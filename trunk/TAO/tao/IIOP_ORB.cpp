@@ -62,9 +62,7 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
 
       // Marshal the objref into an encapsulation bytestream.
       (void) cdr.write_octet (TAO_ENCAP_BYTE_ORDER);
-      if (cdr.encode (CORBA::_tc_Object,
-                        &obj, 0,
-                        env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
+      if ((cdr << obj) == 0)
         return 0;
 
       // Now hexify the encapsulated CDR data into a string, and
@@ -163,11 +161,8 @@ ior_string_to_object (const char *str,
   mb.wr_ptr (len);
   TAO_InputCDR stream (&mb, byte_order);
 
-  CORBA::Object_ptr objref=0;
-  if (stream.decode (CORBA::_tc_Object,
-		     &objref, 0,
-		     env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
-    objref = 0;
+  CORBA::Object_ptr objref = CORBA::Object::_nil ();
+  stream >> objref;
 
   return objref;
 }

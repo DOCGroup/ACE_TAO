@@ -8,6 +8,7 @@
 #include "tao/ORB.h"
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
+#include "tao/debug.h"
 
 ACE_RCSID(tao, IIOP_Profile, "$Id$")
 
@@ -319,7 +320,7 @@ TAO_Transport *
 TAO_IIOP_Profile::transport (void)
 {
   // do I need to do a dynamic cast here?
-  if (hint_) 
+  if (hint_)
     return hint_->transport ();
   else
     return 0;
@@ -339,12 +340,15 @@ TAO_IIOP_Profile::parse (TAO_InputCDR& cdr,
   // Read and verify major, minor versions, ignoring IIOP
   // profiles whose versions we don't understand.
   //
+  // @@ Fred: if we find a version like 1.5 we are supposed to handle
+  // it, i.e. read the fields we know about and ignore the rest!
+  //
   // XXX this doesn't actually go back and skip the whole
   // encapsulation...
   if (!(cdr.read_octet (this->version_.major)
-      && this->version_.major == TAO_IIOP_Profile::DEF_IIOP_MAJOR
-      && cdr.read_octet (this->version_.minor)
-      && this->version_.minor <= TAO_IIOP_Profile::DEF_IIOP_MINOR))
+        && this->version_.major == TAO_IIOP_Profile::DEF_IIOP_MAJOR
+        && cdr.read_octet (this->version_.minor)
+        && this->version_.minor <= TAO_IIOP_Profile::DEF_IIOP_MINOR))
   {
     ACE_DEBUG ((LM_DEBUG,
                 "detected new v%d.%d IIOP profile",
@@ -360,13 +364,9 @@ TAO_IIOP_Profile::parse (TAO_InputCDR& cdr,
     }
 
   // Get host and port
-  if (cdr.decode (CORBA::_tc_string,
-                  &this->host_,
-                  0,
-                  env) != CORBA::TypeCode::TRAVERSE_CONTINUE
-      || !cdr.read_ushort (this->port_))
+  if (cdr.read_string (this->host_) == 0
+      || cdr.read_ushort (this->port_) == 0)
     {
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
       ACE_DEBUG ((LM_DEBUG, "error decoding IIOP host/port"));
       return -1;
     }
@@ -375,25 +375,22 @@ TAO_IIOP_Profile::parse (TAO_InputCDR& cdr,
 
   // ... and object key.
 
-  // @@ This is a hack. This code was moved from encode.cpp
-  //    but it is not clear to me what is going on.  So I have
-  //    passed a reference to continue_decoding into this method
-  //    continue_decoding is used in STUB_Object::decode ()
-  continue_decoding = cdr.decode (TC_opaque,
-                                  &this->object_key_,
-                                  0,
-                                  env) == CORBA::TypeCode::TRAVERSE_CONTINUE;
+  if ((cdr >> this->object_key_) == 0)
+    return -1;
 
-  if (cdr.length () != 0)
+  if (cdr.length () != 0 && TAO_debug_level)
     {
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      // If there is extra data in the profile we are supposed to
+      // ignore it, but print a warning just in case...
       ACE_DEBUG ((LM_DEBUG,
                   "%d bytes out of %d left after IIOP profile data\n",
                   cdr.length (),
                   encap_len));
-      return -1;
     }
-  return 1;
+  if (cdr.good_bit ())
+    return 1;
+
+  return -1;
 }
 
 int
@@ -742,20 +739,21 @@ TAO_IIOP_Profile::prefix (void)
   return ::prefix_;
 }
 
-CORBA::TypeCode::traverse_status
-TAO_IIOP_Profile::encode (TAO_OutputCDR *&stream,
-                          CORBA::Environment &env)
+int
+TAO_IIOP_Profile::encode (TAO_OutputCDR &stream) const
 {
   // UNSIGNED LONG, tag for this protocol profile;
-  stream->write_ulong (TAO_IOP_TAG_INTERNET_IOP);
-
+  // @@ it seems like this is not a good separation of concerns, why
+  // do we write the TAG here? That's generic code and should be
+  // handled by the object reference writer (IMHO).
+  stream.write_ulong (TAO_IOP_TAG_INTERNET_IOP);
+ 
   // UNSIGNED LONG, number of succeeding bytes in the
   // encapsulation.  We don't actually need to make the
   // encapsulation, as nothing needs stronger alignment than
   // this longword; it guarantees the rest is aligned for us.
-  u_int hostlen;
 
-  hostlen = ACE_OS::strlen ((char *) this->host_);
+  CORBA::ULong hostlen = ACE_OS::strlen ((char *) this->host_);
   CORBA::ULong encap_len =
     1                              // byte order
     + 1                            // version major
@@ -768,44 +766,23 @@ TAO_IIOP_Profile::encode (TAO_OutputCDR *&stream,
     + ( hostlen & 02)              // optional pad short
     + 4                            // sizeof (key length)
     + this->object_key_.length (); // key length.
-  stream->write_ulong (encap_len);
-
-#if 0
-  size_t current_len = stream->length ();
-#endif /* 0 */
+  stream.write_ulong (encap_len);
 
   // CHAR describing byte order, starting the encapsulation
-  stream->write_octet (TAO_ENCAP_BYTE_ORDER);
+  stream.write_octet (TAO_ENCAP_BYTE_ORDER);
 
   // IIOP::TAO_IOP_Version, two characters (version 1.0) padding
-  stream->write_char (this->version_.major);
-  stream->write_char (this->version_.minor);
+  stream.write_char (this->version_.major);
+  stream.write_char (this->version_.minor);
 
   // STRING hostname from profile
-  stream->encode (CORBA::_tc_string,
-                  &this->host_,
-                  0,
-                  env);
+  stream.write_string (this->host_);
 
   // UNSIGNED SHORT port number
-  stream->write_ushort (this->port_);
+  stream.write_ushort (this->port_);
 
   // OCTET SEQUENCE for object key
-  stream->encode (TC_opaque,
-                  &this->object_key_,
-                  0,
-                  env);
+  stream << this->object_key_;
 
-#if 0
-  // This is good for debugging the computation of the key
-  // length.
-  size_t final_len = stream->length ();
-  ACE_DEBUG ((LM_DEBUG, "ObjRef::encode: "
-              "stored_len = %d, "
-              "real_len = %d\n",
-              encap_len,
-              final_len - current_len));
-#endif /* 0 */
-
-  return CORBA::TypeCode::TRAVERSE_CONTINUE;
+  return 1;
 }

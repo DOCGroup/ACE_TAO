@@ -1,7 +1,7 @@
 // $Id$
 
 ACE_INLINE CORBA::ULong
-TAO_IIOP_Profile::tag (void)
+TAO_IIOP_Profile::tag (void) const
 {
   return this->tag_;
 }

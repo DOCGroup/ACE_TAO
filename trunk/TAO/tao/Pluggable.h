@@ -148,7 +148,7 @@ class TAO_Export TAO_Profile
   // = DESCRIPTION
   //   @@ Fred, please fill in here.
 public:
-  virtual CORBA::ULong tag (void) = 0;
+  virtual CORBA::ULong tag (void) const = 0;
   // The tag, each concrete class will have a specific tag value.
 
   virtual TAO_Transport *transport (void) = 0;
@@ -172,8 +172,7 @@ public:
   // The body, an octet sequence that represent the marshaled
   // profile.
 
-  virtual CORBA::TypeCode::traverse_status encode (TAO_OutputCDR *&stream,
-                                                   CORBA::Environment &env) = 0;
+  virtual int encode (TAO_OutputCDR &stream) const = 0;
   // Encode this profile in a stream, i.e. marshal it.
 
   virtual const TAO_ObjectKey &object_key (void) const = 0;

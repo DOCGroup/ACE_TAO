@@ -174,9 +174,17 @@ TAO_MProfile::forward_from (void)
 }
 
 ACE_INLINE CORBA::ULong
-TAO_MProfile::profile_count (void)
+TAO_MProfile::profile_count (void) const
 {
   return this->last_;
+}
+
+ACE_INLINE const TAO_Profile*
+TAO_MProfile::get_profile (CORBA::ULong index) const
+{
+  if (index >= this->last_)
+    return 0;
+  return this->pfiles_[index];
 }
 
 ACE_INLINE TAO_Profile_ptr *

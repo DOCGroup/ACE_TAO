@@ -29,7 +29,6 @@
 #include "tao/GIOP.h"
 #include "tao/Any.h"
 #include "tao/Principal.h"
-#include "tao/IIOP_Profile.h"
 #include "tao/MProfile.h"
 #include "tao/Object.h"
 #include "tao/Stub.h"
@@ -553,39 +552,20 @@ TAO_Marshal_Principal::decode (CORBA::TypeCode_ptr,
                                void *context,
                                CORBA::Environment &env)
 {
-  CORBA::Boolean continue_decoding = 1;
-
   // Context is the CDR stream.
   TAO_InputCDR *stream = (TAO_InputCDR *) context;
 
-  CORBA::Principal_ptr *pp = (CORBA::Principal_ptr *) data;
-  CORBA::ULong len;
+  CORBA::Principal_ptr x;
 
-  continue_decoding = stream->read_ulong (len);
-  if (len == 0 || !continue_decoding)
-    *pp = 0;  // null principal
-  else
+  if ((*stream >> x) == 0)
     {
-      // Allocate storage for Principal and its buffer.
-      ACE_NEW_RETURN (*pp,
-                      CORBA::Principal,
-                      CORBA::TypeCode::TRAVERSE_CONTINUE);
-      (*pp)->id.length (len);
-
-      continue_decoding =
-        stream->read_octet_array ((*pp)->id.get_buffer (), len);
-    }
-
-  if (continue_decoding == 1)
-    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-  else
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO_Marshal_Principal::decode detected error\n"));
+      *(CORBA_Principal_ptr*)data = CORBA::Principal::_nil ();
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
+
+  *(CORBA_Principal **)data = x;
+  return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
 // Decode obj ref.  An IOR
@@ -596,170 +576,20 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
                             void *context,
                             CORBA::Environment &env)
 {
-  CORBA::Boolean continue_decoding = 1;
-
   // Context is the CDR stream.
   TAO_InputCDR *stream = (TAO_InputCDR *) context;
-  CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
-  CORBA::String type_hint;
 
-  // First, read the type hint. This will be the type_id encoded in an
-  // object reference.
-  stream->decode (CORBA::_tc_string, &type_hint, 0, env);
+  CORBA::Object_ptr object;
 
-  // @@ TODO: Only IIOP profiles are parsed here! We should use the
-  // connector registry to isolate this code from the particulars of
-  // all the protocols.
-  // Also: the connector registry should create a base TAO_Profile if
-  // it does not find the right protocol to handle the current one.
-
-  CORBA::ULong profiles;
-  STUB_Object *objdata = 0;
-
-  // get the count of profiles that follow
-  continue_decoding = stream->read_ulong (profiles);
-
-  // No profiles means a NIL objref.
-
-  if (profiles == 0)
+  if ((*stream >> object) == 0)
     {
-      *(CORBA::Object_ptr *) data = CORBA::Object::_nil ();
-      CORBA::string_free (type_hint);
-      type_hint = 0;
-      return CORBA_TypeCode::TRAVERSE_CONTINUE;
-    }
-
-  // get a profile container to store all profiles in the IOR.
-  TAO_MProfile *mp = new TAO_MProfile (profiles);
-
-  while (profiles-- != 0 )
-    {
-      // @@ For now we just take IIOP_Profiles,  FRED
-      // We keep decoding until we find a valid IIOP profile.
-      CORBA::ULong tag;
-
-      // get the profile ID tag
-      if ( (continue_decoding = stream->read_ulong (tag)) == 0)
-        {
-          ACE_DEBUG ((LM_DEBUG, "cannot read profile tag\n"));
-          continue;
-        }
-
-      if (tag != TAO_IOP_TAG_INTERNET_IOP ) // || objdata != 0)
-        {
-          continue_decoding = stream->skip_string ();
-          ACE_DEBUG ((LM_DEBUG, "unknown tag %d skipping\n", tag));
-          continue;
-        }
-
-      // OK, we've got an IIOP profile.  It's going to be
-      // encapsulated ProfileData.  Create a new decoding stream and
-      // context for it, and tell the "parent" stream that this data
-      // isn't part of it any more.
-
-      CORBA::ULong encap_len;
-      // ProfileData is encoded as a sequence of octet. So first get
-      // the length of the sequence.
-      if ( (continue_decoding = stream->read_ulong (encap_len)) == 0)
-        {
-          ACE_DEBUG ((LM_DEBUG, "cannot read encap length\n"));
-          continue;
-        }
-
-      // Create the decoding stream from the encapsulation in the
-      // buffer, and skip the encapsulation.
-      TAO_InputCDR str (*stream, encap_len);
-
-      continue_decoding =
-        str.good_bit ()
-        && stream->skip_bytes(encap_len);
-
-      if (!continue_decoding)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "problem decoding encapsulated stream, "
-                      "len = %d\n", encap_len));
-          continue;
-        }
-
-      // get the default IIOP Profile and fill in the blanks
-      // with str.
-      TAO_IIOP_Profile *pfile = new TAO_IIOP_Profile;
-
-      // return code will be -1 if an error occurs
-      // otherwise 0 for stop (can't read this profile type or version)
-      // and 1 for continue.
-      // @@ check with carlos about how TRAVERSE_CONTINUE is used!  FRED
-      switch (pfile->parse (str, continue_decoding, env))
-        {
-          case -1:
-            pfile->_decr_refcnt ();
-            return CORBA::TypeCode::TRAVERSE_STOP;
-          case 0:
-            pfile->_decr_refcnt ();
-            break;
-          case 1:
-          default:
-            mp->give_profile (pfile);
-            // all other return values indicate success
-    	// we do not decrement reference count on profile since we are giving
-    	// it to the MProfile!
-            break;
-        } // switch
-        continue;
-    } // while loop
-
-  // make sure we got some profiles!
-  if (mp->profile_count () == 0)
-    {
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      ACE_DEBUG ((LM_DEBUG, "no IIOP v%d.%d (or earlier) profile in IOR!\n",
-                  TAO_IIOP_Profile::DEF_IIOP_MAJOR,
-                  TAO_IIOP_Profile::DEF_IIOP_MINOR));
-      // get rid of the original MProfile!
-      delete mp;
-
-      return CORBA::TypeCode::TRAVERSE_STOP;
-    }
-
-  // Ownership of type_hint is given to STUB_Object
-  // STUB_Object will make a copy of mp!
-  objdata = new STUB_Object (type_hint, mp);
-
-  // get rid of the original MProfile!
-  delete mp;
-
-  if ( objdata == 0)
-    return CORBA::TypeCode::TRAVERSE_STOP;
-
-  // Create a new CORBA_Object and give it the STUB_Object just
-  // created.
-  TAO_ServantBase *servant =
-    TAO_ORB_Core_instance ()->orb ()->_get_collocated_servant (objdata);
-  CORBA_Object *corba_proxy = 0;
-
-  corba_proxy = new CORBA_Object (objdata, servant, servant != 0);
-
-  if (corba_proxy)
-    *(CORBA_Object **)data = corba_proxy;
-  else
-    continue_decoding = 0;
-
-    // the corba proxy would have already incremented the reference count on
-    // the objdata. So we decrement it here by 1 so that the objdata is now
-    // fully owned by the corba_proxy that was created.
-    // objdata->_decr_refcnt ();
-
-  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
-      && continue_decoding == 1)
-    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-  else
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "marshaling decode_objref detected error\n"));
+      *(CORBA_Object_ptr*)data = CORBA::Object::_nil ();
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
+
+  *(CORBA_Object **)data = object;
+  return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
 // Decode structs.

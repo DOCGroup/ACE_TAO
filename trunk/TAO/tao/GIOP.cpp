@@ -678,15 +678,12 @@ TAO_GIOP::parse_header (TAO_InputCDR &cdr,
 
 CORBA::Boolean
 TAO_GIOP_LocateRequestHeader::init (TAO_InputCDR &msg,
-                                    CORBA::Environment &ACE_TRY_ENV)
+                                    CORBA::Environment &)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_GIOP_LOCATE_REQUEST_HEADER_INIT_START);
 
   return (msg.read_ulong (this->request_id)
-          && msg.decode (TC_opaque,
-                         &this->object_key,
-                         0,
-                         ACE_TRY_ENV));
+          && (msg >> this->object_key) != 0);
 }
 
 CORBA::Boolean

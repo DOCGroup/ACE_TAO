@@ -265,7 +265,7 @@ public:
   // equivalent).
 
   CORBA::Boolean is_equivalent (CORBA::Object_ptr other_obj,
-        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()); 
+        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // XXX All objref representations should know how to marshal
   // themselves.  That will involve ensuring that the IOR that gets
   // marshaled talks a specific protocol, otherwise the target of a
@@ -296,7 +296,7 @@ public:
   // degenerate case where only one profile is wanted.  This method
   // is depricated and is here ONLY for compatibility with multiple
   // profile unfriendly code!  The profile is given to the MProfile
-  // object.  
+  // object.
 
   STUB_Object (char *repository_id,
                TAO_MProfile *profiles);
@@ -319,6 +319,9 @@ public:
   // Copy of the profile list, user must free memory when done.
   // although the user can call get_profiles then reorder
   // the list and give it back to STUB_Object.
+
+  const TAO_MProfile& get_base_profiles (void) const;
+  // Obtain a reference to the basic profile set.
 
   // manage forward and base profiles.
   TAO_Profile *next_profile (void);
@@ -367,7 +370,7 @@ public:
 
   CORBA::Boolean next_profile_retry (void);
   // THREAD SAFE
-  // used to get the next profile after the one being used has 
+  // used to get the next profile after the one being used has
   // failed during the initial connect or send of the message!
 
 protected:

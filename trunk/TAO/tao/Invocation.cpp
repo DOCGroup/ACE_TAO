@@ -377,23 +377,12 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
   CORBA::Object_ptr object_ptr = 0;
   TAO_Transport *transport = this->data_->profile_in_use ()->transport ();
 
-  ACE_TRY
+  if ( (inp_stream >> object_ptr) != 0)
     {
-      inp_stream.decode (CORBA::_tc_Object,
-                         &object_ptr,
-                         0,
-                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCH (CORBA_SystemException, ex)
-    {
-      // Handle the exception for this level here and throw it out again.
-      ACE_PRINT_EXCEPTION (ex, "invoke, location forward (decode)");
       transport->close_connection ();
-      ACE_RETHROW;
+      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO),
+                        TAO_GIOP_SYSTEM_EXCEPTION);
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (TAO_GIOP_SYSTEM_EXCEPTION);
 
   // The object pointer has to be changed to a STUB_Object pointer
   // in order to extract the profile.
@@ -403,7 +392,8 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
   if (stubobj == 0)
     {
       transport->close_connection ();
-      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_NO), TAO_GIOP_SYSTEM_EXCEPTION);
+      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_NO),
+                        TAO_GIOP_SYSTEM_EXCEPTION);
     }
 
   // Make a copy of the IIOP profile in the forwarded objref,

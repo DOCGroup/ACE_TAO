@@ -83,8 +83,8 @@ TAO_OutputCDR::TAO_OutputCDR (size_t size,
                               size_t memcpy_tradeoff)
   :  ACE_OutputCDR (size,
         byte_order,
-        buffer_allocator 
-          ? buffer_allocator 
+        buffer_allocator
+          ? buffer_allocator
           : TAO_ORB_Core_instance ()->output_cdr_buffer_allocator (),
         data_block_allocator
           ? data_block_allocator
@@ -96,7 +96,7 @@ TAO_OutputCDR::TAO_OutputCDR (size_t size,
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR1_ENTER);
 }
 
-TAO_OutputCDR::TAO_OutputCDR (char *data, 
+TAO_OutputCDR::TAO_OutputCDR (char *data,
                               size_t size,
                               int byte_order,
 			                        ACE_Allocator *buffer_allocator,
@@ -105,8 +105,8 @@ TAO_OutputCDR::TAO_OutputCDR (char *data,
   :  ACE_OutputCDR (data,
         size,
         byte_order,
-        buffer_allocator 
-          ? buffer_allocator 
+        buffer_allocator
+          ? buffer_allocator
           : TAO_ORB_Core_instance ()->output_cdr_buffer_allocator (),
         data_block_allocator
           ? data_block_allocator
@@ -126,7 +126,7 @@ TAO_OutputCDR::TAO_OutputCDR (ACE_Message_Block *data,
         memcpy_tradeoff
           ? memcpy_tradeoff
           : TAO_ORB_Core_instance ()->orb_params ()->cdr_memcpy_tradeoff ())
-{ 
+{
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR3_ENTER);
 }
 
@@ -141,7 +141,7 @@ TAO_OutputCDR::encode (CORBA::TypeCode_ptr tc,
                        CORBA::Environment &TAO_IN_ENV)
 {
   TAO_Marshal_Object *mobj =
-    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object (tc, 
+    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object (tc,
                                                            TAO_IN_ENV);
   TAO_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
@@ -159,41 +159,14 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::Any &x)
   TAO_TRY
     {
       CORBA::TypeCode::traverse_status status =
-        TAO_MARSHAL_ANY::instance ()->encode (0, 
-                                              &x, 
-                                              0, 
-                                              &cdr, 
+        TAO_MARSHAL_ANY::instance ()->encode (0,
+                                              &x,
+                                              0,
+                                              &cdr,
                                               TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       if (status== CORBA::TypeCode::TRAVERSE_CONTINUE)
-        return 1;
-      // else return 0 at the end of the function
-    }
-  TAO_CATCH (CORBA_Exception, ex)
-    {
-      return 0;
-    }
-  TAO_ENDTRY;
-  return 0;
-}
-
-CORBA::Boolean
-operator<< (TAO_OutputCDR& cdr, const CORBA::Object *x)
-{
-  TAO_TRY
-    {
-      // @@ This function should *not* use the interpreter, there must
-      // be a way to do this with just CDR operations!!!!
-      CORBA::TypeCode::traverse_status status =
-        TAO_MARSHAL_OBJREF::instance ()->encode (0, 
-                                                 &x, 
-                                                 0, 
-                                                 &cdr, 
-                                                 TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      if (status == CORBA::TypeCode::TRAVERSE_CONTINUE)
         return 1;
       // else return 0 at the end of the function
     }
@@ -213,10 +186,10 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode *x)
       // @@ This function should *not* use the interpreter, there must
       // be a way to do this with just CDR operations!!!!
       CORBA::TypeCode::traverse_status status =
-        TAO_MARSHAL_TYPECODE::instance ()->encode (0, 
-                                                   &x, 
-                                                   0, 
-                                                   &cdr, 
+        TAO_MARSHAL_TYPECODE::instance ()->encode (0,
+                                                   &x,
+                                                   0,
+                                                   &cdr,
                                                    TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -238,7 +211,7 @@ TAO_OutputCDR::append (CORBA::TypeCode_ptr tc,
                        CORBA::Environment &TAO_IN_ENV)
 {
   TAO_Marshal_Object *mobj =
-    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object (tc, 
+    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object (tc,
                                                            TAO_IN_ENV);
   TAO_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
@@ -250,7 +223,7 @@ TAO_OutputCDR::append (CORBA::TypeCode_ptr tc,
 
 // ****************************************************************
 
-TAO_InputCDR::TAO_InputCDR (const char *buf, 
+TAO_InputCDR::TAO_InputCDR (const char *buf,
                             size_t bufsiz,
                             int byte_order)
   : ACE_InputCDR (buf,
@@ -306,7 +279,7 @@ TAO_InputCDR::TAO_InputCDR (const TAO_OutputCDR& rhs,
                             ACE_Allocator* data_block_allocator)
   : ACE_InputCDR (rhs,
         buffer_allocator
-          ? buffer_allocator 
+          ? buffer_allocator
           : TAO_ORB_Core_instance ()->output_cdr_buffer_allocator (),
         data_block_allocator
           ? data_block_allocator
@@ -325,7 +298,7 @@ TAO_InputCDR::decode (CORBA::TypeCode_ptr tc,
                       CORBA::Environment &TAO_IN_ENV)
 {
   TAO_Marshal_Object *mobj =
-    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object (tc, 
+    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object (tc,
                                                            TAO_IN_ENV);
   TAO_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
@@ -340,7 +313,7 @@ TAO_InputCDR::skip (CORBA::TypeCode_ptr tc,
                     CORBA::Environment &TAO_IN_ENV)
 {
   TAO_Marshal_Object *mobj =
-    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object (tc, 
+    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object (tc,
                                                            TAO_IN_ENV);
   TAO_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
@@ -356,36 +329,11 @@ operator>> (TAO_InputCDR& cdr, CORBA::Any &x)
   TAO_TRY
     {
       CORBA::TypeCode::traverse_status status =
-        TAO_MARSHAL_ANY::instance ()->decode (0, 
-                                              &x, 
-                                              0, 
-                                              &cdr, 
+        TAO_MARSHAL_ANY::instance ()->decode (0,
+                                              &x,
+                                              0,
+                                              &cdr,
                                               TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
-        return 0;
-    }
-  TAO_CATCH (CORBA_Exception, ex)
-    {
-      return 0;
-    }
-  TAO_ENDTRY;
-
-  return 1;
-}
-
-CORBA::Boolean
-operator>> (TAO_InputCDR& cdr, CORBA::Object *&x)
-{
-  TAO_TRY
-    {
-      CORBA::TypeCode::traverse_status status =
-        TAO_MARSHAL_OBJREF::instance ()->decode (0, 
-                                                 &x, 
-                                                 0, 
-                                                 &cdr, 
-                                                 TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -406,10 +354,10 @@ operator>> (TAO_InputCDR& cdr, CORBA::TypeCode *&x)
   TAO_TRY
     {
       CORBA::TypeCode::traverse_status status =
-        TAO_MARSHAL_TYPECODE::instance ()->decode (0, 
-                                                   &x, 
-                                                   0, 
-                                                   &cdr, 
+        TAO_MARSHAL_TYPECODE::instance ()->decode (0,
+                                                   &x,
+                                                   0,
+                                                   &cdr,
                                                    TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -424,4 +372,3 @@ operator>> (TAO_InputCDR& cdr, CORBA::TypeCode *&x)
 
   return 1;
 }
-

@@ -476,10 +476,7 @@ IIOP_ServerRequest::init_reply (CORBA::Environment &env)
 
   TAO_GIOP_ServiceContextList resp_ctx;
   resp_ctx.length (0);
-  this->outgoing_->encode (TC_ServiceContextList,
-                           &resp_ctx,
-                           0,
-                           env);
+  *this->outgoing_ << resp_ctx;
   this->outgoing_->write_ulong (this->request_id_);
 
   // Standard exceptions are caught in Connect::handle_input
@@ -490,15 +487,11 @@ IIOP_ServerRequest::init_reply (CORBA::Environment &env)
       this->outgoing_->write_ulong (TAO_GIOP_LOCATION_FORWARD);
 
       CORBA::Object_ptr object_ptr = this->forward_location_.in ();
-      (void) this->outgoing_->encode (CORBA::_tc_Object,
-                                      &object_ptr,
-                                      0,
-                                      env);
-
-      // If encoding went fine
-      if (env.exception () != 0)
+      if ((*this->outgoing_ << object_ptr) == 0)
         {
-          env.print_exception  ("ServerRequest::marshal - forwarding parameter encode failed");
+          ACE_DEBUG ((LM_DEBUG,
+                      "ServerRequest::marshal - "
+                      "encoding forwarded objref failed\n"));
           return;
         }
     }
@@ -552,13 +545,13 @@ IIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
 	        void* value = ACE_const_cast(void*,this->retval_->value ());
 	        if (this->retval_->any_owns_data ())
             {
-	            (void) this->outgoing_->encode (tc.in (), value, 0, env);
+              (void) this->outgoing_->encode (tc.in (), value, 0, env);
             }
           else
-	          {
+            {
               TAO_InputCDR cdr ((ACE_Message_Block *)value);
               (void) this->outgoing_->append (tc.in (), &cdr, env);
-	          }
+            }
         }
 
       // ... Followed by "inout" and "out" parameters, left to right

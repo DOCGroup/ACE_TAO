@@ -28,7 +28,7 @@ STUB_Object::set_profile_in_use_i (TAO_Profile *pfile)
 }
 
 ACE_INLINE
-void 
+void
 STUB_Object::reset_first_locate_request (void)
 {
   first_locate_request_ = 1;
@@ -104,16 +104,16 @@ STUB_Object::~STUB_Object (void)
   if (forward_profiles_)
     reset_profiles ();
 
-  if (this->profile_in_use_ != 0) 
+  if (this->profile_in_use_ != 0)
     {
       this->profile_in_use_->reset_hint ();
       // decrease reference count on profile
-      this->profile_in_use_->_decr_refcnt ();   
+      this->profile_in_use_->_decr_refcnt ();
       this->profile_in_use_ = 0;
     }
 
   if (this->profile_lock_ptr_)
-    delete this->profile_lock_ptr_; 
+    delete this->profile_lock_ptr_;
 
 }
 
@@ -125,7 +125,7 @@ STUB_Object::profile_in_use (void)
 }
 
 ACE_INLINE
-void 
+void
 STUB_Object::use_locate_requests (CORBA::Boolean use_it)
 {
   if (use_it)
@@ -133,16 +133,16 @@ STUB_Object::use_locate_requests (CORBA::Boolean use_it)
       this->first_locate_request_ = 1;
       this->use_locate_request_ = 1;
     }
-  else 
+  else
     {
       // Don't use it.
       this->first_locate_request_ = 0;
       this->use_locate_request_ = 0;
-    }   
-} 
+    }
+}
 
 ACE_INLINE
-TAO_MProfile * 
+TAO_MProfile *
 STUB_Object::get_profiles (void)
 {
   return new TAO_MProfile (&base_profiles_);
@@ -284,4 +284,9 @@ STUB_Object::next_profile_retry (void)
       return 0;
     }
 }
-  
+
+ACE_INLINE const TAO_MProfile&
+STUB_Object::get_base_profiles (void) const
+{
+  return this->base_profiles_;
+}
