@@ -1,3 +1,18 @@
+Sat Jan 10 22:56:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* performance-tests/Latency/Thread_Per_Connection/Roundtrip.cpp:
+	* tests/MT_Client/test_i.cpp:
+
+	  The best fix for the problem outlined is "Sat Jan 10 21:17:10
+	  2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>", is to
+	  wait for all threads exit () before finishing shutting down the
+	  ORB_Core. I was trying to avoid this with earlier checkins. 
+
+	  The cost of avoiding this can be catostrophical though it doesn't
+	  show up for us. We now explicitly call shutdown with a boolean
+	  flag to prevent the crash. We have now moved the configuration
+	  details to the application, but looks like it is hard to avoid. 
+
 Sat Jan 10 22:17:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Connection_Handler.cpp:
