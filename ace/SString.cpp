@@ -893,7 +893,8 @@ ACE_WString::set (const ACE_USHORT16 *s)
 
   this->set (s, len);
 #else  /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
-  this->set (s, ACE_OS::strlen (ACE_static_cast (wchar_t *, s)));
+  // Note: Linux glibc 2.0 can't handle an ACE_static_cast here . . .
+  this->set (s, ACE_OS::strlen ((const wchar_t *) s));
 #endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
 }
 
