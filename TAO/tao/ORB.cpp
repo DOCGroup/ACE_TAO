@@ -482,10 +482,9 @@ CORBA_ORB::resolve_service (const char *service_name,
   CORBA_Object_var return_value = CORBA_Object::_nil ();
 
   // First check to see if we've already initialized this.
-  if (this->name_service_ != CORBA_Object::_nil ())
+  if (!CORBA::is_nil (this->name_service_))
     {
-      // @@ Someone please double-check this ;-)
-      return_value = this->name_service_;
+      return_value = CORBA::Object::_duplicate (this->name_service_);
     }
   else
     {
@@ -530,11 +529,11 @@ CORBA_ORB::resolve_service (const char *service_name,
                                         ACE_TRY_ENV);
           ACE_CHECK_RETURN (CORBA_Object::_nil ());
         }
-      this->name_service_ = return_value.ptr ();
+      this->name_service_ = CORBA::Object::_duplicate (return_value.ptr ());
     }
 
   // Return ior.
-  return CORBA_Object::_duplicate (return_value._retn ());
+  return return_value._retn ();
 }
 
 CORBA_Object_ptr
@@ -657,7 +656,7 @@ CORBA_ORB::resolve_implrepo_service (ACE_Time_Value *timeout,
 }
 
 int
-CORBA_ORB::multicast_query (char *buf,
+CORBA_ORB::multicast_query (char* &buf,
                             const char *service_name,
                             u_short port,
                             ACE_Time_Value *timeout)
@@ -691,21 +690,21 @@ CORBA_ORB::multicast_query (char *buf,
         }
       else
         {
-          // Convert the port we're listening on into network byte
-          // order.
+          // Convert the acceptor port into network byte order.
           ACE_UINT16 response_port =
             ACE_HTONS (my_addr.get_port_number ());
 
-          // Length of data to be sent. This is sent as a header.
+          // Length of service name we will send.
           CORBA::Short data_len =
-            ACE_HTONS (sizeof (ACE_UINT16)
-                       + ACE_OS::strlen (service_name));
+            ACE_HTONS (ACE_OS::strlen (service_name) + 1);
 
-          // Vector to be sent.
+          // Vector we will send.  It contains: 1) length of service
+          // name string, 2)port on which we are listening for
+          // replies, and 3) name of service we are looking for.
           const int iovcnt = 3;
           iovec iovp[iovcnt];
 
-          // The length of data to be sent.
+          // The length of service name string.
           iovp[0].iov_base = (char *) &data_len;
           iovp[0].iov_len  = sizeof (CORBA::Short);
 
@@ -715,7 +714,7 @@ CORBA_ORB::multicast_query (char *buf,
 
           // The service name string.
           iovp[2].iov_base = (char *) service_name;
-          iovp[2].iov_len  = ACE_OS::strlen (service_name);
+          iovp[2].iov_len  = ACE_OS::strlen (service_name) + 1;
 
           // Send the multicast.
           result = dgram.send (iovp,
@@ -739,11 +738,11 @@ CORBA_ORB::multicast_query (char *buf,
                             "# of bytes sent is %d.\n",
                             __FILE__,
                             result));
-              // Wait for response until
-              // TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT.
+              // Wait for response until timeout.
               ACE_Time_Value tv (timeout == 0
                                  ? ACE_Time_Value (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
                                  : *timeout);
+
               // Accept reply connection from server.
               if (acceptor.accept (stream,
                                    0,
@@ -757,35 +756,65 @@ CORBA_ORB::multicast_query (char *buf,
               else
                 {
                   // Receive the IOR.
-                  result = stream.recv (buf,
-                                        BUFSIZ,
-                                        0,
-                                        timeout);
-                  // Close socket now.
-                  stream.close ();
 
-                  // Check for errors.
-                  if (result == -1)
-                    ACE_ERROR ((LM_ERROR,
-                                "%p\n",
-                                "error reading IIOP multicast response"));
+                  // IOR length.
+                  CORBA::Short ior_len;
+                  result = stream.recv_n (&ior_len,
+                                          sizeof (ior_len),
+                                          0,
+                                          &tv);
+                  if (result != sizeof (ior_len))
+                    {
+                      ACE_ERROR ((LM_ERROR,
+                                  "%p\n",
+                                  "multicast_query: unable to receive ior length"));
+                      result = -1;
+                    }
                   else
                     {
-                      // Null terminate message.
-                      buf[result] = 0;
+                      // Allocate more space for the ior if we don't
+                      // have enough.
+                      ior_len = ACE_NTOHS (ior_len);
+                      if (ior_len > 2*BUFSIZ)
+                        {
+                          buf = CORBA::string_alloc (ior_len);
+                          if (buf == 0)
+                            {
+                              ACE_ERROR ((LM_ERROR,
+                                          "%p\n",
+                                          "multicast_query: unable to allocate memory"));
+                              result = -1;
+                            }
+                        }
 
-                      if (TAO_debug_level > 0)
-                        ACE_DEBUG ((LM_DEBUG,
-                                    "%s: service resolved to IOR <%s>\n",
-                                    __FILE__,
-                                    buf));
+                      if (result != -1)
+                        {
+                          // Receive the ior.
+                          result = stream.recv_n (buf,
+                                                  ior_len,
+                                                  0,
+                                                  &tv);
+                          if (result == -1)
+                            ACE_ERROR ((LM_ERROR,
+                                        "%p\n",
+                                        "error reading ior"));
+                          else
+                            {
+                              if (TAO_debug_level > 0)
+                                ACE_DEBUG ((LM_DEBUG,
+                                            "%s: service resolved to IOR <%s>\n",
+                                            __FILE__,
+                                            buf));
+                            }
+                        }
                     }
                 }
             }
         }
     }
 
-  // We don't need the dgram or acceptor anymore.
+  // Clean up.
+  stream.close ();
   dgram.close ();
   acceptor.close ();
 
@@ -805,26 +834,34 @@ CORBA_ORB::multicast_to_service (const char * service_name,
                                  ACE_Time_Value *timeout,
                                  CORBA::Environment& ACE_TRY_ENV)
 {
-  char buf[BUFSIZ + 1];
+  char buf[2*BUFSIZ];
+  char *ior = buf;
+  CORBA::String_var cleaner;
 
-  // Use UDP multicast to locate the  service.
   CORBA_Object_var return_value =
     CORBA_Object::_nil ();
 
-  if (this->multicast_query (buf,
-                             service_name,
-                             port,
-                             timeout) == 0)
+  // Use UDP multicast to locate the  service.
+  int result = this->multicast_query (ior,
+                                      service_name,
+                                      port,
+                                      timeout);
+
+  // If the IOR didn't fit into <buf>, memory for it was dynamically
+  // allocated - make sure it gets deallocated.
+  if (ior != buf)
+    cleaner = ior;
+
+  if (result == 0)
     {
       // Convert IOR to an object reference.
       return_value =
-        this->string_to_object ((CORBA::String) buf,
+        this->string_to_object ((CORBA::String) ior,
                                 ACE_TRY_ENV);
-
       ACE_CHECK_RETURN (CORBA_Object::_nil ());
     }
 
-  // Return ior.
+  // Return object reference.
   return return_value._retn ();
 }
 
