@@ -1,3 +1,10 @@
+Mon Jun 26 17:01:35 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU (CC_VERSION):
+          use $(CXX) instead of hardcoding CC, in case the user overrides
+          CXX.  Thanks to Alexander Belopolsky <alexander.belopolsky@gs.com>
+          for reporting this.
+
 Mon Jun 26 13:31:39 2000  Steve Huston  <shuston@riverace.com>
 
         * tests/OS_Test.cpp: Don't use the word 'fail' when the test

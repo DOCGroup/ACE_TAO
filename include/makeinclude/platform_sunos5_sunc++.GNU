@@ -67,7 +67,7 @@ endif # threads
 CC              = cc
 CXX             = CC
 
-CC_VERSION = $(shell CC -V 2>&1)
+CC_VERSION = $(shell $(CXX) -V 2>&1)
 
 ifeq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
   #### CC 4.2, only, supports -features=castop
