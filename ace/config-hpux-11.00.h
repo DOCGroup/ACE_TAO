@@ -8,6 +8,9 @@
 #define ACE_CONFIG_H
 #include "ace/pre.h"
 
+#define ACE_LACKS_STDINT_H
+#define ACE_LACKS_SYS_SELECT_H
+
 #if defined (__GNUG__)
 
 // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so

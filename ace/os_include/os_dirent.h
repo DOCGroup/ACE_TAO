@@ -28,7 +28,7 @@
 #include "ace/os_include/os_limits.h"
 
 #if defined (VXWORKS)
-#  include "ace/os_include/unistd.h"  // VxWorks needs this to compile
+#  include "ace/os_include/os_unistd.h"  // VxWorks needs this to compile
 #endif /* VXWORKS */
 
 #if !defined (ACE_LACKS_DIRENT_H)

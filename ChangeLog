@@ -1,3 +1,25 @@
+Thu Jun 19 12:18:22 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.h:
+        * ace/config-vxworks5.x.h:
+        * ace/os_include/os_dirent.h:
+          Fixed typos in the VXWORKS ifdef'd sections.
+
+        * ace/OS.h:
+        * ace/os_include/os_stdio.h:
+          Moved include of remLib.h to os_stdio.h, and uncommented
+          sysLib.h since it is needed for sysClkRateGet().  Thanks to Rod
+          Andzik <andzik@rtlogic.com> for help tracking this down.
+
+        * ace/os_include/os_netdb.h:
+          Removed the VXWORKS tests for hostent and servent.
+
+        * ace/config-aix-4x.h:
+          Added ACE_LACKS_STDINT_H.
+
+        * ace/config-hpux-11.00.h:
+          Added ACE_LACKS_STDINT_H and ACE_LACKS_SYS_SELECT_H.
+
 Thu Jun 19 07:50:04 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
