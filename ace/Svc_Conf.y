@@ -310,6 +310,10 @@ pathname
 void
 yyerror (const char *s)
 {
+#if defined (ACE_NDEBUG)
+  ACE_UNUSED_ARG (s);
+#endif /* ACE_NDEBUG */
+
   ACE_ERROR ((LM_ERROR,
               ASYS_TEXT ("[error %d] on line %d: %s\n"),
               ++yyerrno,
@@ -326,8 +330,8 @@ ace_get_module (ACE_Static_Node *str_rec,
 {
   const ACE_Service_Type *sr = str_rec->record ();
   const ACE_Service_Type_Impl *type = sr->type ();
-  ACE_Stream_Type *st = sr == 0 
-    ? 0 
+  ACE_Stream_Type *st = sr == 0
+    ? 0
     : ACE_dynamic_cast (ACE_Stream_Type *,
                         ACE_const_cast (ACE_Service_Type_Impl *,
                                         type));
