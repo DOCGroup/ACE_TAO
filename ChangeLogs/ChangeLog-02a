@@ -1,3 +1,12 @@
+Wed May 23 14:41:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* netsvcs/ACE-netsvcs.html:
+	* netsvcs/Makefile:
+	* netsvcs/Makefile.am:
+	* netsvcs/Makefile.bor:
+	* netsvcs/README:
+	* netsvcs/build.bor: Resurrected the files from the repo. 
+
 Wed May 23 11:13:00 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_run_tests.lst:
