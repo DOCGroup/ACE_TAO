@@ -1111,7 +1111,7 @@ ACE_Select_Reactor::ACE_Select_Reactor (ACE_Sig_Handler *sh,
                   notify) == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_Select_Reactor::open")
+                ASYS_TEXT ("ACE_Select_Reactor::open ")
                 ASYS_TEXT ("failed inside ACE_Select_Reactor::CTOR")));
 }
 
@@ -1147,7 +1147,7 @@ ACE_Select_Reactor::ACE_Select_Reactor (size_t size,
                   notify) == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_Select_Reactor::open")
+                ASYS_TEXT ("ACE_Select_Reactor::open ")
                 ASYS_TEXT ("failed inside ACE_Select_Reactor::CTOR")));
 }
 
