@@ -457,6 +457,8 @@ NS_NamingContext::list (CORBA::ULong how_many,
     // so need to return a BindingIterator.
      {
        NS_BindingIterator *bind_iter = new NS_BindingIterator (hash_iter);
+       
+       ACE_UNUSED_ARG (bind_iter);
 	 
        //  bind_iter->initialize (bi); 
        bi->_duplicate (bi);
