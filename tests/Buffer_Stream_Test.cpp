@@ -110,8 +110,10 @@ int
 Producer::svc (void)
 {
   ACE_NEW_THREAD;
+  ACE_Message_Block *mb;
 
-  // Keep reading stdin, until we reach EOF. 
+  // Send one message for each letter of the alphabet, then send an empty
+  // message to mark the end.
   for (char *c = ACE_ALPHABET; *c != '\0'; c++)
     {
       // Allocate a new message.
@@ -119,7 +121,6 @@ Producer::svc (void)
       d[0] = *c;
       d[1] = '\0';
 
-      ACE_Message_Block *mb;
       ACE_NEW_RETURN (mb, ACE_Message_Block (2), -1);
       ACE_OS::strcpy (mb->rd_ptr (), d);
 
@@ -128,6 +129,10 @@ Producer::svc (void)
       if (this->put_next (mb) == -1)
 	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "put_next"));
     }
+
+  ACE_NEW_RETURN(mb, ACE_Message_Block, -1);
+  if (this->put_next (mb) == -1)
+    ACE_ERROR ((LM_ERROR, "(%t) %p\n", "put_next"));
 
   return 0; 
 }
@@ -182,7 +187,7 @@ Consumer::svc (void)
       }
     }
 
-  ACE_ASSERT (result == -1 && errno == EWOULDBLOCK);
+  ACE_ASSERT (result == 0 || errno == EWOULDBLOCK);
   return 0;
 }
 
