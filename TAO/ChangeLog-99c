@@ -1,3 +1,12 @@
+Mon Feb 22 10:32:09 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/Quoter/Factory_Finder.cpp
+	* examples/Quoter/Factory_Finder_i.cpp
+	* examples/Quoter/Generic_Factory.cpp
+	* examples/Quoter/Generic_Factory_i.cpp
+	* examples/Quoter/Quoter.cpp
+	Changed the TAO_TRY macros to ACE_TRY macros.
+
 Mon Feb 22 09:38:29 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
