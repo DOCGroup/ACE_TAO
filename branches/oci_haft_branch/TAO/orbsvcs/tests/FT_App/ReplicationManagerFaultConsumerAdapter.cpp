@@ -155,7 +155,7 @@ int ReplicationManagerFaultConsumerAdapter::parse_args (int argc, char * argv[])
  */
 int ReplicationManagerFaultConsumerAdapter::init (
   CORBA::ORB_ptr orb
-  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  ACE_ENV_ARG_DECL)
 {
   ACE_DEBUG ((
     LM_DEBUG,

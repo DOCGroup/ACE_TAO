@@ -52,6 +52,12 @@ namespace TAO
     /// The ObjectGroupId of the faulted object.
     PortableGroup::ObjectGroupId object_group_id;
 
+    /// Other properties of the object group to which the fault relates.
+    FT::MembershipStyleValue membership_style;
+    FT::ReplicationStyleValue replication_style;
+    FT::MinimumNumberReplicasValue minimum_number_replicas;
+    FT::InitialNumberReplicasValue initial_number_replicas;
+
   };
 
 } // namespace TAO

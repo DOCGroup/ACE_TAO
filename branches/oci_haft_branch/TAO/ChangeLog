@@ -1,3 +1,22 @@
+Fri Oct 10 13:58:04 2003  Steve Totten  <totten_s@ociweb.com>
+
+        * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.h:
+        * orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.h:
+          Added more fault analysis logic.
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager_Main.cpp:
+          Updated to conform to ACE guidelines and new Server_Main.
+          Still in progress.
+
+        * orbsvcs/tests/FT_App/ReplicationManagerFaultConsumerAdapter.cpp:
+        * orbsvcs/tests/FT_App/ReplicationManagerFaultConsumerAdapter.h:
+          Minor code cleanup.
+
+        These changes were made in the oci_haft branch.
+
 Fri Oct 10 12:09:39 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
@@ -62,6 +81,70 @@ Fri Oct 10 12:09:39 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         These changes were made in the oci_haft branch.
 
+Thu Oct  9 14:26:48 2003  Steve Totten  <totten_s@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup.idl:
+          Added a TAO-specific get_object_group_ref_from_id()
+          operation to PortableGroup::ObjectGroupManager.
+          This operation will be needed by the FT_ReplicationManager
+          to lookup the ObjectGroup reference from the ObjectGroupId
+          that it receives in a fault report.  This operation may
+          be generally useful to other services, as well.
+
+          Also changed TagGroupTaggedComponent member
+          "component_version" to "group_version" to match the
+          following specs:
+          - Load Balancing joint submission (mars/02-10-14)
+          - Unreliabe Multicast final adopted spec (ptc/01-11-08)
+          - Data Parallel CORBA final adopted spec (ptc/01-11-09)
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.h:
+          Added implementation of TAO-specific
+          get_object_group_ref_from_id() operation that delegates to
+          the underlying PortableGroup ObjectGroupManager
+          implementation.
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
+          Use "group_version" instead of "component_version".
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:
+          Implemented TAO-specific get_object_group_ref_from_id()
+          operation.
+          Also, changed "component_version" to "group_version".
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Utils.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.cpp:
+          Changed "component_version" to "group_version".
+
+        * orbsvcs/tests/FaultTolerance/IOGR/FaultTolerance_IOGR.mpc:
+          Added portablegroup and Messaging base projects.
+
+        * orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
+          Changed "version" to "group_version" and "ft_domain_id" to
+          "group_domain_id" to match names of members of
+          PortableGroup::TagGroupTaggedComponent IDL struct.
+
+        These changes were made in the oci_haft branch.
+
+Thu Oct  9 14:24:47 2003  Steve Totten  <totten_s@ociweb.com>
+
+        Applied the following changes on behalf of
+        Curt Hibbs <hibbs_c@ociweb.com>:
+
+        * orbsvcs/tests/FT_App/FT_UnitTests.cpp:
+        * orbsvcs/tests/FT_App/FT_UnitTests.h:
+          Made changes to use FT_ReplicaFactory to populate the FactoryInfos
+          for unit testing.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
+          Fixed a bug in validating properties when creating groups.
+
+        These changes were made in the oci_haft branch.
 
 Wed Oct  8 13:59:40 2003  Steve Totten  <totten_s@ociweb.com>
 
@@ -151,7 +234,6 @@ Tues Oct  7 08:44:52 2003  Dale Wilson  <wilson_d@ociweb.com>
           Respond to style issues raised during code review and Bala's @@ notes.
           Fix shutdown race condition that caused unit test failures.
 
-
         * orbsvcs/tests/FT_App/run_test_notifier.pl:
           Reduce the timeouts for processes that we "know" will be gone.
           It makes the test fail faster when something goes wrong.
@@ -161,7 +243,6 @@ Tues Oct  7 08:44:52 2003  Dale Wilson  <wilson_d@ociweb.com>
           Remove redundant comments.
 
         These changes were made in the oci_haft branch.
-
 
 Mon Oct  6 17:18:30 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -299,7 +380,6 @@ Mon Sep 29 18:55:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
           A new test for the feature mentioned below.
 
 Mon Sep 29 18:39:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
 
           A temporary hack for Boris to keep progressing. The aim of this
           hack in the branch is to add a propreietary interception
