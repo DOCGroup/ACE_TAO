@@ -1,8 +1,0 @@
-// $Id$
-
-// control.idl
-
-interface supplier_ctrl {
-  // start supplier
-  oneway void ctrl (in boolean flag, in short num_events);
-};
