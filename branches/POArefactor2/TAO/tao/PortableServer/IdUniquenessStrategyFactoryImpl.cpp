@@ -1,8 +1,8 @@
 // $Id$
 
 #include "IdUniquenessStrategyFactoryImpl.h"
-#include "IdUniquenessStrategyUnique.h"
-#include "IdUniquenessStrategyMultiple.h"
+#include "IdUniquenessStrategy.h"
+#include "ace/Dynamic_Service.h"
 
 ACE_RCSID (PortableServer,
            IdUniquenessStrategyFactoryImpl,
@@ -25,12 +25,34 @@ namespace TAO
       {
         case ::PortableServer::MULTIPLE_ID :
         {
-          ACE_NEW_RETURN (strategy, IdUniquenessStrategyMultiple, 0);
+          strategy =
+            ACE_Dynamic_Service<IdUniquenessStrategy>::instance ("IdUniquenessStrategyMultiple");
+
+          if (strategy == 0)
+            {
+              ACE_Service_Config::process_directive (
+                ACE_TEXT("dynamic IdUniquenessStrategyMultiple Service_Object *")
+                ACE_TEXT("TAO_PortableServer:_make_IdUniquenessStrategyMultiple()"));
+
+              strategy =
+                ACE_Dynamic_Service<IdUniquenessStrategy>::instance ("IdUniquenessStrategyMultiple");
+            }
           break;
         }
         case ::PortableServer::UNIQUE_ID :
         {
-          ACE_NEW_RETURN (strategy, IdUniquenessStrategyUnique, 0);
+          strategy =
+            ACE_Dynamic_Service<IdUniquenessStrategy>::instance ("IdUniquenessStrategyUnique");
+
+          if (strategy == 0)
+            {
+              ACE_Service_Config::process_directive (
+                ACE_TEXT("dynamic IdUniquenessStrategyUnique Service_Object *")
+                ACE_TEXT("TAO_PortableServer:_make_IdUniquenessStrategyUnique()"));
+
+              strategy =
+                ACE_Dynamic_Service<IdUniquenessStrategy>::instance ("IdUniquenessStrategyUnique");
+            }
           break;
         }
       }
@@ -50,13 +72,9 @@ namespace TAO
     ACE_FACTORY_DEFINE (TAO_PortableServer, IdUniquenessStrategyFactoryImpl)
 
     #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
     template class ACE_Dynamic_Service<IdUniquenessStrategyFactoryImpl>;
-
     #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
     #pragma instantiate ACE_Dynamic_Service<IdUniquenessStrategyFactoryImpl>
-
     #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
   }
 }

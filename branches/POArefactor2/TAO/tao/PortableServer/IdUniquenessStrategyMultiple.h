@@ -16,6 +16,7 @@
 
 #include "portableserver_export.h"
 #include "IdUniquenessStrategy.h"
+#include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -41,6 +42,9 @@ namespace TAO
 
       virtual bool allow_multiple_activations (void) const;
     };
+
+    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, IdUniquenessStrategyMultiple)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, IdUniquenessStrategyMultiple)
   }
 }
 

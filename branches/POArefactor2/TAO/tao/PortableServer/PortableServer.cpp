@@ -47,6 +47,9 @@
 #include "tao/PortableServer/IdUniquenessPolicyValueMultiple.h"
 #include "tao/PortableServer/IdUniquenessPolicyValueUnique.h"
 
+#include "tao/PortableServer/IdUniquenessStrategyMultiple.h"
+#include "tao/PortableServer/IdUniquenessStrategyUnique.h"
+
 #include "tao/PortableServer/ImplicitActivationPolicyValueExplicit.h"
 #include "tao/PortableServer/ImplicitActivationPolicyValueImplicit.h"
 
@@ -160,6 +163,14 @@ TAO_POA_Initializer::init (void)
 
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_IdUniquenessPolicyValueUnique
+    );
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_IdUniquenessStrategyMultiple
+    );
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_IdUniquenessStrategyUnique
     );
 
 #if (TAO_HAS_MINIMUM_POA == 0)

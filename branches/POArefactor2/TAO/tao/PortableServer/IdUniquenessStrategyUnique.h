@@ -16,6 +16,7 @@
 
 #include "portableserver_export.h"
 #include "IdUniquenessStrategy.h"
+#include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,7 +30,6 @@ namespace TAO
       : public virtual IdUniquenessStrategy
     {
     public:
-
       IdUniquenessStrategyUnique (void);
 
       virtual ~IdUniquenessStrategyUnique (void);
@@ -47,6 +47,9 @@ namespace TAO
     private:
       TAO_POA* poa_;
     };
+
+    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, IdUniquenessStrategyUnique)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, IdUniquenessStrategyUnique)
   }
 }
 
