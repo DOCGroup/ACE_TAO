@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project (CIAO_Client) : taolib_with_idl, valuetype, ifr_client, ciaoversion {
+project (CIAO_Client) : taolib_with_idl, valuetype, ifr_client {
   sharedname  = CIAO_Client
   idlflags  += -Sc -Wb,stub_export_include=CIAO_Client_Export.h -Wb,stub_export_macro=CIAO_CLIENT_Export -Wb,skel_export_include=CIAO_Container_Export.h -Wb,skel_export_macro=CIAO_CONTAINER_Export
   dynamicflags    = CIAO_CLIENT_BUILD_DLL

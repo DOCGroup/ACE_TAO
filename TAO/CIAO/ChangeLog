@@ -1,3 +1,12 @@
+Tue Feb  1 13:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/CCM_Core.mpc:
+        * DAnCE/ciao/CCM_Core.mpc:
+          Removed ciaoversion as base project. This will be removed because it
+          results in the fact that each generated GNU makefile will get the
+          version number generated. We want that the GNU make rules get the
+          version number from Version.h
+
 Mon Jan 31 21:00:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* CIDLC/ServantSourceGenerator.cpp (pre):

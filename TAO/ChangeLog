@@ -1,3 +1,15 @@
+Tue Feb  1 13:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/FlResource.mpc:
+        * tao/QtResource.mpc:
+        * tao/tao.mpc:
+        * tao/TkResource.mpc:
+        * tao/XtResource.mpc:
+          Removed taoversion as base project. This will be removed because it
+          results in the fact that each generated GNU makefile will get the
+          version number generated. We want that the GNU make rules get the
+          version number from Version.h
+
 Tue Feb  1 13:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/diffs/IOP.diff:

@@ -1,10 +1,10 @@
 // -*- MPC -*-
 // $Id$
 
-project: acedefaults, aceversion, pkgconfig {
+project: acedefaults, pkgconfig {
   after    += ACE
   libs     += ACE
-  libout    = $(ACE_ROOT)/lib 
+  libout    = $(ACE_ROOT)/lib
 
   specific(automake) {
     libout -= $(ACE_ROOT)/lib
