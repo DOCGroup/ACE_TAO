@@ -50,7 +50,11 @@ static const char usage [] =
 "                 [-p to suppress prioritization of operations]]\n";
 
 DualEC_Supplier::DualEC_Supplier (int argc, char** argv)
-: sched_hi_impl_ (0),
+: channel_hi_name_ (1),
+  channel_lo_name_ (1),
+  sched_hi_name_ (1),
+  sched_lo_name_ (1),
+  sched_hi_impl_ (0),
   sched_lo_impl_ (0),
   ec_hi_impl_ (0),
   ec_lo_impl_ (0),
@@ -71,6 +75,22 @@ DualEC_Supplier::DualEC_Supplier (int argc, char** argv)
 {
   TAO_TRY
     {
+      this->sched_hi_name_.length (1);
+      this->sched_hi_name_[0].id = CORBA::string_dup ("DUAL_SCHED_HI");
+      TAO_CHECK_ENV;
+
+      this->sched_lo_name_.length (1);
+      this->sched_lo_name_[0].id = CORBA::string_dup ("DUAL_SCHED_LO");
+      TAO_CHECK_ENV;
+
+      this->channel_hi_name_.length (1);
+      this->channel_hi_name_[0].id = CORBA::string_dup ("DUAL_EC_HI");
+      TAO_CHECK_ENV;
+
+      this->channel_lo_name_.length (1);
+      this->channel_lo_name_[0].id = CORBA::string_dup ("DUAL_EC_LO");
+      TAO_CHECK_ENV;
+
       this->terminator_ = terminator_impl_._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
@@ -108,11 +128,31 @@ DualEC_Supplier::DualEC_Supplier (int argc, char** argv)
 
 DualEC_Supplier::~DualEC_Supplier ()
 {
-  this->dOVE_Supplier_Hi_.disconnect ();
-  this->dOVE_Supplier_Lo_.disconnect ();
+  TAO_TRY
+    {
+      this->dOVE_Supplier_Hi_.disconnect ();
+      this->dOVE_Supplier_Lo_.disconnect ();
 
-  // CDG - TBD - unregister the ECs from the NS
-  // CDG - TBD - destroy the ECs
+      // Unbind the schedulers from the NS.
+      this->naming_context_->unbind (this->sched_hi_name_, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      this->naming_context_->unbind (this->sched_lo_name_, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      // Unbind the ECs from the NS.
+      this->naming_context_->unbind (this->channel_hi_name_, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      this->naming_context_->unbind (this->channel_lo_name_, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("DualEC_Supplier::~DualEC_Supplier");
+    }
+  TAO_ENDTRY;
+
+  // @@TBD - destroy the ECs
+  // @@TBD - destroy the schedulers
 }
 
 int
@@ -271,6 +311,8 @@ DualEC_Supplier::run_nav_thread (void *arg)
           {
             any.replace (_tc_Navigation, *nav, 0, TAO_TRY_ENV);
 
+            // Sleep briefly to avoid too much livelock (a little is good). 
+            ACE_OS::sleep (sup->nav_pause_);
 
             sup->navigation_Supplier->notify (any);
           }
@@ -339,6 +381,8 @@ DualEC_Supplier::run_weap_thread (void *arg)
           {
             any.replace (_tc_Weapons, *weap, 0, TAO_TRY_ENV);
 
+            // Sleep briefly to avoid too much livelock (a little is good). 
+            ACE_OS::sleep (sup->weap_pause_);
 
             sup->weapons_Supplier->notify (any);
           }
@@ -381,7 +425,7 @@ DualEC_Supplier::run_weap_thread (void *arg)
 int
 DualEC_Supplier::create_schedulers (void)
 {
-  // CDG - TBD - look at a command line modified setting,
+  // @@TBD - look at a command line modified setting,
   // create either a runtime or a config scheduler for 
   // each instance
 
@@ -414,16 +458,12 @@ DualEC_Supplier::create_schedulers (void)
 
           // Register Scheduling Service Implementations with Naming Service
 
-          CosNaming::Name sched_hi_name (1);
-          sched_hi_name.length (1);
-          sched_hi_name[0].id = CORBA::string_dup ("DUAL_SCHED_HI");
-          naming_context_->bind (sched_hi_name, sched_hi_.in (), TAO_TRY_ENV);
+          this->naming_context_->bind (this ->sched_hi_name_, 
+                                       this->sched_hi_.in (), TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
-          CosNaming::Name sched_lo_name (1);
-          sched_lo_name.length (1);
-          sched_lo_name[0].id = CORBA::string_dup ("DUAL_SCHED_LO");
-          naming_context_->bind (sched_lo_name, sched_lo_.in (), TAO_TRY_ENV);
+          naming_context_->bind (this->sched_lo_name_, 
+                                 this->sched_lo_.in (), TAO_TRY_ENV);
           TAO_CHECK_ENV;
         }
     }
@@ -470,16 +510,12 @@ DualEC_Supplier::create_event_channels (void)
 
       // Register Event Service Implementations with Naming Service
 
-      CosNaming::Name channel_hi_name (1);
-      channel_hi_name.length (1);
-      channel_hi_name[0].id = CORBA::string_dup ("DUAL_EC_HI");
-      naming_context_->bind (channel_hi_name, ec_hi_.in (), TAO_TRY_ENV);
+      naming_context_->bind (this->channel_hi_name_, 
+                             this->ec_hi_.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      CosNaming::Name channel_lo_name (1);
-      channel_lo_name.length (1);
-      channel_lo_name[0].id = CORBA::string_dup ("DUAL_EC_LO");
-      naming_context_->bind (channel_lo_name, ec_lo_.in (), TAO_TRY_ENV);
+      naming_context_->bind (this->channel_lo_name_, 
+		                     this->ec_lo_.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
   }
@@ -596,7 +632,15 @@ DualEC_Supplier::start_generating_events (void)
       this->compute_schedules ();
 
       // Load the scheduling data for the simulation.
-      this->load_schedule_data (this->schedule_data_);
+      this->load_schedule_data ();
+
+      // Sleep for 15 seconds to give time for registrations.
+      ACE_DEBUG ((LM_DEBUG,
+		          "DUAL_SCHED_HI, DUAL_SCHED_LO, DUAL_EC_HI and "
+                  "DUAL_EC_LO are registered with the Naming Service.\n"
+                  "Sleeping 15 seconds before generating events"));
+      ACE_Time_Value tv (15, 0);
+      ACE_OS::sleep (tv);
 
       // Spawn thread to run over the navigation data and generate events.
       ACE_Thread_Manager event_thread_manager;
@@ -701,8 +745,8 @@ DualEC_Supplier::load_schedule_data ()
                     }
 
  
-                  if ((strcmp((*sched_data)->operation_name, "high_20") == 0) ||
-                      (strcmp((*sched_data)->operation_name, "low_20") == 0))
+                  if ((strcmp(data.operation_name, "high_20") == 0) ||
+                      (strcmp(data.operation_name, "low_20") == 0))
                     {
                       ACE_NEW (weap, Weapons);
                       if (weap == 0)
@@ -758,7 +802,7 @@ DualEC_Supplier::load_schedule_data ()
                       nav->position_longitude = ACE_OS::rand() % 180;
                       nav->altitude = ACE_OS::rand() % 100;
                       nav->heading = ACE_OS::rand() % 180;
-                      this nav_roll_ = (this->nav_roll_ >= 180) ? -180 : this->nav_roll_ + 1;
+                      this->nav_roll_ = (this->nav_roll_ >= 180) ? -180 : this->nav_roll_ + 1;
                       nav->roll = this->nav_roll_;
                       this->nav_pitch_ =  (this->nav_pitch_ >= 90) ? -90 : this->nav_pitch_ + 1;
                       nav->pitch = this->nav_pitch_;
@@ -786,7 +830,6 @@ DualEC_Supplier::load_schedule_data ()
           return;
         }
     }
-  }
 }
 
 
@@ -795,7 +838,7 @@ DualEC_Supplier::load_schedule_data ()
 unsigned int
 DualEC_Supplier::get_options (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "f:m:t:dsrp");
+  ACE_Get_Opt get_opt (argc, argv, "f:m:n:w:dsrp");
   int opt;
   int temp;
 
@@ -830,6 +873,41 @@ DualEC_Supplier::get_options (int argc, char *argv [])
           else
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%s: message count must be > 0",
+                               argv[0]),
+                               1);
+          break;
+
+        case 'n':
+          temp = ACE_OS::atoi (get_opt.optarg);
+          if (temp >= 0)
+            {
+              this->nav_pause_ = 
+                ACE_Time_Value(0, ACE_static_cast (long, temp));
+              ACE_DEBUG ((LM_DEBUG,
+                          "Navigation pause: %d usec\n",
+                          temp));
+            }
+          else
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "%s: navigation pause must be >= 0",
+                               argv[0]),
+                               1);
+          break;
+
+
+        case 'w':
+          temp = ACE_OS::atoi (get_opt.optarg);
+          if (temp >= 0)
+            {
+              this->weap_pause_ = 
+                ACE_Time_Value(0, ACE_static_cast (long, temp));
+              ACE_DEBUG ((LM_DEBUG,
+                          "Weapons pause: %d usec\n",
+                          temp));
+            }
+          else
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "%s: weapons pause must be >= 0",
                                argv[0]),
                                1);
           break;

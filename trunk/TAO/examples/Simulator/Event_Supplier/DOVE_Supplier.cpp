@@ -337,12 +337,13 @@ DOVE_Supplier::connect_Supplier (ACE_Scheduler_Factory::POD_RT_Info * rt_info)
   }
   TAO_CATCHANY
   {
-    TAO_TRY_ENV.print_exception ("DOVE_Supplier::open");
+    TAO_TRY_ENV.print_exception ("DOVE_Supplier::connect_supplier");
     return -1;
   }
   TAO_ENDTRY;
 
   return 0;
+
 }
 
 

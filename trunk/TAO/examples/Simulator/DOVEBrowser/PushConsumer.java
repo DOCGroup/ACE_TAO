@@ -46,11 +46,17 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
   private RtecEventChannelAdmin.ConsumerAdmin consumer_admin_;
   private RtecEventChannelAdmin.ProxyPushSupplier suppliers_;
 
-  public PushConsumer (org.omg.CORBA.ORB orb, DataHandler dataHandler)
+  public PushConsumer (org.omg.CORBA.ORB orb, 
+                       DataHandler dataHandler,
+                       boolean use_queueing)
     {
       orb_ = orb;
-      dataHandlerAdapter_ = new MTDataHandlerAdapter (dataHandler);
-      dataHandlerAdapter_.start ();
+      dataHandlerAdapter_ = 
+        new MTDataHandlerAdapter (dataHandler, use_queueing);
+      if (use_queueing)
+        {
+          dataHandlerAdapter_.start ();
+        }
     }
 
 

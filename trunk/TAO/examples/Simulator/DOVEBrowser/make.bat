@@ -85,6 +85,7 @@ javac *.java
 @del Weapons.java
 @del WeaponsHelper.java
 @del WeaponsHolder.java
+@del NavWeapTerminator*.java
 @del Navigation.java
 @del NavigationHelper.java
 @del NavigationHolder.java
