@@ -71,8 +71,6 @@ static const char file_prefix[] = "file://";
 // Count of the number of ORBs.
 int CORBA_ORB::orb_init_count_ = 0;
 
-// ****************************************************************
-
 CORBA::Boolean
 operator<< (TAO_OutputCDR &strm,
             const CORBA::ORB::InvalidName &_tao_aggregate)
@@ -141,8 +139,6 @@ CORBA::Exception *CORBA::ORB::InvalidName::_alloc (void)
 {
   return new CORBA::ORB::InvalidName;
 }
-
-// ****************************************************************
 
 CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
   : refcount_ (1),
@@ -656,7 +652,7 @@ CORBA_ORB::resolve_implrepo_service (ACE_Time_Value *timeout,
 }
 
 int
-CORBA_ORB::multicast_query (char* &buf,
+CORBA_ORB::multicast_query (char *&buf,
                             const char *service_name,
                             u_short port,
                             ACE_Time_Value *timeout)
@@ -760,7 +756,7 @@ CORBA_ORB::multicast_query (char* &buf,
                   // IOR length.
                   CORBA::Short ior_len;
                   result = stream.recv_n (&ior_len,
-                                          sizeof (ior_len),
+                                          sizeof ior_len,
                                           0,
                                           &tv);
                   if (result != sizeof (ior_len))
@@ -775,7 +771,7 @@ CORBA_ORB::multicast_query (char* &buf,
                       // Allocate more space for the ior if we don't
                       // have enough.
                       ior_len = ACE_NTOHS (ior_len);
-                      if (ior_len > 2*BUFSIZ)
+                      if (ior_len > TAO_DEFAULT_IOR_SIZE)
                         {
                           buf = CORBA::string_alloc (ior_len);
                           if (buf == 0)
@@ -798,14 +794,11 @@ CORBA_ORB::multicast_query (char* &buf,
                             ACE_ERROR ((LM_ERROR,
                                         "%p\n",
                                         "error reading ior"));
-                          else
-                            {
-                              if (TAO_debug_level > 0)
-                                ACE_DEBUG ((LM_DEBUG,
-                                            "%s: service resolved to IOR <%s>\n",
-                                            __FILE__,
-                                            buf));
-                            }
+                          else if (TAO_debug_level > 0)
+                            ACE_DEBUG ((LM_DEBUG,
+                                        "%s: service resolved to IOR <%s>\n",
+                                        __FILE__,
+                                        buf));
                         }
                     }
                 }
@@ -829,12 +822,12 @@ CORBA_ORB::multicast_query (char* &buf,
 //    and we return NULL.
 
 CORBA_Object_ptr
-CORBA_ORB::multicast_to_service (const char * service_name,
+CORBA_ORB::multicast_to_service (const char *service_name,
                                  u_short port,
                                  ACE_Time_Value *timeout,
                                  CORBA::Environment& ACE_TRY_ENV)
 {
-  char buf[2*BUFSIZ];
+  char buf[TAO_DEFAULT_IOR_SIZE];
   char *ior = buf;
   CORBA::String_var cleaner;
 
@@ -1407,7 +1400,6 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
       // XXX there should be a simple way to reuse this code in other
       // ORB implementations ...
 
-      // @@ Is BUFSIZ the right size here?
       char buf [ACE_CDR::DEFAULT_BUFSIZE];
 #if defined(ACE_HAS_PURIFY)
       (void) ACE_OS::memset (buf, '\0', sizeof(buf));
