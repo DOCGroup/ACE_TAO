@@ -350,7 +350,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
 {
   ACE_TRACE ("ACE::get_bcast_addr");
 
-#if !defined(ACE_WIN32)
+#if !defined(ACE_WIN32) && !defined(__INTERIX)
   ACE_HANDLE s = handle;
 
   if (s == ACE_INVALID_HANDLE)
@@ -523,7 +523,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
   ACE_UNUSED_ARG (host_name);
   bcast_addr = (ACE_UINT32 (INADDR_BROADCAST));
   return 0;
-#endif /* !ACE_WIN32 */
+#endif /* !ACE_WIN32 && !__INTERIX */
 }
 
 // return an array of all configured IP interfaces on this host, count

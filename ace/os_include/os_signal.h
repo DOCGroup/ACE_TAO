@@ -40,7 +40,7 @@
 
 #if defined (ACE_HAS_SIGINFO_T)
 #  if !defined (ACE_LACKS_SIGINFO_H)
-#    if defined (__QNX__) || defined (__OpenBSD__)
+#    if defined (__QNX__) || defined (__OpenBSD__) || defined (__INTERIX)
 #      include /**/ <sys/siginfo.h>
 #    else  /* __QNX__ || __OpenBSD__ */
 #      include /**/ <siginfo.h>
@@ -66,13 +66,11 @@ extern "C"
 #endif /* __cplusplus */
 
 #if defined (ACE_SIGINFO_IS_SIGINFO_T)
-   typedef struct siginfo siginfo_t;
+  typedef struct siginfo siginfo_t;
 #endif /* ACE_LACKS_SIGINFO_H */
 
 #if defined (ACE_LACKS_SIGSET)
-#  if !defined(__MINGW32__)
-     typedef u_int sigset_t;
-#  endif /* !__MINGW32__*/
+  typedef u_int sigset_t;
 #endif /* ACE_LACKS_SIGSET */
 
 #if defined (ACE_HAS_SIG_MACROS)

@@ -117,7 +117,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
                           sizeof one) == -1)
     return -1;
 
-#if !defined (ACE_WIN32)
+#if !defined (ACE_WIN32) && !defined(__INTERIX)
   ACE_HANDLE s = this->get_handle ();
 
   char buf[BUFSIZ];
@@ -278,7 +278,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
                   ACE_Bcast_Node (addr,
                                   this->if_list_),
                   -1);
-#endif /* !ACE_WIN32 */
+#endif /* !ACE_WIN32 && !__INTERIX */
   if (this->if_list_ == 0)
     {
       errno = ENXIO;
