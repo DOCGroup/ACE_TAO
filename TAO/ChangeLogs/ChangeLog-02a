@@ -1,3 +1,7 @@
+Sun Jan 13 09:35:31 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* TAOACE_Static.dsw (Project): Added FT_ORB.dsp.
+
 Sun Jan 13 09:03:25 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* tests/Two_Objects/worker.h: 
