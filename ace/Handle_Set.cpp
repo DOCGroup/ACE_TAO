@@ -144,6 +144,18 @@ ACE_Handle_Set::bitpos (u_long bit)
 
 // Synchronize the underlying FD_SET with the MAX_FD and the SIZE.
 
+#if defined(ACE_USE_SHIFT_FOR_EFFICIENCY)
+// These don't work because shifting right 3 bits is not the same as
+// dividing by 3, e.g., dividing by 8 requires shifting right 3 bits.
+// In order to do the shift, we need to calculate the number of bits
+// at some point.
+#define ACE_DIV_BY_WORDSIZE(x) ( (x) >> (ACE_Handle_Set::WORDSIZE) )
+#define ACE_MULT_BY_WORDSIZE(x) ( (x) << (ACE_Handle_Set::WORDSIZE) )
+#else
+#define ACE_DIV_BY_WORDSIZE(x) ( (x) / (ACE_Handle_Set::WORDSIZE) )
+#define ACE_MULT_BY_WORDSIZE(x) ( (x) * (ACE_Handle_Set::WORDSIZE) )
+#endif /* ACE_USE_SHIFT_FOR_DIVIDE */
+
 void
 ACE_Handle_Set::sync (ACE_HANDLE max)
 {
@@ -151,7 +163,7 @@ ACE_Handle_Set::sync (ACE_HANDLE max)
 #if !defined (ACE_WIN32)
   this->size_ = 0;
 
-  for (int i = (max - 1) / ACE_Handle_Set::WORDSIZE; 
+  for (int i = ACE_DIV_BY_WORDSIZE(max - 1);
        i >= 0; 
        i--)
     this->size_ += ACE_Handle_Set::count_bits (this->mask_.fds_bits[i]);
@@ -175,20 +187,20 @@ ACE_Handle_Set::set_max (ACE_HANDLE current_max)
     {
       int i;
 
-      for (i = (current_max - 1) / ACE_Handle_Set::WORDSIZE;
+      for (i = ACE_DIV_BY_WORDSIZE(current_max - 1);
 	   this->mask_.fds_bits[i] == 0; 
 	   i--)
 	continue;
 
 #if 1 /* !defined(ACE_HAS_BIG_FD_SET) */
-      this->max_handle_ = i * ACE_Handle_Set::WORDSIZE;
+      this->max_handle_ = ACE_MULT_BY_WORDSIZE(i);
       for (fd_mask val = this->mask_.fds_bits[i]; 
 	   (val & ~1) != 0; // This obscure code is needed since "bit 0" is in location 1...
 	   val = (val >> 1) & ACE_MSB_MASK)
 	this->max_handle_++;
 #else
       register u_long val = this->mask_.fds_bits[i];
-      this->max_handle_ = i * ACE_Handle_Set::WORDSIZE
+      this->max_handle_ = ACE_MULT_BY_WORDSIZE(i)
 	+ ACE_Handle_Set::bitpos(val & ~(val - 1));
 #endif /* 1 */
     }
@@ -256,7 +268,7 @@ ACE_Handle_Set_Iterator::operator () (void)
 	  // and then loop until we've found the first non-zero bit or
 	  // we run past the <maxhandlep1> of the bitset.
 
-	  for (this->handle_index_ = ++this->word_num_ * ACE_Handle_Set::WORDSIZE;
+	  for (this->handle_index_ = ACE_MULT_BY_WORDSIZE(++this->word_num_);
 	       this->handle_index_ < maxhandlep1
 		 && this->handles_.mask_.fds_bits[this->word_num_] == 0;
 	       this->word_num_++)
@@ -306,7 +318,7 @@ ACE_Handle_Set_Iterator::operator () (void)
        while (lsb == 0);
 
        // Set index to word boundary.
-       this->handle_index_ = this->word_num_ * ACE_Handle_Set::WORDSIZE;
+       this->handle_index_ = ACE_MULT_BY_WORDSIZE(this->word_num_);
 
        // Put new word_val.
        this->word_val_ = lsb;
@@ -365,7 +377,7 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs)
 #elif defined (ACE_HAS_BIG_FD_SET)
     oldlsb_ (0),
     word_max_ (hs.max_handle_ == ACE_INVALID_HANDLE 
-	       ? 0 : ((hs.max_handle_ / ACE_Handle_Set::WORDSIZE) + 1))
+	       ? 0 : ((ACE_DIV_BY_WORDSIZE(hs.max_handle_)) + 1))
 #endif /* ACE_HAS_BIG_FD_SET */
 {
   ACE_TRACE ("ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator");
@@ -402,7 +414,7 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs)
       }
     else
       {
-	this->word_num_ = this->handles_.min_handle_ / ACE_Handle_Set::WORDSIZE - 1;
+	this->word_num_ = ACE_DIV_BY_WORDSIZE(this->handles_.min_handle_) - 1;
 	this->word_val_ = 0;
       }
 #endif /* !ACE_WIN32 && !ACE_HAS_BIG_FD_SET */

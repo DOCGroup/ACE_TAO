@@ -23,3 +23,11 @@ ACE_Object_Manager::at_exit (void *object,
     cleanup_hook,
     param);
 }
+
+ACE_INLINE
+ACE_Sig_Set &
+ACE_Object_Manager::default_mask (void)
+{
+  return *ACE_Object_Manager::default_mask_p_;
+}
+
