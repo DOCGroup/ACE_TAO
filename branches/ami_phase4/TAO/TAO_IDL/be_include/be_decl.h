@@ -63,37 +63,36 @@ public:
   virtual SIZE_TYPE size_type (void);
   // return our size type
 
-  const char *fullname (void);
+  const char *full_name (void);
   // return the stringified full name
 
-  const char *ami_handler_fullname (void);
-  // return the stringified full name of the assosciated AMI reply handler.
-
-  const char *flatname (void);
+  const char *flat_name (void);
   // return the flattened full scoped name.
-
-  const char *ami_handler_flatname (void);
-  // return the flattened full scoped name of the assosciated AMI reply handler.
-
-  char* compute_flatname (const char *prefix, const char *suffix);
-  // Both the arguments should be non-null!!!. Applies prefix and
-  // suffix to the local name and makes a flat name.
 
   const char *repoID (void);
   // retrieve the repository ID.
 
-  const char *ami_handler_repoID (void);
-  // retrieve the repository ID of the assosciated AMI reply handler.
+  // Methods used by the interface type strategy
+  void compute_full_name  (const char *prefix, 
+                           const char *suffix,
+                           char *&name);
+  // Both the arguments should be non-null!!!. Applies prefix and
+  // suffix to the local name and makes a flat name.
 
-  char *compute_repoID (const char *prefix, const char *suffix);
+  void compute_flat_name (const char *prefix, 
+                         const char *suffix,
+                         char *& name);
+  // Both the arguments should be non-null!!!. Applies prefix and
+  // suffix to the local name and makes a flat name.
+
+
+  void compute_repoID (const char *prefix, 
+                       const char *suffix,
+                       char *& name);
   // Apply the prefix and suffix to the local name and compute the
   // repoID.  Both the parameters should be non-null.
 
-  int compute_ami_handler_name (const char *name,
-                                char *&ami_handler_name);
-  // Computes the name of the corresponding AMI handler out of a
-  // given name. The name might contain POA_ at the beginning
-  // and might possibly have many scope levels.
+  // End of Methods use by the interface type strategy
 
   const char* prefix (void);
   // retrieve the repository ID prefix
@@ -150,12 +149,11 @@ protected:
   virtual int compute_size_type (void);
   // determine our size type and set it if it is unknown
 
-  virtual void compute_fullname (void);
+  virtual void compute_full_name (void);
   // computes the fully scoped name
 
-  virtual void compute_flatname (void);
+  virtual void compute_flat_name (void);
   // compute the flattened fully scoped name
-
 
   virtual void compute_repoID (void);
   // computes the repoID
@@ -179,23 +177,14 @@ protected:
   idl_bool cli_stub_cdr_op_gen_;
   idl_bool cli_inline_cdr_op_gen_;
 
-  char *fullname_;
+  char *full_name_;
   // our full scoped name
 
-  char *ami_handler_fullname_;
-  // our full scoped name of the associated AMI reply handler
-
-  char *flatname_;
+  char *flat_name_;
   // flattened fully scoped name
-
-  char *ami_handler_flatname_;
-  // flattened fully scoped name of the associated AMI reply handler
 
   char *repoID_;
   // repository ID
-
-  char *ami_handler_repoID_;
-  // repository ID of the associated AMI reply handler
 
   char *prefix_;
   // The repository ID prefix

@@ -1,3 +1,119 @@
+Sat Jul  10 15:30:00 1999  Michael Kircher  <mk1@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_ch.cpp
+	* TAO_IDL/be_include/be_visitor_operation/ami_handler_thru_poa_collocated_ch.h:
+	  Added these files to generate AMI Reply Handler code.
+
+	* TAO_IDL/be/be_decl.cpp * TAO_IDL/be/be_helper.cpp * TAO_IDL/be/be_interface.cpp 
+	* TAO_IDL/be/be_interface_fwd.cpp 
+	* TAO_IDL/be/be_predefined_type.cpp 
+	* TAO_IDL/be/be_sequence.cpp
+	* TAO_IDL/be/be_structure.cpp * TAO_IDL/be/be_type.cpp 
+	* TAO_IDL/be/be_union.cpp 
+	* TAO_IDL/be/be_union_branch.cpp 
+	* TAO_IDL/be/be_valuetype.cpp
+	* TAO_IDL/be/be_valuetype_fwd.cpp
+	* TAO_IDL/be/be_visitor_factory.cpp
+	* TAO_IDL/be/be_visitor_interface.cpp
+	* TAO_IDL/be/be_visitor_operation.cpp
+	* TAO_IDL/be/be_visitor_rettype.cpp
+	* TAO_IDL/be/be_visitor_scope.cpp
+	* TAO_IDL/be/be_visitor_argument/argument.cpp
+	* TAO_IDL/be/be_visitor_array/array_ch.cpp
+	* TAO_IDL/be/be_visitor_array/array_ci.cpp
+	* TAO_IDL/be/be_visitor_array/array_cs.cpp
+	* TAO_IDL/be/be_visitor_array/cdr_op_ch.cpp
+	* TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp
+	* TAO_IDL/be/be_visitor_exception/ctor_assign.cpp
+	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp
+	* TAO_IDL/be/be_visitor_exception/exception_ctor.cpp
+	* TAO_IDL/be/be_visitor_field/cdr_op_ci.cpp
+	* TAO_IDL/be/be_visitor_interface/ami_handler_cs.cpp
+	* TAO_IDL/be/be_visitor_interface/ami_handler_fwd_ch.cpp
+	* TAO_IDL/be/be_visitor_interface/ami_handler_fwd_ci.cpp
+	* TAO_IDL/be/be_visitor_interface/ami_handler_servant_ch.cpp
+	* TAO_IDL/be/be_visitor_interface/ami_handler_servant_cs.cpp
+	* TAO_IDL/be/be_visitor_interface/ami_handler_stub_ch.cpp
+	* TAO_IDL/be/be_visitor_interface/ami_handler_stub_cs.cpp
+	* TAO_IDL/be/be_visitor_interface/any_op_ch.cpp
+	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp
+	* TAO_IDL/be/be_visitor_interface/collocated_ami_handler_ch.cpp
+	* TAO_IDL/be/be_visitor_interface/direct_collocated_sh.cpp
+	* TAO_IDL/be/be_visitor_interface/direct_collocated_ss.cpp
+	* TAO_IDL/be/be_visitor_interface/interface.cpp
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp
+	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp
+	* TAO_IDL/be/be_visitor_interface/interface_ih.cpp
+	* TAO_IDL/be/be_visitor_interface/interface_is.cpp
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+	* TAO_IDL/be/be_visitor_interface/thru_poa_collocated_sh.cpp
+	* TAO_IDL/be/be_visitor_interface/thru_poa_collocated_ss.cpp
+	* TAO_IDL/be/be_visitor_interface/tie_sh.cpp
+	* TAO_IDL/be/be_visitor_interface/tie_si.cpp
+	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ch.cpp
+	* TAO_IDL/be/be_visitor_operation/ami_arglist.cpp
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp
+	* TAO_IDL/be/be_visitor_operation/ami_handler_operation_ch.cpp
+	* TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.cpp
+	* TAO_IDL/be/be_visitor_operation/argument.cpp
+	* TAO_IDL/be/be_visitor_operation/argument_marshal.cpp
+	* TAO_IDL/be/be_visitor_operation/exceptlist_cs.cpp
+	* TAO_IDL/be/be_visitor_operation/operation_ami_cs.cpp
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp
+	* TAO_IDL/be/be_visitor_operation/operation_is.cpp
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_cs.cpp
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_cs.cpp
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp
+	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp
+	* TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp
+	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp
+	* TAO_IDL/be/be_visitor_union/cdr_op_ci.cpp
+	* TAO_IDL/be/be_visitor_union/union_ch.cpp
+	* TAO_IDL/be/be_visitor_union/union_ci.cpp
+	* TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp
+	* TAO_IDL/be/be_visitor_union_branch/public_access_cs.cpp
+	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp
+	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp
+	* TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp
+	* TAO_IDL/be/be_visitor_valuetype/field_cdr_ci.cpp
+	* TAO_IDL/be/be_visitor_valuetype/field_cs.cpp
+	* TAO_IDL/be/be_visitor_valuetype/marshal_cs.cpp
+	* TAO_IDL/be/be_visitor_valuetype/valuetype.cpp
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp
+	* TAO_IDL/be/be_visitor_valuetype_fwd/interface_fwd_ch.cpp
+	* TAO_IDL/be/be_visitor_valuetype_fwd/interface_fwd_ci.cpp
+	* TAO_IDL/be_include/be_codegen.h
+	* TAO_IDL/be_include/be_decl.h
+	* TAO_IDL/be_include/be_helper.h
+	* TAO_IDL/be_include/be_interface.h
+	* TAO_IDL/be_include/be_visitor_interface.h
+	* TAO_IDL/be_include/be_visitor_operation.h:
+	  Edited all the files to generate AMI Handler code, I also 
+	  changed "fullname ()" methods to "full_name ()" to 
+	  be more consistent. The code generation for AMI
+	  Handlers uses a strategy on the be_interface node.
+	  This strategy hides all the differences betwenn
+	  the name generations.
+
+	* tao/PollableC.cpp:
+	  Fixed the the usage of env instead of ACE_TRY_ENV.
+
+
 Fri Jul  9 19:12:14 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/UIOP_Acceptor.{h,cpp} (open_i, rendezvous_point):
