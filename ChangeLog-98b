@@ -1,3 +1,12 @@
+Fri May  8 03:43:25 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.{h,cpp}: Added yet one more member variable
+	  into Thread_Descriptor to keep track of registration of
+	  Thread_Descriptors.  By adding this variable, we can avoid an
+	  extra locking in remove_thr for most cases (normal cases ;-).
+	  Thanks to the inspiration from Arturo Montes
+	  <mitosys@colomsat.net.co>.
+
 Thu May 07 22:06:13 1998  Ben Eng  <ben@jetpen.com>
 
         * ace/config-kcc-common.h,config-linux-{common,kcc}.h: updated
