@@ -4,9 +4,9 @@
 // The following configuration file is designed to work for Interix
 // platforms using GNU g++ (Interix == Microsoft's Services for Unix)
 
-#ifndef ACE_CONFIG_H
-#define ACE_CONFIG_H
-#include "ace/pre.h"
+#ifndef ACE_CONFIG_WIN32_INTERIX_H
+#define ACE_CONFIG_WIN32_INTERIX_H
+#include /**/ "ace/pre.h"
 #include <arpa/inet.h>
 
 # define ACE_LACKS_SENDMSG
@@ -101,8 +101,8 @@
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE    // We need thread specific storage even though...
 #define ACE_HAS_TSS_EMULATION              // It would appear to be broken in Interix!
 
-#include "ace/post.h"
-#endif /* ACE_CONFIG_H */
+#include /**/ "ace/post.h"
+#endif /* ACE_CONFIG_WIN32_INTERIX_H */
 
 /*
 The following tests do not run.
