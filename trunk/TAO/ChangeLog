@@ -1,3 +1,8 @@
+Wed Jan  7 15:35:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Smart_Proxies/Policy/Smart_Proxies_Policy.mpc:
+          Client needs portableserver
+
 Wed Jan  7 13:00:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit.mpc:
