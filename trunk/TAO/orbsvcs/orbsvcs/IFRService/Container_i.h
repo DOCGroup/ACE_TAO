@@ -442,12 +442,28 @@ private:
       CORBA::Boolean exclude_inherited
       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-
   void update_refs (
       const char *path,
       const char *name
     );
   // Used with structs, unions and exceptions.
+
+  ACE_TString create_value_common (
+      CORBA::DefinitionKind container_kind,
+      ACE_Configuration_Section_Key container_key,
+      ACE_Configuration_Section_Key new_key,
+      const char *id,
+      const char *name,
+      const char *version,
+      CORBA::Boolean is_custom,
+      CORBA::Boolean is_abstract,
+      CORBA::ValueDef_ptr base_value,
+      CORBA::Boolean is_truncatable,
+      const CORBA::ValueDefSeq &abstract_base_values,
+      const CORBA::InterfaceDefSeq &supported_interfaces
+      ACE_ENV_ARG_DECL
+    );
+  // Common code for create_value_i and create_ext_value_i.
   
 protected:
   static const char *tmp_name_holder_;

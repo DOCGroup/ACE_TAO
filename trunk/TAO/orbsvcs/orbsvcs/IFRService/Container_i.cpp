@@ -4,7 +4,9 @@
 #include "Repository_i.h"
 #include "InterfaceDef_i.h"
 #include "ValueDef_i.h"
+#include "ExtValueDef_i.h"
 #include "IFR_Service_Utils.h"
+#include "IFR_Service_Utils_T.h"
 
 #include "tao/IFR_Client/IFR_ComponentsC.h"
 
@@ -1369,179 +1371,28 @@ TAO_Container_i::create_value_i (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
-  ACE_TString path = 
-    TAO_IFR_Service_Utils::create_common (this->def_kind (),
-                                          CORBA::dk_Value,
-                                          this->section_key_,
-                                          new_key,
-                                          this->repo_,
-                                          id,
-                                          name,
-                                          &TAO_Container_i::same_as_tmp_name,
-                                          version,
-                                          "defns"
-                                          ACE_ENV_ARG_PARAMETER);
+  ACE_TString path =
+    this->create_value_common (this->def_kind (),
+                               this->section_key_,
+                               new_key,
+                               id,
+                               name,
+                               version,
+                               is_custom,
+                               is_abstract,
+                               base_value,
+                               is_truncatable,
+                               abstract_base_values,
+                               supported_interfaces
+                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::ValueDef::_nil ());
 
-  this->repo_->config ()->set_integer_value (new_key,
-                                             "is_custom",
-                                             (CORBA::ULong) is_custom);
-
-  this->repo_->config ()->set_integer_value (new_key,
-                                             "is_abstract",
-                                             (CORBA::ULong) is_abstract);
-
-  this->repo_->config ()->set_integer_value (new_key,
-                                             "is_truncatable",
-                                             (CORBA::ULong) is_truncatable);
-  if (!CORBA::is_nil (base_value))
-    {
-      const char *base_path = 
-        TAO_IFR_Service_Utils::reference_to_path (base_value);
-          
-      // Get the servant's key into the temporary key holder, because
-      // the name clash checker for base valuetypes is static, and has
-      // no other way to know about a specific key.
-      this->repo_->config ()->expand_path (
-                                  this->repo_->root_key (),
-                                  base_path,
-                                  TAO_IFR_Service_Utils::tmp_key_,
-                                  0
-                                );
-      TAO_IFR_Service_Utils::name_exists (&TAO_ValueDef_i::name_clash,
-                                          new_key,
-                                          this->repo_,
-                                          CORBA::dk_Value
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::ValueDef::_nil ());
-          
-      const char *base_value_id = base_value->_interface_repository_id ();
-      this->repo_->config ()->set_string_value (new_key,
-                                                "base_value",
-                                                base_value_id);
-    }
-
-  CORBA::ULong length = abstract_base_values.length ();
-
-  if (length > 0)
-    {
-      ACE_Configuration_Section_Key bases_key;
-      this->repo_->config ()->open_section (this->section_key_,
-                                            "abstract_bases",
-                                            1,
-                                            bases_key);
-      this->repo_->config ()->set_integer_value (bases_key,
-                                                 "count",
-                                                 length);
-                                 
-      const char *base_id = 0;
-      const char *base_path = 0;
-      char *stringified = 0;
-
-      for (CORBA::ULong i = 0; i < length; ++i)
-        {
-          base_path = 
-            TAO_IFR_Service_Utils::reference_to_path (
-                abstract_base_values[i].in ()
-              );
-              
-          // Get the servant's key into the temporary key holder, because
-          // the name clash checker for base interfaces is static, and has
-          // no other way to know about a specific key.
-          this->repo_->config ()->expand_path (
-                                      this->repo_->root_key (),
-                                      base_path,
-                                      TAO_IFR_Service_Utils::tmp_key_,
-                                      0
-                                    );
-          TAO_IFR_Service_Utils::name_exists (&TAO_ValueDef_i::name_clash,
-                                              new_key,
-                                              this->repo_,
-                                              CORBA::dk_Value
-                                              ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CORBA::ValueDef::_nil ());
-          
-          base_id = abstract_base_values[i]->_interface_repository_id ();
-          stringified = TAO_IFR_Service_Utils::int_to_string (i);
-          this->repo_->config ()->set_string_value (bases_key,
-                                                    stringified,
-                                                    base_id);
-        }
-    }
-
-  length = supported_interfaces.length ();
-
-  if (length > 0)
-    {
-      ACE_Configuration_Section_Key supported_key;
-      this->repo_->config ()->open_section (new_key,
-                                            "supported",
-                                            1,
-                                            supported_key);
-      this->repo_->config ()->set_integer_value (supported_key,
-                                                 "count",
-                                                 length);
-      const char *supported_id = 0;
-      const char *supported_path = 0;
-      CORBA::ULong kind = 0;
-      CORBA::Boolean concrete_seen = 0;
-      CORBA::DefinitionKind def_kind;
-          
-      for (CORBA::ULong i = 0; i < length; ++i)
-        {
-          supported_path = 
-            TAO_IFR_Service_Utils::reference_to_path (
-                supported_interfaces[i].in ()
-              );
-              
-          // Get the servant's key into the temporary key holder, because
-          // the name clash checker for base interfaces is static, and has
-          // no other way to know about a specific key.
-          this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                               supported_path,
-                                               TAO_IFR_Service_Utils::tmp_key_,
-                                               0);
-          this->repo_->config ()->get_integer_value (
-                                      TAO_IFR_Service_Utils::tmp_key_,
-                                      "def_kind",
-                                      kind);
-          def_kind = ACE_static_cast (CORBA::DefinitionKind, kind);
-          
-          if (def_kind == CORBA::dk_Interface)
-            {
-              if (concrete_seen == 0)
-                {
-                  concrete_seen = 1;
-                }
-              else
-                {
-                  ACE_THROW_RETURN (CORBA::BAD_PARAM (12,
-                                                      CORBA::COMPLETED_NO),
-                                    CORBA::ValueDef::_nil ());
-                }
-            }                            
-          
-          TAO_IFR_Service_Utils::name_exists (&TAO_ValueDef_i::name_clash,
-                                              new_key,
-                                              this->repo_,
-                                              CORBA::dk_Value
-                                              ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CORBA::ValueDef::_nil ());
-
-          supported_id = 
-            supported_interfaces[i]->_interface_repository_id ();
-          char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
-          this->repo_->config ()->set_string_value (supported_key,
-                                                    stringified,
-                                                    supported_id);
-        }
-    }
-    
-  TAO_IFR_Service_Utils::set_initializers (initializers,
-                                           this->repo_->config (),
-                                           new_key);
+  TAO_IFR_Generic_Utils<CORBA::InitializerSeq>::set_initializers (
+      initializers,
+      this->repo_->config (),
+      new_key
+    );
 
   // Create the object reference.
   CORBA::Object_var obj =
@@ -1971,22 +1822,82 @@ TAO_Container_i::create_ext_value (
 
 CORBA::ExtValueDef_ptr 
 TAO_Container_i::create_ext_value_i (
-      const char * /* id */,
-      const char * /* name */,
-      const char * /* *ersion */,
-      CORBA::Boolean /* is_custom */,
-      CORBA::Boolean /* is_abstract */,
-      CORBA::ValueDef_ptr /* base_value */,
-      CORBA::Boolean /* is_truncatable */,
-      const CORBA::ValueDefSeq & /* abstract_base_values */,
-      const CORBA::InterfaceDefSeq & /* supported_interfaces */,
-      const CORBA::ExtInitializerSeq & /* initializers */
+      const char *id,
+      const char *name,
+      const char *version,
+      CORBA::Boolean is_custom,
+      CORBA::Boolean is_abstract,
+      CORBA::ValueDef_ptr base_value,
+      CORBA::Boolean is_truncatable,
+      const CORBA::ValueDefSeq &abstract_base_values,
+      const CORBA::InterfaceDefSeq &supported_interfaces,
+      const CORBA::ExtInitializerSeq &initializers
       ACE_ENV_ARG_DECL_NOT_USED
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // TODO
-  return 0;
+  ACE_Configuration_Section_Key new_key;
+  ACE_TString path =
+    this->create_value_common (this->def_kind (),
+                               this->section_key_,
+                               new_key,
+                               id,
+                               name,
+                               version,
+                               is_custom,
+                               is_abstract,
+                               base_value,
+                               is_truncatable,
+                               abstract_base_values,
+                               supported_interfaces
+                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::ExtValueDef::_nil ());
+
+  /// This does not handle the initializer exceptions, so we do that below.
+  TAO_IFR_Generic_Utils<CORBA::ExtInitializerSeq>::set_initializers (
+      initializers,
+      this->repo_->config (),
+      this->section_key_
+    );
+
+  CORBA::ULong length = initializers.length ();
+
+  if (length > 0)
+    {
+      ACE_Configuration_Section_Key initializers_key, initializer_key;
+      char *stringified = 0;
+
+      this->repo_->config ()->open_section (new_key,
+                                            "initializers",
+                                            0,
+                                            initializers_key);
+
+      for (CORBA::ULong i = 0; i < length; ++i)
+        {
+          stringified = TAO_IFR_Service_Utils::int_to_string (i);
+          this->repo_->config ()->open_section (initializers_key,
+                                                stringified,
+                                                0,
+                                                initializer_key);
+
+          TAO_ExtValueDef_i impl (this->repo_);
+          impl.section_key (new_key);
+          impl.exceptions (initializer_key,
+                           "excepts",
+                           initializers[i].exceptions);
+        }
+    }
+    
+  // Create the object reference.
+  CORBA::Object_var obj =
+    TAO_IFR_Service_Utils::create_objref (CORBA::dk_Value,
+                                          path.c_str (),
+                                          this->repo_
+                                          ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::ExtValueDef::_nil ());
+
+  return CORBA::ExtValueDef::_narrow (obj.in ()
+                                      ACE_ENV_ARG_PARAMETER);
 }
 
 int
@@ -2506,3 +2417,192 @@ TAO_Container_i::update_refs (const char *path,
                                              count + 1);
 }
 
+ACE_TString
+TAO_Container_i::create_value_common (
+    CORBA::DefinitionKind container_kind,
+    ACE_Configuration_Section_Key container_key,
+    ACE_Configuration_Section_Key new_key,
+    const char *id,
+    const char *name,
+    const char *version,
+    CORBA::Boolean is_custom,
+    CORBA::Boolean is_abstract,
+    CORBA::ValueDef_ptr base_value,
+    CORBA::Boolean is_truncatable,
+    const CORBA::ValueDefSeq &abstract_base_values,
+    const CORBA::InterfaceDefSeq &supported_interfaces
+    ACE_ENV_ARG_DECL
+  )
+{
+  TAO_Container_i::tmp_name_holder_ = name;
+  ACE_TString path;
+  path = 
+    TAO_IFR_Service_Utils::create_common (container_kind,
+                                          CORBA::dk_Value,
+                                          container_key,
+                                          new_key,
+                                          this->repo_,
+                                          id,
+                                          name,
+                                          &TAO_Container_i::same_as_tmp_name,
+                                          version,
+                                          "defns"
+                                          ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (path);
+
+  this->repo_->config ()->set_integer_value (new_key,
+                                             "is_custom",
+                                             (CORBA::ULong) is_custom);
+
+  this->repo_->config ()->set_integer_value (new_key,
+                                             "is_abstract",
+                                             (CORBA::ULong) is_abstract);
+
+  this->repo_->config ()->set_integer_value (new_key,
+                                             "is_truncatable",
+                                             (CORBA::ULong) is_truncatable);
+  if (!CORBA::is_nil (base_value))
+    {
+      const char *base_path = 
+        TAO_IFR_Service_Utils::reference_to_path (base_value);
+          
+      // Get the servant's key into the temporary key holder, because
+      // the name clash checker for base valuetypes is static, and has
+      // no other way to know about a specific key.
+      this->repo_->config ()->expand_path (
+                                  this->repo_->root_key (),
+                                  base_path,
+                                  TAO_IFR_Service_Utils::tmp_key_,
+                                  0
+                                );
+      TAO_IFR_Service_Utils::name_exists (&TAO_ValueDef_i::name_clash,
+                                          new_key,
+                                          this->repo_,
+                                          CORBA::dk_Value
+                                          ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (path);
+          
+      const char *base_value_id = base_value->_interface_repository_id ();
+      this->repo_->config ()->set_string_value (new_key,
+                                                "base_value",
+                                                base_value_id);
+    }
+
+  CORBA::ULong length = abstract_base_values.length ();
+
+  if (length > 0)
+    {
+      ACE_Configuration_Section_Key bases_key;
+      this->repo_->config ()->open_section (this->section_key_,
+                                            "abstract_bases",
+                                            1,
+                                            bases_key);
+      this->repo_->config ()->set_integer_value (bases_key,
+                                                 "count",
+                                                 length);
+                                 
+      const char *base_id = 0;
+      const char *base_path = 0;
+      char *stringified = 0;
+
+      for (CORBA::ULong i = 0; i < length; ++i)
+        {
+          base_path = 
+            TAO_IFR_Service_Utils::reference_to_path (
+                abstract_base_values[i].in ()
+              );
+              
+          // Get the servant's key into the temporary key holder, because
+          // the name clash checker for base interfaces is static, and has
+          // no other way to know about a specific key.
+          this->repo_->config ()->expand_path (
+                                      this->repo_->root_key (),
+                                      base_path,
+                                      TAO_IFR_Service_Utils::tmp_key_,
+                                      0
+                                    );
+          TAO_IFR_Service_Utils::name_exists (&TAO_ValueDef_i::name_clash,
+                                              new_key,
+                                              this->repo_,
+                                              CORBA::dk_Value
+                                              ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (path);
+          
+          base_id = abstract_base_values[i]->_interface_repository_id ();
+          stringified = TAO_IFR_Service_Utils::int_to_string (i);
+          this->repo_->config ()->set_string_value (bases_key,
+                                                    stringified,
+                                                    base_id);
+        }
+    }
+
+  length = supported_interfaces.length ();
+
+  if (length > 0)
+    {
+      ACE_Configuration_Section_Key supported_key;
+      this->repo_->config ()->open_section (new_key,
+                                            "supported",
+                                            1,
+                                            supported_key);
+      this->repo_->config ()->set_integer_value (supported_key,
+                                                 "count",
+                                                 length);
+      const char *supported_id = 0;
+      const char *supported_path = 0;
+      CORBA::ULong kind = 0;
+      CORBA::Boolean concrete_seen = 0;
+      CORBA::DefinitionKind def_kind;
+          
+      for (CORBA::ULong i = 0; i < length; ++i)
+        {
+          supported_path = 
+            TAO_IFR_Service_Utils::reference_to_path (
+                supported_interfaces[i].in ()
+              );
+              
+          // Get the servant's key into the temporary key holder, because
+          // the name clash checker for base interfaces is static, and has
+          // no other way to know about a specific key.
+          this->repo_->config ()->expand_path (this->repo_->root_key (),
+                                               supported_path,
+                                               TAO_IFR_Service_Utils::tmp_key_,
+                                               0);
+          this->repo_->config ()->get_integer_value (
+                                      TAO_IFR_Service_Utils::tmp_key_,
+                                      "def_kind",
+                                      kind);
+          def_kind = ACE_static_cast (CORBA::DefinitionKind, kind);
+          
+          if (def_kind == CORBA::dk_Interface)
+            {
+              if (concrete_seen == 0)
+                {
+                  concrete_seen = 1;
+                }
+              else
+                {
+                  ACE_THROW_RETURN (CORBA::BAD_PARAM (12,
+                                                      CORBA::COMPLETED_NO),
+                                    path);
+                }
+            }                            
+          
+          TAO_IFR_Service_Utils::name_exists (&TAO_ValueDef_i::name_clash,
+                                              new_key,
+                                              this->repo_,
+                                              CORBA::dk_Value
+                                              ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (path);
+
+          supported_id = 
+            supported_interfaces[i]->_interface_repository_id ();
+          char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
+          this->repo_->config ()->set_string_value (supported_key,
+                                                    stringified,
+                                                    supported_id);
+        }
+    }
+    
+  return path;
+}

@@ -43,6 +43,12 @@ public:
                                TAO_Repository_i *repo,
                                ACE_Configuration_Section_Key &key
                                ACE_ENV_ARG_DECL);
+
+  static void set_initializers (const T &initializers,
+                                ACE_Configuration *config,
+                                ACE_Configuration_Section_Key &key);
+  /// Common to Container::create_value(), create_ext_value 
+  /// and ValueDef::initializers().
 };
 
 template<typename T_desc, typename T_impl>

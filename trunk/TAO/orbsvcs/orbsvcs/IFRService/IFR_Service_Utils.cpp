@@ -968,79 +968,43 @@ TAO_IFR_Service_Utils::create_common (
 }
 
 void
-TAO_IFR_Service_Utils::set_initializers (
-    const CORBA::InitializerSeq &initializers,
+TAO_IFR_Service_Utils::set_exceptions (
     ACE_Configuration *config,
-    ACE_Configuration_Section_Key &key
+    ACE_Configuration_Section_Key &key,
+    const char *sub_section,
+    const CORBA::ExceptionDefSeq &exceptions
   )
 {
-  CORBA::ULong length = initializers.length ();
+  CORBA::ULong length = exceptions.length ();
 
   if (length == 0)
     {
       return;
     }
-    
-  ACE_Configuration_Section_Key initializers_key;
+
+  // Create new subsection because we are either creating a new entry 
+  // or are calling from a mutator which has already removed the old one.
+  ACE_Configuration_Section_Key excepts_key;
   config->open_section (key,
-                        "initializers",
+                        sub_section,
                         1,
-                        initializers_key);
-  config->set_integer_value (initializers_key,
+                        excepts_key);
+
+  config->set_integer_value (excepts_key,
                              "count",
                              length);
 
-  CORBA::ULong arg_count = 0;
-  char *arg_path = 0;
-  ACE_Configuration_Section_Key initializer_key;
-  ACE_Configuration_Section_Key params_key;
-  ACE_Configuration_Section_Key arg_key;
+  char *type_path = 0;
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
+      type_path = 
+        TAO_IFR_Service_Utils::reference_to_path (exceptions[i].in ());
+
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
-      config->open_section (initializers_key,
-                            stringified,
-                            1,
-                            initializer_key);
-      config->set_string_value (initializer_key,
-                                "name",
-                                initializers[i].name.in ());
-
-      arg_count = initializers[i].members.length ();
-
-      if (arg_count > 0)
-        {
-          config->open_section (initializer_key,
-                                "params",
-                                1,
-                                params_key);
-          config->set_integer_value (params_key,
-                                     "count",
-                                     arg_count);
-
-          for (CORBA::ULong j = 0; j < arg_count; ++j)
-            {
-              char *stringified = 
-                TAO_IFR_Service_Utils::int_to_string (j);
-              config->open_section (params_key,
-                                    stringified,
-                                    1,
-                                    arg_key);
-              config->set_string_value (
-                  arg_key,
-                  "arg_name",
-                  initializers[i].members[j].name.in ()
-                );
-              arg_path = 
-                TAO_IFR_Service_Utils::reference_to_path (
-                    initializers[i].members[j].type_def.in ()
-                  );
-              config->set_string_value (arg_key,
-                                        "arg_path",
-                                        arg_path);
-            }
-        }
+      config->set_string_value (excepts_key,
+                                stringified,
+                                type_path);
     }
 }
 

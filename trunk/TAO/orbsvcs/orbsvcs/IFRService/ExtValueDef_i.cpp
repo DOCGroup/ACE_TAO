@@ -35,7 +35,7 @@ TAO_ExtValueDef_i::ext_initializers (
   this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return this->ext_initializers (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->ext_initializers_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA::ExtInitializerSeq *
@@ -110,7 +110,7 @@ TAO_ExtValueDef_i::ext_initializers_i (
                                                 0,
                                                 arg_key);
           this->repo_->config ()->get_string_value (arg_key,
-                                                    "name",
+                                                    "arg_name",
                                                     holder);
           retval[i].members[j].name = holder.fast_rep ();
           this->repo_->config ()->get_string_value (arg_key,
@@ -173,77 +173,37 @@ TAO_ExtValueDef_i::ext_initializers_i (
                           "initializers",
                           1);
 
+  /// This does not handle the initializer exceptions, so we do that below.
+  TAO_IFR_Generic_Utils<CORBA::ExtInitializerSeq>::set_initializers (
+      ext_initializers,
+      this->repo_->config (),
+      this->section_key_
+    );
+
   CORBA::ULong length = ext_initializers.length ();
 
-  if (length == 0)
+  if (length > 0)
     {
-      return;
-    }
-    
-  ACE_Configuration_Section_Key initializers_key;
-  config->open_section (this->section_key_,
-                        "initializers",
-                        1,
-                        initializers_key);
-  config->set_integer_value (initializers_key,
-                             "count",
-                             length);
+      ACE_Configuration_Section_Key initializers_key, initializer_key;
+      char *stringified = 0;
 
-  CORBA::ULong arg_count = 0;
-  char *arg_path = 0;
-  ACE_Configuration_Section_Key initializer_key;
-  ACE_Configuration_Section_Key params_key;
-  ACE_Configuration_Section_Key arg_key;
+      this->repo_->config ()->open_section (this->section_key_,
+                                            "initializers",
+                                            0,
+                                            initializers_key);
 
-  for (CORBA::ULong i = 0; i < length; ++i)
-    {
-      char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
-      config->open_section (initializers_key,
-                            stringified,
-                            1,
-                            initializer_key);
-      config->set_string_value (initializer_key,
-                                "name",
-                                ext_initializers[i].name.in ());
-
-      arg_count = ext_initializers[i].members.length ();
-
-      if (arg_count > 0)
+      for (CORBA::ULong i = 0; i < length; ++i)
         {
-          config->open_section (initializer_key,
-                                "params",
-                                1,
-                                params_key);
-          config->set_integer_value (params_key,
-                                     "count",
-                                     arg_count);
+          stringified = TAO_IFR_Service_Utils::int_to_string (i);
+          this->repo_->config ()->open_section (initializers_key,
+                                                stringified,
+                                                0,
+                                                initializer_key);
 
-          for (CORBA::ULong j = 0; j < arg_count; ++j)
-            {
-              char *stringified = 
-                TAO_IFR_Service_Utils::int_to_string (j);
-              config->open_section (params_key,
-                                    stringified,
-                                    1,
-                                    arg_key);
-              config->set_string_value (
-                  arg_key,
-                  "arg_name",
-                  ext_initializers[i].members[j].name.in ()
-                );
-              arg_path = 
-                TAO_IFR_Service_Utils::reference_to_path (
-                    ext_initializers[i].members[j].type_def.in ()
-                  );
-              config->set_string_value (arg_key,
-                                        "arg_path",
-                                        arg_path);
-            }
+          this->exceptions (initializer_key,
+                            "excepts",
+                            ext_initializers[i].exceptions);
         }
-
-      this->exceptions (initializer_key,
-                        "excepts",
-                        ext_initializers[i].exceptions);
     }
 }
 
@@ -258,7 +218,7 @@ TAO_ExtValueDef_i::describe_ext_value (
   this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return this->describe_ext_value (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->describe_ext_value_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA::ExtValueDef::ExtFullValueDescription *
