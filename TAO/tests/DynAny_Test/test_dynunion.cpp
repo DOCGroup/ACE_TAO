@@ -50,13 +50,13 @@ Test_DynUnion::run_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                  "\t*=*=*=*= %s =*=*=*=*\n",
-                 data.labels[3]));
+                 data.labels[12]));
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(Any)/insert/get\n"));
 
-      tu._d(DynAnyTests::TE_FIRST);
-      tu.s (data.m_short2);
+      tu._d(DynAnyTests::TE_SECOND);
+      tu.tc (data.m_typecode2);
       CORBA_Any in_any1;
       in_any1 <<= tu;
       CORBA_DynAny_ptr dp1 =
@@ -66,12 +66,12 @@ Test_DynUnion::run_test (void)
       CORBA_DynUnion_ptr fa1 = CORBA_DynUnion::_narrow (dp1,
                                                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      fa1->insert_short (data.m_short1,
-                         ACE_TRY_ENV);
+      fa1->insert_typecode (data.m_typecode1,
+                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::Short s_out1 = fa1->get_short (ACE_TRY_ENV);
+      CORBA::TypeCode_ptr s_out1 = fa1->get_typecode (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (s_out1 == data.m_short1)
+      if (s_out1->equal (data.m_typecode1))
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
       else 
@@ -89,9 +89,9 @@ Test_DynUnion::run_test (void)
       ftc1->from_any (*out_any1,
                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::Short s_out2 = ftc1->get_short (ACE_TRY_ENV);
+      CORBA::TypeCode_ptr s_out2 = ftc1->get_typecode (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (s_out2 == data.m_short1)
+      if (s_out2->equal (data.m_typecode1))
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
       else 
@@ -134,9 +134,9 @@ Test_DynUnion::run_test (void)
       ACE_TRY_CHECK;
       CORBA::TCKind tk = ftc1->member_kind (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (!ACE_OS::strcmp (m_nm, "s")         && 
-          tk == CORBA::tk_short               &&
-          dp3->get_short (ACE_TRY_ENV) == data.m_short1)
+      if (!ACE_OS::strcmp (m_nm, "tc")
+          && tk == CORBA::tk_TypeCode
+          && data.m_typecode1->equal (dp3->get_typecode (ACE_TRY_ENV)))
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
       else 
