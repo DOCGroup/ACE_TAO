@@ -1,22 +1,30 @@
 project(*Consumer): messaging, rteventexe, naming {
+  requires  += corba_messaging
+
   Source_Files {
     Consumer.cpp
   }
 }
 
 project(*Supplier): messaging, rteventexe, naming {
+  requires  += corba_messaging
+
   Source_Files {
     Supplier.cpp
   }
 }
 
 project(*): messaging, rteventexe, naming {
+  requires  += corba_messaging
+
   Source_Files {
     Gateway.cpp
   }
 }
 
 project(*EC): messaging, rteventexe, naming {
+  requires  += corba_messaging
+
   Source_Files {
     EC.cpp
   }

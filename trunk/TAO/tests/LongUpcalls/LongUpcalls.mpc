@@ -2,6 +2,7 @@ project(*Server): messaging, taoserver {
   idlflags -= -Sc
   idlflags += -GC
   exename   = blocking_server
+  requires += ami
 
   Source_Files {
     Manager.cpp
@@ -13,6 +14,7 @@ project(*Client): messaging, taoserver {
   idlflags -= -Sc
   idlflags += -GC
   exename   = blocking_client
+  requires += ami
 
   Source_Files {
     Controller.cpp
@@ -24,6 +26,7 @@ project(*AMI Server): messaging, taoserver {
   idlflags -= -Sc
   idlflags += -GC
   exename   = ami_server
+  requires += ami
 
   Source_Files {
     AMI_Manager.cpp
@@ -35,6 +38,7 @@ project(*AMI Client): messaging, taoserver {
   idlflags -= -Sc
   idlflags += -GC
   exename   = ami_client
+  requires += ami
 
   Source_Files {
     Controller.cpp

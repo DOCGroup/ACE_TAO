@@ -1,4 +1,4 @@
-project(ECM Supplier): rteventexe, rtsched, naming, iortable, messaging {
+project(ECM Supplier): rteventexe, rtsched, naming, iortable, messaging, corba_messaging {
   exename  = ECM_Supplier
   Source_Files {
     ECM_Data.cpp
@@ -6,7 +6,7 @@ project(ECM Supplier): rteventexe, rtsched, naming, iortable, messaging {
   }
 }
 
-project(ECM Consumer): rteventexe, rtsched, naming, iortable, messaging {
+project(ECM Consumer): rteventexe, rtsched, naming, iortable, messaging, corba_messaging {
   exename  = ECM_Consumer
   Source_Files {
     ECM_Data.cpp

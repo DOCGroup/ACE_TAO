@@ -1,4 +1,5 @@
 project: taoexe, ifr_client {
+  avoids  += minimum_corba
   exename  = IDL3_Test
 
   IDL_Files {
