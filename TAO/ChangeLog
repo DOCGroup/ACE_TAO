@@ -1,3 +1,12 @@
+Wed Jun 18 08:18:22 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.h:
+          Fixed type
+
+        * orbsvcs/tests/EC_Mcast/Makefile:
+        * orbsvcs/tests/Event/Basic/Makefile:
+          Updated dependencies
+
 Wed Jun 18 06:39:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
           Below an detail overview of all RTEC changes. The changes are made by
