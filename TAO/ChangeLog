@@ -1,3 +1,9 @@
+Tue Nov 25 14:03:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        
+          Added naming_export.h to the project creator.
+
 Tue Nov 25 13:51:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_decl.cpp (compute_full_name):
