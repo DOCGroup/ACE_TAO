@@ -22,6 +22,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/SString.h"
 #include "ace/Auto_Event.h"
+#include "ace/OS_NS_unistd.h"
 
 static int debug = 1;
 
