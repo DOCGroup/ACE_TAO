@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-
 // $Id$
 
 // ============================================================================
@@ -110,6 +109,7 @@ public:
                                               CORBA::Environment &env);
   // Tell whether this property is defined or no. Forget about the
   // value.
+
 protected:
   typedef ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex> 
           CosProperty_Hash_Map;
@@ -144,9 +144,8 @@ protected:
   // can be defined.
 };
 
-class TAO_ORBSVCS_Export TAO_PropertySetDef
-  : public virtual POA_CosPropertyService::PropertySetDef,
-    public virtual TAO_PropertySet
+class TAO_ORBSVCS_Export TAO_PropertySetDef : public virtual POA_CosPropertyService::PropertySetDef,
+                                              public virtual TAO_PropertySet
 {
   // = TITLE
   //     This class implements PropertySetDef interface, which is
@@ -216,13 +215,13 @@ public:
   virtual CORBA::Boolean get_property_modes (const CosPropertyService::PropertyNames &property_names,
                                              CosPropertyService::PropertyModes_out property_modes,
                                              CORBA::Environment &env);
-  // Batch operation for getting the property. Invoke get_property_mode
-  // for each name.
-  // Return value False indicates that properties with *undefined* modes
-  // have failed due to PropertyNotFound or InvalidPropertyName exception.
-  // Returning False in case of *Nothing to retun* or New is
-  // failing. The caller has  to check the out parameter whether it is
-  // Nil or no, before doing something with it.
+  // Batch operation for getting the property. Invoke
+  // get_property_mode for each name.  Return value False indicates
+  // that properties with *undefined* modes have failed due to
+  // PropertyNotFound or InvalidPropertyName exception.  Returning
+  // False in case of *Nothing to retun* or New is failing. The caller
+  // has to check the out parameter whether it is Nil or no, before
+  // doing something with it.
   
   virtual void set_property_mode (const char *property_name,
                                   CosPropertyService::PropertyModeType property_mode, 
@@ -230,12 +229,13 @@ public:
   // Set the mode of a property. Watch the following. The change of
   // mode is allowed introduce more constraints, but it should not
   // relax the constraints. The following decisions have been made, in
-  // TAO's implementation. The Property Spec has left this to the implenters.
-  // "Normal" to anything is possible.
-  // "Readonly" mode to "Fixed-Readonly" is possible. Others not possible.
-  // "Fixed-Normal" to "Fixed-Readonly" is possible. Other things are impossible.
-  // "Fixed-Readonly" to anything is *not* possible.
-  // For all illegal set_mode attempts, UnsupportedMode exception is raised.
+  // TAO's implementation. The Property Spec has left this to the
+  // implenters.  "Normal" to anything is possible.  "Readonly" mode
+  // to "Fixed-Readonly" is possible. Others not possible.
+  // "Fixed-Normal" to "Fixed-Readonly" is possible. Other things are
+  // impossible.  "Fixed-Readonly" to anything is *not* possible.  For
+  // all illegal set_mode attempts, UnsupportedMode exception is
+  // raised.
 
   virtual void set_property_modes (const CosPropertyService::PropertyModes &property_modes,
                                    CORBA::Environment &env);
@@ -276,7 +276,7 @@ public:
                               CORBA::Environment &env);
   // Allows a client to create a new TAO_PropertySet with specific
   // initial properties."All the properties will have *fixed-normal"
-  // modes". 
+  // modes".
 
 private:
   TAO_Unbounded_Sequence<TAO_PropertySet*> propertyset_products_;
@@ -322,8 +322,6 @@ private:
   // keep track all of them so that we can delete them at the end.
 };
 
-
-
 class TAO_ORBSVCS_Export TAO_PropertyNamesIterator :  public virtual POA_CosPropertyService::PropertyNamesIterator
 {
   // = TITLE
@@ -368,7 +366,7 @@ public:
   // Destroys the iterator.
 private:
   typedef ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
-  CosProperty_Hash_Map;
+          CosProperty_Hash_Map;
   typedef ACE_Hash_Map_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
           CosProperty_Hash_Iterator;
   typedef ACE_Hash_Map_Entry<CosProperty_Hash_Key, CosProperty_Hash_Value>
@@ -431,7 +429,6 @@ private:
   typedef ACE_Hash_Map_Entry<CosProperty_Hash_Key, CosProperty_Hash_Value>
           CosProperty_Hash_Entry;
   typedef CosProperty_Hash_Entry * CosProperty_Hash_Entry_ptr;
-  
 
   CosProperty_Hash_Iterator iterator_;
   // The iterator object.
