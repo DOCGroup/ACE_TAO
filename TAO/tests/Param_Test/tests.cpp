@@ -749,7 +749,7 @@ Test_Bounded_String_Sequence::run_sii_test (Param_Test_ptr objref,
 int
 Test_Bounded_String_Sequence::add_args (CORBA::NVList_ptr &param_list,
                                         CORBA::NVList_ptr &retval,
-										CORBA::Environment &env)
+                                                                                CORBA::Environment &env)
 {
   CORBA::Any in_arg (Param_Test::_tc_Bounded_StrSeq, (void *) &this->in_.in (), 0);
   CORBA::Any inout_arg (Param_Test::_tc_Bounded_StrSeq, &this->inout_.inout (), 0);
@@ -1474,15 +1474,15 @@ Test_Bounded_Struct_Sequence::run_sii_test (Param_Test_ptr objref,
   Param_Test::Bounded_StructSeq_out out (this->out_.out ());
   this->ret_ = objref->test_bounded_struct_sequence (this->in_,
                                                      this->inout_.inout (),
-													 out,
-													 env);
+                                                                                                         out,
+                                                                                                         env);
   return (env.exception () ? -1:0);
 }
 
 int
 Test_Bounded_Struct_Sequence::add_args (CORBA::NVList_ptr &param_list,
-					                    CORBA::NVList_ptr &retval,
-							            CORBA::Environment &env)
+                                                            CORBA::NVList_ptr &retval,
+                                                                    CORBA::Environment &env)
 {
   CORBA::Any in_arg (Param_Test::_tc_Bounded_StructSeq, (void *) &this->in_, 0);
   CORBA::Any inout_arg (Param_Test::_tc_Bounded_StructSeq, &this->inout_.inout (), 0);
@@ -1517,12 +1517,12 @@ Test_Bounded_Struct_Sequence::check_validity (CORBA::Request_ptr req)
 {
   CORBA::Environment env;
   this->inout_ = new Param_Test::Bounded_StructSeq (*(Param_Test::Bounded_StructSeq *)
-													req->arguments ()->item
-													(1, env)->value ()->value ());
+                                                                                                        req->arguments ()->item
+                                                                                                        (1, env)->value ()->value ());
   this->out_ = new Param_Test::Bounded_StructSeq (*(Param_Test::Bounded_StructSeq *) req->arguments
-												  ()->item (2, env)->value ()->value ());
+                                                                                                  ()->item (2, env)->value ()->value ());
   this->ret_ = new Param_Test::Bounded_StructSeq (*(Param_Test::Bounded_StructSeq *)req->result
-												  ()->value ()->value ());
+                                                                                                  ()->value ()->value ());
   return this->check_validity ();
 }
 
@@ -1549,7 +1549,7 @@ Test_Bounded_Struct_Sequence::print_values (void)
 
 CORBA::Boolean
 Test_Bounded_Struct_Sequence::compare (const Param_Test::Bounded_StructSeq &s1,
-									   const Param_Test::Bounded_StructSeq &s2)
+                                                                           const Param_Test::Bounded_StructSeq &s2)
 {
   if (s1.maximum () != s2.maximum ())
       return 0;
@@ -2198,7 +2198,7 @@ Test_Short_Sequence::init_parameters (Param_Test_ptr objref,
   // set the length of the sequence
   this->in_->length (len);
   // now set each individual element
-  for (CORBA::Short i=0; i < this->in_->length (); i++)
+  for (CORBA::ULong i=0; i < this->in_->length (); i++)
     {
       // generate some arbitrary string to be filled into the ith location in
       // the sequence
@@ -2223,7 +2223,7 @@ Test_Short_Sequence::run_sii_test (Param_Test_ptr objref,
 {
   Param_Test::Short_Seq_out out (this->out_.out ());
   this->ret_ = objref->test_short_sequence (this->in_.in (),
-										    this->inout_.inout (),
+                                                                                    this->inout_.inout (),
                                             out,
                                             env);
   return (env.exception () ? -1:0);
@@ -2366,7 +2366,7 @@ Test_Bounded_Short_Sequence::opname (void) const
 
 int
 Test_Bounded_Short_Sequence::init_parameters (Param_Test_ptr objref,
-											  CORBA::Environment &env)
+                                                                                          CORBA::Environment &env)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -2379,7 +2379,7 @@ Test_Bounded_Short_Sequence::init_parameters (Param_Test_ptr objref,
   // set the length of the sequence
   this->in_->length (len);
   // now set each individual element
-  for (CORBA::Short i=0; i < this->in_->maximum (); i++)
+  for (CORBA::ULong i=0; i < this->in_->maximum (); i++)
     {
       // generate some arbitrary string to be filled into the ith location in
       // the sequence
@@ -2404,9 +2404,9 @@ Test_Bounded_Short_Sequence::run_sii_test (Param_Test_ptr objref,
 {
   Param_Test::Bounded_Short_Seq_out out (this->out_.out ());
   this->ret_ = objref->test_bounded_short_sequence (this->in_.in (),
-									        	    this->inout_.inout (),
+                                                                                            this->inout_.inout (),
                                                     out,
-		                                            env);
+                                                            env);
   return (env.exception () ? -1:0);
 }
 
@@ -2560,7 +2560,7 @@ Test_Long_Sequence::init_parameters (Param_Test_ptr objref,
   // set the length of the sequence
   this->in_->length (len);
   // now set each individual element
-  for (CORBA::Long i=0; i < this->in_->length (); i++)
+  for (CORBA::ULong i=0; i < this->in_->length (); i++)
     {
       this->in_[i] = i;
     }
@@ -2582,7 +2582,7 @@ Test_Long_Sequence::run_sii_test (Param_Test_ptr objref,
 {
   Param_Test::Long_Seq_out out (this->out_.out ());
   this->ret_ = objref->test_long_sequence (this->in_.in (),
-								   	       this->inout_.inout (),
+                                                                               this->inout_.inout (),
                                            out,
                                            env);
   return (env.exception () ? -1:0);
@@ -2725,7 +2725,7 @@ Test_Bounded_Long_Sequence::opname (void) const
 
 int
 Test_Bounded_Long_Sequence::init_parameters (Param_Test_ptr objref,
-				  						     CORBA::Environment &env)
+                                                                                     CORBA::Environment &env)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -2738,7 +2738,7 @@ Test_Bounded_Long_Sequence::init_parameters (Param_Test_ptr objref,
   // set the length of the sequence
   this->in_->length (len);
   // now set each individual element
-  for (CORBA::Short i=0; i < this->in_->maximum (); i++)
+  for (CORBA::ULong i=0; i < this->in_->maximum (); i++)
     {
       this->in_[i] = i;
     }
@@ -2760,9 +2760,9 @@ Test_Bounded_Long_Sequence::run_sii_test (Param_Test_ptr objref,
 {
   Param_Test::Bounded_Long_Seq_out out (this->out_.out ());
   this->ret_ = objref->test_bounded_long_sequence (this->in_.in (),
-									        	   this->inout_.inout (),
+                                                                                           this->inout_.inout (),
                                                    out,
-		                                           env);
+                                                           env);
   return (env.exception () ? -1:0);
 }
 
@@ -2922,23 +2922,23 @@ Test_ObjRef_Sequence::init_parameters (Param_Test_ptr objref,
       // the sequence
       this->in_[i] = objref->make_coffee (env);
       if (env.exception ())
-	  {
+          {
         env.print_exception ("make_coffee");
         return -1;
-	  }
+          }
       // get some sequence length (not more than 10)
-	  CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 6);
-	  desc.name = Coffee_Flavor [index];
-	  // set the attribute of the object
-//	  this->in_[i]->description (desc, env); // set the attribute for the in object
-	  Coffee_ptr tmp = this->in_[i];
-	  tmp->description (desc, env);
+          CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 6);
+          desc.name = Coffee_Flavor [index];
+          // set the attribute of the object
+//        this->in_[i]->description (desc, env); // set the attribute for the in object
+          Coffee_ptr tmp = this->in_[i];
+          tmp->description (desc, env);
 
-	  if (env.exception ())
-	    {
-	      env.print_exception ("set coffee attribute");
-	      return -1;
-	    }
+          if (env.exception ())
+            {
+              env.print_exception ("set coffee attribute");
+              return -1;
+            }
     }
   return 0;
 }
@@ -2989,21 +2989,21 @@ Test_ObjRef_Sequence::add_args (CORBA::NVList_ptr &param_list,
 CORBA::Boolean
 Test_ObjRef_Sequence::check_validity (void)
 {
-	TAO_TRY 
-	{
-		if (this->compare (this->in_, this->inout_.in (), TAO_TRY_ENV) &&
-  		    this->compare (this->in_, this->out_.in (), TAO_TRY_ENV) &&
-	        this->compare (this->in_, this->ret_.in (), TAO_TRY_ENV))
-		  return 1;
-	    else
-		  return 0;
-	}
-	TAO_CATCHANY; 
-	{
-	  return 0;
-	}
-	TAO_ENDTRY;
-	return 0;
+        TAO_TRY
+        {
+                if (this->compare (this->in_, this->inout_.in (), TAO_TRY_ENV) &&
+                    this->compare (this->in_, this->out_.in (), TAO_TRY_ENV) &&
+                this->compare (this->in_, this->ret_.in (), TAO_TRY_ENV))
+                  return 1;
+            else
+                  return 0;
+        }
+        TAO_CATCHANY;
+        {
+          return 0;
+        }
+        TAO_ENDTRY;
+        return 0;
 }
 
 CORBA::Boolean
@@ -3044,7 +3044,7 @@ Test_ObjRef_Sequence::print_values (void)
 CORBA::Boolean
 Test_ObjRef_Sequence::compare (const Param_Test::Coffee_Mix &s1,
                                const Param_Test::Coffee_Mix &s2,
-							   CORBA::Environment& env)
+                                                           CORBA::Environment& env)
 {
   if (s1.maximum () != s2.maximum ())
       return 0;
@@ -3058,18 +3058,18 @@ Test_ObjRef_Sequence::compare (const Param_Test::Coffee_Mix &s1,
 
       char* n1 = vs1->description (env)->name;
       if (env.exception ())
-		{
-		  env.print_exception ("retrieving description for vs1");
-		  return 0;
-		}
-	  char* n2 = vs2->description (env)->name;
-	  if (env.exception ())
-	    {
-	      env.print_exception ("retrieving description for vs2");
-	      return 0;
-	    }
-	  if (!ACE_OS::strcmp(n1, n2))
-	    return 0;
+                {
+                  env.print_exception ("retrieving description for vs1");
+                  return 0;
+                }
+          char* n2 = vs2->description (env)->name;
+          if (env.exception ())
+            {
+              env.print_exception ("retrieving description for vs2");
+              return 0;
+            }
+          if (!ACE_OS::strcmp(n1, n2))
+            return 0;
     }
 
   return 1; // success
@@ -3104,8 +3104,8 @@ Test_AnySeq::Test_AnySeq (void)
   : opname_ (CORBA::string_dup ("test_any_sequence")),
     in_ (new Param_Test::AnySeq),
     inout_ (new Param_Test::AnySeq),
-	out_ (0),
-	ret_ (0)  
+        out_ (0),
+        ret_ (0)
 {
 }
 
@@ -3133,28 +3133,28 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref,
     CORBA::ULong index = 2;
 
     switch (index)
-	{
+        {
       case 0:
-		{
+                {
           CORBA::Short s;
           s = gen->gen_short ();
           ACE_DEBUG ((LM_DEBUG, "setting short = %d\n", s));
           this->in_[i] <<= s;
           this->inout_[i] <<= s;
-		}
+                }
         break;
       case 1:
-		{
+                {
           char *str = gen->gen_string ();
           ACE_DEBUG ((LM_DEBUG, "setting string = %s\n", str));
           this->in_[i] <<= str;
           this->inout_[i] <<= str;
-		}
+                }
         break;
       case 2:
-		{
+                {
           TAO_TRY
-		  {
+                  {
             // get access to a Coffee Object
             Coffee_var cobj = objref->make_coffee (TAO_TRY_ENV);
             TAO_CHECK_ENV;
@@ -3170,7 +3170,7 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref,
             return -1;
           }
         TAO_ENDTRY;
-		}
+                }
         break;
       case 3:
         break;
@@ -3178,9 +3178,10 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref,
         break;
       case 5:
         break;
-	}
-  return 0;
+        }
   }
+
+  return 0;
 }
 
 int
@@ -3194,26 +3195,26 @@ Test_AnySeq::reset_parameters (void)
     CORBA::ULong index = 2;
 
     switch (index)
-	{
+        {
       case 0:
-		{
+                {
           CORBA::Short s;
           s = gen->gen_short ();
           this->in_[i] <<= s;
           this->inout_[i] <<= s;
-		}
+                }
         break;
       case 1:
-		{
+                {
           char *str = gen->gen_string ();
           this->in_[i] <<= str;
           this->inout_[i] <<= str;
-		}
+                }
         break;
       case 2:
-		{
+                {
           this->inout_[i] = this->in_[i];
-		}
+                }
         break;
       case 3:
         break;
@@ -3221,9 +3222,10 @@ Test_AnySeq::reset_parameters (void)
         break;
       case 5:
         break;
-	}
-  return 0;
+        }
   }
+
+  return 0;
 }
 
 int
@@ -3295,7 +3297,7 @@ Test_AnySeq::check_validity (void)
              (this->inout_[i] >>= str_inout) &&
              (this->out_[i] >>= str_out) &&
              (this->ret_[i] >>= str_ret))
-	{
+    {
       if (!ACE_OS::strcmp (str_in, str_inout) &&
           !ACE_OS::strcmp (str_in, str_out) &&
           !ACE_OS::strcmp (str_in, str_ret))
@@ -3314,10 +3316,12 @@ Test_AnySeq::check_validity (void)
       // all the >>= operators returned true so we are OK.
       return 1;
     }
-  else
-    return 0;
-
+    else
+      return 0;
   }
+
+  // Should never reach this.
+  return 0;
 }
 
 CORBA::Boolean
