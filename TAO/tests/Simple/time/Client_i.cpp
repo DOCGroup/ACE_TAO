@@ -108,7 +108,7 @@ Client_i::time (void)
   else
     {
       char *ascii_timedate =
-        ACE_OS::ctime (ACE_static_cast (time_t *, &timedate));
+        ACE_OS::ctime (ACE_reinterpret_cast (time_t *, &timedate));
 
       ACE_DEBUG ((LM_DEBUG,
                   "string time is %s\n",
