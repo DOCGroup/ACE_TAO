@@ -17,6 +17,6 @@ int
 ACE_RMCast_Resend_Handler::handle_timeout (const ACE_Time_Value &,
                                            const void *)
 {
-  (void) this->retransmission_->resend (0 /* @@ TODO */);
+  (void) this->retransmission_->resend_all ();
   return 0;
 }

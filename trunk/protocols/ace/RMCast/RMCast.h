@@ -58,50 +58,6 @@ public:
     MT_LAST
   };
 
-  //! Simple enum used to describe the receiver state transitions
-  /*!
-    Receivers go through several states before they can fully accept
-    messages, the following comments describe those states, as well as
-    the possible transitions
-   This configuration is pesimistic, any invalid message is cause
-   enough to reclaim all the resources.  This partially addresses
-   situations where either accidentally or intentionally a sender is
-   multicasting packets to the wrong group.
-
-   <CODE>
-              NON_EXISTENT JOINING      JOINED       LEAVING<BR>
-   ----------------------------------------------------------------<BR>
-   POLL       JOINING      JOINING      JOINED       LEAVING<BR>
-              Send/Join    Send/Join    Send/Ack     Send/Leave<BR>
-  <BR>
-   ACK        NON_EXISTENT NON_EXISTENT NON_EXISTENT NON_EXISTENT<BR>
-              Noop         Destroy      Destroy      Destroy<BR>
-  <BR>
-   JOIN       NON_EXISTENT NON_EXISTENT NON_EXISTENT NON_EXISTENT<BR>
-              Noop         Destroy      Destroy      Destroy<BR>
-  <BR>
-   LEAVE      NON_EXISTENT NON_EXISTENT NON_EXISTENT NON_EXISTENT<BR>
-              Noop         Destroy      Destroy      Destroy<BR>
-  <BR>
-   ACK_JOIN   JOINING      JOINED       JOINED       LEAVING<BR>
-              Send/Join    Update ACT   Update ACT   Send/Leave<BR>
-  <BR>
-   ACK_LEAVE  NON_EXISTENT NON_EXISTENT NON_EXISTENT NON_EXISTENT<BR>
-              Noop         Destroy      Destroy      Destroy<BR>
-  <BR>
-   SEND_DATA  JOINING      JOINING      JOINED       LEAVING<BR>
-              Send/Join    Send/Join    Recv/Data    Send/Leave<BR>
-  </CODE>
-  */
-  enum Receiver_State
-  {
-    RS_NON_EXISTENT,
-    RS_JOINING,
-    RS_JOINED,
-    RS_LEAVING
-  };
-
-
   //! Simle enum used to describe the state transitions for senders
   /*!
    State transition (and actions) for the senders.

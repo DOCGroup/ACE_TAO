@@ -22,19 +22,18 @@ ACE_RMCast_Reassembly (void)
 
 ACE_RMCast_Reassembly::~ACE_RMCast_Reassembly (void)
 {
-  /*!<
-     We cleanup the resources in the destructor
-     <B color=red>@@ TODO</B> Why not in the close() operation?
-  */
-  for (Message_Map_Iterator i = this->messages_.begin ();
-       i != this->messages_.end ();
-       ++i)
-    {
-      ACE_RMCast_Partial_Message *message = (*i).int_id_;
-      if (message != 0)
-        delete message;
-    }
-  this->messages_.unbind_all ();
+  (void) this->close_i ();
+}
+
+/**
+ *
+ * We cleanup the resources in the destructor
+ */
+int
+ACE_RMCast_Reassembly::close ()
+{
+  this->close_i ();
+  return this->ACE_RMCast_Module::close ();
 }
 
 int
@@ -43,9 +42,15 @@ ACE_RMCast_Reassembly::data (ACE_RMCast::Data &data)
   if (this->next () == 0)
     return 0;
 
+  // ACE_DEBUG ((LM_DEBUG,
+  //             "Reassembly::data - %d,%d,%d\n",
+  //             data.sequence_number,
+  //             data.total_size,
+  //             data.fragment_offset));
+
   if (data.payload->length () + data.fragment_offset > data.total_size)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_ERROR ((LM_ERROR,
                   "RMCast_Reassembly::data - invalid size\n"));
       return -1; // Corrupt message?
     }
@@ -60,33 +65,35 @@ ACE_RMCast_Reassembly::data (ACE_RMCast::Data &data)
                         ACE_RMCast_Partial_Message (data.total_size),
                         -1);
 
+        // ACE_DEBUG ((LM_DEBUG,
+        //             "Reassembly::data - new message\n"));
         if (this->messages_.bind (data.sequence_number,
                                   message) == -1)
           return -1; // Internal error?
       }
 
-    // The message was in the collection, but it has been received
-    // already, this is a duplicate fragment, just drop it.
-    if (message == 0)
-      return 0;
-
     if (message->fragment_received (data.total_size,
                                     data.fragment_offset,
                                     data.payload) == -1)
       {
-        ACE_DEBUG ((LM_DEBUG,
-                    "Error in fragment_received\n"));
+        // ACE_DEBUG ((LM_DEBUG,
+        //             "Error in fragment_received\n"));
         return -1;
       }
 
     if (!message->is_complete ())
-      return 0;
+      {
+        // ACE_DEBUG ((LM_DEBUG,
+        //             "Reassembly::data - message still incomplete\n"));
+        return 0;
+      }
 
-    // Remove the message from the collection, but leave a marker
-    // to indicate that it was already received...
-    if (this->messages_.rebind (data.sequence_number,
-                                (ACE_RMCast_Partial_Message*)0) == -1)
-      return -1;
+    if (this->messages_.unbind (data.sequence_number) == -1)
+      {
+        // ACE_DEBUG ((LM_DEBUG,
+        //            "Reassembly::data - message now complete\n"));
+        return -1;
+      }
   }
 
   // Push the message...
@@ -102,6 +109,20 @@ ACE_RMCast_Reassembly::data (ACE_RMCast::Data &data)
   delete message;
 
   return r;
+}
+
+void
+ACE_RMCast_Reassembly::close_i (void)
+{
+  for (Message_Map_Iterator i = this->messages_.begin ();
+       i != this->messages_.end ();
+       ++i)
+    {
+      ACE_RMCast_Partial_Message *message = (*i).int_id_;
+      if (message != 0)
+        delete message;
+    }
+  this->messages_.unbind_all ();
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

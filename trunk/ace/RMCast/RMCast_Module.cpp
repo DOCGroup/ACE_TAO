@@ -32,12 +32,16 @@ ACE_RMCast_Module::next (void) const
 int
 ACE_RMCast_Module::open (void)
 {
+  if (this->next () != 0)
+    return this->next ()->open ();
   return 0;
 }
 
 int
 ACE_RMCast_Module::close (void)
 {
+  if (this->next () != 0)
+    return this->next ()->close ();
   return 0;
 }
 
