@@ -20,7 +20,7 @@ project(*Lib) : acelib {
 
 project(*test) : aceexe {
   exename = server_test
-  after  += Service_Configurator_IPC_Server_Lib
+  after  += Svc_Cfg_IPC_Server_Lib
   libs   += IPC_Tests_Server
   Source_Files {
     server_test.cpp
