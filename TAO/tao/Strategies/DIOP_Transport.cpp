@@ -250,7 +250,7 @@ TAO_DIOP_Transport::send_request (TAO_Stub *stub,
 
     return -1;
 
-  return this->idle_after_send ();
+  return 0;
 }
 
 int
