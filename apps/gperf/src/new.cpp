@@ -35,9 +35,7 @@ const int ALIGNMENT = ((char *)&((struct fooalign *) 0)->d - (char *)0);
 
 void *
 operator new (size_t size)
-#if defined (_RWSTD_THROW_SPEC)
-_RWSTD_THROW_SPEC ((std::bad_alloc))
-#endif /* _RWSTD_THROW_SPEC */
+  ACE_THROW_SPEC (std::bad_alloc)
 {
   // @@ This function should probably be replaced with something from
   // ACE, e.g., some type of ACE_Memory_Allocator.
