@@ -11,11 +11,11 @@ Mon Sep 20 14:58:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 Mon Sep 20 14:47:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
-	  For a typedef'd interface or forward-declared interface,
-	  we were generating the typedef for the _ptr, the _var
-	  and the _out, but not for the interface itself. Now 
-	  we are. Thanks to probal@lucent.com for sending in the
-	  example that pointed this out.
+	  For a typedef'd interface or forward-declared interface, we were
+ 	  generating the typedef for the _ptr, the _var and the _out, but
+ 	  not for the interface itself. Now we are. Thanks to Probal
+ 	  Bhattacharjya <probal@lucent.com> for sending in the example
+ 	  that pointed this out.
 
 Mon Sep 20 14:35:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
