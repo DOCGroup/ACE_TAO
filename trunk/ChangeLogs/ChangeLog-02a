@@ -1,3 +1,9 @@
+Fri Apr  5 12:51:11 UTC 2002  Don Hinton  <dhinton@ieee.org>
+	
+	* ace/ACE.i (strnew): Added null pointer check to
+	  the wchar_t version so its behavior matches the char
+	  version.
+
 Fri Apr  5 11:40:00 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/ATM_Acceptor.h
