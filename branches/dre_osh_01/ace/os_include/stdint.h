@@ -2,19 +2,19 @@
 
 //=============================================================================
 /**
- *  @file    stdint.h
+ *  @file    os_stdint.h
  *
  *  integer types
  *
  *  $Id$
  *
- *  @author Don Hinton <dhinton@ieee.org>
+ *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
 //=============================================================================
 
-#ifndef ACE_OS_INCLUDE_STDINT_H
-#define ACE_OS_INCLUDE_STDINT_H
+#ifndef ACE_OS_INCLUDE_OS_STDINT_H
+#define ACE_OS_INCLUDE_OS_STDINT_H
 
 #include "ace/pre.h"
 
@@ -25,7 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (ACE_LACKS_STDINT_H)
-# include /**/ <stdint.h>
+#  include /**/ <stdint.h>
 #endif /* !ACE_LACKS_STDINT_H */
 
 // BSD style types
@@ -44,50 +44,80 @@
 #  endif /* ! defined (ACE_PSOS) */
 #endif  /* ACE_LACKS_SYS_TYPES_H */
 
-
+#if !defined (ACE_PSOSIM) && defined (ACE_PSOS_CANT_USE_SYS_TYPES)
+   // these are missing from the pSOS types.h file, and the compiler
+   // supplied types.h file collides with the pSOS version.
+#  if !defined (ACE_SHOULD_NOT_DEFINE_SYS_TYPES)
+     typedef unsigned char     u_char;
+     typedef unsigned short    u_short;
+#  endif /* ACE_SHOULD_NOT_DEFINE_SYS_TYPES */
+   typedef unsigned int      u_int;
+#  if !defined (ACE_SHOULD_NOT_DEFINE_SYS_TYPES)
+     typedef unsigned long     u_long;
+#  endif /* ACE_SHOULD_NOT_DEFINE_SYS_TYPES */
+   // These are defined in types.h included by (among others) pna.h
+#  if 0
+     typedef unsigned char     uchar_t;
+     typedef unsigned short    ushort_t;
+     typedef unsigned int      uint_t;
+     typedef unsigned long     ulong_t;
+#  endif /* 0 */
+     typedef char *            caddr_t;
+#  if defined (ACE_PSOS_DIAB_PPC)
+     // pid_t is defined in sys/types.h
+#    if 0
+       typedef unsigned long pid_t;
+#    endif /* 0 */
+#    define ACE_INVALID_PID ((pid_t) ~0)
+#  else /* !defined (ACE_PSOS_DIAB_PPC) */
+     typedef long pid_t;
+#    define ACE_INVALID_PID ((pid_t) -1)
+#  endif /* defined (ACE_PSOS_DIAB_PPC) */
+//      typedef unsigned char wchar_t;
+#endif /* ACE_PSOS_CANT_USE_SYS_TYPES */
 
 /* Define required types if missing */
 
 #if defined (ACE_LACKS_INT8_T)
-# if !defined (ACE_INT8_T_TYPE)
-#  define ACE_INT8_T_TYPE char
-# endif /* !ACE_INT8_T_TYPE */
-typedef ACE_INT8_T_TYPE int8_t;
+#  if !defined (ACE_INT8_T_TYPE)
+#    define ACE_INT8_T_TYPE char
+#  endif /* !ACE_INT8_T_TYPE */
+   typedef ACE_INT8_T_TYPE int8_t;
 #endif /* ACE_LACKS_INT8_T */
 
 #if defined (ACE_LACKS_UINT8_T)
-# if !defined (ACE_UINT8_T_TYPE)
-#  define ACE_UINT8_T_TYPE unsigned char
-# endif /* !ACE_UINT8_T_TYPE */
-typedef ACE_UINT8_T_TYPE int8_t;
+#  if !defined (ACE_UINT8_T_TYPE)
+#    define ACE_UINT8_T_TYPE unsigned char
+#  endif /* !ACE_UINT8_T_TYPE */
+   typedef ACE_UINT8_T_TYPE int8_t;
 #endif /* ACE_LACKS_UINT8_T */
 
 #if defined (ACE_LACKS_INT16_T)
-# if !defined (ACE_INT16_T_TYPE)
-#  define ACE_INT16_T_TYPE short
-# endif /* !ACE_INT16_T_TYPE */
-typedef ACE_INT16_T_TYPE int16_t;
+#  if !defined (ACE_INT16_T_TYPE)
+#    define ACE_INT16_T_TYPE short
+#  endif /* !ACE_INT16_T_TYPE */
+   typedef ACE_INT16_T_TYPE int16_t;
 #endif /* ACE_LACKS_INT16_T */
 
 #if defined (ACE_LACKS_UINT16_T)
-# if !defined (ACE_UINT16_T_TYPE)
-#  define ACE_UINT16_T_TYPE unsigned short
-# endif /* !ACE_UINT16_T_TYPE */
-typedef ACE_UINT16_T_TYPE int16_t;
+#  if !defined (ACE_UINT16_T_TYPE)
+#    define ACE_UINT16_T_TYPE unsigned short
+#  endif /* !ACE_UINT16_T_TYPE */
+   typedef ACE_UINT16_T_TYPE int16_t;
 #endif /* ACE_LACKS_UINT16_T */
 
 #if defined (ACE_LACKS_INT32_T)
-# if !defined (ACE_INT32_T_TYPE)
-#  define ACE_INT32_T_TYPE long
-# endif /* !ACE_INT32_T_TYPE */
-typedef ACE_INT32_T_TYPE int32_t;
+#  if !defined (ACE_INT32_T_TYPE)
+#    define ACE_INT32_T_TYPE long
+#  endif /* !ACE_INT32_T_TYPE */
+   typedef ACE_INT32_T_TYPE int32_t;
 #endif /* ACE_LACKS_INT32_T */
 
 #if defined (ACE_LACKS_UINT32_T)
-# if !defined (ACE_UINT32_T_TYPE)
-#  define ACE_UINT32_T_TYPE unsigned long
-# endif /* !ACE_UINT32_T_TYPE */
-typedef ACE_UINT32_T_TYPE int32_t;
+#  if !defined (ACE_UINT32_T_TYPE)
+#    define ACE_UINT32_T_TYPE unsigned long
+#  endif /* !ACE_UINT32_T_TYPE */
+   typedef ACE_UINT32_T_TYPE int32_t;
 #endif /* ACE_LACKS_UIN32_T */
 
 // @todo pull in ACE class here
@@ -112,17 +142,17 @@ environment and the application is being built in the
 _POSIX_V6_LPBIG_OFFBIG programming environment.
 */
 #if defined (ACE_LACKS_INT64_T)
-# if !defined (ACE_INT64_T_TYPE)
-#  define ACE_INT64_T_TYPE long
-# endif /* !ACE_INT64_T_TYPE */
-typedef ACE_INT64_T_TYPE int64_t;
+#  if !defined (ACE_INT64_T_TYPE)
+#    define ACE_INT64_T_TYPE long
+#  endif /* !ACE_INT64_T_TYPE */
+   typedef ACE_INT64_T_TYPE int64_t;
 #endif /* ACE_LACKS_INT64_T */
 
 #if defined (ACE_LACKS_UINT64_T)
-# if !defined (ACE_UINT64_T_TYPE)
-#  define ACE_UINT64_T_TYPE unsigned long
-# endif /* !ACE_UINT64_T_TYPE */
-typedef ACE_UINT64_T_TYPE int64_t;
+#  if !defined (ACE_UINT64_T_TYPE)
+#    define ACE_UINT64_T_TYPE unsigned long
+#  endif /* !ACE_UINT64_T_TYPE */
+   typedef ACE_UINT64_T_TYPE int64_t;
 #endif /* ACE_LACKS_UIN64_T */
 
 // @todo move the ACE_INT## typedefs here so that ACE_INT64 will
@@ -132,4 +162,4 @@ typedef ACE_UINT64_T_TYPE int64_t;
 // @todo perhaps add macros
 
 #include "ace/post.h"
-#endif /* ACE_OS_INCLUDE_STDINT_H */
+#endif /* ACE_OS_INCLUDE_OS_STDINT_H */

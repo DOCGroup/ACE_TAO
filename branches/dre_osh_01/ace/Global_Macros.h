@@ -432,6 +432,216 @@ friend class ace_dewarn_gplusplus
 #   endif /* defined (__Lynx__) && __LYNXOS_SDK_VERSION == 199701L */
 # endif /* defined ! ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR */
 
+
+/*******************************************************************/
+
+/// Service Objects, i.e., objects dynamically loaded via the service
+/// configurator, must provide a destructor function with the
+/// following prototype to perform object cleanup.
+typedef void (*ACE_Service_Object_Exterminator)(void *);
+
+/** @name Service Configurator macros
+ *
+ * The following macros are used to define helper objects used in
+ * ACE's Service Configurator.  This is an implementation of the
+ * Service Configurator pattern:
+ *
+ * http://www.cs.wustl.edu/~schmidt/PDF/SvcConf.pdf
+ *
+ * The intent of this pattern is to allow developers to dynamically
+ * load and configure services into a system.  With a little help from
+ * this macros statically linked services can also be dynamically
+ * configured.
+ *
+ * More details about this component are available in the documentation
+ * of the ACE_Service_Configurator class and also
+ * ACE_Dynamic_Service.
+ *
+ * Notice that in all the macros the SERVICE_CLASS parameter must be
+ * the name of a class derived from ACE_Service_Object.
+ */
+//@{
+/// Declare a the data structure required to register a statically
+/// linked service into the service configurator.
+/**
+ * The macro should be used in the header file where the service is
+ * declared, its only argument is usually the name of the class that
+ * implements the service.
+ *
+ * @param SERVICE_CLASS The name of the class implementing the
+ *   service.
+ */
+# define ACE_STATIC_SVC_DECLARE(SERVICE_CLASS) \
+extern ACE_Static_Svc_Descriptor ace_svc_desc_##SERVICE_CLASS ;
+
+/// As ACE_STATIC_SVC_DECLARE, but using an export macro for NT
+/// compilers.
+/**
+ * NT compilers require the use of explicit directives to export and
+ * import symbols from a DLL.  If you need to define a service in a
+ * dynamic library you should use this version instead.
+ * Normally ACE uses a macro to inject the correct export/import
+ * directives on NT.  Naturally it also the macro expands to a blank
+ * on platforms that do not require such directives.
+ * The first argument (EXPORT_NAME) is the prefix for this export
+ * macro, the full name is formed by appending _Export.
+ * ACE provides tools to generate header files that define the macro
+ * correctly on all platforms, please see
+ * $ACE_ROOT/bin/generate_export_file.pl
+ *
+ * @param EXPORT_NAME The export macro name prefix.
+ * @param SERVICE_CLASS The name of the class implementing the service.
+ */
+#define ACE_STATIC_SVC_DECLARE_EXPORT(EXPORT_NAME,SERVICE_CLASS) \
+extern EXPORT_NAME##_Export ACE_Static_Svc_Descriptor ace_svc_desc_##SERVICE_CLASS;
+
+/// Define the data structure used to register a statically linked
+/// service into the Service Configurator.
+/**
+ * The service configurator requires several arguments to build and
+ * control an statically linked service, including its name, the
+ * factory function used to construct the service, and some flags.
+ * All those parameters are configured in a single structure, an
+ * instance of this structure is statically initialized using the
+ * following macro.
+ *
+ * @param SERVICE_CLASS The name of the class that implements the
+ *    service, must be derived (directly or indirectly) from
+ *    ACE_Service_Object.
+ * @param NAME The name for this service, this name is used by the
+ *    service configurator to match configuration options provided in
+ *    the svc.conf file.
+ * @param TYPE The type of object.  Objects can be streams or service
+ *    objects.  Please read the ACE_Service_Configurator and ASX
+ *    documentation for more details.
+ * @param FN The name of the factory function, usually the
+ *    ACE_SVC_NAME macro can be used to generate the name.  The
+ *    factory function is often defined using ACE_FACTORY_DECLARE and
+ *    ACE_FACTORY_DEFINE.
+ * @param FLAGS Flags to control the ownership and lifecycle of the
+ *    object. Please read the ACE_Service_Configurator documentation
+ *    for more details.
+ * @param ACTIVE If not zero then a thread will be dedicate to the
+ *    service. Please read the ACE_Service_Configurator documentation
+ *    for more details.
+ */
+#define ACE_STATIC_SVC_DEFINE(SERVICE_CLASS, NAME, TYPE, FN, FLAGS, ACTIVE) \
+ACE_Static_Svc_Descriptor ace_svc_desc_##SERVICE_CLASS = { NAME, TYPE, FN, FLAGS, ACTIVE };
+
+/// Automatically register a service with the service configurator
+/**
+ * In some applications the services must be automatically registered
+ * with the service configurator, before main() starts.
+ * The ACE_STATIC_SVC_REQUIRE macro defines a class whose constructor
+ * register the service, it also defines a static instance of that
+ * class to ensure that the service is registered before main.
+ *
+ * On platforms that lack adequate support for static C++ objects the
+ * macro ACE_STATIC_SVC_REGISTER can be used to explicitly register
+ * the service.
+ *
+ * @todo One class per-Service_Object seems wasteful.  It should be
+ *   possible to define a single class and re-use it for all the
+ *   service objects, just by passing the Service_Descriptor as an
+ *   argument to the constructor.
+ */
+#if defined(ACE_LACKS_STATIC_CONSTRUCTORS)
+# define ACE_STATIC_SVC_REQUIRE(SERVICE_CLASS)\
+class ACE_Static_Svc_##SERVICE_CLASS {\
+public:\
+  ACE_Static_Svc_##SERVICE_CLASS() { \
+    ACE_Service_Config::static_svcs ()->insert (\
+         &ace_svc_desc_##SERVICE_CLASS); \
+  } \
+};
+#define ACE_STATIC_SVC_REGISTER(SERVICE_CLASS)\
+ACE_Static_Svc_##SERVICE_CLASS ace_static_svc_##SERVICE_CLASS
+
+#else /* !ACE_LACKS_STATIC_CONSTRUCTORS */
+
+# define ACE_STATIC_SVC_REQUIRE(SERVICE_CLASS)\
+class ACE_Static_Svc_##SERVICE_CLASS {\
+public:\
+  ACE_Static_Svc_##SERVICE_CLASS() { \
+    ACE_Service_Config::static_svcs ()->insert (\
+         &ace_svc_desc_##SERVICE_CLASS); \
+    } \
+};\
+static ACE_Static_Svc_##SERVICE_CLASS ace_static_svc_##SERVICE_CLASS;
+#define ACE_STATIC_SVC_REGISTER(SERVICE_CLASS) do {} while (0)
+
+#endif /* !ACE_LACKS_STATIC_CONSTRUCTORS */
+
+/// Declare the factory method used to create dynamically loadable
+/// services.
+/**
+ * Once the service implementation is dynamically loaded the Service
+ * Configurator uses a factory method to create the object.
+ * This macro declares such a factory function with the proper
+ * interface and export macros.
+ * Normally used in the header file that declares the service
+ * implementation.
+ *
+ * @param CLS must match the prefix of the export macro used for this
+ *        service.
+ * @param SERVICE_CLASS must match the name of the class that
+ *        implements the service.
+ *
+ */
+#define ACE_FACTORY_DECLARE(CLS,SERVICE_CLASS) \
+extern "C" CLS##_Export ACE_Service_Object *\
+_make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *);
+
+/// Define the factory method (and destructor) for a dynamically
+/// loadable service.
+/**
+ * Use with arguments matching ACE_FACTORY_DECLARE.
+ * Normally used in the .cpp file that defines the service
+ * implementation.
+ *
+ * This macro defines both the factory method and the function used to
+ * cleanup the service object.
+ *
+ * If this macro is used to define a factory function that need not be
+ * exported (for example, in a static service situation), CLS can be
+ * specified as ACE_Local_Service.
+ */
+# define ACE_Local_Service_Export
+
+# define ACE_FACTORY_DEFINE(CLS,SERVICE_CLASS) \
+void _gobble_##SERVICE_CLASS (void *p) { \
+  ACE_Service_Object *_p = ACE_static_cast (ACE_Service_Object *, p); \
+  ACE_ASSERT (_p != 0); \
+  delete _p; } \
+extern "C" CLS##_Export ACE_Service_Object *\
+_make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
+{ \
+  ACE_TRACE (#SERVICE_CLASS); \
+  if (gobbler != 0) \
+    *gobbler = (ACE_Service_Object_Exterminator) _gobble_##SERVICE_CLASS; \
+  return new SERVICE_CLASS; \
+}
+
+/// The canonical name for a service factory method
+#define ACE_SVC_NAME(SERVICE_CLASS) _make_##SERVICE_CLASS
+
+/// The canonical way to invoke (i.e. construct) a service factory
+/// method.
+#define ACE_SVC_INVOKE(SERVICE_CLASS) _make_##SERVICE_CLASS (0)
+
+//@}
+
+/** @name Helper macros for services defined in the netsvcs library.
+ *
+ * The ACE services defined in netsvcs use this helper macros for
+ * simplicity.
+ *
+ */
+//@{
+# define ACE_SVC_FACTORY_DECLARE(X) ACE_FACTORY_DECLARE (ACE_Svc, X)
+# define ACE_SVC_FACTORY_DEFINE(X) ACE_FACTORY_DEFINE (ACE_Svc, X)
+//@}
+
 #include "ace/post.h"
 
 #endif /*ACE_GLOBAL_MACROS_H*/

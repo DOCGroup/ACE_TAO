@@ -2,19 +2,19 @@
 
 //=============================================================================
 /**
- *  @file    pthread.h
+ *  @file    os_pthread.h
  *
  *  threads
  *
  *  $Id$
  *
- *  @author Don Hinton <dhinton@ieee.org>
+ *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
 //=============================================================================
 
-#ifndef ACE_OS_INCLUDE_PTHREAD_H
-#define ACE_OS_INCLUDE_PTHREAD_H
+#ifndef ACE_OS_INCLUDE_OS_PTHREAD_H
+#define ACE_OS_INCLUDE_OS_PTHREAD_H
 
 #include "ace/pre.h"
 
@@ -28,16 +28,14 @@
 
 // This needs to go here *first* to avoid problems with AIX.
 # if defined (ACE_HAS_PTHREADS)
-//extern "C" {
 #   define ACE_DONT_INCLUDE_ACE_SIGNAL_H
 #     include "ace/os_include/signal.h"
 #   undef ACE_DONT_INCLUDE_ACE_SIGNAL_H
-  //#   include "ace/os_include/pthread.h"
 #   if defined (DIGITAL_UNIX)
 #     define pthread_self __pthread_self
 extern "C" pthread_t pthread_self (void);
 #   endif /* DIGITAL_UNIX */
-//}
+
 #   if defined (HPUX_10)
 //    HP-UX 10 needs to see cma_sigwait, and since _CMA_NOWRAPPERS_ is defined,
 //    this header does not get included from pthreads.h.
@@ -47,7 +45,9 @@ extern "C" pthread_t pthread_self (void);
 
 
 #if !defined (ACE_LACKS_PTHREAD_H)
-# include /**/ <pthread.h>
+   extern "C" {
+#  include /**/ <pthread.h>
+   }
 #endif /* !ACE_LACKS_PTHREAD_H */
 
 
@@ -394,4 +394,4 @@ protected:
 #endif /* ACE_HAS_PTHREADS */
 
 #include "ace/post.h"
-#endif /* ACE_OS_INCLUDE_PTHREAD_H */
+#endif /* ACE_OS_INCLUDE_OS_PTHREAD_H */

@@ -2,19 +2,19 @@
 
 //=============================================================================
 /**
- *  @file    regex.h
+ *  @file    os_regex.h
  *
  *  regular expression matching types
  *
  *  $Id$
  *
- *  @author Don Hinton <dhinton@ieee.org>
+ *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
 //=============================================================================
 
-#ifndef ACE_OS_INCLUDE_REGEX_H
-#define ACE_OS_INCLUDE_REGEX_H
+#ifndef ACE_OS_INCLUDE_OS_REGEX_H
+#define ACE_OS_INCLUDE_OS_REGEX_H
 
 #include "ace/pre.h"
 
@@ -31,4 +31,4 @@
 #endif /* !ACE_LACKS_REGEX_H */
 
 #include "ace/post.h"
-#endif /* ACE_OS_INCLUDE_REGEX_H */
+#endif /* ACE_OS_INCLUDE_OS_REGEX_H */

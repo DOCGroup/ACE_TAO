@@ -2,19 +2,19 @@
 
 //=============================================================================
 /**
- *  @file    trace.h
+ *  @file    os_trace.h
  *
  *  tracing
  *
  *  $Id$
  *
- *  @author Don Hinton <dhinton@ieee.org>
+ *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
 //=============================================================================
 
-#ifndef ACE_OS_INCLUDE_TRACE_H
-#define ACE_OS_INCLUDE_TRACE_H
+#ifndef ACE_OS_INCLUDE_OS_TRACE_H
+#define ACE_OS_INCLUDE_OS_TRACE_H
 
 #include "ace/pre.h"
 
@@ -27,8 +27,8 @@
 #include "ace/os_include/sys/types.h"
 
 #if !defined (ACE_LACKS_TRACE_H)
-# include /**/ <trace.h>
+#  include /**/ <trace.h>
 #endif /* !ACE_LACKS_TRACE_H */
 
 #include "ace/post.h"
-#endif /* ACE_OS_INCLUDE_TRACE_H */
+#endif /* ACE_OS_INCLUDE_OS_TRACE_H */

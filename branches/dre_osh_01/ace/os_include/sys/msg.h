@@ -2,19 +2,19 @@
 
 //=============================================================================
 /**
- *  @file    msg.h
+ *  @file    os_msg.h
  *
  *  XSI message queue structures
  *
  *  $Id$
  *
- *  @author Don Hinton <dhinton@ieee.org>
+ *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
 //=============================================================================
 
-#ifndef ACE_OS_INCLUDE_SYS_MSG_H
-#define ACE_OS_INCLUDE_SYS_MSG_H
+#ifndef ACE_OS_INCLUDE_SYS_OS_MSG_H
+#define ACE_OS_INCLUDE_SYS_OS_MSG_H
 
 #include "ace/pre.h"
 
@@ -38,22 +38,22 @@
 #endif /* !ACE_LACKS_SYS_MSG_H */
 
 #if defined (ACE_LACKS_MSGBUF_T)
-struct msgbuf {};
+   struct msgbuf {};
 #endif /* ACE_LACKS_MSGBUF_T */
 
 #if defined (ACE_LACKS_SYSV_MSQ_PROTOS)
-extern "C"
-{
-  int msgget (key_t, int);
-  int msgrcv (int, void *, size_t, long, int);
-  int msgsnd (int, const void *, size_t, int);
-  int msgctl (int, int, struct msqid_ds *);
-}
+   extern "C"
+   {
+     int msgget (key_t, int);
+     int msgrcv (int, void *, size_t, long, int);
+     int msgsnd (int, const void *, size_t, int);
+     int msgctl (int, int, struct msqid_ds *);
+   }
 #endif /* ACE_LACKS_SYSV_MSQ_PROTOS */
 
 #if defined (ACE_WIN32)
-struct msqid_ds {};
+   struct msqid_ds {};
 #endif /* ACE_WIN32 */
 
 #include "ace/post.h"
-#endif /* ACE_OS_INCLUDE_SYS_MSG_H */
+#endif /* ACE_OS_INCLUDE_SYS_OS_MSG_H */

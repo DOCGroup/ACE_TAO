@@ -2,19 +2,19 @@
 
 //=============================================================================
 /**
- *  @file    iconv.h
+ *  @file    os_iconv.h
  *
  *  codeset conversion facility
  *
  *  $Id$
  *
- *  @author Don Hinton <dhinton@ieee.org>
+ *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
 //=============================================================================
 
-#ifndef ACE_OS_INCLUDE_ICONV_H
-#define ACE_OS_INCLUDE_ICONV_H
+#ifndef ACE_OS_INCLUDE_OS_ICONV_H
+#define ACE_OS_INCLUDE_OS_ICONV_H
 
 #include "ace/pre.h"
 
@@ -31,4 +31,4 @@
 #endif /* !ACE_LACKS_ICONV_H */
 
 #include "ace/post.h"
-#endif /* ACE_OS_INCLUDE_ICONV_H */
+#endif /* ACE_OS_INCLUDE_OS_ICONV_H */

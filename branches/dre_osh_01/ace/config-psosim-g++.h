@@ -126,6 +126,10 @@
 //                                                            //
 ////////////////////////////////////////////////////////////////
 
+/* In the *simulator* environment, use unsigned int for size_t */
+#define size_t  unsigned int
+
+#define TCP_
 
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 

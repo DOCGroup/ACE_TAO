@@ -2,19 +2,19 @@
 
 //=============================================================================
 /**
- *  @file    string.h
+ *  @file    os_string.h
  *
  *  string operations
  *
  *  $Id$
  *
- *  @author Don Hinton <dhinton@ieee.org>
+ *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
 //=============================================================================
 
-#ifndef ACE_OS_INCLUDE_STRING_H
-#define ACE_OS_INCLUDE_STRING_H
+#ifndef ACE_OS_INCLUDE_OS_STRING_H
+#define ACE_OS_INCLUDE_OS_STRING_H
 
 #include "ace/pre.h"
 
@@ -27,11 +27,11 @@
 #include "ace/os_include/stddef.h"
 
 #if !defined (ACE_LACKS_STRING_H)
-# include /**/ <string.h>
+#  include /**/ <string.h>
 #endif /* !ACE_LACKS_STRING_H */
 
 #if defined (ACE_LACKS_STRTOK_R_PROTOTYPE) && !defined (_POSIX_SOURCE)
-extern "C" char *strtok_r (char *s, const char *delim, char **save_ptr);
+  extern "C" char *strtok_r (char *s, const char *delim, char **save_ptr);
 #endif  /* ACE_LACKS_STRTOK_R_PROTOTYPE */
 
 #if defined (__BORLANDC__)
@@ -50,8 +50,8 @@ extern "C" char *strtok_r (char *s, const char *delim, char **save_ptr);
    // that are not included because there is already an identically
    // named file provided with pSOS, which does not have this info
    // from compiler supplied header
-   extern char *strdup (const char *);  // string.h
+   extern "C" char *strdup (const char *);  // string.h
 #endif /* ACE_PSOS_SNARFS_HEADER_INFO */
 
 #include "ace/post.h"
-#endif /* ACE_OS_INCLUDE_STRING_H */
+#endif /* ACE_OS_INCLUDE_OS_STRING_H */

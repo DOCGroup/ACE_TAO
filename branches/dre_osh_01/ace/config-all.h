@@ -22,6 +22,67 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#   define ACE_BITS_PER_ULONG (8 * sizeof (u_long))
+
+#if !defined (ACE_OSTREAM_TYPE)
+# if defined (ACE_LACKS_IOSTREAM_TOTALLY)
+#   define ACE_OSTREAM_TYPE FILE
+# else  /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+#   define ACE_OSTREAM_TYPE ostream
+# endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+#endif /* ! ACE_OSTREAM_TYPE */
+
+#if !defined (ACE_DEFAULT_LOG_STREAM)
+# if defined (ACE_LACKS_IOSTREAM_TOTALLY)
+#   define ACE_DEFAULT_LOG_STREAM 0
+# else  /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+#   define ACE_DEFAULT_LOG_STREAM (&cerr)
+# endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+#endif /* ! ACE_DEFAULT_LOG_STREAM */
+
+// These two are only for backward compatibility. You should avoid
+// using them if not necessary.
+# define ACE_SYNCH_1 ACE_SYNCH_DECL
+# define ACE_SYNCH_2 ACE_SYNCH_USE
+
+// For Win32 compatibility...
+# if !defined (ACE_WSOCK_VERSION)
+#   define ACE_WSOCK_VERSION 0, 0
+# endif /* ACE_WSOCK_VERSION */
+
+# if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+#   define ACE_MT(X) X
+#   if !defined (_REENTRANT)
+#     define _REENTRANT
+#   endif /* _REENTRANT */
+# else
+#   define ACE_MT(X)
+# endif /* ACE_MT_SAFE  todo: this needs to go in a header higher up...*/
+
+# if defined (ACE_HAS_USING_KEYWORD)
+#   define ACE_USING using
+# else
+#   define ACE_USING
+# endif /* ACE_HAS_USING_KEYWORD */
+
+# if defined (ACE_HAS_TYPENAME_KEYWORD)
+#   define ACE_TYPENAME typename
+# else
+#   define ACE_TYPENAME
+# endif /* ACE_HAS_TYPENAME_KEYWORD */
+
+# if defined (ACE_HAS_STD_TEMPLATE_SPECIALIZATION)
+#   define ACE_TEMPLATE_SPECIALIZATION template<>
+# else
+#   define ACE_TEMPLATE_SPECIALIZATION
+# endif /* ACE_HAS_STD_TEMPLATE_SPECIALIZATION */
+
+# if defined (ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION)
+#   define ACE_TEMPLATE_METHOD_SPECIALIZATION template<>
+# else
+#   define ACE_TEMPLATE_METHOD_SPECIALIZATION
+# endif /* ACE_HAS_STD_TEMPLATE_SPECIALIZATION */
+
 // =========================================================================
 // Perfect Multicast filting refers to RFC 3376, where a socket is only
 // delivered dgrams for groups joined even if it didn't bind the group

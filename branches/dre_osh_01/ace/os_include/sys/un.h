@@ -2,19 +2,19 @@
 
 //=============================================================================
 /**
- *  @file    un.h
+ *  @file    os_un.h
  *
  *  definitions for UNIX domain sockets
  *
  *  $Id$
  *
- *  @author Don Hinton <dhinton@ieee.org>
+ *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
 //=============================================================================
 
-#ifndef ACE_OS_INCLUDE_SYS_UN_H
-#define ACE_OS_INCLUDE_SYS_UN_H
+#ifndef ACE_OS_INCLUDE_SYS_OS_UN_H
+#define ACE_OS_INCLUDE_SYS_OS_UN_H
 
 #include "ace/pre.h"
 
@@ -27,8 +27,8 @@
 #include "ace/os_include/sys/socket.h"
 
 #if !defined (ACE_LACKS_SYS_UN_H)
-# include /**/ <sys/un.h>
+#  include /**/ <sys/un.h>
 #endif /* !ACE_LACKS_SYS_UN_H */
 
 #include "ace/post.h"
-#endif /* ACE_OS_INCLUDE_SYS_UN_H */
+#endif /* ACE_OS_INCLUDE_SYS_OS_UN_H */
