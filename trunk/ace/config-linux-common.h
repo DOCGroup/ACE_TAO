@@ -156,11 +156,16 @@
 #   define ACE_POSIX_AIOCB_PROACTOR
 # endif  /* ACE_POSIX_SIG_PROACTOR */
 
-// Some misc wide character stuff
-# define ACE_LACKS_WCSDUP_PROTOTYPE
+#if __GLIBC__ >= 2
+// glibc 2 and higher has wchar support
+# define ACE_HAS_XPG4_MULTIBYTE_CHAR
+#endif
 
-// Linux has wcstok, but not the kind we are looking for.
+#if __GLIBC__ < 2
+// These are present in glibc 2 and higher
 # define ACE_LACKS_WCSTOK
+# define ACE_LACKS_WCSDUP_PROTOTYPE
+#endif /* __GLIBC__ < 2 */
 
 #define ACE_LACKS_ITOW
 #define ACE_LACKS_WCSICMP

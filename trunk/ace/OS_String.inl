@@ -530,7 +530,12 @@ ACE_OS_String::strtok (char *s, const char *tokens)
 ACE_INLINE wchar_t *
 ACE_OS_String::strtok (wchar_t *s, const wchar_t *tokens)
 {
+#if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
+  static wchar_t *lasts;
+  return ::wcstok (s, tokens, &lasts);
+#else
   return ::wcstok (s, tokens);
+#endif /* ACE_HAS_XPG4_MULTIBYTE_CHAR */
 }
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOK */
 
