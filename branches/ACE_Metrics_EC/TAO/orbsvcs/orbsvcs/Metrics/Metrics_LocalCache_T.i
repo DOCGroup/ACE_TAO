@@ -1236,7 +1236,7 @@ TAO_Metrics_ReportingLocalCache<ACE_LOCK, ALLOCATOR>::register_probes (Metrics::
             (const char *) this->dequeue_names_ [i];
       }
 
-      logger->set_identities (probe_identities, ACE_TRY_ENV);
+      logger->set_identities (probe_identities);
       ACE_TRY_CHECK;
    }
    ACE_CATCHANY
@@ -1343,7 +1343,7 @@ TAO_Metrics_ReportingLocalCache<ACE_LOCK, ALLOCATOR>::output_statistics (Metrics
     // Iterate over registered upcall data and harvest those probes, and
     // the aggregate QoS data too.
     typename TAO_Metrics_ReportingLocalCache<ACE_LOCK,ALLOCATOR>::TAO_Metrics_Cache_Data * data = 0;
-      
+
     typename TAO_Metrics_ReportingLocalCache<ACE_LOCK, ALLOCATOR>::METRICS_MONITOR_MAP_ITERATOR
       data_iter (this->monitor_maps_ [this->consumer_index_]);
 
@@ -1548,7 +1548,7 @@ register_base_metrics (const char *name,
 
       ACE_TRY_NEW_ENV
       {
-         logger->set_identity (probe_identity, ACE_TRY_ENV);
+         logger->set_identity (probe_identity);
          ACE_TRY_CHECK;
       }
       ACE_CATCHANY
