@@ -280,7 +280,7 @@ for ACE.  Ideally, ACE will compile on any POSIX conforming OS.
       let us know) like this: <p>
 
       <code>ln -sf $ACE_ROOT/ace/libACE.so $ACE_ROOT/ace/libACE.so.4.5</code><p>
-      
+
   <li><b>NetBSD</b><p>
 
       Like FreeBSD, NetBSD's <code>ld.so</code> also requires
@@ -819,9 +819,17 @@ we used for VxWorks 5.3.1/g++ 2.7.2:
 #define INCLUDE_WINDVIEW	/* WindView command server */
 </pre>
 
+If you use TAO, it's also a good idea to increase the
+<code>NUM_FILES</code> parameter from its default of 50 to,
+say, 1000.<p>
+
+Please note that those VxWorks kernel configuration parameters
+are set in the VxWorks configAll.h file.  You must rebuild your
+VxWorks kernel after modifying that file.<p>
+
 It probably wouldn't take much effort to modify the
 ACE library to not require <code>INCLUDE_CPLUS_IOSTREAMS</code>,
-if necessary.
+if necessary.<p>
 
 If you're first getting started with ACE and/or VxWorks, I recommend
 just building the ACE library and tests first.  (Some of the ACE
