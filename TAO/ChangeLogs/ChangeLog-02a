@@ -1,3 +1,11 @@
+Fri Aug 11 08:12:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Exception.cpp:
+
+	  In the macros that generate Any operators for system
+	  exceptions, changed some ACE_CHECKs to ACE_TRY_CHECKs.
+	  This was caught by the g++ minimum CORBA build.
+
 Fri Aug 11 05:50:59 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/IDL_Test/Makefile.bor: Added IDLDIR = . so this
