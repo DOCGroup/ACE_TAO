@@ -15,7 +15,7 @@
 #if !defined (ACE_TIMER_HEAP_T_H)
 #define ACE_TIMER_HEAP_T_H
 
-#include "ace/Timer_Queue.h"
+#include "ace/Timer_Queue_T.h"
 #include "ace/Free_List.h"
 #include "ace/Containers.h"
 
