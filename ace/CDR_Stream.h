@@ -927,6 +927,7 @@ public:
   ACE_Char_Codeset_Translator ();
 
   virtual ~ACE_Char_Codeset_Translator () {};
+
   /// Increment the reference count. 
   void add_ref ();
   void remove_ref ();
