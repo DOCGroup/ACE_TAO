@@ -29,9 +29,9 @@ LIBDIR=${CLASSINFOLIBDIR-"$OSE_VERSION_ROOT/bin"}
 
 INFO2INFO="$BINDIR/info2info"
 
-AWK="nawk"
+AWK="gawk"
 
-if test "$AWK" = "nawk"
+if test "$AWK" = "gawk"
 then
   VARG="-v"
 fi

@@ -1,4 +1,4 @@
-#!/bin/nawk
+#!/usr/bin/gawk
 
 
 # defining macros - eat them 
