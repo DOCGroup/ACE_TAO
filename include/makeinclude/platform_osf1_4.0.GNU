@@ -17,8 +17,14 @@ ifndef CXX_VERSION
   CXX_VERSION := $(shell $(CXX) -V)
 endif # CXX_VERSION
 
+CXX_1016 =
 CXX_1136 =
 CXX_1180 =
+
+ifneq (,$(optimize))
+  CXX_1016 = ,1016
+endif # optimize
+
 #### 6.1-029 and later support msg 1136.  We disable it by default.
 ifneq (6.0-,$(findstring 6.0-,$(CXX_VERSION)))
 ifeq (6.1-,$(findstring 6.1-,$(CXX_VERSION)))
@@ -45,12 +51,13 @@ endif # ! 6.0
 #  610: nonoverriding_function_decl
 #  835: unreferenced_function_param
 #  839: no_corresponding_delete (until this is fixed in libTAO)
+# 1016: expected type is incompatible with declared type of int (in bzero ())
 # 1136: conversion to integral type of smaller size could lose data
 # 1180: statement causes unreachable return
 ifneq ($(CXX_VER),CXX_5)
   WARNING_FLAGS += -w0 -msg_display_number
   WARNING_FLAGS += \
-    -msg_disable 9,174,193,236,401,610,835,839$(CXX_1136)$(CXX_1180)
+    -msg_disable 9,174,193,236,401,610,835,839$(CXX_1016)$(CXX_1136)$(CXX_1180)
 endif # 6.0 or later
 
 CCFLAGS         += $(CFLAGS) -ptr ptrepository $(WARNING_FLAGS)
