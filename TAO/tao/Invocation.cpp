@@ -66,8 +66,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Invocation_Timeprobe_Description,
 // restructuring an ORB core in terms of asynchrony.
 
 TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
-                                          const char *operation,
-                                          TAO_ORB_Core* orb_core)
+                                                      const char *operation,
+                                                      TAO_ORB_Core* orb_core)
   : stub_ (stub),
     opname_ (operation),
     request_id_ (0),
@@ -85,8 +85,8 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
 
 TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
 {
-  if (this->transport_ != 0)
-    this->transport_->idle ();
+  //if (this->transport_ != 0)
+  //this->transport_->idle ();
 }
 
 // The public API involves creating an invocation, starting it, filling
@@ -388,9 +388,9 @@ TAO_GIOP_Twoway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 int
 TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
                                     CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,CORBA::UnknownUserException))
+  ACE_THROW_SPEC ((CORBA::SystemException,CORBA::UnknownUserException))
 {
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_INVOCATION_INVOKE_START);
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_Invocation_INVOKE_START);
 
   int retval = this->invoke_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (retval);
@@ -774,7 +774,6 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
     this->transport_->send_request (this->orb_core_,
                                     this->out_stream_,
                                     1);
-
 
   if (result == -1)
     {

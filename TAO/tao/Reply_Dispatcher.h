@@ -53,6 +53,8 @@ public:
   // transports.
 };
 
+// *********************************************************************
+
 class TAO_Export TAO_Synch_Reply_Dispatcher : public TAO_Reply_Dispatcher
 {
   // = TITLE
@@ -82,7 +84,12 @@ public:
                               const TAO_GIOP_Version& version,
                               TAO_GIOP_ServiceContextList& reply_ctx,
                               TAO_GIOP_Message_State* message_state);
+  // Dispatch the reply. Copy the buffers and return. Since the
+  // invocation is synchronous demarshalling will take place on the
+  // stack.
+
   virtual TAO_GIOP_Message_State *message_state (void) const;
+  // Return the message state of this invocation.
 
 private:
   CORBA::ULong reply_status_;
@@ -97,6 +104,60 @@ private:
   TAO_GIOP_Message_State *message_state_;
   // CDR stream for reading the input.
 };
+
+// *********************************************************************
+
+class TAO_Export TAO_Asynch_Reply_Dispatcher : public TAO_Reply_Dispatcher
+{
+  // = TITLE
+  //
+  //     Reply dispatcher for Asynchoronous Method Invocation (AMI)s. 
+  //
+  // = DESCRIPTION
+  //
+
+public:
+  TAO_Asynch_Reply_Dispatcher (TAO_GIOP_Message_State* message_state);
+  // Constructor.
+
+  virtual ~TAO_Asynch_Reply_Dispatcher (void);
+  // Destructor.
+
+  CORBA::ULong reply_status (void) const;
+  // Get the reply status.
+
+  const TAO_GIOP_Version& version (void) const;
+  // Get the GIOP version
+
+  TAO_GIOP_ServiceContextList& reply_ctx (void);
+  // Get the reply context
+
+  virtual int dispatch_reply (CORBA::ULong reply_status,
+                              const TAO_GIOP_Version& version,
+                              TAO_GIOP_ServiceContextList& reply_ctx,
+                              TAO_GIOP_Message_State* message_state);
+  // Dispatch the reply. This involves demarshalling the reply and
+  // calling the appropriate call back hook method on the reply
+  // handler. 
+
+  virtual TAO_GIOP_Message_State *message_state (void) const;
+  // Return the message state.
+
+private:
+  CORBA::ULong reply_status_;
+  // Reply or LocateReply status.
+
+  TAO_GIOP_Version version_;
+  // The version
+
+  TAO_GIOP_ServiceContextList reply_ctx_;
+  // The service context list
+
+  TAO_GIOP_Message_State *message_state_;
+  // CDR stream for reading the input.
+};
+
+// *********************************************************************
 
 #if defined (__ACE_INLINE__)
 #include "tao/Reply_Dispatcher.i"
