@@ -1,3 +1,13 @@
+Mon Feb 09 14:52:25 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_chorus_ghs.GNU: added include path.
+
+        * ace/config-chorus.h: with GreenHills, removed
+          ACE_HAS_WCHAR_TYPEDEFS_CHAR and ACE_LACKS_UNISTD_H.  We'll
+          see if --multibyte_chars --wchar_t_keyword work.
+
+        * ace/OS.h: added #include <stdfileio.h> with GreenHills/Chorus.
+
 Sun Feb  8 15:33:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* include/makeinclude/wrapper_macros.GNU:
