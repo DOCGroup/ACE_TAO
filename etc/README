@@ -4,7 +4,7 @@ Svc_Conf_[ly].cpp.diff are use to patch their respective files in
 ACE_wrappers/ace.  They are used by Makefile in that directory, so
 users don't ordinarily need to be concerned with them.
 
-To updated Svc_Conf_l.cpp.diff:
+To update Svc_Conf_l.cpp.diff:
 
 1) cd to ACE_wrappers/ace.
 2) Create the old version of the file in Svc_Conf_l.cpp.orig.
