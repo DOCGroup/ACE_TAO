@@ -1,34 +1,43 @@
+Wed Feb 25 10:43:32 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/config-lynxos.h:
+
+          Fixed the portion of the header that determines whether we are
+          building on LynxOS 4.0.x or not.  Thanks to Olli Savia
+          <ops@iki.fi> for reporting this problem and testing my changes on
+          LynxOS 3.1.0.
+
 Tue Feb 24 17:31:22 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/Reactor/Client.cpp: Fixed manipulation and iterations_
-	  count and way that memory is copied into a new ACE_Message_Block.
-	  Thanks to Karen L. Regner <karen.regner@swri.org> for reporting
-	  these problems.
+        * examples/APG/Reactor/Client.cpp: Fixed manipulation and iterations_
+          count and way that memory is copied into a new ACE_Message_Block.
+          Thanks to Karen L. Regner <karen.regner@swri.org> for reporting
+          these problems.
 
-	* THANKS: Added Karen Regner to the Hall of Fame.
+        * THANKS: Added Karen Regner to the Hall of Fame.
 
 Tue Feb 24 17:22:45 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Message_Block.h: Fixed up some of the documentation; clarified
-	  that the data buffer given to a constructor is not copied anywhere,
-	  but referenced.
+        * ace/Message_Block.h: Fixed up some of the documentation; clarified
+          that the data buffer given to a constructor is not copied anywhere,
+          but referenced.
 
 Tue Feb 24 18:57:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/msvc_static_order.lst:
-	  Added another dsp that must be build first
+        * bin/msvc_static_order.lst:
+          Added another dsp that must be build first
 
 Tue Feb 24 18:13:19 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* performance-tests/Synch-Benchmarks/Base_Test/Baseline_Test{h,cpp}:
+        * performance-tests/Synch-Benchmarks/Base_Test/Baseline_Test{h,cpp}:
           Fixed compile problems in wchar builds
 
 Tue Feb 24 17:58:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/Hash_Map_Manager_T.{h,i}:
-	  Added protected accessor methods cur_size and table. People which
+        * ace/Hash_Map_Manager_T.{h,i}:
+          Added protected accessor methods cur_size and table. People which
           create a derived class can use these accessors. Thanks to Ganesh Pai
-	  <GPai@sonusnet.com> for the idea.
+          <GPai@sonusnet.com> for the idea.
 
 Tue Feb 24 17:34:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
