@@ -1,3 +1,12 @@
+Fri Feb 26 12:44:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Param_Test/big_union.cpp: 
+	  Fixed some warnings for Linux/EGCS.
+	  check_validity was incomplete.
+
+	* tests/Param_Test/svc.conf: 
+	  Removed obsolete options.
+
 Fri Feb 26 11:35:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/Makefile:
