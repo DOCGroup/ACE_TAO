@@ -8,15 +8,16 @@
 #include "ace/Reactor.h"
 #include "ace/Event_Handler.h"
 #include "ace/OS_NS_sys_time.h"
+#include "ace/Counter.h"
+
 #include "orbsvcs/Event/EC_Kokyu_Factory.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Event/EC_Event_Limit.h"
 
 #include "Kokyu_EC.h"
 #include "Consumer.h"
 #include "Service_Handler.h"
-#include <ace/Counter.h>
-#include "orbsvcs/Event/EC_Event_Limit.h"
 
 #ifdef ACE_HAS_DSUI
 #include <dsui.h>
@@ -328,11 +329,9 @@ main (int argc, char* argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      //We need to set the ACE_Reactor::instance() to be the ORB
-      //reactor so Kokyu's RG implementation can use it w/o creating
-      //an extra thread to run the reactor event loop. I hope this
-      //doesn't screw something else up!
-      //ACE_Reactor::instance(orb->orb_core()->reactor());
+      //spawn thread to run the reactor event loop
+      Reactor_Task rt;
+      rt.initialize();
 
       // ****************************************************************
 
@@ -391,8 +390,13 @@ main (int argc, char* argv[])
       EC_Event_Limit* e_limit = new EC_Event_Limit (TAO_ORB_Core_instance());
 #endif //ACE_HAS_DSUI
       ACE_Time_Value ticker (125);
-      orb->orb_core()->reactor()->schedule_timer(e_limit,0, ticker);
+      long timer_id = rt.reactor()->schedule_timer(e_limit,0, ticker);
+      if (timer_id < 0)
+        {
+          ACE_DEBUG((LM_DEBUG,"Consumer_EC (%t) Could not schedule EC_Event_Limit timeout\n"));
+        }
 
+      rt.activate(); //need thread creation flags? or priority?
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
