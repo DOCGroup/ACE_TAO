@@ -1,3 +1,10 @@
+Mon Jan 29 15:25:44 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao.IFR_TypeCodes.cpp:
+
+          Added CORBA namespace scoping to ValueModifier constant
+          assignments.
+
 Mon Jan 29 10:58:54 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/IFR_Client/InterfaceC.h:
