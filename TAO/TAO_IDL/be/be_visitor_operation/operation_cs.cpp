@@ -831,8 +831,8 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
 
   // Prepare the request header
   os->indent ();
-  *os << "CORBA::Octet flag = " << be_idt_nl
-      << "ACE_static_cast (CORBA::Octet, ";
+  *os << "const CORBA::Octet flag = " << be_idt_nl
+      << "ACE_static_cast (const CORBA::Octet, ";
 
   switch (node->flags ())
     {
