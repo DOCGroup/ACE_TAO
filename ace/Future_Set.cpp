@@ -38,12 +38,12 @@ ACE_Future_Set<T>::ACE_Future_Set (const ACE_Future_Set<T> &r)
 template <class T>
 ACE_Future_Set<T>::~ACE_Future_Set (void)
 {
-  FUTURE_HASH_ENTRY *map_entry = 0
+  FUTURE_ENTRY *map_entry = 0;
 
   // Detach ourselves from all remaining futures, if any,
   // in our map.
 
-  for (FUTURE_HASH_ITERATOR map_iterator (this->future_map_);
+  for (FUTURE_ITERATOR map_iterator (this->future_map_);
        map_iterator.next (map_entry) != 0;
        map_iterator.advance ())
     {
@@ -70,8 +70,7 @@ ACE_Future_Set<T>::insert (ACE_Future<T> &future)
                   FUTURE_HOLDER (future),
                   -1);
 
-  FUTURE_REP_HASH_ADDR future_rep_hash_addr (future.get_rep ());
-  int result = this->future_map_.bind (future_rep_hash_addr, 
+  int result = this->future_map_.bind (future.get_rep (),
                                        future_holder);
 
   // If a new map entry was created, then attach to the future,
@@ -124,14 +123,13 @@ ACE_Future_Set<T>::next_readable (ACE_Future<T> &future,
     return 0;
 
   // Remove the hash map entry with the specified future rep from our map.
-  FUTURE_REP_HASH_ADDR future_rep_hash_addr (future_rep);
   FUTURE_HOLDER *future_holder;
 
-  if (this->future_map_.find (future_rep_hash_addr,
+  if (this->future_map_.find (future_rep,
                               future_holder) != -1)
     {
       future = future_holder->item_;
-      this->future_map_.unbind (future_rep_hash_addr);
+      this->future_map_.unbind (future_rep);
       delete future_holder;
       return 1;
     }

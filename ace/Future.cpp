@@ -155,19 +155,20 @@ ACE_Future_Rep<T>::set (const T &r,
                         T (r),
                         -1);
 
-      OBSERVER_HASH_ENTRY *map_entry = 0;
-
       // Remove and notify all subscribed observers.
+      OBSERVER_COLLECTION::iterator iterator =
+        this->observer_collection_.begin ();
 
-      for (OBSERVER_HASH_ITERATOR map_iterator (this->observer_hash_);
-           map_iterator.next (map_entry) != 0;
-           map_iterator.advance ())
+      OBSERVER_COLLECTION::iterator end =
+        this->observer_collection_.end ();
+
+      for (;
+           iterator != end;
+           ++iterator)
         {
-          OBSERVER *observer = map_entry->int_id_;
+          OBSERVER *observer = *iterator;
           observer->update (caller);
         }
-
-      this->observer_hash_.close ();
 
       // Signal all the waiting threads.
       return this->value_ready_.broadcast ();
@@ -215,8 +216,7 @@ ACE_Future_Rep<T>::attach (ACE_Future_Observer<T> *observer,
   // If the value is already produced, then notify observer
   if (this->value_ == 0)
     {
-      OBSERVER_HASH_ADDR observer_hash_addr (observer);
-      result = this->observer_hash_.bind (observer_hash_addr, observer);
+      result = this->observer_collection_.insert (observer);
     }
   else
       observer->update (caller);
@@ -231,9 +231,7 @@ ACE_Future_Rep<T>::detach (ACE_Future_Observer<T> *observer)
 
   // Remove all occurrences of the specified observer from this
   // objects hash map.
-  OBSERVER_HASH_ADDR observer_hash_addr (observer);
-
-  return this->observer_hash_.unbind (observer_hash_addr);
+  return this->observer_collection_.remove (observer);
 }
 
 template <class T>
