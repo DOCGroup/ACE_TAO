@@ -8,9 +8,9 @@ Wed Apr  4 08:35:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp: 
 	* tao/ORB_Core.h:
-	* tao/ORB_Core.i: Removed the #include of BiDir_Adapter from
+	* tao/ORB_Core.i: Removed the #include of BiDir_Adapter.h from
 	  ORB_Core.h and moved it to ORB_Core.cpp. Forward declared that
-	  class in the cpp file. Moved the method that is dependant on the
+	  class in the .h file. Moved the method that is dependant on the
 	  include in .h file, from .i file to .cpp file -- basically
 	  uninlined that method. The method is not on the critical path
 	  and so shouldn't matter.
