@@ -1,3 +1,8 @@
+Tue May 14 16:05:13 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* TAO_IDL/driver/drv_preproc.cpp (DRV_copy_input): Added ACE_OS:: to
+	  fopen() and fclose().  Thanks to Eric Eide for reporting this.
+
 Mon May 13 11:54:12 2002 Ru Gunatilleke <ru@ociweb.com>
 
 	* orbsvcs/orbsvcs/PortableGroup.dsp:
