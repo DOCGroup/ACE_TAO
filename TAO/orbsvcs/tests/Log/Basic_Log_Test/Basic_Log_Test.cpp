@@ -8,25 +8,24 @@
 #include "ace/Log_Msg.h"
 #include "ace/SString.h"
 
-#include <assert.h>
 
 ACE_RCSID (Basic_Log_Test,
            Basic_Log_Test,
            "$Id$")
 
-const char* BasicLog_Test::basic_log_factory_name_="BasicLogFactory";
-const char* BasicLog_Test::naming_sevice_name_="NameService";
 
-// Constructor
+const char* BasicLog_Test::basic_log_factory_name_= "BasicLogFactory";
+const char* BasicLog_Test::naming_sevice_name_ = "NameService";
+
+
 BasicLog_Test::BasicLog_Test(void)
-: logServiceIor_(NULL)
+  : logServiceIor_ (0)
 {
-// do nothing
 }
 
-BasicLog_Test::~BasicLog_Test()
+BasicLog_Test::~BasicLog_Test (void)
 {
-  this->destroy_log();
+  this->destroy_log ();
 }
 
 int
@@ -42,11 +41,8 @@ BasicLog_Test::init (int argc, char *argv[])
       orb_ = CORBA::ORB_init (argc,
                               argv,
                               "internet" ACE_ENV_ARG_PARAMETER);
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "\nTrying to initialize orb\n"));
-
       ACE_TRY_CHECK;
+
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "\nOrb initialized successfully\n"));
@@ -85,10 +81,10 @@ BasicLog_Test::init_factory (ACE_ENV_SINGLE_ARG_DECL)
   //CORBA::Object_var logging_obj = orb_->resolve_initial_references ("BasicLogFactory",
   //                                                         ACE_TRY_ENV);
 
-  this->resolve_naming_service(ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->resolve_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  this->resolve_basic_factory(ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->resolve_basic_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   /*
@@ -121,7 +117,7 @@ BasicLog_Test::init_factory (ACE_ENV_SINGLE_ARG_DECL)
   */
   // If debugging, get the factory's IOR
   CORBA::String_var str =
-    orb_->object_to_string (basicLog_.in()//,
+    orb_->object_to_string (basicLog_.in()
                             ACE_ENV_ARG_PARAMETER); //Init the Client
   ACE_CHECK_RETURN (-1);
 
@@ -129,11 +125,12 @@ BasicLog_Test::init_factory (ACE_ENV_SINGLE_ARG_DECL)
     ACE_DEBUG ((LM_DEBUG,
                 "The logger IOR is <%s>\n",
                 str.in ()));
-  ACE_RETURN(0);
+
+  return 0;
 }
 
 int
-BasicLog_Test::test_CreateLog(CORBA::ULongLong maxSize)
+BasicLog_Test::test_CreateLog (CORBA::ULongLong maxSize)
 {
 
   ACE_TRY_NEW_ENV
@@ -141,7 +138,7 @@ BasicLog_Test::test_CreateLog(CORBA::ULongLong maxSize)
       DsLogAdmin::LogId id;
       basicLog_ = factory_->create(DsLogAdmin::wrap, maxSize, id);
       // @@ Krish, never use != 0 to compare a NIL object reference!!!
-      assert(!CORBA::is_nil (basicLog_.in ()));
+      ACE_ASSERT (!CORBA::is_nil (basicLog_.in ()));
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG,
                   "The logger id is %d\n",
@@ -175,80 +172,99 @@ BasicLog_Test::test_CreateLog(CORBA::ULongLong maxSize)
 int
 BasicLog_Test::test_LogAction ()
 {
-  ACE_TRY_NEW_ENV {
+  ACE_TRY_NEW_ENV
+    {
+      DsLogAdmin::LogId id = basicLog_->id ();
 
-    DsLogAdmin::LogId id = basicLog_->id();
+      ACE_DEBUG ((LM_DEBUG, "The log's id is %d\n", id));
 
-    ACE_DEBUG((LM_DEBUG,"The log's id is %d\n", id));
+      basicLog_->set_log_full_action (DsLogAdmin::halt);
 
-    basicLog_->set_log_full_action(DsLogAdmin::halt);
+      DsLogAdmin::LogFullActionType logFullAction =
+        basicLog_->get_log_full_action ();
 
-    DsLogAdmin::LogFullActionType logFullAction = basicLog_->get_log_full_action();
-    if (logFullAction != DsLogAdmin::halt){
-      ACE_ERROR_RETURN((LM_ERROR,"Setting log full action to halt failed\n"),-1);
-    }
-    ACE_DEBUG((LM_DEBUG,"The log's full action successfully set to halt\n"));
+      if (logFullAction != DsLogAdmin::halt)
+        {
+          ACE_ERROR_RETURN((LM_ERROR,
+                            "Setting log full action to halt failed\n"),-1);
+        }
+
+      ACE_DEBUG ((LM_DEBUG,
+                 "The log's full action successfully set to halt\n"));
 
 #ifndef ACE_LACKS_LONGLONG_T
-    ACE_DEBUG((LM_INFO,"The current size %Q, max size %Q\n",
-               basicLog_->get_current_size(), basicLog_->get_max_size()));
+      ACE_DEBUG ((LM_INFO,
+                 "The current size %Q, max size %Q\n",
+                 basicLog_->get_current_size (),
+                 basicLog_->get_max_size()));
 #else
-    ACE_DEBUG((LM_DEBUG,"The current size %u , max size %u\n",
-               basicLog_->get_current_size().lo(),
-               basicLog_->get_max_size().lo()));
+      ACE_DEBUG ((LM_DEBUG,
+                 "The current size %u , max size %u\n",
+                 basicLog_->get_current_size().lo (),
+                 basicLog_->get_max_size().lo ()));
 #endif
 
-    this->write_records(0 ACE_ENV_ARG_PARAMETER);
-    //make sure that it is full and when writing
-    ACE_TRY_CHECK;
-    ACE_DEBUG((LM_DEBUG,"Wrote records instead should have thrown exception"));
+      // make sure that it is full and when writing
+      this->write_records (0 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-    basicLog_->set_log_full_action(DsLogAdmin::wrap);
-    ACE_ERROR_RETURN((LM_ERROR,"Testing log action halt failed\n"),-1);
+      ACE_DEBUG ((LM_DEBUG,
+                  "Wrote records instead should have thrown exception"));
 
-  }
+      basicLog_->set_log_full_action (DsLogAdmin::wrap);
+      ACE_ERROR_RETURN((LM_ERROR,"Testing log action halt failed\n"),-1);
+    }
   ACE_CATCH(DsLogAdmin::LogFull, xLogFull)
     {
-      ACE_DEBUG((LM_DEBUG,"Correctly caught exception LogFull\n"));
+      ACE_DEBUG ((LM_DEBUG,"Correctly caught exception LogFull\n"));
 
-      CORBA::ULongLong nrecords = basicLog_->get_n_records();
+      CORBA::ULongLong nrecords = basicLog_->get_n_records ();
 
-      ACE_DEBUG((LM_ERROR,"The number of records written was %d\n", ACE_U64_TO_U32(nrecords)));
+      ACE_DEBUG ((LM_ERROR,
+                  "The number of records written was %d\n",
+                  ACE_U64_TO_U32 (nrecords)));
 
-      DsLogAdmin::AvailabilityStatus logStatus = basicLog_->get_availability_status();
+      DsLogAdmin::AvailabilityStatus logStatus =
+        basicLog_->get_availability_status ();
 
       if (!logStatus.log_full)
-        ACE_ERROR_RETURN((LM_ERROR,"Failed the log's get_availability_status.\n"),-1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Failed the log's get_availability_status.\n"),
+                          -1);
 
-      ACE_DEBUG((LM_DEBUG,"Log's availability status correctly set to log_full\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                 "Log's availability status correctly set to log_full\n"));
 
-      basicLog_->set_log_full_action(DsLogAdmin::wrap);
-      DsLogAdmin::LogFullActionType logFullAction = basicLog_->get_log_full_action();
+      basicLog_->set_log_full_action (DsLogAdmin::wrap);
+      DsLogAdmin::LogFullActionType logFullAction =
+        basicLog_->get_log_full_action();
+
       if (logFullAction != DsLogAdmin::wrap)
-        ACE_ERROR_RETURN((LM_ERROR,"Setting log full action to wrap failed\n"),-1);
+        ACE_ERROR_RETURN((LM_ERROR,
+                          "Setting log full action to wrap failed\n"),-1);
 
       ACE_TRY_EX (SECOND)
         {
-          int i = this->write_records(0 ACE_ENV_ARG_PARAMETER);
+          int i = this->write_records (0 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (SECOND);
 
-          ACE_DEBUG((LM_DEBUG,"Test to wrap worked. %d written.\n",i));
+          ACE_DEBUG ((LM_DEBUG,"Test to wrap worked. %d written.\n",i));
         }
-      ACE_CATCH(DsLogAdmin::LogFull, xLogFull)
+      ACE_CATCH (DsLogAdmin::LogFull, xLogFull)
         {
-          ACE_DEBUG((LM_ERROR,"Caught exception LogFull.  Fail testing wrapping of the log.\n"));
+          ACE_DEBUG ((LM_ERROR,"Caught exception LogFull.  Fail testing wrapping of the log.\n"));
           return -1;
         }
       ACE_CATCHANY
         {
-          ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION,"test_LogAction");
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "test_LogAction");
           return -1;
         }
       ACE_ENDTRY;
     }
   ACE_ENDTRY;
 
-  ACE_RETURN(0);
+  return 0;
 }
 /*
 int BasicLog_Test::display_records ()
@@ -273,18 +289,19 @@ int BasicLog_Test::display_records ()
 
 }
 */
-int BasicLog_Test::write_records(CORBA::ULongLong numberOfRecords ACE_ENV_ARG_DECL_NOT_USED)
+int BasicLog_Test::write_records (CORBA::ULongLong numberOfRecords
+                                  ACE_ENV_ARG_DECL_NOT_USED)
 {
   CORBA::ULongLong numOfRecs = numberOfRecords;
   if (numOfRecs == 0)
-  { 
-    numOfRecs = basicLog_->get_max_size();
-  }
+    { 
+      numOfRecs = basicLog_->get_max_size();
+    }
 
 #ifndef ACE_LACKS_LONGLONG_T
-  ACE_DEBUG((LM_INFO,"B_test: Write_records: Max size in bytes %Q.\n", numOfRecs));
+  ACE_DEBUG ((LM_INFO,"B_test: Write_records: Max size in bytes %Q.\n", numOfRecs));
 #else
-  ACE_DEBUG((LM_INFO,"B_test: Write_records: currentsize in bytes %u.\n", numOfRecs.lo()));
+  ACE_DEBUG ((LM_INFO,"B_test: Write_records: currentsize in bytes %u.\n", numOfRecs.lo()));
 #endif
 
   int i = 0;
@@ -331,17 +348,17 @@ int BasicLog_Test::write_records(CORBA::ULongLong numberOfRecords ACE_ENV_ARG_DE
   }
   
 #ifndef ACE_LACKS_LONGLONG_T
-    ACE_DEBUG((LM_INFO,"B_test: Write_records: currentsize in bytes %Q.\n",
+    ACE_DEBUG ((LM_INFO,"B_test: Write_records: currentsize in bytes %Q.\n",
                basicLog_->get_current_size()));
 #else
-    ACE_DEBUG((LM_DEBUG,"B_test: Write_records: currentsize in bytes %u.\n",
+    ACE_DEBUG ((LM_DEBUG,"B_test: Write_records: currentsize in bytes %u.\n",
                basicLog_->get_current_size().lo()));
 #endif
 
 //dhanvey
   CORBA::ULongLong nrecords = basicLog_->get_n_records();
 
-  ACE_DEBUG((LM_ERROR,"The number of records in log is %d\n", ACE_U64_TO_U32(nrecords)));
+  ACE_DEBUG ((LM_ERROR,"The number of records in log is %d\n", ACE_U64_TO_U32(nrecords)));
 
   ACE_RETURN(nrecords);
 }
@@ -362,7 +379,7 @@ BasicLog_Test::test_adminState()
     }
   ACE_CATCH(DsLogAdmin::LogLocked, xLocked)
     {
-      ACE_DEBUG((LM_DEBUG,"Setting administrative state to lock succeeded.  DsLogAdmin::LogLocked was caught.\n"));
+      ACE_DEBUG ((LM_DEBUG,"Setting administrative state to lock succeeded.  DsLogAdmin::LogLocked was caught.\n"));
     }
   ACE_CATCHANY
     {
@@ -377,13 +394,13 @@ BasicLog_Test::test_adminState()
     {
       this->write_records(0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (SECOND);
-      ACE_DEBUG((LM_DEBUG,"Setting administrative state to succeeded.  DsLogAdmin::LogLocked not thrown.\n"));
+      ACE_DEBUG ((LM_DEBUG,"Setting administrative state to succeeded.  DsLogAdmin::LogLocked not thrown.\n"));
       ACE_RETURN(0);
 
     }
   ACE_CATCH(DsLogAdmin::LogLocked, xLocked)
     {
-      ACE_DEBUG((LM_DEBUG,"Setting administrative state to lock faild.  DsLogAdmin::LogLocked was caught.\n"));
+      ACE_DEBUG ((LM_DEBUG,"Setting administrative state to lock faild.  DsLogAdmin::LogLocked was caught.\n"));
     }
   ACE_ENDTRY;
   ACE_RETURN(0);
@@ -391,37 +408,48 @@ BasicLog_Test::test_adminState()
 
 
 int
-BasicLog_Test::test_logSize()
+BasicLog_Test::test_logSize (void)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
-      basicLog_->set_max_size(1);
+      basicLog_->set_max_size (1);
       ACE_TRY_CHECK;
-      ACE_ERROR_RETURN((LM_ERROR,"Setting max size less than current size failed.  DsLogAdmin::InvalidParam not thrown.\n"),
+
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Setting max size less than current size failed.\n"
+                         "DsLogAdmin::InvalidParam not thrown.\n"),
                        -1);
     }
   ACE_CATCH(DsLogAdmin::InvalidParam, xParam)
     {
-      ACE_DEBUG((LM_DEBUG,"Setting max size less than current size succeeded.  DsLogAdmin::InvalidParam caught.\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Setting max size less than current size succeeded.\n"
+                  "DsLogAdmin::InvalidParam caught.\n"));
     }
   ACE_ENDTRY;
 
   ACE_TRY_EX(SECOND)
     {
-      basicLog_->set_max_size(10000);
+      basicLog_->set_max_size (10000);
 
-      CORBA::ULongLong nrecords = basicLog_->get_n_records();
-      int i = this->write_records(0 ACE_ENV_ARG_PARAMETER);
+      CORBA::ULongLong nrecords = basicLog_->get_n_records ();
+      int i = this->write_records (0 ACE_ENV_ARG_PARAMETER);
+
       ACE_TRY_CHECK_EX (SECOND);
-      ACE_DEBUG((LM_DEBUG,"Increasing max size succeeded. Old record count, %d. New record count, %d\n", ACE_U64_TO_U32(nrecords), i));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Increasing max size succeeded. Old record count, %d."
+                  "New record count, %d\n",
+                  ACE_U64_TO_U32(nrecords),
+                  i));
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "test_logSize");
-      ACE_ERROR_RETURN((LM_ERROR,"Increasing max size failed. Exception thrown.\n"),-1);
-
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Increasing max size failed. Exception thrown.\n"),
+                        -1);
     }
   ACE_ENDTRY;
   ACE_RETURN(0);
@@ -432,23 +460,27 @@ BasicLog_Test::test_logCompaction(CORBA::ULong lifeExpectancy)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
-  CORBA::ULongLong old_n_records = basicLog_->get_n_records();
+  CORBA::ULongLong old_n_records = basicLog_->get_n_records ();
   if (old_n_records <= 0)
     {
       ACE_TRY
         {
-          this->write_records(0 ACE_ENV_ARG_PARAMETER);
+          this->write_records (0 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "test_logCompaction");
-          ACE_ERROR_RETURN
-            ((LM_ERROR,"Caught exception trying to write records for test_logCompaction.\n"), -1);
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Caught exception trying to write records "
+                             "for test_logCompaction.\n"),
+                            -1);
         }
       ACE_ENDTRY;
     }
-  CORBA::ULong old_max_life = basicLog_->get_max_record_life();
+
+  CORBA::ULong old_max_life = basicLog_->get_max_record_life ();
+
   ACE_TRY_EX(SECOND)
     {
       basicLog_->set_max_record_life (lifeExpectancy);
@@ -458,42 +490,45 @@ BasicLog_Test::test_logCompaction(CORBA::ULong lifeExpectancy)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "test_logCompaction");
-      ACE_ERROR_RETURN
-        ((LM_ERROR,"Caught exception setting max record life test_logCompaction.\n"), -1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Caught exception setting max record life "
+                         "test_logCompaction.\n"),
+                        -1);
     }
   ACE_ENDTRY;
 
-  ACE_OS::sleep(lifeExpectancy+1); // make sure the records have aged.
-  CORBA::ULongLong new_n_records = basicLog_->get_n_records();
-  basicLog_->set_max_record_life(old_max_life);
+  ACE_OS::sleep (lifeExpectancy + 1); // make sure the records have aged.
+  CORBA::ULongLong new_n_records = basicLog_->get_n_records ();
+  basicLog_->set_max_record_life (old_max_life);
 
-  ACE_DEBUG((LM_ERROR,"The number of records in log is %d\n", ACE_U64_TO_U32(new_n_records)));
+  ACE_DEBUG ((LM_ERROR,
+              "The number of records in log is %d\n",
+              ACE_U64_TO_U32 (new_n_records)));
 
   if (new_n_records != 0)
     {
       ACE_ERROR_RETURN((LM_ERROR,
                         "Log compaction failed, because %d records remain.\n",
-                        ACE_U64_TO_U32(new_n_records)),-1 );
+                        ACE_U64_TO_U32 (new_n_records)),
+                       -1 );
     }
-  ACE_RETURN(0);
+
+  return 0;
 }
 
 //use ACE_U64_TO_U32 to convert ULongLong to ULong in call to this function
 //Writes and retrieves numberOfrecordsToWrite records.
 int
-BasicLog_Test::test_retrieval(CORBA::ULong numberOfRecordsToWrite)
+BasicLog_Test::test_retrieval (CORBA::ULong /* numberOfRecordsToWrite */)
 {
-  ACE_UNUSED_ARG (numberOfRecordsToWrite);
-
   int rc = 0;
-
-  
+ 
   if (!rc)
     {
-      ACE_DEBUG((LM_ERROR,"Test of retrieval: succeeded.\n"));
+      ACE_DEBUG ((LM_ERROR,"Test of retrieval: succeeded.\n"));
     }
-  ACE_RETURN(rc);
-  
+
+  return rc;
 }
 
 
@@ -572,12 +607,12 @@ BasicLog_Test::destroy_log()
 {
   ACE_TRY_NEW_ENV
     {
-      if (!CORBA::is_nil(basicLog_.in()))
+      if (!CORBA::is_nil(basicLog_.in ()))
         {
-          basicLog_->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
+          basicLog_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          basicLog_ = DsLogAdmin::BasicLog::_nil();
+          basicLog_ = DsLogAdmin::BasicLog::_nil ();
         }
     }
   ACE_CATCHANY
@@ -587,96 +622,110 @@ BasicLog_Test::destroy_log()
   ACE_ENDTRY;
 }
 
-int BasicLog_Test::test_log_destroy()
+int BasicLog_Test::test_log_destroy (void)
 {
 
-  ACE_DEBUG((LM_ERROR,"Testing destroy log\n"));
-  this->basicLog_->destroy();
+  ACE_DEBUG ((LM_ERROR, "Testing destroy log\n"));
+  this->basicLog_->destroy ();
+
   ACE_TRY_NEW_ENV
     {
-      this->write_records(1 ACE_ENV_ARG_PARAMETER);
+      this->write_records (1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      ACE_DEBUG((LM_INFO,"Wrote to log\n"));
+      ACE_DEBUG ((LM_INFO, "Wrote to log\n"));
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION,"Destroying log");
-      ACE_DEBUG((LM_ERROR,"Test of destroy log succeeded and caught exception.\n"));
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Destroying log");
+      ACE_DEBUG ((LM_ERROR,
+                  "Test of destroy log succeeded and caught exception.\n"));
       return 0;
     }
   ACE_ENDTRY;
-  ACE_ERROR_RETURN((LM_ERROR,"Test of destroy log failed and no exception thrown.\n"), -1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "Test of destroy log failed and no exception thrown.\n"),
+                    -1);
 }
 
 int
-BasicLog_Test::test_week_mask()
+BasicLog_Test::test_week_mask (void)
 {
-
-
   DsLogAdmin::WeekMask masks;
-  masks.length(1);
+  masks.length (1);
 
-  masks[0].days = DsLogAdmin::Monday | DsLogAdmin::Tuesday | DsLogAdmin::Wednesday | DsLogAdmin::Friday | DsLogAdmin::Saturday  ;
+  masks[0].days =
+    DsLogAdmin::Monday
+    | DsLogAdmin::Tuesday
+    | DsLogAdmin::Wednesday
+    | DsLogAdmin::Friday
+    | DsLogAdmin::Saturday;
 
   masks[0].intervals.length(1);
 
-  masks[0].intervals[0].start.hour = (CORBA::Short)13;
+  masks[0].intervals[0].start.hour = (CORBA::Short) 13;
 
-  masks[0].intervals[0].start.minute = (CORBA::Short)30;
-  masks[0].intervals[0].stop.hour = (CORBA::Short)14;
-  masks[0].intervals[0].stop.minute = (CORBA::Short)30;
-
+  masks[0].intervals[0].start.minute = (CORBA::Short) 30;
+  masks[0].intervals[0].stop.hour = (CORBA::Short) 14;
+  masks[0].intervals[0].stop.minute = (CORBA::Short) 30;
 
   this->basicLog_->set_week_mask (masks);
 
   return 0;
-
 }
 
 
-int BasicLog_Test::delete_records (CORBA::ULongLong numberOfRecords)
+int BasicLog_Test::delete_records (CORBA::ULongLong /* numberOfRecords */)
 {
-  ACE_UNUSED_ARG (numberOfRecords);
-
   ACE_DECLARE_NEW_CORBA_ENV;
 
 #ifndef ACE_LACKS_LONGLONG_T
-  ACE_DEBUG((LM_INFO," before delete -- curr size %Q, max %Q\n",
-             basicLog_->get_current_size(), basicLog_->get_max_size()));
+  ACE_DEBUG ((LM_INFO,
+              " before delete -- curr size %Q, max %Q\n",
+              basicLog_->get_current_size (),
+              basicLog_->get_max_size()));
 #else
-  ACE_DEBUG((LM_DEBUG,"2ndThe current size %u , max size %u\n",
-             basicLog_->get_current_size().lo(),
-             basicLog_->get_max_size().lo()));
+  ACE_DEBUG ((LM_DEBUG,
+              "2ndThe current size %u , max size %u\n",
+              basicLog_->get_current_size().lo(),
+              basicLog_->get_max_size().lo()));
 #endif
 
-  CORBA::ULongLong nrecords = basicLog_->get_n_records();
+  CORBA::ULongLong nrecords = basicLog_->get_n_records ();
 
-  ACE_DEBUG((LM_ERROR,"The number of records was %d\n", ACE_U64_TO_U32(nrecords)));
+  ACE_DEBUG ((LM_ERROR,
+              "The number of records was %d\n",
+              ACE_U64_TO_U32 (nrecords)));
 
-  CORBA::Long retVal = basicLog_->delete_records ("TCL", "id >= 0" ACE_ENV_ARG_PARAMETER);
- 
+  CORBA::Long retVal =
+    basicLog_->delete_records ("TCL", "id >= 0" ACE_ENV_ARG_PARAMETER);
 
-  ACE_DEBUG ((LM_DEBUG, "Number of records in Log after delete = %d \n",
+  ACE_DEBUG ((LM_DEBUG,
+              "Number of records in Log after delete = %d\n",
               retVal));
 
 #ifndef ACE_LACKS_LONGLONG_T
-  ACE_DEBUG((LM_INFO," after delete -- curr size %Q, max %Q\n",
-             basicLog_->get_current_size(), basicLog_->get_max_size()));
+  ACE_DEBUG ((LM_INFO,
+              " after delete -- curr size %Q, max %Q\n",
+              basicLog_->get_current_size (),
+              basicLog_->get_max_size ()));
 #else
-  ACE_DEBUG((LM_DEBUG,"2ndThe current size %u , max size %u\n",
-             basicLog_->get_current_size().lo(),
-             basicLog_->get_max_size().lo()));
+  ACE_DEBUG ((LM_DEBUG,
+              "2ndThe current size %u , max size %u\n",
+              basicLog_->get_current_size ().lo (),
+              basicLog_->get_max_size ().lo ()));
 #endif
   
-  nrecords = basicLog_->get_n_records();
+  nrecords = basicLog_->get_n_records ();
 
-  ACE_DEBUG((LM_ERROR,"The number of records is %d\n", ACE_U64_TO_U32(nrecords)));
+  ACE_DEBUG ((LM_ERROR,
+              "The number of records is %d\n",
+              ACE_U64_TO_U32 (nrecords)));
 
 return 0;
 }
 
 int
-BasicLog_Test::test_capacity_alarm_threshold()
+BasicLog_Test::test_capacity_alarm_threshold (void)
 {
  
   //basicLog_->set_log_full_action(DsLogAdmin::halt);
@@ -695,12 +744,16 @@ BasicLog_Test::test_capacity_alarm_threshold()
     {
       basicLog_->set_capacity_alarm_thresholds (list);
       ACE_TRY_CHECK;
-      ACE_ERROR_RETURN((LM_ERROR,"Setting an invalid alarm threshold failed.  DsLogAdmin::InvalidThreshold not thrown.\n"),
-                       -1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Setting an invalid alarm threshold failed.  "
+                         "DsLogAdmin::InvalidThreshold not thrown.\n"),
+                        -1);
     }
   ACE_CATCH(DsLogAdmin::InvalidThreshold, xParam)
     {
-      ACE_DEBUG((LM_DEBUG,"Setting an invalid alarm threshold succeeded.  DsLogAdmin::InvalidThreshold caught.\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Setting an invalid alarm threshold succeeded.  "
+                  "DsLogAdmin::InvalidThreshold caught.\n"));
     }
   ACE_ENDTRY;
 
@@ -712,12 +765,16 @@ BasicLog_Test::test_capacity_alarm_threshold()
     {
       basicLog_->set_capacity_alarm_thresholds (list);
       ACE_TRY_CHECK_EX (SECOND);
-      ACE_ERROR_RETURN((LM_ERROR,"Setting an invalid alarm threshold failed.  DsLogAdmin::InvalidThreshold not thrown.\n"),
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Setting an invalid alarm threshold failed.  "
+                         "DsLogAdmin::InvalidThreshold not thrown.\n"),
                        -1);
     }
   ACE_CATCH(DsLogAdmin::InvalidThreshold, xParam)
     {
-      ACE_DEBUG((LM_DEBUG,"Setting an invalid alarm threshold succeeded.  DsLogAdmin::InvalidThreshold caught.\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Setting an invalid alarm threshold succeeded.  "
+                  "DsLogAdmin::InvalidThreshold caught.\n"));
     }
   ACE_ENDTRY;
 
@@ -729,9 +786,11 @@ BasicLog_Test::test_capacity_alarm_threshold()
 
   CORBA::ULongLong nrecords = basicLog_->get_n_records();
 
-  ACE_DEBUG((LM_ERROR,"The number of records is %d\n", ACE_U64_TO_U32(nrecords)));
+  ACE_DEBUG ((LM_ERROR,
+              "The number of records is %d\n",
+              ACE_U64_TO_U32(nrecords)));
 
-  this->write_records(0 ACE_ENV_ARG_PARAMETER);
+  this->write_records (0 ACE_ENV_ARG_PARAMETER);
 
   return 0;
 

@@ -14,10 +14,9 @@
  */
 // ============================================================================
 
-#ifndef _BASILOG_TEST_H
-#define _BASILOG_TEST_H
+#ifndef TAO_BASIC_LOG_TEST_H
+#define TAO_BASIC_LOG_TEST_H
 
-#include "tao/corba.h"
 #include "orbsvcs/DsLogAdminC.h"
 #include "orbsvcs/CosNamingC.h"
 
@@ -158,7 +157,4 @@ private:
 
 };
 
-
-
-
-#endif
+#endif  /* TAO_BASIC_LOG_TEST_H */
