@@ -68,11 +68,10 @@ public:
                                    CORBA::Boolean restart,
                                    CORBA::Environment &ACE_TRY_ENV);
 
-  virtual void add_rt_service_context_hook (
-                  TAO_GIOP_Invocation *invocation,
-                  CORBA::Policy *model_policy,
-                  CORBA::Short &client_priority,
-                  CORBA::Environment &ACE_TRY_ENV);
+  virtual void add_rt_service_context_hook (TAO_Service_Context &service_context,
+                                            CORBA::Policy *model_policy,
+                                            CORBA::Short &client_priority,
+                                            CORBA::Environment &ACE_TRY_ENV);
 
   virtual void get_selector_hook (CORBA::Policy *model_policy,
                                   CORBA::Boolean
