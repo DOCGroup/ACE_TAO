@@ -3961,9 +3961,9 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
           || !imr->_stubobj ()
           || !imr->_stubobj ()->profile_in_use ())
         {
-          if (TAO_debug_level > 0)
+          if (TAO_debug_level > 1)
             ACE_DEBUG ((LM_DEBUG,
-                        "Invalid Implementation Repository IOR, skipping IMRification\n"));
+                        "Missing ImR IOR, will not use the ImR\n"));
           goto orbkey;
         }
 

@@ -1,3 +1,15 @@
+Wed Oct 25 20:59:45 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tao/PortableServer/POA.cpp:
+
+          Changed the "Invalid Implementation Repository IOR..."
+          message to "Missing ImR IOR, will not use the ImR", so
+          now it doesn't sound like an error, and also bumped
+          up its debug level to >1, so it will not show up unless
+          you want a lot of info. This was reported by ChenXu
+          <chenxu_xjtu@263.net> a while back, and several others
+          tripped over it.  [Bug 694]
+
 Wed Oct 25 10:16:38 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/ORBInitializer_Registry.cpp:
