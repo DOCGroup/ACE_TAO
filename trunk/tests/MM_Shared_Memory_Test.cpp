@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    Shared_Memory_MM_Test.cpp
 //
@@ -17,7 +17,7 @@
 //
 // = AUTHOR
 //    Prashant Jain and Doug Schmidt
-// 
+//
 // ============================================================================
 
 #include "test_config.h"
@@ -75,31 +75,31 @@ server (void *)
 static void
 spawn (void)
 {
-#if !defined (ACE_WIN32) && !defined (VXWORKS) && !defined (ACE_PSOS)
+#if !defined (ACE_LACKS_FORK)
   switch (ACE_OS::fork ())
     {
     case -1:
       ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n%a"), ASYS_TEXT ("fork failed")));
       exit (-1);
-    case 0: 
+    case 0:
       client (0);
     default:
       server (0);
     }
 #elif defined (ACE_HAS_THREADS)
   if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (client),
-					      (void *) 0,
-					      THR_NEW_LWP | THR_DETACHED) == -1)
+                                              (void *) 0,
+                                              THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n%a"), ASYS_TEXT ("thread create failed")));
 
   if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (server),
-					      (void *) 0,
-					      THR_NEW_LWP | THR_DETACHED) == -1)
+                                              (void *) 0,
+                                              THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n%a"), ASYS_TEXT ("thread create failed")));
   ACE_Thread_Manager::instance ()->wait ();
 #else
   ACE_ERROR ((LM_ERROR, ASYS_TEXT ("only one thread may be run in a process on this platform\n%a"), 1));
-#endif /* ACE_HAS_THREADS */	
+#endif /* ACE_HAS_THREADS */
 }
 
 int
