@@ -1,3 +1,10 @@
+Tue Jul 13 20:57:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/include/ast-decl.h:
+	* TAO_IDL/include/utl_scope.h:
+	  Added forward declarations of class Identifier to
+	  hopefully help out AIX w/IBM C++.
+
 Tue Jul 13 18:41:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
