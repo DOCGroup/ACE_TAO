@@ -70,7 +70,7 @@ CORBA_ORB::~CORBA_ORB (void)
 int
 CORBA_ORB::open (void)
 {
-  if (this->open_called_)
+  if (this->open_called_ != CORBA::B_FALSE)
     return -1;
 
   this->open_called_ = CORBA::B_TRUE;
@@ -78,16 +78,18 @@ CORBA_ORB::open (void)
   TAO_Server_Strategy_Factory *f = this->server_factory ();
 
   // Initialize the endpoint ... or try!
-  if (this->peer_acceptor_.open (this->params()->addr (),
-				 TAO_ORB_Core_instance()->reactor(),
-				 f->creation_strategy (),
-				 f->accept_strategy (),
-				 f->concurrency_strategy (),
-				 f->scheduling_strategy ()) == -1)
+  TAO_ORB_Core *ocp = TAO_ORB_Core_instance ();
+  
+  if (ocp->acceptor ()->open (ocp->orb_params ()->addr (),
+                              ocp->reactor(),
+                              f->creation_strategy (),
+                              f->accept_strategy (),
+                              f->concurrency_strategy (),
+                              f->scheduling_strategy ()) == -1)
     // @@ CJC Need to return an error somehow!!  Maybe set do_exit?
     return -1;
 
-  if (this->peer_acceptor_.acceptor ().get_local_addr (this->addr_) == -1)
+  if (ocp->acceptor ()->acceptor ().get_local_addr (ocp->addr ()) == -1)
     return -1;
 
   return 0;
@@ -306,7 +308,6 @@ CORBA_ORB::POA_init (int &argc,
 #endif /* ROA_NEEDS_REQ_KEY */
     
   ACE_NEW_RETURN (rp, CORBA::POA (this, env), 0);
-  oc->root_poa (rp);
 
   return rp;
 }
@@ -353,11 +354,8 @@ CORBA_ORB::run (ACE_Time_Value *tv)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Dynamic_Service<TAO_Server_Strategy_Factory>;
 template class ACE_Dynamic_Service<TAO_Client_Strategy_Factory>;
-template class ACE_Strategy_Acceptor<TAO_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Creation_Strategy<TAO_Client_Connection_Handler>;
-template class ACE_Connect_Strategy<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR>;
 //template class TAO_HASH_ADDR;
 template class ACE_Hash_Map_Entry<TAO_HASH_ADDR, TAO_Client_Connection_Handler *>;
 template class ACE_Hash_Map_Iterator<TAO_HASH_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_RW_MUTEX>;
@@ -367,11 +365,8 @@ template class ACE_Hash_Map_Manager<TAO_HASH_ADDR, TAO_Client_Connection_Handler
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Dynamic_Service<TAO_Server_Strategy_Factory>
 #pragma instantiate ACE_Dynamic_Service<TAO_Client_Strategy_Factory>
-#pragma instantiate ACE_Strategy_Acceptor<TAO_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Creation_Strategy<TAO_Client_Connection_Handler>
-#pragma instantiate ACE_Connect_Strategy<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR>
 //#pragma instantiate TAO_HASH_ADDR
 #pragma instantiate ACE_Hash_Map_Entry<TAO_HASH_ADDR, TAO_Client_Connection_Handler *>
 #pragma instantiate ACE_Hash_Map_Iterator<TAO_HASH_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_RW_MUTEX>
