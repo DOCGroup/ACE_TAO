@@ -24,6 +24,9 @@
 
 #include "Thread_Timer_Queue_Test.h"
 
+#include "ace/Condition_T.h"
+#include "ace/Thread_Mutex.h"
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Thread_Timer_Queue_Adapter<Timer_Heap>;
 template class Timer_Queue_Test_Driver<Thread_Timer_Queue,

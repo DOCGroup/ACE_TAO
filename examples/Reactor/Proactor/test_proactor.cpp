@@ -44,10 +44,10 @@ static ACE_TCHAR *host = 0;
 static u_short port = ACE_DEFAULT_SERVER_PORT;
 
 // File that we're sending.
-static ACE_TCHAR *file = ACE_TEXT("test_proactor.cpp");
+static const ACE_TCHAR *file = ACE_TEXT("test_proactor.cpp");
 
 // Name of the output file.
-static ACE_TCHAR *dump_file = ACE_TEXT("output");
+static const ACE_TCHAR *dump_file = ACE_TEXT("output");
 
 // Keep track of when we're done.
 static int done = 0;
@@ -377,7 +377,7 @@ Sender::Sender (void)
     transmit_file_done_ (0)
 {
   // Moment of inspiration... :-)
-  static char *data = "Welcome to Irfan World! Irfan RULES here !!\n";
+  static const char *data = "Welcome to Irfan World! Irfan RULES here !!\n";
   this->welcome_message_.init (data,
                                ACE_OS::strlen (data));
   this->welcome_message_.wr_ptr (ACE_OS::strlen (data));

@@ -1,3 +1,24 @@
+Sat Aug  9 20:55:47 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * examples/Connection/blocking/SPIPE-acceptor.cpp:
+        * examples/Export/dll.cpp:
+          Added missing explicit template instantiations.
+
+        * examples/examples/OS/Process/imore.cpp:
+        * examples/Connection/blocking/SPIPE-connector.cpp:
+        * examples/OS/Process/process.cpp:
+        * examples/Reactor/Proactor/test_proactor.cpp:
+
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.cpp:
+          Added #include Condition_T.h and Thread_Mutex.h needed for
+          explicit template instantiation.
+
+        * examples/Timer_Queue/Timer_Queue.mpc:
+          Added "after" directive so library gets compiled first.
+
+        * tests/Collection_Test.cpp:
+          Fixed a typo in an explicit template instantiation directive.
+
 Sat Aug  9 13:56:37 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* Kokyu/Dispatcher_Task.h: Deleted extra qualification for method
