@@ -1,3 +1,9 @@
+Mon Nov 03 21:29:32 1997    <nw1@COYOTE>
+
+	* ace/OS.cpp (cleanup_tss): Added TSS cleanup codes for Win32 when
+	  non-main threads exiting.  Without them, Thread_Manager won't
+	  cleanup thread table correctly.
+
 Mon Nov 03 18:32:42 1997  Carlos O'Ryan  <coryan@MILONGA>
 
 	* ace/Proactor.cpp:
