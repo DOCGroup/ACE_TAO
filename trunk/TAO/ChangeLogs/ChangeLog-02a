@@ -1,3 +1,11 @@
+Mon Aug 28 02:22:11 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* tests/Portable_Interceptors/Benchmark/Benchmark.dsw
+	* tests/Portable_Interceptors/Benchmark/client.dsp
+	* tests/Portable_Interceptors/Benchmark/server.dsp:
+
+	  Added these project and workspace files for the Win32 platform.
+
 Mon Aug 28 01:16:11 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* docs/releasenotes/index.html
