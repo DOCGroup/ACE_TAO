@@ -13,7 +13,7 @@ project(PortableGroup) : orbsvcslib, core, naming, svc_utils, portableserver, me
   }
 
   IDL_Files {
-    idlflags += -GC
+    //idlflags += -GC
     PortableGroup.idl
   }
 
