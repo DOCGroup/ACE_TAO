@@ -47,14 +47,14 @@ ACE_Obstack::new_chunk (void)
 {
   ACE_TRACE ("ACE_Obstack::new_chunk");
 
-  ACE_TCHAR *temp;
+  char *temp;
   
   ACE_ALLOCATOR_RETURN 
     (temp,
-     ACE_static_cast (ACE_TCHAR *,
+     ACE_static_cast (char *,
                       this->allocator_strategy_->malloc 
                         (sizeof (class ACE_Obchunk) 
-                         + this->size_ * sizeof (ACE_TCHAR))),
+                         + this->size_)),
      0);
 
   return new (temp) ACE_Obchunk (this->size_);
@@ -90,12 +90,12 @@ ACE_Obstack::~ACE_Obstack (void)
     }
 }
 
-ACE_TCHAR *
-ACE_Obstack::copy (const ACE_TCHAR *s, 
+char *
+ACE_Obstack::copy (const char *s, 
 		   size_t len)
 {
   ACE_TRACE ("ACE_Obstack::copy");
-  ACE_TCHAR *result;
+  char *result;
 
   ACE_ASSERT (this->size_ >= len + 1);
 
@@ -123,6 +123,25 @@ ACE_Obstack::copy (const ACE_TCHAR *s,
   this->curr_->cur_ += (len + 1);
   return result;
 }
+
+#if defined (ACE_HAS_WCHAR)
+/**
+ * Convert the wchar_t string into a normal string (which requires a doubling
+ * of size with a cast) and send it to the normal char * version of copy.
+ * We also need to cast the return value back to wchar_t to pass back to the
+ * app.
+ *
+ * @note This is mainly here for Svc_Conf support with ACE_USES_WCHAR.
+ */
+wchar_t *
+ACE_Obstack::copy (const wchar_t *data, size_t len)
+{
+  return ACE_reinterpret_cast 
+    (wchar_t *,
+     this->copy (ACE_reinterpret_cast (const char *, data), 
+                 len * sizeof (wchar_t)));
+}
+#endif /* ACE_HAS_WCHAR */
 
 void 
 ACE_Obstack::release (void)

@@ -1,3 +1,15 @@
+Mon Nov 13 00:36:29 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Obstack.cpp:
+        * ace/Obstack.h:
+
+          Nanbor mentioned to me the other day that the interfaces to
+          this class probably should remain as char *.  After looking
+          at it, I agreed and changed it to that.  But since Svc_Conf
+          uses this class in such a way that it is passing wchar_t
+          strings to it when ACE_USES_WCHAR is defined, I also added
+          a wchar_t version of copy to make things happy.
+
 Sun Nov 12 17:00:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/ace_ce.dsw: (removed)
