@@ -8593,6 +8593,17 @@ ACE_OS_CString (ASCII_STRING).wchar_rep ()
 #define ptr_align_binary(ptr, alignment) \
         ((char *) align_binary (((ptr_arith_t) (ptr)), (alignment)))
 
+// SunCC 5.0 has problems with the first double colon in
+// (::foo...) which all other compilers need in certain 
+// cases of code generated from an IDL file.
+# if !defined (ACE_GLOBAL_COLONS)
+#   if (__SUNPRO_CC) && (__SUNPRO_CC == 0x500)
+#     define ACE_GLOBAL_COLONS ""
+#   else
+#     define ACE_GLOBAL_COLONS "::"
+#   endif /* __SUNPRO_CC && __SUNPRO_CC == 0x500 */
+# endif /* ACE_GLOBAL_COLONS */
+
 // Defining POSIX4 real-time signal range.
 #if defined ACE_HAS_AIO_CALLS
 #define ACE_SIGRTMIN SIGRTMIN
