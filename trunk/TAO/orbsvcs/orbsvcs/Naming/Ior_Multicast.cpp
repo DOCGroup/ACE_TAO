@@ -69,7 +69,7 @@ IOR_Multicast::handle_input (ACE_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Reply to multicast not sent. Received %d bytes, expected %d.",
                        retcode,
-                       sizeof (CORBA::Short)),
+                       sizeof (mcast_info)),
                       -1);
 
   // Confirm that we were meant to respond to this request.
