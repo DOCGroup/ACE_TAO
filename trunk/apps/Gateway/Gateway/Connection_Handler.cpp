@@ -4,6 +4,18 @@
 #include "Event_Channel.h"
 #include "Concrete_Connection_Handlers.h"
 
+Event_Channel *
+Connection_Handler::event_channel (void) const
+{
+  return this->event_channel_;
+}
+
+void
+Connection_Handler::event_channel (Event_Channel *ec)
+{
+  this->event_channel_ = ec;
+}
+
 void
 Connection_Handler::connection_id (CONNECTION_ID id)
 {
@@ -11,7 +23,7 @@ Connection_Handler::connection_id (CONNECTION_ID id)
 }
 
 CONNECTION_ID
-Connection_Handler::connection_id (void)
+Connection_Handler::connection_id (void) const
 {
   return this->connection_id_;
 }
@@ -19,7 +31,7 @@ Connection_Handler::connection_id (void)
 // The total number of bytes sent/received on this Proxy.
 
 size_t
-Connection_Handler::total_bytes (void)
+Connection_Handler::total_bytes (void) const
 {
   return this->total_bytes_;
 }
@@ -35,7 +47,7 @@ Connection_Handler::Connection_Handler (void)
 }
 
 Connection_Handler::Connection_Handler (const Connection_Config_Info &pci)
-  : remote_addr_ (pci.remote_port_, pci.host_),
+  : remote_addr_ (pci.remote_port_, pci.host_[0] == '\0' ? ACE_DEFAULT_SERVER_HOST : pci.host_),
     local_addr_ (pci.local_port_),
     connection_id_ (pci.connection_id_),
     total_bytes_ (0),
@@ -59,7 +71,7 @@ Connection_Handler::connection_role (char d)
 // Get the connection_role.
 
 char
-Connection_Handler::connection_role (void)
+Connection_Handler::connection_role (void) const
 {
   return this->connection_role_;
 }
@@ -102,7 +114,7 @@ Connection_Handler::max_timeout (int mto)
 // Gets the max timeout delay.
 
 int
-Connection_Handler::max_timeout (void)
+Connection_Handler::max_timeout (void) const
 {
   return this->max_timeout_;
 }
@@ -147,6 +159,14 @@ Connection_Handler::state (Connection_Handler::State s)
   this->state_ = s;
 }
 
+// Return the current state of the Proxy.
+
+Connection_Handler::State
+Connection_Handler::state (void) const
+{
+  return this->state_;
+}
+
 // Upcall from the <ACE_Acceptor> or <ACE_Connector> that delegates
 // control to our Connection_Handler.
 
@@ -173,24 +193,28 @@ Connection_Handler::open (void *)
     return 0;
 }
 
-// Return the current state of the Proxy.
-
-Connection_Handler::State
-Connection_Handler::state (void)
-{
-  return this->state_;
-}
-
 const ACE_INET_Addr &
-Connection_Handler::remote_addr (void)
+Connection_Handler::remote_addr (void) const
 {
   return this->remote_addr_;
 }
 
+void
+Connection_Handler::remote_addr (ACE_INET_Addr &ra)
+{
+  this->remote_addr_ = ra;
+}
+
 const ACE_INET_Addr &
-Connection_Handler::local_addr (void)
+Connection_Handler::local_addr (void) const
 {
   return this->local_addr_;
+}
+
+void
+Connection_Handler::local_addr (ACE_INET_Addr &la)
+{
+  this->local_addr_ = la;
 }
 
 // Make the appropriate type of <Connection_Handler> (i.e.,

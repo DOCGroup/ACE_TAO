@@ -94,18 +94,26 @@ public:
 protected:
   typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> inherited;
 
-  virtual int recv (ACE_Message_Block *&);
+  void transmit (ACE_Message_Block *mb,
+                 size_t n,
+                 int event_type);
+  // Transmit <mb> to the gatewayd.
+
+  virtual int recv (ACE_Message_Block *&mb);
   // Receive an Peer event from gatewayd.
 
-  virtual int send (ACE_Message_Block *);
+  virtual int send (ACE_Message_Block *mb);
   // Send an Peer event to gatewayd, using <nonblk_put>.
 
   virtual int nonblk_put (ACE_Message_Block *mb);
   // Perform a non-blocking <put>, which tries to send an event to the
   // gatewayd, but only if it isn't flow controlled.
 
+  int subscribe (void);
+  // Register Consumer subscriptions with the gateway.
+
   // = Event/state/action handlers.
-  int xmit_stdin (void);
+  int transmit_stdin (void);
   // Receive a event from stdin and send it to the gateway.
 
   int await_connection_id (void);

@@ -9,7 +9,7 @@ Options *Options::instance_ = 0;
 void
 Options::print_usage_and_die (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "%n [-a {C|S}:acceptor-port] [-c {C|S}:connector-port] [-h gateway-host] [-q max-queue-size] [-t timeout] [-v]\n"));
+  ACE_DEBUG ((LM_DEBUG, "%n [-a {C|S}:acceptor-port] [-c {C|S}:connector-port] [-C connection-id] [-h gateway-host] [-q max-queue-size] [-t timeout] [-v]\n"));
 }
 
 Options::Options (void)
@@ -20,7 +20,8 @@ Options::Options (void)
     consumer_connector_port_ (DEFAULT_GATEWAY_CONSUMER_PORT),
     connector_host_ (ACE_DEFAULT_SERVER_HOST),
     timeout_ (0),
-    max_queue_size_ (MAX_QUEUE_SIZE)
+    max_queue_size_ (MAX_QUEUE_SIZE),
+    connection_id_ (0)
 {
   char *timeout = ACE_OS::getenv ("TIMEOUT");
 
@@ -43,6 +44,12 @@ long
 Options::timeout (void) const
 {
   return this->timeout_;
+}
+
+CONNECTION_ID &
+Options::connection_id (void)
+{
+  return this->connection_id_;
 }
 
 long
@@ -146,6 +153,10 @@ Options::parse_args (int argc, char *argv[])
                     this->supplier_connector_port_ = ACE_OS::atoi (flag + 2);
                 }
           }
+          break;
+          /* NOTREACHED */
+        case 'C':
+          this->connection_id_ = ACE_OS::atoi (get_opt.optarg);
           break;
           /* NOTREACHED */
 	case 'h':

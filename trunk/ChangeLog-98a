@@ -1,3 +1,39 @@
+Sun Jan 11 00:00:26 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* apps/Gateway/Peer/Peer: Added new logic to transmit subscription
+ 	  requests to the Gateway.
+
+	* apps/Gateway/Gateway/Event.h (class Event_Header): Make sure
+ 	  that we correctly encode/decode the connection_id.
+
+Sat Jan 10 18:17:06 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* apps/Gateway/Gateway/Event.h: Added the event priority_ field to
+ 	  the Event_Key.  We don't currently use this, but we may some
+ 	  day.
+
+	* apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp (put):
+ 	  Changed the forward() method to process() since our new scheme
+ 	  will need to do more than just forward, e.g., it will need to
+ 	  handle subscriptions.
+
+	* apps/Gateway/Gateway/Connection_Handler: Made the accessors
+ 	  const member functions and also added accessors for the
+ 	  Event_Channel * so this can be set by the
+ 	  Connection_Handler_Acceptor::accept_svc_handler() method.
+	  
+	* apps/Gateway/Gateway/Connection_Handler: Added mutators so that
+ 	  we can set the local and remote addresses outside of the
+ 	  constructor.
+
+	* apps/Gateway/Gateway/Options: Added a connection_id() accessor
+ 	  to set/get the connection id.  This makes it possible to allow
+ 	  Peers to connection with the Gateway.
+
+	* apps/Gateway/Gateway/Gateway.cpp (parse_connection_config_file):
+ 	  Added a sanity check to ensure that the connection ids start at
+ 	  1 and increment by 1.
+
 Sat Jan 10 22:37:37 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/SStirng.i (find): changed type of local i to size_t to

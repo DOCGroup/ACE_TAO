@@ -6,16 +6,41 @@
 #include "Connection_Handler_Acceptor.h"
 
 int
-Connection_Handler_Acceptor::make_svc_handler (Connection_Handler *&ph)
+Connection_Handler_Acceptor::make_svc_handler (Connection_Handler *&ch)
 {
-  ACE_ALLOCATOR_RETURN (ph,
+  ACE_ALLOCATOR_RETURN (ch,
                         this->connection_handler_factory_.make_connection_handler (this->connection_config_info_),
                         -1);
   return 0;
 }
 
+int
+Connection_Handler_Acceptor::accept_svc_handler (Connection_Handler *ch)
+{
+  if (this->inherited::accept_svc_handler (ch) == -1)
+    return -1;
+  else
+    {
+      ch->connection_id (Options::instance ()->connection_id ());
+      ACE_INET_Addr remote_addr;
+
+      if (ch->peer ().get_remote_addr (remote_addr) == -1)
+        return -1;
+
+      // Set the remote address of our connected Peer.
+      ch->remote_addr (remote_addr);
+
+      // Set the Event_Channel pointer.
+      ch->event_channel (&this->event_channel_);
+
+      // Increment the connection ID by one.
+      Options::instance ()->connection_id ()++;
+      return 0;
+    }
+}
+
 Connection_Handler_Acceptor::Connection_Handler_Acceptor (Event_Channel &ec,
-                                                char connection_role)
+                                                          char connection_role)
   : event_channel_ (ec)
 {
   this->connection_config_info_.connection_id_ = 0;

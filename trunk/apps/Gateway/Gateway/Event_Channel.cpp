@@ -81,51 +81,100 @@ Event_Channel::compute_performance_statistics (void)
 
 int
 Event_Channel::handle_timeout (const ACE_Time_Value &,
-				   const void *)
+                               const void *)
 {
   // This is called periodically to compute performance statistics.
   return this->compute_performance_statistics ();
 }
 
-// This method forwards the <event> to Consumer that have registered
-// to receive it.
-
 int
 Event_Channel::put (ACE_Message_Block *event,
                     ACE_Time_Value *)
 {
-  // We got a valid event, so determine its virtual forwarding
-  // address, which is stored in the first of the two event blocks,
-  // which are chained together by <ACE::recv>.
+  // We got a valid event, so determine its type, which is stored in
+  // the first of the two <ACE_Message_Block>s, which are chained
+  // together by <ACE::recv>.
+  Event_Key *event_key = (Event_Key *) event->rd_ptr ();
 
-  Event_Key *forwarding_addr = (Event_Key *) event->rd_ptr ();
-
-  // Skip over the address portion and get the data.
+  // Skip over the address portion and get the data, which is in the
+  // second <ACE_Message_Block>.
   ACE_Message_Block *data = event->cont ();
 
-  // <dispatch_set> points to the set of Consumers associated with
-  // this forwarding address.
+  switch (event_key->type_)
+    {
+    case ROUTING_EVENT:
+      this->routing_event (event_key, 
+                           data); 
+      break;
+    case SUBSCRIPTION_EVENT:
+      this->subscription_event (data);
+      break;
+    }
+
+  // Release the memory in the message block.
+  event->release ();
+  return 0;
+}
+
+void
+Event_Channel::subscription_event (ACE_Message_Block *data)
+{
+  Event *event = (Event *) data->rd_ptr ();
+
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) received a subscription with %d bytes from connection id %d\n",
+	      event->header_.len_,
+              event->header_.connection_id_));
+  Subscription *subscription = (Subscription *) event->data_;
+  // Convert the subscription into host byte order so that we can
+  // access it directly without having to repeatedly muck with it...
+  subscription->decode ();
+
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) connection_id_ = %d, total_consumers_ = %d\n",
+              subscription->connection_id_,
+              subscription->total_consumers_));
+
+  for (ACE_INT32 i = 0;
+       i < subscription->total_consumers_;
+       i++)
+    ACE_DEBUG ((LM_DEBUG,
+                "(%t) consumers_[%d] = %d\n",
+                i, 
+                subscription->consumers_[i]));
+    
+}
+
+void
+Event_Channel::routing_event (Event_Key *forwarding_address,
+                              ACE_Message_Block *data)
+{
   Consumer_Dispatch_Set *dispatch_set = 0;
 
-  if (this->efd_.find (*forwarding_addr, dispatch_set) == -1)
+  // Initialize the <dispatch_set> to points to the set of Consumers
+  // associated with this forwarding address.
+
+  if (this->efd_.find (*forwarding_address,
+                       dispatch_set) == -1)
     // Failure.
     ACE_ERROR ((LM_DEBUG,
 		"(%t) find failed on connection id = %d, type = %d\n",
-		forwarding_addr->connection_id_,
-		forwarding_addr->type_));
+		forwarding_address->connection_id_,
+		forwarding_address->type_));
   else
     {
       // Check to see if there are any consumers.
       if (dispatch_set->size () == 0)
 	ACE_DEBUG ((LM_WARNING,
-		   "there are no active consumers for this event currently\n"));
+                    "there are no active consumers for this event currently\n"));
 
       else // There are consumers, so forward the event.
 	{
+          // Initialize the interator.
 	  Consumer_Dispatch_Set_Iterator dsi (*dispatch_set);
 
 	  // At this point, we should assign a thread-safe locking
-	  // strategy to the Message_Block is we're running in a
+	  // strategy to the <ACE_Message_Block> is we're running in a
 	  // multi-threaded configuration.
           data->locking_strategy (Options::instance ()->locking_strategy ());
 
@@ -147,11 +196,11 @@ Event_Channel::put (ACE_Message_Block *event,
 		    {
 		      if (errno == EWOULDBLOCK) // The queue has filled up!
 			ACE_ERROR ((LM_ERROR, "(%t) %p\n",
-				   "gateway is flow controlled, so we're dropping events"));
+                                    "gateway is flow controlled, so we're dropping events"));
 		      else
 			ACE_ERROR ((LM_ERROR,
                                     "(%t) %p transmission error to peer %d\n",
-				   "put",
+                                    "put",
                                     (*connection_handler)->connection_id ()));
 
 		      // We are responsible for releasing an
@@ -162,16 +211,6 @@ Event_Channel::put (ACE_Message_Block *event,
 	    }
 	}
     }
-
-  // Release the memory in the message block.
-  event->release ();
-  return 0;
-}
-
-int
-Event_Channel::svc (void)
-{
-  return 0;
 }
 
 int
@@ -284,18 +323,28 @@ Event_Channel::initiate_acceptors (void)
       (Options::instance ()->consumer_acceptor_port (),
        ACE_Reactor::instance (),
        Options::instance ()->blocking_semantics ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
                        "cannot register acceptor"),
                        -1);
+  else
+    ACE_DEBUG ((LM_DEBUG,
+                "accepting Consumers at %d\n", 
+                Options::instance ()->consumer_acceptor_port ()));
 
   if (Options::instance ()->enabled (Options::SUPPLIER_CONNECTOR)
       && this->supplier_acceptor_.open
       (Options::instance ()->supplier_acceptor_port (),
        ACE_Reactor::instance (),
        Options::instance ()->blocking_semantics ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
                        "cannot register acceptor"),
                       -1);
+  else
+    ACE_DEBUG ((LM_DEBUG,
+                "accepting Suppliers at %d\n", 
+                Options::instance ()->supplier_acceptor_port ()));
 
   return 0;
 }
@@ -306,12 +355,15 @@ Event_Channel::initiate_acceptors (void)
 int
 Event_Channel::close (u_long)
 {
-  if (Options::instance ()->threading_strategy ()
-      != Options::REACTIVE)
+  if (Options::instance ()->threading_strategy () != Options::REACTIVE)
     {
       if (ACE_Thread_Manager::instance ()->suspend_all () == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "suspend_all"), -1);
-      ACE_DEBUG ((LM_DEBUG, "(%t) suspending all threads\n"));
+	ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%t) %p\n",
+                           "suspend_all"),
+                          -1);
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) suspending all threads\n"));
     }
 
   // First tell everyone that the spaceship is here...
@@ -408,7 +460,7 @@ Event_Channel::bind_proxy (Connection_Handler *connection_handler)
 
 int
 Event_Channel::subscribe (const Event_Key &event_addr,
-			      Consumer_Dispatch_Set *cds)
+                          Consumer_Dispatch_Set *cds)
 {
   int result = this->efd_.bind (event_addr, cds);
 

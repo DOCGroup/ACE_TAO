@@ -111,6 +111,9 @@ public:
   long max_queue_size (void) const;
   // The maximum size of the queue.
 
+  CONNECTION_ID &connection_id (void);
+  // Returns a reference to the next available connection id;
+
 private:
   enum
   {
@@ -172,6 +175,9 @@ private:
 
   long max_queue_size_;
   // The maximum size of the queue.
+
+  CONNECTION_ID connection_id_;
+  // The next available connection id.
 
   char connection_config_file_[MAXPATHLEN + 1];
   // Name of the connection configuration file.

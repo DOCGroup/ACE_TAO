@@ -72,6 +72,9 @@ public:
   long max_queue_size (void) const;
   // The maximum size of the queue.
 
+  CONNECTION_ID &connection_id (void);
+  // Returns a reference to the connection id.
+
 private:
   enum
   {
@@ -122,6 +125,9 @@ private:
 
   long max_queue_size_;
   // The maximum size that the queue can grow to.
+
+  CONNECTION_ID connection_id_;
+  // The connection id.
 };
 
 #endif /* OPTIONS_H */

@@ -69,7 +69,7 @@ public:
   // Subscribe the <Consumer_Dispatch_Set> to receive events that
   // match <Event_Key>.
 
-  // = Event forwarding method.
+  // = Event processing entry point.
   virtual int put (ACE_Message_Block *mb,
                    ACE_Time_Value * = 0);
   // Pass <mb> to the Event Channel so it can forward it to Consumers.
@@ -82,11 +82,17 @@ public:
   // Suppliers.
 
 private:
-  virtual int svc (void);
-  // Run as an active object.
-
   int parse_args (int argc, char *argv[]);
   // Parse the command-line arguments.
+
+  // = Methods for handling events.
+  void routing_event (Event_Key *event_key,
+                    ACE_Message_Block *data);
+  // Forwards the <data> to Consumer that have registered to receive
+  // it, based on addressing information in the <event_key>.
+
+  void subscription_event (ACE_Message_Block *data);
+  // Add a Consumer subscription.
 
   int compute_performance_statistics (void);
   // Perform timer-based performance profiling.

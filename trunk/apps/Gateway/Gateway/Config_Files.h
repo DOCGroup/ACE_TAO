@@ -71,22 +71,17 @@ class Consumer_Config_Info
   //     Stores the information in a Consumer Map entry.
 {
 public:
-  enum 
-  {
-    MAX_CONSUMERS = 1000 
-    // Total number of multicast consumers.
-  };
-
   ACE_INT32 connection_id_;
-  // Connection id for this proxy.
+  // Connection id.
 
   ACE_INT32 type_;
   // Message type.
 
   ACE_INT32 consumers_[MAX_CONSUMERS];
-  // Connection ids for consumers that we're routing to.
+  // Connection ids for consumers that will be routed information
+  // containing this <connection_id_>
   
-  int total_consumers_;
+  ACE_INT32 total_consumers_;
   // Total number of these consumers.
 };  
 
