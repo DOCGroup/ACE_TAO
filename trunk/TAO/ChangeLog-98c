@@ -1,3 +1,16 @@
+Wed Jan 28 14:25:29 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/Param_Test/run_test: Updated to utilized the new '-o'
+ 	option on the server side and for the clients to get the IOR from
+ 	that file.
+
+	* tests/Param_Test/server.cpp: Added '-o' option to specify the
+ 	name of a file in which the server can deposit the IOR which the
+ 	client should use.
+
+	* tests/Param_Test/options.cpp: Updated the options string (forgot
+ 	it last time through).
+
 Wed Jan 28 13:56:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/POA/Makefile: 

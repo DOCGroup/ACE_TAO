@@ -39,7 +39,7 @@ Options::~Options (void)
 int
 Options::parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "dn:f:h:p:k:i:t:");
+  ACE_Get_Opt get_opts (argc, argv, "dn:f:i:t:");
   int c;
 
   while ((c = get_opts ()) != -1)

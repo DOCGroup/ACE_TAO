@@ -19,11 +19,12 @@
 #include "param_test_i.h"
 
 // Parses the command line arguments and returns an error status
+static FILE* ior_output_file = 0;
 
 static int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "d");
+  ACE_Get_Opt get_opts (argc, argv, "do:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -31,6 +32,13 @@ parse_args (int argc, char *argv[])
       {
       case 'd':  // debug flag
         TAO_debug_level++;
+        break;
+      case 'o':
+        ior_output_file = ACE_OS::fopen (get_opts.optarg, "w");
+        if (ior_output_file == 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to open %s for writing: %p\n",
+                             get_opts.optarg), -1);
         break;
       case '?':
       default:
@@ -125,7 +133,12 @@ main (int argc, char *argv[])
                                    TAO_TRY_ENV);
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) The IOR is <%s>\n", str.in ()));
-
+      if (ior_output_file)
+        {
+          ACE_OS::fprintf (ior_output_file, "%s", str.in());
+          ACE_OS::fclose (ior_output_file);
+        }
+      
       // Make the POAs controlled by this manager active
       poa_manager->activate (TAO_TRY_ENV);
       TAO_CHECK_ENV;
