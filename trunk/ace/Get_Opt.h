@@ -6,7 +6,7 @@
  *  $Id$
  *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
- *  
+ *
  *  Long option support added by Don Hinton <dhinton@gmx.net>.
  */
 //=============================================================================
@@ -46,14 +46,14 @@ public:
   /// Mutually exclusive ordering values.
   enum
   {
-    /// The options must come first, return <EOF> as soon as a 
+    /// The options must come first, return <EOF> as soon as a
     /// non-option argument is encountered.
-    REQUIRE_ORDER = 1, 
+    REQUIRE_ORDER = 1,
 
     /// Reorder the arguments so that all the options come first (the
     /// order of the options and the following arguments are
     /// maintained).
-    PERMUTE_ARGS = 2, 
+    PERMUTE_ARGS = 2,
 
     /// Continue processing the command line for each argument.  The
     /// return value '1' signifies a non-option argument.
@@ -70,7 +70,7 @@ public:
     /// character in <optstring>.
     ARG_REQUIRED = 1,
 
-    /// Argument is optional, same as passing "::" after a short 
+    /// Argument is optional, same as passing "::" after a short
     /// option character in <optstring>.
     ARG_OPTIONAL = 2
   };
@@ -82,16 +82,16 @@ public:
    * empty.
    *
    * <optstring> is a string containing the legitimate short option
-   * characters.  A single colon ":" in <optstring> means that the 
+   * characters.  A single colon ":" in <optstring> means that the
    * previous character is an option that wants, requires, an argument,
    * whereas a double colon "::" signifies the argument is optional.
    * The argument is taken from the rest of the current <argv>-element,
    * or from the following <argv>-element (only valid for required
    * arguments, optional arguments must always reside in the same
-   * <argv>-element), and returned in by <opt_arg ()>. 
+   * <argv>-element), and returned in by <opt_arg ()>.
    *
-   * Multiple short options can be combined as long as only the last 
-   * one can takes an argument, e.g., if <optstring> is defined as 
+   * Multiple short options can be combined as long as only the last
+   * one can takes an argument, e.g., if <optstring> is defined as
    * "abc:" or "abc::" then the command line "program -abcxxx" short
    * options a, b, and c are found with "xxx" as the argument for c.
    * However, if the command line is specified as "program -acb" only
@@ -99,7 +99,7 @@ public:
    * for options with optional arguments, e.g., those followed by "::"
    * the argument must be in the same <argv>-element, so "program -abc
    * xxx" will only find "xxx" as the argument for c if <optstring> is
-   * specified as "abc:" not "abc::". 
+   * specified as "abc:" not "abc::".
    *
    * If a missing required option argument is detected, return the
    * colon character ':' if the first character of <optstring> was a
@@ -113,19 +113,19 @@ public:
    * set <report_errors> to zero, the error message is suppressed but
    * we still return '?'.
    *
-   * <optstring> can be extended by adding long options, 
-   * <long_option()>, that have corresponding short options.  If the 
+   * <optstring> can be extended by adding long options,
+   * <long_option()>, that have corresponding short options.  If the
    * short option already appears in <optstring> they argument
-   * characteristics must match, otherwise it is added  -- see 
+   * characteristics must match, otherwise it is added  -- see
    * <long_option()> for more information.
    *
    * If 'W', followed by a semi-colon ';' appears in <optstring>, then
    * any time a 'W' appears on the command line, the following argument
-   * is treated as a long option, e.g., if the command line contains 
+   * is treated as a long option, e.g., if the command line contains
    * "program -W foo" "foo" is treated as a long option, i.e., as if
    * "program --foo" had been passed.
    *
-   * <ordering> refers to how the <argv>-elements are processed.  
+   * <ordering> refers to how the <argv>-elements are processed.
    * <REQUIRE_ORDER> means that we stop processing and return <EOF> as
    * soon as a non-option argument is found, and <opt_ind ()>
    * holds the index of the next <argv>-element so the program can
@@ -203,7 +203,7 @@ public:
    * much of <argv> has been scanned so far.
    */
   int &opt_ind (void);
-  
+
   // Adds a long option with no corresponding short option.
   int long_option (const ACE_TCHAR *name,
                    OPTION_ARG_MODE has_arg = NO_ARG);
@@ -217,7 +217,7 @@ public:
                    int short_option,
                    OPTION_ARG_MODE has_arg = NO_ARG);
 
-  /// Returns the name of the long option found on the last call to 
+  /// Returns the name of the long option found on the last call to
   /// <operator()> or 0 if none was found.
   const ACE_TCHAR *long_option (void) const;
 
@@ -231,13 +231,19 @@ public:
   /// long_option added short options as expected.
   const ACE_TCHAR *optstring (void) const;
 
-public: 
+public:
   /**
    * The following five data members should be private, but that
    * would break backwards compatibility.  However, we recommend not
    * writing code that uses these fields directly.
    */
-        
+
+  /// Holds the <argc> count.
+  int argc_;
+
+  /// Holds the <argv> pointer.
+  ACE_TCHAR **argv_;
+
   /// Index in argv_ of the next element to be scanned.
   int optind;
 
@@ -249,16 +255,10 @@ public:
   /// <operator()>.
   ACE_TCHAR *optarg;
 
-  /// Holds the <argc> count.
-  int argc_;
-
-  /// Holds the <argv> pointer.
-  ACE_TCHAR **argv_;
-
 private:
-  class ACE_Get_Opt_Long_Option 
+  class ACE_Get_Opt_Long_Option
   {
-  public:  
+  public:
     /// ctor
     ACE_Get_Opt_Long_Option (const ACE_TString name,
                              int has_arg,
@@ -266,22 +266,22 @@ private:
       :  name_ (name),
          has_arg_ (has_arg),
          val_ (val) {};
-    
+
     /// Default dtor.
     ~ACE_Get_Opt_Long_Option (void) {};
-    
+
     int operator < (const ACE_Get_Opt_Long_Option &rhs);
-    
+
     /// Long option name.
     const ACE_TString name_;
 
-    /// Contains value for <OPTION_ARG_MODE>. 
+    /// Contains value for <OPTION_ARG_MODE>.
     int has_arg_;
 
     /// Contains a valid short option character or zero if it doesn't
-    /// have a corresponding short option.  It can also contain a 
+    /// have a corresponding short option.  It can also contain a
     /// non-printable value that cannot be passed to <optstring> but
-    /// will be returned by <operator()>.  This is handy for 
+    /// will be returned by <operator()>.  This is handy for
     /// simplifying long option handling, see tests/Get_Opt_Test.cpp
     /// for an example of this technique.
     int val_;
@@ -296,7 +296,7 @@ private:
   /// Handles short options.
   int short_option_i (void);
 
-  /// If permuting args, this functions manages the nonopt_start_ and 
+  /// If permuting args, this functions manages the nonopt_start_ and
   /// nonopt_end_ indexes and makes calls to permute to actually
   /// reorder the <argv>-elements.
   void permute_args (void);
@@ -311,10 +311,10 @@ private:
   int long_only_;
 
   /// Keeps track of whether or not a colon was passed in <optstring>.
-  /// This is used to determine the return value when required 
+  /// This is used to determine the return value when required
   /// arguments are missing.
   int has_colon_;
-  
+
   /**
    * The next char to be scanned in the option-element in which the
    * last option character we returned was found.  This allows us to
@@ -331,8 +331,8 @@ private:
   /// Index of the first non-option <argv>-element found (only valid
   /// when permuting).
   int nonopt_start_;
-  
-  /// Index of the <argv>-element following the last non-option element 
+
+  /// Index of the <argv>-element following the last non-option element
   /// (only valid when permuting).
   int nonopt_end_;
 
