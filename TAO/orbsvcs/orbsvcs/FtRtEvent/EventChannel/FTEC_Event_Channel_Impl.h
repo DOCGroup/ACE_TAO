@@ -39,7 +39,7 @@ public:
 
   /// Start the internal threads (if any), etc.
   /// After this call the EC can be used.
-  virtual void activate (
+  virtual void activate_object (
     CORBA::ORB_var orb,
     const FtRtecEventComm::ObjectId& supplier_admin_oid,
     const FtRtecEventComm::ObjectId& consumer_admin_oid
