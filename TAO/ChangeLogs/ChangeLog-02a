@@ -1,3 +1,41 @@
+Sat Jan 27 18:41:28 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/RT_ORBInitializer.cpp (pre_init):
+
+	  Use ACE_NEW_THROW_EX instead of raw "new" operator.
+
+	  Store newly created TAO_Priority_Mapping_Manager reference in
+	  its corresponding "_var" so that proper reference counting
+	  semantics are maintained, i.e., the caller is always responsible
+	  for storage.  Fixes a memory leak.
+
+	* tao/Priority_Mapping_Manager.h (TAO_Priority_Mapping_Manager):
+
+	  Derive this class from TAO_Local_RefCounted_Object so that we
+	  pull in the version of CORBA::LocalObject with reference
+	  counting implemented.  Fixes a memory leak.
+
+	* tao/Pool_Per_Endpoint.cpp (run):
+	* tao/RT_Protocols_Hooks.cpp (set_thread_priority,
+	  get_thread_priority):
+
+	  Added missing ACE_CHECKs and ACE_CHECK_RETURNs.
+
+	* tao/ORB_Core.cpp (priority_mapping_manager):
+
+	  Fixed problem where this (accessor) method would always return a
+	  nil object reference.
+
+	  Release the old reference before setting the new one in the
+	  mutator version of this method.  Fixes a memory leak.  We won't
+	  need to do this once we change the priority_mapping_manager_
+	  member to be a non-static CORBA::Object_var.
+
+	  (fini):
+
+	  Release the reference to the priority mapping manager.  Fixes a
+	  memory leak.
+
 Sat Jan 27 16:01:08 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/IFR_Service/Options.cpp:

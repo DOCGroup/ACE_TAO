@@ -356,7 +356,8 @@ TAO_RT_Protocols_Hooks::get_thread_priority (TAO_ORB_Core *orb_core,
   if (ACE_Thread::getprio (current, native_priority) == -1)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - RT_Protocols_Hooks::get_thread_priority: ")
+                  ACE_TEXT ("TAO (%P|%t) - ")
+                  ACE_TEXT ("RT_Protocols_Hooks::get_thread_priority: ")
                   ACE_TEXT (" ACE_Thread::get_prio\n")));
       return -1;
     }
@@ -367,6 +368,7 @@ TAO_RT_Protocols_Hooks::get_thread_priority (TAO_ORB_Core *orb_core,
   TAO_Priority_Mapping_Manager_var mapping_manager =
     TAO_Priority_Mapping_Manager::_narrow (obj.in (),
                                            ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   TAO_Priority_Mapping *priority_mapping =
     mapping_manager.in ()->mapping ();
@@ -374,8 +376,9 @@ TAO_RT_Protocols_Hooks::get_thread_priority (TAO_ORB_Core *orb_core,
   if (priority_mapping->to_CORBA (native_priority, priority) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - RT_Protocols_Hooks::get_thread_priority: ")
-                  ACE_TEXT (" Priority_Mapping::to_CORBA\n")));
+                  ACE_TEXT ("TAO (%P|%t) - ")
+                  ACE_TEXT ("RT_Protocols_Hooks::get_thread_priority: ")
+                  ACE_TEXT ("Priority_Mapping::to_CORBA\n")));
       return -1;
     }
 
@@ -393,6 +396,7 @@ TAO_RT_Protocols_Hooks::set_thread_priority (TAO_ORB_Core *orb_core,
   TAO_Priority_Mapping_Manager_var mapping_manager =
     TAO_Priority_Mapping_Manager::_narrow (obj.in (),
                                            ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   TAO_Priority_Mapping *priority_mapping =
     mapping_manager.in ()->mapping ();
@@ -400,6 +404,7 @@ TAO_RT_Protocols_Hooks::set_thread_priority (TAO_ORB_Core *orb_core,
   CORBA::Short native_priority;
   if (priority_mapping->to_native (priority, native_priority) == 0)
     return -1;
+
   ACE_hthread_t current;
   ACE_Thread::self (current);
 
@@ -411,8 +416,7 @@ TAO_RT_Protocols_Hooks::set_thread_priority (TAO_ORB_Core *orb_core,
 
 void
 TAO_RT_Protocols_Hooks::set_priority_mapping (TAO_ORB_Core *orb_core,
-                                              TAO_Resource_Factory
-                                              *trf,
+                                              TAO_Resource_Factory *trf,
                                               CORBA::Environment &ACE_TRY_ENV)
 {
   ///
@@ -426,7 +430,7 @@ TAO_RT_Protocols_Hooks::set_priority_mapping (TAO_ORB_Core *orb_core,
   ACE_CHECK;
 
   if (!CORBA::is_nil (priority_mapping_manager.in ()))
-      priority_mapping_manager->mapping (trf->get_priority_mapping ());
+    priority_mapping_manager->mapping (trf->get_priority_mapping ());
 }
 
 int

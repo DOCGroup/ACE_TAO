@@ -50,6 +50,7 @@ TAO_Pool_Per_Endpoint::run (CORBA::Environment &ACE_TRY_ENV)
       TAO_Priority_Mapping_Manager_var mapping_manager = 
         TAO_Priority_Mapping_Manager::_narrow (obj.in (),
                                                ACE_TRY_ENV);
+      ACE_CHECK;
 
       RTCORBA::PriorityMapping *pm =
         mapping_manager.in ()->mapping ();
@@ -63,9 +64,12 @@ TAO_Pool_Per_Endpoint::run (CORBA::Environment &ACE_TRY_ENV)
 
       if (TAO_debug_level > 3)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - creating thread at priority %d:%d\n"),
-                    priority, corba_priority));
+                    ACE_TEXT ("TAO (%P|%t) - creating thread at ")
+                    ACE_TEXT ("priority %d:%d\n"), 
+                    priority,
+                    corba_priority));
 #endif /* TAO_HAS_RT_CORBA == 1 */
+
       if (this->activate (this->flags_,
                           this->poolsize_, /* number of threads */
                           1, /* force active */
@@ -86,7 +90,7 @@ TAO_Pool_Per_Endpoint::svc (void)
                 ACE_TEXT (" using reactor <%x> in this thread\n"),
                 this->orb_->orb_core ()->reactor ()));
 
-  this->orb_->run ();
+  this->orb_->run ();  // @@ Where's the error/exception check?
 
   if (TAO_debug_level > 3)
     ACE_DEBUG ((LM_DEBUG,
