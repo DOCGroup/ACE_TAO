@@ -219,19 +219,20 @@ ACE_SSL_Context::set_mode (int mode)
 
   this->mode_ = mode;
 
-  if (this->certificate_.type () == -1)
-    {
-      const char *cert_file = ACE_OS::getenv (ACE_SSL_CERT_FILE_ENV);
-      if (cert_file == 0)
-        cert_file = ACE_DEFAULT_SSL_CERT_FILE;
-      const char *cert_dir = ACE_OS::getenv (ACE_SSL_CERT_DIR_ENV);
-      if (cert_dir == 0)
-        cert_dir = ACE_DEFAULT_SSL_CERT_DIR;
+  const char *cert_file = ACE_OS::getenv (ACE_SSL_CERT_FILE_ENV);
+  if (cert_file == 0)
+    cert_file = ACE_DEFAULT_SSL_CERT_FILE;
+  const char *cert_dir = ACE_OS::getenv (ACE_SSL_CERT_DIR_ENV);
+  if (cert_dir == 0)
+    cert_dir = ACE_DEFAULT_SSL_CERT_DIR;
 
-      ::SSL_CTX_load_verify_locations (this->context_,
+  // SSL_CTX_load_verify_locations() returns 0 on error.
+  if (::SSL_CTX_load_verify_locations (this->context_,
                                        cert_file,
-                                       cert_dir);
-      ::ERR_print_errors_fp (stderr);
+                                       cert_dir) <= 0)
+    {
+      // ::ERR_print_errors_fp (stderr);
+      return -1;
     }
 
   if (this->certificate_.type () != -1
