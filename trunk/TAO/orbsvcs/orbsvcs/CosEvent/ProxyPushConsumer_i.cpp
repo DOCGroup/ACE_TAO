@@ -12,17 +12,22 @@ class PushSupplierWrapper : public POA_RtecEventComm::PushSupplier
 {
   // = TITLE
   //   A Wrapper for the Rtec PushSupplier.
+  //
   // = DESCRIPTION
-  //   The Rtec ProxyPushConsumer uses a Rtec PushSupplier.
-  //   This class wraps the Cos PushSupplier to make it look like a Rtec PushSupplier.
+  //   The Rtec ProxyPushConsumer uses a Rtec PushSupplier.  This
+  //   class wraps the Cos PushSupplier to make it look like a Rtec
+  //   PushSupplier.
 public:
   // = Initialization and termination methods.
   PushSupplierWrapper (CosEventComm::PushSupplier_ptr supplier);
+  // Constructor.
 
-  ~PushSupplierWrapper ();
+  ~PushSupplierWrapper (void);
+  // Destructor.
 
   virtual void disconnect_push_supplier (CORBA::Environment &TAO_TRY_ENV);
-  // disconnects the push supplier.
+  // Disconnects the push supplier.
+
 private:
   CosEventComm::PushSupplier_ptr supplier_;
   // The Cos PushSupplier that we're proxying for.
@@ -47,21 +52,24 @@ PushSupplierWrapper::disconnect_push_supplier (CORBA::Environment &TAO_TRY_ENV)
  // Deactivate the supplier proxy
   PortableServer::POA_var poa =
     this->_default_POA (TAO_TRY_ENV);
-
   TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this, TAO_TRY_ENV);
+    poa->servant_to_id (this,
+                        TAO_TRY_ENV);
   TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 
-  poa->deactivate_object (id.in (), TAO_TRY_ENV);
+  poa->deactivate_object (id.in (),
+                          TAO_TRY_ENV);
   TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 
-  // @@ If we keep a list remember to remove this object from the list.
+  // @@ If we keep a list remember to remove this object from the
+  // list.
   delete this;
 };
 
-ProxyPushConsumer_i::ProxyPushConsumer_i (const RtecEventChannelAdmin::SupplierQOS &qos, RtecEventChannelAdmin::ProxyPushConsumer_ptr ppc)
+ProxyPushConsumer_i::ProxyPushConsumer_i (const RtecEventChannelAdmin::SupplierQOS &qos,
+                                          RtecEventChannelAdmin::ProxyPushConsumer_ptr ppc)
   : qos_ (qos),
     ppc_ (ppc),
     wrapper_ (0)
@@ -69,7 +77,7 @@ ProxyPushConsumer_i::ProxyPushConsumer_i (const RtecEventChannelAdmin::SupplierQ
   // No-Op.
 }
 
-ProxyPushConsumer_i::~ProxyPushConsumer_i ()
+ProxyPushConsumer_i::~ProxyPushConsumer_i (void)
 {
   // No-Op.
 }
@@ -83,12 +91,12 @@ ProxyPushConsumer_i::push (const CORBA::Any &data,
 
   RtecEventComm::Event& e = events[0];
   RtecEventComm::Event eqos = qos_.publications[0].event;
-  /*
-    NOTE: we initialize the <EventHeader> field using the 1st <publications>
-    from the <SupplierQOS>.so we assume that publications[0] is initialized.
-  */
+
+  // NOTE: we initialize the <EventHeader> field using the 1st
+  // <publications> from the <SupplierQOS>.so we assume that
+  // publications[0] is initialized.
   e.header.source = eqos.header.source;
-  e.header.ttl = eqos.header.ttl ;
+  e.header.ttl = eqos.header.ttl;
   e.header.type = eqos.header.type;
 
   ACE_hrtime_t t = ACE_OS::gethrtime ();
@@ -113,31 +121,38 @@ ProxyPushConsumer_i::disconnect_push_consumer (CORBA::Environment &TAO_TRY_ENV)
   TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this, TAO_TRY_ENV);
+    poa->servant_to_id (this, 
+                        TAO_TRY_ENV);
   TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 
-  poa->deactivate_object (id.in (), TAO_TRY_ENV);
+  poa->deactivate_object (id.in (),
+                          TAO_TRY_ENV);
   TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 
   delete this;
 }
 
 void
-ProxyPushConsumer_i::connect_push_supplier (CosEventComm::PushSupplier_ptr push_supplier, CORBA::Environment &TAO_TRY_ENV)
+ProxyPushConsumer_i::connect_push_supplier (CosEventComm::PushSupplier_ptr push_supplier,
+                                            CORBA::Environment &TAO_TRY_ENV)
 {
-   CORBA::Environment &_env = TAO_TRY_ENV;
+  // @@ Pradeep, do you really need this _env variable?  Can you remove it?
+  CORBA::Environment &_env = TAO_TRY_ENV;
 
   if (this->connected ())
-    TAO_THROW (CosEventChannelAdmin::AlreadyConnected());
+    TAO_THROW (CosEventChannelAdmin::AlreadyConnected ());
 
-  this->wrapper_ = new PushSupplierWrapper(push_supplier);
+  // @@ Pradeep, please make sure to use ACE_NEW and ACE_NEW_RETURN in
+  // situations like this to check for new failures.
+  this->wrapper_ = new PushSupplierWrapper (push_supplier);
 
   this->ppc_->connect_push_supplier (this->wrapper_->_this (TAO_TRY_ENV),
                                      this->qos_,
                                      TAO_TRY_ENV);
 }
 
-int ProxyPushConsumer_i::connected (void)
+int 
+ProxyPushConsumer_i::connected (void)
 {
   return this->wrapper_ == 0 ? 0 : 1;
 }
