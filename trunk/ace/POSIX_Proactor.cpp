@@ -290,7 +290,7 @@ ACE_POSIX_Proactor::handle_signal (int, siginfo_t *, ucontext_t *)
   ACE_Time_Value timeout (0, 0);
   int result = 0;
 
-  while (1)
+  for (;;)
     {
       result = this->handle_events (timeout);
       if (result != 0 || errno == ETIME)
@@ -851,7 +851,7 @@ ACE_POSIX_AIOCB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result, int op)
   ACE_TRACE ("ACE_POSIX_AIOCB_Proactor::start_aio");
 
   int ret_val;
-  const TCHAR *ptype;
+  const ACE_TCHAR *ptype;
 
   // Start IO
 

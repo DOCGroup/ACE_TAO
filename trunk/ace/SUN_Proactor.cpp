@@ -141,8 +141,8 @@ ACE_SUN_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
 {
   ACE_TRACE ("ACE_SUN_Proactor::start_aio");
 
-  int result;
-  const TCHAR *ptype;
+  int ret_val;
+  const ACE_TCHAR *ptype;
 
   // Start IO
 
@@ -150,7 +150,7 @@ ACE_SUN_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
     {
     case 0 : 
       ptype = "read";
-      result = aioread (result->aio_fildes,
+      ret_val = aioread (result->aio_fildes,
                         (char *) result->aio_buf,
                         result->aio_nbytes,
                         result->aio_offset,
@@ -160,7 +160,7 @@ ACE_SUN_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
 
     case 1 :
       ptype = "write"; 
-      result = aiowrite (result->aio_fildes,
+      ret_val = aiowrite (result->aio_fildes,
                          (char *) result->aio_buf,
                          result->aio_nbytes,
                          result->aio_offset,
@@ -170,16 +170,16 @@ ACE_SUN_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
 
     default:
       ptype = "?????"; 
-      result = -1;
+      ret_val = -1;
       break;
     }
 	
-  if (result == -1)
+  if (ret_val == -1)
     ACE_ERROR ((LM_ERROR,
                 "%N:%l:(%P | %t)::start_aio: aio%s %p\n",
                 ptype,
                 "queueing failed\n"));
-  return result;
+  return ret_val;
 }
 
 #endif /* ACE_HAS_AIO_CALLS && sun */
