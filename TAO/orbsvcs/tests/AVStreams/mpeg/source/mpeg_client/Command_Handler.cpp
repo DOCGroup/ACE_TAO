@@ -1147,7 +1147,7 @@ Command_Handler::speed (void)
   if (!shared->live && shared->cmd == CmdPLAY)
     {
       if (videoSocket >= 0) {
-        Video_Control::SPEEDpara_var para;
+        Video_Control::SPEEDpara_var para (new Video_Control::SPEEDpara);
         para->sn = shared->cmdsn;
         para->usecPerFrame = shared->usecPerFrame;
         para->framesPerSecond = shared->framesPerSecond;
