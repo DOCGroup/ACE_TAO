@@ -92,7 +92,7 @@ public:
     TAO_ALLOCATOR_THREAD_LOCK
   };
 
-  // Translator type
+  /// Translator type
   enum TRANSLATOR_TYPE
   {
     CHAR_TRANSLATOR,
@@ -115,6 +115,8 @@ public:
   virtual ACE_Allocator* output_cdr_dblock_allocator (void);
   virtual ACE_Allocator* output_cdr_buffer_allocator (void);
   virtual ACE_Allocator* output_cdr_msgblock_allocator (void);
+  virtual ACE_Allocator* amh_response_handler_allocator (void);
+  virtual ACE_Allocator* ami_response_handler_allocator (void);
   virtual TAO_ProtocolFactorySet *get_protocol_factories (void);
 
   virtual TAO_Codeset_Manager *get_codeset_manager ();
@@ -233,7 +235,7 @@ private:
   };
 
   /// Type of flushing strategy configured
-  int flushing_strategy_type_;
+  Flushing_Strategy_Type flushing_strategy_type_;
 
   TAO_Codeset_Manager *codeset_manager_;
 
