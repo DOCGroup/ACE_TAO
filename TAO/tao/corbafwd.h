@@ -338,6 +338,8 @@ class CORBA_ORB_ObjectIdList_out;
 typedef CORBA_ORB_ObjectIdList *CORBA_ORB_ObjectIdList_ptr;
 
 // Forward declarations for INTERFACE REPO..Bala
+#ifdef TAO_HAS_INTERFACE_REPOSTORY
+
 class CORBA_IRObject;
 class CORBA_IRObject_var;
 class CORBA_IRObject_out;
@@ -602,6 +604,7 @@ class CORBA_EnumMemberSeq;
 class CORBA_EnumMemberSeq_out;
 class CORBA_EnumMemberSeq_var;
 typedef CORBA_EnumMemberSeq *CORBA_EnumMemberSeq_ptr;
+#endif /* TAO_HAS_INTERFACE_REPOSITORY*/
 
 // enum values defined in tao/NVList.h, bitwise ORed.
 typedef u_int CORBA_Flags;
@@ -795,6 +798,7 @@ TAO_NAMESPACE CORBA
   typedef CORBA_Current_var Current_var;
   typedef CORBA_Current_out Current_out;
 
+#ifdef TAO_HAS_INTERFACE_REPOSITORY
   // Interface Repository Bala===========
   typedef CORBA_IRObject IRObject;
   typedef CORBA_IRObject *IRObject_ptr;
@@ -1060,6 +1064,8 @@ TAO_NAMESPACE CORBA
   typedef CORBA_EnumMemberSeq *EnumMemberSeq_ptr;
   typedef CORBA_EnumMemberSeq_out EnumMemberSeq_out;
   typedef CORBA_EnumMemberSeq_var EnumMemberSeq_var;
+#endif /* TAO_HAS_INTERFACE_REPOSITORY */
+
 #ifdef TAO_HAS_VALUETYPE
   typedef CORBA_ValueBase ValueBase;
   typedef CORBA_ValueFactoryBase ValueFactoryBase;
@@ -1414,7 +1420,16 @@ TAO_NAMESPACE CORBA
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_DIIPollable;
 
     // ****************************************************************
+  typedef char *RepositoryId;
+  typedef CORBA::String_var RepositoryId_var;
+  typedef CORBA::String_out RepositoryId_out;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_RepositoryId;
 
+  typedef char *Identifier;
+  typedef CORBA::String_var Identifier_var;
+  typedef CORBA::String_out Identifier_out;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Identifier;
+#ifdef TAO_HAS_INTERFACE_REPOSITORY
   // ------------------------------Interface REPOS Bala
 
   // =================== Interface Repository =====================
@@ -1423,15 +1438,9 @@ TAO_NAMESPACE CORBA
   typedef CORBA_String_out ScopedName_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ScopedName;
 
-  typedef char *Identifier;
-  typedef CORBA::String_var Identifier_var;
-  typedef CORBA::String_out Identifier_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Identifier;
+  
 
-  typedef char *RepositoryId;
-  typedef CORBA::String_var RepositoryId_var;
-  typedef CORBA::String_out RepositoryId_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_RepositoryId;
+  
 
   enum DefinitionKind
   {
@@ -1598,6 +1607,7 @@ TAO_NAMESPACE CORBA
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short VM_ABSTRACT;
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short VM_TRUNCATABLE;
   // ================== Interface Repository =====================
+#endif /*TAO_HAS_INTERFACE_REPOSITORY */
   // There could be a single version of these methods, but g++ 2.7.2
   // gets horribly confused if we used CORBA::default_environment() at
   // this point.
