@@ -1,3 +1,10 @@
+Wed Jan 21 09:40:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/sequence.cpp: 
+	* tao/sequence_T.cpp: 
+	  Fixed allocation problem for operator= in sequences, the new
+	  buffer should have size "rhs.maximum_", not "this->maximum_"
+
 Wed Jan 21 04:43:57 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tao/corbacom.h: Added Object_var and ORB_var to the CORBA class
