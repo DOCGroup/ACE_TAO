@@ -28,6 +28,7 @@
 #if !defined (MPEG_GLOBAL_H)
 #define MPEG_GLOBAL_H
 
+#include "ace/SOCK_CODgram.h"
 // Global symbols, these need to become enums eventually.
 
 #define SESSION_NUM     4
@@ -150,6 +151,9 @@ class Video_Global
 {
 public:
   Video_Global ();
+
+  ACE_SOCK_CODgram dgram;
+  // the UDP data socket
 
   int live_source;
   int video_format;

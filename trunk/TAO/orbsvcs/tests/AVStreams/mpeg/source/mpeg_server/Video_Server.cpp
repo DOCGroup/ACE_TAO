@@ -25,11 +25,12 @@
  */
 
 #include "Video_Server.h"
+#include "orbsvcs/CosNamingC.h"
 
 // Video_Sig_Handler methods
 // handles the timeout SIGALRM signal
-Video_Sig_Handler::Video_Sig_Handler (Video_Control_Handler *vch)
-  : vch_ (vch)
+Video_Sig_Handler::Video_Sig_Handler ()
+  : vci_ (VIDEO_CONTROL_I::instance ())
 {
 }
 
@@ -112,8 +113,8 @@ Video_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
       // Handle the timeout
       Video_Timer_Global::timerHandler (SIGALRM);
       // send the frame
-      //      cerr << "current state = " << this->vch_->get_state ()->get_state ();
-      switch (this->vch_->get_state ()->get_state ())
+      //      cerr << "current state = " << this->vci_->get_state ()->get_state ();
+      switch (this->vci_->get_state ()->get_state ())
         {
         case Video_Control_State::VIDEO_PLAY:
           VIDEO_SINGLETON::instance ()->play_send   ();
@@ -142,17 +143,15 @@ Video_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 
 // Video_Data_Handler methods
 
-Video_Data_Handler::Video_Data_Handler (int video_data_fd,
-                                        Video_Control_Handler *vch)
-  : data_handle_ (video_data_fd),
-    vch_ (vch)
+Video_Data_Handler::Video_Data_Handler ()
+  : vci_ (VIDEO_CONTROL_I::instance ())
 {
 }
 
 ACE_HANDLE
 Video_Data_Handler::get_handle (void) const
 {
-  return this->data_handle_ ;
+  return VIDEO_SINGLETON::instance ()->dgram.get_handle ();
 }
 
 int
@@ -160,7 +159,7 @@ Video_Data_Handler::handle_input (ACE_HANDLE handle)
 {
   fprintf (stderr,"Video_Data_Handler::handle_input ()\n");
   
-  switch (this->vch_->get_state ()->get_state ())
+  switch (this->vci_->get_state ()->get_state ())
     {
     case Video_Control_State::VIDEO_PLAY:
       VIDEO_SINGLETON::instance ()->GetFeedBack ();
@@ -177,177 +176,7 @@ Video_Data_Handler::handle_input (ACE_HANDLE handle)
 
 // Video_Control_Handler methods
 
-Video_Control_Handler::Video_Control_Handler (int control_fd)
-  : control_handle_ (control_fd)
-{
-}
 
-// Called by the reactor to extract the handle associated with this handler.
-ACE_HANDLE
-Video_Control_Handler::get_handle (void) const
-{
-  return this->control_handle_ ;
-}
-
-// Called by the Reactor when data is ready to be read from the
-// video control handle, which indicates a control message from the client.
-int
-Video_Control_Handler::handle_input (ACE_HANDLE handle)
-{
-  ACE_DEBUG ((LM_DEBUG, 
-              "(%P|%t)"
-              "Video_Control_Handler::handle_input called!!!\n"));
-  if (this->state_->handle_input (handle) != 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Removing the Video_Control_Handler from TAO Reactor\n"));
-    return TAO_ORB_Core_instance ()->reactor ()-> remove_handler (this,
-                                                                  ACE_Event_Handler::READ_MASK);
-    }
-  return 0;
-  // state pattern
-}
-
-// Returns the current state object .
-Video_Control_State *
-Video_Control_Handler::get_state (void)
-{
-  return this->state_;
-}
-
-CORBA::Boolean 
-Video_Control_Handler::init_video (const Video_Control::INITvideoPara &para,
-                                   Video_Control::INITvideoReply_out reply,
-                                   CORBA::Environment&)
-{
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Video_Control_Handler::init_video called\n"));
-  return this->state_->init_video (para,reply);
-}
-
-
-CORBA::Boolean 
-Video_Control_Handler::stat_stream (CORBA::Char_out ch,
-                              CORBA::Long_out size,
-                              CORBA::Environment&)
-{
-  return this->state_->stat_stream (ch,size);
-}
-
-
-CORBA::Boolean 
-Video_Control_Handler::close (CORBA::Environment&)
-{
-  return this->state_->close ();
-}
-
-
-CORBA::Boolean 
-Video_Control_Handler::stat_sent (CORBA::Environment&)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              "Video_Control_Handler::stat_sent ()\n"));
-  return this->state_->stat_sent ();
-}
-
-
-CORBA::Boolean 
-Video_Control_Handler::fast_forward (const Video_Control::FFpara &para,
-                               CORBA::Environment&)
-{
-  return this->state_->fast_forward (para);
-
-}
-
-
-CORBA::Boolean 
-Video_Control_Handler::fast_backward (const Video_Control::FFpara &para,
-                                CORBA::Environment&)
-{
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Video_Control_Handler::init_video called\n"));
-  return this->state_->fast_backward (para);
-}
-
-
-CORBA::Boolean 
-Video_Control_Handler::step (const Video_Control::STEPpara &para,
-                       CORBA::Environment&)
-{
-  return this->state_->step (para);
-}
-
-
-CORBA::Boolean 
-Video_Control_Handler::play (const Video_Control::PLAYpara &para,
-                       CORBA::Long_out vts,
-                       CORBA::Environment&)
-{
-  return this->state_->play (para,vts);
-}
-
-
-CORBA::Boolean 
-Video_Control_Handler::position (const Video_Control::POSITIONpara &para,
-                           CORBA::Environment&)
-{
-  return this->state_->position (para);
-}
-
-
-CORBA::Boolean 
-Video_Control_Handler::speed (const Video_Control::SPEEDpara &para,
-                        CORBA::Environment&)
-{
-  return this->state_->speed (para);
-}
-
-// ~~ Why do you need the Environment
-
-CORBA::Boolean 
-Video_Control_Handler::stop (CORBA::Long cmdsn,
-                       CORBA::Environment&)
-{
-  return this->state_->stop (cmdsn);
-}
-
-// Changes the state of the video control handler from the current
-// state to the state represented by the argument.
-void
-Video_Control_Handler::change_state (Video_Control_State *state)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Video_Control_Handler::Changing to state %d\n",
-              state->get_state ()));
-  this->state_ = state;
-}
-
-
-
-// ----------------------------------------------------------------------
-// Video_Control_Handler_Instance methods.
-
-// Default constructor
-Video_Control_Handler_Instance::Video_Control_Handler_Instance (void)
-  :video_control_handler_ (0)
-{
-}
-
-// Sets the video_control_handler associated with this instance singleton.
-void
-Video_Control_Handler_Instance::set_video_control_handler (Video_Control_Handler *h)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t)video_control-handler_instance ():set video_control_handler %x,%x",
-              this,
-              h));
-  this->video_control_handler_ = h;
-}
-
-// Accessor method to the associated video_control_handler 
-Video_Control_Handler *
-Video_Control_Handler_Instance::get_video_control_handler (void)
-{
-  return this->video_control_handler_;
-}
 
 // ----------------------------------------------------------------------
 // Video_Server methods
@@ -357,65 +186,37 @@ Video_Server::Video_Server ()
 {
 }
 
-// Constructor with arguments control_fd,data_fd,real-time tag,maximum
-// packet size.Calls the init methods with these arguments.
-Video_Server::Video_Server (int ctr_fd,
-                            int data_fd,
-                            int rttag,
-                            int max_pkt_size)
-  : data_handler_ (0),
-    control_handler_ (0),
-    sig_handler_ (0)
-{
-  this->init (ctr_fd,
-              data_fd,
-              rttag,
-              max_pkt_size);
-}
-
-// initialize VIDEO_SINGLETON::instance ()
-// creates a data and control handler for the video
-// server. the control handler will accept
-// commands over TCP, and the data handler will
-// send data packets and recieve feedback packets
-// from the client
-// the reactor_ also gets initialized here
 int
-Video_Server::init (int ctr_fd,
-                    int data_fd,
-                    int rttag,
-                    int max_pkt_size)
+Video_Server::init (int argc,
+                    char **argv,
+                    CORBA::Environment &env)
 {
   int result;
 
-  // Associate the default ACE_Reactor instance as the reactor .
-  this->reactor_ = TAO_ORB_Core_instance ()->reactor ();
-
-  // Create the control,data and signal handlers.
-  ACE_NEW_RETURN (this->control_handler_, 
-                  Video_Control_Handler (ctr_fd),
-                  -1);
-
-  VIDEO_CONTROL_HANDLER_INSTANCE::instance ()->set_video_control_handler (this->control_handler_);
-
-  ACE_NEW_RETURN (this->data_handler_ ,
-                  Video_Data_Handler (data_fd,
-                                      this->control_handler_),
-                  -1);
-
-  ACE_NEW_RETURN (this->sig_handler_, 
-                  Video_Sig_Handler (this->control_handler_),
-                  -1);
-
+  if (this->initialize_orb (argc,
+                            argv,
+                            env) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) Video_Server: orb initialization failed!"),
+                      -1);
+  
   // @@ Can you please change the use of "fd" to "handle" globally?
   // Set the global socket fd's from the arguments.
-  VIDEO_SINGLETON::instance ()->serviceSocket = ctr_fd;
-  VIDEO_SINGLETON::instance ()->videoSocket = data_fd;
+  int max_pkt_size = -INET_SOCKET_BUFFER_SIZE;
+  VIDEO_SINGLETON::instance ()->serviceSocket = -1;
+
   VIDEO_SINGLETON::instance ()->conn_tag = max_pkt_size;
   
-  if (max_pkt_size > 0) VIDEO_SINGLETON::instance ()->msgsize = max_pkt_size;
-  else if (max_pkt_size < 0) VIDEO_SINGLETON::instance ()->msgsize = - max_pkt_size;
-  else VIDEO_SINGLETON::instance ()->msgsize = 1024 * 1024;
+  if (max_pkt_size > 0) 
+    VIDEO_SINGLETON::instance ()->msgsize 
+      = max_pkt_size;
+  else 
+    if (max_pkt_size < 0) 
+      VIDEO_SINGLETON::instance ()->msgsize 
+        = - max_pkt_size;
+    else 
+      VIDEO_SINGLETON::instance ()->msgsize 
+        = 1024 * 1024;
   /*
     SFprintf(stderr, "VS VIDEO_SINGLETON::instance ()->msgsize = %d\n", VIDEO_SINGLETON::instance ()->msgsize);
   */
@@ -426,67 +227,67 @@ Video_Server::init (int ctr_fd,
   // Set the atexit routine
   atexit (on_exit_routine);
 
-  VIDEO_SINGLETON::instance ()->lastRef[0] = VIDEO_SINGLETON::instance ()->lastRef[1] = -1;
+  VIDEO_SINGLETON::instance ()->lastRef [0] 
+    = VIDEO_SINGLETON::instance ()->lastRef[1] 
+    = -1;
+
   VIDEO_SINGLETON::instance ()->lastRefPtr = 0;
 
-  //  VIDEO_SINGLETON::instance ()->init_video ();
-  // This is commented so that the client will do a CORBA call now.
-
-  if (rttag) {
-    if (SetRTpriority("VS", 0) == -1) rttag = 0;
-  }
-  // sets the video control handler state to be waiting
-  this->control_handler_->change_state
-    (VIDEO_CONTROL_WAITING_STATE::instance ());
   return 0;
 }
 
 int
-Video_Server::register_handlers (void)
+Video_Server::run (CORBA::Environment &env)
+{
+  return this->orb_manager_.run (env);
+}
+
+int
+Video_Server::initialize_orb (int argc,
+                              char **argv,
+                              CORBA::Environment &env)
 {
   int result;
 
-  // Register the event handlers with the default ACE_REACTOR.
+  // Initialize the orb_manager
+  this->orb_manager_.init_child_poa (argc,
+                                     argv,
+                                     "child_poa",
+                                     env);
+  TAO_CHECK_ENV_RETURN (env,
+                        -1);
 
-  // first the data handler, i.e. UDP
-  result = this->reactor_->register_handler (this->data_handler_, 
-                                             ACE_Event_Handler::READ_MASK);
-  if (result < 0)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%P|%t) register_handler for data_handler failed\n"),
-                        result);
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) registered fd for data handler = (%d)\n",
-              this->data_handler_->get_handle ()));
-
-
+  this->orb_manager_.activate_under_child_poa ("Video_Control",
+                                               VIDEO_CONTROL_I::instance (),
+                                               env);
+  TAO_CHECK_ENV_RETURN (env,-1);
   
-  // next, the control handler, i.e. TCP
-  result = this->reactor_->register_handler (this->control_handler_,
-                                             ACE_Event_Handler::READ_MASK);
-
-  
-  if (result < 0)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%P|%t) register_handler for data_handler failed\n"),
-                        result);
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) registered fd for control handler = (%d)\n",
-              this->control_handler_->get_handle ()));
-
-  
-
-  // finally, the signal handler, for periodic transmission
-  // of packets
-  result = this->sig_handler_->register_handler ();
-
-  
-  if (result < 0)
+  CORBA::Object_var naming_obj =
+    this->orb_manager_.orb ()->resolve_initial_references ("NameService");
+  if (CORBA::is_nil (naming_obj.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) register_handler for sig_handler"
-                       "failed!\n"),
+                       " (%P|%t) Unable to resolve the Name Service.\n"),
                       -1);
+  CosNaming::NamingContext_var naming_context =
+    CosNaming::NamingContext::_narrow (naming_obj.in (),
+                                       env);
+  TAO_CHECK_ENV_RETURN (env,
+                        -1);
 
+  // Create a name for the video control object
+  CosNaming::Name video_control_name (1);
+  video_control_name.length (1);
+  video_control_name [0].id = CORBA::string_dup ("Video_Control");
+  
+  // Register the video control object with the naming server.
+  naming_context->bind (video_control_name,
+                        VIDEO_CONTROL_I::instance ()->_this (env),
+                        env);
+
+  TAO_CHECK_ENV_RETURN (env, 
+                        -1);
+
+  VIDEO_CONTROL_I::instance ()->change_state (VIDEO_CONTROL_WAITING_STATE::instance ());
   return 0;
 }
 
@@ -530,11 +331,5 @@ Video_Server::on_exit_routine(void)
 // Destructor
 Video_Server::~Video_Server ()
 {
-  if (this->data_handler_ != 0)
-    delete this->data_handler_ ;
-  if (this->control_handler_ != 0)
-    delete this->control_handler_ ;
-  if (this->sig_handler_ != 0)
-    delete this->sig_handler_ ;
 }
 

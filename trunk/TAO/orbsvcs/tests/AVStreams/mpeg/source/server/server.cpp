@@ -1,6 +1,7 @@
 // $Id$
 
 #include "server.h"
+#include "ace/Process.h"
 
 // Creates a svc handler by passing "this", i.e.  a reference to the
 // acceptor that created it this is needed by the svc_handler to
@@ -39,50 +40,7 @@ AV_Svc_Handler::open (void *)
   // (THR_BOUND);
   ACE_DEBUG ((LM_DEBUG, 
               "(%P|%t) AV_Svc_Handler::open called\n"));
-  switch (ACE_OS::fork ("child"))
-    {
-    case -1:
-      // fork failed!!
-      ACE_ERROR_RETURN ((LM_ERROR, 
-                         "(%P|%t) fork failed\n"),
-                        -1);
-    case 0:
-      // I am the child. i should handle this connection close down
-      // the "listen-mode" socket
-      //    ACE_Reactor::instance ()->remove_handler
-      TAO_ORB_Core_instance ()->reactor ()->remove_handler
-        (this->acceptor_->get_handle (),
-         ACCEPT_MASK);
-      
-      // Handle this connection in the same thread.
-      this->svc ();
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) child returning from AV_Svc_handler::open\n"));
-      return 0;
-    default:
-      // i am the parent. i should go back and listen for more
-      // connections
-
-      // (1) "this" will commit suicide, because this svc_handler is not required
-      // in the parent. otherwise, a new AV_Svc_handler will be created
-      // for each connection, and will never go away, i.e. a memory leak
-      // will result. 
-      // (2) also, this closes down the "connected socket" in the
-      // parent, so that when the child closes down its connected
-      // socket the connection is actually closed. otherwise, the
-      // connection would remain open forever because the parent still
-      // has a connected socket.
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Parent Returning from AV_Svc_Handler::open\n"));
-      TAO_ORB_Core_instance ()->orb ()->shutdown ();
-      //shutdown the ORB
-
-      this->destroy ();
-      return 0;
-      
-    }
-  return 0;
+  return this->svc ();
 }
 
 // this will handle the connection
@@ -91,8 +49,6 @@ AV_Svc_Handler::svc (void)
 {
   int result;
   result = this->handle_connection ();
-
-  if (result != 0)
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) AV_Svc_Handler::svc exiting\n"));
@@ -105,68 +61,6 @@ AV_Svc_Handler::svc (void)
 int
 AV_Svc_Handler::handle_connection (ACE_HANDLE)
 {
-  int junk;
-  int result;
-  u_short port;
-  ACE_UINT32 ip;
-
-  // Client is sending us JUNK
-  this->peer ().recv_n (&junk, sizeof junk);
-  
-  // Client is sending us it's port number
-  this->peer ().recv_n (&port, sizeof port);
-  
-  // Client is sending us it's IP addr
-  this->peer ().recv_n (&ip, sizeof ip);
-  
-  this->client_data_addr_.set (port,
-                               ip,
-                               0);
-  ACE_DEBUG ((LM_DEBUG, 
-              "(%P|%t) Client IP == %s, "
-              "Client Port == %d\n",
-              client_data_addr_.get_host_name (),
-              client_data_addr_.get_port_number ()));
-
-  this->server_data_addr_.set ((unsigned short)0);
-
-  // "Connect" our dgram to the client endpoint.
-  if (this->dgram_.open (client_data_addr_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       "(%P|%t) UDP open failed: %p\n"),
-                      -1);
-  
-  if (this->dgram_.get_local_addr (this->server_data_addr_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       "(%P|%t) UDP get_local_addr failed: %p\n"),
-                      -1);
-
-  ACE_DEBUG ((LM_DEBUG, 
-              "(%P|%t) UDP IP address is %s, and the port number is %d\n",
-              this->server_data_addr_.get_host_addr (),
-              this->server_data_addr_.get_port_number ()));
-
-  port = this->server_data_addr_.get_port_number ();
-
-  // %% we need to fix this ?
-  // XXX this is a hack to get my IP address set correctly! By default,
-  // get_ip_address is returning 0.0.0.0, even after calling
-  // get_local_addr () !!
-  this->server_data_addr_.set (port,
-                               this->server_data_addr_.get_host_name ());
-
-  ip = this->server_data_addr_.get_ip_address ();
-
-  port = htons (port);
-  ip = htonl (ip);
-  // Client wants us to send the port number first
-  this->peer ().send_n (&port,
-                        (int) sizeof (u_short));
-
-  // Client wants us to send it the IP address
-  this->peer ().send_n (&ip,
-                        (int) sizeof (ACE_UINT32));
-
   // Client is sending us a command
   u_char cmd;
   if (this->peer ().recv_n (&cmd,
@@ -186,32 +80,25 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
                               Mpeg_Global::rttag, 
                               -INET_SOCKET_BUFFER_SIZE); 
         */
-               
-        ACE_NEW_RETURN (this->vs_,
-                        Video_Server (this->peer ().get_handle (),
-                                      this->dgram_.get_handle (),
-                                      Mpeg_Global::rttag,
-                                      -INET_SOCKET_BUFFER_SIZE),
-                        -1);
 
-        // registers the video server handlers.
-        result = this->vs_->register_handlers ();
-
-        if (result != 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%P|%t) handle_connection:%p"),
-                             result);
-        return result;
-                 
+        ACE_Process_Options video_process_options;
+        video_process_options.command_line ("./vs -ORBport 0");
+        
+        ACE_Process video_process;
+        video_process.spawn (video_process_options);
+        this->destroy ();
+        // %% need to close down the orb fd's
+        // in the child process!!
       }
       break;
     default:
+      // %% need to fork here
       if (Mpeg_Global::live_audio)
         LeaveLiveAudio ();
-      result = AudioServer (this->peer ().get_handle (), 
-                            this->dgram_.get_handle (), 
-                            Mpeg_Global::rttag, 
-                            -INET_SOCKET_BUFFER_SIZE);
+      int result = AudioServer (this->peer ().get_handle (), 
+                                this->dgram_.get_handle (), 
+                                Mpeg_Global::rttag, 
+                                -INET_SOCKET_BUFFER_SIZE);
       //    ACE_Reactor::instance ()->end_event_loop ();
       TAO_ORB_Core_instance ()->reactor ()->end_event_loop ();
       if (result != 0)
@@ -496,15 +383,16 @@ AV_Server::init (int argc,
 
   // Initialize the orb_manager
   this->orb_manager_.init_child_poa (argc,
-                                      argv,
-                                      "child_poa",
-                                      env);
-  TAO_CHECK_ENV_RETURN (env,-1);
+                                     argv,
+                                     "child_poa",
+                                     env);
+  TAO_CHECK_ENV_RETURN (env,
+                        -1);
 
-  this->orb_manager_.activate_under_child_poa ("Video_Control",
-                                                &this->video_control_,
-                                                env);
-  TAO_CHECK_ENV_RETURN (env,-1);
+  //  this->orb_manager_.activate_under_child_poa ("Video_Control",
+  //                                              &this->video_control_,
+  //                                              env);
+  // TAO_CHECK_ENV_RETURN (env,-1);
 
   CORBA::ORB_var orb = 
     this->orb_manager_.orb ();
@@ -514,14 +402,14 @@ AV_Server::init (int argc,
   this->naming_server_.init (orb,child_poa);
 
   // Create a name for the video control object
-  CosNaming::Name video_control_name (1);
-  video_control_name.length (1);
-  video_control_name[0].id = CORBA::string_dup ("Video_Control");
+  //  CosNaming::Name video_control_name (1);
+  //  video_control_name.length (1);
+  //  video_control_name[0].id = CORBA::string_dup ("Video_Control");
   // Register the video control object with the naming server.
-  this->naming_server_->bind (video_control_name,
-                              this->video_control_._this (env),
-                              env);
-  TAO_CHECK_ENV_RETURN (env, -1);
+  //  this->naming_server_->bind (video_control_name,
+  //                              this->video_control_._this (env),
+  //                              env);
+  //  TAO_CHECK_ENV_RETURN (env, -1);
 
   result = this->parse_args (argc, argv);
   if (result < 0)
@@ -533,45 +421,45 @@ AV_Server::init (int argc,
   if (result < 0)
     return result;
 
-  Mpeg_Global::parentpid = ACE_OS::getpid ();
+  //  Mpeg_Global::parentpid = ACE_OS::getpid ();
   
   ::atexit (on_exit_routine);
 
   // %%
-  if (Mpeg_Global::live_audio) 
-    {
-      if (InitLiveAudio (argc, argv) == -1)
-        Mpeg_Global::live_audio = 0;
-      else
-        Mpeg_Global::live_audio = 2;
-    }
+  //  if (Mpeg_Global::live_audio) 
+  // {
+  //    if (InitLiveAudio (argc, argv) == -1)
+  //      Mpeg_Global::live_audio = 0;
+  //    else
+  //      Mpeg_Global::live_audio = 2;
+  //  }
 
-  if (Mpeg_Global::live_video) 
-    {
-      if (InitLiveVideo (argc, argv) == -1)
-        Mpeg_Global::live_video = 0;
-      else
-        Mpeg_Global::live_video = 2;
-    }
+  //if (Mpeg_Global::live_video) 
+  // {
+  //    if (InitLiveVideo (argc, argv) == -1)
+  //      Mpeg_Global::live_video = 0;
+  //    else
+  //      Mpeg_Global::live_video = 2;
+  //  }
   
   // open LOG_DIR/vcrsSession.log as the stdout
   // if not, use /dev/null
-  {
-    char buf [100];
-    ACE_OS::sprintf (buf, 
-                     "%s%s", 
-                     LOG_DIR, 
-                     "vcrsSession.log");
-
-    if (::freopen (buf, 
-                   "a", 
-                   stdout) == NULL) 
-      {
-        ::freopen ("/dev/null", 
-                   "w", 
-                   stdout);
-      }
-  }
+//   {
+//     char buf [100];
+//     ACE_OS::sprintf (buf, 
+//                      "%s%s", 
+//                      LOG_DIR, 
+//                      "vcrsSession.log");
+//    
+//     if (::freopen (buf, 
+//                    "a", 
+//                    stdout) == NULL) 
+//       {
+//         ::freopen ("/dev/null", 
+//                    "w", 
+//                    stdout);
+//       }
+//   }
   return 0;
 }
 
@@ -590,21 +478,9 @@ AV_Server::run (CORBA::Environment& env)
               "(%P|%t) acceptor_handler == %d\n",
               this->acceptor_.get_handle ()));
 
-    //  ACE_Reactor::instance ()->run_event_loop (); 
-
   // Run the ORB event loop
   this->orb_manager_.run (env);
 
-  /*
-  if (this->acceptor_.open (this->server_control_addr_,
-                             TAO_ORB_Core_instance ()->reactor ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
-  */
-  TAO_ORB_Core_instance ()->reactor ()->register_handler (&this->acceptor_,
-                                                          ACE_Event_Handler::ACCEPT_MASK);
-  TAO_ORB_Core_instance ()->reactor ()->run_event_loop ();
-  //run the event loop again.
-      
   ACE_DEBUG ((LM_DEBUG,
               "(%P)AV_Server::run () "
               "came out of the (acceptor) "
