@@ -1,9 +1,19 @@
+Wed Apr 26 15:41:23 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Param_Test/bd_wstr_seq.cpp:
+        * tests/Param_Test/ub_wstr_seq.cpp:
+          Use ACE_OS::wscmp() instead of ACE_OS::strcmp() to compare wide
+          strings.
+
+        * tests/Param_Test/Makefile:
+          Update dependencies
+
 Wed Apr 26 17:34:29 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/diffs/InterceptorC.h.diff:
-	* tao/InterceptorC.h: Added "#include" for Object.h and
-	  Environment.h for it to compile on SunCC 4.2.  Thanks to Carlos
-	  for noticing this.
+        * tao/diffs/InterceptorC.h.diff:
+        * tao/InterceptorC.h: Added "#include" for Object.h and
+          Environment.h for it to compile on SunCC 4.2.  Thanks to Carlos
+          for noticing this.
 
 Wed Apr 26 14:06:28 2000  Carlos O'Ryan  <coryan@uci.edu>
 
