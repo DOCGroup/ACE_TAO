@@ -1,9 +1,14 @@
-Wed May 14 16:32:57 1997  David L. Levine  <levine@cs.wustl.edu>
-
-	* Makefile: use cpio instead of tar to allow easy filtering
-	  of CVS files from the release.
-
 Wed May 14 15:45:30 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Singleton.h: Added a new instance() method to the ACE
+ 	  Singleton that can be used to set the Singleton.  This is useful
+ 	  for situations where the type being used as the Singleton
+ 	  doesn't have a default constructor.  Thanks to Arturo Montes
+ 	  <mitosys@colomsat.net.co> for this suggestion.
+
+	* ace/Singleton: Factored out common code in the Singleton and
+ 	  SingletonEx implementations so they will be cleaner and more
+ 	  portable.
 
 	* ace/Local_Name_Space_T.h,
 	  ace/Map_Manager.h,
@@ -14,6 +19,25 @@ Wed May 14 15:45:30 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 	  Changed all uses of the identifier "allocator" to "alloc" to
  	  avoid conflicts with MSVC++ STL 5.0.  Thanks to William
  	  L. Gerecke <gerecke@rayva.org> for reporting this.
+
+	* ace/config-aix-4.[12].x.h: Replaces
+ 	  ACE_LACKS_PTHREAD_THR_SIGSETMASK with ACE_HAS_SIGTHREADMASK.
+  	  Thanks to Chris Lahey for this.
+
+	* ace/OS.i (thr_sigsetmask): Added the ACE_HAS_SIGTHREADMASK
+ 	  support for AIX.  Thanks to Chris Lahey for this.
+
+	* ace/Singleton: Added the new ACE_SingletonEx, which supports
+ 	  both heap-based and thread-specific storage-based Singletons.
+  	  Thanks to Chris Lahey for this.
+
+	* ace/OS.h: Added the new ACE_Singleton_Strategy to OS.h.  Thanks
+ 	  to Chris Lahey for this.
+
+Wed May 14 16:32:57 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* Makefile: use cpio instead of tar to allow easy filtering
+	  of CVS files from the release.
 
 Wed May 14 15:00:58 1997    <irfan@TWOSTEP>
 

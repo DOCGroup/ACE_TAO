@@ -1,16 +1,16 @@
-#include "ace/Service_Config.h"
 // $Id$
 
+#include "ace/Service_Config.h"
 #include "ace/Synch.h"
 
 #if defined (ACE_HAS_THREADS)
 
 // Define a class that will be stored in thread-specific data.  Note
 // that as far as this class is concerned it's just a regular C++
-// class.  The ACE_TSS wrapper transparently ensures that
-// objects of this class will be placed in thread-specific storage.
-// All calls on ACE_TSS::operator->() are delegated to the
-// appropriate method in the Errno class.
+// class.  The ACE_TSS wrapper transparently ensures that objects of
+// this class will be placed in thread-specific storage.  All calls on
+// ACE_TSS::operator->() are delegated to the appropriate method in
+// the Errno class.
 
 class Errno
 {
@@ -55,17 +55,14 @@ ACE_MT (ACE_Thread_Mutex Errno::lock_);
 int Errno::flags_;
 
 // This is our thread-specific error handler...
-static ACE_TSS<Errno> TSS_Error;
+static ACE_TSS<Errno> tss_error;
+
+// Serializes output via cout.
+static ACE_SYNCH_MUTEX lock;
 
 #if defined (ACE_HAS_THREADS)
-// Serializes output via cout.
-static ACE_Thread_Mutex lock;
-
 typedef ACE_TSS_Guard<ACE_Thread_Mutex> GUARD;
 #else
-// Serializes output via cout.
-static ACE_Null_Mutex lock;
-
 typedef ACE_Guard<ACE_Null_Mutex> GUARD;
 #endif /* ACE_HAS_THREADS */
 
@@ -94,17 +91,17 @@ worker (void *c)
   if (ACE_OS::thr_keycreate (&key, cleanup) == -1)
     ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keycreate"));
 
-  ip = new int;
+  ACE_NEW_RETURN (ip, int, 0);
 
   if (ACE_OS::thr_setspecific (key, (void *) ip) == -1)
     ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
 
-  for (int i = 0; i < count; i++)
+  for (size_t i = 0; i < count; i++)
     {
       if (ACE_OS::thr_keycreate (&key, cleanup) == -1)
 	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keycreate"));
 
-      ip = new int;
+      ACE_NEW_RETURN (ip, int, 0);
 
       ACE_DEBUG ((LM_DEBUG, "(%t) in worker 1, key = %d, ip = %x\n", key, ip));
 
@@ -126,21 +123,21 @@ worker (void *c)
       ACE_OS::read (ACE_INVALID_HANDLE, 0, 0);
 
       // The following two lines set the thread-specific state.
-      TSS_Error->error (errno);
-      TSS_Error->line (__LINE__);
+      tss_error->error (errno);
+      tss_error->line (__LINE__);
 
       // This sets the static state (note how C++ makes it easy to do
       // both).
-      TSS_Error->flags (count);
+      tss_error->flags (count);
 
       {
 	// Use the guard to serialize access to cout...
 	ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, lock, 0);
 
 	cout << "(" << ACE_Thread::self ()
-	     << ") errno = "  << TSS_Error->error () 
-	     << ", lineno = " << TSS_Error->line ()
-	     << ", flags = " << TSS_Error->flags () 
+	     << ") errno = "  << tss_error->error () 
+	     << ", lineno = " << tss_error->line ()
+	     << ", flags = " << tss_error->flags () 
 	     << endl;
       }
       key = 0;
@@ -148,7 +145,7 @@ worker (void *c)
       if (ACE_OS::thr_keycreate (&key, cleanup) == -1)
 	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keycreate"));
 
-      ip = new int;
+      ACE_NEW_RETURN (ip, int, 0);
 
       ACE_DEBUG ((LM_DEBUG, "(%t) in worker 2, key = %d, ip = %x\n", key, ip));
 
@@ -196,7 +193,7 @@ main (int argc, char *argv[])
 					       ACE_THR_FUNC (&worker), 
 					       (void *) count,
 					       THR_BOUND | THR_DETACHED) == -1)
-    ACE_OS::perror ("ACE_Thread_Manager::spawn_n");
+    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Thread_Manager::spawn_n"), -1);
 
   ACE_Service_Config::thr_mgr ()->wait ();
 #else
