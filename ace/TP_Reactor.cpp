@@ -309,6 +309,24 @@ ACE_TP_Reactor::remove_handler (const ACE_Handle_Set &handles,
 }
 
 int
+ACE_TP_Reactor::register_handler (int,
+                                  ACE_Event_Handler *,
+                                  ACE_Sig_Action *,
+                                  ACE_Event_Handler **,
+                                  ACE_Sig_Action *)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+int
+ACE_TP_Reactor::register_handler (const ACE_Sig_Set &,
+                                  ACE_Event_Handler *,
+                                  ACE_Sig_Action *)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+int
 ACE_TP_Reactor::remove_handler (int /*signum*/,
                                 ACE_Sig_Action * /*new_disp*/,
                                 ACE_Sig_Action * /*old_disp*/,
