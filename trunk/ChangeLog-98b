@@ -1,3 +1,11 @@
+Mon Nov 30 13:54:04 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* netsvcs/lib/Server_Logging_Handler_T.cpp (handle_input): There
+ 	  was a friggin' bug in this code that is a violation of Reactor
+ 	  framework design rule #2, i.e., we were returning a non-0 value
+ 	  from handle_input(), which is a no-no...  Thanks to Steve Huston
+ 	  for reporting this.
+
 Mon Nov 29 13:16:53 EST 1998  James CE Johnson  <jcej@lads.com>
 
 	* docs/tutorials/001/logger.h: 
