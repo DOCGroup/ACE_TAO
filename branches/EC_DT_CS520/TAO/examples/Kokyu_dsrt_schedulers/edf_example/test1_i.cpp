@@ -6,6 +6,10 @@
 #include "ace/ACE.h"
 #include "tao/debug.h"
 
+#include "dt_oneway_config.h"
+#include "dt_oneway_dsui_families.h"
+#include <dsui.h>
+
 #if !defined(__ACE_INLINE__)
 #include "test1_i.i"
 #endif /* __ACE_INLINE__ */
@@ -21,7 +25,7 @@ Simple_Server1_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL_NOT_US
   record the entering service time on the server side.
   Thirteenth Time. 
 */
-  DSUI_EVENT_LOG (TEST_ONE, START_SERVICE, 1, 0, NULL);
+  DSUI_EVENT_LOG (TEST_ONE_FAM, START_SERVICE, 1, 0, NULL);
 
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
@@ -127,7 +131,7 @@ Simple_Server1_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL_NOT_US
   recording the finishing service time on the server side.
   Fourteenth Time.
 */
-  DSUI_EVENT_LOG (TEST_ONE, STOP_SERVICE, 1,0,NULL);
+//  DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, 1,0,NULL);
 }
 
 void
