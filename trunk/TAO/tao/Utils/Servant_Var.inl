@@ -183,6 +183,8 @@ operator==(TAO::Utils::Servant_Var<X> const & x,
   return x.in() == y.in();
 }
 
+// -*- C++ -*-
+// $Id$
 template <class X, class Y>
 ACE_INLINE bool
 operator!=(TAO::Utils::Servant_Var<X> const & x,

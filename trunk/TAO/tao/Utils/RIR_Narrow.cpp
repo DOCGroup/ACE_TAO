@@ -1,15 +1,12 @@
-/**
- * @file RIR_Narrow.cpp
- *
- * $Id$
- *
- * @author Carlos O'Ryan <coryan@atdesk.com>
- */
-#ifndef RIR_Narrow__cpp_
-#define RIR_Narrow__cpp_
+#ifndef TAO_UTILS_RIR_NARROW_CPP
+#define TAO_UTILS_RIR_NARROW_CPP
 
 #include "RIR_Narrow.h"
 #include <stdexcept>
+
+ACE_RCSID (Utils,
+           RIR_Narror,
+           "$Id$")
 
 template<class T> TAO::Utils::RIR_Narrow<T>::_ptr_type
 TAO::Utils::RIR_Narrow<T>::narrow (CORBA::ORB_ptr orb,
@@ -55,4 +52,4 @@ TAO::Utils::RIR_Narrow<T>::narrow_object (CORBA::Object_ptr object
   return narrowed_object._retn ();
 }
 
-#endif // RIR_Narrow__cpp_
+#endif /*TAO_UTILS_RIR_NARROW_CPP*/
