@@ -106,6 +106,9 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
 template class ACE_Singleton<ACE_Auto_Event, ACE_Thread_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<ACE_Auto_Event, ACE_Thread_Mutex>
+#elif defined (__GNUC__) && defined (_AIX)
+template ACE_Singleton<ACE_Auto_Event, ACE_Thread_Mutex> *
+  ACE_Singleton<ACE_Auto_Event, ACE_Thread_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 
@@ -117,4 +120,3 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   return 0;
 }
 #endif /* ACE_HAS_THREADS */
-
