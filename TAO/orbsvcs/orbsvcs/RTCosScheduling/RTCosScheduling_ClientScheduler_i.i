@@ -10,6 +10,8 @@
  */
 //=============================================================================
 
+#if (TAO_HAS_INTERCEPTORS == 1)
+
 ACE_INLINE char *
 TAO::RTCosScheduling_ClientScheduler_Interceptor::name (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -62,3 +64,5 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 {
   ACE_UNUSED_ARG(ri);
 }
+
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
