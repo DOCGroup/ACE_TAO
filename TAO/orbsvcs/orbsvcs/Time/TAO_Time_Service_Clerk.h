@@ -19,7 +19,6 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Reactor.h"
-#include "orbsvcs/Naming/Naming_Server.h"
 
 #include "orbsvcs/TimeServiceS.h"
 #include "Timer_Helper.h"
@@ -92,10 +91,6 @@ public:
 
   /// Return the globally synchronized time.
   virtual CORBA::ULongLong get_time (void);
-
-  /// This method is called by the driver program to set the Naming
-  /// Server instance.
-  void name_server (TAO_Naming_Server &server);
 
   /// Returns the time displacement factor.
   CORBA::Short time_displacement_factor (void);
