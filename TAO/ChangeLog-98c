@@ -1,3 +1,7 @@
+Wed May  6 00:28:09 1998  Marina Igorevna Spivak  <marina@macarena.cs.wustl.edu>
+
+	* orbscsvcs/tests/Naming/ns_tree.cpp: made several minor
+ 	  modifications to the test program
 	
 
 Tue May  5 15:40:09 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
