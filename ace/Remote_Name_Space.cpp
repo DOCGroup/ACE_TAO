@@ -40,9 +40,9 @@ ACE_Remote_Name_Space::bind (const ACE_WString &name,
 			     const char *type)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::bind");
-  ACE_Name_Request request (ACE_Name_Request::BIND, name.rep (),
+  ACE_Name_Request request (ACE_Name_Request::BIND, name.fast_rep (),
 			    name.length () * sizeof (ACE_USHORT16),
-			    value.rep (),
+			    value.fast_rep (),
 			    value.length () * sizeof (ACE_USHORT16),
 			    type, 
                             ACE_OS::strlen (type));
@@ -56,9 +56,9 @@ ACE_Remote_Name_Space::rebind (const ACE_WString &name,
 			       const char *type)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::rebind");
-  ACE_Name_Request request (ACE_Name_Request::REBIND, name.rep (),
+  ACE_Name_Request request (ACE_Name_Request::REBIND, name.fast_rep (),
 			    name.length () * sizeof (ACE_USHORT16),
-			    value.rep (),
+			    value.fast_rep (),
 			    value.length () * sizeof (ACE_USHORT16),
 			    type, 
                             ACE_OS::strlen (type));
@@ -72,7 +72,7 @@ ACE_Remote_Name_Space::resolve (const ACE_WString &name,
 				char *&type)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::resolve");
-  ACE_Name_Request request (ACE_Name_Request::RESOLVE, name.rep (),
+  ACE_Name_Request request (ACE_Name_Request::RESOLVE, name.fast_rep (),
 			    name.length () * sizeof (ACE_USHORT16),
 			    0, 0, 0, 0);
 
@@ -96,7 +96,7 @@ int
 ACE_Remote_Name_Space::unbind (const ACE_WString &name)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::unbind");
-  ACE_Name_Request request (ACE_Name_Request::UNBIND, name.rep (),
+  ACE_Name_Request request (ACE_Name_Request::UNBIND, name.fast_rep (),
 			    name.length () * sizeof (ACE_USHORT16),
 			    0, 0, 0, 0);
 
@@ -109,7 +109,7 @@ ACE_Remote_Name_Space::list_names (ACE_WSTRING_SET &set,
 				   const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_names");
-  ACE_Name_Request request (ACE_Name_Request::LIST_NAMES, pattern.rep (),
+  ACE_Name_Request request (ACE_Name_Request::LIST_NAMES, pattern.fast_rep (),
 			    pattern.length () * sizeof (ACE_USHORT16),
 			    0, 0, 0, 0);
 
@@ -139,7 +139,7 @@ ACE_Remote_Name_Space::list_values (ACE_WSTRING_SET &set,
 				    const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_values");
-  ACE_Name_Request request (ACE_Name_Request::LIST_VALUES, pattern.rep (),
+  ACE_Name_Request request (ACE_Name_Request::LIST_VALUES, pattern.fast_rep (),
 			    pattern.length () * sizeof (ACE_USHORT16),
 			    0, 0, 0, 0);
 
@@ -169,7 +169,7 @@ ACE_Remote_Name_Space::list_types (ACE_WSTRING_SET &set,
 				   const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_types");
-  ACE_Name_Request request (ACE_Name_Request::LIST_TYPES, pattern.rep (),
+  ACE_Name_Request request (ACE_Name_Request::LIST_TYPES, pattern.fast_rep (),
 			    pattern.length () * sizeof (ACE_USHORT16),
 			    0, 0, 0, 0);
 
@@ -199,7 +199,7 @@ ACE_Remote_Name_Space::list_name_entries (ACE_BINDING_SET &set,
 					  const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_names");
-  ACE_Name_Request request (ACE_Name_Request::LIST_NAME_ENTRIES, pattern.rep (),
+  ACE_Name_Request request (ACE_Name_Request::LIST_NAME_ENTRIES, pattern.fast_rep (),
 			    pattern.length () * sizeof (ACE_USHORT16),
 			    0, 0, 0, 0);
 
@@ -233,7 +233,7 @@ ACE_Remote_Name_Space::list_value_entries (ACE_BINDING_SET &set,
 					   const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_values");
-  ACE_Name_Request request (ACE_Name_Request::LIST_VALUE_ENTRIES, pattern.rep (),
+  ACE_Name_Request request (ACE_Name_Request::LIST_VALUE_ENTRIES, pattern.fast_rep (),
 			    pattern.length () * sizeof (ACE_USHORT16),
 			    0, 0, 0, 0);
 
@@ -267,7 +267,7 @@ ACE_Remote_Name_Space::list_type_entries (ACE_BINDING_SET &set,
 					  const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_types");
-  ACE_Name_Request request (ACE_Name_Request::LIST_TYPE_ENTRIES, pattern.rep (),
+  ACE_Name_Request request (ACE_Name_Request::LIST_TYPE_ENTRIES, pattern.fast_rep (),
 			    pattern.length () * sizeof (ACE_USHORT16),
 			    0, 0, 0, 0);
 
