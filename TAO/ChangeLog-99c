@@ -1,3 +1,29 @@
+Sat Jul 10 21:56:54 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/UIOP_Acceptor.h:
+	* tao/UIOP_Acceptor.cpp (open_i, close):
+
+	  Added an "unlink_on_close_" member that flags whether or not the 
+	  UIOP rendezvous point should be unlinked when closing the
+	  acceptor.  Currently this flag is only unset when an "address
+	  already in use" error (EADDRINUSE) occurs.  An existing
+	  rendezvous point shouldn't be unlinked if errno == EADDRINUSE
+	  since it may be in use by another UIOP server/client. [Bug 52]
+
+	* tao/UIOP_Acceptor.cpp (create_mprofile):
+
+	  Initialized a pointer to zero to prevent potential uninitialized 
+	  variable warnings.
+
+	  Minor coding style updates.
+
+	* tao/UIOP_Profile.cpp (parse_string):
+
+	  Inadvertently checked for incorrect return value while setting
+	  the rendezvous point in the underlying ACE_UNIX_Addr.  The
+	  problem was introduced when I fixed another problem.  URL style
+	  object references are working again for UIOP.
+
 Sat Jul 10 20:31:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp (init): Changed
