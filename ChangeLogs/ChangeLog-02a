@@ -1,9 +1,18 @@
+Fri Jun 22 18:00:51 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * examples/Log_Msg/test_ostream.cpp (main):
+
+          Removed the flags variable and added the file open mode flags
+          directly to the constructor. There doesn't see to be a portable
+          way of fixing this as a lot of compilers don't have a compliant
+          standard library. This fixes the compile error on gcc-3.0
+
 Fri Jun 22 13:10:13 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* examples/Log_Msg/test_ostream.cpp (main):
+        * examples/Log_Msg/test_ostream.cpp (main):
 
-	  Reverted the change as it seems to break VC++. Will fix it
-	  shortly.
+          Reverted the change as it seems to break VC++. Will fix it
+          shortly.
 
 Fri Jun 22 10:31:29 2001  Steve Huston  <shuston@riverace.com>
 
@@ -14,16 +23,16 @@ Fri Jun 22 10:31:29 2001  Steve Huston  <shuston@riverace.com>
 
 Fri Jun 22 07:33:45 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/OS_TLI.{h,inl}: Changed the signature of the t_open() and
-	  t_accept() wrappers to use ACE_HANDLE rather than int.  Thanks
- 	  to Steffen Hieber <Steffen.Hieber@erl9.siemens.de> for reporting
- 	  this.
+        * ace/OS_TLI.{h,inl}: Changed the signature of the t_open() and
+          t_accept() wrappers to use ACE_HANDLE rather than int.  Thanks
+          to Steffen Hieber <Steffen.Hieber@erl9.siemens.de> for reporting
+          this.
 
 Fri Jun 22 09:31:04 2001  Ossama Othman  <ossama@uci.edu>
 
-	* html/index.html:
+        * html/index.html:
 
-	  Corrected hyperlink for SSLIOP documentation.
+          Corrected hyperlink for SSLIOP documentation.
 
 Fri Jun 22 10:27:01 2001  Paul Calabrese  <calabrese_p@ociweb.com>
 
@@ -33,15 +42,15 @@ Fri Jun 22 10:27:01 2001  Paul Calabrese  <calabrese_p@ociweb.com>
 
 Fri Jun 22 00:26:34 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* examples/Log_Msg/test_ostream.cpp (main):
+        * examples/Log_Msg/test_ostream.cpp (main):
 
-	  Changed the type of flags to ios::openmode from int to fix
-	  errors under gcc-3.0.
+          Changed the type of flags to ios::openmode from int to fix
+          errors under gcc-3.0.
 
-	* examples/IOStream/client:
-	* examples/IOStream/server:
+        * examples/IOStream/client:
+        * examples/IOStream/server:
 
-	  Added ACE_UNUSED_ARG to fix a couple of warnings.
+          Added ACE_UNUSED_ARG to fix a couple of warnings.
 
 Thu Jun 21 13:57:09 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -73,7 +82,7 @@ Thu Jun 21 08:00:01 2001  Chad Elliott  <elliott_c@ociweb.com>
          Moved #include "ace/Connector.h" to be after #include
          "ace/SOCK_Connector.h" to fix compile error on AIX, Visual
           Age C++ 5.  Thanks to David Sperry <sperryd@res.raytheon.com>
- 	  for reporting this.
+          for reporting this.
 
         * apps/JAWS/server/Makefile:
 
@@ -107,23 +116,23 @@ Wed Jun 20 17:31:32 2001  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Wed Jun 20 10:42:02 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst:
+        * bin/auto_run_tests.lst:
 
-	  Disabled the TAO/tests/Exposed_Policies test from being
-	  run under minimum builds, since it needs CORBA messaging
-	  and RTCORBA.
+          Disabled the TAO/tests/Exposed_Policies test from being
+          run under minimum builds, since it needs CORBA messaging
+          and RTCORBA.
 
 Wed Jun 20 09:17:46 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 
-	* tests/Max_Default_Port_Test.dsp (SOURCE): Fixed the release
-	  builds.
+        * tests/Max_Default_Port_Test.dsp (SOURCE): Fixed the release
+          builds.
 
 Wed Jun 20 08:47:46 2001  Chanaka Liyanaarachchi  <chanaka@ociweb.com>
 
-	* tests/Max_Default_Port_Test.cpp:
+        * tests/Max_Default_Port_Test.cpp:
 
-	  Replaced char * with ACE_TCHAR * in main function signature to
-	  make the test WChar friendly.
+          Replaced char * with ACE_TCHAR * in main function signature to
+          make the test WChar friendly.
 
 Wed Jun 20 08:05:19 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -133,9 +142,9 @@ Wed Jun 20 08:05:19 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Tue Jun 19 21:24:41 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/OS.i (mutex_lock): Fiddled around with the #else so that
-	  we'll avoid "statement not reached" warnings on KCC.  Thanks to
- 	  J Shane Culpepper <pepper@channelogics.com> for reporting this.
+        * ace/OS.i (mutex_lock): Fiddled around with the #else so that
+          we'll avoid "statement not reached" warnings on KCC.  Thanks to
+          J Shane Culpepper <pepper@channelogics.com> for reporting this.
 
 Wed Jun 20 07:35:04 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -144,24 +153,24 @@ Wed Jun 20 07:35:04 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Tue Jun 19 16:01:01 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* include/makeinclude/platform_hpux_aCC.GNU (THR_DEFS):
-	  Suppressed error 908 complaining about use of 'export' which
-	  might be used as a C++ keyword in future by aCC compiler.
+        * include/makeinclude/platform_hpux_aCC.GNU (THR_DEFS):
+          Suppressed error 908 complaining about use of 'export' which
+          might be used as a C++ keyword in future by aCC compiler.
 
 Tue Jun 19 16:20:52 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
-	* ace/CDR_Stream.cpp:
+        * ace/CDR_Stream.cpp:
 
-	  Just fixing a typo. Removed ACE_INLINE from skip_wchar ().
+          Just fixing a typo. Removed ACE_INLINE from skip_wchar ().
 
 Tue Jun 19 16:08:34 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
-	* ace/CDR_Stream.{i,cpp}:
+        * ace/CDR_Stream.{i,cpp}:
 
-	  Fixed the skip_wchar() according to the changes in WChar
-	  implementation of GIOP 1.2. Thanks to
-	  Peter Phillips  <pphillip@opentext.com> for reporting the problem
-	  the fix.  This fixes BIGID 945.
+          Fixed the skip_wchar() according to the changes in WChar
+          implementation of GIOP 1.2. Thanks to
+          Peter Phillips  <pphillip@opentext.com> for reporting the problem
+          the fix.  This fixes BIGID 945.
 
 Tue Jun 19 08:13:52 2001  Chanaka Liyanaarachchi  <chanaka@ociweb.com>
 
@@ -188,9 +197,9 @@ Tue Jun 19 08:03:38 2001  Chanaka Liyanaarachchi  <chanaka@ociweb.com>
 
          Changed the value of ACE_MAX_DEFAULT_PORT to 65535. This had
          been set to 0 (zero) previously to avoid a problem on NT4.0 SP3.
-	 The problem was that beyond ports 65279, a bind call would
-	 succeed but the handle returned would be junk. This problem does
-	 not seem to exist on NT4.0 SP6, and Windows 2000.
+         The problem was that beyond ports 65279, a bind call would
+         succeed but the handle returned would be junk. This problem does
+         not seem to exist on NT4.0 SP6, and Windows 2000.
 
 Tue Jun 19 07:20:56 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -201,8 +210,8 @@ Tue Jun 19 07:20:56 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Mon Jun 18 21:33:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst: Added the Big_Reply tests to the nightly
-	  builds.
+        * bin/auto_run_tests.lst: Added the Big_Reply tests to the nightly
+          builds.
 
 Mon Jun 18 16:20:51 2001  Steve Huston  <shuston@riverace.com>
 
@@ -228,24 +237,24 @@ Mon Jun 18 15:29:38 2001  Steve Huston  <shuston@riverace.com>
 
 Mon Jun 18 10:06:37 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* etc/tao_ssliop.doxygen: New configuration file for
-	SSLIOP-related files.
+        * etc/tao_ssliop.doxygen: New configuration file for
+        SSLIOP-related files.
 
-	* bin/generate_doxygen.pl: Added new SSLIOP configuration file to
-	the list of things to be documented for TAO.
+        * bin/generate_doxygen.pl: Added new SSLIOP configuration file to
+        the list of things to be documented for TAO.
 
 Sun Jun 17 21:26:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Message_Block.i: Fixed Fuzz errors.
+        * ace/Message_Block.i: Fixed Fuzz errors.
 
 Sat Jun 17 17:33:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/CDR_Base.cpp (grow): Cleared the DONT_DELETE flag of the
-	  message block whose data block is expanded.
+        * ace/CDR_Base.cpp (grow): Cleared the DONT_DELETE flag of the
+          message block whose data block is expanded.
 
-	* ace/CDR_Stream.h:
-	* ace/CDR_Stream.cpp: Added a new method clone_from () in the
-	  ACE_InputCDR class. This method is used in the bug #575 fix.
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.cpp: Added a new method clone_from () in the
+          ACE_InputCDR class. This method is used in the bug #575 fix.
 
 Sun Jun 17 17:11:36 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
