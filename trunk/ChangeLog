@@ -1,3 +1,13 @@
+Tue May 20 12:53:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/TP_Reactor.h:
+	* ace/TP_Reactor.cpp: Do not allow users to register signal
+	  handlers with the TP_Reactor. TP_Reactor does not signals at
+	  present and allowing this is simply confusing. We now return a
+	  value of -1 if users try registering a signal handler with the
+	  reactor. Thanks to Carsten Prescher
+	  <prescher@pcdasa73.vs.dasa.de> for pointing this out.
+
 Tue May 20 10:54:10 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tests/Proactor_Test.cpp (open): Changed IPPROTO_TCP to
