@@ -34,7 +34,7 @@ static_libs = 1
 
 CC      = $(GHS_DIR)/cxch68
 CXX     = $(CC)
-CFLAGS  = -groot=$(MVME_DIR) -alttools=$(GHS_DIR) -68040 -X445 -fprecise \
+CFLAGS  = -groot=$(MVME_DIR) -alttools=$(GHS_DIR) -68040 -fprecise \
           -I$(MVME_INCL)/posix \
           -I$(MVME_INCL)/stdc \
           -I$(MVME_INCL)/chorus \
