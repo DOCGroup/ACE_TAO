@@ -1,5 +1,7 @@
 Mon Apr 14 23:08:27 1997    <irfan@TWOSTEP>
 
+	* INSTALL: Updated install files for Win32.
+
 	* ace/SPIPE_Stream: Changed the use of ACE::send_n to ACE::write_n
  	  and ACE::recv_n to ACE::read_n.
 
