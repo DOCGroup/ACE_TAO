@@ -2,8 +2,6 @@
 
 #include "tao/ORB_Constants.h"
 
-//#include <openssl/bn.h>
-
 
 ACE_RCSID (SSLIOP,
            SSLIOP_Credentials,
@@ -169,8 +167,8 @@ TAO::SSLIOP_Credentials::remove_relinquished_listener (const char * /* id */
 bool
 TAO::SSLIOP_Credentials::operator== (const TAO::SSLIOP_Credentials &rhs)
 {
-  X509 * xa = this->x509_.in ();
-  X509 * xb = rhs.x509_.in ();
+  ::X509 * xa = this->x509_.in ();
+  ::X509 * xb = rhs.x509_.in ();
   // EVP_PKEY *ea = this->evp_.in ();
   // EVP_PKEY *eb = rhs.evp_.in ();
 
@@ -182,7 +180,8 @@ TAO::SSLIOP_Credentials::operator== (const TAO::SSLIOP_Credentials &rhs)
   ACE_CHECK_RETURN (false);
 
   const SecurityLevel3::CredentialsType rct =
-    rhs.creds_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+    const_cast<TAO::SSLIOP_Credentials &> (rhs).creds_type (
+      ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (false);
 
   // Don't bother check the creds_id and expiry_time attributes.  They

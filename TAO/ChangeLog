@@ -1,3 +1,12 @@
+Thu Aug 12 17:52:36 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp (operator==):
+
+	  Cast away the const-ness of the right hand side argument before
+	  invoking its non-const cred_type() method.  The method in
+	  question doesn't modify the object so doing so is not violating
+	  any "immutability contract".  Fixes a compile-time error.
+
 Thu Aug 12 17:51:52 2004  Simon McQueen  <sm@prismtechnologies.com>
 
         * TAO_IDL/fe/fe_lookup.cpp (lookup):
