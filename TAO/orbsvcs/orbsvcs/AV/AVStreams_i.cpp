@@ -312,13 +312,14 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
             {
               for (u_int j=0;j<b_feps.length ();j++)
                 {
-                  if (&(b_feps [j]) != 0)
+                  AVStreams::FlowEndPoint_ptr fep_a = 
+                    AVStreams::FlowEndPoint::_narrow (a_feps [i],TAO_TRY_ENV);
+                  TAO_CHECK_ENV;
+                  AVStreams::FlowEndPoint_ptr fep_b =
+                    AVStreams::FlowEndPoint::_narrow (b_feps [j],TAO_TRY_ENV);
+
+                  if (fep_b->get_connected_fep () != 0)
                     {
-                      AVStreams::FlowEndPoint_ptr fep_a = 
-                        AVStreams::FlowEndPoint::_narrow (a_feps [i],TAO_TRY_ENV);
-                      TAO_CHECK_ENV;
-                      AVStreams::FlowEndPoint_ptr fep_b =
-                        AVStreams::FlowEndPoint::_narrow (b_feps [j],TAO_TRY_ENV);
                       if (fep_a->is_fep_compatible (fep_b,
                                                    TAO_TRY_ENV) == 1)
                         {
@@ -349,7 +350,8 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                           TAO_CHECK_ENV;
                           // what should be passed to QoS?
                           flow_connection->connect (producer,consumer,the_qos [0],env);
-                          b_feps [j] = 0;
+                          fep_a->set_peer (flow_connection,fep_b,the_qos[0],env);
+                          fep_b->set_peer (flow_connection,fep_a,the_qos[0],env);
                         }
                     }
                 }
@@ -431,11 +433,11 @@ TAO_StreamEndPoint::stop (const AVStreams::flowSpec &the_spec,
 // Start the physical flow of data on the stream
 // Empty the_spec --> apply to all flows
 void
-TAO_StreamEndPoint::start (const AVStreams::flowSpec &the_spec,
+TAO_StreamEndPoint::start (const AVStreams::flowSpec &flow_spec,
                            CORBA::Environment &env)
 {
   // Make the upcall into the app
-  this->handle_start (the_spec, env);
+  this->handle_start (flow_spec, env);
 }
 
 // Close the connection
@@ -1712,3 +1714,8 @@ TAO_FDev::destroy (AVStreams::FlowEndPoint_ptr the_ep,
   ACE_UNUSED_ARG (env);
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class  ACE_Hash_Map_Manager <TAO_String_Hash_Key,CORBA::Object_ptr,ACE_Null_Mutex>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Hash_Map_Manager <TAO_String_Hash_Key,CORBA::Object_ptr,ACE_Null_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
