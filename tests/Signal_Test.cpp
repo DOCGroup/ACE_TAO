@@ -120,9 +120,7 @@ synchronous_signal_handler (void *)
       sigset.sig_add (SIGTERM);
     }
   else
-    {
-      sigset.sig_add (SIGHUP);
-    }
+    sigset.sig_add (SIGHUP);
 
   for (;;)
     {
@@ -330,6 +328,10 @@ run_test (ACE_THR_FUNC worker,
         }
     }
   else
+#else
+    // Don't remove this since otherwise some compilers give warnings
+    // when ACE_HAS_THREADS is disabled!
+    ACE_UNUSED_ARG (synchronous_signal_handler);
 #endif /* ACE_HAS_THREADS */
     {
       ACE_UNUSED_ARG (handle_signals_in_separate_thread);
