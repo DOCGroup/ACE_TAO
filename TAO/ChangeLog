@@ -1,3 +1,11 @@
+Thu Aug  1 09:49:12 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/LoadBalancer/Makefile:
+	* orbsvcs/orbsvcs/Makefile.CosLoadBalancing:
+
+	  The new Load Balancer requires AMI to be enabled.  Do not
+	  attempt to build it if AMI is disabled.
+
 Thu Aug 01 15:19:44 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/LF_Follower_Auto_Adder.h:
