@@ -25,7 +25,7 @@
 /**
  * @class TAO_NS_Peer_T
  *
- * @brief
+ * @brief Base implementation for all Supplier and Consumer Classes.
  *
  */
 template <class Peer_Traits>

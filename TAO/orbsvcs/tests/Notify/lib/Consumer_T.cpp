@@ -20,14 +20,14 @@ TAO_NS_Consumer_T<Consumer_Traits>::~TAO_NS_Consumer_T ()
 {
 }
 
-template <class Consumer_Traits> TAO_NS_Consumer_T<Consumer_Traits>::Proxy_Traits_PTR
+template <class Consumer_Traits> ACE_TYPENAME TAO_NS_Consumer_T<Consumer_Traits>::Proxy_Traits_PTR
 TAO_NS_Consumer_T<Consumer_Traits>::get_proxy_supplier (void)
 {
   return this->get_proxy ();
 }
 
-template <class Consumer_Traits> TAO_NS_Consumer_T<Consumer_Traits>::Proxy_Traits_PTR
-TAO_NS_Consumer_T<Consumer_Traits>::obtain_proxy (TAO_NS_Consumer_T<Consumer_Traits>::Admin_Traits_PTR admin_ptr ACE_ENV_ARG_DECL)
+template <class Consumer_Traits> ACE_TYPENAME TAO_NS_Consumer_T<Consumer_Traits>::Proxy_Traits_PTR
+TAO_NS_Consumer_T<Consumer_Traits>::obtain_proxy (ACE_TYPENAME TAO_NS_Consumer_T<Consumer_Traits>::Admin_Traits_PTR admin_ptr ACE_ENV_ARG_DECL)
 {
   Consumer_Traits traits;
 

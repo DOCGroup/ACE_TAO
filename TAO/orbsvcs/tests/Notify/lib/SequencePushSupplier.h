@@ -55,7 +55,7 @@ typedef TAO_NS_Supplier_T<TAO_NS_SequencePushSupplier_Traits> TAO_NS_SequencePus
 /**
  * @class TAO_NS_SequencePushSupplier
  *
- * @brief
+ * @brief SequencePushSupplier Implementation.
  *
  */
 class TAO_NOTIFY_TEST_Export TAO_NS_SequencePushSupplier : public TAO_NS_SequencePushSupplier_Base

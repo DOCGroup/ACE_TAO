@@ -40,7 +40,7 @@ class TAO_NS_ConsumerAdmin_Ext_Traits
 /**
  * @class TAO_NS_Consumer_T
  *
- * @brief
+ * @brief Base template to implement Consumers.
  *
  */
 template <class Consumer_Traits>
