@@ -341,7 +341,7 @@ TAO_POA::policies (void)
 }
 
 ACE_INLINE TAO_Object_Table &
-TAO_POA::active_object_map (void)
+TAO_POA::active_object_map (void) const
 {
   return *this->active_object_map_;
 }
@@ -642,6 +642,12 @@ TAO_POA::create_object_id (PortableServer::Servant servant,
                            CORBA::Environment &env)
 {
   return this->active_object_map ().create_object_id (servant, env);
+}
+
+ACE_INLINE CORBA::ULong
+TAO_POA::system_id_size (void) const
+{
+  return this->active_object_map ().system_id_size ();
 }
 
 ACE_INLINE ACE_Lock &

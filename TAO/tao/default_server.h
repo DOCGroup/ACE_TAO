@@ -50,8 +50,10 @@ public:
 
   virtual CONCURRENCY_STRATEGY *concurrency_strategy (void);
 
-  virtual TAO_Object_Table_Impl *create_object_table (void);
-  // Factory method for object tables.
+  virtual TAO_Object_Table_Impl *create_object_table (int user_id_policy);
+  // Return a new id-->object table.  If <user_id_policy> is true, the
+  // request is being made for a POA with USER ID policy. Otherwise,
+  // the SYSTEM_ID policy is being used.
 
   virtual ACE_Lock *create_poa_lock (void);
   // Creates and returns a lock for POA based on the setting for
@@ -114,17 +116,27 @@ public:
   // <-ORBeventlock> <{which}>
   //   where <{which}> is one of <thread> or <null> (default <null>)
 
-private:
+protected:
   void tokenize (char *flag_string);
 
+  // = Helpers for <create_object_table>
+  TAO_Object_Table_Impl *create_user_id_policy_object_table (void);
+  TAO_Object_Table_Impl *create_system_id_policy_object_table (void);
+  TAO_Object_Table_Impl *create_object_table_i (TAO_Demux_Strategy table_type);
+  
   u_long thread_flags_;
   // Default thread flags passed to thr_create().
 
   u_long object_table_size_;
   // Default size of object lookup table.
 
-  TAO_Demux_Strategy object_lookup_strategy_;
-  // The type of lookup/demultiplexing strategy being used
+  TAO_Demux_Strategy object_lookup_strategy_for_user_id_policy_;
+  // The type of lookup/demultiplexing strategy being used for user id
+  // policy
+
+  TAO_Demux_Strategy object_lookup_strategy_for_system_id_policy_;
+  // The type of lookup/demultiplexing strategy being used for system
+  // id policy
 
   enum Lock_Type
   {

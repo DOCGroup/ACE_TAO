@@ -26,21 +26,6 @@ TAO_Object_Table_Impl::find (const PortableServer::ObjectId &id)
   return this->find (id, servant);
 }
 
-ACE_INLINE PortableServer::ObjectId *
-TAO_Object_Table_Impl::create_object_id (PortableServer::Servant servant,
-                                         CORBA::Environment &env)
-{
-  // This function is supposed to always fail.  Only
-  // TAO_Active_Demux_ObjTable::create_object_id is supposed to
-  // succeed.
-
-  ACE_UNUSED_ARG (servant);
-
-  CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
-  env.exception (exception);
-  return 0;
-}
-
 ACE_INLINE
 TAO_Object_Table_Iterator::TAO_Object_Table_Iterator (TAO_Object_Table_Iterator_Impl *impl)
   : impl_ (impl)
@@ -182,6 +167,33 @@ TAO_Object_Table::create_object_id (PortableServer::Servant servant,
   return this->impl_->create_object_id (servant, env);
 }
 
+ACE_INLINE CORBA::ULong
+TAO_Object_Table::system_id_size (void) const
+{
+  return this->impl_->system_id_size ();
+}
+
+ACE_INLINE int
+TAO_Dynamic_Hash_ObjTable::find (const PortableServer::ObjectId &id,
+                                 PortableServer::Servant &servant)
+{
+  return this->hash_map_.find (id, servant);
+}
+
+ACE_INLINE int
+TAO_Dynamic_Hash_ObjTable::bind (const PortableServer::ObjectId &id,
+                                 PortableServer::Servant servant)
+{
+  return this->hash_map_.bind (id, servant);
+}
+
+ACE_INLINE int
+TAO_Dynamic_Hash_ObjTable::unbind (const PortableServer::ObjectId &id,
+                                   PortableServer::Servant &servant)
+{
+  return this->hash_map_.unbind (id, servant);
+}
+
 ACE_INLINE int
 TAO_Dynamic_Hash_ObjTable::find (const PortableServer::Servant servant)
 {
@@ -199,6 +211,12 @@ TAO_Dynamic_Hash_ObjTable::find (const PortableServer::Servant servant,
                                  PortableServer::ObjectId_out id)
 {
   return this->TAO_Object_Table_Impl::find (servant, id);
+}
+
+ACE_INLINE CORBA::ULong
+TAO_Dynamic_Hash_ObjTable::system_id_size (void) const
+{
+  return sizeof (CORBA::ULong);
 }
 
 ACE_INLINE
@@ -310,6 +328,12 @@ TAO_Linear_ObjTable::find (const PortableServer::Servant servant,
   return this->TAO_Object_Table_Impl::find (servant, id);
 }
 
+ACE_INLINE CORBA::ULong
+TAO_Linear_ObjTable::system_id_size (void) const
+{
+  return sizeof (CORBA::ULong);
+}
+
 ACE_INLINE TAO_Object_Table_Iterator_Impl *
 TAO_Linear_ObjTable::begin (void) const
 {
@@ -361,6 +385,12 @@ TAO_Active_Demux_ObjTable::parse_object_id (const PortableServer::ObjectId &id,
   generation = id_data[TAO_Active_Demux_ObjTable::GENERATION_FIELD];
 
   return 0;
+}
+
+ACE_INLINE CORBA::ULong
+TAO_Active_Demux_ObjTable::system_id_size (void) const
+{
+  return 2 * sizeof (CORBA::ULong);
 }
 
 ACE_INLINE
