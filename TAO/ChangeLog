@@ -1,3 +1,10 @@
+Thu Feb 20 13:25:37 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Domain/DomainS.cpp:
+	* tao/Domain/DomainS.h:
+
+	  "CORBA_" -> "CORBA::".
+
 Thu Feb 20 13:05:36 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/DynamicInterface/Context.cpp:
