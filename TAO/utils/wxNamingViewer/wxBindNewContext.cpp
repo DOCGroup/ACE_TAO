@@ -12,80 +12,80 @@
 namespace  // anonymous
 {
   void create_dialog_components( wxDialog* dialog)
+  {
+    wxBoxSizer *topsizer = new wxBoxSizer( wxVERTICAL);
+ 
     {
-      wxBoxSizer *topsizer = new wxBoxSizer( wxVERTICAL);
- 
-      {
-        wxBoxSizer *sizer = new wxBoxSizer( wxHORIZONTAL);
-        sizer->Add(
-                   new wxStaticText( dialog, -1, "ID:" ),
-                   0,
-                   wxALL,
-                   5);
-        wxTextCtrl* text = new wxTextCtrl(
-                                          dialog,
-                                          IDC_ID
-                                          );
-        text->SetName( "idText");
-        sizer->Add(
-                   text,
-                   1,
-                   wxALL,
-                   5);
-        topsizer->Add(
-                      sizer,
-                      0,
-                      wxALIGN_LEFT | wxEXPAND);
-      }
- 
-      {
-        wxBoxSizer *sizer = new wxBoxSizer( wxHORIZONTAL);
-        sizer->Add(
-                   new wxStaticText( dialog, -1, "Kind:" ),
-                   0,
-                   wxALL,
-                   5);
-        wxTextCtrl* text = new wxTextCtrl(
-                                          dialog,
-                                          IDC_KIND
-                                          );
-        text->SetName( "kindText");
-        sizer->Add(
-                   text,
-                   1,
-                   wxALL,
-                   5);
-        topsizer->Add(
-                      sizer,
-                      0,
-                      wxALIGN_LEFT | wxEXPAND);
-      }
- 
-      wxBoxSizer *button_sizer = new wxBoxSizer( wxHORIZONTAL);
-      {
-        wxButton* okButton = new wxButton( dialog, wxID_OK, "OK" );
-        okButton->SetName( "okButton");
-        button_sizer->Add(
-                          okButton,
-                          0,
-                          wxALL,
-                          5);
-      }
-      {
-        button_sizer->Add(
-                          new wxButton( dialog, wxID_CANCEL, "Cancel" ),
-                          0,
-                          wxALL,
-                          5);
-      }
+      wxBoxSizer *sizer = new wxBoxSizer( wxHORIZONTAL);
+      sizer->Add(
+                 new wxStaticText( dialog, -1, "ID:" ),
+                 0,
+                 wxALL,
+                 5);
+      wxTextCtrl* text = new wxTextCtrl(
+                                        dialog,
+                                        IDC_ID
+                                        );
+      text->SetName( "idText");
+      sizer->Add(
+                 text,
+                 1,
+                 wxALL,
+                 5);
       topsizer->Add(
-                    button_sizer,
+                    sizer,
                     0,
-                    wxALIGN_CENTER);
- 
-      dialog->SetSizer( topsizer);
-      topsizer->SetSizeHints( dialog);
+                    wxALIGN_LEFT | wxEXPAND);
     }
+ 
+    {
+      wxBoxSizer *sizer = new wxBoxSizer( wxHORIZONTAL);
+      sizer->Add(
+                 new wxStaticText( dialog, -1, "Kind:" ),
+                 0,
+                 wxALL,
+                 5);
+      wxTextCtrl* text = new wxTextCtrl(
+                                        dialog,
+                                        IDC_KIND
+                                        );
+      text->SetName( "kindText");
+      sizer->Add(
+                 text,
+                 1,
+                 wxALL,
+                 5);
+      topsizer->Add(
+                    sizer,
+                    0,
+                    wxALIGN_LEFT | wxEXPAND);
+    }
+ 
+    wxBoxSizer *button_sizer = new wxBoxSizer( wxHORIZONTAL);
+    {
+      wxButton* okButton = new wxButton( dialog, wxID_OK, "OK" );
+      okButton->SetName( "okButton");
+      button_sizer->Add(
+                        okButton,
+                        0,
+                        wxALL,
+                        5);
+    }
+    {
+      button_sizer->Add(
+                        new wxButton( dialog, wxID_CANCEL, "Cancel" ),
+                        0,
+                        wxALL,
+                        5);
+    }
+    topsizer->Add(
+                  button_sizer,
+                  0,
+                  wxALIGN_CENTER);
+ 
+    dialog->SetSizer( topsizer);
+    topsizer->SetSizeHints( dialog);
+  }
  
 }; // anonymous
 
@@ -107,15 +107,8 @@ WxBindNewContext::WxBindNewContext( wxWindow* parent)
     LoadFromResource( parent, "bindNewContext");
 #else
    create_dialog_components( this);
-endif  // defined(wxUSE_RESOURCES) && (wxUSE_RESOURCES == 1)
+#endif  // defined(wxUSE_RESOURCES) && (wxUSE_RESOURCES == 1)
  }
-
-WxBindNewContext::WxBindNewContext( wxWindow* parent):
-  wxDialog()
-{
-  LoadFromResource( parent, "bindNewContext");
-}
-
 
 bool WxBindNewContext::TransferDataFromWindow()
 {
