@@ -4216,6 +4216,23 @@ ACE_OS::gethostbyname (const char *name)
 # endif /* ACE_HAS_NONCONST_GETBY */
 }
 
+# if defined (ACE_HAS_IP6)
+ACE_INLINE struct hostent *
+ACE_OS::gethostbyname2 (const char *name, int type)
+{
+  // ACE_TRACE ("ACE_OS::gethostbyname2");
+#  if defined (ACE_PSOS)
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (type);
+  ACE_NOTSUP_RETURN (0);
+#  elif defined (ACE_HAS_NONCONST_GETBY)
+  ACE_SOCKCALL_RETURN (::gethostbyname2 ((char *) name, type), struct hostent *, 0);
+#  else
+  ACE_SOCKCALL_RETURN (::gethostbyname2 (name, type), struct hostent *, 0);
+#  endif /* ACE_HAS_NONCONST_GETBY */
+}
+# endif /* ACE_HAS_IP6 */
+
 ACE_INLINE struct hostent *
 ACE_OS::gethostbyaddr (const char *addr, int length, int type)
 {
