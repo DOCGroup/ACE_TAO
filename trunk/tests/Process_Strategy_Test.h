@@ -28,6 +28,7 @@
 #include "ace/File_Lock.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
+#include "ace/Strategies_T.h"
 
 // Forward decl.
 class ACE_Thread_Manager;
