@@ -7,14 +7,14 @@ Mon Jun 19 22:14:26 2000  Alex Arulanthu  <Alex.Arulanthu@sylantro.com>
 	* examples/Reactor/Proactor/Makefile
 	* examples/Reactor/Proactor/test_proactor2.cpp:
 
-	Thanks to Alex Libman <alibman@baltimore.com>, the following
-	changes have been integrated onto POSIX Proactor. 
+	  Thanks to Alex Libman <alibman@baltimore.com>, the following 
+	  changes have been integrated onto POSIX Proactor. 
 
-	- Enabling the completion call backs even if aio_return fails. We
-	  will call the completion call back methods with 0 transferred
-	  data parameter.
+	  - Enabling the completion call backs even if aio_return
+	  fails. We will call the completion call back methods with 0
+	  transferred data parameter.
 
-	- MT safe'ing AIOCB proactor. It would not improve the
+	  - MT safe'ing AIOCB proactor. It would not improve the
 	  efficiency. 
 
 Mon Jun 19 19:44:05 2000  Ossama Othman  <ossama@uci.edu>
