@@ -358,7 +358,7 @@ ACE_Process_Manager::handle_close (ACE_HANDLE handle,
 
   ACE_OS::close (dummy_handle_);
 #else
-  ACE_UNSED_ARG (handle);
+  ACE_UNUSED_ARG (handle);
 #endif /* ACE_WIN32 */
   return 0;
 }
