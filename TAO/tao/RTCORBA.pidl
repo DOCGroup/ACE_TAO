@@ -25,6 +25,10 @@
 //         all.  It is unclear whether that was intentional or a
 //         result of sloppiness.  Until the former is proved, the
 //         latter will be assumed and all interfaces made <local>.
+//     3.  Two TAO-specific interfaces, UnixDomainProtocolProperties
+//         and SharedMemoryProtocolProperties, have been added to allow
+//         configuration of TAO's UIOP and SHMEM pluggable protocols
+//         through RTCORBA Protocol Policies.
 //
 //   This file was used to generate the code in
 //   RTCORBA{C,S,S_T}.{h,i,cpp} The command used to generate code
@@ -32,7 +36,7 @@
 //
 //     tao_idl -o orig -Gp -Gd -Ge 1 -Gv \
 //          -Wb,export_macro=TAO_Export \
-//          -Wb,export_include=corbafwd.h \
+//          -Wb,export_include="tao/corbafwd.h" \
 //          -Wb,pre_include="ace/pre.h" \
 //          -Wb,post_include="ace/post.h" \
 //          RTCORBA.pidl
@@ -125,15 +129,35 @@ module RTCORBA
   local interface ProtocolProperties {};
 
   local interface TCPProtocolProperties : ProtocolProperties
-    {
-      attribute long send_buffer_size;
-      attribute long recv_buffer_size;
-      attribute boolean keep_alive;
-      attribute boolean dont_route;
-      attribute boolean no_delay;
-    };
+  {
+    attribute long send_buffer_size;
+    attribute long recv_buffer_size;
+    attribute boolean keep_alive;
+    attribute boolean dont_route;
+    attribute boolean no_delay;
+  };
 
   local interface GIOPProtocolProperties : ProtocolProperties {};
+
+  // Properties for TAO-specific protocols (these protocols &
+  // interfaces are not specified by the OMG).
+
+  // Communication over Unix Domain Sockets (Local IPC).
+  local interface UnixDomainProtocolProperties : ProtocolProperties
+  {
+    attribute long send_buffer_size;
+    attribute long recv_buffer_size;
+  };
+
+  // Communication over Shared Memory.
+  local interface SharedMemoryProtocolProperties : ProtocolProperties
+  {
+    attribute long preallocate_buffer_size;
+    attribute string mmap_filename;
+    attribute string mmap_lockname;
+  };
+
+  // End of TAO-specific interfaces.
 
   struct Protocol
   {
@@ -146,16 +170,16 @@ module RTCORBA
   // Server Protocol Policy
   const CORBA::PolicyType SERVER_PROTOCOL_POLICY_TYPE = 0x54410004;
   local interface ServerProtocolPolicy : CORBA::Policy
-    {
-      readonly attribute ProtocolList protocols;
-    };
+  {
+    readonly attribute ProtocolList protocols;
+  };
 
   // Client Protocol Policy
   const CORBA::PolicyType CLIENT_PROTOCOL_POLICY_TYPE = 0x54410005;
   local interface ClientProtocolPolicy : CORBA::Policy
-    {
-      readonly attribute ProtocolList protocols;
-    };
+  {
+    readonly attribute ProtocolList protocols;
+  };
 
   // RT Current.
   local interface Current : CORBA::Current

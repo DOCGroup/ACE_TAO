@@ -1,5 +1,5 @@
---- orig/RTCORBAC.cpp	Thu Jun 15 13:59:41 2000
-+++ RTCORBAC.cpp	Fri Jun  9 13:00:53 2000
+--- orig/RTCORBAC.cpp	Sat May 20 22:29:17 2000
++++ RTCORBAC.cpp	Fri Aug 18 20:40:33 2000
 @@ -1,4 +1,4 @@
 -/* -*- C++ -*- $Id$ */
 +/* -*- C++ -*- $Id$ */
@@ -394,7 +394,7 @@
  RTCORBA::ProtocolProperties_ptr RTCORBA::ProtocolProperties::_narrow (
      CORBA::Object_ptr obj,
      CORBA::Environment &ACE_TRY_ENV
-@@ -802,30 +762,40 @@
+@@ -802,30 +762,37 @@
    void *retv = 0;
    if (type == ACE_reinterpret_cast
      (ptr_arith_t,
@@ -414,9 +414,6 @@
 -const char* RTCORBA::ProtocolProperties::_interface_repository_id (void) const
 +//////////////////////////////////////////////////////
 +// CDR Encoding Support
-+
-+// @@ Angelo, can you explain to me why these methods here return
-+// true, while same methods in PolicyC.cpp return false?
 +
 +CORBA::Boolean
 +RTCORBA::ProtocolProperties::_tao_encode (TAO_OutputCDR &)
@@ -445,7 +442,7 @@
  
  RTCORBA::TCPProtocolProperties_ptr RTCORBA::TCPProtocolProperties::_narrow (
      CORBA::Object_ptr obj,
-@@ -870,11 +840,11 @@
+@@ -870,11 +837,11 @@
    void *retv = 0;
    if (type == ACE_reinterpret_cast
      (ptr_arith_t,
@@ -459,7 +456,7 @@
      retv = ACE_reinterpret_cast
        (
          void *,
-@@ -887,7 +857,7 @@
+@@ -887,7 +854,7 @@
    else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
      retv = ACE_reinterpret_cast (void *,
        ACE_static_cast (CORBA::Object_ptr, this));
@@ -468,7 +465,7 @@
    if (retv)
      this->_add_ref ();
    return retv;
-@@ -898,15 +868,6 @@
+@@ -898,15 +865,6 @@
    return "IDL:omg.org/RTCORBA/TCPProtocolProperties:1.0";
  }
  
@@ -484,7 +481,7 @@
  RTCORBA::GIOPProtocolProperties_ptr RTCORBA::GIOPProtocolProperties::_narrow (
      CORBA::Object_ptr obj,
      CORBA::Environment &ACE_TRY_ENV
-@@ -950,11 +911,11 @@
+@@ -950,11 +908,11 @@
    void *retv = 0;
    if (type == ACE_reinterpret_cast
      (ptr_arith_t,
@@ -498,7 +495,7 @@
      retv = ACE_reinterpret_cast
        (
          void *,
-@@ -967,7 +928,7 @@
+@@ -967,7 +925,7 @@
    else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
      retv = ACE_reinterpret_cast (void *,
        ACE_static_cast (CORBA::Object_ptr, this));
@@ -507,8 +504,169 @@
    if (retv)
      this->_add_ref ();
    return retv;
-@@ -980,7 +941,7 @@
+@@ -978,9 +936,168 @@
+   return "IDL:omg.org/RTCORBA/GIOPProtocolProperties:1.0";
+ }
  
++// default constructor
++RTCORBA::UnixDomainProtocolProperties::UnixDomainProtocolProperties (void)
++{}
++
++// destructor
++RTCORBA::UnixDomainProtocolProperties::~UnixDomainProtocolProperties (void)
++{}
++
++RTCORBA::UnixDomainProtocolProperties_ptr RTCORBA::UnixDomainProtocolProperties::_narrow (
++    CORBA::Object_ptr obj,
++    CORBA::Environment &ACE_TRY_ENV
++  )
++{
++  return UnixDomainProtocolProperties::_unchecked_narrow (obj, ACE_TRY_ENV);
++}
++
++RTCORBA::UnixDomainProtocolProperties_ptr RTCORBA::UnixDomainProtocolProperties::_unchecked_narrow (
++    CORBA::Object_ptr obj,
++    CORBA::Environment &
++  )
++{
++  if (CORBA::is_nil (obj))
++    return UnixDomainProtocolProperties::_nil ();
++  return
++      ACE_reinterpret_cast
++        (
++          UnixDomainProtocolProperties_ptr,
++            obj->_tao_QueryInterface
++              (
++                ACE_reinterpret_cast
++                  (
++                    ptr_arith_t,
++                    &UnixDomainProtocolProperties::_narrow
++                  )
++              )
++        );
++}
++
++RTCORBA::UnixDomainProtocolProperties_ptr
++RTCORBA::UnixDomainProtocolProperties::_duplicate (UnixDomainProtocolProperties_ptr obj)
++{
++  if (!CORBA::is_nil (obj))
++    obj->_add_ref ();
++  return obj;
++}
++
++void *RTCORBA::UnixDomainProtocolProperties::_tao_QueryInterface (ptr_arith_t type)
++{
++  void *retv = 0;
++  if (type == ACE_reinterpret_cast
++    (ptr_arith_t,
++      &RTCORBA::UnixDomainProtocolProperties::_narrow))
++    retv = ACE_reinterpret_cast (void*, this);
++  else if (type == ACE_reinterpret_cast
++    (ptr_arith_t,
++      &RTCORBA::ProtocolProperties::_narrow))
++    retv = ACE_reinterpret_cast
++      (
++        void *,
++        ACE_static_cast
++          (
++            RTCORBA::ProtocolProperties_ptr,
++            this
++          )
++      );
++  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
++    retv = ACE_reinterpret_cast (void *,
++      ACE_static_cast (CORBA::Object_ptr, this));
++
++  if (retv)
++    this->_add_ref ();
++  return retv;
++}
++
++const char* RTCORBA::UnixDomainProtocolProperties::_interface_repository_id (void) const
++{
++  return "IDL:omg.org/RTCORBA/UnixDomainProtocolProperties:1.0";
++}
++
++
++// default constructor
++RTCORBA::SharedMemoryProtocolProperties::SharedMemoryProtocolProperties (void)
++{}
++
++// destructor
++RTCORBA::SharedMemoryProtocolProperties::~SharedMemoryProtocolProperties (void)
++{}
++
++RTCORBA::SharedMemoryProtocolProperties_ptr RTCORBA::SharedMemoryProtocolProperties::_narrow (
++    CORBA::Object_ptr obj,
++    CORBA::Environment &ACE_TRY_ENV
++  )
++{
++  return SharedMemoryProtocolProperties::_unchecked_narrow (obj, ACE_TRY_ENV);
++}
++
++RTCORBA::SharedMemoryProtocolProperties_ptr RTCORBA::SharedMemoryProtocolProperties::_unchecked_narrow (
++    CORBA::Object_ptr obj,
++    CORBA::Environment &
++  )
++{
++  if (CORBA::is_nil (obj))
++    return SharedMemoryProtocolProperties::_nil ();
++  return
++      ACE_reinterpret_cast
++        (
++          SharedMemoryProtocolProperties_ptr,
++            obj->_tao_QueryInterface
++              (
++                ACE_reinterpret_cast
++                  (
++                    ptr_arith_t,
++                    &SharedMemoryProtocolProperties::_narrow
++                  )
++              )
++        );
++}
++
++RTCORBA::SharedMemoryProtocolProperties_ptr
++RTCORBA::SharedMemoryProtocolProperties::_duplicate (SharedMemoryProtocolProperties_ptr obj)
++{
++  if (!CORBA::is_nil (obj))
++    obj->_add_ref ();
++  return obj;
++}
++
++void *RTCORBA::SharedMemoryProtocolProperties::_tao_QueryInterface (ptr_arith_t type)
++{
++  void *retv = 0;
++  if (type == ACE_reinterpret_cast
++    (ptr_arith_t,
++      &RTCORBA::SharedMemoryProtocolProperties::_narrow))
++    retv = ACE_reinterpret_cast (void*, this);
++  else if (type == ACE_reinterpret_cast
++    (ptr_arith_t,
++      &RTCORBA::ProtocolProperties::_narrow))
++    retv = ACE_reinterpret_cast
++      (
++        void *,
++        ACE_static_cast
++          (
++            RTCORBA::ProtocolProperties_ptr,
++            this
++          )
++      );
++  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
++    retv = ACE_reinterpret_cast (void *,
++      ACE_static_cast (CORBA::Object_ptr, this));
++
++  if (retv)
++    this->_add_ref ();
++  return retv;
++}
++
++const char* RTCORBA::SharedMemoryProtocolProperties::_interface_repository_id (void) const
++{
++  return "IDL:omg.org/RTCORBA/SharedMemoryProtocolProperties:1.0";
++}
++
  
  #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 -  
@@ -516,7 +674,7 @@
  #if !defined (__TAO_UNBOUNDED_SEQUENCE_RTCORBA_PROTOCOLLIST_CS_)
  #define __TAO_UNBOUNDED_SEQUENCE_RTCORBA_PROTOCOLLIST_CS_
  
-@@ -989,43 +950,43 @@
+@@ -989,43 +1106,43 @@
    {
      RTCORBA::Protocol* tmp = 0;
      tmp = _TAO_Unbounded_Sequence_RTCORBA_ProtocolList::allocbuf (length);
@@ -572,7 +730,7 @@
  
  #if !defined (_RTCORBA_PROTOCOLLIST_CS_)
  #define _RTCORBA_PROTOCOLLIST_CS_
-@@ -1037,30 +998,30 @@
+@@ -1037,30 +1154,30 @@
  RTCORBA::ProtocolList::ProtocolList (void)
  {}
  RTCORBA::ProtocolList::ProtocolList (CORBA::ULong max) // uses max size
@@ -609,7 +767,7 @@
   (seq)
  {}
  RTCORBA::ProtocolList::~ProtocolList (void) // dtor
-@@ -1078,15 +1039,6 @@
+@@ -1078,15 +1195,6 @@
  TAO_NAMESPACE_BEGIN (RTCORBA)
  TAO_NAMESPACE_DEFINE (const CORBA::ULong, SERVER_PROTOCOL_POLICY_TYPE, 1413545988U)
  TAO_NAMESPACE_END
@@ -625,7 +783,7 @@
  RTCORBA::ServerProtocolPolicy_ptr RTCORBA::ServerProtocolPolicy::_narrow (
      CORBA::Object_ptr obj,
      CORBA::Environment &ACE_TRY_ENV
-@@ -1130,11 +1082,11 @@
+@@ -1130,11 +1238,11 @@
    void *retv = 0;
    if (type == ACE_reinterpret_cast
      (ptr_arith_t,
@@ -639,7 +797,7 @@
      retv = ACE_reinterpret_cast
        (
          void *,
-@@ -1147,7 +1099,7 @@
+@@ -1147,7 +1255,7 @@
    else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
      retv = ACE_reinterpret_cast (void *,
        ACE_static_cast (CORBA::Object_ptr, this));
@@ -648,7 +806,7 @@
    if (retv)
      this->_add_ref ();
    return retv;
-@@ -1162,15 +1114,6 @@
+@@ -1162,15 +1270,6 @@
  TAO_NAMESPACE_BEGIN (RTCORBA)
  TAO_NAMESPACE_DEFINE (const CORBA::ULong, CLIENT_PROTOCOL_POLICY_TYPE, 1413545989U)
  TAO_NAMESPACE_END
@@ -664,7 +822,7 @@
  RTCORBA::ClientProtocolPolicy_ptr RTCORBA::ClientProtocolPolicy::_narrow (
      CORBA::Object_ptr obj,
      CORBA::Environment &ACE_TRY_ENV
-@@ -1214,11 +1157,11 @@
+@@ -1214,11 +1313,11 @@
    void *retv = 0;
    if (type == ACE_reinterpret_cast
      (ptr_arith_t,
@@ -678,7 +836,7 @@
      retv = ACE_reinterpret_cast
        (
          void *,
-@@ -1231,7 +1174,7 @@
+@@ -1231,7 +1330,7 @@
    else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
      retv = ACE_reinterpret_cast (void *,
        ACE_static_cast (CORBA::Object_ptr, this));
@@ -687,7 +845,7 @@
    if (retv)
      this->_add_ref ();
    return retv;
-@@ -1242,15 +1185,6 @@
+@@ -1242,15 +1341,6 @@
    return "IDL:omg.org/RTCORBA/ClientProtocolPolicy:1.0";
  }
  
@@ -703,7 +861,7 @@
  RTCORBA::Current_ptr RTCORBA::Current::_narrow (
      CORBA::Object_ptr obj,
      CORBA::Environment &ACE_TRY_ENV
-@@ -1294,11 +1228,11 @@
+@@ -1294,11 +1384,11 @@
    void *retv = 0;
    if (type == ACE_reinterpret_cast
      (ptr_arith_t,
@@ -717,7 +875,7 @@
      retv = ACE_reinterpret_cast
        (
          void *,
-@@ -1311,7 +1245,7 @@
+@@ -1311,7 +1401,7 @@
    else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
      retv = ACE_reinterpret_cast (void *,
        ACE_static_cast (CORBA::Object_ptr, this));
@@ -726,7 +884,7 @@
    if (retv)
      this->_add_ref ();
    return retv;
-@@ -1322,15 +1256,6 @@
+@@ -1322,15 +1412,6 @@
    return "IDL:omg.org/RTCORBA/Current:1.0";
  }
  
@@ -742,7 +900,7 @@
  RTCORBA::Mutex_ptr RTCORBA::Mutex::_narrow (
      CORBA::Object_ptr obj,
      CORBA::Environment &ACE_TRY_ENV
-@@ -1374,12 +1299,12 @@
+@@ -1374,12 +1455,12 @@
    void *retv = 0;
    if (type == ACE_reinterpret_cast
      (ptr_arith_t,
@@ -757,7 +915,7 @@
    if (retv)
      this->_add_ref ();
    return retv;
-@@ -1390,15 +1315,6 @@
+@@ -1390,15 +1471,6 @@
    return "IDL:omg.org/RTCORBA/Mutex:1.0";
  }
  
@@ -773,7 +931,19 @@
  RTCORBA::RTORB_ptr RTCORBA::RTORB::_narrow (
      CORBA::Object_ptr obj,
      CORBA::Environment &ACE_TRY_ENV
-@@ -1464,7 +1380,7 @@
+@@ -1449,9 +1521,9 @@
+ 
+ // copy constructor
+ RTCORBA::RTORB::InvalidThreadpool::InvalidThreadpool (const ::RTCORBA::RTORB::InvalidThreadpool &_tao_excp)
+-  : CORBA_UserException (_tao_excp._type ())
++  : CORBA_UserException (_tao_excp._id ())
+ {
+-  }
++}
+ 
+ // assignment operator
+ RTCORBA::RTORB::InvalidThreadpool&
+@@ -1464,7 +1536,7 @@
  
  // narrow
  RTCORBA::RTORB::InvalidThreadpool *
@@ -782,7 +952,7 @@
  {
    if (!ACE_OS::strcmp ("IDL:omg.org/RTCORBA/RTORB/InvalidThreadpool:1.0", exc->_id ())) // same type
      return ACE_dynamic_cast (InvalidThreadpool *, exc);
-@@ -1507,12 +1423,12 @@
+@@ -1507,12 +1579,12 @@
    void *retv = 0;
    if (type == ACE_reinterpret_cast
      (ptr_arith_t,
@@ -797,7 +967,28 @@
    if (retv)
      this->_add_ref ();
    return retv;
-@@ -2014,7 +1930,7 @@
+@@ -1952,6 +2024,20 @@
+ 
+ #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+     defined (ACE_HAS_GNU_REPO)
++    template class TAO_Object_Manager<RTCORBA::UnixDomainProtocolProperties,RTCORBA::UnixDomainProtocolProperties_var>;
++  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
++  #  pragma instantiate TAO_Object_Manager<RTCORBA::UnixDomainProtocolProperties,RTCORBA::UnixDomainProtocolProperties_var>
++#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
++
++#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
++    defined (ACE_HAS_GNU_REPO)
++    template class TAO_Object_Manager<RTCORBA::SharedMemoryProtocolProperties,RTCORBA::SharedMemoryProtocolProperties_var>;
++  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
++  #  pragma instantiate TAO_Object_Manager<RTCORBA::SharedMemoryProtocolProperties,RTCORBA::SharedMemoryProtocolProperties_var>
++#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
++
++#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
++    defined (ACE_HAS_GNU_REPO)
+     template class TAO_Object_Manager<RTCORBA::ServerProtocolPolicy,RTCORBA::ServerProtocolPolicy_var>;
+   #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+   #  pragma instantiate TAO_Object_Manager<RTCORBA::ServerProtocolPolicy,RTCORBA::ServerProtocolPolicy_var>
+@@ -2014,7 +2100,7 @@
      // set the length of the sequence
      _tao_sequence.length (_tao_seq_len);
      // If length is 0 we return true.
@@ -806,7 +997,7 @@
        return 1;
      // retrieve all the elements
      CORBA::Boolean _tao_marshal_flag = 1;
-@@ -2056,7 +1972,7 @@
+@@ -2056,7 +2142,7 @@
      // set the length of the sequence
      _tao_sequence.length (_tao_seq_len);
      // If length is 0 we return true.
@@ -815,7 +1006,7 @@
        return 1;
      // retrieve all the elements
      CORBA::Boolean _tao_marshal_flag = 1;
-@@ -2069,3 +1985,4 @@
+@@ -2069,3 +2155,4 @@
    return 0; // error
  }
  

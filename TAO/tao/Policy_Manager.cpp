@@ -281,6 +281,10 @@ TAO_Policy_Manager_Impl::set_policy_overrides (
       ACE_CHECK;
     }
 
+  // Flag, indicating whether we have already overridden
+  // RTCORBA::ServerProtocolPolicy during this call.
+  int server_protocol_set = 0;
+
   for (CORBA::ULong i = 0; i < policies.length ();  ++i)
     {
       CORBA::Policy_ptr policy = policies[i];
@@ -480,6 +484,17 @@ TAO_Policy_Manager_Impl::set_policy_overrides (
 
         case TAO_RT_SERVER_PROTOCOL_POLICY_TYPE:
           {
+            // Only one ServerProtocolPolicy should be included in a
+            // given PolicyList (section 4.15.2 of RTCORBA 1.0, i.e.,
+            // ptc/99-05-03).
+            // User-caused exceptional conditions can leave the Policy
+            // Manager in an inconsistent state.  It is the
+            // responsibility of the user to return it to consistent state.
+            if (server_protocol_set != 0)
+              ACE_THROW (CORBA::INV_POLICY ());
+            else
+              server_protocol_set = 0;
+
             RTCORBA::ServerProtocolPolicy_var p =
               RTCORBA::ServerProtocolPolicy::_narrow (policy);
 
