@@ -1,3 +1,9 @@
+Tue Feb 15 22:56:58 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/SHMIOP_Transport.cpp (send): Changed to use the new
+	  ACE_MEM_IO::send method to send a message block chain.  This
+	  reduced the number of signaling and should improve performace.
+
 Tue Feb 15 19:53:49 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_interface.cpp:
