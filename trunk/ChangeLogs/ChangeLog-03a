@@ -1,8 +1,17 @@
+Thu Feb 22 08:43:30 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * include/makeinclude/rules.local.GNU:
+          Add SunWS_cache and ir.out to the list of files removed by
+          the realclean pseudo-target.  This directory is used by Sun/CC
+          5.0 (and Forte), if not removed the information there can become
+          stale, and break the builds.
+          This should fix the Sun/CC 5.0 nightly builds.
+
 Thu Feb 22 07:51:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/OS.i: Reverted the change "Thu Feb 22 03:31:06 2001
-	  Krishnakumar B  <kitty@ace.cs.wustl.edu> ". The beta 5.1.13 is
-	  going to be zapped. 
+        * ace/OS.i: Reverted the change "Thu Feb 22 03:31:06 2001
+          Krishnakumar B  <kitty@ace.cs.wustl.edu> ". The beta 5.1.13 is
+          going to be zapped.
 
 Thu Feb 22 03:52:25 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -10,17 +19,17 @@ Thu Feb 22 03:52:25 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Thu Feb 22 03:31:06 2001  Krishnakumar B  <kitty@ace.cs.wustl.edu>
 
-	* ace/OS.i (dlsym): 
-  	  Hopefully fixed the Win32 builds. Removed a extra ! in the
-	  #ifdef.  
+        * ace/OS.i (dlsym):
+          Hopefully fixed the Win32 builds. Removed a extra ! in the
+          #ifdef.
 
 Thu Feb 22 02:58:36 2001  Krishnakumar B  <kitty@ace.cs.wustl.edu>
 
-	* VERSION:
- 	* PROBLEM-REPORT-FORM:
-	* ace/Version.h:
-	Reverted the changes and restored the old versions of 
-	these files as the beta build script was killed. Pain :-(
+        * VERSION:
+        * PROBLEM-REPORT-FORM:
+        * ace/Version.h:
+        Reverted the changes and restored the old versions of
+        these files as the beta build script was killed. Pain :-(
 
 Wed Feb 21 20:10:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
