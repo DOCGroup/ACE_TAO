@@ -19,13 +19,13 @@
 #if !defined (CRITERIA_EVALUATOR_H_H)
 #define CRITERIA_EVALUATOR_H_H
 
-class Quoter_Criteria_Evaluator : public Stock::Criteria_Evaluator
+class Quoter_Criteria_Evaluator// : public Stock::Criteria_Evaluator
 {
   // = TILE
   //  
 
 public:
-  Quoter_Criteria_Evaluator (const CosLifeCycle::Criteria criteria);
+  Quoter_Criteria_Evaluator (const CosLifeCycle::Criteria & criteria);
   ~Quoter_Criteria_Evaluator ();
   
   Stock::Criteria_Evaluator::SeqNamedValuePair * getInitialization (CORBA::Environment &_tao_environment);
@@ -42,13 +42,13 @@ public:
       return 0;
     }
 
-  void setCriteria (const CosLifeCycle::Criteria & criteria,
-		      CORBA::Environment &_tao_environment);
+  //  void setCriteria (const CosLifeCycle::Criteria & criteria,
+  //		      CORBA::Environment &_tao_environment);
 
 private:
   CORBA::Any *getCriteriaMember (const CORBA::String member_name);
     
-  CosLifeCycle::Criteria criteria_;
+  const CosLifeCycle::Criteria &criteria_;
 };
 
 #endif /* CRITERIA_EVALUATOR_H */

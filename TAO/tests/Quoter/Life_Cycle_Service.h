@@ -17,8 +17,8 @@
 #include "tao/TAO.h"
 #include "Life_Cycle_Service_Impl.h"
 
-#if !defined (LIFE_CYCLE_SERVICE_H)
-#define LIFE_CYCLE_SERVICE_H
+#if !defined (QUOTER_LIFE_CYCLE_SERVICE_H)
+#define QUOTER_LIFE_CYCLE_SERVICE_H
 
 class Quoter_Life_Cycle_Service_Server
 {
@@ -47,7 +47,7 @@ private:
   TAO_ORB_Manager orb_manager_;
   // instance of the ORB Manager
 
-  Quoter_Generic_Factory_Impl *quoter_Generic_Factory_Impl_ptr_;
+  Quoter_Life_Cycle_Service_Impl *quoter_Life_Cycle_Service_Impl_ptr_;
   // Instance of the Quoter Generic Factory.
   
   CosNaming::NamingContext_var quoterNamingContext_var_;
@@ -60,4 +60,5 @@ private:
   // commandline arguments.
 };
 
-#endif /* LIFE_CYCLE_SERVICE_H */
+#endif /* QUOTER_LIFE_CYCLE_SERVICE_H */
+

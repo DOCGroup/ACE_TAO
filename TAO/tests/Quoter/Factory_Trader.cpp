@@ -92,10 +92,10 @@ Factory_Trader::add_type ()
 
       // Add the new type
       incarnationNumber = this->repository_.add_type (CORBA::string_dup("Factory"),
-							   GENERIC_FACTORY_INTERFACE_REPOSITORY_ID,
-							   propStructSeq,
-							   superTypeSeq,
-							   TAO_TRY_ENV);
+						      GENERIC_FACTORY_INTERFACE_REPOSITORY_ID,
+						      propStructSeq,
+						      superTypeSeq,
+						      TAO_TRY_ENV);
       TAO_CHECK_ENV;      
     }
   TAO_CATCH (CORBA::UserException, userex)
@@ -148,6 +148,7 @@ Factory_Trader::export (const char * name,
 			    CORBA::string_dup("Factory"),
 			    propertySeq,
 			    TAO_TRY_ENV);
+			    
       TAO_CHECK_ENV;
     }
   TAO_CATCH (CORBA::UserException, userex)

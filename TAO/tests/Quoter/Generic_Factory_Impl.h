@@ -19,7 +19,7 @@
 #if !defined (QUOTER_GENERIC_FACTORY_IMPL_H)
 #define QUOTER_GENERIC_FACTORY_IMPL_H
 
-class Quoter_Generic_Factory_Impl : public POA_Stock::Quoter_Generic_Factory 
+class Quoter_Generic_Factory_Impl : public POA_Stock::Quoter_Generic_Factory
 {
   // = TILE
   //   A CosLifeCycle conforming Generic Factory for the Quoter

@@ -34,7 +34,7 @@ LDFLAGS += -L$(STL_ROOT)/lib
 
 # end of the trading service stuff
 
-BIN = client server Factory_Finder Generic_Factory
+BIN = client server Factory_Finder Generic_Factory Life_Cycle_Service
 
 BUILD = $(BIN)
 
@@ -55,7 +55,7 @@ GENERIC_FACTORY_SRCS = \
 	Generic_Factory.cpp Generic_Factory_Impl.cpp 
 
 LIFE_CYCLE_SERVICE_SRCS = \
-	Life_Cycle_Service.cpp Life_Cycle_Service.cpp \
+	Life_Cycle_Service.cpp Life_Cycle_Service_Impl.cpp \
 	Factory_Trader.cpp Criteria_Evaluator.cpp
 
 
