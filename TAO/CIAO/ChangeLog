@@ -1,3 +1,32 @@
+Thu Mar  3 10:31:10 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ExecImplGenerator.cpp:
+        * CIDLC/ExecImplHeaderGenerator.cpp:
+        
+          - Added support for .cdl file extension similar to
+            support already in the servant generators.
+            
+          - Fixed bug in export include generation.
+          
+          Thanks to Matt Emerson <mjemerson@isis.vanderbilt.edu>,
+          Ming Xiong <xiongm@isi.vanderbilt.edu>, James Hill
+          <jhill@isis.vanderbilt.edu> and Stoyan Paunov
+          <spaunov@isis.vanderbilt.edu> for reporting these
+          problems.
+            
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          - Replaced remaining instances of generation of 'new' with
+            'ACE_NEW' and changed code generation to reduce line
+            lengths.
+            
+          - Changed code generation of Cookie_var for multiplex
+            receptacles to pass a Cookie* to ACE_NEW, then
+            assign to the _var, instead of passing in _var.out(),
+            which causes the allocation to fail on some platforms.
+            Thanks to Don Busch <busch_d@ociweb.com> for reporting
+            the problem.
+
 Mon Mar 03 09:37:23 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* DAnCE/examples/Hello/descriptors/Hello.cdp
