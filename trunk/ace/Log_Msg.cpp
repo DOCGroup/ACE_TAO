@@ -26,6 +26,7 @@
 #include "ace/Log_Msg_IPC.h"
 #include "ace/Log_Msg_NT_Event_Log.h"
 #include "ace/Log_Msg_UNIX_Syslog.h"
+#include "ace/Log_Record.h"
 
 ACE_RCSID(ace, Log_Msg, "$Id$")
 
@@ -362,6 +363,14 @@ ACE_Log_Msg::instance (void)
 
   return &log_msg->object ();
 #endif /* ! ACE_MT_SAFE */
+}
+
+// Not inlined to help prevent having to include OS.h just to 
+// get ACE_DEBUG, et al, macros.
+int
+ACE_Log_Msg::last_error_adapter (void)
+{
+  return ACE_OS::last_error ();
 }
 
 // Sets the flag in the default priority mask used to initialize

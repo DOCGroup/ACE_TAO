@@ -12,6 +12,7 @@
 #include "ace/Synch.h"
 #include "ace/Singleton.h"
 #include "ace/streams.h"
+#include "ace/Log_Record.h"
 
 #include "server_loggerd.h"
 

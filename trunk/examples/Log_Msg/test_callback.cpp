@@ -21,6 +21,7 @@
 #include "ace/OS.h"
 #include "ace/Log_Msg.h"
 #include "ace/Log_Msg_Callback.h"
+#include "ace/Log_Record.h"
 
 ACE_RCSID(Log_Msg, test_callback, "$Id$")
 

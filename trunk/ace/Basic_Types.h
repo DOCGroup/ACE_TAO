@@ -69,6 +69,17 @@
 
 # include "ace/ACE_export.h"
 
+// Pick up MAXPATHLEN without need of OS.h.
+#if !defined (MAXPATHLEN)
+#  if defined (ACE_WIN32)
+#    define MAXPATHLEN  _MAX_PATH
+#  elif defined (_POSIX_PATH_MAX)
+#     define MAXPATHLEN _POSIX_PATH_MAX
+#  else
+#     define MAXPATHLEN 1024
+#  endif /* ACE_WIN32 */
+#endif /* MAXPATHLEN */
+
 // A char always has 1 byte, by definition.
 # define ACE_SIZEOF_CHAR 1
 
@@ -601,6 +612,46 @@ typedef ACE_UINT16 ACE_USHORT16;
 #     define ACE_BYTE_ORDER ACE_BIG_ENDIAN
 #   endif
 # endif /* ! BYTE_ORDER && ! __BYTE_ORDER */
+
+
+// These were moved from OS.h.
+#if defined (ACE_HAS_THREADS)
+#  if defined (ACE_HAS_PTHREADS)
+#    if defined (ACE_HAS_TSS_EMULATION)
+       typedef u_long ACE_thread_key_t;
+#    else  /* ! ACE_HAS_TSS_EMULATION */
+       typedef pthread_key_t ACE_thread_key_t;
+#    endif /* ! ACE_HAS_TSS_EMULATION */
+#  elif defined (ACE_HAS_STHREADS)
+     // Solaris threads, without PTHREADS.
+     // Typedefs to help compatibility with Windows NT and Pthreads.
+     typedef thread_t ACE_thread_t;
+     typedef thread_key_t ACE_thread_key_t;
+//     typedef mutex_t ACE_mutex_t;
+#  elif defined (ACE_PSOS)
+#    if defined (ACE_PSOS_HAS_TSS)
+       typedef u_long ACE_thread_key_t;
+#    else
+       typedef u_int ACE_thread_key_t;
+#    endif /* ACE_PSOS_HAS_TSS */
+#  elif defined (VXWORKS)
+     typedef u_int ACE_thread_key_t;
+#  endif
+#else
+   typedef u_int ACE_thread_key_t;
+#endif
+
+#if defined (ACE_WIN32)
+#  if defined (ACE_HAS_TSS_EMULATION)
+//typedef DWORD ACE_OS_thread_key_t;
+     typedef u_int ACE_thread_key_t;
+#  else  /* ! ACE_HAS_TSS_EMULATION */
+     typedef DWORD ACE_thread_key_t;
+#  endif /* ! ACE_HAS_TSS_EMULATION */
+#endif
+
+
+
 
 # if defined (__ACE_INLINE__)
 #   include "ace/Basic_Types.i"
