@@ -1,3 +1,24 @@
+Mon Aug 06 17:17:33 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Service_Config.cpp:
+
+	  Fixed some debugging messages that were not wrapped within an
+	  ACE_LIB_TEXT macro.
+
+	* tests/Service_Config_Test.UTF-16.conf:
+
+	  Interim UTF-16 encoded version of the UTF-8 encoded
+	  Service_Config_Test.conf.  It was generated on a little-endian
+	  host.  Its current purpose is simply to keep our Unicode
+	  regression testing happy until the on-the-fly generation is
+	  implemented.  Once we start generating this file on-the-fly
+	  this file should disappear.
+	
+	* tests/Service_Config_Test.cpp (run_test):
+
+	  When using full Unicode support, use the version of the Service
+	  Configurator file that is UTF-16 encoded (as described above).
+
 Mon Aug 06 11:10:24 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Svc_Conf_l.cpp:

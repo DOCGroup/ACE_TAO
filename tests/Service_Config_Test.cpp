@@ -120,10 +120,29 @@ run_test (int argc, ACE_TCHAR *argv[])
 {
   ACE_ARGV new_argv;
 
+  const ACE_TCHAR svc_conf[] =
+#if defined (ACE_USES_WCHAR) && ACE_USES_WCHAR == 1
+    // When using full Unicode support, use the version of the Service
+    // Configurator file that is UTF-16 encoded.
+    //
+    // @@ Note: Some platforms may want other encoding (e.g. UTF-32).
+    //
+    //          iconv(1) found on Linux and Solaris, for example, can
+    //          be used to convert between encodings.
+    //
+    //          Byte ordering is also an issue, so we should be
+    //          generating this file on-the-fly from the UTF-8 encoded
+    //          file by using functions like iconv(1) or iconv(3).
+    ACE_TEXT ("Service_Config_Test.UTF-16.conf");
+#else
+    // ASCII (UTF-8) encoded Service Configurator file.
+    ACE_TEXT ("Service_Config_Test.conf");
+#endif  /* ACE_USES_WCHAR == 1 */
+
   // Process the Service Configurator directives in this test's
   ACE_ASSERT (new_argv.add (argv) != -1
               && new_argv.add (ACE_TEXT ("-f")) != -1
-              && new_argv.add (ACE_TEXT ("Service_Config_Test.conf")) != -1);
+              && new_argv.add (svc_conf) != -1);
 
   // We need this scope to make sure that the destructor for the
   // <ACE_Service_Config> gets called.
