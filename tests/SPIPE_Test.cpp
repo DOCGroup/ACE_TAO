@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    SPIPE_Test.cpp
 //
@@ -18,7 +18,7 @@
 //
 // = AUTHOR
 //    Prashant Jain
-// 
+//
 // ============================================================================
 
 #include "test_config.h"
@@ -32,6 +32,7 @@
 // pipe name to use
 static const char *PIPE_NAME = "ace_pipe_name";
 
+#if defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32)
 static void *
 client (void *)
 {
@@ -45,7 +46,7 @@ client (void *)
     ACE_ERROR ((LM_ERROR, "%p\n", rendezvous));
 
   for (char *c = ACE_ALPHABET; *c != '\0'; c++)
-    if (cli_stream.send (c, 1) == -1) 
+    if (cli_stream.send (c, 1) == -1)
       ACE_ERROR ((LM_ERROR, "%p\n", "send_n"));
 
   if (cli_stream.close () == -1)
@@ -73,7 +74,7 @@ server (void *)
     ACE_ERROR ((LM_ERROR, "%p\n", "open"));
 
   ACE_DEBUG ((LM_DEBUG, "waiting for connection\n"));
-  
+
   // Accept a client connection
   if (acceptor.accept (new_stream, 0) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "accept"));
@@ -89,6 +90,7 @@ server (void *)
   new_stream.close ();
   return 0;
 }
+#endif /* ACE_HAS_STREAM_PIPES || ACE_WIN32 */
 
 int
 main (int, char *[])
@@ -102,30 +104,27 @@ main (int, char *[])
     case -1:
       ACE_ERROR ((LM_ERROR, "%p\n%a", "fork failed"));
       exit (-1);
-    case 0: 
+    case 0:
       client (0);
     default:
       server (0);
     }
 #elif defined (ACE_HAS_THREADS)
   if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (client),
-					      (void *) 0,
-					      THR_NEW_LWP | THR_DETACHED) == -1)
+                                              (void *) 0,
+                                              THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n%a", "thread create failed"));
 
   if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (server),
-					      (void *) 0,
-					      THR_NEW_LWP | THR_DETACHED) == -1)
+                                              (void *) 0,
+                                              THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n%a", "thread create failed"));
 
   ACE_Thread_Manager::instance ()->wait ();
 #endif /* !ACE_LACKS_EXEC */
 #else
-  ACE_UNUSED_ARG (client);
-  ACE_UNUSED_ARG (server);
-
-  ACE_DEBUG ((LM_DEBUG, 
-	      "SPIPE is not supported on this platform\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "SPIPE is not supported on this platform\n"));
 #endif /* ACE_HAS_STREAM_PIPES || ACE_WIN32 */
   ACE_END_TEST;
   return 0;
