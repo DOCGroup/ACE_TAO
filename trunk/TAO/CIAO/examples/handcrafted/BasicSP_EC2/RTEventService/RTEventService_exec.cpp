@@ -20,15 +20,15 @@ MyImpl::RTEventService_exec_impl::RTEventService_exec_impl ()
   char * argv[1] = { "RTEventService_exec" };
   int argc = sizeof (argv) / sizeof (argv[0]);
   this->orb_ = CORBA::ORB_init (argc, argv ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   // Get a reference to the POA
   CORBA::Object_var poa_object =
   orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
   this->poa_ =
     PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
   if (CORBA::is_nil (this->poa_.in ()))
     ACE_ERROR ((LM_ERROR, "Nil RootPOA\n"));
 
@@ -181,10 +181,10 @@ void MyImpl::RTEventServiceSupplier_impl::disconnect_push_supplier (void)
 {
   CORBA::Object_var poa_object =
     orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
   PortableServer::POA_var root_poa =
     PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
   if (CORBA::is_nil (root_poa.in ()))
     ACE_ERROR ((LM_ERROR, "Nil RootPOA\n"));
   PortableServer::ObjectId_var oid = root_poa->servant_to_id (this);
@@ -221,12 +221,14 @@ void MyImpl::RTEventServiceConsumer_impl::push (const RtecEventComm::EventSet& e
 void MyImpl::RTEventServiceConsumer_impl::disconnect_push_consumer (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_DEBUG ((LM_DEBUG, "MyImpl::RTEventServiceConsumer_impl::disconnect_push_consumer\n"));
+
   CORBA::Object_var poa_object =
     orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
   PortableServer::POA_var root_poa =
     PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
   if (CORBA::is_nil (root_poa.in ()))
     ACE_ERROR ((LM_ERROR, "Nil RootPOA\n"));
   PortableServer::ObjectId_var oid = root_poa->servant_to_id (this);
@@ -245,19 +247,45 @@ CIAO::Object_Reference_Cookie::~Object_Reference_Cookie ()
 
 CIAO::Object_Reference_Cookie::Object_Reference_Cookie (CORBA::Object_ptr obj)
 {
-  
+  CORBA::ORB_var orb = obj->orb_core ()->orb ();
+
+  CORBA::Object_var poa_object =
+  orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  PortableServer::POA_var poa =
+    PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  if (CORBA::is_nil (poa.in ()))
+    ACE_ERROR ((LM_ERROR, "Nil RootPOA\n"));
+
+  PortableServer::ObjectId_var oid = poa->reference_to_id (obj);
+
+  // @@ Bala, is this line necessary?
+  this->cookieValue ().length (oid->length ());
+
+  this->cookieValue (oid.in ());
 }
 
 int
 CIAO::Object_Reference_Cookie::insert (CORBA::Object_ptr obj)
 {
-  // CORBA::ORB_var orb = obj->orb_core ()->orb ();
+  CORBA::ORB_var orb = obj->orb_core ()->orb ();
 
-  // PortableServer::ObjectId_var oid = orb->object_to_id (obj);
+  CORBA::Object_var poa_object =
+  orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  PortableServer::POA_var poa =
+    PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  if (CORBA::is_nil (poa.in ()))
+    ACE_ERROR ((LM_ERROR, "Nil RootPOA\n"));
 
-  // this->cookieValue ().length (oid->length ());
+  PortableServer::ObjectId_var oid = poa->reference_to_id (obj ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-  // this->cookieValue ().get_buffer (0);
+  this->cookieValue ().length (oid->length ());
+
+  this->cookieValue (oid.in ());
 
   return 0;
 }
@@ -266,14 +294,28 @@ int
 CIAO::Object_Reference_Cookie::extract (::Components::Cookie *ck,
                                         CORBA::Object_ptr obj)
 {
-  CIAO::Cookie * c = CIAO::Cookie::_downcast (ck);
+
+  // @@ Bala, this obviously doesn't work. How can I get a reference to the ORB here?
+  CORBA::ORB_var orb = obj->orb_core ()->orb ();
+
+  CORBA::Object_var poa_object =
+  orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  PortableServer::POA_var poa =
+    PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  if (CORBA::is_nil (poa.in ()))
+    ACE_ERROR ((LM_ERROR, "Nil RootPOA\n"));
+
+  CIAO::Cookie *c = CIAO::Cookie::_downcast (ck);
 
   if (c == 0)
     return -1;
 
-  ::CORBA::OctetSeq * x = c->get_cookie ();
+  PortableServer::ObjectId_var oid = c->get_cookie ();
 
-  // obj = CORBA::ORB::string_to_object (x);
+  obj = poa->id_to_reference (oid.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   return 0;
 }
