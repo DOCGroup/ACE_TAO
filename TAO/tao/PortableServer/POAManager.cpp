@@ -7,6 +7,7 @@
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/Interceptor_List.h"
 #include "tao/ORB_Core.h"
+#include "tao/IORInterceptor/IORInterceptor_List.h"
 
 #if !defined (__ACE_INLINE__)
 # include "POAManager.i"
@@ -137,16 +138,21 @@ TAO_POA_Manager::adapter_manager_state_changed (PortableServer::POAManager::Stat
                                                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  PortableInterceptor::AdapterState adapter_state = state;
+
   /// Whenever the POAManager state is changed, the
   /// adapter_manager_state_changed method is to be invoked on all the IOR
   ///  Interceptors.
+  TAO_IORInterceptor_List *interceptor_list =
+    this->object_adapter_.orb_core ().ior_interceptor_list ();
 
-  PortableInterceptor::AdapterState adapter_state = state;
+  if (interceptor_list == 0)
+    return;
 
   TAO_IORInterceptor_List::TYPE &interceptors =
-    this->object_adapter_.orb_core ().ior_interceptors ();
+    interceptor_list->interceptors ();
 
-  size_t interceptor_count = interceptors.size ();
+  const size_t interceptor_count = interceptors.size ();
 
   if (interceptor_count == 0)
     return;

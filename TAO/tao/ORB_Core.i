@@ -611,18 +611,3 @@ TAO_ORB_Core::server_request_interceptors (void)
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-ACE_INLINE void
-TAO_ORB_Core::add_interceptor (
-   PortableInterceptor::IORInterceptor_ptr interceptor
-   ACE_ENV_ARG_DECL)
-{
-  this->ior_interceptors_.add_interceptor (interceptor
-                                            ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE TAO_IORInterceptor_List::TYPE &
-TAO_ORB_Core::ior_interceptors (void)
-{
-  return this->ior_interceptors_.interceptors ();
-}

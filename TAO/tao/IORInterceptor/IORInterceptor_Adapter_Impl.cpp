@@ -12,48 +12,52 @@ TAO_IORInterceptor_Adapter_Impl::~TAO_IORInterceptor_Adapter_Impl (void)
 }
 
 void
-TAO_IORInterceptor_Adapter_Impl::tao_iorinterceptor_release (
-      PortableInterceptor::IORInterceptor_ptr p
-    )
-{
-  CORBA::release (p);
-}
-
-PortableInterceptor::Interceptor_ptr 
-TAO_IORInterceptor_Adapter_Impl::tao_iorinterceptor (
-    TAO_IORInterceptor_List::TYPE & container,
-    size_t index
-  )
-{
-  return container[index];
-}
-
-void 
-TAO_IORInterceptor_Adapter_Impl::tao_add_iorinterceptor (
-    TAO_IORInterceptor_List * list,
-    TAO_IORInterceptor_List::TYPE & container,
-    PortableInterceptor::IORInterceptor_ptr interceptor
+TAO_IORInterceptor_Adapter_Impl::add_interceptor (
+    PortableInterceptor::IORInterceptor_ptr i
     ACE_ENV_ARG_DECL
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  size_t index = list->add_interceptor_helper (interceptor
+  this->ior_interceptor_list_.add_interceptor (i
                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-
-  container[index] =
-    PortableInterceptor::IORInterceptor::_duplicate (interceptor);
 }
 
-void 
-TAO_IORInterceptor_Adapter_Impl::tao_iorinterceptor_destroy (
-    TAO_IORInterceptor_List::TYPE & container,
-    size_t ilen
-    ACE_ENV_ARG_DECL
-  )
+void
+TAO_IORInterceptor_Adapter_Impl::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  container[ilen]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  TAO_IORInterceptor_List::TYPE &inter =
+    this->ior_interceptor_list_.interceptors ();
+
+  size_t len = inter.size ();
+  size_t ilen = len;
+
+  for (size_t k = 0; k < len; ++k)
+    {
+      // Destroy the interceptors in reverse order in case the array
+      // list is only partially destroyed and another invocation
+      // occurs afterwards.
+      --ilen;
+
+      inter[k]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+
+      // Since Interceptor::destroy() can throw an exception, decrease
+      // the size of the interceptor array incrementally since some
+      // interceptors may not have been destroyed yet.  Note that this
+      // size reduction is fast since no memory is actually
+      // deallocated.
+      inter.size (ilen);
+    }
 }
 
+TAO_IORInterceptor_List*
+TAO_IORInterceptor_Adapter_Impl::interceptor_list (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return &this->ior_interceptor_list_;
+}
 // *********************************************************************
 
 // Initialization and registration of dynamic service object.
@@ -65,7 +69,7 @@ TAO_IORInterceptor_Adapter_Impl::Initializer (void)
       "Concrete_IORInterceptor_Adapter"
     );
 
-  return 
+  return
     ACE_Service_Config::process_directive (
         ace_svc_desc_TAO_IORInterceptor_Adapter_Impl
       );
@@ -81,4 +85,3 @@ ACE_STATIC_SVC_DEFINE (
   )
 
 ACE_FACTORY_DEFINE (TAO_IORInterceptor, TAO_IORInterceptor_Adapter_Impl)
-

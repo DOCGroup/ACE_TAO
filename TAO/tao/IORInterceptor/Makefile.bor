@@ -6,6 +6,7 @@ NAME = TAO_IORInterceptor
 
 OBJFILES = \
 	$(OBJDIR)\IORInterceptorC.obj \
+	$(OBJDIR)\IORInterceptor_List.obj \
 	$(OBJDIR)\IORInterceptor_Adapter_Impl.obj
 
 RESOURCE = $(OBJDIR)\TAO_IORInterceptor.res
