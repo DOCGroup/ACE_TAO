@@ -46,7 +46,7 @@ ACE_Timer_Heap::ACE_Timer_Heap (size_t size,
   // Initialize the "freelist," which uses negative values to
   // distinguish freelist elements from "pointers" into the <heap_>
   // array.
-  for (size_t i = 0; i < size; i++)
+  for (int i = 0; i < size; i++)
     this->timer_ids_[i] = -(i + 1);
 
   if (preallocate)
@@ -294,7 +294,7 @@ ACE_Timer_Heap::grow_heap (void)
    this->timer_ids_ = new_timer_ids;
 
    // and add the new elements to the end of the "freelist"
-   for (size_t i = this->max_size_; i < new_size; i++)
+   for (int i = this->max_size_; i < new_size; i++)
      this->timer_ids_[i] = -(i + 1);
 
    // Grow the preallocation array (if using preallocation)
