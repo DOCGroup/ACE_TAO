@@ -1,8 +1,16 @@
+Thu Dec 11 18:13:29 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_NS_netdb.inl: Changed use of naked ::memset() calls to
+	  ACE_OS::memset(). Fixes compile errors on AIX 4.3.
+
+	* ace/OS_NS_stdio.cpp (gets): Added "ACE_STD_NAMESPACE::" prefix to
+	  getchar() call; fixes compile error on AIX 4.3.
+
 Wed Dec 10 18:20:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Message_Queue.h:
           Mark deprecated enums with @deprecated so that they appear on the
-          doxygen deprated page
+          doxygen deprecated page
 
         * ace/Thread.h:
           Moved comment above method instead of between argumens.
