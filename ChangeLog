@@ -1,3 +1,11 @@
+Mon Aug 16 22:53:53 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/SSL/SSL_SOCK_Stream.cpp (~ACE_SSL_SOCK_Stream):
+
+	  Removed useless invalidation of "ssl_" pointer member by
+	  assignment of zero.  Once the destructor is called, the object
+	  no longer exists so invalidation is unnecessary.
+
 Mon Aug 16 16:54:18 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/config/ftorbutils.mpb
