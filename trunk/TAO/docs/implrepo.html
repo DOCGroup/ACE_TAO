@@ -19,7 +19,7 @@
 <h2>Table of Contents</h2>
 
 <ul>
-  <li><a href="#Changes">Changes</a> </li>
+  <li><a href="#Changes">Recent Changes</a> </li>
   <li><a href="#Overview">Overview</a> <ul>
       <li><a href="#PersistentandTransientIORs">Persistent and Transient IORs</a> </li>
       <li><a href="#TheImplementationRepository">The Implementation Repository</a> </li>
@@ -64,7 +64,7 @@
 
 <hr>
 
-<h2><a name="Changes">Changes</a></h2>
+<h2><a name="Changes">Recent Changes</a></h2>
 
 <p>Since 3.02 
 
@@ -77,51 +77,62 @@
 
 <h2><a name="Overview">Overview</a></h2>
 
-<p>This document describes the proposed design of the TAO Implementation Repository, which
-was originally known as the reactivator/activation service. If you have any questions or
-comments on our design, please post them to the <a HREF="ACE-mail.html">ACE</a> mailing
-list &lt;<a HREF="mailto:ace-useres@cs.wustl.edu">ace-users@cs.wustl.edu</a>&gt; or send
-email to Darrell Brunsch &lt;<a HREF="mailto:brunsch@cs.wustl.edu">brunsch@cs.wustl.edu</a>&gt;.</p>
-<!-- DB: ACE-mail.html doesn't exist here, should it point somewhere else? -->
+<p>This document describes the proposed design of the TAO
+Implementation Repository, which was originally known as the
+reactivator/activation service. If you have any questions or comments
+on our design, please post them to the <a
+HREF="http://www.cs.wustl.edu/~schmidt/ACE-mail.html">ACE</a> mailing
+list &lt;<a
+HREF="mailto:ace-useres@cs.wustl.edu">ace-users@cs.wustl.edu</a>&gt;
+or send email to Darrell Brunsch &lt;<a
+HREF="mailto:brunsch@cs.wustl.edu">brunsch@cs.wustl.edu</a>&gt;.</p>
 
 <h3><a name="PersistentandTransientIORs">Persistent and Transient IORs</a></h3>
 
 <p>CORBA defines two types of object references: <a
-HREF="http://www.cs.wustl.edu/~schmidt/C++-report-col12.ps.gz">persistent and transient</a>.
-The difference between the two stems from the lifetime of the reference in relation to the
-lifetime of the server process that created it. The lifetime of a transient object
-reference is limited to the lifetime of its server process. Once the server process exits
-the transient object reference no longer exists. All references to this object should now
-be invalid, even if the server is restarted. In contrast, persistent object references can
-outlive their originating server process. Therefore, the server can exit and be restarted
-without invalidating its persistent object references. This enables the implementation of
-features like automatic server activation and object migration.</p>
+HREF="http://www.cs.wustl.edu/~schmidt/C++-report-col12.ps.gz">persistent
+and transient</a>.  The difference between the two stems from the
+lifetime of the reference in relation to the lifetime of the server
+process that created it. The lifetime of a transient object reference
+is limited to the lifetime of its server process. Once the server
+process exits the transient object reference no longer exists. All
+references to this object should now be invalid, even if the server is
+restarted. In contrast, persistent object references can outlive their
+originating server process. Therefore, the server can exit and be
+restarted without invalidating its persistent object references. This
+enables the implementation of features like automatic server
+activation and object migration.</p>
 
-<p>Note that both persistent and transient object references can refer to objects that
-reside in <em>manually activated</em> servers, <em>i.e.</em>, the so-called ``persistent
-servers.'' A persistent server is a server that is launched manually, <em>i.e.</em>, it is
-always running. A persistent server can generate transient references and/or persistent
-references. </p>
+<p>Note that both persistent and transient object references can refer
+to objects that reside in <em>manually activated</em> servers,
+<em>i.e.</em>, the so-called ``persistent servers.'' A persistent
+server is a server that is launched manually, <em>i.e.</em>, it is
+always running. A persistent server can generate transient references
+and/or persistent references. </p>
 
-<p>Developers should be aware that persistence of the object reference does not imply any
-persistence on the object implementation state. It is certainly possible to provide
-persistent object references for objects whose state is not persistent. Therefore, servant
-implementors are responsible for preserving the state of their servants, <em>e.g.</em>,
-using a database or file. </p>
+<p>Developers should be aware that persistence of the object reference
+does not imply any persistence on the object implementation state. It
+is certainly possible to provide persistent object references for
+objects whose state is not persistent. Therefore, servant implementors
+are responsible for preserving the state of their servants,
+<em>e.g.</em>, using a database or file. </p>
 
 <h3><a name="TheImplementationRepository">The Implementation Repository</a></h3>
 
-<p>According to the CORBA specification, &quot;The Implementation Repository contains
-information that allows the ORB to locate and activate implementations of objects&quot;
-[CORBA Spec Rev. 2.2: 2.1.14] In earlier revisions of the specification, there was a
-method <code>get_implementation</code> in the CORBA Object interface. This has been
-deprecated as of the CORBA 2.2 specification, leaving both the interface and
-implementation of the Implementation Repository to the ORB vendor.</p>
+<p>According to the CORBA specification, &quot;The Implementation
+Repository contains information that allows the ORB to locate and
+activate implementations of objects&quot; [CORBA Spec Rev. 2.2:
+2.1.14] In earlier revisions of the specification, there was a method
+<code>get_implementation</code> in the CORBA Object interface. This
+has been deprecated as of the CORBA 2.2 specification, leaving both
+the interface and implementation of the Implementation Repository to
+the ORB vendor.</p>
 
-<p>A good paper describing the functionality of the CORBA Implementation Repository is
-&quot;<a href="http://www.cs.wustl.edu/~schmidt/michi.pdf">Binding, Migration, and
-Scalability in CORBA</a>&quot; [Henning]. This paper describes the following three
-functions of the Implementation Repository: 
+<p>A good paper describing the functionality of the CORBA
+Implementation Repository is &quot;<a
+href="http://www.cs.wustl.edu/~schmidt/michi.pdf">Binding, Migration,
+and Scalability in CORBA</a>&quot; [Henning]. This paper describes the
+following three functions of the Implementation Repository:
 
 <ol>
   <li>Maintain a registry of known servers.</li>
@@ -129,8 +140,9 @@ functions of the Implementation Repository:
   <li>Starts servers on demand if they are registered with the Implementation Repository.</li>
 </ol>
 
-<p>The TAO Implementation Repository is based on the design in this paper. The next
-section details our goals and plans for the implementation.</p>
+<p>The TAO Implementation Repository is based on the design in this
+paper. The next section details our goals and plans for the
+implementation.</p>
 
 <hr>
 
@@ -149,43 +161,25 @@ section details our goals and plans for the implementation.</p>
     IIOP messages and multiple profiles in IORs, even if the client is not implemented using
     TAO.</li>
   <li>TAO's Implementation Repository will know if one of the servers registered with it is
-    running by the use of a &quot;ping&quot; like mechanism in the server. This allows the
+    running by the use of a &quot;ping&quot;-like service in the
+      server. This service allows the
     Implementation Repository to know when it should restart the server.</li>
-<!-- DCS: Darrell, can you please elaborate on this a bit?  -->
-<!-- DB: Rephrased this bullet and also added a section about the -->
-<!-- DB: ping object and the results of a quick discussion with -->
-<!-- DB: Carlos about this stuff. -->
-<!-- DB: BTW, you don't have to say "Darrell," every time since I'm -->
-<!-- DB: pretty much the default editor of the paper.  ;-)  -->
   <li>TAO will be fork-safe. Since there will be an open connection to the client while the
     server is restarted (via fork or CreateProcess) then care will be needed to make sure that
-    the open sockets will be closed in the client process. This will remove a resource leak. </li>
-<!-- COR: Maybe I didn't explain myself properly when we discussed -->
-<!-- COR: this, I would expect that after fork all connections are -->
-<!-- COR: closed on the server, otherwise we will end up leaking -->
-<!-- COR: resources (file descriptors or handles) -->
-<!-- DB: Then I'm not sure how are we supposed to return a LOCATION -->
-<!-- DB: FORWARD if we have to close the connection? -->
-<!-- DCS: Darrell, I think it's ok to close the connection, as long as -->
-<!-- DCS: we set up the right port number for the child process to listen -->
-<!-- DCS: at, right?  Can you please clarify this a bit more in the text, BTW? -->
-<!-- DB: Okay, I figured out what was going on and rewrote the bullet -->
+    the open sockets will be closed in the client process. This will remove a resource leak. 
+    <!-- Darrell, do you think that the new CLOEXEC feature of TAO -->
+    <!-- will handle this automagically?! -->
+</li>
+
   <li>TAO will exploit features of IIOP 1.1 to safely and efficiently verify if an IOR was
     generated by TAO itself on the client side. The server will still determine this through
     the object key, since that is all that is passed in a request.</li>
-  <li>TAO will support multiple profiles in IORSs. A profile contains the host/port and object
+  <li>TAO will support multiple profiles in IORs. A profile contains the host/port and object
     key of a CORBA Object. An optimization that will be possible is to have a last known
-    profile of the object as the first profile and an Implementation Repository as the seconf
+    profile of the object as the first profile and an Implementation Repository as the second
     profile in an IOR. The client will first try the object to see if it still active at the
-    host/port before it contacts the Implementation Repository. </li>
-<!-- DCS: Darrell, can you please clarify this just a bit, i.e., explain -->
-<!-- DCS: what it means to support multiple profiles? -->
-<!-- DB: Rephrased the above bullet. -->
-</ul>
-<!-- DCS: Darrell, can you please clarify what the motivation is for the -->
-<!-- DCS: Implementation Repository? -->
-<!-- DB: How should this motivation different than the motivation in the -->
-<!-- DB: Overview sections? Or is it just a summary of it?  -->
+    host/port before it contacts the Implementation Repository.  This
+    strategy will reduce latency. </li>
 
 <h3><a name="VirtualServers">Virtual Servers</a></h3>
 
@@ -202,15 +196,12 @@ An executable may have one or more virtual servers on it. This allows one virtua
 to be moved off the executable to another executable (for instance, onto another machine)
 without affecting the objects in other virtual servers on the original executable. </p>
 
-<p>Each virtual server will be indexed in the Implementation Repository by a name that is
-given to it by the user. It is also the users responsibility to make sure that each
-virtual server name is unique. By default this name is the name of the executable (since
-by default there is only one virtual server per executable) but this behavior can be
-overridden. </p>
-<!-- DCS: Darrell, can you please define what a "virtual server name" is briefly? -->
-<!-- DCS: Darrell, can you please elaborate on this a bit?  It's not clear -->
-<!-- DCS: why a virtual server enables migration! -->
-<!-- DB: Rewrote the above. -->
+<p>Each virtual server will be indexed in the Implementation
+Repository by a name that is given to it by the user. It is also the
+users responsibility to make sure that each virtual server name is
+unique. By default, this name is the name of the executable (since by
+default there is only one virtual server per executable).  However,
+this default behavior can be overridden. </p>
 
 <h3><a name="PingObject">Ping Object</a></h3>
 
@@ -232,9 +223,6 @@ server is unresponsive or not.</p>
 <h3><a name="NewIORs">New IORs</a></h3>
 
 <p>Standard CORBA IORs contain the following two sections:</p>
-<!-- DCS: Darrell, can you please briefly explain what a "Type ID" and a -->
-<!-- DCS: "Sequence of Tagged Profiles" are? -->
-<!-- DB: Done below -->
 
 <table border="1">
   <tr>
@@ -243,11 +231,12 @@ server is unresponsive or not.</p>
   </tr>
 </table>
 
-<p>The Type ID is an indicator for the most derived type known at the time of the
-reference creation. It is used as a hint for the client in determining what interfaces the
-object can support. The Sequence of Tagged Profiles consist of one or more profiles that
-encapsulate information used by the associated protocol in order to communicate with the
-object (host, port, object id, etc.).</p>
+<p>The Type ID is an indicator for the most derived type known at the
+time of the reference creation. It is used as a hint for the client in
+determining what interfaces the object can support. The Sequence of
+Tagged Profiles consist of one or more profiles that encapsulate
+information used by the associated protocol in order to communicate
+with the object (host, port, object id, etc.).</p>
 
 <p>Currently, TAO uses only one IIOP 1.0 Tagged Profile, which is defined as follows:</p>
 
@@ -350,22 +339,19 @@ so the Implementation Repository knows which server to launch.</p>
 <h4><a name="WhydoesImplRepocontainanOBJKey">Why does the Implementation Repository
 profile contain an Object Key?</a></h4>
 
-<p>It needs to know what the object key of the object when forwarding is used. A server
-may contain more than one object, so the object key is needed to forward to the correct
-object on the server. </p>
-<!-- DCS: Darrell, "more than one" what?! -->
-<!-- DB: Added.-->
+<p>It needs to know what the object key of the object when forwarding
+is used. A server may contain more than one object, so the object key
+is needed to forward to the correct object on the server. </p>
 
 <h3><a name="POAExtensions">POA Extensions</a></h3>
 
-<p>TAO's POA will contain a new TAO-specific method called <code>create_reference_with_virtual_server[_and_id]
-(...)</code>. This method takes additional arguments for a virtual server name and a
-sequence of Implementation Repository IORs. The POA will register the virtual server name
-with each of the Implementation Repositories in the sequence passed in. Several
-Implementation Repositories may be specified for redundancy. </p>
-<!-- DCS: Darrell, I'm not sure what you mean by "each Implementation -->
-<!-- DCS: Repository?"  Are there more than one?  Can you please clarify this?-->
-<!-- DB: Added more info on multiple IRs -->
+<p>TAO's POA will contain a new TAO-specific method called
+<code>create_reference_with_virtual_server[_and_id] (...)</code>. This
+method takes additional arguments for a virtual server name and a
+sequence of Implementation Repository IORs. The POA will register the
+virtual server name with each of the Implementation Repositories in
+the sequence passed in. Several Implementation Repositories can be
+specified to enhance availability through redundancy. </p>
 
 <h3><a name="PossibleFutureGoals">Possible Future Goals</a></h3>
 
@@ -390,15 +376,15 @@ Repository:
 storage. Databases are a good example of this, where the server can be stopped and
 restarted with all the information remaining on disk. </p>
 
-<p>The server must also make sure it creates the POA and Object in a way that does not
-change the POA ID and Object ID. The Implementation Repository forwards requests based on
-the information in the IOR; if the POA ID or Object ID changes, then the Implementation
-Repository will be unable to sucessfully forward requests. If the server implements
-dynamic servants with POA activation, then this is not an issue.</p>
-<!-- DCS: Darrell, can you please elaborate briefly on how these -->
-<!-- DCS: restrictions actually affect the way that a TAO server is -->
-<!-- DCS: written? -->
-<!-- DB: I rewrote this in a way that seems a bit clearer to me. -->
+<p>The server must also make sure it creates the POA and Object in a
+way that does not change the POA ID and Object ID. The Implementation
+Repository forwards requests based on the information in the IOR; if
+the POA ID or Object ID changes, then the Implementation Repository
+will be unable to sucessfully forward requests. If the server
+implements dynamic servants with POA activation, then this is not an
+issue.</p>
+<!-- Darrell, can you please explain why this isn't an issue, -->
+<!-- briefly?! -->
 
 <h3><a name="PreliminaryInterface">Preliminary Interface</a></h3>
 
@@ -467,6 +453,8 @@ dynamic servants with POA activation, then this is not an issue.</p>
 <!-- DCS: Darrell, can you please explain how this ping() will work, i.e., -->
 <!-- DCS: will it throw an exception if the server isn't live? -->
 <!-- DB: Ok.  But do oneways also return exceptions? -->
+<!-- Darrell, no!  Maybe we shouldn't make this a oneway, but make it -->
+<!-- a twoway with a return value or out parameter? -->
   };
 
   interface Implementation_Repository
@@ -553,38 +541,27 @@ might be running) to try first, and then only if that fails does the client cont
 Implementation Repository. This is an optimization for case where the server does not shut
 down often, and most requests do not need to be forwarded to a new address.</p>
 
-<p>In cases where most requests will require a forward, TAO can support a policy that is
-just like this alternative, where the Implmentation Repository will be contacted first.</p>
-<!-- DCS: Darrell, I don't see how we can get away from doing this as a -->
-<!-- DCS: bootstrapping technique.  Can you please explain where in the -->
-<!-- DCS: document we discuss how to avoid this initial indirection? -->
-<!-- DB: Does the above clear this up, or are you asking for something more -->
-<!-- DB: about how the helper application registers the virtual server name -->
-<!-- DB: or how the server finds out about the IR when it starts up (or is -->
-<!-- DB: restarted). -->
+<p>In cases where most requests will require a forward, TAO can
+support a policy that is just like this alternative, where the
+Implmentation Repository will be contacted first.</p>
 
 <hr>
 
 <h2><a name="AccessingtheImplementationRepository">Accessing the Implementation Repository</a>
 </h2>
 
-<p>The Implementation Repository will be transparent to the clients and the servers.
-Clients will only deal with IIOP 1.1 IORs, and in the default case all the Implementation
-Repository logic on the server side will be handled internally by the ORB and the POA. </p>
-<!-- DCS: Darrell, that's not entirely correct since the server program -->
-<!-- DCS: must register its virtual server name, right? -->
-<!-- DB: Addressed above (default case it is transparent for servers) -->
+<p>The Implementation Repository will be transparent to the clients
+and the servers.  Clients will only deal with IIOP 1.1 IORs, and in
+the default case all the Implementation Repository logic on the server
+side will be handled internally by the ORB and the POA. </p>
 
 <h3><a name="HelperApplication">Helper Application</a></h3>
 
-<p>A helper application will be included with the Implementation Repository. It will be a
-command-line utility that will assist users with adding and removing server records
-(containing virtual server names and executable name/options) from the Implementation
+<p>A helper application will be included with the Implementation
+Repository. It will be a command-line utility that will assist users
+with adding and removing server records (containing virtual server
+names and executable name/options) from the Implementation
 Repository. </p>
-<!-- DCS: Darrell, I recommend that you take a look at how VisiBroker and -->
-<!-- DCS: Orbix do this and write a short explanation of the command-line -->
-<!-- DCS: utilities you propose to use! -->
-<!-- DB: @@ Looking at them right now. -->
 
 <h3><a name="LocatinganinstanceofImplRepo">Locating an Instance of the Implementation
 Repository </a></h3>
@@ -606,11 +583,8 @@ multicast group) the server name of the Persistent Object the client is interest
 default multicast group and default port of the Implementation Repository can be
 overridden through command line options or environment variables. </p>
 
-<p>In most cases, one Implementation Repository will be enough. For redundancy several
-Implementation Repositories can be specified.</p>
-<!-- DCS: Darrell, please make sure you explain why a client might need -->
-<!-- DCS: multiple Implementation Repositories. -->
-<!-- DB: Added it above. -->
+<p>In most cases, one Implementation Repository will be enough. For
+redundancy, several Implementation Repositories can be specified.</p>
 
 <hr>
 
@@ -632,10 +606,6 @@ Repository must be specified on the command line or in an environment variable.
     environmental variables, and then through multicast (in that order). Once it finds one it
     registers itself and passes the ping object to the implementation repository with <code>server_is_running</code>
     operation. </li>
-<!-- DCS: Darrell, can you clarify if this a standard OMG CORBA operation -->
-<!-- DCS: or a TAO extension? -->
-<!-- DB: I'm guessing you are referring to the communication between the -->
-<!-- DB: server and IR.  If so, done above.-->
   <li>The profile returned by registration will be stored for later use.</li>
   <li>Client later can call the <code>POA::create_reference</code> operation.</li>
   <li>The <code>create_reference</code> operation will create the local profile.</li>
@@ -647,12 +617,9 @@ Repository must be specified on the command line or in an environment variable.
 <h3><a name="HowServerProducesPersistentIORcomplex">How a server produces a Persistent IOR
 (in complex cases)</a></h3>
 
-<p>As with the default case, the server must be registered with an Implementation
-Repository, although it does not need to be multicast aware since the IORs will be passed
-to the POA by the program. </p>
-<!-- DCS: Darrell, can you please clarify why it need not be multicast -->
-<!-- DCS: aware? -->
-<!-- DB: done. -->
+<p>As with the default case, the server must be registered with an
+Implementation Repository, although it does not need to be multicast
+aware since the IORs will be passed to the POA by the program. </p>
 
 <ol>
   <li><code>ORB_init</code> is called and does the default work (if it has Implementation
