@@ -93,7 +93,7 @@ ACE_Get_Opt::operator () (void)
       if (this->optind >= this->argc_ 
 	  || *(this->nextchar_ = this->argv_[this->optind]) != '-') 
 	{
-	  this->nextchar_ = ASYS_TEXT ("");
+	  this->nextchar_ = ACE_const_cast (char *, ASYS_TEXT (""));
 	  return EOF;
 	}
 
@@ -102,7 +102,7 @@ ACE_Get_Opt::operator () (void)
 	{	
 	  // Found "--".
 	  ++this->optind;
-	  this->nextchar_ = ASYS_TEXT ("");
+	  this->nextchar_ = ACE_const_cast (char *, ASYS_TEXT (""));
 	  return EOF;
 	}
     }			
@@ -142,7 +142,7 @@ ACE_Get_Opt::operator () (void)
       else if (this->argc_ <= ++this->optind) 
 	{ 
 	  // No arg.
-	  this->nextchar_ = ASYS_TEXT ("");
+	  this->nextchar_ = ACE_const_cast (char *, ASYS_TEXT (""));
 
 	  if (*this->optstring_ == ':')
 	    return ':';
@@ -155,7 +155,7 @@ ACE_Get_Opt::operator () (void)
       else // White space.
 	this->optarg = this->argv_[this->optind];
 
-      this->nextchar_ = ASYS_TEXT ("");
+      this->nextchar_ = ACE_const_cast (char *, ASYS_TEXT (""));
       ++this->optind;
     }
 
