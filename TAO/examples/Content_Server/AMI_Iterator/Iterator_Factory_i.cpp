@@ -6,7 +6,7 @@
 #include "Content_Iterator_i.h"
 #include "Iterator_Factory_i.h"
 
-ACE_RCSID(Content_Server, Iterator_Factory_i, "$Id$")
+ACE_RCSID(AMI_Iterator, Iterator_Factory_i, "$Id$")
 
 void
 Iterator_Factory_i::get_iterator (const char * pathname,
@@ -18,34 +18,33 @@ Iterator_Factory_i::get_iterator (const char * pathname,
   // Based on code available in H&V.
 
   ACE_DEBUG ((LM_DEBUG,
-              "Received request for file: <%s> ",
+              "Received request for file: <%s>\n",
               pathname));
 
-  ACE_HANDLE handle = ACE_OS::open (pathname, O_RDONLY);
-
-  if (handle == ACE_INVALID_HANDLE)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "...FAILED\n"));
-
-      ACE_THROW (Web_Server::Error_Result (404));
-      // HTTP 1.1 "Not Found"
-    }
-
   struct stat file_status;
-  if (ACE_OS::fstat (handle, &file_status) == -1)
+  if (ACE_OS::stat (pathname, &file_status) == -1)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "...FAILED\n"));
-
-      ACE_OS::close (handle);
-
       ACE_THROW (Web_Server::Error_Result (500));
       // HTTP 1.1 "Internal Server Error"
     }
 
   Content_Iterator_i * iterator_servant =
-    new Content_Iterator_i (handle, file_status.st_size);
+    new Content_Iterator_i (pathname, file_status.st_size);
+
+  if (iterator_servant->init () != 0)
+    {
+      if (errno == EACCES)
+        {
+          ACE_THROW (Web_Server::Error_Result (403));
+          // HTTP 1.1 "Forbidden"
+        }
+      else
+        {
+          ACE_THROW (Web_Server::Error_Result (500));
+          // HTTP 1.1 "Internal Server Error"
+        }
+    }
+
 
   // Activate the Content_Iterator object.
   Web_Server::Content_Iterator_var iterator =
@@ -57,11 +56,6 @@ Iterator_Factory_i::get_iterator (const char * pathname,
   if (this->modification_date (&file_status,
                                metadata) != 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "...FAILED\n"));
- 
-      ACE_OS::close (handle);
-
       ACE_THROW (Web_Server::Error_Result (500));
       // HTTP 1.1 "Internal Server Error
     }
@@ -69,17 +63,9 @@ Iterator_Factory_i::get_iterator (const char * pathname,
   if (this->content_type (pathname,
                           metadata) != 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "...FAILED\n"));
-
-      ACE_OS::close (handle);
-
       ACE_THROW (Web_Server::Error_Result (500));
       // HTTP 1.1 "Internal Server Error
     }
-
-  ACE_DEBUG ((LM_DEBUG,
-              "...STARTED\n"));
 
   contents = iterator._retn (); // Make a copy
 }
@@ -192,4 +178,3 @@ Iterator_Factory_i::content_type (const char * filename,
 
   return 0;
 }
-

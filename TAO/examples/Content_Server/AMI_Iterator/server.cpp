@@ -8,6 +8,8 @@
 
 #include "Iterator_Factory_i.h"
 
+ACE_RCSID(AMI_Iterator, server, "$Id$")
+
 int
 main (int argc, char *argv[])
 {
@@ -17,8 +19,8 @@ main (int argc, char *argv[])
       // Initialize the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            "Ossama's Mighty ORB",
-                                            ACE_TRY_ENV); 
+                                            "Mighty ORB",
+                                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Get the Root POA.
@@ -39,7 +41,8 @@ main (int argc, char *argv[])
       // Create the Iterator_Factory servant and object.
       // It activates and deactivates the Content_Iterator object.
       Iterator_Factory_i factory_servant;
-	  Web_Server::Iterator_Factory_var factory = factory_servant._this (ACE_TRY_ENV);
+      Web_Server::Iterator_Factory_var factory =
+        factory_servant._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Get a reference to the Name Service.
