@@ -1,3 +1,16 @@
+Thu Jun 10 13:53:09 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/Simple/Simple_util.cpp: Fixed improper use of return
+	  values from the ORB Manager.  Since the ORB Manager duplicates
+	  the data members before returning them, we must store them in
+	  vars.
+
+	* examples/Simple/chat/Client_i.cpp (run): Changed the use of ORB
+	  to ORB Manager to simplify the activatation of the POA Manager.
+	  The POA Manager must be activated before incoming calls can
+	  reach the servants registered with the POAs that the POA Manager
+	  manages.
+
 Thu Jun 10 13:18:31 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Request.h: Inline functions must be included *before*
