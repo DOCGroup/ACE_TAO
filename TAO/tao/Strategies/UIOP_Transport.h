@@ -74,11 +74,6 @@ public:
   virtual int idle (void);
 
   /// Write the complete Message_Block chain to the connection.
-  virtual ssize_t send (TAO_Stub *stub,
-                        int two_way,
-                        const ACE_Message_Block *mblk,
-                        const ACE_Time_Value *s = 0);
-
   virtual ssize_t send (const ACE_Message_Block *mblk,
                         const ACE_Time_Value *s = 0,
                         size_t *bytes_transferred = 0);
