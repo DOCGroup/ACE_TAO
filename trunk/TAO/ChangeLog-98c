@@ -1,76 +1,81 @@
+Tue Sep 01 21:45:05 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/EC_Multiple: added VBIN so that the executable
+          will be built when only shared libs are built.
+
 Tue Sep  1 19:57:46 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* tests/Simple/Time/Time.dsw:
-	* tests/Simple/Time/client.dsp:
-	* tests/Simple/Time/client_static.dsp:
-	* tests/Simple/Time/server.dsp:
-	* tests/Simple/Time/server_static.dsp:
-	* tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.dsw:
-	* tests/Cubit/TAO/IDL_Cubit/client.dsp:
-	* tests/Cubit/TAO/IDL_Cubit/server.dsp:
-	* tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp:
-	  Updated for MSVC 6.
+        * tests/Simple/Time/Time.dsw:
+        * tests/Simple/Time/client.dsp:
+        * tests/Simple/Time/client_static.dsp:
+        * tests/Simple/Time/server.dsp:
+        * tests/Simple/Time/server_static.dsp:
+        * tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.dsw:
+        * tests/Cubit/TAO/IDL_Cubit/client.dsp:
+        * tests/Cubit/TAO/IDL_Cubit/server.dsp:
+        * tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp:
+          Updated for MSVC 6.
 
-	* tests/Cubit/TAO/IDL_Cubit/run_test.pl:
-	  Fixed a problem on NT with ACE_ROOT and updated it to use all
-	  the stuff I learned about Perl since the last time I was here.
+        * tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+          Fixed a problem on NT with ACE_ROOT and updated it to use all
+          the stuff I learned about Perl since the last time I was here.
 
 Tue Sep 01 19:28:28 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/POA/Generic_Servant/client.cpp and
- 	  tests/POA/TIE/client.cpp (main): Fixed incorrect test condition.
+        * tests/POA/Generic_Servant/client.cpp and
+          tests/POA/TIE/client.cpp (main): Fixed incorrect test condition.
 
 Tue Sep  1 19:06:44 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* TAO_IDL/util/utl_global.cpp : Fixed "strdup + delete"
-	bug!!! Replaced the strdup's with ACE_OS::strnew. Thanks to Darrell
-	for pointing this out. 
+        * TAO_IDL/util/utl_global.cpp : Fixed "strdup + delete"
+        bug!!! Replaced the strdup's with ACE_OS::strnew. Thanks to Darrell
+        for pointing this out.
 
 Tue Sep  1 16:29:30 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Exception.h: 
-	* tao/Exception.cpp: 
-	  CORBA_SystemException shoul be a concrete class.  Thanks to Tom
-	  Dobridge <dobridge@persimmon.com> for pointing this out.
+        * tao/Exception.h:
+        * tao/Exception.cpp:
+          CORBA_SystemException shoul be a concrete class.  Thanks to Tom
+          Dobridge <dobridge@persimmon.com> for pointing this out.
 
-	* tao/default_server.h: 
-	* tao/default_server.cpp: 
-	  Added new default creation strategy for Server side connection
-	  handlers. This reduces the number of calls to
-	  ORB_Core_instance() a notch.
+        * tao/default_server.h:
+        * tao/default_server.cpp:
+          Added new default creation strategy for Server side connection
+          handlers. This reduces the number of calls to
+          ORB_Core_instance() a notch.
 
-	* tao/Makefile: 
-	  Updated dependencies.
+        * tao/Makefile:
+          Updated dependencies.
 
 Tue Sep  1 09:37:01 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* utils/catior/catior.cpp (main): Fixed a minor printing bug
-	  -- a loop wasn't breaking out when '\n' or EOF was reached...
-	
-	* utils/catior: Added several new tests for Jeff Hopper's catior
- 	  program, as well as a new version of his program.  Thanks Jeff.
+        * utils/catior/catior.cpp (main): Fixed a minor printing bug
+          -- a loop wasn't breaking out when '\n' or EOF was reached...
+
+        * utils/catior: Added several new tests for Jeff Hopper's catior
+          program, as well as a new version of his program.  Thanks Jeff.
 
 Mon Aug 31 18:08:10 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* TAO-INSTALL.html: Now mentions the perl scripts (run_test.pl)
-	  that we use, and the versions of perl that we work with.
+        * TAO-INSTALL.html: Now mentions the perl scripts (run_test.pl)
+          that we use, and the versions of perl that we work with.
 
 Mon Aug 31 13:44:27 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/Naming_Service/Naming_Service.cpp (main): Renamed the
- 	  class TAO_Naming_Service to be more specific...
+        * orbsvcs/Naming_Service/Naming_Service.cpp (main): Renamed the
+          class TAO_Naming_Service to be more specific...
 
 Mon Aug 31 15:22:42 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* TAOACE.dsw:
-	* TAOACE_Static.dsw:
-	* tao/TAO.dsw:
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp:
-	* TAO_IDL/tao_idl.dsw:
-	* TAO_IDL/tao_idl.dsp:
-	* TAO_IDL/tao_idl_static.dsp:
-	  Updated for MSVC 6.
+        * TAOACE.dsw:
+        * TAOACE_Static.dsw:
+        * tao/TAO.dsw:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+        * TAO_IDL/tao_idl.dsw:
+        * TAO_IDL/tao_idl.dsp:
+        * TAO_IDL/tao_idl_static.dsp:
+          Updated for MSVC 6.
 
 Mon Aug 31 07:50:23 1998  David L. Levine  <levine@cs.wustl.edu>
 
