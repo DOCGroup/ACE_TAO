@@ -1,3 +1,18 @@
+This directory contains two examples: <imore> and <process>.  They
+show how you can play with various features of ACE_Process to create
+new processes.
+
+imore:
+-----
+This example shows how to redirect the output of one process (in our
+case, the parent process) to another process (child process.)  This is
+very similiar what a UNIX shell does when we "pipe" command together.
+You can select whether you want to use named pipes or a unnamed pipe.
+
+
+process:
+--------
+
 This example shows how to use ACE_Process to "portably" create new
 processes.  The ACE_Process_Options class allows applications to
 portably specify path, command-line arguments, environment variable
