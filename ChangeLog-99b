@@ -1,4 +1,8 @@
-Mon Aug 02 16:07:43 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Mon Aug 02 16:48:41 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Malloc.h (ACE_Malloc_Header): Added a dummy member function
+	  to prevent egcs from complaining "all member functions are
+	  private."
 
 	* ace/Based_Pointer_Repository.cpp:  Fixed the use of map
 	  iterators.
