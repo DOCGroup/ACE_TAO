@@ -257,13 +257,13 @@ ACE_Object_Manager::at_exit_i (void *object,
 class ACE_Export ACE_Object_Manager_Destroyer
   // = TITLE
   //    Ensure that the <ACE_Object_Manager> gets initialized before any
-  //    application threads have been spawned.  
+  //    application threads have been spawned, and destroyed at program
+  //    termination.
   //
   // = DESCRIPTION
-  //    The <ACE_Object_Manager_Destroyer> class is placed in this
-  //    file, rather than Object_Manager.cpp, to be sure that the
-  //    static Object_Manager gets linked into applications that
-  //    statically link libACE.a.
+  //    Without ACE_HAS_NONSTATIC_OBJECT_MANAGER, a static instance of this
+  //    class is created.  Therefore, it gets created before main ()
+  //    is called.  And it gets destroyed after main () returns.
 {
 public:
   ACE_Object_Manager_Destroyer (void);
