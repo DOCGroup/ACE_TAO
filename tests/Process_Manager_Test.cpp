@@ -38,14 +38,22 @@ USELIB("..\ace\aced.lib");
 
 #if !defined (ACE_LACKS_FORK) && defined (ACE_HAS_THREADS)
 
-static bool debug_test = false;
+static u_int debug_test = 0;
 
-class Exit_Handler : public ACE_Event_Handler 
+class Exit_Handler : public ACE_Event_Handler
 {
 public:
   Exit_Handler (const char *msg): msg_ (msg) { }
 
-  virtual int handle_exit (ACE_Process *proc) 
+  virtual ~Exit_Handler (void) { }
+
+  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask)
+  {
+    delete this;
+    return 0;
+  }
+
+  virtual int handle_exit (ACE_Process *proc)
   {
     if (debug_test)
       ACE_DEBUG ((LM_DEBUG,
@@ -95,21 +103,21 @@ main (int argc, ASYS_TCHAR *argv[])
   ACE_Get_Opt args (argc, argv, "d");
 
   for (int arg = args (); arg != EOF; arg = args ())
-    switch (arg) 
+    switch (arg)
       {
       case 'd':
-        debug_test = true;
+        debug_test = 1u;
         break;
       default:
         usage (argv[0]);
         break;
       }
 
-  if (args.optind == argc - 1) 
+  if (args.optind == argc - 1)
     {     // child process: sleep & exit
       int secs = atoi (argv[args.optind]);
       ACE_OS::sleep (secs ? secs : 1);
-      if (debug_test) 
+      if (debug_test)
         ACE_DEBUG ((LM_DEBUG,
                     ASYS_TEXT ("(%P|%t) about to exit with code %d\n"),
                     secs));
@@ -119,14 +127,18 @@ main (int argc, ASYS_TCHAR *argv[])
   if (args.optind != argc)      // incorrect usage
     usage (argv[0]);
 
+  ACE_START_TEST (ASYS_TEXT ("Process_Manager_Test"));
+
   // Try the explicit <ACE_Process_Manager::wait> functions
 
+  int result = 0;
   ACE_Process_Manager mgr;
 
   mgr.register_handler (new Exit_Handler ("default"));
-  
+
   ACE_exitcode exitcode;
 
+  // --------------------------------------------------
   // wait for a specific PID
   pid_t child1 = spawn_child (argv[0],
                               mgr,
@@ -134,12 +146,16 @@ main (int argc, ASYS_TCHAR *argv[])
   pid_t result1 = mgr.wait (child1,
                             &exitcode);
 
+  ACE_ASSERT (result1 == child1);
+  // ACE_ASSERT (exitcode == 1);
+
   if (debug_test)
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT ("(%P|%t) waited for child %d: %d\n"),
                 child1,
                 exitcode));
 
+  // --------------------------------------------------
   // wait for a specific PID; another should finish first
   pid_t child2 = spawn_child (argv[0],
                               mgr,
@@ -149,6 +165,9 @@ main (int argc, ASYS_TCHAR *argv[])
                               4);
   pid_t result2 = mgr.wait (child3,
                             &exitcode);
+
+  ACE_ASSERT (result2 == child3);
+  // ACE_ASSERT (exitcode == 4);
 
   if (debug_test)
     ACE_DEBUG ((LM_DEBUG,
@@ -161,11 +180,15 @@ main (int argc, ASYS_TCHAR *argv[])
   pid_t result3 = mgr.wait (0,
                             &exitcode);
 
+  ACE_ASSERT (result3 == child2);
+  // ACE_ASSERT (exitcode == 1);
+
   if (debug_test)
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT ("(%P|%t) waited for any child: %d\n"),
                 exitcode));
 
+  // --------------------------------------------------
   // Try the timed wait functions
 
   // This one shouldn't timeout:
@@ -175,6 +198,9 @@ main (int argc, ASYS_TCHAR *argv[])
   pid_t result4 = mgr.wait (0,
                             ACE_Time_Value (4),
                             &exitcode);
+
+  ACE_ASSERT (result4 == child4);
+  // ACE_ASSERT (exitcode == 1);
 
   if (debug_test)
     ACE_DEBUG ((LM_DEBUG,
@@ -188,7 +214,10 @@ main (int argc, ASYS_TCHAR *argv[])
   pid_t result5 = mgr.wait (0,
                             ACE_Time_Value (1),
                             &exitcode);
-  if (debug_test) 
+
+  ACE_ASSERT (result5 == 0);    // should have timed out
+
+  if (debug_test)
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT ("(%P|%t) waited for any child: %d\n"),
                 exitcode));
@@ -197,11 +226,15 @@ main (int argc, ASYS_TCHAR *argv[])
   result5 = mgr.wait (0,
                       &exitcode);
 
+  ACE_ASSERT (result5 == child5);
+  // ACE_ASSERT (exitcode == 4);
+
   if (debug_test)
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT ("(%P|%t) waited for child 5 again: %d\n"),
                 exitcode));
 
+  // --------------------------------------------------
   // Finally, try the reactor stuff...
   mgr.open (ACE_Process_Manager::DEFAULT_SIZE,
             ACE_Reactor::instance ());
@@ -209,9 +242,9 @@ main (int argc, ASYS_TCHAR *argv[])
   pid_t child6 = spawn_child (argv[0],
                               mgr,
                               5);
-  pid_t child7 = spawn_child (argv[0],
-                              mgr,
-                              6);
+  /* pid_t child7 = */ spawn_child (argv[0],
+                                    mgr,
+                                    6);
 
   mgr.register_handler (new Exit_Handler ("specific"),
                         child6);
@@ -224,11 +257,12 @@ main (int argc, ASYS_TCHAR *argv[])
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT ("(%P|%t) done!\n") ));
 
-  return 0;
+  ACE_END_TEST;
+  return result;
 }
 
 #else
-int 
+int
 main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Process_Manager_Test"));
