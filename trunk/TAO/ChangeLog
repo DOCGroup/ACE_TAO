@@ -1,3 +1,10 @@
+Fri Apr 23 14:43:40 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.cpp:
+
+          Made changes to fix some windows builds.
+
 Fri Apr 23 14:01:25 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/Messaging.h:

@@ -327,28 +327,11 @@ TAO_LB_LoadMinimum::analyze_loads (
 
   // Iterate through the entire location list to determine
   // the location where the load has to be shed.
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong j = 0; j < len; ++j)
     {
       ACE_TRY_EX (SECOND)
         {
-          const PortableGroup::Location & loc = locations[i];
-
-          // Retrieve the load list for the location from the
-          // LoadManager and push it to this Strategy's load
-          // processor.
-          /*
-          CosLoadBalancing::LoadList_var current_loads =
-            load_manager->get_loads (loc
-                                     ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          CosLoadBalancing::Load present_load;
-          this->push_loads (loc,
-                            current_loads.in (),
-                            present_load
-                            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-          */
+          const PortableGroup::Location & loc = locations[j];
 
          /* 
           ACE_DEBUG ((LM_DEBUG,
@@ -358,7 +341,7 @@ TAO_LB_LoadMinimum::analyze_loads (
                        avg_load.value));
         */ 
 
-          if (tmp[i].value <= avg_load.value)
+          if (tmp[j].value <= avg_load.value)
             {
               load_manager->disable_alert (loc
                                            ACE_ENV_ARG_PARAMETER);
@@ -368,9 +351,9 @@ TAO_LB_LoadMinimum::analyze_loads (
             {
 
               CORBA::Float percent_diff =
-                (tmp[i].value / min_load) - 1;
+                (tmp[j].value / min_load) - 1;
 
-              if (tmp[i].value == min_load)
+              if (tmp[j].value == min_load)
               {
                 percent_diff = 0;
               }
