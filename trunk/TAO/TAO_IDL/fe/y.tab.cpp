@@ -6061,14 +6061,7 @@ tao_yyreduce:
                 {
                   if (!s->is_local () && tp->is_local ())
                     {
-                      ACE_DEBUG ((LM_DEBUG,
-                                  ACE_TEXT ("error in %s line %d\n"),
-                                  idl_global->filename ()->get_string (),
-                                  idl_global->lineno ()));
-                      ACE_DEBUG ((LM_DEBUG,
-                                  ACE_TEXT ("Cannot use a local type as an ")
-                                  ACE_TEXT ("argument of a remote ")
-                                  ACE_TEXT ("operation\n")));
+                      idl_global->err ()->local_remote_mismatch (tp, s);
                     }
                   else
                     {
