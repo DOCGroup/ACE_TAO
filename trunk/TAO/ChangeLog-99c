@@ -1,45 +1,54 @@
+Sat Feb 13 17:52:01 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	Changed the following to make the time returned in units of 100
+	nanoseconds instead of seconds.
+
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp :
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp) :
+	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp :
+
 Sat Feb 13 01:11:52 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.cpp:
 	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp:
 	  Replaced the  _env environment variable usages with the TAO_IN_ENV
 	  parameters.
-	
+
 Fri Feb 12 22:04:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Factory.h: 
-	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.h: 
-	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.h: 
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h: 
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i: 
+	* orbsvcs/orbsvcs/Event/EC_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
 	  Added new methods to create the locking strategies in the
 	  ProxyPushConsumer and ProxyPushSupplier.
 	  The Null_Factory uses ACE_Lock_Adapter<ACE_Null_Mutex>, the
 	  Basic_Factory uses ACE_Lock_Adapter<ACE_SYNCH_MUTEX>.
 
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h: 
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.i: 
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.i:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
 	  The ProxyPushSupplier uses the new locking strategies.
 	  A couple of private _i methods were added to avoid dead-locks.
 
-	* orbsvcs/orbsvcs/Event/EC_Dispatching.h: 
-	* orbsvcs/orbsvcs/Event/EC_Dispatching.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Dispatching.h:
+	* orbsvcs/orbsvcs/Event/EC_Dispatching.cpp:
 	  The dispatching strategy receives the consumer object reference
 	  from the ProxyPushSupplier, otherwise it has to make an upcall
 	  and incurs in a dead-lock.
 
-	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.h: 
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.h:
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
 	  Minor cosmetic changes.
 
-	* orbsvcs/orbsvcs/Makefile: 
+	* orbsvcs/orbsvcs/Makefile:
 	  Added dependencies for the new Event2 service.
 
-	* tao/GIOP.cpp: 
+	* tao/GIOP.cpp:
 	  Added some comments.
 
 Fri Feb 12 21:20:49 1999  Jeff Parsons  <parsons@cs.wustl.edu>
