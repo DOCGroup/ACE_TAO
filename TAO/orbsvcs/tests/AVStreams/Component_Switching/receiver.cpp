@@ -356,7 +356,7 @@ main (int argc,
 
       else
         ACE_DEBUG ((LM_DEBUG,
-                    "File Opened Successfull\n"));
+                    "File Opened Successfully\n"));
 
       result =
         receiver.init (argc,
