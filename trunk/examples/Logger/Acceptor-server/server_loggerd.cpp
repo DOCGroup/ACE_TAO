@@ -75,8 +75,12 @@ Logging_Handler::Logging_Handler (void)
 
 int
 Logging_Handler::handle_timeout (const ACE_Time_Value &,
-				 const void *arg)
+                                 const void *arg)
 {
+#if defined (ACE_NDEBUG)
+  ACE_UNUSED_ARG (arg);
+#endif /* ACE_NDEBUG */
+
   ACE_ASSERT (arg == this);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) handling timeout from this = %u\n", this));
   return 0;
@@ -104,32 +108,32 @@ Logging_Handler::handle_input (ACE_HANDLE)
       /* NOTREACHED */
     case 0:
       ACE_ERROR_RETURN ((LM_ERROR,
-			 "(%P|%t) closing log daemon at host %s (fd = %d)\n",
+                         "(%P|%t) closing log daemon at host %s (fd = %d)\n",
                          this->peer_name_, this->get_handle ()), -1);
       /* NOTREACHED */
     case sizeof (size_t):
       {
-	ACE_Log_Record lp;
+        ACE_Log_Record lp;
 
         len = ntohl (len);
-	n = this->peer ().recv_n ((void *) &lp, len);
+        n = this->peer ().recv_n ((void *) &lp, len);
 
-	if (n != len)
-	  ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p at host %s\n",
+        if (n != len)
+          ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p at host %s\n",
                              "client logger", this->peer_name_), -1);
-	/* NOTREACHED */
+        /* NOTREACHED */
 
-	lp.decode ();
+        lp.decode ();
 
-	if (lp.length () == n)
-	  {
-	    ACE_DEBUG ((LM_DEBUG, "(%P|%t) "));
-	    lp.print (this->peer_name_, 1, cerr);
-	  }
-	else
-	  ACE_ERROR ((LM_ERROR, "(%P|%t) error, lp.length = %d, n = %d\n",
-		      lp.length (), n));
-	break;
+        if (lp.length () == n)
+          {
+            ACE_DEBUG ((LM_DEBUG, "(%P|%t) "));
+            lp.print (this->peer_name_, 1, cerr);
+          }
+        else
+          ACE_ERROR ((LM_ERROR, "(%P|%t) error, lp.length = %d, n = %d\n",
+                      lp.length (), n));
+        break;
       }
     default:
       ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p at host %s\n",
@@ -150,22 +154,22 @@ Logging_Handler::open (void *)
   else
     {
       ACE_OS::strncpy (this->peer_name_,
-		       addr.get_host_name (),
-		       MAXHOSTNAMELEN + 1);
+                       addr.get_host_name (),
+                       MAXHOSTNAMELEN + 1);
 
       if (REACTOR::instance ()->register_handler (this, READ_MASK) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "(%P|%t) can't register with reactor\n"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) can't register with reactor\n"), -1);
       else if (REACTOR::instance ()->schedule_timer
-	       (this,
-		(const void *) this,
-		ACE_Time_Value (2),
-		ACE_Time_Value (2)) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "can'(%P|%t) t register with reactor\n"), -1);
+               (this,
+                (const void *) this,
+                ACE_Time_Value (2),
+                ACE_Time_Value (2)) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "can'(%P|%t) t register with reactor\n"), -1);
       else
-      	ACE_DEBUG ((LM_DEBUG,
-		    "(%P|%t) connected with %s\n", this->peer_name_));
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) connected with %s\n", this->peer_name_));
       return 0;
     }
 }
@@ -190,21 +194,21 @@ main (int argc, char *argv[])
   // QUIT_HANDLER becomes "set" and thus, the event loop below will
   // exit.
   else if (REACTOR::instance ()->register_handler
-	   (SIGINT, QUIT_HANDLER::instance ()) == -1)
+           (SIGINT, QUIT_HANDLER::instance ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "registering service with ACE_Reactor\n"), -1);
+                       "registering service with ACE_Reactor\n"), -1);
 
   // Run forever, performing logging service.
 
   ACE_DEBUG ((LM_DEBUG,
-	      "(%P|%t) starting up server logging daemon\n"));
+              "(%P|%t) starting up server logging daemon\n"));
 
   // Perform logging service until QUIT_HANDLER receives SIGINT.
   while (QUIT_HANDLER::instance ()->is_set () == 0)
     REACTOR::instance ()->handle_events ();
 
   ACE_DEBUG ((LM_DEBUG,
-	      "(%P|%t) shutting down server logging daemon\n"));
+              "(%P|%t) shutting down server logging daemon\n"));
 
   return 0;
 }
@@ -224,4 +228,3 @@ template class ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>;
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
