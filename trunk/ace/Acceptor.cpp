@@ -422,16 +422,18 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump ();
   this->creation_strategy_->dump ();
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("delete_creation_strategy_ = %d"), delete_creation_strategy_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("delete_creation_strategy_ = %d"), delete_creation_strategy_));
   this->accept_strategy_->dump ();
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("delete_accept_strategy_ = %d"), delete_accept_strategy_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("delete_accept_strategy_ = %d"), delete_accept_strategy_));
   this->concurrency_strategy_->dump ();
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("delete_concurrency_strategy_ = %d"), delete_concurrency_strategy_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("delete_concurrency_strategy_ = %d"), delete_concurrency_strategy_));
   this->scheduling_strategy_->dump ();
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("delete_scheduling_strategy_ = %d"), delete_scheduling_strategy_));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nservice_name_ = %s"), this->service_name_));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nservice_description_ = %s"), this->service_description_));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nservice_port_ = %d"), this->service_port_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("delete_scheduling_strategy_ = %d"), delete_scheduling_strategy_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nservice_name_ = %s"),
+              this->service_name_ == 0 ? ASYS_TEXT ("<unknown>") : this->service_name_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nservice_description_ = %s"),
+              this->service_description_ == 0 ? ASYS_TEXT ("<unknown>") : this->service_description_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nservice_port_ = %d"), this->service_port_));
   this->service_addr_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -565,7 +567,8 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor
       scheduling_strategy_ (0),
       delete_scheduling_strategy_ (0),
       service_name_ (0),
-      service_description_ (0)
+      service_description_ (0),
+      service_port_ (0)
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor");
 
@@ -589,6 +592,17 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor
    const ASYS_TCHAR service_name[],
    const ASYS_TCHAR service_description[],
    int use_select)
+    : creation_strategy_ (0),
+      delete_creation_strategy_ (0),
+      accept_strategy_ (0),
+      delete_accept_strategy_ (0),
+      concurrency_strategy_ (0),
+      delete_concurrency_strategy_ (0),
+      scheduling_strategy_ (0),
+      delete_scheduling_strategy_ (0),
+      service_name_ (0),
+      service_description_ (0),
+      service_port_ (0)
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor");
 
@@ -735,9 +749,13 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (ASYS_TCHAR **strp
   // @@ Should add the protocol in...
   ACE_OS::sprintf (buf,
                    ASYS_TEXT ("%s\t %s #%s\n"),
-                   this->service_name_,
+                   this->service_name_ == 0 
+                   ? ASYS_TEXT ("<unknown>")
+                   : this->service_name_,
                    service_addr_str,
-                   this->service_description_);
+                   this->service_description_ == 0 
+                   ? ASYS_TEXT ("<unknown>")
+                   : this->service_description_);
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;

@@ -694,12 +694,13 @@ Erik Johannes <ejohannes@oresis.com>
 Alex Hornby <alex@anvil.co.uk>
 Riaz Syed <syed@Lynx.COM>
 Clarence M. Weaver <clarence_m_weaver@md.northgrum.com>
+John Forest <forestj@res.raytheon.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
-at Ericsson and is now at ObjectSpace.  Paul devised the recursive
-Makefile scheme that underlies this distribution and also spent
-countless hours with me discussing object-oriented techniques for
-developing distributed application frameworks.
+at Ericsson.  Paul devised the recursive Makefile scheme that
+underlies this distribution and also spent countless hours with me
+discussing object-oriented techniques for developing distributed
+application frameworks.
 
 Finally, I'd also like to thank Todd L. Montgomery <tmont@cs.wvu.edu>,
 fellow heavy metal head, for fulfilling his quest to get ACE to

@@ -153,22 +153,22 @@ class ACE_Message_Queue_Vx : public ACE_Message_Queue<ACE_NULL_SYNCH>
   //
   //     NOTE: *Many* ACE_Message_Queue features are not supported with
   //     this specialization, including:
-  //     * The two size arguments to the constructor and open () are
+  //     * The two size arguments to the constructor and <open> are
   //       interpreted differently.  The first is interpreted as the
   //       maximum number of bytes in a message.  The second is
   //       interpreted as the maximum number of messages that can be
   //       queued.
-  //     * dequeue_head () *requires* that the ACE_Message_Block
+  //     * <dequeue_head> *requires* that the ACE_Message_Block
   //       pointer argument point to an ACE_Message_Block that was
   //       allocated by the caller.  It must be big enough to support
   //       the received message, without using continutation.  The
   //       pointer argument is not modified.
   //     * Message priority.  MSG_Q_FIFO is hard-coded.
   //     * enqueue method timeouts.
-  //     * peek_dequeue_head ().
-  //     * ACE_Message_Queue_Iterators.
+  //     * <peek_dequeue_head>.
+  //     * <ACE_Message_Queue_Iterators>.
   //     * The ability to change low and high water marks after creation.
-  //     * Message_Block chains.  The continuation field of ACE_Message_Block
+  //     * <Message_Block> chains.  The continuation field of <ACE_Message_Block>
   //     *   is ignored; only the first block of a fragment chain is
   //     *   recognized.
 public:
