@@ -154,7 +154,6 @@ DRV_cpp_init (void)
   // for example, 5.1.14 gets 0x050114
   char version_option[128];
   ACE_OS::sprintf (version_option,
-
                    "-D__TAO_IDL=0x%2.2d%2.2d%2.2d",
                    ACE_MAJOR_VERSION, ACE_MINOR_VERSION, ACE_BETA_VERSION);
   DRV_cpp_putarg (version_option);
@@ -421,10 +420,6 @@ DRV_pre_proc (const char *myfile)
     {
       ACE_NEW (tmp,
                UTL_String (tmp_ifile));
-      idl_global->set_filename (tmp);
-
-      ACE_NEW (tmp,
-               UTL_String (tmp_ifile));
       idl_global->set_main_filename (tmp);
 
       ACE_NEW (tmp,
@@ -450,10 +445,6 @@ DRV_pre_proc (const char *myfile)
       fclose (fd);
 
       idl_global->set_read_from_stdin (I_FALSE);
-
-      ACE_NEW (tmp,
-               UTL_String (myfile));
-      idl_global->set_filename (tmp);
 
       ACE_NEW (tmp,
                UTL_String (myfile));
@@ -607,6 +598,17 @@ DRV_pre_proc (const char *myfile)
           ACE_OS::exit (99);
         }
 
+      // ACE_DEBUG sends to stderr - we want stdout for this dump
+      // of the preprocessor output. This is basically the guts of
+      // the ACE_DEBUG macro with the ostream reset.
+      int ace_error = ACE_OS::last_error ();
+      ACE_Log_Msg *out = ACE_Log_Msg::instance ();
+      out->conditional_set (__FILE__, 
+                            __LINE__, 
+                            0, 
+                            ace_error);
+      out->msg_ostream (&cout);
+
       while ((bytes = ACE_OS::fread (buffer, 
                                      sizeof (char), 
                                      ACE_Log_Record::MAXLOGMSGLEN - 1, 
@@ -615,7 +617,8 @@ DRV_pre_proc (const char *myfile)
         {
           buffer[bytes] = 0;  // Null char
 
-          ACE_DEBUG ((LM_DEBUG, buffer));
+          out->log (LM_DEBUG, 
+                    buffer);
         }
 
       ACE_OS::fclose (preproc);
