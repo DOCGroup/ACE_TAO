@@ -41,6 +41,10 @@ class be_visitor_ami_pre_proc : public be_visitor_scope
   // = DESCRIPTION
   //   Adds AMI implied IDL code to the AST
   //
+private:
+ typedef AST_Interface *AST_Interface_ptr; 
+
+
 public:
   be_visitor_ami_pre_proc (be_visitor_context *ctx);
 
@@ -72,15 +76,30 @@ public:
   // visit a root
 
 private:
-  int create_sendc_method (be_operation *node);
+  be_interface *create_reply_handler (be_interface *node);
+  // create the reply handler interface
+
+  be_valuetype *create_exception_holder (be_interface *node);
+  // create the exception holder valuetype
+  
+  be_operation *create_sendc_operation (be_operation *node);
   // create a method with "sendc_" prepended
 
-  int create_excep_method (be_operation *node);
+  be_operation *create_excep_operation (be_operation *node);
   // create a method with "_excep" appended
+
+  be_operation *create_reply_handler_operation (be_operation *node);
+  // create an operation with only the OUT and INOUT arguments
 
   int visit_scope (be_scope *node);
   // specialized visit_scope 
 
+  int generate_name (ACE_CString &desintation,
+                     const char *prefix,
+                     const char *middle_name,
+                     const char *suffix);
+  // concatenate the prefix, middle_name and suffix
+  // and store the result in desination.
 };
 
 #endif // TAO_BE_VISITOR_AMI_PRE_PROC_H

@@ -269,6 +269,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       delete visitor;
     }
 
+#if 0
   // Only if AMI code generation is activated and we 
   // are not calling ourselves already
   if (idl_global->ami_call_back () == I_TRUE
@@ -305,6 +306,9 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
       delete node->set_strategy (old_strategy);
     }
+
+#endif /* 0 */
+
   *os << "\n";
   ctx.stream (tao_cg->server_template_header ());
 

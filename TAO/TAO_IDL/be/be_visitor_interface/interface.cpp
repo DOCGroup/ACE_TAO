@@ -447,6 +447,12 @@ be_visitor_interface::visit_exception (be_exception *node)
 int
 be_visitor_interface::visit_operation (be_operation *node)
 {
+
+  // Change the state depending on the kind of interface
+  // we are defined in.
+  be_interface *parent = be_interface::narrow_from_scope (node->defined_in ());
+  this->ctx_->state (parent->next_state (this->ctx_->state ()));
+
   // instantiate a visitor context with a copy of our context. This info
   // will be modified ased on what type of node we are visiting
   be_visitor_context ctx (*this->ctx_);
@@ -565,7 +571,7 @@ be_visitor_interface::visit_operation (be_operation *node)
   //
   // AMI Call back code generation.
   //
-
+#if 0
   // Only if AMI callbacks are enabled.
   if (idl_global->ami_call_back () == I_TRUE)
     {
@@ -712,7 +718,7 @@ be_visitor_interface::visit_operation (be_operation *node)
           }
       }
     }
-
+#endif /* 0 */
   return 0;
 }
 

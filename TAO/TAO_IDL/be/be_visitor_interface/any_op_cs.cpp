@@ -93,7 +93,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
               << "CORBA::Object_ptr obj" << be_uidt_nl
               << ") = 0;" << be_uidt_nl;
         }
-
+#if 0
       // @@ Michael: This might not be the right place ..
       if (idl_global->ami_call_back () == I_TRUE)
       {
@@ -113,7 +113,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
 
         delete node->set_strategy (old_strategy);
       }
-
+#endif /* 0 */
       // generate the Any <<= and >>= operator declarations
       // Any <<= and >>= operators
       os->indent ();

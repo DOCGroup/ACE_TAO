@@ -207,7 +207,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     }
 
   // AMI
-
+#if 0
   // Generate code for the AMI Reply Handler.
   if (idl_global->ami_call_back () == I_TRUE)
     {
@@ -283,6 +283,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
       delete node->set_strategy (old_strategy);
     }
-
+#endif /* 0 */
   return 0;
 }

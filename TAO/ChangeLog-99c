@@ -1,3 +1,55 @@
+Thu Sep 23 08:55:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* TAO_IDL/be/be_interface_strategy.h,
+	  TAO_IDL/be/be_interface_strategy.cpp:
+	  Introduced these files, holding now the 
+	  strategies, which were formerly in the be_interface.{h,cpp}
+	  files.
+
+	* TAO_IDL/Makefile
+	  TAO_IDL/tao_idl.dsp
+	  TAO_IDL/tao_idl_static.dsp:
+	  Added two files.
+
+	* TAO_IDL/ast/ast_interface.cpp
+	  TAO_IDL/include/ast_interface.h
+	  TAO_IDL/ast/ast_operation.cpp
+	  TAO_IDL/include/ast_operation.h:
+	  Renamed operations add_operation_x to
+	  be_add_operation and add_exceptions_x to
+	  be_add_exceptions.
+
+	* TAO_IDL/ast/ast_module.cpp
+	  TAO_IDL/include/ast_module.h:
+	  Added a method to add interfaces in the 
+	  back-end.
+
+	* TAO_IDL/be/be_interface.cpp,
+	  TAO_IDL/be/be_visitor_ami_pre_proc.cpp,
+	  TAO_IDL/be/be_visitor_attribute/attribute.cpp,
+	  TAO_IDL/be/be_visitor_interface/ami_exception_holder_ch.cpp,
+	  TAO_IDL/be/be_visitor_interface/ami_exception_holder_ci.cpp,
+	  TAO_IDL/be/be_visitor_interface/ami_exception_holder_cs.cpp,
+	  TAO_IDL/be/be_visitor_interface/any_op_ch.cpp,
+	  TAO_IDL/be/be_visitor_interface/any_op_cs.cpp,
+	  TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp,
+	  TAO_IDL/be/be_visitor_interface/cdr_op_ci.cpp,
+	  TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp,
+	  TAO_IDL/be/be_visitor_interface/interface.cpp,
+	  TAO_IDL/be/be_visitor_interface/interface_ch.cpp,
+	  TAO_IDL/be/be_visitor_interface/interface_cs.cpp,
+	  TAO_IDL/be/be_visitor_interface/interface_sh.cpp,
+	  TAO_IDL/be/be_visitor_interface/interface_ss.cpp,
+	  TAO_IDL/be/be_visitor_valuetype/cdr_op_ci.cpp,
+	  TAO_IDL/be_include/be.h,
+	  TAO_IDL/be_include/be_interface.h,
+	  TAO_IDL/be_include/be_visitor_ami_pre_proc.h:
+	  Did a big refactoring by commenting out all origninal
+	  AMI code generation and activating the new AMI
+	  implied IDL preprocessor.
+	  Still, AMI code does not compile yet, we need to 
+	  implement some of the visitors.
+
 Thu Sep 23 02:02:30 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO-INSTALL.html: Updated the idl files compilation guidelines.
@@ -35,7 +87,7 @@ Wed Sep 22 10:30:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  in several places. Amazingly, gcc 2.95 compiled this, but
 	  MSVC output an internal compiler error.
 
-Mon Sep 22 01:15:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+Tue Sep 22 01:15:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * TAO_IDL/ast/ast_operation.cpp,
           TAO_IDL/include/ast_operation.h:
@@ -121,14 +173,14 @@ Tue Sep 21 16:38:02 1999  Jeff Parsons  <parsons@cs.wustl.edu>
           Philippe Merle <Philippe.Merle@lifl.fr> for pointing
           out this memory management bug and sending in a fix.
 
-Mon Sep 21 16:25:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+Tue Sep 21 16:25:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * TAO/TAO_IDL/be/be_visitor_ami_pre_proc.cpp,
           TAO/TAO_IDL/be_include/be_visitor_ami_pre_proc.h:
           Enhanced the AST node generation with support for
           sendc_xx and xx_excep operation nodes.
 
-Mon Sep 21 14:25:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+Tue Sep 21 14:25:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
           Fixed problems with unused arguments.
@@ -166,7 +218,7 @@ Tue Sep 21 12:08:46 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
           Added a missing template instantiation for
           ACE_Equal_To<MMDevice_Map_Hash_Key>.
 
-Mon Sep 21 12:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+Tue Sep 21 12:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * TAO_IDL/Makefile,
           TAO_IDL/tao_idl.dsp,

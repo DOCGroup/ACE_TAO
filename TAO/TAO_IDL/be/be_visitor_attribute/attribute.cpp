@@ -177,7 +177,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   //
   // AMI Call back code generation.
   //
-
+#if 0
   // Only if AMI callbacks are enabled.
   if (idl_global->ami_call_back () == I_TRUE)
     {
@@ -327,7 +327,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
             } // switch
         } // else
     } // if AMI
-
+#endif /* 0 */
 
   if (op)
     {
@@ -462,7 +462,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
    //
   // AMI Call back code generation.
   //
-
+#if 0
   // Only if AMI callbacks are enabled.
   if (idl_global->ami_call_back () == I_TRUE)
     {
@@ -609,7 +609,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
             } // switch
         } // else
     } // if AMI
-
+#endif /* 0 */
   
   delete op;
   delete rt;

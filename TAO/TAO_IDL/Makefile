@@ -87,6 +87,7 @@ FILES = tao_idl \
         be/be_expression \
         be/be_field \
         be/be_interface \
+		be/be_interface_strategy \
         be/be_interface_fwd \
         be/be_valuetype \
         be/be_valuetype_fwd\

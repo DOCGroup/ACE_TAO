@@ -50,6 +50,7 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+#if 0
   // @@ Michael: Please fix this!!
   int i;
   int to_do;
@@ -76,7 +77,7 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
                              "(%N:%l) be_visitor_interface_any_op_ch::visit_interface - "
                              "codegen failed - invalid state\n"), -1);
         }
-
+#endif /* 0 */
       os->indent ();
 
       // Generate the stub factory function pointer declaration the interface is
@@ -109,7 +110,7 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
 
 
       node->cli_hdr_any_op_gen (1);
-
+#if 0
       switch (i)
         {
         case 0:
@@ -123,6 +124,7 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
                              "codegen failed - invalid state\n"), -1);
         }
   } // for      
+#endif /* 0 */
 
   return 0;
 }

@@ -132,4 +132,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "be_visitor_context.h"  // visitor context
 #include        "be_visitor_ami_pre_proc.h" // visitor to generate AMI implied IDL
 
+#include        "be_interface_strategy.h" // strategy for interface nodes
+
 #endif           // _BE_BE_HH
