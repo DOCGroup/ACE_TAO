@@ -26,7 +26,9 @@
 #include "tao/ValueBase.h"
 #include "tao/debug.h"
 
-ACE_RCSID(tao, append, "$Id$")
+ACE_RCSID (tao, 
+           append, 
+           "$Id$")
 
 // Encode instances of arbitrary data types based only on typecode.
 // "data" points to the data type; if it's not a primitve data type,

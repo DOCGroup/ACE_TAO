@@ -1,3 +1,15 @@
+Sat Jan 11 000:18:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.cpp:
+        * tao/Any.h:
+        * tao/Any_T.h:
+        * tao/NVList.cpp:
+        * tao/Typecode_Constants.cpp:
+        * tao/append.cpp:
+
+	  More cleanup of internal incompatibilities with the new
+	  Any implementation.
+
 Fri Jan 10 18:57:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:

@@ -159,7 +159,7 @@ namespace TAO
                                    const T *&);
 
     virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
-    virtual CORBA::Boolean demarshal_value (TAO_InputCDR &);
+    CORBA::Boolean demarshal_value (TAO_InputCDR &);
 
     virtual const void *value (void) const;
     virtual void free_value (void);
