@@ -33,7 +33,7 @@ class TAO_Transport;
 
 namespace IOP
 {
-  class TaggedProfile;
+  struct TaggedProfile;
 }
 
 namespace TAO

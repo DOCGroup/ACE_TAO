@@ -1,3 +1,8 @@
+Sun Apr 27 20:42:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Transport_Acceptor.h: Fixed a forward declaration that
+	  caused compile errors in VC++.
+
 Sun Apr 27 20:08:27 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp: Fixed a typo that blasted
