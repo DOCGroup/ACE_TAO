@@ -1,3 +1,8 @@
+Mon Oct 13 11:58:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/PSS/Makefile.parser: Removed the new line which caused
+	  compilation errors. 
+
 Mon Oct 13 10:59:47 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.h: 
@@ -6,7 +11,8 @@ Mon Oct 13 10:59:47 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_DT_Creator.cpp: 
 
 	  Removed export qualification for the xxx_DT_Creator class. The
-	  service declaration was changed to use ACE_Local_Service. This is to fix problems with MSVC release builds.
+	  service declaration was changed to use ACE_Local_Service. This
+	  is to fix problems with MSVC release builds. 
 	
 	* examples/RTScheduling/Fixed_Priority_Scheduler/Fixed_Priority_Scheduler.dsp: 
 	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.dsp: 
