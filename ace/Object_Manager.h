@@ -126,9 +126,13 @@ class ACE_Export ACE_Object_Manager : public ACE_Object_Manager_Base
   //     thread.  It is created just after entry to ::main (int, char
   //     *[]), and before any existing code in that function is
   //     executed.  To enable this alternative, add #define
-  //     ACE_HAS_NONSTATIC_OBJECT_MANAGER to ace/config.h prior to
+  //     ACE_HAS_NONSTATIC_OBJECT_MANAGER before including the platform
+  //     specific config-* file in ace/config.h prior to
   //     building the ACE library and your applications.  This #define
   //     is enabled in some config files that are supplied with ACE.
+  //     To ensure a static object manager is used, #undef
+  //     ACE_HAS_NONSTATIC_OBJECT_MANAGER *after* including the platform
+  //     specific config-* file.
   //
   //     Note that the ACE_Object_Manager _must_ be created before
   //     any threads are spawned by the program.
