@@ -726,9 +726,10 @@ CORBA_ORB::multicast_query (char *buf,
       // Check for errors.
       if (result == -1)
         {
-          ACE_ERROR ((LM_ERROR,
-                      "%p",
-                      "error reading IIOP multicast response"));
+          if (TAO_debug_level > 0)
+            ACE_ERROR ((LM_ERROR,
+                        "%p\n",
+                        "error reading IIOP multicast response"));
           break;
         }
       // Success!
