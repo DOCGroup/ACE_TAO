@@ -92,10 +92,6 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\Assembly_Impl.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\CCM_DeploymentC.cpp
 # End Source File
 # Begin Source File
@@ -162,10 +158,6 @@ SOURCE=.\ServerActivator_Impl.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm"
-# Begin Source File
-
-SOURCE=.\Assembly_Impl.h
-# End Source File
 # Begin Source File
 
 SOURCE=.\CCM_DeploymentC.h
@@ -502,10 +494,6 @@ BuildCmds= \
 # Begin Group "Inline Files"
 
 # PROP Default_Filter "i,inl"
-# Begin Source File
-
-SOURCE=.\Assembly_Impl.inl
-# End Source File
 # Begin Source File
 
 SOURCE=.\CCM_DeploymentC.i
