@@ -29,4 +29,17 @@ module frag
   typedef sequence<double> dub_seq;
 };
 
+// These are in each file in the reopened_modules chain,
+// and in reopened_modules.idl, test interface parent lookup.
+module A
+{
+  module B
+  {
+    interface X1
+    {
+      string getX1 ();
+    };
+  };
+};
+
 #endif /* IDL_TEST_REOPEN_INCLUDE1_IDL */
