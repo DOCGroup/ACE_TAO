@@ -64,7 +64,7 @@ private:
   int iterations_;
   // Number of times to send a buffer.
 
-  const char *rendezvous_;
+  TCHAR rendezvous_[MAXPATHLEN + 1];
   // Meeting place for pipe.
 
   ACE_Sig_Adapter done_handler_;

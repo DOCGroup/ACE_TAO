@@ -214,7 +214,7 @@ private:
   int timeout_;
   // Time period for updating system time
 
-  LPCTSTR poolname_;
+  TCHAR poolname_[MAXNAMLEN + 1];
   // Pool name for backing store
 
   int blocking_semantics_;
