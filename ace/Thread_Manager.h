@@ -269,14 +269,14 @@ public:
   // 0 if fail.
 
   int thr_self (ACE_hthread_t &);
-
   // Return the "real" handle to the calling thread, caching it if
   // necessary in TSS to speed up subsequent lookups. This is
   // necessary since on some platforms (e.g., Win32) we can't get this
-  // handle via direct method calls.  Notice that you should *not* close
-  // the handle passed back from this method.  It is used internally
-  // by Thread Manager.  On the other hand, you *have to* use this internal
-  // thread handle when working on Thread_Manager.  Return -1 if fail.
+  // handle via direct method calls.  Notice that you should *not*
+  // close the handle passed back from this method.  It is used
+  // internally by Thread Manager.  On the other hand, you *have to*
+  // use this internal thread handle when working on Thread_Manager.
+  // Return -1 if fail.
 
   ACE_thread_t thr_self (void);
   // Return the unique ID of the thread.  This is not strictly
