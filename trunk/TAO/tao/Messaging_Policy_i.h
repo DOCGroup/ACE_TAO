@@ -24,7 +24,7 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
 
-#include "MessagingS.h"
+#include "tao/MessagingS.h"
 
 #if defined(_MSC_VER)
 #pragma warning(disable:4250)

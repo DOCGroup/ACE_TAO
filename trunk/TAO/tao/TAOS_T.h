@@ -16,12 +16,12 @@
 
 
 #if defined (__ACE_INLINE__)
-#include "TAOS_T.i"
+#include "tao/TAOS_T.i"
 #endif /* defined INLINE */
 
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "TAOS_T.cpp"
+#include "tao/TAOS_T.cpp"
 #endif /* defined REQUIRED SOURCE */
 
 

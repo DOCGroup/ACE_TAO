@@ -148,7 +148,7 @@ void operator<<= (CORBA::Any &, CORBA_Current_ptr);
 CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_Current *&);
 
 #if defined (__ACE_INLINE__)
-#include "CurrentC.i"
+#include "tao/CurrentC.i"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)

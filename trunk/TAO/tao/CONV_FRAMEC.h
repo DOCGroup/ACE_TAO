@@ -358,7 +358,7 @@ CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, CONV_FRAME::CodeSetContext
 
 
 #if defined (__ACE_INLINE__)
-#include "CONV_FRAMEC.i"
+#include "tao/CONV_FRAMEC.i"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)

@@ -20,7 +20,7 @@
 #include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
-#include "MessagingS_T.i"
+#include "tao/MessagingS_T.i"
 #endif /* !defined INLINE */
 
 template <class T> PortableServer::POA_ptr

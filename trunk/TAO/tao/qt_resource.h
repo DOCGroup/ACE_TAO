@@ -35,7 +35,7 @@ class TAO_Export TAO_QtResource_Factory : public TAO_Default_Resource_Factory
   //   factory can return resource instances which are, e.g., global,
   //   stored in thread-specific storage, stored in shared memory,
   //   etc.
-  
+
 public:
   TAO_QtResource_Factory (void);
 
@@ -51,7 +51,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "qt_resource.i"
+#include "tao/qt_resource.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE( TAO_QtResource_Factory )

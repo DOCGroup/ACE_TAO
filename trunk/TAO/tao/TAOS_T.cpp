@@ -14,10 +14,10 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#include "TAOS_T.h"
+#include "tao/TAOS_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "TAOS_T.i"
+#include "tao/TAOS_T.i"
 #endif /* !defined INLINE */
 
 

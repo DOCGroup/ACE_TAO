@@ -15,10 +15,10 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#include "PollableS_T.h"
+#include "tao/PollableS_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "PollableS_T.i"
+#include "tao/PollableS_T.i"
 #endif /* !defined INLINE */
 
 

@@ -19,7 +19,7 @@
 #ifndef TAO_CONV_FRAMES_H
 #define TAO_CONV_FRAMES_H
 
-#include "CONV_FRAMEC.h"
+#include "tao/CONV_FRAMEC.h"
 
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -35,10 +35,10 @@ TAO_NAMESPACE  POA_CONV_FRAME
 }
 TAO_NAMESPACE_CLOSE
 
-#include "CONV_FRAMES_T.h"
+#include "tao/CONV_FRAMES_T.h"
 
 #if defined (__ACE_INLINE__)
-#include "CONV_FRAMES.i"
+#include "tao/CONV_FRAMES.i"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)

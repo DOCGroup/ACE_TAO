@@ -10,13 +10,13 @@
 // Hand Modified by Vishal Kachroo <vishal@cs.wustl.edu>
 //
 
-#include "ObjectIDList.h"
+#include "tao/ObjectIDList.h"
 #include "tao/Typecode.h"
 #include "tao/ORB.h"
 #include "tao/Any.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ObjectIDList.i"
+#include "tao/ObjectIDList.i"
 #endif /* !defined INLINE */
 
 #if !defined (_CORBA_ORB_OBJECTIDLIST_CS_)

@@ -8,12 +8,12 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "IORS.h"
+#include "tao/IORS.h"
 
 ACE_RCSID(tao, IORS, "$Id$")
 
 #if !defined (__ACE_INLINE__)
-#include "IORS.i"
+#include "tao/IORS.i"
 #endif /* !defined INLINE */
 
 POA_TAO_IOP::TAO_IOR_Manipulation::TAO_IOR_Manipulation (void)
@@ -70,7 +70,7 @@ POA_TAO_IOP::TAO_IOR_Manipulation::_this (CORBA_Environment &ACE_TRY_ENV)
     TAO_IOP::TAO_IOR_Manipulation::_nil ();
 
   ACE_NEW_RETURN (retval,
-                  POA_TAO_IOP::_tao_collocated_TAO_IOR_Manipulation (this, 
+                  POA_TAO_IOP::_tao_collocated_TAO_IOR_Manipulation (this,
                                                                      stub),
                   TAO_IOP::TAO_IOR_Manipulation::_nil ());
 
@@ -85,12 +85,12 @@ POA_TAO_IOP::TAO_IOR_Manipulation::_create_collocated_objref (
 {
   ACE_UNUSED_ARG (type);
   if (!strcmp ("IDL:TAO_IOP/TAO_IOR_Manipulation:1.0",repository_id))
-    {      
+    {
       TAO_IOP::TAO_IOR_Manipulation *retval =
         TAO_IOP::TAO_IOR_Manipulation::_nil ();
 
       ACE_NEW_RETURN (retval,
-                      POA_TAO_IOP::_tao_collocated_TAO_IOR_Manipulation (this, 
+                      POA_TAO_IOP::_tao_collocated_TAO_IOR_Manipulation (this,
                                                                          stub),
                       TAO_IOP::TAO_IOR_Manipulation::_nil ());
 

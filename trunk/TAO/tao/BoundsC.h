@@ -20,12 +20,12 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 #if defined (TAO_EXPORT_NESTED_CLASSES)
 #  if defined (TAO_EXPORT_NESTED_MACRO)
 #    undef TAO_EXPORT_NESTED_MACRO
 #  endif /* defined (TAO_EXPORT_NESTED_MACRO) */
-#  define TAO_EXPORT_NESTED_MACRO 
+#  define TAO_EXPORT_NESTED_MACRO
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 #if defined(_MSC_VER)
 #pragma warning(disable:4250)
@@ -37,7 +37,7 @@
   class  TAO_Export CORBA_Bounds : public CORBA::UserException
   {
   public:
-    
+
     CORBA_Bounds (void); // default ctor
     CORBA_Bounds (const CORBA_Bounds &); // copy ctor
     ~CORBA_Bounds (void); // dtor
@@ -63,14 +63,14 @@ CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::Bounds *&);
 
 #ifndef __ACE_INLINE__
 
-CORBA::Boolean  operator<< (TAO_OutputCDR &, const CORBA::Bounds &); // 
+CORBA::Boolean  operator<< (TAO_OutputCDR &, const CORBA::Bounds &); //
 CORBA::Boolean  operator>> (TAO_InputCDR &, CORBA::Bounds &);
 
 #endif /* __ACE_INLINE__ */
 
 
 #if defined (__ACE_INLINE__)
-#include "BoundsC.i"
+#include "tao/BoundsC.i"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)

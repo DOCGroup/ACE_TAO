@@ -15,7 +15,7 @@
 #if defined TAO_HAS_INTERFACE_REPOSITORY
 
 #if !defined (__ACE_INLINE__)
-#include "InterfaceC.i"
+#include "tao/InterfaceC.i"
 #endif /* !defined INLINE */
 
 static const CORBA::Long _oc_CORBA_Identifier[] =

@@ -15,10 +15,10 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#include "DomainS_T.h"
+#include "tao/DomainS_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "DomainS_T.i"
+#include "tao/DomainS_T.i"
 #endif /* !defined INLINE */
 
 

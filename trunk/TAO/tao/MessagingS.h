@@ -15,9 +15,9 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
 
-#include "TimeBaseS.h"
-#include "POA_CORBA.h"
-#include "MessagingC.h"
+#include "tao/TimeBaseS.h"
+#include "tao/POA_CORBA.h"
+#include "tao/MessagingC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -1664,11 +1664,11 @@ private:
         const CORBA::Char *logical_type_id,
         CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
       );
-    
+
     virtual CORBA::Boolean _non_existent(
         CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
       );
-    
+
   };
 
 
@@ -1683,14 +1683,14 @@ private:
         const CORBA::Char *logical_type_id,
         CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
       );
-    
+
     ReplyHandler_ptr _get_servant (void) const;
-    
+
     virtual CORBA::Boolean _non_existent(
         CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
       );
-    
-      
+
+
   private:
     ReplyHandler_ptr servant_;
   };
@@ -2037,10 +2037,10 @@ private:
 }
 TAO_NAMESPACE_CLOSE
 
-// #include "MessagingS_T.h"
+// #include "tao/MessagingS_T.h"
 
 #if defined (__ACE_INLINE__)
-#include "MessagingS.i"
+#include "tao/MessagingS.i"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)

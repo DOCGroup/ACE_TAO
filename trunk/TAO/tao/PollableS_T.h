@@ -17,12 +17,12 @@
 
 
 #if defined (__ACE_INLINE__)
-#include "PollableS_T.i"
+#include "tao/PollableS_T.i"
 #endif /* defined INLINE */
 
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "PollableS_T.cpp"
+#include "tao/PollableS_T.cpp"
 #endif /* defined REQUIRED SOURCE */
 
 

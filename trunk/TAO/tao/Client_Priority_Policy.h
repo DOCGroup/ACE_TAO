@@ -30,7 +30,7 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
 
-#include "TAOS.h"
+#include "tao/TAOS.h"
 
 #if defined(_MSC_VER)
 #pragma warning(disable:4250)

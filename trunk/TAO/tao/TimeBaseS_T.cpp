@@ -22,10 +22,10 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#include "TimeBaseS_T.h"
+#include "tao/TimeBaseS_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "TimeBaseS_T.i"
+#include "tao/TimeBaseS_T.i"
 #endif /* !defined INLINE */
 
 

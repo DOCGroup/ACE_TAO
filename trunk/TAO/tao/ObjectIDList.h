@@ -132,7 +132,7 @@ CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, CORBA_ORB_ObjectIdList &);
 
 
 #if defined (__ACE_INLINE__)
-#include "ObjectIDList.i"
+#include "tao/ObjectIDList.i"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)
