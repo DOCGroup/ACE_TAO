@@ -78,7 +78,7 @@ TAO_IIOP_Transport::handler (void)
 int
 TAO_IIOP_Transport::idle (void)
 {
-  return this->handler_->idle();
+  return this->handler_->idle ();
 }
 
 void

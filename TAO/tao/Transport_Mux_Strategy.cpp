@@ -89,10 +89,6 @@ TAO_Exclusive_TMS::dispatch_reply (CORBA::ULong request_id,
       return 0;
     }
 
-  // The transport is available for reuse again since we have received
-  // our reply.
-  this->transport_->idle ();
-
   TAO_Reply_Dispatcher *rd = this->rd_;
   this->request_id_ = 0xdeadbeef; // @@ What is a good value???
   this->rd_ = 0;
@@ -135,14 +131,14 @@ TAO_Exclusive_TMS::idle_after_send (void)
   return 0;
 }
 
-// int
-// TAO_Exclusive_TMS::idle_after_reply (void)
-// {
-//   if (this->transport_ != 0)
-//     return this->transport_->idle ();
-//
-//   return 0;
-// }
+int
+TAO_Exclusive_TMS::idle_after_reply (void)
+{
+  if (this->transport_ != 0)
+    return this->transport_->idle ();
+
+  return 0;
+}
 
 // int
 // TAO_Exclusive_TMS::reply_received (const CORBA::ULong request_id)
@@ -292,11 +288,12 @@ TAO_Muxed_TMS::idle_after_send (void)
   return 0;
 }
 
-// int
-// TAO_Muxed_TMS::idle_after_reply (void)
-// {
-//   return 0;
-// }
+int
+TAO_Muxed_TMS::idle_after_reply (void)
+{
+  // No op.
+  return 0;
+}
 
 // int
 // TAO_Muxed_TMS::reply_received (const CORBA::ULong request_id)
