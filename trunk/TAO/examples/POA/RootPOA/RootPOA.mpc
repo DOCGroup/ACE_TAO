@@ -2,8 +2,6 @@
 // $Id$
 
 project(*Server): taoserver {
-  Source_Files {
-    RootPOA.cpp
-  }
+  exename = RootPOA
 }
 
