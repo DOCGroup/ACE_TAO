@@ -1,3 +1,11 @@
+Fri Jun  4 18:57:02 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+	  Removed incorrect error output from a couple of 
+	  default switch cases. Thanks to 
+	  whoever at rdfa@eci.esys.com for pointing out the
+	  problem and to Carlos for his help with the fix.
+
 Fri Jun 04 17:30:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched: Reconfig_Scheduler.{cpp, h}: completed
