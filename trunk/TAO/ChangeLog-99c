@@ -1,3 +1,9 @@
+Thu Jan 14 23:32:19 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* orbsvcs/tests/ImplRepo/Makefile: Changed to incorporate the
+	right path for Repository.o file. The make was throwing a link
+	error.
+
 Thu Jan 14 22:10:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/try_macros.h: Added comments to indication the macros in the

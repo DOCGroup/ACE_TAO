@@ -17,7 +17,7 @@ DIRS = ../../ImplRepo_Service
 
 LDLIBS = -lTAO
 
-IDL_SRC	= AirplaneS.cpp AirplaneC.cpp 
+IDL_SRC	= AirplaneS.cpp AirplaneC.cpp
 PROG_SRCS = Repository.cpp \
 	    Repository_Test.cpp \
 	    airplane_client.cpp \
@@ -44,8 +44,8 @@ IMPLREPO_SERVICE_OBJS = $(addprefix ../../ImplRepo_Service/$(VDIR), $(patsubst %
 #IMPLREPO_SERVICE_OBJS = ../../ImplRepo_Service/$(VDIR)/PingC.o \
 #                        ../../ImplRepo_Service/$(VDIR)/PingS.o \
 #                        ../../ImplRepo_Service/$(VDIR)/ImplRepoC.o \
-#                        ../../ImplRepo_Service/$(VDIR)/ImplRepoS.o 
-                        
+#                        ../../ImplRepo_Service/$(VDIR)/ImplRepoS.o
+
 
 
 IMPLREPO_CLIENT_OBJS =  Simple_ObjectC.o \
@@ -71,7 +71,7 @@ AIRPLANE_SERVER_OBJS =  AirplaneC.o \
 		        airplane_i.o \
                         IR_Helper.o
 
-REPOSITORY_TEST_OBJS =	Repository.o \
+REPOSITORY_TEST_OBJS =	../../../ImplRepo_Service/$(VDIR)/Repository.o \
 			Repository_Test.o
 
 BIN = airplane_server \
