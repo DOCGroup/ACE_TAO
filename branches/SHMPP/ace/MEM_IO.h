@@ -59,7 +59,7 @@ public:
                 size_t n) ;
   // Recv an <n> byte buffer from the shm_malloc_ thru connected socket.
 
-  ssize_t fetch_recv_buf (int flags);
+  ssize_t fetch_recv_buf (int flags, ACE_Time_Value *timeout = 0);
   // @@ Please fill in here.
 
   /*
@@ -83,11 +83,12 @@ public:
   ssize_t recv (iovec *io_vec,
                 const ACE_Time_Value *timeout = 0);
   // Same as above.  Deprecated.
+  */
 
   ssize_t send (const void *buf,
                 size_t n,
                 int flags,
-                const ACE_Time_Value *timeout) const;
+                const ACE_Time_Value *timeout);
   // Wait to to <timeout> amount of time to send up to <n> bytes into
   // <buf> from <handle> (uses the <send> call).  If <send> times out
   // a -1 is returned with <errno == ETIME>.  If it succeeds the
@@ -96,7 +97,7 @@ public:
   ssize_t recv (void *buf,
                 size_t n,
                 int flags,
-                const ACE_Time_Value *timeout) const;
+                const ACE_Time_Value *timeout);
   // Wait up to <timeout> amount of time to receive up to <n> bytes
   // into <buf> from <handle> (uses the <recv> call).  If <recv> times
   // out a -1 is returned with <errno == ETIME>.  If it succeeds the
@@ -104,7 +105,7 @@ public:
 
   ssize_t send (const void *buf,
                 size_t n,
-                const ACE_Time_Value *timeout) const;
+                const ACE_Time_Value *timeout);
   // Wait to to <timeout> amount of time to send up to <n> bytes into
   // <buf> from <handle> (uses the <send> call).  If <send> times out
   // a -1 is returned with <errno == ETIME>.  If it succeeds the
@@ -112,12 +113,13 @@ public:
 
   ssize_t recv (void *buf,
                 size_t n,
-                const ACE_Time_Value *timeout) const;
+                const ACE_Time_Value *timeout);
   // Wait up to <timeout> amount of time to receive up to <n> bytes
   // into <buf> from <handle> (uses the <recv> call).  If <recv> times
   // out a -1 is returned with <errno == ETIME>.  If it succeeds the
   // number of bytes received is returned.
 
+  /*
   ssize_t send (size_t n,
                 ...) const;
   // Send <n> varargs messages to the connected socket.
