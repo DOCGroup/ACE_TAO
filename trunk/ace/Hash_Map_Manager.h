@@ -105,16 +105,16 @@ public:
 
   // = Initialization and termination methods.
 
+  ACE_Hash_Map_Manager (ACE_Allocator *alloc = 0);
+  // Initialize a <Hash_Map_Manager> with default size.
+
   ACE_Hash_Map_Manager (size_t size, 
 			ACE_Allocator *alloc = 0);
   // Initialize a <Hash_Map_Manager> with size <length>.
 
-  ACE_Hash_Map_Manager (ACE_Allocator *alloc = 0);
-  // Initialize a <Hash_Map_Manager> with default size.
-
-  int open (size_t length = ACE_DEFAULT_MAP_SIZE, 
+  int open (size_t size = ACE_DEFAULT_MAP_SIZE, 
 	    ACE_Allocator *alloc = 0);
-  // Initialize a <Hash_Map_Manager> with size <length>.
+  // Initialize a <Hash_Map_Manager> with <size> elements.
 
   int close (void);
   // Close down a <Hash_Map_Manager> and release dynamically allocated
