@@ -47,6 +47,7 @@ namespace CCF
 
         private:
           SemanticGraph::Type* type_;
+          SemanticGraph::Type* member_type_;
         };
       }
     }

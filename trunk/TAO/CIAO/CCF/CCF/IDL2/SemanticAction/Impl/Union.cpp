@@ -130,12 +130,63 @@ namespace CCF
         member_type (IdentifierPtr const& id)
         {
           if (ctx.trace ()) cerr << "type " << id << endl;
+
+          member_type_ = 0;
+
+          Name name (id->lexeme ());
+          ScopedName from (ctx.scope ().scoped_name ());
+
+          try
+          {
+            try
+            {
+              member_type_ = &resolve<Type> (from, name, Flags::complete);
+            }
+            catch (Resolve const&)
+            {
+              cerr << "error: invalid union member declaration" << endl;
+              throw;
+            }
+
+            //@@ I am not handling NotUnique here. For example if
+            //   I provide module name as type then the compiler
+            //   will ICE. Think about other places it may happen
+            //   (attribute, value memebr, typeded, others?).
+            //
+          }
+          catch (NotFound const&)
+          {
+            cerr << "no type with name \'" << name
+                 << "\' visible from scope \'" << from << "\'" << endl;
+          }
+          catch (WrongType const&)
+          {
+            cerr << "declaration with name \'" << name
+                 << "\' visible from scope \'" << from
+                 << "\' is not a type declaration" << endl;
+            cerr << "using non-type as an member type is illegal" << endl;
+          }
+          catch (NotComplete const& e)
+          {
+            cerr << "type \'" << e.name () << "\' is not complete" << endl;
+          }
         }
 
         void Union::
         member_name (SimpleIdentifierPtr const& id)
         {
           if (ctx.trace ()) cerr << "name " << id << endl;
+
+          if (member_type_)
+          {
+            SimpleName name (id->lexeme ());
+
+            SemanticGraph::UnionMember& m (
+              ctx.tu ().new_node<SemanticGraph::UnionMember> ());
+
+            ctx.tu ().new_edge<Belongs> (m, *member_type_);
+            ctx.tu ().new_edge<Defines> (ctx.scope (), m, name);
+          }
         }
 
         void Union::
