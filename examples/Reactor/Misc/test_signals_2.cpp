@@ -185,7 +185,7 @@ external_handler (int signum)
 
 #if !defined (HPUX)
 int 
-main (int argc, char *)
+main (int argc, char *[])
 {
   // If argc > 1 then allow multiple handlers per-signal, else just
   // allow 1 handler per-signal.
