@@ -1,3 +1,14 @@
+Fri Oct 31 07:34:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Valuetype/AbstractBase_Invocation_Adapter.h:
+          Removed ; after ACE_UNIMPLEMENTED_FUNC
+
+        * tao/Valuetype/Makefile.bor:
+          Added missing file
+
+        * tao/Messaging/Makefile.bor:
+          Removed obsolete files.
+
 Thu Oct 30 23:23:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* performance-tests/Cubit/TAO/DII_Cubit/Makefile:
@@ -13,26 +24,26 @@ Thu Oct 30 23:23:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  since the DynamicInterface library depends on the Messaging
 	  library.
 
-	* tests/OBV/Supports/Supports_Test_impl.cpp: 
+	* tests/OBV/Supports/Supports_Test_impl.cpp:
 	* tests/Xt_Stopwatch/Stopwatch_display.h:
 
 	  Fixed compilation problems. These showed up only in builds which
-	  used MPC. 
+	  used MPC.
 
 	* tao/Messaging/Asynch_Timeout_Handler.cpp:
 	* tao/Messaging/Asynch_Timeout_Handler.h:
 	* tao/Messaging/Messaging.cpp:
 	* tao/Messaging/Messaging.h:
-	
-	  Cosmetic fixes to get them compiling in minimum_corba builds. 
+
+	  Cosmetic fixes to get them compiling in minimum_corba builds.
 
 	* tao/Messaging/Messaging.mpc:
 
 	  Added the list of files in the project.
-	  
+
 Thu Oct 30 22:57:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/examples/ORT/Makefile: 
+	* orbsvcs/examples/ORT/Makefile:
 
 	  Added misisng libraries.
 
@@ -68,7 +79,7 @@ Thu Oct 30 15:01:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/tests/Notify/performance-tests/Filter/Notify_Sequence_Push_Consumer.cpp:
 	* orbsvcs/tests/Notify/performance-tests/Filter/Notify_Structured_Push_Consumer.cpp:
 
-	  Fixed compilation on platforms where exceptions are turned off. 
+	  Fixed compilation on platforms where exceptions are turned off.
 
 Thu Oct 30 20:45:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
@@ -78,7 +89,6 @@ Thu Oct 30 20:45:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
         * tao/Strategies/SCIOP_Acceptor.cpp:
 
           Cleaned up commented code.  No functional change.
-
 
 Thu Oct 30 20:30:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
@@ -97,7 +107,7 @@ Thu Oct 30 20:30:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 Thu Oct 30 13:50:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/DynamicInterface/DII_Invocation.cpp:
-	* TAO_IDL/ast/ast_string.cpp: 
+	* TAO_IDL/ast/ast_string.cpp:
 
 	  Fixed warnings with g++ 2.95.3.
 
@@ -139,7 +149,7 @@ Thu Oct 30 09:38:01 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 Thu Oct 30 09:28:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Notify/Method_Request_Updates_T.h:
-	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.h: 
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.h:
 
 	  Forward declared CORBA::Environment to get around build problems
 	  in static builds.
