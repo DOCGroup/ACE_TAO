@@ -1,14 +1,29 @@
+Fri Jan  9 13:31:09 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/Makefile.BE:
+        * TAO_IDL/Makefile.FE:
+        * TAO_IDL/TAO_IDL_BE_LIB.dsp:
+        * TAO_IDL/TAO_IDL_FE_LIB.dsp:
+        * TAO_IDL/be_include/TAO_IDL_BE_Export.h:
+        * TAO_IDL/include/TAO_IDL_FE_Export.h:
+        * TAO_IDL/tao_idl.mpc:
+        * TAO_IDL/tao_idl_static.dsp:
+
+          Converted these to key the exporting of symbols based on
+          ACE_AS_STATIC_LIBS instead of TAO_AS_STATIC_LIBS, since it has
+          nothing to do with whether TAO is built statically.
+
 Fri Jan  9 11:51:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/Miop/McastHello/McastHello.h:
+        * orbsvcs/tests/Miop/McastHello/McastHello.h:
 
-	  Fixed compile errors with g++ caused due to improper overriding
-	  of virtual functions.
+          Fixed compile errors with g++ caused due to improper overriding
+          of virtual functions.
 
 Fri Jan  9 11:59:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Message_Block_Data_Iterator.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Message_Block_Data_Iterator.h:
           Added missing includes
 
 Fri Jan  9 11:33:27 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -61,55 +76,55 @@ Thu Jan  8 22:30:13 2004  Frank Hunleth  <frank@hunleth.com>
 
 Thu Jan  8 20:45:01 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/Advanced/ch_8_and_10/icp.cpp:
-	  With BCB use rand else use lrand48 like it was.
+        * examples/Advanced/ch_8_and_10/icp.cpp:
+          With BCB use rand else use lrand48 like it was.
 
 Thu Jan  8 20:30:33 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/Advanced/ch_8_and_10/icp.cpp:
-	  Fixed compile error in BCB build.
+        * examples/Advanced/ch_8_and_10/icp.cpp:
+          Fixed compile error in BCB build.
 
 Thu Jan  8 20:09:16 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.cpp:
-	  Made these files compiling with BCB, thanks to Bala for helping with
-	  this. Let us just see what other compilers find of the solution.
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.cpp:
+          Made these files compiling with BCB, thanks to Bala for helping with
+          this. Let us just see what other compilers find of the solution.
 
 Thu Jan  8 19:06:33 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/FT_ReplicationManager/FT_ReplicationManagerLib_export.h:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManagerLib_export.h:
           Added check for TAO_AS_STATIC_LIBS for setting the export flags for
           proper building of static libraries.
 
 Thu Jan  8 19:03:16 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_ORB_Utils_export.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ORB_Utils_export.h:
           Added check for TAO_AS_STATIC_LIBS for setting the export flags for
           proper building of static libraries.
 
 Thu Jan  8 19:00:49 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.{h,cpp,inl}:
-	  Moved the inline files from the header to a new .inl file and include
-	  that file in the header and implementation file. Also use ACE_INLINE
-	  instead of the c++ inline. Reordered the methods to solve Tru64
-	  warnings.
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.{h,cpp,inl}:
+          Moved the inline files from the header to a new .inl file and include
+          that file in the header and implementation file. Also use ACE_INLINE
+          instead of the c++ inline. Reordered the methods to solve Tru64
+          warnings.
 
 Thu Jan  8 18:37:56 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/Simple/time-date/Alt_Resource_Factory.h:
+        * examples/Simple/time-date/Alt_Resource_Factory.h:
           Added check for TAO_AS_STATIC_LIBS for setting the export flags for
           proper building of static and dynamic libraries.
 
-	* examples/Simple/time-date/Simple_time_date.mpc:
-	  Pass idl flags for generating the export stuff
+        * examples/Simple/time-date/Simple_time_date.mpc:
+          Pass idl flags for generating the export stuff
 
 Thu Jan  8 17:52:38 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/FtRtEvent/Utils/ftrtevent_export.h:
-	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_export.h:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/ftrtevent_export.h:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_export.h:
           Added check for TAO_AS_STATIC_LIBS for setting the export flags for
           proper building of static libraries.
 
@@ -124,21 +139,21 @@ Thu Jan  8 11:11:48 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Jan  8 17:11:33 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/FtRtEvent/ClientORB/ftrt_clientorb_export.h:
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/ftrt_clientorb_export.h:
           Added check for TAO_AS_STATIC_LIBS for setting the export flags for
           proper building of static libraries.
 
 Thu Jan  8 11:03:13 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
 
-	  Fixed a warning due to wrong macro usage.
+          Fixed a warning due to wrong macro usage.
 
 Thu Jan  8 16:46:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAO_IDL/tao_idl.mpc:
-	  Added staticflags += TAO_AS_STATIC_LIBS to the TAO_IDL_EXE project
-	  to fix link errors in the MSVC6 Static build
+        * TAO_IDL/tao_idl.mpc:
+          Added staticflags += TAO_AS_STATIC_LIBS to the TAO_IDL_EXE project
+          to fix link errors in the MSVC6 Static build
 
 Thu Jan  8 07:44:14 2004  Chad Elliott  <elliott_c@ociweb.com>
 
