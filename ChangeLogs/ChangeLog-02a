@@ -1,3 +1,20 @@
+Fri Jan 25 19:58:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Process_Manager.cpp (wait(pid_t, const ACE_Time_Value &,
+          ACE_exitcode *status)): If platform offers sigtimedwait, use it
+          instead of setting ualarm and then doing sigwait. Once ualarm
+          is set, it will fire, even if this method has returned. This
+          causes Solaris processes to die on SIGALRM.
+
+          Also, do not play with the process group ID by default. It's
+          not needed for doing normal signal management by most processes.
+          If processes really have a need to change or set a new process
+          group, they need to do it explicitly by using ACE_OS::setpgid()
+          or by setting a process group ID in an ACE_Process_Options object
+          when spawning processes.
+
+        * tests/Process_Manager_Test.cpp: Added a bit more diagnostic info.
+
 Fri Jan 25 18:29:37 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.x.h: Removed ACE_HAS_SIGTIMEDWAIT. It compiles,
