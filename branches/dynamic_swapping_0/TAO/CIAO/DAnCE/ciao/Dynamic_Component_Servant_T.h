@@ -29,7 +29,7 @@
 
 namespace CIAO
 {
-  template <typename COMP_SERVANT>
+  template <typename COMP_SERVANT, typename COMP_EXEC, typename COMP_EXEC_VAR>
   class Dynamic_Component_Servant
     : public virtual Dynamic_Component_Servant_Base
   {
