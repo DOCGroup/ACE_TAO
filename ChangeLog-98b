@@ -1,4 +1,4 @@
-Fri Oct  9 00:02:01 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+Fri Oct 09 00:02:01 1998  Alexander Babu Arulanthu <alex@cs.wustl.edu>
 
 	* ace/Asynch_IO.cpp: The YET another problem with doing multiple
 	Asynch_Accepts have been fixed. Thanks very much James Hu for
