@@ -1,3 +1,19 @@
+Wed Mar 27 09:23:42 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+
+          Modified gen_throw_spec() to include the entire iterator
+          loop inside the check for the operation belonging to a
+          valuetype. This allows the removal of several similar
+          checks inside the loop and the use of a loop counter.
+
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+
+          Restored the copying of the exception list from a regular
+          operation to the exception holder operation. Apparently
+          this list is used not only for the throw spec generation
+          but also for generation of other operations.
+
 Wed Mar 27 10:03:47 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* tao/Invocation.cpp: Add include of ace/Auto_Ptr.h for Tru64 builds.
