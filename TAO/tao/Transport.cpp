@@ -478,23 +478,15 @@ TAO_Transport::release (TAO_Transport* transport)
     }
 }
 
-// @@ TODO Somebody needs to go throught this code and change those
-// stupidly long calls sequences:
-//
-// this->orb_core_->lane_resources ().transport_cache ().
-//
-// to a single inline function!!
-
 int
 TAO_Transport::recache_transport (TAO_Transport_Descriptor_Interface *desc)
 {
   // First purge our entry
-  this->orb_core_->lane_resources ().transport_cache ().purge_entry (
-    this->cache_map_entry_);
+  this->transport_cache_manager ().purge_entry (this->cache_map_entry_);
 
   // Then add ourselves to the cache
-  return this->orb_core_->lane_resources ().transport_cache ().cache_transport (desc,
-                                                                                this);
+  return this->transport_cache_manager ().cache_transport (desc,
+                                                           this);
 }
 
 void
@@ -502,7 +494,7 @@ TAO_Transport::purge_entry (void)
 {
   if (this->cache_map_entry_ != 0)
     {
-      (void) this->orb_core_->lane_resources ().transport_cache ().purge_entry (this->cache_map_entry_);
+      (void) this->transport_cache_manager ().purge_entry (this->cache_map_entry_);
     }
 }
 
@@ -511,9 +503,9 @@ TAO_Transport::make_idle (void)
 {
   if (this->cache_map_entry_ != 0)
     {
-      return this->orb_core_->lane_resources ().transport_cache ().make_idle (
-               this->cache_map_entry_);
+      return this->transport_cache_manager ().make_idle (this->cache_map_entry_);
     }
+
   return -1;
 }
 
@@ -545,8 +537,7 @@ TAO_Transport::close_connection_shared (int disable_purge,
   // Purge the entry
   if (!disable_purge && this->cache_map_entry_ != 0)
     {
-      this->orb_core_->lane_resources ().transport_cache ().purge_entry (
-        this->cache_map_entry_);
+      this->transport_cache_manager ().purge_entry (this->cache_map_entry_);
     }
 
   if (eh == 0)
@@ -1534,17 +1525,6 @@ TAO_Transport::register_handler (void)
   return this->register_handler_i ();
 }
 
-int
-TAO_Transport::id (void) const
-{
-  return this->id_;
-}
-
-void
-TAO_Transport::id (int id)
-{
-  this->id_ = id;
-}
 
 int
 TAO_Transport::schedule_output_i (void)
