@@ -1,3 +1,11 @@
+Mon Jan 05 00:24:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/FaultTolerance/IOGR/Manager.dsp:
+	* orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.dsp:
+
+	  Fixed the release configurations by adding messaging
+	  library. Looks like they have been busted recently.
+
 Sun Jan  4 23:08:45 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bug_1568_Regression/server.dsp:

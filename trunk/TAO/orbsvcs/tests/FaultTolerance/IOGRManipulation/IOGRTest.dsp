@@ -44,7 +44,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /machine:IX86
-# ADD LINK32 advapi32.lib user32.lib TAO_FT_ServerORB.lib TAO_FT_ClientORB.lib TAO_FTORB_Utils.lib TAO_IORManip.lib TAO_PortableServer.lib TAO_IORInterceptor.lib TAO_Valuetype.lib TAO_ObjRefTemplate.lib TAO.lib ACE.lib /nologo /subsystem:console /machine:I386 /libpath:"../../../orbsvcs" /libpath:"../../../../tao/IORManipulation" /libpath:"../../../../tao/PortableServer" /libpath:"../../../../tao/Valuetype" /libpath:"../../../../tao/IORInterceptor" /libpath:"../../../../tao/ObjRefTemplate" /libpath:"../../../../tao" /libpath:"../../../../../ace"
+# ADD LINK32 advapi32.lib user32.lib TAO_FT_ServerORB.lib TAO_FT_ClientORB.lib TAO_FTORB_Utils.lib TAO_IORManip.lib TAO_Messaging.lib TAO_PortableServer.lib TAO_IORInterceptor.lib TAO_Valuetype.lib TAO_ObjRefTemplate.lib TAO.lib ACE.lib /nologo /subsystem:console /machine:I386 /libpath:"../../../orbsvcs" /libpath:"../../../../tao/IORManipulation" /libpath:"../../../../tao/PortableServer" /libpath:"../../../../tao/Valuetype" /libpath:"../../../../tao/IORInterceptor" /libpath:"../../../../tao/ObjRefTemplate" /libpath:"../../../../tao" /libpath:"../../../../tao/Messaging" /libpath:"../../../../../ace"
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "IOGRTest - Win32 Debug"
