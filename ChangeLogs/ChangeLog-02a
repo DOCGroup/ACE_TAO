@@ -1,73 +1,84 @@
+Fri Mar 03 11:52:10 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/rules.nested.GNU: added -f $(MAKEFILE)
+          to $(MAKE) invocation, to support overriding of the default
+          Makefile name.  Added definition of MAKEFILE, if it is null.
+          Thanks to Wei Chiang <wei.chiang@nokia.com> for suggesting this.
+
+        * include/makeinclude/rules.local.GNU: changed test to see if
+          MAKEFILE macro isn't set from ifndef to ifeq null, for consistency
+          with above addition to rules.nested.GNU.
+
 Thu Mar  2 13:23:39 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/TLI.cpp, TLI_Connector.cpp, TLI_Stream.cpp: Removed comments
-	  regarding the quality of SunOS 4...  Thanks to Malcolm Spence
-	  <spence_m@ociweb.com> for reporting this!
+        * ace/TLI.cpp, TLI_Connector.cpp, TLI_Stream.cpp: Removed comments
+          regarding the quality of SunOS 4...  Thanks to Malcolm Spence
+          <spence_m@ociweb.com> for reporting this!
 
 Wed Mar  1 22:39:04 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Log_Record.cpp:
-          
+
           Thanks to Valery Arkhangorodsky <valerya@servicesoft.com>,
           who took the time to figure out the code in round_up () and
           spotted a mistake in it.
-          
+
         * examples/Shared_Malloc/test_persistence.cpp:
-          
+
           The last bug in my changes.  Changing a pointer to an array
           is not something to be done on a whim.  Needed to change a
           couple of "== 0" to strcpy's, etc.
 
 Wed Mar 01 19:25:39 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Based_Pointer_T.cpp:
-	* ace/Malloc.cpp: Replaced ACE_ASSERT (!"A STRING") with
-	  ACE_ASSERT (0).  Some brain-damaged compilers (i.e., Diab DCC
-	  4.2b) can't handle this.  Thanks to Bob Bouterse
-	  <BBouterse@escient.com> for reporting and fixing this.
+        * ace/Based_Pointer_T.cpp:
+        * ace/Malloc.cpp: Replaced ACE_ASSERT (!"A STRING") with
+          ACE_ASSERT (0).  Some brain-damaged compilers (i.e., Diab DCC
+          4.2b) can't handle this.  Thanks to Bob Bouterse
+          <BBouterse@escient.com> for reporting and fixing this.
 
 Wed Mar  1 16:29:55 2000  Ossama Othman  <ossama@uci.edu>
 
-	* configure.in (ACE_HAS_ALT_CUSERID):
+        * configure.in (ACE_HAS_ALT_CUSERID):
 
-	  Wrapped the test for this macro with
-	  ACE_CONVERT_WARNINGS_TO_ERRORS to cause implicit prototype
-	  declaration warnings to be converted to errors when using
-	  gcc < 2.95.2 (including egcs <= 1.1.x).  This fixes a warning on
-	  Red Hat 6.1 systems.  Thanks to Rich Seibel
-	  <seibel_r@ociweb.com> for providing a fix.
+          Wrapped the test for this macro with
+          ACE_CONVERT_WARNINGS_TO_ERRORS to cause implicit prototype
+          declaration warnings to be converted to errors when using
+          gcc < 2.95.2 (including egcs <= 1.1.x).  This fixes a warning on
+          Red Hat 6.1 systems.  Thanks to Rich Seibel
+          <seibel_r@ociweb.com> for providing a fix.
 
 Tue Feb 29 23:36:29 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/README:
-	* ace/Thread_Manager.h:
-	* ace/Thread_Manager.i:
-	* ace/Thread_Manager.cpp (append_thr): Moved thread descriptor
-	  reset statement into reset.
+        * ace/README:
+        * ace/Thread_Manager.h:
+        * ace/Thread_Manager.i:
+        * ace/Thread_Manager.cpp (append_thr): Moved thread descriptor
+          reset statement into reset.
 
-	  (reset): Added reset methods to
-	  ACE_Thread_Descriptor and ACE_Thread_Descriptor_Base to reset
-	  Thread_Descriptor back to its initialized state.
+          (reset): Added reset methods to
+          ACE_Thread_Descriptor and ACE_Thread_Descriptor_Base to reset
+          Thread_Descriptor back to its initialized state.
 
-	  (ACE_Thread_Descriptor): Removed reset statements for
-	  cleanup_info_.  They are handle by ACE_Cleanup_Info's contructor
-	  already.
+          (ACE_Thread_Descriptor): Removed reset statements for
+          cleanup_info_.  They are handle by ACE_Cleanup_Info's contructor
+          already.
 
-	  (acquire_release): Added a macro
-	  ACE_THREAD_MANAGER_USES_SAFE_SPAWN to disable double-checked
-	  locking.  When this macro is defined, a spawned thread will
-	  always acquire the release the <sync_> lock before starting any
-	  other initialization.  This should avoid a potential race
-	  condition on some platforms (i.e., DEC Alpha, Marced) using
-	  aggressive read/write reordering strategies.
+          (acquire_release): Added a macro
+          ACE_THREAD_MANAGER_USES_SAFE_SPAWN to disable double-checked
+          locking.  When this macro is defined, a spawned thread will
+          always acquire the release the <sync_> lock before starting any
+          other initialization.  This should avoid a potential race
+          condition on some platforms (i.e., DEC Alpha, Marced) using
+          aggressive read/write reordering strategies.
 
-	  (spawn_i): Call <reset> method on the "new" thread descriptor
-	  after acquiring a thread descriptor from the freelist.  This
-	  change moved most of the thread descriptor initialization code
-	  from append_thr into <reset>, before spawning the thread.
+          (spawn_i): Call <reset> method on the "new" thread descriptor
+          after acquiring a thread descriptor from the freelist.  This
+          change moved most of the thread descriptor initialization code
+          from append_thr into <reset>, before spawning the thread.
 
-	  Thanks to John Hickin <hickin@nortelnetworks.com> for motivating
-	  these changes.
+          Thanks to John Hickin <hickin@nortelnetworks.com> for motivating
+          these changes.
 
 Tue Feb 29 21:18:12 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -92,15 +103,15 @@ Tue Feb 29 21:18:12 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Tue Feb 29 16:40:43 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/CDR_Stream.h:
-	* ace/CDR_Stream.i:
-	* ace/CDR_Stream.cpp:
-	  Fixed alignment problems when inserting message blocks without
-	  copying.  The same fix was a good excuse to optimize the
-	  OutputCDR class, as described in bug #160.
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.i:
+        * ace/CDR_Stream.cpp:
+          Fixed alignment problems when inserting message blocks without
+          copying.  The same fix was a good excuse to optimize the
+          OutputCDR class, as described in bug #160.
 
-	* ace/OS.h:
-	  Use the ACE_ prefix in a couple of naked macros.
+        * ace/OS.h:
+          Use the ACE_ prefix in a couple of naked macros.
 
         * ace/ACE.cpp:
           Fixed the crc32 routine, it seems we inherited a bug from the
@@ -114,9 +125,9 @@ Tue Feb 29 16:23:41 2000  Steve Huston  <shuston@riverace.com>
 
 Tue Feb 29 13:48:24 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.h: Updated a comment about using ACE_Malloc for class-specific
-	  allocations.  Thanks to Boris Sukholitko <boris@webglide.com>
-	  for reporting this.
+        * ace/OS.h: Updated a comment about using ACE_Malloc for class-specific
+          allocations.  Thanks to Boris Sukholitko <boris@webglide.com>
+          for reporting this.
 
 Tue Feb 29 08:48:28 2000  Darrell Brunsch <brunsch@uci.edu>
 
