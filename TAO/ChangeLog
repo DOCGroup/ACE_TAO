@@ -1,3 +1,8 @@
+Fri Aug 19 10:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.h:
+          Removed not allowed comma at end of enum list
+
 Fri Aug 20 02:15:42 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:
@@ -11,9 +16,7 @@ Fri Aug 20 09:27:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
         * tests/Bug_1670_Regression/Bug_1670_Regression.mpc:
         * tests/Bug_1568_Regression/Bug_1568_Regression.mpc:
         * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/GroupRef_Manipulation.mpc:
-
           Removed outdated -Gv IDL option according to [Bug 1908].
-
 
 Thu Aug 19 23:28:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
