@@ -585,7 +585,7 @@ ACE_InputCDR::ACE_InputCDR (const ACE_Message_Block *data,
   // We must copy the contents of <data> into the new buffer, but
   // respecting the alignment.
   ptr_arith_t curalign =
-    ptr_arith_t(data->wr_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
+    ptr_arith_t(data->rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
   ptr_arith_t tmpalign =
     ptr_arith_t(this->start_.rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
   int offset = curalign - tmpalign;
