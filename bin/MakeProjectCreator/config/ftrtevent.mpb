@@ -5,4 +5,5 @@ project : ftorbutils, rtevent, naming {
   after     += FtRtEvent
   libs      += TAO_FtRtEvent
   tagchecks += FtRtEvent
+  avoids    += minimum_corba
 }
