@@ -20,6 +20,10 @@ SUBDIRS = \
 ##        ASNMP \
 ##        websvcs
 
+if BUILD_KOKYU
+SUBDIRS += Kokyu
+endif
+
 if BUILD_TAO
 SUBDIRS += TAO
 endif
