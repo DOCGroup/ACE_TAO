@@ -1,7 +1,7 @@
 // $Id$
 
 // ============================================================================
- //
+//
 // = LIBRARY
 //    tests
 // 
@@ -24,6 +24,8 @@
 // THE FOLLOWING ARE ONLY FOR DEBUGGING PURPOSES AND SHOULD BE USED
 // WITH EXTREME CAUTION!!!!
 
+#define private public
+#define protected public
 #include "ace/OS.h"
 #include "ace/Thread.h"
 #include "ace/Service_Config.h"
@@ -31,12 +33,9 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Acceptor.h"
 #include "ace/Handle_Set.h"
-#define private public
-#define protected public
 #include "ace/Connector.h"
 #include "ace/Strategies.h"
 #include "ace/Strategies_T.h"
-#include "ace/Hash_Map_Manager.h"
 #undef private
 #undef protected
 #include "test_config.h"
@@ -209,21 +208,19 @@ Svc_Handler::close (u_long side)
 
 // ****************************************
 
+// Template specializations!
 
-// THESE SHOULD GO IN THE INET_Addr.h!!!
 size_t
-hash(const ACE_INET_Addr& addr)
+ACE_Hash_Addr<ACE_INET_Addr, Svc_Handler>::hash_i (const ACE_INET_Addr &addr) const
 {
-  size_t v = addr.get_ip_address() + addr.get_port_number();
-  return v;
+  return addr.get_ip_address () + addr.get_port_number ();
 }
 
 int
-compare(const ACE_INET_Addr& a1, const ACE_INET_Addr& a2)
+ACE_Hash_Addr<ACE_INET_Addr, Svc_Handler>::compare_i (const ACE_INET_Addr &a1, 
+						      const ACE_INET_Addr &a2) const
 {
-  int equal = (a1 == a2);
-  int ret = equal ? 0 : 1;
-  return ret;
+  return a1 == a2;
 }
 
 // ****************************************
@@ -296,44 +293,50 @@ blocking_connect (CONNECTOR &con, const ACE_INET_Addr &server_addr)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close"));
 }
 
-typedef Hash_Addr<ACE_INET_Addr,Svc_Handler> EXT_ID;
-typedef Svc_Handler* INT_ID;
-typedef ACE_Hash_Map_Entry<EXT_ID,INT_ID> MAP_ENTRY;
+typedef ACE_Hash_Addr<ACE_INET_Addr, Svc_Handler> EXT_ID;
+typedef Svc_Handler *INT_ID;
+typedef ACE_Hash_Map_Entry<EXT_ID, INT_ID> MAP_ENTRY;
 
-
-void
-dump_map(ACE_Hash_Map_Manager<EXT_ID,INT_ID,ACE_Null_Mutex>& hashmap)
+static void
+dump_map (ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_Null_Mutex> &hashmap)
 {
-  FILE* fp = stderr;
-  fprintf(fp, "Dumping hash map at 0x%p (cur_size_=%d,total_size_=%d,table_=0x%p)\n",
-	 &hashmap, hashmap.cur_size_, hashmap.total_size_, hashmap.table_);
+  ACE_DEBUG ((LM_DEBUG,
+	      "Dumping hash map at 0x%p (cur_size_ = %d, total_size_ = %d, table_ = 0x%p)\n",
+	      &hashmap, hashmap.cur_size_, hashmap.total_size_, hashmap.table_));
+
   for (size_t slot = 0; slot < hashmap.total_size_; slot++)
     {
       if (hashmap.table_[slot] == hashmap.sentinel_)
 	continue;
       
-      fprintf(fp,"slot %-4d: ", slot);
-      MAP_ENTRY* temp;
-      for (temp = hashmap.table_[slot];
+      ACE_DEBUG ((LM_DEBUG, "slot %-4d: ", slot));
+
+      for (MAP_ENTRY *temp = hashmap.table_[slot];
 	   temp != hashmap.sentinel_;
 	   temp = temp->next_)
 	{
 	  EXT_ID& key = temp->ext_id_;
 	  INT_ID& val = temp->int_id_;
 
-	  fprintf(fp,"(%s,%d,%sin use,0x%p), ",
-		 key.get_host_name(), key.get_port_number(), val->in_use() ? "" : "not ", val);
+	  ACE_DEBUG ((LM_DEBUG, "(%s,%d,%sin use,0x%p), ",
+		      key.get_host_name (), 
+		      key.get_port_number (), 
+		      val->in_use() ? "" : "not ", val));
 	}
-      fprintf(fp,"SENTINEL(0x%p)\n", hashmap.sentinel_);
+
+      ACE_DEBUG ((LM_DEBUG, "SENTINEL (0x%p)\n", hashmap.sentinel_));
     }
-  fprintf(fp,"End of dump\n");
+
+  ACE_DEBUG ((LM_DEBUG, "end of dump\n"));
 }
 
-void
-dump(STRAT_CONNECTOR& con)
+static void
+dump (STRAT_CONNECTOR &con)
 {
-  CACHED_CONNECT_STRATEGY* csp = (CACHED_CONNECT_STRATEGY*)con.connect_strategy_;
-  dump_map(csp->connection_cache_);
+  CACHED_CONNECT_STRATEGY* csp = 
+    (CACHED_CONNECT_STRATEGY *) con.connect_strategy_;
+
+  dump_map (csp->connection_cache_);
 }
 
 // This function runs the more sophisticated tests involving the
@@ -539,14 +542,14 @@ main (int, char *[])
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_Null_Mutex>;
-template class Hash_Addr<ACE_INET_Addr, Svc_Handler>;
+template class ACE_Hash_Addr<ACE_INET_Addr, Svc_Handler>;
 template class ACE_NOOP_Creation_Strategy<Svc_Handler>;
 template class ACE_Concurrency_Strategy<Svc_Handler>;
 template class ACE_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Creation_Strategy<Svc_Handler>;
-template class ACE_Hash_Map_Entry<Hash_Addr<ACE_INET_Addr,Svc_Handler>, Svc_Handler *>;
-template class ACE_Hash_Map_Manager<Hash_Addr<ACE_INET_Addr,Svc_Handler>, Svc_Handler *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<ACE_Hash_Addr<ACE_INET_Addr,Svc_Handler>, Svc_Handler *>;
+template class ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr,Svc_Handler>, Svc_Handler *, ACE_Null_Mutex>;
 template class ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *>;
 template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
@@ -555,11 +558,11 @@ template class ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Svc_Tuple<Svc_Handler>;
 
-#  if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_THREADS)
 template class ACE_Guard<ACE_SYNCH_RW_MUTEX>;
 template class ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>;
 template class ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>;
-#  else
+#else
   // These are specialized in libACE if ACE doesn't have threads.
-#  endif /* ACE_HAS_THREADS */
+#endif /* ACE_HAS_THREADS */
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
