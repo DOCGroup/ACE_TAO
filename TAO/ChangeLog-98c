@@ -1,5 +1,16 @@
 Thu Oct  8 17:37:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* tao/ORB.h: 
+	* tao/Typecode.h: 
+	* tao/Typecode.cpp: 
+	* tao/Typecode_Constants.h: 
+	* tao/Typecode_Constants.cpp: 
+	  Moved the CORBA::TypeCode::_tc_Bounds and
+	  CORBA::TypeCode::_tc_Kind typecodes to their proper namespace.
+
+	* docs/releasenotes/TODO.html: 
+	  Updated some tasks related to the last change.
+
 	* tao/Connect.cpp: 
 	  If an exception is thrown while handling a oneway request we
 	  just ignore it, unless the debugging flags in the ORB are

@@ -21,7 +21,7 @@
 ACE_RCSID(tao, Typecode, "$Id$")
 
 CORBA_TypeCode::Bounds::Bounds (void)
-  : CORBA_UserException (CORBA::_tc_Bounds)
+  : CORBA_UserException (CORBA::TypeCode::_tc_Bounds)
 {
 }
 
@@ -49,7 +49,7 @@ CORBA_TypeCode::Bounds::_is_a (const char* interface_id) const
 }
 
 CORBA_TypeCode::BadKind::BadKind (void)
-  : CORBA_UserException (CORBA::_tc_BadKind)
+  : CORBA_UserException (CORBA::TypeCode::_tc_BadKind)
 {
 }
 
@@ -197,9 +197,9 @@ CORBA_TypeCode::~CORBA_TypeCode (void)
 // Returns true if the two unaliased typecodes are equal.
 CORBA::Boolean
 CORBA_TypeCode::equivalent (CORBA::TypeCode_ptr tc,
-			    CORBA::Environment &env)
+			    CORBA::Environment &env) const
 {
-  CORBA::TypeCode_ptr rcvr = this;
+  const CORBA::TypeCode* rcvr = this;
 
   if (this->kind_ == CORBA::tk_alias)
     {

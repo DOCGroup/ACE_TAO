@@ -61,25 +61,25 @@ CORBA::TypeCode_ptr CORBA::_tc_wstring;
 // Various things that can be passed as "general" parameters:
 // Any, TypeCode_ptr, Principal_ptr, Object_ptr
 //
-CORBA::TypeCode_ptr CORBA::_tc_any;
-CORBA::TypeCode_ptr CORBA::_tc_TypeCode;
-CORBA::TypeCode_ptr CORBA::_tc_Principal;
-CORBA::TypeCode_ptr CORBA::_tc_Object;
+CORBA::TypeCode_ptr CORBA::_tc_any = 0;
+CORBA::TypeCode_ptr CORBA::_tc_TypeCode = 0;
+CORBA::TypeCode_ptr CORBA::_tc_Principal = 0;
+CORBA::TypeCode_ptr CORBA::_tc_Object = 0;
 // Two typecodes for exceptions
-CORBA::TypeCode_ptr CORBA::_tc_Bounds;
-CORBA::TypeCode_ptr CORBA::_tc_BadKind;
+CORBA::TypeCode_ptr CORBA::TypeCode::_tc_Bounds = 0;
+CORBA::TypeCode_ptr CORBA::TypeCode::_tc_BadKind = 0;
 // Some more typecodes in the CORBA namespace. We keep adding to this list as
 // we find more and more things being introduced to the CORBA namespace
-CORBA::TypeCode_ptr CORBA::_tc_Policy;
-CORBA::TypeCode_ptr CORBA::_tc_PolicyList;
-CORBA::TypeCode_ptr CORBA::_tc_Current;
-CORBA::TypeCode_ptr CORBA::_tc_Identifier;
-CORBA::TypeCode_ptr CORBA::_tc_RepositoryId;
-CORBA::TypeCode_ptr CORBA::_tc_PolicyType;
+CORBA::TypeCode_ptr CORBA::_tc_Policy = 0;
+CORBA::TypeCode_ptr CORBA::_tc_PolicyList = 0;
+CORBA::TypeCode_ptr CORBA::_tc_Current = 0;
+CORBA::TypeCode_ptr CORBA::_tc_Identifier = 0;
+CORBA::TypeCode_ptr CORBA::_tc_RepositoryId = 0;
+CORBA::TypeCode_ptr CORBA::_tc_PolicyType = 0;
 // Internal to TAO ORB
-CORBA::TypeCode_ptr TC_opaque;
-CORBA::TypeCode_ptr TC_ServiceContextList;
-CORBA::TypeCode_ptr TC_completion_status;
+CORBA::TypeCode_ptr TC_opaque = 0;
+CORBA::TypeCode_ptr TC_ServiceContextList = 0;
+CORBA::TypeCode_ptr TC_completion_status = 0;
 
 // initialize all the ORB owned TypeCode constants. This routine will be
 // invoked by the ORB_init method
@@ -204,10 +204,10 @@ TAO_TypeCodes::init (void)
     0, 0, 0, 0            // no members to this typecode
   };
 
-  CORBA::_tc_Bounds = new CORBA::TypeCode (CORBA::tk_except,
-                                           sizeof tc_buf_Bounds,
-                                           tc_buf_Bounds,
-                                           1);
+  CORBA::TypeCode::_tc_Bounds = new CORBA::TypeCode (CORBA::tk_except,
+                                                     sizeof tc_buf_Bounds,
+                                                     tc_buf_Bounds,
+                                                     1);
 
   static char tc_buf_BadKind [] =
   {
@@ -226,10 +226,10 @@ TAO_TypeCodes::init (void)
     0, 0, 0, 0            // no members to this typecode
   };
 
-  CORBA::_tc_BadKind = new CORBA::TypeCode (CORBA::tk_except,
-                                            sizeof tc_buf_BadKind,
-                                            tc_buf_BadKind,
-                                            1);
+  CORBA::TypeCode::_tc_BadKind = new CORBA::TypeCode (CORBA::tk_except,
+                                                      sizeof tc_buf_BadKind,
+                                                      tc_buf_BadKind,
+                                                      1);
 
   static const CORBA::Long _oc_CORBA_Identifier[] =
   {
@@ -486,9 +486,9 @@ TAO_TypeCodes::fini (void)
   CORBA::release (CORBA::_tc_Object);
 
   // other ORB owned typecodes
-  CORBA::release (CORBA::_tc_Bounds);
+  CORBA::release (CORBA::TypeCode::_tc_Bounds);
 
-  CORBA::release (CORBA::_tc_BadKind);
+  CORBA::release (CORBA::TypeCode::_tc_BadKind);
 
   // additional typecodes in the CORBA namespace
   CORBA::release (CORBA::_tc_Policy);
