@@ -2255,7 +2255,7 @@ attribute:
 	      AST_Type *tp = d->compose($4);
  	      if (tp == NULL)
 	 	continue;
-	      a = idl_global->gen()->create_attribute($1, tp, d->name(), p);
+	      a = idl_global->gen()->create_attribute($1, tp, (UTL_IdList *) d->name()->copy (), p);
 	      /*
 	       * Add one attribute to the enclosing scope
 	       */
@@ -2489,7 +2489,7 @@ parameter :
 	  if ($3 != NULL && $5 != NULL && s != NULL) {
 	    AST_Type *tp = $5->compose($3);
 	    if (tp != NULL) {
-	      a = idl_global->gen()->create_argument($1, tp, $5->name(), p);
+	      a = idl_global->gen()->create_argument($1, tp, (UTL_IdList *) $5->name ()->copy (), p);
 	      (void) s->fe_add_argument(a);
 	    }
 	  }
