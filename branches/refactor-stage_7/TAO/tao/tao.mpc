@@ -107,14 +107,12 @@ project(TAO) : acelib, taoversion, core, tao_output {
       Protocols_Hooks.cpp
       Default_Protocols_Hooks.cpp
       Messaging_SyncScopeC.cpp
-      Invocation.cpp
       Invocation_Endpoint_Selectors.cpp
       Asynch_Invocation.cpp
       operation_details.cpp
       ClientRequestInfo.cpp
       ClientRequestInfo_i.cpp
       RequestInfo_Util.cpp
-      ClientInterceptorAdapter.cpp
       PI_ForwardC.cpp
       PortableInterceptorC.cpp
       PICurrent.cpp
