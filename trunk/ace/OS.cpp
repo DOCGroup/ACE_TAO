@@ -4613,6 +4613,33 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
 }
 # endif /* ! ACE_HAS_THREADS || ACE_LACKS_RWLOCK_T */
 
+void
+ACE_OS::exit (int status)
+{
+  // ACE_TRACE ("ACE_OS::exit");
+
+#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) && !defined (ACE_HAS_WINCE) && !defined (ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER)
+  // Shut down the ACE_Object_Manager.  With
+  // ACE_HAS_NONSTATIC_OBJECT_MANAGER, the ACE_Object_Manager is
+  // instantiated on the main's stack.  ::exit () doesn't destroy it.
+  ACE_Object_Manager::fini ();
+#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
+
+#if !defined (ACE_HAS_WINCE)
+# if defined (ACE_WIN32)
+  ::ExitProcess ((UINT) status);
+# elif defined (ACE_PSOSIM)
+  ::u_exit (status);
+# else
+  ::exit (status);
+# endif /* ACE_WIN32 */
+#else
+  // @@ This is not exactly the same as ExitProcess.  But this is the
+  // closest one I can get.
+  ::TerminateProcess (::GetCurrentProcess (), status);
+#endif /* ACE_HAS_WINCE */
+}
+
 # if defined (ACE_PSOS)
 
 // bit masks and shifts for prying info out of the pSOS time encoding
@@ -4961,4 +4988,24 @@ ACE_CE_Bridge::write_msg (CString *s)
                                                     this->notification_),
                                           (long)((void *) s));
 }
+
+//          **** Warning ****
+// You should not use the following function under CE at all.  This
+// function is used to make Svc_Conf_l.cpp compile under WinCE.  It
+// might not do what it is expected to do under regular environments.
+//          **** Warning ****
+
+void
+exit (int status)
+{
+#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) && !defined (ACE_HAS_WINCE) && !defined (ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER)
+  // Shut down the ACE_Object_Manager.  With
+  // ACE_HAS_NONSTATIC_OBJECT_MANAGER, the ACE_Object_Manager is
+  // instantiated on the main's stack.  ::exit () doesn't destroy it.
+  ACE_Object_Manager::fini ();
+#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
+
+  ACE_OS::exit (status);
+}
+
 # endif /* ACE_HAS_WINCE */
