@@ -17,11 +17,12 @@
 #ifndef ACE_QOS_SESSION_IMPL_H
 #define ACE_QOS_SESSION_IMPL_H
 
+#include "ace/QoS_Session.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/QoS_Session.h"
 
 #if defined (ACE_HAS_RAPI)
 #include "rapi/rapi_lib.h"
