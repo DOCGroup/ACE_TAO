@@ -48,47 +48,37 @@ public:
   ~TAO_ORB_Parameters (void);
   // Destructor.
 
+  const ACE_INET_Addr &addr (void) const;
   void addr (const ACE_INET_Addr &addr);
-  // Set the address on which we're listening.
+  // Set/Get the address on which we're listening.
 
-  const ACE_INET_Addr &addr (void);
-  // Get the address on which we're listening.
+  const char *host (void) const;
+  void host (const ACE_CString &host);
+  // Set/Get the hostname.
 
-  void name_service_ior (CORBA::String ns);
-  // Set the IOR of our name service.
+  const char *name_service_ior (void) const;
+  void name_service_ior (const ACE_CString &ns);
+  // Set/Get the IOR of our name service.
 
-  CORBA::String name_service_ior (void);
-  // Get the IOR of our name service.
-
+  CORBA::UShort name_service_port (void) const;
   void name_service_port (CORBA::UShort port);
-  // Set the port of our name service.
+  // Set/Get the port of our name service.
 
-  CORBA::UShort name_service_port (void);
-  // Get the port of our name service.
+  const char *trading_service_ior (void) const;
+  void trading_service_ior (const ACE_CString &ns);
+  // Set/Get the IOR of our trading service.
 
-  void trading_service_ior (CORBA::String ns);
-  // Set the IOR of our trading service.
-
-  CORBA::String trading_service_ior (void);
-  // Get the IOR of our trading service.
-
+  CORBA::UShort trading_service_port (void) const;
   void trading_service_port (CORBA::UShort port);
-  // Set the port of our trading service.
+  // Set/Get the port of our trading service.
 
-  CORBA::UShort trading_service_port (void);
-  // Get the port of our trading service.
-
-  int sock_rcvbuf_size (void);
-  // Get the size to be used for a socket's receive buffer.
-
+  int sock_rcvbuf_size (void) const;
   void sock_rcvbuf_size (int);
-  // Set the size to be used for a socket's receive buffer.
+  // Set/Get the size to be used for a socket's receive buffer.
 
-  int sock_sndbuf_size (void);
-  // Get the size to be used for a socket's send buffer.
-
+  int sock_sndbuf_size (void) const;
   void sock_sndbuf_size (int);
-  // Set the size to be used for a socket's send buffer.
+  // Set/Get the size to be used for a socket's send buffer.
 
   int cdr_default_size (void) const;
   void cdr_default_size (int);
@@ -126,13 +116,16 @@ private:
   ACE_INET_Addr addr_;
   // host + port number we are listening on
 
-  CORBA::String name_service_ior_;
+  ACE_CString host_;
+  // host name
+  
+  ACE_CString name_service_ior_;
   // The IOR of our configured Naming Service.
 
   CORBA::UShort name_service_port_;
   // The port number of our configured Naming Service.
 
-  CORBA::String trading_service_ior_;
+  ACE_CString trading_service_ior_;
   // The IOR of our configured Trading Service.
 
   CORBA::UShort trading_service_port_;

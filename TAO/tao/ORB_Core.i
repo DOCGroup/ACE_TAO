@@ -94,12 +94,6 @@ TAO_ORB_Core::acceptor (void)
   return TAO_OC_RETRIEVE (acceptor);
 }
 
-ACE_INLINE ACE_INET_Addr&
-TAO_ORB_Core::addr (void)
-{
-  return *TAO_OC_RETRIEVE (addr);
-}
-
 #undef TAO_OC_RETRIEVE
 #undef TAO_TRF
 

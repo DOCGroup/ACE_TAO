@@ -241,12 +241,17 @@ CORBA_ORB::open (void)
     // Need to return an error somehow!!  Maybe set do_exit?
     return -1;
 
-  if (ocp->acceptor ()->acceptor ().get_local_addr (ocp->addr ()) == -1)
+  // The following step is necessary since the user may have specified
+  // a 0 for a port number.  Once we open the acceptor, we can recheck
+  // the address and get the accurate port number.
+  ACE_INET_Addr new_address;
+  if (ocp->acceptor ()->acceptor ().get_local_addr (new_address) == -1)
     return -1;
 
-  ocp->acceptor ()->acceptor ().enable (ACE_CLOEXEC);
+  // Reset the address
+  ocp->orb_params ()->addr (new_address);
 
-  ocp->orb_params ()->addr (ocp->addr ());
+  ocp->acceptor ()->acceptor ().enable (ACE_CLOEXEC);
   ocp->add_to_collocation_table ();
 
   return 0;
@@ -451,50 +456,53 @@ CORBA_ORB::resolve_name_service (ACE_Time_Value *timeout)
 
   // First check to see if we've already initialized this.
   if (this->name_service_ != CORBA_Object::_nil ())
-    // @@ Someone please double-check this ;-)
-    return_value = this->name_service_;
-
-  char *name_service_ior =
-    TAO_ORB_Core_instance ()->orb_params ()->name_service_ior ();
-
-  // Second, check to see if the user has give us a parameter on
-  // the command-line.
-  if (name_service_ior == 0)
-    // Third, check to see if the user has an environment variable.
-    name_service_ior = ACE_OS::getenv ("NameServiceIOR");
-
-  if (name_service_ior != 0)
     {
-      this->name_service_ =
-        this->string_to_object (name_service_ior, env);
-
-      // check for errors
-      if (env.exception () != 0)
-        this->name_service_ = CORBA_Object::_nil ();
-
+      // @@ Someone please double-check this ;-)
+      return_value = this->name_service_;
     }
   else
     {
-      // First, determine if the port was supplied on the command line
-      u_short port =
-        TAO_ORB_Core_instance ()->orb_params ()->name_service_port ();
+      ACE_CString name_service_ior =
+        TAO_ORB_Core_instance ()->orb_params ()->name_service_ior ();
 
-      if (port == 0)
+      // Second, check to see if the user has give us a parameter on
+      // the command-line.
+      if (name_service_ior.length () == 0)
+        // Third, check to see if the user has an environment variable.
+        name_service_ior = ACE_OS::getenv ("NameServiceIOR");
+
+      if (name_service_ior.length () != 0)
         {
-          // Look for the port among our environment variables.
-          const char *port_number =
-            ACE_OS::getenv ("NameServicePort");
+          this->name_service_ =
+            this->string_to_object (name_service_ior.c_str (), env);
 
-          if (port_number != 0)
-            port = ACE_OS::atoi (port_number);
-          else
-            port = TAO_DEFAULT_NAME_SERVER_REQUEST_PORT;
+          // check for errors
+          if (env.exception () != 0)
+            this->name_service_ = CORBA_Object::_nil ();
         }
-
-      this->name_service_ =
-        this->multicast_to_service (TAO_SERVICEID_NAMESERVICE,
-                                    port,
-                                    timeout);
+      else
+        {
+          // First, determine if the port was supplied on the command line
+          u_short port =
+            TAO_ORB_Core_instance ()->orb_params ()->name_service_port ();
+          
+          if (port == 0)
+            {
+              // Look for the port among our environment variables.
+              const char *port_number =
+                ACE_OS::getenv ("NameServicePort");
+              
+              if (port_number != 0)
+                port = ACE_OS::atoi (port_number);
+              else
+                port = TAO_DEFAULT_NAME_SERVER_REQUEST_PORT;
+            }
+          
+          this->name_service_ =
+            this->multicast_to_service (TAO_SERVICEID_NAMESERVICE,
+                                        port,
+                                        timeout);
+        }
     }
 
   // Return ior.
@@ -510,24 +518,26 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout)
 
   // First check to see if we've already initialized this.
   if (this->trading_service_ != CORBA_Object::_nil ())
-    // @@ Someone please double-check this ;-)
-    return_value = this->trading_service_;
+    {
+      // @@ Someone please double-check this ;-)
+      return_value = this->trading_service_;
+    }
   else
     {
-      char *trading_service_ior =
+      ACE_CString trading_service_ior =
         TAO_ORB_Core_instance ()->orb_params ()->trading_service_ior ();
 
       // Second, check to see if the user has give us a parameter on
       // the command-line.
-      if (trading_service_ior == 0)
+      if (trading_service_ior.length () == 0)
         // Third, check to see if the user has an environment variable.
         trading_service_ior = ACE_OS::getenv ("TradingServiceIOR");
 
-      if (trading_service_ior != 0)
+      if (trading_service_ior.length () != 0)
         {
           this->trading_service_ =
-            this->string_to_object (trading_service_ior, env);
-
+            this->string_to_object (trading_service_ior.c_str (), env);
+          
           // check for errors
           if (env.exception () != 0)
             this->trading_service_ = CORBA_Object::_nil ();
@@ -537,25 +547,25 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout)
           // First, determine if the port was supplied on the command line
           u_short port =
             TAO_ORB_Core_instance ()->orb_params ()->trading_service_port ();
-
+          
           if (port == 0)
             {
               // Look for the port among our environment variables.
               const char *port_number = ACE_OS::getenv ("TradingServicePort");
-
+              
               if (port_number != 0)
                 port = ACE_OS::atoi (port_number);
               else
                 port = TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT;
             }
-
+          
           this->trading_service_ =
             this->multicast_to_service (TAO_SERVICEID_TRADINGSERVICE,
                                         port,
                                         timeout);
         }
     }
-
+  
   return_value = this->trading_service_;
   return CORBA_Object::_duplicate (return_value);
 }
@@ -720,10 +730,13 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
   else
     id = 0;
 
+  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
   IIOP_Object *data = 0;
   data = new IIOP_Object (id,
-                          IIOP::Profile (TAO_ORB_Core_instance ()->orb_params ()->addr (),
-                                         key));
+                          orb_core->orb_params ()->host (),
+                          orb_core->orb_params ()->addr ().get_port_number (),
+                          key,
+                          orb_core->orb_params ()->addr ());
   if (data == 0)
     env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 

@@ -265,7 +265,7 @@ iiop_string_to_object (const char *string,
     }
 
   data->profile.port = (short) ACE_OS::atoi (start);
-  data->profile.object_addr (0);
+  data->profile.reset_object_addr ();
   start = ++cp;
 
   // Parse the object key
@@ -336,8 +336,8 @@ IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
 #if 0
       ACE_DEBUG ((LM_DEBUG,
 		  "IIOP_ORB: checking collocation for <%s:%d>\n",
-		  iiopobj->profile.object_addr().get_host_name(),
-		  iiopobj->profile.object_addr().get_port_number()));
+		  iiopobj->profile.object_addr ().get_host_name (),
+		  iiopobj->profile.object_addr ().get_port_number ()));
 #endif
       CORBA::Environment env;
       TAO_ObjectKey_var objkey = iiopobj->key (env);
@@ -347,15 +347,15 @@ IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
 #if 0
           ACE_DEBUG ((LM_DEBUG,
                       "IIOP_ORB: cannot find key for <%s:%d>\n",
-                      iiopobj->profile.object_addr().get_host_name(),
-                      iiopobj->profile.object_addr().get_port_number()));
+                      iiopobj->profile.object_addr ().get_host_name (),
+                      iiopobj->profile.object_addr ().get_port_number ()));
 #endif
           return 0;
         }
 
       // Check if the object requested is a collocated object.
       TAO_POA *poa = TAO_ORB_Core_instance ()->
-        get_collocated_poa (iiopobj->profile.object_addr());
+        get_collocated_poa (iiopobj->profile.object_addr ());
 
       if (poa != 0)
         {
@@ -366,8 +366,8 @@ IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
 #if 0
               ACE_DEBUG ((LM_DEBUG,
                           "IIOP_ORB: cannot find servant for <%s:%d>\n",
-                          iiopobj->profile.object_addr().get_host_name(),
-                          iiopobj->profile.object_addr().get_port_number()));
+                          iiopobj->profile.object_addr ().get_host_name (),
+                          iiopobj->profile.object_addr ().get_port_number ()));
 #endif
               return 0;
             }
@@ -375,8 +375,8 @@ IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
 #if 0
           ACE_DEBUG ((LM_DEBUG,
                       "IIOP_ORB: object at <%s:%d> is collocated\n",
-                      iiopobj->profile.object_addr().get_host_name(),
-                      iiopobj->profile.object_addr().get_port_number()));
+                      iiopobj->profile.object_addr ().get_host_name (),
+                      iiopobj->profile.object_addr ().get_port_number ()));
 #endif
           return servant;
         }

@@ -106,6 +106,7 @@ ACE_INLINE
 TAO_Active_Object_Map::~TAO_Active_Object_Map (void)
 {
   delete this->impl_;
+  delete this->reverse_impl_;
 }
 
 ACE_INLINE int
