@@ -1,3 +1,18 @@
+Thu Jul 29 19:11:27 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/Object_Adapter.cpp (create_lock):
+
+	  Fixed unused argument warnings in single-threaded build.
+
+Thu Jul 29 17:22:53 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/ORB.{h,cpp}:
+
+	  Moved CORBA_ORB::perform_work() and CORBA_ORB::work_pending()
+	  outside of the !TAO_HAS_MINIMUM_CORBA code block.  This change
+	  is similar to the change we made for shutdown because we (Irfan) 
+	  feel these methods are too important.
+
 Thu Jul 29 19:14:07 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tao/Stub.cpp:
