@@ -2,7 +2,7 @@
 
 #include "RT_Properties.h"
 
-ACE_RCSID(ExposedPolicies, RT_Properties.cpp, "$Id$")
+ACE_RCSID (ExposedPolicies, RT_Properties, "$Id$")
 
 #if (TAO_HAS_RT_CORBA == 1)
 
