@@ -27,6 +27,8 @@ Event_Analyzer::control (ACE_Message_Block *mb)
     case ACE_IO_Cntl_Msg::SET_HWM:
       this->water_marks (cmd, *(size_t *) mb->cont ()->rd_ptr ());
       break;
+    default:
+      break;
     }
   return 0;
 }
