@@ -1,3 +1,9 @@
+Fri Jul 14 20:49:46 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/config/utility.h:
+
+	  Added some neat :-) ACE_* macro utilities.
+
 Fri Jul 14 20:38:44 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/dirent.inl:
@@ -31,7 +37,7 @@ Fri Jul 14 19:06:09 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
         * pace/pthread.h:
         * pace/unistd.h:
-          Removed a duplicate closing }.
+pp          Removed a duplicate closing }.
 
 	* pace/pthread.h:
 	  Added (void) in arguments to pointers to functions
