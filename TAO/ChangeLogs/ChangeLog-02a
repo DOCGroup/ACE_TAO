@@ -1,3 +1,8 @@
+Thu Apr 18 08:02:06 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp: Fixed a compile
+	  error with g++.
+
 Wed Apr 17 17:30:02 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
