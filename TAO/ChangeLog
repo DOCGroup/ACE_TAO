@@ -1,3 +1,11 @@
+Wed Feb 23 01:59:20 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Exception.h:
+
+	  Reverted change that made constructors protected.  MSVC++ 7.1
+	  cannot catch CORBA::Exception subclasses through a pointer or
+	  references to CORBA::Exception otherwise.
+
 Wed Feb 23 01:03:30 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/PortableServer/Fixed_Array_SArgument_T.h:
