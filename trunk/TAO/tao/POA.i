@@ -593,7 +593,7 @@ TAO_POA::the_children (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD;
+  TAO_POA_GUARD_RETURN (0);
 
   return this->the_children_i (ACE_TRY_ENV);
 }
