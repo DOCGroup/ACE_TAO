@@ -1,3 +1,10 @@
+Thu Aug  7 12:43:05 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/make.mpd:
+
+          Fixed a problem with the generic make template where a static
+          library wouldn't get installed.
+
 Thu Aug  7 13:08:28 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Unbounded_Set_Ex.cpp:
