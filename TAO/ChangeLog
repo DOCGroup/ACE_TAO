@@ -1,3 +1,12 @@
+Sun Feb 27 07:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/PortableServerA.cpp:
+          Fixed problem in minimum corba configuration, a little bit too much
+          was ifdef'd out
+
+        * tao/PortableServer/diffs/*.diff:
+          Updated
+
 Sun Feb 27 07:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/GOA.cpp:
