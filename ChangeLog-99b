@@ -1,3 +1,10 @@
+Sat Jul 31 17:54:32 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* etc/enforce_ace_try.diff:
+	  Apply this patch file and then compile to enforce the correct
+	  use of ACE_TRY macros. It renames the exception(), clear() and
+	  print_exception() methods in the CORBA::Environment class.
+
 Sat Jul 31 17:39:42 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/Timeprobe_T.cpp:
