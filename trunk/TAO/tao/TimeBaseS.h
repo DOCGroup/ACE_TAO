@@ -36,13 +36,5 @@
 #include "TimeBaseS.i"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
-
 #include "ace/post.h"
 #endif /* ifndef */
