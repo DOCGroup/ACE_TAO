@@ -407,6 +407,9 @@ ace_thread_manager_adapter (void *args)
   // <exit_hook>.
   exit_hook.thr_mgr (thread_args->thr_mgr ());
 
+  // @@@@@@@@@@ Try to insert thread descriptor here.  Wait until the main thread has
+  // our thread_descriptor ready.
+
   // Invoke the user-supplied function with the args.
   void *status = thread_args->invoke ();
 
@@ -485,6 +488,9 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
       ACE_UNUSED_ARG (t_handle);
 #endif /* ACE_HAS_WTHREADS */
       
+  // @@@@@@@@@@ Try to insert thread descriptor here.  The newly spawned thread
+  // is waiting this information.
+
       return this->append_thr (*t_id,
                                thr_handle, 
                                ACE_THR_SPAWNED, 
