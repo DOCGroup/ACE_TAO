@@ -1,5 +1,5 @@
 #
-# Makefile for building the Faults ping executable
+# Makefile for building the RTCorba Profile_And_Endpoint_Selection client executable
 #
 
 NAME = client
@@ -13,12 +13,14 @@ OBJFILES = \
 CFLAGS = \
 	$(ACE_CFLAGS) \
         $(TAO_CFLAGS) \
-        $(TAO_RTCORBA_CFLAGS)
+        $(TAO_RTCORBA_CFLAGS) \
+        $(TAO_STRATEGIES_CFLAGS)
 
 LIBFILES = \
 	$(ACE_LIB) \
         $(TAO_LIB) \
-        $(TAO_RTCORBA_LIB)
+        $(TAO_RTCORBA_LIB) \
+        $(TAO_STRATEGIES_LIB)
 
 IDLFILES = \
         $(IDLDIR)\test.idl
