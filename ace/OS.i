@@ -1587,6 +1587,8 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   return result;
 #endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 #else
+  ACE_UNUSED_ARG (cv);
+  ACE_UNUSED_ARG (external_mutex);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -1699,9 +1701,9 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   return result;
 #endif /* ACE_HAS_WTHREADS */
 #else
-  cv = cv;
-  external_mutex = external_mutex;
-  timeout = timeout;
+  ACE_UNUSED_ARG (cv);
+  ACE_UNUSED_ARG (external_mutex);
+  ACE_UNUSED_ARG (timeout);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -1888,6 +1890,7 @@ ACE_OS::rw_rdlock (ACE_rwlock_t *rw)
   return 0;
 #endif /* ACE_HAS_STHREADS */
 #else
+  ACE_UNUSED_ARG (rw);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -1923,6 +1926,7 @@ ACE_OS::rw_tryrdlock (ACE_rwlock_t *rw)
   return result;
 #endif /* ACE_HAS_STHREADS */
 #else
+  ACE_UNUSED_ARG (rw);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -1958,6 +1962,7 @@ ACE_OS::rw_trywrlock (ACE_rwlock_t *rw)
   return result;
 #endif /* ACE_HAS_STHREADS */
 #else
+  ACE_UNUSED_ARG (rw);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -2002,6 +2007,7 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
   return result;
 #endif /* ACE_HAS_STHREADS */
 #else
+  ACE_UNUSED_ARG (rw);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -2045,6 +2051,7 @@ ACE_OS::rw_wrlock (ACE_rwlock_t *rw)
   return 0;
 #endif /* ACE_HAS_STHREADS */
 #else
+  ACE_UNUSED_ARG (rw);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -2087,6 +2094,10 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
   return result;
 #endif /* ACE_HAS_STHREADS */
 #else
+  ACE_UNUSED_ARG (rw);
+  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (arg);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -2104,6 +2115,7 @@ ACE_OS::rwlock_destroy (ACE_rwlock_t *rw)
   return ACE_OS::cond_destroy (&rw->waiting_writers_);
 #endif /* ACE_HAS_STHREADS */
 #else
+  ACE_UNUSED_ARG (rw);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -2143,6 +2155,12 @@ ACE_OS::event_init (ACE_event_t *event,
 				 arg);
   return result;
 #else
+  ACE_UNUSED_ARG (event);
+  ACE_UNUSED_ARG (manual_reset);
+  ACE_UNUSED_ARG (initial_state);
+  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (arg);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }
@@ -2157,6 +2175,7 @@ ACE_OS::event_destroy (ACE_event_t *event)
   int r2 = ACE_OS::cond_destroy (&event->condition_);
   return r1 != 0 || r2 != 0 ? -1 : 0;
 #else
+  ACE_UNUSED_ARG (event);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }
@@ -2215,13 +2234,14 @@ ACE_OS::event_wait (ACE_event_t *event)
     result = -1;
   return result;
 #else
+  ACE_UNUSED_ARG (event);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }
     
 ACE_INLINE int 
 ACE_OS::event_timedwait (ACE_event_t *event, 
-			   ACE_Time_Value *timeout)
+			 ACE_Time_Value *timeout)
 {
 #if defined (ACE_WIN32)
   DWORD result;
@@ -2294,6 +2314,8 @@ ACE_OS::event_timedwait (ACE_event_t *event,
     result = -1;
   return result;
 #else
+  ACE_UNUSED_ARG (event);
+  ACE_UNUSED_ARG (timeout);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }
@@ -2348,6 +2370,7 @@ ACE_OS::event_signal (ACE_event_t *event)
     result = -1;
   return result;
 #else
+  ACE_UNUSED_ARG (event);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }
@@ -2395,6 +2418,7 @@ ACE_OS::event_pulse (ACE_event_t *event)
     result = -1;
   return result;
 #else
+  ACE_UNUSED_ARG (event);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }
@@ -2420,6 +2444,7 @@ ACE_OS::event_reset (ACE_event_t *event)
     result = -1;
   return result;
 #else
+  ACE_UNUSED_ARG (event);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }
@@ -3255,6 +3280,7 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (*s), ace_result_), int, -1);
 #endif /* ACE_HAS_STHREADS */
 #else
+  ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_POSIX_SEM */
 }
@@ -3264,9 +3290,9 @@ ACE_OS::sema_init (ACE_sema_t *s, u_int count, int type,
 		   LPCTSTR name, void *arg, int max)
 {
   // ACE_TRACE ("ACE_OS::sema_init");
-  name = name;
-  max = max;
 #if defined (ACE_HAS_POSIX_SEM)
+  ACE_UNUSED_ARG (arg);
+  ACE_UNUSED_ARG (max);
   if (name)
     {
       s->name_ = ACE_OS::strdup (name);
@@ -3282,6 +3308,8 @@ ACE_OS::sema_init (ACE_sema_t *s, u_int count, int type,
     }
 #elif defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_STHREADS)
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (max);
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_init (s, count, type, arg), ace_result_), 
 		     int, -1);
 #elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
@@ -3318,6 +3346,12 @@ ACE_OS::sema_init (ACE_sema_t *s, u_int count, int type,
     return 0;
 #endif /* ACE_HAS_STHREADS */
 #else
+  ACE_UNUSED_ARG (s);
+  ACE_UNUSED_ARG (count);
+  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (arg);
+  ACE_UNUSED_ARG (max);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_POSIX_SEM */
 }
@@ -3352,6 +3386,7 @@ ACE_OS::sema_post (ACE_sema_t *s)
 		     int, -1);
 #endif /* ACE_HAS_STHREADS */
 #else
+  ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_POSIX_SEM */
 }
@@ -3418,6 +3453,7 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
 
 #endif /* ACE_HAS_STHREADS */
 #else
+  ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_POSIX_SEM */
 }
@@ -3479,6 +3515,7 @@ ACE_OS::sema_wait (ACE_sema_t *s)
   /* NOTREACHED */
 #endif /* ACE_HAS_STHREADS */
 #else
+  ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_POSIX_SEM */
 }
@@ -3512,6 +3549,7 @@ ACE_OS::thr_continue (ACE_hthread_t target_thread)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::taskResume (target_thread), ace_result_), int, -1);
 #endif /* ACE_HAS_STHREADS */
 #else
+  ACE_UNUSED_ARG (target_thread);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -3875,6 +3913,8 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
   return *sig;
 #endif /* ACE_HAS_STHREADS */
 #else
+  ACE_UNUSED_ARG (set);
+  ACE_UNUSED_ARG (sig);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		
 }
@@ -3954,9 +3994,15 @@ ACE_OS::thr_sigsetmask (int how,
 
   return 0;
 #else /* Should not happen. */
+  ACE_UNUSED_ARG (how);
+  ACE_UNUSED_ARG (nsm);
+  ACE_UNUSED_ARG (osm);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STHREADS */
 #else
+  ACE_UNUSED_ARG (how);
+  ACE_UNUSED_ARG (nsm);
+  ACE_UNUSED_ARG (osm);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		
 }
@@ -4031,9 +4077,13 @@ ACE_OS::thr_kill (ACE_thread_t thr_id, int signum)
                        int, -1);
 
 #else /* This should not happen! */
+  ACE_UNUSED_ARG (thr_id);
+  ACE_UNUSED_ARG (signum);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STHREADS */
 #else
+  ACE_UNUSED_ARG (thr_id);
+  ACE_UNUSED_ARG (signum);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */            
 }
@@ -4100,9 +4150,11 @@ ACE_OS::thr_setconcurrency (int hint)
 	
   ACE_NOTSUP_RETURN (-1);
 #elif defined (VXWORKS)
+  ACE_UNUSED_ARG (hint);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STHREADS */
 #else
+  ACE_UNUSED_ARG (hint);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -4139,10 +4191,14 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
 				       ace_result_), 
 		     int, -1);
 #else
-  // for example, platforms that support Pthreads but LACK_SETSCHED
+  // For example, platforms that support Pthreads but LACK_SETSCHED.
+  ACE_UNUSED_ARG (thr_id);
+  ACE_UNUSED_ARG (prio);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STHREADS */
 #else
+  ACE_UNUSED_ARG (thr_id);
+  ACE_UNUSED_ARG (prio);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -4167,6 +4223,7 @@ ACE_OS::thr_suspend (ACE_hthread_t target_thread)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::taskSuspend (target_thread), ace_result_), int, -1);
 #endif /* ACE_HAS_STHREADS */
 #else
+  ACE_UNUSED_ARG (target_thread);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
