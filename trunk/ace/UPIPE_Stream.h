@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -102,6 +102,9 @@ public:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
+
+  // = Meta-type info
+  typedef ACE_UPIPE_Addr PEER_ADDR;
 
 private:
   /// To hold the last ACE_Message_Block read out of the stream. Thus
