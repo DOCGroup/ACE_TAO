@@ -2045,7 +2045,7 @@ ACE_OS::sema_wait (ACE_sema_t *s)
 }
 
 ACE_INLINE int 
-ACE_OS::sema_wait (ACE_sema_t *s, const ACE_Time_Value &tv)
+ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
 {
   // ACE_TRACE ("ACE_OS::sema_wait");
 #if defined (ACE_HAS_POSIX_SEM)
