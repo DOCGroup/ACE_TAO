@@ -341,7 +341,7 @@ DEP_CPP_NAMIN=\
 	"..\..\tao\Exception.i"\
 	"..\..\tao\giop.h"\
 	"..\..\tao\giop.i"\
-	"..\..\tao\IIOP_Interpreter.h"\
+	"..\..\tao\CDR_Interpreter.h"\
 	"..\..\tao\IIOP_Object.h"\
 	"..\..\tao\IIOP_Object.i"\
 	"..\..\tao\IIOP_ORB.h"\

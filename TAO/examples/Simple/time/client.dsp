@@ -337,7 +337,7 @@ DEP_CPP_CLIEN=\
 	"..\..\..\tao\Exception.i"\
 	"..\..\..\tao\GIOP.h"\
 	"..\..\..\tao\GIOP.i"\
-	"..\..\..\tao\IIOP_Interpreter.h"\
+	"..\..\..\tao\CDR_Interpreter.h"\
 	"..\..\..\tao\IIOP_Object.h"\
 	"..\..\..\tao\IIOP_Object.i"\
 	"..\..\..\tao\IIOP_ORB.h"\
@@ -608,7 +608,7 @@ DEP_CPP_TIMEC=\
 	"..\..\..\tao\Exception.i"\
 	"..\..\..\tao\GIOP.h"\
 	"..\..\..\tao\GIOP.i"\
-	"..\..\..\tao\IIOP_Interpreter.h"\
+	"..\..\..\tao\CDR_Interpreter.h"\
 	"..\..\..\tao\IIOP_Object.h"\
 	"..\..\..\tao\IIOP_Object.i"\
 	"..\..\..\tao\IIOP_ORB.h"\
@@ -869,7 +869,7 @@ DEP_CPP_TIMES=\
 	"..\..\..\tao\Exception.i"\
 	"..\..\..\tao\GIOP.h"\
 	"..\..\..\tao\GIOP.i"\
-	"..\..\..\tao\IIOP_Interpreter.h"\
+	"..\..\..\tao\CDR_Interpreter.h"\
 	"..\..\..\tao\IIOP_Object.h"\
 	"..\..\..\tao\IIOP_Object.i"\
 	"..\..\..\tao\IIOP_ORB.h"\
