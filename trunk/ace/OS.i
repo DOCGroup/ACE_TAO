@@ -2504,7 +2504,6 @@ ACE_OS::getprotobyname (const char *name)
 #if defined (VXWORKS)
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_NONCONST_GETBY)
-#else
   ACE_SOCKCALL_RETURN (::getprotobyname ((char *) name),
 		       struct protoent *, 0);
 #else
@@ -2536,7 +2535,7 @@ ACE_OS::getprotobyname_r (const char *name,
   		       struct protoent *, 0);
 #endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 #endif /* defined (AIX) || defined (DIGITAL_UNIX) */
-#if defined (ACE_HAS_NONCONST_GETBY)
+#elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_SOCKCALL_RETURN (::getprotobyname ((char *) name),
 		       struct protoent *, 0);
 #else
