@@ -1,9 +1,29 @@
+Tue Oct 05 21:58:06 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-WinCE.h: Reenabled ACE_HAS_MFC.  This should be the
+	  most portable configuration.  If you insist not to use MFC at
+	  all, define ACE_HAS_MFC=0 in your config.h file.
+
+	* ace/OS.h:
+	* ace/OS.cpp (set_window): Removed the MFC specific set_window
+	  method so we can use ACE in both MFC and non-MFC applications.
+
+	* ace/INET_Addr.h: Applied ASYS_TEXT to several default
+	  string literals.
+
+	* ace/DLL.h:
+	* ace/DLL.cpp: Changed the type of <dll_name> in ctor and the open
+	  method to ASYS_TCHAR to minimize string conversion.
+
+	* tests/DLL_Test.cpp: Applied ASYS_TEXT to the name of the DLL
+	  file.
+
 Tue Oct  5 19:01:43 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* ace/CDR_Stream.i:
 	  Changed << for bounded (w)strings to marshal only 'length'
 	  bytes, instead of 'bound' bytes. The previous method could
-	  cause an access violation if the string fits near the end 
+	  cause an access violation if the string fits near the end
 	  of a system page, but the 'bound' extends beyond it. Thanks
 	  to Brian Wright <bwright@paladyne.com> for reporting this
 	  bug.
@@ -39,7 +59,7 @@ Mon Oct  4 08:31:58 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	  work around the fact that the print_stats() method is const.
   	  Thanks to Jean-Marc Strauss <jms97@club-internet.fr> for
  	  reporting this.
-	
+
         * ace/INET_Addr.cpp (set):  Added ACE_UNUSED_ARG
           so the compiler won't complain about the protocol paraemter in
           parts of the code where it's not used.

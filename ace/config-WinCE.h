@@ -25,10 +25,10 @@
 #define ACE_HAS_WINNT4 0
 
 // You must use MFC with ACE on CE.
-//  #if defined (ACE_HAS_MFC)
-//  # undef ACE_HAS_MFC
-//  #endif /* ACE_HAS_MFC */
-//  #define ACE_HAS_MFC 1
+#if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
+# undef ACE_HAS_MFC
+#endif /* ACE_HAS_MFC */
+#define ACE_HAS_MFC 1
 
 // So is UNICODE.
 #if defined (ACE_HAS_UNICODE)

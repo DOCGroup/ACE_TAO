@@ -61,13 +61,13 @@ public:
 
   ACE_INET_Addr (const ASYS_TCHAR port_name[],
 		 const ASYS_TCHAR host_name[],
-                 const ASYS_TCHAR protocol[] = "tcp");
+                 const ASYS_TCHAR protocol[] = ASYS_TEXT ("tcp"));
   // Uses <getservbyname> to create an <ACE_INET_Addr> from a
   // <port_name>, the remote <host_name>, and the <protocol>.
 
   ACE_INET_Addr (const ASYS_TCHAR port_name[],
 		 ACE_UINT32 ip_addr,
-                 const ASYS_TCHAR protocol[] = "tcp");
+                 const ASYS_TCHAR protocol[] = ASYS_TEXT ("tcp"));
   // Uses <getservbyname> to create an <ACE_INET_Addr> from a
   // <port_name>, an Internet <ip_addr>, and the <protocol>.  This
   // method assumes that <ip_addr> is in host byte order.
@@ -101,13 +101,13 @@ public:
 
   int set (const ASYS_TCHAR port_name[],
 	   const ASYS_TCHAR host_name[],
-           const ASYS_TCHAR protocol[] = "tcp");
+           const ASYS_TCHAR protocol[] = ASYS_TEXT ("tcp"));
   // Uses <getservbyname> to initialize an <ACE_INET_Addr> from a
   // <port_name>, the remote <host_name>, and the <protocol>.
 
   int set (const ASYS_TCHAR port_name[],
 	   ACE_UINT32 ip_addr,
-           const ASYS_TCHAR protocol[] = "tcp");
+           const ASYS_TCHAR protocol[] = ASYS_TEXT ("tcp"));
   // Uses <getservbyname> to initialize an <ACE_INET_Addr> from a
   // <port_name>, an <ip_addr>, and the <protocol>.  This assumes that
   // <ip_addr> is already in network byte order.
@@ -119,7 +119,7 @@ public:
   // is assumed to be a port number, with the IP address being
   // INADDR_ANY.
 
-  int set (const sockaddr_in *, 
+  int set (const sockaddr_in *,
 	   int len);
   // Creates an <ACE_INET_Addr> from a sockaddr_in structure.
 
@@ -129,7 +129,7 @@ public:
   virtual void set_addr (void *, int len);
   // Set a pointer to the address.
 
-  virtual int addr_to_string (ASYS_TCHAR buffer[], 
+  virtual int addr_to_string (ASYS_TCHAR buffer[],
                               size_t size,
                               int ipaddr_format = 1) const;
   // Transform the current <ACE_INET_Addr> address into string format.

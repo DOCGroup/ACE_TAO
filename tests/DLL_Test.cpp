@@ -91,7 +91,9 @@ main (int argc, ASYS_TCHAR *argv[])
     defined (__hpux)
 
   ACE_DLL dll;
-  int retval = dll.open (OBJ_PREFIX "DLL_Test" OBJ_SUFFIX);
+  int retval = dll.open (ASYS_TEXT (OBJ_PREFIX)
+                         ASYS_TEXT ("DLL_Test")
+                         ASYS_TEXT (OBJ_SUFFIX));
   if (retval != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("%p\n"),
