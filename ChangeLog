@@ -1,3 +1,14 @@
+Tue Nov 30 07:32:18 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * apps/gperf/tests/iout2_gen/.empty:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Reverted my previous change as it caused more problems than it
+          solved.  Instead, after much research I've found that VPATH
+          doesn't work when source files are generated into a directory
+          other than '.', so I made a directory (iout2_gen) to hold the
+          generated source (idl.cpp) from the iinset2 gperf test.
+
 Tue Nov 30 09:51:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * ace/ACE.inl:
@@ -5,12 +16,12 @@ Tue Nov 30 09:51:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
 Mon Nov 29 17:56:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* tests/Test_Output.cpp: Re this change:
-	  Fri Nov 19 18:19:19 2004  Steve Huston  <shuston@riverace.com>
-	  the reinterpret_cast<> breaks some stuff on LynxOS. So only do
-	  reinterpret_cast on ACE_LACKS_IOSTREAM_TOTALLY, else use
-	  dynamic_cast. This should fix LynXOS. Thanks to
-	  Olli Savia <ops@iki.fi> for bringing this to my attention.
+        * tests/Test_Output.cpp: Re this change:
+          Fri Nov 19 18:19:19 2004  Steve Huston  <shuston@riverace.com>
+          the reinterpret_cast<> breaks some stuff on LynxOS. So only do
+          reinterpret_cast on ACE_LACKS_IOSTREAM_TOTALLY, else use
+          dynamic_cast. This should fix LynXOS. Thanks to
+          Olli Savia <ops@iki.fi> for bringing this to my attention.
 
 Mon Nov 29 14:10:12 2004  Chad Elliott  <elliott_c@ociweb.com>
 
