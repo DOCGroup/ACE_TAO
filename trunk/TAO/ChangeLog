@@ -1,3 +1,9 @@
+Wed Mar 12 11:43:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Makefile.tao:
+
+	  Fixed typo in a newly added file.
+
 Wed Mar 12 09:25:34 2003  Ossama Othman  <ossama@uci.edu>
 
 	* TAO_IDL/be_include/be_codegen.h:

@@ -153,7 +153,7 @@ ORB_CORE_FILES = \
   Environment \
   Object \
   LocalObject \
-  ObjectIDListC \
+  ObjectIdListC \
   ORB \
   corbafwd \
   Policy_ForwardC \
