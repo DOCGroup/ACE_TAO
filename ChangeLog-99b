@@ -1,3 +1,87 @@
+Wed Jul 21 04:32:20 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Reactor.cpp:
+	* ace/Reactor.h:
+	* ace/Reactor.i:
+	* ace/Reactor_Impl.h:
+	* ace/Select_Reactor_T.cpp:
+	* ace/Select_Reactor_T.h:
+	* ace/Select_Reactor_T.i:
+	* ace/TP_Reactor.cpp:
+	* ace/WFMO_Reactor.cpp:
+	* ace/WFMO_Reactor.h:
+	* ace/WFMO_Reactor.i: The change was motivated by removing a race
+	  condition in TP_Reactor during shutdown.  There was a small time
+	  gap between a thread running TP_Reactor event loop checking its
+	  end_event_loop flag to the thread actually grabing the token in
+	  TP_Reactor.  Since the token return to its "normal" state after
+	  broadcasting, this thread has no chance to notice that the
+	  reactor has already been shutdowned and thus a deadlock occured.
+	  In order to fix the problem, we must keep a state indicating
+	  whether the reactor has been shutdowned or not in the reactor.
+
+	  An added benefit of adding this state is that every reactor now
+	  has its own run_reactor_event_loop which mimic the behavior of
+	  the static ACE_Reactor::run_event_loop but instead of working on
+	  the singleton reactor, the added function work on an instance of
+	  reactor object.  In fact, all event_loop control functions have
+	  been added.  They are named *_reactor_event_loop to
+	  differentiate their behavior.   These newly added function use
+	  the added state in the reactor to control the looping of event
+	  handling.  All run_reactor_event_loop methods take an extra
+	  argument of a function pointer.  The function will be called in
+	  every iteration if it is set.
+
+	  Notice that the singleton event loop control functions are still
+	  available.  Although these function merely forward the call to
+	  the singleton reactor's *_reactor_event_loop functions, you can
+	  still use them to control the "main" event loop.  In fact, it is
+	  required that you use these functions to run the main event loop
+	  because it facilitates Service_Configurator's "reconfigure"
+	  feature.
+
+	  All reactors now also have two extra functions namely
+	  "deactivated" which is used to query whether the reactor will
+	  handle more incoming event or not, and "deactivate" which is
+	  used to control this new feature.
+
+	  An side effect of the change is that, once a reactor get
+	  deactivated, calls to handle_events will return -1 immediately.
+	  You can use the "deactivated" method to check if there's
+	  actually an error in the handle_events method or it simply
+	  returned because the reactor has been deactivated.  This is also
+	  how the various "run_reactor_event_loop" handle the situation.
+	  Notice that this should not cause any backward compatibility
+	  problem becuase if a user is using his own end_event_loop flag,
+	  he will not (and should not) invoke any more handle_events after
+	  the flag has been set.  Also, if he is using the global
+	  run_event_loop methods (for controling singleton reactor,) they
+	  should still behave the same.
+
+	  To summarize the change:
+
+	  1. The run_event_loop control logic has been "pushed" down into
+	  each individual reactor.  The methods supporting the logic are
+	  defined in ACE_Reactor and are:
+
+	     run_reactor_event_loop ()
+	     run_alertable_reactor_event_loop ()
+	     end_reactor_event_loop ()
+	     reactor_event_loop_done ()
+	     reset_reactor_event_loop ()
+
+	  2. The origianl run_event_loop methods in ACE_Reactor are still
+	  working but they now use the run_reactor_event_loop methods in
+	  the implementation of the reactor.
+
+	  3. Reactors now keep a state to indicate handle_events should be
+	  called or not.  They can be controlled thru:
+
+	     deactivated ()
+	     deactivate ()
+
+	  methods.
+
 Tue Jul 20 21:31:50 1999  Jim Rogers  jrogers@viasoft.com
 
         * ace/config-mvs.h: added ACE_HAS_EXCEPTIONS.
