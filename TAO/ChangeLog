@@ -1,3 +1,47 @@
+Sun Aug 17 12:12:22 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Stub.h:
+
+	  No longer any need to include "ORB_Core.h".
+
+	* tao/Stub.i (service_profile_selection):
+	* tao/Stub.cpp (service_profile_selection):
+
+	  Uninlined this deprecated method.  It isn't used anywhere in
+	  TAO.  Allowed removal of "ORB_Core.h" include from "Stub.h".
+
+	* tao/ClientRequestInfo_i.cpp:
+	* tao/DomainC.cpp:
+	* tao/Messaging_PolicyValueC.cpp:
+	* tao/Object_KeyC.cpp:
+	* tao/PolicyC.cpp:
+	* tao/Remote_Object_Proxy_Impl.cpp:
+	* tao/DynamicInterface/Request.cpp:
+	* tao/IFR_Client/IFR_BaseC.cpp:
+	* tao/IFR_Client/IFR_BasicC.cpp:
+	* tao/IFR_Client/IFR_ComponentsC.cpp:
+	* tao/IFR_Client/IFR_ExtendedC.cpp:
+	* tao/Messaging/MessagingC.cpp:
+	* tao/Messaging/Messaging_Policy_i.cpp:
+	* tao/PortableServer/ImR_LocatorC.cpp:
+	* tao/PortableServer/ImplRepoC.cpp:
+	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+	* tao/RTCORBA/RT_Protocols_Hooks.cpp:
+	* tao/RTCORBA/RT_Stub.cpp:
+	* tao/Valuetype/AbstractBase.cpp:
+
+	  Include "tao/ORB_Core.h" to pull in TAO_ORB_Core class
+	  declaration.
+
+	* tao/Interceptor_List.cpp:
+
+	  Added "const" qualifier to some constant variables.
+
+	* TAO_IDL/be/be_codegen.cpp (start_client_stubs):
+
+	  Since "tao/Stub.h" no longer includes "tao/ORB_Core.h" header,
+	  generated stubs now explicitly include "tao/ORB_Core.h".
+
 Sun Aug 17 10:36:44 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/IFRService/IRObject_i.cpp:

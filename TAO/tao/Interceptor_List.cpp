@@ -41,7 +41,7 @@ TAO_Interceptor_List::add_interceptor_i (
         );
       ACE_CHECK_RETURN (0);
 
-      size_t old_len = this->length ();
+      const size_t old_len = this->length ();
 
       if (ACE_OS_String::strlen (name.in ()) != 0)
         {
@@ -76,7 +76,7 @@ TAO_Interceptor_List::add_interceptor_i (
         }
 
       /// Increase the length of the Interceptor sequence by one.
-      size_t new_len = old_len + 1;
+      const size_t new_len = old_len + 1;
       this->length (new_len);
       return old_len;
     }
@@ -107,7 +107,7 @@ TAO_ClientRequestInterceptor_List::TAO_ClientRequestInterceptor_List (void)
 
 TAO_ClientRequestInterceptor_List::~TAO_ClientRequestInterceptor_List (void)
 {
-  size_t len = this->interceptors_.size ();
+  const size_t len = this->interceptors_.size ();
 
   for (size_t i = 0; i < len; ++i)
     CORBA::release (this->interceptors_[i]);
