@@ -37,9 +37,7 @@ ACE_DLL::ACE_DLL (ACE_DL_TYPE dll_name,
 ACE_DLL::~ACE_DLL (void)
 {
   // CLose the library only if it hasn't been already.
-  if (this->close_on_destruction_ != 0
-      && this->handle_ != ACE_SHLIB_INVALID_HANDLE)
-    this->close ();
+  this->close ();
 }
   
 // This method opens the library based on the mode specified using the
@@ -54,7 +52,7 @@ ACE_DLL::~ACE_DLL (void)
 //               relocation processing of any other object. 
 
 int 
-ACE_DLL::open (ACE_DL_TYPE dll_name,
+ACE_DLL::open (ACE_DL_TYPE dll_filename,
                int open_mode,
                int close_on_destruction)
 {
@@ -62,10 +60,23 @@ ACE_DLL::open (ACE_DL_TYPE dll_name,
   // once without closing it which would cause handle memory leaks.
   this->close ();
 
+  // Reset the flag
   this->close_on_destruction_ = close_on_destruction;
 
+  // Find out where the library is
+  ASYS_TCHAR dll_pathname[MAXPATHLEN + 1];
+
+  // Transform the pathname into the appropriate dynamic link library
+  // by searching the ACE_LD_SEARCH_PATH.
+  int result = ACE::ldfind (ASYS_WIDE_STRING (dll_filename),
+                            dll_pathname,
+                            (sizeof dll_pathname / sizeof (ASYS_TCHAR)));
+  // Check for errors
+  if (result != 0)
+    return result;
+
   // The ACE_SHLIB_HANDLE object is obtained.
-  this->handle_ = ACE_OS::dlopen (dll_name, open_mode);
+  this->handle_ = ACE_OS::dlopen (dll_pathname, open_mode);
 
   if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -88,17 +99,20 @@ ACE_DLL::symbol (ACE_DL_TYPE sym_name)
 int 
 ACE_DLL::close (void)
 {
+  int retval = 0;
+
   // The handle is checked to see whether the library is closed
-  // already.  If not, it is closed and the handle is made invalid to
-  // indicate that it's now closed.
-  if (this->handle_ != ACE_SHLIB_INVALID_HANDLE)
+  // already and the <close_on_destruction_> flag is specified.  If
+  // not, it is closed and the handle is made invalid to indicate that
+  // it's now closed.
+  if (this->close_on_destruction_ != 0 &&
+      this->handle_ != ACE_SHLIB_INVALID_HANDLE)
     {
-      int retval = ACE_OS::dlclose (this->handle_);
-      this->handle_ = ACE_SHLIB_INVALID_HANDLE;
-      return retval;
+      retval = ACE_OS::dlclose (this->handle_);
     }
-  else
-    return 0;
+
+  this->handle_ = ACE_SHLIB_INVALID_HANDLE;
+  return retval;
 }
 
 // This method is used on error in an library operation.

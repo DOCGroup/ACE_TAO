@@ -1,3 +1,27 @@
+Mon Dec 07 22:58:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/Reactor/Misc/test_early_timeouts.cpp: On some
+ 	  platforms, select() returns before the time value specified.
+  	  This tests counts the number of times this happens and the max
+ 	  early timeout.
+
+	* ace/DLL.cpp (open): Added a call to ACE::ldopen() before calling
+ 	  ACE_OS::dlopen().  The allows us to find the library is
+ 	  predefined places and also expand the file name to the correct
+ 	  syntax (prefix and suffix) according to the platform.
+
+	  Also, fixed a bug where the <close_on_destruction_> flag has not
+	  being consulted on a reopen.
+
+	* ace/ACE.cpp (ldfind): Moved the code that calls
+ 	  ExpandEnvironmentStringsA() from
+ 	  ACE_Location_Node::open_handle() to ACE::ldfind().  This code is
+ 	  more general and therefore belongs in ACE::ldfind().
+
+	* ace/Parse_Node.cpp and ace/Svc_Conf_y.cpp: Fixed the incorrect
+ 	  use of ASYS_WIDE_STRING. Remember that the string returned from
+ 	  ASYS_WIDE_STRING is only valid for that line of code ;)
+	
 Mon Dec  7 19:10:24 EST 1998  James CE Johnson <jcej@lads.com>
 
         * docs/tutorials/

@@ -567,6 +567,14 @@ ACE::ldfind (const ASYS_TCHAR filename[],
 {
   ACE_TRACE ("ACE::ldfind");
 
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+  ASYS_TCHAR expanded_filename[MAXPATHLEN];
+  if (::ExpandEnvironmentStringsA (filename,
+                                   expanded_filename,
+                                   sizeof expanded_filename))
+    filename = expanded_filename;
+#endif /* ACE_WIN32 */
+
   ASYS_TCHAR tempcopy[MAXPATHLEN + 1];
   ASYS_TCHAR searchpathname[MAXPATHLEN + 1];
   ASYS_TCHAR searchfilename[MAXPATHLEN + 2];
