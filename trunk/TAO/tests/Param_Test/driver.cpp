@@ -264,6 +264,18 @@ Driver::run (void)
         else
           retstatus = client->run_dii_test ();
         delete client;
+        
+        Param_Test_Client<Test_Unbounded_Struct_Sequence> *client2 = new
+          Param_Test_Client<Test_Unbounded_Struct_Sequence>
+          (this->orb_.in (),
+           this->objref_.in(),
+           new Test_Unbounded_Struct_Sequence);
+        
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client2->run_sii_test ();
+        else
+          retstatus = client2->run_dii_test ();
+        delete client2;
       }
       break;
     case Options::TEST_BD_STRUCT_SEQUENCE:
