@@ -3,6 +3,7 @@ Sun Mar 10 05:48:37 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tests/Muxed_GIOP_Versions/run_test.pl: Changed the timeouts a
 	  bit so that the tests can run on other platforms.
 
+	* tests/Makefile: Added the new test to the list.
 Sun Mar 10 00:00:08 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Muxed_GIOP_Versions/server.dsp:
