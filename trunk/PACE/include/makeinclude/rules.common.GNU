@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------
-#	$Id$
+#       $Id$
 #
-#	Common rules for building PACE targets
+#       Common rules for building PACE targets
 #----------------------------------------------------------------------------
 
 ifndef PACE_ROOT
@@ -40,39 +40,40 @@ endif # PACE_SYSNAME == Linux
 # IRIX (32 bit)     IRIX (unconfirmed)
 # HPUX              HP-UX
 
-# Solaris is POSIX - change this when the platform directories get
-# squared away
-#ifeq ($(PACE_SYSNAME),SunOS || $(PACE_SYSNAME),Linux)
-
 ifeq ($(PACE_SYSNAME),SunOS)
-# Hard code special cases for SunOS 5.6 and 5.7 since we
-# need a 3 digit version number for comparison purposes.
+  # Hard code special cases for SunOS 5.6 and 5.7 since we
+  # need a 3 digit version number for comparison purposes.
   ifeq ($(PACE_SYSVER),57)
     PACE_SYSVER := $(PACE_SYSVER)0
   endif # PACE_SYSVER
   ifeq ($(PACE_SYSVER),56)
     PACE_SYSVER := $(PACE_SYSVER)0
   endif # PACE_SYSVER
-VPATH :=.:posix:$(VPATH)
-CFLAGS += -DPACE_SUNOS=$(PACE_SYSVER)
+  VPATH :=.:posix:$(VPATH)
+  CFLAGS += -DPACE_SUNOS=$(PACE_SYSVER)
 endif
 
 ifeq ($(PACE_SYSNAME),NT)
-VPATH :=.:win32:$(VPATH)
-CFLAGS += -DPACE_WIN32=$(PACE_SYSVER)
+  VPATH :=.:win32:$(VPATH)
+  CFLAGS += -DPACE_WIN32=$(PACE_SYSVER)
 endif
 
 ifeq ($(PACE_SYSNAME),LynxOS)
-VPATH :=.:posix:$(VPATH)
-CFLAGS += -DPACE_LYNXOS=$(PACE_SYSVER)
+  VPATH :=.:posix:$(VPATH)
+  CFLAGS += -DPACE_LYNXOS=$(PACE_SYSVER)
+endif
+
+ifeq ($(PACE_SYSNAME),OSF1)
+  VPATH :=.:posix:$(VPATH)
+  CFLAGS += -DPACE_OSF1=$(PACE_SYSVER)
 endif
 
 ifeq ($(PACE_SYSNAME),VxWorks)
-VPATH :=.:vxworks:$(VPATH)
-CFLAGS += -DPACE_VXWORKS=$(PACE_SYSVER)
+  VPATH :=.:vxworks:$(VPATH)
+  CFLAGS += -DPACE_VXWORKS=$(PACE_SYSVER)
 endif
 
 ifeq ($(PACE_SYSNAME),Linux)
-VPATH :=.:posix:$(VPATH)
-CFLAGS += -DPACE_LINUX=$(PACE_SYSVER)
+  VPATH :=.:posix:$(VPATH)
+  CFLAGS += -DPACE_LINUX=$(PACE_SYSVER)
 endif
