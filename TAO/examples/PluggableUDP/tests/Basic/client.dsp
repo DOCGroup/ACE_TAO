@@ -1,11 +1,11 @@
-# Microsoft Developer Studio Project File - Name="UDP Client" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="UDP Basic Client" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 # TARGTYPE "Win32 (ALPHA) Console Application" 0x0603
 
-CFG=UDP Client - Win32 Debug
+CFG=UDP Basic Client - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -14,14 +14,14 @@ CFG=UDP Client - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "client.mak" CFG="UDP Client - Win32 Debug"
+!MESSAGE NMAKE /f "client.mak" CFG="UDP Basic Client - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "UDP Client - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "UDP Client - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE "UDP Client - Win32 Alpha Debug" (based on "Win32 (ALPHA) Console Application")
-!MESSAGE "UDP Client - Win32 Alpha Release" (based on "Win32 (ALPHA) Console Application")
+!MESSAGE "UDP Basic Client - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "UDP Basic Client - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "UDP Basic Client - Win32 Alpha Debug" (based on "Win32 (ALPHA) Console Application")
+!MESSAGE "UDP Basic Client - Win32 Alpha Release" (based on "Win32 (ALPHA) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -29,7 +29,7 @@ CFG=UDP Client - Win32 Debug
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 
-!IF  "$(CFG)" == "UDP Client - Win32 Release"
+!IF  "$(CFG)" == "UDP Basic Client - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -56,7 +56,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
 # ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer"
 
-!ELSEIF  "$(CFG)" == "UDP Client - Win32 Debug"
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -83,7 +83,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
 # ADD LINK32 aced.lib TAOd.lib TAO_PortableServerd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer"
 
-!ELSEIF  "$(CFG)" == "UDP Client - Win32 Alpha Debug"
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Alpha Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -112,7 +112,7 @@ LINK32=link.exe
 # ADD BASE LINK32 aced.lib TAOd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 # ADD LINK32 aced.lib TAOd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao\PortableServer"
 
-!ELSEIF  "$(CFG)" == "UDP Client - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Alpha Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -154,10 +154,10 @@ SOURCE="$(InputPath)"
 
 # Begin Target
 
-# Name "UDP Client - Win32 Release"
-# Name "UDP Client - Win32 Debug"
-# Name "UDP Client - Win32 Alpha Debug"
-# Name "UDP Client - Win32 Alpha Release"
+# Name "UDP Basic Client - Win32 Release"
+# Name "UDP Basic Client - Win32 Debug"
+# Name "UDP Basic Client - Win32 Alpha Debug"
+# Name "UDP Basic Client - Win32 Alpha Release"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
@@ -165,13 +165,13 @@ SOURCE="$(InputPath)"
 
 SOURCE=.\client.cpp
 
-!IF  "$(CFG)" == "UDP Client - Win32 Release"
+!IF  "$(CFG)" == "UDP Basic Client - Win32 Release"
 
-!ELSEIF  "$(CFG)" == "UDP Client - Win32 Debug"
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Debug"
 
-!ELSEIF  "$(CFG)" == "UDP Client - Win32 Alpha Debug"
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "UDP Client - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Alpha Release"
 
 !ENDIF 
 
@@ -180,13 +180,13 @@ SOURCE=.\client.cpp
 
 SOURCE=.\UDP_Client_i.cpp
 
-!IF  "$(CFG)" == "UDP Client - Win32 Release"
+!IF  "$(CFG)" == "UDP Basic Client - Win32 Release"
 
-!ELSEIF  "$(CFG)" == "UDP Client - Win32 Debug"
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Debug"
 
-!ELSEIF  "$(CFG)" == "UDP Client - Win32 Alpha Debug"
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "UDP Client - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Alpha Release"
 
 !ENDIF 
 
@@ -195,13 +195,13 @@ SOURCE=.\UDP_Client_i.cpp
 
 SOURCE=.\UDP_i.cpp
 
-!IF  "$(CFG)" == "UDP Client - Win32 Release"
+!IF  "$(CFG)" == "UDP Basic Client - Win32 Release"
 
-!ELSEIF  "$(CFG)" == "UDP Client - Win32 Debug"
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Debug"
 
-!ELSEIF  "$(CFG)" == "UDP Client - Win32 Alpha Debug"
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "UDP Client - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Alpha Release"
 
 !ENDIF 
 
@@ -210,13 +210,13 @@ SOURCE=.\UDP_i.cpp
 
 SOURCE=.\UDPC.cpp
 
-!IF  "$(CFG)" == "UDP Client - Win32 Release"
+!IF  "$(CFG)" == "UDP Basic Client - Win32 Release"
 
-!ELSEIF  "$(CFG)" == "UDP Client - Win32 Debug"
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Debug"
 
-!ELSEIF  "$(CFG)" == "UDP Client - Win32 Alpha Debug"
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "UDP Client - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Alpha Release"
 
 !ENDIF 
 
@@ -225,13 +225,13 @@ SOURCE=.\UDPC.cpp
 
 SOURCE=.\UDPS.cpp
 
-!IF  "$(CFG)" == "UDP Client - Win32 Release"
+!IF  "$(CFG)" == "UDP Basic Client - Win32 Release"
 
-!ELSEIF  "$(CFG)" == "UDP Client - Win32 Debug"
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Debug"
 
-!ELSEIF  "$(CFG)" == "UDP Client - Win32 Alpha Debug"
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "UDP Client - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Alpha Release"
 
 !ENDIF 
 
@@ -260,7 +260,7 @@ SOURCE=.\UDPC.h
 
 SOURCE=.\UDP.idl
 
-!IF  "$(CFG)" == "UDP Client - Win32 Release"
+!IF  "$(CFG)" == "UDP Basic Client - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
 USERDEP__UDP_I="..\..\..\..\..\bin\Release\tao_idl.exe"	
@@ -299,7 +299,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "UDP Client - Win32 Debug"
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
 USERDEP__UDP_I="..\..\..\..\..\bin\tao_idl.exe"	
@@ -338,7 +338,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "UDP Client - Win32 Alpha Debug"
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Alpha Debug"
 
 # PROP BASE Ignore_Default_Tool 1
 # PROP Ignore_Default_Tool 1
@@ -378,7 +378,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "UDP Client - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Alpha Release"
 
 # PROP BASE Ignore_Default_Tool 1
 # PROP Ignore_Default_Tool 1

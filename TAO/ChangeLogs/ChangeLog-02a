@@ -1,3 +1,19 @@
+Thu Apr 19 14:40:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * examples/PluggableUDP/tests/Basic/run_test.pl:
+        * examples/PluggableUDP/tests/Performance/run_test.pl:
+
+          Fixed the path settings.
+
+        * examples/PluggableUDP/tests/SimplePerformance/run_test.pl:
+
+          Added the perl script.
+
+        * examples/PluggableUDP/tests/Basic/server.dsp:
+        * examples/PluggableUDP/tests/Basic/client.dsp:
+
+          Changed the name as it appears in the workspace slightly.
+  
 Thu Apr 19 07:09:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/RTCORBA/Thread_Pool/server.cpp: Fixed a typo that was
