@@ -84,7 +84,7 @@ client (void *arg)
     ACE_Reactor::instance ()->notify (handler);
 
   if (--thread_counter == 0)
-    ACE_Reactor::end_event_loop ();
+    ACE_Reactor::instance()->end_reactor_event_loop ();
 
   return 0;
 }

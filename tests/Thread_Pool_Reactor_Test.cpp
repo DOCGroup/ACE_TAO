@@ -148,7 +148,7 @@ Request_Handler::handle_input (ACE_HANDLE fd)
                   fd,
                   buffer));
       if (ACE_OS::strcmp (buffer, ACE_TEXT ("shutdown")) == 0)
-          ACE_Reactor::end_event_loop ();
+          ACE_Reactor::instance()->end_reactor_event_loop ();
       return 0;
     }
   else
