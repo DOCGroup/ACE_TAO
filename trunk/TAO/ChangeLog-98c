@@ -6,6 +6,8 @@ Fri May 15 08:40:40 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/orbsvcs/Makefile: commented out Event/EC_Gateway and
           Property/CosPropertyService_i because they cause build failures.
 
+        * Makefile: added .PHONY for phony targets.
+
 Fri May 15 00:25:29 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.1.21 released.
