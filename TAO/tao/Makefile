@@ -148,34 +148,6 @@ ORB_CORE_FILES = \
 
 DYNAMIC_ANY_FILES =
 
-ifndef minimum_corba
-  minimum_corba = 0
-endif # minimum_corba
-
-ifeq ($(minimum_corba),0)
-
-POA_FILES += \
-  Forwarding_Servant
-
-ORB_CORE_FILES += \
-  Context \
-  Request \
-  Services \
-  NVList
-
-DYNAMIC_ANY_FILES += \
-  DynAnyC \
-  DynAnyS \
-  DynAny_i \
-  DynArray_i \
-  DynEnum_i \
-  DynSequence_i \
-  DynStruct_i \
-  DynUnion_i \
-  InconsistentTypeCodeC
-
-endif # minimum_corba
-
 ifndef corba_messaging
   corba_messaging = 1
 endif # corba_messaging
@@ -202,6 +174,30 @@ LIBS += $(ACELIB)
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+ifndef minimum_corba
+
+POA_FILES += \
+  Forwarding_Servant
+
+ORB_CORE_FILES += \
+  Context \
+  Request \
+  Services \
+  NVList
+
+DYNAMIC_ANY_FILES += \
+  DynAnyC \
+  DynAnyS \
+  DynAny_i \
+  DynArray_i \
+  DynEnum_i \
+  DynSequence_i \
+  DynStruct_i \
+  DynUnion_i \
+  InconsistentTypeCodeC
+
+endif # minimum_corba
 
 ####
 #### Build customization.
