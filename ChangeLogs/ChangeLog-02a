@@ -1,3 +1,12 @@
+Fri Jan 26 15:34:01 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/OS.h:
+	* ace/OS.i (mutex_timedlock, mutex_lock):
+	* ace/Synch.i (acquire):
+
+	  Renamed the ACE_OS::mutex_timedlock() to the overloaded
+	  ACE_OS::mutex_lock().
+
 Fri Jan 26 14:13:32 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/OS.h:
