@@ -107,8 +107,8 @@ be_visitor_interface::visit_attribute (be_attribute *node)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_interface::"
                            "visit_attribute - "
-                           "Bad context state\n"
-                           ), -1);
+                           "Bad context state\n"),
+                          -1);
       }
     }
 
@@ -382,6 +382,10 @@ be_visitor_interface::visit_operation (be_operation *node)
 
   switch (this->ctx_->state ())
     {
+    case TAO_CodeGen::TAO_AMI_HANDLER_CH:
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_CH);
+      break;
+
     case TAO_CodeGen::TAO_INTERFACE_CH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_CH);
       break;
@@ -480,7 +484,7 @@ be_visitor_interface::visit_operation (be_operation *node)
       return 0;
     }
       
-  // Grab the appropriate visitor
+  // Grab the appropriate visitor.
   visitor = tao_cg->make_visitor (&ctx);
   if (!visitor)
     {
