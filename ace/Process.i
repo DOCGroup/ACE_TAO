@@ -128,9 +128,9 @@ ACE_Process_Options::get_stderr (void)
 #endif /* ACE_WIN32 */
 
 ACE_INLINE LPTSTR
-ACE_Process_Options::cl_options_buf (void)
+ACE_Process_Options::command_line_buf (void)
 {
-  return cl_options_;
+  return command_line_buf_;
 }
 
 ACE_INLINE LPTSTR 
@@ -146,16 +146,4 @@ ACE_INLINE void
 ACE_Process_Options::working_directory (const TCHAR *wd)
 {
   ACE_OS::strcpy (working_directory_, wd);
-}
-
-ACE_INLINE LPCTSTR
-ACE_Process_Options::path (void) const
-{
-  return path_;
-}
-
-ACE_INLINE void
-ACE_Process_Options::path (LPCTSTR p)
-{
-  ACE_OS::strcpy (path_, p);
 }
