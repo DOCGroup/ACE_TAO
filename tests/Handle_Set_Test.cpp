@@ -170,9 +170,9 @@ main (int argc, char *argv[])
   size_t max_handles = argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_Handle_Set::MAXSIZE;
   size_t max_iterations = argc > 3 ? ACE_OS::atoi (argv[3]) : ACE_MAX_ITERATIONS;
 
-  //  test_duplicates (count);
+  test_duplicates (count);
   test_boundaries ();
-  //  test_performance (max_handles, max_iterations);
+  test_performance (max_handles, max_iterations);
 
   ACE_END_TEST;
   return 0;
@@ -180,5 +180,6 @@ main (int argc, char *argv[])
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Unbounded_Queue<int>;
+template class ACE_Unbounded_Queue_Iterator<int>;
 template class ACE_Node<int>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
