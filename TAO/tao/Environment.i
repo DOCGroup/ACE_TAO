@@ -22,11 +22,6 @@ ACE_INLINE
 void
 CORBA::release (CORBA::Environment_ptr env)
 {
-  if (env == 0)
-    {
-      return;
-    }
-
   delete env;
 }
 
@@ -53,6 +48,6 @@ ACE_INLINE
 CORBA::Environment_ptr
 CORBA::Environment::_nil (void)
 {
-  return (CORBA::Environment_ptr)0;
+  return (CORBA::Environment_ptr) 0;
 }
 
