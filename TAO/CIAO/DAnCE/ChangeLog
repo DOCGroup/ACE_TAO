@@ -1,3 +1,35 @@
+Tue Feb 15 20:38:41 2005  Will Otte <wotte@dre.vanderbilt.edu>
+	
+	* Config_Handlers/ADD_Handler.cpp
+	* Config_Handlers/ADD_Handler.h
+	* Config_Handlers/Any_Handler.cpp
+	* Config_Handlers/Any_Handler.h
+	* Config_Handlers/DP_Handler.cpp
+	* Config_Handlers/DP_Handler.h
+	* Config_Handlers/IDD_Handler.cpp
+	* Config_Handlers/ID_Handler.cpp
+	* Config_Handlers/ID_Handler.h
+	* Config_Handlers/MDD_Handler.cpp
+	* Config_Handlers/MDD_Handler.h
+
+	Various compile/bugfixes. 
+	
+	* Config_Handlers/Config_Handlers.mpc:
+
+	Updated to use the new test program and include the IDREF_Base class.
+	
+	* Config_Handlers/test.cpp
+
+	Trivial test program to process an instance document and dump it back
+	out using the DnC dump from HEAD.
+
+
+	* Config_Handlers/IDREF_Base.cpp
+	* Config_Handlers/IDREF_Base.h
+
+	Added this base class to handle IDREF mappings in handlers that bind them.
+	Please see ADD_Handler.cpp and MDD_Handler.cpp for how to use them.
+	
 Fri Feb 11 11:25:04 2005  Will Otte <wotte@dre.vanderbilt.edu>
 	
 	* Config_Handlers/Basic_Deployment_Data.cpp
