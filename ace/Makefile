@@ -304,7 +304,8 @@ TEMPLATE_FILES = \
            Timer_Queue_T \
            Timer_Wheel_T \
            Typed_SV_Message \
-           Typed_SV_Message_Queue
+           Typed_SV_Message_Queue \
+	   Vector_T
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
