@@ -318,7 +318,7 @@ ACE_Sig_Handler::dispatch (int signum,
 
   // We can't use the <sig_pending> call here because that acquires
   // the lock, which is non-portable...
-  ACE_Sig_Handler::sig_pending_ = pending;
+  ACE_Sig_Handler::sig_pending_ = 1;
 
   // Darn well better be in range since the OS dispatched this...
   ACE_ASSERT (ACE_Sig_Handler::in_range (signum));
