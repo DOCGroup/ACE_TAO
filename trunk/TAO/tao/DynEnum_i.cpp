@@ -479,6 +479,7 @@ TAO_DynEnum_i::get_longlong (CORBA::Environment &ACE_TRY_ENV)
   CORBA::LongLong val = 0;
 #endif /* ! ACE_LACKS_LONGLONG_T */
 
+  ACE_UNUSED_ARG (val);
   ACE_THROW_RETURN (CORBA::BAD_OPERATION (), val;);
 }
 
