@@ -30,6 +30,8 @@ ACE_INLINE PortableServer::ObjectId *
 TAO_Object_Table_Impl::create_object_id (PortableServer::Servant servant,
                                          CORBA::Environment &env)
 {
+  // This function is supposed to always fail.
+
   ACE_UNUSED_ARG (servant);
 
   CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
