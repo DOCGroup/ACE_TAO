@@ -2,7 +2,7 @@
 #include	"idl.h"
 #include	"idl_extern.h"
 #include	"fe_private.h"
-/* starting time is 16:32:33 */
+/* starting time is 2:40:07 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
 /* Command-line: /project/adaptive/ACE_wrappers/build/SunOS5.5/bin/gperf -M -J -c -C -D -E -T -f 0 -a -o -t -p -K keyword_ -L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$ fe/keywords.dat  */
 unsigned int
@@ -188,4 +188,4 @@ TAO_IDL_CPP_Keyword_Table::lookup (const char *str, unsigned int len)
     }
   return 0;
 }
-/* ending time is 16:32:33 */
+/* ending time is 2:40:07 */

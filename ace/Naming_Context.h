@@ -255,8 +255,8 @@ public:
   ~ACE_Name_Options (void);
 
   void parse_args (int argc,
-                   const char *argv[]);
-  // Parse arguments
+                   char *argv[]);
+  // Parse arguments.
 
   // = Set/Get port number
   void nameserver_port (int port);
