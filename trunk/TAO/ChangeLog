@@ -1,3 +1,13 @@
+Tue Dec 23 14:51:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/examples/FaultTolerance/RolyPoly/Makefile:
+	* orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
+	* orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.h:
+	* orbsvcs/examples/FaultTolerance/RolyPoly/server.cpp:
+
+	  Fixed compile errors and that were showing up in my workspace with
+	  g++.  
+
 Tue Dec 23 20:14:45 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/orbsvcs/Makefile:

@@ -7,6 +7,7 @@
 #include "RolyPoly_i.h"
 #include "CrashPoint.h"
 #include "ORB_Initializer.h"
+#include "tao/ORBInitializer_Registry.h"
 
 const char *ior_file = 0;
 
