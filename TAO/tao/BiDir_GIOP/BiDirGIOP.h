@@ -94,4 +94,4 @@ TAO_Requires_BiDirGIOP_Initializer = TAO_BiDirGIOP_Loader::Initializer ();
 #undef TAO_BIDIRGIOP_SAFE_INCLUDE
 
 #include /**/ "ace/post.h"
-#endif /* TAO_DYNAMICANY_H */
+#endif /* TAO_BIDIR_GIOP_H */
