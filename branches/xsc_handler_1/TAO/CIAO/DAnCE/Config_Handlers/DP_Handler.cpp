@@ -7,7 +7,6 @@
 #include "IDD_Handler.h"
 #include "ID_Handler.h"
 #include "cdp.hpp"
-#include "Singleton_IDREF_Map.h"
 
 #include "DP_PCD_Handler.h"
 
@@ -31,7 +30,6 @@ namespace CIAO
     DP_Handler::~DP_Handler (void)
       throw ()
     {
-      (void) Singleton_IDREF_Map::instance ()->unbind_refs ();
     }
 
     ::Deployment::DeploymentPlan const *
