@@ -41,12 +41,12 @@ template class ACE_Map_Reverse_Iterator<RtecEventChannelAdmin::Observer_Handle, 
 template class ACE_Node<ACE_ES_Consumer_Rep *>;
 template class ACE_Node<ACE_Push_Consumer_Proxy *>;
 template class ACE_Node<ACE_Push_Supplier_Proxy *>;
-template class ACE_Unbounded_Set_Ex<ACE_ES_Consumer_Rep *>;
-template class ACE_Unbounded_Set_Ex<ACE_Push_Consumer_Proxy *>;
-template class ACE_Unbounded_Set_Ex<ACE_Push_Supplier_Proxy *>;
-template class ACE_Unbounded_Set_Ex_Iterator<ACE_ES_Consumer_Rep *>;
-template class ACE_Unbounded_Set_Ex_Iterator<ACE_Push_Consumer_Proxy *>;
-template class ACE_Unbounded_Set_Ex_Iterator<ACE_Push_Supplier_Proxy *>;
+template class ACE_Unbounded_Set<ACE_ES_Consumer_Rep *>;
+template class ACE_Unbounded_Set<ACE_Push_Consumer_Proxy *>;
+template class ACE_Unbounded_Set<ACE_Push_Supplier_Proxy *>;
+template class ACE_Unbounded_Set_Iterator<ACE_ES_Consumer_Rep *>;
+template class ACE_Unbounded_Set_Iterator<ACE_Push_Consumer_Proxy *>;
+template class ACE_Unbounded_Set_Iterator<ACE_Push_Supplier_Proxy *>;
 
 template class ACE_Auto_Basic_Ptr<ACE_Push_Supplier_Proxy>;
 template class ACE_Auto_Basic_Ptr<ACE_Push_Consumer_Proxy>;
@@ -78,12 +78,12 @@ template class ACE_Array_Iterator<TAO_EC_Event>;
 #pragma instantiate ACE_Node<ACE_ES_Consumer_Rep *>
 #pragma instantiate ACE_Node<ACE_Push_Consumer_Proxy *>
 #pragma instantiate ACE_Node<ACE_Push_Supplier_Proxy *>
-#pragma instantiate ACE_Unbounded_Set_Ex<ACE_ES_Consumer_Rep *>
-#pragma instantiate ACE_Unbounded_Set_Ex<ACE_Push_Consumer_Proxy *>
-#pragma instantiate ACE_Unbounded_Set_Ex<ACE_Push_Supplier_Proxy *>
-#pragma instantiate ACE_Unbounded_Set_Ex_Iterator<ACE_ES_Consumer_Rep *>
-#pragma instantiate ACE_Unbounded_Set_Ex_Iterator<ACE_Push_Consumer_Proxy *>
-#pragma instantiate ACE_Unbounded_Set_Ex_Iterator<ACE_Push_Supplier_Proxy *>
+#pragma instantiate ACE_Unbounded_Set<ACE_ES_Consumer_Rep *>
+#pragma instantiate ACE_Unbounded_Set<ACE_Push_Consumer_Proxy *>
+#pragma instantiate ACE_Unbounded_Set<ACE_Push_Supplier_Proxy *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_ES_Consumer_Rep *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Push_Consumer_Proxy *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Push_Supplier_Proxy *>
 
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Push_Supplier_Proxy>
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Push_Consumer_Proxy>
