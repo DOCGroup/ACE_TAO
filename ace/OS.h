@@ -5117,6 +5117,8 @@ public:
   // = A set of wrappers for stdio file operations.
   static int last_error (void);
   static void last_error (int);
+  static int set_errno_to_last_error (void);
+  static int set_errno_to_wsa_last_error (void);
   static int fclose (FILE *fp);
   static int fcntl (ACE_HANDLE handle,
                     int cmd,

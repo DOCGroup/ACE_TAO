@@ -1557,23 +1557,28 @@ ACE_OS::strcasecmp (const char *s, const char *t)
 #if !defined (ACE_WIN32) || defined (ACE_HAS_WINCE)
   ACE_TRACE ("ACE_OS::strcasecmp");
 # if defined (ACE_LACKS_STRCASECMP)
-  // Handles most of what the BSD version does, but does not indicate
-  // lexicographic ordering if the strings are unequal.  Just
-  // indicates equal (ignoring case) by return value == 0, else not
-  // equal.
-  int result = 0;
+  const char *scan1 = s;
+  const char *scan2 = t;
 
-  do
+  while (*scan1 != 0 
+         && ACE_OS::to_lower (*scan1) == ACE_OS::to_lower (*scan2))
     {
-      int a = ACE_OS::to_lower (*s);
-      int b = ACE_OS::to_lower (*t);
-      result = ((a < b) ? -1 : (a > b));
-      if (result != 0)
-        break;
-    } while (*s++ != '\0' && *t++ != '\0');
-  //  paranoid termination condition
+      ++scan1;
+      ++scan2;
+    }
 
-  return result; // == 0 for match, else 1
+  // The following case analysis is necessary so that characters which
+  // look negative collate low against normal characters but high
+  // against the end-of-string NUL.
+
+  if (*scan1 == '\0' && *scan2 == '\0')
+    return 0;
+  else if (*scan1 == '\0')
+    return -1;
+  else if (*scan2 == '\0')
+    return 1;
+  else
+    return ACE_OS::to_lower (*scan1) - ACE_OS::to_lower (*scan2);
 # else
   return ::strcasecmp (s, t);
 # endif /* ACE_LACKS_STRCASECMP */
@@ -1583,29 +1588,40 @@ ACE_OS::strcasecmp (const char *s, const char *t)
 }
 
 ACE_INLINE int
-ACE_OS::strncasecmp (const char *s, const char *t, size_t len)
+ACE_OS::strncasecmp (const char *s,
+                     const char *t,
+                     size_t len)
 {
 #if !defined (ACE_WIN32) || defined (ACE_HAS_WINCE)
   ACE_TRACE ("ACE_OS::strcasecmp");
 # if defined (ACE_LACKS_STRCASECMP)
-  // Handles most of what the BSD version does, but does not indicate
-  // lexicographic ordering if the strings are unequal.  Just
-  // indicates equal (ignoring case) by return value == 0, else not
-  // equal.
-  int result = 0;
+  const wchar_t *scan1 = s;
+  const wchar_t *scan2 = t
+  ssize_t count = ssize_t (n);
 
-  while (*s != '\0' && *t != '\0' && len != 0)
+  while (--count >= 0 
+         && *scan1 != 0
+         && ACE_OS::to_lower (*scan1) == ACE_OS::to_lower (*scan2))
     {
-      if (ACE_OS::to_lower (*s) != ACE_OS::to_lower (*t))
-        {
-          result = ((ACE_OS::to_lower (*s) < ACE_OS::to_lower (*t)) ? -1 : 1);
-          break;
-        }
-
-      ++s; ++t; --len;
+      ++scan1;
+      ++scan2;
     }
 
-  return result; // == 0 for match, else 1
+  if (count < 0)
+    return 0;
+
+  // The following case analysis is necessary so that characters which
+  // look negative collate low against normal characters but high
+  // against the end-of-string NUL.
+
+  if (*scan1 == '\0' && *scan2 == '\0')
+    return 0;
+  else if (*scan1 == '\0')
+    return -1;
+  else if (*scan2 == '\0')
+    return 1;
+  else
+    return ACE_OS::to_lower (*scan1) - ACE_OS::to_lower (*scan2);
 # else
   return ::strncasecmp (s, t, len);
 # endif /* ACE_LACKS_STRCASECMP */
@@ -5792,6 +5808,44 @@ ACE_OS::inet_ntop (int family, const void *addrptr, char *strptr, size_t len)
 
   ACE_NOTSUP_RETURN(0);
 #endif /* ACE_HAS_IP6 */
+}
+
+ACE_INLINE int
+ACE_OS::set_error_to_last_error (void)
+{
+# if defined (ACE_WIN32)
+// Borland C++ Builder 4 has a bug in the RTL that resets the
+// <GetLastError> value to zero when errno is accessed.  Thus, we have
+// to use this to set errno to GetLastError.  It's bad, but only for
+// WIN32
+#   if defined(__BORLANDC__) && (__BORLANDC__ == 0x540)
+  int last_error = ::GetLastError ();
+  return errno = last_error;
+#   else /* defined(__BORLANDC__) && (__BORLANDC__ == 0x540) */
+  return errno = ::GetLastError ();
+#   endif /* defined(__BORLANDC__) && (__BORLANDC__ == 0x540) */
+#else
+  return errno;
+# endif /* defined(ACE_WIN32) */
+}
+
+ACE_INLINE int
+ACE_OS::set_errno_to_wsa_last_error (void)
+{
+# if defined (ACE_WIN32)
+// Borland C++ Builder 4 has a bug in the RTL that resets the
+// <GetLastError> value to zero when errno is accessed.  Thus, we have
+// to use this to set errno to GetLastError.  It's bad, but only for
+// WIN32
+#   if defined(__BORLANDC__) && (__BORLANDC__ == 0x540)
+  int last_error = ::WSAGetLastError ();
+  return errno = last_error;
+#   else /* defined(__BORLANDC__) && (__BORLANDC__ == 0x540) */
+  return errno = ::WSAGetLastError ();
+#   endif /* defined(__BORLANDC__) && (__BORLANDC__ == 0x540) */
+#else
+  return errno;
+# endif /* defined(ACE_WIN32) */
 }
 
 ACE_INLINE int
@@ -10120,15 +10174,27 @@ ACE_OS::strcmp (const wchar_t *s, const wchar_t *t)
 #   if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
   return wcscmp (s, t);
 #   else
-  while (*s != 0 &&
-         *t != 0 &&
-         *s == *t)
+  const wchar_t *scan1 = s;
+  const wchar_t *scan2 = t;
+
+  while (*scan1 != 0 && *scan1 == *scan2) 
     {
-      s++;
-      t++;
+      ++scan1;
+      ++scan2;
     }
 
-  return *s - *t;
+  // The following case analysis is necessary so that characters which
+  // look negative collate low against normal characters but high
+  // against the end-of-string NUL.
+
+  if (*scan1 == '\0' && *scan2 == '\0')
+    return 0;
+  else if (*scan1 == '\0')
+    return -1;
+  else if (*scan2 == '\0')
+    return 1;
+  else
+    return *scan1 - *scan2;
 #   endif /* ACE_HAS_XPG4_MULTIBYTE_CHAR */
 # endif /* ACE_HAS_UNICODE */
 }
@@ -10165,12 +10231,12 @@ ACE_OS::strcmp (const ACE_USHORT16 *s, const ACE_USHORT16 *t)
 {
   ACE_TRACE ("ACE_OS::strcmp");
 
-  while (*s != 0 &&
-         *t != 0 &&
-         *s == *t)
+  while (*s != 0
+         && *t != 0 
+         && *s == *t)
     {
-      s++;
-      t++;
+      ++s;
+      ++t;
     }
 
   return *s - *t;
@@ -10182,7 +10248,7 @@ ACE_OS::wslen (const WChar *s)
 {
   u_int len = 0;
 
-  while (*s++)
+  while (*s++ != 0)
     len++;
 
   return len;
@@ -10322,54 +10388,68 @@ ACE_OS::strcasecmp (const wchar_t *s, const wchar_t *t)
   ACE_TRACE ("ACE_OS::strcasecmp");
 
 # if !defined (ACE_WIN32)
-  // Handles most of what the BSD version does, but does not indicate
-  // lexicographic ordering if the strings are unequal.  Just
-  // indicates equal (ignoring case) by return value == 0, else not
-  // equal.
-  int result = 0;
+  const wchar_t *scan1 = s;
+  const wchar_t *scan2 = t;
 
-  do
+  while (*scan1 != 0 
+         && ACE_OS::to_lower (*scan1) == ACE_OS::to_lower (*scan2))
     {
-      int a = ACE_OS::to_lower (*s);
-      int b = ACE_OS::to_lower (*t);
-      result = ((a < b) ? -1 : (a > b));
-      if (result != 0)
-        break;
-    } while (*s++ != '\0' && *t++ != '\0');
-  //  paranoid termination condition
+      ++scan1;
+      ++scan2;
+    }
 
-  return result; // == 0 for match, else 1
+  // The following case analysis is necessary so that characters which
+  // look negative collate low against normal characters but high
+  // against the end-of-string NUL.
 
+  if (*scan1 == '\0' && *scan2 == '\0')
+    return 0;
+  else if (*scan1 == '\0')
+    return -1;
+  else if (*scan2 == '\0')
+    return 1;
+  else
+    return ACE_OS::to_lower (*scan1) - ACE_OS::to_lower (*scan2);
 # else /* ACE_WIN32 */
   return ::_wcsicmp (s, t);
 # endif /* ACE_WIN32 */
 }
 
 ACE_INLINE int
-ACE_OS::strncasecmp (const wchar_t *s, const wchar_t *t, size_t len)
+ACE_OS::strncasecmp (const wchar_t *s,
+                     const wchar_t *t,
+                     size_t len)
 {
   ACE_TRACE ("ACE_OS::strcasecmp");
 
 # if !defined (ACE_WIN32)
-  // Handles most of what the BSD version does, but does not indicate
-  // lexicographic ordering if the strings are unequal.  Just
-  // indicates equal (ignoring case) by return value == 0, else not
-  // equal.
-  int result = 0;
+  const wchar_t *scan1 = s;
+  const wchar_t *scan2 = t
+  ssize_t count = ssize_t (n);
 
-  while (*s != '\0' && *t != '\0' && len != 0)
+  while (--count >= 0 
+         && *scan1 != 0
+         && ACE_OS::to_lower (*scan1) == ACE_OS::to_lower (*scan2))
     {
-      if (ACE_OS::to_lower (*s) != ACE_OS::to_lower (*t))
-        {
-          result = ((ACE_OS::to_lower (*s) < ACE_OS::to_lower (*t)) ? -1 : 1);
-          break;
-        }
-
-      ++s; ++t; --len;
+      ++scan1;
+      ++scan2;
     }
 
-  return result; // == 0 for match, else 1
+  if (count < 0)
+    return 0;
 
+  // The following case analysis is necessary so that characters which
+  // look negative collate low against normal characters but high
+  // against the end-of-string NUL.
+
+  if (*scan1 == '\0' && *scan2 == '\0')
+    return 0;
+  else if (*scan1 == '\0')
+    return -1;
+  else if (*scan2 == '\0')
+    return 1;
+  else
+    return ACE_OS::to_lower (*scan1) - ACE_OS::to_lower (*scan2);
 # else /* ACE_WIN32 */
   return ::_wcsnicmp (s, t, len);
 # endif /* ACE_WIN32 */
