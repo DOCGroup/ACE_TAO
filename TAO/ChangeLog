@@ -1,3 +1,9 @@
+Mon Feb  9 16:03:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/FTORB.mpc:
+	  Reordered files cpp files to fix compile errors in our SuSE 9 MPC
+	  build. By this reorder the idl files are compiled in the right order
+
 Mon Feb  9 08:36:12 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ORB_Core.cpp (connection_timeout):
@@ -29,8 +35,8 @@ Sun Feb  8 09:10:30 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
  	* tao/Invocation_Adapter.h:
 	* tao/Invocation_Adapter.inl:
 
-	  Added a virtual destructor. 
-	
+	  Added a virtual destructor.
+
 	* tao/Messaging/Asynch_Invocation.cpp:
 	* tao/Messaging/Asynch_Invocation.h:
 	* tao/Messaging/Asynch_Invocation_Adapter.cpp:
@@ -40,24 +46,24 @@ Sun Feb  8 09:10:30 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  Auto_Functor to manage memory through the life-time of the
 	  objects. This should prevent the leaks that Andrew
 	  Reid<andrew.reid@eservglobal.com> reported.
-	
+
 	* tao/Makefile*: Updated dependencies using the new dependency
-	  generator. 
+	  generator.
 
 Sun Feb  8 08:14:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/tutorials/Quoter/On_Demand_Activation/Quoter_On_Demand_Activation.mpc: 
+	* docs/tutorials/Quoter/On_Demand_Activation/Quoter_On_Demand_Activation.mpc:
 	  Do not build if minimum_corba is enabled.
 
 Sat Feb  7 22:09:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/Makefile*:
-	  
+
 	  Updated dependencies. A new script $ACE_ROOT/bin/depgen.pl was
 	  used to generate dependencies. The following command was used to
 	  use the above script "make DEPGEN=$ACE_ROOT/bin/depgen.pl
 	  depend".  If the script works well we can make this the
-	  default. 
+	  default.
 
 	  BTW, this should fix some strange errors in the daily builds.
 
@@ -68,11 +74,11 @@ Sat Feb  7 20:32:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  Inherit from PortableServer::RefCountServantBase in addition to
 	  the POA_* class or interface while generating the implementation
 	  of the servant classes. Thanks to Don Hinton for pointing this
-	  out. 
-	
+	  out.
+
 	* tao/TAO_Internal.cpp:
 
-	  Fix for BUGID 1734. Please see 
+	  Fix for BUGID 1734. Please see
 
 	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1734
 
@@ -92,7 +98,7 @@ Sat Feb  7 09:02:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tests/Oneway_Buffering/client.cpp:
 
 	  Fixed warnings that were caused by comparison between signed
-	  and unsigned integers.  
+	  and unsigned integers.
 
 Sat Feb  7 14:18:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
