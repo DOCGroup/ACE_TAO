@@ -345,13 +345,13 @@ clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/CosNaming_i.h \
+ $(TAO_ROOT)/tao/IOR_LookupTable.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Context.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.h \
@@ -642,13 +642,13 @@ clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/CosNaming_i.h \
+ $(TAO_ROOT)/tao/IOR_LookupTable.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Context.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.h \
@@ -938,13 +938,13 @@ clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/CosNaming_i.h \
+ $(TAO_ROOT)/tao/IOR_LookupTable.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Context.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.h \
@@ -1232,13 +1232,13 @@ clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/CosNaming_i.h \
+ $(TAO_ROOT)/tao/IOR_LookupTable.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Context.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.h \

@@ -546,9 +546,9 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosNamingC.i CosNamingS_T.h CosNamingS_T.i CosNamingS_T.cpp \
- CosNamingS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosNamingC.i CosNamingS_T.h CosNamingS_T.i \
+ CosNamingS_T.cpp CosNamingS.i
 .obj/CosTimeBaseS.o .obj/CosTimeBaseS.so .shobj/CosTimeBaseS.o .shobj/CosTimeBaseS.so: CosTimeBaseS.cpp CosTimeBaseS.h CosTimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -806,11 +806,12 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosTimeBaseC.i CosTimeBaseS_T.h CosTimeBaseS_T.i CosTimeBaseS_T.cpp \
- CosTimeBaseS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosTimeBaseC.i CosTimeBaseS_T.h CosTimeBaseS_T.i \
+ CosTimeBaseS_T.cpp CosTimeBaseS.i
 .obj/TimeServiceS.o .obj/TimeServiceS.so .shobj/TimeServiceS.o .shobj/TimeServiceS.so: TimeServiceS.cpp TimeServiceS.h CosTimeBaseS.h \
- CosTimeBaseC.h $(TAO_ROOT)/tao/corba.h \
+ CosTimeBaseC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -1066,10 +1067,10 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosTimeBaseC.i CosTimeBaseS_T.h CosTimeBaseS_T.i CosTimeBaseS_T.cpp \
- CosTimeBaseS.i TimeServiceC.h TimeServiceC.i TimeServiceS_T.h \
- TimeServiceS_T.i TimeServiceS_T.cpp TimeServiceS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosTimeBaseC.i CosTimeBaseS_T.h CosTimeBaseS_T.i \
+ CosTimeBaseS_T.cpp CosTimeBaseS.i TimeServiceC.h TimeServiceC.i \
+ TimeServiceS_T.h TimeServiceS_T.i TimeServiceS_T.cpp TimeServiceS.i
 .obj/LoggerS.o .obj/LoggerS.so .shobj/LoggerS.o .shobj/LoggerS.so: LoggerS.cpp LoggerS.h LoggerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1327,8 +1328,9 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- LoggerC.i LoggerS_T.h LoggerS_T.i LoggerS_T.cpp LoggerS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h LoggerC.i LoggerS_T.h LoggerS_T.i LoggerS_T.cpp \
+ LoggerS.i
 .obj/CosConcurrencyControlS.o .obj/CosConcurrencyControlS.so .shobj/CosConcurrencyControlS.o .shobj/CosConcurrencyControlS.so: CosConcurrencyControlS.cpp \
  CosConcurrencyControlS.h CosConcurrencyControlC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -1587,12 +1589,13 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosConcurrencyControlC.i CosConcurrencyControlS_T.h \
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosConcurrencyControlC.i CosConcurrencyControlS_T.h \
  CosConcurrencyControlS_T.i CosConcurrencyControlS_T.cpp \
  CosConcurrencyControlS.i
 .obj/CosLifeCycleS.o .obj/CosLifeCycleS.so .shobj/CosLifeCycleS.o .shobj/CosLifeCycleS.so: CosLifeCycleS.cpp CosLifeCycleS.h CosNamingS.h \
- CosNamingC.h $(TAO_ROOT)/tao/corba.h \
+ CosNamingC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -1848,10 +1851,11 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosNamingC.i CosNamingS_T.h CosNamingS_T.i CosNamingS_T.cpp \
- CosNamingS.i CosLifeCycleC.h CosLifeCycleC.i CosLifeCycleS_T.h \
- CosLifeCycleS_T.i CosLifeCycleS_T.cpp CosLifeCycleS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosNamingC.i CosNamingS_T.h CosNamingS_T.i \
+ CosNamingS_T.cpp CosNamingS.i CosLifeCycleC.h CosLifeCycleC.i \
+ CosLifeCycleS_T.h CosLifeCycleS_T.i CosLifeCycleS_T.cpp \
+ CosLifeCycleS.i
 .obj/LifeCycleServiceS.o .obj/LifeCycleServiceS.so .shobj/LifeCycleServiceS.o .shobj/LifeCycleServiceS.so: LifeCycleServiceS.cpp LifeCycleServiceS.h \
  CosLifeCycleS.h CosNamingS.h CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -2110,12 +2114,13 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosNamingC.i CosNamingS_T.h CosNamingS_T.i CosNamingS_T.cpp \
- CosNamingS.i CosLifeCycleC.h CosLifeCycleC.i CosLifeCycleS_T.h \
- CosLifeCycleS_T.i CosLifeCycleS_T.cpp CosLifeCycleS.i \
- LifeCycleServiceC.h LifeCycleServiceC.i LifeCycleServiceS_T.h \
- LifeCycleServiceS_T.i LifeCycleServiceS_T.cpp LifeCycleServiceS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosNamingC.i CosNamingS_T.h CosNamingS_T.i \
+ CosNamingS_T.cpp CosNamingS.i CosLifeCycleC.h CosLifeCycleC.i \
+ CosLifeCycleS_T.h CosLifeCycleS_T.i CosLifeCycleS_T.cpp \
+ CosLifeCycleS.i LifeCycleServiceC.h LifeCycleServiceC.i \
+ LifeCycleServiceS_T.h LifeCycleServiceS_T.i LifeCycleServiceS_T.cpp \
+ LifeCycleServiceS.i
 .obj/PingS.o .obj/PingS.so .shobj/PingS.o .shobj/PingS.so: PingS.cpp PingS.h PingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2373,8 +2378,8 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- PingC.i PingS_T.h PingS_T.i PingS_T.cpp PingS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h PingC.i PingS_T.h PingS_T.i PingS_T.cpp PingS.i
 .obj/ImplRepoS.o .obj/ImplRepoS.so .shobj/ImplRepoS.o .shobj/ImplRepoS.so: ImplRepoS.cpp ImplRepoS.h PingS.h PingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2632,9 +2637,10 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- PingC.i PingS_T.h PingS_T.i PingS_T.cpp PingS.i ImplRepoC.h \
- ImplRepoC.i ImplRepoS_T.h ImplRepoS_T.i ImplRepoS_T.cpp ImplRepoS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h PingC.i PingS_T.h PingS_T.i PingS_T.cpp PingS.i \
+ ImplRepoC.h ImplRepoC.i ImplRepoS_T.h ImplRepoS_T.i ImplRepoS_T.cpp \
+ ImplRepoS.i
 .obj/CosPropertyServiceS.o .obj/CosPropertyServiceS.so .shobj/CosPropertyServiceS.o .shobj/CosPropertyServiceS.so: CosPropertyServiceS.cpp CosPropertyServiceS.h \
  CosPropertyServiceC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -2893,9 +2899,10 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosPropertyServiceC.i CosPropertyServiceS_T.h CosPropertyServiceS_T.i \
- CosPropertyServiceS_T.cpp CosPropertyServiceS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosPropertyServiceC.i CosPropertyServiceS_T.h \
+ CosPropertyServiceS_T.i CosPropertyServiceS_T.cpp \
+ CosPropertyServiceS.i
 .obj/CosTradingS.o .obj/CosTradingS.so .shobj/CosTradingS.o .shobj/CosTradingS.so: CosTradingS.cpp CosTradingS.h CosTradingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -3153,11 +3160,12 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosTradingC.i CosTradingS_T.h CosTradingS_T.i CosTradingS_T.cpp \
- CosTradingS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosTradingC.i CosTradingS_T.h CosTradingS_T.i \
+ CosTradingS_T.cpp CosTradingS.i
 .obj/RtecSchedulerS.o .obj/RtecSchedulerS.so .shobj/RtecSchedulerS.o .shobj/RtecSchedulerS.so: RtecSchedulerS.cpp RtecSchedulerS.h CosTimeBaseS.h \
- CosTimeBaseC.h $(TAO_ROOT)/tao/corba.h \
+ CosTimeBaseC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -3413,12 +3421,14 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosTimeBaseC.i CosTimeBaseS_T.h CosTimeBaseS_T.i CosTimeBaseS_T.cpp \
- CosTimeBaseS.i RtecSchedulerC.h RtecSchedulerC.i RtecSchedulerS_T.h \
- RtecSchedulerS_T.i RtecSchedulerS_T.cpp RtecSchedulerS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosTimeBaseC.i CosTimeBaseS_T.h CosTimeBaseS_T.i \
+ CosTimeBaseS_T.cpp CosTimeBaseS.i RtecSchedulerC.h RtecSchedulerC.i \
+ RtecSchedulerS_T.h RtecSchedulerS_T.i RtecSchedulerS_T.cpp \
+ RtecSchedulerS.i
 .obj/RtecEventCommS.o .obj/RtecEventCommS.so .shobj/RtecEventCommS.o .shobj/RtecEventCommS.so: RtecEventCommS.cpp RtecEventCommS.h CosTimeBaseS.h \
- CosTimeBaseC.h $(TAO_ROOT)/tao/corba.h \
+ CosTimeBaseC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -3674,13 +3684,15 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosTimeBaseC.i CosTimeBaseS_T.h CosTimeBaseS_T.i CosTimeBaseS_T.cpp \
- CosTimeBaseS.i RtecEventCommC.h RtecEventCommC.i RtecEventCommS_T.h \
- RtecEventCommS_T.i RtecEventCommS_T.cpp RtecEventCommS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosTimeBaseC.i CosTimeBaseS_T.h CosTimeBaseS_T.i \
+ CosTimeBaseS_T.cpp CosTimeBaseS.i RtecEventCommC.h RtecEventCommC.i \
+ RtecEventCommS_T.h RtecEventCommS_T.i RtecEventCommS_T.cpp \
+ RtecEventCommS.i
 .obj/RtecEventChannelAdminS.o .obj/RtecEventChannelAdminS.so .shobj/RtecEventChannelAdminS.o .shobj/RtecEventChannelAdminS.so: RtecEventChannelAdminS.cpp \
  RtecEventChannelAdminS.h RtecEventCommS.h CosTimeBaseS.h \
- CosTimeBaseC.h $(TAO_ROOT)/tao/corba.h \
+ CosTimeBaseC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -3936,13 +3948,13 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosTimeBaseC.i CosTimeBaseS_T.h CosTimeBaseS_T.i CosTimeBaseS_T.cpp \
- CosTimeBaseS.i RtecEventCommC.h RtecEventCommC.i RtecEventCommS_T.h \
- RtecEventCommS_T.i RtecEventCommS_T.cpp RtecEventCommS.i \
- RtecSchedulerS.h RtecSchedulerC.h RtecSchedulerC.i RtecSchedulerS_T.h \
- RtecSchedulerS_T.i RtecSchedulerS_T.cpp RtecSchedulerS.i \
- RtecEventChannelAdminC.h RtecEventChannelAdminC.i \
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosTimeBaseC.i CosTimeBaseS_T.h CosTimeBaseS_T.i \
+ CosTimeBaseS_T.cpp CosTimeBaseS.i RtecEventCommC.h RtecEventCommC.i \
+ RtecEventCommS_T.h RtecEventCommS_T.i RtecEventCommS_T.cpp \
+ RtecEventCommS.i RtecSchedulerS.h RtecSchedulerC.h RtecSchedulerC.i \
+ RtecSchedulerS_T.h RtecSchedulerS_T.i RtecSchedulerS_T.cpp \
+ RtecSchedulerS.i RtecEventChannelAdminC.h RtecEventChannelAdminC.i \
  RtecEventChannelAdminS_T.h RtecEventChannelAdminS_T.i \
  RtecEventChannelAdminS_T.cpp RtecEventChannelAdminS.i
 .obj/RtecUDPAdminS.o .obj/RtecUDPAdminS.so .shobj/RtecUDPAdminS.o .shobj/RtecUDPAdminS.so: RtecUDPAdminS.cpp RtecUDPAdminS.h RtecEventCommS.h \
@@ -4203,12 +4215,12 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosTimeBaseC.i CosTimeBaseS_T.h CosTimeBaseS_T.i CosTimeBaseS_T.cpp \
- CosTimeBaseS.i RtecEventCommC.h RtecEventCommC.i RtecEventCommS_T.h \
- RtecEventCommS_T.i RtecEventCommS_T.cpp RtecEventCommS.i \
- RtecUDPAdminC.h RtecUDPAdminC.i RtecUDPAdminS_T.h RtecUDPAdminS_T.i \
- RtecUDPAdminS_T.cpp RtecUDPAdminS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosTimeBaseC.i CosTimeBaseS_T.h CosTimeBaseS_T.i \
+ CosTimeBaseS_T.cpp CosTimeBaseS.i RtecEventCommC.h RtecEventCommC.i \
+ RtecEventCommS_T.h RtecEventCommS_T.i RtecEventCommS_T.cpp \
+ RtecEventCommS.i RtecUDPAdminC.h RtecUDPAdminC.i RtecUDPAdminS_T.h \
+ RtecUDPAdminS_T.i RtecUDPAdminS_T.cpp RtecUDPAdminS.i
 .obj/CosEventCommS.o .obj/CosEventCommS.so .shobj/CosEventCommS.o .shobj/CosEventCommS.so: CosEventCommS.cpp CosEventCommS.h CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -4466,8 +4478,8 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosEventCommC.i CosEventCommS_T.h CosEventCommS_T.i \
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosEventCommC.i CosEventCommS_T.h CosEventCommS_T.i \
  CosEventCommS_T.cpp CosEventCommS.i
 .obj/CosEventChannelAdminS.o .obj/CosEventChannelAdminS.so .shobj/CosEventChannelAdminS.o .shobj/CosEventChannelAdminS.so: CosEventChannelAdminS.cpp \
  CosEventChannelAdminS.h CosEventCommS.h CosEventCommC.h \
@@ -4727,8 +4739,8 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosEventCommC.i CosEventCommS_T.h CosEventCommS_T.i \
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosEventCommC.i CosEventCommS_T.h CosEventCommS_T.i \
  CosEventCommS_T.cpp CosEventCommS.i CosEventChannelAdminC.h \
  CosEventChannelAdminC.i CosEventChannelAdminS_T.h \
  CosEventChannelAdminS_T.i CosEventChannelAdminS_T.cpp \
@@ -4991,13 +5003,14 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosPropertyServiceC.i CosPropertyServiceS_T.h CosPropertyServiceS_T.i \
- CosPropertyServiceS_T.cpp CosPropertyServiceS.i AVStreamsC.h \
- AVStreamsC.i AVStreamsS_T.h AVStreamsS_T.i AVStreamsS_T.cpp \
- AVStreamsS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosPropertyServiceC.i CosPropertyServiceS_T.h \
+ CosPropertyServiceS_T.i CosPropertyServiceS_T.cpp \
+ CosPropertyServiceS.i AVStreamsC.h AVStreamsC.i AVStreamsS_T.h \
+ AVStreamsS_T.i AVStreamsS_T.cpp AVStreamsS.i
 .obj/Null_MediaCtrlS.o .obj/Null_MediaCtrlS.so .shobj/Null_MediaCtrlS.o .shobj/Null_MediaCtrlS.so: Null_MediaCtrlS.cpp Null_MediaCtrlS.h \
- Null_MediaCtrlC.h $(TAO_ROOT)/tao/corba.h \
+ Null_MediaCtrlC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -5253,9 +5266,9 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- Null_MediaCtrlC.i Null_MediaCtrlS_T.h Null_MediaCtrlS_T.i \
- Null_MediaCtrlS_T.cpp Null_MediaCtrlS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h Null_MediaCtrlC.i Null_MediaCtrlS_T.h \
+ Null_MediaCtrlS_T.i Null_MediaCtrlS_T.cpp Null_MediaCtrlS.i
 .obj/sfpS.o .obj/sfpS.so .shobj/sfpS.o .shobj/sfpS.so: sfpS.cpp sfpS.h sfpC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -5513,8 +5526,8 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- sfpC.i sfpS_T.h sfpS_T.i sfpS_T.cpp sfpS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h sfpC.i sfpS_T.h sfpS_T.i sfpS_T.cpp sfpS.i
 .obj/CosNamingC.o .obj/CosNamingC.so .shobj/CosNamingC.o .shobj/CosNamingC.so: CosNamingC.cpp CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -5772,9 +5785,9 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosNamingC.i CosNamingS.h CosNamingS_T.h CosNamingS_T.i \
- CosNamingS_T.cpp CosNamingS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosNamingC.i CosNamingS.h CosNamingS_T.h \
+ CosNamingS_T.i CosNamingS_T.cpp CosNamingS.i
 .obj/CosTimeBaseC.o .obj/CosTimeBaseC.so .shobj/CosTimeBaseC.o .shobj/CosTimeBaseC.so: CosTimeBaseC.cpp CosTimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -6032,9 +6045,9 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosTimeBaseC.i CosTimeBaseS.h CosTimeBaseS_T.h CosTimeBaseS_T.i \
- CosTimeBaseS_T.cpp CosTimeBaseS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosTimeBaseC.i CosTimeBaseS.h CosTimeBaseS_T.h \
+ CosTimeBaseS_T.i CosTimeBaseS_T.cpp CosTimeBaseS.i
 .obj/TimeServiceC.o .obj/TimeServiceC.so .shobj/TimeServiceC.o .shobj/TimeServiceC.so: TimeServiceC.cpp TimeServiceC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -6292,11 +6305,11 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosTimeBaseC.h CosTimeBaseC.i TimeServiceC.i TimeServiceS.h \
- CosTimeBaseS.h CosTimeBaseS_T.h CosTimeBaseS_T.i CosTimeBaseS_T.cpp \
- CosTimeBaseS.i TimeServiceS_T.h TimeServiceS_T.i TimeServiceS_T.cpp \
- TimeServiceS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosTimeBaseC.h CosTimeBaseC.i TimeServiceC.i \
+ TimeServiceS.h CosTimeBaseS.h CosTimeBaseS_T.h CosTimeBaseS_T.i \
+ CosTimeBaseS_T.cpp CosTimeBaseS.i TimeServiceS_T.h TimeServiceS_T.i \
+ TimeServiceS_T.cpp TimeServiceS.i
 .obj/LoggerC.o .obj/LoggerC.so .shobj/LoggerC.o .shobj/LoggerC.so: LoggerC.cpp LoggerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -6554,8 +6567,9 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- LoggerC.i LoggerS.h LoggerS_T.h LoggerS_T.i LoggerS_T.cpp LoggerS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h LoggerC.i LoggerS.h LoggerS_T.h LoggerS_T.i \
+ LoggerS_T.cpp LoggerS.i
 .obj/CosConcurrencyControlC.o .obj/CosConcurrencyControlC.so .shobj/CosConcurrencyControlC.o .shobj/CosConcurrencyControlC.so: CosConcurrencyControlC.cpp \
  CosConcurrencyControlC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -6814,8 +6828,8 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosConcurrencyControlC.i CosConcurrencyControlS.h \
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosConcurrencyControlC.i CosConcurrencyControlS.h \
  CosConcurrencyControlS_T.h CosConcurrencyControlS_T.i \
  CosConcurrencyControlS_T.cpp CosConcurrencyControlS.i
 .obj/CosLifeCycleC.o .obj/CosLifeCycleC.so .shobj/CosLifeCycleC.o .shobj/CosLifeCycleC.so: CosLifeCycleC.cpp CosLifeCycleC.h \
@@ -7075,11 +7089,11 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosNamingC.h CosNamingC.i CosLifeCycleC.i CosLifeCycleS.h \
- CosNamingS.h CosNamingS_T.h CosNamingS_T.i CosNamingS_T.cpp \
- CosNamingS.i CosLifeCycleS_T.h CosLifeCycleS_T.i CosLifeCycleS_T.cpp \
- CosLifeCycleS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosNamingC.h CosNamingC.i CosLifeCycleC.i \
+ CosLifeCycleS.h CosNamingS.h CosNamingS_T.h CosNamingS_T.i \
+ CosNamingS_T.cpp CosNamingS.i CosLifeCycleS_T.h CosLifeCycleS_T.i \
+ CosLifeCycleS_T.cpp CosLifeCycleS.i
 .obj/LifeCycleServiceC.o .obj/LifeCycleServiceC.so .shobj/LifeCycleServiceC.o .shobj/LifeCycleServiceC.so: LifeCycleServiceC.cpp LifeCycleServiceC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -7337,13 +7351,13 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosLifeCycleC.h CosNamingC.h CosNamingC.i CosLifeCycleC.i \
- LifeCycleServiceC.i LifeCycleServiceS.h CosLifeCycleS.h CosNamingS.h \
- CosNamingS_T.h CosNamingS_T.i CosNamingS_T.cpp CosNamingS.i \
- CosLifeCycleS_T.h CosLifeCycleS_T.i CosLifeCycleS_T.cpp \
- CosLifeCycleS.i LifeCycleServiceS_T.h LifeCycleServiceS_T.i \
- LifeCycleServiceS_T.cpp LifeCycleServiceS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosLifeCycleC.h CosNamingC.h CosNamingC.i \
+ CosLifeCycleC.i LifeCycleServiceC.i LifeCycleServiceS.h \
+ CosLifeCycleS.h CosNamingS.h CosNamingS_T.h CosNamingS_T.i \
+ CosNamingS_T.cpp CosNamingS.i CosLifeCycleS_T.h CosLifeCycleS_T.i \
+ CosLifeCycleS_T.cpp CosLifeCycleS.i LifeCycleServiceS_T.h \
+ LifeCycleServiceS_T.i LifeCycleServiceS_T.cpp LifeCycleServiceS.i
 .obj/PingC.o .obj/PingC.so .shobj/PingC.o .shobj/PingC.so: PingC.cpp PingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -7601,8 +7615,9 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- PingC.i PingS.h PingS_T.h PingS_T.i PingS_T.cpp PingS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h PingC.i PingS.h PingS_T.h PingS_T.i PingS_T.cpp \
+ PingS.i
 .obj/ImplRepoC.o .obj/ImplRepoC.so .shobj/ImplRepoC.o .shobj/ImplRepoC.so: ImplRepoC.cpp ImplRepoC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -7860,10 +7875,10 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- PingC.h PingC.i ImplRepoC.i ImplRepoS.h PingS.h PingS_T.h PingS_T.i \
- PingS_T.cpp PingS.i ImplRepoS_T.h ImplRepoS_T.i ImplRepoS_T.cpp \
- ImplRepoS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h PingC.h PingC.i ImplRepoC.i ImplRepoS.h PingS.h \
+ PingS_T.h PingS_T.i PingS_T.cpp PingS.i ImplRepoS_T.h ImplRepoS_T.i \
+ ImplRepoS_T.cpp ImplRepoS.i
 .obj/CosPropertyServiceC.o .obj/CosPropertyServiceC.so .shobj/CosPropertyServiceC.o .shobj/CosPropertyServiceC.so: CosPropertyServiceC.cpp CosPropertyServiceC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -8121,10 +8136,10 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosPropertyServiceC.i CosPropertyServiceS.h CosPropertyServiceS_T.h \
- CosPropertyServiceS_T.i CosPropertyServiceS_T.cpp \
- CosPropertyServiceS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosPropertyServiceC.i CosPropertyServiceS.h \
+ CosPropertyServiceS_T.h CosPropertyServiceS_T.i \
+ CosPropertyServiceS_T.cpp CosPropertyServiceS.i
 .obj/CosTradingC.o .obj/CosTradingC.so .shobj/CosTradingC.o .shobj/CosTradingC.so: CosTradingC.cpp CosTradingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -8382,9 +8397,9 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosTradingC.i CosTradingS.h CosTradingS_T.h CosTradingS_T.i \
- CosTradingS_T.cpp CosTradingS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosTradingC.i CosTradingS.h CosTradingS_T.h \
+ CosTradingS_T.i CosTradingS_T.cpp CosTradingS.i
 .obj/RtecSchedulerC.o .obj/RtecSchedulerC.so .shobj/RtecSchedulerC.o .shobj/RtecSchedulerC.so: RtecSchedulerC.cpp RtecSchedulerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -8642,11 +8657,11 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosTimeBaseC.h CosTimeBaseC.i RtecSchedulerC.i RtecSchedulerS.h \
- CosTimeBaseS.h CosTimeBaseS_T.h CosTimeBaseS_T.i CosTimeBaseS_T.cpp \
- CosTimeBaseS.i RtecSchedulerS_T.h RtecSchedulerS_T.i \
- RtecSchedulerS_T.cpp RtecSchedulerS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosTimeBaseC.h CosTimeBaseC.i RtecSchedulerC.i \
+ RtecSchedulerS.h CosTimeBaseS.h CosTimeBaseS_T.h CosTimeBaseS_T.i \
+ CosTimeBaseS_T.cpp CosTimeBaseS.i RtecSchedulerS_T.h \
+ RtecSchedulerS_T.i RtecSchedulerS_T.cpp RtecSchedulerS.i
 .obj/RtecEventCommC.o .obj/RtecEventCommC.so .shobj/RtecEventCommC.o .shobj/RtecEventCommC.so: RtecEventCommC.cpp RtecEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -8904,11 +8919,11 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosTimeBaseC.h CosTimeBaseC.i RtecEventCommC.i RtecEventCommS.h \
- CosTimeBaseS.h CosTimeBaseS_T.h CosTimeBaseS_T.i CosTimeBaseS_T.cpp \
- CosTimeBaseS.i RtecEventCommS_T.h RtecEventCommS_T.i \
- RtecEventCommS_T.cpp RtecEventCommS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosTimeBaseC.h CosTimeBaseC.i RtecEventCommC.i \
+ RtecEventCommS.h CosTimeBaseS.h CosTimeBaseS_T.h CosTimeBaseS_T.i \
+ CosTimeBaseS_T.cpp CosTimeBaseS.i RtecEventCommS_T.h \
+ RtecEventCommS_T.i RtecEventCommS_T.cpp RtecEventCommS.i
 .obj/RtecEventChannelAdminC.o .obj/RtecEventChannelAdminC.so .shobj/RtecEventChannelAdminC.o .shobj/RtecEventChannelAdminC.so: RtecEventChannelAdminC.cpp \
  RtecEventChannelAdminC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -9167,16 +9182,17 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- RtecEventCommC.h CosTimeBaseC.h CosTimeBaseC.i RtecEventCommC.i \
- RtecSchedulerC.h RtecSchedulerC.i RtecEventChannelAdminC.i \
- RtecEventChannelAdminS.h RtecEventCommS.h CosTimeBaseS.h \
- CosTimeBaseS_T.h CosTimeBaseS_T.i CosTimeBaseS_T.cpp CosTimeBaseS.i \
- RtecEventCommS_T.h RtecEventCommS_T.i RtecEventCommS_T.cpp \
- RtecEventCommS.i RtecSchedulerS.h RtecSchedulerS_T.h \
- RtecSchedulerS_T.i RtecSchedulerS_T.cpp RtecSchedulerS.i \
- RtecEventChannelAdminS_T.h RtecEventChannelAdminS_T.i \
- RtecEventChannelAdminS_T.cpp RtecEventChannelAdminS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h RtecEventCommC.h CosTimeBaseC.h CosTimeBaseC.i \
+ RtecEventCommC.i RtecSchedulerC.h RtecSchedulerC.i \
+ RtecEventChannelAdminC.i RtecEventChannelAdminS.h RtecEventCommS.h \
+ CosTimeBaseS.h CosTimeBaseS_T.h CosTimeBaseS_T.i CosTimeBaseS_T.cpp \
+ CosTimeBaseS.i RtecEventCommS_T.h RtecEventCommS_T.i \
+ RtecEventCommS_T.cpp RtecEventCommS.i RtecSchedulerS.h \
+ RtecSchedulerS_T.h RtecSchedulerS_T.i RtecSchedulerS_T.cpp \
+ RtecSchedulerS.i RtecEventChannelAdminS_T.h \
+ RtecEventChannelAdminS_T.i RtecEventChannelAdminS_T.cpp \
+ RtecEventChannelAdminS.i
 .obj/RtecUDPAdminC.o .obj/RtecUDPAdminC.so .shobj/RtecUDPAdminC.o .shobj/RtecUDPAdminC.so: RtecUDPAdminC.cpp RtecUDPAdminC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -9434,13 +9450,13 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- RtecEventCommC.h CosTimeBaseC.h CosTimeBaseC.i RtecEventCommC.i \
- RtecUDPAdminC.i RtecUDPAdminS.h RtecEventCommS.h CosTimeBaseS.h \
- CosTimeBaseS_T.h CosTimeBaseS_T.i CosTimeBaseS_T.cpp CosTimeBaseS.i \
- RtecEventCommS_T.h RtecEventCommS_T.i RtecEventCommS_T.cpp \
- RtecEventCommS.i RtecUDPAdminS_T.h RtecUDPAdminS_T.i \
- RtecUDPAdminS_T.cpp RtecUDPAdminS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h RtecEventCommC.h CosTimeBaseC.h CosTimeBaseC.i \
+ RtecEventCommC.i RtecUDPAdminC.i RtecUDPAdminS.h RtecEventCommS.h \
+ CosTimeBaseS.h CosTimeBaseS_T.h CosTimeBaseS_T.i CosTimeBaseS_T.cpp \
+ CosTimeBaseS.i RtecEventCommS_T.h RtecEventCommS_T.i \
+ RtecEventCommS_T.cpp RtecEventCommS.i RtecUDPAdminS_T.h \
+ RtecUDPAdminS_T.i RtecUDPAdminS_T.cpp RtecUDPAdminS.i
 .obj/CosEventCommC.o .obj/CosEventCommC.so .shobj/CosEventCommC.o .shobj/CosEventCommC.so: CosEventCommC.cpp CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -9698,9 +9714,9 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosEventCommC.i CosEventCommS.h CosEventCommS_T.h CosEventCommS_T.i \
- CosEventCommS_T.cpp CosEventCommS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosEventCommC.i CosEventCommS.h CosEventCommS_T.h \
+ CosEventCommS_T.i CosEventCommS_T.cpp CosEventCommS.i
 .obj/CosEventChannelAdminC.o .obj/CosEventChannelAdminC.so .shobj/CosEventChannelAdminC.o .shobj/CosEventChannelAdminC.so: CosEventChannelAdminC.cpp \
  CosEventChannelAdminC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -9959,11 +9975,11 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosEventCommC.h CosEventCommC.i CosEventChannelAdminC.i \
- CosEventChannelAdminS.h CosEventCommS.h CosEventCommS_T.h \
- CosEventCommS_T.i CosEventCommS_T.cpp CosEventCommS.i \
- CosEventChannelAdminS_T.h CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosEventCommC.h CosEventCommC.i \
+ CosEventChannelAdminC.i CosEventChannelAdminS.h CosEventCommS.h \
+ CosEventCommS_T.h CosEventCommS_T.i CosEventCommS_T.cpp \
+ CosEventCommS.i CosEventChannelAdminS_T.h CosEventChannelAdminS_T.i \
  CosEventChannelAdminS_T.cpp CosEventChannelAdminS.i
 .obj/AVStreamsC.o .obj/AVStreamsC.so .shobj/AVStreamsC.o .shobj/AVStreamsC.so: AVStreamsC.cpp AVStreamsC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -10222,9 +10238,10 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- CosPropertyServiceC.h CosPropertyServiceC.i AVStreamsC.i AVStreamsS.h \
- CosPropertyServiceS.h CosPropertyServiceS_T.h CosPropertyServiceS_T.i \
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h CosPropertyServiceC.h CosPropertyServiceC.i \
+ AVStreamsC.i AVStreamsS.h CosPropertyServiceS.h \
+ CosPropertyServiceS_T.h CosPropertyServiceS_T.i \
  CosPropertyServiceS_T.cpp CosPropertyServiceS.i AVStreamsS_T.h \
  AVStreamsS_T.i AVStreamsS_T.cpp AVStreamsS.i
 .obj/Null_MediaCtrlC.o .obj/Null_MediaCtrlC.so .shobj/Null_MediaCtrlC.o .shobj/Null_MediaCtrlC.so: Null_MediaCtrlC.cpp Null_MediaCtrlC.h \
@@ -10484,9 +10501,10 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- Null_MediaCtrlC.i Null_MediaCtrlS.h Null_MediaCtrlS_T.h \
- Null_MediaCtrlS_T.i Null_MediaCtrlS_T.cpp Null_MediaCtrlS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h Null_MediaCtrlC.i Null_MediaCtrlS.h \
+ Null_MediaCtrlS_T.h Null_MediaCtrlS_T.i Null_MediaCtrlS_T.cpp \
+ Null_MediaCtrlS.i
 .obj/sfpC.o .obj/sfpC.so .shobj/sfpC.o .shobj/sfpC.so: sfpC.cpp sfpC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -10744,8 +10762,8 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h orbsvcs_export.h \
- sfpC.i sfpS.h sfpS_T.h sfpS_T.i sfpS_T.cpp sfpS.i
+ $(TAO_ROOT)/tao/Union.h \
+ orbsvcs_export.h sfpC.i sfpS.h sfpS_T.h sfpS_T.i sfpS_T.cpp sfpS.i
 .obj/IOR_Multicast.o .obj/IOR_Multicast.so .shobj/IOR_Multicast.o .shobj/IOR_Multicast.so: IOR_Multicast.cpp IOR_Multicast.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -12624,7 +12642,8 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.i \
- Time/TAO_TIO.h $(TAO_ROOT)/tao/TAO.h \
+ Time/TAO_TIO.h \
+ $(TAO_ROOT)/tao/TAO.h \
  Time/TAO_Time_Service_Server.h
 .obj/TAO_Time_Service_Clerk.o .obj/TAO_Time_Service_Clerk.so .shobj/TAO_Time_Service_Clerk.o .shobj/TAO_Time_Service_Clerk.so: Time/TAO_Time_Service_Clerk.cpp \
  Time/TAO_Time_Service_Clerk.h \
@@ -12916,7 +12935,8 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.i \
  Time/Timer_Helper.h Time/TAO_TIO.h \
- $(TAO_ROOT)/tao/TAO.h Time/TAO_UTO.h
+ $(TAO_ROOT)/tao/TAO.h \
+ Time/TAO_UTO.h
 .obj/TAO_UTO.o .obj/TAO_UTO.so .shobj/TAO_UTO.o .shobj/TAO_UTO.so: Time/TAO_UTO.cpp Time/TAO_UTO.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.h \
@@ -13190,7 +13210,8 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.i \
- Time/TAO_TIO.h $(TAO_ROOT)/tao/TAO.h
+ Time/TAO_TIO.h \
+ $(TAO_ROOT)/tao/TAO.h
 .obj/TAO_TIO.o .obj/TAO_TIO.so .shobj/TAO_TIO.o .shobj/TAO_TIO.so: Time/TAO_TIO.cpp Time/TAO_TIO.h \
  $(TAO_ROOT)/tao/TAO.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -14818,7 +14839,8 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlS.i \
- Concurrency/CC_LockSet.h $(ACE_ROOT)/ace/Token.h \
+ Concurrency/CC_LockSet.h \
+ $(ACE_ROOT)/ace/Token.h \
  $(ACE_ROOT)/ace/Token.i
 .obj/Concurrency_Utils.o .obj/Concurrency_Utils.so .shobj/Concurrency_Utils.o .shobj/Concurrency_Utils.so: Concurrency/Concurrency_Utils.cpp \
  $(ACE_ROOT)/ace/streams.h \
@@ -17519,7 +17541,8 @@ ORBSVCS_COMPONENTS:
  Trader/Offer_Database.h Trader/Offer_Database.cpp \
  Trader/Offer_Iterators_T.cpp
 .obj/Service_Type_Repository.o .obj/Service_Type_Repository.so .shobj/Service_Type_Repository.o .shobj/Service_Type_Repository.so: Trader/Service_Type_Repository.cpp \
- Trader/Locking.h $(TAO_ROOT)/tao/corba.h \
+ Trader/Locking.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -21606,7 +21629,8 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.i
-.obj/BCU.o .obj/BCU.so .shobj/BCU.o .shobj/BCU.so: Event/BCU.cpp $(ACE_ROOT)/ace/ACE.h \
+.obj/BCU.o .obj/BCU.so .shobj/BCU.o .shobj/BCU.so: Event/BCU.cpp \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -21621,7 +21645,8 @@ ORBSVCS_COMPONENTS:
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Record.i Event/BCU.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ Event/BCU.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h
 .obj/Dispatching_Modules.o .obj/Dispatching_Modules.so .shobj/Dispatching_Modules.o .shobj/Dispatching_Modules.so: Event/Dispatching_Modules.cpp \
  $(ACE_ROOT)/ace/Sched_Params.h \
@@ -25356,7 +25381,8 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Dispatching_Modules.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Module_Factory.h
 .obj/EC_Event_Channel.o .obj/EC_Event_Channel.so .shobj/EC_Event_Channel.o .shobj/EC_Event_Channel.so: Event/EC_Event_Channel.cpp \
- Event/EC_Event_Channel.h $(ACE_ROOT)/ace/OS.h \
+ Event/EC_Event_Channel.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -25646,12 +25672,13 @@ ORBSVCS_COMPONENTS:
  Event/EC_Dispatching.h Event/EC_Dispatching.i \
  Event/EC_ConsumerAdmin.h Event/EC_ProxyPushSupplier_Set.h \
  Event/EC_Busy_Lock.h Event/EC_Busy_Lock.i Event/EC_Busy_Lock.cpp \
- Event/EC_Command.h Event/EC_Command.i Event/EC_Command.cpp \
  Event/EC_ProxyPushSupplier_Set.i Event/EC_ConsumerAdmin.i \
  Event/EC_SupplierAdmin.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Filter.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Filter.i \
  Event/EC_SupplierAdmin.i Event/EC_Timeout_Generator.h \
+ Event/EC_Timeout_Filter.h Event/EC_Filter.h Event/EC_QOS_Info.h \
+ Event/EC_QOS_Info.i Event/EC_Timeout_Filter.i \
  Event/EC_Timeout_Generator.i Event/EC_ObserverStrategy.h \
  $(ACE_ROOT)/ace/RB_Tree.h \
  $(ACE_ROOT)/ace/RB_Tree.i \
@@ -25946,14 +25973,14 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
  Event/EC_ProxyPushSupplier_Set.h Event/EC_Busy_Lock.h \
- Event/EC_Busy_Lock.i Event/EC_Busy_Lock.cpp Event/EC_Command.h \
- Event/EC_Command.i Event/EC_Command.cpp \
+ Event/EC_Busy_Lock.i Event/EC_Busy_Lock.cpp \
  Event/EC_ProxyPushSupplier_Set.i Event/EC_ConsumerAdmin.i \
  Event/EC_ProxySupplier.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Filter.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Filter.i \
  Event/EC_ProxySupplier.i Event/EC_Event_Channel.h Event/EC_Factory.h \
- Event/EC_Factory.i Event/EC_Event_Channel.i
+ Event/EC_Factory.i Event/EC_Event_Channel.i Event/EC_Command.h \
+ Event/EC_Command.i Event/EC_Command.cpp
 .obj/EC_SupplierAdmin.o .obj/EC_SupplierAdmin.so .shobj/EC_SupplierAdmin.o .shobj/EC_SupplierAdmin.so: Event/EC_SupplierAdmin.cpp \
  Event/EC_SupplierAdmin.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
@@ -27126,7 +27153,6 @@ ORBSVCS_COMPONENTS:
  Event/EC_Factory.h Event/EC_Factory.i Event/EC_Event_Channel.i \
  Event/EC_ConsumerAdmin.h Event/EC_ProxyPushSupplier_Set.h \
  Event/EC_Busy_Lock.h Event/EC_Busy_Lock.i Event/EC_Busy_Lock.cpp \
- Event/EC_Command.h Event/EC_Command.i Event/EC_Command.cpp \
  Event/EC_ProxyPushSupplier_Set.i Event/EC_ConsumerAdmin.i \
  Event/EC_ProxySupplier.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Filter.h \
@@ -28214,7 +28240,8 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h Event/EC_Factory.i
+ $(TAO_ROOT)/tao/Union.h \
+ Event/EC_Factory.i
 .obj/EC_QOS_Info.o .obj/EC_QOS_Info.so .shobj/EC_QOS_Info.o .shobj/EC_QOS_Info.so: Event/EC_QOS_Info.cpp Event/EC_QOS_Info.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -28232,7 +28259,8 @@ ORBSVCS_COMPONENTS:
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Record.i Event/EC_QOS_Info.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ Event/EC_QOS_Info.i
 .obj/EC_Null_Factory.o .obj/EC_Null_Factory.so .shobj/EC_Null_Factory.o .shobj/EC_Null_Factory.so: Event/EC_Null_Factory.cpp Event/EC_Null_Factory.h \
  Event/EC_Factory.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
@@ -28492,8 +28520,8 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h Event/EC_Factory.i \
- Event/EC_Null_Factory.i Event/EC_Dispatching.h \
+ $(TAO_ROOT)/tao/Union.h \
+ Event/EC_Factory.i Event/EC_Null_Factory.i Event/EC_Dispatching.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.i \
@@ -28525,8 +28553,7 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
  Event/EC_ProxyPushSupplier_Set.h Event/EC_Busy_Lock.h \
- Event/EC_Busy_Lock.i Event/EC_Busy_Lock.cpp Event/EC_Command.h \
- Event/EC_Command.i Event/EC_Command.cpp \
+ Event/EC_Busy_Lock.i Event/EC_Busy_Lock.cpp \
  Event/EC_ProxyPushSupplier_Set.i Event/EC_ConsumerAdmin.i \
  Event/EC_SupplierAdmin.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Filter.h \
@@ -28540,8 +28567,11 @@ ORBSVCS_COMPONENTS:
  $(ACE_ROOT)/ace/RB_Tree.cpp \
  Event/EC_ObserverStrategy.i Event/EC_ProxyPushSupplier_Set_T.h \
  Event/EC_ProxyPushSupplier_Set_T.i \
- Event/EC_ProxyPushSupplier_Set_T.cpp \
+ Event/EC_ProxyPushSupplier_Set_T.cpp Event/EC_Command.h \
+ Event/EC_Command.i Event/EC_Command.cpp \
  Event/EC_Reactive_Timeout_Generator.h Event/EC_Timeout_Generator.h \
+ Event/EC_Timeout_Filter.h Event/EC_Filter.h Event/EC_QOS_Info.h \
+ Event/EC_QOS_Info.i Event/EC_Timeout_Filter.i \
  Event/EC_Timeout_Generator.i Event/EC_Reactive_Timeout_Generator.i
 .obj/EC_Disjunction_Filter.o .obj/EC_Disjunction_Filter.so .shobj/EC_Disjunction_Filter.o .shobj/EC_Disjunction_Filter.so: Event/EC_Disjunction_Filter.cpp \
  Event/EC_Disjunction_Filter.h Event/EC_Filter.h \
@@ -29874,8 +29904,8 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h Event/EC_Factory.i \
- Event/EC_Basic_Factory.i Event/EC_Dispatching.h \
+ $(TAO_ROOT)/tao/Union.h \
+ Event/EC_Factory.i Event/EC_Basic_Factory.i Event/EC_Dispatching.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.i \
@@ -29909,8 +29939,7 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
  Event/EC_ProxyPushSupplier_Set.h Event/EC_Busy_Lock.h \
- Event/EC_Busy_Lock.i Event/EC_Busy_Lock.cpp Event/EC_Command.h \
- Event/EC_Command.i Event/EC_Command.cpp \
+ Event/EC_Busy_Lock.i Event/EC_Busy_Lock.cpp \
  Event/EC_ProxyPushSupplier_Set.i Event/EC_ConsumerAdmin.i \
  Event/EC_SupplierAdmin.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Filter.h \
@@ -29924,8 +29953,11 @@ ORBSVCS_COMPONENTS:
  $(ACE_ROOT)/ace/RB_Tree.cpp \
  Event/EC_ObserverStrategy.i Event/EC_ProxyPushSupplier_Set_T.h \
  Event/EC_ProxyPushSupplier_Set_T.i \
- Event/EC_ProxyPushSupplier_Set_T.cpp \
+ Event/EC_ProxyPushSupplier_Set_T.cpp Event/EC_Command.h \
+ Event/EC_Command.i Event/EC_Command.cpp \
  Event/EC_Reactive_Timeout_Generator.h Event/EC_Timeout_Generator.h \
+ Event/EC_Timeout_Filter.h Event/EC_Filter.h Event/EC_QOS_Info.h \
+ Event/EC_QOS_Info.i Event/EC_Timeout_Filter.i \
  Event/EC_Timeout_Generator.i Event/EC_Reactive_Timeout_Generator.i
 .obj/EC_ObserverStrategy.o .obj/EC_ObserverStrategy.so .shobj/EC_ObserverStrategy.o .shobj/EC_ObserverStrategy.so: Event/EC_ObserverStrategy.cpp \
  Event/EC_ObserverStrategy.h \
@@ -30226,8 +30258,7 @@ ORBSVCS_COMPONENTS:
  Event/EC_ProxySupplier.i Event/EC_ProxyConsumer.h \
  Event/EC_ProxyConsumer.i Event/EC_ConsumerAdmin.h \
  Event/EC_ProxyPushSupplier_Set.h Event/EC_Busy_Lock.h \
- Event/EC_Busy_Lock.i Event/EC_Busy_Lock.cpp Event/EC_Command.h \
- Event/EC_Command.i Event/EC_Command.cpp \
+ Event/EC_Busy_Lock.i Event/EC_Busy_Lock.cpp \
  Event/EC_ProxyPushSupplier_Set.i Event/EC_ConsumerAdmin.i \
  Event/EC_SupplierAdmin.h Event/EC_SupplierAdmin.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
@@ -30492,9 +30523,8 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h Event/EC_Busy_Lock.h \
- Event/EC_Busy_Lock.i Event/EC_Busy_Lock.cpp Event/EC_Command.h \
- Event/EC_Command.i Event/EC_Command.cpp \
+ $(TAO_ROOT)/tao/Union.h \
+ Event/EC_Busy_Lock.h Event/EC_Busy_Lock.i Event/EC_Busy_Lock.cpp \
  Event/EC_ProxyPushSupplier_Set.i Event/EC_ProxySupplier.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
@@ -30526,7 +30556,8 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Filter.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Filter.i \
- Event/EC_ProxySupplier.i
+ Event/EC_ProxySupplier.i Event/EC_Command.h Event/EC_Command.i \
+ Event/EC_Command.cpp
 .obj/EC_Per_Supplier_Filter.o .obj/EC_Per_Supplier_Filter.so .shobj/EC_Per_Supplier_Filter.o .shobj/EC_Per_Supplier_Filter.so: Event/EC_Per_Supplier_Filter.cpp \
  Event/EC_Per_Supplier_Filter.h Event/EC_SupplierFiltering.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
@@ -30819,8 +30850,7 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
  Event/EC_Factory.h Event/EC_Factory.i Event/EC_Event_Channel.i \
  Event/EC_ProxyPushSupplier_Set.h Event/EC_Busy_Lock.h \
- Event/EC_Busy_Lock.i Event/EC_Busy_Lock.cpp Event/EC_Command.h \
- Event/EC_Command.i Event/EC_Command.cpp \
+ Event/EC_Busy_Lock.i Event/EC_Busy_Lock.cpp \
  Event/EC_ProxyPushSupplier_Set.i Event/EC_ProxySupplier.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Filter.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Filter.i \
@@ -31145,8 +31175,7 @@ ORBSVCS_COMPONENTS:
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Event_Handler.h \
  $(ACE_ROOT)/ace/Event_Handler.i \
- Event/EC_Timeout_Generator.i Event/EC_Timeout_Filter.h \
- Event/EC_Filter.h \
+ Event/EC_Timeout_Filter.h Event/EC_Filter.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -31391,7 +31420,7 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
  Event/EC_Filter.i Event/EC_QOS_Info.h Event/EC_QOS_Info.i \
- Event/EC_Timeout_Filter.i \
+ Event/EC_Timeout_Filter.i Event/EC_Timeout_Generator.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i
@@ -31417,7 +31446,8 @@ ORBSVCS_COMPONENTS:
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Event_Handler.h \
  $(ACE_ROOT)/ace/Event_Handler.i \
- Event/EC_Timeout_Generator.i Event/EC_Reactive_Timeout_Generator.i \
+ Event/EC_Timeout_Filter.h Event/EC_Filter.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -31656,7 +31686,13 @@ ORBSVCS_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h
+ $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
+ Event/EC_Filter.i Event/EC_QOS_Info.h Event/EC_QOS_Info.i \
+ Event/EC_Timeout_Filter.i Event/EC_Timeout_Generator.i \
+ Event/EC_Reactive_Timeout_Generator.i
 .obj/ConsumerAdmin_i.o .obj/ConsumerAdmin_i.so .shobj/ConsumerAdmin_i.o .shobj/ConsumerAdmin_i.so: CosEvent/ConsumerAdmin_i.cpp \
  CosEvent/ConsumerAdmin_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \

@@ -317,13 +317,13 @@ Logging_Test:	$(addprefix $(VDIR),$(LOGGING_TEST_OBJS))
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/CosNaming_i.h \
+ $(TAO_ROOT)/tao/IOR_LookupTable.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Context.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i
 .obj/Logging_Test_i.o .obj/Logging_Test_i.so .shobj/Logging_Test_i.o .shobj/Logging_Test_i.so: Logging_Test_i.cpp \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -596,12 +596,12 @@ Logging_Test:	$(addprefix $(VDIR),$(LOGGING_TEST_OBJS))
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/CosNaming_i.h \
+ $(TAO_ROOT)/tao/IOR_LookupTable.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Context.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

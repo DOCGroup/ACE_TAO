@@ -316,13 +316,13 @@ Logging_Service: $(addprefix $(VDIR),$(LOGGING_OBJS))
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/CosNaming_i.h \
+ $(TAO_ROOT)/tao/IOR_LookupTable.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Context.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Logger_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoggerS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoggerC.h \
@@ -601,13 +601,13 @@ Logging_Service: $(addprefix $(VDIR),$(LOGGING_OBJS))
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/CosNaming_i.h \
+ $(TAO_ROOT)/tao/IOR_LookupTable.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Context.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Logger_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoggerS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoggerC.h \

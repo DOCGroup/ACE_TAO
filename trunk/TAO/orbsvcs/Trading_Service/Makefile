@@ -310,6 +310,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) $(TSS_ORB_FLAG)
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
+ $(TAO_ROOT)/tao/IOR_LookupTable.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Trader.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
