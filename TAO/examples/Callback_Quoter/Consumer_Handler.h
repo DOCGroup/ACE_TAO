@@ -92,6 +92,10 @@ public:
   // the Notifier-server.
 
 private:
+  
+  CORBA::ORB_var orb_;
+  // Our orb.
+
   int read_ior (char *filename);
   // Function to read the server IOR from a file.
 
@@ -125,9 +129,6 @@ private:
   int use_naming_service_;
   // This variable denotes whether the naming service
   // is used or not.
-
-  CORBA::ORB_var orb_;
-  // Our orb.
 
  Consumer_Input_Handler *consumer_input_handler_;
   // Reference to the input_event_handler.
