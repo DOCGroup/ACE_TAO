@@ -274,6 +274,11 @@ protected:
   static ACE_INET_Addr server_address_;
   // The address of the Token Server used by all instances of
   // Token_Proxy.
+
+private:
+  ACE_TSS_Connection (const ACE_TSS_Connection &);
+  void operator= (const ACE_TSS_Connection &);
+  // Private: should not be used
 };
 
 #if defined (__ACE_INLINE__)
