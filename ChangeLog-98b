@@ -14,6 +14,9 @@ Tue Nov 24 09:34:58 1998  David L. Levine  <levine@cs.wustl.edu>
           don't print suspend-resume results if the suspend-resume
           test isn't run (because thr_suspend isn't supported).
 
+        * ace/OS.h: replaced ENOTSUP with EDEADLK in a comment,
+          to fix a copy-and-paste error.
+
 Mon Nov 24 03:30:36 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
         * tests/DLL_Wrapper_Test.cpp: Added a test example for the DLL
