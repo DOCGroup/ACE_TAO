@@ -1,6 +1,12 @@
+Tue Dec 11 07:59:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/Makefile.bor:
+          Updated BCB makefile with the changes of the changelog entry
+          Mon Dec 10 15:39:22 2001 Balachandran Natarajan <bala@cs.wustl.edu>
+
 Mon Dec 10 19:10:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Refcountable.h: 
+	* ace/Refcountable.h:
 	* ace/Recyclable.h:
 	* ace/Hashable.h:
 	* ace/Hashable.inl:
@@ -19,12 +25,12 @@ Mon Dec 10 15:39:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	from the repo.
 
 	Tue Nov 27 12:29:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-	
+
 	* ace/Refcountable.h: Added a #define for the inlined file.
-	
-	* examples/Reactor/Misc/test_demuxing.cpp: 
+
+	* examples/Reactor/Misc/test_demuxing.cpp:
 	* examples/Timer_Queue/Reactor_Timer_Queue_Test.h:
-	* examples/Timer_Queue/main_reactor.cpp: Added  #includes 
+	* examples/Timer_Queue/main_reactor.cpp: Added  #includes
 
 	* examples/*/Makefile:
 	* tests/Makefile: Updated dependencies
@@ -37,16 +43,16 @@ Mon Dec 10 15:39:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tests/Message_Queue_Notifications_Test.cpp:
 	* tests/Priority_Reactor_Test.cpp:
 	* tests/Reactors_Test.cpp:
-	* tests/Service_Config_DLL.cpp: 
+	* tests/Service_Config_DLL.cpp:
 	* tests/RMCast/Makefile: Fixed compilation errors.
 
 	Wed Nov 21 10:42:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Svc_Handler.cpp: 
+	* ace/Svc_Handler.cpp:
 	* ace/Connector.h:
 	* ace/Strategies_T.h:
 	* ace/Acceptor.h:
-	* ace/Svc_Handler.h: Fixed compilation errors. 
+	* ace/Svc_Handler.h: Fixed compilation errors.
 
 	Tue Nov 20 12:48:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -81,18 +87,18 @@ Mon Dec 10 15:39:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Refcountable.h:
 	* ace/Refcountable.cpp:
-	* ace/Refcountable.inl: New file for the class ACE_Refcountable. 
+	* ace/Refcountable.inl: New file for the class ACE_Refcountable.
 
 	* ace/OS.h: Moved the enum ACE_Recyclable_State to Recyclable.h
 
 	* ace/Acceptor.h:
-	* ace/Caching_Utility_T.cpp: 
+	* ace/Caching_Utility_T.cpp:
 	* ace/Message_Queue.h:
-	* ace/Message_Queue_T.cpp: 
+	* ace/Message_Queue_T.cpp:
 	* ace/Strategies_T.h:
-	* ace/Svc_Handler.cpp: Removed inclusion of Strategies.h. 
-		
-	* ace/Procator.cpp: #included Service_Config.h 
+	* ace/Svc_Handler.cpp: Removed inclusion of Strategies.h.
+
+	* ace/Procator.cpp: #included Service_Config.h
 
 	* ace/Makefile: Added new file and generated dependencies
 
