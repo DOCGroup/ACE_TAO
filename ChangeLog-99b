@@ -1,5 +1,11 @@
 Wed Jun 23 00:03:31 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Service_Config.h (ACE_Service_Config): Moved the
+	  documentation for the open() method's "argv" parameters *to* the
+ 	  open() method.  Also clarified that by default we don't install
+ 	  the "statically configured services" (such as ACE_Svc_Manager).
+  	  Thanks to Ian MacDonald <ianmacd@bg.com> for motivating this.
+
 	* ace/OS.i (accept): Added a new workaround for platforms
 	  like VxWorks that can't handle NULL addrs to accept().  Thanks
  	  to James Hu <jhx@entera.com> for this fix.
