@@ -738,7 +738,7 @@ nobase_include_HEADERS += \
   IIOP_Acceptor.i \
   IIOP_Connection_Handler.i \
   IIOP_Endpoint.i \
-  IIOP_EndpointsC.i \
+  IIOP_EndpointsC.inl \
   IIOP_Profile.i \
   IIOP_Transport.i \
   IOPC.i \
