@@ -1,3 +1,14 @@
+Tue Feb 22 20:56:51 2000  Ossama Othman  <ossama@uci.edu>
+
+	* config.guess:
+
+	  Updated to latest version from the GNU CVS repository.
+
+	* config.sub:
+
+	  Merged my QNX Neutrino patches into the latest version from the
+	  GNU CVS repository.
+
 Tue Feb 22 20:09:14 2000  Ossama Othman  <ossama@uci.edu>
 
 	* config.sub:
