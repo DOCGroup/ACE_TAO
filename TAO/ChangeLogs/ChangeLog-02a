@@ -22,17 +22,17 @@ Fri Mar 15 00:46:00 2002  Si Mong Park  <spark@ociweb.com>
         * TAO/tao/ORB_Core.cpp:
         * TAO/tao/ORB_Core.h:
         * TAO/tao/ORB_Core.i:
-          Changed TAO_ORB_Core::init() to accept char type to match the type used
-          in CORBA::ORB_init() to prevent confusion.
+          Changed TAO_ORB_Core::init() to accept char type to match the
+	  type used in CORBA::ORB_init() to prevent confusion.
 
         * TAO/tao/TAO_Internal.cpp:
-          Fixed an error that caused an access violation upon deleting string
-          sesquence that is not under proper owner ship.
+          Fixed an error that caused an access violation upon deleting
+	  string sequence that is not under proper owner ship.
 
         * TAO/tao/default_resource.cpp:
         * TAO/tao/Resource_Factory.cpp:
         * TAO/tao/Resource_Factory.h:
-          Changed back to use ACE_CString due to the unexpected additional
+          Changed back to use ACE_CString due to the unexpected additional 
           awkward type conversion.
 
         * TAO/tao/BiDir_GIOP/BiDirGIOP.cpp:
@@ -57,8 +57,8 @@ Fri Mar 15 00:46:00 2002  Si Mong Park  <spark@ociweb.com>
 	* TAO/tao/Strategies/UIOP_Lite_Factory.h:
         * TAO/tao/TypeCodeFactory/TypeCodeFactory_Loader.cpp:
         * TAO/tao/TypeCodeFactory/TypeCodeFactory_Loader.h:
-          Changed the matching char parameter type to ACE_TCHAR as defined in
-          the base class' virtual interface.
+          Changed the matching char parameter type to ACE_TCHAR as defined
+	  in the base class' virtual interface.
 
 	* TAO/tao/Strategies/SHMIOP_Connection_Handler.cpp:
           Changed ACE_TEXT to ACE_LIB_TEXT.
@@ -79,7 +79,8 @@ Fri Mar 15 00:46:00 2002  Si Mong Park  <spark@ociweb.com>
         * TAO/tao/SmartProxies/SmartProxies.vcp:
 	* TAO/tao/Strategies/TAO_Strategies.vcp:
         * TAO/tao/TypeCodeFactory/TypeCodeFactory.vcp:
-          eMbedded Visual C++ 3.0 project file for main TAO.dll for WinCE build.
+          eMbedded Visual C++ 3.0 project file for main TAO.dll for WinCE
+	  build. 
 
 Thu Feb 28 09:55:21 2002  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -99,12 +100,12 @@ Thu Mar 14 14:13:02 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Server_Leaks/run_test.pl:
 
-          Increase the wait time for server startup.  Slower machines were
+          Increase the wait time for server startup.  Slower machines were 
           failing due to this.
 
         * tests/Server_Leaks/client.cpp:
 
-          Switched an ACE_CHECK within a try block to an ACE_TRY_CHECK.
+          Switched an ACE_CHECK within a try block to an ACE_TRY_CHECK. 
 
 Thu Mar 14 12:03:21 2002  Ossama Othman  <ossama@uci.edu>
 
@@ -122,8 +123,8 @@ Thu Mar 14 13:50:59 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/examples/Security/Send_File/Send_File_Server.dsp:
 
-          Changed %ACE_ROOT%/bin/tao_idl to a relative path to be consistent
-          with other project files.
+          Changed %ACE_ROOT%/bin/tao_idl to a relative path to be
+	  consistent with other project files.
 
 Thu Mar 14 13:44:15 2002  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -131,8 +132,8 @@ Thu Mar 14 13:44:15 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * docs/tutorials/Quoter/RT_Event_Service/Stock_i.cpp:
 
-          Changed MyTieStock to be a friend of class Quoter_Stock_i instead
-          of the constructor to avoid a compilation error on AIX.
+          Changed MyTieStock to be a friend of class Quoter_Stock_i
+	  instead of the constructor to avoid a compilation error on AIX.
 
 Thu Mar 14 09:26:54 2002  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -457,7 +458,7 @@ Sun Mar 10 08:33:10 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Sun Mar 10 08:05:36 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLUIOP_Transport.cpp: Pass the CDR
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Pass the CDR
 	  stream to check whether BiDirectional GIOP can be enabled or
 	  not.
 
