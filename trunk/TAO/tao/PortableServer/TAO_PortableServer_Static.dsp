@@ -173,6 +173,10 @@ SOURCE=.\Collocated_Object.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Default_Acceptor_Filter.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\DomainS.h
 # End Source File
 # Begin Source File
@@ -262,6 +266,10 @@ SOURCE=.\Active_Object_Map.cpp
 # Begin Source File
 
 SOURCE=.\Collocated_Object.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Default_Acceptor_Filter.cpp
 # End Source File
 # Begin Source File
 
