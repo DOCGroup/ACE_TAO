@@ -16,22 +16,20 @@ bgcolor="#ffffff">
 <H3>Overview</H3>
 <blockquote>
 
-<p>TAO can be configured in several ways.  Certain components in TAO,
-such as the ORB Core or Object Adapter, can be tuned by users by
-providing value for options or environment variables to them.  These
-options are commonly specified as (1) environment variables or (2)
-strings passed on the command-line.  Command-line options and
-environment variables to control global ORB features, such as the IOR
-format or ORB's bootstrapping methods.	They are generally passed to
-component initialization methods for consumption. <P>
+<p>There are two major mechanisms to configure the behaviors of TAO.
+Behaviors that are global to a process, such as those of ORB Core or
+Object Adapters, are configrued through environment variables or
+command line flags.</p>
 
-In addition, options in <code>svc.conf</code> file provide a mechanism
-to fine-tune internal components in TAO that are specific to
-particular configurations.  If your program use-cases have particular
-characteristics, you can use the <code>svc.conf</code> file to
-customize your programs and use various optimization provided by TAO .
-However, a <code>svc.conf</code> file is not required to run TAO
-programs. </p>
+<p>Another mechanism to configure TAO is to plug in internal
+implementations implementing different behaviors that an ORB uses.
+Plugins are loading into an ORB by providing a <code>svc.conf</code>
+file where users can specify the plugins to be loaded into the ORB and
+options that are specific to each plugin.  In other words, if your
+program use-cases have particular characteristics, you can use the
+<code>svc.conf</code> file to customize your programs and use various
+optimization provided by TAO.  A <code>svc.conf</code> file, however,
+is not required to run TAO programs.</p>
 
 <P><EM>Programmer's Note:</EM> the internal structure for options is
 the traditional <CODE>argc</CODE>/<CODE>argv</CODE> vector of strings
@@ -1017,5 +1015,3 @@ Back to the TAO <A HREF="components.html">components documentation</A>.
 
 <!--#include virtual="/~schmidt/cgi-sig.html" -->
 </HTML>
-
-
