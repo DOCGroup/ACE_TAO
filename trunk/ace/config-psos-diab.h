@@ -16,6 +16,8 @@
 
 #define ACE_LACKS_INLINE_FUNCTIONS
 
+#define ACE_LACKS_TEMPLATE_AS_TEMPLATE_PARAMETER
+
 #if defined (__GNUG__)
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
@@ -33,6 +35,12 @@
 #define ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR
 
 # define ACE_HAS_BROKEN_NOOP_DTORS
+
+# define ACE_HAS_DIRENT
+# define ACE_LACKS_READDIR_R
+# define ACE_LACKS_TELLDIR
+# define ACE_LACKS_SEEKDIR
+# define ACE_LACKS_REWINDDIR
 
 // Template instantiation definitions
 // #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_FILE
@@ -107,6 +115,7 @@
 #define ACE_HAS_SIGINFO_T
 #define ACE_LACKS_SIGINFO_H
 #define ACE_SIGINFO_IS_SIGINFO_T
+#define ACE_LACKS_SIGSET_DEFINITIONS
 
 #define ACE_HAS_SIGWAIT
 

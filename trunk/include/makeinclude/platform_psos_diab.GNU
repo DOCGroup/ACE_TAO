@@ -6,6 +6,7 @@
 # ================================================================
 
 PSS_SYS_DIR	= $(PSS_ROOT)/sys/os
+PSS_LIBC_DIR	= $(PSS_ROOT)/sys/libc
 
 PSOS_SYS_OBJS = $(PSS_SYS_DIR)/prepc.o $(PSS_SYS_DIR)/psos.o \
                 $(PSS_SYS_DIR)/pna.o  $(PSS_SYS_DIR)/phile.o
@@ -15,9 +16,10 @@ PSOS_SYS_OBJS = $(PSS_SYS_DIR)/prepc.o $(PSS_SYS_DIR)/psos.o \
 
 PSS_BSP_LIB	= -L $(PSS_BSP) -lbsp
 
-DIAB_LIBS = -L $(DIABLIB)/MC60FS -lcfp -lm -limpfp -lcomplex -lios \
-            -L $(DIABLIB)/MC60F -lchar -lg -li -limpl -lram -ld \
-            -L $(DIABLIB)/MC60F/psos -lpsos
+DIAB_LIBS = -L $(DIABLIB)/MC60F -li -lchar -lg -limpl -lram -ld \
+            -L $(DIABLIB)/MC60FS -lcfp -lm -limpfp -lcomplex -lios \
+            -L $(DIABLIB)/MC60F/psos -lpsos \
+            -L $(PSS_ROOT)/sys/libc -lprepc
 
 # DIAB_LIBS = -L $(DIABLIB)/MC60FS -limpfp \
 #            -L $(DIABLIB)/MC60F -limpl \

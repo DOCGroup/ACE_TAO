@@ -9960,9 +9960,7 @@ ACE_INLINE int
 ACE_OS::sigaddset (sigset_t *s, int signum)
 {
   // ACE_TRACE ("ACE_OS::sigaddset");
-#if !defined (ACE_LACKS_SIGSET)
-  ACE_OSCALL_RETURN (::sigaddset (s, signum), int, -1);
-#else
+#if defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
   if (s == NULL) {
     errno = EFAULT ;
     return -1 ;
@@ -9971,17 +9969,30 @@ ACE_OS::sigaddset (sigset_t *s, int signum)
     errno = EINVAL ;
     return -1 ;                 // Invalid signum, return error
   }
+#   if defined (ACE_PSOS) && defined (__DIAB)
+  // treat 0th u_long of sigset_t as high bits,
+  // and 1st u_long of sigset_t as low bits.
+  if (signum <= ACE_BITS_PER_ULONG)
+  {
+    s->s[1] |= (1 << (signum - 1)) ;
+  }
+  else
+  {
+    s->s[0] |= (1 << (signum - ACE_BITS_PER_ULONG - 1)) ;
+  }
+#   else
   *s |= (1 << (signum - 1)) ;
+#   endif /* defined (ACE_PSOS) && defined (__DIAB) */
   return 0 ;
-#endif /* !ACE_LACKS_SIGSET */
+#else
+  ACE_OSCALL_RETURN (::sigaddset (s, signum), int, -1);
+#endif /* ACE_LACKS_SIGSET || ACE_LACKS_SIGSET_DEFINITIONS */
 }
 
 ACE_INLINE int
 ACE_OS::sigdelset (sigset_t *s, int signum)
 {
-#if !defined (ACE_LACKS_SIGSET)
-  ACE_OSCALL_RETURN (::sigdelset (s, signum), int, -1);
-#else
+#if defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS) 
   if (s == NULL) {
     errno = EFAULT ;
     return -1 ;
@@ -9990,54 +10001,70 @@ ACE_OS::sigdelset (sigset_t *s, int signum)
     errno = EINVAL ;
     return -1 ;                 // Invalid signum, return error
   }
+#   if defined (ACE_PSOS) && defined (__DIAB)
+  // treat 0th u_long of sigset_t as high bits,
+  // and 1st u_long of sigset_t as low bits.
+  if (signum <= ACE_BITS_PER_ULONG)
+  {
+    s->s[1] &= ~(1 << (signum - 1)) ;
+  }
+  else
+  {
+    s->s[0] &= ~(1 << (signum - ACE_BITS_PER_ULONG - 1)) ;
+  }
+#   else
   *s &= ~(1 << (signum - 1)) ;
+#   endif /* defined (ACE_PSOS) && defined (__DIAB) */
   return 0 ;
-#endif /* !ACE_LACKS_SIGSET */
+#else
+  ACE_OSCALL_RETURN (::sigdelset (s, signum), int, -1);
+#endif /* ACE_LACKS_SIGSET || ACE_LACKS_SIGSET_DEFINITIONS */
 }
 
 ACE_INLINE int
 ACE_OS::sigemptyset (sigset_t *s)
 {
-#if !defined (ACE_LACKS_SIGSET)
-  ACE_OSCALL_RETURN (::sigemptyset (s), int, -1);
-#else
+#if defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
   if (s == NULL) {
     errno = EFAULT ;
     return -1 ;
   }
+#   if defined (ACE_PSOS) && defined (__DIAB)
+  s->s[0] = 0 ;
+  s->s[1] = 0 ;
+#   else
   *s = 0 ;
+#   endif /* defined (ACE_PSOS) && defined (__DIAB) */
   return 0 ;
-#endif /* !ACE_LACKS_SIGSET */
+#else  
+  ACE_OSCALL_RETURN (::sigemptyset (s), int, -1);
+#endif /* ACE_LACKS_SIGSET || ACE_LACKS_SIGSET_DEFINITIONS */
 }
 
 ACE_INLINE int
 ACE_OS::sigfillset (sigset_t *s)
 {
-#if !defined (ACE_LACKS_SIGSET)
-  ACE_OSCALL_RETURN (::sigfillset (s), int, -1);
-#else
+#if defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
   if (s == NULL) {
     errno = EFAULT ;
     return -1 ;
   }
+#   if defined (ACE_PSOS) && defined (__DIAB)
+  s->s[0] = ~(u_long) 0 ;
+  s->s[1] = ~(u_long) 0 ;
+#   else
   *s = ~(sigset_t) 0 ;
+#   endif /* defined (ACE_PSOS) && defined (__DIAB) */
   return 0 ;
-#endif /* !ACE_LACKS_SIGSET */
+#else
+  ACE_OSCALL_RETURN (::sigfillset (s), int, -1);
+#endif /* ACE_LACKS_SIGSET || ACE_LACKS_SIGSET_DEFINITIONS */
 }
 
 ACE_INLINE int
 ACE_OS::sigismember (sigset_t *s, int signum)
 {
-#if !defined (ACE_LACKS_SIGSET)
-#if defined (ACE_HAS_SIGISMEMBER_BUG)
-  if (signum < 1 || signum >= ACE_NSIG)
-    {
-      errno = EINVAL ;
-      return -1 ;                 // Invalid signum, return error
-    }
-#endif /* ACE_HAS_SIGISMEMBER_BUG */
-  ACE_OSCALL_RETURN (::sigismember (s, signum), int, -1);
-#else
+#if defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
   if (s == NULL) {
     errno = EFAULT ;
     return -1 ;
@@ -10046,25 +10073,47 @@ ACE_OS::sigismember (sigset_t *s, int signum)
     errno = EINVAL ;
     return -1 ;                 // Invalid signum, return error
   }
+#   if defined (ACE_PSOS) && defined (__DIAB)
+  // treat 0th u_long of sigset_t as high bits,
+  // and 1st u_long of sigset_t as low bits.
+  if (signum <= ACE_BITS_PER_ULONG)
+  {
+    return ((s->s[1] & (1 << (signum - 1))) != 0) ;
+  }
+  else
+  {
+    return ((s->s[0] & (1 << (signum - ACE_BITS_PER_ULONG - 1))) != 0) ;
+  }
+#   else
   return ((*s & (1 << (signum - 1))) != 0) ;
-#endif /* !ACE_LACKS_SIGSET */
+#   endif /* defined (ACE_PSOS) && defined (__DIAB) */
+#else
+#  if defined (ACE_HAS_SIGISMEMBER_BUG)
+  if (signum < 1 || signum >= ACE_NSIG)
+    {
+      errno = EINVAL ;
+      return -1 ;                 // Invalid signum, return error
+    }
+#  endif /* ACE_HAS_SIGISMEMBER_BUG */
+  ACE_OSCALL_RETURN (::sigismember (s, signum), int, -1);
+#endif /* ACE_LACKS_SIGSET || ACE_LACKS_SIGSET_DEFINITIONS */
 }
 
 ACE_INLINE int
 ACE_OS::sigprocmask (int how, const sigset_t *nsp, sigset_t *osp)
 {
-#if !defined (ACE_LACKS_SIGSET)
+#if defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
+  ACE_UNUSED_ARG (how);
+  ACE_UNUSED_ARG (nsp);
+  ACE_UNUSED_ARG (osp);
+  ACE_NOTSUP_RETURN (-1);
+#else
 # if defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::sigprocmask (how, (int*) nsp, osp), int, -1);
 # else
   ACE_OSCALL_RETURN (::sigprocmask (how, nsp, osp), int, -1);
 # endif /* ACE_LACKS_POSIX_PROTOTYPES */
-#else
-  ACE_UNUSED_ARG (how);
-  ACE_UNUSED_ARG (nsp);
-  ACE_UNUSED_ARG (osp);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* !ACE_LACKS_SIGSET */
+#endif /* ACE_LACKS_SIGSET || ACE_LACKS_SIGSET_DEFINITIONS */
 }
 
 ACE_INLINE void *
@@ -10216,8 +10265,26 @@ ACE_INLINE DIR *
 ACE_OS::opendir (const char *filename)
 {
 #if defined (ACE_HAS_DIRENT)
+#  if defined (ACE_PSOS)
+  // The pointer to the DIR buffer must be passed to ACE_OS::closedir
+  // in order to free it and avoid a memory leak.
+  DIR *dir;
+  u_long result;
+  ACE_NEW_RETURN (dir, DIR, 0);
+  result = ::open_dir (ACE_const_cast (char *, filename), dir);
+  if (0 == result)
+  {
+    return dir;
+  }
+  else
+  {
+    errno = result;
+    return 0;
+  }
+#  else /* ! defined (ACE_PSOS) */
   // VxWorks' ::opendir () is declared with a non-const argument.
   return ::opendir (ACE_const_cast (char *, filename));
+#  endif /* ! defined (ACE_PSOS) */
 #else
   ACE_UNUSED_ARG (filename);
   ACE_NOTSUP_RETURN (0);
@@ -10228,7 +10295,17 @@ ACE_INLINE void
 ACE_OS::closedir (DIR *d)
 {
 #if defined (ACE_HAS_DIRENT)
+#  if defined (ACE_PSOS)
+  u_long result;
+  result = ::close_dir (d);
+  delete d;
+  if (result != 0) 
+  {
+    errno = result;
+  }
+#  else /* ! defined (ACE_PSOS) */
   ::closedir (d);
+#  endif /* ! defined (ACE_PSOS) */
 #else
   ACE_UNUSED_ARG (d);
 #endif /* ACE_HAS_DIRENT */
@@ -10238,7 +10315,25 @@ ACE_INLINE struct dirent *
 ACE_OS::readdir (DIR *d)
 {
 #if defined (ACE_HAS_DIRENT)
+#  if defined (ACE_PSOS)
+  // The returned pointer to the dirent struct must be
+  // deleted by the caller to avoid a memory leak.
+  struct dirent *dir_ent;
+  u_long result;
+  ACE_NEW_RETURN (dir_ent, dirent, 0);
+  result = ::read_dir (d, dir_ent);
+  if (0 == result)
+  {
+    return dir_ent;
+  }
+  else
+  {
+    errno = result;
+    return 0;
+  }
+#  else /* ! defined (ACE_PSOS) */
   return ::readdir (d);
+#  endif /* ! defined (ACE_PSOS) */
 #else
   ACE_UNUSED_ARG (d);
   ACE_NOTSUP_RETURN (0);
@@ -10294,7 +10389,11 @@ ACE_OS::rewinddir (DIR *d)
 {
 #if defined (ACE_HAS_DIRENT)
 # if defined (ACE_LACKS_SEEKDIR)
+#  if defined (ACE_LACKS_REWINDDIR)
+  ACE_UNUSED_ARG (d);
+#  else /* ! defined (ACE_LACKS_REWINDDIR) */
    ::rewinddir (d);
+#  endif /* ! defined (ACE_LACKS_REWINDDIR) */
 # else  /* ! ACE_LACKS_SEEKDIR */
     // We need to implement <rewinddir> using <seekdir> since it's often
     // defined as a macro...
