@@ -17,6 +17,7 @@
 #ifndef GATEWAY_I_H
 #define GATEWAY_I_H
 
+#include "tao/DynamicInterface/DII_CORBA_methods.h"
 #include "tao/PortableServer/PortableServerC.h"
 #include "tao/DynamicInterface/Dynamic_Implementation.h"
 #include "tao/IFR_Client/IFR_Client_Adapter_Impl.h"

@@ -1,6 +1,11 @@
 // $Id$
 
+#include "tao/DynamicInterface/Request.h"
+#include "tao/Strategies/advanced_resource.h"
+#include "tao/TC_Constants_Forward.h"
+
 #include "TestC.h"
+
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
@@ -8,11 +13,10 @@
 #include "ace/Sample_History.h"
 #include "ace/OS_NS_errno.h"
 
-#include "tao/Strategies/advanced_resource.h"
-#include "tao/TC_Constants_Forward.h"
-#include "tao/DynamicInterface/Request.h"
 
-ACE_RCSID(DII_Latency, client, "$Id$")
+ACE_RCSID (DII,
+           client,
+           "$Id$")
 
 const char *ior = "file://test.ior";
 int niterations = 100;
@@ -42,11 +46,11 @@ parse_args (int argc, char *argv[])
             ACE_OS::strcmp (data_type, "longlong") != 0)
           return -1;
         break;
-	  
+
 	  case 's':
         sz = ACE_OS::atoi (get_opts.opt_arg ());
         break;
-	  
+
       case 'h':
         do_dump_history = 1;
         break;
@@ -428,7 +432,7 @@ main (int argc, char *argv[])
                             1);
         }
 
-	  Test::octet_load oc;	
+	  Test::octet_load oc;
 
       for (int j = 0; j < 100; ++j)
         {

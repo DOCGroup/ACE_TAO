@@ -43,6 +43,9 @@ namespace CORBA
   class ExceptionList;
   typedef ExceptionList *ExceptionList_ptr;
 
+  class Request;
+  typedef Request *Request_ptr;
+
   TAO_NAMESPACE_INLINE_FUNCTION void release (Context_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Context_ptr);
 
@@ -51,6 +54,10 @@ namespace CORBA
 
   TAO_NAMESPACE_INLINE_FUNCTION void release (ExceptionList_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ExceptionList_ptr);
+
+  TAO_NAMESPACE_INLINE_FUNCTION void release (Request_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Request_ptr);
+
 }
 
 #include /**/ "ace/post.h"

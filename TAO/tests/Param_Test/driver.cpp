@@ -16,14 +16,14 @@
 //
 // ============================================================================
 
+#include "client.h"
 #include "driver.h"
 #include "results.h"
-#include "client.h"
 #include "tests.h"
 #include "ace/Get_Opt.h"
 
 ACE_RCSID (Param_Test,
-           driver, 
+           driver,
            "$Id$")
 
 // This function runs the test (main program)

@@ -17,17 +17,15 @@
 //
 // ============================================================================
 
-#if !defined (CLIENT_CPP)
+#ifndef CLIENT_CPP
 #define CLIENT_CPP
 
 #include "options.h"
 #include "results.h"
 #include "client.h"
 
-#include "tao/DynamicInterface/Request.h"
-
-ACE_RCSID (Param_Test, 
-           client, 
+ACE_RCSID (Param_Test,
+           client,
            "$Id$")
 
 // Constructor.p
