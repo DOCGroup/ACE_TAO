@@ -993,6 +993,25 @@ SOURCE=.\GIOP_Server_Request.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOPC.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\IIOP_Acceptor.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
@@ -2832,6 +2851,10 @@ SOURCE=.\GIOP_Server_Request.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOPC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IIOP_Acceptor.h
 # End Source File
 # Begin Source File
@@ -3288,6 +3311,10 @@ SOURCE=.\GIOP_Server_Request.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOPC.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\IIOP_Connect.i
 # End Source File
 # Begin Source File
@@ -3501,6 +3528,14 @@ SOURCE=.\ValueFactory.i
 # Begin Source File
 
 SOURCE=.\ValueFactory_Map.i
+# End Source File
+# End Group
+# Begin Group "Resource files"
+
+# PROP Default_Filter "rc"
+# Begin Source File
+
+SOURCE=.\tao.rc
 # End Source File
 # End Group
 # End Target
