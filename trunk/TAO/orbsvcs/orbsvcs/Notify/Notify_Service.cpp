@@ -59,7 +59,8 @@ TAO_NS_Notify_Service::init (int argc, char *argv[])
                   
           if (dispatching_threads > 0)
             {
-              NotifyExt::ThreadPoolParams tp_params = {0, (unsigned)dispatching_threads, 0, ACE_DEFAULT_THREAD_PRIORITY, 0, 0, 0 };
+              NotifyExt::ThreadPoolParams tp_params = 
+                {0, (unsigned)dispatching_threads, 0, ACE_DEFAULT_THREAD_PRIORITY, 0, 0, 0 };
               CosNotification::QoSProperties ec_qos;
 
               ec_qos.length (1);
@@ -67,7 +68,7 @@ TAO_NS_Notify_Service::init (int argc, char *argv[])
               ec_qos[0].value <<= tp_params;
 
               TAO_NS_PROPERTIES::instance()->default_event_channel_qos_properties (ec_qos);
-                  }
+            }
         }
     }
 

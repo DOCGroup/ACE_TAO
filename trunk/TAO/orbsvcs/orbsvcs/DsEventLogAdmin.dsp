@@ -38,12 +38,12 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "Release"
-# PROP Intermediate_Dir "Release"
+# PROP Output_Dir ""
+# PROP Intermediate_Dir "DLL\Release\DsEventLogAdmin"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "DSEVENTLOGADMIN_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MT /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "DSEVENTLOGADMIN_EXPORTS" /FD /c
+# ADD CPP /nologo /MT /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_USRDLL" /D "TAO_ORBSVCS_HAS_NAMING" /D "_WINDOWS" /D "TAO_EVENTLOG_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -54,7 +54,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 TAO.lib ace.lib TAO_PortableServer.lib TAO_DsLogAdmin.lib TAO_CosEvent.lib /nologo /dll /machine:I386 /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO.lib ace.lib TAO_PortableServer.lib TAO_DsLogAdmin.lib TAO_CosEvent.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_DsEventLogAdmin.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "DsEventLogAdmin - Win32 Debug"
 
@@ -159,12 +159,13 @@ SOURCE=.\DsEventLogAdmin.idl
 !IF  "$(CFG)" == "DsEventLogAdmin - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__DSEVE="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\DsEventLogAdmin.idl
 InputName=DsEventLogAdmin
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../..  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Log_Export -Wb,export_include=Log\log_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../..  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_EventLog_Export -Wb,export_include=Log\eventlog_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -198,6 +199,7 @@ BuildCmds= \
 
 # PROP Intermediate_Dir "DLL\Debug\DsEventLogAdmin"
 # PROP Ignore_Default_Tool 1
+USERDEP__DSEVE="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\DsEventLogAdmin.idl
 InputName=DsEventLogAdmin
