@@ -168,7 +168,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               n_chunks, 
               chunk_size));
 				
-  Allocator allocator (n_chunks, chunk_size);
+  DYNAMIC_ALLOCATOR allocator (n_chunks, chunk_size);
 
   requested_size = chunk_size;
   ACE_DEBUG ((LM_INFO, 
