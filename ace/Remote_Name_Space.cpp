@@ -38,8 +38,8 @@ ACE_Remote_Name_Space::ACE_Remote_Name_Space (const ACE_TCHAR *hostname,
 }
 
 int
-ACE_Remote_Name_Space::bind (const ACE_WString &name,
-                             const ACE_WString &value,
+ACE_Remote_Name_Space::bind (const ACE_NS_WString &name,
+                             const ACE_NS_WString &value,
                              const char *type)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::bind");
@@ -56,8 +56,8 @@ ACE_Remote_Name_Space::bind (const ACE_WString &name,
 }
 
 int
-ACE_Remote_Name_Space::rebind (const ACE_WString &name,
-                               const ACE_WString &value,
+ACE_Remote_Name_Space::rebind (const ACE_NS_WString &name,
+                               const ACE_NS_WString &value,
                                const char *type)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::rebind");
@@ -74,8 +74,8 @@ ACE_Remote_Name_Space::rebind (const ACE_WString &name,
 }
 
 int
-ACE_Remote_Name_Space::resolve (const ACE_WString &name,
-                                ACE_WString &value,
+ACE_Remote_Name_Space::resolve (const ACE_NS_WString &name,
+                                ACE_NS_WString &value,
                                 char *&type)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::resolve");
@@ -93,7 +93,7 @@ ACE_Remote_Name_Space::resolve (const ACE_WString &name,
   if (this->ns_proxy_.recv_reply (reply) == -1)
     return -1;
 
-  ACE_WString temp (reply.value (), reply.value_len () / sizeof (ACE_USHORT16));
+  ACE_NS_WString temp (reply.value (), reply.value_len () / sizeof (ACE_USHORT16));
   value = temp;
   ACE_NEW_RETURN (type,
                   char[reply.type_len () + 1],
@@ -103,7 +103,7 @@ ACE_Remote_Name_Space::resolve (const ACE_WString &name,
 }
 
 int
-ACE_Remote_Name_Space::unbind (const ACE_WString &name)
+ACE_Remote_Name_Space::unbind (const ACE_NS_WString &name)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::unbind");
   ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> name_urep (name.ushort_rep ());
@@ -116,7 +116,7 @@ ACE_Remote_Name_Space::unbind (const ACE_WString &name)
 
 int
 ACE_Remote_Name_Space::list_names (ACE_WSTRING_SET &set,
-                                   const ACE_WString &pattern)
+                                   const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_names");
   ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> pattern_urep (pattern.ushort_rep ());
@@ -138,8 +138,8 @@ ACE_Remote_Name_Space::list_names (ACE_WSTRING_SET &set,
                            -1);
       if (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
         {
-          ACE_WString name (reply.name (),
-                            reply.name_len () / sizeof (ACE_USHORT16));
+          ACE_NS_WString name (reply.name (),
+                               reply.name_len () / sizeof (ACE_USHORT16));
           set.insert (name);
         }
     }
@@ -148,7 +148,7 @@ ACE_Remote_Name_Space::list_names (ACE_WSTRING_SET &set,
 
 int
 ACE_Remote_Name_Space::list_values (ACE_WSTRING_SET &set,
-                                    const ACE_WString &pattern)
+                                    const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_values");
   ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> pattern_urep (pattern.ushort_rep ());
@@ -170,8 +170,8 @@ ACE_Remote_Name_Space::list_values (ACE_WSTRING_SET &set,
                            -1);
       if (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
         {
-          ACE_WString value (reply.value (),
-                             reply.value_len () / sizeof (ACE_USHORT16));
+          ACE_NS_WString value (reply.value (),
+                                reply.value_len () / sizeof (ACE_USHORT16));
           set.insert (value);
         }
     }
@@ -181,7 +181,7 @@ ACE_Remote_Name_Space::list_values (ACE_WSTRING_SET &set,
 
 int
 ACE_Remote_Name_Space::list_types (ACE_WSTRING_SET &set,
-                                   const ACE_WString &pattern)
+                                   const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_types");
   ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> pattern_urep (pattern.ushort_rep ());
@@ -204,7 +204,7 @@ ACE_Remote_Name_Space::list_types (ACE_WSTRING_SET &set,
                            -1);
       if (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
         {
-          ACE_WString type (reply.type ());
+          ACE_NS_WString type (reply.type ());
           set.insert (type);
         }
     }
@@ -214,7 +214,7 @@ ACE_Remote_Name_Space::list_types (ACE_WSTRING_SET &set,
 
 int
 ACE_Remote_Name_Space::list_name_entries (ACE_BINDING_SET &set,
-                                          const ACE_WString &pattern)
+                                          const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_name_entries");
   ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> pattern_urep (pattern.ushort_rep ());
@@ -237,10 +237,10 @@ ACE_Remote_Name_Space::list_name_entries (ACE_BINDING_SET &set,
                            -1);
       if (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
         {
-          ACE_WString name (reply.name (),
-                            reply.name_len () / sizeof (ACE_USHORT16));
-          ACE_WString value (reply.value (),
-                             reply.value_len () / sizeof (ACE_USHORT16));
+          ACE_NS_WString name (reply.name (),
+                               reply.name_len () / sizeof (ACE_USHORT16));
+          ACE_NS_WString value (reply.value (),
+                                reply.value_len () / sizeof (ACE_USHORT16));
           ACE_Name_Binding entry (name,
                                   value,
                                   reply.type ());
@@ -253,7 +253,7 @@ ACE_Remote_Name_Space::list_name_entries (ACE_BINDING_SET &set,
 
 int
 ACE_Remote_Name_Space::list_value_entries (ACE_BINDING_SET &set,
-                                           const ACE_WString &pattern)
+                                           const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_value_entries");
   ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> pattern_urep (pattern.ushort_rep ());
@@ -276,10 +276,10 @@ ACE_Remote_Name_Space::list_value_entries (ACE_BINDING_SET &set,
                            -1);
       if (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
         {
-          ACE_WString name (reply.name (),
-                            reply.name_len () / sizeof (ACE_USHORT16));
-          ACE_WString value (reply.value (),
-                             reply.value_len () / sizeof (ACE_USHORT16));
+          ACE_NS_WString name (reply.name (),
+                               reply.name_len () / sizeof (ACE_USHORT16));
+          ACE_NS_WString value (reply.value (),
+                                reply.value_len () / sizeof (ACE_USHORT16));
           ACE_Name_Binding entry (name,
                                   value,
                                   reply.type());
@@ -292,7 +292,7 @@ ACE_Remote_Name_Space::list_value_entries (ACE_BINDING_SET &set,
 
 int
 ACE_Remote_Name_Space::list_type_entries (ACE_BINDING_SET &set,
-                                          const ACE_WString &pattern)
+                                          const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_type_entries");
   ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> pattern_urep (pattern.ushort_rep ());
@@ -315,10 +315,10 @@ ACE_Remote_Name_Space::list_type_entries (ACE_BINDING_SET &set,
                           -1);
       if (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
         {
-          ACE_WString name (reply.name (),
-                            reply.name_len () / sizeof (ACE_USHORT16));
-          ACE_WString value (reply.value (),
-                             reply.value_len () / sizeof (ACE_USHORT16));
+          ACE_NS_WString name (reply.name (),
+                               reply.name_len () / sizeof (ACE_USHORT16));
+          ACE_NS_WString value (reply.value (),
+                                reply.value_len () / sizeof (ACE_USHORT16));
           ACE_Name_Binding entry (name,
                                   value,
                                   reply.type ());
@@ -347,6 +347,5 @@ ACE_Remote_Name_Space::dump (void) const
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Auto_Basic_Array_Ptr<ACE_USHORT16>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_USHORT16>   
+#pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_USHORT16>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

@@ -23,11 +23,11 @@ ACE_NS_String::fast_rep (void) const
   return this->rep_;
 }
 
-ACE_NS_String::operator ACE_WString () const
+ACE_NS_String::operator ACE_NS_WString () const
 {
-  ACE_TRACE ("ACE_NS_String::operator ACE_WString");
-  return ACE_WString (this->rep_,
-                      (this->len_ / sizeof (ACE_USHORT16)) - 1);
+  ACE_TRACE ("ACE_NS_String::operator ACE_NS_WString");
+  return ACE_NS_WString (this->rep_,
+                         (this->len_ / sizeof (ACE_USHORT16)) - 1);
 }
 
 size_t
@@ -41,9 +41,9 @@ char *
 ACE_NS_String::char_rep (void) const
 {
   ACE_TRACE ("ACE_NS_String::char_rep");
-  ACE_WString w_string (this->rep_,
-                        (this->len_ / sizeof (ACE_USHORT16)) - 1);
-  return w_string.char_rep ();
+  ACE_NS_WString w_string (this->rep_,
+                           (this->len_ / sizeof (ACE_USHORT16)) - 1);
+  return ACE_Wide_To_Ascii::convert (w_string.fast_rep ());
 }
 
 ACE_NS_String::ACE_NS_String (void)
@@ -54,7 +54,7 @@ ACE_NS_String::ACE_NS_String (void)
   ACE_TRACE ("ACE_NS_String::ACE_NS_String");
 }
 
-ACE_NS_String::ACE_NS_String (const ACE_WString &s)
+ACE_NS_String::ACE_NS_String (const ACE_NS_WString &s)
   : len_ ((s.length () + 1) * sizeof (ACE_USHORT16)),
     rep_ (s.ushort_rep ()),
     delete_rep_ (1)
@@ -185,9 +185,9 @@ template class ACE_Map_Iterator_Base<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mu
 #endif
 template class ACE_Unbounded_Set<ACE_Name_Binding>;
 template class ACE_Unbounded_Set_Iterator<ACE_Name_Binding>;
-template class ACE_Unbounded_Set<ACE_WString>;
-template class ACE_Unbounded_Set_Iterator<ACE_WString>;
-template class ACE_Node<ACE_WString>;
+template class ACE_Unbounded_Set<ACE_NS_WString>;
+template class ACE_Unbounded_Set_Iterator<ACE_NS_WString>;
+template class ACE_Node<ACE_NS_WString>;
 template class ACE_Node<ACE_Name_Binding>;
 template class ACE_Guard<ACE_RW_Process_Mutex>;
 template class ACE_Read_Guard<ACE_RW_Process_Mutex>;
@@ -213,9 +213,9 @@ template class ACE_Write_Guard<ACE_RW_Process_Mutex>;
 #endif
 #pragma instantiate ACE_Unbounded_Set<ACE_Name_Binding>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Name_Binding>
-#pragma instantiate ACE_Unbounded_Set<ACE_WString>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_WString>
-#pragma instantiate ACE_Node<ACE_WString>
+#pragma instantiate ACE_Unbounded_Set<ACE_NS_WString>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_NS_WString>
+#pragma instantiate ACE_Node<ACE_NS_WString>
 #pragma instantiate ACE_Node<ACE_Name_Binding>
 #pragma instantiate ACE_Guard<ACE_RW_Process_Mutex>
 #pragma instantiate ACE_Read_Guard<ACE_RW_Process_Mutex>

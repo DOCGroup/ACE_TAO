@@ -18,9 +18,9 @@ ACE_Name_Binding::~ACE_Name_Binding (void)
   ACE_OS::free ((void *) this->type_);
 }
 
-ACE_Name_Binding::ACE_Name_Binding (const ACE_WString &name,
-				    const ACE_WString &value,
-				    const char *type)
+ACE_Name_Binding::ACE_Name_Binding (const ACE_NS_WString &name,
+                                    const ACE_NS_WString &value,
+                                    const char *type)
   : name_ (name),
     value_ (value),
     type_ (type == 0 ? ACE_OS::strdup ("") : ACE_OS::strdup (type))
@@ -46,12 +46,12 @@ ACE_Name_Binding::operator = (const ACE_Name_Binding &s)
   this->type_ = ACE_OS::strdup (s.type_);
 }
 
-int 
+int
 ACE_Name_Binding::operator == (const ACE_Name_Binding &s) const
 {
   ACE_TRACE ("ACE_Name_Binding::operator ==");
-  return this->name_ == s.name_ 
-    && this->value_ == s.value_ 
+  return this->name_ == s.name_
+    && this->value_ == s.value_
     && ACE_OS::strcmp (this->type_, s.type_) == 0;
 }
 
@@ -59,4 +59,3 @@ ACE_Name_Space::~ACE_Name_Space (void)
 {
   ACE_TRACE ("ACE_Name_Space::~ACE_Name_Space");
 }
-
