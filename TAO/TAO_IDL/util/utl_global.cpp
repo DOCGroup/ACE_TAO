@@ -154,7 +154,6 @@ IDL_GlobalData::IDL_GlobalData (void)
       case_diff_error_ (I_TRUE),
       ami_call_back_ (I_FALSE),
       gen_tie_classes_ (I_TRUE),
-      gen_except_ostream_op_ (I_TRUE),
 #if (TAO_HAS_SMART_PROXIES == 1)
       gen_smart_proxies_ (I_TRUE)
 #else
@@ -1519,19 +1518,6 @@ IDL_GlobalData::gen_tie_classes (void)
 {
   return this->gen_tie_classes_;
 }
-
-void
-IDL_GlobalData::gen_except_ostream_op (idl_bool val)
-{
-  this->gen_except_ostream_op_ = val;
-}
-
-idl_bool
-IDL_GlobalData::gen_except_ostream_op (void)
-{
-  return this->gen_except_ostream_op_;
-}
-
 
 void
 IDL_GlobalData::gen_smart_proxies (idl_bool val)
