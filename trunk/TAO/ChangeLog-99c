@@ -1,27 +1,31 @@
+Tue Jun 22 14:02:26 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/OBV/Typed_Events/Makefile: replaced rm with $(RM).
+
 Tue Jun 22 13:55:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
-	  Eliminated unused arg in _reset() and added initialization of
-	  base class constructor in copy constructor. These were
-	  pointed out by Linux warnings in David's build logs.
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+          Eliminated unused arg in _reset() and added initialization of
+          base class constructor in copy constructor. These were
+          pointed out by Linux warnings in David's build logs.
 
 Tue Jun 22 13:42:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/fe/fe_interface_header.cpp:
-	* tao/Active_Object_Map.cpp:
-	* tao/Context.cpp:
-	* tao/GIOP.cpp:
-	* tao/IORC.cpp:
-	* tao/PolicyC.cpp:
-	* tao/Transport_Mux_Strategy.cpp:
-	* tao/UIOP_Transport.cpp:
-	* tao/ValueBase.cpp:
-	* tests/OctetSeq/OctetSeq.cpp:
-	  More unused arg warnings removed..
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        * tao/Active_Object_Map.cpp:
+        * tao/Context.cpp:
+        * tao/GIOP.cpp:
+        * tao/IORC.cpp:
+        * tao/PolicyC.cpp:
+        * tao/Transport_Mux_Strategy.cpp:
+        * tao/UIOP_Transport.cpp:
+        * tao/ValueBase.cpp:
+        * tests/OctetSeq/OctetSeq.cpp:
+          More unused arg warnings removed..
 
-	* tao/IIOP_Connect.cpp:
-	* tao/IIOP_Transport.cpp:
-	  In this case the unused argument was actually a bug.
+        * tao/IIOP_Connect.cpp:
+        * tao/IIOP_Transport.cpp:
+          In this case the unused argument was actually a bug.
 
 Tue Jun 22 13:19:24 1999  David L. Levine  <levine@cs.wustl.edu>
 
