@@ -14,7 +14,7 @@
  */
 //==============================================================
 #include "RoundTripC.h"
-
+#include "tao/Strategies/advanced_resource.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
@@ -48,14 +48,8 @@ parse_args (int argc, char *argv[])
 
       case '?':
       default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "-i <niterations> "
-                           "-h (dump history) "
-                           "\n",
-                           argv [0]),
-                          -1);
+        /* Could be any other parameter like -ORBSvcConf file so ignore */
+       break;
       }
   // Indicates sucessful parsing of the command line
   return 0;
