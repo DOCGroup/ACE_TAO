@@ -26,7 +26,11 @@
 
 class TAO_ORB_Core;
 class TAO_ORB_Core_TSS_Resources;
+
+#if !defined (TAO_HAS_COLLOCATION)
 class TAO_Transport;
+#endif
+
 class ACE_SOCK;
 class ACE_Lock;
 class ACE_Event_Handler;
@@ -55,11 +59,13 @@ public:
   /// Destructor
   virtual ~TAO_Connection_Handler (void);
 
+#if !defined (TAO_HAS_COLLOCATION)
   /// Return the underlying transport object
   TAO_Transport *transport (void);
 
   /// Set the underlying transport object
   void transport (TAO_Transport* transport);
+#endif
 
   /// Is the handler closed?
   int is_closed (void);
@@ -167,8 +173,10 @@ private:
   /// Pointer to the TAO_ORB_Core
   TAO_ORB_Core *orb_core_;
 
+#if !defined (TAO_HAS_COLLOCATION)
   /// Transport object reference
   TAO_Transport* transport_;
+#endif
 
   /// Cached tss resources of the ORB that activated this object.
   TAO_ORB_Core_TSS_Resources *tss_resources_;

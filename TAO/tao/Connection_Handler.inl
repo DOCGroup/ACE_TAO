@@ -14,11 +14,13 @@ TAO_Connection_Handler::tss_resources (void)
   return this->tss_resources_;
 }
 
+#if !defined (TAO_HAS_COLLOCATION)
 ACE_INLINE TAO_Transport *
 TAO_Connection_Handler::transport (void)
 {
   return this->transport_;
 }
+#endif
 
 ACE_INLINE int
 TAO_Connection_Handler::is_closed (void)
