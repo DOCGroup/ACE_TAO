@@ -1,3 +1,13 @@
+Sun Mar  4 10:03:59 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* examples/PluggableUDP/tests/server.cpp:
+	* examples/PluggableUDP/tests/client.cpp:
+	  Added missing ACE_TRY_ENV parameter to
+	  resolve_initial_references() per Ossama's request.
+
+	* examples/PluggableUDP/tests/UDP_i.cpp:
+	  Fixed some compiler warnings under Linux.
+
 Sat Mar 03 23:32:29 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/AMI_Timeouts/timeout_client.cpp (init):
@@ -17,7 +27,7 @@ Sat Mar 03 22:56:20 2001  Ossama Othman  <ossama@uci.edu>
 	  loop scope, so that Environment is not available outside of the
 	  loop.  However, an ACE_CHECK_RETURN is done outside of the
 	  ACE_TRY_NEW_ENV block.  Use ACE_DECLARE_NEW_CORBA_ENV instead.
-	
+
 	  Added missing ACE_TRY_ENV parameter to the
 	  resolve_initial_references() and shutdown() calls.
 
@@ -43,7 +53,7 @@ Sat Mar  3 16:31:31 2001  Darrell Brunsch <brunsch@uci.edu>
         * docs/tutorials/Quoter/Simple/ImprovedServer/index.html:
         * docs/tutorials/Quoter/Simple/Persistent/index.html:
 
-          Changed references to 
+          Changed references to
           http://www.cs.wustl.edu/~schmidt/ACE_wrappers/* to
           relative paths instead (Fixes fuzz errors).
 
