@@ -1,3 +1,9 @@
+Mon Feb 11 05:42:02 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Connector.h: Fixed a typo in the coments. Thanks to Miljenko
+	  Norsic (ETK) <Miljenko.Norsic@etk.ericsson.se> for reporting
+	  this. 
+
 Sun Feb 10 16:28:30 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/config-macosx.h 
