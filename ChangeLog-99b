@@ -1,3 +1,11 @@
+Mon Apr 26 07:30:51 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.i (fstat): Changed to use CE's implementation and added
+	  some features that're supported on other Win32 platforms.  The
+	  original implementation for Win32 closed down the file handle
+	  accidentally which is not a "Good Thing[TM]".  Thanks to Dominic
+	  Williams <dom@connected-place.co.uk> for pointing this out.
+
 Sun Apr 25 21:35:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/ACE.{h,cpp},OS.{h,cpp},Object_Manager.{h,cpp} (init,fini):
