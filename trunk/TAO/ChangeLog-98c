@@ -1,4 +1,8 @@
-Fri May  1 17:14:32 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+Fri May  1 17:26:31 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming_Utils.h: Added "argv/argc" parameters to
+ 	  the TAO_Naming_Server::init() and constructor methods.  Thanks
+ 	  to Ross J. Lillie <lillie@rsch.comm.mot.com> for this feature.
 
 	* tao/Makefile: Moved the Arg_Shifter from TAO to ACE since it is
  	  generic and not TAO-specific.
