@@ -70,12 +70,17 @@ public:
           TAO_IIOP_SSL_BASE_CONNECTOR;
 
 protected:
-  /// = More TAO_Connector methods, please check the documentation on
-  ///   Transport_Connector.h
+  /**
+   * @name The TAO_Connector Methods
+   *
+   * Check the documentation in tao/Transport_Connector.h for details.
+   */
+  //@{
   int set_validate_endpoint (TAO_Endpoint *ep);
 
   int make_connection (TAO_GIOP_Invocation *invocation,
                        TAO_Transport_Descriptor_Interface *desc);
+  //@}
 
 private:
 

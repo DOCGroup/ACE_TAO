@@ -1,25 +1,22 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/Time_Service
-//
-// = FILENAME
-//    Timer_Helper.cpp
-//
-// = DESCRIPTION
-//    This class is registered with the Reactor and extends from the
-//    event handler.It is a friend of the TAO_Time_Service_Clerk and
-//    helps to update the clerk's notion of globally synchronized
-//    time. This class obviates the need for multiple inheritance in
-//    the clerk.
-//
-// = AUTHOR
-//    Vishal Kachroo  <vishal@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Timer_Helper.cpp
+ *
+ *  $Id$
+ *
+ *  This class is registered with the Reactor and extends from the
+ *  event handler.It is a friend of the TAO_Time_Service_Clerk and
+ *  helps to update the clerk's notion of globally synchronized
+ *  time. This class obviates the need for multiple inheritance in
+ *  the clerk.
+ *
+ *
+ *  @author Vishal Kachroo  <vishal@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TIMER_HELPER_H
 #include "ace/pre.h"
@@ -37,38 +34,40 @@
 
 class TAO_Time_Service_Clerk;
 
+/**
+ * @class Timer_Helper
+ *
+ * @brief Timer Helper for the clerk.
+ *
+ * The handle timeout method of this class is called periodically
+ * by the reactor. This method updates the clerk's notion of
+ * globally synchronized time by contacting the various Time
+ * Servers.
+ */
 class TAO_Time_Export Timer_Helper : public ACE_Event_Handler
 {
-  // = TITLE
-  //    Timer Helper for the clerk.
-  //
-  // = DESCRIPTION
-  //    The handle timeout method of this class is called periodically
-  //    by the reactor. This method updates the clerk's notion of
-  //    globally synchronized time by contacting the various Time
-  //    Servers.
 public:
   // = Initialization and termination methods.
+  /// Constructor.
   Timer_Helper (void);
-  // Constructor.
 
+  /// Destructor.
   ~Timer_Helper (void);
-  // Destructor.
 
+  /// Constructor that sets the clerk.
   Timer_Helper (TAO_Time_Service_Clerk *clerk);
-  // Constructor that sets the clerk.
 
+  /// This method is called periodically by the Reactor to update the
+  /// clerk's time.
   int handle_timeout (const ACE_Time_Value &time,
 		      const void *arg);
-  // This method is called periodically by the Reactor to update the
-  // clerk's time.
 
 protected:
+  /// Clerk's instance that this class helps to update time.
   TAO_Time_Service_Clerk *clerk_;
-  // Clerk's instance that this class helps to update time.
 
+  /// The set of server IORs.
   typedef ACE_Array_Base<CosTime::TimeService_var> IORS;
-  // The set of server IORs.
 };
 
 #include "ace/post.h"
