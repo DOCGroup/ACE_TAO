@@ -96,7 +96,8 @@ DIRS  = CDR \
 	DLL_ORB \
         ORB_shutdown \
 	Two_Objects \
-	Nested_Upcall_Crash
+	Nested_Upcall_Crash \
+	RTScheduling
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
