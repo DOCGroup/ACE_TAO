@@ -15,9 +15,11 @@ Reactor_Logging_Server<ACCEPTOR>::Reactor_Logging_Server
   int result;
 
   if (logger_port != 0)
-    result = server_addr.set (logger_port, INADDR_ANY);
+    result = server_addr.set (logger_port,
+                              (ACE_UNIT32) INADDR_ANY);
   else
-    result = server_addr.set ("ace_logger", INADDR_ANY);
+    result = server_addr.set ("ace_logger",
+                              (ACE_UINT32) INADDR_ANY);
   if (result != -1)
     result = ACCEPTOR::open (server_addr);
   if (result == -1) reactor->end_reactor_event_loop ();

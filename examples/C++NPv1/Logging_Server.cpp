@@ -35,9 +35,11 @@ int Logging_Server::open (u_short logger_port)
   int result;
 
   if (logger_port != 0)
-    result = server_addr.set (logger_port, INADDR_ANY);
+    result = server_addr.set (logger_port,
+                              (ACE_UINT32) INADDR_ANY);
   else
-    result = server_addr.set ("ace_logger", INADDR_ANY);
+    result = server_addr.set ("ace_logger",
+                              (ACE_UINT32) INADDR_ANY);
   if (result == -1) return -1;
 
   // Start listening, enable reuse of listen address for quick restarts.
