@@ -619,8 +619,8 @@ string_strsncpy_test (void)
                                 strsncpy1,
                                 25) == 0);
 
-     strsncpy1[25]  0;
-     strsncpy2[25]  0;
+     strsncpy1[25] = 0;
+     strsncpy2[25] = 0;
 
      ACE_ASSERT (ACE_OS_String::strcmp (strsncpy2, strsncpy1) == 0);
 

@@ -1,3 +1,8 @@
+Tue Dec 10 16:53:29 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/OS_Test.cpp: Add missing '=' signs to fix compile error on
+          wide-char builds.
+
 Tue Dec 10 16:05:37 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* Makefile: Added a target 'reverseclean'
