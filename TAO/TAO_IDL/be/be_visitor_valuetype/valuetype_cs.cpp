@@ -259,7 +259,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << node->local_name () << " *," << be_nl
           << "_tao_void_pointer" << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl
-          << "delete tmp;" << be_uidt_nl
+          << "CORBA::remove_ref (tmp);" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
 
