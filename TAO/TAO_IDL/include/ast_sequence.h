@@ -119,7 +119,6 @@ private:
 
   idl_bool unbounded_;
   // Whether we are bounded or unbounded.
-
 };
 
 #endif           // _AST_SEQUENCE_AST_SEQUENCE_HH

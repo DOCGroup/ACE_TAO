@@ -3,6 +3,7 @@
 #include "be_visitor_typecode/typecode_defn.h"
 #include "be_stream_factory.h"
 #include "be_visitor_factory.h"
+#include "ast_interface.h"
 #include "ace/Singleton.h"
 #include "ace/Synch.h"
 #include "ace/Unbounded_Queue.h"

@@ -29,7 +29,7 @@ public:
   DEF_NARROW_FROM_DECL(AST_Native);
 
   // AST Dumping.
-  virtual void dump(ACE_OSTREAM_TYPE &o);
+  virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);

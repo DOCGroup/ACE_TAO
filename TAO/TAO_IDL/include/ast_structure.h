@@ -119,6 +119,9 @@ public:
   virtual idl_bool in_recursion (AST_Type *node = 0);
   // Are we or the node represented by node involved in recursion.
 
+  virtual int contains_wstring (void);
+  // Do we contain a wstring at some nesting level?
+
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 
@@ -127,7 +130,6 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-
 
 protected:
   virtual int compute_size_type (void);

@@ -226,6 +226,28 @@ AST_Structure::is_local (void)
   return this->local_struct_;
 }
 
+int
+AST_Structure::contains_wstring (void)
+{
+  if (this->contains_wstring_ == -1)
+    {
+      for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
+        {
+          if (si.item ()->contains_wstring () == 1)
+            {
+              this->contains_wstring_ = 1;
+              return this->contains_wstring_;
+            }
+        }
+
+      this->contains_wstring_ = 0;
+    }
+
+  return this->contains_wstring_;
+}
+
 // Private operations.
 
 // Add this AST_Field node (a field declaration) to this scope.
