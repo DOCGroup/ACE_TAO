@@ -49,9 +49,13 @@ Sender_StreamEndPoint::set_protocol_object (const char *,
 }
 
 Sender::Sender (void)
-  :count_ (0),
+  :sender_mmdevice_ (0),
+   endpoint_ (0),
+   count_ (0),
+   filename_ ("Makefile"),
    fp_ (0),
-   frame_rate_ (30)
+   frame_rate_ (30),
+   protocol_object_ (0)
 {
   this->mb.size (BUFSIZ);
 }
@@ -113,13 +117,6 @@ Sender::file (void)
   return this->fp_;
 }
 
-TAO_StreamCtrl*
-Sender::streamctrl (void)
-{
-  return &this->streamctrl_;
-}
-
-
 int
 Sender::frame_rate (void)
 {
@@ -143,14 +140,19 @@ Sender::register_sender (CORBA::Environment &ACE_TRY_ENV)
                   TAO_MMDevice (&this->endpoint_strategy_),
                   -1);
   
+
   CosNaming::Name sender_mmdevice_name (1);
   sender_mmdevice_name.length (1);
   sender_mmdevice_name [0].id = CORBA::string_dup ("Sender");
   
+  // Servant Reference Counting to manage lifetime
+  PortableServer::ServantBase_var safe_sender_mmdevice =
+    this->sender_mmdevice_;
+  
   CORBA::Object_var mmdevice =
     this->sender_mmdevice_->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN(-1);
-  
+
   // Register the server object with the naming server.
   this->my_naming_client_->rebind (sender_mmdevice_name,
                                    mmdevice.in (),
