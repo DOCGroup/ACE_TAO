@@ -1,3 +1,11 @@
+Mon Mar 16 23:34:39 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/README:
+	* ace/config-WinCE.h: Added ACE_LACKS_STRRCHR.
+
+	* ace/OS.i: Added implementation of ACE_OS::strrchr () when
+	platforms don't provide one.
+
 Mon Mar 16 16:08:45 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/High_Res_Timer.cpp: set global_scale_factor_ to 1000 with
@@ -14,7 +22,7 @@ Mon Mar 16 13:04:58 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	* ace/OS.h:
 	Extended the ACE_HAS_STL_MAP_CONFLICT to include 'queue' as well
-	as 'map.' 'queue' is defined in sys/stream.h, which is included in 
+	as 'map.' 'queue' is defined in sys/stream.h, which is included in
 	OS.h by netinet/in.h and sys/timod.h.
 
 Mon Mar 16 00:22:40 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
@@ -22,7 +30,7 @@ Mon Mar 16 00:22:40 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* CE-status: Updated CE port status.
 
 	* ace/config-WinCE.h: Added macro definitions for EOF and BUFSIZ.
-	
+
 	* ace/OS.{h,i} (ace_isspace): Added both char and wchar version
 	  functions.  Notice that this can't be called isspace because
 	  most compilers implement isspace as a macro.
@@ -33,15 +41,15 @@ Mon Mar 16 00:22:40 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/ARGV.{h,i,cpp}: Unicodize this class under CE.  Notice that
 	  under CE, you won't be able to use environment variable
-	  substitution since there's no environment variable at all.  
+	  substitution since there's no environment variable at all.
 
 	* ace/Reactor.cpp: Don't include Service_Config.h and
 	  WFMO_Reactor.h under CE for now. Prevent Reactor from
-	  reconfigure the service configurator. 
+	  reconfigure the service configurator.
 
 	* ace/Task.cpp: Don't include Service_Config.h under CE for now.
 	  Prevent Task_Base from reconfigure the service configurator.
-	
+
 	* ace/SString.cpp: Don't include Service_Config.h under CE for
 	  now.
 
@@ -56,7 +64,7 @@ Mon Mar 16 00:22:40 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  usage of char functions that flex and yacc use and wchar
 	  functions that most CE functions use.
 
-	* ace/Get_Opt.{h,cpp}: 
+	* ace/Get_Opt.{h,cpp}:
 	* ace/Local_Token.{h,i,cpp}:
 	* ace/Map_Manager.cpp:
 	* ace/Message_Queue.cpp:
