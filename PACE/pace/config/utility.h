@@ -66,6 +66,7 @@ return ( (errno = ENOTSUP), FAILVALUE)
 
 // Define the pathname separator characters for Win32 (ugh).
 # define PACE_DIRECTORY_SEPARATOR_STR "\\"
+
 # define PACE_DIRECTORY_SEPARATOR_CHAR '\\'
 # define PACE_LD_SEARCH_PATH "PATH"
 # define PACE_LD_SEARCH_PATH_SEPARATOR_STR ";"
