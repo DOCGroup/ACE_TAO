@@ -198,7 +198,7 @@ try to help you fix the problems.
       "archive has no table of contents; add one using ranlib(1)" for
       certain libraries, e.g., libASX.a, libThreads.a, and libSPIPE.a.
       This occurs since SunOS 4.x does not support these features.<P>
-
+  
   <LI><B>AIX</B><P>
 
       The ACE port to AIX assumes that the user has installed the AIX
@@ -807,6 +807,56 @@ If you use the GNU GCC g++ compiler please note the following:
       <code>PAGE_SIZE</code> to 8192.  Then rebuild ACE.  Thanks to
       <a href="mailto:gpai@voicetek.com">Ganesh Pai</a> for this
       information.<p>
+
+   <li>Sun OS 5.6 using egcs1.1.2/egcs 2.95 with
+       ld:Software Generation Utilities - Solaris/ELF (3.0)
+       as: WorkShop Compilers 4.X dev 18 Sep 1996<p>
+
+      You could come across weird external symbol compiler errors.
+
+      Example:
+
+      <pre>
+      -I/opt/ace/SunOS-1.0 -DACE_HAS_EXCEPTIONS  -o Cached_Accept_Conn_Test
+      .obj/Cached_Accept_Conn_Test.o  -L/opt/ace/SunOS-1.0/ace -L./  -lACE
+      -lsocket -ldl -lgen -lnsl -lposix4 -lthread
+      ld: warning: relocation error: R_SPARC_32: file
+     .obj/Cached_Accept_Conn_Test.o: symbol
+       __t21ACE_Cache_Map_Manager7Zt30ACE_Refcounted_Hash_Recyclable1Z13
+       ACE_INET_AddrZP18Client_Svc_HandlerZt23ACE_Hash_Map_Manager_Ex5Zt
+      30ACE_Refcounted_Hash_Recyclable1Z13ACE_INET_AddrZt8ACE_Pair2ZP18
+      Client_Svc_HandlerZUiZt8ACE_Hash1Zt30...</pre>
+
+      external symbolic relocation against non-allocatable section .stab;
+      cannot be processed at runtime: relocation ignored<P>
+
+      Solution:<P>
+ 
+      Install the "binutils" package from GNU (www.gnu.org); specifically,
+      "as" and "ld".<P>
+
+      Conclusion:<P>
+
+      Perfect build stats:<P>
+ 
+      OS:
+      Kernel version: SunOS 5.6 Generic 105181-03 December 1999.<P>
+
+      compiler:
+      gcc version egcs-2.91.66 19990314 (egcs-1.1.2 release)<P>
+ 
+      loader:
+      GNU ld version 2.9.1 (with BFD 2.9.1)
+      Supported emulations:
+       elf32_sparc<P>
+
+      assembler:
+      GNU assembler version 2.9.1 (sparc-sun-solaris2.6), using
+      BFD version 2.9.1<P>
+ 
+      Thanks to <a href="mailto:johng@keck.hawii.edu">John Gathright</a> for providing this
+      information.<P>
+
 </ul>
 
 
