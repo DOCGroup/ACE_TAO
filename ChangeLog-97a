@@ -1,5 +1,23 @@
 Thu May 15 00:26:42 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/config-chorus.h: Added ACE_LACKS_MPROTECT,
+ 	  ACE_HAS_IP_MULTICAST, and ACE_LACKS_SOCKETPAIR to the Chorus
+ 	  port.  Thanks to Wei Chiang <chiang@erebor.tele.nokia.fi> for
+ 	  reporting this.
+
+	* ace/OS.i: Added ACE_LACKS_ACCESS to the Chorus config file
+ 	  and VxWorks config file, as well as to OS.i.
+
+: 	* ace/OS.i: Added ACE_LACKS_GETSERVBYNAME to the Chorus config
+ 	  file and VxWorks config file, as well as to OS.i.
+
+	* ace/OS.i: Added ACE_LACKS_SBRK to the Chorus config file, as
+ 	  well as to the definition of the ACE_OS::sbrk() function.
+
+	* ace/OS.h: Removed #include /**/ <pwd.h> from the Chorus-specific
+ 	  part of OS.h since it's already included elsewhere.  Thanks to
+ 	  Wei Chiang <chiang@erebor.tele.nokia.fi> for reporting this.
+
 	* ace/Reactor: Added a typedef for ACE_Reactor_Token to
  	  ACE_Null_Mutex for situations where ACE_MT_SAFE is *disabled*.
   	  This makes the code more consistent.

@@ -11,6 +11,8 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
+#define ACE_LACKS_ACCESS
+#define ACE_LACKS_GETSERVBYNAME
 #define ACE_HAS_STRING_CLASS
 #define ACE_LACKS_COND_T
 #define ACE_LACKS_EXEC
