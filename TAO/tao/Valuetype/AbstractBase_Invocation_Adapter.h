@@ -39,7 +39,7 @@ namespace TAO
    *
    *
    */
-  class TAO_Valuetype_Export AbstractBase_Invocation_Adapter 
+  class TAO_Valuetype_Export AbstractBase_Invocation_Adapter
     : public Invocation_Adapter
   {
   public:
@@ -55,10 +55,10 @@ namespace TAO
 
   private:
     /// Dont allow default initializations
-    ACE_UNIMPLEMENTED_FUNC (AbstractBase_Invocation_Adapter (void));
+    ACE_UNIMPLEMENTED_FUNC (AbstractBase_Invocation_Adapter (void))
 
     ACE_UNIMPLEMENTED_FUNC (AbstractBase_Invocation_Adapter & operator= (
-        const AbstractBase_Invocation_Adapter &));
+        const AbstractBase_Invocation_Adapter &))
   };
 } // End namespace TAO
 
