@@ -244,6 +244,12 @@ TAO_IIOP_Connection_Handler::fetch_handle (void)
 }
 
 int
+TAO_IIOP_Connection_Handler::resume_handler (void)
+{
+  return 1;
+}
+
+int
 TAO_IIOP_Connection_Handler::handle_output (ACE_HANDLE)
 {
   return this->transport ()->handle_output ();
@@ -316,32 +322,13 @@ TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE h)
   // Increase the reference count on the upcall that have passed us.
   this->pending_upcalls_++;
 
-  // The buffer on the stack which will be used to hold the input
-  // messages
-  char buf [TAO_CONNECTION_HANDLER_BUF_SIZE];
-
-#if defined(ACE_HAS_PURIFY)
-  (void) ACE_OS::memset (buf,
-                         '\0',
-                         sizeof buf);
-#endif /* ACE_HAS_PURIFY */
-
-
-  // Create a message block
-  ACE_Message_Block message_block (buf,
-                                   sizeof (buf));
-
-  // Align the message block
-  ACE_CDR::mb_align (buf);
-
-  // Read the message into the  message block that we have created on
-  // the stack.
-  // @@ Start from here..
-  this->transport ()->read_message
+ int retval = this->transport ()->handle_input_i (h);
 
   // The upcall is done. Bump down the reference count
   if (--this->pending_upcalls_ <= 0)
-    result = -1;
+    retval = -1;
+
+  return retval;
 }
 
 
@@ -351,23 +338,7 @@ TAO_IIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
 {
 
 
-  // Call the transport read the message
-  int result = this->transport ()->read_process_message (max_wait_time);
 
-  // Now the message has been read
-  if (result == -1 && TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - %p\n"),
-                  ACE_TEXT ("IIOP_Connection_Handler::read_message \n")));
-
-    }
-
-
-
-  if (result == -1 ||
-      result == 1)
-    return result;
 
   return 0;
 }

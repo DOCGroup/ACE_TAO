@@ -84,6 +84,9 @@ public:
   /// Get the underlying handle
   virtual ACE_HANDLE fetch_handle (void) = 0;
 
+  /// Need to be implemented by the underlying protocol objects
+  virtual int handle_input_i (ACE_HANDLE = ACE_INVALID_HANDLE,
+                              ACE_Time_Value *max_wait_time = 0) = 0;
 protected:
 
   /// Return our TAO_ORB_Core pointer
@@ -100,10 +103,6 @@ protected:
   /// This method is invoked from the svc () method of the Svc_Handler
   /// Object.
   int svc_i (void);
-
-  /// Need to be implemented by the underlying protocol objects
-  virtual int handle_input_i (ACE_HANDLE = ACE_INVALID_HANDLE,
-                              ACE_Time_Value *max_wait_time = 0) = 0;
 
 #if !defined (TAO_CONNECTION_HANDLER_BUF_SIZE)
 #   define TAO_CONNECTION_HANDLER_BUF_SIZE 1024

@@ -111,6 +111,10 @@ public:
   /// Return the underlying handle
   virtual ACE_HANDLE fetch_handle (void);
 
+  /// Send a TRUE value to the reactor, so that the reactor does not
+  /// resume the handler
+  virtual int resume_handler (void);
+
   /// Use peer() to drain the outgoing message queue
   virtual int handle_output (ACE_HANDLE);
 
