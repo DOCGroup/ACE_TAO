@@ -23,8 +23,8 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Priority_Reactor)
 const int npriorities =
   ACE_Event_Handler::HI_PRIORITY - ACE_Event_Handler::LO_PRIORITY + 1;
 
-ACE_INLINE
-void ACE_Priority_Reactor::init_bucket (void)
+ACE_INLINE void
+ACE_Priority_Reactor::init_bucket (void)
 {
   // Allocate enough space for all the handles.
   // TODO: This can be wrong, maybe we should use other kind of
@@ -36,10 +36,6 @@ void ACE_Priority_Reactor::init_bucket (void)
   ACE_NEW (this->bucket_, QUEUE*[npriorities]);
   // This loops "ensures" exception safety.
   int i;
-  for (i = 0; i < npriorities; ++i)
-    {
-      this->bucket_[i] = 0;
-    }
   for (i = 0; i < npriorities; ++i)
     {
       ACE_NEW (this->bucket_[i], QUEUE (this->tuple_allocator_));

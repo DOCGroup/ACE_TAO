@@ -65,6 +65,22 @@ protected:
   // Closing down
 };
 
+class Process_Strategy : public ACE_Process_Strategy<Counting_Service>
+{
+public:
+
+  // Constructor
+  Process_Strategy (size_t n_processes = 1,
+                    ACE_Event_Handler *acceptor = 0,
+                    ACE_Reactor * = 0,
+                    int flags = 0);
+
+  // Overwrite the process creation method to include connection
+  // counting
+  virtual int activate_svc_handler (Counting_Service *svc_handler,
+				    void *arg = 0);
+};
+
 class Options : public ACE_Event_Handler
   // = TITLE
   //     Maintains the options for this program.
@@ -98,9 +114,6 @@ public:
 
   ACE_Concurrency_Strategy <Counting_Service> *concurrency_strategy (void);
   // Returns the concurrency strategy.
-
-  virtual int handle_signal (int, siginfo_t *, ucontext_t *);
-  // Catch the SIGCHLD signal and reap the exiting child processes.
 
 private:
   Concurrency_Type concurrency_type_;

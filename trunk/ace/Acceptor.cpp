@@ -257,14 +257,13 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::activate_svc_handler
   (SVC_HANDLER *svc_handler)
 {
-  ACE_Trace::start_tracing ();
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::activate_svc_handler");
 
   int result = 0;
 
   // See if we should enable non-blocking I/O on the <svc_handler>'s
   // peer.
-  if (ACE_BIT_ENABLED (this->flags_, ACE_NONBLOCK) != 0)
+  if (ACE_BIT_ENABLED (this->flags_, ACE_NONBLOCK))
     {
       if (svc_handler->peer ().enable (ACE_NONBLOCK) == -1)
         result = -1;
@@ -273,13 +272,12 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::activate_svc_handler
   else if (svc_handler->peer ().disable (ACE_NONBLOCK) == -1)
     result = -1;
 
-  if (svc_handler->open ((void *) this) == -1)
+  if (result == 0 && svc_handler->open ((void *) this) == -1)
     result = -1;
-
+  
   if (result == -1)
     svc_handler->close (0);
 
-  ACE_Trace::stop_tracing ();
   return result;
 }
 

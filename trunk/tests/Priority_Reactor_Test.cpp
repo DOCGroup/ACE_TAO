@@ -253,8 +253,9 @@ main (int argc, char *argv[])
       }
 
   // Manage memory automagically.
-  auto_ptr<ACE_Select_Reactor> impl;
+  // Note:  This ordering is very subtle...
   auto_ptr<ACE_Reactor> reactor;
+  auto_ptr<ACE_Select_Reactor> impl;
 
   if (opt_priority_reactor)
     {
@@ -332,7 +333,7 @@ main (int argc, char *argv[])
     {
       ACE_DEBUG ((LM_DEBUG,
 		  "(%P|%t) running out of time, "
-		  "probably due to failed connections."));
+		  "probably due to failed connections.\n"));
     }
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) waiting for the children...\n"));
