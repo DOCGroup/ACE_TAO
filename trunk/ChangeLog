@@ -1,3 +1,14 @@
+Fri Aug 27 11:40:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/ftrtevent.mpb:
+	* bin/MakeProjectCreator/portablegroup.mpb:
+	
+	  Changed to inherit from messaging.mpb.
+
+	* bin/MakeProjectCreator/rtsched.mpb:
+
+	  Changed to inherit from svc_utils.mpb.
+
 Fri Aug 27 13:38:25 2004  Steve Huston  <shuston@riverace.com>
 
 	* netsvcs/clients/Naming/Client/Client_Test.cpp:
