@@ -1100,7 +1100,7 @@ ACE_OS::cuserid (LPTSTR user, size_t maxlen)
       ::remCurIdGet (user, 0);
       return user;
     }
-#elif defined (CHORUS) || defined (ACE_HAS_WINCE) || defined (ACE_PSOS)
+#elif defined (CHORUS) || defined (ACE_HAS_WINCE) || defined (ACE_PSOS) || defined (__QNXNTO__)
   // @@ WinCE doesn't support GetUserName.  But there should be a way
   // to get around this.
   ACE_UNUSED_ARG (user);
@@ -1714,10 +1714,10 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
       && ::pthread_mutex_init (m, attributes) == 0)
 #   elif defined (ACE_HAS_PTHREADS_DRAFT7) || defined (ACE_HAS_PTHREADS_STD)
     if (ACE_ADAPT_RETVAL(::pthread_mutexattr_init (&attributes), result) == 0
-#     if defined (_POSIX_THREAD_PROCESS_SHARED)
+#     if defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)
         && ACE_ADAPT_RETVAL(::pthread_mutexattr_setpshared(&attributes, type),
                             result) == 0
-#     endif /* _POSIX_THREAD_PROCESS_SHARED */
+#     endif /* _POSIX_THREAD_PROCESS_SHARED && ! ACE_LACKS_MUTEXATTR_PSHARED */
         && ACE_ADAPT_RETVAL(::pthread_mutex_init (m, &attributes), result)== 0)
 #   else // draft 6
     if (::pthread_mutexattr_init (&attributes) == 0
@@ -2244,10 +2244,10 @@ ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
       && ::pthread_cond_init (cv, attributes) == 0
 #     elif defined (ACE_HAS_PTHREADS_STD) || defined (ACE_HAS_PTHREADS_DRAFT7)
   if (ACE_ADAPT_RETVAL(::pthread_condattr_init (&attributes), result) == 0
-#       if defined (_POSIX_THREAD_PROCESS_SHARED)
+#       if defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)
       && ACE_ADAPT_RETVAL(::pthread_condattr_setpshared(&attributes, type),
                           result) == 0
-#       endif /* _POSIX_THREAD_PROCESS_SHARED */
+#       endif /* _POSIX_THREAD_PROCESS_SHARED && ! ACE_LACKS_MUTEXATTR_PSHARED */
       && ACE_ADAPT_RETVAL(::pthread_cond_init (cv, &attributes), result) == 0
 #     else  /* this is draft 6 */
   if (::pthread_condattr_init (&attributes) == 0
