@@ -520,6 +520,12 @@ start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_barrier, Ta
   ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF + 25;
 #endif /* VXWORKS */
 
+  if (run_utilization_test == 1)
+     priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+                                                 ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
+                                                                                 ACE_SCOPE_THREAD),
+                                                 ACE_SCOPE_THREAD);
+
   ACE_DEBUG ((LM_DEBUG,
               "Creating servant 0 with high priority %d\n",
               priority));
@@ -743,6 +749,9 @@ main (int argc, char *argv[])
           ACE_THR_PRI_FIFO_DEF + 50,//30,
 #elif defined (VXWORKS) /* ! __Lynx__ */
           6,
+#elif defined (ACE_WIN32)
+  ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
+                                  ACE_SCOPE_THREAD),
 #else
           ACE_THR_PRI_FIFO_DEF + 25,
 #endif /* ! __Lynx__ */

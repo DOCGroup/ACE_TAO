@@ -85,8 +85,11 @@ Util_Thread::run_computations (void)
 	}
       this->computation ();
       this->number_of_computations_ ++;
-      //      ACE_OS::thr_yield (); // Shouldn't need this.  And I'm not sure
+           ACE_OS::thr_yield (); // Shouldn't need this.  And I'm not sure
                             // if it really helps.
+
+	  if (ts_->utilization_task_started_ == 0)
+		  break;
     }
 
   return 0;

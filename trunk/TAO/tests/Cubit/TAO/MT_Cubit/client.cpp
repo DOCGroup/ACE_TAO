@@ -710,6 +710,9 @@ main (int argc, char *argv[])
           30,
 #elif defined (VXWORKS) /* ! __Lynx__ */
 	  6,
+#elif defined (ACE_WIN32)
+  ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
+                                  ACE_SCOPE_THREAD),
 #else
 	  ACE_THR_PRI_FIFO_DEF + 25,
 #endif /* ! __Lynx__ */
