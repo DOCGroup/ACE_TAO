@@ -4,12 +4,12 @@
 
 ACE_RCSID(DSI, Database_i, "$Id$")
 
-DatabaseImpl::Simpler_Malloc::Simpler_Malloc (void)
-  : MALLOC (ACE_DEFAULT_BACKING_STORE)
+DatabaseImpl::Simpler_Database_Malloc::Simpler_Database_Malloc (void)
+  : DATABASE_MALLOC (ACE_DEFAULT_BACKING_STORE)
 {
 }
 
-DatabaseImpl::Simpler_Malloc::~Simpler_Malloc (void)
+DatabaseImpl::Simpler_Database_Malloc::~Simpler_Database_Malloc (void)
 {
   this->remove ();
 }
@@ -156,7 +156,7 @@ DatabaseImpl::Agent::create_entry (const char *key,
                    Database::Duplicate_Key))
 {
   // Create a new entry in the database:
-  if (ACE_OS::strcmp (entry_type, "Employee") != 0 
+  if (ACE_OS::strcmp (entry_type, "Employee") != 0
       || initial_attributes.length () != 2)
     ACE_THROW_RETURN (Database::Unknown_Type (),
                       Database::Entry::_nil ());
@@ -169,7 +169,7 @@ DatabaseImpl::Agent::create_entry (const char *key,
   const Database::NamedValue &second =
     initial_attributes[1];
 
-  if (ACE_OS::strcmp (first.name.in (), "name") != 0 
+  if (ACE_OS::strcmp (first.name.in (), "name") != 0
       || ACE_OS::strcmp (second.name.in (), "id") != 0)
     ACE_THROW_RETURN (Database::Unknown_Type (),
                       Database::Entry::_nil ());
@@ -370,7 +370,7 @@ DatabaseImpl::Employee::name (const char* name)
 {
   DATABASE::instance ()->free (this->name_);
 
-  this->name_ = 
+  this->name_ =
     (char *) DATABASE::instance ()->malloc (ACE_OS::strlen (name) + 1);
 
   ACE_OS::strcpy (this->name_,
@@ -406,9 +406,9 @@ DatabaseImpl::Employee::operator delete (void *pointer)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
 template class ACE_Malloc_Iterator<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
-template class ACE_Singleton<DatabaseImpl::Simpler_Malloc, ACE_Null_Mutex>;
+template class ACE_Singleton<DatabaseImpl::Simpler_Database_Malloc, ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
 #pragma instantiate ACE_Malloc_Iterator<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
-#pragma instantiate ACE_Singleton<DatabaseImpl::Simpler_Malloc, ACE_Null_Mutex>
+#pragma instantiate ACE_Singleton<DatabaseImpl::Simpler_Database_Malloc, ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
