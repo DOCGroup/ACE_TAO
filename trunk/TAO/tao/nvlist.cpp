@@ -166,7 +166,7 @@ CORBA::is_nil (CORBA::NVList_ptr nvl)
 CORBA_NVList::~CORBA_NVList (void)
 {
   // destroy each NamedValue element
-  for (CORBA::ULong i = 0; i < this->len_; i++)
+  for (CORBA::ULong i = 0; i < this->max_; i++)
     (&this->values_[i])->~CORBA_NamedValue ();
 
   if (this->values_)

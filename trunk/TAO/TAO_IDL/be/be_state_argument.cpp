@@ -1753,12 +1753,16 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
                 {
-                  // nothing
+                  // if we are sequence, call init manager
+                  if (type->node_type () == AST_Decl::NT_sequence)
+                    {
+                      *os << arg->local_name () << ".init_mgr ();" << nl;
+                    }
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
                 {
-                  *os << arg->local_name () << ", ";
+                  *os << "*" << arg->local_name () << ", ";
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
@@ -1823,7 +1827,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   else
                     {
                     // declare a variable
-                      *os << bt->name () << " " << arg->local_name () <<
+                      *os << bt->name () << " *" << arg->local_name () <<
                         " = new " << bt->name () << ";" << nl;
 #if 0
                     // now define a NamedValue_ptr
@@ -1870,6 +1874,12 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
                 {
+                  // if we are sequence, call init manager
+                  if (type->node_type () == AST_Decl::NT_sequence)
+                    {
+                      *os << "_tao_base_" << arg->local_name () <<
+                        "->init_mgr ();" << nl;
+                    }
                   if (bt->size_type () == be_decl::VARIABLE)
                     {
                       *os << arg->local_name () << " = _tao_base_" <<

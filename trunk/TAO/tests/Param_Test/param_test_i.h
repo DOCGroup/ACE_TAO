@@ -42,6 +42,20 @@ public:
                                        CORBA::String_out s3,
                                        CORBA::Environment &env);
   // test for unbounded strings
+
+  virtual Param_Test::Fixed_Struct
+  test_fixed_struct (const Param_Test::Fixed_Struct &s1,
+                     Param_Test::Fixed_Struct &s2,
+                     Param_Test::Fixed_Struct_out s3,
+                     CORBA::Environment &env);
+  // test for fixed structures
+
+  virtual Param_Test::StrSeq *
+  test_strseq (const Param_Test::StrSeq &s1,
+               Param_Test::StrSeq &s2,
+               Param_Test::StrSeq_out s3,
+               CORBA::Environment &env);
+  // test for string sequence
 };
 
-#endif /* if !defined */
+#endif /* PARAM_TEST_I_H */

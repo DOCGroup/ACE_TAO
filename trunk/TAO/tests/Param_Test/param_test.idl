@@ -25,11 +25,11 @@ interface Coffee
   struct Desc
   {
     string name;
-    long   count;
   };
+
   readonly attribute Desc description;
 };
-*/
+  */
 
 interface Param_Test
 {
@@ -39,7 +39,40 @@ interface Param_Test
   short test_short (in short s1,
                     inout short s2,
                     out short s3);
+
+  // strings unbounded
+  string test_unbounded_string (in string s1,
+                                inout string s2,
+                                out string s3);
+
+  // structures (fixed size)
+  struct Fixed_Struct
+  {
+    long l;
+    char c;
+    short s;
+    octet o;
+    float f;
+    boolean b;
+    double d;
+  };
+
+  Fixed_Struct test_fixed_struct (in Fixed_Struct s1,
+                                  inout Fixed_Struct s2,
+                                  out Fixed_Struct s3);
+
+  // sequences and typedefs
+  typedef sequence<string> StrSeq;
+  StrSeq test_strseq (in StrSeq s1,
+                      inout StrSeq s2,
+                      out StrSeq s3);
+
+
   /*
+  // object references
+  Coffee make_coffee (); // make a Coffee object
+  Coffee test_Coffee (in Coffee o1, inout Coffee o2, out Coffee o3);
+
   long test_long (in long l1,
                   inout long l2,
                   out long l3);
@@ -54,16 +87,6 @@ interface Param_Test
                       inout double d2,
                       out double d3);
 
-  // object references
-  Coffee make_coffee (); // make an Coffee object
-  Coffee test_Coffee (in Coffee o1, inout Coffee o2, out Coffee o3);
-  */
-
-  // strings unbounded
-  string test_unbounded_string (in string s1,
-                                inout string s2,
-                                out string s3);
-  /*
   // strings bounded
   const unsigned long STRLEN = 10;
   string<STRLEN> test_bstring (in string<STRLEN> s1,
@@ -77,15 +100,6 @@ interface Param_Test
                          out MYSTRING s3);
 
 
-  // structures (fixed size)
-  struct fixed_struct
-  {
-    long l;
-  };
-  fixed_struct test_fstruct (in fixed_struct s1,
-                             inout fixed_struct s2,
-                             out fixed_struct s3);
-
   // structures (variable)
   struct var_struct
   {
@@ -97,17 +111,14 @@ interface Param_Test
   var_struct test_vstruct (in var_struct s1,
                            inout var_struct s2,
                            out var_struct s3);
+
+  // nested structs (we use a combination of fixed and var sized)
+
   // arrays (fixed)
 
   // arrays (variable)
 
   // multidimensional arrays (fixed)
-
-  // sequences
-  typedef sequence<string> StrSeq;
-  StrSeq test_seq (in StrSeq s1,
-                   inout StrSeq s2,
-                   out StrSeq s3);
 
   // more combinations to follow
   union U switch (long)

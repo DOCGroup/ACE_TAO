@@ -60,3 +60,37 @@ Param_Test_i::test_unbounded_string (const char *s1,
   s2 = tmp;
   return retstr;
 }
+
+// test for fixed structures. Just copy the in parameter into all the others
+Param_Test::Fixed_Struct
+Param_Test_i::test_fixed_struct (const Param_Test::Fixed_Struct &s1,
+                                 Param_Test::Fixed_Struct &s2,
+                                 Param_Test::Fixed_Struct_out s3,
+                                 CORBA::Environment &env)
+{
+  ACE_UNUSED_ARG (env);
+  s2 = s1;
+  s3 = s1;
+  return s1;
+}
+
+// test for string sequence
+Param_Test::StrSeq *
+Param_Test_i::test_strseq (const Param_Test::StrSeq &s1,
+                           Param_Test::StrSeq &s2,
+                           Param_Test::StrSeq_out s3,
+                           CORBA::Environment &env)
+{
+  // we copy the "in" sequences into all the inout, out and return sequences.
+
+  Param_Test::StrSeq
+    *ret = new Param_Test::StrSeq,
+    *out = new Param_Test::StrSeq;
+
+  // now copy all elements of s1 into the others using the assignment operator
+  s2 = s1;
+  *out = s1;
+  *ret = s1;
+  s3 = out;
+  return ret;
+}

@@ -1,3 +1,51 @@
+Mon Dec 29 21:51:38 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_sequence.cpp: get_name was returning a local
+	variable. In addition, added generationof a method called
+	"init_mgr" that must be used to initialize the sequence's
+	underlying mgr_ vector.
+
+	There was some problem with bounded/unbounded sequence code
+	generation (an error  in an if stmt).
+
+	* TAO_IDL/be/{be_state_argument, be_state_attribute,
+	be_state_operation}.cpp - added code to generate the call to
+	init_mgr for sequences after the do_call is made.
+
+	* TAO_IDL/be_include/be_sequence.h : gen_name returns char* rather
+	than const char* because we now allocate a new string and return
+	it.
+
+	* TAO/tao/Makefile: applied make depend to incorporate nvlist.i
+
+	* TAO/tao/corbacom.h: Added a "boolean release" field to
+	CORBA_SEQUNECE so that its layout is similar to the generated code
+	for sequences.
+
+	* TAO/tao/decode.cpp: In sequence decode, we also set the release
+	flag to 1. In addition, for sequences of strings and objrefs, we
+	zero out additional 4 bytes that are used to store a pointer to
+	the manager array.
+
+	* TAO/tao/deep_free.cpp: some indentation. Also passed the correct
+	parameter to string/wstring::decode
+
+	* TAO/tao/invoke.cpp: In do_dynamic_call, for sequences of strings
+	(inclusing typedefed sequences of strings that themselves can be
+	typedefed), we must allocate size+4 bytes for demarshaling the
+	sequences. The extra 4 bytes are for the manager array pointer.
+
+	* TAO/tao/nvlist.cpp: I the method item, the loop should have run
+	from o to max_ rather than upto len_.
+
+	* TAO/tao/orbobj.cpp: Used placement new of NamedValue in the
+	create_list method.
+
+	* TAO/tests/Param_Test: Added new tests for Fixed_Struct and
+	string sequence. Added a README file.
+
+	* TAO/doc/releasenotes/index.html: updated with latest success stories.
+
 Thu Dec 25 20:36:58 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.49, released Thu Dec 25 20:36:58 1997.

@@ -241,6 +241,18 @@ IIOP_Object::do_call (CORBA::Environment &env,	// exception reporting
     }
 }
 
+// helper method to retrieve the base typecode
+CORBA::TypeCode_ptr
+tao_base_typecode (CORBA::TypeCode_ptr tc)
+{
+  CORBA::Environment env;
+  while (tc->kind (env) == CORBA::tk_alias)
+    {
+      tc = tc->content_type (env);
+    }
+  return tc;
+}
+
 // DII analogue of the above.  Differs in how the vararg calling
 // convention is implemented -- DII doesn't use the normal call stack
 // with its implicit typing, but iinstead uses heap-based arguments
@@ -334,7 +346,28 @@ IIOP_Object::do_dynamic_call (const char *opname,       	// operation name
 
                   if (size != 0)
                     {
-                      void *ptr = new CORBA::Octet [size];
+                      void *ptr;
+                      CORBA::TypeCode_ptr baseTC = tao_base_typecode (tcp);
+                      if (baseTC->kind (env) == CORBA::tk_sequence)
+                        {
+                          CORBA::TypeCode_ptr content = tao_base_typecode
+                            (baseTC->content_type (env));
+                          switch (content->kind (env))
+                            {
+                            case CORBA::tk_string:
+                            case CORBA::tk_wstring:
+                            case CORBA::tk_objref:
+                              ptr = new CORBA::Octet [size+4]; // +4 for
+                              // the
+                              // managed
+                              // type pointer
+                              break;
+                            default:
+                              ptr = new CORBA::Octet [size];
+                            }
+                        }
+                      else
+                        ptr = new CORBA::Octet [size];
 
                       tcp->AddRef ();
                       result->value ()->replace (tcp, ptr,
@@ -367,7 +400,28 @@ IIOP_Object::do_dynamic_call (const char *opname,       	// operation name
 
                       if (size != 0)
                         {
-                          void *ptr = new CORBA::Octet [size];
+                          void *ptr;
+                          CORBA::TypeCode_ptr baseTC = tao_base_typecode (tcp);
+                          if (baseTC->kind (env) == CORBA::tk_sequence)
+                            {
+                              CORBA::TypeCode_ptr content = tao_base_typecode
+                                (baseTC->content_type (env));
+                              switch (content->kind (env))
+                                {
+                                case CORBA::tk_string:
+                                case CORBA::tk_wstring:
+                                case CORBA::tk_objref:
+                                  ptr = new CORBA::Octet [size+4]; // +4 for
+                                                                   // the
+                                                                   // managed
+                                                                   // type pointer
+                                  break;
+                                default:
+                                  ptr = new CORBA::Octet [size];
+                                }
+                            }
+                          else
+                            ptr = new CORBA::Octet [size];
 
                           tcp->AddRef ();
                           value->value ()->replace (tcp, ptr,

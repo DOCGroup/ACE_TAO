@@ -473,6 +473,8 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
           break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS:
             {
+              // if we are sequence, call init manager
+              *os << "retval->init_mgr ();" << nl;
               *os << "return retval;" << nl;
             }
           break;

@@ -33,6 +33,12 @@ Generator::gen_short (void)
   return (CORBA::Short) (::lrand48 () % TEST_BUFSIZE);
 }
 
+CORBA::Long
+Generator::gen_long (void)
+{
+  return ::lrand48 () % TEST_BUFSIZE;
+}
+
 char *
 Generator::gen_string (void)
 {
@@ -53,6 +59,18 @@ Generator::gen_string (void)
   return buf;
 }
 
+const Param_Test::Fixed_Struct
+Generator::gen_fixed_struct (void)
+{
+  this->fixed_struct_.l = lrand48 ();
+  this->fixed_struct_.c = lrand48 () % 128;
+  this->fixed_struct_.s = (CORBA::Short) lrand48 ();
+  this->fixed_struct_.o = lrand48 () % 128;
+  this->fixed_struct_.f = (CORBA::Float) drand48 ();
+  this->fixed_struct_.b = (CORBA::Boolean) lrand48 () % 2;
+  this->fixed_struct_.d = drand48 ();
+  return this->fixed_struct_;
+}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<Generator, ACE_SYNCH_RECURSIVE_MUTEX>;

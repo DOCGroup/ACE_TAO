@@ -18,8 +18,9 @@ CORBA_SRCS = any corbacom except nvlist object orbobj poa \
 OTHERS_HDRS = align cdr giop iiopobj iioporb xdr connect params marshal debug \
               default_client default_server server_factory client_factory orb_core
 
-OTHERS_INLN = any poa cdr connect iiopobj iioporb object orbobj params svrrqst typecode marshal \
-              default_client default_server server_factory client_factory orb_core
+OTHERS_INLN = any poa cdr connect iiopobj iioporb object orbobj params svrrqst \
+	nvlist typecode marshal default_client default_server server_factory \
+	client_factory orb_core
 
 # These are components that are either header & source or source-only
 OTHERS_SRCS = \
@@ -140,6 +141,7 @@ copy:	$(INSTALL)
 .obj/cdr.o .shobj/cdr.so: cdr.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -286,6 +288,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -305,6 +308,7 @@ copy:	$(INSTALL)
 .obj/client_factory.o .shobj/client_factory.so: client_factory.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -451,6 +455,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -470,6 +475,7 @@ copy:	$(INSTALL)
 .obj/connect.o .shobj/connect.so: connect.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -616,6 +622,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -637,6 +644,7 @@ copy:	$(INSTALL)
 .obj/debug.o .shobj/debug.so: debug.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -783,6 +791,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -802,6 +811,7 @@ copy:	$(INSTALL)
 .obj/decode.o .shobj/decode.so: decode.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -948,6 +958,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -967,6 +978,7 @@ copy:	$(INSTALL)
 .obj/deep_copy.o .shobj/deep_copy.so: deep_copy.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1113,6 +1125,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -1132,6 +1145,7 @@ copy:	$(INSTALL)
 .obj/deep_free.o .shobj/deep_free.so: deep_free.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1278,6 +1292,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -1298,6 +1313,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1443,6 +1459,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -1463,6 +1480,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1608,6 +1626,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -1627,6 +1646,7 @@ copy:	$(INSTALL)
 .obj/encode.o .shobj/encode.so: encode.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1773,6 +1793,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -1792,6 +1813,7 @@ copy:	$(INSTALL)
 .obj/giop.o .shobj/giop.so: giop.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1938,6 +1960,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -1959,6 +1982,7 @@ copy:	$(INSTALL)
 .obj/iiopobj.o .shobj/iiopobj.so: iiopobj.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2105,6 +2129,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -2124,6 +2149,7 @@ copy:	$(INSTALL)
 .obj/iioporb.o .shobj/iioporb.so: iioporb.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2270,6 +2296,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -2289,6 +2316,7 @@ copy:	$(INSTALL)
 .obj/interp.o .shobj/interp.so: interp.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2435,6 +2463,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -2454,6 +2483,7 @@ copy:	$(INSTALL)
 .obj/invoke.o .shobj/invoke.so: invoke.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2600,6 +2630,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -2619,6 +2650,7 @@ copy:	$(INSTALL)
 .obj/marshal.o .shobj/marshal.so: marshal.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2765,6 +2797,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -2784,6 +2817,7 @@ copy:	$(INSTALL)
 .obj/objtable.o .shobj/objtable.so: objtable.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2930,6 +2964,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -2949,6 +2984,7 @@ copy:	$(INSTALL)
 .obj/optable.o .shobj/optable.so: optable.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3095,6 +3131,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -3114,6 +3151,7 @@ copy:	$(INSTALL)
 .obj/orb_core.o .shobj/orb_core.so: orb_core.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3260,6 +3298,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -3285,6 +3324,7 @@ copy:	$(INSTALL)
 .obj/params.o .shobj/params.so: params.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3431,6 +3471,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -3450,6 +3491,7 @@ copy:	$(INSTALL)
 .obj/server_factory.o .shobj/server_factory.so: server_factory.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3596,6 +3638,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -3616,6 +3659,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/tao_internals.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3762,6 +3806,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -3785,6 +3830,7 @@ copy:	$(INSTALL)
 .obj/tc_const.o .shobj/tc_const.so: tc_const.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3931,6 +3977,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -3949,6 +3996,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/singletons.h
 .obj/Timeprobe.o .shobj/Timeprobe.so: Timeprobe.cpp \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3979,6 +4027,7 @@ copy:	$(INSTALL)
 .obj/any.o .shobj/any.so: any.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4125,6 +4174,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -4144,6 +4194,7 @@ copy:	$(INSTALL)
 .obj/corbacom.o .shobj/corbacom.so: corbacom.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4290,6 +4341,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -4309,6 +4361,7 @@ copy:	$(INSTALL)
 .obj/except.o .shobj/except.so: except.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4455,6 +4508,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -4474,6 +4528,7 @@ copy:	$(INSTALL)
 .obj/nvlist.o .shobj/nvlist.so: nvlist.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4620,6 +4675,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -4639,6 +4695,7 @@ copy:	$(INSTALL)
 .obj/object.o .shobj/object.so: object.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4785,6 +4842,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -4804,6 +4862,7 @@ copy:	$(INSTALL)
 .obj/orbobj.o .shobj/orbobj.so: orbobj.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4950,6 +5009,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -4980,6 +5040,7 @@ copy:	$(INSTALL)
 .obj/poa.o .shobj/poa.so: poa.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5126,6 +5187,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -5145,6 +5207,7 @@ copy:	$(INSTALL)
 .obj/principa.o .shobj/principa.so: principa.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5291,6 +5354,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -5310,6 +5374,7 @@ copy:	$(INSTALL)
 .obj/request.o .shobj/request.so: request.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5456,6 +5521,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -5475,6 +5541,7 @@ copy:	$(INSTALL)
 .obj/svrrqst.o .shobj/svrrqst.so: svrrqst.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5621,6 +5688,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -5640,6 +5708,7 @@ copy:	$(INSTALL)
 .obj/typecode.o .shobj/typecode.so: typecode.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5786,6 +5855,7 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \

@@ -69,6 +69,7 @@ private:
   // private constructor. Cannot be directly instantiated other than by its
   // friends.
 
+  friend class CORBA_ORB;
   friend class CORBA_NVList;
   friend class CORBA_Request;
 };

@@ -57,6 +57,9 @@ public:
   void error_count (CORBA::ULong);
   // set error count
 
+  void iterations (CORBA::ULong iters);
+  // set the number of times the test will be run
+
 private:
   CORBA::ULong call_count_;
   // # of calls made to functions
@@ -67,8 +70,8 @@ private:
   ACE_Profile_Timer timer_;
   // for timing the test
 
-  ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time_;
-  // holds the elapsed time
+  ACE_Profile_Timer::ACE_Elapsed_Time *elapsed_time_;
+  // holds the elapsed time for each iteration
 };
 
 #endif /* RESULTS_H */

@@ -156,6 +156,11 @@ struct CORBA_SEQUENCE
   u_int length;
 #endif /* SIZEOF_LONG */
   T *buffer;
+#  if	SIZEOF_BOOL != 0
+  bool release;
+#  else	/* "bool" not builtin to this compiler */
+  int  release;
+#  endif /* "bool" not builtin */
 
   CORBA_SEQUENCE (void)
     : maximum (0), length (0), buffer (0) { }

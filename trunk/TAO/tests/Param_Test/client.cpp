@@ -56,9 +56,7 @@ Param_Test_Client<T>::run_sii_test (void)
   // initialize call count and error count
   this->results_.call_count (0);
   this->results_.error_count (0);
-
-  // start the timing
-  this->results_.start_timer ();
+  this->results_.iterations (opt->loop_count ());
 
   // Make the calls in a loop.
   for (i = 0; i < opt->loop_count (); i++)
@@ -67,8 +65,15 @@ Param_Test_Client<T>::run_sii_test (void)
       this->test_object_->init_parameters ();
 
       this->results_.call_count (this->results_.call_count () + 1);
-      ACE_DEBUG ((LM_DEBUG, "\n****** Before call values *****\n"));
-      this->test_object_->print_values ();
+      if (opt->debug ())
+        {
+          ACE_DEBUG ((LM_DEBUG, "\n****** Before call values *****\n"));
+          this->test_object_->print_values ();
+        }
+
+      // start the timing
+      this->results_.start_timer ();
+
       // make the call
       if (this->test_object_->run_sii_test (this->param_test_, env) == -1)
         {
@@ -80,10 +85,16 @@ Param_Test_Client<T>::run_sii_test (void)
                       i));
           continue;
         }
+      // stop the timer.
+      this->results_.stop_timer ();
+
       // now check if the values returned are as expected
-      ACE_DEBUG ((LM_DEBUG, "\n****** After call values *****\n"));
-      this->test_object_->print_values ();
-      if (this->test_object_->check_validity () == -1)
+      if (opt->debug ())
+        {
+          ACE_DEBUG ((LM_DEBUG, "\n****** After call values *****\n"));
+          this->test_object_->print_values ();
+        }
+      if (!this->test_object_->check_validity ())
         {
           this->results_.error_count (this->results_.error_count () + 1);
           ACE_ERROR ((LM_ERROR,
@@ -93,9 +104,6 @@ Param_Test_Client<T>::run_sii_test (void)
           continue;
         }
     }
-
-  // stop the timer.
-  this->results_.stop_timer ();
 
   // print statistics
   this->results_.print_stats (this->test_object_->opname ());
@@ -112,14 +120,12 @@ Param_Test_Client<T>::run_dii_test (void)
   Options *opt = OPTIONS::instance ();
   CORBA::Environment env; // environment
   CORBA::NVList_ptr nvlist;  // argument list for DII parameters
-  CORBA::NVList_ptr retval; // to access teh NamedValue that stores the result
+  CORBA::NVList_ptr retval; // to access the NamedValue that stores the result
 
   // initialize call count and error count
   this->results_.call_count (0);
   this->results_.error_count (0);
-
-  // start the timing
-  this->results_.start_timer ();
+  this->results_.iterations (opt->loop_count ());
 
   // Make the calls in a loop.
   for (i = 0; i < opt->loop_count (); i++)
@@ -128,6 +134,10 @@ Param_Test_Client<T>::run_dii_test (void)
       this->test_object_->init_parameters ();
 
       this->results_.call_count (this->results_.call_count () + 1);
+
+      // start the timing. We measure the entire overhead of DII, including the
+      // time required to create and populate the NVList
+      this->results_.start_timer ();
 
       // first create the argument list and populate it
       this->orb_->create_list (3, nvlist);
@@ -153,8 +163,12 @@ Param_Test_Client<T>::run_dii_test (void)
                                           0,
                                           env);
 
-      ACE_DEBUG ((LM_DEBUG, "\n****** Before call values *****\n"));
-      this->test_object_->print_values ();
+      if (opt->debug ())
+        {
+          ACE_DEBUG ((LM_DEBUG, "\n****** Before call values *****\n"));
+          this->test_object_->print_values ();
+        }
+
       // Make the invocation, verify the result.
       req->invoke ();
       if (req->env ()->exception () != 0)
@@ -164,10 +178,14 @@ Param_Test_Client<T>::run_dii_test (void)
           CORBA::release (req);
           continue;
         }
-      ACE_DEBUG ((LM_DEBUG, "\n****** After call values *****\n"));
-      this->test_object_->print_values ();
+
+      if (opt->debug ())
+        {
+          ACE_DEBUG ((LM_DEBUG, "\n****** After call values *****\n"));
+          this->test_object_->print_values ();
+        }
       // now check if the values returned are as expected
-      if (this->test_object_->check_validity (req) ==  -1)
+      if (!this->test_object_->check_validity (req))
         {
           this->results_.error_count (this->results_.error_count () + 1);
           ACE_ERROR ((LM_ERROR,
@@ -179,10 +197,11 @@ Param_Test_Client<T>::run_dii_test (void)
         }
       // release the request
       CORBA::release (req);
-    } // for loop
 
-  // stop the this->results_.
-  this->results_.stop_timer ();
+      // stop the this->results_.
+      this->results_.stop_timer ();
+
+    } // for loop
 
   // print statistics
   this->results_.print_stats (opname);
