@@ -8676,15 +8676,15 @@ ACE_OS::getenv (const wchar_t *symbol)
 }
 
 ACE_INLINE int
-ACE_OS::access (const wchar_t *path, int amode)
+ACE_OS::rename (const char *old_name, const char *new_name)
 {
 #if !defined (ACE_HAS_WINCE)
-  // ACE_TRACE ("ACE_OS::access");
-  ACE_OSCALL_RETURN (::_wrename (oldname, newname), int, -1);
+  // ACE_TRACE ("ACE_OS::rename");
+  ACE_OSCALL_RETURN (::_wrename (old_name, new_name), int, -1);
 #else
   // @@ There should be a Win32 API that can do this.
-  ACE_UNUSED_ARG (path);
-  ACE_UNUSED_ARG (amode);
+  ACE_UNUSED_ARG (old_name);
+  ACE_UNUSED_ARG (new_name);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_WINCE */
 }
