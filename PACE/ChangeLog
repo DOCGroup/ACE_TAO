@@ -1,3 +1,9 @@
+Sat Jul 29 09:19:01 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * include/makeinclude/rules.common.h (CFLAGS): on OSF1, added
+          -D_DEC_XPG, to pickup up _SC_AIO_LISTIO_MAX, et al., from
+          /usr/include/unistd.h.
+
 Sat Jul 29 09:08:15 2000  David L. Levine <levine@cs.wustl.edu>
 
         * pace/config/config.h,pace/posix/aio.inl (aio_suspend):
