@@ -1,3 +1,9 @@
+Sat Oct 11 11:01:05 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* Kokyu/Koku_defs.h:
+	  Added export qualification for some classes to get rid of link
+	  errors in MSVC builds.
+
 Fri Oct 10 22:56:35 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* Kokyu/Kokyu_defs.{h,i,cpp}: 
