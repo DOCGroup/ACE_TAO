@@ -3,6 +3,16 @@ Sat Aug 25 10:16:21 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 	* tests/Svc_Handler_Test.cpp (main): The destructor of svc_handler
 	  will close file_io, so we don't need to do it explicitly!
 
+	* ace/Log_Msg.cpp (log): Changed range check from 
+	
+	  this->msg_ + ACE_Log_Record::MAXLOGMSGLEN
+	  
+	  to
+	  
+	  this->msg_ + sizeof this->msg_ 
+	  
+	  to correspond to the change below.
+	  
 	* ace/Log_Msg.h (ACE_Log_Msg): Increased the size of the buffer
 	  used to store log records to account for the NUL-terminator.
 
