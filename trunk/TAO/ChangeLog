@@ -1,3 +1,9 @@
+Sun Jul  7 12:45:39 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Makefile.IFRService:
+
+          Updated dependencies.
+
 Fri Jul  5 08:12:30 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp (init): 
