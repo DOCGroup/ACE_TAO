@@ -33,6 +33,7 @@
 #define ACE_LACKS_MPROTECT
 #define ACE_LACKS_MSYNC
 #define ACE_LACKS_TCP_NODELAY
+#define ACE_LACKS_MSG_WFMO
 
 // There's no host table, by default. So using "localhost" won't work.
 // If your system does have the ability to use "localhost" and you want to,
