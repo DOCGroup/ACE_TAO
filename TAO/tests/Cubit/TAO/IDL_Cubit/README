@@ -1,17 +1,15 @@
 // $Id$
 
-This is the cubit example that uses the TAO IDL compiler to generate
-the stubs and skeletons. Additional features include presence of a
-factory to create Cubit objects and testing the _bind call to get the
-factory object reference.
+This example uses the TAO IDL compiler to generate the SII stubs and
+skeletons.  You can either run the server in the background in the
+same window as the client or open a separate window for the client and
+server.
 
-You can either run the server in the background in the same window as
-the client or open a separate window for the client and server.
-
-The client and server by default make use of the Naming Service.
-The cubit server now has its own NamingServer implementation and hence
-you don't have to start the NamingService before starting the client
-and server.
+By default, the client and server use the Naming Service.  The cubit
+server has its own NamingServer implementation.  Therefore, you don't
+have to start the NamingService before starting the client and server.
+Likewise, you can use the -s flags on both the server and client if
+you don't want to use the naming service.
 
 The collocation_test demonstrates how the performance improves when
 objects are collocated.  The test runs both server and client in
@@ -22,9 +20,6 @@ moment.  This may be changed in the future.  At this moment, the
 collocation_test must use Naming_Service to resolve object
 references.  This may be changed later, also.
 
-	You just have to use the -s flags on both the server and
-client if you don't want to use the naming service.
-
 server:
 -------
 
@@ -33,20 +28,22 @@ server:
 
 Options:
 -------
--s       Tells the server not to register the cubit-factory object 
+-s       Tells the server not to register the Cubit_Factory object
          with the Naming Service.
 
--d       Debug flag (It is additive more -d flags will give debugging).
+-d       Debug flag (It is additive more -d flags will increase
+         the debugging level).
 
--o      Outputs the cubit_factory ior file to the file
+-o       Outputs the cubit_factory IOR to a file.
 
--n      Number of cubit objects exported by the server
+-n       Number of cubit objects exported by the server.
 
 The server cubit factory maintains num_of_cubit objects (default =
 1). They are assigned keys that look like "key0", "key1", ...
 
 When the server is started and you have used the -d flag, you should
-see as the first line of output something that looks like
+see as the first line of output something that looks like the follow:
+
 	iiop:1.0//swarm:10015/Persistent/886013035/850128/RootPOA/RootPOA_is_BAD/factory
 	(-ORBobjrefstyle url)
 or
@@ -54,10 +51,9 @@ or
 	(-ORBobjrefstyle ior)
 
 Using -d turns on debugging messages.  It is additive, i.e., the more
--d options provided, the more debugging you can get.  At the moment,
-only 2 levels of debugging are implemented, and more than 2 -d options
-are ignored.
-
+-d options provided, the more debugging you get.  At the moment, only
+2 levels of debugging are implemented, and more than 2 -d options are
+silently ignored.
 
 client:
 -------
@@ -66,16 +62,17 @@ client:
 
 Options:
 -------
-	d	Debug flag
-	s	Don't Use the Naming Service
-	x 	Tells the server to shutdown.
-	f	Reads the cubit factory ior from the file
-	k	Reads the cubit factory ior from commandline
-	n	no. of iterations
+-d	Debug flag
+-s	Don't Use the Naming Service
+-x 	Tells the server to shutdown.
+-f	Reads the cubit factory IOR from the file
+-k	Reads the cubit factory IOR from commandline
+-n	no. of iterations
 	
-	There are 3 ways of giving the CubitFactory IOR to the client:
+The following are the three ways of giving the CubitFactory IOR to the
+client:
 
-	1. From a file using the -f option. (This file can be produced using 
+        1. From a file using the -f option. (This file can be produced using 
 		the -o option of the server.)
 	
 	2. Directly on the commandline using the -k option.
@@ -90,7 +87,7 @@ IDL_Cubit_Test:
 client using the default options of the server and client. To test
 using this just run 
 
-        %IDL_Cubit_Test       
+        % IDL_Cubit_Test       
 
 collocation_test:
 -----------------
@@ -115,7 +112,6 @@ did dynamic on Client_Strategy_Factory, error = 0
 opening dynamic service Server_Strategy_Factory
 did dynamic on Server_Strategy_Factory, error = 0
 The IOR is: <iiop:1.0//tango:20000/Persistent/887665222/647179/RootPOA/RootPOA_is_BAD/factory\00\00>
-
 
 2.Start the client.
 
