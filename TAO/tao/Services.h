@@ -59,13 +59,13 @@ struct TAO_Export CORBA_ServiceDetail
       _tao_seq_Octet (const _tao_seq_Octet &); // copy ctor
       ~_tao_seq_Octet (void); // dtor
 
-#if defined(TAO_NO_COPY_OCTET_SEQUENCES)
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       _tao_seq_Octet (
                       CORBA::ULong length,
                       const ACE_Message_Block* mb
                       )
         : TAO_Unbounded_Sequence<CORBA::Octet> (length, mb) {}
-#endif /* TAO_NO_COPY_OCTET_SEQUENCE */
+#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */
     };
 
   static CORBA::TypeCode_ptr _tc__tao_seq_Octet;

@@ -2058,14 +2058,14 @@ operator<< (TAO_OutputCDR& cdr, const TAO_opaque& x)
 {
   CORBA::ULong length = x.length ();
   cdr.write_ulong (length);
-#if !defined (TAO_NO_COPY_OCTET_SEQUENCES)
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 0)
   cdr.write_octet_array (x.get_buffer (), length);
-#else
+#else /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
   if (x.mb () == 0)
     cdr.write_octet_array (x.get_buffer (), length);
   else
     cdr.write_octet_array_mb (x.mb ());
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES */
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
   return (CORBA::Boolean) cdr.good_bit ();
 }
 
@@ -2074,14 +2074,14 @@ operator>>(TAO_InputCDR& cdr, TAO_opaque& x)
 {
   CORBA::ULong length;
   cdr.read_ulong (length);
-#if !defined (TAO_NO_COPY_OCTET_SEQUENCES)
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 0)
   x.length (length);
   cdr.read_octet_array (x.get_buffer (), length);
-#else
+#else /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
   x.replace (length, cdr.start ());
   x.mb ()->wr_ptr (x.mb ()->rd_ptr () + length);
   cdr.skip_bytes (length);
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES */
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
   return (CORBA::Boolean) cdr.good_bit ();
 }
 
@@ -2252,18 +2252,10 @@ operator>> (istream &is, CORBA::WString_out &wso)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-#if !defined (TAO_NO_COPY_OCTET_SEQUENCES)
-template class TAO_Unbounded_Sequence<CORBA::Octet>;
-#endif /* defined (TAO_NO_COPY_OCTET_SEQUENCES) */
-
 template class ACE_Dynamic_Service<TAO_Server_Strategy_Factory>;
 template class ACE_Dynamic_Service<TAO_Client_Strategy_Factory>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#if !defined (TAO_NO_COPY_OCTET_SEQUENCES)
-#pragma instantiate TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* defined (TAO_NO_COPY_OCTET_SEQUENCES) */
 
 #pragma instantiate ACE_Dynamic_Service<TAO_Server_Strategy_Factory>
 #pragma instantiate ACE_Dynamic_Service<TAO_Client_Strategy_Factory>

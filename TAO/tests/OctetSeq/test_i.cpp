@@ -8,6 +8,11 @@
 
 ACE_RCSID(OctetSeq, test_i, "$Id$")
 
+Database_i::~Database_i (void)
+{
+  delete[] this->elements_;
+}
+
 void
 Database_i::set (Test::Index i,
                  const Test::OctetSeq& seq,
@@ -22,6 +27,7 @@ Database_i::set (Test::Index i,
   returned_token = verification_token;
 
   CORBA::ULong len = seq.length ();
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
   // CORBA::ULong max = seq.maximum ();
   ACE_Message_Block *mb = seq.mb ();
   if (mb == 0)
@@ -32,6 +38,9 @@ Database_i::set (Test::Index i,
     {
       this->elements_[i].replace (len, seq.mb ());
     }
+#else
+  this->elements_[i] = seq;
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 }
 
 Test::OctetSeq*

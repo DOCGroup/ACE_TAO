@@ -486,12 +486,17 @@ TAO_IIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
                                TAO_ObjectKey &object_key)
 {
   // Create the decoding stream from the encapsulation in the buffer,
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
   TAO_InputCDR cdr (profile.profile_data.mb ());
+#else
+  TAO_InputCDR cdr (ACE_reinterpret_cast(char*,profile.profile_data.get_buffer ()),
+                    profile.profile_data.length ());
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
   CORBA::Octet major, minor;
-  
+
   // Read the version. We just read it here. We don't*do any*
-  // processing. 
+  // processing.
   if (!(cdr.read_octet (major)
         && cdr.read_octet (minor)))
   {
@@ -504,7 +509,7 @@ TAO_IIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
       }
     return -1;
   }
-  
+
   CORBA::String_var host;
   CORBA::UShort port = 0;
 
@@ -520,11 +525,11 @@ TAO_IIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
         }
       return -1;
     }
-  
+
   // ... and object key.
   if ((cdr >> object_key) == 0)
     return -1;
-  
+
   // We are NOT bothered about the rest.
 
   return 1;

@@ -1,55 +1,113 @@
+Thu Jun 29 11:28:04 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/orbconf.h:
+          Changed the TAO_NO_COPY_OCTET_SEQUENCES macro to work as all the
+          other macros in TAO, i.e. it is defined to either 0 or 1 to
+          disable or enable the optimization.
+
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+          Generate code that uses #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+          instead of #if defined(TAO_NO_COPY_OCTET_SEQUENCES)
+
+        * tao/Sequence.h:
+        * tao/Sequence.i:
+        * tao/Sequence.cpp:
+          Change the specialization of
+          TAO_Unbounded_Sequence<CORBA::Octet> to work when
+          TAO_NO_COPY_OCTET_SEQUENCES is disabled.  This is needed because
+          some components in the ORB rely on it.
+
+        * tao/ORB.cpp:
+          Never instantiate the TAO_Unbounded_Sequence<CORBA::Octet>
+          class.  It is specialized all the time.
+
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Profile.cpp:
+        * tao/SHMIOP_Acceptor.cpp:
+        * tao/SHMIOP_Profile.cpp:
+        * tao/UIOP_Acceptor.cpp:
+        * tao/UIOP_Profile.cpp:
+          Modify it to work when TAO_NO_COPY_OCTET_SEQUENCES is disabled.
+
+        * tao/IOPC.h:
+        * tao/IOPC.cpp:
+        * tao/MessagingC.h:
+        * tao/MessagingC.cpp:
+        * tao/Services.h:
+        * tao/Services.cpp:
+          Change the protections for TAO_NO_COPY_OCTET_SEQUENCES from #if
+          defined() to #if (XXX == 1)
+
+        * tests/OctetSeq/OctetSeq.cpp:
+          Modify it to work when TAO_NO_COPY_OCTET_SEQUENCES is disabled.
+
+        * tests/OctetSeq/client.cpp:
+          Destroy the ORB to avoid memory leaks and detect problems with
+          memory management.
+
+        * tests/OctetSeq/server.cpp:
+          The Database_i object must be declared in a nested scope,
+          otherwise the ORB is destroyed before the octet sequences
+          contained in the database object.
+
+        * tests/OctetSeq/test_i.h:
+        * tests/OctetSeq/test_i.cpp:
+          Add destructor to avoid memory leak.
+          Modify it to work when TAO_NO_COPY_OCTET_SEQUENCES is disabled.
+
 Thu Jun 29 00:12:04 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/Makefile.bor:
+        * tao/Makefile.bor:
 
-	  Added Priority_Mapping_Manager.
+          Added Priority_Mapping_Manager.
 
 Wed Jun 28 15:50:37 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/IORC.cpp (_unchecked_narrow): Removed smart proxies code
-	  from the generated code.  We don't need smart proxy stuff in
-	  this file.  It was causing compilation errors when compiling
-	  with smart proxies enable.
+        * tao/IORC.cpp (_unchecked_narrow): Removed smart proxies code
+          from the generated code.  We don't need smart proxy stuff in
+          this file.  It was causing compilation errors when compiling
+          with smart proxies enable.
 
 Wed Jun 28 12:19:36 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* docs/tutorials/Quoter/Naming_Service/Naming_Service.dsw:
-	* docs/tutorials/Quoter/Naming_Service/client.cpp:
-	* docs/tutorials/Quoter/Naming_Service/client.dsp:
-	* docs/tutorials/Quoter/Naming_Service/index.html:
-	* docs/tutorials/Quoter/Naming_Service/server.cpp:
-	* docs/tutorials/Quoter/Naming_Service/server.dsp:
-	* docs/tutorials/Quoter/Simple/Simple.dsw:
-	* docs/tutorials/Quoter/Simple/Client/client.cpp:
-	* docs/tutorials/Quoter/Simple/Client/client.dsp:
-	* docs/tutorials/Quoter/Simple/Impl-Repo/server.cpp:
-	* docs/tutorials/Quoter/Simple/Impl-Repo/server.dsp:
-	* docs/tutorials/Quoter/Simple/ImprovedServer/Stock_Factory_i.h:
-	* docs/tutorials/Quoter/Simple/ImprovedServer/Stock_i.h:
-	* docs/tutorials/Quoter/Simple/ImprovedServer/improvedserver.dsp:
-	* docs/tutorials/Quoter/Simple/ImprovedServer/server.cpp:
-	* docs/tutorials/Quoter/Simple/Persistent/index.html:
-	* docs/tutorials/Quoter/Simple/Persistent/server.cpp:
-	* docs/tutorials/Quoter/Simple/Persistent/server.dsp:
-	* docs/tutorials/Quoter/Simple/Server/server.cpp:
-	* docs/tutorials/Quoter/Simple/Server/server.dsp:
-	  Add project files for MSVC.
-	  Fixed several minor problems detected by the MSVC compiler.
+        * docs/tutorials/Quoter/Naming_Service/Naming_Service.dsw:
+        * docs/tutorials/Quoter/Naming_Service/client.cpp:
+        * docs/tutorials/Quoter/Naming_Service/client.dsp:
+        * docs/tutorials/Quoter/Naming_Service/index.html:
+        * docs/tutorials/Quoter/Naming_Service/server.cpp:
+        * docs/tutorials/Quoter/Naming_Service/server.dsp:
+        * docs/tutorials/Quoter/Simple/Simple.dsw:
+        * docs/tutorials/Quoter/Simple/Client/client.cpp:
+        * docs/tutorials/Quoter/Simple/Client/client.dsp:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/server.cpp:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/server.dsp:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Stock_Factory_i.h:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Stock_i.h:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/improvedserver.dsp:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/server.cpp:
+        * docs/tutorials/Quoter/Simple/Persistent/index.html:
+        * docs/tutorials/Quoter/Simple/Persistent/server.cpp:
+        * docs/tutorials/Quoter/Simple/Persistent/server.dsp:
+        * docs/tutorials/Quoter/Simple/Server/server.cpp:
+        * docs/tutorials/Quoter/Simple/Server/server.dsp:
+          Add project files for MSVC.
+          Fixed several minor problems detected by the MSVC compiler.
 
 Wed Jun 28 14:00:33 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp:
+        * tao/ORB_Core.cpp:
 
-	  Protected RTCORBA specific code with if (TAO_HAS_RT_CORBA == 1).
+          Protected RTCORBA specific code with if (TAO_HAS_RT_CORBA == 1).
 
-	* tao/RT_Policy_i.cpp:
+        * tao/RT_Policy_i.cpp:
 
-	  Fixed warnings about not initializing CORBA::LocalObject
-	  superclass in copy constructors.
+          Fixed warnings about not initializing CORBA::LocalObject
+          superclass in copy constructors.
 
-	* peformance-tests/RTCorba/Orb_Per_Priority/server.cpp
+        * peformance-tests/RTCorba/Orb_Per_Priority/server.cpp
 
-	  Fixed compile errors.
+          Fixed compile errors.
 
 Wed Jun 28 12:49:30 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -59,108 +117,108 @@ Wed Jun 28 12:49:30 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Wed Jun 28 10:36:19 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao.IORC.h:
-	* tao/IORC.i:
-	  Added missing TAO_Export macros that I had left out of
-	  recent regeneration, and removed the ostream operators
-	  for the exceptions, since they had also been removed
-	  from the previous regeneration. Thanks to Aniruddha
-	  Gokhale <gokhale@research.bell-labs.com>, Rudynell
-	  Millian <rmillian@lucent.com> et al for pointing out
-	  the missing macros.
+        * tao.IORC.h:
+        * tao/IORC.i:
+          Added missing TAO_Export macros that I had left out of
+          recent regeneration, and removed the ostream operators
+          for the exceptions, since they had also been removed
+          from the previous regeneration. Thanks to Aniruddha
+          Gokhale <gokhale@research.bell-labs.com>, Rudynell
+          Millian <rmillian@lucent.com> et al for pointing out
+          the missing macros.
 
 Tue Jun 27 23:27:46 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/RT_Current.h:
+        * tao/RT_Current.h:
 
-	  Removed MSVC "inherited via dominance" warnings.
+          Removed MSVC "inherited via dominance" warnings.
 
 Tue Jun 27 00:44:42 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/TAOC.h
-	* tao/Priority_Mapping_Manager.h
-	* tao/Priority_Mapping_Manager.i
-	* tao/Priority_Mapping_Manager.cpp:
+        * tao/TAOC.h
+        * tao/Priority_Mapping_Manager.h
+        * tao/Priority_Mapping_Manager.i
+        * tao/Priority_Mapping_Manager.cpp:
 
-	  Added new pseudo object TAO::PriorityMappingManager, which can
-	  be obtained by invoking
-	  ORB::resolve_initial_references ("PriorityMappingManager").
+          Added new pseudo object TAO::PriorityMappingManager, which can
+          be obtained by invoking
+          ORB::resolve_initial_references ("PriorityMappingManager").
 
-	  TAO::PriorityMappingManager allows application programmer to set/
-	  obtain the Priority Mapping used by the orb.  This is a
-	  TAO-specific interface (hence TAO scope): the spec requires the
-	  functionality but does not define the interface.  For
-	  more information refer to RTCORBA specification.
+          TAO::PriorityMappingManager allows application programmer to set/
+          obtain the Priority Mapping used by the orb.  This is a
+          TAO-specific interface (hence TAO scope): the spec requires the
+          functionality but does not define the interface.  For
+          more information refer to RTCORBA specification.
 
-	  Example of using TAO::ProrityMappingManager to obtain ORB's
-	  priority mapping can be found in:
-	  tests/Endpoint_Per_Priority/client.cpp
+          Example of using TAO::ProrityMappingManager to obtain ORB's
+          priority mapping can be found in:
+          tests/Endpoint_Per_Priority/client.cpp
 
-	  TAO::PriorityMappingManager can be used to set priority mapping
-	  used by the orb:
-	  - mapping class must derive from RTCORBA::PriorityMapping, i.e,
-	    TAO_Priority_Mapping
-	  - mapping object must be dynamically allocated, and its
-	    ownership surrendered to the mapping manager
+          TAO::PriorityMappingManager can be used to set priority mapping
+          used by the orb:
+          - mapping class must derive from RTCORBA::PriorityMapping, i.e,
+            TAO_Priority_Mapping
+          - mapping object must be dynamically allocated, and its
+            ownership surrendered to the mapping manager
           - mapping class can be user-defined or TAO-provided
 
-	* tao/ORB.cpp
-	* tao/ORB.h
-	* tao/ORB.i
-	* tao/ORB_Core.cpp
-	* tao/ORB_Core.h
-	* tao/ORB_Core.i
-	* tao/orbconf.h:
+        * tao/ORB.cpp
+        * tao/ORB.h
+        * tao/ORB.i
+        * tao/ORB_Core.cpp
+        * tao/ORB_Core.h
+        * tao/ORB_Core.i
+        * tao/orbconf.h:
 
-	  The following objects are now available from
-	  <resolve_initial_references>:
-	  - RTCORBA::RTORB
-	  - RTCORBA::Current
-	  - TAO::PriorityMappingManager
+          The following objects are now available from
+          <resolve_initial_references>:
+          - RTCORBA::RTORB
+          - RTCORBA::Current
+          - TAO::PriorityMappingManager
 
-	* tao/RT_Current.h
-	* tao/RT_Mutex.cpp
-	* tao/RT_Mutex.h
-	* tao/RT_ORB.h
-	* tao/RT_Policy_i.cpp
-	* tao/RT_Policy_i.h:
+        * tao/RT_Current.h
+        * tao/RT_Mutex.cpp
+        * tao/RT_Mutex.h
+        * tao/RT_ORB.h
+        * tao/RT_Policy_i.cpp
+        * tao/RT_Policy_i.h:
 
-	  Fixed all local interface implementations in the files above to
-	  inherit from CORBA::LocalObject (per CCM spec).  Since
-	  CORBA::LocalObject's <add_ref> and <remove_ref> are no-ops,
-	  overriden them to provide reference counting for all objects
-	  that need it, i.e, in all policies and mutex implementations.
+          Fixed all local interface implementations in the files above to
+          inherit from CORBA::LocalObject (per CCM spec).  Since
+          CORBA::LocalObject's <add_ref> and <remove_ref> are no-ops,
+          overriden them to provide reference counting for all objects
+          that need it, i.e, in all policies and mutex implementations.
 
-	* tao/Pool_Per_Endpoint.cpp
+        * tao/Pool_Per_Endpoint.cpp
 
-	  Updated to use TAO::PriorityMappingManager.
+          Updated to use TAO::PriorityMappingManager.
 
-	* peformance-tests/RTCorba/Multiple_Endpoints/client.cpp
-	* peformance-tests/RTCorba/Single_Endpoint/client.cpp
-	* peformance-tests/RTCorba/Orb_Per_Priority/client.cpp
-	* peformance-tests/RTCorba/Orb_Per_Priority/server.cpp
-	* tests/Endpoint_Per_Priority/client.cpp
+        * peformance-tests/RTCorba/Multiple_Endpoints/client.cpp
+        * peformance-tests/RTCorba/Single_Endpoint/client.cpp
+        * peformance-tests/RTCorba/Orb_Per_Priority/client.cpp
+        * peformance-tests/RTCorba/Orb_Per_Priority/server.cpp
+        * tests/Endpoint_Per_Priority/client.cpp
 
-	  Updated these tests to use new TAO::PriorityMappingManager
-	  interface mentioned above.
+          Updated these tests to use new TAO::PriorityMappingManager
+          interface mentioned above.
 
-	* peformance-tests/RTCorba/Multiple_Endpoints/Makefile
-	* peformance-tests/RTCorba/Single_Endpoint/Makefile
-	* peformance-tests/RTCorba/Orb_Per_Priority/Makefile
-	* tests/Endpoint_Per_Priority/Makefile
-	* tao/Makefile:
-	* tao/TAO.dsp
-	* tao/TAO_Static.dsp
+        * peformance-tests/RTCorba/Multiple_Endpoints/Makefile
+        * peformance-tests/RTCorba/Single_Endpoint/Makefile
+        * peformance-tests/RTCorba/Orb_Per_Priority/Makefile
+        * tests/Endpoint_Per_Priority/Makefile
+        * tao/Makefile:
+        * tao/TAO.dsp
+        * tao/TAO_Static.dsp
 
-	  Updated dependencies.
+          Updated dependencies.
 
 
 Tue Jun 27 15:15:07 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Client_Priority_Policy.cpp:
-	* tao/Buffering_Constraint_Policy.cpp: Some version of g++
-	  complained that LocalObject should be initialized explicitly in
-	  copy ctor.  Just added them in copy ctor.
+        * tao/Client_Priority_Policy.cpp:
+        * tao/Buffering_Constraint_Policy.cpp: Some version of g++
+          complained that LocalObject should be initialized explicitly in
+          copy ctor.  Just added them in copy ctor.
 
 Tue Jun 27 14:35:54 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -172,109 +230,109 @@ Tue Jun 27 14:35:54 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Tue Jun 27 12:50:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
 
-	  If an interface is forward declared in a module and
-	  then fully defined in a reopened instance of that
-	  module, the IDL compiler may, in some cases,
-	  consider the two module instances to be different
-	  scopes (for example, if one of them is included from
-	  another IDL file). In a case like this, the
-	  AST_Interface::redefine() method, called by
-	  AST_Interface::forward_redefinition_helper(), was not
-	  updating the 'defined_in' member, leading to lookup
-	  errors for references inside the interface definition.
-	  The scope update has now been added. Thanks to
-	  Richard Reitmeyer <richard@verecomm.com> for reporting
-	  this bug and sending in an example pair of IDL files.
+          If an interface is forward declared in a module and
+          then fully defined in a reopened instance of that
+          module, the IDL compiler may, in some cases,
+          consider the two module instances to be different
+          scopes (for example, if one of them is included from
+          another IDL file). In a case like this, the
+          AST_Interface::redefine() method, called by
+          AST_Interface::forward_redefinition_helper(), was not
+          updating the 'defined_in' member, leading to lookup
+          errors for references inside the interface definition.
+          The scope update has now been added. Thanks to
+          Richard Reitmeyer <richard@verecomm.com> for reporting
+          this bug and sending in an example pair of IDL files.
 
 Tue Jun 27 10:09:08 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_interface.cpp:
-	* TAO_IDL/be/be_interface_fwd.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_interface_fwd.cpp:
 
-	  Recent addition of a cast operator for TAO_Object_Manager
-	  to _var has caused the inline definition of the _var
-	  constructor from pointer to come too late. Even if it
-	  is defined at the occurrence of a forward declaration
-	  of the interface, aggessively inlining compilers will
-	  complain. Therefore, the definition of this constructor
-	  has been moved to the header file. This problem was
-	  uncovered by g++ warnings when compiling generated
-	  code.
+          Recent addition of a cast operator for TAO_Object_Manager
+          to _var has caused the inline definition of the _var
+          constructor from pointer to come too late. Even if it
+          is defined at the occurrence of a forward declaration
+          of the interface, aggessively inlining compilers will
+          complain. Therefore, the definition of this constructor
+          has been moved to the header file. This problem was
+          uncovered by g++ warnings when compiling generated
+          code.
 
 Tue Jun 27 09:44:32 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Any.cpp:
-	* tao/NVList.cpp:
+        * tao/Any.cpp:
+        * tao/NVList.cpp:
 
-	  Added some missing .in()s when CORBA::Any's type_
-	  member is referenced, since it is now a
-	  TypeCode_var.
+          Added some missing .in()s when CORBA::Any's type_
+          member is referenced, since it is now a
+          TypeCode_var.
 
 Mon Jun 26 23:56:26 2000  Ossama Othman  <ossama@uci.edu>
 
-	* examples/Content_Server/SMI_Iterator/Makefile:
-	* examples/Content_Server/AMI_Iterator/Makefile:
+        * examples/Content_Server/SMI_Iterator/Makefile:
+        * examples/Content_Server/AMI_Iterator/Makefile:
 
-	  Updated client and server file lists.  Some object files were
-	  unnecessarily linked into the client and/or the server.
+          Updated client and server file lists.  Some object files were
+          unnecessarily linked into the client and/or the server.
 
-	* examples/Content_Server/SMI_Iterator/SMI_Iterator.dsw:
-	* examples/Content_Server/AMI_Iterator/AMI_Iterator.dsw:
-	* examples/Content_Server/AMI_Observer/AMI_Observer.dsw:
+        * examples/Content_Server/SMI_Iterator/SMI_Iterator.dsw:
+        * examples/Content_Server/AMI_Iterator/AMI_Iterator.dsw:
+        * examples/Content_Server/AMI_Observer/AMI_Observer.dsw:
 
-	  Added new MSVC++ workspace files.
+          Added new MSVC++ workspace files.
 
-	* examples/Content_Server/SMI_Iterator/server.dsp:
-	* examples/Content_Server/SMI_Iterator/client.dsp:
+        * examples/Content_Server/SMI_Iterator/server.dsp:
+        * examples/Content_Server/SMI_Iterator/client.dsp:
 
-	  Corrected include/library paths, and source file lists.
+          Corrected include/library paths, and source file lists.
 
-	* examples/Content_Server/AMI_Iterator/server.dsp:
-	* examples/Content_Server/AMI_Iterator/client.dsp:
-	* examples/Content_Server/AMI_Observer/server.dsp:
-	* examples/Content_Server/AMI_Observer/client.dsp:
+        * examples/Content_Server/AMI_Iterator/server.dsp:
+        * examples/Content_Server/AMI_Iterator/client.dsp:
+        * examples/Content_Server/AMI_Observer/server.dsp:
+        * examples/Content_Server/AMI_Observer/client.dsp:
 
-	  New MSVC++ project files.
+          New MSVC++ project files.
 
-	* examples/Content_Server/SMI_Iterator/Content_Iterator_i.h:
-	* examples/Content_Server/AMI_Iterator/Content_Iterator_i.h:
-	* examples/Content_Server/AMI_Iterator/Iterator_Handler.h:
-	* examples/Content_Server/AMI_Observer/Callback_Handler.h:
-	* examples/Content_Server/AMI_Observer/Callback_i.h:
-	* examples/Content_Server/AMI_Iterator/Push_Iterator_Handler.h:
+        * examples/Content_Server/SMI_Iterator/Content_Iterator_i.h:
+        * examples/Content_Server/AMI_Iterator/Content_Iterator_i.h:
+        * examples/Content_Server/AMI_Iterator/Iterator_Handler.h:
+        * examples/Content_Server/AMI_Observer/Callback_Handler.h:
+        * examples/Content_Server/AMI_Observer/Callback_i.h:
+        * examples/Content_Server/AMI_Iterator/Push_Iterator_Handler.h:
 
-	  Added preprocessor pragma to surpress "dominance" warnings from
-	  MSVC++.  It is being a bit too paranoid.
+          Added preprocessor pragma to surpress "dominance" warnings from
+          MSVC++.  It is being a bit too paranoid.
 
-	* examples/Content_Server/SMI_Iterator/Web_Server.dsw:
+        * examples/Content_Server/SMI_Iterator/Web_Server.dsw:
 
-	  Removed this file.  It has been superseded by
-	  "SMI_Iterator.dsw."
+          Removed this file.  It has been superseded by
+          "SMI_Iterator.dsw."
 
 Mon Jun 26 16:50:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/DomainC.h:
-	* tao/DomainC.i:
-	* tao/InterceptorC.h:
-	* tao/InterceptorC.i:
-	* tao/PolicyC.h:
-	* tao/PolicyC.i:
-	* tao/diffs/InterceptorC.h.diff:
-	* tao/diffs/PolicyC.h.diff:
+        * tao/DomainC.h:
+        * tao/DomainC.i:
+        * tao/InterceptorC.h:
+        * tao/InterceptorC.i:
+        * tao/PolicyC.h:
+        * tao/PolicyC.i:
+        * tao/diffs/InterceptorC.h.diff:
+        * tao/diffs/PolicyC.h.diff:
 
-	  Because of the recently added cast operator for
-	  TAO_Object_Manager, there were some inline
-	  problems with these generated files. To fix it,
-	  some _var constructors were inlined in the .h
-	  file and removed from the .i file. The diff files
-	  were modified accordingly.
+          Because of the recently added cast operator for
+          TAO_Object_Manager, there were some inline
+          problems with these generated files. To fix it,
+          some _var constructors were inlined in the .h
+          file and removed from the .i file. The diff files
+          were modified accordingly.
 
-	* tao/diffs/InterceptorC.i.diff:
-	* tao/diffs/PolicyC.i.diff:
+        * tao/diffs/InterceptorC.i.diff:
+        * tao/diffs/PolicyC.i.diff:
 
-	  New diff files added.
+          New diff files added.
 
 Mon Jun 26 16:45:49 2000  David L. Levine  <levine@cs.wustl.edu>
 
