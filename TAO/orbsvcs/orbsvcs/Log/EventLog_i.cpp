@@ -8,17 +8,17 @@ ACE_RCSID (Log,
            "$Id$")
 
 
-LogConsumer::LogConsumer (EventLog_i *log)
+TAO_Event_LogConsumer::TAO_Event_LogConsumer (EventLog_i *log)
   : log_ (log)
 {
 }
 
-LogConsumer::~LogConsumer (void)
+TAO_Event_LogConsumer::~TAO_Event_LogConsumer (void)
 {
 }
 
 void
-LogConsumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin)
+TAO_Event_LogConsumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin)
 {
   // Connect to the event channel.
   CosEventComm::PushConsumer_var myself = this->_this ();
@@ -27,11 +27,11 @@ LogConsumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin)
 }
 
 void
-LogConsumer::push (const CORBA::Any& data ACE_ENV_ARG_DECL)
+TAO_Event_LogConsumer::push (const CORBA::Any& data ACE_ENV_ARG_DECL)
 ACE_THROW_SPEC ((
-		CORBA::SystemException,
-		CosEventComm::Disconnected
-	))
+                CORBA::SystemException,
+                CosEventComm::Disconnected
+        ))
 {
   // create a record list...
   DsLogAdmin::RecordList recList (1);
@@ -46,10 +46,10 @@ ACE_THROW_SPEC ((
 }
 
 void
-LogConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
-	ACE_THROW_SPEC ((
-		CORBA::SystemException
-	))
+TAO_Event_LogConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+        ACE_THROW_SPEC ((
+                CORBA::SystemException
+        ))
 {
   this->supplier_proxy_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
@@ -167,7 +167,7 @@ EventLog_i::activate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   // Create the PushConsumer that will log the events.
-  this->my_log_consumer_ = new LogConsumer (this);
+  this->my_log_consumer_ = new TAO_Event_LogConsumer (this);
   ACE_CHECK;
   this->my_log_consumer_->connect (consumer_admin.in ());
 }
