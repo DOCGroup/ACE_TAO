@@ -5,6 +5,7 @@
 #include "ace/Stats.h"
 #include "ace/Sample_History.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_string.h"
 #include "testC.h"
 
 static const char *ior = "file://ior";
@@ -15,11 +16,12 @@ static int count_missed_end_deadlines = 0;
 static ACE_UINT32 gsf = 0;
 static int do_dump_history = 0;
 static int print_missed_invocations = 0;
+static CORBA::ULong message_size = 0;
 
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "d:e:i:k:m:r:x:");
+  ACE_Get_Opt get_opts (argc, argv, "d:e:i:k:m:r:s:x:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -49,6 +51,10 @@ parse_args (int argc, char **argv)
         invocation_rate = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
+      case 's':
+        message_size = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
+
       case 'x':
         shutdown_server = ACE_OS::atoi (get_opts.opt_arg ());
         break;
@@ -63,6 +69,7 @@ parse_args (int argc, char **argv)
                            "\t-k <ior> (defaults to %s)\n"
                            "\t-m <print missed invocations for paced workers> (defaults to %d)\n"
                            "\t-r <invocation rate> (defaults to %d)\n"
+                           "\t-s <message size> (defaults to %d)\n"
                            "\t-x <shutdown server> (defaults to %d)\n"
                            "\n",
                            argv[0],
@@ -72,6 +79,7 @@ parse_args (int argc, char **argv)
                            ior,
                            print_missed_invocations,
                            invocation_rate,
+                           message_size,
                            shutdown_server),
                           -1);
       }
@@ -260,8 +268,19 @@ Paced_Worker::missed_end_deadline (CORBA::ULong invocation)
 void
 Paced_Worker::run (ACE_ENV_SINGLE_ARG_DECL)
 {
+  ::test::octets payload;
+  payload.length (message_size);
+
+  CORBA::Octet *buffer =
+    payload.get_buffer ();
+
+  ACE_OS::memset (buffer,
+                  1,
+                  message_size * sizeof CORBA::Octet);
+
   // To get things going...
-  this->test_->method (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->test_->method (payload
+                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->test_start_ =
@@ -283,7 +302,8 @@ Paced_Worker::run (ACE_ENV_SINGLE_ARG_DECL)
           continue;
         }
 
-      this->test_->method (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->test_->method (payload
+                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       ACE_hrtime_t time_after_call =

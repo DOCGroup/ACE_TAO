@@ -1,3 +1,11 @@
+Wed Jun 16 13:54:56 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* performance-tests\Protocols\client.cpp: 
+	* performance-tests\Protocols\server.cpp: 
+	* performance-tests\Protocols\test.idl: 
+
+	  Added ability to send messages of arbitrary size.
+
 Wed Jun 16 11:25:49 2004  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests/RTCORBA/Diffserv/server.cpp: 
