@@ -1,3 +1,9 @@
+Sun Apr 06 13:54:56 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Svc_Conf_l.cpp, Makefile: added #define ACE_BUILD_DLL.
+	  Thanks to Matthias Kerkhoff <make@cs.tu-berlin.de> for
+	  reporting this.
+
 Sat Apr  5 13:12:37 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/MM_Shared_Memory_Test.cpp: Removed the use of dynamic
