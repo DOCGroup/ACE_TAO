@@ -15,18 +15,22 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corba.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Objref_VarOut_T.h"
+
 #include "orbsvcs/CosEvent/event_export.h"
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_ProxyPushSupplier;
 class TAO_CEC_ProxyPullSupplier;
+
+namespace CORBA
+{
+  class SystemException;
+}
 
 /**
  * @class TAO_CEC_ConsumerControl

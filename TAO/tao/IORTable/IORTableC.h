@@ -374,20 +374,56 @@ namespace IORTable
 // TAO_IDL - Generated from
 // be/be_visitor_traits.cpp:48
 
+#if defined (_MSC_VER)
+
 // Traits specializations.
 namespace TAO
 {
-  // Hand crafted.
+
+#if !defined (_IORTABLE_LOCATOR__TRAITS_CH_)
+#define _IORTABLE_LOCATOR__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_IORTable_Export Objref_Traits<IORTable::Locator>
+  {
+    static IORTable::Locator_ptr tao_duplicate (
+        IORTable::Locator_ptr
+      );
+    static void tao_release (
+        IORTable::Locator_ptr
+      );
+    static IORTable::Locator_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        IORTable::Locator_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_IORTABLE_TABLE__TRAITS_CH_)
+#define _IORTABLE_TABLE__TRAITS_CH_
+  
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IORTable_Export Objref_Traits<IORTable::Table>
   {
-    static IORTable::Table_ptr tao_duplicate (IORTable::Table_ptr);
-    static void tao_release (IORTable::Table_ptr);
+    static IORTable::Table_ptr tao_duplicate (
+        IORTable::Table_ptr
+      );
+    static void tao_release (
+        IORTable::Table_ptr
+      );
     static IORTable::Table_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (IORTable::Table_ptr p,
-                                       TAO_OutputCDR & cdr);
+    static CORBA::Boolean tao_marshal (
+        IORTable::Table_ptr p,
+        TAO_OutputCDR & cdr
+      );
   };
+
+#endif /* end #if !defined */
 };
+
+#endif /* _MSC_VER */
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/cdr_op.cpp:48

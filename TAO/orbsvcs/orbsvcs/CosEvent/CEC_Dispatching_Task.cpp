@@ -2,11 +2,15 @@
 
 #include "CEC_Dispatching_Task.h"
 
+#include "tao/ORB_Constants.h"
+
 #if ! defined (__ACE_INLINE__)
 #include "CEC_Dispatching_Task.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(CosEvent, CEC_Dispatching, "$Id$")
+ACE_RCSID (CosEvent, 
+           CEC_Dispatching, 
+           "$Id$")
 
 int
 TAO_CEC_Dispatching_Task::svc (void)

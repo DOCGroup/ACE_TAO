@@ -35,28 +35,6 @@
 #  define TAO_NAMING_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
 #endif /* TAO_NAMING_HAS_DLL == 1 */
 
-// Export decl of Objref_Traits<> specialization needed by other libs.
-namespace CosNaming
-{
-  class NamingContext;
-  typedef NamingContext *NamingContext_ptr;
-}
-
-namespace TAO
-{
-  ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Naming_Export Objref_Traits<CosNaming::NamingContext>
-  {
-    static CosNaming::NamingContext_ptr tao_duplicate (
-        CosNaming::NamingContext_ptr
-      );
-    static void tao_release (CosNaming::NamingContext_ptr);
-    static CosNaming::NamingContext_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (CosNaming::NamingContext_ptr p,
-                                       TAO_OutputCDR & cdr);
-  };
-}
-
 #endif /* TAO_NAMING_EXPORT_H */
 
 // End of auto generated file.

@@ -24,7 +24,6 @@
 #include "ace/Synch.h"
 #include "ace/SString.h"
 
-#include "tao/corba.h"
 #include "orbsvcs/CosNamingC.h"
 #include "naming_export.h"
 

@@ -1236,7 +1236,10 @@ UTL_Scope::lookup_pseudo (Identifier *e)
       return 0;
     }
 
-  for (;!i->is_done (); i->next ())
+  AST_Decl *scope = ScopeAsDecl (this);
+  char *scope_name = scope->local_name ()->get_string ();
+
+  for (; !i->is_done (); i->next ())
     {
       d = i->item ();
 
@@ -1273,7 +1276,28 @@ UTL_Scope::lookup_pseudo (Identifier *e)
         }
     }
 
+  if (tc_lookup)
+    {
+      d = this->look_in_previous (e);
+
+      if (d != 0)
+        {
+          // Generation of #includes for Typecode.h
+          // checks this bit, so we set it for TCKind as well.
+          ACE_SET_BITS (idl_global->decls_seen_info_,
+                        idl_global->decls_seen_masks.typecode_seen_);
+          delete i;
+          return d;
+        }
+    }
+
   delete i;
+  return 0;
+}
+
+AST_Decl *
+UTL_Scope::look_in_previous (Identifier *)
+{
   return 0;
 }
 

@@ -289,7 +289,7 @@ public:
     ACE_UINT64 non_local_op_seen_;
     ACE_UINT64 typecode_seen_;
     ACE_UINT64 any_seen_;
-    ACE_UINT64 corba_module_seen_;
+    ACE_UINT64 parametermode_seen_;
     ACE_UINT64 base_object_seen_;
     ACE_UINT64 valuefactory_seen_;
 

@@ -1,14 +1,14 @@
 #include "LB_CPU_Monitor.h"
 
+#include "tao/ORB_Constants.h"
+
 #if defined (ACE_HAS_SYS_LOADAVG_H)
 # include <sys/loadavg.h>
 #endif /* ACE_HAS_SYS_LOADAVG_H */
 
-
 ACE_RCSID (LoadBalancing,
            LB_CPU_Monitor,
            "$Id$")
-
 
 TAO_LB_CPU_Monitor::TAO_LB_CPU_Monitor (const char * location_id,
                                         const char * location_kind)

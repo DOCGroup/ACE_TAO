@@ -1,13 +1,13 @@
 // -*- C++ -*-
 
 #include "FT_Invocation_Endpoint_Selectors.h"
+
 #include "tao/Invocation.h"
 #include "tao/Stub.h"
 #include "tao/Profile.h"
 #include "tao/Endpoint.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/debug.h"
-
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Invocation_Endpoint_Selectors.i"
@@ -16,8 +16,6 @@
 ACE_RCSID (FaultTolerance,
            FT_Invocation_Endpoint_Selectors,
            "$Id$")
-
-
 
 TAO_FT_Invocation_Endpoint_Selector::TAO_FT_Invocation_Endpoint_Selector (void)
   : TAO_Default_Endpoint_Selector (),

@@ -312,6 +312,15 @@ be_visitor_typedef_ch::visit_interface (be_interface *node)
 }
 
 int
+be_visitor_typedef_ch::visit_interface_fwd (be_interface_fwd *node)
+{
+//  be_interface *fd = 
+//    be_interface::narrow_from_decl (node->full_definition ());
+//  return this->visit_interface (fd);
+  return 0;
+}
+
+int
 be_visitor_typedef_ch::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();

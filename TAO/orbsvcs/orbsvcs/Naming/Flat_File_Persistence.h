@@ -13,7 +13,6 @@
 #define TAO_FLAT_FILE_PERSISTENCE_H
 
 #include "Storable.h"
-#include "tao/corba.h"
 
 //------------------------------------------------------------------------
 // The Flat File concrete classes

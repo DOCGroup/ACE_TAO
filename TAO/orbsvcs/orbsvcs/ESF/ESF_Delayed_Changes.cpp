@@ -12,9 +12,12 @@
 #include "ESF_Defaults.h"
 #include "ESF_Worker.h"
 #include "ESF_Delayed_Command.h"
+
 #include "ace/Functor.h"
 
-ACE_RCSID(ESF, ESF_Delayed_Changes, "$Id$")
+ACE_RCSID (ESF, 
+           ESF_Delayed_Changes, 
+           "$Id$")
 
 // ****************************************************************
 

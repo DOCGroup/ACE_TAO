@@ -587,7 +587,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
             }
         }
 
-      if (this->pd_n_inherits > 0)
+      if (this->has_mixed_parentage_ && ! this->is_abstract ())
         {
           *os << "," << be_nl;
         }

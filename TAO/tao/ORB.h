@@ -60,7 +60,6 @@ namespace CORBA
   class StructMemberSeq;
   class UnionMemberSeq;
   class ValueMemberSeq;
-
   class ORB_ObjectIdList;
   
   // Used at present only in Typecode_Constants.cpp, to make _tc_ORBid.
@@ -69,6 +68,14 @@ namespace CORBA
   typedef String_var ORBid_var;
   typedef String_out ORBid_out;
   extern TAO_Export TypeCode_ptr _tc_ORBid;
+
+  // A couple of string typedefs used by various libs and services.
+  typedef char * Identifier;
+  typedef String_var Identifier_var;
+  typedef String_out Identifier_out;
+  typedef char * RepositoryId;
+  typedef String_var RepositoryId_var;
+  typedef String_out RepositoryId_out;
 
   typedef
     TAO_MngSeq_Var_T<

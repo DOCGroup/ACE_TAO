@@ -16,6 +16,7 @@
 
 #ifndef TAO_FT_INVOCATION_ENDPOINT_SELECTOR_H
 #define TAO_FT_INVOCATION_ENDPOINT_SELECTOR_H
+
 #include /**/ "ace/pre.h"
 
 #include "fault_tol_export.h"
@@ -24,8 +25,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #include "tao/Invocation_Endpoint_Selectors.h"
+#include "tao/Basic_Types.h"
+#include "tao/ORB_Constants.h"
 
 class TAO_GIOP_Invocation;
 class TAO_Profile;
@@ -92,4 +94,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif  /* FT_TAO_INVOCATION_ENDPOINT_SELECTOR_H */

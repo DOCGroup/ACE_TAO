@@ -11,6 +11,7 @@
 
 #ifndef TAO_Notify_METHOD_REQUEST_H
 #define TAO_Notify_METHOD_REQUEST_H
+
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"
@@ -21,6 +22,7 @@
 
 #include "ace/Message_Block.h"
 #include "ace/Refcounted_Auto_Ptr.h"
+
 #include "Event.h"
 
 class TAO_Notify_Method_Request;
@@ -65,4 +67,5 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_Notify_METHOD_REQUEST_H */

@@ -103,7 +103,7 @@ IDL_GlobalData::dsf::dsf (void)
     non_local_op_seen_ (0),
     typecode_seen_ (0),
     any_seen_ (0),
-    corba_module_seen_ (0),
+    parametermode_seen_ (0),
     base_object_seen_ (0),
     valuefactory_seen_ (0),
 
@@ -249,7 +249,7 @@ IDL_GlobalData::IDL_GlobalData (void)
   ACE_SET_BITS (this->decls_seen_masks.non_local_op_seen_,      cursor << 15);
   ACE_SET_BITS (this->decls_seen_masks.typecode_seen_,          cursor << 16);
   ACE_SET_BITS (this->decls_seen_masks.any_seen_,               cursor << 17);
-  ACE_SET_BITS (this->decls_seen_masks.corba_module_seen_,      cursor << 18);
+  ACE_SET_BITS (this->decls_seen_masks.parametermode_seen_,     cursor << 18);
   ACE_SET_BITS (this->decls_seen_masks.base_object_seen_,       cursor << 19);
   ACE_SET_BITS (this->decls_seen_masks.valuefactory_seen_,      cursor << 20);
 

@@ -273,10 +273,35 @@ TAO::Collocation_Proxy_Broker *
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_traits.cpp:48
 
+#if defined (_MSC_VER)
+
 // Traits specializations.
 namespace TAO
 {
+
+#if !defined (_IMPLEMENTATIONREPOSITORY_LOCATOR__TRAITS_CH_)
+#define _IMPLEMENTATIONREPOSITORY_LOCATOR__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_PortableServer_Export Objref_Traits<ImplementationRepository::Locator>
+  {
+    static ImplementationRepository::Locator_ptr tao_duplicate (
+        ImplementationRepository::Locator_ptr
+      );
+    static void tao_release (
+        ImplementationRepository::Locator_ptr
+      );
+    static ImplementationRepository::Locator_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        ImplementationRepository::Locator_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
 };
+
+#endif /* _MSC_VER */
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52

@@ -27,7 +27,9 @@
 
 #include "tao/Basic_Types.h"
 #include "tao/Objref_VarOut_T.h"
+
 #include "orbsvcs/CosEvent/event_export.h"
+
 #include "CEC_ProxyPushSupplier.h"
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)

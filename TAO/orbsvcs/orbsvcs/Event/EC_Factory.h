@@ -14,6 +14,7 @@
 
 #ifndef TAO_EC_FACTORY_H
 #define TAO_EC_FACTORY_H
+
 #include /**/ "ace/pre.h"
 
 #include /**/ "event_export.h"
@@ -22,7 +23,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corba.h"
 #include "ace/Service_Object.h"
 
 class ACE_Lock;
@@ -161,4 +161,5 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_EC_FACTORY_H */
