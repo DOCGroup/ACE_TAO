@@ -1,3 +1,8 @@
+Sat Jun 19 22:28:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/auto_compile:
+	  Updated the list of tests run every night.
+
 Sat Jun 19 18:15:48 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/OS.h:
