@@ -96,11 +96,22 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream) const
   ::SSL_set_accept_state (new_stream.ssl ());
 
   int status = ::SSL_accept (new_stream.ssl ());
-  if (status < 0)
+  if (status <= 0)
     {
       if (::BIO_sock_should_retry (status))
         {
-          errno = EAGAIN;
+	  switch (::SSL_get_error (new_stream.ssl (), status))
+	    {
+	    case SSL_ERROR_WANT_WRITE:
+            case SSL_ERROR_WANT_READ:
+            case SSL_ERROR_WANT_X509_LOOKUP:
+	      // If blocked, try again.
+              errno = EWOULDBLOCK;
+              break;
+            default:
+              ERR_print_errors_fp (stderr);
+              break;
+            }
         }
       else
         ERR_print_errors_fp (stderr);
