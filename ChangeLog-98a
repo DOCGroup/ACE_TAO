@@ -10,6 +10,10 @@ Tue Jan 06 10:37:49 1998  David L. Levine  <levine@cs.wustl.edu>
           that it builds on Linux/non-glibc.  For some reason, its
           preprocessor was getting confused.
 
+        * ace/OS.i (nanosleep): convert nanoseconds to microseconds
+          by dividing by 1000, not multiplying.  Thanks to
+          Mitch Kuninsky <Mitch_Kuninsky@avid.com> for reporting this.
+
         * ace/config-mvs.h: added ACE_LACKS_LONGLONG_T because MVS doesn't
           support it.  Thanks to Chuck Gehr <gehr@sweng.stortek.com> for
           confirming that.
