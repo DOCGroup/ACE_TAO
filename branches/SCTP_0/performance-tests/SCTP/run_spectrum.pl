@@ -94,10 +94,12 @@ Note that the options B<-s> and B<-t> are used by this script when it
 launches the client.  An occurrence of either of these options in the
 configuration file will be ignored as redundant.
 
-The client is executed 16 times: once for each payload size from 2^0
-bytes to 2^15 bytes.  Histograms summarizing the round-trip latency
-performance are dumped to a file called C<TIMESTAMP.spectrum> where
-C<TIMESTAMP> is the current time in hyphen-delimited form.
+The client is executed 15 times: once for each payload size from 2^2
+bytes to 2^16 bytes.  (SCTP tests only go up to 2^15 bytes because of
+limitations in our SCTP implementation.)  Histograms summarizing the
+round-trip latency performance are dumped to a file called
+C<TIMESTAMP.spectrum> where C<TIMESTAMP> is the current time in
+hyphen-delimited form.
 
 =head1 EXAMPLES
 
@@ -228,8 +230,12 @@ print "Read options from $config_file: \"$options\"\n\n";
 # Name a unique file to store the results in.
 ($output_file = localtime() . ".spectrum") =~ tr/ /-/;
 
-# Run the test for message sizes ranging from 2^0 bytes to 2^15 bytes
-for (my $i = 0; $i <= 15; ++$i) {
+# Run the test for message sizes ranging from 2^2 bytes to 2^16 bytes
+# (SCTP tests only go up to 2^15 bytes because of limitations in our
+#  SCTP implementation)
+my $max_size = 16;
+$max_size = 15 if $protocol eq "sctp";
+for (my $i = 2; $i <= $max_size; ++$i) {
     
     # Assemble client parameters and print out the command line
     my $client_params = "-t $protocol -s $i $options >> $output_file";
