@@ -9,7 +9,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # Assumes (or builds) the lib with debug=0.  Allows other make args,
 # such as -j 4, to be passed on the command line.
 
-$usage="$0 [-h, for html output] [-v] [make args]";
+$usage="$0 [-h, for html output] [-v] [make arguments]\n";
 
 ####
 #### Configuration parameters.
@@ -93,6 +93,12 @@ if ($ACE_ROOT =~ /vxworks/) {
   $WIND_BASE = $ENV{'WIND_BASE'}  ||  $default_wind_base;
   $WIND_HOST_TYPE = $ENV{'WIND_HOST_TYPE'}  ||  $default_host_type;
   $size = "$WIND_BASE/host/$WIND_HOST_TYPE/bin/size$TOOLENV";
+} elsif ($ACE_ROOT =~ /lynx-ppc/) {
+  $size = '/usr/lynx/3.0.0/ppc/cdk/sunos-xcoff-ppc/bin/size';
+} elsif ($ACE_ROOT =~ /lynx/) {
+  $size = '/usr/lynx/3.0.0/x86/cdk/sunos-coff-x86/bin/size';
+} elsif ($ACE_ROOT =~ /chorus/) {
+  $size = '/project/doc/mvme/green68k/gnu/bin/size';
 } else {
   $size = 'size';
 }
