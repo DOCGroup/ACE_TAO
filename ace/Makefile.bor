@@ -10,10 +10,10 @@ DIRS =  SSL \
 
 OBJFILES = \
 	$(OBJDIR)\ACE.obj \
-	$(OBJDIR)\ACE_Init.obj \
-	$(OBJDIR)\ACE_Flag_Manip.obj \
-	$(OBJDIR)\ACE_Handle_Ops.obj \
-	$(OBJDIR)\ACE_Lib_Find.obj \
+	$(OBJDIR)\Init_ACE.obj \
+	$(OBJDIR)\Flag_Manip.obj \
+	$(OBJDIR)\Handle_Ops.obj \
+	$(OBJDIR)\Lib_Find.obj \
 	$(OBJDIR)\ACE_Sock_Connect.obj \
 	$(OBJDIR)\Malloc_Instantiations.obj \
 	$(OBJDIR)\Activation_Queue.obj \
