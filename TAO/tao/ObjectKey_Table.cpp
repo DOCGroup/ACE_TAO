@@ -163,15 +163,51 @@ TAO::ObjectKey_Table::unbind_i (TAO::Refcounted_ObjectKey *&key_new)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_RB_Tree <TAO::ObjectKey,
-                            TAO::Refcounted_ObjectKey,
+                            TAO::Refcounted_ObjectKey *,
                             TAO::Less_Than_ObjectKey,
                             ACE_Null_Mutex>;
+
+template class ACE_RB_Tree_Iterator_Base <class TAO::ObjectKey,
+                                          class TAO::Refcounted_ObjectKey *,
+                                          class TAO::Less_Than_ObjectKey,
+                                          class ACE_Null_Mutex>;
+
+template class ACE_RB_Tree_Iterator <TAO::ObjectKey,
+                                     TAO::Refcounted_ObjectKey *,
+                                     TAO::Less_Than_ObjectKey,
+                                     ACE_Null_Mutex>;
+
+template class ACE_RB_Tree_Reverse_Iterator <TAO::ObjectKey,
+                                             TAO::Refcounted_ObjectKey *,
+                                             TAO::Less_Than_ObjectKey,
+                                             ACE_Null_Mutex>;
+
+template class ACE_RB_Tree_Node <TAO::ObjectKey,
+                                 TAO::Refcounted_ObjectKey *>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_RB_Tree <TAO::ObjectKey,
-                                 TAO::Refcounted_ObjectKey,
+                                 TAO::Refcounted_ObjectKey *,
                                  TAO::Less_Than_ObjectKey,
                                  ACE_Null_Mutex>
+
+#pragma instantiate ACE_RB_Tree_Iterator_Base <TAO::ObjectKey,
+                                               TAO::Refcounted_ObjectKey *,
+                                               TAO::Less_Than_ObjectKey,
+                                               ACE_Null_Mutex>
+
+#pragma instantiate ACE_RB_Tree_Iterator <TAO::ObjectKey,
+                                          TAO::Refcounted_ObjectKey *,
+                                          TAO::Less_Than_ObjectKey,
+                                          ACE_Null_Mutex>
+
+#pragma instantiate ACE_RB_Tree_Reverse_Iterator <TAO::ObjectKey,
+                                                  TAO::Refcounted_ObjectKey *,
+                                                  TAO::Less_Than_ObjectKey,
+                                                  ACE_Null_Mutex>
+
+#pragma instantiate ACE_RB_Tree_Node <TAO::ObjectKey,
+                                      TAO::Refcounted_ObjectKey *>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

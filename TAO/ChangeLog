@@ -1,3 +1,18 @@
+Fri May 23 13:21:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * tao/Any.cpp: Moved explicit template instantiations for
+	  ValueBase and AbstractBase to its own library.
+	
+	* tao/ObjectKey_Table.cpp: Fixed template instantiations for
+	  RB_Tree. 
+	
+	* tao/Messaging/MessagingC.cpp: Removed unnecessary template
+	  instantiations. 
+
+	* tao/Valuetype/AbstractBase.cpp: 
+	* tao/Valuetype/Seq_Tmplinst.cpp: Templat einstantiations for the
+	  ValueType library.
+
 Fri May 23 11:16:31 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	From David Kinder <david.kinder@sophos.com>
