@@ -97,8 +97,9 @@ ACE_Hash_Map_Manager<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNC
 
 TAO_Dynamic_Hash_ObjTable::TAO_Dynamic_Hash_ObjTable (CORBA::ULong size)
   : hash_map_ (size == 0 ? 
-      ACE_static_cast (size_t, TAO_Object_Table_Impl::DEFAULT_TABLE_SIZE) :
-      size),
+               ACE_static_cast (size_t,
+                                TAO_Object_Table_Impl::DEFAULT_TABLE_SIZE) :
+               size),
     counter_ (0)
 {
 }
