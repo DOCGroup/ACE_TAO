@@ -457,6 +457,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::Current>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -478,12 +479,14 @@ TAO::Any_Impl_T<CORBA::Current>::to_object (
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::Current>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::Current>::demarshal_value (TAO_InputCDR &)
 {

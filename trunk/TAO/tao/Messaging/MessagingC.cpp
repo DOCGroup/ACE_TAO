@@ -1165,6 +1165,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::ExceptionHolder>::to_value (
     CORBA::ValueBase *&_tao_elem
@@ -1229,6 +1230,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::ReplyHandler>::to_object (
     CORBA::Object_ptr &_tao_elem

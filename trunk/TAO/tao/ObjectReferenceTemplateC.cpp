@@ -1353,6 +1353,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ObjectReferenceFactory>::to_value (
     CORBA::ValueBase *&_tao_elem
@@ -1416,6 +1417,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ObjectReferenceTemplate>::to_value (
     CORBA::ValueBase *&_tao_elem

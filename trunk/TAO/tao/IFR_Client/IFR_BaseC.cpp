@@ -19910,6 +19910,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::IRObject>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -19973,6 +19974,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::Contained>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -21473,6 +21475,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::IDLType>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -21536,6 +21539,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::TypedefDef>::to_object (
     CORBA::Object_ptr &_tao_elem

@@ -1228,6 +1228,7 @@ STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
 #define TAO_SYSTEM_EXCEPTION(name) \
+template<> \
 CORBA::Boolean \
 TAO::Any_Dual_Impl_T<CORBA::name >::marshal_value (TAO_OutputCDR &cdr) \
 { \
@@ -1249,6 +1250,7 @@ STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
 #define TAO_SYSTEM_EXCEPTION(name) \
+template<> \
 CORBA::Boolean \
 TAO::Any_Dual_Impl_T<CORBA::name >::demarshal_value (TAO_InputCDR &cdr) \
 { \
