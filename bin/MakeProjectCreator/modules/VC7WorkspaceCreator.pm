@@ -57,7 +57,7 @@ sub write_comps {
   ## $guid above is the VC7 Project GUID.  It should not change.
 
   ## Project Information
-  foreach my $project (@list) {
+  foreach my $project (sort @list) {
     my($pi) = $$pjs{$project};
     my($name, $deps, $pguid) = @$pi;
 
@@ -111,7 +111,7 @@ sub write_comps {
             "\tGlobalSection(ProjectConfiguration) = postSolution$crlf";
 
   ## Project Configuration Names
-  foreach my $project (@list) {
+  foreach my $project (sort @list) {
     my($pi) = $$pjs{$project};
     my($name, $deps, $pguid, @cfgs) = @$pi;
     foreach my $cfg (sort @cfgs) {
