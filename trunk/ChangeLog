@@ -1,3 +1,29 @@
+Tue May  1 06:15:26 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Hash_Map_Manager_T.h (class ACE_Hash_Map_Manager_Ex): Fixed
+	  an erroneous comment.  Thanks to Mark Drijver
+ 	  <mdrijver@remedy.nl> for finding this.
+
+	* ace/Local_Name_Space_T.cpp (create_manager_i): It's now valid
+	  to use fixed mmap addresses on Win9x.  Thanks to Cristian Ferretti
+ 	  <cristian_ferretti@yahoo.com> for these fixes.
+
+	* ace/Mem_Map.{h,i},
+  	* ace/ace_wchar.h,
+	* ace/OS.{h,i}: Added support to the ACE_OS::mmap() function and
+	  ACE_Mem_Map class so they work properly on Win9x.  Thanks to
+ 	  Cristian Ferretti <cristian_ferretti@yahoo.com> for these fixes.
+
+	* tests/Malloc_Test.cpp (main): Updated this test so that it
+	  doesn't try to do any remapping or alternative child address
+ 	  ranges on Win9x.  Thanks to Cristian Ferretti
+ 	  <cristian_ferretti@yahoo.com> for pointing this out.
+
+	* tests/MEM_Stream_Test.cpp (handle_input): Make sure to multiple
+	  MAXPATHLEN * sizeof (ACE_CHAR) to handle Unicode properly.
+  	  Thanks to Cristian Ferretti <cristian_ferretti@yahoo.com> for
+ 	  pointing this out.
+
 Mon Apr 30 12:56:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/nightlybuilds/builds.lst : Removed RAPI of the scoreboard.
@@ -9,6 +35,16 @@ Sun Apr 29 15:20:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  Added a flag to the Pluggable UDP test, so that it does not
 	  get run in environments using only statically linked libraries.
 
+Sun Apr 29 11:44:26 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/ace_wchar.h: Reverted the following change 
+  
+          Tue Apr 24 06:28:00 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+          * ace/ace_wchar.h: Fixed some code for VxWorks.  Thanks to
+            Albert Wijnja <Albert.Wijnja@meco.nl> for reporting this.
+  
+          This change is confusing since it's inconsistent with other
+	  platforms that enable ACE_TEXT_WIDE.
 
 Thu Apr 26 20:14:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -186,9 +222,6 @@ Tue Apr 24 06:28:00 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
         * docs/ACE-guidelines.html: Updated the discussion of using
           open() rather than constructors.  Thanks to Stan Pinte
           <spinte@latinia.com> for motivating this.
-
-        * ace/ace_wchar.h: Fixed some code for VxWorks.  Thanks to
-          Albert Wijnja <Albert.Wijnja@meco.nl> for reporting this.
 
 Sat Apr 14 10:51:39 2001  Carlos O'Ryan  <coryan@uci.edu>
 

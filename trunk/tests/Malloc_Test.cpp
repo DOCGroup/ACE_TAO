@@ -37,12 +37,16 @@ typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
 #define MMAP_FILENAME ACE_TEXT ("test_file")
 #define MUTEX_NAME ACE_TEXT ("test_lock")
 
-#if !defined (linux) && \
-    !(defined (ACE_WIN32) && (defined (ghs) || defined (__MINGW32__)))
+#if !defined (linux) \
+    && !(defined (ACE_WIN32) \
+         && (defined (ghs) \
+             || defined (__MINGW32__) \
+             || (!defined(ACE_HAS_WINNT4) || (ACE_HAS_WINNT4 == 0))))
 #define ACE_TEST_REMAP_ON_FAULT
 // Linux seems to have problem when calling mmap from the signal handler.
 // The Green Hills Native x86 compiler does not support structural exceptions.
 // Mingw's gcc does not support structural exceptions.
+// Win9x doesn't support remaps.
 // On these plarforms, we make sure the remapping will never occur.
 #endif /* linux && Win32 GHS*/
 
@@ -62,15 +66,21 @@ static const void *PARENT_BASE_ADDR = ACE_DEFAULT_BASE_ADDR;
 // If the platform supports position-independent malloc, choose
 // another base address that's 1M higher so that <ACE_Malloc> will be
 // mapped into a different address in the child's virtual memory.
-// Note that on HP-UX on PA-RISC hardware, a single range of a file cannot
-// be mapped into multiple virtual address ranges, even across processes.
-// So, though the whole PI pointer thing is tested here, it isn't actually
-// using multiple address ranges.
-static const void *CHILD_BASE_ADDR =
-#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 && !defined (HPUX))
-       1024 * 1024 +
-#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
-       ACE_DEFAULT_BASE_ADDR;
+// Note that on HP-UX on PA-RISC hardware, a single range of a file
+// cannot be mapped into multiple virtual address ranges, even across
+// processes.  So, though the whole PI pointer thing is tested here,
+// it isn't actually using multiple address ranges.  Also, on Win9x,
+// you need to map shared views to the same address.
+
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 && !defined (HPUX)) \
+     && !(defined (ACE_WIN32) \
+	  && (!defined (ACE_HAS_WINNT4) || (ACE_HAS_WINNT4 == 0)))
+# define CHILD_ADDR_DELTA (1024*1024)
+#else
+# define CHILD_ADDR_DELTA 0
+#endif /* CHILD_ADDR_DELTA */
+
+static const void *CHILD_BASE_ADDR = CHILD_ADDR_DELTA + ACE_DEFAULT_BASE_ADDR;
 
 // Shared memory allocator.  Hide the allocator inside this function
 // so that it doesn't get constructed until after the
@@ -282,30 +292,25 @@ child (void)
 // On Win9x/Me, a shared address needs to be on the shared arena,
 // betweeen the second and third megabyte in the virtual address space
 // of the process. Also, a mapped view of a file is shared on the same
-// virtual address on every 32 bit process.
-// On WinNT/2k, memory above 2Gb is reserved for the system.
-// So, we need to check at runtime (we want an ACE_HAS_WINNT4 == 0 ace
-// to run on either).
+// virtual address on every 32 bit process.  On WinNT/2k, memory above
+// 2Gb is reserved for the system.  So, we need to check at runtime
+// (we want an ACE_HAS_WINNT4 == 0 ace to run on either).
 static void
-get_base_addrs()
+get_base_addrs (void)
 {
   OSVERSIONINFO vinfo;
-  vinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+  vinfo.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
   if (::GetVersionEx(&vinfo) == 0)
     return;
 
   if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT)
-    {
-      PARENT_BASE_ADDR = (char*) (64 * 1024*1024);
-    }
+    PARENT_BASE_ADDR = (char*) (64 * 1024*1024);
   else
-    {
-      PARENT_BASE_ADDR = (char*) ((2048UL + 512UL)*(1024UL*1024UL));
-    }
+    PARENT_BASE_ADDR = (char*) ((2048UL + 512UL)*(1024UL*1024UL));
 
-  CHILD_BASE_ADDR = 1024*1024 + (char*) PARENT_BASE_ADDR;
+  CHILD_BASE_ADDR = CHILD_ADDR_DELTA + (char*) PARENT_BASE_ADDR;
 }
-#endif
+#endif /* defined (ACE_WIN32) && (!defined (ACE_HAS_WINNT4) || (ACE_HAS_WINNT4 == 0)) */
 
 int
 main (int argc, ACE_TCHAR *[])

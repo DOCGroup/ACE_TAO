@@ -85,11 +85,7 @@ using std::size_t;
 // Define the unicode/wchar related macros correctly
 
 # if !defined (ACE_TEXT_WIDE)
-# if defined (VXWORKS)
-#  define ACE_TEXT_WIDE_I(STRING) STRING
-# else /* VXWORKS */
 #  define ACE_TEXT_WIDE_I(STRING) L##STRING
-#endif /* VXWORKS */
 #  define ACE_TEXT_WIDE(STRING) ACE_TEXT_WIDE_I (STRING)
 # endif /* ACE_TEXT_WIDE */
 
@@ -219,6 +215,7 @@ typedef ACE_Wide_To_Ascii ACE_OS_WString;
 #define ACE_TEXT_GetUserName                     ::GetUserNameW
 #define ACE_TEXT_LoadLibrary                     ::LoadLibraryW
 #define ACE_TEXT_MoveFileEx                      ::MoveFileExW
+#define ACE_TEXT_OpenFileMapping                 ::OpenFileMappingW
 #define ACE_TEXT_OpenSCManager                   ::OpenSCManagerW
 #define ACE_TEXT_OpenService                     ::OpenServiceW
 #define ACE_TEXT_RegisterEventSource             ::RegisterEventSourceW
@@ -263,6 +260,7 @@ typedef ACE_Wide_To_Ascii ACE_OS_WString;
 #define ACE_TEXT_GetUserName                     ::GetUserNameA
 #define ACE_TEXT_LoadLibrary                     ::LoadLibraryA
 #define ACE_TEXT_MoveFileEx                      ::MoveFileExA
+#define ACE_TEXT_OpenFileMapping                 ::OpenFileMappingA
 #define ACE_TEXT_OpenSCManager                   ::OpenSCManagerA
 #define ACE_TEXT_OpenService                     ::OpenServiceA
 #define ACE_TEXT_RegisterEventSource             ::RegisterEventSourceA

@@ -3226,9 +3226,14 @@ ACE_OS::mmap (void *addr,
               ACE_HANDLE file_handle,
               off_t off,
               ACE_HANDLE *file_mapping,
-              LPSECURITY_ATTRIBUTES sa)
+              LPSECURITY_ATTRIBUTES sa,
+              const ACE_TCHAR *file_mapping_name)
 {
   ACE_OS_TRACE ("ACE_OS::mmap");
+#if !defined (ACE_WIN32) || defined (ACE_HAS_PHARLAP)
+  ACE_UNUSED_ARG (file_mapping_name);
+#endif /* !defined (ACE_WIN32) || defined (ACE_HAS_PHARLAP) */
+
 #if defined (ACE_HAS_PACE) && !defined (__Lynx__) && !defined (ACE_WIN32)
   ACE_UNUSED_ARG (file_mapping);
   ACE_UNUSED_ARG (sa);
@@ -3263,12 +3268,38 @@ ACE_OS::mmap (void *addr,
 
   // Only create a new handle if we didn't have a valid one passed in.
   if (*file_mapping == ACE_INVALID_HANDLE)
-    *file_mapping = ::CreateFileMapping (file_handle,
-                                         ACE_OS::default_win32_security_attributes (sa),
-                                         prot,
-                                         0,
-                                         0,
-                                         0);
+    {
+#if !defined (ACE_HAS_WINNT4) || (ACE_HAS_WINNT4 == 0)
+      int try_create = 1;
+      if (file_mapping_name != 0)
+	{
+	  // On Win9x, we first try to OpenFileMapping to
+	  // file_mapping_name. Only if there is no mapping object
+          // with that name we try CreateFileMapping.
+
+	  *file_mapping = ACE_TEXT_OpenFileMapping (nt_flags,
+                                                    0,
+                                                    file_mapping_name);
+          if (*file_mapping != 0 
+              || ::GetLastError () != ERROR_INVALID_NAME)
+            try_create = 0;
+	}
+
+      if (try_create)
+#endif /* (ACE_HAS_WINNT4) || (ACE_HAS_WINNT4 == 0) */
+	{
+	  const LPSECURITY_ATTRIBUTES attr =
+	    ACE_OS::default_win32_security_attributes (sa);
+
+	  *file_mapping = ACE_TEXT_CreateFileMapping (file_handle,
+                                                      attr,
+                                                      prot,
+                                                      0,
+                                                      0,
+                                                      file_mapping_name);
+	}
+    }
+
   if (*file_mapping == 0)
     ACE_FAIL_RETURN (MAP_FAILED);
 
