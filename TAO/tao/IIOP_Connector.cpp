@@ -100,8 +100,8 @@ TAO_IIOP_Connector::close (void)
 }
 
 int
-TAO_IIOP_Connector::make_connect (TAO_GIOP_Invocation *invocation,
-                                  TAO_Transport_Descriptor_Interface *desc)
+TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
+                                     TAO_Transport_Descriptor_Interface *desc)
 {
   ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
   TAO_Endpoint *endpoint = desc->endpoint ();

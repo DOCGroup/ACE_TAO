@@ -1,3 +1,24 @@
+Mon Apr 15 23:13:23 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport_Connector.h:
+	* tao/Transport_Connector.cpp: Changed the name of the method
+	  make_connect () as make_connection (), since the latter
+	  indicated what it was doing.
+	  
+	* tao/IIOP_Connector.cpp (make_connection): 
+	* tao/IIOP_Connector.h:
+	* tao/Strategies/SHMIOP_Connector.h:
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.h:
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/DIOP_Connector.h:
+	* tao/Strategies/DIOP_Connector.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp: Changed the
+	  method name mentioned above in all the implementations.
+
 Mon Apr 15 22:19:31 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Incoming_Message_Queue.h:

@@ -75,11 +75,11 @@ protected:
   /**
    * @name More TAO_Connector methods
    *
-   * Please check the documentation in Pluggable.h.
+   * Please check the documentation in Transport_Connector.h.
    */
   //@{
-  int make_connect (TAO_GIOP_Invocation *invocation,
-                    TAO_Transport_Descriptor_Interface *desc);
+  int make_connection (TAO_GIOP_Invocation *invocation,
+                       TAO_Transport_Descriptor_Interface *desc);
 
   virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL);
 

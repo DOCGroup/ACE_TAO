@@ -86,8 +86,8 @@ TAO_UIPMC_Connector::close (void)
 }
 
 int
-TAO_UIPMC_Connector::make_connect (TAO_GIOP_Invocation *invocation,
-                                   TAO_Transport_Descriptor_Interface *desc)
+TAO_UIPMC_Connector::make_connection (TAO_GIOP_Invocation *invocation,
+                                      TAO_Transport_Descriptor_Interface *desc)
 
 {
   TAO_Transport *&transport = invocation->transport ();

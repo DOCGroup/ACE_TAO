@@ -70,8 +70,9 @@ public:
           TAO_IIOP_SSL_BASE_CONNECTOR;
 
 protected:
-  int make_connect (TAO_GIOP_Invocation *invocation,
-                    TAO_Transport_Descriptor_Interface *desc);
+
+  int make_connection (TAO_GIOP_Invocation *invocation,
+                       TAO_Transport_Descriptor_Interface *desc);
 
 private:
 
