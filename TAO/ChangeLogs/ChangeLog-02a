@@ -1,3 +1,10 @@
+Fri Jul 13 16:07:04 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp: Make sure
+	  that this->ior_multicast is non-NULL in ~ImplRepo_i() before
+ 	  using it to lookup in the reactor.  Thanks to Victor Chernenko
+ 	  <v_chernenko@hotmail.com> for reporting this.
+
 Thu Jul 13 14:30:16 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
         * examples/AMI/FL_Callback/AMI_Peer.dsp:
