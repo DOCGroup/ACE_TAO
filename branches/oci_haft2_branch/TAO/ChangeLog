@@ -1,3 +1,11 @@
+Mon Nov 10 09:13:45 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder.cpp:
+        * tao/Utils/Server_Main.h:
+        * tao/Utils/Server_Main.cpp:
+          More merge warnings/errors fixes.
+
 Mon Nov 10 08:40:59 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
