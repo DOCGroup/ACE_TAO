@@ -84,14 +84,18 @@ main (int argc, LPTSTR [], LPTSTR envp[])
       ACE_START_TEST ("Env_Value_Test");
 
       TEST_THIS (int, "TEST_VALUE_POSITIVE", 4, 10);
+#if !defined (ACE_LACKS_FLOATING_POINT)
       TEST_THIS (double, "TEST_VALUE_POSITIVE", -1.0, 10.2);
+#endif /* ! ACE_LACKS_FLOATING_POINT */
       TEST_THIS (long, "TEST_VALUE_POSITIVE", 0, 10);
       TEST_THIS (unsigned long, "TEST_VALUE_POSITIVE", 0, 10);
       TEST_THIS (short, "TEST_VALUE_POSITIVE", 0, 10);
       TEST_THIS (unsigned short, "TEST_VALUE_POSITIVE", 0, 10);
 
       TEST_THIS (int, "TEST_VALUE_NEGATIVE", 4, -10);
+#if !defined (ACE_LACKS_FLOATING_POINT)
       TEST_THIS (double, "TEST_VALUE_NEGATIVE", -1.0, -10.2);
+#endif /* ! ACE_LACKS_FLOATING_POINT */
       TEST_THIS (long, "TEST_VALUE_NEGATIVE", 0, -10L);
       TEST_THIS (unsigned long, "TEST_VALUE_NEGATIVE", 0, (unsigned long) -10);
       TEST_THIS (short, "TEST_VALUE_NEGATIVE", 0, -10);
@@ -107,7 +111,9 @@ main (int argc, LPTSTR [], LPTSTR envp[])
 }
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class ACE_Env_Value<char*>;
-  template class ACE_Env_Value<double>;
+# if !defined (ACE_LACKS_FLOATING_POINT)
+    template class ACE_Env_Value<double>;
+# endif /* ! ACE_LACKS_FLOATING_POINT */
   template class ACE_Env_Value<int>;
   template class ACE_Env_Value<long>;
   template class ACE_Env_Value<short>;
@@ -115,7 +121,9 @@ main (int argc, LPTSTR [], LPTSTR envp[])
   template class ACE_Env_Value<unsigned long>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate  ACE_Env_Value<char*>
-# pragma instantiate  ACE_Env_Value<double>
+# if !defined (ACE_LACKS_FLOATING_POINT)
+#   pragma instantiate  ACE_Env_Value<double>
+# endif /* ! ACE_LACKS_FLOATING_POINT */
 # pragma instantiate  ACE_Env_Value<int>
 # pragma instantiate  ACE_Env_Value<long>
 # pragma instantiate  ACE_Env_Value<short>
