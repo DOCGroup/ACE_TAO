@@ -1,3 +1,19 @@
+Fri Sep  8 21:33:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/Makefile:
+
+	  New file:
+	* TAO_IDL/Makefile.dependencies:
+
+	  New simple makefile, called by the top level makefile for
+	  tao_idl, that touches (updates the timestamp) on the tao_idl
+	  executable if either the FE or the BE library has been modfied.
+	  Now that the IDL compiler is in three parts, this is necessary
+	  to cause code regeneration if _any_ part of the IDL compiler
+	  has been mofified. Thanks to Nanbor for his help with this.
+	  Note that a similiar scheme for Win32 platforms must still
+	  be put in place.
+
 Fri Sep  8 21:00:01 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ be/be_visitor_argument/arglist.cpp:
