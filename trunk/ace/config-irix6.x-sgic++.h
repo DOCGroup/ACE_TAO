@@ -45,6 +45,9 @@
 // Compiler/platform has thread-specific storage
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
+// The pthread_cond_timedwait call does not reset the timer.
+#define ACE_LACKS_COND_TIMEDWAIT_RESET 1
+
 // Scheduling functions are declared in <sched.h>
 #define ACE_NEEDS_SCHED_H
 
