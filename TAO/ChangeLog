@@ -1,3 +1,12 @@
+Tue Mar  1 01:46:22 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_interface/amh_si.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+	* tao/PortableServer/Servant_Base.cpp:
+
+	  Fixed inconsistencies in AMH skeleton function parameter order.
+	  Addresses regressions in the Bug_1670_Regression test.
+
 Tue Mar  1 00:47:51 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/CORBALOC_Parser.cpp:
