@@ -39,7 +39,6 @@ public class PushConsumerFactory
 	else { // not running as an Applet, but as an normal Application
 	  orb_ = org.omg.CORBA.ORB.init (args, null);
 	}
-	// @@ no more boa_init
 	
 	// Get the Naming Service initial reference
 	
@@ -51,8 +50,8 @@ public class PushConsumerFactory
 	
 	if (nameServiceIOR == null) {  // only used when running via "java" or "vbj"     
 	  System.out.println ("Using the lookup protocol!");
-	  NS_Resolve ns_resolve_ = new NS_Resolve ();
-	  naming_service_object_ = ns_resolve_.resolve_name_service (orb_);
+	  NS_Resolve ns_resolve = new NS_Resolve ();
+	  naming_service_object_ = ns_resolve.resolve_name_service (orb_);
 	}
 	else {
 	  System.out.println ("Using the following IOR: " + nameServiceIOR);
@@ -85,7 +84,7 @@ public class PushConsumerFactory
 	  CosNaming.NamingContext naming_context = 
 	    CosNaming.NamingContextHelper.narrow (naming_service_object_);
 	  
-	  if (naming_context_ == null)
+	  if (naming_context == null)
 	    {
 	      System.err.println ("The Naming Context is null");
 	      System.exit (1);
@@ -96,7 +95,7 @@ public class PushConsumerFactory
 
 	  CosNaming.NameComponent[] ec_name_components = new CosNaming.NameComponent[1];
 	  ec_name_components[0] = new CosNaming.NameComponent ("EventService","");
-	  org.omg.CORBA.Object event_channel_object = naming_context.resolve (ec_name_components_);
+	  org.omg.CORBA.Object event_channel_object = naming_context.resolve (ec_name_components);
 
 	  if (event_channel_object == null)
 	    {
@@ -104,7 +103,7 @@ public class PushConsumerFactory
 	    }
 	  
        	  RtecEventChannelAdmin.EventChannel event_channel = 
-	    RtecEventChannelAdmin.EventChannelHelper.narrow (event_channel_object_);
+	    RtecEventChannelAdmin.EventChannelHelper.narrow (event_channel_object);
 
 	  System.out.println ("Reference to the Event Service is ok.");
 
