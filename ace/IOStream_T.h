@@ -23,7 +23,7 @@
 #define ACE_IOSTREAM_T_H
 
 #include "ace/IOStream.h"
-#include <iomanip.h>
+#include "ace/stdcpp.h" // for iomanip[.h]
 
 #if defined (ACE_HAS_STRING_CLASS)
 template <class STREAM> STREAM & operator>> (STREAM &stream, ACE_Quoted_String &str);

@@ -4,9 +4,7 @@
 #define ACE_BUILD_DLL
 #include "ace/Log_Record.h"
 
-#if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
-# include /**/ <iostream.h>
-#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
+#include "ace/stdcpp.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Record)
 

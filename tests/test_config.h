@@ -14,8 +14,7 @@
 #if !defined (ACE_TEST_CONFIG_H)
 #define ACE_TEST_CONFIG_H
 
-#include <iostream.h>
-#include <fstream.h>
+#include "ace/stdcpp.h"
 
 #if !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
 class KEY

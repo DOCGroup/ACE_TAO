@@ -2,6 +2,7 @@
 // $Id$
 
 #define ACE_BUILD_DLL
+
 // We need this to get the status of ACE_NTRACE...
 #include "ace/config.h"
 
@@ -43,7 +44,7 @@ static ACE_FIFO_Send_Msg message_queue_;
 #endif /* ACE_WIN32 */
 
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
-# include /**/ <iostream.h>
+# include "ace/stdcpp.h"
 #endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
@@ -472,7 +473,6 @@ ACE_Log_Msg::~ACE_Log_Msg (void)
 }
 
 // Open the sender-side of the Message ACE_Queue.
-
 int
 ACE_Log_Msg::open (const char *prog_name,
 		   u_long flags,
