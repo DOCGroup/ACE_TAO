@@ -4,6 +4,8 @@
 ACE_INLINE
 ACE_Local_Memory_Pool::~ACE_Local_Memory_Pool (void)
 {
+  // Free up all memory allocated by this pool.
+  this->release ();
 }
 
 ACE_INLINE int

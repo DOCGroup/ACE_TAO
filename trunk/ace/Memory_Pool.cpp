@@ -63,7 +63,7 @@ ACE_Local_Memory_Pool::release (void)
        i != this->allocated_chunks_.end ();
        ++i)
     delete [] *i;
-
+  this->allocated_chunks_.reset ();
   return 0;
 }
 
