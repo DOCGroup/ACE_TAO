@@ -1,6 +1,30 @@
 # $Id$
-
+#
 # VxWorks 5.2-5.3.1 with Green Hills 1.8.8
+
+#### Notes:
+#### 1) This file requires that your PATH be set to include the location
+####    of the Green Hills executables.  And, it usually requires that
+####    WIND_BASE and WIND_HOST_TYPE be set.
+####
+#### 2) If your CPU is not a ppc, you'll need to set your CPU environment
+####    variable.
+####
+#### 3) You'll probably need to set your GHS environment variable to the
+####    location of your Green Hills executables.
+####
+#### Here's an example platform_macros.GNU file:
+####
+#### WIND_BASE = /project/doc/wind
+#### WIND_HOST_TYPE = sun4-solaris2
+####
+#### ifeq (,$(findstring /project/doc/green,$PATH))
+####   PATH +=:/project/doc/green
+#### endif # PATH
+####
+#### CPU = 86
+#### GHS = /project/doc/green/vx$(CPU)
+#### include $(ACE_ROOT)/include/makeinclude/platform_vxworks5.x_ghs.GNU
 
 VXWORKS = 1
 CROSS-COMPILE = 1
@@ -9,16 +33,41 @@ debug = 1
 shared_libs =
 static_libs = 1
 
-CC              = cxvxppc
+
+#### CPU type
+ifndef CPU
+  CPU = ppc
+endif # CPU
+
+#### Green Hills location, and target-specific definitions.
+ifeq ($(CPU),86)
+  # Without this RANLIB, ld386 complains that it can't read the
+  # archive symbol table.
+  RANLIB = $(WIND_BASE)/host/$(WIND_HOST_TYPE)/bin/ranlib386
+  ifndef GHS
+    GHS = /project/doc/green/vx$(CPU)
+  endif # GHS
+else
+ifeq ($(CPU,ppc)
+  ifndef GHS
+    GHS = /appl/newgreen/vx$(CPU)603
+  endif # GHS
+endif # ppc
+endif # CPU
+
+
+CC              = cxvx$(CPU)
 CXX             = $(CC)
 CCFLAGS         += $(CFLAGS) --no_rtti -tnone
 DCFLAGS         += -g
 DLD             = $(CXX)
 LD              = $(CXX)
 LDFLAGS         = --no_auto_instantiation
-LIBS            += /appl/newgreen/vxppc603/ghsbltin.o /appl/newgreen/vxppc603/ghsmath.o
+LIBS            += $(GHS)/ghsbltin.o $(GHS)/ghsmath.o
 OCFLAGS         += -OL -OM
 PIC             =
 AR              = ax
-ARFLAGS         = rv
-RANLIB          = /bin/true
+ARFLAGS         = r
+ifndef RANLIB
+  RANLIB        = /bin/true
+endif # RANLIB
