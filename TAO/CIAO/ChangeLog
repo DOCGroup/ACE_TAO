@@ -1,3 +1,18 @@
+Wed Jun 30 09:26:42 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/Hello/Sender/starter.cpp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.cpp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_exec.cpp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_exec.h:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.cpp:
+        * examples/OEP/BasicSP/EC/controller.cpp:
+        * examples/OEP/Display/NavDisplay/NavDisplay_exec.cpp:
+        * examples/OEP/Display/RateGen/RateGen_exec.cpp:
+        * examples/OEP/Display/RateGen/controller.cpp:
+        
+          Changes to eliminate build warnings (mostly assignments of
+          const char* to char*) and cosmetic changes.
+
 Wed Jun 30 08:37:15 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Hello/Receiver/Receiver_exec.cpp:

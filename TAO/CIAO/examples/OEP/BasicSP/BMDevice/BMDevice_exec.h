@@ -90,7 +90,7 @@ namespace MyImpl
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
   protected:
-    char *str_;
+    const char *str_;
 
    /// Copmponent specific context
     BasicSP::CCM_BMDevice_Context_var context_;
