@@ -692,8 +692,9 @@ private:
 # define ACE_BIT_CMP_MASK(WORD, BIT, MASK) (((WORD) & (BIT)) == MASK)
 # define ACE_SET_BITS(WORD, BITS) (WORD |= (BITS))
 # define ACE_CLR_BITS(WORD, BITS) (WORD &= ~(BITS))
-# define ACE_MAX(x,y) (((x)>(y))?(x):(y))
-# define ACE_MIN(x,y) (((y)>(x))?(x):(y))
+
+// include the ACE min()/max() functions.
+# include "ace/Min_Max.h"
 
 // Keep the compiler from complaining about parameters which are not used.
 # if defined (ghs) || defined (__GNUC__) || defined (__hpux) || defined (__sgi) || defined (__DECCXX) || defined (__KCC) || defined (__rational__) || (__USLC__)
