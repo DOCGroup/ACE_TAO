@@ -1017,10 +1017,9 @@ be_interface::convert_parent_ops (be_visitor *visitor)
 void
 be_interface::gen_gperf_input_header (TAO_OutStream *os)
 {
-  *os << "class TAO_operation_db_entry {\n"
-      << "public:\n"
-      << "\tchar *opname_;" << "\n"
-      << "\tTAO_Skeleton skel_ptr_;" << "\n"
+  *os << "struct TAO_operation_db_entry {\n"
+      << "\tchar * opname;" << "\n"
+      << "\tTAO_Skeleton skel_ptr;" << "\n"
       << "};" << "\n"
       << "%%"
       << "\n";

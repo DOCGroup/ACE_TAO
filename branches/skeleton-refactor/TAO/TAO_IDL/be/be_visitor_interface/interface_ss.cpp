@@ -608,8 +608,7 @@ be_visitor_interface_ss::dispatch_method (be_interface *node)
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << "this->synchronous_upcall_dispatch (req," << be_nl
-      << "                                   servant_upcall," << be_nl
-      << "                                   this" << be_nl
+      << "                                   servant_upcall" << be_nl
       << "                                   ACE_ENV_ARG_PARAMETER);"
       << be_uidt_nl;
   *os << "}";

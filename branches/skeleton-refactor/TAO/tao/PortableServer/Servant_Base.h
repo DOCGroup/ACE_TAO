@@ -96,10 +96,10 @@ public:
                      TAO::Collocation_Strategy st,
                      const unsigned int length = 0);
 
-protected:
-
   /// Get this interface's repository id (TAO specific).
   virtual const char *_interface_repository_id (void) const = 0;
+
+protected:
 
   /// Default constructor, only derived classes can be created.
   TAO_ServantBase (TAO_Operation_Table * optable = 0);
@@ -111,13 +111,11 @@ protected:
   TAO_ServantBase &operator= (const TAO_ServantBase &);
 
   virtual void synchronous_upcall_dispatch (TAO_ServerRequest &req,
-                                            void *servant_upcall,
-                                            void *derived_this
+                                            void *servant_upcall
                                             ACE_ENV_ARG_DECL);
 
   virtual void asynchronous_upcall_dispatch (TAO_ServerRequest &req,
-                                             void *servant_upcall,
-                                             void *derived_this
+                                             void *servant_upcall
                                              ACE_ENV_ARG_DECL);
 
 protected:
