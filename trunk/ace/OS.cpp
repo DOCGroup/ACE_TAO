@@ -1442,19 +1442,19 @@ template class ACE_TSS<ACE_TSS_Keys>;
 void
 ACE_OS::cleanup_tss (const u_int main_thread)
 {
-#if defined (ACE_HAS_TSS_EMULATION)
+#if defined (ACE_HAS_TSS_EMULATION) || defined (ACE_WIN32)
   // Call TSS destructors for current thread.
   ACE_TSS_Cleanup::instance ()->exit (0);
-#endif /* ACE_HAS_TSS_EMULATION */
+#endif /* ACE_HAS_TSS_EMULATION || ACE_WIN32 */
 
   if (main_thread)
     {
-#if !defined (ACE_HAS_TSS_EMULATION)
+#if ! (defined (ACE_HAS_TSS_EMULATION) || defined (ACE_WIN32))
   // Just close the ACE_Log_Msg for the current (which should be main) thread.
   // We don't have TSS emulation; if there's native TSS, it should call its
   // destructors when the main thread exits.
       ACE_Log_Msg::close ();
-#endif /* ! ACE_HAS_TSS_EMULATION */
+#endif /* ! ACE_HAS_TSS_EMULATION || ACE_WIN32 */
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
       // Remove all TSS_Info table entries.
@@ -1464,10 +1464,6 @@ ACE_OS::cleanup_tss (const u_int main_thread)
       delete ACE_TSS_Cleanup::instance ();
 #endif /* WIN32 || ACE_HAS_TSS_EMULATION */
     }
-#if defined (ACE_WIN32)
-  else
-    ACE_TSS_Cleanup::instance ()->exit (0);
-#endif /* ACE_WIN32 */
 }
 
 void
@@ -2207,7 +2203,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     }
 #    if 0
   *thr_handle = ::CreateThread
-    (0, 
+    (0,
      stacksize,
      LPTHREAD_START_ROUTINE (ACE_THREAD_FUNCTION),
      ACE_THREAD_ARGUMENT,
