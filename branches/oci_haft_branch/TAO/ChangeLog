@@ -1,3 +1,28 @@
+Mon Nov  3 17:29:58 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* orbsvcs/examples/FaultTolerance/Makefile:
+	* orbsvcs/examples/FaultTolerance/RolyPoly/CrashPoint.cpp:
+	* orbsvcs/examples/FaultTolerance/RolyPoly/CrashPoint.h:
+	* orbsvcs/examples/FaultTolerance/RolyPoly/Log.h:
+	* orbsvcs/examples/FaultTolerance/RolyPoly/LogACE_RB_Tree.h:
+	* orbsvcs/examples/FaultTolerance/RolyPoly/LogStdMap.h:
+	* orbsvcs/examples/FaultTolerance/RolyPoly/Makefile:
+	* orbsvcs/examples/FaultTolerance/RolyPoly/ORB_Initializer.cpp:
+	* orbsvcs/examples/FaultTolerance/RolyPoly/ORB_Initializer.h:
+	* orbsvcs/examples/FaultTolerance/RolyPoly/README:
+	* orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
+	* orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.h:
+	* orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly.idl:
+	* orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly_i.cpp:
+	* orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly_i.h:
+	* orbsvcs/examples/FaultTolerance/RolyPoly/StateUpdate.h:
+	* orbsvcs/examples/FaultTolerance/RolyPoly/client.cpp:
+	* orbsvcs/examples/FaultTolerance/RolyPoly/server.cpp:
+
+ 	  RolyPoly is a simple example that shows how to increase 
+	  application reliability by using replication to tolerate 
+	  faults. See README for details.
+
 Mon Nov  3 16:09:59 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.h:
