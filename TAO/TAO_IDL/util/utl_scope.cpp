@@ -1085,6 +1085,11 @@ AST_Decl *
 UTL_Scope::lookup_by_name_local (Identifier *e,
                                  long index)
 {
+  if (index > 0 && index == (long )this->nmembers ())
+    {
+      return 0;
+    }
+
   // Temporary hack to disallow 'fixed' without 
   // implementing all the classes for it.
   UTL_String arg (e->get_string ());
