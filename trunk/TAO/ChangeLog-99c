@@ -1,3 +1,13 @@
+Thu Dec  2 14:44:28 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* performance-tests/Makefile
+	* performance-tests/README
+	* performance-tests/RTCorba/Makefile
+	* performance-tests/RTCorba/Oneways/Makefile:
+	  Added/updated the above Makefiles so that all recently added
+	  RTCorba benchmarks get compiled with the rest of the
+	  performance-tests.
+
 Thu Dec  2 11:41:37 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
