@@ -229,19 +229,13 @@ public:
                         int encode = 1);
 
   /**
-   * Set the host name without effecting the port number.
-   */
-  int set_host_name (const char host_name[],
-                     int address_family = AF_UNSPEC);
-
-  /**
    * Sets the address without affecting the port number.  If
    * <encode> is enabled then <ip_addr> is converted into network
    * byte order, otherwise it is assumed to be in network byte order
    * already and are passed straight through.  The size of the address
    * is specified in the <len> parameter.
    */
-  int set_address (const void *ip_addr,
+  int set_address (const char *ip_addr,
                    int len,
                    int encode = 1);
 
@@ -253,7 +247,7 @@ public:
    * storing it in the <hostname> (which is assumed to be
    * <hostnamelen> bytes long).  This version is reentrant.  If
    * <hostnamelen> is greater than 0 then <hostname> will be
-   * NUL-terminated even if -1 is returned.
+   * NUL-terminated even if -1 is returned. 
    */
   int get_host_name (char hostname[],
                      size_t hostnamelen) const;
