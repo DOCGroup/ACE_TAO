@@ -1,3 +1,9 @@
+Tue Mar 15 13:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Removed Two_Objects tests, it is already in the orb core test
+          list, no need to run it twice
+
 Mon Mar 14 16:32:08 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* protocols/ace/RMCast/Socket.h:
