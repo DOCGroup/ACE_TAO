@@ -101,12 +101,17 @@ int be_visitor_args_request_info_arglist::visit_array (be_array *node)
     {
     case AST_Argument::dir_IN:
       {
-        if (scope == this->ctx_->scope ())
+        if (scope == this->ctx_->scope ()
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "const ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
 	          *os << bt->local_name ();
 	          *os << ")";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
           {
@@ -117,12 +122,17 @@ int be_visitor_args_request_info_arglist::visit_array (be_array *node)
       }
     case AST_Argument::dir_INOUT:
       {
-        if (scope == this->ctx_->scope ())
+        if (scope == this->ctx_->scope ()
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
 	          *os << bt->local_name ();
 	          *os << ")";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
           {
@@ -133,12 +143,17 @@ int be_visitor_args_request_info_arglist::visit_array (be_array *node)
       }
     case AST_Argument::dir_OUT:
       {
-        if (scope == this->ctx_->scope ())
+        if (scope == this->ctx_->scope ()
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
 	          *os << bt->local_name ();
 	          *os << "_out)";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
           {
@@ -178,12 +193,17 @@ int be_visitor_args_request_info_arglist::visit_enum (be_enum *node)
     {
     case AST_Argument::dir_IN:
       {
-        if (scope == this->ctx_->scope ())
+        if (scope == this->ctx_->scope ()
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "const ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
 	          *os << bt->local_name ();
 	          *os << ")" << " &";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
           {
@@ -194,12 +214,17 @@ int be_visitor_args_request_info_arglist::visit_enum (be_enum *node)
       }
     case AST_Argument::dir_INOUT:
       {
-        if (scope == this->ctx_->scope ())
+        if (scope == this->ctx_->scope ()
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
 	          *os << bt->local_name ();
 	          *os << ") &";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
           {
@@ -210,12 +235,17 @@ int be_visitor_args_request_info_arglist::visit_enum (be_enum *node)
       }
     case AST_Argument::dir_OUT:
       {
-        if (scope == this->ctx_->scope ())
+        if (scope == this->ctx_->scope ()
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
 	          *os << bt->local_name ();
 	          *os << "_out)";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
           {
@@ -319,12 +349,17 @@ int be_visitor_args_request_info_arglist::visit_predefined_type (
         {
         case AST_Argument::dir_IN:
           {
-            if (scope == this->ctx_->scope ())
+            if (scope == this->ctx_->scope ()
+                && this->ctx_->sub_state () 
+                     == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
               {
                 *os << "const ACE_NESTED_CLASS (";
 	              *os << scope->name () << ",";
 	              *os << bt->local_name ();
 	              *os << ")" << " &";
+
+                // Reset the substate.
+                this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
               }
             else
               {
@@ -335,12 +370,17 @@ int be_visitor_args_request_info_arglist::visit_predefined_type (
           }
         case AST_Argument::dir_INOUT:
           {
-            if (scope == this->ctx_->scope ())
+            if (scope == this->ctx_->scope ()
+                && this->ctx_->sub_state () 
+                     == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
               {
                 *os << "ACE_NESTED_CLASS (";
 	              *os << scope->name () << ",";
 	              *os << bt->local_name ();
 	              *os << ")" << " &";
+
+                // Reset the substate.
+                this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
               }
             else
               {
@@ -351,12 +391,17 @@ int be_visitor_args_request_info_arglist::visit_predefined_type (
           }
         case AST_Argument::dir_OUT:
           {
-            if (scope == this->ctx_->scope ())
+            if (scope == this->ctx_->scope ()
+                && this->ctx_->sub_state () 
+                     == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
               {
                 *os << "ACE_NESTED_CLASS (";
 	              *os << scope->name () << ",";
 	              *os << bt->local_name ();
 	              *os << "_out)";
+
+                // Reset the substate.
+                this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
               }
             else
               {
@@ -388,12 +433,17 @@ int be_visitor_args_request_info_arglist::visit_predefined_type (
         {
         case AST_Argument::dir_IN:
           {
-            if (scope == this->ctx_->scope ())
+            if (scope == this->ctx_->scope ()
+                && this->ctx_->sub_state () 
+                     == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
               {
                 *os << "const ACE_NESTED_CLASS (";
 	              *os << scope->name () << ",";
 	              *os << bt->local_name ();
 	              *os << ")" << " &";
+
+                // Reset the substate.
+                this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
               }
             else
               {
@@ -404,12 +454,17 @@ int be_visitor_args_request_info_arglist::visit_predefined_type (
           }
         case AST_Argument::dir_INOUT:
           {
-            if (scope == this->ctx_->scope ())
+            if (scope == this->ctx_->scope ()
+                && this->ctx_->sub_state () 
+                     == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
               {
                 *os << "ACE_NESTED_CLASS (";
 	              *os << scope->name () << ",";
 	              *os << bt->local_name ();
 	              *os << ")" << " &";
+
+                // Reset the substate.
+                this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
               }
             else
               {
@@ -420,12 +475,17 @@ int be_visitor_args_request_info_arglist::visit_predefined_type (
           }
         case AST_Argument::dir_OUT:
           {
-            if (scope == this->ctx_->scope ())
+            if (scope == this->ctx_->scope ()
+                && this->ctx_->sub_state () 
+                     == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
               {
                 *os << "ACE_NESTED_CLASS (";
 	              *os << scope->name () << ",";
 	              *os << bt->local_name ();
 	              *os << "_out)";
+
+                // Reset the substate.
+                this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
               }
             else
               {
@@ -466,12 +526,17 @@ int be_visitor_args_request_info_arglist::visit_sequence (be_sequence *node)
     {
     case AST_Argument::dir_IN:
       {
-        if (scope == this->ctx_->scope ())
+        if (scope == this->ctx_->scope ()
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "const ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
 	          *os << bt->local_name ();
 	          *os << ") &";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
           {
@@ -482,12 +547,17 @@ int be_visitor_args_request_info_arglist::visit_sequence (be_sequence *node)
       }
     case AST_Argument::dir_INOUT:
       {
-        if (scope == this->ctx_->scope ())
+        if (scope == this->ctx_->scope ()
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
 	          *os << bt->local_name ();
 	          *os << ") &";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
           {
@@ -498,12 +568,17 @@ int be_visitor_args_request_info_arglist::visit_sequence (be_sequence *node)
       }
     case AST_Argument::dir_OUT:
       {
-        if (scope == this->ctx_->scope ())
+        if (scope == this->ctx_->scope ()
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
 	          *os << bt->local_name ();
 	          *os << "_out)";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
           {
@@ -581,12 +656,17 @@ int be_visitor_args_request_info_arglist::visit_structure (be_structure *node)
     {
     case AST_Argument::dir_IN:
       {
-        if (scope == this->ctx_->scope ())
+        if (scope == this->ctx_->scope ()
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "const ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
 	          *os << bt->local_name ();
 	          *os << ") &";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
           {
@@ -597,12 +677,17 @@ int be_visitor_args_request_info_arglist::visit_structure (be_structure *node)
       }
     case AST_Argument::dir_INOUT:
       {
-        if (scope == this->ctx_->scope ())
+        if (scope == this->ctx_->scope ()
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
 	          *os << bt->local_name ();
 	          *os << ") &";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
           {
@@ -613,12 +698,17 @@ int be_visitor_args_request_info_arglist::visit_structure (be_structure *node)
       }
     case AST_Argument::dir_OUT:
       {
-        if (scope == this->ctx_->scope ())
+        if (scope == this->ctx_->scope ()
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
 	          *os << bt->local_name ();
 	          *os << "_out)";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
           {
@@ -658,12 +748,17 @@ int be_visitor_args_request_info_arglist::visit_union (be_union *node)
     {
     case AST_Argument::dir_IN:
       {
-        if (scope == this->ctx_->scope ())
+        if (scope == this->ctx_->scope ()
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "const ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
 	          *os << bt->local_name ();
 	          *os  << ") &";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
           {
@@ -674,12 +769,17 @@ int be_visitor_args_request_info_arglist::visit_union (be_union *node)
       }
     case AST_Argument::dir_INOUT:
       {
-        if (scope == this->ctx_->scope ())
+        if (scope == this->ctx_->scope ()
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
 	          *os << bt->local_name ();
 	          *os  << ") &";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
           {
@@ -690,12 +790,17 @@ int be_visitor_args_request_info_arglist::visit_union (be_union *node)
       }
     case AST_Argument::dir_OUT:
       {
-        if (scope == this->ctx_->scope ())
+        if (scope == this->ctx_->scope ()
+            && this->ctx_->sub_state () 
+                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
 	          *os << bt->local_name ();
 	          *os  << "_out)";
+
+            // Reset the substate.
+            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
           }
         else
           {
