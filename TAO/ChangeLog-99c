@@ -1,3 +1,8 @@
+Mon Oct 11 21:39:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/DSI_Gateway/test_dsi.cpp:
+	  Removed memory leak.
+
 Mon Oct 11 16:41:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Makefile:
