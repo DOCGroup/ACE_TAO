@@ -1,3 +1,9 @@
+Sat Mar 16 09:07:20 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* TAOACE.dsw: Added Messaging DLL as a dependency to the
+	  Event_Service and add TAO DLL as a dependency to the Messaging
+	  DLL.  
+
 Sat Mar 16 11:35:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orsvcs/orbsvcs/CosNaming.bor:
