@@ -1,3 +1,10 @@
+Sat Jun 27 01:06:24 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Log/Logger_i.cpp (log): Commented out unused.
+  	  Cast the 0 passed to ACE_INET_Addr to int explicitly.
+  	  (Otherwise, the compiler can't tell whether it's a NULL ptr or
+ 	  int 0.)
+
 Fri Jun 26 21:24:58 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Cubit/TAO/Makefile: Removed DII_Cubit for now until
