@@ -1,10 +1,10 @@
 Wed Aug 11 17:00:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/Cached_Accept_Conn_Test.cpp:
-	  Removed run_event_loop and end_event_loop and put in
-	  handle_events with a flag to stop the loop. This is a bug fix
-	  for Bug183.
-		 	
+        * tests/Cached_Accept_Conn_Test.cpp:
+          Removed run_event_loop and end_event_loop and put in
+          handle_events with a flag to stop the loop. This is a bug fix
+          for Bug183.
+
 Wed Aug 11 15:49:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: cleaned up ACE doc tool discussion.
