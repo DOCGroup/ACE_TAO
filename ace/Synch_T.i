@@ -5,8 +5,6 @@
 
 #include "ace/Thread.h"
 
-#if defined (ACE_LACKS_METHOD_DEFINITIONS_IN_CLASS_TEMPLATE)
-
 template <class ACE_LOCK> ACE_INLINE
 ACE_Guard<ACE_LOCK>::ACE_Guard (ACE_LOCK &l)
   : lock_ (&l)
@@ -80,8 +78,6 @@ ACE_Guard<ACE_LOCK>::remove (void)
   return this->lock_->remove ();
 }
 // Explicitly remove the lock.
-
-#endif /* defined (ACE_LACKS_METHOD_DEFINITIONS_IN_CLASS_TEMPLATE) */
 
 template <class ACE_LOCKING_MECHANISM> ACE_INLINE
 ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::ACE_Lock_Adapter (ACE_LOCKING_MECHANISM &lock)
