@@ -1,5 +1,9 @@
 Thu Mar 20 18:58:50 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace: Made a bunch of minor changes to support SunOS 4.x better.
+	  Thanks to Scott Halstead <scott.halstead@gs.com> for reporting
+	  these problems.
+
 	* tests/Conn_Test.cpp: Added ACE_TEMPLATES_REQUIRE_SPECIALIZATION
  	  for the various templates used in this test.  Thanks to Thilo
  	  Kielmann <kielmann@informatik.uni-siegen.de> for reporting this.
