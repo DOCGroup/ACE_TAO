@@ -43,15 +43,15 @@ class ACE_Export ACE_Sig_Set
 {
 public:
   // = Initialization and termination methods.
-  /// Initialize <sigset_> with <sigset>.  If <sigset> == 0 then fill
+  /// Initialize <sigset_> with @a sigset.  If @a sigset == 0 then fill
   /// the set.
   ACE_Sig_Set (sigset_t *sigset);
 
-  /// Initialize <sigset_> with <sigset>.  If <sigset> == 0 then fill
+  /// Initialize <sigset_> with @a sigset.  If @a sigset == 0 then fill
   /// the set.
   ACE_Sig_Set (ACE_Sig_Set *sigset);
 
-  /// If <fill> == 0 then initialize the <sigset_> to be empty, else
+  /// If @a fill == 0 then initialize the <sigset_> to be empty, else
   /// full.
   ACE_Sig_Set (int fill = 0);
 

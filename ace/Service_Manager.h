@@ -61,7 +61,7 @@ protected:
   // = Perform the various meta-services.
 
   /// Trigger a reconfiguration of the Service Configurator by
-  //re-reading its local <svc.conf> file.
+  /// re-reading its local <svc.conf> file.
   virtual int reconfigure_services (void);
 
   /// Determine all the services offered by this daemon and return the
