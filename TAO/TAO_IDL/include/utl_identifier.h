@@ -81,19 +81,30 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include	"idl_fwd.h"
 #include	"utl_string.h"
 
-class Identifier {
-  public:
-    // Constructor(s)
-    Identifier();
-    Identifier(char *s, long x=1, long y=0, long z=I_FALSE);
-    virtual ~Identifier();
+class Identifier 
+{
+public:
+  Identifier ();
+  // Default Constructor(s)
+  
+  Identifier (char *s, long x=1, long y=0, long z=I_FALSE);
+  // constructor
 
-    // Operations
-    char	*get_string();
-    long	compare(Identifier *other);
+  virtual ~Identifier ();
+  // destructor
+  
+  // =Operations
 
-    // Dumping
-    virtual void	dump(ostream &o);
+  char	*get_string ();
+  // get the underlying string
+
+  long	compare (Identifier *other);
+  // compare with other Identifier
+  
+  // =Dumping
+
+  virtual void	dump (ostream &o);
+  // dump to an ostream
 
   private:
     // Storage for data
