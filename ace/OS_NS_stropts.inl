@@ -110,7 +110,7 @@ ACE_OS::ioctl (ACE_HANDLE handle,
 
 #if defined (ACE_WIN32)
   ACE_SOCKET sock = (ACE_SOCKET) handle;
-  ACE_SOCKCALL_RETURN (::ioctlsocket (sock, cmd, (unsigned long *) val), int, -1);
+  ACE_SOCKCALL_RETURN (::ioctlsocket (sock, cmd, reinterpret_cast<unsigned long *> (val)), int, -1);
 #elif defined (VXWORKS)
   ACE_OSCALL_RETURN (::ioctl (handle, cmd, reinterpret_cast<int> (val)),
                      int, -1);

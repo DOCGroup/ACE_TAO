@@ -79,6 +79,8 @@
 #define ACE_LACKS_KEY_T
 
 /****** Posix Defines *****/
+#define ACE_LACKS_WAIT
+#define ACE_LACKS_WAITPID
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_POSIX_SEM
 #define ACE_HAS_STRDUP_EMULATION

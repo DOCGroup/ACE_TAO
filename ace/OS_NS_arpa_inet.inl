@@ -9,7 +9,7 @@ ACE_INLINE unsigned long
 ACE_OS::inet_addr (const char *name)
 {
   ACE_OS_TRACE ("ACE_OS::inet_addr");
-#if defined (VXWORKS) || defined (ACE_PSOS)
+#if defined (ACE_PSOS)
 
   u_long ret = 0;
   u_int segment;
@@ -43,7 +43,7 @@ ACE_OS::inet_addr (const char *name)
     }
   return valid ? htonl (ret) : INADDR_NONE;
 #elif defined (ACE_HAS_NONCONST_GETBY)
-  return ::inet_addr ((char *) name);
+  return ::inet_addr (const_cast <char*> (name));
 #else
   return ::inet_addr (name);
 #endif /* ACE_HAS_NONCONST_GETBY */

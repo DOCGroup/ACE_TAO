@@ -71,6 +71,10 @@ public:
   bool operator!= (int error);
 
 private:
+  // Prevent copying
+  ACE_Errno_Guard (const ACE_Errno_Guard &);
+  ACE_Errno_Guard &operator= (const ACE_Errno_Guard &);
+
 #if defined (ACE_MT_SAFE)
   ACE_ERRNO_TYPE *errno_ptr_;
 #endif /* ACE_MT_SAFE */

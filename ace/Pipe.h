@@ -43,7 +43,7 @@ public:
   /// Open the pipe and initialize the handles.
   ACE_Pipe (ACE_HANDLE handles[2]);
 
-  /// Initialize the <ACE_Pipe> from the <read> and <write> handles.
+  /// Initialize the ACE_Pipe from the @a read and @a write handles.
   ACE_Pipe (ACE_HANDLE read, ACE_HANDLE write);
 
   /// Default dtor.  It doesn't close the handles for you.

@@ -521,7 +521,7 @@ typedef ACE_HANDLE ACE_SOCKET;
 // indicate that the actual thread function doesn't return anything. The
 // rest of ACE uses a real type so there's no a ton of conditional code
 // everywhere to deal with the possibility of no return type.
-# if defined (VXWORKS)
+# if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
 # include /**/ <taskLib.h>
 typedef int ACE_THR_FUNC_RETURN;
 # elif defined (ACE_PSOS)
@@ -541,7 +541,7 @@ typedef void (*ACE_THR_C_DEST)(void *);
 typedef void (*ACE_THR_DEST)(void *);
 
 // Now some platforms have special requirements...
-# if defined (VXWORKS)
+# if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
 typedef FUNCPTR ACE_THR_FUNC_INTERNAL;  // where typedef int (*FUNCPTR) (...)
 # elif defined (ACE_PSOS)
 typedef void (*ACE_THR_FUNC_INTERNAL)(void *);
@@ -551,7 +551,7 @@ typedef ACE_THR_FUNC ACE_THR_FUNC_INTERNAL;
 
 extern "C"
 {
-# if defined (VXWORKS)
+# if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
 typedef FUNCPTR ACE_THR_C_FUNC;  // where typedef int (*FUNCPTR) (...)
 # elif defined (ACE_PSOS)
 // needed to handle task entry point type inconsistencies in pSOS+

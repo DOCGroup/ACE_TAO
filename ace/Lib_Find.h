@@ -49,7 +49,7 @@ namespace ACE
                                   const ACE_TCHAR *type);
 
   /**
-   * Transforms <entry_point> into a form that can be located in a
+   * Transforms @a entry_point into a form that can be located in a
    * dynamic library using <dlsym>. For example, with Win32/Borland
    * extern "C" functions which use the default calling convention
    * have a '_' prepended. Always returns a buffer that has been
@@ -59,7 +59,7 @@ namespace ACE
 
   /**
    * Returns the temporary directory including the trailing slash in
-   * <buffer>.  Returns -1 for an error or if the buffer_len is not
+   * @a buffer.  Returns -1 for an error or if the buffer_len is not
    * long enough.
    */
   extern ACE_Export int get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len);
@@ -74,7 +74,7 @@ namespace ACE
   // above, these are used only in the functions in this class. So it makes
   // more sense to move these functions too to this class.
   //
-  /// Replace all instances of <search> in <s> with <replace>.  Returns
+  /// Replace all instances of @a search in @a s with @a replace.  Returns
   /// the number of replacements made.
   extern ACE_Export size_t strrepl (char *s, char search, char replace);
 

@@ -672,13 +672,6 @@ private:
  * examples.
  *
  */
-template <class ACE_LOCK>
-class ACE_Malloc_Lock_Adapter_T
-{
-public:
-  ACE_LOCK * operator () (const ACE_TCHAR *name);
-};
-
 /*****************************************************************************/
 
 /**
@@ -879,6 +872,13 @@ public:
   /// through those entries whose @a name match.
   ACE_Malloc_FIFO_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,
                             const char *name = 0);
+};
+
+template <class ACE_LOCK>
+class ACE_Malloc_Lock_Adapter_T
+{
+public:
+  ACE_LOCK * operator () (const ACE_TCHAR *myname);
 };
 
 #if defined (__ACE_INLINE__)

@@ -1996,21 +1996,26 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
   *bp = '\0'; // Terminate bp, but don't auto-increment this!
 
-  // Check that memory was not corrupted.
+  ssize_t result = 0;
+
+  // Check that memory was not corrupted, if it corrupted we can't log anything
+  // anymore because all our members could be corrupted.
   if (bp >= this->msg_ + sizeof this->msg_)
     {
       abort_prog = 1;
       ACE_OS::fprintf (stderr,
                        "The following logged message is too long!\n");
     }
+  else
+    {
+      // Copy the message from thread-specific storage into the transfer
+      // buffer (this can be optimized away by changing other code...).
+      log_record.msg_data (this->msg ());
 
-  // Copy the message from thread-specific storage into the transfer
-  // buffer (this can be optimized away by changing other code...).
-  log_record.msg_data (this->msg ());
-
-  // Write the <log_record> to the appropriate location.
-  ssize_t result = this->log (log_record,
-                              abort_prog);
+      // Write the <log_record> to the appropriate location.
+      result = this->log (log_record,
+                          abort_prog);
+    }
 
   if (abort_prog)
     {
