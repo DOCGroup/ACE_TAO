@@ -17,8 +17,8 @@
 #if !defined (_RWHO_DB_MANAGER_H)
 #define _RWHO_DB_MANAGER_H
 
-#include "rwhod.h"
-#include "Dirent.h"
+#include <protocols/rwhod.h>
+#include "ace/Dirent.h"
 #include "Protocol_Record.h"
 
 class RWho_DB_Manager 
