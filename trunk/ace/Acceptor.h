@@ -55,24 +55,34 @@ public:
   ACE_Acceptor (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
 		ACE_Reactor * = ACE_Reactor::instance (),
 		int flags = 0,
-                int use_select = 1);
+                int use_select = 1,
+                int reuse_addr = 1);
   // Initialize and register <this> with the Reactor and listen for
   // connection requests at the designated <local_addr>.  <flags>
   // indicates how <SVC_HANDLER>'s should be initialized prior to
   // being activated.  Right now, the only flag that is processed is
   // <ACE_NONBLOCK>, which enabled non-blocking I/O on the
-  // <SVC_HANDLER> when it is opened.
+  // <SVC_HANDLER> when it is opened.  If <use_select> is non-zero
+  // then <select> is used to determine when to break out of the
+  // <accept> loop.  <reuse_addr> is passed down to the
+  // <PEER_ACCEPTOR>.  If it is non-zero this will allow the OS to
+  // reuse this listen port.
 
   int open (const ACE_PEER_ACCEPTOR_ADDR &, 
 	    ACE_Reactor * = ACE_Reactor::instance (),
 	    int flags = 0,
-            int use_select = 1);
+            int use_select = 1,
+            int reuse_addr = 1);
   // Initialize and register <this> with the Reactor and listen for
   // connection requests at the designated <local_addr>.  <flags>
   // indicates how <SVC_HANDLER>'s should be initialized prior to
   // being activated.  Right now, the only flag that is processed is
   // <ACE_NONBLOCK>, which enabled non-blocking I/O on the
-  // <SVC_HANDLER> when it is opened.
+  // <SVC_HANDLER> when it is opened.  If <use_select> is non-zero
+  // then <select> is used to determine when to break out of the
+  // <accept> loop.  <reuse_addr> is passed down to the
+  // <PEER_ACCEPTOR>.  If it is non-zero this will allow the OS to
+  // reuse this listen port.
 
   virtual ~ACE_Acceptor (void);
   // Close down the Acceptor's resources.
