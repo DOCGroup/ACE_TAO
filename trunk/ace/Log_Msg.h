@@ -94,6 +94,10 @@
   class ostream;
 #endif
 
+#if defined (__Lynx__)
+# undef STDERR
+#endif
+
 #define ACE_LOG_MSG ACE_Log_Msg::instance ()
 
 class ACE_Export ACE_Log_Msg 

@@ -544,6 +544,8 @@ ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
   ACE_UNUSED_ARG (argv);
   ACE_UNUSED_ARG (optstring);
   ACE_NOTSUP_RETURN (-1);
+#elif defined (__Lynx__)
+  ACE_OSCALL_RETURN (::getopt (argc, (char**) argv, optstring), int, -1);
 #elif defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::getopt (argc, (const char* const *) argv, optstring), int, -1);
 #else
@@ -1220,7 +1222,9 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 
 #if defined (ACE_HAS_DCETHREADS)
   if (::pthread_mutexattr_create (&attributes) == 0
+#if !defined (ACE_DOES_NOT_HAVE_SETKIND_NP)
       && ::pthread_mutexattr_setkind_np (&attributes, type) == 0
+#endif
       && ::pthread_mutex_init (m, attributes) == 0)
 #else
     if (::pthread_mutexattr_init (&attributes) == 0
@@ -4019,7 +4023,7 @@ ACE_OS::puts (const char *s)
 ACE_INLINE ACE_SignalHandler
 ACE_OS::signal (int signum, ACE_SignalHandler func)
 {
-#if !defined(ACE_HAS_TANDEM_SIGNALS)
+#if !defined (ACE_HAS_TANDEM_SIGNALS) && !defined (ACE_HAS_LYNXOS_SIGNALS)
     return ::signal (signum, func);
 #else
   return (ACE_SignalHandler) ::signal (signum, (void (*)(int)) func);
@@ -4527,6 +4531,11 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
 #else /* ACE_HAS_ONEARG_SETWAIT */
 #if defined (DIGITAL_UNIX)
   errno = ::__sigwaitd10 (set, sig);
+#elif defined (__Lynx__)
+  // Second arg is a void **, which we don't need (the selected
+  // signal number is returned).
+  *sig = ::sigwait (set, 0);
+  return *sig;
 #else
   errno = ::sigwait (set, sig);
 #endif /* DIGITAL_UNIX */
@@ -7156,7 +7165,7 @@ ACE_OS::nanosleep (const struct timespec *requested,
   // if ACE_HAS_CLOCK_GETTIME is defined, then ::nanosleep () should
   // be available on the platform.  On Solaris 2.x, both functions
   // require linking with -lposix4.
-  return ::nanosleep (requested, remaining);
+  return ::nanosleep ((ACE_TIMESPEC_PTR) requested, remaining);
 #else
   ACE_UNUSED_ARG (remaining);
 

@@ -1641,6 +1641,9 @@ typedef void (*ACE_SignalHandlerV)(int);
 #if defined (ACE_HAS_SIG_C_FUNC)
 }
 #endif /* ACE_HAS_SIG_C_FUNC */
+#elif defined (ACE_HAS_LYNXOS_SIGNALS)     
+typedef void (*ACE_SignalHandler)(...);    
+typedef void (*ACE_SignalHandlerV)(...);   
 #elif defined (ACE_HAS_TANDEM_SIGNALS)     
 typedef void (*ACE_SignalHandler)(...);    
 typedef void (*ACE_SignalHandlerV)(...);   
@@ -2204,6 +2207,12 @@ extern "C"
 #if !defined (ACE_LACKS_TCP_H)
 #include /**/ <netinet/tcp.h>
 #endif /* ACE_LACKS_TCP_H */
+
+#if defined (__Lynx__)
+# ifndef howmany
+#   define howmany(x, y)   (((x)+((y)-1))/(y))
+# endif /* howmany */
+#endif /* __Lynx__ */
 
 #if defined (CHORUS)
 #include /**/ <chorus.h>
