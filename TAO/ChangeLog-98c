@@ -1,5 +1,10 @@
 Tue May  5 15:40:09 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp: Changed the
+ 	  ACE_SYNCH_MUTEX to ACE_SYNCH_RECURSIVE_MUTEX to try and
+ 	  workaround intra-class method deadlocks.  Thanks to Marina for
+ 	  pointing this out.
+
 	* tao/orbconf.h: Added macros for
  	  TAO_SOCK_{STREAM,ACCEPTOR,CONNECTOR}, which can be overridden in
  	  an ACE config.h file to select a different set of transport

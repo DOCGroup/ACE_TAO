@@ -23,12 +23,16 @@ NS_NamingContext::NS_NamingContext (void)
     ACE_ERROR ((LM_ERROR, "%p\n", "NS_NamingContext"));
 
   // Get the lock from the orb that knows what type is appropriate.
-  // @@ Nanbor, there still is an error if I use this function to get the lock.
-  //  this->lock_ = TAO_ORB_Core_instance ()->server_factory ()->create_servant_lock ();
+  // @@ Nanbor, there still is an error if I use this function to get
+  // the lock.  this->lock_ = TAO_ORB_Core_instance ()->server_factory
+  // ()->create_servant_lock ();
   
-  // if orb core returned a null lock, allocate a thread mutex by default
-  //  if (this->lock_ == 0)
-    ACE_NEW (this->lock_, ACE_Lock_Adapter<ACE_SYNCH_MUTEX> ());
+  // if orb core returned a null lock, allocate a thread mutex by
+  // default if (this->lock_ == 0)
+  // @@ We may need to add a template instantiation for this if it's
+  // not already defined someplace...
+  ACE_NEW (this->lock_,
+           ACE_Lock_Adapter<ACE_SYNCH_RECURSIVE_MUTEX>);
 }
 
 NS_NamingContext::~NS_NamingContext (void)
