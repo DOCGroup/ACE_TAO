@@ -1,3 +1,12 @@
+Mon May 17 15:12:54 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * test/Thread_Manager_Test.cpp: use a hash map, instead of
+          TSS, to store each thread's indication of whether it has
+          been signalled.  That way, the signal handler doesn't have
+          to access TSS.  Increased the delay from 1 to 2 seconds after
+          the signal test, which also seems to help avoid thread lib
+          panics on Solaris.
+
 Mon May 17 14:02:01 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Conn_Test.cpp (handler): added comment saying that even
