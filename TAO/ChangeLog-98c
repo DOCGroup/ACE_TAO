@@ -1,3 +1,17 @@
+Mon Jan  4 14:29:49 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
+
+	  For the [] operator, instead of returning a
+	  TAO_SeqElem_String_Manager, we were generating
+	  TAO_String_Manager. 
+
+	* tests/Param_Test/objref.cpp
+	  tests/Param_Test/ub_objref_seq.cpp:
+
+	  There were instances of incorrect assignment between a
+	  String_var and a TAO_String_Manager. 
+
 Mon Jan 04 12:45:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Runtime_Scheduler.{cpp, h}
