@@ -2609,7 +2609,7 @@ Audio_Global::PLAYaudio(void)
   
   for (;;)
   {
-    struct fd_set read_mask, write_mask;
+    fd_set read_mask, write_mask;
     struct timeval tval;
     unsigned curTime = get_usec();
     
