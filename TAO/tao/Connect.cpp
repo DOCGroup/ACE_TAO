@@ -28,11 +28,12 @@ static const char *TAO_Connect_Timeprobe_Description[] =
     "Server_Connection_Handler::handle_locate - start",
     "Server_Connection_Handler::handle_locate - end",
 
+    "Server_Connection_Handler::receive_request - end",
+
     "Client_Connection_Handler::send_request - start",
     "Client_Connection_Handler::send_request - end",
 
-    "MT_Client_Connection_Handler - before l/f wakeup",
-    "MT_Client_Connection_Handler - after l/f wakeup"
+    "GIOP::Send_Request - return"
   };
 
 enum
@@ -47,11 +48,12 @@ enum
     TAO_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_START,
     TAO_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_END,
 
+    TAO_SERVER_CONNECTION_HANDLER_RECEIVE_REQUEST_END,
+
     TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START,
     TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_END,
 
-    TAO_MT_CLIENT_CONNECTION_HANDLER_BEFORE_LF_WAKEUP,
-    TAO_MT_CLIENT_CONNECTION_HANDLER_AFTER_LF_WAKEUP
+    GIOP_SEND_REQUEST_RETURN
   };
 
 // Setup Timeprobes
@@ -641,6 +643,8 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
       TAO_GIOP::Message_Type type =
         TAO_GIOP::recv_request (this->iiop_transport_, input, this->orb_core_);
 
+      TAO_MINIMAL_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_RECEIVE_REQUEST_END);
+
       // Check to see if we've been cancelled cooperatively.
       if (this->orb_core_->orb ()->should_shutdown () != 0)
         error_encountered = 1;
@@ -775,6 +779,8 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
       //      this->handle_close ();
       return -1;
     }
+
+  TAO_MINIMAL_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_END);
 
   return result;
 }
@@ -968,6 +974,8 @@ TAO_ST_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
   int success  = (int) TAO_GIOP::send_request (this->iiop_transport_,
                                                stream,
                                                orb_core);
+  TAO_MINIMAL_TIMEPROBE (GIOP_SEND_REQUEST_RETURN);
+
   if (!success)
     return -1;
 
@@ -1049,6 +1057,8 @@ TAO_MT_Client_Connection_Handler::send_request (TAO_ORB_Core *orb_core,
                                                    stream,
                                                    orb_core);
 
+      TAO_MINIMAL_TIMEPROBE (GIOP_SEND_REQUEST_RETURN);
+
       if (!success)
         return -1;
     }
@@ -1070,7 +1080,7 @@ TAO_MT_Client_Connection_Handler::send_request (TAO_ORB_Core *orb_core,
                                                   stream,
                                                   orb_core);
 
-      TAO_PP_TIMEPROBE (TAO_MT_CLIENT_CONNECTION_HANDLER_BEFORE_LF_WAKEUP);
+      TAO_MINIMAL_TIMEPROBE (GIOP_SEND_REQUEST_RETURN);
 
       if (!success)
         {
