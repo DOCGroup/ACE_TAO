@@ -42,13 +42,12 @@ public:
 
   enum Video_States 
   {
-    WAITING,
+    VIDEO_WAITING,
     VIDEO_PLAY = 1,
     VIDEO_FAST_FORWARD = 2,
     VIDEO_FAST_BACKWARD = 3
   };
 
-  // Indicates the state of the Video Server process ie. play, fast forward play
   virtual int handle_input (ACE_HANDLE h = 0) = 0;
   // state pattern - this is handled differently
   // depending on the state
@@ -63,8 +62,10 @@ public:
 protected:
   
   Video_States state_;
-  
+  // State of this object
+ 
   Video_Control_Handler *vch_;
+  // My Video Control Handler
 
 };
 
@@ -72,14 +73,20 @@ class Video_Control_Waiting_State
   : public virtual Video_Control_State
 {
 public:
-  virtual int handle_input (ACE_HANDLE h = 0);
+  Video_Control_Waiting_State (void);
+  // Default constructor, sets the state to WAITING
 
+  virtual int handle_input (ACE_HANDLE h = 0);
+  // Called by the Video_Control_handler when in the waiting state 
 };
 
 class Video_Control_Play_State
   : public virtual Video_Control_State
 {
 public:
+  Video_Control_Play_State (void);
+  // Default constructor, sets the state to VIDEO_PLAY
+
   virtual int handle_input (ACE_HANDLE h = 0);
 
 };
@@ -88,6 +95,9 @@ class Video_Control_Fast_Forward_State
   : public virtual Video_Control_State
 {
 public:
+  Video_Control_Fast_Forward_State (void);
+  // Default constructor, sets the state to VIDEO_FAST_FORWARD
+
   virtual int handle_input (ACE_HANDLE h = 0);
 
 };
@@ -96,6 +106,9 @@ class Video_Control_Fast_Backward_State
   : public virtual Video_Control_State
 {
 public:
+  Video_Control_Fast_Backward_State (void);
+  // Default constructor, sets the state to VIDEO_FAST_BACKWARD
+
   virtual int handle_input (ACE_HANDLE h = 0);
 
 };

@@ -7,8 +7,6 @@
 Video_Control_State::Video_Control_State ()
   : vch_ (VIDEO_CONTROL_HANDLER_INSTANCE::instance ()->get_video_control_handler ())
 {
-
-
 }
 
 Video_Control_State::Video_States
@@ -18,6 +16,11 @@ Video_Control_State::get_state (void)
 }
 
 // ----------------------------------------------------------------------
+
+Video_Control_Waiting_State::Video_Control_Waiting_State (void)
+{
+  this->state_ = VIDEO_WAITING;
+}
 
 int
 Video_Control_Waiting_State::handle_input (ACE_HANDLE h)
@@ -51,9 +54,11 @@ Video_Control_Waiting_State::handle_input (ACE_HANDLE h)
         return result;
       break;
     case CmdFF:
+      Video_Server::init_fast_play ();
       this->vch_->change_state (VIDEO_CONTROL_FAST_FORWARD_STATE::instance ());
       break;
     case CmdFB:
+      Video_Server::init_fast_play ();
       this->vch_->change_state (VIDEO_CONTROL_FAST_BACKWARD_STATE::instance ());
       break;
     case CmdPLAY:
@@ -80,6 +85,11 @@ Video_Control_Waiting_State::handle_input (ACE_HANDLE h)
   // one command was handled successfully
   return 0;
   
+}
+
+Video_Control_Play_State::Video_Control_Play_State (void)
+{
+  this->state_ = VIDEO_PLAY;
 }
 
 int
@@ -110,6 +120,10 @@ Video_Control_Play_State::handle_input (ACE_HANDLE h)
     // We need to call the read_cmd of the Video_Server to simulate
     // the control going to a switch..
     //  Video_Server::read_cmd ();
+
+    // Change the state of the video control handler to waiting state
+    // to read further commands.
+    this->vch_->change_state (VIDEO_CONTROL_WAITING_STATE::instance ());
     return 0;
   }
   else if (tmp == CmdSPEED)
@@ -146,6 +160,11 @@ Video_Control_Play_State::handle_input (ACE_HANDLE h)
   return 0;
 }
 
+Video_Control_Fast_Forward_State::Video_Control_Fast_Forward_State (void)
+{
+  this->state_ = VIDEO_FAST_FORWARD;
+}
+
 int
 Video_Control_Fast_Forward_State::handle_input (ACE_HANDLE h)
 {
@@ -173,7 +192,15 @@ Video_Control_Fast_Forward_State::handle_input (ACE_HANDLE h)
   Video_Timer_Global::StopTimer();
   //  VIDEO_SINGLETON::instance ()->state = Video_Global::INVALID;
   //  Video_Server::read_cmd ();
+
+  //Change the video control handler's state to read further commands
+  this->vch_->change_state (VIDEO_CONTROL_WAITING_STATE::instance ());
   return 0;
+}
+
+Video_Control_Fast_Backward_State::Video_Control_Fast_Backward_State (void)
+{
+  this->state_ = VIDEO_FAST_BACKWARD;
 }
 
 int
@@ -203,5 +230,9 @@ Video_Control_Fast_Backward_State::handle_input (ACE_HANDLE h)
   Video_Timer_Global::StopTimer();
   //  VIDEO_SINGLETON::instance ()->state = Video_Global::INVALID;
   //  Video_Server::read_cmd ();
+
+  //Change the video control handler's state to read further commands
+  this->vch_->change_state (VIDEO_CONTROL_WAITING_STATE::instance ());
+
   return 0;
 }
