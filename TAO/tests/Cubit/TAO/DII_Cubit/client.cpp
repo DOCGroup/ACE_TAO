@@ -3,18 +3,17 @@
 // ============================================================================
 //
 // = LIBRARY
-//		TAO/tests/Cubit/TAO/DII_Cubit
+//	TAO/tests/Cubit/TAO/DII_Cubit
 //
 // = FILENAME
-//		client.cpp
+//	client.cpp
 //
 // = DESCRIPTION
 //      This class implements a simple CORBA client for the Cubit
 //      example using DII functionality
 //
-
 // = AUTHOR
-//		Jeff Parsons <jp4@cs.wustl.edu>
+//	Jeff Parsons <jp4@cs.wustl.edu>
 // ============================================================================
 
 #include "client.h"
@@ -27,6 +26,33 @@ const int SMALL_OCTET_SEQ_LENGTH = 16;
 const int LARGE_OCTET_SEQ_LENGTH = 4096;
 const int SMALL_LONG_SEQ_LENGTH = 4;
 const int LARGE_LONG_SEQ_LENGTH = 1024;
+
+// Some macros for env checks used identically in each operation.
+#define CUBIT_CHECK_ENV_RETURN_VOID(PRINT_STRING) \
+  if (this->env_.exception () != 0) \
+    { \
+      this->error_count_++; \
+      this->env_.print_exception (PRINT_STRING); \
+      return; \
+    }
+
+#define CUBIT_CHECK_ENV_RELEASE_RETURN_VOID(REQ, PRINT_STRING) \
+  if (this->env_.exception () != 0) \
+    { \
+      this->error_count_++; \
+      this->env_.print_exception (PRINT_STRING); \
+      CORBA::release (REQ); \
+      return; \
+    }
+
+#define REQUEST_CHECK_ENV_RETURN_VOID(REQ, PRINT_STRING) \
+  if (REQ->env ()->exception () != 0) \
+    { \
+      this->error_count_++; \
+      REQ->env ()->print_exception (PRINT_STRING); \
+      CORBA::release (REQ); \
+      return; \
+    }
 
 // Constructor
 DII_Cubit_Client::DII_Cubit_Client (void)
@@ -77,36 +103,34 @@ DII_Cubit_Client::init (int argc, char **argv)
                        this->factory_key_);
     }
 
-	// Quick fix to exit gracefully when no IOR or key args are provided.
-	if (!ACE_OS::strcmp (this->factory_IOR_,
-											 DEFAULT_FACTORY_IOR))
-		{
-			return -1;
-		}
+  // Quick fix to exit gracefully when no IOR or key args are provided.
+  if (!ACE_OS::strcmp (this->factory_IOR_,
+		       DEFAULT_FACTORY_IOR))
+    {
+      return -1;
+    }
 
   TAO_TRY
     {
       // Initialize the ORB.
-      orb_var_ = CORBA::ORB_init (this->argc_,
-                                  this->argv_,
-                                  0,
-                                  TAO_TRY_ENV);
+      this->orb_var_ = CORBA::ORB_init (this->argc_,
+                                        this->argv_,
+                                        0,
+                                        TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       // Get a factory object reference from the factory IOR.
-      factory_var_ =
-        this->orb_var_->string_to_object (this->factory_IOR_, 
-                                          TAO_TRY_ENV);
+      this->factory_var_ = this->orb_var_->string_to_object (this->factory_IOR_, 
+                                                             TAO_TRY_ENV);
       TAO_CHECK_ENV;
-			
+
       // Get a Cubit object with a DII request on the Cubit factory.
       CORBA::Request_ptr mc_req;
 
-      mc_req =
-        this->factory_var_->_request ("make_cubit",
-                                      TAO_TRY_ENV);
+      mc_req = this->factory_var_->_request ("make_cubit",
+                                             TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
+	
       // make_cubit takes a char *arg that it doesn't use, but we must
       // include it in the request.
       CORBA::String dummy = "";
@@ -115,6 +139,11 @@ DII_Cubit_Client::init (int argc, char **argv)
                              &dummy,
                              CORBA::B_FALSE);
    
+      mc_req->arguments ()->add_value (0,
+				       string_arg,
+				       CORBA::ARG_IN,
+				       this->env_);
+
       // Insert the result-holding variable into the request.
       mc_req->result ()->value ()->replace (CORBA::_tc_Object, 
                                             &obj_var_,
@@ -125,9 +154,8 @@ DII_Cubit_Client::init (int argc, char **argv)
       // Ask the Cubit factory for a Cubit object.
       mc_req->invoke ();
 
-      // *mc_req->result ()->value () >>= this->obj_var_;
-
       CORBA::release (mc_req);
+
     }
   TAO_CATCHANY
     {
@@ -251,43 +279,29 @@ DII_Cubit_Client::cube_short_dii (void)
   req = this->obj_var_->_request ("cube_short",
                                   this->env_);
 
-  if (this->env_.exception () != 0) 
-    {
-      this->error_count_++;
-      this->env_.print_exception ("cube_short_dii request create");
-      return;
-    }
+  CUBIT_CHECK_ENV_RETURN_VOID ("cube_short_dii request create");
 
   CORBA::Short ret_short, arg_short = -3;
 
   // Make an Any out of the short and add it to the request arg list.
   CORBA::Any arg_holder (CORBA::_tc_short,
-                         &arg_short, CORBA::B_FALSE);
+                         &arg_short, 
+			 CORBA::B_FALSE);
    
   req->arguments ()->add_value (0,
                                 arg_holder,
                                 CORBA::ARG_IN,
                                 this->env_);
-  if (this->env_.exception () != 0) 
-    {
-      this->error_count_++;
-      this->env_.print_exception ("cube_short_dii request arg add");
-      CORBA::release (req);
-      return;
-    }
+
+  CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req, "cube_short_dii request arg add");
 
   // Initialize the result variable.
   req->result ()->value ()->replace (CORBA::_tc_short, 
                                      &ret_short, 
                                      CORBA::B_TRUE, 
                                      this->env_);
-  if (this->env_.exception () != 0) 
-    {
-      this->error_count_++;
-      this->env_.print_exception ("cube_short_dii result type");
-      CORBA::release (req);
-      return;
-    }
+
+  CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req, "cube_short_dii result type");
 
   // Invoke, check for an exception and verify the result.
 
@@ -295,13 +309,7 @@ DII_Cubit_Client::cube_short_dii (void)
 
   req->invoke ();
 
-  if (req->env ()->exception () != 0) 
-    {
-      this->error_count_++;
-      req->env ()->print_exception ("cube_short_dii invoke");
-      CORBA::release (req);
-      return;
-    }
+  REQUEST_CHECK_ENV_RETURN_VOID (req, "cube_short_dii invoke");
 
   if (ret_short != arg_short * arg_short * arg_short) 
     {
@@ -319,14 +327,10 @@ DII_Cubit_Client::cube_long_dii (void)
   // Create the request ...
   CORBA::Request_ptr req;
 
-  req = this->obj_var_->_request ((CORBA::String) "cube_long",
+  req = this->obj_var_->_request ("cube_long",
                                   this->env_);
-  if (this->env_.exception () != 0) 
-    {
-      this->error_count_++;
-      this->env_.print_exception ("cube_long_dii request create");
-      return;
-    }
+
+  CUBIT_CHECK_ENV_RETURN_VOID ("cube_long_dii request create");
 
   CORBA::Long ret_long;
   CORBA::Long arg_long = -7;
@@ -340,26 +344,16 @@ DII_Cubit_Client::cube_long_dii (void)
                                 arg_holder,
                                 CORBA::ARG_IN,
                                 this->env_);
-  if (this->env_.exception () != 0) 
-    {
-      this->error_count_++;
-      this->env_.print_exception ("cube_long_dii request arg add");
-      CORBA::release (req);
-      return;
-    }
+
+  CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req, "cube_long_dii request arg add");
 
   // Insert the result variable.
   req->result ()->value ()->replace (CORBA::_tc_long, 
                                      &ret_long, 
                                      CORBA::B_TRUE, 
                                      this->env_);
-  if (this->env_.exception () != 0) 
-    {
-      this->error_count_++;
-      this->env_.print_exception ("cube_long_dii result type");
-      CORBA::release (req);
-      return;
-    }
+
+  CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req, "cube_long_dii result type");
 
   // Invoke, check for an exception and verify the result.
 
@@ -367,13 +361,7 @@ DII_Cubit_Client::cube_long_dii (void)
 
   req->invoke ();
 
-  if (req->env ()->exception () != 0) 
-    {
-      this->error_count_++;
-      req->env ()->print_exception ("cube_long_dii invoke");
-      CORBA::release (req);
-      return;
-    }
+  REQUEST_CHECK_ENV_RETURN_VOID (req, "cube_long_dii invoke");
 
   if (ret_long != arg_long * arg_long * arg_long) 
     {
@@ -391,15 +379,10 @@ DII_Cubit_Client::cube_octet_dii (void)
   // Create the request ...
   CORBA::Request_ptr req;
 
-  req = this->obj_var_->_request ((CORBA::String) "cube_octet",
+  req = this->obj_var_->_request ("cube_octet",
                                   this->env_);
 
-  if (this->env_.exception () != 0) 
-    {
-      this->error_count_++;
-      this->env_.print_exception ("cube_octet_dii request create");
-      return;
-    }
+  CUBIT_CHECK_ENV_RETURN_VOID ("cube_octet_dii request create");
 
   CORBA::Octet ret_octet;
   CORBA::Octet arg_octet = 5;
@@ -413,39 +396,23 @@ DII_Cubit_Client::cube_octet_dii (void)
                                 arg_holder,
                                 CORBA::ARG_IN,
                                 this->env_);
-  if (this->env_.exception () != 0) 
-    {
-      this->error_count_++;
-      this->env_.print_exception ("cube_octet_dii request arg add");
-      CORBA::release (req);
-      return;
-    }
+
+  CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req, "cube_octet_dii request arg add");
 
   // Insert the result variable.
   req->result ()->value ()->replace (CORBA::_tc_octet, 
                                      &ret_octet, 
                                      CORBA::B_TRUE, 
                                      this->env_);
-  if (this->env_.exception () != 0) 
-    {
-      this->error_count_++;
-      this->env_.print_exception ("cube_octet_dii result type");
-      CORBA::release (req);
-      return;
-    }
+
+  CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req, "cube_octet_dii result type");
 
   // Invoke, check for an exception and verify the result.
   this->call_count_++;
 
   req->invoke ();
 
-  if (req->env ()->exception () != 0) 
-    {
-      this->error_count_++;
-      req->env ()->print_exception ("cube_octet_dii invoke");
-      CORBA::release (req);
-      return;
-    }
+  REQUEST_CHECK_ENV_RETURN_VOID (req, "cube_octet_dii invoke");
 
   if (ret_octet != arg_octet * arg_octet * arg_octet) 
     {
@@ -463,14 +430,10 @@ DII_Cubit_Client::cube_union_dii (void)
   // Create the request ...
   CORBA::Request_ptr req;
 
-  req = this->obj_var_->_request ((CORBA::String) "cube_union",
+  req = this->obj_var_->_request ("cube_union",
                                   this->env_);
-  if (this->env_.exception () != 0) 
-    {
-      this->error_count_++;
-      this->env_.print_exception ("cube_union_dii request create");
-      return;
-    }
+
+  CUBIT_CHECK_ENV_RETURN_VOID ("cube_union_dii request create");
 
   Cubit::oneof arg_union, ret_union;
    
@@ -488,13 +451,8 @@ DII_Cubit_Client::cube_union_dii (void)
                                 arg_holder,
                                 CORBA::ARG_IN,
                                 this->env_);
-  if (this->env_.exception () != 0) 
-    {
-      this->error_count_++;
-      this->env_.print_exception ("cube_union_dii request arg add");
-      CORBA::release (req);
-      return;
-    }
+
+  CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req, "cube_union_dii request arg add");
 
   // Insert the result variable.
   req->result ()->value ()->replace (Cubit::_tc_oneof, 
@@ -502,13 +460,7 @@ DII_Cubit_Client::cube_union_dii (void)
                                      CORBA::B_TRUE, 
                                      this->env_);
 
-  if (this->env_.exception () != 0) 
-    {
-      this->error_count_++;
-      this->env_.print_exception ("cube_union_dii result type");
-      CORBA::release (req);
-      return;
-    }
+  CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req, "cube_union_dii result type");
 
   // Invoke, check for an exception and verify the result
 
@@ -516,13 +468,7 @@ DII_Cubit_Client::cube_union_dii (void)
 
   req->invoke ();
 
-  if (req->env ()->exception () != 0) 
-    {
-      this->error_count_++;
-      req->env ()->print_exception ("cube_union_dii invoke");
-      CORBA::release (req);
-      return;
-    }
+  REQUEST_CHECK_ENV_RETURN_VOID (req, "cube_union_dii invoke");
 
   if (ret_union.cm ().l != arg_union.cm ().l * arg_union.cm ().l * arg_union.cm ().l 
       || ret_union.cm ().s != arg_union.cm ().s * arg_union.cm ().s * arg_union.cm ().s 
@@ -542,15 +488,10 @@ DII_Cubit_Client::cube_struct_dii (void)
   // Create the request ...
   CORBA::Request_ptr req;
 
-  req = this->obj_var_->_request ((CORBA::String) "cube_struct",
+  req = this->obj_var_->_request ("cube_struct",
                                   this->env_);
 
-  if (this->env_.exception () != 0) 
-    {
-      this->error_count_++;
-      this->env_.print_exception ("cube_struct_dii request create");
-      return;
-    }
+  CUBIT_CHECK_ENV_RETURN_VOID ("cube_struct_dii request create");
 
   Cubit::Many arg_struct, ret_struct;
    
@@ -567,26 +508,16 @@ DII_Cubit_Client::cube_struct_dii (void)
                                 arg_holder,
                                 CORBA::ARG_IN,
                                 this->env_);
-  if (this->env_.exception () != 0) 
-    {
-      this->error_count_++;
-      this->env_.print_exception ("cube_struct_dii request arg add");
-      CORBA::release (req);
-      return;
-    }
+
+  CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req, "cube_struct_dii request arg add");
 
   // Insert the result variable.
   req->result ()->value ()->replace (Cubit::_tc_Many, 
                                      &ret_struct, 
                                      CORBA::B_TRUE, 
                                      this->env_);
-  if (this->env_.exception () != 0) 
-    {
-      this->error_count_++;
-      this->env_.print_exception ("cube_struct_dii result type");
-      CORBA::release (req);
-      return;
-    }
+
+  CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req, "cube_struct_dii result type");
 
   // Invoke, check for an exception and verify the result.
 
@@ -594,13 +525,7 @@ DII_Cubit_Client::cube_struct_dii (void)
 
   req->invoke ();
 
-  if (req->env ()->exception () != 0) 
-    {
-      this->error_count_++;
-      req->env ()->print_exception ("cube_struct_dii invoke");
-      CORBA::release (req);
-      return;
-    }
+  REQUEST_CHECK_ENV_RETURN_VOID (req, "cube_struct_dii invoke");
 
   if (ret_struct.l != arg_struct.l * arg_struct.l * arg_struct.l 
       || ret_struct.s != arg_struct.s * arg_struct.s * arg_struct.s 
@@ -620,22 +545,17 @@ DII_Cubit_Client::cube_octet_seq_dii (int length)
   // Create the request ...
   CORBA::Request_ptr req;
 
-  req = this->obj_var_->_request ((CORBA::String) "cube_octet_sequence",
+  req = this->obj_var_->_request ("cube_octet_sequence",
                                   this->env_);
 
-  if (this->env_.exception () != 0) 
-    {
-      this->error_count_++;
-      this->env_.print_exception ("cube_octet_seq_dii request create");
-      return;
-    }
+  CUBIT_CHECK_ENV_RETURN_VOID ("cube_octet_seq_dii request create");
 
   // Same length as in IDL_Cubit tests so timings can be compared.
-  Cubit::octet_seq ret_octet_seq (1), arg_octet_seq;
-  arg_octet_seq.length (1);
+  Cubit::octet_seq ret_octet_seq, arg_octet_seq;
+  arg_octet_seq.length (length);
   arg_octet_seq[0] = 4;
 
-  // Make an Any out of the raw and add it to the request arg list
+  // Make an Any out of the octet_seq and add it to the request arg list
   CORBA::Any arg_holder (Cubit::_tc_octet_seq,
                          &arg_octet_seq,
                          CORBA::B_FALSE);
@@ -645,13 +565,7 @@ DII_Cubit_Client::cube_octet_seq_dii (int length)
                                 CORBA::ARG_IN,
                                 this->env_);
 
-  if (this->env_.exception () != 0) 
-    {
-      this->error_count_++;
-      this->env_.print_exception ("cube_octet_seq_dii request arg add");
-      CORBA::release (req);
-      return;
-    }
+  CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req, "cube_octet_seq_dii request arg add");
 
   // Insert the result variable.
   req->result ()->value ()->replace (Cubit::_tc_octet_seq, 
@@ -659,13 +573,7 @@ DII_Cubit_Client::cube_octet_seq_dii (int length)
                                      CORBA::B_TRUE, 
                                      this->env_);
 
-  if (this->env_.exception () != 0) 
-    {
-      this->error_count_++;
-      this->env_.print_exception ("cube_octet_seq_dii result type");
-      CORBA::release (req);
-      return;
-    }
+  CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req, "cube_octet_seq_dii result type");
 
   // Invoke, check for an exception and verify the result.
 
@@ -673,13 +581,7 @@ DII_Cubit_Client::cube_octet_seq_dii (int length)
 
   req->invoke ();
 
-  if (req->env ()->exception () != 0) 
-    {
-      this->error_count_++;
-      req->env ()->print_exception ("cube_octet_seq_dii invoke");
-      CORBA::release (req);
-      return;
-    }
+  REQUEST_CHECK_ENV_RETURN_VOID (req, "cube_octet_seq_dii invoke");
 
   // Check for correct length.
   if (ret_octet_seq.length () != arg_octet_seq.length ()) 
@@ -706,23 +608,17 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
   // Create the request ...
   CORBA::Request_ptr req;
 
-  req = this->obj_var_->_request ((CORBA::String) "cube_long_sequence",
+  req = this->obj_var_->_request ("cube_long_sequence",
                                   this->env_);
 
-  if (this->env_.exception () != 0) 
-    {
-      this->error_count_++;
-      this->env_.print_exception ("cube_long_seq_dii request create");
-      return;
-    }
+  CUBIT_CHECK_ENV_RETURN_VOID ("cube_long_seq_dii request create");
 
   // Same length as in IDL_Cubit tests so timings can be compared.
-  Cubit::long_seq ret_long_seq (1), arg_long_seq;
-  arg_long_seq.length (1);
+  Cubit::long_seq ret_long_seq, arg_long_seq;
+  arg_long_seq.length (length);
   arg_long_seq[0] = 4;
 
-  // Make an Any out of the sequence and add it to the request arg
-  // list.
+  // Make an Any out of the long_seq and add it to the request arg list.
   CORBA::Any arg_holder (Cubit::_tc_long_seq,
                          &arg_long_seq,
                          CORBA::B_FALSE);
@@ -731,13 +627,8 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
                                 arg_holder,
                                 CORBA::ARG_IN,
                                 this->env_);
-  if (this->env_.exception () != 0) 
-    {
-      this->error_count_++;
-      this->env_.print_exception ("cube_long_seq_dii request arg add");
-      CORBA::release (req);
-      return;
-    }
+
+  CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req, "cube_long_seq_dii request arg add");
 
   // Insert the result variable.
   req->result ()->value ()->replace (Cubit::_tc_long_seq, 
@@ -745,13 +636,7 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
                                      CORBA::B_TRUE, 
                                      this->env_);
 
-  if (this->env_.exception () != 0) 
-    {
-      this->error_count_++;
-      this->env_.print_exception ("cube_long_seq_dii result type");
-      CORBA::release (req);
-      return;
-    }
+  CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req, "cube_long_seq_dii result type");
 
   // Invoke, check for an exception and verify the result.
 
@@ -759,13 +644,7 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
 
   req->invoke ();
 
-  if (req->env ()->exception () != 0) 
-    {
-      this->error_count_++;
-      req->env ()->print_exception ("cube_long_seq_dii invoke");
-      CORBA::release (req);
-      return;
-    }
+  REQUEST_CHECK_ENV_RETURN_VOID (req, "cube_long_seq_dii invoke");
 
   // Check for correct length.
   if (ret_long_seq.length () != arg_long_seq.length ()) 
@@ -789,142 +668,130 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
 int
 DII_Cubit_Client::run (void)
 {
-	// NOTE - default loop_count_ is 250 but can be set from the command line.
-	// loop counter.
-	u_int i;
+  // loop counter.
+  u_int i;
 
-	// Make a timer and an elapsed time holder.
-	ACE_Profile_Timer dii_timer;
-	ACE_Profile_Timer::ACE_Elapsed_Time dii_elapsed_time;
+  // Make a timer and an elapsed time holder.
+  ACE_Profile_Timer dii_timer;
+  ACE_Profile_Timer::ACE_Elapsed_Time dii_elapsed_time;
 
-	// Order and format of test calls matches that of SII (IDL) tests
-	// for easy comparison.
+  // Order and format of test calls matches that of SII (IDL) tests
+  // for easy comparison.
 
-	//	short
+  //	short
 
-	this->call_count_ = 0;
-	this->error_count_ = 0;
-	dii_timer.start ();
-	for (i = 0; i < this->loop_count_; i++)
-		this->cube_short_dii ();
-	dii_timer.stop ();
-	dii_timer.elapsed_time (dii_elapsed_time);  
-	this->print_stats ("DII cube_short", dii_elapsed_time);
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  dii_timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_short_dii ();
+  dii_timer.stop ();
+  dii_timer.elapsed_time (dii_elapsed_time);  
+  this->print_stats ("DII cube_short", dii_elapsed_time);
 
-	//	octet
+  //	octet
 
-	this->call_count_ = 0;
-	this->error_count_ = 0;
-	dii_timer.start ();
-	for (i = 0; i < this->loop_count_; i++)
-		this->cube_octet_dii ();
-	dii_timer.stop ();
-	dii_timer.elapsed_time (dii_elapsed_time);  
-	this->print_stats ("DII cube_octet", dii_elapsed_time);
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  dii_timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_octet_dii ();
+  dii_timer.stop ();
+  dii_timer.elapsed_time (dii_elapsed_time);  
+  this->print_stats ("DII cube_octet", dii_elapsed_time);
 
-	//	long
+  //	long
 
-	this->call_count_ = 0;
-	this->error_count_ = 0;
-	dii_timer.start ();
-	for (i = 0; i < this->loop_count_; i++)
-		this->cube_long_dii ();
-	dii_timer.stop ();
-	dii_timer.elapsed_time (dii_elapsed_time);  
-	this->print_stats ("DII cube_long", dii_elapsed_time);
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  dii_timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_long_dii ();
+  dii_timer.stop ();
+  dii_timer.elapsed_time (dii_elapsed_time);  
+  this->print_stats ("DII cube_long", dii_elapsed_time);
 
-	//	struct
+  //	struct
 
-	this->call_count_ = 0;
-	this->error_count_ = 0;
-	dii_timer.start ();
-	for (i = 0; i < this->loop_count_; i++)
-		this->cube_struct_dii ();
-	dii_timer.stop ();
-	dii_timer.elapsed_time (dii_elapsed_time);  
-	this->print_stats ("DII cube_struct", dii_elapsed_time);
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  dii_timer.start ();
+  for (i = 0; i < 1; i++)
+    this->cube_struct_dii ();
+  dii_timer.stop ();
+  dii_timer.elapsed_time (dii_elapsed_time);  
+  this->print_stats ("DII cube_struct", dii_elapsed_time);
 
-	//	union
+  //	union
 
-	this->call_count_ = 0;
-	this->error_count_ = 0;
-	dii_timer.start ();
-	for (i = 0; i < this->loop_count_; i++)
-		this->cube_union_dii ();
-	dii_timer.stop ();
-	dii_timer.elapsed_time (dii_elapsed_time);  
-	this->print_stats ("DII cube_union", dii_elapsed_time);
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  dii_timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_union_dii ();
+  dii_timer.stop ();
+  dii_timer.elapsed_time (dii_elapsed_time);  
+  this->print_stats ("DII cube_union", dii_elapsed_time);
 
-	//	small long sequence
+  //	small long sequence
 
-	this->call_count_ = 0;
-	this->error_count_ = 0;
-	dii_timer.start ();
-	for (i = 0; i < this->loop_count_; i++)
-		this->cube_long_seq_dii (SMALL_LONG_SEQ_LENGTH);
-	dii_timer.stop ();
-	dii_timer.elapsed_time (dii_elapsed_time);  
-	this->print_stats ("DII cube_small_sequence<long>", dii_elapsed_time);
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  dii_timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_long_seq_dii (SMALL_LONG_SEQ_LENGTH);
+  dii_timer.stop ();
+  dii_timer.elapsed_time (dii_elapsed_time);  
+  this->print_stats ("DII cube_small_sequence<long>", dii_elapsed_time);
 
-	//	large long sequence
+  //	large long sequence
 
-	this->call_count_ = 0;
-	this->error_count_ = 0;
-	dii_timer.start ();
-	for (i = 0; i < this->loop_count_; i++)
-		this->cube_long_seq_dii (LARGE_LONG_SEQ_LENGTH);
-	dii_timer.stop ();
-	dii_timer.elapsed_time (dii_elapsed_time);  
-	this->print_stats ("DII cube_large_sequence<long>", dii_elapsed_time);
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  dii_timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_long_seq_dii (LARGE_LONG_SEQ_LENGTH);
+  dii_timer.stop ();
+  dii_timer.elapsed_time (dii_elapsed_time);  
+  this->print_stats ("DII cube_large_sequence<long>", dii_elapsed_time);
 
-	//	small octet sequence
+  //	small octet sequence
 
-	this->call_count_ = 0;
-	this->error_count_ = 0;
-	dii_timer.start ();
-	for (i = 0; i < this->loop_count_; i++)
-		this->cube_long_seq_dii (SMALL_OCTET_SEQ_LENGTH);
-	dii_timer.stop ();
-	dii_timer.elapsed_time (dii_elapsed_time);  
-	this->print_stats ("DII cube_small_sequence<octet>", dii_elapsed_time);
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  dii_timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_long_seq_dii (SMALL_OCTET_SEQ_LENGTH);
+  dii_timer.stop ();
+  dii_timer.elapsed_time (dii_elapsed_time);  
+  this->print_stats ("DII cube_small_sequence<octet>", dii_elapsed_time);
 
-	//	large octet sequence
+  //	large octet sequence
 
-	this->call_count_ = 0;
-	this->error_count_ = 0;
-	dii_timer.start ();
-	for (i = 0; i < this->loop_count_; i++)
-		this->cube_long_seq_dii (LARGE_OCTET_SEQ_LENGTH);
-	dii_timer.stop ();
-	dii_timer.elapsed_time (dii_elapsed_time);  
-	this->print_stats ("DII cube_large_sequence<octet>", dii_elapsed_time);
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  dii_timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_long_seq_dii (LARGE_OCTET_SEQ_LENGTH);
+  dii_timer.stop ();
+  dii_timer.elapsed_time (dii_elapsed_time);  
+  this->print_stats ("DII cube_large_sequence<octet>", dii_elapsed_time);
 
-	//	mixin
+  //	mixin
 
-	this->call_count_ = 0;
-	this->error_count_ = 0;
-	dii_timer.start ();
-	for (i = 0; i < this->loop_count_; i++)
-		{
-			this->cube_short_dii ();
-			this->cube_octet_dii ();
-			this->cube_long_dii ();
-		}
-	dii_timer.stop ();
-	dii_timer.elapsed_time (dii_elapsed_time);  
-	this->print_stats ("DII cube mixin (short/octet/long)", dii_elapsed_time);
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  dii_timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    {
+      this->cube_short_dii ();
+      this->cube_octet_dii ();
+      this->cube_long_dii ();
+    }
+  dii_timer.stop ();
+  dii_timer.elapsed_time (dii_elapsed_time);  
+  this->print_stats ("DII cube mixin (short/octet/long)", dii_elapsed_time);
 
-  // Using the single calls below to track down memory leaks.  They
-  // will be gone eventually.
-#if 0
-  this->cube_short_dii ();
- 	this->cube_long_dii ();
- 	this->cube_octet_dii ();
-  //	this->cube_union_dii ();
- 	this->cube_struct_dii ();
- 	this->cube_raw_dii ();
-  //	this->cube_sequence_dii ();
-#endif /* 0 */
   return this->error_count_ == 0 ? 0 : 1;
 }
 
@@ -936,8 +803,8 @@ int main (int argc, char *argv[])
 
   if (cubit_client.init (argc, argv) == -1)
     return 1;
-//  else
-//    return cubit_client.run ();
+  else
+    return cubit_client.run ();
 
   return 0;
 }
