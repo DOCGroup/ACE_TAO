@@ -13,6 +13,12 @@ Fri Jan 29 16:25:22 1999  Steve Huston  <shuston@riverace.com>
         * docs/tutorials/019/server/cpp: Removed redefinition of char *s from
           'for' loop.  Works around a compiler issue, but isn't needed anyway.
 
+        * include/makeinclude/platform_hpux_aCC.GNU: On HP-UX 10.20, suppress
+          (future)error 667 and warning 495 to stop hearing about the problems
+          with the system-supplied header files.  The compiler still says
+          there was 1 future error, but at least it's easy to scan the output
+          for real errors now.
+
 Fri Jan 29 14:49:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/ACE.cpp: 
