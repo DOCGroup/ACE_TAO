@@ -241,13 +241,27 @@ CORBA_ORB::POA_init (int &argc,
 int
 CORBA_ORB::perform_work (ACE_Time_Value *tv)
 {
-  return TAO_ORB_Core_instance ()->reactor ()->handle_events (tv);
+  ACE_Reactor *r = TAO_ORB_Core_instance ()->reactor ();
+  
+  // Set the owning thread of the Reactor to the one which we're
+  // currently in.  This is necessary b/c it's possible that the
+  // application is calling us from a thread other than that in which
+  // the Reactor's CTOR (which sets the owner) was called.
+  r->owner (ACE_Thread::self ());
+
+  return r->handle_events (tv);
 }
 
 int
 CORBA_ORB::run (ACE_Time_Value *tv)
 {
   ACE_Reactor *r = TAO_ORB_Core_instance ()->reactor ();
+
+  // Set the owning thread of the Reactor to the one which we're
+  // currently in.  This is necessary b/c it's possible that the
+  // application is calling us from a thread other than that in which
+  // the Reactor's CTOR (which sets the owner) was called.
+  r->owner (ACE_Thread::self ());
 
   // This method should only be called by servers, so now we set up
   // for listening!
