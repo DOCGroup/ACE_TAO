@@ -296,9 +296,8 @@ make: *** [libACE.so] Error 8
       dynamic loader in glibc 2.1 is thread safe.<p>
 
       The ACE <code>Tokens_Test</code> hangs with egcs 1.1b on Linux.
-      It runs properly when built with egcs 1.0.2, egcs 1.0.3 and egcs
-      1.1.1.  All other ACE tests run properly with these egcs
-      versions.<p>
+      It runs properly when built with egcs 1.0.2 and later.  All other
+      ACE tests run properly with these egcs 1.0.2 and later.<p>
 
       <strong>NOTE:</strong> The TAO NameService uses IP multicasting
       by default, though it is not required.  IP multicast on Linux
@@ -672,8 +671,7 @@ If you use the GNU GCC g++ compiler please note the following:
       and comment out the <code>OCFLAGS</code> line.<P>
 
   <li>ACE/TAO don't seem to build well with g++ 2.8.1.  We routinely
-      use g++ 2.7.2.3, egcs 1.0.2, and egcs 1.0.3, and recommend those
-      versions.  egcs 1.1.1 is reported to be OK, as well.<p>
+      use egcs 1.1.1 (on Solaris) and 1.1.2, and recommend those versions.<p>
 
   <LI>Earlier (prior to 2.7.2) versions of g++ may not compile
       certain parts of ACE correctly due to compiler bugs.  Please
