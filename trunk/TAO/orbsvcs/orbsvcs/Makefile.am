@@ -14,7 +14,6 @@ TAO_ROOT = $(top_srcdir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 
-noinst_LTLIBRARIES =
 pkgconfig_DATA =
 lib_LTLIBRARIES =
 CLEANFILES =
@@ -95,12 +94,38 @@ EXTRA_DIST = \
 ## Makefile.CosProperty.am
 
 BUILT_SOURCES += \
+  CosPropertyC.inl \
+  CosPropertyS.inl \
+  CosPropertyS_T.inl \
+  CosPropertyC.h \
+  CosPropertyS.h \
+  CosPropertyC.cpp \
+  CosPropertyS.cpp \
+  CosPropertyS_T.cpp
+
+CLEANFILES += \
+  CosProperty-stamp \
+  CosPropertyC.inl \
+  CosPropertyS.inl \
+  CosPropertyS_T.inl \
+  CosPropertyC.h \
+  CosPropertyS.h \
+  CosPropertyC.cpp \
+  CosPropertyS.cpp \
+  CosPropertyS_T.cpp
+
+CosPropertyC.inl CosPropertyS.inl CosPropertyS_T.inl CosPropertyC.h CosPropertyS.h CosPropertyC.cpp CosPropertyS.cpp CosPropertyS_T.cpp: CosProperty-stamp
+
+CosProperty-stamp: $(srcdir)/CosProperty.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Property_Export -Wb,export_include=orbsvcs/Property/property_export.h $(srcdir)/CosProperty.idl
+	@touch $@
+
+BUILT_SOURCES += \
   CosPropertyServiceC.inl \
   CosPropertyServiceS.inl \
   CosPropertyServiceS_T.inl \
   CosPropertyServiceC.h \
   CosPropertyServiceS.h \
-  CosPropertyServiceS_T.h \
   CosPropertyServiceC.cpp \
   CosPropertyServiceS.cpp \
   CosPropertyServiceS_T.cpp
@@ -112,21 +137,15 @@ CLEANFILES += \
   CosPropertyServiceS_T.inl \
   CosPropertyServiceC.h \
   CosPropertyServiceS.h \
-  CosPropertyServiceS_T.h \
   CosPropertyServiceC.cpp \
   CosPropertyServiceS.cpp \
   CosPropertyServiceS_T.cpp
 
-CosPropertyServiceC.inl CosPropertyServiceS.inl CosPropertyServiceS_T.inl CosPropertyServiceC.h CosPropertyServiceS.h CosPropertyServiceS_T.h CosPropertyServiceC.cpp CosPropertyServiceS.cpp CosPropertyServiceS_T.cpp: CosPropertyService-stamp
+CosPropertyServiceC.inl CosPropertyServiceS.inl CosPropertyServiceS_T.inl CosPropertyServiceC.h CosPropertyServiceS.h CosPropertyServiceC.cpp CosPropertyServiceS.cpp CosPropertyServiceS_T.cpp: CosPropertyService-stamp
 
 CosPropertyService-stamp: $(srcdir)/CosPropertyService.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Property_Export -Wb,export_include=orbsvcs/Property/property_export.h $(srcdir)/CosPropertyService.idl
 	@touch $@
-
-Property = \
-  CosPropertyServiceC.cpp \
-  CosPropertyServiceS.cpp \
-  Property/CosPropertyService_i.cpp
 
 lib_LTLIBRARIES += libTAO_CosProperty.la
 
@@ -140,7 +159,11 @@ libTAO_CosProperty_la_CPPFLAGS = \
   -DTAO_PROPERTY_BUILD_DLL
 
 libTAO_CosProperty_la_SOURCES = \
-  $(Property)
+  CosPropertyC.cpp \
+  CosPropertyS.cpp \
+  CosPropertyServiceC.cpp \
+  CosPropertyServiceS.cpp \
+  Property/CosPropertyService_i.cpp
 
 libTAO_CosProperty_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -151,15 +174,22 @@ libTAO_CosProperty_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
+  CosProperty.idl \
+  CosPropertyC.h \
+  CosPropertyC.inl \
+  CosPropertyS.h \
+  CosPropertyS.inl \
+  CosPropertyS_T.cpp \
+  CosPropertyS_T.inl \
   CosPropertyService.idl \
   CosPropertyServiceC.h \
   CosPropertyServiceC.inl \
   CosPropertyServiceS.h \
   CosPropertyServiceS.inl \
   CosPropertyServiceS_T.cpp \
-  CosPropertyServiceS_T.h \
   CosPropertyServiceS_T.inl \
-  Property/CosPropertyService_i.h
+  Property/CosPropertyService_i.h \
+  Property/property_export.h
 
 pkgconfig_DATA += TAO_CosProperty.pc
 
@@ -726,7 +756,6 @@ libTAO_CosEvent_Skel_la_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
   -DTAO_HAS_TYPED_EVENT_CHANNEL \
-  -DTAO_HAS_TYPED_EVENT_CHANNEL \
   -DTAO_EVENT_SKEL_BUILD_DLL
 
 libTAO_CosEvent_Skel_la_SOURCES = \
@@ -820,7 +849,6 @@ libTAO_CosEvent_Serv_la_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -DTAO_HAS_TYPED_EVENT_CHANNEL \
   -DTAO_HAS_TYPED_EVENT_CHANNEL \
   -DTAO_EVENT_SERV_BUILD_DLL
 
@@ -2194,7 +2222,7 @@ EXTRA_DIST += \
 if BUILD_ACEXML
 if !BUILD_MINIMUM_CORBA
 
-noinst_LTLIBRARIES += libTAO_CosNotification_Persist.la
+lib_LTLIBRARIES += libTAO_CosNotification_Persist.la
 
 libTAO_CosNotification_Persist_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -2230,7 +2258,7 @@ libTAO_CosNotification_Persist_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-noinst_HEADERS = \
+nobase_include_HEADERS += \
   Channel_Clients_T.i \
   Event_Utilities.i \
   Notify/XML_Loader.h \
@@ -2952,6 +2980,7 @@ libTAO_DsEventLogAdmin_Serv_la_LDFLAGS = \
 
 libTAO_DsEventLogAdmin_Serv_la_LIBADD = \
   libTAO_CosEvent_Serv.la \
+  libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \

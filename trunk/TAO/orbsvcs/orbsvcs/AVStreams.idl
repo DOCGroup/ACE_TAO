@@ -14,7 +14,7 @@
 #ifndef TAO_AV_STREAMS_IDL
 #define TAO_AV_STREAMS_IDL
 
-#include "CosPropertyService.idl"
+#include "CosProperty.idl"
 
 #pragma prefix "omg.org"
 
