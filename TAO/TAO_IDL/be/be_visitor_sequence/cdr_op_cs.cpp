@@ -202,7 +202,8 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       if (!tdef)
         {
           *os << "#endif /* _TAO_CDR_OP_"
-              << node->flat_name () << "_CPP_ */\n\n";
+              << node->flat_name () << "_CPP_ */"
+              << be_uidt_nl << be_uidt_nl;
         }
 
       node->cli_stub_cdr_op_gen (1);
@@ -547,7 +548,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                                 -1);
             }
 
-          *os << "_forany tmp (ACE_reinterpret_cast (";
+          *os << "_forany tmp (";
 
           if (bt->accept (visitor) == -1)
             {
@@ -558,8 +559,30 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                                 -1);
             }
 
-          *os << "_slice *, _tao_sequence[i]));" << be_nl;
-          *os << "_tao_marshal_flag = (strm >> tmp";
+          *os << "_alloc ());" << be_nl;
+          *os << "_tao_marshal_flag = (strm >> tmp);" << be_nl;
+
+          if (bt->accept (visitor) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_sequence_cdr_op_cs::"
+                                 "visit_node - "
+                                 "base type visit failed\n"),
+                                -1);
+            }
+
+          *os << "_copy (_tao_sequence[i], tmp.in ());" << be_nl;
+          
+          if (bt->accept (visitor) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_sequence_cdr_op_cs::"
+                                 "visit_node - "
+                                 "base type visit failed\n"),
+                                -1);
+            }
+
+          *os << "_free (tmp.inout ());" << be_uidt_nl;
           break;
         case AST_Decl::NT_string:
         case AST_Decl::NT_wstring:
@@ -577,7 +600,8 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
             if (str->max_size ()->ev ()->u.ulval == 0)
               {
                 // unbounded
-                *os << "_tao_marshal_flag = (strm >> _tao_sequence[i].out ()";
+                *os << "_tao_marshal_flag = (strm >> _tao_sequence[i].out ());"
+                    << be_uidt_nl;
               }
             else
               {
@@ -591,13 +615,13 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                     *os << "_tao_marshal_flag = (strm >> "
                         << "CORBA::Any::to_wstring (_tao_sequence[i].out (), ";
                   }
-                *os << str->max_size ()->ev ()->u.ulval << ")";
+                *os << str->max_size ()->ev ()->u.ulval << "));" << be_uidt_nl;
               }
           }
           break;
         case AST_Decl::NT_interface:
         case AST_Decl::NT_interface_fwd:
-          *os << "_tao_marshal_flag = (strm >> _tao_sequence[i].out ()";
+          *os << "_tao_marshal_flag = (strm >> _tao_sequence[i].out ());" << be_uidt_nl;
           break;
         case AST_Decl::NT_pre_defined:
           {
@@ -615,20 +639,20 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
 
             if (pt->pt () == AST_PredefinedType::PT_pseudo)
               {
-                *os << "_tao_marshal_flag = (strm >> _tao_sequence[i].out ()";
+                *os << "_tao_marshal_flag = (strm >> _tao_sequence[i].out ());" 
+                    << be_uidt_nl;
               }
             else
               {
-                *os << "_tao_marshal_flag = (strm >> _tao_sequence[i]";
+                *os << "_tao_marshal_flag = (strm >> _tao_sequence[i]);" << be_uidt_nl;
               }
           }
           break;
         default:
-          *os << "_tao_marshal_flag = (strm >> _tao_sequence[i]";
+          *os << "_tao_marshal_flag = (strm >> _tao_sequence[i]);" << be_uidt_nl;
           break;
         }
-      *os << ");" << be_uidt_nl
-          << "}";
+      *os << "}";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       switch (bt->node_type ())
@@ -643,8 +667,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                                 -1);
             }
 
-          *os << "_forany tmp (" << be_idt << be_idt_nl;
-          *os << "ACE_const_cast (" << be_idt << be_idt_nl;
+          *os << "_var tmp_var (";
           
           if (bt->accept (visitor) == -1)
             {
@@ -655,9 +678,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                                 -1);
             }
 
-          *os << "_slice *," << be_nl
-              << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
-              << "const ";
+          *os << "_dup (_tao_sequence[i]));" << be_nl;
 
           if (bt->accept (visitor) == -1)
             {
@@ -668,10 +689,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                                 -1);
             }
 
-          *os << "_slice *," << be_nl
-              << "_tao_sequence[i])" << be_uidt_nl
-              << ")" << be_uidt << be_uidt_nl
-              << ");" << be_uidt << be_uidt << be_uidt_nl;
+          *os << "_forany tmp (tmp_var.inout ());" << be_nl;
           *os << "_tao_marshal_flag = (strm << tmp";
           break;
         case AST_Decl::NT_string:
@@ -717,7 +735,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                         -1);
     }
 
-  *os << be_uidt_nl;
+  *os << be_nl;
   *os << "return _tao_marshal_flag;" << be_uidt_nl;
 
   delete visitor;
