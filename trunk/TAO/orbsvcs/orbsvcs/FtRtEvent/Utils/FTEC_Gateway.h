@@ -11,7 +11,7 @@
 #ifndef FTEC_GATEWAY_H
 #define FTEC_GATEWAY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"
@@ -31,19 +31,19 @@ namespace TAO_FTRTEC
           (PortableServer::POA_ptr poa
             ACE_ENV_ARG_DECL);
 
-      RtecEventChannelAdmin::EventChannel_ptr 
+      RtecEventChannelAdmin::EventChannel_ptr
         _this(ACE_ENV_SINGLE_ARG_DECL);
 
       //= The RtecEventChannelAdmin::EventChannel methods
       virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-        for_consumers (ACE_ENV_SINGLE_ARG_DECL) 
+        for_consumers (ACE_ENV_SINGLE_ARG_DECL)
           ACE_THROW_SPEC((CORBA::SystemException));
 
       virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-        for_suppliers (ACE_ENV_SINGLE_ARG_DECL) 
+        for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
           ACE_THROW_SPEC((CORBA::SystemException));
 
-      virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) 
+      virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
          ACE_THROW_SPEC((CORBA::SystemException));
 
       virtual RtecEventChannelAdmin::Observer_Handle
@@ -69,5 +69,5 @@ namespace TAO_FTRTEC
 #include "FTEC_Gateway.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/  "ace/post.h"
 #endif

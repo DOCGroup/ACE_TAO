@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file   ConnectionAcceptHandler.h
+ *  @file   ConnectionHandler_T.h
  *
  *  $Id$
  *
