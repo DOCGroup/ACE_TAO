@@ -28,13 +28,17 @@ main (int argc, char *argv[])
   int result;
   ACE_Registry::Naming_Context naming_context;
 
+  LPCTSTR host = 0;
+  if (argc == 2)
+    host = ACE_WIDE_STRING (argv[1]);
+
   // Connect to a predefined naming context
   result = ACE_Predefined_Naming_Contexts::connect (naming_context,
 						    HKEY_LOCAL_MACHINE, 
 						    // HKEY_CLASSES_ROOT,
 						    // HKEY_USERS,
 						    // HKEY_CURRENT_USER, 
-						    argc == 2 ? argv[1] : 0);
+						    host);
 							
   if (result != 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Predefined_Naming_Contexts::connect failed"), -1);

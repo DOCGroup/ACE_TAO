@@ -124,22 +124,22 @@ setup_names ()
   // Stupid implementation of STL is broken
   /*
   ::application_context_name.reserve (4);
-  ::application_context_name [0].id_ = "Software";
-  ::application_context_name [1].id_ = "AcmeSoft";
-  ::application_context_name [2].id_ = "AcmeApplication";
-  ::application_context_name [3].id_ = "1.0";
+  ::application_context_name [0].id_ = __TEXT ("Software");
+  ::application_context_name [1].id_ = __TEXT ("AcmeSoft");
+  ::application_context_name [2].id_ = __TEXT ("AcmeApplication");
+  ::application_context_name [3].id_ = __TEXT ("1.0");
   
   ::counter_name.reserve (1);
-  ::counter_name [0].id_ = "Instance Counter";
+  ::counter_name [0].id_ = __TEXT ("Instance Counter");
   */
 
   ACE_Registry::Name_Component component;
 
-  component.id_ = "Software",         ::application_context_name.push_back (component);
-  component.id_ = "AcmeSoft",         ::application_context_name.push_back (component);
-  component.id_ = "AcmeApplication",  ::application_context_name.push_back (component);
-  component.id_ = "1.0",              ::application_context_name.push_back (component);
+  component.id_ = __TEXT ("Software"),         ::application_context_name.push_back (component);
+  component.id_ = __TEXT ("AcmeSoft"),         ::application_context_name.push_back (component);
+  component.id_ = __TEXT ("AcmeApplication"),  ::application_context_name.push_back (component);
+  component.id_ = __TEXT ("1.0"),              ::application_context_name.push_back (component);
   
-  component.id_ = "Instance Counter", ::counter_name.push_back (component);
+  component.id_ = __TEXT ("Instance Counter"), ::counter_name.push_back (component);
 }
 
