@@ -1,3 +1,10 @@
+Tue Aug 10 10:57:00 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+	  Enable check for ACE_HAS_WCHAR.  We'll never shake out any
+	  wide character configuration bugs that may remain if it's
+	  disabled.
+
 Tue Aug 10 11:08:31 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-linux-common.h: Removed ACE_LACKS_TOWLOWER and

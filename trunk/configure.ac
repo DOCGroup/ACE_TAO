@@ -863,10 +863,8 @@ ACE_CHECK_LACKS_HEADERS(unistd.h)
 
 ACE_CHECK_LACKS_HEADERS(utime.h)
 
-dnl This check will be disabled until we can get ACE to compile when it
-dnl ACE_HAS_WCHAR is defined on UN*X systems
-dnl AC_CHECK_HEADER([wchar.h],
-dnl   [AC_DEFINE([ACE_HAS_WCHAR])],)
+AC_CHECK_HEADER([wchar.h],
+  [AC_DEFINE([ACE_HAS_WCHAR])],)
 
 ACE_CHECK_HAS_HEADERS(libc.h)
 
