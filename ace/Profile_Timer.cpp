@@ -31,7 +31,7 @@ ACE_Profile_Timer::ACE_Profile_Timer (void)
 #  if defined (ACE_HAS_PRUSAGE_T)
   ACE_OS::memset (&this->last_usage_, 0, sizeof this->last_usage_);
   char buf[20];
-  ACE_OS::sprintf (buf, "/proc/%d", ACE_OS::getpid ());
+  ACE_OS::sprintf (buf, "/proc/%d", ACE_static_cast (int, ACE_OS::getpid ()));
 
   if ((this->proc_handle_ = ACE_OS::open (buf, O_RDONLY, 0)) == -1)
     ACE_OS::perror (buf);
