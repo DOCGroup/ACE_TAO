@@ -1,3 +1,8 @@
+Tue Dec 09 13:05:00 1997    <nw1@CHA-CHA>
+
+	* ace/Containers.cpp (copy_all_nodes): Added a temporary
+ 	  ACE_Node<T> pointer to get around the macro side effects.
+
 Sun Dec  7 10:20:46 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Service_Config.cpp (parse_args): Added an appropriate macro
