@@ -1,65 +1,74 @@
+Mon Jul 12 08:04:20 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Simple/time-date/Makefile: removed Time_DateC.o,
+          Time_DateS.o, and Time_Date_i.o from SIMPLE_SVR_OBJS.  This
+          allows the server to be linked without warnings on DU 5.0.
+          And, it allows the example to function as intended, i.e.,
+          the servants are now linked in at runtime. [Bug 59]
+
 Mon Jul 12 00:05:33 1999  nanbor  <nanbor@cs.wustl.edu>
 
         * TAO version 0.4.1 released.
 
 Sun Jul 11 14:14:56 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/util/utl_scope.cpp:
-	  Further mod to lookup functions in response to a bug
-	  in compiling TAO/examples/Event_Comm.idl.
+        * TAO_IDL/util/utl_scope.cpp:
+          Further mod to lookup functions in response to a bug
+          in compiling TAO/examples/Event_Comm.idl.
 
 Sun Jul 11 12:15:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * Reconfig_Scheduler_T.{cpp, h},
-          Reconfig_Sched_Utils.{cpp, h}: Fixes for nightly build log errors and warnings.
-          Changed exception from UNKNOWN_TASK to INTERNAL, added ACE_TYPENAME for traits,
-          moved DFS ordering function from scheduler to scheduling strategy.
+          Reconfig_Sched_Utils.{cpp, h}: Fixes for nightly build log errors
+          and warnings.  Changed exception from UNKNOWN_TASK to INTERNAL,
+          added ACE_TYPENAME for traits, moved DFS ordering function from
+          scheduler to scheduling strategy.
 
 Sun Jul 11 03:25:07 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp
-	  (assign_priorities_i):
-	  (init): The assignment operator of auto_ptr takes another
-	  auto_ptr, not the pointer itself.
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp
+          (assign_priorities_i):
+          (init): The assignment operator of auto_ptr takes another
+          auto_ptr, not the pointer itself.
 
 Sat Jul 10 23:46:18 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/Options.html:
-	* docs/configurations.html: More updates to the configuration
-	  document.
+        * docs/Options.html:
+        * docs/configurations.html: More updates to the configuration
+          document.
 
 Sat Jul 10 21:56:54 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/UIOP_Acceptor.h:
-	* tao/UIOP_Acceptor.cpp (open_i, close):
+        * tao/UIOP_Acceptor.h:
+        * tao/UIOP_Acceptor.cpp (open_i, close):
 
-	  Added an "unlink_on_close_" member that flags whether or not the
-	  UIOP rendezvous point should be unlinked when closing the
-	  acceptor.  Currently this flag is only unset when an "address
-	  already in use" error (EADDRINUSE) occurs.  An existing
-	  rendezvous point shouldn't be unlinked if errno == EADDRINUSE
-	  since it may be in use by another UIOP server/client. [Bug 52]
+          Added an "unlink_on_close_" member that flags whether or not the
+          UIOP rendezvous point should be unlinked when closing the
+          acceptor.  Currently this flag is only unset when an "address
+          already in use" error (EADDRINUSE) occurs.  An existing
+          rendezvous point shouldn't be unlinked if errno == EADDRINUSE
+          since it may be in use by another UIOP server/client. [Bug 52]
 
-	* tao/UIOP_Acceptor.cpp (create_mprofile):
+        * tao/UIOP_Acceptor.cpp (create_mprofile):
 
-	  Initialized a pointer to zero to prevent potential uninitialized
-	  variable warnings.
+          Initialized a pointer to zero to prevent potential uninitialized
+          variable warnings.
 
-	  Minor coding style updates.
+          Minor coding style updates.
 
-	* tao/UIOP_Profile.cpp (parse_string):
+        * tao/UIOP_Profile.cpp (parse_string):
 
-	  Inadvertently checked for incorrect return value while setting
-	  the rendezvous point in the underlying ACE_UNIX_Addr.  The
-	  problem was introduced when I fixed another problem.  URL style
-	  object references are working again for UIOP.
+          Inadvertently checked for incorrect return value while setting
+          the rendezvous point in the underlying ACE_UNIX_Addr.  The
+          problem was introduced when I fixed another problem.  URL style
+          object references are working again for UIOP.
 
 Sat Jul 10 20:31:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp (init): Changed
-	  the use of auto_ptr::reset to release-and-assign since some
-	  compilers are still implementaing the C++ standard draft, which
-	  doesn't has reset() in auto_ptr.
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp (init): Changed
+          the use of auto_ptr::reset to release-and-assign since some
+          compilers are still implementaing the C++ standard draft, which
+          doesn't has reset() in auto_ptr.
 
 Sat Jul 10 19:40:41 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -76,138 +85,138 @@ Sat Jul 10 19:40:41 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Sat Jul 10 19:20:55 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/Simple/bank/Account_i.{h,cpp}:
-	* examples/Simple/echo/Echo_i.{h,cpp}: Added no-op copy
-	  constructors to fool old g++ (2.7.2.3).
+        * examples/Simple/bank/Account_i.{h,cpp}:
+        * examples/Simple/echo/Echo_i.{h,cpp}: Added no-op copy
+          constructors to fool old g++ (2.7.2.3).
 
 Sat Jul 10 18:54:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
-	  Fixed warnings on HP-UX/aCC, thanks to Eric Mitchell for
-	  facilitating the resources to find these problems.
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+          Fixed warnings on HP-UX/aCC, thanks to Eric Mitchell for
+          facilitating the resources to find these problems.
 
 Sat Jul 10 17:35:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
-	  Added an init to 0 in each file to avert SunOS egcs warnings.
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
+          Added an init to 0 in each file to avert SunOS egcs warnings.
 
 Sat Jul 10 15:53:59 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* tao/Transport_Mux_Strategy.cpp: Single lined the #pragma lines
-	  to fix the warnings in VxWorks.  Thanks to David for reporting
-	  this and for Carlos for coming up with the solution.
+        * tao/Transport_Mux_Strategy.cpp: Single lined the #pragma lines
+          to fix the warnings in VxWorks.  Thanks to David for reporting
+          this and for Carlos for coming up with the solution.
 
 Fri Jul  9 19:12:14 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/UIOP_Acceptor.{h,cpp} (open_i, rendezvous_point):
-	* tao/UIOP_Profile.{h,cpp}:
+        * tao/UIOP_Acceptor.{h,cpp} (open_i, rendezvous_point):
+        * tao/UIOP_Profile.{h,cpp}:
 
-	  Moved the rendezvous point verification method to the UIOP
-	  acceptor since it is the acceptor that should verify the
-	  rendezvous point.  Previously, the rendezvous point was checked
-	  on the client only when URL style object references were being
-	  used.  That behavior was incorrect.
+          Moved the rendezvous point verification method to the UIOP
+          acceptor since it is the acceptor that should verify the
+          rendezvous point.  Previously, the rendezvous point was checked
+          on the client only when URL style object references were being
+          used.  That behavior was incorrect.
 
-	* tao/Acceptor_Registry.cpp (open):
+        * tao/Acceptor_Registry.cpp (open):
 
-	  Comment updates.
+          Comment updates.
 
-	* tao/IIOP_Connector.cpp (preconnect):
+        * tao/IIOP_Connector.cpp (preconnect):
 
-	  Updated default preconnect port to be 683 instead of 9999 since
-	  the default port for CORBA 3 will be 683, as assigned by the
-	  IANA.
+          Updated default preconnect port to be 683 instead of 9999 since
+          the default port for CORBA 3 will be 683, as assigned by the
+          IANA.
 
-	* tao/IIOP_Profile.cpp (parse_string):
+        * tao/IIOP_Profile.cpp (parse_string):
 
-	  Updated some brittle code and added some additional error checks.
+          Updated some brittle code and added some additional error checks.
 
 Fri Jul  9 21:50:00 1999  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/ami_handler_vardecl_cs.cpp:
-	  Fixed a not reachable switch statement.
+        * TAO_IDL/be/be_visitor_argument/ami_handler_vardecl_cs.cpp:
+          Fixed a not reachable switch statement.
 
 Fri Jul  9 20:40:54 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/include/utl_scope.h:
-	* TAO_IDL/util/utl_scope.cpp:
-	  Extensive mods to lookup_by_name(), lookup_by_name_local(), and
-	  iter_lookup_by_name_local() so they will traverse the scope tree
-	  above the starting point and check for reopened modules.
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_scope.cpp:
+          Extensive mods to lookup_by_name(), lookup_by_name_local(), and
+          iter_lookup_by_name_local() so they will traverse the scope tree
+          above the starting point and check for reopened modules.
 
 Fri Jul 09 18:54:40 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* version_tests.dsw (Project): Fixed location of POA Deactivation
-	  project.
+        * version_tests.dsw (Project): Fixed location of POA Deactivation
+          project.
 
 Fri Jul  9 17:21:26 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_field/cdr_op_ci.cpp:
-	  Fixed two typos (misplaced parens) in generated code.
+        * TAO_IDL/be/be_visitor_field/cdr_op_ci.cpp:
+          Fixed two typos (misplaced parens) in generated code.
 
 Fri Jul  9 16:47:34 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/IIOP_Connector.cpp (preconnect):
+        * tao/IIOP_Connector.cpp (preconnect):
 
-	  If no port is specified then a default port of 9999 should be
-	  used, as stated in the spec.
+          If no port is specified then a default port of 9999 should be
+          used, as stated in the spec.
 
 Fri Jul  9 16:44:49 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/compiled_marshal_ss.cpp:
-	  Fixed several typos and misleading ACE_ERROR messages.
+        * TAO_IDL/be/be_visitor_argument/compiled_marshal_ss.cpp:
+          Fixed several typos and misleading ACE_ERROR messages.
 
 Fri Jul  9 16:41:32 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Persistent_Grid/Grid_i.cpp:
-	* examples/Persistent_Grid/Grid_i.h:
-	* examples/Persistent_Grid/Makefile:
-	* examples/Persistent_Grid/Simple_util.cpp:
-	* examples/Persistent_Grid/server.cpp: Implemented Dr.Schmidt's
-	  suggestions. Did a bit a code clean up. Tested on SunCC 5.0 and
-	  g++ on SunOS5.5.1
+        * examples/Persistent_Grid/Grid_i.cpp:
+        * examples/Persistent_Grid/Grid_i.h:
+        * examples/Persistent_Grid/Makefile:
+        * examples/Persistent_Grid/Simple_util.cpp:
+        * examples/Persistent_Grid/server.cpp: Implemented Dr.Schmidt's
+          suggestions. Did a bit a code clean up. Tested on SunCC 5.0 and
+          g++ on SunOS5.5.1
 
 Fri Jul 09 16:12:32 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
-	  (visit_interface):
-	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp
-	  (be_visitor_interface_any_op_cs): Added appropriate storage
-	  class specifiers to the collocation stub factory function
-	  pointer and the dummy pointer initializer integer.  Hopefully,
-	  this will eliminate the bazillion warnings from OSF1.
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+          (visit_interface):
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp
+          (be_visitor_interface_any_op_cs): Added appropriate storage
+          class specifiers to the collocation stub factory function
+          pointer and the dummy pointer initializer integer.  Hopefully,
+          this will eliminate the bazillion warnings from OSF1.
 
 Fri Jul  9 16:04:42 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/Invocation.cpp (start):
+        * tao/Invocation.cpp (start):
 
-	  Removed request_hdr time probe.  It is replaced by the time
-	  probes described below.
+          Removed request_hdr time probe.  It is replaced by the time
+          probes described below.
 
-	* tao/{IIOP,UIOP}_Transport.cpp (start_request):
+        * tao/{IIOP,UIOP}_Transport.cpp (start_request):
 
-	  Removed send_request() time probe and added one to
-	  start_request() since the time spent in start_request() is more
-	  important for benchmarking.
+          Removed send_request() time probe and added one to
+          start_request() since the time spent in start_request() is more
+          important for benchmarking.
 
 Fri Jul  9 15:22:20 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* orbsvcs/Naming_Service/Naming_Service.cpp:
-	  Added a check for error conditions in the <init> method, after
-	  <init_child_poa>, in order to shut down gracefully.
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+          Added a check for error conditions in the <init> method, after
+          <init_child_poa>, in order to shut down gracefully.
 
 Fri Jul  9 14:26:28 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_string.h:
-	* TAO_IDL/be_include/be_predefined_type.h:
-	* TAO_IDL/be/be_string.cpp:
-	* TAO_IDL/be/be_predefined_type.cpp:
-	  Added overrides for 2nd signature of overloaded
-	  compute_tc_type() virtual function in base class be_type.
-	  Averts warnings from KAI compiler.
+        * TAO_IDL/be_include/be_string.h:
+        * TAO_IDL/be_include/be_predefined_type.h:
+        * TAO_IDL/be/be_string.cpp:
+        * TAO_IDL/be/be_predefined_type.cpp:
+          Added overrides for 2nd signature of overloaded
+          compute_tc_type() virtual function in base class be_type.
+          Averts warnings from KAI compiler.
 
 Fri Jul  9 14:10:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -219,116 +228,116 @@ Fri Jul  9 14:10:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
 Fri Jul  9 12:59:05 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Simple/grid/Grid_i.h :
-	* examples/Simple/grid/Grid_i.cpp :Fixed a warning on
-	  HP_UX. Thanks to Carlos for reporting this.
+        * examples/Simple/grid/Grid_i.h :
+        * examples/Simple/grid/Grid_i.cpp :Fixed a warning on
+          HP_UX. Thanks to Carlos for reporting this.
 
 Fri Jul  9 11:14:03 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* docs/releasenotes/index.html:
+        * docs/releasenotes/index.html:
 
-	  Updated the UIOP pluggable transport protocol usage guidelines
-	  about the importance of using absolute and relative paths
-	  consistently with a given UIOP rendezvous point.
+          Updated the UIOP pluggable transport protocol usage guidelines
+          about the importance of using absolute and relative paths
+          consistently with a given UIOP rendezvous point.
 
 Fri Jul  9 10:58:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/Property/run_test.pl:
-	  Print messages to stderr to make the output readable
+        * orbsvcs/tests/Property/run_test.pl:
+          Print messages to stderr to make the output readable
 
-	* orbsvcs/ImplRepo_Service/Makefile:
-	  Updated dependencies
+        * orbsvcs/ImplRepo_Service/Makefile:
+          Updated dependencies
 
-	* examples/OBV/Typed_Events/run_test.pl:
-	  Added missing run_test script
+        * examples/OBV/Typed_Events/run_test.pl:
+          Added missing run_test script
 
 Fri Jul  9 01:55:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
-	  (visit_interface): Fixed type mismatch warning on KCC.
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+          (visit_interface): Fixed type mismatch warning on KCC.
 
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp
-	  (visit_interface): Fixed unused argument warnings on egcs.
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp
+          (visit_interface): Fixed unused argument warnings on egcs.
 
 Fri Jul 09 01:00:40 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/DynAnyC.cpp: Removed a duplicated template instantiation.
+        * tao/DynAnyC.cpp: Removed a duplicated template instantiation.
 
-	* tao/Connector_Registry.cpp (preprocess_preconnects): Added a
-	  static cast to a ssize_t value to avoid MSVC warnings.
+        * tao/Connector_Registry.cpp (preprocess_preconnects): Added a
+          static cast to a ssize_t value to avoid MSVC warnings.
 
 Thu Jul  8 23:34:42 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Persistent_Grid/README:
-	* examples/Persistent_Grid/Grid_Client_i.cpp:
-	* examples/Persistent_Grid/Grid_i.cpp:
-	* examples/Persistent_Grid/Persistent_Client_i.cpp:
-	* examples/Persistent_Grid/Simple_util.cpp:
-	* examples/Persistent_Grid/client.cpp:
-	* examples/Persistent_Grid/persistent_client.cpp:
-	* examples/Persistent_Grid/server.cpp:
-	* examples/Persistent_Grid/Grid_Client_i.h
-	* examples/Persistent_Grid/Grid_i.h
-	* examples/Persistent_Grid/Persistent_Client.h
-	* examples/Persistent_Grid/Simple_util.h
-	* examples/Persistent_Grid/run_test.pl
-	* examples/Persistent_Grid/Makefile
-	* examples/Persistent_Grid/Persistent_Grid.dsw
-	* examples/TAO_Examples.dsw
-	* examples/Persistent_Grid/Persistent_Grid_Server_Files.dsp:
-	* examples/Persistent_Grid/Persistent_Grid_Client_Files.dsp:
-	* examples/Persistent_Grid/Persistent_Grid_Client_Second_Files.dsp:
-	  A new example added to show the persistence nature of the
-	  server. Please refer to the README file in that directory for
-	  info on how to build and run the tests.
+        * examples/Persistent_Grid/README:
+        * examples/Persistent_Grid/Grid_Client_i.cpp:
+        * examples/Persistent_Grid/Grid_i.cpp:
+        * examples/Persistent_Grid/Persistent_Client_i.cpp:
+        * examples/Persistent_Grid/Simple_util.cpp:
+        * examples/Persistent_Grid/client.cpp:
+        * examples/Persistent_Grid/persistent_client.cpp:
+        * examples/Persistent_Grid/server.cpp:
+        * examples/Persistent_Grid/Grid_Client_i.h
+        * examples/Persistent_Grid/Grid_i.h
+        * examples/Persistent_Grid/Persistent_Client.h
+        * examples/Persistent_Grid/Simple_util.h
+        * examples/Persistent_Grid/run_test.pl
+        * examples/Persistent_Grid/Makefile
+        * examples/Persistent_Grid/Persistent_Grid.dsw
+        * examples/TAO_Examples.dsw
+        * examples/Persistent_Grid/Persistent_Grid_Server_Files.dsp:
+        * examples/Persistent_Grid/Persistent_Grid_Client_Files.dsp:
+        * examples/Persistent_Grid/Persistent_Grid_Client_Second_Files.dsp:
+          A new example added to show the persistence nature of the
+          server. Please refer to the README file in that directory for
+          info on how to build and run the tests.
 
 Thu Jul 08 23:55:46 1999  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* tao/TAO.dsp
-	* tao/TAO_Static.dsp: Added the Files Pollable{C,S}.{h,cpp}
-	  and Asynch_Invocation.{h,cpp} to the MSVC project files.
+        * tao/TAO.dsp
+        * tao/TAO_Static.dsp: Added the Files Pollable{C,S}.{h,cpp}
+          and Asynch_Invocation.{h,cpp} to the MSVC project files.
 
 Thu Jul 08 23:29:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Servant_Base.{h,cpp}: Removed the _create_collocated_objref method.
+        * tao/Servant_Base.{h,cpp}: Removed the _create_collocated_objref method.
 
-	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp: Changed to use
-	  a collocation stub factory function pointer to generate
-	  collocated stubs.   The hook (function pointer) is defined in
-	  *C.{h,cpp} and default to 0.  If the skeleton file is linked
-	  with the stub file, the hook will be initialized to use a
-	  factory function defined in the skeleton file.
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp: Changed to use
+          a collocation stub factory function pointer to generate
+          collocated stubs.   The hook (function pointer) is defined in
+          *C.{h,cpp} and default to 0.  If the skeleton file is linked
+          with the stub file, the hook will be initialized to use a
+          factory function defined in the skeleton file.
 
-	* TAO_IDL/be/be_visitor_interface/thru_poa_collocated_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/thru_poa_collocated_ss.cpp:  We
-	  no longer need to initialize thru_poa stubs with a servant
-	  pointer.  Also removed get_servant() method from thru_poa stub.
+        * TAO_IDL/be/be_visitor_interface/thru_poa_collocated_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_collocated_ss.cpp:  We
+          no longer need to initialize thru_poa stubs with a servant
+          pointer.  Also removed get_servant() method from thru_poa stub.
 
-	* TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:  Borrow these two
-	  file to define the collocation stub factory function pointer.
+        * TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:  Borrow these two
+          file to define the collocation stub factory function pointer.
 
 Thu Jul  8 22:55:59 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* Thanks to Michael Kircher and Carlos, we have put together most
-	  of the TAO_IDL code and tao code for the AMI call back
- 	  implementation. This commit is the result of the merging process
- 	  between the "ami_phase3" branch and the current branch.
+        * Thanks to Michael Kircher and Carlos, we have put together most
+          of the TAO_IDL code and tao code for the AMI call back
+          implementation. This commit is the result of the merging process
+          between the "ami_phase3" branch and the current branch.
 
-  	* Most of the support for the AMI Callback is added. But all the
-	  AMI specific code is conditionally compiled using
- 	  "TAO_HAS_CORBA_MESSAGING" and "TAO_POLLER".
+        * Most of the support for the AMI Callback is added. But all the
+          AMI specific code is conditionally compiled using
+          "TAO_HAS_CORBA_MESSAGING" and "TAO_POLLER".
 
 Thu Jul  8 21:50:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/CDR/run_test.pl:
-	  The code to check for errors was broken.
+        * tests/CDR/run_test.pl:
+          The code to check for errors was broken.
 
-	* tao/PolicyC.cpp:
-	  Added missing template instantiation
+        * tao/PolicyC.cpp:
+          Added missing template instantiation
 
 Thu Jul 08 21:47:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -340,98 +349,98 @@ Thu Jul 08 21:47:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
 Thu Jul  8 21:31:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Typecode.cpp:
-	  Added missing template instantiation.
+        * tao/Typecode.cpp:
+          Added missing template instantiation.
 
 Thu Jul  8 21:02:58 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/Connector_Registry.cpp (preprocess_preconnects):
+        * tao/Connector_Registry.cpp (preprocess_preconnects):
 
-	  Minor fix for case when preconnect string contains no
-	  preconnects (e.g.: "iiop://").
+          Minor fix for case when preconnect string contains no
+          preconnects (e.g.: "iiop://").
 
-	* tao/{IIOP,UIOP}_Connect.cpp:
+        * tao/{IIOP,UIOP}_Connect.cpp:
 
-	  Cosmetic updates.
+          Cosmetic updates.
 
 Thu Jul  8 17:18:36 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/params.{h,cpp}:
+        * tao/params.{h,cpp}:
 
-	  Changed the preconnects container to an
-	  ACE_Unbounded_Queue<ACE_CString> since it allows duplicate
-	  values and since it has already been instantiated in ACE.  Since
-	  it has already been instantiated in ACE, no increase in TAO's
-	  footprint will occur.  Furthermore, since the preconnect
-	  processing is not in a performance critical path, no degradation
-	  in performance will occur. [Bug 4]
+          Changed the preconnects container to an
+          ACE_Unbounded_Queue<ACE_CString> since it allows duplicate
+          values and since it has already been instantiated in ACE.  Since
+          it has already been instantiated in ACE, no increase in TAO's
+          footprint will occur.  Furthermore, since the preconnect
+          processing is not in a performance critical path, no degradation
+          in performance will occur. [Bug 4]
 
-	* tao/Connector_Registry.{h,cpp}:
+        * tao/Connector_Registry.{h,cpp}:
 
-	  Added a new preprocess_preconnects() method to "squeeze" all
-	  protocol similar preconnects into a single string.  This
-	  preprocessing gets around having to iterate over all of the
-	  loaded protocols in each protocol connector.  Protocol iteration
-	  will remain in the connector registry.  Furthermore,
-	  preprocessing the preconnects in this manner also makes it
-	  easier for protocol implementers to parse the preconnects.
-	  [Bug 4]
+          Added a new preprocess_preconnects() method to "squeeze" all
+          protocol similar preconnects into a single string.  This
+          preprocessing gets around having to iterate over all of the
+          loaded protocols in each protocol connector.  Protocol iteration
+          will remain in the connector registry.  Furthermore,
+          preprocessing the preconnects in this manner also makes it
+          easier for protocol implementers to parse the preconnects.
+          [Bug 4]
 
-	* tao/Protocol_Factory.{h,cpp}:
-	* tao/IIOP_Factory.{h,cpp}:
-	* tao/UIOP_Factory.{h,cpp}:
+        * tao/Protocol_Factory.{h,cpp}:
+        * tao/IIOP_Factory.{h,cpp}:
+        * tao/UIOP_Factory.{h,cpp}:
 
-	  Added a prefix() method that returns the expected prefix for the
-	  given transport protocol.  One such method already exists in
-	  each protocol's Profile class.  However, it makes more sense to
-	  get the prefix from the protocol factory in the case that this
-	  newly added method is used, currently only in preconnect
-	  processing. [Bug 4]
+          Added a prefix() method that returns the expected prefix for the
+          given transport protocol.  One such method already exists in
+          each protocol's Profile class.  However, it makes more sense to
+          get the prefix from the protocol factory in the case that this
+          newly added method is used, currently only in preconnect
+          processing. [Bug 4]
 
-	* tao/ORB_Core.cpp (init):
+        * tao/ORB_Core.cpp (init):
 
-	  The preconnect provided on the command line wasn't being
-	  "consumed" during command line parsing.  Thanks to Steve Totten
-	  <totten_s@ociweb.com> for reporting this problem and providing a
-	  fix.  [Bug 39]
+          The preconnect provided on the command line wasn't being
+          "consumed" during command line parsing.  Thanks to Steve Totten
+          <totten_s@ociweb.com> for reporting this problem and providing a
+          fix.  [Bug 39]
 
-	  Update related to the preconnect fixes described above. [Bug 4]
+          Update related to the preconnect fixes described above. [Bug 4]
 
-	* tao/ORB_Core.h (TAO_ORB_Core):
+        * tao/ORB_Core.h (TAO_ORB_Core):
 
-	  Comment updates.
+          Comment updates.
 
 Thu Jul  8 16:30:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Sequence_T.h:
-	* tao/Sequence_T.i:
-	* tao/Sequence_T.cpp:
-	  Sequences of pseudo objects require a different Object_Manager
-	  class
+        * tao/Sequence_T.h:
+        * tao/Sequence_T.i:
+        * tao/Sequence_T.cpp:
+          Sequences of pseudo objects require a different Object_Manager
+          class
 
-	* TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
-	  Fixed to generate the new Pseudo_Object_Manager<> class
+        * TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
+          Fixed to generate the new Pseudo_Object_Manager<> class
 
-	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
-	  The T::_nil() method is defined in the header file to work
-	  around g++ problems.
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+          The T::_nil() method is defined in the header file to work
+          around g++ problems.
 
-	* tao/DomainC.cpp:
-	* tao/DomainC.i:
-	* tao/DynAnyC.cpp:
-	* tao/DynSequence_i.cpp:
-	* tao/MessagingC.cpp:
-	* tao/PollableC.cpp:
-	* tao/Request.cpp:
-	  Added missing template instantiations
+        * tao/DomainC.cpp:
+        * tao/DomainC.i:
+        * tao/DynAnyC.cpp:
+        * tao/DynSequence_i.cpp:
+        * tao/MessagingC.cpp:
+        * tao/PollableC.cpp:
+        * tao/Request.cpp:
+          Added missing template instantiations
 
-	* orbsvcs/orbsvcs/Channel_Clients_T.h:
-	  Added missing default parameters
+        * orbsvcs/orbsvcs/Channel_Clients_T.h:
+          Added missing default parameters
 
 Thu Jul 08 15:55:17 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -621,7 +630,7 @@ Wed Jul 07 16:25:05 1999  David L. Levine  <levine@cs.wustl.edu>
             in the 7 bit minor code field.  _info then prints
             out the value.  Not perfect, due to the loss of
             information, but it often provides a lot more useful
-            information than it did before.  [18]
+            information than it did before.  [Bug 18]
 
 Wed Jul  7 16:14:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -4627,340 +4636,340 @@ Sun Jun 20 14:39:23 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Wed Jul  7 18:13:40 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* tao/Invocation.cpp: Removed the loop around the wait_for_reply.
+        * tao/Invocation.cpp: Removed the loop around the wait_for_reply.
 
-	* TAO/TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp: Fixed CC5
-	  warnings.
+        * TAO/TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp: Fixed CC5
+          warnings.
 
-	* TAO/tao/Invocation.cpp
-	* TAO/tao/Invocation.i
-	* TAO/tao/Reply_Dispatcher.cpp
-	* TAO/tao/Reply_Dispatcher.h: Integrated the CDR changes done in
-	  ACE_CDR. Stealing the CDR content is coded here now.
+        * TAO/tao/Invocation.cpp
+        * TAO/tao/Invocation.i
+        * TAO/tao/Reply_Dispatcher.cpp
+        * TAO/tao/Reply_Dispatcher.h: Integrated the CDR changes done in
+          ACE_CDR. Stealing the CDR content is coded here now.
 
-	* TAO/tests/AMI/orb_creation.cpp: Fixed CC5 warnings.
+        * TAO/tests/AMI/orb_creation.cpp: Fixed CC5 warnings.
 
 Wed Jul  7 10:55:06 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* Asynch_Invocation.cpp
-	* Asynch_Invocation.h
-	* MessagingC.h
-	* PollableC.cpp
-	* PollableC.h
-	* PollableS.cpp
-	* PollableS.h
-	* Reply_Dispatcher.cpp
-	* Reply_Dispatcher.h: Guarded the AMI specific classes etc with
-	  TAO_HAS_CORBA_MESSAGING && TAO_POLLER.
+        * Asynch_Invocation.cpp
+        * Asynch_Invocation.h
+        * MessagingC.h
+        * PollableC.cpp
+        * PollableC.h
+        * PollableS.cpp
+        * PollableS.h
+        * Reply_Dispatcher.cpp
+        * Reply_Dispatcher.h: Guarded the AMI specific classes etc with
+          TAO_HAS_CORBA_MESSAGING && TAO_POLLER.
 
 Tue Jul  6 22:10:00 1999  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* tao/PollableS.cpp:
-	  Replaced three ACE_BASE_CLASS macros with ACE_CORBA_1 macros to
-	  get VC to compile it.
+        * tao/PollableS.cpp:
+          Replaced three ACE_BASE_CLASS macros with ACE_CORBA_1 macros to
+          get VC to compile it.
 
-	* tao/TAO.dsp
-	* tao/TAO_Static.dsp:
+        * tao/TAO.dsp
+        * tao/TAO_Static.dsp:
           Added the files Pollable{C,S}.{h,cpp} and Asynch_Invocation.{h,cpp}.
 
-	* TAO_IDL/be_include/be_decl.h
-	* TAO_IDL/be/be_decl.cpp
-  	* TAO_IDL/be_include/be_interface.h
-  	* TAO_IDL/be/be_interface.cpp:
-  	* TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp
-  	* TAO_IDL/be/be_visitor_argument/upcall_ss.cpp
-  	* TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp
-  	* TAO_IDL/be/be_visitor_argument/ami_handler_result_arg.cpp:
-	  Added code to generate ami_handler_ names. The generated names
-	  are held in the corresponding classes, which is then also
-	  responsible for deleting it.
+        * TAO_IDL/be_include/be_decl.h
+        * TAO_IDL/be/be_decl.cpp
+        * TAO_IDL/be_include/be_interface.h
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp
+        * TAO_IDL/be/be_visitor_argument/upcall_ss.cpp
+        * TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp
+        * TAO_IDL/be/be_visitor_argument/ami_handler_result_arg.cpp:
+          Added code to generate ami_handler_ names. The generated names
+          are held in the corresponding classes, which is then also
+          responsible for deleting it.
 
-  	* TAO_IDL/be/be_visitor_operation/ami_handler_argument_marshal.cpp
-  	* TAO_IDL/be_include/be_visitor_operation/ami_handler_argument_marshal.h
-  	* TAO_IDL/be/be_visitor_argument/ami_handler_upcall_cs.cpp
-  	* TAO_IDL/be_include/be_visitor_argument/ami_handler_upcall_cs.h
-  	* TAO_IDL/be/be_visitor_argument/ami_handler_vardecl_cs.cpp
-  	* TAO_IDL/be_include/be_visitor_argument/ami_handler_vardecl_cs.h
-  	* TAO_IDL/be/be_visitor_argument/ami_handler_compiled_marshal_cs.cpp
-  	* TAO_IDL/be_include/be_visitor_argument/ami_handler_compiled_marshal_cs.h:
+        * TAO_IDL/be/be_visitor_operation/ami_handler_argument_marshal.cpp
+        * TAO_IDL/be_include/be_visitor_operation/ami_handler_argument_marshal.h
+        * TAO_IDL/be/be_visitor_argument/ami_handler_upcall_cs.cpp
+        * TAO_IDL/be_include/be_visitor_argument/ami_handler_upcall_cs.h
+        * TAO_IDL/be/be_visitor_argument/ami_handler_vardecl_cs.cpp
+        * TAO_IDL/be_include/be_visitor_argument/ami_handler_vardecl_cs.h
+        * TAO_IDL/be/be_visitor_argument/ami_handler_compiled_marshal_cs.cpp
+        * TAO_IDL/be_include/be_visitor_argument/ami_handler_compiled_marshal_cs.h:
           Added these files for code generation of the AMI Handler
-	  skeleton.
+          skeleton.
 
         * TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.cpp
-  	* TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp
-  	* TAO_IDL/be_include/be_visitor_operation/ami_handler_skeleton_cs.h
-  	* TAO_IDL/be/be_visitor_operation/ami_handler_arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp
+        * TAO_IDL/be_include/be_visitor_operation/ami_handler_skeleton_cs.h
+        * TAO_IDL/be/be_visitor_operation/ami_handler_arglist.cpp:
           Made changes to generate skeleton code for the AMI handler.
 
-  	* TAO_IDL/be_include/be_visitor_interface/ami_handler_servant_cs.h
-	* TAO_IDL/be/be_visitor_interface/ami_handler_servant_cs.cpp:
-	  Added these files for code generation of the AMI handler
-	  servant.
+        * TAO_IDL/be_include/be_visitor_interface/ami_handler_servant_cs.h
+        * TAO_IDL/be/be_visitor_interface/ami_handler_servant_cs.cpp:
+          Added these files for code generation of the AMI handler
+          servant.
 
-  	* TAO_IDL/be/be_codegen.h
-	* TAO_IDL/be/be_visitor_factory.cpp
-  	* TAO_IDL/be/be_visitor_interface.cpp
-  	* TAO_IDL/be_include/be_visitor_interface.h
-  	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp
-    	  Made changes to generate servant code for the AMI handler.
+        * TAO_IDL/be/be_codegen.h
+        * TAO_IDL/be/be_visitor_factory.cpp
+        * TAO_IDL/be/be_visitor_interface.cpp
+        * TAO_IDL/be_include/be_visitor_interface.h
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp
+          Made changes to generate servant code for the AMI handler.
 
 Tue Jul  6 09:55:42 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* tao/Invocation.cpp
-	* tao/Wait_Strategy.cpp:Commented out the call to
-	  <sending_request> in Invocation class.
+        * tao/Invocation.cpp
+        * tao/Wait_Strategy.cpp:Commented out the call to
+          <sending_request> in Invocation class.
 
-	* client.muxed.conf: Added this file. This enables MT wait
-	  strategy and MUXED TMS.
+        * client.muxed.conf: Added this file. This enables MT wait
+          strategy and MUXED TMS.
 
-	* tests/AMI/client.cpp: Addes sendc method.
-
-
-
-	* tests/AMI/Makefile
-	* tests/AMI/run_test.pl
-	* tests/AMI/simple-client.conf
-	* tests/AMI/simple-client.cpp
-	* tests/AMI/test-handC.cpp
-	* tests/AMI/test_i.cpp
-	* tests/AMI/test_i.h
-	* tests/AMI/test_i.i:
-	  Cosmetic changes to print usefull debug messages with thread id
-	  etc.
-
-	* tao/Transport_Mux_Strategy.cpp
-	* tao/Transport_Mux_Strategy.h
-	  Changes to these files again for making it MT safe. Added
-	  SYNCH_MUTEX to the Hash Table. and protected the
-	  request_id_generator with a lock.
+        * tests/AMI/client.cpp: Addes sendc method.
 
 
-	* tao/GIOP.cpp
-	* tao/IIOP_Transport.cpp
-	* tao/Invocation.cpp
-	* tao/Invocation.i
-	* tao/Pluggable.cpp
-	* tao/Pluggable.h
-	* tao/Reply_Dispatcher.cpp
-	* tao/Reply_Dispatcher.h
-	* tao/Transport_Mux_Strategy.cpp
-	* tao/Transport_Mux_Strategy.h
-	* tao/Wait_Strategy.cpp
 
-    	  Ooooh!!!. Got the Muxed TMS to work. I havent taken care of the
-	  MT case yet. Need to make the Hash Table with SYNCH
-	  MUTEX. Things should be ok then.
+        * tests/AMI/Makefile
+        * tests/AMI/run_test.pl
+        * tests/AMI/simple-client.conf
+        * tests/AMI/simple-client.cpp
+        * tests/AMI/test-handC.cpp
+        * tests/AMI/test_i.cpp
+        * tests/AMI/test_i.h
+        * tests/AMI/test_i.i:
+          Cosmetic changes to print usefull debug messages with thread id
+          etc.
+
+        * tao/Transport_Mux_Strategy.cpp
+        * tao/Transport_Mux_Strategy.h
+          Changes to these files again for making it MT safe. Added
+          SYNCH_MUTEX to the Hash Table. and protected the
+          request_id_generator with a lock.
+
+
+        * tao/GIOP.cpp
+        * tao/IIOP_Transport.cpp
+        * tao/Invocation.cpp
+        * tao/Invocation.i
+        * tao/Pluggable.cpp
+        * tao/Pluggable.h
+        * tao/Reply_Dispatcher.cpp
+        * tao/Reply_Dispatcher.h
+        * tao/Transport_Mux_Strategy.cpp
+        * tao/Transport_Mux_Strategy.h
+        * tao/Wait_Strategy.cpp
+
+          Ooooh!!!. Got the Muxed TMS to work. I havent taken care of the
+          MT case yet. Need to make the Hash Table with SYNCH
+          MUTEX. Things should be ok then.
 
 Sun Jul  4 13:00:38 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* Transport_Mux_Strategy.cpp
-	* Transport_Mux_Strategy.h
-	* default_client.cpp: Implemented Muxed TMS. But have nt got to
-	  working yet. It is just there not burting anything.
+        * Transport_Mux_Strategy.cpp
+        * Transport_Mux_Strategy.h
+        * default_client.cpp: Implemented Muxed TMS. But have nt got to
+          working yet. It is just there not burting anything.
 
-	* tao/Asynch_Invocation.cpp
-	* tao/Asynch_Invocation.h
-	* tao/Asynch_Invocation.i
-	* tao/Client_Strategy_Factory.cpp
-	* tao/Client_Strategy_Factory.h
-	* tao/Invocation.cpp
-	* tao/Invocation.h
-	* tao/Invocation.i
-	* tao/Pluggable.cpp
-	* tao/Reply_Dispatcher.cpp
-	* tao/Reply_Dispatcher.h
-	* tao/Transport_Mux_Strategy.cpp
-	* tao/Transport_Mux_Strategy.h
-	* tao/default_client.cpp
-	* tao/default_client.h
+        * tao/Asynch_Invocation.cpp
+        * tao/Asynch_Invocation.h
+        * tao/Asynch_Invocation.i
+        * tao/Client_Strategy_Factory.cpp
+        * tao/Client_Strategy_Factory.h
+        * tao/Invocation.cpp
+        * tao/Invocation.h
+        * tao/Invocation.i
+        * tao/Pluggable.cpp
+        * tao/Reply_Dispatcher.cpp
+        * tao/Reply_Dispatcher.h
+        * tao/Transport_Mux_Strategy.cpp
+        * tao/Transport_Mux_Strategy.h
+        * tao/default_client.cpp
+        * tao/default_client.h
 
-	  Moved the message state from <Invocation> classes to the
-	  Transport Mux Strategy. This makes it  to have the behavior of
-	  Transport object acccesing the messaging state uniform, across
-	  Muxed and Exclusive TMS. I have not done Muxed TMS yet.
+          Moved the message state from <Invocation> classes to the
+          Transport Mux Strategy. This makes it  to have the behavior of
+          Transport object acccesing the messaging state uniform, across
+          Muxed and Exclusive TMS. I have not done Muxed TMS yet.
 
 Sat Jul  3 10:54:00 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_factory.cpp
-	* TAO_IDL/be_include/be_codegen.h
-	* tao/Asynch_Invocation.cpp
-	* tao/Asynch_Invocation.h
-	* tao/Asynch_Invocation.i
-	* tao/Invocation.cpp
-	* tao/Invocation.h
+        * TAO_IDL/be/be_visitor_factory.cpp
+        * TAO_IDL/be_include/be_codegen.h
+        * tao/Asynch_Invocation.cpp
+        * tao/Asynch_Invocation.h
+        * tao/Asynch_Invocation.i
+        * tao/Invocation.cpp
+        * tao/Invocation.h
 
-  	  Moved the transport_->idle () to the derived class'
-	  constructors.
+          Moved the transport_->idle () to the derived class'
+          constructors.
 
-	* tests/AMI/test.idl
+        * tests/AMI/test.idl
 
-  	  Just commented out the other methods. Left only get_number.
+          Just commented out the other methods. Left only get_number.
 
-	* Makefile
-	* client.tss.conf
+        * Makefile
+        * client.tss.conf
         * server.dsp
-	* test_i.cpp
-	* README
-	* orb_creation.cpp
-	* simple-client.conf
-	* test_i.h
-	* client.conf
-	* orb_creation.dsp
-	* simple-client.cpp
-	* test_i.i
-	* client.cpp
-	* run_test.pl*
-	* simple_client.dsp
-	* update.log
-	* client.dsp
-	* server.conf
-	* test-handC.cpp
+        * test_i.cpp
+        * README
+        * orb_creation.cpp
+        * simple-client.conf
+        * test_i.h
+        * client.conf
+        * orb_creation.dsp
+        * simple-client.cpp
+        * test_i.i
+        * client.cpp
+        * run_test.pl*
+        * simple_client.dsp
+        * update.log
+        * client.dsp
+        * server.conf
+        * test-handC.cpp
 
-  	  Files for the simple test. But you actually need server and
-	  simple-client test files right now.
+          Files for the simple test. But you actually need server and
+          simple-client test files right now.
 
 
-	* tests/AMI/simple-client.cpp: Removed the iteration part from the
-	  test. Let us keep it really simple.
+        * tests/AMI/simple-client.cpp: Removed the iteration part from the
+          test. Let us keep it really simple.
 
-	* TAO_IDL/be/be_visitor_factory.cpp
-	* TAO_IDL/be/be_visitor_interface/ami_handler_stub_cs.cpp
-	* TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.cpp
-	  Changes for generating Reply Handler skeletons.
+        * TAO_IDL/be/be_visitor_factory.cpp
+        * TAO_IDL/be/be_visitor_interface/ami_handler_stub_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.cpp
+          Changes for generating Reply Handler skeletons.
 
-	* TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp:
-	  Added this file. This file generates the demarshalling skeletons
-	  for the Reply Handler and then calls the Reply Handler's call
-	  back hook methods. This file is not fully done yet. But this
-	  visitor is not used for the time being.
+        * TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp:
+          Added this file. This file generates the demarshalling skeletons
+          for the Reply Handler and then calls the Reply Handler's call
+          back hook methods. This file is not fully done yet. But this
+          visitor is not used for the time being.
 
-	* tao/Transport_Mux_Strategy.cpp: Fixed the explicit template
-	  instantiation problems.
+        * tao/Transport_Mux_Strategy.cpp: Fixed the explicit template
+          instantiation problems.
 
 Fri Jul  2 16:28:08 1999 Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	  Another big step generating code for AMI. Done with sendc
-	  methods and Reply Handler call back methods. Both header files
-	  and cpp files contents.
+          Another big step generating code for AMI. Done with sendc
+          methods and Reply Handler call back methods. Both header files
+          and cpp files contents.
 
-  	  TO-DO: Reply Handler skeletons. Reply Handler servants.
+          TO-DO: Reply Handler skeletons. Reply Handler servants.
 
-	* tao/Asynch_Invocation.h
-	* tao/Asynch_Invocation.i
-	* tao/Makefile
-	* tao/MessagingC.h
-	* tao/MessagingS.cpp
-	* tao/Reply_Dispatcher.cpp
-	* tao/Reply_Dispatcher.h
+        * tao/Asynch_Invocation.h
+        * tao/Asynch_Invocation.i
+        * tao/Makefile
+        * tao/MessagingC.h
+        * tao/MessagingS.cpp
+        * tao/Reply_Dispatcher.cpp
+        * tao/Reply_Dispatcher.h
 
-	* TAO_IDL/Makefile
-	* TAO_IDL/ast/ast_decl.cpp
-	* TAO_IDL/be/be_codegen.cpp
-	* TAO_IDL/be/be_decl.cpp
-	* TAO_IDL/be/be_interface.cpp
-	* TAO_IDL/be/be_type.cpp
-	* TAO_IDL/be/be_visitor_argument.cpp
-	* TAO_IDL/be/be_visitor_factory.cpp
-	* TAO_IDL/be/be_visitor_interface.cpp
-	* TAO_IDL/be/be_visitor_operation.cpp
-	* TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp
-	* TAO_IDL/be/be_visitor_interface/ami_handler_stub_ch.cpp
-	* TAO_IDL/be/be_visitor_interface/interface.cpp
-	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp
-	* TAO_IDL/be/be_visitor_operation/ami_arglist.cpp
-	* TAO_IDL/be/be_visitor_operation/ami_ch.cpp
-	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp
-	* TAO_IDL/be/be_visitor_operation/ami_handler_arglist.cpp
-	* TAO_IDL/be/be_visitor_operation/ami_handler_operation_ch.cpp
-	* TAO_IDL/be/be_visitor_operation/argument.cpp
-	* TAO_IDL/be/be_visitor_operation/argument_invoke.cpp
-	* TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp
-	* TAO_IDL/be/be_visitor_operation/rettype.cpp
-	* TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp
-	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp
-	* TAO_IDL/be_include/be_codegen.h
-	* TAO_IDL/be_include/be_decl.h
-	* TAO_IDL/be_include/be_interface.h
-	* TAO_IDL/be_include/be_type.h
-	* TAO_IDL/be_include/be_visitor_argument.h
-	* TAO_IDL/be_include/be_visitor_interface.h
-	* TAO_IDL/be_include/be_visitor_operation.h
-	* TAO_IDL/include/ast_decl.h
+        * TAO_IDL/Makefile
+        * TAO_IDL/ast/ast_decl.cpp
+        * TAO_IDL/be/be_codegen.cpp
+        * TAO_IDL/be/be_decl.cpp
+        * TAO_IDL/be/be_interface.cpp
+        * TAO_IDL/be/be_type.cpp
+        * TAO_IDL/be/be_visitor_argument.cpp
+        * TAO_IDL/be/be_visitor_factory.cpp
+        * TAO_IDL/be/be_visitor_interface.cpp
+        * TAO_IDL/be/be_visitor_operation.cpp
+        * TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp
+        * TAO_IDL/be/be_visitor_interface/ami_handler_stub_ch.cpp
+        * TAO_IDL/be/be_visitor_interface/interface.cpp
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/ami_arglist.cpp
+        * TAO_IDL/be/be_visitor_operation/ami_ch.cpp
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/ami_handler_arglist.cpp
+        * TAO_IDL/be/be_visitor_operation/ami_handler_operation_ch.cpp
+        * TAO_IDL/be/be_visitor_operation/argument.cpp
+        * TAO_IDL/be/be_visitor_operation/argument_invoke.cpp
+        * TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype.cpp
+        * TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp
+        * TAO_IDL/be_include/be_codegen.h
+        * TAO_IDL/be_include/be_decl.h
+        * TAO_IDL/be_include/be_interface.h
+        * TAO_IDL/be_include/be_type.h
+        * TAO_IDL/be_include/be_visitor_argument.h
+        * TAO_IDL/be_include/be_visitor_interface.h
+        * TAO_IDL/be_include/be_visitor_operation.h
+        * TAO_IDL/include/ast_decl.h
 
-  	  Added the following files for the changes mentioned above.
+          Added the following files for the changes mentioned above.
 
-	* TAO_IDL/be/be_visitor_rettype.cpp
-	* TAO_IDL/be/be_visitor_argument/ami_handler_result_arg.cpp
-	* TAO_IDL/be/be_visitor_interface/ami_handler_servant_ch.cpp
-	* TAO_IDL/be/be_visitor_interface/ami_handler_stub_cs.cpp
-	* TAO_IDL/be/be_visitor_interface/collocated_ami_handler_ch.cpp
-	* TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.cpp
-	* TAO_IDL/be/be_visitor_operation/ami_handler_result_arg.cpp
-	* TAO_IDL/be/be_visitor_operation/ami_handler_operation.cpp
-	* TAO_IDL/be_include/be_visitor_argument/ami_handler_result_arg.h
-	* TAO_IDL/be_include/be_visitor_interface/collocated_ami_handler_ch.h
-	* TAO_IDL/be_include/be_visitor_interface/ami_handler_servant_ch.h
-	* TAO_IDL/be_include/be_visitor_interface/ami_handler_stub_cs.h
-	* TAO_IDL/be_include/be_visitor_operation/ami_handler_operation_cs.h
-	* TAO_IDL/be_include/be_visitor_operation/ami_handler_result_arg.h
-	* TAO_IDL/be_include/be_visitor_operation/ami_handler_operation.h
+        * TAO_IDL/be/be_visitor_rettype.cpp
+        * TAO_IDL/be/be_visitor_argument/ami_handler_result_arg.cpp
+        * TAO_IDL/be/be_visitor_interface/ami_handler_servant_ch.cpp
+        * TAO_IDL/be/be_visitor_interface/ami_handler_stub_cs.cpp
+        * TAO_IDL/be/be_visitor_interface/collocated_ami_handler_ch.cpp
+        * TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/ami_handler_result_arg.cpp
+        * TAO_IDL/be/be_visitor_operation/ami_handler_operation.cpp
+        * TAO_IDL/be_include/be_visitor_argument/ami_handler_result_arg.h
+        * TAO_IDL/be_include/be_visitor_interface/collocated_ami_handler_ch.h
+        * TAO_IDL/be_include/be_visitor_interface/ami_handler_servant_ch.h
+        * TAO_IDL/be_include/be_visitor_interface/ami_handler_stub_cs.h
+        * TAO_IDL/be_include/be_visitor_operation/ami_handler_operation_cs.h
+        * TAO_IDL/be_include/be_visitor_operation/ami_handler_result_arg.h
+        * TAO_IDL/be_include/be_visitor_operation/ami_handler_operation.h
 
 Wed Jun 23 23:19:34 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	   Added Asynch Invocation class. It makes invocations without
-	   waiting for the reply. Implemented a portion of Asynch Reply
-	   Dispatcher and Muxed TMS. Not complete yet.
+           Added Asynch Invocation class. It makes invocations without
+           waiting for the reply. Implemented a portion of Asynch Reply
+           Dispatcher and Muxed TMS. Not complete yet.
 
-  	 * tao/IIOP_Transport.cpp:
-	 * tao/Invocation.cpp:
-	 * tao/Invocation.p:
-	 * tao/Makefilp:
-	 * tao/Reply_Dispatcher.cpp:
-	 * tao/Reply_Dispatcher.p:
-	 * tao/Transport_Mux_Strategy.cpp:
-	 * tao/Transport_Mux_Strategy.p:
+         * tao/IIOP_Transport.cpp:
+         * tao/Invocation.cpp:
+         * tao/Invocation.p:
+         * tao/Makefilp:
+         * tao/Reply_Dispatcher.cpp:
+         * tao/Reply_Dispatcher.p:
+         * tao/Transport_Mux_Strategy.cpp:
+         * tao/Transport_Mux_Strategy.p:
 
-  	Added the following files.
+        Added the following files.
 
-	 * tao/Asynch_Invocation.cpp:
-	 * tao/Asynch_Invocation.h:
-	 * tao/Asynch_Invocation.i:
+         * tao/Asynch_Invocation.cpp:
+         * tao/Asynch_Invocation.h:
+         * tao/Asynch_Invocation.i:
 
 Tue Jun 22 11:59:06 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-  	One more big step on generating AMI call back code. If I get rid
-	of the references to the ReplyHandler from the generated files,
-	I could get things to compile.
+        One more big step on generating AMI call back code. If I get rid
+        of the references to the ReplyHandler from the generated files,
+        I could get things to compile.
 
-	* TAO_IDL/Makefile:
-	* TAO_IDL/be/be_codegen.cpp:
-	* TAO_IDL/be/be_interface.cpp:
-	* TAO_IDL/be/be_visitor_factory.cpp:
-	* TAO_IDL/be/be_visitor_interface.cpp:
-	* TAO_IDL/be/be_visitor_scope.cpp:
-	* TAO_IDL/be/be_visitor_argument/ami_handler_arglist.cpp:
-	* TAO_IDL/be/be_visitor_interface/ami_handler_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/ami_arglist.cpp:
-	* TAO_IDL/be/be_visitor_operation/ami_ch.cpp:
-	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/ami_handler_arglist.cpp:
-	* TAO_IDL/be_include/be_codegen.h:
-	* TAO_IDL/be_include/be_visitor_interface.h:
-	* TAO_IDL/be_include/be_visitor_operation/ami_handler_arglist.h:
+        * TAO_IDL/Makefile:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_factory.cpp:
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_visitor_scope.cpp:
+        * TAO_IDL/be/be_visitor_argument/ami_handler_arglist.cpp:
+        * TAO_IDL/be/be_visitor_interface/ami_handler_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_handler_arglist.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_visitor_interface.h:
+        * TAO_IDL/be_include/be_visitor_operation/ami_handler_arglist.h:
 
-  	Changes for the above.
+        Changes for the above.
 
-  	* TAO_IDL/be/be_visitor_interface/ami_handler_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/ami_handler_stub_ch.cpp:
-	* TAO_IDL/be_include/be_visitor_interface/ami_handler_cs.h:
-	* TAO_IDL/be_include/be_visitor_interface/ami_handler_stub_ch.h:
+        * TAO_IDL/be/be_visitor_interface/ami_handler_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/ami_handler_stub_ch.cpp:
+        * TAO_IDL/be_include/be_visitor_interface/ami_handler_cs.h:
+        * TAO_IDL/be_include/be_visitor_interface/ami_handler_stub_ch.h:
 
-  	Added these files.
+        Added these files.
 
 Sun Jun 20 07:40:02 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 

@@ -37,10 +37,7 @@ SIMPLE_CLT_OBJS = Time_DateC.o \
                   client.o \
                   ../Simple_util.o \
                   Time_Date_Client_i.o
-SIMPLE_SVR_OBJS = Time_DateC.o \
-                  Time_DateS.o \
-                  Time_Date_i.o \
-                  server.o \
+SIMPLE_SVR_OBJS = server.o \
                   ../Simple_util.o
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
