@@ -102,7 +102,7 @@ class Thread_Per_Request_Task : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
   Thread_Per_Request_Task (ACE_HANDLE handle,
-                           ACE_Thread_Manager &tm
+                           ACE_Thread_Manager &tm,
                            int &grp_id);
   virtual int open (void *args = 0);
   virtual int close (u_long);
