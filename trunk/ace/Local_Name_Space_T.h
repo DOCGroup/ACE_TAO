@@ -40,7 +40,7 @@ typedef ACE_Hash_Map_Manager_Ex<ACE_NS_String, ACE_NS_Internal, ACE_Hash<ACE_NS_
 typedef ACE_Map_Manager<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex> MAP_MANAGER;
 #endif /* 0 */
 
-// Deprecated typedefs.  Use the map's traits instead.
+/// @deprecated Deprecated typedefs.  Use the map's traits instead.
 typedef MAP_MANAGER::ITERATOR MAP_ITERATOR;
 typedef MAP_MANAGER::ENTRY MAP_ENTRY;
 
