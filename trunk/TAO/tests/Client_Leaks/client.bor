@@ -1,5 +1,5 @@
 #
-# Makefile for building the Faults Test executable
+# $Id$
 #
 
 NAME = client
@@ -9,6 +9,7 @@ TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
 OBJFILES = \
 	$(OBJDIR)\TestC.obj \
 	$(OBJDIR)\TestS.obj \
+	$(OBJDIR)\Client_Task.obj \
 	$(OBJDIR)\client.obj
 
 CFLAGS = \
