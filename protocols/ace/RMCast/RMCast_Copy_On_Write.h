@@ -176,7 +176,7 @@ public:
   //! Destructor
   ~ACE_RMCast_Copy_On_Write (void);
 
-  //! Iterate over all the elements invoking \param worker on each one.
+  //! Iterate over all the elements invoking worker on each one.
   int for_each (ACE_RMCast_Worker<KEY,ITEM> *worker);
 
   //! Get the first key
