@@ -20,7 +20,7 @@
 
 #include "CC_naming_service.h"
 
-CC_naming_service::CC_naming_service (CORBA::ORB_var orb)
+CC_naming_service::CC_naming_service (CORBA::ORB_var orb, CORBA::Environment &_env)
   : naming_context_ (0),
     cc_factory_key_ (0),
     orb_ (0),
@@ -28,7 +28,10 @@ CC_naming_service::CC_naming_service (CORBA::ORB_var orb)
 {
   this->orb_ = orb;
 
-  init_naming_service ();
+  int success = init_naming_service ();
+  if(success<0)
+    TAO_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
+
 }
 
 CC_naming_service::~CC_naming_service (void)
@@ -78,7 +81,7 @@ CC_naming_service::bind_name (char *n,
                              CORBA::Environment &_env)
 {
   ACE_DEBUG ((LM_DEBUG, "CC_Client::bind_name\n"));
-  
+
   TAO_TRY
     {
       CosNaming::Name ns_name (1);
@@ -102,7 +105,7 @@ CC_naming_service::get_lock_set_factory (void)
   return this->factory_;
 }
 
-int 
+int
 CC_naming_service::init_naming_service (void)
 {
   TAO_TRY
@@ -118,17 +121,17 @@ CC_naming_service::init_naming_service (void)
         CosNaming::NamingContext::_narrow (naming_obj.in (),
                                            TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      
+
       CORBA::Object_var factory_obj = get_obj_from_name ("CosConcurrency",
                                                          "LockSetFactory",
                                                          TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      
+
       this->factory_ =
         CosConcurrencyControl::LockSetFactory::_narrow
         (factory_obj.in (),TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      
+
       if (CORBA::is_nil (this->factory_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " could not resolve lock set factory in Naming service\n"),
@@ -140,6 +143,6 @@ CC_naming_service::init_naming_service (void)
       return -1;
     }
   TAO_ENDTRY;
-  
+
   return 0;
 }

@@ -159,4 +159,26 @@ private:
   // The name of the lock
 };
 
+class Test_Release_Not_Held_Lock : public CC_Test
+{
+  // = TITLE
+  //   This class tests that the LockNotHeld exception is thrown if a
+  //   not held lock is released.
+public:
+  Test_Release_Not_Held_Lock (CC_naming_service *naming_service_,
+                                CosConcurrencyControl::lock_mode mode_);
+  // Default constructor. The naming service must be initialized
+  // before calling this method. The mode is the mode of the lock
+
+  virtual ~Test_Release_Not_Held_Lock (void);
+  // Destructor
+
+  virtual int run (int times_to_run = 1);
+  // Runs the test the specified number of times.
+
+private:
+  CosConcurrencyControl::lock_mode mode_;
+  // The lock mode of the lock being tested
+};
+
 #endif /* !defined (_CC_TESTS_H_) */
