@@ -5067,8 +5067,6 @@ TAO_Tokenizer::operator [] (size_t index) const
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Hash<ACE_CString>;
-template class ACE_Equal_To<ACE_CString>;
 
 template class ACE_Hash_Map_Entry<ACE_CString, AVStreams::FDev_ptr>;
 template class ACE_Hash_Map_Entry<ACE_CString, AVStreams::FlowConnection_ptr>;
