@@ -287,9 +287,7 @@ Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_HANDL
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::out_of_sockets_handler (void)
 {
-  // ENOBUFS had to be checked on NT while ENOENT check had to be
-  // added for Solaris + Linux.
-  if (ACE::out_of_file_descriptors (errno))
+  if (ACE::out_of_handles (errno))
     {
       // Close connections which are cached by explicitly purging the
       // connection cache maintained by the connector.

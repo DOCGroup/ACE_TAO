@@ -31,7 +31,7 @@ size_t ACE::pagesize_ = 0;
 size_t ACE::allocation_granularity_ = 0;
 
 int
-ACE::out_of_file_descriptors (int error)
+ACE::out_of_handles (int error)
 {
   // EMFILE is common to all platforms.
   if (error == EMFILE ||
