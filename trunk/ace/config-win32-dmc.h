@@ -95,6 +95,9 @@
 #define ACE_LACKS_REGEX_H
 #define ACE_LACKS_SYS_MSG_H
 #define ACE_LACKS_NETINET_TCP_H
+#define ACE_LACKS_UNISTD_H
+#define ACE_LACKS_TERMIOS_H
+#define ACE_LACKS_ACE_IOSTREAM
 
 // Typedefs which we expect DMC to do, but they don't do that
 typedef long o_uid_t;
