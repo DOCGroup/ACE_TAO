@@ -52,7 +52,7 @@ public class TSClerkHandler extends SvcHandler
     this.initialTimeout_ = timeout;
     this.processor_ = parent;
 
-    this.sendMsg_ = new String ("TIME_UPDATE_REQUEST\n");
+    this.sendMsg_ = new String ("TIME_UPDATE_REQUEST");
   }
   
   /**
@@ -202,12 +202,13 @@ public class TSClerkHandler extends SvcHandler
 	// Used to calculate the turn-around time
 	long sendTime = System.currentTimeMillis();
 
-	this.peer ().send (this.sendMsg_);
+	this.peer ().send(this.sendMsg_);
 	ackLen = this.peer ().recv (ack);
 
 	long recvTime = System.currentTimeMillis();
 
 	if (ackLen <= 0) {
+
 	  this.state_ = DISCONNECTED;
 	  return -1;
 
@@ -218,6 +219,8 @@ public class TSClerkHandler extends SvcHandler
 	  delta += (recvTime - sendTime) / 2;
 
 	  this.delta_ = delta;
+
+          System.err.println("Delta: " + this.delta_);
 	}
 
       }
