@@ -42,8 +42,9 @@ TAO_RT_Mutex::try_lock (TimeBase::TimeT wait_time,
     }
   else
     {
-      // wait for some time before giving up
-      // (wait_time units are 100ns.  See TimeBase.pidl)
+      // Wait for the specified amount of time before
+      // giving up.  (wait_time units are 100ns.  See
+      // TimeBase.pidl)
 
       TimeBase::TimeT seconds = wait_time / 10000000u;
       TimeBase::TimeT microseconds = (wait_time % 10000000u) / 10;

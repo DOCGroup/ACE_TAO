@@ -24,19 +24,19 @@ RTCORBA::Mutex_ptr
 TAO_RT_ORB::create_mutex (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_RT_Mutex *tmp;
+  TAO_RT_Mutex *mutex;
 
-  ACE_NEW_THROW_EX (tmp,
+  ACE_NEW_THROW_EX (mutex,
                     TAO_RT_Mutex (),
                     CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
                                       CORBA::COMPLETED_NO));
 
-  return tmp;
+  return mutex;
 }
 
 void
-TAO_RT_ORB::destroy_mutex (RTCORBA::Mutex_ptr /*the_mutex*/,
-                           CORBA::Environment &/*ACE_TRY_ENV*/)
+TAO_RT_ORB::destroy_mutex (RTCORBA::Mutex_ptr,
+                           CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Don't need to do anything.  The destructor on the mutex
@@ -46,52 +46,50 @@ TAO_RT_ORB::destroy_mutex (RTCORBA::Mutex_ptr /*the_mutex*/,
 
 RTCORBA::Mutex_ptr
 TAO_RT_ORB::create_named_mutex (const char *name,
-                                 CORBA::Boolean_out created_flag,
-                                 CORBA::Environment &ACE_TRY_ENV)
+                                CORBA::Boolean_out created_flag,
+                                CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_RT_Mutex *tmp;
+  TAO_RT_Mutex *mutex;
 
-  tmp = mutex_mgr_.find_mutex (name);
-  if (tmp != 0)
+  mutex = mutex_mgr_.find_mutex (name);
+  if (mutex != 0)
     {
       created_flag = 0;
 
       // Increment the reference count to pass ownership
       // to the caller.
-      tmp->_add_ref ();
+      mutex->_add_ref ();
     }
   else
     {
-      ACE_NEW_THROW_EX (tmp,
+      ACE_NEW_THROW_EX (mutex,
                         TAO_Named_RT_Mutex (name, mutex_mgr_),
                         CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
                                           CORBA::COMPLETED_NO));
 
       // registration should always succeed
-      if ( mutex_mgr_.register_mutex (name, tmp) != 0)
+      if ( mutex_mgr_.register_mutex (name, mutex) != 0)
         {
-          delete tmp;
+          delete mutex;
           ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
         }
       created_flag = 1;
     }
 
-  return tmp;
+  return mutex;
 }
 
 RTCORBA::Mutex_ptr
-TAO_RT_ORB::open_named_mutex (const char * name,
+TAO_RT_ORB::open_named_mutex (const char *name,
                               CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   RTCORBA::RTORB::MutexNotFound
-                   ))
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   RTCORBA::RTORB::MutexNotFound))
 {
-  TAO_RT_Mutex *tmp;
+  TAO_RT_Mutex *mutex;
 
-  tmp = mutex_mgr_.find_mutex (name);
-  if (tmp == 0)
+  mutex = mutex_mgr_.find_mutex (name);
+  if (mutex == 0)
     {
       ACE_THROW_RETURN (RTCORBA::RTORB::MutexNotFound (), 0);
     }
@@ -99,10 +97,10 @@ TAO_RT_ORB::open_named_mutex (const char * name,
     {
       // Increment the reference count to pass ownership
       // to the caller.
-      tmp->_add_ref ();
+      mutex->_add_ref ();
     }
 
-  return tmp;
+  return mutex;
 }
 
 
