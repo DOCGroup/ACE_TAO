@@ -8,31 +8,42 @@
 #endif
 
 #if defined (__DECCXX)
-# define ACE_HAS_STRING_CLASS
 # define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_SIGNED_CHAR
 # if defined (linux)
+#   define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #   define ACE_HAS_CPLUSPLUS_HEADERS
-# endif /* linux */
+#   if !defined (__USE_STD_IOSTREAM)
+#     define ACE_HAS_STRING_CLASS
+#   endif /* ! __USE_STD_IOSTREAM */
+# else  /* ! linux */
+#   define ACE_HAS_STRING_CLASS
+#   if (__DECCXX_VER >= 60090010)
+#     define ACE_HAS_STDCPP_STL_INCLUDES
+#   endif /* __DECCXX_VER < 60090010 */
+# endif /* ! linux */
 # define DEC_CXX
 # if (__DECCXX_VER >= 60090010)
     // DEC CXX 6.0 supports exceptions, etc., by default.  Exceptions
     // are enabled by platform_osf1_4.0.GNU/wrapper_macros.GNU.
-#   if defined (ACE_HAS_EXCEPTIONS)  &&  !defined (linux)
+#   if defined (ACE_HAS_EXCEPTIONS)
 #     define ACE_NEW_THROWS_EXCEPTIONS
-#   endif /* ACE_HAS_EXCEPTIONS && ! linux */
+#   endif /* ACE_HAS_EXCEPTIONS */
 #   define ACE_HAS_ANSI_CASTS
 #   if !defined (__RTTI)
 #     define ACE_LACKS_RTTI
 #   endif
-#   if !defined (linux)
-#     define ACE_HAS_STDCPP_STL_INCLUDES
-#   endif /* ! linux */
 #   define ACE_HAS_TEMPLATE_SPECIALIZATION
 #   define ACE_HAS_TEMPLATE_TYPEDEFS
 #   define ACE_HAS_TYPENAME_KEYWORD
 #   define ACE_HAS_USING_KEYWORD
+
+#   if defined (__USE_STD_IOSTREAM)
+#     define ACE_LACKS_CHAR_RIGHT_SHIFTS
+#     define ACE_LACKS_IOSTREAM_FX
+#     define ACE_LACKS_UNBUFFERED_STREAMBUF
+#   endif /* ! __USE_STD_IOSTREAM */
 
 //    9: nested comment not allowed.  (/usr/include/pdsc.h!) (nestcomment)
 //  177: variable was declared but never referenced (declbutnotref)
