@@ -1,3 +1,15 @@
+Tue Mar 30 23:28:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Message_Block.cpp (init_i): This function was not releasing
+	  the old data block (if <data_block_> was non-zero).  Fixed this
+	  problem and avoided the memory leak.  Thanks to Sangwoo Jin
+	  <swjinjin@sei.co.kr> for reporting this leak.
+
+	  Also changed the constructors to set <data_block_> to zero.
+
+	* tests/Message_Queue_Test.cpp (receiver): Fixed hacked use of
+	  init() to prevent memory leak.  The new init_i() fixes the leak.
+
 Tue Mar 30 23:24:02 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* configure.in:
@@ -17,7 +29,7 @@ Tue Mar 30 23:24:02 1999  Ossama Othman  <othman@cs.wustl.edu>
 	  The functionality is the same but the ACE reimplementation
  	  actually works when C++ is the test language.  For some reason
 	  Autoconf's test isn't being generated properly by GNU M4.
-	  
+
 Tue Mar 30 22:04:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-win32-common.h: Added definition of
