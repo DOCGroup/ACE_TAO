@@ -996,8 +996,8 @@ TAO_LB_LoadManager::built_in_strategy (CosLoadBalancing::StrategyInfo * info
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    "ERROR: TAO_LB_LoadManager::next_member - "
-                    "Unknown/unexpected built-in Strategy:\n"
+                    "ERROR: TAO_LB_LoadManager::built_in_strategy - "
+                    "Unknown/unexpected built-in strategy:\n"
                     "     \"%s\"\n",
                     strategy));
 

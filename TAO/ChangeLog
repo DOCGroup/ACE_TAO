@@ -1,3 +1,40 @@
+Thu Nov 14 16:40:06 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/LoadBalancer/LoadMonitor.cpp (usage):
+	* orbsvcs/LoadBalancer/LoadManager.cpp (usage):
+
+	  Clarified usage message.
+
+	  (parse_args):
+
+	  If the "-h" command line option was supplied, print the usage
+	  message and exit immediately.  Previously, the usage message was
+	  printed but the executable never exited.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ClientComponent.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ClientComponent.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ClientORBInitializer.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ClientORBInitializer.cpp:
+
+	  New sources that transparently add adaptive load balancing
+	  support to a client.  They are used to transparently register
+	  the existing LB_ClientRequestInterceptor.  This part of a set of
+	  changes that enable the adaptive load balancing support in
+	  Cygnus, i.e. TAO's new load balancer.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp (get_location):
+
+	  Fixed problem where CosLoadBalancing::LocationNotFound exception
+	  was propagated to the client, and interpreted as a
+	  CORBA::UNKNOWN exception.  If a loads at the supplied location
+	  are not available continue the loop and attempt to retrieve
+	  loads from the next location.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp
+	  (built_in_strategy):
+
+	  Corrected debugging statement.
+
 Thu Nov 14 16:35:45 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Makefile: Added new tests to the daily builds.

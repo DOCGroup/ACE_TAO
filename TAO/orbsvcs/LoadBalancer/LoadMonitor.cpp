@@ -24,18 +24,19 @@ void
 usage (const ACE_TCHAR * cmd)
 {
   ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("Usage:  %s ")
-              ACE_TEXT ("-l <location_id> ")
-              ACE_TEXT ("-k <location_kind> ")
-              ACE_TEXT ("-t <CPU|Disk|Memory|Network> ")
-              ACE_TEXT ("-s <PULL|PUSH> ")
-              ACE_TEXT ("-i <push_interval> (in seconds,")
-              ACE_TEXT (" and requires \"PUSH\" style monitoring) ")
-              ACE_TEXT ("-m <custom_monitor_ior>")
-              ACE_TEXT (" (overrides \"-t\", \"-l\" and \"-k\") ")
-              ACE_TEXT ("-o <ior_output_file> ")
-              ACE_TEXT ("-h ")
-              ACE_TEXT ("\n\n"),
+              ACE_TEXT ("Usage:\n")
+              ACE_TEXT ("  %s\n")
+              ACE_TEXT ("    -l <location_id>\n")
+              ACE_TEXT ("    -k <location_kind>\n")
+              ACE_TEXT ("    -t <CPU | Disk | Memory | Network>\n")
+              ACE_TEXT ("    -s <PULL | PUSH>\n")
+              ACE_TEXT ("    -i <push_interval> (in seconds,")
+              ACE_TEXT (" and requires \"PUSH\" style monitoring)\n")
+              ACE_TEXT ("    -m <custom_monitor_ior>")
+              ACE_TEXT (" (overrides \"-t\", \"-l\" and \"-k\")\n")
+              ACE_TEXT ("    -o <ior_output_file>\n")
+              ACE_TEXT ("    -h\n")
+              ACE_TEXT ("\n"),
               cmd));
 }
 
@@ -88,7 +89,7 @@ parse_args (int argc,
 
         case 'h':
           ::usage (argv[0]);
-          exit (0);
+          ACE_OS::exit (0);
           break;
 
         default:
