@@ -1199,6 +1199,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head (ACE_Message_Block *new_item,
                                                 ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head");
+  int queue_count = 0;
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
@@ -1211,7 +1212,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head (ACE_Message_Block *new_item,
     if (this->wait_not_full_cond (ace_mon, timeout) == -1)
       return -1;
 
-    int queue_count = this->enqueue_head_i (new_item);
+    queue_count = this->enqueue_head_i (new_item);
 
     if (queue_count == -1)
       return -1;
@@ -1230,6 +1231,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio (ACE_Message_Block *new_item,
                                                 ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio");
+  int queue_count = 0;
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
@@ -1242,7 +1244,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio (ACE_Message_Block *new_item,
     if (this->wait_not_full_cond (ace_mon, timeout) == -1)
       return -1;
 
-    int queue_count = this->enqueue_i (new_item);
+    queue_count = this->enqueue_i (new_item);
 
     if (queue_count == -1)
       return -1;
@@ -1260,6 +1262,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_deadline (ACE_Message_Block *new_item,
                                                     ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_deadline");
+  int queue_count = 0;
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
@@ -1272,7 +1275,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_deadline (ACE_Message_Block *new_item,
     if (this->wait_not_full_cond (ace_mon, timeout) == -1)
       return -1;
 
-    int queue_count = this->enqueue_deadline_i (new_item);
+    queue_count = this->enqueue_deadline_i (new_item);
 
     if (queue_count == -1)
       return -1;
@@ -1297,6 +1300,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (ACE_Message_Block *new_item,
                                               ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail");
+  int queue_count = 0;
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
@@ -1309,7 +1313,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (ACE_Message_Block *new_item,
     if (this->wait_not_full_cond (ace_mon, timeout) == -1)
       return -1;
 
-    int queue_count = this->enqueue_tail_i (new_item);
+    queue_count = this->enqueue_tail_i (new_item);
 
     if (queue_count == -1)
       return -1;

@@ -1,3 +1,8 @@
+Mon May  6 07:39:22 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Message_Queue_T.cpp (notify): Moved int queue_count definition
+	  to outside the scope.  Thanks to Chad Elliot for reporting this.
+
 Sun May  5 19:14:34 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Message_Queue_T.cpp: Modified all the enqueue*() methods so that 
