@@ -1,3 +1,35 @@
+Sat Mar 03 11:14:57 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/corbafwd.h:
+
+	  Added the CORBA::_tc_{OctetSeq,StringSeq,WStringSeq} TypeCode
+	  declarations.  They were previously renamed to get around
+	  problems with compilers that lack support for namespaces.  The
+	  proper workaround is to actually put them in the CORBA namespace
+	  by using the forward declaration / typedef trick used in this
+	  file.  This also fixes a problem with these TypeCodes not being
+	  available due to the renaming.
+
+	* tao/OctetSeqC.h:
+	* tao/StringSeqC.h:
+
+	  Removed the _tc_CORBA_{OctetSeq,StringSeq,WStringSeq}
+	  declarations.  They were hacks to get around compilers that do
+	  not support namespaces.  The proper TypeCodes are now declared
+	  in the CORBA namespace in `corbafwd.h'.
+
+	* tao/OctetSeqC.cpp:
+	* tao/StringSeqC.cpp:
+
+	  Use the proper CORBA::_tc_{OctetSeq,StringSeq,WStringSeq}
+	  TypeCodes rather than broken renamed ones described above.  This
+	  addresses CORBA compliance and interoperability problems.
+
+	* tao/diffs/OctetSeq.diff:
+	* tao/diffs/StringSeq.diff:
+
+	  Regenerated these diffs to include the above changes.
+
 Sat Mar  3 10:42:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.cpp (forward_references): 

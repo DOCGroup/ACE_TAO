@@ -95,7 +95,9 @@ static const CORBA::Long _oc_CORBA_OctetSeq[] =
 };
 static CORBA::TypeCode _tc_TAO_tc_CORBA_OctetSeq (CORBA::tk_alias, sizeof (_oc_CORBA_OctetSeq), (char *) &_oc_CORBA_OctetSeq, 0, sizeof (CORBA_OctetSeq));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_CORBA_OctetSeq, &_tc_TAO_tc_CORBA_OctetSeq)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_OctetSeq, &_tc_TAO_tc_CORBA_OctetSeq)
+TAO_NAMESPACE_END
 
 void operator<<= (
     CORBA::Any &_tao_any,
@@ -106,7 +108,7 @@ void operator<<= (
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        _tc_CORBA_OctetSeq,
+        CORBA::_tc_OctetSeq,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin ()
       );
@@ -118,7 +120,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA_OctetSeq *_tao_elem) // non copyin
   TAO_OutputCDR stream;
   stream << *_tao_elem;
   _tao_any._tao_replace (
-      _tc_CORBA_OctetSeq,
+      CORBA::_tc_OctetSeq,
       TAO_ENCAP_BYTE_ORDER,
       stream.begin (),
       1,
@@ -141,7 +143,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA_OctetSeq *&_
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (_tc_CORBA_OctetSeq, ACE_TRY_ENV)) // not equal
+    if (!type->equivalent (CORBA::_tc_OctetSeq, ACE_TRY_ENV)) // not equal
       {
         return 0;
       }
@@ -165,7 +167,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA_OctetSeq *&_
       if (stream >> *tmp)
       {
         ((CORBA::Any *)&_tao_any)->_tao_replace (
-            _tc_CORBA_OctetSeq,
+            CORBA::_tc_OctetSeq,
             1,
             ACE_static_cast (void *, tmp),
             CORBA_OctetSeq::_tao_any_destructor

@@ -479,9 +479,14 @@ TAO_NAMESPACE CORBA
   typedef ACE_CDR::LongDouble LongDouble;
   typedef LongDouble &LongDouble_out;
 
-
   typedef ACE_CDR::Char Char;
   typedef Char &Char_out;
+
+  // CORBA::TypeCode typedefs.
+  typedef CORBA_TypeCode TypeCode;
+  typedef CORBA_TypeCode *TypeCode_ptr;
+  typedef CORBA_TypeCode_var TypeCode_var;
+  typedef CORBA_TypeCode_out TypeCode_out;
 
   // = String memory management.
   TAO_NAMESPACE_INLINE_FUNCTION char *string_alloc (ULong len);
@@ -505,19 +510,21 @@ TAO_NAMESPACE CORBA
   typedef CORBA_WString_out WString_out;
 
   /// String sequence typedefs
-
   typedef CORBA_StringSeq StringSeq;
   typedef CORBA_StringSeq_var StringSeq_var;
   typedef CORBA_StringSeq_out StringSeq_out;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_StringSeq;
 
   typedef CORBA_WStringSeq WStringSeq;
   typedef CORBA_WStringSeq_var WStringSeq_var;
   typedef CORBA_WStringSeq_out WStringSeq_out;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_WStringSeq;
 
   /// Octet sequence typedef
   typedef CORBA_OctetSeq OctetSeq;
   typedef CORBA_OctetSeq_var OctetSeq_var;
   typedef CORBA_OctetSeq_out OctetSeq_out;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_OctetSeq;
 
 //   typedef TAO_Unbounded_Sequence<Octet> OctetSeq;
 //   typedef TAO_Unbounded_Sequence<Octet> OctetSeq_var;
@@ -585,11 +592,6 @@ TAO_NAMESPACE CORBA
 
   typedef CORBA_ServerRequest ServerRequest;
   typedef ServerRequest *ServerRequest_ptr;
-
-  typedef CORBA_TypeCode TypeCode;
-  typedef CORBA_TypeCode *TypeCode_ptr;
-  typedef CORBA_TypeCode_var TypeCode_var;
-  typedef CORBA_TypeCode_out TypeCode_out;
 
   typedef CORBA_ExceptionList ExceptionList;
   typedef CORBA_ExceptionList_var ExceptionList_var;
