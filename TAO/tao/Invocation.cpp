@@ -154,7 +154,7 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
 
   if (server_addr_p == 0)
     {
-      env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+      env.exception (new CORBA::INTERNAL (CORBA::COMPLETED_NO));
       return;
     }
 
@@ -185,10 +185,7 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
                       local_addr.get_port_number (),
                       "errno"));
 
-          // There might be a better exception to set, but it's unclear
-          // which one should be used.  This one applies, even if it's
-          // vague.
-          env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+          env.exception (new CORBA::TRANSIENT (CORBA::COMPLETED_NO));
           return;
         }
     }
@@ -208,10 +205,7 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
                       server_addr_p->get_port_number (),
                       "errno"));
 
-        // There might be a better exception to set, but it's unclear
-        // which one should be used.  This one applies, even if it's
-        // vague.
-        env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+        env.exception (new CORBA::TRANSIENT (CORBA::COMPLETED_NO));
         return;
       }
 
@@ -291,7 +285,7 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
       break;
 
     default:
-      env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+      env.exception (new CORBA::INTERNAL (CORBA::COMPLETED_NO));
       return;
     }
   if (!this->out_stream_.good_bit ())
@@ -390,7 +384,7 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
       // point in the code however!  Some minor restructuring needs to
       // happen.
       //
-      env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::TRANSIENT (CORBA::COMPLETED_MAYBE));
       return TAO_GIOP_SYSTEM_EXCEPTION;
     }
   return TAO_GIOP_NO_EXCEPTION;
@@ -857,7 +851,6 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) illegal GIOP message (%s) in response to my Request!\n",
                   TAO_GIOP::message_name (m)));
-      env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
       // FALLTHROUGH ...
 
     case TAO_GIOP::CommunicationError:
@@ -1071,7 +1064,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &env)
       // send_request () closed the connection; we just set the
       // handler to 0 here.
       this->data_->reset_handler ();
-      env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::TRANSIENT (CORBA::COMPLETED_MAYBE));
       return TAO_GIOP_SYSTEM_EXCEPTION;
     }
 
@@ -1132,7 +1125,6 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &env)
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) illegal GIOP message (%s) in response to my Request!\n",
                   TAO_GIOP::message_name (m)));
-      env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
       // FALLTHROUGH ...
 
     case TAO_GIOP::CommunicationError:
