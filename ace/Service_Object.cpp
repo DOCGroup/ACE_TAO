@@ -3,15 +3,14 @@
 // Service_Object.cpp
 
 #define ACE_BUILD_DLL
-#include "ace/Service_Object.h"
 #include "ace/Service_Types.h"
+#include "ace/Service_Object.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Service_Object.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Object)
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type)
 
 void
@@ -21,9 +20,9 @@ ACE_Service_Type::dump (void) const
 }
 
 ACE_Service_Type::ACE_Service_Type (const char *n,
-					ACE_Service_Type_Impl *t,
-					const ACE_SHLIB_HANDLE h,
-					int active)
+				    ACE_Service_Type_Impl *t,
+				    const ACE_SHLIB_HANDLE h,
+				    int active)
   : name_ (0),
     type_ (t),
     handle_ (h),

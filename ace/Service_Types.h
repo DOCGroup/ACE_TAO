@@ -19,11 +19,6 @@
 
 #include "ace/Service_Object.h"
 #include "ace/Synch.h"
-#include "ace/Stream.h"
-
-typedef ACE_Stream<ACE_SYNCH> MT_Stream;
-typedef ACE_Module<ACE_SYNCH> MT_Module;
-typedef ACE_Task<ACE_SYNCH> MT_Task;
 
 class ACE_Export ACE_Service_Type_Impl
   // = TITLE
@@ -86,7 +81,7 @@ class ACE_Export ACE_Service_Object_Type : public ACE_Service_Type_Impl
 {
 public:
   // = Initialization method.
-  ACE_Service_Object_Type (ACE_Service_Object *so, 
+  ACE_Service_Object_Type (const void *so,
 			   const char *name, 
 			   u_int flags = 0);
 
@@ -105,7 +100,7 @@ class ACE_Export ACE_Module_Type : public ACE_Service_Type_Impl
 {
 public:
   // = Initialization method.
-  ACE_Module_Type (MT_Module *m, 
+  ACE_Module_Type (const void *m, // Really an <ACE_Module> *.
 		   const char *identifier, 
 		   u_int flags = 0);
 
@@ -138,7 +133,7 @@ class ACE_Export ACE_Stream_Type : public ACE_Service_Type_Impl
 {
 public:
   // = Initialization method.
-  ACE_Stream_Type (MT_Stream *s, 
+  ACE_Stream_Type (const void *s, // Really an <ACE_Stream> *.
 		   const char *identifier, 
 		   u_int flags = 0);
 
