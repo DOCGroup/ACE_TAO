@@ -100,8 +100,8 @@ public:
    *
    * Reference counting hooks are no-ops by default.
    */
-  virtual void _add_ref (void);
-  virtual void _remove_ref (void);
+  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
   //@}
 
   /// Get the correct vtable.

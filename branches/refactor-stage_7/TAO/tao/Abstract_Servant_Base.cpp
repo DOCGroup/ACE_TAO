@@ -17,12 +17,12 @@ TAO_Abstract_ServantBase::~TAO_Abstract_ServantBase (void)
 }
 
 void
-TAO_Abstract_ServantBase::_add_ref (void)
+TAO_Abstract_ServantBase::_add_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
 }
 
 void
-TAO_Abstract_ServantBase::_remove_ref (void)
+TAO_Abstract_ServantBase::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
 }
 
