@@ -1,3 +1,11 @@
+Thu Aug 19 08:07:53 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* examples/APG/Signals/SigAction.cpp:
+
+	  Changed to use a (conditional) extern "C" linkage block around
+	  my_sighandler, because the plain extern "C" directive resulted
+	  in a declaration with multiple storage classes.
+
 Thu Aug 19 08:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * PROBLEM-REPORT-FORM:
