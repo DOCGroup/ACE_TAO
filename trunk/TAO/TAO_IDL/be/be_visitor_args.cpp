@@ -1642,7 +1642,7 @@ int be_visitor_args_marshal_ss::visit_predefined_type (be_predefined_type *node)
 	  break;
 	case AST_Argument::dir_OUT:
           os->indent ();
-          *os << "&_tao_var_" << arg->local_name () << ".out ()";
+          *os << "&" << arg->local_name () << ".ptr ()";
 	  break;
 	} // end switch direction
     } // end of if
@@ -1713,7 +1713,7 @@ int be_visitor_args_marshal_ss::visit_string (be_string *)
       break;
     case AST_Argument::dir_OUT:
       os->indent ();
-      *os << "&_tao_var_" << arg->local_name () << ".out ()";
+      *os << "&" << arg->local_name () << ".ptr ()";
       break;
     }
   return 0;
