@@ -383,6 +383,7 @@ public:
   // only used within this one file right now, and we always want them
   // inlined, so here they sit.
   TAO_Synchronous_Cancellation_Required (void)
+    : old_type_ (0)
     {
 #if !defined (VXWORKS)
       ACE_OS::thr_setcanceltype (THR_CANCEL_DEFERRED, &old_type_);
@@ -392,7 +393,7 @@ public:
   ~TAO_Synchronous_Cancellation_Required (void)
     {
 #if !defined (VXWORKS)
-      int dont_care = 0;
+      int dont_care;
       ACE_OS::thr_setcanceltype(old_type_, &dont_care);
 #endif /* ! VXWORKS */
     }
