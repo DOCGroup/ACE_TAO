@@ -1,9 +1,17 @@
+Thu Jul 22 14:03:26 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Pluggable/server.cpp (main): removed
+          ACE_NOTREACHED wrapper from final return 0 statement,
+          and removed the return 0 in the main try block.  This
+          avoids a warning from Green Hills that the main ()
+          could return without a value.  Not any more.
+
 Thu Jul 22 11:06:44 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
-	  (visit_interface):  I should use obj.in() to pass the object
-	  into _uncheck_narrow().  Thanks to David and Carlos for pointing
-	  this out.
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+          (visit_interface):  I should use obj.in() to pass the object
+          into _uncheck_narrow().  Thanks to David and Carlos for pointing
+          this out.
 
 Thu Jul 22 07:21:03 1999  David L. Levine  <levine@cs.wustl.edu>
 
