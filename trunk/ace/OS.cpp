@@ -2342,7 +2342,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           else // THR_SCHED_DEFAULT
             priority = ACE_THR_PRI_OTHER_DEF;
         }
-#     endif //ACE_HAS_PTHREADS_1003_DOT_1C
+#     endif /* ACE_HAS_PTHREADS_1003_DOT_1C */
       if (priority != ACE_DEFAULT_THREAD_PRIORITY)
         {
           struct sched_param sparam;

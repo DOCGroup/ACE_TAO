@@ -810,7 +810,7 @@ ACE_Thread_Manager::run_thread_exit_hooks (int i)
   ACE_UNUSED_ARG (i);
 #else
   ACE_UNUSED_ARG (i);
-#endif // 0
+#endif /* 0 */
 }
 
 // Remove a thread from the pool.  Must be called with locks held.
