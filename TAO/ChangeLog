@@ -1,3 +1,8 @@
+Sun Jan 23 15:50:25 2005  Marek Brudka  <mbrudka@aster.pl>
+
+        * */.cvsignore (Module):
+	Made cvs less annoyed.
+
 Sun Jan 23 13:17:29 2005  Marek Brudka  <mbrudka@aster.pl>
 
         * tao/Strategies/advanced_resource.h (Module):
@@ -22,7 +27,6 @@ Sun Jan 23 11:56:27 2005  Marek Brudka  <mbrudka@aster.pl>
 Sun Jan 23 11:41:55 2005  Marek Brudka  <mbrudka@aster.pl>
 
         * tao/ORB_Core.cpp (Module):
-        
 	  Added necessary include directive lost during merge.
 
 Sun Jan 23 01:52:50 2005  Marek Brudka  <mbrudka@aster.pl>
@@ -220,7 +224,7 @@ Sun Jan 23 01:52:50 2005  Marek Brudka  <mbrudka@aster.pl>
         * examples/AMI/FL_Callback/progress.cpp (Module):
         * examples/AMI/FL_Callback/FL_Callback.mpc (Module):
 
-          Naming more constistent and new GUIResources loading schema. 
+          Naming more constistent and new GUIResources loading schema.
 
         Sat Jan 15 00:19:04 2005  Marek Brudka  <mbrudka@aster.pl>
 
@@ -251,9 +255,9 @@ Sun Jan 23 01:52:50 2005  Marek Brudka  <mbrudka@aster.pl>
         * tao/xt_resource.h (Module):
         * tao/xt_resource.cpp (Module):
         * tao/tao_xtreactor.mpc (Module):
-  
+
           Created TAO_*Resource_Loader, changed some names,updated doc and
-	  adapted tests to new way gui resources are loaded. 
+	  adapted tests to new way gui resources are loaded.
 
         * tests/QtTests/server.cpp (Module):
         * tests/QtTests/client.cpp (Module):
@@ -269,21 +273,21 @@ Sun Jan 23 01:52:50 2005  Marek Brudka  <mbrudka@aster.pl>
           Created reactor factory on ORB_Core level to create GUI
 	  reactors. Removed resouce_factory chain from
 	  Advanced_Resource_Factory. Adapted qt_resource_loader to new
-	  reactor creation schema. Some style changes. 
+	  reactor creation schema. Some style changes.
 
         Tue Jan 11 23:39:37 2005  Marek Brudka  <mbrudka@aster.pl>
 
         * tao/Strategies/advanced_resource.h (Module):
         * tao/Strategies/advanced_resource.cpp (Module):
-	
+
           Created a simple chain of resource_factories to allow creation
 	  of GUIReactors and using Advanced_Resource_Factory the same
-	  time. 
+	  time.
 
         * tao/qt_resource_loader.cpp (Module):
         * tao/qt_resource.h (Module):
         * tao/qt_resource.cpp (Module):
-	
+
           Corrected loading of TAO_QtResource_Factory. Protected against
 	  multiple calls of create_reactor_impl.
 
@@ -293,29 +297,29 @@ Sun Jan 23 01:52:50 2005  Marek Brudka  <mbrudka@aster.pl>
         * tests/QtTests/svc.conf (Module):
         * tests/QtTests/server.cpp (Module):
         * tests/QtTests/client.cpp (Module):
-	
+
           Adapted the test to the current programming model for qt
 	  resource.
-	
+
         * tao/tao_qtreactor.mpc (Module):
         * tao/qt_resource_loader.h (Module):
         * tao/qt_resource_loader.cpp (Module):
-        
+
 	  Create preliminary version of QtReasourceLoader class for static
-	  use of Qt resources in TAO servers. 
+	  use of Qt resources in TAO servers.
 
         Sun Jan  9 01:20:25 2005  Marek Brudka  <mbrudka@aster.pl>
 
         * docs/Options.html (Module):
-	
+
           Updated documentation.
-	
+
         * tao/Strategies/advanced_resource.h (Module):
         * tao/Strategies/advanced_resource.cpp (Module):
-        
+
 	  Removed support for FlReactor and TkReactor from
-	  AdvancedFactory. 
-	
+	  AdvancedFactory.
+
         * examples/AMI/FL_Callback/svc.conf.xml (Module):
         * examples/AMI/FL_Callback/svc.conf (Module):
         * examples/AMI/FL_Callback/FL_Callback.mpc (Module):
@@ -323,45 +327,45 @@ Sun Jan 23 01:52:50 2005  Marek Brudka  <mbrudka@aster.pl>
         * tests/FL_Cube/svc.conf (Module):
         * tests/FL_Cube/server.cpp (Module):
         * tests/FL_Cube/client.cpp (Module):
-        
+
 	  TAO_Advanced_Resource_Factory changed into
 	  TAO_FlResource_Factory.
-	
+
         * tao/tao_xtreactor.mpc (Module):
         * tao/tao_tkreactor.mpc (Module):
         * tao/tao_qtreactor.mpc (Module):
         * tao/tao_flreactor.mpc (Module):
-        
+
 	  Removed dependencies on features
-	  tao_qtreactor,tao_xtreactor,tao_flreactor,tao_tkreactor 
+	  tao_qtreactor,tao_xtreactor,tao_flreactor,tao_tkreactor
 
         Mon Dec 13 19:17:29 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * */.cvsignore (Module):
-   
+
           Stopped cvs from complaining about unknown executables.
 
         Mon Dec 13 02:32:56 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tao/Strategies/advanced_resource.cpp (Message):
-         
+
 	  Fix small bug related with missing plugin library.
 
         Mon Dec 13 02:28:06 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tests/FL_Cube/FL_Cube.mpc (Module):
         * examples/AMI/FL_Callback/FL_Callback.mpc (Module):
-	
+
           Dependence on tao_flreactor changed into ace_fl.
 
         Mon Dec 13 00:38:28 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tao/Strategies/advanced_resource.h (Module):
         * tao/Strategies/advanced_resource.cpp (Module):
-	
+
           Removed ACE_HAS_TK macros. Removed static linkage with
 	  ACE_TkReactor. Applied for dynamic loading of reactor framework
-	  to TkReactor. 
+	  to TkReactor.
 
         Mon Dec 13 00:37:45 2004  Marek Brudka  <mbrudka@aster.pl>
 
@@ -370,55 +374,55 @@ Sun Jan 23 01:52:50 2005  Marek Brudka  <mbrudka@aster.pl>
         * tao/tk_resource.cpp (Module):
         * tao/tao_tkreactor.mpc (Module):
         * tao/TAO_TkReactor_export.h (Module):
-	
+
           Created TAO_TkReactor library with TAO_TkResourceFactory.
 
         * tao/fl_resource.h (Module):
         * tao/fl_resource.cpp (Module):
-	
+
           Move #include "ace/FlReactor" from header to definition.
 
         * tao/Strategies.mpc (Module):
-	
+
           Removed explicite dependencies of TAO_Strategies on
-	  TAO_TkReactor. 
+	  TAO_TkReactor.
 
         Sun Dec 12 23:38:40 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * docs/Options.html (Message):
-	
+
           Updated documentation on Advanced_Resource_Factory.
 
         Sun Dec 12 23:01:58 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tao/tao_flreactor.mpc (Module):
-        
+
 	  Created project for build TAO_FlReactor library.
 
         * tao/xt_resource.h (Module):
         * tao/xt_resource.cpp (Module):
         * tao/qt_resource.h (Module):
         * tao/qt_resource.cpp (Module):
-	
+
           Removed bug related with incorrect service class (was TAO, is
 	  TAO_QtReactor or TAO_XtReactor) for exported Service_Objects and
-	  Factories. 
+	  Factories.
 
         * tao/fl_resource.i (Module):
         * tao/fl_resource.h (Module):
         * tao/fl_resource.cpp (Module):
         * tao/TAO_FlReactor_export.h (Module):
-	
+
           Create TAO_FlResourceFactory for ACE_FlReactor similar to
-	  QtResourceFactory. 
+	  QtResourceFactory.
 
         * tao/Strategies.mpc (Module):
-	
+
           Removed explicite dependence on tao_flreactor.
 
         * tao/Strategies/advanced_resource.h (Module):
         * tao/Strategies/advanced_resource.cpp (Module):
-	
+
           Removed ACE_HAS_FL macros. Removed static linkage with
 	  ACE_FlReactor. Created framework for dynamic loading of GUI
 	  reactors using ACE_DLL. Applied this framework for
@@ -438,53 +442,53 @@ Sun Jan 23 01:52:50 2005  Marek Brudka  <mbrudka@aster.pl>
         Sun Dec 12 15:12:41 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * .cvsignore (Module):
-	
+
           To stop cvs from complaining about unknown files.
 
         Sun Dec 12 14:44:53 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * TAOACE.mwc (Module):
-        
+
 	  Temporarily disabled some projects as MPC is now buggy.
 
         Sun Dec 12 01:14:03 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tao/tao_xtreactor.mpc (Module):
         * tao/tao_qtreactor.mpc (Module):
-	
+
           Added header and inline files to project.
 
         * tao/Strategies.mpc (Module):
-  
+
           Created dependence on tao_tkreactor and tao_flreactor. To be
 	  removed when tao_flresource and tao_tkresource will be
-	  avalaible. 
+	  avalaible.
 
         * tests/FL_Cube/FL_Cube.mpc (Module):
         * examples/AMI/FL_Callback/progress.cpp (Module):
-	
+
           Fixed a bug related with undefined stdio functions.
 
         * examples/AMI/FL_Callback/Peer_i.cpp (Module):
-	
+
           Fixed a bug related with undefined sleep function.
 
         * examples/AMI/FL_Callback/FL_Callback.mpc (Module):
-	
+
           Created dependence on tao_flreactor. To be removed when
-	  tao_flresource will be available. 
+	  tao_flresource will be available.
 
         Fri Dec 10 01:04:12 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tests/Xt_Stopwatch/.cvsignore (Module):
-	
+
           Created few ignores to make cvs silent.
 
         Fri Dec 10 00:45:22 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tests/QtTests/.cvsignore (Module):
         * utils/catior/.cvsignore (Module):
-        
+
 	  Created few ignores to make cvs silent.
 
         * tests/Xt_Stopwatch/svc.conf.xml (Module):
@@ -509,48 +513,48 @@ Sun Jan 23 01:52:50 2005  Marek Brudka  <mbrudka@aster.pl>
           Removed ACE_HAS_XT macros.
 
         * tao/TAO_XtReactor_export.h (Module):
-	
+
           Created export macros for TAO_XtRector library.
 
         * tao/xt_resource.h (Module):
         * tao/xt_resource.cpp (Module):
-	
+
           Removed ACE_HAS_XT macros. Applied export macros for
-	  XtResourceFactory. 
+	  XtResourceFactory.
 
         * tao/tao_xtreactor.mpc (Module):
-	
+
           Derived tao_xtreactor from all needed base projects.
 
         Fri Dec 10 00:40:11 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tests/QtTests/README (Module):
-          
+
 	  Described a problem with ORB shutdown.
 
         * tests/QtTests/svc.conf.xml (Module):
         * tests/QtTests/svc.conf (Module):
-        
+
 	  Change shared library where QtResource factory can be found from
 	  TAO to TAO_QtReactor.
 
         * tests/QtTests/server.cpp (Module):
         * tests/QtTests/client.cpp (Module):
-	
+
           Removed silly mistake related with removing ACE_HAS_QT macros.
 
         Tue Dec  7 20:48:26 2004  Marek Brudka  <mbrudka@aster.pl>
-	
+
         * tao/tao_qtreactor.mpc (Module):
         * tao/qt_resource.h (Module):
         * tao/TAO_QtReactor_export.h (Module):
-        
+
 	  Created and applied export macros for TAO_QtReactor.
 
         Mon Dec  6 00:35:59 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * TAO_IDL/.cvsignore (Module):
-	
+
           To remove cvs warnings.
 
         Sun Dec  5 23:17:46 2004  Marek Brudka  <mbrudka@aster.pl>
@@ -563,14 +567,14 @@ Sun Jan 23 01:52:50 2005  Marek Brudka  <mbrudka@aster.pl>
         * tests/QtTests/client.cpp (Module):
         * tao/qt_resource.h (Module):
         * tao/qt_resource.cpp (Module):
-	
+
           Removed dependencies on ACE_HAS_QT. Compilation is now managed
-	  by MPC. 
-	
+	  by MPC.
+
         * tests/QtTests/QtTests.mpc (Module):
-  
+
           Removed explicite dependencies on qt. They are managed now by qt
-	  based projects. 
+	  based projects.
 
         Fri Dec  3 23:15:18 2004  Marek Brudka  <mbrudka@aster.pl>
 
@@ -581,7 +585,7 @@ Sun Jan 23 01:52:50 2005  Marek Brudka  <mbrudka@aster.pl>
 
           Initial changes related with the separation of reactors into
 	  distinct libraries.  Many thanks to Raphael Bossek
-	  <raphael.bossek@gmx.de> for this patch. 
+	  <raphael.bossek@gmx.de> for this patch.
 
 Sat Jan 22 12:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
