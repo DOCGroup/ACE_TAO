@@ -72,6 +72,7 @@ CONTROLLED_FILES = ACE-INSTALL.html \
                 ACE-install.sh \
                 ASNMP \
                 BIBLIOGRAPHY \
+		BUG-REPORT-FORM \
                 COPYING \
                 ChangeLog \
 		ChangeLog-98a \
