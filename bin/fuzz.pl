@@ -126,7 +126,7 @@ sub store_file ($)
     elsif ($name =~ /\.(mpc|mwc|mpb|mpt)/i) {
         push @files_mpc, ($name);
     }
-    elsif ($name =~ /\.(icc|ncb|opt)$/i) {
+    elsif ($name =~ /\.(icc|ncb|opt|zip)$/i) {
         push @files_noncvs, ($name);
     }
 }
@@ -484,6 +484,35 @@ sub check_for_preprocessor_comments ()
                 }
             }
             close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
+# We should not have empty inline files in the repo
+sub check_for_empty_inline_files ()
+{
+    print "Running empty inline files test\n";
+    foreach $file (@files_inl) {
+        my $found = 0;
+        my $ignore = 0;
+        if (open (FILE, $file)) {
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+              if (/\/\/ TAO and the TAO IDL Compiler have been developed by/) {# skip IDL generated files
+                $ignore = 1;
+                next;}
+              next if /^[:blank:]*$/; # skip empty lines
+              next if /^[:blank:]*\/\//; # skip C++ comments
+              $found = 1;
+            }
+            close (FILE);
+            if ($found == 0 and $ignore == 0) {
+             print_error ("File $file is empty and should not be in the "
+                         ."repository");
+            }
         }
         else {
             print STDERR "Error: Could not open $file\n";
@@ -1319,6 +1348,7 @@ if ($opt_t) {
 print "--------------------Configuration: Fuzz - Level ",$opt_l,
       "--------------------\n";
 
+check_for_empty_inline_files () if ($opt_l >= 1);
 check_for_msc_ver_string () if ($opt_l >= 6);
 check_for_noncvs_files () if ($opt_l >= 1);
 check_for_streams_include () if ($opt_l >= 6);
