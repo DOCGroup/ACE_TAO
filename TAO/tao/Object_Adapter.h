@@ -406,6 +406,32 @@ public:
 
   friend Outstanding_Requests;
 
+  class Single_Threaded_POA_Lock
+  {
+    // = TITLE
+    //     This class helps us by locking servants in a single
+    //     threaded POA for the duration of the upcall.
+    //     Single_Threaded_POA_Lock has a magic constructor and
+    //     destructor.  We acquire the servant lock in the
+    //     constructor.  We release the servant lock in the
+    //     destructor.
+  public:
+
+    Single_Threaded_POA_Lock (TAO_POA &poa,
+                              PortableServer::Servant servant);
+    // Constructor.
+
+    ~Single_Threaded_POA_Lock (void);
+    // Destructor.
+
+  protected:
+
+    TAO_POA &poa_;
+    PortableServer::Servant servant_;
+  };
+
+  friend Single_Threaded_POA_Lock;
+
 };
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -291,6 +291,15 @@ TAO_Object_Adapter::dispatch_servant_i (const TAO_ObjectKey &key,
                                                *this);
     ACE_UNUSED_ARG (outstanding_requests);
 
+    // This class helps us by locking servants in a single threaded
+    // POA for the duration of the upcall.  Single_Threaded_POA_Lock
+    // has a magic constructor and destructor.  We acquire the servant
+    // lock in the constructor.  We release the servant lock in the
+    // destructor.
+    Single_Threaded_POA_Lock single_threaded_poa_lock (*poa,
+                                                       servant);
+    ACE_UNUSED_ARG (single_threaded_poa_lock);
+
     // Unlock for the duration of the servant upcall.  Reacquire once
     // the upcall completes. Even though we are releasing the lock,
     // the servant entry in the active object map is reference counted
@@ -830,6 +839,27 @@ TAO_Object_Adapter::Outstanding_Requests::~Outstanding_Requests (void)
     {
       // Wakeup all waiting threads.
       this->poa_.outstanding_requests_condition_.broadcast ();
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+TAO_Object_Adapter::Single_Threaded_POA_Lock::Single_Threaded_POA_Lock (TAO_POA &poa,
+                                                                        PortableServer::Servant servant)
+  : poa_ (poa),
+    servant_ (servant)
+{
+  if (this->poa_.policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
+    {
+      this->servant_->_single_threaded_poa_lock ().acquire ();
+    }
+}
+
+TAO_Object_Adapter::Single_Threaded_POA_Lock::~Single_Threaded_POA_Lock (void)
+{
+  if (this->poa_.policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
+    {
+      this->servant_->_single_threaded_poa_lock ().release ();
     }
 }
 

@@ -90,9 +90,28 @@ protected:
   virtual const char *_interface_repository_id (void) const = 0;
   // Get this interface's repository id (TAO specific).
 
+  // = Should be protected/private, but a nested class needs it.
+
+public:
+  ACE_SYNCH_MUTEX &_single_threaded_poa_lock (void);
+  // Access to the single threaded poa lock.
+
+protected:
+  void _increment_single_threaded_poa_lock_count (void);
+  // New single threaded POA wants to use this lock.
+
+  void _decrement_single_threaded_poa_lock_count (void);
+  // Single threaded POA is no longer interested in this lock.
+
   TAO_Operation_Table *optable_;
   // The operation table for this servant, it is initialized by the
   // most derived class.
+
+  ACE_SYNCH_MUTEX *single_threaded_poa_lock_;
+  // Lock for single threaded POAs.
+
+  u_long single_threaded_poa_lock_count_;
+  // Reference count for lock.
 };
 
 class TAO_Export TAO_RefCountServantBase : public virtual TAO_ServantBase
