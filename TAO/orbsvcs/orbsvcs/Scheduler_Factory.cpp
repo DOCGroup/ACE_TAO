@@ -325,6 +325,12 @@ int ACE_Scheduler_Factory::dump_schedule
   return 0;
 }
 
+#if defined (HPUX) && !defined (__GNUG__)
+  // aCC can't handle RtecScheduler::Preemption_Priority used as an operator
+  // name.
+  typedef CORBA::Long RtecScheduler_Preemption_Priority;
+#endif /* HPUX && !g++ */
+
 RtecScheduler::Preemption_Priority
 ACE_Scheduler_Factory::preemption_priority ()
 {
@@ -335,10 +341,16 @@ ACE_Scheduler_Factory::preemption_priority ()
       ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority> *tss =
         ace_scheduler_factory_data->preemption_priority_;
       // egcs 1.0.1 raises an internal compiler error if we implicitly
-      // call the type conversion operator.  So, call it explcitly.
+      // call the type conversion operator.  So, call it explicitly.
+#if defined (HPUX) && !defined (__GNUG__)
+      const RtecScheduler::Preemption_Priority preemption_priority =
+        ACE_static_cast (RtecScheduler::Preemption_Priority,
+                         tss->operator RtecScheduler_Preemption_Priority ());
+#else
       const RtecScheduler::Preemption_Priority preemption_priority =
         ACE_static_cast (RtecScheduler::Preemption_Priority,
                          tss->operator RtecScheduler::Preemption_Priority ());
+#endif /* HPUX && !g++ */
       return preemption_priority;
     }
   else
@@ -359,7 +371,12 @@ ACE_Scheduler_Factory::set_preemption_priority
         return;
 
   ace_scheduler_factory_data->preemption_priority_->
+#if defined (HPUX) && !defined (__GNUG__)
+    // aCC can't handle the typedef
+    operator RtecScheduler_Preemption_Priority & () = preemption_priority;
+#else
     operator RtecScheduler::Preemption_Priority & () = preemption_priority;
+#endif /* HPUX && !g++ */
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
