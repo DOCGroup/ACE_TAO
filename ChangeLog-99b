@@ -1,3 +1,9 @@
+Wed Feb 03 14:23:55 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Service_Config.{h,i,cpp}: Added one more argument to open
+	  methods that allows ignoring the default svc.conf file.  You can
+	  still open svc.conf files using the -f option.
+
 Wed Feb 03 10:12:14 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/make_release: fixed release_filter so that it doesn't put
