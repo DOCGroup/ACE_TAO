@@ -1,3 +1,8 @@
+Tue Jul 10 19:10:19 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace.icc: Corrected the mis-applied patch for ace.icc in
+          Mon Jul 09 19:12:42 2001  Steve Huston  <shuston@riverace.com>
+
 Tue Jul 10 16:01:52 2001  Ossama Othman  <ossama@uci.edu>
 
 	* THANKS:
