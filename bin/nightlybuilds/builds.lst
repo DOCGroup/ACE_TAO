@@ -34,10 +34,15 @@ TYPE = TIMEONLY
 LIST = http://tao.doc.wustl.edu/bugzilla/Fuzz/
 WEB  = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?fuzz
 
-[Win2000_Unicode]
+[Win2000_WChar_Unicode]
 TYPE = TIMEONLY
 LIST = http://tao.doc.wustl.edu/bugzilla/Unicode/
 WEB  = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?unicode
+
+[Win2000_WChar]
+TYPE = TIMEONLY
+LIST = http://tao.doc.wustl.edu/bugzilla/wchar/
+WEB  = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?wchar
 
 [Win2000_LIB_Debug]
 TYPE = TIMEONLY
@@ -53,6 +58,11 @@ WEB  = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?lib_release
 TYPE = TIMEONLY
 LIST = http://ringil.ece.uci.edu/bugzilla/legacy/
 WEB  = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?legacy
+
+[Win2000_Unicode]
+TYPE = TIMEONLY
+LIST = http://ringil.ece.uci.edu/bugzilla/unicode/
+WEB  = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?unicode
 
 [WinCE_All]
 TYPE = TIMEONLY
@@ -84,7 +94,7 @@ TYPE = TIMEONLY
 LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/balar_Core/
 WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?balar_Core
 
-[Debian_Unicode]
+[Debian_WChar]
 TYPE = TIMEONLY
 LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/valinor_Unicode/
 WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?valinor_Unicode
