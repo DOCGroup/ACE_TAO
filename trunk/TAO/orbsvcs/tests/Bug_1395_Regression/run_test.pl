@@ -119,14 +119,14 @@ sub test_body
    ## the server so that it can pick up the new locator IOR
    unlink($server_ior_file);
    $SERVER->Kill ();
-   $SERVER->Spawn ();   
+   $SERVER->Spawn ();
 
    if (PerlACE::waitforfile_timed ($server_ior_file, 10) == -1)
    {
       print STDERR "ERROR: cannot find $server_ior_file\n";
       $ACTIVATOR->Kill ();
-      $LOCATOR->Kill ();  
-      $SERVER->Kill (); 
+      $LOCATOR->Kill ();
+      $SERVER->Kill ();
       return 1;
    }
 
