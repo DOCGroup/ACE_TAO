@@ -9,7 +9,6 @@ OBJFILES = \
 CFLAGS = \
         $(ACE_CFLAGS) \
         $(ACE_XML_CFLAGS) \
-        -I..\.. \
         -DACEXML_PARSER_BUILD_DLL
 
 CPPDIR = .;..

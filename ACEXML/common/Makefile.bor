@@ -22,8 +22,8 @@ OBJFILES = \
 
 CFLAGS = \
         $(ACE_CFLAGS) \
-        -DACEXML_BUILD_DLL \
-        -I..
+        $(ACE_XML_CFLAGS) \
+        -DACEXML_BUILD_DLL
 
 CPPDIR = .;..
 
