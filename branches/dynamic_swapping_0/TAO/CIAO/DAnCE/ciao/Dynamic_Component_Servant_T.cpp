@@ -23,7 +23,8 @@ namespace CIAO
       :Dynamic_Component_Servant_Base (c),
        executor_ (Components::EnterpriseComponent::_duplicate (ec)),
        home_servant_ (home_servant),
-       home_ (Components::CCMHome::_duplicate (home))
+       home_ (Components::CCMHome::_duplicate (home)),
+       component_removed_ (0)
   {
   }
 
@@ -52,7 +53,9 @@ namespace CIAO
     if (this->servant_map_.find (oid, servant) == 0)
       {
         servant->remove ();
+        component_removed_ = 1;
       }
+    ACE_DEBUG ((LM_DEBUG, "flag at remove is %d\n", component_removed_));
   }
 
   template <typename COMP_SVNT,
@@ -80,6 +83,15 @@ namespace CIAO
     COMP_SVNT *svt = new COMP_SVNT(ciao_comp.in (), this->home_.in (),
                                    this->home_servant_,
                                    this->container_);
+    ACE_DEBUG ((LM_DEBUG, "i am creating the servant\n"));
+    ACE_DEBUG ((LM_DEBUG, "flag is %d\n", component_removed_));
+    if (component_removed_ == 1)
+      {
+        svt->ciao_preactivate ();
+        svt->ciao_activate ();
+        svt->ciao_postactivate ();
+        component_removed_ = 0;
+      }
     PortableServer::ServantBase_var safe (svt);
     this->servant_map_.bind (oid, svt);
     return safe._retn ();

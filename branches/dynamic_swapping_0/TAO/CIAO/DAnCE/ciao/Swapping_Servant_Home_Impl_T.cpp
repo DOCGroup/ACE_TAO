@@ -95,7 +95,7 @@ namespace CIAO
     {
       servant->destroy (oid);
     }
-    this->container_->delete_servant_map (oid);
+    // this->container_->delete_servant_map (oid);
   }
 
   // Operations for keyless home interface.
@@ -244,12 +244,14 @@ namespace CIAO
                     COMP_SVNT>::update_component_map (
     PortableServer::ObjectId &oid)
   {
+    /*
     Dynamic_Component_Servant_Base *servant;
     if (dynamic_servant_map_.unbind (oid, servant) != 0)
       {
         ACE_DEBUG ((LM_DEBUG, "Invalid component object reference\n"));
         return;
       }
+    */
     return;
   }
 
