@@ -591,6 +591,7 @@ ifdef kylix
   LDLIBS := $(LDLIBS:-l%=lib%.$(SOEXT))
   LIBS := $(LIBS:-l%=lib%.$(SOEXT))
   ACELIB := $(ACELIB:-l%=lib%.$(SOEXT))
+  ACE_SHLIBS := $(ACE_SHLIBS:-l%=lib%.$(SOEXT))
 endif # kylix
 
 VLDLIBS = $(LDLIBS) $(ACELIB) $(LIBS)
