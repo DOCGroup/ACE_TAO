@@ -1545,10 +1545,21 @@ ACE::set_handle_limit (int new_limit)
 {
   ACE_TRACE ("ACE::set_handle_limit");
   int cur_limit = ACE::max_handles ();
+  int max_limit = cur_limit;
 
   if (cur_limit == -1)
     return -1;
 
+#if !defined (ACE_LACKS_RLIMIT) && defined (RLIMIT_NOFILE)
+  struct rlimit rl;
+  ACE_OS::memset ((void *) &rl, 0, sizeof rl);
+  ACE_OS::getrlimit (RLIMIT_NOFILE, &rl);
+  max_limit = rl.rlim_max;
+#endif /* ACE_LACKS_RLIMIT */
+
+  if (new_limit == -1)
+    new_limit = max_limit;
+  
   if (new_limit < 0)
     {
       errno = EINVAL;
@@ -1557,8 +1568,6 @@ ACE::set_handle_limit (int new_limit)
   if (new_limit > cur_limit)
     {
 #if !defined (ACE_LACKS_RLIMIT) && defined (RLIMIT_NOFILE)
-      struct rlimit rl;
-      ACE_OS::memset ((void *) &rl, 0, sizeof rl);
       rl.rlim_cur = new_limit;
       return ACE_OS::setrlimit (RLIMIT_NOFILE, &rl);
 #else
@@ -1569,8 +1578,6 @@ ACE::set_handle_limit (int new_limit)
   else
     {
 #if !defined (ACE_LACKS_RLIMIT) && defined (RLIMIT_NOFILE)
-      struct rlimit rl;
-      ACE_OS::memset ((void *) &rl, 0, sizeof rl);
       rl.rlim_cur = new_limit;
       return ACE_OS::setrlimit (RLIMIT_NOFILE, &rl);
 #else
