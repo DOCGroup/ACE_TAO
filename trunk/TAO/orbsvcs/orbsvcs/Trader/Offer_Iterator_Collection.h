@@ -17,7 +17,6 @@
 #ifndef TAO_OFFER_ITERATOR_COLLECTION_H
 #define TAO_OFFER_ITERATOR_COLLECTION_H
 
-#include "stl.h"
 #include "orbsvcs/CosTradingS.h"
 
 class TAO_Offer_Iterator_Collection : public POA_CosTrading::OfferIterator
@@ -73,9 +72,9 @@ private:
     // Cached value of the number of elements left in this iterator. 
   };
   
-  typedef deque<Iter_Info> OFFER_ITERS;
+  typedef ACE_Unbounded_Queue <Iter_Info> Offer_Iters;
 
-  OFFER_ITERS iters_;
+  Offer_Iters iters_;
   // The iterator collection.
   
   CORBA::ULong total_left_;

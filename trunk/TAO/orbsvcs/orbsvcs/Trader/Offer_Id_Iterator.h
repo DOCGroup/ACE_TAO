@@ -17,7 +17,7 @@
 #ifndef TAO_OFFER_ID_ITERATOR_H
 #define TAO_OFFER_ID_ITERATOR_H
 
-#include "stl.h"
+#include "ace/Containers.h"
 #include "orbsvcs/CosTradingS.h"
 
 class TAO_Offer_Id_Iterator : public POA_CosTrading::OfferIdIterator
@@ -77,13 +77,14 @@ class TAO_Offer_Id_Iterator : public POA_CosTrading::OfferIdIterator
   
  private:
 
-#ifdef OS_NO_DEFAULT_TEMPLATE_ARGUMENTS
-  typedef queue<CosTrading::OfferId, deque<CosTrading::OfferId> > OFFER_ID_QUEUE;
-#else
-  typedef queue<CosTrading::OfferId> OFFER_ID_QUEUE;
-#endif /* OS_NO_DEFAULT_TEMPLATE_ARGUMENTS */
+  typedef ACE_Unbounded_Queue
+    <
+    CosTrading::OfferId
+    >
+    Offer_Id_Queue;
   
-  OFFER_ID_QUEUE ids_;
+  
+  Offer_Id_Queue ids_;
 };
 
 #endif /* TAO_OFFER_ID_ITERATOR_H */

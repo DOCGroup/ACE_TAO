@@ -34,7 +34,7 @@ void
 TAO_Query_Only_Offer_Iterator::add_offer (CosTrading::OfferId offer_id,
 					  CosTrading::Offer* offer)
 {
-  this->offers_.push_back (offer);
+  this->offers_.enqueue_tail (offer);
   CORBA::string_free (offer_id);
 }
 
@@ -49,7 +49,7 @@ TAO_Query_Only_Offer_Iterator::max_left (CORBA::Environment& _env)
 CORBA::Boolean 
 TAO_Query_Only_Offer_Iterator::next_n (CORBA::ULong n, 
                                        CosTrading::OfferSeq_out offers,
-				                                CORBA::Environment& _env) 
+				       CORBA::Environment& _env) 
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   offers = new CosTrading::OfferSeq;
@@ -61,11 +61,11 @@ TAO_Query_Only_Offer_Iterator::next_n (CORBA::ULong n,
   // populate the sequence.
   for (CORBA::ULong i = 0; i < offers_in_sequence; i++)
     {
-      CosTrading::Offer& source = *(this->offers_.front ());
+      CosTrading::Offer *source = 0;
       CosTrading::Offer& destination = (*offers)[i];
 
-      this->pfilter_.filter_offer (source, destination);
-      offers_.pop_front ();
+      this->offers_.dequeue_head (source);
+      this->pfilter_.filter_offer (*source, destination);
     }
   
   return offers_in_sequence != 0;

@@ -8,30 +8,31 @@ TAO_DP_Dispatcher::TAO_DP_Dispatcher(const char* name)
 
 TAO_DP_Dispatcher::~TAO_DP_Dispatcher (void)
 {
-  for (HANDLER_MAP::iterator handler_iter = this->handlers_.begin ();
-       handler_iter != this->handlers_.end ();
+  for (Handler_Map::iterator handler_iter (this->handlers_);
+       ! handler_iter.done ();
        handler_iter++)
     {
-      CORBA::Boolean delete_me = (*handler_iter).second.second;
+      Handler_Info& handler_info = (*handler_iter).int_id_;
 
-      if (delete_me)
-	delete (*handler_iter).second.first;
+      if (handler_info.free_on_delete_)
+	delete handler_info.handle_;	  
     }
 }
 
-void
+int
 TAO_DP_Dispatcher::
 register_handler(const char* name,
 		 TAO_DP_Evaluation_Handler* handler,
 		 CORBA::Boolean release_on_delete)
 {
-  string prop_name(name);
-  TAO_DP_Dispatcher::HANDLER_MAP::iterator handlers_iter =
-    this->handlers_.find(prop_name);
+  TAO_String_Hash_Key prop_name(name);
 
   // Set up the handler to receive evaluations for prop_name
-  if (handlers_iter == this->handlers_.end())
-    this->handlers_[prop_name] = make_pair (handler, release_on_delete);
+  Handler_Info handler_info;  
+  handler_info.handle_ = handler;
+  handler_info.free_on_delete_ = release_on_delete;
+
+  return (this->handlers_.bind (prop_name, handler_info) != 0) ? -1 : 0;
 }
 
 CosTradingDynamic::DynamicProp*
@@ -72,17 +73,14 @@ construct_dynamic_prop (const char* name,
 
 
 TAO_DP_Evaluation_Handler*
-TAO_DP_Dispatcher::remove_handler(const char* name)
+TAO_DP_Dispatcher::remove_handler (const char* name)
 {
-  string prop_name(name);
+  Handler_Info handler_info;
+  TAO_String_Hash_Key prop_name (name);
   TAO_DP_Evaluation_Handler* handler = 0;
-  HANDLER_MAP::iterator handlers_iter = this->handlers_.find(prop_name);
 
-  if (handlers_iter != this->handlers_.end())
-    {
-      handler = (*handlers_iter).second.first;
-      this->handlers_.erase(handlers_iter);
-    }
+  if (this->handlers_.unbind (prop_name, handler_info) == 0)
+    handler = handler_info.handle_;
 
   return handler;
 }
@@ -95,13 +93,14 @@ TAO_DP_Dispatcher::evalDP(const char* name,
   TAO_THROW_SPEC ((CORBA::SystemException, 
 		   CosTradingDynamic::DPEvalFailure))
 {
-  string prop_name(name);
   CORBA::Any* result = 0;
-  HANDLER_MAP::iterator handlers_iter = this->handlers_.find(prop_name);
-
-  if (handlers_iter != this->handlers_.end())
+  Handler_Info handler_info;
+  TAO_String_Hash_Key prop_name(name);
+  
+  if (this->handlers_.find (prop_name, handler_info) == 0)
     {
-      TAO_DP_Evaluation_Handler* handler = (*handlers_iter).second.first;
+      TAO_DP_Evaluation_Handler* handler = handler_info.handle_;
+      
       result = handler->evalDP (extra_info, returned_type, _env);
       TAO_CHECK_ENV_RETURN (_env, result);
       

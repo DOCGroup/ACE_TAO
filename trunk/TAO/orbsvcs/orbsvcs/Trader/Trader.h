@@ -19,7 +19,6 @@
 #ifndef TAO_TRADER_BASE_H
 #define TAO_TRADER_BASE_H
 
-#include "stl.h"
 #include "ace/Hash_Map_Manager.h"
 #include "Attributes.h"
 #include "Monitor.h"

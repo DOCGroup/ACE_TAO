@@ -17,17 +17,19 @@
 #include "Constraint_Validator.h"
 
 TAO_Constraint_Validator::
-TAO_Constraint_Validator(TypeStruct* type_struct)
+TAO_Constraint_Validator
+(CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct)
 {
-  PropStructSeq& prop_seq = type_struct->props;
+  CosTradingRepos::ServiceTypeRepository::PropStructSeq& prop_seq =
+    type_struct->props;
   int length = prop_seq.length();
   
   // Create a map of the service type properties to their types.
   for (int i = 0; i < length; i++)
     {
-      string prop_name_str((const char*)prop_seq[i].name);
       CORBA::TypeCode_var corba_type = prop_seq[i].value_type;
-      this->type_map_[prop_name_str] = (const CORBA::TypeCode_ptr)corba_type;
+      TAO_String_Hash_Key prop_name_str = (const char*) prop_seq[i].name;
+      this->type_map_.bind (prop_name_str, corba_type.ptr ());
     }
 }
 
@@ -406,19 +408,15 @@ TAO_Constraint_Validator::extract_type (TAO_Constraint* expr,
 					TAO_Expression_Type& type)
 {
   CORBA::TypeCode* return_value = 0;
+
   type = expr->expr_type();
   if (type == TAO_IDENT)
     {
       TAO_Property_Constraint* prop = (TAO_Property_Constraint*) expr;
-      string prop_name(prop->name());
-      Property_Type_Map_Iter type_iter =
-	this->type_map_.find (prop_name);
+      TAO_String_Hash_Key prop_name (prop->name());
 
-      if (type_iter != this->type_map_.end())
-	{
-	  return_value = (*type_iter).second;
-	  type = TAO_Literal_Constraint::comparable_type(return_value);
-	}
+      if (this->type_map_.find (prop_name, return_value) == 0)
+	type = TAO_Literal_Constraint::comparable_type (return_value);
     }
 
   return return_value;

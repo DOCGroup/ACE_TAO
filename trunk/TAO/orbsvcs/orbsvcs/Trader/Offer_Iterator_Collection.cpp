@@ -29,7 +29,7 @@ add_offer_iterator (CosTrading::OfferIterator* offer_iter)
       TAO_ENDTRY;
 
       this->total_left_ += iter_info.num_left_;
-      this->iters_.push_back (iter_info);
+      this->iters_.enqueue_tail (iter_info);
     }
 }
 
@@ -44,9 +44,10 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
   CosTrading::OfferSeq_var out_offers;
   
   ACE_NEW_RETURN (offers, CosTrading::OfferSeq, return_value);
-  while (offers_left > 0 && ! this->iters_.empty ())
+  while (offers_left > 0 && ! this->iters_.is_empty ())
     {
-      Iter_Info& iter_info = this->iters_.front ();
+      Iter_Info iter_info;
+      this->iters_.dequeue_head (iter_info);
 
       // Determine how many offers we should retrieve from this
       // iterator. 
@@ -74,14 +75,13 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
 
       // If we've exhausted this iterator, destroy it.
       if (iter_info.num_left_ == 0)
-	{
-	  iter_info.iter_->destroy (env);
-	  this->iters_.pop_front ();
-	}
+	iter_info.iter_->destroy (env);
+      else
+	this->iters_.enqueue_head (iter_info);
     }
 
   // Determine if we have anything left to offer.
-  if (this->iters_.empty ())
+  if (this->iters_.is_empty ())
     return_value = CORBA::B_FALSE;
 
   return return_value;
@@ -92,10 +92,15 @@ TAO_Offer_Iterator_Collection::destroy (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   // Destroy all iterators in the collection.
-  for (OFFER_ITERS::iterator iters_iter = this->iters_.begin ();
-       iters_iter != this->iters_.end ();
-       iters_iter++)
-    (*iters_iter).iter_->destroy (_env);
+  for (Offer_Iters::ITERATOR iters_iter (this->iters_);
+       ! iters_iter.done ();
+       iters_iter.advance ())
+    {
+      Iter_Info* iter_info = 0;
+
+      iters_iter.next (iter_info);
+      iter_info->iter_->destroy (_env);
+    }
 
   this->total_left_ = 0;
 

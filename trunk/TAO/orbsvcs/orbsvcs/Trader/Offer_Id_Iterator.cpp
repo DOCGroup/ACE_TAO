@@ -14,23 +14,28 @@
 
 #include "Offer_Id_Iterator.h"
 
-TAO_Offer_Id_Iterator::TAO_Offer_Id_Iterator(void)
+TAO_Offer_Id_Iterator::TAO_Offer_Id_Iterator (void)
 {
 }
 
 TAO_Offer_Id_Iterator::~TAO_Offer_Id_Iterator (void)
 {
-  int items_left = this->ids_.size ();
+  int items_left = this->ids_.size (),
+    return_value = 0;
 
-  for (int i = 0; i < items_left; i++)
+  do
     {
-      CORBA::string_free (this->ids_.front ());
-      this->ids_.pop ();
+      CosTrading::OfferId offer_id = 0;
+      
+      return_value = this->ids_.dequeue_head (offer_id);
+      if (return_value == 0)
+	CORBA::string_free (offer_id);
     }
+  while (return_value == 0);
 }
 
 CORBA::ULong
-TAO_Offer_Id_Iterator::max_left(CORBA::Environment& env)
+TAO_Offer_Id_Iterator::max_left (CORBA::Environment& env)
   TAO_THROW_SPEC ((CORBA::SystemException,
 		  CosTrading::UnknownMaxLeft))
 {
@@ -38,7 +43,7 @@ TAO_Offer_Id_Iterator::max_left(CORBA::Environment& env)
 }
 
 void
-TAO_Offer_Id_Iterator::destroy(CORBA::Environment& _env)
+TAO_Offer_Id_Iterator::destroy (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   // Remove self from POA
@@ -51,6 +56,7 @@ TAO_Offer_Id_Iterator::destroy(CORBA::Environment& _env)
     {
       PortableServer::POA_var poa = this->_default_POA (TAO_TRY_ENV);
       TAO_CHECK_ENV;
+      
       PortableServer::ObjectId_var id = poa->servant_to_id (this, TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
@@ -65,9 +71,9 @@ TAO_Offer_Id_Iterator::destroy(CORBA::Environment& _env)
 }
 
 CORBA::Boolean
-TAO_Offer_Id_Iterator::next_n(CORBA::ULong n,
-			      CosTrading::OfferIdSeq_out _ids,
-			      CORBA::Environment& _env)
+TAO_Offer_Id_Iterator::next_n (CORBA::ULong n,
+			       CosTrading::OfferIdSeq_out _ids,
+			       CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   // Calculate the number of Ids to be returned in this.
@@ -91,9 +97,10 @@ TAO_Offer_Id_Iterator::next_n(CORBA::ULong n,
 	  // Copy in those ids!
 	  for (int i = 0; i < returnable_items; i++)
 	    {
-	      char* offer_id = this->ids_.front ();
+	      CosTrading::OfferId offer_id = 0;
+
+	      this->ids_.dequeue_head (offer_id);
 	      id_buf[i] = offer_id;
-	      this->ids_.pop ();
 	    }
 	  
 	  // Place them into an OfferIdSeq.
@@ -114,7 +121,7 @@ TAO_Offer_Id_Iterator::next_n(CORBA::ULong n,
 }
 
 void
-TAO_Offer_Id_Iterator::insert_id(CosTrading::OfferId new_id)
+TAO_Offer_Id_Iterator::insert_id (CosTrading::OfferId new_id)
 {
-  this->ids_.push (new_id);
+  this->ids_.enqueue_tail (new_id);
 }

@@ -19,8 +19,6 @@
 
 #include "Offer_Modifier.h"
 
-#include "stl.h"
-
 template <class TRADER>
 class TAO_Register :
   public TAO_Trader_Components<POA_CosTrading::Register>,

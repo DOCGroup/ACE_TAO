@@ -181,9 +181,9 @@ private:
   CosTrading::Link::LinkInfo,
   MAP_LOCK_TYPE
   >
-  LINKS;
+  Links;
   
-  LINKS links_;
+  Links links_;
   // The collection of link connecting this trader to others in the
   // federation. 
   

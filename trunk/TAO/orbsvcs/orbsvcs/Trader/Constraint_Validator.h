@@ -17,7 +17,7 @@
 #ifndef TAO_CONSTRAINT_VALIDATOR_H
 #define TAO_CONSTRAINT_VALIDATOR_H
 
-#include "stl.h"
+#include "Trader.h"
 #include "Constraint_Nodes.h"
 
 class TAO_Constraint_Validator : public TAO_Constraint_Visitor
@@ -38,23 +38,9 @@ class TAO_Constraint_Validator : public TAO_Constraint_Visitor
   //    at which point we can back out of the traversal.
 {
 public:
-
-  typedef
-    map<string, CORBA::TypeCode_ptr, less<string> >
-    Property_Type_Map;
-
-  typedef Property_Type_Map::iterator
-    Property_Type_Map_Iter;
   
-  typedef
-    CosTradingRepos::ServiceTypeRepository::TypeStruct
-    TypeStruct;
-  
-  typedef
-    CosTradingRepos::ServiceTypeRepository::PropStructSeq
-    PropStructSeq;
-  
-  TAO_Constraint_Validator(TypeStruct* type_struct);
+  TAO_Constraint_Validator
+    (CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct);
   // The constructor creates a map of property names to their values
   // from the Type Description retrieved from the
   // ServiceTypeRepository. The ServiceTypeRepository throws
@@ -118,6 +104,14 @@ public:
   
 private:
 
+  typedef ACE_Hash_Map_Manager
+    <
+    TAO_String_Hash_Key,
+    CORBA::TypeCode_ptr,
+    ACE_Null_Mutex
+    >
+    Property_Type_Map;
+  
   Property_Type_Map type_map_;
   // A map gleaned from the ServiceTypeStruct, which correlates
   // property names with their types.
