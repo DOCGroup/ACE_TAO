@@ -1823,6 +1823,7 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
                          TAO_ENCAP_BYTE_ORDER,
                          this->orb_core_->output_cdr_buffer_allocator (),
                          this->orb_core_->output_cdr_dblock_allocator (),
+                         this->orb_core_->output_cdr_msgblock_allocator (),
                          this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
                          this->orb_core_->to_iso8859 (),
                          this->orb_core_->to_unicode ());

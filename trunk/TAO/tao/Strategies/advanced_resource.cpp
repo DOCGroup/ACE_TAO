@@ -574,6 +574,25 @@ TAO_Advanced_Resource_Factory::input_cdr_buffer_allocator (void)
   return allocator;
 }
 
+ACE_Allocator *
+TAO_Advanced_Resource_Factory::input_cdr_msgblock_allocator (void)
+{
+  ACE_Allocator *allocator = 0;
+  switch (this->cdr_allocator_type_)
+    {
+    case TAO_ALLOCATOR_NULL_LOCK:
+      ACE_NEW_RETURN (allocator,
+                      NULL_LOCK_ALLOCATOR,
+                      0);
+      break;
+    default:
+      return
+        this->TAO_Default_Resource_Factory::input_cdr_msgblock_allocator();
+    }
+
+  return allocator;
+}
+
 int
 TAO_Advanced_Resource_Factory::input_cdr_allocator_type_locked (void)
 {
@@ -636,7 +655,6 @@ TAO_Advanced_Resource_Factory::create_lf_strategy (void)
     }
   return strategy;
 }
-
 
 TAO_Priority_Mapping *
 TAO_Advanced_Resource_Factory::get_priority_mapping (void)

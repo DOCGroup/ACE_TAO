@@ -145,6 +145,7 @@ public:
   /// Access the input CDR allocators.
   virtual ACE_Allocator* input_cdr_dblock_allocator (void);
   virtual ACE_Allocator* input_cdr_buffer_allocator (void);
+  virtual ACE_Allocator* input_cdr_msgblock_allocator (void);
 
   // Return 1 when the input CDR allocator uses a lock else 0.
   virtual int input_cdr_allocator_type_locked (void);
@@ -152,6 +153,7 @@ public:
   /// Access the output CDR allocators.
   virtual ACE_Allocator* output_cdr_dblock_allocator (void);
   virtual ACE_Allocator* output_cdr_buffer_allocator (void);
+  virtual ACE_Allocator* output_cdr_msgblock_allocator (void);
 
   /**
    * The protocol factory list is implemented in this class since
