@@ -263,6 +263,7 @@ static int n_loops = 10;
 template class ACE_Refcounted_Auto_Ptr<Printer, ACE_Thread_Mutex>;
 template class ACE_Refcounted_Auto_Ptr<Printer, ACE_Null_Mutex>;
 template class ACE_Auto_Basic_Ptr<Printer>;
+template class ACE_Auto_Basic_Ptr<Scheduler>;
 template class auto_ptr<Scheduler>;
 template class auto_ptr<ACE_Method_Request>;
 template class ACE_Auto_Basic_Ptr<ACE_Method_Request>;
@@ -272,6 +273,7 @@ template class ACE_Auto_Basic_Ptr<ACE_Method_Request>;
 #pragma instantiate ACE_Refcounted_Auto_Ptr<Printer, ACE_Thread_Mutex>
 #pragma instantiate ACE_Refcounted_Auto_Ptr<Printer, ACE_Null_Mutex>
 #pragma instantiate ACE_Auto_Basic_Ptr<Printer>
+#pragma instantiate ACE_Auto_Basic_Ptr<Scheduler>
 #pragma instantiate auto_ptr<Scheduler>
 #pragma instantiate auto_ptr<ACE_Method_Request>
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Method_Request>
@@ -358,8 +360,3 @@ main (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return 0;
 }
-
-
-
-
-

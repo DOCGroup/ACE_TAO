@@ -1,3 +1,10 @@
+Fri Dec 22 08:06:10 2000  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tests/Refcounted_Auto_Ptr_Test.cpp: Fixed the problem with an undefined 
+	  ACE_Auto_Basic_Ptr<Scheduler> by adding an explicit template
+ 	  instantiation.  Thanks to Frank A. Hunleth"
+ 	  <fhunleth@cs.wustl.edu> for reporting this.
+
 Thu Dec 21 18:12:38 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/ace-dll.icc, ace-lib.icc: Added OS_Errno.(cpp h) to the files
