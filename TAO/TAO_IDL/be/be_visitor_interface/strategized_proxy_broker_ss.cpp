@@ -193,7 +193,7 @@ be_visitor_interface_strategized_proxy_broker_ss::gen_thru_poa_operations (
           << "forward_obj," << be_nl
           << "args," << be_nl
           << "num_args" << be_nl
-          << "ACE_ENV_ARG_DECL" << be_uidt_nl
+          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
           << ");" << be_uidt_nl
           << "ACE_TRY_CHECK;" << be_uidt_nl
           << "}" << be_uidt_nl;
