@@ -1,3 +1,12 @@
+Thu Feb 10 22:14:06 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
+	* orbsvcs/tests/Event/Basic/Basic.dsw:
+	* orbsvcs/tests/Event/Basic/Complex.dsp:
+	* orbsvcs/tests/Event/Basic/Disconnect.dsp:
+	  Add new files to the project.
+
 Thu Feb 10 22:04:29 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/fe/idl.yy:
