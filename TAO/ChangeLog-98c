@@ -1,3 +1,12 @@
+Mon Oct 20 10:51:29 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* docs/releasenotes*: Moved releasenotes.html into a directory
+ 	named "releasenotes" so that the various status pages can live
+ 	independently.  Currently only the ORB Core's status page is
+ 	broken out, but the documentation should eventually turn into two
+ 	frames with the one at the top acting as the guide and the lower
+ 	frame being the actual status document.
+
 Fri Oct 17 17:42:27 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* docs/releasenotes.html: Updated to reflect current status.
