@@ -152,3 +152,9 @@ int Barrier::make_barrier( int _wait )
 
     return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Atomic_Op <ACE_Mutex, u_int>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Atomic_Op <ACE_Mutex, u_int>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
