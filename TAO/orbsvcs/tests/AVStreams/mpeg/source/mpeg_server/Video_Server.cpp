@@ -102,12 +102,83 @@ play_send (void)
 // Video_Time_Handler methods
 // handles the timeout
 
-int
-Video_Time_Handler::handle_timeout (const ACE_Time_Value &tv,
-                                    const void *arg)
+Video_Sig_Handler::Video_Sig_Handler (void)
 {
-  Video_Timer_Global::timerHandler (0);
-  play_send ();
+    // Assign the Sig_Handler a dummy I/O descriptor.  Note that even
+  // though we open this file "Write Only" we still need to use the
+  // ACE_Event_Handler::NULL_MASK when registering this with the
+  // ACE_Reactor (see below).
+  this->handle_ = ACE_OS::open (ACE_DEV_NULL, O_WRONLY);
+  ACE_ASSERT (this->handle_ != -1);
+
+  // Register signal handler object.  Note that NULL_MASK is used to
+  // keep the ACE_Reactor from calling us back on the "/dev/null"
+  // descriptor.
+  if (ACE_Reactor::instance ()->register_handler 
+      (this, ACE_Event_Handler::NULL_MASK) == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n%a", "register_handler", 1));
+
+  // Create a sigset_t corresponding to the signals we want to catch.
+  ACE_Sig_Set sig_set;
+
+  //  sig_set.sig_add (SIGINT);
+  // sig_set.sig_add (SIGQUIT);
+  sig_set.sig_add (SIGALRM);  
+
+  // Register the signal handler object to catch the signals.
+  if (ACE_Reactor::instance ()->register_handler (sig_set, this) == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n%a", "register_handler", 1));
+}
+// Called by the ACE_Reactor to extract the fd.
+
+ACE_HANDLE
+Video_Sig_Handler::get_handle (void) const
+{
+  return this->handle_;
+}
+
+int 
+Video_Sig_Handler::handle_input (ACE_HANDLE)
+{
+  ACE_DEBUG ((LM_DEBUG, "(%t) handling asynchonrous input...\n"));
+  return 0;
+}
+
+int 
+Video_Sig_Handler::shutdown (ACE_HANDLE, ACE_Reactor_Mask)
+{
+  ACE_DEBUG ((LM_DEBUG, "(%t) closing down Sig_Handler...\n"));
+  return 0;
+}
+
+// This method handles all the signals that are being caught by this
+// object.  In our simple example, we are simply catching SIGALRM,
+// SIGINT, and SIGQUIT.  Anything else is logged and ignored.
+//
+// There are several advantages to using this approach.  First, 
+// the behavior triggered by the signal is handled in the main event
+// loop, rather than in the signal handler.  Second, the ACE_Reactor's 
+// signal handling mechanism eliminates the need to use global signal 
+// handler functions and data. 
+
+int
+Video_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
+{
+  //  ACE_DEBUG ((LM_DEBUG, "(%t) received signal %S\n", signum));
+
+  switch (signum)
+    {
+    case SIGALRM:
+      // Handle the timeout
+      Video_Timer_Global::timerHandler (SIGALRM);
+      // send the frame..
+      play_send ();
+      break;
+    default: 
+      ACE_DEBUG ((LM_DEBUG, 
+		  "(%t) %S: not handled, returning to program\n", signum));
+      break;
+    }
   return 0;
 }
 
@@ -395,7 +466,7 @@ Video_Server::play (void)
   para.framesPerSecond = ntohl(para.framesPerSecond);
   para.VIDEO_SINGLETON::instance ()->frameRateLimit1000 = ntohl(para.VIDEO_SINGLETON::instance ()->frameRateLimit1000);
   para.collectStat = ntohl(para.collectStat);
-  para.VIDEO_SINGLETON::instance ()->sendVIDEO_SINGLETON::Instance ()->PatternGops = ntohl(para.VIDEO_SINGLETON::instance ()->sendVIDEO_SINGLETON::Instance ()->PatternGops);
+  para.VIDEO_SINGLETON::instance ()->sendPatternGops = ntohl(para.VIDEO_SINGLETON::instance ()->sendPatternGops);
   para.VIDEO_SINGLETON::instance ()->VStimeAdvance = ntohl(para.VIDEO_SINGLETON::instance ()->VStimeAdvance);
 #endif
 
