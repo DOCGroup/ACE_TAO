@@ -1,3 +1,9 @@
+Sat Jun  6 18:34:24 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace: Added two new files: Timeprobe_T.h and Timeprobe_T.cpp in
+ 	  order to solve problems with multiply defined symbols.  Thanks
+ 	  to Brian Mendel, David Levine, and Irfan for tracing this down.
+
 Sat Jun 06 16:43:01 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Timeprobe.cpp (dtor): inserted missing "[]" in delete of

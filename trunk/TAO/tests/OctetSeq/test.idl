@@ -9,11 +9,11 @@
 //    test.idl
 //
 // = DESCRIPTION
-//   Simple IDL file to generate the TypeCodes for sequence<octet>,
+//   Simple IDL file to generate the TypeCodes for sequence<octet> and
 //   sequence<char>.
 //
 // = AUTHORS
-//    Carlos O'Ryan
+//    Carlos O'Ryan <coryan@cs.wustl.edu>
 //
 // ============================================================================
 
