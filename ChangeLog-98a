@@ -8,6 +8,10 @@ Mon Dec 15 06:42:42 1997  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-linux-common.h: updated header comments about
           autosensing the platform capabilities.
 
+        * tests/Process_Strategy_Test.cpp: (parse_args): added DEBUG
+          message if an unsupported concurreny strategy is provided with
+          a -c option.
+
 Mon Dec 15 01:12:33 1997    <irfan@TWOSTEP>
 
 	* ace/Synch_T.h (ACE_Atmoic_Op::value_i): Explicitly return
