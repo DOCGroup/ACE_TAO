@@ -1,3 +1,8 @@
+Wed Apr  7 13:42:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/POA/DSI/Database_i.cpp (_is_a): 
+	Added a ACE_UNSED_ARG to avoid warnings..
+
 Wed Apr 07 13:27:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/POAS.h:

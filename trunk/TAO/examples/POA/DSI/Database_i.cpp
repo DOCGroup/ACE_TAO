@@ -81,7 +81,9 @@ DatabaseImpl::Entry::_is_a (CORBA::ServerRequest_ptr request,
                                                              CORBA::ARG_IN,
                                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
+      
+      ACE_UNUSED_ARG (named_value_1);
+      
       request->arguments (list,
                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
