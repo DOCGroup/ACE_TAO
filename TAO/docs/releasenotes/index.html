@@ -565,7 +565,7 @@ Points of contact: <a href="mailto:marina@cs.wustl.edu">Marina
 Spivak</a> and <a href="mailto:vishal@cs.wustl.edu">Vishal Kachroo</a>
 <p>
 
-The CORBA <a href="ftp://www.omg.org/pub/docs/formal/97-07-12.pdf">The
+The CORBA <a href="ftp://www.omg.org/pub/docs/formal/97-07-12.pdf">
 Naming Service</a> supports a hierarchical mapping between sequences
 of strings and object references.  The CORBA <A
 HREF="ftp://ftp.omg.org/pub/docs/orbos/98-10-11.pdf">Interoperable
@@ -574,10 +574,11 @@ locate the Naming Service. It allows the ORB to be administratively
 configured for bootstrapping to services not set up with the orb at
 install time. <P>
 
-<p>Current status (as of 22nd Feb 1999):
+<p>Current status (as of 7th Apr 1999):
 <ul>
 <li>
-Implementation of the CORBA Naming Service spec is complete.</li>
+Implementation of the CORBA Naming Service spec is complete.  Optional
+persistence capability has been added.</li>
 <li>
 Implementation of the CORBA InterOperable Naming Service is in
 progress. </li>
@@ -585,13 +586,12 @@ progress. </li>
 Recently completed work:
 <ul>
 <li>
-The implementation of the Naming Service has been upgraded to use TAO's
-exception macros, which allow it to work both with C++ exceptions and without.</li>
+Persistence for the Naming Service has been implemented.  Persistence
+feature is optional, and is controlled by the command line argument.</li>
+
 <li>
-Destroy method has been updated.</li>
-<li>
-More test examples have been added to TAO/orbsvcs/tests/Simple_Naming.
-</li>
+The implementation of the Naming Service has been updated to use new ACE
+exception macros.</li>
 <li>
 Added support for the InterOperable Naming Service, which enables the
 ORB to support IORs in user-friendly <CODE>iioploc</CODE> format.
@@ -622,10 +622,6 @@ conjunction with the current TAO examples.
 
 Work in progress:
 <ul>
-<li>
-Currently the bindings are stored as a table in memory. Work is under way
-to provide persistance option for the Naming Service.</li>
-</li>
 
 <LI> Currently adding support for the iiopname format and conversions
 to and from URL-style IORs.
