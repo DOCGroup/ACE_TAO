@@ -2398,12 +2398,12 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
+ Exception.h \
+ Exception.i \
  Acceptor_Registry.i \
  Profile.h \
  Tagged_Components.h \
  IOPC.h \
- Exception.h \
- Exception.i \
  Object.h \
  Policy_ForwardC.h \
  Sequence.h \
