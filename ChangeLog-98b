@@ -1,3 +1,13 @@
+Wed May  6 23:28:47 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp:
+ 	  Fixed a couple of mistakes that were causing the UNIX domain
+ 	  sockets not to work.  Thanks to Sandro Doro
+ 	  <doros@aureus.sublink.org> for recommending this.
+
+        * performance-tests/Misc/context_switch_time.cpp (svc): An 'i'
+          was being defined twice, gorp!  It's fixed now!
+
 Wed May 06 22:00:14 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-linux-common.h: only #define
@@ -21,8 +31,6 @@ Wed May 06 16:32:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
         * ace/Filecache.h (ACE_Filecache_Handle): Removed
           ACE_EXPORT_DECLARE and specified ACE_Export directly for
           ACE_Filecache_Handle and ACE_Filecache in calss declarations.
-
-Wed May  6 02:57:40 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Thread_Manager.{h,i,cpp}: A bug was found by Arturo Montes
           <mitosys@colomsat.net.co> who noticed that when a thread was
@@ -76,11 +84,6 @@ Wed May  6 02:57:40 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
         * tests/Reactor_Notify_Test.cpp (run_test): Moved the #endif of
           ACE_HAS_THREADS down to avoid compilation error on non-threaded
           platforms.
-
-Wed May  6 00:15:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * performance-tests/Misc/context_switch_time.cpp (svc): An 'i'
-          was being defined twice, gorp!  It's fixed now!
 
 Tue May  5 14:12:08 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
