@@ -41,8 +41,10 @@
 #define ACE_HAS_TID_T
 #define ACE_HAS_UALARM 
 
-// Platform lacks support for shared condition variables
-#define ACE_LACKS_CONDATTR_PSHARED
+// If ACE doesn't compile due to the lack of these methods, please
+// send email to schmidt@cs.wustl.edu reporting this. 
+// #define ACE_LACKS_CONDATTR_PSHARED
+// #define ACE_LACKS_MUTEXATTR_PSHARED
 
 // Platform lacks support for stack address information
 #define ACE_LACKS_THREAD_STACK_ADDR

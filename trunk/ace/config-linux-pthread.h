@@ -19,6 +19,11 @@
 #define ACE_LACKS_RWLOCK_T
 #define ACE_HAS_SIGWAIT
 #define ACE_LACKS_CONDATTR_PSHARED
+#define ACE_LACKS_CONDATTR_PSHARED
+// If ACE doesn't compile due to the lack of these methods, please
+// send email to schmidt@cs.wustl.edu reporting this. 
+// #define ACE_LACKS_CONDATTR_PSHARED
+// #define ACE_LACKS_MUTEXATTR_PSHARED
 
 // To use pthreads on Linux you'll need to use the MIT version, for
 // now...

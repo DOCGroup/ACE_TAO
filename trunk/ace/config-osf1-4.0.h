@@ -152,6 +152,10 @@
 #define ACE_HAS_UALARM
 #define ACE_HAS_UCONTEXT_T
 #define ACE_LACKS_CONDATTR_PSHARED
+// If ACE doesn't compile due to the lack of these methods, please
+// send email to schmidt@cs.wustl.edu reporting this. 
+// #define ACE_LACKS_CONDATTR_PSHARED
+// #define ACE_LACKS_MUTEXATTR_PSHARED
 #define ACE_LACKS_PRI_T
 #define ACE_LACKS_RWLOCK_T
 #define ACE_LACKS_THREAD_PROCESS_SCOPING

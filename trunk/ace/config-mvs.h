@@ -76,7 +76,10 @@
 #define ACE_HAS_VOIDPTR_SOCKOPT
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
 #define ACE_HAS_YIELD_VOID_PTR
-#define ACE_LACKS_CONDATTR_PSHARED
+// If ACE doesn't compile due to the lack of these methods, please
+// send email to schmidt@cs.wustl.edu reporting this. 
+// #define ACE_LACKS_CONDATTR_PSHARED
+// #define ACE_LACKS_MUTEXATTR_PSHARED
 #define ACE_LACKS_IOSTREAM_FX
 #define ACE_LACKS_KEYDELETE
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF

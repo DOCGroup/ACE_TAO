@@ -1533,6 +1533,9 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
         && ACE_ADAPT_RETVAL(::pthread_mutex_init (m, &attributes), result)== 0)
 #else
     if (::pthread_mutexattr_init (&attributes) == 0
+#if !defined (ACE_LACKS_MUTEXATTR_PSHARED)
+      && ::pthread_mutexattr_setpshared (&attributes, type) == 0
+#endif /* ACE_LACKS_MUTEXATTR_PSHARED */
 #if defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP)
         && ::pthread_mutexattr_setkind_np (&attributes, type) == 0
 #endif /* ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
@@ -2029,15 +2032,14 @@ ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
       && ACE_ADAPT_RETVAL(::pthread_cond_init (cv, &attributes), result) == 0
 #else
   if (::pthread_condattr_init (&attributes) == 0
-      && ::pthread_cond_init (cv, &attributes) == 0
+#if !defined (ACE_LACKS_CONDATTR_PSHARED)
+      && ::pthread_condattr_setpshared (&attributes, type) == 0
+#endif /* ACE_LACKS_CONDATTR_PSHARED */
 #  if defined (ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP)
       && ::pthread_condattr_setkind_np (&attributes, type) == 0
 #  endif /* ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP */
+      && ::pthread_cond_init (cv, &attributes) == 0
 #endif /* ACE_HAS_DCETHREADS */
-#if !defined (ACE_LACKS_CONDATTR_PSHARED)
-      && ACE_ADAPT_RETVAL(::pthread_condattr_setpshared (&attributes, type),
-                          result) == 0
-#endif /* ACE_LACKS_CONDATTR_PSHARED */
       )
      result = 0;
   else

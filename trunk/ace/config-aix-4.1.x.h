@@ -32,7 +32,10 @@
 #define ACE_LACKS_TCP_H
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
 #define ACE_LACKS_THREAD_STACK_ADDR
-#define ACE_LACKS_CONDATTR_PSHARED
+// If ACE doesn't compile due to the lack of these methods, please
+// send email to schmidt@cs.wustl.edu reporting this. 
+// #define ACE_LACKS_CONDATTR_PSHARED
+// #define ACE_LACKS_MUTEXATTR_PSHARED
 #define ACE_HAS_SIN_LEN
 #define ACE_HAS_SYSV_IPC
 #define ACE_HAS_STRUCT_NETDB_DATA
