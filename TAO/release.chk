@@ -1,0 +1,89 @@
+# $Id$
+
+# Hint: use picture-mode to make editing this easier (C-c . will set
+# the direction to "down".
+
+Legend:
+	Platforms are indicated by position within square brackets, i.e.,
+	[ABCDEF] where
+
+	A = Solaris/CC
+	B = NT (MSVC++ 5.0)
+	C = Solaris/g++
+	D = IRIX
+	E = Linux/g++
+	F = Other (Linux/egcs, Solaris/egcs, etc.)
+
+	The state is indicated as a tri-state value, e.g.,
+
+	0 = doesn't work
+	1 = works
+	x = not attempted or unknown
+
+
+[1111  ]   libTAO and TAO_IDL compile.
+[1111  ]   IDL_Cubit compiles
+        [1111  ] Runs
+[1111  ]   Param_Test compiles and runs for
+        [x111  ] DII short
+        [x111  ] DII ubstring
+        [x011  ] DII fixed_struct
+        [x100  ] DII strseq
+        [x100  ] DII var_struct
+        [x100  ] DII nested_struct
+        [x000  ] DII struct_seq
+        [x000  ] DII objref
+
+        [1111  ] SII short
+        [1111  ] SII ubstring
+        [1011  ] SII fixed_struct
+        [1111  ] SII strseq
+        [1111  ] SII var_struct
+        [1111  ] SII nested_struct
+        [0000  ] SII struct_seq
+        [0000  ] SII objref
+[1110  ] MT_Cubit compiles
+        [101x  ] runs for Octet
+        [101x  ] runs for Short
+        [101x  ] runs for Long
+        [101x  ] runs for Struct
+[1101  ] orbsvcs compiles
+        [10 x  ] Event_Latency runs
+        [0x x  ] Simple_Naming runs
+        [xx x  ] Logger runs
+
+NOTES
+* Solaris/CC
+
+* NT
+** Warnings on libTAO and tao_idl compilation.
+** Param_Test with struct_seq segfaults server.
+** MT_Cubit client segfaults after transactions made.
+
+* Solaris/g++
+** Warnings during tao_idl compilation.
+** SII,DII struct_seq causes a bus error on the server.
+** SII objref causes marshal exceptions, but no fatalities.
+** DII objref client gets illegal instruction.
+** orbsvcs fails with missing stuff in ACE_Map_Manager.
+** MT_Cubit gets relocation error on startup:
+   ld.so.1: ./svr: fatal: relocation error: symbol not found:
+   ACE_Task_Base::activate(long, int, int, long, int, ACE_Task_Base *,
+   unsigned int *): referenced in ./svr
+
+* IRIX
+** Event Latency won't work because unproper detection of failures for
+   priority change.
+   MT_Cubit does not compile due to extra library (-lposix4) only
+   present in Solaris; IMHO that should go into the platform file for
+   Solaris/CC
+
+* Linux/g++
+* Other (Linux/egcs, Solaris/egcs, etc.)
+
+
+
+# eval:(overwrite-mode nil)
+# Local Variables:
+# mode:indented-text
+# End:
