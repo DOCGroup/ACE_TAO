@@ -4959,7 +4959,6 @@ Thu Aug 15 21:04:35 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
         * ace/Signal.cpp (ACE_Sig_Handlers): Moved the #endif /* HPUX */
           down to the end of the file so that it works correctly on HPUX.
           Thanks to Eric C. Newton <ecn@clark.net> for report this bug.
-          
 
         * ace/OS.i: Updated the behavior of thr_join() so that it will do
           a ::CloseHandle after getting the exit status.  Thanks to the
