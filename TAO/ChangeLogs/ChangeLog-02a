@@ -1,10 +1,48 @@
+Sat Jun  12 17:42:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	First set of checkins for big two ways.
+
+	* tao/Connection_Handler.h: Added #define for the default
+	  buffer size . Not sure yet whether this is the right place for
+	  it.
+
+	* tao/Incoming_Message_Queue.h:
+	* tao/Incoming_Message_Queue.cpp:
+	* tao/Incoming_Message_Queue.inl: Queue up the incoming
+	  messages. We form a circular linked list of messages that are
+	  bigger than a particular buffer size. During processing we take
+	  messages of the queue to pass it onto the higher layers of the
+	  ORB.
+
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Base.h: Added support for big two way
+	  requests. If the message has only been partially read we add the
+	  message in the queue and then go for the next read. During
+	  processing we check if the queue has messages before processing
+	  the message on hand.
+
+	* tao/GIOP_Message_State.h:
+	* tao/GIOP_Message_State.cpp:
+	* tao/GIOP_Message_State.inl: Added accessor methods.
+
+	* tao/Transport.cpp: Added support for bigger two ways. If we
+	  receive a two way bigger than a particular size we read and
+	  queue the message and do a further read to retrieve the rest of
+	  the message.
+
+	* tao/TAO.dsp: Added new files.
+	* tao/default_resource.cpp: For single threaded configuration we
+	  have been creating a locked data block and that seems to defy
+	  logic. We now should create a lock free datablock for single
+	  threaded configurations.
+
 Sat Jun  2 12:02:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/* : Merged with the main trunk.
 
 Fri Jun  1 17:22:29 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_State.cpp (parse_message_header_i): 
+	* tao/GIOP_Message_State.cpp (parse_message_header_i):
 	* tao/Connection_Handler.cpp:
 	* tao/GIOP_Message_Base.cpp:
 	* tao/Makefile:
