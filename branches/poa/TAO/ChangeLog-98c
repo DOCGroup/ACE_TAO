@@ -1,3 +1,18 @@
+Tue Jan  6 13:31:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/objtable.h: 
+	* tao/objtable.cpp: 
+	  Fixed some problems with the PortableServer::ObjectId and
+	  PortableServer::Servant changes.
+
+	* tao/poa.h: 
+	* TAO_IDL/be/be_interface.cpp: 
+	  Added a method to get the interface repository name for a
+	  skeleton.
+
+	* tao/encode.cpp: 
+	  Fixed problem on object reference enconding.
+
 Mon Jan 05 23:41:59 1998    <coryan@MILONGA>
 
 	* tao/objkeyC.cpp: 
