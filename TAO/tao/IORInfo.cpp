@@ -63,7 +63,7 @@ TAO_IORInfo::add_ior_component (const IOP::TaggedComponent &component,
   // Add the given tagged component to all profiles.
 
   CORBA::ULong profile_count = this->mp_.profile_count ();
-  for (CORBA::ULong i = 0; i != profile_count; ++i)
+  for (CORBA::ULong i = 0; i < profile_count; ++i)
     {
       TAO_Profile *profile = this->mp_.get_profile (i);
 
@@ -83,7 +83,7 @@ TAO_IORInfo::add_ior_component_to_profile (
   // ProfileId.
 
   CORBA::ULong profile_count = this->mp_.profile_count ();
-  for (CORBA::ULong i = 0; i != profile_count; ++i)
+  for (CORBA::ULong i = 0; i < profile_count; ++i)
     {
       TAO_Profile *profile = this->mp_.get_profile (i);
 
