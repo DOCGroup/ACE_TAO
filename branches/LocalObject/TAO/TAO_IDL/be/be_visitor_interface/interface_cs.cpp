@@ -175,7 +175,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "_ptr obj)" << be_nl
       << "{" << be_idt_nl
       << "if (!CORBA::is_nil (obj))" << be_idt_nl
-      << "obj->_incr_refcnt ();" << be_uidt_nl
+      << "obj->_add_ref ();" << be_uidt_nl
       << "return obj;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 

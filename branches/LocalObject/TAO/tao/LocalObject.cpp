@@ -49,9 +49,13 @@ CORBA::LocalObject::_remove_ref (void)
 
 CORBA::Boolean
 CORBA::LocalObject::_is_a (const CORBA::Char *type_id,
-                           CORBA::Environment &ACE_TRY_ENV)
+                           CORBA::Environment &)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  if ((!ACE_OS::strcmp ((char *)type_id, "IDL:omg.org/CORBA/LocalObject:1.0")) ||
+      (!ACE_OS::strcmp ((char *)type_id, "IDL:omg.org/CORBA/Object:1.0")))
+  return 1; // success using local knowledge
+  else
+    return 0;
 }
 
 const char*

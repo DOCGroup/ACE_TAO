@@ -56,11 +56,10 @@ public:
   virtual CORBA::Boolean _is_a (const CORBA::Char *logical_type_id,
                                 CORBA_Environment &ACE_TRY_ENV =
                                   TAO_default_environment ());
-  // throws NO_IMPLEMENT.
-
-  virtual const char* _interface_repository_id (void) const;
-  // The repository ID for the most derived class, this is an
-  // implementation method and does no remote invocations!
+  // Determine if we are of the type specified by the
+  // "logical_type_id".  The CCM spec says this operation _may_ throw
+  // NO_IMPLEMENT exception.  Since we need it in _narrow, I'll keep
+  // this function around.
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
@@ -166,6 +165,19 @@ public:
   // private state.  Since that changes easily (when different ORB
   // protocols are in use) there is no default implementation.
 
+  // = Reference count managment.
+  virtual void _add_ref (void);
+  // Increment the reference count.
+
+  virtual void _remove_ref (void);
+  // Decrement the reference count.
+
+  // = TAO extensions
+
+  virtual const char* _interface_repository_id (void) const;
+  // The repository ID for the most derived class, this is an
+  // implementation method and does no remote invocations!
+
   virtual TAO_ObjectKey *_key (CORBA_Environment &ACE_TRY_ENV =
                                  TAO_default_environment ());
   // throws NO_IMPLEMENT.
@@ -183,22 +195,10 @@ public:
 #endif /* __GNUC__ */
   // Useful for template programming.
 
-  // = Reference count managment.
-  virtual void _add_ref (void);
-  // Increment the reference count.
-
-  virtual void _remove_ref (void);
-  // Decrement the reference count.
-
-  // = TAO extensions
-
 protected:
 private:
 
   // = Unimplemented methods
-  LocalObject (TAO_Stub *p = 0,
-               TAO_ServantBase *servant = 0,
-               CORBA::Boolean collocated = 0);
   // constructor
 
   LocalObject (const CORBA_Object &);
@@ -209,12 +209,12 @@ class TAO_Export CORBA::LocalObject_var
 {
 public:
   LocalObject_var (void); // default constructor
-  LocalObject_var (CORBA::Object_ptr);
-  LocalObject_var (const CORBA_Object_var &); // copy constructor
+  LocalObject_var (CORBA::LocalObject_ptr);
+  LocalObject_var (const CORBA::LocalObject_var &); // copy constructor
   ~LocalObject_var (void); // destructor
 
-  LocalObject_var &operator= (CORBA::Object_ptr);
-  LocalObject_var &operator= (const CORBA_Object_var &);
+  LocalObject_var &operator= (CORBA::LocalObject_ptr);
+  LocalObject_var &operator= (const CORBA::LocalObject_var &);
   CORBA::LocalObject_ptr operator-> (void) const;
 
   operator const CORBA::LocalObject_ptr &() const;
@@ -233,12 +233,12 @@ private:
 class TAO_Export CORBA::LocalObject_out
 {
 public:
-  LocalObject_out (CORBA::Object_ptr &);
-  LocalObject_out (CORBA_Object_var &);
-  LocalObject_out (const CORBA_Object_out &);
-  LocalObject_out &operator= (const CORBA_Object_out &);
-  LocalObject_out &operator= (const CORBA_Object_var &);
-  LocalObject_out &operator= (CORBA::Object_ptr);
+  LocalObject_out (CORBA::LocalObject_ptr &);
+  LocalObject_out (CORBA::LocalObject_var &);
+  LocalObject_out (const CORBA::LocalObject_out &);
+  LocalObject_out &operator= (const CORBA::LocalObject_out &);
+  LocalObject_out &operator= (const CORBA::LocalObject_var &);
+  LocalObject_out &operator= (CORBA::LocalObject_ptr);
   operator CORBA::LocalObject_ptr &();
   CORBA::LocalObject_ptr &ptr (void);
   CORBA::LocalObject_ptr operator-> (void);
