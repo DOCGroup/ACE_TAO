@@ -18,6 +18,8 @@
 
 TARGET = $(BINDIR)\$(NAME)$(LIB_DECORATOR).dll
 
+all: $(TARGET)
+
 $(TARGET): $(OBJFILES) $(RESOURCE)
 	@$(MAKE_BINDIR)
 	$(LD) @&&!

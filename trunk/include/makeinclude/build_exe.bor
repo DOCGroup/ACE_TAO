@@ -19,6 +19,8 @@
 
 TARGET = $(BINDIR)\$(NAME).exe
 
+all: $(TARGET)
+
 $(TARGET): $(OBJFILES) $(RESOURCE)
 	@$(MAKE_BINDIR)
 	$(LD) @&&!
