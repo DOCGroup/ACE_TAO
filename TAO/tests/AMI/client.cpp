@@ -145,6 +145,8 @@ public:
   void get_yadda_excep (A::AMI_AMI_TestExceptionHolder * excep_holder,
                   CORBA::Environment &ACE_TRY_ENV)
     {
+      ACE_UNUSED_ARG (excep_holder);
+      ACE_UNUSED_ARG (ACE_TRY_ENV);
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda_excep> called: \n"));
     };
@@ -160,6 +162,8 @@ public:
   void set_yadda_excep (A::AMI_AMI_TestExceptionHolder * excep_holder,
                   CORBA::Environment &ACE_TRY_ENV)
     {
+      ACE_UNUSED_ARG (excep_holder);
+      ACE_UNUSED_ARG (ACE_TRY_ENV);
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda_excep> called: \n"));
     };
