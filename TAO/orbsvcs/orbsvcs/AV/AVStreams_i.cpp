@@ -2484,7 +2484,10 @@ TAO_StreamEndPoint::add_fep_i_add_property (AVStreams::FlowEndPoint_ptr fep
       // exception implies the flow name is not defined and is system
       // generated.
       flow_name = "flow";
-      flow_name += this->flow_num_++;
+      char tmp[255];
+      ACE_OS::sprintf (tmp, "%u", this->flow_num_++);
+      flow_name += tmp;
+
       CORBA::Any flowname_any;
       flowname_any <<= flow_name.c_str ();
       fep->define_property ("Flow",
