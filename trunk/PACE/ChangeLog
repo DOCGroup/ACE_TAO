@@ -1,3 +1,9 @@
+Tue Aug 29 14:57:04 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/stat.inl (pace_stat): 
+
+	  Implemented pace_fstat and pace_stat.
+
 Tue Aug 29 14:14:45 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/stat.h (pace_fstat):
