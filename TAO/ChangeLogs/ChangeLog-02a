@@ -1,9 +1,17 @@
+Mon Jun 18 10:38:02 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/PortableServer/Default_Policy_Validator.cpp:
+	* tao/PortableServer/Object_Adapter.cpp:
+
+	  Added TAO_HAS_MINIMUM_POA guards to help get the
+	  minimum build compiling again.
+
 Mon Jun 18 10:15:46 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * tests/Exposed_Policies/Client.dsp:
         * tests/Exposed_Policies/Server.dsp:
 
-          Added RTCORBA libraries to linker list, and changed the 
+          Added RTCORBA libraries to linker list, and changed the
           names of the projects to "Exposed_Policies Client" and
           "Exposed_Policies Server" from "Client" and "Server".
 
@@ -35,31 +43,31 @@ Sun Jun 17 18:24:18 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/server.cpp:
 	  Fixed compilation problems by adding the missing include, and
 	  regenerated dependencies.
-	
+
 Sun Jun 17 10:12:49 2001  Craig Rodrigues  <crodrigues@bbn.com>
 
-        * tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp: 
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp:
           add #include "tao/RTCORBA/Priority_Mapping_Manager.h" to fix
-          compilation error. 
+          compilation error.
 
 Sun Jun 17 08:08:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Strategies/GIOP_Message_NonReactive_Base.cpp: Fixed a
-	  compile error with KCC.  
+	  compile error with KCC.
 
 Sat Jun 16 22:00:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
- 
+
         * orbsvcs/orbsvcs/AV/AVStreams_i.cpp
         * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp
         * orbsvcs/orbsvcs/AV/RTP.cpp
         * orbsvcs/orbsvcs/AV/Transport.cpp
         * orbsvcs/orbsvcs/AV/UDP.cpp
- 
+
           Fixes so that specifying a flow specification of RTP/UDP
           will actually result in RTP over UDP being used.
- 
+
         * orbsvcs/orbsvcs/AV/QoS_UDP.i
- 
+
           Remove compiler warning.
 
 Sat Jun 16 18:23:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
@@ -68,7 +76,7 @@ Sat Jun 16 18:23:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* orbsvcs/orbsvcs/AV/sfp.cpp:
 	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
 	* orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.cpp: Fixed compile
-	  errors. 
+	  errors.
 
 Sat Jun 16 12:15:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
@@ -81,7 +89,7 @@ Sat Jun 16 10:25:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/CDR.h:
 	* tao/CDR.i: Added an extra flag argument to the constructor to
 	  keep up with the changes in ACE.
-	
+
 	* tao/GIOP_Message_Base.cpp:
 	* tao/GIOP_Message_Lite.cpp:
 	* tao/Pluggable_Messaging_Utils.cpp:
