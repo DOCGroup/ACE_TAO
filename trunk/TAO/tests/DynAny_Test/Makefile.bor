@@ -31,6 +31,9 @@ LIBFILES = \
 	$(TAO_PORTABLESERVER_LIB) \
 	$(TAO_DYNAMICANY_LIB)
 
+IDLFILES = \
+        $(IDLDIR)\da_tests.idl
+
 CPPDIR = .
 
 IDLDIR = .
