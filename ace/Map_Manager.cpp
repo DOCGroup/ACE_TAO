@@ -670,7 +670,6 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator* (void)
   return *retv;
 }
 
-#if 0
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
 ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator== (ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &rhs)
 {
@@ -684,9 +683,6 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator!= (ACE_Map_Iterator_Ba
   ACE_TRACE ("ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator!=");
   return (this->next_ != rhs.next_ || this->map_man_ != rhs.map_man_);
 }
-#endif /* 0 */
-
-
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Map_Iterator)
 
@@ -694,7 +690,7 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK> void
 ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::dump (void) const
 {
   ACE_TRACE ("ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::dump");
-  
+
   this->dump_i ();
 }
 
