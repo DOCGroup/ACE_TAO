@@ -91,7 +91,7 @@ Init2x2Dither()
 
   numcodes =  l_range * cr_range * cb_range;
 
-  dith_a = (unsigned char *) malloc(numcodes*4);
+  dith_a = (unsigned char *) ACE_OS::malloc(numcodes*4);
 
   dith_ca =  dith_a;
 
@@ -183,8 +183,8 @@ void RandInit(int h, int w)
 {
   int i;
 
-  randval_a = (int *) malloc(w*5*sizeof(int));
-  randptr_a = (int **) malloc(h*sizeof(int *));
+  randval_a = (int *) ACE_OS::malloc(w*5*sizeof(int));
+  randptr_a = (int **) ACE_OS::malloc(h*sizeof(int *));
 
 #ifdef NO_LRAND48
   for (i=0; i<w*5; i++) {

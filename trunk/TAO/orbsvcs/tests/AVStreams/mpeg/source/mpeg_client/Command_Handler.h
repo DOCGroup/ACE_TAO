@@ -66,7 +66,9 @@
 #include "ace/Acceptor.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "mpeg_shared/ReceiverS.h"
-
+#include "ace/Get_Opt.h"
+#include "ab.h"
+#include "vb.h"
 
 class Command_Handler;
 
@@ -325,6 +327,9 @@ public:
   // this will register this sig_handler
   // with the reactor for SIGCHLD,SIGTERM,SIGINT
 
+  int remove_handler (void);
+  // removes the handlers.
+
   virtual int shutdown (ACE_HANDLE,
                         ACE_Reactor_Mask);
   // handles the reactor shutdown
@@ -358,6 +363,21 @@ private:
   Command_Handler *command_handler_;
   // We need the command handler to call close ()
 
+};
+
+class Decode_Notification_Handler :public ACE_Event_Handler
+{
+public:
+  Decode_Notification_Handler (Command_Handler *command_handler);
+  // constructor.
+
+  virtual ACE_HANDLE get_handle (void) const;
+  // Get the Notification handle.
+
+  virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  // called when input events occur.
+private:
+  Command_Handler *command_handler_;
 };
 
 enum Suspended
@@ -512,6 +532,9 @@ private:
   int parse_args (int argc,char **argv);
   // parses the arguments.
 
+  int remove_handlers (void);
+  // removes all the handlers.
+
   int busy_;
   // flag to indicate the state of the command handler
 
@@ -581,6 +604,9 @@ private:
 
   Client_Sig_Handler client_sig_handler_;
   // Handler for the signals.
+
+  Decode_Notification_Handler notification_handler_;
+  // handler for the decode signals from VD process.
 
   int argc_;
   char **argv_;

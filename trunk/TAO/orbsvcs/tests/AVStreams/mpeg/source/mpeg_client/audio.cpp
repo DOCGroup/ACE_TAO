@@ -167,7 +167,7 @@ int InitAudioDevice(void)
                BytesPerUnit(attributes.type) / SampsPerUnit(attributes.type);
   shared->AFPara.samplesPerSecond = ac->device->playSampleFreq;
   /*
-  memcpy(&(shared->AFPara), &(shared->config.audioPara), sizeof(AudioParameter));
+  ACE_OS::memcpy (&(shared->AFPara), &(shared->config.audioPara), sizeof(AudioParameter));
   */
   useAF = 1;
   fprintf(stderr, "Using default AudioFile.\n");
@@ -188,14 +188,14 @@ int InitAudioDevice(void)
   afd = open(AUDIO_DEVICE, O_WRONLY | O_NDELAY);
   if (afd == -1) {
     fprintf(stderr, "%s", AUDIO_DEVICE);
-    perror(" can't be opened for write");
+   ACE_OS::perror (" can't be opened for write");
     return -1;
   }
   cfd = open(AUDIO_CONTROL, O_WRONLY | O_NDELAY);
   if (cfd == -1) {
     fprintf(stderr, "%s", AUDIO_DEVICE);
-    perror(" can't be opened for write");
-    close(afd);
+   ACE_OS::perror (" can't be opened for write");
+    ACE_OS::close (afd);
     afd = -1;
     return -1;
   }
@@ -203,43 +203,43 @@ int InitAudioDevice(void)
   
   if (ioctl(cfd, AUDIO_SET_DATA_FORMAT, AUDIO_FORMAT_ULAW) < 0) {
     fprintf(stderr, "%s" AUDIO_DEVICE);
-    perror("can't be set to u-law");
-    close(afd);
-    close(cfd);
+   ACE_OS::perror ("can't be set to u-law");
+    ACE_OS::close (afd);
+    ACE_OS::close (cfd);
     afd = -1;
     return -1;
   }
   if (ioctl(cfd, AUDIO_SET_CHANNELS, 1) < 0) {
     fprintf(stderr, "%s" AUDIO_DEVICE);
-    perror("can't be set to have single channel");
-    close(afd);
-    close(cfd);
+   ACE_OS::perror ("can't be set to have single channel");
+    ACE_OS::close (afd);
+    ACE_OS::close (cfd);
     afd = -1;
     return -1;
   }
   if (ioctl(cfd, AUDIO_SET_SAMPLE_RATE, 8000) < 0) {
     fprintf(stderr, "%s" AUDIO_DEVICE);
-    perror("can't be set to 8000sps");
-    close(afd);
-    close(cfd);
+   ACE_OS::perror ("can't be set to 8000sps");
+    ACE_OS::close (afd);
+    ACE_OS::close (cfd);
     afd = -1;
     return -1;
   }
   if (ioctl(cfd, AUDIO_SET_OUTPUT, AUDIO_OUT_SPEAKER | AUDIO_OUT_HEADPHONE))
   {
     fprintf(stderr, "%s" AUDIO_DEVICE);
-    perror("can't be set output to both internal speaker and headphone");
-    close(afd);
-    close(cfd);
+   ACE_OS::perror ("can't be set output to both internal speaker and headphone");
+    ACE_OS::close (afd);
+    ACE_OS::close (cfd);
     afd = -1;
     return -1;
   }
   if(ioctl(cfd, AUDIO_SET_TXBUFSIZE, 1024*64) < 0)
   {
     fprintf(stderr, "%s" AUDIO_DEVICE);
-    perror("can't be set output buffer size to 64K");
-    close(afd);
-    close(cfd);
+   ACE_OS::perror ("can't be set output buffer size to 64K");
+    ACE_OS::close (afd);
+    ACE_OS::close (cfd);
     afd = -1;
     return -1;
   }
@@ -276,7 +276,7 @@ int InitAudioDevice(void)
   afd = open(AUDIO_DEVICE, O_WRONLY);
   if (afd == -1) {
     fprintf(stderr, "%s", AUDIO_DEVICE);
-    perror(" can't be opened for write");
+   ACE_OS::perror (" can't be opened for write");
     return -1;
   }
   
@@ -380,7 +380,7 @@ unsigned int PlayAudioSamples(unsigned int time, char * buf, int size)
     }
   }
 #else
-  write(afd, buf, size);
+  ACE_OS::write (afd, buf, size);
 #endif
 
   current_time += size;

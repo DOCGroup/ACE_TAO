@@ -110,9 +110,9 @@ correct_underflow() {
   if (status  < 0) {
     if (!quietFlag) {
       fprintf (stderr, "\n");
-      perror("Unexpected read error.");
+     ACE_OS::perror ("Unexpected read error.");
     }
-    exit(1);
+    ACE_OS::exit (1);
   }
   else if ((status == 0) && (bufLength < 1)) {
     if (!quietFlag) {
@@ -128,7 +128,7 @@ correct_underflow() {
     if (loopFlag) longjmp(env, 1);
     DestroyVidStream(curVidStream);
 */
-    exit(0);
+    ACE_OS::exit (0);
   }
 #ifdef UTIL2
   curBits = *bitBuffer << bitOffset;
@@ -215,7 +215,7 @@ char *get_ext_data ()
 
   /* Allocate ext data buffer. */
 
-  dataPtr = (char *) malloc(size);
+  dataPtr = (char *) ACE_OS::malloc(size);
 
   /* Initialize marker to keep place in ext data buffer. */
 
@@ -421,7 +421,7 @@ char *get_extra_bit_info ()
   /* Initialize size of extra bit info buffer and allocate. */
 
   size = EXT_BUF_SIZE;
-  dataPtr = (char *) malloc(size);
+  dataPtr = (char *) ACE_OS::malloc(size);
 
   /* Reset marker to hold place in buffer. */
 

@@ -191,7 +191,7 @@ typedef struct macroblock {
 
 /* Block structure. */
 
-typedef struct block {
+typedef struct {
   short int dct_recon[8][8];             /* Reconstructed dct coeff matrix. */
   short int dct_dc_y_past;               /* Past lum. dc dct coefficient.   */
   short int dct_dc_cr_past;              /* Past cr dc dct coefficient.     */

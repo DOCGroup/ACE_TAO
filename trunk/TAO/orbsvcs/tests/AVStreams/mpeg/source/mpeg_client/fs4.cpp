@@ -128,8 +128,8 @@ FS4DitherImage(unsigned char *lum, unsigned char *cr,
   FS4Dither *chan_index;
 
   if (first) {
-    cur_row_error = (char *) malloc(cols+2);
-    next_row_error = (char *) malloc(cols+2);
+    cur_row_error = (char *) ACE_OS::malloc(cols+2);
+    next_row_error = (char *) ACE_OS::malloc(cols+2);
     first = 0;
   }
 
