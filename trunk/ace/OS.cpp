@@ -3,6 +3,7 @@
 #include "ace/OS.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_Thread_Adapter.h"
+#include "ace/OS_QoS.h"
 
 // Perhaps we should *always* include ace/OS.i in order to make sure
 // we can always link against the OS symbols?
