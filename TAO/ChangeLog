@@ -1,3 +1,26 @@
+Mon Aug 25 12:00:30 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_operation/interceptors_result.cpp
+	  (visit_sequence, visit_structure, visit_union):
+
+	  Force the copying version of the Any insertion operator to be
+	  used when inserting variable length types in the Any return
+	  value of the operation-specific
+	  PortableInterceptor::RequestInfo::result() implementation.
+	  Thanks to Philip Leishman <leishman@rheinmetall-de.com> for
+	  detecting the original problem with sequences.
+
+	* tests/Portable_Interceptors/Dynamic/client.cpp:
+	* tests/Portable_Interceptors/Dynamic/interceptors.cpp:
+	* tests/Portable_Interceptors/Dynamic/interceptors.h:
+	* tests/Portable_Interceptors/Dynamic/test.idl:
+	* tests/Portable_Interceptors/Dynamic/test_i.cpp:
+	* tests/Portable_Interceptors/Dynamic/test_i.h:
+
+	  Added code that exercises
+	  PortableInterceptor::RequestInfo::result() method when variable
+	  length structures are used as return types.
+
 Mon Aug 25 18:41:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/configurations.html:
@@ -45,9 +68,10 @@ Mon Aug 25 08:41:13 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 Mon Aug 25 08:05:38 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-        * orbsvcs/examples/RtEC/Schedule/Schedule.h:
-        * orbsvcs/examples/RtEC/Schedule/Service.cpp: Fixed compile errors caused
-          by changes to compute_scheduling and dump_schedule methods.
+	* orbsvcs/examples/RtEC/Schedule/Schedule.h:
+	* orbsvcs/examples/RtEC/Schedule/Service.cpp: Fixed compile errors
+	  caused by changes to compute_scheduling and dump_schedule
+	  methods.
 
 Mon Aug 25 08:02:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
