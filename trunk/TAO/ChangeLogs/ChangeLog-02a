@@ -1,3 +1,14 @@
+Wed Mar 22 13:32:50 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/InterfaceC.h:
+	* tao/InterfaceS.h:
+	  Removed the leading and trailing underbar characters
+	  from the all-caps string made from the filename that
+	  follows #ifndef, #define, etc. This not only follows
+	  the style common to hand-crafted IDL generated files,
+	  but avoids a namespace clash with generated files in
+	  IDL_Test.
+
 Wed Mar 22 11:53:21 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Base.cpp (dump_msg): Added ASYS_TEXT in places
