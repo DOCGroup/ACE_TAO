@@ -20,10 +20,20 @@
 #define TAO_GIOP_MESSAGE_LITE_H
 #include "ace/pre.h"
 
-#include "tao/GIOP_Server_Request.h"
-#include "tao/GIOP_Message_Headers.h"
-#include "tao/target_specification.h"
+//#include "tao/target_specification.h"
+#include "tao/CDR.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+
 #include "tao/GIOP_Utils.h"
+#include "tao/GIOP_Message_State.h"
+
+class TAO_GIOP_ServerRequest;
+class TAO_GIOP_Locate_Request_Header;
+
 
 class TAO_Export TAO_GIOP_Message_Lite : public TAO_Pluggable_Messaging
 {
@@ -84,6 +94,13 @@ public:
                               CORBA::Octet message_type);
   // Processes the messages from the connectors so that they can be
   // passed on to the appropriate states.
+  
+  CORBA::Boolean write_reply_header (TAO_OutputCDR &cdr,
+                                     TAO_Pluggable_Reply_Params &reply,
+                                     CORBA::Environment &ACE_TRY_ENV =
+                                     TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
 private:
   CORBA::Boolean
   write_request_header (const TAO_Operation_Details &details,
@@ -128,9 +145,6 @@ private:
   int parse_locate_header (TAO_GIOP_Locate_Request_Header &request);
   // Parse the Locate Request header
 
-  CORBA::Boolean make_reply (CORBA::ULong request_id,
-                             TAO_OutputCDR &output);
-  // Make a reply message including the protocol header
 
   int send_reply_exception (TAO_Transport *transport,
                             TAO_ORB_Core* orb_core,

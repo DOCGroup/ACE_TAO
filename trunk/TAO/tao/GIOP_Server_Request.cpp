@@ -201,9 +201,7 @@ TAO_GIOP_ServerRequest::set_exception (const CORBA::Any &value,
       }
     // Normal exception
     else
-
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
       {
         ACE_NEW_THROW_EX (this->exception_,
                           CORBA::Any (value),
@@ -286,117 +284,52 @@ TAO_GIOP_ServerRequest::dsi_marshal (CORBA::Environment &ACE_TRY_ENV)
 void
 TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
 {
-  // Construct a REPLY header.
-  this->mesg_base_->write_protocol_header (TAO_PLUGGABLE_MESSAGE_REPLY,
-                                           *this->outgoing_);
+  // Construct our reply generator
+  TAO_Pluggable_Reply_Params reply_params;
+  
+  // We put all the info that we have in to this <reply_params> and
+  // call the <write_reply_header> in the
+  // pluggable_messaging_interface. One point to be noted however is
+  // that, it was the pluggable_messaging classes who created us and
+  // delegated us to do work on its behalf. But we would be calling
+  // back. As we dont have a LOCK or any such things we can call
+  // pluggable_messaging guys again. We would be on the same thread of
+  // invocation. So *theoratically* there should not be a problem. 
+  reply_params.request_id_ = this->request_id_;
 
-#if (TAO_HAS_MINIMUM_CORBA == 1)
-  *this->outgoing_ << this->service_info_;
-#else
   if (this->lazy_evaluation_ == 0 || this->params_ == 0)
-    {
-      *this->outgoing_ << this->service_info_;
-    }
+    reply_params.params_ = 0;
   else
-    {
-      // If lazy evaluation is enabled then we are going to insert an
-      // extra node at the end of the service context list, just to
-      // force the appropiate padding.
-      // But first we take it out any of them..
-      CORBA::ULong count = 0;
-      CORBA::ULong l = this->service_info_.length ();
-      CORBA::ULong i;
-      for (i = 0; i != l; ++i)
-        {
-          if (this->service_info_[i].context_id == TAO_SVC_CONTEXT_ALIGN)
-            continue;
-          count++;
-        }
-      // Now increment it to account for the last dummy one...
-      count++;
+    reply_params.params_ = this->params_;
 
-      // Now marshal the rest of the service context objects
-      *this->outgoing_ << count;
-      for (i = 0; i != l; ++i)
-        {
-          if (this->service_info_[i].context_id == TAO_SVC_CONTEXT_ALIGN)
-            continue;
-          *this->outgoing_ << this->service_info_[i];
-        }
-
-      // @@ Much of this code is GIOP 1.1 specific and should be
-      //    re-thought once GIOP 1.2 is implemented, this is not a big
-      //    deal because the code is only used in DSI gateways.
-      ptr_arith_t target =
-        this->params_->_tao_target_alignment ();
-
-      ptr_arith_t current =
-        ptr_arith_t(this->outgoing_->current_alignment ()) % ACE_CDR::MAX_ALIGNMENT;
-
-      CORBA::ULong pad = 0;
-      if (target == 0)
-        {
-          // We want to generate adequate padding to start the request
-          // id on a 8 byte boundary, two cases:
-          // - If the dummy tag starts on a 4 byte boundary and the
-          //   dummy sequence has 0 elements then we have:
-          //   4:tag 8:sequence_length 4:sequence_body 4:request_id
-          //   8:payload
-          // - If the dummy tag starts on an 8 byte boundary, with 4
-          //   elements we get:
-          //   8:tag 4:sequence_length 8:sequence_body 4:request_id
-          //   8:payload
-          if (current != 0 && current <= ACE_CDR::LONG_ALIGN)
-            {
-              pad = 4;
-            }
-        }
-      else if (target != ACE_CDR::LONG_ALIGN)
-        {
-          // The situation reverses, we want to generate adequate
-          // padding to start the request id on a 4 byte boundary, two
-          // cases:
-          // - If the dummy tag starts on a 4 byte boundary and the
-          //   dummy sequence has 4 elements then we have:
-          //   4:tag 8:sequence_length 4:sequence_body 8:request_id
-          //   4:payload
-          // - If the dummy tag starts on an 8 byte boundary, with 0
-          //   elements we get:
-          //   8:tag 4:sequence_length 8:sequence_body 8:request_id
-          //   4:payload
-          if (current > ACE_CDR::LONG_ALIGN)
-            {
-              pad = 4;
-            }
-        }
-      else if (target == ACE_CDR::MAX_ALIGNMENT)
-        {
-          pad = 0;
-        }
-      else
-        {
-          // <target> can only have the values above
-          ACE_THROW (CORBA::MARSHAL ());
-        }
-
-      *this->outgoing_ << CORBA::ULong(TAO_SVC_CONTEXT_ALIGN);
-      *this->outgoing_ << pad;
-      for (CORBA::ULong j = 0; j != pad; ++j)
-        {
-          *this->outgoing_ << ACE_OutputCDR::from_octet(0);
-        }
-    }
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
-  this->outgoing_->write_ulong (this->request_id_);
-
-  // Standard exceptions are caught in Connect::handle_input
-
+  // Pass in the service context
+  reply_params.service_context_notowned (&this->service_info_);
+  
   // Forward exception only.
   if (!CORBA::is_nil (this->forward_location_.in ()))
     {
-      this->outgoing_->write_ulong (TAO_GIOP_LOCATION_FORWARD);
+      reply_params.reply_status_ = TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD;
+    }
 
+  // Any exception at all.
+  else if (this->exception_ == 0)
+    {
+      reply_params.reply_status_ = TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION;
+    }
+  else
+    {
+      reply_params.reply_status_ = this->exception_type_;
+    }
+
+  // Construct a REPLY header.
+  this->mesg_base_->write_reply_header (*this->outgoing_,
+                                        reply_params);
+
+  // Finish the GIOP Reply header, then marshal the exception.
+  if (reply_params.reply_status_ ==
+      TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD)
+    {
+      // Marshall the forward location pointrr
       CORBA::Object_ptr object_ptr = this->forward_location_.in ();
       if ((*this->outgoing_ << object_ptr) == 0)
         {
@@ -406,23 +339,16 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
           return;
         }
     }
-
-  // Any exception at all.
-  else if (this->exception_ == 0)
+  else if (reply_params.reply_status_ !=
+           TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION)
     {
-      // First finish the GIOP header ...
-      this->outgoing_->write_ulong (TAO_GIOP_NO_EXCEPTION);
-    }
-  else
-    {
+      // We are checking for NO exception. If there was a NO_EXCEPTION
+      // type the IDL compiler would marshall the return values, the
+      // out & inout parameters in to the stream <*this->output>
+      
+      // In this special case we only marshall the exception type
       CORBA::TypeCode_ptr except_tc;
-
       except_tc = this->exception_->type ();
-
-      // Finish the GIOP Reply header, then marshal the exception.
-      // XXX x->type () someday ...
-
-      this->outgoing_->write_ulong (this->exception_type_);
 
       // we use the any's ACE_Message_Block
       TAO_InputCDR cdr (this->exception_->_tao_get_cdr (),
@@ -448,20 +374,24 @@ TAO_GIOP_ServerRequest::exception_type (void)
 void
 TAO_GIOP_ServerRequest::send_no_exception_reply (TAO_Transport *transport)
 {
-  this->mesg_base_->write_protocol_header (TAO_PLUGGABLE_MESSAGE_REPLY,
-                                           *this->outgoing_);
+  // Construct our reply generator
+  TAO_Pluggable_Reply_Params reply_params;
+  reply_params.request_id_ = this->request_id_;
+  reply_params.params_ = 0;  
+  reply_params.svc_ctx_.length (0);
 
-  IOP::ServiceContextList resp_ctx;
-  resp_ctx.length (0);
+  // Pass in the service context
+  reply_params.service_context_notowned (& reply_params.svc_ctx_);
+  
+  reply_params.reply_status_ = TAO_GIOP_NO_EXCEPTION;
 
-  *this->outgoing_ << resp_ctx;
-  this->outgoing_->write_ulong (this->request_id_);
-  this->outgoing_->write_ulong (TAO_GIOP_NO_EXCEPTION);
+  // Construct a REPLY header.
+  this->mesg_base_->write_reply_header (*this->outgoing_,
+                                        reply_params);
 
+  // Send the message
   int result = this->mesg_base_->send_message (transport,
                                                *this->outgoing_);
-
-
 
   if (result == -1)
     {

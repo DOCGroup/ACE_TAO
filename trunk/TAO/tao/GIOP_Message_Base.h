@@ -173,6 +173,11 @@ const size_t TAO_GIOP_VERSION_MAJOR_OFFSET = 4;
 const size_t TAO_GIOP_MESSAGE_FLAGS_OFFSET = 6;
 const size_t TAO_GIOP_MESSAGE_TYPE_OFFSET  = 7;
 
+// This is used by GIOP1.2. This is to align the message body on a
+// 8-octet boundary.
+const size_t TAO_GIOP_MESSAGE_ALIGN_PTR = 8;
+
+
 #if defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Base.i"
 #endif /* __ACE_INLINE__ */

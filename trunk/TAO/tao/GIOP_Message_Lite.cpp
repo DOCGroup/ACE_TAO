@@ -7,6 +7,8 @@
 #include "tao/POA.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/operation_details.h"
+#include "tao/GIOP_Server_Request.h"
+#include "tao/GIOP_Message_Headers.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Lite.i"
@@ -135,8 +137,8 @@ TAO_GIOP_Message_Lite::
       if (retval == -1 && TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("TAO (%P|%t) - %p\n")
-                      ASYS_TEXT ("TAO_GIOP_Message_Lite::handle_input")));
+                      ASYS_TEXT ("TAO (%P|%t) - \n")
+                      ASYS_TEXT ("TAO_GIOP_Message_Lite::handle_input \n")));
           return -1;
         }
 
@@ -447,6 +449,151 @@ TAO_GIOP_Message_Lite::
 }
 
 
+
+
+
+CORBA::Boolean
+TAO_GIOP_Message_Lite::
+  write_reply_header (TAO_OutputCDR &output,
+                      TAO_Pluggable_Reply_Params &reply,
+                      CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+
+  // Write the GIOP Lite header first
+  this->write_protocol_header (TAO_PLUGGABLE_MESSAGE_REPLY,
+                               output);
+
+  // Write the service context list
+#if defined (TAO_HAS_MINIMUM_CORBA)
+  output << reply.service_context_notowned ();
+#else
+  if (reply.params_ == 0)
+    {
+      output << reply.service_context_notowned ();
+    }
+  else
+    {
+      // If lazy evaluation is enabled then we are going to insert an
+      // extra node at the end of the service context list, just to
+      // force the appropiate padding.
+      // But first we take it out any of them..
+      CORBA::ULong count = 0;
+      IOP::ServiceContextList &svc_ctx =
+        reply.service_context_notowned ();
+      CORBA::ULong l = svc_ctx.length ();
+      CORBA::ULong i;
+      for (i = 0; i != l; ++i)
+        {
+          if (svc_ctx[i].context_id == TAO_SVC_CONTEXT_ALIGN)
+            continue;
+          count++;
+        }
+
+      // Now increment it to account for the last dummy one...
+      count++;
+      
+      // Now marshal the rest of the service context objects
+      output << count;
+      for (i = 0; i != l; ++i)
+        {
+          if (svc_ctx[i].context_id == TAO_SVC_CONTEXT_ALIGN)
+            continue;
+          output << svc_ctx[i];
+        }
+      
+      // @@ Much of this code is GIOP 1.1 specific and should be
+      ptr_arith_t target =
+        reply.params_->_tao_target_alignment ();
+      
+      ptr_arith_t current =
+        ptr_arith_t (output.current_alignment ()) % ACE_CDR::MAX_ALIGNMENT;
+      
+      CORBA::ULong pad = 0;
+      if (target == 0)
+        {
+          // We want to generate adequate padding to start the request
+          // id on a 8 byte boundary, two cases:
+          // - If the dummy tag starts on a 4 byte boundary and the
+          //   dummy sequence has 0 elements then we have:
+          //   4:tag 8:sequence_length 4:sequence_body 4:request_id
+          //   8:payload
+          // - If the dummy tag starts on an 8 byte boundary, with 4
+          //   elements we get:
+          //   8:tag 4:sequence_length 8:sequence_body 4:request_id
+          //   8:payload
+          if (current != 0 && current <= ACE_CDR::LONG_ALIGN)
+            {
+              pad = 4;
+            }
+        }
+      else if (target != ACE_CDR::LONG_ALIGN)
+        {
+          // The situation reverses, we want to generate adequate
+          // padding to start the request id on a 4 byte boundary, two
+          // cases:
+          // - If the dummy tag starts on a 4 byte boundary and the
+          //   dummy sequence has 4 elements then we have:
+          //   4:tag 8:sequence_length 4:sequence_body 8:request_id
+          //   4:payload
+          // - If the dummy tag starts on an 8 byte boundary, with 0
+          //   elements we get:
+          //   8:tag 4:sequence_length 8:sequence_body 8:request_id
+          //   4:payload
+          if (current > ACE_CDR::LONG_ALIGN)
+            {
+              pad = 4;
+            }
+        }
+      else if (target == ACE_CDR::MAX_ALIGNMENT)
+        {
+          pad = 0;
+        }
+      else
+        {
+          // <target> can only have the values above
+          ACE_THROW_RETURN (CORBA::MARSHAL (),
+                            0);
+        }
+      
+      output << CORBA::ULong (TAO_SVC_CONTEXT_ALIGN);
+      output << pad;
+      for (CORBA::ULong j = 0; j != pad; ++j)
+        {
+          output << ACE_OutputCDR::from_octet(0);
+        }
+    }
+#endif /* TAO_HAS_MINIMUM_CORBA */
+  
+  // Write the request ID
+  output.write_ulong (reply.request_id_);
+  
+  // Write the reply status
+  switch (reply.reply_status_)
+    {
+    case TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION:
+      output.write_ulong (TAO_GIOP_NO_EXCEPTION);
+      break;
+    case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD:
+      output.write_ulong (TAO_GIOP_LOCATION_FORWARD);
+      break;
+    case TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION:
+      output.write_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
+      break;
+    case TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION:
+      output.write_ulong (TAO_GIOP_USER_EXCEPTION);
+      break;
+    default:
+      // Some other specifc exception
+      output.write_ulong (reply.reply_status_);
+      break;
+    }
+
+  return 1;
+}
+
+
+
 CORBA::Boolean
 TAO_GIOP_Message_Lite::
   write_request_header (const TAO_Operation_Details &opdetails,
@@ -642,15 +789,19 @@ TAO_GIOP_Message_Lite::
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   ACE_CATCH (PortableServer::ForwardRequest, forward_request)
     {
+      TAO_Pluggable_Reply_Params reply_params;
+      reply_params.request_id_ = request_id;
+      reply_params.reply_status_ = TAO_GIOP_LOCATION_FORWARD;
+      reply_params.svc_ctx_.length (0);
+      reply_params.service_context_notowned (&reply_params.svc_ctx_);
+      reply_params.params_ = 0;
       // Make the GIOP header and Reply header
-      this->make_reply (request_id,
-                        this->output_);
-
-      this->output_.write_ulong (TAO_GIOP_LOCATION_FORWARD);
+      this->write_reply_header (this->output_,
+                                reply_params);
 
       CORBA::Object_ptr object_ptr =
         forward_request.forward_reference.in();
-
+      
       this->output_ << object_ptr;
 
       // Flag for code below catch blocks.
@@ -1087,8 +1238,11 @@ TAO_GIOP_Message_Lite::
                         orb_core->to_unicode ());
 
   // Make the GIOP & reply header. They are version specific.
-  this->make_reply (request_id,
-                    output);
+  TAO_Pluggable_Reply_Params reply_params;
+  reply_params.request_id_ = request_id;
+  reply_params.svc_ctx_.length (0);
+  reply_params.service_context_notowned (&reply_params.svc_ctx_);
+  reply_params.params_ = 0;
 
   // A new try/catch block, but if something goes wrong now we have no
   // hope, just abort.
@@ -1106,8 +1260,13 @@ TAO_GIOP_Message_Lite::
         extype = CORBA::SYSTEM_EXCEPTION;
 
       // write the reply_status
-      output.write_ulong
-        (TAO_GIOP_Utils::convert_CORBA_to_GIOP_exception (extype));
+      reply_params.reply_status_ = 
+        TAO_GIOP_Utils::convert_CORBA_to_GIOP_exception (extype);
+      
+      // Make the GIOP & reply header. They are version specific.
+      this->write_reply_header (output,
+                                reply_params);
+      
 
       x->_tao_encode (output, ACE_TRY_ENV);
       ACE_TRY_CHECK;

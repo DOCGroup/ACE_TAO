@@ -55,6 +55,17 @@ public:
 
   int parse_reply (TAO_Message_State_Factory &mesg_state,
                    TAO_Pluggable_Reply_Params &params);
+  
+
+  CORBA::Boolean write_reply_header (TAO_OutputCDR &cdr,
+                                     TAO_Pluggable_Reply_Params &reply,
+                                     CORBA::Environment &ACE_TRY_ENV =
+                                     TAO_default_environment ())
+     ACE_THROW_SPEC ((CORBA::SystemException));
+  // This would prepare a version specific reply to the
+  // messages from the client. The type of reply would be context
+  // sensitive. Only the common stuff for all the replies to be
+  // sent would be handled. 
 private:
 
   int process_client_request (TAO_Transport *transport,
@@ -81,12 +92,6 @@ private:
   CORBA::Octet major_version (void);
   CORBA::Octet minor_version (void);
 
-  CORBA::Boolean make_reply (CORBA::ULong request_id,
-                             TAO_OutputCDR &output);
-  // This would prepare a version specific reply to the
-  // messages from the client. The type of reply would be context
-  // sensitive. Only the common stuff for all the replies to be
-  // sent would be handled.
 
   int make_send_locate_reply (TAO_Transport *transport,
                               TAO_GIOP_Locate_Request_Header &request,
