@@ -187,10 +187,13 @@
 #define TAO_DEFAULT_CDR_MEMCPY_TRADEOFF 256
 
 #if defined (ACE_HAS_EXCEPTIONS)
+# define TAO_HAS_EXCEPTIONS
+// TAO_USE_EXCEPTIONS is only here for backwards compatibility and
+// will go away shortly so don't use it...
 # define TAO_USE_EXCEPTIONS
-#elif defined (TAO_USE_EXCEPTIONS) && !defined (ACE_HAS_EXCEPTIONS)
+#elif (defined (TAO_HAS_EXCEPTIONS) || defined (TAO_USE_EXCEPTIONS)) && !defined (ACE_HAS_EXCEPTIONS)
 # error "tao/orbconf.h: You can only use exceptions in TAO if ACE supports them"
-#endif /* TAO_USE_EXCEPTIONS */
+#endif /* TAO_HAS_EXCEPTIONS */
 
 // The CDR growing strategy is control by several parameters:
 // + The default or initial CDR buffer size.
