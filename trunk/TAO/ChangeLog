@@ -1,3 +1,10 @@
+Sat Jan 10 17:47:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* orbsvcs/performance-tests/RTEvent/lib/Send_Task.h:
+
+	  Fixed another warning with Forte 8 compilers, which complained
+	  about the ACE_Task_Base::init () being hidden.
+
 Sat Jan 10 17:25:23 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/FTRT_Event_Service/Gateway_Service/FTRTEC_Gateway_Service.mpc:
