@@ -391,17 +391,29 @@ slot where the servant is registered is in the Object Key.
 Point of contact: <A HREF="mailto:marina@cs.wustl.edu">Marina
 Spivak</A> 
 
-<P>Current status (as of Feb 27th):
+<P>Current status (as of Sep 28):
 <UL>
 <LI>
-The Naming Service implementation is complete.</LI>
+Implementation of the Naming Service is complete.
+</LI>
 </UL>
+
+Recently completed work:
+<UL>
+<LI>
+The implementation of the Naming Service has been upgraded to use TAO's exception macros,
+which allow it to work both with C++ exceptions and without.
+<LI>
+Destroy method has been updated.
+<LI>
+More test examples have been added to TAO/orbsvcs/tests/Simple_Naming.
+</UL>
+
 Future work:
 <UL>
 <LI>
 Currently the bindings are stored as a table in memory. Future work will
 include a persistent database to store the bindings.</LI>
-
 <LI>
 Replication of the bindings to other Naming Service's currently running.
 It will probably be modeled after the LDAP Multi-Master Replication Protocol.
