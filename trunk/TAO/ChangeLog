@@ -1,10 +1,15 @@
+Thu Oct  3 05:46:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/LoadBalancer/LoadMonitor.bor:
+          Fixed this BCB makefile
+
 Wed Oct  2 21:48:07 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Log/Log_i.cpp (query_i):
 
 	  Improved exception-safety, and thus a potential memory leak.
 
-	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp (create_with_id): 
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp (create_with_id):
 
 	  Fixed incorrect code that used the auto_ptr<> template in an
 	  attempt to make the code exception-safe.  auto_ptr<> doesn't
@@ -109,7 +114,7 @@ Tue Oct  1 23:27:48 2002  Ossama Othman  <ossama@uci.edu>
 
 	  Added `Monitor_Signal_Handler' and `Signal_Handler' to the list
 	  of source/object files.
-	
+
 Tue Oct  1 14:53:46 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_Location_Index_Map.cpp:
