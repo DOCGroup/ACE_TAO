@@ -4,6 +4,8 @@
 ** Copyright 2002 Addison Wesley. All Rights Reserved.
 */
 
+#include "ace/config-all.h"
+
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS))
 
 #include "ace/OS_NS_string.h"
@@ -254,8 +256,7 @@ int AIO_CLD_Connector::validate_connection
   }
 
   SSL_clear (ssl_);
-  SSL_set_fd
-    (ssl_, ACE_reinterpret_cast (int, result.connect_handle ()));
+  SSL_set_fd (ssl_, reinterpret_cast<int> (result.connect_handle ()));
 
   SSL_set_verify (ssl_, SSL_VERIFY_PEER, 0);
 
@@ -289,12 +290,10 @@ int AIO_Client_Logging_Daemon::init
   for (int c; (c = get_opt ()) != -1;)
     switch (c) {
     case 'p': // Client logging daemon acceptor port number.
-      cld_port = ACE_static_cast
-        (u_short, ACE_OS::atoi (get_opt.opt_arg ()));
+      cld_port = static_cast<u_short> (ACE_OS::atoi (get_opt.opt_arg ()));
       break;
     case 'r': // Server logging daemon acceptor port number.
-      sld_port = ACE_static_cast
-        (u_short, ACE_OS::atoi (get_opt.opt_arg ()));
+      sld_port = static_cast<u_short> (ACE_OS::atoi (get_opt.opt_arg ()));
       break;
     case 's': // Server logging daemon hostname.
       ACE_OS::strsncpy
@@ -347,7 +346,6 @@ int AIO_Client_Logging_Daemon::fini () {
   return 0;
 }
 
-#endif /* (ACE_WIN32 && !ACE_HAS_WINCE) || ACE_HAS_AIO_CALLS */
-
 ACE_FACTORY_DEFINE (AIO_CLD, AIO_Client_Logging_Daemon)
 
+#endif /* (ACE_WIN32 && !ACE_HAS_WINCE) || ACE_HAS_AIO_CALLS */
