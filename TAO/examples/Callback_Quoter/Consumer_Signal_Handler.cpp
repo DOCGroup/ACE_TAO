@@ -18,7 +18,7 @@
 //
 // ===========================================================
 
-#include <Consumer_Signal_Handler.h>
+#include "Consumer_Signal_Handler.h"
 
 Consumer_Signal_Handler::Consumer_Signal_Handler (Consumer_Handler *consumer_handler)
   : consumer_handler_ (consumer_handler)
@@ -34,7 +34,7 @@ Consumer_Signal_Handler::handle_signal (int signum,
                                         siginfo_t*,
                                         ucontext_t*)
 {
-  switch (signum)
+  /*switch (signum)
     {
     case SIGWINCH:
       ACE_DEBUG ((LM_DEBUG,
@@ -42,12 +42,12 @@ Consumer_Signal_Handler::handle_signal (int signum,
       quit_on_signal ();
      break;
 
-    case SIGINT:
+    case SIGINT:*/
       ACE_DEBUG ((LM_DEBUG,
 		  " Exiting on receiving ^C\n"));
       quit_on_signal ();
-      break;
-    }
+    /*  break;
+    }*/
 
   return 0;
 }
