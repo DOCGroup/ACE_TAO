@@ -1,3 +1,12 @@
+Thu Feb 26 14:21:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* CIAOTAO.mwc:
+
+	  An mwc file for CIAO with its dependencies on ACE+TAO. Folks can
+	  now run $ACE_ROOT/bin/mwc.pl CIAOTAO.mwc in $CIAO_ROOT and
+	  invoke "make" from $CIAO_ROOT. Thanks to Brian Mendel and Ed
+	  Mulholland for motivating this.
+
 Tue Feb 24 18:00:44 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/Deployment.idl:          Removed
