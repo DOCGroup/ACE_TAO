@@ -235,7 +235,10 @@ TAO_Basic_StreamCtrl::destroy (const AVStreams::flowSpec &flow_spec,
                 TAO_String_Hash_Key flow_name_key (flowname);
                 FlowConnection_Map::ENTRY *flow_connection_entry = 0;
                 if (this->flow_connection_map_.find (flow_name_key, flow_connection_entry) == 0)
-                  flow_connection_entry->int_id_->destroy (ACE_TRY_ENV);
+                  {
+                    flow_connection_entry->int_id_->destroy (ACE_TRY_ENV);
+                    ACE_TRY_CHECK;
+                  }
               }
           else
             {
@@ -1335,6 +1338,7 @@ TAO_StreamCtrl::modify_QoS (AVStreams::streamQoS &the_qos,
   else
     {
       TAO_Basic_StreamCtrl::modify_QoS (the_qos, the_spec, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
     }
   return 1;
 }
@@ -1790,6 +1794,8 @@ TAO_StreamEndPoint::stop (const AVStreams::flowSpec &flow_spec,
 {
   // Make the upcall into the app
   this->handle_stop (flow_spec, ACE_TRY_ENV);
+  ACE_CHECK;
+
   if (flow_spec.length () > 0)
     {
 
@@ -1833,6 +1839,8 @@ TAO_StreamEndPoint::start (const AVStreams::flowSpec &flow_spec,
   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "TAO_StreamEndPoint::start\n"));
   // Make the upcall into the app
   this->handle_start (flow_spec, ACE_TRY_ENV);
+  ACE_CHECK;
+
   if (flow_spec.length () > 0)
     {
       // Now call start on all the flow handlers.
@@ -2166,6 +2174,7 @@ TAO_StreamEndPoint::add_fep_i (AVStreams::FlowEndPoint_ptr fep,
       CORBA::Any_var flow_name_any =
         fep->get_property_value ("FlowName", ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
       const char *tmp;
       flow_name_any >>= tmp;
       flow_name = CORBA::string_dup (tmp);
@@ -2174,6 +2183,7 @@ TAO_StreamEndPoint::add_fep_i (AVStreams::FlowEndPoint_ptr fep,
     {
       flow_name =
         this->add_fep_i_add_property (fep, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
     }
   ACE_ENDTRY;
   return flow_name._retn ();
@@ -2937,6 +2947,8 @@ TAO_VDev::modify_QoS (AVStreams::streamQoS &the_qos,
   ACE_UNUSED_ARG (the_qos);
   ACE_UNUSED_ARG (the_spec);
   ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
   return 0;
 }
 
@@ -3021,6 +3033,8 @@ TAO_MMDevice::bind_mcast (AVStreams::MMDevice_ptr first_peer,
   ACE_UNUSED_ARG (is_met);
   ACE_UNUSED_ARG (the_spec);
   ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
   return 0;
 }
 
@@ -3220,6 +3234,8 @@ TAO_MMDevice::create_A (AVStreams::StreamCtrl_ptr streamctrl,
 {
   CORBA::String_var str_ctrl_ior =
        TAO_ORB_Core_instance ()->orb ()->object_to_string (streamctrl, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
   AVStreams::StreamEndPoint_A_ptr sep_a = 0;
   AVStreams::StreamEndPoint_ptr sep = 0;
   ACE_TRY
@@ -3400,6 +3416,7 @@ TAO_MMDevice::get_fdev (const char *flow_name,
                    AVStreams::noSuchFlow))
 {
   ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
   TAO_String_Hash_Key fdev_name_key (flow_name);
   FDev_Map::ENTRY *fdev_entry = 0;
@@ -3609,6 +3626,7 @@ TAO_FlowConnection::modify_QoS (AVStreams::QoS & new_qos,
 {
   ACE_UNUSED_ARG (new_qos);
   ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
   return 0;
 }
 
@@ -3725,6 +3743,8 @@ TAO_FlowConnection::connect (AVStreams::FlowProducer_ptr producer,
       this->flow_consumer_set_.insert (flow_consumer);
       AVStreams::FlowConnection_var flowconnection =
         this->_this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       flow_producer->set_peer (flowconnection.in (),
                                flow_consumer,
                                the_qos,
@@ -3787,6 +3807,7 @@ TAO_FlowConnection::disconnect (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
   return  0;
 }
 
@@ -4001,6 +4022,7 @@ TAO_FlowConnection::drop (AVStreams::FlowEndPoint_ptr target,
 {
   ACE_UNUSED_ARG (target);
   ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
   return 0;
 }
 
@@ -4089,6 +4111,8 @@ TAO_FlowEndPoint::lock (CORBA::Environment &ACE_TRY_ENV)
 {
   // lock the current flowendpoint
   ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
   if (this->lock_)
     return 0;
   this->lock_ = 1;
@@ -4101,6 +4125,8 @@ TAO_FlowEndPoint::unlock (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_CHECK;
+
   this->lock_ = 0;
 }
 
@@ -4147,6 +4173,8 @@ TAO_FlowEndPoint::related_flow_connection (AVStreams::FlowConnection_ptr related
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_CHECK;
+
   this->related_flow_connection_ = AVStreams::FlowConnection::_duplicate (related_flow_connection);
 }
 
