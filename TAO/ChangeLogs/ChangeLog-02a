@@ -1,3 +1,17 @@
+Tue Dec 19 08:53:51 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
+
+        * TAO_IDL/fe/idl.yy:
+
+          Modified the yacc file to check, in the case where an enum
+          value is used in an array dim, a string bound, or a sequence
+          bound, for a zero value. An error is output if zero is found,
+          because in the above cases, the value must be a positive integer.
+
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/y.tab.cpp.diff:
+
+          Regenerated these files.
+
 Tue Dec 19 06:17:57 2000  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * tao/Makefile.bor:
