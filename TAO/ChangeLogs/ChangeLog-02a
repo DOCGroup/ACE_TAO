@@ -1,3 +1,10 @@
+Wed Dec 13 23:56:58 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+
+	  Added ClientRequestInfo.inl to the list of "inline" sources.
+
 Wed Dec 13 19:06:43 2000  Ossama Othman  <ossama@uci.edu>
 
 	The following changes are the first stage of a series of updates
