@@ -1,3 +1,9 @@
+Thu Jul  6 10:36:46 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/ACE.cpp: Fixed the timestamp() call so that it returns a string with
+	  the date that also contains the year.  Thanks to Nicoletta Viale
+ 	  <nicoletta.viale@sodalia.it> for reporting this.
+
 Thu Jul 06 10:59:41 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Misc/test_naming (bind,rebind,unbind,find):
