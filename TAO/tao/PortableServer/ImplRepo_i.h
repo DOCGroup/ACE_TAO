@@ -60,4 +60,6 @@ protected:
   PortableServer::POA_var poa_;
 };
 
+#include "ace/post.h"
+
 #endif /* TAO_IMPLREPO_I_H */
