@@ -7778,8 +7778,6 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
   return 0;
 #elif defined (sun)
 
-  int result = 0;
-
   /** obtain the local host name */
   char hostname [MAXHOSTNAMELEN];
   ACE_OS::hostname (hostname, sizeof (hostname));
