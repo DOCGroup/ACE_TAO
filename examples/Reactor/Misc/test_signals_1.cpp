@@ -66,6 +66,7 @@ main (int, char *argv[])
 
   // ----- Set up a non-ACE signal handler -----
   ACE_Sig_Action sig ((ACE_SignalHandler) my_signal_function, SIGQUIT);
+  ACE_UNUSED_ARG (sig);
 
   // This just executes the reactor events until my_handler tells us
   // we are finished.
