@@ -93,7 +93,7 @@ public:
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Callback method <foo> called: result <%d>, out_arg <%d>\n",
-                      ami_return_val, 
+                      ami_return_val,
                       out_l));
         }
     };
@@ -125,8 +125,8 @@ public:
       ACE_CHECK;
     };
 
-  
-  void get_yadda (CORBA::Long result, 
+
+  void get_yadda (CORBA::Long result,
                   CORBA::Environment &ACE_TRY_ENV)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
@@ -147,7 +147,7 @@ public:
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda_excep> called: \n"));
     };
-    
+
   void set_yadda (CORBA::Environment &ACE_TRY_ENV)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
@@ -192,13 +192,13 @@ main (int argc, char *argv[])
       PortableServer::POAManager_var poa_manager_var =
         poa_var->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       poa_manager_var->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       if (parse_args (argc, argv) != 0)
         return 1;
-      
+
       // We reuse the object_var smart pointer!
       object_var = orb->string_to_object (ior, ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -215,7 +215,7 @@ main (int argc, char *argv[])
                             1);
         }
 
-      // Instantiate the ReplyHandler and register that with the POA. 
+      // Instantiate the ReplyHandler and register that with the POA.
       Handler handler;
       A::AMI_AMI_TestHandler_var the_handler_var =
         handler._this (ACE_TRY_ENV);
@@ -225,7 +225,7 @@ main (int argc, char *argv[])
       // by sending 0 to it.
       ACE_DEBUG ((LM_DEBUG,
                   "Sending asynch message\n"));
-                
+
       ami_test_var->sendc_foo (the_handler_var.in (),
                                0,
                                "Let's talk AMI.",
@@ -233,25 +233,25 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       CORBA::Long l = 931247;
- 
+
       for (ssize_t ni = 0; ni < niterations; ni++)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Sending asynch message: %d\n",
                       ni));
-                    
+
           ami_test_var->sendc_foo (the_handler_var.in (),
                                    l,
                                    "Let's talk AMI.",
                                    ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
-      
+
       // Begin test of attributes
       ami_test_var->sendc_get_yadda (the_handler_var.in (),
                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       ami_test_var->sendc_set_yadda (the_handler_var.in (),
                                      4711,
                                      ACE_TRY_ENV);
@@ -279,7 +279,7 @@ main (int argc, char *argv[])
       //while (orb->work_pending())
       //  orb->perform_work ();
 
-  
+
       CORBA::Long number = ami_test_var->foo (l,
                                               l,
                                               "Let's talk SMI.",
@@ -288,20 +288,20 @@ main (int argc, char *argv[])
 
       if (debug)
         {
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                       "Received the following number: %d\n",
                       number));
         }
-      
+
       if (shutdown_flag)
         {
           ami_test_var->shutdown (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
 
-      poa_var->destroy (true,  // ethernalize objects
- 					              false, // wait for completion
-						            ACE_TRY_ENV);
+      poa_var->destroy (1,  // ethernalize objects
+                        0, // wait for completion
+                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       orb->destroy (ACE_TRY_ENV);
@@ -315,6 +315,6 @@ main (int argc, char *argv[])
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
-  
+
   return 0;
 }

@@ -1,3 +1,12 @@
+Sat Mar 10 18:20:32 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/AMI/server.cpp:
+        * tests/AMI/client.cpp:
+        * tests/AMI/simple_client.cpp:
+        * examples/PluggableUDP/tests/client.cpp:
+          Don't use true or false, the lame platforms (gcc-2.7.2 and
+          Sun/CC 4.2) do not have a bool type.
+
 Sat Mar 10 18:12:58 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Client_Leaks/client.cpp:
