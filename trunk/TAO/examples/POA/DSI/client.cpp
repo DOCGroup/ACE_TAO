@@ -33,7 +33,7 @@ parse_args (int argc, char **argv)
     switch (c)
       {
       case 'k':
-        iorfile = ACE_OS::strdup (get_opts.optarg);
+        iorfile = get_opts.optarg;
         break;
       case 'd':
 	TAO_debug_level++;

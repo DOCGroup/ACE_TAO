@@ -17,16 +17,18 @@
 
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"
+#include "ace/Read_Buffer.h"
 #include "Multiple_InheritanceC.h"
 
 ACE_RCSID(Multiple_Inheritance, client, "$Id$")
 
 static char *ior = 0;
+static char *ior_input_file = 0;
 
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, "dk:i:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -35,21 +37,33 @@ parse_args (int argc, char **argv)
       case 'k':
         ior = get_opts.optarg;
         break;
+      case 'i':
+	ior_input_file = get_opts.optarg;
+	break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
+                           "\nusage:  %s"
+			   "-d"
+			   "-i <ior_input_file>"
                            "-k IOR"
                            "\n",
                            argv [0]),
                           -1);
       }
 
-  if (ior == 0)
+  if (ior == 0 && ior_input_file == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Please specify the IOR for the servant"), -1);
+                       "\nPlease specify the IOR or IOR input file"
+		       " for the servant"),
+		      -1);
+  if (ior != 0 && ior_input_file != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "\nPlease specify only an IOR or only an IOR"
+		       " input file but not both"),
+		      -1);
 
-  // Indicates successful parsing of command line.
+  // Indicates successful parsing of the command line.
   return 0;
 }
 
@@ -67,6 +81,27 @@ main (int argc, char **argv)
     {
       env.print_exception ("CORBA::ORB_init");
       return -1;
+    }
+
+  // If ior_input_file exists, Read the file, and get the IOR
+  // else, it must have been specified on the command line 
+  if (ior_input_file != 0)
+    {
+      ACE_HANDLE input_file = ACE_OS::open (ior_input_file, 0);
+      if (input_file == ACE_INVALID_HANDLE)
+	ACE_ERROR_RETURN ((LM_DEBUG,
+			   "Cannot open input file for reading IOR: %s\n", 
+			   ior_input_file),
+			  -1);
+      ACE_Read_Buffer ior_buffer (input_file);
+      char *data = ior_buffer.read ();
+      if (data == 0)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   "Unable to read ior\n"),
+			  -1);
+      ior = ACE_OS::strdup (data);
+      ior_buffer.alloc ()-> free (data);
+      ACE_OS::close (input_file);
     }
 
   // Get the object reference with the IOR
