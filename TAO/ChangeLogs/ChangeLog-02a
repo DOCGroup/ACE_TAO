@@ -1,3 +1,10 @@
+Tue Jun 12 18:50:57 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * docs/Options.html:
+          Updated documentation to reflect that the -ORBSchedPolicy
+          and -ORBPriorityMapping options moved from the Strategies
+          library to the RTCORBA library.
+
 Tue Jun 12 18:28:46 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * tao/Policy.pidl:
