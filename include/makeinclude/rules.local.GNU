@@ -22,7 +22,7 @@ build.local: $(BUILD)
 
 # Set up the suffixes for C++ and IDL.
 .SUFFIXES:
-.SUFFIXES: .cpp .cc .C .idl $(SUFFIXES)
+.SUFFIXES: .cpp .cc .C .cxx .idl $(SUFFIXES)
 
 # C++ related targets
 
@@ -49,6 +49,10 @@ $(VDIR)%.o: %.C $(VDIR).creation_stamp
 	${MVCMD}
 
 $(VDIR)%.o: %.cc $(VDIR).creation_stamp
+	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
+	${MVCMD}
+
+$(VDIR)%.o: %.cxx $(VDIR).creation_stamp
 	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
 
@@ -80,6 +84,12 @@ $(VSHDIR)%.$(OBJEXT): %.cpp $(VSHDIR).creation_stamp
 endif
 
 $(VSHDIR)%.$(OBJEXT): %.cc $(VSHDIR).creation_stamp
+	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+
+$(VSHDIR)%.$(OBJEXT): %.C $(VSHDIR).creation_stamp
+	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+
+$(VSHDIR)%.$(OBJEXT): %.cxx $(VSHDIR).creation_stamp
 	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
 
 $(VSHDIR)%.$(OBJEXT): %.c $(VSHDIR).creation_stamp

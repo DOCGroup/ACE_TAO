@@ -19,10 +19,8 @@ VLOBJS   += $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(notdir $(LSR
 LSRC    += $(LSRC2)
 
 
-ifdef PRELIB
 VSHOBJS = $(addsuffix .$(OBJEXT),$(addprefix $(VSHDIR),$(basename $(notdir $(LSRC)))))
 VSHOBJS1 = $(addsuffix .$(OBJEXT),$(addprefix $(VSHDIR),$(basename $(notdir $(LSRC)))))
-endif # ! PRELIB
 
 ifdef static_libs
   INSTALL += $(VLIB:%.$(LIBEXT)=$(INSLIB)/%.$(LIBEXT))
