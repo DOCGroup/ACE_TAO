@@ -35,6 +35,13 @@ CPP_SRCS += \
         Event/EC_Kokyu_Dispatching \
 	Event/EC_Kokyu_Factory
 
+LIBCHECK = $(shell for lib in Kokyu; do for libpath in ../../../lib ../../../ace; do full="`echo $$libpath/lib$$lib.* $$libpath/$$lib.lib | tr ' ' '\012' | grep -v \* | head -1`"; if [ -r "$$full" ]; then break; else full=; fi; done; if [ -z "$$full" ]; then echo $$lib; exit; fi; done; echo 1)
+ifneq ($(LIBCHECK), 1)
+  LIB   =
+  SHLIB =
+  all: lib_warning
+endif
+
 FILES = $(CPP_SRCS)
 DEFS  = $(addsuffix .h,$(FILES))
 LSRC  = $(addsuffix .cpp,$(FILES)) $(IDL_SRC)
@@ -65,6 +72,12 @@ endif
 #
 # Extra dependencies not caught by make depend.
 #
+
+lib_warning:
+	@echo This project will not be built due to the following missing library:
+	@echo Kokyu
+	@echo Please build the Kokyu library under ${ACE_ROOT}/Kokyu
+
 
 #----------------------------------------------------------------------------
 #       Dependencies
