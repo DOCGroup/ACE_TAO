@@ -4,6 +4,7 @@
 #if !defined(_WIN32)
 
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/ACE.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
