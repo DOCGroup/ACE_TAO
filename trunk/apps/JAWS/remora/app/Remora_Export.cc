@@ -1,3 +1,5 @@
+// $Id$
+
 #include "Remora_Export.h"
 
 
@@ -21,7 +23,7 @@ Remora_Export::Remora_Export(const Remora_Export& export)
 
 Remora_Export::~Remora_Export()
 {
-  try
+  PMCTRY
     {
       if (this->remora_agent_ != 0)
 	{
@@ -29,19 +31,21 @@ Remora_Export::~Remora_Export()
 	  this->remora_agent_->_release();
 	}
     }
-  catch(remora::Invalid_Statistic& excp)
+  PMCCATCH(remora::Invalid_Statistic, excp)
     {
     }
-  catch(CORBA::SystemException& excp)
+  PMCAND_CATCH(CORBA::SystemException, excp)
     {
       CORBA::release(this->remora_agent_);
     }
+  PMCEND_CATCH
+  
 }
 
 void
 Remora_Export::init()
 {
-  try
+  PMCTRY
     {
       int argc = 1;
       char* argv[1];
@@ -49,15 +53,18 @@ Remora_Export::init()
 
       CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
       
+      cout << this->stat_.label_ << " Binding to server..." << endl;
       this->remora_agent_ =
 	remora::Remora_Statistics_Agent::_bind(STATS_AGENT_NAME);
 
+      cout << this->stat_.label_ << " Registering Statistic..." << endl;
       this->remora_agent_->acceptNewStatistic(this->stat_);
     }
-  catch(CORBA::Exception& excp)
+  PMCCATCH(CORBA::Exception, excp)
     {
       cerr << excp << endl;
     }
+  PMCEND_CATCH
 }
 
 void
@@ -65,20 +72,22 @@ Remora_Export::update_value(int new_value)
 {
   this->stat_.value_ = new_value;
 
-  try
+  PMCTRY
     {
+      cout << this->stat_.label_ << " Updating a value." << endl;
       if (this->remora_agent_ != 0 && (! this->remora_agent_->_non_existent()))
 	this->remora_agent_->updateStatistic(this->stat_);
     }
-  catch(CORBA::SystemException& sysex)
+  PMCCATCH(CORBA::SystemException, sysex)
     {
       cerr << sysex << endl;
       this->remora_agent_->_release();
       this->remora_agent_ = 0;
     }
-  catch(remora::Invalid_Statistic& excp)
+  PMCAND_CATCH(remora::Invalid_Statistic, excp)
     {
       cerr << excp << endl;
     }
+  PMCEND_CATCH
 }
 

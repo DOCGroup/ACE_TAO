@@ -1,4 +1,4 @@
-// $Id
+// $Id$ 
 
 #include "Remora_Import.h"
 
@@ -25,7 +25,7 @@ Remora_Import::Remora_Import(const Remora_Import& import)
 
 Remora_Import::~Remora_Import()
 {
-  try
+  PMCTRY
     {
       if (this->remora_agent_ != 0)
 	{
@@ -33,20 +33,21 @@ Remora_Import::~Remora_Import()
 	  this->remora_agent_->_release();
 	}
     }
-  catch(remora::Invalid_Statistic& excp)
+  PMCCATCH(remora::Invalid_Statistic, excp)
     {
       cerr << "Tried to remove invalid statistic.";
     }
-  catch(CORBA::SystemException& excp)
+  PMCAND_CATCH(CORBA::SystemException, excp)
     {
       CORBA::release(this->remora_agent_);
     }
+  PMCEND_CATCH
 }
 
 void
 Remora_Import::init()
 {
-  try
+  PMCTRY
     {
       int argc = 1;
       char* argv[1];
@@ -54,31 +55,35 @@ Remora_Import::init()
 
       CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
       
+      cout << this->control_.label_ << " Binding to server..." << endl;
       this->remora_agent_ =
 	remora::Remora_Controls_Agent::_bind(CONTROL_AGENT_NAME);
 
+      cout << this->control_.label_ << " Registering Control..." << endl;
       this->remora_agent_->acceptNewControl(this->control_);
     }
-  catch(CORBA::Exception& excp)
+  PMCCATCH(CORBA::Exception, excp)
     {
       cerr << excp << endl;
     }
+  PMCEND_CATCH
 }
 
 CORBA::Long
 Remora_Import::grab_value(void)
 {
-  try
+  PMCTRY
     {
       if (this->remora_agent_ != 0)
 	{
+	  cout << this->control_.label_ << " Grabbing a value from the client." << endl;
 	  this->remora_agent_->getControlState(this->control_);
 	}
       
       // C++ exception handling needs a 'finally' construct
       return this->control_.value_;
     }
-  catch(CORBA::SystemException& sysex)
+  PMCCATCH(CORBA::SystemException, sysex)
     {
       cerr << sysex << endl;
       this->remora_agent_->_release();
@@ -86,17 +91,19 @@ Remora_Import::grab_value(void)
 
       return this->control_.value_;
     }
-  catch(remora::Invalid_Control& excp)
+  PMCAND_CATCH(remora::Invalid_Control, excp)
     {
-      try
+      PMCTRY
 	{
 	  this->remora_agent_->acceptNewControl(this->control_);
 	}
-      catch(CORBA::SystemException& sysex2)
+      PMCCATCH(CORBA::SystemException, sysex2)
 	{
 	  return this->control_.value_;
 	}
+      PMCEND_CATCH
 
       return this->control_.value_;
     }
+  PMCEND_CATCH
 }
