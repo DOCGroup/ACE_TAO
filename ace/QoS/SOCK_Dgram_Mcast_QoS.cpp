@@ -3,6 +3,10 @@
 #include "SOCK_Dgram_Mcast_QoS.h"
 #include "ace/Log_Msg.h"
 
+#if defined (ACE_WIN32)
+#include "ace/Sock_Connect.h"  // needed for subscribe_ifs()
+#endif /* ACE_WIN32 */
+
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "SOCK_Dgram_Mcast_QoS.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
@@ -113,10 +117,10 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
   // help us.  It doesn't hurt to do this on Win95, it's just a little
   // slower than it normally would be.
   //
-  // NOTE - <ACE::get_ip_interfaces> doesn't always get all of the
-  // interfaces.  In particular, it may not get a PPP interface.  This
-  // is a limitation of the way <ACE::get_ip_interfaces> works with
-  // MSVC.  The reliable way of getting the interface list is
+  // NOTE - <ACE_Sock_Connect::get_ip_interfaces> doesn't always get all
+  // of the interfaces.  In particular, it may not get a PPP interface.  This
+  // is a limitation of the way <ACE_Sock_Connect::get_ip_interfaces> works
+  // with MSVC.  The reliable way of getting the interface list is
   // available only with MSVC 5.
 
   if (net_if == 0)
@@ -124,8 +128,8 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
       ACE_INET_Addr *if_addrs = 0;
       size_t if_cnt;
 
-      if (ACE::get_ip_interfaces (if_cnt,
-                                  if_addrs) != 0)
+      if (ACE_Sock_Connect::get_ip_interfaces (if_cnt,
+                                               if_addrs) != 0)
         return -1;
 
       size_t nr_subscribed = 0;
