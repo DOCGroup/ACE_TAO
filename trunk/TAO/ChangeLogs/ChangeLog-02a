@@ -1,3 +1,8 @@
+Tue Jul 11 13:18:42 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Trader_T.h:
+	  Disabled "inheritence via dominance" warnings in Win NT builds.
+
 Tue Jul 11 13:08:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/IFR_Service/IFR_Service.dsp:
