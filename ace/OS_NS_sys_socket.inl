@@ -709,6 +709,29 @@ ACE_OS::sendv (ACE_HANDLE handle,
 
   return (ssize_t) bytes_sent;
 
+#elif defined (ACE_HAS_SOCK_BUF_SIZE_MAX)
+
+  // Platform limits the maximum socket message size.  Pare down the
+  // iovec, if necessary, to obey the limit.
+  iovec local_iov[ACE_IOV_MAX];
+  long total = 0;
+  long new_total;
+  for (int i = 0; i < n; i++)
+    {
+      local_iov[i].iov_base = buffers[i].iov_base;
+      local_iov[i].iov_len  = buffers[i].iov_len;
+
+      new_total = total + buffers[i].iov_len;
+      if ( new_total >= SSIZE_MAX )
+        {
+          local_iov[i].iov_len = SSIZE_MAX - total;
+          n = i+1;
+          break;
+        }
+      total = new_total;
+    }
+  return ACE_OS::writev (handle, local_iov, n);
+
 #else
   return ACE_OS::writev (handle, buffers, n);
 #endif /* ACE_HAS_WINSOCK2 */

@@ -1,3 +1,21 @@
+Fri Nov 19 10:17:00 2004  Gary Maxey  <gary.maxey@hp.com>
+
+        * ace/ACE.inl:
+
+          Use ::recv() instead of ::read() on Tandem NSK platform 
+          because it is faster.
+
+        * ace/OS_NS_sys_socket.inl
+
+          In ACE_OS::sendv, when ACE_HAS_SOCK_BUF_SIZE_MAX, avoid writing
+          more than system allows.
+
+        * ace/config-tandem-nsk-mips-v2.h
+        * ace/config-tandem-nsk-mips-v3.h
+
+          Updated ACE_HAS_SOCK_BUF_SIZE_MAX define
+
+
 Fri Nov 19 09:55:35 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* Kokyu/Kokyu.{h,cpp}: 
