@@ -1,12 +1,18 @@
+Wed Jun 28 12:49:30 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tao/Messaging_Policy_i.cpp: Some version of g++
+          complained that LocalObject should be initialized explicitly in
+          copy ctors.  Just added them in copy ctors.
+
 Wed Jun 28 10:36:19 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao.IORC.h:
 	* tao/IORC.i:
 	  Added missing TAO_Export macros that I had left out of
 	  recent regeneration, and removed the ostream operators
-	  for the exceptions, since they had also been removed 
-	  from the previous regeneration. Thanks to Aniruddha 
-	  Gokhale <gokhale@research.bell-labs.com>, Rudynell 
+	  for the exceptions, since they had also been removed
+	  from the previous regeneration. Thanks to Aniruddha
+	  Gokhale <gokhale@research.bell-labs.com>, Rudynell
 	  Millian <rmillian@lucent.com> et al for pointing out
 	  the missing macros.
 
