@@ -1,3 +1,11 @@
+Wed Jul 22 11:55:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Any.cpp: 
+	  Removed uses == operator for TypeCode_var and TypeCode_ptr,
+	  NT does not like this (it is ambigous) and the semantics are
+	  also broken, we use TypeCode::equal() instead; thanks to Darrell
+	  Brunsch for reporting this.
+
 Wed Jul 22 11:18:51 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* Makefile: Updated the Makefile to include the server_i and

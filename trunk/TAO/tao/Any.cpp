@@ -648,52 +648,54 @@ CORBA_Any_var::operator= (const CORBA::Any_var& r)
 void
 CORBA_Any::dump (const CORBA::Any any_value)
 {
+  CORBA::Environment env;
+
   // Get the type.
   CORBA::TypeCode_var type = any_value.type ();
 
-  if (type == CORBA::_tc_null)
+  if (type->equal (CORBA::_tc_null, env))
     ACE_DEBUG ((LM_DEBUG,"Null\n"));
 
-  else if (type == CORBA::_tc_void)
+  else if (type->equal (CORBA::_tc_void, env))
     ACE_DEBUG ((LM_DEBUG,"Void\n"));
 
-  else if (type == CORBA::_tc_short)
+  else if (type->equal (CORBA::_tc_short, env))
     {
       CORBA::Short s;
       any_value >>= s;
       ACE_DEBUG ((LM_DEBUG,"Short %d\n",s));
     }
-  else if (type == CORBA::_tc_long)
+  else if (type->equal (CORBA::_tc_long, env))
     {
       CORBA::Long l;
       any_value >>= l;
       ACE_DEBUG ((LM_DEBUG,"Long %d\n", l));
     }
-  else if (type == CORBA::_tc_ushort)
+  else if (type->equal (CORBA::_tc_ushort, env))
     {
       CORBA::UShort s;
       any_value >>= s;
       ACE_DEBUG ((LM_DEBUG,"UShort %d\n", s));
     }
-  else if (type == CORBA::_tc_ulong)
+  else if (type->equal (CORBA::_tc_ulong, env))
     {
       CORBA::ULong l;
       any_value >>= l;
       ACE_DEBUG ((LM_DEBUG,"ULong %d\n", l));
     }
-  else if (type == CORBA::_tc_float)
+  else if (type->equal (CORBA::_tc_float, env))
     {
       CORBA::Float f;
       any_value >>= f;
       ACE_DEBUG ((LM_DEBUG,"Float %f\n", f));
     }
-  else if (type == CORBA::_tc_double)
+  else if (type->equal (CORBA::_tc_double, env))
     {
       CORBA::Double d;
       any_value >>= d;
       ACE_DEBUG ((LM_DEBUG,"Double %f\n", d));
     }
-  else if (type == CORBA::_tc_boolean)
+  else if (type->equal (CORBA::_tc_boolean, env))
     {
       CORBA::Boolean b;
       any_value >>= (to_boolean)b;
@@ -702,13 +704,13 @@ CORBA_Any::dump (const CORBA::Any any_value)
       else
         ACE_DEBUG ((LM_DEBUG, "Boolean B_FALSE\n"));
     }
-  else if (type  == CORBA::_tc_char)
+  else if (type->equal (CORBA::_tc_char, env))
     {
       CORBA::Char ch;
       any_value >>= to_char (ch);
       ACE_DEBUG ((LM_DEBUG,"Char %c\n", ch));
     }
-  else if (type == CORBA::_tc_string)
+  else if (type->equal (CORBA::_tc_string, env))
     {
        CORBA::String str;
        any_value >>= str;
