@@ -99,6 +99,12 @@ private:
 // Forward declaration.
 class ACE_Thread_Control;
 
+// This typedef should be (and used to be) inside the ACE_Thread_Manager
+// declaration.  But, it caused compilation problems on g++/VxWorks/i960
+// with -g.  Note that ACE_Thread_Manager::THR_FUNC is only used
+// internally in ACE_Thread_Manager, so it's not useful for anyone else.
+typedef int (ACE_Thread_Manager::*THR_FUNC)(int, int);
+
 class ACE_Export ACE_Thread_Manager
   // = TITLE
   //    Manages a pool of threads.
@@ -383,7 +389,6 @@ protected:
 
   // = The following four methods implement a simple scheme for
   // operating on a collection of threads atomically.
-  typedef int (ACE_Thread_Manager::*THR_FUNC)(int, int);
 
   int check_state (ACE_Thread_State state, ACE_thread_t thread);
   // Efficiently check whether <thread> is in a particular <state>.
