@@ -425,14 +425,14 @@ Defaulting Behavior
    all of the files in the directory will be added to the corresponding list
    by extension
 
-3) If idl files exist in the directory and
-   the IDL_Files components are left defaulted (i.e. not listed) and
-   none of the idl generated files are listed in the corresponding lists
+3) If custom files (ex. idl files) exist in the directory and
+   the custom files components (ex. IDL_Files) are left defaulted (i.e. not
+   listed) or the custom files components are specified and none of the
+   custom generated files are listed in the corresponding lists
 
-   the project is assumed to be a TAO project, the idl files are added to
-   the IDL_Files list  and all of the (would be) generated files will be
-   added to the front of the corresponding lists (source, inline and
-   header lists)
+   the custom files are added to the custom files component list if the
+   weren't specified and all of the (would be) generated files will be added
+   to the front of the corresponding lists (source, inline and header lists)
 
 4) If files are listed in the Source_Files list and
    a corresponding header or inline file exists
