@@ -1,3 +1,9 @@
+2003-04-14    <dts@axwell>
+
+	* orbsvcs/tests/Notify/RT_lib/RT_POA_Command.h
+	  Removed clash with symbol defined in
+	  /usr/include/machine/cpu.h on HPUX.
+
 Sun Apr 13 13:25:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IIOP_Profile.h:
