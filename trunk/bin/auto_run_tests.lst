@@ -31,6 +31,8 @@ TAO/performance-tests/RTCorba/Oneways/Reliable/run_test.pl: !MINIMUM
 TAO/tests/AMI/run_test.pl: !MINIMUM
 TAO/tests/AMI_Timeouts/run_test.pl: !MINIMUM !ST
 
+TAO/tests/AMH_Exceptions/run_test.pl: !MINIMUM
+
 TAO/tests/OctetSeq/run_test.pl
 TAO/tests/OctetSeq/run_test1.pl: !STATIC
 TAO/tests/OctetSeq/run_test2.pl: !STATIC
@@ -155,6 +157,8 @@ TAO/examples/Quoter/run_test.pl: !MINIMUM
 TAO/examples/Load_Balancing/run_test.pl: !MINIMUM !SUNCC5_1
 TAO/examples/PluggableUDP/tests/Basic/run_test.pl: !STATIC !ST
 TAO/examples/PluggableUDP/tests/SimplePerformance/run_test.pl
+TAO/examples/AMH/Sink_Server/run_test.pl: !MINIMUM
+
 
 TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl: !MINIMUM
 #TAO/orbsvcs/tests/AVStreams/Full_Profile/run_test.pl: !MINIMUM
