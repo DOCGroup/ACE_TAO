@@ -1335,6 +1335,10 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
           return d;
         }
 
+      // For the possible call to look_in_inherited() below.
+      AST_Decl::NodeType nt = d->node_type ();
+      t = DeclAsScope (d);
+
       // OK, start of name is defined. Now loop doing local lookups
       // of subsequent elements of the name, if any.
       UTL_ScopedName *sn = (UTL_ScopedName *) e->tail ();
@@ -1344,6 +1348,17 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
           d = iter_lookup_by_name_local (d, 
                                          sn,
                                          0);
+        }
+
+      // If the start of the scoped name is an interface, and the
+      // above lookup failed, it's possible that what we're looking
+      // up was inherited into that interface. The first call to
+      // look_in_inherited() is this function only checks base classes
+      // of the scope (interface) we started the lookup from.
+      if (d == 0 && nt == AST_Decl::NT_interface)
+        {
+          d = t->look_in_inherited (sn,
+                                    treat_as_ref);
         }
 
       // If treat_as_ref is true and d is not 0, add d to
