@@ -165,7 +165,7 @@ static char header[] =
 static char footer[] =
 "\n"
 "// This setups Scheduler_Factory to use the runtime version\n"
-"static int scheduler_factory_setup = \n"
+"int scheduler_factory_setup = \n"
 "  ACE_Scheduler_Factory::use_runtime (sizeof (infos)/sizeof (infos[0]),\n"
 "                                      infos);\n"
 "\n"
