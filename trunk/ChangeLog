@@ -1,3 +1,96 @@
+Wed Apr 16 00:10:37 2003  Ossama Othman  <ossama@uci.edu>
+
+	* ace/CDR_Base.h:
+
+	  Isolated ACE_CDR::WChar typedef from the ACE_OS::WChar typedef.
+	  Reduces coupling between CDR_Base.h and OS.h.
+
+	  No need to include ace/OS.h.
+
+	  Cosmetic improvements.
+
+	* ace/CDR_Base.cpp:
+
+	  Include ace/OS.h.  Necessitated by above change.
+
+	* ace/CDR_Stream.h:
+
+	  Include ace/SStringfwd.h instead of ace/SString.h.  Forward
+	  declarations are enough.
+
+	* ace/CDR_Stream.i:
+
+	  Use the ACE_OS_String scope instead of ACE_OS when calling
+	  string functions.  Allows removal of dependency on OS.h header.
+
+	* ace/Global_Macros.h:
+
+	  Moved "ACE_THROW_SPEC" preprocessor macros from OS.h to this
+	  header.  Helps remove OS.h dependencies for some headers.
+
+	* ace/INET_Addr.cpp (get_host_addr):
+
+	  Fixed VxWorks unused argument warnings.
+
+	* ace/Message_Block.h:
+
+	  Changed all "u_long" typedefs to "unsigned long".  Allows
+	  removal of OS.h include.
+
+	  Include Default_Constants.h, Global_Macros.h, Time_Value.h and
+	  <stdlib.h>.
+
+	* ace/Message_Block_T.h:
+
+	  Corrected file documentation.
+
+	* ace/OS.h:
+
+	  Moved "ACE_THROW_SPEC" and pointer alignment related macros to
+	  smaller appropriate headers.
+
+	* ace/OS_Memory.h:
+
+	  Moved pointer alignment related macros from OS.h to this
+	  header.  Helps reduce dependence on OS.h in some headers.
+
+	* ace/SStringfwd.h:
+
+	  New file containing template forward declaration based
+	  ACE_{C,W}String typedefs.  Headers requiring these typedefs for
+	  forward declarations now need only include this header instead
+	  of SString.h.
+
+	* ace/SString.h:
+
+	  Moved ACE_{C,W}String typedefs out of this header.  See above
+	  change.
+
+	* ace/String_Base.h:
+
+	  Replaced ACE.h include with Global_Macros.h, OS_String.h and
+	  OS_Memory.h.
+
+	* ace/String_Base.i (hash):
+	* ace/String_Base.cpp (hash):
+
+	  Uninlined ACE_String_Base<>::hash method.  Allows removal of
+	  ACE.h include in String_Base.h.
+
+	* ace/SSL/SSL_Asynch_Stream.cpp (do_SSL_read):
+
+	  Use of ACE_Message_Block::wr_ptr() when writing data from an
+	  ACE_Message_Block, not rd_ptr().
+
+	* ace/SSL/SSL_SOCK_Stream.cpp (send, recv):
+
+	  Corrected problem in the vararg versions of these methods where
+	  "holes" in data read/written occurred in partial reads/writes.
+
+	* ace/SSL/SSL_SOCK_Stream.i (send_i, recv_i):
+
+	  Improved "const" correctness.
+
 Wed Apr 16 06:55:53 UTC UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * netsvcs/clients/Naming/Dump_Restore/Makefile:
