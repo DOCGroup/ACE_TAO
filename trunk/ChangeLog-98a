@@ -1,3 +1,9 @@
+Wed Apr 08 17:29:01 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/SOCK_Acceptor.cpp (open): There was a boo-boo in open() as
+ 	  we were only calling bind_port() and ignoring the port supplied
+ 	  by the user. Call bind_port only if port == 0.
+
 Wed Apr  8 01:09:52 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Malloc_T: Added a new ACE_Static_Allocator class, which is
