@@ -43,13 +43,13 @@ typedef string ACE_IOStream_String;
 #endif /* ! ACE_HAS_STDCPP_STL_INCLUDES */
 #endif /* ACE_WIN32 */
 
-#if defined (DEC_CXX)
+#if defined (__DECCXX_VER)
 # if __DECCXX_VER < 50700000
 #   include /**/ <stl_macros>
 # else
 #   include /**/ <stdcomp>
 # endif /* __DECCXX_VER < 50700000 */
-#endif /* DEC_CXX */
+#endif /* __DECCXX_VER */
 
 
 class ACE_Quoted_String : public ACE_IOStream_String
