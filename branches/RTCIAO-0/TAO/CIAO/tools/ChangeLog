@@ -1,3 +1,16 @@
+Thu Aug 14 16:27:52 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/XML_Helpers/RTCAD-example.rtd:
+	* tools/XML_Helpers/RTCAD-example.cad: Added new file to show some
+	  example cad and rtd files.
+
+	* tools/XML_Helpers/main.cpp:
+	* tools/XML_Helpers/XML_Utils.cpp: Extended to invoke the RTCAD
+	  handler.
+
+	* tools/XML_Helpers/RTConfig_Handlers.h:
+	* tools/XML_Helpers/RTConfig_Handlers.cpp: Fixed run-time errors.
+
 Wed Aug 13 01:48:46 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tools/RTComponentServer/RTComponentServer.mpc: Added dependency
