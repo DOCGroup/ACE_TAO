@@ -83,5 +83,52 @@ module Stock
       //      raises (NoFactory, InvalidCriteria, CannotMeetCriteria);
     };
 
+  interface Quoter_Life_Cycle_Service : CosLifeCycle::GenericFactory
+    {
+      // = TITLE 
+      //   Wrapper for the CosLifeCycle GenericFactory
+      //
+      // inherits: 
+      // boolean supports(in Key k);
+      // Object create_object(in Key	k, in Criteria the_criteria)
+      //      raises (NoFactory, InvalidCriteria, CannotMeetCriteria);
+
+      void register_factory (in string name, 
+			     in string location,
+			     in string description,
+			     in Object object);
+      // provide an method for registering factories with their properties
+    };
+
+  interface Criteria_Evaluator
+    {
+      // = TITLE
+      //   Criteria Evaluator
+      //
+      // = DESCRIPTION
+      //   Interface description for an evaluator of CosLifeCycle
+      //   Criterias. It is mainly a wrapper, which should make
+      //   access easier
+      //
+      typedef sequence <CosLifeCycle::NameValuePair> SeqNamedValuePair;
+
+      exception NotAvailable { string reason; };
+      // raised if the questioned configuration is not available
+
+      SeqNamedValuePair getInitialization ();
+      // get the initialization 
+
+      string getFilter ();
+      // get a filter string 
+
+      SeqNamedValuePair getLogicalLocation ();
+      // get the logical location
+      
+      string getPreferences ();
+      // get the preferences, not implemented
+
+      void setCriteria (in CosLifeCycle::Criteria criteria);
+      // set the Criteria which is searched for keywords
+    };
 };
 
