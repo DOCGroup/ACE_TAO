@@ -30,6 +30,23 @@
 #include "ace/Strategies.h"
 #include "Conn_Test.h"
 
+#if defined (DEC_CXX)
+
+int
+main (int, char *[])
+{
+  ACE_START_TEST ("Conn_Test");
+
+  // Conn_Test doesn't build on DEC_CXX 5.5, and doesn't run properly
+  // (it runs indefinitely) on DEC_CXX 6.0.
+  ACE_ERROR ((LM_ERROR, "Conn_Test not supported on this platform\n"));
+
+  ACE_END_TEST;
+  return 0;
+}
+
+#else
+
 // ****************************************
 
 Svc_Handler::Svc_Handler (ACE_Thread_Manager *)
@@ -536,3 +553,4 @@ template class ACE_Svc_Tuple<Svc_Handler>;
 #pragma instantiate ACE_Svc_Tuple<Svc_Handler>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#endif /* DEC_CXX */
