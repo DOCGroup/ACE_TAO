@@ -107,9 +107,3 @@ TAO_Transport::check_event_handler_i (const char *caller)
     }
   return 0;
 }
-
-ACE_INLINE TAO_Transport_Cache_Manager &
-TAO_Transport::transport_cache_manager (void)
-{
-  return this->orb_core_->lane_resources ().transport_cache ();
-}
