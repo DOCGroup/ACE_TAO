@@ -1,3 +1,13 @@
+Fri Oct 22 12:39:29 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Messaging_Policy_i.cpp (TAO_Sync_Scope_Policy and
+	  TAO_RelativeRoundtripTimeoutPolicy_i):
+	* tao/Buffering_Constraint_Policy.cpp (TAO_Buffering_Constraint_Policy):
+	* tao/Client_Priority_Policy.cpp (TAO_Client_Priority_Policy):
+
+	  Added explicit copy constructors because SUN CC 5.0 won't
+	  compile without them.
+
 Thu Oct 21 14:55:02 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * examples/Quoter/Quoter.dsw:

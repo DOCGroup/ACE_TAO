@@ -43,7 +43,10 @@ class TAO_Export TAO_RelativeRoundtripTimeoutPolicy_i : public PortableServer::R
 public:
   TAO_RelativeRoundtripTimeoutPolicy_i (PortableServer::POA_ptr poa,
                                         const TimeBase::TimeT& relative_expiry);
-  // Constructor
+  // Constructor.
+
+  TAO_RelativeRoundtripTimeoutPolicy_i (const TAO_RelativeRoundtripTimeoutPolicy_i &rhs);
+  // Copy constructor.
 
   static CORBA::Policy_ptr create (
       PortableServer::POA_ptr poa,
@@ -101,6 +104,9 @@ public:
                          PortableServer::POA_ptr poa);
   // Constructor.
 
+  TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs);
+  // Copy constructor.
+
   static CORBA::Policy_ptr create (PortableServer::POA_ptr poa,
                                    const CORBA::Any& val,
                                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -123,6 +129,7 @@ public:
   virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
 private:
+
   Messaging::SyncScope synchronization_;
   // The attribute
 
