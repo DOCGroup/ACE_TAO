@@ -842,6 +842,16 @@ int
 TAO_GIOP_Message_Base::write_protocol_header (TAO_GIOP_Message_Type t,
                                               TAO_OutputCDR &msg)
 {
+
+#if defined (TAO_HAS_NO_HEADER_REMARSHALL)
+  static bool once = true;
+  static int header_length = 0;
+
+  if (once)
+    {
+      once = false;
+#endif
+
   // Reset the message type
   // Reset the message type
   msg.reset ();
@@ -873,7 +883,20 @@ TAO_GIOP_Message_Base::write_protocol_header (TAO_GIOP_Message_Type t,
   static int header_size = sizeof (header) / sizeof (header[0]);
   msg.write_octet_array (header, header_size);
 
+#if defined (TAO_HAS_NO_HEADER_REMARSHALL)
+  header_length = msg.total_length ();
+#endif
+
   return msg.good_bit ();
+
+#if defined (TAO_HAS_NO_HEADER_REMARSHALL)
+    }
+
+  // Skip the required set of bytes
+  msg.skip_from_start (header_length);
+  return msg.good_bit ();
+#endif
+
 }
 
 int

@@ -2,7 +2,7 @@
 project(TAO) : acelib, taoversion, core, tao_output, taodefaults, pidl, extra_core {
   sharedname   = TAO
   dynamicflags = TAO_BUILD_DLL
-  macros      += TAO_HAS_COLLOCATION
+  macros += TAO_HAS_NO_HEADER_REMARSHALL
 
   // It is no longer necessary to override IDL_Files since it is a
   // custom build type and comes from the taoidldefaults base project.
@@ -26,6 +26,7 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, pidl, extra_co
       IIOP_Lite_Factory.cpp
       IIOP_Profile.cpp
       IIOP_Transport.cpp
+      IIOP_Connector.cpp
       IIOP_Acceptor.cpp
       IIOP_Connection_Handler.cpp
       IIOP_Endpoint.cpp
@@ -34,19 +35,6 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, pidl, extra_co
       IIOPC.cpp
       IIOPA.cpp
     }
-
-//    exclude {
-//     IIOP_Connector.cpp
-//     Remote_Object_Proxy_Broker.cpp
-//     LocateRequest_Invocation_Adapter.cpp
-//     Remote_Invocation.cpp
-//     Synch_Invocation.cpp
-//     LocateRequest_Invocation.cpp
-//     Invocation_Endpoint_Selectors.cpp
-//     Reactive_Connect_Strategy.cpp
-//     Blocked_Connect_Strategy.cpp
-//     LF_Connect_Strategy.cpp
-//    }
 
     Pluggable_Messaging {
       Pluggable_Messaging.cpp
@@ -108,6 +96,7 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, pidl, extra_co
       Encodable.cpp
       Abstract_Servant_Base.cpp
       Object_Proxy_Broker.cpp
+      Remote_Object_Proxy_Broker.cpp
       Object_Proxy_Impl.cpp
       DomainC.cpp
       DomainA.cpp
@@ -127,9 +116,13 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, pidl, extra_co
       Messaging_SyncScopeC.cpp
       Invocation_Base.cpp
       Invocation_Adapter.cpp
+      LocateRequest_Invocation_Adapter.cpp
       Profile_Transport_Resolver.cpp
-      Transport_Cache_Manager.cpp
+      Remote_Invocation.cpp
       Collocated_Invocation.cpp
+      Synch_Invocation.cpp
+      LocateRequest_Invocation.cpp
+      Invocation_Endpoint_Selectors.cpp
       operation_details.cpp
       ClientRequestInfo.cpp
       ClientRequestInfo_i.cpp
@@ -260,6 +253,7 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, pidl, extra_co
       PolicyFactory_Registry.cpp
       Cache_Entries.cpp
       Base_Transport_Property.cpp
+      Transport_Cache_Manager.cpp
       Cleanup_Func_Registry.cpp
       Transport_Descriptor_Interface.cpp
       Object_Ref_Table.cpp
@@ -272,6 +266,9 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, pidl, extra_co
       Block_Flushing_Strategy.cpp
       Reactive_Flushing_Strategy.cpp
       Connect_Strategy.cpp
+      Blocked_Connect_Strategy.cpp
+      Reactive_Connect_Strategy.cpp
+      LF_Connect_Strategy.cpp
       Queued_Message.cpp
       Synch_Queued_Message.cpp
       Asynch_Queued_Message.cpp

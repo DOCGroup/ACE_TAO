@@ -1,3 +1,17 @@
+Thu Jan  6 13:05:25 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * Strategies/DIOP_Connection_Handler.cpp:
+        * Strategies/SHMIOP_Connection_Handler.cpp:
+        * Strategies/SHMIOP_Connector.cpp:
+        * Strategies/UIOP_Connection_Handler.cpp:
+        * Strategies/UIOP_Connector.cpp:
+          Spill over changes from Collocation refactoring
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/tao.mpc:
+          Prevent marshing protocol header when requests do not
+          change. mpc file that sets the right macro
+
 Tue Jan  4 09:17:53 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * tao/Invocation_Adapter.cpp:
@@ -62,10 +76,10 @@ Tue Jan  4 09:17:53 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
        * tao/Messaging/Asynch_Invocation_Adapter.h:
-         
-         If using Asynchronous communication, factored remoting code. This 
-         includes code for invoking two way operations. This inturn calls the 
-         Invocation Adapter's invoke which is already specialized for 
+
+         If using Asynchronous communication, factored remoting code. This
+         includes code for invoking two way operations. This inturn calls the
+         Invocation Adapter's invoke which is already specialized for
          collocated operation.
 
        * tao/TAO.mpc:
