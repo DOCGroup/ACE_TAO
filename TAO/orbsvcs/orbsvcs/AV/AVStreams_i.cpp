@@ -1608,6 +1608,10 @@ void
 TAO_Base_StreamEndPoint::set_flow_handler (const char *flowname,
                                            TAO_AV_Flow_Handler *handler)
 {
+  if(TAO_debug_level > 1)
+  {
+     ACE_DEBUG ((LM_DEBUG, "(%N,%l) TAO_Base_StreamEndPoint::set_flow_handler(), flowname: %s\n", flowname));
+  }
   ACE_CString flow_name_key (flowname);
   if (this->flow_handler_map_.bind (flow_name_key, handler) != 0)
     ACE_ERROR ((LM_ERROR,

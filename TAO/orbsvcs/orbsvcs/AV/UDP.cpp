@@ -72,6 +72,79 @@ TAO_AV_UDP_Flow_Handler::get_handle (void) const
   return this->sock_dgram_.get_handle () ;
 }
 
+int
+TAO_AV_UDP_Flow_Handler::change_qos(AVStreams::QoS qos)
+{
+  if( TAO_debug_level > 0 )
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%N,%l) TAO_AV_UDP_Flow_Handler::change_qos\n"));
+    }
+
+  unsigned int i=0;
+
+  int ret = 0;
+  CORBA::Long dscp = 0;
+  CORBA::Long ecn = 0;
+  int dscp_flag=0;
+  for(i=0; i < qos.QoSParams.length(); i++)
+    {
+
+      if( ACE_OS::strcmp( qos.QoSParams[i].property_name.in(), "Diffserv_Codepoint") == 0)
+        {
+          qos.QoSParams[i].property_value >>= dscp; 
+          dscp_flag=1;
+          // DSCP value can only be 6 bits wide
+          if(!((dscp >= 0) && (dscp <= 63)))
+            {
+              dscp_flag = 0;
+              ACE_DEBUG((LM_DEBUG, "(%N,%l) ECN value can only be (0-3) not %d\n", ecn)); 
+              return -1;
+            }
+        }
+
+      if( ACE_OS::strcmp( qos.QoSParams[i].property_name.in(), "ECN") == 0)
+        {
+          qos.QoSParams[i].property_value >>= ecn;
+          // ECN value can only occupy bits 6 and 7 of the
+          // IP Diffserv byte
+          if(!((ecn >= 0) && (ecn <= 3)))
+            {
+              ACE_DEBUG((LM_DEBUG, "(%N,%l) ECN value can only be (0-3) not %d\n", ecn)); 
+              ecn = 0;
+            }	
+
+        }
+    }
+      // Set the Diffserv byte only if we specified
+      // the Diffserv Codepoint (DSCP) or ECN via QoSParams
+      // passed into this method
+      if(dscp_flag || ecn)
+        {
+          int tos;
+          tos = (int)(dscp << 2);
+          if(ecn)
+            {
+              tos |= ecn;
+            }
+          ret = sock_dgram_.set_option(IPPROTO_IP, IP_TOS, (int *)&tos , (int)sizeof(tos));
+
+          if(TAO_debug_level > 1)
+            {
+              ACE_DEBUG((LM_DEBUG, "(%N,%l) set tos: ret: %d\n", ret));
+            }
+        }
+
+      if(TAO_debug_level > 1)
+        {
+           if(ret < 0 )
+             {
+                ACE_DEBUG((LM_DEBUG, "(%N,%l) errno: %p\n"));
+	     }
+	}
+      return ret;
+}
+
 //------------------------------------------------------------
 // TAO_AV_UDP_Transport
 //------------------------------------------------------------
