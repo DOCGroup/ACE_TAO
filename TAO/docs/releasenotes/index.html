@@ -48,8 +48,14 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
     <H3><A NAME="idl"></A>IDL Compiler</H3>
     Point of contact: <A HREF="mailto:gokhale@cs.wustl.edu">Aniruddha Gokhale</A>
 
-    <P> Current status: (As of Nov 25th, 1997.)
+    <P> Current status: (As of Dec 2nd, 1997.)
     <UL>
+      <LI> Latest success story: Problems when interfaces use single
+          or multiple inheritance solved. The problem was with the demultiplexing
+          code, the generated operation tables, and the dispatching
+          mechanism. We are currently testing this with the Event
+          Channel code. </LI>
+
       <LI> Generated code closely follows the C++ Mapping specified in
           the POA Specification (ORBOS/97-05-15). </LI>
 
@@ -80,20 +86,21 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
       <LI> Support for attributes completed and is currently undergoing
           testing </LI>
 
-      <LI> The latest success story is that the compiler
+      <LI> The compiler
           generates correct code for COSS Naming service and it
           runs properly. Correct code also gets generated for the
           Event Channel program </LI>
+
     </UL>
 
-  <P> Known bugs:
+  <P> Known bugs/unimplemented constructs:
   <UL>
-	<LI>Works for <I>most</I> IDL constructs. Some of the known
-            bugs/incomplete tasks are:
+	<LI> Some of the known bugs/incomplete tasks are:
             <UL>
-              <LI> Problems when interfaces use single or multiple
-                  inheritance. The problem is with the demultiplexing
-                  code. </LI>
+              <LI>
+                  Exceptions are not well-supported. TAO does not use
+                  C++ Exceptions. Instead we use the alternative
+                  mapping that uses CORBA::Environment. </LI>
 
               <LI>
                   Sequences of strings and object references still
@@ -103,11 +110,6 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
                   TypeCode generation for multidimensional arrays and
                   indirected typecodes is still a problem. </LI>
 
-              <LI>
-                  Exceptions are not well-supported. TAO does not use
-                  C++ Exceptions. Instead we use the alternative
-                  mapping that uses CORBA::Environment. </LI>
-
               <LI> Unions with default cases yet to be handled  </LI>
 
               <LI> The <<= and >>= operators for user-defined types
@@ -116,6 +118,16 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
               <LI> Deal with names in the IDL definition that are C++
                   keywords. </LI>
 
+              <LI> IDL is case insensitive. However, it looks like our
+                  front-end is case sensitive. Thanks to Anil Gopinath
+                  (anil@ittc.ukans.edu) for pointing this out. </LI>
+
+              <LI> tao_idl generates code for a *.idl file only inside
+                  the directory where the *.idl resides. However, it
+                  may be required to generate code elsewhere i.e., in
+                  the directory where the compiler was invoked. Thanks
+                  to Tom Richards (tomr@MCMEnterprise.com) for this
+                  suggestion. </LI>
             </UL>
         </LI>
       </UL>
