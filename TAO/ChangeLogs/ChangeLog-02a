@@ -1,3 +1,9 @@
+Fri Aug 17 14:14:21 2001  Paul Calabrese <calabrese_p@ociweb.com>
+
+        * docs/Options.html:
+
+          Clean up the Advanced_Resource_Factory section.
+
 Fri Aug 17 08:18:40 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/RTPortableServer/TAO_RTPortableServer.dsp:
