@@ -5,7 +5,7 @@ Wed Aug  6 02:27:32 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           option needed to enable dynamic_casting of objects passed to
           shared libraries.  Thanks to Chris Cleeland
           <cleeland@ociweb.com> for suggesting we dynamically obtain which
-          ld is in use by passing the -print-prog-name to gcc, and
+          ld to use by passing the -print-prog-name to gcc, and
           Krishnakumar B <kitty@cse.wustl.edu> for the patch.
 
         * ace/Null_Mutex.h:
