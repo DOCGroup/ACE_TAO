@@ -1,16 +1,21 @@
+Thu Jan  1 14:47:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h:
+        * orbsvcs/orbsvcs/AV/Flows_T.h:
+
 Thu Jan  1 00:26:12 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Sched/DynSched.cpp:
 
-	  #included ace/Null_Mutex.h to fix a compile error on Solaris. 
+	  #included ace/Null_Mutex.h to fix a compile error on Solaris.
 
 Thu Jan  1 00:10:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/PortableInterceptorC.h:
 
 	  Some handcrafting to prevent VC++ from crying hoarse. Thanks to
-	  Johnny for pointing it out. 
-	
+	  Johnny for pointing it out.
+
 	* tao/diffs/PortableInterceptor.diff:
 
 	  Updated dthe diffs.
@@ -23,15 +28,15 @@ Wed Dec 31 23:48:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  smart proxy during a _narrow () or _unchecked_narrow (). Our
 	  great tests are simply of no use to detect such important
 	  problems.  This should fix [BUGID 1697]. Thanks to Chris Liebig
-	  for reporting this problem. 
-	
+	  for reporting this problem.
+
 	* orbsvcs/tests/Notify/lib/Command_Factory_T.h:
 
 	  Fixed a warning with g++.
-	
+
 	* tests/Smart_Proxies/Policy/Makefile:
 
-	  Fixed dependancies. 
+	  Fixed dependancies.
 
 Wed Dec 31 15:46:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -49,7 +54,7 @@ Wed Dec 31 15:26:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  Reverted part of the changes made in "Wed Dec 31 13:44:20 2003
 	  Jeff Parsons <j.parsons@vanderbilt.edu>" since they don't
 	  compile with g++.
-	
+
 	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
 
 	  Fixed warnings on TRU 64.
@@ -63,7 +68,7 @@ Wed Dec 31 14:24:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tests/Portable_Interceptors/Collocated/Dynamic/Client_Task.cpp:
 	* tests/RTScheduling/Thread_Cancel/Thread_Task.cpp:
 
-	  Fixed unused variable warnings from CXX. 
+	  Fixed unused variable warnings from CXX.
 
 Wed Dec 31 13:44:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -92,8 +97,8 @@ Wed Dec 31 10:13:48 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* tao/IFR_Client/IFR_Base.pidl:
 
-	  Removed defenitions of CORBA::Identifier and 
-	  CORBA::RepositoryId since they are already defined in orb.idl.	
+	  Removed defenitions of CORBA::Identifier and
+	  CORBA::RepositoryId since they are already defined in orb.idl.
 
 Wed Dec 31 09:54:05 2003  Chad Elliott  <elliott_c@ociweb.com>
 
