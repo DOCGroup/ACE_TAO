@@ -1,3 +1,42 @@
+Sat Mar 10 19:05:38 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/config-win32.h:
+
+          Include config-win32-common.h even on Windows CE.
+        
+        * ace/config-win32-msvc-6.h:
+
+          If ACE_ENDTHREADEX is already defined, don't define it.
+
+        * ace/OS_Dirent.h:
+
+          Changed the use of ACE_WINCE to ACE_HAS_WINCE.
+
+        * ace/Service_Manager.cpp:
+
+          Fixed a couple of ACE_TCHAR/ACE_LIB_TEXT problems.
+
+        * ace/ace_wchar.h:
+
+          On Windows CE, #include wtypes.h.
+
+        * ace/ace_dll.vcp:
+        * ace/ace_os_dll.vcp:
+
+          Redid the output files and directories.  Now intermediate
+          files go into Release/PLATFORM and Debug/PLATFORM (where
+          PLATFORM = MIPS/ARM/X86EM/SH3/SH4).  The *.lib files go
+          into ../Lib/PLATFORM and the *.dll into ../bin/PLATFORM.
+          Also, the DLL's were renamed from ace_dll.dll and 
+          ace_os_dll.dll to ace[d].dll and ace_os[d].dll.
+
+        * bin/pippen.pl:
+
+          Changed the environment variables from DEFAULT_COMPILER and
+          DEFAULT_CONFIGS to PIPPEN_COMPILER and PIPPEN_CONFIGS. Also
+          used \Q\E for the configs because some of the Windows CE
+          configs confused the script because they use parentheses.
+
 Sat Mar 10 16:59:51 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* ACE-INSTALL.html:
