@@ -1,7 +1,15 @@
+Fri Feb  5 19:44:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* release.chk: 
+	  Cleared all the marks, the file was not up-to-date.
+
 Fri Feb  5 18:45:36 1999 Fred Kuhns <fredk@cs.wustl.edu>
-        * tao/Stub.i, rearranged order of declarations.
+
+        * tao/Stub.i: 
+	  Rearranged order of declarations.
 
 Fri Feb  5 18:11:33 1999 Fred Kuhns <fredk@cs.wustl.edu>
+
         * tao/MProfile.cpp
 	  Fixed set () so it would reinitialize the list of profiles.
 
