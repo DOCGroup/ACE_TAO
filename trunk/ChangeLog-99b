@@ -1,12 +1,19 @@
+Sun Mar 14 22:54:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* netsvcs/lib/Client_Logging_Handler.cpp (init): Added an
+ 	  ACE_OS::unlink() to prevent STREAM pipes from getting confused
+ 	  if this application doesn't shutdown gracefully.  Thanks to Bill
+ 	  Rizzi <rizzi@softserv.com>.
+
 Sun Mar 14 19:51:25 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* configure.in: Added real-time support library `-lrt' check to
-	asynchronous IO functions/libraries checks.
+	  asynchronous IO functions/libraries checks.
 
-	GNU glibc 2.1 adds support for the POSIX 1b real-time specification
-	in the library `librt'.  The POSIX asynchronous IO functions may
-	be found in that library.  Currently, `-lpthread' must also be
-	linked to in addition to `-lrt'.
+	  GNU glibc 2.1 adds support for the POSIX 1b real-time
+ 	  specification in the library `librt'.  The POSIX asynchronous IO
+ 	  functions may be found in that library.  Currently, `-lpthread'
+ 	  must also be linked to in addition to `-lrt'.
 
 Sun Mar 14 17:20:09 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
