@@ -1,3 +1,21 @@
+Thu Dec 17 04:45:39 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* tao/IIOP_Object.cpp (constructor):
+	 
+	  We were missing the initialization of the forward profile and
+	  forward profile success in the constructor with the following
+	  signature. 
+
+	  IIOP_Object::IIOP_Object (const char *host,
+                                    const CORBA::UShort port,
+                                    const char *objkey,
+                                    char *repository_id);
+
+	  Without the above initialization, we were getting segmentation
+	  fault in the destructor of the underlying Profile as it tried to
+	  delete the forward profile which pointed to an illegal address
+	  in memory.
+
 Tue Dec 15 19:39:45 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB.h:
