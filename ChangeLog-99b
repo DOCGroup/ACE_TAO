@@ -1,3 +1,8 @@
+Thu Jul  8 08:34:22 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Msg.cpp (log): Don't special-case the %t handling on AIX
+          4.3 - just 4.2 and earlier.
+
 Thu Jul  8 00:23:02 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Malloc_T.cpp: Updated all the methods that check 
