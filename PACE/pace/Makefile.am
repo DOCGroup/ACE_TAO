@@ -25,8 +25,10 @@ DESTDIRS = \
   vxworks \
   win32
 
+PACE_LIB = @PACE_LIB@
+
 lib_LTLIBRARIES = libPACE.la
-libPACE_la_LIBADD = @PACE_LIB@
+libPACE_la_LIBADD = $(PACE_LIB)
 
 pkginclude_HEADERS = \
   aio.h \
