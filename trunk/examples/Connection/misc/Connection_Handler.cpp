@@ -63,6 +63,7 @@ Connection_Handler::open (void *)
   return this->activate (THR_NEW_LWP);
 }
 
+int
 Connection_Handler::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) in close()\n"));
@@ -178,6 +179,8 @@ int
 Connection_Handler::handle_timeout (const ACE_Time_Value &tv, 
 				    const void *arg)
 {
+  ACE_UNUSED_ARG (tv);
+
   ACE_ASSERT (arg == this);
   ACE_DEBUG ((LM_DEBUG, " (%P|%t) handling timeout from this = %u\n", this));
   return 0;
