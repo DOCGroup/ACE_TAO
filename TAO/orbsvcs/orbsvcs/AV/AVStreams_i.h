@@ -108,7 +108,7 @@ public:
                              CORBA::Environment &env = CORBA::Environment::default_environment ()) 
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::noSuchFlow,
-                     AVStreams::notSupported));
+                     AVStreams::FPError));
   // Used to control the flow protocol parameters.
 
   virtual CORBA::Object_ptr get_flow_connection (const char *flow_name,
@@ -385,7 +385,7 @@ public:
                                              AVStreams::flowSpec &the_spec,
                                              CORBA::Environment &env = CORBA::Environment::default_environment ()) 
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed,
+                     AVStreams::streamOpDenied,
                      AVStreams::noSuchFlow,
                      AVStreams::QoSRequestFailed,
                      AVStreams::FPError));
@@ -560,7 +560,7 @@ public:
                                              AVStreams::flowSpec &the_spec,
                                              CORBA::Environment &env = CORBA::Environment::default_environment ()) 
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed,
+                     AVStreams::streamOpDenied,
                      AVStreams::noSuchFlow,
                      AVStreams::QoSRequestFailed,
                      AVStreams::FPError));
@@ -1205,12 +1205,12 @@ class TAO_ORBSVCS_Export TAO_MediaControl
                                                   AVStreams::PositionKey a_key,
                                                   CORBA::Environment &env = CORBA::Environment::default_environment ()) 
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::PostionKeyNotSupported)) =0;
+                     AVStreams::MediaControl::PostionKeyNotSupported)) =0;
 
   virtual void set_media_position (const AVStreams::Position & a_position,
                                    CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::PostionKeyNotSupported,
+                     AVStreams::MediaControl::PostionKeyNotSupported,
                      AVStreams::InvalidPosition)) =0;
 
   virtual void start (const AVStreams::Position & a_position,
