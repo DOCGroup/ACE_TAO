@@ -13,7 +13,7 @@ CIAO::XMLHelpers::Cascadable_DocHandler::Cascadable_DocHandler (ACEXML_XMLReader
                                                                 const ACEXML_Char *localName,
                                                                 const ACEXML_Char *qName,
                                                                 ACEXML_Attributes *
-                                                                ACEXML_ENV_ARG_NOT_USED)
+                                                                ACEXML_ENV_ARG_DECL)
   ACE_THROW_SPEC ((ACEXML_SAXException))
     : namespaceURI_ (ACE::strnew (namespaceURI)),
       localName_ (ACE::strnew (localName)),
@@ -23,6 +23,7 @@ CIAO::XMLHelpers::Cascadable_DocHandler::Cascadable_DocHandler (ACEXML_XMLReader
       child_ (0),
       locator_ (0)
 {
+  ACE_UNUSED_ARG (ACEXML_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CIAO::XMLHelpers::Cascadable_DocHandler::~Cascadable_DocHandler ()

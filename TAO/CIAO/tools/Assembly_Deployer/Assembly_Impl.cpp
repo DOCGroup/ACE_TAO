@@ -23,7 +23,7 @@ CIAO::AssemblyFactory_Impl::_default_POA (void)
 
 int
 CIAO::AssemblyFactory_Impl::init (const char *init_file
-                                  ACE_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->deployment_config_.init (init_file);
@@ -125,12 +125,12 @@ CIAO::AssemblyFactory_Impl::destroy (Components::Cookie * c
     ACE_THROW (::Components::Deployment::InvalidAssembly ());
 
   ::Components::Deployment::AssemblyState
-      state = assembly->get_state (ACE_ENV_ARG_PARAMETER);
+      state = assembly->get_state (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (state == ::Components::Deployment::INSERVICE)
     {
-      assembly->tear_down (ACE_ENV_ARG_PARAMETER);
+      assembly->tear_down (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -360,7 +360,7 @@ CIAO::Assembly_Impl::make_connection (CIAO::Assembly_Connection::Connect_Info *i
 
 CORBA::Object_ptr
 CIAO::Assembly_Impl::resolve_interface (CIAO::Assembly_Connection::IF_Resolver_Info *info
-                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                        ACE_ENV_ARG_DECL)
 {
   switch (info->resolver_type ())
     {
@@ -408,7 +408,7 @@ CIAO::Assembly_Impl::resolve_interface (CIAO::Assembly_Connection::IF_Resolver_I
 
 Components::CCMObject_ptr
 CIAO::Assembly_Impl::resolve_component (CIAO::Assembly_Connection::IF_Resolver_Info *info
-                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                        ACE_ENV_ARG_DECL)
 {
   if (info->resolver_type () == CIAO::Assembly_Connection::COMP_IDREF)
     {
@@ -437,7 +437,7 @@ CIAO::Assembly_Impl::resolve_component (CIAO::Assembly_Connection::IF_Resolver_I
 
 Components::CCMHome_ptr
 CIAO::Assembly_Impl::resolve_home (CIAO::Assembly_Connection::IF_Resolver_Info *info
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                   ACE_ENV_ARG_DECL)
 {
   switch (info->resolver_type ())
     {
@@ -476,7 +476,7 @@ CIAO::Assembly_Impl::resolve_home (CIAO::Assembly_Connection::IF_Resolver_Info *
 
 Components::EventConsumerBase_ptr
 CIAO::Assembly_Impl::resolve_consumer (CIAO::Assembly_Connection::IF_Resolver_Info *info
-                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                       ACE_ENV_ARG_DECL)
 {
   if (info->resolver_type () == CIAO::Assembly_Connection::CONSUMER)
     {

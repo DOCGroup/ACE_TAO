@@ -108,7 +108,8 @@ install_homes (CIAO::Session_Container &container,
   ACE_UNUSED_ARG (orb);
 
   if (component_list_ == 0)
-    ACE_THROW (CORBA::BAD_PARAM ());
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (),
+                      Components::CCMHome::_nil ());
 
   FILE* config_file =
     ACE_OS::fopen (component_list_, "r");
@@ -153,7 +154,7 @@ install_homes (CIAO::Session_Container &container,
                                          items[2],
                                          items[3]
                                          ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          ACE_CHECK_RETURN (Components::CCMHome::_nil ());
 
           if (CORBA::is_nil (home.in ()))
             {
@@ -174,7 +175,8 @@ main (int argc, char *argv[])
     {
       // Initialize orb
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv
+                                            argv,
+                                            ""
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
