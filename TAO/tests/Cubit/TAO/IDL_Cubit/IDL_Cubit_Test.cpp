@@ -60,9 +60,9 @@ main (int, char *[])
                 "Client forked with pid = %d.\n",
                 client.getpid ()));
 
-  if (server.wait () != 0)
+  if (server.wait () < 0)
     ACE_DEBUG ((LM_DEBUG,"(%P|%t) Wait on server failed\n"));
-  if (client.wait () != 0)
+  if (client.wait () < 0)
     ACE_DEBUG ((LM_DEBUG,"(%P|%t) Wait on client failed\n"));
 
   ACE_END_TEST;
