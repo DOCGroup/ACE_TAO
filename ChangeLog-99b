@@ -1,15 +1,19 @@
+Fri Feb 19 17:01:08 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Makefile: moved ACE from OS_FILES to UTILS_FILES.
+
 Fri Feb 19 15:44:23 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS,
-	  ace/Synch: Moved the implementation of the
-	  ACE_Recursive_Thread_Mutex from the Synch.* files to
-	  the OS.* files in order to reduce coupling in OS.* and
-	  other parts of ACE.
+        * ace/OS,
+          ace/Synch: Moved the implementation of the
+          ACE_Recursive_Thread_Mutex from the Synch.* files to
+          the OS.* files in order to reduce coupling in OS.* and
+          other parts of ACE.
 
 Fri Feb 19 12:36:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.i: 
-	  Fixed missing ACE_INLINE for ACE_OS::strenvdup()
+        * ace/OS.i:
+          Fixed missing ACE_INLINE for ACE_OS::strenvdup()
 
 Fri Feb 19 11:35:57 1999  Steve Huston  <shuston@riverace.com>
 
@@ -21,90 +25,90 @@ Fri Feb 19 11:35:57 1999  Steve Huston  <shuston@riverace.com>
 
 Fri Feb 19 11:22:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.cpp (open): Don't call CreateFileA with FILE_SHARE_DELETE
-	  when compiled on Win95 because it doesn't support the flag.  The
-	  implication of this change is that unlink before close will not
-	  work on Win95.  So programs that are targeted to both NT and
-	  Win95 cannot depend on it.  Thanks to Rod Joseph
-	  <rodjoseph@adt.com> for reporting the bug.
+        * ace/OS.cpp (open): Don't call CreateFileA with FILE_SHARE_DELETE
+          when compiled on Win95 because it doesn't support the flag.  The
+          implication of this change is that unlink before close will not
+          work on Win95.  So programs that are targeted to both NT and
+          Win95 cannot depend on it.  Thanks to Rod Joseph
+          <rodjoseph@adt.com> for reporting the bug.
 
 Thu Feb 18 21:10:45 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.cpp (string_to_argv): We no longer have to special case
- 	  for WinCE since this logic has been moved into
- 	  ACE_OS::strenvdup().
+        * ace/OS.cpp (string_to_argv): We no longer have to special case
+          for WinCE since this logic has been moved into
+          ACE_OS::strenvdup().
 
-	* ace/ACE.cpp: Implemented ACE::strenvdup() using
- 	  ACE_OS::strenvdup().
+        * ace/ACE.cpp: Implemented ACE::strenvdup() using
+          ACE_OS::strenvdup().
 
-	* ace/OS: Move the implementation of strenvdup() from ACE to
- 	  ACE_OS to remove another dependency from the OS wrappers.
+        * ace/OS: Move the implementation of strenvdup() from ACE to
+          ACE_OS to remove another dependency from the OS wrappers.
 
-	* ace/ARGV.cpp: Rewrote the ACE_ARGV::string_to_argv() and
- 	  ACE_ARGV::argv_to_string() methods to use the new
- 	  ACE_OS::string_to_argv() and ACE_OS::argv_to_string().
+        * ace/ARGV.cpp: Rewrote the ACE_ARGV::string_to_argv() and
+          ACE_ARGV::argv_to_string() methods to use the new
+          ACE_OS::string_to_argv() and ACE_OS::argv_to_string().
 
-	* ace/OS.h: Added string_to_argv() and argv_to_string() methods to
- 	  ACE_OS to remove the dependency on ACE_ARGV.
+        * ace/OS.h: Added string_to_argv() and argv_to_string() methods to
+          ACE_OS to remove the dependency on ACE_ARGV.
 
 Thu Feb 18 19:21:03 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/005/client_handler.cpp: Replaced the leading '_'
-	in the open() method so that we can cast _acceptor to acceptor.
+        * docs/tutorials/005/client_handler.cpp: Replaced the leading '_'
+        in the open() method so that we can cast _acceptor to acceptor.
 
 Thu Feb 18 14:12:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* netsvcs/clients/Naming/Client/svc.conf: Changed to start up
-	  ACE_Naming_Context as dynamic service.  Thanks to Darren
-	  Whobrey <whobrey@fecit.co.uk> for reporting this problem.
+        * netsvcs/clients/Naming/Client/svc.conf: Changed to start up
+          ACE_Naming_Context as dynamic service.  Thanks to Darren
+          Whobrey <whobrey@fecit.co.uk> for reporting this problem.
 
-	* ace/Name_Proxy.cpp (open): The timeout value was set upp
-	  ACE_Time_Value::zero accidentally when we want blocking
-	  connect.  Thanks to Darren Whobrey <whobrey@fecit.co.uk> for
-	  reporting the bug.
+        * ace/Name_Proxy.cpp (open): The timeout value was set upp
+          ACE_Time_Value::zero accidentally when we want blocking
+          connect.  Thanks to Darren Whobrey <whobrey@fecit.co.uk> for
+          reporting the bug.
 
-	* ace/CDR_Stream.{h,i} (ACE_InputCDR::do_byte_swap): Added
-	  accessor function for Flick.
+        * ace/CDR_Stream.{h,i} (ACE_InputCDR::do_byte_swap): Added
+          accessor function for Flick.
 
-	* ace/CORBA_macros.h (ACE_THROW_INT): This should return a new
-	  instance of the exception.  Thanks to Andy for pointing this
-	  out.
+        * ace/CORBA_macros.h (ACE_THROW_INT): This should return a new
+          instance of the exception.  Thanks to Andy for pointing this
+          out.
 
 Wed Feb 17 16:40:56 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h (ACE_NEW_THROW_EX): A new ACE_NEW_THROW macro which
-	  makes ACE_NEW_THROW_EX behave like a exception-throwing
-	  function.  I.e., you need to follow ACE_NEW_THOW_EX with
-	  appropriate ACE_CHECK* macros.  The use of ACE_NEW_THROW,
-	  ACE_NEW_THROW_RETURN, ACE_NEW_TRY_THROW are deprecated.
+        * ace/OS.h (ACE_NEW_THROW_EX): A new ACE_NEW_THROW macro which
+          makes ACE_NEW_THROW_EX behave like a exception-throwing
+          function.  I.e., you need to follow ACE_NEW_THOW_EX with
+          appropriate ACE_CHECK* macros.  The use of ACE_NEW_THROW,
+          ACE_NEW_THROW_RETURN, ACE_NEW_TRY_THROW are deprecated.
 
-	* docs/exceptions.html: Added documentation for
-	  ACE_DECLARE_NEW_CORBA_ENV.
+        * docs/exceptions.html: Added documentation for
+          ACE_DECLARE_NEW_CORBA_ENV.
 
-	* ace/config-WinCE.h: Automatically define ACE_HAS_WINCE if it is
-	  not already defined.
+        * ace/config-WinCE.h: Automatically define ACE_HAS_WINCE if it is
+          not already defined.
 
-	* ace/Synch.cpp: I had to shuffle the location of .i file around
-	  to avoid a warning from SH compiler for CE.
+        * ace/Synch.cpp: I had to shuffle the location of .i file around
+          to avoid a warning from SH compiler for CE.
 
-	* ace/config-win32-common.h: Disabled checking for DLL run-time,
-	  WIN32, and multi-threaded run-time on Windows CE.
+        * ace/config-win32-common.h: Disabled checking for DLL run-time,
+          WIN32, and multi-threaded run-time on Windows CE.
 
-	* ace/CORBA_macros.h (ACE_DECLARE_NEW_CORBA_ENV): Added this macro
-	  for declaring a new CORBA_Environment called ACE_TRY_ENV.
-	  ACE_TRY_NEW_ENV should now be avoided because it won't work if
-	  multiple try blocks are needed in the top-most functions.
-	  Instead, you can use the new macro to define the environment
-	  variable and use ACE_TRY/ACE_TRY_EX as usually.  This is even
-	  more intuitive than ACE_TRY_NEW_ENV. ;)  Thanks to Andy for
-	  reporting the problem.
+        * ace/CORBA_macros.h (ACE_DECLARE_NEW_CORBA_ENV): Added this macro
+          for declaring a new CORBA_Environment called ACE_TRY_ENV.
+          ACE_TRY_NEW_ENV should now be avoided because it won't work if
+          multiple try blocks are needed in the top-most functions.
+          Instead, you can use the new macro to define the environment
+          variable and use ACE_TRY/ACE_TRY_EX as usually.  This is even
+          more intuitive than ACE_TRY_NEW_ENV. ;)  Thanks to Andy for
+          reporting the problem.
 
 Wed Feb 17 10:44:29 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* examples/Reactor/Proactor/test_proactor.dsp:
-	* examples/Reactor/Proactor/test_proactor.cpp:
-	* examples/Reactor/Proactor/Makefile:
-	rtagged these files with "new_proactor"
+        * examples/Reactor/Proactor/test_proactor.dsp:
+        * examples/Reactor/Proactor/test_proactor.cpp:
+        * examples/Reactor/Proactor/Makefile:
+        rtagged these files with "new_proactor"
 
 Tue Feb 16 17:08:53 1999  Steve Huston  <shuston@riverace.com>
 
@@ -112,7 +116,7 @@ Tue Feb 16 17:08:53 1999  Steve Huston  <shuston@riverace.com>
           class definition to new file, transceiver.h, to build ok on AIX (P15)
           and fixed core dump if ctor fails to connect.
 
-	* examples/Connection/misc: Moved some class definitions from
+        * examples/Connection/misc: Moved some class definitions from
           test_upipe.cpp to new file test_upipe.h to build ok on AIX (P17).
           Same thing with Connection_Handler - new file Connection_Handler.h.
 
@@ -121,78 +125,78 @@ Tue Feb 16 17:08:53 1999  Steve Huston  <shuston@riverace.com>
 
 Tue Feb 16 16:42:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/CORBA_macros.h (ACE_PRINT_EXCEPTION): A new macro that deal
-	  with printing out the exception for debugging.  Thanks to Lothar
-	  Werzinger <lwerzinger@krones.de> for suggesting this.
+        * ace/CORBA_macros.h (ACE_PRINT_EXCEPTION): A new macro that deal
+          with printing out the exception for debugging.  Thanks to Lothar
+          Werzinger <lwerzinger@krones.de> for suggesting this.
 
-	* docs/exceptions.html: Added documentation for the new macro
-	  ACE_PRINT_EXCEPTION.  Since there's no portable way to print out
-	  the content of a CORBA_Exception, we use this macro to deal with
-	  differences among various ORB implementations.  This macro is
-	  user definable.
+        * docs/exceptions.html: Added documentation for the new macro
+          ACE_PRINT_EXCEPTION.  Since there's no portable way to print out
+          the content of a CORBA_Exception, we use this macro to deal with
+          differences among various ORB implementations.  This macro is
+          user definable.
 
-	Thanks to Eric Covington <eric@nowsol.com> for figuring out the
-	following.
+        Thanks to Eric Covington <eric@nowsol.com> for figuring out the
+        following.
 
-	* ace/ace_ce_dll.dsp: Added Functor.cpp and Message_Queue.cpp.
+        * ace/ace_ce_dll.dsp: Added Functor.cpp and Message_Queue.cpp.
 
-	* ace/High_Res_Timer.cpp (dump): Fixed Unicode problem.
+        * ace/High_Res_Timer.cpp (dump): Fixed Unicode problem.
 
-	* ace/OS.i (truncate): WinCE does not have char* version of
-	  truncate.
+        * ace/OS.i (truncate): WinCE does not have char* version of
+          truncate.
 
 Tue Feb 16 00:39:35 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
-	* ace/ace_dll.dsp:
-	* examples/Reactor/Proactor/test_proactor.dsp:
-	* examples/Reactor/Proactor/test_proactor.cpp:
-	Updated the files.
-	* ace/WIN32_Asynch_IO.h:
-	* ace/WIN32_Asynch_IO.cpp:
-	* ace/WIN32_Asynch_IO.i:
-	Added the files
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp:
-	Updated these files
-	* examples/Reactor/Proactor/Makefile:
-	New make file which also compiles the test_aiosig_ace.cpp
-	program.
-	* ace/POSIX_Asynch_IO.i:
-	Added the file.
+        * ace/ace_dll.dsp:
+        * examples/Reactor/Proactor/test_proactor.dsp:
+        * examples/Reactor/Proactor/test_proactor.cpp:
+        Updated the files.
+        * ace/WIN32_Asynch_IO.h:
+        * ace/WIN32_Asynch_IO.cpp:
+        * ace/WIN32_Asynch_IO.i:
+        Added the files
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+        Updated these files
+        * examples/Reactor/Proactor/Makefile:
+        New make file which also compiles the test_aiosig_ace.cpp
+        program.
+        * ace/POSIX_Asynch_IO.i:
+        Added the file.
 
 
-	rTagged the ACE_wrappers repository with <before_proactor>
-	After the following changes rtagged the repository with
-	<after_proactor>
+        rTagged the ACE_wrappers repository with <before_proactor>
+        After the following changes rtagged the repository with
+        <after_proactor>
 
-	* ace/
-		Proactor.h
-		Asynch_IO.cpp
- 		Asynch_IO.h
- 		Makefile
- 		Proactor.cpp
- 		Proactor.h
-		config-lynxos.h
-		config-sunos5.6.h
-		config-sunos5.7.h
-		POSIX_Asynch_IO.{h,CPP}
-		POSIX_Proactor.{h,cpp}
-		WIN32_Asynch_IO.{h,cpp}
-		Asynch_IO_Impl.{h,cpp,i}
-		Proactor_Impl.h
-	Applied Bridge pattern to the POSIX implementation of the Proactor
-	code. ACE_POSIX_AIOCB_Proactor works fine on Solaris
-	2.6. ACE_POSIX_SIG_Proactor works on LynxOS. Take a look at the tests
-	at the $(ACE_ROOT)/examples/Reactor/Proactor/ and the README.
+        * ace/
+                Proactor.h
+                Asynch_IO.cpp
+                Asynch_IO.h
+                Makefile
+                Proactor.cpp
+                Proactor.h
+                config-lynxos.h
+                config-sunos5.6.h
+                config-sunos5.7.h
+                POSIX_Asynch_IO.{h,CPP}
+                POSIX_Proactor.{h,cpp}
+                WIN32_Asynch_IO.{h,cpp}
+                Asynch_IO_Impl.{h,cpp,i}
+                Proactor_Impl.h
+        Applied Bridge pattern to the POSIX implementation of the Proactor
+        code. ACE_POSIX_AIOCB_Proactor works fine on Solaris
+        2.6. ACE_POSIX_SIG_Proactor works on LynxOS. Take a look at the tests
+        at the $(ACE_ROOT)/examples/Reactor/Proactor/ and the README.
 
-	* tests/
-		Aio_Platform_Test.cpp
-	*examples/Reactor/Proactor/:
-		test_proactor.cpp
-		test_aiocb.cpp
-		test_aiosig.cpp
-		test_aiosig_ace.cpp
-		README
-	Test files for testing out the platforms.
+        * tests/
+                Aio_Platform_Test.cpp
+        *examples/Reactor/Proactor/:
+                test_proactor.cpp
+                test_aiocb.cpp
+                test_aiosig.cpp
+                test_aiosig_ace.cpp
+                README
+        Test files for testing out the platforms.
 
 Mon Feb 15 13:17:15 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -200,103 +204,103 @@ Mon Feb 15 13:17:15 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sun Feb 14 15:25:27 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ACE-configuration.txt:
-	* ACE.ifnames:
-	* acconfig.h:
-	* ace-config.in:
-	* ace-diff-config.in:
-	* acinclude.m4:
-	* aclocal.m4:
-	* config.guess:
-	* config.sub:
-	* configure:
-	* configure.in:
-	* install-sh:
-	* libtool:
-	* ltconfig:
-	* ltmain.sh:
-	* missing:
-	* mkinstalldirs:
-	* ace/config.h.in:
+        * ACE-configuration.txt:
+        * ACE.ifnames:
+        * acconfig.h:
+        * ace-config.in:
+        * ace-diff-config.in:
+        * acinclude.m4:
+        * aclocal.m4:
+        * config.guess:
+        * config.sub:
+        * configure:
+        * configure.in:
+        * install-sh:
+        * libtool:
+        * ltconfig:
+        * ltmain.sh:
+        * missing:
+        * mkinstalldirs:
+        * ace/config.h.in:
 
-	Started to introduce the work done by the ACE Configuration
-	Project into the official ACE distribution.
+        Started to introduce the work done by the ACE Configuration
+        Project into the official ACE distribution.
 
-	To help speed development, the work being done by the ACE
-	Configuration Project is being slowly introduced into the official
-	ACE distribution.  Some of the functionality in the work created by
-	the ACE Configuration Project has been removed so that ACE may be
-	built in the usual fashion.  Once the ACE Configuration Project
-	work stabilizes on more platforms that removed functionality may be
-	added to ACE.
+        To help speed development, the work being done by the ACE
+        Configuration Project is being slowly introduced into the official
+        ACE distribution.  Some of the functionality in the work created by
+        the ACE Configuration Project has been removed so that ACE may be
+        built in the usual fashion.  Once the ACE Configuration Project
+        work stabilizes on more platforms that removed functionality may be
+        added to ACE.
 
-	Currently the configure script contains most of the tests that are
-	necessary to properly configure ACE on most platforms.  However,
-	there are still some autoconf tests that are missing.  As such, you
-	may encounter and most likely will have compilation problems.
+        Currently the configure script contains most of the tests that are
+        necessary to properly configure ACE on most platforms.  However,
+        there are still some autoconf tests that are missing.  As such, you
+        may encounter and most likely will have compilation problems.
 
-	The `configure' script that is currently being used has been
-	modified from the ACE Configuration Project's `configure' script to
-	prevent makefiles from being automatically generated since there are
-	still some issues that must be addressed before automatically
-	generated makefiles are incorporated into the official ACE
-	distribution.
+        The `configure' script that is currently being used has been
+        modified from the ACE Configuration Project's `configure' script to
+        prevent makefiles from being automatically generated since there are
+        still some issues that must be addressed before automatically
+        generated makefiles are incorporated into the official ACE
+        distribution.
 
 Sun Feb 14 14:09:11 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/015/server.cpp (main): Force the singleton to use
-	the Select Reactor instead of the OS-default.  This should fix the
-	problem this tutorial has on Win32 due to blocking vs non-blocking
-	socket configuration.
+        * docs/tutorials/015/server.cpp (main): Force the singleton to use
+        the Select Reactor instead of the OS-default.  This should fix the
+        problem this tutorial has on Win32 due to blocking vs non-blocking
+        socket configuration.
 
-	* docs/tutorials/015/Protocol_Task.h : Removed the ability to
-	activate this task.  The code is now a little simpler and less
-	likely to behave in unpredicatable ways.
+        * docs/tutorials/015/Protocol_Task.h : Removed the ability to
+        activate this task.  The code is now a little simpler and less
+        likely to behave in unpredicatable ways.
 
-	* docs/tutorials/015/* : A few typos fixed but mostly fallout from
-	removing the ability to activate the Protocol_Task.
+        * docs/tutorials/015/* : A few typos fixed but mostly fallout from
+        removing the ability to activate the Protocol_Task.
 
-	* docs/tutorials/016/page01.html : Added Kirthika's abstract.
+        * docs/tutorials/016/page01.html : Added Kirthika's abstract.
 
-	* docs/tutorials/016/condition.cpp : Made max_threads_ a
-	non-static member variable that is set by open().
+        * docs/tutorials/016/condition.cpp : Made max_threads_ a
+        non-static member variable that is set by open().
 
-	* docs/tutorials/017/page01.html : Added Kirthika's abstract.
+        * docs/tutorials/017/page01.html : Added Kirthika's abstract.
 
 Sun Feb 14 12:47:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/CDR_Stream.h:
-	* ace/CDR_Stream.i:
-	* ace/CDR_Stream.cpp:
-	  Minor cosmetic changes, mostly trailing spaces.
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.i:
+        * ace/CDR_Stream.cpp:
+          Minor cosmetic changes, mostly trailing spaces.
 
 Sat Feb 13 22:06:17 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	The following changes are based on the patch Eric Covington
-	<eric@nowsol.com> submitted.  Thanks very much to Eric for
-	bringing ACE/CE up-to-date.
+        The following changes are based on the patch Eric Covington
+        <eric@nowsol.com> submitted.  Thanks very much to Eric for
+        bringing ACE/CE up-to-date.
 
-	* ace/ace_ce_dll.dsp: Updated.
+        * ace/ace_ce_dll.dsp: Updated.
 
-	* ace/OS.cpp: (open): CE doesn't support opening files with
-	  attribute FILE_SHARE_DELETE.
+        * ace/OS.cpp: (open): CE doesn't support opening files with
+          attribute FILE_SHARE_DELETE.
 
-	* ace/OS.i (abort): CE doesn't support abort.
+        * ace/OS.i (abort): CE doesn't support abort.
 
-	* ace/Stats.cpp (print_summary): CE doesn't support strerror.
+        * ace/Stats.cpp (print_summary): CE doesn't support strerror.
 
-	* ace/Stats.i (dump): Changed to use ACE_DEBUG.
+        * ace/Stats.i (dump): Changed to use ACE_DEBUG.
 
-	* tests/Thread_Manager_Test.cpp (main):
-	* ace/tests/SOCK_Connector_Test.cpp (find_another_host):
-	* ace/Log_Msg.cpp (log):
-	* ace/INET_Addr.cpp (addr_to_string): Fixed Unicode problems.
+        * tests/Thread_Manager_Test.cpp (main):
+        * ace/tests/SOCK_Connector_Test.cpp (find_another_host):
+        * ace/Log_Msg.cpp (log):
+        * ace/INET_Addr.cpp (addr_to_string): Fixed Unicode problems.
 
 Fri Feb 12 16:14:47 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Remote_Tokens.cpp: Replaced the typedef for
- 	  ACE_TSS_CONNECTION_MUTEX with #define ACE_TSS_CONNECTION_MUTEX.
-  	  Thanks to Arturo for reporting this.
+        * ace/Remote_Tokens.cpp: Replaced the typedef for
+          ACE_TSS_CONNECTION_MUTEX with #define ACE_TSS_CONNECTION_MUTEX.
+          Thanks to Arturo for reporting this.
 
 Fri Feb 12 18:41:22 1999  Steve Huston  <shuston@riverace.com>
 
