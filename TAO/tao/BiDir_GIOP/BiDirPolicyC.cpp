@@ -20,6 +20,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "BiDirGIOP.h"
+#include "tao/Typecode.h"
 
 #if !defined (__ACE_INLINE__)
 #include "BiDirPolicyC.i"
