@@ -74,7 +74,7 @@ namespace CIAO
     CORBA::Object_var poa_object =
       this->orb_->resolve_initial_references("RootPOA"
                                              ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_CHECK_RETURN (-1);
 
     if (CORBA::is_nil (poa_object.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -84,24 +84,24 @@ namespace CIAO
     PortableServer::POA_var root_poa =
       PortableServer::POA::_narrow (poa_object.in ()
                                     ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_CHECK_RETURN (-1);
 
     this->create_component_POA (name,
                                 more_policies,
                                 root_poa.in ()
                                 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_CHECK_RETURN (-1);
 
     this->create_facet_consumer_POA (root_poa.in ()
                                      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_CHECK_RETURN (-1);
 
     PortableServer::POAManager_var poa_manager =
       root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_CHECK_RETURN (-1);
 
     poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_CHECK_RETURN (-1);
 
     return 0;
   }
