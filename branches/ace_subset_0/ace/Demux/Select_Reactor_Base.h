@@ -21,7 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Timer/Timer_Queue.h"
-#include "ace/Demux/Event_Handler.h"
+#include "ace/Event_Handler/Event_Handler.h"
 #include "ace/OS/Handle_Set.h"
 #include "ace/Threads/Token.h"
 #include "ace/IPC/Pipe.h"

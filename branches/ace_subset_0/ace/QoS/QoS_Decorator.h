@@ -22,7 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/IPC/INET_Addr.h"
-#include "ace/Demux/Event_Handler.h"
+#include "ace/Event_Handler/Event_Handler.h"
 #include "ace/QoS/SOCK_Dgram_Mcast_QoS.h"
 #include "ace/QoS/ACE_QoS_Export.h"
 

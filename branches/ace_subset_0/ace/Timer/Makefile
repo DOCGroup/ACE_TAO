@@ -238,8 +238,8 @@ clean:
  $(ACE_ROOT)/ace/Connection/Sock_Connect.h \
  $(ACE_ROOT)/ace/Connection/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/Threads/Synch.h \
  $(ACE_ROOT)/ace/Threads/Synch.i \
@@ -411,8 +411,8 @@ clean:
  $(ACE_ROOT)/ace/Memory/Malloc_T.i \
  $(ACE_ROOT)/ace/Memory/Malloc_T.cpp \
  $(ACE_ROOT)/ace/Memory/Memory_Pool.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  $(ACE_ROOT)/ace/Memory/Mem_Map.h \
@@ -495,8 +495,8 @@ clean:
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.i \
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.cpp \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.cpp \
  Timer_Queue_T.i \
@@ -578,8 +578,8 @@ clean:
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.i \
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.cpp \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.cpp \
  Timer_Queue_T.i \
@@ -652,8 +652,8 @@ clean:
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.i \
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.cpp \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.cpp \
  Timer_Queue_T.i \
@@ -729,8 +729,8 @@ clean:
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.i \
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.cpp \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.cpp \
  Timer_Queue_T.i \
@@ -807,8 +807,8 @@ clean:
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.i \
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.cpp \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.cpp \
  Timer_Queue_T.i \
@@ -878,8 +878,8 @@ clean:
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.i \
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.cpp \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.cpp \
  Timer_Queue_T.i \
@@ -931,8 +931,8 @@ clean:
  $(ACE_ROOT)/ace/Connection/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Svcconf/Shared_Object.i \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/Svcconf/Service_Object.i \
  $(ACE_ROOT)/ace/Threads/Thread_Manager.h \
  $(ACE_ROOT)/ace/Threads/Thread.h \
@@ -1101,8 +1101,8 @@ clean:
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.i \
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.cpp \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.cpp \
  Timer_Queue_T.i \
@@ -1166,8 +1166,8 @@ clean:
  $(ACE_ROOT)/ace/Logging/Log_Priority.h \
  $(ACE_ROOT)/ace/Logging/Log_Record.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  Timer_Queue_T.h \
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.h \
@@ -1241,8 +1241,8 @@ clean:
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.i \
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.cpp \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.cpp \
  Timer_Queue_T.i \
@@ -1314,8 +1314,8 @@ clean:
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.i \
  $(ACE_ROOT)/ace/Utils/Templates/Free_List.cpp \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.i \
  $(ACE_ROOT)/ace/Utils/Test_and_Set.cpp \
  Timer_Queue_T.i \

@@ -12,7 +12,7 @@
 #define ACE_NOTIFICATION_STRATEGY_H
 #include "ace/pre.h"
 
-#include "ace/Demux/Event_Handler.h"
+#include "ace/Event_Handler/Event_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

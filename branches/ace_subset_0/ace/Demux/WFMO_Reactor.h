@@ -23,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Timer/Timer_Queue.h"
-#include "ace/Demux/Event_Handler.h"
+#include "ace/Event_Handler/Event_Handler.h"
 #include "ace/Threads/Synch.h"
 #include "ace/Demux/Reactor_Impl.h"
 #include "ace/Streams/Message_Queue.h"

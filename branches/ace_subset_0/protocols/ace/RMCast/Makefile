@@ -185,8 +185,8 @@ clean:
  $(ACE_ROOT)/ace/Memory/Malloc_T.i \
  $(ACE_ROOT)/ace/Memory/Malloc_T.cpp \
  $(ACE_ROOT)/ace/Memory/Memory_Pool.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  $(ACE_ROOT)/ace/Memory/Mem_Map.h \
@@ -391,8 +391,8 @@ clean:
  $(ACE_ROOT)/ace/Memory/Malloc_T.i \
  $(ACE_ROOT)/ace/Memory/Malloc_T.cpp \
  $(ACE_ROOT)/ace/Memory/Memory_Pool.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  $(ACE_ROOT)/ace/Memory/Mem_Map.h \
@@ -498,8 +498,8 @@ clean:
  $(ACE_ROOT)/ace/Svcconf/Service_Object.h \
  $(ACE_ROOT)/ace/Svcconf/Shared_Object.h \
  $(ACE_ROOT)/ace/Svcconf/Shared_Object.i \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/Svcconf/Service_Object.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/IPC/Signal.i \
@@ -756,8 +756,8 @@ clean:
  $(ACE_ROOT)/ace/Connection/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Svcconf/Shared_Object.i \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/Svcconf/Service_Object.i \
  $(ACE_ROOT)/ace/Threads/Thread_Manager.h \
  $(ACE_ROOT)/ace/Threads/Thread.h \
@@ -955,8 +955,8 @@ clean:
  $(ACE_ROOT)/ace/Svcconf/Service_Object.h \
  $(ACE_ROOT)/ace/Svcconf/Shared_Object.h \
  $(ACE_ROOT)/ace/Svcconf/Shared_Object.i \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/Svcconf/Service_Object.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/IPC/Signal.i \
@@ -1172,8 +1172,8 @@ clean:
  $(ACE_ROOT)/ace/Svcconf/Service_Object.h \
  $(ACE_ROOT)/ace/Svcconf/Shared_Object.h \
  $(ACE_ROOT)/ace/Svcconf/Shared_Object.i \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/Svcconf/Service_Object.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/IPC/Signal.i \
@@ -1315,8 +1315,8 @@ clean:
  $(ACE_ROOT)/ace/Memory/Malloc_T.i \
  $(ACE_ROOT)/ace/Memory/Malloc_T.cpp \
  $(ACE_ROOT)/ace/Memory/Memory_Pool.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  $(ACE_ROOT)/ace/Memory/Mem_Map.h \
@@ -1363,7 +1363,7 @@ clean:
  $(ACE_ROOT)/ace/OS/OS_Errno.h \
  $(ACE_ROOT)/ace/OS/OS_Export.h \
  $(ACE_ROOT)/ace/OS/OS_Errno.inl \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS/OS.h \
  $(ACE_ROOT)/ace/OS/OS_Dirent.h \
@@ -1392,7 +1392,7 @@ clean:
  $(ACE_ROOT)/ace/Connection/Sock_Connect.h \
  $(ACE_ROOT)/ace/Connection/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  RMCast_Resend_Handler.i \
  RMCast_Retransmission.h \
  RMCast_Module.h \
@@ -1623,8 +1623,8 @@ clean:
  $(ACE_ROOT)/ace/Memory/Malloc_T.i \
  $(ACE_ROOT)/ace/Memory/Malloc_T.cpp \
  $(ACE_ROOT)/ace/Memory/Memory_Pool.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/IPC/Signal.i \
  $(ACE_ROOT)/ace/Memory/Mem_Map.h \
@@ -1770,7 +1770,7 @@ clean:
  $(ACE_ROOT)/ace/OS/OS_Errno.h \
  $(ACE_ROOT)/ace/OS/OS_Export.h \
  $(ACE_ROOT)/ace/OS/OS_Errno.inl \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS/OS.h \
  $(ACE_ROOT)/ace/OS/OS_Dirent.h \
@@ -1799,7 +1799,7 @@ clean:
  $(ACE_ROOT)/ace/Connection/Sock_Connect.h \
  $(ACE_ROOT)/ace/Connection/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  RMCast_UDP_Event_Handler.i \
  RMCast_IO_UDP.h \
  RMCast_Module.h \
@@ -2000,8 +2000,8 @@ clean:
  $(ACE_ROOT)/ace/Svcconf/Service_Object.h \
  $(ACE_ROOT)/ace/Svcconf/Shared_Object.h \
  $(ACE_ROOT)/ace/Svcconf/Shared_Object.i \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/Svcconf/Service_Object.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/IPC/Signal.i \
@@ -2158,8 +2158,8 @@ clean:
  $(ACE_ROOT)/ace/Svcconf/Service_Object.h \
  $(ACE_ROOT)/ace/Svcconf/Shared_Object.h \
  $(ACE_ROOT)/ace/Svcconf/Shared_Object.i \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/Svcconf/Service_Object.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/IPC/Signal.i \
@@ -2314,8 +2314,8 @@ clean:
  $(ACE_ROOT)/ace/Svcconf/Service_Object.h \
  $(ACE_ROOT)/ace/Svcconf/Shared_Object.h \
  $(ACE_ROOT)/ace/Svcconf/Shared_Object.i \
- $(ACE_ROOT)/ace/Demux/Event_Handler.h \
- $(ACE_ROOT)/ace/Demux/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler/Event_Handler.i \
  $(ACE_ROOT)/ace/Svcconf/Service_Object.i \
  $(ACE_ROOT)/ace/IPC/Signal.h \
  $(ACE_ROOT)/ace/IPC/Signal.i \

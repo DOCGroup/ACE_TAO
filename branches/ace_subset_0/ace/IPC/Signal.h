@@ -24,7 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Demux/Event_Handler.h"
+#include "ace/Event_Handler/Event_Handler.h"
 
 // This worksaround a horrible bug with HP/UX C++...
 typedef struct sigaction ACE_SIGACTION;
