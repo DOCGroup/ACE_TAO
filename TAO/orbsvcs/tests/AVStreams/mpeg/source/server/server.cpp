@@ -447,11 +447,15 @@ AV_Server_Sig_Handler::~AV_Server_Sig_Handler (void)
   TAO_ORB_Core_instance ()->reactor ()->remove_handler (this->sig_set);
 }
 
+/*
 Video_Server_MMDevice::Video_Server_MMDevice (CosNaming::NamingContext_ptr ns)
   :naming_context_ (ns)
 {
+  this->video_process_options_.command_line ("./vs -ORBport 0 -ORBobjrefstyle url");
 }
+*/
 
+/*
 AVStreams::StreamEndPoint_B_ptr  
 Video_Server_MMDevice::create_B (AVStreams::StreamCtrl_ptr the_requester, 
                                  AVStreams::VDev_out the_vdev, 
@@ -544,12 +548,15 @@ Video_Server_MMDevice::create_B (AVStreams::StreamCtrl_ptr the_requester,
 
   return streamendpoint_ptr;
 }
+*/
 
 // AV_Server routines
 
 // Default Constructor
 AV_Server::AV_Server (void)
+  :video_process_strategy_ (&video_process_options_)
 {
+  this->video_process_options_.command_line ("./vs -ORBport 0 -ORBobjrefstyle url");
 }
 
 // %% move to the destructor or sig handler
@@ -658,7 +665,7 @@ AV_Server::init (int argc,
 
   // Register the video mmdevice object with the ORB
   ACE_NEW_RETURN (this->video_mmdevice_,
-                  Video_Server_MMDevice (this->naming_context_.in ()),
+                  TAO_MMDevice (&this->video_process_strategy_),
                   -1);
 
   // create the video server mmdevice with the naming service pointer.

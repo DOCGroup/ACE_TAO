@@ -44,6 +44,7 @@
 #include "mpeg_server/Video_Server.h"
 #include "mpeg_server/Audio_Server.h"
 #include "orbsvcs/AV/AVStreams_i.h"
+#include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "vs.h"
 
 // Forward declaration.
@@ -156,6 +157,7 @@ private:
 };
 
 
+/*
 class Video_Server_MMDevice 
   :public virtual TAO_MMDevice
 {
@@ -164,6 +166,7 @@ public:
   // constructor taking a pointer to the root naming context of the
   // naming service
 
+  
   virtual AVStreams::StreamEndPoint_B_ptr  create_B (AVStreams::StreamCtrl_ptr the_requester, 
                                                      AVStreams::VDev_out the_vdev, 
                                                      AVStreams::streamQoS &the_qos, 
@@ -171,11 +174,19 @@ public:
                                                      char *&named_vdev, 
                                                      const AVStreams::flowSpec &the_spec,  
                                                      CORBA::Environment &env);
+  
   // Called by StreamCtrl to create a "B" type streamandpoint and vdev
 private:
   CosNaming::NamingContext_ptr naming_context_;
   // The NamingService root naming context
+
+  ACE_Process_Options video_process_options_;
+  // The options for the video process to be spawned by the process strategy
+
+  TAO_AV_Endpoint_Process_Strategy_B process_strategy_;
+  // The strategy to create endpoints and vdevs.
 };
+*/
 
 typedef ACE_Acceptor <AV_Svc_Handler, ACE_SOCK_ACCEPTOR> AV_ACCEPTOR;
 
@@ -234,9 +245,15 @@ private:
 
   ACE_INET_Addr server_control_addr_;
   // Control (TCP) Address of this server.
-  
-  Video_Server_MMDevice *video_mmdevice_;
-  // The video mmdevice
+
+  ACE_Process_Options video_process_options_;
+  // The process options for the process to be spawned by the process strategy
+
+  TAO_AV_Endpoint_Process_Strategy_B video_process_strategy_;
+  // The proces strategy for the video.
+
+  TAO_MMDevice *video_mmdevice_;
+  // The video server multimedia device
 };
 
 typedef ACE_Singleton<AV_Server,ACE_Null_Mutex> AV_SERVER;
