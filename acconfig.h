@@ -73,7 +73,7 @@
 #undef PTHREAD_STACK_MAX
 
 /* ///////////////////// OSSAMA'S NEW STUFF ////////////////// */
-/* 
+/*
  THIS STUFF WILL REPLACE THE ABOVE OLDER STUFF AND/OR WILL BE MERGED INTO IT
 */
 
@@ -94,12 +94,12 @@
 
 /* Cray specific configuration parameters */
 /*
- *  The following predefined macros are used within ACE ifdefs.  
+ *  The following predefined macros are used within ACE ifdefs.
  *  These are defined when using the Cray compilers.  _CRAYMPP
  *  is defined, for example, if you are running on a Cray T3E
  *  massively parallel machine.  Moreover, in the case of the T3E,
  *  _CRAYT3E will be defined.  This is used to determine the
- *  ACE_SIZEOF defines for primitive types.  
+ *  ACE_SIZEOF defines for primitive types.
  *
  *  _UNICOS is defined as either the major version of UNICOS being run,
  *  e.g. 9 or 10 on the vector machines (e.g. C90, T90, J90, YMP, ...)
