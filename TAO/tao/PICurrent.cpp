@@ -257,7 +257,7 @@ TAO_PICurrent_Impl::copy (TAO_PICurrent_Impl &rhs, CORBA::Boolean deep_copy)
                                  "slot table copy.");
         }
       ACE_ENDTRY;
-      
+
       rhs.dirty (0);
 
       rhs.pi_peer (0); // Break all ties with the PICurrent peer.

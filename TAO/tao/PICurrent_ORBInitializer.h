@@ -22,6 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if TAO_HAS_INTERCEPTORS == 1
+
 #include "PortableInterceptorC.h"
 #include "LocalObject.h"
 #include "PICurrent.h"
@@ -71,6 +73,8 @@ public:
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
+
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #include "ace/post.h"
 
