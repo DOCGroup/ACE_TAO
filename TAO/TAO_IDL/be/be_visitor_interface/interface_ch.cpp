@@ -431,7 +431,7 @@ be_visitor_interface_ch::gen_abstract_ops_helper (be_interface *node,
           be_operation new_op (op->return_type (),
                                op->flags (),
                                &item_new_name,
-                               op->is_local (),
+                               node->is_local (),
                                op->is_abstract ());
           new_op.set_defined_in (node);
           be_visitor_interface::add_abstract_op_args (op,
