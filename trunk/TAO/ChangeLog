@@ -1,4 +1,10 @@
-﻿Wed Dec 10 09:13:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Dec 10 09:26:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.{h,cpp}:
+          Fixed some method argument names which where exactly the same as
+          the name of some members.
+
+Wed Dec 10 09:13:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/OBV/TC_Alignment/client.dsp:
 	* tests/OBV/TC_Alignment/server.dsp:
@@ -25,7 +31,7 @@ Tue Dec  9 18:22:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/Makefile:
 
-	  Added a bunch of new tests into the Makefiles for compilation. 
+	  Added a bunch of new tests into the Makefiles for compilation.
 
 	* orbsvcs/tests/Bug_1630_Regression/testclient.cpp:
 
@@ -73,13 +79,13 @@ Tue Dec  9 18:38:12 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 Tue Dec  9 11:37:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/extra_core.mpb:
-	  
-	  For some reason there are so many places where we have hardcoded
-	  that  minimum_corba means no messaging. This is atrocious :-). 
-	
-	* tests/Bug_1639_Regression/test.mpc: 
 
-	  Cleaned the MPC file. 
+	  For some reason there are so many places where we have hardcoded
+	  that  minimum_corba means no messaging. This is atrocious :-).
+
+	* tests/Bug_1639_Regression/test.mpc:
+
+	  Cleaned the MPC file.
 
 Tue Dec  9 17:24:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
