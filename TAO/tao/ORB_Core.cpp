@@ -834,9 +834,12 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
       else if ((current_arg = arg_shifter.get_the_parameter
                 ("-ORBLogFile")))
         {
+          //
           // redirect all ACE_DEUBG and ACE_ERROR output to a file
-          // USAGE: -ORBLogFile <filename>
-          // default: append
+          // USAGE: -ORBLogFile <file>
+          // default: if <file> is present     = append
+          //          if <file> is not present = create
+          //
 
           ASYS_TCHAR* file_name = current_arg;
           arg_shifter.consume_arg ();
@@ -857,17 +860,17 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
 
           ofstream* output_stream;
 
-          ACE_NEW_RETURN
-            (output_stream,
-             ofstream (),
-             1);
-
           //
           // note: we are allocating dynamic memory here....but
           // I assume it will persist for the life of the program
           //
 
-          output_stream->open (file_name, ios::out | ios::app, 0660);
+          ACE_NEW_RETURN
+            (output_stream,
+             ofstream (),
+             1);
+
+          output_stream->open (file_name, ios::out | ios::app);
 
           if (!output_stream->bad ())
             {
@@ -1067,7 +1070,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   this->orb_params ()->service_port (NAMESERVICE, ns_port);
   this->orb_params ()->service_port (TRADINGSERVICE, ts_port);
   this->orb_params ()->service_port (IMPLREPOSERVICE, ir_port);
-  
+
   this->orb_params ()->mcast_discovery_endpoint (mde);
   this->orb_params ()->use_dotted_decimal_addresses (dotted_decimal_addresses);
   this->orb_params ()->nodelay (nodelay);

@@ -1,3 +1,9 @@
+Sun Oct 31 22:22:15 1999  Luther J Baker  <ljb1@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp (init): Removed 3rd argument of fstream::open(...)
+	  as some platforms complained. If the defaults permissions are
+	  inadequate, we can use add ACE_OS::chmod (...).
+
 Sun Oct 31 20:11:43 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* tao/orbconf.h:
@@ -10,14 +16,14 @@ Sun Oct 31 20:11:43 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
  	  Abstracted out the code for location of different services through
 	  resolve_initial_references () by the ORB. This reduces the
-	  footprint of the ORB as now there is a single method to locate 
+	  footprint of the ORB as now there is a single method to locate
 	  services instead of a different method for each service.
 
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
 	* orbsvcs/Trading_Service/Trading_Service.cpp:
 
 	  Made changes in these files to reflect the changes made to the ORB
-	  Core since a single method is now used to get/set the service port.	
+	  Core since a single method is now used to get/set the service port.
 
 Sat Oct 30 21:40:48 1999  Luther J Baker  <ljb1@cs.wustl.edu>
 
@@ -93,11 +99,9 @@ Fri Oct 29 19:36:33 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Fri Oct 29 19:44:39 1999  Luther J Baker  <ljb1@cs.wustl.edu>
 
-        * tao/ORB_Core.cpp (init):
-          Added option:
-
-          -ORBLogFile <file> to allow redirection of ACE_DEBUG
-          and ACE_ERROR statements.
+        * tao/ORB_Core.cpp (init): Added option to allow for
+	  redirection of ACE_DEBUG and ACE_ERROR statements
+	  -ORBLogFile <file>
 
 Fri Oct 29 12:58:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
