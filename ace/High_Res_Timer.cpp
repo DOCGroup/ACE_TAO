@@ -23,43 +23,6 @@ ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
 # include "ace/Synch.h"
 # include "ace/Object_Manager.h"
 
-# if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-
-u_long
-ACE_High_Res_Timer::get_registry_scale_factor (void)
-{
-  HKEY hk;
-  unsigned long speed;
-  unsigned long speed_size = sizeof speed;
-  unsigned long speed_type = REG_DWORD;
-
-  long rc = ::RegOpenKeyEx (HKEY_LOCAL_MACHINE,
-                            ACE_TEXT ("HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0"),
-                            NULL,
-                            KEY_READ,
-                            &hk);
-
-  if (rc != ERROR_SUCCESS)
-    // Couldn't find key
-    return 1;
-
-  rc = ::RegQueryValueEx (hk,
-                          ACE_TEXT ("~MHz"),
-                          0,
-                          &speed_type,
-                          (LPBYTE) &speed,
-                          &speed_size);
-
-  ::RegCloseKey (hk);
-
-  if (rc != ERROR_SUCCESS)
-    // Couldn't get the value
-    return 1;
-
-  return speed;
-}
-# endif /*ACE_WIN32 && ! ACE_HAS_WINCE */
-
   // Initialize the global_scale_factor_ to 1.  The first
   // ACE_High_Res_Timer instance construction will override this
   // value.
@@ -96,8 +59,11 @@ ACE_High_Res_Timer::global_scale_factor ()
       if (ACE_High_Res_Timer::global_scale_factor_ == 1u)
         {
 #         if defined (ACE_WIN32)
-            ACE_High_Res_Timer::global_scale_factor (
-              ACE_High_Res_Timer::get_registry_scale_factor ());
+            LARGE_INTEGER freq;
+            if (::QueryPerformanceFrequency (&freq))
+              // We have a high-res timer
+              ACE_High_Res_Timer::global_scale_factor (ACE_static_cast (unsigned int,
+                                                                        freq.QuadPart / 1000000));
 #         elif defined (linux) && (__alpha__)
             // Get the BogoMIPS from /proc.  It works fine on
             // Alpha and Pentium Pro.  For other CPUs, it will
@@ -178,7 +144,7 @@ ACE_High_Res_Timer::calibrate (const ACE_UINT32 usec,
 
   // The addition of 5 below rounds instead of truncates.
   const ACE_UINT32 scale_factor =
-    (ticks.whole () / actual_sleep.whole ()  +  5) /
+    (ticks.whole () / actual_sleep.whole () + 5) /
     10u /* usec/100 usec */;
   ACE_High_Res_Timer::global_scale_factor (scale_factor);
 

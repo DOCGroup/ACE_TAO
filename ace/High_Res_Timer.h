@@ -178,15 +178,6 @@ public:
   // However, setting the global_scale_factor_ appropriately will
   // result in the finest resolution possible.
 
-protected:
-
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-  static u_long get_registry_scale_factor (void);
-  // This is used to find out the Mhz of the machine for the scale
-  // factor.  If there are any problems getting it, we just return 1
-  // (the default).
-#endif /* ACE_WIN32 */
-
 private:
   static void hrtime_to_tv (ACE_Time_Value &tv,
                             const ACE_hrtime_t hrt);
