@@ -1,3 +1,9 @@
+Fri Dec 14 07:17:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Objref_Sequence_Test/server.cpp:
+	* tests/Objref_Sequence_Test/client.cpp: Fixed compilation errors
+	  in no exceptions builds. Trying to get used to the new macros.
+
 Fri Dec 14 07:12:38 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Objref_Sequence_Test/Makefile: Removed references to the
