@@ -74,7 +74,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:480
+  // be\be_visitor_arg_traits.cpp:492
 
 #if !defined (_CORBA_INTERFACEDEFSEQ__ARG_TRAITS_CS_)
 #define _CORBA_INTERFACEDEFSEQ__ARG_TRAITS_CS_
@@ -110,7 +110,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:480
+  // be\be_visitor_arg_traits.cpp:492
 
 #if !defined (_CORBA_VALUEDEFSEQ__ARG_TRAITS_CS_)
 #define _CORBA_VALUEDEFSEQ__ARG_TRAITS_CS_
@@ -129,7 +129,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:480
+  // be\be_visitor_arg_traits.cpp:492
 
 #if !defined (_CORBA_EXTINITIALIZERSEQ__ARG_TRAITS_CS_)
 #define _CORBA_EXTINITIALIZERSEQ__ARG_TRAITS_CS_
@@ -148,7 +148,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:480
+  // be\be_visitor_arg_traits.cpp:492
 
 #if !defined (_CORBA_EXCEPTIONDEFSEQ__ARG_TRAITS_CS_)
 #define _CORBA_EXCEPTIONDEFSEQ__ARG_TRAITS_CS_
@@ -167,7 +167,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:480
+  // be\be_visitor_arg_traits.cpp:492
 
 #if !defined (_CORBA_PARDESCRIPTIONSEQ__ARG_TRAITS_CS_)
 #define _CORBA_PARDESCRIPTIONSEQ__ARG_TRAITS_CS_
@@ -5361,7 +5361,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1619
+// be\be_visitor_root/root.cpp:1521
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

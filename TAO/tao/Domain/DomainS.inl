@@ -45,7 +45,7 @@ POA_CORBA::ConstructionPolicy::_get_policy_type_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1939
+// be\be_interface.cpp:1859
 
 ACE_INLINE
 void
@@ -66,7 +66,7 @@ POA_CORBA::ConstructionPolicy::copy_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1939
+// be\be_interface.cpp:1859
 
 ACE_INLINE
 void
@@ -87,7 +87,7 @@ POA_CORBA::ConstructionPolicy::destroy_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1322
+// be\be_interface.cpp:1244
 
 ACE_INLINE void
 POA_CORBA::_TAO_ConstructionPolicy_Direct_Proxy_Impl::_get_policy_type (
@@ -110,7 +110,7 @@ POA_CORBA::_TAO_ConstructionPolicy_Direct_Proxy_Impl::_get_policy_type (
 
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1322
+// be\be_interface.cpp:1244
 
 ACE_INLINE void
 POA_CORBA::_TAO_ConstructionPolicy_Direct_Proxy_Impl::copy (
@@ -133,7 +133,7 @@ POA_CORBA::_TAO_ConstructionPolicy_Direct_Proxy_Impl::copy (
 
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1322
+// be\be_interface.cpp:1244
 
 ACE_INLINE void
 POA_CORBA::_TAO_ConstructionPolicy_Direct_Proxy_Impl::destroy (
