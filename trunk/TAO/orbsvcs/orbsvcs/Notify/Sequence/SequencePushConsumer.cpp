@@ -46,8 +46,7 @@ TAO_NS_SequencePushConsumer::init (CosNotifyComm::SequencePushConsumer_ptr push_
 void
 TAO_NS_SequencePushConsumer::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
-  if (this->timer_id_ != -1)
-    this->cancel_timer ();
+  this->cancel_timer ();
 }
 
 void
@@ -86,22 +85,20 @@ TAO_NS_SequencePushConsumer::qos_changed (const TAO_NS_QoSProperties& qos_proper
 void
 TAO_NS_SequencePushConsumer::schedule_timer (void)
 {
-  if (this->timer_)
-    this->timer_id_ = this->timer_->schedule_timer (this, 0, this->pacing_interval_);
-
   // Schedule the timer.
-  if (this->timer_id_ == -1)
-    this->pacing_interval_ = ACE_Time_Value::zero; // some error, revert to no pacing.
+  if (this->pacing_interval_ != ACE_Time_Value::zero)
+    {
+      this->timer_id_ = this->timer_->schedule_timer (this, this->pacing_interval_, 0);
+
+      if (this->timer_id_ == -1)
+        this->pacing_interval_ = ACE_Time_Value::zero; // some error, revert to no pacing.
+    }
 }
 
 void
 TAO_NS_SequencePushConsumer::cancel_timer (void)
 {
-  if (this->timer_ && this->timer_id_ != -1)
-    {
-      timer_->cancel_timer (this->timer_id_);
-      this->timer_id_ = -1;
-    }
+  timer_->cancel_timer (this->timer_id_);
 }
 
 void
@@ -144,20 +141,19 @@ int
 TAO_NS_SequencePushConsumer::handle_timeout (const ACE_Time_Value& /*current_time*/,
                                              const void* /*act*/)
 {
-  if (this->timer_id_ != -1)
-    this->cancel_timer ();
-
   CosNotification::EventBatch event_batch;
 
-  int deq_count = this->buffering_strategy_->dequeue_available (event_batch);
+  int pending = 0;
+
+  int deq_count = this->buffering_strategy_->dequeue_available (event_batch, pending);
 
   if (deq_count > 0)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
+      TAO_NS_Refcountable_Guard ref_guard(*this->proxy ()); // Protect this object from being destroyed in this scope.
 
-      this->push (event_batch ACE_ENV_ARG_PARAMETER);
+      this->push (event_batch);
 
-      if (this->pacing_interval_ != ACE_Time_Value::zero)
+      if (pending)
         this->schedule_timer ();
     }
 
@@ -165,25 +161,20 @@ TAO_NS_SequencePushConsumer::handle_timeout (const ACE_Time_Value& /*current_tim
 }
 
 void
-TAO_NS_SequencePushConsumer::push (const CosNotification::EventBatch& event_batch ACE_ENV_ARG_DECL)
+TAO_NS_SequencePushConsumer::push (const CosNotification::EventBatch& event_batch)
 {
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       this->push_consumer_->push_structured_events (event_batch ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
-  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, not_exist)
-    {
-      this->handle_dispatch_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCH (CORBA::SystemException, sysex)
-    {
-      this->handle_dispatch_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
   ACE_CATCHANY
     {
+      this->handle_dispatch_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // we're scheduled to be destroyed. don't set the timer.
+      this->pacing_interval_ = ACE_Time_Value::zero;
     }
   ACE_ENDTRY;
 }

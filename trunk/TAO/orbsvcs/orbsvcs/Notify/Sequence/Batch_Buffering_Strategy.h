@@ -43,7 +43,8 @@ public:
 
   /// Dequeue upto batch. This method will not block.
   /// Return -1 on error else the number of items dequeued (<batch_size>).
-  int dequeue_available (CosNotification::EventBatch& event_batch);
+  /// <pending> is set to the number of events remaining in the queue.
+  int dequeue_available (CosNotification::EventBatch& event_batch, int &pending);
 
 protected:
 
