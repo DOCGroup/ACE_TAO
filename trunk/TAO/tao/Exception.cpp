@@ -514,8 +514,8 @@ CORBA_UnknownUserException::CORBA_UnknownUserException (CORBA_Any &ex)
 }
 
 CORBA_UnknownUserException::CORBA_UnknownUserException (
-    const CORBA_UnknownUserException& e
-  )
+      const CORBA_UnknownUserException& e)
+  : CORBA_UserException ()
 {
   ACE_NEW (this->exception_,
            CORBA_Any (*e.exception_));
