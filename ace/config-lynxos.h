@@ -79,7 +79,7 @@
 #define ACE_HAS_BROKEN_WRITEV
 #define ACE_HAS_BROKEN_READV
 #define ACE_HAS_BROKEN_SETRLIMIT
-#define ACE_LACKS_POSIX_PROTO_FOR_SOME_FUNCS
+#define ACE_LACKS_POSIX_PROTOTYPES_FOR_SOME_FUNCS
 
 // Platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST
@@ -191,5 +191,8 @@
 
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096
+
+extern "C" 
+int getopt(int, char *const *, cons char *);
 
 #endif /* ACE_CONFIG_H */
