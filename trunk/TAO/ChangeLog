@@ -1,3 +1,16 @@
+Wed Dec 22 08:10:47 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/FTORB.mpc:
+
+          The FT_ClientORB and FT_ServerORB require interceptors to function
+          properly.
+
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/GroupRef_Manipulation.mpc:
+
+          The interceptors setting is taken care in the ftclientorb and
+          ftserverorb base projects.  So, it is no longer necessary to set
+          it here.
+
 Tue Dec 21 12:37:42 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Activator_Options.h:
