@@ -7,7 +7,8 @@ Tue Jul 30 13:37:20 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/performance.html: 
 	* docs/Options.html: Documented that RW connection handler cannot
-	  be used with AMI.  
+	  be used with AMI.  Thanks to Bertin Colpron
+ 	  <BColpron@interstarinc.com> for motivating this.
 
 Tue Jul 30 10:24:09 2002  Ossama Othman  <ossama@uci.edu>
 
