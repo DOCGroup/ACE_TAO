@@ -30,6 +30,12 @@ endif
 
 CC              = cxx
 CXX             = $(CC)
+
+# Note: Just get the version if it hasnt been defined so far.  
+ifndef CXX_VERSION
+  CXX_VERSION := $(shell $(CXX) -V)
+endif # ! CXX_VERSION
+
 #### Note: -thread uses POSIX threads.  If you want to use DCE threads
 ####       instead, change "-pthread" to "-threads".
 ifeq ($(threads),1)
@@ -37,6 +43,8 @@ ifeq ($(threads),1)
 else
 	CFLAGS          += -DACE_MT_SAFE=0
 endif
+
+
 
 #### These flags can only be used with cxx Version 6.0 and later.
 #### They are enabled by default; they can be disabled by settting
@@ -84,15 +92,13 @@ ifeq (0,$(rtti))
   CCFLAGS += -nortti
 endif # rtti
 
+
 ifeq (0,$(exceptions))
   #### Disable the default exception handling of cxx >= 6.0.
   #### This is untested.  exceptions=1 is the default, so it's not used
   #### by default.
-  ifndef CXX_VERSION
-    CXX_VERSION := $(shell $(CXX) -V)
-  endif # ! CXX_VERSION
-
   ifeq (6.,$(findstring 6.,$(CXX_VERSION)))
     CCFLAGS += -nocleanup
   endif # 6.x
 endif # ! exceptions
+

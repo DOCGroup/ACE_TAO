@@ -19,6 +19,14 @@ ifeq (5.,$(findstring 5.,$(ACE_DU_VERSION)))
     SOFLAGS = -shared -use_ld_input $(ACELIB)
 endif # ! 5.x
 
+### There is a bug with pthreads header file shipped with v1885 of 
+### V5.1. We need to turn this flag to get asm () inline for
+### compilation. 
+ifeq (1885,$(findstring 1885,$(ACE_DU_SUBVERSION)))  
+  ifeq (6.,$(findstring 6.,$(CXX_VERSION)))
+    CPPFLAGS += -D_PTHREAD_ENV_DECCXX
+  endif # 6.x
+endif #v1885
 
 # Include the common macros for all compilers
 #
