@@ -15,6 +15,7 @@ FILES	=  TS_Server_Handler \
 	   Token_Handler \
 	   Logging_Strategy
 
+# Put these in when things are finally working!
 # Server_Logging_Handler_T 
 # Log_Message_Receiver 
 
