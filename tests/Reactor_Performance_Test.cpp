@@ -110,11 +110,18 @@ Read_Handler::handle_input (ACE_HANDLE handle)
           if (errno == EWOULDBLOCK)
             return 0;
           else
-            // This will cause handle_close to get called.
-            return -1;
+            {
+              ACE_ERROR ((LM_ERROR, "handle_input: %p (%d)", "recv\n", errno));
+
+              // This will cause handle_close to get called.
+              return -1;
+            }
         }
       else // result == 0
         {
+          ACE_ERROR ((LM_ERROR, "handle_input, results is 0: %p (%d)\n",
+                      "recv", errno));
+
           // This will cause handle_close to get called.
           return -1;
         }
@@ -379,11 +386,11 @@ main (int argc, ASYS_TCHAR *argv[])
                 ASYS_TEXT ("(%t) %p\n"),
                 ASYS_TEXT ("thread create failed")));
 
-  ACE_Time_Value run_limit (10);
+  ACE_Time_Value run_limit (opt_nloops / 10);
 
   ACE_Profile_Timer timer;
   timer.start ();
-  ACE_Reactor::instance()->run_event_loop (run_limit);
+  const int status = ACE_Reactor::instance()->run_event_loop (run_limit);
   timer.stop ();
 
   ACE_Profile_Timer::ACE_Elapsed_Time et;
@@ -398,7 +405,7 @@ main (int argc, ASYS_TCHAR *argv[])
   ACE_Thread_Manager::instance ()->wait ();
 
   ACE_END_TEST;
-  return 0;
+  return status;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
