@@ -20,6 +20,7 @@
 #include "CC_naming_service.h"
 #include "ace/ACE.h"
 #include "ace/Process.h"
+#include "ace/Log_Msg.h"
 #include "orbsvcs/CosConcurrencyControlC.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
