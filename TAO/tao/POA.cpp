@@ -1166,9 +1166,14 @@ TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
   // the applicable policies.
   PortableServer::Servant servant = 0;
   PortableServer::ObjectId_var system_id;
-  if (this->active_object_map ().find_servant_and_system_id_using_user_id (user_id,
-                                                                           servant,
-                                                                           system_id.out ()) != 0)
+
+  // @@ We need something that can find the system id using appropriate strategy,
+  // at the same time, return the servant if one is available.  Before we have that
+  // function, <create_reference_with_id_i> basically generates broken collocated
+  // object when DIRECT collocation strategy is used.
+
+  if (this->active_object_map ().find_system_id_using_user_id (user_id,
+                                                               system_id.out ()) != 0)
     {
       ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                         CORBA::Object::_nil ());
