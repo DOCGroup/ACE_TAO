@@ -77,7 +77,7 @@ Options::filename (void)
 
 Options::Options (void)
   :
-#if !defined (ACE_LACKS_EXEC)
+#if !defined (ACE_LACKS_FORK)
     concurrency_type_ (PROCESS)
 #elif defined (ACE_HAS_THREADS)
     concurrency_type_ (THREAD)
