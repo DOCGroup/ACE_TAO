@@ -175,7 +175,7 @@ AST_Module::fe_add_module (AST_Module *t)
   while (ACE_OS::strcmp (t->prefix (), "") == 0 && scope != 0)
     {
       AST_Decl *parent = ScopeAsDecl (scope);
-      t->prefix (ACE_static_cast (char *, parent->prefix ()));
+      t->prefix (ACE_const_cast (char *, parent->prefix ()));
       scope = parent->defined_in ();
     }
 
