@@ -7,7 +7,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Thread.h"
 
-ACE_RCSID (Bug_1495 Regression Test,
+ACE_RCSID (Bug_1495_Regression_Test,
            interceptors,
            "$Id$");
 
