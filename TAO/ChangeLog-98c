@@ -1,3 +1,12 @@
+Fri Oct 23 12:41:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Environment.cpp: 
+	  When using native C++ exceptions the
+	  CORBA_Environment::default_environment() function clears the
+	  environment every time it is called.  This should fix some
+	  problems reported by Goran Lowkrantz
+	  <Goran.Lowkrantz@infologigruppen.se>
+
 Fri Oct 23 12:33:56 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
