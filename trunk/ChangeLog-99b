@@ -1,173 +1,45 @@
-Wed Jul 07 08:35:24 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Wed Jul  7 08:55:53 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/Threads/future1.cpp
-	* examples/Threads/future2.cpp
-	* tests/Future_Set_Test.cpp
-	* tests/Future_Test.cpp
-
-	  Fixed some template instantiations.
-
-Wed Jul  7 03:27:16 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* examples/Shared_Malloc: Added a new file called
-	  test_position_independent_malloc.cpp that exercises the new
- 	  "position-independent" features of the ACE_Malloc<> class.
-
-	* ace/Malloc_T.cpp: All the ACE_Malloc constructors were calling
-	  open() without checking the results.  Now, if failure occurs we
- 	  print a message.  In addition, we weren't checking in
- 	  shared_malloc() to make sure that we'd been properly initialized
- 	  by the constructor.  Now, if we aren't initialized correctly we
- 	  return 0.  Thanks to Dietrich Quehl
- 	  <Dietrich.Quehl@med.siemens.de> for reporting these problems.
-
-	* ace/Memory_Pool: Added a new feature to ACE_Shared_Memory_Pool
-	  and ACE_Shared_Memory_Pool_Options that makes it possible to
- 	  tailor the size of System V shared memory segments without
- 	  breaking any existing ACE code.  Thanks to Serge Kolgan
- 	  <skolgan@cisco.com> for contributing this enhancement.
-
-	* ace/Makefile.bor (OBJFILES): Updated this file to include
-	  the new Based_Pointer_Repository.obj entry.
-
-	* ace/Makefile: Reran make depend.
-
-	* ace/Makefile: Added the Based_Pointer_Repository.{h,cpp} and
-	  Based_Pointer_T.{h,cpp} files to the Makefile.
-
-	* ace/Malloc.h: Added the first support for the new "Based Pointer
- 	  Malloc" feature that's described below.
-
-        * ace: Added the Based_Pointer_Repository.{h,cpp} and
-	  Based_Pointer_T.{h,cpp} files to the release.  These classes
- 	  make it possible to transparently use "pointers" in shared
- 	  memory without having to ensure that the base addresses of all
- 	  the pointers are mapped into separate processes at the same
- 	  absolute memory base address.  Thanks to Dietrich Quehl
- 	  <Dietrich.Quehl@med.siemens.de> for contributing this software.
-
-Wed Jul 07 00:24:50 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-Wed Jul 07 01:28:40 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp: Added the Based_Pointer_Repository.{h,cpp} and
-	  Based_Pointer_T.{h,cpp} files to the project files.
-
-	* ace/Based_Pointer_Repository.cpp: Added define ACE_BUILD_DLL.
-
-Tue Jul 06 22:47:04 1999  David L. Levine  <levine@cs.wustl.edu>
-
-        * bin/check_build_logs: filter out Purify warning about
-          non-pic R_SPARC_*.
-
-        * ace/config-linuxppcr5.h: commented out #define __USE_XOPEN
-          because it's not necessary with glibc 2.1.1.  Thanks to
-          Andreas Tobler <toa@pop.agri.ch> for reporting this.
-
-        * ace/OS.i (thr_kill, thr_setprio, sema_destroy, sema_wait, chdir,
-          unlink, sema_post, thr_continue, thr_getprio, thr_suspend,
- 	  ioctl): on VxWorks only, removed ACE_ADAPT_RETVAL wrapper from
- 	  system call, because it returns OK/ERROR (except for ioctl,
- 	  which returns driver number/ERROR).  Thanks to Elias Sreih
- 	  <sealstd1@nortelnetworks.com> for reporting this.
-
-        * tests/SOCK_Send_Recv_Test.cpp (server): added 5 second
-          sleep so that the code agrees with the comments :-) It now
- 	  passes on LynxOS.  Thanks to Steve Huston for the fix.  Also,
- 	  changed an exit () call to ACE_OS::exit (), and changed a few
- 	  C-style casts to ANSI-style casts.
-
-Tue Jul  6 19:20:16 1999  Steve Huston  <shuston@riverace.com>
-
-        * ace/Cache_Map_Manager_T.h: Removed extra "ace/" from #pragma
-          implementation directive.
-
-        * tests/Cache_Map_Manager_Test.cpp: Changed typedefs for KEY and
-	  VALUE from size_t to ACE_UINT32 to they always pick up the
- 	  specializations for ACE_Hash, etc. On HP-UX and AIX, size_t is
- 	  not the same as ACE_UINT32, and this caused build errors.
-
-        * tests/Conn_Test.cpp: Restrict range of the test on PharLap ETS,
-	  else it runs out of resources with default configuration.
-
-Tue Jul  6 18:21:37 1999  Everett Anderson  <eea1@cs.wustl.edu>
-
-        * ace/Token_Request_Reply.{h,i,cpp}: Added
-	  ACE_TOKEN_REQUEST_HEADER_SIZE for the fixed-length portion of
- 	  ACE_Token_Request's Transfer struct, changing length
- 	  calculations accordingly.  Added two bytes to the buffer to
- 	  accomodate '\0' values after the token name and client ID.
-
-        * ace/Remote_Tokens.cpp: Changed the check for failure when
-          receiving a reply in request_reply.
-
-Tue Jul  6 18:21:36 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * ace/Map_Manager.cpp: Made this file conform to the ACE programming
-          guidelines.
-
-Tue Jul  6 18:31:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
-
-        * include/makeinclude/platform_irix6.x_sgic++.GNU:
-          Removed pesky warnings about functions to big to optimize
-          because it would be slow.
-
-Tue Jul  6 18:15:31 1999  Steve Huston  <shuston@riverace.com>
-
-        * ACE_INSTALL.html: Added a further note re PharLap ETS builds.
-
-        * ace/config-pharlap.h: Added ACE_TIMER_SKEW of 10ms.
-
-        * tests/Atomic_Op_Test.dsp:
-        * tests/Barrier_Test.dsp:
-        * tests/Cache_Map_Manager_Test.dsp:
-        * tests/Future_Set_Test.dsp:
-          Changed PharLap ETS configurations to put intermediate files in
-          ETS_LIB\Debug (like all the others), not in ETS_DLL\Debug.
-
-        * tests/test_config.h: Set ACE_MAX_CLIENTS to 4 for PharLap ETS.
-
-        * tests/run_pharlap_tests.bat: Disabled some tests of unsupported
-          facilities.
-
-        * tests/SOCK_Test.cpp: Replaced "localhost" with ACE_LOCALHOST.
+	* tests/Map_Manager_Test.cpp (test_cache_map_manager): 
+	  Added <null_caching_strategy> to the construction of
+	  <cache_map_manager> and <hash_cache_map_manager> objects to make
+	  it in sync with the changes made below.
 
 Tue Jul  6 17:54:52 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-        * ace/Caching_Strategies_T.{h,i,cpp}: Added Abstract Base class
-          called ACE_Caching_Strategy and ACE_Caching_Strategy_Adaptor
-          which facilitate changing of caching strategies at runtime using
-          the External Polymorphism pattern.
+	* ace/Caching_Strategies_T.{h,i,cpp}: Added Abstract Base class
+	  called ACE_Caching_Strategy and ACE_Caching_Strategy_Adaptor
+	  which facilitate changing of caching strategies at runtime using
+	  the External Polymorphism pattern.
+	
+	* ace/Cached_Connect_Strategy_T.{h, cpp}: Changed the signature of 
+	  the constructor and also removed the <caching_strategy_> member.
 
-        * ace/Cached_Connect_Strategy_T.{h, cpp}: Changed the signature of
-          the constructor and also removed the <caching_strategy_> member.
+	* ace/Cache_Map_Manager_T.{h, cpp}: 
+ 	* ace/Hash_Cache_Map_Manager_T.{h,cpp}:
+	  Changed the signature of the constructor.This was needed to be
+	  able to use the External Polymorphism pattern.
 
-        * ace/Cache_Map_Manager_T.{h, cpp}:
-        * ace/Hash_Cache_Map_Manager_T.{h,cpp}:
-          Changed the signature of the constructor.This was needed to be
-          able to use the External Polymorphism pattern.
-
-        * tests/Cache_Map_Manager_Test.cpp:
-        * tests/Cached_Conn_Test.cpp:
-          Made necessary changes to reflect the changes above.
-          Thanks to Irfan of the DOC group for helping with this.
-
+	* tests/Cache_Map_Manager_Test.cpp:
+	* tests/Cached_Conn_Test.cpp:
+	  Made necessary changes to reflect the changes above. 
+	  Thanks to Irfan of the DOC group for helping with this.
+	
 Tue Jul  6 17:34:52 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.x.h: Enabled ACE_HAS_PTHREADS_UNIX98_EXT and
           removed ACE_LACKS_RWLOCK_T for AIX 4.3. Moved some other
-          ACE_LACKS settings to the pre-4.3 threads section to allow
-          taking advantage of more capability on AIX 4.3.
+ 	  ACE_LACKS settings to the pre-4.3 threads section to allow
+ 	  taking advantage of more capability on AIX 4.3.
 
 Tue Jul 06 16:29:32 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-        * ace/OS.h: Moved the string conversion macros before including
-          OS.i because we also use them in the file.  Thanks to Carlos for
-          reporting this.
+	* ace/OS.h: Moved the string conversion macros before including
+	  OS.i because we also use them in the file.  Thanks to Carlos for
+	  reporting this.
 
-        * OS.{h,i,cpp}:
-        * Parse_Node.cpp: Windows CE fixes.
+	* OS.{h,i,cpp}:
+	* Parse_Node.cpp: Windows CE fixes.
 
 Tue Jul 06 15:56:19 1999  David L. Levine  <levine@cs.wustl.edu>
 
