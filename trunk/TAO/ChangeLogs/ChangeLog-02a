@@ -1,3 +1,11 @@
+Mon May 15 22:05:49 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
+	  Changed the Time Offset constant to 141427 days 
+	  (0x2D8539C80 secs) instead of 141426.97 days 
+	  (0x2D8539260 secs). I have put comments in the code on why
+	  this offset is required.
+
 Mon May 15 20:03:11 2000  Pradeep Gore  <pradeep@cumbia.cs.wustl.edu>
 	* orbsvcs/orbsvcs/Notify/Notify_Filter_i.h:
 	  Put in the fix for "inheritance via dominance error"
