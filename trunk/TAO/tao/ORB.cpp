@@ -648,6 +648,7 @@ CORBA::ORB_init (int &argc,
     {
       ACE_DEBUG ((LM_DEBUG, "%s; ERROR: unexpected basic type size; "
                             "s:%d l:%d ll:%d f:%d d:%d ld:%d wc:%d v:%d\n",
+                  __FILE__,
                   sizeof (CORBA::Short),
                   sizeof (CORBA::Long),
                   sizeof (CORBA::LongLong),
