@@ -1,3 +1,7 @@
+Fri Jul  6 00:39:38 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/*/Makefile: Updated dependencies.
+
 Fri Jul  6 00:38:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/*/Makefile: Updated dependencies.
