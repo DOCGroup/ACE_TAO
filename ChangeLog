@@ -1,3 +1,8 @@
+Wed Jan  5 10:09:35 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/SString.h: Updated the documentation for the various string
+	  wrapper facades to clarify that they don't perform any locking.
+
 Wed Jan 05 09:53:04 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/SOCK_Stream.[hi] (sendv_n): added const to iov[]
