@@ -31,7 +31,11 @@ class ServantLocator_i : public POA_PortableServer::ServantLocator
   //   NON_RETAIN policy.
   // 
   // = DESCRIPTION
-  //   @@ Kirthika, please explain what this class DOES.
+  //   This class defines the Servant Locator interface of the Servant
+  //   Manager. It is invoked when the POA has an USE_SERVANT_MANAGER
+  //   policy and a servant_retention policy of NON_RETAIN type.
+
+  //   @@ *done*Kirthika, please explain what this class DOES.
 public:
   ServantLocator_i (CORBA::ORB_ptr orb);
   // Constructor.
@@ -43,7 +47,15 @@ public:
                                              CORBA::Environment &env);
   // This method is invoked by a POA whenever it receives a request
   // for MyFoo object that is not currently active.
-  // @@ Kirthika, please explain briefly what THIS method does
+  // When the POA is created using the NON_RETAIN policy the Active
+  // Object Map is not maintained, in other words, an association
+  // between the ObjectId and the servant is not maintained. Hence every
+  // client request the servant has to be loaded. Note the operation
+  // argument. This argument specifies the operation to be invoked on
+  // the servant. The cookie helps in  marking the servant. This marking
+  // is useful while destroying the servant.
+
+  // @@ *done*Kirthika, please explain briefly what THIS method does
   // whenever it is invoked, i.e., explain the use of the
   // ServantManager stuff...
 
@@ -54,8 +66,13 @@ public:
                            PortableServer::Servant the_servant,
                            CORBA::Environment &env);
   // This method is invoked whenever a MyFooServant completes a
-  // request.
-  // @@ Kirthika, please explain briefly what THIS method does
+  // request. As the Servant Loactor interface is used when the POA
+  // doesnt maintain the Active Object Map, its necessary to get rid
+  // of the servant after the client request has been processed. The
+  // appropriate servant is destroyed by verifying the cookie.Again
+  // this method is invoked per client request.
+
+  // @@ *done*Kirthika, please explain briefly what THIS method does
   // whenever it is invoked, i.e., explain the use of the
   // ServantManager stuff...
 
@@ -66,12 +83,13 @@ public:
 private:
   ServantManager_i servant_manager_;
   // The <ServantManager_i> object that provides utility methods.
-  // @@ Kirthika, briefly summarize what these methods accomplish (in
-  // general).
+  // The methods include obtaining the servant using an ACE_DLL
+  // object, destroying the servant and extracting the dllname and
+  // factory function from the ObjectId.
 
-  int counter_;
-  // Counter for number of invocations of this.
-  // @@ Kirthika, please explain what this is needed for.
+  // @@ *done*Kirthika, briefly summarize what these methods accomplish (in
+  // general).
+  
 };
 
 #endif /* SERVANT_LOCATOR_H */
