@@ -1,48 +1,54 @@
+Sun Mar 21 09:44:30 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Timeprobe_Test.cpp: don't test ACE_Singleton
+          creating during static construction if ACE_HAS_PURIFY
+          is enabled, because it notices the memory-in-use.
+
 Sat Mar 20 19:10:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Connector.h:
-	* ace/Connector.cpp:
-	* ace/Strategies_T.h:
-	* ace/Strategies_T.cpp:
-	  Added new methods to the ACE_Connector, ACE_Strategy_Connector,
-	  ACE_Connect_Strategy and ACE_Cached_Connect_Strategy.
-	  The motivation for this new method is a bit convoluted:
-	    In TAO we store the Svc_Handler returned from connect() as a
-	    hint for later Cached_Connector lookups.  But the location
-	    where we store it could be shared between multiple threads.
-	    To minimize the number of locks this hint is only modified and 
-	    examined by the Cached_Connector, while the lock in the
-	    connection map is beign held.
+        * ace/Connector.h:
+        * ace/Connector.cpp:
+        * ace/Strategies_T.h:
+        * ace/Strategies_T.cpp:
+          Added new methods to the ACE_Connector, ACE_Strategy_Connector,
+          ACE_Connect_Strategy and ACE_Cached_Connect_Strategy.
+          The motivation for this new method is a bit convoluted:
+            In TAO we store the Svc_Handler returned from connect() as a
+            hint for later Cached_Connector lookups.  But the location
+            where we store it could be shared between multiple threads.
+            To minimize the number of locks this hint is only modified and
+            examined by the Cached_Connector, while the lock in the
+            connection map is beign held.
 
-	    The problem arises when the hint is returned: another thread
-	    could try to use the same hint location, detect that the hint
-	    is in use and replace it before the thread that just requested 
-	    the object has a chance to read the hint value.
-	    The solution is to use two variables: one is the hint
-	    location, carefully protected by the Cached_Connector lock,
-	    the other is a variable in the thread stack, they return the
-	    same thing, but the second variable is not affected by changes 
-	    done by other threads.
+            The problem arises when the hint is returned: another thread
+            could try to use the same hint location, detect that the hint
+            is in use and replace it before the thread that just requested
+            the object has a chance to read the hint value.
+            The solution is to use two variables: one is the hint
+            location, carefully protected by the Cached_Connector lock,
+            the other is a variable in the thread stack, they return the
+            same thing, but the second variable is not affected by changes
+            done by other threads.
 
-	    In short: we addeda connect() method that takes two arguments, 
-	    the first is just intented to update the cached connector
-	    hint, the second is where the real connection gets returned.
-	
-	* tests/Makefile:
-	  David discovered that using SRC to list the sources does not
-	  work under some platforms. But using PSRC does.
+            In short: we addeda connect() method that takes two arguments,
+            the first is just intented to update the cached connector
+            hint, the second is where the real connection gets returned.
+
+        * tests/Makefile:
+          David discovered that using SRC to list the sources does not
+          work under some platforms. But using PSRC does.
 
 Sat Mar 20 15:51:14 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* configure.in:
-	  Added tests for: ACE_HAS_BROKEN_NAMESPACES
-	                   ACE_HAS_BROKEN_CONVERSIONS
-	                   ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS
-	                   ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP
-	                   ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP
-	                   ACE_HAS_PTHREAD_PROCESS_ENUM
-	
-	  Added some minor updates and corrections.
+        * configure.in:
+          Added tests for: ACE_HAS_BROKEN_NAMESPACES
+                           ACE_HAS_BROKEN_CONVERSIONS
+                           ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS
+                           ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP
+                           ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP
+                           ACE_HAS_PTHREAD_PROCESS_ENUM
+
+          Added some minor updates and corrections.
 
 Sat Mar 20 09:06:10 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -126,12 +132,12 @@ Sat Mar 20 02:03:53 1999  Ossama Othman  <othman@cs.wustl.edu>
 Fri Mar 19 23:36:37 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/Active_Map_Manager.h (ACE_Active_Map_Manager_Key): Changed
- 	  method index() to slot_index() and generation() to
- 	  slot_generation().  These changes were motivated by the
- 	  OpenEdition platform/compiler, which defines a macro called
- 	  index().  Also, changed the type of <index_> and <generation_>
- 	  from u_long to ACE_UINT32 to get consistent size across
- 	  platforms.
+          method index() to slot_index() and generation() to
+          slot_generation().  These changes were motivated by the
+          OpenEdition platform/compiler, which defines a macro called
+          index().  Also, changed the type of <index_> and <generation_>
+          from u_long to ACE_UINT32 to get consistent size across
+          platforms.
 
 Fri Mar 19 22:50:19 1999  David L. Levine  <levine@cs.wustl.edu>
 
