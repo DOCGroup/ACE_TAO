@@ -766,12 +766,6 @@ private:
   RtecEventChannelAdmin::SupplierQOS qos_;
   // Supplier QOS specifications.
 
-  int initialize_event_forwarding (void);
-  // Becomes a supplier.  Returns 0 on success, -1 on failure.
-
-  void push_forward_event (void);
-  // Pushes the forward event.
-
   // Events waiting to be forwarded.
   Event_Set *pending_events_;
 

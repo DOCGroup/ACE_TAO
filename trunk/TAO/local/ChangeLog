@@ -1,3 +1,10 @@
+Mon Nov 24 20:53:03 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* bin/Event_Service/Event_Channel.h: 
+	* bin/Event_Service/Event_Channel.cpp: 
+	  Removed the forward_event support, since this is MDA/Boeing
+	  propietary.
+
 Thu Nov 20 22:07:36 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * local/bin/Scheduling_Service/Scheduler_Generic.*:
@@ -32,7 +39,7 @@ Sun Nov 16 00:11:28 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 	* README:
 	* Makefile:
 	  This directory should hold the propietary code of Boeing. It
-	  even holds its own Makefile to keep the profile *very* low.
+	  even holds its own ChangeLog to keep the profile *very* low.
 	  IT MUST NOT BE DISTRIBUTED IN THE RELEASES.
 
 	* bin/Makefile:
