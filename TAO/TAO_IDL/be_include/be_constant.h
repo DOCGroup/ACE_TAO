@@ -41,7 +41,7 @@ public:
   // constructor
 
   // = helper
-  char *exprtype_to_string (void);
+  const char *exprtype_to_string (void);
   // returns the appropriate type
 
   // Visiting
