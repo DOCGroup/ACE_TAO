@@ -21,7 +21,8 @@ DIRS = \
 	TypeCodeFactory \
 	SmartProxies \
 	RTCORBA \
-	RTPortableServer
+   RTPortableServer \
+   RTScheduling
 
 OBJFILES = \
 	$(OBJDIR)\Abstract_Servant_Base.obj \

@@ -1,9 +1,17 @@
+Sat Jul 5 06:55:12 UTC 2003  Johnny Willemsne  <jwillemsen@remedy.nl>
+
+        * tao/RTScheduling/Makefile.bor:
+          Corrected small erros in this BCB makefile
+
+        * tao/Makefile.bor:
+          Added RTScheduling directory so that this directory is also build
+
 Fri Jul 4 17:05:39 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* tao/RTScheduling/Makefile.bor: 	
+	* tao/RTScheduling/Makefile.bor:
 
 	  Added Makefile to build with Borland compiler.
-	
+
 Fri Jul  4 12:27:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rules.tao.GNU:
