@@ -85,6 +85,7 @@ ifr_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *)
   return 0;
 }
 
+int
 ifr_visitor::visit_component (AST_Component *)
 {
   return 0;
@@ -96,6 +97,7 @@ ifr_visitor::visit_component_fwd (AST_ComponentFwd *)
   return 0;
 }
 
+int
 ifr_visitor::visit_home (AST_Home *)
 {
   return 0;
