@@ -1,3 +1,19 @@
+Wed Nov 24 08:18:51 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * apps/gperf/tests/Makefile.am:
+        * apps/gperf/tests/tests.mpc:
+
+          Generate the gperf generated code into an alternate directory for
+          the iinset2 project.  Since iinset and iinset2 share the same
+          input file, the correct gperf commandflags weren't being used for
+          the second project to be processed.
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          When gendir is used, attempt to automatically make the specified
+          directory.
+
 Wed Nov 24 12:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/SCTP/hist.cpp:
@@ -10,20 +26,20 @@ Wed Nov 24 12:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Nov 23 20:41:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/OS_NS_Thread.inl:
+        * ace/OS_NS_Thread.inl:
 
-	  Reverted this change "Tue Nov 23 20:26:51 2004  Balachandran
-	  Natarajan  <bala@dre.vanderbilt.edu>" since this has no scope of
-	  working. I guess the policy stuff itself is a bad thing for
-	  Win32. Let me find out from the original contributor.
+          Reverted this change "Tue Nov 23 20:26:51 2004  Balachandran
+          Natarajan  <bala@dre.vanderbilt.edu>" since this has no scope of
+          working. I guess the policy stuff itself is a bad thing for
+          Win32. Let me find out from the original contributor.
 
 Tue Nov 23 20:26:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/OS_NS_Thread.inl:
+        * ace/OS_NS_Thread.inl:
 
-	  The previous checkin used ::GetCurrentProcess () to access the
-	  policy which is not right, but the "id" passed in should be
-	  used to maintain the semantics of thr_getprio ().
+          The previous checkin used ::GetCurrentProcess () to access the
+          policy which is not right, but the "id" passed in should be
+          used to maintain the semantics of thr_getprio ().
 
 Tue Nov 23 14:06:41 2004  Dale Wilson  <wilson_d@ociweb.com>
 
