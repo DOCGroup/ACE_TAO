@@ -1,3 +1,10 @@
+Thu Oct  4 17:08:39 2001  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp:
+          In prepare(), call ACE_Process_Options::command_line() rather
+          than ACE_Process_Options::process_name() to set the program
+          path for the child process.
+
 Thu Oct  4 13:18:37 2001  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv1/Logging_Handler.cpp: Use a ACE_Message_Block,
