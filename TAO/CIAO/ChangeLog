@@ -1,3 +1,13 @@
+Mon Sep 13 07:11:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/ciao/Port_Activator.h:
+	* DAnCE/ciao/Servant_Activator.cpp:
+	* ciao/Port_Activator.h:
+	* ciao/Servant_Activator.cpp:
+
+	  Fixes for MSVC++ compilation errors. Inspite of being careful I
+	  introduced a couple of VC++ anathemas.
+
 Mon Sep 13 06:16:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/ciao/Container_Base.cpp:

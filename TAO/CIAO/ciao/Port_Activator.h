@@ -47,7 +47,7 @@ namespace CIAO
 
     Port_Activator (const char *oid,
                     const char *name,
-                    Port_Activator::Type t);
+                    Type t);
 
     virtual ~Port_Activator (void);
 
