@@ -6780,14 +6780,14 @@ ACE_OS::getrlimit (int resource, struct rlimit *rl)
 {
   // ACE_TRACE ("ACE_OS::getrlimit");
 
-#if defined (ACE_WIN32) || defined (ACE_LACKS_RLIMIT)
+#if defined (ACE_LACKS_RLIMIT)
   ACE_UNUSED_ARG (resource);
   ACE_UNUSED_ARG (rl);
 
   ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::getrlimit (resource, rl), int, -1);
-#endif /* ACE_WIN32 */
+#endif /* ACE_LACKS_RLIMIT */
 }
 
 ACE_INLINE int
@@ -6795,14 +6795,14 @@ ACE_OS::setrlimit (int resource, ACE_SETRLIMIT_TYPE *rl)
 {
   // ACE_TRACE ("ACE_OS::setrlimit");
 
-#if defined (ACE_WIN32) || defined (ACE_LACKS_RLIMIT)
+#if defined (ACE_LACKS_RLIMIT)
   ACE_UNUSED_ARG (resource);
   ACE_UNUSED_ARG (rl);
 
   ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::setrlimit (resource, rl), int, -1);
-#endif /* ACE_WIN32 */
+#endif /* ACE_LACKS_RLIMIT */
 }
 
 ACE_INLINE int
