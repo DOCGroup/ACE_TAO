@@ -36,9 +36,10 @@ public:
 
   virtual ~TAO_Collocated_Object (void);
   // destructor
-
+/*
   virtual TAO_ServantBase *_servant (void) const;
   // return the associated servant (if one exists)
+*/
 
   static TAO_Collocated_Object *_narrow (CORBA::Object_ptr object,
                                          CORBA_Environment &ACE_TRY_ENV =
@@ -63,9 +64,13 @@ private:
   TAO_Collocated_Object (const TAO_Collocated_Object &);
   TAO_Collocated_Object &operator = (const TAO_Collocated_Object &);
 
+  /*
+
 private:
   TAO_ServantBase *servant_;
   // Servant pointer.  It is 0 except for collocated objects.
+  
+  */
 };
 
 #if defined (__ACE_INLINE__)
