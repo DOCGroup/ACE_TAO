@@ -216,13 +216,12 @@
 // MUTABLE macro
 // =========================================================================
 
-# if defined (ACE_HAS_MUTABLE_KEYWORD)
-#   define ACE_MUTABLE mutable
-#   define ACE_CONST_WHEN_MUTABLE const // Addition #1
-# else  /* ! ACE_HAS_MUTABLE_KEYWORD */
-#   define ACE_MUTABLE
-#   define ACE_CONST_WHEN_MUTABLE       // Addition #2
-# endif /* ! ACE_HAS_MUTABLE_KEYWORD */
+/**
+ * @deprecated ACE_MUTABLE is deprecated.  ACE now requires C++
+ *             "mutable" keyword support.
+ */
+# define ACE_MUTABLE mutable
+# define ACE_CONST_WHEN_MUTABLE const // Addition #1
 
 // ============================================================================
 // EXPORT macros
