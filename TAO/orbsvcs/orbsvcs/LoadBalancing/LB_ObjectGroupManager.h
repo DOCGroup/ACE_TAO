@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * @file ObjectGroupManager.h
+ * @file LB_ObjectGroupManager.h
  *
  * $Id$
  *
@@ -16,23 +16,31 @@
 
 #include "ace/pre.h"
 
-#include "Loadbalancing_export.h"
+#include "orbsvcs/LoadBalancingC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/// Forward declarations.
+class TAO_LB_PropertyManager;
+class TAO_LB_ObjectGroup_Map;
 
 /**
  * @class TAO_LB_ObjectGroupManager
  *
- * @brief 
+ * @brief TAO_LoadBalancing::ObjectGroupManager implementation.
  *
+ * The ObjectGroupManager provides the interface necessary to
+ * facilitate application-controlled object group membership.
  */
-class TAO_LoadBalancing_Export TAO_LB_ObjectGroupManager
-  : public virtual POA_TAO_LoadBalancing::ObjectGroupManager
+class TAO_LB_ObjectGroupManager
+  : public virtual TAO_LoadBalancing::ObjectGroupManager
 {
 public:
+
+  /// Constructor.
+  TAO_LB_ObjectGroupManager (TAO_LB_ObjectGroup_Map *map);
 
   /**
    * @name TAO_LoadBalancer::ObjectGroupManager methods
@@ -116,8 +124,11 @@ public:
 
 private:
 
-  // @@ NEED MAP FOR ObjectId TO ObjectGroup
-  // @@ NEED MAP FOR FactoryCreationId TO ObjectGroup
+  /// Reference to the PropertyManager.
+  TAO_LB_PropertyManager &property_manager_;
+
+  /// Pointer to the ObjectGroup map.
+  TAO_LB_ObjectGroup_Map &object_group_map_;
 
 };
 

@@ -5,17 +5,18 @@
 #include "ReplicaLocator.h"
 #include "LoadBalancer_i.h"
 
-ACE_RCSID(orbsvcs, ReplicaLocator, "$Id$")
+ACE_RCSID (LoadBalancing,
+           ReplicaLocator,
+           "$Id$")
 
 TAO_LB_ReplicaLocator::TAO_LB_ReplicaLocator (TAO_LB_LoadBalancer *lb)
-  : load_balancer_ (lb) // This pointer shouldn't be zero!
+  : load_balancer_ (lb)  // Obviously, this pointer shouldn't be zero!
 {
-  // Nothing else
 }
 
 PortableServer::Servant
 TAO_LB_ReplicaLocator::preinvoke (
-      const PortableServer::ObjectId & /* oid */,
+      const PortableServer::ObjectId &oid,
       PortableServer::POA_ptr /* adapter */,
       const char * /* operation */,
       PortableServer::ServantLocator::Cookie & /* the_cookie */
@@ -29,7 +30,7 @@ TAO_LB_ReplicaLocator::preinvoke (
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
   CORBA::Object_var replica =
-    this->load_balancer_->replica (ACE_TRY_ENV);
+    this->load_balancer_->replica (oid, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   // Throw a forward exception to force the client to redirect its
@@ -49,5 +50,4 @@ TAO_LB_ReplicaLocator::postinvoke (
     TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // No-op
 }
