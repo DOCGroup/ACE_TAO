@@ -1,93 +1,100 @@
+Thu Apr 22 07:58:20 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+
+        * bin/prj_install.pl:
+
+          Removed this file.  It now lives in the MPC directory.
+
 Thu Apr 22 00:26:14 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/ATM_Addr.h:
-	* ace/Active_Map_Manager.h:
-	* ace/Active_Map_Manager.i:
-	* ace/Addr.h:
-	* ace/Atomic_Op.h:
-	* ace/Atomic_Op.i:
-	* ace/Atomic_Op_T.h:
-	* ace/Atomic_Op_T.i:
-	* ace/Based_Pointer_T.h:
-	* ace/Basic_Types.h:
-	* ace/Basic_Types.i:
-	* ace/Bound_Ptr.h:
-	* ace/CDR_Base.cpp:
-	* ace/CDR_Base.h:
-	* ace/Cache_Map_Manager_T.h:
-	* ace/Cache_Map_Manager_T.i:
-	* ace/Cleanup.cpp:
-	* ace/Cleanup.h:
-	* ace/Configuration.cpp:
-	* ace/Configuration.h:
-	* ace/Containers_T.cpp:
-	* ace/Containers_T.h:
-	* ace/Containers_T.i:
-	* ace/DEV_Addr.h:
-	* ace/FILE_Addr.h:
-	* ace/Functor_T.h:
-	* ace/Functor_T.i:
-	* ace/Future.h:
-	* ace/Get_Opt.h:
-	* ace/Hash_Map_Manager_T.h:
-	* ace/Hash_Map_Manager_T.i:
-	* ace/INET_Addr.h:
-	* ace/IOStream.h:
-	* ace/Local_Name_Space.h:
-	* ace/Local_Tokens.h:
-	* ace/Local_Tokens.i:
-	* ace/MEM_Addr.h:
-	* ace/Map_Manager.h:
-	* ace/Map_Manager.i:
-	* ace/Map_T.h:
-	* ace/Map_T.i:
-	* ace/Name_Space.h:
-	* ace/OS_Errno.h:
-	* ace/OS_Errno.inl:
-	* ace/OS_NS_Thread.cpp:
-	* ace/OS_NS_Thread.h:
-	* ace/Pair_T.h:
-	* ace/Pair_T.i:
-	* ace/RB_Tree.h:
-	* ace/RB_Tree.i:
-	* ace/Refcounted_Auto_Ptr.h:
-	* ace/Registry.cpp:
-	* ace/Registry.h:
-	* ace/SPIPE_Addr.h:
-	* ace/SString.h:
-	* ace/Select_Reactor_Base.h:
-	* ace/Select_Reactor_Base.i:
-	* ace/Service_Config.h:
-	* ace/Service_Config.i:
-	* ace/Strategies_T.h:
-	* ace/Strategies_T.i:
-	* ace/String_Base.h:
-	* ace/Thread_Manager.h:
-	* ace/Thread_Manager.i:
-	* ace/Time_Value.h:
-	* ace/Timeprobe.h:
-	* ace/Timeprobe.i:
-	* ace/UNIX_Addr.h:
-	* ace/Unbounded_Set.cpp:
-	* ace/Unbounded_Set.h:
-	* ace/Unbounded_Set_Ex.cpp:
-	* ace/Unbounded_Set_Ex.h:
-	* ace/Vector_T.cpp:
-	* ace/Vector_T.h:
-	* ace/Vector_T.i:
-	* ace/CLASSIX/CLASSIX_Group.h:
-	* ace/CLASSIX/CLASSIX_Port.h:
+        * ace/ATM_Addr.h:
+        * ace/Active_Map_Manager.h:
+        * ace/Active_Map_Manager.i:
+        * ace/Addr.h:
+        * ace/Atomic_Op.h:
+        * ace/Atomic_Op.i:
+        * ace/Atomic_Op_T.h:
+        * ace/Atomic_Op_T.i:
+        * ace/Based_Pointer_T.h:
+        * ace/Basic_Types.h:
+        * ace/Basic_Types.i:
+        * ace/Bound_Ptr.h:
+        * ace/CDR_Base.cpp:
+        * ace/CDR_Base.h:
+        * ace/Cache_Map_Manager_T.h:
+        * ace/Cache_Map_Manager_T.i:
+        * ace/Cleanup.cpp:
+        * ace/Cleanup.h:
+        * ace/Configuration.cpp:
+        * ace/Configuration.h:
+        * ace/Containers_T.cpp:
+        * ace/Containers_T.h:
+        * ace/Containers_T.i:
+        * ace/DEV_Addr.h:
+        * ace/FILE_Addr.h:
+        * ace/Functor_T.h:
+        * ace/Functor_T.i:
+        * ace/Future.h:
+        * ace/Get_Opt.h:
+        * ace/Hash_Map_Manager_T.h:
+        * ace/Hash_Map_Manager_T.i:
+        * ace/INET_Addr.h:
+        * ace/IOStream.h:
+        * ace/Local_Name_Space.h:
+        * ace/Local_Tokens.h:
+        * ace/Local_Tokens.i:
+        * ace/MEM_Addr.h:
+        * ace/Map_Manager.h:
+        * ace/Map_Manager.i:
+        * ace/Map_T.h:
+        * ace/Map_T.i:
+        * ace/Name_Space.h:
+        * ace/OS_Errno.h:
+        * ace/OS_Errno.inl:
+        * ace/OS_NS_Thread.cpp:
+        * ace/OS_NS_Thread.h:
+        * ace/Pair_T.h:
+        * ace/Pair_T.i:
+        * ace/RB_Tree.h:
+        * ace/RB_Tree.i:
+        * ace/Refcounted_Auto_Ptr.h:
+        * ace/Registry.cpp:
+        * ace/Registry.h:
+        * ace/SPIPE_Addr.h:
+        * ace/SString.h:
+        * ace/Select_Reactor_Base.h:
+        * ace/Select_Reactor_Base.i:
+        * ace/Service_Config.h:
+        * ace/Service_Config.i:
+        * ace/Strategies_T.h:
+        * ace/Strategies_T.i:
+        * ace/String_Base.h:
+        * ace/Thread_Manager.h:
+        * ace/Thread_Manager.i:
+        * ace/Time_Value.h:
+        * ace/Timeprobe.h:
+        * ace/Timeprobe.i:
+        * ace/UNIX_Addr.h:
+        * ace/Unbounded_Set.cpp:
+        * ace/Unbounded_Set.h:
+        * ace/Unbounded_Set_Ex.cpp:
+        * ace/Unbounded_Set_Ex.h:
+        * ace/Vector_T.cpp:
+        * ace/Vector_T.h:
+        * ace/Vector_T.i:
+        * ace/CLASSIX/CLASSIX_Group.h:
+        * ace/CLASSIX/CLASSIX_Port.h:
 
-	  Changed return types of all equality, relational and logical
-	  operators to bool.
+          Changed return types of all equality, relational and logical
+          operators to bool.
 
 Thu Apr 22 00:22:03 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* bin/fuzz.pl (check_for_non_bool_operators):
+        * bin/fuzz.pl (check_for_non_bool_operators):
 
-	  New test that determines if equality, relational and logical
-	  operators return a type other than "bool".  A "bool" return type
-	  for such operators is the norm for modern C++ compilers.
+          New test that determines if equality, relational and logical
+          operators return a type other than "bool".  A "bool" return type
+          for such operators is the norm for modern C++ compilers.
 
 Thu Apr 22 07:12:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -104,14 +111,14 @@ Thu Apr 22 06:02:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Apr 21 13:36:41 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/os_include/os_time.h: Reverted this change:
-	  Thu Apr 15 17:56:29 2004  Steve Huston  <shuston@riverace.com>
-	  and directly include <sys/time.h> instead. Although the Apr 15
-	  change fixed the g++ build on HP-UX, it revived a compile error
-	  for the aC++ build wherein the ACE_OS::sigaction() method would
-	  not compile, apparantly due to some confusion over partially-defined
-	  struct sigaction in some inlined situations. I have no idea why,
-	  but at this point, both the aC++ and g++ builds are quiet.
+        * ace/os_include/os_time.h: Reverted this change:
+          Thu Apr 15 17:56:29 2004  Steve Huston  <shuston@riverace.com>
+          and directly include <sys/time.h> instead. Although the Apr 15
+          change fixed the g++ build on HP-UX, it revived a compile error
+          for the aC++ build wherein the ACE_OS::sigaction() method would
+          not compile, apparantly due to some confusion over partially-defined
+          struct sigaction in some inlined situations. I have no idea why,
+          but at this point, both the aC++ and g++ builds are quiet.
 
 Tue Apr 20 12:47:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -125,10 +132,10 @@ Tue Apr 20 12:47:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Apr 20 06:17:43 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* THANKS:
+        * THANKS:
 
-	  To avoid spam for our dear users we have changed the @ symbol
-	  and the dot symbol to be in character format.
+          To avoid spam for our dear users we have changed the @ symbol
+          and the dot symbol to be in character format.
 
 Mon Apr 19 14:10:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -151,16 +158,16 @@ Mon Apr 19 14:02:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Apr 16 12:34:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/ace.icp:
-	* tests/tests.icp: Removed these left-over Visual Age C++ projects.
+        * ace/ace.icp:
+        * tests/tests.icp: Removed these left-over Visual Age C++ projects.
 
-	* ace/ace_dll64.mak:
-	* ace/ace_lib64.mak:
-	* apps/JAWS/clients/WebSTONE/src/client/webclient.mak:
-	* apps/JAWS/clients/WebSTONE/src/gendata/genrand.mak:
-	* apps/JAWS/clients/WebSTONE/src/master/webmaster.mak:
-	* examples/C++NPv1/Process_Per_Connection_Logging_Server.mak:
-	  Removed these MSVC make files. These are all now generatable via MPC.
+        * ace/ace_dll64.mak:
+        * ace/ace_lib64.mak:
+        * apps/JAWS/clients/WebSTONE/src/client/webclient.mak:
+        * apps/JAWS/clients/WebSTONE/src/gendata/genrand.mak:
+        * apps/JAWS/clients/WebSTONE/src/master/webmaster.mak:
+        * examples/C++NPv1/Process_Per_Connection_Logging_Server.mak:
+          Removed these MSVC make files. These are all now generatable via MPC.
 
 Fri Apr 16 09:35:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -179,18 +186,18 @@ Fri Apr 16 06:38:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Apr 15 23:28:24 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* include/makeinclude/platform_sunos5_sunc++.GNU (CCFLAGS):
-	  (CPPFLAGS):
+        * include/makeinclude/platform_sunos5_sunc++.GNU (CCFLAGS):
+          (CPPFLAGS):
 
-	  Moved preprocessor flags in compiler flags variable $(CCFLAGS)
-	  to preprocessor flags variable $(CPPFLAGS).  Addresses potential
-	  dependency generation problems.
+          Moved preprocessor flags in compiler flags variable $(CCFLAGS)
+          to preprocessor flags variable $(CPPFLAGS).  Addresses potential
+          dependency generation problems.
 
 Thu Apr 15 17:56:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/os_include/os_time.h: Include ace/os_include/sys/os_time.h
-	  before <time.h>. This insures that the X/Open form of select(),
-	  using fdset* as opposed to int*, gets selected, at least on HP-UX.
+        * ace/os_include/os_time.h: Include ace/os_include/sys/os_time.h
+          before <time.h>. This insures that the X/Open form of select(),
+          using fdset* as opposed to int*, gets selected, at least on HP-UX.
 
 Thu Apr 15 14:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
