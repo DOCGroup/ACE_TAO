@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    examples
-// 
+//
 // = FILENAME
 //    test_handle_close.cpp
 //
@@ -17,7 +17,7 @@
 //
 // = AUTHOR
 //    Irfan Pyarali
-// 
+//
 // ============================================================================
 
 #include "ace/Get_Opt.h"
@@ -38,6 +38,9 @@ static int opt_select_reactor = 0;
 // Make pipe readable in main()
 static int write_to_pipe_in_main = 0;
 
+// Cancel reads
+static int cancel_reads = 0;
+
 // Write some data to the pipe.  This will cause handle_input to get
 // called.
 void
@@ -45,9 +48,9 @@ write_to_pipe (ACE_Pipe &pipe)
 {
   char *data = "hello";
   int len = ACE_OS::strlen (data);
-  
+
   int result = ACE::send (pipe.write_handle (),
-                          data, 
+                          data,
                           len);
   ACE_ASSERT (result == len);
 }
@@ -69,20 +72,32 @@ public:
   int handle_close (ACE_HANDLE handle,
                     ACE_Reactor_Mask close_mask)
   {
-    ACE_DEBUG ((LM_DEBUG, 
-                "Handle closed called with mask = %d\n",
+    ACE_DEBUG ((LM_DEBUG,
+                "Handler::handle_close called with mask = %d\n",
                 close_mask));
     return 0;
   }
 
   int handle_input (ACE_HANDLE handle)
   {
+    ACE_DEBUG ((LM_DEBUG, "Handler::handle_input\n"));
+
     // Remove for reading
     return -1;
   }
 
   int handle_output (ACE_HANDLE handle)
   {
+    ACE_DEBUG ((LM_DEBUG, "Handler::handle_output\n"));
+
+    // Optionally cancel reads
+    if (cancel_reads)
+      {
+        int result = ACE_Reactor::instance ()->cancel_wakeup (this,
+                                                              ACE_Event_Handler::READ_MASK);
+        ACE_ASSERT (result != -1);
+      }
+
     // Write to the pipe; this causes handle_input to get called.
     if (!write_to_pipe_in_main)
       write_to_pipe (this->pipe_);
@@ -95,17 +110,33 @@ protected:
   ACE_Pipe &pipe_;
 };
 
-class Different_Handler : public Handler
+class Different_Handler : public ACE_Event_Handler
 {
 public:
 
   Different_Handler (ACE_Pipe &pipe)
-    : Handler (pipe)
-  {    
+    : pipe_ (pipe)
+  {
+  }
+
+  ACE_HANDLE get_handle (void) const
+  {
+    return this->pipe_.read_handle ();
+  }
+
+  int handle_close (ACE_HANDLE handle,
+                    ACE_Reactor_Mask close_mask)
+  {
+    ACE_DEBUG ((LM_DEBUG,
+                "Different_Handler::handle_close called with mask = %d\n",
+                close_mask));
+    return 0;
   }
 
   int handle_input (ACE_HANDLE handle)
   {
+    ACE_DEBUG ((LM_DEBUG, "Different_Handler::handle_input\n"));
+
     // Remove for reading
     int result = ACE_Reactor::instance ()->remove_handler (this,
                                                            ACE_Event_Handler::READ_MASK);
@@ -116,10 +147,33 @@ public:
 
   int handle_output (ACE_HANDLE handle)
   {
+    ACE_DEBUG ((LM_DEBUG, "Different_Handler::handle_output\n"));
+
+    // Add for reading
+    int result = ACE_Reactor::instance ()->mask_ops (this,
+                                                     ACE_Event_Handler::READ_MASK,
+                                                     ACE_Reactor::ADD_MASK);
+    ACE_Reactor_Mask old_masks =
+      ACE_Event_Handler::WRITE_MASK |
+      ACE_Event_Handler::EXCEPT_MASK;
+
+    ACE_ASSERT (result == old_masks);
+
+    // Get new masks
+    result = ACE_Reactor::instance ()->mask_ops (this,
+                                                 ACE_Event_Handler::NULL_MASK,
+                                                 ACE_Reactor::GET_MASK);
+    ACE_Reactor_Mask current_masks =
+      ACE_Event_Handler::READ_MASK |
+      ACE_Event_Handler::WRITE_MASK |
+      ACE_Event_Handler::EXCEPT_MASK;
+
+    ACE_ASSERT (result == current_masks);
+
     // Remove for writing
     ACE_Reactor_Mask mask = ACE_Event_Handler::WRITE_MASK | ACE_Event_Handler::DONT_CALL;
-    int result = ACE_Reactor::instance ()->remove_handler (this,
-                                                           mask);
+    result = ACE_Reactor::instance ()->remove_handler (this,
+                                                       mask);
     ACE_ASSERT (result == 0);
 
     // Write to the pipe; this causes handle_input to get called.
@@ -128,6 +182,9 @@ public:
 
     return 0;
   }
+
+protected:
+  ACE_Pipe &pipe_;
 };
 
 
@@ -162,7 +219,7 @@ main (int argc, char *argv[])
   int result = 0;
 
   // Parse args
-  ACE_Get_Opt getopt (argc, argv, ASYS_TEXT ("swm"), 1);
+  ACE_Get_Opt getopt (argc, argv, ASYS_TEXT ("swmc"), 1);
   for (int c; (c = getopt ()) != -1; )
     switch (c)
       {
@@ -174,6 +231,9 @@ main (int argc, char *argv[])
         break;
       case 'm':
         write_to_pipe_in_main = 1;
+        break;
+      case 'c':
+        cancel_reads = 1;
         break;
       }
 
@@ -201,27 +261,31 @@ main (int argc, char *argv[])
   // clean up.
   if (opt_select_reactor || opt_wfmo_reactor)
     impl = auto_ptr<ACE_Reactor_Impl> (ACE_Reactor::instance ()->implementation ());
-  
+
   // Register handlers
-  ACE_Reactor_Mask mask = 
-    ACE_Event_Handler::READ_MASK | 
+  ACE_Reactor_Mask handler_mask =
+    ACE_Event_Handler::READ_MASK |
     ACE_Event_Handler::WRITE_MASK |
     ACE_Event_Handler::EXCEPT_MASK;
-    
+
+  ACE_Reactor_Mask different_handler_mask =
+    ACE_Event_Handler::WRITE_MASK |
+    ACE_Event_Handler::EXCEPT_MASK;
+
   result = ACE_Reactor::instance ()->register_handler (&handler,
-                                                       mask);
+                                                       handler_mask);
   ACE_ASSERT (result == 0);
 
   result = ACE_Reactor::instance ()->register_handler (&different_handler,
-                                                       mask);
+                                                       different_handler_mask);
   ACE_ASSERT (result == 0);
-  
-  // Write to the pipe; this causes handle_input to get called.  
+
+  // Write to the pipe; this causes handle_input to get called.
   if (write_to_pipe_in_main)
     {
       write_to_pipe (pipe1);
       write_to_pipe (pipe2);
-    }      
+    }
 
   // Note that handle_output will get called automatically since the
   // pipe is writable!
@@ -229,6 +293,8 @@ main (int argc, char *argv[])
   // Run for three seconds
   ACE_Time_Value time (3);
   ACE_Reactor::instance ()->run_event_loop (time);
+
+  ACE_DEBUG ((LM_DEBUG, "\nClosing down the application\n\n"));
 
   return 0;
 }

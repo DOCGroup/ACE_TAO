@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    examples
-// 
+//
 // = FILENAME
 //    test_removals.cpp
 //
@@ -13,11 +13,11 @@
 //    Tests the Reactor's ability to handle simultaneous events.  If
 //    you pass anything on the command-line, then each handler
 //    requests to be removed from the Reactor after each event.
-//    
+//
 // = AUTHOR
 //    Tim Harrison
 //    Irfan Pyarali
-// 
+//
 // ============================================================================
 
 #include "ace/Reactor.h"
@@ -36,7 +36,7 @@ class Event_Handler : public ACE_Event_Handler
 //    created with -close_down- it returns -1 from handle signal.
 {
 public:
-  Event_Handler (int event_number, 
+  Event_Handler (int event_number,
 		 int close_down)
     : event_number_ (event_number),
     close_down_ (close_down)
@@ -97,7 +97,7 @@ main (int argc, char *argv[])
 	  break;
 	}
       if (result == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "main"), -1);	
-    }	
+	ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "main"), -1);
+    }
   return 0;
 }
