@@ -37,7 +37,8 @@ static
 ACE_Malloc<ACE_SHARED_MEMORY_POOL, ACE_SV_Semaphore_Simple> &
 myallocator ()
 {
-  static ACE_Malloc<ACE_SHARED_MEMORY_POOL, ACE_SV_Semaphore_Simple> myallocator;
+  static ACE_Malloc<ACE_SHARED_MEMORY_POOL,
+                    ACE_SV_Semaphore_Simple> myallocator;
   return myallocator;
 }
 
@@ -55,35 +56,43 @@ parent (char *shm)
   // This semaphore is initially created with a count of 0, i.e., it
   // is "locked."
   ACE_ASSERT (mutex.open (SEM_KEY_1,
-                           ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
+                          ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
 
   ACE_SV_Semaphore_Complex synch;
   // This semaphore is initially created with a count of 0, i.e., it
   // is "locked."
   ACE_ASSERT (synch.open (SEM_KEY_2,
-                           ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
+                          ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
 
   // This for loop executes in a critical section proteced by <mutex>.
   for (int i = 0; i < SHMSZ; i++)
     shm[i] = SHMDATA[i];
 
   if (mutex.release () == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P) %p"), ASYS_TEXT ("parent mutex.release")));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P) %p"),
+                ASYS_TEXT ("parent mutex.release")));
   else if (synch.acquire () == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P) %p"), ASYS_TEXT ("parent synch.acquire")));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P) %p"),
+                ASYS_TEXT ("parent synch.acquire")));
 
   if (myallocator ().remove () == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P) %p\n"), ASYS_TEXT ("parent allocator.remove")));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P) %p\n"),
+                ASYS_TEXT ("parent allocator.remove")));
   if (mutex.remove () == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P) %p\n"), ASYS_TEXT ("parent mutex.remove")));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P) %p\n"),
+                ASYS_TEXT ("parent mutex.remove")));
   if (synch.remove () == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P) %p\n"), ASYS_TEXT ("parent synch.remove")));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P) %p\n"),
+                ASYS_TEXT ("parent synch.remove")));
   return 0;
 }
 
 static int
 child (char *shm)
 {
+  // Give the parent a chance to create the semaphore.
+  ACE_OS::sleep (1);
+
   ACE_SV_Semaphore_Complex mutex;
   // This semaphore is initially created with a count of 0, i.e., it
   // is "locked."
@@ -104,7 +113,8 @@ child (char *shm)
     if (errno == EAGAIN)
       ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P) spinning in child!\n")));
     else
-      ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("(%P) child mutex.tryacquire")), 1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ASYS_TEXT ("(%P) child mutex.tryacquire")), 1);
 
   for (int i = 0; i < SHMSZ; i++)
     ACE_ASSERT (SHMDATA[i] == shm[i]);
@@ -131,7 +141,8 @@ main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("SV_Shared_Memory_Test"));
 
-#if defined (ACE_HAS_SYSV_IPC) && !defined (ACE_LACKS_FORK) && !defined(ACE_LACKS_SYSV_SHMEM)
+#if defined (ACE_HAS_SYSV_IPC) && !defined (ACE_LACKS_FORK) && \
+    !defined(ACE_LACKS_SYSV_SHMEM)
   char *shm = (char *) myallocator ().malloc (27);
 
   switch (ACE_OS::fork ("SV_Shared_Memory_Test.cpp"))
@@ -148,7 +159,8 @@ main (int, ASYS_TCHAR *[])
     }
 #else
   ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("SYSV IPC, SYSV SHMEM, or fork are not supported on this platform\n")));
+              ASYS_TEXT ("SYSV IPC, SYSV SHMEM, or fork ")
+              ASYS_TEXT ("are not supported on this platform\n")));
 #endif /* ACE_HAS_SYSV_IPC */
   ACE_END_TEST;
   return 0;
