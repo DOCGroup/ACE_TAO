@@ -45,7 +45,7 @@ be_visitor_sequence_cs::gen_bounded_obj_sequence (be_sequence *node)
 
   // generate the class name
   be_type  *pt; // base types
-      
+
   if (bt->node_type () == AST_Decl::NT_typedef)
     {
       // get the primitive base type of this typedef node
@@ -54,7 +54,7 @@ be_visitor_sequence_cs::gen_bounded_obj_sequence (be_sequence *node)
     }
   else
     pt = bt;
-  
+
   const char * class_name = node->instance_name ();
 
   static char full_class_name [NAMEBUFSIZE];
@@ -120,15 +120,15 @@ be_visitor_sequence_cs::gen_bounded_obj_sequence (be_sequence *node)
       << "{" << be_idt_nl
       << "if (this->buffer_ == 0 || this->release_ == 0)" << be_idt_nl
       << "return;" << be_uidt_nl;
-  pt->accept(visitor); 
-  *os <<" **tmp = ACE_reinterpret_cast ("; 
-  pt->accept (visitor); 
+  pt->accept(visitor);
+  *os <<" **tmp = ACE_reinterpret_cast (";
+  pt->accept (visitor);
   *os << " **, this->buffer_);" << be_nl
       << full_class_name << "::freebuf (tmp);" << be_nl
       << "this->buffer_ = 0;" << be_uidt_nl
       << "}" << be_nl
       << be_nl;
-  
+
   // destructor
   *os << full_class_name << "::~" << class_name << " (void)" << be_nl
       << "// destructor" << be_nl
@@ -142,7 +142,7 @@ be_visitor_sequence_cs::gen_bounded_obj_sequence (be_sequence *node)
       << full_class_name << "::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)" << be_nl
       << "{" << be_idt_nl;
   pt->accept(visitor);
-  *os <<" **tmp = ACE_reinterpret_cast ("; 
+  *os <<" **tmp = ACE_reinterpret_cast (";
   pt->accept (visitor);
   *os << " **, this->buffer_);" << be_nl
       << be_nl
@@ -196,4 +196,3 @@ be_visitor_sequence_cs::gen_bounded_obj_sequence (be_sequence *node)
   delete visitor;
   return 0;
 }
-

@@ -47,7 +47,7 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
 
   // generate the class name
   be_type  *pt; // base types
-      
+
   if (bt->node_type () == AST_Decl::NT_typedef)
   {
     // get the primitive base type of this typedef node
@@ -101,25 +101,25 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
   os->gen_ifdef_macro (class_name);
 
   os->indent ();
-  
+
   // allocate_buffer
   *os << "// The Base_Sequence functions, please see tao/Sequence.h" << be_nl
       << "void" << be_nl
       << full_class_name << "::_allocate_buffer (CORBA::ULong length)" << be_nl
       << "{" << be_idt_nl;
-  pt->accept(visitor); 
+  pt->accept(visitor);
   *os <<" **tmp = " << full_class_name << "::allocbuf (length);" << be_nl
       << be_nl
       << "if (this->buffer_ != 0)" << be_nl
       << "{" << be_idt_nl;
-  pt->accept(visitor); 
-  *os <<" **old = ACE_reinterpret_cast ("; 
-  pt->accept (visitor); 
+  pt->accept(visitor);
+  *os <<" **old = ACE_reinterpret_cast (";
+  pt->accept (visitor);
   *os << "**, this->buffer_);" << be_nl
       << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_idt_nl
       << "if (!this->release_)" << be_idt_nl
-      << "tmp[i] = "; 
-  pt->accept (visitor); 
+      << "tmp[i] = ";
+  pt->accept (visitor);
   *os << "::_duplicate (old[i]);" << be_uidt_nl
       << "else" << be_idt_nl
       << "tmp[i] = old[i];" << be_uidt_nl << be_uidt_nl
@@ -136,15 +136,15 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       << "{" << be_idt_nl
       << "if (this->buffer_ == 0 || this->release_ == 0)" << be_idt_nl
       << "return;" << be_uidt_nl;
-  pt->accept(visitor); 
+  pt->accept(visitor);
   *os <<" **tmp = ACE_reinterpret_cast (";
-  pt->accept (visitor); 
+  pt->accept (visitor);
   *os << "**, this->buffer_);" << be_nl
       << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_nl
       << "{" << be_idt_nl
       << "CORBA::release (tmp[i]);" << be_nl
-      << "tmp[i] = "; 
-  pt->accept (visitor); 
+      << "tmp[i] = ";
+  pt->accept (visitor);
   *os << "::_nil ();" << be_uidt_nl
       << "}" << be_nl
       << full_class_name << "::freebuf (tmp);" << be_nl
@@ -163,21 +163,21 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
   *os << "void" << be_nl
       << full_class_name << "::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)" << be_nl
       << "{" << be_idt_nl;
-  pt->accept(visitor); 
-  *os <<" **tmp = ACE_reinterpret_cast ("; 
-  pt->accept (visitor); 
+  pt->accept(visitor);
+  *os <<" **tmp = ACE_reinterpret_cast (";
+  pt->accept (visitor);
   *os << "**, this->buffer_);" << be_nl
       << be_nl
       << "for (CORBA::ULong i = nl; i < ol; ++i)" << be_nl
       << "{" << be_idt_nl
       << "CORBA::release (tmp[i]);" << be_nl
-      << "tmp[i] = "; 
-  pt->accept (visitor); 
+      << "tmp[i] = ";
+  pt->accept (visitor);
   *os << "::_nil ();" << be_uidt_nl
       << "}" << be_uidt_nl
       << "}" << be_nl;
 
-  
+
   be_predefined_type *prim = be_predefined_type::narrow_from_decl (pt);
   if ((pt->node_type () != AST_Decl::NT_pre_defined) ||
       (prim && (prim->pt () == AST_PredefinedType::PT_pseudo) &&
@@ -200,7 +200,7 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       pt->accept (visitor);
       *os << "::_narrow (src, ACE_TRY_ENV);" << be_uidt_nl
 	  << "}\n" << be_nl;
-      
+
       *os << "CORBA_Object*" << be_nl
           << full_class_name << "::_upcast (void *src) const" <<  be_nl
 	  << "{" << be_idt_nl;
@@ -220,4 +220,3 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
   delete visitor;
   return 0;
 }
-

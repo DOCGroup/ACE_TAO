@@ -66,7 +66,7 @@ be_visitor_sequence_ci::gen_bounded_str_sequence (be_sequence *node)
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CI);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
-  
+
   // !! branching in either compile time template instantiation
   // or manual template instatiation
   os->gen_ifdef_AHETI();
@@ -78,7 +78,7 @@ be_visitor_sequence_ci::gen_bounded_str_sequence (be_sequence *node)
 #if 0 /* Why is this here? ASG */
   // generate the class name
   be_type  *pt; // base types
-      
+
   if (bt->node_type () == AST_Decl::NT_typedef)
   {
     // get the primitive base type of this typedef node
@@ -88,7 +88,7 @@ be_visitor_sequence_ci::gen_bounded_str_sequence (be_sequence *node)
   else
     pt = bt;
 
-  // the accept is here the first time used and if an 
+  // the accept is here the first time used and if an
   // error occurs, it will occur here. Later no check
   // for errors will be done.
   if (pt->accept (visitor) == -1)
@@ -136,7 +136,7 @@ be_visitor_sequence_ci::gen_bounded_str_sequence (be_sequence *node)
   // constructor
   *os << "ACE_INLINE" << be_nl
       << full_class_name << "::" << class_name << " (void)" << be_nl
-      << "  : TAO_Bounded_Base_Sequence (" << node->max_size () 
+      << "  : TAO_Bounded_Base_Sequence (" << node->max_size ()
       << ", " << full_class_name << "::allocbuf(" << node->max_size () << "))" << be_nl
       << "{" << be_nl
       << "}" << be_nl
@@ -149,7 +149,6 @@ be_visitor_sequence_ci::gen_bounded_str_sequence (be_sequence *node)
       << "CORBA::Boolean release)" << be_uidt_nl
       << "  : TAO_Bounded_Base_Sequence (" << node->max_size () << ", length, value, release)" << be_nl
       << "{" << be_nl
-      << "  this->_allocate_buffer (" << node->max_size () << ");" << be_nl
       << "}" << be_nl
       << be_nl;
 
@@ -169,7 +168,7 @@ be_visitor_sequence_ci::gen_bounded_str_sequence (be_sequence *node)
       << be_nl;
 
   // operator=
-  *os << "ACE_INLINE " << full_class_name << "& " << be_nl 
+  *os << "ACE_INLINE " << full_class_name << "& " << be_nl
       << full_class_name << "::operator= (const " << full_class_name << " &rhs)" << be_nl
       << "{" << be_idt_nl
       << "if (this == &rhs)" << be_idt_nl
@@ -262,4 +261,3 @@ be_visitor_sequence_ci::gen_bounded_str_sequence (be_sequence *node)
   delete visitor;
   return 0;
 }
-

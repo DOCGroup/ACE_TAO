@@ -45,7 +45,7 @@ be_visitor_sequence_ch::gen_bounded_str_sequence (be_sequence *node)
 
   // generate the class name
   be_type  *pt; // base types
-      
+
   if (bt->node_type () == AST_Decl::NT_typedef)
   {
     // get the primitive base type of this typedef node
@@ -63,7 +63,7 @@ be_visitor_sequence_ch::gen_bounded_str_sequence (be_sequence *node)
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CH);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
-  
+
   // !! branching in either compile time template instantiation
   // or manual template instatiation
   os->gen_ifdef_AHETI();
@@ -71,7 +71,7 @@ be_visitor_sequence_ch::gen_bounded_str_sequence (be_sequence *node)
   os->gen_ifdef_macro (class_name);
 
   os->indent ();
-  // the accept is here the first time used and if an 
+  // the accept is here the first time used and if an
   // error occurs, it will occur here. Later no check
   // for errors will be done.
   if (pt->accept (visitor) == -1)
@@ -128,7 +128,7 @@ be_visitor_sequence_ch::gen_bounded_str_sequence (be_sequence *node)
   *os << "const char* *get_buffer (void) const;" << be_nl;
 
   // shrink_buffer
-  *os << "virtual void _shrink_buffer (CORBA::ULong nl,CORBA::ULong ol);" 
+  *os << "virtual void _shrink_buffer (CORBA::ULong nl,CORBA::ULong ol);"
       << be_uidt_nl;
 
   *os << "};\n";
@@ -142,4 +142,3 @@ be_visitor_sequence_ch::gen_bounded_str_sequence (be_sequence *node)
   delete visitor;
   return 0;
 }
-

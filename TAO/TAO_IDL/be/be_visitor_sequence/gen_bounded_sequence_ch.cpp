@@ -83,7 +83,7 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
 
   // constructor
   *os << class_name << " (CORBA::ULong length," << be_idt_nl;
-  pt->accept (visitor); 
+  pt->accept (visitor);
   *os <<" *data," << be_nl
       << "CORBA::Boolean release = 0);" << be_uidt_nl;
 
@@ -101,23 +101,23 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
   // Accessors
   // operator[]
   *os << "// = Accessors." << be_nl;
-  pt->accept(visitor); 
+  pt->accept(visitor);
   *os <<" &operator[] (CORBA::ULong i);// operator []" << be_nl;
 
   // operator[]
-  *os << "const "; 
-  pt->accept (visitor); 
+  *os << "const ";
+  pt->accept (visitor);
   *os << " &operator[] (CORBA::ULong i) const;" << be_nl;
 
   // Static Operations
   *os << "// = Static operations." << be_nl
-      << "static "; 
-  pt->accept (visitor); 
+      << "static ";
+  pt->accept (visitor);
   *os << " *allocbuf (CORBA::ULong); // Allocate storage for the sequence." << be_nl;
 
   // free_buf
-  *os << "static void freebuf ("; 
-  pt->accept (visitor); 
+  *os << "static void freebuf (";
+  pt->accept (visitor);
   *os << " *buffer); // Free the sequence." << be_nl;
 
   // allocate_buffer
@@ -127,18 +127,18 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
   *os << "virtual void _deallocate_buffer (void);" << be_nl;
 
   // get_buffer
-  pt->accept(visitor); 
+  pt->accept(visitor);
   *os << " *get_buffer (CORBA::Boolean orphan = 0);" << be_nl;
 
   // get_buffer
-  *os << "const "; 
-  pt->accept (visitor); 
+  *os << "const ";
+  pt->accept (visitor);
   *os << " *get_buffer (void) const;" << be_nl;
 
   // replace
   *os << "void replace (CORBA::ULong max," << be_idt_nl
       << "CORBA::ULong length," << be_nl;
-  pt->accept(visitor); 
+  pt->accept(visitor);
   *os <<" *data," << be_nl
       << "CORBA::Boolean release = 0);" << be_uidt << be_uidt_nl;
 
