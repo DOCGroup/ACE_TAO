@@ -19,6 +19,7 @@
 #include "Resume_Handle.h"
 #include "Codeset_Manager.h"
 #include "Codeset_Translator_Factory.h"
+#include "ace/OS_NS_sys_time.h"
 
 #include "ace/Reactor.h"
 
