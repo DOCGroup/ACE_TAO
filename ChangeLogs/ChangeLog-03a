@@ -1,3 +1,10 @@
+Tue Oct  2 15:00:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/CDR_Stream.cpp (clone_from): Copied the GIOP major and minor
+	  versions from the incoming CDR stream. Thanks to
+	  <sleung@opentext.com> for reporting this. This closes bugzill id
+	  1043. 
+
 Tue Oct  2 09:45:39 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/libDLL_Test.icc:
