@@ -12,6 +12,8 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
+LDLIBS = -lTAO_DIOP -lTAO_PortableServer -lTAO
+
 IDL_FILES = test
 IDL_SRC = testC.cpp testS.cpp
 BIN = client server
@@ -44,10 +46,10 @@ include $(TAO_ROOT)/taoconfig.mk
 .PRECIOUS: $(foreach ext, $(IDL_EXT), test$(ext))
 
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 client: $(addprefix $(VDIR),$(CLIENT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
 	-$(RM) $(foreach ext, $(IDL_EXT), test$(ext))
