@@ -627,138 +627,165 @@ CORBA_SystemException::_tao_get_omg_exception_description (
 
   static const char *UNKNOWN_TABLE[] =
     {
-        "Unlisted user exception received by client.",    // 1
-        "Non-standard System Exception not supported."    // 2
+      "Unlisted user exception received by client.",    // 1
+      "Non-standard SystemException not supported.",    // 2
+      "An unkown user exception received by a portable interceptor." // 3
     };
 
   static const char *BAD_PARAM_TABLE[] =
     {
-        "Failure to register, unregister, or lookup value factory.", // 1
-        "RID already defined in IFR.",                               // 2
-        "Name already used in the context in IFR.",                  // 3
-        "Target is not a valid container.",                          // 4
-        "Name clash in inherited context.",                          // 5
-        "Incorrect type for abstract interface.",                    // 6
-        "string_to_object conversion failed due to a bad scheme name.", // 7
-        "string_to_object conversion failed due to a bad address.",  // 8
-        "string_to_object conversion failed due to a bad schema specific part.",// 9
-        "string_to_object conversion failed due to non specific reason.", // 10
-        "Attempt to derive abstract interface from non-abstract base interface in the Interface Repository.", // 11
-        "Attempt to let a ValueDef support more than one non-abstract interface in the Interface Repository.", // 12
-        "Attempt to use an incomplete TypeCode as a parameter.",     // 13
-        "Invalid object id passed to POA::create_reference_by_id.",  // 14
-        "Bad name argument in TypeCode operation.",                  // 15
-        "Bad RepositoryId argument in TypeCode operation.",          // 16
-        "Invalid member namein TypeCode operation.",                 // 17
-        "Duplicate label value in create_union_tc.",                 // 18
-        "Incompatible TypeCode of label and discriminator in create_union_tc.", // 19
-        "Supplied discriminator type illegitimate in create_union_tc.", // 20
-        "Any passed to ServerRequest::set_exception does not contain an exception.", // 21
-        "Unlisted user exception passed to ServerRequest::set_exception", // 22
-        "wchar transmission code set not in service context.",       // 23
-        "Service context is not in OMG-defined range.",              // 24
-        "Enum value out of range.",                                  // 25
-        "Invalid service context Id in portable interceptor.",       // 26
-        "Attempt to call register_initial_reference with a null Object.", // 27
-        "Invalid component Id in portable interceptor.",             // 28
-        "Invalid profile Id in portable interceptor.",               // 29
-        "Two or more Policy objects with the same PolicyType value supplied to Object::set_policy_overrides or PolicyManager::set_policy_overrides." // 30
+      "Failure to register, unregister, or lookup value factory.", // 1
+      "RID already defined in IFR.",                               // 2
+      "Name already used in the context in IFR.",                  // 3
+      "Target is not a valid container.",                          // 4
+      "Name clash in inherited context.",                          // 5
+      "Incorrect type for abstract interface.",                    // 6
+      "string_to_object conversion failed due to a bad scheme name.", // 7
+      "string_to_object conversion failed due to a bad address.",  // 8
+      "string_to_object conversion failed due to a bad schema specific part.",// 9
+      "string_to_object conversion failed due to non specific reason.", // 10
+      "Attempt to derive abstract interface from non-abstract base interface in the Interface Repository.", // 11
+      "Attempt to let a ValueDef support more than one non-abstract interface in the Interface Repository.", // 12
+      "Attempt to use an incomplete TypeCode as a parameter.",     // 13
+      "Invalid object id passed to POA::create_reference_by_id.",  // 14
+      "Bad name argument in TypeCode operation.",                  // 15
+      "Bad RepositoryId argument in TypeCode operation.",          // 16
+      "Invalid member namein TypeCode operation.",                 // 17
+      "Duplicate label value in create_union_tc.",                 // 18
+      "Incompatible TypeCode of label and discriminator in create_union_tc.", // 19
+      "Supplied discriminator type illegitimate in create_union_tc.", // 20
+      "Any passed to ServerRequest::set_exception does not contain an exception.", // 21
+      "Unlisted user exception passed to ServerRequest::set_exception", // 22
+      "wchar transmission code set not in service context.",       // 23
+      "Service context is not in OMG-defined range.",              // 24
+      "Enum value out of range.",                                  // 25
+      "Invalid service context Id in portable interceptor.",       // 26
+      "Attempt to call register_initial_reference with a null Object.", // 27
+      "Invalid component Id in portable interceptor.",             // 28
+      "Invalid profile Id in portable interceptor.",               // 29
+      "Two or more Policy objects with the same PolicyType value supplied to Object::set_policy_overrides or PolicyManager::set_policy_overrides." // 30
+      "Attempt to define a oneway operation with non-void result, out or inout parameters or user exceptions.", // 31
+      "DII asked to create request for an implicit operation.",     // 32,
+      "An OTS/XA integration xa_ call returned XAER_INVAL.",        // 33
+      "Union branch modifier called with bad case label discriminator.", // 34
+      "Illegal IDL context property name.",   // 35
+      "Illegal IDL property search string.",  // 36
+      "Illegal IDL context name.",            // 37
+      "Non-empty IDL context.",               // 38
+      "Servant not found [ServantManager].",  // 39
+      "ORB output stream does not support ValueOutputStream interface.", // 40
+      "ORB input stream does not support ValueInputStream interface."    // 41
     };
 
   static const char *IMP_LIMIT_TABLE[] =
     {
-        "Unable to use any profile in IOR." // 1
+      "Unable to use any profile in IOR." // 1
     };
+
+  static const char *INITIALIZE_TABLE[] =
+    {
+      "Priority range too restricted for ORB." // 1
+    };
+
 
   static const char *INV_OBJREF_TABLE[] =
     {
-        "wchar Code Set support not specified.", // 1
-        "Codeset component required for type using wchar or wstring data." // 2
+      "wchar Code Set support not specified.", // 1
+      "Codeset component required for type using wchar or wstring data." // 2
     };
 
   static const char *MARSHAL_TABLE[] =
     {
-        "Unable to locate value factory.",  // 1
-        "ServerRequest::set_result called before ServerRequest::ctx when the operation IDL contains a context clause.", // 2
-        "NVList passed to ServerRequest::arguments does not describe all parameters passed by client.", // 3
-        "Attempt to marshal Local object.", // 4
-        "wchar or wstring data erroneously sent by client over GIOP 1.0 connection.", // 5
-        "wchar or wstring data erroneously returned by server over GIOP 1.0 connection." //6
+      "Unable to locate value factory.",  // 1
+      "ServerRequest::set_result called before ServerRequest::ctx when the operation IDL contains a context clause.", // 2
+      "NVList passed to ServerRequest::arguments does not describe all parameters passed by client.", // 3
+      "Attempt to marshal Local object.", // 4
+      "wchar or wstring data erroneously sent by client over GIOP 1.0 connection.", // 5
+      "wchar or wstring data erroneously returned by server over GIOP 1.0 connection." //6
+      "Unsupported RMI/IDL custom value type stream format." // 7
     };
 
   static const char *BAD_TYPECODE_TABLE[] =
     {
-        "Attempt to marshal incomplete TypeCode.",             // 1
-        "Member type code illegitimate in TypeCode operation." // 2
+      "Attempt to marshal incomplete TypeCode.",              // 1
+      "Member type code illegitimate in TypeCode operation.", // 2
+      "Illegal parameter type."                               // 3
     };
 
   static const char *NO_IMPLEMENT_TABLE[] =
     {
-        "Missing local value implementation.",        // 1
-        "Incompatible value implementation version.", // 2
-        "Unable to use any profile in IOR.",          // 3
-        "Attempt to use DII on Local object."         // 4
+      "Missing local value implementation.",        // 1
+      "Incompatible value implementation version.", // 2
+      "Unable to use any profile in IOR.",          // 3
+      "Attempt to use DII on Local object.",        // 4
+      "Biomolecular Sequence Analysis iterator cannot be reset.",         // 5
+      "Biomolecular Sequence Analysis metadata is not available as XML.", // 6
+      "Genomic Maps iterator cannot be rest."       // 7
     };
 
   static const char *NO_RESOURCE_TABLE[] =
     {
-        "Portable Interceptor operation not support in this binding." // 1
+      "Portable Interceptor operation not support in this binding.", // 1
+      "No connection for request's priority."                        // 2
     };
 
   static const char *BAD_INV_ORDER_TABLE[] =
     {
-        "Dependency exists in IFR preventing destruction of this object", // 1
-        "Attempt to destroy indestructible objects in IFR.", // 2
-        "Operation would deadlock.",                         // 3
-        "ORB has shutdown.",                                 // 4
-        "Attempt to invoke \"send\" or \"invoke\" operation of the same \"Request\" object more than once.", // 5
-        "Attempt to set a servant manager after one has already been set.", // 6
-        "ServerRequest::arguments called more than once or after a call to ServerRequest::set_exception.", // 7
-        "ServerRequest::ctx called more than once or before ServerRequest::arguments or after ServerRequest::ctx, ServerRequest::set_result or ServerRequest::set_exception.", // 8
-        "ServerRequest::result called more than once or before ServerRequest::arguments or after ServerRequest::set_result or ServerRequest::set_exception.", // 9
-        "Attempt to send a DII request after it was sent previously.", // 10
-        "Attempt to poll a DII request or to retrieve its result before the request was sent.", // 11
-        "Attempt to poll a DII request or to retrieve its result after the result was retrieved previously.", // 12
-        "Attempt to poll a synchronous DII request or to retrieve results from a synchronous DII request.", // 13
-        "Invalid portable interceptor call",                 // 14
-        "Service context add failed in portable interceptor because a service context with the given id already exists.", // 15
-        "Registration of PolicyFactory failed because a factory already exists for the given type.", // 16
-        "POA cannot create POAs while undergoing destruction." // 17
+      "Dependency exists in IFR preventing destruction of this object", // 1
+      "Attempt to destroy indestructible objects in IFR.", // 2
+      "Operation would deadlock.",                         // 3
+      "ORB has shutdown.",                                 // 4
+      "Attempt to invoke \"send\" or \"invoke\" operation of the same \"Request\" object more than once.", // 5
+      "Attempt to set a servant manager after one has already been set.", // 6
+      "ServerRequest::arguments called more than once or after a call to ServerRequest::set_exception.", // 7
+      "ServerRequest::ctx called more than once or before ServerRequest::arguments or after ServerRequest::ctx, ServerRequest::set_result or ServerRequest::set_exception.", // 8
+      "ServerRequest::result called more than once or before ServerRequest::arguments or after ServerRequest::set_result or ServerRequest::set_exception.", // 9
+      "Attempt to send a DII request after it was sent previously.", // 10
+      "Attempt to poll a DII request or to retrieve its result before the request was sent.", // 11
+      "Attempt to poll a DII request or to retrieve its result after the result was retrieved previously.", // 12
+      "Attempt to poll a synchronous DII request or to retrieve results from a synchronous DII request.", // 13
+      "Invalid portable interceptor call",                 // 14
+      "Service context add failed in portable interceptor because a service context with the given id already exists.", // 15
+      "Registration of PolicyFactory failed because a factory already exists for the given type.", // 16
+      "POA cannot create POAs while undergoing destruction." // 17
     };
 
   static const char *TRANSIENT_TABLE[] =
     {
-        "Request discarded due to resource exhaustion in POA, or because POA is in discarding state.", // 1
-        "No usable profile in IOR.",                            // 2
-        "Request cancelled.",                                   // 3
-        "POA destroyed."                                        // 4
+      "Request discarded due to resource exhaustion in POA, or because POA is in discarding state.", // 1
+      "No usable profile in IOR.",                            // 2
+      "Request cancelled.",                                   // 3
+      "POA destroyed."                                        // 4
     };
 
   static const char *OBJ_ADAPTER_TABLE[] =
     {
-        "System exception in POA::unknown_adapter.",              // 1
-        "Servant not found [ServantManager].",                    // 2
-        "No default servant available [POA policy].",             // 3
-        "No servant manager available [POA policy].",             // 4
-        "Violation of POA policy by ServantActivator::incarnate." // 5
+      "System exception in POA::unknown_adapter.",              // 1
+      "Incorrect servant type returned by servant manager",     // 2
+      "No default servant available [POA policy].",             // 3
+      "No servant manager available [POA policy].",             // 4
+      "Violation of POA policy by ServantActivator::incarnate.",// 5
+      "Exception in PortableInterceptor::IORInterceptor::components_established.", // 6
+      "Null servant returned by servant manager."               // 7
     };
 
   static const char *DATA_CONVERSION_TABLE[] =
     {
-        "Character does not map to negotiated transmission code set." // 1
+      "Character does not map to negotiated transmission code set.", // 1
+      "Failure of PriorityMapping object."                           // 2
     };
 
   static const char *OBJECT_NOT_EXIST_TABLE[] =
     {
-        "Attempt to pass an unactivated (unregistered) value as an object reference.", // 1
-        "POAManager::incarnate failed to create POA." // 2
+      "Attempt to pass an unactivated (unregistered) value as an object reference.", // 1
+      "POAManager::incarnate failed to create POA." // 2
     };
 
   static const char *INV_POLICY_TABLE[] =
     {
-        "Unable to reconcile IOR specified policy with the effective policy override." // 1
-        "Invalid PolicyType.", // 2
-        "No PolicyFactory has been registered for the given PolicyType." // 3
+      "Unable to reconcile IOR specified policy with the effective policy override." // 1
+      "Invalid PolicyType.", // 2
+      "No PolicyFactory has been registered for the given PolicyType." // 3
     };
 
   if (minor_code == 0)
@@ -1020,7 +1047,10 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
     TAO_SYSTEM_EXCEPTION (TRANSACTION_ROLLEDBACK) \
     TAO_SYSTEM_EXCEPTION (INVALID_TRANSACTION) \
     TAO_SYSTEM_EXCEPTION (CODESET_INCOMPATIBLE) \
-    TAO_SYSTEM_EXCEPTION (BAD_QOS)
+    TAO_SYSTEM_EXCEPTION (BAD_QOS) \
+    TAO_SYSTEM_EXCEPTION (INVALID_ACTIVITY) \
+    TAO_SYSTEM_EXCEPTION (ACTIVITY_COMPLETED) \
+    TAO_SYSTEM_EXCEPTION (ACTIVITY_REQUIRED)
 
 // Declare static storage for these ... the buffer is "naturally"
 // aligned and overwritten.

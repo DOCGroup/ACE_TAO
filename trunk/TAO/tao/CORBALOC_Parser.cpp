@@ -4,7 +4,7 @@
 #include "MProfile.h"
 #include "Connector_Registry.h"
 #include "tao/debug.h"
-
+ 
 #if !defined(__ACE_INLINE__)
 #include "CORBALOC_Parser.i"
 #endif /* __ACE_INLINE__ */
