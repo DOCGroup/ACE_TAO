@@ -26,8 +26,8 @@ Tue Sep 21 12:10:29 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/Typecode.cpp:
 	  Added a check in private_equal_union and private_equal_struct
 	  for a member that is recursive, but of a different type than
-	  the enclosing union or struct. Thanks to 
-	  Lothar Werzinger <werzinger.lothar@krones.de> for providing 
+	  the enclosing union or struct. Thanks to
+	  Lothar Werzinger <werzinger.lothar@krones.de> for providing
 	  the example that pointed out this use case.
 
 Tue Sep 21 12:08:46 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
@@ -46,7 +46,7 @@ Mon Sep 21 12:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp,
 	  TAO_IDL/be_include/be_visitor_ami_pre_proc.h
 	  Created these files to hold the pre processor
-	  for generating implied AMI IDL code. 
+	  for generating implied AMI IDL code.
 
 	* TAO_IDL/be/be_produce.cpp:
 	  Put a hook in to the AMI preprocessor.
@@ -56,7 +56,7 @@ Mon Sep 21 12:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 Tue Sep 21 11:53:36 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	Added the following changes from Christopher Kohlhoff 
+	Added the following changes from Christopher Kohlhoff
 	<chris@kohlhoff.com>:
 
 	* examples/Borland/Broadcaster.idl: Chat example IDL file must be
@@ -76,7 +76,7 @@ Tue Sep 21 11:53:36 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
  	  system time resolution.
 
 Mon Sep 21 09:20:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
-	
+
 	* TAO_IDL/be/be_visitor_factory.cpp:
 	  Removed some AMI visitors for interpretive marshaling because we
  	  do not support interpretive marshaling for AMI anyway.
@@ -100,7 +100,7 @@ Mon Sep 20 19:11:44 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  now that I have copied it right, seems to work for
 	  MSVC, SunOS/EGCS and SunOS/SunCC. This check-in
 	  will test if it works for all our other platforms.
-	  Thanks again to Thanks to Christopher Kohlhoff 
+	  Thanks again to Thanks to Christopher Kohlhoff
 	  <chris@kohlhoff.com> for sending in this fix.
 
 Mon Sep 20 15:30:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
@@ -111,7 +111,7 @@ Mon Sep 20 15:30:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
 	  Using now the ACE_NESTED_CLASS macro to take care
 	  of the Microsoft VC++ nested class bug.
-		
+
 	* tests/AMI/client.cpp,
 	  tests/AMI/simple_client.cpp: Fixed naming conventions.
 
@@ -153,7 +153,7 @@ Mon Sep 20 11:53:16 1999  Ossama Othman  <othman@cs.wustl.edu>
 	* tao/ORB.cpp:
 
 	  Minor code style updates.
-	
+
 	* tao/ORB_Core.h (TAO_ORB_Core):
 	* tao/ORB_Core.i (orb):
 	* tao/ORB_Core.cpp (TAO_ORB_Core, init, fini):
@@ -198,7 +198,7 @@ Mon Sep 20 11:00:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* TAO_IDL/be/be_interface.cpp,
 	  TAO_IDL/be_include/be_interface.h:
-	  Introduced a new strategy for exception holders and 
+	  Introduced a new strategy for exception holders and
 	  factored out the commonalities to ami handlers in
 	  a prefix-suffix strategy as a base class for both.
 
@@ -208,7 +208,7 @@ Mon Sep 20 11:00:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  TAO_IDL/be/be_visitor_interface.cpp,
 	  TAO_IDL/be/be_visitor_operation.cpp,
 	  TAO_IDL/be/be_visitor_argument/ami_handler_arglist.cpp
-	  TAO_IDL/be/be_visitor_attribute/attribute.cpp: 
+	  TAO_IDL/be/be_visitor_attribute/attribute.cpp:
 	  Added support for the xx_excep method in the AMI
 	  Reply Handler class.
 
@@ -217,7 +217,7 @@ Mon Sep 20 11:00:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp,
 	  TAO_IDL/be/be_visitor_interface/cdr_op_ci.cpp,
 	  TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
-	  Added a strategy approach to generate code for 
+	  Added a strategy approach to generate code for
 	  the exception holders but I am not content with
 	  the current approach. This will change soon.
 
@@ -265,12 +265,12 @@ Mon Sep 20 11:00:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tao/MessagingC.cpp
 	  tao/MessagingC.h
-	  tao/MessagingC.i: Fixed the generated code for 
-	  the Exceptionholder valuetype, because it was originally 
+	  tao/MessagingC.i: Fixed the generated code for
+	  the Exceptionholder valuetype, because it was originally
 	  generated with the Exceptionholder being a struct. There
-	  is still a lot to do. E.g. valuetype do not support 
+	  is still a lot to do. E.g. valuetype do not support
 	  _vars for some parts, therefore we have memory leaks!
- 
+
 	* tao/Invocation.h
 	  tao/Reply_Dispatcher.cpp: Added support for AMI
 	  exception handling.
@@ -296,7 +296,7 @@ Mon Sep 20 08:39:05 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	* tao/IIOP_Connect.cpp: Added support for nodelay() so that we can
 	  set TCP_NODELAY via the ORB options.  Thanks to John Masiyowski
  	  <jmasiyowski@fallschurch.esys.com> for suggesting this.
-	
+
 	* tao/params.cpp (TAO_ORB_Parameters): Initialized some fields
 	  as follows:
 
@@ -327,7 +327,7 @@ Sun Sep 19 17:22:19 1999  Ossama Othman  <othman@cs.wustl.edu>
 	* tao/ORB.cpp:
 
 	  Somehow the entire contents of ORB.i were copied into ORB.cpp
-	  during the CORBA 2.3 updates I made back on Sep 14.  None of the 
+	  during the CORBA 2.3 updates I made back on Sep 14.  None of the
 	  compilers complained about this either! In any case, no harm was
 	  done.  I removed the duplicate code.
 
@@ -350,11 +350,11 @@ Sat Sep 18 19:22:49 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
 	  Added missing code for copy constructor of a union
 	  containing a typecode. _duplicate was called, but the
-	  assignment wasn't made. 
+	  assignment wasn't made.
 
 	* TAO_IDL/be/be_visitor_array/array_ci.cpp:
 	  Moved an #if defined (ACE_HAS_BROKEN_IMPLICIT_CONST_CAST)
-	  from TAO_IDL code to generated code, so that IDL 
+	  from TAO_IDL code to generated code, so that IDL
 	  compiler built on one platform can generate code for
 	  another platform.
 
@@ -409,7 +409,7 @@ Sat Sep 18 17:57:24 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/encode.cpp:
 	  There was a missing set of parentheses for TAO_Marshal_Struct
 	  that I left out of a fix sent in to the alignment code for
-	  Borland C Builder. Thanks to Christopher Kohlhoff 
+	  Borland C Builder. Thanks to Christopher Kohlhoff
 	  <chris@kohlhoff.com> for pointing this out.
 
 Sat Sep 18 16:25:17 1999  Ossama Othman  <othman@cs.wustl.edu>
@@ -432,7 +432,7 @@ Sat Sep 18 15:11:30 1999  Ossama Othman  <othman@cs.wustl.edu>
 	  Changed instances of "CORBA_Object *" to "CORBA::Object_var."
 	  Previously I introduced an auto_ptr<CORBA_Object> instantiation,
 	  which was incorrect.
- 	
+
 	  Removed unnecessary auto_ptr<CORBA_Object> instantiations,
 	  further reducing TAO's footprint.
 
@@ -2631,7 +2631,7 @@ Mon Aug 30 02:39:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
           problem in generated code.  This was causing compilation errors
           in tests/Collocation project.
 
-Mon Aug 30 02:37:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Mon Aug 30 02:11:17 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         Merging the PI-current (Interceptors) branch to the main trunk.
 
