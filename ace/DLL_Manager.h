@@ -23,6 +23,7 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/SStringfwd.h"
+#include "ace/os_include/os_dlfcn.h"
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #  include "ace/Thread_Mutex.h"

@@ -23,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (ACE_HAS_THREADS)
-#  include "ace/Null_Thread.h"
+#  include "ace/Null_Mutex.h"
 #else /* ACE_HAS_THREAD */
 // ACE platform supports some form of threading.
 
