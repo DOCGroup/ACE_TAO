@@ -100,8 +100,8 @@ class TAO_Export TAO_Marshal_Object
   //    The Marshaling object that provides a common interface to the
   //    CDR object for marshaling different IDL data types
   //
-  //    Provides a set of virtual methods for encoding, decoding,
-  //    deep_copying, and deep_freeing.
+  //    Provides a set of virtual methods for encoding, decoding
+  //    and deep_freeing.
 public:
   virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
@@ -156,10 +156,6 @@ public:
                                                   const void *parent_typecode,
                                                   void *context,
                                                   CORBA::Environment &env);
-  static CORBA::TypeCode::traverse_status deep_copy (CORBA::TypeCode_ptr tc,
-                                                  const void *source,
-                                                  const void *dest,
-                                                  CORBA::Environment &env);
   static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
@@ -197,10 +193,6 @@ public:
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA::Environment &env);
-  static CORBA::TypeCode::traverse_status deep_copy (CORBA::TypeCode_ptr tc,
-                                                  const void *source,
-                                                  const void *dest,
                                                   CORBA::Environment &env);
   static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *source,
@@ -240,10 +232,6 @@ public:
                                                   const void *parent_typecode,
                                                   void *context,
                                                   CORBA::Environment &env);
-  static CORBA::TypeCode::traverse_status deep_copy (CORBA::TypeCode_ptr tc,
-                                                  const void *source,
-                                                  const void *dest,
-                                                  CORBA::Environment &env);
   static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
@@ -281,10 +269,6 @@ public:
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA::Environment &env);
-  static CORBA::TypeCode::traverse_status deep_copy (CORBA::TypeCode_ptr tc,
-                                                  const void *source,
-                                                  const void *dest,
                                                   CORBA::Environment &env);
   static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
@@ -324,10 +308,6 @@ public:
                                                   const void *parent_typecode,
                                                   void *context,
                                                   CORBA::Environment &env);
-  static CORBA::TypeCode::traverse_status deep_copy (CORBA::TypeCode_ptr tc,
-                                                  const void *source,
-                                                  const void *dest,
-                                                  CORBA::Environment &env);
   static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
@@ -365,10 +345,6 @@ public:
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA::Environment &env);
-  static CORBA::TypeCode::traverse_status deep_copy (CORBA::TypeCode_ptr tc,
-                                                  const void *source,
-                                                  const void *dest,
                                                   CORBA::Environment &env);
   static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
@@ -408,10 +384,6 @@ public:
                                                   const void *parent_typecode,
                                                   void *context,
                                                   CORBA::Environment &env);
-  static CORBA::TypeCode::traverse_status deep_copy (CORBA::TypeCode_ptr tc,
-                                                  const void *source,
-                                                  const void *dest,
-                                                  CORBA::Environment &env);
   static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
@@ -449,10 +421,6 @@ public:
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA::Environment &env);
-  static CORBA::TypeCode::traverse_status deep_copy (CORBA::TypeCode_ptr tc,
-                                                  const void *source,
-                                                  const void *dest,
                                                   CORBA::Environment &env);
   static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
@@ -492,10 +460,6 @@ public:
                                                   const void *parent_typecode,
                                                   void *context,
                                                   CORBA::Environment &env);
-  static CORBA::TypeCode::traverse_status deep_copy (CORBA::TypeCode_ptr tc,
-                                                  const void *source,
-                                                  const void *dest,
-                                                  CORBA::Environment &env);
   static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
@@ -533,10 +497,6 @@ public:
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA::Environment &env);
-  static CORBA::TypeCode::traverse_status deep_copy (CORBA::TypeCode_ptr tc,
-                                                  const void *source,
-                                                  const void *dest,
                                                   CORBA::Environment &env);
   static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
@@ -576,10 +536,6 @@ public:
                                                   const void *parent_typecode,
                                                   void *context,
                                                   CORBA::Environment &env);
-  static CORBA::TypeCode::traverse_status deep_copy (CORBA::TypeCode_ptr tc,
-                                                  const void *source,
-                                                  const void *dest,
-                                                  CORBA::Environment &env);
   static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
@@ -617,10 +573,6 @@ public:
                                                   const void *parent_typecode,
                                                   void *context,
                                                   CORBA::Environment &env);
-  static CORBA::TypeCode::traverse_status deep_copy (CORBA::TypeCode_ptr tc,
-                                                  const void *source,
-                                                  const void *dest,
-                                                  CORBA::Environment &env);
   static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
@@ -657,10 +609,6 @@ public:
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA::Environment &env);
-  static CORBA::TypeCode::traverse_status deep_copy (CORBA::TypeCode_ptr tc,
-                                                  const void *source,
-                                                  const void *dest,
                                                   CORBA::Environment &env);
   static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,

@@ -82,12 +82,18 @@ class CORBA_Exception;
 //typedef class CORBA_Exception *CORBA_Exception_ptr;
 
 class CORBA_Request;
+class CORBA_Request_var;
+class CORBA_Request_out;
 //typedef class CORBA_Request *CORBA_Request_ptr;
 
 class CORBA_NamedValue;
+class CORBA_NamedValue_var;
+class CORBA_NamedValue_out;
 //typedef class CORBA_NamedValue *CORBA_NamedValue_ptr;
 
 class CORBA_NVList;
+class CORBA_NVList_var;
+class CORBA_NVList_out;
 //typedef class CORBA_NVList *CORBA_NVList_ptr;
 
 class CORBA_ORB;
@@ -485,9 +491,13 @@ public:
 
   typedef CORBA_NamedValue NamedValue;
   typedef NamedValue *NamedValue_ptr;
+  typedef CORBA_NamedValue_var NamedValue_var;
+  typedef CORBA_NamedValue_out NamedValue_out;
 
   typedef CORBA_NVList NVList;
   typedef NVList *NVList_ptr;
+  typedef CORBA_NVList_var NVList_var;
+  typedef CORBA_NVList_out NVList_out;
 
   typedef CORBA_Object Object;
   typedef CORBA_Object *Object_ptr;
@@ -502,8 +512,10 @@ public:
   typedef CORBA_ORB_var ORB_var;
   typedef CORBA_ORB_out ORB_out;
 
-  typedef CORBA_Request Request;
+  typedef CORBA_Request Request; 
   typedef Request *Request_ptr;
+  typedef CORBA_Request_var Request_var;
+  typedef CORBA_Request_out Request_out;
 
   typedef CORBA_ServerRequest ServerRequest;
   typedef ServerRequest *ServerRequest_ptr;

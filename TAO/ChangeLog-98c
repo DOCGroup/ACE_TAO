@@ -1,3 +1,73 @@
+Wed Jul 22 16:26:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Makefile: 
+	* tao/Marshal.h: 
+	* tao/Marshal.i: 
+	* tao/deep_copy.cpp: 
+	  The deep_copy methods are not used any more, Anys using
+	  marshalling instead.
+
+	* tao/ORB.h: 
+	* tao/NVList.h: 
+	* tao/NVList.i: 
+	* tao/Request.h: 
+	* tao/Request.i: 
+	  Added T_var and T_out classes for NVList, NamedValue and
+	  Request.
+
+	* tao/Object.i: 
+	* tao/Object.cpp: 
+	  All the Object_out and Object_var methods are defined as inline
+	  methods.
+
+	* tests/Param_Test/client.cpp: 
+	  Use the new CORBA::Request_var class.
+
+	* tests/Param_Test/any.cpp: 
+	* tests/Param_Test/any.h: 
+	* tests/Param_Test/bd_long_seq.cpp: 
+	* tests/Param_Test/bd_long_seq.h: 
+	* tests/Param_Test/bd_short_seq.cpp: 
+	* tests/Param_Test/bd_short_seq.h: 
+	* tests/Param_Test/bd_str_seq.cpp: 
+	* tests/Param_Test/bd_str_seq.h: 
+	* tests/Param_Test/bd_string.cpp: 
+	* tests/Param_Test/bd_string.h: 
+	* tests/Param_Test/bd_struct_seq.cpp: 
+	* tests/Param_Test/bd_struct_seq.h: 
+	* tests/Param_Test/fixed_array.cpp: 
+	* tests/Param_Test/fixed_array.h: 
+	* tests/Param_Test/fixed_struct.cpp: 
+	* tests/Param_Test/fixed_struct.h: 
+	* tests/Param_Test/nested_struct.cpp: 
+	* tests/Param_Test/nested_struct.h: 
+	* tests/Param_Test/objref.cpp: 
+	* tests/Param_Test/objref.h: 
+	* tests/Param_Test/short.cpp: 
+	* tests/Param_Test/short.h: 
+	* tests/Param_Test/typecode.cpp: 
+	* tests/Param_Test/typecode.h: 
+	* tests/Param_Test/ub_any_seq.cpp: 
+	* tests/Param_Test/ub_any_seq.h: 
+	* tests/Param_Test/ub_long_seq.cpp: 
+	* tests/Param_Test/ub_long_seq.h: 
+	* tests/Param_Test/ub_objref_seq.cpp: 
+	* tests/Param_Test/ub_objref_seq.h: 
+	* tests/Param_Test/ub_short_seq.cpp: 
+	* tests/Param_Test/ub_short_seq.h: 
+	* tests/Param_Test/ub_str_seq.cpp: 
+	* tests/Param_Test/ub_str_seq.h: 
+	* tests/Param_Test/ub_string.cpp: 
+	* tests/Param_Test/ub_string.h: 
+	* tests/Param_Test/ub_struct_seq.cpp: 
+	* tests/Param_Test/ub_struct_seq.h: 
+	* tests/Param_Test/var_array.cpp: 
+	* tests/Param_Test/var_array.h: 
+	* tests/Param_Test/var_struct.cpp: 
+	* tests/Param_Test/var_struct.h: 
+	  The add_args() method receives NVList_ptr parameters instead of
+	  NVList_ptr& otherwise it is too hard to use a NVList_var.
+
 Wed Jul 22 15:58:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 0.1.41 released.

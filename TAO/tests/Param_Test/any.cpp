@@ -166,8 +166,8 @@ Test_Any::run_sii_test (Param_Test_ptr objref,
 }
 
 int
-Test_Any::add_args (CORBA::NVList_ptr &param_list,
-                    CORBA::NVList_ptr &retval,
+Test_Any::add_args (CORBA::NVList_ptr param_list,
+                    CORBA::NVList_ptr retval,
                     CORBA::Environment &env)
 {
   CORBA::Any in_arg (CORBA::_tc_any, &this->in_, 0);

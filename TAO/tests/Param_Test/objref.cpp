@@ -115,9 +115,9 @@ Test_ObjRef::run_sii_test (Param_Test_ptr objref,
 }
 
 int
-Test_ObjRef::add_args (CORBA::NVList_ptr &param_list,
-                      CORBA::NVList_ptr &retval,
-                      CORBA::Environment &env)
+Test_ObjRef::add_args (CORBA::NVList_ptr param_list,
+		       CORBA::NVList_ptr retval,
+		       CORBA::Environment &env)
 {
   CORBA::Any in_arg (_tc_Coffee, &this->in_, 0);
   CORBA::Any inout_arg (_tc_Coffee, &this->inout_, 0);
@@ -140,39 +140,42 @@ CORBA::Boolean
 Test_ObjRef::check_validity (void)
 {
   CORBA::Environment env;
-  char   // attribute names
-    *in,
-    *inout,
-    *out,
-    *ret;
 
-  in = this->in_->description (env)->name;
+  Coffee::Desc_var in_desc = 
+    this->in_->description (env);
   if (env.exception ())
     {
       env.print_exception ("retrieving description");
       return 0;
     }
+  char* in = in_desc->name;
 
-  inout = this->inout_->description (env)->name;
+  Coffee::Desc_var inout_desc =
+    this->inout_->description (env);
   if (env.exception ())
     {
       env.print_exception ("retrieving description");
       return 0;
     }
+  char* inout = inout_desc->name;
 
-  out = this->out_->description (env)->name;
+  Coffee::Desc_var out_desc =
+    this->out_->description (env);
   if (env.exception ())
     {
       env.print_exception ("retrieving description");
       return 0;
     }
+  char* out = out_desc->name;
 
-  ret = this->ret_->description (env)->name;
+  Coffee::Desc_var ret_desc =
+    this->out_->description (env);
   if (env.exception ())
     {
       env.print_exception ("retrieving description");
       return 0;
     }
+  char* ret = ret_desc->name;
 
   // now compare them
   if (!ACE_OS::strcmp (in, inout) &&
@@ -218,39 +221,43 @@ void
 Test_ObjRef::print_values (void)
 {
   CORBA::Environment env;
-  char   // attribute names
-    *in,
-    *inout,
-    *out,
-    *ret;
 
-  in = this->in_->description (env)->name;
+  Coffee::Desc_var in_desc = 
+    this->in_->description (env);
   if (env.exception ())
     {
       env.print_exception ("retrieving description");
       return;
     }
+  char* in = in_desc->name;
 
-  inout = this->inout_->description (env)->name;
+  Coffee::Desc_var inout_desc =
+    this->inout_->description (env);
   if (env.exception ())
     {
       env.print_exception ("retrieving description");
       return;
     }
+  char* inout = inout_desc->name;
 
-  out = this->out_->description (env)->name;
+  Coffee::Desc_var out_desc =
+    this->out_->description (env);
   if (env.exception ())
     {
       env.print_exception ("retrieving description");
       return;
     }
+  char* out = out_desc->name;
 
-  ret = this->ret_->description (env)->name;
+  Coffee::Desc_var ret_desc =
+    this->out_->description (env);
   if (env.exception ())
     {
       env.print_exception ("retrieving description");
       return;
     }
+  char* ret = ret_desc->name;
+
 
   ACE_DEBUG ((LM_DEBUG,
               "\n=*=*=*=*=*=*"
