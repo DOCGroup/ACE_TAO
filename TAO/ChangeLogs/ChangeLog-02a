@@ -1,3 +1,29 @@
+Mon Jun 19 19:26:14 2000  Ossama Othman  <ossama@uci.edu>
+
+	* examples/Content_Server/Makefile:
+
+	  Fixed conditional so that the AMI examples are built when AMI is
+	  not explicitly disabled.
+
+	* examples/Content_Server/SMI_Iterator/Content_Iterator_i.cpp:
+	* examples/Content_Server/SMI_Iterator/Content_Iterator_i.h:
+	* examples/Content_Server/SMI_Iterator/Iterator_Factory_i.cpp:
+	* examples/Content_Server/SMI_Iterator/Iterator_Factory_i.h:
+	* examples/Content_Server/SMI_Iterator/client.cpp:
+	* examples/Content_Server/SMI_Iterator/server.cpp:
+	* examples/Content_Server/AMI_Iterator/Content_Iterator_i.cpp:
+	* examples/Content_Server/AMI_Iterator/Content_Iterator_i.h:
+	* examples/Content_Server/AMI_Iterator/Iterator_Factory_i.cpp:
+	* examples/Content_Server/AMI_Iterator/Iterator_Handler.cpp:
+	* examples/Content_Server/AMI_Iterator/Iterator_Handler.h:
+	* examples/Content_Server/AMI_Iterator/client.cpp:
+	* examples/Content_Server/AMI_Iterator/server.cpp:
+	* examples/Content_Server/AMI_Observer/Callback.cpp:
+	* examples/Content_Server/AMI_Observer/Callback.h:
+
+	  Updated to conform to ACE/TAO coding style guidelines.  Thanks
+	  to Doug for providing feedback.
+
 Mon Jun 19 18:10:17 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/tests/Interoperable_Naming/Makefile:
