@@ -5,8 +5,10 @@
 
 #include "service_configS.h"
 
-#include <ace/Service_Config.h>
-#include <ace/streams.h>
+#include "ace/Service_Config.h"
+#include "ace/streams.h"
+#include "ace/OS_NS_string.h"
+
 
 using namespace CORBA;
 using namespace PortableServer;
