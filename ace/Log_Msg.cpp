@@ -858,7 +858,8 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
                   break;
                 case 'P': // Format the current process id.
                   type = SKIP_SPRINTF;
-                  ACE_OS::sprintf (bp, ASYS_TEXT ("%d"), this->getpid ());
+                  ACE_OS::sprintf (bp, ASYS_TEXT ("%d"),
+                                   ACE_static_cast (int, this->getpid ()));
                   break;
                 case 'p': // Format the string assocated with the errno value.
                   {
