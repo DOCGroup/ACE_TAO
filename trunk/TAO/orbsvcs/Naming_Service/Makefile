@@ -8,15 +8,11 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-LIBNAME	= libnaming
-LIB 	= $(LIBNAME).a
-SHLIB 	= $(LIBNAME).$(SOEXT)
-
 BIN 	= Naming_Service
 
 SVR_SRCS=Naming_Service.cpp
 
-LDLIBS  = -lnaming -lorbsvcs -lTAO
+LDLIBS  = -lorbsvcs -lTAO
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
