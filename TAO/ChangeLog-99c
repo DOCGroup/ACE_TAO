@@ -1,3 +1,29 @@
+Mon Jun 28 12:53:24 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/Makefile:
+
+	  Updated the dependencies.
+
+	* tao/IIOP_Connect.cpp:
+
+	  Removed unnecessary explicit template instantiations.
+
+	* tao/IIOP_Connect.h:
+	* tao/IIOP_Connect.cpp:
+	* tao/UIOP_Connect.h:
+	* tao/UIOP_Connect.cpp:
+
+	  Changed transport_ member from pointer member to non-pointer
+	  member.  This removes the need to instantiate the transport_
+	  member on the heap, thus avoiding any potential memory
+	  management problems.
+
+	* tao/IIOP_Connect.i:
+	* tao/UIOP_Connect.i:
+
+	  Moved all good inline method candidates from `.cpp' files to
+	  their corresponding inline `.i' files.
+
 Mon Jun 28 15:11:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
