@@ -1,3 +1,12 @@
+Wed Mar 09 08:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Collocated_Invocation.cpp (invoke):
+          Get the servant orb from the effective target, this matches the
+          way we detect if we can use a collocated call or not. This fixes
+          the crashing of the TAO test Bug_1495_Regression in our daily
+          builds which was testing a forward location from a remote to a
+          collocated servant
+
 Wed Mar 09 08:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/IFRService/*S.{h,cpp,inl}:
