@@ -38,11 +38,11 @@
 
 #include "test_config.h"
 #include "ace/Acceptor.h"
+#include "ace/Handle_Set.h"
 #include "ace/Get_Opt.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/Strategies_T.h"
-#include "ace/Service_Config.h"
 #include "ace/Singleton.h"
 #include "Process_Strategy_Test.h"	// Counting_Service and Options in here
 
@@ -377,10 +377,6 @@ Counting_Service::open (void *)
 static void *
 client (void *arg)
 {
-#if (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS)
-  ACE_NEW_THREAD;
-#endif /* (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS) */
-
   ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
   ACE_INET_Addr server_addr (remote_addr->get_port_number (), "localhost");
 
@@ -462,10 +458,6 @@ client (void *arg)
 static void *
 server (void *)
 {
-#if (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS)
-  ACE_NEW_THREAD;
-#endif /* (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS) */
-
   ACE_Time_Value timeout (3);
 
   // Run the main event loop, but only wait for up to 3 seconds (this
@@ -483,8 +475,6 @@ int
 main (int argc, char *argv[])
 {
   ACE_START_TEST ("Process_Strategy_Test");
-
-  ACE_Service_Config svc_conf;
 
   if (OPTIONS::instance ()->parse_args (argc, argv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "parse_args"), -1);

@@ -31,10 +31,6 @@ static TCHAR shm_key[] = ACE_TEMP_FILE_NAME __TEXT ("XXXXXX");
 static void *
 client (void *)
 {
-#if defined (ACE_WIN32) || defined (VXWORKS)
-  ACE_NEW_THREAD;
-#endif /* ACE_WIN32 */
-
   ACE_OS::sleep (3);
   char *t = ACE_ALPHABET;
   ACE_Shared_Memory_MM shm_client (shm_key);
@@ -55,10 +51,6 @@ client (void *)
 static void *
 server (void *)
 {
-#if defined (ACE_WIN32) || defined (VXWORKS)
-  ACE_NEW_THREAD;
-#endif /* ACE_WIN32 */
-
   ACE_Shared_Memory_MM shm_server (shm_key, SHMSZ);
 
   char *shm = (char *) shm_server.malloc ();

@@ -32,7 +32,6 @@
 #include "ace/Token_Collection.h"
 #include "ace/Remote_Tokens.h"
 #include "ace/Thread_Manager.h"
-#include "ace/Service_Config.h"
 #include "ace/Token_Invariants.h"
 
 #if defined (ACE_HAS_THREADS)
@@ -53,7 +52,6 @@ public:
 static void *
 run_thread (void *vp)
 {
-  ACE_NEW_THREAD;
   Test_Params *tp = (Test_Params *) vp;
   ACE_Token_Collection collection (1, tp->collection_name_);
   collection.insert (*(tp->token1_));

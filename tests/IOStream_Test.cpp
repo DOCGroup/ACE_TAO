@@ -151,7 +151,6 @@ operator<< (ostream &stream, qchar *buf)
 static void *
 client (void *arg = 0)
 {
-  ACE_NEW_THREAD;
   ACE_UNUSED_ARG (arg);
 
   // We don't _need_ to dynamically allocate the ACE_SOCK_IOStream.
@@ -239,8 +238,6 @@ client (void *arg = 0)
 static void *
 server (void *arg = 0)
 {
-  ACE_NEW_THREAD;
-
   // We don't _need_ to dynamically allocate the ACE_SOCK_IOStream.
   // But if we don't, it doesn't get destroyed on some platforms, e.g.,
   // g++ 2.7.2.1 and Sun C++ 4.2 on Solaris 2.5.1.  (It does work on

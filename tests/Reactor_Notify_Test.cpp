@@ -17,10 +17,10 @@
 // 
 // ============================================================================
 
-#include "test_config.h"
 #include "ace/Synch.h"
-#include "ace/Service_Config.h"
 #include "ace/Task.h"
+#include "ace/Pipe.h"
+#include "test_config.h"
 
 #if defined (ACE_HAS_THREADS)
 
@@ -101,8 +101,6 @@ Supplier_Task::~Supplier_Task (void)
 int 
 Supplier_Task::svc (void)
 {
-  ACE_NEW_THREAD;
-
   size_t i;
 
   ACE_DEBUG ((LM_DEBUG, "(%t) **** starting unlimited notifications test\n"));
@@ -172,7 +170,6 @@ main (int, char *[])
   ACE_START_TEST ("Reactor_Notify_Test");
 
 #if defined (ACE_HAS_THREADS)
-  ACE_Service_Config daemon; 
   ACE_ASSERT (ACE_LOG_MSG->op_status () != -1);
 
   Supplier_Task task;

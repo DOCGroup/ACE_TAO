@@ -19,9 +19,9 @@
 // 
 // ============================================================================
 
-#include "test_config.h"
 #include "ace/Message_Queue.h"
-#include "ace/Service_Config.h"
+#include "ace/Thread_Manager.h"
+#include "test_config.h"
 
 #if defined (ACE_HAS_THREADS)
 
@@ -86,9 +86,6 @@ static void *
 producer (void *args)
 {
   ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue = (ACE_Message_Queue<ACE_MT_SYNCH> *) args;
-
-  // Insert thread into thr_mgr.
-  ACE_NEW_THREAD;
 
   ACE_Message_Block *mb = 0;
 
