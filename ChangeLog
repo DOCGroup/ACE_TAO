@@ -1,3 +1,34 @@
+(not committed)  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-hpux-11.00.h: Add ACE_HAS_SOCKLEN_T. The socklen_t type
+	  is not always used. It depends on the standards in effect at
+	  compile time, and this is refined in ace/os_includes/sys/os_socket.h.
+	  This addition (and the one from platform_hpux_gcc.GNU, below) fixes
+	  compile issues with g++ builds on HP-UX.
+
+	* include/makeinclude/platform_hpux_gcc.GNU: Add
+	  -D_XOPEN_SOURCE_EXTENDED to CFLAGS. This prevents the use of the
+	  outdated BSD form of select() that uses int* rather than fdset*.
+	  This happens if either sys/time.h is included before time.h or
+	  _XOPEN_SOURCE_EXTENDED is defined. I'm guessing that something in
+	  the include orders changed in the OS.h reorg to trip this up for
+	  g++, but this fixes it regardless of include order.
+
+Sat Jan 10 16:14:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_NS_sys_socket.inl (closesocket): On HP-UX, use
+          shutdown() before, and in addition to, close() to close a socket.
+	  The previous "fix" left the socket opened after shutdown().
+
+	* tests/Bug_1576_Regression_Test.cpp: Use ACE_DLL_SUFFIX to form the
+	  name of the bogus dll name instead of literal ".so". Prevents a
+	  run-time warning from platforms that use a different suffix, such
+	  as HP-UX.
+
+	* tests/Makefile.am: Removed -module from the libTestOutput line
+	  so it actually links the library for use by other tests. Added
+	  TSS_Static_Test_SOURCES to have it build as well.
+
 Sat Jan 10 11:18:24 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-lite.h:

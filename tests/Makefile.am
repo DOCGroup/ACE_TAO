@@ -88,7 +88,6 @@ FRAMEWORK_COMPONENT_TEST = Framework_Component_Test
 lib_LTLIBRARIES = libDLL_Test.la libService_Config_DLL.la libTest_Output.la
 
 libTest_Output_la_SOURCES = Test_Output.cpp test_config.h
-libTest_Output_la_LDFLAGS = -module
 libTest_Output_la_LIBADD = $(top_builddir)/ace/libACE.la
 
 libDLL_Test_la_SOURCES = DLL_Test_Impl.cpp DLL_Test_Impl.h
@@ -470,6 +469,8 @@ TP_Reactor_Test_SOURCES = TP_Reactor_Test.cpp TP_Reactor_Test.h
 
 TSS_Test_SOURCES = TSS_Test.cpp \
                    TSS_Test_Errno.h
+
+TSS_Static_Test_SOURCES = TSS_Static_Test.cpp
 
 Task_Test_SOURCES = Task_Test.cpp
 
