@@ -309,7 +309,7 @@ POA_CosEventComm::PushSupplier_tie < T >::disconnect_push_supplier ()
       supplier_admin->obtain_push_consumer ();
 </PRE>
     <P>And finally we use our supplier personality to connect to the
-      supplier:
+      consumer proxy:
     </P>
 <PRE>
     CosEventComm::PushSupplier_var supplier =
@@ -335,7 +335,7 @@ Quoter_Stock_i::disconnect_push_supplier (CORBA::Environment &)
     <P>Implement a consumer that receives the price update events.
     </P>
     <P>The
-      <A HREF="Consumer_i.h">header file</A>
+      <A HREF="Stock_Consumer.h">header file</A>
       is already provided,
       along with a sample
       <A HREF="client.cpp">client.cpp</A>.
@@ -352,7 +352,7 @@ Quoter_Stock_i::disconnect_push_supplier (CORBA::Environment &)
     <H4>Solution</H4>
 
     <P>Compare your solution with
-      <A HREF="Consumer_i.cpp">Consumer_i.cpp</A>.
+      <A HREF="Stock_Consumer.cpp">Stock_Consumer.cpp</A>.
     </P>
 
     <H4>Testing</H4>
@@ -375,8 +375,11 @@ $ client
     <P>and finally the server:
     </P>
 <PRE>
-$ server < stock_list.txt
+$ server AAAA MSFT RHAT < stock_list.txt
 </PRE>
+    <P>Here is the
+      <A HREF="stock_list.txt">stock_list.txt file</A>.
+    </P>
 
     <H3>Exercise 2</H3>
 
@@ -386,19 +389,25 @@ $ server < stock_list.txt
 <PRE>
 $ client
 $ client
-$ server < stock_list1.txt
-$ server < stock_list2.txt
+$ server AAAA BBBB < stock_list1.txt
+$ server ZZZZ YYYY < stock_list2.txt
 </PRE>
     <P>Do the clients receive all the events from both servers? What
       if you don't want to receive all the events, for example,
       because you are only interested in certain stocks?
+    </P>
+    <P>Here are the
+      <A HREF="stock_list.txt">stock_list1.txt</A>
+      and
+      <A HREF="stock_list.txt">stock_list2.txt</A>
+      files.
     </P>
 
     <hr>
     <address><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></address>
 <!-- Created: Sat Nov 27 15:47:01 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Tue Nov 30 00:29:37 CST 1999
+Last modified: Tue Nov 30 18:14:44 CST 1999
 <!-- hhmts end -->
   </body>
 </html>

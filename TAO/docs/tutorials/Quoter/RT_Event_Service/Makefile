@@ -22,9 +22,9 @@ BIN2 = client server
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (CosEvent,$(findstring CosEvent,$(TAO_ORBSVCS)))
+ifeq (Event2,$(findstring Event2,$(TAO_ORBSVCS)))
   BIN = $(BIN2)
-endif # CosEvent
+endif # Event2
 
 SRC = $(addsuffix .cpp, $(BIN) $(IDLFILES) Stock_Consumer Stock_i Stock_Factory_i)
 
