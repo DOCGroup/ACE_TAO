@@ -62,7 +62,7 @@ int TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
         //////////////////////////////////
         // let the servant register itself
         result = servant.init(orb.in () ACE_ENV_ARG_PARAMETER);
-	ACE_TRY_CHECK;
+        ACE_TRY_CHECK;
 
         if (result == 0)
         {
@@ -84,12 +84,13 @@ int TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
             ACE_Time_Value work_tv(1,0);
             orb->perform_work(work_tv ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
-            quit = servant.idle(result ACE_ENV_ARG_PARAMETER);
-	    ACE_TRY_CHECK;
+            quit = servant.idle(result);
           }
           servant.fini(ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
           orb->shutdown(1 ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
           ACE_ERROR ((LM_INFO,
             "%T %s (%P|%t) Terminated normally. %s\n", name_, servant.identity()
