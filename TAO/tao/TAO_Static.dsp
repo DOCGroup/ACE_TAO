@@ -175,6 +175,10 @@ SOURCE=.\corbafwd.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\CORBALOC_Parser.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\CurrentC.h
 # End Source File
 # Begin Source File
@@ -324,6 +328,10 @@ SOURCE=.\IOPC.h
 # Begin Source File
 
 SOURCE=.\IOPS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ior_corbaloc_export.h
 # End Source File
 # Begin Source File
 
@@ -823,6 +831,10 @@ SOURCE=.\corbafwd.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\CORBALOC_Parser.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\default_client.i
 # End Source File
 # Begin Source File
@@ -1296,6 +1308,10 @@ SOURCE=.\CORBA_String.cpp
 # Begin Source File
 
 SOURCE=.\corbafwd.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CORBALOC_Parser.cpp
 # End Source File
 # Begin Source File
 
