@@ -1,3 +1,22 @@
+Thu Nov  6 19:40:41 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Connector.cpp: If connect_n() fails make sure to return -1.
+  	  Thanks to Stephen Coy <stevec@magna.com.au> for pointing out the
+ 	  problem.
+
+	* ace/config-sco-5.0.0.h: Removed the ACE_LACKS_RLIMIT flag.
+  	  Thanks to Arturo Montes <mitosys@colomsat.net.co> for reporting
+ 	  this.
+
+	* tests: Changed all uses of "localhost" to
+ 	  ACE_DEFAULT_SERVER_HOST.  This solves some problems with MVS.
+  	  Thanks to Chuck Gehr <gehr@sweng.stortek.com> for reporting
+ 	  this.
+
+	* examples/Timer_Queue: Changed COMMAND to CMD so it won't
+ 	  conflict with the HP/YUX compiler.  Thanks to Sandro Doro
+ 	  <doros@aureus.sublink.org> for reporting this.
+
 Thu Nov 06 19:55:35 1997    <irfan@TWOSTEP>
 
 	* ace/Synch_T.h: Fixed all the ACE_SYNCH_* defines.  Thanks to
@@ -15,7 +34,7 @@ Thu Nov 06 18:30:42 1997  Steve Huston  <shuston@riverace.com>
 Thu Nov  6 16:51:36 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
 	* tests/SOCK_Connector_Test.cpp (find_another_host): Added
-	ACE_NETBSD to the #if define around gethostent.
+	  ACE_NETBSD to the #if define around gethostent.
 
 Thu Nov 06 10:07:26 1997  Steve Huston  <shuston@riverace.com>
 

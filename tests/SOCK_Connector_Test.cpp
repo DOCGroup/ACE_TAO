@@ -36,7 +36,7 @@
 static void
 find_another_host (char other_host[])
 {
-  ACE_OS::strcpy (other_host, "localhost");	// If all else fails
+  ACE_OS::strcpy (other_host, ACE_DEFAULT_SERVER_HOST);	// If all else fails
 
   // These gethost-type things don't work everywhere.
 #if !defined (ACE_WIN32) && !defined (VXWORKS) && !defined (ACE_NETBSD)
@@ -55,7 +55,7 @@ find_another_host (char other_host[])
 
   while ((h = gethostent ()) != NULL) 
     {
-      if (ACE_OS::strcmp (h->h_name, "localhost") == 0)
+      if (ACE_OS::strcmp (h->h_name, ACE_DEFAULT_SERVER_HOST) == 0)
 	continue;
       // AIX just _has_ to be different
       if (ACE_OS::strcmp (h->h_name, "loopback") == 0)

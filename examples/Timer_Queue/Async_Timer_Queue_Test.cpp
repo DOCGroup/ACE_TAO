@@ -256,26 +256,26 @@ Async_Timer_Queue_Test_Driver::display_menu (void)
 int
 Async_Timer_Queue_Test_Driver::init (void)
 {
-  typedef Command<Async_Timer_Queue, Async_Timer_Queue::ACTION> COMMAND;
+  typedef Command<Async_Timer_Queue, Async_Timer_Queue::ACTION> CMD;
 
   // Initialize <Command> objects with their corresponding <Input_Task> methods.
   ACE_NEW_RETURN (schedule_cmd_,
-		  COMMAND (*Async_Timer_Queue::instance (),
+		  CMD (*Async_Timer_Queue::instance (),
 			   &Async_Timer_Queue::schedule_timer),
 		  -1);
 
   ACE_NEW_RETURN (cancel_cmd_,
-		  COMMAND (*Async_Timer_Queue::instance (),
+		  CMD (*Async_Timer_Queue::instance (),
 			   &Async_Timer_Queue::cancel_timer),
 		  -1);
 
   ACE_NEW_RETURN (list_cmd_,
-		  COMMAND (*Async_Timer_Queue::instance (),
+		  CMD (*Async_Timer_Queue::instance (),
 			   &Async_Timer_Queue::list_timer),
 		  -1);
 
   ACE_NEW_RETURN (shutdown_cmd_,
-		  COMMAND (*Async_Timer_Queue::instance (),
+		  CMD (*Async_Timer_Queue::instance (),
 			   &Async_Timer_Queue::shutdown_timer),
 		  -1);
 
