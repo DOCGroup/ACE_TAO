@@ -172,6 +172,10 @@ SOURCE=.\BiDirGIOP.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\BiDirPolicy_Validator.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\BiDirPolicyC.cpp
 # End Source File
 # End Group
@@ -197,6 +201,10 @@ SOURCE=.\BiDirGIOP.h
 # Begin Source File
 
 SOURCE=.\bidirgiop_export.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\BiDirPolicy_Validator.h
 # End Source File
 # Begin Source File
 
