@@ -1,3 +1,9 @@
+Tue Mar 26 06:50:58 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Synch.h (ACE_Null_Mutex): Added a dummy "lock_" variable
+	  to make ACE_Condition<ACE_Null_Mutex> work properly.  Thanks to
+ 	  Ido Yellin <Ido.Yellin@Focusengine.com> for reporting this.
+
 Wed Mar 21 08:11:15 2002  Boris Kolpackov  <bosk@ipmce.ru>
   
 	* THANKS: Added Frank Rybak <rybak@ll.mit.edu> to the Hall of fame.
