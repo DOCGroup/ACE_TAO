@@ -1,3 +1,4 @@
+// $Id$
 #include "TT_Info.h"
 #include "orbsvcs/Trader/Property_Evaluator.h"
 
@@ -15,7 +16,6 @@ const char* TT_Info::REMOTE_IO_NAME = "Remote_IO";
 const char* TT_Info::REMOTE_IO_PROPERTY_NAMES[] = 
 {
   "Name",
-  "Aliases",
   "Location",
   "Description"
 };
@@ -223,7 +223,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq)
     {
       CORBA::Any* value = 0;
       CORBA::TypeCode_ptr tc = 0;
-      ACE_DEBUG ((LM_DEBUG, "%30s: ", prop_seq[k].name.in ()));
+      ACE_DEBUG ((LM_DEBUG, "%-15s: ", prop_seq[k].name.in ()));
       TAO_TRY
 	{
 	  value = prop_eval.property_value(k, env);
@@ -274,6 +274,12 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq)
 	  CORBA::ULong ulong;
 	  (*value) >>= ulong;
 	  ACE_DEBUG ((LM_DEBUG, "%d\n", ulong));
+	}
+      else if (tc->equal (CORBA::_tc_long, env))
+	{
+	  CORBA::Long clong;
+	  (*value) >>= clong;
+	  ACE_DEBUG ((LM_DEBUG, "%d\n", clong));
 	}      
       else if (tc->equal (CORBA::_tc_string, env))
 	{

@@ -1,3 +1,4 @@
+// $Id$
 #include "Offer_Importer.h"
 #include "orbsvcs/Trader/Policy_Manager.h"
 
@@ -24,7 +25,11 @@ TAO_Offer_Importer::perform_queries (CORBA::Environment& _env)
     {
       TAO_Policy_Manager policies;
       CosTrading::Lookup::SpecifiedProps desired_props;
-      
+
+      policies.exact_type_match (CORBA::B_FALSE);
+      policies.search_card (4*NUM_OFFERS);
+      policies.match_card (4*NUM_OFFERS);
+      policies.return_card (4*NUM_OFFERS);
       for (int i = 0; i < TT_Info::NUM_QUERIES; i++)
 	{
 	  ACE_DEBUG ((LM_DEBUG, "Performing query for %s.\n", TT_Info::QUERIES[i][0]));
@@ -47,15 +52,21 @@ TAO_Offer_Importer::perform_queries (CORBA::Environment& _env)
 				TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 
-	  CosTrading::OfferSeq_var offer_seq (offer_seq_out);
-	  CosTrading::OfferIterator_var offer_iterator (offer_iterator_out);
-	  CosTrading::PolicyNameSeq_var limits_applied (limits_applied_out);
+	  //CosTrading::OfferSeq_var offer_seq (offer_seq_out);
+	  //CosTrading::OfferIterator_var offer_iterator (offer_iterator_out);
+	  //CosTrading::PolicyNameSeq_var limits_applied (limits_applied_out);
 	  ACE_DEBUG ((LM_DEBUG, "Results:\n\n"));
 	  
-	  this->display_results (offer_seq.in (),
-				 offer_iterator.in (),
+	  this->display_results (*offer_seq_out,
+				 offer_iterator_out,
 				 TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
+
+	  ACE_DEBUG ((LM_DEBUG, "Limits Applied:\n\n"));
+	  for (int length = limits_applied_out->length (), j = 0; j < length; j++)
+	    {
+	      ACE_DEBUG ((LM_DEBUG, "%s\n", (const char *)(*limits_applied_out)[j]));
+	    }
 	}
     }
   TAO_CATCHANY
@@ -89,7 +100,10 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   for (int length = offer_seq.length (), i = 0; i < length; i++)
-    TT_Info::dump_properties (offer_seq[i].properties);
+    {
+      TT_Info::dump_properties (offer_seq[i].properties);
+      ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
+    }
 
   TAO_TRY
     {  
@@ -107,9 +121,12 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
 	      TAO_CHECK_ENV;
 
 	      CosTrading::OfferSeq_var iter_offers (iter_offers_out);
-	      CosTrading::PropertySeq& props = iter_offers[i].properties;
 	      for (length = iter_offers->length (), i = 0; i < length; i++)
-		TT_Info::dump_properties (props);
+		{
+		  CosTrading::PropertySeq& props = iter_offers[i].properties;
+		  TT_Info::dump_properties (props);
+		  ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
+		}
 	      
 	    } while (any_left); 	
 	}
