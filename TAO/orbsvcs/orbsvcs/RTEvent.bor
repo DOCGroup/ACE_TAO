@@ -32,9 +32,11 @@ OBJFILES = \
 	$(OBJDIR)\EC_Factory.obj \
 	$(OBJDIR)\EC_Filter.obj \
 	$(OBJDIR)\EC_Filter_Builder.obj \
+	$(OBJDIR)\EC_Group_Scheduling.obj \
 	$(OBJDIR)\EC_Gateway.obj \
 	$(OBJDIR)\EC_Gateway_UDP.obj \
 	$(OBJDIR)\ECG_Mcast_EH.obj \
+	$(OBJDIR)\ECG_UDP_Sender.obj \
 	$(OBJDIR)\EC_Masked_Type_Filter.obj \
 	$(OBJDIR)\EC_MT_Dispatching.obj \
 	$(OBJDIR)\EC_Negation_Filter.obj \

@@ -747,6 +747,10 @@ SOURCE=.\Event\EC_Gateway_UDP.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\EC_Group_Scheduling.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\EC_Masked_Type_Filter.cpp
 # End Source File
 # Begin Source File
@@ -844,6 +848,10 @@ SOURCE=.\Event\EC_UDP_Admin.cpp
 # Begin Source File
 
 SOURCE=.\Event\ECG_Mcast_EH.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_UDP_Sender.cpp
 # End Source File
 # Begin Source File
 
@@ -1116,7 +1124,27 @@ SOURCE=.\RtecUDPAdminS_T.h
 # End Group
 # Begin Source File
 
+SOURCE=.\Event\EC_Group_Scheduling.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Group_Scheduling.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\ECG_Mcast_EH.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_UDP_Protocol.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_UDP_Sender.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_UDP_Sender.inl
 # End Source File
 # End Target
 # End Project
