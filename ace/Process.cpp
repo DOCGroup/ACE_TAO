@@ -9,7 +9,7 @@
 #include "ace/Process.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_Tokenizer::ACE_Tokenizer (char *buffer)
+ACE_Tokenizer::ACE_Tokenizer (LPTSTR buffer)
   : buffer_ (buffer),
     index_ (0),
     preserves_index_ (0),
@@ -18,7 +18,7 @@ ACE_Tokenizer::ACE_Tokenizer (char *buffer)
 }
 
 int
-ACE_Tokenizer::delimiter (char d)
+ACE_Tokenizer::delimiter (TCHAR d)
 {
   if (delimiter_index_ == MAX_DELIMITERS)
     return -1;
@@ -30,7 +30,7 @@ ACE_Tokenizer::delimiter (char d)
 }
 
 int
-ACE_Tokenizer::delimiter_replace (char d, char replacement)
+ACE_Tokenizer::delimiter_replace (TCHAR d, TCHAR replacement)
 {
   if (delimiter_index_ == MAX_DELIMITERS)
     return -1;
@@ -43,7 +43,7 @@ ACE_Tokenizer::delimiter_replace (char d, char replacement)
 }
 
 int 
-ACE_Tokenizer::preserve_designators (char start, char stop, int strip)
+ACE_Tokenizer::preserve_designators (TCHAR start, TCHAR stop, int strip)
 {
   if (preserves_index_ == MAX_PRESERVES)
     return -1;
@@ -56,7 +56,7 @@ ACE_Tokenizer::preserve_designators (char start, char stop, int strip)
 }
 
 int 
-ACE_Tokenizer::is_delimiter (char d, int &replace, char &r)
+ACE_Tokenizer::is_delimiter (TCHAR d, int &replace, TCHAR &r)
 {
   replace = 0;
 
@@ -75,7 +75,7 @@ ACE_Tokenizer::is_delimiter (char d, int &replace, char &r)
 }
 
 int 
-ACE_Tokenizer::is_preserve_designator (char start, char &stop, int &strip)
+ACE_Tokenizer::is_preserve_designator (TCHAR start, TCHAR &stop, int &strip)
 {
   for (int x=0; x < preserves_index_; x++)
     if (preserves_[x].start_ == start)
@@ -88,7 +88,7 @@ ACE_Tokenizer::is_preserve_designator (char start, char &stop, int &strip)
   return 0;
 }
 
-char *
+LPTSTR
 ACE_Tokenizer::next (void)
 {
   // Check if the previous pass was the last one in the buffer.
@@ -98,9 +98,9 @@ ACE_Tokenizer::next (void)
       return 0;
     }
 
-  char replacement;
+  TCHAR replacement;
   int replace;
-  char *next_token;
+  LPTSTR next_token;
 
   // Skip all leading delimiters.
   while (1)
@@ -124,7 +124,7 @@ ACE_Tokenizer::next (void)
   next_token = buffer_ + index_;
 
   // A preserved region is it's own token.
-  char stop;
+  TCHAR stop;
   int strip;
   if (this->is_preserve_designator (buffer_[index_], stop, strip))
     {
@@ -410,7 +410,7 @@ ACE_Process_Old::set_handles (ACE_HANDLE std_in,
 }
 
 int
-ACE_Process_Old::set_cwd (const TCHAR *cwd)
+ACE_Process_Old::set_cwd (LPCTSTR cwd)
 {
   ACE_OS::strncpy (this->cwd_, cwd, MAXPATHLEN);
   // This is for paranoia...
@@ -430,7 +430,7 @@ ACE_Process_Old::start (char *argv[], char *envp[])
     return -1;
 
   // If there is no current working directory, we *MUST* pass 0, not "".
-  char *cwd = strlen (cwd_) == 0 ? 0 : cwd_;
+  TCHAR *cwd = ACE_OS::strlen (cwd_) == 0 ? 0 : cwd_;
 
   BOOL fork_result = 
     ::CreateProcess (NULL,
@@ -505,10 +505,10 @@ ACE_Process_Old::start (char *argv[], char *envp[])
 }
 
 ACE_Process_Old::ACE_Process_Old (char *argv[],
-			  ACE_HANDLE std_in,
-			  ACE_HANDLE std_out,
-			  ACE_HANDLE std_err,
-			  char *envp[])
+				  ACE_HANDLE std_in,
+				  ACE_HANDLE std_out,
+				  ACE_HANDLE std_err,
+				  char *envp[])
 #if defined (ACE_WIN32)
   : set_handles_called_ (0)
 #else /* ACE_WIN32 */
@@ -556,7 +556,7 @@ ACE_Process_Options::ACE_Process_Options (int ie,
     command_line_buf_ (0),
     command_line_argv_calculated_ (0)
 {
-  ACE_NEW (command_line_buf_, char[cobl]);
+  ACE_NEW (command_line_buf_, TCHAR[cobl]);
   command_line_buf_[0] = '\0';
 
   working_directory_[0] = '\0';
@@ -581,7 +581,7 @@ ACE_Process_Options::inherit_environment (void)
   environment_inherited_ = 1;
 
   // Get the existing environment.
-  char *existing_environment = ::GetEnvironmentStrings ();
+  LPTSTR existing_environment = ::GetEnvironmentStrings ();
 
   int index = 0;
 
@@ -603,10 +603,48 @@ ACE_Process_Options::inherit_environment (void)
 
   ::FreeEnvironmentStrings (existing_environment);
 }
+
+#else /* defined ACE_WIN32 */
+
+char * const *
+ACE_Process_Options::command_line_argv (void)
+{
+  if (command_line_argv_calculated_ == 0)
+    {
+      command_line_argv_calculated_ = 1;
+
+      // This tokenizer will replace all spaces with end-of-string
+      // characters and will preserve text between "" and '' pairs.
+      ACE_Tokenizer parser (command_line_buf_);
+      parser.delimiter_replace (' ', '\0');
+      parser.preserve_designators ('\"', '\"'); // "
+      parser.preserve_designators ('\'', '\'');
+
+      int x = 0;
+      do
+	{
+	  command_line_argv_[x] = parser.next ();
+	}
+      while (command_line_argv_[x] != 0 &&
+	     // substract one for the ending zero.
+	     ++x < MAX_COMMAND_LINE_OPTIONS-1);
+
+      command_line_argv_[x] = 0;
+    }
+			
+  return command_line_argv_;
+}
+
+char **
+ACE_Process_Options::env_argv (void)
+{
+  return environment_argv_;
+}
+
 #endif /* ACE_WIN32 */
 
 int
-ACE_Process_Options::setenv (char *envp[])
+ACE_Process_Options::setenv (LPTSTR envp[])
 {
   int i = 0;
   while (envp[i])
@@ -625,16 +663,16 @@ ACE_Process_Options::setenv (char *envp[])
 }
 
 int
-ACE_Process_Options::setenv (const char *format, ...)
+ACE_Process_Options::setenv (LPCTSTR format, ...)
 {
-  char stack_buf[DEFAULT_COMMAND_LINE_BUF_LEN];
+  TCHAR stack_buf[DEFAULT_COMMAND_LINE_BUF_LEN];
 
   // Start varargs.
   va_list argp;
   va_start (argp, format);
 
   // Add the rest of the varargs.
-  ::vsprintf (stack_buf, format, argp);
+  ACE_OS::vsprintf (stack_buf, format, argp);
 
   // End varargs.
   va_end (argp);
@@ -652,22 +690,22 @@ ACE_Process_Options::setenv (const char *format, ...)
 }
 
 int
-ACE_Process_Options::setenv (const char *variable_name,
-			     const char *format, ...)
+ACE_Process_Options::setenv (LPCTSTR variable_name,
+			     LPCTSTR format, ...)
 {
-  char newformat[DEFAULT_COMMAND_LINE_BUF_LEN];
+  TCHAR newformat[DEFAULT_COMMAND_LINE_BUF_LEN];
 
   // Add in the variable name.
-  ACE_OS::sprintf (newformat, "%s=%s", variable_name, format);
+  ACE_OS::sprintf (newformat, __TEXT ("%s=%s"), variable_name, format);
 
-  char stack_buf[DEFAULT_COMMAND_LINE_BUF_LEN];
+  TCHAR stack_buf[DEFAULT_COMMAND_LINE_BUF_LEN];
 
   // Start varargs.
   va_list argp;
   va_start (argp, format);
 
   // Add the rest of the varargs.
-  ::vsprintf (stack_buf, newformat, argp);
+  ACE_OS::vsprintf (stack_buf, newformat, argp);
 
   // End varargs.
   va_end (argp);
@@ -780,7 +818,7 @@ ACE_Process_Options::set_handles (ACE_HANDLE std_in,
 }
 
 int
-ACE_Process_Options::command_line (char *argv[])
+ACE_Process_Options::command_line (LPTSTR argv[])
 {
   int i;
 
@@ -789,7 +827,7 @@ ACE_Process_Options::command_line (char *argv[])
       ACE_OS::strcat (command_line_buf_, argv[i]);
       while (argv[++i])
         {
-          ACE_OS::strcat (command_line_buf_, " ");
+          ACE_OS::strcat (command_line_buf_, __TEXT (" "));
           ACE_OS::strcat (command_line_buf_, argv[i]);
         }
     }
@@ -798,54 +836,19 @@ ACE_Process_Options::command_line (char *argv[])
 }
 
 int
-ACE_Process_Options::command_line (const char *format, ...)
+ACE_Process_Options::command_line (LPCTSTR format, ...)
 {
   // Store all ... args in argp.
   va_list argp;
   va_start (argp, format);
 
   // sprintf the format and args into command_line_buf__.
-  ::vsprintf (command_line_buf_, format, argp);
+  ACE_OS::vsprintf (command_line_buf_, format, argp);
 
   // Useless macro.
   va_end (argp);
 
   return 0;
-}
-
-char * const *
-ACE_Process_Options::command_line_argv (void)
-{
-  if (command_line_argv_calculated_ == 0)
-    {
-      command_line_argv_calculated_ = 1;
-
-      // This tokenizer will replace all spaces with end-of-string
-      // characters and will preserve text between "" and '' pairs.
-      ACE_Tokenizer parser (command_line_buf_);
-      parser.delimiter_replace (' ', '\0');
-      parser.preserve_designators ('\"', '\"');
-      parser.preserve_designators ('\'', '\'');
-
-      int x = 0;
-      do
-	{
-	  command_line_argv_[x] = parser.next ();
-	}
-      while (command_line_argv_[x] != 0 &&
-	     // substract one for the ending zero.
-	     ++x < MAX_COMMAND_LINE_OPTIONS-1);
-
-      command_line_argv_[x] = 0;
-    }
-			
-  return command_line_argv_;
-}
-
-char **
-ACE_Process_Options::env_argv (void)
-{
-  return environment_argv_;
 }
 
 LPTSTR 
