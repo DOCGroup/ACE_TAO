@@ -130,9 +130,9 @@ public class ImageApp extends Applet
     ImageSender imageSender = new ImageSender ();
     imageSender.open (this.imageCanvas_.getImage (), url);
     int bytesSent = imageSender.send ();
-    System.out.println ("Sent: " + bytesSent);
-    //    DialogManager.popDialog (DialogType.NOT_YET_IMPLEMENTED,
-    //			     "Save File: " + url);
+    if (bytesSent == -1)
+      DialogManager.popDialog (DialogType.NOT_SUPPORTED,
+			       "Server does not support uploading or URL not found");
   }
 
   public Choice getFilters () 
