@@ -1,18 +1,28 @@
+Tue Apr 20 22:55:18 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.i (thr_join): ifdef ACE_LACKS_PTHREAD_NULL_STATUS,
+          provide the address of a temporary variable for the status
+          argument of ::pthread_join (), if the caller passed 0.
+
+        * ace/config-lynxos.h,README: added ACE_LACKS_PTHREAD_NULL_STATUS.
+          LynxOS 3.0.0 fails ::pthread_join () calls with EFAULT
+          if the second (status) argument is 0.
+
 Tue Apr 20 21:53:32 1999  Joe Hoffert <joeh@cs.wustl.edu>
 
-	* examples/IPC_SAP/TLI_SAP/Makefile: Had inadvertently checked in
+        * examples/IPC_SAP/TLI_SAP/Makefile: Had inadvertently checked in
           local changes. Now undoing these changes.
 
 Tue Apr 20 18:25:45 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/{SOCK,TLI,LSOCK,Asynch}_Acceptor.h: Replaced the use of the
- 	  hard-coded backlog value of 5 with ACE_DEFAULT_BACKLOG.  Thanks
- 	  to Irfan for motivating this.
+        * ace/{SOCK,TLI,LSOCK,Asynch}_Acceptor.h: Replaced the use of the
+          hard-coded backlog value of 5 with ACE_DEFAULT_BACKLOG.  Thanks
+          to Irfan for motivating this.
 
         * ace/OS.h: Added a new (overriddable) macro called
- 	  ACE_DEFAULT_BACKLOG that's used to control the default number of
- 	  connections that can be accepted by an OS.  The default value is
- 	  5.
+          ACE_DEFAULT_BACKLOG that's used to control the default number of
+          connections that can be accepted by an OS.  The default value is
+          5.
 
 Tue Apr 20 18:22:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -28,24 +38,24 @@ Tue Apr 20 18:22:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
 Tue Apr 20 16:41:39 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Thread_Manager.cpp (num_tasks_in_group): Make sure we are
-	  not searching for a null task.  Thanks to Umar Syyid
-	  <usyyid@hns.com> for pointing this out.
+        * ace/Thread_Manager.cpp (num_tasks_in_group): Make sure we are
+          not searching for a null task.  Thanks to Umar Syyid
+          <usyyid@hns.com> for pointing this out.
 
 Tue Apr 20 15:10:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Reactor_Performance_Test.cpp: Changed the default number
-	  of connections (<opt_nconnection>) from 20 to 5 for NT.  This
-	  seems reasonable since the default backlog is 5.  Once we have
-	  the ability to set the backlog from the ACE_Acceptor class, we
-	  can increase this number.
+        * tests/Reactor_Performance_Test.cpp: Changed the default number
+          of connections (<opt_nconnection>) from 20 to 5 for NT.  This
+          seems reasonable since the default backlog is 5.  Once we have
+          the ability to set the backlog from the ACE_Acceptor class, we
+          can increase this number.
 
 Tue Apr 20 13:55:34 1999  Joe Hoffert <joeh@cs.wustl.edu>
 
-	* ace/OS.i: Fixed ACE_OS::t_free to free memory if pointer is not
+        * ace/OS.i: Fixed ACE_OS::t_free to free memory if pointer is not
           null.
 
-	* ace/TLI.h: Added default ACE_XTI_ATM_DEVICE.
+        * ace/TLI.h: Added default ACE_XTI_ATM_DEVICE.
 
         * ace/TLI_Connector.cpp: Disabled non-blocking connects for XTI/ATM
           since FORE's drivers have problems with this. Also, fixed t_alloc
@@ -58,16 +68,16 @@ Tue Apr 20 13:55:34 1999  Joe Hoffert <joeh@cs.wustl.edu>
 
 Tue Apr 20 13:30:51 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/ace.icc: Added a configuration file for creating a shared
- 	  library with Visual Age C++.  Thanks to Rene Matteau
- 	  <matteau@ca.ibm.com> for this.
+        * ace/ace.icc: Added a configuration file for creating a shared
+          library with Visual Age C++.  Thanks to Rene Matteau
+          <matteau@ca.ibm.com> for this.
 
 Mon Apr 19 23:50:25 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Time_Service_Test.cpp (main): Fixed error message.
+        * tests/Time_Service_Test.cpp (main): Fixed error message.
 
-	* ace/Connector.cpp (handle_close): Removed unused argument
-	  <mask>.
+        * ace/Connector.cpp (handle_close): Removed unused argument
+          <mask>.
 
 Mon Apr 19 17:17:47 1999  Steve Huston  <shuston@riverace.com>
 
@@ -75,9 +85,9 @@ Mon Apr 19 17:17:47 1999  Steve Huston  <shuston@riverace.com>
 
 Mon Apr 19 17:02:42 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Connector.cpp (handle_close): There is no need to call
-	  cancel_timer() or remove_handler() from handle_close().  Removal
-	  of all svc tuples from the <reactor> is done by <cleanup_AST>.
+        * ace/Connector.cpp (handle_close): There is no need to call
+          cancel_timer() or remove_handler() from handle_close().  Removal
+          of all svc tuples from the <reactor> is done by <cleanup_AST>.
 
 Mon Apr 19 16:45:54 1999  David L. Levine  <levine@cs.wustl.edu>
 
