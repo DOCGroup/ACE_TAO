@@ -1,3 +1,9 @@
+Mon Sep  8 12:38:22 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/RTScheduling/RTScheduler.mpc:
+
+          Added rtcorba and portableserver to the inheritance list.
+
 Mon Sep  8 07:06:38 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Oneway_Buffering/Oneway_Buffering.mpc:
