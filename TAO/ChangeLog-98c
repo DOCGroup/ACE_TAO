@@ -1,29 +1,35 @@
+Wed Aug 19 09:47:58 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Cubit/TAO/MT_Cubit/README: removed instructions for
+          building client w/o libraries for VxWorks.  They were out-of-date,
+          and too much of libACE/TAO are needed now for it to be done easily.
+
 Wed Aug 19 08:07:38 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/debug: Fixed a couple of uses of TAO_Export to make MSVC 6.0
- 	  happy.  Thanks to Goran Lowkrantz
- 	  <Goran.Lowkrantz@infologigruppen.se> for reporting this.
+        * tao/debug: Fixed a couple of uses of TAO_Export to make MSVC 6.0
+          happy.  Thanks to Goran Lowkrantz
+          <Goran.Lowkrantz@infologigruppen.se> for reporting this.
 
 Tue Aug 18 23:58:05 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/ORB_Core.h (TAO_Resource_Factory): Changed this class so
- 	  that most of the methods are virtual and the private section is
- 	  protected.  This makes it easier for users to inherit and extend
- 	  this class.
+        * tao/ORB_Core.h (TAO_Resource_Factory): Changed this class so
+          that most of the methods are virtual and the private section is
+          protected.  This makes it easier for users to inherit and extend
+          this class.
 
 Tue Aug 18 19:14:27 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* tests/Cubit/TAO/DII_Cubit/clinet.cpp:
-	  Had an incorrect "owns-data" boolean arg in all the cubit 
-	  test request constructions.
+        * tests/Cubit/TAO/DII_Cubit/clinet.cpp:
+          Had an incorrect "owns-data" boolean arg in all the cubit
+          test request constructions.
 
 Tue Aug 18 17:54:16 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (init): Fixed incorrect
- 	  assignment.
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (init): Fixed incorrect
+          assignment.
 
-	* tests/Cubit/TAO/IDL_Cubit/server.cpp (main): Added print
- 	  statements for initialization errors.
+        * tests/Cubit/TAO/IDL_Cubit/server.cpp (main): Added print
+          statements for initialization errors.
 
 Tue Aug 18 16:54:24 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -31,17 +37,17 @@ Tue Aug 18 16:54:24 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Tue Aug 18 15:43:16 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* Param_Test/ub_objref_seq.cpp:
-	* Param_Test/client.dsp:
-	* Param_Test/README:
-	  DII test now works with objref sequences. Also changed client
-	  file to reflect that longlong.cpp was changed to ulonglong.cpp.
-	  Updated README file.
+        * Param_Test/ub_objref_seq.cpp:
+        * Param_Test/client.dsp:
+        * Param_Test/README:
+          DII test now works with objref sequences. Also changed client
+          file to reflect that longlong.cpp was changed to ulonglong.cpp.
+          Updated README file.
 
 Tue Aug 18 15:23:21 1998  Steve Huston  <shuston@riverace.com>
 
-	* tao/Any.cpp: Use operator delete directly, rather than delete, to
-	  free un-typed memory.  Thanks to John Mulhern for this fix.
+        * tao/Any.cpp: Use operator delete directly, rather than delete, to
+          free un-typed memory.  Thanks to John Mulhern for this fix.
 
 Tue Aug 18 09:39:50 1998  David L. Levine  <levine@cs.wustl.edu>
 
