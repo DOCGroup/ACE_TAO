@@ -1,3 +1,12 @@
+Fri May  7 14:58:59 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/RTCosScheduling/client.cpp:
+	* orbsvcs/tests/RTCosScheduling/server.cpp:
+
+	  Include "tao/Version.h" to pull in TAO_*_VERSION preprocessor
+	  constant definitions.  Addresses undefined preprocessor constant
+	  g++ warnings when using the "-Wundef" preprocessor flag.
+
 Fri May  7 16:44:33 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
