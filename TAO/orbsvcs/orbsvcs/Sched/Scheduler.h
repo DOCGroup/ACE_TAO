@@ -47,6 +47,8 @@ public:
   typedef RtecScheduler::OS_Priority OS_Thread_Priority;
   typedef RtecScheduler::Sub_Priority Sub_Priority;
   typedef RtecScheduler::RT_Info RT_Info;
+  typedef RtecScheduler::Time Time;
+
   // Map some types to simplify re-use.
 
   typedef const char *Object_Name;
@@ -164,7 +166,9 @@ public:
   // Returns 0 on success, or -1 if an invalid mode or handle are supplied.
   // Queue numbers are platform-independent priority values, ranging from
   // a highest priority value of 0 to the lowest priority value, which is
-  // returned by "minimum_priority_queue ()".
+  // returned by "minimum_priority_queue ()". The current and deadline times
+  // are part of the scheduling service implementation interface, but may be
+  // ignored by some implementations and used by others.  
 
   // = Access the platform-independent priority value of the lowest-priority
   //   thread.

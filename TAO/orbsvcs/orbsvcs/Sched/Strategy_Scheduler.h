@@ -93,7 +93,7 @@ class ACE_Strategy_Scheduler_Factory
 {
 public:
 
-        static ACE_Strategy_Scheduler * create (ACE_DynScheduler::Preemption_Priority minimum_critical_priority);
+        static ACE_Strategy_Scheduler * create (RtecScheduler::Preemption_Priority minimum_critical_priority);
     // construct and return a scheduler strategized with
     // an instance of the the parameterized strategy type
 };
@@ -462,6 +462,103 @@ private:
   static ACE_RMS_Dyn_Scheduler_Strategy *instance_;
     // instance of the strategy
 
+};
+
+
+/////////////////////////////////////////////
+// Runtime Dispatch Subpriority Strategies //
+/////////////////////////////////////////////
+
+class TAO_ORBSVCS_Export ACE_Dispatch_Subpriority_Strategy
+{
+public:
+
+  ACE_Dispatch_Subpriority_Strategy (long frame_size = ACE_ONE_SECOND_IN_USECS);
+  // ctor: frame size is the number of microseconds in a complete
+  //       dispatch frame (defaults to one million = one second).
+
+  virtual RtecScheduler::Sub_Priority 
+          runtime_subpriority (const ACE_Time_Value &current_time,
+                               const ACE_Time_Value &deadline_time,
+                               const ACE_Time_Value &execution_time,
+                               RtecScheduler::Sub_Priority static_subpriority) = 0;
+  // abstract method to compute the dispatch subpriority for an operation
+
+  virtual RtecScheduler::Sub_Priority 
+          response_function (const ACE_Time_Value &time_metric,
+                             RtecScheduler::Sub_Priority static_subpriority);
+  // response function for run time subpriority: stepwise linear function that
+  // gives appoximately the same dispatching behavior as a hyperbolic function,
+  // but does not require us to use floating point math.
+
+
+protected:
+
+  long frame_size_;
+  // number of microseconds per scheduling frame
+
+  long dynamic_max_;
+  // max value that a dynamic priority representation can have
+
+  long static_max_;
+  // number of bits available for static subpriority representation
+
+  u_int static_bits_;
+  // number of bits available for static subpriority representation
+
+  ACE_Time_Value max_time_;
+  // maximum time value that can be represented
+
+  ACE_Time_Value min_time_;
+  // minimum time value that can be represented
+
+};
+
+
+class TAO_ORBSVCS_Export ACE_Deadline_Subpriority_Strategy
+                         : public ACE_Dispatch_Subpriority_Strategy
+{
+public:
+
+  ACE_Deadline_Subpriority_Strategy (long frame_size = ACE_ONE_SECOND_IN_USECS);
+  // ctor: frame size is the number of microseconds in a complete
+  //       dispatch frame (defaults to one million = one second).
+
+
+  virtual RtecScheduler::Sub_Priority 
+          runtime_subpriority (const ACE_Time_Value &current_time,
+                               const ACE_Time_Value &deadline_time,
+                               const ACE_Time_Value &execution_time,
+                               RtecScheduler::Sub_Priority static_subpriority);
+};
+
+class TAO_ORBSVCS_Export ACE_Laxity_Subpriority_Strategy
+                         : public ACE_Dispatch_Subpriority_Strategy
+{
+public:
+
+  ACE_Laxity_Subpriority_Strategy (long frame_size = ACE_ONE_SECOND_IN_USECS);
+  // ctor: frame size is the number of microseconds in a complete 
+  //       dispatch frame (defaults to one million = one second).
+
+
+  virtual RtecScheduler::Sub_Priority 
+          runtime_subpriority (const ACE_Time_Value &current_time,
+                               const ACE_Time_Value &deadline_time,
+                               const ACE_Time_Value &execution_time,
+                               RtecScheduler::Sub_Priority static_subpriority);
+};
+
+class TAO_ORBSVCS_Export ACE_Static_Subpriority_Strategy
+                         : public ACE_Dispatch_Subpriority_Strategy
+{
+public:
+
+  virtual RtecScheduler::Sub_Priority 
+          runtime_subpriority (const ACE_Time_Value &current_time,
+                               const ACE_Time_Value &deadline_time,
+                               const ACE_Time_Value &execution_time,
+                               RtecScheduler::Sub_Priority static_subpriority);
 };
 
 

@@ -190,13 +190,19 @@ ACE_DynScheduler::register_task (RT_Info *rt_info, handle_t &handle)
 {
   ACE_DynScheduler::status_t ret;
 
+  // check the pointer we were passed
+  if (! rt_info)
+  {
+    handle = 0;
+    return ST_UNKNOWN_TASK;
+  }
+
   // try to store the new task's information . . .
   switch (rt_info_entries_.insert (rt_info))
     {
       case 0 : // successfully inserted
         {
           rt_info->handle = (handle = ++handles_);
-
           ret = SUCCEEDED;
 
           // zero out the task entry ACT used by the scheduler
@@ -208,7 +214,7 @@ ACE_DynScheduler::register_task (RT_Info *rt_info, handle_t &handle)
           if (output_level () >= 5)
             {
               ACE_OS::printf ("registered task \"%s\" with RT_Info at %X\n",
-                              (const char*)rt_info->entry_point,
+                              (const char*)(rt_info->entry_point),
                               (void *) rt_info);
             }
         }
@@ -280,6 +286,52 @@ ACE_DynScheduler::get_rt_info (Object_Name name,
 
 
 
+
+int ACE_DynScheduler::priority (
+  const RtecScheduler::handle_t handle,
+  RtecScheduler::OS_Priority &priority,
+  RtecScheduler::Sub_Priority &subpriority,
+  RtecScheduler::Preemption_Priority &preemption_prio)
+{
+  // look up the RT_Info that has the given handle
+  RT_Info *rt_info = 0;
+  if (lookup_rt_info (handle, rt_info) == SUCCEEDED)
+  {
+    // copy the priority values from the RT_Info 
+    priority = rt_info->priority;
+    subpriority = rt_info->static_subpriority;
+    preemption_prio = rt_info->preemption_priority;
+
+    return 0;
+  }
+  else
+
+  {
+    // RT_Info not found: assign default priority values
+    priority = minimum_priority_;
+    subpriority = ACE_Scheduler_MIN_SUB_PRIORITY;
+    preemption_prio = ACE_Scheduler_MAX_PREEMPTION_PRIORITY;
+
+    if (output_level () >= 3)
+    {
+      ACE_OS::printf ("preemption_prio %d: min %d, pri %d, min_pri %d\n",
+                      preemption_prio, minimum_priority_queue (),
+                      priority, minimum_priority_);
+    }
+
+    return -1;
+  }
+}
+  // "priority" is the OS thread priority that was assigned to the Task that
+  // was assigned "handle".  "subpriority" combines the dynamic and static
+  // subpriorities of the Task that was assigned handle.  "preemption_prio"
+  // is a platform-independent priority queue number, ranging from a
+  // highest priority value of 0 to the lowest priority value, which is
+  // returned by "minimum_priority_queue ()".  The current and deadline times
+  // supplied are used to compute the operation's dynamic subpriority
+  // Returns 0 on success, or -1 if an invalid handle was supplied.
+
+
 int ACE_DynScheduler::number_of_dependencies(RT_Info* rt_info)
 {
   return rt_info->dependencies.length();
@@ -291,7 +343,7 @@ int ACE_DynScheduler::number_of_dependencies(RT_Info& rt_info)
 }
 
 int ACE_DynScheduler::add_dependency(RT_Info* rt_info,
-                                              Dependency_Info& d)
+                                     Dependency_Info& d)
 {
   RT_Info *temp_info = 0; // temporary pointer to the caller's RT_Info
 
@@ -363,12 +415,6 @@ void ACE_DynScheduler::export(RT_Info& info, FILE* file)
                               info.dependencies[i].number_of_calls);
 
     }
-
-// TBD - we'll need to update this to use the information aggregated
-//       within the task entry pointed to by the RT_Info's volatile_token
-//       ACT (in fact, there is now more than one
-//       priority assignment per RT_Info, w/ disjunction on multiple
-//       priority levels, rates, etc. - iterate through and show each dispatch)
 
   (void) ACE_OS::fprintf (file, "# end calls\n%d\n%d\n%d\n\n",
                           info.priority,
