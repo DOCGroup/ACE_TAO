@@ -939,7 +939,7 @@ TAO_AV_RTCP_Callback::demux (TAO_AV_RTP::rtphdr* rh,
    */
 }
 
-ACE_FACTORY_DEFINE (AV, TAO_AV_RTCP_Flow_Factory)
+ACE_FACTORY_DEFINE (TAO_AV, TAO_AV_RTCP_Flow_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_AV_RTCP_Flow_Factory,
                        ACE_TEXT ("RTCP_Flow_Factory"),
                        ACE_SVC_OBJ_T,
@@ -947,3 +947,6 @@ ACE_STATIC_SVC_DEFINE (TAO_AV_RTCP_Flow_Factory,
                        ACE_Service_Type::DELETE_THIS |
                        ACE_Service_Type::DELETE_OBJ,
                        0)
+
+
+

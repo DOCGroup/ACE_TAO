@@ -1475,7 +1475,7 @@ TAO_AV_UDP_QoS_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
   return object;
 }
 
-ACE_FACTORY_DEFINE (AV, TAO_AV_UDP_QoS_Flow_Factory)
+ACE_FACTORY_DEFINE (TAO_AV, TAO_AV_UDP_QoS_Flow_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_AV_UDP_QoS_Flow_Factory,
                        ACE_TEXT ("UDP_QoS_Flow_Factory"),
                        ACE_SVC_OBJ_T,
@@ -1484,7 +1484,7 @@ ACE_STATIC_SVC_DEFINE (TAO_AV_UDP_QoS_Flow_Factory,
                        ACE_Service_Type::DELETE_OBJ,
                        0)
 
-ACE_FACTORY_DEFINE (AV, TAO_AV_UDP_QoS_Factory)
+ACE_FACTORY_DEFINE (TAO_AV, TAO_AV_UDP_QoS_Factory)
 
 ACE_STATIC_SVC_DEFINE (TAO_AV_UDP_QoS_Factory,
                        ACE_TEXT ("UDP_QoS_Factory"),

@@ -9,6 +9,7 @@
 #include "orbsvcs/AV/RTP.h"
 #include "orbsvcs/AV/RTCP.h"
 #include "orbsvcs/AV/sfp.h"
+#include "orbsvcs/AV/default_resource.h"
 
 #ifdef ACE_HAS_RAPI
 #include "orbsvcs/AV/QoS_UDP.h"
@@ -547,93 +548,290 @@ TAO_AV_Core::get_connector (const char *flowname)
 }
 
 int
+TAO_AV_Core::load_default_transport_factories (void)
+{
+  const char *udp_factory_str = "UDP_Factory";
+  const char *tcp_factory_str = "TCP_Factory";
+
+  TAO_AV_Transport_Factory *udp_factory = 0;
+  TAO_AV_Transport_Item *udp_item = 0;
+  
+  udp_factory =
+    ACE_Dynamic_Service<TAO_AV_Transport_Factory>::instance (udp_factory_str);
+  if (udp_factory == 0)
+    {
+      if (TAO_debug_level)
+	ACE_ERROR ((LM_WARNING,
+		    "(%P|%t) WARNING - No %s found in Service Repository."
+		    "  Using default instance.\n",
+		    "UDP Factory"));
+      
+      ACE_NEW_RETURN (udp_factory,
+		      TAO_AV_UDP_Factory,
+		      -1);
+    }
+  
+  ACE_NEW_RETURN (udp_item, TAO_AV_Transport_Item ("UDP_Factory"), -1);
+  udp_item->factory (udp_factory);
+  
+  this->transport_factories_.insert (udp_item);
+  
+  TAO_AV_Transport_Factory *tcp_factory = 0;
+  TAO_AV_Transport_Item *tcp_item = 0;
+  
+  tcp_factory =
+    ACE_Dynamic_Service<TAO_AV_Transport_Factory>::instance (tcp_factory_str);
+  if (tcp_factory == 0)
+    {
+      if (TAO_debug_level)
+	ACE_ERROR ((LM_WARNING,
+		    "(%P|%t) WARNING - No %s found in Service Repository."
+		    "  Using default instance.\n",
+		    "TCP Factory"));
+      
+      ACE_NEW_RETURN (tcp_factory,
+		      TAO_AV_TCP_Factory,
+                          -1);
+    }
+  
+  ACE_NEW_RETURN (tcp_item, TAO_AV_Transport_Item ("TCP_Factory"), -1);
+  tcp_item->factory (tcp_factory);
+  
+  this->transport_factories_.insert (tcp_item);
+  
+#ifdef ACE_HAS_RAPI
+  const char *udp_qos_factory_str = "UDP_QoS_Factory";
+  
+  TAO_AV_Transport_Factory *udp_qos_factory = 0;
+  TAO_AV_Transport_Item *udp_qos_item = 0;
+  
+  udp_qos_factory =
+        ACE_Dynamic_Service<TAO_AV_Transport_Factory>::instance (udp_qos_factory_str);
+  if (udp_qos_factory == 0)
+    {
+      if (TAO_debug_level)
+	ACE_ERROR ((LM_WARNING,
+		    "(%P|%t) WARNING - No %s found in Service Repository."
+		    "  Using default instance.\n",
+		    "UDP QoS Factory"));
+      
+          ACE_NEW_RETURN (udp_qos_factory,
+                          TAO_AV_UDP_QoS_Factory,
+                          -1);
+    }
+  
+  ACE_NEW_RETURN (udp_qos_item, 
+		  TAO_AV_Transport_Item ("UDP_QoS_Factory"),
+		  -1);
+      
+  udp_qos_item->factory (udp_qos_factory);
+      
+  this->transport_factories_.insert (udp_qos_item);
+#endif /*ACE_HAS_RAPI*/
+
+  return 0;
+}
+
+int
 TAO_AV_Core::init_transport_factories (void)
 {
   TAO_AV_TransportFactorySetItor end = this->transport_factories_.end ();
   TAO_AV_TransportFactorySetItor factory = this->transport_factories_.begin ();
 
-  const char *udp_factory_str = "UDP_Factory";
-  const char *tcp_factory_str = "TCP_Factory";
 
   if (factory == end)
     {
-      TAO_AV_Transport_Factory *udp_factory = 0;
-      TAO_AV_Transport_Item *udp_item = 0;
+      if (TAO_debug_level > 0) 
+	ACE_DEBUG ((LM_DEBUG,
+		    "Loading default transport protocols\n"));
+      this->load_default_transport_factories ();
+    }
+  else
+    {
+      for (; factory != end; factory++)
+	{
+	  const ACE_CString &name = (*factory)->name ();
+	  if (TAO_debug_level > 0) 
+	    ACE_DEBUG ((LM_DEBUG,
+			"%s \n",
+			name.c_str ()));
+	  
+	  (*factory)->factory (
+			       ACE_Dynamic_Service<TAO_AV_Transport_Factory>::instance (name.c_str ()));
+	  if ((*factory)->factory () == 0)
+	    {
+	      ACE_ERROR_RETURN ((LM_ERROR,
+				 ACE_TEXT ("TAO (%P|%t) Unable to load ")
+				 ACE_TEXT ("protocol <%s>, %p\n"),
+				 name.c_str (), ""),
+				-1);
+	    }
+	  
+	  if (TAO_debug_level > 0)
+	    {
+	      ACE_DEBUG ((LM_DEBUG,
+			  ACE_TEXT ("TAO (%P|%t) Loaded protocol <%s>\n"),
+			  name.c_str ()));
+	    }
+	}
+      
+    }
+  
+  return 0;
+}
 
-      udp_factory =
-        ACE_Dynamic_Service<TAO_AV_Transport_Factory>::instance (udp_factory_str);
-      if (udp_factory == 0)
-        {
-          if (TAO_debug_level)
-            ACE_ERROR ((LM_WARNING,
-                        "(%P|%t) WARNING - No %s found in Service Repository."
-                        "  Using default instance.\n",
-                        "UDP Factory"));
+int
+TAO_AV_Core::load_default_flow_protocol_factories (void)
+{
+  const char *udp_flow = "UDP_Flow_Factory";
+  const char *tcp_flow = "TCP_Flow_Factory";
+  const char *rtp_flow = "RTP_Flow_Factory";
+  const char *rtcp_flow = "RTCP_Flow_Factory";
+  const char *sfp_flow = "SFP_Flow_Factory";
 
-          ACE_NEW_RETURN (udp_factory,
-                          TAO_AV_UDP_Factory,
-                          -1);
-        }
+  TAO_AV_Flow_Protocol_Factory *udp_flow_factory = 0;
+  TAO_AV_Flow_Protocol_Item *udp_item = 0;
 
-      ACE_NEW_RETURN (udp_item, TAO_AV_Transport_Item ("UDP_Factory"), -1);
-      udp_item->factory (udp_factory);
+  udp_flow_factory =
+    ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (udp_flow);
+  if (udp_flow_factory == 0)
+    {
+      if (TAO_debug_level)
+	ACE_ERROR ((LM_WARNING,
+		    "(%P|%t) WARNING - No %s found in Service Repository."
+		    "  Using default instance.\n",
+		    "UDP Flow Factory"));
 
-      this->transport_factories_.insert (udp_item);
+      ACE_NEW_RETURN (udp_flow_factory,
+		      TAO_AV_UDP_Flow_Factory,
+		      -1);
+    }
 
-      TAO_AV_Transport_Factory *tcp_factory = 0;
-      TAO_AV_Transport_Item *tcp_item = 0;
+  ACE_NEW_RETURN (udp_item, TAO_AV_Flow_Protocol_Item ("UDP_Flow_Factory"), -1);
+  udp_item->factory (udp_flow_factory);
 
-      tcp_factory =
-        ACE_Dynamic_Service<TAO_AV_Transport_Factory>::instance (tcp_factory_str);
-      if (tcp_factory == 0)
-        {
-          if (TAO_debug_level)
-            ACE_ERROR ((LM_WARNING,
-                        "(%P|%t) WARNING - No %s found in Service Repository."
-                        "  Using default instance.\n",
-                        "TCP Factory"));
-
-          ACE_NEW_RETURN (tcp_factory,
-                          TAO_AV_TCP_Factory,
-                          -1);
-        }
-
-      ACE_NEW_RETURN (tcp_item, TAO_AV_Transport_Item ("TCP_Factory"), -1);
-      tcp_item->factory (tcp_factory);
-
-      this->transport_factories_.insert (tcp_item);
+  this->flow_protocol_factories_.insert (udp_item);
 
 #ifdef ACE_HAS_RAPI
-      const char *udp_qos_factory_str = "UDP_QoS_Factory";
+      
+  const char *udp_qos_flow = "UDP_QoS_Flow_Factory";
+  TAO_AV_Flow_Protocol_Factory *udp_qos_flow_factory = 0;
+  TAO_AV_Flow_Protocol_Item *udp_qos_flow_item = 0;
 
-      TAO_AV_Transport_Factory *udp_qos_factory = 0;
-      TAO_AV_Transport_Item *udp_qos_item = 0;
+  udp_qos_flow_factory =
+    ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (udp_qos_flow);
+  if (udp_qos_flow_factory == 0)
+    {
+      if (TAO_debug_level)
+	ACE_ERROR ((LM_WARNING,
+		    "(%P|%t) WARNING - No %s found in Service Repository."
+		    "  Using default instance.\n",
+		    "UDP QoS Flow Factory"));
 
-      udp_qos_factory =
-        ACE_Dynamic_Service<TAO_AV_Transport_Factory>::instance (udp_qos_factory_str);
-      if (udp_qos_factory == 0)
-        {
-          if (TAO_debug_level)
-            ACE_ERROR ((LM_WARNING,
-                        "(%P|%t) WARNING - No %s found in Service Repository."
-                        "  Using default instance.\n",
-                        "UDP QoS Factory"));
-	  
-          ACE_NEW_RETURN (udp_qos_factory,
-                          TAO_AV_UDP_QoS_Factory,
-                          -1);
-        }
-
-      ACE_NEW_RETURN (udp_qos_item, 
-		      TAO_AV_Transport_Item ("UDP_QoS_Factory"),
+      ACE_NEW_RETURN (udp_qos_flow_factory,
+		      TAO_AV_UDP_QoS_Flow_Factory,
 		      -1);
-      
-      udp_qos_item->factory (udp_qos_factory);
-      
-      this->transport_factories_.insert (udp_qos_item);
+    }
+
+  ACE_NEW_RETURN (udp_qos_flow_item, TAO_AV_Flow_Protocol_Item ("UDP_QoS_Flow_Factory"), -1);
+  udp_qos_flow_item->factory (udp_qos_flow_factory);
+
+  this->flow_protocol_factories_.insert (udp_qos_flow_item);
+
 #endif /*ACE_HAS_RAPI*/
 
+  TAO_AV_Flow_Protocol_Factory *tcp_flow_factory = 0;
+  TAO_AV_Flow_Protocol_Item *tcp_item = 0;
+
+  tcp_flow_factory =
+    ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (tcp_flow);
+  if (tcp_flow_factory == 0)
+    {
+      if (TAO_debug_level)
+	ACE_ERROR ((LM_WARNING,
+		    "(%P|%t) WARNING - No %s found in Service Repository."
+		    "  Using default instance.\n",
+		    "TCP Flow Factory"));
+
+      ACE_NEW_RETURN (tcp_flow_factory,
+		      TAO_AV_TCP_Flow_Factory,
+		      -1);
     }
+
+  ACE_NEW_RETURN (tcp_item, TAO_AV_Flow_Protocol_Item ("TCP_Flow_Factory"), -1);
+  tcp_item->factory (tcp_flow_factory);
+
+  this->flow_protocol_factories_.insert (tcp_item);
+
+  TAO_AV_Flow_Protocol_Factory *rtp_flow_factory = 0;
+  TAO_AV_Flow_Protocol_Item *rtp_item = 0;
+
+  rtp_flow_factory =
+    ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (rtp_flow);
+  if (rtp_flow_factory == 0)
+    {
+      if (TAO_debug_level)
+	ACE_ERROR ((LM_WARNING,
+		    "(%P|%t) WARNING - No %s found in Service Repository."
+		    "  Using default instance.\n",
+		    "RTP Flow Factory"));
+
+      ACE_NEW_RETURN (rtp_flow_factory,
+		      TAO_AV_RTP_Flow_Factory,
+		      -1);
+    }
+
+  ACE_NEW_RETURN (rtp_item, TAO_AV_Flow_Protocol_Item ("RTP_Flow_Factory"), -1);
+  rtp_item->factory (rtp_flow_factory);
+
+  this->flow_protocol_factories_.insert (rtp_item);
+
+  TAO_AV_Flow_Protocol_Factory *rtcp_flow_factory = 0;
+  TAO_AV_Flow_Protocol_Item *rtcp_item = 0;
+
+  rtcp_flow_factory =
+    ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (rtcp_flow);
+  if (rtcp_flow_factory == 0)
+    {
+      if (TAO_debug_level)
+	ACE_ERROR ((LM_WARNING,
+		    "(%P|%t) WARNING - No %s found in Service Repository."
+		    "  Using default instance.\n",
+		    "RTCP Flow Factory"));
+
+      ACE_NEW_RETURN (rtcp_flow_factory,
+		      TAO_AV_RTCP_Flow_Factory,
+		      -1);
+    }
+
+  ACE_NEW_RETURN (rtcp_item, TAO_AV_Flow_Protocol_Item ("RTCP_Flow_Factory"), -1);
+  rtcp_item->factory (rtcp_flow_factory);
+
+  this->flow_protocol_factories_.insert (rtcp_item);
+
+  TAO_AV_Flow_Protocol_Factory *sfp_flow_factory = 0;
+  TAO_AV_Flow_Protocol_Item *sfp_item = 0;
+
+  sfp_flow_factory =
+    ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (sfp_flow);
+  if (sfp_flow_factory == 0)
+    {
+      if (TAO_debug_level)
+	ACE_ERROR ((LM_WARNING,
+		    "(%P|%t) WARNING - No %s found in Service Repository."
+		    "  Using default instance.\n",
+		    "SFP Flow Factory"));
+
+      ACE_NEW_RETURN (sfp_flow_factory,
+		      TAO_AV_SFP_Factory,
+		      -1);
+    }
+
+  ACE_NEW_RETURN (sfp_item, TAO_AV_Flow_Protocol_Item ("SFP_Flow_Factory"), -1);
+  sfp_item->factory (sfp_flow_factory);
+
+  this->flow_protocol_factories_.insert (sfp_item);
+
   return 0;
 }
 
@@ -642,158 +840,45 @@ TAO_AV_Core::init_flow_protocol_factories (void)
 {
   TAO_AV_Flow_ProtocolFactorySetItor end = this->flow_protocol_factories_.end ();
   TAO_AV_Flow_ProtocolFactorySetItor factory = this->flow_protocol_factories_.begin ();
-
-  const char *udp_flow = "UDP_Flow_Factory";
-  const char *tcp_flow = "TCP_Flow_Factory";
-  const char *rtp_flow = "RTP_Flow_Factory";
-  const char *rtcp_flow = "RTCP_Flow_Factory";
-  const char *sfp_flow = "SFP_Flow_Factory";
-
+  
   if (factory == end)
     {
-      TAO_AV_Flow_Protocol_Factory *udp_flow_factory = 0;
-      TAO_AV_Flow_Protocol_Item *udp_item = 0;
-
-      udp_flow_factory =
-        ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (udp_flow);
-      if (udp_flow_factory == 0)
-        {
-          if (TAO_debug_level)
-            ACE_ERROR ((LM_WARNING,
-                        "(%P|%t) WARNING - No %s found in Service Repository."
-                        "  Using default instance.\n",
-                        "UDP Flow Factory"));
-
-          ACE_NEW_RETURN (udp_flow_factory,
-                          TAO_AV_UDP_Flow_Factory,
-                          -1);
-        }
-
-      ACE_NEW_RETURN (udp_item, TAO_AV_Flow_Protocol_Item ("UDP_Flow_Factory"), -1);
-      udp_item->factory (udp_flow_factory);
-
-      this->flow_protocol_factories_.insert (udp_item);
-
-#ifdef ACE_HAS_RAPI
+      ACE_DEBUG ((LM_DEBUG,
+		  "Loading default flow protocol factories\n"));
       
-      const char *udp_qos_flow = "UDP_QoS_Flow_Factory";
-      TAO_AV_Flow_Protocol_Factory *udp_qos_flow_factory = 0;
-      TAO_AV_Flow_Protocol_Item *udp_qos_flow_item = 0;
-
-      udp_qos_flow_factory =
-        ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (udp_qos_flow);
-      if (udp_qos_flow_factory == 0)
-        {
-          if (TAO_debug_level)
-            ACE_ERROR ((LM_WARNING,
-                        "(%P|%t) WARNING - No %s found in Service Repository."
-                        "  Using default instance.\n",
-                        "UDP QoS Flow Factory"));
-
-          ACE_NEW_RETURN (udp_qos_flow_factory,
-                          TAO_AV_UDP_QoS_Flow_Factory,
-                          -1);
-        }
-
-      ACE_NEW_RETURN (udp_qos_flow_item, TAO_AV_Flow_Protocol_Item ("UDP_QoS_Flow_Factory"), -1);
-      udp_qos_flow_item->factory (udp_qos_flow_factory);
-
-      this->flow_protocol_factories_.insert (udp_qos_flow_item);
-
-#endif /*ACE_HAS_RAPI*/
-
-      TAO_AV_Flow_Protocol_Factory *tcp_flow_factory = 0;
-      TAO_AV_Flow_Protocol_Item *tcp_item = 0;
-
-      tcp_flow_factory =
-        ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (tcp_flow);
-      if (tcp_flow_factory == 0)
-        {
-          if (TAO_debug_level)
-            ACE_ERROR ((LM_WARNING,
-                        "(%P|%t) WARNING - No %s found in Service Repository."
-                        "  Using default instance.\n",
-                        "TCP Flow Factory"));
-
-          ACE_NEW_RETURN (tcp_flow_factory,
-                          TAO_AV_TCP_Flow_Factory,
-                          -1);
-        }
-
-      ACE_NEW_RETURN (tcp_item, TAO_AV_Flow_Protocol_Item ("TCP_Flow_Factory"), -1);
-      tcp_item->factory (tcp_flow_factory);
-
-      this->flow_protocol_factories_.insert (tcp_item);
-
-      TAO_AV_Flow_Protocol_Factory *rtp_flow_factory = 0;
-      TAO_AV_Flow_Protocol_Item *rtp_item = 0;
-
-      rtp_flow_factory =
-        ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (rtp_flow);
-      if (rtp_flow_factory == 0)
-        {
-          if (TAO_debug_level)
-            ACE_ERROR ((LM_WARNING,
-                        "(%P|%t) WARNING - No %s found in Service Repository."
-                        "  Using default instance.\n",
-                        "RTP Flow Factory"));
-
-          ACE_NEW_RETURN (rtp_flow_factory,
-                          TAO_AV_RTP_Flow_Factory,
-                          -1);
-        }
-
-      ACE_NEW_RETURN (rtp_item, TAO_AV_Flow_Protocol_Item ("RTP_Flow_Factory"), -1);
-      rtp_item->factory (rtp_flow_factory);
-
-      this->flow_protocol_factories_.insert (rtp_item);
-
-      TAO_AV_Flow_Protocol_Factory *rtcp_flow_factory = 0;
-      TAO_AV_Flow_Protocol_Item *rtcp_item = 0;
-
-      rtcp_flow_factory =
-        ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (rtcp_flow);
-      if (rtcp_flow_factory == 0)
-        {
-          if (TAO_debug_level)
-            ACE_ERROR ((LM_WARNING,
-                        "(%P|%t) WARNING - No %s found in Service Repository."
-                        "  Using default instance.\n",
-                        "RTCP Flow Factory"));
-
-          ACE_NEW_RETURN (rtcp_flow_factory,
-                          TAO_AV_RTCP_Flow_Factory,
-                          -1);
-        }
-
-      ACE_NEW_RETURN (rtcp_item, TAO_AV_Flow_Protocol_Item ("RTCP_Flow_Factory"), -1);
-      rtcp_item->factory (rtcp_flow_factory);
-
-      this->flow_protocol_factories_.insert (rtcp_item);
-
-      TAO_AV_Flow_Protocol_Factory *sfp_flow_factory = 0;
-      TAO_AV_Flow_Protocol_Item *sfp_item = 0;
-
-      sfp_flow_factory =
-        ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (sfp_flow);
-      if (sfp_flow_factory == 0)
-        {
-          if (TAO_debug_level)
-            ACE_ERROR ((LM_WARNING,
-                        "(%P|%t) WARNING - No %s found in Service Repository."
-                        "  Using default instance.\n",
-                        "SFP Flow Factory"));
-
-          ACE_NEW_RETURN (sfp_flow_factory,
-                          TAO_AV_SFP_Factory,
-                          -1);
-        }
-
-      ACE_NEW_RETURN (sfp_item, TAO_AV_Flow_Protocol_Item ("SFP_Flow_Factory"), -1);
-      sfp_item->factory (sfp_flow_factory);
-
-      this->flow_protocol_factories_.insert (sfp_item);
+      this->load_default_flow_protocol_factories ();
     }
+  else
+    {
+      for (; factory != end; factory++)
+	{
+	  const ACE_CString &name = (*factory)->name ();
+	  if (TAO_debug_level > 0) 
+	    ACE_DEBUG ((LM_DEBUG,
+			"%s \n",
+			name.c_str ()));
+	  
+	  (*factory)->factory (
+			       ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (name.c_str ()));
+	  if ((*factory)->factory () == 0)
+	    {
+	      ACE_ERROR_RETURN ((LM_ERROR,
+				 ACE_TEXT ("TAO (%P|%t) Unable to load ")
+				 ACE_TEXT ("protocol <%s>, %p\n"),
+				 name.c_str (), ""),
+				-1);
+	    }
+	  
+	  if (TAO_debug_level > 0)
+	    {
+	      ACE_DEBUG ((LM_DEBUG,
+			  ACE_TEXT ("TAO (%P|%t) Loaded protocol <%s>\n"),
+			  name.c_str ()));
+	    }
+	}
+
+    }
+
   return 0;
 }
 

@@ -1372,7 +1372,7 @@ template class ACE_Singleton<TAO_SFP_Base, TAO_SYNCH_MUTEX>;
 #pragma instantiate ACE_Singleton<TAO_SFP_Base, TAO_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-ACE_FACTORY_DEFINE (AV, TAO_AV_SFP_Factory)
+ACE_FACTORY_DEFINE (TAO_AV, TAO_AV_SFP_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_AV_SFP_Factory,
                        ACE_TEXT ("SFP_Factory"),
                        ACE_SVC_OBJ_T,

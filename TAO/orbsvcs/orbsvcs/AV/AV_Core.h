@@ -89,6 +89,9 @@ public:
   int init_transport_factories (void);
   int init_flow_protocol_factories (void);
 
+  int load_default_transport_factories (void);
+  int load_default_flow_protocol_factories (void);
+
   /// = Get the acceptor registry
   TAO_AV_Acceptor *get_acceptor (const char *flowname);
   TAO_AV_Connector *get_connector (const char *flowname);
