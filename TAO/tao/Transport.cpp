@@ -996,11 +996,8 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
   size_t payload = missing_data + incoming.length ();
 
   // Grow the buffer to the size of the message
-  if (ACE_CDR::grow (&incoming,
-                     payload) == 0)
-    {
-      cout << "Amba Gosh " <<endl;
-    };
+  ACE_CDR::grow (&incoming,
+                 payload);
 
   // .. do a read on the socket again.
   ssize_t n = this->recv (incoming.wr_ptr (),
