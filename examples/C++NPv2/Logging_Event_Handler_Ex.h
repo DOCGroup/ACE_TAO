@@ -12,10 +12,6 @@
 
 #include "Logging_Event_Handler.h"
 
-#if !defined (MAX_CLIENT_TIMEOUT)
-#define MAX_CLIENT_TIMEOUT 3600 /* 3600 seconds == one hour. */
-#endif /* MAX_CLIENT_TIMEOUT */
-
 class Logging_Event_Handler_Ex : public Logging_Event_Handler
 {
 private:
@@ -26,6 +22,10 @@ private:
   const ACE_Time_Value max_client_timeout_;
 
 public:
+
+  // 3600 seconds == one hour.
+  enum { MAX_CLIENT_TIMEOUT = 3600 };
+
   Logging_Event_Handler_Ex 
     (ACE_Reactor *reactor,
      const ACE_Time_Value &max_client_timeout
