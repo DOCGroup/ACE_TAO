@@ -1,18 +1,18 @@
 Tue Mar 31 15:27:25 1998  Steve Huston  <shuston@riverace.com>
 
-	* apps/JAWS/server/JAWS_Pipeline_Handler.cpp: Defined 'status' in
-	  the put() function.
+        * apps/JAWS/server/JAWS_Pipeline_Handler.cpp: Defined 'status' in
+          the put() function.
 
-	* ace/config-dgux-4.x-ghs.h: Removed settings for ACE_SIZEOF_LONG_LONG
-	  since the compiler doesn't really support a long long that ACE
-	  is looking for (64-bit).  Use the ACE-supplied ACE_ULongLong type.
+        * ace/config-dgux-4.x-ghs.h: Removed settings for ACE_SIZEOF_LONG_LONG
+          since the compiler doesn't really support a long long that ACE
+          is looking for (64-bit).  Use the ACE-supplied ACE_ULongLong type.
 
 Tue Mar 31 10:46:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Msg_WFMO_Reactor.cpp: Changed to use
- 	  MsgWaitForMultipleObjects if we are not under NT.  Also in
-	  MsgWaitForMultipleObjectsEx, we should use NT defined flags
-	  instead of the boolean "alertable" directly.
+        * ace/Msg_WFMO_Reactor.cpp: Changed to use
+          MsgWaitForMultipleObjects if we are not under NT.  Also in
+          MsgWaitForMultipleObjectsEx, we should use NT defined flags
+          instead of the boolean "alertable" directly.
 
 Tue Mar 31 07:22:09 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -26,7 +26,9 @@ Tue Mar 31 07:22:09 1998  David L. Levine  <levine@cs.wustl.edu>
           dereference it in the worker's loop.  It seems that a worker
           thread can continue to run after main exits (and cleans up
           TSS).  That shouldn't happen, but it looks like it does on
-          Linux, LynxOS, and Digital Unix.
+          Linux, LynxOS, and Digital Unix.  Thanks to James CE Johnson
+          <jcej@lads.com> for verifying that the fix works on Linux/
+          Intel and DU 4.0.
 
         * examples/Threads/task_five.cpp (main): wrapped return statement
           at end with ACE_NOTREACHED.  This will prevent compiler warnings
@@ -56,11 +58,11 @@ Fri Mar 27 23:04:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Mar 27 16:47:26 1998  Steve Huston  <shuston@riverace.com>
 
-	* tests/tests.mdp: Made settings for Env_Value_Test consistent with
-	  other tests, so that run_tests.bat can find it.
+        * tests/tests.mdp: Made settings for Env_Value_Test consistent with
+          other tests, so that run_tests.bat can find it.
 
-	* netsvcs/servers/servers4.mdp: Added ..\lib to Include directories
-	  when building in Release mode.
+        * netsvcs/servers/servers4.mdp: Added ..\lib to Include directories
+          when building in Release mode.
 
 Fri Mar 27 13:55:13 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
