@@ -50,6 +50,10 @@ Thu Jan 22 09:04:13 1998  David L. Levine  <@cs.wustl.edu>
           file.  It should be used by applications for a default real-time
           thread priority.
 
+        * ace/config-chorus.GNU: added GreenHills support.
+
+        * include/makeinclude/platform_chorus_ghs.GNU: added platform file.
+
 Wed Jan 21 21:37:03 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Hash_Map_Manager.cpp (close_i): Removed the HPUX_11
