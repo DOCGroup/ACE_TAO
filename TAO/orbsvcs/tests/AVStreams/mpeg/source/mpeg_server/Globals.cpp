@@ -1591,7 +1591,8 @@ Video_Global::stat_sent (void)
 }
 
 int
-Video_Global::init_play (Video_Control::PLAYpara para)
+Video_Global::init_play (Video_Control::PLAYpara para,
+                         CORBA::Long_out vts)
 {
   // ~~ why do we need the play_para in Video_Global , why can't just use
   // the para that's passed.
@@ -1623,10 +1624,14 @@ Video_Global::init_play (Video_Control::PLAYpara para)
   this->currentUPF = this->play_para.usecPerFrame;
   this->VStimeAdvance = this->play_para.VStimeAdvance;
 
-  {
-    int ts = htonl (get_usec ());
-    this->CmdWrite ((char *)&ts, sizeof (int));
-  }
+  vts = get_usec ();
+  cerr << "vts is " << vts << endl;
+  // begin evil code
+  //  {
+    //    int vts = get_usec ();
+    //    this->CmdWrite ((char *)&ts, sizeof (int));
+  //  }
+  // end evil code
  
   if (this->live_source || this->video_format != VIDEO_MPEG1) {
     PLAYpara live_play_para; // xxx hack to compile the code
