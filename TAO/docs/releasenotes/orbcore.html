@@ -62,6 +62,19 @@
     Recently Completed Work:
 
     <UL>
+      <li>Fixed a slight problem in <a href="#hostfix">other recent
+      work</a> where a servant listening on <code>INADDR_ANY</code>
+      reported an IOR with address <tt>0.0.0.0</tt>.  It now reports
+      the default hostname instead.</li>
+
+      <LI>Working version of TAO on VxWorks with VME transport.</li>
+
+      <li>TAO now reacts gracefully in the face of a non-existent
+      <code>svc.conf</code> file or simply missing entries in the
+      file.  It logs a warning message and uses default values
+      versions of items which it would normally obtain from the
+      Service Repository.</li>
+
       <li><a name="hostfix"></a>Fixed problem where object references
       for objects dynamically created within a server do not have
       proper host, at least if the desired host was specified using <a
@@ -261,77 +274,99 @@
     Critical Work:
 
     <UL>
-      <LI>Support new concurrency models, e.g.,	Thread-per-Request, thread pool, etc..</LI>
+      <LI>Support new concurrency models, e.g., Thread-per-Request,
+      thread pool, etc..</LI>
 
-      <LI>Working version of TAO on VxWorks with VME transport.</li>
     </UL> 
 
     Future work:
     <UL>
-      <li>Make TAO more robust in the face of a non-existent
-      <code>svc.conf</code> file.</li>
-
-      <li>Replace all uses of <code>new</code> and <code>delete</code>
-      with allocators that can be put into TSS.  The main motivation
-      for this is to eliminate lock contention when multiple threads
-      need to allocate/deallocate memory, however it might also be
-      possible to substitute an allocator better-tuned to an
-      application's specific usage.</li>
-
-      <li>Performance optimizations in general, not limited to:
-	<nl>
+      <li>Performance optimizations, such as:
+	<ol>
 	  <li>Strategize the connection management scheme so that we
 	  don't always have to pay the price of a look up in the
 	  connection cache.  Basically, we want to be able to "hold" a
 	  service handler for a string of requests.  And, of course,
 	  do this in a portable manner.</LI>
-	</nl>
+	  
+	  <li>Replace all uses of <code>new</code> and
+	  <code>delete</code> with allocators that can be put into
+	  TSS.  The main motivation for this is to eliminate lock
+	  contention when multiple threads need to allocate/deallocate
+	  memory, however it might also be possible to substitute an
+	  allocator better-tuned to an application's specific
+	  usage.</li>
+	</ol>
       </li>
 
-      <li>Improve connection cache so that it won't crash when there
-      are no more slots or sockets.</li>
+      <li>Robustness improvements:
+	<ol>
+	  <li>Improve connection cache so that it won't crash when there
+	    are no more slots or sockets.</li>
+	</ol>
+      </li>
 
-      <li>Implement <code>ORB::perform_work</code> and
-	<code>ORB::work_pending</code> so that <code>ORB::run</code>
-	<em>could</em> be implemented in terms of them.</li>
+      <li>New features:
+	<ol>
+	  <li>Implement <code>ORB::perform_work</code> and
+	    <code>ORB::work_pending</code> so that <code>ORB::run</code>
+	    <em>could</em> be implemented in terms of them.</li>
 
+	  <LI>Integrate the <A HREF="index.html#poa">POA</A> implementation.</LI>
+
+	  <li>Improve the <code>Service Configurator</code> service
+	    entry faking on VxWorks.</li>
+
+	  <li>Integrate with realtime upcalls (RTUs).</li>
+
+	  <LI>Remove the CORBA_SEQUENCE structure which is not a true C++
+	    mapping of sequences. This will affect the code that uses
+	    OctetSequences and TC_opaque. </LI>
+	</ol>
+      </li>
+
+      <li>Internal restructuring:
+	<ol>
       <li>Remove <code>_FAR</code> from all code.</li>
 
       <li>Rework underlayment so eliminate <code>IUnknown</code> class.</li>
 
-      <li>Integrate with realtime upcalls (RTUs).</li>
-
-      <li>Update ORB Patterns paper to reflect the latest TAO has to
-	offer.  Specifically
-	<nl>
-	  <li>sections on the Abstract Factory and Concurrency
-	  strategies need to be updated, and the entire paper needs to
-	  be reviewed for accuracy w.r.t the current TAO.</li>
-	  <li>Metrics must be re-computed.</li>
-	  <li>Tighten existing discussions.</li>
-	  <li>Add information on new patterns (such as TSS) which have been used since initial work.</li>
-	</nl>
+	</ol>
       </li>
 
-      <li>Make the section in <a
-      href="../../TAO-Install.html"><code>$TAO_ROOT/TAO-Install.html</code></a>
-      that documents installation on Unix platforms more complete.
-	</li>
+      <li>Documentation:
+	<ol>
+	  <li>Update ORB Patterns paper to reflect the latest TAO has to
+	    offer.  Specifically
+	    <ul>
+	      <li>sections on the Abstract Factory and Concurrency
+		strategies need to be updated, and the entire paper needs to
+		be reviewed for accuracy w.r.t the current TAO.</li>
+	      <li>Metrics must be re-computed.</li>
+	      <li>Tighten existing discussions.</li>
+	      <li>Add information on new patterns (such as TSS) which
+	      have been used since initial work.</li>
+	    </ul>
 
-      <li>Improve the <code>Service Configurator</code> service
-	entry faking on VxWorks.</li>
+	  <li>Make the section in <a
+	  href="../../TAO-Install.html"><code>$TAO_ROOT/TAO-Install.html</code></a>
+	  that documents installation on Unix platforms more
+	  complete.</li>
+      </li>
 
-      <LI>Integrate the <A HREF="#poa">POA</A> implementation.</LI>
+	</ol>
+      </li>
 
-      <LI>Assist in porting higher level services (e.g., <A
-	  HREF="#eventchannel">Event Channel</A>) to TAO.</LI>
+      <li>Miscellany:
+	<ol>
+	  <LI>Assist in porting higher level services (e.g., <A
+	      HREF="#eventchannel">Event Channel</A>) to TAO.</LI>
 
-      <li>Compile and verify ACE and TAO on Linux using the Kuck and
-	Associates, Inc. (KAI) compiler tools.</li>
+	  <li>Compile and verify ACE and TAO on Linux using the Kuck and
+	    Associates, Inc. (KAI) compiler tools.</li>
+	</ol>
+      </li>
 
-      <LI>Remove the CORBA_SEQUENCE structure which is not a true C++
-	mapping of sequences. This will affect the code that uses
-	OctetSequences and TC_opaque. </LI>
 
     </UL>
 
