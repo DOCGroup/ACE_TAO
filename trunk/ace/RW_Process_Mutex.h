@@ -20,6 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Default_Constants.h"
+#include "ace/OS_NS_fcntl.h"
 
 /**
  * @class ACE_RW_Process_Mutex
