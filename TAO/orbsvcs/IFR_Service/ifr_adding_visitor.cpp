@@ -1499,6 +1499,8 @@ ifr_adding_visitor::load_any (AST_Expression::AST_ExprValue *ev,
         delete wstr;
         break;
       }
+    default:
+      break;
     }
 }
 
