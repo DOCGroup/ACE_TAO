@@ -1,78 +1,82 @@
 Thu Sep  7 16:15:24 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/OS.h:
-	* ace/OS.cpp:
-	  Break out the dependency between the ACE_Thread_Manager and the
-	  OS layer.  The OS layer used ACE_Thread_Adapter to create
-	  threads, this class depends on ACE_Thread_Manager, but on the
-	  path used by the OS layer the class does not use Thread_Manager
-	  at all.  The solution was to create a base class
-	  (ACE_Base_Thread_Adapter) and a specialized version used in the
-	  OS layer (ACE_OS_Thread_Adapter).
+        * ace/OS.h:
+        * ace/OS.cpp:
+          Break out the dependency between the ACE_Thread_Manager and the
+          OS layer.  The OS layer used ACE_Thread_Adapter to create
+          threads, this class depends on ACE_Thread_Manager, but on the
+          path used by the OS layer the class does not use Thread_Manager
+          at all.  The solution was to create a base class
+          (ACE_Base_Thread_Adapter) and a specialized version used in the
+          OS layer (ACE_OS_Thread_Adapter).
 
-	* ace/Makefile:
-	* ace/Makefile.am:
-	* ace/Makefile.bor:
-	  Update the Makefile and the dependencies.
+        * ace/Makefile:
+        * ace/Makefile.am:
+        * ace/Makefile.bor:
+          Update the Makefile and the dependencies.
 
-	* ace/Base_Thread_Adapter.h:
-	* ace/Base_Thread_Adapter.inl:
-	* ace/Base_Thread_Adapter.cpp:
-	  Abstract base class for ACE_Thread_Adapter.  Applications
-	  continue to use ACE_Thread_Adapter, but the OS layer uses the
-	  base class (or OS_Thread_Adapter).  This way we decouple the OS
-	  layer from the ACE_Thread_Manager class.
+        * ace/Base_Thread_Adapter.h:
+        * ace/Base_Thread_Adapter.inl:
+        * ace/Base_Thread_Adapter.cpp:
+          Abstract base class for ACE_Thread_Adapter.  Applications
+          continue to use ACE_Thread_Adapter, but the OS layer uses the
+          base class (or OS_Thread_Adapter).  This way we decouple the OS
+          layer from the ACE_Thread_Manager class.
 
-	* ace/config-all.h:
-	  Move the definition of ACE_THR_FUNC and ACE_THR_C_FUNC out here.
+        * ace/config-all.h:
+          Move the definition of ACE_THR_FUNC and ACE_THR_C_FUNC out here.
 
-	* ace/OS_Thread_Adapter.h:
-	* ace/OS_Thread_Adapter.inl:
-	* ace/OS_Thread_Adapter.cpp:
-	  Implement a version of ACE_Base_Thread_Adapter that does not use
-	  the Thread_Manager at all.
+        * ace/OS_Thread_Adapter.h:
+        * ace/OS_Thread_Adapter.inl:
+        * ace/OS_Thread_Adapter.cpp:
+          Implement a version of ACE_Base_Thread_Adapter that does not use
+          the Thread_Manager at all.
 
-	* ace/Thread_Adapter.h:
-	* ace/Thread_Adapter.inl:
-	* ace/Thread_Adapter.cpp:
-	  Removed the common code to Base_Thread_Adapter.*
+        * ace/Thread_Adapter.h:
+        * ace/Thread_Adapter.inl:
+        * ace/Thread_Adapter.cpp:
+          Removed the common code to Base_Thread_Adapter.*
 
-	* ace/Thread.h:
-	  Include "ace/Thread_Adapter.h" directly because the OS layer
-	  does not include it anymore.
+        * ace/Thread.h:
+          Include "ace/Thread_Adapter.h" directly because the OS layer
+          does not include it anymore.
 
-	* ace/Thread_Hook.h:
-	* ace/Thread_Hook.cpp:
-	  This class does not need to #include Thread_Manager.h
+        * ace/Thread_Hook.h:
+        * ace/Thread_Hook.cpp:
+          This class does not need to #include Thread_Manager.h
 
-	* ace/Log_Msg.h:
-	* ace/Log_Msg.cpp:
-	  Add another hook to make the ACE_OS_Thread_Descriptor available
-	  to the OS layer when running MFC builds.
+        * ace/Log_Msg.h:
+        * ace/Log_Msg.cpp:
+          Add another hook to make the ACE_OS_Thread_Descriptor available
+          to the OS layer when running MFC builds.
+
+        * ace/Thread_Exit.cpp:
+          The is_constructed_ flag is reset in the cleanup function
+          instead of letting the OS layer do it.
 
 Thu Sep  7 12:07:14 2000  Ossama Othman  <ossama@uci.edu>
 
-	* bin/autoconf_compile (LOGBASE):
+        * bin/autoconf_compile (LOGBASE):
 
-	  Create log file with `.txt' extension instead of `.log' to
-	  prevent web browsers from needlessly prompting users which
-	  viewer should be used.
-	
-	* m4/acinclude.m4:
+          Create log file with `.txt' extension instead of `.log' to
+          prevent web browsers from needlessly prompting users which
+          viewer should be used.
 
-	  Updated copyright information.
+        * m4/acinclude.m4:
 
-	* m4/platform.m4:
+          Updated copyright information.
 
-	  When setting platform-specific flags, use the "$host" autoconf
-	  variable instead of "$target."  The latter is only supposed to
-	  be used when building cross-platform tool chains.
+        * m4/platform.m4:
 
-	* m4/threads.m4 (CPPFLAGS):
+          When setting platform-specific flags, use the "$host" autoconf
+          variable instead of "$target."  The latter is only supposed to
+          be used when building cross-platform tool chains.
 
-	  Place user provided preprocessor flags after the ones set by the
-	  configure script to allow the user to override automatically
-	  set flags.
+        * m4/threads.m4 (CPPFLAGS):
+
+          Place user provided preprocessor flags after the ones set by the
+          configure script to allow the user to override automatically
+          set flags.
 
 Thu Sep 07 14:30:49 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -82,21 +86,21 @@ Thu Sep 07 14:30:49 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Thu Sep 07 11:36:51 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_Context.cpp (set_mode):
-	* ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
-	* ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
-	* ace/SSL/SSL_SOCK_Stream.i (recv, send):
+        * ace/SSL/SSL_Context.cpp (set_mode):
+        * ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
+        * ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
+        * ace/SSL/SSL_SOCK_Stream.i (recv, send):
 
-	  Do not print OpenSSL error message if ACE_NDEBUG is defined.
+          Do not print OpenSSL error message if ACE_NDEBUG is defined.
 
 Thu Sep  7 10:52:47 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tests/CDR_Array_Test.cpp:
+        * tests/CDR_Array_Test.cpp:
 
-	  Code intended to allocate and zero and source buffer and
-	  destination buffer was actually zeroing the source buffer
-	  twice. Thanks to Johnny Willemsen <johnny.willemsen@meco.nl>
-	  for reporting this bug.
+          Code intended to allocate and zero and source buffer and
+          destination buffer was actually zeroing the source buffer
+          twice. Thanks to Johnny Willemsen <johnny.willemsen@meco.nl>
+          for reporting this bug.
 
 Thu Sep 07 11:16:36 2000  Steve Huston  <shuston@riverace.com>
 
@@ -135,32 +139,32 @@ Sat Sep  2 15:13:59 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Sat Sep  2 12:22:59 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/CDR_Stream.h:
-	  Define macros to initialize a LongDouble, this is needed to
-	  avoid warnings in some ORB code.
+        * ace/CDR_Stream.h:
+          Define macros to initialize a LongDouble, this is needed to
+          avoid warnings in some ORB code.
 
 Sat Sep  2 07:14:06 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/config-sunos5.5.h: Added ACE_LACKS_PLACEMENT_OPERATOR_DELETE
-	  to fix a bug with SunC++ 4.1.  Thanks to Sameer Schabungbam
- 	  <schabungbam@hss.hns.com> for reporting this.
+        * ace/config-sunos5.5.h: Added ACE_LACKS_PLACEMENT_OPERATOR_DELETE
+          to fix a bug with SunC++ 4.1.  Thanks to Sameer Schabungbam
+          <schabungbam@hss.hns.com> for reporting this.
 
 Fri Sep  1 16:50:50 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* ace/Configuration.cpp:
+        * ace/Configuration.cpp:
 
-	  The method export_section contained a delete of a void*.
-	  Many compilers warn about this. Cast the void* to char*.
+          The method export_section contained a delete of a void*.
+          Many compilers warn about this. Cast the void* to char*.
 
 Fri Sep  1 13:25:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* ace/Configuration.cpp:
+        * ace/Configuration.cpp:
         * ace/Configuration.h:
 
-	  Checked in some fixes to ACE_Configuration sent in by
-	  Chris Hafey <chafey@stentorsoft.com>. Chris writes:
+          Checked in some fixes to ACE_Configuration sent in by
+          Chris Hafey <chafey@stentorsoft.com>. Chris writes:
 
-	  Fixed a handle leak in export_config().
+          Fixed a handle leak in export_config().
           Thanks to Matthew Adams <madams@bexusa.com> for reporting the bug.
 
           Fixed a memory leak in export_section() for binary types.  Fixed a
@@ -169,29 +173,29 @@ Fri Sep  1 13:25:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
           win32 versions, we now export unrecognized types as BINARY values
           rather than fail entirely.  Fixed a bug where the size of a new
           section name was calculated incorrectly for unicode builds.
-	  Thanks to Vijay Aswadhati <wyseman@planetbazaar.com> for reporting
+          Thanks to Vijay Aswadhati <wyseman@planetbazaar.com> for reporting
           this.  [Bug 649]
 
 Fri Sep 01 03:08:59 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Task.h:
-	* ace/Thread_Manager.h:
-	* ace/Thread_Manager.cpp: For some reason, the <spawn_n> method
-	  that takes a thread_id array did not take the <task> pointer.
-	  If a user "activate"'ed a task and asking for the thread_id's,
-	  these thread would not be marked as these task, which caused
-	  they unaccounted for in subsequent wast_task.  Fixed the problem
-	  by adding the <task> argument to <spawn_n> and make sure the
-	  task pointer is passed in <activate> method.  Thanks to Mervyn
-	  Quah <mquah@guoco.com> for reporting the bug.
-	  [Bug 616]
+        * ace/Task.h:
+        * ace/Thread_Manager.h:
+        * ace/Thread_Manager.cpp: For some reason, the <spawn_n> method
+          that takes a thread_id array did not take the <task> pointer.
+          If a user "activate"'ed a task and asking for the thread_id's,
+          these thread would not be marked as these task, which caused
+          they unaccounted for in subsequent wast_task.  Fixed the problem
+          by adding the <task> argument to <spawn_n> and make sure the
+          task pointer is passed in <activate> method.  Thanks to Mervyn
+          Quah <mquah@guoco.com> for reporting the bug.
+          [Bug 616]
 
 Thu Aug 31 15:31:30 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* include/makeinclude/outputdir.bor: Added a comment to explain
-	  how the OBJDIR macro works when the -DPASCAL option is used.
-  	  Thanks to Marcel Van Der Weert <mvdweert@aweta.nl> and
- 	  Christopher Kohlhoff <chris@kohlhoff.com> for reporting this.
+        * include/makeinclude/outputdir.bor: Added a comment to explain
+          how the OBJDIR macro works when the -DPASCAL option is used.
+          Thanks to Marcel Van Der Weert <mvdweert@aweta.nl> and
+          Christopher Kohlhoff <chris@kohlhoff.com> for reporting this.
 
 Thu Aug 31 08:32:11 2000  Albert Wijnja <Albert.Wijnja@meco.nl>
 
