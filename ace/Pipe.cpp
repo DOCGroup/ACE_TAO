@@ -72,18 +72,28 @@ ACE_Pipe::open (void)
 
 #elif defined (ACE_HAS_STREAM_PIPES)
   if (ACE_OS::pipe (this->handles_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("pipe")), -1);
-
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("%p\n"),
+                       ASYS_TEXT ("pipe")),
+                      -1);
   int arg = RMSGN;
 
   // Enable "msg no discard" mode, which ensures that record
   // boundaries are maintained when messages are sent and received.
   if (ACE_OS::ioctl (this->handles_[0], I_SRDOPT, (void *) arg) == -1
       || ACE_OS::ioctl (this->handles_[1], I_SRDOPT, (void *) arg) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ioctl")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("%p\n"),
+                       ASYS_TEXT ("ioctl")), -1);
 #else
-  if (ACE_OS::socketpair (AF_UNIX, SOCK_DGRAM, 0, this->handles_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("socketpair")), -1);
+  if (ACE_OS::socketpair (AF_UNIX,
+                          SOCK_DGRAM,
+                          0,
+                          this->handles_) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("%p\n"),
+                       ASYS_TEXT ("socketpair")),
+                      -1);
 #endif /* ACE_WIN32 */
   // Point both the read and write HANDLES to the appropriate socket
   // HANDLEs.
@@ -121,7 +131,8 @@ ACE_Pipe::ACE_Pipe (ACE_HANDLE handles[2])
   ACE_TRACE ("ACE_Pipe::ACE_Pipe");
 
   if (this->open (handles) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Pipe::ACE_Pipe")));
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("ACE_Pipe::ACE_Pipe")));
 }
 
 ACE_Pipe::ACE_Pipe (ACE_HANDLE read, 
