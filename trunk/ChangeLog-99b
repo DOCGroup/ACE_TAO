@@ -1,5 +1,8 @@
 Sat Jun 26 14:41:31 1999  Marina Spivak  <marina@cs.wustl.edu>
 
+	* ace/Event_Handler_T.h
+          Removed "ACE_Export" - it is not necessary for a template class.
+
 	* ace/Hash_Map_With_Allocator.{h,i,cpp}:    
 	  Added these files to ACE.  These files contain a thin wrapper
 	  around ACE_Hash_Map_Manager, which is useful when

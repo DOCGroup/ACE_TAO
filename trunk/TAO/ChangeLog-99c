@@ -1,8 +1,5 @@
 Sat Jun 26 14:23:25 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* ace/Event_Handler_T.h
-	Removed "ACE_Export" - it is not necessary for a template class.
-
 	* orbsvcs/tests/Simple_Naming/client.cpp
 	Clean up of the remaining old exception code.
 
