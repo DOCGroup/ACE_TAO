@@ -188,11 +188,9 @@ const size_t TAO_DEFAULT_ORB_TABLE_SIZE = 16;
 # define TAO_CONNECTION_CACHE_MAXIMUM (ACE::max_handles () / 2)
 #endif /* TAO_CONNECTION_CACHE_MAXIMUM */
 
-// This deals with platforms that support namespaces vs platforms that
-// don't.  @@ MSVC's namespace implementation is somehow broken.
-// The following macros are required to deal with the most bizarre and insane
-// behavior of the MSVC++ compiler
-#if defined (ACE_HAS_USING_KEYWORD)
+
+// This definition theoretically is not required. Just leaving it here
+// for backward compatibility
 #define TAO_NAMESPACE namespace
 #define TAO_NAMESPACE_CLOSE
 #define TAO_NAMESPACE_STORAGE_CLASS extern TAO_EXPORT_MACRO
@@ -200,15 +198,7 @@ const size_t TAO_DEFAULT_ORB_TABLE_SIZE = 16;
 #define TAO_NAMESPACE_END  }
 #define TAO_NAMESPACE_TYPE(TYPE)
 #define TAO_NAMESPACE_DEFINE(TYPE,NAME,RHS) TYPE NAME = RHS;
-#else
-#define TAO_NAMESPACE struct TAO_EXPORT_MACRO
-#define TAO_NAMESPACE_CLOSE ;
-#define TAO_NAMESPACE_STORAGE_CLASS static
-#define TAO_NAMESPACE_BEGIN(NS)  NS##::
-#define TAO_NAMESPACE_END
-#define TAO_NAMESPACE_TYPE(TYPE) TYPE
-#define TAO_NAMESPACE_DEFINE(TYPE,NAME,RHS) NAME = RHS;
-#endif /* ACE_HAS_USING_KEYWORD */
+
 
 # if defined (_MSC_VER) && defined (__ACE_INLINE__)
 #   define TAO_NAMESPACE_INLINE_FUNCTION inline
