@@ -10,7 +10,7 @@
 
 ## The number in AUTOMAKE_OPTIONS is the minimum required version automake
 ## needed to process this file.
-AUTOMAKE_OPTIONS = 1.4
+AUTOMAKE_OPTIONS = 1.5
 
 ## Disable building of CLASSIX library for now.
 ## SUBDIRS = CLASSIX
@@ -154,7 +154,8 @@ libACE_OS_la_SOURCES = \
   OS_Thread_Adapter.cpp \
   OS_Log_Msg_Attributes.cpp \
   Thread_Hook.cpp \
-  Sched_Params.cpp
+  Sched_Params.cpp \
+  Handle_Set.cpp
 
 libACE_Utils_la_SOURCES = \
   ACE.cpp \
@@ -166,6 +167,7 @@ libACE_Utils_la_SOURCES = \
   Configuration_Import_Export.cpp \
   Containers.cpp \
   Dirent.cpp \
+  Dirent_Selector.cpp \
   Dynamic.cpp \
   Filecache.cpp \
   Flag_Manip.cpp \
@@ -173,19 +175,15 @@ libACE_Utils_la_SOURCES = \
   Get_Opt.cpp \
   Hash_Map_Manager.cpp \
   Handle_Ops.cpp \
-  Handle_Set.cpp \
   Init_ACE.cpp \
   Lib_Find.cpp \
+  Message_Block.cpp \
   Method_Request.cpp \
   Object_Manager.cpp \
   Registry.cpp \
   SString.cpp \
   Stats.cpp \
   Sample_History.cpp
-
-# We only want `gethrtime.cpp' if building on Pentium(tm) so we need
-# to let Automake know that `gethrtime.cpp' is conditionally built.
-EXTRA_libACE_Utils_la_SOURCES = gethrtime.cpp
 
 libACE_Logging_la_SOURCES = \
   Dump.cpp \
@@ -194,6 +192,7 @@ libACE_Logging_la_SOURCES = \
   Log_Msg_Backend.cpp \
   Log_Msg_IPC.cpp \
   Log_Msg_NT_Event_Log.cpp \
+  Log_Msg_UNIX_Event_Syslog.cpp \
   Log_Record.cpp \
   Logging_Strategy.cpp \
   Trace.cpp
@@ -330,7 +329,6 @@ libACE_Streams_la_SOURCES = \
   CDR_Base.cpp \
   CDR_Stream.cpp \
   Codeset_IBM1047.cpp \
-  Message_Block.cpp \
   Message_Queue.cpp \
   Task.cpp
 
@@ -371,6 +369,10 @@ libACE_Timer_la_SOURCES = \
   Timer_Wheel.cpp \
   $(ACE_GETHRTIME_CPP)
 
+# We only want `gethrtime.cpp' if building on Pentium(tm) so we need
+# to let Automake know that `gethrtime.cpp' is conditionally built.
+EXTRA_libACE_Timer_la_SOURCES = gethrtime.cpp
+
 libACE_Other_la_SOURCES = \
   CORBA_Handler.cpp \
   CORBA_Ref.cpp \
@@ -397,10 +399,6 @@ libACE_la_SOURCES = \
   $(libACE_Timer_la_SOURCES) \
   $(libACE_Token_la_SOURCES) \
   $(libACE_Other_la_SOURCES)
-
-# We only want `gethrtime.cpp' if building on Pentium(tm) so we need
-# to let Automake know that `gethrtime.cpp' is conditionally built.
-EXTRA_libACE_Timer_la_SOURCES = gethrtime.cpp
 
 
 ## The following is an excerpt from the "libtool" manual, written by
@@ -458,6 +456,7 @@ TEMPLATE_FILES = \
   Auto_IncDec_T.cpp \
   Auto_Ptr.cpp \
   Based_Pointer_T.cpp \
+  Bound_Ptr.cpp \
   Connector.cpp \
   Containers_T.cpp \
   Cache_Map_Manager_T.cpp \
@@ -540,6 +539,7 @@ HEADER_FILES = \
   Based_Pointer_T.h \
   Basic_Stats.h \
   Basic_Types.h \
+  Bound_Ptr.h \
   CDR_Base.h \
   CDR_Stream.h \
   CORBA_Handler.h \
@@ -564,6 +564,7 @@ HEADER_FILES = \
   DLL.h \
   Date_Time.h \
   Dirent.h \
+  Dirent_Selector.h \
   Dump.h \
   Dump_T.h \
   Dynamic.h \
@@ -624,6 +625,7 @@ HEADER_FILES = \
   Log_Msg_Callback.h \
   Log_Msg_IPC.h \
   Log_Msg_NT_Event_Log.h \
+  Log_Msg_UNIX_Syslog.h \
   Log_Priority.h \
   Log_Record.h \
   Logging_Strategy.h \
@@ -668,8 +670,10 @@ HEADER_FILES = \
   OS_String.h \
   OS_TLI.h \
   OS_Thread_Adapter.h \
+  Obchunk.h \
   Object_Manager.h \
   Obstack.h \
+  Obstack_T.h \
   PI_Malloc.h \
   POSIX_Asynch_IO.h \
   POSIX_Proactor.h \
@@ -723,6 +727,7 @@ HEADER_FILES = \
   Select_Reactor_Base.h \
   Select_Reactor_T.h \
   Service_Config.h \
+  Service_Loader.h \
   Service_Manager.h \
   Service_Object.h \
   Service_Repository.h \
@@ -741,6 +746,7 @@ HEADER_FILES = \
   Stream.h \
   Stream_Modules.h \
   Svc_Conf.h \
+  Svc_Conf_Lexer_Guard.h \
   Svc_Conf_Tokens.h \
   Svc_Handler.h \
   Synch.h \
@@ -800,8 +806,8 @@ HEADER_FILES = \
   XTI_ATM_Mcast.h \
   XtReactor.h \
   ace_wchar.h \
-  config.h \
   config-all.h \
+  config.h \
   iosfwd.h \
   post.h \
   pre.h \
@@ -828,186 +834,7 @@ INLINE_FILES = \
   Auto_Ptr.i \
   Based_Pointer_T.i \
   Basic_Types.i \
-  CDR_Stream.i \
-  CORBA_Handler.i \
-  Cache_Map_Manager_T.i \
-  Caching_Strategies_T.i \
-  Capabilities.i \
-  Containers.i \
-  Containers_T.i \
-  DEV.i \
-  DEV_Addr.i \
-  DEV_Connector.i \
-  DEV_IO.i \
-  Date_Time.i \
-  Dirent.i \
-  Dynamic.i \
-  Dynamic_Service.i \
-  Dynamic_Service_Base.i \
-  Env_Value_T.i \
-  Event_Handler.i \
-  Event_Handler_T.i \
-  FIFO.i \
-  FIFO_Recv.i \
-  FIFO_Recv_Msg.i \
-  FIFO_Send.i \
-  FIFO_Send_Msg.i \
-  FILE.i \
-  FILE_Addr.i \
-  FILE_Connector.i \
-  FILE_IO.i \
-  FlReactor.i \
-  Flag_Manip.i \
-  Free_List.i \
-  Functor.i \
-  Functor_T.i \
-  Get_Opt.i \
-  Handle_Gobbler.i \
-  Handle_Ops.i \
-  Handle_Set.i \
-  Hash_Cache_Map_Manager_T.i \
-  Hash_Map_Manager_T.i \
-  Hash_Map_With_Allocator_T.i \
-  High_Res_Timer.i \
-  INET_Addr.i \
-  IOStream_T.i \
-  IO_SAP.i \
-  IPC_SAP.i \
-  Init_ACE.i \
-  Intrusive_List.inl \
-  Intrusive_List_Node.inl \
-  LSOCK.i \
-  LSOCK_CODgram.i \
-  LSOCK_Connector.i \
-  LSOCK_Dgram.i \
-  LSOCK_Stream.i \
-  Lib_Find.i \
-  Local_Tokens.i \
-  Log_Record.i \
-  MEM_Acceptor.i \
-  MEM_Addr.i \
-  MEM_Connector.i \
-  MEM_IO.i \
-  MEM_SAP.i \
-  MEM_Stream.i \
-  Malloc.i \
-  Malloc_Allocator.i \
-  Malloc_T.i \
-  Managed_Object.i \
-  Map_Manager.i \
-  Map_T.i \
-  Mem_Map.i \
-  Memory_Pool.i \
-  Message_Block.i \
-  Message_Block_T.i \
-  Message_Queue.i \
-  Message_Queue_T.i \
-  Module.i \
-  Msg_WFMO_Reactor.i \
-  Multiplexor.i \
-  NT_Service.i \
-  OS.i \
-  Object_Manager.i \
-  Obstack.i \
-  PI_Malloc.i \
-  POSIX_Asynch_IO.i \
-  POSIX_Proactor.i \
-  Pair_T.i \
-  Parse_Node.i \
-  Pipe.i \
-  Proactor.i \
-  Process.i \
-  Process_Manager.i \
-  Profile_Timer.i \
-  RB_Tree.i \
-  Reactor.i \
-  Read_Buffer.i \
-  Refcounted_Auto_Ptr.i \
-  Remote_Tokens.i \
-  SOCK.i \
-  SOCK_Acceptor.i \
-  SOCK_CODgram.i \
-  SOCK_Connector.i \
-  SOCK_Dgram.i \
-  SOCK_Dgram_Bcast.i \
-  SOCK_Dgram_Mcast.i \
-  SOCK_IO.i \
-  SOCK_Stream.i \
-  SPIPE.i \
-  SPIPE_Addr.i \
-  SPIPE_Connector.i \
-  SPIPE_Stream.i \
-  SString.i \
-  SUN_Proactor.i \
-  SV_Message.i \
-  SV_Message_Queue.i \
-  SV_Semaphore_Complex.i \
-  SV_Semaphore_Simple.i \
-  SV_Shared_Memory.i \
-  Sched_Params.i \
-  Select_Reactor_Base.i \
-  Select_Reactor_T.i \
-  Service_Config.i \
-  Service_Manager.i \
-  Service_Object.i \
-  Service_Repository.i \
-  Service_Types.i \
-  Shared_Memory_MM.i \
-  Shared_Memory_SV.i \
-  Shared_Object.i \
-  Signal.i \
-  Singleton.i \
-  Sock_Connect.i \
-  Stats.i \
-  Strategies.i \
-  Strategies_T.i \
-  Stream.i \
-  Svc_Conf.l \
-  Synch.i \
-  Synch_Options.i \
-  Synch_T.i \
-  TLI.i \
-  TLI_Connector.i \
-  TLI_Stream.i \
-  TP_Reactor.i \
-  Task.i \
-  Task_T.i \
-  Test_and_Set.i \
-  Thread.i \
-  Thread_Manager.i \
-  Timeprobe.i \
-  Timer_Queue_Adapters.i \
-  Timer_Queue_T.i \
-  Token.i \
-  Token_Collection.i \
-  Token_Manager.i \
-  Token_Request_Reply.i \
-  Typed_SV_Message.i \
-  Typed_SV_Message_Queue.i \
-  UNIX_Addr.i \
-  UPIPE_Acceptor.i \
-  UPIPE_Connector.i \
-  UPIPE_Stream.i \
-  WFMO_Reactor.i \
-  XTI_ATM_Mcast.i \
-  ACE.i \
-  ARGV.i \
-  ATM_Acceptor.i \
-  ATM_Addr.i \
-  ATM_Connector.i \
-  ATM_Params.i \
-  ATM_QoS.i \
-  ATM_Stream.i \
-  Activation_Queue.i \
-  Active_Map_Manager.i \
-  Active_Map_Manager_T.i \
-  Addr.i \
-  Asynch_IO_Impl.i \
-  Atomic_Op.i \
-  Auto_IncDec_T.i \
-  Auto_Ptr.i \
-  Based_Pointer_T.i \
-  Basic_Types.i \
+  Bound_Ptr.i \
   CDR_Stream.i \
   CORBA_Handler.i \
   Cache_Map_Manager_T.i \
@@ -1085,8 +912,9 @@ INLINE_FILES = \
   Multiplexor.i \
   NT_Service.i \
   OS.i \
+  Obchunk.i \
   Object_Manager.i \
-  Obstack.i \
+  Obstack_T.i \
   PI_Malloc.i \
   POSIX_Asynch_IO.i \
   POSIX_Proactor.i \
@@ -1126,6 +954,7 @@ INLINE_FILES = \
   Select_Reactor_Base.i \
   Select_Reactor_T.i \
   Service_Config.i \
+  Service_Loader.i \
   Service_Manager.i \
   Service_Object.i \
   Service_Repository.i \
@@ -1171,7 +1000,10 @@ INLINE_FILES = \
   Base_Thread_Adapter.inl \
   Basic_Stats.inl \
   CDR_Base.inl \
+  Dirent_Selector.inl \
   File_Lock.inl \
+  Intrusive_List.inl \
+  Intrusive_List_Node.inl \
   OS_Dirent.inl \
   OS_Errno.inl \
   OS_Log_Msg_Attributes.inl \
