@@ -23,8 +23,8 @@ TAO_LB_MemberLocator::preinvoke (
                    PortableServer::ForwardRequest))
 {
   CORBA::Object_var member =
-    this->load_manager_->member (oid
-                                 ACE_ENV_ARG_PARAMETER);
+    this->load_manager_->next_member (oid
+                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
 //   ACE_DEBUG ((LM_DEBUG,

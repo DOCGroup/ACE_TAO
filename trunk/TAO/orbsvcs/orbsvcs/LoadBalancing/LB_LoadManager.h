@@ -23,7 +23,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
+#include "LB_LoadAlertMap.h"
 #include "LB_MonitorMap.h"
+#include "LB_LoadListMap.h"
 #include "LB_Pull_Handler.h"
 
 #include "orbsvcs/PortableGroupC.h"
@@ -34,19 +36,19 @@
 
 
 /// Forward declarations
-class TAO_LB_Balancing_Strategy;
+class TAO_LB_RoundRobin;
+class TAO_LB_Random;
+class TAO_LB_LeastLoaded;
 
 
 class TAO_LoadBalancing_Export TAO_LB_LoadManager
-  : public virtual POA_CosLoadBalancing::LoadManager
+  : public virtual POA_CosLoadBalancing::LoadManager,
+    public virtual PortableServer::RefCountServantBase
 {
 public:
 
   /// Constructor.
   TAO_LB_LoadManager (void);
-
-  /// Destructor.
-  ~TAO_LB_LoadManager (void);
 
   /**
    * @name CosLoadBalancing::LoadManager Methods
@@ -55,11 +57,64 @@ public:
    */
   //@{
 
-  // For the PUSH load monitoring style.
+  /// For the PUSH load monitoring style.
   virtual void push_loads (const PortableGroup::Location & the_location,
                            const CosLoadBalancing::LoadList & loads
                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+  /// Return the raw loads at the given location.
+  virtual CosLoadBalancing::LoadList * get_loads (
+      const PortableGroup::Location & the_location
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosLoadBalancing::LocationNotFound));
+
+  /// Inform member at given location of load alert condition.
+  virtual void enable_alert (PortableGroup::ObjectGroup_ptr object_group,
+                             const PortableGroup::Location & the_location
+                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((PortableGroup::ObjectGroupNotFound,
+                     CosLoadBalancing::LoadAlertNotFound));
+
+  /// Inform member at given location that load alert condition has
+  /// passed.
+  virtual void disable_alert (PortableGroup::ObjectGroup_ptr object_group,
+                              const PortableGroup::Location & the_location
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((PortableGroup::ObjectGroupNotFound,
+                     CosLoadBalancing::LoadAlertNotFound));
+
+  /// Register a LoadAlert object for the member at the given
+  /// location.
+  virtual void register_load_alert (
+      PortableGroup::ObjectGroup_ptr object_group,
+      const PortableGroup::Location & the_location,
+      CosLoadBalancing::LoadAlert_ptr load_alert
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableGroup::ObjectGroupNotFound,
+                     CosLoadBalancing::LoadAlertAlreadyPresent,
+                     CosLoadBalancing::LoadAlertNotAdded));
+
+  /// Retrieve the LoadAlert object for the member at the given
+  /// location.
+  virtual CosLoadBalancing::LoadAlert_ptr get_load_alert (
+      PortableGroup::ObjectGroup_ptr object_group,
+      const PortableGroup::Location & the_location
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableGroup::ObjectGroupNotFound,
+                     CosLoadBalancing::LoadAlertNotFound));
+
+  /// Remove (de-register) the LoadAlert object for the member at the
+  /// given location.
+  virtual void remove_load_alert (PortableGroup::ObjectGroup_ptr object_group,
+                                  const PortableGroup::Location & the_location
+                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableGroup::ObjectGroupNotFound,
+                     CosLoadBalancing::LoadAlertNotFound));
 
   /// Register a load monitor with the load balancer.
   virtual void register_load_monitor (
@@ -302,29 +357,28 @@ public:
   /**
    * Select the next member of the object group corresponding to the
    * given ObjectId.  The object group's load balancing strategy
-   * will be queried that member.
+   * will be queried for that member.
    */
-  CORBA::Object_ptr member (const PortableServer::ObjectId & oid
-                            ACE_ENV_ARG_DECL);
+  CORBA::Object_ptr next_member (const PortableServer::ObjectId & oid
+                                 ACE_ENV_ARG_DECL);
 
 public:
 
-  /// Return a reference to the replica to which the current client
-  /// request will be forwarded.
-  /**
-   * The load balancer does the right thing and figures which object
-   * group the replica should be chosen from.
-   */
-  CORBA::Object_ptr replica (const PortableServer::ObjectId &oid
-                             ACE_ENV_ARG_DECL);
-
-
   /// Initialize the load balancer.  This will cause a child POA to be
   /// created with the appropriate policies to support ServantLocators
-  /// (i.e. for the ReplicaLocator).
-  void init (CORBA::ORB_ptr orb,
+  /// (i.e. for the MemberLocator).
+  void init (ACE_Reactor * reactor,
              PortableServer::POA_ptr root_poa
              ACE_ENV_ARG_DECL);
+
+protected:
+
+  /// Destructor.
+  /**
+   * Destructor is protected to enforce correct memory management
+   * through reference counting.
+   */ 
+  ~TAO_LB_LoadManager (void);
 
 private:
 
@@ -347,6 +401,34 @@ private:
     const PortableGroup::Criteria & the_criteria,
     PortableGroup::FactoryInfos & factory_infos) const;
 
+  /// Return a reference to the built-in load balancing strategy named
+  /// "strategy."
+  CosLoadBalancing::Strategy_ptr built_in_strategy (const char * strategy);
+
+  /// Check validity of Strategy or CustomStrategy property.
+  /**
+   * If a "LeastLoaded" Strategy is found in the property list, the
+   * LeastLoaded Strategy implementation will be initialized with the
+   * provided LeastLoaded-specific properties.
+   */
+  void check_strategy_prop (const PortableGroup::Properties & props
+                            ACE_ENV_ARG_DECL);
+
+  /// Initialize the built-in LeastLoaded Strategy with the given
+  /// LeastLoaded properties.
+  void init_least_loaded (const PortableGroup::Properties & props
+                        ACE_ENV_ARG_DECL);
+
+  /// Utility method to extract a CORBA::Float value from the given
+  /// property.
+  /**
+   * @note This method is really only used when initializing the
+   *       LeastLoaded built-in Strategy.
+   */
+  void extract_float_property (const PortableGroup::Property & property,
+                               CORBA::Float & value
+                               ACE_ENV_ARG_DECL);
+
 private:
 
   /// Reactor used when pulling loads from registered load monitors.
@@ -355,12 +437,28 @@ private:
   /// The POA that dispatches requests to the ReplicaLocator.
   PortableServer::POA_var poa_;
 
-  /// Mutex that provides synchronization.
+  /// Mutex that provides synchronization for the LoadMonitor map.
+  TAO_SYNCH_MUTEX monitor_lock_;
+
+  /// Mutex that provides synchronization for the LoadMap table.
+  TAO_SYNCH_MUTEX load_lock_;
+
+  /// Mutex that provides synchronization for the LoadAlert table.
+  TAO_SYNCH_MUTEX load_alert_lock_;
+
+  /// Mutex that provides synchronization for the LoadManager's
+  /// state.
   TAO_SYNCH_MUTEX lock_;
 
   /// Table that maps PortableGroup::Location to load monitor at that
   /// location.
   TAO_LB_MonitorMap monitor_map_;
+
+  /// Table that maps location to load list.
+  TAO_LB_LoadListMap load_map_;
+
+  /// Table that maps object group and location to LoadAlert object.
+  TAO_LB_LoadAlertMap load_alert_map_;
 
   /// The ObjectGroupManager that implements the functionality
   /// necessary for application-controlled object group membership.
@@ -383,6 +481,35 @@ private:
 
   /// Cached object reference that points to this servant.
   CosLoadBalancing::LoadManager_var lm_ref_;
+
+  /// Cached object reference that points to the AMI handler for all
+  /// LoadAlert objects.
+  CosLoadBalancing::AMI_LoadAlertHandler_var load_alert_handler_;
+
+  /**
+   * @name Built-in load balancing strategy implementations
+   *
+   * "Built-in" load balancing strategies defined by the load
+   * balancing specification.
+   */
+  //@{
+  /// The "RoundRobin" load balancing strategy.
+  TAO_LB_RoundRobin * round_robin_;
+
+  /// The "Random" load balancing strategy.
+  TAO_LB_Random * random_;
+
+  /// The "LeastLoaded" load balancing strategy.
+  TAO_LB_LeastLoaded * least_loaded_;
+  //@}
+
+  /// Cached instance of the Property name
+  /// "org.omg.CosLoadBalancing.Strategy".
+  PortableGroup::Name built_in_balancing_strategy_name_;
+
+  /// Cached instance of the Property name
+  /// "org.omg.CosLoadBalancing.CustomStrategy".
+  PortableGroup::Name custom_balancing_strategy_name_;
 
 };
 
