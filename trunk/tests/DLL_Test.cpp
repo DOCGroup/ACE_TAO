@@ -18,7 +18,7 @@
 
 #define ACE_BUILD_SVC_DLL
 
-#include "test_config.h" /* Include first to enable ACE_ASSERT. */
+#include "test_config.h" 
 #include "ace/DLL.h"
 #include "ace/Auto_Ptr.h"
 
@@ -33,14 +33,15 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
-// Considering UNIX OS to be default. On Win32 platforms, the symbols are got form the .exe 
-// as one cant have .exe and .dll for the same .cpp. Also, on Win32 platforms one cant use the
-// .obj to obtain symbols dynamically at runtime.
+// Considering UNIX OS to be default. On Win32 platforms, the symbols
+// are got form the .exe as one cant have .exe and .dll for the same
+// .cpp. Also, on Win32 platforms one cant use the .obj to obtain
+// symbols dynamically at runtime.
 
 #if defined (ACE_WIN32)
-#	define ACE_OBJ_SUFFIX ".exe"
+#  define OBJ_SUFFIX ".exe"
 #else
-#	define ACE_OBJ_SUFFIX ".o"
+#  define OBJ_SUFFIX ".o"
 #endif /*ACE_WIN32*/
 
 class Hello
@@ -53,12 +54,6 @@ class Hello
   //    be loaded on demand and its methods called on getting the
   //    symbols from the library.
 public:
-
-  Hello (void)
-    { }
-
-  ~Hello (void)
-    { }
 
   void say_hello (void)
     {
@@ -98,22 +93,22 @@ main (int argc, char *argv[])
 
   ACE_START_TEST ("DLL_Test");
 
-  ACE_DLL ace_dll_obj;
+  ACE_DLL dll;
 
-  int retval = ace_dll_obj.open ("./DLL_Test"ACE_OBJ_SUFFIX);
+  int retval = dll.open ("DLL_Test" OBJ_SUFFIX);
   if (retval != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ace_dll_obj.error()),
+                       dll.error ()),
                       -1);
 
-  TC f = (TC) ace_dll_obj.symbol ("get_hello");
+  TC f = (TC) dll.symbol ("get_hello");
 
   if (f == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ace_dll_obj.error()),
+                       dll.error ()),
                       -1);
 
-  auto_ptr <Hello> my_hello (f ());
+  auto_ptr<Hello> my_hello (f ());
 
   // Make the method calls, as the object pointer is available.
   my_hello->say_hello ();
