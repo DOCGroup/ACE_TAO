@@ -1,3 +1,9 @@
+Tue Sep 30 17:15:14 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+
+	* tests/Hash_Map_Manager_Test.cpp: Added some code to test the
+	  Hash_Map_Manager_Iterator.  This is to show Bob Laferriere that
+	  it works.
+
 Tue Sep 30 13:41:14 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.i
