@@ -210,6 +210,10 @@ SOURCE=.\BiDirPolicyC.h
 
 SOURCE=.\BiDir_Policy_i.inl
 # End Source File
+# Begin Source File
+
+SOURCE=.\BiDirPolicyC.i
+# End Source File
 # End Group
 # Begin Group "Template Files"
 
