@@ -1,3 +1,15 @@
+Sat Nov 13 10:40:13 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Removed line with m4_include([configure.ac.Makefiles]),
+	  autoreconf barfs with it present, even though it was
+	  "commented out" with dnl...
+
+	* apps/gperf/tests/Makefile.am:
+
+	  Tweak to work around MPC brokenness.
+
 Fri Nov 12 20:54:14 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* Makefile.am:
