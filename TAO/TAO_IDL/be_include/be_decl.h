@@ -70,6 +70,9 @@ public:
 
   virtual void destroy (void);
   // Cleanup function.
+  
+  void set_local (idl_bool val);
+  // Temporarily set this node's is_local_ flag.
 
   // Boolean methods to test if code was already generated.
   idl_bool cli_hdr_gen (void);
