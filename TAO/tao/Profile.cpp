@@ -121,6 +121,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list,
 #else /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   ACE_UNUSED_ARG (policy_list);
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 }
