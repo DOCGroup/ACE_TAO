@@ -128,8 +128,28 @@ AC_DEFUN(ACE_SET_COMPILER_FLAGS, dnl
          ;;
      esac
      ;;
-   *irix*)
-
+   *irix5*)
+     case "$CXX" in
+       CC)
+         CXXFLAGS="$CXXFLAGS -ptused -prelink +pp -woff 3203,3209,3161,3262,3665"
+         ACE_CXXFLAGS="$ACE_CXXFLAGS "
+         DCXXFLAGS="-g"
+         OCXXFLAGS=""
+         ;;
+       *)
+         ;;
+     esac
+     ;;
+   *irix6*)
+     case "$CXX" in
+       CC)
+         CPPFLAGS="$CPPFLAGS -D_SGI_MP_SOURCE"
+         CXXFLAGS="$CXXFLAGS -exceptions -ptnone -no_prelink -Wl,-woff,15 -Wl,-woff,84 -Wl,-woff,85 -Wl,-woff,133"
+         ACE_CXXFLAGS="$ACE_CXXFLAGS "
+         DCXXFLAGS="-g"
+         OCXXFLAGS="-O -OPT:Olimit=0"
+       ;;
+     esac
      ;;
    *linux*)
      case "$CXX" in
