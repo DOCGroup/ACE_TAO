@@ -31,7 +31,8 @@ CFG=ACE dynamic library - Win32 Debug
 # Begin Project
 # PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
-# PROP Scc_LocalPath ""
+# PROP Scc_LocalPath "Desktop"
+# PROP WCE_FormatVersion ""
 
 !IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
@@ -172,10 +173,10 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /MTd /c
-# SUBTRACT BASE CPP /YX /Yc /Yu
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /MDd /c
-# SUBTRACT CPP /YX /Yc /Yu
+# ADD BASE CPP nologo Gt0 W3 GX Zi Od Gy I "..\\ /D " WIN32" D "_DEBUG" D "_WINDOWS" D ACE_HAS_DLL=1 FD MTd c
+# SUBTRACT BASE CPP YX Yc Yu
+# ADD CPP nologo Gt0 W3 GX Zi Od Gy I "..\\ /D " WIN32" D "_DEBUG" D "_WINDOWS" D ACE_HAS_DLL=1 FD MDd c
+# SUBTRACT CPP YX Yc Yu
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
@@ -206,10 +207,10 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /Ob2 /I "..\\ /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /c
-# SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /Ob2 /I "..\\ /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /c
-# SUBTRACT CPP /YX
+# ADD BASE CPP nologo MT Gt0 W3 GX O2 Ob2 I "..\\ /D " WIN32" D "NDEBUG" D "_WINDOWS" D ACE_HAS_DLL=1 FD c
+# SUBTRACT BASE CPP YX
+# ADD CPP nologo MD Gt0 W3 GX O2 Ob2 I "..\\ /D " WIN32" D "NDEBUG" D "_WINDOWS" D ACE_HAS_DLL=1 FD c
+# SUBTRACT CPP YX
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
@@ -240,10 +241,10 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /MTd /c
-# SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /MTd /c
-# SUBTRACT CPP /YX
+# ADD BASE CPP nologo Gt0 W3 GX Zi Od Gy I "..\\ /D " WIN32" D "_DEBUG" D "_WINDOWS" D ACE_HAS_DLL=1 D "UNICODE" FD MTd c
+# SUBTRACT BASE CPP YX
+# ADD CPP nologo Gt0 W3 GX Zi Od Gy I "..\\ /D " WIN32" D "_DEBUG" D "_WINDOWS" D ACE_HAS_DLL=1 D "UNICODE" FD MTd c
+# SUBTRACT CPP YX
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
@@ -274,10 +275,10 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /Ob2 /I "..\\ /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /c
-# SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MT /Gt0 /W3 /GX /O2 /Ob2 /I "..\\ /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /c
-# SUBTRACT CPP /YX
+# ADD BASE CPP nologo MT Gt0 W3 GX O2 Ob2 I "..\\ /D " WIN32" D "NDEBUG" D "_WINDOWS" D ACE_HAS_DLL=1 D "UNICODE" FD c
+# SUBTRACT BASE CPP YX
+# ADD CPP nologo MT Gt0 W3 GX O2 Ob2 I "..\\ /D " WIN32" D "NDEBUG" D "_WINDOWS" D ACE_HAS_DLL=1 D "UNICODE" FD c
+# SUBTRACT CPP YX
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
@@ -12147,111 +12148,6 @@ DEP_CPP_PROFI=\
 	".\SString.i"\
 	".\streams.h"\
 	".\Time_Value.h"\
-	".\Trace.h"\
-	".\ws2tcpip.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\RB_Tree.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-DEP_CPP_RB_TR=\
-	".\ACE.h"\
-	".\ACE.i"\
-	".\Auto_Ptr.cpp"\
-	".\Auto_Ptr.h"\
-	".\Auto_Ptr.i"\
-	".\Basic_Types.h"\
-	".\Basic_Types.i"\
-	".\config-win32-borland.h"\
-	".\config-win32-common.h"\
-	".\config-win32.h"\
-	".\config-WinCE.h"\
-	".\config.h"\
-	".\Functor.h"\
-	".\Functor.i"\
-	".\Functor_T.cpp"\
-	".\Functor_T.h"\
-	".\Functor_T.i"\
-	".\inc_user_config.h"\
-	".\iosfwd.h"\
-	".\Log_Msg.h"\
-	".\Log_Priority.h"\
-	".\Log_Record.h"\
-	".\Log_Record.i"\
-	".\Malloc_Base.h"\
-	".\Managed_Object.cpp"\
-	".\Managed_Object.h"\
-	".\Managed_Object.i"\
-	".\Object_Manager.h"\
-	".\Object_Manager.i"\
-	".\OS.h"\
-	".\OS.i"\
-	".\RB_Tree.h"\
-	".\RB_Tree.i"\
-	".\SString.h"\
-	".\SString.i"\
-	".\streams.h"\
-	".\Trace.h"\
-	".\ws2tcpip.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-DEP_CPP_RB_TR=\
-	".\ACE.h"\
-	".\ACE.i"\
-	".\Auto_Ptr.cpp"\
-	".\Auto_Ptr.h"\
-	".\Auto_Ptr.i"\
-	".\Basic_Types.h"\
-	".\Basic_Types.i"\
-	".\config-win32-borland.h"\
-	".\config-win32-common.h"\
-	".\config-win32.h"\
-	".\config-WinCE.h"\
-	".\config.h"\
-	".\Functor.h"\
-	".\Functor.i"\
-	".\Functor_T.cpp"\
-	".\Functor_T.h"\
-	".\Functor_T.i"\
-	".\inc_user_config.h"\
-	".\iosfwd.h"\
-	".\Log_Msg.h"\
-	".\Log_Priority.h"\
-	".\Log_Record.h"\
-	".\Log_Record.i"\
-	".\Malloc_Base.h"\
-	".\Managed_Object.cpp"\
-	".\Managed_Object.h"\
-	".\Managed_Object.i"\
-	".\Object_Manager.h"\
-	".\Object_Manager.i"\
-	".\OS.h"\
-	".\OS.i"\
-	".\RB_Tree.h"\
-	".\RB_Tree.i"\
-	".\SString.h"\
-	".\SString.i"\
-	".\streams.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
@@ -27273,6 +27169,11 @@ SOURCE=.\Module.cpp
 # Begin Source File
 
 SOURCE=.\Pair_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\RB_Tree.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
