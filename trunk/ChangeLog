@@ -1,3 +1,12 @@
+Tue Nov 25 14:13:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * include/makeinclude/all_in_one.GNU:
+          Include rules.bin.GNU after rules.lib.GNU so that dependencies
+          can be correctly set.  Use definition of DIRS to decide whether
+          to include rules.nested.GNU or rules.nonested.GNU.
+          rules.nested.GNU is needed to recurse directories if DIRS is
+          defined.
+
 Tue Nov 25 10:08:12 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
 	* apps/JAWS3/jaws3/io.h: 
