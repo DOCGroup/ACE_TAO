@@ -1,3 +1,10 @@
+Sat Dec 28 11:04:38 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/MEM_Stream_Test.cpp: Made sure this test ignore the EIO
+	  error from the following change when a connection was closed.
+
+	  Fri Dec 27 08:38:29 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
 Fri Dec 27 20:06:39 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Malloc_T.h:
