@@ -453,14 +453,17 @@ Please let us know if you're able to contribute to this effort.<p>
 
 Here is an example size breakdown, by ACE library component.  It is
 for the ACE 5.0 libACE.a, statically built with these <a
-href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html#flags">make flags</a>:
-
+href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html#flags">make
+flags</a>:
 <pre><code>
     debug=0 optimize=1 static_libs_only=1 DEFFLAGS=-DACE_USE_RCSID=0
 </code></pre><p>
 
 To build an ACE static library, if shared libraries are the default, use
-<code>make static_libs_only=1</code>.<p>
+<code>make static_libs_only=1</code>.  If you're using recent versions
+of GNU GCC, you can use the <A
+  HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html#repo">-frepo</A>
+option, which reduces the footprint by another 25 percent. <P>
 
 <center><table cellpadding=4 border=4>
   <tr>
