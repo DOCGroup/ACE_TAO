@@ -99,7 +99,11 @@ PostBuild_Cmds=copy orbsvcs.dll ..\..\tao
 # Name "orbsvcs - Win32 Debug"
 # Begin Source File
 
-SOURCE=.\Channel_Clients.cpp
+SOURCE=.\Event\BCU.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Sched\Config_Scheduler.cpp
 # End Source File
 # Begin Source File
 
@@ -113,7 +117,7 @@ InputName=CosNaming
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-    -Wb,export_include=orbsvcs_export.h $(InputName).idl
+     -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -142,7 +146,7 @@ InputName=CosNaming
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-    -Wb,export_include=orbsvcs_export.h $(InputName).idl
+     -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -165,6 +169,10 @@ BuildCmds= \
 
 !ENDIF 
 
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\CosNaming_i.cpp
 # End Source File
 # Begin Source File
 
@@ -180,6 +188,33 @@ SOURCE=.\CosTimeBase.idl
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
+# Begin Custom Build
+InputPath=.\CosTimeBase.idl
+InputName=CosTimeBase
+
+BuildCmds= \
+	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
+     -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 # Begin Custom Build - Invoking TAO_IDL compiler
@@ -188,7 +223,7 @@ InputName=CosTimeBase
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-    -Wb,export_include=orbsvcs_export.h $(InputName).idl
+     -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -214,7 +249,31 @@ BuildCmds= \
 # End Source File
 # Begin Source File
 
+SOURCE=.\CosTimeBaseC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosTimeBaseS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\Dispatching_Modules.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Entries.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\Event_Channel.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event_Utilities.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\Local_ESTypes.cpp
 # End Source File
 # Begin Source File
 
@@ -228,7 +287,7 @@ InputName=Logger
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-    -Wb,export_include=orbsvcs_export.h $(InputName).idl
+     -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -257,7 +316,7 @@ InputName=Logger
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-    -Wb,export_include=orbsvcs_export.h $(InputName).idl
+     -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -291,6 +350,18 @@ SOURCE=.\LoggerS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\Memory_Pools.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ReactorTask.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\RT_Task.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\RtecEventChannelAdmin.idl
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
@@ -301,7 +372,7 @@ InputName=RtecEventChannelAdmin
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-    -Wb,export_include=orbsvcs_export.h $(InputName).idl
+     -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -330,7 +401,7 @@ InputName=RtecEventChannelAdmin
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-    -Wb,export_include=orbsvcs_export.h $(InputName).idl
+     -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -374,7 +445,7 @@ InputName=RtecEventComm
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-    -Wb,export_include=orbsvcs_export.h $(InputName).idl
+     -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -403,7 +474,7 @@ InputName=RtecEventComm
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-    -Wb,export_include=orbsvcs_export.h $(InputName).idl
+     -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -447,7 +518,7 @@ InputName=RtecScheduler
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-    -Wb,export_include=orbsvcs_export.h $(InputName).idl
+     -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -476,7 +547,7 @@ InputName=RtecScheduler
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-    -Wb,export_include=orbsvcs_export.h $(InputName).idl
+     -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -514,11 +585,23 @@ SOURCE=.\Runtime_Scheduler.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Sched\Scheduler.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Scheduler_Factory.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Sched\Scheduler_Generic.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Scheduler_Utilities.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\Task_Manager.cpp
 # End Source File
 # Begin Source File
 
