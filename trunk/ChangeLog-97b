@@ -1,5 +1,8 @@
 Wed Oct 22 07:23:21 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* ace/OS.i (getpgid): fixed (commented) ACE_TRACE identifer.
+	  Thanks to Eric Newton <ecn@smart.net> for reporting this.
+
 	* ACE-INSTALL.html: updated DEC CXX 6.0 build/test status.
 
 	* examples/Service_Configurator/IPC-tests/server/Handle_Timeout.i
