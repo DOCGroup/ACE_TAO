@@ -1121,7 +1121,7 @@ ACE_INLINE size_t
 ACE_OS::strcspn (const char *s, const char *reject)
 {
 #if !defined (ACE_HAS_WINCE)
-  // ACE_TRACE ("ACE_OS::strstr");
+  // ACE_TRACE ("ACE_OS::strcspn");
   return ::strcspn (s, reject);
 #else
   const char *scan;
@@ -1146,7 +1146,7 @@ ACE_INLINE size_t
 ACE_OS::strspn (const char *s, const char *t)
 {
 #if !defined (ACE_HAS_WINCE)
-  // ACE_TRACE ("ACE_OS::strstr");
+  // ACE_TRACE ("ACE_OS::strspn");
   return ::strspn (s, t);
 #else
   ACE_UNUSED_ARG (s);
@@ -1190,6 +1190,22 @@ ACE_OS::strchr (const char *s, int c)
 }
 
 ACE_INLINE const char *
+ACE_OS::strnchr (const char *s, int c, size_t len)
+{
+  for (size_t i = 0; i < len; i++)
+    if (s[i] == c)
+      return s + i;
+
+  return 0;
+}
+
+ACE_INLINE char *
+ACE_OS::strnchr (char *s, int c, size_t len)
+{
+  return (char *) ACE_OS::strnchr ((const char *) s, c, len);
+}
+
+ACE_INLINE const char *
 ACE_OS::strstr (const char *s, const char *t)
 {
   // ACE_TRACE ("ACE_OS::strstr");
@@ -1201,6 +1217,23 @@ ACE_OS::strstr (char *s, const char *t)
 {
   // ACE_TRACE ("ACE_OS::strstr");
   return ::strstr (s, t);
+}
+
+ACE_INLINE const char *
+ACE_OS::strnstr (const char *s, const char *t, size_t len)
+{
+  size_t t_len = ::strlen (t);
+  for (size_t i = 0; i < len - t_len; i++)
+    if (::memcmp (s + i, t, t_len) == 0)
+      return s + i;
+
+  return 0;
+}
+
+ACE_INLINE char *
+ACE_OS::strnstr (char *s, const char *t, size_t len)
+{
+  return (char *) ACE_OS::strnstr ((const char *) s, t, len);
 }
 
 ACE_INLINE char *
@@ -8533,15 +8566,45 @@ ACE_OS::strcat (wchar_t *s, const wchar_t *t)
   return ::wcscat (s, t);
 }
 
-ACE_INLINE wchar_t *
+ACE_INLINE const wchar_t *
 ACE_OS::strchr (const wchar_t *s, wint_t c)
+{
+  // ACE_TRACE ("ACE_OS::strchr");
+  return (const wchar_t *) ::wcschr (s, c);
+}
+
+ACE_INLINE const wchar_t *
+ACE_OS::strnchr (const wchar_t *s, wint_t c, size_t len)
+{
+  for (size_t i = 0; i < len; i++)
+    if (s[i] == c)
+      return s + i;
+
+  return 0;
+}
+
+ACE_INLINE const wchar_t *
+ACE_OS::strrchr (const wchar_t *s, wint_t c)
+{
+  // ACE_TRACE ("ACE_OS::strrchr");
+  return (const wchar_t *) ::wcsrchr (s, c);
+}
+
+ACE_INLINE wchar_t *
+ACE_OS::strchr (wchar_t *s, wint_t c)
 {
   // ACE_TRACE ("ACE_OS::strchr");
   return ::wcschr (s, c);
 }
 
 ACE_INLINE wchar_t *
-ACE_OS::strrchr (const wchar_t *s, wint_t c)
+ACE_OS::strnchr (wchar_t *s, wint_t c, size_t len)
+{
+  return (wchar_t *) ACE_OS::strnchr ((const wchar_t *) s, c, len);
+}
+
+ACE_INLINE wchar_t *
+ACE_OS::strrchr (wchar_t *s, wint_t c)
 {
   // ACE_TRACE ("ACE_OS::strrchr");
   return ::wcsrchr (s, c);
@@ -8663,11 +8726,35 @@ ACE_OS::ace_isspace (wchar_t c)
 
 #if defined (ACE_WIN32)
 
-ACE_INLINE wchar_t *
+ACE_INLINE const wchar_t *
 ACE_OS::strstr (const wchar_t *s, const wchar_t *t)
 {
   // ACE_TRACE ("ACE_OS::strstr");
+  return (const wchar_t *) ::wcsstr (s, t);
+}
+
+ACE_INLINE wchar_t *
+ACE_OS::strstr (wchar_t *s, const wchar_t *t)
+{
+  // ACE_TRACE ("ACE_OS::strstr");
   return ::wcsstr (s, t);
+}
+
+ACE_INLINE const wchar_t *
+ACE_OS::strnstr (const wchar_t *s, const wchar_t *t, size_t len)
+{
+  size_t t_len = ACE_OS::strlen (t);
+  for (size_t i = 0; i < len - t_len; i++)
+    if (::memcmp (s + i, t, t_len * sizeof (wchar_t)) == 0)
+      return s + i;
+
+  return 0;
+}
+
+ACE_INLINE wchar_t *
+ACE_OS::strnstr (wchar_t *s, const wchar_t *t, size_t len)
+{
+  return (wchar_t *) ACE_OS::strnstr ((const wchar_t *) s, t, len);
 }
 
 ACE_INLINE wchar_t *

@@ -1130,7 +1130,8 @@ TAO_POA::find_POA (const char *adapter_name,
                    CORBA::Boolean activate_it,
                    CORBA::Environment &env)
 {
-  TAO_POA::String name (adapter_name);
+  // Don't copy string
+  TAO_POA::String name (adapter_name, 0, 0);
 
   TAO_POA *result = this->find_POA (name,
                                     activate_it,
@@ -2726,7 +2727,8 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
   starting_at = TAO_POA::object_key_type_length () + TAO_Creation_Time::creation_time_length ();
   int how_many = last_token_position - starting_at;
   poa_name.set ((const char *) &key[starting_at],
-                how_many);
+                how_many,
+                0);
 
   // Take the substring from (last_token_position + separator_length)
   // to length for the objectId
@@ -2918,15 +2920,17 @@ TAO_POA::parse_poa_name (const TAO_POA::String &adapter_name,
       // If found, take the substring from 0 to token_position
       int starting_at = 0;
       int how_many = token_position - starting_at;
-      topmost_poa_name = adapter_name.substr (starting_at,
-                                              how_many);
+      topmost_poa_name.set (&adapter_name[starting_at],
+                            how_many,
+                            0);
 
       // Take the substring from (token_position + separator_length)
       // to length
       starting_at = token_position + TAO_POA::name_separator_length ();
       how_many = adapter_name.length () - starting_at;
-      tail_poa_name = adapter_name.substr (starting_at,
-                                           how_many);
+      tail_poa_name.set (&adapter_name[starting_at],
+                         how_many,
+                         0);
     }
 }
 
