@@ -1,3 +1,9 @@
+Sun Aug 29 19:25:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tools/XML_Helpers/XMLHelpers.mpc:
+
+	  Fix for link errors in Debian_Core builds.
+
 Sun Aug 29 19:02:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* DAnCE/ciao/CCM_Core.mpc: 
