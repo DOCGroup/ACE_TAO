@@ -32,8 +32,10 @@ Requirements:
 		   
 
 !!RELEASE CHANGES: 
-	- A first version of the DOVE MIB is now available.
-        - the DOVEBrowser accepts now the ORBnameserviceior parameter
+	- the file make.bat is in this directory just for test purposes.
+	  It is used to switch from the Visibroker environment to the JDK 1.2
+	  envrionment. So don't worry about it, you won't need it.
+
 
 Parts of the Demo:
 
