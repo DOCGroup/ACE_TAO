@@ -11,7 +11,7 @@ CC		= /bin/cc
 CXX		= /usr/bin/CC -pta -ti,/bin/true -tr,/bin/true
 CFLAGS		= -Aa -z
 CCFLAGS		= $(CFLAGS)
-DCFLAGS		+= -g -DHPUX_VERS=$(HPUX_VERS)
+DCFLAGS		+= -g -D_REENTRANT -DHPUX_VERS=$(HPUX_VERS)
 DLD		= /usr/bin/CC
 LD		= /usr/bin/CC
 PIC		= +Z
