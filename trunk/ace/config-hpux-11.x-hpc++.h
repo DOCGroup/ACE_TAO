@@ -22,9 +22,6 @@
 // Compiler can't handle calls like foo->operator T *()
 #  define ACE_HAS_BROKEN_CONVERSIONS
 
-// Compiler can't handle large enums (e.g., HP/UX C++)
-#  define ACE_HAS_BROKEN_ENUMS
-
 // Necessary with some compilers to pass ACE_TTY_IO as parameter to
 // DEV_Connector.
 #  define ACE_NEEDS_DEV_IO_CONVERSION
