@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -12,7 +12,9 @@
 
 #ifndef ACE_SERVICE_CONFIG_H
 #define ACE_SERVICE_CONFIG_H
+
 #include "ace/pre.h"
+
 #include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -24,7 +26,6 @@
 #include "ace/Unbounded_Queue.h"
 #include "ace/Unbounded_Set.h"
 #include "ace/SString.h"
-#include "ace/DLL.h"
 #include "ace/XML_Svc_Conf.h"
 
 // Forward decl.
@@ -32,6 +33,8 @@ class ACE_Service_Repository;
 class ACE_Allocator;
 class ACE_Reactor;
 class ACE_Thread_Manager;
+class ACE_DLL;
+
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 class ACE_Svc_Conf_Param;
 #endif /* ACE_USES_CLASSIC_SVC_CONF ==1 */
@@ -448,5 +451,7 @@ private:
 // longer)
 #include "ace/Reactor.h"
 #include "ace/Svc_Conf_Tokens.h"
+
 #include "ace/post.h"
+
 #endif /* ACE_SERVICE_CONFIG_H */
