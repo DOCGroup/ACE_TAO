@@ -96,11 +96,11 @@ public:
   /// Called when input events occur (e.g., connection or data).
   virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
 
-  /// Called when output events are possible (e.g., flow control
-  /// abates).
+  /// Called when output events are possible (e.g., when flow control
+  /// abates or non-blocking connection completes).
   virtual int handle_output (ACE_HANDLE fd = ACE_INVALID_HANDLE);
 
-  /// Called when execption events occur (e.g., SIGURG).
+  /// Called when an exceptional events occur (e.g., SIGURG).
   virtual int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE);
 
   /**

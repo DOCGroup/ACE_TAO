@@ -6,7 +6,8 @@
  *
  *  $Id$
  *
- *  @author Irfan Pyarali
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
 
@@ -151,7 +152,7 @@ public:
   /**
    * Run the event loop until the
    * <ACE_Reactor::handle_events/ACE_Reactor::alertable_handle_events>
-   * method returns -1 or the <end_event_loop> method is invoked.
+   * method returns -1 or the <end_reactor_event_loop> method is invoked.
    */
   virtual int run_reactor_event_loop (REACTOR_EVENT_HOOK = 0);
   virtual int run_alertable_reactor_event_loop (REACTOR_EVENT_HOOK = 0);
@@ -159,7 +160,7 @@ public:
   /**
    * Run the event loop until the <ACE_Reactor::handle_events> or
    * <ACE_Reactor::alertable_handle_events> methods returns -1, the
-   * <end_event_loop> method is invoked, or the <ACE_Time_Value>
+   * <end_reactor_event_loop> method is invoked, or the <ACE_Time_Value>
    * expires.
    */
   virtual int run_reactor_event_loop (ACE_Time_Value &tv,
@@ -174,7 +175,8 @@ public:
    */
   virtual int end_reactor_event_loop (void);
 
-  /// Report if the <ACE_Reactor::instance>'s event loop is finished.
+  /// Indicate if the <ACE_Reactor::instance>'s event loop has been
+  /// ended.
   virtual int reactor_event_loop_done (void);
 
   /// Resets the <ACE_Reactor::end_event_loop_> static so that the
