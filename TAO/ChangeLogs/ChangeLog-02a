@@ -1,9 +1,17 @@
+Fri Feb 16 02:28:19 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tests/Exposed_Policies/Policy_Verifier.h:
+	* tests/Exposed_Policies/Policy_Verifier.cpp:
+
+	  Fixed false warning message that used to detect that
+	  the number of bands was not correct.
+
 Thu Feb 15 19:23:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * examples/POA/Default_Servant/File_i.cpp:
 
-          Changed the use of 0644 for open permissions to 
-          ACE_DEFAULT_FILE_PERMS.  On Win32, 0644 causes ACE_OS::open 
+          Changed the use of 0644 for open permissions to
+          ACE_DEFAULT_FILE_PERMS.  On Win32, 0644 causes ACE_OS::open
           to fail.
 
         * examples/Load_Balancing/service.dsp:
@@ -60,7 +68,7 @@ Thu Feb 15 13:43:50 2001  Jeff Parsons <parsons@cs.wustl.edu>
           actual item is in a base class of that interface. Previously,
           only base classes of the scope where the lookup was initiated
           (if it is an interface) were checked. Thanks to
-          Doug Warner <dougwarner@micron.com> for sending in the 
+          Doug Warner <dougwarner@micron.com> for sending in the
           example IDL file that pointed this out.
 
         * tests/IDL_Test/interface.idl:
