@@ -88,12 +88,19 @@ TAO_DIOP_Transport::send (iovec *iov, int iovcnt,
   for (int i = 0; i < iovcnt; i++)
      bytes_to_send += iov[i].iov_len;
 
-  this->connection_handler_->dgram ().send (iov,
-                                            iovcnt,
-                                            addr);
+  ssize_t n = this->connection_handler_->dgram ().send (iov,
+                                                        iovcnt,
+                                                        addr);
   // @@ Michael:
   // Always return a positive number of bytes sent, as we do
   // not handle sending errors in DIOP.
+  if (n == -1 && TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO: (%P|%t|%N|%l) Send of %d bytes failed %p\n"),
+                  bytes_to_send,
+                  ACE_TEXT ("send_i ()\n")));
+    }
 
   bytes_transferred = bytes_to_send;
 
@@ -191,7 +198,7 @@ TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
 
   // Read the message into the  message block that we have created on
   // the stack.
-  ssize_t n = this->recv (message_block.rd_ptr (),
+  ssize_t n = this->recv (message_block.wr_ptr (),
                           message_block.space (),
                           max_wait_time);
 
@@ -207,23 +214,43 @@ TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
   // Set the write pointer in the stack buffer
   message_block.wr_ptr (n);
 
-  // Parse the incoming message for validity. The check needs to be
+  // Check the incoming message for validity. The check needs to be
   // performed by the messaging objects.
-  if (this->parse_incoming_messages (message_block) == -1)
-    return -1;
+  if (this->messaging_object ()->check_for_valid_header (message_block) == 0)
+    {
+      if (TAO_debug_level)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO: (%P|%t|%N|%l) failed to find a valid header on transport %d after fault %p\n"),
+                      this->id (),
+                      ACE_TEXT ("handle_input_i ()\n")));
+        }
+
+      return -1;
+    }
 
   // NOTE: We are not performing any queueing nor any checking for
-  // missing data. We are assuming that ALL the data would be got in a
+  // missing data. We are assuming that ALL the data arrives in a
   // single read.
 
   // Make a node of the message block..
-  TAO_Queued_Data qd (&message_block);
-
-  // Extract the data for the node..
-  this->messaging_object ()->get_message_data (&qd);
-
-  // Process the message
-  return this->process_parsed_messages (&qd, rh);
+  //
+  // We could make this more efficient by having a fixed Queued Data
+  // allocator, i.e., it always gave back the same thing.  Actually,
+  // we *could* create an allocator that took a stack-allocated object
+  // as an argument and returned that when asked an allocation is
+  // done.  Something to contemplate...
+  TAO_Queued_Data* qd =
+    TAO_Queued_Data::make_completed_message (message_block,
+                                             *this->messaging_object ());
+  int retval = -1;
+  if (qd)
+    {
+      // Process the message
+      retval = this->process_parsed_messages (qd, rh);
+      TAO_Queued_Data::release (qd);
+    }
+  return retval;
 }
 
 

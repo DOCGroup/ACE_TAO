@@ -18,7 +18,7 @@
 
 #include <boost/test/unit_test.hpp>
 #include <boost/shared_ptr.hpp>
-#include <boost/weak_ptr.hpp>
+#include <boost/enable_shared_from_this.hpp>
 
 #include <sstream>
 
@@ -26,6 +26,7 @@ using namespace boost::unit_test_framework;
 using namespace TAO;
 
 struct Tester
+  : public boost::enable_shared_from_this<Tester>
 {
   typedef char char_type;
   typedef char * value_type;
@@ -258,54 +259,40 @@ struct Tester
 
     BOOST_CHECK_MESSAGE(f.expect(0), f);
     BOOST_CHECK_MESSAGE(r.expect(32), r);
-
+    
   }
 
   void add_all(test_suite * ts)
   {
-    boost::shared_ptr<Tester> shared_this(self_);
-
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_default_constructor,
-                shared_this));
+                shared_from_this()));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_ulong_constructor,
-                shared_this));
+                shared_from_this()));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_copy_constructor_from_default,
-                shared_this));
+                shared_from_this()));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_copy_constructor_from_ulong,
-                shared_this));
+                shared_from_this()));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_set_length_less_than_maximum,
-                shared_this));
+                shared_from_this()));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_set_length_more_than_maximum,
-                shared_this));
+                shared_from_this()));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_index_accessor,
-                shared_this));
+                shared_from_this()));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_index_checking,
-                shared_this));
+                shared_from_this()));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_copy_constructor_values,
-                shared_this));
+                shared_from_this()));
   }
 
-  static boost::shared_ptr<Tester> allocate()
-  {
-    boost::shared_ptr<Tester> ptr(new Tester);
-    ptr->self_ = ptr;
-
-    return ptr;
-  }
-
-private:
-  Tester() {}
-
-  boost::weak_ptr<Tester> self_;
 };
 
 test_suite *
@@ -314,9 +301,14 @@ init_unit_test_suite(int, char*[])
   std::auto_ptr<test_suite> ts(
       BOOST_TEST_SUITE("unbounded string sequence unit test"));
 
-  boost::shared_ptr<Tester> tester(Tester::allocate());
+  boost::shared_ptr<Tester> tester(new Tester);
   tester->add_all(ts.get());
 
   return ts.release();
 }
 
+#if 0
+// This is just to convince MPC that I do not need a main() to have a
+// program.
+int main() {}
+#endif

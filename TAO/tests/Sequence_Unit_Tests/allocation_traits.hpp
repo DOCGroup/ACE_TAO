@@ -86,7 +86,7 @@ struct unbounded_reference_allocation_traits
   {
     value_type * buffer =
       base_allocation_traits::allocbuf(maximum + 1);
-    reinterpret_cast<value_type**>(buffer)[0] = buffer + maximum + 1;
+    reinterpret_cast<value_type*>(buffer[0]) = buffer + maximum + 1;
 
     reference_traits::zero_range(buffer + 1, buffer + maximum + 1);
 
@@ -117,7 +117,6 @@ struct bounded_reference_allocation_traits
   {
     value_type * buffer = base_allocation_traits::allocbuf(MAX);
     reference_traits::zero_range(buffer, buffer + MAX);
-    return buffer;
   }
 
   inline static void freebuf(value_type * buffer)

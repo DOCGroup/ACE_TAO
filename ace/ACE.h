@@ -536,15 +536,6 @@ namespace ACE
   extern ACE_Export u_long hash_pjw (const wchar_t *str, size_t len);
 #endif /* ACE_HAS_WCHAR */
 
-  /// Computes CRC-CCITT for the string.
-  extern ACE_Export ACE_UINT16 crc_ccitt(const char *str);
-
-  /// Computes CRC-CCITT for the buffer.
-  extern ACE_Export ACE_UINT16 crc_ccitt(const void *buf, size_t len);
-
-  /// Computes CRC-CCITT for the @ len iovec buffers.
-  extern ACE_Export ACE_UINT16 crc_ccitt(const iovec *iov, int len);
-
   /// Computes the ISO 8802-3 standard 32 bits CRC for the string.
   extern ACE_Export ACE_UINT32 crc32 (const char *str);
 
@@ -553,7 +544,7 @@ namespace ACE
 
   /// Computes the ISO 8802-3 standard 32 bits CRC for the
   /// @ len iovec buffers.
-  extern ACE_Export ACE_UINT32 crc32 (const iovec *iov, int len);
+  extern ACE_Export ACE_UINT32 crc32 (iovec *iov, int len);
 
   /// Euclid's greatest common divisor algorithm.
   extern ACE_Export u_long gcd (u_long x, u_long y);

@@ -19,7 +19,7 @@
 
 #include <boost/test/unit_test.hpp>
 #include <boost/shared_ptr.hpp>
-#include <boost/weak_ptr.hpp>
+#include <boost/enable_shared_from_this.hpp>
 
 using namespace TAO::details;
 
@@ -63,10 +63,10 @@ struct helper<CORBA::WChar>
 };
 
 template<class charT>
-struct Tester
+struct Tester : public boost::enable_shared_from_this<Tester<charT> >
 {
   typedef string_traits<charT,true> tested_element_traits;
-  typedef string_sequence_element<tested_element_traits> tested_element;
+  typedef string_sequence_element<charT> tested_element;
   typedef charT * string_type;
   typedef typename tested_element_traits::string_var string_var;
   typedef typename tested_element_traits::string_mgr string_mgr;
@@ -82,7 +82,7 @@ struct Tester
       BOOST_CHECK_MESSAGE(d.expect(0), d);
       BOOST_CHECK_MESSAGE(r.expect(0), r);
       x = helper<charT>::sample0();
-
+      
       BOOST_CHECK_MESSAGE(d.expect(1), d);
       BOOST_CHECK_MESSAGE(r.expect(1), r);
 
@@ -179,7 +179,7 @@ struct Tester
       BOOST_CHECK_MESSAGE(r.expect(0), r);
 
       x = y;
-
+      
       BOOST_CHECK_MESSAGE(d.expect(0), d);
       BOOST_CHECK_MESSAGE(r.expect(1), r);
 
@@ -281,7 +281,7 @@ struct Tester
       BOOST_CHECK_MESSAGE(r.expect(0), r);
 
       x = y;
-
+      
       BOOST_CHECK_MESSAGE(d.expect(1), d);
       BOOST_CHECK_MESSAGE(r.expect(1), r);
 
@@ -314,7 +314,7 @@ struct Tester
       BOOST_CHECK_MESSAGE(r.expect(0), r);
 
       x = y;
-
+      
       BOOST_CHECK_MESSAGE(d.expect(1), d);
       BOOST_CHECK_MESSAGE(r.expect(1), r);
 
@@ -333,47 +333,32 @@ struct Tester
 
   void add_all(test_suite * ts)
   {
-    boost::shared_ptr<Tester> shared_this(self_);
-
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_assignment_from_const_string,
-                shared_this));
+                shared_from_this()));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_assignment_from_element,
-                shared_this));
+                shared_from_this()));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_self_assignment,
-                shared_this));
+                shared_from_this()));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_assignment_from_non_const_string,
-                shared_this));
+                shared_from_this()));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_copy_constructor,
-                shared_this));
+                shared_from_this()));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_assignment_from_copy,
-                shared_this));
+                shared_from_this()));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_assignment_from_var,
-                shared_this));
+                shared_from_this()));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_assignment_from_mgr,
-                shared_this));
+                shared_from_this()));
   }
-
-  static boost::shared_ptr<Tester> allocate()
-  {
-    boost::shared_ptr<Tester> ptr(new Tester);
-    ptr->self_ = ptr;
-
-    return ptr;
-  }
-
-private:
-  Tester() {}
-
-  boost::weak_ptr<Tester> self_;
-};
+}; 
 
 test_suite *
 init_unit_test_suite(int, char*[])
@@ -382,13 +367,18 @@ init_unit_test_suite(int, char*[])
       BOOST_TEST_SUITE("string sequence element unit test"));
 
   boost::shared_ptr<Tester<char> > char_tester(
-      Tester<char>::allocate());
+      new Tester<char>);
   char_tester->add_all(ts.get());
 
   boost::shared_ptr<Tester<CORBA::WChar> > wchar_tester(
-      Tester<CORBA::WChar>::allocate());
+      new Tester<CORBA::WChar>);
   wchar_tester->add_all(ts.get());
 
   return ts.release();
 }
 
+#if 0
+// This is just to convince MPC that I do not need a main() to have a
+// program.
+int main() {}
+#endif
