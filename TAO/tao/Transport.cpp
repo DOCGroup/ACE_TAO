@@ -1157,10 +1157,12 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
       if (retval == -1)
         {
           if (TAO_debug_level > 2)
-            ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) - Transport[%d]::handle_input, "
-                        "error while parsing the head of the queue\n",
-                        this->id()));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) - Transport[%d]::handle_input, "
+                          "error while parsing the head of the queue\n",
+                          this->id()));
+            }
         }
 
       return retval;
@@ -1333,10 +1335,12 @@ TAO_Transport::parse_incoming_messages (ACE_Message_Block &block)
       if (retval == -1)
         {
           if (TAO_debug_level > 2)
-            ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) - Transport[%d]::parse_incoming_messages, "
-                        "error in incoming message\n",
-                        this->id ()));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) - Transport[%d]::parse_incoming_messages, "
+                          "error in incoming message\n",
+                          this->id ()));
+            }
 
           return -1;
         }
@@ -1836,12 +1840,12 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
     {
       if (TAO_debug_level)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "TAO (%P|%t) - Transport[%d]::process_parsed_messages, "
-                             "received MessageError, closing connection\n",
-                             this->id ()),
-                            -1);
+          ACE_ERROR ((LM_ERROR,
+                     "TAO (%P|%t) - Transport[%d]::process_parsed_messages, "
+                     "received MessageError, closing connection\n",
+                     this->id ()));
         }
+      return -1;
     }
 
   // If not, just return back..
