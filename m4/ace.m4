@@ -25,7 +25,7 @@ dnl ACE_CONFIGURATION_OPTIONS
 AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
 [
  AC_ARG_ENABLE([alloca],
-  AC_HELP_STRING([--enable-alloca],[compile with alloca() support [[no]]]),
+  AS_HELP_STRING(--enable-alloca,compile with alloca() support [[[no]]]),
   [
    case "${enableval}" in
     yes)
@@ -46,7 +46,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
   ])
 
  AC_ARG_ENABLE([log-msg-prop],
-  AC_HELP_STRING([--enable-log-msg-prop],[enable threads inheriting ACE_Log_Msg properties from parent thread [[yes]]]),
+  AS_HELP_STRING(--enable-log-msg-prop,enable threads inheriting ACE_Log_Msg properties from parent thread [[[yes]]]),
   [
    case "${enableval}" in
     yes)
@@ -62,7 +62,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
   ],)
 
  AC_ARG_ENABLE([logging],
-  AC_HELP_STRING([--enable-logging],[enable ACE logging macros [[yes]]]),
+  AS_HELP_STRING(--enable-logging,enable ACE logging macros [[[yes]]]),
   [
    case "${enableval}" in
     yes)
@@ -78,7 +78,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
   ],)
 
  AC_ARG_ENABLE([malloc-stats],
-  AC_HELP_STRING([--enable-malloc-stats],[enable malloc statistics collection [[no]]]),
+  AS_HELP_STRING(--enable-malloc-stats,enable malloc statistics collection [[[no]]]),
   [
    case "${enableval}" in
     yes)
@@ -94,7 +94,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
   ],)
 
  AC_ARG_ENABLE([pi-pointers],
-  AC_HELP_STRING([--enable-pi-pointers],[enable pos. indep. pointers [[yes]]]),
+  AS_HELP_STRING(--enable-pi-pointers,enable pos. indep. pointers [[[yes]]]),
   [
    case "${enableval}" in
     yes)
@@ -112,7 +112,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
   ])
 
  AC_ARG_ENABLE([probe],
-  AC_HELP_STRING([--enable-probe],[enable ACE_Timeprobes [[no]]]),
+  AS_HELP_STRING(--enable-probe,enable ACE_Timeprobes [[[no]]]),
   [
    case "${enableval}" in
     yes)
@@ -127,7 +127,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
   ],)
 
  AC_ARG_ENABLE([static-obj-mgr],
-  AC_HELP_STRING([--enable-static-obj-mgr],[enable static Object_Manager [[yes]]]),
+  AS_HELP_STRING(--enable-static-obj-mgr,enable static Object_Manager [[[yes]]]),
   [
    case "${enableval}" in
     yes)
@@ -144,7 +144,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
 
 
  AC_ARG_ENABLE([threads],
-  AC_HELP_STRING([--enable-threads],[enable thread support [[yes]]]),
+  AS_HELP_STRING(--enable-threads,enable thread support [[[yes]]]),
   [
    case "${enableval}" in
     yes)
@@ -163,7 +163,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
   ])
 
  AC_ARG_ENABLE([verb-not-sup],
-  AC_HELP_STRING([--enable-verb-not-sup],[enable verbose ENOTSUP reports [[no]]]),
+  AS_HELP_STRING(--enable-verb-not-sup,enable verbose ENOTSUP reports [[[no]]]),
   [
    case "${enableval}" in
     yes)
@@ -179,7 +179,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
   ],)
 
  AC_ARG_ENABLE([trace],
-  AC_HELP_STRING([--enable-trace],[enable ACE tracing [[no]]]),
+  AS_HELP_STRING(--enable-trace,enable ACE tracing [[[no]]]),
   [
    case "${enableval}" in
     yes)
@@ -197,7 +197,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
   ])
 
  AC_ARG_ENABLE([xt-reactor],
-  AC_HELP_STRING([--enable-xt-reactor],[build support for the XtReactor [[no]]]),
+  AS_HELP_STRING(--enable-xt-reactor,build support for the XtReactor [[[no]]]),
   [
    case "${enableval}" in
     yes)
@@ -227,7 +227,7 @@ dnl line, then "no_x" is set to "yes."
   ],)
 
  AC_ARG_ENABLE([fl-reactor],
-  AC_HELP_STRING([--enable-fl-reactor],[build support for the FlReactor [[no]]]),
+  AS_HELP_STRING(--enable-fl-reactor,build support for the FlReactor [[[no]]]),
   [
    case "${enableval}" in
     yes)
@@ -245,7 +245,7 @@ dnl line, then "no_x" is set to "yes."
   ],)
 
  AC_ARG_WITH([gperf],
-  AC_HELP_STRING([--with-gperf],[compile the gperf program [[yes]]]),
+  AS_HELP_STRING(--with-gperf,compile the gperf program [[[yes]]]),
   [
    case "${withval}" in
     yes)
@@ -277,7 +277,7 @@ dnl line, then "no_x" is set to "yes."
  AM_CONDITIONAL([COMPILE_GPERF], [test X$ace_user_with_gperf = Xyes])
 
  AC_ARG_WITH([rmcast],
-  AC_HELP_STRING([--with-rmcast],[compile the ACE_RMCast library [[yes]]]),
+  AS_HELP_STRING(--with-rmcast,compile the ACE_RMCast library [[[yes]]]),
   [
    case "${withval}" in
     yes)
@@ -297,7 +297,7 @@ dnl line, then "no_x" is set to "yes."
  AM_CONDITIONAL([BUILD_RMCAST], [test X$ace_user_with_rmcast = Xyes])
 
  AC_ARG_WITH([qos],
-  AC_HELP_STRING([--with-qos],[compile the ACE_QoS library [[no]]]),
+  AS_HELP_STRING(--with-qos,compile the ACE_QoS library [[[no]]]),
   [
    case "${withval}" in
     yes)
@@ -317,7 +317,7 @@ dnl line, then "no_x" is set to "yes."
  AM_CONDITIONAL([BUILD_QOS], [test X$ace_user_with_qos = Xyes])
 
  AC_ARG_WITH([ssl],
-  AC_HELP_STRING([--with-ssl],[compile the ACE_SSL library [[yes]]]),
+  AS_HELP_STRING(--with-ssl,compile the ACE_SSL library [[[yes]]]),
   [
    case "${withval}" in
     yes)
@@ -337,7 +337,7 @@ dnl line, then "no_x" is set to "yes."
 # AM_CONDITIONAL([BUILD_SSL], [test X$ace_user_with_ssl = Xyes])
 
 #AC_ARG_WITH([tao],
-# AC_HELP_STRING([--with-tao],[build TAO (the ACE ORB) [[yes]]]),
+# AS_HELP_STRING(--with-tao,build TAO (the ACE ORB) [[[yes]]]),
 #              [
 #               case "${withval}" in
 #                yes)
@@ -355,7 +355,7 @@ dnl line, then "no_x" is set to "yes."
 #              ])
 
  AC_ARG_WITH([tli-device],
-  AC_HELP_STRING([--with-tli-device(=DEV)],[device for TCP on TLI [[/dev/tcp]]]),
+  AS_HELP_STRING(--with-tli-device(=DEV),device for TCP on TLI [[/dev/tcp]]),
   [
    case "${withval}" in
     yes)
@@ -374,7 +374,7 @@ dnl line, then "no_x" is set to "yes."
   ],)
 
  AC_ARG_ENABLE([reentrant],
-  AC_HELP_STRING([--enable-reentrant],[enable reentrant functions [[yes]]]),
+  AS_HELP_STRING(--enable-reentrant,enable reentrant functions [[[yes]]]),
   [
    case "${enableval}" in
     yes)
@@ -401,7 +401,7 @@ dnl ACE_COMPILATION_OPTIONS
 AC_DEFUN([ACE_COMPILATION_OPTIONS],
 [
  AC_ARG_ENABLE([debug],
-  AC_HELP_STRING([--enable-debug],[enable debugging [[yes]]]),
+  AS_HELP_STRING(--enable-debug,enable debugging [[[yes]]]),
   [
    case "${enableval}" in
     yes)
@@ -417,7 +417,7 @@ AC_DEFUN([ACE_COMPILATION_OPTIONS],
   ],)
 
  AC_ARG_ENABLE([exceptions],
-  AC_HELP_STRING([--enable-exceptions],[enable C++ exception handling [[yes]]]),
+  AS_HELP_STRING(--enable-exceptions,enable C++ exception handling [[[yes]]]),
   [
    case "${enableval}" in
     yes)
@@ -457,7 +457,7 @@ dnl    fi
 
 
  AC_ARG_ENABLE([fast],
-  AC_HELP_STRING([--enable-fast],[enable -fast flag, e.g. Sun C++ [[no]]]),
+  AS_HELP_STRING(--enable-fast,enable -fast flag, e.g. Sun C++ [[[no]]]),
   [
    case "${enableval}" in
     yes)
@@ -473,7 +473,7 @@ dnl    fi
   ],)
 
  AC_ARG_ENABLE([inline],
-  AC_HELP_STRING([--enable-inline],[enable code inlining [[yes]]]),
+  AS_HELP_STRING(--enable-inline,enable code inlining [[[yes]]]),
   [
    case "${enableval}" in
     yes)
@@ -492,7 +492,7 @@ dnl    fi
   ])
 
  AC_ARG_ENABLE([optimize],
-  AC_HELP_STRING([--enable-optimize],[enable additional optimizations [[yes]]]),
+  AS_HELP_STRING(--enable-optimize,enable additional optimizations [[[yes]]]),
   [
    case "${enableval}" in
     yes)
@@ -512,7 +512,7 @@ dnl    fi
 
 
  AC_ARG_ENABLE([profile],
-  AC_HELP_STRING([--enable-profile],[enable profiling [[no]]]),
+  AS_HELP_STRING(--enable-profile,enable profiling [[[no]]]),
   [
    case "${enableval}" in
     yes)
@@ -551,7 +551,7 @@ dnl    fi
   ],)
 
  AC_ARG_ENABLE([purify],
-  AC_HELP_STRING([--enable-purify],[Purify all executables [[no]]]),
+  AS_HELP_STRING(--enable-purify,Purify all executables [[[no]]]),
   [
    case "${enableval}" in
     yes)
@@ -579,7 +579,7 @@ dnl    fi
   ], PURELINK="")
 
  AC_ARG_ENABLE([quantify],
-  AC_HELP_STRING([--enable-quantify],[Quantify all executables [[no]]]),
+  AS_HELP_STRING(--enable-quantify,Quantify all executables [[[no]]]),
   [
    case "${enableval}" in
     yes)
@@ -608,7 +608,7 @@ dnl    fi
   ], PRELINK="")
 
  AC_ARG_ENABLE([repo],
-  AC_HELP_STRING([--enable-repo],[use GNU template repository GNU C++ with repo patches and EGCS only [[no]]]),
+  AS_HELP_STRING(--enable-repo,use GNU template repository GNU C++ with repo patches and EGCS only [[[no]]]),
   [
    case "${enableval}" in
     yes)
@@ -634,7 +634,7 @@ dnl    fi
   ])
 
  AC_ARG_ENABLE([rtti],
-  AC_HELP_STRING([--enable-rtti],[enable run-time type identification *Currently only for Sun C++* [[no]]]),
+  AS_HELP_STRING(--enable-rtti,enable run-time type identification *Currently only for Sun C++* [[[no]]]),
   [
    case "${enableval}" in
     yes)
@@ -659,7 +659,7 @@ dnl    fi
   ],)
 
  AC_ARG_ENABLE([stdcpplib],
-  AC_HELP_STRING([--enable-stdcpplib],[enable standard C++ library [[yes]]]),
+  AS_HELP_STRING(--enable-stdcpplib,enable standard C++ library [[[yes]]]),
   [
    case "${enableval}" in
     yes)
