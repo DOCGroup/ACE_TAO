@@ -1,3 +1,11 @@
+Sat May 03 15:55:07 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Object.cpp (operator<<): If the object reference is not
+	  completely evaluated just marshall the stream of octets into the
+	  incoming CDR. Thanks to Andras Lang
+	  <lang@isis-server.isis.vanderbilt.edu> for reporting the
+	  problem. 
+
 Sat May  3 09:35:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/orbconf.h:
