@@ -1,3 +1,8 @@
+Fri Sep 11 17:29:11 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.{h,cpp} : Replaced the
+	  ACE_timer_t based global_jitter_array with ACE_Unbounded_Set.
+
 1998-09-11  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* tests/Simple/chat: Added new test program.  This simple chat
