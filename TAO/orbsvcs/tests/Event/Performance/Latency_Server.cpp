@@ -3,7 +3,7 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 
-#include "tao/Messaging.h"
+#include "tao/Messaging/Messaging.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/High_Res_Timer.h"

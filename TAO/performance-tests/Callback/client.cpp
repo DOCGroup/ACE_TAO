@@ -2,7 +2,7 @@
 
 #include "Callback_i.h"
 
-#include "tao/Messaging.h"
+#include "tao/Messaging/Messaging.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "ace/High_Res_Timer.h"

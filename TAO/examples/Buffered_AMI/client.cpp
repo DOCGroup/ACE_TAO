@@ -14,7 +14,7 @@
 // ================================================================
 
 #include "testS.h"
-#include "tao/Messaging.h"
+#include "tao/Messaging/Messaging.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 
