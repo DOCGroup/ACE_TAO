@@ -1,3 +1,19 @@
+Mon May  5 06:02:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Makefile.bor:
+          Corrected build order TAO libraries
+
+        * tao/ObjRefTemplate/TAO_ObjRefTemplate.rc:
+        * tao/Valuetype/TAO_Valuetype.rc:
+          Added missing rc files to fix Borland build errors
+
+        * tao/IORInterceptor/TAO_IORInterceptor.rc:
+          Removed MSVC specific part, else Borland has problems handling this
+          file.
+
+        * tao/ObjRefTemplate/Makefile.bor:
+          Removed not needed line
+
 Sun May  4 19:01:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.ll:
@@ -580,7 +596,7 @@ Sun May  4 18:06:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 		    Updated makefiles and project files for the TAO tests
 		    and examples that use valuetypes, abstract interfaces,
-		    IOR interceptors or object reference templates. Also 
+		    IOR interceptors or object reference templates. Also
 		    removed many unnecessary links, includes
 		    and IDL compiler command line options.
 
@@ -620,7 +636,7 @@ Sun May  4 18:06:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 		  * tests/OBV/TC_Alignment/server.bor:
 		  * tests/OBV/TC_Alignment/server.dsp:
 
-		    Updated rules.tao.GNU and the tests in the 
+		    Updated rules.tao.GNU and the tests in the
 		    TAO/tests/OBV directory to work with the
 		    new Valuetype library. Also substituted ptrdiff_t
 		    for ptr_arith_t in TAO_IDL.
@@ -940,7 +956,7 @@ Sat May 03 15:55:07 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  completely evaluated just marshall the stream of octets into the
 	  incoming CDR. Thanks to Andras Lang
 	  <lang@isis-server.isis.vanderbilt.edu> for reporting the
-	  problem. 
+	  problem.
 
 Sat May  3 09:35:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
