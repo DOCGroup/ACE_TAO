@@ -180,9 +180,14 @@
 # include "ace/config-borland-common.h"
 #elif defined (__PGI)
 // Portable group compiler
+# define ACE_HAS_CPLUSPLUS_HEADERS
+# define ACE_HAS_STDCPP_STL_INCLUDES
+# define ACE_HAS_TEMPLATE_TYPEDEFS
+# define ACE_HAS_TYPENAME_KEYWORD
+# define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
+# define ACE_HAS_STANDARD_CPP_LIBRARY 1
 # define ACE_LACKS_SWAB
-# define ACE_LACKS_TOWUPPER
-# define ACE_LACKS_TOWLOWER
+# undef ACE_HAS_CLOCK_GETTIME
 #else  /* ! __GNUG__ && ! __KCC && !__DECCXX && !__INTEL_COMPILER && !__BORLANDC__ && !__PGI */
 # error unsupported compiler in ace/config-linux-common.h
 #endif /* ! __GNUG__ && ! __KCC */
