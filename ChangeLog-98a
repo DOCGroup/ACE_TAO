@@ -3,6 +3,11 @@ Mon Feb 16 14:57:26 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/Priority_Task_Test.cpp (open): fallback to minimum
           ACE_SCHED_OTHER priority instead of 0.
 
+        * ace/High_Res_Timer.cpp: initialize global_scale_factor_ to 1 if
+          ACE_HAS_{,AIX_}HI_RES_TIMER and ACE_WIN32 are not defined.
+          Thanks to Robert Olson <olson@mcs.anl.gov> for reporting a
+          problem with bad hires time values on Irix.
+
 Mon Feb 16 10:51:28 1998  Oliver Kellogg <Oliver.Kellogg@vs.dasa.de>
 
         * include/makeinclude/platform_osf1_4.0_rcc.GNU: added this
