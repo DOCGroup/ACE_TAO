@@ -96,7 +96,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #if defined(ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   int n_threads = argc > 3 ? ACE_OS::atoi (argv[3]) : 4;
 
-  if (task.activate (n_threads, THR_BOUND | THR_DETACHED) == -1)
+  if (task.activate (THR_BOUND | THR_DETACHED, n_threads) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "activate"),
