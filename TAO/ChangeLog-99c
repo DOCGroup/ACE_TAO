@@ -1,3 +1,9 @@
+Tue Jun  8 20:19:15 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
+
+	* tao/Principal.i 
+	* tao/Request.cpp,i:
+	  Fixed inline use before declaration problem. 
+
 Tue Jun  8 19:48:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_module.cpp:
