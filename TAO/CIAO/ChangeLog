@@ -1,10 +1,17 @@
+Wed Feb 11 12:05:59 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/Documentation/Build.html:
+
+	  Updated URLs to the Boost website. Fixed incorrect build 
+	  instruction for Windows.
+
 Wed Feb 11 11:36:08 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-	  
+
 	* examples/Hello/descriptors/run_test_debug.pl:
 
 	  A new script that uses -ORBdebuglevel while running the
-	  component server.  
-	  
+	  component server.
+
  	* examples/Hello/step-by-step.html:
 
 	  Added a pointer to the above script.
