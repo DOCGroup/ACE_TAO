@@ -1,3 +1,9 @@
+Sat Apr  4 00:55:30 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* netsvcs/clients/Naming/{Client,Dump_Restore}/Makefile:
+	  Moved all program source names to PSRC, not SRC, for
+	  'make depend'.
+
 Fri Apr  3 21:18:51 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.cpp (cleanup): Moved ACE_Cleanup::cleanup() back into the
