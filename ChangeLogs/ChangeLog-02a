@@ -1,3 +1,13 @@
+Tue NOv 14 14:19:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Log_Record.cpp:
+
+          In ACE_Log_Record::print, changed the call to ACE_OS::fprintf
+          to use ACE_TEXT("%s") as the second argument instead of just 
+          "%s".  This should make logging under ACE_USES_UNICODE readable.
+          Thanks to James Buck <jim@nowsol.com> for reporting the problem
+          and submitting this patch.
+
 Tue Nov 14 09:19:16 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Threads/thread_specific.cpp:
