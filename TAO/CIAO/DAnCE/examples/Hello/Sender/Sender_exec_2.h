@@ -14,62 +14,29 @@
 #include "SenderEC.h"
 #include "Sender_exec_export.h"
 #include "tao/LocalObject.h"
-#include "ace/DLL.h"
 
 namespace Sender_Impl
 {
-
-  typedef ::Components::EnterpriseComponent_ptr (*ExecFactory) (void);
-
-  /**
-   * @class Sender_exec_i
-   *
-   * Sender executor implementation class.
-   */
-
-  class SENDER_EXEC_Export SenderSwap_exec_i :
-      public virtual CIAO::Swap_Exec,
-      public virtual TAO_Local_RefCounted_Object
-  {
-  public:
-    SenderSwap_exec_i ();
-
-    ~SenderSwap_exec_i ();
-
-    virtual ::Components::EnterpriseComponent_ptr 
-    incarnate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-    virtual ::Components::EnterpriseComponent_ptr 
-    etherealize (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-  protected:
-    int count_;
-  };
-
-  class SENDER_EXEC_Export Sender_exec_i :
+  class SENDER_EXEC_Export Sender_exec_2_i :
       public virtual Sender_Exec,
       public virtual TAO_Local_RefCounted_Object
   {
 
   public:
     /// Default constructor.
-    Sender_exec_i ()
-        : message_(CORBA::string_dup ("Default Message")),
-          count_ (0)
+    Sender_exec_2_i ()
+        : message_(CORBA::string_dup ("Default Message"))
     {
     }
 
     /// Secondary construction.
-    Sender_exec_i (const char* local_message)
-      : message_ (CORBA::string_dup (local_message)),
-        count_ (0)
+    Sender_exec_2_i (const char* local_message)
+      : message_ (CORBA::string_dup (local_message))
     {
     }
 
     /// Default destructor.
-    virtual ~Sender_exec_i ();
+    virtual ~Sender_exec_2_i ();
 
     /// Operation to set the value of the attribute
     virtual void local_message (const char * local_message
@@ -127,19 +94,15 @@ namespace Sender_Impl
 
   private:
     CORBA::String_var message_;
-    friend class Message_Impl;
-    int count_;
+
+    friend class Message_Impl_2;
   };
 
-
-  //
-  //
-  //
-  class Message_Impl : public virtual Hello::CCM_ReadMessage,
+  class Message_Impl_2 : public virtual Hello::CCM_ReadMessage,
                        public virtual TAO_Local_RefCounted_Object
   {
   public:
-    Message_Impl (Sender_exec_i& component)
+    Message_Impl_2 (Sender_exec_2_i& component)
         : component_ (component)
     {
     }
@@ -149,36 +112,12 @@ namespace Sender_Impl
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
-    Sender_exec_i& component_;
-  };
-
-  /**
-   * @class SenderHome_exec_i
-   *
-   * Sender home executor implementation class.
-   */
-  class SENDER_EXEC_Export SenderHome_exec_i :
-    public virtual SenderHome_Exec,
-    public virtual TAO_Local_RefCounted_Object
-  {
-  public:
-    /// Default ctor.
-    SenderHome_exec_i ();
-
-    /// Default dtor.
-    virtual ~SenderHome_exec_i ();
-
-    // Implicit home operations.
-
-    virtual ::Components::EnterpriseComponent_ptr
-    create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::CCMException));
+    Sender_exec_2_i& component_;
   };
 
 }
 
-extern "C" SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
-createSenderHome_Impl (void);
+extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
+createSenderExec_Impl (void);
 
 #endif /* SENDER_EXEC_H */

@@ -57,6 +57,38 @@ project(Hello_Base_Sender_DnC_exec) : ciao_component_dnc {
   }
 }
 
+project(Hello_Base_Sender_DnC_exec_1) : ciao_component_dnc {
+  after   += Hello_Base_Sender_DnC_svnt
+  sharedname = Sender_DnC_exec_1
+  libs      += Sender_DnC_stub Sender_DnC_svnt Hello_Base_DnC_stub Hello_Base_DnC_svnt
+
+  idlflags  +=  -Wb,export_macro=SENDER_EXEC_Export -Wb,export_include=Sender_exec_export.h
+  dynamicflags   = SENDER_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Sender_exec_1.cpp
+  }
+}
+
+project(Hello_Base_Sender_DnC_exec_2) : ciao_component_dnc {
+  after   += Hello_Base_Sender_DnC_svnt
+  sharedname = Sender_DnC_exec_2
+  libs      += Sender_DnC_stub Sender_DnC_svnt Hello_Base_DnC_stub Hello_Base_DnC_svnt
+
+  idlflags  +=  -Wb,export_macro=SENDER_EXEC_Export -Wb,export_include=Sender_exec_export.h
+  dynamicflags   = SENDER_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Sender_exec_2.cpp
+  }
+}
+
 project (Hello_DnC_Starter) : ciao_client_dnc, valuetype{
   exename = starter
   after += Hello_Base_Sender_DnC_stub
