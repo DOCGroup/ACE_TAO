@@ -1,3 +1,44 @@
+Tue Apr 20 13:35:24 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS:
+        *
+          orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/LoadBalancing.mpc:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Makefile:
+        *
+          orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/ORBInitializer.cpp:
+        *
+          orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/ORBInitializer.h:
+        *
+          orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/RPS_Monitor.h:
+        *
+          orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/RPS_Monitor.cpp:
+        *
+          orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Roundtrip.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Roundtrip.h:
+        *
+          orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/ServerRequestInterceptor.h:
+        *
+          orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/ServerRequestInterceptor.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Test.idl:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/client.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/default.conf:
+        *
+          orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/default.conf.xml:
+        *
+          orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/default_configuration.xml:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/run_test.pl:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/server.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/svc.conf:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/svc.conf.xml:
+
+          Added a new directory LBPerf, which will host the benchmarking
+          code to test different facets of the TAO Load Balancing
+          service.
+
+          Made an initial check-in of the Request-per-second monitor
+          test written by Ossama Othman <ossama@dre.vanderbilt.edu>.
+
 Tue Apr 20 13:22:28 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * orbsvcs/LoadBalancer/LoadManager.cpp:
