@@ -257,10 +257,10 @@ ACE_OS::condattr_init (ACE_condattr_t &attributes,
       ::pthread_condattr_create (&attributes) == 0
 #     elif defined (ACE_HAS_PTHREADS_STD) || defined (ACE_HAS_PTHREADS_DRAFT7)
       ACE_ADAPT_RETVAL(::pthread_condattr_init (&attributes), result) == 0
-#       if defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)
+#       if defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)
       && ACE_ADAPT_RETVAL(::pthread_condattr_setpshared(&attributes, type),
                           result) == 0
-#       endif /* _POSIX_THREAD_PROCESS_SHARED && ! ACE_LACKS_MUTEXATTR_PSHARED */
+#       endif /* _POSIX_THREAD_PROCESS_SHARED && ! ACE_LACKS_CONDATTR_PSHARED */
 #     else  /* this is draft 6 */
       ::pthread_condattr_init (&attributes) == 0
 #       if !defined (ACE_LACKS_CONDATTR_PSHARED)
