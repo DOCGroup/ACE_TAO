@@ -20,6 +20,14 @@ class TAO_ORBSVCS_Export ACE_Scheduler_Factory
   //   actually do the scheduling, without incurring in RPC overheads.
 {
 public:
+  enum Factory_Status {UNINITIALIZED, CONFIG, RUNTIME};
+    // = TITLE
+    //   Factory Status
+    //
+    // = DESCRIPTION
+    //   This type enumerates the possible states of the factory: 
+    //   uninitialized, or in a config or runtime mode of operation.
+
   struct POD_RT_Info
     // = TITLE
     //   Plain Old Data for RT_Infos.
@@ -69,12 +77,17 @@ public:
   // resolve_initial_references.
 
   static int dump_schedule (const RtecScheduler::RT_Info_Set& infos,
-                            const char* file_name = 0);
+                            const char* file_name = 0,
+                            const char* format_string = 0);
   // This helper function will dump the schedule returned by a
   // RtecScheduler::Scheduler into a file, the file can be compiled to
   // create an efficient local implementation of the Scheduler.
 
   // TODO: How to do cleanup()? Use the ACE_Object_Manager stuff?
+
+  static Factory_Status status (void);
+  // This helper function allows the application to determine whether the 
+  // factory is uninitialized, or in a config or runtime mode of operation.
 
 protected:
   static int no_config_run (void);
@@ -88,6 +101,7 @@ protected:
 
 private:
   static RtecScheduler::Scheduler_ptr server_;
+  static Factory_Status status_;
 };
 
 #if defined (__ACE_INLINE__)
@@ -95,3 +109,12 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_SCHEDULER_FACTORY_H */
+
+
+
+
+
+
+
+
+
