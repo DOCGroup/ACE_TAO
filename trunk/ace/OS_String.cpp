@@ -96,6 +96,8 @@ ACE_OS_String::strdup (const wchar_t *s)
     return 0;
 
   return ACE_OS_String::strcpy (buffer, s);
+#   elif defined (ACE_WCSDUP_EQUIVALENT)
+  return ACE_WCSDUP_EQUIVALENT (s);
 #   else /* ACE_LACKS_WCSDUP */
   return ::wcsdup (s);
 #   endif /* ACE_LACKS_WCSDUP */
