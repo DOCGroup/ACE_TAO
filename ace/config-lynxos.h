@@ -155,9 +155,12 @@
 // Platform lack reader/writer locks
 #define ACE_LACKS_RWLOCK_T
 
-
 // Compiler/platform has thread-specific storage
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
+
+// Without TSS emulation, you'll only have 3 native TSS keys, on
+// LynxOS 3.0.0/ppc.
+#define ACE_HAS_TSS_EMULATION
 
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_DIRENT
@@ -184,7 +187,6 @@ extern "C"
   int getopt (int, char *const *, const char *);
   int putenv (const char *);
 }
-
 
 #define ACE_HAS_AIO_CALLS
 
