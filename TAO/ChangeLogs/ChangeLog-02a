@@ -1,9 +1,3 @@
-Thu Sep 07 18:17:49 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp
-	  (visit_operation): Added a missing space which caused
-	  compilation errors in generated code.
-
 Thu Sep  7 16:09:30 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB.cpp (string_copy):
