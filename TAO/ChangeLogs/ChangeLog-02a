@@ -1,3 +1,17 @@
+Mon Jan 21 01:05:37 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.cpp
+	  (TAO_SSLIOP_password_callback):
+
+	  Fixed static_cast from "void *" to "const char *".  Such a cast
+	  is invalid.  Instead, static_cast to a "char *" and then assign
+	  to a "const char *".
+
+	  (make_X509, make_RSA):
+
+	  Corrected misuse of ACE_OS::close() where ACE_OS::fclose() was
+	  expected.
+
 Sun Jan 20 23:14:47 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP.idl:
