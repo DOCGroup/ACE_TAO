@@ -32,13 +32,19 @@ class TAO_RT_Notify_Export TAO_NS_RTCORBA_POA_Helper : public TAO_NS_POA_Helper
 {
 public:
   /// Destructor
-  ~TAO_NS_RTCORBA_POA_Helper ();  
+  ~TAO_NS_RTCORBA_POA_Helper ();
 
   /// Create a new PortableServer::POA.
   void init (PortableServer::POA_ptr parent_poa, const char* poa_name, NotifyExt::ThreadPoolParams* tp_params ACE_ENV_ARG_DECL);
 
   /// Create a new PortableServer::POA. The name is chosen at random.
   void init (PortableServer::POA_ptr parent_poa, NotifyExt::ThreadPoolParams* tp_params ACE_ENV_ARG_DECL);
+
+  /// Create a new PortableServer::POA.
+  void init (PortableServer::POA_ptr parent_poa, const char* poa_name, NotifyExt::ThreadPoolLanesParams* tpl_params ACE_ENV_ARG_DECL);
+
+  /// Create a new PortableServer::POA. The name is chosen at random.
+  void init (PortableServer::POA_ptr parent_poa, NotifyExt::ThreadPoolLanesParams* tpl_params ACE_ENV_ARG_DECL);
 };
 
 #if defined (__ACE_INLINE__)

@@ -34,7 +34,7 @@ public:
   TAO_NS_RTCORBA_EventChannel (void);
 
   /// Destructor
-  ~TAO_NS_RTCORBA_EventChannel ();  
+  ~TAO_NS_RTCORBA_EventChannel ();
 
 protected:
 };

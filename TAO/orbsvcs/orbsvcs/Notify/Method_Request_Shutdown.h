@@ -36,7 +36,7 @@ public:
   TAO_NS_Method_Request_Shutdown (TAO_NS_ThreadPool_Task* task);
 
   /// Destructor
-  ~TAO_NS_Method_Request_Shutdown ();  
+  ~TAO_NS_Method_Request_Shutdown ();
 
   /// Execute method.
   virtual int call (void);

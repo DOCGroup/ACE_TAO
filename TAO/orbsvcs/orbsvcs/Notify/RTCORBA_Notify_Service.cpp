@@ -42,7 +42,7 @@ TAO_NS_RTCORBA_Notify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   // Resolve RTORB
   CORBA::Object_var object =
     orb->resolve_initial_references ("RTORB"
-				      ACE_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   RTCORBA::RTORB_var rt_orb =
@@ -53,7 +53,7 @@ TAO_NS_RTCORBA_Notify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   // Resolve RTCurrent
   object =
     orb->resolve_initial_references ("RTCurrent"
-				     ACE_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   RTCORBA::Current_var current =
@@ -70,8 +70,8 @@ void
 TAO_NS_RTCORBA_Notify_Service::init_factory (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_NEW_THROW_EX (this->factory_,
-		    TAO_NS_RTCORBA_Factory (),
-		    CORBA::NO_MEMORY ());
+                    TAO_NS_RTCORBA_Factory (),
+                    CORBA::NO_MEMORY ());
   ACE_CHECK;
 
   TAO_NS_PROPERTIES::instance()->factory (this->factory_);
@@ -81,8 +81,8 @@ void
 TAO_NS_RTCORBA_Notify_Service::init_builder (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_NEW_THROW_EX (this->builder_,
-		    TAO_NS_RTCORBA_Builder (),
-		    CORBA::NO_MEMORY ());
+                    TAO_NS_RTCORBA_Builder (),
+                    CORBA::NO_MEMORY ());
   ACE_CHECK;
 
   TAO_NS_PROPERTIES::instance()->builder (this->builder_);

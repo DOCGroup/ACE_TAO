@@ -39,7 +39,7 @@ public:
   TAO_NS_ProxyConsumer (void);
 
   /// Destructor
-  ~TAO_NS_ProxyConsumer (); 
+  ~TAO_NS_ProxyConsumer ();
 
   /// Connect
   void connect (TAO_NS_Supplier* supplier ACE_ENV_ARG_DECL)
@@ -55,6 +55,12 @@ public:
   virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
 
   virtual void push (TAO_NS_Event_var &event);
+
+  /// Access our Peer.
+  virtual TAO_NS_Peer* peer (void);
+
+  /// Access the Supplier
+  TAO_NS_Supplier* supplier (void);
 
 protected:
   /// Return 1 if connected

@@ -21,12 +21,11 @@
 
 #include "Types.h"
 
-class TAO_NS_EventTypeSeq;
 
 /**
  * @class TAO_NS_Event_Manager
  *
- * @brief A class that manages the Consumer and Supplier maps. 
+ * @brief A class that manages the Consumer and Supplier maps.
  *
  */
 class TAO_Notify_Export TAO_NS_Event_Manager
@@ -36,10 +35,13 @@ public:
   TAO_NS_Event_Manager (void);
 
   /// Destructor
-  ~TAO_NS_Event_Manager ();  
+  ~TAO_NS_Event_Manager ();
 
   /// Init
   void init (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Init
+  void shutdown (void);
 
   /// Subscribe <proxy_supplier> to the event type sequence list <seq>.
   void subscribe (TAO_NS_ProxySupplier* proxy_supplier, const TAO_NS_EventTypeSeq& seq ACE_ENV_ARG_DECL);
@@ -57,6 +59,12 @@ public:
   TAO_NS_Consumer_Map* consumer_map (void);
   TAO_NS_Supplier_Map* supplier_map (void);
 
+  /// Event Dispatch Observer
+  TAO_NS_Event_Dispatch_Observer* event_dispatch_observer (void);
+
+  /// Update dispatch observer.
+  TAO_NS_Updates_Dispatch_Observer* updates_dispatch_observer (void);
+
 protected:
   /// Consumer Map
   TAO_NS_Consumer_Map* consumer_map_;
@@ -64,8 +72,23 @@ protected:
   /// Supplier Map
   TAO_NS_Supplier_Map* supplier_map_;
 
-  /// Cache the list that always gets events.
-  TAO_NS_Consumer_Collection* broadcast_list_;
+  /// Consumer Map Observer
+  TAO_NS_Consumer_Map_Observer* consumer_map_observer_;
+
+  /// Supplier Map Observer
+  TAO_NS_Supplier_Map_Observer* supplier_map_observer_;
+
+  /// Event Dispatch Observer.
+  TAO_NS_Event_Dispatch_Observer* event_dispatch_observer_;
+
+  /// Update dispatch observer.
+  TAO_NS_Updates_Dispatch_Observer* updates_dispatch_observer_;
+
+  /// Worker task that dispatches pending events.
+  TAO_NS_Event_Pending_Worker* event_pending_worker_;
+
+  /// Worker task that dispatches pending update messges.
+  TAO_NS_Updates_Pending_Worker* updates_pending_worker_;
 };
 
 #if defined (__ACE_INLINE__)

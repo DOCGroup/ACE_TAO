@@ -37,10 +37,7 @@ public:
   TAO_NS_SupplierAdmin (void);
 
   /// Destructor
-  ~TAO_NS_SupplierAdmin ();  
-
-  /// Init this object.
-  void set (CosNotifyChannelAdmin::InterFilterGroupOperator op ACE_ENV_ARG_DECL);
+  ~TAO_NS_SupplierAdmin ();
 
   /// Return servant
   virtual PortableServer::Servant servant (void);
@@ -53,37 +50,37 @@ public:
   virtual void release (void);
 
 protected:
-  /// = CosNotifyChannelAdmin::SupplierAdmin methods  
+  /// = CosNotifyChannelAdmin::SupplierAdmin methods
   virtual CosNotifyChannelAdmin::AdminID MyID (
-    
+
   )
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   virtual ::CosNotifyChannelAdmin::EventChannel_ptr MyChannel (
-    
+
   )
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   virtual ::CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator (
-    
+
   )
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   virtual ::CosNotifyChannelAdmin::ProxyIDSeq * pull_consumers (
-    
+
   )
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   virtual ::CosNotifyChannelAdmin::ProxyIDSeq * push_consumers (
-    
+
   )
     ACE_THROW_SPEC ((
                      CORBA::SystemException
@@ -116,14 +113,14 @@ protected:
                      ));
 
   virtual void destroy (
-    
+
   )
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   virtual ::CosNotification::QoSProperties * get_qos (
-    
+
   )
     ACE_THROW_SPEC ((
                      CORBA::SystemException
@@ -179,28 +176,28 @@ protected:
                      ));
 
   virtual ::CosNotifyFilter::FilterIDSeq * get_all_filters (
-    
+
   )
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   virtual void remove_all_filters (
-    
+
   )
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   virtual ::CosEventChannelAdmin::ProxyPushConsumer_ptr obtain_push_consumer (
-    
+
   )
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   virtual ::CosEventChannelAdmin::ProxyPullConsumer_ptr obtain_pull_consumer (
-    
+
   )
     ACE_THROW_SPEC ((
                      CORBA::SystemException

@@ -16,4 +16,3 @@ TAO_NS_Method_Request::TAO_NS_Method_Request (TAO_NS_Event_var& event)
 TAO_NS_Method_Request::~TAO_NS_Method_Request ()
 {
 }
-

@@ -24,7 +24,7 @@
 /**
  * @class TAO_NS_Worker_Task
  *
- * @brief Base Worker Task. 
+ * @brief Base Worker Task.
  *
  */
 class TAO_Notify_Export TAO_NS_Worker_Task

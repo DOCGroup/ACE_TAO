@@ -1,3 +1,474 @@
+Mon Oct  7 00:57:48 CDT 2002 Pradeep Gore <pradeep@oomworks.com>
+
+	Summary of Changes:
+	+ Added ThreadPool Lane support.
+	+ Corrected implementation of subscription/offer updates.
+	+ Notification can now retry and remove unresponsive/dead Peers.
+	+ ETCL Filtering is moved to a seperate library. Service
+	Configurator can be used to load user defined filter factory.
+	+ A scripting based test framework for rapidly creating Notification test cases.
+	  Documentation of the framework is in: $TAO_ROOT/docs/Notify_Test_Framework.html 
+ 	
+	The following files were modified:
+	
+	* orbsvcs/orbsvcs/Notify/notify_stubs_export.h:
+ 	* orbsvcs/orbsvcs/Notify/Admin.h:
+	* orbsvcs/orbsvcs/Notify/Admin.cpp:
+	* orbsvcs/orbsvcs/Notify/Admin.inl:
+
+	  Added Subscription types, Filter Admin and Interfilter-operator
+	  data members.
+	
+	* orbsvcs/orbsvcs/Notify/Builder.h:
+	* orbsvcs/orbsvcs/Notify/Builder.cpp:
+
+	  Added method to obtain the Filter Factory.
+	
+	* orbsvcs/orbsvcs/Notify/Consumer.h:
+	* orbsvcs/orbsvcs/Notify/Consumer.cpp:
+	* orbsvcs/orbsvcs/Notify/Consumer.inl:
+
+	  Added proxy accessor methods, dispatch observer and list of
+	  pending events.
+	  
+	* orbsvcs/orbsvcs/Notify/ConsumerAdmin.h:
+	* orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:
+
+	  Added code for propagating Subscription changes to children
+	  proxysuppliers.
+	
+	* orbsvcs/orbsvcs/Notify/Event.h:
+	* orbsvcs/orbsvcs/Notify/Event.cpp:
+	  
+	  Addeded do_match and push_no_filtering methods.
+	
+ 	* orbsvcs/orbsvcs/Notify/EventChannel.h:
+	* orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+	  
+	  Delegate QoS processing to QoSAdmin.
+	  Added Accessor for Filter Factory.
+	
+	* orbsvcs/orbsvcs/Notify/EventChannelFactory.h:
+	* orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+
+	  Create default filter factory.
+	
+	* orbsvcs/orbsvcs/Notify/EventTypeSeq.h:
+	* orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
+
+	  Added init method to correctly manage new added and removed
+	  sequences.
+	
+ 	* orbsvcs/orbsvcs/Notify/Event_Manager.h:
+	* orbsvcs/orbsvcs/Notify/Event_Manager.cpp:
+	* orbsvcs/orbsvcs/Notify/Event_Manager.inl:
+
+	 Introduced Event Map Observers, Dispatch Observers and Pending
+	 Worker Tasks.
+	
+	* orbsvcs/orbsvcs/Notify/Event_Map_T.h:
+	* orbsvcs/orbsvcs/Notify/Event_Map_T.cpp:
+	* orbsvcs/orbsvcs/Notify/Event_Map_T.inl:
+
+	  Added Event_Map_Observer to receive notifications of majot
+	  changes to the map.
+	  Moved TAO_NS_Event_Map_Entry_T class to its own seperate file.
+	
+	* orbsvcs/orbsvcs/Notify/Factory.h:
+	* orbsvcs/orbsvcs/Notify/Factory.cpp:
+	  
+	  Added factory methods for Proxy and Peer collections.
+	
+	* orbsvcs/orbsvcs/Notify/Notify_Service.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Service.cpp:
+
+	  Added method to init the main thread by setting it to lowest
+	  available priority.
+	
+	* orbsvcs/orbsvcs/Notify/Object.h:
+	* orbsvcs/orbsvcs/Notify/Object.cpp:
+	* orbsvcs/orbsvcs/Notify/Object.inl:
+
+	  Added accessor for the POA in which this object lives.
+	
+	* orbsvcs/orbsvcs/Notify/Properties.h:
+	* orbsvcs/orbsvcs/Notify/Properties.cpp:
+	* orbsvcs/orbsvcs/Notify/Properties.inl:
+
+	  Added property to flag if subscription/offer updates are
+	  enabled.
+	  Added a update-period member.
+	
+	* orbsvcs/orbsvcs/Notify/Proxy.h:
+	* orbsvcs/orbsvcs/Notify/Proxy.cpp:
+	* orbsvcs/orbsvcs/Notify/Proxy.inl: 
+
+	  Added accessor for event types.
+	  Added method to check filters.
+	  Added destroy method.
+	  Added Peer accessor.
+	  Added method admin_subscription which is called which updates
+	  are set on the Admin class.
+	
+ 	* orbsvcs/orbsvcs/Notify/ProxyConsumer.h:
+	* orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+	* orbsvcs/orbsvcs/Notify/ProxyConsumer.inl:
+
+	  Added accessor for Peer and Supplier.
+	
+	* orbsvcs/orbsvcs/Notify/ProxySupplier.h:
+	* orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+	* orbsvcs/orbsvcs/Notify/ProxySupplier.inl:
+
+	  Added accessor for Peer and Consumer.
+	
+	* orbsvcs/orbsvcs/Notify/QoSAdmin.h:
+	* orbsvcs/orbsvcs/Notify/QoSAdmin.cpp:
+
+	  Added methods to apply ThreadPool/Lane properties.
+	
+ 	* orbsvcs/orbsvcs/Notify/RTCORBA_POA_Helper.h:
+	* orbsvcs/orbsvcs/Notify/RTCORBA_POA_Helper.cpp:
+
+	  Added ThreadPoolLane support to POA.
+	
+	* orbsvcs/orbsvcs/Notify/RTCORBA_ProxySupplier.h: 
+	* orbsvcs/orbsvcs/Notify/RTCORBA_ProxySupplier.cpp:
+
+	  Added implementation of push/forward_nofiltering methods.
+	
+	* orbsvcs/orbsvcs/Notify/RTCORBA_QoSAdmin.cpp:
+
+	  Added RTCORBA ThreadLane QoS support.
+	
+	* orbsvcs/orbsvcs/Notify/Supplier.h:
+	* orbsvcs/orbsvcs/Notify/Supplier.cpp:
+	* orbsvcs/orbsvcs/Notify/Supplier.inl: 
+	 
+	  Added accessor for Proxy and ProxySupplier classes.
+	
+	* orbsvcs/orbsvcs/Notify/SupplierAdmin.h:
+	* orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp:
+
+	  Added FilterAdmin and offer_change support.
+	
+	* orbsvcs/orbsvcs/Notify/Types.h:
+	  
+	  Added forward declaration for Dispatch Observer template, Map
+	  Observer template and Pending worker template.
+	
+ 	* orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
+	* orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp:
+ 	
+	  Added call to check_filters.
+	
+	* orbsvcs/orbsvcs/Notify/POA_Helper.cpp:
+
+	  Changed conditional debug message.
+	
+ 	* orbsvcs/orbsvcs/Notify/StructuredEvent.h:
+	* orbsvcs/orbsvcs/Notify/StructuredEvent.cpp:
+
+	 Added do_match and push_no_filtering methods.
+	
+	* orbsvcs/orbsvcs/Notify/StructuredProxyPushConsumer.h:
+	* orbsvcs/orbsvcs/Notify/StructuredProxyPushConsumer.cpp: 
+
+	  Added filter and offer_change support.
+	
+ 	* orbsvcs/orbsvcs/Notify/StructuredProxyPushSupplier.h:
+	* orbsvcs/orbsvcs/Notify/StructuredProxyPushSupplier.cpp:
+
+	  Added filter and subscription_change support.
+	
+	* orbsvcs/orbsvcs/Notify/StructuredPushConsumer.h:
+	* orbsvcs/orbsvcs/Notify/StructuredPushConsumer.cpp: 
+
+	 Added internal methods to push events and dispatch updates.
+	
+ 	* orbsvcs/orbsvcs/Notify/StructuredPushSupplier.h:
+ 	* orbsvcs/orbsvcs/Notify/StructuredPushSupplier.cpp:
+
+	 Added internal methods to dispatch updates.
+	
+	The following files were added to seperate filtering to another library:
+
+	* orbsvcs/orbsvcs/Notify/etcl_notify_filtering_export.h:
+ 	* orbsvcs/orbsvcs/Notify/Constraint_Interpreter.h:
+	* orbsvcs/orbsvcs/Notify/Constraint_Interpreter.cpp:
+	* orbsvcs/orbsvcs/Notify/Constraint_Visitors.h:
+	* orbsvcs/orbsvcs/Notify/Constraint_Visitors.cpp: 
+
+	* orbsvcs/orbsvcs/Notify/ETCL_Filter.h:
+	* orbsvcs/orbsvcs/Notify/ETCL_Filter.cpp:
+	* orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.h:
+	* orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.cpp:
+	* orbsvcs/orbsvcs/Notify/ETCL_Filter.inl:
+	* orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.inl: 
+
+	  Previous Notify_ prefix has been removed to reflect new naming
+	  convention.
+	
+	* orbsvcs/orbsvcs/Notify/FilterAdmin.h:
+	* orbsvcs/orbsvcs/Notify/FilterAdmin.cpp:
+
+	  Implementation of the FilterAdmin interface.
+	
+	* orbsvcs/orbsvcs/Notify/FilterFactory.h:
+
+	  Service Object to obtain a CosNotifyFilter::FilterFactory
+	  reference.
+	  
+ 	* orbsvcs/orbsvcs/Notify/Dispatch_Observer_T.h:
+	* orbsvcs/orbsvcs/Notify/Dispatch_Observer_T.cpp:
+	* orbsvcs/orbsvcs/Notify/Dispatch_Observer_T.inl:
+
+	  An observer class that is notified of the success or failure of event/update diapatches.
+          If a dispatch fails, the PEER is added to a pending list. This list is obtained by the Pending Worker to retry delivery of
+          Events/Updates. When the max_retries are reached, the observer destroys the proxy.
+	
+ 	* orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.h:
+	* orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.cpp:
+	* orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.inl:
+
+	  Moved Event_Map_Entry_T definition from Event_Map_T.* files.
+
+	* orbsvcs/orbsvcs/Notify/Event_Map_Observer.h:
+
+	  Interface to observe event map changes.
+	
+	* orbsvcs/orbsvcs/Notify/Event_Map_Observer_T.h:
+	* orbsvcs/orbsvcs/Notify/Event_Map_Observer_T.inl: 
+	* orbsvcs/orbsvcs/Notify/Event_Map_Observer_T.cpp: 
+	
+	  Observer that is notified when a new event type appears/last
+	  seen in an event map.
+	
+ 	* orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_No_Filtering.h:
+	* orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_No_Filtering.cpp: 
+	* orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_No_Filtering.inl:
+
+	  Method_Request object that dispatches an event to its proxy but
+	  does not do any filtering. This is used when reinitiating an
+	  event propagation during a retry from a previous failure.
+	
+	* orbsvcs/orbsvcs/Notify/Peer.h:
+	* orbsvcs/orbsvcs/Notify/Peer.cpp:
+	* orbsvcs/orbsvcs/Notify/Peer.inl:
+
+	  Base class for Supplier and Consumer classes.
+	  Implements dispatch of updates and notifies the
+	  Update_Dispatch_Observer of success/failure.
+	
+ 	* orbsvcs/orbsvcs/Notify/Pending_Worker_T.h:
+	* orbsvcs/orbsvcs/Notify/Pending_Worker_T.cpp:
+	* orbsvcs/orbsvcs/Notify/Pending_Worker_T.inl:
+
+	  Periodic Task that obtains the list of pending PEER's from the dispatch_observer and dispatches pending events/updates.
+
+	* orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.h:
+	* orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.cpp:
+	* orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.inl: 
+
+	  A Helper class to propagate subscription/offer change methods
+	  from Admin to Peers.
+	
+	The following files were added for the test framework:
+
+	* docs/Notify_Test_Framework.html:
+
+	  Added description of options available.
+	
+ 	* orbsvcs/tests/Notify/lib/Activation_Manager.h:
+	* orbsvcs/tests/Notify/lib/Activation_Manager.cpp:
+	* orbsvcs/tests/Notify/lib/Activation_Manager.inl:
+	  
+	  Class to keep track of active suppliers and consumers. i,e. track which peer has finished sending/receiving
+	  its events.
+	
+	* orbsvcs/tests/Notify/lib/Application_Command.h:
+	* orbsvcs/tests/Notify/lib/Application_Command.cpp:
+	* orbsvcs/tests/Notify/lib/Application_Command.inl:
+	 
+	  Command to control the Application.
+	
+ 	* orbsvcs/tests/Notify/lib/Application_Command_Factory.h:
+	* orbsvcs/tests/Notify/lib/Application_Command_Factory.cpp:
+	* orbsvcs/tests/Notify/lib/Application_Command_Factory.inl:
+
+	  Factory that creates TAO_NS_Application_Command objects.
+	
+	* orbsvcs/tests/Notify/lib/Application_Starter.h:
+
+	 Interface to start a test application.
+	
+	* orbsvcs/tests/Notify/lib/Command.h:
+	* orbsvcs/tests/Notify/lib/Command.cpp: 
+	* orbsvcs/tests/Notify/lib/Command.inl:
+
+	  Base class for all Command objects.
+	
+ 	* orbsvcs/tests/Notify/lib/Command_Builder.h:
+	* orbsvcs/tests/Notify/lib/Command_Builder.cpp:
+	* orbsvcs/tests/Notify/lib/Command_Builder.inl:
+
+	 Class for collating and serially executing command objects.
+	
+	* orbsvcs/tests/Notify/lib/Command_Factory.h:
+	* orbsvcs/tests/Notify/lib/Command_Factory.cpp:
+	* orbsvcs/tests/Notify/lib/Command_Factory.inl:
+
+	  Base class for Factory to create command objects.
+	
+	* orbsvcs/tests/Notify/lib/Command_Factory_T.h:
+	* orbsvcs/tests/Notify/lib/Command_Factory_T.cpp:
+	* orbsvcs/tests/Notify/lib/Command_Factory_T.inl:
+	 
+	  Template for Command Factories.
+	
+ 	* orbsvcs/tests/Notify/lib/ConsumerAdmin_Command.h:
+	* orbsvcs/tests/Notify/lib/ConsumerAdmin_Command.cpp:
+	* orbsvcs/tests/Notify/lib/ConsumerAdmin_Command.inl:
+
+	  Command for operations of ConsumerAdmins.
+	
+	* orbsvcs/tests/Notify/lib/Default_Application_Starter.h:
+	* orbsvcs/tests/Notify/lib/Default_Application_Starter.cpp:
+	* orbsvcs/tests/Notify/lib/Default_Application_Starter.inl:
+
+	  Default implementation of the Application Starter interface.
+	
+	* orbsvcs/tests/Notify/lib/EventChannel_Command.h:
+	* orbsvcs/tests/Notify/lib/EventChannel_Command.cpp: 
+	* orbsvcs/tests/Notify/lib/EventChannel_Command.inl:
+
+	  Command for operations on Event Channels.
+	
+ 	* orbsvcs/tests/Notify/lib/Factories_Define.h:
+
+	  Defines a macro for defining Factory objects.
+	
+	* orbsvcs/tests/Notify/lib/Factories_Define.cpp:
+
+	  Defines all the factorues we support: channel, application,
+	  supplieradmin, consumeradmin, periodicconsumer, periodic
+	  supplier and filter.
+	
+	* orbsvcs/tests/Notify/lib/Filter_Command.h:
+	* orbsvcs/tests/Notify/lib/Filter_Command.cpp:
+
+	  Command for operations on Filters.
+	
+	* orbsvcs/tests/Notify/lib/LookupManager.h:
+	* orbsvcs/tests/Notify/lib/LookupManager.cpp:
+	* orbsvcs/tests/Notify/lib/LookupManager.inl:
+
+	  A repository that uses the naming service to register and lookup
+	  objects in the test framework.
+	
+	* orbsvcs/tests/Notify/lib/Name.h:
+	* orbsvcs/tests/Notify/lib/Name.cpp:
+	* orbsvcs/tests/Notify/lib/Name.inl:
+
+	  Defintions of common string constants.
+	
+ 	* orbsvcs/tests/Notify/lib/Options_Parser.h:
+	* orbsvcs/tests/Notify/lib/Options_Parser.cpp:
+	* orbsvcs/tests/Notify/lib/Options_Parser.inl:
+
+	  A parser for options shared by serveral command objects.
+	
+	* orbsvcs/tests/Notify/lib/PeriodicConsumer_Command.h:
+	* orbsvcs/tests/Notify/lib/PeriodicConsumer_Command.cpp:
+	* orbsvcs/tests/Notify/lib/PeriodicConsumer_Command.inl:
+
+	  Command for operations on Periodic Consumers.
+	
+ 	* orbsvcs/tests/Notify/lib/PeriodicSupplier_Command.h:
+	* orbsvcs/tests/Notify/lib/PeriodicSupplier_Command.cpp:
+	* orbsvcs/tests/Notify/lib/PeriodicSupplier_Command.inl:
+
+	  Command for operations on Periodic Suppliers.
+	  
+	* orbsvcs/tests/Notify/lib/Periodic_Consumer.h:
+	* orbsvcs/tests/Notify/lib/Periodic_Consumer.cpp:
+	* orbsvcs/tests/Notify/lib/Periodic_Consumer.inl:
+
+	  A Consumer that receives structured events periodically form the event
+	  channel.
+	
+ 	* orbsvcs/tests/Notify/lib/Periodic_Supplier.h:
+	* orbsvcs/tests/Notify/lib/Periodic_Supplier.cpp:
+	* orbsvcs/tests/Notify/lib/Periodic_Supplier.inl:
+
+	  A Supplier that sends structured events periodically to the event
+	  channel.
+	
+	* orbsvcs/tests/Notify/lib/PushConsumer.h:
+	* orbsvcs/tests/Notify/lib/PushConsumer.cpp:
+	* orbsvcs/tests/Notify/lib/PushConsumer.inl:
+	* orbsvcs/tests/Notify/lib/PushSupplier.h:
+	* orbsvcs/tests/Notify/lib/PushSupplier.cpp: 
+	* orbsvcs/tests/Notify/lib/PushSupplier.inl:
+
+	  Previous Notify_ prefix has been removed to reflect new naming
+	  convention.
+	
+ 	* orbsvcs/tests/Notify/lib/RTCORBA_Application_Command.h:
+	* orbsvcs/tests/Notify/lib/RTCORBA_Application_Command.cpp:
+	* orbsvcs/tests/Notify/lib/RTCORBA_Application_Command.inl:
+
+	  Command for RTCORBA aware test Application.
+	
+	* orbsvcs/tests/Notify/lib/rtcorba_notify_test_export.h:
+ 	* orbsvcs/tests/Notify/lib/RTCORBA_POA_Command.h:
+	* orbsvcs/tests/Notify/lib/RTCORBA_POA_Command.cpp:
+	* orbsvcs/tests/Notify/lib/RTCORBA_POA_Command.inl:
+
+	  Command to create RT POAs.
+	
+	* orbsvcs/tests/Notify/lib/RTCORBA_Factories_Define.cpp:
+
+	  Define RTCORBA command factories - RTPOA.
+	
+	* orbsvcs/tests/Notify/lib/StructuredEvent.h:
+ 	* orbsvcs/tests/Notify/lib/StructuredEvent.cpp:
+	* orbsvcs/tests/Notify/lib/StructuredEvent.inl:
+
+	  Helper class to polulate a structured event.
+	
+	* orbsvcs/tests/Notify/lib/StructuredPushConsumer.h:
+	* orbsvcs/tests/Notify/lib/StructuredPushConsumer.cpp:
+	* orbsvcs/tests/Notify/lib/StructuredPushConsumer.inl:
+	* orbsvcs/tests/Notify/lib/StructuredPushSupplier.h:
+	* orbsvcs/tests/Notify/lib/StructuredPushSupplier.cpp:
+	* orbsvcs/tests/Notify/lib/StructuredPushSupplier.inl: 
+	* orbsvcs/tests/Notify/lib/SequencePushConsumer.h:
+	* orbsvcs/tests/Notify/lib/SequencePushConsumer.cpp:
+	* orbsvcs/tests/Notify/lib/SequencePushConsumer.inl: 
+	* orbsvcs/tests/Notify/lib/SequencePushSupplier.h:
+
+	  Previous Notify_ prefix has been removed to reflect new naming
+	  convention.
+	
+	* orbsvcs/tests/Notify/lib/SupplierAdmin_Command.h:
+	* orbsvcs/tests/Notify/lib/SupplierAdmin_Command.cpp:
+ 	* orbsvcs/tests/Notify/lib/SupplierAdmin_Command.inl:
+
+	  Command Object for SupplierAdmin operations.
+	
+	* orbsvcs/tests/Notify/lib/Task_Callback.h:
+
+	  Interface that is called when a Periodic Peer finishes with its
+	  operations.
+	
+	* orbsvcs/tests/Notify/lib/Task_Stats.h:
+	* orbsvcs/tests/Notify/lib/Task_Stats.cpp: 
+	* orbsvcs/tests/Notify/lib/Task_Stats.inl:
+
+	  Stats class for recording latency and throughput stats for each
+	  periodic consumer and supplier.
+
 Mon Sep  2 01:55:33 CDT 2002 Pradeep Gore <pradeep@oomworks.com>
 
 	 Added the following Real-Time Notification implementation files -

@@ -39,12 +39,15 @@ public:
   /// Constuctor
   TAO_NS_EventChannelFactory (void);
 
+  /// Init the factory
+  void init (ACE_ENV_SINGLE_ARG_DECL);
+
   /// Destructor
-  virtual ~TAO_NS_EventChannelFactory ();  
+  virtual ~TAO_NS_EventChannelFactory ();
 
   /// Return servant
   virtual PortableServer::Servant servant (void);
-  
+
   /// = ServantBase  Methods
   virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
   virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
@@ -52,10 +55,17 @@ public:
   /// TAO_NS_Destroy_Callback methods
   virtual void release (void);
 
+  /// Accesor for the default filter factory shared by all EC's.
+  virtual CosNotifyFilter::FilterFactory_ptr get_default_filter_factory (ACE_ENV_SINGLE_ARG_DECL);
+
  protected:
   /// = Data Members
 
+  /// The default filter factory.
+  CosNotifyFilter::FilterFactory_var default_filter_factory_;
+
   /// = CosNotifyChannelAdmin Methods
+
   virtual ::CosNotifyChannelAdmin::EventChannel_ptr create_channel (
     const CosNotification::QoSProperties & initial_qos,
     const CosNotification::AdminProperties & initial_admin,
@@ -68,7 +78,7 @@ public:
   ));
 
 virtual ::CosNotifyChannelAdmin::ChannelIDSeq * get_all_channels (
-    
+
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException

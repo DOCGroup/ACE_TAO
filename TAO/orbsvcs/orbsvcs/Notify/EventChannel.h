@@ -32,7 +32,7 @@ class TAO_NS_EventChannelFactory;
 /**
  * @class TAO_NS_EventChannel
  *
- * @brief Implementation of CosNotifyChannelAdmin::EventChannel 
+ * @brief Implementation of CosNotifyChannelAdmin::EventChannel
  *
  */
 class TAO_Notify_Export TAO_NS_EventChannel : public POA_CosNotifyChannelAdmin::EventChannel, public TAO_NS_Container_T <TAO_NS_Admin, TAO_NS_EventChannel, TAO_NS_EventChannelFactory>, public TAO_NS_Destroy_Callback
@@ -45,7 +45,7 @@ public:
   TAO_NS_EventChannel (void);
 
   /// Destructor
-  ~TAO_NS_EventChannel ();  
+  ~TAO_NS_EventChannel ();
 
   /// Return servant
   virtual PortableServer::Servant servant (void);
@@ -68,29 +68,27 @@ protected:
                      CORBA::SystemException
                      ));
 
-  virtual ::CosNotifyChannelAdmin::EventChannelFactory_ptr MyFactory ( 
+  virtual ::CosNotifyChannelAdmin::EventChannelFactory_ptr MyFactory (
   )
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   virtual ::CosNotifyChannelAdmin::ConsumerAdmin_ptr default_consumer_admin (
-    
+
   )
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   virtual ::CosNotifyChannelAdmin::SupplierAdmin_ptr default_supplier_admin (
-    
+
   )
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual ::CosNotifyFilter::FilterFactory_ptr default_filter_factory (
-    
-  )
+  virtual ::CosNotifyFilter::FilterFactory_ptr default_filter_factory (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
@@ -129,21 +127,21 @@ protected:
                      ));
 
   virtual ::CosNotifyChannelAdmin::AdminIDSeq * get_all_consumeradmins (
-    
+
   )
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   virtual ::CosNotifyChannelAdmin::AdminIDSeq * get_all_supplieradmins (
-    
+
   )
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   virtual ::CosNotification::QoSProperties * get_qos (
-    
+
   )
     ACE_THROW_SPEC ((
                      CORBA::SystemException
@@ -167,7 +165,7 @@ protected:
                      ));
 
   virtual ::CosNotification::AdminProperties * get_admin (
-    
+
   )
     ACE_THROW_SPEC ((
                      CORBA::SystemException
@@ -182,14 +180,14 @@ protected:
                      ));
 
   virtual ::CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (
-    
+
   )
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   virtual ::CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (
-    
+
   )
     ACE_THROW_SPEC ((
                      CORBA::SystemException

@@ -21,4 +21,3 @@ TAO_NS_Worker_Task::shutdown (void)
 {
   return;
 }
-

@@ -34,9 +34,9 @@ public:
   TAO_NS_RTCORBA_ProxyConsumer (void);
 
   /// Destructor
-  ~TAO_NS_RTCORBA_ProxyConsumer ();  
+  ~TAO_NS_RTCORBA_ProxyConsumer ();
 
-  /// Process 
+  /// Process
   virtual void push (TAO_NS_Event_var &event);
 };
 

@@ -24,6 +24,7 @@ CORBA::ULong
 TAO_NS_Refcountable::_incr_refcnt (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+
   if (TAO_debug_level > 0 )
     ACE_DEBUG ((LM_DEBUG,"object:%x  incr refcount = %d\n", this, refcount_+1 ));
 
@@ -56,4 +57,3 @@ TAO_NS_Refcountable::destroy_callback (TAO_NS_Destroy_Callback* destroy_callback
 {
   destroy_callback_ = destroy_callback;
 }
-

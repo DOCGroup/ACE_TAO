@@ -34,7 +34,7 @@ public:
   TAO_NS_Reactive_Task (void);
 
   /// Destructor
-  ~TAO_NS_Reactive_Task ();  
+  ~TAO_NS_Reactive_Task ();
 
   /// Exec the request.
   virtual void exec (TAO_NS_Method_Request& method_request);

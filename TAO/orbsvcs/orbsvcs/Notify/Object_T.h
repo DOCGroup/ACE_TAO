@@ -38,7 +38,7 @@ public:
   TAO_NS_Object_T (void);
 
   /// Destructor
-  virtual ~TAO_NS_Object_T ();  
+  virtual ~TAO_NS_Object_T ();
 
   /// destroy <type>
   void destroy (TYPE* type ACE_ENV_ARG_DECL);

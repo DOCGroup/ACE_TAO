@@ -38,11 +38,15 @@ public:
   TAO_NS_Notify_Service (void);
 
   /// Destructor
-  virtual ~TAO_NS_Notify_Service ();  
+  virtual ~TAO_NS_Notify_Service ();
+
+  /// = Service_Object virtual method overloads.
+  virtual int init (int argc, char *argv[]);
+  virtual int fini (void);
 
   /// Init
   virtual void init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
-  
+
   /// Create the Channel Factory.
   virtual CosNotifyChannelAdmin::EventChannelFactory_ptr create (PortableServer::POA_ptr default_POA ACE_ENV_ARG_DECL);
 
@@ -55,6 +59,9 @@ protected:
 
   /// Creates the Builder for RT Notify objects.
   virtual void init_builder (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Apply ORB Schedluling policy to main thread and set its priority to the lowest available.
+  void init_main_thread (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
 
   /// Service component for object factory operations.
   TAO_NS_Factory* factory_;
@@ -71,4 +78,3 @@ ACE_FACTORY_DECLARE (TAO_Notify, TAO_NS_Notify_Service)
 
 #include "ace/post.h"
 #endif /* TAO_NS_COSNOTIFY_SERVICE_H */
-

@@ -30,14 +30,14 @@
  */
 class TAO_RT_Notify_Export TAO_NS_RTCORBA_Properties
 {
-	friend class ACE_Singleton<TAO_NS_RTCORBA_Properties, TAO_SYNCH_MUTEX>;
+        friend class ACE_Singleton<TAO_NS_RTCORBA_Properties, TAO_SYNCH_MUTEX>;
 
 public:
   /// Constuctor
   TAO_NS_RTCORBA_Properties (void);
 
   /// Destructor
-  ~TAO_NS_RTCORBA_Properties (); 
+  ~TAO_NS_RTCORBA_Properties ();
 
   RTCORBA::RTORB_ptr rt_orb (void);
   void rt_orb (RTCORBA::RTORB_ptr rt_orb);
@@ -48,7 +48,7 @@ public:
 protected:
   /// RT-ORB
   RTCORBA::RTORB_var rt_orb_;
-  
+
   /// Current
   RTCORBA::Current_var current_;
 };

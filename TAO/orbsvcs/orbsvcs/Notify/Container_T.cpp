@@ -55,13 +55,13 @@ TAO_NS_Container_T<TYPE, OBJECT, PARENT>::remove (TYPE* type ACE_ENV_ARG_DECL)
 {
   this->collection_->disconnected (type ACE_ENV_ARG_PARAMETER);
 }
- 
+
 template<class TYPE, class OBJECT, class PARENT> void
 TAO_NS_Container_T<TYPE, OBJECT, PARENT>::init_collection (ACE_ENV_SINGLE_ARG_DECL)
 {
   // get the factory
   TAO_NS_Factory* factory = TAO_NS_PROPERTIES::instance ()->factory ();
-  
+
   // Init variables
   factory->create (this->collection_ ACE_ENV_SINGLE_ARG_PARAMETER);
 }

@@ -26,7 +26,7 @@
 /**
  * @class TAO_NS_POA_Helper
  *
- * @brief POA Abstraction. 
+ * @brief POA Abstraction.
  *
  */
 class TAO_Notify_Export TAO_NS_POA_Helper : private ACE_Copy_Disabled
@@ -42,7 +42,7 @@ public:
   void init (PortableServer::POA_ptr parent_poa ACE_ENV_ARG_DECL);
 
   /// Destructor
-  virtual ~TAO_NS_POA_Helper ();  
+  virtual ~TAO_NS_POA_Helper ();
 
   /// Get underlying POA
   PortableServer::POA_ptr poa (void);
@@ -68,10 +68,10 @@ protected:
 
   /// POA
   PortableServer::POA_var poa_;
-  
+
   /// ID Factory
   TAO_NS_ID_Factory id_factory_;
-  
+
   /// Convert id to ObjectID
   PortableServer::ObjectId* long_to_ObjectId (CORBA::Long id ACE_ENV_ARG_DECL) const;
 };

@@ -17,13 +17,13 @@ ACE_RCSID(RT_Notify, TAO_NS_Object, "$Id$")
 TAO_NS_Object::TAO_NS_Object (void)
   :event_manager_ (0), qos_admin_ (0), id_ (0), poa_ (0), worker_task_ (0), delete_worker_task_ (0)
 {
-  if (TAO_debug_level > 0 )
+  if (TAO_debug_level > 1 )
     ACE_DEBUG ((LM_DEBUG,"object:%x  created\n", this ));
 }
 
 TAO_NS_Object::~TAO_NS_Object ()
 {
-  if (TAO_debug_level > 0 )
+  if (TAO_debug_level > 1 )
     ACE_DEBUG ((LM_DEBUG,"object:%x  destroyed\n", this ));
 
   this->shutdown_worker_task ();
@@ -47,7 +47,7 @@ TAO_NS_Object::activate (ACE_ENV_SINGLE_ARG_DECL)
   return poa_->activate (this->servant (), id_ ACE_ENV_ARG_PARAMETER);
 }
 
-void 
+void
 TAO_NS_Object::deactivate (ACE_ENV_SINGLE_ARG_DECL)
 {
   poa_->deactivate (id_ ACE_ENV_ARG_PARAMETER);
@@ -95,4 +95,3 @@ TAO_NS_Object::worker_task (TAO_NS_Worker_Task* worker_task)
 
   delete_worker_task_ = 0;
 }
-

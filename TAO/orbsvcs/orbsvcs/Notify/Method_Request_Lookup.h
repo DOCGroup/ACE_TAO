@@ -26,7 +26,7 @@
 /**
  * @class TAO_NS_Method_Request_Lookup
  *
- * @brief Lookup command object looks up the event type of the given event in the consumer map and send the event to each proxysupplier. 
+ * @brief Lookup command object looks up the event type of the given event in the consumer map and send the event to each proxysupplier.
  *
  */
 class TAO_Notify_Export TAO_NS_Method_Request_Lookup : public TAO_NS_Method_Request, public TAO_ESF_Worker<TAO_NS_ProxySupplier>
@@ -36,7 +36,7 @@ public:
   TAO_NS_Method_Request_Lookup (TAO_NS_Event_var& event, TAO_NS_ProxyConsumer* proxy_consumer, TAO_NS_Consumer_Map* map);
 
   /// Destructor
-  ~TAO_NS_Method_Request_Lookup ();  
+  ~TAO_NS_Method_Request_Lookup ();
 
   /// Create a copy of this object.
   TAO_NS_Method_Request* copy (void);

@@ -15,4 +15,3 @@ TAO_NS_RTCORBA_Properties::TAO_NS_RTCORBA_Properties (void)
 TAO_NS_RTCORBA_Properties::~TAO_NS_RTCORBA_Properties ()
 {
 }
-

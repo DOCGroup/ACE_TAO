@@ -34,7 +34,7 @@ public:
   TAO_NS_RTCORBA_Notify_Service (void);
 
   /// Destructor
-  ~TAO_NS_RTCORBA_Notify_Service (); 
+  ~TAO_NS_RTCORBA_Notify_Service ();
 
   /// Init the service.
   virtual void init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);

@@ -27,7 +27,7 @@ TAO_NS_EventType::init_i (const char* domain_name, const char* type_name)
   if (this->is_special () == 1)
     {
       this->event_type_.domain_name = (const char* )"*";
-      this->event_type_.type_name = (const char* )"%ALL"; 
+      this->event_type_.type_name = (const char* )"%ALL";
     }
 
   this->recompute_hash ();
@@ -78,7 +78,7 @@ TAO_NS_EventType&
 TAO_NS_EventType::operator=(const TAO_NS_EventType& event_type)
 {
   if (this == &event_type)
-    return *this;   
+    return *this;
 
   this->init_i (event_type.event_type_.domain_name.in (),event_type.event_type_.type_name.in ());
 
@@ -121,4 +121,3 @@ TAO_NS_EventType::is_special (void) const
   else
     return 0;
 }
-
