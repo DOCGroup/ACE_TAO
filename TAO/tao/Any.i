@@ -37,7 +37,8 @@ ACE_INLINE
 void
 CORBA_Any::operator<<= (CORBA::Short s)
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       CORBA::Short *ns;
       ACE_NEW (ns,
@@ -60,7 +61,8 @@ ACE_INLINE
 void
 CORBA_Any::operator<<= (CORBA::UShort s)
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       CORBA::UShort *ns;
       ACE_NEW (ns,
@@ -83,7 +85,8 @@ ACE_INLINE
 void
 CORBA_Any::operator<<= (CORBA::Long l)
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       CORBA::Long *nl;
       ACE_NEW (nl,
@@ -106,7 +109,8 @@ ACE_INLINE
 void
 CORBA_Any::operator<<= (CORBA::ULong l)
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       CORBA::ULong *nl;
       ACE_NEW (nl,
@@ -129,7 +133,8 @@ ACE_INLINE
 void
 CORBA_Any::operator<<= (CORBA::LongLong l)
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       CORBA::LongLong *nl;
       ACE_NEW (nl,
@@ -152,7 +157,8 @@ ACE_INLINE
 void
 CORBA_Any::operator<<= (CORBA::ULongLong l)
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       CORBA::ULongLong *nl;
       ACE_NEW (nl,
@@ -175,7 +181,8 @@ ACE_INLINE
 void
 CORBA_Any::operator<<= (CORBA::Float f)
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       CORBA::Float *nf;
       ACE_NEW (nf,
@@ -197,7 +204,8 @@ CORBA_Any::operator<<= (CORBA::Float f)
 ACE_INLINE void
 CORBA_Any::operator<<= (CORBA::Double d)
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       CORBA::Double *nd;
       ACE_NEW (nd,
@@ -220,7 +228,8 @@ CORBA_Any::operator<<= (CORBA::Double d)
 ACE_INLINE void
 CORBA_Any::operator<<= (const CORBA_Any& a)
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       CORBA_Any_ptr na;
       ACE_NEW (na,
@@ -244,7 +253,8 @@ ACE_INLINE
 void
 CORBA::Any::operator<<= (CORBA::Any_ptr anyptr)
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       this->replace (CORBA::_tc_any,
                      anyptr,
@@ -271,7 +281,8 @@ ACE_INLINE
 void
 CORBA_Any::operator<<= (from_boolean b)
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       CORBA::Boolean *nb;
       ACE_NEW (nb,
@@ -294,7 +305,8 @@ ACE_INLINE
 void
 CORBA_Any::operator<<= (from_octet o)
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       CORBA::Octet *no;
       ACE_NEW (no,
@@ -317,7 +329,8 @@ ACE_INLINE
 void
 CORBA_Any::operator<<= (from_char c)
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       CORBA::Char *nc;
       ACE_NEW (nc,
@@ -340,7 +353,8 @@ ACE_INLINE
 void
 CORBA_Any::operator<<= (from_wchar wc)
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       CORBA::WChar *nwc;
       ACE_NEW (nwc,
