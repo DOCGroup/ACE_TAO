@@ -1,3 +1,9 @@
+Sun Jul 11 14:14:56 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_scope.cpp:
+	  Further mod to lookup functions in response to a bug
+	  in compiling TAO/examples/Event_Comm.idl.
+
 Sun Jul 11 12:15:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * Reconfig_Scheduler_T.{cpp, h},
