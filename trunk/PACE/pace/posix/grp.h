@@ -6,27 +6,18 @@
  *    pace (posix ace)
  *
  * = FILENAME
- *    grp.h
+ *    pace/posix/grp.h
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================ */
 
-
 #ifndef PACE_GRP_H
 #define PACE_GRP_H
 
-
 #include "pace/defines.h"
 #include <grp.h>
-
-/* Linux wants to use sys/types.h to define pace_gid_t.
- * Sun is happy with grp.h. */
-# if defined (linux)
-#include "pace/sys/types.h"
-# endif /* linux */
-
 
 # if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
@@ -50,14 +41,12 @@ extern "C" {
                                    struct group ** result);
   /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
-
 # if defined (PACE_HAS_CPLUSPLUS)
 }
 # endif /* PACE_HAS_CPLUSPLUS */
 
 # if defined (PACE_HAS_INLINE)
-# include "grp.inl"
+# include "pace/posix/grp.inl"
 # endif /* PACE_HAS_INLINE */
-
 
 #endif /* PACE_GRP_H */

@@ -6,16 +6,14 @@
  *    pace
  *
  * = FILENAME
- *    pthread.inl
+ *    pace/posix/pthread.inl
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================= */
 
-
 #include "pace/unistd.h"
-
 
 PACE_INLINE
 int

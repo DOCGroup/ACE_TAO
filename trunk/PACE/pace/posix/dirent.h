@@ -6,26 +6,23 @@
  *    pace
  *
  * = FILENAME
- *    dirent.h
+ *    pace/posix/dirent.h
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================ */
 
-
 #ifndef PACE_DIRENT_H
 #define PACE_DIRENT_H
-
 
 #include "pace/defines.h"
 #include "pace/sys/types.h"
 #include <dirent.h>
 
-
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
   PACE_INLINE DIR * pace_opendir (const char * dirname);
 
@@ -39,13 +36,12 @@ extern "C" {
 
   PACE_INLINE int pace_closedir (DIR * dirp);
 
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 }
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
-# if defined (PACE_HAS_INLINE)
-# include "dirent.inl"
-# endif /* PACE_HAS_INLINE */
-
+#if defined (PACE_HAS_INLINE)
+# include "pace/posix/dirent.inl"
+#endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_DIRENT_H */

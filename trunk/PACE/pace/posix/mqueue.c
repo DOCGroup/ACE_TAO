@@ -6,17 +6,15 @@
  *    pace (posix ace)
  *
  * = FILENAME
- *    mqueue.c
+ *    pace/posix/mqueue.c
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================= */
 
-
 #include "pace/mqueue.h"
 
-
-# if !defined (PACE_HAS_INLINE)
-# include "mqueue.inl"
-# endif /* PACE_HAS_INLINE */
+#if !defined (PACE_HAS_INLINE)
+# include "pace/posix/mqueue.inl"
+#endif /* ! PACE_HAS_INLINE */

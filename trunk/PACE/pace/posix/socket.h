@@ -6,26 +6,23 @@
  *    pace
  *
  * = FILENAME
- *    socket.h
+ *    pace/posix/socket.h
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================ */
 
-
 #ifndef PACE_SYS_SOCKET_H
 #define PACE_SYS_SOCKET_H
-
 
 #include "pace/defines.h"
 #include "pace/sys/types.h"
 #include <sys/socket.h>
 
-
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
   PACE_INLINE int pace_closesocket (PACE_HANDLE handle);
 
@@ -53,13 +50,12 @@ extern "C" {
                                int type,
                                int protocol);
 
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 }
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
-# if defined (PACE_HAS_INLINE)
-# include "socket.inl"
-# endif /* PACE_HAS_INLINE */
-
+#if defined (PACE_HAS_INLINE)
+# include "pace/posix/socket.inl"
+#endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_SYS_SOCKET_H */

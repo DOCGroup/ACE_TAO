@@ -6,17 +6,15 @@
  *    pace
  *
  * = FILENAME
- *    fnctl.h
+ *    pace/posix/fnctl.h
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================ */
 
-
 #ifndef PACE_FCNTL_H
 #define PACE_FCNTL_H
-
 
 #include "pace/defines.h"
 #include "pace/sys/types.h"
@@ -24,11 +22,9 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-
-
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
   PACE_INLINE int pace_creat (const char * path, pace_mode_t mode);
 
@@ -48,13 +44,12 @@ extern "C" {
    * surrounding the arguments.
    */
 
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 }
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
-# if defined (PACE_HAS_INLINE)
-# include "fcntl.inl"
-# endif /* PACE_HAS_INLINE */
-
+#if defined (PACE_HAS_INLINE)
+# include "pace/posix/fcntl.inl"
+#endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_FCNTL_H */

@@ -6,13 +6,12 @@
  *    pace
  *
  * = FILENAME
- *    pwd.inl
+ *    pace/posix/pwd.inl
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================= */
-
 
 PACE_INLINE
 struct passwd *

@@ -6,13 +6,12 @@
  *    pace
  *
  * = FILENAME
- *    grp.inl
+ *    pace/posix/grp.inl
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================= */
-
 
 PACE_INLINE
 struct group *

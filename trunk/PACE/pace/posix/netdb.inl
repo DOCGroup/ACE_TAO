@@ -6,16 +6,14 @@
  *    pace
  *
  * = FILENAME
- *    netdb.inl
+ *    pace/posix/netdb.inl
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================= */
 
-
 #include "pace/unistd.h"
-
 
 PACE_INLINE
 struct hostent *

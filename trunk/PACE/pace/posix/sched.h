@@ -6,32 +6,22 @@
  *    pace
  *
  * = FILENAME
- *    sched.h
+ *    pace/posix/sched.h
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================ */
 
-
 #ifndef PACE_SCHED_H
 #define PACE_SCHED_H
-
 
 #include "pace/defines.h"
 #include <sched.h>
 
-/* Linux wants to use sys/types.h to define pid_t.
- * Sun is happy with sched.h.
- */
-# if defined (linux)
-#include "pace/sys/types.h"
-#endif
-
-
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
   PACE_INLINE int pace_sched_get_priority_max (int policy);
 
@@ -54,13 +44,12 @@ extern "C" {
 
   PACE_INLINE int pace_sched_yield ();
 
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 }
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
-# if defined (PACE_HAS_INLINE)
-# include "sched.inl"
-# endif /* PACE_HAS_INLINE */
-
+#if defined (PACE_HAS_INLINE)
+# include "pace/posix/sched.inl"
+#endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_SCHED_H */

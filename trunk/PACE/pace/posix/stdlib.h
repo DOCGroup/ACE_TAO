@@ -6,25 +6,22 @@
  *    pace
  *
  * = FILENAME
- *    stdlib.h
+ *    pace/posix/stdlib.h
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================ */
 
-
 #ifndef PACE_STDLIB_H
 #define PACE_STDLIB_H
-
 
 #include "pace/defines.h"
 #include "pace/unistd.h"
 
-
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
   PACE_INLINE void pace_abort ();
 
@@ -62,13 +59,13 @@ extern "C" {
 
   PACE_INLINE void * pace_valloc (size_t size);
 
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 }
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
-# if defined (PACE_HAS_INLINE)
-# include "stdlib.inl"
-# endif /* PACE_HAS_INLINE */
-
+#if defined (PACE_HAS_INLINE)
+# include "pace/posix/stdlib.inl"
+#endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_STDLIB_H */
+

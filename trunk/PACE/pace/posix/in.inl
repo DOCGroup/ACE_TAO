@@ -6,16 +6,14 @@
  *    pace
  *
  * = FILENAME
- *    in.inl
+ *    pace/posix/in.inl
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================= */
 
-
 #include <netinet/in.h>
-
 
 PACE_INLINE
 PACE_UINT32

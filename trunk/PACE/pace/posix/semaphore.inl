@@ -6,13 +6,12 @@
  *    pace
  *
  * = FILENAME
- *    semaphore.inl
+ *    pace/posix/semaphore.inl
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================= */
-
 
 PACE_INLINE
 int

@@ -1,22 +1,20 @@
-/* $Id $ -*- C -*-
+/* $Id$
 
- * ===========================================================================
+ * =============================================================================
  *
  * = LIBRARY
  *    pace
  *
  * = FILENAME
- *    locale.c
+ *    pace/posix/locale.c
  *
  * = AUTHOR
  *    Joe Hoffert
  *
- * ===========================================================================
- */
-
+ * ============================================================================= */
 
 #include "pace/locale.h"
 
-# if !defined (PACE_HAS_INLINE)
-# include "locale.inl"
-# endif /* !PACE_HAS_INLINE */
+#if !defined (PACE_HAS_INLINE)
+# include "pace/posix/locale.inl"
+#endif /* ! PACE_HAS_INLINE */

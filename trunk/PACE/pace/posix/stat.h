@@ -6,26 +6,23 @@
  *    pace
  *
  * = FILENAME
- *    stat.h
+ *    pace/posix/stat.h
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================ */
 
-
 #ifndef PACE_SYS_STAT_H
 #define PACE_SYS_STAT_H
-
 
 #include "pace/defines.h"
 #include "pace/sys/types.h"
 #include <sys/stat.h>
 
-
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
   PACE_INLINE int pace_chmod (const char * path, mode_t mode);
 
@@ -41,13 +38,12 @@ extern "C" {
 
   PACE_INLINE mode_t pace_umask (mode_t cmask);
 
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 }
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
-# if defined (PACE_HAS_INLINE)
-# include "stat.inl"
-# endif /* PACE_HAS_INLINE */
-
+#if defined (PACE_HAS_INLINE)
+# include "pace/posix/stat.inl"
+#endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_SYS_STAT_H */

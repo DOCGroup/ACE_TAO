@@ -6,26 +6,23 @@
  *    pace
  *
  * = FILENAME
- *    unistd.h
+ *    pace/posix/unistd.h
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================ */
 
-
 #ifndef PACE_UNISTD_H
 #define PACE_UNISTD_H
-
 
 #include "pace/defines.h"
 #include "pace/sys/types.h"
 #include <stropts.h>
 
-
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
   PACE_INLINE void pace__exit (int status);
 
@@ -143,13 +140,12 @@ extern "C" {
 
   PACE_INLINE ssize_t pace_write (int fildes, const void * buf, size_t nbyte);
 
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 }
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
-# if defined (PACE_HAS_INLINE)
-# include "unistd.inl"
-# endif /* PACE_HAS_INLINE */
-
+#if defined (PACE_HAS_INLINE)
+# include "pace/posix/unistd.inl"
+#endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_UNISTD_H */
