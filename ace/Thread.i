@@ -150,7 +150,7 @@ ACE_INLINE int
 ACE_Thread::disablecancel (struct cancel_state *old_state)
 {
   ACE_TRACE ("ACE_Thread::disablecancel");
-  int old_cstate;
+  int old_cstate = 0;
   int retval;
   if ((retval = ACE_OS::thr_setcancelstate (THR_CANCEL_DISABLE,
 					    &old_cstate)) == 0)
@@ -168,8 +168,8 @@ ACE_Thread::enablecancel (struct cancel_state *old_state,
 			  int flag)
 {
   ACE_TRACE ("ACE_Thread::enablecancel");
-  int old_cstate;
-  int old_ctype;
+  int old_cstate = 0;
+  int old_ctype = 0;
   int retval;
 
   retval = ACE_OS::thr_setcancelstate (THR_CANCEL_ENABLE, &old_cstate);
@@ -196,8 +196,8 @@ ACE_Thread::setcancelstate (struct cancel_state &new_state,
 			    struct cancel_state *old_state)
 {
   ACE_TRACE ("ACE_Thread::setcancelstate");
-  int old_cstate;
-  int old_ctype;
+  int old_cstate = 0;
+  int old_ctype = 0;
 
   if (new_state.cancelstate != 0
       && ACE_OS::thr_setcancelstate (new_state.cancelstate, 
