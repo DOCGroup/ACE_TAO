@@ -9,8 +9,8 @@ the client or open a separate window for the client and server.
 server:
 -------
 
-% svr [-d] [-ORBhost <serverhost>] [-ORBport <portnum>]
-           [-n <number-of-cubit-objects>]
+% server [-d] [-ORBhost <serverhost>] [-ORBport <portnum>]
+           [-n <number-of-cubit-objects>] [-o <ior_output_file>]
 
 The server cubit factory maintained num_of_cubit objects (default =
 1). They are assigned keys that look like "key0", "key1", ...
@@ -28,11 +28,19 @@ Using -d turns on debugging messages.  It is additive, i.e., the more
 only 2 levels of debugging are implemented, and more than 2 -d options
 are ignored.
 
-	You need to set -d to get the IOR 
+	The IOR can be outputted to a file using the -o option. 
+	Irrespective of the -o option the IOR will be outputted on the screen.
 
 client:
 -------
 
-% clnt [-d] <-f IOR> -n <iterations>
+% client [-d] <-f cubit_factory_ior_file> <-k cubit_factory_ior>  -n <iterations>
 
-  where IOR is the factory IOR obtained from the server.
+	There are 2 ways of giving the CubitFactory IOR to the client:
+
+	1. From a file using the -f option. (This file can be produced using 
+		the -o option of the server.)
+	
+	2. Directly on the commandline using the -k option.
+
+
