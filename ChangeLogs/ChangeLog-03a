@@ -1,3 +1,10 @@
+Thu Oct  4 17:38:21 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Synch.h: Added some comments to explain the rationale for
+          the different return values from the blocking and timed
+          versions of ACE_Null_Semaphore::acquire().  Thanks to Doug
+          Schmidt for explaining this.
+
 Thu Oct  4 17:27:39 2001  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv1/Logging_Handler.cpp (recv_log_record): Insure that
