@@ -1,3 +1,9 @@
+Wed Sep 15 10:07:55 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tests/ORB_init/ORB_init.cpp (main):
+
+	  Added missing parentheses to ACE_TRY_THROW parameter.
+
 Wed Sep 15 09:23:57 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/TAO.dsp:
