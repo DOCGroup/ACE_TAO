@@ -1,6 +1,9 @@
 Wed Jul  3 11:31:25 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/Portable_Interceptors/ForwardRequest/Makefile:
+        * orbsvcs/IFR_Service/Makefile.BE:
+        * orbsvcs/IFR_Service/Makefile.EX:
+        * orbsvcs/IFR_Service/Makefile.IFR_Service:
 
           Updated dependencies.
 
