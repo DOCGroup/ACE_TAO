@@ -114,7 +114,7 @@ Client_i::init (int argc, char *argv[])
         this->ts_->thread_per_rate_ = 1;
       else if (ACE_OS::strcmp (this->argv_[i],"-t") == 0
                && (i - 1 < this->argc_))
-        this->ts_->thread_count_ = 
+        this->ts_->thread_count_ =
           ACE_OS::atoi (this->argv_[i+1]);
     }
   PCCTIMER_INIT;
@@ -137,7 +137,7 @@ Client_i::output_taskinfo (void)
   FILE *file_handle = ACE_OS::fopen ("taskinfo.txt", "w");
 
   if (file_handle == 0)
-    ACE_ERROR ((LM_ERROR, 
+    ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "open"));
 
@@ -221,9 +221,9 @@ Client_i::output_latency (void)
       ACE_timer_t *latency = 0;
 
       for (iterator.first ();
-           (i < (j == 0 
-                 ? this->ts_->high_priority_loop_count_ 
-                 : this->ts_->loop_count_) / this->ts_->granularity_) && 
+           (i < (j == 0
+                 ? this->ts_->high_priority_loop_count_
+                 : this->ts_->loop_count_) / this->ts_->granularity_) &&
              (iterator.next (latency));
            i++,iterator.advance ())
         {
@@ -263,7 +263,7 @@ Client_i::init_low_priority (void)
     this->priority_.number_of_priorities ();
   this->grain_ = this->priority_.grain ();
   this->counter_ = 0;
-}  
+}
 
 void
 Client_i::calc_util_time (void)
@@ -321,8 +321,8 @@ Client_i::activate_high_client (void)
                                              0,
                                              0,
                                              0,
-					     0,           //  size_t stack_size[] = 0,
-					     (ACE_thread_t *) &this->task_id_) == -1)
+                                             0,           //  size_t stack_size[] = 0,
+                                             (ACE_thread_t *) &this->task_id_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p; priority is %d\n",
                        "activate failed",
@@ -381,7 +381,7 @@ Client_i::activate_low_client (void)
                   this->low_priority_));
       // The first thread starts at the lowest priority of all the low
       // priority clients.
-      if (this->low_priority_client_[i - 1]->activate 
+      if (this->low_priority_client_[i - 1]->activate
           (THR_BOUND | ACE_SCHED_FIFO,
            1,
            0,
@@ -401,12 +401,12 @@ Client_i::activate_low_client (void)
         {
           this->counter_ = (this->counter_ + 1) % this->grain_;
 
-          if (this->counter_ == 0 
+          if (this->counter_ == 0
               // Just so when we distribute the priorities among the
               // threads, we make sure we don't go overboard.
               && this->num_priorities_ * this->grain_ > this->num_low_priority_ - (i - 1))
             // Get the next higher priority.
-            this->low_priority_ = ACE_Sched_Params::next_priority 
+            this->low_priority_ = ACE_Sched_Params::next_priority
               (ACE_SCHED_FIFO, this->low_priority_, ACE_SCOPE_THREAD);
         }
     } /* end of for () */
@@ -439,7 +439,7 @@ Client_i::activate_util_thread (void)
 
       // Activate the Utilization thread.  It will wait until all
       // threads have finished binding.
-      this->util_thread_->activate 
+      this->util_thread_->activate
         (THR_BOUND | ACE_SCHED_FIFO,
          1,
          0,
@@ -618,7 +618,7 @@ Client_i::start_servant (void)
               this->high_priority_));
 
   // Make the high priority task an active object.
-   if (high_priority_task->activate 
+   if (high_priority_task->activate
        (THR_BOUND | ACE_SCHED_FIFO,
         1,
         0,
@@ -657,7 +657,7 @@ Client_i::do_priority_inversion_test (void)
   GLOBALS::instance ()->num_of_objs = 1;
   GLOBALS::instance ()->use_name_service = 0;
 
-  for (u_int j = 0; j < this->argc_; j++)
+  for (int j = 0; j < this->argc_; j++)
     if (ACE_OS::strcmp (this->argv_[j], "-u") == 0)
       {
         this->start_servant ();
@@ -718,7 +718,7 @@ Client_i::do_priority_inversion_test (void)
 
   ACE_DEBUG ((LM_DEBUG,
               "-------------------------- Stats -------------------------------\n"));
-  
+
   this->print_priority_inversion_stats ();
   return 0;
 }
@@ -747,7 +747,7 @@ Client_i::do_thread_per_rate_test (void)
                         this->argv_,
                         CB_1HZ_CONSUMER);
   ACE_Sched_Priority priority;
-  
+
   priority = this->priority_.get_high_priority ();
   ACE_DEBUG ((LM_DEBUG,
               "Creating 20 Hz client with priority %d\n",
@@ -826,7 +826,7 @@ Client_i::do_thread_per_rate_test (void)
               "10Hz client latency : %A usec, jitter: %A usec\n"
               "5Hz client latency : %A usec, jitter: %A usec\n"
               "1Hz client latency : %A usec, jitter: %A usec\n",
-              CB_20Hz_client.get_latency (0), 
+              CB_20Hz_client.get_latency (0),
               CB_20Hz_client.get_jitter (0),
               CB_10Hz_client.get_latency (1),
               CB_10Hz_client.get_jitter (1),
@@ -860,7 +860,7 @@ main (int argc, char *argv[])
 
   if (result < 0)
     return result;
-  
+
   // Run the tests.
   client.run ();
 
