@@ -1,3 +1,9 @@
+Sat Feb 14 08:48:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/TMCast/Group.cpp:
+
+	  Fixed compile errors in daily builds.
+
 Fri Feb 13 12:21:06 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
  
 	* ace/Process_Manager.cpp (wait): If the
