@@ -488,8 +488,8 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
                         ACE_LIB_TEXT ("ioctl (get broadaddr)")));
           else
             {
-              ACE_OS::memcpy (ACE_reinterpret_cast(sockaddr_in *, &ip_addr),
-                              ACE_reinterpret_cast(sockaddr_in *, &if_req.ifr_broadaddr),
+              ACE_OS::memcpy (reinterpret_cast<sockaddr_in *> (&ip_addr),
+                              reinterpret_cast<sockaddr_in *> (&if_req.ifr_broadaddr),
                               sizeof if_req.ifr_broadaddr);
 
               ACE_OS::memcpy ((void *) &host_addr,
@@ -587,7 +587,7 @@ ACE::get_ip_interfaces (size_t &count,
         continue;
 
       // We assume IPv4 addresses here
-      addrp = ACE_reinterpret_cast(struct sockaddr_in *, &(lpii->iiAddress));
+      addrp = reinterpret_cast<struct sockaddr_in *> (&(lpii->iiAddress));
       if (addrp->sin_addr.s_addr == INADDR_ANY)
         continue;
 
@@ -997,7 +997,7 @@ ACE::get_ip_interfaces (size_t &count,
           p_if->ifa_addr->sa_family == AF_INET)
         {
           struct sockaddr_in *addr =
-            ACE_reinterpret_cast(sockaddr_in *, p_if->ifa_addr);
+            reinterpret_cast<sockaddr_in *> (p_if->ifa_addr);
 
           // Sometimes the kernel returns 0.0.0.0 as the interface
           // address, skip those...
@@ -1098,7 +1098,7 @@ ACE::get_ip_interfaces (size_t &count,
         {
 #if !defined(_UNICOS)
           struct sockaddr_in *addr =
-            ACE_reinterpret_cast(sockaddr_in *, &pcur->ifr_addr);
+            reinterpret_cast<sockaddr_in *> (&pcur->ifr_addr);
 
           // Sometimes the kernel returns 0.0.0.0 as the interface
           // address, skip those...

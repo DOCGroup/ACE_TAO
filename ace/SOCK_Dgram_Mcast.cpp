@@ -92,13 +92,13 @@ ACE_SOCK_Dgram_Mcast::dump (void) const
       ip_mreq *pm = iter.next ();
 
       // Get subscribed address (w/out port# info - not relevant).
-      ACE_INET_Addr ip_addr (ACE_static_cast (u_short, 0),
+      ACE_INET_Addr ip_addr (static_cast<u_short> (0),
                              ACE_NTOHL (pm->IMR_MULTIADDR.s_addr));
       ACE_SDM_helpers::addr_to_string (ip_addr, addr_string,
                                        sizeof addr_string, 1);
 
       // Get interface address/specification.
-      ACE_INET_Addr if_addr (ACE_static_cast (u_short, 0),
+      ACE_INET_Addr if_addr (static_cast<u_short> (0),
                              ACE_NTOHL (pm->imr_interface.s_addr));
       ACE_SDM_helpers::addr_to_string (if_addr, iface_string,
                                        sizeof iface_string, 1);
@@ -984,8 +984,7 @@ ACE_SOCK_Dgram_Mcast::make_multicast_ifaddr (ip_mreq *ret_mreq,
         return -1;
 
       sockaddr_in *socket_address;
-      socket_address = ACE_reinterpret_cast (sockaddr_in*,
-                                             &if_address.ifr_addr);
+      socket_address = reinterpret_cast<sockaddr_in*> (&if_address.ifr_addr);
       lmreq.imr_interface.s_addr = socket_address->sin_addr.s_addr;
 #endif /* ACE_WIN32 || __INTERIX */
     }

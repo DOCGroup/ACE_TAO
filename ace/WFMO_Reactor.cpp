@@ -2560,7 +2560,7 @@ ACE_WFMO_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
         return -1;        // This shouldn't happen...
 
       ACE_Notification_Buffer *buffer =
-        ACE_reinterpret_cast (ACE_Notification_Buffer *, mb->base ());
+        reinterpret_cast<ACE_Notification_Buffer *> (mb->base ());
 
       // If this is not a Reactor notify (it is for a particular handler),
       // and it matches the specified handler (or purging all),

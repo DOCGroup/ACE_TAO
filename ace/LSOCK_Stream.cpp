@@ -22,7 +22,7 @@ ACE_LSOCK_Stream::get_local_addr (ACE_Addr &addr) const
 
   // Perform the downcast since <addr> had better be an
   // <ACE_UNIX_Addr>.
-  ACE_UNIX_Addr *rhs_unix_addr = ACE_dynamic_cast (ACE_UNIX_Addr *, &addr);
+  ACE_UNIX_Addr *rhs_unix_addr = dynamic_cast<ACE_UNIX_Addr *> (&addr);
   ACE_UNIX_Addr lhs_unix_addr;
 
   if (rhs_unix_addr == 0)

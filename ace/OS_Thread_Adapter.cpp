@@ -43,7 +43,7 @@ ACE_OS_Thread_Adapter::invoke (void)
 
   // Extract the arguments.
   ACE_THR_FUNC_INTERNAL func =
-    ACE_reinterpret_cast (ACE_THR_FUNC_INTERNAL, this->user_func_);
+    reinterpret_cast<ACE_THR_FUNC_INTERNAL> (this->user_func_);
   void *arg = this->arg_;
 
   // Delete ourselves since we don't need <this> anymore.  Make sure
@@ -80,7 +80,7 @@ ACE_OS_Thread_Adapter::invoke (void)
             // Invoke the start hook to give the user a chance to
             // perform some initialization processing before the
             // <func> is invoked.
-            status = hook->start (ACE_reinterpret_cast (ACE_THR_FUNC, func),
+            status = hook->start (reinterpret_cast<ACE_THR_FUNC> (func),
                                   arg);
           else
             {
@@ -109,8 +109,7 @@ ACE_OS_Thread_Adapter::invoke (void)
       // Task::svc_run to 0.
 #if 0
       // Call the <Task->close> hook.
-      if (func == ACE_reinterpret_cast (ACE_THR_FUNC_INTERNAL,
-                                        ACE_Task_Base::svc_run))
+      if (func == reinterpret_cast<ACE_THR_FUNC_INTERNAL> (ACE_Task_Base::svc_run))
         {
           ACE_Task_Base *task_ptr = (ACE_Task_Base *) arg;
           ACE_Thread_Manager *thr_mgr_ptr = task_ptr->thr_mgr ();

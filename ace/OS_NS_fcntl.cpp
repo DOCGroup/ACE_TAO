@@ -121,26 +121,26 @@ ACE_OS::open (const char *filename,
   return 0;
 # else
   unsigned long result, handle;
-  result = ::open_f (&handle, ACE_const_cast(char *, filename), 0);
+  result = ::open_f (&handle, const_cast<char *> (filename), 0);
   if (result != 0)
     {
       // We need to clean this up...not 100% correct!
       // To correct we should handle all the cases of TRUNC and CREAT
       if ((result == 0x200B) && (ACE_BIT_ENABLED (mode, O_CREAT)))
         {
-          result = ::create_f(ACE_const_cast(char *, filename),1,0);
+          result = ::create_f(const_cast<char *> (filename),1,0);
           if (result != 0)
             {
               errno = result;
-              return ACE_static_cast (ACE_HANDLE, -1);
+              return static_cast<ACE_HANDLE> (-1);
             }
           else  //File created...try to open it again
             {
-              result = ::open_f (&handle, ACE_const_cast(char *, filename), 0);
+              result = ::open_f (&handle, const_cast<char *> (filename), 0);
               if (result != 0)
                 {
                   errno = result;
-                  return ACE_static_cast (ACE_HANDLE, -1);
+                  return static_cast<ACE_HANDLE> (-1);
                 }
 
             }
@@ -148,10 +148,10 @@ ACE_OS::open (const char *filename,
       else
         {
           errno = result;
-          return ACE_static_cast (ACE_HANDLE, -1);
+          return static_cast<ACE_HANDLE> (-1);
         }
     }
-  return ACE_static_cast (ACE_HANDLE, handle);
+  return static_cast<ACE_HANDLE> (handle);
 # endif /* defined (ACE_PSOS_LACKS_PHILE) */
 #elif defined (INTEGRITY)
   ACE_UNUSED_ARG (sa);

@@ -81,8 +81,7 @@ int
 ACE_WIN32_Asynch_Result::post_completion (ACE_Proactor_Impl *proactor)
 {
   // Get to the platform specific implementation.
-  ACE_WIN32_Proactor *win32_proactor = ACE_dynamic_cast (ACE_WIN32_Proactor *,
-                                                         proactor);
+  ACE_WIN32_Proactor *win32_proactor = dynamic_cast<ACE_WIN32_Proactor *> (proactor);
 
   if (win32_proactor == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -454,7 +453,7 @@ ACE_WIN32_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
         if (msg_space > ULONG_MAX)
           this_chunk_length = ULONG_MAX;
         else
-          this_chunk_length = ACE_static_cast (u_long, msg_space);
+          this_chunk_length = static_cast<u_long> (msg_space);
         // Collect the data in the iovec.
         iov[iovcnt].iov_base = msg->wr_ptr () + wr_ptr_offset;
         iov[iovcnt].iov_len  = this_chunk_length;
@@ -505,8 +504,8 @@ ACE_WIN32_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
   DWORD bytes_recvd = 0;
   u_long flags = 0;
 
-  int initiate_result = ::WSARecv (ACE_reinterpret_cast (SOCKET, result->handle ()),
-                                   ACE_reinterpret_cast (WSABUF *, iov),
+  int initiate_result = ::WSARecv (reinterpret_cast<SOCKET> (result->handle ()),
+                                   reinterpret_cast<WSABUF *> (iov),
                                    iovcnt,
                                    &bytes_recvd,
                                    &flags,
@@ -569,7 +568,7 @@ ACE_WIN32_Asynch_Read_Stream::shared_read (ACE_WIN32_Asynch_Read_Stream_Result *
       errno = ERANGE;
       return -1;
     }
-  DWORD bytes_to_read = ACE_static_cast (DWORD, result->bytes_to_read ());
+  DWORD bytes_to_read = static_cast<DWORD> (result->bytes_to_read ());
   u_long bytes_read;
 
   result->set_error (0); // Clear error before starting IO.
@@ -875,7 +874,7 @@ ACE_WIN32_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
         if (msg_len > ULONG_MAX)
           this_chunk_length = ULONG_MAX;
         else
-          this_chunk_length = ACE_static_cast (u_long, msg_len);
+          this_chunk_length = static_cast<u_long> (msg_len);
         // Collect the data in the iovec.
         iov[iovcnt].iov_base = msg->rd_ptr () + rd_ptr_offset;
         iov[iovcnt].iov_len  = this_chunk_length;
@@ -924,8 +923,8 @@ ACE_WIN32_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
 
   u_long bytes_sent = 0;
 
-  int initiate_result = ::WSASend (ACE_reinterpret_cast (SOCKET, result->handle ()),
-                                   ACE_reinterpret_cast (WSABUF *, iov),
+  int initiate_result = ::WSASend (reinterpret_cast<SOCKET> (result->handle ()),
+                                   reinterpret_cast<WSABUF *> (iov),
                                    iovcnt,
                                    &bytes_sent,
                                    0, // flags
@@ -988,7 +987,7 @@ ACE_WIN32_Asynch_Write_Stream::shared_write (ACE_WIN32_Asynch_Write_Stream_Resul
       errno = ERANGE;
       return -1;
     }
-  DWORD bytes_to_write = ACE_static_cast (DWORD, result->bytes_to_write ());
+  DWORD bytes_to_write = static_cast<DWORD> (result->bytes_to_write ());
 
   result->set_error (0); // Clear error before starting IO.
 
@@ -1325,7 +1324,7 @@ ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
       errno = ERANGE;
       return -1;
     }
-  DWORD dword_bytes_to_read = ACE_static_cast (DWORD, bytes_to_read);
+  DWORD dword_bytes_to_read = static_cast<DWORD> (bytes_to_read);
 
   // last one should be completely 0
   buffer_pointers[buffer_pointers_count].Buffer = 0;
@@ -1728,7 +1727,7 @@ ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
       errno = ERANGE;
       return -1;
     }
-  DWORD dword_bytes_to_write = ACE_static_cast (DWORD, bytes_to_write);
+  DWORD dword_bytes_to_write = static_cast<DWORD> (bytes_to_write);
 
   // last one should be completely 0
   buffer_pointers[buffer_pointers_count].Buffer = 0;
@@ -2035,7 +2034,7 @@ ACE_WIN32_Asynch_Accept::accept (ACE_Message_Block &message_block,
       errno = ERANGE;
       return -1;
     }
-  DWORD dword_bytes_to_read = ACE_static_cast (DWORD, bytes_to_read);
+  DWORD dword_bytes_to_read = static_cast<DWORD> (bytes_to_read);
 
   int close_accept_handle = 0;
   // If the <accept_handle> is invalid, we will create a new socket.
@@ -2080,8 +2079,8 @@ ACE_WIN32_Asynch_Accept::accept (ACE_Message_Block &message_block,
                                     (SOCKET) result->accept_handle (),
                                     result->message_block ().wr_ptr (),
                                     dword_bytes_to_read,
-                                    ACE_static_cast (DWORD, address_size),
-                                    ACE_static_cast (DWORD, address_size),
+                                    static_cast<DWORD> (address_size),
+                                    static_cast<DWORD> (address_size),
                                     &bytes_read,
                                     result);
   if (initiate_result == 1)
@@ -2528,8 +2527,7 @@ ACE_WIN32_Asynch_Connect::connect_i (ACE_WIN32_Asynch_Connect_Result *result,
 
   if (local_sap != ACE_Addr::sap_any)
     {
-      sockaddr * laddr = ACE_reinterpret_cast (sockaddr *,
-                                               local_sap.get_addr ());
+      sockaddr * laddr = reinterpret_cast<sockaddr *> (local_sap.get_addr ());
       int size = local_sap.get_size ();
 
       if (ACE_OS::bind (handle, laddr, size) == -1)
@@ -2558,8 +2556,7 @@ ACE_WIN32_Asynch_Connect::connect_i (ACE_WIN32_Asynch_Connect_Result *result,
   for (;;)
     {
       int rc = ACE_OS::connect (handle,
-                                ACE_reinterpret_cast (sockaddr *,
-                                                      remote_sap.get_addr ()),
+                                reinterpret_cast<sockaddr *> (remote_sap.get_addr ()),
                                 remote_sap.get_size ());
 
       if (rc < 0)  // failure
@@ -3006,8 +3003,8 @@ ACE_WIN32_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
       errno = ERANGE;
       return -1;
     }
-  DWORD dword_bytes_to_write = ACE_static_cast (DWORD, bytes_to_write);
-  DWORD dword_bytes_per_send = ACE_static_cast (DWORD, bytes_per_send);
+  DWORD dword_bytes_to_write = static_cast<DWORD> (bytes_to_write);
+  DWORD dword_bytes_per_send = static_cast<DWORD> (bytes_per_send);
 
   ACE_WIN32_Asynch_Transmit_File_Result *result = 0;
   ACE_NEW_RETURN (result,
@@ -3343,7 +3340,7 @@ ACE_WIN32_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
         if (msg_space > ULONG_MAX)
           this_chunk_length = ULONG_MAX;
         else
-          this_chunk_length = ACE_static_cast (u_long, msg_space);
+          this_chunk_length = static_cast<u_long> (msg_space);
         // Collect the data in the iovec.
         iov[iovcnt].iov_base = msg->wr_ptr () + wr_ptr_offset;
         iov[iovcnt].iov_len  = this_chunk_length;
@@ -3668,7 +3665,7 @@ ACE_WIN32_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
         if (msg_len > ULONG_MAX)
           this_chunk_length = ULONG_MAX;
         else
-          this_chunk_length = ACE_static_cast (u_long, msg_len);
+          this_chunk_length = static_cast<u_long> (msg_len);
         // Collect the data in the iovec.
         iov[iovcnt].iov_base = msg->rd_ptr () + rd_ptr_offset;
         iov[iovcnt].iov_len  = this_chunk_length;

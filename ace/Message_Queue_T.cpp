@@ -118,7 +118,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::peek_dequeue_head (ACE_ME
   int cur_count = this->queue_.peek_dequeue_head (mb, timeout);
 
   if (cur_count != -1)
-    first_item  = ACE_reinterpret_cast (ACE_MESSAGE_TYPE *, mb->base ());
+    first_item  = reinterpret_cast<ACE_MESSAGE_TYPE *> (mb->base ());
 
   return cur_count;
 }
@@ -242,7 +242,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_head (ACE_MESSAGE
   // Dequeue the message.
   if (cur_count != -1)
     {
-      first_item = ACE_reinterpret_cast (ACE_MESSAGE_TYPE *, mb->base ());
+      first_item = reinterpret_cast<ACE_MESSAGE_TYPE *> (mb->base ());
       // Delete the message block.
       mb->release ();
       return cur_count;
@@ -268,7 +268,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_prio (ACE_MESSAGE
   // Dequeue the message.
   if (cur_count != -1)
     {
-      dequeued = ACE_reinterpret_cast (ACE_MESSAGE_TYPE *, mb->base ());
+      dequeued = reinterpret_cast<ACE_MESSAGE_TYPE *> (mb->base ());
       // Delete the message block.
       mb->release ();
       return cur_count;
@@ -294,7 +294,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_tail (ACE_MESSAGE
   // Dequeue the message.
   if (cur_count != -1)
     {
-      dequeued = ACE_reinterpret_cast (ACE_MESSAGE_TYPE *, mb->base ());
+      dequeued = reinterpret_cast<ACE_MESSAGE_TYPE *> (mb->base ());
       // Delete the message block.
       mb->release ();
       return cur_count;
@@ -320,7 +320,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_deadline (ACE_MES
   // Dequeue the message.
   if (cur_count != -1)
     {
-      dequeued = ACE_reinterpret_cast (ACE_MESSAGE_TYPE *, mb->base ());
+      dequeued = reinterpret_cast<ACE_MESSAGE_TYPE *> (mb->base ());
       // Delete the message block.
       mb->release ();
       return cur_count;
