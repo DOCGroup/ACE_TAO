@@ -219,7 +219,7 @@ public:
   void set_port_number (u_short,
 			int encode = 1);
 
-  /// Return the port number, converting it into host byte order.
+  /// Return the port number, converting it into host byte-order.
   u_short get_port_number (void) const;
 
   /**
