@@ -52,14 +52,14 @@ be_visitor_valuetype_ami_exception_holder_cs::visit_valuetype (be_valuetype *nod
     *os << "OBV_";
 
   *os << node->compute_name ("_tao_", "") << "::"
-      << node->compute_local_name ("_tao_", "") << " () { };" << be_nl << be_nl;
+      << node->compute_local_name ("_tao_", "") << " () { }" << be_nl << be_nl;
 
   if (node->is_nested () &&
       node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
     *os << "OBV_";
 
   *os << node->compute_name ("_tao_", "") << "::~"
-      << node->compute_local_name ("_tao_", "") << " () { };" << be_nl << be_nl;
+      << node->compute_local_name ("_tao_", "") << " () { }" << be_nl << be_nl;
 
   // generate code for the elements of the interface
   if (this->visit_valuetype_scope (node) == -1)
@@ -78,7 +78,7 @@ be_visitor_valuetype_ami_exception_holder_cs::visit_valuetype (be_valuetype *nod
       node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
     *os << "OBV_";
 
-  *os << node->full_name () << "_factory::~" << node->local_name () << "_factory ()" 
+  *os << node->full_name () << "_factory::~" << node->local_name () << "_factory ()"
       << "{ }" << be_nl << be_nl;
 
   *os << "TAO_OBV_CREATE_RETURN_TYPE (" << node->local_name () << ")" << be_nl;
@@ -126,4 +126,3 @@ be_visitor_valuetype_ami_exception_holder_cs::visit_operation (be_operation *nod
 
   return 0;
 }
-
