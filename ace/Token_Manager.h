@@ -50,6 +50,9 @@ public:
     static ACE_Token_Manager *instance (void);
     void instance (ACE_Token_Manager *);
 
+    static void cleanup (void *instance, void *);
+    // Cleanup method, used by ACE_Object_Manager to destroy the singleton.
+
     void get_token (ACE_Token_Proxy *, const char *token_name);
     // The Token manager uses ACE_Token_Proxy::token_id_ to look for
     // an existing token.  If none is found, the Token Manager calls
