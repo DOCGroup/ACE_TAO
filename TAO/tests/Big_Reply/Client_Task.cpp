@@ -58,14 +58,15 @@ Client_Task::validate_connection (void)
   // exceptions  that are expected (see bug 189 on why it is so). We
   // could use a a validate_connection for it . But we wantthis test
   // to work with Minimum CORBA builds too..
-  ACE_TRY
+  for (int i = 0; i != 100; ++i)
     {
-      for (int i = 0; i != 100; ++i)
+      ACE_TRY
         {
+
           this->reply_gen_->ping (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
+        ACE_CATCHANY {}
+        ACE_ENDTRY;
     }
-  ACE_CATCHANY {}
-  ACE_ENDTRY;
 }

@@ -1,3 +1,8 @@
+Tue Jul 24 12:33:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Big_Reply/Client_Task.cpp (validate_connection): Some
+	  cosmetic changes.
+
 Tue Jul 24 08:38:14 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/examples/Security/SecurityLevel1/SLevel1_Test.idl:
