@@ -1,3 +1,95 @@
+Sun Jul 28 09:03:08 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+        Merge from the branch bug_1125_stage_0. This merge solves the
+        dreaded  problem of ORB building up the stack when a reply is
+	written. This should fix [BUG 1125].
+
+	Wed Jul 24 22:30:29 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Synch_Queued_Message.h:
+	* tao/Synch_Queued_Message.cpp: 
+	* tao/Asynch_Queued_Message.h (TAO_Asynch_Queued_Message): 
+	* tao/Asynch_Queued_Message.cpp: Added comments and spruced up
+	  line spacings.
+
+	* tao/Transport.cpp: Added a debug statement for logging
+	  purposes. 
+	
+
+	Mon Jul 22 17:52:04 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Base.cpp: We now use the global pool for
+	  allocating memory  for the return path. Using TSS created
+	  problems when we were trying to move the unsent messages from
+	  the TSS to global pool. The message block makes things to crash
+	  horribly, especially at places that you have no clue about. 
+	
+	* tao/Transport.cpp: Do not reset the allocators since it is not
+	  required. 
+
+	Tue Jul 16 07:06:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Synch_Queued_Message.cpp:
+	* tao/Asynch_Queued_Message.cpp: Removed code that reset stuff
+	  from the destructor.  This caused problems when trying to use
+	  the ACE_DES_FREE macro since it called the destructor first and
+	  then free ().
+
+	* tao/TAO_Server_Request.cpp: All calls to send_message () will
+	  carry an argument mentioning that they are replies.
+
+	* tao/GIOP_Message_Base.cpp: Fixed a problem in dump_msg ()
+	  method. The probelm was that we neved respected the byte-order
+	  of the sending ORB when printing out request id's. Thanks to Kew
+	  Whitney <Whitney.Kew@Invensys.com>
+
+	* tao/Transport.cpp: Cosmetic fixes.
+
+	Sun Jul 14 10:49:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Queued_Message.h:
+	* tao/Queued_Message.cpp: Added an argument in the constructor to
+	  pass an allocator. Added a pure virtual method, clone () to the
+	  interface.
+
+	* tao/Synch_Queued_Message.h:
+	* tao/Synch_Queued_Message.cpp:
+	* tao/Asynch_Queued_Message.h:
+	* tao/Asynch_Queued_Message.cpp: Implemented the method clone ().
+
+	* tao/Incoming_Mesage_Queue.cpp: Fixed a typo in a print
+	  statement.
+
+	Fri Jul 12 14:10:14 2002   Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport.h:
+	* tao/Transport.cpp:
+	  - Added a new enum enumerating the different message types
+	    recognised within the ORB.
+
+	  - Added two new methods send_reply_message_i () and
+	    send_synch_message_helper_i (). The method
+	    send_reply_message_i () seperates the path of the reply
+	    message from the send_synchronous_message_i () method. The
+	    method send_synch_message_helper_i () is a helper method
+	    containing common code for the request and reply paths.
+
+	  - The methods, send_message (), send_message_shared () and
+	    send_message_shared_i () had a variable named
+	    is_synchronous. The variable name has been changed to reflect
+	    the right usage.
+
+	* tao/IIOP_Transport.cpp:
+	* tao/Strategies/DIOP_Transport.cpp:
+	* tao/Strategies/SHMIOP_Transport.cpp:
+	* tao/Strategies/UIOP_Transport.cpp: The variable names
+	  is_synchronous was changed to reflect the usage.
+
+	* tao/Invocation.cpp:
+	* tao/Invocation.h: Instead of calling invoke () with a magic
+	  number, used the enumeration defined in Transport.h.
+
+
 Sun Jul 28 08:13:59 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/Miop/McastHello/Makefile: Updated dependencies.
