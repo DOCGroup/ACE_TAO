@@ -48,14 +48,15 @@ public:
   void stop_incr (void);
   // Stop incremental timing.
 
-  void print_total (char *message, 
-		    int iterations, 
-		    ACE_HANDLE handle);
-  // Print total time.
+  void print_total (const char *message,
+		    const int iterations = 1,
+		    ACE_HANDLE handle = ACE_STDOUT);
+  // Print total time.  NOTE:  only use print_total ()
+  // if incremental timings had been used!
 
-  void print_ave (char *message, 
-		  int iterations, 
-		  ACE_HANDLE handle);
+  void print_ave (const char *message,
+		  const int iterations = 1,
+		  ACE_HANDLE handle = ACE_STDOUT);
   // Print average time.
 
   void dump (void) const;
