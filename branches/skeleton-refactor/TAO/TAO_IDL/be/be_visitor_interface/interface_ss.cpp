@@ -172,6 +172,29 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
+
+//   {
+//     Identifier arg_name (ACE_OS::strdup ("type_id"));
+//     UTL_ScopedName arg_scoped_name (&arg_name, 0);
+//     AST_Argument arg (AST_Argument::dir_in,
+//                       AST_Decl::NT_pre_defined,
+//                       &arg_scoped_name);
+                   
+
+//     AST_Type rt (AST_Decl::NT_op, 0);
+//     Identifier op_name (ACE_OS::strdup ("_is_a"));
+//     UTL_ScopedName scoped_name (&op_name, 0);
+//     be_operation is_a (&rt,
+//                        AST_Operation::OP_noflags,
+//                        &scoped_name,
+//                        node->is_local (),
+//                        node->is_abstract ());
+//     is_a.set_defined_in (node);
+
+//     be_visitor_operation_upcall_command_ss upcall_command_visitor (this->ctx_);
+//     upcall_command_visitor.visit_operation (&is_a);
+//   }
+
   *os << "TAO_InputCDR &_tao_in = _tao_server_request.incoming ();"
   << be_nl << be_nl;
 
@@ -395,32 +418,32 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  // the downcast method.
-  *os << "void* " << full_skel_name
-      << "::_downcast (" << be_idt << be_idt_nl
-      << "const char* logical_type_id" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl;
+//   // the downcast method.
+//   *os << "void* " << full_skel_name
+//       << "::_downcast (" << be_idt << be_idt_nl
+//       << "const char* logical_type_id" << be_uidt_nl
+//       << ")" << be_uidt_nl
+//       << "{" << be_idt_nl;
 
-  if (this->generate_downcast_implementation (node, os) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_ss::"
-                         "visit_interface - "
-                         "traverse for downcast implementation failed\n"),
-                        -1);
-    }
+//   if (this->generate_downcast_implementation (node, os) == -1)
+//     {
+//       ACE_ERROR_RETURN ((LM_ERROR,
+//                          "be_visitor_interface_ss::"
+//                          "visit_interface - "
+//                          "traverse for downcast implementation failed\n"),
+//                         -1);
+//     }
 
-  *os << "if (ACE_OS::strcmp (logical_type_id," << be_nl
-      << "                    \"IDL:omg.org/CORBA/Object:1.0\") == 0)"
-      << be_idt_nl
-      << "{" << be_idt_nl
-      << "return static_cast<PortableServer::Servant> (this);"
-      << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl;
+//   *os << "if (ACE_OS::strcmp (logical_type_id," << be_nl
+//       << "                    \"IDL:omg.org/CORBA/Object:1.0\") == 0)"
+//       << be_idt_nl
+//       << "{" << be_idt_nl
+//       << "return static_cast<PortableServer::Servant> (this);"
+//       << be_uidt_nl
+//       << "}" << be_uidt_nl << be_nl;
 
-  *os << "return 0;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+//   *os << "return 0;" << be_uidt_nl
+//       << "}" << be_nl << be_nl;
 
   *os << "const char* " << full_skel_name
       << "::_interface_repository_id (void) const"
@@ -538,7 +561,7 @@ be_visitor_interface_ss::this_method (be_interface *node)
       << "ACE_CHECK_RETURN (0);" << be_nl << be_nl
       << "TAO_Stub_Auto_Ptr safe_stub (stub);" << be_nl;
 
-  *os << "CORBA::Object_ptr tmp = CORBA::Object::_nil ();" 
+  *os << "CORBA::Object_ptr tmp = CORBA::Object::_nil ();"
       << be_nl << be_nl
       << "CORBA::Boolean _tao_opt_colloc =" << be_idt_nl
       << "stub->servant_orb_var ()->orb_core ()->"
@@ -715,13 +738,13 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
   return 0;
 }
 
-int
-be_visitor_interface_ss::generate_downcast_implementation (be_interface *node,
-                                                           TAO_OutStream *os)
-{
-  return node->traverse_inheritance_graph (be_interface::downcast_helper,
-                                           os);
-}
+// int
+// be_visitor_interface_ss::generate_downcast_implementation (be_interface *node,
+//                                                            TAO_OutStream *os)
+// {
+//   return node->traverse_inheritance_graph (be_interface::downcast_helper,
+//                                            os);
+// }
 
 int
 be_visitor_interface_ss::generate_copy_ctor (be_interface *node,

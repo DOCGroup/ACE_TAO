@@ -118,12 +118,11 @@ namespace TAO
   };
 
   /**
-   * @struct Basic_Arg_Traits_T
+   * @struct Object_SArg_Traits_T
    *
    * @brief Template class for skeleton argument traits of objects.
    *
    */
-
   template<typename T_ptr, typename T_var, typename T_out>
   struct Object_SArg_Traits_T
   {

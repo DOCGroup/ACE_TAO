@@ -109,13 +109,13 @@ be_visitor_operation_upcall_command_ss::visit_operation (be_operation * node)
 
   if (!node->void_return_type ())
     {
-      os << "static_cast<TAO::SArg_Traits< ";
+      os << "static_cast<TAO::Arg_Traits< ";
 
       this->gen_arg_template_param_name (node,
                                          node->return_type (),
                                          &os);
 
-      os << ">::ret_val *> (this->args_[0])->arg () =" << be_idt_nl;
+      os << ">::ret_base *> (this->args_[0])->arg () =" << be_idt_nl;
     }
 
   if (this->gen_upcall (node) == -1)
@@ -189,7 +189,7 @@ be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
         AST_Argument::narrow_from_decl (si.item ());
 
       os << (index == 1 ? "" : ",") << be_nl
-         << "static_cast<TAO::SArg_Traits< ";
+         << "static_cast<TAO::Arg_Traits< ";
 
       this->gen_arg_template_param_name (arg,
                                          arg->field_type (),
@@ -211,7 +211,7 @@ be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
           break;
         }
 
-      os << "_arg_val *> (this->args_[" << index << "])->arg ()";
+      os << "_arg_base *> (this->args_[" << index << "])->arg ()";
     }
 
   // End the upcall

@@ -174,70 +174,70 @@ be_visitor_amh_interface_ss::generate_proxy_classes (be_interface *)
 
 // ****************************************************************
 
-class TAO_IDL_Downcast_Implementation_Worker
-  : public TAO_IDL_Inheritance_Hierarchy_Worker
-{
-public:
-  TAO_IDL_Downcast_Implementation_Worker ();
+// class TAO_IDL_Downcast_Implementation_Worker
+//   : public TAO_IDL_Inheritance_Hierarchy_Worker
+// {
+// public:
+//   TAO_IDL_Downcast_Implementation_Worker ();
 
-  virtual int emit (be_interface *base,
-                    TAO_OutStream *os,
-                    be_interface *derived);
-};
+//   virtual int emit (be_interface *base,
+//                     TAO_OutStream *os,
+//                     be_interface *derived);
+// };
 
-TAO_IDL_Downcast_Implementation_Worker::
-TAO_IDL_Downcast_Implementation_Worker (void)
-{
-}
+// TAO_IDL_Downcast_Implementation_Worker::
+// TAO_IDL_Downcast_Implementation_Worker (void)
+// {
+// }
 
-int
-TAO_IDL_Downcast_Implementation_Worker::
-emit (be_interface * /* derived */,
-      TAO_OutStream *os,
-      be_interface *base)
-{
-  // @@ This whole thing would be more efficient if we could pass the
-  // ACE_CString to compute_full_name, after all it uses that
-  // internally.
-  ACE_CString amh_name ("POA_");
+// int
+// TAO_IDL_Downcast_Implementation_Worker::
+// emit (be_interface * /* derived */,
+//       TAO_OutStream *os,
+//       be_interface *base)
+// {
+//   // @@ This whole thing would be more efficient if we could pass the
+//   // ACE_CString to compute_full_name, after all it uses that
+//   // internally.
+//   ACE_CString amh_name ("POA_");
 
-  // @@ The following code is *NOT* exception-safe.
-  char *buf = 0;
-  base->compute_full_name ("AMH_", "", buf);
-  amh_name += buf;
-  // buf was allocated using ACE_OS::strdup, so we must use free instead
-  // of delete.
-  ACE_OS::free (buf);
+//   // @@ The following code is *NOT* exception-safe.
+//   char *buf = 0;
+//   base->compute_full_name ("AMH_", "", buf);
+//   amh_name += buf;
+//   // buf was allocated using ACE_OS::strdup, so we must use free instead
+//   // of delete.
+//   ACE_OS::free (buf);
 
-  *os << "if (ACE_OS::strcmp (logical_type_id, \""
-      << base->repoID () << "\") == 0)" << be_idt_nl
-      << "return static_cast<"
-      << amh_name.c_str () << "*> (this);" << be_uidt_nl;
+//   *os << "if (ACE_OS::strcmp (logical_type_id, \""
+//       << base->repoID () << "\") == 0)" << be_idt_nl
+//       << "return static_cast<"
+//       << amh_name.c_str () << "*> (this);" << be_uidt_nl;
 
-  return 0;
-}
+//   return 0;
+// }
 
-int
-be_visitor_amh_interface_ss::generate_downcast_implementation (be_interface *node,
-                                                               TAO_OutStream *os)
-{
-  // Make sure the queues are empty.
-  node->get_insert_queue ().reset ();
-  node->get_del_queue ().reset ();
+// int
+// be_visitor_amh_interface_ss::generate_downcast_implementation (be_interface *node,
+//                                                                TAO_OutStream *os)
+// {
+//   // Make sure the queues are empty.
+//   node->get_insert_queue ().reset ();
+//   node->get_del_queue ().reset ();
 
 
-  // Insert ourselves in the queue.
-  if (node->get_insert_queue ().enqueue_tail (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_interface::traverse_inheritance_graph - "
-                         "error generating entries\n"),
-                        -1);
-    }
+//   // Insert ourselves in the queue.
+//   if (node->get_insert_queue ().enqueue_tail (node) == -1)
+//     {
+//       ACE_ERROR_RETURN ((LM_ERROR,
+//                          "(%N:%l) be_interface::traverse_inheritance_graph - "
+//                          "error generating entries\n"),
+//                         -1);
+//     }
 
-  TAO_IDL_Downcast_Implementation_Worker worker;
-  return node->traverse_inheritance_graph (worker, os);
-}
+//   TAO_IDL_Downcast_Implementation_Worker worker;
+//   return node->traverse_inheritance_graph (worker, os);
+// }
 
 // ****************************************************************
 

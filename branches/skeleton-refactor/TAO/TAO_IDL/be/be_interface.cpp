@@ -1896,27 +1896,27 @@ be_interface::is_a_helper (be_interface * /*derived*/,
   return 0;
 }
 
-int
-be_interface::downcast_helper (be_interface * /* derived */,
-                               be_interface *base,
-                               TAO_OutStream *os)
-{
-  // Abstract interfaces have no code generated on the skeleton side.
-  if (base->is_abstract ())
-    {
-      return 0;
-    }
+// int
+// be_interface::downcast_helper (be_interface * /* derived */,
+//                                be_interface *base,
+//                                TAO_OutStream *os)
+// {
+//   // Abstract interfaces have no code generated on the skeleton side.
+//   if (base->is_abstract ())
+//     {
+//       return 0;
+//     }
 
-  *os << "if (ACE_OS::strcmp (logical_type_id," << be_nl
-      << "                    \""
-      << base->repoID () << "\") == 0)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return static_cast<"
-      << base->full_skel_name () << "_ptr> (this);" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl;
+//   *os << "if (ACE_OS::strcmp (logical_type_id," << be_nl
+//       << "                    \""
+//       << base->repoID () << "\") == 0)" << be_idt_nl
+//       << "{" << be_idt_nl
+//       << "return static_cast<"
+//       << base->full_skel_name () << "_ptr> (this);" << be_uidt_nl
+//       << "}" << be_uidt_nl << be_nl;
 
-  return 0;
-}
+//   return 0;
+// }
 
 int
 be_interface::gen_skel_helper (be_interface *derived,

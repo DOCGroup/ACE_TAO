@@ -106,6 +106,9 @@ namespace TAO
   class Ret_Object_Argument_T : public Mutable_Argument_T<S_ptr &>
   {
   public:
+
+    typedef base_type
+
     Ret_Object_Argument_T (void);
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
@@ -148,6 +151,11 @@ namespace TAO
     typedef Inout_Object_Argument_T<T_ptr, T_traits>      inout_arg_val;
     typedef Out_Object_Argument_T<T_ptr,T_out>            out_arg_val;
     typedef Ret_Object_Argument_T<T_ptr,T_var>            ret_val;
+
+    typedef Const_Argument_T<in_type>                     in_arg_base;
+    typedef Mutable_Argument_T<inout_type>                inout_arg_base;
+    typedef Mutable_Argument_T<out_type>                  out_arg_base;
+    typedef Mutable_Argument_T<inout_type>                ret_base;
 
     typedef Object_Tag                                    idl_tag;
   };

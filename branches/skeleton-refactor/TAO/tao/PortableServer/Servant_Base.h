@@ -71,9 +71,6 @@ public:
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     );
 
-  /// Get the correct vtable.
-  virtual void *_downcast (const char *repository_id) = 0;
-
   /// This is an auxiliary method for _this() and _narrow().
   virtual TAO_Stub *_create_stub (ACE_ENV_SINGLE_ARG_DECL);
 

@@ -67,7 +67,7 @@ TAO_Dynamic_Hash_OpTable::TAO_Dynamic_Hash_OpTable (const TAO_operation_db_entry
 {
   // Iterate thru each entry in the database and bind the operation
   // name to its corresponding skeleton.
-  for (CORBA::ULong i = 0; i < dbsize; i++)
+  for (CORBA::ULong i = 0; i < dbsize; ++i)
     {
       TAO::Operation_Skeletons s;
       s.skel_ptr_ = db[i].skel_ptr_;
