@@ -63,7 +63,15 @@ which will enable the IFR service to be resolved by getting
 its IOR from <filename>. By default, the IFR service stores
 its IOR in the file 'if_repo.ior', but that can be modified
 by starting the IFR service using the -o option (see above).
+All -ORB options appear in the command line before any other
+options, since the -ORB options are consumed by CORBA::ORB_init.
 
+tao_ifr can process multiple IDL files in one execution. As
+long as the filenames come after any -ORB options that may
+be present, they may come mixed in any order with the other
+command line options. The tao_ifr command line parser will
+treat any option (or option pair) that doesn't begin with 
+'-' as a filename.
 
 More information about the Interface Repository and tao_ifr can 
 be found in ACE_ROOT/TAO/docs/releasenotes/index.html.
