@@ -52,7 +52,6 @@ Legend:
 [0000x ] 	SII struct_seq
 [0000x ] 	SII objref
 
-  
 [11x1x ] 	DII short
 [11x1x ] 	DII ubstring
 [11x1x ] 	DII fixed_struct
@@ -62,10 +61,8 @@ Legend:
 [00x0x ] 	DII struct_seq
 [00x0x ] 	DII objref
 
-  
 [0x0x0 ] Thruput/TAO compiles
 
-  
 [1111x ] liborbsvcs compiles
 [1111x ] Naming_Service compiles
 [1111x ] Simple_Naming compiles
@@ -73,7 +70,7 @@ Legend:
 [1xx1x ] Logger compiles
 [xxx0x ] 	Logger runs
 [11x11 ] Scheduling_Service compiles
-[x1xxx ]        Scheduling_Service runs
+[11xxx ]        Scheduling_Service runs
 [11x10 ] Event_Service compiles
 [x1xxx ]        Event_Service runs
 [11x10 ] Dump_Schedule compiles
@@ -92,7 +89,7 @@ NOTES
 **orbsvcs/tests/Logger does not compile
 **Thruput/TAO/server.cpp -same errors as Logger/svr.cpp
 **ParamTest/var_struct,nested_struct,struct_seq - seg. fault , but able to fix manually
-  the tao_idl compiler generated files, works fine then.						
+  the tao_idl compiler generated files, works fine then.
 
 * NT
 ** Warnings on libTAO and tao_idl compilation.
