@@ -1,3 +1,8 @@
+Sat Jul 18 22:48:52 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* There was a typo in the Makefile where CE-status should have
+	  been CE-status.txt.  Thanks to Nanbor for fixing this.
+
 Sat Jul 18 22:14:07 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.22 released.
