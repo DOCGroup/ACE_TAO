@@ -114,18 +114,18 @@ be_visitor_traits::visit_interface (be_interface *node)
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
           << "struct " << be_global->stub_export_macro () << " Objref_Traits<"
-          << node->name () << ">" << be_nl
+          << " ::" << node->name () << ">" << be_nl
           << "{" << be_idt_nl
-          << "static " << node->name () << "_ptr tao_duplicate ("
+          << "static ::" << node->name () << "_ptr tao_duplicate ("
           << be_idt << be_idt_nl
-          << node->name () << "_ptr" << be_uidt_nl
+          << "::" << node->name () << "_ptr" << be_uidt_nl
           << ");" << be_uidt_nl
           << "static void tao_release (" << be_idt << be_idt_nl
-          << node->name () << "_ptr" << be_uidt_nl
+          << "::" << node->name () << "_ptr" << be_uidt_nl
           << ");" << be_uidt_nl
-          << "static " << node->name () << "_ptr tao_nil (void);" << be_nl
+          << "static ::" << node->name () << "_ptr tao_nil (void);" << be_nl
           << "static CORBA::Boolean tao_marshal (" << be_idt << be_idt_nl
-          << node->name () << "_ptr p," << be_nl
+          << "::" << node->name () << "_ptr p," << be_nl
           << "TAO_OutputCDR & cdr" << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl
           << "};";
@@ -192,7 +192,7 @@ be_visitor_traits::visit_valuetype (be_valuetype *node)
           << node->name () << ">" << be_nl
           << "{" << be_idt_nl
           << "static void tao_add_ref (" << node->name () << " *);" << be_nl
-          << "static void tao_remove_ref (" << node->name () << " *);" 
+          << "static void tao_remove_ref (" << node->name () << " *);"
           << be_nl
           << "static void tao_release (" << node->name () << " *);"
           << be_uidt_nl
@@ -271,7 +271,7 @@ be_visitor_traits::visit_field (be_field *node)
 {
   be_type *ft = be_type::narrow_from_decl (node->field_type ());
   AST_Decl::NodeType nt = ft->node_type ();
-  
+
   // All we are trying to catch in here are anonymous array members.
   if (nt != AST_Decl::NT_array)
     {
@@ -294,7 +294,7 @@ be_visitor_traits::visit_union_branch (be_union_branch *node)
 {
   be_type *ft = be_type::narrow_from_decl (node->field_type ());
   AST_Decl::NodeType nt = ft->node_type ();
-  
+
   // All we are trying to catch in here are anonymous array members.
   if (nt != AST_Decl::NT_array)
     {
@@ -361,31 +361,31 @@ be_visitor_traits::visit_array (be_array *node)
     {
       return 0;
     }
-    
+
   ACE_CString name_holder;
-  
+
   if (node->is_nested ())
     {
-      be_decl *parent = 
+      be_decl *parent =
         be_scope::narrow_from_scope (node->defined_in ())->decl ();
       name_holder = parent->full_name ();
-      
+
       name_holder += "::";
-      
+
       if (!this->ctx_->alias ())
         {
           name_holder += "_";
         }
-        
+
       name_holder += node->local_name ()->get_string ();
     }
   else
     {
       name_holder = node->full_name ();
     }
-  
+
   const char *name = name_holder.fast_rep ();
-    
+
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Generate the array traits specialization definitions,
@@ -433,17 +433,17 @@ be_visitor_traits::visit_array (be_array *node)
       << "static void tao_free (" << be_idt << be_idt_nl
       << name << "_slice * _tao_slice" << be_uidt_nl
       << ");" << be_uidt_nl
-      << "static " << name << "_slice * tao_dup (" 
+      << "static " << name << "_slice * tao_dup ("
       << be_idt << be_idt_nl
-      << "const " << name << "_slice * _tao_slice" 
+      << "const " << name << "_slice * _tao_slice"
       << be_uidt_nl
       << ");" << be_uidt_nl
       << "static void tao_copy (" << be_idt << be_idt_nl
       << name << "_slice * _tao_to," << be_nl
-      << "const " << name << "_slice * _tao_from" 
+      << "const " << name << "_slice * _tao_from"
       << be_uidt_nl
       << ");" << be_uidt_nl
-      << "static " << name << "_slice * tao_alloc (void);" 
+      << "static " << name << "_slice * tao_alloc (void);"
       << be_uidt_nl
       << "};";
 
