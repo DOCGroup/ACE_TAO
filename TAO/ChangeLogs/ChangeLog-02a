@@ -1,3 +1,8 @@
+Wed Mar 28 17:53:35 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+        * orbsvcs/AV/Protocol_Factory.h:
+          Fixed doxygen comment.
+
 Wed Mar 28 16:48:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/NestedUpcall/Triangle_Test/server_A.cpp (main): 
