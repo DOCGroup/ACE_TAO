@@ -27,14 +27,14 @@ PP_TEST_SVR_OBJS = PP_TestC.o \
 		 PP_TestS.o \
 		 PP_Test_Server.o \
 		 PP_Test_i.o \
-		 server.o \
+		 server.o
 PP_TEST_CLT_OBJS = PP_TestC.o \
 		 PP_TestS.o \
 		 PP_Test_Client.o \
-		 client.o \
+		 client.o
 
 BIN = server \
-      client \
+      client
 BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 VBIN = $(BIN:%=%$(VAR))
