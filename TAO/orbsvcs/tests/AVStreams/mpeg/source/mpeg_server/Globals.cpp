@@ -19,7 +19,7 @@ Video_Global::Video_Global ()
   video_format = 0;
   
   pkts_sent = 0;
-  time_t start_time = 0;
+  start_time = 0;
   
   conn_tag = 0;
 
@@ -32,11 +32,11 @@ Video_Global::Video_Global ()
                   0,
                   PATH_SIZE);
 
-  FILE *fp = 0;
+  fp = 0;
 
   needHeader = 0;
 
-  lastRef [0] = lastref [1] = 0;
+  lastRef [0] = lastRef [1] = 0;
 
   lastRefPtr = 0;
   currentUPF = 0;
@@ -46,7 +46,7 @@ Video_Global::Video_Global ()
   fps = 0;  /* current frames-per-second: playback speed */
   frameRateLimit = 0;
 
-  VideoPacket * packet = 0;
+  packet = 0;
   packetBufSize = 0;
   msgsn = 0;
   packetsn = 0;
