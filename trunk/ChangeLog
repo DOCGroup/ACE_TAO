@@ -1,3 +1,18 @@
+Wed Jan  7 17:50:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* apps/gperf/tests/c++-res.exp:
+	* apps/gperf/tests/c++.gperf:
+	* apps/gperf/tests/cpp-res.exp:
+	* apps/gperf/tests/cpp.gperf:
+	  Removed the c++ files and added them with cpp again. The BCB makefile
+	  environment can't handle files with a + in the name. Because we are
+	  using MPC this test is now also build with Borland.
+
+	* apps/gperf/tests/Makefile:
+	* apps/gperf/tests/Makefile.am:
+	* apps/gperf/tests/tests.mpc:
+	  Updated these files to reflect the change above.
+
 Wed Jan  7 10:34:29 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/USAGE:
