@@ -63,7 +63,8 @@ public:
   // buffer to read.  This method determines how much data is in the
   // socket, allocates a buffer of this size, reads in the data, and
   // returns the number of bytes read.  The caller is responsible for
-  // deleting the member in the <iov_base> field of <io_vec>.
+  // deleting the member in the <iov_base> field of <io_vec> using the
+  // ``delete []'' syntax.
 
   ssize_t send (const iovec iov[], 
                 size_t n, 
