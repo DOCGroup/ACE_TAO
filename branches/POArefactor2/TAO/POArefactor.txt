@@ -1,3 +1,9 @@
+Mon Oct 11 13:55:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{cpp,i}:
+          Moved the_activator get/set methods from inline to cpp file, uses a
+          lock and requires IDL generated code, not handy in the inline file
+
 Mon Oct 11 13:41:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Collocation_Opportunities/Collocation_Opportunities.cpp:
