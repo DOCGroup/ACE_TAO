@@ -1,3 +1,16 @@
+Fri Jul 21 19:49:19 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/utime.h (pace_utime):	
+	* pace/win32/utime.inl (pace_utime):
+
+	  Implemented the "RIGHT ANSWER[TM]" but it doesn't work so
+	  casted away and made the current func work. Left the 
+	  correct implementation in the file.
+
+	* pace/docs/PACE_POSIX_support.txt
+
+	  Updated.
+
 Fri Jul 21 19:22:28 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/string.inl:
