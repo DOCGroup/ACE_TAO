@@ -302,8 +302,8 @@ L"'"\\u([0-9a-fA-F]{1,4})"'"	{
 ^\?\?=[ \t]*[0-9]*{NL} {
 		  idl_parse_line_and_file(ace_yytext);
 	        }
-^#[ \t]*ident.*{NL}	|
-^\?\?=[ \t]*ident.*{NL}	{
+^#[ \t]*ident[ \t].*{NL}	|
+^\?\?=[ \t]*ident[ \t].*{NL}	{
 		  /* store cpp ident */
                   idl_global->ident_string (ace_yytext);
   		  idl_global->set_lineno(idl_global->lineno() + 1);
