@@ -465,7 +465,7 @@ main (int argc, char *argv[])
 	CORBA::BOA::impl_is_ready();
 	
 	cout << "server exiting" << endl;
-	return 42;
+	return 0;
     }
     
     //

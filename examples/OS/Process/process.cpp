@@ -58,7 +58,7 @@ main (int argc, char *argv[])
   ACE_OS::close (infile);
 
   ACE_DEBUG ((LM_DEBUG, "Goodbye.\n"));
-  return 42;
+  return 0;
 }
 
 
