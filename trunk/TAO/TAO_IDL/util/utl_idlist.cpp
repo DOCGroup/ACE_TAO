@@ -1,3 +1,5 @@
+// $Id$
+
 /*
 
 COPYRIGHT
@@ -51,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -86,8 +88,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 
 UTL_IdList::UTL_IdList (Identifier *s, UTL_IdList *cdr)
-  : pd_car_data (s),
-    UTL_List ((UTL_List *) cdr)
+  : UTL_List ((UTL_List *) cdr),
+    pd_car_data (s)
 {
 }
 
@@ -132,14 +134,14 @@ UTL_IdList::dump (ostream &o)
   long				first = I_TRUE;
   long				second = I_FALSE;
 
-  while (!(i->is_done ())) 
+  while (!(i->is_done ()))
     {
       if (!first)
         o << "::";
       else if (second)
         first = second = I_FALSE;
       i->item ()->dump (o);
-      if (first) 
+      if (first)
         {
           if (ACE_OS::strcmp (i->item ()->get_string (), "::") != 0)
             first = I_FALSE;

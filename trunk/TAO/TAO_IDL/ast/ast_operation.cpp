@@ -1,3 +1,5 @@
+// $Id$
+
 /*
 
 COPYRIGHT
@@ -51,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -92,12 +94,12 @@ AST_Operation::AST_Operation()
 
 AST_Operation::AST_Operation(AST_Type *rt, Flags fl, UTL_ScopedName *n,
 			   UTL_StrList *p)
-  : pd_return_type(rt),
+  : AST_Decl(AST_Decl::NT_op, n, p),
+    UTL_Scope(AST_Decl::NT_op),
+    pd_return_type(rt),
     pd_flags(fl),
     pd_context(NULL),
-    pd_exceptions(NULL),
-    AST_Decl(AST_Decl::NT_op, n, p),
-    UTL_Scope(AST_Decl::NT_op)
+    pd_exceptions(NULL)
 {
   AST_PredefinedType *pdt;
 
@@ -289,7 +291,7 @@ AST_Operation::dump(ostream &o)
     }
     delete si;
     o << ")";
-  }    
+  }
 }
 
 /*
