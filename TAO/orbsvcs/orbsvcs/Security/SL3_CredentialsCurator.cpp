@@ -31,7 +31,7 @@ TAO::SL3::CredentialsCurator::~CredentialsCurator (void)
        i != fend;
        ++i)
     {
-      // Deallocate the CredentialsId.
+      // Deallocate the Acquistion Method.
       CORBA::string_free (const_cast<char *> ((*i).ext_id_));
 
       delete (*i).int_id_;
@@ -251,6 +251,10 @@ TAO::SL3::CredentialsCurator:: register_acquirer_factory (
   else if (result == -1)  // Failure.
     ACE_THROW (CORBA::INTERNAL ());
 
+
+  // CredentialsCurator now owns the acquisition method id.
+  (void) method._retn ();
+
   // Otherwise success!
 }
 
@@ -272,7 +276,8 @@ TAO::SL3::CredentialsCurator::_tao_add_own_credentials (
       ACE_THROW (CORBA::NO_RESOURCES ());
     }
 
-  (void) credentials_id._retn (); // Credentials table nows owns the id.
+ // CredentialsCurator nows owns the id.
+  (void) credentials_id._retn ();
 }
 
 

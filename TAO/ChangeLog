@@ -1,3 +1,13 @@
+Wed Aug  4 22:13:19 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Security/SL3_CredentialsCurator.cpp
+	  (register_acquirer_factory):
+
+	  Release the String_var containing acquisition method Id  once
+	  the factory is successfully registered.  Memory management
+	  becomes the responsiblity of the CredentialsCurator.  Fixes a
+	  double deletion error.
+
 Wed Aug  4 21:23:52 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/IIOP_Acceptor.h (BASE_ACCEPTOR, CREATION_STRATEGY):
