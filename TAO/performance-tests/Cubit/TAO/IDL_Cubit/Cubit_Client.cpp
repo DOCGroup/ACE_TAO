@@ -50,7 +50,7 @@ ACE_RCSID(IDL_Cubit, Cubit_Client, "$Id$")
 
 enum
 {
-  // Timeprobe description table start key 
+  // Timeprobe description table start key
   CUBIT_CLIENT_CUBE_ONEWAY_START = 10000,
   CUBIT_CLIENT_CUBE_ONEWAY_END,
 
@@ -92,10 +92,10 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Cubit_Client_Timeprobe_Description,
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 // Constructor.
-Cubit_Client::Cubit_Client (int testing_collocation)
+Cubit_Client::Cubit_Client (int testing_collocation, int shutdown)
   : cubit_factory_key_ (0),
     loop_count_ (250),
-    shutdown_ (0),
+    shutdown_ (shutdown),
     cubit_ (Cubit::_nil ()),
     call_count_ (0),
     error_count_ (0),
@@ -681,7 +681,7 @@ Cubit_Client::cube_many_sequence (int i, int l)
           Cubit::Many &in  = input[j];
           Cubit::Many &out = output[j];
 
-          if (in.l * in.l * in.l != out.l || 
+          if (in.l * in.l * in.l != out.l ||
               in.s * in.s * in.s != out.s ||
               in.o * in.o * in.o != out.o)
             {
@@ -693,7 +693,7 @@ Cubit_Client::cube_many_sequence (int i, int l)
       Cubit::Many &in  = input[0];
       Cubit::Many &out = output[0];
 
-      if (in.l * in.l * in.l != out.l || 
+      if (in.l * in.l * in.l != out.l ||
           in.s * in.s * in.s != out.s ||
           in.o * in.o * in.o != out.o)
         {
@@ -717,7 +717,7 @@ Cubit_Client::cube_rti_data (int i, int numUpdates, int numAttrs)
 
   input.msgs.length (numUpdates);
 
-  for (int j = 0; j < numUpdates; ++j) 
+  for (int j = 0; j < numUpdates; ++j)
     {
       input.msgs[j].oumh (Cubit::RtiObjectUpdateMessageHeader ());
       Cubit::RtiObjectUpdateMessageHeader & oumh = input.msgs[j].oumh ();
@@ -734,7 +734,7 @@ Cubit_Client::cube_rti_data (int i, int numUpdates, int numAttrs)
       oumh.orderingHandle = 1;
       oumh.messagePayload.length (numAttrs);
 
-      for (int k = 0; k < numAttrs; ++k) 
+      for (int k = 0; k < numAttrs; ++k)
         {
           oumh.messagePayload[k] = Cubit::HandleValuePair ();
           Cubit::HandleValuePair &hvp = oumh.messagePayload[k];
@@ -1148,6 +1148,9 @@ Cubit_Client::init (int argc, char **argv, char *collocation_test_ior)
                                     "internet",
                                     TAO_TRY_ENV);
       TAO_CHECK_ENV;
+      if (this->testing_collocation_ == 0)
+        // turn off collocation if directed to do so.
+        TAO_ORB_Core_instance ()->using_collocation (0);
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
