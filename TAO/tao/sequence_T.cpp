@@ -286,10 +286,12 @@ operator= (const TAO_Unbounded_Object_Sequence<T> &rhs)
   return *this;
 }
 
-template <class T> T* *
+template <class T> T **
 TAO_Unbounded_Object_Sequence<T>::allocbuf (CORBA::ULong nelems)
 {
-  T **buf = new T*[nelems];
+  T **buf;
+  
+  ACE_NEW_RETURN (buf, T*[nelems], 0);
 
   for (CORBA::ULong i = 0; i < nelems; i++)
     buf[i] = T::_nil ();
@@ -437,12 +439,16 @@ TAO_Bounded_Object_Sequence<T, MAX>::operator=
   return *this;
 }
 
-template <class T, CORBA::ULong MAX> T* *
+template <class T, CORBA::ULong MAX> T **
 TAO_Bounded_Object_Sequence<T, MAX>::allocbuf (CORBA::ULong)
 {
-  T **buf = new T*[MAX];
+  T **buf;
+  
+  ACE_NEW_RETURN (buf, T*[MAX], 0)
+
   for (CORBA::ULong i = 0; i < MAX; i++)
     buf[i] = T::_nil ();
+
   return buf;
 }
 
@@ -561,10 +567,12 @@ TAO_Bounded_String_Sequence<MAX>::operator=
   return *this;
 }
 
-template<CORBA::ULong MAX> char* *
+template<CORBA::ULong MAX> char **
 TAO_Bounded_String_Sequence<MAX>::allocbuf (CORBA::ULong)
 {
-  char **buf = new char*[MAX];
+  char **buf;
+  
+  ACE_NEW_RETURN (buf, char *[MAX], 0);
 
   for (CORBA::ULong i = 0; i < MAX; i++)
     buf[i] = 0;
