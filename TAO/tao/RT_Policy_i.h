@@ -115,10 +115,7 @@ private:
   // Attributes.
 };
 
-// @@ Angelo: the traditional separator in ACE+TAO is // ****
-//    furthermore, it is better if you *don't* mix many classes in the
-//    same file, consider splitting this stuff.
-////////////////////////////////////////////////////////////////////////////
+//*************************************************************************
 
 class TAO_Export TAO_ThreadpoolPolicy :
   public RTCORBA::ThreadpoolPolicy,
@@ -164,7 +161,7 @@ private:
   // Attribute.
 };
 
-//////////////////////////////////////////////////////////////////////////////
+//*************************************************************************
 
 class TAO_Export TAO_PrivateConnectionPolicy :
   public RTCORBA::PrivateConnectionPolicy,
@@ -202,7 +199,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
-////////////////////////////////////////////////////////////////////////////
+//*************************************************************************
 
 class TAO_Export TAO_PriorityBandedConnectionPolicy :
   public RTCORBA::PriorityBandedConnectionPolicy,
@@ -270,7 +267,8 @@ private:
   RTCORBA::PriorityBands priority_bands_;
   // Attribute.
 };
-////////////////////////////////////////////////////////////////////////////
+
+//*************************************************************************
 
 class TAO_Export TAO_ServerProtocolPolicy :
   public RTCORBA::ServerProtocolPolicy,
@@ -317,7 +315,7 @@ private:
   // Attribute.
 };
 
-////////////////////////////////////////////////////////////////////////////
+//*************************************************************************
 
 class TAO_Export TAO_ClientProtocolPolicy :
   public RTCORBA::ClientProtocolPolicy,
@@ -384,7 +382,7 @@ private:
   // Attribute.
 };
 
-////////////////////////////////////////////////////////////////////////////
+//*************************************************************************
 
 class TAO_Export TAO_TCP_Properties :
   public RTCORBA::TCPProtocolProperties,
@@ -474,7 +472,7 @@ private:
   CORBA::Boolean no_delay_;
 };
 
-//////////////////////////////////////////////////////////////////////
+//*************************************************************************
 
 class TAO_Export TAO_Unix_Domain_Properties :
   public RTCORBA::ProtocolProperties,
@@ -525,7 +523,7 @@ private:
   CORBA::Long recv_buffer_size_;
 };
 
-//////////////////////////////////////////////////////////////////////
+//*************************************************************************
 
 class TAO_Export TAO_SMEM_Properties :
   public RTCORBA::ProtocolProperties,
@@ -587,7 +585,7 @@ private:
   ACE_CString mmap_lockname_;
 };
 
-/////////////////////////////////////////////////////////////////////////
+//*************************************************************************
 
 class TAO_Export TAO_GIOP_Properties :
   public RTCORBA::GIOPProtocolProperties,
@@ -607,15 +605,7 @@ protected:
   TAO_GIOP_Properties (void);
 };
 
-//////////////////////////////////////////////////////////////////////////
-
-// @@ Angelo: I suspect that this stuff should be moved into the
-// pluggable protocol framework, to be precise:
-//   + Each TAO_Protocol_Factory class should be able to create a
-//   ProtocolProperties object.
-//   + The ORB should use the list of available protocols to create
-//   any requested protocol property.
-//
+//*************************************************************************
 
 class TAO_Export TAO_Protocol_Properties_Factory
 {

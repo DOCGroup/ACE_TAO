@@ -179,13 +179,14 @@ main (int argc, char *argv[])
 
       // @@ Angelo: in general this is a good test, but it does not
       // check if:
-      // + The values obtained are the expected values, could you
-      //   compare against well known values somehow?
-      // + Can you check that things that should fail indeed do?  For
-      //   example:  what if the user queries or tries to set a policy
-      //   that makes no sense, like Timeouts? Certain values should
-      //   be returned and maybe exceptions raised (I don't know), we
-      //   need to check for that too!
+      // + The values obtained are the expected values,
+      // could you compare against well known values somehow?
+      // + Can
+      // you check that things that should fail indeed do?  For
+      // example: what if the user queries or tries to set a policy
+      // that makes no sense on the client, like ServerProtocolPolicy?
+      // Certain values should be returned and maybe exceptions raised
+      // (I don't know), we need to check for that too!
     }
   ACE_CATCHANY
     {
