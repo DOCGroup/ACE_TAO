@@ -69,9 +69,12 @@ ifndef TAO_ORBSVCS
       TAO_ORBSVCS += RTCORBAEvent
     endif #corba_messaging
 
-    # The Load Balancer requires POA ServantLocator support, which
-    # Minimum CORBA disables.
-    TAO_ORBSVCS += CosLoadBalancing
+    ifeq ($(ami),1)
+      ifeq ($(interceptors),1)
+        # The Load Balancer requires AMI and Interceptor support.
+        TAO_ORBSVCS += CosLoadBalancing
+      endif #interceptors
+    endif #ami
 
     # The PortableGroup library requires several methods in the POA,
     # which are disabled by Minimum CORBA.

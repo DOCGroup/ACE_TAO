@@ -1,3 +1,18 @@
+Fri Oct 18 15:46:29 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Makefile.CosLoadBalancing: Removed the check for
+	  'ami' and 'interceptors' from this file. Most of the Makefiles
+	  in the orbsvcs adds the check in the top level Makefile, with a
+	  reason. 
+	
+	* orbsvcs/orbsvcs/Makefile: Moved the check here. The main reason
+	  for having the check here is that, once the list of Makefiles
+	  that needs to be run is built, it writes out the
+	  ORBSVCS_COMPONENTS.list file, event though the actual Makefile
+	  was not executed. This creates problmes for the tests and
+	  examples that depends on the contents within the
+	  ORBSVCS_COMPONENTS.list file.
+	
 Fri Oct 18 15:40:11 2002  Priyanka Gontla  <pgontla@ociweb.com>
 
 	* orbsvcs/ImplRepo_Service/ImR_Activator.bor: 
@@ -7,8 +22,8 @@ Fri Oct 18 15:40:11 2002  Priyanka Gontla  <pgontla@ociweb.com>
 	
 Fri Oct 18 10:30:20 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* examples/AMH/Sink_Server/Base_Server.cpp: Fixed a warning with
-	  g++. 
+	* examples/AMH/Sink_Server/Base_Server.cpp: Fixed a warning in
+	  g++ builds. 
 
 Thu Oct 17 18:35:29 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
