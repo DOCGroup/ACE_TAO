@@ -49,7 +49,6 @@ namespace TAO
    */
   class TAO_PortableGroup_Export PG_Object_Group
   {
-
     // Information about an object group member
     struct MemberInfo
     {

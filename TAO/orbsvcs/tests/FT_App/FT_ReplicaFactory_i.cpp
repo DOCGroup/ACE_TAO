@@ -762,9 +762,9 @@ void FT_ReplicaFactory_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 // competence-challenged compilers.
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template ACE_Vector<FT_TestReplica_i *>;
-  template ACE_Guard<ACE_Mutex>;
-  template ACE_Vector<ACE_CString>;
+  template class ACE_Vector<FT_TestReplica_i *>;
+  template class ACE_Guard<ACE_Mutex>;
+  template class ACE_Vector<ACE_CString>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate ACE_Vector<FT_TestReplica_i *>
 # pragma instantiate ACE_Guard<ACE_Mutex>

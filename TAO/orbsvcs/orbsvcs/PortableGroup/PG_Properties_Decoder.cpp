@@ -158,7 +158,7 @@ int TAO_PG::test_encode_decode ()
 #endif // PG_PS_UNIT_TEST
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template ACE_Hash_Map_Manager<
+  template class ACE_Hash_Map_Manager<
     ACE_CString,
     const PortableGroup::Value *,
     ACE_SYNCH_NULL_MUTEX>;
