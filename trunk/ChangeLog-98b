@@ -1,7 +1,7 @@
 Wed Dec 09 18:03:58 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/Reactor/WFMO_Reactor/test_network_events.cpp (main):
-	  Removed global variables and cleaned up some minor things.
+        * examples/Reactor/WFMO_Reactor/test_network_events.cpp (main):
+          Removed global variables and cleaned up some minor things.
 
 Wed Dec 09 07:02:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -29,6 +29,13 @@ Wed Dec 09 07:02:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-tandem.h,README: removed ACE_HAS_STRUCT_PROTOENT_DATA,
           because it is no longer used.  Thanks to Ossama for reporting this.
+
+        * tests/Collection_Test.cpp,
+          examples/Reactor/Misc/test_early_timeouts.cpp:
+          removed unused parameter names argc and argv.
+
+        * tests/DLL_Test.cpp: added ACE_Auto_Basic_Ptr <Hello> template
+          instantiation.
 
 1998-12-09  Irfan Pyarali  <irfan@cs.wustl.edu>
 
