@@ -91,6 +91,13 @@ public class PushConsumerFactory {
                   arg_index += 2;
                   ++ss_names_count_;
                 }
+              else if (args[arg_index].equals ("-dualECdemo")) 
+                {
+                  System.out.println ("switch [" + args[arg_index] + "]");
+                  ++arg_index;
+                  ec_names_count_ += 2;
+                  ss_names_count_ += 2;
+                }
               // Skip over anything else
               else
                 {
@@ -130,6 +137,16 @@ public class PushConsumerFactory {
                   ss_names_[ss_names_count_] = args[arg_index + 1];
                   ++ss_names_count_;       
                   arg_index += 2;
+                }
+              else if (args[arg_index].equals ("-dualECdemo")) 
+                {
+                  ss_names_[ss_names_count_] = "DUAL_SCHED_HI";
+                  ss_names_[ss_names_count_ + 1] = "DUAL_SCHED_LO";
+                  ec_names_[ec_names_count_] = "DUAL_EC_HI";
+                  ec_names_[ec_names_count_ + 1] = "DUAL_EC_LO";
+                  ++arg_index;
+                  ec_names_count_ += 2;
+                  ss_names_count_ += 2;
                 }
               // Skip over anything else.
               else
