@@ -1,3 +1,17 @@
+Mon Jul 24 11:12:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+
+	  Removed extra set of parentheses generated when using the
+	  native 'throw' keyword. Thanks to Alex Hornby <alex@hornby.org.uk>
+	  for reporting this bug.
+
 Mon Jul 24 01:27:53 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Acceptor_Registry.cpp (open):
