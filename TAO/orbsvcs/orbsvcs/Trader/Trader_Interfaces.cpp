@@ -122,7 +122,6 @@ query (const char *type,
   // Obtain a reference to the offer database. 
   Offer_Database& offer_database = this->trader_.offer_database ();  
   
-  // Perform the lookup, placing the ordered results in ordered_offers.
   // TAO_Offer_Filter -- ensures that we don't consider offers with
   // modifiable or dynamic properties if the Trader doesn't support
   // them, or the importer has turned them off using policies. 
@@ -201,6 +200,7 @@ query (const char *type,
           CosTrading::Admin::OctetSeq_var rid;
           if (request_id == 0)
             {
+              // If a query id needs to be generated, do so. 
               CosTrading::Admin_ptr admin_if =
                 this->trader_.trading_components ().admin_if ();
               request_id = admin_if->request_id_stem (env);
@@ -208,6 +208,8 @@ query (const char *type,
 
               if (request_id != 0)
                 {
+                  // Remember this sequence number, in case it makes
+                  // its unholy return. 
                   rid = request_id;                  
                   ACE_GUARD (TRADER_LOCK_TYPE, trader_mon, this->lock_);
                   this->request_ids_.insert (*request_id);
@@ -216,7 +218,8 @@ query (const char *type,
               else
                 return;
             }
-          
+
+          // Query those links we've accumulated!
           this->federated_query (links.in (),
                                  policies,
                                  *request_id,
@@ -259,7 +262,7 @@ lookup_one_type (const char* type,
       // the constraint, use the TAO_Preference_Interpreter to
       // order the matched offers with respect to the preference
       // string passed to the method. All the while the offer
-      // iterator ensures we don't exceed the match cardinality
+      // filter ensures we don't exceed the match cardinality
       // constraints. 
       CosTrading::Offer* offer = offer_iter.get_offer ();
       
@@ -341,7 +344,8 @@ lookup_all_subtypes (const char* type,
             {
               if (ACE_OS::strcmp (type_struct->super_types[j], type) == 0)
                 {
-                  // Egads, a subtype!
+                  // Egads, a subtype! This type has the type passed
+                  // to query in its list of super_types.
                   offer_filter.configure_type (type_struct.ptr ());
                   this->lookup_one_type (all_types[i],
                                          offer_database,
@@ -416,12 +420,14 @@ fill_receptacles (const char* type,
     {
       CosTrading::Offer* offer = 0;
       CosTrading::OfferId offer_id = 0;
-      
+
+      // Pull the next ordered offer out of the preference interpreter.
       pref_inter.remove_offer (offer, offer_id);
       CosTrading::Offer& source = *offer;
       CosTrading::Offer& destination = offers[i];
-      prop_filter.filter_offer (source, destination);
 
+      // Filter out the undesired properties. 
+      prop_filter.filter_offer (source, destination);
       CORBA::string_free (offer_id);
     }
     
@@ -430,16 +436,19 @@ fill_receptacles (const char* type,
     {
       // Create an iterator implementation 
       TAO_Offer_Iterator *oi = this->create_offer_iterator (prop_filter);
-      offer_itr = oi->_this (env);
 
-      TAO_CHECK_ENV_RETURN (env,total_offers - offers_in_iterator);
+      // Register it with the POA.
+      offer_itr = oi->_this (env);
+      TAO_CHECK_ENV_RETURN (env, total_offers - offers_in_iterator);
       
       // Add to the iterator
       for (i = 0; i < offers_in_iterator; i++)
 	{
           CosTrading::Offer* offer = 0;
           CosTrading::OfferId offer_id = 0;
-          
+
+          // Pull the next ordered offer out of the preference
+          // intrerpreter and add it to the offer iterator.
           pref_inter.remove_offer (offer, offer_id);
 	  oi->add_offer (offer_id, offer);
 	}
@@ -685,7 +694,7 @@ federated_query (const CosTrading::LinkNameSeq& links,
         }
       TAO_CATCHANY
 	{
-          TAO_TRY_ENV.print_exception ("TAO_Lookup::federated_query");
+          // Ah, well, this query failed, move on to the next one.
 	}
       TAO_ENDTRY;
     }

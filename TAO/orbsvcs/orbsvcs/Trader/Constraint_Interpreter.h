@@ -26,8 +26,8 @@
 
 class TAO_Interpreter
 // = TITLE
-//      TAO_Interpreter is the superclass for all interpreters. It's
-//      build tree method invoke the yacc parser to parse a constraint 
+//      TAO_Interpreter is the superclass for all interpreters. Its
+//      build tree method invokes the yacc parser to parse a constraint 
 //      or preference string. 
 {   
 protected:
@@ -155,18 +155,27 @@ private:
 
   TAO_Preference_Interpreter (const TAO_Preference_Interpreter&);
   TAO_Preference_Interpreter& operator= (const TAO_Preference_Interpreter&);
+  // Disallow copying.
   
   struct Preference_Info
   {
     CORBA::Boolean evaluated_;
+    // True if the preference evaluation didn't return an error for this offer.
+    
     TAO_Literal_Constraint value_;
+    // The value of the preference evaluation.
+
     CosTrading::OfferId offer_id_;
+    // The offer id of this offer.
+    
     CosTrading::Offer* offer_;
+    // A pointer to the offer.
   };
   
   typedef ACE_Unbounded_Queue<Preference_Info> Ordered_Offers; 
   
   Ordered_Offers offers_;
+  // The ordered list of offers.
 };
 
   // *************************************************************
