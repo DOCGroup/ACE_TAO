@@ -11,7 +11,9 @@ TAO_Property_Filter (const SPECIFIED_PROPS& desired_props,
 {
   if (this->policy_ == CosTrading::Lookup::some)
     {
-    const CosTrading::PropertyNameSeq& prop_seq = desired_props.prop_names ();
+      ACE_DEBUG ((LM_DEBUG, "Filter: policy == some\n"));
+      const CosTrading::PropertyNameSeq&
+	prop_seq = desired_props.prop_names ();
       int length = prop_seq.length ();
 
       for (int i = 0; i < length; i++)
@@ -19,16 +21,19 @@ TAO_Property_Filter (const SPECIFIED_PROPS& desired_props,
 	  const char* pname = prop_seq[i];
 
 	  // Check for errors or duplicates
-	  if (! TAO_Trader_Base::is_valid_identifier_name (pname))
-	    TAO_THROW_SPEC (CosTrading::IllegalPropertyName (pname));
-	  else
+	  if (TAO_Trader_Base::is_valid_identifier_name (pname))
 	    {
 	      // Insert returns a pair whose second element is a flag
 	      // indicating whether a collision occured.
 	      TAO_String_Hash_Key prop_name (pname);
 	      if (this->props_.insert (prop_name) == 1)
-		TAO_THROW_SPEC (CosTrading::DuplicatePropertyName (pname));
-	    }	    
+		{
+		  ACE_DEBUG ((LM_DEBUG, "Filter: Inserted %s\n", pname));
+		  TAO_THROW (CosTrading::DuplicatePropertyName (pname));
+		}
+	    }
+	  else
+	    TAO_THROW (CosTrading::IllegalPropertyName (pname));
 	}
     }
 }

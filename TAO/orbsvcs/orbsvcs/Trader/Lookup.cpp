@@ -242,8 +242,8 @@ perform_lookup (const char* type,
   // the return sequence and iterator for later purusal by the
   // importer. Only prepare for the importer no more offers than the
   // return cardinality default or policy allows.
-  int num_offers = pref_inter.num_offers ();
-  for (int i = 0; i < num_offers && i < return_card; i++)
+  CORBA::ULong num_offers = pref_inter.num_offers ();
+  for (CORBA::ULong i = 0; i < num_offers && i < return_card; i++)
     {
       CosTrading::Offer* offer;
       CosTrading::OfferId offer_id;
@@ -345,7 +345,7 @@ lookup_all_subtypes (const char* type,
   // closure of a type's super type relation includes the super type
   // being considered, then perform a search on that type.
   CORBA::ULong num_types = all_types->length ();
-  for (int i = 0;
+  for (CORBA::ULong i = 0;
        i < num_types && offer_filter.ok_to_consider_more ();
        i++)
     {
@@ -367,7 +367,7 @@ lookup_all_subtypes (const char* type,
 	super_types = type_struct->super_types;
       CORBA::ULong num_super_types = super_types.length ();
 
-      for (int j = 0; j < num_super_types; j++)
+      for (CORBA::ULong j = 0; j < num_super_types; j++)
 	{
 	  if (ACE_OS::strcmp (type_struct->super_types[j], type) == 0)
 	    {
@@ -414,7 +414,7 @@ fill_receptacles (const char* type,
   
   // RETURNING: Calculate how many offers go into the sequence
   //  Calculate how many go into the iterator
-  int size = ordered_offers.size ();
+  CORBA::ULong size = ordered_offers.size ();
   CORBA::ULong offers_in_sequence = (how_many < size) ? how_many : size;
   CORBA::ULong offers_in_iterator = size - offers_in_sequence;
   CORBA::ULong total_offers = offers_in_sequence + offers_in_iterator;
@@ -422,7 +422,7 @@ fill_receptacles (const char* type,
   offers->length (offers_in_sequence);
   
   // Add to the sequence, filtering out the undesired properties.
-  for (int i = 0;
+  for (CORBA::ULong i = 0;
        i < offers_in_sequence;
        ordered_offers_iterator.advance (), i++)
     {
@@ -772,7 +772,7 @@ operator== (const CosTrading::Admin::OctetSeq_var& l,
   
   if (left_length == right_length) 
     {
-      for (int i = 0; i < left_length; i++)
+      for (CORBA::ULong i = 0; i < left_length; i++)
 	{
 	  if (left[i] == right[i])
 	    {

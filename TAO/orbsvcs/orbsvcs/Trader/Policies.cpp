@@ -27,10 +27,10 @@ TAO_Policies::TAO_Policies (TAO_Trader_Base& trader,
   for (int i = 0; i < TAO_NUM_POLICIES; i++)
     this->policies_[i] = 0;
 
-  for (int j = 0; j < policies.length (); j++)
+  for (CORBA::ULong j = 0; j < policies.length (); j++)
     {      
       const char* pol_name = (const char*) policies[j].name;
-      int length = (pol_name == 0) ? 0 : ACE_OS::strlen (pol_name),
+      size_t length = (pol_name == 0) ? 0 : ACE_OS::strlen (pol_name),
 	index = -1;
 
       if (length < ACE_OS::strlen (POLICY_NAMES[HOP_COUNT]))
@@ -387,7 +387,6 @@ TAO_Policies::policies_to_forward (void)
   // Create a new policy sequence, shortening the starting trader
   // policy by one link.
   
-  CORBA::Environment env;
   CORBA::ULong counter = 0;
   CosTrading::Policy* policy_buffer =
     CosTrading::PolicySeq::allocbuf (REQUEST_ID + 1);
@@ -410,20 +409,26 @@ TAO_Policies::policies_to_forward (void)
 		{
 		  // Eliminate the first link of the trader name.
 		  CosTrading::TraderName* trader_name =
-		    this->starting_trader (env);
+		    this->starting_trader (TAO_TRY_ENV);
+		  TAO_CHECK_ENV;
+		  
 		  CORBA::ULong length = trader_name->length ();
 		  
-		  for (int j = 1; j < length; j++)
+		  for (CORBA::ULong j = 1; j < length; j++)
 		    trader_name[j - 1] = trader_name[j];		  
 		  trader_name->length (length - 1);
 
 		  new_policy.value <<= *trader_name;
+		  counter++;
 		}
 	      TAO_CATCHANY {}
 	      TAO_ENDTRY;	      
 	    }
 	  else
-	    new_policy.value = this->policies_[i]->value;
+	    {
+	      new_policy.value = this->policies_[i]->value;
+	      counter++;
+	    }
 	}
     }
 
