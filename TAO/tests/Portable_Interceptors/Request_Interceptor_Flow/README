@@ -1,5 +1,9 @@
 # $Id$
 
+NOTE: The code in this test is highly specialized and very brittle.
+      Do not use it as a model for "real world" interceptor code.
+
+
 This test verifies that proper request interceptor flow semantics
 occur during a given request/invocation.  It does so by executing a
 canned (hard-coded) set of scenarios.  Each scenario excercises a
