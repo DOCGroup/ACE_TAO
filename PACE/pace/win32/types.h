@@ -1,4 +1,4 @@
-/* $Id$ -*- C -*-
+/* $Id$
 
  * ============================================================================
  *
@@ -109,7 +109,6 @@ typedef unsigned long DWORD;
 
 #ifndef PACE_SIZE_T
 #define PACE_SIZE_T
-  typedef unsigned long size_t;
   typedef size_t pace_size_t;
 #endif /* PACE_SIZE_T */
 
