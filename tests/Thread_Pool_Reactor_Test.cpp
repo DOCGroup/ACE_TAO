@@ -104,7 +104,8 @@ parse_arg (int argc, ASYS_TCHAR *argv[])
 
 class Acceptor_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
 {
-  // This class is the Svc_Handler used by <Acceptor>.
+  // = TITLE
+  //   This class is the Svc_Handler used by <Acceptor>.
 public:
   Acceptor_Handler (ACE_Thread_Manager *tm = 0);
   // The default constructor makes sure the right reactor is used.
@@ -128,8 +129,9 @@ int
 Acceptor_Handler::handle_input (ACE_HANDLE fd)
 {
   ASYS_TCHAR buffer[BUFSIZ];
-  int result = -1;
-  if ((result = this->peer ().recv (buffer, BUFSIZ * sizeof (ASYS_TCHAR))) > 0)
+  int result = this->peer ().recv (buffer, BUFSIZ * sizeof (ASYS_TCHAR);
+
+  if (result > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("(%t) Acceptor_Handler::handle_input (fd = %x)\n"),
@@ -144,14 +146,12 @@ Acceptor_Handler::handle_input (ACE_HANDLE fd)
           main_reactor->notify ();
           ACE_Reactor::end_event_loop ();
         }
-
       return 0;
     }
   else
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT ("(%t) Acceptor_Handler: end handle input (%x)\n"),
                 fd));
-
   return -1;
 }
 
@@ -170,16 +170,14 @@ svr_worker (void *)
 {
   // Server thread function.
 
-  int result = 0;
-
   while (!ACE_Reactor::event_loop_done ())
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) handling events ....\n"));
 
-      result = ACE_Reactor::instance ()->handle_events ();
-      if (result < 0)
-        ACE_DEBUG ((LM_DEBUG, "(%t) Error handling events\n"));
+      if (ACE_Reactor::instance ()->handle_events () == -1)
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%t) Error handling events\n"));
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -202,18 +200,23 @@ cli_worker (void *)
       if (connect.connect (stream, addr) < 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("(%t) %p\n"), ASYS_TEXT ("connect")));
+                      ASYS_TEXT ("(%t) %p\n"),
+                      ASYS_TEXT ("connect")));
           continue;
         }
 
       ASYS_TCHAR *buf = ASYS_TEXT ("Message from Connection worker\n");
 
-      for (size_t j = 0; j < cli_req_no; ACE_OS::sleep (delay), j++)
+      for (size_t j = 0; j < cli_req_no; j++)
         {
-          ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) conn_worker stream handle = %x\n"),
+          ACE_DEBUG ((LM_DEBUG, 
+                      ASYS_TEXT ("(%t) conn_worker stream handle = %x\n"),
                       stream.get_handle ()));
-          stream.send_n (buf, (ACE_OS::strlen (buf) + 1) * sizeof (ASYS_TCHAR));
+          stream.send_n (buf,
+                         (ACE_OS::strlen (buf) + 1) * sizeof (ASYS_TCHAR));
+          ACE_OS::sleep (delay);
         }
+
       stream.close ();
     }
 
@@ -226,6 +229,7 @@ worker (void *)
   ACE_OS::sleep (3);
 
   ACE_INET_Addr addr (rendezvous);
+
   int grp = ACE_Thread_Manager::instance ()->spawn_n (cli_thrno,
                                                       &cli_worker,
                                                       &addr);
@@ -234,19 +238,24 @@ worker (void *)
   ACE_Thread_Manager::instance ()->wait_grp (grp);
 
   ACE_OS::sleep (1);
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Shutting down...\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("Shutting down...\n")));
   ACE_SOCK_Stream stream;
   ACE_SOCK_Connector connect;
+
   if (connect.connect (stream, addr) < 0)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p Error while connecting\n"),
                 ASYS_TEXT ("connect")));
 
   char *buf = "shutdown";
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("shutdown stream handle = %x\n"),
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("shutdown stream handle = %x\n"),
               stream.get_handle ()));
+
   stream.send_n (buf, ACE_OS::strlen (buf) + 1);
   stream.close ();
+
   return 0;
 }
 
@@ -262,27 +271,29 @@ main (int argc, ASYS_TCHAR *argv[])
   ACE_Reactor::instance (&new_reactor);
 
   // Most platforms seem to have trouble accepting connections
-  // simultaneously in multiple threads.  Therefore, we can't
-  // quite use the Acceptor with the TP_Reactor.  Create a
-  // Select_Reactor and run the event_loop in the main thread.
+  // simultaneously in multiple threads.  Therefore, we can't quite
+  // use the Acceptor with the TP_Reactor.  Create a Select_Reactor
+  // and run the event_loop in the main thread.
   ACE_Select_Reactor slr;
   ACE_Reactor mreactor (&slr);
-  main_reactor =  &mreactor;
+  main_reactor = &mreactor;
   ACCEPTOR acceptor;
   ACE_INET_Addr accept_addr (rendezvous);
-  acceptor.open (accept_addr,
-                 main_reactor);
-
+  if (acceptor.open (accept_addr,
+                     main_reactor) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("%p\n"),
+                       ASYS_TEXT ("open")),
+                      1);
 
   ACE_Thread_Manager::instance ()->spawn_n (svr_thrno,
                                             svr_worker);
   ACE_Thread_Manager::instance ()->spawn (worker);
 
   int result = 0;
+
   while (result >= 0 && main_event_loop)
-    {
-      result = slr.handle_events ();
-    }
+    result = slr.handle_events ();
 
   ACE_ASSERT (result != -1);
 
