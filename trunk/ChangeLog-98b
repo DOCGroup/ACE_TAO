@@ -1,3 +1,10 @@
+Mon Jul  6 14:24:11 EET DST 1998 Wei Chiang <chiang@horizon.ntc.nokia.com>
+	* tests/CLASSIX/CLASSIX_Con_Acc_Test.cpp:
+	Add a pause after each send_n()(i.e. ipcSend()) as a temporary
+	work around over the block problem in ipcSend() when the resources are
+	exhaused.
+
+
 Mon Jul  6 03:56:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Thread_Manager.h (ACE_Thread_Manager::thr_self): Instead of
