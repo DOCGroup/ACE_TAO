@@ -33,6 +33,10 @@ public:
 
     rh->test_method (send_time_);
 
+    // We had duplicated the RH, so release it after we finish using
+    // it.
+    CORBA::release (rh);
+
     ACE_UNUSED_ARG (time);
     return -1;
 
