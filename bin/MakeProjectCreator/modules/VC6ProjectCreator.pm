@@ -102,14 +102,19 @@ sub sort_files {
 sub file_sorter {
   my($self)  = shift;
   my($left)  = shift;
-  my($right) = shift;   
+  my($right) = shift;
   return lc($left) cmp lc($right);
 }
 
 
 sub crlf {
   my($self) = shift;
-  return "\r\n";
+  if ($^O eq 'MSWin32') {
+    return "\n";
+  }
+  else {
+    return "\r\n";
+  }
 }
 
 
@@ -126,7 +131,7 @@ sub fill_value {
 }
 
 
-sub separate_static_project {   
+sub separate_static_project {
   my($self) = shift;
   return 1;
 }
@@ -156,8 +161,8 @@ sub override_valid_component_extensions {
 
   return $array;
 }
- 
- 
+
+
 sub override_exclude_component_extensions {
   my($self)  = shift;
   my($comp)  = shift;

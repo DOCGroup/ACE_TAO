@@ -48,14 +48,19 @@ sub sort_files {
 sub file_sorter {
   my($self)  = shift;
   my($left)  = shift;
-  my($right) = shift;   
+  my($right) = shift;
   return lc($left) cmp lc($right);
 }
 
 
 sub crlf {
   my($self) = shift;
-  return "\r\n";
+  if ($^O eq 'MSWin32') {
+    return "\n";
+  }
+  else {
+    return "\r\n";
+  }
 }
 
 
