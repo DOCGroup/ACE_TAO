@@ -1,4 +1,4 @@
-Fri May 10 18:15:10 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
+Fri May 10 18:16:50 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Connector.cpp (handle_output): Removed unnecessary debug
 	  statement.
