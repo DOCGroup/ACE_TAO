@@ -1,3 +1,14 @@
+Fri Jun 16 13:10:17 2000  Ossama Othman  <ossama@uci.edu>
+	
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.h (preinvoke,
+	  postinvoke):
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp (preinvoke,
+	  postinvoke):
+
+	  Use the TAO_ENV_ARG_DECL macro to allow the ReplicaLocator
+	  implementation to be compiled with or without exceptions
+	  transparently.
+
 Fri Jun 16 15:33:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Connectors.cpp (write_request_header): 
