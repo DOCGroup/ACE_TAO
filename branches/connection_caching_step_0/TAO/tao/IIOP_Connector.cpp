@@ -194,6 +194,10 @@ TAO_IIOP_Connector::connect (TAO_Base_Connection_Property *prop,
         ACE_dynamic_cast (TAO_IIOP_Client_Connection_Handler *,
                           conn_handler);
 
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) IIOP_Connector::connect ")
+                  ACE_TEXT ("I got this Handler <%d> \n"),
+                  svc_handler->test_index_));
     }
   else
     {
@@ -260,6 +264,7 @@ TAO_IIOP_Connector::connect (TAO_Base_Connection_Property *prop,
                       ACE_TEXT ("couldn't add the new  connection to Cache \n")));
         }
     }
+
 
   transport = svc_handler->transport ();
   return 0;

@@ -13,11 +13,12 @@
 ACE_RCSID(tao, Connection_Handler, "$Id$")
 
 TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
-  :orb_core_ (orb_core),
-   tss_resources_ (orb_core->get_tss_resources ()),
-   ref_count_ (1),
-   cache_map_entry_ (0),
-   is_registered_ (0)
+  :   test_index_ (0),
+      orb_core_ (orb_core),
+      tss_resources_ (orb_core->get_tss_resources ()),
+      ref_count_ (1),
+      cache_map_entry_ (0),
+      is_registered_ (0)
 {
 }
 

@@ -95,6 +95,8 @@ public:
   virtual ACE_HANDLE fetch_handle (void) = 0;
   // Get the underlying handle
 
+  CORBA::Long test_index_;
+  // test index
 protected:
 
   void remove_handle (ACE_HANDLE handle);
@@ -148,6 +150,8 @@ private:
 
   CORBA::Boolean is_registered_;
   // Are we registered with the reactor?
+
+
 };
 
 #if defined (__ACE_INLINE__)
