@@ -50,10 +50,9 @@ class SFP_Encoder
   // Need the ORB to initialize the CDR encoder
 };
 
-/*
 class SFP_Decoder
 {
-
+public:
   SFP_Decoder ();
   // Default constructor
 
@@ -68,16 +67,15 @@ class SFP_Decoder
   int decode_stop_message (ACE_Message_Block *message);
   // returns 0 if the message is a valid SFP start message
   // returns -1 otherwise.
-
+  
   ~SFP_Decoder ();
 
 private:
-  CDR decoder_;
+  CDR *decoder_;
   // Use the TAO CDR encoder to encode everything
   
   CORBA::ORB_var orb_;
   // Need the ORB to initialize the CDR encoder
 };
-*/
 
 #endif /* !defined (TAO_SFP_H) */

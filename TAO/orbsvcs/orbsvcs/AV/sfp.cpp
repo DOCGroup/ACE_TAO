@@ -8,6 +8,7 @@ SFP_Encoder::SFP_Encoder ()
   : orb_ (0),
     encoder_ (0)
 {
+  // We need to initialize the ORB!
   TAO_TRY
     {
       ACE_ARGV orb_args (TAO_SFP_ORB_ARGUMENTS);
@@ -26,7 +27,7 @@ SFP_Encoder::SFP_Encoder ()
   TAO_ENDTRY;
   ACE_NEW (encoder_,
            CDR ());
-                  
+  
 }
 
 ACE_Message_Block *
@@ -38,7 +39,8 @@ SFP_Encoder::encode_start_message ()
       SFP::start_message start;
 
       // copy the magic number into the message
-      for (int i = 0; i < sizeof start.magic_number; i++)
+      start.magic_number.length (4);
+      for (int i = 0; i < 4; i++)
         start.magic_number [i] = TAO_SFP_START_MAGIC_NUMBER [i];
       
       // put the version number into the field
@@ -56,9 +58,10 @@ SFP_Encoder::encode_start_message ()
           == CORBA_TypeCode::TRAVERSE_CONTINUE)
         {
           ACE_DEBUG ((LM_DEBUG, 
-                      "(%P|%t) encode of start succeeded:"
-                      "size of the buffer is %d\n",
-                      encoder_->length));
+                      "(%P|%t) encode of start message succeeded:"
+                      "length == %d\n",
+                      encoder_->length ()));
+
         }
       TAO_CHECK_ENV;
     }
@@ -74,18 +77,19 @@ SFP_Encoder::encode_start_message ()
   ACE_Message_Block *message;
   
   ACE_NEW_RETURN (message, 
-                  ACE_Message_Block (encoder_->length),
+                  ACE_Message_Block (encoder_->length ()),
                   0);
   
-  if (message->copy ((char *) encoder_->buffer,
-                     (size_t) encoder_->length) == -1)
+  if (message->copy ((char *) encoder_->buffer (),
+                     encoder_->length ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
                        "SFP_Encoder: Could not copy"
                        " start message into ACE_Message_Block"),
                       0);
-
+  
+  
   return message;
-
+  
 }
 
 ACE_Message_Block *
@@ -96,8 +100,8 @@ SFP_Encoder::encode_simple_frame (ACE_Message_Block *data)
       // construct the frame header
       SFP::frame_header frame_header;
       // copy the magic number into the message
-      //      frame_header.magic_number.length (4);
-      for (int i = 0; i < 3; i++)
+      frame_header.magic_number.length (4);
+      for (int i = 0; i < 4; i++)
         frame_header.magic_number [i] = TAO_SFP_MAGIC_NUMBER [i];
       
       // flags field is all zeroes
@@ -117,9 +121,10 @@ SFP_Encoder::encode_simple_frame (ACE_Message_Block *data)
           == CORBA_TypeCode::TRAVERSE_CONTINUE)
         {
           ACE_DEBUG ((LM_DEBUG, 
-                      "(%P|%t) encode of simpleframe header succeeded:"
-                      "size of the buffer is %d\n",
-                      encoder_->length));
+                      "(%P|%t) encode of simple frame succeeded:"
+                      "length == %d\n",
+                      encoder_->length ()));
+
         }
       TAO_CHECK_ENV;
     }
@@ -135,11 +140,11 @@ SFP_Encoder::encode_simple_frame (ACE_Message_Block *data)
   ACE_Message_Block *message;
   
   ACE_NEW_RETURN (message, 
-                  ACE_Message_Block (encoder_->length),
+                  ACE_Message_Block (encoder_->length ()),
                   0);
   
-  if (message->copy ((char *) encoder_->buffer,
-                     (size_t) encoder_->length) == -1)
+  if (message->copy ((char *) encoder_->buffer (),
+                     (size_t) encoder_->length ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
                        "SFP_Encoder: Could not copy"
                        " header for simpleframe into "
@@ -153,6 +158,57 @@ SFP_Encoder::encode_simple_frame (ACE_Message_Block *data)
 }
 
 SFP_Encoder::~SFP_Encoder ()
+{
+
+}
+
+SFP_Decoder::SFP_Decoder ()
+{
+  ACE_NEW (decoder_,
+           CDR ());
+  
+}
+
+int
+SFP_Decoder::decode_start_message (ACE_Message_Block *message)
+{
+
+  TAO_TRY
+    {
+      decoder_->decode (SFP::_tc_start_message,
+			(void *) message->rd_ptr (),
+			0,
+			TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("SFP_Decoder::"
+                                   "decode_start_message");
+      return -1;
+    }
+  TAO_ENDTRY;
+
+  //  Now try to stuff the decoded buffer into our structure
+  SFP::start_message start;
+
+  cerr << decoder_->length ();
+  
+  ACE_OS::memcpy (&start,
+		  decoder_->buffer (),
+		  (size_t) decoder_->length ());
+  
+  ACE_DEBUG ((LM_DEBUG, 
+	      "Decoded start message,"
+	      "version number == %d . %d\n",
+	      start.major_version,
+	      start.minor_version));
+
+  return 0;
+}
+
+SFP_Decoder::~SFP_Decoder ()
 {
 
 }
