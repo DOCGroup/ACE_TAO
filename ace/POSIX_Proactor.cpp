@@ -353,7 +353,7 @@ ACE_POSIX_Proactor::create_asynch_write_dgram (void)
 
 ACE_Asynch_Write_Dgram_Result_Impl *
 ACE_POSIX_Proactor::create_asynch_write_dgram_result
-  (ACE_Handler::Proxy_ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block *message_block,
    size_t bytes_to_write,
@@ -670,7 +670,7 @@ ACE_AIOCB_Notify_Pipe_Manager::ACE_AIOCB_Notify_Pipe_Manager (ACE_POSIX_AIOCB_Pr
   posix_aiocb_proactor_->set_notify_handle (this->pipe_.read_handle ());
 
   // Open the read stream.
-  if (this->read_stream_.open (*this,
+  if (this->read_stream_.open (this->proxy (),
                                this->pipe_.read_handle (),
                                0, // Completion Key
                                0) // Proactor

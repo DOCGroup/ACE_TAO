@@ -209,7 +209,7 @@ protected:
   ACE_Proactor *proactor_;
 
   /// Handler that will receive the callback.
-  ACE_Handler::Proxy_Ptr *handler_proxy_;
+  ACE_Handler::Proxy_Ptr handler_proxy_;
 
   /// I/O handle used for reading.
   ACE_HANDLE handle_;
