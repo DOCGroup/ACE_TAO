@@ -2684,27 +2684,37 @@ idl_store_pragma (char *buf)
   int crunched = 0;
 
   // Remove all the blanks between the '#' and the 'pragma'.
-  if (*sp != 'p')
+  while (*sp != 'p')
     {
-      while (*sp != 'p')
+      ++sp;
+      ++crunched;
+    }
+
+  char *tp = buf + 1;
+
+  // This copies the crunched string back to the original, and
+  // also compensates for the behavior of the Sun preprocessor,
+  // which put spaces around the double colons of a non-quoted
+  // scoped name, a case which is possible in #pragma version.
+  while (*sp != '\n')
+    {
+      if (*sp == ' ' && *(sp + 1) == ':')
         {
-          ++sp;
           ++crunched;
         }
-
-      char *tp = buf + 1;
-
-      while (*sp != '\n')
+      else if (*sp == ':' && *(sp + 1) == ' ')
+        {
+          *tp = *sp;
+          ++crunched;
+          ++sp;
+          ++tp;
+        }
+      else
         {
           *tp = *sp;
           ++tp;
-          ++sp;
         }
-    }
 
-  // Remove the final '\n'.
-  while (*sp != '\n')
-    {
       ++sp;
     }
 
@@ -2773,9 +2783,10 @@ idl_store_pragma (char *buf)
 
       // For some reason, the SunCC preprocessor adds a trailing space, which
       // messes with idl_valid_version() below, so we check and remove.
-      if (number[len - 1] == ' ')
+      while (number[len - 1] == ' ')
         {
           number[len - 1] = '\0';
+          len = ACE_OS::strlen (number);
         }
 
       AST_Decl *d = idl_find_node (tmp);
