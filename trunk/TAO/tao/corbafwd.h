@@ -61,7 +61,13 @@
 # endif
 #endif /* _MSC_VER */
 
-#define TAO_DEFAULT_MINOR_CODE 0xffff0000L
+// This number was assigned by the OMG do *NOT* change at random
+// The ASCII represetantion is TA0xxxx, close enough since they only
+// take 20 bits, the first 16 are TA, the next 4 are 0000.
+// Remember that we can only play with the last 12 bits,
+// TAO_MAX_MINOR_CODE is there to remind us of that.
+#define TAO_DEFAULT_MINOR_CODE 0x544F0000
+#define TAO_MAX_MINOR_CODE 0x544F0FFF
 
 // Forward declarations of some data types are needed.
 
