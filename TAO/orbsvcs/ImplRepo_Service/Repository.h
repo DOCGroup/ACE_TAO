@@ -21,6 +21,7 @@
 #define REPOSITORY_H
 
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Synch.h"
 
 #if defined (UNICODE)
 #define ACE_TString ACE_WString
