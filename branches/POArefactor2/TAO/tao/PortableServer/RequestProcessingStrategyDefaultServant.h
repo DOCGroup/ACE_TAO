@@ -16,7 +16,7 @@
 
 #include "portableserver_export.h"
 #include "RequestProcessingStrategy.h"
-#include "ServantBase_var.h"
+#include "Servant_Base.h"
 
 #include "Servant_Location.h"
 
