@@ -12,6 +12,12 @@
 //    Checks to be sure that a failed ACE_NEW[_RETURN] doesn't end up throwing
 //    an exception up to the caller.
 //
+//    Note that this test doesn't get a real attempt on platforms which:
+//      1. Are known to throw exceptions when 'new' runs out of resources,
+//      2. Are built with exceptions disabled.
+//    In these cases, the test puts a message in the log noting that a failed
+//    new will throw an exception, and trust that the user accepts that risk.
+//
 // = AUTHOR
 //    Steve Huston
 //
@@ -63,8 +69,15 @@ main (int, ASYS_TCHAR *[])
   ACE_START_TEST (ASYS_TEXT ("New_Fail_Test"));
   int status = 0;
 
-#if defined (__SUNPRO_CC) && !defined (ACE_HAS_EXCEPTIONS)
+  // Some platforms are known to throw an exception on a failed 'new', but
+  // are customarily built without exception support to improve performance.
+  // These platforms are noted, and the test passes.
+  // For new ports, it is wise to let this test run.  Depending on intended
+  // conditions, exceptions can be disabled when the port is complete.
+#if (defined (__SUNPRO_CC) || defined (__GNUG__)) && \
+    !defined (ACE_HAS_EXCEPTIONS)
   ACE_DEBUG ((LM_NOTICE, "Out-of-memory will throw an unhandled exception\n"));
+  ACE_DEBUG ((LM_NOTICE, "Rebuild with exceptions=1 to prevent this, but it may impair performance.\n"));
 #else
 
   char *blocks[MAX_ALLOCS_IN_TEST];
