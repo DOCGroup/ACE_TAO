@@ -6518,6 +6518,9 @@ extern "C" ssize_t writev_timedwait (ACE_HANDLE handle,
 #     define ACE_DEFAULT_THREAD_KEYS 64
 #   endif /* ! ACE_DEFAULT_THREAD_KEYS */
 
+// forward declaration
+class ACE_TSS_Keys;
+
 /**
  * @class ACE_TSS_Emulation
  *
@@ -6542,6 +6545,10 @@ public:
   /// Sets the argument to the next available key.  Returns 0 on success,
   /// -1 if no keys are available.
   static int next_key (ACE_thread_key_t &key);
+
+  /// Release a key that was used. This way the key can be given out in a
+  /// new request. Returns 0 on success, 1 if the key was not reserved.
+  static int release_key (ACE_thread_key_t key);
 
   /// Returns the exit hook associated with the key.  Does _not_ check
   /// for a valid key.
@@ -6573,12 +6580,17 @@ public:
 
 private:
   // Global TSS structures.
-  /// Always contains the value of the next key to be allocated.
+  /// Contains the possible value of the next key to be allocated. Which key
+  /// is actually allocated is based on the tss_keys_used
   static u_int total_keys_;
 
   /// Array of thread exit hooks (TSS destructors) that are called for each
   /// key (that has one) when the thread exits.
   static ACE_TSS_DESTRUCTOR tss_destructor_ [ACE_TSS_THREAD_KEYS_MAX];
+
+  /// TSS_Keys instance to administrate whether a specific key is in used
+  /// or not
+  static ACE_TSS_Keys tss_keys_used_;
 
 #   if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
   /// Location of current thread's TSS array.
@@ -6712,8 +6724,12 @@ public:
   int test_and_set (const ACE_thread_key_t key);
 
   /// Mark the specified key as not being in use, if it was not already so
-  /// cleared.  Returns 1 if the had already been cleared, 0 if not.
+  /// cleared.  Returns 1 if the key had already been cleared, 0 if not.
   int test_and_clear (const ACE_thread_key_t key);
+
+  /// Return whether the specific key is marked as in use.
+  /// Returns 1 if the key is been marked, 0 if not.
+  int is_set (const ACE_thread_key_t key) const;
 
 private:
   /// For a given key, find the word and bit number that represent it.

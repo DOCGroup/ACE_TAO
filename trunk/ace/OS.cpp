@@ -1775,7 +1775,6 @@ int
 ACE_TSS_Keys::test_and_clear (const ACE_thread_key_t key)
 {
   ACE_KEY_INDEX (key_index, key);
-
   u_int word, bit;
   find (key_index, word, bit);
 
@@ -1789,6 +1788,17 @@ ACE_TSS_Keys::test_and_clear (const ACE_thread_key_t key)
       return 1;
     }
 }
+
+int
+ACE_TSS_Keys::is_set (const ACE_thread_key_t key) const
+{
+  ACE_KEY_INDEX (key_index, key);
+  u_int word, bit;
+  find (key_index, word, bit);
+
+  return ACE_BIT_ENABLED (key_bit_words_[word], 1 << bit);
+}
+
 
 class ACE_TSS_Cleanup
   // = TITLE
@@ -2213,6 +2223,8 @@ ACE_TSS_Cleanup::tss_keys ()
 # if defined (ACE_HAS_TSS_EMULATION)
 u_int ACE_TSS_Emulation::total_keys_ = 0;
 
+ACE_TSS_Keys ACE_TSS_Emulation::tss_keys_used_;
+
 ACE_TSS_Emulation::ACE_TSS_DESTRUCTOR
 ACE_TSS_Emulation::tss_destructor_[ACE_TSS_Emulation::ACE_TSS_THREAD_KEYS_MAX]
  = { 0 };
@@ -2341,12 +2353,26 @@ ACE_TSS_Emulation::next_key (ACE_thread_key_t &key)
 
   if (total_keys_ < ACE_TSS_THREAD_KEYS_MAX)
     {
+       u_int counter = 0;
+       // Loop through all possible keys and check whether a key is free
+       for ( ;counter < ACE_TSS_THREAD_KEYS_MAX; counter++)
+         {
+            ACE_thread_key_t localkey;
 #   if defined (ACE_HAS_NONSCALAR_THREAD_KEY_T)
-      ACE_OS::memset (&key, 0, sizeof (ACE_thread_key_t));
-      ACE_OS::memcpy (&key, &total_keys_, sizeof (u_int));
+              ACE_OS::memset (&localkey, 0, sizeof (ACE_thread_key_t));
+              ACE_OS::memcpy (&localkey, &counter_, sizeof (u_int));
 #   else
-      key = total_keys_;
+              localkey = counter;
 #   endif /* ACE_HAS_NONSCALAR_THREAD_KEY_T */
+            // If the key is not set as used, we can give out this key, if not
+            // we have to search further
+            if (tss_keys_used_.is_set(localkey) == 0)
+            {
+               tss_keys_used_.test_and_set(localkey);
+               key = localkey;
+               break;
+            }
+         }
 
       ++total_keys_;
       return 0;
@@ -2356,6 +2382,22 @@ ACE_TSS_Emulation::next_key (ACE_thread_key_t &key)
       key = ACE_OS::NULL_key;
       return -1;
     }
+}
+
+int
+ACE_TSS_Emulation::release_key (ACE_thread_key_t key)
+{
+  ACE_OS_Recursive_Thread_Mutex_Guard (
+    *ACE_static_cast (ACE_recursive_thread_mutex_t *,
+                      ACE_OS_Object_Manager::preallocated_object[
+                        ACE_OS_Object_Manager::ACE_TSS_KEY_LOCK]));
+
+  if (tss_keys_used_.test_and_clear (key) == 0)
+  {
+    --total_keys_;
+    return 0;
+  }
+  return 1;
 }
 
 void *
@@ -3940,12 +3982,14 @@ int
 ACE_OS::thr_keyfree (ACE_thread_key_t key)
 {
   ACE_OS_TRACE ("ACE_OS::thr_keyfree");
-  // If we are using TSS emulation then we shuld use ACE's implementation
+  // If we are using TSS emulation then we should use ACE's implementation
   //  of it and not make any PACE calls.
 # if defined (ACE_HAS_PACE) && !defined (ACE_HAS_TSS_EMULATION) && !defined (ACE_WIN32)
     return ::pace_pthread_key_delete (key);
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_TSS_EMULATION)
+    // Release the key in the TSS_Emulation administration
+    ACE_TSS_Emulation::release_key (key);
     return ACE_TSS_Cleanup::instance ()->remove (key);
 #   elif defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
     ACE_UNUSED_ARG (key);
