@@ -253,48 +253,45 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
       if (ACE_BIT_DISABLED (nv->flags (), CORBA::ARG_IN | CORBA::ARG_INOUT))
         continue;
 
-      // First, make sure the memory into which we'll be unmarshaling
-      // exists, and is the right size.
-      //
-      // NOTE: desirable to have a way to let the dynamic
-      // implementation routine preallocate this data, for
-      // environments where DSI is just being used in lieu of a
-      // language mapped server-side API and the size is really
-      // knowable in advance.
-      //
-      // This is exactly what the TAO IDL compiler generated skeletons do.
-
       CORBA::Any_ptr any = nv->value ();
       CORBA::TypeCode_var tc = any->type ();
 
-      void *value;
-      if (!any->value ())
-        { // not preallocated
-          ACE_NEW (value, char [tc->size (env)]);
+      // @@ (JP) The following code depends on the fact that 
+      // TO_InputCDR does not contain chained message blocks.
+      char *begin, *end;
+      begin = this->incoming_->rd_ptr ();
 
-          if (env.exception () != 0)
-            return;
+      CORBA::TypeCode::traverse_status retval = 
+        this->incoming_->skip (tc.in (), env);
 
-          any->replace (tc.in (), value, 1, env);
-          if (env.exception () != 0)
-            return;
+      TAO_CHECK_ENV (env);
 
-        }
-      else
-        value = (void *)any->value (); // memory was already preallocated
-
-      // Then just unmarshal the value.
-      (void) incoming_->decode (tc.in (), value, 0, env);
-      if (env.exception () != 0)
+      if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
           const char* param_name = nv->name ();
+
           if (param_name == 0)
             param_name = "(no name given)";
+
           ACE_ERROR ((LM_ERROR,
                       "IIOP_ServerRequest::arguments - problem while"
                       " decoding parameter %d <%s>\n", i, param_name));
           return;
         }
+
+      end = this->incoming_->rd_ptr ();
+
+      ACE_Message_Block* cdr;
+
+      ACE_NEW(cdr,
+              ACE_Message_Block (end - begin));
+
+      cdr->wr_ptr (end);
+
+      any->_tao_replace (tc.in (),
+                         cdr,
+                         0,
+                         env);        
     }
 
   // If any data is left over, it'd be context values ... else error.
