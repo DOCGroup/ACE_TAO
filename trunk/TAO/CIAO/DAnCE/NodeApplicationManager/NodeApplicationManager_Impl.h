@@ -109,6 +109,7 @@ namespace CIAO
     create_node_application (const ACE_CString & options
                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
+                       Deployment::ResourceNotAvailable,
                        Deployment::StartError,
                        Deployment::InvalidProperty));
 
