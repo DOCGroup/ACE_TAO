@@ -8,17 +8,17 @@ Wed Aug 15 11:10:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * include/makeinclude/wrapper_macros.GNU: Added $(VDIR) for
           OBJDIRS. This prevents hardcoding the value of OBJDIRS. This has
-          been tested for a dynamic and a static library on Linux. If
-          there are other platforms that gives problems, please feel free
-          to revert the changes to the version 4.114 of the file.
+ 	  been tested for a dynamic and a static library on Linux. If
+ 	  there are other platforms that gives problems, please feel free
+ 	  to revert the changes to the version 4.114 of the file.
 
 Wed Aug 15 09:35:19 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Dirent_Test.cpp:
 
           Added #define's for VXWORKS that allow this test to function
-          properly.  Avoid hard-coded relative paths that may not exist on
-          VxWorks.
+ 	  properly.  Avoid hard-coded relative paths that may not exist on
+ 	  VxWorks.
 
 Wed Aug 15 09:08:40 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -53,8 +53,8 @@ Tue Aug 14 23:57:42 2001  Steve Huston  <shuston@riverace.com>
 
         * A set of changes to encapsulate passing handles to spawned
           processes. Thanks very much to Eamonn Saunders
-          <Esaunders@softricity.com> for suggesting that this could
-          work and pointing out the Win32 details!
+ 	  <Esaunders@softricity.com> for suggesting that this could work
+ 	  and pointing out the Win32 details!
 
         * THANKS: Added Eamonn Saunders to the Hall of Fame
 
@@ -154,9 +154,13 @@ Mon Aug 13 14:01:35 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 Sun Aug 12 14:46:07 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-        * ace/OS.cpp (sched_params): Make sure to set errno for Win32 so
-          that callers can figure out what's going wrong in a consistent
-          way.
+	* ace/OS.cpp (sched_params): Make sure to set errno for Win32 so
+	  that callers can figure out what's going wrong in a consistent
+ 	  way.
+
+	* ace/Select_Reactor_Base.i (purge_pending_notifications): Don't
+	  try to purge the notifications if notify_handler_ is 0.  thanks
+ 	  to Steve Rahn <SRahn@rim.net> for reporting this.
 
 Mon Aug 13 20:09:04 2001  Balachandran  <bala@cs.wustl.edu>
 
@@ -230,12 +234,6 @@ Fri Aug 10 11:06:23 2001  Chad Elliott  <elliott_c@ociweb.com>
         * apps/drwho/server.cpp:
 
           Changes to avoid warnings on HP-UX with aCC.
-
-Thu Aug  9 17:58:33 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
-
-        * ace/Select_Reactor_Base.i (purge_pending_notifications): Don't
-          try to purge the notifications if notify_handler_ is 0.  thanks
-          to Steve Rahn <SRahn@rim.net> for reporting this.
 
 Thu Aug  9 16:56:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 

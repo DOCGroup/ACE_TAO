@@ -2372,20 +2372,20 @@ ACE_WFMO_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
 {
   ACE_TRACE ("ACE_WFMO_Reactor_Notify::purge_pending_notifications");
 
-  // Go over message queue and take out all the matching event handlers.
-  // If eh == 0, purge all. Note that reactor notifies (no handler specified)
-  // are never purged, as this may lose a needed notify the reactor
-  // queued for itself.
+  // Go over message queue and take out all the matching event
+  // handlers.  If eh == 0, purge all. Note that reactor notifies (no
+  // handler specified) are never purged, as this may lose a needed
+  // notify the reactor queued for itself.
 
   if (this->message_queue_.is_empty ())
     return 0;
 
   // Guard against new and/or delivered notifications while purging.
-  // WARNING!!! The use of the notification queue's lock object for this
-  // guard makes use of the knowledge that on Win32, the mutex protecting
-  // the queue is really a CriticalSection, which is recursive. This is
-  // how we can get away with locking it down here and still calling
-  // member functions on the queue object.
+  // WARNING!!! The use of the notification queue's lock object for
+  // this guard makes use of the knowledge that on Win32, the mutex
+  // protecting the queue is really a CriticalSection, which is
+  // recursive. This is how we can get away with locking it down here
+  // and still calling member functions on the queue object.
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, monitor, this->message_queue_.lock(), -1);
 
   // first, copy all to our own local queue. Since we've locked everyone out
@@ -2421,10 +2421,10 @@ ACE_WFMO_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
       }
       else
       {
-        // To preserve it, move it to the local_queue.
-        // But first, if this is not a Reactor notify (it is for a particularhandler),
-        // and it matches the specified handler (or purging all), then
-        // apply the mask
+        // To preserve it, move it to the local_queue.  But first, if
+        // this is not a Reactor notify (it is for a
+        // particularhandler), and it matches the specified handler
+        // (or purging all), then apply the mask
         if ((0 != buffer->eh_) &&
             (0 == eh || eh == buffer->eh_))
           ACE_CLR_BITS(buffer->mask_, mask);
@@ -2439,8 +2439,8 @@ ACE_WFMO_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
       return -1;
     }
 
-  // Now copy back from the local queue to the class queue, taking care to
-  // preserve the original order...
+  // Now copy back from the local queue to the class queue, taking
+  // care to preserve the original order...
   queue_size  = local_queue.message_count ();
   for (index = 0; index < queue_size; ++index)
     {
