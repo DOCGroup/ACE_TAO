@@ -155,15 +155,15 @@ TAO_CodeGen::start_client_header (const char *fname)
       ACE_OS::strcat (macro_name, "_H_");
 
       // generate the #ifndef ... #define statements
-      this->client_header_->print ("#if !defined (%s)\n", macro_name);
+      this->client_header_->print ("#ifndef %s\n", macro_name);
       this->client_header_->print ("#define %s\n\n", macro_name);
 
       // Including standard files
 
       // switch between changing or non-changing standard include files
-      // include files, so that #include statements can be 
+      // include files, so that #include statements can be
       // generated with ""s or <>s respectively, for the standard include
-      // files (e.g. tao/corba.h)       
+      // files (e.g. tao/corba.h)
       *this->client_header_ << "#include ";
 
       if (idl_global->changing_standard_include_files () == 1)
@@ -365,7 +365,7 @@ TAO_CodeGen::start_server_header (const char *fname)
 
       ACE_OS::strcat (macro_name, "_H_");
 
-      this->server_header_->print ("#if !defined (%s)\n", macro_name);
+      this->server_header_->print ("#ifndef %s\n", macro_name);
       this->server_header_->print ("#define %s\n\n", macro_name);
 
       // We must include all the skeleton headers corresponding to
@@ -453,8 +453,7 @@ TAO_CodeGen::start_server_template_header (const char *fname)
 
       ACE_OS::strcat (macro_name, "_H_");
 
-      this->server_template_header_->print ("#if !defined (%s)\n",
-                                            macro_name);
+      this->server_template_header_->print ("#ifndef %s\n", macro_name);
       this->server_template_header_->print ("#define %s\n\n", macro_name);
 
       *this->server_template_header_ << "#if defined(_MSC_VER)\n"
@@ -559,8 +558,7 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
 
       ACE_OS::strcat (macro_name, "_CPP_");
 
-      this->server_template_skeletons_->print ("#if !defined (%s)\n",
-                                               macro_name);
+      this->server_template_skeletons_->print ("#ifndef %s\n", macro_name);
       this->server_template_skeletons_->print ("#define %s\n\n", macro_name);
 
       *this->server_template_skeletons_ << "#if defined(_MSC_VER)\n"
@@ -819,7 +817,7 @@ TAO_CodeGen::end_client_header (void)
                         << "#endif /* _MSC_VER */\n";
 
   // code to put the last #endif
-  *this->client_header_ << "\n#endif /* if !defined */\n";
+  *this->client_header_ << "\n#endif /* ifndef */\n";
   return 0;
 }
 
@@ -841,7 +839,7 @@ TAO_CodeGen::end_server_header (void)
                         << "#endif /* _MSC_VER */\n";
 
   // code to put the last #endif
-  *this->server_header_ << "\n#endif /* if !defined */\n";
+  *this->server_header_ << "\n#endif /* ifndef */\n";
   return 0;
 }
 
@@ -910,7 +908,7 @@ TAO_CodeGen::end_server_template_header (void)
                                  << "#endif /* _MSC_VER */\n";
 
   // code to put the last #endif
-  *this->server_template_header_ << "\n#endif /* if !defined */\n";
+  *this->server_template_header_ << "\n#endif /* ifndef */\n";
   return 0;
 }
 
@@ -918,7 +916,7 @@ int
 TAO_CodeGen::end_server_template_skeletons (void)
 {
   // code to put the last #endif
-  *this->server_template_skeletons_ << "\n#endif /* if !defined */\n";
+  *this->server_template_skeletons_ << "\n#endif /* ifndef */\n";
   return 0;
 }
 
