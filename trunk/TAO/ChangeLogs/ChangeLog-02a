@@ -1,3 +1,17 @@
+Wed Jul 12 12:02:15 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp:
+
+	  Added "InterfaceRepository" to list of strings to compare
+	  in handle_events(). Multicast discovery of IFR now works,
+	  and has been tested locally on NT, locally on Solaris, and
+	  remotely between the two platforms in both directions.
+
+	* orbsvcs/tests/InterfaceRepo/IFR_Test/README:
+	* docs/releasenotes.index.html:
+
+	  Documentation updated with the above info.
+
 Wed Jul 12 09:46:13 2000  Giga Giguashvili <gregoryg@paradigmgeo.com>
 
         * tao/POAManager.h: added forward declaration of TAO_Object_Adapter
