@@ -1,8 +1,13 @@
+Sat Dec 11 18:56:24 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * orbsvcs/ImplRepo_Service/tao_ir_i.cpp: Removed possibly  
+          uninitialized variable use from display_server_information ().
+
 Sat Dec 11 14:33:25 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
 	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
-	   Added  template instantiations for ACE_Hash and ACE_Equal_To
+          Added template instantiations for ACE_Hash and ACE_Equal_To
 
 Sat Dec 11 14:31:45 1999  Ossama Othman  <othman@cs.wustl.edu>
 
