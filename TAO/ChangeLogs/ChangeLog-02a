@@ -1,3 +1,24 @@
+Wed Mar  1 16:38:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp:
+	  Code generation for sequences of a typedef now use the 
+	  typedef's name instead of the unaliased type name. The former
+	  behavior was causing a problem when the typedef in question
+	  is #included from another IDL file. Thanks to
+	  David O'Farrell <eeidofl@eei.ericsson.se> for sending in the
+	  example IDL file that exposed this problem.
+
 Wed Mar  1 12:47:41 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Policy_Manager.cpp (get_policy_overrides): 
