@@ -31,14 +31,14 @@ Stopwatch_display::set_time (CORBA::Float time)
   ACE_OS::sprintf (buf, "%6.3f", time);
 
   // Convert to compound string
-  XmString xmstr = XmStringCreateSimple ( buf );
+  XmString xmstr = XmStringCreateSimple (buf);
 
   // Display the string in the Label widget
-  XtVaSetValues ( this->label_, XmNlabelString, xmstr, NULL );
+  XtVaSetValues (this->label_, XmNlabelString, xmstr, NULL);
   //??Can use XtSetValues with ac and al values.. 
 
   // The compound string can be freed once passed to the widget
-  XmStringFree ( xmstr );
+  XmStringFree (xmstr);
 }
 
 

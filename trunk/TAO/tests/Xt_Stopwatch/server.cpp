@@ -73,8 +73,6 @@ main (int argc, char *argv[])
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      
-
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
 
@@ -124,8 +122,6 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       
-
-
       XtRealizeWidget (toplevel );
       XtAppMainLoop ( app );
     }

@@ -4,24 +4,29 @@
 Control::Control (Widget &parent )
 {
   // Instantiate the  sub-components of the Control
-  this->frame_ = XmCreateFrame (parent, "frame",
-                                0, 0 );
+  this->frame_ = XmCreateFrame (parent, 
+                                "frame",
+                                0, 
+                                0 );
 
-  this->rowcolumn_ = XmCreateRowColumn (this->frame_,"rwc",
-                                        0, 0 );
+  this->rowcolumn_ = XmCreateRowColumn (this->frame_, 
+                                        "rwc",
+                                        0, 
+                                        0 );
 
-  this->startwidget_ = XmCreatePushButton (this->rowcolumn_, "Start",
-                                           0,0);
+  this->startwidget_ = XmCreatePushButton (this->rowcolumn_, 
+                                           "Start",
+                                           0,
+                                           0);
 
-  this->stopwidget_ = XmCreatePushButton (this->rowcolumn_, "Stop",
-                                          0,0);
+  this->stopwidget_ = XmCreatePushButton (this->rowcolumn_, 
+                                          "Stop",
+                                          0,
+                                          0);
 }
 
 Control::~Control ( )
 {
-  //delete _face;
-  //delete _timer;
-  // delete _control;
 }
 
 void 
@@ -44,15 +49,5 @@ Control::stopwidget (void)
 {
   return this->stopwidget_;
 }
-/*void Control::timerStarted()
-{
-    // Empty
-}
-
-void Control::timerStopped()
-{
-    // Empty
-}
-*/
 
 
