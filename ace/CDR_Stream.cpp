@@ -39,6 +39,8 @@
 # include "ace/CDR_Stream.i"
 #endif /* ! __ACE_INLINE__ */
 
+ACE_RCSID(ace, CDR_Stream, "$Id$")
+
 int
 ACE_CDR::grow (ACE_Message_Block *mb, size_t minsize)
 {
@@ -134,7 +136,9 @@ ACE_OutputCDR::ACE_OutputCDR (size_t size,
              data_block_allocator),
      do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
      good_bit_ (1),
-     memcpy_tradeoff_ (memcpy_tradeoff)
+     memcpy_tradeoff_ (memcpy_tradeoff),
+     char_translator_ (0),
+     wchar_translator_ (0)
 {
   ACE_CDR::mb_align (&this->start_);
   this->current_ = &this->start_;
@@ -157,7 +161,9 @@ ACE_OutputCDR::ACE_OutputCDR (char *data, size_t size,
              data_block_allocator),
      do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
      good_bit_ (1),
-     memcpy_tradeoff_ (memcpy_tradeoff)
+     memcpy_tradeoff_ (memcpy_tradeoff),
+     char_translator_ (0),
+     wchar_translator_ (0)
 {
   // We cannot trust the buffer to be properly aligned
   ACE_CDR::mb_align (&this->start_);
@@ -170,7 +176,9 @@ ACE_OutputCDR::ACE_OutputCDR (ACE_Message_Block *data,
   :  start_ (data->data_block ()->duplicate ()),
      do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
      good_bit_ (1),
-     memcpy_tradeoff_ (memcpy_tradeoff)
+     memcpy_tradeoff_ (memcpy_tradeoff),
+     char_translator_ (0),
+     wchar_translator_ (0)
 {
   // We cannot trust the buffer to be properly aligned
   ACE_CDR::mb_align (&this->start_);
@@ -239,6 +247,12 @@ ACE_CDR::Boolean
 ACE_OutputCDR::write_string (ACE_CDR::ULong len,
                              const char *x)
 {
+  // @@ This is a slight violation of "Optimize for the common case",
+  // i.e. normally the translator will be 0, but OTOH the code is
+  // smaller and should be better for the cache ;-) ;-)
+  if (this->char_translator_ != 0)
+    return this->char_translator_->write_string (*this, len, x);
+
   if (len != 0)
     {
       if (this->write_ulong (len + 1))
@@ -265,6 +279,12 @@ ACE_CDR::Boolean
 ACE_OutputCDR::write_wstring (ACE_CDR::ULong len,
                               const ACE_CDR::WChar *x)
 {
+  // @@ This is a slight violation of "Optimize for the common case",
+  // i.e. normally the translator will be 0, but OTOH the code is
+  // smaller and should be better for the cache ;-) ;-)
+  if (this->wchar_translator_ != 0)
+    return this->wchar_translator_->write_wstring (*this, len, x);
+
   if (x != 0)
     {
       if (this->write_ulong (len + 1))
@@ -541,7 +561,9 @@ ACE_InputCDR::ACE_InputCDR (const char *buf,
                             int byte_order)
   : start_ (buf, bufsiz),
     do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
-    good_bit_ (1)
+    good_bit_ (1),
+    char_translator_ (0),
+    wchar_translator_ (0)
 {
   this->start_.wr_ptr (bufsiz);
 }
@@ -550,17 +572,21 @@ ACE_InputCDR::ACE_InputCDR (size_t bufsiz,
                             int byte_order)
   : start_ (bufsiz),
     do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
-    good_bit_ (1)
+    good_bit_ (1),
+    char_translator_ (0),
+    wchar_translator_ (0)
 {
 }
 
 ACE_InputCDR::ACE_InputCDR (const ACE_Message_Block *data,
                             int byte_order)
-  :  start_ (ACE_CDR::total_length (data, 0) + ACE_CDR::MAX_ALIGNMENT),
-  // @@ We may need allocators for the previous line, and the size may
-  // be a standard ACE_*CDR size...
-     do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
-     good_bit_ (1)
+  : start_ (ACE_CDR::total_length (data, 0) + ACE_CDR::MAX_ALIGNMENT),
+ // @@ We may need allocators for the previous line, and the size may
+ // be a standard ACE_*CDR size...
+    do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
+    good_bit_ (1),
+    char_translator_ (0),
+    wchar_translator_ (0)
 {
   // We must copy the contents of <data> into the new buffer, but
   // respecting the alignment.
@@ -584,9 +610,11 @@ ACE_InputCDR::ACE_InputCDR (const ACE_Message_Block *data,
 
 ACE_InputCDR::ACE_InputCDR (ACE_Data_Block *data,
                             int byte_order)
-  :  start_ (data),
-     do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
-     good_bit_ (1)
+  : start_ (data),
+    do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
+    good_bit_ (1),
+    char_translator_ (0),
+    wchar_translator_ (0)
 {
 }
 
@@ -595,7 +623,9 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
                             ACE_CDR::Long offset)
   : start_ (rhs.start_.data_block ()->duplicate ()),
     do_byte_swap_ (rhs.do_byte_swap_),
-    good_bit_ (1)
+    good_bit_ (1),
+    char_translator_ (0),
+    wchar_translator_ (0)
 {
   char* newpos = rhs.start_.rd_ptr() + offset;
   if (this->start_.base () <= newpos
@@ -615,7 +645,9 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
                             size_t size)
   : start_ (rhs.start_.data_block ()->duplicate ()),
     do_byte_swap_ (rhs.do_byte_swap_),
-    good_bit_ (1)
+    good_bit_ (1),
+    char_translator_ (0),
+    wchar_translator_ (0)
 {
   char* newpos = rhs.start_.rd_ptr();
   if (this->start_.base () <= newpos
@@ -640,7 +672,9 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
 ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs)
   : start_ (rhs.start_.data_block ()->duplicate ()),
     do_byte_swap_ (rhs.do_byte_swap_),
-    good_bit_ (1)
+    good_bit_ (1),
+    char_translator_ (0),
+    wchar_translator_ (0)
 {
   this->start_.rd_ptr (rhs.start_.rd_ptr ());
   this->start_.wr_ptr (rhs.start_.wr_ptr ());
@@ -674,7 +708,9 @@ ACE_InputCDR::ACE_InputCDR (const ACE_OutputCDR& rhs,
             ACE_Time_Value::max_time,
             data_block_allocator),
     do_byte_swap_ (rhs.do_byte_swap_),
-    good_bit_ (1)
+    good_bit_ (1),
+    char_translator_ (0),
+    wchar_translator_ (0)
 {
   ACE_CDR::mb_align (&this->start_);
   for (const ACE_Message_Block *i = rhs.begin ();
@@ -686,6 +722,12 @@ ACE_InputCDR::ACE_InputCDR (const ACE_OutputCDR& rhs,
 ACE_CDR::Boolean
 ACE_InputCDR::read_string (char *&x)
 {
+  // @@ This is a slight violation of "Optimize for the common case",
+  // i.e. normally the translator will be 0, but OTOH the code is
+  // smaller and should be better for the cache ;-) ;-)
+  if (this->char_translator_ != 0)
+    return this->char_translator_->read_string (*this, x);
+
   ACE_CDR::ULong len;
 
   this->read_ulong (len);
@@ -719,6 +761,12 @@ ACE_InputCDR::read_string (ACE_CString &x)
 ACE_CDR::Boolean
 ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
 {
+  // @@ This is a slight violation of "Optimize for the common case",
+  // i.e. normally the translator will be 0, but OTOH the code is
+  // smaller and should be better for the cache ;-) ;-)
+  if (this->wchar_translator_ != 0)
+    return this->wchar_translator_->read_wstring (*this, x);
+
   ACE_CDR::ULong len;
   this->read_ulong (len);
   if (this->good_bit())

@@ -142,7 +142,7 @@ ACE_InputCDR::to_string::to_string (ACE_CDR::Char *&s,
 
 // ****************************************************************
 
-ACE_INLINE 
+ACE_INLINE
 ACE_OutputCDR::~ACE_OutputCDR (void)
 {
   if (this->start_.cont () != 0)
@@ -179,13 +179,17 @@ ACE_OutputCDR::write_boolean (ACE_CDR::Boolean x)
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::write_char (ACE_CDR::Char x)
 {
-  return this->write_1 (ACE_reinterpret_cast (const ACE_CDR::Octet*, &x));
+  if (this->char_translator_ == 0)
+    return this->write_1 (ACE_reinterpret_cast (const ACE_CDR::Octet*, &x));
+  return this->char_translator_->write_char (*this, x);
 }
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::write_wchar (ACE_CDR::WChar x)
 {
-  return this->write_2 (ACE_reinterpret_cast (const ACE_CDR::UShort*,&x));
+  if (this->wchar_translator_ == 0)
+    return this->write_2 (ACE_reinterpret_cast (const ACE_CDR::UShort*, &x));
+  return this->wchar_translator_->write_wchar (*this, x);
 }
 
 ACE_INLINE ACE_CDR::Boolean
@@ -268,20 +272,24 @@ ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::write_char_array (const ACE_CDR::Char *x,
                                  ACE_CDR::ULong length)
 {
-  return this->write_array (x,
-                            ACE_CDR::OCTET_SIZE,
-                            ACE_CDR::OCTET_ALIGN,
-                            length);
+  if (this->char_translator_ == 0)
+    return this->write_array (x,
+                              ACE_CDR::OCTET_SIZE,
+                              ACE_CDR::OCTET_ALIGN,
+                              length);
+  return this->char_translator_->write_char_array (*this, x, length);
 }
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::write_wchar_array (const ACE_CDR::WChar* x,
                                   ACE_CDR::ULong length)
 {
-  return this->write_array (x,
-                            ACE_CDR::SHORT_SIZE,
-                            ACE_CDR::SHORT_ALIGN,
-                            length);
+  if (this->wchar_translator_ == 0)
+    return this->write_array (x,
+                              ACE_CDR::SHORT_SIZE,
+                              ACE_CDR::SHORT_ALIGN,
+                              length);
+  return this->wchar_translator_->write_wchar_array (*this, x, length);
 }
 
 ACE_INLINE ACE_CDR::Boolean
@@ -474,7 +482,7 @@ ACE_OutputCDR::align_write_ptr (size_t alignment)
 
 // ****************************************************************
 
-ACE_INLINE 
+ACE_INLINE
 ACE_InputCDR::~ACE_InputCDR (void)
 {
 }
@@ -497,14 +505,18 @@ ACE_InputCDR::read_boolean (ACE_CDR::Boolean& x)
 ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_char (ACE_CDR::Char &x)
 {
-  return this->read_1 (ACE_reinterpret_cast (ACE_CDR::Octet*, &x));
+  if (this->char_translator_ == 0)
+    return this->read_1 (ACE_reinterpret_cast (ACE_CDR::Octet*, &x));
+  return this->char_translator_->read_char (*this, x);
 }
 
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_wchar (ACE_CDR::WChar& x)
 {
-  return this->read_2 (ACE_reinterpret_cast (ACE_CDR::UShort*,&x));
+  if (this->wchar_translator_ == 0)
+    return this->read_2 (ACE_reinterpret_cast (ACE_CDR::UShort*,&x));
+  return this->wchar_translator_->read_wchar (*this, x);
 }
 
 ACE_INLINE ACE_CDR::Boolean
@@ -569,20 +581,24 @@ ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_char_array (ACE_CDR::Char* x,
                                ACE_CDR::ULong length)
 {
-  return this->read_array (x,
-                           ACE_CDR::OCTET_SIZE,
-                           ACE_CDR::OCTET_ALIGN,
-                           length);
+  if (this->char_translator_ == 0)
+    return this->read_array (x,
+                             ACE_CDR::OCTET_SIZE,
+                             ACE_CDR::OCTET_ALIGN,
+                             length);
+  return this->char_translator_->read_char_array (*this, x, length);
 }
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_wchar_array (ACE_CDR::WChar* x,
                                 ACE_CDR::ULong length)
 {
-  return this->read_array (x,
-                           ACE_CDR::SHORT_SIZE,
-                           ACE_CDR::SHORT_ALIGN,
-                           length);
+  if (this->wchar_translator_ == 0)
+    return this->read_array (x,
+                             ACE_CDR::SHORT_SIZE,
+                             ACE_CDR::SHORT_ALIGN,
+                             length);
+  return this->wchar_translator_->read_wchar_array (*this, x, length);
 }
 
 ACE_INLINE ACE_CDR::Boolean
@@ -1206,4 +1222,134 @@ ACE_InputCDR::align_read_ptr (size_t alignment)
 
   this->good_bit_ = 0;
   return -1;
+}
+
+// ****************************************************************
+
+ACE_INLINE ACE_CDR::Boolean
+ACE_Char_Codeset_Translator::read_1 (ACE_InputCDR& input,
+                                     ACE_CDR::Octet *x)
+{
+  return input.read_1 (x);
+}
+
+ACE_INLINE ACE_CDR::Boolean
+ACE_Char_Codeset_Translator::write_1 (ACE_OutputCDR& output,
+                                      const ACE_CDR::Octet *x)
+{
+  return output.write_1 (x);
+}
+
+ACE_INLINE ACE_CDR::Boolean
+ACE_Char_Codeset_Translator::read_array (ACE_InputCDR& in,
+                                         void* x,
+                                         size_t size,
+                                         size_t align,
+                                         ACE_CDR::ULong length)
+{
+  return in.read_array (x, size, align, length);
+}
+
+ACE_INLINE ACE_CDR::Boolean
+ACE_Char_Codeset_Translator::write_array (ACE_OutputCDR& out,
+                                          const void *x,
+                                          size_t size,
+                                          size_t align,
+                                          ACE_CDR::ULong length)
+{
+  return out.write_array(x, size, align, length);
+}
+
+ACE_INLINE int
+ACE_Char_Codeset_Translator::adjust (ACE_OutputCDR& out,
+                                     size_t size,
+                                     size_t align,
+                                     char *&buf)
+{
+  return out.adjust(size, align, buf);
+}
+
+ACE_INLINE void
+ACE_Char_Codeset_Translator::good_bit (ACE_OutputCDR& out, int bit)
+{
+  out.good_bit_ = bit;
+}
+
+// ****************************************************************
+
+ACE_INLINE ACE_CDR::Boolean
+ACE_WChar_Codeset_Translator::read_1 (ACE_InputCDR& input,
+                                      ACE_CDR::Octet *x)
+{
+  return input.read_1 (x);
+}
+
+ACE_INLINE ACE_CDR::Boolean
+ACE_WChar_Codeset_Translator::read_2 (ACE_InputCDR& input,
+                                      ACE_CDR::UShort *x)
+{
+  return input.read_2 (x);
+}
+
+ACE_INLINE ACE_CDR::Boolean
+ACE_WChar_Codeset_Translator::read_4 (ACE_InputCDR& input,
+                                      ACE_CDR::ULong *x)
+{
+  return input.read_4 (x);
+}
+
+ACE_INLINE ACE_CDR::Boolean
+ACE_WChar_Codeset_Translator::write_1 (ACE_OutputCDR& output,
+                                       const ACE_CDR::Octet *x)
+{
+  return output.write_1 (x);
+}
+
+ACE_INLINE ACE_CDR::Boolean
+ACE_WChar_Codeset_Translator::write_2 (ACE_OutputCDR& output,
+                                       const ACE_CDR::UShort *x)
+{
+  return output.write_2 (x);
+}
+
+ACE_INLINE ACE_CDR::Boolean
+ACE_WChar_Codeset_Translator::write_4 (ACE_OutputCDR& output,
+                                       const ACE_CDR::ULong *x)
+{
+  return output.write_4 (x);
+}
+
+ACE_INLINE ACE_CDR::Boolean
+ACE_WChar_Codeset_Translator::read_array (ACE_InputCDR& in,
+                                          void* x,
+                                          size_t size,
+                                          size_t align,
+                                          ACE_CDR::ULong length)
+{
+  return in.read_array (x, size, align, length);
+}
+
+ACE_INLINE ACE_CDR::Boolean
+ACE_WChar_Codeset_Translator::write_array (ACE_OutputCDR& out,
+                                           const void *x,
+                                           size_t size,
+                                           size_t align,
+                                           ACE_CDR::ULong length)
+{
+  return out.write_array(x, size, align, length);
+}
+
+ACE_INLINE int
+ACE_WChar_Codeset_Translator::adjust (ACE_OutputCDR& out,
+                                      size_t size,
+                                      size_t align,
+                                      char *&buf)
+{
+  return out.adjust(size, align, buf);
+}
+
+ACE_INLINE void
+ACE_WChar_Codeset_Translator::good_bit (ACE_OutputCDR& out, int bit)
+{
+  out.good_bit_ = bit;
 }
