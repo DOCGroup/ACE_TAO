@@ -54,16 +54,16 @@ public:
   ~be_interface (void);
   // dtor
 
-  virtual int gen_var_defn (char *interface_name = 0);
-  // generate the var definition. If <interface_name> is not 0, generate
-  // the var defn for that name. Otherwise, do it for the interface you
-  // are visiting (this).
-  
   virtual void gen_def_ctors (TAO_OutStream* os);
   //call the default constructors of all the base classes
 
   virtual void gen_copy_ctors (TAO_OutStream* os);
   //call the copy constructors of all the base classes
+
+  virtual int gen_var_defn (char *interface_name = 0);
+  // generate the var definition. If <interface_name> is not 0, generate
+  // the var defn for that name. Otherwise, do it for the interface you
+  // are visiting (this).
 
   virtual int gen_var_impl (char *interface_local_name = 0,
                             char *interface_full_name  = 0);
