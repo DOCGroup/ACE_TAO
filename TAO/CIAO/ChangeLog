@@ -1,3 +1,28 @@
+Tue Dec 30 11:42:08 2003  lut  <lu@birute>
+
+	* examples/handcrafted/examples.mwc
+	Removed this file since MPC works recursively now.
+
+Tue Dec 30 11:28:43 2003  lut  <lu@dre.vanderbilt.edu>
+
+	* exmaples/handcrafted/BasicSP
+	Removed this directory.
+
+Tue Dec 30 11:26:24 2003  lut  <lu@dre.vanderbilt.edu>
+
+	* examples/handcrafted/Philosophers
+	Removed this directory.
+
+Tue Dec 30 11:20:39 2003  lut  <lu@dre.vanderbilt.edu>
+
+	* examples/handcrafted/Hello
+	Removed this directory.
+
+Tue Dec 30 10:56:03 2003  lut  <lu@dre.vanderbilt.edu>
+
+	* examples/handcrafted/Display
+	Removed this directory.
+
 Tue Dec 23 16:26:19 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
@@ -34,7 +59,7 @@ Tue Dec 23 16:26:19 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
 
 	  Added support for feature mentioned above.
-	
+
 	* CCF/Example/CIDL/LocalExecutorMapping/test-2.idl:
 	* CCF/Example/CIDL/LocalExecutorMapping/test-2_exec.idl.orig:
 
