@@ -58,7 +58,7 @@ TAO_GIOP_Message_Handler::read_parse_message (TAO_Transport *transport)
 
   if (TAO_debug_level > 8)
     {
-      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - received %d bytes 1\n", n));
+      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - received %d bytes \n", n));
     }
 
   // Check what message are we waiting for and take suitable action
@@ -89,20 +89,21 @@ TAO_GIOP_Message_Handler::parse_header (void)
   // Grab the read pointer
   char *buf = this->current_buffer_.rd_ptr ();
 
-  // Let us be specific that it is for 1.0
+  // Let us be specific that this is for 1.0
   if (this->message_state_.giop_version.minor == 0 &&
-      this->message_state_.giop_version.minor == 1)
+      this->message_state_.giop_version.major == 1)
     {
       this->message_state_.byte_order =
         buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET];
-      if (TAO_debug_level > 2
-          && this->message_state_.byte_order != 0 &&
+
+      if (this->message_state_.byte_order != 0 &&
           this->message_state_.byte_order != 1)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) invalid byte order <%d>")
-                      ACE_TEXT (" for version <1.0>\n"),
-                      this->message_state_.byte_order));
+          if (TAO_debug_level > 2)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) invalid byte order <%d>")
+                        ACE_TEXT (" for version <1.0>\n"),
+                        this->message_state_.byte_order));
           return -1;
         }
     }
@@ -116,9 +117,9 @@ TAO_GIOP_Message_Handler::parse_header (void)
       this->message_state_.more_fragments =
         (CORBA::Octet) (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x02);
 
-      if (TAO_debug_level > 2
-          && (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & ~0x3) != 0)
+      if ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & ~0x3) != 0)
         {
+          if (TAO_debug_level > 2)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) invalid flags for <%d>")
                       ACE_TEXT (" for version <%d %d> \n"),
@@ -149,6 +150,8 @@ TAO_GIOP_Message_Handler::parse_header (void)
                   this->message_state_.message_size));
     }
 
+  // By this point we are doubly sure that we have a more or less
+  // valid GIOP message with a valid major revisiosn number.
   if (this->message_state_.more_fragments &&
       this->message_state_.giop_version.minor == 2 &&
       this->current_buffer_.length () > TAO_GIOP_MESSAGE_FRAGMENT_HEADER)
@@ -290,7 +293,7 @@ TAO_GIOP_Message_Handler::is_message_ready (TAO_Transport *transport)
                 "Recv msg",
                 ACE_reinterpret_cast (u_char *,
                                       buf),
-                this->message_state_.message_size);
+                len + TAO_GIOP_MESSAGE_HEADER_LEN);
 
           return this->message_state_.is_complete (this->current_buffer_);
         }
@@ -308,7 +311,8 @@ TAO_GIOP_Message_Handler::is_message_ready (TAO_Transport *transport)
               "Recv msg",
               ACE_reinterpret_cast (u_char *,
                                     buf),
-              this->message_state_.message_size);
+              this->message_state_.message_size +
+              TAO_GIOP_MESSAGE_HEADER_LEN);
 
           this->supp_buffer_.data_block (
             this->current_buffer_.data_block ()->clone ());
@@ -458,7 +462,8 @@ TAO_GIOP_Message_Handler::get_message (void)
                 "Recv msg",
                 ACE_reinterpret_cast (u_char *,
                                       buf),
-                this->message_state_.message_size);
+                this->message_state_.message_size +
+                TAO_GIOP_MESSAGE_HEADER_LEN);
 
           this->supp_buffer_.rd_ptr (this->message_state_.message_size);
           return this->message_state_.is_complete (this->current_buffer_);
@@ -483,7 +488,8 @@ TAO_GIOP_Message_Handler::get_message (void)
               "Recv msg",
               ACE_reinterpret_cast (u_char *,
                                     buf),
-              this->message_state_.message_size);
+              this->message_state_.message_size +
+              TAO_GIOP_MESSAGE_HEADER_LEN);
 
           this->supp_buffer_.rd_ptr (this->message_state_.message_size);
           return this->message_state_.is_complete (this->current_buffer_);

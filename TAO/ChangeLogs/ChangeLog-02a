@@ -1,3 +1,11 @@
+Tue Mar  6 11:49:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Handler.cpp (is_message_ready): 
+	* tao/GIOP_Message_Base.cpp: Made a pass through the code and
+	  fixed a few ACE_DEBUG statements and HEXDUMP statements. Thanks
+	  to Johnny.Willemsen <jwillemsen@mego.nl> for pointing these
+	  out. 
+
 Tue Mar 06 10:58:15 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* examples/PluggableUDP/tests/client.dsp:
