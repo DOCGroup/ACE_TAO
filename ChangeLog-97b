@@ -1,3 +1,9 @@
+Tue Oct 14 03:26:17 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/OS.cpp (uname): Added a workaround for the fact that
+	  Chorus doesn't support uname().  Thanks to Wei Chiang for
+	  this fix.
+
 Tue Oct 14 08:02:20 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* Managed_Object.{h,cpp} (ACE_Cleanup_Adapter): added virtual

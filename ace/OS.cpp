@@ -210,7 +210,7 @@ ACE_OS::readPPCTimeBase (u_long &most, u_long &least)
 }
 #endif /* ACE_HAS_POWERPC && ghs */
 
-#if defined (ACE_WIN32) || defined (VXWORKS)
+#if defined (ACE_WIN32) || defined (VXWORKS) || defined (CHORUS)
 // Don't inline on those platforms because this function contains
 // string literals, and some compilers, e.g., g++, don't handle those
 // efficiently in unused inline functions.
@@ -318,6 +318,14 @@ ACE_OS::uname (struct utsname *name)
   ACE_OS::strcpy (name->release, "???");
   ACE_OS::strcpy (name->version, sysBspRev ());
   ACE_OS::strcpy (name->machine, sysModel ());
+
+  return ACE_OS::hostname (name->nodename, maxnamelen);
+#elif defined (CHORUS)
+  size_t maxnamelen = sizeof name->nodename;
+  ACE_OS::strcpy (name->sysname, "CHORUS/ClassiX");
+  ACE_OS::strcpy (name->release, "???");
+  ACE_OS::strcpy (name->version, "???");
+  ACE_OS::strcpy (name->machine, "???");
 
   return ACE_OS::hostname (name->nodename, maxnamelen);
 #endif /* ACE_WIN32 */
