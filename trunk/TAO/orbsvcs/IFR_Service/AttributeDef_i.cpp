@@ -172,7 +172,7 @@ IR_AttributeMode
 TAO_AttributeDef_i::mode (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (IR_ATTR_NORMAL);
+  TAO_IFR_READ_GUARD_RETURN (ATTR_NORMAL);
 
   return this->mode_i (ACE_TRY_ENV);
 }
