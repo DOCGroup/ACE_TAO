@@ -96,11 +96,27 @@ LINK32=link.exe
 # PROP Default_Filter ""
 # Begin Source File
 
+SOURCE=.\Cache_Manager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cache_Object.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Concurrency.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Data_Block.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\FILE.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Filecache.cpp
 # End Source File
 # Begin Source File
 
@@ -156,6 +172,30 @@ SOURCE=.\Assoc_Array.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Cache_Hash_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cache_Heap_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cache_List_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cache_Manager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cache_Manager_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cache_Object.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Concurrency.h
 # End Source File
 # Begin Source File
@@ -165,6 +205,18 @@ SOURCE=.\Data_Block.h
 # Begin Source File
 
 SOURCE=.\Export.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\FILE.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Filecache.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Hash_Bucket_T.h
 # End Source File
 # Begin Source File
 
@@ -196,6 +248,10 @@ SOURCE=.\Pipeline_Handler.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Pipeline_Handler_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Pipeline_Tasks.h
 # End Source File
 # Begin Source File
@@ -217,7 +273,107 @@ SOURCE=.\Waiter.h
 # Begin Source File
 
 SOURCE=.\Assoc_Array.cpp
+
+!IF  "$(CFG)" == "JAWS Library - Win32 Release"
+
 # PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "JAWS Library - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cache_Hash_T.cpp
+
+!IF  "$(CFG)" == "JAWS Library - Win32 Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "JAWS Library - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cache_Heap_T.cpp
+
+!IF  "$(CFG)" == "JAWS Library - Win32 Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "JAWS Library - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cache_List_T.cpp
+
+!IF  "$(CFG)" == "JAWS Library - Win32 Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "JAWS Library - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cache_Manager_T.cpp
+
+!IF  "$(CFG)" == "JAWS Library - Win32 Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "JAWS Library - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Hash_Bucket_T.cpp
+
+!IF  "$(CFG)" == "JAWS Library - Win32 Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "JAWS Library - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Pipeline_Handler_T.cpp
+
+!IF  "$(CFG)" == "JAWS Library - Win32 Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "JAWS Library - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # End Group
 # End Target
