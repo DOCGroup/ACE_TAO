@@ -14,6 +14,7 @@
 
 #ifndef ACE_RW_MUTEX_H
 #define ACE_RW_MUTEX_H
+
 #include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
@@ -132,4 +133,5 @@ private:
 #endif /* ACE_HAS_THREADS */
 
 #include /**/ "ace/post.h"
+
 #endif /* ACE_RW_MUTEX_H */

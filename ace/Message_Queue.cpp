@@ -62,8 +62,8 @@ ACE_Message_Queue_Vx::ACE_Message_Queue_Vx (size_t max_messages,
                                             size_t max_message_length,
                                             ACE_Notification_Strategy *ns)
   : ACE_Message_Queue<ACE_NULL_SYNCH> (0, 0, ns),
-    max_messages_ (ACE_static_cast (int, max_messages)),
-    max_message_length_ (ACE_static_cast (int, max_message_length))
+    max_messages_ (static_cast<int> (max_messages)),
+    max_message_length_ (static_cast<int> (max_message_length))
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::ACE_Message_Queue_Vx");
 
@@ -96,8 +96,8 @@ ACE_Message_Queue_Vx::open (size_t max_messages,
   this->cur_count_ = 0;
   this->head_ = 0;
   this->notification_strategy_ = ns;
-  this->max_messages_ = ACE_static_cast (int, max_messages);
-  this->max_message_length_ = ACE_static_cast (int, max_message_length);
+  this->max_messages_ = static_cast<int> (max_messages);
+  this->max_message_length_ = static_cast<int> (max_message_length);
 
   if (tail_)
     {
@@ -107,7 +107,7 @@ ACE_Message_Queue_Vx::open (size_t max_messages,
     }
 
   return (this->tail_ =
-            ACE_reinterpret_cast (ACE_Message_Block *,
+          reinterpret_cast<ACE_Message_Block *> (
               ::msgQCreate (max_messages_,
                             max_message_length_,
                             MSG_Q_FIFO))) == 0 ? -1 : 0;
@@ -343,9 +343,9 @@ ACE_Message_Queue_NT::enqueue (ACE_Message_Block *new_item,
 #endif /* ACE_WIN64 */
       state_to_post = ACE_Message_Queue_Base::ACTIVATED;
       if (::PostQueuedCompletionStatus (this->completion_port_,
-                                        ACE_static_cast (DWORD, msize),
+                                        static_cast<DWORD> (msize),
                                         state_to_post,
-                                        ACE_reinterpret_cast (LPOVERLAPPED, new_item)))
+                                        reinterpret_cast<LPOVERLAPPED> (new_item)))
         {
           // Update the states once I succeed.
           this->cur_bytes_ += msize;
@@ -389,7 +389,7 @@ ACE_Message_Queue_NT::dequeue (ACE_Message_Block *&first_item,
   int retv = ::GetQueuedCompletionStatus (this->completion_port_,
                                           &msize,
                                           &queue_state,
-                                          ACE_reinterpret_cast (LPOVERLAPPED *, &first_item),
+                                          reinterpret_cast<LPOVERLAPPED *> (&first_item),
                                           (timeout == 0 ? INFINITE : timeout->msec ()));
   {
     ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);

@@ -39,8 +39,8 @@ public:
    * @brief Keeps track of the various user, system, and elapsed (real)
    * times.
    *
-   * @note If @c ACE_HAS_FLOATING_POINT is enabled, these values are in
-   * microseconds; otherwise, they are in seconds.
+   * @note If @c ACE_LACKS_FLOATING_POINT is enabled, these values are
+   *       in microseconds; otherwise, they are in seconds.
    */
   class ACE_Elapsed_Time
   {
