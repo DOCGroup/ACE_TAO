@@ -117,6 +117,7 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
                              "(%P|%t), ACK send failed: %p",
                              "AV_Svc_Handler::handle_connection"),
                             -1);
+        ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
       }
       // close down the connected socket in the main process
       this->destroy ();
@@ -142,14 +143,15 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
           ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t) Audio_Server init failed ()\n"),-1);
           result = as_->run ();
           //    ACE_Reactor::instance ()->end_event_loop ();
-          TAO_ORB_Core_instance ()->reactor ()->end_event_loop ();
+          TAO_ORB_Core_instance ()->orb ()-> shutdown ();
           if (result != 0)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "(%P|%t)handle_connection : "),
+                               "(%P|%t) handle_connection : %d\n"),
                               result);
           return result;
           break;
         default:
+          this->destroy ();
           return 0;
         }
       break;

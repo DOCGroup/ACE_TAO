@@ -275,7 +275,7 @@ public:
   int SendReferences (int group, int frame);
   int send_to_network (int timeToUse);
   int first_packet_send_to_network (int timeToUse);
-  void GetFeedBack (void);
+  int GetFeedBack (void);
   int SendPicture (int *frame);
   int ReadInfoFromFile (void);
   void WriteInfoToFile (void);
