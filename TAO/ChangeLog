@@ -1,3 +1,9 @@
+Wed Aug  4 07:17:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/AMH/Sink_Server/Timer_Handler.h:
+        * examples/AMH/Sink_Server/Client_Task.cpp:
+          Removed old comments that just shouldn't be in the code anymore
+
 Tue Aug  3 17:08:38 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
