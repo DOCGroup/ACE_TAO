@@ -1,3 +1,12 @@
+Fri Oct 10 22:01:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
+
+	  Fixed a wrong exception that was propogated for hard coded
+	  invocations. Long long ago, interceptors were not invoked for
+	  hard coded invocations. But now they are. We need to check for
+	  hard coded invocations before we return an exception. 
+	
 Fri Oct 10 21:42:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Portable_Interceptors/AMI/client.cpp: Removed code that
