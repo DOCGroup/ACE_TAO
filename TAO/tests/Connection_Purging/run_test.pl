@@ -10,22 +10,9 @@ require Process;
 require ACEutils;
 use Cwd;
 
-$cwd = getcwd();
-for($i = 0; $i <= $#ARGV; $i++) {
-  if ($ARGV[$i] eq '-chorus') {
-    $i++;
-    if (defined $ARGV[$i]) {
-      $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
-    }
-    else {
-      print STDERR "The -chorus option requires the hostname of the target\n";
-      exit(1);
-    }
-  }  
-}  
+ACE::checkForTarget(getcwd());
 
-$T = Process::Create ($EXEPREFIX."Connection_Purging".$EXE_EXT,
-                      "-ORBCollocation no -d");
+$T = Process::Create ($EXEPREFIX."Connection_Purging".$EXE_EXT." -ORBCollocation no -d");
 
 $client = $T->TimedWait (60);
 if ($client == -1) {

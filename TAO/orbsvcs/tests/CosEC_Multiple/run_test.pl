@@ -15,6 +15,8 @@ $ev_count = 2;
 $status = 0;
 $port = ACE::uniqueid () + 10001;  # This can't be 10000 on Chorus 4.0
 
+ACE::checkForTarget(getcwd());
+
 # setup CosEC params such that..
 # cos event service name = "cosec1"
 # for ConsumerQOS: EventID = 21, SourceID = 6
@@ -160,18 +162,6 @@ for ($i = 0; $i <= $#ARGV; $i++)
         $ev_count = $ARGV[$i + 1];
         $i++;
         last SWITCH;
-    }
-    if ($ARGV[$i] eq '-chorus') {
-      $i++;
-      if (defined $ARGV[$i]) {
-        $cwd = getcwd();
-        $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
-      }
-      else {
-        print STDERR "The -chorus option requires the hostname of the target\n";
-        exit(1);
-      }
-      last SWITCH;
     }
   }
 }

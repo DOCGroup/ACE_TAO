@@ -17,6 +17,8 @@ $implrepo_ior = "$cwd$DIR_SEPARATOR" . "implrepo.ior";
 
 $refstyle = " -ORBobjrefstyle URL";
 
+ACE::checkForTarget($cwd);
+
 $implrepo_server = $EXEPREFIX."..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".
                    $DIR_SEPARATOR."ImplRepo_Service".$EXE_EXT;
 
@@ -193,17 +195,6 @@ for ($i = 0; $i <= $#ARGV; $i++)
     {
       both_ir_test ();
       exit;
-    }
-    if ($ARGV[$i] eq '-chorus') {
-      $i++;
-      if (defined $ARGV[$i]) {
-        $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
-      }
-      else {
-        print STDERR "The -chorus option requires the hostname of the target\n";
-        exit(1);
-      }
-      last SWITCH;
     }
     print "run_test: Unknown Option: ".$ARGV[$i]."\n";
   }

@@ -1,3 +1,55 @@
+Tue Apr 11 11:32:03 2000  Chad Elliott  <elliott_c@ociweb.com>
+        * orbsvcs/tests/AVStreams/benchmark/run_test.pl
+          orbsvcs/tests/CosEC_Multiple/run_test.pl
+          orbsvcs/tests/CosEC_Multiple/run_test2.pl
+          orbsvcs/tests/CosEvent/Basic/run_test.pl
+          orbsvcs/tests/EC_Basic/run_test.pl
+          orbsvcs/tests/EC_Custom_Marshal/run_test.pl
+          orbsvcs/tests/EC_Mcast/run_test.pl
+          orbsvcs/tests/EC_Multiple/run_test.pl
+          orbsvcs/tests/EC_Throughput/run_test.pl
+          orbsvcs/tests/Event/Basic/run_test.pl
+          orbsvcs/tests/Event/Performance/run_test.pl
+          orbsvcs/tests/Event_Latency/run_test.pl
+          orbsvcs/tests/ImplRepo/run_test.pl
+          orbsvcs/tests/Property/run_test.pl
+          orbsvcs/tests/Simple_Naming/run_test.pl
+          orbsvcs/tests/Time/run_test.pl
+          orbsvcs/tests/Trading/run_test.pl
+          tests/AMI/run_test.pl
+          tests/CDR/run_test.pl
+          tests/Connection_Purging/run_test.pl
+          tests/DSI_Gateway/run_test.pl
+          tests/DynAny_Test/run_test.pl
+          tests/Endpoint_Per_Priority/run_test.pl
+          tests/Explicit_Event_Loop/run_test.pl  
+          tests/Faults/run_test.pl
+          tests/IORManipulation/run_test.pl
+          tests/InterOp-Naming/run_test.pl 
+          tests/Interceptors/run_test.pl   
+          tests/Leader_Followers/run_test.pl
+          tests/MT_Client/run_test.pl
+          tests/MT_Server/run_test.pl
+          tests/Multiple_Inheritance/run_test.pl
+          tests/Native_Exceptions/run_test.pl   
+          tests/NestedUpcall/MT_Client_Test/run_test.pl
+          tests/NestedUpcall/Simple/run_test.pl
+          tests/NestedUpcall/Triangle_Test/run_test.pl
+          tests/Nested_Event_Loop/run_test.pl
+          tests/ORB_init/run_test.pl
+          tests/OctetSeq/run_test.pl
+          tests/POA/Deactivation/run_test.pl
+          tests/POA/Destruction/run_test.pl 
+          tests/POA/Identity/run_test.pl    
+          tests/Param_Test/run_test.pl      
+          tests/Smart_Proxies/run_test.pl
+          tests/Smart_Proxies/On_Demand/run_test.pl
+          tests/Timed_Buffered_Oneways/run_test.pl 
+          tests/Timeout/run_test.pl
+
+          Refactor duplicate code into ACEutils.pm
+          Thanks Carlos.
+
 Tue Apr 11 09:02:33 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/corbafwd.h (TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,

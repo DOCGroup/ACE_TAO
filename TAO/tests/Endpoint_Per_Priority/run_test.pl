@@ -13,22 +13,9 @@ $cwd = getcwd();
 $client_conf="$cwd$DIR_SEPARATOR" . "client.conf";
 $server_conf="$cwd$DIR_SEPARATOR" . "server.conf";
 $threads='2';
-$hostname = "localhost";
 $iorfile = "$cwd$DIR_SEPARATOR" . "test.ior";
 
-for($i = 0; $i <= $#ARGV; $i++) {
-  if ($ARGV[$i] eq '-chorus') {
-    $i++;
-    if (defined $ARGV[$i]) {
-      $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
-      $hostname = $ARGV[$i];
-    }
-    else {
-      print STDERR "The -chorus option requires the hostname of the target\n";
-      exit(1);
-    }
-  }
-}
+ACE::checkForTarget($cwd);
 
 print STDERR "================ Multi-threaded test\n";
 
@@ -37,11 +24,11 @@ unlink $iorfile;
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
                        " -ORBDebugLevel 5".
                        " -ORBSvcConf $server_conf"
-		       . " -ORBEndPoint iiop://$hostname:0/priority=0 "
-		       . " -ORBEndPoint iiop://$hostname:0/priority=1 "
-		       . " -ORBEndPoint iiop://$hostname:0/priority=2 "
-                       . " -ORBEndPoint iiop://$hostname:0/priority=3 "
-                       . " -ORBEndPoint iiop://$hostname:0/priority=4 "
+		       . " -ORBEndPoint iiop://$TARGETHOSTNAME:0/priority=0 "
+		       . " -ORBEndPoint iiop://$TARGETHOSTNAME:0/priority=1 "
+		       . " -ORBEndPoint iiop://$TARGETHOSTNAME:0/priority=2 "
+                       . " -ORBEndPoint iiop://$TARGETHOSTNAME:0/priority=3 "
+                       . " -ORBEndPoint iiop://$TARGETHOSTNAME:0/priority=4 "
                        . " -o $iorfile -n $threads");
 
 if (ACE::waitforfile_timed ($iorfile, 10) == -1) {

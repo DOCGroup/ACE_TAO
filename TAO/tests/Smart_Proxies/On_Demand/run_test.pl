@@ -7,15 +7,19 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 unshift @INC, '../../../../bin';
 require ACEutils;
+use Cwd;
 
-$iorfile = "test.ior";
+$cwd = getcwd();
+$iorfile = "$cwd$DIR_SEPARATOR" . "test.ior";
+
+ACE::checkForTarget($cwd);
 
 unlink $iorfile;
 
 print STDERR "\nrunning Smart Proxy test consisting of the client and the server\n\n";
 
 $SV = Process::Create ($EXEPREFIX."server".$EXE_EXT,
-		       " -o $iorfile");
+                     " -o $iorfile");
 
 if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile>\n";
@@ -23,7 +27,7 @@ if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
   exit 1;
 }
 
-$CL  = Process::Create ($EXEPREFIX."client$EXE_EXT ");
+$CL  = Process::Create ($EXEPREFIX."client$EXE_EXT ", "-i file://$iorfile");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
