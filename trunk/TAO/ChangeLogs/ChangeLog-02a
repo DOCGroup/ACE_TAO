@@ -1,3 +1,10 @@
+Mon Jan 24 18:47:22 2000  Ossama Othman  <ossama@uci.edu>
+
+	* docs/Options.html:
+
+	  Clarified what UID and GID in the documentation for the
+	  -ORBSetUID and -ORBSetGID options.
+
 Mon Jan 24 13:17:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
