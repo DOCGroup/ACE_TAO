@@ -40,15 +40,32 @@ main (int argc, char* argv [])
       ACE_DEBUG ((LM_DEBUG,
 		  "Cancelling Threads.....\n"));
 
-      DT_Hash_Map_Iterator iterator (*orb->orb_core ()->dt_hash ());
-      DT_Hash_Map_Entry *entry;
-
-    for (;iterator.next (entry) != 0; iterator.advance ())
+      /*
+	DT_Hash_Map_Iterator iterator (*orb->orb_core ()->dt_hash ());
+	DT_Hash_Map_Entry *entry;
+	
+	for (;iterator.next (entry) != 0; iterator.advance ())
 	{
-	  RTScheduling::DistributableThread_var DT = RTScheduling::DistributableThread::_narrow (entry->int_id_);
+	RTScheduling::DistributableThread_var DT = RTScheduling::DistributableThread::_narrow (entry->int_id_);
+	DT->cancel (ACE_ENV_ARG_PARAMETER);
+	}
+      */
+
+      CORBA::Object_ptr current_obj = orb->resolve_initial_references ("RTScheduler_Current");
+      
+      RTScheduling::Current_var current = RTScheduling::Current::_narrow (current_obj
+									  ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+            
+      for (int i = 0; i < 4; i++)
+	{
+	  RTScheduling::DistributableThread_var DT = current->lookup ((task.guids ())[i]
+								      ACE_ENV_ARG_PARAMETER);
+	  ACE_TRY_CHECK;
+
 	  DT->cancel (ACE_ENV_ARG_PARAMETER);
 	}
-      
+
       orb->run ();
     }
   ACE_CATCHANY
