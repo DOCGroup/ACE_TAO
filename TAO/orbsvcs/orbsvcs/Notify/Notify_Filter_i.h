@@ -164,19 +164,17 @@ virtual CosNotifyFilter::CallbackIDSeq * get_callbacks (
     CORBA::SystemException
   ));
 
-
 private:
   void add_constraints_i (
     const CosNotifyFilter::ConstraintInfoSeq& constraint_info_seq
     TAO_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosNotifyFilter::InvalidConstraint
-                     ));
+        CORBA::SystemException,
+        CosNotifyFilter::InvalidConstraint
+      ));
 
-
-    struct Notify_Constraint_Expr
+  struct Notify_Constraint_Expr
     {
       // = DESCRIPTION
       //   Structure for associating ConstraintInfo with an interpreter.
@@ -188,7 +186,7 @@ private:
       // Constraint Interpreter.
     };
 
-  TAO_Notify_ID_Pool<CosNotifyFilter::ConstraintID> constraint_expr_ids_;
+  TAO_Notify_ID_Pool <CosNotifyFilter::ConstraintID> constraint_expr_ids_;
   // Id generator for ConstraintInfo's.
 
   ACE_Hash_Map_Manager <CosNotifyFilter::ConstraintID,
@@ -199,11 +197,12 @@ private:
 
   typedef ACE_Hash_Map_Iterator <CosNotifyFilter::ConstraintID,
                                  ACE_NESTED_CLASS (TAO_Notify_Filter_i, Notify_Constraint_Expr*),
-                                                  TAO_SYNCH_MUTEX>
+                                 TAO_SYNCH_MUTEX>
   CONSTRAINT_EXPR_LIST_ITER;
 
-  typedef ACE_Hash_Map_Entry<CosNotifyFilter::ConstraintID,
-                             ACE_NESTED_CLASS (TAO_Notify_Filter_i, Notify_Constraint_Expr*)>
+  typedef ACE_Hash_Map_Entry <CosNotifyFilter::ConstraintID,
+                              ACE_NESTED_CLASS (TAO_Notify_Filter_i, 
+                                                Notify_Constraint_Expr*)>
   CONSTRAINT_EXPR_ENTRY;
 };
 

@@ -1,7 +1,7 @@
 %option noyywrap
 
 %{
-// ETCL.ll,v 1.2 2000/04/02 19:22:41 coryan Exp
+// ETCL.ll,v 1.3 2002/01/14 19:52:28 parsons Exp
 // ========================================================================
 //
 // = LIBRARY
@@ -83,29 +83,29 @@ in		{ TAO_YY_LEX_DEBUG; return TAO_ETCL_IN; }
 "]"		{ TAO_YY_LEX_DEBUG; return TAO_ETCL_RBRA; }
 TRUE		{ 
 		  lvalp->constraint = 
-		    new TAO_ETCL_Boolean_Literal (1);
+		    new TAO_ETCL_Literal_Constraint ((CORBA::Boolean) 1);
 		  TAO_YY_LEX_DEBUG; return TAO_ETCL_BOOLEAN;
 		}
 FALSE		{ 
 		  lvalp->constraint = 
-		    new TAO_ETCL_Boolean_Literal (0);
+		    new TAO_ETCL_Literal_Constraint ((CORBA::Boolean) 0);
 		  TAO_YY_LEX_DEBUG; return TAO_ETCL_BOOLEAN;
 		}
 {integer}	{ 
 		  lvalp->constraint = 
-		    new TAO_ETCL_Integer_Literal (ACE_OS::atoi (yytext));
+		    new TAO_ETCL_Literal_Constraint (ACE_OS::atoi (yytext));
 		  TAO_YY_LEX_DEBUG; return TAO_ETCL_INTEGER; 
 		}
 {float}		{
 		  double v;
 		  sscanf (yytext, "%lf", &v); 
 		  lvalp->constraint = 
-		    new TAO_ETCL_Float_Literal (v);
+		    new TAO_ETCL_Literal_Constraint (v);
 		  TAO_YY_LEX_DEBUG; return TAO_ETCL_FLOAT; 
 		}
 {string}	{ 
 		  lvalp->constraint =
-		    new TAO_ETCL_String_Literal (extract_string(yytext));
+		    new TAO_ETCL_Literal_Constraint (extract_string (yytext));
 		  TAO_YY_LEX_DEBUG; return TAO_ETCL_STRING; 
 		}
 {ident}		{ 
@@ -125,26 +125,33 @@ const char*
 extract_string(char* str)
 {
   char *t = str;
-  for (char * i = str + 1; *i != 0; ++i, ++t)
+  for (char * i = str + 1; *i != '\''; ++i, ++t)
     {
       if (*i == '\\')
         {
-	  ++i;
-	  if (*i == 0)
-	    return 0;
-	  else if (*i == 't')
-	    *t = '\t';
-	  else if (*i == 'n')
-	    *t = '\n';
-	  else if (*i == '\\')
-	    *t = '\\';
+          ++i;
+          if (*i == 0)
+            return 0;
+          else if (*i == 't')
+            *t = '\t';
+          else if (*i == 'n')
+            *t = '\n';
+          else if (*i == '\\')
+            *t = '\\';
           else
             *t = *i;
           continue;
         }
-      *t = *i;
-     
+
+      *t = *i;     
     }
 
+  *t = '\0';
   return str;
+}
+
+int
+yywrap (void)
+{
+  return 1;
 }

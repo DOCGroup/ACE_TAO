@@ -5,13 +5,6 @@
 
 #define YYBISON 1  /* Identify Bison output.  */
 
-#define yyparse TAO_ETCL_yyparse
-#define yylex TAO_ETCL_yylex
-#define yyerror TAO_ETCL_yyerror
-#define yylval TAO_ETCL_yylval
-#define yychar TAO_ETCL_yychar
-#define yydebug TAO_ETCL_yydebug
-#define yynerrs TAO_ETCL_yynerrs
 #define	TAO_ETCL_GT	257
 #define	TAO_ETCL_GE	258
 #define	TAO_ETCL_LT	259
@@ -43,7 +36,7 @@
 #define	TAO_ETCL_SIGNED	285
 #define	TAO_ETCL_DOUBLE	286
 #define	TAO_ETCL_CONSTRAINT	287
-#define	TAO_ETCL_SEQUENCE	288
+#define	TAO_ETCL_COMPONENT	288
 #define	TAO_ETCL_WITH	289
 #define	TAO_ETCL_MAX	290
 #define	TAO_ETCL_MIN	291
@@ -56,7 +49,7 @@
 #define	TAO_ETCL_TYPE_ID	298
 #define	TAO_ETCL_REPOS_ID	299
 
-#line 1 "ETCL/ETCL.yy"
+//#line 1 "ETCL/ETCL.yy"
 
 // $Id$
 // ========================================================================
@@ -73,14 +66,11 @@
 //
 // ========================================================================
 
-#include "orbsvcs/ETCL/ETCL_Constraint.h"
+#include "ETCL_y.h"
+#include "ETCL_Constraint.h"
+#include "ETCL_Interpreter.h"
 
-#define YYPARSE_PARAM lex_state
-#define YYLEX_PARAM lex_state
-
-//#define YYDEBUG 1
-
-#define YYSTYPE TAO_ETCL_YYSTYPE
+extern int yylex (void);
 
 static void yyerror (const char *)
 {
@@ -88,11 +78,6 @@ static void yyerror (const char *)
   // Ignore error messages
 }
 
-extern int yylex (YYSTYPE *lvalp, void *lex_state);
-
-#ifndef YYSTYPE
-#define YYSTYPE int
-#endif
 #include <stdio.h>
 
 #ifndef __cplusplus
@@ -103,7 +88,7 @@ extern int yylex (YYSTYPE *lvalp, void *lex_state);
 
 
 
-#define	YYFINAL		112
+#define	YYFINAL		114
 #define	YYFLAG		-32768
 #define	YYNTBASE	46
 
@@ -148,9 +133,9 @@ static const short yyprhs[] = {     0,
     27,    29,    33,    37,    41,    45,    49,    53,    55,    59,
     64,    66,    70,    72,    76,    80,    82,    86,    90,    92,
     95,    97,   101,   103,   106,   109,   111,   114,   117,   119,
-   121,   125,   129,   132,   133,   136,   139,   141,   143,   144,
-   147,   149,   151,   154,   156,   158,   160,   162,   164,   166,
-   171,   176,   179,   184,   185,   187,   190,   193
+   121,   124,   128,   132,   135,   137,   138,   141,   144,   146,
+   148,   149,   152,   154,   156,   159,   161,   163,   165,   167,
+   169,   171,   176,   181,   184,   189,   190,   192,   195,   198
 };
 
 static const short yyrhs[] = {    48,
@@ -166,27 +151,27 @@ static const short yyrhs[] = {    48,
      0,    13,    56,     0,    56,     0,    26,    48,    25,     0,
     22,     0,    17,    22,     0,    18,    22,     0,    23,     0,
     17,    23,     0,    18,    23,     0,    24,     0,    16,     0,
-     9,    40,    57,     0,    10,    40,    57,     0,    40,    57,
-     0,     0,    41,    59,     0,    29,    58,     0,    60,     0,
-    61,     0,     0,    41,    59,     0,    60,     0,    61,     0,
-    29,    58,     0,    43,     0,    42,     0,    44,     0,    45,
-     0,    62,     0,    63,     0,    28,    22,    27,    58,     0,
-    26,    29,    25,    58,     0,    22,    58,     0,    26,    64,
-    25,    58,     0,     0,    22,     0,    17,    22,     0,    18,
-    22,     0,    24,     0
+     9,    29,     0,     9,    40,    57,     0,    10,    40,    57,
+     0,    40,    57,     0,    29,     0,     0,    41,    59,     0,
+    29,    58,     0,    60,     0,    61,     0,     0,    41,    59,
+     0,    60,     0,    61,     0,    29,    58,     0,    43,     0,
+    42,     0,    44,     0,    45,     0,    62,     0,    63,     0,
+    28,    22,    27,    58,     0,    26,    29,    25,    58,     0,
+    22,    58,     0,    26,    64,    25,    58,     0,     0,    22,
+     0,    17,    22,     0,    18,    22,     0,    24,     0
 };
 
 #endif
 
 #if YYDEBUG != 0
 static const short yyrline[] = { 0,
-    75,    76,    79,    81,    83,    85,    87,    91,    93,    96,
-    98,   101,   103,   105,   107,   109,   111,   113,   116,   118,
-   120,   123,   125,   128,   130,   132,   135,   137,   139,   142,
-   144,   147,   150,   152,   154,   157,   159,   161,   164,   165,
-   167,   169,   171,   175,   177,   180,   183,   184,   187,   189,
-   192,   193,   196,   198,   200,   202,   204,   206,   207,   210,
-   214,   218,   222,   226,   228,   230,   232,   234
+    92,    93,    96,    98,   100,   102,   104,   108,   110,   113,
+   115,   118,   120,   122,   124,   126,   128,   130,   133,   135,
+   137,   140,   142,   145,   147,   149,   152,   154,   156,   159,
+   161,   164,   166,   168,   170,   172,   174,   176,   178,   180,
+   182,   184,   186,   188,   190,   194,   196,   199,   202,   203,
+   206,   208,   211,   212,   215,   217,   219,   221,   223,   225,
+   226,   229,   233,   237,   241,   245,   247,   249,   251,   253
 };
 #endif
 
@@ -200,7 +185,7 @@ static const char * const yytname[] = {   "$","error","$undefined.","TAO_ETCL_GT
 "TAO_ETCL_DIV","TAO_ETCL_UMINUS","TAO_ETCL_INTEGER","TAO_ETCL_FLOAT","TAO_ETCL_STRING",
 "TAO_ETCL_RPAREN","TAO_ETCL_LPAREN","TAO_ETCL_RBRA","TAO_ETCL_LBRA","TAO_ETCL_IDENT",
 "TAO_ETCL_UNSIGNED","TAO_ETCL_SIGNED","TAO_ETCL_DOUBLE","TAO_ETCL_CONSTRAINT",
-"TAO_ETCL_SEQUENCE","TAO_ETCL_WITH","TAO_ETCL_MAX","TAO_ETCL_MIN","TAO_ETCL_FIRST",
+"TAO_ETCL_COMPONENT","TAO_ETCL_WITH","TAO_ETCL_MAX","TAO_ETCL_MIN","TAO_ETCL_FIRST",
 "TAO_ETCL_RANDOM","TAO_ETCL_DOLLAR","TAO_ETCL_DOT","TAO_ETCL_DISCRIMINANT","TAO_ETCL_LENGTH",
 "TAO_ETCL_TYPE_ID","TAO_ETCL_REPOS_ID","constraint","preference","bool_or","bool_and",
 "bool_compare","expr_in","expr_twiddle","expr","term","factor_not","factor",
@@ -214,9 +199,9 @@ static const short yyr1[] = {     0,
     49,    50,    50,    50,    50,    50,    50,    50,    51,    51,
     51,    52,    52,    53,    53,    53,    54,    54,    54,    55,
     55,    56,    56,    56,    56,    56,    56,    56,    56,    56,
-    56,    56,    56,    57,    57,    57,    57,    57,    58,    58,
-    58,    58,    59,    59,    59,    59,    59,    59,    59,    60,
-    61,    62,    63,    64,    64,    64,    64,    64
+    56,    56,    56,    56,    56,    57,    57,    57,    57,    57,
+    58,    58,    58,    58,    59,    59,    59,    59,    59,    59,
+    59,    60,    61,    62,    63,    64,    64,    64,    64,    64
 };
 
 static const short yyr2[] = {     0,
@@ -224,90 +209,90 @@ static const short yyr2[] = {     0,
      1,     3,     3,     3,     3,     3,     3,     1,     3,     4,
      1,     3,     1,     3,     3,     1,     3,     3,     1,     2,
      1,     3,     1,     2,     2,     1,     2,     2,     1,     1,
-     3,     3,     2,     0,     2,     2,     1,     1,     0,     2,
-     1,     1,     2,     1,     1,     1,     1,     1,     1,     4,
-     4,     2,     4,     0,     1,     2,     2,     1
+     2,     3,     3,     2,     1,     0,     2,     2,     1,     1,
+     0,     2,     1,     1,     2,     1,     1,     1,     1,     1,
+     1,     4,     4,     2,     4,     0,     1,     2,     2,     1
 };
 
 static const short yydefact[] = {     0,
      0,     0,     0,    40,     0,     0,    33,    36,    39,     0,
-     0,     0,     0,     6,     7,    44,     2,     1,     9,    11,
-    18,    21,    23,    26,    29,    31,    44,    44,    30,    34,
-    37,    35,    38,     0,     5,     4,     3,     0,     0,    49,
-     0,    43,    47,    48,     0,     0,     0,     0,     0,     0,
-     0,     0,    44,     0,     0,     0,     0,     0,    41,    42,
-    32,     0,     0,     0,    46,    51,    52,    49,    64,    49,
-    55,    54,    56,    57,    45,    58,    59,     8,    10,    14,
-    15,    16,    17,    12,    13,    44,    19,    22,    24,    25,
-    27,    28,    49,    49,    50,    62,     0,     0,    65,    68,
-     0,    53,    20,    61,    60,    66,    67,    49,    63,     0,
-     0,     0
+    45,     0,     0,     0,     6,     7,    46,     2,     1,     9,
+    11,    18,    21,    23,    26,    29,    31,    41,    46,    46,
+    30,    34,    37,    35,    38,     0,     5,     4,     3,     0,
+     0,    51,     0,    44,    49,    50,     0,     0,     0,     0,
+     0,     0,     0,     0,    46,     0,     0,     0,     0,     0,
+    42,    43,    32,     0,     0,     0,    48,    53,    54,    51,
+    66,    51,    57,    56,    58,    59,    47,    60,    61,     8,
+    10,    14,    15,    16,    17,    12,    13,    46,    19,    22,
+    24,    25,    27,    28,    51,    51,    52,    64,     0,     0,
+    67,    70,     0,    55,    20,    63,    62,    68,    69,    51,
+    65,     0,     0,     0
 };
 
-static const short yydefgoto[] = {   110,
-    17,    18,    19,    20,    21,    22,    23,    24,    25,    26,
-    42,    65,    75,    66,    67,    76,    77,   101
+static const short yydefgoto[] = {   112,
+    18,    19,    20,    21,    22,    23,    24,    25,    26,    27,
+    44,    67,    77,    68,    69,    78,    79,   103
 };
 
 static const short yypact[] = {    41,
-   -39,   -32,     0,-32768,    26,    38,-32768,-32768,-32768,    73,
-    73,    73,    73,-32768,-32768,    27,-32768,     3,     9,-32768,
-    97,    13,   103,    54,-32768,-32768,    27,    27,-32768,-32768,
--32768,-32768,-32768,    -6,     3,     3,     3,     4,    14,    43,
-    -1,-32768,-32768,-32768,    73,    73,    73,    73,    73,    73,
-    73,    73,     6,    73,    73,    73,    73,    73,-32768,-32768,
--32768,    50,    11,    -1,-32768,-32768,-32768,    43,    70,    43,
--32768,-32768,-32768,-32768,-32768,-32768,-32768,     9,-32768,-32768,
--32768,-32768,-32768,-32768,-32768,    27,-32768,   105,    54,    54,
--32768,-32768,    43,    43,-32768,-32768,    30,    44,-32768,-32768,
-    60,-32768,-32768,-32768,-32768,-32768,-32768,    43,-32768,    93,
-    98,-32768
+   -13,   -39,    94,-32768,    38,    46,-32768,-32768,-32768,    73,
+-32768,    73,    73,    73,-32768,-32768,    -9,-32768,    -6,     7,
+-32768,   121,    -5,    19,    55,-32768,-32768,-32768,    -9,    -9,
+-32768,-32768,-32768,-32768,-32768,    21,    -6,    -6,    -6,     6,
+    25,    -2,    -1,-32768,-32768,-32768,    73,    73,    73,    73,
+    73,    73,    73,    73,   -18,    73,    73,    73,    73,    73,
+-32768,-32768,-32768,    27,    29,    -1,-32768,-32768,-32768,    -2,
+    31,    -2,-32768,-32768,-32768,-32768,-32768,-32768,-32768,     7,
+-32768,-32768,-32768,-32768,-32768,-32768,-32768,    -9,-32768,    67,
+    55,    55,-32768,-32768,    -2,    -2,-32768,-32768,    44,    50,
+-32768,-32768,    69,-32768,-32768,-32768,-32768,-32768,-32768,    -2,
+-32768,    98,   100,-32768
 };
 
 static const short yypgoto[] = {-32768,
--32768,   104,    67,    80,    59,-32768,    65,    69,    71,   124,
-   -24,   -63,    66,   -16,   -14,-32768,-32768,-32768
+-32768,    95,    54,    58,    86,-32768,    59,    30,    33,   111,
+   -26,   -65,    53,   -17,   -15,-32768,-32768,-32768
 };
 
 
-#define	YYLAST		130
+#define	YYLAST		140
 
 
-static const short yytable[] = {    43,
-    27,    44,    59,    60,    96,    45,   102,    28,     1,     2,
-    43,    43,    44,    44,    45,     4,     5,     6,    61,    46,
-    68,     7,     8,     9,    69,    10,    53,    70,    87,   104,
-   105,    38,    62,    39,    40,    63,    43,    94,    44,    16,
-    71,    72,    73,    74,   109,    86,    41,    30,    31,     1,
-     2,   106,    38,     3,    39,    40,     4,     5,     6,    32,
-    33,   103,     7,     8,     9,   107,    10,    41,    38,    43,
-    39,    44,    57,    58,    93,    11,    12,    13,    14,    15,
-    16,     1,     2,    64,   108,     3,    97,    98,     4,     5,
-     6,    99,   111,   100,     7,     8,     9,   112,    10,    47,
-    48,    49,    50,    51,    52,    80,    81,    82,    83,    84,
-    85,    78,    16,    34,    35,    36,    37,    54,    88,    55,
-    56,    55,    56,    89,    90,    79,    29,    91,    92,    95
+static const short yytable[] = {    45,
+    30,    46,    61,    62,    98,    47,   104,    40,    55,    41,
+    42,    45,    45,    46,    46,    28,    40,    48,    41,    42,
+    70,    88,    43,    40,    71,    41,    29,    72,    89,   106,
+   107,    43,    47,    56,    64,    57,    58,    45,    66,    46,
+    73,    74,    75,    76,   111,    63,    65,    99,   100,     1,
+     2,    95,   101,     3,   102,    96,     4,     5,     6,    32,
+    33,   105,     7,     8,     9,   108,    10,    34,    35,    11,
+    45,   109,    46,    59,    60,    12,    13,    14,    15,    16,
+    17,     1,     2,    57,    58,     3,    91,    92,     4,     5,
+     6,    93,    94,   110,     7,     8,     9,   113,    10,   114,
+    80,    11,     1,     2,    36,    81,    37,    38,    39,     4,
+     5,     6,    17,    31,    90,     7,     8,     9,    97,    10,
+     0,     0,    11,    49,    50,    51,    52,    53,    54,     0,
+     0,     0,     0,    17,    82,    83,    84,    85,    86,    87
 };
 
-static const short yycheck[] = {    16,
-    40,    16,    27,    28,    68,    12,    70,    40,     9,    10,
-    27,    28,    27,    28,    12,    16,    17,    18,    25,    11,
-    22,    22,    23,    24,    26,    26,    14,    29,    53,    93,
-    94,    26,    29,    28,    29,    22,    53,    27,    53,    40,
-    42,    43,    44,    45,   108,    40,    41,    22,    23,     9,
-    10,    22,    26,    13,    28,    29,    16,    17,    18,    22,
-    23,    86,    22,    23,    24,    22,    26,    41,    26,    86,
-    28,    86,    19,    20,    25,    35,    36,    37,    38,    39,
-    40,     9,    10,    41,    25,    13,    17,    18,    16,    17,
-    18,    22,     0,    24,    22,    23,    24,     0,    26,     3,
-     4,     5,     6,     7,     8,    47,    48,    49,    50,    51,
-    52,    45,    40,    10,    11,    12,    13,    15,    54,    17,
-    18,    17,    18,    55,    56,    46,     3,    57,    58,    64
+static const short yycheck[] = {    17,
+    40,    17,    29,    30,    70,    12,    72,    26,    14,    28,
+    29,    29,    30,    29,    30,    29,    26,    11,    28,    29,
+    22,    40,    41,    26,    26,    28,    40,    29,    55,    95,
+    96,    41,    12,    15,    29,    17,    18,    55,    41,    55,
+    42,    43,    44,    45,   110,    25,    22,    17,    18,     9,
+    10,    25,    22,    13,    24,    27,    16,    17,    18,    22,
+    23,    88,    22,    23,    24,    22,    26,    22,    23,    29,
+    88,    22,    88,    19,    20,    35,    36,    37,    38,    39,
+    40,     9,    10,    17,    18,    13,    57,    58,    16,    17,
+    18,    59,    60,    25,    22,    23,    24,     0,    26,     0,
+    47,    29,     9,    10,    10,    48,    12,    13,    14,    16,
+    17,    18,    40,     3,    56,    22,    23,    24,    66,    26,
+    -1,    -1,    29,     3,     4,     5,     6,     7,     8,    -1,
+    -1,    -1,    -1,    40,    49,    50,    51,    52,    53,    54
 };
-#define YYPURE 1
-
-/* -*-C-*-  Note some compilers choke on comments on `#line' lines.  */
-#line 3 "/usr/share/misc/bison.simple"
+/* -*-C-*-  Note some compilers choke on comments on `//#line' lines.  */
+//#line 3 "/pkg/gnu/share/bison.simple"
 /* This file comes from bison-1.28.  */
 
 /* Skeleton output parser for bison,
@@ -445,6 +430,10 @@ while (0)
 int	yychar;			/*  the lookahead symbol		*/
 YYSTYPE	yylval;			/*  the semantic value of the		*/
 				/*  lookahead symbol			*/
+YYSTYPE yyval;		/*  the variable used to return		*/
+				/*  semantic values from the action	*/
+				/*  routines				*/
+
 
 #ifdef YYLSP_NEEDED
 YYLTYPE yylloc;			/*  location data for the lookahead	*/
@@ -476,7 +465,7 @@ int yydebug;			/*  nonzero means print parse trace	*/
 #ifndef YYMAXDEPTH
 #define YYMAXDEPTH 10000
 #endif
-
+
 /* Define __yy_memcpy.  Note that the size argument
    should be passed with type unsigned int, because that is what the non-GCC
    definitions require.  With GCC, __builtin_memcpy takes an arg
@@ -520,8 +509,8 @@ __yy_memcpy (char *to, char *from, unsigned int count)
 
 #endif
 #endif
-
-#line 217 "/usr/share/misc/bison.simple"
+
+//#line 217 "/pkg/gnu/share/bison.simple"
 
 /* The user can define YYPARSE_PARAM as the name of an argument to be passed
    into yyparse.  The argument should have type void *.
@@ -589,10 +578,6 @@ yyparse(YYPARSE_PARAM_ARG)
   YYLTYPE yylloc;
 #endif
 #endif
-
-  YYSTYPE yyval;		/*  the variable used to return		*/
-				/*  semantic values from the action	*/
-				/*  routines				*/
 
   int yylen;
 
@@ -850,209 +835,225 @@ yyreduce:
   switch (yyn) {
 
 case 3:
-#line 80 "ETCL/ETCL.yy"
+//#line 97 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Preference (TAO_ETCL_MIN, yyvsp[0].constraint); ;
     break;}
 case 4:
-#line 82 "ETCL/ETCL.yy"
+//#line 99 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Preference (TAO_ETCL_MAX, yyvsp[0].constraint); ;
     break;}
 case 5:
-#line 84 "ETCL/ETCL.yy"
+//#line 101 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Preference (TAO_ETCL_WITH, yyvsp[0].constraint); ;
     break;}
 case 6:
-#line 86 "ETCL/ETCL.yy"
+//#line 103 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Preference (TAO_ETCL_FIRST); ;
     break;}
 case 7:
-#line 88 "ETCL/ETCL.yy"
+//#line 105 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Preference (TAO_ETCL_RANDOM); ;
     break;}
 case 8:
-#line 92 "ETCL/ETCL.yy"
+//#line 109 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_OR, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 10:
-#line 97 "ETCL/ETCL.yy"
+//#line 114 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_AND, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 12:
-#line 102 "ETCL/ETCL.yy"
+//#line 119 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_EQ, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 13:
-#line 104 "ETCL/ETCL.yy"
+//#line 121 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_NE, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 14:
-#line 106 "ETCL/ETCL.yy"
+//#line 123 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_GT, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 15:
-#line 108 "ETCL/ETCL.yy"
+//#line 125 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_GE, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 16:
-#line 110 "ETCL/ETCL.yy"
+//#line 127 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_LT, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 17:
-#line 112 "ETCL/ETCL.yy"
+//#line 129 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_LE, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 19:
-#line 117 "ETCL/ETCL.yy"
+//#line 134 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_IN, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 20:
-#line 119 "ETCL/ETCL.yy"
+//#line 136 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_IN, yyvsp[-3].constraint, yyvsp[0].constraint); ;
     break;}
 case 22:
-#line 124 "ETCL/ETCL.yy"
+//#line 141 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_TWIDDLE, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 24:
-#line 129 "ETCL/ETCL.yy"
+//#line 146 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_PLUS, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 25:
-#line 131 "ETCL/ETCL.yy"
+//#line 148 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_MINUS, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 27:
-#line 136 "ETCL/ETCL.yy"
+//#line 153 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_MULT, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 28:
-#line 138 "ETCL/ETCL.yy"
+//#line 155 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_DIV, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 30:
-#line 143 "ETCL/ETCL.yy"
+//#line 160 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Unary_Expr (TAO_ETCL_NOT, yyvsp[0].constraint); ;
     break;}
 case 32:
-#line 148 "ETCL/ETCL.yy"
+//#line 165 "ETCL/ETCL.yy"
 { yyval.constraint = yyvsp[-1].constraint; ;
     break;}
 case 33:
-#line 151 "ETCL/ETCL.yy"
+//#line 167 "ETCL/ETCL.yy"
 { yyval.constraint = yyvsp[0].constraint; ;
     break;}
 case 34:
-#line 153 "ETCL/ETCL.yy"
+//#line 169 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Unary_Expr (TAO_ETCL_PLUS, yyvsp[0].constraint); ;
     break;}
 case 35:
-#line 155 "ETCL/ETCL.yy"
+//#line 171 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Unary_Expr (TAO_ETCL_MINUS, yyvsp[0].constraint); ;
     break;}
 case 36:
-#line 158 "ETCL/ETCL.yy"
+//#line 173 "ETCL/ETCL.yy"
 { yyval.constraint = yyvsp[0].constraint; ;
     break;}
 case 37:
-#line 160 "ETCL/ETCL.yy"
+//#line 175 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Unary_Expr (TAO_ETCL_PLUS, yyvsp[0].constraint); ;
     break;}
 case 38:
-#line 162 "ETCL/ETCL.yy"
+//#line 177 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Unary_Expr (TAO_ETCL_MINUS, yyvsp[0].constraint); ;
     break;}
+case 39:
+//#line 179 "ETCL/ETCL.yy"
+{ yyval.constraint = yyvsp[0].constraint; ;
+    break;}
+case 40:
+//#line 181 "ETCL/ETCL.yy"
+{ yyval.constraint = yyvsp[0].constraint; ;
+    break;}
 case 41:
-#line 168 "ETCL/ETCL.yy"
+//#line 183 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Exist (yyvsp[0].constraint); ;
     break;}
 case 42:
-#line 170 "ETCL/ETCL.yy"
-{ yyval.constraint = new TAO_ETCL_Default (yyvsp[0].constraint); ;
+//#line 185 "ETCL/ETCL.yy"
+{ yyval.constraint = new TAO_ETCL_Exist (yyvsp[0].constraint); ;
     break;}
 case 43:
-#line 172 "ETCL/ETCL.yy"
-{ yyval.constraint = new TAO_ETCL_Eval (yyvsp[0].constraint); ;
+//#line 187 "ETCL/ETCL.yy"
+{ yyval.constraint = new TAO_ETCL_Default (yyvsp[0].constraint); ;
     break;}
 case 44:
-#line 176 "ETCL/ETCL.yy"
-{ yyval.constraint = 0 ;
+//#line 189 "ETCL/ETCL.yy"
+{ yyval.constraint = new TAO_ETCL_Eval (yyvsp[0].constraint); ;
     break;}
 case 45:
-#line 178 "ETCL/ETCL.yy"
-{ yyval.constraint = new TAO_ETCL_Dot (yyvsp[0].constraint); ;
+//#line 191 "ETCL/ETCL.yy"
+{ yyval.constraint = yyvsp[0].constraint; ;
     break;}
 case 46:
-#line 181 "ETCL/ETCL.yy"
-{ yyval.constraint = new TAO_ETCL_Component (yyvsp[-1].constraint, yyvsp[0].constraint); ;
-    break;}
-case 49:
-#line 188 "ETCL/ETCL.yy"
-{ yyval.constraint = 0 ;
-    break;}
-case 50:
-#line 190 "ETCL/ETCL.yy"
-{ yyval.constraint = new TAO_ETCL_Dot (yyvsp[0].constraint); ;
-    break;}
-case 53:
-#line 197 "ETCL/ETCL.yy"
-{ yyval.constraint = new TAO_ETCL_Component (yyvsp[-1].constraint, yyvsp[0].constraint); ;
-    break;}
-case 54:
-#line 199 "ETCL/ETCL.yy"
-{ yyval.constraint = new TAO_ETCL_Special (TAO_ETCL_LENGTH); ;
-    break;}
-case 55:
-#line 201 "ETCL/ETCL.yy"
-{ yyval.constraint = new TAO_ETCL_Special (TAO_ETCL_DISCRIMINANT); ;
-    break;}
-case 56:
-#line 203 "ETCL/ETCL.yy"
-{ yyval.constraint = new TAO_ETCL_Special (TAO_ETCL_TYPE_ID); ;
-    break;}
-case 57:
-#line 205 "ETCL/ETCL.yy"
-{ yyval.constraint = new TAO_ETCL_Special (TAO_ETCL_REPOS_ID); ;
-    break;}
-case 60:
-#line 211 "ETCL/ETCL.yy"
-{ yyval.constraint = new TAO_ETCL_Component_Array (yyvsp[-2].constraint, yyvsp[0].constraint); ;
-    break;}
-case 61:
-#line 215 "ETCL/ETCL.yy"
-{ yyval.constraint = new TAO_ETCL_Component_Assoc (yyvsp[-2].constraint, yyvsp[0].constraint); ;
-    break;}
-case 62:
-#line 219 "ETCL/ETCL.yy"
-{ yyval.constraint = new TAO_ETCL_Component_Pos (yyvsp[-1].constraint, yyvsp[0].constraint); ;
-    break;}
-case 63:
-#line 223 "ETCL/ETCL.yy"
-{ yyval.constraint = new TAO_ETCL_Union_Pos (yyvsp[-2].constraint, yyvsp[0].constraint); ;
-    break;}
-case 64:
-#line 227 "ETCL/ETCL.yy"
+//#line 195 "ETCL/ETCL.yy"
 { yyval.constraint = 0; ;
     break;}
+case 47:
+//#line 197 "ETCL/ETCL.yy"
+{ yyval.constraint = new TAO_ETCL_Dot (yyvsp[0].constraint); ;
+    break;}
+case 48:
+//#line 200 "ETCL/ETCL.yy"
+{ yyval.constraint = new TAO_ETCL_Component (yyvsp[-1].constraint, yyvsp[0].constraint); ;
+    break;}
+case 51:
+//#line 207 "ETCL/ETCL.yy"
+{ yyval.constraint = 0; ;
+    break;}
+case 52:
+//#line 209 "ETCL/ETCL.yy"
+{ yyval.constraint = new TAO_ETCL_Dot (yyvsp[0].constraint); ;
+    break;}
+case 55:
+//#line 216 "ETCL/ETCL.yy"
+{ yyval.constraint = new TAO_ETCL_Component (yyvsp[-1].constraint, yyvsp[0].constraint); ;
+    break;}
+case 56:
+//#line 218 "ETCL/ETCL.yy"
+{ yyval.constraint = new TAO_ETCL_Special (TAO_ETCL_LENGTH); ;
+    break;}
+case 57:
+//#line 220 "ETCL/ETCL.yy"
+{ yyval.constraint = new TAO_ETCL_Special (TAO_ETCL_DISCRIMINANT); ;
+    break;}
+case 58:
+//#line 222 "ETCL/ETCL.yy"
+{ yyval.constraint = new TAO_ETCL_Special (TAO_ETCL_TYPE_ID); ;
+    break;}
+case 59:
+//#line 224 "ETCL/ETCL.yy"
+{ yyval.constraint = new TAO_ETCL_Special (TAO_ETCL_REPOS_ID); ;
+    break;}
+case 62:
+//#line 230 "ETCL/ETCL.yy"
+{ yyval.constraint = new TAO_ETCL_Component_Array (yyvsp[-2].constraint, yyvsp[0].constraint); ;
+    break;}
+case 63:
+//#line 234 "ETCL/ETCL.yy"
+{ yyval.constraint = new TAO_ETCL_Component_Assoc (yyvsp[-2].constraint, yyvsp[0].constraint); ;
+    break;}
+case 64:
+//#line 238 "ETCL/ETCL.yy"
+{ yyval.constraint = new TAO_ETCL_Component_Pos (yyvsp[-1].constraint, yyvsp[0].constraint); ;
+    break;}
 case 65:
-#line 229 "ETCL/ETCL.yy"
-{ yyval.constraint = new TAO_ETCL_Union_Value (+1, yyvsp[0].constraint); ;
+//#line 242 "ETCL/ETCL.yy"
+{ yyval.constraint = new TAO_ETCL_Union_Pos (yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 66:
-#line 231 "ETCL/ETCL.yy"
-{ yyval.constraint = new TAO_ETCL_Union_Value (+1, yyvsp[0].constraint); ;
+//#line 246 "ETCL/ETCL.yy"
+{ yyval.constraint = 0; ;
     break;}
 case 67:
-#line 233 "ETCL/ETCL.yy"
-{ yyval.constraint = new TAO_ETCL_Union_Value (-1, yyvsp[0].constraint); ;
+//#line 248 "ETCL/ETCL.yy"
+{ yyval.constraint = new TAO_ETCL_Union_Value (+1, yyvsp[0].constraint); ;
     break;}
 case 68:
-#line 235 "ETCL/ETCL.yy"
+//#line 250 "ETCL/ETCL.yy"
+{ yyval.constraint = new TAO_ETCL_Union_Value (+1, yyvsp[0].constraint); ;
+    break;}
+case 69:
+//#line 252 "ETCL/ETCL.yy"
+{ yyval.constraint = new TAO_ETCL_Union_Value (-1, yyvsp[0].constraint); ;
+    break;}
+case 70:
+//#line 254 "ETCL/ETCL.yy"
 { yyval.constraint = new TAO_ETCL_Union_Value (yyvsp[0].constraint); ;
     break;}
 }
    /* the action file gets copied in in place of this dollarsign */
-#line 543 "/usr/share/misc/bison.simple"
-
+//#line 543 "/pkg/gnu/share/bison.simple"
+
   yyvsp -= yylen;
   yyssp -= yylen;
 #ifdef YYLSP_NEEDED
@@ -1271,7 +1272,6 @@ yyerrhandle:
     }
   return 1;
 }
-#line 238 "ETCL/ETCL.yy"
+//#line 257 "ETCL/ETCL.yy"
 
 
-//extern int yydebug = 1;
