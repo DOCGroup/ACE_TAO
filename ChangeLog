@@ -1,3 +1,10 @@
+Fri Dec 10 23:53:41 2004  Marek Brudka  <mbrudka@aster.pl>
+
+	* bin/MakeProjectCreator/config/global.features (Module):
+	Removed xt_reactor feature.
+	* ACE-INSTALL.html (Module):
+	Modified documentation related to QtReactor and XtReactor.
+
 Fri Dec 10 22:57:22 2004  Marek Brudka  <mbrudka@aster.pl>
 
 	* tests/QtReactor_Test.cpp (Message):
