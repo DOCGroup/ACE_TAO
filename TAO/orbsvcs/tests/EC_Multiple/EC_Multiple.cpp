@@ -1015,8 +1015,6 @@ Test_ECG::shutdown_supplier (void* /* supplier_cookie */,
 
       ACE_hrtime_t t = ACE_OS::gethrtime ();
       ORBSVCS_Time::hrtime_to_TimeT (s.header.creation_time, t);
-      s.header.ec_recv_time = ORBSVCS_Time::zero ();
-      s.header.ec_send_time = ORBSVCS_Time::zero ();
       s.header.type = ACE_ES_EVENT_SHUTDOWN;
       consumer->push (shutdown, ACE_TRY_ENV);
     }
@@ -1478,8 +1476,6 @@ Test_Supplier::push (const RtecEventComm::EventSet& events,
 
       ACE_hrtime_t t = ACE_OS::gethrtime ();
       ORBSVCS_Time::hrtime_to_TimeT (s.header.creation_time, t);
-      s.header.ec_recv_time = ORBSVCS_Time::zero ();
-      s.header.ec_send_time = ORBSVCS_Time::zero ();
 
       this->message_count_--;
 

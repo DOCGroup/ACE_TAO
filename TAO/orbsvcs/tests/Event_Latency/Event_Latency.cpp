@@ -188,6 +188,22 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
               ORBSVCS_Time::TimeT_to_hrtime (creation,
                                              events[i].header.creation_time);
 
+              const ACE_hrtime_t now = ACE_OS::gethrtime ();
+              const ACE_hrtime_t elapsed = now - creation;
+              ACE_Time_Value latency (ACE_static_cast (long,
+                elapsed / ACE_ONE_SECOND_IN_NSECS),
+                                      ACE_static_cast (long,
+                ACE_CU64_TO_CU32 (elapsed) % ACE_ONE_SECOND_IN_NSECS / 1000));
+
+              if (! shutting_down)
+                {
+                  ++total_pushes_;
+                  if (min_latency_ > latency) min_latency_ = latency;
+                  if (max_latency_ < latency) max_latency_ = latency;
+                  total_latency_ += latency;
+                }
+
+#if !defined(TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS)
               ACE_hrtime_t ec_recv;
               ORBSVCS_Time::TimeT_to_hrtime (ec_recv,
                                              events[i].header.ec_recv_time);
@@ -196,19 +212,8 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
               ORBSVCS_Time::TimeT_to_hrtime (ec_send,
                                              events[i].header.ec_send_time);
 
-              const ACE_hrtime_t now = ACE_OS::gethrtime ();
-              const ACE_hrtime_t elapsed = now - creation;
-              ACE_Time_Value latency (ACE_static_cast (long,
-                elapsed / ACE_ONE_SECOND_IN_NSECS),
-                                      ACE_static_cast (long,
-                ACE_CU64_TO_CU32 (elapsed) % ACE_ONE_SECOND_IN_NSECS / 1000));
-
-              const long to_ec_nsecs = ACE_CU64_TO_CU32 (ec_recv - creation);
-              ACE_Time_Value to_ec (to_ec_nsecs / ACE_ONE_SECOND_IN_NSECS,
-                                    to_ec_nsecs % ACE_ONE_SECOND_IN_NSECS /
-                                      1000);
-
-              ACE_Time_Value in_ec, from_ec;
+              ACE_Time_Value in_ec;
+              ACE_Time_Value from_ec;
               if (! short_circuit_EC)
                 {
                   const ACE_hrtime_t in_ec_nsecs = ec_send - ec_recv;
@@ -226,18 +231,11 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
                                     ACE_static_cast (long,
                       ACE_CU64_TO_CU32 (from_ec_nsecs) %
                         ACE_ONE_SECOND_IN_NSECS / 1000));
-                }
 
-              if (! shutting_down)
-                {
-                  ++total_pushes_;
-                  if (min_latency_ > latency) min_latency_ = latency;
-                  if (max_latency_ < latency) max_latency_ = latency;
-                  total_latency_ += latency;
-                  if (min_to_ec_ > to_ec) min_to_ec_ = to_ec;
-                  if (max_to_ec_ < to_ec) max_to_ec_ = to_ec;
-                  if (! short_circuit_EC)
+                  if (! shutting_down)
                     {
+                      if (min_to_ec_ > to_ec) min_to_ec_ = to_ec;
+                      if (max_to_ec_ < to_ec) max_to_ec_ = to_ec;
                       sum_to_ec_ += to_ec;
                       if (min_in_ec_ > in_ec) min_in_ec_ = in_ec;
                       if (max_in_ec_ < in_ec) max_in_ec_ = in_ec;
@@ -247,6 +245,8 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
                       sum_from_ec_ += from_ec;
                     }
                 }
+#endif /* TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS */
+
             }
         }
 

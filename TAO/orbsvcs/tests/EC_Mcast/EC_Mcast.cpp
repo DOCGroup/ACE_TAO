@@ -943,8 +943,6 @@ ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
 
   ACE_hrtime_t t = ACE_OS::gethrtime ();
   ORBSVCS_Time::hrtime_to_TimeT (s.header.creation_time, t);
-  s.header.ec_recv_time = ORBSVCS_Time::zero ();
-  s.header.ec_send_time = ORBSVCS_Time::zero ();
 
   this->event_count_--;
 
