@@ -217,7 +217,7 @@ namespace ACE_Utils
 
   typedef ACE_Singleton <UUID_Generator, ACE_SYNCH_MUTEX> UUID_GENERATOR;
 
-};
+}
 
 #if defined (__ACE_INLINE__)
 #include "ace/UUID.inl"
