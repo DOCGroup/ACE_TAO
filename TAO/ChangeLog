@@ -1,3 +1,11 @@
+Thu Jun 26 14:30:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Objref_VarOut_T.h:
+
+	  Added 'typedef T _obj_type;' to the _var class for interfaces. This
+	  allows access to T's static methods and typedefs from template code
+	  using the corresponding _var.
+
 Thu Jun 26 14:03:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_sh.cpp (visit_interface):
