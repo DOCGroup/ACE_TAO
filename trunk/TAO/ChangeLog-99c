@@ -1,3 +1,14 @@
+Fri Jul 30 19:49:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Faults/test_i.cpp:
+	  Reduce the sleep time to avoid false timeouts
+
+	* tests/Faults/pong.cpp:
+	* tests/Faults/ping_i.cpp:
+	* tests/Faults/pong.cpp:
+	  Fixed syntax errors in last commit, Sun/CC just seems unable to
+	  catch them.
+
 Fri Jul 30 18:47:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tests/Faults/Makefile:
