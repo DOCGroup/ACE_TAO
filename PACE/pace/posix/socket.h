@@ -17,8 +17,13 @@
 #define PACE_SOCKET_H_POSIX
 
 #include <sys/types.h>
+#if PACE_LYNXOS == 0x300 || PACE_LYNXOS == 0x310
+#include <socket.h>
+#include <uio.h>
+#else
 #include <sys/socket.h>
 #include <sys/uio.h>
+#endif /* PACE_LYNXOS != 0x300 && PACE_LYNXOS != 0x310 */
 
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
@@ -30,12 +35,18 @@ extern "C" {
 
 #ifndef PACE_SOCKLEN_T
 #define PACE_SOCKLEN_T
+# if PACE_LYNXOS == 0x300 || PACE_LYNXOS == 0x310
+    typedef int pace_socklen_t;
+# else
     typedef socklen_t pace_socklen_t;
+# endif /* PACE_LYNXOS != 0x300 && PACE_LYNXOS != 0x310 */
 #endif /* PACE_SOCKLEN_T */
 
 #ifndef PACE_SA_FAMILY_T
 #define PACE_SA_FAMILY_T
+# if PACE_LYNXOS != 0x300 && PACE_LYNXOS != 0x310
     typedef sa_family_t pace_family_t;
+# endif /* PACE_LYNXOS != 0x300 && PACE_LYNXOS != 0x310 */
 #endif /* PACE_SA_FAMILY_T */
 
 #ifndef PACE_MSGHDR

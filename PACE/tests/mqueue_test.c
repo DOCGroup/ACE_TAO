@@ -1,5 +1,6 @@
 /* $Id$ */
 
+#if PACE_LYNXOS != 0x300
 #include "pace/stdio.h"
 #include "pace/fcntl.h"
 #include "pace/mqueue.h"
@@ -33,7 +34,7 @@ int
 main (int argc, char** argv)
 {
 #if PACE_LYNXOS
-  pace_printf ("No errors, have occurred. On the other hand no operations have been performed either. Take what you can get I guess.\n");
+  pace_printf ("mqueue_test not supported on LynxOS.\n");
   PACE_UNUSED_ARG (argc);
   PACE_UNUSED_ARG (argv);
   return EXIT_SUCCESS;
@@ -120,3 +121,10 @@ main (int argc, char** argv)
   return EXIT_SUCCESS;
 #endif /* ! PACE_LYNXOS */
 }
+#else
+int
+main (int argc, char **argv)
+{
+  printf("PACE does not support LynxOS 3.0.0.\n");
+}
+#endif /* PACE_LYNXOS == 0x300 */

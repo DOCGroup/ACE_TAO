@@ -18,6 +18,7 @@
  * =====================================================================
  */
 
+#if PACE_LYNXOS != 0x300
 #include "pace/stdio.h"
 #include "pace/unistd.h"
 #include "pace/time.h"
@@ -126,6 +127,7 @@ check_sysconf ()
                        "_SC_PRIORITY_SCHEDULING",
                        "_SC_REALTIME_SIGNALS"};
 
+  /* Success indicated by compilation for this function. */
   printf("pace_sysconf %s\n", success);
   for (index = 0; index < confnamessize; index++) 
     {
@@ -236,3 +238,10 @@ main (int argc, char **argv)
   PACE_UNUSED_ARG (argv);
   return 0;
 }
+#else
+int
+main (int argc, char **argv)
+{
+  printf("PACE does not support LynxOS 3.0.0.\n");
+}
+#endif /* PACE_LYNXOS == 0x300 */
