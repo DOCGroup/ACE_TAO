@@ -234,10 +234,26 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
 
   if (TAO_debug_level > 2)
     {
+      // Check whether the output cdr stream is build up of multiple
+      // messageblocks. If so, consolidate them to one block that can be
+      // dumped
+      ACE_Message_Block* consolidated_block = 0;
+      if (stream.begin()->cont() != 0)
+        {
+          consolidated_block = new ACE_Message_Block;
+          ACE_CDR::consolidate(consolidated_block, stream.begin());
+          buf = (char *) (consolidated_block->rd_ptr ());
+        }
+      ///
       this->dump_msg ("send",
                       ACE_reinterpret_cast (u_char *,
                                             buf),
                       total_len);
+
+      //
+      delete consolidated_block;
+      consolidated_block = 0;
+      //
     }
 
   return 0;
@@ -304,6 +320,8 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // Create a message block by stealing the data block
   ACE_Message_Block msg_block (this->message_handler_.data_block_dup ());
 
+  ACE_CDR::mb_align (&msg_block);
+
   // Move the wr_ptr () and rd_ptr in the message block. This is not
   // generally required as we are not going to write anything. But
   // this is *important* for checking the length of the CDR streams
@@ -355,12 +373,15 @@ TAO_GIOP_Message_Base::process_reply_message (
   // Create a message block by stealing the data block
   ACE_Message_Block msg_block (this->message_handler_.data_block_dup ());
 
+  ACE_CDR::mb_align (&msg_block);
+
   // Move the wr_ptr () and rd_ptr in the message block. This is not
   // generally required as we are not going to write anything. But
   // this is *important* for checking the length of the CDR streams
   size_t n = this->message_handler_.message_state ().message_size;
   msg_block.wr_ptr (n + TAO_GIOP_MESSAGE_HEADER_LEN);
   msg_block.rd_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
+
 
   // Steal the input CDR from the message block
   int byte_order = this->message_handler_.message_state ().byte_order;

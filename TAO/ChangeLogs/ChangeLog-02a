@@ -1,3 +1,20 @@
+Mon Mar 12 13:20:12 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Lite.cpp (message_type): Added a fix to
+	  soncolidate the outgoing message blocks before dumping the
+	  contents for debugging purposes. Thanks to Johnny Willemsen for
+	  providing this patch.
+	
+	* tao/GIOP_Message_Base.cpp: 
+	* tao/GIOP_Message_Handler.cpp:
+	* tao/GIOP_Message_Handler.inl: Added code to align the message
+	  blocks on an 8 byte boundary. This is needed for BCB as the
+	  memory allocated doesn't seem to get aligned on an 8 byte
+	  boundary. Hopefully this should fix most of the problem that
+	  folks see on BCB. Thanks to Christopher Kohlhoff
+	  <chris@kohlhoff.com> and Johnny Willemsen for putting in effort
+	  to get behind what the compiler was actually doing.
+
 Mon Mar 12 12:39:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/Simple/time/Time_i.h:
