@@ -1,3 +1,21 @@
+Mon Jul 19 15:10:01 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/UIOP_Acceptor.cpp (~TAO_UIOP_Acceptor):
+
+	  Removed call to close() in the destructor since it was causing a 
+	  segmentation fault.  It isn't needed since close() gets called
+	  even when the Acceptor_Registry is destroyed, and when the ORB
+	  shuts down.  Thanks to Kirthika for pointing out the problem and 
+	  providing a fix.
+
+	* tao/IOR_LookupTable.cpp:
+
+	  Fixed missing "tao/" from #include of ObjectIDList.h.
+
+	* Makefile:
+
+	  Updated dependencies.
+
 Mon Jul 19 15:08:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/CosEvent_Service/CosEvent_Service.h:
