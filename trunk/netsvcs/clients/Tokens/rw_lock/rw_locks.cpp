@@ -44,7 +44,7 @@ static int write_sleep = 0;
 static int renew = 0;
 
 static void *
-run_thread (void *vp)
+run_thread (void *)
 {
   for (int x = 0; x < iterations; x++)
     {
