@@ -39,7 +39,6 @@ Wed Oct  8 18:16:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tests/Policies/Manipulation.cpp: Changed the call from _narrow
 	  () to unchecked_narrow ().
         
-
 Wed Oct  8 00:00:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bug_1482_Regression/Client_Task.cpp: Reverted the change
