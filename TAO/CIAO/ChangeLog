@@ -1,3 +1,10 @@
+Sun Mar 14 00:16:46 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* CIDLC/CIDLC.mpc:
+
+	  Removed the * to disable the duplicated words in the
+	  project/makefile.
+
 Mon Mar 15 10:14:16 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CIDLC/cidlc.cpp:

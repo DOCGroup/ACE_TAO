@@ -1,6 +1,6 @@
 //$Id$
 
-project(*CIDLC) {
+project(CIDLC) {
   requires += cidl
   exename = cidlc
   includes += .. ../CCF
