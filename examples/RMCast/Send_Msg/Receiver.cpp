@@ -10,7 +10,6 @@
 #include <vector>
 #include <iostream>
 
-
 using std::cout;
 using std::cerr;
 using std::endl;
@@ -36,9 +35,13 @@ main (int argc, char* argv[])
     Message expected_msg;
     expected_msg.sn = 0;
 
-    for (unsigned short i = 0; i < payload_size; i++)
+    // VC6 does not know about new rules.
+    //
     {
-      expected_msg.payload[i] = i;
+      for (unsigned short i = 0; i < payload_size; i++)
+      {
+        expected_msg.payload[i] = i;
+      }
     }
 
     Status_List received (message_count, 0);
@@ -70,17 +73,26 @@ main (int argc, char* argv[])
 
     unsigned long lost_count (0), damaged_count (0), duplicate_count (0);
 
-    for (Status_List::iterator i (received.begin ()), end (received.end ());
-         i != end;
-         ++i) if (*i == 0) ++lost_count;
+    {
+      for (Status_List::iterator i (received.begin ()), end (received.end ());
+           i != end;
+           ++i) if (*i == 0) ++lost_count;
+    }
 
-    for (Status_List::iterator i (damaged.begin ()), end (damaged.end ());
-         i != end;
-         ++i) if (*i == 1) ++damaged_count;
 
-    for (Status_List::iterator i (duplicate.begin ()), end (duplicate.end ());
-         i != end;
-         ++i) if (*i == 1) ++duplicate_count;
+    {
+      for (Status_List::iterator i (damaged.begin ()), end (damaged.end ());
+           i != end;
+           ++i) if (*i == 1) ++damaged_count;
+    }
+
+
+    {
+      for (Status_List::iterator i (duplicate.begin ()), end (duplicate.end ());
+           i != end;
+           ++i) if (*i == 1) ++duplicate_count;
+    }
+
 
     cout << "lost      : " << lost_count << endl
          << "damaged   : " << damaged_count << endl

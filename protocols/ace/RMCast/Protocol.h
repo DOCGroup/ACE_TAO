@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 // file      : ace/RMCast/Protocol.h
 // author    : Boris Kolpackov <boris@kolpackov.net>
 // cvs-id    : $Id$
@@ -205,19 +203,19 @@ namespace ACE_RMCast
     }
 
   public:
-    struct duplicate {};
-
-    void
+    bool
     add (Profile_ptr p)
     {
       u16 id (p->id ());
 
       if (profiles_.find (id) == 0)
       {
-        throw duplicate ();
+        return false;
       }
 
       profiles_.bind (id, p);
+
+      return true;
     }
 
     Profile const*
