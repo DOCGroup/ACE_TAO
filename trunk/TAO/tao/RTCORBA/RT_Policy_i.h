@@ -320,6 +320,7 @@ public:
                    int &send_buffer_size,
                    int &recv_buffer_size,
                    int &no_delay,
+		   int &enable_network_priority,
                    const char *protocol_type);
 
   // Return the cached policy type for this policy.
@@ -382,6 +383,7 @@ public:
                    int &send_buffer_size,
                    int &recv_buffer_size,
                    int &no_delay,
+		   int &enable_network_priority,
                    const char* protocol_type);
 
   virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -438,7 +440,8 @@ public:
                       ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
                       CORBA::Boolean keep_alive = 1,
                       CORBA::Boolean dont_route = 0,
-                      CORBA::Boolean no_delay = 1);
+                      CORBA::Boolean no_delay = 1,
+		      CORBA::Boolean enable_network_priority = 0);
 
   virtual CORBA::Long send_buffer_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -481,6 +484,13 @@ public:
 
   /// This method reads the object state from a CDR representation.
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+  
+  virtual CORBA::Boolean enable_network_priority (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual void enable_network_priority (CORBA::Boolean enable
+					ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
 
@@ -496,6 +506,7 @@ private:
   CORBA::Boolean keep_alive_;
   CORBA::Boolean dont_route_;
   CORBA::Boolean no_delay_;
+  CORBA::Boolean enable_network_priority_;
 };
 
 //*************************************************************************
