@@ -238,7 +238,7 @@ ParseReconBlock(int n)
 	  if (run == END_OF_BLOCK) break;
           if (i >= 64)
             {
-              ACE_DEBUG ((LM_DEBUG,"(%P|%t) subscript out of range \n"));
+              //              ACE_DEBUG ((LM_DEBUG,"(%P|%t) subscript out of range \n"));
               break;
             }
 	  i = i + run + 1;
@@ -305,7 +305,7 @@ ParseReconBlock(int n)
 	  i = i+run+1;
           if (i >= 64)
             {
-              ACE_DEBUG ((LM_DEBUG,"(%P|%t) subscript out of range \n"));
+              //              ACE_DEBUG ((LM_DEBUG,"(%P|%t) subscript out of range \n"));
               break;
             }
 	  pos = zigzag_direct[i];
