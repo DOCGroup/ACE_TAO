@@ -173,7 +173,7 @@ IPC_Client<SH, PR_CO_2>::init (int argc, char *argv[])
   // Call down to the CONNECTOR's open() method to do the initialization.
   this->inherited::open (ACE_Reactor::instance ());
 
-  char *r_addr = argc > 1 ? argv[1] : 
+  const char *r_addr = argc > 1 ? argv[1] : 
     ACE_SERVER_ADDRESS (ACE_DEFAULT_SERVER_HOST, 
 			ACE_DEFAULT_SERVER_PORT_STR);
   ACE_Time_Value timeout (argc > 2 
