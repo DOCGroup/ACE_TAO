@@ -1244,7 +1244,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 		    void *stack,
 		    size_t stacksize)
 {
-// ACE_TRACE ("ACE_OS::thr_create");
+  // ACE_TRACE ("ACE_OS::thr_create");
 
 #if defined (ACE_HAS_THREADS)
   ACE_thread_t tmp_thr;
@@ -1256,26 +1256,181 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   if (thr_handle == 0)
     thr_handle = &tmp_handle;
 
-#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+#  if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+
   int result;
   pthread_attr_t attr;
-#if defined (ACE_HAS_SETKIND_NP)
+#    if defined (ACE_HAS_SETKIND_NP)
   if (::pthread_attr_create (&attr) != 0)
-#else /* ACE_HAS_SETKIND_NP */
+#    else /* ACE_HAS_SETKIND_NP */
   if (::pthread_attr_init (&attr) != 0)
-#endif /* ACE_HAS_SETKIND_NP */
-    return -1;
-#if !defined (ACE_LACKS_SETSCHED)
-  else
+#    endif /* ACE_HAS_SETKIND_NP */
+      return -1;
+#    if !defined (ACE_LACKS_SETSCHED)
+  // The PRIORITY stuff used to be here...-cjc
+#    endif /* ACE_LACKS_SETSCHED */
+
+
+  // *** Set Stack Size
+#    if defined (ACE_NEEDS_HUGE_THREAD_STACKSIZE)
+  if (stacksize < ACE_NEEDS_HUGE_THREAD_STACKSIZE)
+    stacksize = ACE_NEEDS_HUGE_THREAD_STACKSIZE;
+#    endif /* ACE_NEEDS_HUGE_THREAD_STACKSIZE */
+
+  if (stacksize != 0)
     {
-#  if defined(ACE_HAS_PTHREADS_1003_DOT_1C)
+      size_t size = stacksize;
+
+#    if defined (PTHREAD_STACK_MIN)
+      if (size < PTHREAD_STACK_MIN)
+	size = PTHREAD_STACK_MIN;
+#    endif /* PTHREAD_STACK_MIN */
+
+#    if !defined (ACE_LACKS_THREAD_STACK_SIZE)      // JCEJ 12/17/96
+      if (::pthread_attr_setstacksize (&attr, size) != 0)
+	{
+#      if defined (ACE_HAS_SETKIND_NP)
+	  ::pthread_attr_delete (&attr);
+#      else /* ACE_HAS_SETKIND_NP */
+	  ::pthread_attr_destroy (&attr);
+#      endif /* ACE_HAS_SETKIND_NP */
+	  return -1;
+	}
+#    endif /* !ACE_LACKS_THREAD_STACK_SIZE */
+    }
+
+  // *** Set Stack Address
+#    if !defined (ACE_LACKS_THREAD_STACK_ADDR)
+  if (stack != 0)
+    {
+      if (::pthread_attr_setstackaddr (&attr, stack) != 0)
+	{
+#      if defined (ACE_HAS_SETKIND_NP)
+	  ::pthread_attr_delete (&attr);
+#      else /* ACE_HAS_SETKIND_NP */
+	  ::pthread_attr_destroy (&attr);
+#      endif /* ACE_HAS_SETKIND_NP */
+	  return -1;
+	}
+    }
+#    endif /* !ACE_LACKS_THREAD_STACK_ADDR */
+
+
+
+  // *** Deal with various attributes
+  if (flags != 0)
+    {
+      // *** Set Detach state
+#    if !defined (ACE_LACKS_SETDETACH)
+      if (ACE_BIT_ENABLED (flags, THR_DETACHED) 
+	  || ACE_BIT_ENABLED (flags, THR_JOINABLE))
+	{
+	  int dstate = PTHREAD_CREATE_JOINABLE; 
+
+	  if (ACE_BIT_ENABLED (flags, THR_DETACHED))
+	    dstate = PTHREAD_CREATE_DETACHED;
+
+#      if defined (ACE_HAS_SETKIND_NP)
+	  if (::pthread_attr_setdetach_np (&attr, dstate) != 0)
+#      else /* ACE_HAS_SETKIND_NP */
+#        if defined (ACE_HAS_PTHREAD_DSTATE_PTR)
+	  if (::pthread_attr_setdetachstate (&attr, &dstate) != 0)
+#        else
+	  if (::pthread_attr_setdetachstate (&attr, dstate) != 0)
+#        endif /* ACE_HAS_PTHREAD_DSTATE_PTR */
+#      endif /* ACE_HAS_SETKIND_NP */
+		{
+#      if defined (ACE_HAS_SETKIND_NP)
+	    ::pthread_attr_delete (&attr);
+#      else /* ACE_HAS_SETKIND_NP */
+	    ::pthread_attr_destroy (&attr);
+#      endif /* ACE_HAS_SETKIND_NP */
+	    return -1;
+	  }
+	}
+#    endif /* ACE_LACKS_SETDETACH */
+
+      // *** Set Policy
+#    if !defined (ACE_LACKS_SETSCHED)
+      // If we wish to set the priority explicitly, we have to enable
+      // explicit scheduling, and a policy, too.
+      if (priority != -1)
+	{
+	  ACE_SET_BITS(flags, THR_EXPLICIT_SCHED);
+	  if (ACE_BIT_DISABLED(flags, THR_SCHED_FIFO)
+	      && ACE_BIT_DISABLED(flags, THR_SCHED_RR)
+	      && ACE_BIT_DISABLED(flags, THR_SCHED_DEFAULT))
+	    ACE_SET_BITS(flags, THR_SCHED_DEFAULT);
+	}
+
+      if (   ACE_BIT_ENABLED (flags, THR_SCHED_FIFO)
+	     || ACE_BIT_ENABLED (flags, THR_SCHED_RR)
+	     || ACE_BIT_ENABLED (flags, THR_SCHED_DEFAULT))
+	{
+	  int spolicy;
+
+#      if defined (ACE_HAS_ONLY_SCHED_OTHER)
+            // Solaris, thru version 2.5.1, only supports SCHED_OTHER.
+            spolicy = SCHED_OTHER;
+#      else
+	  if (ACE_BIT_ENABLED (flags, THR_SCHED_DEFAULT))
+	    spolicy = SCHED_OTHER;
+	  else if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO))
+	    spolicy = SCHED_FIFO;
+	  else
+	    spolicy = SCHED_RR;
+#      endif
+
+#      if !defined (ACE_HAS_FSU_PTHREADS)
+#        if defined (ACE_HAS_SETKIND_NP)
+	  result = ::pthread_attr_setsched (&attr, spolicy);
+#        else /* ACE_HAS_SETKIND_NP */
+	  result = ::pthread_attr_setschedpolicy (&attr, spolicy);
+#        endif /* ACE_HAS_SETKIND_NP */
+	  if (result != 0)
+	      {
+		// preserve the errno value
+		errno = result;
+#        if defined (ACE_HAS_SETKIND_NP)
+		::pthread_attr_delete (&attr);
+#        else /* ACE_HAS_SETKIND_NP */
+		::pthread_attr_destroy (&attr);
+#        endif /* ACE_HAS_SETKIND_NP */
+		return -1;
+	      }
+#      else
+	  int ret;
+	  switch (spolicy)
+	    {
+	    case SCHED_FIFO:
+	    case SCHED_RR:
+	      ret = 0;
+	      break;
+	    default:
+	      ret = 22;
+	      break;
+	    }
+	  if (ret != 0)
+	    {
+#        if defined (ACE_HAS_SETKIND_NP)
+	      ::pthread_attr_delete (&attr);
+#        else /* ACE_HAS_SETKIND_NP */
+	      ::pthread_attr_destroy (&attr);
+#        endif /* ACE_HAS_SETKIND_NP */
+	      return -1;
+	    }
+#      endif	/*  ACE_HAS_FSU_PTHREADS */
+	}
+
+      // *** Set Priority (use reasonable default priorities)
+#      if defined(ACE_HAS_PTHREADS_1003_DOT_1C)
       // If we wish to explicitly set a scheduling policy, we also
       // have to specify a priority.
       // We choose a "middle" priority as default.
       // Maybe this is also necessary on other POSIX'ish implementations?
       if ((   ACE_BIT_ENABLED(flags, THR_SCHED_FIFO)
-	   || ACE_BIT_ENABLED(flags, THR_SCHED_RR)
-	   || ACE_BIT_ENABLED(flags, THR_SCHED_DEFAULT))
+	      || ACE_BIT_ENABLED(flags, THR_SCHED_RR)
+	      || ACE_BIT_ENABLED(flags, THR_SCHED_DEFAULT))
 	  && priority == -1)
 	{
 	  if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO))
@@ -1285,20 +1440,20 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	  else // THR_SCHED_DEFAULT
 	    priority = PRI_OTHER_MIN + (PRI_OTHER_MAX - PRI_OTHER_MIN)/2;
 	}
-#  endif //ACE_HAS_PTHREADS_1003_DOT_1C
+#      endif //ACE_HAS_PTHREADS_1003_DOT_1C
       if (priority != -1)
 	{
 	  struct sched_param sparam;
 
 	  ACE_OS::memset ((void *) &sparam, 0, sizeof sparam);
 
-#  if defined (ACE_HAS_DCETHREADS) && !defined (ACE_HAS_SETKIND_NP)
-	  sparam.sched_priority = ACE_MAX(priority, PRIORITY_MAX);
-#  elif defined(ACE_HAS_IRIX62_THREADS) || defined (ACE_HAS_PTHREADS_XAVIER)
-	  sparam.sched_priority = ACE_MAX(priority, PTHREAD_MAX_PRIORITY);
-#  elif defined (PTHREAD_MAX_PRIORITY) /* For MIT pthreads... */
-	  sparam.prio = ACE_MAX(priority, PTHREAD_MAX_PRIORITY);
-#  elif defined(ACE_HAS_PTHREADS_1003_DOT_1C)
+#      if defined (ACE_HAS_DCETHREADS) && !defined (ACE_HAS_SETKIND_NP)
+	  sparam.sched_priority = ACE_MIN(priority, PRIORITY_MAX);
+#      elif defined(ACE_HAS_IRIX62_THREADS) || defined (ACE_HAS_PTHREADS_XAVIER)
+	  sparam.sched_priority = ACE_MIN(priority, PTHREAD_MAX_PRIORITY);
+#      elif defined (PTHREAD_MAX_PRIORITY) /* For MIT pthreads... */
+	  sparam.prio = ACE_MIN(priority, PTHREAD_MAX_PRIORITY);
+#      elif defined(ACE_HAS_PTHREADS_1003_DOT_1C)
 	  // The following code forces priority into range.
 	  if (ACE_BIT_ENABLED(flags, THR_SCHED_FIFO))
 	    {
@@ -1315,28 +1470,28 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	      sparam.sched_priority =
 		ACE_MIN(PRI_OTHER_MAX, ACE_MAX(PRI_OTHER_MIN, priority));
 	    }
-#  else
+#      else
 	  sparam.sched_priority = priority;
-#  endif
+#      endif
 
-#  if !defined (ACE_HAS_FSU_PTHREADS)
+#      if !defined (ACE_HAS_FSU_PTHREADS)
 	  int retval = 0;
-#    if defined (ACE_HAS_SETKIND_NP)
+#        if defined (ACE_HAS_SETKIND_NP)
 	  retval = ::pthread_attr_setsched (&attr, SCHED_OTHER);
-#    else /* ACE_HAS_SETKIND_NP */
+#        else /* ACE_HAS_SETKIND_NP */
 	  retval = ::pthread_attr_setschedparam (&attr, &sparam);
-#    endif /* ACE_HAS_SETKIND_NP */
+#        endif /* ACE_HAS_SETKIND_NP */
 	  if (retval != 0)
 	    {
-#    if defined (ACE_HAS_SETKIND_NP)
+#        if defined (ACE_HAS_SETKIND_NP)
 	      ::pthread_attr_delete (&attr);
-#    else /* ACE_HAS_SETKIND_NP */
+#        else /* ACE_HAS_SETKIND_NP */
 	      ::pthread_attr_destroy (&attr);
-#    endif /* ACE_HAS_SETKIND_NP */
+#        endif /* ACE_HAS_SETKIND_NP */
 	      errno = retval;
 	      return -1;
 	    }
-#  else
+#      else
 	  if ((sparam.sched_priority >= PTHREAD_MIN_PRIORITY)
 	      && (sparam.sched_priority <= PTHREAD_MAX_PRIORITY))
 	    attr.prio = sparam.sched_priority;
@@ -1345,233 +1500,153 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	      pthread_attr_destroy (&attr);
 	      return -1;
 	    }
-#  endif	/* ACE_HAS_FSU_PTHREADS */
+#      endif	/* ACE_HAS_FSU_PTHREADS */
+	}
+
+      // *** Set scheduling explicit or inherited
+      if (   ACE_BIT_ENABLED (flags, THR_INHERIT_SCHED)
+	  || ACE_BIT_ENABLED (flags, THR_EXPLICIT_SCHED))
+	{
+#      if defined (ACE_HAS_SETKIND_NP)
+	  int sched = PTHREAD_DEFAULT_SCHED;
+#      else /* ACE_HAS_SETKIND_NP */
+	  int sched = PTHREAD_EXPLICIT_SCHED;
+#      endif /* ACE_HAS_SETKIND_NP */
+	  if (ACE_BIT_ENABLED (flags, THR_INHERIT_SCHED))
+	    sched = PTHREAD_INHERIT_SCHED;
+	  if (::pthread_attr_setinheritsched (&attr, sched) != 0)
+	    {
+#      if defined (ACE_HAS_SETKIND_NP)
+	      ::pthread_attr_delete (&attr);
+#      else /* ACE_HAS_SETKIND_NP */
+	      ::pthread_attr_destroy (&attr);
+#      endif /* ACE_HAS_SETKIND_NP */
+	      return -1;
+	    }
+	}
+#    endif /* ACE_LACKS_SETSCHED */
+
+
+      // *** Set Scope
+#    if !defined (ACE_LACKS_THREAD_PROCESS_SCOPING)
+      if (ACE_BIT_ENABLED (flags, THR_SCOPE_SYSTEM)
+	  || ACE_BIT_ENABLED (flags, THR_SCOPE_PROCESS))
+	{
+	  int scope = PTHREAD_SCOPE_PROCESS;
+	  if (ACE_BIT_ENABLED (flags, THR_SCOPE_SYSTEM))
+	    scope = PTHREAD_SCOPE_SYSTEM;
+
+	  if (::pthread_attr_setscope (&attr, scope) != 0)
+	    {
+#      if defined (ACE_HAS_SETKIND_NP)
+	      ::pthread_attr_delete (&attr);
+#      else /* ACE_HAS_SETKIND_NP */
+	      ::pthread_attr_destroy (&attr);
+#      endif /* ACE_HAS_SETKIND_NP */
+	      return -1;
+	    }
+	}
+#    endif /* !ACE_LACKS_THREAD_PROCESS_SCOPING */
+
+      if (ACE_BIT_ENABLED (flags, THR_NEW_LWP))
+	{
+	  // Increment the number of LWPs by one to emulate the
+	  // Solaris semantics.
+	  int lwps = ACE_OS::thr_getconcurrency ();
+	  ACE_OS::thr_setconcurrency (lwps + 1);
 	}
     }
-#endif /* ACE_LACKS_SETSCHED */
 
-#if defined (ACE_NEEDS_HUGE_THREAD_STACKSIZE)
-    if (stacksize < ACE_NEEDS_HUGE_THREAD_STACKSIZE)
-      stacksize = ACE_NEEDS_HUGE_THREAD_STACKSIZE;
-#endif /* ACE_NEEDS_HUGE_THREAD_STACKSIZE */
+#    if defined (ACE_HAS_SETKIND_NP)
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (thr_id, attr, func, args), 
+				result),
+	      int, -1, result);
+  ::pthread_attr_delete (&attr);
+#    else /* !ACE_HAS_SETKIND_NP */
+#      if defined (ACE_HAS_THR_C_FUNC)
+  ACE_Thread_Adapter *thread_args;
+  ACE_NEW_RETURN (thread_args, ACE_Thread_Adapter (func, args), -1);
 
-    if (stacksize != 0)
-      {
-	size_t size = stacksize;
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (thr_id, &attr,
+						  ACE_THR_C_FUNC (&ace_thread_adapter), 
+						  thread_args),
+				result),
+	      int, -1, result);
+#      else
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (thr_id, &attr, func, args), 
+				result),
+	      int, -1, result);
+#      endif /* ACE_HAS_THR_C_FUNC */
+  ::pthread_attr_destroy (&attr);
+#    endif /* ACE_HAS_SETKIND_NP */
+#    if defined (ACE_HAS_STHREADS)
+  // This is the Solaris implementation of pthreads, where
+  // ACE_thread_t and ACE_hthread_t are the same.
+  if (result != -1)
+    *thr_handle = *thr_id;
+#    else
+  *thr_handle = ACE_OS::NULL_hthread;
+#    endif /* ACE_HAS_STHREADS */
+  return result;
+#  elif defined (ACE_HAS_STHREADS)
+  int result;
+  int start_suspended = ACE_BIT_ENABLED (flags, THR_SUSPENDED);
 
-#if defined (PTHREAD_STACK_MIN)
-	if (size < PTHREAD_STACK_MIN)
-	  size = PTHREAD_STACK_MIN;
-#endif /* PTHREAD_STACK_MIN */
+  if (priority >= 0)
+    // If we need to set the priority, then we need to start the
+    // thread in a suspended mode.
+    ACE_SET_BITS (flags, THR_SUSPENDED);
 
-#if !defined (ACE_LACKS_THREAD_STACK_SIZE)      // JCEJ 12/17/96
-	if (::pthread_attr_setstacksize (&attr, size) != 0)
-	  {
-#if defined (ACE_HAS_SETKIND_NP)
-	    ::pthread_attr_delete (&attr);
-#else /* ACE_HAS_SETKIND_NP */
-	    ::pthread_attr_destroy (&attr);
-#endif /* ACE_HAS_SETKIND_NP */
-	    return -1;
-	  }
-#endif /* !ACE_LACKS_THREAD_STACK_SIZE */
-      }
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::thr_create (stack, stacksize, func, args,
+					      flags, thr_id), result), 
+	      int, -1, result);
 
-#if !defined (ACE_LACKS_THREAD_STACK_ADDR)
-    if (stack != 0)
-      {
-	if (::pthread_attr_setstackaddr (&attr, stack) != 0)
-	  {
-#if defined (ACE_HAS_SETKIND_NP)
-	    ::pthread_attr_delete (&attr);
-#else /* ACE_HAS_SETKIND_NP */
-	    ::pthread_attr_destroy (&attr);
-#endif /* ACE_HAS_SETKIND_NP */
-	    return -1;
-	  }
-      }
-#endif /* !ACE_LACKS_THREAD_STACK_ADDR */
-    if (flags != 0)
-      {
-#if !defined (ACE_LACKS_SETDETACH)
-	if (ACE_BIT_ENABLED (flags, THR_DETACHED) 
-	    || ACE_BIT_ENABLED (flags, THR_JOINABLE))
-	  {
-	    int dstate = PTHREAD_CREATE_JOINABLE; 
+  if (result != -1)
+    {
+      if (priority >= 0)
+	{
+	  // Set the priority of the new thread and then let it
+	  // continue, but only if the user didn't start it suspended
+	  // in the first place!
+	  ACE_OS::thr_setprio (*thr_handle, priority);
 
-	    if (ACE_BIT_ENABLED (flags, THR_DETACHED))
-	      dstate = PTHREAD_CREATE_DETACHED;
+	  if (start_suspended == 0)
+	    ACE_OS::thr_continue (*thr_handle);
+	}
+    }
+  return result;
+#  elif defined (ACE_HAS_WTHREADS)
+  ACE_UNUSED_ARG (stack);
+  ACE_Thread_Adapter *thread_args;
+  ACE_NEW_RETURN (thread_args, ACE_Thread_Adapter (func, args), -1);
+#    if defined (ACE_HAS_MFC)
+  if (ACE_BIT_ENABLED (flags, THR_USE_AFX))
+    {
+      CWinThread *cwin_thread = 
+	::AfxBeginThread ((AFX_THREADPROC) &ace_thread_adapter,
+			  thread_args, priority, 0, 
+			  flags | THR_SUSPENDED);
+      // Have to duplicate the handle because
+      // CWinThread::~CWinThread() closes the original handle.
+      (void) ::DuplicateHandle (::GetCurrentProcess (), 
+				cwin_thread->m_hThread,
+				::GetCurrentProcess (),
+				thr_handle,
+				0, 
+				TRUE,
+				DUPLICATE_SAME_ACCESS);
+ 
+      *thr_id = cwin_thread->m_nThreadID;
 
-#if defined (ACE_HAS_SETKIND_NP)
-	    if (::pthread_attr_setdetach_np (&attr, dstate) != 0)
-#else /* ACE_HAS_SETKIND_NP */
-#if defined (ACE_HAS_PTHREAD_DSTATE_PTR)
-	    if (::pthread_attr_setdetachstate (&attr, &dstate) != 0)
-#else
-	    if (::pthread_attr_setdetachstate (&attr, dstate) != 0)
-#endif /* ACE_HAS_PTHREAD_DSTATE_PTR */
-#endif /* ACE_HAS_SETKIND_NP */
-	      {
-#if defined (ACE_HAS_SETKIND_NP)
-		::pthread_attr_delete (&attr);
-#else /* ACE_HAS_SETKIND_NP */
-		::pthread_attr_destroy (&attr);
-#endif /* ACE_HAS_SETKIND_NP */
-		return -1;
-	      }
-	  }
-#endif /* ACE_LACKS_SETDETACH */
-#if !defined (ACE_LACKS_SETSCHED)
-	// If we wish to set the priority explicitly, we have to enable
-	// explicit scheduling, and a policy, too.
-	if (priority != -1)
-	  {
-	    ACE_SET_BITS(flags, THR_EXPLICIT_SCHED);
-	    if (ACE_BIT_DISABLED(flags, THR_SCHED_FIFO)
-		&& ACE_BIT_DISABLED(flags, THR_SCHED_RR)
-		&& ACE_BIT_DISABLED(flags, THR_SCHED_DEFAULT))
-	      ACE_SET_BITS(flags, THR_SCHED_DEFAULT);
-	  }
-
-	if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO)
-	    || ACE_BIT_ENABLED (flags, THR_SCHED_RR)
-	    || ACE_BIT_ENABLED (flags, THR_SCHED_DEFAULT))
-	  {
-	    int spolicy;
-
-#if defined (ACE_HAS_ONLY_SCHED_OTHER)
-            // Solaris, thru version 2.5.1, only supports SCHED_OTHER.
-            spolicy = SCHED_OTHER;
-#else
-	    if (ACE_BIT_ENABLED (flags, THR_SCHED_DEFAULT))
-	      spolicy = SCHED_OTHER;
-	    else if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO))
-	      spolicy = SCHED_FIFO;
-	    else
-	      spolicy = SCHED_RR;
-#endif /* ACE_HAS_STHREADS */
-
-#if !defined (ACE_HAS_FSU_PTHREADS)
-#if defined (ACE_HAS_SETKIND_NP)
-	    if (::pthread_attr_setsched (&attr, spolicy) != 0)
-#else /* ACE_HAS_SETKIND_NP */
-	    if (::pthread_attr_setschedpolicy (&attr, spolicy) != 0)
-#endif /* ACE_HAS_SETKIND_NP */
-	      {
-#if defined (ACE_HAS_SETKIND_NP)
-		::pthread_attr_delete (&attr);
-#else /* ACE_HAS_SETKIND_NP */
-		::pthread_attr_destroy (&attr);
-#endif /* ACE_HAS_SETKIND_NP */
-		return -1;
-	      }
-#else
-	    int ret;
-	    switch (spolicy)
-	      {
-	      case SCHED_FIFO:
-	      case SCHED_RR:
-		ret = 0;
-		break;
-	      default:
-		ret = 22;
-		break;
-	      }
-	    if (ret != 0)
-	      {
-#if defined (ACE_HAS_SETKIND_NP)
-		::pthread_attr_delete (&attr);
-#else /* ACE_HAS_SETKIND_NP */
-		::pthread_attr_destroy (&attr);
-#endif /* ACE_HAS_SETKIND_NP */
-		return -1;
-	      }
-#endif	/*  ACE_HAS_FSU_PTHREADS */
-	  }
-
-	if (ACE_BIT_ENABLED (flags, THR_INHERIT_SCHED)
-	    || ACE_BIT_ENABLED (flags, THR_EXPLICIT_SCHED))
-	  {
-#if defined (ACE_HAS_SETKIND_NP)
-	    int sched = PTHREAD_DEFAULT_SCHED;
-#else /* ACE_HAS_SETKIND_NP */
-	    int sched = PTHREAD_EXPLICIT_SCHED;
-#endif /* ACE_HAS_SETKIND_NP */
-	    if (ACE_BIT_ENABLED (flags, THR_INHERIT_SCHED))
-	      sched = PTHREAD_INHERIT_SCHED;
-	    if (::pthread_attr_setinheritsched (&attr, sched) != 0)
-	      {
-#if defined (ACE_HAS_SETKIND_NP)
-		::pthread_attr_delete (&attr);
-#else /* ACE_HAS_SETKIND_NP */
-		::pthread_attr_destroy (&attr);
-#endif /* ACE_HAS_SETKIND_NP */
-		return -1;
-	      }
-	  }
-#endif /* ACE_LACKS_SETSCHED */
-#if !defined (ACE_LACKS_THREAD_PROCESS_SCOPING)
-	if (ACE_BIT_ENABLED (flags, THR_SCOPE_SYSTEM)
-	    || ACE_BIT_ENABLED (flags, THR_SCOPE_PROCESS))
-	  {
-	    int scope = PTHREAD_SCOPE_PROCESS;
-	    if (ACE_BIT_ENABLED (flags, THR_SCOPE_SYSTEM))
-	      scope = PTHREAD_SCOPE_SYSTEM;
-
-	    if (::pthread_attr_setscope (&attr, scope) != 0)
-	      {
-#if defined (ACE_HAS_SETKIND_NP)
-		::pthread_attr_delete (&attr);
-#else /* ACE_HAS_SETKIND_NP */
-		::pthread_attr_destroy (&attr);
-#endif /* ACE_HAS_SETKIND_NP */
-		return -1;
-	      }
-	  }
-#endif /* !ACE_LACKS_THREAD_PROCESS_SCOPING */
-
-	if (ACE_BIT_ENABLED (flags, THR_NEW_LWP))
-	  {
-	    // Increment the number of LWPs by one to emulate the
-	    // Solaris semantics.
-	    int lwps = ACE_OS::thr_getconcurrency ();
-	    ACE_OS::thr_setconcurrency (lwps + 1);
-	  }
-      }
-
-#if defined (ACE_HAS_SETKIND_NP)
-      ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (thr_id, attr, func, args), 
-				    result),
-		  int, -1, result);
-      ::pthread_attr_delete (&attr);
-#else /* !ACE_HAS_SETKIND_NP */
-#if defined (ACE_HAS_THR_C_FUNC)
-      ACE_Thread_Adapter *thread_args;
-      ACE_NEW_RETURN (thread_args, ACE_Thread_Adapter (func, args), -1);
-
-      ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (thr_id, &attr,
-						      ACE_THR_C_FUNC (&ace_thread_adapter), 
-						      thread_args),
-				    result),
-		  int, -1, result);
-#else
-      ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (thr_id, &attr, func, args), 
-				    result),
-		  int, -1, result);
-#endif /* ACE_HAS_THR_C_FUNC */
-      ::pthread_attr_destroy (&attr);
-#endif /* ACE_HAS_SETKIND_NP */
-#if defined (ACE_HAS_STHREADS)
-      // This is the Solaris implementation of pthreads, where
-      // ACE_thread_t and ACE_hthread_t are the same.
-      if (result != -1)
-	*thr_handle = *thr_id;
-#else
-      *thr_handle = ACE_OS::NULL_hthread;
-#endif /* ACE_HAS_STHREADS */
-      return result;
-#elif defined (ACE_HAS_STHREADS)
-      int result;
+      if (ACE_BIT_ENABLED (flags, THR_SUSPENDED) == 0)
+	cwin_thread->ResumeThread ();
+      // cwin_thread will be deleted in AfxThreadExit()
+      // Warning: If AfxThreadExit() is called from within the
+      // thread, ACE_TSS_Cleanup->exit() never gets called !
+    }
+  else
+#    endif /* ACE_HAS_MFC */
+    {
       int start_suspended = ACE_BIT_ENABLED (flags, THR_SUSPENDED);
 
       if (priority >= 0)
@@ -1579,142 +1654,85 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	// thread in a suspended mode.
 	ACE_SET_BITS (flags, THR_SUSPENDED);
 
-      ACE_OSCALL (ACE_ADAPT_RETVAL (::thr_create (stack, stacksize, func, args,
-						  flags, thr_id), result), 
-		  int, -1, result);
+      *thr_handle = (void *) ::_beginthreadex 
+	(NULL,
+	 stacksize,
+	 ACE_THR_C_FUNC (&ace_thread_adapter),
+	 thread_args,
+	 flags,
+	 (unsigned int *) thr_id);
 
-      if (result != -1)
+      if (priority >= 0 && *thr_handle != 0)
 	{
-	  if (priority >= 0)
-	    {
-	      // Set the priority of the new thread and then let it
-	      // continue, but only if the user didn't start it suspended
-	      // in the first place!
-	      ACE_OS::thr_setprio (*thr_handle, priority);
+	  // Set the priority of the new thread and then let it
+	  // continue, but only if the user didn't start it suspended
+	  // in the first place!
+	  ACE_OS::thr_setprio (*thr_handle, priority);
 
-	      if (start_suspended == 0)
-		ACE_OS::thr_continue (*thr_handle);
-	    }
+	  if (start_suspended == 0)
+	    ACE_OS::thr_continue (*thr_handle);
 	}
-      return result;
-#elif defined (ACE_HAS_WTHREADS)
-      ACE_UNUSED_ARG (stack);
-      ACE_Thread_Adapter *thread_args;
-      ACE_NEW_RETURN (thread_args, ACE_Thread_Adapter (func, args), -1);
-#if defined (ACE_HAS_MFC)
-      if (ACE_BIT_ENABLED (flags, THR_USE_AFX))
-  	{
-  	  CWinThread *cwin_thread = 
-  	    ::AfxBeginThread ((AFX_THREADPROC) &ace_thread_adapter,
- 			      thread_args, priority, 0, 
-			      flags | THR_SUSPENDED);
- 	  // Have to duplicate the handle because
- 	  // CWinThread::~CWinThread() closes the original handle.
- 	  (void) ::DuplicateHandle (::GetCurrentProcess (), 
-				    cwin_thread->m_hThread,
-				    ::GetCurrentProcess (),
-				    thr_handle,
-				    0, 
-				    TRUE,
-				    DUPLICATE_SAME_ACCESS);
- 
-  	  *thr_id = cwin_thread->m_nThreadID;
+    }
+#    if 0
+  *thr_handle = ::CreateThread 
+    (NULL, stacksize,
+     LPTHREAD_START_ROUTINE (ACE_THR_C_FUNC (ace_thread_adapter)),
+     thread_args, flags, thr_id);
+#    endif /* 0 */
 
- 	  if (ACE_BIT_ENABLED (flags, THR_SUSPENDED) == 0)
-	    cwin_thread->ResumeThread ();
-	      // cwin_thread will be deleted in AfxThreadExit()
-	      // Warning: If AfxThreadExit() is called from within the
-	      // thread, ACE_TSS_Cleanup->exit() never gets called !
-	}
-      else
-#endif /* ACE_HAS_MFC */
-        {
-	  int start_suspended = ACE_BIT_ENABLED (flags, THR_SUSPENDED);
+  // Close down the handle if no one wants to use it.
+  if (thr_handle == &tmp_handle)
+    ::CloseHandle (tmp_handle);
 
-	  if (priority >= 0)
-	    // If we need to set the priority, then we need to start the
-	    // thread in a suspended mode.
-	    ACE_SET_BITS (flags, THR_SUSPENDED);
+  if (*thr_handle != 0)
+    return 0;
+  else
+    ACE_FAIL_RETURN (-1);
+  /* NOTREACHED */
+#  elif defined (VXWORKS)
+  // The call below to ::taskSpawn () causes VxWorks to assign a
+  // unique task name of the form: "t" + an integer, because the
+  // first argument is 0.
 
-	  *thr_handle = (void *) ::_beginthreadex 
-	    (NULL,
-	     stacksize,
-	     ACE_THR_C_FUNC (&ace_thread_adapter),
-	     thread_args,
-	     flags,
-	     (unsigned int *) thr_id);
+  // args must be an array of _exactly_ 10 ints.
 
-	  if (priority >= 0 && *thr_handle != 0)
-	    {
-	      // Set the priority of the new thread and then let it
-	      // continue, but only if the user didn't start it suspended
-	      // in the first place!
-	      ACE_OS::thr_setprio (*thr_handle, priority);
+  // The stack arg is ignored:  if there's a need for it, we'd have to
+  // use ::taskInit ()/::taskActivate () instead of ::taskSpawn ().
 
-	      if (start_suspended == 0)
-		ACE_OS::thr_continue (*thr_handle);
-	    }
-	}
-#if 0
-      *thr_handle = ::CreateThread 
-	 (NULL, stacksize,
-	  LPTHREAD_START_ROUTINE (ACE_THR_C_FUNC (ace_thread_adapter),
-	  thread_args, flags, thr_id);
-#endif /* 0 */
+  // The hard-coded arguments are what ::sp () would use.  ::taskInit ()
+  // is used instead of ::sp () so that we can set the priority, flags,
+  // and stacksize.  (::sp () also hardcodes priority to 100, flags
+  // to VX_FP_TASK, and stacksize to 20,000.)  stacksize should be
+  // an even integer.
 
-      // Close down the handle if no one wants to use it.
-      if (thr_handle == &tmp_handle)
-	::CloseHandle (tmp_handle);
+  // If called with thr_create() defaults, use same default values as ::sp ():
+  if (priority == -1) priority = 100;
+  if (flags == 0) flags = VX_FP_TASK; // Assumes that there is a
+  // floating point coprocessor.
+  // As noted above, ::sp () hardcodes
+  // this, so we should be safe with it.
 
-      if (*thr_handle != 0)
-	return 0;
-      else
-	ACE_FAIL_RETURN (-1);
-      /* NOTREACHED */
-#elif defined (VXWORKS)
-      // The call below to ::taskSpawn () causes VxWorks to assign a
-      // unique task name of the form: "t" + an integer, because the
-      // first argument is 0.
+  if (stacksize == 0) stacksize = 20000;
 
-      // args must be an array of _exactly_ 10 ints.
+  ACE_hthread_t tid = ::taskSpawn (0, priority,
+				   (int) flags, (int) stacksize, func,
+				   (int)args, 0, 0, 0, 0, 0, 0, 0, 0, 0 );
 
-      // The stack arg is ignored:  if there's a need for it, we'd have to
-      // use ::taskInit ()/::taskActivate () instead of ::taskSpawn ().
+  if (tid == ERROR)
+    return -1;
+  else
+    {
+      // ::taskTcb (int tid) returns the address of the WIND_TCB
+      // (task control block).  According to the ::taskSpawn()
+      // documentation, the name of the new task is stored at
+      // pStackBase, but is that of the current task?  If so, it
+      // might be a bit quicker than this extraction of the tcb . . .
+      *thr_id = ::taskTcb (tid)->name;
+      *thr_handle = tid;
+      return 0;
+    }
 
-      // The hard-coded arguments are what ::sp () would use.  ::taskInit ()
-      // is used instead of ::sp () so that we can set the priority, flags,
-      // and stacksize.  (::sp () also hardcodes priority to 100, flags
-      // to VX_FP_TASK, and stacksize to 20,000.)  stacksize should be
-      // an even integer.
-
-      // If called with thr_create() defaults, use same default values as ::sp ():
-      if (priority == -1) priority = 100;
-      if (flags == 0) flags = VX_FP_TASK; // Assumes that there is a
-                                          // floating point coprocessor.
-                                          // As noted above, ::sp () hardcodes
-                                          // this, so we should be safe with it.
-
-      if (stacksize == 0) stacksize = 20000;
-
-      ACE_hthread_t tid = ::taskSpawn (0, priority,
-                                       (int) flags, (int) stacksize, func,
-                                       (int)args, 0, 0, 0, 0, 0, 0, 0, 0, 0 );
-
-      if (tid == ERROR)
-        return -1;
-      else
-        {
-	  // ::taskTcb (int tid) returns the address of the WIND_TCB
-	  // (task control block).  According to the ::taskSpawn()
-	  // documentation, the name of the new task is stored at
-	  // pStackBase, but is that of the current task?  If so, it
-	  // might be a bit quicker than this extraction of the tcb . . .
-	  *thr_id = ::taskTcb (tid)->name;
-	  *thr_handle = tid;
-          return 0;
-        }
-
-#endif /* ACE_HAS_STHREADS */
+#  endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (func);
   ACE_UNUSED_ARG (args);
