@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:323
+// be\be_codegen.cpp:302
 
 
 #include "DynamicAny.h"
@@ -38,11 +38,11 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "DynamicAnyC.i"
+#include "DynamicAnyC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:64
+// be\be_visitor_arg_traits.cpp:65
 
 // Arg traits specializations.
 namespace TAO
@@ -90,12 +90,6 @@ TAO::Objref_Traits<DynamicAny::DynAny>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
-(*DynamicAny__TAO_DynAny_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
 // TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
 
@@ -129,14 +123,13 @@ DynamicAny::DynAny::InvalidValue::operator= (const ::DynamicAny::DynAny::Invalid
 DynamicAny::DynAny::InvalidValue *
 DynamicAny::DynAny::InvalidValue::_downcast (CORBA::Exception *_tao_excp)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/DynamicAny/DynAny/InvalidValue:1.0", _tao_excp->_rep_id ()))
-    {
-      return ACE_dynamic_cast (InvalidValue *, _tao_excp);
-    }
-  else
-    {
-      return 0;
-    }
+  return dynamic_cast<InvalidValue *> (_tao_excp);
+}
+
+const DynamicAny::DynAny::InvalidValue *
+DynamicAny::DynAny::InvalidValue::_downcast (CORBA::Exception const *_tao_excp)
+{
+  return dynamic_cast<const InvalidValue *> (_tao_excp);
 }
 
 CORBA::Exception *DynamicAny::DynAny::InvalidValue::_alloc (void)
@@ -214,14 +207,13 @@ DynamicAny::DynAny::TypeMismatch::operator= (const ::DynamicAny::DynAny::TypeMis
 DynamicAny::DynAny::TypeMismatch *
 DynamicAny::DynAny::TypeMismatch::_downcast (CORBA::Exception *_tao_excp)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/DynamicAny/DynAny/TypeMismatch:1.0", _tao_excp->_rep_id ()))
-    {
-      return ACE_dynamic_cast (TypeMismatch *, _tao_excp);
-    }
-  else
-    {
-      return 0;
-    }
+  return dynamic_cast<TypeMismatch *> (_tao_excp);
+}
+
+const DynamicAny::DynAny::TypeMismatch *
+DynamicAny::DynAny::TypeMismatch::_downcast (CORBA::Exception const *_tao_excp)
+{
+  return dynamic_cast<const TypeMismatch *> (_tao_excp);
 }
 
 CORBA::Exception *DynamicAny::DynAny::TypeMismatch::_alloc (void)
@@ -325,7 +317,7 @@ DynamicAny::DynAny::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/DynamicAny/DynAny:1.0"
         ) ||
       !ACE_OS::strcmp (
@@ -397,12 +389,6 @@ TAO::Objref_Traits<DynamicAny::DynFixed>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
-(*DynamicAny__TAO_DynFixed_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
 DynamicAny::DynFixed::DynFixed (void)
 {}
 
@@ -462,11 +448,11 @@ DynamicAny::DynFixed::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/DynamicAny/DynAny:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/DynamicAny/DynFixed:1.0"
         ) ||
       !ACE_OS::strcmp (
@@ -538,12 +524,6 @@ TAO::Objref_Traits<DynamicAny::DynEnum>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
-(*DynamicAny__TAO_DynEnum_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
 DynamicAny::DynEnum::DynEnum (void)
 {}
 
@@ -603,11 +583,11 @@ DynamicAny::DynEnum::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/DynamicAny/DynAny:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/DynamicAny/DynEnum:1.0"
         ) ||
       !ACE_OS::strcmp (
@@ -777,12 +757,6 @@ TAO::Objref_Traits<DynamicAny::DynStruct>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
-(*DynamicAny__TAO_DynStruct_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
 DynamicAny::DynStruct::DynStruct (void)
 {}
 
@@ -842,11 +816,11 @@ DynamicAny::DynStruct::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/DynamicAny/DynAny:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/DynamicAny/DynStruct:1.0"
         ) ||
       !ACE_OS::strcmp (
@@ -918,12 +892,6 @@ TAO::Objref_Traits<DynamicAny::DynUnion>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
-(*DynamicAny__TAO_DynUnion_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
 DynamicAny::DynUnion::DynUnion (void)
 {}
 
@@ -983,11 +951,11 @@ DynamicAny::DynUnion::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/DynamicAny/DynAny:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/DynamicAny/DynUnion:1.0"
         ) ||
       !ACE_OS::strcmp (
@@ -1150,12 +1118,6 @@ TAO::Objref_Traits<DynamicAny::DynSequence>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
-(*DynamicAny__TAO_DynSequence_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
 DynamicAny::DynSequence::DynSequence (void)
 {}
 
@@ -1215,11 +1177,11 @@ DynamicAny::DynSequence::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/DynamicAny/DynAny:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/DynamicAny/DynSequence:1.0"
         ) ||
       !ACE_OS::strcmp (
@@ -1291,12 +1253,6 @@ TAO::Objref_Traits<DynamicAny::DynArray>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
-(*DynamicAny__TAO_DynArray_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
 DynamicAny::DynArray::DynArray (void)
 {}
 
@@ -1356,11 +1312,11 @@ DynamicAny::DynArray::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/DynamicAny/DynAny:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/DynamicAny/DynArray:1.0"
         ) ||
       !ACE_OS::strcmp (
@@ -1432,12 +1388,6 @@ TAO::Objref_Traits<DynamicAny::DynValue>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
-(*DynamicAny__TAO_DynValue_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
 DynamicAny::DynValue::DynValue (void)
 {}
 
@@ -1497,11 +1447,11 @@ DynamicAny::DynValue::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/DynamicAny/DynAny:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/DynamicAny/DynValue:1.0"
         ) ||
       !ACE_OS::strcmp (
@@ -1573,12 +1523,6 @@ TAO::Objref_Traits<DynamicAny::DynAnyFactory>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
-(*DynamicAny__TAO_DynAnyFactory_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
 // TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
 
@@ -1612,14 +1556,13 @@ DynamicAny::DynAnyFactory::InconsistentTypeCode::operator= (const ::DynamicAny::
 DynamicAny::DynAnyFactory::InconsistentTypeCode *
 DynamicAny::DynAnyFactory::InconsistentTypeCode::_downcast (CORBA::Exception *_tao_excp)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/DynamicAny/DynAnyFactory/InconsistentTypeCode:1.0", _tao_excp->_rep_id ()))
-    {
-      return ACE_dynamic_cast (InconsistentTypeCode *, _tao_excp);
-    }
-  else
-    {
-      return 0;
-    }
+  return dynamic_cast<InconsistentTypeCode *> (_tao_excp);
+}
+
+const DynamicAny::DynAnyFactory::InconsistentTypeCode *
+DynamicAny::DynAnyFactory::InconsistentTypeCode::_downcast (CORBA::Exception const *_tao_excp)
+{
+  return dynamic_cast<const InconsistentTypeCode *> (_tao_excp);
 }
 
 CORBA::Exception *DynamicAny::DynAnyFactory::InconsistentTypeCode::_alloc (void)
@@ -1723,7 +1666,7 @@ DynamicAny::DynAnyFactory::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/DynamicAny/DynAnyFactory:1.0"
         ) ||
       !ACE_OS::strcmp (
@@ -1789,12 +1732,12 @@ CORBA::Boolean operator<< (
     const DynamicAny::NameValuePairSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
   
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
+      CORBA::Boolean _tao_marshal_flag = true;
       
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
@@ -1804,7 +1747,7 @@ CORBA::Boolean operator<< (
       return _tao_marshal_flag;
     }
   
-  return 0;
+  return false;
 }
 
 CORBA::Boolean operator>> (
@@ -1821,7 +1764,7 @@ CORBA::Boolean operator>> (
       // of the stream. (See bug 58.)
       if (_tao_seq_len > strm.length ())
         {
-          return 0;
+          return false;
         }
       
       // Set the length of the sequence.
@@ -1830,11 +1773,11 @@ CORBA::Boolean operator>> (
       // If length is 0 we return true.
       if (0 >= _tao_seq_len) 
         {
-          return 1;
+          return true;
         }
       
       // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
+      CORBA::Boolean _tao_marshal_flag = true;
       
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
@@ -1845,7 +1788,7 @@ CORBA::Boolean operator>> (
     
     }
   
-  return 0;
+  return false;
 }
 
 #endif /* _TAO_CDR_OP_DynamicAny_NameValuePairSeq_CPP_ */
@@ -1861,12 +1804,12 @@ CORBA::Boolean operator<< (
     const DynamicAny::AnySeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
   
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
+      CORBA::Boolean _tao_marshal_flag = true;
       
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
@@ -1876,7 +1819,7 @@ CORBA::Boolean operator<< (
       return _tao_marshal_flag;
     }
   
-  return 0;
+  return false;
 }
 
 CORBA::Boolean operator>> (
@@ -1893,7 +1836,7 @@ CORBA::Boolean operator>> (
       // of the stream. (See bug 58.)
       if (_tao_seq_len > strm.length ())
         {
-          return 0;
+          return false;
         }
       
       // Set the length of the sequence.
@@ -1902,11 +1845,11 @@ CORBA::Boolean operator>> (
       // If length is 0 we return true.
       if (0 >= _tao_seq_len) 
         {
-          return 1;
+          return true;
         }
       
       // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
+      CORBA::Boolean _tao_marshal_flag = true;
       
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
@@ -1917,13 +1860,13 @@ CORBA::Boolean operator>> (
     
     }
   
-  return 0;
+  return false;
 }
 
 #endif /* _TAO_CDR_OP_DynamicAny_AnySeq_CPP_ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1628
+// be\be_visitor_root/root.cpp:1629
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -2502,4 +2445,3 @@ CORBA::Boolean operator>> (
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-

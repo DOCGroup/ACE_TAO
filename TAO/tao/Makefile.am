@@ -19,7 +19,7 @@ TAO_ROOT = $(top_srcdir)
 pkgconfigdata_DATA =
 lib_LTLIBRARIES =
 
-## Makefile.TAO.am 
+## Makefile.TAO.am
 
 lib_LTLIBRARIES += libTAO.la
 
@@ -917,7 +917,7 @@ EXTRA_DIST = \
   tao.rc
 
 
-## Makefile.BiDir_GIOP.am 
+## Makefile.BiDir_GIOP.am
 
 lib_LTLIBRARIES += libTAO_BiDirGIOP.la
 
@@ -964,7 +964,7 @@ EXTRA_DIST += \
   BiDir_GIOP/TAO_BiDir_GIOP.rc
 
 
-## Makefile.PortableServer.am 
+## Makefile.PortableServer.am
 
 lib_LTLIBRARIES += libTAO_PortableServer.la
 
@@ -1097,7 +1097,7 @@ EXTRA_DIST += \
   PortableServer/TAO_PortableServer.rc
 
 
-## Makefile.IFR_Client.am 
+## Makefile.IFR_Client.am
 
 lib_LTLIBRARIES += libTAO_IFR_Client.la
 
@@ -1153,7 +1153,7 @@ EXTRA_DIST += \
   IFR_Client/TAO_IFR_Client.rc
 
 
-## Makefile.Domain.am 
+## Makefile.Domain.am
 
 lib_LTLIBRARIES += libTAO_Domain.la
 
@@ -1194,7 +1194,7 @@ EXTRA_DIST += \
   Domain/TAO_Domain.rc
 
 
-## Makefile.DynamicAny.am 
+## Makefile.DynamicAny.am
 
 lib_LTLIBRARIES += libTAO_DynamicAny.la
 
@@ -1236,7 +1236,7 @@ nobase_include_HEADERS += \
   DynamicAny/DynamicAny.h \
   DynamicAny/DynamicAny.pidl \
   DynamicAny/DynamicAnyC.h \
-  DynamicAny/DynamicAnyC.i \
+  DynamicAny/DynamicAnyC.inl \
   DynamicAny/dynamicany_export.h
 
 pkgconfigdata_DATA += TAO_DynamicAny.pc
@@ -1249,7 +1249,7 @@ EXTRA_DIST += \
   DynamicAny/TAO_DynamicAny.rc
 
 
-## Makefile.Valuetype.am 
+## Makefile.Valuetype.am
 
 lib_LTLIBRARIES += libTAO_Valuetype.la
 
@@ -1305,7 +1305,7 @@ EXTRA_DIST += \
   Valuetype/TAO_Valuetype.rc
 
 
-## Makefile.Messaging.am 
+## Makefile.Messaging.am
 
 lib_LTLIBRARIES += libTAO_Messaging.la
 
@@ -1388,7 +1388,7 @@ EXTRA_DIST += \
   Messaging/TAO_Messaging.rc
 
 
-## Makefile.DynamicInterface.am 
+## Makefile.DynamicInterface.am
 
 if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
@@ -1459,7 +1459,7 @@ EXTRA_DIST += \
   DynamicInterface/TAO_DynamicInterface.rc
 
 
-## Makefile.ObjRefTemplate.am 
+## Makefile.ObjRefTemplate.am
 
 lib_LTLIBRARIES += libTAO_ObjRefTemplate.la
 
@@ -1514,7 +1514,7 @@ EXTRA_DIST += \
   ObjRefTemplate/TAO_ObjRefTemplate.rc
 
 
-## Makefile.IORInterceptor.am 
+## Makefile.IORInterceptor.am
 
 lib_LTLIBRARIES += libTAO_IORInterceptor.la
 
@@ -1569,7 +1569,7 @@ EXTRA_DIST += \
   IORInterceptor/TAO_IORInterceptor.rc
 
 
-## Makefile.IORManipulation.am 
+## Makefile.IORManipulation.am
 
 lib_LTLIBRARIES += libTAO_IORManip.la
 
@@ -1611,7 +1611,7 @@ EXTRA_DIST += \
   IORManipulation/TAO_IORManip.rc
 
 
-## Makefile.IORTable.am 
+## Makefile.IORTable.am
 
 lib_LTLIBRARIES += libTAO_IORTable.la
 
@@ -1654,7 +1654,7 @@ EXTRA_DIST += \
   IORTable/TAO_IORTable.rc
 
 
-## Makefile.RTCORBA.am 
+## Makefile.RTCORBA.am
 
 if BUILD_RT_CORBA
 
@@ -1757,7 +1757,7 @@ EXTRA_DIST += \
   RTCORBA/TAO_RTCORBA.rc
 
 
-## Makefile.RTPortableServer.am 
+## Makefile.RTPortableServer.am
 
 if BUILD_RT_CORBA
 
@@ -1816,7 +1816,7 @@ EXTRA_DIST += \
   RTPortableServer/TAO_RTPortableServer.rc
 
 
-## Makefile.RTScheduler.am 
+## Makefile.RTScheduler.am
 
 if BUILD_CORBA_MESSAGING
 if BUILD_RT_CORBA
@@ -1879,7 +1879,7 @@ EXTRA_DIST += \
   RTScheduling/TAO_RTScheduler.rc
 
 
-## Makefile.SmartProxies.am 
+## Makefile.SmartProxies.am
 
 lib_LTLIBRARIES += libTAO_SmartProxies.la
 
@@ -1915,7 +1915,7 @@ EXTRA_DIST += \
   SmartProxies/TAO_SmartProxies.pc.in
 
 
-## Makefile.Strategies.am 
+## Makefile.Strategies.am
 
 lib_LTLIBRARIES += libTAO_Strategies.la
 
@@ -2033,7 +2033,7 @@ EXTRA_DIST += \
   Strategies/TAO_Strategies.rc
 
 
-## Makefile.TAO_FlResource.am 
+## Makefile.TAO_FlResource.am
 
 if BUILD_ACE_FLREACTOR
 if BUILD_FL
@@ -2071,7 +2071,7 @@ endif BUILD_GL
 endif BUILD_FL
 endif BUILD_ACE_FLREACTOR
 
-## Makefile.TAO_QtResource.am 
+## Makefile.TAO_QtResource.am
 
 if BUILD_ACE_QTREACTOR
 if BUILD_QT
@@ -2108,7 +2108,7 @@ nobase_include_HEADERS += \
 endif BUILD_QT
 endif BUILD_ACE_QTREACTOR
 
-## Makefile.TAO_TkResource.am 
+## Makefile.TAO_TkResource.am
 
 if BUILD_ACE_TKREACTOR
 if BUILD_TK
@@ -2142,7 +2142,7 @@ nobase_include_HEADERS += \
 endif BUILD_TK
 endif BUILD_ACE_TKREACTOR
 
-## Makefile.TAO_XtResource.am 
+## Makefile.TAO_XtResource.am
 
 if BUILD_ACE_XTREACTOR
 if BUILD_X11
@@ -2178,7 +2178,7 @@ endif BUILD_XT
 endif BUILD_X11
 endif BUILD_ACE_XTREACTOR
 
-## Makefile.TypeCodeFactory.am 
+## Makefile.TypeCodeFactory.am
 
 lib_LTLIBRARIES += libTAO_TypeCodeFactory.la
 
@@ -2222,7 +2222,7 @@ EXTRA_DIST += \
   TypeCodeFactory/TypeCodeFactory.rc
 
 
-## Makefile.Utils.am 
+## Makefile.Utils.am
 
 lib_LTLIBRARIES += libTAO_Utils.la
 
