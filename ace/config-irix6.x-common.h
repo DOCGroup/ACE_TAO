@@ -136,6 +136,8 @@
 #define ACE_HAS_DIRENT
 #define ACE_LACKS_RWLOCK_T
 
+#define ACE_HAS_GPERF
+
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
 #define ACE_NTRACE 1
