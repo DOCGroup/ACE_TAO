@@ -1177,7 +1177,7 @@ TAO_Offer_Modifier::affect_change (const CosTrading::PropertySeq& modifies)
   // Scrap the existing property sequence and begin a new one
   CosTrading::PropertySeq prop_seq (total_length);
   //  this->offer_->properties.length (total_length);
-  
+
   // Copy in the unaffected and modified props into the offer,
   // excluding those that were deleted. Let's try and retain their
   // relative ordering.
@@ -1189,7 +1189,7 @@ TAO_Offer_Modifier::affect_change (const CosTrading::PropertySeq& modifies)
       if (this->props_.unbind (prop_name, prop_value) == 0)
         prop_seq[num_modified++] = *prop_value;
     }
-  
+
   for (i = 0; i < merge_length; i++)
     {
       CosTrading::Property* prop_value = 0;
@@ -1471,8 +1471,6 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer* source,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, CosTrading::Property*>;
-template class ACE_Hash<TAO_String_Hash_Key>;
-template class ACE_Equal_To<TAO_String_Hash_Key>;
 template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTrading::Property*, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, CosTrading::Property*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key, CosTrading::Property*, ACE_Null_Mutex>;
@@ -1485,8 +1483,6 @@ template class ACE_Unbounded_Queue<CosTrading::Property*>;
 template class ACE_Unbounded_Queue_Iterator<CosTrading::Property*>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key, CosTrading::Property*>
-#pragma instantiate ACE_Hash<TAO_String_Hash_Key>
-#pragma instantiate ACE_Equal_To<TAO_String_Hash_Key>
 #pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTrading::Property*, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, CosTrading::Property*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key, CosTrading::Property*, ACE_Null_Mutex>
