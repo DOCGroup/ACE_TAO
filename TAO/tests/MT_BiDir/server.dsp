@@ -156,7 +156,7 @@ InputPath=.\Receiver.idl
 InputName=Receiver
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -237,7 +237,7 @@ InputPath=.\Sender.idl
 InputName=Sender
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
