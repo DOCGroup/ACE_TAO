@@ -1,3 +1,10 @@
+Sun Oct 22 15:35:38 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Makefile.bor:
+
+          Changed ACE_Sock_Connect.obj to Sock_Connect.obj, since
+          it appears that it has been renamed.
+
 Sun Oct 22 15:07:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/ace_dll.dsp:
