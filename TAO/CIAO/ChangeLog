@@ -1,3 +1,9 @@
+Sun Aug 15 09:17:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* performance-tests/Benchmark/Benchmark.mpc:
+
+	  Added missing libraries as reported by our daily builds.
+
 Sun Aug 15 09:12:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/tests/Config_Handlers/handler_test.mpb:
