@@ -1,3 +1,9 @@
+Fri Feb 06 07:55:00 1999 Chris Gill <cdgill@cs.wustl.edu>
+
+  (new) * TAO/orbsvcs/tests/Simulator/DOVEBrowser/MTDataHandlerAdapter.java:
+ 	  Adapts data handler to be an active object that processes events
+	  enqueued by another thread.
+
 Sat Feb 06 07:33:19 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/decode.cpp (decode): removed break statement following
