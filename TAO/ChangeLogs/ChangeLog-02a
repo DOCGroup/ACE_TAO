@@ -5,7 +5,7 @@ Tue May  8 08:56:32 2001  Ossama Othman  <ossama@uci.edu>
 	  Reverted the change "Tue May  8 09:01:13 2001  Balachandran
 	  Natarajan  <bala@cs.wustl.edu>".  The call to destroy() was
 	  correct since not all applications call ORB::shutdown() (or
-	  ORB::destroy().  In such cases, memory leaks will occur since
+	  ORB::destroy()).  In such cases, memory leaks will occur since
 	  the object reference table destroy() method is not explicitly
 	  called.
 
