@@ -1,3 +1,9 @@
+Tue Oct  6 22:12:30 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Simple/grid/Grid_i.cpp: Fixed bugs with exceptions.
+  	  Thanks to Tom Dobridge <dobridge@persimmon.com> for pointing
+ 	  this out.
+
 Tue Oct  6 21:25:22 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * TAO-INSTALL.html: Added an extra note about compiling the
@@ -6,26 +12,27 @@ Tue Oct  6 21:25:22 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Tue Oct  6 21:02:24 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-        * examples/Simple/bank/AccountManager_i.cpp (close):
-                Changed TAO_TRY_ENV to _env to avoid duplicate
-                definition.
+        * examples/Simple/bank/AccountManager_i.cpp (close): Changed
+ 	  TAO_TRY_ENV to _env to avoid duplicate definition.  Thanks to
+ 	  Tom Dobridge <dobridge@persimmon.com> for pointing this out.
 
 Tue Oct  6 20:28:10 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-        * tao/try_macros.h:
-          The TAO_TRY macro generates a new do/while block even for the
-          native C++ exception case, this is more consistent with the
-          alternative mapping.
+        * tao/try_macros.h: The TAO_TRY macro generates a new do/while
+ 	  block even for the native C++ exception case, this is more
+ 	  consistent with the alternative mapping.  Thanks to Tom Dobridge
+ 	  <dobridge@persimmon.com> for pointing this out.
 
-        * examples/Callback_Quoter/MarketFeed_i.cpp:
-        * examples/Callback_Quoter/Client_i.cpp:
-          Removed instantiations of TAO_TRY_ENV because TAO_TRY does it
-          for us.
+        * examples/Callback_Quoter/MarketFeed_i.cpp: *
+ 	  examples/Callback_Quoter/Client_i.cpp: Removed instantiations of
+ 	  TAO_TRY_ENV because TAO_TRY does it for us.  Thanks to Tom
+ 	  Dobridge <dobridge@persimmon.com> for pointing this out.
 
 Tue Oct  6 20:05:55 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
         * examples/Callback_Quoter/Supplier_i.cpp (unregister_callback):
-          removed a variable which was defined unnecessarily.
+ 	  removed a variable which was defined unnecessarily.  Thanks to
+ 	  David Levine for reporting this.
 
 Tue Oct  6 17:16:46 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
