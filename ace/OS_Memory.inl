@@ -1,11 +1,13 @@
+// -*- C++ -*-
 // $Id$
 
 #if !defined (ACE_LACKS_SBRK)
 #  include "ace/os_include/os_unistd.h"
 #endif /* !ACE_LACKS_SBRK */
 
+namespace ACE_OS {
 ACE_INLINE void *
-ACE_OS_Memory::sbrk (int brk)
+sbrk (int brk)
 {
 #if defined (ACE_LACKS_SBRK)
   ACE_UNUSED_ARG (brk);
@@ -14,3 +16,4 @@ ACE_OS_Memory::sbrk (int brk)
   ACE_OSCALL_RETURN (::sbrk (brk), void *, 0);
 #endif /* VXWORKS */
 }
+} /* namespace ACE_OS */

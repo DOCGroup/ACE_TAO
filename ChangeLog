@@ -1,3 +1,23 @@
+Thu Sep  4 01:25:53 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.{h,cpp,i}:
+        * ace/OS_String.{h,cpp,i}:
+        * ace/OS_Dirent.{h,cpp,inl}:
+        * ace/OS_Memory.{h,cpp,inl}:
+        * ace/OS_TLI.{h,cpp,inl}:
+          Converted the ACE_OS* classes to namespaces.  Moved ACE_event_t
+          below ACE_OS. Replaced friend class ACE_OS declarations with
+          the actual methods needing access to protected or private
+          methods and variables in various classses.  Made static
+          variables externs defined in OS.cpp.
+
+        * ace/os_include/os_pthread.h:
+          Removed friend class ACE_OS from ACE_sema_t and changed
+          protected to public.
+
+        * ace/os_include/sys/os_stat.h:
+          Added "/**/" to #include <direct.h>.
+
 Wed Sep  3 17:01:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/UUID.cpp (ACE_Utils): 

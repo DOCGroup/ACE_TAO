@@ -1,8 +1,9 @@
 // -*- C++ -*-
 // $Id$
 
+namespace ACE_OS {
 ACE_INLINE ACE_DIR *
-ACE_OS_Dirent::opendir (const ACE_TCHAR *filename)
+opendir (const ACE_TCHAR *filename)
 {
 #if defined (ACE_HAS_DIRENT)
 #  if defined (ACE_PSOS)
@@ -36,7 +37,7 @@ ACE_OS_Dirent::opendir (const ACE_TCHAR *filename)
 }
 
 ACE_INLINE void
-ACE_OS_Dirent::closedir (ACE_DIR *d)
+closedir (ACE_DIR *d)
 {
 #if defined (ACE_HAS_DIRENT)
 # if defined (ACE_PSOS)
@@ -63,7 +64,7 @@ ACE_OS_Dirent::closedir (ACE_DIR *d)
 }
 
 ACE_INLINE struct dirent *
-ACE_OS_Dirent::readdir (ACE_DIR *d)
+readdir (ACE_DIR *d)
 {
 #if defined (ACE_HAS_DIRENT)
 #  if defined (ACE_PSOS)
@@ -91,9 +92,9 @@ ACE_OS_Dirent::readdir (ACE_DIR *d)
 }
 
 ACE_INLINE int
-ACE_OS_Dirent::readdir_r (ACE_DIR *dirp,
-                          struct dirent *entry,
-                          struct dirent **result)
+readdir_r (ACE_DIR *dirp,
+           struct dirent *entry,
+           struct dirent **result)
 {
 #if !defined (ACE_HAS_REENTRANT_FUNCTIONS)
   ACE_UNUSED_ARG (entry);
@@ -136,7 +137,7 @@ ACE_OS_Dirent::readdir_r (ACE_DIR *dirp,
 }
 
 ACE_INLINE long
-ACE_OS_Dirent::telldir (ACE_DIR *d)
+telldir (ACE_DIR *d)
 {
 #if defined (ACE_HAS_DIRENT)  &&  !defined (ACE_LACKS_TELLDIR)
   return ::telldir (d);
@@ -147,7 +148,7 @@ ACE_OS_Dirent::telldir (ACE_DIR *d)
 }
 
 ACE_INLINE void
-ACE_OS_Dirent::seekdir (ACE_DIR *d, long loc)
+seekdir (ACE_DIR *d, long loc)
 {
 #if defined (ACE_HAS_DIRENT)  &&  !defined (ACE_LACKS_SEEKDIR)
   ::seekdir (d, loc);
@@ -158,7 +159,7 @@ ACE_OS_Dirent::seekdir (ACE_DIR *d, long loc)
 }
 
 ACE_INLINE void
-ACE_OS_Dirent::rewinddir (ACE_DIR *d)
+rewinddir (ACE_DIR *d)
 {
 #if defined (ACE_HAS_DIRENT)
 # if defined (ACE_LACKS_SEEKDIR)
@@ -178,11 +179,11 @@ ACE_OS_Dirent::rewinddir (ACE_DIR *d)
 }
 
 ACE_INLINE int
-ACE_OS_Dirent::scandir (const ACE_TCHAR *dirname,
-                        struct dirent **namelist[],
-                        int (*selector)(const struct dirent *),
-                        int (*comparator) (const struct dirent **f1,
-                                           const struct dirent **f2))
+scandir (const ACE_TCHAR *dirname,
+         struct dirent **namelist[],
+         int (*selector)(const struct dirent *),
+         int (*comparator) (const struct dirent **f1,
+                            const struct dirent **f2))
 {
 #if defined (ACE_HAS_SCANDIR)
   return ::scandir (dirname, namelist, selector, comparator);
@@ -190,3 +191,4 @@ ACE_OS_Dirent::scandir (const ACE_TCHAR *dirname,
   return ACE_OS_Dirent::scandir_emulation (dirname, namelist, selector, comparator);
 #endif /* ACE_HAS_SCANDIR */
 }
+} /* namespace ACE_OS */

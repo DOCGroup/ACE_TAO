@@ -6,6 +6,11 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS.h"
 
+extern "C"
+{
+  typedef int (*ACE_SCANDIR_COMPARATOR) (const void *, const void *);
+}
+
 /*
    These definitions are missing on the original VC6 distribution.  The new
    headers that define these are available in the Platform SDK and are defined
@@ -26,8 +31,9 @@ ACE_RCSID(ace, OS_Dirent, "$Id$")
 # include "ace/OS_Dirent.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
+namespace ACE_OS {
 ACE_DIR *
-ACE_OS_Dirent::opendir_emulation (const ACE_TCHAR *filename)
+opendir_emulation (const ACE_TCHAR *filename)
 {
 #if defined (ACE_WIN32)
   ACE_DIR *dir;
@@ -87,7 +93,7 @@ ACE_OS_Dirent::opendir_emulation (const ACE_TCHAR *filename)
 }
 
 void
-ACE_OS_Dirent::closedir_emulation (ACE_DIR *d)
+closedir_emulation (ACE_DIR *d)
 {
 #if defined (ACE_WIN32)
   if (d->current_handle_ != INVALID_HANDLE_VALUE)
@@ -106,7 +112,7 @@ ACE_OS_Dirent::closedir_emulation (ACE_DIR *d)
 }
 
 dirent *
-ACE_OS_Dirent::readdir_emulation (ACE_DIR *d)
+readdir_emulation (ACE_DIR *d)
 {
 #if defined (ACE_WIN32)
   if (d->dirent_ != 0)
@@ -158,17 +164,12 @@ ACE_OS_Dirent::readdir_emulation (ACE_DIR *d)
 #endif /* ACE_WIN32 */
 }
 
-extern "C"
-{
-  typedef int (*ACE_SCANDIR_COMPARATOR) (const void *, const void *);
-}
-
 int
-ACE_OS_Dirent::scandir_emulation (const ACE_TCHAR *dirname,
-                                  dirent **namelist[],
-                                  int (*selector) (const dirent *entry),
-                                  int (*comparator) (const dirent **f1,
-                                                     const dirent **f2))
+scandir_emulation (const ACE_TCHAR *dirname,
+                   dirent **namelist[],
+                   int (*selector) (const dirent *entry),
+                   int (*comparator) (const dirent **f1,
+                                      const dirent **f2))
 {
   ACE_DIR *dirp = ACE_OS_Dirent::opendir (dirname);
 
@@ -275,3 +276,5 @@ ACE_OS_Dirent::scandir_emulation (const ACE_TCHAR *dirname,
 
   return nfiles;
 }
+
+} /* namespace ACE_OS */
