@@ -51,13 +51,14 @@ typedef int (*COMP_FUNC) (const void*, const void*);
 // Default constructor.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
-TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::TAO_Reconfig_Scheduler ()
+TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::TAO_Reconfig_Scheduler (int enforce_schedule_stability)
   : config_info_count_ (0),
     rt_info_count_ (0),
     next_handle_ (1),
     entry_ptr_array_ (0),
     entry_ptr_array_size_ (0),
     stability_flags_ (SCHED_NONE_STABLE),
+    enforce_schedule_stability_ (enforce_schedule_stability),
     dependency_count_ (0),
     last_scheduled_priority_ (0)
 {
@@ -74,11 +75,13 @@ TAO_Reconfig_Scheduler (int config_count,
                         ACE_Scheduler_Factory::POD_RT_Info rt_infos[],
                         int dependency_count,
                         ACE_Scheduler_Factory::POD_Dependency_Info dependency_infos[],
-                        u_long stability_flags)
+                        u_long stability_flags,
+                        int enforce_schedule_stability)
   : config_info_count_ (0),
     rt_info_count_ (0),
     next_handle_ (1),
     stability_flags_ (SCHED_ALL_STABLE),
+    enforce_schedule_stability_ (enforce_schedule_stability),
     dependency_count_ (0),
     last_scheduled_priority_ (0)
 {
@@ -523,7 +526,8 @@ priority (RtecScheduler::handle_t handle,
   ACE_CHECK;
 
   // Check stability flags.
-  if (this->stability_flags_ & SCHED_PRIORITY_NOT_STABLE)
+  if ((this->stability_flags_ & SCHED_PRIORITY_NOT_STABLE)
+      && this->enforce_schedule_stability_)
     {
       ACE_THROW (RtecScheduler::NOT_SCHEDULED ());
     }
@@ -745,7 +749,8 @@ dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
   ACE_CHECK;
 
   // Check stability flags
-  if (this->stability_flags_ & SCHED_PRIORITY_NOT_STABLE)
+  if ((this->stability_flags_ & SCHED_PRIORITY_NOT_STABLE)
+      && this->enforce_schedule_stability_)
     {
       ACE_THROW (RtecScheduler::NOT_SCHEDULED ());
     }
@@ -779,7 +784,8 @@ last_scheduled_priority (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK_RETURN (0);
 
   // Check schedule stability flags.
-  if (this->stability_flags_ & SCHED_PRIORITY_NOT_STABLE)
+  if ((this->stability_flags_ & SCHED_PRIORITY_NOT_STABLE)
+      && this->enforce_schedule_stability_)
     {
       ACE_THROW_RETURN (RtecScheduler::NOT_SCHEDULED (),
                         (RtecScheduler::Preemption_Priority_t) -1);
@@ -1010,7 +1016,8 @@ priority_i (RtecScheduler::handle_t handle,
                       RtecScheduler::NOT_SCHEDULED))
 {
   // Check stability flags.
-  if (this->stability_flags_ & SCHED_PRIORITY_NOT_STABLE)
+  if ((this->stability_flags_ & SCHED_PRIORITY_NOT_STABLE)
+      && this->enforce_schedule_stability_)
     {
       ACE_THROW (RtecScheduler::NOT_SCHEDULED ());
     }

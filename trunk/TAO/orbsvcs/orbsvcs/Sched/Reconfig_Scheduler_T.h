@@ -49,7 +49,7 @@ class TAO_Reconfig_Scheduler :
 {
 public:
 
-  TAO_Reconfig_Scheduler ();
+  TAO_Reconfig_Scheduler (int enforce_schedule_stability = 0);
   // Default constructor.
 
   TAO_Reconfig_Scheduler (int config_count,
@@ -58,7 +58,8 @@ public:
                           ACE_Scheduler_Factory::POD_RT_Info rt_info[],
                           int dependency_count,
                           ACE_Scheduler_Factory::POD_Dependency_Info dependency_info[],
-                          u_long stability_flags);
+                          u_long stability_flags,
+                          int enforce_schedule_stability = 0);
   // Constructor. Initialize the scheduler from POD_Config_Info, POD_RT_Info,
   // and POD_Dependency arrays, plus schedule stability flags.
 
@@ -403,6 +404,12 @@ protected:
   // Flags indicating whether a stable schedule has been computed
   // since the last addition or modification of information, and which
   // parts of the schedule are unstable.
+
+  int enforce_schedule_stability_;
+  // Indicates whether the scheduler should enforce stability by
+  // throwing an exception: otherwise for operations where this
+  // matters, it will simply return a default value if nothing
+  // has been generated.
 
   int dependency_count_;
   // The number of dependencies in the dependency lists of all RT_Infos.
