@@ -22,7 +22,9 @@
 #include "tests.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Param_Test, driver, "$Id$")
+ACE_RCSID (Param_Test,
+           driver, 
+           "$Id$")
 
 // This function runs the test (main program)
 int

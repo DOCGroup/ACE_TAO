@@ -19,7 +19,9 @@
 #include "helper.h"
 #include "var_struct.h"
 
-ACE_RCSID(Param_Test, var_struct, "$Id$")
+ACE_RCSID (Param_Test,
+           var_struct, 
+           "$Id$")
 
 // ************************************************************************
 //               Test_Var_Struct

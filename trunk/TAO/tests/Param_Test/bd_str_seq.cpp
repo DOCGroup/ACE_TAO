@@ -19,7 +19,9 @@
 #include "helper.h"
 #include "bd_str_seq.h"
 
-ACE_RCSID(Param_Test, bd_str_seq, "$Id$")
+ACE_RCSID (Param_Test, 
+           bd_str_seq, 
+           "$Id$")
 
 // ************************************************************************
 //               Test_Bounded_String_Sequence

@@ -19,7 +19,9 @@
 #include "helper.h"
 #include "bd_wstr_seq.h"
 
-ACE_RCSID(Param_Test, bd_wstr_seq, "$Id$")
+ACE_RCSID (Param_Test, 
+           bd_wstr_seq, 
+           "$Id$")
 
 // ************************************************************************
 //               Test_Bounded_WString_Sequence

@@ -19,7 +19,9 @@
 #include "helper.h"
 #include "bd_long_seq.h"
 
-ACE_RCSID(Param_Test, bd_long_seq, "$Id$")
+ACE_RCSID (Param_Test, 
+           bd_long_seq, 
+           "$Id$")
 
 // ************************************************************************
 //               Test_Bounded_Long_Sequence

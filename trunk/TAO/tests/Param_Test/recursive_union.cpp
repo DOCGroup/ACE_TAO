@@ -18,7 +18,9 @@
 
 #include "recursive_union.h"
 
-ACE_RCSID(Param_Test, recursive_union, "$Id$")
+ACE_RCSID (Param_Test,
+           recursive_union, 
+           "$Id$")
 
 const CORBA::ULong MAX_DEPTH = 3;
 const CORBA::ULong MAX_SEQ_LENGTH = 2;

@@ -20,10 +20,12 @@
 #include "complex_any.h"
 #include "tao/debug.h"
 
+ACE_RCSID (Param_Test, 
+           complex_any, 
+           "$Id$")
+
 const int LEVEL_2_LENGTH = 5;
 const int LEVEL_3_LENGTH = 3;
-
-ACE_RCSID(Param_Test, complex_any, "$Id$")
 
 // ************************************************************************
 //               Test_Complex_Any
