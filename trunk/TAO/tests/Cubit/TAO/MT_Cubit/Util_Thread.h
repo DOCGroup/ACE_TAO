@@ -1,3 +1,5 @@
+// $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -37,7 +39,7 @@ private:
 
   int run_computations ();
   // run the computations
-  
+
   double number_of_computations_;
   Task_State *ts_;
 };

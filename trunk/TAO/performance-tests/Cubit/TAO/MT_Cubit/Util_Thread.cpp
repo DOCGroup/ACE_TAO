@@ -1,22 +1,24 @@
+// $Id$
+
 #include "Util_Thread.h"
 
-Util_Thread::Util_Thread (Task_State *ts, 
+Util_Thread::Util_Thread (Task_State *ts,
                           ACE_Thread_Manager *thr_mgr)
   : ACE_Task<ACE_MT_SYNCH> (thr_mgr),
+    done_ (0),
     number_of_computations_ (0),
-    ts_ (ts),
-    done_ (0)
+    ts_ (ts)
 {
 }
 
 int
 Util_Thread::svc (void)
 {
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "(%t) Utilization Thread created, "
               "waiting for threads to finish binding\n"));
   ts_->barrier_->wait ();
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "(%t) Threads have bound, "
               "utilization test started\n"));
   run_computations ();
@@ -43,7 +45,7 @@ Util_Thread::run_computations ()
       unsigned long test_done = 1;
       unsigned long sqrt_n = (unsigned long) ceil (sqrt (n));
       unsigned long i;
-      
+
       for (i = 2; i <= sqrt_n; i++)
         while ( (n % i) == 0) {
           n /= i;
