@@ -86,6 +86,8 @@ public:
   /// Delete the dynamically allocated Singleton
   static void close_singleton (void);
 
+  static const ACE_TCHAR *dll_name (void);
+
   // = Singleton reactor event loop management methods.
 
   // Note that these method ONLY work on the "Singleton Reactor,"

@@ -131,6 +131,12 @@ ACE_Reactor::close_singleton (void)
     }
 }
 
+const ACE_TCHAR *
+ACE_Reactor::dll_name (void)
+{
+  return 0;
+}
+
 int
 ACE_Reactor::check_reconfiguration (ACE_Reactor *)
 {

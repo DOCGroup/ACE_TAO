@@ -3,9 +3,15 @@
 
 // Framework_Component.inl
 
+#include "ace/ACE.h"
+
 ACE_INLINE 
-ACE_Framework_Component::ACE_Framework_Component (const void *_this)
-  :  this_ (_this)
+ACE_Framework_Component::ACE_Framework_Component (void *_this, 
+                                                  const ACE_TCHAR *dll_name,
+                                                  const ACE_TCHAR *name)
+  :  this_ (_this),
+     dll_name_ (ACE::strnew (dll_name ? dll_name : ACE_LIB_TEXT (""))),
+     name_ (ACE::strnew (name ? name : ACE_LIB_TEXT ("")))
 {
   ACE_TRACE ("ACE_Framework_Component::ctor");
 }

@@ -6,7 +6,7 @@
 //    tests
 //
 // = FILENAME
-//    Framework_Component_Test.h
+//    Framework_Component_DLL.h
 //
 // = DESCRIPTION
 //    Define class needed for generating templates. IBM C++ requires this to
@@ -17,8 +17,8 @@
 //
 // ============================================================================
 
-#ifndef ACE_TESTS_FRAMEWORK_COMPONENT_TEST_H
-#define ACE_TESTS_FRAMEWORK_COMPONENT_TEST_H
+#ifndef ACE_TESTS_FRAMEWORK_COMPONENT_DLL_H
+#define ACE_TESTS_FRAMEWORK_COMPONENT_DLL_H
 
 #include "ace/Log_Msg.h"
 
