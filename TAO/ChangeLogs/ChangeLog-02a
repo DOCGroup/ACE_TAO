@@ -4,7 +4,7 @@ Wed Jun 05 10:46:04 2002  Ossama Othman  <ossama@uci.edu>
 	  (get_type_properties):
 
 	  Use ACE_THROW_RETURN instead of ACE_THROW.  This method returns
-	  a value.  Fixes an emulated exceptionm build problem.
+	  a value.  Fixes an emulated exception build problem.
 
 	  (set_properties_dynamically):
 
