@@ -294,7 +294,7 @@ public:
   // Otherwise, a -1 is returned and errno is set to indicate the
   // error.
 
-  virtual int display_menu (void);
+  virtual int display_menu (void)=0;
   // Prints the user interface for the driver to STDERR.
 
   virtual int init (void)=0;

@@ -5,28 +5,23 @@ threaded and reactive concurrency mechanisms in ACE.  The example
 application schedules and processes heterogenerous user input and
 timer-based events in the context of a bounded packet relay mechanism.
 
-This example is based on the notion of a time-bounded packet relay.
-In this example, a transmission begins, packets arrive from an input
-device object, and are transferred to an output device object by a
-relay object at a specified pace.  The transfer continues until all
-packets have been relayed or a duration limit expires, at which point
-the transmission ends.
+In this example, a transmission begins, packets arrive from an input device 
+object, and are transferred to an output device object by a relay object at
+a specified pace.  The transfer continues until all packets have been 
+relayed, a duration limit expires, or the transmission is cancelled.
 
 User input is handled concurrently with a running transmission.  You
 can run a transmission, cancel a transmission, change transmission
 parameters, view statistics from the most recent transmission, or exit
 the program, using selections from an interactive text-based menu.
-
 In addition, the example program can be run in batch mode, with the
-appropriate commands piped to the program in place of its standard
-input stream.  
+appropriate commands piped to the program's standard input stream.  
 
-Transmission parameters are intialized to default values.
-Transmission parameter values persist until/unless they are
-subsequently modified by an appropriate command.  If an invalid value
-for a command is given, or a run or report command is issued while a
-transmission is in progress, the offending command has no effect, and
-an error message is generated.
+Transmission parameters are intialized to default values.  Transmission 
+parameter values persist until/unless they are subsequently modified by an 
+appropriate command.  If an invalid value for a command is given, or a run
+or report command is issued while a transmission is in progress, the 
+offending command has no effect, and an error message is generated.
 
 2. USER INTERFACE
 
@@ -78,16 +73,15 @@ The design of this example application consists of four main
 components: the driver object, the relay object, the input device
 object, and the output device object.
 
-The driver object is responsible for receiving user input and overall
-handling of user input commands.  The driver object is active, with
-separate threads for receiving user input and managing its
-transmission timer queue.  This allows the user to issue commands
-while a transmission is in progress.  The driver object uses an
-ACE_Thread_Timer_Queue_Adapter, which is derived from ACE_Task_Base.
-The driver object runs inside another active object, called
-User_Input_Task, which is also derived from ACE_Task_Base.  This
-allows both the timer queue and the user input object to be made
-active, running in their own threads of control.
+The driver object is responsible for receiving user input and overall handling
+of user input commands.  The driver object is active, with separate threads
+for receiving user input and managing its transmission timer queue.  This
+allows the user to issue commands while a transmission is in progress.  The
+driver object uses an ACE_Thread_Timer_Queue_Adapter, which is derived from
+ACE_Task_Base.  The driver object starts another active object, called
+User_Input_Task, which is also derived from ACE_Task_Base.  This allows both
+the timer queue and the user input object to be made active, running in their
+own threads of control.
 
 The relay object is passive, managing a message queue and necessary
 locks to allow safe access from multiple threads.  It provides methods
@@ -115,11 +109,10 @@ delete on the passed pointer.
 
 3.2. RUN-TIME CHARACTERSITICS
 
-When the user initiates a transmission, the appropriate settings are
-passed by the driver to the relay object's start transmission method.
-The relay object tries to acquire a lock for a new transmission.  If
-it fails to do so, another transmission is in progress, and the
-methods returns an error.  Otherwise, the relay object's start
+When the user initiates a transmission, the appropriate settings are passed
+by the driver to the relay object's start transmission method. The relay
+object tries to start a new transmission.  If another transmission is in
+progress, the method returns an error.  Otherwise, the relay object's start
 transmission method initializes itself and the input and output device
 objects, activates the input device object, and stores the handle for
 the new input device thread. 
@@ -128,7 +121,7 @@ The driver then constructs a timeout handler with a count of the
 number of messages to relay and a send timeout value, and pushes a
 timer with this handler onto the timer queue.  If there is a limit on
 the duration of the transmission, the driver constructs a different
-handler for end-of- transmission, and pushes a timer for the end of
+handler for end-of-transmission, and pushes a timer for the end of
 the transmission with this handler onto the timer queue as well.  When
 the user issues a cancel transmission command, the driver calls the
 relay's end transmission method.
@@ -136,15 +129,14 @@ relay's end transmission method.
 When a send timeout expires, the handler (running in the timer queue
 thread) calls the send method of the relay.  If there are any enqueued
 messages from the input device object in its queue, the relay object's
-send method will dequeue the message, pass it to the output device
+send method will dequeue a message, pass it to the output device
 object, and return success.  If there are no messages in the queue,
 the relay object's send method will return failure.  If the send was
 successful, the handler will decrement its count of remaining
 messages.  If the count is greater than zero, the handler will
 register a new send timer for itself and exit.  If the count is zero,
 then the handler will call the relay's end transmission method, clear
-the timer queue, and release the transmission-in-progress semaphore
-before exiting.
+the timer queue, and mark itself inactive before exiting.
 
 Similarly, if the end-of-transmission timer expires before all packets
 have been sent, that handler will call the relay's end transmission
@@ -153,14 +145,14 @@ method, clear the timer queue, release the semaphore, and then exit.
 When the relay's end transmission method is called, it marks the relay
 itself inactive, and calls the input device's deactivate method, which
 sets the input device's activity flag to inactive (see below).  The
-relay's end transmission method then waits on the stored input thread
-handle until that thread exits, before returning.
+relay's end transmission method then waits until the input device thread
+exits, before returning.
 
 While it is still active, the input device thread blocks on a reactor
 timeout for the duration it was given by the relay.  When the timeout
 expires, the input device checks a flag to see if it is still active.
 If the flag says the input device is inactive, the thread simply
-exits.  Tis allows cancellation of the input device when a
+exits.  This allows cancellation of the input device when a
 transmission has ended.  If the flag says it is still active, the
 thread builds a new character buffer, and wraps this with a new
 ACE_Message_Block.  The input device passes this message block to the
@@ -176,11 +168,9 @@ its thread simply exits.
 
 The files for this example are located in
 $ACE_ROOT/examples/Bounded_Packet_Relay in the latest release of ACE,
-which will be located at
+which is located at
 
 http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE.tar.gz
-
-when the example application is complete.
 
 Source Files: Thread_Bounded_Packet_Relay.h
               Thread_Bounded_Packet_Relay.cpp
@@ -193,5 +183,3 @@ Make file:    Makefile
 Doc file:     README (this file)
 
 Executable:   bpr_thread
-
-
