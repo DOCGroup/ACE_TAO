@@ -16,16 +16,46 @@ $status = 0;
 
 @tests =
   (
-   "AdminProperties",
-   "ConnectDisconnect",
-   "Events",
-   "IdAssignment",
-   "LifeCycle",
-   "Simple",
-   "MultiTypes",
-   "Filter",
-   "Updates",
-   "Sequence"
+   {
+    name => "AdminProperties",
+    args => "-ORBSvcConf adminproperties.conf",
+   },
+   {
+    name => "ConnectDisconnect",
+    args => "",
+   },
+   {
+    name => "Events",
+    args => "",
+   },
+   {
+    name => "IdAssignment",
+    args => "",
+   },
+   {
+    name => "LifeCycle",
+    args => "",
+   },
+   {
+    name => "Simple",
+    args => "",
+   },
+   {
+    name => "MultiTypes",
+    args => "",
+   },
+   {
+    name => "Filter",
+    args => "",
+   },
+   {
+    name => "Updates",
+    args => "",
+   },
+   {
+    name => "Sequence",
+    args => "",
+   },
   );
 
 @default_test_configs =
@@ -75,9 +105,19 @@ for $config (@test_configs)
     
     for $name (@tests)
       {
-        print STDERR "\nTesting $name....\n\n";
-        $test = new PerlACE::Process ("./$name",
-                                  "-ORBInitRef NameService=file://$namingior ");
+        ## The MaxQueueLength and MaxEventsPerConsumer are not supported in the Reactive
+        ## configuration, so we skip this test for now.
+        ## The Notification should actually throw an exception for the property not supported.
+        if ($name->{name} eq "AdminProperties" 
+            && $config eq "notify.reactive.conf")
+          {
+            next;
+          }
+
+        print STDERR "\nTesting $name->{name}....\n\n";
+        $test = new PerlACE::Process ("./$name->{name}",
+                                      "-ORBInitRef NameService=file://$namingior " .
+                                      "$name->{args} ");
         $test->Spawn ();
 
         $status = $test->WaitKill ($experiment_timeout);
