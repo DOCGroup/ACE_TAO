@@ -9,6 +9,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Log_Msg.h"
 #include "ace/Thread.h"
 #include "ace/Timer_Heap.h"
 
