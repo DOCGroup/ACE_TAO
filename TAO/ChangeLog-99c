@@ -1,3 +1,8 @@
+Tue Sep  7 09:16:31 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/ORB.cpp: Fixed a warning with g++. Thanks to Dr.Schmidt &
+	  Dr.Levine's build for reporting this.
+
 Mon Sep  6 21:28:11 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp
