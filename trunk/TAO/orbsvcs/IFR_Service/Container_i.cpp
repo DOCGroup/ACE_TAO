@@ -587,7 +587,7 @@ TAO_Container_i::describe_contents (IR::DefinitionKind limit_type,
   for (CORBA::ULong i = 0; i < ret_len; i++)
     {
       desc = contents[i]->describe (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_CHECK_RETURN (0);
 
       retval[i].contained_object = 
         IR::Contained::_duplicate (contents[i]);
@@ -961,7 +961,7 @@ TAO_Container_i::create_union (const char *id,
     }
 
   IR::DefinitionKind def_kind = this->def_kind (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (IR::StructDef::_nil ());
+  ACE_CHECK_RETURN (IR::UnionDef::_nil ());
 
   if (def_kind == IR::dk_Struct
       || def_kind == IR::dk_Union
@@ -1046,7 +1046,7 @@ TAO_Container_i::create_enum (const char *id,
     }
 
   IR::DefinitionKind def_kind = this->def_kind (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (IR::StructDef::_nil ());
+  ACE_CHECK_RETURN (IR::EnumDef::_nil ());
 
   if (def_kind == IR::dk_Struct
       || def_kind == IR::dk_Union
