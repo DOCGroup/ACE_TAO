@@ -19,13 +19,19 @@ Mpeg_Svc_Handler::open (void *)
 int
 Mpeg_Svc_Handler::svc (void)
 {
-  return this->handle_input ();
+  int result;
+  result = this->handle_input ();
+  if (result != 0)
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) Thread exiting... "));
+  return result;
 }
 
 int
 Mpeg_Svc_Handler::handle_input (ACE_HANDLE)
 {  
   int junk;
+  int result;
   u_short port;
   ACE_UINT32 ip;
   // Client is sending us JUNK
@@ -95,23 +101,28 @@ Mpeg_Svc_Handler::handle_input (ACE_HANDLE)
     {
     case CmdINITvideo:
       if (Mpeg_Global::live_audio) LeaveLiveAudio();
-      VideoServer (this->peer ().get_handle (), 
+      result=VideoServer (this->peer ().get_handle (), 
                    this->dgram_.get_handle (), 
                    Mpeg_Global::rttag, 
                    -INET_SOCKET_BUFFER_SIZE);
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%P|%t): video server returned.\n"),
-                        -1);
+      if (result != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) handle_input: "),
+                          result);
+      return result;
       break;
     default:
       if (Mpeg_Global::live_audio) LeaveLiveAudio();
-      AudioServer (this->peer ().get_handle (), 
-                   this->dgram_.get_handle (), 
-                   Mpeg_Global::rttag, 
-                   -INET_SOCKET_BUFFER_SIZE);
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%P|%t): video server returned.\n"),
-                        -1);
+      result = AudioServer (this->peer ().get_handle (), 
+                            this->dgram_.get_handle (), 
+                            Mpeg_Global::rttag, 
+                            -INET_SOCKET_BUFFER_SIZE);
+      if (result != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t)handle_input : "),
+                          result);
+      return result;
+     
     }
 
   return 0;
