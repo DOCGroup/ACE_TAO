@@ -27,6 +27,11 @@
 #include "ace/os_include/sys/types.h"
 #include "ace/os_include/inttypes.h"
 
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#  include <process.h>
+#  include <io.h>
+#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
+
 #if !defined (ACE_LACKS_UNISTD_H)
 # include /**/ <unistd.h>
 #endif /* !ACE_LACKS_UNISTD_H */

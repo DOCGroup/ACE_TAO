@@ -1,3 +1,30 @@
+Thu May  7 02:04:00 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.h:
+          Replaced Windows specific includes for ws2tcpip.h, direct.h,
+          process.h, and io.h with the appropriate new headers listed
+          below.		  
+
+        * ace/config-cygwin32.h:
+          Added following ACE_LACKS macros:  STDINT_H, INTTYPES8H,
+          STROPTS_H, and UCONTEXT_H.
+
+		* ace/config-win32-msvc.h:
+          Added several ACE_LACKS macros: UCONTEXT_H, STDINT_H,
+          SYS_SELECT_H, TIME_H, SYS_RESOURCE_H, SYS_WAIT_H,
+          SYS_UIO_H, SYS_SOCKET_H, and NETINET_IN_H.
+
+		* ace/os_include/unistd.h:
+          Added include for <process.h> and <io.h> on Windows,
+          but not WINCE.
+ 
+		* ace/os_include/sys/stat.h:
+          Added include for <direct.h> on Windows, but not WINCE.
+
+		* ace/os_include/netinet/in.h:
+          Added include for <ws2tcpip.h> when ACE_HAS_WINSOCK2 is 
+          defined and != 0.
+
 Wed May  7 00:02:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS.{i,h}:
