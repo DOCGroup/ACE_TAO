@@ -1,3 +1,10 @@
+Thu Apr 12 20:36:30 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/OS.i (thr_getspecific): Reorder the way in which we check
+	  the flags so that ACE_HAS_PTHREADS takes precedence over
+ 	  ACE_HAS_STHREADS.  Thanks to Munagala Ramanath
+ 	  <amberarrow@yahoo.com> for reporting this.
+
 Thu Apr 12 21:18:44 2001  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_hpux_aCC.GNU: Added

@@ -7513,7 +7513,6 @@ ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
 #endif /* ACE_HAS_PACE */
 }
 
-
 #if defined (ACE_HAS_TSS_EMULATION)
 
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
@@ -7528,9 +7527,7 @@ ACE_OS::thr_getspecific (ACE_OS_thread_key_t key, void **data)
 //  return 0;
 //#  elif defined (ACE_HAS_THREADS)
 #  if defined (ACE_HAS_THREADS)
-#   if defined (ACE_HAS_STHREADS)
-    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getspecific (key, data), ace_result_), int, -1);
-#   elif defined (ACE_HAS_PTHREADS)
+#   if defined (ACE_HAS_PTHREADS)
 #    if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
     return pthread_getspecific (key, data);
 #    else /* this is ACE_HAS_PTHREADS_DRAFT7 or STD */
@@ -7542,6 +7539,8 @@ ACE_OS::thr_getspecific (ACE_OS_thread_key_t key, void **data)
 #     endif /* pthread_getspecific */
 #    endif       /*  ACE_HAS_PTHREADS_DRAFT4, 6 */
     return 0;
+#   elif defined (ACE_HAS_STHREADS)
+    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getspecific (key, data), ace_result_), int, -1);
 #   elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS)
     ACE_hthread_t tid;
     ACE_OS::thr_self (tid);
