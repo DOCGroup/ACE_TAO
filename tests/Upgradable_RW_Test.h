@@ -9,12 +9,17 @@
 //    Upgradable_RW_Test.h
 //
 // = DESCRIPTION
-//    See the acording .cpp file for more information.
+//    This class gets its own header file to work around AIX C++
+//    compiler "features" related to template instantiation...  It is
+//    only used by Upgradable_RW_Test.cpp.
 //
 // = AUTHOR
 //    Michael Kircher <mk1@cs.wustl.edu>
 //
 // ============================================================================
+
+#ifndef ACE_TESTS_UPGRADABLE_RW_TEST_H
+#define ACE_TESTS_UPGRADABLE_RW_TEST_H
 
 #include "test_config.h"
 #include "ace/Synch.h"
@@ -30,56 +35,57 @@
 #include "ace/SString.h"
 #include "ace/Profile_Timer.h"
 
-
 class Element;
 
 class Element
-// =TITEL
-//   The members for the double linked list
-//
 {
+  // = TITLE
+  //   The members for the double linked list.
   friend class ACE_Double_Linked_List<Element>;
   friend class ACE_Double_Linked_List_Iterator_Base<Element>;
   friend class ACE_Double_Linked_List_Iterator<Element>;
   friend class ACE_Double_Linked_List_Reverse_Iterator<Element>;
 
 public:
-  Element (ACE_CString* item = 0, Element* p = 0, Element* n = 0)
-    : prev_ (p), next_(n), item_(item)
-    {
-    }
+  Element (ACE_CString *item = 0,
+           Element *p = 0,
+           Element *n = 0)
+    : prev_ (p),
+      next_(n),
+      item_(item)
+  {
+  }
 
-  ACE_CString* value (void)
-    {
-      return this->item_;
-    }
+  ACE_CString *value (void)
+  {
+    return this->item_;
+  }
 
 private:
-  Element* prev_;
-  Element* next_;
-  ACE_CString* item_;
+  Element *prev_;
+  Element *next_;
+  ACE_CString *item_;
 };
 
-typedef ACE_Double_Linked_List<Element>  Linked_List;
-
+typedef ACE_Double_Linked_List<Element> Linked_List;
 
 class Time_Calculation
-//  = TITLE
-//     class to do time calculations thread safe
-//
 {
+  //  = TITLE
+  //     class to do time calculations thread safe
 public:
-  Time_Calculation ()
+  Time_Calculation (void)
     : reported_times_ (0)
-    {
-      times_.real_time = 0;
-      times_.user_time = 0;
-      times_.system_time = 0;
-    }
+  {
+    times_.real_time = 0;
+    times_.user_time = 0;
+    times_.system_time = 0;
+  }
 
   void report_time (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time);
   // take the time of the thread and add it to
-  void print_stats ();
+
+  void print_stats (void);
 
 private:
   ACE_Profile_Timer::ACE_Elapsed_Time times_;
@@ -92,19 +98,17 @@ private:
   // count how many threads gave me the elapsed_time
 };
 
-
 class Reader_Task : public ACE_Task_Base
-//  = TITLE
-//     A Task for readers
-//
 {
+  //  = TITLE
+  //     A Task for readers
 public:
   Reader_Task (Time_Calculation &time_Calculation,
                ACE_Barrier &barrier)
     : time_Calculation_ (time_Calculation),
-    barrier_(barrier)
-    {
-    };
+      barrier_(barrier)
+  {
+  };
 
   virtual int svc (void);
 
@@ -118,17 +122,16 @@ private:
 };
 
 class Writer_Task : public ACE_Task_Base
-//  = TITLE
-//     A Task for wirters.
-//
 {
+  //  = TITLE
+  //     A Task for wirters.
 public:
   Writer_Task (Time_Calculation &time_Calculation,
                ACE_Barrier &barrier)
     : time_Calculation_ (time_Calculation),
-    barrier_(barrier)
-    {
-    };
+      barrier_(barrier)
+  {
+  };
 
   virtual int svc (void);
 
@@ -141,5 +144,4 @@ private:
   // to allow a "nice" start
 };
 
-
-
+#endif /* ACE_TESTS_UPGRADABLE_RW_TEST_H */

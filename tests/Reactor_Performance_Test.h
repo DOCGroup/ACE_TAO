@@ -10,15 +10,18 @@
 //
 // = DESCRIPTION
 //    This file includes template class definitions for the
-//    Reactor_Performance_Test.cpp program.
+//    Reactor_Performance_Test.cpp program.  This class gets its own
+//    header file to work around AIX C++ compiler "features" related
+//    to template instantiation...
 //
 // = AUTHOR
-//    Irfan Pyarali, Steve Huston
+//    Irfan Pyarali <irfan@cs.wustl.edu> and
+//    Steve Huston <shuston@riverace.com>
 //
 // ============================================================================
 
-#ifndef __REACTOR_PERFORMANCE_TEST_H
-#define __REACTOR_PERFORMANCE_TEST_H
+#ifndef ACE_TESTS_REACTOR_PERFORMANCE_TEST_H
+#define ACE_TESTS_REACTOR_PERFORMANCE_TEST_H
 
 #include "ace/SOCK_Stream.h"
 
@@ -29,9 +32,10 @@
 #include "ace/Svc_Handler.h"
 #include "ace/Synch.h"
 
-// Simple class for reading in the data
 class Read_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
 {
+  // = TITLE
+  //   Simple class for reading in the data
 public:
   static void set_countdown (int nconnections);
 
@@ -46,16 +50,14 @@ private:
   // How many connections are we waiting for.
 };
 
-
-
-// This Svc_Handler simply connects to a server and sends some output
-// to it.  Its purpose is to feed the test.
 class Write_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
 {
+  // = TITLE
+  //   This Svc_Handler simply connects to a server and sends some
+  //   output to it.  Its purpose is to feed the test.
 public:
   virtual int open (void *);
   virtual int send_data (void);
 };
 
-
-#endif /* __REACTOR_PERFORMANCE_TEST_H */
+#endif /* ACE_TESTS_REACTOR_PERFORMANCE_TEST_H */
