@@ -1,18 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel tests
-//
-// = FILENAME
-//   Atomic_Reconnect.h
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Atomic_Reconnect.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef EC_ATOMIC_RECONNECT_H
 #define EC_ATOMIC_RECONNECT_H
@@ -24,17 +20,18 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class Consumer
+ *
+ * @brief Simple consumer object
+ *
+ */
 class Consumer : public EC_Counting_Consumer
 {
-  // = TITLE
-  //   Simple consumer object
-  //
-  // = DESCRIPTION
-  //
 public:
+  /// Constructor
   Consumer (const char* name,
             int event_base_type);
-  // Constructor
 
   void dump_results (int expected_count,
                      int tolerance);
@@ -48,15 +45,15 @@ public:
                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Number of events of type <event_base_type_> received.
   CORBA::ULong event_base_count;
-  // Number of events of type <event_base_type_> received.
 
 private:
+  /// Base event type
   int event_base_type_;
-  // Base event type
 
+  /// Synchronize access to the counter
   TAO_SYNCH_MUTEX lock_;
-  // Synchronize access to the counter
 };
 
 #endif /* EC_ATOMIC_RECONNECT_H */
