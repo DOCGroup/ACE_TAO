@@ -1761,7 +1761,8 @@ TAO_POA::reference_to_servant_i (CORBA::Object_ptr reference
                         0);
     }
 
-  return this->active_policy_strategies_.servant_retention_strategy()->reference_to_servant (reference ACE_ENV_ARG_PARAMETER);
+  return this->active_policy_strategies_.servant_retention_strategy()->
+    reference_to_servant (reference ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::ObjectId *
@@ -1820,7 +1821,8 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (0);
 
-  return this->active_policy_strategies_.servant_retention_strategy()->reference_to_id (reference, system_id ACE_ENV_ARG_PARAMETER);
+  return this->active_policy_strategies_.servant_retention_strategy()->
+    reference_to_id (reference, system_id ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::Servant
@@ -1830,7 +1832,8 @@ TAO_POA::id_to_servant_i (const PortableServer::ObjectId &id
                    PortableServer::POA::ObjectNotActive,
                    PortableServer::POA::WrongPolicy))
 {
-  return this->active_policy_strategies_.servant_retention_strategy()->id_to_servant (id ACE_ENV_ARG_PARAMETER);
+  return this->active_policy_strategies_.servant_retention_strategy()->
+    id_to_servant (id ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object_ptr
@@ -1840,7 +1843,8 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id
                    PortableServer::POA::ObjectNotActive,
                    PortableServer::POA::WrongPolicy))
 {
-  return this->active_policy_strategies_.servant_retention_strategy()->id_to_reference (id ACE_ENV_ARG_PARAMETER);
+  return this->active_policy_strategies_.servant_retention_strategy()->
+    id_to_reference (id ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::OctetSeq *
@@ -1864,7 +1868,8 @@ TAO_POA::locate_servant_i (const char *operation,
                            int &wait_occurred_restart_call
                            ACE_ENV_ARG_DECL)
 {
-  return this->active_policy_strategies_.servant_retention_strategy()->locate_servant (operation, system_id, servant_upcall, poa_current_impl, wait_occurred_restart_call ACE_ENV_ARG_PARAMETER);
+  return this->active_policy_strategies_.servant_retention_strategy()->
+    locate_servant (operation, system_id, servant_upcall, poa_current_impl, wait_occurred_restart_call ACE_ENV_ARG_PARAMETER);
 }
 
 /* static */

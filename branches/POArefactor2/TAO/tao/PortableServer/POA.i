@@ -51,6 +51,7 @@ TAO_POA::destroy (CORBA::Boolean etherealize_objects,
   this->destroy_i (etherealize_objects,
                    wait_for_completion
                    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 ACE_INLINE TAO_POA_Policy_Set &

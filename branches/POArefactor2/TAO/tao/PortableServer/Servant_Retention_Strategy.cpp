@@ -19,6 +19,8 @@
 #include "POA.h"
 #include "tao/debug.h"
 
+// @todo Check the usage of non_retain and request_processing (default servant especially)
+
 ACE_RCSID (PortableServer,
            Servant_Retention_Strategy,
            "$Id$")
