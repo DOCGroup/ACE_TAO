@@ -1508,7 +1508,7 @@ be_interface::gen_typecode (void)
   cs->indent (); // start from whatever indentation level we were at
 
   *cs << "CORBA::tk_objref, // typecode kind" << nl;
-  *cs << this->tc_size () << ", // encapsulation length\n";
+  *cs << this->tc_encap_len () << ", // encapsulation length\n";
   // now emit the encapsulation
   return this->gen_encapsulation ();
 }
