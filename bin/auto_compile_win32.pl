@@ -122,9 +122,18 @@ sub Build_Config
         $Bname =~ s/.*\/([^\/]*)/$1/;
         ($Project_File, $Project_Name) = split /,\s*/, $Bname;
         chdir ("$ENV{ACE_ROOT}/$Project_Dir");
-        $Status =
-            system "msdev.com $Project_File /MAKE \"$Project_Name - $Config\" /USEENV /BUILD /Y3";
-#        print "$Status = msdev.com $Project_File /MAKE \"$Project_Name - $Config\"\n";
+        if ( $Debug == 0 )
+        {
+            $Status =
+                system "msdev.com $Project_File /MAKE \"$Project_Name - $Config\" /USEENV /BUILD /Y3";
+        }
+        else
+        {
+            $Status = 0;
+            print "chdir (\"$ENV{ACE_ROOT}/$Project_Dir\");\n";
+            print "$Status = msdev.com $Project_File /MAKE \"$Project_Name - $Config\"\n";
+        }
+
         if ($Ignore_error == 0)
         {
             return if $Status != 0;
@@ -134,42 +143,60 @@ sub Build_Config
 
 sub Build_Collection
 {
+    print "Build_Collection\n" if ( $Verbose );
     my $Cntr = 0;
     for (; $Cntr < scalar(@Lists); $Cntr ++)
     {
         $Config = $Lists[$Cntr];
+        print "Building $Config of $Target{$Config}\n" if ( $Debug );
         Build_Config ($Config, $Target{$Config});
     }
 }
 
 
+$Verbose = 0;
+$Debug = 0;
 $Ignore_error = 0;              # By default, bail out if an error occurs.
 $Build_DLL = 1;
 $Build_LIB = 1;
 @Lists = @Win32_Lists;
-@DLL_Collections = @Win32_DLL_Collections;
-@Lib_Collections = @Win32_Lib_Collections;
+%DLL_Collections = %Win32_DLL_Collections;
+%Lib_Collections = %Win32_Lib_Collections;
 
 ## Parse command line argument
 while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^-/ )
 {
     if ( $ARGV[0] eq '-k' )     # Ignore error.  Compile the whole thing
     {
+        print "Ignore errors\n" if ( $Verbose );
         $Ignore_error = 1;      # in the same configuration.
     }
     elsif ( $ARGV[0] eq '-a' )  # Use Alpha
     {
+        print "Build Alpha\n" if ( $Verbose );
         @Lists = @Alpha_Lists;
-        @DLL_Collections = @Alpha_DLL_Collections;
-        @Lib_Collections = @Alpha_Lib_Collections;
+        %DLL_Collections = %Alpha_DLL_Collections;
+        %Lib_Collections = %Alpha_Lib_Collections;
+    }
+    elsif ( $ARGV[0] eq '-d')   # Script debugging mode
+    {
+        print "Debug mode on\nVerbose mode on\n";
+        $Debug = 1;
+        $Verbose = 1;
     }
     elsif ( $ARGV[0] eq '-D' )  # Build DLL only
     {
+        print "Build DLL only" if ( $Verbose );
         $Build_LIB = 0;
     }
     elsif ( $ARGV[0] eq '-L' )  # Build LIB only
     {
+        print "Build LIB only" if ( $Verbose );
         $Build_DLL = 0;
+    }
+    elsif ($ARGV[0] eq '-v' )   # Verbose mode
+    {
+        $Verbose = 1;
     }
     else
     {
@@ -179,14 +206,24 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^-/ )
     shift;
 }
 
+if ( $Verbose )
+{
+    for ($II = 0; $II < scalar (@Lists); $II++)
+    {
+        printf "$Lists[$II]\n";
+    }
+}
+
 if ( $Build_DLL )
 {
+    print "Building DLL\n" if ( $Verbose );
     %Target = %DLL_Collections;
     Build_Collection;
 }
 
 if ( $Build_LIB )
 {
+    print "Building LIB\n" if ( $Verbose );
     %Target = %Lib_Collections;
     Build_Collection;
 }
