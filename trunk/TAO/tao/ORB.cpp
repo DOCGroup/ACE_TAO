@@ -18,6 +18,8 @@
 
 #include "tao/Timeprobe.h"
 
+ACE_RCSID(tao, ORB, "$Id$")
+
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_ORB_Timeprobe_Description[] =

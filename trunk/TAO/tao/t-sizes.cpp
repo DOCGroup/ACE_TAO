@@ -2,6 +2,8 @@
 
 #include "tao/corba.h"
 
+ACE_RCSID(tao, t_sizes, "$Id$")
+
 #define SHOWSIZE(t) ACE_OS::printf ("sizeof (%s) = %u\n", #t, sizeof(t));
 
 int

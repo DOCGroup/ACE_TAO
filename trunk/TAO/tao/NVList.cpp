@@ -8,6 +8,8 @@
 # include "tao/NVList.i"
 #endif /* ! __ACE_INLINE__ */
 
+ACE_RCSID(tao, NVList, "$Id$")
+
 // Reference counting for DII Request object
 
 CORBA::ULong

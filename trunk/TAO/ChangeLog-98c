@@ -1,3 +1,58 @@
+Fri Jul 31 20:34:27 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
+
+	* tao/Any.cpp: 
+	* tao/CDR.cpp: 
+	* tao/Client_Strategy_Factory.cpp: 
+	* tao/Connect.cpp: 
+	* tao/CurrentC.cpp: 
+	* tao/CurrentS.cpp: 
+	* tao/Exception.cpp: 
+	* tao/Forwarding_Servant.cpp: 
+	* tao/GIOP.cpp: 
+	* tao/IIOP_Interpreter.cpp: 
+	* tao/IIOP_ORB.cpp: 
+	* tao/IIOP_Object.cpp: 
+	* tao/Invocation.cpp: 
+	* tao/Marshal.cpp: 
+	* tao/NVList.cpp: 
+	* tao/ORB.cpp: 
+	* tao/ORB_Core.cpp: 
+	* tao/ORB_Strategies_T.cpp: 
+	* tao/Object.cpp: 
+	* tao/Object_KeyC.cpp: 
+	* tao/Object_Table.cpp: 
+	* tao/Operation_Table.cpp: 
+	* tao/POA.cpp: 
+	* tao/POAC.cpp: 
+	* tao/POAS.cpp: 
+	* tao/PolicyC.cpp: 
+	* tao/PolicyS.cpp: 
+	* tao/Principal.cpp: 
+	* tao/Request.cpp: 
+	* tao/Sequence.cpp: 
+	* tao/Sequence_T.cpp: 
+	* tao/Servant_Base.cpp: 
+	* tao/Server_Request.cpp: 
+	* tao/Server_Strategy_Factory.cpp: 
+	* tao/Stub.cpp: 
+	* tao/TAO.cpp: 
+	* tao/TAO_Internal.cpp: 
+	* tao/Typecode.cpp: 
+	* tao/Typecode_Constants.cpp: 
+	* tao/Union.cpp: 
+	* tao/append.cpp: 
+	* tao/debug.cpp: 
+	* tao/decode.cpp: 
+	* tao/deep_free.cpp: 
+	* tao/default_client.cpp: 
+	* tao/default_server.cpp: 
+	* tao/encode.cpp: 
+	* tao/params.cpp: 
+	* tao/poa_T.cpp: 
+	* tao/skip.cpp: 
+	* tao/t-sizes.cpp: 
+	Added ACE_RCSID to these files.
+
 Fri Jul 31 15:34:55 1998 Jeff Parsons <jp4@cs.wustl.edu>
 
       * Param_Test/bd_string.cpp:

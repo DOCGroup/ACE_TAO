@@ -28,6 +28,8 @@
 
 #include "tao/corba.h"
 
+ACE_RCSID(tao, Typecode_Constants, "$Id$")
+
 // Declare all the standard typecodes owned by the ORB
 
 // Null and void

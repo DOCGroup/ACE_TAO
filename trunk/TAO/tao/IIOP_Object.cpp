@@ -1,4 +1,3 @@
-
 // $Id$
 
 // @ (#)iiopobj.cpp     1.9 95/11/04
@@ -18,6 +17,8 @@
 #endif /* ! __ACE_INLINE__ */
 
 #include "tao/Timeprobe.h"
+
+ACE_RCSID(tao, IIOP_Object, "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 

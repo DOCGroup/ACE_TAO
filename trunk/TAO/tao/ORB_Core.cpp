@@ -12,6 +12,8 @@
 # include "tao/ORB_Core.i"
 #endif /* ! __ACE_INLINE__ */
 
+ACE_RCSID(tao, ORB_Core, "$Id$")
+
 typedef ACE_TSS_Singleton<TAO_ORB_Core, ACE_SYNCH_MUTEX>
         TAO_ORB_CORE;
 

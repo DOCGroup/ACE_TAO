@@ -21,6 +21,8 @@
 
 #include "tao/corba.h"
 
+ACE_RCSID(tao, append, "$Id$")
+
 // Encode instances of arbitrary data types based only on typecode.
 // "data" points to the data type; if it's not a primitve data type,
 // the TypeCode interpreter is used to recursively encode its

@@ -14,6 +14,8 @@
 # include "tao/Exception.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(tao, Exception, "$Id$")
+
 // Static initializers.
 
 CORBA::ExceptionList *TAO_Exceptions::system_exceptions;

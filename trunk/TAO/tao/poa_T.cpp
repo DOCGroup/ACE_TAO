@@ -5,6 +5,8 @@
 
 #include "tao/poa_T.h"
 
+ACE_RCSID(tao, poa_T, "$Id$")
+
 template <class ACE_LOCKING_MECHANISM>
 TAO_Locked_POA<ACE_LOCKING_MECHANISM>::TAO_Locked_POA (const char *adapter_name,
                                                        PortableServer::POAManager_ptr poa_manager,

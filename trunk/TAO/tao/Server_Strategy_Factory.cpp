@@ -2,6 +2,8 @@
 
 #include "tao/corba.h"
 
+ACE_RCSID(tao, Server_Strategy_Factory, "$Id$")
+
 TAO_Server_Strategy_Factory::TAO_Server_Strategy_Factory (void)
 {
 }

@@ -15,6 +15,8 @@
 
 #include "tao/corba.h"
 
+ACE_RCSID(tao, debug, "$Id$")
+
 #if !defined (ACE_HAS_PTHREADS) && !defined (ACE_HAS_DCE_DRAFT4_THREADS)
   // _POSIX_THREAD_SAFE_FUNCTIONS implied
 # define flockfile(f)

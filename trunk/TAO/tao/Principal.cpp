@@ -10,6 +10,8 @@
 #include "tao/Principal.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(tao, Principal, "$Id$")
+
 CORBA_Principal::CORBA_Principal (void)
 {
 }
