@@ -1,5 +1,35 @@
 Tue Oct 14 00:07:37 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/Svc_Conf.y: Make sure that the Module has the same name as
+ 	  the Module_Type object from the svc.conf file.  We need to do
+ 	  this because the Stream_Type::fini() method removes each module
+ 	  by the name given in the configuration file (stored in the
+ 	  Module_Type object).  But the Stream::remove() method compares
+ 	  this name against the name stored in the Module.  So the object
+ 	  is deleted, but never removed from the list.  Another traversal
+ 	  of the list causes a crash...  Thanks to Eric Newton for
+ 	  suggesting this fix.
+
+	* ace/OS.cpp (invoke): Added call to AfxEndThread insides
+ 	  ACE_TSS_Cleanup::exit() such that the same cleanup would not be
+ 	  executed again when threads exit in ace_thread_adapter() in
+ 	  OS.cpp.  Thanks to Alex Chan <Alex.Chan@Aspect.com> for
+ 	  reporting this.
+
+	* ace/Service_Config.cpp (process_directives): Avoid reporting
+ 	  lex/yacc leakage since there is nothing we could do about it.
+  	  Thanks to Alex Chan <Alex.Chan@Aspect.com> for reporting this.
+
+	* ace/Service_Types.cpp: Changed the implementation so that we
+ 	  bypass the default cleanup originally done in
+ 	  ACE_Service_Type_Impl::fini() and instead perform the cleanup in
+ 	  ACE_Service_Object_Type::fini (void).  Thanks to Alex Chan
+ 	  <Alex.Chan@Aspect.com> for reporting this.
+
+	* ace/Svc_Conf.y: Removed duplicate call to symbol() to avoid the
+ 	  problem that dynamic service objects are created twice.  Thanks
+ 	  to Alex Chan <Alex.Chan@Aspect.com> for reporting this.
+
 	* examples/Reactor/FIFO/client.cpp (main): Fixed the call to
  	  fifo_sender.send () so that it passes msg rather than &msg.
   	  Thanks to Sandro Doro <doros@aureus> for reporting this.
