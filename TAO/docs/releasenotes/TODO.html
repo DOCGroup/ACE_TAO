@@ -268,6 +268,29 @@ class Foo {
 };
 	    </PRE>
 	    note the missing comma before the TAO_ENV_ARG parameter.
+            <P>
+            </P> A different alternative is to generate both
+            functions, and make the default implementation just invoke
+            the other:
+	    <PRE>
+// IDL
+interface Foo {
+  void bar (in long x);
+};
+
+// C++ 
+class POA_Foo {
+  void bar (CORBA::Long x, CORBA::Environment& env)
+               TAO_THROW_SPEC ((CORBA::SystemException))
+  {
+    this->bar (x);
+  }
+  void bar (CORBA::Long x)
+               TAO_THROW_SPEC ((CORBA::SystemException)) = 0;
+};
+	    </PRE>
+            The problem is: which alternative should be the pure
+            virtual function? Which one is overriden by the user?
 	  <P></LI>
 
 	</OL>
@@ -548,13 +571,6 @@ class Foo {
 	</P>
       </LI>
 
-      <LI><P>Add the <CODE>CORBA::TypeCode::_tc_Bounds</CODE> and the
-	  <CODE>CORBA::TypeCode::_tc_BadKind</CODE> type codes.
-	  Currently they are in the wrong namespace (just
-	  <CODE>CORBA::_tc_Bounds</CODE>).
-	</P>
-      </LI>
-
       <LI><P>Is the client side in TAO handling a
 	  <CODE>CloseConnection</CODE> GIOP message properly?
 	</P>
@@ -585,11 +601,6 @@ class Foo {
       <LI><P>The <CODE>SINGLE_THREAD_MODEL</CODE> for the POA requires
 	  that the execution for all request on that POA happen on the
 	  same thread.
-	</P>
-      </LI>
-
-      <LI><P>The methods in <CODE>CORBA::TypeCode</CODE> should be
-	  <CODE>const</CODE>.
 	</P>
       </LI>
 
@@ -795,6 +806,21 @@ class Foo {
       <H3>Completed Tasks</H3>
 
     <OL>
+      <LI><P>The methods in <CODE>CORBA::TypeCode</CODE> should be
+	  <CODE>const</CODE>.
+	</P>
+        <BR>[DONE] 
+      </LI>
+
+      <LI><P>Add the <CODE>CORBA::TypeCode::_tc_Bounds</CODE> and the
+	  <CODE>CORBA::TypeCode::_tc_BadKind</CODE> type codes.
+	  Currently they are in the wrong namespace (just
+	  <CODE>CORBA::_tc_Bounds</CODE>).
+	</P>
+        <BR>[DONE]
+      </LI>
+
+
       <LI><P>Add compiled marshalling
 	  <BR>[STATUS] Andy is working on this.
 	  <BR>[DONE] The compiled marshaling code works, we still have
