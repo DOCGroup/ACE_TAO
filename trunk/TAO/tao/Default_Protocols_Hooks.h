@@ -58,9 +58,9 @@ public:
                                   CORBA::Short &server_priority);
 
   virtual void get_selector_bands_policy_hook (CORBA::Policy *bands_policy,
+                                               CORBA::Short p,
                                                CORBA::Short &min_priority,
                                                CORBA::Short &max_priority,
-                                               CORBA::Short &p,
                                                int &in_range);
 
   virtual int get_thread_CORBA_priority (CORBA::Short &

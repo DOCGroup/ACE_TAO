@@ -6,10 +6,11 @@
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/ORB_Core.h"
 #include "../check_supported_priorities.cpp"
-#include "./readers.cpp"
+#include "../common_args.cpp"
 
 static int iterations = 5;
 static int shutdown_server = 0;
+static int debug = 1;
 
 static const char *ior = "file://ior";
 
@@ -19,7 +20,7 @@ static const char *bands_file = "empty_file";
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "b:p:k:i:x");
+  ACE_Get_Opt get_opts (argc, argv, "b:d:p:k:i:x");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -31,6 +32,10 @@ parse_args (int argc, char **argv)
 
       case 'i':
         iterations = ::atoi (get_opts.opt_arg ());
+        break;
+
+      case 'd':
+        debug = ::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':
@@ -50,6 +55,7 @@ parse_args (int argc, char **argv)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-b <bands_file> "
+                           "-d <debug> "
                            "-p <invocation_priorities_file> "
                            "-k ior "
                            "-i iterations "
@@ -218,12 +224,13 @@ main (int argc, char **argv)
                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      Short_Array priorities;
+      ULong_Array priorities;
       result =
         get_values ("client",
                     invocation_priorities_file,
                     "invocation priorities",
-                    priorities);
+                    priorities,
+                    debug);
       if (result != 0)
         return result;
 
@@ -233,7 +240,8 @@ main (int argc, char **argv)
         get_priority_bands ("client",
                             bands_file,
                             rt_orb.in (),
-                            policies
+                            policies,
+                            debug
                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (result != 0)

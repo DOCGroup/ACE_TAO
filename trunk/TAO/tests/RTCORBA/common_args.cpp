@@ -3,13 +3,14 @@
 #include "ace/Read_Buffer.h"
 #include "ace/Array_Base.h"
 
-typedef ACE_Array_Base<CORBA::Short> Short_Array;
+typedef ACE_Array_Base<CORBA::ULong> ULong_Array;
 
 int
 get_priority_bands (const char *test_type,
                     const char *bands_file,
                     RTCORBA::RTORB_ptr rt_orb,
-                    CORBA::PolicyList &policies
+                    CORBA::PolicyList &policies,
+                    int debug
                     ACE_ENV_ARG_DECL)
 {
   //
@@ -32,9 +33,10 @@ get_priority_bands (const char *test_type,
   // Check for empty bands file.
   if (string == 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "\n%s: No bands set!\n\n",
-                  test_type));
+      if (debug)
+        ACE_DEBUG ((LM_DEBUG,
+                    "\n%s: No bands set!\n\n",
+                    test_type));
       return 0;
     }
 
@@ -44,10 +46,11 @@ get_priority_bands (const char *test_type,
   RTCORBA::PriorityBands bands;
   bands.length (bands_length);
 
-  ACE_DEBUG ((LM_DEBUG,
-              "\n%s: There are %d bands: ",
-              test_type,
-              bands_length));
+  if (debug)
+    ACE_DEBUG ((LM_DEBUG,
+                "\n%s: There are %d bands: ",
+                test_type,
+                bands_length));
 
   int result = 1;
   char* working_string = string;
@@ -71,10 +74,11 @@ get_priority_bands (const char *test_type,
       working_string += ACE_OS::strlen (working_string);
       working_string += 1;
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "[%d %d] ",
-                  bands[i].low,
-                  bands[i].high));
+      if (debug)
+        ACE_DEBUG ((LM_DEBUG,
+                    "[%d %d] ",
+                    bands[i].low,
+                    bands[i].high));
     }
 
   reader.alloc ()->free (string);
@@ -85,8 +89,9 @@ get_priority_bands (const char *test_type,
                        bands_file),
                       -1);
 
-  ACE_DEBUG ((LM_DEBUG,
-              "\n\n"));
+  if (debug)
+    ACE_DEBUG ((LM_DEBUG,
+                "\n\n"));
 
   CORBA::Policy_var banded_connection_policy =
     rt_orb->create_priority_banded_connection_policy (bands
@@ -104,7 +109,8 @@ int
 get_values (const char *test_type,
             const char *file_name,
             const char *name,
-            Short_Array &values)
+            ULong_Array &values,
+            int debug)
 {
   //
   // Read lanes from a file.
@@ -126,10 +132,11 @@ get_values (const char *test_type,
   // Check for empty lanes file.
   if (string == 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "\n%s: No %s set!\n\n",
-                  test_type,
-                  name));
+      if (debug)
+        ACE_DEBUG ((LM_DEBUG,
+                    "\n%s: No %s set!\n\n",
+                    test_type,
+                    name));
       return 0;
     }
 
@@ -138,18 +145,19 @@ get_values (const char *test_type,
 
   values.size (length);
 
-  ACE_DEBUG ((LM_DEBUG,
-              "\n%s: There are %d %s: ",
-              test_type,
-              length,
-              name));
+  if (debug)
+    ACE_DEBUG ((LM_DEBUG,
+                "\n%s: There are %d %s: ",
+                test_type,
+                length,
+                name));
 
   int result = 1;
   char* working_string = string;
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       result = ::sscanf (working_string,
-                         "%hd",
+                         "%lu",
                          &values[i]);
       if (result == 0 || result == EOF)
         break;
@@ -157,9 +165,10 @@ get_values (const char *test_type,
       working_string += ACE_OS::strlen (working_string);
       working_string += 1;
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "[%d] ",
-                  values[i]));
+      if (debug)
+        ACE_DEBUG ((LM_DEBUG,
+                    "[%u] ",
+                    values[i]));
     }
 
   reader.alloc ()->free (string);
@@ -170,8 +179,9 @@ get_values (const char *test_type,
                        file_name),
                       -1);
 
-  ACE_DEBUG ((LM_DEBUG,
-              "\n\n"));
+  if (debug)
+    ACE_DEBUG ((LM_DEBUG,
+                "\n\n"));
 
   return 0;
 }
@@ -187,15 +197,17 @@ get_priority_lanes (const char *test_type,
                     CORBA::ULong max_buffered_requests,
                     CORBA::ULong max_request_buffer_size,
                     CORBA::Boolean allow_borrowing,
-                    CORBA::PolicyList &policies
+                    CORBA::PolicyList &policies,
+                    int debug
                     ACE_ENV_ARG_DECL)
 {
-  Short_Array priorities;
+  ULong_Array priorities;
   int result =
     get_values (test_type,
                 lanes_file,
                 "lanes",
-                priorities);
+                priorities,
+                debug);
   if (result != 0 ||
       priorities.size () == 0)
     return result;
@@ -234,6 +246,52 @@ get_priority_lanes (const char *test_type,
   return 0;
 }
 
+int
+get_protocols (const char *test_type,
+               const char *lanes_file,
+               RTCORBA::RTORB_ptr rt_orb,
+               CORBA::PolicyList &policies,
+               int debug
+               ACE_ENV_ARG_DECL)
+{
+  ULong_Array protocol_values;
+  int result =
+    get_values (test_type,
+                lanes_file,
+                "protocols",
+                protocol_values,
+                debug);
+  if (result != 0 ||
+      protocol_values.size () == 0)
+    return result;
+
+  RTCORBA::ProtocolList protocols;
+  protocols.length (protocol_values.size ());
+
+  for (CORBA::ULong i = 0;
+       i < protocol_values.size ();
+       ++i)
+    {
+      protocols[i].protocol_type =
+        protocol_values[i];
+      protocols[i].transport_protocol_properties =
+        RTCORBA::ProtocolProperties::_nil ();
+      protocols[i].orb_protocol_properties =
+        RTCORBA::ProtocolProperties::_nil ();
+    }
+
+  CORBA::Policy_var protocol_policy =
+    rt_orb->create_client_protocol_policy (protocols
+                                           ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  policies.length (policies.length () + 1);
+  policies[policies.length () - 1] =
+    protocol_policy;
+
+  return 0;
+}
+
 void
 get_auto_priority_lanes_and_bands (CORBA::ULong number_of_lanes,
                                    RTCORBA::RTORB_ptr rt_orb,
@@ -244,7 +302,8 @@ get_auto_priority_lanes_and_bands (CORBA::ULong number_of_lanes,
                                    CORBA::ULong max_buffered_requests,
                                    CORBA::ULong max_request_buffer_size,
                                    CORBA::Boolean allow_borrowing,
-                                   CORBA::PolicyList &policies
+                                   CORBA::PolicyList &policies,
+                                   int debug
                                    ACE_ENV_ARG_DECL)
 {
   RTCORBA::ThreadpoolLanes lanes;
@@ -256,9 +315,10 @@ get_auto_priority_lanes_and_bands (CORBA::ULong number_of_lanes,
   CORBA::Short priority_range =
     RTCORBA::maxPriority - RTCORBA::minPriority;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "\nUsing %d lanes\n",
-              number_of_lanes));
+  if (debug)
+    ACE_DEBUG ((LM_DEBUG,
+                "\nUsing %d lanes\n",
+                number_of_lanes));
 
   for (CORBA::ULong i = 0;
        i < number_of_lanes;
@@ -283,15 +343,17 @@ get_auto_priority_lanes_and_bands (CORBA::ULong number_of_lanes,
       bands[i].high = high_priority;
       bands[i].low = low_priority;
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "%d: [%d %d] ",
-                  i + 1,
-                  low_priority,
-                  high_priority));
+      if (debug)
+        ACE_DEBUG ((LM_DEBUG,
+                    "%d: [%d %d] ",
+                    i + 1,
+                    low_priority,
+                    high_priority));
     }
 
-  ACE_DEBUG ((LM_DEBUG,
-              "\n\n"));
+  if (debug)
+    ACE_DEBUG ((LM_DEBUG,
+                "\n\n"));
 
   RTCORBA::ThreadpoolId threadpool_id =
     rt_orb->create_threadpool_with_lanes (stacksize,
@@ -317,7 +379,7 @@ get_auto_priority_lanes_and_bands (CORBA::ULong number_of_lanes,
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Array_Base<CORBA::Short>;
+template class ACE_Array_Base<CORBA::ULong>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Array_Base<CORBA::Short>
+#pragma instantiate ACE_Array_Base<CORBA::ULong>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

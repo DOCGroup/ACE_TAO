@@ -408,6 +408,33 @@ the ORB.
     </TD>
   </TR>
 
+  <TR>
+    <TD><CODE>-ORBSingleReadOptimization</CODE> <EM>boolean (0|1)</EM></TD>
+
+    <TD><A name=-ORBSingleReadOptimization></A>This option controls
+    single read optimzations when reading requests.  If this option is
+    off, the ORB will do two reads to read a request.  One to read the
+    request header and the other to read the request payload.  If this
+    option is on, the ORB will do a read of size
+    <EM>TAO_MAXBUFSIZE</EM>, hoping to read the entire request.
+    However, in this case, there is a chance of reading more than one
+    request.  If any additional requests have been read, they are
+    queued up for processing later.<p>
+
+    This option defaults to <EM>1</EM> because it can provide better
+    performance since one less read is performed.  However, in the
+    case of RT-CORBA, this option should be set to <EM>0</EM>.
+    Consider the following scenario: two requests are read from one
+    socket; the additional request is queued; a Reactor notify is
+    dispatch to awake a follower threads; at this time, new requests
+    arrive on others sockets of higher priority; however, since
+    notifies are given preferences over normal I/O, the lower priority
+    queued message will be processed before the newly arrived higher
+    priority request.
+
+    </TD>
+  </TR>
+
 </TABLE>
 </P>
 </blockquote>

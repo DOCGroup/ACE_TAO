@@ -139,6 +139,9 @@ public:
       CORBA::Exception &x
     );
 
+  /// Header length
+  virtual size_t header_length (void) const;
+
 protected:
 
   /// Processes the <GIOP_REQUEST> messages

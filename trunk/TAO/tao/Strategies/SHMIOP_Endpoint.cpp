@@ -21,6 +21,7 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const ACE_MEM_Addr &addr,
     host_ (),
     port_ (0),
     object_addr_ (addr.get_remote_addr ()),
+    object_addr_set_ (0),
     next_ (0)
 {
   this->set (addr.get_remote_addr (), use_dotted_decimal_addresses);
@@ -32,6 +33,7 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const ACE_INET_Addr &addr,
     host_ (),
     port_ (0),
     object_addr_ (addr),
+    object_addr_set_ (0),
     next_ (0)
 {
   this->set (addr, use_dotted_decimal_addresses);
@@ -44,6 +46,7 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const char *host,
     host_ (),
     port_ (port),
     object_addr_ (addr),
+    object_addr_set_ (0),
     next_ (0)
 {
   if (host != 0)
@@ -55,6 +58,7 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (void)
     host_ (),
     port_ (0),
     object_addr_ (),
+    object_addr_set_ (0),
     next_ (0)
 {
 }
@@ -66,12 +70,12 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const char *host,
     host_ (),
     port_ (port),
     object_addr_ (),
+    object_addr_set_ (0),
     next_ (0)
 {
   if (host != 0)
     this->host_ = host;
 
-  this->object_addr_.set_type (-1);
   this->priority (priority);
 }
 

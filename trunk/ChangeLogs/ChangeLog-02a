@@ -179,6 +179,15 @@ Mon Jul  1 06:21:00 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 	  value for OSIOCGIFCONF.  Thanks to John Zorko <j.zorko@att.net>
  	  for this fix.
 
+Sun Jun 30 22:22:05 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/MEM_Addr.cpp (same_host): This method was unnecessarily
+	  creating and copying both the local and remote addresses.  I
+	  changed it so that we only compare the IP addresses.
+
+	* ace/MEM_Connector.cpp (connect): Changed debugging statement to
+	  provide additional information.
+
 Sun Jun 30 15:32:47 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Based_Pointer_Repository.h:
