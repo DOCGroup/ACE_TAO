@@ -17,24 +17,24 @@ BINS="TAO/tests/ORB_init/ORB_init TAO/tests/ORB_destroy/ORB_destroy"
 
 LIBS="ace/libACE.a \
     TAO/tao/libTAO.a \
-    TAO/tao/PortableServer/libTAO_PortableServer.a \
-    TAO/tao/Strategies/libTAO_Strategies.a \
-    TAO/tao/SmartProxies/libTAO_SmartProxies.a \
-    TAO/tao/DynamicAny/libTAO_DynamicAny.a \
-    TAO/tao/DynamicInterface/libTAO_DynamicInterface.a \
-    TAO/tao/IFR_Client/libTAO_IFR_Client.a \
-    TAO/tao/BiDir_GIOP/libTAO_BiDirGIOP.a \
-    TAO/tao/Domain/libTAO_Domain.a \
-    TAO/tao/IORManipulation/libTAO_IORManip.a \
-    TAO/tao/IORTable/libTAO_IORTable.a \
-    TAO/tao/TypeCodeFactory/libTAO_TypeCodeFactory.a \
-    TAO/tao/RTCORBA/libTAO_RTCORBA.a \
-    TAO/tao/IORInterceptor/libTAO_IORInterceptor.a \
-    TAO/tao/Messaging/libTAO_Messaging.a \
-    TAO/tao/ObjRefTemplate/libTAO_ObjRefTemplate.a \
-    TAO/tao/Valuetype/libTAO_Valuetype.a \
-    TAO/tao/RTScheduling/libTAO_RTScheduler.a \
-    TAO/tao/RTPortableServer/libTAO_RTPortableServer.a"
+    TAO/tao/libTAO_PortableServer.a \
+    TAO/tao/libTAO_Strategies.a \
+    TAO/tao/libTAO_SmartProxies.a \
+    TAO/tao/libTAO_DynamicAny.a \
+    TAO/tao/libTAO_DynamicInterface.a \
+    TAO/tao/libTAO_IFR_Client.a \
+    TAO/tao/libTAO_BiDirGIOP.a \
+    TAO/tao/libTAO_Domain.a \
+    TAO/tao/libTAO_IORManip.a \
+    TAO/tao/libTAO_IORTable.a \
+    TAO/tao/libTAO_TypeCodeFactory.a \
+    TAO/tao/libTAO_RTCORBA.a \
+    TAO/tao/libTAO_IORInterceptor.a \
+    TAO/tao/libTAO_Messaging.a \
+    TAO/tao/libTAO_ObjRefTemplate.a \
+    TAO/tao/libTAO_Valuetype.a \
+    TAO/tao/libTAO_RTScheduler.a \
+    TAO/tao/libTAO_RTPortableServer.a"
 
 cd $ACE_ROOT
 
