@@ -1,3 +1,45 @@
+Fri Jul 10 17:29:25 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Mcast/Makefile: 
+	* orbsvcs/tests/EC_Mcast/svc.conf: 
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.h: 
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp: 
+	* orbsvcs/orbsvcs/Makefile: 
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h: 
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
+	  Added the first implementation of a UDP/Mcast based gateway to
+	  the EC. The current classes require a lot of manual
+	  configuration.
+	  Also implemented a small test to show the usage.
+
+	* tao/CDR.h: 
+	* tao/CDR.i: 
+	* tao/CDR.cpp: 
+	  Give access to external users of the swap_<n> methods, also
+	  provide an accesor for the byte swapping flag in OutputCDRs.
+
+	* tao/GIOP.cpp: 
+	  Use the new byte swap accessor.
+
+	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.i: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	  Completed support for gateways that are interested in the
+	  supplier list changes. It is now possible to add Gateways
+	  *after* the consumer or supplier list has stabilized.
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp: 
+	  Do nothing if receive a supplier update.
+
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp: 
+	  Destroy the Event Channel *after* the consumers unsubscribe from
+	  it.
+
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
+	* orbsvcs/Event_Service/Event_Service.cpp: 
+	  Before a normal exit we unbind the Event Service (and, if local,
+	  the Scheduling Service) from the Naming Service.
+
 Fri Jul 10 17:03:11 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp: 

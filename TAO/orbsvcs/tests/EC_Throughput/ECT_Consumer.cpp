@@ -153,12 +153,11 @@ Driver::run (int argc, char* argv[])
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-      channel->destroy (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
       this->disconnect_consumers (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
+      channel->destroy (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
   TAO_CATCH (CORBA::SystemException, sys_ex)
     {

@@ -769,13 +769,26 @@ ACE_EventChannel::report_disconnect_i (u_long event)
 }
 
 void
-ACE_EventChannel::add_gateway (TAO_EC_Gateway* gw)
+ACE_EventChannel::add_gateway (TAO_EC_Gateway* gw,
+			       CORBA::Environment& _env)
 {
   this->gwys_.insert (gw);
+
+  RtecEventChannelAdmin::ConsumerQOS c_qos;
+  RtecEventChannelAdmin::SupplierQOS s_qos;
+
+  this->consumer_module_->fill_qos (c_qos, s_qos);
+  gw->update_consumer (c_qos, s_qos, _env);
+  if (_env.exception () != 0) return;
+
+  this->supplier_module_->fill_qos (c_qos, s_qos);
+  gw->update_supplier (c_qos, s_qos, _env);
+  if (_env.exception () != 0) return;
 }
 
 void
-ACE_EventChannel::del_gateway (TAO_EC_Gateway* gw)
+ACE_EventChannel::del_gateway (TAO_EC_Gateway* gw,
+			       CORBA::Environment&)
 {
   this->gwys_.remove (gw);
 }
@@ -803,10 +816,25 @@ ACE_EventChannel::update_consumer_gwys (CORBA::Environment& _env)
 }
 
 void
-ACE_EventChannel::update_supplier_gwys (CORBA::Environment&)
+ACE_EventChannel::update_supplier_gwys (CORBA::Environment& _env)
 {
   if (this->gwys_.is_empty ())
     return;
+
+  ACE_DEBUG ((LM_DEBUG,
+	      "EC (%t) Event_Channel::update_supplier_gwys\n"));
+
+  RtecEventChannelAdmin::ConsumerQOS c_qos;
+  RtecEventChannelAdmin::SupplierQOS s_qos;
+  this->supplier_module_->fill_qos (c_qos, s_qos);
+  for (Gateway_Set_Iterator i = this->gwys_.begin ();
+       i != this->gwys_.end ();
+       ++i)
+    {
+      TAO_EC_Gateway* gw = *i;
+      gw->update_supplier (c_qos, s_qos, _env);
+      if (_env.exception () != 0) return;
+    }
 }
 
 // ****************************************************************
@@ -3051,6 +3079,8 @@ ACE_ES_Supplier_Module::connected (ACE_Push_Supplier_Proxy *supplier,
 {
   channel_->report_connect (ACE_EventChannel::SUPPLIER);
   up_->connected (supplier, _env);
+  if (!supplier->qos ().is_gateway)
+    this->channel_->update_supplier_gwys (_env);
 }
 
 void
@@ -3072,10 +3102,16 @@ ACE_ES_Supplier_Module::disconnecting (ACE_Push_Supplier_Proxy *supplier,
       channel_->report_disconnect_i (ACE_EventChannel::SUPPLIER);
     }
 
+  CORBA::Boolean dont_update = supplier->qos ().is_gateway;
+
+  // @@ TODO It would seem 
   // IMHO this release is broken: supplier is a parameter, we never
   // actually increased its reference count, so we shouldn't decrease
   // it.
   // CORBA::release (supplier);
+
+  if (!dont_update)
+    this->channel_->update_supplier_gwys (_env);
 }
 
 void
@@ -3183,6 +3219,102 @@ ACE_ES_Supplier_Module::push (ACE_Push_Supplier_Proxy *proxy,
       TAO_RETHROW;
     }
   TAO_ENDTRY;
+}
+
+void
+ACE_ES_Supplier_Module::fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos,
+                                  RtecEventChannelAdmin::SupplierQOS& s_qos)
+{
+  ACE_GUARD (ACE_ES_MUTEX, ace_mon, this->lock_);
+
+  c_qos.is_gateway = CORBA::B_TRUE;
+  s_qos.is_gateway = CORBA::B_TRUE;
+
+  int count = 0;
+  {
+    for (Supplier_Iterator i = this->all_suppliers_.begin ();
+         i != this->all_suppliers_.end ();
+         ++i)
+      {
+        ACE_Push_Supplier_Proxy *s = *i;
+
+        if (s->qos ().is_gateway)
+          continue;
+
+        count += s->qos ().publications.length ();
+      }
+  }
+
+  RtecEventChannelAdmin::DependencySet& dep = c_qos.dependencies;
+  RtecEventChannelAdmin::PublicationSet& pub = s_qos.publications;
+
+  dep.length (count + 1);
+  pub.length (count);
+
+  CORBA::ULong cc = 0;
+  CORBA::ULong sc = 0;
+  dep[cc].event.type_ = ACE_ES_DISJUNCTION_DESIGNATOR;
+  dep[cc].event.source_ = 0;
+  dep[cc].event.creation_time_ = ORBSVCS_Time::zero;
+  dep[cc].rt_info = 0;
+  cc++;
+
+  for (Supplier_Iterator i = this->all_suppliers_.begin ();
+       i != this->all_suppliers_.end ();
+       ++i)
+    {
+      ACE_Push_Supplier_Proxy *s = *i;
+
+      if (s->qos ().is_gateway)
+        continue;
+
+      CORBA::ULong count = s->qos ().publications.length ();
+      for (CORBA::ULong j = 0; j < count; ++j)
+        {
+          RtecEventComm::Event& event =
+            s->qos ().publications[j].event;
+
+          RtecEventComm::EventType type = event.type_;
+          if (type <= ACE_ES_EVENT_UNDEFINED)
+            continue;
+
+          // Only type and source dependencies are relevant, notice
+          // that we turn conjunctions into disjunctions because
+          // correlations could be satisfied by events coming from
+          // several remote ECs.
+          if (type <= ACE_ES_EVENT_UNDEFINED)
+            continue;
+
+          // If the dependency is already there we don't add it.
+          CORBA::ULong k;
+          for (k = 0; k < sc; ++k)
+            {
+              if (pub[k].event.type_ == event.type_
+                  && pub[k].event.source_ == event.source_)
+                break;
+            }
+          if (k == sc)
+            {
+              dep[cc].event.type_ = event.type_;
+              dep[cc].event.source_ = event.source_;
+              dep[cc].event.creation_time_ = ORBSVCS_Time::zero;
+              // The RT_Info is filled up later.
+              dep[cc].rt_info = 0;
+              cc++;
+
+              pub[sc].event.type_ = event.type_;
+              pub[sc].event.source_ = event.source_;
+              pub[sc].event.creation_time_ = ORBSVCS_Time::zero;
+              pub[sc].dependency_info.dependency_type =
+                RtecScheduler::TWO_WAY_CALL;
+              pub[sc].dependency_info.number_of_calls = 1;
+              pub[sc].dependency_info.rt_info = 0;
+              sc++;
+            }
+        }
+    }
+  dep.length (cc);
+  pub.length (sc);
 }
 
 // ************************************************************

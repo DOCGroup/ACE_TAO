@@ -3,6 +3,56 @@
 
 // ****************************************************************
 
+ACE_INLINE
+void CDR::swap_2 (const char *orig, char* target)
+{
+  target[1] = *orig++;
+  target[0] = *orig++;
+}
+
+ACE_INLINE
+void CDR::swap_4 (const char *orig, char* target)
+{
+  target [3] = *orig++;
+  target [2] = *orig++;
+  target [1] = *orig++;
+  target [0] = *orig++;
+}
+
+ACE_INLINE
+void CDR::swap_8 (const char *orig, char* target)
+{
+  target [7] = *orig++;
+  target [6] = *orig++;
+  target [5] = *orig++;
+  target [4] = *orig++;
+  target [3] = *orig++;
+  target [2] = *orig++;
+  target [1] = *orig++;
+  target [0] = *orig++;
+}
+
+ACE_INLINE
+void CDR::swap_16 (const char *orig, char* target)
+{
+  target [15] = *orig++;
+  target [14] = *orig++;
+  target [13] = *orig++;
+  target [12] = *orig++;
+  target [11] = *orig++;
+  target [10] = *orig++;
+  target [9] = *orig++;
+  target [8] = *orig++;
+  target [7] = *orig++;
+  target [6] = *orig++;
+  target [5] = *orig++;
+  target [4] = *orig++;
+  target [3] = *orig++;
+  target [2] = *orig++;
+  target [1] = *orig++;
+  target [0] = *orig++;
+}
+
 ACE_INLINE void
 CDR::mb_align (ACE_Message_Block* mb)
 {
@@ -280,6 +330,12 @@ TAO_OutputCDR::encode (CORBA::TypeCode_ptr tc,
   if (env.exception() == 0 && mobj != 0)
     return mobj->encode (tc, data, data2, this, env);
   return CORBA::TypeCode::TRAVERSE_STOP;
+}
+
+ACE_INLINE
+TAO_OutputCDR::do_byte_swap (void) const
+{
+  return this->do_byte_swap_;
 }
 
 // ****************************************************************
