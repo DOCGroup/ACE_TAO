@@ -1,19 +1,27 @@
+Sun May 16 20:04:09 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h: moved #include of ace/Trace.h to before #include of
+          ace/OS.i.
+
+        * ace/OS.{i,cpp}: enabled ACE_TRACE for most functions (except
+          those that are used by ACE_TRACE).
+
 Sun May 16 19:54:10 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/config-sunos5.7.h: Comments
-	* ace/config-sunos5.6.h: Comments
+        * ace/config-sunos5.7.h: Comments
+        * ace/config-sunos5.6.h: Comments
 
-	* ace/POSIX_Asynch_IO.cpp: 
-	* ace/POSIX_Proactor.h:	
-	* ace/POSIX_Proactor.cpp: - Using ACE_dynamic_cast to get
-	<ACE_POSIX_Asynch_Result *> from <aiocb *> gives build errors on
-	egcs. <ACE_reinterpret_cast> is not the correct solution for
-	this. Solved this problem by having one more list of
-	<ACE_POSIX_Asynch_Result *> so that we dont have to do any
-	casting. 
-	* ace/Proactor.cpp (ACE_Proactor): Indentation.
-	* examples/Reactor/Proactor/post_completions.cpp: Added template
-	pragma's. 
+        * ace/POSIX_Asynch_IO.cpp:
+        * ace/POSIX_Proactor.h:
+        * ace/POSIX_Proactor.cpp: - Using ACE_dynamic_cast to get
+        <ACE_POSIX_Asynch_Result *> from <aiocb *> gives build errors on
+        egcs. <ACE_reinterpret_cast> is not the correct solution for
+        this. Solved this problem by having one more list of
+        <ACE_POSIX_Asynch_Result *> so that we dont have to do any
+        casting.
+        * ace/Proactor.cpp (ACE_Proactor): Indentation.
+        * examples/Reactor/Proactor/post_completions.cpp: Added template
+        pragma's.
 
 Sun May 16 18:35:59 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
