@@ -89,7 +89,7 @@ public:
   // opened for reading.
 
   ACE_Filecache_Handle (const char *filename,
-		    int size);
+                    int size);
   // Create new entry, and acquire it.  Presence of SIZE assumes the
   // file is being opened for writing.
 
@@ -213,11 +213,6 @@ private:
 
   static ACE_Filecache *cvf_;
   // The reference to the instance
-
-  // = Synchronization variables.
-  static ACE_SYNCH_RW_MUTEX lock_;
-  static ACE_SYNCH_RW_MUTEX hash_lock_[DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE];
-  static ACE_SYNCH_RW_MUTEX file_lock_[DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE];
 };
 
 class ACE_Filecache_Object
@@ -251,7 +246,7 @@ public:
   // = error_ accessors
   int error (void) const;
   int error (int error_value,
-	     const char *s = "ACE_Filecache_Object");
+             const char *s = "ACE_Filecache_Object");
 
   const char *filename (void) const;
   // filename_ accessor
@@ -277,7 +272,7 @@ protected:
 
 private:
   int error_i (int error_value,
-	       const char *s = "ACE_Filecache_Object");
+               const char *s = "ACE_Filecache_Object");
   // Internal error logging method, no locking.
 
 public:
