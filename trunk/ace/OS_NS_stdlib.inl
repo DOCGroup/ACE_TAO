@@ -392,6 +392,8 @@ ACE_OS::system (const ACE_TCHAR *s)
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::_wsystem (s), int, -1);
+#elif defined(ACE_TANDEM_T1248_PTHREADS)
+  ACE_OSCALL_RETURN (::spt_system (s), int, -1);
 #else
   ACE_OSCALL_RETURN (::system (s), int, -1);
 #endif /* !CHORUS */
