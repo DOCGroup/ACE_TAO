@@ -81,8 +81,15 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
                          0,
                          "",
                          0);
-      if (handler->status () == JAWS_IO_Handler::TRANSMIT_OK)
-        return 0;
+      switch (handler->status ())
+        {
+        case JAWS_IO_Handler::TRANSMIT_OK:
+          return 0;
+        case JAWS_IO_Handler::TRANSMIT_ERROR:
+          return -1;
+        default:
+          return 1;
+        }
     }
 
   return -1;
