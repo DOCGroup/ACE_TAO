@@ -1,5 +1,10 @@
 Wed Dec 26 06:19:32 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* ace/Proactor.cpp: 
+	* ace/Proactor.h: The #include "ace/Proactor.i" must come inside
+	  of the #ifdefs that determine if the Proactor will be available
+	  on a particular platform.
+
 	* examples/Reactor/Misc/test_reactors.cpp: Removed a duplicate
 	  ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int> instantiation.
 
