@@ -57,7 +57,8 @@ svc_config_entry
 dynamic 
   : ACE_DYNAMIC svc_location parameters_opt
     { 
-      $$ = new ACE_Dynamic_Node ($2, $3);
+      if ($2 != 0)
+	$$ = new ACE_Dynamic_Node ($2, $3);
     }
   ;
 
@@ -184,10 +185,17 @@ module
 svc_location
   : ACE_IDENT type svc_initializer status
     {
-      unsigned int flags 
+      u_int flags 
 	= ACE_Service_Type::DELETE_THIS | ($3->dispose () == 0 ? 0 : ACE_Service_Type::DELETE_OBJ);
-      ACE_Service_Type *stp = ace_create_service_type ($1, $2, $3->symbol (), flags);
-      $$ = new ACE_Service_Record ($1, stp, $3->handle (), $4);
+      const void *sym = $3->symbol ();
+
+      if (sym != 0)
+	{
+	  ACE_Service_Type *stp = ace_create_service_type ($1, $2, $3->symbol (), flags);
+	  $$ = new ACE_Service_Record ($1, stp, $3->handle (), $4);
+	}
+      else
+	$$ = 0;
     }
   ;
 
@@ -296,7 +304,7 @@ ACE_Service_Type *
 ace_create_service_type (const char *name, 
 			 int type, 
 			 const void *symbol, 
-			 unsigned int flags)
+			 u_int flags)
 {
   ACE_Service_Type *stp = 0;
 
