@@ -18,7 +18,11 @@ class PushConsumer_impl :
 public virtual POA_RtecEventComm::PushConsumer
 {
 public:
-  PushConsumer_impl(CORBA::ORB_ptr orb, int num_iteration);
+  PushConsumer_impl();
+
+  int init(CORBA::ORB_ptr orb, int num_iterations,
+           RtecEventChannelAdmin::EventChannel_ptr,
+           const ACE_Time_Value& timer_interval ACE_ENV_ARG_DECL);
 
     virtual void push (
         const RtecEventComm::EventSet & data
