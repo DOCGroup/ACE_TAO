@@ -445,6 +445,15 @@ DRV_get_orb_idl_includes (void)
   orb_idl_path += "/orb.idl";
   FILE *fd = ACE_OS::fopen (orb_idl_path.fast_rep (), "r");
 
+  if (fd == 0) {
+    ACE_ERROR ((LM_ERROR,
+		"%s%s",
+		orb_idl_path.fast_rep (),
+		": cannot open input file\n"));
+
+    ACE_OS::exit (99);
+  }
+
   while (DRV_get_line (fd))
     {
       // Find the included .pidl files and add them to

@@ -1,3 +1,8 @@
+Tue Jul 20 21:54:00 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * TAO_IDL/driver/drv_preproc.cpp (DRV_get_orb_idl_includes):
+	  Don't crash if orb.idl file could not be opened.
+
 Tue Jul 20 15:45:43 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/corba.h:
@@ -11238,3 +11243,7 @@ Thu Jan  1 00:10:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tao/diffs/PortableInterceptor.diff:
 
           Updated the diffs.
+
+Local Variables:
+add-log-time-format: current-time-string
+End:
