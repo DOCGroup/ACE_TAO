@@ -1,10 +1,8 @@
-project (Bug_1639_testclient) : taoexe {
+project (Bug_1639_testclient) : taoserver {
    exename    = client
    includes   += $(ACE_ROOT)/include .
    requires   += exceptions
-   libpaths   += $(ACE_ROOT)/ace . $(TAO_ROOT)/tao/PortableServer $(TAO_ROOT)/tao/DynamicAny $(TAO_ROOT)/tao
-   libs       +=  ACE TAO TAO_PortableServer TAO_DynamicAny
-
+   libs       +=  TAO_DynamicAny
    Source_Files {
       struct_client.cpp
       structC.cpp
