@@ -1,3 +1,8 @@
+Wed Sep  2 22:50:30 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* utils/catior/catior.cpp (catpoop): Fixed an unused variable
+ 	  warning.  Thanks to David Levine for reporting this.
+
 Wed Sep 02 21:12:40 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.8 released.
