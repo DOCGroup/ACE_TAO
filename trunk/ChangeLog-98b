@@ -1,101 +1,106 @@
+Sun Sep 06 08:34:57 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-g++-common.h,ace/README,tests/Conn_Test.cpp:
+          renamed ACE_HAS_OLD_GNUG to ACE_HAS_GNUG_PRE_2_8.
+
 Sat Sep  5 15:31:33 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace: Removed ACE_HAS_IRIX_GETTIMEOFDAY and all of its uses
- 	  throughout ACE.  It was no longer necessary.  Thanks to Ossama
- 	  for reporting this.
+        * ace: Removed ACE_HAS_IRIX_GETTIMEOFDAY and all of its uses
+          throughout ACE.  It was no longer necessary.  Thanks to Ossama
+          for reporting this.
 
-	* ace/Synch.h: Added a "no-op" ACE_Barrier for cases where we
- 	  don't have ACE_HAS_THREADS enabled.
+        * ace/Synch.h: Added a "no-op" ACE_Barrier for cases where we
+          don't have ACE_HAS_THREADS enabled.
 
 Sat Sep  5 15:25:33 EDT 1998  James CE Johnson  <jcej@lads.com>
 
-	  docs/tutorials/index.html
-	  docs/tutorials/008/Makefile
-	  docs/tutorials/008/server.cpp
-	  docs/tutorials/008/broadcast_client.cpp
-	  docs/tutorials/008/directed_client.cpp
-	  docs/tutorials/008/page01.html
-	  docs/tutorials/008/page02.html
-	  docs/tutorials/008/page03.html
-	  docs/tutorials/008/page04.html
-	  docs/tutorials/008/page05.html
-	  docs/tutorials/008/CVS/Root
-	  docs/tutorials/008/CVS/Repository
-	  docs/tutorials/008/CVS/Entries
-	  docs/tutorials/009/Makefile
-	  docs/tutorials/009/broadcast_client.cpp
-	  docs/tutorials/009/directed_client.cpp
-	  docs/tutorials/009/server.cpp
-	  docs/tutorials/009/CVS/Root
-	  docs/tutorials/009/CVS/Repository
-	  docs/tutorials/009/CVS/Entries
+          docs/tutorials/index.html
+          docs/tutorials/008/Makefile
+          docs/tutorials/008/server.cpp
+          docs/tutorials/008/broadcast_client.cpp
+          docs/tutorials/008/directed_client.cpp
+          docs/tutorials/008/page01.html
+          docs/tutorials/008/page02.html
+          docs/tutorials/008/page03.html
+          docs/tutorials/008/page04.html
+          docs/tutorials/008/page05.html
+          docs/tutorials/008/CVS/Root
+          docs/tutorials/008/CVS/Repository
+          docs/tutorials/008/CVS/Entries
+          docs/tutorials/009/Makefile
+          docs/tutorials/009/broadcast_client.cpp
+          docs/tutorials/009/directed_client.cpp
+          docs/tutorials/009/server.cpp
+          docs/tutorials/009/CVS/Root
+          docs/tutorials/009/CVS/Repository
+          docs/tutorials/009/CVS/Entries
 
-	  Began the next set of tutorials on the topic of Datagrams.
+          Began the next set of tutorials on the topic of Datagrams.
 
 Fri Sep  4 18:56:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Name_Proxy.cpp: 
-	  Fixed spurious double assignment (int foo = foo = bar;), thanks
-	  to thanks to John Mulhern <9107@mn3.lawson.lawson.com> for
-	  reporting this.
+        * ace/Name_Proxy.cpp:
+          Fixed spurious double assignment (int foo = foo = bar;), thanks
+          to thanks to John Mulhern <9107@mn3.lawson.lawson.com> for
+          reporting this.
 
 Fri Sep 04 18:54:32 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Select_Reactor_T.cpp (ACE_Select_Reactor_T): Made sure that
- 	  all references to Select_Reactor have the template argument in
- 	  them.  Thanks to "Gehr, Chuck R" <GehrCR@LOUISVILLE.STORTEK.COM>
- 	  for sending the patches.
+        * ace/Select_Reactor_T.cpp (ACE_Select_Reactor_T): Made sure that
+          all references to Select_Reactor have the template argument in
+          them.  Thanks to "Gehr, Chuck R" <GehrCR@LOUISVILLE.STORTEK.COM>
+          for sending the patches.
 
 Fri Sep  4 18:29:29 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* examples/Reactor/Proactor/test_proactor.cpp: Changed to use
-	"test_proactor.cpp" as input file. 
+        * examples/Reactor/Proactor/test_proactor.cpp: Changed to use
+        "test_proactor.cpp" as input file.
 
 Fri Sep  4 17:51:17 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/Proactor.cpp:
-	* ace/Asynch_Acceptor.cpp:
- 	* ace/Asynch_Acceptor.h:
- 	* ace/Asynch_IO.cpp:
-	* examples/Reactor/Proactor/test_proactor.cpp:
-		First round of changes for ACE_Asynch_Accept. Makes use of
-	separate thread  for each accept call, each thread blocking on the
-	ACE_OS::accept. Thanks to Irfan, a better implementation using
-	TP_Reactor is currently being done. 
+        * ace/Proactor.cpp:
+        * ace/Asynch_Acceptor.cpp:
+        * ace/Asynch_Acceptor.h:
+        * ace/Asynch_IO.cpp:
+        * examples/Reactor/Proactor/test_proactor.cpp:
+                First round of changes for ACE_Asynch_Accept. Makes use of
+        separate thread  for each accept call, each thread blocking on the
+        ACE_OS::accept. Thanks to Irfan, a better implementation using
+        TP_Reactor is currently being done.
 
 Fri Sep  4 16:45:36 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace: Removed all traces of ACE_HAS_MT_SAFE_SOCKETS -- this was a
- 	  vestige from Solaris 2.2!  Thanks to Ossama Othman
- 	  <othman@astrosun.tn.cornell.edu> for suggesting this.
+        * ace: Removed all traces of ACE_HAS_MT_SAFE_SOCKETS -- this was a
+          vestige from Solaris 2.2!  Thanks to Ossama Othman
+          <othman@astrosun.tn.cornell.edu> for suggesting this.
 
-	* ace/Service_Config: Changed the default value of
- 	  ACE_Service_Config::debug_ from 1 to 0.  Thus, debugging is
- 	  DISABLED by default.  If you want to enable debugging, pass the
- 	  -d option to the constructor of ACE_Service_Config.
+        * ace/Service_Config: Changed the default value of
+          ACE_Service_Config::debug_ from 1 to 0.  Thus, debugging is
+          DISABLED by default.  If you want to enable debugging, pass the
+          -d option to the constructor of ACE_Service_Config.
 
-	* ace/Naming_Context.cpp,
-	  ace/Service_Config.cpp,
-	  ace/Service_Types.cpp,
-	  ace/Service_Repository.cpp: Now we only print out service config
- 	  information if we're ACE::debug() is non-0.  This is more
- 	  consistent with other parts of ACE.  Thanks to XuYifeng
- 	  <xuyf@pop.zg169.net> for reporting this.
+        * ace/Naming_Context.cpp,
+          ace/Service_Config.cpp,
+          ace/Service_Types.cpp,
+          ace/Service_Repository.cpp: Now we only print out service config
+          information if we're ACE::debug() is non-0.  This is more
+          consistent with other parts of ACE.  Thanks to XuYifeng
+          <xuyf@pop.zg169.net> for reporting this.
 
-	* ace/Service_Config: Moved the debug() stuff from here and put it
- 	  into class ACE so that it will be more globally visible.
+        * ace/Service_Config: Moved the debug() stuff from here and put it
+          into class ACE so that it will be more globally visible.
 
 Fri Sep 04 15:24:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ACE.i: Here, we should use ASYS_INLINE which is always
-	  defined as inline on most platforms.
+        * ace/ACE.i: Here, we should use ASYS_INLINE which is always
+          defined as inline on most platforms.
 
-	* ace/Log_Msg.h (ACE_Log_Msg): Added a new ACE_DEBUG format
-	  character 'A' which prints out an ACE_timer_t value.  This is
-	  most useful when you want to print out the timers in
-	  ACE_Profile_Timer::ACE_Elapse_Time.  Thanks to Naga for
-	  providing the brilliant idea.
-	  
+        * ace/Log_Msg.h (ACE_Log_Msg): Added a new ACE_DEBUG format
+          character 'A' which prints out an ACE_timer_t value.  This is
+          most useful when you want to print out the timers in
+          ACE_Profile_Timer::ACE_Elapse_Time.  Thanks to Naga for
+          providing the brilliant idea.
+
         * tests/XtReactor_Test.cpp (main): Removed '.cpp' from
           ACE_START_TEST title string.  Thanks to Ossama for reporting
           this.
