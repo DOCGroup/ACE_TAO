@@ -1,3 +1,9 @@
+Mon May  8 14:37:32 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Task.h: Cleaned up the documentation so that it will
+	  work correctly with class2man.  Thanks to Charlie Duke
+ 	  <cduke@www.cuseemeworld.com> for reporting this.
+
 Mon May 08 22:56:28 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * ACE version 5.1.2 released.
