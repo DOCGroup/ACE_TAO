@@ -600,7 +600,6 @@ protected:
    */
   int is_preserve_designator (ACE_TCHAR start, ACE_TCHAR &stop, int &strip);
 
-private:
   ACE_TCHAR *buffer_;
   int index_;
 

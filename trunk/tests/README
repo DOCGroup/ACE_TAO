@@ -1,9 +1,11 @@
 $Id$
 
-This directory contains a battery of tests that exercise all the
-functionality of ACE on Win32 and UNIX.  These tests can be executed
-in a single pass via a shell script run_tests.sh (on UNIX) or a batch
-file run_tests.bat (on Win32).
+This directory contains a battery of tests that exercise many
+capabilities of ACE on the numerous platforms upon which it runs.  In
+addition to providing an automated regression testing facility, these
+tests also illustrate how to program many of the ACE features.  The
+tests can be executed in a single pass via a shell script run_tests.sh
+(on UNIX) or a batch file run_tests.bat (on Win32).
 
 By default, all the output from the tests will be stored in separate
 files in the ./log/ (or .\log\) directory.  However, you can override
@@ -16,15 +18,21 @@ Please follow these directions when adding a new test to
 $ACE_ROOT/tests:
 
 1.  Use appropriate ACE_START_TEST and ACE_END_TEST macros in main ()
+
 2.  Add test to Makefile
-3.  Add test to MS project files (tests.dsp and version_tests/version_tests.dsp)
+
+3.  Add test to MS project files (tests.dsp and
+    version_tests/version_tests.dsp)
+
 4.  Add test to all or most of these:
 
     run_tests.bat, run_tests.psosim, run_tests.sh, and run_tests.vxworks.
 ________________________________________
 
-The tests have been run on UNIX, pSOS, Windows NT, and Windows 95 and they
-all work with the following exceptions:
+
+The tests have been run on a wide range of platforms (e.g., UNIX,
+pSOS, VxWorks, LynxOS, Windows NT/2000/95/98/etc.) and they all work
+with the following exceptions:
 
 1. Name_Server_Test on Windows 95: this does not work on Windows 95
    since Windows 95 has a different model for shared memory and does
@@ -71,13 +79,13 @@ Notes:
    UNIXserver.conf and UNIXclerk.conf (and for Win32, Win32server.conf
    and Win32clerk.conf).
 
-Please see run_tests.vxworks for information on the status of
-tests on VxWorks.
+Please see run_tests.vxworks for information on the status of tests on
+VxWorks.
 
-Please see run_tests.psosim for information on the status of tests on pSOSim.
-Run_tests.psosim is an executable shell script that runs all tests that are
-(believed) relevant to the single threaded port to pSOSim.
-
+Please see run_tests.psosim for information on the status of tests on
+pSOSim.  Run_tests.psosim is an executable shell script that runs all
+tests that are (believed) relevant to the single threaded port to
+pSOSim.
 
 If you have any questions/suggestions, please send email to
 ace-users@cs.wustl.edu.
