@@ -141,7 +141,7 @@ typedef ACE_Singleton<JAWS_Synch_IO, ACE_SYNCH_MUTEX>
 // This only works on Win32
 #if defined (ACE_WIN32)
 
-class JAWS_Asynch_IO : public JAWS_IO, public ACE_Handler
+class JAWS_Asynch_IO : public JAWS_IO
   // = TITLE
   //
   //     This class defines the interface for a Asynchronous I/O class.
