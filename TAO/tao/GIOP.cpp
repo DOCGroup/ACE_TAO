@@ -157,7 +157,7 @@ operator<< (TAO_OutputCDR &cdr,
 
   cdr.write_ulong (length);
 
-  for (CORBA::ULong i = 0; 
+  for (CORBA::ULong i = 0;
        i < length && cdr.good_bit ();
        ++i)
     cdr << x[i];
@@ -267,8 +267,8 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
       // iovec, there we should set TAO_WRITEV_MAX to that limit.
       if (iovcnt == TAO_WRITEV_MAX)
         {
-          ssize_t n = this->peers.sendv_n (iov,
-                                           iovcnt);
+          ssize_t n = peer.send_n (iov,
+                                   iovcnt);
           if (n == -1)
             {
               if (TAO_orbdebug)
@@ -296,8 +296,8 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
 
   if (iovcnt != 0)
     {
-      ssize_t n = this->peer.sendv_n (iov,
-                                      iovcnt);
+      ssize_t n = peer.send_n (iov,
+                               iovcnt);
       if (n == -1)
         {
           if (TAO_orbdebug)
@@ -482,7 +482,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
   if (CDR::grow (&msg.start_,
                  header_len) == -1)
     // This should probably be an exception.
-    return TAO_GIOP::CommunicationError; 
+    return TAO_GIOP::CommunicationError;
 
   char *header = msg.start_.rd_ptr ();
   ssize_t len = TAO_GIOP::read_buffer (connection,
@@ -537,7 +537,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
 			      orb_core) == -1)
     {
       TAO_GIOP::send_error (handler);
-      return TAO_GIOP::EndOfFile; 
+      return TAO_GIOP::EndOfFile;
       // We didn't really receive anything useful here.
     }
 
@@ -616,7 +616,7 @@ TAO_GIOP::parse_header_std (TAO_InputCDR &cdr,
 			    CORBA::ULong &message_size)
 {
   char *header = cdr.start_.rd_ptr ();
-  
+
   if (!(header [0] == 'G'
         && header [1] == 'I'
         && header [2] == 'O'
@@ -663,7 +663,7 @@ TAO_GIOP::parse_header_lite (TAO_InputCDR &cdr,
   do_byte_swap = 0;
 
   char *header = cdr.start_.rd_ptr ();
-  
+
   // Get the message type out and adjust the buffer's records to
   // record that we've read everything except the length.
   message_type = (TAO_GIOP::Message_Type) header[4];
@@ -716,7 +716,7 @@ TAO_GIOP::start_message_std (TAO_GIOP::Message_Type type,
   // if (msg.size () < TAO_GIOP_HEADER_LEN)
   // return 0;
 
-  static CORBA::Octet header[] = 
+  static CORBA::Octet header[] =
   {
     'G', 'I', 'O', 'P',
     TAO_GIOP_MessageHeader::MY_MAJOR,
@@ -765,30 +765,30 @@ TAO_GIOP::start_message (TAO_GIOP::Message_Type type,
     return TAO_GIOP::start_message_std (type, msg);
 }
 
-const char * 
-TAO_GIOP::message_name (TAO_GIOP::Message_Type which) 
-{ 
-  static const char *msgnames[] = 
-  { 
-    "EndOfFile (nonstd)", 
-    "Request (client)", 
-    "Reply (server)", 
-    "CancelRequest (client)", 
-    "LocateRequest (client)", 
-    "LocateReply (server)", 
-    "CloseConnection (server)", 
-    "MessageError (either)" 
-  }; 
- 
-  int i = (int) which + 1; 
-  // Add one since EndOfFile is -1. 
- 
-  if (i > (int) (sizeof (msgnames) / sizeof (msgnames[0]))) 
-    return "<Bad Value!>"; 
-  else 
-    return msgnames[i]; 
-} 
- 
+const char *
+TAO_GIOP::message_name (TAO_GIOP::Message_Type which)
+{
+  static const char *msgnames[] =
+  {
+    "EndOfFile (nonstd)",
+    "Request (client)",
+    "Reply (server)",
+    "CancelRequest (client)",
+    "LocateRequest (client)",
+    "LocateReply (server)",
+    "CloseConnection (server)",
+    "MessageError (either)"
+  };
+
+  int i = (int) which + 1;
+  // Add one since EndOfFile is -1.
+
+  if (i > (int) (sizeof (msgnames) / sizeof (msgnames[0])))
+    return "<Bad Value!>";
+  else
+    return msgnames[i];
+}
+
 TAO_GIOP_ReplyStatusType
 TAO_GIOP::convert_CORBA_to_GIOP_exception (CORBA::ExceptionType corba_type)
 {
