@@ -33,7 +33,7 @@ TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (const ACE_MEM_Addr &addr,
                                         const TAO_GIOP_Version &version,
                                         TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_SHMEM_PROFILE, orb_core, version),
-    endpoint_ (addr, 
+    endpoint_ (addr,
                orb_core->orb_params ()->use_dotted_decimal_addresses ()),
     count_ (1),
     endpoints_encoded_ (0),
@@ -306,8 +306,6 @@ TAO_SHMIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
   const TAO_SHMIOP_Profile *op =
     ACE_dynamic_cast (const TAO_SHMIOP_Profile *, other_profile);
 
-  ACE_ASSERT (op->object_key_.length () < UINT_MAX);
-
   if (!(this->object_key_ == op->object_key_
         && this->version_ == op->version_
         && this->count_ == op->count_))
@@ -315,7 +313,7 @@ TAO_SHMIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
 
   // Check endpoints equivalence.
   // @@ Are we guaranteed that the endpoints in both profiles will be
-  // in the same order?   
+  // in the same order?
   const TAO_SHMIOP_Endpoint *other_endp = &op->endpoint_;
   for (TAO_SHMIOP_Endpoint *endp = &this->endpoint_;
        endp != 0;
@@ -497,7 +495,7 @@ TAO_SHMIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
   encap << this->object_key_;
 
   // Encode profile endpoints.
-  TAO_SHMIOP_Profile *p = 
+  TAO_SHMIOP_Profile *p =
     ACE_const_cast (TAO_SHMIOP_Profile *, this);
   if (!endpoints_encoded_)
     p->encode_endpoints ();
@@ -515,14 +513,14 @@ TAO_SHMIOP_Profile::encode_endpoints (void)
   endpoints.length (this->count_);
 
   TAO_SHMIOP_Endpoint *endpoint = &this->endpoint_;
-  for (size_t i = 0; 
+  for (size_t i = 0;
        i < this->count_;
        ++i)
     {
       endpoints[i].host = endpoint->host ();
       endpoints[i].port = endpoint->port ();
       endpoints[i].priority = endpoint->priority ();
-      
+
       endpoint = endpoint->next_;
     }
 
@@ -535,7 +533,7 @@ TAO_SHMIOP_Profile::encode_endpoints (void)
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO_TAG_ENDPOINTS;
   tagged_component.component_data.length (length);
-  CORBA::Octet *buf = 
+  CORBA::Octet *buf =
     tagged_component.component_data.get_buffer ();
 
   for (const ACE_Message_Block *iterator = out_cdr.begin ();
@@ -566,26 +564,26 @@ TAO_SHMIOP_Profile::decode_endpoints (void)
     {
       const CORBA::Octet *buf =
         tagged_component.component_data.get_buffer ();
-      
+
       TAO_InputCDR in_cdr (ACE_reinterpret_cast (const char*, buf),
                            tagged_component.component_data.length ());
-      
+
       // Extract the Byte Order.
       CORBA::Boolean byte_order;
       if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
         return 0;
       in_cdr.reset_byte_order (ACE_static_cast(int, byte_order));
-      
+
       // Extract endpoints sequence.
       TAO_IIOPEndpointSequence endpoints;
       in_cdr >> endpoints;
-      
+
       // Get the priority of the first endpoint.  It's other data is
       // extracted as part of the standard iiop decoding.
       this->endpoint_.priority (endpoints[0].priority);
 
       // Start with the second endpoint, because the first endpoint is
-      // always extracted through standard iiop profile body. 
+      // always extracted through standard iiop profile body.
       for (CORBA::ULong i = 1; i < endpoints.length (); ++i)
         {
           TAO_SHMIOP_Endpoint *endpoint = 0;
