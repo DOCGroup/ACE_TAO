@@ -1,3 +1,10 @@
+Sun Oct  4 19:48:25 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp: 
+	  Exceptions were not beign transmitted from the server back to
+	  the client.  We need to rethink the use of two environments in
+	  the skeleton.
+
 Sun Oct  4 16:37:23 1998  Carlos O'Ryan  <coryan@tango.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
