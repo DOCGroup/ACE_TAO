@@ -24,7 +24,7 @@ pace_cfgetospeed (const struct termios *termiosp)
 
 PACE_INLINE
 int
-pace_cfsetospeed (struct termios *termios_p, speed_t speed)
+pace_cfsetospeed (struct termios *termios_p, pace_speed_t speed)
 {
   return cfsetospeed (termios_p, speed);
 }
@@ -38,7 +38,7 @@ pace_cfgetispeed (const struct termios *termios_p)
 
 PACE_INLINE
 int
-pace_cfsetispeed (struct termios *termios_p, speed_t speed)
+pace_cfsetispeed (struct termios *termios_p, pace_speed_t speed)
 {
   return cfsetispeed (termios_p, speed);
 }
@@ -72,13 +72,6 @@ pace_tcflush (int fildes, int queue_selector)
 }
 
 PACE_INLINE
-pid_t
-pace_tcgetpgrp (int fildes)
-{
-  return tcgetpgrp (fildes);
-}
-
-PACE_INLINE
 int
 pace_tcsendbreak (int fildes, int duration)
 {
@@ -92,11 +85,4 @@ pace_tcsetattr (int fildes,
                 const struct termios *termios_p)
 {
   return tcsetattr (fildes, optional_actions, termios_p);
-}
-
-PACE_INLINE
-int
-pace_tcsetpgrp (int fildes, pid_t pgrp_id)
-{
-  return tcsetpgrp (fildes, pgrp_id);
 }

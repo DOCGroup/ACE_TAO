@@ -23,13 +23,33 @@
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS) */
 
+#ifndef PACE_CC_T
+#define PACE_CC_T
+typedef cc_t pace_cc_t;
+#endif /* PACE_CC_T */
+
+#ifndef PACE_SPEED_T
+#define PACE_SPEED_T
+typedef speed_t pace_speed_t;
+#endif /* PACE_SPEED_T */
+
+#ifndef PACE_TCFLAG_T
+#define PACE_TCFLAG_T
+typedef tcflag_t pace_tcflag_t;
+#endif /* PACE_TCFLAG_T */
+
+#ifndef PACE_TERMIOS
+#define PACE_TERMIOS
+typedef struct termios pace_termios;
+#endif /* PACE_TERMIOS */
+
   PACE_INLINE speed_t pace_cfgetospeed (const struct termios * termiosp);
 
-  PACE_INLINE int pace_cfsetospeed (struct termios * termios_p, speed_t speed);
+  PACE_INLINE int pace_cfsetospeed (struct termios * termios_p, pace_speed_t speed);
 
   PACE_INLINE speed_t pace_cfgetispeed (const struct termios * termios_p);
 
-  PACE_INLINE int pace_cfsetispeed (struct termios * termios_p, speed_t speed);
+  PACE_INLINE int pace_cfsetispeed (struct termios * termios_p, pace_speed_t speed);
 
   PACE_INLINE int pace_tcdrain (int fildes);
 
@@ -39,15 +59,11 @@ extern "C" {
 
   PACE_INLINE int pace_tcgetattr (int fildes, struct termios * termios_p);
 
-  PACE_INLINE pid_t pace_tcgetpgrp (int fildes);
-
   PACE_INLINE int pace_tcsendbreak (int fildes, int duration);
 
   PACE_INLINE int pace_tcsetattr (int fildes,
                                   int optional_actions,
                                   const struct termios * termios_p);
-
-  PACE_INLINE int pace_tcsetpgrp (int fildes, pid_t pgrp_id);
 
 #if defined (PACE_HAS_CPLUSPLUS)
 }
