@@ -128,7 +128,7 @@ cat_octet_seq (const char *object_name,
 
 static CORBA::Boolean
 catior (char* str,
-        CORBA::Environment &env)
+        CORBA::Environment &)
 {
   // Unhex the bytes, and make a CDR deencapsulation stream from the
   // resulting data.
