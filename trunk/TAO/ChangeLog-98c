@@ -1,26 +1,32 @@
+Thu Jun 18 14:07:57 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/start_services: use port 0, and use the -o and
+          -p Naming_Service options.  Thanks to Carlos for these
+          suggestions.
+
 Thu Jun 18 12:07:32 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* tests/Quoter/{Factory_Finder, Generic_Factory}_Impl.cpp:
-	  removed unneccessary code.
+        * tests/Quoter/{Factory_Finder, Generic_Factory}_Impl.cpp:
+          removed unneccessary code.
 
-	* orbsvcs/LifeCycle_Service/LifeCycle_Service_Impl.cpp:
-	  removed unneccessary code.
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service_Impl.cpp:
+          removed unneccessary code.
 
 1998-06-18  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
-	* orbsvcs/tests/Concurrency/CC_command.tab.cpp
-	  orbsvcs/tests/Concurrency/Makefile
-	  Now the yacc generated file is patched too.
+        * orbsvcs/tests/Concurrency/CC_command.tab.cpp
+          orbsvcs/tests/Concurrency/Makefile
+          Now the yacc generated file is patched too.
 
 Thu Jun 18 11:38:32 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* orbscvs/tests/AVStreams/server_discovery/TS_Resolve.java:
-	* orbscvs/tests/AVStreams/server_discovery/Property_Evaluator.java:
-	* orbscvs/tests/AVStreams/server_discovery/Discover_Server.java:
-	* orbscvs/tests/AVStreams/server_discovery/Makefile:
-	* orbsvcs/tests/AVStreams/server_discovery/remote_netscape:
-	The beginnings of a Java tool to locate a best matched server for
-	the A/V demo's client using the Trading Service.
+        * orbscvs/tests/AVStreams/server_discovery/TS_Resolve.java:
+        * orbscvs/tests/AVStreams/server_discovery/Property_Evaluator.java:
+        * orbscvs/tests/AVStreams/server_discovery/Discover_Server.java:
+        * orbscvs/tests/AVStreams/server_discovery/Makefile:
+        * orbsvcs/tests/AVStreams/server_discovery/remote_netscape:
+        The beginnings of a Java tool to locate a best matched server for
+        the A/V demo's client using the Trading Service.
 
 
 1998-06-18  Torben Worm  <tworm@cumbia.cs.wustl.edu>
