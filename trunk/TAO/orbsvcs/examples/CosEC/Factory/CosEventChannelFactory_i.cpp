@@ -334,9 +334,13 @@ TAO_CosEventChannelFactory_i::find_channel_id
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class CosEC_Utility_Methods<CORBA::Object>;
+template class auto_ptr <CosEC_ServantBase>;
+template class ACE_Auto_Basic_Ptr <CosEC_ServantBase>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate CosEC_Utility_Methods<CORBA::Object>
+#pragma instantiate auto_ptr <CosEC_ServantBase>
+#pragma instantiate  ACE_Auto_Basic_Ptr <CosEC_ServantBase>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
