@@ -26,7 +26,7 @@ module Bug1495_Regression
         void get_thread_id (out long thread_id);
         // get the thread id of the thread that services this request.
 
-        void shutdown ();
+        oneway void shutdown ();
         // Shutdown the ORB.
     };
 };
