@@ -560,9 +560,9 @@ server_endpoint::block_for_connection (
 	    // Delete records for connections that were closed and
 	    // which nobody is using.
 	    //
-	    if (list->fd < 0) {
-		if (list->refcount != 0)
-		    continue;
+      if (list->fd == ACE_INVALID_HANDLE) {
+         if (list->refcount != 0)
+            continue;
 
 		assert (previous != 0);		// passive must exist!
 
@@ -589,6 +589,7 @@ server_endpoint::block_for_connection (
 		    list->refcount++;
 		    return list;
 		}
+
 #if defined(_WIN32)
 #  define FDSET_CAST (SOCKET)
 #else
