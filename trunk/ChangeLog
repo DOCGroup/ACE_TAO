@@ -1,3 +1,15 @@
+Tue Apr  1 13:42:37 CEST 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* tests/Unbounded_Set_Test_Ex.cpp: New.
+
+	  This is a replica of Unbounded_Set_Test.cpp but uses the new
+	  ACE_Unbounded_Set_Ex class instead of ACE_Unbounded_Set.
+	  This is for side-by-side comparisons between the two tests.
+
+	* tests/Makefile: Added Unbounded_Set_Test_Ex, updated dependencies.
+
+	* tests/Makefile.{am,bor}: Added Unbounded_Set_Test_Ex.
+
 Tue Apr  1 12:48:33 CEST 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
 	* ace/Node.{h,cpp}:
