@@ -1,65 +1,71 @@
+Thu Jul 15 21:32:26 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/create_ace_build: removed # -*- perl -*- on first
+          line so that t/csh users don't trip over it.  Thanks
+          to Irfan for reporting this.
+
 Thu Jul 15 20:23:39 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Cached_Conn_Test.cpp (test_connection_management): Changed
-	  the test to allow for both one listen endpoint or multiple
-	  listen endpoints.
+        * tests/Cached_Conn_Test.cpp (test_connection_management): Changed
+          the test to allow for both one listen endpoint or multiple
+          listen endpoints.
 
-	* ace/Cached_Connect_Strategy_T.cpp:
-	* ace/Strategies_T.cpp
+        * ace/Cached_Connect_Strategy_T.cpp:
+        * ace/Strategies_T.cpp
 
-	  - find: Since the comparison of
-	    REFCOUNTED_HASH_RECYCLABLE_ADDRESS doesn't work very well when
-	    trying to find an idle connection (because there are many idle
-	    states), we now use the new backet iterator to find a idle
-	    connection.
+          - find: Since the comparison of
+            REFCOUNTED_HASH_RECYCLABLE_ADDRESS doesn't work very well when
+            trying to find an idle connection (because there are many idle
+            states), we now use the new backet iterator to find a idle
+            connection.
 
-	  - check_hint_i: Explicitly checks for idleness; previously it
-	    was simple checking !closed.
+          - check_hint_i: Explicitly checks for idleness; previously it
+            was simple checking !closed.
 
-	* ace/Strategies.h (ACE_Recyclable): Changed ACE_Recyclable::State
-	  to ACE_Recyclable_State.
+        * ace/Strategies.h (ACE_Recyclable): Changed ACE_Recyclable::State
+          to ACE_Recyclable_State.
 
-	* ace/Strategies_T.h (ACE_Refcounted_Hash_Recyclable):
+        * ace/Strategies_T.h (ACE_Refcounted_Hash_Recyclable):
 
-	  - Added operator!=(ACE_Refcounted_Hash_Recyclable<T>)
-	  - Removed operator==(T)
-	  - Added T &subject()
-	  - Change operator==(ACE_Refcounted_Hash_Recyclable<T>) to check
-	    for equality in state and subject.
+          - Added operator!=(ACE_Refcounted_Hash_Recyclable<T>)
+          - Removed operator==(T)
+          - Added T &subject()
+          - Change operator==(ACE_Refcounted_Hash_Recyclable<T>) to check
+            for equality in state and subject.
 
-	* ace/Caching_Utility_T.cpp (minimum): Entries marked
-	  ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE should also be considered
-	  for purging.
+        * ace/Caching_Utility_T.cpp (minimum): Entries marked
+          ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE should also be considered
+          for purging.
 
-	* ace/Cleanup_Strategies_T.cpp (cleanup): The hash map of the
-	  connection cache may contain duplicates.  Therefore, we are not
-	  exactly sure which map entry will be removed when calling
-	  unbind().  Therefore, we use the other unbind() which gives us
-	  back the value of the entry that was removed.  This way will
-	  close the correct handler.
+        * ace/Cleanup_Strategies_T.cpp (cleanup): The hash map of the
+          connection cache may contain duplicates.  Therefore, we are not
+          exactly sure which map entry will be removed when calling
+          unbind().  Therefore, we use the other unbind() which gives us
+          back the value of the entry that was removed.  This way will
+          close the correct handler.
 
-	* ace/Svc_Handler.cpp (state): Added a new method that allows the
-	  user to explcitly set the state of the Svc_Handler. If the
-	  Svc_Handler does not have a recycler, this method will have no
-	  effect.
+        * ace/Svc_Handler.cpp (state): Added a new method that allows the
+          user to explcitly set the state of the Svc_Handler. If the
+          Svc_Handler does not have a recycler, this method will have no
+          effect.
 
 Thu Jul 15 16:39:06 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* Makefile:
-	* NEWS:
+        * Makefile:
+        * NEWS:
 
-	  The NEWS file is no longer a generated file so it was added to
-	  the list of controlled files.
+          The NEWS file is no longer a generated file so it was added to
+          the list of controlled files.
 
 Thu Jul 15 16:20:43 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Service_Manager.cpp (init): Check to see the acceptor handle
-	  is ACE_INVALID_HANDLE before the actual initialization to
-	  prevent this service from being initialized twice.
-	  (fini): Must call remove_handler with
-	  ACE_Event_Handler::DONT_CALL since the service manager won't be
-	  around when the reactor is being destroyed.  Thanks to Gheorghe
-	  Aprotosoaie <gaprotosoaie@paragonms.com> for reporting this.
+        * ace/Service_Manager.cpp (init): Check to see the acceptor handle
+          is ACE_INVALID_HANDLE before the actual initialization to
+          prevent this service from being initialized twice.
+          (fini): Must call remove_handler with
+          ACE_Event_Handler::DONT_CALL since the service manager won't be
+          around when the reactor is being destroyed.  Thanks to Gheorghe
+          Aprotosoaie <gaprotosoaie@paragonms.com> for reporting this.
 
 Thu Jul 15 16:26:28 1999  David L. Levine  <levine@cs.wustl.edu>
 
