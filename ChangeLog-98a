@@ -1,13 +1,18 @@
+Wed Apr 29 12:25:05 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-lynxos.h: added ACE_POLL_IS_BROKEN so that
+          ACE_OS::sleep () uses select () instead of poll ().
+
 Tue Apr 28 23:08:10 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Hash_Map_Manager.cpp: Bugs fixed.
+        * ace/Hash_Map_Manager.cpp: Bugs fixed.
 
-	* tests/Map_Manager_Test.cpp: Added assertion tests on the number
-	  of iterations to ensure the test does run correctly.
+        * tests/Map_Manager_Test.cpp: Added assertion tests on the number
+          of iterations to ensure the test does run correctly.
 
-	* tests/Map_Manager_Test.cpp (main): Disabled the VERBOSE_LITE
-	  Log_Msg flag before starting the real test and reenabled it
-	  after the tests.
+        * tests/Map_Manager_Test.cpp (main): Disabled the VERBOSE_LITE
+          Log_Msg flag before starting the real test and reenabled it
+          after the tests.
 
 Tue Apr 28 06:49:50 1998  David L. Levine  <levine@cs.wustl.edu>
 
