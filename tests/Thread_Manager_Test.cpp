@@ -43,7 +43,7 @@ handler (int signum)
   if (signal_catcher)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) received signal %d, signaled = %d\n",
+                  ASYS_TEXT ("(%t) received signal %d, signaled = %d\n"),
                   signum,
                   (*signal_catcher)->signaled ()));
       (*signal_catcher)->signaled (1);
@@ -61,7 +61,7 @@ worker (int iterations)
   if (!signal_catcher)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) (worker): signal catcher is 0!!!!\n"));
+                  ASYS_TEXT ("(%t) (worker): signal catcher is 0!!!!\n")));
       return (void *) -1;
     }
 
@@ -70,7 +70,7 @@ worker (int iterations)
   if (my_signal_catcher == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) (worker): *signal catcher is 0!!!!\n"));
+                  ASYS_TEXT ("(%t) (worker): *signal catcher is 0!!!!\n")));
       return (void *) -1;
     }
 
@@ -81,7 +81,7 @@ worker (int iterations)
   thread_start->wait ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) worker starting loop\n"));
+              ASYS_TEXT ("(%t) worker starting loop\n")));
 
   for (int i = 0; i < iterations; i++)
     {
@@ -94,7 +94,7 @@ worker (int iterations)
               thr_mgr->testcancel (ACE_Thread::self ()) != 0)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "(%t) has been cancelled before iteration %d!\n",
+                          ASYS_TEXT ("(%t) has been cancelled before iteration %d!\n"),
                           i));
               break;
             }
@@ -119,9 +119,9 @@ template class ACE_TSS<Signal_Catcher>;
 #endif /* ACE_HAS_THREADS */
 
 int
-main (int, char *[])
+main (int, ASYS_TCHAR *[])
 {
-  ACE_START_TEST ("Thread_Manager_Test");
+  ACE_START_TEST (ASYS_TEXT ("Thread_Manager_Test"));
 
 #if defined (ACE_HAS_THREADS)
   int n_threads = DEFAULT_THREADS;
@@ -153,7 +153,7 @@ main (int, char *[])
 #if !defined (ACE_HAS_PTHREADS) && !defined (ACE_HAS_DCETHREADS)
   // Wait for 1 second and then suspend every thread in the group.
   ACE_OS::sleep (1);
-  ACE_DEBUG ((LM_DEBUG, "(%t) suspending group\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) suspending group\n")));
 
   ACE_ASSERT (thr_mgr->suspend_grp (grp_id) != -1);
 
@@ -161,7 +161,7 @@ main (int, char *[])
   // group.
   ACE_OS::sleep (ACE_Time_Value (1));
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) resuming group\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) resuming group\n")));
 
   ACE_ASSERT (thr_mgr->resume_grp (grp_id) != -1);
 #endif /* ! ACE_HAS_PTHREADS && ! ACE_HAS_DCETHREADS */
@@ -170,7 +170,7 @@ main (int, char *[])
   // the group.
   ACE_OS::sleep (ACE_Time_Value (1));
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) signaling group\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) signaling group\n")));
 
 #if defined (ACE_HAS_WTHREADS)
   thr_mgr->kill_grp (grp_id, SIGINT);
@@ -181,14 +181,14 @@ main (int, char *[])
   // Wait for 1 more second and then cancel all the threads.
   ACE_OS::sleep (ACE_Time_Value (1));
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) cancelling group\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) cancelling group\n")));
 
   ACE_ASSERT (thr_mgr->cancel_grp (grp_id) != -1);
 
   // Perform a barrier wait until all the threads have shut down.
   ACE_ASSERT (thr_mgr->wait () != -1);
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) main thread finished\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) main thread finished\n")));
 
   delete thread_start;
   thread_start = 0;
@@ -196,7 +196,7 @@ main (int, char *[])
   signal_catcher = 0;
 
 #else
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
 
   ACE_END_TEST;
