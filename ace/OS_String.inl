@@ -88,13 +88,13 @@ ACE_OS_String::strcat (wchar_t *s, const wchar_t *t)
 ACE_INLINE size_t
 ACE_OS_String::strspn (const char *s, const char *t)
 {
-#if !defined (ACE_HAS_WINCE)
-  return ::strspn (s, t);
-#else
+#if defined (ACE_HAS_WINCE)
   ACE_UNUSED_ARG (s);
   ACE_UNUSED_ARG (t);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_WINCE */
+#else  /* ! ACE_HAS_WINCE */
+  return ::strspn (s, t);
+#endif /* ! ACE_HAS_WINCE */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -108,11 +108,11 @@ ACE_OS_String::strspn (const wchar_t*s, const wchar_t *t)
 ACE_INLINE char *
 ACE_OS_String::strchr (char *s, int c)
 {
-#if !defined (ACE_HAS_WINCE)
-  return ::strchr (s, c);
-#else
+#if defined (ACE_HAS_WINCE)
   return ACE_OS_String::strchr_emulation (s, c);
-#endif /* ACE_HAS_WINCE */
+#else  /* ! ACE_HAS_WINCE */
+  return ::strchr (s, c);
+#endif /* ! ACE_HAS_WINCE */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -126,11 +126,11 @@ ACE_OS_String::strchr (wchar_t *s, wint_t c)
 ACE_INLINE const char *
 ACE_OS_String::strchr (const char *s, int c)
 {
-#if !defined (ACE_HAS_WINCE)
-  return (const char *) ::strchr (s, c);
-#else
+#if defined (ACE_HAS_WINCE)
   return ACE_OS_String::strchr_emulation (s, c);
-#endif /* ACE_HAS_WINCE */
+#else  /* ! ACE_HAS_WINCE */
+  return (const char *) ::strchr (s, c);
+#endif /* ! ACE_HAS_WINCE */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -229,44 +229,44 @@ ACE_OS_String::strnstr (wchar_t *s, const wchar_t *t, size_t len)
 ACE_INLINE char *
 ACE_OS_String::strrchr (char *s, int c)
 {
-#if !defined (ACE_LACKS_STRRCHR)
-  return ::strrchr (s, c);
-#else
+#if defined (ACE_LACKS_STRRCHR)
   return ACE_OS_String::strrchr_emulation (s, c);
-#endif /* ACE_LACKS_STRRCHR */
+#else  /* ! ACE_LACKS_STRRCHR */
+  return ::strrchr (s, c);
+#endif /* ! ACE_LACKS_STRRCHR */
 }
 
-#if defined (ACE_HAS_WCHAR) 
+#if defined (ACE_HAS_WCHAR)
 ACE_INLINE const wchar_t *
 ACE_OS_String::strrchr (const wchar_t *s, wint_t c)
 {
-#if !defined (ACE_LACKS_WCSRCHR)
-  return (const wchar_t *) ::wcsrchr (s, c);
-#else 
+#if defined (ACE_LACKS_WCSRCHR)
   return ACE_OS_String::strrchr_emulation (s, c);
-#endif /* ACE_LACKS_WCSRCHR */
+#else /* ! ACE_LACKS_WCSRCHR */
+  return (const wchar_t *) ::wcsrchr (s, c);
+#endif /* ! ACE_LACKS_WCSRCHR */
 }
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE const char *
 ACE_OS_String::strrchr (const char *s, int c)
 {
-#if !defined (ACE_LACKS_STRRCHR)
-  return (const char *) ::strrchr (s, c);
-#else 
+#if defined (ACE_LACKS_STRRCHR)
   return ACE_OS_String::strrchr_emulation (s, c);
-#endif /* ACE_LACKS_STRRCHR */
+#else  /* ! ACE_LACKS_STRRCHR */
+  return (const char *) ::strrchr (s, c);
+#endif /* ! ACE_LACKS_STRRCHR */
 }
 
-#if defined (ACE_HAS_WCHAR) 
+#if defined (ACE_HAS_WCHAR)
 ACE_INLINE wchar_t *
 ACE_OS_String::strrchr (wchar_t *s, wint_t c)
 {
-#if !defined (ACE_LACKS_WCSRCHR)
-  return (wchar_t *) ::wcsrchr (s, c);
-#else 
+#if defined (ACE_LACKS_WCSRCHR)
   return ACE_OS_String::strrchr_emulation (s, c);
-#endif /* ACE_LACKS_WCSRCHR */
+#else  /* ! ACE_LACKS_WCSRCHR */
+  return (wchar_t *) ::wcsrchr (s, c);
+#endif /* ! ACE_LACKS_WCSRCHR */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -301,23 +301,23 @@ ACE_OS_String::strcpy (wchar_t *s, const wchar_t *t)
 ACE_INLINE size_t
 ACE_OS_String::strcspn (const char *s, const char *reject)
 {
-#if !defined (ACE_HAS_WINCE)
-  return ::strcspn (s, reject);
-#else 
+#if defined (ACE_HAS_WINCE)
   return ACE_OS_String::strcspn_emulation (s, reject);
-#endif /* ACE_HAS_WINCE */
+#else  /* ! ACE_HAS_WINCE */
+  return ::strcspn (s, reject);
+#endif /* ! ACE_HAS_WINCE */
 }
 
 ACE_INLINE char *
 ACE_OS_String::strpbrk (char *s1, const char *s2)
 {
-#if !defined (ACE_HAS_WINCE)
-  return ::strpbrk (s1, s2);
-#else
+#if defined (ACE_HAS_WINCE)
   ACE_UNUSED_ARG (s1);
   ACE_UNUSED_ARG (s2);
   ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_WINCE */
+#else  /* ! ACE_HAS_WINCE */
+  return ::strpbrk (s1, s2);
+#endif /* ! ACE_HAS_WINCE */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -331,13 +331,13 @@ ACE_OS_String::strpbrk (wchar_t *s, const wchar_t *t)
 ACE_INLINE const char *
 ACE_OS_String::strpbrk (const char *s1, const char *s2)
 {
-#if !defined (ACE_HAS_WINCE)
-  return (const char *) ::strpbrk (s1, s2);
-#else
+#if defined (ACE_HAS_WINCE)
   ACE_UNUSED_ARG (s1);
   ACE_UNUSED_ARG (s2);
   ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_WINCE */
+#else  /* ! ACE_HAS_WINCE */
+  return (const char *) ::strpbrk (s1, s2);
+#endif /* ! ACE_HAS_WINCE */
 }
 
 ACE_INLINE int
@@ -354,15 +354,15 @@ ACE_OS_String::strcasecmp (const char *s, const char *t)
 #endif /* !ACE_LACKS_STRCASECMP && !__BORLANDC__ && !ACE_WIN32 */
 }
 
-#if defined (ACE_HAS_WCHAR) 
+#if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
 ACE_OS_String::strcasecmp (const wchar_t *s, const wchar_t *t)
 {
-#if !defined (ACE_WIN32)
-  return ACE_OS_String::strcasecmp_emulation (s, t);
-#else /* ACE_WIN32 */
+#if defined (ACE_WIN32)
   return ::_wcsicmp (s, t);
-#endif /* ACE_WIN32 */ 
+#else  /* ! ACE_WIN32 */
+  return ACE_OS_String::strcasecmp_emulation (s, t);
+#endif /* ! ACE_WIN32 */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -384,11 +384,11 @@ ACE_OS_String::strncasecmp (const char *s, const char *t, size_t len)
 ACE_INLINE int
 ACE_OS_String::strncasecmp (const wchar_t *s, const wchar_t *t, size_t len)
 {
-#if !defined (ACE_WIN32)
-  return ACE_OS_String::strncasecmp_emulation (s, t, len);
-#else /* ACE_WIN32 */
+#if defined (ACE_WIN32)
   return ::_wcsnicmp (s, t, len);
-#endif /* ACE_WIN32 */
+#else  /* ! ACE_WIN32 */
+  return ACE_OS_String::strncasecmp_emulation (s, t, len);
+#endif /* ! ACE_WIN32 */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -454,7 +454,7 @@ ACE_OS_String::strtok_r (char *s, const char *tokens, char **lasts)
 {
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS)
   return ::strtok_r (s, tokens, lasts);
-#else 
+#else
   return ACE_OS_String::strtok_r_emulation (s, tokens, lasts);
 #endif /* (ACE_HAS_REENTRANT_FUNCTIONS) */
 }
@@ -464,14 +464,14 @@ ACE_OS_String::strtol (const char *s, char **ptr, int base)
 {
   // @@ We must implement this function for WinCE also.
   // Notice WinCE support wcstol.
-#if !defined (ACE_HAS_WINCE)
-  return ::strtol (s, ptr, base);
-#else
+#if defined (ACE_HAS_WINCE)
   ACE_UNUSED_ARG (s);
   ACE_UNUSED_ARG (ptr);
   ACE_UNUSED_ARG (base);
   ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_WINCE */
+#else  /* ! ACE_HAS_WINCE */
+  return ::strtol (s, ptr, base);
+#endif /* ! ACE_HAS_WINCE */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -487,20 +487,14 @@ ACE_OS_String::strtoul (const char *s, char **ptr, int base)
 {
   // @@ WINCE: We must implement this function for WinCE also.
   // Notice WinCE support wcstoul.
-#if !defined (ACE_HAS_WINCE)
-# if defined (linux) && defined (__GLIBC__)
-  // ::strtoul () appears to be broken on Linux 2.0.30/Alpha w/glibc:
-  // it returns 0 for a negative number.
-  return (unsigned long) ::strtol (s, ptr, base);
-# else  /* ! linux || ! __GLIBC__ */
-  return ::strtoul (s, ptr, base);
-# endif /* ! linux || ! __GLIBC__ */
-#else /* ACE_HAS_WINCE */
+#if defined (ACE_HAS_WINCE)
   ACE_UNUSED_ARG (s);
   ACE_UNUSED_ARG (ptr);
   ACE_UNUSED_ARG (base);
   ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_WINCE */
+#else  /* ! ACE_HAS_WINCE */
+  return ::strtoul (s, ptr, base);
+#endif /* ! ACE_HAS_WINCE */
 }
 
 
@@ -516,13 +510,13 @@ ACE_INLINE double
 ACE_OS_String::strtod (const char *s, char **endptr)
 {
   // @@ WinCE only support wcstod
-#if !defined (ACE_HAS_WINCE)
-  return ::strtod (s, endptr);
-#else /* ACE_HAS_WINCE */
+#if defined (ACE_HAS_WINCE)
   ACE_UNUSED_ARG (s);
   ACE_UNUSED_ARG (endptr);
   ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_WINCE */
+#else  /* ! ACE_HAS_WINCE */
+  return ::strtod (s, endptr);
+#endif /* ! ACE_HAS_WINCE */
 }
 
 #if defined (ACE_HAS_WCHAR)
