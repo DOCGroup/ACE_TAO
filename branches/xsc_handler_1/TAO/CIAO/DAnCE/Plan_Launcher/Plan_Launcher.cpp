@@ -90,12 +90,6 @@ namespace CIAO
     int
     run_main_implementation (int argc, char *argv[])
     {
-      if (package_url == 0)
-        {
-          usage (argv[0]);
-          return -1;
-        }
-
       ACE_DECLARE_NEW_CORBA_ENV;
 
       ACE_TRY
@@ -106,6 +100,12 @@ namespace CIAO
                              ""
                              ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
+
+          if (!parse_args || package_url == 0)
+            {
+              usage (argv[0]);
+              return -1;
+            }
 
           CORBA::Object_var obj;
 
@@ -133,7 +133,7 @@ namespace CIAO
           if (CORBA::is_nil (exec_mgr.in ()))
             {
               ACE_ERROR ((LM_ERROR,
-                          "(%P|%t) CIAO_Executor: nil Execution"
+                          "(%P|%t) CIAO_PlanLauncher: nil Execution"
                           " Manager reference, narrow failed\n"));
               return -1;
             }
@@ -149,21 +149,22 @@ namespace CIAO
               intf.get_plan ();
 
           ::Deployment::DomainApplicationManager_var dapp_mgr =
-              exec_mgr->preparePlan (plan, 1);
+              exec_mgr->preparePlan (plan,
+                                     1);
 
           if (CORBA::is_nil (dapp_mgr.in ()))
             {
               ACE_DEBUG ((LM_DEBUG,
                           "(%P|%t) CIAO_Executor:preparePlan call failed:nil "
                           "DomainApplicationManager reference\n"));
-              return 0;
+              return -1;
             }
 
           if (CIAO::debug_level () > 10)
             ACE_DEBUG ((LM_DEBUG,
                         "CIAO_Executor: Obtained DAM ref \n"));
 
-          ///===== BALA
+          // == BALA check some bogus things here..
           // Create a dummy set of properties and start the
           // Launching of applications
           ::Deployment::Properties_var properties;

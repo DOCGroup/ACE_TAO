@@ -1,3 +1,36 @@
+Sun Oct 10 22:58:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* ExecutionManager/DAM_Map.cpp:
+	* ExecutionManager/DAM_Map.h:
+
+	  New files that stores the map of UUID of a plan to the reference
+	  to DomainApplicationManager.
+	
+	* ExecutionManager/ExecutionManager.mpc:
+	  
+	  Added new files. 
+	
+	* ExecutionManager/Execution_Manager.cpp:
+
+	  Removed a bunch of bogus options which contributed nothing. Made
+	  the implementation a bit cleaner and simpler. 
+	
+	* ExecutionManager/Execution_Manager_Impl.cpp:
+	* ExecutionManager/Execution_Manager_Impl.h:
+
+	  Total revamp of the implementation. We can now handle multiple
+	  domains. We now use UUID in the plan to make an informed
+	  decision on whether we are dealing with the same plan or a
+	  different plan. 
+	
+	* Plan_Launcher/Plan_Launcher.cpp:
+
+	  Cosmetic fixes.
+	
+	* ciao/CIAO_Config.h:
+
+	  A configuration file having compile time options. 
+
 Fri Oct  8 15:24:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/Config_Handlers/Config_Handlers.mpc:
