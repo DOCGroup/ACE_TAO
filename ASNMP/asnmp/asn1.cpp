@@ -105,7 +105,7 @@ u_char * asn1::parse_int( u_char *data,
     value = (value << 8) | *bufp++;
   *intp = value;
   return bufp;
-};
+}
 
 
 /*
@@ -158,7 +158,7 @@ u_char * asn1::parse_unsigned_int( u_char *data,
     value = (value << 8) | *bufp++;
   *intp = value;
   return bufp;
-};
+}
 
 
 /*
@@ -214,7 +214,7 @@ u_char * asn1::build_int( u_char *data,
     integer <<= 8;
   }
   return data;
-};
+}
 
 
 /*
@@ -280,7 +280,7 @@ u_char * asn1::build_unsigned_int( u_char *data,
     integer <<= 8;
   }
   return data;
-};
+}
 
 
 /*
@@ -327,7 +327,7 @@ u_char * asn1::parse_string( u_char     *data,
   *strlength = (int)asn_length;
   *datalength -= (int)asn_length + (bufp - data);
   return bufp + asn_length;
-};
+}
 
 
 /*
@@ -362,7 +362,7 @@ u_char * asn1::build_string( u_char *data,
   ACE_OS::memcpy((u_char *)data,(u_char *)string, strlength);
   *datalength -= strlength;
   return data + strlength;
-};
+}
 
 
 /*
@@ -492,7 +492,7 @@ u_char * asn1::parse_length( u_char *data,
     *length = (long)lengthbyte;
     return data + 1;
   }
-};
+}
 
 u_char *asn1::build_length( u_char *data,
                                 int *datalength,
@@ -738,7 +738,7 @@ u_char *asn1::build_null( u_char *data,
    * ASN.1 null ::= 0x05 0x00
    */
   return asn1::build_header(data, datalength, type, 0);
-};
+}
 
 /*
  * parse_bitstring - pulls a bitstring out of an ASN bitstring type.
@@ -1177,7 +1177,7 @@ u_char *cmu_snmp::auth_build( u_char *data,
   }
 
   return (u_char *)data;
-};
+}
 
 
 // build a variable binding
