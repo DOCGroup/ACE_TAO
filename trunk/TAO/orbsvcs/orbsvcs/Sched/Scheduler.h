@@ -30,7 +30,6 @@
 
 #include "ace/Map_Manager.h"
 #include "ace/Message_Block.h"
-#include "ace/Synch.h"
 #include "ace/SString.h"
 #include "ace/Unbounded_Set.h"
 

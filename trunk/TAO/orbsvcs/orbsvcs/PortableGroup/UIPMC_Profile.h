@@ -31,7 +31,6 @@
 #include "UIPMC_Endpoint.h"
 #include "portablegroup_export.h"
 
-#include "ace/Synch.h"
 #include "ace/SString.h"
 
 
