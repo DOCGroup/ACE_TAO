@@ -403,7 +403,7 @@ TAO_StreamEndPoint::set_negotiator (AVStreams::Negotiator_ptr new_negotiator,
 
 void 
 TAO_StreamEndPoint::set_key (const char *flow_name, 
-                             const char *the_key,  
+                             const encryption_key & the_key,
                              CORBA::Environment &env)
 {
 }
