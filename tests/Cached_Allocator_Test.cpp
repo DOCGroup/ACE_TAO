@@ -24,7 +24,7 @@ ACE_RCSID(tests, Cached_Allocator_Test, "$Id$")
 
 typedef ACE_Dynamic_Cached_Allocator<ACE_SYNCH_NULL_MUTEX> DYNAMIC_ALLOCATOR;
 
-static int 
+static int
 speed_test (ACE_UINT32 loops)
 {
 #ifndef ACE_LACKS_FLOATING_POINT
@@ -41,8 +41,8 @@ speed_test (ACE_UINT32 loops)
   size_t chunk_size = 8;
 
   ACE_DEBUG ((LM_INFO,
-              ACE_TEXT (" (%t) ACE_Dynamic_Cached_Allocator "
-                        "speed test...\n")));
+              ACE_TEXT (" (%t) ACE_Dynamic_Cached_Allocator ")
+              ACE_TEXT ("speed test...\n")));
 
   DYNAMIC_ALLOCATOR allocator (n_chunks, chunk_size);
 
@@ -63,18 +63,18 @@ speed_test (ACE_UINT32 loops)
 
   ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Iterations : %d\n"), loops));
 #ifdef ACE_LACKS_FLOATING_POINT
-  ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Total time : %d s, %d us\n"), 
+  ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Total time : %d s, %d us\n"),
               tc.sec (), tc.usec ()));
 #elif !defined ACE_LACKS_FLOATING_POINT
   tt    = tc.sec () + tc.usec ()*1.0e-6;
   ut    = tt/loops;
   utus  = ut*1.0e6;
   speed = loops/tt;
- 
+
   ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Total time : %.6g [s]\n"), tt));
   ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Unit time  : %.6g [us]\n"), utus));
   ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Speed      : %.6g [1/s]\n"), speed));
- 
+
 #endif /* !defined ACE_LACKS_FLOATING_POINT */
 
   return 0;
@@ -83,7 +83,7 @@ speed_test (ACE_UINT32 loops)
 typedef char MEMBLOCK[8];
 typedef ACE_Cached_Allocator<MEMBLOCK, ACE_SYNCH_NULL_MUTEX> STATIC_ALLOCATOR;
 
-static int 
+static int
 stdspeed_test (ACE_UINT32 loops)
 {
 
@@ -100,8 +100,8 @@ stdspeed_test (ACE_UINT32 loops)
   size_t n_chunks   = 10,
     chunk_size = 8;
 
-  ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) ACE_Cached_Allocator "
-                                 "speed test...\n")));
+  ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) ACE_Cached_Allocator ")
+                       ACE_TEXT ("speed test...\n")));
 
   STATIC_ALLOCATOR allocator (n_chunks);
 
@@ -120,24 +120,24 @@ stdspeed_test (ACE_UINT32 loops)
 
   ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Iterations : %d\n"), loops));
 #ifdef ACE_LACKS_FLOATING_POINT
-  ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Total time : %d s, %d us\n"), 
+  ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Total time : %d s, %d us\n"),
               tc.sec (), tc.usec ()));
 #elif !defined ACE_LACKS_FLOATING_POINT
   tt    = tc.sec () + tc.usec ()*1.0e-6;
   ut    = tt/loops;
   utus  = ut*1.0e6;
   speed = loops/tt;
- 
+
   ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Total time : %.6g [s]\n"), tt));
   ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Unit time  : %.6g [us]\n"), utus));
   ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Speed      : %.6g [1/s]\n"), speed));
- 
+
 #endif /* !defined ACE_LACKS_FLOATING_POINT */
 
   return 0;
 }
 
-int 
+int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Cached_Allocator_Test"));
@@ -158,21 +158,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     loops = 100000000;
   else
     loops = ACE_OS::atoi (argv[1]);
-  
+
   chunk_size = 8;
   n_chunks = 2;
-  
+
   ACE_DEBUG ((LM_INFO,
-              ACE_TEXT (" (%t) Creating allocator: "
-                        "%d chunks, %d bytes each\n"),
-              n_chunks, 
+              ACE_TEXT (" (%t) Creating allocator: ")
+              ACE_TEXT ("%d chunks, %d bytes each\n"),
+              n_chunks,
               chunk_size));
-				
+
   DYNAMIC_ALLOCATOR allocator (n_chunks, chunk_size);
 
   requested_size = chunk_size;
-  ACE_DEBUG ((LM_INFO, 
-              ACE_TEXT (" (%t) Allocating chunk 1: %d bytes, should succeed...\n"), 
+  ACE_DEBUG ((LM_INFO,
+              ACE_TEXT (" (%t) Allocating chunk 1: %d bytes, should succeed...\n"),
               requested_size));
 
   ptr1 = (char *) allocator.malloc (requested_size);
@@ -182,8 +182,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) OK, succeeded.\n")));
 
   requested_size = chunk_size + 1;
-  ACE_DEBUG ((LM_INFO, 
-              ACE_TEXT (" (%t) Allocating chunk 2: %d bytes, too big, should fail...\n"), 
+  ACE_DEBUG ((LM_INFO,
+              ACE_TEXT (" (%t) Allocating chunk 2: %d bytes, too big, should fail...\n"),
               requested_size));
 
   ptr2 = (char *) allocator.malloc (requested_size);
@@ -194,8 +194,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   requested_size = chunk_size - 1;
   ACE_DEBUG ((LM_INFO,
-              ACE_TEXT (" (%t) Allocating chunk 3: %d bytes, "
-                        "should succeed...\n"),
+              ACE_TEXT (" (%t) Allocating chunk 3: %d bytes, ")
+              ACE_TEXT ("should succeed...\n"),
               requested_size));
   ptr3 = (char *) allocator.malloc (requested_size);
   if (!ptr3)
@@ -205,9 +205,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // One chunk too far...
   requested_size = chunk_size;
-  ACE_DEBUG ((LM_INFO, 
-              ACE_TEXT (" (%t) Allocating chunk 4: %d bytes, no free chunks,"
-                        " should fail...\n"),
+  ACE_DEBUG ((LM_INFO,
+              ACE_TEXT (" (%t) Allocating chunk 4: %d bytes, no free chunks,")
+              ACE_TEXT (" should fail...\n"),
               requested_size));
 
   ptr4 = (char *) allocator.malloc (requested_size);
@@ -230,8 +230,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   allocator.free (ptr1);
 
   requested_size = chunk_size;
-  ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Allocating chunk: %d bytes, "
-                                 "should succeed...\n"),
+  ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Allocating chunk: %d bytes, ")
+                       ACE_TEXT ("should succeed...\n"),
               requested_size));
   ptr1 = (char *) allocator.malloc (requested_size);
   if (!ptr1)
