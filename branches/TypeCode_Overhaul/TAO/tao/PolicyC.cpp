@@ -35,7 +35,7 @@
 #include "tao/SystemException.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Object_T.h"
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 #include "tao/Basic_Arguments.h"
 #include "tao/Object_Argument_T.h"
 #include "ace/OS_NS_string.h"

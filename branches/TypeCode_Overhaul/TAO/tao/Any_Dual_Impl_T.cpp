@@ -10,7 +10,7 @@
 #include "tao/Environment.h"
 #include "tao/SystemException.h"
 #include "tao/CDR.h"
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 
 #include "ace/CORBA_macros.h"
 #include "ace/Auto_Ptr.h"

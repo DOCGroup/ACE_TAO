@@ -29,7 +29,7 @@ ACE_RCSID (tao,
 # include "Sequence_T.h"
 # include "Any.h"
 # include "Object.h"
-# include "Typecode.h"
+# include "TypeCode.h"
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION 
           || ACE_HAS_TEMPLATE_INSTANTIATION_PRAGM */
 

@@ -31,19 +31,19 @@ CORBA::TypeCode::equal (TypeCode_ptr tc
 
   ACE_TRY
     {
-      char const * tc_id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+      char const * const tc_id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      char const * this_id = this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+      char const * const this_id = this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (ACE_OS::strcmp (this_id, tc_id) != 0)
         return 0;
 
-      char const * tc_name = tc->name (ACE_ENV_SINGLE_ARG_PARAMETER);
+      char const * const tc_name = tc->name (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      char const * this_name = this->name (ACE_ENV_SINGLE_ARG_PARAMETER);
+      char const * const this_name = this->name (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (ACE_OS::strcmp (this_name, tc_name) != 0)

@@ -72,7 +72,7 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// Hand crafted, keeps DynamicC.h and Typecode.h out of header files.
+// Hand crafted, keeps DynamicC.h and TypeCode.h out of header files.
 namespace Dynamic
 {
   class ParameterList;

@@ -4,7 +4,7 @@
 #include "Environment.h"
 #include "Any_SystemException.h"
 #include "Any_Dual_Impl_T.h"
-#include "Typecode.h"
+#include "TypeCode.h"
 #include "ORB_Constants.h"
 #include "TC_Constants_Forward.h"
 #include "CORBA_String.h"

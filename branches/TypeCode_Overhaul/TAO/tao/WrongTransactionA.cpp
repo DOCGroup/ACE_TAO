@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "WrongTransactionC.h"
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 #include "tao/SystemException.h"
 #include "tao/Any_Dual_Impl_T.h"
 
