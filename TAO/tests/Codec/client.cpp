@@ -11,14 +11,22 @@ int
 verify_data (Foo::Bar *original, Foo::Bar *extracted)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Original\t\t\tExtracted\n"
-              "--------\t\t\t---------\n"
-              "%s\t%s\n"
-              "%d\t\t\t\t%d\n"
-              "%s\t\t\t%s\n\n",
-              original->A.in (), extracted->A.in (),
-              original->B, extracted->B,
-              original->C.in (), extracted->C.in ()));
+              "Original\n"
+              "--------\n"
+              "%s\n"
+              "%d\n"
+              "%s\n\n"
+              "Extracted\n"
+              "---------\n"
+              "%s\n"
+              "%d\n"
+              "%s\n\n",
+              original->A.in (),
+              original->B,
+              original->C.in (),
+              extracted->A.in (),
+              extracted->B,
+              extracted->C.in ()));
 
   if (ACE_OS_String::strcmp (original->A, extracted->A) != 0
       || original->B != extracted->B
@@ -65,7 +73,7 @@ main (int argc, char *argv[])
       // ----------------------------------------------------------
 
       // Test values to be placed in the test structure.
-      const char A[] = "I need a standing ovation!";
+      const char A[] = "I want a standing ovation!";
       CORBA::Long B = -3427;
       const char C[] = "I'm Batman.";
 

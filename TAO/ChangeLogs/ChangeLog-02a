@@ -1,3 +1,15 @@
+Sat Mar 03 12:18:12 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Codec/client.cpp (verify_data):
+
+	  Cleaned up test output so that it is HTML friendly (i.e. no tab
+	  characters).  The output in our HTML build logs was slightly
+	  confusing.
+
+	* tests/Codec/README:
+
+	  Updated expected test output.
+
 Sat Mar 03 11:46:36 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Portable_Interceptors/ForwardRequest/server.bor:
