@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 // $Id$
 
 #include "ace/POSIX_Asynch_IO.h"
@@ -18,6 +19,12 @@ u_long
 ACE_POSIX_Asynch_Result::bytes_transferred (void) const
 {
   return this->bytes_transferred_;
+}
+
+void
+ACE_POSIX_Asynch_Result::set_bytes_transferred (u_long nbytes)
+{
+  this->bytes_transferred_= nbytes;
 }
 
 const void *
@@ -44,6 +51,11 @@ ACE_POSIX_Asynch_Result::error (void) const
   return this->error_;
 }
 
+void
+ACE_POSIX_Asynch_Result::set_error (u_long errcode)
+{
+  this->error_=errcode;
+}
 ACE_HANDLE
 ACE_POSIX_Asynch_Result::event (void) const
 {
@@ -114,7 +126,7 @@ ACE_POSIX_Asynch_Result::ACE_POSIX_Asynch_Result (ACE_Handler &handler,
   aio_sigevent.sigev_signo = signal_number;
 
   // Event is not used on POSIX.
-ACE_UNUSED_ARG (event);
+  ACE_UNUSED_ARG (event);
 
   //
   // @@ Support offset_high with aiocb64.
@@ -178,12 +190,27 @@ ACE_POSIX_Asynch_Operation::cancel (void)
   if (!p_impl)
     return -1;
 
-  // For <ACE_SUN_Proactor> this function is not implemented yet.  We
-  // should call aiocancel instead of aio_cancel but we have not got
-  // information about aio_result_t.
+  // For ACE_SUN_Proactor and ACE_POSIX_AIOCB_Proactor
+  // we should call  cancel_aio (this->handle_)
+  // method to cancel correctly all deferred AIOs
 
-  if (p_impl->get_impl_type () == ACE_POSIX_Proactor::PROACTOR_SUN)
-    return -1;
+  switch ( p_impl->get_impl_type ())
+  {
+    case ACE_POSIX_Proactor::PROACTOR_SUN:
+    case ACE_POSIX_Proactor::PROACTOR_AIOCB:
+      {
+        ACE_POSIX_AIOCB_Proactor * p_impl_aiocb = ACE_dynamic_cast
+          (ACE_POSIX_AIOCB_Proactor *, 
+           p_impl );
+
+        if ( ! p_impl_aiocb)
+           return -1;
+     
+        return p_impl_aiocb->cancel_aio (this->handle_);
+      }
+    default:
+      break;
+  }
 
   int result = ::aio_cancel (this->handle_, 0);
 
@@ -1680,18 +1707,16 @@ ACE_POSIX_Asynch_Accept_Result::post_completion (ACE_Proactor_Impl *proactor)
 class ACE_Export ACE_POSIX_Asynch_Accept_Handler : public ACE_Event_Handler
 {
   // = TITLE
-  //     For the POSIX implementation, we have two helper classes
-  //     (ACE_POSIX_AIOCB_Asynch_Accept_Hander and
-  //     ACE_POSIX_SIG_Asynch_Accept_Handler) to do <Asynch_Accept>. This
-  //     class abstracts out the commonalities on these two helper classes.
+  //     For the POSIX implementation this class is common
+  //     for all Proactors (AIOCB/SIG/SUN)
   //
   // = DESCRIPTION
   //
+
 public:
   ~ACE_POSIX_Asynch_Accept_Handler (void);
   // Destructor.
 
-protected:
   ACE_POSIX_Asynch_Accept_Handler (ACE_Reactor* reactor,
                                    ACE_POSIX_Proactor *posix_proactor);
   // Constructor. Give the reactor so that it can activate/deactivate
@@ -1699,22 +1724,29 @@ protected:
   // handler can send the <POSIX_Asynch_Accept> result block through
   // <post_completion>.
 
-  int register_accept_call_i (ACE_POSIX_Asynch_Accept_Result* result);
+ int cancel_uncompleted (int flg_notify);
+  // flg_notify points whether or not we should send notification about
+  // canceled accepts
+
+
+  int register_accept_call (ACE_POSIX_Asynch_Accept_Result* result);
   // Worker method for registering this <accept> call with the local
-  // handler. This method has the common code found between the two
-  // differnt implementation subclasses. This method assumes that
-  // locks are already obtained to access the shared the queues.
+  // handler. This method obtains lock to access the shared the queues.
 
   ACE_POSIX_Asynch_Accept_Result* deregister_accept_call (void);
   // Method for deregistering.
 
+  int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  // Called when accept event comes up on <listen_hanlde>
+
+protected:
   ACE_Reactor* reactor_;
   // Reactor used by the Asynch_Accept. We need this here to enable
   // and disable the <handle> now and then, depending on whether any
   // <accept> is pending or no.
 
   ACE_POSIX_Proactor *posix_proactor_;
-  // POSIX_Proactor.
+  // POSIX_Proactor implementation.
 
   ACE_Unbounded_Queue<ACE_POSIX_Asynch_Accept_Result*> result_queue_;
   // Queue of Result pointers that correspond to all the <accept>'s
@@ -1729,75 +1761,27 @@ protected:
 
 // *********************************************************************
 
-class ACE_Export ACE_POSIX_AIOCB_Asynch_Accept_Handler : public ACE_POSIX_Asynch_Accept_Handler
-{
-  // = TITLE
-  //     For the POSIX implementation, this class takes care of doing
-  //     <Asynch_Accept> for AIOCB strategy.
-  //
-  // = DESCRIPTION
-  //
-public:
-  ACE_POSIX_AIOCB_Asynch_Accept_Handler (ACE_Reactor *reactor,
-                                         ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
-  // Constructor. Give the reactor so that it can activate/deactivate
-  // the handlers. Give also the proactor used here, so that the
-  // handler can send information through the notification pipe
-  // (<post_completion>).
-
-  ~ACE_POSIX_AIOCB_Asynch_Accept_Handler (void);
-  // Destructor.
-
-  int register_accept_call (ACE_POSIX_Asynch_Accept_Result* result);
-  // Register this <accept> call with the local handler.
-
-  virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
-  // Called when accept event comes up on the <listen_handle>.
-};
-
-// *********************************************************************
-
-class ACE_Export ACE_POSIX_SIG_Asynch_Accept_Handler : public ACE_POSIX_Asynch_Accept_Handler
-{
-  // = TITLE
-  //     For the POSIX implementation, this class takes care of doing
-  //     Asynch_Accept.
-  //
-  // = DESCRIPTION
-  //
-public:
-  ACE_POSIX_SIG_Asynch_Accept_Handler (ACE_Reactor* reactor,
-                                       ACE_POSIX_SIG_Proactor *posix_sig_proactor);
-  // Constructor. Give the reactor so that it can activate/deactivate
-  // the handlers. Give also the proactor used here, so that the
-  // handler can send information through <post_completion>.
-
-  ~ACE_POSIX_SIG_Asynch_Accept_Handler (void);
-  // Destructor.
-
-  int register_accept_call (ACE_POSIX_Asynch_Accept_Result *result);
-  // Register this <accept> call with the local handler.
-
-  virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
-  // Called when accept event comes up on the <listen_handle>.
-};
-
-// *********************************************************************
-
 ACE_POSIX_Asynch_Accept_Handler::ACE_POSIX_Asynch_Accept_Handler (ACE_Reactor* reactor,
                                                                   ACE_POSIX_Proactor *posix_proactor)
   : reactor_ (reactor),
     posix_proactor_ (posix_proactor)
 {
+  ACE_TRACE ("ACE_POSIX_Asynch_Accept_Handler::ctor");
 }
 
 ACE_POSIX_Asynch_Accept_Handler::~ACE_POSIX_Asynch_Accept_Handler (void)
 {
+  ACE_TRACE ("ACE_POSIX_Asynch_Accept_Handler::dtor");
 }
 
 int
-ACE_POSIX_Asynch_Accept_Handler::register_accept_call_i (ACE_POSIX_Asynch_Accept_Result* result)
+ACE_POSIX_Asynch_Accept_Handler::register_accept_call (ACE_POSIX_Asynch_Accept_Result* result)
 {
+  // The queue is updated by main thread in the register function call
+  // and thru the auxillary thread in the deregister fun. So let us
+  // mutex it.
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
+
   // Insert this result to the queue.
   int insert_result = this->result_queue_.enqueue_tail (result);
   if (insert_result == -1)
@@ -1830,7 +1814,7 @@ ACE_POSIX_Asynch_Accept_Handler::deregister_accept_call (void)
   // The queue is updated by main thread in the register function call and
   // thru the auxillary thread  in the deregister fun. So let us mutex
   // it.
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0));
 
   // Get the first item (result ptr) from the Queue.
   ACE_POSIX_Asynch_Accept_Result* result = 0;
@@ -1858,31 +1842,60 @@ ACE_POSIX_Asynch_Accept_Handler::deregister_accept_call (void)
   return result;
 }
 
-// *********************************************************************
 
-ACE_POSIX_AIOCB_Asynch_Accept_Handler::ACE_POSIX_AIOCB_Asynch_Accept_Handler (ACE_Reactor* reactor,
-                                                                              ACE_POSIX_AIOCB_Proactor* posix_aiocb_proactor)
-  : ACE_POSIX_Asynch_Accept_Handler (reactor, posix_aiocb_proactor)
+//@@ New method cancel_uncompleted
+// It performs cancellation of all pending requests
+//
+// Parameter flg_notify can be 
+//     0  - don't send notifications about canceled accepts
+//    !0  - notify user about canceled accepts
+//          according POSIX standards we should receive notifications
+//          on canceled AIO requests
+//
+//  Return value : number of cancelled requests
+//
+  
+int
+ACE_POSIX_Asynch_Accept_Handler::cancel_uncompleted (int flg_notify)
 {
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
+
+  int retval = 0;
+
+  for ( ; ; retval++ )
+  {
+    ACE_POSIX_Asynch_Accept_Result* result = 0;
+
+    this->result_queue_.dequeue_head (result);
+
+    if (result == 0)
+      break;
+
+    this->reactor_->suspend_handler (result->listen_handle ());
+ 
+    if ( ! flg_notify ) //if we should not notify 
+      delete result ;   //   we have to delete result
+    else                //else notify as any cancelled AIO
+      {
+        // Store the new handle.
+        result->aio_fildes = ACE_INVALID_HANDLE ;
+        result->set_bytes_transferred (0);
+        result->set_error (ECANCELED);
+
+        if (this->posix_proactor_->post_completion (result) == -1)
+          ACE_ERROR ((LM_ERROR,
+                 "Error:(%P | %t):%p\n",
+                 "ACE_POSIX_Asynch_Accept_Handler::"
+                 "cancel_uncompleted:<post_completion> failed"));
+      }
+  }  
+
+  return retval;
 }
 
-ACE_POSIX_AIOCB_Asynch_Accept_Handler::~ACE_POSIX_AIOCB_Asynch_Accept_Handler (void)
-{
-}
 
 int
-ACE_POSIX_AIOCB_Asynch_Accept_Handler::register_accept_call (ACE_POSIX_Asynch_Accept_Result* result)
-{
-  // The queue is updated by main thread in the register function call
-  // and thru the auxillary thread in the deregister fun. So let us
-  // mutex it.
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
-
-  return register_accept_call_i (result);
-}
-
-int
-ACE_POSIX_AIOCB_Asynch_Accept_Handler::handle_input (ACE_HANDLE /* fd */)
+ACE_POSIX_Asynch_Accept_Handler::handle_input (ACE_HANDLE /* fd */)
 {
   // An <accept> has been sensed on the <listen_handle>. We should be
   // able to just go ahead and do the <accept> now on this <fd>. This
@@ -1902,13 +1915,15 @@ ACE_POSIX_AIOCB_Asynch_Accept_Handler::handle_input (ACE_HANDLE /* fd */)
   // thru reactor. But are we sure?
   ACE_HANDLE new_handle = ACE_OS::accept (result->listen_handle (), 0, 0);
   if (new_handle == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:(%P | %t):%p\n",
-                       "ACE_POSIX_AIOCB_Asynch_Accept_Handler::"
-                       "handle_input:<accept> system call failed"),
-                      -1);
+    {
+      result->set_error( errno );
+      ACE_ERROR ((LM_ERROR,
+                "%N:%l:(%P | %t):%p\n",
+                "ACE_POSIX_AIOCB_Asynch_Accept_Handler::"
+                "handle_input:<accept> system call failed"));
 
-  // Accept has completed.
+      // Notify client as usual, "AIO" finished with errors
+    }
 
   // Store the new handle.
   result->aio_fildes = new_handle;
@@ -1925,88 +1940,21 @@ ACE_POSIX_AIOCB_Asynch_Accept_Handler::handle_input (ACE_HANDLE /* fd */)
   return 0;
 }
 
-// *********************************************************************
-
-ACE_POSIX_SIG_Asynch_Accept_Handler::ACE_POSIX_SIG_Asynch_Accept_Handler (ACE_Reactor* reactor,
-                                                                          ACE_POSIX_SIG_Proactor *posix_sig_proactor)
-  : ACE_POSIX_Asynch_Accept_Handler (reactor, posix_sig_proactor)
-{
-}
-
-ACE_POSIX_SIG_Asynch_Accept_Handler::~ACE_POSIX_SIG_Asynch_Accept_Handler (void)
-{
-}
-
-int
-ACE_POSIX_SIG_Asynch_Accept_Handler::register_accept_call (ACE_POSIX_Asynch_Accept_Result* result)
-{
-  // The queue is updated by main thread in the register function call
-  // and thru the auxillary thread in the deregister fun. So let us
-  // mutex it.
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
-
-  // Do the work.
-  if (this->register_accept_call_i (result) == -1)
-    return -1;
-
-  return 0;
-}
-
-int
-ACE_POSIX_SIG_Asynch_Accept_Handler::handle_input (ACE_HANDLE /* fd */)
-{
-  // An <accept> has been sensed on the <listen_handle>. We should be
-  // able to just go ahead and do the <accept> now on this <fd>. This
-  // should be the same as the <listen_handle>.
-
-  // Deregister this info pertaining to this <accept> call.
-  ACE_POSIX_Asynch_Accept_Result* result = this->deregister_accept_call ();
-  if (result == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:(%P | %t):%p\n",
-                       "ACE_POSIX_SIG_Asynch_Accept_Handler::"
-                       "handle_input:deregister_accept_call failed"),
-                      -1);
-
-  // Issue <accept> now.
-  // @@ We shouldnt block here since we have already done poll/select
-  // thru reactor. But are we sure?
-  ACE_HANDLE new_handle = ACE_OS::accept (result->listen_handle (), 0, 0);
-  if (new_handle == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error:(%P | %t):%p\n",
-                       "ACE_POSIX_SIG_Asynch_Accept_Handler::"
-                       "handle_input:<accept> system call failed"),
-                      -1);
-
-  // Accept has completed.
-
-  // Store the new handle.
-  result->aio_fildes = new_handle;
-
-  // Notify the main process about this completion.
-  if (this->posix_proactor_->post_completion (result) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error:(%P | %t):%p\n",
-                       "ACE_POSIX_SIG_Asynch_Accept_Handler::"
-                       "handle_input:<post_completion> failed"),
-                      -1);
-
-  return 0;
-}
 
 // *********************************************************************
 
-ACE_POSIX_AIOCB_Asynch_Accept::ACE_POSIX_AIOCB_Asynch_Accept (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor)
+ACE_POSIX_Asynch_Accept::ACE_POSIX_Asynch_Accept (ACE_POSIX_Proactor *posix_proactor)
   : ACE_Asynch_Operation_Impl (),
     ACE_Asynch_Accept_Impl (),
-    ACE_POSIX_AIOCB_Asynch_Operation (posix_aiocb_proactor),
-    accept_handler_ (0)
+    ACE_POSIX_Asynch_Operation (),
+    accept_handler_ (0),
+    grp_id_(-1),                      //thread not spawn
+    posix_proactor_ (posix_proactor)  //save concrete proactor impl.
 {
 }
 
 int
-ACE_POSIX_AIOCB_Asynch_Accept::accept (ACE_Message_Block &message_block,
+ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
                                        u_long bytes_to_read,
                                        ACE_HANDLE accept_handle,
                                        const void *act,
@@ -2032,7 +1980,7 @@ ACE_POSIX_AIOCB_Asynch_Accept::accept (ACE_Message_Block &message_block,
                                                   message_block,
                                                   bytes_to_read,
                                                   act,
-                                                  this->posix_proactor ()->get_handle (),
+                                                  this->posix_proactor_->get_handle (),
                                                   priority,
                                                   signal_number),
                   -1);
@@ -2045,11 +1993,21 @@ ACE_POSIX_AIOCB_Asynch_Accept::accept (ACE_Message_Block &message_block,
 }
 
 int
-ACE_POSIX_AIOCB_Asynch_Accept::open (ACE_Handler &handler,
+ACE_POSIX_Asynch_Accept::open (ACE_Handler &handler,
                                      ACE_HANDLE handle,
                                      const void *completion_key,
                                      ACE_Proactor *proactor)
 {
+  // check for non zero accept_handler_  
+  // we could not create a new handler without closing the previous
+
+  if ( this->accept_handler_ != 0 )
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%N:%l:ACE_POSIX_Asynch_Accept::open:"
+                       "accept_handler_ not null\n"),
+                      -1);
+    
+
   int result = ACE_POSIX_Asynch_Operation::open (handler,
                                                  handle,
                                                  completion_key,
@@ -2060,8 +2018,8 @@ ACE_POSIX_AIOCB_Asynch_Accept::open (ACE_Handler &handler,
   // Init the Asynch_Accept_Handler now. It needs to keep Proactor
   // also with it.
   ACE_NEW_RETURN (this->accept_handler_,
-                  ACE_POSIX_AIOCB_Asynch_Accept_Handler (&this->reactor_,
-                                                         this->posix_proactor ()),
+                  ACE_POSIX_Asynch_Accept_Handler (&this->reactor_,
+                                                   this->posix_proactor_),
                   -1);
 
   // Register the handle with the reactor.
@@ -2083,9 +2041,11 @@ ACE_POSIX_AIOCB_Asynch_Accept::open (ACE_Handler &handler,
 
   // Spawn the thread. It is the only thread we are going to have. It
   // will do the <handle_events> on the reactor.
-  return_val = ACE_Thread_Manager::instance ()->spawn (ACE_POSIX_AIOCB_Asynch_Accept::thread_function,
-                                                       ACE_reinterpret_cast (void *, &this->reactor_));
-  if (return_val  == -1)
+  // save group id of the created thread
+  
+  grp_id_ = ACE_Thread_Manager::instance ()->spawn (ACE_POSIX_Asynch_Accept::thread_function,
+                                                    ACE_reinterpret_cast (void *, &this->reactor_));
+  if (grp_id_ == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%N:%l:Thread_Manager::spawn failed\n"),
                       -1);
@@ -2093,12 +2053,73 @@ ACE_POSIX_AIOCB_Asynch_Accept::open (ACE_Handler &handler,
   return 0;
 }
 
-ACE_POSIX_AIOCB_Asynch_Accept::~ACE_POSIX_AIOCB_Asynch_Accept (void)
+ACE_POSIX_Asynch_Accept::~ACE_POSIX_Asynch_Accept (void)
 {
+  this->close (0);  // not send notifications to user
+}
+
+int
+ACE_POSIX_Asynch_Accept::close ( int flg_notify)
+{
+  // 1. It performs cancellation of all pending requests
+  // 2. Stops and waits for the thread we had created
+  // 3. Removes accept_handler_ from Reactor
+  // 4. Deletes accept_handler_ 
+  // 5. close the socket
+  //
+  //  Parameter flg_notify can be 
+  //     0  - don't send notifications about canceled accepts
+  //    !0  - notify user about canceled accepts
+  //          according POSIX standards we should receive notifications
+  //          on canceled AIO requests
+  //
+  //  Return codes : 0 - OK , 
+  //                -1 - Errors
+
+  if ( this->accept_handler_ )
+    this->accept_handler_->cancel_uncompleted ( flg_notify );
+
+  //stop and wait for the thread
+
+  if ( grp_id_ != -1 )
+    {
+      reactor_.end_reactor_event_loop ();
+
+      if ( ACE_Thread_Manager::instance ()->wait_grp (grp_id_) ==-1)
+        ACE_ERROR ((LM_ERROR,
+                   "%N:%l:Thread_Manager::wait_grp failed\n"));
+      else
+        grp_id_ = -1;
+    }
+
+  //AL remove and destroy accept_handler_
+
+  if ( this->accept_handler_ != 0 )
+    {
+      this->reactor_.remove_handler
+                           ( this->accept_handler_,
+                             ACE_Event_Handler::ALL_EVENTS_MASK
+                           | ACE_Event_Handler::DONT_CALL ); 
+ 
+      delete this->accept_handler_ ;
+      this->accept_handler_ = 0 ;
+    }
+ 
+  // It looks like a good place to close listen handle here.
+  // But I am not sure with compatibility with the old programs
+  // You can comment the closure of the socket
+
+  if ( this->handle_ != ACE_INVALID_HANDLE )
+    {
+      ACE_OS::closesocket (this->handle_);
+      this->handle_=ACE_INVALID_HANDLE;
+    }
+
+  return 0;
 }
 
 void*
-ACE_POSIX_AIOCB_Asynch_Accept::thread_function (void* arg_reactor)
+ACE_POSIX_Asynch_Accept::thread_function (void* arg_reactor)
 {
   // Retrieve the reactor pointer from the argument.
   ACE_Reactor* reactor = ACE_reinterpret_cast (ACE_Reactor *,
@@ -2116,7 +2137,9 @@ ACE_POSIX_AIOCB_Asynch_Accept::thread_function (void* arg_reactor)
 
   // Handle events.
   int result = 0;
-  while (result != -1)
+
+  //while (result != -1)
+  while ( reactor->reactor_event_loop_done () == 0 )
     {
       result = reactor->handle_events ();
     }
@@ -2128,151 +2151,36 @@ ACE_POSIX_AIOCB_Asynch_Accept::thread_function (void* arg_reactor)
 // the call to the ACE_POSIX_Asynch_Operation base class.
 
 int
-ACE_POSIX_AIOCB_Asynch_Accept::cancel (void)
+ACE_POSIX_Asynch_Accept::cancel (void)
 {
-  return ACE_POSIX_Asynch_Operation::cancel ();
+  //We are not ACE_POSIX_Asynch_Operation
+  //so we could not call ::aiocancel ()
+  //We delegate real cancelation to the accept_handler_ 
+  // accept_handler_->cancel_uncompleted (1)
+
+  //return ACE_POSIX_Asynch_Operation::cancel ();
+
+  if ( this->accept_handler_ == 0 )
+    return 1 ;      // AIO_ALLDONE
+
+  //cancel with notifications as POSIX should do
+
+  int retval = this->accept_handler_->cancel_uncompleted (1);
+
+  //retval contains now the number of canceled requests
+  
+  if ( retval == 0 )
+    return 1 ;      // AIO_ALLDONE
+
+  if ( retval > 0 )
+    return 0;       // AIO_CANCELED
+
+  return -1;
+
 }
 
 ACE_Proactor *
-ACE_POSIX_AIOCB_Asynch_Accept::proactor (void) const
-{
-  return ACE_POSIX_Asynch_Operation::proactor ();
-}
-
-// *********************************************************************
-
-ACE_POSIX_SIG_Asynch_Accept::ACE_POSIX_SIG_Asynch_Accept (ACE_POSIX_SIG_Proactor *posix_sig_proactor)
-  : ACE_Asynch_Operation_Impl (),
-    ACE_Asynch_Accept_Impl (),
-    ACE_POSIX_SIG_Asynch_Operation (posix_sig_proactor),
-    accept_handler_ (0)
-{
-}
-
-int
-ACE_POSIX_SIG_Asynch_Accept::accept (ACE_Message_Block &message_block,
-                                     u_long bytes_to_read,
-                                     ACE_HANDLE accept_handle,
-                                     const void *act,
-                                     int priority,
-                                     int signal_number)
-{
-  // Sanity check: make sure that enough space has been allocated by
-  // the caller.
-  size_t address_size = sizeof (sockaddr_in) + sizeof (sockaddr);
-  size_t space_in_use = message_block.wr_ptr () - message_block.base ();
-  size_t total_size = message_block.size ();
-  size_t available_space = total_size - space_in_use;
-  size_t space_needed = bytes_to_read + 2 * address_size;
-  if (available_space < space_needed)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_LIB_TEXT ("Buffer too small\n")), -1);
-
-  // Common code for both WIN and POSIX.
-  ACE_POSIX_Asynch_Accept_Result *result = 0;
-  ACE_NEW_RETURN (result,
-                  ACE_POSIX_Asynch_Accept_Result (*this->handler_,
-                                                  this->handle_,
-                                                  accept_handle,
-                                                  message_block,
-                                                  bytes_to_read,
-                                                  act,
-                                                  this->posix_sig_proactor_->get_handle (),
-                                                  priority,
-                                                  signal_number),
-                  -1);
-
-  // Register this <accept> call with the local handler.
-  this->accept_handler_->register_accept_call (result);
-
-  return 0;
-}
-
-
-int
-ACE_POSIX_SIG_Asynch_Accept::open (ACE_Handler &handler,
-                                     ACE_HANDLE handle,
-                                     const void *completion_key,
-                                     ACE_Proactor *proactor)
-{
-  int result = ACE_POSIX_Asynch_Operation::open (handler,
-                                                 handle,
-                                                 completion_key,
-                                                 proactor);
-  if (result == -1)
-    return result;
-
-  // Init the Asynch_Accept_Handler now. It needs to keep Proactor
-  // also with it.
-  ACE_NEW_RETURN (this->accept_handler_,
-                  ACE_POSIX_SIG_Asynch_Accept_Handler (&this->reactor_,
-                                                       this->posix_proactor ()),
-                  -1);
-
-  // Register the handle with the reactor.
-  int return_val = this->reactor_.register_handler (this->handle_,
-                                                    this->accept_handler_,
-                                                    ACE_Event_Handler::ACCEPT_MASK);
-  if (return_val == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:Reactor::register_handler failed\n"),
-                      -1);
-
-  // Suspend the <handle> now. Enable only when the <accept> is issued
-  // by the application.
-  return_val = this->reactor_.suspend_handler (this->handle_);
-  if (return_val == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:Reactor::suspend_handler failed\n"),
-                      -1);
-
-  // Spawn the thread. It is the only thread we are going to have. It
-  // will do the <handle_events> on the reactor.
-  return_val = ACE_Thread_Manager::instance ()->spawn (ACE_POSIX_SIG_Asynch_Accept::thread_function,
-                                                       (void *)&this->reactor_);
-  if (return_val  == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:Thread_Manager::spawn failed\n"),
-                      -1);
-
-  return 0;
-}
-
-ACE_POSIX_SIG_Asynch_Accept::~ACE_POSIX_SIG_Asynch_Accept (void)
-{
-}
-
-void*
-ACE_POSIX_SIG_Asynch_Accept::thread_function (void* arg_reactor)
-{
-  // Retrieve the reactor pointer from the argument.
-  ACE_Reactor* reactor = ACE_reinterpret_cast (ACE_Reactor *,
-                                               arg_reactor);
-  if (reactor == 0)
-    reactor = ACE_Reactor::instance ();
-
-  // For this reactor, this thread is the owner.
-  reactor->owner (ACE_OS::thr_self ());
-
-  // Handle events. Wait for any connection events.
-  int result = 0;
-  while (result != -1)
-    result = reactor->handle_events ();
-
-  return 0;
-}
-
-// Methods belong to ACE_POSIX_Asynch_Operation base class. These
-// methods are defined here to avoid dominance warnings. They route
-// the call to the ACE_POSIX_Asynch_Operation base class.
-
-int
-ACE_POSIX_SIG_Asynch_Accept::cancel (void)
-{
-  return ACE_POSIX_Asynch_Operation::cancel ();
-}
-
-ACE_Proactor *
-ACE_POSIX_SIG_Asynch_Accept::proactor (void) const
+ACE_POSIX_Asynch_Accept::proactor (void) const
 {
   return ACE_POSIX_Asynch_Operation::proactor ();
 }

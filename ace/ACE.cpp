@@ -2394,13 +2394,12 @@ ACE::format_hexdump (const char *buffer,
 
 // Returns the current timestamp in the form
 // "hour:minute:second:microsecond."  The month, day, and year are
-// also stored in the beginning of the date_and_time array.  Returns 0
-// if unsuccessful, else returns pointer to beginning of the "time"
-// portion of <day_and_time>.
+// also stored in the beginning of the date_and_time array.
 
 ACE_TCHAR *
 ACE::timestamp (ACE_TCHAR date_and_time[],
-                int date_and_timelen)
+                int date_and_timelen,
+                int return_pointer_to_first_digit)
 {
   //ACE_TRACE ("ACE::timestamp");
 
@@ -2411,22 +2410,43 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
     }
 
 #if defined (WIN32)
-  // @@ Jesper, I think Win32 supports all the UNIX versions below.
-  // Therefore, we can probably remove this WIN32 ifdef altogether.
-  SYSTEMTIME local;
-  ::GetLocalTime (&local);
+   // Emulate Unix.  Win32 does NOT support all the UNIX versions
+   // below, so DO we need this ifdef.
+  static const char *day_of_week_name[] = {
+    ACE_LIB_TEXT ("Sun"),
+    ACE_LIB_TEXT ("Mon"),
+    ACE_LIB_TEXT ("Tue"),
+    ACE_LIB_TEXT ("Wed"),
+    ACE_LIB_TEXT ("Thr"),
+    ACE_LIB_TEXT ("Fri"),
+    ACE_LIB_TEXT ("Sat")
+  };
 
-  ACE_OS::sprintf (date_and_time,
-                   ACE_LIB_TEXT ("%02d/%02d/%04d %02d.%02d.%02d.%06d"),
-                   (int) local.wMonth, // new, also the %02d in sprintf
-                   (int) local.wDay,   // new, also the %02d in sprintf
-                   (int) local.wYear,  // new, also the %02d in sprintf
-                   (int) local.wHour,
-                   (int) local.wMinute,
-                   (int) local.wSecond,
-                   (int) local.wMilliseconds * 1000);
-  date_and_time[26] = '\0';
-  return &date_and_time[11];
+ static const char *month_name[] = {
+   ACE_LIB_TEXT ("Jan"),
+   ACE_LIB_TEXT ("Feb"),
+   ACE_LIB_TEXT ("Mar"),
+   ACE_LIB_TEXT ("Apr"),
+   ACE_LIB_TEXT ("May"),
+   ACE_LIB_TEXT ("Jun"),
+   ACE_LIB_TEXT ("Jul"),
+   ACE_LIB_TEXT ("Aug"),
+   ACE_LIB_TEXT ("Sep"),
+   ACE_LIB_TEXT ("Oct"),
+   ACE_LIB_TEXT ("Nov"),
+   ACE_LIB_TEXT ("Dec") };
+
+   ACE_OS::sprintf (date_and_time,
+                    ACE_LIB_TEXT ("%3s %3s %2d %04d %02d:%02d:%02d.%06d"),
+                    day_of_week_name[local.wDayOfWeek],
+                    month_name[local.wMonth - 1],
+                    (int) local.wDay,
+                    (int) local.wYear,
+                    (int) local.wHour,
+                    (int) local.wMinute,
+                    (int) local.wSecond,
+                    (int) (local.wMilliseconds * 1000));
+   return &date_and_time[15 + (return_pointer_to_first_digit != 0)];
 #else  /* UNIX */
   ACE_TCHAR timebuf[26]; // This magic number is based on the ctime(3c) man page.
   ACE_Time_Value cur_time = ACE_OS::gettimeofday ();
@@ -2454,7 +2474,7 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
                    timetmp,
                    cur_time.usec ());
   date_and_time[33] = '\0';
-  return &date_and_time[15];
+  return &date_and_time[15 + (return_pointer_to_first_digit != 0)];
 #endif /* WIN32 */
 }
 

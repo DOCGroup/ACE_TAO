@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -8,7 +9,6 @@
  *  @author Irfan Pyarali (irfan@cs.wustl.edu)
  */
 //=============================================================================
-
 
 #ifndef ACE_ASYNCH_ACCEPTOR_H
 #define ACE_ASYNCH_ACCEPTOR_H
@@ -94,8 +94,12 @@ public:
 
   /**
    * This cancels all pending accepts operations that were issued by
-   * the calling thread.  The function does not cancel accept
-   * operations issued by other threads.
+   * the calling thread.
+   * Windows NT- The function does not cancel accept operations
+   *             issued by other threads
+   * POSIX     - all OK, it delegates cancelation to the
+   *             ACE_POSIX_Asynch_Accept
+   *
    */
   virtual int cancel (void);
 

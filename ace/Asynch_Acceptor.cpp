@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 // $Id$
 
 #ifndef ACE_ASYNCH_ACCEPTOR_C
@@ -183,8 +184,8 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
   int error = 0;
 
   // If the asynchronous accept fails.
-  if (!error &&
-      !result.success ())
+  if (!result.success () ||
+      result.accept_handle() == ACE_INVALID_HANDLE )
     {
       error = 1;
       ACE_ERROR ((LM_ERROR,
@@ -268,7 +269,8 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
     }
 
   // On failure, no choice but to close the socket
-  if (error)
+  if (error &&
+      result.accept_handle() != ACE_INVALID_HANDLE )
     ACE_OS::closesocket (result.accept_handle ());
 
   // Delete the dynamically allocated message_block
@@ -300,7 +302,10 @@ ACE_Asynch_Acceptor<HANDLER>::cancel (void)
         || (defined (__BORLANDC__) && (__BORLANDC__ >= 0x530)))
   return (int) ::CancelIo (this->listen_handle_);
 #else
-  ACE_NOTSUP_RETURN (-1);
+  //ACE_NOTSUP_RETURN (-1);
+  // Supported now
+  return this->asynch_accept_.cancel();
+
 #endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) && ((defined (_MSC_VER) && (_MSC_VER > 1020)) || (defined (__BORLANDC__) && (__BORLANDC__ >= 0x530))) */
 }
 

@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 // $Id$ 
   
 #define ACE_BUILD_DLL
@@ -421,6 +422,9 @@ ACE_AIOCB_Notify_Pipe_Manager::ACE_AIOCB_Notify_Pipe_Manager (ACE_POSIX_AIOCB_Pr
   // Open the pipe.
   this->pipe_.open ();
 
+  // Let AIOCB_Proactor know about our handle 
+  posix_aiocb_proactor_->set_notify_handle (this->pipe_.read_handle ());
+
   // Open the read stream.
   if (this->read_stream_.open (*this,
                                this->pipe_.read_handle (),
@@ -474,11 +478,12 @@ ACE_AIOCB_Notify_Pipe_Manager::handle_read_stream (const ACE_Asynch_Read_Stream:
   asynch_result = *(ACE_POSIX_Asynch_Result **) result.message_block ().rd_ptr ();
 
   // Do the upcall.
-  this->posix_aiocb_proactor_->application_specific_code (asynch_result,
-                                                          0,  // No Bytes transferred.
-                                                          1,  // Success.
-                                                          0,  // Completion token.
-                                                          0); // Error.
+  this->posix_aiocb_proactor_->application_specific_code 
+            (asynch_result,
+             asynch_result->bytes_transferred(), // 0, No bytes transferred.
+             1,  // Result : True.
+             0,  // No completion key.
+             asynch_result->error());   //0, No error.
 
   // Set the message block properly. Put the <wr_ptr> back in the
   // initial position.
@@ -504,12 +509,13 @@ ACE_POSIX_AIOCB_Proactor::ACE_POSIX_AIOCB_Proactor (size_t max_aio_operations)
     aiocb_list_ (0),
     result_list_ (0),
     aiocb_list_max_size_ (max_aio_operations),
-    aiocb_list_cur_size_ (0)
+    aiocb_list_cur_size_ (0),
+    notify_pipe_read_handle_ (ACE_INVALID_HANDLE),  
+    num_deferred_aiocb_ (0),
+    num_started_aio_(0)
 {
-  if (aiocb_list_max_size_ > 8192)  
-    // @@ Alex, this shouldn't be a magic number -- it should be a
-    // constant, e.g., ACE_AIO_MAX_SIZE or something.
-    aiocb_list_max_size_ = 8192;
+  //check for correct value for max_aio_operations
+  check_max_aio_num () ;
 
   ACE_NEW (aiocb_list_, 
            aiocb *[aiocb_list_max_size_]);
@@ -532,14 +538,15 @@ ACE_POSIX_AIOCB_Proactor::ACE_POSIX_AIOCB_Proactor (size_t max_aio_operations,in
     aiocb_list_ (0),
     result_list_ (0),
     aiocb_list_max_size_ (max_aio_operations),
-    aiocb_list_cur_size_ (0)
+    aiocb_list_cur_size_ (0),
+    notify_pipe_read_handle_ (ACE_INVALID_HANDLE),  
+    num_deferred_aiocb_ (0),
+    num_started_aio_(0)
 {
   ACE_UNUSED_ARG (Flg);
 
-  if (aiocb_list_max_size_ > 8192)  
-    // @@ Alex, this shouldn't be a magic number -- it should be a
-    // constant, e.g., ACE_AIO_MAX_SIZE or something.
-    aiocb_list_max_size_ = 8192;
+  //check for correct value for max_aio_operations
+  check_max_aio_num () ;
 
   ACE_NEW (aiocb_list_, 
            aiocb *[aiocb_list_max_size_]);
@@ -562,11 +569,68 @@ ACE_POSIX_AIOCB_Proactor::~ACE_POSIX_AIOCB_Proactor (void)
 {
   delete_notify_manager ();
 
+  // delete all uncomlpeted operarion
+  // as nobody will notify client since now
+  for (size_t ai = 0; ai < aiocb_list_max_size_; ai++)
+    {
+      delete result_list_[ai] ;
+      result_list_[ai] = 0;
+      aiocb_list_[ai] = 0;
+    }
+
+
   delete [] aiocb_list_;
   aiocb_list_ = 0;
-	
+        
   delete [] result_list_;
   result_list_ = 0;
+}
+
+void ACE_POSIX_AIOCB_Proactor::set_notify_handle (ACE_HANDLE h)
+{
+  notify_pipe_read_handle_ = h ;
+}
+
+void ACE_POSIX_AIOCB_Proactor::check_max_aio_num ()
+{
+  long max_os_aio_num = ACE_OS ::sysconf ( _SC_AIO_MAX );
+
+  // Define max limit AIO's for concrete OS
+  // -1 means that there is no limit, but it is not true
+  // ( example, SunOS 5.6)
+
+  if (  max_os_aio_num > 0  
+     && aiocb_list_max_size_ > ( unsigned long ) max_os_aio_num 
+     )
+     aiocb_list_max_size_ = max_os_aio_num ;
+
+#if defined(HPUX)
+
+  // Although HPUX 11.00 allows to start 2048 AIO's
+  // for all process in system
+  // it has a limit 256 max elements for aio_suspend ()
+  // It is a pity, but ...
+
+  long max_os_listio_num = ACE_OS ::sysconf ( _SC_AIO_LISTIO_MAX );
+  if (  max_os_listio_num > 0  
+     && aiocb_list_max_size_ > ( unsigned long ) max_os_listio_num 
+     )
+     aiocb_list_max_size_ = max_os_listio_num ;
+
+#endif 
+
+  // The last check for user-defined value
+  // ACE_AIO_MAX_SIZE if defined in POSIX_Proactor.h
+
+  if (  aiocb_list_max_size_ <= 0
+     || aiocb_list_max_size_ > ACE_AIO_MAX_SIZE
+     )
+     aiocb_list_max_size_ = ACE_AIO_MAX_SIZE;
+
+  ACE_DEBUG ((LM_DEBUG,
+             "(%P | %t) ACE_POSIX_AIOCB_Proactor::Max Number of AIOs=%d\n",
+              aiocb_list_max_size_)); 
+
 }
 
 void  
@@ -656,8 +720,10 @@ ACE_POSIX_AIOCB_Proactor::create_asynch_accept (void)
 {
   ACE_Asynch_Accept_Impl *implementation = 0;
   ACE_NEW_RETURN (implementation,
-                  ACE_POSIX_AIOCB_Asynch_Accept (this),
+                  ACE_POSIX_Asynch_Accept (this),
                   0);
+  //was ACE_POSIX_AIOCB_Asynch_Accept (this)
+
   return implementation;
 }
 
@@ -705,43 +771,56 @@ ACE_POSIX_AIOCB_Proactor::handle_events (u_long milli_seconds)
                         0);  // let continue work
     }
 
+  size_t index = 0;
   int error_status = 0;
   int return_status = 0;
 
-  ACE_POSIX_Asynch_Result *asynch_result =
-    find_completed_aio (error_status, return_status);
+  int retval= 0;
 
-  if (asynch_result == 0)
-    return 0;
+  for ( ; ; )
+  {
+    ACE_POSIX_Asynch_Result *asynch_result =
+      find_completed_aio (error_status, return_status,index);
 
-  // Call the application code.
-  this->application_specific_code (asynch_result,
+    if (asynch_result == 0)
+      break;
+
+    //at least one processed
+    retval = 1 ; // more informative retval++  
+
+    // Call the application code.
+    this->application_specific_code (asynch_result,
                                    return_status, // Bytes transferred.
                                    1,             // Success
                                    0,             // No completion key.
                                    error_status); // Error
-  return 1;    
+  }
+
+  return retval;    
 }
 
 ACE_POSIX_Asynch_Result *
 ACE_POSIX_AIOCB_Proactor::find_completed_aio (int &error_status,
-                                               int &return_status)
+                                              int &return_status,
+                                              size_t &index )
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->mutex_, 0));
-
-  size_t ai;
+  
   ACE_POSIX_Asynch_Result *asynch_result = 0;
 
   error_status = 0;
   return_status= 0;
-	
-  for (ai = 0; ai < aiocb_list_max_size_; ai++)
+
+  if ( num_started_aio_ == 0 )  // save time
+    return asynch_result;
+        
+  for (; index < aiocb_list_max_size_; index++)
     {
-      if (aiocb_list_[ai] == 0) // Dont process null blocks.
+      if (aiocb_list_[index] == 0) // Dont process null blocks.
         continue;
 
       // Get the error status of the aio_ operation.
-      error_status = aio_error (aiocb_list_[ai]);
+      error_status = aio_error (aiocb_list_[index]);
 
       if (error_status == -1)   // <aio_error> itself has failed.
         {
@@ -750,12 +829,16 @@ ACE_POSIX_AIOCB_Proactor::find_completed_aio (int &error_status,
                       "ACE_POSIX_AIOCB_Proactor::find_completed_aio:"
                       "<aio_error> has failed\n"));
 
-          // skip this operation  
-          aiocb_list_[ai] = 0;
-          result_list_[ai] = 0;
-          aiocb_list_cur_size_--;
-		
-          continue;
+          break;
+
+          // we should notify user, otherwise : 
+          // memory leak for result and "hanging" user
+          // what was before skip this operation  
+
+          //aiocb_list_[index] = 0;
+          //result_list_[index] = 0;
+          //aiocb_list_cur_size_--;
+          //continue;
         }
 
       // Continue the loop if <aio_> operation is still in progress.
@@ -764,28 +847,39 @@ ACE_POSIX_AIOCB_Proactor::find_completed_aio (int &error_status,
 
     } // end for
 
-  if (ai >= this->aiocb_list_max_size_) // all processed
+  if (index >= this->aiocb_list_max_size_) // all processed
     return asynch_result;
   else if (error_status == ECANCELED)
     return_status = 0;
-  else
-    return_status = aio_return (aiocb_list_[ai]);
-
+  else if (error_status == -1)
+    return_status = 0;
+  else 
+    return_status = aio_return (aiocb_list_[index]);
+    
   if (return_status == -1) 
     {
-      // was ACE_ERROR_RETURN
-      ACE_ERROR ((LM_ERROR,   
+      return_status = 0; // zero bytes transferred
+
+      if (error_status == 0)  // nonsense 
+        ACE_ERROR ((LM_ERROR,   
                   "%N:%l:(%P | %t)::%p\n",
                   "ACE_POSIX_AIOCB_Proactor::find_completed_aio:"
                   "<aio_return> failed\n"));
-      return_status = 0; // zero bytes transferred
     }
 
-  asynch_result = result_list_[ai];
+  
+  asynch_result = result_list_[index];
 
-  aiocb_list_[ai] = 0;
-  result_list_[ai] = 0;
+  aiocb_list_[index] = 0;
+  result_list_[index] = 0;
   aiocb_list_cur_size_--;
+
+  num_started_aio_--;  // decrement count active aios
+  index++ ;            // for next iteration
+
+  this->start_deferred_aio ();
+  //make attempt to start deferred AIO
+  //It is safe as we are protected by mutex_
 
   return asynch_result;
 }
@@ -811,42 +905,107 @@ ACE_POSIX_AIOCB_Proactor::register_and_start_aio
   ACE_TRACE ("ACE_POSIX_AIOCB_Proactor::register_and_start_aio");
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->mutex_, -1));
-
+  
   int ret_val = (aiocb_list_cur_size_ >= aiocb_list_max_size_) ? -1 : 0;
 
   if (result == 0) // Just check the status of the list
     return ret_val;
 
-  // Non-zero ptr.  Find a free slot and store.
-  if (ret_val == 0)
-    {
-      for (size_t i= 0; i < this->aiocb_list_max_size_; i++)
-        if (aiocb_list_[i] == 0)  
-          {
-            ret_val = start_aio (result, op);
+  // Save operation code in the aiocb
+  switch ( op )
+  {
+    case 0 : 
+      result->aio_lio_opcode = LIO_READ;
+      break;
 
-            if (ret_val == 0)   // Store the pointers.
-              {
-                aiocb_list_[i] = result; 
-                result_list_[i] = result;
+    case 1 : 
+      result->aio_lio_opcode = LIO_WRITE;
+      break;
+    
+    default:
+      ACE_ERROR_RETURN ((LM_ERROR,
+                "%N:%l:(%P | %t)::\n"
+                "register_and_start_aio: Invalid operation code\n"),
+                -1);
+  }
 
-                aiocb_list_cur_size_++;
-              }
-            return ret_val;
-          }
-
-      errno = EAGAIN;
-      ret_val = -1;
-    }
-				 
-  ACE_ERROR ((LM_ERROR,
+  if (ret_val != 0)   // No free slot
+    {                                   
+      errno   = EAGAIN;
+      ACE_ERROR_RETURN ((LM_ERROR,
               "%N:%l:(%P | %t)::\n"
-              "register_and_start_aio: No space to store the <aio>info\n"));
-  return ret_val;
+              "register_and_start_aio: "
+              "No space to store the <aio>info\n"),
+              -1);
+    }
+
+  // Find a free slot and store.
+  // we reserve zero slot for ACE_AIOCB_Notify_Pipe_Manager
+  // so make check for ACE_AIOCB_Notify_Pipe_Manager request
+
+  size_t i = 0;
+
+  if ( notify_pipe_read_handle_ == result->aio_fildes ) // Notify_Pipe ?
+    {                                       // should be free,
+      if ( result_list_[i] != 0 )           // only 1 request 
+        {                                   // is allowed
+          errno   = EAGAIN;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                     "%N:%l:(%P | %t)::\n"
+                     "register_and_start_aio:"
+                     "internal Proactor error 0\n"),
+                     -1 );
+        }
+    }
+  else  //try to find free slot as usual, but starting from 1
+    {
+      for ( i= 1; i < this->aiocb_list_max_size_; i++) 
+        if (result_list_[i] == 0)  
+          break ;
+    }
+  
+  if ( i >= this->aiocb_list_max_size_ )
+    ACE_ERROR_RETURN ((LM_ERROR,
+              "%N:%l:(%P | %t)::\n"
+              "register_and_start_aio: "
+              "internal Proactor error 1\n"),
+              -1);
+
+  result_list_[i] = result;   //Store result ptr anyway
+  aiocb_list_cur_size_++;
+
+  ret_val = start_aio (result);
+
+  switch ( ret_val )
+    {
+    case 0 :     // started OK
+      aiocb_list_[i] = result;
+      return 0 ;
+
+    case 1 :     //OS AIO queue overflow
+      num_deferred_aiocb_ ++ ;
+      return 0 ;
+  
+    default:    //Invalid request, there is no point
+      break;    // to start it later 
+    }
+
+  result_list_[i] = 0;
+  aiocb_list_cur_size_--;
+                                 
+  ACE_ERROR ((LM_ERROR,
+              "%N:%l:(%P | %t)::%p\n",
+              "register_and_start_aio: Invalid request to start <aio>\n"));
+  return -1;
 }
 
+// start_aio  has new return codes
+//     0    AIO was started successfully
+//     1    AIO was not started, OS AIO queue overflow
+//     -1   AIO was not started, other errors
+
 int
-ACE_POSIX_AIOCB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result, int op)
+ACE_POSIX_AIOCB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result)
 {
   ACE_TRACE ("ACE_POSIX_AIOCB_Proactor::start_aio");
 
@@ -855,13 +1014,13 @@ ACE_POSIX_AIOCB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result, int op)
 
   // Start IO
 
-  switch (op)
+  switch (result->aio_lio_opcode  )
     {
-    case 0:
+    case LIO_READ :
       ptype = "read ";
       ret_val = aio_read (result);
       break;
-    case 1:
+    case LIO_WRITE :
       ptype = "write";
       ret_val = aio_write (result);
       break;
@@ -870,15 +1029,176 @@ ACE_POSIX_AIOCB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result, int op)
       ret_val = -1;
       break;
     }
-	
-  if (ret_val == -1)
-    ACE_ERROR ((LM_ERROR,
+
+  if (ret_val == 0 )
+    num_started_aio_ ++ ;
+  else // if (ret_val == -1)
+    {
+      if ( errno == EAGAIN )  //Ok, it will be deferred AIO
+         ret_val = 1 ;
+      else
+        ACE_ERROR ((LM_ERROR,
                 "%N:%l:(%P | %t)::start_aio: aio_%s %p\n",
                 ptype,
                 "queueing failed\n"));
+    }
 
   return ret_val;
 }
+
+
+int
+ACE_POSIX_AIOCB_Proactor::start_deferred_aio ()
+{
+  ACE_TRACE ("ACE_POSIX_AIOCB_Proactor::start_deferred_aio");
+
+  // This protected method is called from 
+  // find_completed_aio after any AIO completion
+  // We should call this method always with locked 
+  //   ACE_POSIX_AIOCB_Proactor::mutex_ 
+  //
+  // It tries to start the first deferred AIO 
+  // if such exists
+
+  if ( num_deferred_aiocb_ == 0 )
+    return 0 ;  //  nothing to do
+
+  size_t i = 0;
+
+  for ( i= 0; i < this->aiocb_list_max_size_; i++) 
+    if (  result_list_[i] !=0       // check for
+       && aiocb_list_[i]  ==0 )     // deferred AIO
+      break ;
+
+  if ( i >= this->aiocb_list_max_size_ )
+    ACE_ERROR_RETURN ((LM_ERROR,
+                 "%N:%l:(%P | %t)::\n"
+                 "start_deferred_aio:"
+                 "internal Proactor error 3\n"),
+                 -1);
+    
+  ACE_POSIX_Asynch_Result *result = result_list_[i];
+
+  int ret_val = start_aio (result);
+
+  switch ( ret_val )
+    {
+    case 0 :    //started OK , decrement count of deferred AIOs
+      aiocb_list_[i] = result;
+      num_deferred_aiocb_ -- ;   
+      return 0 ;
+
+    case 1 :
+      return 0 ;  //try again later
+
+    default :     // Invalid Parameters , should never be
+      break ;
+    }
+ 
+  //AL notify  user
+
+  result_list_[i] = 0;
+  aiocb_list_cur_size_--;
+
+  num_deferred_aiocb_ -- ;   
+
+  result->set_error (errno);
+  result->set_bytes_transferred (0);
+  this->post_completion ( result );
+
+  return -1;
+}
+
+int
+ACE_POSIX_AIOCB_Proactor::cancel_aio ( ACE_HANDLE handle )
+{
+  // This new method should be called from 
+  // ACE_POSIX_Asynch_Operation instead of usual ::aio_cancel
+  // It scans the result_list_ and defines all AIO requests 
+  // that were issued for handle "handle"
+  //
+  // For all deferred AIO requests with handle "handle"
+  // it removes its from the lists and notifies user
+  //
+  // For all running AIO requests with handle "handle" 
+  // it calls ::aio_cancel. According to the POSIX standards
+  // we will receive ECANCELED  for all ::aio_canceled AIO requests
+  // later on return from ::aio_suspend
+
+  ACE_TRACE ("ACE_POSIX_AIOCB_Proactor::cancel_aio");
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->mutex_, -1));
+        
+  int    num_total     = 0;
+  int    num_cancelled = 0;
+  size_t ai = 0;
+
+  for (ai = 0; ai < aiocb_list_max_size_; ai++)
+    {
+      if ( result_list_[ai] == 0 )    //skip empty slot
+         continue ;
+
+      if ( result_list_[ai]->aio_fildes != handle )  //skip not our slot
+         continue ;
+
+      num_total++ ;  
+
+      ACE_POSIX_Asynch_Result *asynch_result = result_list_[ai];
+    
+      if ( aiocb_list_ [ai] == 0 )  //deferred aio
+        {
+          num_cancelled ++ ;
+          num_deferred_aiocb_ -- ;
+
+          aiocb_list_[ai] = 0;
+          result_list_[ai] = 0;
+          aiocb_list_cur_size_--;
+
+          asynch_result->set_error (ECANCELED);
+          asynch_result->set_bytes_transferred (0);
+          this->post_completion ( asynch_result );
+        }
+      else      //cancel started aio
+        {
+          int rc_cancel = this->cancel_aiocb (asynch_result );
+
+          if ( rc_cancel == 0 )    //notification in the future
+            num_cancelled ++ ;     //it is OS responsiblity
+        }
+    }
+
+  if ( num_total == 0 )
+    return 1;  // ALLDONE
+
+  if ( num_cancelled == num_total )
+    return 0;  // CANCELLED
+
+  return 2; // NOT CANCELLED
+}
+
+int
+ACE_POSIX_AIOCB_Proactor::cancel_aiocb ( ACE_POSIX_Asynch_Result * result )
+{
+  // This new method is called from cancel_aio
+  // to cancel concrete running AIO request
+  int rc = ::aio_cancel (0, result );
+  
+  // Check the return value and return 0/1/2 appropriately.
+  if (rc == AIO_CANCELED)
+    return 0;
+  else if (rc == AIO_ALLDONE)
+    return 1;
+  else if (rc == AIO_NOTCANCELED)
+    return 2;
+
+  ACE_ERROR_RETURN ((LM_ERROR,
+                       "%N:%l:(%P | %t)::%p\n",
+                       "cancel_aiocb:"
+                       "Unexpected result from <aio_cancel>"),
+                      -1);
+
+}
+
 
 // *********************************************************************
 
@@ -1048,8 +1368,10 @@ ACE_POSIX_SIG_Proactor::create_asynch_accept (void)
 {
   ACE_Asynch_Accept_Impl *implementation = 0;
   ACE_NEW_RETURN (implementation,
-                  ACE_POSIX_SIG_Asynch_Accept (this),
+                  ACE_POSIX_Asynch_Accept (this),
                   0);
+
+  // was  ACE_POSIX_SIG_Asynch_Accept (this),
   return implementation;
 }
 
@@ -1274,7 +1596,7 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
 
           // Failure.
           if (return_status == -1)
-            {						
+            {                                           
               ACE_ERROR ((LM_ERROR,
                           "%N:%l:(%P | %t)::%p\n",
                           "ACE_POSIX_SIG_Proactor::handle_events:"
@@ -1294,11 +1616,12 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
     }
   else if (sig_info.si_code == SI_QUEUE)
     {
-      this->application_specific_code (asynch_result,
-                                       0,  // No bytes transferred.
-                                       1,  // Result : True.
-                                       0,  // No completion key.
-                                       0); // No error.
+      this->application_specific_code 
+            (asynch_result,
+             asynch_result->bytes_transferred(), // 0, No bytes transferred.
+             1,  // Result : True.
+             0,  // No completion key.
+             asynch_result->error());   //0, No error.
     }
   else
     // Unknown signal code.
