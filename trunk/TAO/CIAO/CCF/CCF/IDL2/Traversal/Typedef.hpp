@@ -25,18 +25,17 @@ namespace CCF
         virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
-          traverse (n->dynamic_type<SyntaxTree::TypedefDecl> ());
-          return true;
+          return traverse (n->dynamic_type<SyntaxTree::TypedefDecl> ());
         }
 
-        virtual void
+        virtual bool
         traverse (SyntaxTree::TypedefDeclPtr const& n)
         {
           typedef_decl = n;
 
           SyntaxTree::NodePtr vt (n->virtual_type ());
 
-          disp_.dispatch (vt);
+          return disp_.dispatch (vt);
         }
 
       protected:
