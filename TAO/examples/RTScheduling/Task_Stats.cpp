@@ -70,7 +70,7 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
   int val_2;
   ACE_UINT64 x;
 
-  x = this->thr_run_time_[0] / scale_factor;
+  x = this->thr_run_time_[0];// scale_factor;
   val_1 = ACE_CU64_TO_CU32 (x);	
   
   ACE_OS::fprintf (output_file, "%u \t %d\n",val_1,thr_count_[0]);
@@ -80,12 +80,12 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
     {
       if (this->thr_count_[i] == this->thr_count_[i-1])
 	{
-	  x = this->thr_run_time_[i] / scale_factor;
+	  x = this->thr_run_time_[i];// / scale_factor;
 	  val_1 = ACE_CU64_TO_CU32 (x);	
 	}
       else 
 	{
-	  x = this->thr_run_time_[i-1] / scale_factor;
+	  x = this->thr_run_time_[i-1];// / scale_factor;
 	  val_1 = ACE_CU64_TO_CU32 (x);	
 	}
       
