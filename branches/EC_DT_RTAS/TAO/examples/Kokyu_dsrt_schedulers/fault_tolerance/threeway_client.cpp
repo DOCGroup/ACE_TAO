@@ -30,7 +30,7 @@ int enable_dynamic_scheduling = 1;
 int enable_yield = 1;
 int enable_rand = 0;
 int niteration1 = 5;
-int niteration2 = 3;
+int niteration2 = 10;
 int workload1 = 2;
 int period1 = 4;
 int workload2 = 1;
@@ -652,8 +652,13 @@ Worker::svc (void)
 #endif
       DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 
+      int need_ft=0;
+      if (rand() > RAND_MAX/2 ) 
+         need_ft = 1;
       DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&oid);
-      server_->test_method (left_work ACE_ENV_ARG_PARAMETER);
+
+      if (need_ft) {
+      server_->test_method (left_work,2 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
       ACE_DEBUG ((LM_DEBUG, "BRGIN to make next one way call\n"));
       sched_param.task_id= second_task_id;
@@ -664,10 +669,16 @@ Worker::svc (void)
                                                         implicit_sched_param.in ()
                                                         ACE_ENV_ARG_PARAMETER);
 
-      server2_->test_method (left_work ACE_ENV_ARG_PARAMETER);
+      server2_->test_method (left_work,2 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       sched_param.task_id= first_task_id;
+      }
+      else {
+        server_->test_method (left_work,1 ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (-1);
+      }
+ 
       /*DTTIME:
         oneway call done on the client side.
       */

@@ -38,7 +38,7 @@ public:
   // ctor
 
   // = The Simple_Server methods.
-  void test_method (CORBA::Long x ACE_ENV_ARG_DECL_NOT_USED)
+  void test_method (CORBA::Long x, CORBA::Long y ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)

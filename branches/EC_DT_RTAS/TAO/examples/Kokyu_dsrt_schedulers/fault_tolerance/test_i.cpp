@@ -21,7 +21,7 @@
 ACE_RCSID(MT_Server, test_i, "test_i.cpp,v 1.2 2003/10/08 13:26:32 venkita Exp")
 
 void
-Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
+Simple_Server_i::test_method (CORBA::Long exec_duration, CORBA::Long need_ft ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Policy_ptr sched_policy =
@@ -171,7 +171,7 @@ Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
                                                     ACE_ENV_ARG_PARAMETER);
 
   DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&oid);  
-  this->server_->test_method2(exec_duration);
+  this->server_->test_method2(exec_duration,need_ft);
   DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, sizeof(Object_ID), (char*)&oid);
   this->current_->end_scheduling_segment (name); 
   DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
