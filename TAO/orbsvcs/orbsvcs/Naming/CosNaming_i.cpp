@@ -23,7 +23,8 @@ TAO_NamingContext::TAO_NamingContext (PortableServer::POA_ptr poa,
 				      int root)
   : lock_ (0),
     root_ (root),
-    poa_ (PortableServer::POA::_duplicate (poa))
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    counter_ (0)
 {
   // Deal with faults.
   if (context_.open (default_hash_table_size) == -1)
@@ -457,6 +458,12 @@ TAO_NamingContext::unbind (const CosNaming::Name& n,
 CosNaming::NamingContext_ptr
 TAO_NamingContext::new_context (CORBA::Environment &_env)
 {
+  ACE_GUARD_THROW_RETURN (ACE_Lock, 
+                          ace_mon, 
+                          *this->lock_, 
+                          CORBA::INTERNAL (CORBA::COMPLETED_NO), 
+                          CosNaming::NamingContext::_nil ());
+
   TAO_NamingContext *c = 0;
 
   CosNaming::NamingContext_var result;
@@ -467,8 +474,20 @@ TAO_NamingContext::new_context (CORBA::Environment &_env)
 			result._retn ());
   TAO_TRY
     {
+      char name[BUFSIZ];
+      ACE_OS::sprintf (name, "%d", this->counter_++);
+
+      PortableServer::ObjectId_var id =
+        PortableServer::string_to_ObjectId (name);
+      
+      this->poa_->activate_object_with_id (id.in (),
+                                           c,
+                                           TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
       result = c->_this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
       return result._retn ();
     }
   TAO_CATCHANY
@@ -660,6 +679,17 @@ TAO_NamingContext::list (CORBA::ULong how_many,
 		       hash_iter,
 		       TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
+
+          char name[BUFSIZ];
+          ACE_OS::sprintf (name, "%d", this->counter_++);
+
+          PortableServer::ObjectId_var id =
+            PortableServer::string_to_ObjectId (name);
+      
+          this->poa_->activate_object_with_id (id.in (),
+                                               bind_iter,
+                                               TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
 	  bi = bind_iter->_this (TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
