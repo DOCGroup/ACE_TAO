@@ -30,9 +30,7 @@
 #include "notifylog_serv_export.h"
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -49,7 +47,7 @@ class TAO_NotifyLogFactory_i;
  * Log when events are 'pushed' to the NotifyLog which is an
  * EventChannel.
  */
-class TAO_Notify_LogConsumer : 
+class TAO_Notify_LogConsumer :
   public virtual POA_CosNotifyComm::StructuredPushConsumer,
   public PortableServer::RefCountServantBase
 {
@@ -108,7 +106,7 @@ protected:
   TAO_NotifyLog_i *log_;
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

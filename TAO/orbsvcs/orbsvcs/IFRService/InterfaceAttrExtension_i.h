@@ -28,13 +28,11 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_IFRService_Export TAO_InterfaceAttrExtension_i 
+class TAO_IFRService_Export TAO_InterfaceAttrExtension_i
   : public virtual TAO_IRObject_i
 {
   // = TITLE
@@ -50,19 +48,19 @@ public:
   virtual ~TAO_InterfaceAttrExtension_i (void);
   // Destructor
 
-  virtual 
+  virtual
   CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *
   describe_ext_interface (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *
   describe_ext_interface_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::ExtAttributeDef_ptr create_ext_attribute (
       const char *id,
       const char *name,
@@ -74,7 +72,7 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
   CORBA::ExtAttributeDef_ptr create_ext_attribute_i (
       const char *id,
       const char *name,
@@ -88,7 +86,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

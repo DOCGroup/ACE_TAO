@@ -30,13 +30,11 @@
 #include "IFR_ComponentsS.h"
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_IFRService_Export TAO_HomeDef_i 
+class TAO_IFRService_Export TAO_HomeDef_i
   : public virtual TAO_ExtInterfaceDef_i
 {
   // = TITLE
@@ -108,35 +106,35 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-      
+
   void base_home_i (
       CORBA::ComponentIR::HomeDef_ptr base_home
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-      
+
   virtual CORBA::InterfaceDefSeq *supported_interfaces (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-      
+
   CORBA::InterfaceDefSeq *supported_interfaces_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-      
+
   virtual void supported_interfaces (
       const CORBA::InterfaceDefSeq &supported_interfaces
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-      
+
   void supported_interfaces_i (
       const CORBA::InterfaceDefSeq &supported_interfaces
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-      
+
   virtual CORBA::ComponentIR::ComponentDef_ptr managed_component (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
@@ -152,13 +150,13 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-      
+
   void managed_component_i (
       CORBA::ComponentIR::ComponentDef_ptr managed_component
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-      
+
   virtual CORBA::ValueDef_ptr primary_key (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
@@ -174,13 +172,13 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-      
+
   void primary_key_i (
       CORBA::ValueDef_ptr primary_key
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-      
+
   virtual CORBA::ComponentIR::FactoryDef_ptr create_factory (
       const char *id,
       const char *name,
@@ -275,7 +273,7 @@ private:
                        ACE_ENV_ARG_DECL);
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
