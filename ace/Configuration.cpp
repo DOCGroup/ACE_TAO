@@ -593,8 +593,36 @@ ACE_Configuration_Win32Registry::remove_section (const ACE_Configuration_Section
         }
     }
 
+#if (ACE_HAS_WINNT4 != 0)
   if (ACE_TEXT_RegDeleteKey (base_key, sub_section) != ERROR_SUCCESS)
     return -2;
+#else
+  if (!recursive)
+    {
+      ACE_Configuration_Section_Key section;
+      if (open_section (key, sub_section, 0, section))
+        return -2;
+ 
+      HKEY sub_key;
+      if (load_key (section, sub_key))
+        return -3;
+ 
+      ACE_TCHAR name_buffer[ACE_DEFAULT_BUFSIZE];
+      DWORD buffer_size = ACE_DEFAULT_BUFSIZE;
+      // Check for a an entry under the sub_key
+      if (ACE_TEXT_RegEnumKeyEx (sub_key,
+                                 0,
+                                 name_buffer,
+                                 &buffer_size,
+                                 NULL,
+                                 NULL,
+                                 NULL,
+                                 NULL) == ERROR_SUCCESS)
+        return -2;
+    }
+  else if (ACE_TEXT_RegDeleteKey (base_key, sub_section) != ERROR_SUCCESS)
+    return -2;
+#endif
 
   return 0;
 }
