@@ -2215,12 +2215,7 @@ ACE::handle_ready (ACE_HANDLE handle,
   fds.events = read_ready ? POLLIN : POLLOUT;
   fds.revents = 0;
 
-  int result;
-
-  if (timeout == 0)
-    result = ACE_OS::poll (&fds, 1, 0);
-  else
-    result = ACE_OS::poll (&fds, 1, *timeout);
+  int result = ACE_OS::poll (&fds, 1, timeout);
 #else
 
   ACE_Handle_Set handle_set;
