@@ -1,3 +1,14 @@
+Sat Jun 17 07:46:44 2000  Chris Kohlhoff <chris@kohlhoff.com>
+  
+        * tao/Makefile.bor:
+	  Added missing file Policy_Factory.cpp.
+
+        * orbsvcs/orbsvcs/Makefile.bor:
+	* orbsvcs/orbsvcs/LoadBalancing.bor:
+	* orbsvcs/LoadBalancer/Makefile.bor:
+	* orbsvcs/Makefile.bor:
+	  Added new LoadBalancing orbsvcs library.
+  
 Fri Jun 16 23:18:21 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp (preinvoke):
