@@ -1,3 +1,14 @@
+Thu Feb  8 14:53:07 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/AMI_Timeouts/AMI_Timeouts.dsw:
+
+          Inserted client.dsp.
+
+        * tests/AMI_Timeouts/client.dsp:
+        * tests/AMI_Timeouts/server.dsp:
+
+          Fixed/Added idl custom build commands.  
+
 Thu Feb  8 14:29:13 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/GIOP_Message_Handler.cpp:
