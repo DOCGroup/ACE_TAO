@@ -29,9 +29,6 @@
 template <class PROXY> class TAO_ESF_Proxy_Collection;
 template <class TYPE> class TAO_ESF_RefCount_Guard;
 template <class PROXY, class ACE_LOCK> class TAO_NS_Event_Map_T;
-template <class PEER> class TAO_NS_Dispatch_Observer_T;
-template <class PROXY> class TAO_NS_Event_Map_Observer_T;
-template <class PEER> class TAO_NS_Pending_Worker_T;
 
 /**
  *  Forward declare classes
@@ -71,15 +68,6 @@ typedef TAO_ESF_RefCount_Guard<CORBA::ULong> TAO_NS_Object_RefCount_Guard;
 
 typedef TAO_NS_Event_Map_T<TAO_NS_ProxySupplier, TAO_SYNCH_RW_MUTEX> TAO_NS_Consumer_Map;
 typedef TAO_NS_Event_Map_T<TAO_NS_ProxyConsumer, TAO_SYNCH_RW_MUTEX> TAO_NS_Supplier_Map;
-
-typedef TAO_NS_Event_Map_Observer_T<TAO_NS_ProxyConsumer> TAO_NS_Consumer_Map_Observer;
-typedef TAO_NS_Event_Map_Observer_T<TAO_NS_ProxySupplier> TAO_NS_Supplier_Map_Observer;
-
-typedef TAO_NS_Dispatch_Observer_T<TAO_NS_Peer> TAO_NS_Updates_Dispatch_Observer;
-typedef TAO_NS_Dispatch_Observer_T<TAO_NS_Consumer> TAO_NS_Event_Dispatch_Observer;
-
-typedef TAO_NS_Pending_Worker_T<TAO_NS_Peer> TAO_NS_Updates_Pending_Worker;
-typedef TAO_NS_Pending_Worker_T<TAO_NS_Consumer> TAO_NS_Event_Pending_Worker;
 
 #include "ace/post.h"
 #endif /* TAO_NS_TYPES_H */

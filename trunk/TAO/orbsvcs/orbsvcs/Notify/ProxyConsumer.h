@@ -53,6 +53,7 @@ public:
   /// Shutdown  (TAO_NS_Container_T method)
   virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
 
+  /// Start event propagation.
   virtual void push (TAO_NS_Event_var &event);
 
   /// Access our Peer.
@@ -61,10 +62,10 @@ public:
   /// Access the Supplier
   TAO_NS_Supplier* supplier (void);
 
-protected:
   /// Return 1 if connected
   int is_connected (void);
 
+protected:
   /// The Supplier that we're connect to.
   TAO_NS_Supplier* supplier_;
 };

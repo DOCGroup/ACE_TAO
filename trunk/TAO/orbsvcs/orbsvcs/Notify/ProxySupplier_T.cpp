@@ -32,9 +32,9 @@ TAO_NS_ProxySupplier_T<SERVANT_TYPE>::~TAO_NS_ProxySupplier_T ()
 }
 
 template <class SERVANT_TYPE> void
-TAO_NS_ProxySupplier_T<SERVANT_TYPE>::admin_subscription (const CosNotification::EventTypeSeq & added,
-                                            const CosNotification::EventTypeSeq & removed
-                                            ACE_ENV_ARG_DECL)
+TAO_NS_ProxySupplier_T<SERVANT_TYPE>::admin_types_changed (const CosNotification::EventTypeSeq & added,
+                                                           const CosNotification::EventTypeSeq & removed
+                                                           ACE_ENV_ARG_DECL)
 {
   this->subscription_change (added, removed ACE_ENV_ARG_PARAMETER);
 }
@@ -97,7 +97,7 @@ TAO_NS_ProxySupplier_T<SERVANT_TYPE>::obtain_offered_types (CosNotifyChannelAdmi
                    CORBA::SystemException
                    ))
 {
-  return this->obtain_types (mode ACE_ENV_ARG_PARAMETER);
+  return this->obtain_types (mode, this->event_manager_->offered_types () ACE_ENV_ARG_PARAMETER);
 }
 
 template <class SERVANT_TYPE> void
@@ -110,17 +110,15 @@ TAO_NS_ProxySupplier_T<SERVANT_TYPE>::subscription_change (const CosNotification
   TAO_NS_EventTypeSeq seq_added (added);
   TAO_NS_EventTypeSeq seq_removed (removed);
 
-  ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
-                      CORBA::INTERNAL ());
-  ACE_CHECK;
+  {
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
+                        CORBA::INTERNAL ());
+    ACE_CHECK;
 
-  this->subscribed_types_.init (seq_added, seq_removed);
+    this->subscribed_types_.init (seq_added, seq_removed);
+  }
 
-  if (this->is_connected () == 1)
-    {
-      event_manager_->subscribe (this, seq_added ACE_ENV_ARG_PARAMETER);
-      event_manager_->un_subscribe (this, seq_removed ACE_ENV_ARG_PARAMETER);
-    }
+  this->event_manager_->subscription_change (this, seq_added, seq_removed ACE_ENV_ARG_PARAMETER);
 }
 
 template <class SERVANT_TYPE> void
@@ -131,13 +129,15 @@ TAO_NS_ProxySupplier_T<SERVANT_TYPE>::suspend_connection (ACE_ENV_SINGLE_ARG_DEC
                    CosNotifyChannelAdmin::NotConnected
                    ))
 {
-  ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_, CORBA::INTERNAL ());
+  {
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_, CORBA::INTERNAL ());
 
-  if (this->is_connected () == 0)
-    ACE_THROW (CosNotifyChannelAdmin::NotConnected ());
+    if (this->is_connected () == 0)
+      ACE_THROW (CosNotifyChannelAdmin::NotConnected ());
 
-  if (this->consumer_->is_suspended () == 1)
-    ACE_THROW (CosNotifyChannelAdmin::ConnectionAlreadyInactive ());
+    if (this->consumer_->is_suspended () == 1)
+      ACE_THROW (CosNotifyChannelAdmin::ConnectionAlreadyInactive ());
+  }
 
   this->consumer_->suspend (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
@@ -160,7 +160,7 @@ TAO_NS_ProxySupplier_T<SERVANT_TYPE>::resume_connection (ACE_ENV_SINGLE_ARG_DECL
       ACE_THROW (CosNotifyChannelAdmin::ConnectionAlreadyActive ());
   }
 
-  this->consumer_->suspend (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->consumer_->resume (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 template <class SERVANT_TYPE> CosNotifyChannelAdmin::ConsumerAdmin_ptr
@@ -178,6 +178,8 @@ TAO_NS_ProxySupplier_T<SERVANT_TYPE>::MyAdmin (ACE_ENV_SINGLE_ARG_DECL)
 
   return ret._retn ();
 }
+
+/***************************** UNIMPLEMENTED METHODS***************************************/
 
 template <class SERVANT_TYPE> CosNotifyFilter::MappingFilter_ptr
 TAO_NS_ProxySupplier_T<SERVANT_TYPE>::priority_filter (ACE_ENV_SINGLE_ARG_DECL)

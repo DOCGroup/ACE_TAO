@@ -14,12 +14,12 @@ ACE_RCSID(RT_Notify, TAO_NS_Proxy, "$Id$")
 #include "EventChannel.h"
 #include "EventChannelFactory.h"
 #include "Notify_Service.h"
+#include "Method_Request_Updates.h"
+#include "Worker_Task.h"
 
 TAO_NS_Proxy::TAO_NS_Proxy (void)
   :updates_off_ (0)
 {
-  // Set initial proxy mode to broadcast.
-  this->subscribed_types_.insert (TAO_NS_EventType::special ());
 }
 
 TAO_NS_Proxy::~TAO_NS_Proxy ()
@@ -27,19 +27,11 @@ TAO_NS_Proxy::~TAO_NS_Proxy ()
 }
 
 void
-TAO_NS_Proxy::type_added (const TAO_NS_EventType& added)
+TAO_NS_Proxy::types_changed (const TAO_NS_EventTypeSeq& added, const TAO_NS_EventTypeSeq& removed ACE_ENV_ARG_DECL_NOT_USED)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
-  this->added_.insert (added);
-  this->removed_.remove (added);
-}
+  TAO_NS_Method_Request_Updates request (added, removed, this);
 
-void
-TAO_NS_Proxy::type_removed (const TAO_NS_EventType& removed)
-{
-  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
-  this->removed_.insert (removed);
-  this->added_.remove (removed);
+  this->worker_task ()->exec (request);
 }
 
 CORBA::Boolean
@@ -67,7 +59,7 @@ TAO_NS_Proxy::check_filters (TAO_NS_Event_var &event ACE_ENV_ARG_DECL)
 }
 
 CosNotification::EventTypeSeq*
-TAO_NS_Proxy::obtain_types (CosNotifyChannelAdmin::ObtainInfoMode mode ACE_ENV_ARG_DECL)
+TAO_NS_Proxy::obtain_types (CosNotifyChannelAdmin::ObtainInfoMode mode, const TAO_NS_EventTypeSeq& types ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -84,7 +76,7 @@ TAO_NS_Proxy::obtain_types (CosNotifyChannelAdmin::ObtainInfoMode mode ACE_ENV_A
   if (mode == CosNotifyChannelAdmin::ALL_NOW_UPDATES_OFF ||
       mode == CosNotifyChannelAdmin::ALL_NOW_UPDATES_ON)
     {
-      this->added_.populate (event_type_seq);
+      types.populate (event_type_seq);
     }
 
   if (mode == CosNotifyChannelAdmin::NONE_NOW_UPDATES_ON ||

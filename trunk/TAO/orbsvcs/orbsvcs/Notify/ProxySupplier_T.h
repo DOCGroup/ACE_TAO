@@ -39,9 +39,9 @@ public:
   ~TAO_NS_ProxySupplier_T ();
 
   /// Notification of subscriptions set at the admin.
-  virtual void admin_subscription (const CosNotification::EventTypeSeq & added,
-                                   const CosNotification::EventTypeSeq & removed
-                                   ACE_ENV_ARG_DECL);
+  virtual void admin_types_changed (const CosNotification::EventTypeSeq & added,
+                                    const CosNotification::EventTypeSeq & removed
+                                    ACE_ENV_ARG_DECL);
 
   ///= POA_Notify_Internal methods
   /// POA_Notify_Internal::Event_Forwarder method

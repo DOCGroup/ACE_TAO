@@ -47,8 +47,8 @@ public:
 
 protected:
   /// Dispatch updates implementation.
-  virtual void dispatch_updates_i (const TAO_NS_EventTypeSeq & added,
-                                   const TAO_NS_EventTypeSeq & removed
+  virtual void dispatch_updates_i (const CosNotification::EventTypeSeq& added,
+                                   const CosNotification::EventTypeSeq& removed
                                    ACE_ENV_ARG_DECL);
 
   /// The proxy that we associate with.

@@ -48,7 +48,7 @@ Event_StructuredPushSupplier::~Event_StructuredPushSupplier (void)
 
 /***************************************************************************/
 Events::Events (void)
-  : event_count_ (5)
+  : use_default_admin_ (0), event_count_ (5)
 {
 }
 
@@ -73,19 +73,37 @@ Events::init (int argc,
 
   CosNotifyChannelAdmin::AdminID adminid;
 
-  this->supplier_admin_ =
-    this->ec_->new_for_suppliers (this->ifgop_,
-                                  adminid
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  if (use_default_admin_ == 1)
+    {
+      this->supplier_admin_ =
+        this->ec_->default_supplier_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+    }
+  else
+    {
+      this->supplier_admin_ =
+        this->ec_->new_for_suppliers (this->ifgop_,
+                                      adminid
+                                      ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+    }
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
-  this->consumer_admin_ =
-    this->ec_->new_for_consumers (this->ifgop_,
-                                  adminid
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  if (use_default_admin_ == 1)
+    {
+      this->consumer_admin_ =
+        this->ec_->default_consumer_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+    }
+  else
+    {
+      this->consumer_admin_ =
+        this->ec_->new_for_consumers (this->ifgop_,
+                                      adminid
+                                      ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+    }
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 
@@ -134,7 +152,13 @@ Events::parse_args (int argc,
 
     while (arg_shifter.is_anything_left ())
     {
-      if ((current_arg = arg_shifter.get_the_parameter ("-events")))
+      if (arg_shifter.cur_arg_strncasecmp ("-use_default_admin") == 0)
+        {
+          this->use_default_admin_ = 1;
+          arg_shifter.consume_arg ();
+
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter ("-events")))
         {
           this->event_count_ = ACE_OS::atoi (current_arg);
           // The number of events to send/receive.
@@ -144,6 +168,7 @@ Events::parse_args (int argc,
         {
           ACE_DEBUG((LM_DEBUG,
                      "usage: %s "
+                     "-use_default_admin "
                      "-events event_count \n",
                      argv[0], argv[0]));
 

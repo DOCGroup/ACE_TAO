@@ -24,9 +24,9 @@ TAO_NS_ProxyConsumer_T<SERVANT_TYPE>::~TAO_NS_ProxyConsumer_T ()
 }
 
 template <class SERVANT_TYPE> void
-TAO_NS_ProxyConsumer_T<SERVANT_TYPE>::admin_subscription (const CosNotification::EventTypeSeq & added,
-                                                          const CosNotification::EventTypeSeq & removed
-                                                          ACE_ENV_ARG_DECL)
+TAO_NS_ProxyConsumer_T<SERVANT_TYPE>::admin_types_changed (const CosNotification::EventTypeSeq & added,
+                                                           const CosNotification::EventTypeSeq & removed
+                                                           ACE_ENV_ARG_DECL)
 {
   this->offer_change (added, removed ACE_ENV_ARG_PARAMETER);
 }
@@ -57,17 +57,15 @@ TAO_NS_ProxyConsumer_T<SERVANT_TYPE>::offer_change (const CosNotification::Event
   TAO_NS_EventTypeSeq seq_added (added);
   TAO_NS_EventTypeSeq seq_removed (removed);
 
-  ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
-                      CORBA::INTERNAL ());
-  ACE_CHECK;
+  {
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
+                        CORBA::INTERNAL ());
+    ACE_CHECK;
 
-  this->subscribed_types_.init (seq_added, seq_removed);
+    this->subscribed_types_.init (seq_added, seq_removed);
+  }
 
-  if (this->is_connected () == 1)
-    {
-      event_manager_->publish (this, seq_added ACE_ENV_ARG_PARAMETER);
-      event_manager_->un_publish (this, seq_removed ACE_ENV_ARG_PARAMETER);
-    }
+  this->event_manager_->offer_change (this, seq_added, seq_removed ACE_ENV_ARG_PARAMETER);
 }
 
 template <class SERVANT_TYPE> CosNotification::EventTypeSeq*
@@ -76,7 +74,7 @@ TAO_NS_ProxyConsumer_T<SERVANT_TYPE>::obtain_subscription_types (CosNotifyChanne
                    CORBA::SystemException
                    ))
 {
-  return this->obtain_types (mode ACE_ENV_ARG_PARAMETER);
+  return this->obtain_types (mode, this->event_manager_->subscription_types () ACE_ENV_ARG_PARAMETER);
 }
 
 #endif /* TAO_NS_PROXYCONSUMER_T_CPP */

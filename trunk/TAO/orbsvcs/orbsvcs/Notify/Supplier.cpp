@@ -31,15 +31,9 @@ TAO_NS_Supplier::proxy (void)
 }
 
 void
-TAO_NS_Supplier::dispatch_updates_i (const TAO_NS_EventTypeSeq & added, const TAO_NS_EventTypeSeq & removed
+TAO_NS_Supplier::dispatch_updates_i (const CosNotification::EventTypeSeq& added, const CosNotification::EventTypeSeq& removed
                                      ACE_ENV_ARG_DECL)
 {
-  CosNotification::EventTypeSeq cos_added;
-  CosNotification::EventTypeSeq cos_removed;
-
-  added.populate (cos_added);
-  removed.populate (cos_removed);
-
   if (!CORBA::is_nil (this->subscribe_.in ()))
-    this->subscribe_->subscription_change (cos_added, cos_removed ACE_ENV_ARG_PARAMETER);
+    this->subscribe_->subscription_change (added, removed ACE_ENV_ARG_PARAMETER);
 }

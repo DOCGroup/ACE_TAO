@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "AdminProperties"=.\AdminProperties.dsp - Package Owner=<4>
+Project: "Basic AdminProperties"=.\AdminProperties.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -15,7 +15,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ConnectDisconnect"=.\ConnectDisconnect.dsp - Package Owner=<4>
+Project: "Basic ConnectDisconnect"=.\ConnectDisconnect.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -27,7 +27,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Events"=.\Events.dsp - Package Owner=<4>
+Project: "Basic Events"=.\Events.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -39,7 +39,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "IdAssignment"=.\IdAssignment.dsp - Package Owner=<4>
+Project: "Basic Filter"=.\Filter.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -51,7 +51,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LifeCycle"=.\LifeCycle.dsp - Package Owner=<4>
+Project: "Basic IdAssignment"=.\IdAssignment.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -63,7 +63,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Simple"=.\Simple.dsp - Package Owner=<4>
+Project: "Basic LifeCycle"=.\LifeCycle.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -75,7 +75,31 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Updates"=.\Updates.dsp - Package Owner=<4>
+Project: "Basic MultiTypes"=.\MultiTypes.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Basic Simple"=.\Simple.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Basic Updates"=.\Updates.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
