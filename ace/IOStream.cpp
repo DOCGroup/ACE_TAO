@@ -442,7 +442,9 @@ ACE_Streambuf_T::fillbuf (void)
 }
 
 ACE_Streambuf_T::ACE_Streambuf_T (u_int streambuf_size, int io_mode)
-  : get_mode_ (1),
+  : eback_saved_ (0),  // to avoid Purify UMR
+    pbase_saved_ (0),  // to avoid Purify UMR
+    get_mode_ (1),
     put_mode_ (2),
     mode_ (io_mode),
     streambuf_size_ (streambuf_size),
