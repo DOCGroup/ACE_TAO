@@ -3,6 +3,12 @@ Mon May 10 11:01:58 1999  David L. Levine  <levine@cs.wustl.edu>
         * tests/New_Fail_Test.cpp: DEC cxx catches its default,
           NoNamedException.  OK, I guess.
 
+        * tests/Upgradable_RW_Test.cpp: added -f option, which
+          enables FIFO thread scheduling.  Some platforms require
+          superuser privilege to use it.  Also, wait a maximum
+          of 1 second per iteration.  And, replaced some u_longs with
+          u_ints.
+
 Mon May 10 08:26:44 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/g++dep: added support for our Solaris 7 machines.
