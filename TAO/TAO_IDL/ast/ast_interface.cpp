@@ -962,9 +962,14 @@ AST_Interface::redefine (AST_Interface *from,
   this->set_n_inherits (from->n_inherits ());
   this->set_inherits_flat (from->inherits_flat ());
   this->set_n_inherits_flat (from->n_inherits_flat ());
-  /*
-   * Update place of definition
-   */
+
+  // 'this' is the full_definition member of a forward
+  // declared interface. 'from' is the actual full
+  // definition, which may be in a different scope.
+  // Since 'this' will replace 'from' upon returning
+  // from here, we have to update the scope now.
+  this->set_defined_in (from->defined_in ());
+
   this->set_imported (idl_global->imported ());
   this->set_in_main_file (idl_global->in_main_file ());
   this->set_line (idl_global->lineno ());
