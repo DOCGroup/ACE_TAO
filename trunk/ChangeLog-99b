@@ -15,6 +15,12 @@ Fri Mar 19 10:29:17 1999  David L. Levine  <levine@cs.wustl.edu>
           can #define ACE_FINI_HOOK to any executable code, and it
           will be executed on program termination.
 
+        * ace/config-linux-lxpthreads.h: with ACE_HAS_TSS_EMULATION,
+          #define ACE_FINI_HOOK to insert a one-second sleep at
+          program termination.  It's necessary to avoid occasional
+          segfaults of unknown origin, but they appear to be in the
+          LinuxThreads library.
+
 Fri Mar 19 03:24:34 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/Singleton.cpp (instance): Commented out the call to
