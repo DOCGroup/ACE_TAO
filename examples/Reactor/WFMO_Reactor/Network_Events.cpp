@@ -190,13 +190,16 @@ Network_Listener::handle_close (ACE_HANDLE handle,
 
   this->acceptor_.close ();
 
+  delete this;
+
   return 0;
 }
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  Network_Listener listener;
+  Network_Listener *listener =
+    new Network_Listener;
 
   ACE_Reactor::run_event_loop ();
 

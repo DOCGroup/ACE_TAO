@@ -41,9 +41,9 @@ $test_timeout = 60;
 
 for $test (@tests)
 {
-    print STDERR "\n________________________________________\n";
-    print STDERR "\nStarting test \"$test\"";
-    print STDERR "\n________________________________________\n\n";
+    print STDOUT "\n________________________________________\n";
+    print STDOUT "\nStarting test \"$test\"";
+    print STDOUT "\n________________________________________\n\n";
     
     $test_process = new PerlACE::Process ($test);
     $test_process->Spawn ();
@@ -56,7 +56,7 @@ for $test (@tests)
         print STDERR "\n________________________________________\n";
     }
 
-    print STDERR "\n________________________________________\n";
-    print STDERR "\n\"$test\" completed";
-    print STDERR "\n________________________________________\n";
+    print STDOUT "\n________________________________________\n";
+    print STDOUT "\n\"$test\" completed";
+    print STDOUT "\n________________________________________\n";
 }
