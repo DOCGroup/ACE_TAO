@@ -12,8 +12,14 @@
 #ifndef _ACEXML_ELEMENT_TREE_H_
 #define _ACEXML_ELEMENT_TREE_H_
 
-#include "ACEXML/common/XML_Types.h"
+#include "ace/pre.h"
 #include "ACEXML/parser/debug_validator/Debug_DTD_Manager_Export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ACEXML/common/XML_Types.h"
 
 /**
  * @class ACEXML_Element_Tree_Node Element_Tree.h "parser/debug_validator/Element_Tree.h"
@@ -48,8 +54,8 @@ protected:
 /**
  * @class ACEXML_Element_Tree_Name_Node Element_Tree.h "parser/debug_validator/Element_Tree.h"
  *
- * @brief An abstract base class for describing a name node in a DTD
- *  child element definition.
+ * @brief An abstract base class for describing a name node in a DTD child
+ * element definition.
  *
  * @sa ACEXML_Element_Tree_Node, ACEXML_Element_Tree_List_Node
  */
@@ -77,8 +83,8 @@ class ACEXML_Element_Tree_List_Stack;
 /**
  * @class ACEXML_Element_Tree_List_Node Element_Tree.h "parser/debug_validator/Element_Tree.h"
  *
- * @brief An abstract base class for describing a node list in
- *  a DTD child element definition.
+ * @brief An abstract base class for describing a node list in a DTD child
+ * element definition.
  *
  * @sa ACEXML_Element_Tree_Node, ACEXML_Element_Tree_Name_Node
  */
@@ -148,4 +154,7 @@ protected:
 #if defined (__ACEXML_INLINE__)
 # include "ACEXML/parser/debug_validator/Element_Tree.i"
 #endif /* __ACEXML_INLINE__ */
+
+#include "ace/post.h"
+
 #endif /* _ACEXML_ELEMENT_TREE_H_ */

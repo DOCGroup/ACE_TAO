@@ -13,6 +13,13 @@
 #ifndef _ACEXML_SAXEXCEPTIONS_H_
 #define _ACEXML_SAXEXCEPTIONS_H_
 
+#include "ace/pre.h"
+#include "ACEXML/common/ACEXML_Export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ACEXML/common/Exception.h"
 
 /**
@@ -163,4 +170,7 @@ protected:
 #if defined (__ACEXML_INLINE__)
 # include "ACEXML/common/SAXExceptions.i"
 #endif /* __ACEXML_INLINE__ */
+
+#include "ace/post.h"
+
 #endif /* _ACEXML_SAXEXCEPTIONS_H_ */

@@ -15,9 +15,17 @@
 
 #ifndef _ACEXML_XML_TYPES_H_
 # define _ACEXML_XML_TYPES_H_
-# include "ace/OS.h"
-# include "ace/SString.h"
-# include "ACEXML/common/ACEXML_Export.h"
+
+#include "ace/pre.h"
+#include "ACEXML/common/ACEXML_Export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/OS.h"
+#include "ace/SString.h"
+#include "ACEXML/common/ACEXML_Export.h"
 
 # if defined (ACE_HAS_WCHAR) && (ACE_SIZEOF_WCHAR == 2)
 typedef wchar_t ACEXML_UTF16;
@@ -67,5 +75,8 @@ typedef ACE_CString ACEXML_String;
 # else
 #   define ACEXML_INLINE
 # endif /* __ACEXML_INLINE */
+
+
+#include "ace/post.h"
 
 #endif /* _ACEXML_XML_TYPE_H_ */

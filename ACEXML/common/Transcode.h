@@ -15,6 +15,14 @@
 
 #ifndef _ACEXML_TRANSCODE_H_
 #define _ACEXML_TRANSCODE_H_
+
+#include "ace/pre.h"
+#include "ACEXML/common/ACEXML_Export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ACEXML/common/XML_Types.h"
 
 /**
@@ -162,4 +170,7 @@ public:
 #if defined (__ACEXML_INLINE__)
 # include "ACEXML/common/Transcode.i"
 #endif /* __ACEXML_INLINE__ */
+
+#include "ace/post.h"
+
 #endif /* _ACEXML_TRANSCODE_H_ */

@@ -12,8 +12,11 @@
 #ifndef _ACEXML_URL_ADDR_H
 #define _ACEXML_URL_ADDR_H
 
+#include "ace/pre.h"
+#include "ACEXML/common/ACEXML_Export.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#define ACE_LACKS_PRAGMA_ONCE
+#pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/INET_Addr.h"
@@ -112,5 +115,8 @@ private:
   /// Current length of the <addr_string_>
   size_t addr_string_len_;
 };
+
+
+#include "ace/post.h"
 
 #endif /* _ACEXML_URL_ADDR_H */

@@ -12,6 +12,13 @@
 #ifndef ACEXML_DEFAULTHANDLER_H
 #define ACEXML_DEFAULTHANDLER_H
 
+#include "ace/pre.h"
+#include "ACEXML/common/ACEXML_Export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ACEXML/common/ContentHandler.h"
 #include "ACEXML/common/DTDHandler.h"
 #include "ACEXML/common/EntityResolver.h"
@@ -31,10 +38,9 @@
  * - ContentHandler
  * - ErrorHandler
  *
- * Application writers can extend this class when they need to
- * implement only part of an interface; parser writers can instantiate
- * this class to provide default handlers when the application has not
- * supplied its own.
+ * Application writers can extend this class when they need to implement
+ * only part of an interface; parser writers can instantiate this class to
+ * provide default handlers when the application has not supplied its own.
  */
 class ACEXML_Export ACEXML_DefaultHandler
   : public ACEXML_ContentHandler,
@@ -214,4 +220,7 @@ public:
 #if defined (__ACEXML_INLINE__)
 # include "ACEXML/common/DefaultHandler.i"
 #endif /* __ACEXML_INLINE__ */
+
+#include "ace/post.h"
+
 #endif /* ACEXML_DEFAULTHANDLER_H */

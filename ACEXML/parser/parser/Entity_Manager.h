@@ -13,8 +13,14 @@
 #ifndef ACEXML_ENTITY_MANAGER_H
 #define ACEXML_ENTITY_MANAGER_H
 
-#include "ACEXML/common/XML_Types.h"
+#include "ace/pre.h"
 #include "ACEXML/parser/parser/Parser_export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ACEXML/common/XML_Types.h"
 #include "ace/Hash_Map_Manager.h"
 
 typedef ACE_Hash_Map_Entry<ACEXML_String,
@@ -68,4 +74,7 @@ private:
 #if defined (__ACEXML_INLINE__)
 # include "ACEXML/parser/parser/Entity_Manager.i"
 #endif /* __ACEXML_INLINE__ */
+
+#include "ace/post.h"
+
 #endif /* ACEXML_ENTITY_MANAGER_H */

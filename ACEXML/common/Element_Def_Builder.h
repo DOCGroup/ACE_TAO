@@ -12,6 +12,12 @@
 #ifndef _ACEXML_ELEMENT_DEF_BUILDER_H_
 #define _ACEXML_ELEMENT_DEF_BUILDER_H_
 
+#include "ace/pre.h"
+#include "ACEXML/common/ACEXML_Export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 #include "ace/Auto_Ptr.h"
 #include "ACEXML/common/XML_Types.h"
 #include "ACEXML/common/Env.h"
@@ -19,11 +25,11 @@
 /**
  * @class ACEXML_Element_Def_Builder Element_Def_Builder.h "common/Element_Def_Builder.h"
  *
- * @brief An abstract virtual class that defines the interface
- *         to define an element definition.
+ * @brief An abstract virtual class that defines the interface to define an
+ * element definition.
  *
- * This class defines how to define an element definition after
- * parsing a DTD.
+ * This class defines how to define an element definition after parsing a
+ * DTD.
  */
 class ACEXML_Export ACEXML_Element_Def_Builder
 {
@@ -128,5 +134,8 @@ public:
    */
   virtual void dump (void) = 0;
 };
+
+
+#include "ace/post.h"
 
 #endif /* _ACEXML_ELEMENT_DEF_BUILDER_H_ */

@@ -12,8 +12,11 @@
 #ifndef _ACEXML_MEM_MAP_STREAM_H
 #define _ACEXML_MEM_MAP_STREAM_H
 
+#include "ace/pre.h"
+#include "ACEXML/common/ACEXML_Export.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#define ACE_LACKS_PRAGMA_ONCE
+#pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SOCK_Stream.h"
@@ -22,7 +25,6 @@
 #include "ace/Connector.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Synch_T.h"
-#include "ACEXML/common/ACEXML_Export.h"
 #include "ACEXML/common/XML_Types.h"
 
 typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> Svc_Handler;
@@ -34,10 +36,10 @@ typedef ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> Connector;
  * @brief Provides a memory-mapped stream abstraction to simplify parsing
  * of tokens.
  *
- * This class makes it possible to treat an connection as a stream
- *   of bytes, similar to the C library stdio streams. The contents of the
- *   connection are buffered incrementally in a memory-mapped file. This
- *   class maintains pointers to two positions in the stream:
+ * This class makes it possible to treat an connection as a stream of
+ * bytes, similar to the C library stdio streams. The contents of the
+ * connection are buffered incrementally in a memory-mapped file. This
+ * class maintains pointers to two positions in the stream:
  *
  *   1. The <recv> position, which keeps track of the beginning of a
  *      token that is in the stream.
@@ -45,12 +47,11 @@ typedef ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> Connector;
  *   2. The <get> position, which moves along character-by-character
  *      until the end of the token is reached.
  *
- *   Once a token has been located, it can be extracted from the
- *   stream by calling the <recv>.  The length of the token, i.e.,
- *   the <recv_len>, is the length in bytes between the <get>
- *   position and the <recv> position.  Once the token has been
- *   extracted, the <recv> and <get> positions can be updated by the
- *   <seek> method.
+ * Once a token has been located, it can be extracted from the stream by
+ * calling the <recv>. The length of the token, i.e., the <recv_len>, is
+ * the length in bytes between the <get> position and the <recv> position.
+ * Once the token has been extracted, the <recv> and <get> positions can be
+ * updated by the <seek> method.
  */
 class ACEXML_Export ACEXML_Mem_Map_Stream
 {
@@ -183,6 +184,9 @@ private:
   ACEXML_Char *end_of_mapping_plus1_;
 
 };
+
+
+#include "ace/post.h"
 
 
 #endif /* _ACEXML_MEM_MAP_STREAM_H */
