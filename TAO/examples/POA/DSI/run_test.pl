@@ -12,7 +12,7 @@ $iorfile = "server.ior";
 
 unlink $iorfile;
 
-$SV = Process::Create ($EXEPREFIX."server$Process::EXE_EXT", " -f $iorfile");
+$SV = Process::Create ($EXEPREFIX."server$EXE_EXT", " -f $iorfile");
 
 if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile>\n";
@@ -20,7 +20,7 @@ if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
   exit 1;
 }
 
-$CL = Process::Create ($EXEPREFIX."client$Process::EXE_EXT ",
+$CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
 		       " -f $iorfile -x");
 
 $client = $CL->TimedWait (60);

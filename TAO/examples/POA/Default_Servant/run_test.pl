@@ -12,7 +12,7 @@ $iorfile = "server.ior";
 
 unlink $iorfile;
 
-$SV = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT,
+$SV = Process::Create ($EXEPREFIX."server".$EXE_EXT,
 		       " -o $iorfile");
 
 if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
@@ -21,7 +21,7 @@ if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
   exit 1;
 }
 
-$CL  = Process::Create ($EXEPREFIX."client$Process::EXE_EXT ",
+$CL  = Process::Create ($EXEPREFIX."client$EXE_EXT ",
 			" -k $iorfile");
 
 $client = $CL->TimedWait (60);

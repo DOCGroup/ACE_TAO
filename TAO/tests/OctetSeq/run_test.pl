@@ -15,7 +15,7 @@ $file="test.ior";
 
 unlink $file;
 
-$SV = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT,
+$SV = Process::Create ($EXEPREFIX."server".$EXE_EXT,
                        "-o $file");
 if (ACE::waitforfile_timed ($file, 3) == -1) {
   print STDERR "ERROR: cannot find file <$file>\n";
@@ -23,7 +23,7 @@ if (ACE::waitforfile_timed ($file, 3) == -1) {
   exit 1;
 }
 
-$CL = Process::Create ($EXEPREFIX."client".$Process::EXE_EXT,
+$CL = Process::Create ($EXEPREFIX."client".$EXE_EXT,
                        " -i 5000 -k file://$file");
 
 $client = $CL->TimedWait (60);
@@ -46,7 +46,7 @@ unlink $file;
 
 print STDERR "\n\n==== Octet sequence performance test\n";
 
-$T = Process::Create ($EXEPREFIX."OctetSeq$Process::EXE_EXT",
+$T = Process::Create ($EXEPREFIX."OctetSeq$EXE_EXT",
                       " -n 32 -l 8192 -h 8192 -s 1 -q");
 
 $client = $T->TimedWait (60);

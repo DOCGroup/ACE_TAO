@@ -60,7 +60,7 @@ unlink $iorfile_2;
 unlink $iorfile_3;
 
 
-$SV = Process::Create ($EXEPREFIX."server$Process::EXE_EXT", "-f $iorfile $extra_args");
+$SV = Process::Create ($EXEPREFIX."server$EXE_EXT", "-f $iorfile $extra_args");
 
 if (ACE::waitforfile_timed ($iorfile_1, 5) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile_1>\n";
@@ -80,11 +80,11 @@ if (ACE::waitforfile_timed ($iorfile_3, 5) == -1) {
   exit 1;
 }
 
-$CL_1  = Process::Create ("../Generic_Servant/client$Process::EXE_EXT ",
+$CL_1  = Process::Create ("../Generic_Servant/client$EXE_EXT ",
 			  " $extra_args $oneway -i $iterations -f $iorfile_1");
-$CL_2  = Process::Create ("../Generic_Servant/client$Process::EXE_EXT ",
+$CL_2  = Process::Create ("../Generic_Servant/client$EXE_EXT ",
 			  " $extra_args $oneway -i $iterations -f $iorfile_2");
-$CL_3  = Process::Create ("../Generic_Servant/client$Process::EXE_EXT ",
+$CL_3  = Process::Create ("../Generic_Servant/client$EXE_EXT ",
 			  " $extra_args $oneway -i $iterations -f $iorfile_3 -x");
 
 

@@ -78,7 +78,7 @@ sub run_test
     cleanup_ior ();
 
     # Run the servers
-    $SRV1 = Process::Create  (".".$DIR_SEPARATOR."server".$Process::EXE_EXT,
+    $SRV1 = Process::Create  (".".$DIR_SEPARATOR."server".$EXE_EXT,
                              "$server1args");
     print STDERR ("server $server1args\n");
 
@@ -88,7 +88,7 @@ sub run_test
       exit 1;
     }
 
-    $SRV2 = Process::Create  (".".$DIR_SEPARATOR."server".$Process::EXE_EXT,
+    $SRV2 = Process::Create  (".".$DIR_SEPARATOR."server".$EXE_EXT,
                              "$server2args");
     print STDERR ("server $server2args\n");
 
@@ -100,7 +100,7 @@ sub run_test
     }
 
     if ($server3args ne "") {
-      $SRV3 = Process::Create (".".$DIR_SEPARATOR."server".$Process::EXE_EXT,
+      $SRV3 = Process::Create (".".$DIR_SEPARATOR."server".$EXE_EXT,
 			       "$server3args");
 
       if (ACE::waitforfile_timed ("server3", 5) == -1) {
@@ -113,7 +113,7 @@ sub run_test
     }
 
     # Run the client and block until completion
-    $CL = Process::Create ($EXEPREFIX."client".$Process::EXE_EXT,
+    $CL = Process::Create ($EXEPREFIX."client".$EXE_EXT,
 			   " $clientargs");
     print STDERR ("client $clientargs\n");
 

@@ -23,7 +23,10 @@ sub run_test
   my $type = shift(@_);
 
   unlink $iorfile; # Ignore errors
-  $SV = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT,
+  print STDERR "==== Testing $type === wait....\n";
+  sleep 2;
+
+  $SV = Process::Create ($EXEPREFIX."server".$EXE_EXT,
                          "$debug -o $iorfile");
 
   if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
@@ -32,7 +35,7 @@ sub run_test
     exit 1;
   }
 
-  $CL = Process::Create ($EXEPREFIX."client",
+  $CL = Process::Create ($EXEPREFIX."client".$EXE_EXT,
 			 " $debug -f $iorfile  -i $invocation -t ".
 			 "$type -n $num -x");
 
@@ -48,9 +51,22 @@ sub run_test
     $SV->Kill (); $SV->TimedWait (1);
   }
   unlink $iorfile;
+
+  print STDERR "==== Test for $type finished ===\n";
 }
 
 # Parse the arguments
+
+@types = ("short", "ulonglong", "ubstring", "bdstring", "fixed_struct",
+          "ub_strseq", "bd_strseq",
+          "var_struct", "nested_struct", "recursive_struct",
+          "ub_struct_seq", "bd_struct_seq",
+          "any", "objref", "objref_sequence", "objref_struct",
+          "any_sequence",
+          "ub_short_sequence", "ub_long_sequence",
+          "bd_short_sequence", "bd_long_sequence",
+          "fixed_array", "var_array", "typecode", "exception",
+	  "big_union", "complex_any");
 
 for ($i = 0; $i <= $#ARGV; $i++)
 {
@@ -84,13 +100,21 @@ for ($i = 0; $i <= $#ARGV; $i++)
     {
       if ($^O eq "MSWin32")
       {
-        $Process::newwindow = "no";
+        $newwindow = "no";
+      }
+      last SWITCH;
+    }
+    if ($ARGV[$i] eq "-twowin")
+    {
+      if ($^O eq "MSWin32")
+      {
+        $newwindow = "yes";
       }
       last SWITCH;
     }
     if ($ARGV[$i] eq "-t")
     {
-      $type = $ARGV[$i + 1];
+      @types = split (',', $ARGV[$i + 1]);
       $i++;
       last SWITCH;
     }
@@ -104,27 +128,8 @@ for ($i = 0; $i <= $#ARGV; $i++)
   }
 }
 
-@types = ("short", "ulonglong", "ubstring", "bdstring", "fixed_struct",
-          "ub_strseq", "bd_strseq",
-          "var_struct", "nested_struct", "recursive_struct",
-          "ub_struct_seq", "bd_struct_seq",
-          "any", "objref", "objref_sequence", "objref_struct",
-          "any_sequence",
-          "ub_short_sequence", "ub_long_sequence",
-          "bd_short_sequence", "bd_long_sequence",
-          "fixed_array", "var_array", "typecode", "exception",
-	  "big_union", "complex_any");
-
-if ($type ne "")
-{
+foreach $type (@types) {
   run_test ($type);
-}
-else
-{
-  foreach $type (@types)
-  {
-    run_test ($type);
-  }
 }
 
 unlink $iorfile;

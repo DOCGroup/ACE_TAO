@@ -78,11 +78,11 @@ for ($i = 0; $i <= $#ARGV; $i++)
   }
 }
 
-(-f $svexepref."server".$Process::EXE_EXT  &&
- -f $clexepref."client".$Process::EXE_EXT)  ||
+(-f $svexepref."server".$EXE_EXT  &&
+ -f $clexepref."client".$EXE_EXT)  ||
   die "$0: server and/or client need to be built!\n";
 
-$SV = Process::Create ($svexepref."server".$Process::EXE_EXT,
+$SV = Process::Create ($svexepref."server".$EXE_EXT,
                        $svflags.
                        $svnsflags);
 
@@ -94,7 +94,7 @@ if (ACE::waitforfile_timed ($iorfile, 10) == -1) {
   exit 1;
 }
 
-$CL = Process::Create ($clexepref . "client".$Process::EXE_EXT,
+$CL = Process::Create ($clexepref . "client".$EXE_EXT,
                        " $clflags $clnsflags -x");
 
 $client = $CL->TimedWait (60);

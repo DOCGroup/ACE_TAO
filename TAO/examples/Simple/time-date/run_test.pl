@@ -11,11 +11,11 @@ require Process;
 
 $iorfile = "./ior";
 
-$SV = Process::Create ($EXEPREFIX."server$Process::EXE_EXT");
+$SV = Process::Create ($EXEPREFIX."server$EXE_EXT");
 
 ACE::waitforfile ($iorfile);
 
-$status  = system ($EXEPREFIX."client$Process::EXE_EXT -f $iorfile -ORBSkipServiceConfigOpen");
+$status  = system ($EXEPREFIX."client$EXE_EXT -f $iorfile -ORBSkipServiceConfigOpen");
 
 $SV->Kill (); $SV->Wait ();
 

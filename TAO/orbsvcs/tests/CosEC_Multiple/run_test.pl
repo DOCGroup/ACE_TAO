@@ -27,32 +27,32 @@ $CosEC2_params = "-n cosec2 -e 20 -o 5 -p \"6 21\"";
 sub cosec_multiple_test1
 {
     # first start the Naming service..
-    $SV1 = Process::Create ($EXEPREFIX."../../Naming_Service/Naming_Service".$Process::EXE_EXT,"");
+    $SV1 = Process::Create ($EXEPREFIX."../../Naming_Service/Naming_Service".$EXE_EXT,"");
 
     sleep 10;
 
     # now start the Rt EC..
-    $SV2 = Process::Create ($EXEPREFIX."../../Event_Service/Event_Service".$Process::EXE_EXT,"");
+    $SV2 = Process::Create ($EXEPREFIX."../../Event_Service/Event_Service".$EXE_EXT,"");
 
     sleep 10;
 
     # now start the CosEC1..
-    $SV3 = Process::Create ($EXEPREFIX."../../CosEvent_Service/CosEvent_Service".$Process::EXE_EXT,$CosEC1_params);
+    $SV3 = Process::Create ($EXEPREFIX."../../CosEvent_Service/CosEvent_Service".$EXE_EXT,$CosEC1_params);
 
     sleep 10;
 
     # now start the CosEC2..
-    $SV4 = Process::Create ($EXEPREFIX."../../CosEvent_Service/CosEvent_Service".$Process::EXE_EXT,$CosEC2_params);
+    $SV4 = Process::Create ($EXEPREFIX."../../CosEvent_Service/CosEvent_Service".$EXE_EXT,$CosEC2_params);
 
     sleep 10;
 
     #start 1 consumer that uses CosEC1 to receive events
-    $CONS = Process::Create ($EXEPREFIX."consumer".$Process::EXE_EXT,"-n cosec1 -c $ev_count");
+    $CONS = Process::Create ($EXEPREFIX."consumer".$EXE_EXT,"-n cosec1 -c $ev_count");
 
     sleep 10;
 
     #start 1 supplier  that uses CosEC2 to send events
-    $SUPP = Process::Create ($EXEPREFIX."supplier".$Process::EXE_EXT,"-n cosec2 -c $ev_count");
+    $SUPP = Process::Create ($EXEPREFIX."supplier".$EXE_EXT,"-n cosec2 -c $ev_count");
 
     sleep 10;
 
@@ -65,12 +65,12 @@ sub cosec_multiple_test1
 
     #----------
  #start 1 consumer that uses CosEC1 to receive events
-    $CONS2 = Process::Create ($EXEPREFIX."consumer".$Process::EXE_EXT,"-n cosec2 -c $ev_count");
+    $CONS2 = Process::Create ($EXEPREFIX."consumer".$EXE_EXT,"-n cosec2 -c $ev_count");
 
     sleep 10;
 
     #start 1 supplier  that uses CosEC2 to send events
-    $SUPP2 = Process::Create ($EXEPREFIX."supplier".$Process::EXE_EXT,"-n cosec1 -c $ev_count");
+    $SUPP2 = Process::Create ($EXEPREFIX."supplier".$EXE_EXT,"-n cosec1 -c $ev_count");
 
     sleep 10;
 

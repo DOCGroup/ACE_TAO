@@ -48,7 +48,7 @@ sub name_server
   my $args = "$other -o $nsiorfile";
   my $prog = "..$DIR_SEPARATOR..$DIR_SEPARATOR"."orbsvcs$DIR_SEPARATOR".
              "Naming_Service$DIR_SEPARATOR".
-             "Naming_Service$Process::EXE_EXT";
+             "Naming_Service$EXE_EXT";
 
   $NS = Process::Create ($prog, $args);
 }
@@ -59,7 +59,7 @@ sub lifecycle_server
              "$ior -ORBsvcconf svc.conf";
   my $prog = "..$DIR_SEPARATOR..$DIR_SEPARATOR"."orbsvcs$DIR_SEPARATOR".
              "LifeCycle_Service$DIR_SEPARATOR".
-             "LifeCycle_Service$Process::EXE_EXT";
+             "LifeCycle_Service$EXE_EXT";
 
   $LC = Process::Create ($prog, $args);
 }
@@ -69,7 +69,7 @@ sub server
   my $args = "$other $debug $sm ".
              "-ORBnameserviceior $ior -ORBsvcconf $s_conf";
 
-  $SV = Process::Create ("server$Process::EXE_EXT", $args);
+  $SV = Process::Create ("server$EXE_EXT", $args);
 }
 
 sub factory_finder
@@ -77,7 +77,7 @@ sub factory_finder
   my $args = "$other -ORBnameserviceior ".
              "$ior -ORBsvcconf svc.conf";
 
-  $FF = Process::Create ("Factory_Finder".$Process::EXE_EXT, $args);
+  $FF = Process::Create ("Factory_Finder".$EXE_EXT, $args);
 }
 
 sub generic_factory
@@ -85,12 +85,12 @@ sub generic_factory
   my $args = "$other -l -ORBnameserviceior ".
              "$ior -ORBsvcconf svc.conf";
 
-  $GF = Process::Create ("Generic_Factory".$Process::EXE_EXT, $args);
+  $GF = Process::Create ("Generic_Factory".$EXE_EXT, $args);
 }
 
 sub client
 {
-  my $exe = "client$Process::EXE_EXT $other -l $debug $cm ".
+  my $exe = $EXEPREFIX."client$EXE_EXT $other -l $debug $cm ".
             "-ORBnameserviceior $ior -ORBsvcconf $c_conf";
 
   for ($j = 0; $j < $n; $j++)
@@ -107,11 +107,13 @@ for ($i = 0; $i <= $#ARGV; $i++)
   {
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?")
     {
-      print "run_test [-n num] [-leave] [-onewin] [-d] [-h] [-nt] [-cm] [-sm] [-ns|sv|ff|cl|gf]\n";
+      print "run_test [-n num] [-leave] [-onewin]"
+	"[-twowin] [-d] [-h] [-nt] [-cm] [-sm] [-ns|sv|ff|cl|gf]\n";
       print "\n";
       print "-n num              -- runs the client num times\n";
       print "-leave              -- leaves the servers running and their windows open\n";
       print "-onewin             -- keeps all tests in one window on NT\n";
+      print "-twowin             -- put each test in a separate window on NT\n";
       print "-d                  -- runs each in debug mode\n";
       print "-h                  -- prints this information\n";
       print "-nt num             -- number of threads in the client (twice for server)\n";
@@ -194,6 +196,14 @@ for ($i = 0; $i <= $#ARGV; $i++)
       if ($^O eq "MSWin32")
       {
         $Process::newwindow = "no";
+      }
+      last SWITCH;
+    }
+    if ($ARGV[$i] eq "-twowin")
+    {
+      if ($^O eq "MSWin32")
+      {
+        $Process::newwindow = "yes";
       }
       last SWITCH;
     }

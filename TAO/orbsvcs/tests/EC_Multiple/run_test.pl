@@ -11,13 +11,13 @@ require Process;
 $NS_ior = "NameService.ior";
 $sleeptime = 3;
 
-$NS = Process::Create ("../../Naming_Service/Naming_Service".
-                       $Process::EXE_EXT." -o $NS_ior ");
+$NS = Process::Create ("../../Naming_Service/Naming_Service".$EXE_EXT,
+		       " -o $NS_ior ");
 
 sleep $sleeptime;
 
 # This is a very simple test, no multiple consumers and no gateways.
-$status = system ($EXEPREFIX."EC_Multiple".$Process::EXE_EXT.
+$status = system ($EXEPREFIX."EC_Multiple".$EXE_EXT.
                   " -s local");
 
 $NS->Kill ();
