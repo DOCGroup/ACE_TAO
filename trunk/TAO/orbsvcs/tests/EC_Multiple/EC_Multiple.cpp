@@ -389,7 +389,8 @@ Test_ECG::run (int argc, char* argv[])
 
       // Create the EventService implementation, but don't start its
       // internal threads.
-      ACE_EventChannel ec_impl (0);
+      // Explicit cat to CORBA::Boolean to disambiguate call.
+      ACE_EventChannel ec_impl (CORBA::Boolean(0));
 
       // Register Event_Service with the Naming Service.
       RtecEventChannelAdmin::EventChannel_var ec =
