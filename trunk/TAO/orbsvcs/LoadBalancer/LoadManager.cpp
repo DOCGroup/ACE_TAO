@@ -41,7 +41,7 @@ parse_args (int argc,
       switch (c)
         {
         case 'o':
-          ::lb_ior_file = get_opts.opt_arg ();
+          ::lm_ior_file = get_opts.opt_arg ();
           break;
 
         case 's':
@@ -170,9 +170,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      FILE * lb_ior = ACE_OS::fopen (lb_ior_file, "w");
-      ACE_OS::fprintf (lb_ior, "%s", str.in ());
-      ACE_OS::fclose (lb_ior);
+      FILE * lm_ior = ACE_OS::fopen (lm_ior_file, "w");
+      ACE_OS::fprintf (lm_ior, "%s", str.in ());
+      ACE_OS::fclose (lm_ior);
 
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
