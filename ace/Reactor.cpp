@@ -1062,14 +1062,17 @@ ACE_Reactor::register_handler (const ACE_Sig_Set &sigset,
                                ACE_Sig_Action *new_disp)
 {
   ACE_TRACE ("ACE_Reactor::register_handler");
+
   int result = 0;
+
+#if (NSIG > 0)
 
   for (int s = 1; s < NSIG; s++)
     if (sigset.is_member (s) 
         && this->signal_handler_->register_handler (s, new_sh, 
 						    new_disp) == -1) 
       result = -1;
-
+#endif /* NSIG */
   return result;
 }
 
@@ -1079,10 +1082,12 @@ ACE_Reactor::remove_handler (const ACE_Sig_Set &sigset)
   ACE_TRACE ("ACE_Reactor::remove_handler");
   int result = 0;
 
+#if (NSIG == 0)
   for (int s = 1; s < NSIG; s++)
     if (sigset.is_member (s) 
         && this->signal_handler_->remove_handler (s) == -1)
       result = -1;
+#endif /* NSIG */
 
   return result;    
 }
