@@ -1,3 +1,104 @@
+Thu Jan  1 12:04:29 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+        * apps/Gateway/Peer/Options.cpp (parse_args): Changed the option
+          to set the passive acceptor port from -p to -a.  This is now
+          consistent with the option for active connector port number,
+          which is -c.
+
+        * apps/Gateway/Gateway/Gateway.cpp (fini): Added a call to
+          ACE::remove_stdin_handler(), which removes the handler for
+          ACE_STDIN so the gatewayd will shutdown cleanly.
+
+        * ace/ACE: Added a new method, remove_stdin_handler(), which is
+          the inverse of the register_stdin_handler() method.  However,
+          I'm not sure how to make this work on NT!
+
+        * examples/Reactor/Misc/notification.cpp: Removed some
+ 	  CHORUS-specific, which should be a no-op with our new signal()
+ 	  and sigaction() scheme.
+
+        * ace/OS.i: Enhanced the signal() and sigaction() wrappers so that
+          they simply ignore signums of 0.  This means that we don't need
+          to special case all this stuff throughout ACE anymore.
+
+        * ace/OS.h: Changed all the #defines for various SIG* so that they
+          are all 0.  This way, we can ensure that the signal() functions
+          in ACE_OS can correctly ignore these signals.  This should clean
+          up a ton of platform-dependent code throughout ACE.
+
+	* apps/Gateway/Gateway/File_Parser.cpp (getint): Added a new
+ 	  special-case check for the '*' character, which indicates "use
+ 	  the default value for this field."
+
+	* apps/Gateway/Gateway/Options: Added a new option to provide a
+ 	  default max retry timeout.
+
+	* tests/Reader_Writer_Test.cpp: Enhanced the test so that it
+ 	  exercises the new "upgrade" feature of RW_Thread_Mutexes.
+
+	* ace/{OS,Synch}: Added new methods,
+ 	  ACE_OS::rw_trywrlock_upgrade() and
+ 	  ACE_RW_Thread_Mutex::tryacquire_write_upgrade() that
+ 	  conditionally upgrade a read lock to a write lock.  This only
+ 	  works if there are no other readers present, in which case the
+ 	  method returns 0.  Otherwise, the method returns -1 and sets
+ 	  errno to EBUSY.  Note that the caller of this method *must*
+ 	  already possess this lock as a read lock.
+
+	* apps/Gateway/{Gateway,Peer}/Makefile: Removed the $(VLIB) macro
+ 	  so that we don't try to build the lib*.a files by default.
+  	  Thanks to David Levine for explaining this.
+
+	* apps/Gateway/Gateway: Added new Options.{h,cpp} files and
+ 	  rearranged the program to centralize all options processing in
+ 	  an Options Singleton.
+
+	* apps/Gateway/Peer/Options.cpp (parse_args): Changed the
+ 	  connector and acceptor options to use a more generalizable
+ 	  format.  Now we can set the Consumer and Supplier port numbers
+ 	  independently.
+
+	* apps/Gateway/Gateway/Event.h: This is currently where the macros
+ 	  from the following bullets have been moved, so they can be
+ 	  shared by the Peer and Gateway components.
+
+	* ace/OS.h: Moved the ACE_DEFAULT_{GATEWAY,PEER}_SERVER_PORT
+ 	  macros into the Gateway application, where they belong.
+
+	* apps/Gateway/Peer/Options.cpp (parse_args): Changed the option
+ 	  to set the passive acceptor port from -p to -a.  This is now
+ 	  consistent with the option for active connector port number,
+ 	  which is -c.
+
+	* apps/Gateway/Gateway/Gateway.cpp (fini): Added a call to
+ 	  ACE::remove_stdin_handler(), which removes the handler for
+ 	  ACE_STDIN so the gatewayd will shutdown cleanly.
+
+	* ace/ACE: Added a new method, remove_stdin_handler(), which is
+ 	  the inverse of the register_stdin_handler() method.  However,
+ 	  I'm not sure how to make this work on NT!
+
+	* examples/Reactor/Misc/notification.cpp: Removed some CHORUS-specific
+	  code, which should be a no-op with our new signal() and sigaction()
+	  scheme.
+
+	* ace/OS.i: Enhanced the signal() and sigaction() wrappers so that
+ 	  they simply ignore signums of 0.  This means that we don't need
+ 	  to special case all this stuff throughout ACE anymore.
+
+	* ace/OS.h: Changed all the #defines for various SIG* so that they
+ 	  are all 0.  This way, we can ensure that the signal() functions
+ 	  in ACE_OS can correctly ignore these signals.  This should clean
+ 	  up a ton of platform-dependent code throughout ACE.
+
+	* apps/Gateway/Gateway/Gateway.cpp (init): Revised the code a bit
+ 	  to factor out platform-dependent signal handling stuff in the
+ 	  right place.
+
+	* apps/Gateway/Gateway/gatewayd.cpp: Cleaned up the gatewayd main
+ 	  program so that it reuses more ACE components and so that it is
+ 	  more portable.
+
 Thu Jan 01 18:24:56 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* apps/Gateway/Gateway/Gateway.dsp:  Added new file Options.cpp.
@@ -34,44 +135,6 @@ Thu Jan 01 17:13:06 1998  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/wrapper_macros.GNU: if building shared libs
           only, set OBJEXT to "so" and VDIR to .shobj/, so that only shared
           objects will be built.
-
-Thu Jan  1 12:04:29 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
-
-        * apps/Gateway/Peer/Options.cpp (parse_args): Changed the option
-          to set the passive acceptor port from -p to -a.  This is now
-          consistent with the option for active connector port number,
-          which is -c.
-
-        * apps/Gateway/Gateway/Gateway.cpp (fini): Added a call to
-          ACE::remove_stdin_handler(), which removes the handler for
-          ACE_STDIN so the gatewayd will shutdown cleanly.
-
-        * ace/ACE: Added a new method, remove_stdin_handler(), which is
-          the inverse of the register_stdin_handler() method.  However,
-          I'm not sure how to make this work on NT!
-
-        * examples/Reactor/Misc/notification.cpp: Removed some CHORUS-specific
-          code, which should be a no-op with our new signal() and sigaction()
-          scheme.
-
-        * ace/OS.i: Enhanced the signal() and sigaction() wrappers so that
-          they simply ignore signums of 0.  This means that we don't need
-          to special case all this stuff throughout ACE anymore.
-
-        * ace/OS.h: Changed all the #defines for various SIG* so that they
-          are all 0.  This way, we can ensure that the signal() functions
-          in ACE_OS can correctly ignore these signals.  This should clean
-          up a ton of platform-dependent code throughout ACE.
-
-        * apps/Gateway/Gateway/Gateway.cpp (init): Revised the code a bit
-          to factor out platform-dependent signal handling stuff in the
-          right place.
-
-        * apps/Gateway/Gateway/gatewayd.cpp: Cleaned up the gatewayd main
-          program so that it reuses more ACE components and so that it is
-          more portable.
-
-Thu Jan 01 08:50:55 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * apps/Gateway/Peer/Peer.cpp: added template instantiations.
 
