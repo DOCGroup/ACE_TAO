@@ -17,14 +17,8 @@
 #include <sys/types.h>
 #include <pthread.h>
 
-#ifndef PACE_SYS_TYPES_H
-#define PACE_SYS_TYPES_H
-
-
-#if defined (PACE_SUNOS)
-/* specific to SunOS 5.7 ace.cs <luther@cs.wustl.edu> */
-/*# include <inttypes.h> */
-#endif /* (PACE_SUNOS) */
+#ifndef PACE_SYS_TYPES_H_POSIX
+#define PACE_SYS_TYPES_H_POSIX
 
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
@@ -128,4 +122,4 @@ extern "C" {
 }
 #endif /* PACE_HAS_CPLUSPLUS */
 
-#endif /* PACE_SYS_TYPES_H */
+#endif /* PACE_SYS_TYPES_H_POSIX */

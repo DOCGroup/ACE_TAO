@@ -13,17 +13,43 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_UTIME_H_INDIRECT
-#define PACE_UTIME_H_INDIRECT
+#ifndef PACE_UTIME_H
+#define PACE_UTIME_H
 
 #include "pace/config/defines.h"
 
-#if defined (PACE_HAS_POSIX)
+#if (PACE_HAS_POSIX)
 # include "pace/posix/utime.h"
-#elif defined (PACE_VXWORKS)
+#elif (PACE_VXWORKS)
 # include "pace/vxworks/utime.h"
-#elif defined (PACE_WIN32)
+#elif (PACE_WIN32)
 # include "pace/win32/utime.h"
 #endif
 
-#endif /* PACE_UTIME_H_INDIRECT */
+#if defined (PACE_HAS_CPLUSPLUS)
+extern "C" {
+#endif /* PACE_HAS_CPLUSPLUS */
+
+  /**
+     PACE's implementation of the POSIX function utime.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 5.6.6.
+     */
+  PACE_INLINE int pace_utime (const char * path,
+                              const pace_utimbuf * times);
+
+#if defined (PACE_HAS_CPLUSPLUS)
+}
+#endif /* PACE_HAS_CPLUSPLUS */
+
+#if defined (PACE_HAS_INLINE)
+#  if (PACE_HAS_POSIX)
+#    include "pace/posix/utime.inl"
+#  elif (PACE_VXWORKS)
+#    include "pace/vxworks/utime.inl"
+#  elif (PACE_WIN32)
+#    include "pace/win32/utime.inl"
+#  endif
+#endif /* PACE_HAS_INLINE */
+
+#endif /* PACE_UTIME_H */

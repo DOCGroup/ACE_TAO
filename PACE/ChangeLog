@@ -1,3 +1,38 @@
+Fri Jul  7 19:11:38 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* pace/sys/mman.h
+	* pace/sys/stat.h
+	* pace/sys/times.h
+	* pace/sys/types.h
+	* pace/sys/utsname.h
+	* pace/sys/wait.h
+	* pace/termios.h
+	* pace/time.h
+	* pace/unistd.h
+	* pace/utime.h
+	* pace/posix/mman.h
+	* pace/posix/stat.h
+	* pace/posix/termios.h
+	* pace/posix/time.h
+	* pace/posix/times.h
+	* pace/posix/types.h
+	* pace/posix/unistd.h
+	* pace/posix/utime.h
+	* pace/posix/utsname.h
+	* pace/posix/wait.h
+
+	Continued  changes:
+
+        Changed the #if defined (PACE_HAS_POSIX) to #if
+	PACE_HAS_POSIX per our recent conversation regarding all macros being
+	assigned a value.
+
+	Moved the prototype function signatures to the root
+	directory *.h file.
+
+	Changed the form the *.inl file was included.
+
+
 Fri Jul  7 17:24:33 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/fcntl.h:
