@@ -101,10 +101,6 @@ SOURCE=.\Sender.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Sender_Task.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\TestC.cpp
 # End Source File
 # Begin Source File
@@ -122,10 +118,6 @@ SOURCE=.\Receiver.h
 # Begin Source File
 
 SOURCE=.\Sender.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Sender_Task.h
 # End Source File
 # Begin Source File
 
