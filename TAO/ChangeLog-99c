@@ -1,3 +1,17 @@
+Fri Aug  6 18:31:31 1999  Mike Moran  <mm4@cs.wustl.edu>
+
+	* tests/Explicit_Event_Loop/
+	* tests/Explicit_Event_Loop/Makefile:
+	* tests/Explicit_Event_Loop/CHANGES:
+	* tests/Explicit_Event_Loop/README:
+	* tests/Explicit_Event_Loop/client.cpp:
+	* tests/Explicit_Event_Loop/run_test.pl:
+	* tests/Explicit_Event_Loop/server.cpp:
+	* tests/Explicit_Event_Loop/server.h:
+	* tests/Explicit_Event_Loop/time.idl:	
+	Added a simple test to use work_pending() and perform_work()
+	at the request of [BUGID:202].
+	
 Fri Aug  6 17:10:33 1999  Pradeep Gore  <pradeep@ace.cs.wustl.edu>
 
 	* examples/Event_Comm/Consumer_Handler.cpp:
