@@ -1,60 +1,66 @@
+Thu Dec  2 13:11:22 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Topology_Object.h:
+          Restore the "unnecessary" virtual inheritence and added a note
+          indicating why it's there (to suppress a warning from HP ACC)
+
 Thu Dec  2 10:51:34 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
-        
+
           Added generation of namespace 'TAO' to the generation of 'VMCID'
           added in
-          
+
           Thu Dec  2 13:06:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Thu Dec  2 13:06:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
 
-	  Used VMCID while trying to propogate system exception with minor
-	  code. 
+          Used VMCID while trying to propogate system exception with minor
+          code.
 
 Wed Dec  1 12:00:40 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/run_test.pl:
 
-	  Correct typo in client's server IOR parameter.
+          Correct typo in client's server IOR parameter.
 
 Wed Dec  1 11:38:57 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Update.
+          Update.
 
-	* orbsvcs/orbsvcs/FTORB.mpc:
+        * orbsvcs/orbsvcs/FTORB.mpc:
 
-	  Added PortableGroup_Simple_export.h, PortableGroup_Simple_DSS_T.h
-	  to Header_Files; PortableGroup_Simple_DSS_T.inl to Inline_Files;
-	  and PortableGroup_Simple_DSS_T.cpp to Template_Files so headers
-	  will be installed.
+          Added PortableGroup_Simple_export.h, PortableGroup_Simple_DSS_T.h
+          to Header_Files; PortableGroup_Simple_DSS_T.inl to Inline_Files;
+          and PortableGroup_Simple_DSS_T.cpp to Template_Files so headers
+          will be installed.
 
 Wed Dec  1 19:29:32 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/SystemException.cpp:
 
-	  Moved some of the minor code changes from Johnn's branch to the
-	  main trunk. The minor code specification was slightly out of
-	  whack with the CORBA specification.
+          Moved some of the minor code changes from Johnn's branch to the
+          main trunk. The minor code specification was slightly out of
+          whack with the CORBA specification.
 
 Wed Dec  1 17:19:39 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
 
-	  Added minor code while throwing BAD_OPERATION exception in
-	  conformance with the CORBA spec.
+          Added minor code while throwing BAD_OPERATION exception in
+          conformance with the CORBA spec.
 
-	* tao/IIOP_Endpoint.cpp:
+        * tao/IIOP_Endpoint.cpp:
 
-	  Removed a weird DEBUG statemnet.
+          Removed a weird DEBUG statemnet.
 
-	* tao/SystemException.cpp:
+        * tao/SystemException.cpp:
 
-	  Added a minor code lookup table for BAD_OPERATION.
+          Added a minor code lookup table for BAD_OPERATION.
 
 Wed Dec  1 16:30:00 UTC 2004  Simon Massey  <sma@prismtech.com>
 
@@ -71,8 +77,8 @@ Wed Dec  1 15:30:00 UTC 2004  Simon Massey  <sma@prismtech.com>
 
           Fixed bugzilla 1996 - IFR - Dereferencing NULL pointer
           when compound object has been deleted.  Thanks to Johnny
-	  Willemsen <jwillemsen@remedy.nl> for pointing out emulated
-	  exceptions were wrongly used in the previous fix.
+          Willemsen <jwillemsen@remedy.nl> for pointing out emulated
+          exceptions were wrongly used in the previous fix.
 
 Wed Dec  1 14:00:00 UTC 2004  Simon Massey  <sma@prismtech.com>
 
@@ -89,7 +95,7 @@ Wed Dec  1 07:18:37 2004  Chad Elliott  <elliott_c@ociweb.com>
         * orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
 
           Fixed build warnings about mismatch parameter types with
-	  fprintf.
+          fprintf.
 
 Tue Nov 30 16:33:08 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 

@@ -86,13 +86,15 @@ namespace TAO_Notify
     /// call the reconnect() method on all of our children to give them
     /// the chance to do the same.
     virtual void reconnect (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+
   };
 
   /// \brief Base class for Persistent Topology Objects.
   ///
   /// Topology objects must be derived from this class to allow themselves
   /// to be persisted.
-  class TAO_Notify_Serv_Export Topology_Object : public virtual TAO_Notify_Object, public Topology_Savable
+  /// Note: virtual inheritance from TopologySavable is unnecessary, but HP ACC compiler warns if it's not there.
+  class TAO_Notify_Serv_Export Topology_Object : public virtual TAO_Notify_Object, public virtual Topology_Savable
   {
   public:
     /// The constructor.
