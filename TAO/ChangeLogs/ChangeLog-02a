@@ -1,3 +1,9 @@
+Thu Sep 13 13:46:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* docs/Options.html: Changed -ORBCacheMax in the documentation to
+	  be -ORBConnectionCacheMax. Thanks to Jean-christophe Dubois
+	  <jcd@one.com>  for reporting this.
+
 Thu Sep 13 13:18:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Cache_Growth_Test: A new test for testing whether the
