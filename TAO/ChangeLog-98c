@@ -1,3 +1,8 @@
+Tue Sep 22 22:46:52 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/MT_Cubit/Makefile: Updated
+ 	dependencies.
+
 Tue Sep 22 22:29:30 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * exmaples/POA/{Forwarding,TIE}: added FooS_T.* to
