@@ -4541,7 +4541,7 @@ AVSVC_COMPONENTS:
   AV/AV_Core.h AV/Transport.h AV/Flows_T.h AV/Flows_T.cpp AV/sfp.h \
   sfpC.h \
   AV/Policy.h AV/MCast.h AV/FlowSpec_Entry.h AV/Protocol_Factory.h \
-  AV/UDP.h AV/Nil.h AV/RTCP.h \
+  AV/UDP.h AV/RTCP.h \
   AV/RTP.h \
   AV/Protocol_Factory.h \
   AV/Policy.h \
@@ -6190,7 +6190,7 @@ AVSVC_COMPONENTS:
   AV/Protocol_Factory.h AV/Policy.h \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
-  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i AV/Nil.h \
+  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
   AV/AVStreams_i.h $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_NS_arpa_inet.h \
   $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
@@ -7718,7 +7718,7 @@ AVSVC_COMPONENTS:
   AV/Flows_T.cpp \
   AV/UDP.h \
   AV/RTP.h \
-  AV/RTCP_Channel.h AV/RTCP_Packet.h AV/Nil.h
+  AV/RTCP_Channel.h AV/RTCP_Packet.h 
 
 .obj/sfp.o .obj/sfp.so .shobj/sfp.o .shobj/sfp.so: AV/sfp.cpp AV/sfp.h $(ACE_ROOT)/ace/pre.h \
   AV/AV_export.h \

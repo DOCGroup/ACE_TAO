@@ -3,7 +3,6 @@
 #include "AVStreams_i.h"
 #include "sfp.h"
 #include "MCast.h"
-#include "Nil.h"
 #include "RTCP.h"
 #include "RTP.h"
 #include "UDP.h"
@@ -165,7 +164,7 @@ int
 TAO_AV_Connector_Registry::close (TAO_AV_Connector *connector)
 {
   this->connectors_.remove (connector);
-  
+
   if (connector != 0)
     delete connector;
   return 0;

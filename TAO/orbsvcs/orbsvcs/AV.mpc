@@ -32,7 +32,6 @@ project(AV) : orbsvcslib, core, property, naming, qos {
       AV/Flows_T.cpp
       AV/MCast.cpp
       AV/md5c.cpp
-      AV/Nil.cpp
       AV/Policy.cpp
       AV/Protocol_Factory.cpp
       AV/QoS_UDP.cpp
@@ -66,7 +65,6 @@ project(AV) : orbsvcslib, core, property, naming, qos {
     AV/Flows_T.h
     AV/MCast.h
     AV/md5.h
-    AV/Nil.h
     AV/Policy.h
     AV/Protocol_Factory.h
     AV/QoS_UDP.h
