@@ -1,3 +1,23 @@
+Mon Oct 20 12:05:39 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/Filecache.*
+	* ace/FIFO.*
+	* ace/FIFO_Send.*
+	* ace/FIFO_Recv.*
+	* ace/FIFO_Send_Msg.*
+	* ace/FIFO_Recv_Msg.*
+	* ace/Memory_Pool.* (ACE_MMAP_Memory_Pool_Options,
+	  ACE_MMAP_Memory_Pool): Added one member variable to these class
+	  so users can specify the LPSECURITY_ATTRIBUTES object they want
+	  to use with them.  
+	  (map_file, init_inquire): Pass the security attribute to
+	  underlying memory map object.
+
+	* ace/Mem_Map.* (ACE_Mem_Map, map, open, map_it): Added a new
+	  function parameter LPSECURITY_ATTRIBUTES.  It will be passed
+	  down to ACE_OS::mmap or ACE_OS::open.  This is only used on
+	  Win32. 
+
 Mon Oct 20 08:48:28 1997  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS.h, config-hpux-10.x.h:  Added a new definition,
