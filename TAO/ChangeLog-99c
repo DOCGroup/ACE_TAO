@@ -1,3 +1,15 @@
+Mon Apr 19 14:35:42 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* orbsvcs/tests/Trading/colocated_test.cpp (main):
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp (run):
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp (run):
+	* orbsvcs/Trading_Service/Trading_Service.cpp (init):
+        * tao/Stub.cpp (set_policy_overrides):
+        * tao/POA.cpp (create_POA):
+
+          Avoided annoying g++ warning about <auto_ptr> by explicitly
+	  making a temporary. Thanks to David for pointing this out.
+
 Mon Apr 19 13:54:10 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/configurations.html: removed TAO_ORBSVCS limitation
