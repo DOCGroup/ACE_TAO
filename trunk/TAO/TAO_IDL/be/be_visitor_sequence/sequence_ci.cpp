@@ -295,12 +295,12 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
       << "}" << be_uidt_nl
       << "else" << be_idt_nl
       << "{" << be_idt_nl
-      << node->name () << " *deep_copy =" << be_idt_nl
-      << "new " << node->name () << " (*p.ptr_);" 
+      << node->local_name () << " *deep_copy =" << be_idt_nl
+      << "new " << node->local_name () << " (*p.ptr_);" 
       << be_uidt_nl << be_nl
       << "if (deep_copy != 0)" << be_idt_nl
       << "{" << be_idt_nl
-      << node->name () << " *tmp = deep_copy;" << be_nl
+      << node->local_name () << " *tmp = deep_copy;" << be_nl
       << "deep_copy = this->ptr_;" << be_nl
       << "this->ptr_ = tmp;" << be_nl
       << "delete deep_copy;" << be_uidt_nl

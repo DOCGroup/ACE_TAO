@@ -279,12 +279,12 @@ be_structure::gen_var_impl (char *,
       << "}" << be_uidt_nl
       << "else" << be_idt_nl
       << "{" << be_idt_nl
-      << this->name () << " *deep_copy =" << be_idt_nl
-      << "new " << this->name () << " (*p.ptr_);" 
+      << this->local_name () << " *deep_copy =" << be_idt_nl
+      << "new " << this->local_name () << " (*p.ptr_);" 
       << be_uidt_nl << be_nl
       << "if (deep_copy != 0)" << be_idt_nl
       << "{" << be_idt_nl
-      << this->name () << " *tmp = deep_copy;" << be_nl
+      << this->local_name () << " *tmp = deep_copy;" << be_nl
       << "deep_copy = this->ptr_;" << be_nl
       << "this->ptr_ = tmp;" << be_nl
       << "delete deep_copy;" << be_uidt_nl
