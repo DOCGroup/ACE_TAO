@@ -322,11 +322,15 @@ IDL compiler now supports the CORBA AMI callback model, generating code
 for reply handlers and reply stubs if the -GC command line option is
 used. The TAO library must be compiled with TAO_HAS_CORBA_MESSAGING = 1.
 If this is done, TAO_HAS_AMI_CALLBACK will automatically be defined to
-1 as well. IDL_HAS_VALUETYPE is defined to 1 by default.
+1 as well. IDL_HAS_VALUETYPE is defined to 1 by default. </li>
+
+<li>
+New command line option -So added to suppress generation of ostream
+operators for exceptions. </li>
 
 <li>
 New command line option -Sc added to suppress generation of tie classes
-and *S_T.* files. The default is still to generate them.
+and *S_T.* files. The default is still to generate them. </li>
 
 <li>
 IDL compiler now handles escaped identifiers (CORBA 2.3.1). An identifier
@@ -334,7 +338,13 @@ appearing in an IDL file with a leading underscore will appear in
 generated code without the underscore. This enables the use of identifiers
 in generated code identical to IDL keywords, as specified in CORBA 2.3.1.
 If the resulting identifier matches a C++ keyword, "_cxx_"
-will be prepended in generated code as before.
+will be prepended in generated code as before. </li>
+
+<li>
+The -St option to suppress generation of typecodes now also suppresses the
+generation of the Any insertion and extraction operators. The extraction
+operators require the associated typecode, so the generated code for those
+operators would not compile when the -St option was used. </li>
 </ul>
 
 <p><br>Known bugs/unimplemented constructs:
