@@ -39,10 +39,6 @@
 
 ACE_RCSID(ReactorEx, test_network_events, "$Id$")
 
-// Globals for this test
-int stop_test = 0;
-ACE_Reactor reactor;
-
 class Network_Handler : public ACE_Event_Handler
 {
 public:
@@ -61,7 +57,7 @@ public:
 Network_Handler::Network_Handler (ACE_SOCK_Stream &s)
   : stream_ (s)
 {
-  this->reactor (&::reactor);
+  this->reactor (ACE_Reactor::instance ());
 
   ACE_ASSERT (this->reactor ()->register_handler (this, READ_MASK) == 0);
 }
@@ -133,7 +129,7 @@ Network_Listener::Network_Listener (void)
   : local_address_ (ACE_DEFAULT_SERVER_PORT),
     acceptor_ (local_address_, 1)
 {
-  this->reactor (&::reactor);
+  this->reactor (ACE_Reactor::instance ());
   ACE_ASSERT (this->reactor ()->register_handler (this, 
 						  ACE_Event_Handler::ACCEPT_MASK) == 0);
 }
@@ -186,13 +182,10 @@ Network_Listener::handle_close (ACE_HANDLE handle,
 
 int 
 main (int, char *[])
-{
+{  
   Network_Listener listener;
 
-  int result = 0;
-  while (!stop_test && result != -1)
-    {
-      result = reactor.handle_events ();
-    }
+  ACE_Reactor::run_event_loop ();
+
   return 0;
 };
