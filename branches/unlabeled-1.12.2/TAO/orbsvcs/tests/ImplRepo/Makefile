@@ -17,7 +17,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs \
             -I$(TAO_ROOT)
 
 IDL_SRC = AirplaneS.cpp AirplaneC.cpp NesteaS.cpp NesteaC.cpp
-PROG_SRCS = Repository.cpp \
+PROG_SRCS = \
             Repository_Test.cpp \
             airplane_client.cpp \
             airplane_server.cpp \
@@ -59,6 +59,7 @@ NESTEA_SERVER_OBJS =  NesteaC.o \
 
 
 REPOSITORY_TEST_OBJS =  ../../../ImplRepo_Service/$(VDIR)/Repository.o \
+                        ../../../ImplRepo_Service/$(VDIR)/Options.o \
                         Repository_Test.o
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
