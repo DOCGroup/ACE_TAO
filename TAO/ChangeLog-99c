@@ -1,3 +1,9 @@
+Mon Aug  9 12:00:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/IOR_LookupTable.cpp:
+	  Added missing #include required for platforms without native
+	  exceptions.
+
 Mon Aug 09 09:38:00 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Exception.cpp (_tao_errno): only provide the
