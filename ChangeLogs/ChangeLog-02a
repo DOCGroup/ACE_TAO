@@ -1,3 +1,11 @@
+Wed Jul 04 14:26:10 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Synch_T.h (class ACE_Acquire_Method): Moved the enums from
+	  the Reverse Lock class into ACE_Acquire_Method, a non-template
+	  class.  These enums should have been inside the reverse lock
+	  class, but some lame compilers cannot handle enums inside
+	  template classes.
+
 Wed Jul 04 12:43:22 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Synch_T.i (ACE_Reverse_Lock): Fully specified the

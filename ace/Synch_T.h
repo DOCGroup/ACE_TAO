@@ -104,6 +104,33 @@ private:
 };
 
 /**
+ * @class ACE_Acquire_Method
+ *
+ * @brief An enum class.
+ *
+ * These enums should have been inside the reverse lock class, but
+ * some lame compilers cannot handle enums inside template classes.
+ *
+ * The METHOD_TYPE is used to indicate which acquire() method will be
+ * called on the real lock when the release() method is called on the
+ * reverse lock. REGULAR indicated the acquire() method, READ
+ * indicates the acquire_read() method, and WRITE indicates the
+ * acquire_write() method.  Note that the try_*() methods are not
+ * represented here because we have to make sure that the release()
+ * method on the reverse lock acquires a lock on the real lock.
+ **/
+class ACE_Acquire_Method
+{
+public:
+  enum METHOD_TYPE
+  {
+    ACE_REGULAR,
+    ACE_READ,
+    ACE_WRITE
+  };
+};
+
+/**
  * @class ACE_Reverse_Lock
  *
  * @brief A reverse (or anti) lock.
@@ -126,30 +153,13 @@ class ACE_Reverse_Lock : public ACE_Lock
 {
 public:
 
-  /**
-   * The ACE_ACQUIRE_METHOD is used to indicate which acquire() method
-   * will be called on the real lock when the release() method is
-   * called on the reverse lock. REGULAR indicated the acquire()
-   * method, READ indicates the acquire_read() method, and WRITE
-   * indicates the acquire_write() method.  Note that the try_*()
-   * methods are not represented here because we have to make sure
-   * that the release() method on the reverse lock acquires a lock on
-   * the real lock.
-   **/
-  enum ACE_ACQUIRE_METHOD
-  {
-    ACE_REGULAR,
-    ACE_READ,
-    ACE_WRITE
-  };
-
   typedef ACE_LOCKING_MECHANISM ACE_LOCK;
 
   // = Initialization/Finalization methods.
 
   /// Constructor. All locking requests will be forwarded to <lock>.
   ACE_Reverse_Lock (ACE_LOCKING_MECHANISM &lock,
-                    ACE_ACQUIRE_METHOD acquire_method = ACE_REGULAR);
+                    ACE_Acquire_Method::METHOD_TYPE acquire_method = ACE_Acquire_Method::ACE_REGULAR);
 
   /// Destructor. If <lock_> was not passed in by the user, it will be
   /// deleted.
@@ -188,7 +198,7 @@ private:
   ACE_LOCKING_MECHANISM &lock_;
 
   /// This indicates what kind of acquire method will be called.
-  ACE_ACQUIRE_METHOD acquire_method_;
+  ACE_Acquire_Method::METHOD_TYPE acquire_method_;
 };
 
 /**
