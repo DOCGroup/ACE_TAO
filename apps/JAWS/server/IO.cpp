@@ -105,15 +105,45 @@ JAWS_Synch_IO::transmit_file (const char *filename,
 
   if (result == ACE_Filecache_Handle::SUCCESS)
     {
+#if 0
       ACE_SOCK_Stream stream;
       stream.set_handle (this->handle_);
       
       if ((stream.send_n (header, header_size) == header_size) 
-	  && ((u_long) stream.send_n (handle.address (), handle.size ()) == handle.size ()) 
+	  && ((u_long) stream.send_n (handle.address (), handle.size ())
+              == handle.size ())
 	  && (stream.send_n (trailer, trailer_size) == trailer_size))
 	this->handler_->transmit_file_complete ();
       else
-	result = -1;      
+	result = -1;
+#else
+      // Attempting to use writev
+      // Is this faster?
+      struct iovec iov[3];
+      int iovcnt = 0;
+      if (header_size > 0)
+        {
+          iov[iovcnt].iov_base = (char *) header;
+          iov[iovcnt].iov_len = header_size;
+          iovcnt++;
+        }
+      if (handle.size () > 0)
+        {
+          iov[iovcnt].iov_base = (char *) handle.address ();
+          iov[iovcnt].iov_len = handle.size ();
+          iovcnt++;
+        }
+      if (trailer_size > 0)
+        {
+          iov[iovcnt].iov_base = (char *) trailer;
+          iov[iovcnt].iov_len = trailer_size;
+          iovcnt++;
+        }
+      if (ACE_OS::writev (this->handle_, iov, iovcnt) == 0)
+        this->handler_->transmit_file_complete ();
+      else
+        result = -1;
+#endif
     }
 
   if (result != ACE_Filecache_Handle::SUCCESS)    
