@@ -1,3 +1,10 @@
+Wed Oct 21 22:29:35 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* TAO_IDL/be/be_codegen.cpp (TAO_CodeGen): Fixed the problem with
+	#include'ing the server skeleton header of the another #included
+	idl file. Thanks to Stach (t.stach@inobis.de) for tracking this
+	down. 
+
 Wed Oct 21 15:01:23 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp
