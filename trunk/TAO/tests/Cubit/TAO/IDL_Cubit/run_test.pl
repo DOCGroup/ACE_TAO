@@ -12,7 +12,7 @@ $ior_file = "cubit_ior";
 $SV = Process::Create ("server".$Process::EXE_EXT, 
                        "-s -ORBport ".$server_port." -o ".$ior_file." -ORBobjrefstyle url");
 
-sleep (5);
+sleep (2);
 
 system ("client".$Process::EXE_EXT." -x -s -f ".$ior_file." -ORBport ".$client_port );
 
