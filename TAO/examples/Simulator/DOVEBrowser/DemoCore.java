@@ -16,19 +16,18 @@
 
 import java.awt.*;
 import java.awt.event.*;
-import java.beans.*;
 
 public class DemoCore extends Frame {
 
   private static final int MAX_VIS_COMPS = 10;
 
   private PushConsumerFactory pushConsumerFactory_;
+  private VisCompFactory visCompFactory_;
   private DataHandler dataHandler_;
   private java.util.Vector vis_comp_list_;
   private int countVisComp_ = 0;
   private GridBagLayout gridbag_;
   private GridBagConstraints constraints_;
-
 
   DemoCore () {
     super ();
@@ -88,73 +87,52 @@ public class DemoCore extends Frame {
 					 }
 				       });      
     
+    // instantiate the Factory for Visualization Components
+    visCompFactory_ = new VisCompFactory ();
+
+    // in here the factory is needed
     addConnection ("Cpu_UsageObservable");
   }
   
-  public boolean addConnection (String selected) {	
-    // to not fill too many into it
-    if (countVisComp_ < MAX_VIS_COMPS) {
+	public boolean addConnection (String selected) {	
+		// to not fill too many into it
+		if (countVisComp_ < MAX_VIS_COMPS) {
       
-      // get a reference to the Observable
-      DemoObservable observable_ = dataHandler_.getObservable (selected);
+			// get a reference to the Observable
+			DemoObservable observable_ = dataHandler_.getObservable (selected);
+	
+			if (observable_ != null) {
+	
+        VisComp visComp_ = visCompFactory_.getNewVisComp (observable_.getProperty (), selected);
 
-      if (observable_ != null) {
-
-	ClassLoader classLoader_ = this.getClass().getClassLoader();	
-
-	VisComp visComp_ = null;
-	String visCompName_ = "VisComp";
-	switch (observable_.getProperty ()) {
-	case Properties.DOUBLE:
-	  visCompName_ = "Double"+visCompName_;
-	  break;
-	case Properties.NAVIGATION:
-	  visCompName_ = "Navigation"+visCompName_;
-	  break;
-	case Properties.WEAPONS:
-	  visCompName_ = "Weapons"+visCompName_;
-	  break;
-	default: return false;
-	}
-	try {
-	  System.out.println ("Trying to connect: " + visCompName_+ " .. ");
-	  visComp_ = (VisComp) Beans.instantiate (classLoader_, visCompName_);
-	  visComp_.setName (selected);
-	  System.out.println ("Connected: " + visCompName_);
-	}
-	catch (Exception e) {
-	  System.out.println ("Unable to load JavaBean: " + e);
+	  		if (visComp_ != null) {
+		  		vis_comp_list_.addElement (visComp_);	 
+	    
+			  	// connect the Observer with the Observable
+  				observable_.addObserver (visComp_);
+	  
+	  			countVisComp_++;
+	  
+          // not more than three in a row
+		  		if (countVisComp_ == 3){
+			    	constraints_.gridwidth = GridBagConstraints.REMAINDER;
+          }
+          if (countVisComp_ > 3) {
+				    constraints_.gridwidth = 1;
+			    } 
+	  
+			    gridbag_.setConstraints ((java.awt.Component) visComp_, constraints_);
+	  
+			    // add the Visualization Component to the Frame
+			    DemoCore.this.add ((java.awt.Component) visComp_);
+			    DemoCore.this.show ();
+	  
+          return true;
+        }
+		  }
+    }
 	  return false;
 	}
-	if (visComp_ != null) {
-	  vis_comp_list_.addElement (visComp_);	 
-	  
-	  // connect the Observer with the Observable
-	  observable_.addObserver (visComp_);
-	  
-	  countVisComp_++;
-	  
-	  if (countVisComp_ == 3){
-	    constraints_.gridwidth = GridBagConstraints.REMAINDER;
-	  }
-	  if (countVisComp_ > 3) {
-	    constraints_.gridwidth = 1;
-	  }
-	  
-	  gridbag_.setConstraints ((java.awt.Component) visComp_, constraints_);
-	  
-	  // add the Visualization Component to the Frame
-	  DemoCore.this.add ((java.awt.Component) visComp_);
-	
-	  System.out.println ("Connected the consumer with the visualization component!");
-	  DemoCore.this.show ();
-	  
-	  return true;
-	}
-      }
-    }
-    return false;
-  }
   
   public void init () {
 
