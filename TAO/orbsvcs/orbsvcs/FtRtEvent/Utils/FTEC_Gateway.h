@@ -40,7 +40,7 @@ namespace TAO_FTRTEC
 
       virtual RtecEventChannelAdmin::Observer_Handle
         append_observer
-          (RtecEventChannelAdmin::Observer_ptr observer 
+          (RtecEventChannelAdmin::Observer_ptr observer
            ACE_ENV_ARG_DECL) ACE_THROW_SPEC((
                              CORBA::SystemException,
                              RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
