@@ -1,3 +1,7 @@
+Tue Dec 23 19:34:40 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* TAO version 0.0.47, released Tue Dec 23 19:34:40 1997.
+
 Tue Dec 23 13:36:50 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_state_sequence.cpp: ACE_NESTED_CLASS must be
