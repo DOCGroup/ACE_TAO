@@ -96,6 +96,12 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
           // so we have to test for it first.
           if (ev->u.cval == '\\')
             this->TAO_OutStream::print ("'\\\\'");
+
+          // This handles hex and octal escape sequences
+          // that would print out either as weird characters
+          // or as an unsigned number too large for a char.
+          else if (ev->u.cval < 0)
+            this->TAO_OutStream::print ("%hd", ev->u.cval);
           else if (isprint (ev->u.cval))
 	          this->TAO_OutStream::print ("'%c'", ev->u.cval);
 	        else if (iscntrl (ev->u.cval))
