@@ -1,3 +1,9 @@
+Sun Nov 09 17:55:50 1997    <nw1@COYOTE>
+
+	* ace/ACE.i (hex2byte,nibble2hex): Replaced ACE_INLINE to inline
+ 	  for these two functions.  Functions in this file are always
+ 	  inlined.
+
 Sun Nov  9 14:07:02 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/ACE.cpp: Added hex character routines from TAO since they
