@@ -9,9 +9,6 @@
 #include "ace/Service_Types.h"
 #include "ace/Containers.h"
 #include "ace/Auto_Ptr.h"
-#if !defined (ACE_HAS_WINCE)
-#  include "ace/Proactor.h"
-#endif /* !ACE_HAS_WINCE */
 #include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Process_Manager.h"
@@ -830,9 +827,7 @@ ACE_Service_Config::close_singletons (void)
   // so we need to close it down first.
 
   ACE_Reactor::close_singleton ();
-#if (((defined (ACE_HAS_WINNT)) && (ACE_HAS_WINNT == 1)) || (defined (ACE_HAS_AIO_CALLS)))
-  ACE_Proactor::close_singleton ();
-#endif /* (((defined (ACE_HAS_WINNT)) && (ACE_HAS_WINNT == 1)) || (defined (ACE_HAS_AIO_CALLS))) */
+
 #if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
   ACE_Thread_Manager::close_singleton ();
 #endif /* ! ACE_THREAD_MANAGER_LACKS_STATICS */
