@@ -15,10 +15,16 @@
 #if !defined (ACE_TEST_CONFIG_H)
 #define ACE_TEST_CONFIG_H
 
+#include "ace/inc_user_config.h"
+#if defined (ACE_NLOGGING)
+// ACE_NLOGGING must not be set if the tests are to produce any output.
+#undef ACE_NLOGGING
+#endif /* ACE_NLOGGING */
+
 /* Borland C++ Builder stuff */
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 #include /**/ <condefs.h>
-#endif
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 // This first #undef protects against command-line definitions.
 #undef ACE_NDEBUG
