@@ -1,3 +1,15 @@
+Fri Jun  8 09:14:53 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
+	* orbsvcs/orbsvcs/AV/Fill_ACE_QoS.cpp: 
+	  
+	  Fixed compile errors due to missing template instantiations.
+
+	* auto_run_tests.lst: 
+
+	  Added the AVStreams tests to the nightly builds.
+
+
 Fri Jun  8 07:38:59 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Connection_Purging/README:
