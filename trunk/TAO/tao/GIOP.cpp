@@ -461,8 +461,12 @@ TAO_GIOP::close_connection (TAO_Transport *transport,
 static const char
 error_message [TAO_GIOP_HEADER_LEN] =
 {
-  // 'G', 'I', 'O', 'P',
-  0x47, 0x49, 0x4f, 0x50, // work on non-ASCII platforms...
+  // The following works on non-ASCII platforms, such as MVS (which
+  // uses EBCDIC).
+  0x47, // 'G'
+  0x49, // 'I'
+  0x4f, // 'O' 
+  0x50, // 'P'
   TAO_GIOP_MessageHeader::MY_MAJOR,
   TAO_GIOP_MessageHeader::MY_MINOR,
   TAO_ENCAP_BYTE_ORDER,
@@ -630,15 +634,16 @@ TAO_GIOP::handle_input (TAO_Transport *transport,
 
       if (input.grow (header_size +
                       header.message_size) == -1)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - %p\n",
-                      "TAO_GIOP::handle_input, ACE_CDR::grow"));
-          return -1;
-        }
+        // @@ Carlos, shouldn't we only print out an error message if
+        // TAO_debug_level is > 0?
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "TAO (%P|%t) - %p\n",
+                           "TAO_GIOP::handle_input, ACE_CDR::grow"),
+                          -1);
 
-      // Growing the buffer may have reset the rd_ptr(), but we want to
-      // leave it just after the GIOP header (that was parsed already);
+      // Growing the buffer may have reset the rd_ptr(), but we want
+      // to leave it just after the GIOP header (that was parsed
+      // already);
       input.skip_bytes (header_size);
     }
 
@@ -681,7 +686,8 @@ TAO_GIOP::handle_input (TAO_Transport *transport,
           buf -= header_len;
           size_t msg_len = input.length () + header_len;
           TAO_GIOP::dump_msg ("recv",
-                              ACE_reinterpret_cast (u_char *, buf),
+                              ACE_reinterpret_cast (u_char *,
+                                                    buf),
                               msg_len);
         }
       return 1;
@@ -692,11 +698,11 @@ TAO_GIOP::handle_input (TAO_Transport *transport,
 int
 TAO_GIOP::parse_reply (TAO_Transport *transport,
                        TAO_ORB_Core *orb_core,
-                       TAO_InputCDR& input,
-                       const TAO_GIOP_MessageHeader& header,
-                       TAO_GIOP_ServiceContextList& reply_ctx,
-                       CORBA::ULong& request_id,
-                       CORBA::ULong& reply_status)
+                       TAO_InputCDR &input,
+                       const TAO_GIOP_MessageHeader &header,
+                       TAO_GIOP_ServiceContextList &reply_ctx,
+                       CORBA::ULong &request_id,
+                       CORBA::ULong &reply_status)
 {
   switch (header.message_type)
     {
@@ -748,9 +754,9 @@ TAO_GIOP::parse_reply (TAO_Transport *transport,
       return -1;
     }
 
-  // and the reply status type.
-  // status can be NO_EXCEPTION, SYSTEM_EXCEPTION, USER_EXCEPTION,
-  // LOCATION_FORWARD or (on GIOP 1.2) LOCATION_FORWARD_PERM
+  // and the reply status type.  status can be NO_EXCEPTION,
+  // SYSTEM_EXCEPTION, USER_EXCEPTION, LOCATION_FORWARD or (on GIOP
+  // 1.2) LOCATION_FORWARD_PERM
   if (!input.read_ulong (reply_status))
     {
       if (TAO_debug_level > 0)
@@ -762,19 +768,22 @@ TAO_GIOP::parse_reply (TAO_Transport *transport,
   return 0;
 }
 
-// ****************************************************************
-
+// @@ Carlos, this method is rather large.  Is it possible to break it
+// up a bit?
 void
 TAO_GIOP::process_server_message (TAO_Transport *transport,
                                   TAO_ORB_Core *orb_core,
                                   TAO_InputCDR &input,
-                                  const TAO_GIOP_MessageHeader& header)
+                                  const TAO_GIOP_MessageHeader &header)
 {
   char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
 #if defined(ACE_HAS_PURIFY)
-  (void) ACE_OS::memset (repbuf, '\0', sizeof (repbuf));
+  (void) ACE_OS::memset (repbuf,
+                         '\0',
+                         sizeof repbuf);
 #endif /* ACE_HAS_PURIFY */
-  TAO_OutputCDR output (repbuf, sizeof(repbuf),
+  TAO_OutputCDR output (repbuf, 
+                        sizeof repbuf,
                         TAO_ENCAP_BYTE_ORDER,
                         orb_core->output_cdr_buffer_allocator (),
                         orb_core->output_cdr_dblock_allocator (),
@@ -816,10 +825,9 @@ TAO_GIOP::process_server_message (TAO_Transport *transport,
           ACE_TRY_CHECK;
           break;
 
-        // These messages should never be sent to the server;
-        // it's an error if the peer tries.  Set the environment
-        // accordingly, as it's not yet been reported as an
-        // error.
+          // These messages should never be sent to the server; it's an
+          // error if the peer tries.  Set the environment accordingly,
+          // as it's not yet been reported as an error.
         case TAO_GIOP::Reply:
         case TAO_GIOP::LocateReply:
         case TAO_GIOP::CloseConnection:
@@ -842,36 +850,34 @@ TAO_GIOP::process_server_message (TAO_Transport *transport,
     {
       if (response_required)
         {
-          int result = TAO_GIOP::send_reply_exception (transport,
-                                                       orb_core,
-                                                       request_id,
-                                                       &ACE_ANY_EXCEPTION);
-          if (result == -1)
+          if (TAO_GIOP::send_reply_exception (transport,
+                                              orb_core,
+                                              request_id,
+                                              &ACE_ANY_EXCEPTION) == -1)
             {
               if (TAO_debug_level > 0)
                 ACE_ERROR ((LM_ERROR,
                             "TAO: (%P|%t) %p: cannot send exception\n",
                             "TAO_GIOP::process_server_message"));
-              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO: ");
+              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                                   "TAO: ");
             }
 
           return;
         }
-      else
+      else if (TAO_debug_level > 0)
         {
-          if (TAO_debug_level > 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          "(%P|%t) exception thrown "
-                          "but client is not waiting a response\n"));
-              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO: ");
-            }
-
           // It is unfotunate that an exception (probably a system
           // exception) was thrown by the upcall code (even by the
           // user) when the client was not expecting a response.
           // However, in this case, we cannot close the connection
           // down, since it really isn't the client's fault.
+
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) exception thrown "
+                      "but client is not waiting a response\n"));
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                               "TAO: ");
         }
       return;
     }
@@ -881,65 +887,54 @@ TAO_GIOP::process_server_message (TAO_Transport *transport,
       // @@ TODO some c++ exception or another, but what do we do with
       //    it?
       // We are supposed to map it into a CORBA::UNKNOWN exception.
-      // BTW, this cannot be detected if using the <env> mapping.
-      //   If we have native exceptions but no support for them
-      //   in the ORB we should still be able to catch it.
-      //   If we don't have native exceptions it couldn't have been
-      //   raised in the first place!
+      // BTW, this cannot be detected if using the <env> mapping.  If
+      // we have native exceptions but no support for them in the ORB
+      // we should still be able to catch it.  If we don't have native
+      // exceptions it couldn't have been raised in the first place!
       if (response_required)
         {
-          CORBA::UNKNOWN exception (
-            CORBA::SystemException::minor_code_tao_ (
-                TAO_UNHANDLED_SERVER_CXX_EXCEPTION, 0),
-            CORBA::COMPLETED_MAYBE);
+          CORBA::UNKNOWN exception 
+            (CORBA::SystemException::minor_code_tao_ 
+             (TAO_UNHANDLED_SERVER_CXX_EXCEPTION, 0),
+             CORBA::COMPLETED_MAYBE);
 
-          int result =
-            TAO_GIOP::send_reply_exception (transport,
-                                            orb_core,
-                                            request_id,
-                                            &exception);
-          if (result == -1)
+          if (TAO_GIOP::send_reply_exception (transport,
+                                              orb_core,
+                                              request_id,
+                                              &exception) == -1)
             {
               if (TAO_debug_level > 0)
                 ACE_ERROR ((LM_ERROR,
                             "TAO: (%P|%t) %p: cannot send exception\n",
                             "TAO_GIOP::process_server_message"));
-              ACE_PRINT_EXCEPTION (exception, "TAO: ");
+              ACE_PRINT_EXCEPTION (exception,
+                                   "TAO: ");
             }
         }
-      else
-        {
-          if (TAO_debug_level > 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          "(%P|%t) exception thrown "
-                          "but client is not waiting a response\n"));
-            }
-
-          // It is unfotunate that an exception (probably a system
-          // exception) was thrown by the upcall code (even by the
-          // user) when the client was not expecting a response.
-          // However, in this case, we cannot close the connection
-          // down, since it really isn't the client's fault.
-        }
-
+      else if (TAO_debug_level > 0)
+        // It is unfotunate that an exception (probably a system
+        // exception) was thrown by the upcall code (even by the user)
+        // when the client was not expecting a response.  However, in
+        // this case, we cannot close the connection down, since it
+        // really isn't the client's fault.
+        ACE_ERROR ((LM_ERROR,
+                    "(%P|%t) exception thrown "
+                    "but client is not waiting a response\n"));
       return;
     }
 #endif /* TAO_HAS_EXCEPTIONS */
   ACE_ENDTRY;
 
-  if (response_required)
-    {
-      int result = TAO_GIOP::send_message (transport,
-                                           output,
-                                           orb_core);
-      // No exception but some kind of error, yet a response is
-      // required.
-      if (result == -1 && TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
-                    "TAO: (%P|%t) %p: cannot send reply\n",
-                    "TAO_GIOP::process_server_message"));
-    }
+  if (response_required
+      && TAO_GIOP::send_message (transport,
+                                 output,
+                                 orb_core) == -1
+      && TAO_debug_level > 0)
+    // No exception but some kind of error, yet a response is
+    // required.
+    ACE_ERROR ((LM_ERROR,
+                "TAO: (%P|%t) %p: cannot send reply\n",
+                "TAO_GIOP::process_server_message"));
 
   TAO_MINIMAL_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_END);
 }
@@ -968,14 +963,15 @@ TAO_GIOP::process_server_request (TAO_Transport *transport,
   response_required = request.response_expected ();
 
 #if !defined (TAO_NO_IOR_TABLE)
-
-  const CORBA::Octet *object_key = request.object_key ().get_buffer ();
+  const CORBA::Octet *object_key =
+    request.object_key ().get_buffer ();
 
   if (ACE_OS::memcmp (object_key,
                       &TAO_POA::objectkey_prefix[0],
                       TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
     {
-      ACE_CString object_id (ACE_reinterpret_cast (const char *, object_key),
+      ACE_CString object_id (ACE_reinterpret_cast (const char *,
+                                                   object_key),
                              request.object_key ().length (),
                              0,
                              0);
@@ -992,15 +988,18 @@ TAO_GIOP::process_server_request (TAO_Transport *transport,
         orb_core->orb ()->_tao_find_in_IOR_table (object_id,
                                                   object_reference);
 
-      // If ObjectID not in table or reference is nil raise OBJECT_NOT_EXIST.
+      // If ObjectID not in table or reference is nil raise
+      // OBJECT_NOT_EXIST.
 
-      if (CORBA::is_nil (object_reference) || status == -1)
+      if (CORBA::is_nil (object_reference)
+          || status == -1)
         ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
 
-      // ObjectID present in the table with an associated NON-NULL reference.
-      // Throw a forward request exception.
+      // ObjectID present in the table with an associated NON-NULL
+      // reference.  Throw a forward request exception.
 
-      CORBA::Object_ptr dup = CORBA::Object::_duplicate (object_reference);
+      CORBA::Object_ptr dup =
+        CORBA::Object::_duplicate (object_reference);
 
       // @@ We could simply write the response at this point...
       ACE_THROW (PortableServer::ForwardRequest (dup));
@@ -1026,8 +1025,8 @@ TAO_GIOP::process_server_locate (TAO_Transport *transport,
 {
   //  TAO_FUNCTION_PP_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_START);
 
-  // This will extract the request header, set <response_required>
-  // as appropriate.
+  // This will extract the request header, set <response_required> as
+  // appropriate.
   TAO_GIOP_LocateRequestHeader locateRequestHeader;
 
   TAO_GIOP_LocateStatusType status;
@@ -1071,12 +1070,12 @@ TAO_GIOP::process_server_locate (TAO_Transport *transport,
           // If ObjectID not in table or reference is nil raise
           // OBJECT_NOT_EXIST.
 
-          if (CORBA::is_nil (object_reference) || find_status == -1)
+          if (CORBA::is_nil (object_reference) 
+              || find_status == -1)
             ACE_TRY_THROW (CORBA::OBJECT_NOT_EXIST ());
 
           // ObjectID present in the table with an associated NON-NULL
-          // reference.
-          // Throw a forward request exception.
+          // reference.  Throw a forward request exception.
 
           CORBA::Object_ptr dup =
             CORBA::Object::_duplicate (object_reference);
@@ -1089,7 +1088,8 @@ TAO_GIOP::process_server_locate (TAO_Transport *transport,
       // Execute a fake request to find out if the object is there or
       // if the POA can activate it on demand...
       char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
-      TAO_OutputCDR dummy_output (repbuf, sizeof(repbuf));
+      TAO_OutputCDR dummy_output (repbuf,
+                                  sizeof repbuf);
       // This output CDR is not used!
 
       TAO_ObjectKey tmp_key (locateRequestHeader.object_key.length (),
@@ -1113,7 +1113,7 @@ TAO_GIOP::process_server_locate (TAO_Transport *transport,
 
       if (serverRequest.exception_type () == TAO_GIOP_NO_EXCEPTION)
         {
-          // we got no exception, so the object is here
+          // We got no exception, so the object is here.
           status = TAO_GIOP_OBJECT_HERE;
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
@@ -1142,7 +1142,8 @@ TAO_GIOP::process_server_locate (TAO_Transport *transport,
   ACE_CATCH (PortableServer::ForwardRequest, forward_request)
     {
       status = TAO_GIOP_OBJECT_FORWARD;
-      forward_location_var = forward_request.forward_reference;
+      forward_location_var =
+        forward_request.forward_reference;
       ACE_DEBUG ((LM_DEBUG,
                   "handle_locate has been called: forwarding\n"));
     }
@@ -1169,11 +1170,9 @@ TAO_GIOP::process_server_locate (TAO_Transport *transport,
       if ((output << object_ptr) == 0)
         {
           if (TAO_debug_level > 0)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "Server_Connection_Handler::handle_locate - "
-                          "error marshaling forwarded reference\n"));
-            }
+            ACE_DEBUG ((LM_DEBUG,
+                        "Server_Connection_Handler::handle_locate - "
+                        "error marshaling forwarded reference\n"));
           ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                      CORBA::COMPLETED_YES));
         }
@@ -1190,9 +1189,12 @@ TAO_GIOP::send_reply_exception (TAO_Transport *transport,
 
   char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
 #if defined(ACE_HAS_PURIFY)
-  (void) ACE_OS::memset (repbuf, '\0', sizeof (repbuf));
+  (void) ACE_OS::memset (repbuf,
+                         '\0',
+                         sizeof repbuf);
 #endif /* ACE_HAS_PURIFY */
-  TAO_OutputCDR output (repbuf, sizeof(repbuf),
+  TAO_OutputCDR output (repbuf, 
+                        sizeof repbuf,
                         TAO_ENCAP_BYTE_ORDER,
                         orb_core->output_cdr_buffer_allocator (),
                         orb_core->output_cdr_dblock_allocator (),
@@ -1201,10 +1203,12 @@ TAO_GIOP::send_reply_exception (TAO_Transport *transport,
                         orb_core->to_unicode ());
 
   // Construct a REPLY header.
-  TAO_GIOP::start_message (TAO_GIOP::Reply, output, orb_core);
+  TAO_GIOP::start_message (TAO_GIOP::Reply,
+                           output,
+                           orb_core);
 
-  // A new try/catch block, but if something goes wrong now we
-  // have no hope, just abort.
+  // A new try/catch block, but if something goes wrong now we have no
+  // hope, just abort.
   ACE_TRY_NEW_ENV
     {
       // create and write a dummy context
@@ -1218,9 +1222,8 @@ TAO_GIOP::send_reply_exception (TAO_Transport *transport,
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
       // @@ TODO This is the place to conditionally compile
-      // forwarding. It certainly seems easy to strategize too,
-      // just invoke an strategy to finish marshalling the
-      // response.
+      // forwarding. It certainly seems easy to strategize too, just
+      // invoke an strategy to finish marshalling the response.
 
       // Now we check for Forwarding ***************************
 
@@ -1245,12 +1248,13 @@ TAO_GIOP::send_reply_exception (TAO_Transport *transport,
       else
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
         {
           // Write the exception
           CORBA::TypeCode_ptr except_tc = x->_type ();
 
-          CORBA::exception_type extype = CORBA::USER_EXCEPTION;
+          CORBA::exception_type extype =
+            CORBA::USER_EXCEPTION;
+
           if (CORBA::SystemException::_narrow (x) != 0)
             extype = CORBA::SYSTEM_EXCEPTION;
 
@@ -1259,16 +1263,19 @@ TAO_GIOP::send_reply_exception (TAO_Transport *transport,
 
           // @@ Any way to implement this without interpretive
           //    marshaling???
-          output.encode (except_tc, x, 0, ACE_TRY_ENV);
+          output.encode (except_tc,
+                         x,
+                         0,
+                         ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
     }
   ACE_CATCH (CORBA_Exception, ex)
     {
-      // now we know, that while handling the error an other error
+      // Now we know that while handling the error an other error
       // happened -> no hope, close connection.
 
-      // close the handle
+      // Close the handle.
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) cannot marshal exception %p\n",
                   transport->handle (),
@@ -1277,7 +1284,9 @@ TAO_GIOP::send_reply_exception (TAO_Transport *transport,
     }
   ACE_ENDTRY;
 
-  return TAO_GIOP::send_message (transport, output, orb_core);
+  return TAO_GIOP::send_message (transport,
+                                 output,
+                                 orb_core);
 }
 
 CORBA::Boolean
@@ -1291,8 +1300,12 @@ TAO_GIOP::start_message_std (TAO_GIOP::Message_Type type,
 
   static CORBA::Octet header[] =
   {
-    // 'G', 'I', 'O', 'P',
-    0x47, 0x49, 0x4f, 0x50, // work on non-ASCII platforms...
+    // The following works on non-ASCII platforms, such as MVS (which
+    // uses EBCDIC).
+    0x47, // 'G'
+    0x49, // 'I'
+    0x4f, // 'O' 
+    0x50, // 'P'
     TAO_GIOP_MessageHeader::MY_MAJOR,
     TAO_GIOP_MessageHeader::MY_MINOR,
     TAO_ENCAP_BYTE_ORDER
@@ -1317,8 +1330,8 @@ TAO_GIOP::start_message_lite (TAO_GIOP::Message_Type type,
 {
   msg.reset ();
 
-  // Write a dummy <size> later it is set to the right value...
-  // @@ TODO Maybe we should store the OutputCDR status in
+  // Write a dummy <size> later it is set to the right value...  @@
+  // TODO Maybe we should store the OutputCDR status in
   CORBA::ULong size = 0;
   msg.write_ulong (size);
 
@@ -1349,7 +1362,7 @@ CORBA::Boolean
 TAO_GIOP::write_request_header_lite (const TAO_GIOP_ServiceContextList&,
                                      CORBA::ULong request_id,
                                      CORBA::Boolean is_roundtrip,
-                                     const TAO_opaque& key,
+                                     const TAO_opaque &key,
                                      const char* opname,
                                      CORBA::Principal_ptr,
                                      TAO_OutputCDR &out_stream)
@@ -1367,9 +1380,11 @@ TAO_GIOP::parse_header (TAO_ORB_Core *orb_core,
                         TAO_GIOP_MessageHeader& header)
 {
   if (orb_core->orb_params ()->use_lite_protocol ())
-    return TAO_GIOP::parse_header_lite (input, header);
+    return TAO_GIOP::parse_header_lite (input,
+                                        header);
   else
-    return TAO_GIOP::parse_header_std (input, header);
+    return TAO_GIOP::parse_header_std (input,
+                                       header);
 }
 
 int
@@ -1378,26 +1393,28 @@ TAO_GIOP::parse_header_std (TAO_InputCDR &input,
 {
   char *buf = input.rd_ptr ();
 
-  // The values are hard-coded to support non-ASCII platforms
-  if (!(buf [0] == 0x47    // 'G'
-        && buf [1] == 0x49 // 'I'
-        && buf [2] == 0x4f // 'O'
-        && buf [3] == 0x50 // 'P'
-        ))
+  // The values are hard-coded to support non-ASCII platforms.
+  if (!(buf [0] == 0x47      // 'G'
+        && buf [1] == 0x49   // 'I'
+        && buf [2] == 0x4f   // 'O'
+        && buf [3] == 0x50)) // 'P'
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) bad header, magic word [%c%c%c%c]\n",
-                    buf[0], buf[1], buf[2], buf[3]));
+                    buf[0],
+                    buf[1],
+                    buf[2],
+                    buf[3]));
       return -1;
     }
 
 #if 0
   // @@ Nobody uses this magic number, no sense in wasting time here.
-  header.magic[0] = 0x47;
-  header.magic[1] = 0x49;
-  header.magic[2] = 0x4f;
-  header.magic[3] = 0x50;
+  header.magic[0] = 0x47; // 'G'
+  header.magic[1] = 0x49; // 'I'
+  header.magic[2] = 0x4f; // 'O'
+  header.magic[3] = 0x50; // 'P'
 #endif /* 0 */
   header.giop_version.major = buf[4];
   header.giop_version.minor = buf[5];
@@ -1423,16 +1440,16 @@ TAO_GIOP::parse_header_std (TAO_InputCDR &input,
 
 int
 TAO_GIOP::parse_header_lite (TAO_InputCDR &input,
-                             TAO_GIOP_MessageHeader& header)
+                             TAO_GIOP_MessageHeader &header)
 {
   char *buf = input.rd_ptr ();
 
 #if 0
   // @@ Nobody uses this magic number, no sense in wasting time here.
-  header.magic[0] = 0x47;
-  header.magic[1] = 0x49;
-  header.magic[2] = 0x4f;
-  header.magic[3] = 0x50;
+  header.magic[0] = 0x47; // 'G'
+  header.magic[1] = 0x49; // 'I'
+  header.magic[2] = 0x4f; // 'O'
+  header.magic[3] = 0x50; // 'P'
 #endif /* 0 */
   header.giop_version.major = 1;
   header.giop_version.minor = 0;
