@@ -900,6 +900,7 @@ int
 ACE_Select_Reactor_Notify::is_dispatchable (ACE_Notification_Buffer &buffer)
 {
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
+  ACE_UNUSED_ARG(buffer);
   return 1;
 #else
   // If eh == 0 then another thread is unblocking the
