@@ -102,7 +102,7 @@ TAO_IR_i::parse_args (void)
     return -1;
   }
   
-  this->op_ = TAO_IR_Op::make_op (this->argv_[1], this->implrepo_);
+  this->op_ = TAO_IR_Op::make_op (this->argv_[1], this->implrepo_.in ());
   
   // Check for unrecognized operation
 
@@ -555,7 +555,7 @@ TAO_IR_Op_List::run (void)
           // Display verbosely
           this->verbose_server_information_ = 1;
 
-          this->display_server_information (server_information);
+          this->display_server_information (server_information.in ());
       }
     } 
   ACE_CATCH (ImplementationRepository::Administration::NotFound, ex)
@@ -651,7 +651,7 @@ TAO_IR_Op_Update::run (void)
                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
       
-      this->display_server_information (server_information);
+      this->display_server_information (server_information.in ());
     } 
   ACE_CATCH (ImplementationRepository::Administration::NotFound, ex)
     {
