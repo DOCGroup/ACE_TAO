@@ -17,7 +17,7 @@ BIN_UNCHECKED = test
 
 SRC = $(addsuffix .cpp, $(BIN_UNCHECKED))            
 
-CLIENT_OBJS = test.o
+CLIENT_OBJS = test.o ../Scheduler.o
 
 BUILD = $(BIN)
 VBIN = $(BIN:%=%$(VAR))
