@@ -21,11 +21,15 @@ typedef ACE_Acceptor <Logging_Handler, ACE_SOCK_ACCEPTOR> Logging_Acceptor;
 /* One of the new things will be a signal handler so that we can exit
   the application somewhat cleanly.  The 'finished' flag is used
   instead of the previous infninite loop and the 'handler' will set
-  that flag in respose to SIGINT (CTRL-C).  */
+  that flag in respose to SIGINT (CTRL-C). 
+  The invocation of ACE_Reactor::notify() will cause the
+  handle_events() to return so that we can see the new value of 'finished'.
+*/
 static sig_atomic_t finished = 0;
 extern "C" void handler (int)
 {
   finished = 1;
+  g_reactor->notify();
 }
 
 static const u_short PORT = ACE_DEFAULT_SERVER_PORT;

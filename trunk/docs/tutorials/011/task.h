@@ -25,7 +25,7 @@ public:
   int close (u_long flags = 0);
 
 protected:
-  ACE_Barrier *barrier_;
+  ACE_Barrier barrier_;
   
   size_t n_threads_;
 };

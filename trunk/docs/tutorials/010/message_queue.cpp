@@ -10,7 +10,7 @@ int
 run_test (int iterations,
           int threads)
 {
-  /* Create and star an instance of our Task object.  */
+  /* Create and start an instance of our Task object.  */
   Task task (threads);
 
   if (task.open () == -1)
@@ -79,8 +79,7 @@ main (int argc, char *argv[])
   int iterations = argc > 1 ? atoi (argv[1]) : 9;
   int threads = argc > 2 ? atoi (argv[2]) : 2;
   
-  un_test (iterations,
-           threads);
+  run_test (iterations, threads);
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Application exiting\n"));

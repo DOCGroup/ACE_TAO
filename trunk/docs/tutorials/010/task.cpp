@@ -5,7 +5,7 @@
 
 /* Set our housekeeping pointer to NULL and tell the user we exist.  */
 Task::Task (size_t n_threads)
-  : barrier_ (0),
+  : barrier_ (n_threads),
     n_threads_ (n_threads)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -28,25 +28,17 @@ Task::~Task (void)
     until the last thread is done with the message block.  */
   this->getq (message);
   message->release ();
-
-  delete barrier_;
 }
 
-/* Open the object to do work.  We create the Barrier object and tell
-  it how many threads we'll be using.  Next, we activate the Task into
-  the number of requested threads.  */
+/* Open the object to do work.  Next, we activate the Task into the
+  number of requested threads.  */
 int 
 Task::open (void *unused)
 {
   ACE_UNUSED_ARG (unused);
-  barrier_;
-
-  ACE_NEW_RETURN (barrier_,
-                  ACE_Barrier (this->n_threads_),
-                  -1);
 
   return this->activate (THR_NEW_LWP,
-                         threads);
+                         n_threads_);
 }
 
 /* Tell the user we're closing and invoke the baseclass' close() to
@@ -70,7 +62,7 @@ Task::svc (void)
     Task will get a shot at the queue until all of the threads are
     active.  There's no real need to do this but it's an easy intro
     into the use of ACE_Barrier.  */
-  this->barrier_->wait ();
+  this->barrier_.wait ();
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Task 0x%x starts in thread %d\n",

@@ -14,8 +14,19 @@
 <P>
 <HR WIDTH="100%">
 
-Our <A HREF="task.cpp">Task</A> object definition:
+Our <A HREF="task.cpp">Task</A> object definition.
 <P>
+Something to look at here is the ACE_Barrier usage.  In the
+constructor, we tell the barrier how many threads we're using.  Then,
+in the svc() method, we use the barrier's wait() method.  You can
+think of the barrier as a semaphore initialized to the thread count.
+  Each time wait()
+is invoked, the semaphore is decremented and the thread is blocked.
+  When the count equals zero, all threads are unblocked and allowed to
+continue.
+<P>
+<font size=-1>Note:  This isn't the way ACE_Barrier really works, it's 
+just an analogy</font>
 
 <HR WIDTH="100%">
 <PRE>
@@ -26,7 +37,7 @@ Our <A HREF="task.cpp">Task</A> object definition:
 
 <font color=red>/* Set our housekeeping pointer to NULL and tell the user we exist.  */</font>
 <font color=#008888>Task::Task</font> (size_t n_threads)
-  : barrier_ (0),
+  : barrier_ (n_threads),
     n_threads_ (n_threads)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -49,25 +60,17 @@ Our <A HREF="task.cpp">Task</A> object definition:
     until the last thread is done with the message block.  */</font>
   this->getq (message);
   message->release ();
-
-  delete barrier_;
 }
 
-<font color=red>/* Open the object to do work.  We create the Barrier object and tell
-  it how many threads we'll be using.  Next, we activate the Task into
-  the number of requested threads.  */</font>
+<font color=red>/* Open the object to do work.  Next, we activate the Task into the
+  number of requested threads.  */</font>
 int 
 <font color=#008888>Task::open</font> (void *unused)
 {
   ACE_UNUSED_ARG (unused);
-  barrier_;
-
-  ACE_NEW_RETURN (barrier_,
-                  ACE_Barrier (this->n_threads_),
-                  -1);
 
   return this->activate (THR_NEW_LWP,
-                         threads);
+                         n_threads_);
 }
 
 <font color=red>/* Tell the user we're closing and invoke the baseclass' close() to
@@ -91,7 +94,7 @@ int
     Task will get a shot at the queue until all of the threads are
     active.  There's no real need to do this but it's an easy intro
     into the use of ACE_Barrier.  */</font>
-  this->barrier_->wait ();
+  this->barrier_.wait ();
 
   ACE_DEBUG ((LM_DEBUG,
               "<font color=green>(%P|%t) Task 0x%x starts in thread %d\n</font>",

@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-01-24 15:41 EST by <jcej@chiroptera.tragus.org>.
+# Made on 1999-02-09 16:27 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/010'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -13,15 +13,15 @@
 # ------ ---------- ------------------------------------------
 #    440 -rw-rw-r-- hdr
 #     49 -rw-rw-r-- bodies
-#   2245 -rw-rw-r-- page01.pre
+#   2246 -rw-rw-r-- page01.pre
 #     84 -rw-rw-r-- page02.pre
 #    231 -rw-rw-r-- page03.pre
 #    138 -rw-rw-r-- page04.pre
-#     75 -rw-rw-r-- page05.pre
+#    607 -rw-rw-r-- page05.pre
 #   1493 -rw-rw-r-- page06.pre
 #    444 -rw-rw-r-- page07.pre
 #    689 -rw-rw-r-- page02.pst
-#    236 -rw-rw-r-- page03.pst
+#    237 -rw-rw-r-- page03.pst
 #    387 -rw-rw-r-- page04.pst
 #    366 -rw-rw-r-- page05.pst
 #
@@ -70,7 +70,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh24521; then
+if mkdir _sh15890; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -197,12 +197,12 @@ SHAR_EOF
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-976beee5fb40e6328b6e85ea66ad24c7  page01.pre
+84d1b63ff2eb7eecec515b248f73d791  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 2245 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '2245,' 'current size' "$shar_count!"
+    test 2246 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '2246,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -294,24 +294,35 @@ else
   $echo 'x -' extracting 'page05.pre' '(text)'
   sed 's/^X//' << 'SHAR_EOF' > 'page05.pre' &&
 X
-Our <A HREF="task.cpp">Task</A> object definition:
+Our <A HREF="task.cpp">Task</A> object definition.
 <P>
+Something to look at here is the ACE_Barrier usage.  In the
+constructor, we tell the barrier how many threads we're using.  Then,
+in the svc() method, we use the barrier's wait() method.  You can
+think of the barrier as a semaphore initialized to the thread count.
+X  Each time wait()
+is invoked, the semaphore is decremented and the thread is blocked.
+X  When the count equals zero, all threads are unblocked and allowed to
+continue.
+<P>
+<font size=-1>Note:  This isn't the way ACE_Barrier really works, it's 
+just an analogy</font>
 X
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0124153399 'page05.pre' &&
+  $shar_touch -am 0209155699 'page05.pre' &&
   chmod 0664 'page05.pre' ||
   $echo 'restore of' 'page05.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page05.pre:' 'MD5 check failed'
-4d210e58ac8c908096af0bf9bf118847  page05.pre
+ff8f02648de795cd92f08141962d746d  page05.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page05.pre'`"
-    test 75 -eq "$shar_count" ||
-    $echo 'page05.pre:' 'original size' '75,' 'current size' "$shar_count!"
+    test 607 -eq "$shar_count" ||
+    $echo 'page05.pre:' 'original size' '607,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page06.pre ==============
@@ -465,12 +476,12 @@ SHAR_EOF
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page03.pst:' 'MD5 check failed'
-c822867adfcc3d40e4997e7bd68d6404  page03.pst
+f0ce99c3625ad734730e7ac93efd2c8d  page03.pst
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page03.pst'`"
-    test 236 -eq "$shar_count" ||
-    $echo 'page03.pst:' 'original size' '236,' 'current size' "$shar_count!"
+    test 237 -eq "$shar_count" ||
+    $echo 'page03.pst:' 'original size' '237,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page04.pst ==============
@@ -530,5 +541,5 @@ SHAR_EOF
     $echo 'page05.pst:' 'original size' '366,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh24521
+rm -fr _sh15890
 exit 0
