@@ -727,87 +727,87 @@ static const unsigned short tao_yyrline[] =
    First, the terminals, then, starting at TAO_YYNTOKENS, nonterminals. */
 static const char *const tao_yytname[] =
 {
-  "$end", "error", "$undefined", "IDENTIFIER", "IDL_CONST", "IDL_MODULE", 
-  "IDL_INTERFACE", "IDL_TYPEDEF", "IDL_LONG", "IDL_SHORT", "IDL_UNSIGNED", 
-  "IDL_DOUBLE", "IDL_FLOAT", "IDL_CHAR", "IDL_WCHAR", "IDL_OCTET", 
-  "IDL_BOOLEAN", "IDL_FIXED", "IDL_ANY", "IDL_OBJECT", "IDL_STRUCT", 
-  "IDL_UNION", "IDL_SWITCH", "IDL_ENUM", "IDL_SEQUENCE", "IDL_STRING", 
-  "IDL_WSTRING", "IDL_EXCEPTION", "IDL_CASE", "IDL_DEFAULT", 
-  "IDL_READONLY", "IDL_ATTRIBUTE", "IDL_ONEWAY", "IDL_IDEMPOTENT", 
-  "IDL_VOID", "IDL_IN", "IDL_OUT", "IDL_INOUT", "IDL_RAISES", 
-  "IDL_CONTEXT", "IDL_NATIVE", "IDL_LOCAL", "IDL_ABSTRACT", "IDL_CUSTOM", 
-  "IDL_FACTORY", "IDL_PRIVATE", "IDL_PUBLIC", "IDL_SUPPORTS", 
-  "IDL_TRUNCATABLE", "IDL_VALUETYPE", "IDL_COMPONENT", "IDL_CONSUMES", 
-  "IDL_EMITS", "IDL_EVENTTYPE", "IDL_FINDER", "IDL_GETRAISES", "IDL_HOME", 
-  "IDL_IMPORT", "IDL_MULTIPLE", "IDL_PRIMARYKEY", "IDL_PROVIDES", 
-  "IDL_PUBLISHES", "IDL_SETRAISES", "IDL_TYPEID", "IDL_TYPEPREFIX", 
-  "IDL_USES", "IDL_MANAGES", "IDL_INTEGER_LITERAL", 
-  "IDL_UINTEGER_LITERAL", "IDL_STRING_LITERAL", "IDL_CHARACTER_LITERAL", 
-  "IDL_FLOATING_PT_LITERAL", "IDL_TRUETOK", "IDL_FALSETOK", 
-  "IDL_SCOPE_DELIMITOR", "IDL_LEFT_SHIFT", "IDL_RIGHT_SHIFT", 
-  "IDL_WCHAR_LITERAL", "IDL_WSTRING_LITERAL", "';'", "'{'", "'}'", "':'", 
-  "','", "'='", "'|'", "'^'", "'&'", "'+'", "'-'", "'*'", "'/'", "'%'", 
-  "'~'", "'('", "')'", "'>'", "'<'", "'['", "']'", "$accept", "start", 
-  "definitions", "definition", "@1", "@2", "@3", "@4", "@5", "@6", "@7", 
-  "@8", "@9", "@10", "@11", "@12", "module", "@13", "@14", "@15", "@16", 
-  "interface_def", "interface", "@17", "@18", "@19", "interface_decl", 
-  "@20", "interface_header", "inheritance_spec", "@21", "value_def", 
-  "valuetype", "value_concrete_decl", "@22", "@23", "@24", 
-  "value_abs_decl", "@25", "@26", "@27", "value_header", "@28", 
-  "value_decl", "@29", "opt_truncatable", "supports_spec", 
-  "value_forward_decl", "value_box_decl", "value_elements", 
-  "value_element", "state_member", "@30", "@31", "exports", "export", 
-  "@32", "@33", "@34", "@35", "@36", "@37", "@38", "@39", 
-  "at_least_one_scoped_name", "scoped_names", "@40", "scoped_name", "@41", 
-  "@42", "id", "interface_forward", "const_dcl", "@43", "@44", "@45", 
-  "@46", "const_type", "expression", "const_expr", "or_expr", "xor_expr", 
-  "and_expr", "shift_expr", "add_expr", "mult_expr", "unary_expr", 
-  "primary_expr", "literal", "positive_int_expr", "type_dcl", "@47", 
-  "type_declarator", "@48", "type_spec", "simple_type_spec", 
-  "base_type_spec", "template_type_spec", "constructed_type_spec", 
-  "constructed_forward_type_spec", "at_least_one_declarator", 
-  "declarators", "@49", "declarator", "at_least_one_simple_declarator", 
-  "simple_declarators", "@50", "simple_declarator", "complex_declarator", 
-  "integer_type", "signed_int", "unsigned_int", "floating_pt_type", 
-  "fixed_type", "char_type", "octet_type", "boolean_type", "any_type", 
-  "object_type", "struct_decl", "@51", "struct_type", "@52", "@53", "@54", 
-  "at_least_one_member", "members", "member", "@55", "member_i", "@56", 
-  "@57", "@58", "union_decl", "@59", "union_type", "@60", "@61", "@62", 
-  "@63", "@64", "@65", "switch_type_spec", "at_least_one_case_branch", 
-  "case_branches", "case_branch", "@66", "@67", "@68", 
-  "at_least_one_case_label", "case_labels", "case_label", "@69", "@70", 
-  "@71", "element_spec", "@72", "struct_forward_type", 
-  "union_forward_type", "enum_type", "@73", "@74", "@75", "@76", 
-  "at_least_one_enumerator", "enumerators", "@77", "enumerator", 
-  "sequence_type_spec", "@78", "@79", "seq_head", "@80", "@81", 
-  "string_type_spec", "@82", "@83", "string_head", "wstring_type_spec", 
-  "@84", "@85", "wstring_head", "array_declarator", "@86", 
-  "at_least_one_array_dim", "array_dims", "array_dim", "@87", "@88", 
-  "attribute", "attribute_readonly", "@89", "@90", "@91", "@92", 
-  "attribute_readwrite", "@93", "@94", "@95", "@96", "exception", "@97", 
-  "@98", "@99", "@100", "operation", "@101", "@102", "@103", "@104", 
-  "opt_op_attribute", "op_type_spec", "init_decl", "@105", "@106", "@107", 
-  "init_parameter_list", "@108", "@109", "at_least_one_in_parameter", 
-  "in_parameters", "@110", "in_parameter", "@111", "@112", 
-  "parameter_list", "@113", "@114", "at_least_one_parameter", 
-  "parameters", "@115", "parameter", "@116", "@117", "param_type_spec", 
-  "direction", "opt_raises", "@118", "@119", "opt_getraises", "@120", 
-  "@121", "opt_setraises", "@122", "@123", "opt_context", "@124", "@125", 
-  "at_least_one_string_literal", "string_literals", "@126", "typeid_dcl", 
-  "typeprefix_dcl", "component", "component_forward_decl", 
-  "component_decl", "@127", "@128", "@129", "component_header", "@130", 
-  "@131", "component_inheritance_spec", "@132", "component_exports", 
-  "component_export", "@133", "@134", "@135", "@136", "@137", "@138", 
-  "provides_decl", "interface_type", "uses_decl", "opt_multiple", 
-  "emits_decl", "publishes_decl", "consumes_decl", "home_decl", "@139", 
-  "home_header", "@140", "@141", "@142", "@143", "@144", "@145", 
-  "home_inheritance_spec", "@146", "primary_key_spec", "home_body", 
-  "@147", "@148", "home_exports", "home_export", "@149", "@150", 
-  "factory_decl", "@151", "@152", "finder_decl", "@153", "@154", "event", 
-  "event_forward_decl", "event_concrete_forward_decl", 
-  "event_abs_forward_decl", "event_abs_decl", "@155", "@156", "@157", 
-  "event_abs_header", "event_custom_header", "event_plain_header", 
-  "event_rest_of_header", "@158", "event_decl", "@159", "@160", "@161", 
+  "$end", "error", "$undefined", "IDENTIFIER", "IDL_CONST", "IDL_MODULE",
+  "IDL_INTERFACE", "IDL_TYPEDEF", "IDL_LONG", "IDL_SHORT", "IDL_UNSIGNED",
+  "IDL_DOUBLE", "IDL_FLOAT", "IDL_CHAR", "IDL_WCHAR", "IDL_OCTET",
+  "IDL_BOOLEAN", "IDL_FIXED", "IDL_ANY", "IDL_OBJECT", "IDL_STRUCT",
+  "IDL_UNION", "IDL_SWITCH", "IDL_ENUM", "IDL_SEQUENCE", "IDL_STRING",
+  "IDL_WSTRING", "IDL_EXCEPTION", "IDL_CASE", "IDL_DEFAULT",
+  "IDL_READONLY", "IDL_ATTRIBUTE", "IDL_ONEWAY", "IDL_IDEMPOTENT",
+  "IDL_VOID", "IDL_IN", "IDL_OUT", "IDL_INOUT", "IDL_RAISES",
+  "IDL_CONTEXT", "IDL_NATIVE", "IDL_LOCAL", "IDL_ABSTRACT", "IDL_CUSTOM",
+  "IDL_FACTORY", "IDL_PRIVATE", "IDL_PUBLIC", "IDL_SUPPORTS",
+  "IDL_TRUNCATABLE", "IDL_VALUETYPE", "IDL_COMPONENT", "IDL_CONSUMES",
+  "IDL_EMITS", "IDL_EVENTTYPE", "IDL_FINDER", "IDL_GETRAISES", "IDL_HOME",
+  "IDL_IMPORT", "IDL_MULTIPLE", "IDL_PRIMARYKEY", "IDL_PROVIDES",
+  "IDL_PUBLISHES", "IDL_SETRAISES", "IDL_TYPEID", "IDL_TYPEPREFIX",
+  "IDL_USES", "IDL_MANAGES", "IDL_INTEGER_LITERAL",
+  "IDL_UINTEGER_LITERAL", "IDL_STRING_LITERAL", "IDL_CHARACTER_LITERAL",
+  "IDL_FLOATING_PT_LITERAL", "IDL_TRUETOK", "IDL_FALSETOK",
+  "IDL_SCOPE_DELIMITOR", "IDL_LEFT_SHIFT", "IDL_RIGHT_SHIFT",
+  "IDL_WCHAR_LITERAL", "IDL_WSTRING_LITERAL", "';'", "'{'", "'}'", "':'",
+  "','", "'='", "'|'", "'^'", "'&'", "'+'", "'-'", "'*'", "'/'", "'%'",
+  "'~'", "'('", "')'", "'>'", "'<'", "'['", "']'", "$accept", "start",
+  "definitions", "definition", "@1", "@2", "@3", "@4", "@5", "@6", "@7",
+  "@8", "@9", "@10", "@11", "@12", "module", "@13", "@14", "@15", "@16",
+  "interface_def", "interface", "@17", "@18", "@19", "interface_decl",
+  "@20", "interface_header", "inheritance_spec", "@21", "value_def",
+  "valuetype", "value_concrete_decl", "@22", "@23", "@24",
+  "value_abs_decl", "@25", "@26", "@27", "value_header", "@28",
+  "value_decl", "@29", "opt_truncatable", "supports_spec",
+  "value_forward_decl", "value_box_decl", "value_elements",
+  "value_element", "state_member", "@30", "@31", "exports", "export",
+  "@32", "@33", "@34", "@35", "@36", "@37", "@38", "@39",
+  "at_least_one_scoped_name", "scoped_names", "@40", "scoped_name", "@41",
+  "@42", "id", "interface_forward", "const_dcl", "@43", "@44", "@45",
+  "@46", "const_type", "expression", "const_expr", "or_expr", "xor_expr",
+  "and_expr", "shift_expr", "add_expr", "mult_expr", "unary_expr",
+  "primary_expr", "literal", "positive_int_expr", "type_dcl", "@47",
+  "type_declarator", "@48", "type_spec", "simple_type_spec",
+  "base_type_spec", "template_type_spec", "constructed_type_spec",
+  "constructed_forward_type_spec", "at_least_one_declarator",
+  "declarators", "@49", "declarator", "at_least_one_simple_declarator",
+  "simple_declarators", "@50", "simple_declarator", "complex_declarator",
+  "integer_type", "signed_int", "unsigned_int", "floating_pt_type",
+  "fixed_type", "char_type", "octet_type", "boolean_type", "any_type",
+  "object_type", "struct_decl", "@51", "struct_type", "@52", "@53", "@54",
+  "at_least_one_member", "members", "member", "@55", "member_i", "@56",
+  "@57", "@58", "union_decl", "@59", "union_type", "@60", "@61", "@62",
+  "@63", "@64", "@65", "switch_type_spec", "at_least_one_case_branch",
+  "case_branches", "case_branch", "@66", "@67", "@68",
+  "at_least_one_case_label", "case_labels", "case_label", "@69", "@70",
+  "@71", "element_spec", "@72", "struct_forward_type",
+  "union_forward_type", "enum_type", "@73", "@74", "@75", "@76",
+  "at_least_one_enumerator", "enumerators", "@77", "enumerator",
+  "sequence_type_spec", "@78", "@79", "seq_head", "@80", "@81",
+  "string_type_spec", "@82", "@83", "string_head", "wstring_type_spec",
+  "@84", "@85", "wstring_head", "array_declarator", "@86",
+  "at_least_one_array_dim", "array_dims", "array_dim", "@87", "@88",
+  "attribute", "attribute_readonly", "@89", "@90", "@91", "@92",
+  "attribute_readwrite", "@93", "@94", "@95", "@96", "exception", "@97",
+  "@98", "@99", "@100", "operation", "@101", "@102", "@103", "@104",
+  "opt_op_attribute", "op_type_spec", "init_decl", "@105", "@106", "@107",
+  "init_parameter_list", "@108", "@109", "at_least_one_in_parameter",
+  "in_parameters", "@110", "in_parameter", "@111", "@112",
+  "parameter_list", "@113", "@114", "at_least_one_parameter",
+  "parameters", "@115", "parameter", "@116", "@117", "param_type_spec",
+  "direction", "opt_raises", "@118", "@119", "opt_getraises", "@120",
+  "@121", "opt_setraises", "@122", "@123", "opt_context", "@124", "@125",
+  "at_least_one_string_literal", "string_literals", "@126", "typeid_dcl",
+  "typeprefix_dcl", "component", "component_forward_decl",
+  "component_decl", "@127", "@128", "@129", "component_header", "@130",
+  "@131", "component_inheritance_spec", "@132", "component_exports",
+  "component_export", "@133", "@134", "@135", "@136", "@137", "@138",
+  "provides_decl", "interface_type", "uses_decl", "opt_multiple",
+  "emits_decl", "publishes_decl", "consumes_decl", "home_decl", "@139",
+  "home_header", "@140", "@141", "@142", "@143", "@144", "@145",
+  "home_inheritance_spec", "@146", "primary_key_spec", "home_body",
+  "@147", "@148", "home_exports", "home_export", "@149", "@150",
+  "factory_decl", "@151", "@152", "finder_decl", "@153", "@154", "event",
+  "event_forward_decl", "event_concrete_forward_decl",
+  "event_abs_forward_decl", "event_abs_decl", "@155", "@156", "@157",
+  "event_abs_header", "event_custom_header", "event_plain_header",
+  "event_rest_of_header", "@158", "event_decl", "@159", "@160", "@161",
   "event_header", 0
 };
 #endif
@@ -1771,6 +1771,7 @@ tao_yydestruct (tao_yytype, tao_yyvaluep)
 #endif
 {
   /* Pacify ``unused variable'' warnings.  */
+  (void) tao_yytype;
   (void) tao_yyvaluep;
 
 }
@@ -1827,7 +1828,7 @@ tao_yyparse ()
 #endif
 #endif
 {
-  
+
   register int tao_yystate;
   register int tao_yyn;
   int tao_yyresult;
@@ -2275,7 +2276,7 @@ tao_yyreduce:
     {
 //        IDENTIFIER
             Identifier id (tao_yyvsp[0].strval);
-            UTL_ScopedName n (&id, 
+            UTL_ScopedName n (&id,
                               0);
             AST_Module *m = 0;
             UTL_Scope *s = idl_global->scopes ().top_non_null ();
@@ -2284,9 +2285,9 @@ tao_yyreduce:
             /*
              * Make a new module and add it to the enclosing scope
              */
-            if (s != 0) 
+            if (s != 0)
               {
-                m = idl_global->gen ()->create_module (s, 
+                m = idl_global->gen ()->create_module (s,
                                                        &n);
                 (void) s->fe_add_module (m);
               }
@@ -2328,16 +2329,16 @@ tao_yyreduce:
   case 36:
 
     {
-// interface : interface_header          
+// interface : interface_header
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Interface *i = 0;
 
           /*
            * Make a new interface node and add it to its enclosing scope.
            */
-          if (s != 0 && tao_yyvsp[0].ihval != 0) 
+          if (s != 0 && tao_yyvsp[0].ihval != 0)
             {
-              i = 
+              i =
                 idl_global->gen ()->create_interface (
                                         tao_yyvsp[0].ihval->name (),
                                         tao_yyvsp[0].ihval->inherits (),
@@ -2347,7 +2348,7 @@ tao_yyreduce:
                                         tao_yyvsp[0].ihval->is_local (),
                                         tao_yyvsp[0].ihval->is_abstract ()
                                       );
-              AST_Interface::fwd_redefinition_helper (i, 
+              AST_Interface::fwd_redefinition_helper (i,
                                                       s);
               /*
                * Add the interface to its definition scope.
@@ -2432,7 +2433,7 @@ tao_yyreduce:
            * list of all interfaces which this interface inherits from,
            * recursively
            */
-          UTL_ScopedName n (tao_yyvsp[-1].idval, 
+          UTL_ScopedName n (tao_yyvsp[-1].idval,
                             0);
           ACE_NEW_RETURN (tao_yyval.ihval,
                           FE_InterfaceHeader (&n,
@@ -2456,10 +2457,10 @@ tao_yyreduce:
            * list of all interfaces which this interface inherits from,
            * recursively
            */
-          UTL_ScopedName n (tao_yyvsp[-1].idval, 
+          UTL_ScopedName n (tao_yyvsp[-1].idval,
                             0);
           ACE_NEW_RETURN (tao_yyval.ihval,
-                          FE_InterfaceHeader (&n, 
+                          FE_InterfaceHeader (&n,
                                               tao_yyvsp[0].nlval,
                                               I_TRUE,
                                               I_FALSE,
@@ -2480,10 +2481,10 @@ tao_yyreduce:
            * list of all interfaces which this interface inherits from,
            * recursively
            */
-          UTL_ScopedName n (tao_yyvsp[-1].idval, 
+          UTL_ScopedName n (tao_yyvsp[-1].idval,
                             0);
           ACE_NEW_RETURN (tao_yyval.ihval,
-                          FE_InterfaceHeader (&n, 
+                          FE_InterfaceHeader (&n,
                                               tao_yyvsp[0].nlval,
                                               I_FALSE,
                                               I_TRUE,
@@ -2539,9 +2540,9 @@ tao_yyreduce:
           AST_ValueType *v = 0;
           AST_Interface *i = 0;
 
-          if (s != 0 && tao_yyvsp[0].vhval != 0) 
+          if (s != 0 && tao_yyvsp[0].vhval != 0)
             {
-              v = 
+              v =
                 idl_global->gen ()->create_valuetype (
                     tao_yyvsp[0].vhval->name (),
                     tao_yyvsp[0].vhval->inherits (),
@@ -2557,7 +2558,7 @@ tao_yyreduce:
                     I_FALSE
                   );
               i = AST_Interface::narrow_from_decl (v);
-              AST_Interface::fwd_redefinition_helper (i, 
+              AST_Interface::fwd_redefinition_helper (i,
                                                       s);
               /*
                * Add the valuetype to its definition scope
@@ -2610,9 +2611,9 @@ tao_yyreduce:
           AST_ValueType *v = 0;
           AST_Interface *i = 0;
 
-          if (s != 0 && tao_yyvsp[0].vhval != 0) 
+          if (s != 0 && tao_yyvsp[0].vhval != 0)
             {
-              v = 
+              v =
                 idl_global->gen ()->create_valuetype (
                     tao_yyvsp[0].vhval->name (),
                     tao_yyvsp[0].vhval->inherits (),
@@ -2628,7 +2629,7 @@ tao_yyreduce:
                     I_FALSE
                   );
               i = AST_Interface::narrow_from_decl (v);
-              AST_Interface::fwd_redefinition_helper (i, 
+              AST_Interface::fwd_redefinition_helper (i,
                                                       s);
               /*
                * Add the valuetype to its definition scope
@@ -2676,7 +2677,7 @@ tao_yyreduce:
   case 62:
 
     {
-// value_header : value_decl inheritance_spec 
+// value_header : value_decl inheritance_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);
 
           if (tao_yyvsp[0].nlval != 0 && tao_yyvsp[0].nlval->truncatable ())
@@ -2700,7 +2701,7 @@ tao_yyreduce:
 
           UTL_ScopedName *sn = 0;
           ACE_NEW_RETURN (sn,
-                          UTL_ScopedName (tao_yyvsp[-3].idval, 
+                          UTL_ScopedName (tao_yyvsp[-3].idval,
                                           0),
                           1);
           ACE_NEW_RETURN (tao_yyval.vhval,
@@ -2708,7 +2709,7 @@ tao_yyreduce:
                                         tao_yyvsp[-2].nlval,
                                         tao_yyvsp[0].nlval,
                                         tao_yyvsp[-2].nlval ? tao_yyvsp[-2].nlval->truncatable () : I_FALSE),
-                          1);      
+                          1);
         }
     break;
 
@@ -2766,7 +2767,7 @@ tao_yyreduce:
     {
 // value_forward_decl : IDL_ABSTRACT value_decl
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n (tao_yyvsp[0].idval, 
+          UTL_ScopedName n (tao_yyvsp[0].idval,
                             0);
           AST_ValueTypeFwd *f = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_ValueTypeForwardSeen);
@@ -2775,7 +2776,7 @@ tao_yyreduce:
            * Create a node representing a forward declaration of an
            * valuetype. Store it in the enclosing scope
            */
-          if (s != 0) 
+          if (s != 0)
             {
               f = idl_global->gen ()->create_valuetype_fwd (&n,
                                                            I_TRUE);
@@ -2789,7 +2790,7 @@ tao_yyreduce:
     {
 //      | value_decl
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n (tao_yyvsp[0].idval, 
+          UTL_ScopedName n (tao_yyvsp[0].idval,
                             0);
           AST_ValueTypeFwd *f = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_ValueTypeForwardSeen);
@@ -2798,7 +2799,7 @@ tao_yyreduce:
            * Create a node representing a forward declaration of an
            * valuetype. Store it in the enclosing scope
            */
-          if (s != 0) 
+          if (s != 0)
             {
               f = idl_global->gen ()->create_valuetype_fwd (&n,
                                                             I_FALSE);
@@ -2973,7 +2974,7 @@ tao_yyreduce:
     {
 // at_least_one_scoped_name : scoped_name scoped_names
           ACE_NEW_RETURN (tao_yyval.nlval,
-                          UTL_NameList (tao_yyvsp[-1].idlist, 
+                          UTL_NameList (tao_yyvsp[-1].idlist,
                                         tao_yyvsp[0].nlval),
                           1);
         }
@@ -2996,15 +2997,15 @@ tao_yyreduce:
           if (tao_yyvsp[-3].nlval == 0)
             {
               ACE_NEW_RETURN (tao_yyval.nlval,
-                              UTL_NameList (tao_yyvsp[0].idlist, 
+                              UTL_NameList (tao_yyvsp[0].idlist,
                                             0),
                               1);
             }
-          else 
+          else
             {
               UTL_NameList *nl = 0;
               ACE_NEW_RETURN (nl,
-                              UTL_NameList (tao_yyvsp[0].idlist, 
+                              UTL_NameList (tao_yyvsp[0].idlist,
                                             0),
                               1);
               tao_yyvsp[-3].nlval->nconc (nl);
@@ -3104,7 +3105,7 @@ tao_yyreduce:
     {
 // interface_forward : interface_decl
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n (tao_yyvsp[0].idval, 
+          UTL_ScopedName n (tao_yyvsp[0].idval,
                             0);
           AST_InterfaceFwd *f = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceForwardSeen);
@@ -3113,9 +3114,9 @@ tao_yyreduce:
            * Create a node representing a forward declaration of an
            * interface. Store it in the enclosing scope
            */
-          if (s != 0) 
+          if (s != 0)
             {
-              f = idl_global->gen ()->create_interface_fwd (&n, 
+              f = idl_global->gen ()->create_interface_fwd (&n,
                                                             0,
                                                             0);
               (void) s->fe_add_interface_fwd (f);
@@ -3128,7 +3129,7 @@ tao_yyreduce:
     {
 //      | IDL_LOCAL interface_decl
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n (tao_yyvsp[0].idval, 
+          UTL_ScopedName n (tao_yyvsp[0].idval,
                             0);
           AST_InterfaceFwd *f = 0;
           idl_global->set_parse_state (
@@ -3139,10 +3140,10 @@ tao_yyreduce:
            * Create a node representing a forward declaration of an
            * interface. Store it in the enclosing scope
            */
-          if (s != 0) 
+          if (s != 0)
             {
-              f = idl_global->gen ()->create_interface_fwd (&n, 
-                                                            1, 
+              f = idl_global->gen ()->create_interface_fwd (&n,
+                                                            1,
                                                             0);
               (void) s->fe_add_interface_fwd (f);
             }
@@ -3154,7 +3155,7 @@ tao_yyreduce:
     {
 //      | IDL_ABSTRACT interface_decl
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n (tao_yyvsp[0].idval, 
+          UTL_ScopedName n (tao_yyvsp[0].idval,
                             0);
           AST_InterfaceFwd *f = 0;
           idl_global->set_parse_state (
@@ -3165,10 +3166,10 @@ tao_yyreduce:
            * Create a node representing a forward declaration of an
            * interface. Store it in the enclosing scope
            */
-          if (s != 0) 
+          if (s != 0)
             {
-              f = idl_global->gen ()->create_interface_fwd (&n, 
-                                                            0, 
+              f = idl_global->gen ()->create_interface_fwd (&n,
+                                                            0,
                                                             1);
               (void) s->fe_add_interface_fwd (f);
             }
@@ -3211,7 +3212,7 @@ tao_yyreduce:
 
     {
 //      expression
-          UTL_ScopedName n (tao_yyvsp[-4].idval, 
+          UTL_ScopedName n (tao_yyvsp[-4].idval,
                             0);
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Constant *c = 0;
@@ -3221,30 +3222,30 @@ tao_yyreduce:
            * Create a node representing a constant declaration. Store
            * it in the enclosing scope.
            */
-          if (tao_yyvsp[0].exval != 0 && s != 0) 
+          if (tao_yyvsp[0].exval != 0 && s != 0)
             {
-              AST_Expression::AST_ExprValue *result = 
+              AST_Expression::AST_ExprValue *result =
                 tao_yyvsp[0].exval->check_and_coerce (tao_yyvsp[-6].etval,
                                       tao_enum_constant_decl);
               tao_enum_constant_decl = 0;
 
               if (result == 0)
                 {
-                  idl_global->err ()->coercion_error (tao_yyvsp[0].exval, 
+                  idl_global->err ()->coercion_error (tao_yyvsp[0].exval,
                                                       tao_yyvsp[-6].etval);
                 }
-              else 
+              else
                 {
-                  c = 
+                  c =
                     idl_global->gen ()->create_constant (
                                             tao_yyvsp[-6].etval,
-                                            tao_yyvsp[0].exval, 
+                                            tao_yyvsp[0].exval,
                                             &n
                                           );
                   (void) s->fe_add_constant (c);
                   delete result;
                 }
-              
+
               tao_yyvsp[-4].idval->destroy ();
               delete tao_yyvsp[-4].idval;
               tao_yyvsp[-4].idval = 0;
@@ -3287,18 +3288,18 @@ tao_yyreduce:
            * If the constant's type is a scoped name, it must resolve
            * to a scalar constant type
            */
-          AST_Decl *d = 
-            s->lookup_by_name (tao_yyvsp[0].idlist, 
+          AST_Decl *d =
+            s->lookup_by_name (tao_yyvsp[0].idlist,
                                I_TRUE);
 
-          if (s != 0  && d != 0) 
+          if (s != 0  && d != 0)
             {
               tao_enum_constant_decl = d;
 
               /*
                * Look through typedefs.
                */
-              while (d->node_type () == AST_Decl::NT_typedef) 
+              while (d->node_type () == AST_Decl::NT_typedef)
                 {
                   t = AST_Typedef::narrow_from_decl (d);
 
@@ -3314,32 +3315,32 @@ tao_yyreduce:
                 {
                   tao_yyval.etval = AST_Expression::EV_enum;
                 }
-              else if (d->node_type () == AST_Decl::NT_pre_defined) 
+              else if (d->node_type () == AST_Decl::NT_pre_defined)
                 {
                   c = AST_PredefinedType::narrow_from_decl (d);
 
-                  if (c != 0) 
+                  if (c != 0)
                     {
                       tao_yyval.etval = idl_global->PredefinedTypeToExprType (c->pt ());
-                    } 
-                  else 
+                    }
+                  else
                     {
                       tao_yyval.etval = AST_Expression::EV_enum;
                     }
-                } 
-              else if (d->node_type () == AST_Decl::NT_string) 
+                }
+              else if (d->node_type () == AST_Decl::NT_string)
                 {
                   tao_yyval.etval = AST_Expression::EV_string;
-                } 
-              else if (d->node_type () == AST_Decl::NT_wstring) 
+                }
+              else if (d->node_type () == AST_Decl::NT_wstring)
                 {
                   tao_yyval.etval = AST_Expression::EV_wstring;
-                } 
+                }
               else
                 {
                   tao_yyval.etval = AST_Expression::EV_enum;
                 }
-            } 
+            }
           else
             {
               tao_yyval.etval = AST_Expression::EV_enum;
@@ -3352,10 +3353,10 @@ tao_yyreduce:
     {
 // or_expr : xor_expr
 //      | or_expr '|' xor_expr
-          tao_yyval.exval = 
+          tao_yyval.exval =
             idl_global->gen ()->create_expr (
-                                    AST_Expression::EC_or, 
-                                    tao_yyvsp[-2].exval, 
+                                    AST_Expression::EC_or,
+                                    tao_yyvsp[-2].exval,
                                     tao_yyvsp[0].exval
                                   );
         }
@@ -3366,10 +3367,10 @@ tao_yyreduce:
     {
 // xor_expr : and_expr
 //      | xor_expr '^' and_expr
-          tao_yyval.exval = 
+          tao_yyval.exval =
             idl_global->gen ()->create_expr (
-                                    AST_Expression::EC_xor, 
-                                    tao_yyvsp[-2].exval, 
+                                    AST_Expression::EC_xor,
+                                    tao_yyvsp[-2].exval,
                                     tao_yyvsp[0].exval
                                   );
         }
@@ -3379,10 +3380,10 @@ tao_yyreduce:
 
     {
 // and_expr : shift_expr | and_expr '&' shift_expr
-          tao_yyval.exval = 
+          tao_yyval.exval =
             idl_global->gen ()->create_expr (
-                                    AST_Expression::EC_and, 
-                                    tao_yyvsp[-2].exval, 
+                                    AST_Expression::EC_and,
+                                    tao_yyvsp[-2].exval,
                                     tao_yyvsp[0].exval
                                   );
         }
@@ -3392,10 +3393,10 @@ tao_yyreduce:
 
     {
 // shift_expr : add_expr | shift_expr IDL_LEFT_SHIFT add_expr
-          tao_yyval.exval = 
+          tao_yyval.exval =
             idl_global->gen ()->create_expr (
-                                    AST_Expression::EC_left, 
-                                    tao_yyvsp[-2].exval, 
+                                    AST_Expression::EC_left,
+                                    tao_yyvsp[-2].exval,
                                     tao_yyvsp[0].exval
                                   );
         }
@@ -3405,10 +3406,10 @@ tao_yyreduce:
 
     {
 //      | shift_expr IDL_RIGHT_SHIFT add_expr
-          tao_yyval.exval = 
+          tao_yyval.exval =
             idl_global->gen ()->create_expr (
-                                    AST_Expression::EC_right, 
-                                    tao_yyvsp[-2].exval, 
+                                    AST_Expression::EC_right,
+                                    tao_yyvsp[-2].exval,
                                     tao_yyvsp[0].exval
                                   );
         }
@@ -3418,10 +3419,10 @@ tao_yyreduce:
 
     {
 // add_expr : mult_expr | add_expr '+' mult_expr
-          tao_yyval.exval = 
+          tao_yyval.exval =
             idl_global->gen ()->create_expr (
-                                    AST_Expression::EC_add, 
-                                    tao_yyvsp[-2].exval, 
+                                    AST_Expression::EC_add,
+                                    tao_yyvsp[-2].exval,
                                     tao_yyvsp[0].exval
                                   );
         }
@@ -3431,10 +3432,10 @@ tao_yyreduce:
 
     {
 //      | add_expr '-' mult_expr
-          tao_yyval.exval = 
+          tao_yyval.exval =
             idl_global->gen ()->create_expr (
-                                    AST_Expression::EC_minus, 
-                                    tao_yyvsp[-2].exval, 
+                                    AST_Expression::EC_minus,
+                                    tao_yyvsp[-2].exval,
                                     tao_yyvsp[0].exval
                                   );
         }
@@ -3444,10 +3445,10 @@ tao_yyreduce:
 
     {
 // mult_expr : unary_expr | mult_expr '*' unary_expr
-          tao_yyval.exval = 
+          tao_yyval.exval =
             idl_global->gen ()->create_expr (
-                                    AST_Expression::EC_mul, 
-                                    tao_yyvsp[-2].exval, 
+                                    AST_Expression::EC_mul,
+                                    tao_yyvsp[-2].exval,
                                     tao_yyvsp[0].exval
                                   );
         }
@@ -3457,10 +3458,10 @@ tao_yyreduce:
 
     {
 //      | mult_expr '/' unary_expr
-          tao_yyval.exval = 
+          tao_yyval.exval =
             idl_global->gen ()->create_expr (
-                                    AST_Expression::EC_div, 
-                                    tao_yyvsp[-2].exval, 
+                                    AST_Expression::EC_div,
+                                    tao_yyvsp[-2].exval,
                                     tao_yyvsp[0].exval
                                   );
         }
@@ -3470,10 +3471,10 @@ tao_yyreduce:
 
     {
 //      | mult_expr '%' unary_expr
-          tao_yyval.exval = 
+          tao_yyval.exval =
             idl_global->gen ()->create_expr (
-                                    AST_Expression::EC_mod, 
-                                    tao_yyvsp[-2].exval, 
+                                    AST_Expression::EC_mod,
+                                    tao_yyvsp[-2].exval,
                                     tao_yyvsp[0].exval
                                   );
         }
@@ -3483,7 +3484,7 @@ tao_yyreduce:
 
     {
 // unary_expr : primary_expr | '+' primary_expr
-          tao_yyval.exval = 
+          tao_yyval.exval =
             idl_global->gen ()->create_expr (
                                     AST_Expression::EC_u_plus,
                                     tao_yyvsp[0].exval,
@@ -3496,7 +3497,7 @@ tao_yyreduce:
 
     {
 //      | '-' primary_expr
-          tao_yyval.exval = 
+          tao_yyval.exval =
             idl_global->gen()->create_expr (
                                    AST_Expression::EC_u_minus,
                                    tao_yyvsp[0].exval,
@@ -3509,7 +3510,7 @@ tao_yyreduce:
 
     {
 //      | '~' primary_expr
-          tao_yyval.exval = 
+          tao_yyval.exval =
             idl_global->gen()->create_expr (
                                    AST_Expression::EC_bit_neg,
                                    tao_yyvsp[0].exval,
@@ -3533,9 +3534,9 @@ tao_yyreduce:
 
           /*
            * If the scoped name is an IDL constant, it may be used in an
-           * array dim, a string bound, or a sequence bound. If so, it 
+           * array dim, a string bound, or a sequence bound. If so, it
            * must be unsigned and > 0. We assign the constant's value
-           * and type to the expression created here so we can check 
+           * and type to the expression created here so we can check
            * them later.
            */
           if (d != 0 && d->node_type () == AST_Decl::NT_const)
@@ -3572,7 +3573,7 @@ tao_yyreduce:
 
     {
 //      | IDL_UINTEGER_LITERAL
-          tao_yyval.exval = 
+          tao_yyval.exval =
             idl_global->gen ()->create_expr (tao_yyvsp[0].uival,
                                              AST_Expression::EV_ulonglong);
         }
@@ -3697,8 +3698,8 @@ tao_yyreduce:
 
           if (good_expression)
             {
-              tao_yyval.exval = 
-                idl_global->gen()->create_expr (tao_yyvsp[0].exval, 
+              tao_yyval.exval =
+                idl_global->gen()->create_expr (tao_yyvsp[0].exval,
                                                 AST_Expression::EV_ulong);
             }
           else
@@ -3718,32 +3719,32 @@ tao_yyreduce:
 
   case 163:
 
-    { 
-//      type_declarator 
-          tao_yyval.ival = 0; 
+    {
+//      type_declarator
+          tao_yyval.ival = 0;
         }
     break;
 
   case 164:
 
-    { 
-//      | struct_type 
+    {
+//      | struct_type
           tao_yyval.ival = 0;
         }
     break;
 
   case 165:
 
-    { 
-//      | union_type 
+    {
+//      | union_type
           tao_yyval.ival = 0;
         }
     break;
 
   case 166:
 
-    { 
-//      | enum_type 
+    {
+//      | enum_type
           tao_yyval.ival = 0;
         }
     break;
@@ -3760,9 +3761,9 @@ tao_yyreduce:
            * Create a node representing a Native and add it to its
            * enclosing scope
            */
-          if (s != 0) 
+          if (s != 0)
             {
-              node = 
+              node =
                 idl_global->gen ()->create_native (
                                         tao_yyvsp[0].deval->name ()
                                       );
@@ -3803,11 +3804,11 @@ tao_yyreduce:
            * Create a list of type renamings. Add them to the
            * enclosing scope
            */
-          if (s != 0 && tao_yyvsp[-2].dcval != 0 && tao_yyvsp[0].dlval != 0) 
+          if (s != 0 && tao_yyvsp[-2].dcval != 0 && tao_yyvsp[0].dlval != 0)
             {
-              for (UTL_DecllistActiveIterator l (tao_yyvsp[0].dlval); 
-                   !l.is_done (); 
-                   l.next ()) 
+              for (UTL_DecllistActiveIterator l (tao_yyvsp[0].dlval);
+                   !l.is_done ();
+                   l.next ())
                 {
                   d = l.item ();
 
@@ -3823,7 +3824,7 @@ tao_yyreduce:
                       continue;
                     }
 
-                  t = idl_global->gen ()->create_typedef (tp, 
+                  t = idl_global->gen ()->create_typedef (tp,
                                                           d->name (),
                                                           s->is_local (),
                                                           s->is_abstract ());
@@ -3842,7 +3843,7 @@ tao_yyreduce:
 
     {
 // simple_type_spec : base_type_spec
-          tao_yyval.dcval = 
+          tao_yyval.dcval =
             idl_global->scopes ().bottom ()->lookup_primitive_type (
                                                  tao_yyvsp[0].etval
                                                );
@@ -3859,7 +3860,7 @@ tao_yyreduce:
 
           if (s != 0)
             {
-              d = s->lookup_by_name (tao_yyvsp[0].idlist, 
+              d = s->lookup_by_name (tao_yyvsp[0].idlist,
                                      I_TRUE);
             }
 
@@ -3907,9 +3908,9 @@ tao_yyreduce:
               ACE_NEW_RETURN (tao_yyval.dlval,
                               UTL_DeclList (tao_yyvsp[0].deval,
                                             0),
-                              1);               
+                              1);
             }
-          else 
+          else
             {
               UTL_DeclList *dl = 0;
               ACE_NEW_RETURN (dl,
@@ -3962,7 +3963,7 @@ tao_yyreduce:
                                             0),
                               1);
             }
-          else 
+          else
             {
               UTL_DeclList *dl = 0;
               ACE_NEW_RETURN (dl,
@@ -4175,7 +4176,7 @@ tao_yyreduce:
     {
 // struct_type : struct_header
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n (tao_yyvsp[0].idval, 
+          UTL_ScopedName n (tao_yyvsp[0].idval,
                             0);
           AST_Structure *d = 0;
 
@@ -4183,9 +4184,9 @@ tao_yyreduce:
            * Create a node representing a struct declaration. Add it
            * to the enclosing scope
            */
-          if (s != 0) 
+          if (s != 0)
             {
-              d = 
+              d =
                 idl_global->gen ()->create_structure (
                                         &n,
                                         s->is_local (),
@@ -4272,23 +4273,23 @@ tao_yyreduce:
           /*
            * Check for illegal recursive use of type.
            */
-          if (tao_yyvsp[-4].dcval != 0 
+          if (tao_yyvsp[-4].dcval != 0
               && AST_illegal_recursive_type (tao_yyvsp[-4].dcval))
             {
-              idl_global->err ()->error1 (UTL_Error::EIDL_RECURSIVE_TYPE, 
+              idl_global->err ()->error1 (UTL_Error::EIDL_RECURSIVE_TYPE,
                                           tao_yyvsp[-4].dcval);
             }
           /*
            * Create a node representing a struct or exception member
            * Add it to the enclosing scope.
            */
-          else if (s != 0 
-                   && tao_yyvsp[-4].dcval != 0 
-                   && tao_yyvsp[-2].dlval != 0) 
+          else if (s != 0
+                   && tao_yyvsp[-4].dcval != 0
+                   && tao_yyvsp[-2].dlval != 0)
             {
-              for (UTL_DecllistActiveIterator l (tao_yyvsp[-2].dlval); 
-                   !l.is_done (); 
-                   l.next ()) 
+              for (UTL_DecllistActiveIterator l (tao_yyvsp[-2].dlval);
+                   !l.is_done ();
+                   l.next ())
                 {
                   d = l.item ();
 
@@ -4305,10 +4306,10 @@ tao_yyreduce:
                     }
 
                   /* $0 denotes Visibility, must be on yacc reduction stack. */
-                  f = 
+                  f =
                     idl_global->gen ()->create_field (
-                                            tp, 
-                                            d->name (), 
+                                            tp,
+                                            d->name (),
                                             tao_yyvsp[-5].vival
                                           );
                   (void) s->fe_add_field (f);
@@ -4380,7 +4381,7 @@ tao_yyreduce:
     {
 //      ')'
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n (tao_yyvsp[-7].idval, 
+          UTL_ScopedName n (tao_yyvsp[-7].idval,
                             0);
           AST_Union *u = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_SwitchCloseParSeen);
@@ -4389,17 +4390,17 @@ tao_yyreduce:
            * Create a node representing a union. Add it to its enclosing
            * scope.
            */
-          if (tao_yyvsp[-2].dcval != 0 
-              && s != 0) 
+          if (tao_yyvsp[-2].dcval != 0
+              && s != 0)
             {
-              AST_ConcreteType *tp = 
+              AST_ConcreteType *tp =
                 AST_ConcreteType::narrow_from_decl (tao_yyvsp[-2].dcval);
 
-              if (tp == 0) 
+              if (tp == 0)
                 {
                   idl_global->err ()->not_a_type (tao_yyvsp[-2].dcval);
-                } 
-              else 
+                }
+              else
                 {
                   u = idl_global->gen ()->create_union (tp,
                                                         &n,
@@ -4460,7 +4461,7 @@ tao_yyreduce:
 
     {
 // switch_type_spec : integer_type
-          tao_yyval.dcval = 
+          tao_yyval.dcval =
             idl_global->scopes ().bottom ()->lookup_primitive_type (
                                                  tao_yyvsp[0].etval
                                                );
@@ -4477,7 +4478,7 @@ tao_yyreduce:
               idl_global->err ()->error0 (UTL_Error::EIDL_DISC_TYPE);
             }
 
-          tao_yyval.dcval = 
+          tao_yyval.dcval =
             idl_global->scopes ().bottom ()->lookup_primitive_type (
                                                  tao_yyvsp[0].etval
                                                );
@@ -4490,7 +4491,7 @@ tao_yyreduce:
 //      | octet_type
           /* octets are not allowed. */
           idl_global->err ()->error0 (UTL_Error::EIDL_DISC_TYPE);
-          tao_yyval.dcval = 
+          tao_yyval.dcval =
             idl_global->scopes ().bottom ()->lookup_primitive_type (
                                                  tao_yyvsp[0].etval
                                                );
@@ -4501,7 +4502,7 @@ tao_yyreduce:
 
     {
 //      | boolean_type
-          tao_yyval.dcval = 
+          tao_yyval.dcval =
             idl_global->scopes ().bottom ()->lookup_primitive_type (
                                                  tao_yyvsp[0].etval
                                                );
@@ -4525,14 +4526,14 @@ tao_yyreduce:
            * typedef's to arrive at the base type at the end of the
            * chain.
            */
-          d = s->lookup_by_name (tao_yyvsp[0].idlist, 
+          d = s->lookup_by_name (tao_yyvsp[0].idlist,
                                  I_TRUE);
 
-          if (s != 0 && d != 0) 
+          if (s != 0 && d != 0)
             {
-              while (!found) 
+              while (!found)
                 {
-                  switch (d->node_type ()) 
+                  switch (d->node_type ())
                   {
                     case AST_Decl::NT_enum:
                       tao_yyval.dcval = d;
@@ -4541,9 +4542,9 @@ tao_yyreduce:
                     case AST_Decl::NT_pre_defined:
                       p = AST_PredefinedType::narrow_from_decl (d);
 
-                      if (p != 0) 
+                      if (p != 0)
                         {
-                          switch (p->pt ()) 
+                          switch (p->pt ())
                           {
                             case AST_PredefinedType::PT_long:
                             case AST_PredefinedType::PT_ulong:
@@ -4570,7 +4571,7 @@ tao_yyreduce:
                               found = I_TRUE;
                               break;
                           }
-                        } 
+                        }
                       else
                         {
                           tao_yyval.dcval = 0;
@@ -4581,7 +4582,7 @@ tao_yyreduce:
                     case AST_Decl::NT_typedef:
                       t = AST_Typedef::narrow_from_decl (d);
 
-                      if (t != 0) 
+                      if (t != 0)
                         {
                           d = t->base_type ();
                         }
@@ -4593,7 +4594,7 @@ tao_yyreduce:
                       break;
                   }
                 }
-            } 
+            }
           else
             {
               tao_yyval.dcval = 0;
@@ -4635,11 +4636,11 @@ tao_yyreduce:
            * Create several nodes representing branches of a union.
            * Add them to the enclosing scope (the union scope)
            */
-          if (s != 0 
-              &&  tao_yyvsp[-4].llval != 0 
-              && tao_yyvsp[-2].ffval != 0) 
+          if (s != 0
+              &&  tao_yyvsp[-4].llval != 0
+              && tao_yyvsp[-2].ffval != 0)
             {
-              b = 
+              b =
                 idl_global->gen ()->create_union_branch (
                                         tao_yyvsp[-4].llval,
                                         f->field_type (),
@@ -4672,7 +4673,7 @@ tao_yyreduce:
     {
 // at_least_one_case_label : case_label case_labels
           ACE_NEW_RETURN (tao_yyval.llval,
-                          UTL_LabelList (tao_yyvsp[-1].ulval, 
+                          UTL_LabelList (tao_yyvsp[-1].ulval,
                                          tao_yyvsp[0].llval),
                           1);
         }
@@ -4689,7 +4690,7 @@ tao_yyreduce:
                                              0),
                               1);
             }
-          else 
+          else
             {
               UTL_LabelList *ll = 0;
               ACE_NEW_RETURN (ll,
@@ -4776,21 +4777,21 @@ tao_yyreduce:
           /*
            * Check for illegal recursive use of type
            */
-          if (tao_yyvsp[-2].dcval != 0 
+          if (tao_yyvsp[-2].dcval != 0
               && AST_illegal_recursive_type (tao_yyvsp[-2].dcval))
             {
-            idl_global->err()->error1 (UTL_Error::EIDL_RECURSIVE_TYPE, 
+            idl_global->err()->error1 (UTL_Error::EIDL_RECURSIVE_TYPE,
                                        tao_yyvsp[-2].dcval);
             }
           /*
            * Create a field in a union branch
            */
-          else if (tao_yyvsp[-2].dcval == 0 
+          else if (tao_yyvsp[-2].dcval == 0
                    || tao_yyvsp[0].deval == 0)
             {
               tao_yyval.ffval = 0;
             }
-          else 
+          else
             {
               AST_Type *tp = tao_yyvsp[0].deval->compose (tao_yyvsp[-2].dcval);
 
@@ -4814,14 +4815,14 @@ tao_yyreduce:
     {
 // struct_forward_type : struct_decl
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n (tao_yyvsp[0].idval, 
+          UTL_ScopedName n (tao_yyvsp[0].idval,
                             0);
           AST_StructureFwd *d = 0;
 
           /*
            * Create a node representing a forward declaration of a struct.
            */
-          if (s != 0) 
+          if (s != 0)
             {
               d = idl_global->gen ()->create_structure_fwd (&n);
               (void) s->fe_add_structure_fwd (d);
@@ -4834,14 +4835,14 @@ tao_yyreduce:
     {
 // union_forward_type : union_decl
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n (tao_yyvsp[0].idval, 
+          UTL_ScopedName n (tao_yyvsp[0].idval,
                             0);
           AST_UnionFwd *u = 0;
 
           /*
            * Create a node representing a forward declaration of a union.
            */
-          if (s != 0) 
+          if (s != 0)
             {
               u = idl_global->gen ()->create_union_fwd (&n);
               (void) s->fe_add_union_fwd (u);
@@ -4862,7 +4863,7 @@ tao_yyreduce:
     {
 //      id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n (tao_yyvsp[0].idval, 
+          UTL_ScopedName n (tao_yyvsp[0].idval,
                              0);
           AST_Enum *e = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_EnumIDSeen);
@@ -4871,7 +4872,7 @@ tao_yyreduce:
            * Create a node representing an enum and add it to its
            * enclosing scope.
            */
-          if (s != 0) 
+          if (s != 0)
             {
               e = idl_global->gen ()->create_enum (&n,
                                                    s->is_local (),
@@ -4918,7 +4919,7 @@ tao_yyreduce:
             {
               tao_yyval.dcval = 0;
             }
-          else 
+          else
             {
               tao_yyval.dcval = AST_Enum::narrow_from_scope (
                        idl_global->scopes ().top_non_null ()
@@ -4942,7 +4943,7 @@ tao_yyreduce:
 // enumerator : IDENTIFIER
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           Identifier id (tao_yyvsp[0].strval);
-          UTL_ScopedName n (&id, 
+          UTL_ScopedName n (&id,
                             0);
           AST_EnumVal *e = 0;
           AST_Enum *c = 0;
@@ -4951,15 +4952,15 @@ tao_yyreduce:
            * Create a node representing one enumerator in an enum
            * Add it to the enclosing scope (the enum scope)
            */
-          if (s != 0 
-              && s->scope_node_type () == AST_Decl::NT_enum) 
+          if (s != 0
+              && s->scope_node_type () == AST_Decl::NT_enum)
             {
               c = AST_Enum::narrow_from_scope (s);
 
               if (c != 0)
                 {
                   e = idl_global->gen ()->create_enum_val (
-                                              c->next_enum_val (), 
+                                              c->next_enum_val (),
                                               &n
                                             );
                 }
@@ -5004,17 +5005,17 @@ tao_yyreduce:
           /*
            * Create a node representing a sequence
            */
-          if (tao_yyvsp[-2].exval == 0 || tao_yyvsp[-2].exval->coerce (AST_Expression::EV_ulong) == 0) 
+          if (tao_yyvsp[-2].exval == 0 || tao_yyvsp[-2].exval->coerce (AST_Expression::EV_ulong) == 0)
             {
-              idl_global->err ()->coercion_error (tao_yyvsp[-2].exval, 
+              idl_global->err ()->coercion_error (tao_yyvsp[-2].exval,
                                                   AST_Expression::EV_ulong);
               tao_yyval.dcval = 0;
-            } 
-          else if (tao_yyvsp[-5].dcval == 0) 
+            }
+          else if (tao_yyvsp[-5].dcval == 0)
             {
               tao_yyval.dcval = 0;
-            } 
-          else 
+            }
+          else
             {
               AST_Type *tp = AST_Type::narrow_from_decl (tao_yyvsp[-5].dcval);
 
@@ -5022,13 +5023,13 @@ tao_yyreduce:
                 {
                   ; // Error will be caught in FE_Declarator.
                 }
-              else 
+              else
                 {
                   Identifier id ("sequence");
                   UTL_ScopedName sn (&id,
                                      0);
 
-                  tao_yyval.dcval = 
+                  tao_yyval.dcval =
                     idl_global->gen ()->create_sequence (
                                             tao_yyvsp[-2].exval,
                                             tp,
@@ -5064,15 +5065,15 @@ tao_yyreduce:
             {
               tao_yyval.dcval = 0;
             }
-          else 
+          else
             {
               AST_Type *tp = AST_Type::narrow_from_decl (tao_yyvsp[-1].dcval);
-                
+
               if (tp == 0)
                 {
                   ; // Error will be caught in FE_Declarator.
                 }
-              else 
+              else
                 {
                   Identifier id ("sequence");
                   UTL_ScopedName sn (&id,
@@ -5146,14 +5147,14 @@ tao_yyreduce:
           /*
            * Create a node representing a string.
            */
-          if (tao_yyvsp[-2].exval == 0 
-              || tao_yyvsp[-2].exval->coerce (AST_Expression::EV_ulong) == 0) 
+          if (tao_yyvsp[-2].exval == 0
+              || tao_yyvsp[-2].exval->coerce (AST_Expression::EV_ulong) == 0)
             {
-              idl_global->err ()->coercion_error (tao_yyvsp[-2].exval, 
+              idl_global->err ()->coercion_error (tao_yyvsp[-2].exval,
                                                   AST_Expression::EV_ulong);
               tao_yyval.dcval = 0;
-            } 
-          else 
+            }
+          else
             {
               tao_yyval.dcval = idl_global->gen ()->create_string (tao_yyvsp[-2].exval);
               /*
@@ -5224,14 +5225,14 @@ tao_yyreduce:
           /*
            * Create a node representing a string.
            */
-          if (tao_yyvsp[-2].exval == 0 
-              || tao_yyvsp[-2].exval->coerce (AST_Expression::EV_ulong) == 0) 
+          if (tao_yyvsp[-2].exval == 0
+              || tao_yyvsp[-2].exval->coerce (AST_Expression::EV_ulong) == 0)
             {
-              idl_global->err ()->coercion_error (tao_yyvsp[-2].exval, 
+              idl_global->err ()->coercion_error (tao_yyvsp[-2].exval,
                                                   AST_Expression::EV_ulong);
               tao_yyval.dcval = 0;
-            } 
-          else 
+            }
+          else
             {
               tao_yyval.dcval = idl_global->gen ()->create_wstring (tao_yyvsp[-2].exval);
               /*
@@ -5291,16 +5292,16 @@ tao_yyreduce:
           /*
            * Create a node representing an array.
            */
-          if (tao_yyvsp[0].elval != 0) 
+          if (tao_yyvsp[0].elval != 0)
             {
               UTL_ScopedName sn (tao_yyvsp[-2].idval,
                                  0);
-              tao_yyval.dcval = 
+              tao_yyval.dcval =
                 idl_global->gen ()->create_array (
                                         &sn,
-                                        tao_yyvsp[0].elval->length (), 
-                                        tao_yyvsp[0].elval, 
-                                        0, 
+                                        tao_yyvsp[0].elval->length (),
+                                        tao_yyvsp[0].elval,
+                                        0,
                                         0
                                       );
             }
@@ -5329,7 +5330,7 @@ tao_yyreduce:
                                             0),
                               1);
             }
-          else 
+          else
             {
               UTL_ExprList *el = 0;
               ACE_NEW_RETURN (el,
@@ -5376,13 +5377,13 @@ tao_yyreduce:
            * Array dimensions are expressions which must be coerced to
            * positive integers.
            */
-          if (tao_yyvsp[-2].exval == 0 
-              || tao_yyvsp[-2].exval->coerce (AST_Expression::EV_ulong) == 0) 
+          if (tao_yyvsp[-2].exval == 0
+              || tao_yyvsp[-2].exval->coerce (AST_Expression::EV_ulong) == 0)
             {
-              idl_global->err ()->coercion_error (tao_yyvsp[-2].exval, 
+              idl_global->err ()->coercion_error (tao_yyvsp[-2].exval,
                                                   AST_Expression::EV_ulong);
               tao_yyval.exval = 0;
-            } 
+            }
           else
             {
               tao_yyval.exval = tao_yyvsp[-2].exval;
@@ -5436,13 +5437,13 @@ tao_yyreduce:
            * Create nodes representing attributes and add them to the
            * enclosing scope.
            */
-          if (s != 0 
-              && tao_yyvsp[-4].dcval != 0 
-              && tao_yyvsp[-2].dlval != 0) 
+          if (s != 0
+              && tao_yyvsp[-4].dcval != 0
+              && tao_yyvsp[-2].dlval != 0)
             {
-              for (UTL_DecllistActiveIterator l (tao_yyvsp[-2].dlval); 
-                   !l.is_done (); 
-                   l.next ()) 
+              for (UTL_DecllistActiveIterator l (tao_yyvsp[-2].dlval);
+                   !l.is_done ();
+                   l.next ())
                 {
                   d = l.item ();
 
@@ -5458,7 +5459,7 @@ tao_yyreduce:
                       continue;
                     }
 
-                  a = 
+                  a =
                     idl_global->gen ()->create_attribute (
                                             I_TRUE,
                                             tp,
@@ -5524,13 +5525,13 @@ tao_yyreduce:
            * Create nodes representing attributes and add them to the
            * enclosing scope.
            */
-          if (s != 0 
-              && tao_yyvsp[-6].dcval != 0 
-              && tao_yyvsp[-4].dlval != 0) 
+          if (s != 0
+              && tao_yyvsp[-6].dcval != 0
+              && tao_yyvsp[-4].dlval != 0)
             {
-              for (UTL_DecllistActiveIterator l (tao_yyvsp[-4].dlval); 
-                   !l.is_done (); 
-                   l.next ()) 
+              for (UTL_DecllistActiveIterator l (tao_yyvsp[-4].dlval);
+                   !l.is_done ();
+                   l.next ())
                 {
                   d = l.item ();
 
@@ -5546,7 +5547,7 @@ tao_yyreduce:
                       continue;
                     }
 
-                  a = 
+                  a =
                     idl_global->gen ()->create_attribute (
                                             I_FALSE,
                                             tp,
@@ -5584,7 +5585,7 @@ tao_yyreduce:
     {
 //      id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n (tao_yyvsp[0].idval, 
+          UTL_ScopedName n (tao_yyvsp[0].idval,
                             0);
           AST_Exception *e = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_ExceptIDSeen);
@@ -5593,7 +5594,7 @@ tao_yyreduce:
            * Create a node representing an exception and add it to
            * the enclosing scope.
            */
-          if (s != 0) 
+          if (s != 0)
             {
               e = idl_global->gen ()->create_exception (&n,
                                                         s->is_local (),
@@ -5650,7 +5651,7 @@ tao_yyreduce:
 //      IDENTIFIER
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           Identifier id (tao_yyvsp[0].strval);
-          UTL_ScopedName n (&id, 
+          UTL_ScopedName n (&id,
                             0);
           AST_Operation *o = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_OpIDSeen);
@@ -5659,28 +5660,28 @@ tao_yyreduce:
            * Create a node representing an operation on an interface
            * and add it to its enclosing scope.
            */
-          if (s != 0 && tao_yyvsp[-2].dcval != 0) 
+          if (s != 0 && tao_yyvsp[-2].dcval != 0)
             {
-              AST_Type *tp = 
+              AST_Type *tp =
                 AST_Type::narrow_from_decl (tao_yyvsp[-2].dcval);
 
-              if (tp == 0) 
+              if (tp == 0)
                 {
                   idl_global->err ()->not_a_type (tao_yyvsp[-2].dcval);
-                } 
-              else if (tp->node_type () == AST_Decl::NT_except) 
+                }
+              else if (tp->node_type () == AST_Decl::NT_except)
                 {
                   idl_global->err ()->not_a_type (tao_yyvsp[-2].dcval);
-                } 
-              else 
+                }
+              else
                 {
                   AST_Decl *d = ScopeAsDecl (s);
                   AST_Decl::NodeType nt = d->node_type ();
-                  idl_bool local = 
-                    s->is_local () 
+                  idl_bool local =
+                    s->is_local ()
                     || nt == AST_Decl::NT_valuetype
                     || nt == AST_Decl::NT_eventtype;
-                  o = 
+                  o =
                     idl_global->gen ()->create_operation (tp,
                                                           tao_yyvsp[-3].ofval,
                                                           &n,
@@ -5727,7 +5728,7 @@ tao_yyreduce:
           /*
            * Add exceptions and context to the operation.
            */
-          if (s != 0 && s->scope_node_type () == AST_Decl::NT_op) 
+          if (s != 0 && s->scope_node_type () == AST_Decl::NT_op)
             {
               o = AST_Operation::narrow_from_scope (s);
 
@@ -5789,7 +5790,7 @@ tao_yyreduce:
   case 335:
 
     {
-// init_decl : IDL_FACTORY 
+// init_decl : IDL_FACTORY
           //@@ PS_FactorySeen?
           idl_global->set_parse_state (IDL_GlobalData::PS_OpTypeSeen);
         }
@@ -5798,7 +5799,7 @@ tao_yyreduce:
   case 336:
 
     {
-//      IDENTIFIER 
+//      IDENTIFIER
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
 
           if (s->is_abstract ())
@@ -5810,10 +5811,10 @@ tao_yyreduce:
                           ACE_TEXT ("factory construct.\n"),
                           idl_global->filename ()->get_string (),
                           idl_global->lineno ()));
-            }   
-            
-          Identifier id (tao_yyvsp[0].strval);  
-          UTL_ScopedName n (&id, 
+            }
+
+          Identifier id (tao_yyvsp[0].strval);
+          UTL_ScopedName n (&id,
                             0);
           AST_Factory *factory = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_OpIDSeen);
@@ -5928,17 +5929,17 @@ tao_yyreduce:
            * Create a node representing an argument to an operation
            * Add it to the enclosing scope (the operation scope).
            */
-          if (tao_yyvsp[-2].dcval != 0 
-              && tao_yyvsp[0].deval != 0 && 
-              s != 0) 
+          if (tao_yyvsp[-2].dcval != 0
+              && tao_yyvsp[0].deval != 0 &&
+              s != 0)
             {
               AST_Type *tp = tao_yyvsp[0].deval->compose (tao_yyvsp[-2].dcval);
 
-              if (tp != 0) 
+              if (tp != 0)
                 {
                   a = idl_global->gen ()->create_argument (
-                          AST_Argument::dir_IN, 
-                          tp, 
+                          AST_Argument::dir_IN,
+                          tp,
                           (UTL_IdList *) tao_yyvsp[0].deval->name ()->copy ()
                         );
 
@@ -6016,13 +6017,13 @@ tao_yyreduce:
            * Create a node representing an argument to an operation
            * Add it to the enclosing scope (the operation scope).
            */
-          if (tao_yyvsp[-2].dcval != 0 
-              && tao_yyvsp[0].deval != 0 
-              && s != 0) 
+          if (tao_yyvsp[-2].dcval != 0
+              && tao_yyvsp[0].deval != 0
+              && s != 0)
             {
               AST_Type *tp = tao_yyvsp[0].deval->compose (tao_yyvsp[-2].dcval);
 
-              if (tp != 0) 
+              if (tp != 0)
                 {
                   if (!s->is_local () && tp->is_local ())
                     {
@@ -6037,10 +6038,10 @@ tao_yyreduce:
                     }
                   else
                     {
-                      a = 
+                      a =
                         idl_global->gen ()->create_argument (
-                            tao_yyvsp[-4].dival, 
-                            tp, 
+                            tao_yyvsp[-4].dival,
+                            tp,
                             (UTL_IdList *) tao_yyvsp[0].deval->name ()->copy ()
                           );
                       (void) s->fe_add_argument (a);
@@ -6054,7 +6055,7 @@ tao_yyreduce:
 
     {
 // param_type_spec : base_type_spec
-          tao_yyval.dcval = 
+          tao_yyval.dcval =
             idl_global->scopes ().bottom ()->lookup_primitive_type (
                                                  tao_yyvsp[0].etval
                                                );
@@ -6072,7 +6073,7 @@ tao_yyreduce:
 
           if (s != 0)
             {
-              d = s->lookup_by_name (tao_yyvsp[0].idlist, 
+              d = s->lookup_by_name (tao_yyvsp[0].idlist,
                                      I_TRUE);
             }
 
@@ -6084,7 +6085,7 @@ tao_yyreduce:
             {
               AST_Decl::NodeType nt = d->node_type ();
 
-              if (nt == AST_Decl::NT_struct_fwd 
+              if (nt == AST_Decl::NT_struct_fwd
                   || nt == AST_Decl::NT_union_fwd)
                 {
                   if (! AST_Type::narrow_from_decl (d)->is_defined ())
@@ -6289,7 +6290,7 @@ tao_yyreduce:
                                            0),
                               1);
             }
-          else 
+          else
             {
               UTL_StrList *sl = 0;
               ACE_NEW_RETURN (sl,
@@ -6315,7 +6316,7 @@ tao_yyreduce:
     {
 // typeid_dcl : IDL_TYPEID scoped_name IDL_STRING_LITERAL
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = s->lookup_by_name (tao_yyvsp[-1].idlist, 
+          AST_Decl *d = s->lookup_by_name (tao_yyvsp[-1].idlist,
                                            I_TRUE);
 
           if (d == 0)
@@ -6344,7 +6345,7 @@ tao_yyreduce:
           // of this opening would never get checked or set.
           if (d->name ()->compare (tao_yyvsp[-1].idlist) != 0)
             {
-              d = s->lookup_by_name (tao_yyvsp[-1].idlist, 
+              d = s->lookup_by_name (tao_yyvsp[-1].idlist,
                                      I_TRUE);
             }
 
@@ -6366,7 +6367,7 @@ tao_yyreduce:
     {
 // component_forward_decl : IDL_COMPONENT id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n (tao_yyvsp[0].idval, 
+          UTL_ScopedName n (tao_yyvsp[0].idval,
                             0);
           AST_ComponentFwd *f = 0;
           idl_global->set_parse_state (
@@ -6377,7 +6378,7 @@ tao_yyreduce:
            * Create a node representing a forward declaration of a
            * component. Store it in the enclosing scope.
            */
-          if (s != 0) 
+          if (s != 0)
             {
               f = idl_global->gen ()->create_component_fwd (&n);
               (void) s->fe_add_component_fwd (f);
@@ -6388,16 +6389,16 @@ tao_yyreduce:
   case 393:
 
     {
-// component_decl : component_header          
+// component_decl : component_header
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Component *c = 0;
 
           /*
            * Make a new component node and add it to the enclosing scope.
            */
-          if (s != 0 && tao_yyvsp[0].chval != 0) 
+          if (s != 0 && tao_yyvsp[0].chval != 0)
             {
-              c = 
+              c =
                 idl_global->gen ()->create_component (
                                         tao_yyvsp[0].chval->name (),
                                         tao_yyvsp[0].chval->base_component (),
@@ -6407,7 +6408,7 @@ tao_yyreduce:
                                         tao_yyvsp[0].chval->n_supports_flat ()
                                       );
               AST_Interface *i = AST_Interface::narrow_from_decl (c);
-              AST_Interface::fwd_redefinition_helper (i, 
+              AST_Interface::fwd_redefinition_helper (i,
                                                       s);
               /*
                * Add the component to its definition scope.
@@ -6483,7 +6484,7 @@ tao_yyreduce:
            * Create an AST representation of the information in the header
            * part of a component.
            */
-          UTL_ScopedName n (tao_yyvsp[-4].idval, 
+          UTL_ScopedName n (tao_yyvsp[-4].idval,
                             0);
           ACE_NEW_RETURN (tao_yyval.chval,
                           FE_ComponentHeader (&n,
@@ -6620,7 +6621,7 @@ tao_yyreduce:
 // provides_decl : IDL_PROVIDES interface_type id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Component *c = AST_Component::narrow_from_scope (s);
-          
+
           if (c != 0)
             {
               AST_Decl *d = s->lookup_by_name (tao_yyvsp[-1].idlist,
@@ -6644,7 +6645,7 @@ tao_yyreduce:
                   pd.impl = interface_type;
                   c->provides ().enqueue_tail (pd);
                 }
-            }  
+            }
         }
     break;
 
@@ -6714,7 +6715,7 @@ tao_yyreduce:
             {
               AST_Type *interface_type = AST_Type::narrow_from_decl (d);
               AST_Component *c = AST_Component::narrow_from_scope (s);
-          
+
               if (c != 0)
                 {
                   AST_Component::port_description ud;
@@ -6763,7 +6764,7 @@ tao_yyreduce:
             {
               AST_Type *event_type = AST_Type::narrow_from_decl (d);
               AST_Component *c = AST_Component::narrow_from_scope (s);
-          
+
               if (c != 0)
                 {
                   AST_Component::port_description pd;
@@ -6795,7 +6796,7 @@ tao_yyreduce:
             {
               AST_Type *event_type = AST_Type::narrow_from_decl (d);
               AST_Component *c = AST_Component::narrow_from_scope (s);
-          
+
               if (c != 0)
                 {
                   AST_Component::port_description pd;
@@ -6827,7 +6828,7 @@ tao_yyreduce:
             {
               AST_Type *event_type = AST_Type::narrow_from_decl (d);
               AST_Component *c = AST_Component::narrow_from_scope (s);
-          
+
               if (c != 0)
                 {
                   AST_Component::port_description pd;
@@ -6842,16 +6843,16 @@ tao_yyreduce:
   case 426:
 
     {
-// home_decl : home_header 
+// home_decl : home_header
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Home *h = 0;
 
           /*
            * Make a new home node and add it to the enclosing scope.
            */
-          if (s != 0 && tao_yyvsp[0].hhval != 0) 
+          if (s != 0 && tao_yyvsp[0].hhval != 0)
             {
-              h = 
+              h =
                 idl_global->gen ()->create_home (
                                         tao_yyvsp[0].hhval->name (),
                                         tao_yyvsp[0].hhval->base_home (),
@@ -6895,7 +6896,7 @@ tao_yyreduce:
 
     {
 // home_header : IDL_HOME
-          idl_global->set_parse_state (IDL_GlobalData::PS_HomeSeen);    
+          idl_global->set_parse_state (IDL_GlobalData::PS_HomeSeen);
         }
     break;
 
@@ -6903,7 +6904,7 @@ tao_yyreduce:
 
     {
 //      id
-          idl_global->set_parse_state (IDL_GlobalData::PS_HomeIDSeen);    
+          idl_global->set_parse_state (IDL_GlobalData::PS_HomeIDSeen);
         }
     break;
 
@@ -6911,7 +6912,7 @@ tao_yyreduce:
 
     {
 //      home_inheritance_spec
-          idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);    
+          idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);
         }
     break;
 
@@ -6919,7 +6920,7 @@ tao_yyreduce:
 
     {
 //      supports_spec
-          idl_global->set_parse_state (IDL_GlobalData::PS_SupportSpecSeen);    
+          idl_global->set_parse_state (IDL_GlobalData::PS_SupportSpecSeen);
         }
     break;
 
@@ -6927,7 +6928,7 @@ tao_yyreduce:
 
     {
 //      IDL_MANAGES
-          idl_global->set_parse_state (IDL_GlobalData::PS_ManagesSeen);    
+          idl_global->set_parse_state (IDL_GlobalData::PS_ManagesSeen);
         }
     break;
 
@@ -6935,7 +6936,7 @@ tao_yyreduce:
 
     {
 //      scoped_name
-          idl_global->set_parse_state (IDL_GlobalData::PS_ManagesIDSeen);    
+          idl_global->set_parse_state (IDL_GlobalData::PS_ManagesIDSeen);
         }
     break;
 
@@ -6949,7 +6950,7 @@ tao_yyreduce:
            * Create an AST representation of the information in the header
            * part of a component home.
            */
-          UTL_ScopedName n (tao_yyvsp[-10].idval, 
+          UTL_ScopedName n (tao_yyvsp[-10].idval,
                             0);
           ACE_NEW_RETURN (tao_yyval.hhval,
                           FE_HomeHeader (&n,
@@ -6964,8 +6965,8 @@ tao_yyreduce:
   case 435:
 
     {
-// home_inheritance_spec ':' 
-          idl_global->set_parse_state (IDL_GlobalData::PS_InheritColonSeen);    
+// home_inheritance_spec ':'
+          idl_global->set_parse_state (IDL_GlobalData::PS_InheritColonSeen);
         }
     break;
 
@@ -7062,7 +7063,7 @@ tao_yyreduce:
     {
 // factory_decl : IDL_FACTORY id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n (tao_yyvsp[0].idval, 
+          UTL_ScopedName n (tao_yyvsp[0].idval,
                             0);
           AST_Operation *o = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_OpIDSeen);
@@ -7071,10 +7072,10 @@ tao_yyreduce:
            * Create a node representing a factory operation
            * and add it to the enclosing scope.
            */
-          if (s != 0) 
+          if (s != 0)
             {
               AST_Home *home = AST_Home::narrow_from_scope (s);
-              o = 
+              o =
                 idl_global->gen ()->create_operation (
                                         home->managed_component (),
                                         AST_Operation::OP_noflags,
@@ -7136,7 +7137,7 @@ tao_yyreduce:
     {
 // finder_decl : IDL_FINDER id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n (tao_yyvsp[0].idval, 
+          UTL_ScopedName n (tao_yyvsp[0].idval,
                             0);
           AST_Operation *o = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_OpIDSeen);
@@ -7145,10 +7146,10 @@ tao_yyreduce:
            * Create a node representing a finder operation
            * and add it to the enclosing scope.
            */
-          if (s != 0) 
+          if (s != 0)
             {
               AST_Home *home = AST_Home::narrow_from_scope (s);
-              o = 
+              o =
                 idl_global->gen ()->create_operation (
                                         home->managed_component (),
                                         AST_Operation::OP_noflags,
@@ -7210,7 +7211,7 @@ tao_yyreduce:
     {
 // event_concrete_forward_decl : IDL_EVENTTYPE id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n (tao_yyvsp[0].idval, 
+          UTL_ScopedName n (tao_yyvsp[0].idval,
                             0);
           AST_EventTypeFwd *f = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeForwardSeen);
@@ -7219,7 +7220,7 @@ tao_yyreduce:
            * Create a node representing a forward declaration of an
            * eventtype. Store it in the enclosing scope
            */
-          if (s != 0) 
+          if (s != 0)
             {
               f = idl_global->gen ()->create_eventtype_fwd (&n,
                                                             I_FALSE);
@@ -7233,7 +7234,7 @@ tao_yyreduce:
     {
 // event_abs_forward_decl : IDL_ABSTRACT IDL_EVENTTYPE id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n (tao_yyvsp[0].idval, 
+          UTL_ScopedName n (tao_yyvsp[0].idval,
                             0);
           AST_EventTypeFwd *f = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeForwardSeen);
@@ -7242,7 +7243,7 @@ tao_yyreduce:
            * Create a node representing a forward declaration of an
            * eventtype. Store it in the enclosing scope
            */
-          if (s != 0) 
+          if (s != 0)
             {
               f = idl_global->gen ()->create_eventtype_fwd (&n,
                                                             I_TRUE);
@@ -7259,11 +7260,11 @@ tao_yyreduce:
           AST_EventType *e = 0;
           AST_Interface *i = 0;
 
-          if (s != 0 && tao_yyvsp[-1].idval != 0) 
+          if (s != 0 && tao_yyvsp[-1].idval != 0)
             {
               UTL_ScopedName sn (tao_yyvsp[-1].idval,
                                  0);
-              e = 
+              e =
                 idl_global->gen ()->create_eventtype (
                     &sn,
                     tao_yyvsp[0].ehval->inherits (),
@@ -7279,7 +7280,7 @@ tao_yyreduce:
                     I_FALSE
                   );
               i = AST_Interface::narrow_from_decl (e);
-              AST_Interface::fwd_redefinition_helper (i, 
+              AST_Interface::fwd_redefinition_helper (i,
                                                       s);
               /*
                * Add the eventetype to its definition scope
@@ -7401,11 +7402,11 @@ tao_yyreduce:
           AST_EventType *e = 0;
           AST_Interface *i = 0;
 
-          if (s != 0 && tao_yyvsp[-1].idval != 0) 
+          if (s != 0 && tao_yyvsp[-1].idval != 0)
             {
               UTL_ScopedName sn (tao_yyvsp[-1].idval,
                                  0);
-              e = 
+              e =
                 idl_global->gen ()->create_eventtype (
                     &sn,
                     tao_yyvsp[0].ehval->inherits (),
@@ -7421,7 +7422,7 @@ tao_yyreduce:
                     I_FALSE
                   );
               i = AST_Interface::narrow_from_decl (e);
-              AST_Interface::fwd_redefinition_helper (i, 
+              AST_Interface::fwd_redefinition_helper (i,
                                                       s);
               /*
                * Add the eventetype to its definition scope
@@ -7715,4 +7716,3 @@ tao_yyerror (const char *msg)
               "%s\n",
               msg));
 }
-
