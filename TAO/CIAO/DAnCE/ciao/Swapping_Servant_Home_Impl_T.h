@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Swapping_Servant_Impl_T.h
+ *  @file    Swapping_Servant_Home_Impl_T.h
  *
  *  $Id$
  *
