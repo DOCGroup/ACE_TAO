@@ -152,21 +152,21 @@ ACE_Stats::print_summary (const u_int precision,
 {
   if (overflow_)
     ACE_OS::fprintf (file,
-                     ASYS_TEXT ("ACE_Stats::print_summary: "
-                                "there was overflow!\n"));
+                     ASYS_TEXT ("ACE_Stats::print_summary: ")
+                     ASYS_TEXT ("there was overflow!\n"));
 
   // Build a format string, in case the C library doesn't support %*u.
-  char format[32];
+  ASYS_TCHAR format[32];
   ACE_OS::sprintf (format, ASYS_TEXT ("%%d.%%0%du"), precision);
 
   ACE_Stats_Value u (precision);
   mean (u, scale_factor);
-  char mean_string [128];
+  ASYS_TCHAR mean_string [128];
   ACE_OS::sprintf (mean_string, format, u.whole (), u.fractional ());
 
   ACE_Stats_Value sd (precision);
   std_dev (sd, scale_factor);
-  char std_dev_string [128];
+  ASYS_TCHAR std_dev_string [128];
   ACE_OS::sprintf (std_dev_string, format, sd.whole (), sd.fractional ());
 
   ACE_Stats_Value minimum (precision), maximum (precision);
@@ -180,15 +180,15 @@ ACE_Stats::print_summary (const u_int precision,
       const ACE_UINT64 m (max_);
       quotient (m, scale_factor, maximum);
     }
-  char min_string [128];
-  char max_string [128];
+  ASYS_TCHAR min_string [128];
+  ASYS_TCHAR max_string [128];
   ACE_OS::sprintf (min_string, format,
                    minimum.whole (), minimum.fractional ());
   ACE_OS::sprintf (max_string, format,
                    maximum.whole (), maximum.fractional ());
 
-  ACE_OS::fprintf (file, ASYS_TEXT ("samples: %u (%s - %s); mean: "
-                                    "%s; std dev: %s\n"),
+  ACE_OS::fprintf (file, ASYS_TEXT ("samples: %u (%s - %s); mean: ")
+                   ASYS_TEXT ("%s; std dev: %s\n"),
                    samples (), min_string, max_string,
                    mean_string, std_dev_string);
 
