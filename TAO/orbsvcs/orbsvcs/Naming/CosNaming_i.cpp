@@ -479,8 +479,7 @@ NS_NamingContext::list (CORBA::ULong how_many,
       n = context_.current_size ();
     }
 
-  // use hash iterator to populate a BindingList with
-  // bindings.
+  // Use hash iterator to populate a BindingList with bindings.
   CosNaming::BindingList bindings;
   bindings.length (n);
   NS_NamingContext::HASH_MAP::ENTRY *hash_entry;
@@ -498,8 +497,9 @@ NS_NamingContext::list (CORBA::ULong how_many,
       bindings[i].binding_name[0].kind =
 	CORBA::string_dup (hash_entry->ext_id_.kind_.fast_rep ());
     }
-  // Marina, please add check for memory failure.
-  bl = new CosNaming::BindingList (bindings);
+
+  // @@ Marina, please add check for memory failure.
+  ACE_NEW (bl, CosNaming::BindingList (bindings));
 
   // If did not allocate BindingIterator, deallocate hash map
   // iterator.
@@ -592,8 +592,8 @@ NS_BindingIterator::next_n (CORBA::ULong how_many,
 	    }
 	}
 
-      bl = new CosNaming::BindingList (bindings);
       // Marina, please check for failed memory allocation.
+      ACE_NEW (bl, CosNaming::BindingList (bindings));
       return 1;
     }
 }
