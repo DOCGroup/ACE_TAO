@@ -2,8 +2,7 @@
 // $Id$
 
 project(ECT Supplier): rteventexe, rtoldevent, rtsched, naming, iortable, messaging {
-  exename  = ECT_Supplier
-  comps   += Naming RTOLDEvent
+  exename = ECT_Supplier
 
   Source_Files {
     ECT_Driver.cpp
@@ -13,8 +12,7 @@ project(ECT Supplier): rteventexe, rtoldevent, rtsched, naming, iortable, messag
 }
 
 project(ECT Consumer): rteventexe, rtoldevent, rtsched, naming, iortable, messaging {
-  exename  = ECT_Consumer
-  comps   += Naming RTOLDEvent
+  exename = ECT_Consumer
 
   Source_Files {
     ECT_Driver.cpp
@@ -24,8 +22,7 @@ project(ECT Consumer): rteventexe, rtoldevent, rtsched, naming, iortable, messag
 }
 
 project(ECT Throughput): rteventexe, rtoldevent, rtsched, naming, iortable, messaging {
-  exename  = ECT_Throughput
-  comps   += Naming RTOLDEvent
+  exename = ECT_Throughput
 
   Source_Files {
     ECT_Driver.cpp
