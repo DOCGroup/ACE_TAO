@@ -45,7 +45,11 @@ ARFLAGS         = cruvZ
 # When libraries are archived, a hash index is automatically created
 # so there is no need for ranlib
 RANLIB          = @true
-SOFLAGS         = -shared -use_ld_input $(ACELIB)
+#### The -hidden [...] -non_hidden business avoids multiply defined
+#### symbols between the shared library and libcxxstd.a.  It's the
+#### workaround recommended in PTR 43-4-204.
+SOFLAGS         = -hidden /usr/lib/cmplrs/cxx/libcxxstd.a -non_hidden \
+                  -shared -use_ld_input $(ACELIB)
 SOBUILD         = /bin/rm -f $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
                   ln $(VSHDIR)$*.o $@
 
