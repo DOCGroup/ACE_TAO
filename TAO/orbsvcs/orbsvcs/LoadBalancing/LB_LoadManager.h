@@ -289,6 +289,14 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::ObjectGroupNotFound));
 
+  /// TAO specific method
+  virtual PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
+      PortableGroup::ObjectGroupId group_id
+      ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC((
+       CORBA::SystemException,
+       PortableGroup::ObjectGroupNotFound));
+
   /// Return the reference corresponding to the Replica of a given
   /// ObjectGroup at the given location.
   virtual CORBA::Object_ptr get_member_ref (
