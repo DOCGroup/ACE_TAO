@@ -1,16 +1,23 @@
+Mon Apr 16 20:42:46 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * include/makeinclude/platform_qnx_rtp_gcc.GNU:
+          Remove obsolete comments and raise the optimization level from
+          -O2 to -O3, the latter disables a huge number of warnings for
+          PACE.
+
 Mon Apr 16 22:15:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst: Commented out some tests that are
-	  failing on SUNCC 5.1. The failure is because of a compiler
-	  bug. The problem is that the compiler seems to have difficulty
-	  in calling the virtual method in a class hierarchy which is
-	  built with multiple inheritance.
+        * bin/auto_run_tests.lst: Commented out some tests that are
+          failing on SUNCC 5.1. The failure is because of a compiler
+          bug. The problem is that the compiler seems to have difficulty
+          in calling the virtual method in a class hierarchy which is
+          built with multiple inheritance.
 
 Mon Apr 16 20:24:11 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* tests/Config_Test.cpp (main): Remoted the test_io() function.
-	  Thanks to Jerry Odenwelder <jerry.o@mindspring.com> for
- 	  confirming this.
+        * tests/Config_Test.cpp (main): Remoted the test_io() function.
+          Thanks to Jerry Odenwelder <jerry.o@mindspring.com> for
+          confirming this.
 
 Mon Apr 16 16:18:57 2001  Carlos O'Ryan  <coryan@uci.edu>
 
