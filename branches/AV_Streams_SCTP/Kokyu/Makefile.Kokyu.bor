@@ -1,0 +1,64 @@
+# Makefile for building the Kokyu library with Borland C++ Builder
+
+NAME = Kokyu
+
+OBJFILES = \
+	$(OBJDIR)\Default_Dispatcher_Impl.obj \
+	$(OBJDIR)\Dispatcher_Impl.obj \
+	$(OBJDIR)\Dispatcher_Task.obj \
+	$(OBJDIR)\Kokyu.obj \
+	$(OBJDIR)\Kokyu_defs.obj
+
+EXTERNAL_LIBS =
+
+LFLAGS = \
+	-L..\ace\$(CONFIG_SUBDIR) -L..\ace \
+  -L$(CORE_BINDIR)
+
+LIBFILES = \
+	ACE$(LIB_DECORATOR).lib \
+	$(EXTERNAL_LIBS)
+
+!ifdef STATIC
+LIB_FLAGS = -DACE_AS_STATIC_LIBS=1
+DLL_FLAGS =
+!else
+LIB_FLAGS =
+DLL_FLAGS = -DKOKYU_BUILD_DLL=1
+!endif
+
+CFLAGS = \
+	-I.. \
+	$(LIB_FLAGS) \
+	$(DLL_FLAGS)
+
+CPPDIR = .
+
+INCLUDES = \
+	DSRT_Direct_Dispatcher_Impl_T.h \
+	DSRT_Dispatch_Item_T.h \
+	DSRT_Dispatcher_Impl_T.h \
+	DSRT_Sched_Queue_T.h \
+	Default_Dispatcher_Impl.h \
+	Dispatcher_Impl.h \
+	Dispatcher_Task.h \
+	Kokyu.h \
+	Kokyu_defs.h \
+	Kokyu_dsrt.h \
+	DSRT_Direct_Dispatcher_Impl_T \
+	DSRT_Dispatch_Item_T \
+	DSRT_Dispatcher_Impl_T \
+	DSRT_Sched_Queue_T \
+	Kokyu_dsrt \
+	DSRT_Dispatch_Item_T.i \
+	DSRT_Dispatcher_Impl_T.i \
+	Default_Dispatcher_Impl.i \
+	Dispatcher_Impl.i \
+	Dispatcher_Task.i \
+	Kokyu.i \
+	Kokyu_defs.i \
+	Kokyu_dsrt.i
+
+BASE_BINDIR = ..\bin
+
+!include <$(ACE_ROOT)\include\makeinclude\build_library.bor>

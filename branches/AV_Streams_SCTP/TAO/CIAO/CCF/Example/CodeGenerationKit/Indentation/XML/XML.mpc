@@ -1,0 +1,14 @@
+// $Id$
+project {
+
+  exename = indent_xml
+
+  includes += ../../../.. $(UTILITY_ROOT)
+  libpaths += ../../../../CCF/CodeGenerationKit
+  libs += CodeGenerationKit
+
+  Source_Files {
+    indent_xml.cpp
+  }
+
+}

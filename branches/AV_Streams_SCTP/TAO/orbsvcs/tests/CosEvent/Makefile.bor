@@ -1,0 +1,10 @@
+#
+# Makefile for building the TAO cosevent tests
+# $Id$
+#
+
+DIRS = \
+        lib \
+        Basic
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -1,0 +1,42 @@
+project(RMCast Fragment Test) : acetest, rmcast {
+  exename  = RMCast_Fragment_Test
+  Source_Files {
+    RMCast_Fragment_Test.cpp
+  }
+}
+
+project(RMCast Membership Test) : acetest, rmcast {
+  exename  = RMCast_Membership_Test
+  Source_Files {
+    RMCast_Membership_Test.cpp
+  }
+}
+
+project(RMCast Reassembly Test) : acetest, rmcast {
+  exename  = RMCast_Reassembly_Test
+  Source_Files {
+    RMCast_Reassembly_Test.cpp
+  }
+}
+
+project(RMCast Reordering Test) : acetest, rmcast {
+  exename  = RMCast_Reordering_Test
+  Source_Files {
+    RMCast_Reordering_Test.cpp
+  }
+}
+
+project(RMCast Retransmission Test) : acetest, rmcast {
+  exename  = RMCast_Retransmission_Test
+  Source_Files {
+    RMCast_Retransmission_Test.cpp
+  }
+}
+
+project(RMCast UDP Best Effort Test) : acetest, rmcast {
+  exename  = RMCast_UDP_Best_Effort_Test
+  Source_Files {
+    RMCast_UDP_Best_Effort_Test.cpp
+  }
+}
+

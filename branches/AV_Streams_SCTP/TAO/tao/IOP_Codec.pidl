@@ -1,0 +1,69 @@
+// -*- IDL -*-
+
+/**
+ * @file IOP_Codec.pidl
+ *
+ * $Id$
+ *
+ * @brief Pre-compiled IDL source for the IOP module.
+ *
+ * This file is used to generate IOPC.{h,i,cpp}, using the following
+ * command:
+ *
+ *   tao_idl.exe
+ *        -o orig -Gp -Gd -Ge 1 -Gv
+ *        -Wb,export_macro=TAO_Export
+ *        -Wb,export_include=TAO_Export.h
+ *        -Wb,pre_include="ace/pre.h"
+ *        -Wb,post_include="ace/post.h"
+ *        IOP_Codec.pidl
+ *
+ * and then:
+ *
+ * cp orig/IOP_CodecC.{h,i,cpp} .
+ * patch < diffs/IOP_Codec.diff
+ *
+ * The code left in IOP_CodecC.{h,i,cpp} is ready for use.
+ *
+ */
+
+#ifndef TAO_IOP_CODEC_PIDL
+#define TAO_IOP_CODEC_PIDL
+
+#include <orb.idl>
+
+#pragma prefix "omg.org"
+
+module IOP
+{
+    local interface Codec {
+    exception InvalidTypeForEncoding {};
+    exception FormatMismatch {};
+    exception TypeMismatch {};
+
+    CORBA::OctetSeq encode (in any data) raises (InvalidTypeForEncoding);
+    any decode (in CORBA::OctetSeq data) raises (FormatMismatch);
+    CORBA::OctetSeq encode_value (in any data) raises (InvalidTypeForEncoding);
+    any decode_value (in CORBA::OctetSeq data, in CORBA::TypeCode tc)
+      raises (FormatMismatch, TypeMismatch);
+  };
+
+  typedef short EncodingFormat;
+  const EncodingFormat ENCODING_CDR_ENCAPS = 0;
+
+  struct Encoding {
+    EncodingFormat format;
+    octet major_version;
+    octet minor_version;
+  };
+
+  local interface CodecFactory {
+    exception UnknownEncoding {};
+
+    Codec create_codec (in Encoding enc) raises (UnknownEncoding);
+  };
+};
+
+#pragma prefix ""
+
+#endif  /* TAO_IOP_PIDL */
