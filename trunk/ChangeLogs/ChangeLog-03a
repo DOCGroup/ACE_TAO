@@ -1,3 +1,7 @@
+Fri Jan 25 00:37:00 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* We now have 1,400 contributors to the ACE+TAO software.  Yow!
+
 Thu Jan 24 17:49:46 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/CDR_Stream.i: Fixed the check for the length within 
