@@ -38,6 +38,20 @@ case $1 in
       REL="-e s;${TAO_ROOT:=$ACE_ROOT/TAO};\$(TAO_ROOT);g "$REL
       DO_ACE_MAKE_DEPEND=1
       shift ;;
+  # -R VARNAME allows you to specify a variable which should be used
+  #    to generate relative paths if it's defined.  You can use multiple
+  #    -R options, but be careful if one of the values is a proper
+  #    subset of a subsequent value, because I suspect that sed will
+  #    substitute for the first value properly, but not for the second.  You might
+  #    Be able to get around this by reordering and having the more specific
+  #    values lead the less specific values.
+  -R) varname=$2
+      eval "echo \$${varname}" >/tmp/$$.vv
+      varval=`eval cat /tmp/$$.vv`; rm /tmp/$$.vv
+      if [ -n "$varval" ]; then
+        REL="-e s;$varval;\$($varname);g "$REL
+      fi
+      shift; shift;;
   *) STOPNOW=1
 esac
 done
