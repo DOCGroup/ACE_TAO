@@ -1,18 +1,22 @@
+Fri Aug 14 13:47:00 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * src/new.cpp (delete): aded ACE_UNUSED_ARG (ptr).
+
 Fri Jul 31 18:28:45 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
-	* src/Bool_Array.cpp: 
-	* src/Gen_Perf.cpp: 
-	* src/Hash_Table.cpp: 
-	* src/Iterator.cpp: 
-	* src/Key_List.cpp: 
-	* src/List_Node.cpp: 
-	* src/Options.cpp: 
-	* src/Vectors.cpp: 
-	* src/Version.cpp: 
-	* src/gperf.cpp: 
-	* src/new.cpp: 
-	* tests/test.cpp: 
-	Added ACE_RCSID to these files.
+        * src/Bool_Array.cpp:
+        * src/Gen_Perf.cpp:
+        * src/Hash_Table.cpp:
+        * src/Iterator.cpp:
+        * src/Key_List.cpp:
+        * src/List_Node.cpp:
+        * src/Options.cpp:
+        * src/Vectors.cpp:
+        * src/Version.cpp:
+        * src/gperf.cpp:
+        * src/new.cpp:
+        * tests/test.cpp:
+        Added ACE_RCSID to these files.
 
 Tue Jul 21 09:30:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
