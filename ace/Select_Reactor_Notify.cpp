@@ -7,6 +7,7 @@ ACE_RCSID(ace,
           "$Id$")
 
 
+
 ACE_Select_Reactor_Notify::ACE_Select_Reactor_Notify (void)
   : max_notify_iterations_ (-1)
 {
