@@ -63,7 +63,10 @@ public:
   // Close down the ACE_FILE
 
   int get_info (ACE_FILE_Info *finfo);
-  // get informations on the ACE_FILE
+  // Get information on this <ACE_FILE>.
+
+  int get_info (ACE_FILE_Info &finfo);
+  // Get information on this <ACE_FILE>.
 
   int truncate (off_t length);
   // set filesize to length byte

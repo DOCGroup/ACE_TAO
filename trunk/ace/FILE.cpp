@@ -60,6 +60,14 @@ ACE_FILE::get_info (ACE_FILE_Info *finfo)
 }
 
 int
+ACE_FILE::get_info (ACE_FILE_Info &finfo)
+{
+  ACE_TRACE ("ACE_FILE::get_info");
+
+  return this->get_info (&finfo);
+}
+
+int
 ACE_FILE::truncate (off_t length)
 {
   ACE_TRACE ("ACE_FILE::truncate");

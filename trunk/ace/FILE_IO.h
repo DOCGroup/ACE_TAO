@@ -112,9 +112,7 @@ public:
   // Returns 0 if successful, else -1.
 
   int get_remote_addr (ACE_Addr &) const;
-  // Return the address of the remotely connected peer (if there is
-  // one), in the referenced ACE_Addr. Returns 0 if successful, else
-  // -1.
+  // Return the same thing as <get_local_addr>.
 
 private:
   ACE_FILE_Addr addr_;
