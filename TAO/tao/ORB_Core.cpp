@@ -318,22 +318,22 @@ TAO_ORB_Core::init (int& argc, char** argv)
 
   ACE_INET_Addr rendezvous;
 
-  // The conditional catches errors in hbuf.
-  if (ACE_OS::strlen (host) > 0)
+  // No host specified; find it
+  if (ACE_OS::strlen (host) == 0)
     {
-      if (rendezvous.set (port, (char*)host) == -1)
+      char buffer[MAXHOSTNAMELEN + 1];
+      if (rendezvous.get_host_name (buffer, sizeof (buffer)) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) TAO_ORB_Core::init failed to resolve host %s, %p.\n",
-                           (char*)host, "reason"), -1);
+                           "(%P|%t) TAO_ORB_Core::init failed to resolve local host %p.\n"), -1);
+      
+      host = CORBA::string_dup (buffer);
     }
-  else
-    {
-      if (rendezvous.set (port) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) TAO_ORB_Core::init failed to set rendesvous to port %d, %p.\n",
-                           (char*)host, "reason"), -1);
-    }
-
+  
+  if (rendezvous.set (port, (char *) host) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) TAO_ORB_Core::init failed to resolve host %s, %p.\n",
+                       (char*)host, "reason"), -1);
+  
 #if defined (SIGPIPE) && !defined (ACE_LACKS_UNIX_SIGNALS)
   // There's really no way to deal with this in a portable manner, so
   // we just have to suck it up and get preprocessor conditional and
@@ -431,7 +431,11 @@ TAO_ORB_Core::init (int& argc, char** argv)
   if (preconnections)
     this->preconnect (preconnections);
 
-  return 0;
+  // Port not specified: find one for the user
+  if (port == 0)
+    return this_orb->open ();
+  else
+    return 0;
 }
 
 int
