@@ -1,3 +1,15 @@
+Fri Sep 29 02:09:32 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/diffs/RTPortableServerC.h.diff: 
+	* tao/diffs/RTPortableServerC.cpp.diff: 
+
+	  Added diff files.
+
+	* tao/PortableServer/PortableServer.pidl: 
+	* tao/PortableServer/RTPortableServer.pidl: 
+
+	  Updated documentation.
+
 Fri Sep 29 01:41:05 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/PortableServer: New files were added to support the RT POA
