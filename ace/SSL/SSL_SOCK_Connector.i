@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-// SSL_SOCK__Connector.i
+// SSL_SOCK_Connector.i
 
 #if defined (ACE_HAS_SSL)
 
@@ -21,7 +21,7 @@ ASYS_INLINE int
 ACE_SSL_SOCK_Connector::reset_new_handle (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::reset_new_handle");
-  connector_.reset_new_handle (handle);
+  return this->connector_.reset_new_handle (handle);
 }
 
 ASYS_INLINE void
