@@ -1,3 +1,10 @@
+Wed Feb 23 07:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Special_Basic_SArguments.h:
+        * tao/PortableServer/UB_String_SArguments.h:
+          Removed trailing ; after namespace closure to fix warnings
+          on Tru64
+
 Tue Feb 22 21:58:24 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/PortableServer/BD_String_SArgument_T.cpp:
