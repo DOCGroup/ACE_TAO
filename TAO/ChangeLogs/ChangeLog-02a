@@ -1,3 +1,13 @@
+Wed Nov 15 10:46:24 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORBInitInfo.cpp:
+
+	  Added zero ORB core pointer checks.  If the ORB core has been
+	  set to set zero by CORBA::ORB_init(), then ORB initialization is
+	  complete, and throw a CORBA::OBJECT_NOT_EXIST exception as
+	  stipulated by the Portable Interceptor specification.  Thanks to
+	  Carlos for pointing out this check was missing.
+
 Wed Nov 15 09:56:21 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/ORB_Core.h:
@@ -14,7 +24,6 @@ Wed Nov 15 09:56:21 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Cleanup_Func_Registry.cpp:
           Fixed instantiation pragma
-
 
 Wed Nov 15 11:17:03 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 

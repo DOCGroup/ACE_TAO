@@ -26,6 +26,9 @@ CORBA::StringSeq *
 TAO_ORBInitInfo::arguments (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  this->check_validity (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
   // In accordance with the C++ mapping for sequences, it is up to the
   // caller to deallocate storage for returned sequences.
 
@@ -49,9 +52,12 @@ TAO_ORBInitInfo::arguments (CORBA::Environment &ACE_TRY_ENV)
 }
 
 char *
-TAO_ORBInitInfo::orb_id (CORBA::Environment &)
+TAO_ORBInitInfo::orb_id (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  this->check_validity (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
   // In accordance with the C++ mapping for strings, return a copy.
 
   return CORBA::string_dup (this->orb_core_->orbid ());
@@ -65,6 +71,9 @@ TAO_ORBInitInfo::register_initial_reference (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ORBInitInfo::InvalidName))
 {
+  this->check_validity (ACE_TRY_ENV);
+  ACE_CHECK;
+
   if (id == 0)
     ACE_THROW (PortableInterceptor::ORBInitInfo::InvalidName ());
   else if (ACE_OS_String::strlen (id) == 0)
@@ -80,6 +89,9 @@ TAO_ORBInitInfo::resolve_initial_references (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ORBInitInfo::InvalidName))
 {
+  this->check_validity (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
   /// This method is only valid during post_init(), i.e. only after
   /// TAO_ORB_Core::init() has been called.  The ORB Core starts out
   /// in the "shutdown" state, so checking if it is in that state
@@ -111,6 +123,9 @@ TAO_ORBInitInfo::add_client_request_interceptor (
                    PortableInterceptor::ORBInitInfo::DuplicateName))
 {
 # if TAO_HAS_INTERCEPTORS == 1
+  this->check_validity (ACE_TRY_ENV);
+  ACE_CHECK;
+
   this->orb_core_->add_interceptor (interceptor,
                                     ACE_TRY_ENV);
 #else
@@ -127,6 +142,9 @@ TAO_ORBInitInfo::add_server_request_interceptor (
                    PortableInterceptor::ORBInitInfo::DuplicateName))
 {
 # if TAO_HAS_INTERCEPTORS == 1
+  this->check_validity (ACE_TRY_ENV);
+  ACE_CHECK;
+
   this->orb_core_->add_interceptor (interceptor,
                                     ACE_TRY_ENV);
 
@@ -143,6 +161,9 @@ TAO_ORBInitInfo::add_ior_interceptor (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ORBInitInfo::DuplicateName))
 {
+  this->check_validity (ACE_TRY_ENV);
+  ACE_CHECK;
+
   this->orb_core_->add_interceptor (interceptor,
                                     ACE_TRY_ENV);
 }
@@ -151,6 +172,9 @@ PortableInterceptor::SlotId
 TAO_ORBInitInfo::allocate_slot_id (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  this->check_validity (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
                       CORBA_SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
@@ -166,6 +190,9 @@ TAO_ORBInitInfo::register_policy_factory (
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  this->check_validity (ACE_TRY_ENV);
+  ACE_CHECK;
+
   TAO_PolicyFactory_Registry *registry =
     this->orb_core_->policy_factory_registry ();
 
@@ -179,6 +206,9 @@ TAO_ORBInitInfo::allocate_tss_slot_id (ACE_CLEANUP_FUNC cleanup,
                                        CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  this->check_validity (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
   size_t slot_id = 0;
 
   int result = this->orb_core_->add_tss_cleanup_func (cleanup,
@@ -193,4 +223,20 @@ TAO_ORBInitInfo::allocate_tss_slot_id (ACE_CLEANUP_FUNC cleanup,
                       0);
 
   return slot_id;
+}
+
+void
+TAO_ORBInitInfo::check_validity (CORBA_Environment &ACE_TRY_ENV)
+{
+  if (this->orb_core_ == 0)
+    {
+      // As defined by the Portable Interceptor specification, throw a
+      // CORBA::OBJECT_NOT_EXIST exception after CORBA::ORB_init() has
+      // completed.  CORBA::ORB_init() sets the ORB core pointer in
+      // this instance to zero when it is done initializing the ORB,
+      // which is why we base "existence" on the validity of the ORB
+      // core pointer.
+      ACE_THROW (CORBA::OBJECT_NOT_EXIST (TAO_DEFAULT_MINOR_CODE,
+                                          CORBA::COMPLETED_NO));
+    }
 }
