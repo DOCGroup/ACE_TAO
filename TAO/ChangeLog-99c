@@ -1,3 +1,10 @@
+Wed Jun 16 13:47:54 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
+	* orbsvcs/orbsvcs/AV/sfp.cpp:
+	  Fixed the THROW_SPEC warnings on HP-UX. Thanks to Steve Huston for
+	  reporting these.
+
 Wed Jun 16 13:23:57 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* orbsvcs/Time_Service/IR_Helper.cpp: 
