@@ -1004,7 +1004,7 @@ TAO_GIOP::process_server_message (TAO_Transport *transport,
 
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) closing conn %d after C++ exception %p\n",
-                  trasnport.get_handle (),
+                  transport.get_handle (),
                   "TAO_GIOP::process_server_message"));
       return -1;
     }

@@ -21,6 +21,7 @@
 #ifndef TAO_GIOP_SERVER_REQUEST_H
 #define TAO_GIOP_SERVER_REQUEST_H
 
+#include "tao/corbafwd.h"
 #include "tao/Server_Request.h"
 #include "tao/Principal.h"
 
