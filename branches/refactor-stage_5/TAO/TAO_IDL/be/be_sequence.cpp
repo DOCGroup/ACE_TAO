@@ -27,9 +27,12 @@
 #include "be_field.h"
 #include "be_visitor.h"
 #include "be_helper.h"
+
 #include "utl_identifier.h"
 #include "idl_defines.h"
 #include "nr_extern.h"
+#include "global_extern.h"
+
 #include "ace/Log_Msg.h"
 
 ACE_RCSID (be, 
@@ -84,6 +87,44 @@ be_sequence::be_sequence (AST_Expression *v,
 {
   // Always the case.
   this->has_constructor (I_TRUE);
+
+  // This one gets set for all sequences, in addition to any specialized
+  // one that may get set below.
+  ACE_SET_BITS (idl_global->decls_seen_info_,
+                idl_global->decls_seen_masks.seq_seen_);
+
+  // Don't need the return value - just set the member.
+  (void) this->managed_type ();
+
+  switch (this->mt_)
+    {
+      case MNG_ABSTRACT:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.abs_iface_seq_seen_);
+        break;
+      case MNG_OBJREF:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.iface_seq_seen_);
+        break;
+      case MNG_PSEUDO:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.pseudo_seq_seen_);
+        break;
+      case MNG_VALUE:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.vt_seq_seen_);
+        break;
+      case MNG_STRING:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.string_seq_seen_);
+        break;
+      case MNG_WSTRING:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.wstring_seq_seen_);
+        break;
+      default:
+        break;
+    }
 }
 
 // Helper to create_name.

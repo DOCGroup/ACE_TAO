@@ -16,16 +16,18 @@ TAO::In_Object_Argument_T<S_ptr>::arg (void) const
 
 // ==========================================================================
 
-template<typename S_ptr>
+template<typename S_ptr, typename S_traits>
 ACE_INLINE
-TAO::Inout_Object_Argument_T<S_ptr>::Inout_Object_Argument_T (S_ptr & x)
+TAO::Inout_Object_Argument_T<S_ptr,S_traits>::Inout_Object_Argument_T (
+    S_ptr & x
+  )
   : x_ (x)
 {}
 
-template<typename S_ptr>
+template<typename S_ptr, typename S_traits>
 ACE_INLINE
 S_ptr &
-TAO::Inout_Object_Argument_T<S_ptr>::arg (void)
+TAO::Inout_Object_Argument_T<S_ptr,S_traits>::arg (void)
 {
   return this->x_;
 }

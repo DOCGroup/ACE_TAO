@@ -107,6 +107,12 @@ be_interface::be_interface (UTL_ScopedName *n,
           ACE_SET_BITS (idl_global->decls_seen_info_,
                         idl_global->decls_seen_masks.abstract_iface_seen_);
         }
+      else if (local)
+        {
+          // Set the flag for local interface seen in this IDL file.
+          ACE_SET_BITS (idl_global->decls_seen_info_,
+                        idl_global->decls_seen_masks.local_iface_seen_);
+        }
     }
 }
 

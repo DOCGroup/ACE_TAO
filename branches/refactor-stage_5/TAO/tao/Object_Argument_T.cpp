@@ -30,24 +30,24 @@ TAO::In_Object_Argument_T<S_ptr>::interceptor_param (Dynamic::Parameter & p)
 
 // ===========================================================
 
-template<typename S_ptr>
+template<typename S_ptr, typename S_traits>
 CORBA::Boolean
-TAO::Inout_Object_Argument_T<S_ptr>::marshal (TAO_OutputCDR & cdr)
+TAO::Inout_Object_Argument_T<S_ptr,S_traits>::marshal (TAO_OutputCDR & cdr)
 {
   return cdr << this->x_;
 }
 
-template<typename S_ptr>
+template<typename S_ptr, typename S_traits>
 CORBA::Boolean
-TAO::Inout_Object_Argument_T<S_ptr>::demarshal (TAO_InputCDR & cdr)
+TAO::Inout_Object_Argument_T<S_ptr,S_traits>::demarshal (TAO_InputCDR & cdr)
 {
-  CORBA::release (this->x_);
+  S_traits::tao_release (this->x_);
   return cdr >> this->x_;
 }
 
-template<typename S_ptr>
+template<typename S_ptr, typename S_traits>
 void
-TAO::Inout_Object_Argument_T<S_ptr>::interceptor_param (
+TAO::Inout_Object_Argument_T<S_ptr,S_traits>::interceptor_param (
     Dynamic::Parameter & p
   )
 {

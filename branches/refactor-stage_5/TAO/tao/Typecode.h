@@ -27,6 +27,7 @@
 #include "tao/orbconf.h"
 #include "tao/Exception.h"
 #include "tao/Pseudo_VarOut_T.h"
+#include "tao/Objref_VarOut_T.h"
 #include "tao/Object_Argument_T.h"
 #include "tao/Arg_Traits_T.h"
 #include "tao/OBV_Constants.h"
@@ -615,7 +616,8 @@ namespace TAO
   class TAO_Export Arg_Traits<CORBA::TypeCode>
     : public Object_Arg_Traits_T<CORBA::TypeCode_ptr,
                                  CORBA::TypeCode_var,
-                                 CORBA::TypeCode_out>
+                                 CORBA::TypeCode_out,
+                                 TAO::Objref_Traits<CORBA::TypeCode> >
   {
   };
 

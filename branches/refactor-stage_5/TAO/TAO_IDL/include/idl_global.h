@@ -274,7 +274,23 @@ public:
     ACE_UINT64 interface_seen_;
     ACE_UINT64 valuetype_seen_;
     ACE_UINT64 abstract_iface_seen_;
+    ACE_UINT64 local_iface_seen_;
+    ACE_UINT64 basic_type_seen_;
+    ACE_UINT64 ambiguous_type_seen_;
+    ACE_UINT64 enum_seen_;
+    ACE_UINT64 string_seen_;
+    ACE_UINT64 array_seen_;
+    ACE_UINT64 aggregate_seen_;
+
+    ACE_UINT64 seq_seen_;
     ACE_UINT64 iface_seq_seen_;
+    ACE_UINT64 abs_iface_seq_seen_;
+    ACE_UINT64 vt_seq_seen_;
+    ACE_UINT64 array_seq_seen_;
+    ACE_UINT64 pseudo_seq_seen_;
+    ACE_UINT64 string_seq_seen_;
+    ACE_UINT64 wstring_seq_seen_;
+
     ACE_UINT64 basic_arg_seen_;
     ACE_UINT64 bd_string_arg_seen_;
     ACE_UINT64 fixed_array_arg_seen_;

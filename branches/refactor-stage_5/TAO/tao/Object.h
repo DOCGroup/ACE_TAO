@@ -389,7 +389,8 @@ namespace TAO
   class TAO_Export Arg_Traits<CORBA::Object>
     : public Object_Arg_Traits_T<CORBA::Object_ptr, 
                                  CORBA::Object_var, 
-                                 CORBA::Object_out>
+                                 CORBA::Object_out,
+                                 TAO::Objref_Traits<CORBA::Object> >
   {
   };
 };

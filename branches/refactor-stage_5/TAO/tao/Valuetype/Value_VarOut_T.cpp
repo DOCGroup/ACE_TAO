@@ -23,6 +23,13 @@ TAO::Value_Traits<T>::tao_remove_ref (T * p)
   CORBA::remove_ref (p);
 }
 
+template<typename T>
+void
+TAO::Value_Traits<T>::tao_release (T * p)
+{
+  CORBA::remove_ref (p);
+}
+
 // ===============================================================
 
 template <typename T>

@@ -32,6 +32,10 @@ namespace TAO
   {
     static void tao_add_ref (T *);
     static void tao_remove_ref (T *);
+
+    // For INOUT value type arguments, so they can use the same set
+    // of arg classes as interfaces.
+    static void tao_release (T *);
   };
 };
 

@@ -1,3 +1,46 @@
+Wed Aug  6 21:44:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Object.h:
+        * tao/Object_Argument_T.cpp:
+        * tao/Object_Argument_T.h:
+        * tao/Object_Argument_T.inl:
+        * tao/Typecode.h:
+        * tao/corba.h:
+        * tao/Valuetype/Value_VarOut_T.cpp:
+        * tao/Valuetype/Value_VarOut_T.h:
+        * TAO_IDL/be/be_array.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_enum.cpp:
+        * TAO_IDL/be/be_exception.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_predefined_type.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_string.cpp:
+        * TAO_IDL/be/be_structure.cpp:
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_operation/exceptlist_cs.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          - Removed Any, _var and _out template header file includes
+            from corba.h and instead made them selectively generated based on
+            what is seen in the IDL file.
+
+          - Added the exception type code to the elements of ExceptionData
+            generated for operations that raise user-defined exceptions.
+
+          - Removed generated includes for interceptor-related files,
+            since interceptor code is now being factored into the ORB.
+
+          - Added 'tao_release' to TAO::Value_Traits<> and a traits
+            parameter to TAO::Objref_Arg_Traits, so the demarshal()
+            method for the INOUT arg class can call the common release
+            method, and so can be used for both value types and object
+            reference type arguments.
+
 Mon Aug  4 23:31:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
