@@ -3822,27 +3822,12 @@ TAO_POA::create_stub_object (const TAO_ObjectKey &object_key,
                         CORBA::COMPLETED_NO),
                       0);
 
-  //  Add the Polices contained in "policy_list" to each profile
-  //  so that those policies will be exposed to the client in the IOR.
-  //  In particular each CORBA::Policy has to be converted in to
-  //  Messaging::PolicyValue, and then all the Messaging::PolicyValue
-  //  should be embedded inside a Messaging::PolicyValueSeq which became
-  //  in turns the "body" of the IOP::TaggedComponent. This conversion
-  //  is a responsability of the CORBA::Profile class.
-  //  (See orbos\98-05-05.pdf Section 5.4)
-
-  if (policy_list->length () != 0)
-    {
-      TAO_Profile * profile;
-
-      for (CORBA::ULong i = 0; i < mprofile.profile_count (); ++i)
-        {
-          // Get the ith profile
-          profile = mprofile.get_profile (i);
-          profile->policies (policy_list ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
-        }
-    }
+  TAO_Stub *stub =
+    this->orb_core_.create_stub_object (mprofile,
+                                        type_id,
+                                        policy_list
+                                        ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
 
   /// TAO_IORInfo needs 'policy_list'. So, save it.
   this->set_policy_list (policy_list);
@@ -3855,7 +3840,7 @@ TAO_POA::create_stub_object (const TAO_ObjectKey &object_key,
     {
       this->tao_add_ior_component (this->tagged_component_[i]
                                    ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (0);
       }
 
   len = this->tagged_component_id_.length ();
@@ -3868,11 +3853,7 @@ TAO_POA::create_stub_object (const TAO_ObjectKey &object_key,
       ACE_CHECK_RETURN (0);
     }
 
-  return
-    this->orb_core_.create_stub_object (mprofile,
-                                        type_id,
-                                        policy_list
-                                        ACE_ENV_ARG_PARAMETER);
+  return stub;
 }
 
 CORBA::PolicyList *

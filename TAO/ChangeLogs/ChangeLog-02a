@@ -1,3 +1,10 @@
+Thu Feb 14 14:21:31 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/PortableServer/POA.cpp:
+	* tao/ORB_Core.cpp:
+	  Committing the files again. Somehow they didnt go to the repo
+	  yesterday.
+
 Thu Feb 14 16:16:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* COPYING: Updated copyright years.
