@@ -12,7 +12,7 @@ int
 ACE_LSOCK_Stream::get_remote_addr (ACE_Addr &a) const
 {
   ACE_TRACE ("ACE_LSOCK_Stream::get_remote_addr");
-  return this->get_local_addr (a);
+  return ACE_SOCK_Stream::get_remote_addr (a);
 }
 
 void
