@@ -11,7 +11,7 @@ ACE_RCSID(Synch_Benchmarks, synch_driver, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Service_Config::open (argc, argv);
   ACE_Service_Repository_Iterator sri (*ACE_Service_Repository::instance ());
@@ -43,7 +43,7 @@ main (int argc, char *argv[])
 }
 #else
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
 		     "This test requires the platform to have threads\n"), -1);
