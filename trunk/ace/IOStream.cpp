@@ -160,11 +160,19 @@ ACE_Streambuf::underflow (void)
           if (out_waiting () && syncout () == EOF)
             return EOF;
 
-          // We're about to disable put mode but before we do that, we
-          // wan't to preserve it's state.
-          this->pbase_saved_ = pbase ();
-          this->pptr_saved_  = pptr ();
-          this->epptr_saved_ = epptr ();
+          if( ! pbase() )
+            {
+              delete [] pbase_saved_;
+              (void) reset_put_buffer();
+            }
+          else
+            {
+              // We're about to disable put mode but before we do
+              // that, we want to preserve it's state.
+              this->pbase_saved_ = pbase ();
+              this->pptr_saved_  = pptr ();
+              this->epptr_saved_ = epptr ();
+            }
 
           // Disable put mode as described in the constructor.
           setp (0, 0);
@@ -247,10 +255,26 @@ ACE_Streambuf::overflow (int c)
       // If we're coming out of get mode...
       if (this->cur_mode_ == this->get_mode_)
         {
-          // Save the current get mode values
-          this->eback_saved_ = eback ();
-          this->gptr_saved_  = gptr ();
-          this->egptr_saved_ = egptr ();
+          // --> JCEJ 6/6/98
+          if (! eback())
+            {
+              /* Something has happened to cause the streambuf
+                 to get rid of our get area.
+                 We could probably do this a bit cleaner but
+                 this method is sure to cleanup the bits and
+                 pieces.
+              */
+              delete [] eback_saved_;
+              (void) reset_get_buffer();
+            }
+          else
+            {
+              // Save the current get mode values
+              this->eback_saved_ = eback ();
+              this->gptr_saved_  = gptr ();
+              this->egptr_saved_ = egptr ();
+            }
+          // <-- JCEJ 6/6/98
 
           // then disable the get buffer
           setg (0, 0, 0);
