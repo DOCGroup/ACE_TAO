@@ -20,6 +20,7 @@
 
 #include "ace/Time_Value.h"
 #include "ace/Service_Object.h"
+#include "ace/SString.h"
 
 #include /**/ "event_export.h"
 
