@@ -287,6 +287,9 @@ TAO_SSLIOP_Connection_Handler::add_transport_to_cache (void)
   ACE_INET_Addr addr;
 
   // Get the peername.
+  //
+  // Note that the port set in the ACE_INET_Addr is actually the SSL
+  // port!
   if (this->peer ().get_remote_addr (addr) == -1)
     return -1;
 
@@ -295,40 +298,68 @@ TAO_SSLIOP_Connection_Handler::add_transport_to_cache (void)
       addr,
       this->orb_core()->orb_params()->use_dotted_decimal_addresses());
 
-  TAO_SSLIOP_Endpoint endpoint (0,
+  // @@ This is broken.  We need to include the SecurityAssociation
+  //    options to be able to truly distinguish cached SSLIOP
+  //    transports.
+  SSLIOP::SSL ssl =
+    {
+      0,                        // target_supports
+      0,                        // target_requires
+      addr.get_port_number ()   // port
+    };
+
+  TAO_SSLIOP_Endpoint endpoint (&ssl,
                                 &tmpoint);
 
   // Construct a property object
   TAO_Base_Transport_Property prop (&endpoint);
 
   // Add the handler to Cache
-  return this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&prop,
-                                                                                  this->transport ());
+  return
+    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (
+      &prop,
+      this->transport ());
 }
 
 
 int
 TAO_SSLIOP_Connection_Handler::process_listen_point_list (
-    IIOP::ListenPointList &listen_list)
+  IIOP::ListenPointList &listen_list)
 {
   // Get the size of the list
   CORBA::ULong len = listen_list.length ();
 
-  for (CORBA::ULong i = 0; i < len; ++ i)
+  for (CORBA::ULong i = 0; i < len; ++i)
     {
       IIOP::ListenPoint listen_point = listen_list[i];
       ACE_INET_Addr addr (listen_point.port,
                           listen_point.host.in ());
 
 
-        // Construct an  IIOP_Endpoint object
+      // Construct an IIOP_Endpoint object.
+      //
+      // Note that the port in the ACE_INET_Addr is actually the SSL
+      // port!
       TAO_IIOP_Endpoint tmpoint (addr,
         this->orb_core()->orb_params()->use_dotted_decimal_addresses());
 
-      // Construct an  IIOP_Endpoint object
-      TAO_SSLIOP_Endpoint endpoint (0,
-                                    &tmpoint);
+      // @@ This is broken.  We need to include the
+      //    SecurityAssociation options so that the invocation to the
+      //    originator is attempted with the appropriate security
+      //    settings.  Unfortunately, there is currently no portable
+      //    way to send the SecurityAssociation options with the
+      //    IIOP::ListenPointList.  Presumably the new Firewall
+      //    specification will address this deficiency.
+      SSLIOP::SSL ssl =
+        {
+          0,                        // target_supports
+          0,                        // target_requires
+          addr.get_port_number ()   // port
+        };
 
+      // Construct an SSLIOP_Endpoint
+      TAO_SSLIOP_Endpoint endpoint (&ssl,
+                                    &tmpoint);
 
       // Construct a property object
       TAO_Base_Transport_Property prop (&endpoint);
@@ -351,13 +382,13 @@ TAO_SSLIOP_Connection_Handler::process_listen_point_list (
 
 
 int
-TAO_SSLIOP_Connection_Handler::handle_input (ACE_HANDLE)
+TAO_SSLIOP_Connection_Handler::handle_input (ACE_HANDLE handle)
 {
     // Increase the reference count on the upcall that have passed us.
   this->incr_pending_upcalls ();
 
-  TAO_Resume_Handle  resume_handle (this->orb_core (),
-                                    this->get_handle ());
+  TAO_Resume_Handle resume_handle (this->orb_core (),
+                                   handle);
 
   int retval = this->transport ()->handle_input_i (resume_handle);
 
