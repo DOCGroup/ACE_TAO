@@ -1,3 +1,40 @@
+Wed Sep 20 16:04:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ be_include/be.h:
+	* TAO_IDL/be_include/be_argument.h:
+	* TAO_IDL/be_include/be_array.h:
+	* TAO_IDL/be_include/be_attribute.h:
+	* TAO_IDL/be_include/be_codegen.h:
+	* TAO_IDL/be_include/be_constant.h:
+	* TAO_IDL/be_include/be_decl.h:
+	* TAO_IDL/be_include/be_enum.h:
+	* TAO_IDL/be_include/be_enum_val.h:
+	* TAO_IDL/be_include/be_exception.h:
+	* TAO_IDL/be_include/be_expression.h:
+	* TAO_IDL/be_include/be_field.h:
+	* TAO_IDL/be_include/be_generator.h:
+	* TAO_IDL/be_include/be_interface.h:
+	* TAO_IDL/be_include/be_interface_fwd.h:
+	* TAO_IDL/be_include/be_module.h:
+	* TAO_IDL/be_include/be_native.h:
+	* TAO_IDL/be_include/be_operation.h:
+	* TAO_IDL/be_include/be_predefined_type.h:
+	* TAO_IDL/be_include/be_root.h:
+	* TAO_IDL/be_include/be_scope.h:
+	* TAO_IDL/be_include/be_sequence.h:
+	* TAO_IDL/be_include/be_string.h:
+	* TAO_IDL/be_include/be_structure.h:
+	* TAO_IDL/be_include/be_type.h:
+	* TAO_IDL/be_include/be_typedef.h:
+	* TAO_IDL/be_include/be_union.h:
+	* TAO_IDL/be_include/be_union_branch.h:
+	* TAO_IDL/be_include/be_union_label.h:
+	* TAO_IDL/be_include/be_valuetype.h:
+	* TAO_IDL/be_include/be_valuetype_fwd.h:
+
+	  Cosmetic changes to make these files conform to the
+	  ACE style guidelines.
+
 Wed Sep 20 15:17:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
