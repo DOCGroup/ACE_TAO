@@ -91,19 +91,18 @@ ACE_INET_Addr::operator == (const ACE_INET_Addr &sap) const
 }
 
 ACE_INET_Addr::ACE_INET_Addr (void)
-  : ACE_Addr (AF_ANY, sizeof (inet_addr_))
+  : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
 {
   // ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
+  this->set ((u_short)0,
+             ACE_UINT32 (INADDR_ANY));
 }
 
 int
 ACE_INET_Addr::set (const ACE_INET_Addr &sa)
 {
   ACE_TRACE ("ACE_INET_Addr::set");
-
-  this->ACE_Addr::base_set (sa.get_type (),
-                            sa.get_size ());
 
   if (sa.get_type () == AF_ANY)
     // Ugh, this is really a base class, so don't copy it.
@@ -174,7 +173,7 @@ ACE_INET_Addr::set (const char address[])
 }
 
 ACE_INET_Addr::ACE_INET_Addr (const char address[])
-  : ACE_Addr (AF_ANY, 0)
+  : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->set (address);
@@ -182,7 +181,7 @@ ACE_INET_Addr::ACE_INET_Addr (const char address[])
 
 #if defined (ACE_HAS_WCHAR)
 ACE_INET_Addr::ACE_INET_Addr (const wchar_t address[])
-  : ACE_Addr (AF_ANY, 0)
+  : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->set (address);
@@ -254,7 +253,6 @@ ACE_INET_Addr::set (u_short port_number,
     {
       if (res->ai_family == AF_INET || res->ai_family == AF_INET6)
         {
-          this->set_type (res->ai_family);
           this->set_addr (res->ai_addr, res->ai_addrlen);
           this->set_port_number (port_number, encode);
           ret = 0;
@@ -267,7 +265,6 @@ ACE_INET_Addr::set (u_short port_number,
 #else /* ACE_HAS_IPV6 */
 
   ACE_UNUSED_ARG (address_family);
-  this->base_set (AF_INET, this->get_addr_size());
 
   ACE_UINT32 addrv4;
   if (ACE_OS::inet_aton (host_name,
@@ -380,6 +377,7 @@ ACE_INET_Addr::set (const char port_name[],
 ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
                               const char host_name[],
                               int address_family)
+  : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_number,
@@ -404,6 +402,7 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
 ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
                               const wchar_t host_name[],
                               int address_family)
+  : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_number,
@@ -432,7 +431,7 @@ int
 ACE_INET_Addr::set (const sockaddr_in *addr, int len)
 {
   ACE_TRACE ("ACE_INET_Addr::set");
-  this->ACE_Addr::base_set (addr->sin_family, len);
+  ACE_UNUSED_ARG (len);
 
   this->set_address((char*)&addr->sin_addr,
                     sizeof addr->sin_addr,
@@ -451,14 +450,26 @@ ACE_INET_Addr::set_addr (void *addr, int len)
 
   struct sockaddr_in *getfamily = ACE_static_cast (struct sockaddr_in*, addr);
 
-  this->ACE_Addr::base_set (getfamily->sin_family, len);
-  ACE_OS::memcpy (&this->inet_addr_, addr, len);
+  if(getfamily->sin_family == AF_INET)
+    {
+      this->set_port_number(getfamily->sin_port,0);
+      this->set_address((char*)&getfamily->sin_addr,sizeof(getfamily->sin_addr),0);
+    }
+#if defined ACE_HAS_IPV6
+  else if(getfamily->sin_family == AF_INET6)
+    {
+      struct sockaddr_in6 *in6 = ACE_static_cast (struct sockaddr_in6*, addr);
+      this->set_port_number(in6->sin6_port,0);
+      this->set_address((char*)&in6->sin6_addr,sizeof(in6->sin6_addr),0);
+    }
+#endif // ACE_HAS_IPV6
 }
 
 // Creates a ACE_INET_Addr from a sockaddr_in structure.
 
 
 ACE_INET_Addr::ACE_INET_Addr (const sockaddr_in *addr, int len)
+  : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->set (addr, len);
@@ -469,10 +480,10 @@ ACE_INET_Addr::ACE_INET_Addr (const sockaddr_in *addr, int len)
 
 ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
                               ACE_UINT32 inet_address)
+  : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
-  this->base_set (AF_INET, sizeof (this->inet_addr_.in4_));
   if (this->set (port_number, inet_address) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
@@ -485,6 +496,7 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
 ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
                               const char host_name[],
                               const char protocol[])
+  : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_name,
@@ -498,6 +510,7 @@ ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
 ACE_INET_Addr::ACE_INET_Addr (const wchar_t port_name[],
                               const wchar_t host_name[],
                               const wchar_t protocol[])
+  : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_name,
@@ -514,6 +527,7 @@ ACE_INET_Addr::ACE_INET_Addr (const wchar_t port_name[],
 ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
                               ACE_UINT32 inet_address,
                               const char protocol[])
+  : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_name,
@@ -527,6 +541,7 @@ ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
 ACE_INET_Addr::ACE_INET_Addr (const wchar_t port_name[],
                               ACE_UINT32 inet_address,
                               const wchar_t protocol[])
+  : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_name,
@@ -554,8 +569,9 @@ ACE_INET_Addr::get_host_name (char hostname[],
   if (this->inet_addr_.in4_.sin_addr.s_addr == INADDR_ANY)
 #endif
     {
-      if (ACE_OS::hostname (hostname, len) == -1)
+      if (ACE_OS::hostname (hostname, len) == -1) {
         return -1;
+      }
       else
         return 0;
     }
@@ -676,17 +692,7 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
                                 int len,
                                 int encode /* = 1 */)
 {
-  ACE_TRACE ("ACE_INET_Addr::set");
-
-#if defined (ACE_HAS_IPV6)
-  if (len != 16 && len != 4)
-#else
-  if (len != 4)
-#endif /* ACE_HAS_IPV6 */
-    {
-      errno = EAFNOSUPPORT;
-      return -1;
-    }
+  ACE_TRACE ("ACE_INET_Addr::set_address");
 
   // This is really intended for IPv4. If the object is IPv4, or the type
   // hasn't been set but it's a 4-byte address, go ahead. If this is an
@@ -703,23 +709,21 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
       if (encode)
         ip4 = ACE_HTONL (ip4);
 
-      if (this->get_type () == AF_ANY)     // Not set yet - choose IPv4
-        {
-          this->base_set (AF_INET, sizeof (this->inet_addr_.in4_));
-          this->inet_addr_.in4_.sin_family = AF_INET;
-        }
 
-      if (this->get_type () == AF_INET)
+      if (this->get_type () == AF_INET) {
+        this->base_set (AF_INET, sizeof (this->inet_addr_.in4_));
+        this->inet_addr_.in4_.sin_family = AF_INET;
+        this->set_size (sizeof (this->inet_addr_.in4_));
         ACE_OS_String::memcpy (this->ip_addr_pointer (),
                                &ip4,
                                len);
+      }
 #if defined (ACE_HAS_IPV6)
       // If given an IPv4 address to copy to an IPv6 object, map it to
       // an IPv4-mapped IPv6 address.
       else
         {
-          // Make sure to set the family in case the user just did a
-          // set_type to get here.
+          this->base_set (AF_INET6, sizeof (this->inet_addr_.in6_));
           this->inet_addr_.in6_.sin6_family = AF_INET6;
           this->set_size (sizeof (this->inet_addr_.in6_));
           if (ip4 == INADDR_ANY)
@@ -760,18 +764,28 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
 
       return 0;
     }   /* end if (len == 4) */
-
 #if defined (ACE_HAS_IPV6)
-  // Here if an IPv6 address is passed and it does not need to be
-  // encoded.
-  if (this->get_type () == AF_ANY)     // Not set yet - choose IPv6
+  else if(len == 16)
     {
+      if (this->get_type() != PF_INET6)
+        {
+          errno = EAFNOSUPPORT;
+          return -1;
+        }
+      // We protect ourselves up above so IPv6 must be possible here.
       this->base_set (AF_INET6, sizeof (this->inet_addr_.in6_));
       this->inet_addr_.in6_.sin6_family = AF_INET6;
+      ACE_OS_String::memcpy (this->ip_addr_pointer (), ip_addr, len);
+
+      return 0;
+    } /* end len == 16 */
+  else
+    {
+      /* unknown or unsupported address length */
+      errno = EAFNOSUPPORT;
+      return -1;
     }
 
-  ACE_OS_String::memcpy (this->ip_addr_pointer (), ip_addr, len);
-  return 0;
 #endif /* ACE_HAS_IPV6 */
 
 }

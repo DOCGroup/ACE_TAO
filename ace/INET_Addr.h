@@ -298,6 +298,7 @@ private:
   // the underlying internet address structure.
   void *ip_addr_pointer(void) const;
   size_t ip_addr_size(void) const;
+  int determine_type(void) const;
 
   /// Underlying representation.
   /// This union uses the knowledge that the two structures share the

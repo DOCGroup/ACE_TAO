@@ -9,6 +9,17 @@ ACE_INET_Addr::~ACE_INET_Addr (void)
 {
 }
 
+ACE_INLINE int
+ACE_INET_Addr::determine_type(void) const
+{
+#if defined (ACE_HAS_IPV6)
+  if(ACE_Sock_Connect::ipv6_enabled())
+    return AF_INET6;
+  else
+#endif
+    return AF_INET;
+}
+
 ACE_INLINE void *
 ACE_INET_Addr::ip_addr_pointer(void) const
 {
@@ -26,7 +37,7 @@ ACE_INLINE size_t
 ACE_INET_Addr::ip_addr_size(void) const
 {
 #if defined (ACE_HAS_IPV6)
-  if (this->inet_addr_.in4_.sin_family == PF_INET)
+  if (this->get_type () == PF_INET)
     return sizeof this->inet_addr_.in4_.sin_addr;
   else
     return sizeof this->inet_addr_.in6_.sin6_addr;
@@ -65,7 +76,7 @@ ACE_INET_Addr::get_addr_size (void) const
 {
   ACE_TRACE ("ACE_INET_Addr::get_addr_size");
 #if defined (ACE_HAS_IPV6)
-  if (this->inet_addr_.in4_.sin_family == PF_INET)
+  if (this->get_type () == PF_INET)
     return sizeof this->inet_addr_.in4_;
   else
     return sizeof this->inet_addr_.in6_;
@@ -79,7 +90,7 @@ ACE_INLINE u_long
 ACE_INET_Addr::hash (void) const
 {
 #if defined (ACE_HAS_IPV6)
-  if (this->inet_addr_.in6_.sin6_family == PF_INET6)
+  if (this->get_type () == PF_INET6)
     {
       const unsigned int *addr = (const unsigned int*)this->ip_addr_pointer();
       return addr[0] + addr[1] + addr[2] + addr[3] + this->get_port_number();
