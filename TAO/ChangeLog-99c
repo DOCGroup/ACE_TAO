@@ -1,3 +1,13 @@
+Wed Jun 16 18:48:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp:
+	  Removed bogus template instantiations.
+
+	* tao/UIOP_Connector.cpp:
+	* tao/IIOP_Connector.cpp:
+	  Removed duplicate template instantiations when compiling in
+	  single threaded environments.
+
 Wed Jun 16 18:26:06 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* examples/Simple/chat/Broadcaster_i.h:
