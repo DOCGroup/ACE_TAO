@@ -38,7 +38,7 @@ namespace CIAO
    * This class implements the CIAO:Daemon interface.  We use this interface
    * to acquire the
    */
-  class CIAO_SERVER_Export Daemon_Impl
+  class Daemon_Impl
     : public virtual POA_CIAO::Daemon,
       public virtual PortableServer::RefCountServantBase
   {

@@ -49,9 +49,9 @@ project (CIAO_Container) : taolib_with_idl {
 }
 
 project (CIAO_Server) :taolib_with_idl {
-  depends += CIAO_Container CosNaming
+  depends += CIAO_Container
   sharedname  = CIAO_Server
-  libs       += TAO TAO_PortableServer TAO_IFR_Client TAO_Security TAO_CosNaming
+  libs       += TAO TAO_PortableServer TAO_IFR_Client TAO_Security
   idlflags  += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs/orbsvcs -Wb,export_include=CIAO_Server_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h"
 
   dllflags    = CIAO_SERVER_BUILD_DLL
@@ -60,8 +60,7 @@ project (CIAO_Server) :taolib_with_idl {
   IDL_Files {
     CCM_Deployment.idl
     CIAO_Servers.idl
-    Daemon.idl
-    HomeRegistrar.idl
+//    HomeRegistrar.idl
   }
 
   Source_Files {
@@ -69,16 +68,13 @@ project (CIAO_Server) :taolib_with_idl {
     CCM_DeploymentS.cpp
     CIAO_ServersC.cpp
     CIAO_ServersS.cpp
-    DaemonC.cpp
-    DaemonS.cpp
-    HomeRegistrarC.cpp
-    HomeRegistrarS.cpp
+//    HomeRegistrarC.cpp
+//    HomeRegistrarS.cpp
     ComponentInstallation_Impl.cpp
     ComponentServer_Impl.cpp
     Container_Base.cpp
     Container_Impl.cpp
-    Daemon_Impl.cpp
-    HomeRegistrar_i.cpp
+//    HomeRegistrar_i.cpp
     Server_init.cpp
     ServerActivator_Impl.cpp
   }

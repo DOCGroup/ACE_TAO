@@ -95,6 +95,10 @@ SOURCE=.\Daemon_Commands.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\DaemonC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\DaemonController.cpp
 # End Source File
 # Begin Source File
@@ -167,6 +171,10 @@ SOURCE=.\Daemon_Commands.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\DaemonC.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Softpkg_Commands.inl
 # End Source File
 # Begin Source File
@@ -176,6 +184,77 @@ SOURCE=..\XML_Helpers\Softpkg_Handlers.inl
 # Begin Source File
 
 SOURCE=..\XML_Helpers\XML_Utils.inl
+# End Source File
+# End Group
+# Begin Group "IDL FIles"
+
+# PROP Default_Filter "idl"
+# Begin Source File
+
+SOURCE=.\Daemon.idl
+
+!IF  "$(CFG)" == "DaemonController EXE - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+OutDir=.\Release
+InputPath=.\Daemon.idl
+InputName=Daemon
+
+BuildCmds= \
+	..\..\..\..\bin\tao_idl -o $(OutDir) -I..\..\.. -I..\..\..\CIAO\ciao -Wb,pre_include="ace\pre.h" -Wb,post_include="ace\post.h" -I ..\.. -I ..\..\.. -I ..\..\..\orbsvcs\orbsvcs -Ge 1 -Sc $(InputPath)
+
+"$(OutDir)\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(OutDir)\$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(OutDir)\$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(OutDir)\$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(OutDir)\$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(OutDir)\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "DaemonController EXE - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+OutDir=.
+InputPath=.\Daemon.idl
+InputName=Daemon
+
+BuildCmds= \
+	..\..\..\..\bin\tao_idl -o $(OutDir) -I..\..\.. -I..\..\..\CIAO\ciao -Wb,pre_include="ace\pre.h" -Wb,post_include="ace\post.h" -I ..\.. -I ..\..\.. -I ..\..\..\orbsvcs\orbsvcs -Ge 1 -Sc $(InputPath)
+
+"$(OutDir)\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(OutDir)\$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(OutDir)\$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(OutDir)\$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(OutDir)\$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(OutDir)\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
 # End Source File
 # End Group
 # End Target
