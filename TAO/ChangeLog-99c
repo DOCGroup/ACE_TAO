@@ -1,9 +1,31 @@
+Thu Oct  7 04:31:44 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Interpreter.{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Interpreter_Utils.{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Interpreter_Utils_T.{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Trader_Constraint_Visitors.{h,cpp}:
+	  Added these new files to the Trader to decouple the TCL
+	  interpreter from the rest of the Trader.
+	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.h:
+	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Trader.{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader_T.{h,cpp}:
+	  Minor surgery to these files to accomodate the changes from
+	  the decoupling.
+
+	To use the TCL in any other service, the set of files that you
+	need are : Interpreter.cpp, Constraint_Visitors.cpp,
+	Constraint_Nodes.cpp, Constraint_l.cpp, Constraint_y.cpp,
+	Interpreter_Utils_T.cpp and Interpreter_Utils.cpp
+
 Thu Oct  7 01:23:01 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* examples/Quoter/Makefile:
 	  Updated dependencies.  This file was missed during:
 	  Mon Oct  4 17:08:03 1999  Marina Spivak  <marina@cs.wustl.edu>
-	
+
 Wed Oct  6 10:33:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tao/MessagingC.h,
@@ -25,7 +47,7 @@ Wed Oct  6 07:00:25 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
 Wed Oct  6 06:40:23 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* tests/AMI/ami_test_i.cpp: Fixed the way we throw the 
+	* tests/AMI/ami_test_i.cpp: Fixed the way we throw the
 	  exception in method  foo ().
 
 Tue Oct  5 18:41:23 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
