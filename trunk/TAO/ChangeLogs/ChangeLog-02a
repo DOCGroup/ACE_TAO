@@ -1,26 +1,35 @@
+Tue Mar 27 08:15:34 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+          Fixed minor syntax error, i.e. removed extra right paren.
+
+        * tao/Protocols_Hooks.h:
+          Add missing #include for minimum CORBA builds.
+
 Tue Mar 27 05:36:10 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* tao/Wait_On_Leader_Follower.cpp (connection_closed): No need for
-	  ACE_NESTED_CLASS.
+        * tao/Wait_On_Leader_Follower.cpp (connection_closed): No need for
+          ACE_NESTED_CLASS.
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (destroy): Must check for a
-	  non-zero protocol object before destroying it.  We must also
-	  destroy the protocol objects in the reverse flowspec set.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp (destroy): Must check for a
+          non-zero protocol object before destroying it.  We must also
+          destroy the protocol objects in the reverse flowspec set.
 
-	* orbsvcs/tests/AVStreams:
+        * orbsvcs/tests/AVStreams:
 
-	  - Rename Use_Case to Component_Switching.
+          - Rename Use_Case to Component_Switching.
 
-	  - Rename Simple to Simple_Two_Stage.	  
+          - Rename Simple to Simple_Two_Stage.
 
-	  - Revamped the following tests:
-	    
-	    - Simple_Two_Stage
-	    - Simple_Three_Stage
-	    - Asynch_Three_Stage 
-	    - Component_Switching
+          - Revamped the following tests:
 
-	* $ACE_ROOT/bin/auto_run_tests.lst: Added new AV tests.
+            - Simple_Two_Stage
+            - Simple_Three_Stage
+            - Asynch_Three_Stage
+            - Component_Switching
+
+        * $ACE_ROOT/bin/auto_run_tests.lst: Added new AV tests.
 
 Tue Mar 27 09:02:03 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
