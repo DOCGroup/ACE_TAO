@@ -1,3 +1,8 @@
+Mon Dec 20 17:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          Added missing : between tests and LynxOS
+
 Mon Dec 20 08:33:28 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
