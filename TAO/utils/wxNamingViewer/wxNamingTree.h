@@ -35,9 +35,10 @@ private:
   enum {
     listQuantum = 40,
   };
-  void clearChildren( wxTreeItemId& item = wxTreeItemId( 0));
-  WxNamingObject* getTreeObject(
-      wxTreeItemId& item = wxTreeItemId( 0)) const;
+  void clearChildren (void);
+  void clearChildren (wxTreeItemId& item);
+  WxNamingObject* getTreeObject(void) const;
+  WxNamingObject* getTreeObject(wxTreeItemId& item) const;
   void listBindingList(
       wxTreeItemId& item,
       CosNaming::NamingContext_ptr context,
