@@ -1,12 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-template<class TQ> ACE_INLINE TQ &
-ACE_Thread_Timer_Queue_Adapter<TQ>::timer_queue (void)
-{
-  return *(this->timer_queue_);
-}
-
 template<class TQ> ACE_INLINE TQ *
 ACE_Thread_Timer_Queue_Adapter<TQ>::timer_queue (void) const
 {
