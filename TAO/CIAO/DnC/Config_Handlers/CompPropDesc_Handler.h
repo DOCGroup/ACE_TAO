@@ -48,7 +48,7 @@ namespace CIAO
   namespace Config_Handler
   {
 
-    class CompPropDesc_Handler
+    class Config_Handler_Export CompPropDesc_Handler
     {
     public:
 

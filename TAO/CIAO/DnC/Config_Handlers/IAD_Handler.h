@@ -59,7 +59,7 @@ using xercesc::DOMNamedNodeMap;
 
 BEGIN_DEPLOYMENT_NAMESPACE
 
-class IAD_Handler: public Basic_Handler
+class Config_Handler_Export IAD_Handler: public Basic_Handler
 {
 public:
 

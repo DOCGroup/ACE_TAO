@@ -46,7 +46,7 @@ using xercesc::DOMNodeFilter;
 
 BEGIN_DEPLOYMENT_NAMESPACE
 
-class NIA_Handler: public Basic_Handler
+class Config_Handler_Export NIA_Handler: public Basic_Handler
 {
 public:
 
