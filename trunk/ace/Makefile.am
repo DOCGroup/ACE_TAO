@@ -770,7 +770,6 @@ pkginclude_HEADERS = \
         Timer_List.h \
         Timer_List_T.h \
         Timer_Queue.h \
-        Timer_Queue.i \
         Timer_Queue_Adapters.h \
         Timer_Queue_Adapters.i \
         Timer_Queue_T.h \
