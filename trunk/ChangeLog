@@ -1,3 +1,11 @@
+Sun Jan 30 13:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/ASX/CCM_App/CCM_App.cpp:
+          Fixed warning in unicode build
+
+        * ace/Service_Object.h:
+          Doxygen fixes
+
 Sun Jan 30 13:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/Logging/Wrap_Macros.cpp:

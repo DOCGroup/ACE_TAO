@@ -117,7 +117,7 @@ Process_Per_Connection_Logging_Server::handle_data (ACE_SOCK_Stream *client)
 int
 Process_Per_Connection_Logging_Server::run (int argc, char *argv[])
 {
-  strncpy (prog_name_, argv[0], MAXPATHLEN);
+  ACE_OS::strncpy (prog_name_, argv[0], MAXPATHLEN);
   prog_name_[MAXPATHLEN] = '\0'; // Ensure NUL-termination.
   // If there are 2 command line arguments after prog_name_, this
   // is a spawned worker process. Else run as the master.
