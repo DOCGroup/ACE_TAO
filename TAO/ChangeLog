@@ -1,3 +1,9 @@
+Thu Sep  9 19:13:30 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/examples/Log/Event/Log_Event.mpc:
+
+	  Changed projects to inherit from naming.
+
 Thu Sep  9 19:09:39 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/examples/CosEC/TypedSimple/CosEC_TypedSimple.mpc:
