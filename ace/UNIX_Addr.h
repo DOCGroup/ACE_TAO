@@ -65,10 +65,18 @@ public:
   virtual void set_addr (void *addr, int len);
 
   /// Transform the current address into string format.
-  virtual int addr_to_string (char addr[], size_t) const;
+  virtual int addr_to_string (ACE_TCHAR addr[], size_t) const;
 
   /// Transform the string into the current addressing format.
   virtual int string_to_addr (const char addr[]);
+
+#if defined (ACE_HAS_WCHAR)
+  /// Creates an ACE_UNIX_Addr from a string.
+  ACE_UNIX_Addr (const wchar_t rendezvous_point[]);
+
+  /// Creates an ACE_UNIX_Addr from a string.
+  int set (const wchar_t rendezvous_point[]);
+#endif /* ACE_HAS_WCHAR */
 
   /// Compare two addresses for equality.
   bool operator == (const ACE_UNIX_Addr &SAP) const;

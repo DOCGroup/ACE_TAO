@@ -1,4 +1,5 @@
 // $Id$
+// server_loggerd.cpp,v 4.29 2003/12/30 23:18:59 shuston Exp
 
 // This server daemon collects, formats, and displays logging
 // information forwarded from client daemons running on other hosts in
@@ -37,11 +38,11 @@ Options::port (void)
 // Parse the command-line options.
 
 void
-Options::parse_args (int argc, char *argv[])
+Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   this->port_ = ACE_DEFAULT_SERVER_PORT;
 
-  ACE_Get_Opt get_opt (argc, argv, "p:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:"));
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)
@@ -89,7 +90,8 @@ Logging_Handler::handle_timeout (const ACE_Time_Value &,
 #endif /* ACE_NDEBUG */
 
   ACE_ASSERT (arg == this);
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) handling timeout from this = %u\n", this));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%P|%t) handling timeout from this = %@\n"), this));
   return 0;
 }
 
@@ -110,12 +112,12 @@ Logging_Handler::handle_input (ACE_HANDLE)
   switch (n)
     {
     case -1:
-      ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p at host %s\n",
-                         "client logger", this->peer_name_), -1);
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p at host %C\n"),
+                         ACE_TEXT ("client logger"), this->peer_name_), -1);
       /* NOTREACHED */
     case 0:
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%P|%t) closing log daemon at host %s (fd = %d)\n",
+                         ACE_TEXT ("(%P|%t) closing log daemon at host %C (fd = %d)\n"),
                          this->peer_name_, this->get_handle ()), -1);
       /* NOTREACHED */
     case sizeof (size_t):
@@ -126,25 +128,26 @@ Logging_Handler::handle_input (ACE_HANDLE)
         n = this->peer ().recv_n ((void *) &lp, len);
 
         if (n != len)
-          ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p at host %s\n",
-                             "client logger", this->peer_name_), -1);
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p at host %C\n"),
+                             ACE_TEXT ("client logger"), this->peer_name_),-1);
         /* NOTREACHED */
 
         lp.decode ();
 
         if (lp.length () == n)
           {
-            ACE_DEBUG ((LM_DEBUG, "(%P|%t) "));
-            lp.print (this->peer_name_, 1, cerr);
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ")));
+            lp.print (ACE_TEXT_CHAR_TO_TCHAR (this->peer_name_), 1, cerr);
           }
         else
-          ACE_ERROR ((LM_ERROR, "(%P|%t) error, lp.length = %d, n = %d\n",
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) error, lp.length = %d, n = %d\n"),
                       lp.length (), n));
         break;
       }
     default:
-      ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p at host %s\n",
-                         "client logger", this->peer_name_), -1);
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p at host %C\n"),
+                         ACE_TEXT ("client logger"), this->peer_name_), -1);
       /* NOTREACHED */
     }
 
@@ -166,23 +169,26 @@ Logging_Handler::open (void *)
 
       if (REACTOR::instance ()->register_handler (this, READ_MASK) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) can't register with reactor\n"), -1);
+                           ACE_TEXT ("(%P|%t) can't register with reactor\n")),
+                          -1);
       else if (REACTOR::instance ()->schedule_timer
                (this,
                 (const void *) this,
                 ACE_Time_Value (2),
                 ACE_Time_Value (2)) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "can'(%P|%t) t register with reactor\n"), -1);
+                           ACE_TEXT ("(%P|%t) can't register with reactor\n")),
+                          -1);
       else
         ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) connected with %s\n", this->peer_name_));
+                    ACE_TEXT ("(%P|%t) connected with %C\n"),
+                    this->peer_name_));
       return 0;
     }
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Acceptor factory.
   Logging_Acceptor peer_acceptor;
@@ -195,7 +201,7 @@ main (int argc, char *argv[])
   if (peer_acceptor.open
       (ACE_INET_Addr (OPTIONS::instance ()->port ()),
        REACTOR::instance ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
 
   // Register QUIT_HANDLER to receive SIGINT commands.  When received,
   // QUIT_HANDLER becomes "set" and thus, the event loop below will
@@ -203,19 +209,20 @@ main (int argc, char *argv[])
   else if (REACTOR::instance ()->register_handler
            (SIGINT, QUIT_HANDLER::instance ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "registering service with ACE_Reactor\n"), -1);
+                       ACE_TEXT ("registering service with ACE_Reactor\n")),
+                      -1);
 
   // Run forever, performing logging service.
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) starting up server logging daemon\n"));
+              ACE_TEXT ("(%P|%t) starting up server logging daemon\n")));
 
   // Perform logging service until QUIT_HANDLER receives SIGINT.
   while (QUIT_HANDLER::instance ()->is_set () == 0)
     REACTOR::instance ()->handle_events ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) shutting down server logging daemon\n"));
+              ACE_TEXT ("(%P|%t) shutting down server logging daemon\n")));
 
   return 0;
 }

@@ -1,0 +1,43 @@
+// -*- MPC -*-
+// $Id$
+
+project(*SOCK_STREAM_clt) : aceexe {
+  exename = SOCK_STREAM_clt
+  source_files {
+    SOCK_STREAM_clt.cpp
+    Options_Manager.cpp
+    hist.cpp
+  }
+}
+
+project(*SOCK_STREAM_srv) : aceexe {
+  exename = SOCK_STREAM_srv
+  source_files {
+    SOCK_STREAM_srv.cpp
+    Options_Manager.cpp
+  }
+}
+
+project(*SOCK_SEQPACK_clt) : aceexe {
+  exename = SOCK_SEQPACK_clt
+  source_files {
+    SOCK_SEQPACK_clt.cpp
+    Options_Manager.cpp
+    hist.cpp
+  }
+}
+
+project(*SOCK_SEQPACK_srv) : aceexe {
+  exename = SOCK_SEQPACK_srv
+  source_files {
+    SOCK_SEQPACK_srv.cpp
+    Options_Manager.cpp
+  }
+}
+
+project(*SOCK_SEQPACK_Association_Test) : aceexe {
+  exename = SOCK_SEQPACK_Association_Test
+  source_files {
+    SOCK_SEQPACK_Association_Test.cpp
+  }
+}

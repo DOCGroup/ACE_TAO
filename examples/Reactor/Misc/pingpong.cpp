@@ -103,13 +103,13 @@ Ping_Pong::handle_input (ACE_HANDLE)
 
   if (n != (ssize_t) this->buflen_)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) reading [%d] %p\n",
+                       ACE_TEXT ("(%P|%t) reading [%d] %p\n"),
                        handle_,
-                       "read"),
+                       ACE_TEXT ("read")),
                       -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) reading <%d> (%d) [%d] = %s\n",
+              ACE_TEXT ("(%P|%t) reading <%d> (%d) [%d] = %C\n"),
               this->handle_,
               *(int *) this->buf_,
               *(int *) (this->buf_ + sizeof (int)),
@@ -120,15 +120,15 @@ Ping_Pong::handle_input (ACE_HANDLE)
                          this->buflen_);
   if (n == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "[%d] %p\n",
+                       ACE_TEXT ("[%d] %p\n"),
                        handle_,
-                       "read"),
+                       ACE_TEXT ("read")),
                       -1);
   n -= (2 * sizeof (int));
   char *buf = this->buf_ + (2 * sizeof (int));
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) reading <%d> = %*s\n",
+              ACE_TEXT ("(%P|%t) reading <%d> = %*C\n"),
               this->handle_,
               n,
               buf));
@@ -151,7 +151,7 @@ Ping_Pong::handle_output (ACE_HANDLE)
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) writing <%d> [%d]\n",
+                  ACE_TEXT ("(%P|%t) writing <%d> [%d]\n"),
                   this->handle_,
                   this->pid_));
       return 0;
@@ -164,7 +164,7 @@ Ping_Pong::handle_output (ACE_HANDLE)
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) writing <%d>\n",
+                  ACE_TEXT ("(%P|%t) writing <%d>\n"),
                   this->handle_));
       return 0;
     }
@@ -180,7 +180,7 @@ Ping_Pong::handle_timeout (const ACE_Time_Value &,
 }
 
 // Contains the string to "pingpong" back and forth...
-static char *string_name;
+static ACE_TCHAR *string_name;
 
 // Wait for 10 seconds and then shut down.
 static const int SHUTDOWN_TIME = 10;
@@ -193,7 +193,7 @@ run_svc (ACE_HANDLE handle)
   // works because the ACE_Reactor is destroyed before leaving this
   // scope as well, so it'll remove the <callback> object from its
   // internal tables BEFORE it is destroyed.
-  Ping_Pong callback (string_name, handle);
+  Ping_Pong callback (ACE_TEXT_ALWAYS_CHAR (string_name), handle);
 
   // Note that we put the <reactor> AFTER the <callback> so that the
   // <reactor> will get shutdown first.
@@ -214,8 +214,8 @@ run_svc (ACE_HANDLE handle)
                                  SHUTDOWN_TIME) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%p\n",
-                  "reactor"));
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("reactor")));
       ACE_OS::exit (1);
     }
 
@@ -224,8 +224,8 @@ run_svc (ACE_HANDLE handle)
   while (callback.is_set () == 0)
     if (reactor.handle_events () == -1)
       ACE_ERROR ((LM_ERROR,
-                  "%p\n",
-                  "handle_events"));
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("handle_events")));
 }
 
 #if defined (ACE_WIN32) || defined (CHORUS)
@@ -242,19 +242,19 @@ worker (void *arg)
   barrier.wait ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) %n: shutting down tester\n"));
+              ACE_TEXT ("(%P|%t) %n: shutting down tester\n")));
   return 0;
 }
 #endif /* ACE_WIN32 */
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_LOG_MSG->open (argv[0]);
 
   if (argc != 2)
     ACE_ERROR ((LM_ERROR,
-                "usage: %n string\n%a",
+                ACE_TEXT ("usage: %n string\n%a"),
                 1));
 
   string_name = argv[1];

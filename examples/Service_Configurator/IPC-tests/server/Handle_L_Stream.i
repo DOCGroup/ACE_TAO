@@ -32,17 +32,16 @@ Handle_L_Stream::open (const ACE_UNIX_Addr &suas,
 }
 
 ACE_INLINE int 
-Handle_L_Stream::info (char **strp, 
-		       size_t length) const
+Handle_L_Stream::info (ACE_TCHAR **strp, size_t length) const
 {
-  char buf[BUFSIZ];
+  ACE_TCHAR buf[BUFSIZ];
   ACE_UNIX_Addr sa;
 
   if (this->get_local_addr (sa) == -1)
     return -1;
   
-  ACE_OS::sprintf (buf, "%s %s", sa.get_path_name (), 
-		   "# tests local ACE_Stream\n");
+  ACE_OS::strcpy (buf, ACE_TEXT_CHAR_TO_TCHAR (sa.get_path_name ()));
+  ACE_OS::strcat (buf, ACE_TEXT (" # tests local ACE_Stream\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -52,20 +51,20 @@ Handle_L_Stream::info (char **strp,
 }
 
 ACE_INLINE int
-Handle_L_Stream::init (int argc, char *argv[])
+Handle_L_Stream::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNIX_Addr sus;
-  const char *r = Handle_L_Stream::DEFAULT_RENDEZVOUS;
-  ACE_Get_Opt get_opt (argc, argv, "r:", 0);
+  const ACE_TCHAR *r = Handle_L_Stream::DEFAULT_RENDEZVOUS;
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("r:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
      switch (c)
        {
        case 'r': 
-	 r = get_opt.opt_arg ();
-	 break;
+         r = get_opt.opt_arg ();
+         break;
        default:
-	 break;
+         break;
        }
   
   ACE_OS::strncpy (this->rendezvous, r, MAXPATHLEN);
@@ -73,18 +72,18 @@ Handle_L_Stream::init (int argc, char *argv[])
   sus.set (this->rendezvous);
 
   if (this->open (sus) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
   else if (ACE_Reactor::instance ()->register_handler 
 	   (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-		       "registering service with ACE_Reactor\n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+		       ACE_TEXT ("registering service with ACE_Reactor")), -1);
   return 0;
 }
 
 ACE_INLINE int 
 Handle_L_Stream::fini (void) 
 {
-  return ACE_Reactor::instance ()->remove_handler 
+  return ACE_Reactor::instance ()->remove_handler
     (this, ACE_Event_Handler::ACCEPT_MASK);
 }
 
@@ -108,7 +107,7 @@ Handle_L_Stream::handle_input (ACE_HANDLE)
     return -1;
   else
     ACE_DEBUG ((LM_INFO, 
-		"received file descriptor %d on ACE_Stream %s\n", 
+		ACE_TEXT ("received file descriptor %d on ACE_Stream %s\n"),
 		handle, sa.get_path_name ()));
 
   ACE_OS::puts ("----------------------------------------");
@@ -126,12 +125,12 @@ Handle_L_Stream::handle_input (ACE_HANDLE)
   ACE_OS::puts ("----------------------------------------");
 
   time_t t = ACE_OS::time (0L);
-  char *cs = ACE_OS::ctime (&t);
+  ACE_TCHAR *cs = ACE_OS::ctime (&t);
 
   if (new_local_stream.send (4,
 			     Handle_L_Stream::login_name, 
 			     ACE_OS::strlen (Handle_L_Stream::login_name),
-			     cs, 
+			     ACE_TEXT_ALWAYS_CHAR (cs), 
 			     ACE_OS::strlen (cs)) == -1)
     return -1;
   else if (ACE_OS::close (handle) == -1)
