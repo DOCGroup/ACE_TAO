@@ -1,3 +1,32 @@
+Mon Mar 28 22:36:14 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/TypeCode_Constants.cpp:
+	* tao/TypeCode_Constants.h:
+
+	  Moved CORBA::_tc_{Value,Event}Base TypeCode constants to the
+	  TAO_Valuetype library.
+
+	* tao/Value_Box_TypeCode.h:
+	* tao/Value_TypeCode.h:
+	* tao/Value_TypeCode.inl:
+
+	  Added missing "const" keywords to concrete type TypeCode
+	  parameters and attribute.  Fixes compile-time errors.
+
+	* tao/Valuetype/ValueBase.cpp:
+
+	  Define TypeCode constants in terms of new TAO TypeCode
+	  implementation.
+
+	* tao/Valuetype/ValueBase.h:
+
+	  Declared all TypeCode constants as "const".
+
+	* tao/Valuetype/Valuetype_Adapter_Impl.cpp:
+
+	  Removed "tao/Typecode.h" include directive.  That file no longer
+	  exists, nor was it necessary.
+
 Mon Mar 28 21:38:42 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/RefCount_Policy_Traits.h:
