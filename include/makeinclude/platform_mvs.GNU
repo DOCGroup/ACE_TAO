@@ -20,13 +20,13 @@ RANLIB        = echo
 MVCMD         = @test ! -s $(@F) || mv $(@F) $(@D)/$(@F)
  
 # Used to build static executables
-MVSLIB_STATIC = -lACE
+ACELIB_STATIC = -lACE
  
 # Used to build shared executables (much smaller in size)
-MVSLIB_DLL    = $(ACE_ROOT)/ace/libACE.x
+ACELIB_DLL    = $(ACE_ROOT)/ace/libACE.x
  
 # set accordingly to build either static or shared executables
-MVSLIB        = $(MVSLIB_DLL)
+ACELIB        = $(ACELIB_DLL)
  
 SOFLAGS       = -W l,dll
 SOBUILD       = @echo $(COMPILE.cc) -W c,exportall -o $(VSHDIR)$*.o $<; \
