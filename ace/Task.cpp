@@ -1,4 +1,3 @@
-// Task.cpp
 // $Id$
 
 #define ACE_BUILD_DLL
@@ -57,12 +56,12 @@ ACE_Task_Base::resume (void)
 
 int
 ACE_Task_Base::activate (long flags,
-			 int n_threads,
-			 int force_active,
-			 long priority,
-			 int grp_id,
-			 ACE_Task_Base *task,
-			 ACE_hthread_t thread_handles[])
+                         int n_threads,
+                         int force_active,
+                         long priority,
+                         int grp_id,
+                         ACE_Task_Base *task,
+                         ACE_hthread_t thread_handles[])
 {
   ACE_TRACE ("ACE_Task_Base::activate");
 
@@ -85,13 +84,13 @@ ACE_Task_Base::activate (long flags,
     this->thr_mgr_ = ACE_Thread_Manager::instance ();
 
   this->grp_id_ = this->thr_mgr_->spawn_n (n_threads,
-					   ACE_THR_FUNC (&ACE_Task_Base::svc_run),
-					   (void *) this,
-					   flags,
-					   priority,
-					   grp_id,
-					   task,
-					   thread_handles);
+                                           ACE_THR_FUNC (&ACE_Task_Base::svc_run),
+                                           (void *) this,
+                                           flags,
+                                           priority,
+                                           grp_id,
+                                           task,
+                                           thread_handles);
   if (this->grp_id_ == -1)
     return -1;
   else
@@ -99,12 +98,13 @@ ACE_Task_Base::activate (long flags,
 #else
   {
     // Keep the compiler from complaining.
+    ACE_UNUSED_ARG (flags);
     ACE_UNUSED_ARG (n_threads);
     ACE_UNUSED_ARG (force_active);
     ACE_UNUSED_ARG (priority);
     ACE_UNUSED_ARG (grp_id);
     ACE_UNUSED_ARG (task);
-    ACE_UNUSED_ARG (flags);
+    ACE_UNUSED_ARG (thread_handles);
     errno = EINVAL;
     return -1;
   }
@@ -115,7 +115,7 @@ void
 ACE_Task_Base::cleanup (void *object, void *)
 {
   ACE_Task_Base *t = (ACE_Task_Base *) object;
-  
+
   // The thread count must be decremented first in case the <close>
   // hook does something crazy like "delete this".
   t->thr_count_dec ();
@@ -142,11 +142,11 @@ ACE_Task_Base::svc_run (void *args)
   // mechanism so that our close() hook will be sure to get invoked
   // when this thread exits.
 
-#if defined ACE_HAS_SIG_C_FUNC                                          
-  t->thr_mgr ()->at_exit (t, ACE_Task_Base_cleanup, 0);                 
-#else                                                                   
+#if defined ACE_HAS_SIG_C_FUNC
+  t->thr_mgr ()->at_exit (t, ACE_Task_Base_cleanup, 0);
+#else
   t->thr_mgr ()->at_exit (t, ACE_Task_Base::cleanup, 0);
-#endif /* ACE_HAS_SIG_C_FUNC */                                         
+#endif /* ACE_HAS_SIG_C_FUNC */
 
   // Call the Task's svc() hook method.
   return (void *) t->svc ();
@@ -162,4 +162,3 @@ ACE_Task_Base::module_closed (void)
 {
   return this->close (1);
 }
-
