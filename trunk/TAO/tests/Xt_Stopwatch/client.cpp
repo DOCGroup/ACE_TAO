@@ -18,7 +18,7 @@ main (int, char *[])
 #else
 #include "Control.h"
 #include "Client.h"
-#include "tao/xt_resource.h"
+
 
 int
 main (int argc, char *argv[])
@@ -135,7 +135,7 @@ Client::add_callback (Control &ctrl)
 }
 
 void
-Client::start_callback (Widget widget,
+Client::start_callback (Widget /*widget*/,
                         XtPointer client_data,
                         XtPointer)
 {
@@ -145,7 +145,7 @@ Client::start_callback (Widget widget,
 }
 
 void
-Client::stop_callback (Widget widget,
+Client::stop_callback (Widget /*widget*/,
                        XtPointer client_data,
                        XtPointer )
 {
