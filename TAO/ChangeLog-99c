@@ -1,6 +1,7 @@
 Fri Jun 11 13:01:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/MT_Client/run_test.pl:
+	* examples/POA/Forwarding/run_test.pl:
 	  Modified to use the new timeouts, just an example for other test 
 	  developers.
 
