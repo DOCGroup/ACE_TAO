@@ -16,7 +16,7 @@ ACE_SPIPE_Stream::dump (void) const
 
 ACE_SPIPE_Stream::ACE_SPIPE_Stream (void)
 {
-  ACE_TRACE ("ACE_SPIPE_Stream::ACE_SPIPE_Stream");
+  // ACE_TRACE ("ACE_SPIPE_Stream::ACE_SPIPE_Stream");
 }
 
 // Send N char *ptrs and int lengths.  Note that the char *'s precede
