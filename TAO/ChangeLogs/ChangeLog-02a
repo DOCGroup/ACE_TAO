@@ -1,3 +1,84 @@
+Fri Oct 13 10:06:03 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/include/ast_visitor.h:
+	* TAO_IDL/ast/ast_visitor.cpp:
+
+	  New files containing the abstract class ast_visitor.
+	  Anyone writing a pluggable back end for the IDl
+	  compiler and who wishes to have the visitors
+	  traverse the AST_<node> classes instead of the
+	  be_<node> classes can subclass this class.
+
+	* TAO_IDL/Makefile.FE:
+	* TAO_IDL/TAO_IDL_FE_DLL.dsp:
+	* TAO_IDL/TAO_IDL_FE_LIB.dsp:
+	* TAO_IDL/TAI_IDL_FE.bor:
+	* TAO_IDL/ast/Makefile.am:
+
+	  Added the above new files to the Makefiles and
+	  to the MSVC projects.
+
+	* TAO_IDL/ast/ast_argument.cpp:
+	* TAO_IDL/ast/ast_array.cpp:
+	* TAO_IDL/ast/ast_attribute.cpp:
+	* TAO_IDL/ast/ast_constant.cpp:
+	* TAO_IDL/ast/ast_decl.cpp:
+	* TAO_IDL/ast/ast_enum.cpp:
+	* TAO_IDL/ast/ast_enum_val.cpp:
+	* TAO_IDL/ast/ast_exception.cpp:
+	* TAO_IDL/ast/ast_expression.cpp:
+	* TAO_IDL/ast/ast_field.cpp:
+	* TAO_IDL/ast/ast_interface.cpp:
+	* TAO_IDL/ast/ast_interface_fwd.cpp:
+	* TAO_IDL/ast/ast_module.cpp:
+	* TAO_IDL/ast/ast_native.cpp:
+	* TAO_IDL/ast/ast_operation.cpp:
+	* TAO_IDL/ast/ast_predefined_type.cpp:
+	* TAO_IDL/ast/ast_root.cpp:
+	* TAO_IDL/ast/ast_sequence.cpp:
+	* TAO_IDL/ast/ast_string.cpp:
+	* TAO_IDL/ast/ast_structure.cpp:
+	* TAO_IDL/ast/ast_type.cpp:
+	* TAO_IDL/ast/ast_typedef.cpp:
+	* TAO_IDL/ast/ast_union.cpp:
+	* TAO_IDL/ast/ast_union_branch.cpp:
+	* TAO_IDL/ast/ast_union_label.cpp:
+	* TAO_IDL/include/ast.h:
+	* TAO_IDL/include/ast_argument.h:
+	* TAO_IDL/include/ast_array.h:
+	* TAO_IDL/include/ast_attribute.h:
+	* TAO_IDL/include/ast_constant.h:
+	* TAO_IDL/include/ast_decl.h:
+	* TAO_IDL/include/ast_enum.h:
+	* TAO_IDL/include/ast_enum_val.h:
+	* TAO_IDL/include/ast_exception.h:
+	* TAO_IDL/include/ast_expression.h:
+	* TAO_IDL/include/ast_field.h:
+	* TAO_IDL/include/ast_interface.h:
+	* TAO_IDL/include/ast_interface_fwd.h:
+	* TAO_IDL/include/ast_module.h:
+	* TAO_IDL/include/ast_native.h:
+	* TAO_IDL/include/ast_operation.h:
+	* TAO_IDL/include/ast_predefined_type.h:
+	* TAO_IDL/include/ast_root.h:
+	* TAO_IDL/include/ast_sequence.h:
+	* TAO_IDL/include/ast_string.h:
+	* TAO_IDL/include/ast_structure.h:
+	* TAO_IDL/include/ast_type.h:
+	* TAO_IDL/include/ast_typedef.h:
+	* TAO_IDL/include/ast_union.h:
+	* TAO_IDL/include/ast_union_branch.h:
+	* TAO_IDL/include/ast_union_label.h:
+	* TAO_IDL/include/utl_scope.h:
+	* TAO_IDL/util/utl_scope.cpp:
+
+	  Added virtual accept() method to the above classes,
+	  for use by the AST visitors.
+
+	* TAO_IDL/be/be_argument.cpp:
+
+	  Cosmetic changes.
+
 Fri 13 10:07:16 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* examples/Quoter/Quoter_i.cpp: Removed the code to move the
