@@ -1,3 +1,22 @@
+Mon Sep 24 11:03:17 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PICurrent_ORBInitializer.h:
+	* tao/PICurrent_ORBInitializer.cpp:
+
+	  Only make code "visible" if the TAO_HAS_INTERCEPTORS
+	  preprocessor macro is set to "1".  Fixes build problems in
+	  configurations where request interceptors are disabled.
+
+	* tao/PICurrent.h:
+	* tao/PICurrent.cpp:
+
+	  "Nuked" trailing whitespace.
+
+	* tao/Makefile:
+	* tao/*/Makefile:
+
+	  Updated dependencies.
+
 Mon Sep 24 01:21:16 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PICurrent.h:

@@ -111,8 +111,8 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- rtcorba_export.h Priority_Mapping.h RTCORBAC.h \
+ $(ACE_ROOT)/ace/OS.i rtcorba_export.h \
+ Priority_Mapping.h RTCORBAC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -414,8 +414,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  Linear_Priority_Mapping.h rtcorba_export.h Priority_Mapping.h \
- RTCORBAC.h \
- $(TAO_ROOT)/tao/IOPC.h \
+ RTCORBAC.h $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/CDR.h \
@@ -772,6 +771,8 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -1010,8 +1011,8 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- rtcorba_export.h Priority_Mapping.h RTCORBAC.h \
+ $(ACE_ROOT)/ace/OS.i rtcorba_export.h \
+ Priority_Mapping.h RTCORBAC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -1162,8 +1163,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- rtcorba_export.h \
+ $(ACE_ROOT)/ace/OS.i rtcorba_export.h \
  $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -1339,8 +1339,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
- RTCORBAC.h \
- $(TAO_ROOT)/tao/IOPC.h \
+ RTCORBAC.h $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -1437,8 +1436,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- rtcorba_export.h \
+ $(ACE_ROOT)/ace/OS.i rtcorba_export.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -1558,8 +1556,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/PolicyC.i \
- RTCORBAC.i \
- $(TAO_ROOT)/tao/Stub.h \
+ RTCORBAC.i $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \
@@ -1652,6 +1649,8 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -1719,8 +1718,8 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- RTCORBAC.h rtcorba_export.h \
+ $(ACE_ROOT)/ace/OS.i RTCORBAC.h \
+ rtcorba_export.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -1935,6 +1934,8 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -2197,6 +2198,8 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -2474,6 +2477,8 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -2751,6 +2756,8 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -2819,8 +2826,8 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- RTCORBAC.h rtcorba_export.h \
+ $(ACE_ROOT)/ace/OS.i RTCORBAC.h \
+ rtcorba_export.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -3001,8 +3008,8 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- RTCORBAC.h rtcorba_export.h \
+ $(ACE_ROOT)/ace/OS.i RTCORBAC.h \
+ rtcorba_export.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -3208,6 +3215,8 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -3501,6 +3510,8 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -3773,6 +3784,8 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -3976,8 +3989,8 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- RTCORBAC.h rtcorba_export.h \
+ $(ACE_ROOT)/ace/OS.i RTCORBAC.h \
+ rtcorba_export.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -4181,6 +4194,8 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -4298,8 +4313,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
  Priority_Mapping_Manager.h rtcorba_export.h Priority_Mapping.h \
- RTCORBAC.h \
- $(TAO_ROOT)/tao/IOPC.h \
+ RTCORBAC.h $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -4440,6 +4454,8 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -4719,6 +4735,8 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -4858,8 +4876,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- RT_Stub.h \
- $(TAO_ROOT)/tao/Stub.h \
+ RT_Stub.h $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
@@ -4976,6 +4993,8 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -5016,8 +5035,8 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- RTCORBAC.h rtcorba_export.h \
+ $(ACE_ROOT)/ace/OS.i RTCORBAC.h \
+ rtcorba_export.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -5269,6 +5288,8 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Acceptor_Registry.h \

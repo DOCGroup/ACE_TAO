@@ -70,7 +70,7 @@ public:
   /// Retrieve information stored in the slot table at the given
   /// SlotId.
   virtual CORBA::Any * get_slot (PortableInterceptor::SlotId id,
-				 CORBA::Environment &ACE_TRY_ENV = 
+				 CORBA::Environment &ACE_TRY_ENV =
 				   TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
 		     PortableInterceptor::InvalidSlot));
@@ -78,7 +78,7 @@ public:
   /// Set information in the slot table at the given SlotId.
   virtual void set_slot (PortableInterceptor::SlotId id,
 			 const CORBA::Any & data,
-			 CORBA::Environment &ACE_TRY_ENV = 
+			 CORBA::Environment &ACE_TRY_ENV =
                            TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
 		     PortableInterceptor::InvalidSlot));
@@ -308,4 +308,3 @@ private:
 #include "ace/post.h"
 
 #endif /* TAO_PI_CURRENT_H */
-
