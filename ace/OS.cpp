@@ -184,7 +184,6 @@ ACE_Countdown_Time::~ACE_Countdown_Time (void)
 }
 
 #if ! defined (ACE_WIN32) && ! defined (ACE_HAS_LONGLONG_T)
-
 void
 ACE_U_LongLong::dump (FILE *file) const
 {
@@ -202,7 +201,6 @@ ACE_U_LongLong::dump (FILE *file) const
       ::fprintf (file, "%lu", lo_);
     }
 }
-
 #endif /* ! ACE_WIN32 && ! ACE_HAS_LONGLONG_T */
 
 #if defined (ACE_HAS_PENTIUM) && defined (__GNUC__)
