@@ -12,6 +12,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # Do not use environment variables here since not all platforms use ACE_ROOT
 use lib "../../../../../bin";
 
+use English;
 require Process;
 require ACEutils;
 

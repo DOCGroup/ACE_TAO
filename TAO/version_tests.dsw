@@ -3366,6 +3366,54 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Timeout Client"=.\tests\Timeout\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACE DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name gperf
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Timeout Server"=.\tests\Timeout\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACE DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name gperf
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "Timeprobe_Test"=..\tests\Timeprobe_Test.dsp - Package Owner=<4>
 
 Package=<5>
