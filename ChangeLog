@@ -1,3 +1,9 @@
+Mon Mar  5 13:56:33 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Synch_T.{h,i}: Further simplified the new ACE_Guard constructor.
+	  Thanks to Chris Kohlhoff <chris@kohlhoff.com> for contributing
+ 	  this.
+  
 Mon Mar  5 19:20:45 2001  Fuzz Master D <brunsch@uci.edu>
 
         * bin/fuzz.pl:
