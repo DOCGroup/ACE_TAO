@@ -1,19 +1,25 @@
+Thu Jun 10 19:41:02 2004  Olli Savia  <ops@iki.fi>
+
+        * ACE-INSTALL.html:
+
+          Updated LynxOS resource advice.
+
 Thu Jun 10 10:07:22 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Makefile.am: Added Functor_String.{h inl cpp}. Thanks to
-	  J.T. Conklin for reporting this.
+        * ace/Makefile.am: Added Functor_String.{h inl cpp}. Thanks to
+          J.T. Conklin for reporting this.
 
 Wed Jun  9 09:36:03 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Select_Reactor_Base.cpp:
-	* ace/Select_Reactor_T.cpp:
+        * ace/Select_Reactor_Base.cpp:
+        * ace/Select_Reactor_T.cpp:
 
           Use prefix {in,dec}rement operators where applicable instead of
           postfix operators.  The former are more efficient.
 
 Wed Jun 09 09:27:21 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/WFMO_Reactor.cpp:
+        * ace/WFMO_Reactor.cpp:
 
           Use prefix {in,dec}rement operators where applicable instead of
           postfix operators.  The former are more efficient.
@@ -21,103 +27,103 @@ Wed Jun 09 09:27:21 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
           Fixed "pointless comparison of unsigned integer with zero"
           MSVC++ 7.1 warning.
 
-	* ace/Process_Manager.cpp (wait):
+        * ace/Process_Manager.cpp (wait):
 
-	  Fixed incorrect preprocessor conditional.  Addresses "pointless
-	  comparison of unsigned integer with zero" warning from MSVC++
-	  7.1.
+          Fixed incorrect preprocessor conditional.  Addresses "pointless
+          comparison of unsigned integer with zero" warning from MSVC++
+          7.1.
 
 Wed Jun  9 12:04:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_sys_socket.inl (closesocket): Changed the constant passed
-	  to ACE_OS::shutdown() from SD_SEND to ACE_SHUTDOWN_WRITE to make
-	  it portable for Winsock1 and Winsock2 environments. Thanks to
-	  Weida Ma <weida@flyingdonkey.com> for reporting this problem.
+        * ace/OS_NS_sys_socket.inl (closesocket): Changed the constant passed
+          to ACE_OS::shutdown() from SD_SEND to ACE_SHUTDOWN_WRITE to make
+          it portable for Winsock1 and Winsock2 environments. Thanks to
+          Weida Ma <weida@flyingdonkey.com> for reporting this problem.
 
 Wed Jun  9 10:47:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Dirent_Selector.cpp (close): Regarding this:
-	  Thu Jun  3 18:49:59 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
-	  Only platforms with ACE_LACKS_STRUCT_DIR dynamically allocate the
-	  d_name string. All others include it in the dirent struct itself.
-	  Please see Bugzilla 1833 - this problem should be remedied in
-	  ACE_OS::scandir_emulation itself, and this patch removed.
-	
+        * ace/Dirent_Selector.cpp (close): Regarding this:
+          Thu Jun  3 18:49:59 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+          Only platforms with ACE_LACKS_STRUCT_DIR dynamically allocate the
+          d_name string. All others include it in the dirent struct itself.
+          Please see Bugzilla 1833 - this problem should be remedied in
+          ACE_OS::scandir_emulation itself, and this patch removed.
+
 Tue Jun  8 17:01:32 2004  Steve Huston  <shuston@riverace.com>
 
-	* include/makeinclude/platform_hpux_aCC.GNU: Removed the AREXTRA
-	  definition. It caused all the files to be listed twice on the
-	  ar command line; once from xargs and once from the command given
-	  to xargs. Thanks to Ofira Shaer <Oshaer@ndsisrael.com> for
-	  reporting this problem.
+        * include/makeinclude/platform_hpux_aCC.GNU: Removed the AREXTRA
+          definition. It caused all the files to be listed twice on the
+          ar command line; once from xargs and once from the command given
+          to xargs. Thanks to Ofira Shaer <Oshaer@ndsisrael.com> for
+          reporting this problem.
 
-	* THANKS: Added Ofira Shaer.
+        * THANKS: Added Ofira Shaer.
 
 Tue Jun  8 16:27:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* configure.ac: Removed the individual AC_CONFIG_FILE entries for the
-	  automake-generated Makefiles. Replaced with an m4_include of a
-	  MPC-generated list of all Makefiles it generated during the most
-	  recent MPC run. The file created by MPC is configure.ac.Makefiles.
-	  If this works well, we can generate the Makefile.am files as needed
-	  and remove the hand-maintained ones from the repo.
+        * configure.ac: Removed the individual AC_CONFIG_FILE entries for the
+          automake-generated Makefiles. Replaced with an m4_include of a
+          MPC-generated list of all Makefiles it generated during the most
+          recent MPC run. The file created by MPC is configure.ac.Makefiles.
+          If this works well, we can generate the Makefile.am files as needed
+          and remove the hand-maintained ones from the repo.
 
 Tue Jun  8 09:20:18 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/IOStream_T.i: Add missing #includes to satisfy ACE_OS references.
+        * ace/IOStream_T.i: Add missing #includes to satisfy ACE_OS references.
 
 Sun Jun  6 09:48:17 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/SOCK_Dgram_Bcast.cpp (mk_broadcast): If there are
-	  no broadcastable interfaces found, mk_broadcast() now returns -1
- 	  and sets errno to ENXIO ("no such device or address").  Thanks to
- 	  Dave Craig for suggesting this fix.	
-  
-	* ace/SOCK_Dgram_Bcast.cpp (mk_broadcast): Only complain about
-	  broadcast not being enabled for an interface if host_name is non
- 	  NULL.  Thanks to Dave Craig <dwcraig@qualcomm.com> for this fix,
-	  which resolves bugid 1831.
+        * ace/SOCK_Dgram_Bcast.cpp (mk_broadcast): If there are
+          no broadcastable interfaces found, mk_broadcast() now returns -1
+          and sets errno to ENXIO ("no such device or address").  Thanks to
+          Dave Craig for suggesting this fix.
+
+        * ace/SOCK_Dgram_Bcast.cpp (mk_broadcast): Only complain about
+          broadcast not being enabled for an interface if host_name is non
+          NULL.  Thanks to Dave Craig <dwcraig@qualcomm.com> for this fix,
+          which resolves bugid 1831.
 
 Sat Jun  5 09:06:09 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/RMCast/RMCast_IO_UDP.i: Added a fix so that the transmitter
-	  no longer hangs waiting for the acknowledgement unicast response
- 	  messages.  The recipients were transmitting acknowledgements,
- 	  but the transmitter was listening to the socket that was bound
- 	  to a specific multicast address.  Thanks to Dave Craig
- 	  <dwcraig@qualcomm.com> for this fix.
+        * ace/RMCast/RMCast_IO_UDP.i: Added a fix so that the transmitter
+          no longer hangs waiting for the acknowledgement unicast response
+          messages.  The recipients were transmitting acknowledgements,
+          but the transmitter was listening to the socket that was bound
+          to a specific multicast address.  Thanks to Dave Craig
+          <dwcraig@qualcomm.com> for this fix.
 
 Thu Jun  3 23:21:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Dirent_Selector.cpp (close):
+        * ace/Dirent_Selector.cpp (close):
 
-	  Fixed compile-time error where "d_name" member was accessed with
-	  the dot "." operator instead of the pointer "->" operator.
+          Fixed compile-time error where "d_name" member was accessed with
+          the dot "." operator instead of the pointer "->" operator.
 
 Thu Jun  3 18:49:59 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Dirent_Selector.cpp (close): Need to call
+        * ace/Dirent_Selector.cpp (close): Need to call
 
-	  ACE_OS::free (this->namelist_[n_].d_name);
+          ACE_OS::free (this->namelist_[n_].d_name);
 
-	  in close() since ACE_OS::scandir() allocates a dirent structure
- 	  array that includes a dynamically allocated ACE_TCHAR *.  Thanks
- 	  to Benjamin Bronk <benjamin.j.bronk@lmco.com> for reporting this
- 	  and providing the fix.  This fixes bugid 1833.
+          in close() since ACE_OS::scandir() allocates a dirent structure
+          array that includes a dynamically allocated ACE_TCHAR *.  Thanks
+          to Benjamin Bronk <benjamin.j.bronk@lmco.com> for reporting this
+          and providing the fix.  This fixes bugid 1833.
 
 Thu Jun  3 17:36:39 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
-	* bin/MakeProjectCreator/config/ciao_deployment_svnt.mpb:
-	* bin/MakeProjectCreator/config/ciao_deployment_stub.mpb:
-	  Added the -Sc to the idlflag to turn the tie class generation
-	  off by default.
+        * bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_deployment_svnt.mpb:
+        * bin/MakeProjectCreator/config/ciao_deployment_stub.mpb:
+          Added the -Sc to the idlflag to turn the tie class generation
+          off by default.
 
 Thu Jun  3 23:33:23 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* include/makeinclude/platform_qnx_rtp_gcc.GNU (inline):
-	Removed optimization flags when debug is on due to g++ internal
-	compiler error.
+        * include/makeinclude/platform_qnx_rtp_gcc.GNU (inline):
+        Removed optimization flags when debug is on due to g++ internal
+        compiler error.
 
 Thu Jun  3 12:32:52 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -137,32 +143,32 @@ Thu Jun  3 10:52:18 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
 Wed Jun  2 21:07:31 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/ciao_servant_dnc.mpb:
-	* bin/MakeProjectCreator/config/ciao_deployment_stub.mpb:
-	* bin/MakeProjectCreator/config/ciao_deployment_svnt.mpb:
-	* bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_servant_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_deployment_stub.mpb:
+        * bin/MakeProjectCreator/config/ciao_deployment_svnt.mpb:
+        * bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
 
-	  I have to change these file again to prepare to delete
-	  $CIAO_ROOT/DnC/Core directory and move every thing there to
-	  $CIAO_ROOT/DnC/ciao directory so the CIDL generated code will
-	  find the right include file.
+          I have to change these file again to prepare to delete
+          $CIAO_ROOT/DnC/Core directory and move every thing there to
+          $CIAO_ROOT/DnC/ciao directory so the CIDL generated code will
+          find the right include file.
 
 Wed Jun  2 20:42:49 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
-	* bin/MakeProjectCreator/config/ciao_servant_dnc.mpb:
-	* bin/MakeProjectCreator/config/ciao_component_dnc.mpb:
-	* bin/MakeProjectCreator/config/ciao_server_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_servant_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_component_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_server_dnc.mpb:
 
-	  Added these files to avoid conflit between the old and the new
-	  CIAO implementation.
+          Added these files to avoid conflit between the old and the new
+          CIAO implementation.
 
 Thu Jun 03 00:30:00 Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* ace/RW_Process_Mutex.h (ACE_RW_Process_Mutex):
-	* ace/RW_Process_Mutex.cpp (ACE_RW_Process_Mutex):
-  	  Appended file mode to mutex constructor to solve the
- 	  difficulties reported by Bae-Sik Chon <baesikchon@yahoo.com>.
+        * ace/RW_Process_Mutex.h (ACE_RW_Process_Mutex):
+        * ace/RW_Process_Mutex.cpp (ACE_RW_Process_Mutex):
+          Appended file mode to mutex constructor to solve the
+          difficulties reported by Bae-Sik Chon <baesikchon@yahoo.com>.
 
 Wed Jun  2 07:30:56 2004  Chad Elliott  <elliott_c@ociweb.com>
 
