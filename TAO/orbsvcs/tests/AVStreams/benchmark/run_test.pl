@@ -23,7 +23,7 @@ sub name_server
     my $prog = "..".$DIR_SEPARATOR
       ."..".$DIR_SEPARATOR
 	."..".$DIR_SEPARATOR
-	  ."Naming_Server".$DIR_SEPARATOR
+	  ."Naming_Service".$DIR_SEPARATOR
 	."Naming_Server ".$EXE_EXT;
     print ("\nNaming_Server $args\n");
     $NS = Process::Create ($prog, $args);
@@ -70,11 +70,11 @@ $SV->Terminate (); if ($SV->TimedWait (5) == -1) {
   $NS->Kill (); $NS->TimedWait (1);
   exit 1;
 }
-  
+
 $NS->Terminate (); if ($NS->TimedWait (5) == -1) {
   print STDERR "ERROR: cannot terminate naming service\n";
   $NS->Kill (); $NS->TimedWait (1);
   exit 1;
 }
-  
+
 exit $status;
