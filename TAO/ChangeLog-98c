@@ -1,99 +1,105 @@
+Mon Oct 05 13:52:17 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/DynAnyC.cpp,DynArray_i.cpp,DynEnum_i.cpp,DynSequence_i.cpp,
+          DynStruct_i.cpp,DynUnion_i.cpp,DynUnion_i_T.cpp:
+          added ACE_LACKS_LONG_LONG_T support.
+
 Mon Oct  5 11:28:02 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	  MSVC++ does not like
-	      auto_ptr<Foo> x = new Foo;
-	  but it does like
-	      auto_ptr<Foo> x (new Foo);
-	  Thanks to Nanbor for catching this problem and commiting the
-	  fix.
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+          MSVC++ does not like
+              auto_ptr<Foo> x = new Foo;
+          but it does like
+              auto_ptr<Foo> x (new Foo);
+          Thanks to Nanbor for catching this problem and commiting the
+          fix.
 
 Mon Oct  5 10:47:52 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
-	  
-	  Had to remove the code that Carlos had added to propagate the
-	  exception from the _tao_skel_env to the _tao_env parameter. This
-	  was necessary since we no longer use the _tao_skel_env parameter.
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+
+          Had to remove the code that Carlos had added to propagate the
+          exception from the _tao_skel_env to the _tao_env parameter. This
+          was necessary since we no longer use the _tao_skel_env parameter.
 
 Mon Oct  5 07:54:21 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp:
+        * TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp:
 
-	  There was a bug in the generated code. Thanks to David Levine
-	  for sending me the bug report.
+          There was a bug in the generated code. Thanks to David Levine
+          for sending me the bug report.
 
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
-	  TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+          TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
 
-	  We no longer need the _tao_skel_environment variable in the
-	  skeletons. These modifications were necessary to maintain
-	  support for both the compiled as well as interpretive
-	  marshaling. The _is_a_skel now generates a proper
-	  TAO_CHECK_ENV_RETURN_VOID statement.
+          We no longer need the _tao_skel_environment variable in the
+          skeletons. These modifications were necessary to maintain
+          support for both the compiled as well as interpretive
+          marshaling. The _is_a_skel now generates a proper
+          TAO_CHECK_ENV_RETURN_VOID statement.
 
-	  Also made sure that unused local variables are not generated.
+          Also made sure that unused local variables are not generated.
 
-	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp
-	  TAO_IDL/be_include/be_visitor_operation/rettype_vardecl_ss.h:
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp
+          TAO_IDL/be_include/be_visitor_operation/rettype_vardecl_ss.h:
 
-	  Added a new visitor for compiled marshaling for the generation
-	  of return type variable in the  server skeleton code.
-	
-	* TAO_IDL/be/be_visitor_factory.cpp:
+          Added a new visitor for compiled marshaling for the generation
+          of return type variable in the  server skeleton code.
 
-	  For compiled marshaling we now invoke a new visitor for the
-	  return val variable in the skeleton. The reason we do this is
-	  since the interpreted version uses an OBject_var.
-	
-	* tao/{CurrentS, POAS, PolicyS}.cpp:
+        * TAO_IDL/be/be_visitor_factory.cpp:
 
-	  Since we no longer use the _tao_skel_environment, we had to make
-	  the necessary modifications.
+          For compiled marshaling we now invoke a new visitor for the
+          return val variable in the skeleton. The reason we do this is
+          since the interpreted version uses an OBject_var.
 
-	* tao/Server_Request.{h, cpp}:
+        * tao/{CurrentS, POAS, PolicyS}.cpp:
 
-	  The marshal method no longer takes in the _skel_env parameter
+          Since we no longer use the _tao_skel_environment, we had to make
+          the necessary modifications.
+
+        * tao/Server_Request.{h, cpp}:
+
+          The marshal method no longer takes in the _skel_env parameter
 
 Sun Oct  4 19:48:25 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp: 
-	  Exceptions were not beign transmitted from the server back to
-	  the client.  We need to rethink the use of two environments in
-	  the skeleton.
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+          Exceptions were not beign transmitted from the server back to
+          the client.  We need to rethink the use of two environments in
+          the skeleton.
 
 Sun Oct  4 16:37:23 1998  Carlos O'Ryan  <coryan@tango.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	  It is now possible to have several suppliers with the same ID on
-	  the same Event Channel.
- 	  I also fixed a bug with the supplier reconnections: if a
-	  consumer was filtering by source it wouldn't receive the events
-	  if the supplier disconnected and connected again.  Thanks to
-	  Thomas Venturella <tventurell@mdc.com> for some his hints on how
-	  to fix this.
-	  Fixed some problems with exception handling and propagation.
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+          It is now possible to have several suppliers with the same ID on
+          the same Event Channel.
+          I also fixed a bug with the supplier reconnections: if a
+          consumer was filtering by source it wouldn't receive the events
+          if the supplier disconnected and connected again.  Thanks to
+          Thomas Venturella <tventurell@mdc.com> for some his hints on how
+          to fix this.
+          Fixed some problems with exception handling and propagation.
 
-	* orbsvcs/tests/Makefile: 
-	* orbsvcs/tests/EC_Basic/Makefile: 
-	* orbsvcs/tests/EC_Basic/README: 
-	* orbsvcs/tests/EC_Basic/run_test.pl: 
-	* orbsvcs/tests/EC_Basic/EC_Basic.h: 
-	* orbsvcs/tests/EC_Basic/EC_Basic.i: 
-	* orbsvcs/tests/EC_Basic/EC_Basic.cpp: 
-	  Added a new test for the Event Channel, this will grow to become
-	  the main regression test for the EC, at this point it only tests
-	  the use of several suppliers with the same ID.
+        * orbsvcs/tests/Makefile:
+        * orbsvcs/tests/EC_Basic/Makefile:
+        * orbsvcs/tests/EC_Basic/README:
+        * orbsvcs/tests/EC_Basic/run_test.pl:
+        * orbsvcs/tests/EC_Basic/EC_Basic.h:
+        * orbsvcs/tests/EC_Basic/EC_Basic.i:
+        * orbsvcs/tests/EC_Basic/EC_Basic.cpp:
+          Added a new test for the Event Channel, this will grow to become
+          the main regression test for the EC, at this point it only tests
+          the use of several suppliers with the same ID.
 
-	* docs/releasenotes/TODO.html: 
-	  Update the file.
+        * docs/releasenotes/TODO.html:
+          Update the file.
 
 Sun Oct  4 15:40:05 1998  Balachandra Natarajan  <bala@lambada.cs.wustl.edu>
 
-	* Any.cpp
+        * Any.cpp
           Anticipated fix for break in build. The TypeCode_ptr was not
-	  completely qualified (as CORBA::TypeCode_ptr). 
+          completely qualified (as CORBA::TypeCode_ptr).
 
 Sun Oct 04 08:40:12 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -135,8 +141,8 @@ Sat Oct  3 20:20:14 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 Sat Oct  3 19:35:05 1998  Balachandra Natarajan  <bala@lambada.cs.wustl.edu>
 
-	* Any.cpp
-	  Fix for memeory leaks in extraction.
+        * Any.cpp
+          Fix for memeory leaks in extraction.
 
 Sat Oct  3 15:16:05 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
