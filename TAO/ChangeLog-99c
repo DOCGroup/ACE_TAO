@@ -1,3 +1,9 @@
+Mon Jan 11 19:40:25 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosEvent:
+	  for all files in this directory -
+	  replaced TAO_TRY_ENV with TAO_IN_ENV
+
 Mon Jan 11 16:55:57 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * IIOP: removed entire directory tree.

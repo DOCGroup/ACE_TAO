@@ -19,35 +19,35 @@ int
 TAO_CosEC_EventChannel_i::init (const RtecEventChannelAdmin::ConsumerQOS &consumerqos,
                                 const RtecEventChannelAdmin::SupplierQOS &supplierqos,
                                 RtecEventChannelAdmin::EventChannel_ptr rtec,
-                                CORBA::Environment &TAO_TRY_ENV)
+                                CORBA::Environment &TAO_IN_ENV)
 {
   RtecEventChannelAdmin::ConsumerAdmin_ptr rtec_consumeradmin =
-    rtec->for_consumers (TAO_TRY_ENV);
-  TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+    rtec->for_consumers (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, -1);
 
   if (this->consumer_admin_.init (consumerqos,
                                   rtec_consumeradmin) == -1)
     return -1;
 
-  this->consumeradmin_ = consumer_admin_._this (TAO_TRY_ENV);
-  TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+  this->consumeradmin_ = consumer_admin_._this (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, -1);
 
   RtecEventChannelAdmin::SupplierAdmin_ptr rtec_supplieradmin =
-    rtec->for_suppliers (TAO_TRY_ENV);
-  TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+    rtec->for_suppliers (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, -1);
 
   if (this->supplier_admin_.init (supplierqos,
                                   rtec_supplieradmin) == -1)
     return -1;
 
-  this->supplieradmin_ = supplier_admin_._this (TAO_TRY_ENV);
-  TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+  this->supplieradmin_ = supplier_admin_._this (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, -1);
 
   return 0;
 }
 
 CosEventChannelAdmin::ConsumerAdmin_ptr
-TAO_CosEC_EventChannel_i::for_consumers (CORBA::Environment &TAO_TRY_ENV)
+TAO_CosEC_EventChannel_i::for_consumers (CORBA::Environment &TAO_IN_ENV)
 {
   // @@ Pradeep: you must make a copy here, because the caller is
   // responsible of removing this object.
@@ -56,7 +56,7 @@ TAO_CosEC_EventChannel_i::for_consumers (CORBA::Environment &TAO_TRY_ENV)
 }
 
 CosEventChannelAdmin::SupplierAdmin_ptr
-TAO_CosEC_EventChannel_i::for_suppliers (CORBA::Environment &TAO_TRY_ENV)
+TAO_CosEC_EventChannel_i::for_suppliers (CORBA::Environment &TAO_IN_ENV)
 {
   // @@ Pradeep: you must make a copy here, because the caller is
   // responsible of removing this object, same here..
@@ -65,28 +65,28 @@ TAO_CosEC_EventChannel_i::for_suppliers (CORBA::Environment &TAO_TRY_ENV)
 }
 
 void
-TAO_CosEC_EventChannel_i::destroy (CORBA::Environment &TAO_TRY_ENV)
+TAO_CosEC_EventChannel_i::destroy (CORBA::Environment &TAO_IN_ENV)
 {
   // Deactivate the CosEventChannel
   PortableServer::POA_var poa =
-    this->_default_POA (TAO_TRY_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
+    this->_default_POA (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   PortableServer::ObjectId_var id = poa->servant_to_id (this,
-                                                        TAO_TRY_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
+                                                        TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   poa->deactivate_object (id.in (),
-                          TAO_TRY_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
+                          TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   this->supplieradmin_ =  CosEventChannelAdmin::SupplierAdmin::_nil ();
   this->consumeradmin_ =  CosEventChannelAdmin::ConsumerAdmin::_nil ();
 }
 
 void
-TAO_CosEC_EventChannel_i::shutdown (CORBA::Environment &TAO_TRY_ENV)
+TAO_CosEC_EventChannel_i::shutdown (CORBA::Environment &TAO_IN_ENV)
 {
-  this->destroy (TAO_TRY_ENV);
+  this->destroy (TAO_IN_ENV);
   delete this;
 }
