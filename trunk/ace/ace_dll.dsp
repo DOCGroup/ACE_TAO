@@ -1,5 +1,5 @@
 # Microsoft Developer Studio Project File - Name="ACE dynamic library" - Package Owner=<4>
-# Microsoft Developer Studio Generated Build File, Format Version 6.00
+# Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Dynamic-Link Library" 0x0102
@@ -4765,6 +4765,29 @@ NODEP_CPP_NAMIN=\
 	".\Containers.i"\
 	".\stdcpp.h"\
 	
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\NT_Service.cpp
+
+!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
 
@@ -12515,6 +12538,10 @@ SOURCE=.\Naming_Context.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\NT_Service.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Object_Manager.h
 # End Source File
 # Begin Source File
@@ -13184,6 +13211,10 @@ SOURCE=.\Msg_WFMO_Reactor.i
 # Begin Source File
 
 SOURCE=.\Multiplexor.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\NT_Service.i
 # End Source File
 # Begin Source File
 
