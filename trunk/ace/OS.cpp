@@ -1,6 +1,5 @@
 // $Id$
 
-// OS.cpp
 #define ACE_BUILD_DLL
 #include "ace/OS.h"
 #include "ace/SString.h"
@@ -1861,7 +1860,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #        endif /* STHREADS */
              {
 #        if defined (ACE_HAS_DCETHREADS)
-               result = ::pthread_attr_setsched (&attr, SCHED_OTHER);
+               result = ::pthread_attr_setprio (&attr,
+                                                sparam.sched_priority);
 #        else /* ACE_HAS_DCETHREADS */
                result = ::pthread_attr_setschedparam (&attr, &sparam);
 #        endif /* ACE_HAS_DCETHREADS */
@@ -1930,7 +1930,35 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           // Increment the number of LWPs by one to emulate the
           // Solaris semantics.
           int lwps = ACE_OS::thr_getconcurrency ();
-          ACE_OS::thr_setconcurrency (lwps + 1);
+          if (lwps == -1)
+            {
+              if (errno == ENOTSUP)
+                {
+                  // Suppress the ENOTSUP because it's harmless.
+                  errno = 0;
+                }
+              else
+                {
+                  // This should never happen on Solaris: ::thr_getconcurrency
+                  // should always succeed.
+                  return -1;
+                }
+            }
+          else
+            {
+              if (ACE_OS::thr_setconcurrency (lwps + 1) == -1)
+                {
+                  if (errno == ENOTSUP)
+                    {
+                      // Unlikely:  thr_getconcurrency is supported but
+                      // thr_setconcurrency is not?
+                    }
+                  else
+                    {
+                      return -1;
+                    }
+                }
+            }
         }
     }
 
