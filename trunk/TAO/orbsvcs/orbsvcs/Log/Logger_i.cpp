@@ -28,9 +28,9 @@ TAO_Logger_Hash::equal (const char *const &id1, const char *const &id2)
 
 
 TAO_Logger_Hash_Entry::ACE_Hash_Map_Entry (const char *const &ext_id,
-					   Logger_i *const &int_id,
-					   TAO_Logger_Hash_Entry *next,
-					   TAO_Logger_Hash_Entry *prev)
+                                           Logger_i *const &int_id,
+                                           TAO_Logger_Hash_Entry *next,
+                                           TAO_Logger_Hash_Entry *prev)
   : ext_id_ (ext_id ? ACE_OS::strdup (ext_id) : ACE_OS::strdup ("")),
     int_id_ (int_id),
     next_ (next),
@@ -39,7 +39,7 @@ TAO_Logger_Hash_Entry::ACE_Hash_Map_Entry (const char *const &ext_id,
 }
 
 TAO_Logger_Hash_Entry::ACE_Hash_Map_Entry (TAO_Logger_Hash_Entry *next,
-					   TAO_Logger_Hash_Entry *prev)
+                                           TAO_Logger_Hash_Entry *prev)
   : ext_id_ (0),
     next_ (next),
     prev_ (prev)
@@ -74,22 +74,22 @@ Logger_Factory_i::make_logger (const char *name,
                                CORBA::Environment &_env)
 {
   Logger_i  *result;
-  // If name is already in the map, find() will assign <result> to the 
+  // If name is already in the map, find() will assign <result> to the
   // appropriate value
   if (hash_map_.find (name, result) != 0)
     {
       if (TAO_debug_level > 0)
-	ACE_DEBUG ((LM_DEBUG,
-		    "\nMaking a new logger"));
+        ACE_DEBUG ((LM_DEBUG,
+                    "\nMaking a new logger"));
       ACE_NEW_RETURN (result,
-		      Logger_i (name),
-		      0);
+                      Logger_i (name),
+                      0);
       hash_map_.bind (name, result);
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "\nLogger name already bound"));
+                  "\nLogger name already bound"));
     }
   return result->_this (_env);
 }
@@ -137,14 +137,14 @@ Logger_i::verbosity_conversion (Logger::Verbosity_Level verbosity_level)
     case Logger::VERBOSE_LITE:
       return 020;
     default:
-    case Logger::VERBOSE:  
+    case Logger::VERBOSE:
       return 010;
     }
 }
 
 void
 Logger_i::log (const Logger::Log_Record &log_rec,
-	       CORBA::Environment &_env)
+               CORBA::Environment &_env)
 {
   ACE_Time_Value temp (log_rec.time);
 
@@ -153,9 +153,9 @@ Logger_i::log (const Logger::Log_Record &log_rec,
   // ACE_Log_Priority tags, <priority_conversion> is used to coerce
   // the mapping.
   ACE_Log_Record rec (this->priority_conversion (log_rec.type),
-		      ACE_Time_Value (log_rec.time),
+                      ACE_Time_Value (log_rec.time),
                       log_rec.app_id);
-  
+
   // Create a temporary buffer for manipulating the logging message,
   // adding additional space for formatting characters..
   ASYS_TCHAR msgbuf [ACE_MAXLOGMSGLEN + 4];
@@ -164,8 +164,8 @@ Logger_i::log (const Logger::Log_Record &log_rec,
   ACE_OS::strcpy (msgbuf, "\n::");
 
   // Copy the message data into the temporary buffer
-  ACE_OS::strncat (msgbuf, 
-		   log_rec.msg_data,
+  ACE_OS::strncat (msgbuf,
+                   log_rec.msg_data,
                    ACE_MAXLOGMSGLEN);
 
   // Set <ACE_Log_Record.msg_data> to the value stored in <msgbuf>.
@@ -185,15 +185,15 @@ Logger_i::log (const Logger::Log_Record &log_rec,
                       MAXHOSTNAMELEN);
 
   u_long verb_level = this->verbosity_conversion (this->verbosity_level_);
-  
+
   rec.print (namebuf,
-	     verb_level,
-	     stderr);
+             verb_level,
+             stderr);
   // Print out the logging message to stderr with the given level of
   // verbosity
 }
 
-Logger::Verbosity_Level 
+Logger::Verbosity_Level
 Logger_i::verbosity (void) const
 {
   return verbosity_level_;
@@ -208,12 +208,18 @@ Logger_i::verbosity (Logger::Verbosity_Level level, CORBA::Environment &env)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Hash_Map_Manager<const char*, Logger_i*, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<const char*, Logger_i*>;
+template class ACE_Hash_Map_Entry <const char *, Logger_i *>;
+template class ACE_Hash_Map_Manager <const char *, Logger_i *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base <const char *, Logger_i *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator <const char *, Logger_i *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator <const char *, Logger_i *, ACE_Null_Mutex>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Hash_Map_Manager<const char*, Logger_i*, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Entry<const char*, Logger_i*>
+#pragma instantiate ACE_Hash_Map_Entry <const char *, Logger_i *>
+#pragma instantiate ACE_Hash_Map_Manager <const char *, Logger_i *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base <const char *, Logger_i *, ACE_Null_Mutex>;
+#pragma instantiate ACE_Hash_Map_Iterator <const char *, Logger_i *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator <const char *, Logger_i *, ACE_Null_Mutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
