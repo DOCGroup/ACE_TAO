@@ -86,7 +86,8 @@ PACE_INLINE
 int
 pace_srand (unsigned int seed)
 {
-  return srand (seed);
+  srand (seed);
+  return;
 }
 
 PACE_INLINE
