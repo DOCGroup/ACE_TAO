@@ -59,7 +59,8 @@ ACE_ARGV::ACE_ARGV (const ASYS_TCHAR buf[],
     argc_ (0),
     argv_ (0),
     buf_ (0),
-    length_ (0)
+    length_ (0),
+    queue_ ()
 {
   ACE_TRACE ("ACE_ARGV::ACE_ARGV ASYS_TCHAR[] to ASYS_TCHAR *[]");
 
@@ -85,7 +86,8 @@ ACE_ARGV::ACE_ARGV (ASYS_TCHAR *argv[],
     argc_ (0),
     argv_ (0),
     buf_ (0),
-    length_ (0)
+    length_ (0),
+    queue_ ()
 {
   ACE_TRACE ("ACE_ARGV::ACE_ARGV ASYS_TCHAR*[] to ASYS_TCHAR[]");
 
@@ -153,7 +155,8 @@ ACE_ARGV::ACE_ARGV (ASYS_TCHAR *first_argv[],
     argc_ (0),
     argv_ (0),
     buf_ (0),
-    length_ (0)
+    length_ (0),
+    queue_ ()
 {
   ACE_TRACE ("ACE_ARGV::ACE_ARGV ASYS_TCHAR*[] + ASYS_TCHAR *[] to ASYS_TCHAR[]");
 
@@ -198,7 +201,8 @@ ACE_ARGV::ACE_ARGV (int substitute_env_args)
     argc_ (0),
     argv_ (0),
     buf_ (0),
-    length_ (0)
+    length_ (0),
+    queue_ ()
 {
   ACE_TRACE ("ACE_ARGV::ACE_ARGV Iterative");
 
