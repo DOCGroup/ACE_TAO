@@ -1,3 +1,39 @@
+Tue Sep 15 10:26:45 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/be/be_visitor_array/{cdr_op_ch, cdr_op_cs}.cpp:
+	  
+	  The CDR <<, >> operators now use the <array>_forany type as
+	  parameter. This was necessary to distinguish between a
+	  degenerate pointer versus an array. We use the same strategy as
+	  used by the Any <<= and >>= operators.
+
+	  In addition, for types such as arrays of strings and object
+	  references, the generated implementation for the CDR operators
+	  use the "in" and "inout" types. Special handling is also
+	  necessary for arrays of arrays.
+
+	* TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+
+	  Fields that are array types (typedefined or anonymous) must be
+	  passed using their forany types. Special care must be taken to
+	  distinguish between typedefed arrays and anonymous arrays.
+
+	* TAO_IDL/be/be_visitor_root/cdr_op.cpp:
+
+	  Reactivated the CDR operator code generation. This was
+	  temporarily commented out.
+
+	* tao/CDR>{h, i}: 
+
+	  Added << and >> operators that take the Any's helper classes
+	  like from_boolean, to_boolean and others. This is necessary to
+	  distinguish between these types.
+
+	* tao/IIOP_Object.cpp:
+
+	  There was a local variable called "host" that was hiding the
+	  data member "host". This is now fixed.
+
 Tue Sep 15 10:11:03 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_root/cdr_op.cpp: 

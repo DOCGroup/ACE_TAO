@@ -79,7 +79,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
       //  set the sub state as generating code for the output operator
       this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
       *os << "CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
-          << "const " << node->name () << "_slice *_tao_array)" << be_nl
+          << "const " << node->name () << "_forany &_tao_array)" << be_nl
           << "{" << be_idt_nl;
 
       if (bt->accept (this) == -1)
@@ -96,7 +96,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
       os->indent ();
       this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
       *os << "CORBA::Boolean operator>> (TAO_InputCDR &strm, "
-          << node->name () << "_slice *_tao_array)" << be_nl
+          << node->name () << "_forany &_tao_array)" << be_nl
           << "{" << be_idt_nl;
       if (bt->accept (this) == -1)
         {
@@ -158,8 +158,8 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
 
   // we get here if the "type" of individual elements of the array is a
   // primitive type. In this case, we treat the array as a single dimensional
-  // array (even of it was multi-dimensional), and pass the total length of the
-  // array as a cross product of the dimensions
+  // array (even though it was multi-dimensional), and pass the total length of
+  // the array as a cross product of the dimensions
 
   // index
   unsigned long i;
@@ -257,15 +257,23 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
       switch (this->ctx_->sub_state ())
         {
         case TAO_CodeGen::TAO_CDR_INPUT:
-          *os << " ((char *)_tao_array, ";
+          *os << " ((char *)_tao_array.inout (), ";
           break;
         case TAO_CodeGen::TAO_CDR_OUTPUT:
-          *os << " ((const char *)_tao_array, ";
+          *os << " ((const char *)_tao_array.in (), ";
           break;
         }
       break;
     default:
-      *os << " (_tao_array, ";
+      switch (this->ctx_->sub_state ())
+        {
+        case TAO_CodeGen::TAO_CDR_INPUT:
+          *os << " (_tao_array.inout (), ";
+          break;
+        case TAO_CodeGen::TAO_CDR_OUTPUT:
+          *os << " (_tao_array.in (), ";
+          break;
+        }
       break;
     }
   // generate a product of all the dimensions. This will be the total length of
@@ -284,7 +292,7 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
                             -1);
         }
       if (i != 0)
-        // do not generate the multiplication operator teh first time in
+        // do not generate the multiplication operator the first time in
         *os << "*";
       if (expr->ev ()->et == AST_Expression::EV_ulong)
         {
@@ -410,13 +418,22 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "_tao_marshal_flag = (strm >> _tao_array "; 
+      *os << "_tao_marshal_flag = (strm >> ";
+      // handle the array of array case in which case, we need to pass the
+      // forany type
+      if (bt->node_type () == AST_Decl::NT_array)
+        {
+          *os << bt->name () << "_forany ((" << bt->name () 
+              << "_slice *) ";
+        }
+      *os << "_tao_array "; 
       for (i = 0; i < node->n_dims (); i++)
         {
           *os << "[i" << i << "]";
         }
       switch (bt->node_type ())
         {
+          // the following have a _var type and must be handled in a special way
         case AST_Decl::NT_string:
         case AST_Decl::NT_interface:
         case AST_Decl::NT_interface_fwd:
@@ -441,16 +458,30 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
               }
           }
         }
+      if (bt->node_type () == AST_Decl::NT_array)
+        {
+          *os << ")";
+        }
       *os << ");";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "_tao_marshal_flag = (strm << _tao_array "; 
+      *os << "_tao_marshal_flag = (strm << ";
+      // handle the array of array case in which case, we need to pass the
+      // forany type
+      if (bt->node_type () == AST_Decl::NT_array)
+        {
+          *os << bt->name () << "_forany ((" << bt->name () 
+              << "_slice *) ";
+        }
+      *os << "_tao_array "; 
       for (i = 0; i < node->n_dims (); i++)
         {
           *os << "[i" << i << "]";
         }
       switch (bt->node_type ())
         {
+          // the follwoing three have a _var type and must be handled in a
+          // special way
         case AST_Decl::NT_string:
         case AST_Decl::NT_interface:
         case AST_Decl::NT_interface_fwd:
@@ -472,6 +503,11 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
                 *os << ".in ()";
               }
           }
+        }
+      if (bt->node_type () == AST_Decl::NT_array)
+        {
+          // array of array case
+          *os << ")";
         }
       *os << ");";
       break;
