@@ -1,9 +1,15 @@
+Thu Jun 21 08:27:40 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/config-aix-4.x.h:
+
+          Fix for 64-bit AIX builds.
+
 Thu Jun 21 08:00:01 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * apps/Gateway/Peer/Peer.h:
         * apps/JAWS/clients/Blobby/Blob.h:
         * apps/JAWS/clients/Caching/http_handler.h:
-        * examples/ASX/Event_Server/Transceiver/transceiver.cpp:   
+        * examples/ASX/Event_Server/Transceiver/transceiver.cpp:
         * examples/Connection/misc/test_upipe.cpp:
 
          Moved #include "ace/Connector.h" to be after #include

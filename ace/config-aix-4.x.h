@@ -107,7 +107,11 @@
 #if (ACE_AIX_MINOR_VERS < 2)
 #  define ACE_HAS_AIX_BROKEN_SOCKET_HEADER
 #else
-#  define ACE_HAS_SIZET_SOCKET_LEN
+#  if (ACE_AIX_MINOR_VERS == 2)
+#    define ACE_HAS_SIZET_SOCKET_LEN
+#  else
+#    define ACE_HAS_SOCKLEN_T   
+#  endif
 #  define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 #endif /* ACE_AIX_MINOR_VERS < 2 */
 
