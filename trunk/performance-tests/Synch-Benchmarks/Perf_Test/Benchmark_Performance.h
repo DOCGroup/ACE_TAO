@@ -13,9 +13,17 @@
 extern int buffer;
 extern ACE_Svc_Export int synch_count;
 
+class SYNCHLIB_Export Benchmark_Performance_Test_Base : public Benchmark_Base
+{
+  // = TITLE
+  //     This class identifies itself as Benmarking Performance Test class.
+protected:
+  Benchmark_Performance_Test_Base (void);
+};
+
 class ACE_Svc_Export Benchmark_Performance : public Benchmark_Performance_Test_Base
 {
-  // TITLE
+  // = TITLE
   //   Base class for all the timing tests.
 public:
   // = Hooks inherited from ACE_Service_Object.
