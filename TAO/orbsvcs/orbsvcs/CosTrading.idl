@@ -2,7 +2,7 @@
 
 // ========================================================================
 // $Id$
-// 
+//
 // = FILENAME
 //   CosTrading.idl
 //
@@ -10,7 +10,7 @@
 //   Trader  Service v1.0 described in CORBAservices: Common Object
 //   Services Specification, chapter 16 OMG IDL for Trading Function
 //   Module, p 16-74
-// 
+//
 // ========================================================================
 
 
@@ -54,8 +54,8 @@ module CosTrading {
 	typedef Istring Constraint;
 
 	enum FollowOption {
-		local_only, 
-		if_no_local, 
+		local_only,
+		if_no_local,
 		always
 	};
 
@@ -115,7 +115,7 @@ module CosTrading {
 	exception InvalidLookupRef {
 		Lookup target;
 	};
-	  
+
 	exception IllegalOfferId {
 		OfferId id;
 	};
@@ -195,7 +195,7 @@ module CosTrading {
 			Policy the_policy;
 		};
 
-		void query ( 
+		void query (
 			in ServiceTypeName type,
 			in Constraint constr,
 			in Preference pref,
@@ -274,11 +274,11 @@ module CosTrading {
 			in Object reference,
 			in ServiceTypeName type,
 			in PropertySeq properties
-		) raises ( 
+		) raises (
 			InvalidObjectRef,
 			IllegalServiceType,
 			UnknownServiceType,
-			InterfaceTypeMismatch, 
+			InterfaceTypeMismatch,
 			IllegalPropertyName, // e.g. prop_name = "<foo-bar"
 			PropertyTypeMismatch,
 			ReadonlyDynamicProperty,
@@ -306,9 +306,9 @@ module CosTrading {
 			in OfferId id,
 			in PropertyNameSeq del_list,
 			in PropertySeq modify_list
-		) raises ( 
+		) raises (
 			NotImplemented,
-			IllegalOfferId, 
+			IllegalOfferId,
 			UnknownOfferId,
 			ProxyOfferId,
 			IllegalPropertyName,
@@ -369,12 +369,12 @@ module CosTrading {
 			FollowOption max_link_follow_policy;
 		};
 
-		void add_link ( 
+		void add_link (
 			in LinkName name,
 			in Lookup target,
 			in FollowOption def_pass_on_follow_rule,
 			in FollowOption limiting_follow_rule
-		) raises ( 
+		) raises (
 			IllegalLinkName,
 			DuplicateLinkName,
 			InvalidLookupRef, // e.g. nil
@@ -398,11 +398,11 @@ module CosTrading {
 
 		LinkNameSeq list_links ( );
 
-		void modify_link ( 
+		void modify_link (
 			in LinkName name,
 			in FollowOption def_pass_on_follow_rule,
 			in FollowOption limiting_follow_rule
-		) raises ( 
+		) raises (
 			IllegalLinkName,
 			UnknownLinkName,
 			DefaultFollowTooPermissive,
@@ -414,7 +414,7 @@ module CosTrading {
 
 		typedef Istring ConstraintRecipe;
 
-		struct ProxyInfo { 
+		struct ProxyInfo {
 			ServiceTypeName type;
 			Lookup target;
 			PropertySeq properties;
@@ -670,7 +670,7 @@ module CosTradingRepos {
 			CosTrading::UnknownServiceType,
 			DuplicateServiceTypeName
 		);
-				
+
 		void remove_type (
 			in CosTrading::ServiceTypeName name
 		) raises (

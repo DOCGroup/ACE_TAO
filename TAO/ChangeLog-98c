@@ -1,3 +1,276 @@
+Wed Jun 17 22:03:42 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL: Massive restructuring of directories for be_include and
+	the "be" directories. Since each individual file was getting too big
+	with a large number of visitors, we have now subdivided them and
+	grouped them under individual subdirectories. 
+
+	The original header files (e.g., be_include/be_visitor_interface.h), 
+	now only include their subdivided header files. This way the rest of
+	the code does not need to "#include" every individual file. They
+	still deal with the higher level include files only. This avoids
+	any modification of existing code.
+
+	The new directory structure for the be_include directory and the
+	newly added files are shown below:
+
+
+                be_visitor_argument/arglist.h
+                be_visitor_argument/argument.h
+                be_visitor_argument/docall_cs.h
+                be_visitor_argument/marshal_ss.h
+                be_visitor_argument/post_docall_cs.h
+                be_visitor_argument/post_marshal_ss.h
+                be_visitor_argument/post_upcall_ss.h
+                be_visitor_argument/pre_docall_cs.h
+                be_visitor_argument/pre_upcall_ss.h
+                be_visitor_argument/upcall_ss.h
+                be_visitor_argument/vardecl_ss.h
+                be_visitor_array/any_op_ch.h
+                be_visitor_array/any_op_cs.h
+                be_visitor_array/array.h
+                be_visitor_array/array_ch.h
+                be_visitor_array/array_ci.h
+                be_visitor_array/array_cs.h
+                be_visitor_attribute/attribute.h
+                be_visitor_constant/constant_ch.h
+                be_visitor_constant/constant_cs.h
+                be_visitor_enum/any_op_ch.h
+                be_visitor_enum/any_op_cs.h
+                be_visitor_enum/enum_ch.h
+                be_visitor_enum/enum_cs.h
+                be_visitor_exception/any_op_ch.h
+                be_visitor_exception/any_op_cs.h
+                be_visitor_exception/ctor.h
+                be_visitor_exception/ctor_assign.h
+                be_visitor_exception/exception.h
+                be_visitor_exception/exception_ch.h
+                be_visitor_exception/exception_ci.h
+                be_visitor_exception/exception_cs.h
+                be_visitor_exception/exception_ctor.h
+                be_visitor_field/field_ch.h
+                be_visitor_field/field_ci.h
+                be_visitor_field/field_cs.h
+                be_visitor_interface/any_op_ch.h
+                be_visitor_interface/any_op_cs.h
+                be_visitor_interface/collocated_sh.h
+                be_visitor_interface/collocated_ss.h
+                be_visitor_interface/interface.h
+                be_visitor_interface/interface_ch.h
+                be_visitor_interface/interface_ci.h
+                be_visitor_interface/interface_cs.h
+                be_visitor_interface/interface_sh.h
+                be_visitor_interface/interface_si.h
+                be_visitor_interface/interface_ss.h
+                be_visitor_interface/tie_sh.h
+                be_visitor_interface/tie_si.h
+                be_visitor_interface_fwd/interface_fwd_ch.h
+                be_visitor_interface_fwd/interface_fwd_ci.h
+                be_visitor_module/any_op.h
+                be_visitor_module/module.h
+                be_visitor_module/module_ch.h
+                be_visitor_module/module_sh.h
+                be_visitor_operation/arglist.h
+                be_visitor_operation/argument.h
+                be_visitor_operation/collocated_sh.h
+                be_visitor_operation/collocated_ss.h
+                be_visitor_operation/exceptlist_cs.h
+                be_visitor_operation/operation_ch.h
+                be_visitor_operation/operation_cs.h
+                be_visitor_operation/operation_sh.h
+                be_visitor_operation/operation_ss.h
+                be_visitor_operation/rettype.h
+                be_visitor_operation/rettype_assign_ss.h
+                be_visitor_operation/rettype_docall_cs.h
+                be_visitor_operation/rettype_marshal_ss.h
+                be_visitor_operation/rettype_post_docall_cs.h
+                be_visitor_operation/rettype_post_upcall_ss.h
+                be_visitor_operation/rettype_pre_docall_cs.h
+                be_visitor_operation/rettype_return_cs.h
+                be_visitor_operation/rettype_vardecl_cs.h
+                be_visitor_operation/rettype_vardecl_ss.h
+                be_visitor_operation/tie_sh.h
+                be_visitor_operation/tie_si.h
+                be_visitor_root/any_op.h
+                be_visitor_root/root.h
+                be_visitor_root/root_ch.h
+                be_visitor_root/root_ci.h
+                be_visitor_root/root_cs.h
+                be_visitor_root/root_sh.h
+                be_visitor_root/root_si.h
+                be_visitor_root/root_ss.h
+                be_visitor_sequence/any_op_ch.h
+                be_visitor_sequence/any_op_cs.h
+                be_visitor_sequence/buffer_type.h
+                be_visitor_sequence/elemtype.h
+                be_visitor_sequence/sequence_base.h
+                be_visitor_sequence/sequence_ch.h
+                be_visitor_sequence/sequence_ci.h
+                be_visitor_sequence/sequence_cs.h
+                be_visitor_structure/any_op_ch.h
+                be_visitor_structure/any_op_cs.h
+                be_visitor_structure/structure.h
+                be_visitor_structure/structure_ch.h
+                be_visitor_structure/structure_ci.h
+                be_visitor_structure/structure_cs.h
+                be_visitor_typecode/typecode_decl.h
+                be_visitor_typecode/typecode_defn.h
+                be_visitor_typedef/any_op_ch.h
+                be_visitor_typedef/any_op_cs.h
+                be_visitor_typedef/typedef.h
+                be_visitor_typedef/typedef_ch.h
+                be_visitor_typedef/typedef_ci.h
+                be_visitor_typedef/typedef_cs.h
+                be_visitor_union/any_op_ch.h
+                be_visitor_union/any_op_cs.h
+                be_visitor_union/discriminant_ch.h
+                be_visitor_union/discriminant_ci.h
+                be_visitor_union/discriminant_cs.h
+                be_visitor_union/union.h
+                be_visitor_union/union_ch.h
+                be_visitor_union/union_ci.h
+                be_visitor_union/union_cs.h
+                be_visitor_union_branch/private_ch.h
+                be_visitor_union_branch/public_assign_cs.h
+                be_visitor_union_branch/public_ch.h
+                be_visitor_union_branch/public_ci.h
+                be_visitor_union_branch/public_cs.h
+	
+	The same logic of breaking up individual files and grouping them
+	under individual subdirectories is used for the be_visitor_*.cpp
+	files. Each individual file "#include"s their individual
+	subfiles. This way, we do not have to modify the Makefile to
+	compile individual file. In addition, the Makefile would have
+	required each individual subdirectory in its VPATH. Furthermore,
+	it does not compile files with the same name in different
+	directories. The new structure is shown below.
+
+                be_visitor_argument/arglist.cpp
+                be_visitor_argument/argument.cpp
+                be_visitor_argument/docall_cs.cpp
+                be_visitor_argument/marshal_ss.cpp
+                be_visitor_argument/post_docall_cs.cpp
+                be_visitor_argument/post_marshal_ss.cpp
+                be_visitor_argument/post_upcall_ss.cpp
+                be_visitor_argument/pre_docall_cs.cpp
+                be_visitor_argument/pre_upcall_ss.cpp
+                be_visitor_argument/upcall_ss.cpp
+                be_visitor_argument/vardecl_ss.cpp
+                be_visitor_array/any_op_ch.cpp
+                be_visitor_array/any_op_cs.cpp
+                be_visitor_array/array.cpp
+                be_visitor_array/array_ch.cpp
+                be_visitor_array/array_ci.cpp
+                be_visitor_array/array_cs.cpp
+                be_visitor_attribute/attribute.cpp
+                be_visitor_constant/constant_ch.cpp
+                be_visitor_constant/constant_cs.cpp
+                be_visitor_enum/any_op_ch.cpp
+                be_visitor_enum/any_op_cs.cpp
+                be_visitor_enum/enum_ch.cpp
+                be_visitor_enum/enum_cs.cpp
+                be_visitor_exception/any_op_ch.cpp
+                be_visitor_exception/any_op_cs.cpp
+                be_visitor_exception/ctor_assign.cpp
+                be_visitor_exception/exception.cpp
+                be_visitor_exception/exception_ch.cpp
+                be_visitor_exception/exception_ci.cpp
+                be_visitor_exception/exception_cs.cpp
+                be_visitor_exception/exception_ctor.cpp
+                be_visitor_field/field_ch.cpp
+                be_visitor_field/field_ci.cpp
+                be_visitor_field/field_cs.cpp
+                be_visitor_interface/any_op_ch.cpp
+                be_visitor_interface/any_op_cs.cpp
+                be_visitor_interface/collocated_sh.cpp
+                be_visitor_interface/collocated_ss.cpp
+                be_visitor_interface/interface.cpp
+                be_visitor_interface/interface_ch.cpp
+                be_visitor_interface/interface_ci.cpp
+                be_visitor_interface/interface_cs.cpp
+                be_visitor_interface/interface_sh.cpp
+                be_visitor_interface/interface_si.cpp
+                be_visitor_interface/interface_ss.cpp
+                be_visitor_interface/tie_sh.cpp
+                be_visitor_interface/tie_si.cpp
+                be_visitor_interface_fwd/interface_fwd_ch.cpp
+                be_visitor_interface_fwd/interface_fwd_ci.cpp
+                be_visitor_module/any_op.cpp
+                be_visitor_module/module.cpp
+                be_visitor_module/module_ch.cpp
+                be_visitor_module/module_sh.cpp
+                be_visitor_operation/arglist.cpp
+                be_visitor_operation/argument.cpp
+                be_visitor_operation/collocated_sh.cpp
+                be_visitor_operation/collocated_ss.cpp
+                be_visitor_operation/exceptlist_cs.cpp
+                be_visitor_operation/operation_ch.cpp
+                be_visitor_operation/operation_cs.cpp
+                be_visitor_operation/operation_sh.cpp
+                be_visitor_operation/operation_ss.cpp
+                be_visitor_operation/rettype.cpp
+                be_visitor_operation/rettype_assign_ss.cpp
+                be_visitor_operation/rettype_docall_cs.cpp
+                be_visitor_operation/rettype_marshal_ss.cpp
+                be_visitor_operation/rettype_post_docall_cs.cpp
+                be_visitor_operation/rettype_post_upcall_ss.cpp
+                be_visitor_operation/rettype_pre_docall_cs.cpp
+                be_visitor_operation/rettype_return_cs.cpp
+                be_visitor_operation/rettype_vardecl_cs.cpp
+                be_visitor_operation/rettype_vardecl_ss.cpp
+                be_visitor_operation/tie_sh.cpp
+                be_visitor_operation/tie_si.cpp
+                be_visitor_root/any_op.cpp
+                be_visitor_root/root.cpp
+                be_visitor_root/root_ch.cpp
+                be_visitor_root/root_ci.cpp
+                be_visitor_root/root_cs.cpp
+                be_visitor_root/root_sh.cpp
+                be_visitor_root/root_si.cpp
+                be_visitor_root/root_ss.cpp
+                be_visitor_sequence/any_op_ch.cpp
+                be_visitor_sequence/any_op_cs.cpp
+                be_visitor_sequence/buffer_type.cpp
+                be_visitor_sequence/elemtype.cpp
+                be_visitor_sequence/sequence_base.cpp
+                be_visitor_sequence/sequence_ch.cpp
+                be_visitor_sequence/sequence_ci.cpp
+                be_visitor_sequence/sequence_cs.cpp
+                be_visitor_structure/any_op_ch.cpp
+                be_visitor_structure/any_op_cs.cpp
+                be_visitor_structure/structure.cpp
+                be_visitor_structure/structure_ch.cpp
+                be_visitor_structure/structure_ci.cpp
+                be_visitor_structure/structure_cs.cpp
+                be_visitor_typecode/typecode_decl.cpp
+                be_visitor_typecode/typecode_defn.cpp
+                be_visitor_typedef/any_op_ch.cpp
+                be_visitor_typedef/any_op_cs.cpp
+                be_visitor_typedef/typedef.cpp
+                be_visitor_typedef/typedef_ch.cpp
+                be_visitor_typedef/typedef_ci.cpp
+                be_visitor_typedef/typedef_cs.cpp
+                be_visitor_union/any_op_ch.cpp
+                be_visitor_union/any_op_cs.cpp
+                be_visitor_union/discriminant_ch.cpp
+                be_visitor_union/discriminant_ci.cpp
+                be_visitor_union/discriminant_cs.cpp
+                be_visitor_union/union.cpp
+                be_visitor_union/union_ch.cpp
+                be_visitor_union/union_ci.cpp
+                be_visitor_union/union_cs.cpp
+                be_visitor_union_branch/private_ch.cpp
+                be_visitor_union_branch/public_assign_cs.cpp
+                be_visitor_union_branch/public_ch.cpp
+                be_visitor_union_branch/public_ci.cpp
+                be_visitor_union_branch/public_cs.cpp
+
+	* TAO_IDL/be_include
+	  TAO_IDL/be
+
+	  Renamed be_visitor_args.{h, cpp} to be_visitor_argument.{h, cpp}
+	  to reflect the correct name used by the AST node.
+	
 Wed Jun 17 23:29:06 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
