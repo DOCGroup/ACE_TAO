@@ -1,3 +1,16 @@
+	* TAO/tests/Simple/bank : Added the client and server files for this test.
+	/Account_i.cpp
+	/Account_i.h
+	/AccountManager_i.cpp
+	/AccountManager_i.h
+	/Server_i.cpp
+	/Server_i.h
+	/Client_i.cpp
+	/Client_i.h
+	/server.cpp
+	/client.cpp
+	/Bank.idl
+
 1998-09-15  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tests/Simple/echo : Checked in the following files.
