@@ -48,11 +48,16 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
+void
+run_test (Simple_Server_ptr server,
+          CORBA::Environment &ACE_TRY_ENV);
+
 int
 main (int argc, char *argv[])
 {
-  Simple_Server_var server;
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
@@ -91,7 +96,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
       
       // Combined IOR stuff
-      server =
+      Simple_Server_var server =
         Simple_Server::_narrow (merged.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
       
@@ -103,41 +108,66 @@ main (int argc, char *argv[])
                             1);
         }
 
-      // Make a remote call
-      server->remote_call (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "Kill  the primary \n"));
-
-      ACE_OS::sleep (25);
-
-      // Continue making calls
-      server->remote_call (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      run_test (server.in (), ACE_TRY_ENV);
     }
   ACE_CATCHANY
     {
-      // @@ANDY you can uncomment this and see
-      //ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-      //                   "Caught exception:");
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "A COMM failure expected on this platform \n"));
-      ACE_DEBUG ((LM_DEBUG,
-                  "Second attempt\n"));
-
-      server->remote_call (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Shutdwon the other server
-      ACE_DEBUG ((LM_DEBUG,
-                  "Shutting down the other server \n"));
-      server->shutdown ();
-                  
-      return 1;
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Caught an exception \n");
+      return -1;
     }
   ACE_ENDTRY;
-
   return 0;
+}
+
+void run_test (Simple_Server_ptr server,
+               CORBA::Environment &ACE_TRY_ENV)
+{
+  for (int loop = 0; loop < 10; loop++)
+    {
+      ACE_TRY
+        {
+          // Make a remote call
+          server->remote_call (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+          
+          /*ACE_DEBUG ((LM_DEBUG,
+                      "Kill  the primary . . . "));
+          ACE_OS::sleep (25);
+          ACE_DEBUG ((LM_DEBUG, " hope you did\n")); */
+          ACE_DEBUG ((LM_DEBUG,
+                      "I am going to shutdown \n"));
+          server->shutdown (ACE_TRY_ENV);
+	  ACE_TRY_CHECK;
+          ACE_OS::sleep (25);
+        }
+      ACE_CATCH (CORBA::TRANSIENT, t)
+        {
+          if (t.completed () != CORBA::COMPLETED_NO)
+            {
+              ACE_PRINT_EXCEPTION (t, "Unexpected kind of TRANSIENT");
+            }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "The completed status %d\n", t.completed ()));
+              ACE_DEBUG ((LM_DEBUG,
+                          "Automagically re-issuing request on TRANSIENT\n"));
+              ACE_OS::sleep (1);
+            }
+        }
+      ACE_CATCH (CORBA::COMM_FAILURE, f)
+        {
+          ACE_PRINT_EXCEPTION (f, "A (sort of) expected COMM_FAILURE");
+          ACE_DEBUG ((LM_DEBUG,
+                      "Automagically re-issuing request on COMM_FAILURE\n"));
+        }
+      ACE_CATCHANY
+        {
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                               "Unexpected exception");
+          ACE_RETHROW;
+        }
+      ACE_ENDTRY;
+      ACE_CHECK;
+    }
 }

@@ -27,7 +27,8 @@ class Simple_Server_i : public POA_Simple_Server
   //   Implements the Simple_Server interface in test.idl
   //
 public:
-  Simple_Server_i (CORBA::ORB_ptr orb);
+  Simple_Server_i (CORBA::ORB_ptr orb,
+                   PortableServer::POA_ptr poa);
   // ctor
 
   Simple_Server_i (void);
@@ -40,8 +41,12 @@ public:
   void shutdown (CORBA::Environment&)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  PortableServer::POA_ptr _default_POA (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
 private:
   CORBA::ORB_var orb_;
+  PortableServer::POA_ptr poa_;
 };
 
 #if defined(__ACE_INLINE__)

@@ -51,15 +51,57 @@ main (int argc, char *argv[])
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
+      
+      // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      poa_manager->activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+
+      CORBA::PolicyList policies (2);
+      policies.length (2);
+
+      // Lifespan policy
+      policies[0] =
+        root_poa->create_lifespan_policy (PortableServer::PERSISTENT,
+                                          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      
+      policies[1] =
+        root_poa->create_implicit_activation_policy(PortableServer::IMPLICIT_ACTIVATION,
+                                                    ACE_TRY_ENV);
+      // Create the firstPOA under the RootPOA.
+      ACE_CString name = "firstPOA";
+      PortableServer::POA_var first_poa =
+        root_poa->create_POA (name.c_str (),
+                              poa_manager.in (),
+                              policies,
+                              ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Creation of POAs is over. Destroy the Policy objects.
+      for (CORBA::ULong i = 0;
+           i < policies.length ();
+           ++i)
+        {
+          policies[i]->destroy (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Simple_Server_i server_impl (orb.in ());
+      Simple_Server_i server_impl (orb.in (),
+                                   first_poa.in ());
+
+      //PortableServer::ObjectId_var first_oid =
+      //first_poa->activate_object (&server_impl,
+      //                            ACE_TRY_ENV);
+      //ACE_TRY_CHECK;
 
       Simple_Server_var server =
         server_impl._this (ACE_TRY_ENV);
@@ -84,8 +126,6 @@ main (int argc, char *argv[])
 	  ACE_OS::fclose (output_file);
 	}
 
-      poa_manager->activate (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
 
       if (orb->run () == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
