@@ -2,6 +2,7 @@
 /*  A Bison parser, made from Svc_Conf.y
     by GNU Bison version 1.28  */
 
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
 #define ACE_YYBISON 1  /* Identify Bison output.  */
 
 #define ACE_DYNAMIC     257
@@ -18,7 +19,7 @@
 #define ACE_PATHNAME    268
 #define ACE_IDENT       269
 #define ACE_STRING      270
-
+#endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 
 // $Id$
 
@@ -31,6 +32,7 @@ ACE_RCSID (ace,
            Svc_Conf_y,
            "$Id$")
 
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
 // Prototypes.
 static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,
                                         ACE_Static_Node *svc_type);
@@ -1403,3 +1405,4 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return ace_yyparse (&param);
 }
 #endif /* DEBUGGING */
+#endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */

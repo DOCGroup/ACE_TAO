@@ -13,7 +13,7 @@ FILES   = Entity_Manager \
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC    = $(addsuffix .cpp,$(FILES))
 
-LIBS   += $(ACELIB) -lACEXML
+LIBS   += -lACEXML $(ACELIB)
 
 BUILD   = $(VLIB) $(VSHLIB)
 

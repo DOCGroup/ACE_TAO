@@ -2,6 +2,7 @@
 
 #include "ace/Svc_Conf.h"
 
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
 #include "ace/Svc_Conf_Lexer_Guard.h"
 
 ACE_RCSID (ace,
@@ -34,3 +35,4 @@ ACE_Svc_Conf_Lexer_Guard::~ACE_Svc_Conf_Lexer_Guard (void)
 
   ::ace_yy_pop_buffer (this->buffer_);
 }
+#endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
