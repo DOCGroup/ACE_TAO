@@ -79,9 +79,6 @@ ACE_ReactorEx *ACE_Service_Config::reactorEx_ = 0;
 // only delete it safely if we created it!)
 int ACE_Service_Config::delete_reactorEx_ = 0;
 
-// Make this the default.
-typedef ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> ACE_DEFAULT_MALLOC;
-
 // Terminate the eventloop.
 sig_atomic_t ACE_Service_Config::end_reactor_event_loop_ = 0;
 sig_atomic_t ACE_Service_Config::end_proactor_event_loop_ = 0;
@@ -132,7 +129,7 @@ ACE_Service_Config::alloc (void)
   if (ACE_Service_Config::allocator_ == 0)
     {
       ACE_NEW_RETURN (ACE_Service_Config::allocator_,
-		      ACE_Allocator_Adapter <ACE_DEFAULT_MALLOC>,
+		      ACE_New_Allocator,
 		      0);
       ACE_Service_Config::delete_allocator_ = 1;
     }
