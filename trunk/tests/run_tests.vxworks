@@ -108,10 +108,9 @@ ld < Reader_Writer_Test
 write 2, "Reader_Writer_Test ", 19
 ace_main; unld "Reader_Writer_Test"
 
-#### Sometimes hangs
-#### ld < Priority_Reactor_Test
-#### write 2, "Priority_Reactor_Test ", 22
-#### ace_main; unld "Priority_Reactor_Test"
+ld < Priority_Reactor_Test
+write 2, "Priority_Reactor_Test ", 22
+ace_main; unld "Priority_Reactor_Test"
 
 ld < SOCK_Test
 write 2, "SOCK_Test ", 10
@@ -145,10 +144,9 @@ ld < Map_Manager_Test
 write 2, "Map_Manager_Test ", 17
 ace_main; unld "Map_Manager_Test"
 
-#### This test usually runs properly, but sometimes never returns:
-#### ld < Message_Queue_Test
-#### write 2, "Message_Queue_Test ", 19
-#### ace_main; unld "Message_Queue_Test"
+ld < Message_Queue_Test
+write 2, "Message_Queue_Test ", 19
+ace_main; unld "Message_Queue_Test"
 
 ld < Message_Queue_Notifications_Test
 write 2, "Message_Queue_Notifications_Test ", 33
