@@ -1,3 +1,16 @@
+Tue Aug 14 10:56:01 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp:
+
+          Added global qualifier '::' to the generation of the
+          full names for an operation return type in the stub header
+          file, return value allocation in the skeleton body, and
+          ancestors in _tao_QueryInterface(). This addition helps
+          some compilers when dealing with nested classes. Thanks 
+          to gduzan@bbn.com for reporting the bug.
+
 Mon Aug 13 20:09:24 2001  Balachandran  <bala@cs.wustl.edu>
 
         * TAO version 1.1.19 released.
