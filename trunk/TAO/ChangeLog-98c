@@ -1,3 +1,10 @@
+1998-05-12  Torben Worm  <tworm@cumbia.cs.wustl.edu>
+
+	* Reordered initializers and added virtual destructors to
+	  the files orbsvcs/tests/Concurrency/* files.
+	  Updated README files in orbsvcs/tests/Concurrency and
+	  orbsvcs/Concurrency_Service
+
 Mon May 11 18:11:03 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tests/Param_Test/README:
