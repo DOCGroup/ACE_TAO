@@ -975,7 +975,7 @@ TAO_AV_UDP_Object::send_frame (const iovec *iov,
                                TAO_AV_frame_info * /*frame_info*/)
 {
   int result = this->transport_->send (iov,iovcnt);
-  if (result < 0);
+  if (result < 0)
     return result;
   return 0;  
 }

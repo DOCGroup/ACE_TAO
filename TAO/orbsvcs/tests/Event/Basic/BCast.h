@@ -16,6 +16,8 @@
 #include "Driver.h"
 #include "orbsvcs/RtecUDPAdminS.h"
 
+class ACE_INET_Addr;
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */

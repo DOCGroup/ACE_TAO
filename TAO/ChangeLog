@@ -1,3 +1,36 @@
+Mon Aug 11 19:04:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/orbsvcs/AV/UDP.cpp:
+          Removed a spurious ";" from the end of an if statement.
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
+          Changed an ACE_ENV_ARG_DECL to ACE_ENV_ARG_DECL_NOT_USED to
+          remove a warning.
+
+        * orbsvcs/orbsvcs/IFRService/ComponentContainer_i.cpp:
+          Added #include SString.h needed due to recent subsetting.
+
+        * orbsvcs/tests/Event/Basic/BCast.cpp:
+          Added #include INET_Addr.h needed due to recent subsetting.
+
+        * orbsvcs/tests/Event/Basic/BCast.h:
+          Added forward declaration of ACE_INET_Addr needed due to recent
+          subsetting.
+
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.cpp:
+          Added in() to IORM in call to _narrow() since it's a *_var type,
+          and #ifdef'd away the entire file if TAO_HAS_INTERCEPTORS != 1.
+
+        * orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
+          Added in() to IORM in call to _narrow() since it's a *_var type.
+
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/server.cpp:
+          Removed ACE_TRY_NEW_ENV block since LB_server's interface
+          doesn't include exceptions and thus they aren't needed.
+
+        * performance-tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:
+          Added #include ACE.h due to recent subsetting.
+
 Mon Aug 11 14:44:00 UTC 2003  Stephen Torri storri@cse.wustl.edu
 
 	* orbsrvcs/orbsvcs/Metrics/Metrics_LocalCache.h:

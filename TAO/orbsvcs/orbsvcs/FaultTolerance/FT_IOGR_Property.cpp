@@ -328,7 +328,7 @@ TAO_FT_IOGR_Property::get_primary_profile (
 CORBA::Boolean
 TAO_FT_IOGR_Property::remove_primary_tag (
     CORBA::Object_ptr &iogr
-    ACE_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the MProfile

@@ -6,6 +6,7 @@
 #include "orbsvcs/Event/ECG_Mcast_Gateway.h"
 #include "tao/ORB_Core.h"
 #include "ace/Arg_Shifter.h"
+#include "ace/INET_Addr.h"
 
 ACE_RCSID(EC_Tests_Basic, BCast, "$Id$")
 
