@@ -120,6 +120,7 @@ PIC		= +Z
 PRELIB          = $(COMPILE.cc) +inst_close +inst_auto $^
 AR              = /usr/ccs/bin/ar
 ARFLAGS		= ruv
+AREXTRA         = $?
 RANLIB		= echo
 LDFLAGS		= -Wl,+s -z
 SOFLAGS		+= -b +inst_none
