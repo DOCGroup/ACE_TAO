@@ -1,3 +1,10 @@
+Fri Dec 3 12:54:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-vxworks5.x.h:
+          Added _GLIBCPP_USE_LONG_LONG for GCC 3.3+ since it is not defined
+          by the compiler itself. This solves problems with long long support
+	  in standard C++ includes.
+
 Fri Dec  3 11:50:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Timeprobe_T.cpp:
