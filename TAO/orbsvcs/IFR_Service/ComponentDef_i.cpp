@@ -62,7 +62,7 @@ TAO_ComponentDef_i::supported_interfaces (CORBA::Environment & /* ACE_TRY_ENV */
 
 void 
 TAO_ComponentDef_i::supported_interfaces (
-    const IR::InterfaceDefSeq &supported_interfaces,
+    const IR::InterfaceDefSeq & /* supported_interfaces */,
     CORBA::Environment & /* ACE_TRY_ENV */
   )
     ACE_THROW_SPEC ((CORBA::SystemException))

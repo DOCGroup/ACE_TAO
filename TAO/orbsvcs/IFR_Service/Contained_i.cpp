@@ -253,7 +253,7 @@ TAO_Contained_i::defined_in (CORBA::Environment &ACE_TRY_ENV)
 }
 
 char *
-TAO_Contained_i::absolute_name (CORBA::Environment &ACE_TRY_ENV)
+TAO_Contained_i::absolute_name (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 { 
   ACE_TString absolute_name;
@@ -265,7 +265,7 @@ TAO_Contained_i::absolute_name (CORBA::Environment &ACE_TRY_ENV)
 }
 
 IR::Repository_ptr 
-TAO_Contained_i::containing_repository (CORBA::Environment &ACE_TRY_ENV)
+TAO_Contained_i::containing_repository (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 { 
   return this->repo_->repo_objref ();
