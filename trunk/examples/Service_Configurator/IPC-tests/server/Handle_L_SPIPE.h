@@ -8,7 +8,7 @@
 #define _HANDLE_L_SPIPE_H
 
 #include "ace/Service_Config.h"
-#include "ace/Service_Record.h"
+#include "ace/Service_Types.h"
 #include "ace/SPIPE_Acceptor.h"
 
 #if defined (ACE_HAS_STREAM_PIPES)

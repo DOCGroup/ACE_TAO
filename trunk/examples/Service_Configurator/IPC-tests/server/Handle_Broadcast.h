@@ -7,7 +7,7 @@
 #define _HANDLE_BROADCAST_H
 
 #include "ace/Service_Config.h"
-#include "ace/Service_Record.h"
+#include "ace/Service_Types.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram.h"
 

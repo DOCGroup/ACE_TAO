@@ -7,7 +7,7 @@
 #define _HANDLE_TIMEOUT_H
 
 #include "ace/Service_Config.h"
-#include "ace/Service_Record.h"
+#include "ace/Service_Types.h"
 
 class Handle_Timeout : public ACE_Service_Object
 {

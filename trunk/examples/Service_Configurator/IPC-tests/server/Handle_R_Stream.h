@@ -7,7 +7,7 @@
 #define _HANDLE_R_STREAM_H
 
 #include "ace/Service_Config.h"
-#include "ace/Service_Record.h"
+#include "ace/Service_Types.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/INET_Addr.h"
