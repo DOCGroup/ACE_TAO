@@ -42,8 +42,8 @@
  *INDIRECT AND CONSEQUENTIAL DAMAGES, EVEN IF SUN HAS BEEN ADVISED OF THE
  *POSSIBILITY OF SUCH DAMAGES.
  *
- *SunSoft, Inc.  
- *2550 Garcia Avenue 
+ *SunSoft, Inc.
+ *2550 Garcia Avenue
  *Mountain View, California  94043
  *
  *

@@ -12,7 +12,7 @@
 //
 // = DESCRIPTION
 //    Visitor generating AMI stub code for Operation node in the
-//    client header.  
+//    client header.
 //
 // = AUTHOR
 //    Alexander Babu Arulanthu <alex@cs.wustl.edu>
@@ -26,12 +26,12 @@
 #include "be_visitor_operation.h"
 
 ACE_RCSID(be_visitor_operation, operation_ami_ch, "$Id$")
-  
+
 
 // ******************************************************
 // Visitor for generating AMI stub for "operation" in client header.
 // ******************************************************
-  
+
 be_visitor_operation_ami_ch::be_visitor_operation_ami_ch (be_visitor_context *ctx)
   : be_visitor_operation (ctx)
 {
@@ -49,7 +49,7 @@ be_visitor_operation_ami_ch::visit_operation (be_operation *node)
     {
       return 0;
     }
-  
+
   // Output stream.
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
@@ -59,9 +59,9 @@ be_visitor_operation_ami_ch::visit_operation (be_operation *node)
 
   // STEP I: Return type is void.
   *os << "void ";
-  
+
   // STEP 2: Generate the operation name.
-  
+
   // First the sendc prefix.
   *os << "sendc_";
 

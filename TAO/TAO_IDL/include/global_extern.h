@@ -69,7 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // global_extern.hh - Global data for the IDL compiler
 
-extern TAO_IDL_FE_Export IDL_GlobalData *idl_global;    
+extern TAO_IDL_FE_Export IDL_GlobalData *idl_global;
 // Contains all "global" data
 
 // Global functions for the IDL compiler

@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -72,7 +72,7 @@ ACE_RCSID(fe, fe_declarator, "$Id$")
 
 // Constructor(s) and destructor
 
-FE_Declarator::FE_Declarator (UTL_ScopedName *n, 
+FE_Declarator::FE_Declarator (UTL_ScopedName *n,
                               DeclaratorType dt,
 			                        AST_Decl *cp)
  : pd_complex_part (cp),
@@ -109,24 +109,24 @@ FE_Declarator::compose (AST_Decl *d)
         }
     }
 
-  if (ct == 0) 
+  if (ct == 0)
     {
       idl_global->err ()->not_a_type (d);
       return 0;
     }
 
-  if (ct->node_type () == AST_Decl::NT_except) 
+  if (ct->node_type () == AST_Decl::NT_except)
     {
       idl_global->err ()->not_a_type (d);
       return 0;
     }
 
-  if (this->pd_decl_type == FD_simple || this->pd_complex_part == 0) 
+  if (this->pd_decl_type == FD_simple || this->pd_complex_part == 0)
     {
       return ct;
     }
 
-  if (this->pd_complex_part->node_type () == AST_Decl::NT_array) 
+  if (this->pd_complex_part->node_type () == AST_Decl::NT_array)
     {
       arr = AST_Array::narrow_from_decl (this->pd_complex_part);
       arr->set_base_type (ct);

@@ -12,11 +12,11 @@
 //
 // = DESCRIPTION
 //    Visitor for generating code for AMI Handler call back operations
-//    in client header.  
+//    in client header.
 //
 // = AUTHOR
 //    Aniruddha Gokhale and Alexander Babu Arulanthu
-//    <alex@cs.wustl.edu> 
+//    <alex@cs.wustl.edu>
 //
 // ============================================================================
 

@@ -11,7 +11,7 @@
 //    valuetype_init_arglist_ch.cpp
 //
 // = DESCRIPTION
-//    Visitor generating code for the parameter list of the OBV factory 
+//    Visitor generating code for the parameter list of the OBV factory
 //    signature.
 //
 // = AUTHOR

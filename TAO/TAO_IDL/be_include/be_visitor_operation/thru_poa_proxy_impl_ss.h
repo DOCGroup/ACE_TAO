@@ -44,8 +44,8 @@ public:
 
   virtual int visit_operation (be_operation *node);
   // visit operation_thru_poa_proxy_impl.
-  
-  
+
+
   virtual int gen_invoke (be_visitor_context &ctx, be_operation *node);
   // A helper method to generate operation invocation code.
 

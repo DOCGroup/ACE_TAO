@@ -31,7 +31,7 @@ be_module::be_module (void)
 
 be_module::be_module (UTL_ScopedName *n)
   : AST_Module (n),
-    AST_Decl (AST_Decl::NT_module, 
+    AST_Decl (AST_Decl::NT_module,
               n),
     UTL_Scope (AST_Decl::NT_module)
 {

@@ -83,10 +83,10 @@ AST_UnionBranch::AST_UnionBranch (void)
 AST_UnionBranch::AST_UnionBranch (UTL_LabelList *ll,
                                   AST_Type *ft,
 				                          UTL_ScopedName *n)
-  : AST_Field (AST_Decl::NT_union_branch, 
-               ft, 
+  : AST_Field (AST_Decl::NT_union_branch,
+               ft,
                n),
-	  AST_Decl (AST_Decl::NT_union_branch, 
+	  AST_Decl (AST_Decl::NT_union_branch,
               n),
 	  pd_ll (ll)
 {

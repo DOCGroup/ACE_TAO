@@ -93,7 +93,7 @@ be_visitor_args_post_invoke_cs::visit_interface (be_interface *node)
           }
         else
           {
-            *os << "tao_" << node->flat_name () << "_release (" 
+            *os << "tao_" << node->flat_name () << "_release ("
                 << arg->local_name () << ");" << be_nl;
           }
       }
@@ -123,7 +123,7 @@ be_visitor_args_post_invoke_cs::visit_interface_fwd (be_interface_fwd *node)
           }
         else
           {
-            *os << "tao_" << node->flat_name () << "_release (" 
+            *os << "tao_" << node->flat_name () << "_release ("
                 << arg->local_name () << ");" << be_nl;
           }
       }
@@ -199,12 +199,12 @@ be_visitor_args_post_invoke_cs::visit_string (be_string *node)
 
       if (node->width () == (long) sizeof (char))
         {
-          *os << "CORBA::string_free (" << arg->local_name () 
+          *os << "CORBA::string_free (" << arg->local_name ()
               << ");" << be_nl;
         }
       else
         {
-          *os << "CORBA::wstring_free (" << arg->local_name () 
+          *os << "CORBA::wstring_free (" << arg->local_name ()
               << ");" << be_nl;
         }
 

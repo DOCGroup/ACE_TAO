@@ -86,7 +86,7 @@ AST_Generator::create_predefined_type (AST_PredefinedType::PredefinedType t,
 {
   AST_PredefinedType *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_PredefinedType (t, 
+                  AST_PredefinedType (t,
                                       n),
                   0);
 
@@ -216,12 +216,12 @@ AST_Generator::create_interface_fwd (UTL_ScopedName *n,
 {
   AST_InterfaceFwd *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_InterfaceFwd (this->create_interface (n, 
-                                                            0, 
-                                                            -1, 
-                                                            0, 
-                                                            0, 
-                                                            local, 
+                  AST_InterfaceFwd (this->create_interface (n,
+                                                            0,
+                                                            -1,
+                                                            0,
+                                                            0,
+                                                            local,
                                                             abstract),
                                     n),
                   0);
@@ -237,8 +237,8 @@ AST_Generator::create_valuetype (UTL_ScopedName *n,
 {
   AST_Interface *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_Interface (n, 
-                                 ih, 
+                  AST_Interface (n,
+                                 ih,
                                  nih,
                                  0,
                                  0,
@@ -294,8 +294,8 @@ AST_Generator::create_exception (UTL_ScopedName *n,
 {
   AST_Exception *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_Exception (n, 
-                                 local, 
+                  AST_Exception (n,
+                                 local,
                                  abstract),
                   0);
 
@@ -310,8 +310,8 @@ AST_Generator::create_structure (UTL_ScopedName *n,
 {
   AST_Structure *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_Structure (n, 
-                                 local, 
+                  AST_Structure (n,
+                                 local,
                                  abstract),
                   0);
 
@@ -326,8 +326,8 @@ AST_Generator::create_enum (UTL_ScopedName *n,
 {
   AST_Enum *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_Enum (n, 
-                            local, 
+                  AST_Enum (n,
+                            local,
                             abstract),
                   0);
 
@@ -344,10 +344,10 @@ AST_Generator::create_operation (AST_Type *rt,
 {
   AST_Operation *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_Operation (rt, 
-                                 fl, 
-                                 n, 
-                                 local, 
+                  AST_Operation (rt,
+                                 fl,
+                                 n,
+                                 local,
                                  abstract),
                   0);
 
@@ -362,8 +362,8 @@ AST_Generator::create_field (AST_Type *ft,
 {
   AST_Field *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_Field (ft, 
-                             n, 
+                  AST_Field (ft,
+                             n,
                              vis),
                   0);
 
@@ -378,8 +378,8 @@ AST_Generator::create_argument (AST_Argument::Direction d,
 {
   AST_Argument *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_Argument (d, 
-                                ft, 
+                  AST_Argument (d,
+                                ft,
                                 n),
                   0);
 
@@ -432,8 +432,8 @@ AST_Generator::create_union_branch (UTL_LabelList *ll,
 {
   AST_UnionBranch *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_UnionBranch (ll, 
-                                   ft, 
+                  AST_UnionBranch (ll,
+                                   ft,
                                    n),
                   0);
 
@@ -447,7 +447,7 @@ AST_Generator::create_union_label (AST_UnionLabel::UnionLabel ul,
 {
   AST_UnionLabel *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_UnionLabel (ul, 
+                  AST_UnionLabel (ul,
                                   v),
                   0);
 
@@ -462,8 +462,8 @@ AST_Generator::create_constant (AST_Expression::ExprType et,
 {
   AST_Constant *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_Constant (et, 
-                                ev, 
+                  AST_Constant (et,
+                                ev,
                                 n),
                   0);
 
@@ -489,7 +489,7 @@ AST_Generator::create_expr (AST_Expression *v,
 {
   AST_Expression *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_Expression (v, 
+                  AST_Expression (v,
                                   t),
                   0);
 
@@ -505,8 +505,8 @@ AST_Generator::create_expr (AST_Expression::ExprComb c,
 {
   AST_Expression *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_Expression (c, 
-                                  v1, 
+                  AST_Expression (c,
+                                  v1,
                                   v2),
                   0);
 
@@ -528,12 +528,12 @@ AST_Generator::create_expr (long v)
 // Construct an AST_Expression node denoting a long integer being used.
 // as a boolean
 AST_Expression *
-AST_Generator::create_expr (long v, 
+AST_Generator::create_expr (long v,
                             AST_Expression::ExprType t)
 {
   AST_Expression *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_Expression (v, 
+                  AST_Expression (v,
                                   t),
                   0);
 
@@ -620,7 +620,7 @@ AST_Generator::create_enum_val (unsigned long v,
 {
   AST_EnumVal *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_EnumVal (v, 
+                  AST_EnumVal (v,
                                n),
                   0);
 
@@ -656,9 +656,9 @@ AST_Generator::create_sequence (AST_Expression *ms,
 {
   AST_Sequence *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_Sequence (ms, 
-                                bt, 
-                                local, 
+                  AST_Sequence (ms,
+                                bt,
+                                local,
                                 abstract),
                   0);
 
@@ -683,7 +683,7 @@ AST_Generator::create_wstring (AST_Expression *ms)
 {
   AST_String *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_String (ms, 
+                  AST_String (ms,
                               sizeof (ACE_OS::WChar)),
                   0);
 
@@ -699,9 +699,9 @@ AST_Generator::create_typedef (AST_Type *bt,
 {
   AST_Typedef *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_Typedef (bt, 
-                               n, 
-                               local, 
+                  AST_Typedef (bt,
+                               n,
+                               local,
                                abstract),
                   0);
 

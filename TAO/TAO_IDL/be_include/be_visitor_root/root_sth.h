@@ -31,7 +31,7 @@ class be_visitor_root_sth : public be_visitor_root
   //   be_visitor_root_sth
   //
   // = DESCRIPTION
-  //   This is a concrete visitor to generate the server template 
+  //   This is a concrete visitor to generate the server template
   //   header for root.
   //
   //

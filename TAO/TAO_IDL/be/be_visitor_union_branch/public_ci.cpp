@@ -143,8 +143,8 @@ be_visitor_union_branch_public_ci::visit_array (be_array *node)
   // For anonymous arrays, the type name has a _ prepended. We compute the
   // full_name with or without the underscore and use it later on.
   char fname [NAMEBUFSIZE];
-  ACE_OS::memset (fname, 
-                  '\0', 
+  ACE_OS::memset (fname,
+                  '\0',
                   NAMEBUFSIZE);
 
   // If bt is not a typedef and is defined inside the union
@@ -157,25 +157,25 @@ be_visitor_union_branch_public_ci::visit_array (be_array *node)
 
       if (bt->is_nested ())
         {
-          be_decl *parent = 
+          be_decl *parent =
             be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, 
-                           "%s::_%s", 
+          ACE_OS::sprintf (fname,
+                           "%s::_%s",
                            parent->full_name (),
                            bt->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (fname, 
-                           "_%s", 
+          ACE_OS::sprintf (fname,
+                           "_%s",
                            bt->full_name ());
         }
     }
   else
     {
       // Typedefed node.
-      ACE_OS::sprintf (fname, 
-                       "%s", 
+      ACE_OS::sprintf (fname,
+                       "%s",
                        bt->full_name ());
     }
 
@@ -546,7 +546,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
             *os << "typedef CORBA::Object_var OBJECT_FIELD;" << be_nl
                 << "ACE_NEW (" << be_idt << be_idt_nl
                 << "this->u_." << ub->local_name () << "_," << be_nl
-                << "OBJECT_FIELD (CORBA::Object::_duplicate (val))" 
+                << "OBJECT_FIELD (CORBA::Object::_duplicate (val))"
                 << be_uidt_nl
                 << ");" << be_uidt << be_uidt_nl;
           }
@@ -782,7 +782,7 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
     }
   else
     {
-      *os << bu->name () << "::" << ub->local_name () 
+      *os << bu->name () << "::" << ub->local_name ()
           << " (CORBA::WChar *val)";
     }
 
@@ -851,12 +851,12 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
 
   if (node->width () == (long) sizeof (char))
     {
-      *os << "CORBA::string_dup (val);" << be_uidt_nl 
+      *os << "CORBA::string_dup (val);" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
   else
     {
-      *os << "CORBA::wstring_dup (val);" << be_uidt_nl 
+      *os << "CORBA::wstring_dup (val);" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
 
@@ -1080,7 +1080,7 @@ int
 be_visitor_union_branch_public_ci::visit_typedef (be_typedef *node)
 {
   // Save the typedef node for use in code generation.
-  this->ctx_->alias (node); 
+  this->ctx_->alias (node);
 
   // The node to be visited in the base primitve type that gets typedefed.
   be_type *bt = node->primitive_base_type ();

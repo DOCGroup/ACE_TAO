@@ -87,7 +87,7 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
                       UTL_ScopedName *n,
                       idl_bool local,
                       idl_bool abstract)
-  : AST_Decl (AST_Decl::NT_union, 
+  : AST_Decl (AST_Decl::NT_union,
              n),
     UTL_Scope (AST_Decl::NT_union),
     COMMON_Base (local,

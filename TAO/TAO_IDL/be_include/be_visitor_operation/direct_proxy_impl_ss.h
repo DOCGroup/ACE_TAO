@@ -18,13 +18,13 @@
 // ============================================================================
 
 #ifndef _BE_VISITOR_OPERATION_DIRECT_PROXY_IMPL_SS_H_
-#define _BE_VISITOR_OPERATION_DIRECT_PROXY_IMPL_SS_H_ 
+#define _BE_VISITOR_OPERATION_DIRECT_PROXY_IMPL_SS_H_
 
 class be_visitor_operation_direct_proxy_impl_ss : public be_visitor_scope
 {
   //
   // = TITLE
-  //   be_visitor_operation_direct_proxy_impl_ss 
+  //   be_visitor_operation_direct_proxy_impl_ss
   //
   // = DESCRIPTION
   //   This visitor generates the code for the

@@ -84,7 +84,7 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
                              "bad primitive base type\n"
-                             ),  
+                             ),
                             -1);
         }
 
@@ -95,7 +95,7 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
                              "failed to accept visitor\n"
-                             ),  
+                             ),
                             -1);
         }
 
@@ -116,7 +116,7 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
                              "bad base type\n"
-                             ),  
+                             ),
                              -1);
         }
 
@@ -127,7 +127,7 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
                              "failed to accept visitor\n"
-                             ), 
+                             ),
                              -1);
         }
 
@@ -147,7 +147,7 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
                                  "(%N:%l) be_visitor_typedef_ch::"
                                  "visit_typedef - "
                                  "TypeCode declaration failed\n"
-                                 ), 
+                                 ),
                                 -1);
             }
         }
@@ -265,7 +265,7 @@ be_visitor_typedef_ch::visit_enum (be_enum *node)
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_enum - "
                              "base class visitor failed \n"
-                             ),  
+                             ),
                             -1);
         }
     }

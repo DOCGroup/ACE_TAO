@@ -51,24 +51,24 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
                             AST_Interface **ih,
                             long nih,
                             idl_bool set_abstract)
-  : be_interface (n, 
-                  ih, 
-                  nih, 
-                  0, 
-                  0, 
-                  0, 
+  : be_interface (n,
+                  ih,
+                  nih,
+                  0,
+                  0,
+                  0,
                   set_abstract),
-    AST_Interface (n, 
-                   ih, 
-                   nih, 
-                   0, 
-                   0, 
-                   0, 
+    AST_Interface (n,
+                   ih,
+                   nih,
+                   0,
+                   0,
+                   0,
                    set_abstract),
     AST_Decl (AST_Decl::NT_interface,  // It's like an interface.
               n),
     UTL_Scope (AST_Decl::NT_interface),
-    COMMON_Base (0, 
+    COMMON_Base (0,
                  set_abstract),
     full_obv_skel_name_ (0)
 {
@@ -200,7 +200,7 @@ be_valuetype::gen_var_defn (char *)
   *ch << this->local_name () << "* &out (void);" << be_nl;
   *ch << this->local_name () << "* _retn (void);" << be_nl;
 
-  // Generate an additional member function that returns 
+  // Generate an additional member function that returns
   // the underlying pointer.
   *ch << this->local_name () << "* ptr (void) const;";
 
@@ -267,7 +267,7 @@ be_valuetype::gen_var_impl (char *,
   // Constructor from a pointer.
   cs->indent ();
   *cs << "ACE_INLINE" << be_nl;
-  *cs << fname << "::" << lname << " (" 
+  *cs << fname << "::" << lname << " ("
       << this->local_name () << "* p)" << be_nl;
   *cs << "  : ptr_ (p)" << be_nl;
   *cs << "{}\n\n";
@@ -279,7 +279,7 @@ be_valuetype::gen_var_impl (char *,
   *cs << "ACE_INLINE" << be_nl;
   *cs << fname << "::" << lname << " (const "
       << this->local_name () << "* p)" << be_nl;
-  *cs << "  : ptr_ (ACE_const_cast(" 
+  *cs << "  : ptr_ (ACE_const_cast("
       << this->local_name () << "*, p))" << be_nl;
   *cs << "{}\n\n";
 
@@ -321,7 +321,7 @@ be_valuetype::gen_var_impl (char *,
   cs->indent ();
   *cs << "ACE_INLINE" << be_nl;
   *cs << fname << " &" << be_nl;
-  *cs << fname << "::operator= (" << this->local_name () 
+  *cs << fname << "::operator= (" << this->local_name ()
       << "* p)" << be_nl;
   *cs << "{\n";
   cs->incr_indent ();
@@ -335,7 +335,7 @@ be_valuetype::gen_var_impl (char *,
   cs->indent ();
   *cs << "ACE_INLINE" << be_nl;
   *cs << fname << " &" << be_nl;
-  *cs << fname << "::operator= (const " << lname 
+  *cs << fname << "::operator= (const " << lname
       << " &p)" << be_nl;
   *cs << "{\n";
   cs->incr_indent ();
@@ -498,7 +498,7 @@ be_valuetype::gen_out_defn (char *)
 }
 
 int
-be_valuetype::gen_out_impl (char *, 
+be_valuetype::gen_out_impl (char *,
                             char *)
 {
   TAO_OutStream *cs = 0;
@@ -588,7 +588,7 @@ be_valuetype::gen_out_impl (char *,
   cs->indent ();
   *cs << "ACE_INLINE" << be_nl;
   *cs << fname << " &" << be_nl;
-  *cs << fname << "::operator= (const " << this->local_name () 
+  *cs << fname << "::operator= (const " << this->local_name ()
       << "_var &p)" << be_nl;
   *cs << "{\n";
   cs->incr_indent ();
@@ -603,7 +603,7 @@ be_valuetype::gen_out_impl (char *,
   cs->indent ();
   *cs << "ACE_INLINE" << be_nl;
   *cs << fname << " &" << be_nl;
-  *cs << fname << "::operator= (" << this->local_name () 
+  *cs << fname << "::operator= (" << this->local_name ()
       << "* p)" << be_nl;
   *cs << "{\n";
   cs->incr_indent ();
@@ -648,7 +648,7 @@ be_valuetype::gen_out_impl (char *,
   return 0;
 }
 
-int 
+int
 be_valuetype::gen_helper_header (char* ,
                                  char* )
 {
@@ -670,7 +670,7 @@ be_valuetype::gen_helper_header (char* ,
   return 0;
 }
 
-int 
+int
 be_valuetype::gen_helper_inline (char* ,
                                  char* )
 {
@@ -691,9 +691,9 @@ be_valuetype::gen_helper_inline (char* ,
 
   return 0;
 }
- 
 
-int 
+
+int
 be_valuetype::gen_helper_stubs (char* ,
                                 char* )
 {
@@ -705,27 +705,27 @@ be_valuetype::gen_helper_stubs (char* ,
     // add_ref
       << "void" << be_nl
       << "CORBA::add_ref (" << this->full_name () << " * vt)" << be_nl
-      << "{" 
+      << "{"
       << be_idt_nl
       << "if (vt != 0)" << be_nl
-      << "{" 
+      << "{"
       << be_idt_nl
-      << "vt->_add_ref ();" 
+      << "vt->_add_ref ();"
       << be_uidt_nl
-      << "}" 
+      << "}"
       << be_uidt_nl
       << "}" << be_nl << be_nl
   // remove_ref
       << "void" << be_nl
       << "CORBA::remove_ref (" << this->full_name () << " * vt)" << be_nl
-      << "{" 
+      << "{"
       << be_idt_nl
       << "if (vt != 0)" << be_nl
-      << "{" 
+      << "{"
       << be_idt_nl
-      << "vt->_remove_ref ();" 
+      << "vt->_remove_ref ();"
       << be_uidt_nl
-      << "}" 
+      << "}"
       << be_uidt_nl
       << "}" << be_nl << be_nl
       << "//@@ Boris: end experimental" << be_nl;
@@ -755,7 +755,7 @@ be_valuetype::statefull_inherit (void)
     {
       rval = be_valuetype::narrow_from_decl (this->inherits ()[0]);
 
-      if (rval && (rval->is_valuetype ()) 
+      if (rval && (rval->is_valuetype ())
           && (!rval->is_abstract_valuetype ()))
         {
           return rval;

@@ -428,24 +428,6 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   this->this_method (node);
 
-  *os << "CORBA::Object_ptr tmp = CORBA::Object::_nil ();" << be_nl
-      << be_nl
-      << "if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())"
-      << be_idt_nl // idt = 2
-      << "ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);"
-      << be_uidt_nl // idt = 1
-      << "else"
-      << be_idt_nl // idt = 2
-      << "ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);"
-      << be_uidt_nl << be_nl // idt = 1
-      << "CORBA::Object_var obj = tmp;" << be_nl << be_nl;
-
-  *os << "(void) safe_stub.release ();" << be_nl << be_nl;
-
-  *os << "return " << "::" << node->full_name () << "::_unchecked_narrow (obj.in ());"
-      << be_uidt_nl // idt = 0
-      << "}" << be_nl;
-
   // the _create_collocated_objref method.  If the idl compiler does
   // not generate the type of collocated stub but the orb is asking
   // for it, simply return null so a remote stub will be used.
@@ -521,6 +503,24 @@ be_visitor_interface_ss::this_method (be_interface *node)
       << "TAO_Stub *stub = this->_create_stub (TAO_ENV_SINGLE_ARG_PARAMETER);" << be_nl
       << "ACE_CHECK_RETURN (0);" << be_nl << be_nl
       << "TAO_Stub_Auto_Ptr safe_stub (stub);" << be_nl << be_nl;
+
+  *os << "CORBA::Object_ptr tmp = CORBA::Object::_nil ();" << be_nl
+      << be_nl
+      << "if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())"
+      << be_idt_nl // idt = 2
+      << "ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);"
+      << be_uidt_nl // idt = 1
+      << "else"
+      << be_idt_nl // idt = 2
+      << "ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);"
+      << be_uidt_nl << be_nl // idt = 1
+      << "CORBA::Object_var obj = tmp;" << be_nl << be_nl;
+
+  *os << "(void) safe_stub.release ();" << be_nl << be_nl;
+
+  *os << "return " << "::" << node->full_name () << "::_unchecked_narrow (obj.in ());"
+      << be_uidt_nl // idt = 0
+      << "}" << be_nl;
 }
 
 void

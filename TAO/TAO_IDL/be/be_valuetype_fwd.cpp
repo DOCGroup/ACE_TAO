@@ -33,11 +33,11 @@ be_valuetype_fwd::be_valuetype_fwd (void)
 
 be_valuetype_fwd::be_valuetype_fwd (AST_Interface *dummy,
                                     UTL_ScopedName *n)
-  : be_interface_fwd (dummy, 
+  : be_interface_fwd (dummy,
                       n),
-    AST_InterfaceFwd (dummy, 
+    AST_InterfaceFwd (dummy,
                       n),
-    AST_Decl (AST_Decl::NT_interface_fwd, 
+    AST_Decl (AST_Decl::NT_interface_fwd,
               n)
 {
 }

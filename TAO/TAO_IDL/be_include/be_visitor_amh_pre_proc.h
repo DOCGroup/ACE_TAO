@@ -71,11 +71,18 @@ class be_visitor_amh_pre_proc : public be_visitor_scope
     int create_amh_operation (be_operation *node,
                               be_interface *amh_class);
 
-    /// Create the reponse handler interface
-    be_interface *create_response_handler (be_interface *node,
-                                           be_valuetype *excep_holder);
+    /// Create the skeleton reponse handler interface
+    be_interface *create_skeleton_response_handler (be_interface *node);
 
-    /// Create the exception holder valuetype
+    /// Create the client reponse handler interface
+    be_interface *create_client_response_handler (be_interface *node); //,
+                                           //be_valuetype *excep_holder);
+
+	/// method to add memebers to the response handler interfaces
+	int add_rh_node_members ( be_interface *node,
+		be_interface *response_handler);
+
+	/// Create the exception holder valuetype
     be_valuetype *create_exception_holder (be_interface *node);
 
     /// Create a method with "sendc_" prepended, if for_arguments

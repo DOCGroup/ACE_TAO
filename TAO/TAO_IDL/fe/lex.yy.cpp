@@ -2533,7 +2533,7 @@ idl_parse_line_and_file (char *buf)
   idl_global->set_in_main_file (in_main_file);
 
   // If it's an import file store the stripped name for the BE to use
-  if (!(idl_global->in_main_file ()) && idl_global->import ()) 
+  if (!(idl_global->in_main_file ()) && idl_global->import ())
     {
       ACE_NEW (nm,
                UTL_String (stripped_name (fname)));
@@ -2570,18 +2570,18 @@ idl_store_pragma (char *buf)
       while (*sp != '\n')
         {
           *tp = *sp;
-	        ++tp; 
+	        ++tp;
           ++sp;
         }
     }
 
-  if (ACE_OS::strstr (buf + 8, "import") != 0) 
+  if (ACE_OS::strstr (buf + 8, "import") != 0)
     {
       idl_global->set_import (I_TRUE);
       return;
     }
 
-  if (ACE_OS::strstr (buf + 8, "include") != 0) 
+  if (ACE_OS::strstr (buf + 8, "include") != 0)
     {
       idl_global->set_import (I_FALSE);
       return;
@@ -2652,7 +2652,7 @@ idl_store_pragma (char *buf)
 
       d->version (ACE::strnew (number));
     }
-  else if (ACE_OS::strncmp (buf + 8, "ident", 5) == 0) 
+  else if (ACE_OS::strncmp (buf + 8, "ident", 5) == 0)
     {
       idl_global->ident_string (buf + 8);
     }

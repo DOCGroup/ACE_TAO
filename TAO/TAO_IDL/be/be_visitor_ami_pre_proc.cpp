@@ -606,7 +606,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
       field_type->set_defined_in (node->defined_in ());
 
       // Create the argument
-      be_argument *arg = 
+      be_argument *arg =
         new be_argument (AST_Argument::dir_IN,
                          field_type, // is also a valuetype
                          new UTL_ScopedName (new Identifier ("ami_handler"),
@@ -678,7 +678,7 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (be_operation *node,
     return 0;
 
   // Create the return type, which is "void"
-  be_predefined_type *rt = 
+  be_predefined_type *rt =
     new be_predefined_type (AST_PredefinedType::PT_void,
                             new UTL_ScopedName (new Identifier ("void"),
                                                 0));
@@ -708,7 +708,7 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (be_operation *node,
     {
 
       // Create the argument
-      be_argument *arg = 
+      be_argument *arg =
         new be_argument (AST_Argument::dir_IN,
                          node->return_type (),
                          new UTL_ScopedName (new Identifier ("ami_return_val"),
@@ -791,13 +791,13 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
     return 0;
 
   // Create the return type, which is "void"
-  be_predefined_type *rt = 
+  be_predefined_type *rt =
     new be_predefined_type (AST_PredefinedType::PT_void,
                             new UTL_ScopedName (new Identifier ("void"),
                                                 0));
 
   // Create the argument
-  be_argument *arg = 
+  be_argument *arg =
     new be_argument (AST_Argument::dir_IN,
                      excep_holder, // is also a valuetype
                      new UTL_ScopedName (new Identifier ("excep_holder"),
@@ -977,9 +977,9 @@ be_visitor_ami_pre_proc::generate_set_operation (be_attribute *node)
   set_name->last_component ()->replace_string (new_op_name.rep ());
 
   // the return type  is "void"
-  be_predefined_type *rt = 
+  be_predefined_type *rt =
     new be_predefined_type (AST_PredefinedType::PT_void,
-                            new UTL_ScopedName (new Identifier ("void"), 
+                            new UTL_ScopedName (new Identifier ("void"),
                                                 0));
 
   // argument type is the same as the attribute type

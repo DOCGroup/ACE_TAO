@@ -102,7 +102,7 @@ BE_abort (void)
 
   ACE_OS::exit (1);
 }
- 
+
 // Do the work of this BE. This is the starting point for code generation.
 TAO_IDL_BE_Export void
 BE_produce (void)
@@ -142,7 +142,7 @@ BE_produce (void)
 
       ACE_NEW (visitor,
                be_visitor_ami_pre_proc (local_ctx));
-      
+
       if (root->accept (visitor) == -1)
         {
           ACE_ERROR ((LM_ERROR,
@@ -164,7 +164,7 @@ BE_produce (void)
 
       ACE_NEW (visitor,
                be_visitor_amh_pre_proc (local_ctx));
-      
+
       if (root->accept (visitor) == -1)
         {
           ACE_ERROR ((LM_ERROR,
@@ -308,11 +308,11 @@ BE_produce (void)
         }
     }
 
-  // Check if the flags are set for generating the 
+  // Check if the flags are set for generating the
   // the implementation header and skeleton files.
   if (be_global->gen_impl_files ())
     {
-      // (8) generate implementation header.      
+      // (8) generate implementation header.
       ctx.reset ();
       ctx.state (TAO_CodeGen::TAO_ROOT_IH);
 
@@ -327,16 +327,16 @@ BE_produce (void)
                       "implementation skeletons for Root failed\n"));
           BE_abort ();
         }
-      
+
       delete visitor;
-      
-      // (9) Generate implementation source.      
+
+      // (9) Generate implementation source.
       ctx.reset ();
       ctx.state (TAO_CodeGen::TAO_ROOT_IS);
 
       // Create a visitor.
       visitor = tao_cg->make_visitor (&ctx);
-      
+
       // Generate code for the implementation source.
       if (root->accept (visitor) == -1)
         {
@@ -345,7 +345,7 @@ BE_produce (void)
                       "implementation skeletons for Root failed\n"));
           BE_abort ();
         }
-      
+
       delete visitor;
     }
 

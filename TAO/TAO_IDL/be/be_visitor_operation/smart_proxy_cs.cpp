@@ -106,14 +106,14 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
       // (i.e. be_interface), so for deciding the exact scope use intf.
 
       be_decl* scope = be_scope::narrow_from_scope (intf->defined_in ())->decl ();
-  
+
       *os << " ";
       *os << scope->full_name ();
-  
+
       // Only if there exists any nesting "::" is needed!
       if (intf->is_nested ())
-        *os << "::";  
- 
+        *os << "::";
+
       *os << "TAO_" << intf->flat_name () <<"_Smart_Proxy_Base::";
       *os << node->local_name () << " ";
 
@@ -154,7 +154,7 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
         }
 
       *os << "this->get_proxy ()";
- 
+
       if (this->gen_invoke (ctx, node) == -1)
         return -1;
 

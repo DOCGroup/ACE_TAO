@@ -32,15 +32,15 @@ be_union_branch::be_union_branch (void)
 be_union_branch::be_union_branch (UTL_LabelList *ll,
                                   AST_Type *ft,
                                   UTL_ScopedName *n)
-  : AST_UnionBranch (ll, 
-                     ft, 
+  : AST_UnionBranch (ll,
+                     ft,
                      n),
-    AST_Field (AST_Decl::NT_union_branch, 
-               ft, 
+    AST_Field (AST_Decl::NT_union_branch,
+               ft,
                n),
-    AST_Decl (AST_Decl::NT_union_branch, 
+    AST_Decl (AST_Decl::NT_union_branch,
               n),
-    COMMON_Base (ft->is_local (), 
+    COMMON_Base (ft->is_local (),
                  ft->is_abstract ())
 {
 }
@@ -55,7 +55,7 @@ be_union_branch::compute_size_type (void)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_field::compute_size_type - "
-                         "bad field type\n"), 
+                         "bad field type\n"),
                         -1);
     }
 

@@ -29,7 +29,7 @@ class be_visitor_interface_fwd_any_op_ch : public be_visitor_decl
   //   be_visitor_interface_fwd_any_op_ch
   //
   // = DESCRIPTION
-  //   This is a concrete visitor for forward declared interfaces that 
+  //   This is a concrete visitor for forward declared interfaces that
   //   generates the Any operator declaration.
   //
 

@@ -73,7 +73,7 @@ be_scope::destroy (void)
 {
   AST_Decl *i = 0;
   UTL_ScopeActiveIterator *iter = 0;
-  
+
   ACE_NEW (iter,
            UTL_ScopeActiveIterator (this,
                                     IK_decls));

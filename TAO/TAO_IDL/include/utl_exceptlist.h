@@ -100,7 +100,7 @@ private:
 };
 
 // Active iterator for UTL_ExceptList
-class TAO_IDL_FE_Export UTL_ExceptlistActiveIterator 
+class TAO_IDL_FE_Export UTL_ExceptlistActiveIterator
   : public UTL_ListActiveIterator
 {
 public:

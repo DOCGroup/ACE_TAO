@@ -35,7 +35,7 @@ public:
   be_enum_val (void);
   // Default constructor.
 
-  be_enum_val (unsigned long v, 
+  be_enum_val (unsigned long v,
                UTL_ScopedName *n);
   // Constructor.
 

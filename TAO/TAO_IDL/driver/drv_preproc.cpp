@@ -117,7 +117,7 @@ DRV_cpp_expand_output_arg (const char *filename)
   if (output_arg_format != 0)
     {
       delete [] ACE_const_cast (char *, arglist[output_arg_index]);
-      arglist[output_arg_index] = 0; 
+      arglist[output_arg_index] = 0;
 
       char *output_arg = 0;
       ACE_NEW (output_arg,
@@ -155,7 +155,7 @@ DRV_cpp_init (void)
   else
     {
       // Check for the deprecated CPP_LOCATION environment variable
-      ACE_Env_Value<char*> cpp_path ("CPP_LOCATION", 
+      ACE_Env_Value<char*> cpp_path ("CPP_LOCATION",
                                      (char *) 0);
 
       if (cpp_path != 0)
@@ -183,8 +183,8 @@ DRV_cpp_init (void)
   char version_option[128];
   ACE_OS::sprintf (version_option,
                    "-D__TAO_IDL=0x%2.2d%2.2d%2.2d",
-                   ACE_MAJOR_VERSION, 
-                   ACE_MINOR_VERSION, 
+                   ACE_MAJOR_VERSION,
+                   ACE_MINOR_VERSION,
                    ACE_BETA_VERSION);
   DRV_cpp_putarg (version_option);
 
@@ -192,7 +192,7 @@ DRV_cpp_init (void)
 
   // Added some customizable preprocessor options
 
-  ACE_Env_Value<char*> args1 ("TAO_IDL_PREPROCESSOR_ARGS", 
+  ACE_Env_Value<char*> args1 ("TAO_IDL_PREPROCESSOR_ARGS",
                               (char *) 0);
 
   if (args1 != 0)
@@ -202,7 +202,7 @@ DRV_cpp_init (void)
   else
     {
       // Check for the deprecated TAO_IDL_DEFAULT_CPP_FLAGS environment variable
-      ACE_Env_Value<char*> args2 ("TAO_IDL_DEFAULT_CPP_FLAGS", 
+      ACE_Env_Value<char*> args2 ("TAO_IDL_DEFAULT_CPP_FLAGS",
                                   (char *) 0);
 
       if (args2 != 0)

@@ -82,7 +82,7 @@ AST_Module::AST_Module ()
 }
 
 AST_Module::AST_Module (UTL_ScopedName *n)
- : AST_Decl (AST_Decl::NT_module, 
+ : AST_Decl (AST_Decl::NT_module,
              n),
    UTL_Scope (AST_Decl::NT_module),
    pd_has_nested_valuetype (0)

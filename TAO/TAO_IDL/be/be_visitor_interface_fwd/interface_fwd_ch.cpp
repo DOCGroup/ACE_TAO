@@ -82,7 +82,7 @@ be_visitor_interface_fwd_ch::visit_interface_fwd (be_interface_fwd *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface_fwd_ch::"
                          "visit_interface_fwd - "
-                         "codegen for _var failed\n"), 
+                         "codegen for _var failed\n"),
                         -1);
     }
 
@@ -98,7 +98,7 @@ be_visitor_interface_fwd_ch::visit_interface_fwd (be_interface_fwd *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface_fwd_ch::"
                          "visit_interface_fwd - "
-                         "codegen for _out failed\n"), 
+                         "codegen for _out failed\n"),
                         -1);
     }
 

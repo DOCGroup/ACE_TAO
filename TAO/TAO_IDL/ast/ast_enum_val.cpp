@@ -78,13 +78,13 @@ AST_EnumVal::AST_EnumVal (void)
 {
 }
 
-AST_EnumVal::AST_EnumVal (unsigned long v, 
+AST_EnumVal::AST_EnumVal (unsigned long v,
                           UTL_ScopedName *n)
   : AST_Constant  (AST_Expression::EV_ulong,
 		               AST_Decl::NT_enum_val,
-			             new AST_Expression (v), 
+			             new AST_Expression (v),
                    n),
-	  AST_Decl (AST_Decl::NT_enum_val, 
+	  AST_Decl (AST_Decl::NT_enum_val,
               n)
 {
 }

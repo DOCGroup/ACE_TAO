@@ -83,7 +83,7 @@ AST_Structure::AST_Structure (void)
 AST_Structure::AST_Structure (UTL_ScopedName *n,
                               idl_bool local,
                               idl_bool abstract)
- : AST_Decl (AST_Decl::NT_struct, 
+ : AST_Decl (AST_Decl::NT_struct,
              n),
    UTL_Scope (AST_Decl::NT_struct),
    COMMON_Base (local,
@@ -97,7 +97,7 @@ AST_Structure::AST_Structure (AST_Decl::NodeType nt,
                               UTL_ScopedName *n,
                               idl_bool local,
                               idl_bool abstract)
- : AST_Decl (nt, 
+ : AST_Decl (nt,
              n),
    UTL_Scope (nt),
    COMMON_Base (local,

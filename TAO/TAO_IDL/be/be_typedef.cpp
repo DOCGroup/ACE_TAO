@@ -35,13 +35,13 @@ be_typedef::be_typedef (AST_Type *bt,
                         UTL_ScopedName *n,
                         idl_bool local,
                         idl_bool abstract)
-  : AST_Typedef (bt, 
-                 n, 
-                 bt->is_local () || local, 
+  : AST_Typedef (bt,
+                 n,
+                 bt->is_local () || local,
                  abstract),
-    AST_Decl (AST_Decl::NT_typedef, 
+    AST_Decl (AST_Decl::NT_typedef,
               n),
-    COMMON_Base (bt->is_local () || local, 
+    COMMON_Base (bt->is_local () || local,
                  abstract)
 {
 }

@@ -31,7 +31,7 @@ be_visitor_operation_inv_arglist::visit_operation (be_operation *node)
                          "codegen for scope failed\n"),
                         -1);
     }
-  
+
   return 0;
 }
 
@@ -73,9 +73,9 @@ be_visitor_operation_inv_arglist::visit_argument (be_argument *node)
                         -1);
     }
   ctx.scope (intf); // set new scope
-  
+
   ctx.state (TAO_CodeGen::TAO_ARGUMENT_INVOKE_ARG_LIST);
-    
+
   // grab a visitor
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
 

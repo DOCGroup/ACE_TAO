@@ -78,7 +78,7 @@ public:
   // Constructor(s).
   AST_ConcreteType (void);
 
-  AST_ConcreteType (AST_Decl::NodeType nt, 
+  AST_ConcreteType (AST_Decl::NodeType nt,
                     UTL_ScopedName *n);
 
   // Destructor.

@@ -524,7 +524,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
       switch (node->pt ())
         {
         case AST_PredefinedType::PT_pseudo:
-          *os << "this->" << bu->field_pd_prefix() << ub->local_name () 
+          *os << "this->" << bu->field_pd_prefix() << ub->local_name ()
               << bu->field_pd_postfix() << " = "
               << bt->name () << "::_duplicate (val);" << be_uidt_nl;
           break;
@@ -542,7 +542,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
 
         default:
           *os << "// set the value" << be_nl
-              << "this->" << bu->field_pd_prefix () << ub->local_name () 
+              << "this->" << bu->field_pd_prefix () << ub->local_name ()
               << bu->field_pd_postfix ()
               << " = val;" << be_uidt_nl;
         }
@@ -671,9 +671,9 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
       << " (const " << bt->name () << " &val)" << be_nl
       << "{" << be_idt_nl;
 
-  *os << "this->" 
-      << bu->field_pd_prefix() << ub->local_name () 
-                               << bu->field_pd_postfix() 
+  *os << "this->"
+      << bu->field_pd_prefix() << ub->local_name ()
+                               << bu->field_pd_postfix()
       << " = val;" << be_uidt_nl;
 
   *os << "}" << be_nl << be_nl;
@@ -728,7 +728,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
   os->indent (); // start from current indentation
   *os << "// accessor to set the member" << be_nl
       << this->pre_op () << "void" << be_nl;
-  this->op_name (bu, 
+  this->op_name (bu,
                  os);
 
   if (node->width () == (long) sizeof (char))
@@ -912,7 +912,7 @@ be_visitor_valuetype_field_cs::visit_structure (be_structure *node)
   if (0) // %! (bt->size_type () == be_type::VARIABLE)
     { cerr <<"!t VARIABLE struct in field_cs\n";
       *os << "delete this->"
-          << bu->field_pd_prefix() << ub->local_name () 
+          << bu->field_pd_prefix() << ub->local_name ()
           << bu->field_pd_postfix()
           << ";" << be_nl;
 

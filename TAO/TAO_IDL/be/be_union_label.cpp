@@ -12,7 +12,7 @@ be_union_label::be_union_label()
 }
 be_union_label::be_union_label (AST_UnionLabel::UnionLabel ul,
 			       AST_Expression *v)
-  : AST_UnionLabel (ul, 
+  : AST_UnionLabel (ul,
                     v)
 {
 }

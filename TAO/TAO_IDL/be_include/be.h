@@ -98,7 +98,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "be_generator.h"            // class BE_generator
 
 #include        "be_global.h"               // global data for back end
-#include        "be_extern.h"               // pointer to global BE 
+#include        "be_extern.h"               // pointer to global BE
                                             // data object
 
 #include        "be_type.h"

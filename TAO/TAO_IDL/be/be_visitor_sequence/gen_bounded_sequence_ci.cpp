@@ -74,8 +74,8 @@ be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
   const char * class_name = node->instance_name ();
 
   static char full_class_name [NAMEBUFSIZE];
-  ACE_OS::memset (full_class_name, 
-                  '\0', 
+  ACE_OS::memset (full_class_name,
+                  '\0',
                   NAMEBUFSIZE);
 
   if (node->is_nested ())
@@ -83,14 +83,14 @@ be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
       be_scope *s =
         be_scope::narrow_from_scope (node->defined_in ());
 
-      ACE_OS::sprintf (full_class_name, 
+      ACE_OS::sprintf (full_class_name,
                        "%s::%s",
                        s->decl ()->full_name (),
                        class_name);
     }
   else
     {
-      ACE_OS::sprintf (full_class_name, 
+      ACE_OS::sprintf (full_class_name,
                        "%s",
                        class_name);
     }

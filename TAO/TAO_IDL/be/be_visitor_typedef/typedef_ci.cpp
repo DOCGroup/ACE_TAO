@@ -136,7 +136,7 @@ be_visitor_typedef_ci::visit_array (be_array *node)
   be_type *bt;
 
   // This doesn't catch 'typedef of a typedef' if the node is
-  // imported, so we check for that below before generating 
+  // imported, so we check for that below before generating
   // any code.
   if (this->ctx_->alias ())
     {
@@ -163,7 +163,7 @@ be_visitor_typedef_ci::visit_array (be_array *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ci::"
                              "visit_array - "
-                             "base class visitor failed \n"),  
+                             "base class visitor failed \n"),
                             -1);
         }
     }

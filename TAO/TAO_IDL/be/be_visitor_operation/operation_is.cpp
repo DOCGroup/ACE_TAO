@@ -19,7 +19,7 @@
 #include	"idl.h"
 #include	"idl_extern.h"
 #include	"be.h"
-#include        "ace/SString.h" 
+#include        "ace/SString.h"
 
 #include "be_visitor_operation.h"
 
@@ -48,14 +48,14 @@ be_visitor_operation_is::visit_operation (be_operation *node)
   os = this->ctx_->stream ();
   be_interface *intf =
     this->ctx_->interface ();
-  
-  
-  
+
+
+
   this->ctx_->node (node); // save the node
 
   os->indent (); // start with the current indentation level
 
-  
+
 
 
   // STEP I: generate the return type
@@ -100,23 +100,23 @@ be_visitor_operation_is::visit_operation (be_operation *node)
     {
       //If derived class
       classname = intf->flat_name ();
-      
+
     }
 
   else
     {
       ACE_CString str(node->flat_name ());
-      
+
       int lnmlength = ACE_OS::strlen (node->local_name ()->get_string ());
-            
+
       int fnmlength = ACE_OS::strlen (node->flat_name ());
       fnmlength--;
 
       classname = str.substr (0,(fnmlength-lnmlength) ).rep ();
     }
-  
+
   // STEP 2: generate the operation name
-  *os << " " << be_global->impl_class_prefix () << classname 
+  *os << " " << be_global->impl_class_prefix () << classname
       << be_global->impl_class_suffix () << "::" << node->local_name ();
 
   // STEP 3: generate the argument list with the appropriate mapping. For these
@@ -169,7 +169,7 @@ be_visitor_operation_is::visit_operation (be_operation *node)
                          "Bad visitor to return type\n"),
                         -1);
     }
-  
+
 
   if (bt->accept (visitor) == -1)
     {
@@ -185,7 +185,7 @@ be_visitor_operation_is::visit_operation (be_operation *node)
 
   *os << "}" << be_nl << be_uidt_nl;
 
-  
+
   return 0;
 }
 

@@ -24,9 +24,9 @@ be_visitor_interface_proxy_impls_ch::visit_interface (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Generate Guards.
-  *os << "// The Proxy Implementations are used by each interface to" 
+  *os << "// The Proxy Implementations are used by each interface to"
       << be_nl
-      << "// perform a call. Each different implementation encapsulate" 
+      << "// perform a call. Each different implementation encapsulate"
       << be_nl
       << "// an invocation logics." << be_nl << be_nl;
 

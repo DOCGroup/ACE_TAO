@@ -42,7 +42,7 @@ be_visitor_exception_ctor_assign::~be_visitor_exception_ctor_assign (void)
 {
 }
 
-int 
+int
 be_visitor_exception_ctor_assign::visit_exception (be_exception *node)
 {
   // Save the argument node.
@@ -60,7 +60,7 @@ be_visitor_exception_ctor_assign::visit_exception (be_exception *node)
   return 0;
 }
 
-int 
+int
 be_visitor_exception_ctor_assign::visit_field (be_field *node)
 {
   // Save the argument node.
@@ -93,7 +93,7 @@ be_visitor_exception_ctor_assign::visit_field (be_field *node)
   return 0;
 }
 
-int 
+int
 be_visitor_exception_ctor_assign::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
@@ -128,7 +128,7 @@ be_visitor_exception_ctor_assign::visit_array (be_array *node)
   return 0;
 }
 
-int 
+int
 be_visitor_exception_ctor_assign::visit_enum (be_enum *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
@@ -138,19 +138,19 @@ be_visitor_exception_ctor_assign::visit_enum (be_enum *)
 
   if (this->ctx_->exception ()) // Special constructor.
     {
-      *os << "this->" << bd->local_name () << " = _tao_" 
+      *os << "this->" << bd->local_name () << " = _tao_"
           << bd->local_name () << ";\n";
     }
   else
     {
-      *os << "this->" << bd->local_name () << " = _tao_excp." 
+      *os << "this->" << bd->local_name () << " = _tao_excp."
           << bd->local_name () << ";\n";
     }
 
   return 0;
 }
 
-int 
+int
 be_visitor_exception_ctor_assign::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
@@ -263,7 +263,7 @@ int be_visitor_exception_ctor_assign::visit_sequence (be_sequence *)
     }
   else
     {
-      *os << "this->" << bd->local_name () << " = _tao_excp." 
+      *os << "this->" << bd->local_name () << " = _tao_excp."
           << bd->local_name () << ";\n";
     }
 
@@ -281,13 +281,13 @@ int be_visitor_exception_ctor_assign::visit_string (be_string *node)
     {
       if (node->width () == (long) sizeof (char))
         {
-          *os << "this->" << bd->local_name () 
+          *os << "this->" << bd->local_name ()
               << " = CORBA::string_dup (_tao_"
               << bd->local_name () << ");\n";
         }
       else
         {
-          *os << "this->" << bd->local_name () 
+          *os << "this->" << bd->local_name ()
               << " = CORBA::wstring_dup (_tao_"
               << bd->local_name () << ");\n";
         }
@@ -297,13 +297,13 @@ int be_visitor_exception_ctor_assign::visit_string (be_string *node)
       if (node->width () == (long) sizeof (char))
         {
           *os << "this->" << bd->local_name ()
-              << " = CORBA::string_dup (_tao_excp." 
+              << " = CORBA::string_dup (_tao_excp."
               << bd->local_name () << ".in ());\n";
         }
       else
         {
           *os << "this->" << bd->local_name ()
-              << " = CORBA::wstring_dup (_tao_excp." 
+              << " = CORBA::wstring_dup (_tao_excp."
               << bd->local_name () << ".in ());\n";
         }
     }
@@ -325,7 +325,7 @@ int be_visitor_exception_ctor_assign::visit_structure (be_structure *)
     }
   else
     {
-      *os << "this->" << bd->local_name () << " = _tao_excp." 
+      *os << "this->" << bd->local_name () << " = _tao_excp."
           << bd->local_name () << ";\n";
     }
 
@@ -346,7 +346,7 @@ int be_visitor_exception_ctor_assign::visit_union (be_union *)
     }
   else
     {
-      *os << "this->" << bd->local_name () << " = _tao_excp." 
+      *os << "this->" << bd->local_name () << " = _tao_excp."
           << bd->local_name () << ";\n";
     }
 

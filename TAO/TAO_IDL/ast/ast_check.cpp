@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -88,15 +88,15 @@ AST_record_fwd_interface (AST_InterfaceFwd *n)
   long o_ast_n_fwds_alloc = 0;
 
   // Make sure there's space to store one more.
-  if (ast_n_fwds_used == ast_n_fwds_alloc) 
+  if (ast_n_fwds_used == ast_n_fwds_alloc)
     {
-      if (ast_n_fwds_alloc == 0) 
+      if (ast_n_fwds_alloc == 0)
         {
           ast_n_fwds_alloc = INCREMENT;
           ACE_NEW (ast_fwds,
                    AST_InterfaceFwd *[ast_n_fwds_alloc]);
-        } 
-      else 
+        }
+      else
         {
           o_ast_fwds = ast_fwds;
           o_ast_n_fwds_alloc = ast_n_fwds_alloc;
@@ -125,7 +125,7 @@ AST_check_fwd_interface (void)
   AST_InterfaceFwd *d = 0;
   AST_Interface	*itf = 0;
 
-  for (long i = 0; i < ast_n_fwds_used; i++) 
+  for (long i = 0; i < ast_n_fwds_used; i++)
     {
       d = ast_fwds[i];
       itf = d->full_definition ();

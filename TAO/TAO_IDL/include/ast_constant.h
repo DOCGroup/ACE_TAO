@@ -87,7 +87,7 @@ public:
 
   AST_Constant (AST_Expression::ExprType et,
                 AST_Decl::NodeType nt,
-                AST_Expression *ev, 
+                AST_Expression *ev,
                 UTL_ScopedName *n);
 
   AST_Constant (AST_Expression::ExprType et,

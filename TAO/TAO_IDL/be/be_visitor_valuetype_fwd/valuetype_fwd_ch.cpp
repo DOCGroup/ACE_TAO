@@ -66,7 +66,7 @@ be_visitor_valuetype_fwd_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
   *os << "class " << node->local_name () << ";" << be_nl;
 
   // Generate _ptr declaration
-  os->gen_ifdef_macro (node->flat_name (), "_ptr");  
+  os->gen_ifdef_macro (node->flat_name (), "_ptr");
 
   *os << "typedef " << node->local_name ()
       << " *" << node->local_name () << "_ptr;" << be_nl;
@@ -82,7 +82,7 @@ be_visitor_valuetype_fwd_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_ch::"
                          "visit_valuetype - "
-                         "codegen for _var failed\n"), 
+                         "codegen for _var failed\n"),
                         -1);
     }
 

@@ -155,7 +155,7 @@ be_visitor_sequence_ch::gen_base_sequence_class (be_sequence *node)
                   be_visitor_context (*this->ctx_),
                   0);
 
-  be_visitor_sequence_base_template_args visitor (ctx, 
+  be_visitor_sequence_base_template_args visitor (ctx,
                                                   node);
 
   ctx->state (TAO_CodeGen::TAO_SEQUENCE_BASE_CH);
@@ -169,7 +169,7 @@ be_visitor_sequence_ch::gen_base_sequence_class (be_sequence *node)
                         -1);
     }
 
-  // Find out if the sequence is of a managed type and if 
+  // Find out if the sequence is of a managed type and if
   // it is bounded or not.
   if (node->managed_type () == be_sequence::MNG_STRING
       || node->managed_type () == be_sequence::MNG_WSTRING)
@@ -387,7 +387,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ch::"
                          "visit_sequence - "
-                         "codegen for base sequence class\n"), 
+                         "codegen for base sequence class\n"),
                         -1);
     }
 
@@ -422,7 +422,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ch::"
                          "visit_sequence - "
-                         "Bad visitor\n"), 
+                         "Bad visitor\n"),
                         -1);
     }
 
@@ -449,7 +449,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   // but we must protect against certain versions of g++.
   if (this->ctx_->tdef () != 0)
     {
-      *os << "\n#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)" 
+      *os << "\n#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)"
           << be_nl;
       *os << "typedef " << node->local_name () << "_var _var_type;\n"
           << "#endif /* ! __GNUC__ || g++ >= 2.8 */" << be_nl << be_nl;
@@ -597,7 +597,7 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
   *os << be_nl;
 
   // Assignment operator from a pointer.
-  *os << namebuf << " &operator= (" 
+  *os << namebuf << " &operator= ("
       << node->local_name () << " *);" << be_nl;
 
   // Assignment from _var.
@@ -613,7 +613,7 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
 
   // Arrow operator.
   *os << node->local_name () << " *operator-> (void);" << be_nl;
-  *os << "const " << node->local_name () 
+  *os << "const " << node->local_name ()
       << " *operator-> (void) const;" << be_nl;
   *os << be_nl;
 
@@ -678,7 +678,7 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
       pdt = p->pt ();
     }
 
-  // @@ (JP) Problems with constant instantiations of TAO_Object_Manager, 
+  // @@ (JP) Problems with constant instantiations of TAO_Object_Manager,
   // TAO_Pseudo_Object_Manager, TAO_SeqElem_WString_Manager and
   // TAO_SeqElem_String_Manager make these impossible right now [BUGID:676].
   if (nt != AST_Decl::NT_string
@@ -715,7 +715,7 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
   *os << node->local_name () << " *&out (void);" << be_nl;
   *os << node->local_name () << " *_retn (void);" << be_nl;
 
-  // Generate an additional member function that 
+  // Generate an additional member function that
   // returns the underlying pointer.
   *os << node->local_name () << " *ptr (void) const;" << be_uidt_nl << be_nl;
 
@@ -736,11 +736,11 @@ be_visitor_sequence_ch::gen_out_defn (be_sequence *node)
   char namebuf [NAMEBUFSIZE];
   be_type *bt = 0;
 
-  ACE_OS::memset (namebuf, 
-                  '\0', 
+  ACE_OS::memset (namebuf,
+                  '\0',
                   NAMEBUFSIZE);
-  ACE_OS::sprintf (namebuf, 
-                   "%s_out", 
+  ACE_OS::sprintf (namebuf,
+                   "%s_out",
                    node->local_name ()->get_string ());
 
   // Retrieve base type.
@@ -820,7 +820,7 @@ be_visitor_sequence_ch::gen_out_defn (be_sequence *node)
 
   *os << node->local_name () << " *&ptr_;" << be_nl;
   *os << "// Assignment from T_var not allowed." << be_nl;
-  *os << "void operator= (const " << node->local_name () 
+  *os << "void operator= (const " << node->local_name ()
       << "_var &);" << be_uidt_nl;
 
   *os << "};" << be_nl << be_nl;

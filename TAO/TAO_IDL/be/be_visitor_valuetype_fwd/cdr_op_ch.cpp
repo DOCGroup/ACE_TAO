@@ -16,7 +16,7 @@
 //
 // = AUTHOR
 //    Boris Kolpackov <bosk@ipmce.ru>
-//    base on code from Torsten Kuepper 
+//    base on code from Torsten Kuepper
 //    based on code from  Aniruddha Gokhale & Carlos O'Ryan (cdr_op_ci.cpp)
 //
 // ================================================================
@@ -70,7 +70,7 @@ be_visitor_valuetype_fwd_cdr_op_ch::visit_valuetype_fwd (
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_cdr_op_ch::"
                          "visit_valuetype - "
-                         "codegen for helper functions failed\n"), -1); 
+                         "codegen for helper functions failed\n"), -1);
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
@@ -78,12 +78,12 @@ be_visitor_valuetype_fwd_cdr_op_ch::visit_valuetype_fwd (
   // generate the CDR << and >> operator declarations (prototypes)
 
   //@@ Boris: Can I move this to be_valuetype? (as with _var, _out, etc?)
-    
-  *os << be_global->stub_export_macro () 
-      << "CORBA::Boolean operator<< (TAO_OutputCDR &, const " 
+
+  *os << be_global->stub_export_macro ()
+      << "CORBA::Boolean operator<< (TAO_OutputCDR &, const "
       << node->full_name () << " *);" << be_nl;
-  
-  *os << be_global->stub_export_macro () 
+
+  *os << be_global->stub_export_macro ()
       << "CORBA::Boolean operator>> (TAO_InputCDR &, "
       << node->full_name () << " *&);" << be_nl;
 

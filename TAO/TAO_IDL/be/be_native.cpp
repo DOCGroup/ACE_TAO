@@ -29,7 +29,7 @@ be_native::be_native (void)
 
 be_native::be_native (UTL_ScopedName *n)
   : AST_Native (n),
-    AST_Decl (AST_Decl::NT_native, 
+    AST_Decl (AST_Decl::NT_native,
               n)
 {
 }

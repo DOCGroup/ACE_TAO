@@ -153,7 +153,7 @@ public:
   // Constructor(s).
   AST_Decl (void);
 
-  AST_Decl (NodeType type, 
+  AST_Decl (NodeType type,
             UTL_ScopedName *n,
             idl_bool anonymous = I_FALSE);
 

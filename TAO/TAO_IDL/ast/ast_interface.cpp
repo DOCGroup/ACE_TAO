@@ -94,7 +94,7 @@ AST_Interface::AST_Interface(UTL_ScopedName *n,
                              long nih_flat,
                              idl_bool local,
                              idl_bool abstract)
-  : AST_Decl (AST_Decl::NT_interface, 
+  : AST_Decl (AST_Decl::NT_interface,
               n),
     UTL_Scope (AST_Decl::NT_interface),
     COMMON_Base (local,

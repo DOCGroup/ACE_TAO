@@ -16,7 +16,7 @@
 //    in client headers.
 //
 // = AUTHOR
-//    Michael Kircher <Michael.Kircher@mchp.siemens.de> 
+//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
 //
 // ============================================================================
 

@@ -39,7 +39,7 @@ be_visitor_operation_interceptors_result::~be_visitor_operation_interceptors_res
 {
 }
 
-int 
+int
 be_visitor_operation_interceptors_result::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
@@ -63,7 +63,7 @@ be_visitor_operation_interceptors_result::visit_array (be_array *node)
   return 0;
 }
 
-int 
+int
 be_visitor_operation_interceptors_result::visit_enum (be_enum *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
@@ -73,7 +73,7 @@ be_visitor_operation_interceptors_result::visit_enum (be_enum *)
   return 0;
 }
 
-int 
+int
 be_visitor_operation_interceptors_result::visit_interface (be_interface *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
@@ -83,7 +83,7 @@ be_visitor_operation_interceptors_result::visit_interface (be_interface *)
   return 0;
 }
 
-int 
+int
 be_visitor_operation_interceptors_result::visit_interface_fwd (be_interface_fwd *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
@@ -94,7 +94,7 @@ be_visitor_operation_interceptors_result::visit_interface_fwd (be_interface_fwd 
 }
 #ifdef IDL_HAS_VALUETYPE
 
-int 
+int
 be_visitor_operation_interceptors_result::visit_valuetype (be_valuetype *)
 {
   // Not supported since TAO doesnt support Any operators for valuetype yet.
@@ -106,7 +106,7 @@ be_visitor_operation_interceptors_result::visit_valuetype (be_valuetype *)
   return 0;
 }
 
-int 
+int
 be_visitor_operation_interceptors_result::visit_valuetype_fwd (be_valuetype_fwd *)
 {
   // Not supported since TAO doesnt support Any operators for valuetype yet.
@@ -166,7 +166,7 @@ be_visitor_operation_interceptors_result::visit_predefined_type (be_predefined_t
   return 0;
 }
 
-int 
+int
 be_visitor_operation_interceptors_result::visit_sequence (be_sequence *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
@@ -208,7 +208,7 @@ be_visitor_operation_interceptors_result::visit_string (be_string *node)
 return 0;
 }
 
-int 
+int
 be_visitor_operation_interceptors_result::visit_structure (be_structure *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
@@ -219,7 +219,7 @@ be_visitor_operation_interceptors_result::visit_structure (be_structure *)
 
 }
 
-int 
+int
 be_visitor_operation_interceptors_result::visit_union (be_union *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
@@ -229,7 +229,7 @@ be_visitor_operation_interceptors_result::visit_union (be_union *)
   return 0;
 }
 
-int 
+int
 be_visitor_operation_interceptors_result::visit_typedef (be_typedef *node)
 {
   node->primitive_base_type ()->accept (this);

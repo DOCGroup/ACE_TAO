@@ -53,7 +53,7 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
   //     In this case we don't need to bother about factory.
   //
   // (2) There are no (operations or initializers) (i.e. only state
-  //     members) then we need a concrete type-specific factory 
+  //     members) then we need a concrete type-specific factory
   //     class whose create_for_unmarshal creates OBV_ class.
   //
   // (3) There is at least one operation and at least one initializer.
@@ -85,14 +85,14 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
   // ctor
   *os << fname << "::" << lname << " ()" << be_nl
       << "{" << be_nl << "}\n";
-  
+
   // dtor
   *os << be_nl
       << fname << "::~" << lname << " ()" << be_nl
       << "{" << be_nl << "}\n";
 
   //tao_repository_id
-  *os << be_nl 
+  *os << be_nl
       << "const char* " << be_nl
       << fname << "::tao_repository_id (void)" << be_nl
       << "{" << be_idt_nl
@@ -120,7 +120,7 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
   return 0;
 }
 
-int 
+int
 be_visitor_valuetype_init_cs::visit_factory (be_factory *)
 {
   return 0;

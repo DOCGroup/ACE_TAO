@@ -50,18 +50,18 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
     {
       return 0;
     }
-  
+
   // Output stream.
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
-  
+
   *os << "\n// \t *** AMH operation declaration starts here ***\n";
-  
+
   be_interface *intf;
   intf = this->ctx_->attribute ()
     ? be_interface::narrow_from_scope (this->ctx_->attribute()->defined_in ())
     : be_interface::narrow_from_scope (node->defined_in ());
-  
+
   if (!intf)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -70,13 +70,13 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
                          "bad interface scope\n"),
                         -1);
     }
-  
+
   // Step 1 : Generate return type: always void
   os->indent ();
   *os << "virtual void ";
   // only for source: *os << intf->full_skel_name () << "::";
-  
-  
+
+
   // Step 2: Generate the method name
   // Check if we are an attribute node in disguise.
   if (this->ctx_->attribute ())
@@ -92,13 +92,13 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
         }
     }
   *os << node->local_name();
-  
+
   /*
   // STEP 3: Generate the argument list with the appropriate
   //         mapping. For these we grab a visitor that generates the
   //         parameter listing. We also generate the ResponseHandler
   //         argument 'on the fly' and add it to the argument list
-  
+
   //ACE_CString rh_name;
   //ACE_OSTREAM temp;
   AST_Decl *parent = ScopeAsDecl (intf->defined_in ());
@@ -109,7 +109,7 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
   *os << intf->local_name () ;
   //<< "ResponseHandler *response_handler, ";
   AST_Type *rh_field_type = new AST_Type;
-  
+
   // Create the argument
   Identifier *id = new Identifier ("ResponseHandler");
   UTL_IdList *list = new UTL_IdList (id, 0);
@@ -119,11 +119,11 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
   0);
   node->add_argument_to_scope (rh_arg);
   */
-  
+
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_SH);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
-  
+
   if (!visitor)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -132,7 +132,7 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
                          "Bad visitor to return type\n"),
                         -1);
     }
-  
+
   if (node->accept (visitor) == -1)
     {
       delete visitor;
@@ -142,11 +142,11 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
                          "codegen for argument list failed\n"),
                         -1);
     }
-  
+
   delete visitor;
-  
+
   *os << be_nl;
-  
+
   return 0;
 }
 
@@ -173,18 +173,18 @@ be_visitor_amh_rh_operation_sh::visit_operation (be_operation *node)
     {
       return 0;
     }
-  
+
   // Output stream.
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
-  
+
   *os << "\n// \t *** AMH-RH operation declaration starts here ***\n";
-  
+
   be_interface *intf;
   intf = this->ctx_->attribute ()
     ? be_interface::narrow_from_scope (this->ctx_->attribute()->defined_in ())
     : be_interface::narrow_from_scope (node->defined_in ());
-  
+
   if (!intf)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -193,13 +193,13 @@ be_visitor_amh_rh_operation_sh::visit_operation (be_operation *node)
                          "bad interface scope\n"),
                         -1);
     }
-  
+
   // Step 1 : Generate return type: always void
   os->indent ();
   *os << "virtual void ";
   // only for source: *os << intf->full_skel_name () << "::";
-  
-  
+
+
   // Step 2: Generate the method name
   // Check if we are an attribute node in disguise.
   if (this->ctx_->attribute ())
@@ -215,11 +215,11 @@ be_visitor_amh_rh_operation_sh::visit_operation (be_operation *node)
         }
     }
   *os << node->local_name();
-  
+
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_SH);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
-  
+
   if (!visitor)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -228,7 +228,7 @@ be_visitor_amh_rh_operation_sh::visit_operation (be_operation *node)
                          "Bad visitor to return type\n"),
                         -1);
     }
-  
+
   if (node->accept (visitor) == -1)
     {
       delete visitor;
@@ -238,10 +238,10 @@ be_visitor_amh_rh_operation_sh::visit_operation (be_operation *node)
                          "codegen for argument list failed\n"),
                         -1);
     }
-  
+
   delete visitor;
-  
+
   *os << be_nl;
-  
+
   return 0;
 }

@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -113,7 +113,7 @@ UTL_ScopeStack::push (UTL_Scope *el)
   long i;
 
   // Make sure there's space for one more
-  if (this->pd_stack_data_nalloced == this->pd_stack_top) 
+  if (this->pd_stack_data_nalloced == this->pd_stack_top)
     {
       ostack_data_nalloced = this->pd_stack_data_nalloced;
       this->pd_stack_data_nalloced += INCREMENT;

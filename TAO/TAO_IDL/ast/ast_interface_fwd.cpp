@@ -82,7 +82,7 @@ AST_InterfaceFwd::AST_InterfaceFwd (void)
 
 AST_InterfaceFwd::AST_InterfaceFwd (AST_Interface *dummy,
                                     UTL_ScopedName *n)
-  : AST_Decl (AST_Decl::NT_interface_fwd, 
+  : AST_Decl (AST_Decl::NT_interface_fwd,
               n)
 {
   // Create a dummy placeholder for the forward declared interface. This

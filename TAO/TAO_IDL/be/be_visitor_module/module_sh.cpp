@@ -45,7 +45,7 @@ be_visitor_module_sh::visit_module (be_module *node)
   TAO_OutStream *os;
 
   // Not generated and not imported.
-  if (!node->srv_hdr_gen () && !node->imported ()) 
+  if (!node->srv_hdr_gen () && !node->imported ())
     {
       os = this->ctx_->stream ();
 
@@ -79,7 +79,7 @@ be_visitor_module_sh::visit_module (be_module *node)
         }
 
       os->decr_indent ();
-      *os << "}" << be_nl << "TAO_NAMESPACE_CLOSE // module " 
+      *os << "}" << be_nl << "TAO_NAMESPACE_CLOSE // module "
           << node->name () << "\n\n";
     }
 

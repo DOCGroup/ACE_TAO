@@ -47,7 +47,7 @@ be_visitor_interface_cdr_op_ci::visit_interface (be_interface *node)
   // Already generated and/or we are imported. Don't do anything.
   // No CDR operations for locality constrained interfaces.
   if (node->cli_inline_cdr_op_gen ()
-      || node->imported () 
+      || node->imported ()
       || node->is_local ())
     {
       return 0;
@@ -73,15 +73,15 @@ be_visitor_interface_cdr_op_ci::visit_interface (be_interface *node)
 
       // Generate the CDR << and >> operator declarations.
       os->indent ();
-      *os << be_global->stub_export_macro () 
-          << " CORBA::Boolean operator<< (" 
+      *os << be_global->stub_export_macro ()
+          << " CORBA::Boolean operator<< ("
           << be_idt << be_idt_nl
           << "TAO_OutputCDR &," << be_nl
           << "const " << node->full_name () << "_ptr" << be_uidt_nl
           << ");" << be_uidt_nl << be_nl;
 
-      *os << be_global->stub_export_macro () 
-          << " CORBA::Boolean operator>> (" 
+      *os << be_global->stub_export_macro ()
+          << " CORBA::Boolean operator>> ("
           << be_idt << be_idt_nl
           << "TAO_InputCDR &," << be_nl
           << node->full_name () << "_ptr &" << be_uidt_nl

@@ -73,7 +73,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
                          "codegen for _out failed\n"), -1);
     }
 
-  
+
   // The _downcast method    // %! use ACE_xxx_cast here ?
   *os << node->name() << "* " << node->name()
       <<                 "::_downcast (CORBA::ValueBase* v)" << be_nl
@@ -111,7 +111,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
         {
           ++n_inherits_downcastable;
           *os << "if (rval == 0)" << be_idt_nl
-              << "rval = "; 
+              << "rval = ";
 
           if (inherited->defined_in ()->scope_node_type () == AST_Decl::NT_module)
             {
@@ -246,7 +246,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
                          "NULL visitor.\n"
                          ),  -1);
     }
-  
+
   if (visitor->visit_valuetype(node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

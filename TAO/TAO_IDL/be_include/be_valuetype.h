@@ -35,8 +35,8 @@ public:
   be_valuetype (void);
   // Default constructor.
 
-  be_valuetype (UTL_ScopedName *n, 
-                AST_Interface **ih, 
+  be_valuetype (UTL_ScopedName *n,
+                AST_Interface **ih,
                 long nih,
                 idl_bool set_abstract = 0);
   // Constructor that sets its scoped name <n>, a list of inherited valuetypes
@@ -68,14 +68,14 @@ public:
   virtual int gen_helper_header (char *local_name = 0,
          char *full_name = 0);
   // Generate the helper functions definition.
-  
+
   virtual int gen_helper_inline (char *local_name = 0,
          char *full_name = 0);
-  // Generate the helper functions inline implementation.  
+  // Generate the helper functions inline implementation.
 
   virtual int gen_helper_stubs (char *local_name = 0,
         char *full_name = 0);
-  // Generate the helper functions implementation.  
+  // Generate the helper functions implementation.
 
   const char *full_obv_skel_name (void);
   // Retrieve the fully scoped skel class name.

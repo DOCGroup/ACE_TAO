@@ -142,11 +142,13 @@ be_visitor_interface::visit_attribute (be_attribute *node)
 
       // AMH stuff
     case TAO_CodeGen::TAO_INTERFACE_AMH_SH:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_AMH_SH);
-      break;
+    case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SH:
+		ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_SH);
+		break;
     case TAO_CodeGen::TAO_INTERFACE_AMH_SS:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_AMH_SS);
-      break;
+    case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SS:
+		ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_SS);
+		break;
 
     case TAO_CodeGen::TAO_INTERFACE_PROXY_IMPLS_CH:
     case TAO_CodeGen::TAO_INTERFACE_PROXY_IMPLS_CS:
@@ -277,9 +279,11 @@ be_visitor_interface::visit_constant (be_constant *node)
 
     case TAO_CodeGen::TAO_INTERFACE_AMH_SH:
     case TAO_CodeGen::TAO_INTERFACE_AMH_SS:
+    case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SH:
+    case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SS:
+		return 0; // nothing to be done
 
-      return 0; // nothing to be done
-    default:
+	default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_interface::"
@@ -393,8 +397,10 @@ be_visitor_interface::visit_enum (be_enum *node)
 
     case TAO_CodeGen::TAO_INTERFACE_AMH_SH:
     case TAO_CodeGen::TAO_INTERFACE_AMH_SS:
+    case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SH:
+    case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SS:
+		return 0; // nothing to be done
 
-      return 0; // nothing to be done
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -510,8 +516,10 @@ be_visitor_interface::visit_exception (be_exception *node)
 
     case TAO_CodeGen::TAO_INTERFACE_AMH_SH:
     case TAO_CodeGen::TAO_INTERFACE_AMH_SS:
+    case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SH:
+    case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SS:
+		return 0; // nothing to be done
 
-      return 0; // nothing to be done
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -629,14 +637,14 @@ be_visitor_interface::visit_operation (be_operation *node)
       ctx.state (TAO_CodeGen::TAO_OPERATION_AMH_SH);
       break;
     case TAO_CodeGen::TAO_INTERFACE_AMH_SS:
-      return 0; // don't do anything for now
+      ctx.state (TAO_CodeGen::TAO_OPERATION_AMH_SS);
+      break;
     case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_AMH_RH_SH);
       break;
     case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SS:
-      //ctx.state (TAO_CodeGen::TAO_OPERATION_SS);
-      //break;
-      return 0; // don't do anything for now
+      ctx.state (TAO_CodeGen::TAO_OPERATION_AMH_RH_SS);
+      break;
 
     case TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_IMPL_CS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_REMOTE_PROXY_IMPL_CS);
@@ -812,7 +820,8 @@ be_visitor_interface::visit_structure (be_structure *node)
 
     case TAO_CodeGen::TAO_INTERFACE_AMH_SH:
     case TAO_CodeGen::TAO_INTERFACE_AMH_SS:
-
+    case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SH:
+    case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SS:
       return 0; // nothing to be done
     default:
       {
@@ -929,7 +938,9 @@ be_visitor_interface::visit_union (be_union *node)
 
     case TAO_CodeGen::TAO_INTERFACE_AMH_SH:
     case TAO_CodeGen::TAO_INTERFACE_AMH_SS:
-      return 0; // nothing to be done
+    case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SH:
+    case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SS:
+		return 0; // nothing to be done
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -1045,7 +1056,9 @@ be_visitor_interface::visit_typedef (be_typedef *node)
 
     case TAO_CodeGen::TAO_INTERFACE_AMH_SH:
     case TAO_CodeGen::TAO_INTERFACE_AMH_SS:
-      return 0; // nothing to be done
+    case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SH:
+    case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SS:
+		return 0; // nothing to be done
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,

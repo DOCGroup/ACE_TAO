@@ -28,7 +28,7 @@
 ACE_RCSID(be_visitor_interface_fwd, cdr_op_ch, "$Id$")
 
 // ***************************************************************************
-// Forward declared interface visitor for generating CDR operator declarations 
+// Forward declared interface visitor for generating CDR operator declarations
 // in the client header. Called if this node is not later defined in the file.
 // ***************************************************************************
 
@@ -57,8 +57,8 @@ be_visitor_interface_fwd_cdr_op_ch::visit_interface_fwd (be_interface_fwd *node)
     }
 
   // No CDR operations for locality constraint interfaces.
-  if (node->cli_hdr_cdr_op_gen () 
-      || node->imported () 
+  if (node->cli_hdr_cdr_op_gen ()
+      || node->imported ()
       || node->is_local ())
     {
       return 0;

@@ -29,7 +29,7 @@ ACE_RCSID(be_visitor_interface_fwd, cdr_op_ci, "$Id$")
 
 // ****************************************************************
 // Interface visitor for generating CDR operator declarations in the
-// client header 
+// client header
 // ****************************************************************
 
 be_visitor_interface_fwd_cdr_op_ci::be_visitor_interface_fwd_cdr_op_ci (
@@ -50,7 +50,7 @@ be_visitor_interface_fwd_cdr_op_ci::visit_interface_fwd (
     be_interface_fwd *node
   )
 {
-  if (node->cli_inline_cdr_decl_gen () 
+  if (node->cli_inline_cdr_decl_gen ()
       || node->imported ()
       || node->is_local ())
     {
@@ -61,13 +61,13 @@ be_visitor_interface_fwd_cdr_op_ci::visit_interface_fwd (
 
   // generate the CDR << and >> operator declarations
   os->indent ();
-  *os << be_global->stub_export_macro () << " CORBA::Boolean operator<< (" 
+  *os << be_global->stub_export_macro () << " CORBA::Boolean operator<< ("
       << be_idt << be_idt_nl
       << "TAO_OutputCDR &," << be_nl
       << "const " << node->name () << "_ptr" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
-  *os << be_global->stub_export_macro () << " CORBA::Boolean operator>> (" 
+  *os << be_global->stub_export_macro () << " CORBA::Boolean operator>> ("
       << be_idt << be_idt_nl
       << "TAO_InputCDR &," << be_nl
       << node->name () << "_ptr &" << be_uidt_nl

@@ -55,7 +55,7 @@ be_visitor_root_sth::init (void)
           "(%N:%l) be_visitor_root_sth::init - "
           "Error:Unable to open server template header file : %s\n",
           be_global->be_get_server_template_hdr_fname ()
-        ), 
+        ),
         -1
       );
     }
@@ -83,7 +83,7 @@ be_visitor_root_sth::visit_scope (be_scope *node)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_root_sth::visit_scope - "
-                                 "bad node in this scope\n"), 
+                                 "bad node in this scope\n"),
                                 -1);
 
             }
@@ -113,7 +113,7 @@ be_visitor_root_sth::visit_scope (be_scope *node)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_root_sth::visit_scope - "
-                                 "codegen for scope failed\n"), 
+                                 "codegen for scope failed\n"),
                                 -1);
 
             }
@@ -168,12 +168,12 @@ be_visitor_root_sth::visit_module (be_module *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_root_sth::"
                          "visit_module - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                          -1);
     }
 
   os->decr_indent ();
-  *os << "}" << be_nl << "TAO_NAMESPACE_CLOSE // module " 
+  *os << "}" << be_nl << "TAO_NAMESPACE_CLOSE // module "
       << node->name () << "\n";
 
   if (!node->is_nested ())
@@ -194,7 +194,7 @@ be_visitor_root_sth::visit_interface (be_interface *node)
 
   // Generate the TIE class.
 
-  this->ctx_->state (TAO_CodeGen::TAO_INTERFACE_TIE_SH); 
+  this->ctx_->state (TAO_CodeGen::TAO_INTERFACE_TIE_SH);
   this->ctx_->node (node);
 
   be_visitor_interface_tie_sh visitor (this->ctx_);

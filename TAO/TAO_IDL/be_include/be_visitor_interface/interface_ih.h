@@ -46,7 +46,7 @@ public:
   static int method_helper (be_interface *derived,
                             be_interface *node,
                             TAO_OutStream *os);
-  
+
 
 };
 

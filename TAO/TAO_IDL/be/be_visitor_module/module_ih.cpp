@@ -42,7 +42,7 @@ be_visitor_module_ih::visit_module (be_module *node)
 {
   if (!node->impl_hdr_gen () && !node->imported ()) // not generated and not imported
     {
-      
+
       if (this->visit_scope (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -50,7 +50,7 @@ be_visitor_module_ih::visit_module (be_module *node)
                              "visit_module - "
                              "codegen for scope failed\n"), -1);
         }
-      
+
     }
   return 0;
 }

@@ -31,7 +31,7 @@ class be_visitor_interface_fwd_cdr_op_ch : public be_visitor_decl
   //   be_visitor_interface_fwd_cdr_op_ch
   //
   // = DESCRIPTION
-  //   This is a concrete visitor for forward declared interface that generates 
+  //   This is a concrete visitor for forward declared interface that generates
   //   the CDR operator declarations, if the node is not later defined.
   //
 

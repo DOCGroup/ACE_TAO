@@ -82,10 +82,10 @@ AST_Factory::AST_Factory (void)
 }
 
 AST_Factory::AST_Factory (UTL_ScopedName *n)
-  : AST_Decl(AST_Decl::NT_factory, 
+  : AST_Decl(AST_Decl::NT_factory,
              n),
     UTL_Scope(AST_Decl::NT_factory),
-    COMMON_Base (1, 
+    COMMON_Base (1,
                  0), //@@ Always local, never abstract
     argument_count_ (-1),
     has_native_ (0)
@@ -142,7 +142,7 @@ AST_Factory::compute_argument_attr (void)
   if (this->nmembers () > 0)
     {
       // Instantiate a scope iterator.
-      UTL_ScopeActiveIterator si (this, 
+      UTL_ScopeActiveIterator si (this,
                                   UTL_Scope::IK_decls);
 
       while (!si.is_done ())
@@ -179,29 +179,29 @@ AST_Factory::fe_add_argument (AST_Argument *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_by_name_local (t->local_name(), 0)) != 0) 
+  if ((d = lookup_by_name_local (t->local_name(), 0)) != 0)
     {
-      if (!can_be_redefined (d)) 
+      if (!can_be_redefined (d))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
                                       d);
           return 0;
         }
 
-      if (this->referenced (d, t->local_name ())) 
+      if (this->referenced (d, t->local_name ()))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
                                       d);
           return 0;
         }
 
-      if (t->has_ancestor (d)) 
+      if (t->has_ancestor (d))
         {
-          idl_global->err ()->redefinition_in_scope (t, 
+          idl_global->err ()->redefinition_in_scope (t,
                                                      d);
           return 0;
         }
@@ -211,8 +211,8 @@ AST_Factory::fe_add_argument (AST_Argument *t)
   this->add_to_scope (t);
 
   // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t, 
-                           I_FALSE, 
+  this->add_to_referenced (t,
+                           I_FALSE,
                            t->local_name ());
 
   return t;
@@ -223,14 +223,14 @@ void
 AST_Factory::dump (ostream &o)
 {
   AST_Decl *d = 0;
-  UTL_ScopeActiveIterator i (this, 
+  UTL_ScopeActiveIterator i (this,
                              IK_decls);
 
   o << "factory ";
   this->local_name ()->dump (o);
   o << "(";
 
-  while (!i.is_done()) 
+  while (!i.is_done())
     {
       d = i.item ();
       d->dump (o);
