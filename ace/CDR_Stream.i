@@ -287,7 +287,7 @@ ACE_OutputCDR::write_wchar_array (const ACE_CDR::WChar* x,
   if (ACE_OutputCDR::wchar_maxbytes_ == 0)
     {
       errno = EACCES;
-      return (this->good_bit_ = 0);
+      return (ACE_CDR::Boolean) (this->good_bit_ = 0);
     }
   if (ACE_OutputCDR::wchar_maxbytes_ == sizeof (ACE_CDR::WChar))
     return this->write_array (x,
