@@ -447,7 +447,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
     stale_ (0),
     sa_ (sa),
     junklock_ (),
-    lock_ (lock_)
+    lock_ (lock)
 {
   this->init ();
 
