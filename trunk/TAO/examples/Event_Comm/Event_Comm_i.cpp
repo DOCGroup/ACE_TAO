@@ -139,9 +139,8 @@ Notifier_i::Notifier_i (size_t size)
 // such as <compile> and <step> then warn the user that the regular
 // expression feature is not available.
 #ifndef ACE_HAS_REGEX
-  ACE_DEBUG ((LM_DEBUG, "\n WARNING: This platform does not support\
-the functions\
-for regular expressions.\n\
+  ACE_DEBUG ((LM_DEBUG, "\n WARNING: This platform does not support \
+the functions for regular expressions.\n\
 The filtering criteria will not work.\n"));
 #endif //#ifndef ACE_HAS_REGEX
 }
