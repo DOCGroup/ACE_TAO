@@ -144,6 +144,7 @@ ld < Map_Manager_Test
 write 2, "Map_Manager_Test ", 17
 ace_main; unld "Map_Manager_Test"
 
+#### This test occasionally causes a page fault on VxWorks.
 ld < Message_Queue_Test
 write 2, "Message_Queue_Test ", 19
 ace_main; unld "Message_Queue_Test"
