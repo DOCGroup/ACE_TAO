@@ -1,3 +1,43 @@
+Sat Nov 15 21:20:01 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_string.cpp: The typecode info was getting
+	generated in a wrong file because of setting the worng file to
+	generate it in.
+
+	* TAO_IDL/be/be_typedef.cpp: Some extra indentation was getting
+	generated for typecodes. This is fixed.
+
+	* TAO_IDL/be/be_state_argument.cpp: For parameters of type
+	ObjRefs, we were not passing the address of the object_ptr to the
+	Any constructor. This would have caused seg faults when
+	decoding. This is now fixed.
+
+Sat Nov 15 20:17:35 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be: Split be_state.cpp into a number of files based on
+	the IDL types, e.g., be_state_struct.cpp, be_state_union.cpp, ...
+
+	* TAO_IDL/be/be_sequence.cpp: Name creation now uses a uniform
+	strategy rather than typedefed sequences assuming the name of the
+	typedef and anonymous sequences getting a generated name. This was
+	required to eliminate a number of multiple declarations errors.
+
+	* TAO_IDL/be/be_state_union.cpp: Since C++ does not allow
+	instances of classes to appear inside a union declaration, the
+	private data members for data members of type objref, strings,
+	sequences, and anys must be pointers. This changes code in the
+	accessor methods defined in the generated *.i files for the union.
+
+	* TAO_IDL/be/be_operation.cpp: There were some instances of the
+	incorrectly spelled _tao_enviroment remaining which have been
+	corrected.
+
+	* TAO/tao/managed_types.{h,i,cpp}: Added these 3 files that define
+	the self managed data type similar to a String_var. These self
+	managed data types are required for struct/union members that are
+	strings or obj references, as well as for element types of
+	sequences.
+
 Sat Nov 15 18:03:39 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp (make_cubit): We don't
@@ -40,9 +80,6 @@ Sat Nov 15 17:33:15 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 	  Initialize name_service_port_ to zero in the constructor.
 
 Sat Nov 15 12:32:37 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
-
-	* TAO_IDL/be: Split be_state.cpp into a number of files based on
-	the IDL types, e.g., be_state_struct.cpp, be_state_union.cpp, ...
 
 	* TAO_IDL/be/be_typedef.cpp: Added code to generate the typecode
 	structure for typedefs. These use the tk_alias kind field.
