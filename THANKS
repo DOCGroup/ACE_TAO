@@ -676,7 +676,7 @@ Pedro Alves Ferreira <pedro.ferreira@inescn.pt>
 Bruce Edge <bedge@sattel.com>
 Dan Butler <daniel.g.butler@boeing.com>
 Ron MacKenzie <ronm@SLAC.Stanford.EDU>
-Craig Rodrigues <rodrigc@mediaone.net>
+Craig Rodrigues <crodrigu@bbn.com>
 Phil Y. Wang <yhwang@cs.columbia.edu>
 David Brock <dbrock@mail.arc.nasa.gov>
 John Morey <jmorey@tbi.com>
@@ -994,6 +994,8 @@ Youngkwan Cho <ykcho@ece.arizona.edu>
 Dorr H. Clark <dhclark@Lynx.COM>
 Dave McNeely <Dave_McNeely@md.northgrum.com>
 Eric Malenfant <EMalenfant@interstarinc.com>
+Roland Fischer <roli@gugus.com>
+Alexander Libman <alibman@baltimore.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
