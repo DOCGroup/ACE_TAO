@@ -1,3 +1,12 @@
+Thu May 17 15:53:26 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ORB_Core.h (TAO_ORB_Core): 
+	* tao/ORB_Core.cpp (data_block_for_message_block): 
+	  Reverted the change I did to ACE_Data_Block *create_data_block_i()
+	  earlier today. There is not much point in having a 
+	  ACE_Allocator *msgblock_allocator in its signature when that has
+	  no role in creating a ACE_Data_Block.
+		
 Thu May 17 15:45:58 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/Single_Threaded_Latency/default.conf:
