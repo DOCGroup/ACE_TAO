@@ -493,7 +493,7 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_current_infos (void)
           // been updated.  This is to protect against upcalls that
           // try to deregister again.
           ACE_HANDLE handle = ACE_INVALID_HANDLE;
-          ACE_Reactor_Mask masks = 0;
+          ACE_Reactor_Mask masks = ACE_Event_Handler::NULL_MASK;
           ACE_Event_Handler *event_handler = 0;
 
 	  // See if this entry is scheduled for deletion
@@ -594,7 +594,7 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_suspension_infos (void)
           // been updated.  This is to protect against upcalls that
           // try to deregister again.
           ACE_HANDLE handle = ACE_INVALID_HANDLE;
-          ACE_Reactor_Mask masks = 0;
+          ACE_Reactor_Mask masks = ACE_Event_Handler::NULL_MASK;
           ACE_Event_Handler *event_handler = 0;
 
 	  // See if this entry is scheduled for deletion
@@ -683,7 +683,7 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_to_be_added_infos (void)
       // been updated.  This is to protect against upcalls that
       // try to deregister again.
       ACE_HANDLE handle = ACE_INVALID_HANDLE;
-      ACE_Reactor_Mask masks = 0;
+      ACE_Reactor_Mask masks = ACE_Event_Handler::NULL_MASK;
       ACE_Event_Handler *event_handler = 0;
 
       // See if this entry is scheduled for deletion
@@ -1604,11 +1604,19 @@ ACE_WFMO_Reactor_Notify::handle_signal (int signum,
 	  // failure!
 	  mb->release ();
 
-	  // Bail out if we've reached the <notify_threshold_>.  Note
-	  // that by default <notify_threshold_> is -1, so we'll loop
-	  // until we're done.
+	  // Bail out if we've reached the <max_notify_iterations_>.
+	  // Note that by default <max_notify_iterations_> is -1, so
+	  // we'll loop until we're done.
 	  if (i == this->max_notify_iterations_)
-	    break;
+            {
+              // If there are still notification in the queue, we need
+              // to wake up again
+              if (!this->message_queue_.is_empty ())
+                this->wakeup_one_thread_.signal ();
+
+              // Break the loop as we have reached max_notify_iterations_
+              break;
+            }
 	}
     }
 }
