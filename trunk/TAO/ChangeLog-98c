@@ -1,3 +1,8 @@
+Mon Jan 05 09:53:51 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/corbacom.{h,cpp},encode.cpp: replaced defined (VXWORKS) &&
+          defined (ghs) with defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR).
+
 Sun Jan 04 17:19:34 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.53, released Sun Jan 04 17:19:34 1998.
