@@ -254,19 +254,104 @@ ACE_OS::uname (struct utsname *name)
   // ACE_TRACE ("ACE_OS::uname");
 #if defined (ACE_WIN32)
   size_t maxnamelen = sizeof name->nodename;
-  ::strcpy (name->sysname, "Win32");
-  // Any ideas what these should be?
-  ::strcpy (name->release, "???");
-  ::strcpy (name->version, "???");
-  ::strcpy (name->machine, "???");
+  ACE_OS::strcpy (name->sysname, "Win32");
 
+  OSVERSIONINFO vinfo;
+  vinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+  ::GetVersionEx (&vinfo);
+
+  SYSTEM_INFO sinfo;
+  ::GetSystemInfo(&sinfo);
+
+  ACE_OS::strcpy (name->sysname, "Win32");
+
+  if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT)
+  {
+    // Get information from the two structures
+    ACE_OS::sprintf (name->release, 
+                    "Windows NT %d.%d", 
+                    vinfo.dwMajorVersion,
+                    vinfo.dwMinorVersion);
+    ACE_OS::sprintf (name->version,
+                     "Build %d %s",
+                     vinfo.dwBuildNumber,
+                     vinfo.szCSDVersion);
+    
+    char processor[10] = "Unknown";
+    char subtype[10] = "Unknown";
+    
+    switch (sinfo.wProcessorArchitecture)
+    {
+    case PROCESSOR_ARCHITECTURE_INTEL:
+      ACE_OS::strcpy (processor, "Intel");
+      if (sinfo.wProcessorLevel == 3)
+        ACE_OS::strcpy (subtype, "80386");
+      else if (sinfo.wProcessorLevel == 4)
+        ACE_OS::strcpy (subtype, "80486");
+      else if (sinfo.wProcessorLevel == 5)
+        ACE_OS::strcpy (subtype, "Pentium");
+      else if (sinfo.wProcessorLevel == 6)
+        ACE_OS::strcpy (subtype, "Pentium Pro");
+      else if (sinfo.wProcessorLevel == 7)  // I'm guessing here
+        ACE_OS::strcpy (subtype, "Pentium II");
+      break;
+    case PROCESSOR_ARCHITECTURE_MIPS:
+      ACE_OS::strcpy (processor, "MIPS");
+      ACE_OS::strcpy (subtype, "R4000");
+      break;
+    case PROCESSOR_ARCHITECTURE_ALPHA:
+      ACE_OS::strcpy (processor, "Alpha");
+      ACE_OS::sprintf (subtype, "%d", sinfo.wProcessorLevel);
+      break;
+    case PROCESSOR_ARCHITECTURE_PPC:
+      ACE_OS::strcpy (processor, "PPC");
+      if (sinfo.wProcessorLevel == 1)
+        ACE_OS::strcpy (subtype, "601");
+      else if (sinfo.wProcessorLevel == 3)
+        ACE_OS::strcpy (subtype, "603");
+      else if (sinfo.wProcessorLevel == 4)
+        ACE_OS::strcpy (subtype, "604");
+      else if (sinfo.wProcessorLevel == 6)
+        ACE_OS::strcpy (subtype, "603+");
+      else if (sinfo.wProcessorLevel == 9)
+        ACE_OS::strcpy (subtype, "804+");
+      else if (sinfo.wProcessorLevel == 20)
+        ACE_OS::strcpy (subtype, "620");
+      break;
+    case PROCESSOR_ARCHITECTURE_UNKNOWN:
+      ACE_OS::strcpy (processor, "Unknown");
+      break;
+    }
+    ACE_OS::sprintf(name->machine, "%s %s", processor, subtype);
+  }
+  else if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS)
+  {
+    // Get Windows 95 Information
+    ACE_OS::strcpy (name->release, "Windows 95");
+    ACE_OS::sprintf (name->version, "%d", LOWORD (vinfo.dwBuildNumber));
+    if (sinfo.dwProcessorType == PROCESSOR_INTEL_386)
+      ACE_OS::strcpy (name->machine, "Intel 80386");
+    else if (sinfo.dwProcessorType == PROCESSOR_INTEL_486)
+      ACE_OS::strcpy (name->machine, "Intel 80486");
+    else if (sinfo.dwProcessorType == PROCESSOR_INTEL_PENTIUM)
+      ACE_OS::strcpy (name->machine, "Intel Pentium");
+  }
+  else
+  {
+    // We don't know what this is!
+
+    ACE_OS::strcpy (name->release, "???");
+    ACE_OS::strcpy (name->version, "???");
+    ACE_OS::strcpy (name->machine, "???");
+  }  
+  
   return ACE_OS::hostname (name->nodename, maxnamelen);
 #elif defined (VXWORKS)
   size_t maxnamelen = sizeof name->nodename;
-  ::strcpy (name->sysname, "VxWorks");
-  ::strcpy (name->release, "???");
-  ::strcpy (name->version, sysBspRev ());
-  ::strcpy (name->machine, sysModel ());
+  ACE_OS::strcpy (name->sysname, "VxWorks");
+  ACE_OS::strcpy (name->release, "???");
+  ACE_OS::strcpy (name->version, sysBspRev ());
+  ACE_OS::strcpy (name->machine, sysModel ());
 
   return ACE_OS::hostname (name->nodename, maxnamelen);
 #endif /* ACE_WIN32 */
