@@ -36,8 +36,7 @@ CLONE   = Makefile \
           TAO \
           tests \
           websvcs \
-	  ACEXML \
-          PACE
+	  ACEXML
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -133,7 +132,6 @@ CONTROLLED_FILES = \
         FAQ \
         Makefile \
         Makefile.am \
-        PACE \
         PROBLEM-REPORT-FORM \
         README \
         THANKS \
@@ -169,7 +167,6 @@ ALL_RELEASE_FILES = \
 
 RELEASE_LIB_FILES = \
         ACE_wrappers/VERSION \
-        ACE_wrappers/PACE \
         ACE_wrappers/ace \
         ACE_wrappers/bin \
         ACE_wrappers/etc \
