@@ -556,7 +556,7 @@ ACE_Recursive_Thread_Mutex::tryacquire_write (void)
 #else /* ACE_WIN32 */
 // The counter part of the following two functions for non-Win32 platforms
 // are located in file Synch.cpp
-ACE_thread_t
+ACE_INLINE ACE_thread_t
 ACE_Recursive_Thread_Mutex::get_thread_id (void)
 {
   // @@ The structure CriticalSection in Win32 doesn't hold
@@ -567,7 +567,7 @@ ACE_Recursive_Thread_Mutex::get_thread_id (void)
   return ACE_OS::NULL_thread;
 }
 
-int
+ACE_INLINE int
 ACE_Recursive_Thread_Mutex::get_nesting_level (void)
 {
   return this->lock_.RecursionCount;
