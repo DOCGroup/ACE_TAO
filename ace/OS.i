@@ -10251,13 +10251,14 @@ ACE_OS::readdir_r (DIR *dirp,
                    struct dirent **result)
 {
 #if defined (ACE_HAS_DIRENT)  &&  !defined (ACE_LACKS_READDIR_R)
-# if defined (ACE_HAS_PTHREADS_STD)
+# if (defined (sun) && defined (_POSIX_PTHREAD_SEMANTICS))  ||  \
+     (!defined (sun) && defined (ACE_HAS_PTHREADS_STD))
     return ::readdir_r (dirp, entry, result);
-# else  /* ! ACE_HAS_PTHREADS_STD */
+# else  /* ! POSIX.1c */
     // <result> had better not be 0!
     *result = ::readdir_r (dirp, entry);
     return 0;
-# endif /* ! ACE_HAS_PTHREADS_STD */
+# endif /* ! POSIX.1c */
 #else  /* ! ACE_HAS_DIRENT  ||  ACE_LACKS_READDIR_R */
   ACE_UNUSED_ARG (dirp);
   ACE_UNUSED_ARG (entry);
