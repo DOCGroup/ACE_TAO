@@ -2,7 +2,7 @@ Thu Aug 05 12:05:42 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/wrapper_macros.GNU: moved minimum_corba
           make flag support from wrapper_macros.GNU to TAO/rules.tao.GNU.
-          [Bug 204]
+          Thanks to Bala for noticing this. [Bug 204]
 
 Thu Aug 05 12:01:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
