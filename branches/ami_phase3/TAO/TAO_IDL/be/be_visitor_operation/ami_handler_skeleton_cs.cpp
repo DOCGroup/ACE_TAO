@@ -57,13 +57,10 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
   TAO_OutStream *os; // output stream
   be_type *bt;       // type node
   be_visitor_context ctx;  // visitor context
-  be_visitor *visitor; // visitor
+  be_visitor *visitor = 0; // visitor
   
   os = this->ctx_->stream ();
   this->ctx_->node (node); // save the node for future use
-  
-  // Start with the current indentation level.
-  os->indent (); 
   
   // Init the return type variable.
   bt = be_type::narrow_from_decl (node->return_type ());
@@ -76,8 +73,12 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
                         -1);
     }
   
+  // Start with the current indentation level.
+  os->indent (); 
+
+
   // Generate the return type. Return type is simply void.
-  *os << "void " << be_nl;
+  *os << be_nl << "void" << be_nl;
 
   // Get the scope name.
   be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
@@ -97,7 +98,7 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
   *os << "::" << node->local_name () << "_skel (" << be_idt_nl;
   
   // Generate the argument list.
-  *os << "TAO_InputCDR &_tao_reply_cdr, " << be_nl
+  *os << "TAO_InputCDR &_tao_in, " << be_nl
       << "Messaging::ReplyHandler_ptr _tao_reply_handler," << be_nl
       << "CORBA::Environment &ACE_TRY_ENV"<< be_uidt << be_uidt_nl
       << ")" << be_nl;
@@ -105,13 +106,13 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
   // Generate the actual code for the stub. However, if any of the argument
   // types is "native", we flag a MARSHAL exception.
   // last argument - is always CORBA::Environment
-  *os << "{" << be_idt_nl;
+  *os << "{\n" << be_idt;
   
   // Deal with differences between IDL mapping for true C++ exceptions and
   // alternate mapping. Since our code uses the ACE_TRY_ENV variable in a
   // number of places, for the true exception case, we will have to explicitly
   // declare the ACE_TRY_ENV variable.
-  *os << this->gen_environment_var () << "\n";
+  *os << this->gen_environment_var () << be_nl;
 
   // Generate any pre stub info if and only if none of our parameters is of the
   // native type.
@@ -138,18 +139,18 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
   *os << parent->compute_name ("AMI_", "_Handler") << "_var "
       << "_tao_reply_handler_object =" << be_idt_nl;
   
-  *os << parent->compute_name ("AMI_", "_Handler") <<
-      << "::_narrow(_tao_reply_handler, ACE_TRY_ENV);" << be_uidt_nl;
+  *os << parent->compute_name ("AMI_", "_Handler");
+  *os << "::_narrow(_tao_reply_handler, ACE_TRY_ENV);" << be_uidt_nl;
   
-  +os << "ACE_CHECK;" << be_nl << be_nl
+  *os << "ACE_CHECK;" << be_nl << be_nl
       << "// @@ Error handling " << be_nl << be_nl;
   
-  *os << "//Demarshall all the arguments." << be_nl;
+  *os << "//Demarshall all the arguments.\n";
 
   // declare a return type variable
-  be_visitor_context ctx = *this->ctx_;
+  ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_RETVAL_DECL_CS);
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  visitor = tao_cg->make_visitor (&ctx);
   if (!visitor || (bt->accept (visitor) == -1))
     {
       delete visitor;
@@ -159,6 +160,8 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
                          "codegen for return var decl failed\n"),
                         -1);
     }
+  delete visitor;
+  visitor = 0;
   
   // declare variables for arguments
   ctx = *this->ctx_;
@@ -173,9 +176,11 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
                          "codegen for return var decl failed\n"),
                         -1);
     }
+  delete visitor;
+  visitor = 0;
   
   // Demarshal parameters
-  if (this->gen_demarshal_params (node, bt) == -1)
+  if (this->gen_marshal_and_invoke (node, bt) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
 			 "(%N:%1) ami_handler_skeleton_cs::"
@@ -184,34 +189,7 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
                         -1);
     }
   
-  // Invoke the callback method
-  *os << "// Invoke the call back method." << be_nl 
-      << "_tao_reply_handler_object->" 
-      << node->local_name () << " (" << be_idt_nl;
-  
-  // if we have a non-void return type then pass it as the first argument
-  if (!this->void_return_type (bt))
-    *os << "_tao_ami_result," << be_nl;
-  
-  ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_UPCALL_CS);
-  visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || (node->accept (visitor) == -1))
-    {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) ami_handler_skeleton_cs::"
-                         "visit_operation - "
-                         "codegen for making upcall failed\n"),
-                        -1);
-    }
-  *os << be_uidt_nl << ");" << be_nl;
-
-  *os << "ACE_CHECK;" << be_nl;
-  
-  *os << be_uidt_nl << "}" << be_nl << be_nl;
-  
-  // Generate the skeleton method.
+  *os << be_uidt_nl << "};" << be_nl << be_nl;
   
   return 0;
 }
@@ -330,7 +308,7 @@ be_visitor_operation_ami_handler_skeleton_cs::gen_check_exception (be_type *bt)
 }
 
 // ************************************************************
-// Operation visitor for interpretive client stubs
+// Operation visitor for interpretive client skeletons of the AMI reply handler
 // ************************************************************
 
 be_interpretive_visitor_operation_ami_handler_skeleton_cs::
@@ -349,129 +327,7 @@ int
 be_interpretive_visitor_operation_ami_handler_skeleton_cs::gen_pre_stub_info (be_operation *node,
                                                                                be_type *bt)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_visitor *visitor;
-  be_visitor_context ctx;
-
-  // Generate the TAO_Param_Data table
-  os->indent ();
-  *os << "static const TAO_Param_Data ";
-  // check if we are an attribute node in disguise
-  if (this->ctx_->attribute ())
-    {
-      // now check if we are a "get" or "set" operation
-      if (node->nmembers () == 1) // set
-        *os << "_set_";
-      else
-        *os << "_get_";
-    }
-  *os << node->flatname () <<
-    "_paramdata [] = " << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
-
-  // entry for the return type
-  *os << "{" << bt->tc_name () << ", PARAM_RETURN, 0}";
-  if (node->nmembers () > 0)
-    *os << ",\n";
-
-      // generate entries for the param data table for arguments
-  if (this->visit_scope (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_interpretive_visitor_operation_ami_handler_skeleton_cs::"
-                         "gen_pre_stub_info - "
-                         "visit scope failed\n"),
-                        -1);
-    }
-  *os << "\n";
-  os->decr_indent ();
-  *os << "}; // " << node->flatname () << "_paramdata\n\n";
-
-  // Check if this operation raises any exceptions. In that case, we must
-  // generate a list of exception typecodes. This is not valid for
-  // attributes
-  if (!this->ctx_->attribute ())
-    {
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_EXCEPTLIST_CS);
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (node->accept (visitor) == -1))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) "
-                             "be_interpretive_visitor_operation_ami_handler_skeleton_cs::"
-                             "gen_pre_stub_info - "
-                             "Exceptionlist generation error\n"),
-                            -1);
-        }
-    }
-
-  // now generate the calldata table
-  os->indent ();
-  *os << "static const TAO_Call_Data ";
-  // check if we are an attribute node in disguise
-  if (this->ctx_->attribute ())
-    {
-      // now check if we are a "get" or "set" operation
-      if (node->nmembers () == 1) // set
-        *os << "_set_";
-      else
-        *os << "_get_";
-    }
-  *os << node->flatname ()
-      << "_calldata = " << be_nl
-      << "{"
-      << "\"";
-  // check if we are an attribute node in disguise
-  if (this->ctx_->attribute ())
-    {
-      // now check if we are a "get" or "set" operation
-      if (node->nmembers () == 1) // set
-        *os << "_set_";
-      else
-        *os << "_get_";
-    }
-  *os << node->local_name () << "\", ";
-
-      // are we oneway or two operation?
-  if (node->flags () == AST_Operation::OP_oneway)
-    {
-      *os << "0, "; // for false
-    }
-  else
-    {
-      *os << "1, "; // for true
-    }
-  // insert the size of the paramdata table i.e., number of arguments + 1
-  // for return type
-  *os << (node->argument_count () + 1) << ", ";
-
-      // insert the address of the paramdata table
-      // first check if we are an attribute node in disguise
-  if (this->ctx_->attribute ())
-    {
-      // now check if we are a "get" or "set" operation
-      if (node->nmembers () == 1) // set
-        *os << "_set_";
-      else
-        *os << "_get_";
-    }
-  *os << node->flatname () << "_paramdata, ";
-
-      // insert exception list (if any) - node for attributes
-  if (this->ctx_->attribute ())
-    *os << "0, 0};\n\n";
-  else
-    {
-      if (node->exceptions ())
-        {
-          *os << node->exceptions ()->length ()
-              << ", _tao_" << node->flatname () << "_exceptiondata};\n\n";
-        }
-      else
-        *os << "0, 0};\n\n";
-    }
+  // @@ Michael: To be done.
   return 0;
 }
 
@@ -480,108 +336,12 @@ be_interpretive_visitor_operation_ami_handler_skeleton_cs::
 gen_marshal_and_invoke (be_operation*node,
                         be_type *bt)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_visitor *visitor;
-  be_visitor_context ctx;
-
-  os->indent ();
-  *os << "void* _tao_arguments["
-      << node->argument_count () + 1 << "];" << be_nl
-      << "const void** _tao_arg = ACE_const_cast (const void**,_tao_arguments);" << be_nl
-      << "*_tao_arg = ";
-
-  // pass the appropriate return value to docall
-  ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_INVOKE_CS);
-  visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || (bt->accept (visitor) == -1))
-    {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_interpretive_visitor_operation_ami_handler_skeleton_cs::"
-                         "gen_marshal_and_invoke - "
-                         "codegen for return var in do_static_call failed\n"),
-                        -1);
-    }
-  *os << "; _tao_arg++;\n";
-
-  // pass each argument to do_static_call
-  ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_INVOKE_CS);
-  visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || (node->accept (visitor) == -1))
-    {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_interpretive_visitor_operation_ami_handler_skeleton_cs::"
-                         "gen_marshal_and_invoke - "
-                         "codegen for return var in do_static_call failed\n"),
-                        -1);
-    }
-
-  // call do_static_call with appropriate number of arguments
-  os->indent ();
-  *os << "istub->do_static_call (" << be_idt_nl
-      << "ACE_TRY_ENV, " << be_nl
-      << "&";
-  // check if we are an attribute node in disguise
-  if (this->ctx_->attribute ())
-    {
-      // now check if we are a "get" or "set" operation
-      if (node->nmembers () == 1) // set
-        *os << "_set_";
-      else
-        *os << "_get_";
-    }
-  *os << node->flatname () << "_calldata," << be_nl
-      << "_tao_arguments" << be_uidt_nl
-      << ");\n";
-
-  os->indent ();
-  // check if there is an exception
-  if (this->gen_check_exception (bt) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_interpretive_visitor_operation_ami_handler_skeleton_cs::"
-                         "gen_marshal_and_invoke - "
-                         "codegen for checking exception failed\n"),
-                        -1);
-
-    }
-
-  // do any post processing for the arguments
-  ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_POST_INVOKE_CS);
-  visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || (node->accept (visitor) == -1))
-    {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ami_handler_skeleton_cs::"
-                         "visit_operation - "
-                         "codegen for args post do_static_call failed\n"),
-                        -1);
-    }
-
-  // do any post processing for the retval
-  ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_POST_INVOKE_CS);
-  visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || (bt->accept (visitor) == -1))
-    {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ami_handler_skeleton_cs::"
-                         "visit_operation - "
-                         "codegen for return type post do_static_call failed\n"),
-                        -1);
-    }
-
+  // @@ Michael: To be done. 
   return 0;
 }
 
 // ************************************************************
-// Operation visitor for compiled client stubs
+// Operation visitor for compiled client skeletons of the AMI reply handler
 // ************************************************************
 
 be_compiled_visitor_operation_ami_handler_skeleton_cs::
@@ -611,6 +371,7 @@ be_compiled_visitor_operation_ami_handler_skeleton_cs::gen_pre_stub_info (be_ope
       be_visitor *visitor = tao_cg->make_visitor (&ctx);
       if (!visitor || (node->accept (visitor) == -1))
         {
+          delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) "
                              "be_compiled_visitor_operation_ami_handler_skeleton_cs::"
@@ -618,6 +379,7 @@ be_compiled_visitor_operation_ami_handler_skeleton_cs::gen_pre_stub_info (be_ope
                              "Exceptionlist generation error\n"),
                             -1);
         }
+      delete visitor;
     }
 
   return 0;
@@ -625,12 +387,16 @@ be_compiled_visitor_operation_ami_handler_skeleton_cs::gen_pre_stub_info (be_ope
 
 int
 be_compiled_visitor_operation_ami_handler_skeleton_cs::
-gen_demarshal_params (be_operation *node,
-                      be_type *bt)
+gen_marshal_and_invoke (be_operation *node,
+                        be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_visitor *visitor;
+  be_visitor *visitor = 0;
   be_visitor_context ctx;
+
+  os->indent ();
+
+  *os << "if (!(\n" << be_idt << be_idt << be_idt;
   
   if (!this->void_return_type (bt))
     {
@@ -649,7 +415,12 @@ gen_demarshal_params (be_operation *node,
                             -1);
         }
       delete visitor;
-      visitor= 0;
+
+      // Print the && if there are OUT or INOUT arguements in the
+      // signature. 
+      if (this->has_param_type (node, AST_Argument::dir_OUT) ||
+          this->has_param_type (node, AST_Argument::dir_INOUT))
+        *os << " &&\n";
     }
   
   if (this->has_param_type (node, AST_Argument::dir_INOUT) ||
@@ -657,7 +428,7 @@ gen_demarshal_params (be_operation *node,
     {
       // demarshal each in and inout argument
       ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_MARSHAL_CS);
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_DEMARSHAL_CS);
       ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
       visitor = tao_cg->make_visitor (&ctx);
       if (!visitor || (node->accept (visitor) == -1))
@@ -670,11 +441,40 @@ gen_demarshal_params (be_operation *node,
                             -1);
         }
       delete visitor;
-      visitor = 0;
+    }  
+  
+  *os << be_uidt << be_uidt_nl 
+      << " ))" << be_nl
+      << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl << be_nl; 
+
+  // Invoke the callback method
+  *os << "// Invoke the call back method." << be_nl 
+      << "_tao_reply_handler_object->" 
+      << node->local_name () << " (" << be_idt_nl;
+  
+  // if we have a non-void return type then pass it as the first argument
+  if (!this->void_return_type (bt))
+    *os << "_tao_retval,\n";
+  
+  // generate the argument list containing the inout and inout arguments
+  ctx = *this->ctx_;
+  ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_UPCALL_CS);
+  visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor || (node->accept (visitor) == -1))
+    {
+      delete visitor;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) ami_handler_skeleton_cs::"
+                         "visit_operation - "
+                         "codegen for making upcall failed\n"),
+                        -1);
     }
-  
-  *os << be_uidt_nl << "))\n" << be_idt;
-  
-  
+  delete visitor;
+  visitor = 0;
+
+  *os << be_nl << ");" << be_uidt_nl;
+
+  *os << "ACE_CHECK;" << be_nl;
+
   return 0;
 }

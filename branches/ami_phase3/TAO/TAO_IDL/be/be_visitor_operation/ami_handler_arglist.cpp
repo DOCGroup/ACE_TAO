@@ -125,7 +125,7 @@ be_visitor_operation_ami_handler_arglist::visit_operation (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   
-  *os << " (" << be_idt << be_idt << "\n";
+  *os << " (" << be_idt << be_idt << be_nl;
 
   // First argument is a the return value of the operation.
   
@@ -149,7 +149,6 @@ be_visitor_operation_ami_handler_arglist::visit_operation (be_operation *node)
 
   // Set the state.
   ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_RESULT_ARG);
-
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
 
   // Pass the visitor.
@@ -162,6 +161,8 @@ be_visitor_operation_ami_handler_arglist::visit_operation (be_operation *node)
                          "Bad return type\n"),
                         -1);
     }
+  delete visitor;
+  visitor = 0;
   
   if (result_printed)
     *os << ", " << be_nl;
@@ -209,15 +210,16 @@ be_visitor_operation_ami_handler_arglist::visit_operation (be_operation *node)
   *os << be_uidt_nl << ")" << be_uidt;
 
   // Now generate the throw specs.
-  *os << be_idt_nl << "ACE_THROW_SPEC ((CORBA::SystemException))";
+  *os << be_idt_nl << "ACE_THROW_SPEC ((CORBA::SystemException))"
+      << be_uidt_nl;
 
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST_CH:
-      *os << ";\n\n";
+      *os << ";" << be_nl << be_nl;
       break;
     default:
-      *os << "\n";
+      *os << be_nl;
     }
   return 0;
 }

@@ -298,7 +298,7 @@ public:
     TAO_ARGUMENT_AMI_HANDLER_ARGLIST_CH,
     TAO_ARGUMENT_AMI_HANDLER_ARGLIST_CS,
     TAO_ARGUMENT_ARGLIST_AMI_HANDLER,
-    TAO_AMI_HANDLER_OPERATION_RESULT_ARG,  
+    TAO_AMI_HANDLER_OPERATION_RESULT_ARG,
 
     TAO_AMI_HANDLER_TYPECODE_DECL,           // Typecode decl for the AMI_*_Handler.
 
@@ -306,9 +306,9 @@ public:
 
     TAO_COLLOCATED_AMI_HANDLER_OPERATION_CH, // Operation insidee collocated handler.
 
-    TAO_AMI_HANDLER_ARGUMENT_INVOKE_CS,
+// @@ Michael    TAO_AMI_HANDLER_ARGUMENT_INVOKE_CS,
 
-    TAO_AMI_HANDLER_OPERATION_ARG_INVOKE_CS, 
+// @@ Michael    TAO_AMI_HANDLER_OPERATION_ARG_INVOKE_CS,
 
     TAO_AMI_HANDLER_STUB_OPERATION_CS,
 
@@ -330,11 +330,17 @@ public:
                                                      // (only out and inout arguments)
     TAO_AMI_HANDLER_ARGUMENT_UPCALL_CS,              // State derived out of the above
 
+    TAO_AMI_HANDLER_OPERATION_RETVAL_MARSHAL_CS,     // Marshalling the return value
+
     TAO_AMI_HANDLER_OPERATION_RETVAL_DEMARSHAL_CS,   // Demarshalling the return value
+
+    TAO_AMI_HANDLER_OPERATION_ARG_MARSHAL_CS,        // Marshalling the inout and out arguments
+
+    TAO_AMI_HANDLER_ARGUMENT_MARSHAL_CS,             // State derived out of the above
 
     TAO_AMI_HANDLER_OPERATION_ARG_DEMARSHAL_CS,      // Demarshalling the inout and out arguments
 
-    TAO_AMI_HANDLER_SKELETON_CS,
+    TAO_AMI_HANDLER_ARGUMENT_DEMARSHAL_CS,           // State derived out of the above
 
     // Emitting code for root.
     TAO_ROOT_CH,
