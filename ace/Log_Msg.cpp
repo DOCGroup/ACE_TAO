@@ -708,7 +708,6 @@ ACE_Log_Msg::log (ACE_Log_Priority log_priority,
   // Start of variable args section.
   va_list argp;
 
-
   va_start (argp, format_str);
 
   int result = this->log (format_str,
@@ -1384,7 +1383,9 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
 {
   ssize_t result = 0;
 
-  // Only print the message if "SILENT" mode is disabled.
+  // Format the message and print it to stderr and/or ship it off to
+  // the log_client daemon, and/or print it to the ostream.  Of
+  // course, only print the message if "SILENT" mode is disabled.
   if (ACE_BIT_DISABLED (ACE_Log_Msg::flags_,
                         ACE_Log_Msg::SILENT))
     {
@@ -1421,11 +1422,9 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
           result =
             ACE_Log_Msg_Manager::ipc_backend_->log (log_record);
         }
-      // Format the message and print it to stderr and/or ship it off
-      // to the log_client daemon, and/or print it to the ostream.
+
       // This must come last, after the other two print operations
       // (see the <ACE_Log_Record::print> method for details).
-
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
                            ACE_Log_Msg::OSTREAM)
           && this->msg_ostream () != 0)

@@ -213,7 +213,9 @@ ACE_Log_Record::print (const ACE_TCHAR *host_name,
                        FILE *fp)
 {
   ACE_TCHAR verbose_msg [MAXVERBOSELOGMSGLEN];
-  int result = this->format_msg (host_name, verbose_flag, verbose_msg);
+  int result = this->format_msg (host_name,
+                                 verbose_flag,
+                                 verbose_msg);
 
   if (result == 0)
     {
@@ -224,13 +226,9 @@ ACE_Log_Record::print (const ACE_TCHAR *host_name,
 
           // We should have written everything
           if (fwrite_result != verbose_msg_len)
-            {
-              result = -1;
-            }
+            result = -1;
           else
-            {
-              ACE_OS::fflush (fp);
-            }
+            ACE_OS::fflush (fp);
         }
     }
 
