@@ -15,7 +15,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "gatewayd"=.\Gateway.dsp - Package Owner=<4>
+Project: "gatewayd"=.\gatewayd.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
