@@ -1,3 +1,18 @@
+Thu Apr 24 20:17:44 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* Kokyu/DSRT_Dispatcher_Impl.cpp:
+	* Kokyu/DSRT_Dispatcher_Impl.h:
+	* Kokyu/DSRT_Dispatcher_Impl.i:
+	* Kokyu/DSRT_Schedulers.cpp:
+	* Kokyu/DSRT_Schedulers.h:
+	* Kokyu/Kokyu.cpp:
+	* Kokyu/tests/DSRT_MIF/svc.conf:
+	* Kokyu/tests/DSRT_MIF/svc.conf.xml:
+
+	  Restructuring the Kokyu DSRT scheduler stuff. The scheduler is
+	  now a service object so that different scheduler implementations
+	  can be selected at run time thru the svc.conf file.
+
 Thu Apr 24 10:17:28 2003  Steve Totten  <totten_s@ociweb.com>
 
         * bin/MakeProjectCreator/config/smart_proxies.mpb:
