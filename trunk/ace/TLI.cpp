@@ -130,7 +130,11 @@ ACE_TLI::set_option (int level, int option, void *optval, int optlen)
 
   if (this->so_opt_req.opt.len > this->so_opt_req.opt.maxlen)
     {
+#if !defined (ACE_HAS_SET_T_ERRNO) 
       t_errno = TBUFOVFLW;
+#else                              
+      set_t_errno (TBUFOVFLW);     
+#endif /* ACE_HAS_SET_T_ERRNO */
       return -1;
     }
 
@@ -158,7 +162,11 @@ ACE_TLI::get_option (int level, int option, void *optval, int &optlen)
 
   if (this->so_opt_ret.opt.len > this->so_opt_ret.opt.maxlen)
     {
+#if !defined (ACE_HAS_SET_T_ERRNO) 
       t_errno = TBUFOVFLW;
+#else                              
+      set_t_errno (TBUFOVFLW);     
+#endif /* ACE_HAS_SET_T_ERRNO */
       return -1;
     }
 

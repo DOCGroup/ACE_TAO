@@ -27,109 +27,212 @@
 #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
 // Define the default constants for ACE.  Many of these are used for
-// the ACE tests and applications.  You may want to change some of
-// these to correspond to your environment.
+// the ACE tests and applications.  You can change these values by
+// defining the macros in your config.h file.
 
+#if !defined (ACE_DEFAULT_TIMEOUT)
 #define ACE_DEFAULT_TIMEOUT 5
+#endif /* ACE_DEFAULT_TIMEOUT */
+
+#if !defined (ACE_DEFAULT_THREADS)
 #define ACE_DEFAULT_THREADS 1
+#endif /* ACE_DEFAULT_THREADS */
 
 // The following 3 defines are used in the IP multicast and broadcast tests.
+#if !defined (ACE_DEFAULT_BROADCAST_PORT)
 #define ACE_DEFAULT_BROADCAST_PORT 10000
+#endif /* ACE_DEFAULT_BROADCAST_PORT */
+
+#if !defined (ACE_DEFAULT_MULTICAST_PORT)
 #define ACE_DEFAULT_MULTICAST_PORT 10001
+#endif /* ACE_DEFAULT_MULTICAST_PORT */
+
+#if !defined (ACE_DEFAULT_MULTICAST_ADDR)
 #define ACE_DEFAULT_MULTICAST_ADDR "224.9.9.2"
+#endif /* ACE_DEFAULT_MULTICAST_ADDR */
 
 // Default port number for HTTP.
+#if !defined (ACE_DEFAULT_HTTP_SERVER_PORT)
 #define ACE_DEFAULT_HTTP_SERVER_PORT 80
+#endif /* ACE_DEFAULT_HTTP_SERVER_PORT */
 
 // Used in many IPC_SAP tests
+#if !defined (ACE_DEFAULT_SERVER_PORT)
 #define ACE_DEFAULT_SERVER_PORT 10002  
+#endif /* ACE_DEFAULT_SERVER_PORT */
 
 // Used in Acceptor tests
+#if !defined (ACE_DEFAULT_SERVER_PORT_STR)
 #define ACE_DEFAULT_SERVER_PORT_STR "10002"  
+#endif /* ACE_DEFAULT_SERVER_PORT_STR */
 
 // Used for the Service_Directory test
+#if !defined (ACE_DEFAULT_SERVICE_PORT)
 #define ACE_DEFAULT_SERVICE_PORT 10003 
+#endif /* ACE_DEFAULT_SERVICE_PORT */
 
 // Used for the ACE_Thread_Spawn test
-#define ACE_DEFAULT_THR_PORT     10004 
+#if !defined (ACE_DEFAULT_THR_PORT    )
+#define ACE_DEFAULT_THR_PORT 10004 
+#endif /* ACE_DEFAULT_THR_PORT */
 
 // Used for SOCK_Connect::connect() tests
+#if !defined (ACE_DEFAULT_LOCAL_PORT)
 #define ACE_DEFAULT_LOCAL_PORT 10005  
+#endif /* ACE_DEFAULT_LOCAL_PORT */
 
 // Used for Connector tests
+#if !defined (ACE_DEFAULT_LOCAL_PORT_STR)
 #define ACE_DEFAULT_LOCAL_PORT_STR "10005" 
+#endif /* ACE_DEFAULT_LOCAL_PORT_STR */
 
 // Used for the name server.
+#if !defined (ACE_DEFAULT_NAME_SERVER_PORT)
 #define ACE_DEFAULT_NAME_SERVER_PORT 10006
+#endif /* ACE_DEFAULT_NAME_SERVER_PORT */
+
+#if !defined (ACE_DEFAULT_NAME_SERVER_PORT_STR)
 #define ACE_DEFAULT_NAME_SERVER_PORT_STR "10006"
+#endif /* ACE_DEFAULT_NAME_SERVER_PORT_STR */
 
 // Used for the token server.
+#if !defined (ACE_DEFAULT_TOKEN_SERVER_PORT)
 #define ACE_DEFAULT_TOKEN_SERVER_PORT 10007
+#endif /* ACE_DEFAULT_TOKEN_SERVER_PORT */
+
+#if !defined (ACE_DEFAULT_TOKEN_SERVER_PORT_STR)
 #define ACE_DEFAULT_TOKEN_SERVER_PORT_STR "10007"
+#endif /* ACE_DEFAULT_TOKEN_SERVER_PORT_STR */
 
 // Used for the logging server.
+#if !defined (ACE_DEFAULT_LOGGING_SERVER_PORT)
 #define ACE_DEFAULT_LOGGING_SERVER_PORT 10008
+#endif /* ACE_DEFAULT_LOGGING_SERVER_PORT */
+
+#if !defined (ACE_DEFAULT_LOGGING_SERVER_PORT_STR)
 #define ACE_DEFAULT_LOGGING_SERVER_PORT_STR "10008"
+#endif /* ACE_DEFAULT_LOGGING_SERVER_PORT_STR */
 
 // Used for the logging server.
+#if !defined (ACE_DEFAULT_THR_LOGGING_SERVER_PORT)
 #define ACE_DEFAULT_THR_LOGGING_SERVER_PORT 10008
+#endif /* ACE_DEFAULT_THR_LOGGING_SERVER_PORT */
+
+#if !defined (ACE_DEFAULT_THR_LOGGING_SERVER_PORT_STR)
 #define ACE_DEFAULT_THR_LOGGING_SERVER_PORT_STR "10008"
+#endif /* ACE_DEFAULT_THR_LOGGING_SERVER_PORT_STR */
 
 // Used for the gateway server.
+#if !defined (ACE_DEFAULT_GATEWAY_SERVER_PORT)
 #define ACE_DEFAULT_GATEWAY_SERVER_PORT 10009
+#endif /* ACE_DEFAULT_GATEWAY_SERVER_PORT */
+
+#if !defined (ACE_DEFAULT_GATEWAY_SERVER_PORT_STR)
 #define ACE_DEFAULT_GATEWAY_SERVER_PORT_STR "10009"
+#endif /* ACE_DEFAULT_GATEWAY_SERVER_PORT_STR */
 
 // Used for the peer server.
+#if !defined (ACE_DEFAULT_PEER_SERVER_PORT)
 #define ACE_DEFAULT_PEER_SERVER_PORT 10010
+#endif /* ACE_DEFAULT_PEER_SERVER_PORT */
+
+#if !defined (ACE_DEFAULT_PEER_SERVER_PORT_STR)
 #define ACE_DEFAULT_PEER_SERVER_PORT_STR "10010"
+#endif /* ACE_DEFAULT_PEER_SERVER_PORT_STR */
 
 // Used for the time server.
+#if !defined (ACE_DEFAULT_TIME_SERVER_PORT)
 #define ACE_DEFAULT_TIME_SERVER_PORT 10011
-#define ACE_DEFAULT_TIME_SERVER_PORT_STR "10011"
-#define ACE_DEFAULT_TIME_SERVER_STR "ACE_TS_TIME"
+#endif /* ACE_DEFAULT_TIME_SERVER_PORT */
 
+#if !defined (ACE_DEFAULT_TIME_SERVER_PORT_STR)
+#define ACE_DEFAULT_TIME_SERVER_PORT_STR "10011"
+#endif /* ACE_DEFAULT_TIME_SERVER_PORT_STR */
+
+#if !defined (ACE_DEFAULT_TIME_SERVER_STR)
+#define ACE_DEFAULT_TIME_SERVER_STR "ACE_TS_TIME"
+#endif /* ACE_DEFAULT_TIME_SERVER_STR */
+
+#if !defined (ACE_DEFAULT_SERVER_HOST)
 #define ACE_DEFAULT_SERVER_HOST "localhost"
+#endif /* ACE_DEFAULT_SERVER_HOST */
 
 // Default shared memory key
+#if !defined (ACE_DEFAULT_SHM_KEY)
 #define ACE_DEFAULT_SHM_KEY 1234 
+#endif /* ACE_DEFAULT_SHM_KEY */
 
 // Default segment size used by SYSV shared memory (128 K)
+#if !defined (ACE_DEFAULT_SEGMENT_SIZE)
 #define ACE_DEFAULT_SEGMENT_SIZE 1024 * 128
+#endif /* ACE_DEFAULT_SEGMENT_SIZE */
 
 // Maximum number of SYSV shared memory segments 
 // (does anyone know how to figure out the right values?!)
+#if !defined (ACE_DEFAULT_MAX_SEGMENTS)
 #define ACE_DEFAULT_MAX_SEGMENTS 6
+#endif /* ACE_DEFAULT_MAX_SEGMENTS */
 
 // Used by the FIFO tests.
+#if !defined (ACE_DEFAULT_RENDEZVOUS)
 #define ACE_DEFAULT_RENDEZVOUS "/tmp/fifo.ace"
+#endif /* ACE_DEFAULT_RENDEZVOUS */
 
 // Name of the map that's stored in shared memory.
+#if !defined (ACE_NAME_SERVER_MAP)
 #define ACE_NAME_SERVER_MAP "Name Server Map"
+#endif /* ACE_NAME_SERVER_MAP */
 
 // Default file permissions.
+#if !defined (ACE_DEFAULT_FILE_PERMS)
 #define ACE_DEFAULT_FILE_PERMS 0666
+#endif /* ACE_DEFAULT_FILE_PERMS */
 
 // Default directory permissions.
+#if !defined (ACE_DEFAULT_DIR_PERMS)
 #define ACE_DEFAULT_DIR_PERMS 0777
+#endif /* ACE_DEFAULT_DIR_PERMS */
 
 // Default size of the ACE Reactor.
+#if !defined (ACE_DEFAULT_REACTOR_SIZE)
 #define ACE_DEFAULT_REACTOR_SIZE FD_SETSIZE
+#endif /* ACE_DEFAULT_REACTOR_SIZE */
 
 // Default size of the ACE Map_Manager.
+#if !defined (ACE_DEFAULT_MAP_SIZE)
 #define ACE_DEFAULT_MAP_SIZE 1024
+#endif /* ACE_DEFAULT_MAP_SIZE */
 
 // Defaults for ACE Timer Wheel
+#if !defined (ACE_DEFAULT_TIMER_WHEEL_SIZE)
 #define ACE_DEFAULT_TIMER_WHEEL_SIZE 1024
+#endif /* ACE_DEFAULT_TIMER_WHEEL_SIZE */
+
+#if !defined (ACE_DEFAULT_TIMER_WHEEL_RESOLUTION)
 #define ACE_DEFAULT_TIMER_WHEEL_RESOLUTION 100
+#endif /* ACE_DEFAULT_TIMER_WHEEL_RESOLUTION */
 
 // Default size for ACE Timer Hash table
+#if !defined (ACE_DEFAULT_TIMER_HASH_TABLE_SIZE)
 #define ACE_DEFAULT_TIMER_HASH_TABLE_SIZE 1024
+#endif /* ACE_DEFAULT_TIMER_HASH_TABLE_SIZE */
 
 // Defaults for the ACE Free List
+#if !defined (ACE_DEFAULT_FREE_LIST_PREALLOC)
 #define ACE_DEFAULT_FREE_LIST_PREALLOC 0
+#endif /* ACE_DEFAULT_FREE_LIST_PREALLOC */
+
+#if !defined (ACE_DEFAULT_FREE_LIST_LWM)
 #define ACE_DEFAULT_FREE_LIST_LWM 0
+#endif /* ACE_DEFAULT_FREE_LIST_LWM */
+
+#if !defined (ACE_DEFAULT_FREE_LIST_HWM)
 #define ACE_DEFAULT_FREE_LIST_HWM 25000
+#endif /* ACE_DEFAULT_FREE_LIST_HWM */
+
+#if !defined (ACE_DEFAULT_FREE_LIST_INC)
 #define ACE_DEFAULT_FREE_LIST_INC 100
+#endif /* ACE_DEFAULT_FREE_LIST_INC */
 
 // Here are all ACE-specific global declarations needed throughout
 // ACE.
@@ -876,7 +979,9 @@ enum ACE_Thread_State
   // been reclaimed yet.
 };
 
-#define ACE_DEFAULT_THREAD_PRIORITY (-0x7fffffffL-1L)
+#if !defined (ACE_DEFAULT_THREAD_PRIORITY)
+#define ACE_DEFAULT_THREAD_PRIORITY (-0x7fffffffL - 1L)
+#endif /* ACE_DEFAULT_THREAD_PRIORITY */
 
 // Convenient macro for testing for deadlock, as well as for detecting
 // when mutexes fail.
@@ -1454,6 +1559,9 @@ typedef void (*ACE_SignalHandlerV)(int);
 #if defined (ACE_HAS_SIG_C_FUNC)
 }
 #endif /* ACE_HAS_SIG_C_FUNC */
+#elif defined (ACE_HAS_TANDEM_SIGNALS)     
+typedef void (*ACE_SignalHandler)(...);    
+typedef void (*ACE_SignalHandlerV)(...);   
 #elif defined (ACE_HAS_IRIX_53_SIGNALS)
 typedef void (*ACE_SignalHandler)(...);
 typedef void (*ACE_SignalHandlerV)(...);
@@ -1542,16 +1650,35 @@ struct utsname
 
 #include /**/ <sys/timeb.h>
 
-// The following 3 defines are used by the ACE Name Server...
+// The following defines are used by the ACE Name Server...
+#if !defined (ACE_DEFAULT_NAMESPACE_DIR_W)
 #define ACE_DEFAULT_NAMESPACE_DIR_W L"C:\\temp"
+#endif /* ACE_DEFAULT_NAMESPACE_DIR_W */
+
+#if !defined (ACE_DEFAULT_NAMESPACE_DIR_A)
 #define ACE_DEFAULT_NAMESPACE_DIR_A "C:\\temp"
+#endif /* ACE_DEFAULT_NAMESPACE_DIR_A */
+
+#if !defined (ACE_DEFAULT_LOCALNAME_A)
 #define ACE_DEFAULT_LOCALNAME_A "\\localnames"
+#endif /* ACE_DEFAULT_LOCALNAME_A */
+
+#if !defined (ACE_DEFAULT_LOCALNAME_W)
 #define ACE_DEFAULT_LOCALNAME_W L"\\localnames"
+#endif /* ACE_DEFAULT_LOCALNAME_W */
+
+#if !defined (ACE_DEFAULT_GLOBALNAME_A)
 #define ACE_DEFAULT_GLOBALNAME_A "\\globalnames"
+#endif /* ACE_DEFAULT_GLOBALNAME_A */
+
+#if !defined (ACE_DEFAULT_GLOBALNAME_W)
 #define ACE_DEFAULT_GLOBALNAME_W L"\\globalnames"
+#endif /* ACE_DEFAULT_GLOBALNAME_W */
 
 // Need to work around odd glitches with NT.
+#if !defined (ACE_MAX_DEFAULT_PORT)
 #define ACE_MAX_DEFAULT_PORT 0
+#endif /* ACE_MAX_DEFAULT_PORT */
 
 // We're on WinNT or Win95
 #define ACE_PLATFORM_A "Win32"
@@ -1560,23 +1687,31 @@ struct utsname
 #define ACE_PLATFORM_EXE_SUFFIX_W L".exe"
 
 // Used for ACE_MMAP_Memory_Pool
+#if !defined (ACE_DEFAULT_BACKING_STORE)
 #define ACE_DEFAULT_BACKING_STORE __TEXT ("C:\\temp\\ace-malloc-XXXXXX")
+#endif /* ACE_DEFAULT_BACKING_STORE */
 
 // Used for logging
+#if !defined (ACE_DEFAULT_LOGFILE)
 #define ACE_DEFAULT_LOGFILE "C:\\temp\\logfile"
+#endif /* ACE_DEFAULT_LOGFILE */
 
 // Used for dynamic linking
+#if !defined (ACE_DEFAULT_SVC_CONF)
 #define ACE_DEFAULT_SVC_CONF ".\\svc.conf"
+#endif /* ACE_DEFAULT_SVC_CONF */
 
 // The following are #defines and #includes that are specific to
 // WIN32.
-
 #define ACE_STDIN GetStdHandle (STD_INPUT_HANDLE)
 #define ACE_STDOUT GetStdHandle (STD_OUTPUT_HANDLE)
 #define ACE_STDERR GetStdHandle (STD_ERROR_HANDLE)
 
 // Default semaphore key and mutex name
+#if !defined (ACE_DEFAULT_SEM_KEY)
 #define ACE_DEFAULT_SEM_KEY "ACE_SEM_KEY"
+#endif /* ACE_DEFAULT_SEM_KEY */
+
 #define ACE_INVALID_SEM_KEY 0
 
 #define ACE_SEH_TRY __try
@@ -1777,7 +1912,10 @@ typedef char TCHAR;
 #define ACE_MAX_DEFAULT_PORT 65535
 
 // Default semaphore key
+#if !defined (ACE_DEFAULT_SEM_KEY)
 #define ACE_DEFAULT_SEM_KEY 1234
+#endif /* ACE_DEFAULT_SEM_KEY */
+
 #define ACE_INVALID_SEM_KEY -1
 
 // Define the pathname separator characters for UNIX.
@@ -1807,27 +1945,54 @@ typedef char TCHAR;
 #define ACE_DLL_PREFIX "lib"
 
 // The following 3 defines are used by the ACE Name Server...
+#if !defined (ACE_DEFAULT_NAMESPACE_DIR_A)
 #define ACE_DEFAULT_NAMESPACE_DIR_A "/tmp"
+#endif /* ACE_DEFAULT_NAMESPACE_DIR_A */
+
+#if !defined (ACE_DEFAULT_LOCALNAME_A)
 #define ACE_DEFAULT_LOCALNAME_A "/localnames"
+#endif /* ACE_DEFAULT_LOCALNAME_A */
+
+#if !defined (ACE_DEFAULT_GLOBALNAME_A)
 #define ACE_DEFAULT_GLOBALNAME_A "/globalnames"
+#endif /* ACE_DEFAULT_GLOBALNAME_A */
+
 #if defined (ACE_HAS_UNICODE)
+#if !defined (ACE_DEFAULT_NAMESPACE_DIR_W)
 #define ACE_DEFAULT_NAMESPACE_DIR_W L"/tmp"
+#endif /* ACE_DEFAULT_NAMESPACE_DIR_W */
+#if !defined (ACE_DEFAULT_LOCALNAME_W)
 #define ACE_DEFAULT_LOCALNAME_W L"/localnames"
+#endif /* ACE_DEFAULT_LOCALNAME_W */
+#if !defined (ACE_DEFAULT_GLOBALNAME_W)
 #define ACE_DEFAULT_GLOBALNAME_W L"/globalnames"
+#endif /* ACE_DEFAULT_GLOBALNAME_W */
 #else
+#if !defined (ACE_DEFAULT_NAMESPACE_DIR_W)
 #define ACE_DEFAULT_NAMESPACE_DIR_W "/tmp"
+#endif /* ACE_DEFAULT_NAMESPACE_DIR_W */
+#if !defined (ACE_DEFAULT_LOCALNAME_W)
 #define ACE_DEFAULT_LOCALNAME_W "/localnames"
+#endif /* ACE_DEFAULT_LOCALNAME_W */
+#if !defined (ACE_DEFAULT_GLOBALNAME_W)
 #define ACE_DEFAULT_GLOBALNAME_W "/globalnames"
+#endif /* ACE_DEFAULT_GLOBALNAME_W */
 #endif /* ACE_HAS_UNICODE */
 
 // Used for ACE_MMAP_Memory_Pool
+#if !defined (ACE_DEFAULT_BACKING_STORE)
 #define ACE_DEFAULT_BACKING_STORE "/tmp/ace-malloc-XXXXXX" 
+#endif /* ACE_DEFAULT_BACKING_STORE */
 
 // Used for logging
+#if !defined (ACE_DEFAULT_LOGFILE)
 #define ACE_DEFAULT_LOGFILE "/tmp/logfile"
+#endif /* ACE_DEFAULT_LOGFILE */
 
 // Used for dynamic linking.
+#if !defined (ACE_DEFAULT_SVC_CONF)
 #define ACE_DEFAULT_SVC_CONF "./svc.conf"
+#endif /* ACE_DEFAULT_SVC_CONF */
 
 // The following are #defines and #includes that are specific to UNIX.
 
@@ -2396,7 +2561,9 @@ typedef long ACE_INT32;
 
 // Default number of <ACE_Event_Handler>s supported by
 // <ACE_Timer_Heap>.
+#if !defined (ACE_DEFAULT_TIMERS)
 #define ACE_DEFAULT_TIMERS _SC_TIMER_MAX
+#endif /* ACE_DEFAULT_TIMERS */
 
 // Note that this assumes shorts are 16 bits.
 typedef u_short ACE_USHORT16;
@@ -3267,34 +3434,69 @@ private:
      if (POINTER == 0) { errno = ENOMEM; return; } \
    } while (0)
 
+#if !defined (ACE_DEFAULT_MUTEX_A)
 #define ACE_DEFAULT_MUTEX_A "ACE_MUTEX"
+#endif /* ACE_DEFAULT_MUTEX_A */
 
 #if defined (UNICODE)
 
+#if !defined (ACE_DEFAULT_NAMESPACE_DIR)
 #define ACE_DEFAULT_NAMESPACE_DIR ACE_DEFAULT_NAMESPACE_DIR_W
+#endif /* ACE_DEFAULT_NAMESPACE_DIR */
+#if !defined (ACE_DEFAULT_LOCALNAME)
 #define ACE_DEFAULT_LOCALNAME ACE_DEFAULT_LOCALNAME_W 
+#endif /* ACE_DEFAULT_LOCALNAME */
+#if !defined (ACE_DEFAULT_GLOBALNAME)
 #define ACE_DEFAULT_GLOBALNAME ACE_DEFAULT_GLOBALNAME_W
+#endif /* ACE_DEFAULT_GLOBALNAME */
+#if !defined (ACE_DIRECTORY_SEPARATOR_STR)
 #define ACE_DIRECTORY_SEPARATOR_STR ACE_DIRECTORY_SEPARATOR_STR_W
+#endif /* ACE_DIRECTORY_SEPARATOR_STR */
+#if !defined (ACE_DIRECTORY_SEPARATOR_CHAR)
 #define ACE_DIRECTORY_SEPARATOR_CHAR ACE_DIRECTORY_SEPARATOR_CHAR_W
+#endif /* ACE_DIRECTORY_SEPARATOR_CHAR */
+#if !defined (ACE_PLATFORM)
 #define ACE_PLATFORM ACE_PLATFORM_W
+#endif /* ACE_PLATFORM */
+#if !defined (ACE_PLATFORM_EXE_SUFFIX)
 #define ACE_PLATFORM_EXE_SUFFIX ACE_PLATFORM_EXE_SUFFIX_W
-
+#endif /* ACE_PLATFORM_EXE_SUFFIX */
+#if !defined (ACE_DEFAULT_MUTEX_W)
 #define ACE_DEFAULT_MUTEX_W L"ACE_MUTEX"
+#endif /* ACE_DEFAULT_MUTEX_W */
+#if !defined (ACE_DEFAULT_MUTEX)
 #define ACE_DEFAULT_MUTEX ACE_DEFAULT_MUTEX_W
+#endif /* ACE_DEFAULT_MUTEX */
 
 #else
 
+#if !defined (ACE_DEFAULT_NAMESPACE_DIR)
 #define ACE_DEFAULT_NAMESPACE_DIR ACE_DEFAULT_NAMESPACE_DIR_A
+#endif /* ACE_DEFAULT_NAMESPACE_DIR */
+#if !defined (ACE_DEFAULT_LOCALNAME)
 #define ACE_DEFAULT_LOCALNAME ACE_DEFAULT_LOCALNAME_A
+#endif /* ACE_DEFAULT_LOCALNAME */
+#if !defined (ACE_DEFAULT_GLOBALNAME)
 #define ACE_DEFAULT_GLOBALNAME ACE_DEFAULT_GLOBALNAME_A
+#endif /* ACE_DEFAULT_GLOBALNAME */
+#if !defined (ACE_DIRECTORY_SEPARATOR_STR)
 #define ACE_DIRECTORY_SEPARATOR_STR ACE_DIRECTORY_SEPARATOR_STR_A
+#endif /* ACE_DIRECTORY_SEPARATOR_STR */
+#if !defined (ACE_DIRECTORY_SEPARATOR_CHAR)
 #define ACE_DIRECTORY_SEPARATOR_CHAR ACE_DIRECTORY_SEPARATOR_CHAR_A
+#endif /* ACE_DIRECTORY_SEPARATOR_CHAR */
+#if !defined (ACE_PLATFORM)
 #define ACE_PLATFORM ACE_PLATFORM_A
+#endif /* ACE_PLATFORM */
+#if !defined (ACE_PLATFORM_EXE_SUFFIX)
 #define ACE_PLATFORM_EXE_SUFFIX ACE_PLATFORM_EXE_SUFFIX_A
-
+#endif /* ACE_PLATFORM_EXE_SUFFIX */
+#if !defined (ACE_DEFAULT_MUTEX_W)
 #define ACE_DEFAULT_MUTEX_W "ACE_MUTEX"
+#endif /* ACE_DEFAULT_MUTEX_W */
+#if !defined (ACE_DEFAULT_MUTEX)
 #define ACE_DEFAULT_MUTEX ACE_DEFAULT_MUTEX_A
-
+#endif /* ACE_DEFAULT_MUTEX */
 #endif /* UNICODE */
 
 #if defined (ACE_HAS_INLINED_OSCALLS)

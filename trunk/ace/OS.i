@@ -6,6 +6,11 @@
 #define ACE_INLINE
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
+#if defined (ACE_LACKS_RLIMIT_PROTO)
+int getrlimit (int resource, struct rlimit *rlp);       
+int setrlimit (int resource, const struct rlimit *rlp); 
+#endif /* ACE_LACKS_RLIMIT_PROTO */                 
+
 #if !defined (ACE_HAS_STRERROR)
 #if defined (ACE_HAS_SYS_ERRLIST)
 extern char *sys_errlist[];
@@ -3709,7 +3714,11 @@ ACE_OS::puts (const char *s)
 ACE_INLINE ACE_SignalHandler
 ACE_OS::signal (int signum, ACE_SignalHandler func)
 {
-  return ::signal (signum, func);
+#if !defined(ACE_HAS_TANDEM_SIGNALS)
+    return ::signal (signum, func);
+#else
+  return (ACE_SignalHandler) ::signal (signum, (void (*)(int)) func);
+#endif /* !ACE_HAS_TANDEM_SIGNALS */
 }
 
 ACE_INLINE int 

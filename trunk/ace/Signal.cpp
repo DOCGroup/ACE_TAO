@@ -99,7 +99,11 @@ ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
   else
     this->sa_.sa_mask = *sig_mask; // Structure assignment...
 
+#if !defined(ACE_HAS_TANDEM_SIGNALS)                                  
   this->sa_.sa_handler = ACE_SignalHandlerV (sig_handler);
+#else                                                                 
+  this->sa_.sa_handler = (void (*)()) ACE_SignalHandlerV (sig_handler);
+#endif /* !ACE_HAS_TANDEM_SIGNALS */
 }
 
 ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
@@ -115,7 +119,11 @@ ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
   else
     this->sa_.sa_mask = *sig_mask; // Structure assignment...
 
+#if !defined(ACE_HAS_TANDEM_SIGNALS)                                  
   this->sa_.sa_handler = ACE_SignalHandlerV (sig_handler);
+#else                                                                 
+  this->sa_.sa_handler = (void (*)()) ACE_SignalHandlerV (sig_handler);
+#endif /* !ACE_HAS_TANDEM_SIGNALS */
   ACE_OS::sigaction (signum, &this->sa_, 0);
 }
 

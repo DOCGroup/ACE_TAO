@@ -1,3 +1,34 @@
+Sat Jun 21 10:48:34 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace: Added a number of minor changes to signal assignment
+	  code so that ACE will compile with Tandem NonStop.  Thanks
+	  to Jan Perman <uabjjpp@osd.ericsson.se> for these fixes.
+
+	* ace/config-tandem.h:  Added a new config file for the
+	  Tandem NonStop-UX 4.2MP platform.  Thanks to Jan Perman
+	  <uabjjpp@osd.ericsson.se> for contributing this.
+
+	* include/makeinclude/platform_tandem.GNU:  Added a new platform 
+	  file for the Tandem NonStop-UX 4.2MP platform.  Thanks to
+	  Jan Perman <uabjjpp@osd.ericsson.se> for contributing this.
+
+	* ace/config-unixware-2.1.2-g++.h: Added a new config file for
+ 	  UNIXWARE 2.1.2.  Thanks to Ganesh Pai (gpai@voicetek.com) for
+ 	  contributing this.
+
+	* include/makeinclude/platform_unixware_g++.GNU: Updated the
+ 	  UNIXWARE platform config file to work for version 2.1.2.  Thanks
+ 	  to Ganesh Pai (gpai@voicetek.com) for contributing this.
+
+	* ace/Handle_Set.cpp (count_bits): Added another 0xff mask to
+ 	  prevent problems with sign extension on machines with 32 bit
+ 	  ints and 64 bit longs.  Thanks to James Johnson for reporting
+ 	  this.
+
+	* ace/OS.h: Updated all of the ACE_DEFAULT* macros in OS.h so that
+ 	  they can be overridden by #defines in the config.h file.  Thanks
+ 	  to Chuck Gehr for suggesting this.
+
 Thu Jun 19 22:20:20 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.h (VxWorks/g++ only): added horrible hack to work around
