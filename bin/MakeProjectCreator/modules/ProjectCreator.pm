@@ -63,6 +63,7 @@ my(%validNames) = ('exename'         => 1,
                    'include_dir'     => 1,
                    'core'            => 1,
                    'idlgendir'       => 1,
+                   'macros'          => 1,
                   );
 
 ## Custom definitions only
