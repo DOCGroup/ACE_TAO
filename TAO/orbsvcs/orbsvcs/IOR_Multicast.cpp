@@ -12,9 +12,9 @@ TAO_IOR_Multicast::get_handle (void) const
 
 TAO_IOR_Multicast::TAO_IOR_Multicast (void)
   : service_id_ ((TAO_Service_ID) 0),
-    ior_ (0)    
+    ior_ (0)
 {
-}  
+}
 
 TAO_IOR_Multicast::TAO_IOR_Multicast (const char *ior,
                                       u_short port,
@@ -67,7 +67,7 @@ TAO_IOR_Multicast::handle_timeout (const ACE_Time_Value &,
 
 int
 TAO_IOR_Multicast::handle_input (ACE_HANDLE)
-{  
+{
   // mcast_info[0] == port.
   // mcast_info[1] == service id.
   ACE_UINT16 mcast_info[2];
@@ -79,6 +79,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
     this->mcast_dgram_.recv (mcast_info,
                              sizeof (mcast_info),
                              remote_addr);
+
   if (result == -1)
     return -1;
 
@@ -96,15 +97,11 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                       -1);
 
   // Confirm that we were meant to respond to this request.
-  mcast_info.service_id = ACE_NTOHS (mcast_info.service_id);
+  mcast_info[1] = ACE_NTOHS (mcast_info[1]);
 
   if (mcast_info[1] == this->service_id_)
     {
-      // Convert port number received to network byte order and set
-      // port number to reply.
-      ACE_ASSERT (mcast_info[0] == remote_addr.get_port_number ());
-
-      mcast_info[0] = ACE_NTOHS (mcast_info[0]);
+      remote_addr.set_port_number (mcast_info[0], 0);
 
       // Send the object reference for the naming service
       result = response_.send (this->ior_,
