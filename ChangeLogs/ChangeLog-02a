@@ -1,3 +1,8 @@
+Sun Jan 28 08:39:17 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tests/Thread_Mutex_Test.cpp:
+	  Fixed use of ACE_TEXT and string concatenation.
+
 Sun Jan 28 08:03:08 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/tests.dsw:
