@@ -65,7 +65,7 @@ public:
    void verbosity (Logger::Verbosity_Level level,
                   CORBA::Environment &ACE_TRY_ENV =
                   TAO_default_environment ())
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Sets the verbosity level. Valid values are {VERBOSE, VERBOSE_LITE
   //  and SILENT}. Defaults to VERBOSE
 

@@ -42,7 +42,8 @@ public:
                      Test::Already_Running,
                      Test::No_Peers));
 
-  virtual void ping (CORBA::Environment &) ACE_THROW_SPEC (());
+  virtual void ping (CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void receive_payload (const Test::Payload &the_payload,
                                 CORBA::Environment &ACE_TRY_ENV)

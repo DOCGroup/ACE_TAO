@@ -1,3 +1,15 @@
+Tue May 22 15:34:20 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
+
+	* tao/tests/Oneway_Buffering/Oneway_Buffering_Admin.{h,cpp}:
+	* tao/tests/Big_Oneways/Session.{h,cpp}:
+	* tao/tests/AMI_Buffering/test_i.{h,cpp}:
+	* tao/examples/Logging/Logger_i.{h,cpp}:
+	* tao/examples/Buffered_Oneways/test_i.{h,cpp}:
+	* tao/examples/Buffered_AMI/AMI_Buffering_Admin.{h,cpp}:
+
+	  Fixed compile errors in Forte update 1.
+
+	
 Mon May 21 23:22:20 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/TAO_Internal.cpp (open_services):

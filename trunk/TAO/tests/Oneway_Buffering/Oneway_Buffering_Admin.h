@@ -36,7 +36,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void flush (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void shutdown (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
