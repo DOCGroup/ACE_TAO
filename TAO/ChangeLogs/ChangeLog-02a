@@ -1,3 +1,31 @@
+Tue Apr  3 20:56:48 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/DomainC.h:
+        * tao/DomainC.i:
+        * tao/DomainC.cpp:
+        * tao/PolicyC.h:
+        * tao/PolicyC.i:
+        * tao/PolicyC.cpp:
+        * tao/Domain/DomainS.h:
+        * tao/Domain/DomainS.i:
+        * tao/Domain/DomainS.cpp:
+        * tao/Domain/DomainS_T.h:
+        * tao/Domain/DomainS_T.i:
+        * tao/Domain/DomainS_T.cpp:
+        * tao/PortableServer/PolicyS.h:
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/diffs/PolicyC.h.diff:
+        * tao/diffs/PolicyC.i.diff:
+        * tao/diffs/PolicyC.cpp.diff:
+        * tao/diffs/PolicyS.h.diff:
+        * tao/diffs/PolicyS.i.diff:
+        * tao/diffs/PolicyS.cpp.diff:
+        * tao/diffs/PolicyS_T.h.diff:
+        * tao/diffs/PolicyS_T.i.diff:
+        * tao/diffs/PolicyS_T.cpp.diff:
+	  Regenerate Policy and Domain, the new versions support
+	  collocation and interceptors.
+
 Tue Apr  3 21:14:36 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* tao/Leader_Follower.{i,h,cpp}:

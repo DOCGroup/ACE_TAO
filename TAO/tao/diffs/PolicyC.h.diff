@@ -1,31 +1,28 @@
---- PolicyC.h	Sat Jun 24 01:58:09 2000
-+++ PolicyC.h.mod	Sat Jun 24 02:09:13 2000
-@@ -11,7 +11,7 @@
- #define _TAO_IDL_POLICYC_H_
+--- orig/PolicyC.h	Tue Apr  3 14:08:51 2001
++++ patched/PolicyC.h	Tue Apr  3 14:58:15 2001
+@@ -23,13 +23,18 @@
+ #define _TAO_IDL_ORIG_POLICYC_H_
  
  #include "ace/pre.h"
 -#include "tao/corba.h"
 +#include "tao/CurrentC.h"
  
- #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
- #include "ace/streams.h"
-@@ -21,7 +21,12 @@
+ #if !defined (ACE_LACKS_PRAGMA_ONCE)
  # pragma once
  #endif /* ACE_LACKS_PRAGMA_ONCE */
  
--#include "tao/corbafwd.h"
-+#include "tao/Encodable.h"
-+#include "tao/Exception.h"
-+#include "tao/Sequence.h"
-+#include "tao/CDR.h"
-+#include "tao/Typecode.h"
-+#include "tao/Environment.h"
+ #include "TAO_Export.h"
++#include "Encodable.h"
++#include "Exception.h"
++#include "Sequence.h"
++#include "CDR.h"
++#include "Remote_Object_Proxy_Impl.h"
  
  #if defined (TAO_EXPORT_MACRO)
  #undef TAO_EXPORT_MACRO
-@@ -42,30 +47,6 @@
- #pragma warning(disable:4250)
- #endif /* _MSC_VER */
+@@ -54,29 +59,6 @@
+ #pragma option push -w-rvl -w-rch -w-ccc -w-inl
+ #endif /* __BORLANDC__ */
  
 -TAO_NAMESPACE  CORBA
 -{
@@ -40,8 +37,7 @@
 -  enum SetOverrideType
 -  {
 -        SET_OVERRIDE,
--        ADD_OVERRIDE,
--        SetOverrideType_TAO_ENUM_32BIT_ENFORCER = 0x7FFFFFFF
+-        ADD_OVERRIDE    
 -  };
 -  typedef SetOverrideType &SetOverrideType_out;
 -  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_SetOverrideType;
@@ -54,22 +50,25 @@
  #if !defined (_CORBA_POLICYERROR_CH_)
  #define _CORBA_POLICYERROR_CH_
  
-@@ -434,6 +415,14 @@
+@@ -340,6 +322,7 @@
+ class _TAO_CORBA_Policy_Remote_Proxy_Broker;
+ 
+ class TAO_Export CORBA_Policy : public virtual CORBA_Object
++                              , public virtual TAO_Encodable
+ {
+ public:
+ #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+@@ -399,6 +382,9 @@
    
    virtual const char* _interface_repository_id (void) const;
  
-+  virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
-+  // Encode the Policy into a CDR representation.  Returns true
-+  // on success and false on failure.
++  virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &);
++  virtual CORBA::Boolean _tao_decode (TAO_InputCDR &);
 +
-+  virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
-+  // Decode the Policy from a CDR representation.  Returns true
-+  // on success and false on failure.
-+
- protected:
-   CORBA_Policy (void);
-   CORBA_Policy (TAO_Stub *objref, 
-@@ -886,118 +875,6 @@
+ private:
+   _TAO_CORBA_Policy_Proxy_Broker *the_TAO_CORBA_Policy_Proxy_Broker_;
+   
+@@ -1023,119 +1009,6 @@
  #endif /* end #if !defined */
  
  
@@ -174,7 +173,8 @@
 -  virtual const char* _interface_repository_id (void) const;
 -
 -protected:
--  CORBA_Current (void);
+-  CORBA_Current ();
+-  
 -  virtual ~CORBA_Current (void);
 -private:
 -  CORBA_Current (const CORBA_Current &);
@@ -188,7 +188,7 @@
  #if !defined (_CORBA_POLICYCURRENT___PTR_CH_)
  #define _CORBA_POLICYCURRENT___PTR_CH_
  
-@@ -1206,7 +1083,7 @@
+@@ -1338,7 +1211,7 @@
  
  
  #if defined (__ACE_INLINE__)
