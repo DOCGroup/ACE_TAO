@@ -1,3 +1,11 @@
+Fri Jun 11 14:47:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/auto_compile:
+	  Does not compile all the directories in TAO, because it takes
+	  too much space (and time).
+	  Run several more tests in TAO that are stable.
+	  Improve output
+
 Fri Jun 11 14:40:49 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/create_ace_build: run the directory mode value through
