@@ -23,3 +23,18 @@ void
 TAO_Abstract_ServantBase::_remove_ref (CORBA_Environment &)
 {
 }
+
+
+TAO_Abstract_ServantBase::TAO_Abstract_ServantBase (const TAO_Abstract_ServantBase &)
+{
+  // No-Op
+}
+
+TAO_Abstract_ServantBase & TAO_Abstract_ServantBase::operator= (const TAO_Abstract_ServantBase&)
+{
+  return *this;
+} 
+
+
+
+
