@@ -799,14 +799,3 @@ ACE_Filecache_Object::update (void) const
 
   return result;
 }
-
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-# if defined (ACE_HAS_THREADS)
-    template class ACE_Guard<ACE_SYNCH_RW_MUTEX>;
-    template class ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>;
-    template class ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>;
-# else
-    // These are specialized in libACE (Service_Config.cpp) if ACE
-    // doesn't have threads.
-# endif /* ACE_HAS_THREADS */
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
