@@ -1,3 +1,14 @@
+Thu Dec 11 23:20:57 1997    <irfan@TWOSTEP>
+
+	* ace/Strategies_T.cpp (activate_svc_handler): Changed the
+ 	  parameter that was been passed into the open routine of
+ 	  Svc_Handler.  The <arg> that was passed to us is passed through
+ 	  to open, rather than passing <this>.  Thanks to Mats Nilsson
+ 	  <mats.nilsson@xware.se> for pointing this out.
+
+	* ace/Connector.cpp (activate_svc_handler): Made sure that we pass
+ 	  the connector pointer as the void* parameter to the svc_handler.
+
 Thu Dec 11 23:35:04 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i. The code was always calling dlsum for the _init()
