@@ -127,7 +127,7 @@ ACE_RMCast_IO_UDP::handle_input (ACE_HANDLE)
       ACE_RMCast_UDP_Proxy *proxy;
       if (this->map_.unbind (from_address, proxy) == 0)
         {
-          this->factory_->destroy (proxy->module ());
+          this->factory_->destroy (proxy->next ());
           delete proxy;
         }
       return 0;
@@ -166,9 +166,9 @@ ACE_RMCast_IO_UDP::handle_input (ACE_HANDLE)
         }
       ACE_NEW_RETURN (proxy,
                       ACE_RMCast_UDP_Proxy(this,
-                                           from_address,
-                                           module),
+                                           from_address),
                       0);
+      proxy->next (module);
 
       if (this->map_.bind (from_address, proxy) != 0)
         {

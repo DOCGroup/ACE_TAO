@@ -1,3 +1,38 @@
+Sat Sep 23 16:55:26 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/RMCast/Makefile:
+	  Add new components to the RMCast library.
+
+        * ace/RMCast/RMCast_Proxy.h:
+        * ace/RMCast/RMCast_Proxy.i:
+        * ace/RMCast/RMCast_Proxy.cpp:
+	  All proxies must derive from this class, it offers methods to
+	  send back replies directly to the peer.
+
+        * ace/RMCast/RMCast.h:
+	  The Proxy source is propagate among layers.
+
+        * ace/RMCast/RMCast_IO_UDP.cpp:
+	  All proxies are modules.
+
+        * ace/RMCast/RMCast_Membership.h:
+        * ace/RMCast/RMCast_Membership.i:
+        * ace/RMCast/RMCast_Membership.cpp:
+	  New module to keep an explicit collection of all the peers,
+	  detecting join and leave messages and computing the messages
+	  successfully received by all the peers using the Ack
+	  information. 
+
+        * ace/RMCast/RMCast_Retransmission.h:
+        * ace/RMCast/RMCast_Retransmission.i:
+        * ace/RMCast/RMCast_Retransmission.cpp:
+	  Buffer messages to allow retransmission.
+	
+        * ace/RMCast/RMCast_UDP_Proxy.h:
+        * ace/RMCast/RMCast_UDP_Proxy.i:
+        * ace/RMCast/RMCast_UDP_Proxy.cpp:
+	  Modified to inherit from the new RMCast_Proxy class.
+
 Fri Sep 22 15:13:46 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Atomic_Op.i:
