@@ -26,35 +26,45 @@ public:
 int 
 Test_Task::open (void *)
 { 
-  ACE_DEBUG ((LM_DEBUG, "opening %s\n", this->name () ? this->name () : "task"));
+  ACE_DEBUG ((LM_DEBUG,
+              "opening %s\n",
+              this->name () ? this->name () : "task"));
   return 0;
 }
 
 int 
 Test_Task::close (u_long) 
 {
-  ACE_DEBUG ((LM_DEBUG, "closing %s\n", this->name () ? this->name () : "task"));
+  ACE_DEBUG ((LM_DEBUG,
+              "closing %s\n",
+              this->name () ? this->name () : "task"));
   return 0;
 }
 
 int 
 Test_Task::suspend (void) 
 { 
-  ACE_DEBUG ((LM_DEBUG, "suspending in %s\n", this->name () ? this->name () : "task")); 
+  ACE_DEBUG ((LM_DEBUG,
+              "suspending in %s\n",
+              this->name () ? this->name () : "task")); 
   return 0; 
 }
 
 int 
 Test_Task::resume (void) 
 {
-  ACE_DEBUG ((LM_DEBUG, "resuming in %s\n", this->name () ? this->name () : "task"));
+  ACE_DEBUG ((LM_DEBUG,
+              "resuming in %s\n",
+              this->name () ? this->name () : "task"));
   return 0;
 }
 
 int 
 Test_Task::init (int, char *[])
 {
-  ACE_DEBUG ((LM_DEBUG, "initializing %s\n", this->name () ? this->name () : "task"));
+  ACE_DEBUG ((LM_DEBUG,
+              "initializing %s\n",
+              this->name () ? this->name () : "task"));
 
   return 0; 
 }
@@ -62,9 +72,16 @@ Test_Task::init (int, char *[])
 int 
 Test_Task::fini (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "finalizing %s\n", this->name () ? this->name () : "task"));
+  ACE_DEBUG ((LM_DEBUG,
+              "finalizing %s\n",
+              this->name () ? this->name () : "task"));
   return 0; 
 }
+
+// Factories used to control configuration.
+
+ACE_SVC_FACTORY_DECLARE (Test_Task)
+ACE_SVC_FACTORY_DEFINE (Test_Task)
 
 // Dynamically linked functions used to control configuration.
 
@@ -72,13 +89,6 @@ extern "C" ACE_Svc_Export MT_Stream *make_stream (void);
 extern "C" ACE_Svc_Export MT_Module *make_da (void);
 extern "C" ACE_Svc_Export MT_Module *make_ea (void);
 extern "C" ACE_Svc_Export MT_Module *make_mr (void);
-extern "C" ACE_Svc_Export ACE_Service_Object *make_task (void);
-
-ACE_Service_Object *
-make_task (void)
-{
-  return new Test_Task;
-}
 
 MT_Stream *
 make_stream (void)
