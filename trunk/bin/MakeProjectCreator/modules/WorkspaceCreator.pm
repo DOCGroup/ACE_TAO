@@ -972,7 +972,8 @@ sub get_modified_workspace_name {
 sub generate_recursive_input_list {
   my($self) = shift;
   my($dir)  = shift;
-  return $self->extension_recursive_input_list($dir, $wsext);
+  my($exc)  = shift;
+  return $self->extension_recursive_input_list($dir, $exc, $wsext);
 }
 
 

@@ -40,7 +40,7 @@ sub new {
 
   $self->{'path'}     = $path;
   $self->{'name'}     = $name;
-  $self->{'version'}  = "2.0";
+  $self->{'version'}  = "2.1";
   $self->{'types'}    = {};
   $self->{'creators'} = \@creators;
   $self->{'default'}  = $creators[0];
@@ -95,7 +95,7 @@ sub optionError {
   }
   my($spaces) = (' ' x (length($base) + 8));
   print STDERR "$base v$self->{'version'}\n" .
-               "Usage: $base [-global <file>] [-include <directory>] [-recurse]\n" .
+               "Usage: $base [-global <file>] [-include <directory>] [-recurse[=dir1,...]]\n" .
                $spaces . "[-ti <dll | lib | dll_exe | lib_exe>:<file>]\n" .
                $spaces . "[-template <file>] [-relative NAME=VAR] [-base <project>]\n" .
                $spaces . "[-noreldefs] [-notoplevel] [-static] [-static_only]\n" .
@@ -137,7 +137,8 @@ sub optionError {
 "                       addition to dynamic projects.\n" .
 "       -static_only    Specifies that only static projects will be generated.\n" .
 "       -recurse        Recurse from the current directory and generate from\n" .
-"                       all found input files.\n" .
+"                       all found input files.  If directories are passed to\n" .
+"                       this option, then those directories are not recursed.\n" .
 "       -relative       Any \$() variable in an mpc that is matched to NAME\n" .
 "                       is replaced by VAR only if VAR can be made into a\n" .
 "                       relative path based on the current working directory.\n" .
@@ -221,7 +222,8 @@ sub run {
 
       ## Generate the recursive input list
       my($generator) = $name->new();
-      my(@input) = $generator->generate_recursive_input_list('.');
+      my(@input) = $generator->generate_recursive_input_list(
+                                               '.', $options->{'recurse'});
       $options->{'input'} = \@input;
 
       ## If no files were found above, then we issue a warning
