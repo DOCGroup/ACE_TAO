@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#if !defined (IDL3_CLIENT_H)
+#ifndef IDL3_CLIENT_H
 #define IDL3_CLIENT_H
 
 #include "tao/IFR_Client/IFR_ComponentsC.h"
