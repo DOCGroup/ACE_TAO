@@ -49,6 +49,7 @@ PACE_FILES = \
   stdio \
   stdlib \
   string \
+  termios.h \
   time \
   unistd \
   utime \
@@ -57,9 +58,9 @@ CONFIG_FILES =
 SYS_FILES = \
   sys/mman \
   sys/stat \
-  sys/termios \
   sys/times \
-  sys/utsname
+  sys/utsname \
+  sys/wait
 # POSIX_SINGLE_PROCESS Unit of Functionality (POSIX.1)
 # pace_sysconf is in unistd.h;
 # pace_time is in time.h;
@@ -87,7 +88,7 @@ POSIX_MP_FILES = \
   stdlib \
   locale \
   sys/times \
-  wait
+  sys/wait
 # POSIX_SIGNALS Unit of Functionality (POSIX.1)
 # pace_abort is in stdlib.h;
 # pace_alarm is in unistd.h;
@@ -186,7 +187,7 @@ POSIX_P_FILES = \
 #  pace_tcsetattr are in sys/termios.h;
 # pace_ttyname is in unistd.h;
 POSIX_DS_FILES = \
-  sys/termios \
+  termios \
   stdio \
   unistd
 # POSIX_SYSTEM_DATABASE Unit of Functionality (POSIX.1)
@@ -211,7 +212,7 @@ POSIX_CLS_FILES = \
 # pace_tcgetpgrp, pace_tcsetpgrp are in sys/termios.h
 _POSIX_JC_FILES = \
   unistd \
-  sys/termios
+  termios
 # POSIX_USER_GROUPS_R Unit of Functionality (POSIX.1)
 # pace_getlogin_r is in unistd.h;
 POSIX_UGR_FILES = \
