@@ -459,33 +459,35 @@ be_visitor_field_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
                         -1);
     }
 
+  AST_PredefinedType::PredefinedType pt = node->pt ();
+
   // Check what is the code generations substate. Are we generating code for
   // the in/out operators for our parent or for us?
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      // Is a psuedo object.
-      if (node->pt () == AST_PredefinedType::PT_pseudo)
+      if (pt == AST_PredefinedType::PT_pseudo
+          || pt == AST_PredefinedType::PT_object)
         {
           *os << "(strm >> _tao_aggregate." << f->local_name ()
               << ".out ())";
         }
-      else if (node->pt () == AST_PredefinedType::PT_char)
+      else if (pt == AST_PredefinedType::PT_char)
         {
           *os << "(strm >> CORBA::Any::to_char (_tao_aggregate."
               << f->local_name () << "))";
         }
-      else if (node->pt () == AST_PredefinedType::PT_wchar)
+      else if (pt == AST_PredefinedType::PT_wchar)
         {
           *os << "(strm >> CORBA::Any::to_wchar (_tao_aggregate."
               << f->local_name () << "))";
         }
-      else if (node->pt () == AST_PredefinedType::PT_octet)
+      else if (pt == AST_PredefinedType::PT_octet)
         {
           *os << "(strm >> CORBA::Any::to_octet (_tao_aggregate."
               << f->local_name () << "))";
         }
-      else if (node->pt () == AST_PredefinedType::PT_boolean)
+      else if (pt == AST_PredefinedType::PT_boolean)
         {
           *os << "(strm >> CORBA::Any::to_boolean (_tao_aggregate."
               << f->local_name () << "))";
@@ -496,27 +498,27 @@ be_visitor_field_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
         }
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      // Is a psuedo object.
-      if (node->pt () == AST_PredefinedType::PT_pseudo)
+      if (pt == AST_PredefinedType::PT_pseudo
+          || pt == AST_PredefinedType::PT_object)
         {
           *os << "(strm << _tao_aggregate." << f->local_name () << ".in ())";
         }
-      else if (node->pt () == AST_PredefinedType::PT_char)
+      else if (pt == AST_PredefinedType::PT_char)
         {
           *os << "(strm << CORBA::Any::from_char (_tao_aggregate."
               << f->local_name () << "))";
         }
-      else if (node->pt () == AST_PredefinedType::PT_wchar)
+      else if (pt == AST_PredefinedType::PT_wchar)
         {
           *os << "(strm << CORBA::Any::from_wchar (_tao_aggregate."
               << f->local_name () << "))";
         }
-      else if (node->pt () == AST_PredefinedType::PT_octet)
+      else if (pt == AST_PredefinedType::PT_octet)
         {
           *os << "(strm << CORBA::Any::from_octet (_tao_aggregate."
               << f->local_name () << "))";
         }
-      else if (node->pt () == AST_PredefinedType::PT_boolean)
+      else if (pt == AST_PredefinedType::PT_boolean)
         {
           *os << "(strm << CORBA::Any::from_boolean (_tao_aggregate."
               << f->local_name () << "))";
