@@ -39,13 +39,13 @@ ACE_Reactor::ACE_Reactor (ACE_Reactor_Impl *impl)
       this->delete_implementation_ = 1;
     }
 }
-  
+
 ACE_Reactor::~ACE_Reactor (void)
 {
   if (this->delete_implementation_)
     delete this->implementation ();
 }
-  
+
 // Process-wide ACE_Reactor.
 ACE_Reactor *ACE_Reactor::reactor_ = 0;
 
@@ -65,13 +65,13 @@ ACE_Reactor::instance (void)
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-				*ACE_Static_Object_Lock::instance (), 0));
-      
+                                *ACE_Static_Object_Lock::instance (), 0));
+
       if (ACE_Reactor::reactor_ == 0)
-	{
-	  ACE_NEW_RETURN (ACE_Reactor::reactor_, ACE_Reactor, 0);
-	  ACE_Reactor::delete_reactor_ = 1;
-	}
+        {
+          ACE_NEW_RETURN (ACE_Reactor::reactor_, ACE_Reactor, 0);
+          ACE_Reactor::delete_reactor_ = 1;
+        }
     }
   return ACE_Reactor::reactor_;
 }
@@ -82,7 +82,7 @@ ACE_Reactor::instance (ACE_Reactor *r)
   ACE_TRACE ("ACE_Reactor::instance");
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-			    *ACE_Static_Object_Lock::instance (), 0));
+                            *ACE_Static_Object_Lock::instance (), 0));
   ACE_Reactor *t = ACE_Reactor::reactor_;
   // We can't safely delete it since we don't know who created it!
   ACE_Reactor::delete_reactor_ = 0;
@@ -97,7 +97,7 @@ ACE_Reactor::close_singleton (void)
   ACE_TRACE ("ACE_Reactor::close_singleton");
 
   ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon,
-		     *ACE_Static_Object_Lock::instance ()));
+                     *ACE_Static_Object_Lock::instance ()));
 
   if (ACE_Reactor::delete_reactor_)
     {
@@ -121,7 +121,7 @@ ACE_Reactor::run_event_loop (void)
 
 #if !defined (ACE_HAS_WINCE)
       if (ACE_Service_Config::reconfig_occurred ())
-	ACE_Service_Config::reconfigure ();
+        ACE_Service_Config::reconfigure ();
       else
 #endif /* !ACE_HAS_WINCE */
 
@@ -147,8 +147,8 @@ ACE_Reactor::run_event_loop (ACE_Time_Value &tv)
 
 #if !defined (ACE_HAS_WINCE)
       if (ACE_Service_Config::reconfig_occurred ())
-	ACE_Service_Config::reconfigure ();
-      else 
+        ACE_Service_Config::reconfigure ();
+      else
 #endif /* !ACE_HAS_WINCE */
         if (result <= 0)
           return result;
@@ -172,7 +172,7 @@ ACE_Reactor::run_alertable_event_loop (void)
 
 #if !defined (ACE_HAS_WINCE)
       if (ACE_Service_Config::reconfig_occurred ())
-	ACE_Service_Config::reconfigure ();
+        ACE_Service_Config::reconfigure ();
       else
 #endif /* !ACE_HAS_WINCE */
 
@@ -198,8 +198,8 @@ ACE_Reactor::run_alertable_event_loop (ACE_Time_Value &tv)
 
 #if !defined (ACE_HAS_WINCE)
       if (ACE_Service_Config::reconfig_occurred ())
-	ACE_Service_Config::reconfigure ();
-      else 
+        ACE_Service_Config::reconfigure ();
+      else
 #endif /* !ACE_HAS_WINCE */
         if (result <= 0)
           return result;
@@ -237,3 +237,10 @@ ACE_Reactor::event_loop_done (void)
   return ACE_Reactor::end_event_loop_ != 0;
 }
 
+void
+ACE_Reactor::dump (void) const
+{
+  ACE_TRACE ("ACE_Reactor::dump");
+
+  implementation_->dump ();
+}
