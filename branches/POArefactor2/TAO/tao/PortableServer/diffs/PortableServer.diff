@@ -1,5 +1,5 @@
 --- orig/PortableServerC.h	2004-11-11 16:18:43.902478200 +0100
-+++ PortableServerC.h	2004-11-11 16:30:08.000000000 +0100
++++ PortableServerC.h	2004-11-11 17:21:57.817860600 +0100
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //
@@ -26,7 +26,65 @@
      // TAO_IDL - Generated from
      // be\be_visitor_exception/exception_ch.cpp:51
  
-@@ -1010,6 +1014,8 @@
+@@ -849,6 +853,7 @@
+     // TAO_IDL - Generated from
+     // be\be_visitor_operation/operation_ch.cpp:46
+     
++#if (TAO_HAS_MINIMUM_POA == 0)
+     virtual ::PortableServer::ThreadPolicy_ptr create_thread_policy (
+         ::PortableServer::ThreadPolicyValue value
+         ACE_ENV_ARG_DECL_WITH_DEFAULTS
+@@ -856,6 +861,7 @@
+       ACE_THROW_SPEC ((
+         CORBA::SystemException
+       )) = 0;
++#endif /* TAO_HAS_MINIMUM_POA == 0 */
+     
+     // TAO_IDL - Generated from
+     // be\be_visitor_operation/operation_ch.cpp:46
+@@ -893,6 +899,7 @@
+     // TAO_IDL - Generated from
+     // be\be_visitor_operation/operation_ch.cpp:46
+     
++#if (TAO_HAS_MINIMUM_POA == 0)
+     virtual ::PortableServer::ImplicitActivationPolicy_ptr create_implicit_activation_policy (
+         ::PortableServer::ImplicitActivationPolicyValue value
+         ACE_ENV_ARG_DECL_WITH_DEFAULTS
+@@ -900,10 +907,12 @@
+       ACE_THROW_SPEC ((
+         CORBA::SystemException
+       )) = 0;
++#endif /* TAO_HAS_MINIMUM_POA == 0 */
+     
+     // TAO_IDL - Generated from
+     // be\be_visitor_operation/operation_ch.cpp:46
+     
++#if (TAO_HAS_MINIMUM_POA == 0)
+     virtual ::PortableServer::ServantRetentionPolicy_ptr create_servant_retention_policy (
+         ::PortableServer::ServantRetentionPolicyValue value
+         ACE_ENV_ARG_DECL_WITH_DEFAULTS
+@@ -911,10 +920,12 @@
+       ACE_THROW_SPEC ((
+         CORBA::SystemException
+       )) = 0;
++#endif /* TAO_HAS_MINIMUM_POA == 0 */
+     
+     // TAO_IDL - Generated from
+     // be\be_visitor_operation/operation_ch.cpp:46
+     
++#if (TAO_HAS_MINIMUM_POA == 0)
+     virtual ::PortableServer::RequestProcessingPolicy_ptr create_request_processing_policy (
+         ::PortableServer::RequestProcessingPolicyValue value
+         ACE_ENV_ARG_DECL_WITH_DEFAULTS
+@@ -922,6 +933,7 @@
+       ACE_THROW_SPEC ((
+         CORBA::SystemException
+       )) = 0;
++#endif /* TAO_HAS_MINIMUM_POA == 0 */
+     
+     // TAO_IDL - Generated from
+     // be\be_visitor_operation/operation_ch.cpp:46
+@@ -1010,6 +1022,8 @@
      // TAO_IDL - Generated from
      // be\be_visitor_operation/operation_ch.cpp:46
      
@@ -35,7 +93,7 @@
      virtual ::PortableServer::Servant get_servant (
          ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
        )
-@@ -1031,6 +1037,8 @@
+@@ -1031,6 +1045,8 @@
          ::PortableServer::POA::WrongPolicy
        )) = 0;
      
@@ -44,7 +102,7 @@
      // TAO_IDL - Generated from
      // be\be_visitor_operation/operation_ch.cpp:46
      
-@@ -1217,6 +1225,13 @@
+@@ -1217,6 +1233,13 @@
    
    TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_POA;
  
@@ -58,7 +116,7 @@
  // TAO_IDL - Generated from
  // be\be_visitor_module/module_ch.cpp:66
  
-@@ -1377,11 +1392,15 @@
+@@ -1377,11 +1400,15 @@
  // TAO_IDL - Generated from
  // be\be_visitor_exception/any_op_ch.cpp:52
  
@@ -74,7 +132,7 @@
  // TAO_IDL - Generated from
  // be\be_visitor_exception/any_op_ch.cpp:52
  
-@@ -1470,4 +1489,3 @@
+@@ -1470,4 +1497,3 @@
  
  #endif /* ifndef */
  

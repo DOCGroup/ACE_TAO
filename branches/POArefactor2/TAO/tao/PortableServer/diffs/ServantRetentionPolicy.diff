@@ -1,5 +1,5 @@
 --- orig/ServantRetentionPolicyC.h	2004-11-11 16:18:45.654998200 +0100
-+++ ServantRetentionPolicyC.h	2004-11-11 17:19:01.504334200 +0100
++++ ServantRetentionPolicyC.h	2004-11-11 17:19:36.000000000 +0100
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //

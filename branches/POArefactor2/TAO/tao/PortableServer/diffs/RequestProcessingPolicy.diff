@@ -1,5 +1,5 @@
 --- orig/RequestProcessingPolicyC.h	2004-11-11 16:18:44.653558200 +0100
-+++ RequestProcessingPolicyC.h	2004-11-11 17:18:38.150753400 +0100
++++ RequestProcessingPolicyC.h	2004-11-11 17:19:36.000000000 +0100
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //
