@@ -1,5 +1,19 @@
 Wed Oct 14 12:36:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+        * ace: Added 
+	
+	  #if !defined (ACE_LACKS_PRAGMA_ONCE)
+	  #pragma once
+	  #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+	  To all the header files in ACE.  This should speed up
+ 	  compilation time on platforms whose C++ compilers support
+ 	  #pragma once.  Thanks to Patrick J. McNerthney <pat@cartia.com>
+ 	  for suggesting this.
+
+	* ace/Functor.h: Moved the definitions of the constructor and
+ 	  destructor of ACE_Command_Base into the *.i file.
+
 	* ace/Select_Reactor_T: Enhanced dispatch_timer_handlers() so that
  	  it passes the number of timers dispatched as an out parameter to
  	  avoid any ambiguity.
