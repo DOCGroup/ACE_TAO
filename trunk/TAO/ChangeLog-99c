@@ -1,3 +1,10 @@
+Mon May 31 17:35:51 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* docs/Options.html:
+
+	  Updated -ORBendpoint documentation with new "default endpoint"
+	  description.
+
 Mon May 31 15:55:07 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* Removed tests/InterOp-Naming/InterOp_test.cpp as it was 
