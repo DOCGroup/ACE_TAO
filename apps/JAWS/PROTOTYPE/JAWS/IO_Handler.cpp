@@ -325,9 +325,14 @@ JAWS_Asynch_Handler::open (ACE_HANDLE h,
   // ioh_ set from the ACT hopefully
   //this->dispatch_handler ();
 
+#if !defined (ACE_WIN32)
   // Assume at this point there is no data.
   mb.rd_ptr (mb.wr_ptr ());
   mb.crunch ();
+#else
+  // AcceptEx reads some initial data from the socket.
+  this->handler ()->message_block ()->copy (mb.rd_ptr (), mb.length ());
+#endif
 
   ACE_Asynch_Accept::Result fake_result
     (*this, JAWS_IO_Asynch_Acceptor_Singleton::instance ()->get_handle (),
@@ -457,6 +462,8 @@ JAWS_Asynch_Handler::handle_transmit_file (const
   else
     this->handler ()->transmit_file_error (-1);
 
+  result.header_and_trailer ()->header ()->release ();
+  result.header_and_trailer ()->trailer ()->release ();
   delete result.header_and_trailer ();
   delete (ACE_Filecache_Handle *) result.act ();
 }
