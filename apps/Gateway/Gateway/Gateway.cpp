@@ -184,17 +184,47 @@ Gateway::parse_connection_config_file (void)
 		       Options::instance ()->connection_config_file ()),
 		      -1);
 
+  // Keep track of the previous connection id to make sure the
+  // connection config file isn't corrupted.
+  int previous_connection_id = 0;
+
   // Read config file one line at a time.
+
   for (Connection_Config_Info pci;
        connection_file.read_entry (pci, line_number) != FP::EOFILE;
        )
     {
       file_empty = 0;
 
+      // First time in check.
+      if (previous_connection_id == 0)
+        {
+          previous_connection_id == 1;
+
+          if (pci.connection_id_ != 1)
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%t) warning, the first connection id should be 1 not %d\n",
+                        pci.connection_id_));
+        }
+      else if (previous_connection_id + 1 != pci.connection_id_)
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%t) warning, connection ids should keep increasing by 1 and %d + 1 != %d\n",
+                    previous_connection_id,
+                    pci.connection_id_));
+
+      // Update the last connection id to ensure that we monotonically
+      // increase by 1.
+      previous_connection_id = pci.connection_id_;
+
       if (Options::instance ()->enabled (Options::DEBUG))
 	ACE_DEBUG ((LM_DEBUG,
-		    "(%t) conn id = %d, host = %s, remote port = %d, proxy role = %c, "
-		    "max retry timeout = %d, local port = %d, priority = %d\n",
+		    "(%t) conn id = %d, "
+                    "host = %s, "
+                    "remote port = %d, "
+                    "proxy role = %c, "
+		    "max retry timeout = %d, "
+                    "local port = %d, "
+                    "priority = %d\n",
 		    pci.connection_id_,
 		    pci.host_,
 		    pci.remote_port_,
@@ -215,6 +245,10 @@ Gateway::parse_connection_config_file (void)
       // Bind the new Connection_Handler to the connection ID.
       this->event_channel_.bind_proxy (connection_handler);
     }
+
+  // Keep track of the next available connection id, which is
+  // necessary for Peers that connect with us, rather than vice versa.
+  Options::instance ()->connection_id () = previous_connection_id + 1;
 
   if (file_empty)
     ACE_ERROR ((LM_WARNING,
@@ -260,7 +294,9 @@ Gateway::parse_consumer_config_file (void)
 	}
 
       Consumer_Dispatch_Set *dispatch_set;
-      ACE_NEW_RETURN (dispatch_set, Consumer_Dispatch_Set, -1);
+      ACE_NEW_RETURN (dispatch_set,
+                      Consumer_Dispatch_Set,
+                      -1);
 
       Event_Key event_addr (cci_entry.connection_id_,
 			    cci_entry.type_);

@@ -57,10 +57,45 @@ Peer_Handler::open (void *a)
   return 0;
 }
 
+void
+Peer_Handler::transmit (ACE_Message_Block *mb,
+                        size_t n,
+                        int event_type)
+{
+  Event *event = (Event *) mb->rd_ptr ();
+
+  // Initialize the header.
+  new (&event->header_) Event_Header (n,
+                                      this->connection_id_,
+                                      0,
+                                      event_type);
+
+  // Convert all the fields into network byte order.
+  event->header_.encode ();
+
+  // Move the write pointer to the end of the event.
+  mb->wr_ptr (sizeof (Event_Header) + n);
+
+  if (this->put (mb) == -1)
+    {
+      if (errno == EWOULDBLOCK) // The queue has filled up!
+        ACE_ERROR ((LM_ERROR,
+                    "%p\n",
+                    "gateway is flow controlled, so we're dropping events"));
+      else
+        ACE_ERROR ((LM_ERROR,
+                    "%p\n",
+                    "transmission failure in transmit_stdin"));
+      // Caller is responsible for freeing a ACE_Message_Block
+      // if failures occur.
+      mb->release ();
+    }
+}
+
 // Read events from stdin and send them to the gatewayd.
 
 int
-Peer_Handler::xmit_stdin (void)
+Peer_Handler::transmit_stdin (void)
 {
   if (this->connection_id_ != -1)
     {
@@ -88,36 +123,16 @@ Peer_Handler::xmit_stdin (void)
              ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK);
           mb->release ();
           break;
+          /* NOTREACHED */
         case -1:
           mb->release ();
           ACE_ERROR ((LM_ERROR, "%p\n", "read"));
           break;
+          /* NOTREACHED */
         default:
-          event->header_.connection_id_ = this->connection_id_;
-          event->header_.len_ = n;
-          event->header_.priority_ = 0;
-          event->header_.type_ = 0;
-
-          // Convert all the fields into network byte order.
-          event->header_.encode ();
-
-          // Move the write pointer to the end of the event.
-          mb->wr_ptr (sizeof (Event_Header) + n);
-
-          if (this->put (mb) == -1)
-            {
-              if (errno == EWOULDBLOCK) // The queue has filled up!
-                ACE_ERROR ((LM_ERROR,
-                            "%p\n",
-                           "gateway is flow controlled, so we're dropping events"));
-              else
-                ACE_ERROR ((LM_ERROR,
-                            "%p\n",
-                            "transmission failure in xmit_stdin"));
-              // Caller is responsible for freeing a ACE_Message_Block
-              // if failures occur.
-              mb->release ();
-            }
+          this->transmit (mb, n, ROUTING_EVENT);
+          break;
+          /* NOTREACHED */
         }
     }
 
@@ -144,7 +159,7 @@ Peer_Handler::nonblk_put (ACE_Message_Block *mb)
     {
       // We didn't manage to send everything, so requeue.
       ACE_DEBUG ((LM_DEBUG,
-                  "queueing activated on handle %d to supplier id %d\n",
+                  "queueing activated on handle %d to connection id %d\n",
                  this->get_handle (),
                   this->connection_id_));
 
@@ -207,7 +222,7 @@ Peer_Handler::handle_output (ACE_HANDLE)
           if (this->msg_queue ()->is_empty ())
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "queue now empty on handle %d to supplier id %d\n",
+                          "queue now empty on handle %d to connection id %d\n",
                           this->get_handle (),
                           this->connection_id_));
 
@@ -394,7 +409,7 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) supplier id = %d, cur len = %d, total bytes read = %d\n",
+                  "(%t) connection id = %d, cur len = %d, total bytes read = %d\n",
                   event->header_.connection_id_,
                   event->header_.len_,
                   data_received + header_received));
@@ -415,14 +430,14 @@ Peer_Handler::handle_input (ACE_HANDLE sd)
 {
   ACE_DEBUG ((LM_DEBUG, "in handle_input, sd = %d\n", sd));
   if (sd == ACE_STDIN) // Handle event from stdin.
-    return this->xmit_stdin ();
+    return this->transmit_stdin ();
   else
     // Perform the appropriate action depending on the state we are
     // in.
     return (this->*do_action_) ();
 }
 
-// Action that receives our supplier id from the Gateway.
+// Action that receives our connection id from the Gateway.
 
 int
 Peer_Handler::await_connection_id (void)
@@ -452,6 +467,10 @@ Peer_Handler::await_connection_id (void)
                   this->connection_id_));
     }
 
+  // Subscribe for events if we're a Consumer.
+  if (Options::instance ()->enabled (Options::CONSUMER_CONNECTOR))
+    this->subscribe ();
+
   // Transition to the action that waits for Peer events.
   this->do_action_ = &Peer_Handler::await_events;
 
@@ -467,7 +486,21 @@ Peer_Handler::await_connection_id (void)
   return 0;
 }
 
-// Action that receives events.
+int
+Peer_Handler::subscribe (void)
+{
+  ACE_Message_Block *mb;
+  
+  ACE_NEW_RETURN (mb,
+                  ACE_Message_Block (sizeof (Event)),
+                  -1);
+
+  Subscription *subscription = (Subscription *) ((Event *) mb->rd_ptr ())->data_;
+  subscription->connection_id_ = Options::instance ()->connection_id ();
+  this->transmit (mb, sizeof *subscription, SUBSCRIPTION_EVENT);
+}
+
+// Action that receives events from the Gateway.
 
 int
 Peer_Handler::await_events (void)
