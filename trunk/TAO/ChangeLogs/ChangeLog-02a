@@ -1,3 +1,10 @@
+Tue Jul 11 13:08:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/IFR_Service/IFR_Service.dsp:
+
+	  Added link inlcude path for the release version. Thanks
+	  to Angelo for pointing this out.
+
 Tue Jul 11 11:51:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_module.cpp:
