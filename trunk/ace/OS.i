@@ -6870,7 +6870,7 @@ ACE_OS::sigaddset (sigset_t *s, int signum)
     errno = EFAULT ;
     return -1 ;
   }
-  if (signum < 1 || signum > NSIG) {
+  if (signum < 1 || signum >= NSIG) {
     errno = EINVAL ;
     return -1 ;			// Invalid signum, return error
   }
@@ -6889,7 +6889,7 @@ ACE_OS::sigdelset (sigset_t *s, int signum)
     errno = EFAULT ;
     return -1 ;
   }
-  if (signum < 1 || signum > NSIG) {
+  if (signum < 1 || signum >= NSIG) {
     errno = EINVAL ;
     return -1 ;			// Invalid signum, return error
   }
@@ -6938,7 +6938,7 @@ ACE_OS::sigismember (sigset_t *s, int signum)
     errno = EFAULT ;
     return -1 ;
   }
-  if (signum < 1 || signum > NSIG) {
+  if (signum < 1 || signum >= NSIG) {
     errno = EINVAL ;
     return -1 ;			// Invalid signum, return error
   }

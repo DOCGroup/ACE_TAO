@@ -1,3 +1,8 @@
+Thu Jun  5 06:08:06 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
+
+	* ace/OS.i (sigaddset, sigdelset, sigismember): NSIG itself is
+	  invalid and must be excluded.
+
 Wed Jun 04 21:24:35 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-sunos5.5-g++.h: fixed typo: #define instead of
