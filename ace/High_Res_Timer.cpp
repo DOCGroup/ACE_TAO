@@ -51,11 +51,12 @@ ACE_High_Res_Timer::get_registry_scale_factor (void)
 /* static */
 ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = ACE_High_Res_Timer::get_registry_scale_factor ();
 
-#elif defined (ACE_HAS_HI_RES_TIMER) || defined (ACE_HAS_AIX_HI_RES_TIMER)
+#elif defined (ACE_HAS_HI_RES_TIMER) || defined (ACE_HAS_AIX_HI_RES_TIMER) || \
+  defined (ACE_HAS_CLOCK_GETTIME) || defined (ACE_PSOS)
   // A scale_factor of 1000 converts nanosecond ticks to microseconds.
   // That is, on these platforms, 1 tick == 1 nanosecond.
   /* static */
-  ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = ACE_ONE_SECOND_IN_MSECS;
+  ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1000u;
 #else
   // Don't convert at all, by default.  Application code may have to
   // override this using a call to global_scale_factor ().
