@@ -1421,6 +1421,17 @@ ACE_Reactor::dispatch (int number_of_active_handles,
     }
 }
 
+int
+ACE_Reactor::release_token (void)
+{
+#if defined (ACE_WIN32)
+  this->token_.release ();
+  return (int) EXCEPTION_CONTINUE_SEARCH;
+#else
+  return 0;
+#endif /* ACE_WIN32 */
+}
+
 int 
 ACE_Reactor::handle_events (ACE_Time_Value *max_wait_time)
 {
@@ -1441,13 +1452,24 @@ ACE_Reactor::handle_events (ACE_Time_Value *max_wait_time)
   countdown.update ();
 #endif /* ACE_MT_SAFE */
 
-  ACE_Reactor_Handle_Set dispatch_set;
+  int result;
 
-  int number_of_active_handles = 
-    this->wait_for_multiple_events (dispatch_set, 
-				    max_wait_time); 
+  ACE_SEH_TRY {
+    ACE_Reactor_Handle_Set dispatch_set;
 
-  return this->dispatch (number_of_active_handles, dispatch_set);
+    int number_of_active_handles = 
+      this->wait_for_multiple_events (dispatch_set, 
+				      max_wait_time); 
+
+    result = this->dispatch (number_of_active_handles, dispatch_set);
+  }
+  ACE_SEH_EXCEPT (this->release_mutex (this->token_)) {
+    // As it stands now, we catch and then rethrow all Win32
+    // structured exceptions so that we can make sure to release the
+    // <token_> lock correctly.
+  }
+
+  return result;
 }
 
 int

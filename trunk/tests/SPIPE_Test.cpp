@@ -25,7 +25,6 @@
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
 #include "ace/SPIPE_Addr.h"
-#include "ace/Time_Value.h"
 #include "ace/SPIPE_Connector.h"
 #include "ace/SPIPE_Acceptor.h"
 #include "test_config.h"

@@ -32,6 +32,7 @@ ACE_HAS_COMPLEX_LOCK			Platform supports non-standard readers/writer locks...
 ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES 	Prototypes for both signal() and struct sigaction are consistent.
 ACE_HAS_CPLUSPLUS_HEADERS		Compiler/platform has correctly prototyped header files
 ACE_HAS_DLL				Build ACE using the frigging PC DLL nonsense...
+ACE_HAS_EXCEPTIONS			Compiler supports C++ exception handling
 ACE_HAS_GETPAGESIZE			Platform supports getpagesize() call (otherwise, ACE_PAGE_SIZE must be defined, except on Win32)
 ACE_HAS_GETRUSAGE                       Platform supports the getrusage() system call.
 ACE_HAS_GNU_CSTRING_H			Denotes that GNU has cstring.h as standard which redefines memchr() 
@@ -157,6 +158,7 @@ ACE_LACKS_SBRK				Platform lacks a working sbrk() (e.g., Win32 and VxWorks)
 ACE_LACKS_SEMBUF_T			Platform lacks struct sembuf (e.g., Win32 and VxWorks)
 ACE_LACKS_SETDETACH			Platform lacks pthread_attr_setdetachstate() (e.g., HP/UX 10.x)
 ACE_LACKS_SETSCHED			Platform lacks pthread_attr_setsched() (e.g. MVS)
+ACE_LACKS_SYS_NERR			Platforms/compiler lacks the sys_nerr variable (e.g., VxWorks and MVS).
 ACE_LACKS_KEYDELETE			Platform lacks TSS keydelete (e.g., HP/UX)
 ACE_LACKS_SENDMSG			Platform lacks sendmsg() (e.g., Linux)
 ACE_LACKS_SI_ADDR			Platform lacks the si_addr field of siginfo_t (e.g., VxWorks and HP/UX 10.x)

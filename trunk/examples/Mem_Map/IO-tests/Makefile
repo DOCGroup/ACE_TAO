@@ -47,7 +47,6 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/IO_Test.o .shobj/IO_Test.so: IO_Test.cpp \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
@@ -58,6 +57,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/Mem_Map.h IO_Test.h \
- $(WRAPPER_ROOT)/ace/Profile_Timer.h
+ $(WRAPPER_ROOT)/ace/Profile_Timer.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

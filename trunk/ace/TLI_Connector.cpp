@@ -4,7 +4,6 @@
 #define ACE_BUILD_DLL
 #include "ace/Handle_Set.h"
 #include "ace/TLI_Connector.h"
-#include "ace/Time_Value.h"
 
 #if defined (ACE_HAS_TLI)
 

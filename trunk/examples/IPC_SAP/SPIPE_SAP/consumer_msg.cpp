@@ -1,9 +1,7 @@
-
 // $Id$
 
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Acceptor.h"
-#include "ace/Time_Value.h"
 #include "shared.h"
 
 #if defined (ACE_HAS_STREAM_PIPES)

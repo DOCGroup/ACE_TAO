@@ -42,7 +42,6 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/test_log_msg.o .shobj/test_log_msg.so: test_log_msg.cpp \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \

@@ -8,6 +8,8 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+#define ACE_HAS_EXCEPTIONS
+
 // We are using STL's min and max (in algobase.h).  Therefore the
 // macros in window.h are extra
 #if !defined NOMINMAX

@@ -6,7 +6,6 @@
 
 #define ACE_BUILD_DLL
 #include "ace/Thread.h"
-#include "ace/Time_Value.h"
 #include "ace/Synch_T.h"
 
 #if !defined (__ACE_INLINE__)
@@ -235,6 +234,10 @@ ACE_TSS<TYPE>::dump (void) const
 }
 
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+#if defined (ACE_HAS_THR_C_DEST)
+extern "C" void ACE_TSS_C_cleanup(void *); // defined in Synch.cpp
+#endif /* ACE_HAS_THR_C_DEST */
+
 template <class TYPE> void
 ACE_TSS<TYPE>::cleanup (void *ptr)
 {

@@ -7,6 +7,7 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+#define ACE_HAS_EXCEPTIONS
 #define ACE_HAS_UNICODE
 
 // Note that SunC++ 4.1 fixes template bugs that prevented earlier
