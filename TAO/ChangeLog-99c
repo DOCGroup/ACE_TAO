@@ -1,3 +1,9 @@
+Thu May 13 14:48:22 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/corbafwd.h (CORBA): 
+	* tao/corbafwd.cpp :
+	Fixed warnings on Greenhills compiler.
+
 Thu May 13 11:44:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB.h:
