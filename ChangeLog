@@ -8,8 +8,8 @@ Wed Jan  7 13:09:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  ACE_Auto_Event. The idea behind the said checkin was to do a
 	  check whether a proper event occured during event_wait (),
 	  insted of a spurious wakeup call. This was achieved by checking
-	  the value of is_signaled_. This works great for manual
-	  events. For auto events, we don't set the variable value if we
+	  the value of <is_signaled_>. This works great for manual
+	  events. For auto events, we don't set the variable value if we 
 	  have waiting threads. This makes the threads calling
 	  Auto_Event.wait () to wait for ever. 
 
