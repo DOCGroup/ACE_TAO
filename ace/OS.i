@@ -2488,8 +2488,8 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m)
             ACE_OS::cond_wait (&m->lock_available_,
                                &m->nesting_mutex_);
 
-              // At this point the nesting_mutex_ is held...
-              m->owner_id_ = t_id;
+          // At this point the nesting_mutex_ is held...
+          m->owner_id_ = t_id;
         }
 
       // At this point, we can safely increment the nesting_level_ no
@@ -2559,20 +2559,20 @@ ACE_INLINE int
 ACE_OS::recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m)
 {
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_RECURSIVE_MUTEXES)
+#  if defined (ACE_HAS_RECURSIVE_MUTEXES)
   return ACE_OS::thread_mutex_unlock (m);
-#else
+#  else
   ACE_OS_TRACE ("ACE_OS::recursive_mutex_unlock");
-#if !defined (ACE_NDEBUG)
+#    if !defined (ACE_NDEBUG)
   ACE_thread_t t_id = ACE_OS::thr_self ();
-#endif /* ACE_NDEBUG */
+#    endif /* ACE_NDEBUG */
   int result = 0;
 
   if (ACE_OS::thread_mutex_lock (&m->nesting_mutex_) == -1)
     result = -1;
   else
     {
-#if !defined (ACE_NDEBUG)
+#    if !defined (ACE_NDEBUG)
       if (m->nesting_level_ == 0
           || ACE_OS::thr_equal (t_id, m->owner_id_) == 0)
         {
@@ -2580,7 +2580,7 @@ ACE_OS::recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m)
           result = -1;
         }
       else
-#endif /* ACE_NDEBUG */
+#    endif /* ACE_NDEBUG */
         {
           m->nesting_level_--;
           if (m->nesting_level_ == 0)
@@ -2602,12 +2602,141 @@ ACE_OS::recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m)
     ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
   }
   return result;
-#endif /* ACE_HAS_RECURSIVE_MUTEXES */
+#  endif /* ACE_HAS_RECURSIVE_MUTEXES */
 #else
   ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
 }
+
+// This method is used to prepare the recursive mutex for releasing
+// when waiting on a condition variable. If the platform doesn't have
+// native recursive mutex and condition variable support, then ACE needs
+// to save the recursion state around the wait and also ensure that the
+// wait and lock release are atomic. recursive_mutex_cond_relock()
+// is the inverse of this method.
+ACE_INLINE int
+ACE_OS::recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
+                                     ACE_recursive_mutex_state &state)
+{
+#if defined (ACE_HAS_THREADS)
+  ACE_OS_TRACE ("ACE_OS::recursive_mutex_cond_unlock");
+#  if defined (ACE_HAS_RECURSIVE_MUTEXES)
+  // Windows need special handling since it has recursive mutexes, but
+  // does not integrate them into a condition variable.
+#    if defined (ACE_WIN32)
+  // For Windows, the OS takes care of the mutex and its recursion. We just
+  // need to save the nesting count and reduce it so that we can release
+  // the mutex with the condition. When we reacquire it, reset the counts
+  // to match the conditions before the wait occurred so that this thread
+  // does all of its acquires and releases correctly.
+  state.lock_count_ = m->LockCount;
+  state.recursion_count_ = m->RecursionCount;
+  state.owning_thread_ = m->OwningThread;
+  m->LockCount = 0;
+  m->RecursionCount = 1;
+#    endif /* ACE_WIN32 */
+  return 0;
+#  else /* ACE_HAS_RECURSIVE_MUTEXES */
+  // For platforms without recursive mutexes, we obtain the nesting mutex
+  // to gain control over the mutex internals. Then set the internals to say
+  // the mutex is available. If there are waiters, signal the condition
+  // to notify them (this is mostly like the recursive_mutex_unlock() method).
+  // Then, return with the nesting mutex still held. The condition wait
+  // will release it atomically, allowing mutex waiters to continue.
+  // Note that this arrangement relies on the fact that on return from
+  // the condition wait, this thread will again own the nesting mutex
+  // and can either set the mutex internals directly or get in line for
+  // the mutex... this part is handled in recursive_mutex_cond_relock().
+  if (ACE_OS::thread_mutex_lock (&m->nesting_mutex_) == -1)
+    return -1;
+
+#    if !defined (ACE_NDEBUG)
+  if (m->nesting_level_ == 0
+      || ACE_OS::thr_equal (ACE_OS::thr_self (), m->owner_id_) == 0)
+    {
+      ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
+      errno = EINVAL;
+      return -1;
+    }
+#    endif /* ACE_NDEBUG */
+
+  // To make error recovery a bit easier, signal the condition now. Any
+  // waiter won't regain control until the mutex is released, which won't
+  // be until the caller returns and does the wait on the condition.
+  if (ACE_OS::cond_signal (&m->lock_available_) == -1)
+    {
+      // Save/restore errno.
+      ACE_Errno_Guard error (errno);
+      ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
+      return -1;
+    }
+
+  // Ok, the nesting_mutex_ lock is still held, the condition has been
+  // signaled... reset the nesting info and return _WITH_ the lock
+  // held. The lock will be released when the condition waits, in the
+  // caller.
+  state.nesting_level_ = m->nesting_level_;
+  state.owner_id_ = m->owner_id_;
+  m->nesting_level_ = 0;
+  m->owner_id_ = ACE_OS::NULL_thread;
+  return 0;
+#  endif /* ACE_HAS_RECURSIVE_MUTEXES */
+#else
+  ACE_UNUSED_ARG (m);
+  ACE_UNUSED_ARG (state);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS */
+}
+
+
+// This method is called after waiting on a condition variable when a
+// recursive mutex must be reacquired. If the platform doesn't natively
+// integrate recursive mutexes and condition variables, it's taken care
+// of here (inverse of ACE_OS::recursive_mutex_cond_unlock).
+ACE_INLINE void
+ACE_OS::recursive_mutex_cond_relock (ACE_recursive_thread_mutex_t *m,
+                                     ACE_recursive_mutex_state &state)
+{
+#if defined (ACE_HAS_THREADS)
+  ACE_OS_TRACE ("ACE_OS::recursive_mutex_cond_relock");
+#  if defined (ACE_HAS_RECURSIVE_MUTEXES)
+  // Windows need special handling since it has recursive mutexes, but
+  // does not integrate them into a condition variable.
+  // On entry, the OS has already reacquired the lock for us. Just
+  // restore the counts to what they were before waiting on the condition.
+#    if defined (ACE_WIN32)
+  m->LockCount = state.lock_count_;
+  m->RecursionCount = state.recursion_count_;
+#      if !defined (ACE_NDEBUG)
+  ACE_ASSERT (state.owning_thread_ == m->OwningThread);
+#      endif /* !ACE_NDEBUG */
+  return;
+#    endif /* ACE_WIN32 */
+#  else
+  // Without recursive mutex support, it's somewhat trickier. On entry,
+  // the current thread holds the nesting_mutex_, but another thread may
+  // still be holding the ACE_recursive_mutex_t. If so, mimic the code
+  // in ACE_OS::recursive_mutex_lock that waits to acquire the mutex.
+  // After acquiring it, restore the nesting counts and release the
+  // nesting mutex. This will restore the conditions to what they were
+  // before calling ACE_OS::recursive_mutex_cond_unlock().
+  while (m->nesting_level_ > 0)
+    ACE_OS::cond_wait (&m->lock_available_, &m->nesting_mutex_);
+
+  // At this point, we still have nesting_mutex_ and the mutex is free.
+  m->nesting_level_ = state.nesting_level_;
+  m->owner_id_ = state.owner_id_;
+  ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
+  return;
+#  endif /* ACE_HAS_RECURSIVE_MUTEXES */
+#else
+  ACE_UNUSED_ARG (m);
+  ACE_UNUSED_ARG (state);
+  return;
+#endif /* ACE_HAS_THREADS */
+}
+
 
 ACE_INLINE int
 ACE_OS::sema_destroy (ACE_sema_t *s)
