@@ -2,6 +2,7 @@
 // $Id$
 
 interface Cubit
+{
   // = TITLE
   //    Defines an interface that encapsulates operations that cube
   //    numbers.
@@ -9,7 +10,7 @@ interface Cubit
   // = DESCRIPTION
   //    This interface encapsulates operations that cube
   //    octets, shorts, longs, structs and unions.
-{
+
   oneway void cube_oneway ();
   // Test the basic latency of a nil oneway operation.
 
@@ -78,11 +79,75 @@ interface Cubit
 
   oneway void shutdown ();
   // shutdown the application.
+
+  // = The following types provide a torture-test for structs.
+  struct RtiPacketHeader 
+  {
+    unsigned long packetLength; // this is probably redundant
+    unsigned short federationHandle;
+    unsigned long channelHandle;
+    unsigned long packetColor;
+  };
+
+  struct HandleValuePair 
+  {
+    unsigned short handle;
+    octet_seq data;
+  };
+
+  enum MessageHeaderTypes 
+  {
+    objectUpdate,
+    interaction
+    // others omitted
+  };
+
+  typedef sequence<HandleValuePair> HandleValuePairSeq;
+  struct RtiObjectUpdateMessageHeader 
+  {
+    unsigned long updateLength; // probably redundant
+    unsigned long updateTag;
+    unsigned long objectHandle;
+    double timestamp;
+    unsigned long long eventRetractionHandle;
+    unsigned short classHandle;
+    unsigned short sendingFederateHandle;
+    string userTag;
+    octet_seq regionData;
+    octet transportationHandle;
+    octet orderingHandle;
+    HandleValuePairSeq messagePayload;
+  };
+
+  struct RtiInteractionMessageHeader 
+  {
+    unsigned long updateLength;
+    // similar to object update
+  };
+
+  union MessageUnion switch(MessageHeaderTypes) 
+    {
+    case objectUpdate:
+      RtiObjectUpdateMessageHeader oumh;
+    case interaction:
+      RtiInteractionMessageHeader imh;
+    };
+
+  typedef sequence <MessageUnion> MessageUnionSeq;
+  struct RtiPacket 
+  {
+    RtiPacketHeader packetHeader;
+    MessageUnionSeq msgs;
+  };
+
+  void cube_rti_data (in RtiPacket input,
+		      out RtiPacket output);
 };
 
 interface Cubit_Factory
+{
   // = TITLE
   //    Creates Cubit objects.
-{
+
   Cubit make_cubit ();
 };
