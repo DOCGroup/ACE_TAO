@@ -1,3 +1,10 @@
+Thu Feb  8 20:00:49 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/InterfaceS.cpp:
+
+          Chnages corresponding to the changes to generated
+          code in the the entry below.
+
 Thu Feb  8 19:22:00 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
