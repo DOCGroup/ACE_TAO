@@ -135,13 +135,6 @@ main (int argc, char *argv[])
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
-
-          (void) roundtrip->test_method (start ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          ACE_hrtime_t now = ACE_OS::gethrtime ();
-          history.sample (now - start);
-
           if (rate)
           {
             //(void) ACE_OS::nanosleep (&ts, 0);
@@ -150,6 +143,13 @@ main (int argc, char *argv[])
 	    prime_number = ACE::is_prime (UINT_MAX, 2, UINT_MAX/2);
 	    prime_number = ACE::is_prime (10000, 2, 5000);
 	  }
+
+          (void) roundtrip->test_method (start ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          ACE_hrtime_t now = ACE_OS::gethrtime ();
+          history.sample (now - start);
+
         }
 
       ACE_hrtime_t test_end = ACE_OS::gethrtime ();
