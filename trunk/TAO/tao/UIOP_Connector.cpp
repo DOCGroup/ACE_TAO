@@ -61,13 +61,16 @@ typedef ACE_Cached_Connect_Strategy<TAO_UIOP_Client_Connection_Handler,
 
 TAO_UIOP_Connector::TAO_UIOP_Connector (void)
   : TAO_Connector (TAO_IOP_TAG_UNIX_IOP),
-    base_connector_ ()
+    base_connector_ (),
+    orb_core_ (0)
 {
 }
 
 int
 TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
+  this->orb_core_ = orb_core;
+
   TAO_Cached_Connector_Lock *connector_lock = 0;
   ACE_NEW_RETURN (connector_lock,
                   TAO_Cached_Connector_Lock (orb_core),
@@ -270,7 +273,9 @@ TAO_Profile*
 TAO_UIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
   TAO_Profile* pfile;
-  ACE_NEW_RETURN (pfile, TAO_UIOP_Profile, 0);
+  ACE_NEW_RETURN (pfile,
+                  TAO_UIOP_Profile (this->orb_core_),
+                  0);
 
   int r = pfile->decode (cdr);
   if (r == -1)
@@ -296,7 +301,9 @@ TAO_UIOP_Connector::make_profile (const char *endpoint,
   //    //rendezvous_point|object_key
 
   ACE_NEW_RETURN (profile,
-                  TAO_UIOP_Profile (endpoint, ACE_TRY_ENV),
+                  TAO_UIOP_Profile (endpoint,
+                                    this->orb_core_,
+                                    ACE_TRY_ENV),
                   -1);
 
   return 0;  // Success

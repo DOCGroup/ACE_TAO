@@ -33,7 +33,8 @@ ACE_RCSID(tao, UIOP_Acceptor, "$Id$")
 
 TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (void)
   : TAO_Acceptor (TAO_IOP_TAG_UNIX_IOP),
-    base_acceptor_ ()
+    base_acceptor_ (),
+    orb_core_ (0)
 {
 }
 
@@ -56,7 +57,9 @@ TAO_UIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
 
   TAO_UIOP_Profile *pfile;
   ACE_NEW_RETURN (pfile,
-                  TAO_UIOP_Profile (addr, object_key),
+                  TAO_UIOP_Profile (addr,
+                                    object_key,
+                                    this->orb_core_),
                   -1);
 
   if (mprofile.give_profile (pfile) == -1)
@@ -124,6 +127,8 @@ int
 TAO_UIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
                            const ACE_UNIX_Addr& addr)
 {
+  this->orb_core_ = orb_core;
+
   if (this->base_acceptor_.open (orb_core, addr) != 0)
     return -1;
 

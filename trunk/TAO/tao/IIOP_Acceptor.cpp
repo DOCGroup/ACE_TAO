@@ -31,11 +31,12 @@ ACE_RCSID(tao, IIOP_Acceptor, "$Id$")
 
 TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (void)
   : TAO_Acceptor (TAO_IOP_TAG_INTERNET_IOP),
-    base_acceptor_ ()
+    base_acceptor_ (),
+    orb_core_ (0)
 {
 }
 
-// TODO = 
+// TODO =
 //    1) Set the version number for IIOP for which this acceptor is is valid
 //    2) For V1.[1,2] there are tagged components
 //    3) Create multiple profiles for wild carded endpoints (may be multiple
@@ -59,7 +60,8 @@ TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                   TAO_IIOP_Profile (this->host_.c_str (),
                                     this->address_.get_port_number (),
                                     object_key,
-                                    this->address_),
+                                    this->address_,
+                                    this->orb_core_),
                   -1);
 
   if (mprofile.give_profile (pfile) == -1)
@@ -122,6 +124,8 @@ int
 TAO_IIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
                            const ACE_INET_Addr& addr)
 {
+  this->orb_core_ = orb_core;
+
   if (this->base_acceptor_.open (orb_core, addr) == -1)
     {
       if (TAO_debug_level > 0)

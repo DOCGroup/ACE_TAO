@@ -56,7 +56,8 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
       // if so I will add another ctor  fred
       ACE_NEW_RETURN (new_pfile,
                       TAO_IIOP_Profile (iiop_pfile->object_addr (),
-                                        iiop_pfile->object_key ()),
+                                        iiop_pfile->object_key (),
+                                        stub_obj->orb_core ()),
                       CORBA::Object::_nil ());
 
       mp.give_profile (new_pfile);

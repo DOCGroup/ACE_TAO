@@ -1,3 +1,35 @@
+Tue Jun 08 21:13:36 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/IIOP_Profile.cpp (set): Removed the use of
+	  TAO_ORB_Core_instance() in this method.  The use of this
+	  function was incorrect since each ORB has its own set of orb
+	  parameters and we should only look at our own ORB's parameters.
+
+	* tao/IIOP_Profile: Removed extra and unused constructors
+	  (again).  Also, added extra ORB Core argument to remaining
+	  constructors.
+
+	* tao/IIOP_Profile.h (TAO_IIOP_Profile):
+	* tao/IIOP_Connector.h (TAO_IIOP_Connector):
+	* tao/IIOP_Acceptor.cpp (TAO_IIOP_Acceptor):
+
+	  Added orb core as data member.
+
+	* tao/UIOP_Acceptor.cpp
+	* tao/UIOP_Acceptor.h
+	* tao/UIOP_Connector.cpp
+	* tao/UIOP_Connector.h
+	* tao/UIOP_Profile.cpp
+	* tao/UIOP_Profile.h
+
+	  Made identical changes to the UIOP side as described above for
+	  IIOP.  Note that currently we don't need an ORB Core in the UIOP
+	  Profile.  However, changes were still made for the sake of
+	  consistency.
+
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (activate_object): Added
+	  ORB Core parameter to IIOP Profile constructor.
+
 Tue Jun  8 20:32:39 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/ORB_Core.cpp (init): Fixed a minor bug in the processing of
@@ -10,9 +42,9 @@ Tue Jun  8 20:24:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Tue Jun  8 20:19:15 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
-	* tao/Principal.i 
+	* tao/Principal.i
 	* tao/Request.cpp,i:
-	  Fixed inline use before declaration problem. 
+	  Fixed inline use before declaration problem.
 
 Tue Jun  8 19:48:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -37,14 +69,14 @@ Tue Jun  8 18:57:00 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* TIE/client.cpp
 	* TIE/server.cpp: Made changes to the way exceptions were being
 	handled. Some comments were added to make the printout from  ACE_PRINT_EXCEPTION
-	look meaningful. 
+	look meaningful.
 
 Tue Jun 08 18:50:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-	
+
 	* /orbsvcs/tests/AVStreams/benchmark/svc.conf
-	* /orbsvcs/tests/AVStreams/benchmark/clnt.conf 
+	* /orbsvcs/tests/AVStreams/benchmark/clnt.conf
 	* /performance-tests/Thruput/TAO/svc.conf
-	* /MT_Client/client.conf 
+	* /MT_Client/client.conf
 	* /NestedUpcall/MT_Client_Test/client.conf
 	* /orbsvcs/tests/ImplRepo/implrepo.conf
 	* /orbsvcs/tests/Time/implrepo.conf
@@ -52,46 +84,46 @@ Tue Jun 08 18:50:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
           Modified these files to remove redundant configuration options.
 
 	* /orbsvcs/tests/AVStreams/mpeg/source/client/svc.conf
-	* /orbsvcs/tests/AVStreams/mpeg/source/server/svc.conf 
+	* /orbsvcs/tests/AVStreams/mpeg/source/server/svc.conf
 	* /orbsvcs/tests/ImplRepo/svc.conf
 	* /tests/Param_Test/svc.conf
-	* /examples/POA/On_Demand_Loading/svc.conf 
-	* /examples/Simulator/DOVEMIB/svc.conf 
-	* /examples/Simulator/Event_Supplier/svc.conf 
-	* /MT_Client/client.global.conf 
+	* /examples/POA/On_Demand_Loading/svc.conf
+	* /examples/Simulator/DOVEMIB/svc.conf
+	* /examples/Simulator/Event_Supplier/svc.conf
+	* /MT_Client/client.global.conf
 
 	  Removed the *.conf files above since they contained only
 	  redundant options.
 
-	* /orbsvcs/Event_Service/svc.conf 
+	* /orbsvcs/Event_Service/svc.conf
 	* /orbsvcs/tests/Event/Basic/svc.conf
 	* /orbsvcs/tests/EC_Mcast/svc.conf
-	* /orbsvcs/CosEvent_Service/svc.conf 
-	* /tests/FL_Cube/svc.conf 
+	* /orbsvcs/CosEvent_Service/svc.conf
+	* /tests/FL_Cube/svc.conf
 	* /tests/NestedUpcall/Reactor/svc.conf
-	* /examples/Simple/time-date/svc.conf 
-	* /examples/POA/Identity/svc.conf 
-	* /performance-tests/Cubit/TAO/IDL_Cubit/collocation/svc.conf 
-	* /performance-tests/Cubit/TAO/IDL_Cubit/svc.conf 
-	* /performance-tests/Cubit/TAO/MT_Cubit/svc.conf 
+	* /examples/Simple/time-date/svc.conf
+	* /examples/POA/Identity/svc.conf
+	* /performance-tests/Cubit/TAO/IDL_Cubit/collocation/svc.conf
+	* /performance-tests/Cubit/TAO/IDL_Cubit/svc.conf
+	* /performance-tests/Cubit/TAO/MT_Cubit/svc.conf
 	* /performance-tests/POA/Object_Creation_And_Registration/svc.conf
-	* /POA/Explicit_Activation/alternate.conf 
-	* /Quoter/client.conf 
-	* /Quoter/server.conf 
+	* /POA/Explicit_Activation/alternate.conf
+	* /Quoter/client.conf
+	* /Quoter/server.conf
 	* /MT_Client/client.tss.conf
-	* /MT_Client/server.conf 
-	* /NestedUpcall/Reactor/svc.mt.conf 
-	* /orbsvcs/tests/Event/Basic/sched.conf 
+	* /MT_Client/server.conf
+	* /NestedUpcall/Reactor/svc.mt.conf
+	* /orbsvcs/tests/Event/Basic/sched.conf
 	* /orbsvcs/tests/Event/Basic/observer.conf
 	* /orbsvcs/tests/Event/Performance/ec.mt.conf
 	* /orbsvcs/tests/Event/Performance/ec.st.conf
-	* /orbsvcs/tests/EC_Throughput/ec.conf 
-	* /orbsvcs/tests/EC_Throughput/ec.mt.conf 
+	* /orbsvcs/tests/EC_Throughput/ec.conf
+	* /orbsvcs/tests/EC_Throughput/ec.mt.conf
 
-	Retained the *.conf files above as they were originally. 
+	Retained the *.conf files above as they were originally.
         Thanks to Irfan, Nanbor, Naga, Carlos, David of the DOC group for
 	helping me with	this.
-	
+
 Tue Jun 08 18:17:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POA.cpp (find_POA): Must release the Object Adapter lock

@@ -100,6 +100,9 @@ private:
 
   TAO_IIOP_BASE_CONNECTOR  base_connector_;
   // The connector initiating connection requests for IIOP.
+
+  TAO_ORB_Core *orb_core_;
+  // ORB Core.
 };
 
 #endif  /* TAO_IIOP_CONNECTOR_H */
