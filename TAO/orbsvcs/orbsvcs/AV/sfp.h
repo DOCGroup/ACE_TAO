@@ -2,16 +2,14 @@
 // $Id$
 
 // ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS AVStreams.
-//
-// = FILENAME
-//   sfp.h
-//
-// = AUTHOR
-//   Nagarajan Surendran <naga@cs.wustl.edu>
-//
+/**
+ *  @file  sfp.h
+ *
+ *  $Id$
+ *
+ *  @author  Nagarajan Surendran <naga@cs.wustl.edu>
+ *
+ */
 // ============================================================================
 
 #ifndef TAO_AV_SFP_H
@@ -35,6 +33,10 @@
 #define TAO_SFP_MAX_PACKET_SIZE ACE_MAX_DGRAM_SIZE
 //#define TAO_SFP_MAX_PACKET_SIZE 132
 
+/**
+ * @class TAO_SFP_Fragment_Node
+ * @brief
+ */
 class TAO_SFP_Fragment_Node
 {
 public:
@@ -47,6 +49,10 @@ public:
                         const TAO_SFP_Fragment_Node& right);
 };
 
+/**
+ * @class TAO_SFP_Fragment_Table_Entry
+ * @brief
+ */
 class TAO_SFP_Fragment_Table_Entry
 {
 public:
@@ -64,6 +70,10 @@ typedef ACE_Ordered_MultiSet_Iterator<TAO_SFP_Fragment_Node> FRAGMENT_SET_ITERAT
 typedef ACE_Hash_Map_Manager<CORBA::ULong,TAO_SFP_Fragment_Table_Entry*,ACE_Null_Mutex> TAO_SFP_Fragment_Table;
 typedef ACE_Hash_Map_Manager<CORBA::ULong,TAO_SFP_Fragment_Table*,ACE_Null_Mutex> TAO_SFP_Fragment_Table_Map;
 
+/**
+ * @class TAO_SFP_Frame_State
+ * @brief
+ */
 class TAO_AV_Export TAO_SFP_Frame_State
 {
 public:
@@ -87,6 +97,10 @@ public:
 class TAO_AV_Transport;
 class TAO_AV_Core;
 
+/**
+ * @class TAO_SFP_Base
+ * @brief
+ */
 class TAO_AV_Export TAO_SFP_Base
 {
 public:
@@ -195,6 +209,10 @@ protected:
 // Beware the SFP_Base code relies on the Singleton being initialized.
 typedef ACE_Singleton <TAO_SFP_Base,TAO_SYNCH_MUTEX> TAO_SFP_BASE;
 
+/**
+ * @class TAO_SFP_Object
+ * @brief
+ */
 class TAO_AV_Export TAO_SFP_Object  : public TAO_AV_Protocol_Object
 {
 public:
@@ -231,26 +249,38 @@ protected:
   TAO_SFP_Frame_State state_;
 };
 
+/**
+ * @class TAO_SFP_Producer_Object
+ * @brief
+ */
 class TAO_AV_Export TAO_SFP_Producer_Object : public TAO_SFP_Object
 {
 public:
   TAO_SFP_Producer_Object (TAO_AV_Callback *callback,
                            TAO_AV_Transport *transport,
-                           char *&flow_options);
+                           const char *flow_options);
   virtual int handle_input (void);
 protected:
   CORBA::ULong credit_sequence_num_;
 };
 
+/**
+ * @class TAO_SFP_Consumer_Object
+ * @brief
+ */
 class TAO_AV_Export TAO_SFP_Consumer_Object : public TAO_SFP_Object
 {
 public:
   TAO_SFP_Consumer_Object (TAO_AV_Callback *callback,
                            TAO_AV_Transport *transport,
-                           char *&flow_options);
+                           ACE_CString& flow_options);
   virtual int handle_input (void);
 };
 
+/**
+ * @class TAO_AV_SFP_Factory
+ * @brief
+ */
 class TAO_AV_Export TAO_AV_SFP_Factory : public TAO_AV_Flow_Protocol_Factory
 {
 public:

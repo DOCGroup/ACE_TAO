@@ -1107,7 +1107,7 @@ TAO_SFP_Object::set_policies (const TAO_AV_PolicyList& policies)
 // TAO_SFP_Consumer_Object
 TAO_SFP_Consumer_Object::TAO_SFP_Consumer_Object (TAO_AV_Callback *callback,
                                                   TAO_AV_Transport *transport,
-                                                  char *&sfp_options)
+                                                  ACE_CString& sfp_options)
   :TAO_SFP_Object (callback,transport)
 {
   TAO_AV_PolicyList policies = callback->get_policies ();
@@ -1116,12 +1116,10 @@ TAO_SFP_Consumer_Object::TAO_SFP_Consumer_Object (TAO_AV_Callback *callback,
   this->set_policies (policies);
   if (this->max_credit_ > 0)
     {
-      ACE_NEW (sfp_options,
-               char [BUFSIZ]);
-
-      ACE_OS::sprintf (sfp_options,
-                       "sfp:1.0:credit=%d",
-                       max_credit_);
+      sfp_options = "sfp:1.0:credit=";
+      char buf[10];
+      ACE_OS::sprintf(buf, "%d", this->max_credit_);
+      sfp_options += buf;
     }
 }
 
@@ -1161,7 +1159,7 @@ TAO_SFP_Consumer_Object::handle_input (void)
 
 TAO_SFP_Producer_Object::TAO_SFP_Producer_Object (TAO_AV_Callback *callback,
                                                   TAO_AV_Transport *transport,
-                                                  char *&sfp_options)
+                                                  const char *sfp_options)
   :TAO_SFP_Object (callback,transport),
    credit_sequence_num_ (0)
 
@@ -1255,7 +1253,7 @@ TAO_AV_SFP_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
   TAO_AV_Callback *callback = 0;
   endpoint->get_callback (entry->flowname (),
                        callback);
-  char *flow_string = entry->flow_protocol_str ();
+  ACE_CString flow_string( entry->flow_protocol_str () );
   switch (entry->role ())
     {
     case TAO_FlowSpec_Entry::TAO_AV_PRODUCER:
@@ -1263,17 +1261,19 @@ TAO_AV_SFP_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
         ACE_NEW_RETURN (object,
                         TAO_SFP_Producer_Object (callback,
                                                  transport,
-                                                 flow_string),
+                                                 flow_string.c_str() ),
                         0);
       }
       break;
     case TAO_FlowSpec_Entry::TAO_AV_CONSUMER:
       {
+
         ACE_NEW_RETURN (object,
                         TAO_SFP_Consumer_Object (callback,
                                                  transport,
                                                  flow_string),
                         0);
+	entry->flow_protocol_str( flow_string.c_str() );
       }
       break;
     case TAO_FlowSpec_Entry::TAO_AV_INVALID_ROLE:

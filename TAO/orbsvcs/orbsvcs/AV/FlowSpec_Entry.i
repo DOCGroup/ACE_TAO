@@ -5,7 +5,7 @@
 
 ACE_INLINE
 int
-TAO_FlowSpec_Entry::set_direction (char *direction)
+TAO_FlowSpec_Entry::set_direction (const char *direction)
 {
   this->direction_str_ = direction;
   if (direction == 0)
@@ -22,7 +22,7 @@ TAO_FlowSpec_Entry::set_direction (char *direction)
 
 ACE_INLINE
 int
-TAO_FlowSpec_Entry::parse_flow_protocol_string (char *flow_string)
+TAO_FlowSpec_Entry::parse_flow_protocol_string (const char *flow_string)
 {
   if (flow_string == 0)
     return 0;
@@ -43,17 +43,17 @@ TAO_FlowSpec_Entry::direction (void)
 }
 
 ACE_INLINE
-char *
-TAO_FlowSpec_Entry::direction_str (void)
+const char *
+TAO_FlowSpec_Entry::direction_str (void) const
 {
-  return this->direction_str_;
+  return this->direction_str_.c_str();
 }
 
 ACE_INLINE
-char *
-TAO_FlowSpec_Entry::flow_protocol_str (void)
+const char *
+TAO_FlowSpec_Entry::flow_protocol_str (void) const
 {
-  return this->flow_protocol_;
+  return this->flow_protocol_.c_str();
 }
 
 ACE_INLINE
@@ -71,10 +71,10 @@ TAO_FlowSpec_Entry::carrier_protocol (void)
 }
 
 ACE_INLINE
-char *
-TAO_FlowSpec_Entry::carrier_protocol_str (void)
+const char *
+TAO_FlowSpec_Entry::carrier_protocol_str (void) const
 {
-  return this->carrier_protocol_;
+  return this->carrier_protocol_.c_str();
 }
 
 ACE_INLINE
@@ -85,24 +85,24 @@ TAO_FlowSpec_Entry::address (void)
 }
 
 ACE_INLINE
-char *
-TAO_FlowSpec_Entry::address_str (void)
+const char *
+TAO_FlowSpec_Entry::address_str (void) const
 {
-  return this->address_str_;
+  return this->address_str_.c_str();
 }
 
 ACE_INLINE
-char*
-TAO_FlowSpec_Entry::format (void)
+const char*
+TAO_FlowSpec_Entry::format (void) const
 {
-  return this->format_;
+  return this->format_.c_str();
 }
 
 ACE_INLINE
 const char *
-TAO_FlowSpec_Entry::flowname (void)
+TAO_FlowSpec_Entry::flowname (void) const
 {
-  return this->flowname_;
+  return this->flowname_.c_str();
 }
 
 
