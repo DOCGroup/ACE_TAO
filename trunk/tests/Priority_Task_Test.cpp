@@ -160,7 +160,7 @@ main (int, char *[])
 
   for (i = 0; i < ACE_MAX_ITERATIONS; i++)
     {
-      if (! tasks[i].succeeded)
+      if (! tasks[i].succeeded ())
         {
           ++status;
           break;
