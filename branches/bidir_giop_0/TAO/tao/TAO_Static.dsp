@@ -687,10 +687,6 @@ SOURCE=.\singletons.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Smart_Proxies.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\StringSeqC.h
 # End Source File
 # Begin Source File
@@ -995,11 +991,11 @@ SOURCE=.\GIOP_Message_Generator_Parser_Impl.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Headers.i
+SOURCE=.\GIOP_Message_Lite.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Lite.i
+SOURCE=.\GIOP_Message_Locate_Header.i
 # End Source File
 # Begin Source File
 
@@ -1027,7 +1023,7 @@ SOURCE=.\IIOP_Acceptor.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_Connect.i
+SOURCE=.\IIOP_Connection_Handler.i
 # End Source File
 # Begin Source File
 
@@ -1284,10 +1280,6 @@ SOURCE=.\Services.i
 # Begin Source File
 
 SOURCE=.\Single_Reactor.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Smart_Proxies.i
 # End Source File
 # Begin Source File
 
@@ -1623,6 +1615,10 @@ SOURCE=.\IIOP_Acceptor.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\IIOP_Connect.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\IIOP_Connection_Handler.cpp
 # End Source File
 # Begin Source File
@@ -1944,10 +1940,6 @@ SOURCE=.\Single_Reactor.cpp
 # Begin Source File
 
 SOURCE=.\skip.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Smart_Proxies.cpp
 # End Source File
 # Begin Source File
 
