@@ -75,9 +75,39 @@ typedef long      id_t;
 // specific values in config.h files.
 #include "ace/Default_Constants.h"
 
+
+# if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+    // Control message size to pass a file descriptor.
+#   define ACE_BSD_CONTROL_MSG_LEN sizeof (struct cmsghdr) + sizeof (ACE_HANDLE)
+#   if defined (ACE_LACKS_CMSG_DATA_MACRO)
+#     if defined (ACE_LACKS_CMSG_DATA_MEMBER)
+#       define CMSG_DATA(cmsg) ((unsigned char *) ((struct cmsghdr *) (cmsg) + 1))
+#     else
+#       define CMSG_DATA(cmsg) ((cmsg)->cmsg_data)
+#     endif /* ACE_LACKS_CMSG_DATA_MEMBER */
+#   endif /* ACE_LACKS_CMSG_DATA_MACRO */
+# endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
+
+
+// Default size of the ACE Reactor.
+# if defined (FD_SETSIZE)
+int const ACE_FD_SETSIZE = FD_SETSIZE;
+# else
+#   define ACE_FD_SETSIZE FD_SETSIZE
+# endif /* ACE_FD_SETSIZE */
+
+# if !defined (ACE_DEFAULT_SELECT_REACTOR_SIZE)
+#   define ACE_DEFAULT_SELECT_REACTOR_SIZE ACE_FD_SETSIZE
+# endif /* ACE_DEFAULT_SELECT_REACTOR_SIZE */
+
+
 // Here are all ACE-specific global declarations needed throughout
 // ACE.
 #include "ace/Global_Macros.h"
+
+#if !defined (ACE_WIN32)
+#define ACE_MAX_USERID L_cuserid
+#endif /*!ACE_WIN32*/
 
 // include the ACE min()/max() functions.
 # include "ace/Min_Max.h"
