@@ -27,11 +27,11 @@
 #   define ACE_HAS_TYPENAME_KEYWORD
 # endif /* __GNUC__ >= 2.90 */
 
-# if __GNUC__ == 2 && __GNUC_MINOR__ >= 91
-    // This is only needed with egcs 1.1 (egcs-2.91.57).  It can't be
-    // used with older versions.
-#   define ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR
-# endif /* __GNUC__ >= 2.91 */
+// # if __GNUC__ == 2 && __GNUC_MINOR__ >= 91
+//     // This is only needed with egcs 1.1 (egcs-2.91.57).  It can't be
+//     // used with older versions.
+// #   define ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR
+// # endif /* __GNUC__ >= 2.91 */
 
 # if __GNUC__ == 2  &&  __GNUC_MINOR__ != 9  &&  __GNUC_MINOR__ != 91
 #   // g++ 2.9 and egcs 2.91 apparently have a bug with this . . .
