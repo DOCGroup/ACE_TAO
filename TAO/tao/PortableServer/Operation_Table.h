@@ -21,12 +21,37 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Abstract_Servant_Base.h"
+#include "tao/Object.h"
 #include "tao/TAO_Singleton.h"
-
+#include "tao/Collocation_Strategy.h"
 #include "ace/Synch.h"
 #include "ace/Hash_Map_Manager.h"
-#include "ace/Malloc_Allocator.h"
+
+class TAO_ServerRequest;
+
+namespace CORBA
+{
+  class Environment;
+}
+
+typedef void (*TAO_Skeleton)(
+    TAO_ServerRequest &,
+    void *,
+    void *
+#if !defined (TAO_HAS_EXCEPTIONS) || defined (ACE_ENV_BKWD_COMPAT)
+    , CORBA::Environment &
+#endif
+  );
+
+typedef void (*TAO_Collocated_Skeleton)(
+    CORBA::Object_ptr,
+    CORBA::Object_out,
+    TAO::Argument **,
+    int
+#if !defined (TAO_HAS_EXCEPTIONS) || defined (ACE_ENV_BKWD_COMPAT)
+    , CORBA::Environment &
+#endif
+  );
 
 /**
  * @class TAO_operation_db_entry

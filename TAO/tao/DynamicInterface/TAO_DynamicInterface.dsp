@@ -83,7 +83,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAO_PortableServerd.lib TAO_Valuetyped.lib TAOd.lib aced.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_DynamicInterfaced.dll" /pdbtype:sept /libpath:"..\..\tao\Valuetype" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO_Messagingd.lib TAO_PortableServerd.lib TAO_Valuetyped.lib TAOd.lib aced.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_DynamicInterfaced.dll" /pdbtype:sept /libpath:"..\..\tao\Valuetype" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "DynamicInterface - Win32 MFC Debug"
 
@@ -164,11 +165,11 @@ SOURCE=.\DII_Arguments.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\DII_ClientRequestInfo.cpp
+SOURCE=.\DII_Invocation.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\DII_Invocation.cpp
+SOURCE=.\DII_Invocation_Adapter.cpp
 # End Source File
 # Begin Source File
 
@@ -212,11 +213,11 @@ SOURCE=.\DII_Arguments.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\DII_ClientRequestInfo.h
+SOURCE=.\DII_Invocation.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\DII_Invocation.h
+SOURCE=.\DII_Invocation_Adapter.h
 # End Source File
 # Begin Source File
 
