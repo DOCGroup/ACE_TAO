@@ -26,6 +26,10 @@ TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (TAO_GIOP_Invocation *inv,
 {
 }
 
+TAO_ClientRequestInfo_i::~TAO_ClientRequestInfo_i (void)
+{
+}
+
 CORBA::Object_ptr
 TAO_ClientRequestInfo_i::target (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))

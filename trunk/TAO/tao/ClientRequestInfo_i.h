@@ -47,6 +47,9 @@ public:
   TAO_ClientRequestInfo_i (TAO_GIOP_Invocation *invocation,
                            CORBA::Object_ptr target);
 
+  /// Destructor.
+  virtual ~TAO_ClientRequestInfo_i (void);
+
   /// Return an ID unique to the current request.  This request ID may
   /// or may not be the same as the GIOP request ID.
   CORBA::ULong request_id (
