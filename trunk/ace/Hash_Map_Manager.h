@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Hash_Map_Manager.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #if !defined (ACE_HASH_MAP_MANAGER_H)
@@ -38,8 +38,10 @@ public:
                       ACE_Hash_Map_Entry<EXT_ID, INT_ID> *prev);
   // Constructor.
 
+# if ! defined (ACE_HAS_BROKEN_NOOP_DTORS)
   ~ACE_Hash_Map_Entry (void);
   // Destructor.
+#endif /* ! defined (ACE_HAS_BROKEN_NOOP_DTORS) */
 
   EXT_ID ext_id_;
   // Key used to look up an entry.
@@ -70,12 +72,12 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Hash_Map_Reverse_Iterator;
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
-class ACE_Hash_Map_Manager 
+class ACE_Hash_Map_Manager
 {
   // = TITLE
   //     Define a map abstraction that efficiently associates
   //     <EXT_ID>s with <INT_ID>s.
-  //     
+  //
   // = DESCRIPTION
   //     This implementation of a map uses a hash table.  Therefore,
   //     this class expects that the <EXT_ID> contains a method called
@@ -94,16 +96,16 @@ public:
 
   typedef EXT_ID KEY;
   typedef INT_ID VALUE;
-  typedef ACE_Hash_Map_Entry<EXT_ID, INT_ID> 
+  typedef ACE_Hash_Map_Entry<EXT_ID, INT_ID>
           ENTRY;
-  typedef ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> 
+  typedef ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>
           ITERATOR;
-  typedef ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> 
+  typedef ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>
           REVERSE_ITERATOR;
   // = STL-style iterator typedefs.
-  typedef ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> 
+  typedef ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>
           iterator;
-  typedef ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> 
+  typedef ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>
           reverse_iterator;
 
   // = Initialization and termination methods.
@@ -111,11 +113,11 @@ public:
   ACE_Hash_Map_Manager (ACE_Allocator *alloc = 0);
   // Initialize a <Hash_Map_Manager> with default size.
 
-  ACE_Hash_Map_Manager (size_t size, 
+  ACE_Hash_Map_Manager (size_t size,
 			ACE_Allocator *alloc = 0);
   // Initialize a <Hash_Map_Manager> with size <length>.
 
-  int open (size_t size = ACE_DEFAULT_MAP_SIZE, 
+  int open (size_t size = ACE_DEFAULT_MAP_SIZE,
 	    ACE_Allocator *alloc = 0);
   // Initialize a <Hash_Map_Manager> with <size> elements.
 
@@ -155,9 +157,9 @@ public:
   // back to the caller.  The entry in this case will either be the
   // newly created entry, or the existing one.
 
-  int rebind (const EXT_ID &ext_id, 
+  int rebind (const EXT_ID &ext_id,
 	      const INT_ID &int_id,
-	      EXT_ID &old_ext_id, 
+	      EXT_ID &old_ext_id,
 	      INT_ID &old_int_id);
   // Associate <ext_id> with <int_id>.  If <ext_id> is not in the map
   // then behaves just like <bind>.  Otherwise, store the old values
@@ -168,9 +170,9 @@ public:
   // bound successfully, returns 1 if an existing entry was rebound,
   // and returns -1 if failures occur.
 
-  int rebind (const EXT_ID &ext_id, 
+  int rebind (const EXT_ID &ext_id,
 	      const INT_ID &int_id,
-	      EXT_ID &old_ext_id, 
+	      EXT_ID &old_ext_id,
 	      INT_ID &old_int_id,
               ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
   // Same as a normal rebind, except the map entry is also passed back
@@ -234,8 +236,8 @@ protected:
   // separate method to facilitate template specialization.
 
   // = These methods assume locks are held by private methods.
-  
-  int bind_i (const EXT_ID &ext_id, 
+
+  int bind_i (const EXT_ID &ext_id,
               const INT_ID &int_id);
   // Performs bind.  Must be called with locks held.
 
@@ -244,7 +246,7 @@ protected:
               ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
   // Performs bind.  Must be called with locks held.
 
-  int trybind_i (const EXT_ID &ext_id, 
+  int trybind_i (const EXT_ID &ext_id,
                  INT_ID &int_id);
   // Performs trybind.  Must be called with locks held.
 
@@ -252,21 +254,21 @@ protected:
                  INT_ID &int_id,
                  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
   // Performs trybind.  Must be called with locks held.
-  
-  int rebind_i (const EXT_ID &ext_id, 
+
+  int rebind_i (const EXT_ID &ext_id,
                 const INT_ID &int_id,
-		EXT_ID &old_ext_id, 
+		EXT_ID &old_ext_id,
                 INT_ID &old_int_id);
   // Performs rebind.  Must be called with locks held.
 
-  int rebind_i (const EXT_ID &ext_id, 
+  int rebind_i (const EXT_ID &ext_id,
                 const INT_ID &int_id,
-                EXT_ID &old_ext_id, 
+                EXT_ID &old_ext_id,
                 INT_ID &old_int_id,
                 ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
   // Performs rebind.  Must be called with locks held.
 
-  int find_i (const EXT_ID &ext_id, 
+  int find_i (const EXT_ID &ext_id,
               INT_ID &int_id);
   // Performs a find of <int_id> using <ext_id> as the key.  Must be
   // called with locks held.
@@ -280,7 +282,7 @@ protected:
   // Performs a find using <ext_id> as the key.  Must be called with
   // locks held.
 
-  int unbind_i (const EXT_ID &ext_id, 
+  int unbind_i (const EXT_ID &ext_id,
                 INT_ID &int_id);
   // Performs unbind.  Must be called with locks held.
 
@@ -302,7 +304,7 @@ protected:
   ACE_Allocator *allocator_;
   // Pointer to a memory allocator.
 
-  ACE_LOCK lock_; 
+  ACE_LOCK lock_;
   // Synchronization variable for the MT_SAFE <ACE_Hash_Map_Manager>.
 
 private:
@@ -347,11 +349,11 @@ public:
 
   ACE_Hash_Map_Entry<EXT_ID, INT_ID>& operator* (void);
   // Returns a reference to the interal element <this> is pointing
-  // to. 
-  
+  // to.
+
   ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>& map (void);
   // Returns reference the Hash_Map_Manager that is being iterated
-  // over. 
+  // over.
 
   int operator== (const ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &) const;
   int operator!= (const ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &) const;
@@ -364,20 +366,20 @@ protected:
   int forward_i (void);
   // Move forward by one element in the set.  Returns 0 when there's
   // no more item in the set after the current items, else 1.
-  
+
   int reverse_i (void);
   // Move backward by one element in the set.  Returns 0 when there's
   // no more item in the set before the current item, else 1.
-  
+
   void dump_i (void) const;
   // Dump the state of an object.
-  
+
   ACE_Hash_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> *map_man_;
   // Map we are iterating over.
-  
+
   ssize_t index_;
   // Keeps track of how far we've advanced in the table.
-  
+
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *next_;
   // Keeps track of how far we've advanced in a linked list in each
   // table slot.
@@ -401,7 +403,7 @@ public:
   int advance (void);
   // Move forward by one element in the set.  Returns 0 when all the
   // items in the set have been seen, else 1.
-  
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -441,7 +443,7 @@ public:
   int advance (void);
   // Move forward by one element in the set.  Returns 0 when all the
   // items in the set have been seen, else 1.
-  
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -472,4 +474,3 @@ public:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_HASH_MAP_MANAGER_H */
-

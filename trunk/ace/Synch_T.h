@@ -365,6 +365,40 @@ class ACE_Guard
   //     the very least the <acquire>, <tryacquire>, <release>, and
   //     <remove> methods.
 public:
+
+#if defined (ACE_LACKS_METHOD_DEFINITIONS_IN_CLASS_TEMPLATE)
+
+  // = Initialization and termination methods.
+  ACE_Guard (ACE_LOCK &l);
+
+  ACE_Guard (ACE_LOCK &l, int block);
+  // Implicitly and automatically acquire (or try to acquire) the
+  // lock.
+
+  ~ACE_Guard (void);
+  // Implicitly release the lock.
+
+  // = Lock accessors.
+
+  int acquire (void);
+  // Explicitly acquire the lock.
+
+  int tryacquire (void);
+  // Conditionally acquire the lock (i.e., won't block).
+
+  int release (void);
+  // Explicitly release the lock, but only if it is held!
+
+  // = Utility methods.
+  int locked (void);
+  // 1 if locked, 0 if couldn't acquire the lock
+  // (errno will contain the reason for this).
+
+  int remove (void);
+  // Explicitly remove the lock.
+
+#else
+
   // = Initialization and termination methods.
   ACE_Guard (ACE_LOCK &l): lock_ (&l)
   {
@@ -417,6 +451,8 @@ public:
   int remove (void) { return this->lock_->remove (); }
   // Explicitly remove the lock.
 
+#endif /* defined (ACE_LACKS_METHOD_DEFINITIONS_IN_CLASS_TEMPLATE) */
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -424,6 +460,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
+
   ACE_Guard (ACE_LOCK *lock): lock_ (lock) {}
   // Helper, meant for subclass only.
 

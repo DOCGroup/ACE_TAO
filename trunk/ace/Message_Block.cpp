@@ -970,12 +970,10 @@ ACE_Laxity_Message_Strategy::dump (void) const
 //
 // template class ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>;
 // template class ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> >;
-template class ACE_Guard<ACE_Lock>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 // These specializations aren't needed for the ACE library because
 // Service_Config.cpp has them:
 //
 // #pragma instantiate ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>
 // #pragma instantiate ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> >
-#pragma instantiate ACE_Guard<ACE_Lock>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

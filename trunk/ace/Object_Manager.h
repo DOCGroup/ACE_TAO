@@ -58,7 +58,13 @@ class ACE_Export ACE_Object_Manager_Base
   //
   // = DESCRIPTION
   //     Encapsulates the most useful ACE_Object_Manager data structures.
+# if defined (ACE_PSOS) && defined (__DIAB)
+// the Diab compiler got confused and complained about access rights 
+// if this section was protected (changing this to public makes it happy)
+public:
+# else /* ! defined (ACE_PSOS) && defined (__DIAB) */
 protected:
+# endif /* ! defined (ACE_PSOS) && defined (__DIAB) */
   ACE_Object_Manager_Base (void);
   // Default constructor.
 

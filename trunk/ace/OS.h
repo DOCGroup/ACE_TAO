@@ -22,6 +22,11 @@
 // configuration file (e.g., config-sunos5-sunc++-4.x.h).
 # include "ace/inc_user_config.h"
 
+#if defined (ACE_PSOS_TM)
+typedef long long       longlong_t;
+typedef long            id_t;
+#endif /*ACE_PSOS_TM*/
+
 # if defined (ACE_HAS_MOSTLY_UNICODE_APIS) && !defined (UNICODE)
 #   error UNICODE must be defined when using ACE_HAS_MOSTLY_UNICODE_APIS, check your compiler document on how to enable UNICODE.
 # endif /* ACE_HAS_MOSTLY_UNICODE_APIS && !UNICODE */
@@ -562,17 +567,49 @@ typedef int key_t;
 
 # if defined (ACE_PSOS)
 
+    // remap missing error numbers for system functions
+    #define EPERM        1        /* Not super-user                        */
+    #define ENOENT       2        /* No such file or directory             */
+    #define ESRCH        3        /* No such process                       */
+#   if ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM)
+    #define EINTR        4        /* interrupted system call               */
+#   endif /* ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM) */
+    #define EBADF        9        /* Bad file number                       */
+    #define EAGAIN       11       /* Resource temporarily unavailable      */
+#   if ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM)
+    #define EWOULDBLOCK  EAGAIN   /* Blocking resource request would block */
+    #define ENOMEM       12       /* Not enough core                       */
+#   endif /* ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM) */
+    #define EACCES       13       /* Permission denied                     */
+#   if ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM)
+    #define EEXIST       17       /* File exists                           */
+#   endif /* ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM) */
+    #define ENOSPC       28       /* No space left on device               */
+#   if ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM)
+    #define EPIPE        32       /* Broken pipe                           */
+#   endif /* ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM) */
+    #define ETIME        62       /* timer expired                         */
+    #define ENAMETOOLONG 78       /* path name is too long                 */
+    #define ENOSYS       89       /* Unsupported file system operation     */
+#   if ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM)
+    #define EADDRINUSE   125      /* Address already in use                */
+    #define ENETUNREACH  128      /* Network is unreachable                */
+    #define EISCONN      133      /* Socket is already connected           */
+    #define ESHUTDOWN    143      /* Can't send after socket shutdown      */
+    #define ECONNREFUSED 146      /* Connection refused                    */
+    #define EINPROGRESS  150      /* operation now in progress             */
+#   endif /* ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM) */
+    #define ERRMAX       151      /* Last error number                     */
+
+# if defined (ACE_PSOSIM)
+
 #   include /**/ <ace/sys_conf.h> /* system configuration file */
 #   include /**/ <psos.h>         /* pSOS+ system calls                */
 #   include /**/ <pna.h>          /* pNA+ TCP/IP Network Manager calls */
 
-
-#   if defined (ACE_PSOSIM)
-
     /* In the *simulator* environment, use unsigned int for size_t */
-#     define size_t  unsigned int
+# define size_t  unsigned int
 
-//    #include /**/ <prepc.h>    /* pREPC+ ANSI C Standard Library calls */
 
     /*   include <rpc.h>       pRPC+ Remote Procedure Call Library calls   */
     /*                         are not supported by pSOSim                 */
@@ -585,53 +622,78 @@ typedef int key_t;
     /*                         use the wrappers under pSOSim               */
 
     /* put includes for necessary UNIX file system calls here */
-#     include /**/ <sys/stat.h>
-#     include /**/ <sys/ioctl.h>
-#     include /**/ <sys/sockio.h>
-#     include /**/ <netinet/tcp.h>
+    #include /**/ <sys/stat.h>
+    #include /**/ <sys/ioctl.h>
+    #include /**/ <sys/sockio.h>
+    #include /**/ <netinet/tcp.h>
 
-    // remap missing error numbers for system functions
-#     define EPERM        1        /* Not super-user                        */
-#     define ENOENT       2        /* No such file or directory             */
-#     define ESRCH        3        /* No such process                       */
-#     define EINTR        4        /* interrupted system call               */
-#     define EBADF        9        /* Bad file number                       */
-#     define EAGAIN       11       /* Resource temporarily unavailable      */
-#     define EWOULDBLOCK  EAGAIN   /* Blocking resource request would block */
-#     define ENOMEM       12       /* Not enough core                                   */
-#     define EACCES       13       /* Permission denied                     */
-#     define EEXIST       17       /* File exists                           */
-#     define ENOSPC       28       /* No space left on device               */
-#     define EPIPE        32       /* Broken pipe                           */
-#     define ETIME        62       /* timer expired                         */
-#     define ENAMETOOLONG 78       /* path name is too long                 */
-#     define ENOSYS       89       /* Unsupported file system operation     */
-#     define EADDRINUSE   125      /* Address already in use                */
-#     define ENETUNREACH  128      /* Network is unreachable                */
-#     define EISCONN      133      /* Socket is already connected           */
-#     define ESHUTDOWN    143      /* Can't send after socket shutdown      */
-#     define ECONNREFUSED 146      /* Connection refused                    */
-#     define EINPROGRESS  150      /* operation now in progress             */
-#     define ERRMAX       151      /* Last error number                     */
-
-#     define TCP_
-#     if ! defined (BUFSIZ)
-#       define BUFSIZ 1024
-#     endif  /* ! defined (BUFSIZ) */
+    #define TCP_
+    #if ! defined (BUFSIZ)
+      #define BUFSIZ 1024
+    #endif  /* ! defined (BUFSIZ) */
 
 
-#   else
+  #else
 
-#     include /**/ <rpc.h>       /* pRPC+ Remote Procedure Call Library calls */
-#     include /**/ <phile.h>     /* pHILE+ file system calls                  */
+    #if defined (ACE_PSOS_CANT_USE_SYS_TYPES)
+      // these are missing from the pSOS types.h file, and the compiler
+      // supplied types.h file collides with the pSOS version
+      typedef unsigned char u_char;
+      typedef unsigned short        u_short;
+      typedef unsigned int  u_int;
+      typedef unsigned long u_long;
+      typedef unsigned char uchar_t;
+      typedef unsigned short        ushort_t;
+      typedef unsigned int  uint_t;
+      typedef unsigned long ulong_t;
+      typedef char *caddr_t;
+      typedef long pid_t;
+//      typedef unsigned char wchar_t;
+    #endif
 
+    #include <ace/sys_conf.h> /* system configuration file */
+    #include /**/ <configs.h>   /* includes all pSOS headers */
+//    #include /**/ <psos.h>    /* pSOS system calls */
+    #include /**/ <pna.h>      /* pNA+ TCP/IP Network Manager calls */
+    #include /**/ <phile.h>     /* pHILE+ file system calls */
+//    #include /**/ <prepccfg.h>     /* pREPC+ file system calls */
+    #include /**/ <unistd.h>    /* Diab Data supplied file system calls */
+    #include /**/ <sys/wait.h>    /* Diab Data supplied header file */
 
-#   endif /* defined (ACE_PSOSIM) */
+// This collides with phile.h
+//    #include /**/ <sys/stat.h>    /* Diab Data supplied header file */
 
+  // missing preprocessor definitions
+  #define AF_UNIX 0x1
+  #define PF_UNIX AF_UNIX
+  #define PF_INET AF_INET
+  #define AF_MAX AF_INET
+  #define IFF_LOOPBACK IFF_EXTLOOPBACK
 
+  typedef long fd_mask;
+  #define IPPORT_RESERVED	1024
+  #define IPPORT_USERRESERVED	5000
 
+  #define howmany(x, y) (((x)+((y)-1))/(y))
+
+  extern "C"
+  {
+    typedef void (* ACE_SignalHandler) (void);
+    typedef void (* ACE_SignalHandlerV) (void);
+  }
+
+#if !defined(SIG_DFL)
+#define SIG_DFL (ACE_SignalHandler) 0
+#endif  // philabs
+
+  #endif /* defined (ACE_PSOSIM) */
 
 // For general purpose portability
+
+typedef u_long ACE_idtype_t;
+typedef u_long ACE_id_t;
+#   define ACE_SELF (0)
+typedef u_long ACE_pri_t;
 
 // Use pSOS semaphores, wrapped . . .
 typedef struct
@@ -659,7 +721,7 @@ typedef struct
 #   endif /* ACE_DEFAULT_SVC_CONF */
 
 #   if !defined (ACE_DEFAULT_SEM_KEY)
-#     define ACE_DEFAULT_SEM_KEY "ACE_SEM_KEY"
+#     define ACE_DEFAULT_SEM_KEY 1234
 #   endif /* ACE_DEFAULT_SEM_KEY */
 
 #   define ACE_STDIN 0
@@ -827,6 +889,14 @@ struct ACE_OVERLAPPED
   ACE_HANDLE hEvent;
 };
 
+#if !defined(USER_INCLUDE_SYS_TIME_TM)
+typedef struct timespec
+{
+  time_t tv_sec; // Seconds
+  long tv_nsec; // Nanoseconds
+} timespec_t;
+#endif
+
 // Use pSOS time, wrapped . . .
 class ACE_Export ACE_PSOS_Time_t
 {
@@ -972,7 +1042,7 @@ extern "C" pthread_t pthread_self (void);
 #   endif /* VXWORKS */
 # endif /* ACE_NEEDS_SYSTIME_H */
 
-# if !defined (ACE_HAS_POSIX_TIME)
+# if !defined (ACE_HAS_POSIX_TIME) && !defined (ACE_PSOS)
 // Definition per POSIX.
 typedef struct timespec
 {
@@ -1617,6 +1687,7 @@ struct stat {
 
 # else /* ! ACE_HAS_WINCE */
 #   if defined (ACE_LACKS_SYS_TYPES_H)
+#     if ! defined (ACE_PSOS)
   typedef unsigned char u_char;
   typedef unsigned short        u_short;
   typedef unsigned int  u_int;
@@ -1626,11 +1697,14 @@ struct stat {
   typedef unsigned short        ushort_t;
   typedef unsigned int  uint_t;
   typedef unsigned long ulong_t;
+#     endif /* ! defined (ACE_PSOS) */
 #   else
 #     include /**/ <sys/types.h>
 #   endif  /* ACE_LACKS_SYS_TYPES_H */
 
-#   include /**/ <sys/stat.h>
+#   if ! defined (ACE_PSOS)
+#     include /**/ <sys/stat.h>
+#   endif
 # endif /* ACE_HAS_WINCE */
 
 # if defined (ACE_NEW_THROWS_EXCEPTIONS)
@@ -1931,11 +2005,16 @@ typedef ACE_mutex_t ACE_thread_mutex_t;
 // implement ACE_thread_mutex_t and ACE_mutex_t using pSOS semaphores
 typedef u_long ACE_mutex_t;
 typedef u_long ACE_thread_mutex_t;
-typedef long pid_t;
 
-typedef char *ACE_thread_t;
-typedef int ACE_hthread_t;
+typedef u_long ACE_thread_t;
+typedef u_long ACE_hthread_t;
 
+// TCB registers 0-7 are for application use
+#define PSOS_TASK_REG_TSS 0
+#define PSOS_TASK_REG_MAX 7
+
+# define PSOS_TASK_MIN_PRIORITY   1
+# define PSOS_TASK_MAX_PRIORITY 239
 
 // Key type: the ACE TSS emulation requires the key type be unsigned,
 // for efficiency.  (Current POSIX and Solaris TSS implementations also
@@ -1977,29 +2056,29 @@ typedef u_int ACE_thread_key_t;
 /* #define T_NOFPU         0x00000000   Not using FPU */
 /* #define T_FPU           0x00000002   Using FPU bit */
 
-// pSOS signals are sent via as_send(u_long tid, u_long signals)
-typedef u_long sigset_t;
-
-// Wrapper for NT events on pSOS.
-class ACE_Export ACE_event_t
-{
-  friend class ACE_OS;
-protected:
-  ACE_mutex_t lock_;
-  // Protect critical section.
-
-  ACE_cond_t condition_;
-  // Keeps track of waiters.
-
-  int manual_reset_;
-  // Specifies if this is an auto- or manual-reset event.
-
-  int is_signaled_;
-  // "True" if signaled.
-
-  u_long waiting_threads_;
-  // Number of waiting threads.
-};
+//// forward declaration of cond_t emulation class
+//class ACE_cond_t;
+//
+//// Wrapper for NT events on pSOS.
+//class ACE_Export ACE_event_t
+//{
+//  friend class ACE_OS;
+//protected:
+//  ACE_mutex_t lock_;
+//  // Protect critical section.
+//
+//  ACE_cond_t condition_;
+//// Keeps track of waiters.
+//
+//int manual_reset_;
+//// Specifies if this is an auto- or manual-reset event.
+//
+//int is_signaled_;
+//// "True" if signaled.
+//
+//u_long waiting_threads_;
+//// Number of waiting threads.
+//};
 
 
 #   elif defined (VXWORKS)
@@ -2277,19 +2356,23 @@ typedef int ACE_mutex_t;
 typedef int ACE_thread_mutex_t;
 #   if !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_PSOS)
 typedef int ACE_sema_t;
-#   endif /* !ACE_HAS_POSIX_SEM */
+#   endif /* !ACE_HAS_POSIX_SEM && !ACE_PSOS */
 typedef int ACE_rwlock_t;
 typedef int ACE_thread_t;
 typedef int ACE_hthread_t;
 typedef u_int ACE_thread_key_t;
 
-#   if defined (ACE_PSOS)
+# endif /* ACE_HAS_THREADS */
+
+# if defined (ACE_PSOS)
 
 // Wrapper for NT events on pSOS.
 class ACE_Export ACE_event_t
 {
   friend class ACE_OS;
+
 protected:
+
   ACE_mutex_t lock_;
   // Protect critical section.
 
@@ -2306,9 +2389,7 @@ protected:
   // Number of waiting threads.
 };
 
-#   endif /* ACE_PSOS */
-
-# endif /* ACE_HAS_THREADS */
+# endif /* ACE_PSOS */
 
 // Standard C Library includes
 // NOTE: stdarg.h must be #included before stdio.h on LynxOS.
@@ -2316,16 +2397,54 @@ protected:
 # if !defined (ACE_HAS_WINCE)
 #   include /**/ <assert.h>
 #   include /**/ <stdio.h>
-#   include /**/ <new.h>
-#   include /**/ <signal.h>
-#   include /**/ <errno.h>
-#   include /**/ <fcntl.h>
+// this is a nasty hack to get around problems with the
+// pSOS definition of BUFSIZ as the config table entry
+// (which is valued using the LC_BUFSIZ value anyway)
+#   if defined (ACE_PSOS)
+#     if defined (BUFSIZ)
+#       undef BUFSIZ
+#     endif /* defined (BUFSIZ) */
+#     define BUFSIZ LC_BUFSIZ
+#   endif /* defined (ACE_PSOS) */
+
+# include /**/ <new.h>
+# include /**/ <signal.h>
+# include /**/ <errno.h>
+# include /**/ <fcntl.h>
 # endif /* ACE_HAS_WINCE */
+
 # include /**/ <limits.h>
 # include /**/ <ctype.h>
 # include /**/ <string.h>
 # include /**/ <stdlib.h>
 # include /**/ <float.h>
+
+# if defined (ACE_PSOS_SNARFS_HEADER_INFO)
+
+  // header information snarfed from compiler provided header files
+  // that are not included because there is already an identically
+  // named file provided with pSOS, which does not have this info
+
+  // from compiler supplied stdio.h
+  extern FILE *fdopen(int, const char *);
+  extern int getopt(int, char *const *, const char *);
+  extern char *tempnam(const char *, const char *);
+  extern "C" int fileno(FILE *);
+
+//  #define fileno(stream)	((stream)->_file)
+
+  // from compiler supplied string.h
+  extern char *strdup(const char *);
+
+  // from compiler supplied stat.h
+  extern mode_t umask(mode_t);
+  extern int mkfifo(const char *, mode_t);
+  extern int mkdir(const char *, mode_t);
+
+  // from compiler supplied stdlib.h
+  extern int putenv(char *);
+
+# endif /* ACE_PSOS_SNARFS_HEADER_INFO */
 
 # if defined (ACE_NEEDS_SCHED_H)
 #   include /**/ <sched.h>
@@ -2335,6 +2454,7 @@ protected:
 #   define islower iswlower
 #   define isdigit iswdigit
 # endif /* ACE_HAS_WINCE */
+
 
 // If the user wants minimum IOStream inclusion, we will just include
 // the forward declarations
@@ -2423,8 +2543,10 @@ typedef void *ACE_MALLOC_T;
 #   if defined (ACE_HAS_SIG_C_FUNC)
 extern "C" {
 #   endif /* ACE_HAS_SIG_C_FUNC */
+#   if !defined (ACE_PSOS)
 typedef void (*ACE_SignalHandler)(int);
 typedef void (*ACE_SignalHandlerV)(int);
+#   endif /* !defined (ACE_PSOS) */
 #   if defined (ACE_HAS_SIG_C_FUNC)
 }
 #   endif /* ACE_HAS_SIG_C_FUNC */
@@ -2806,6 +2928,10 @@ const int ACE_DEFAULT_SHLIB_MODE = 0;
 # elif defined (ACE_PSOS)
 
 typedef ACE_UINT64 ACE_hrtime_t;
+
+#if defined (ACE_SIGINFO_IS_SIGINFO_T)
+  typedef struct siginfo siginfo_t;
+#endif /* ACE_LACKS_SIGINFO_H */
 
 # else /* !defined (ACE_WIN32) && !defined (ACE_PSOS) */
 
@@ -3717,6 +3843,8 @@ typedef const char **SYS_SIGLIST;
 // This is for C++ static methods.
 # if defined (VXWORKS)
 typedef FUNCPTR ACE_THR_FUNC;  // where typedef int (*FUNCPTR) (...)
+# elif defined (ACE_PSOS)
+typedef void (*ACE_THR_FUNC)(void *);
 # else
 typedef void *(*ACE_THR_FUNC)(void *);
 # endif /* VXWORKS */
@@ -3730,6 +3858,10 @@ extern "C"
 {
 # if defined (VXWORKS)
 typedef FUNCPTR ACE_THR_C_FUNC;  // where typedef int (*FUNCPTR) (...)
+# elif defined (ACE_PSOS)
+// needed to handle task entry point type inconsistencies in pSOS+
+typedef void (*PSOS_TASK_ENTRY_POINT)();
+typedef void (*ACE_THR_C_FUNC)(void *);
 # else
 typedef void *(*ACE_THR_C_FUNC)(void *);
 # endif /* VXWORKS */
@@ -3829,7 +3961,7 @@ private:
 typedef void (*ACE_Sig_Handler_Ex) (int, siginfo_t *siginfo, ucontext_t *ucontext);
 
 // If the xti.h file redefines the function names, do it now, else
-// when the function definitions are encountered, they won't match the
+// when the functigon definitions are encountered, they won't match the
 // declaration here.
 
 # if defined (ACE_REDEFINES_XTI_FUNCTIONS)
@@ -4216,8 +4348,14 @@ public:
   // However, we should provide UNICODE version of them.
   static FILE *fopen (const char *filename,
                       const char *mode);
+
+#if defined (fdopen)
+#undef fdopen
+#endif
+
   static FILE *fdopen (ACE_HANDLE handle,
                        const char *mode);
+
   static char *fgets (char *buf,
                       int size,
                       FILE *fp);
@@ -5463,6 +5601,133 @@ private:
 
 # endif /* ACE_HAS_TSS_EMULATION */
 
+// moved ACE_TSS_Ref, ACE_TSS_Info, and ACE_TSS_Keys class
+// declarations from OS.cpp so they are visible to the single
+// file of template instantiations.
+#if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
+class ACE_TSS_Ref
+  // = TITLE
+  //     "Reference count" for thread-specific storage keys.
+  //
+  // = DESCRIPTION
+  //     Since the <ACE_Unbounded_Stack> doesn't allow duplicates, the
+  //     "reference count" is the identify of the thread_id.
+{
+public:
+  ACE_TSS_Ref (ACE_thread_t id);
+  // Constructor
+
+  ACE_TSS_Ref (void);
+  // Default constructor
+
+  int operator== (const ACE_TSS_Ref &);
+  // Check for equality.
+
+  int operator!= (const ACE_TSS_Ref &);
+  // Check for inequality.
+
+// private:
+
+  ACE_thread_t tid_;
+  // ID of thread using a specific key.
+};
+
+class ACE_TSS_Info
+  // = TITLE
+  //     Thread Specific Key management.
+  //
+  // = DESCRIPTION
+  //     This class maps a key to a "destructor."
+{
+public:
+  ACE_TSS_Info (ACE_thread_key_t key,
+                void (*dest)(void *) = 0,
+                void *tss_inst = 0);
+  // Constructor
+
+  ACE_TSS_Info (void);
+  // Default constructor
+
+  int key_in_use (void) const { return thread_count_ != -1; }
+  // Returns 1 if the key is in use, 0 if not.
+
+  void key_in_use (int flag) { thread_count_ = flag == 0  ?  -1  :  1; }
+  // Mark the key as being in use if the flag is non-zero, or
+  // not in use if the flag is 0.
+
+  int operator== (const ACE_TSS_Info &);
+  // Check for equality.
+
+  int operator!= (const ACE_TSS_Info &);
+  // Check for inequality.
+
+  void dump (void);
+  // Dump the state.
+
+private:
+  ACE_thread_key_t key_;
+  // Key to the thread-specific storage item.
+
+  void (*destructor_)(void *);
+  // "Destructor" that gets called when the item is finally released.
+
+  void *tss_obj_;
+  // Pointer to ACE_TSS<xxx> instance that has/will allocate the key.
+
+  int thread_count_;
+  // Count of threads that are using this key.  Contains -1 when the
+  // key is not in use.
+
+  friend class ACE_TSS_Cleanup;
+};
+
+class ACE_TSS_Keys
+  // = TITLE
+  //     Collection of in-use flags for a thread's TSS keys.
+  //     For internal use only by ACE_TSS_Cleanup; it is public because
+  //     some compilers can't use nested classes for template instantiation
+  //     parameters.
+  //
+  // = DESCRIPTION
+  //     Wrapper around array of whether each key is in use.  A simple
+  //     typedef doesn't work with Sun C++ 4.2.
+{
+ public:
+  ACE_TSS_Keys (void);
+  // Default constructor, to initialize all bits to zero (unused).
+
+  int test_and_set (const ACE_thread_key_t key);
+  // Mark the specified key as being in use, if it was not already so marked.
+  // Returns 1 if the had already been marked, 0 if not.
+
+  int test_and_clear (const ACE_thread_key_t key);
+  // Mark the specified key as not being in use, if it was not already so
+  // cleared.  Returns 1 if the had already been cleared, 0 if not.
+
+private:
+  static void find (const u_int key, u_int &word, u_int &bit);
+  // For a given key, find the word and bit number that represent it.
+
+  enum
+    {
+#   if ACE_SIZEOF_LONG == 8
+      ACE_BITS_PER_WORD = 64,
+#   elif ACE_SIZEOF_LONG == 4
+      ACE_BITS_PER_WORD = 32,
+#   else
+#   error ACE_TSS_Keys only supports 32 or 64 bit longs.
+#   endif /* ACE_SIZEOF_LONG == 8 */
+      ACE_WORDS = (ACE_DEFAULT_THREAD_KEYS - 1) / ACE_BITS_PER_WORD + 1
+    };
+
+  u_long key_bit_words_[ACE_WORDS];
+  // Bit flag collection.  A bit value of 1 indicates that the key is in
+  // use by this thread.
+};
+
+# endif /* defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION) */
+
+
 // Support non-scalar thread keys, such as with some POSIX
 // implementations, e.g., MVS.
 # if defined (ACE_HAS_NONSCALAR_THREAD_KEY_T)
@@ -5499,7 +5764,7 @@ private:
    } while (0)
 # endif /* ACE_NEW_THROWS_EXCEPTIONS */
 
-// Some useful abstration for expressions involving
+// Some useful abstrations for expressions involving
 // ACE_Allocator.malloc ().  The difference between ACE_NEW_MALLOC*
 // with ACE_ALLOCATOR* is that they call constructors also.
 
@@ -5524,25 +5789,43 @@ private:
    } while (0)
 
 # define ACE_NOOP(x)
-# define ACE_DES_NOFREE (POINTER,CLASS) POINTER -> CLASS :: ~ CLASS ()
-# define ACE_DES_FREE(POINTER,DEALLOCATOR,CLASS) \
-   do { POINTER -> CLASS :: ~ CLASS (); DEALLOCATOR ( POINTER ); } while (0)
-# define ACE_DES_NOFREE_TEMPLATE (POINTER,T_CLASS,T_PARAMETER) \
-     POINTER-> T_CLASS T_PARAMETER ::~ T_CLASS ()
-# if defined (__Lynx__) && __LYNXOS_SDK_VERSION == 199701L
-  // LynxOS 3.0.0's g++ has trouble with the real versions of these.
-#   define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER)
-#   define ACE_DES_FREE_TEMPLATE2(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2)
-# else
+
+# if defined (ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR)
+#   define ACE_DES_NOFREE (POINTER,CLASS) POINTER->~CLASS ()
+#   define ACE_DES_FREE(POINTER,DEALLOCATOR,CLASS) \
+   do { POINTER->~CLASS (); DEALLOCATOR (POINTER); } while (0)
+#   define ACE_DES_NOFREE_TEMPLATE (POINTER,T_CLASS,T_PARAMETER) \
+     POINTER->~ T_CLASS ()
 #   define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
+   do { POINTER->~ T_CLASS (); \
+        DEALLOCATOR (POINTER); \
+      } while (0)
+#   define ACE_DES_FREE_TEMPLATE2(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
+  do { POINTER->~ T_CLASS (); \
+       DEALLOCATOR (POINTER); \
+     } while (0)
+# else /* ! ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR */
+#   define ACE_DES_NOFREE(POINTER,CLASS) POINTER -> CLASS :: ~ CLASS ()
+#   define ACE_DES_FREE(POINTER,DEALLOCATOR,CLASS) \
+   do { POINTER -> CLASS :: ~ CLASS (); DEALLOCATOR ( POINTER ); } while (0)
+#   define ACE_DES_NOFREE_TEMPLATE (POINTER,T_CLASS,T_PARAMETER) \
+     POINTER -> T_CLASS T_PARAMETER ::~ T_CLASS ()
+
+#   if defined (__Lynx__) && __LYNXOS_SDK_VERSION == 199701L
+  // LynxOS 3.0.0's g++ has trouble with the real versions of these.
+#     define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER)
+#     define ACE_DES_FREE_TEMPLATE2(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2)
+#   else
+#     define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
     do { POINTER-> T_CLASS T_PARAMETER ::~ T_CLASS (); \
          DEALLOCATOR (POINTER); \
        } while (0)
-#   define ACE_DES_FREE_TEMPLATE2(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
+#     define ACE_DES_FREE_TEMPLATE2(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
     do { POINTER-> T_CLASS <T_PARAM1, T_PARAM2> ::~ T_CLASS (); \
          DEALLOCATOR (POINTER); \
        } while (0)
-# endif
+#   endif /* defined (__Lynx__) && __LYNXOS_SDK_VERSION == 199701L */
+# endif /* defined ! ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR */
 
 # if defined (ACE_HAS_SIGNAL_SAFE_OS_CALLS)
 // The following two macros ensure that system calls are properly
@@ -5643,7 +5926,7 @@ ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */ \
 } \
 int \
 ace_main_i
-#   elif defined (ACE_PSOS)
+#   elif defined (ACE_PSOS) && defined (ACE_PSOS_LACKS_ARGC_ARGV)
 // PSOS root lacks the standard argc, argv command line parameters,
 // create dummy argc and argv in the "real" main  and pass to "user" main.
 // Ignore return value from user main as well.  NOTE: ACE_MAIN must be

@@ -37,9 +37,11 @@ public:
   int is_free_;
   // Keeps track whether entry is free or not.
 
+# if ! defined (ACE_HAS_BROKEN_NOOP_DTORS)
   ~ACE_Map_Entry (void);
   // We need this destructor to keep some compilers from complaining.
   // It's just a no-op, however.
+# endif /* ! defined (ACE_HAS_BROKEN_NOOP_DTORS) */
 
   void dump (void) const;
   // Dump the state of an object.
@@ -294,11 +296,11 @@ public:
 
   ACE_Map_Entry<EXT_ID, INT_ID>& operator* (void);
   // Returns a reference to the interal element <this> is pointing to.
-  
+
   ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>& map (void);
   // Returns reference the Map_Manager that is being iterated
   // over.
-  
+
   int operator== (const ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &) const;
   int operator!= (const ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &) const;
   // Check if two iterators point to the same position

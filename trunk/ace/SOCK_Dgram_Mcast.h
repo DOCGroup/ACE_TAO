@@ -41,7 +41,12 @@ public:
 
   int subscribe (const ACE_INET_Addr &mcast_addr,
 		 int reuse_addr = 1,
+#if defined (ACE_PSOS)
+                 // pSOS supports numbers, not names for network interfaces
+		 long net_if = 0,
+#else
 		 const ASYS_TCHAR *net_if = 0,
+#endif /* defined (ACE_PSOS) */
 		 int protocol_family = PF_INET,
 		 int protocol = 0);
   // Join a multicast group by telling the network interface device
@@ -98,7 +103,14 @@ private:
 		int flags = 0) const;
 
   int make_multicast_address (const ACE_INET_Addr &mcast_addr,
-			      const ASYS_TCHAR *net_if = ASYS_TEXT ("le0"));
+#if defined (ACE_PSOS)
+                              // pSOS supports numbers, not
+                              // names for network interfaces
+			      long net_if = 0
+#else
+			      const ASYS_TCHAR *net_if = ASYS_TEXT ("le0")
+#endif /* defined (ACE_PSOS) */
+                             );
   // Initialize a multicast address.
 
   ACE_INET_Addr mcast_addr_;

@@ -205,7 +205,7 @@ ACE_Filecache::instance (void)
 }
 
 ACE_Filecache::ACE_Filecache (void)
-  : size_ (DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE),
+  : size_ (ACE_DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE),
     hash_ (this->size_)
 {
 }
@@ -355,7 +355,7 @@ ACE_Filecache::finish (ACE_Filecache_Object *&file)
   if (file != 0)
     switch (file->action_)
       {
-      case ACE_Filecache_Object::WRITING:
+      case ACE_Filecache_Object::ACE_WRITING:
         {
           ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (hashlock);
 
@@ -435,20 +435,20 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
 
   // ASSERT strlen(filename) < sizeof (this->filename_)
   ACE_OS::strcpy (this->filename_, filename);
-  this->action_ = ACE_Filecache_Object::READING;
+  this->action_ = ACE_Filecache_Object::ACE_READING;
   // place ourselves into the READING state
 
   // Can we access the file?
   if (ACE_OS::access (this->filename_, R_OK) == -1)
     {
-      this->error_i (ACE_Filecache_Object::ACCESS_FAILED);
+      this->error_i (ACE_Filecache_Object::ACE_ACCESS_FAILED);
       return;
     }
 
   // Can we stat the file?
   if (ACE_OS::stat (this->filename_, &this->stat_) == -1)
     {
-      this->error_i (ACE_Filecache_Object::STAT_FAILED);
+      this->error_i (ACE_Filecache_Object::ACE_STAT_FAILED);
       return;
     }
 
@@ -460,7 +460,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
                                 READ_FLAGS, R_MASK, this->sa_);
   if (this->handle_ == ACE_INVALID_HANDLE)
     {
-      this->error_i (ACE_Filecache_Object::OPEN_FAILED,
+      this->error_i (ACE_Filecache_Object::ACE_OPEN_FAILED,
                      "ACE_Filecache_Object::ctor: open");
       return;
     }
@@ -471,7 +471,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
       if (this->mmap_.map (this->handle_, -1,
                            PROT_READ, ACE_MAP_PRIVATE, 0, 0, this->sa_) != 0)
         {
-          this->error_i (ACE_Filecache_Object::MEMMAP_FAILED,
+          this->error_i (ACE_Filecache_Object::ACE_MEMMAP_FAILED,
                          "ACE_Filecache_Object::ctor: map");
           ACE_OS::close (this->handle_);
           this->handle_ = ACE_INVALID_HANDLE;
@@ -480,7 +480,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
     }
 
    // Ok, finished!
-   this->action_ = ACE_Filecache_Object::READING;
+   this->action_ = ACE_Filecache_Object::ACE_READING;
 }
 
 ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
@@ -495,7 +495,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
 
   this->size_ = size;
   ACE_OS::strcpy (this->filename_, filename);
-  this->action_ = ACE_Filecache_Object::WRITING;
+  this->action_ = ACE_Filecache_Object::ACE_WRITING;
 
   // Can we access the file?
   if (ACE_OS::access (this->filename_, R_OK|W_OK) == -1
@@ -503,7 +503,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
       && ACE_OS::access (this->filename_, F_OK) != -1)
     {
       // File exists, but we cannot access it.
-      this->error_i (ACE_Filecache_Object::ACCESS_FAILED);
+      this->error_i (ACE_Filecache_Object::ACE_ACCESS_FAILED);
       return;
     }
 
@@ -513,7 +513,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
   this->handle_ = ACE_OS::open (this->tempname_, WRITE_FLAGS, W_MASK, this->sa_);
   if (this->handle_ == ACE_INVALID_HANDLE)
     {
-      this->error_i (ACE_Filecache_Object::OPEN_FAILED,
+      this->error_i (ACE_Filecache_Object::ACE_OPEN_FAILED,
                      "ACE_Filecache_Object::acquire: open");
       return;
     }
@@ -521,7 +521,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
   // Can we seek?
   if (ACE_OS::lseek (this->handle_, this->size_ - 1, SEEK_SET) == -1)
     {
-      this->error_i (ACE_Filecache_Object::OPEN_FAILED,
+      this->error_i (ACE_Filecache_Object::ACE_OPEN_FAILED,
                      "ACE_Filecache_Object::acquire: lseek");
       ACE_OS::close (this->handle_);
       return;
@@ -530,7 +530,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
   // Can we write?
   if (ACE_OS::write (this->handle_, "", 1) != 1)
     {
-      this->error_i (ACE_Filecache_Object::WRITE_FAILED,
+      this->error_i (ACE_Filecache_Object::ACE_WRITE_FAILED,
                      "ACE_Filecache_Object::acquire: write");
       ACE_OS::close (this->handle_);
       return;
@@ -540,7 +540,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
   if (this->mmap_.map (this->handle_, this->size_, PROT_RDWR, MAP_SHARED,
                        0, 0, this->sa_) != 0)
     {
-      this->error_i (ACE_Filecache_Object::MEMMAP_FAILED,
+      this->error_i (ACE_Filecache_Object::ACE_MEMMAP_FAILED,
                      "ACE_Filecache_Object::acquire: map");
       ACE_OS::close (this->handle_);
     }
@@ -567,7 +567,7 @@ ACE_Filecache_Object::acquire (void)
 int
 ACE_Filecache_Object::release (void)
 {
-  if (this->action_ == WRITING)
+  if (this->action_ == ACE_WRITING)
     {
       // We are safe since only one thread has a writable Filecache_Object
 
@@ -575,16 +575,16 @@ ACE_Filecache_Object::release (void)
       ACE_HANDLE original = ACE_OS::open (this->filename_, WRITE_FLAGS, W_MASK,
                                           this->sa_);
       if (original == ACE_INVALID_HANDLE)
-        this->error_ = ACE_Filecache_Object::OPEN_FAILED;
+        this->error_ = ACE_Filecache_Object::ACE_OPEN_FAILED;
       else if (ACE_OS::write (original, this->mmap_.addr (),
                               this->size_) == -1)
         {
-          this->error_ = ACE_Filecache_Object::WRITE_FAILED;
+          this->error_ = ACE_Filecache_Object::ACE_WRITE_FAILED;
           ACE_OS::close (original);
           ACE_OS::unlink (this->filename_);
         }
       else if (ACE_OS::stat (this->filename_, &this->stat_) == -1)
-        this->error_ = ACE_Filecache_Object::STAT_FAILED;
+        this->error_ = ACE_Filecache_Object::ACE_STAT_FAILED;
 #endif
 
       this->mmap_.unmap ();
@@ -596,7 +596,7 @@ ACE_Filecache_Object::release (void)
       this->handle_ = ACE_OS::open (this->tempname_, READ_FLAGS, R_MASK);
       if (this->handle_ == ACE_INVALID_HANDLE)
         {
-          this->error_i (ACE_Filecache_Object::OPEN_FAILED,
+          this->error_i (ACE_Filecache_Object::ACE_OPEN_FAILED,
                          "ACE_Filecache_Object::acquire: open");
         }
       else if (this->mmap_.map (this->handle_, -1,
@@ -606,13 +606,13 @@ ACE_Filecache_Object::release (void)
                                 0,
                                 this->sa_) != 0)
         {
-          this->error_i (ACE_Filecache_Object::MEMMAP_FAILED,
+          this->error_i (ACE_Filecache_Object::ACE_MEMMAP_FAILED,
                          "ACE_Filecache_Object::acquire: map");
           ACE_OS::close (this->handle_);
           this->handle_ = ACE_INVALID_HANDLE;
         }
 
-      this->action_ = ACE_Filecache_Object::READING;
+      this->action_ = ACE_Filecache_Object::ACE_READING;
 #endif
     }
 
@@ -680,6 +680,8 @@ ACE_Filecache_Object::update (void) const
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Managed_Object<ACE_SYNCH_RW_MUTEX>;
+template class ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>;
 #if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
 template class ACE_Hash_Map_Entry<const char *, ACE_Filecache_Object *>;
 template class ACE_Hash_Map_Manager<const char *, ACE_Filecache_Object *, ACE_Null_Mutex>;
@@ -694,6 +696,7 @@ template class ACE_Hash_Map_Iterator_Base<ACE_CString, ACE_Filecache_Object *, A
 template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, ACE_Filecache_Object *, ACE_Null_Mutex>;
 #endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Managed_Object<ACE_SYNCH_RW_MUTEX>;
 #if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
 #pragma instantiate ACE_Hash_Map_Entry<const char *, ACE_Filecache_Object *>
 #pragma instantiate ACE_Hash_Map_Manager<const char *, ACE_Filecache_Object *, ACE_Null_Mutex>

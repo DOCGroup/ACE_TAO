@@ -22,3 +22,6 @@ ACE_U_LongLong::output (FILE *file) const
 
 #endif /* ACE_LACKS_LONGLONG_T */
 
+// Explicit template instantiation file
+#include "ace/Template_Instantiations.cpp"
+

@@ -746,8 +746,10 @@ template <class T>
 ACE_Double_Linked_List<T>::~ACE_Double_Linked_List (void)
 {
   this->delete_nodes ();
+
   ACE_DES_FREE (head_, this->allocator_->free,
-                T);
+                  T);
+
   this->head_ = 0;
 }
 
@@ -1357,10 +1359,12 @@ ACE_Bounded_Set_Iterator<T>::next (T *&item)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Node)
 
+# if ! defined (ACE_HAS_BROKEN_NOOP_DTORS)
 template <class T>
 ACE_Node<T>::~ACE_Node (void)
 {
 }
+# endif /* ! defined (ACE_HAS_BROKEN_NOOP_DTORS) */
 
 template <class T>
 ACE_Node<T>::ACE_Node (const T &i, ACE_Node<T> *n)
