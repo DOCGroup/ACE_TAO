@@ -63,45 +63,23 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  os->indent (); // start from the current indentation level
-
   // Generate the constructor from stub and servant.
   if (! node->is_local ())
     {
       os->gen_ifdef_macro (node->flat_name (), "");
       *os << "ACE_INLINE" << be_nl;
-      *os << node->name () << "::" << node->local_name () <<
-        " (" << be_idt_nl << "TAO_Stub *objref," << be_nl
+      *os << node->name () << "::" << node->local_name () << " (" 
+          << be_idt << be_idt_nl 
+          << "TAO_Stub *objref," << be_nl
           << "CORBA::Boolean _tao_collocated," << be_nl 
-	  << "TAO_Abstract_ServantBase *servant" << be_nl
-	  << ")" // constructor 
-	  << be_nl;
-      *os << "  : CORBA_Object (objref, _tao_collocated, servant)" << be_nl;
+	        << "TAO_Abstract_ServantBase *servant" << be_uidt_nl
+	        << ")" // constructor 
+	        << be_nl;
+      *os << ": CORBA_Object (objref, _tao_collocated, servant)" << be_uidt_nl;
       *os << "{" << be_idt_nl
-	  << be_idt_nl // idt = 1
-	  << "this->setup_collocation (_tao_collocated);";
-      /*
-      if (node->n_inherits () > 0)
-	{
-	  for (int i = 0; i < node->n_inherits (); i++)
-	    {
-	      be_interface *inherited =
-		be_interface::narrow_from_decl (node->inherits ()[i]);
-	      be_decl *scope = 0;
-	      if (inherited->is_nested ())
-		{
-		  // inherited node is used in the scope of "node" node
-		  scope =
-		    be_scope::narrow_from_scope (node->defined_in ())->decl ();
-		}
-	      
-	      *os << "this->" << inherited->local_name ()<< "::setup_collocation" << " (_tao_collocated);" << be_nl;
-	   } 
-	    
-	}
-      */
+	        << "this->setup_collocation (_tao_collocated);";
       *os << be_uidt_nl // idt = 0
-	  <<"}" << be_nl;
+	        << "}" << be_nl;
       os->gen_endif ();
     }
 
