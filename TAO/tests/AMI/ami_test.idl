@@ -36,7 +36,7 @@ module A
         // Get the number as the return value as well as the out value and
         // also puts the value.  
   
-        attribute long yadda;
+         attribute long yadda;
         //  oneway void shutdown ();
       };
 
