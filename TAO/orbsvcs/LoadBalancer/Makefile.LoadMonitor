@@ -43,7 +43,7 @@ ifeq (CosLoadBalancing,$(findstring CosLoadBalancing,$(TAO_ORBSVCS)))
 
   # The Load Balancer requires AMI.
   ifeq ($(ami),1)
-    ifneq ($(interceptors),1)
+    ifeq ($(interceptors),1)
       BIN = $(BIN_UNCHECKED)
     endif  # interceptors
   endif # ami
