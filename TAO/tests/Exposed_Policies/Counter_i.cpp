@@ -21,26 +21,23 @@ Counter_Servant::~Counter_Servant (void)
 // Counter Interface Methods Implementation.
 
 void
-Counter_Servant::increment (CORBA::Environment &ACE_TRY_ENV)
+Counter_Servant::increment (CORBA::Environment &/*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   ++this->count_;
 }
 
 CORBA::Long
-Counter_Servant::get_count (CORBA::Environment &ACE_TRY_ENV)
+Counter_Servant::get_count (CORBA::Environment &/*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return this->count_;
 }
 
-void 
-Counter_Servant::reset (CORBA::Environment &ACE_TRY_ENV)
+void
+Counter_Servant::reset (CORBA::Environment &/*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   this->count_ = 0;
 }
 
@@ -51,6 +48,3 @@ Counter_Servant::shutdown (CORBA::Environment &ACE_TRY_ENV)
   this->policy_tester_->shutdown (ACE_TRY_ENV);
   ACE_TRY_CHECK;
 }
-
-
-

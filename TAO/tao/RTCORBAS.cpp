@@ -29,6 +29,9 @@
 #include "RTCORBAS.h"
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/PortableServer/Operation_Table.h"
+#include "tao/TAO_Server_Request.h"
+#include "tao/ORB_Core.h"
+#include "tao/Stub.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/RequestInfo_Util.h"

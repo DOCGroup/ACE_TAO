@@ -175,8 +175,16 @@ int retrieve_data (const char *content_type,
   // Retrieve and store chunks of data.
   Web_Server::Chunk_Type_var chunk;
   CORBA::ULong offset = 0;
-  while (contents->next_chunk (offset, chunk, ACE_TRY_ENV))
+  int rc;
+
+  for (;;)
     {
+      rc = contents->next_chunk (offset, chunk, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
+
+      if (!rc)
+        break;
+
       // Write the received data to a file.
       if (file_io.send (chunk->get_buffer (),
                         chunk->length ()) == -1)
@@ -192,7 +200,6 @@ int retrieve_data (const char *content_type,
       else
         offset += chunk->length ();
     }
-  ACE_CHECK_RETURN (-1);
 
   // Done writing to the file.
   (void) file_io.close ();

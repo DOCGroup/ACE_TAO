@@ -107,6 +107,7 @@ Echo_Client_Request_Interceptor::send_request (
 
   // Add this context to the service context list.
   ri->add_request_service_context (sc, 0, ACE_TRY_ENV);
+  ACE_CHECK;
 
   // Check that the request service context can be retrieved.
   IOP::ServiceContext_var sc2 =

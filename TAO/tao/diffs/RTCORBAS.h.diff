@@ -1,5 +1,5 @@
---- orig/RTCORBAS.h	Sun Mar  4 10:31:17 2001
-+++ RTCORBAS.h	Sun Mar  4 10:52:10 2001
+--- orig/RTCORBAS.h	Wed Mar 28 20:40:56 2001
++++ RTCORBAS.h	Wed Mar 28 20:42:29 2001
 @@ -23,6 +23,10 @@
  #define _TAO_IDL_ORIG_RTCORBAS_H_
  

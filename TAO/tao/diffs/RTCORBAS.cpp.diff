@@ -1,5 +1,5 @@
---- orig/RTCORBAS.cpp	Sun Mar  4 10:31:22 2001
-+++ RTCORBAS.cpp	Sun Mar  4 10:51:41 2001
+--- orig/RTCORBAS.cpp	Wed Mar 28 20:40:59 2001
++++ RTCORBAS.cpp	Wed Mar 28 20:42:23 2001
 @@ -22,6 +22,10 @@
  #ifndef _TAO_IDL_ORIG_RTCORBAS_CPP_
  #define _TAO_IDL_ORIG_RTCORBAS_CPP_
@@ -11,7 +11,7 @@
  #include "RTCORBAS.h"
  #include "tao/PortableServer/Object_Adapter.h"
  #include "tao/PortableServer/Operation_Table.h"
-@@ -40,3 +44,5 @@
+@@ -43,3 +47,5 @@
  
  
  #endif /* ifndef */
