@@ -228,9 +228,11 @@ AST_Root::destroy ()
     {
       AST_Decl *d = this->pd_decls[i - 1];
       
+      // We want to keep the predefined types we add to global
+      // scope around and not add them each time.
       if (d->node_type () == AST_Decl::NT_pre_defined)
         {
-          j = i + 1;
+          j = i;
           break;
         }
 
