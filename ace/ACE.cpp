@@ -1341,30 +1341,25 @@ ACE::sock_error (int error)
 #endif /* ACE_WIN32 */
 }
 
-ACE_UINT32
-ACE::get_bcast_addr (ACE_UINT32 host_addr, 
+int
+ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
+		     const char *host_name,
+		     ACE_UINT32 host_addr, 
 		     ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_INET_Addr::get_bcast_addr");
 
 #if !defined(ACE_WIN32)
-  char buf[BUFSIZ];
-  struct ifconf ifc;
-  struct ifreq *ifr;
+  ACE_HANDLE s = handle;
 
-  struct ifreq flags;
-  struct ifreq if_req;
-
-  struct sockaddr_in ip_addr, if_addr;
-
-  ACE_OS::memcpy ((void *) &ip_addr.sin_addr, 
-		  (void*) &host_addr, 
-                  sizeof ip_addr.sin_addr);
-
-  ACE_HANDLE s = ACE_OS::socket (AF_INET, SOCK_STREAM, 0);
+  if (s == ACE_INVALID_HANDLE)
+    s = ACE_OS::socket (AF_INET, SOCK_STREAM, 0);
 
   if (s == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::socket"), -1);
+
+  struct ifconf ifc;
+  char buf[BUFSIZ];
 
   ifc.ifc_len = sizeof buf;
   ifc.ifc_buf = buf;
@@ -1374,12 +1369,38 @@ ACE::get_bcast_addr (ACE_UINT32 host_addr,
   if (ACE_OS::ioctl (s, SIOCGIFCONF, (char *) &ifc) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
                       "ACE_INET_Addr_::get_bcast_addr: ioctl (get interface configuration)"),
-                      host_addr);
+                      -1);
 
-  ifr = ifc.ifc_req;
+  struct ifreq *ifr = ifc.ifc_req;
 
-  for (int n = ifc.ifc_len / sizeof (struct ifreq) ; n > 0; n--, ifr++)
+  struct sockaddr_in ip_addr;
+
+  // Get host ip address if necessary.
+  if (host_name)
     {
+      hostent *hp = ACE_OS::gethostbyname (host_name);
+
+      if (hp == 0)
+	return -1;
+      else
+	ACE_OS::memcpy ((char *) &ip_addr.sin_addr.s_addr,
+			(char *) hp->h_addr, 
+			hp->h_length);
+    }
+  else
+    {
+      ACE_OS::memset ((void *) &ip_addr, 0, sizeof ip_addr);
+      ACE_OS::memcpy ((void *) &ip_addr.sin_addr, 
+		      (void*) &host_addr, 
+		      sizeof ip_addr.sin_addr);
+    }
+
+  for (int n = ifc.ifc_len / sizeof (struct ifreq);
+       n > 0; 
+       n--, ifr++)
+    {
+      struct sockaddr_in if_addr;
+
       // Compare host ip address with interface ip address.
       ACE_OS::memcpy (&if_addr, &ifr->ifr_addr, sizeof if_addr);
 
@@ -1393,7 +1414,8 @@ ACE::get_bcast_addr (ACE_UINT32 host_addr,
           continue;
         }
 
-      flags = if_req = *ifr;
+      struct ifreq flags = *ifr;
+      struct ifreq if_req = *ifr;
 
       if (ACE_OS::ioctl (s, SIOCGIFFLAGS, (char *) &flags) == -1)
         {
@@ -1419,25 +1441,34 @@ ACE::get_bcast_addr (ACE_UINT32 host_addr,
                        "ACE_INET_Addr::get_bcast_addr: ioctl (get broadaddr)"));
           else
             { 
-              ACE_OS::memcpy ((struct sockaddr_in *)&ip_addr, 
-                              (struct sockaddr_in *)&if_req.ifr_broadaddr,
+              ACE_OS::memcpy ((struct sockaddr_in *) &ip_addr,
+                              (struct sockaddr_in *) &if_req.ifr_broadaddr,
                               sizeof if_req.ifr_broadaddr);
 
-              ACE_OS::memcpy ((void *)&host_addr, (void *)&ip_addr.sin_addr,
+              ACE_OS::memcpy ((void *) &host_addr, 
+			      (void *) &ip_addr.sin_addr,
                               sizeof host_addr);
 
-              ACE_OS::close (s);
-              return host_addr;
+	      if (handle == ACE_INVALID_HANDLE)
+		ACE_OS::close (s);
+	      bcast_addr = host_addr;
+              return 0;
             }
         }
       else
         ACE_ERROR ((LM_ERROR, "%p\n",
                    "ACE_INET_Addr::get_bcast_addr: Broadcast is not enable for this interface."));
 
-      ACE_OS::close (s);
-      return host_addr;
+      if (handle == ACE_INVALID_HANDLE)
+	ACE_OS::close (s);
+      bcast_addr = host_addr;
+      return 0;
     }
 #else
-  return (ACE_UINT32 (INADDR_BROADCAST));
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (host_addr);
+  ACE_UNUSED_ARG (host_name);
+  bcast_addr = (ACE_UINT32 (INADDR_BROADCAST));
+  return 0;
 #endif /* !ACE_WIN32 */
 }

@@ -177,10 +177,10 @@ public:
   // Dummy node used to anchor the freelist. 
 
 #if 0
-  long align_[ACE_MALLOC_ALIGN/sizeof (long)];
-#else
-	      (ACE_MALLOC_ALIGN/sizeof (long)) -
+  long align_ [(ACE_MALLOC_ALIGN/sizeof (long)) -
 	      1 - ((sizeof (ACE_Name_Node *) + sizeof (ACE_Malloc_Header *) + MAXNAMELEN) / sizeof (long))];
+#else
+  long align_[ACE_MALLOC_ALIGN/sizeof (long)];
 #endif /* 0 */
 
   void dump (void) const;

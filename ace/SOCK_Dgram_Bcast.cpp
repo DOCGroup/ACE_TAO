@@ -98,17 +98,10 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const char *host_name)
     return -1;
 
 #if !defined(ACE_WIN32)
+  ACE_HANDLE s = this->get_handle ();
+
   char buf[BUFSIZ];
   struct ifconf ifc;
-  struct ifreq *ifr;
-
-  struct ifreq flags;
-  struct ifreq if_req;
-
-  struct sockaddr_in host_addr, if_addr;
-  hostent *hp;
-
-  int s = this->get_handle ();
 
   ifc.ifc_len = sizeof buf;
   ifc.ifc_buf = buf;
@@ -120,15 +113,21 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const char *host_name)
 		      "ACE_SOCK_Dgram_Bcast::mk_broadcast: ioctl (get interface configuration)"),
 		      ACE_INVALID_HANDLE);
 
-  ifr = ifc.ifc_req;
+  struct ifreq *ifr = ifc.ifc_req;
+
+  struct sockaddr_in host_addr;
 
   //Get host ip address
   if (host_name)
     {
-      hp = ACE_OS::gethostbyname (host_name);
-      ACE_OS::memcpy ((char *) &host_addr.sin_addr.s_addr, 
-		      (char *) hp->h_addr, 
-		      hp->h_length);
+      hostent *hp = ACE_OS::gethostbyname (host_name);
+
+      if (hp == 0)
+	return -1;
+      else
+	ACE_OS::memcpy ((char *) &host_addr.sin_addr.s_addr, 
+			(char *) hp->h_addr, 
+			hp->h_length);
     }
 
   for (int n = ifc.ifc_len / sizeof (struct ifreq) ; n > 0; n--, ifr++) 
@@ -136,6 +135,8 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const char *host_name)
       // Compare host ip address with interface ip address.
       if (host_name)
         {
+	  struct sockaddr_in if_addr;
+
           ACE_OS::memcpy (&if_addr, &ifr->ifr_addr, sizeof if_addr);
 
           if (host_addr.sin_addr.s_addr != if_addr.sin_addr.s_addr)
@@ -149,8 +150,9 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const char *host_name)
 	  continue;
 	}
 
-      flags = if_req = *ifr;
-    
+      struct ifreq flags = *ifr;
+      struct ifreq if_req = *ifr;
+
       if (ACE_OS::ioctl (s, SIOCGIFFLAGS, (char *) &flags) == -1)
 	{
 	  ACE_ERROR ((LM_ERROR, "%p\n", 
