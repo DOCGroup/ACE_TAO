@@ -647,7 +647,7 @@ TAO_NAMESPACE  IR
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_HomeDefSeq;
 
   typedef IR_EventDef EventDef;
-  typedef IR_EventDef *HEventDef_ptr;
+  typedef IR_EventDef *EventDef_ptr;
   typedef IR_EventDef_var EventDef_var;
   typedef IR_EventDef_out EventDef_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_EventDef;
