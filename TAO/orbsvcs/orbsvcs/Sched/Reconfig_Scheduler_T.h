@@ -32,7 +32,6 @@
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 class TAO_Reconfig_Scheduler :
   public POA_RtecScheduler::Scheduler
-{
   // = TITLE
   //   A servant for RtecScheduler::Scheduler that can be initialized
   //   and run solely with precomputed scheduling information, but is also
@@ -47,6 +46,7 @@ class TAO_Reconfig_Scheduler :
   //   during schedule configuration, so that it can be used during
   //   both schedule configuration and run-time phases of operation.
   //
+{
 public:
 
   TAO_Reconfig_Scheduler ();
@@ -326,6 +326,11 @@ protected:
   // Traverses dependency graph, assigning a topological ordering.
   // Resets DFS map entries, do DFS traversal, constructs DFS map.
 
+  static int comp_entry_finish_times (const void *first, const void *second);
+  // Helper function to compare the DFS finish times of
+  // two task entries, so qsort orders these in topological
+  // order, with the higher times *first*.
+
   virtual void detect_cycles_i (CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::INTERNAL,
@@ -342,7 +347,8 @@ protected:
 
   virtual void assign_priorities_i (CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::INTERNAL));
+                     RtecScheduler::INTERNAL,
+                     RtecScheduler::DUPLICATE_NAME));
   // Sort operations by urgency (done by strategy), then
   // assign priorities and subpriorities in one pass.
   // Sets last scheduled priority.

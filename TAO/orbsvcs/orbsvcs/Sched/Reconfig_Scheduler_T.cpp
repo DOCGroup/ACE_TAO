@@ -432,7 +432,7 @@ set (RtecScheduler::handle_t handle,
 
   // Test the utilization difference between the old and new values.
   if ((sched_entry_ptr->orig_rt_info_data ().period != rt_info_ptr->period
-       && sched_entry_ptr->orig_rt_info_data ().worst_case_execution_time 
+       && sched_entry_ptr->orig_rt_info_data ().worst_case_execution_time
           != rt_info_ptr->worst_case_execution_time))
     {
       CORBA::Double orig_time = ACE_static_cast (
@@ -451,7 +451,7 @@ set (RtecScheduler::handle_t handle,
       CORBA::Double new_period = ACE_static_cast (
         CORBA::Double,
         ACE_UINT64_DBLCAST_ADAPTER (rt_info_ptr->period));
- 
+
       if ((orig_time / orig_period) - (new_time / new_period) > DBL_EPSILON
           || (orig_time / orig_period) - (new_time / new_period) < DBL_EPSILON)
         {
@@ -470,7 +470,7 @@ set (RtecScheduler::handle_t handle,
   // If the period changed, look up the handle in the calling
   // dependency map and see if there is anything there: if so,
   // the propagation is unstable.
-  if (sched_entry_ptr->orig_rt_info_data ().period 
+  if (sched_entry_ptr->orig_rt_info_data ().period
       != rt_info_ptr->period)
     {
       // Get the dependency set for the current entry.
@@ -1117,7 +1117,8 @@ dfs_traverse_i (CORBA::Environment &ACE_TRY_ENV)
 // Helper function to compare the DFS finish times of
 // two task entries, so qsort orders these in topological
 // order, with the higher times *first*
-extern "C" int
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
+TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 comp_entry_finish_times (const void *first, const void *second)
 {
   const TAO_Reconfig_Scheduler_Entry *first_entry =
@@ -1169,7 +1170,8 @@ detect_cycles_i (CORBA::Environment &ACE_TRY_ENV)
   ::qsort (ACE_reinterpret_cast (void *, entry_ptr_array_),
            next_handle_,
            sizeof (TAO_Reconfig_Scheduler_Entry *),
-           comp_entry_finish_times);
+           ACE_reinterpret_cast (COMP_FUNC,
+                                 TAO_Reconfig_Scheduler::comp_entry_finish_times));
 
   // Traverse entries in reverse topological order,
   // looking for strongly connected components (cycles).
@@ -1254,7 +1256,7 @@ assign_priorities_i (CORBA::Environment &ACE_TRY_ENV)
   TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY> prio_visitor;
   for (int i = 0; i < this->next_handle_; ++i)
     {
-      int result = prio_visitor.visit (* (entry_ptr_array_ [i])); 
+      int result = prio_visitor.visit (* (entry_ptr_array_ [i]));
       if (result < 0)
         {
           // Something bad happened with the internal data structures.
