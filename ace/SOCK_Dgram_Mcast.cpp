@@ -68,6 +68,55 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
       else if (ACE_SOCK_Dgram::shared_open (local, protocol_family) == -1)
         return -1;
     }
+#if defined (ACE_WIN32)
+  // Windows NT's winsock has trouble with multicast subscribes in the presence
+  // of multiple network interfaces when the IP address is given as INADDR_ANY.
+  // It will pick the first interface and only accept mcast there.  So, to work
+  // around this, cycle through all of the interfaces known and subscribe to
+  // all the non-loopback ones.
+  // Note that this only needs to be done on NT, but there's no way to tell
+  // at this point if the code will be running on NT - only if it is compiled
+  // for NT-only or for NT/95, and that doesn't really help us.  It doesn't
+  // hurt to do this on Win95, it's just a little slower than it normally
+  // would be.
+  //
+  // NOTE - get_ip_interfaces doesn't always get all of the interfaces.  In
+  // particular, it may not get a PPP interface.  This is a limitation of the
+  // way get_ip_interfaces works with MSVC.  The reliable way of getting the
+  // interface list is available only with MSVC 5.
+
+  if (net_if == 0)
+    {
+      ACE_INET_Addr *if_addrs;
+      size_t         if_cnt, nr_subscribed;
+
+      if (ACE::get_ip_interfaces(if_cnt, if_addrs) != 0)
+	return -1;
+
+      for (nr_subscribed = 0; if_cnt > 0; )
+	{
+	  --if_cnt;    // Convert to 0-based for indexing, and next loop check
+	  if (if_addrs[if_cnt].get_ip_address() == INADDR_LOOPBACK)
+	    continue;
+	  if (this->subscribe(mcast_addr,
+			      reuse_addr,
+			      if_addrs[if_cnt].get_host_addr(),
+			      protocol_family,
+			      protocol) == 0)
+	    ++nr_subscribed;
+	}
+
+      delete [] if_addrs;
+
+      if (nr_subscribed == 0)
+	{
+	  errno = ENODEV;
+	  return -1;
+	}
+      return 0;
+    }
+  // else do it like everyone else...
+#endif /* ACE_WIN32 */
 
   // Create multicast request.
   if (this->make_multicast_address (this->mcast_addr_, net_if) == -1)
