@@ -228,6 +228,9 @@ ACE_Get_Opt::long_option_i (void)
     s++;
 
   size_t len = s - this->nextchar_;
+  // set last_option_ to nextchar_, up to the '='.
+  this->last_option (ACE_TString (this->nextchar_, len));
+
   size_t size = this->long_opts_.size ();
   u_int option_index = 0;
   for (option_index = 0; option_index < size ; option_index++)
@@ -243,7 +246,7 @@ ACE_Get_Opt::long_option_i (void)
           hits += 1;
           if (len == ACE_OS::strlen(p->name_))
             {
-              // And in fact, it an exact match, so let's use it.
+              // And in fact, it's an exact match, so let's use it.
               exact = 1;
               break;
             }
@@ -282,7 +285,8 @@ ACE_Get_Opt::long_option_i (void)
               if (this->opterr)
                   ACE_ERROR
                     ((LM_ERROR,
-                      ACE_LIB_TEXT ("%s: long option `--%s' doesn't allow an argument\n"),
+                      ACE_LIB_TEXT ("%s: long option `--%s' doesn't allow ")
+                      ACE_LIB_TEXT ("an argument\n"),
                       this->argv_[0], pfound->name_));
               // The spec doesn't cover this, so we keep going and the program
               // doesn't know we ignored an argument if opt_err is off!!!
@@ -301,7 +305,8 @@ ACE_Get_Opt::long_option_i (void)
               // All out of elements, so we have to punt...
               if (this->opterr)
                 ACE_ERROR ((LM_ERROR,
-                            ACE_LIB_TEXT ("%s: long option '--%s' requires an argument\n"),
+                            ACE_LIB_TEXT ("%s: long option '--%s' requires ")
+                            ACE_LIB_TEXT ("an argument\n"),
                             this->argv_[0], pfound->name_));
               this->nextchar_ = 0;
               this->optopt_ = pfound->val_;   // Remember matching short equiv
@@ -340,8 +345,12 @@ ACE_Get_Opt::short_option_i (void)
 
   /* Look at and handle the next option-character.  */
   ACE_TCHAR opt = *this->nextchar_++;
+  // Set last_option_ to opt 
+  this->last_option (opt);
+
   ACE_TCHAR *oli = 0;
-  oli = ACE_const_cast (ACE_TCHAR*, ACE_OS::strchr (this->optstring_.c_str (), opt));
+  oli = ACE_const_cast (ACE_TCHAR*, 
+                        ACE_OS::strchr (this->optstring_.c_str (), opt));
 
   /* Increment `optind' when we start to process its last character.  */
   if (*this->nextchar_ == '\0')
@@ -392,7 +401,8 @@ ACE_Get_Opt::short_option_i (void)
               // Ran out of arguments before finding required argument.
               if (this->opterr)
                 ACE_ERROR ((LM_ERROR,
-                            ACE_LIB_TEXT ("%s: short option requires an argument -- %c\n"),
+                            ACE_LIB_TEXT ("%s: short option requires ")
+                            ACE_LIB_TEXT ("an argument -- %c\n"),
                             this->argv_[0], opt));
               opt = this->has_colon_ ? ':' : '?';
             }
@@ -471,7 +481,8 @@ ACE_Get_Opt::long_option (const ACE_TCHAR *name,
       // add it.
       ACE_TCHAR *s = 0;
       if ((s = ACE_const_cast (ACE_TCHAR*,
-                               ACE_OS::strchr (this->optstring_.c_str (), short_option))) != 0)
+                               ACE_OS::strchr (this->optstring_.c_str (), 
+                                               short_option))) != 0)
         {
           // Short option exists, so verify the argument options
           if (s[1] == ':')
@@ -554,13 +565,52 @@ ACE_Get_Opt::long_option (void) const
   return 0;
 }
 
+const ACE_TCHAR*
+ACE_Get_Opt::last_option (void) const
+{
+  return this->last_option_.c_str ();
+}
+
+void
+ACE_Get_Opt::last_option (const ACE_TString &last_option)
+{
+  this->last_option_ = last_option;
+}
+
 void
 ACE_Get_Opt::dump (void) const
 {
   ACE_TRACE ("ACE_Get_Opt::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n") 
+              ACE_LIB_TEXT ("opstring_ = %s\n")
+              ACE_LIB_TEXT ("long_only_ = %d\n")
+              ACE_LIB_TEXT ("has_colon_ = %d\n")
+              ACE_LIB_TEXT ("last_option_ = %s\n")
+              ACE_LIB_TEXT ("nextchar_ = %s\n")
+              ACE_LIB_TEXT ("optopt_ = %c\n")
+              ACE_LIB_TEXT ("ordering_ = %d\n"),
+              this->optstring_.c_str (),
+              this->long_only_,
+              this->has_colon_,
+              this->last_option_.c_str (),
+              this->nextchar_,
+              this->optopt_,
+              this->ordering_));
+
+  // now loop through the 
+  size_t size = this->long_opts_.size ();
+  for (u_int i = 0; i < size ; ++i)
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")
+                  ACE_LIB_TEXT ("long_option name_ = %s\n")
+                  ACE_LIB_TEXT ("has_arg_ = %d\n")
+                  ACE_LIB_TEXT ("val_ = %d\n"),
+                  this->long_opts_[i]->name_,
+                  this->long_opts_[i]->has_arg_,
+                  this->long_opts_[i]->val_));
+    }
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 

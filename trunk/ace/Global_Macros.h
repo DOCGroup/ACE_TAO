@@ -27,7 +27,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Start Global Macros
-# define ACE_BEGIN_DUMP ACE_LIB_TEXT ("\n====\n(%P|%t|%x)")
+# define ACE_BEGIN_DUMP ACE_LIB_TEXT ("\n====\n(%P|%t|%x)\n")
 # define ACE_END_DUMP ACE_LIB_TEXT ("====\n")
 
 # if defined (ACE_NDEBUG)

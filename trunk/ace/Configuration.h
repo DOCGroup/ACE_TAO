@@ -402,6 +402,19 @@ protected:
    */
   int validate_name (const ACE_TCHAR* name, int allow_path = 0);
 
+  /** 
+   * Test to see if <name> is valid.  The default value for a key can be
+   * unnamed, which means either <name> is == 0 or <name> == '\0` is
+   * valid.  Otherwise, it calls validate_name() to test <name> for the
+   * same rules that apply to keys.
+   */
+  int validate_value_name (const ACE_TCHAR* name);
+
+  /**
+   *  Represents the "NULL" string to simplify the internal logic.
+   */
+  static ACE_TCHAR NULL_String_;
+
   // Not used
   ACE_Configuration (const ACE_Configuration& rhs);
   ACE_Configuration& operator= (const ACE_Configuration& rhs);
