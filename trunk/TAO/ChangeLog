@@ -1,3 +1,40 @@
+Thu Jan  8 22:30:13 2004  Frank Hunleth  <frank@hunleth.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+
+          Changed references to ACE_MAX_DGRAM_SIZE to MIOP_MAX_DGRAM_SIZE.
+          Thanks to Proum Chauk-Mean <Chauk-Mean.Proum@fr.thalesgroup.com>
+          for pointing this inconsistency out.
+
+          Also, moved a MIOP packet segmentation helper class into its own
+          file.
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Message_Block_Data_Iterator.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Message_Block_Data_Iterator.h:
+
+          Segmentation code from UIPMC_Transport.cpp.
+
+        * orbsvcs/orbsvcs/Makefile.PortableGroup:
+        * orbsvcs/orbsvcs/PortableGroup.bor:
+        * orbsvcs/orbsvcs/PortableGroup.dsp:
+        * orbsvcs/orbsvcs/PortableGroup_Static.dsp:
+
+          Added UIPMC_Message_Block_Data_Iterator to the build lists.
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+
+          Added more information to the log messages and removed use of
+          deprecated multicast socket API.
+
+        * orbsvcs/tests/Miop/McastHello/McastHello.cpp:
+        * orbsvcs/tests/Miop/McastHello/McastHello.h:
+        * orbsvcs/tests/Miop/McastHello/Test.idl:
+        * orbsvcs/tests/Miop/McastHello/client.cpp:
+        * orbsvcs/tests/Miop/McastHello/server.cpp:
+
+          Added code to verify that the largest allowable MIOP packets can
+          also be sent and received.
+
 Thu Jan  8 20:45:01 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/Advanced/ch_8_and_10/icp.cpp:

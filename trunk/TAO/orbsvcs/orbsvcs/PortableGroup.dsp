@@ -7,21 +7,21 @@
 CFG=PortableGroup - Win32 MFC Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "PortableGroup.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "PortableGroup.mak" CFG="PortableGroup - Win32 MFC Debug"
-!MESSAGE 
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "PortableGroup - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "PortableGroup - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "PortableGroup - Win32 MFC Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "PortableGroup - Win32 MFC Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -143,7 +143,7 @@ LINK32=link.exe
 # ADD BASE LINK32 ace.lib TAO.lib TAO_Svc_Utils.lib TAO_RTEvent.lib TAO_RTSched.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_PortableGroup.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 # ADD LINK32 TAO_Messagingmfc.lib TAO_PortableServermfc.lib TAOmfc.lib acemfc.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_PortableGroupmfc.dll" /libpath:"..\..\tao\Valuetype" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
@@ -174,7 +174,7 @@ SOURCE=.\miopC.cpp
 
 # ADD CPP /GR
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -247,7 +247,7 @@ SOURCE=.\PortableGroup\POA_Hooks.cpp
 
 !ELSEIF  "$(CFG)" == "PortableGroup - Win32 MFC Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -264,7 +264,7 @@ SOURCE=.\PortableGroup\Portable_Group_Map.cpp
 
 !ELSEIF  "$(CFG)" == "PortableGroup - Win32 MFC Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -281,7 +281,7 @@ SOURCE=.\PortableGroup\PortableGroup_Acceptor_Registry.cpp
 
 !ELSEIF  "$(CFG)" == "PortableGroup - Win32 MFC Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -298,7 +298,7 @@ SOURCE=.\PortableGroup\PortableGroup_Loader.cpp
 
 !ELSEIF  "$(CFG)" == "PortableGroup - Win32 MFC Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -319,7 +319,7 @@ SOURCE=.\PortableGroup\PortableGroup_Request_Dispatcher.cpp
 
 !ELSEIF  "$(CFG)" == "PortableGroup - Win32 MFC Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -346,7 +346,7 @@ SOURCE=.\PortableGroupC.cpp
 
 # ADD CPP /GR
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -372,7 +372,7 @@ SOURCE=.\PortableGroup\UIPMC_Acceptor.cpp
 
 !ELSEIF  "$(CFG)" == "PortableGroup - Win32 MFC Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -389,7 +389,7 @@ SOURCE=.\PortableGroup\UIPMC_Connection_Handler.cpp
 
 !ELSEIF  "$(CFG)" == "PortableGroup - Win32 MFC Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -406,7 +406,7 @@ SOURCE=.\PortableGroup\UIPMC_Connector.cpp
 
 !ELSEIF  "$(CFG)" == "PortableGroup - Win32 MFC Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -423,7 +423,7 @@ SOURCE=.\PortableGroup\UIPMC_Endpoint.cpp
 
 !ELSEIF  "$(CFG)" == "PortableGroup - Win32 MFC Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -440,7 +440,24 @@ SOURCE=.\PortableGroup\UIPMC_Factory.cpp
 
 !ELSEIF  "$(CFG)" == "PortableGroup - Win32 MFC Release"
 
-!ENDIF 
+!ENDIF
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\UIPMC_Message_Block_Data_Iterator.cpp
+
+!IF  "$(CFG)" == "PortableGroup - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "PortableGroup - Win32 Debug"
+
+# ADD CPP /I "../../tao"
+
+!ELSEIF  "$(CFG)" == "PortableGroup - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "PortableGroup - Win32 MFC Release"
+
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -457,7 +474,7 @@ SOURCE=.\PortableGroup\UIPMC_Profile.cpp
 
 !ELSEIF  "$(CFG)" == "PortableGroup - Win32 MFC Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -474,7 +491,7 @@ SOURCE=.\PortableGroup\UIPMC_Transport.cpp
 
 !ELSEIF  "$(CFG)" == "PortableGroup - Win32 MFC Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -619,6 +636,10 @@ SOURCE=.\PortableGroup\UIPMC_Factory.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\PortableGroup\UIPMC_Message_Block_Data_Iterator.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\PortableGroup\UIPMC_Profile.h
 # End Source File
 # Begin Source File
@@ -688,7 +709,7 @@ SOURCE=.\miop.idl
 !IF  "$(CFG)" == "PortableGroup - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__MIOP_="..\..\..\bin\Release\tao_idl.exe "	
+USERDEP__MIOP_="..\..\..\bin\Release\tao_idl.exe "
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\miop.idl
 InputName=miop
@@ -727,7 +748,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "PortableGroup - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__MIOP_="..\..\..\bin\tao_idl.exe"	
+USERDEP__MIOP_="..\..\..\bin\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\miop.idl
 InputName=miop
@@ -839,7 +860,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -849,7 +870,7 @@ SOURCE=.\PortableGroup.idl
 !IF  "$(CFG)" == "PortableGroup - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__PORTA="..\..\..\bin\Release\tao_idl.exe "	
+USERDEP__PORTA="..\..\..\bin\Release\tao_idl.exe "
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\PortableGroup.idl
 InputName=PortableGroup
@@ -888,7 +909,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "PortableGroup - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__PORTA="..\..\..\bin\tao_idl.exe"	
+USERDEP__PORTA="..\..\..\bin\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\PortableGroup.idl
 InputName=PortableGroup
@@ -1000,7 +1021,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1087,7 +1108,7 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "PortableGroup - Win32 MFC Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # End Group

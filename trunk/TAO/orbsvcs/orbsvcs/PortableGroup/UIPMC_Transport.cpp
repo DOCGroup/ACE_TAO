@@ -38,7 +38,7 @@ ACE_RCSID (PortableGroup,
 
 // Limit the number of fragments that we can divide a message
 // into.
-#define MIOP_MAX_FRAGMENTS    (4)
+#define MIOP_MAX_FRAGMENTS    (1)
 #define MIOP_MAX_HEADER_SIZE  (272) // See MIOP Spec.  Must be a multiple of 8.
 #define MIOP_MAX_DGRAM_SIZE   (ACE_MAX_DGRAM_SIZE)
 
@@ -64,6 +64,12 @@ ACE_RCSID (PortableGroup,
 
 static const CORBA::Octet miop_magic[4] = { 0x4d, 0x49, 0x4f, 0x50 }; // 'M', 'I', 'O', 'P'
 
+struct MIOP_Packet
+{
+  iovec iov[ACE_IOV_MAX];
+  int iovcnt;
+  int length;
+};
 
 TAO_UIPMC_Transport::TAO_UIPMC_Transport (TAO_UIPMC_Connection_Handler *handler,
                                           TAO_ORB_Core *orb_core,
@@ -76,7 +82,7 @@ TAO_UIPMC_Transport::TAO_UIPMC_Transport (TAO_UIPMC_Connection_Handler *handler,
   // Use the normal GIOP object
   ACE_NEW (this->messaging_object_,
            TAO_GIOP_Message_Base (orb_core,
-                                  ACE_MAX_DGRAM_SIZE));
+                                  MIOP_MAX_DGRAM_SIZE));
 
   // Replace the default wait strategy with our own
   // since we don't support waiting on anything.
@@ -108,128 +114,6 @@ TAO_UIPMC_Transport::messaging_object (void)
   return this->messaging_object_;
 }
 
-struct MIOP_Packet
-{
-  iovec iov[ACE_IOV_MAX];
-  int iovcnt;
-  int length;
-};
-
-class ACE_Message_Block_Data_Iterator
-{
-public:
-  /// Constructor
-  ACE_Message_Block_Data_Iterator (iovec *iov, int iovcnt);
-
-  /// Get the next data block that has a size less than or equal
-  /// to max_length.  Return the length of the block returned.
-  size_t next_block (size_t max_length,
-                     iovec &block);
-
-private:
-  enum State
-  {
-    INTER_BLOCK,
-    INTRA_BLOCK
-  };
-
-  iovec *iov_;
-  int iovcnt_;
-
-  // Point internal to a message block, if we have to split one up.
-  char *iov_ptr_;
-  int iov_index_;
-
-  // Length used in a split message block.
-  size_t iov_len_left_;
-
-  // Current message iterator state.
-  State state_;
-
-};
-
-ACE_Message_Block_Data_Iterator::ACE_Message_Block_Data_Iterator (iovec *iov, int iovcnt) :
-  iov_ (iov),
-  iovcnt_ (iovcnt),
-  iov_ptr_ (0),
-  iov_index_ (0),
-  iov_len_left_ (0),
-  state_ (INTER_BLOCK)
-{
-}
-
-size_t
-ACE_Message_Block_Data_Iterator::next_block (size_t max_length,
-                                             iovec &block)
-{
-  if (this->state_ == INTER_BLOCK)
-    {
-      // Check that there are some iovec buffers left.
-      if (this->iov_index_ >= this->iovcnt_)
-        return 0;
-
-
-      size_t current_iov_len =
-                    this->iov_[this->iov_index_].iov_len;
-
-      if (current_iov_len <= max_length)
-        {
-          // Return the full data portion.
-          block.iov_len = ACE_static_cast (u_long, current_iov_len);
-          block.iov_base = this->iov_[this->iov_index_].iov_base;
-
-          // Go to the next block.
-          this->iov_index_++;
-
-          return current_iov_len;
-        }
-      else
-        {
-          // Let the caller use the first part of this
-          // message block.
-          block.iov_len = ACE_static_cast (u_long, max_length);
-          block.iov_base = this->iov_[this->iov_index_].iov_base;
-
-          // Break up the block.
-          this->iov_len_left_ = current_iov_len - max_length;
-          this->iov_ptr_ =
-            ACE_reinterpret_cast (char *,
-                                  ACE_reinterpret_cast (char *, block.iov_base)
-                                  + max_length);
-          this->state_ = INTRA_BLOCK;
-
-          return max_length;
-        }
-    }
-  else
-    {
-      // Currently scanning a split block.
-      if (this->iov_len_left_ <= max_length)
-        {
-          // Return everything that's left in the block.
-          block.iov_len = ACE_static_cast (u_long, this->iov_len_left_);
-          block.iov_base = this->iov_ptr_;
-
-          // Go to the next block.
-          this->iov_index_++;
-
-          // Update the state.
-          this->state_ = INTER_BLOCK;
-
-          return this->iov_len_left_;
-        }
-      else
-        {
-          // Split a little more off the block.
-          block.iov_len = ACE_static_cast (u_long, this->iov_len_left_);
-          block.iov_base = this->iov_ptr_;
-
-          this->iov_len_left_ -= max_length;
-          this->iov_ptr_ += max_length;
-          return max_length;
-        }
-    }
-}
 
 void
 TAO_UIPMC_Transport::write_unique_id (TAO_OutputCDR &miop_hdr, unsigned long unique)
@@ -289,7 +173,7 @@ TAO_UIPMC_Transport::send (iovec *iov, int iovcnt,
   MIOP_Packet *current_fragment;
   int num_fragments = 1;
 
-  ACE_Message_Block_Data_Iterator mb_iter (iov, iovcnt);
+  UIPMC_Message_Block_Data_Iterator mb_iter (iov, iovcnt);
 
   // Initialize the first fragment
   current_fragment = &fragments[0];
@@ -327,7 +211,9 @@ TAO_UIPMC_Transport::send (iovec *iov, int iovcnt,
                   ACE_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("\n\nTAO (%P|%t) ")
                               ACE_TEXT ("UIPMC_Transport::send_i ")
-                              ACE_TEXT ("Message needs too many fragments (max is %d)\n"),
+                              ACE_TEXT ("Message of size %d needs too many MIOP fragments (max is %d).\n")
+                              ACE_TEXT ("You may be able to increase ACE_MAX_DGRAM_SIZE.\n"),
+                              bytes_to_send,
                               MIOP_MAX_FRAGMENTS));
                 }
 
@@ -558,7 +444,7 @@ TAO_UIPMC_Transport::handle_input (TAO_Resume_Handle &rh,
 
   // The buffer on the stack which will be used to hold the input
   // messages
-  char buf [ACE_MAX_DGRAM_SIZE];
+  char buf [MIOP_MAX_DGRAM_SIZE];
 
 #if defined (ACE_HAS_PURIFY)
   (void) ACE_OS::memset (buf,
