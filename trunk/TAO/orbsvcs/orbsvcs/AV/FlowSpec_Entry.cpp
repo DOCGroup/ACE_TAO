@@ -357,10 +357,6 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
   if (this->flowname_.length() == 0)
     return 0;
 
-  ACE_NEW_RETURN (this->entry_,
-                  char [BUFSIZ],
-                  0);
-
   char address [BUFSIZ];
   ACE_CString address_str;
   if (this->address_ != 0)
@@ -497,11 +493,6 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string (void)
 {
   if (this->flowname_.length() == 0)
     return 0;
-
-  ACE_NEW_RETURN (this->entry_,
-                  char [BUFSIZ],
-                  0);
-
 
   char address [BUFSIZ];
   ACE_CString address_str;
