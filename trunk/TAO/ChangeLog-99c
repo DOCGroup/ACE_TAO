@@ -1,452 +1,459 @@
+Fri May 07 22:45:33 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/Trading/Makefile: removed -lTTest from LDLIBS
+          because it now appears explicitly on the link line, because
+          it is a dependency of $(BIN).  egcs complained about the
+          multiple occurrences.
+
 Fri May  7 22:34:58 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/corbafwd.h (CORBA): 
-	* tao/TypeCode_Constants.cpp:
-	Added new typecode for the interface NamedValue. This would make
-	us compatible with CORBA spec.
+        * tao/corbafwd.h (CORBA):
+        * tao/TypeCode_Constants.cpp:
+        Added new typecode for the interface NamedValue. This would make
+        us compatible with CORBA spec.
 
 Fri May  7 19:50:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Sequence_T.i:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp:
-	  Fixed bug in TAO_Bounded_Sequence<T,MAX> thanks for
-	  Jim Rogers <jrogers@viasoft.com> for finding this out.
+        * tao/Sequence_T.i:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp:
+          Fixed bug in TAO_Bounded_Sequence<T,MAX> thanks for
+          Jim Rogers <jrogers@viasoft.com> for finding this out.
 
 Fri May  7 20:57:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp:
-	  Added Sequence_T.cpp and Object_Adapter.h to the
-	  projects.
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+          Added Sequence_T.cpp and Object_Adapter.h to the
+          projects.
 
 Fri May  7 20:39:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Sequence_T.i:
-	  Added a <T> to the argument of the copy constructor for
-	  TAO_Object_Manager<T>. Was causing a problem with IBM
-	  OpenEdition.
+        * tao/Sequence_T.i:
+          Added a <T> to the argument of the copy constructor for
+          TAO_Object_Manager<T>. Was causing a problem with IBM
+          OpenEdition.
 
-	* tao/Object_Adapter.h:
-	  Moved the classes Hint_Strategy, Active_Hint_Strategy, and
-	  No_Hint_Strategy to the public section of TAO_Object_Adapter.
-	  IBM OpenEdition didn't like the protected class Hint_Strategy
-	  being inherited by the other two.
+        * tao/Object_Adapter.h:
+          Moved the classes Hint_Strategy, Active_Hint_Strategy, and
+          No_Hint_Strategy to the public section of TAO_Object_Adapter.
+          IBM OpenEdition didn't like the protected class Hint_Strategy
+          being inherited by the other two.
 
-	* tao/ORB.h:
-	  Moved forward declaration and typedefs of
+        * tao/ORB.h:
+          Moved forward declaration and typedefs of
           CORBA_ORB_InconsistentTypeCode outside of class
-	  ORBA_ORB to the beginning of the file. IBM OpenEdition
-	  didn't like this either.
+          ORBA_ORB to the beginning of the file. IBM OpenEdition
+          didn't like this either.
 
-	  Thanks to Jim Rogers <jrogers@viasoft.com> for pointing
-	  out the problems and suggesting fixes.
+          Thanks to Jim Rogers <jrogers@viasoft.com> for pointing
+          out the problems and suggesting fixes.
 
 Fri May  7 19:37:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
-	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.i:
-	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.h:
-	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
-	  Eliminate one memory allocation on the priority dispatching
-	  case, thanks to Tom Venturella <Thomas.Venturella@MW.Boeing.com> 
-	  for this idea.  In the future we should use a per-supplier data
-	  block instead of a global one, to minimize priority inversion.
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.i:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
+          Eliminate one memory allocation on the priority dispatching
+          case, thanks to Tom Venturella <Thomas.Venturella@MW.Boeing.com>
+          for this idea.  In the future we should use a per-supplier data
+          block instead of a global one, to minimize priority inversion.
 
 Fri May  7 19:16:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_sunsoft.cpp:
-	* TAO_IDL/ast/ast_expression.cpp:
-	* TAO_IDL/include/ast_expression.h:
-	  Put in many many #if ! defined (ACE_LACKS_LONGLONG_T)
-	  brackets to avoid compile errors on GreenHills and
-	  IBM OpenEdition. Thanks to Jim Rogers <jrogers@viasoft.com>
-	  for pointing out the problem.
+        * TAO_IDL/be/be_sunsoft.cpp:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/include/ast_expression.h:
+          Put in many many #if ! defined (ACE_LACKS_LONGLONG_T)
+          brackets to avoid compile errors on GreenHills and
+          IBM OpenEdition. Thanks to Jim Rogers <jrogers@viasoft.com>
+          for pointing out the problem.
 
 Fri May  7 16:55:08 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Typecode.h (CORBA_TypeCode): 
-	Changed the _narrow definitions in TypeCode::BadKind and
-	Type_code::Bounds to be of type static. THis will now be according
-	to the spec. This is the result of test run on the header module.
-	
-	* tao/ORB.h:
-	* ORB.cpp
-	Changed the signature of the method, resol_initial_reference
-	(). This now takes in const string and it was previously a
-	non-const one. We had to make this change to be compatible with
-	the spec and the vsOrb test suite checks for this.
+        * tao/Typecode.h (CORBA_TypeCode):
+        Changed the _narrow definitions in TypeCode::BadKind and
+        Type_code::Bounds to be of type static. THis will now be according
+        to the spec. This is the result of test run on the header module.
+
+        * tao/ORB.h:
+        * ORB.cpp
+        Changed the signature of the method, resol_initial_reference
+        (). This now takes in const string and it was previously a
+        non-const one. We had to make this change to be compatible with
+        the spec and the vsOrb test suite checks for this.
 Fri May  7 12:56:08 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Integrated Byron
-	Harris <harris_b@ociweb.com> 's patches for checking for \\'s in
-	command line IDL file given to tao_idl. 
+        * TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Integrated Byron
+        Harris <harris_b@ociweb.com> 's patches for checking for \\'s in
+        command line IDL file given to tao_idl.
 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: Fixed the
-	IRIX warnings. 
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: Fixed the
+        IRIX warnings.
 
 Fri May  7 10:00:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Makefile:
-	* tao/Context.cpp:
-	* tao/Context.h:
-	* tao/DynAnyC.h:
-	* tao/ORB.cpp:
-	* tao/ORB.h:
-	* tao/Object_Adapter.cpp:
-	* tao/POA.i:
-	* tao/POAC.i:
-	* tao/Typecode_Constants.cpp:
-	* tao/corbafwd.h:
-	  Several fixes to support minimum CORBA.
+        * tao/Makefile:
+        * tao/Context.cpp:
+        * tao/Context.h:
+        * tao/DynAnyC.h:
+        * tao/ORB.cpp:
+        * tao/ORB.h:
+        * tao/Object_Adapter.cpp:
+        * tao/POA.i:
+        * tao/POAC.i:
+        * tao/Typecode_Constants.cpp:
+        * tao/corbafwd.h:
+          Several fixes to support minimum CORBA.
 
-	* examples/Quoter/server.cpp:
-	  Fixed error in my use of ACE_PRINT_EXCEPTION.
+        * examples/Quoter/server.cpp:
+          Fixed error in my use of ACE_PRINT_EXCEPTION.
 
 Thu May  6 21:49:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_union_branch.cpp:
-	* TAO_IDL/be/be_visitor_interface/tie_si.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
-	* examples/Callback_Quoter/Supplier_i.cpp:
-	* examples/POA/Default_Servant/client.cpp:
-	* examples/POA/Default_Servant/server.cpp:
-	* examples/Quoter/server.cpp:
-	* examples/Simple/Simple_util.cpp:
-	* orbsvcs/Trading_Service/Trading_Service.cpp:
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
-	* orbsvcs/orbsvcs/Event/Timer_Module.cpp:
-	* orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
-	* orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
-	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
-	* performance-tests/Thruput/TAO/ttcp_i.cpp:
-	* tao/ORB_Core.cpp:
-	* tao/Operation_Table.cpp:
-	* tests/MT_Client/server.cpp:
-	* tests/Multiple_Inheritance/client.cpp:
-	* tests/Multiple_Inheritance/server.cpp:
-	* utils/catior/catior.cpp:
-	  Fixed inconsisten use of ACE_ERROR and LM_DEBUG, also removed
-	  use of the DEBUG macro in favor of ACE_NDEBUG.
+        * TAO_IDL/be/be_union_branch.cpp:
+        * TAO_IDL/be/be_visitor_interface/tie_si.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * examples/Callback_Quoter/Supplier_i.cpp:
+        * examples/POA/Default_Servant/client.cpp:
+        * examples/POA/Default_Servant/server.cpp:
+        * examples/Quoter/server.cpp:
+        * examples/Simple/Simple_util.cpp:
+        * orbsvcs/Trading_Service/Trading_Service.cpp:
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/Timer_Module.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+        * orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+        * performance-tests/Thruput/TAO/ttcp_i.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/Operation_Table.cpp:
+        * tests/MT_Client/server.cpp:
+        * tests/Multiple_Inheritance/client.cpp:
+        * tests/Multiple_Inheritance/server.cpp:
+        * utils/catior/catior.cpp:
+          Fixed inconsisten use of ACE_ERROR and LM_DEBUG, also removed
+          use of the DEBUG macro in favor of ACE_NDEBUG.
 
 Thu May  6 18:34:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
-	  Fixed problem with disconnections while pushing an event, thanks
-	  to Pradeep Gore for finding this out.
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+          Fixed problem with disconnections while pushing an event, thanks
+          to Pradeep Gore for finding this out.
 
 Thu May  6 18:09:15 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
-	  Fixed return type for the accesor of array fields of a
-	  valuetype.
+        * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+          Fixed return type for the accesor of array fields of a
+          valuetype.
 
 Thu May  6 17:52:47 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/Simple/echo/README (client):
+        * examples/Simple/echo/README (client):
           Updated Naming Service option from -s to -n.
 
 Thu May  6 15:46:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_args.cpp:
-	* TAO_IDL/be/be_visitor.cpp:
-	  Removed characters after #endif
+        * TAO_IDL/be/be_args.cpp:
+        * TAO_IDL/be/be_visitor.cpp:
+          Removed characters after #endif
 
-	* TAO_IDL/be/be_valuetype.cpp:
-	* TAO_IDL/be_include/be_valuetype.h:
-	  Function overloaded with different signature?
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be_include/be_valuetype.h:
+          Function overloaded with different signature?
 
-	* examples/OBV/Typed_Events/Event_Types_impl.cpp:
-	  Fixed return expression on void function.
+        * examples/OBV/Typed_Events/Event_Types_impl.cpp:
+          Fixed return expression on void function.
 
-	* tao/ValueBase.h:
-	* tao/ValueBase.i:
-	  No sense in passing arguments by value as const, and they gave
-	  Sun/CC 4.2 some headaches.
-	  Use unsigned quantities for enums MSVC balks at expressions like
-	  (-0x80000000L).
+        * tao/ValueBase.h:
+        * tao/ValueBase.i:
+          No sense in passing arguments by value as const, and they gave
+          Sun/CC 4.2 some headaches.
+          Use unsigned quantities for enums MSVC balks at expressions like
+          (-0x80000000L).
 
-	* tao/ValueFactory_Map.cpp:
-	  Fixed some constness problems.
+        * tao/ValueFactory_Map.cpp:
+          Fixed some constness problems.
 
-	* utils/catior/catior.cpp:
-	  Fixed unsigned/signed warning.
+        * utils/catior/catior.cpp:
+          Fixed unsigned/signed warning.
 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
-	  No need to change the priority of this thread, it is activated
-	  at the right priority.
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+          No need to change the priority of this thread, it is activated
+          at the right priority.
 
-	* orbsvcs/tests/EC_Throughput/ECT_Driver.cpp:
-	  Fixed debug messages.
+        * orbsvcs/tests/EC_Throughput/ECT_Driver.cpp:
+          Fixed debug messages.
 
-	* orbsvcs/tests/EC_Throughput/ECT_Scheduler_Info.h:
-	  Adjusted priorities for LynxOS.
+        * orbsvcs/tests/EC_Throughput/ECT_Scheduler_Info.h:
+          Adjusted priorities for LynxOS.
 
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
-	  Use (min+max)/2 as default priority, to avoid problems on LynxOS
-	  where the lowest real-time priority is the lowest priority of
-	  the system!
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
+          Use (min+max)/2 as default priority, to avoid problems on LynxOS
+          where the lowest real-time priority is the lowest priority of
+          the system!
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i:
-	  Inline functions where not declared as such, got duplicate
-	  symbols when compiling against static library.
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i:
+          Inline functions where not declared as such, got duplicate
+          symbols when compiling against static library.
 
-	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
-	  Do not exit the loop on exception, continue until shutdown
-	  event.
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+          Do not exit the loop on exception, continue until shutdown
+          event.
 
 Thu May 06 14:34:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/tao_idl.dsp:
-	* TAO_IDL/tao_idl_static.dsp:
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp:
-	  Added the new files that support OBV.
+        * TAO_IDL/tao_idl.dsp:
+        * TAO_IDL/tao_idl_static.dsp:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+          Added the new files that support OBV.
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp:
-	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
-	  Added missing idl files CosTradingRepos.idl,
-	  CosTradingDynamic.idl and some new EC files too.
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
+          Added missing idl files CosTradingRepos.idl,
+          CosTradingDynamic.idl and some new EC files too.
 
 Thu May  6 12:11:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* Many thanks and kudos to Torsten Kuepper
-	  <kuepper2@uni-wuppertal.de> who contributes an initial
-	  implementation of Object-by-Value to TAO. His ChangeLog entry
-	  follows:
+        * Many thanks and kudos to Torsten Kuepper
+          <kuepper2@uni-wuppertal.de> who contributes an initial
+          implementation of Object-by-Value to TAO. His ChangeLog entry
+          follows:
 
-	* TAO/tao/Makefile:
-	* TAO/TAO_IDL/Makefile:
-	* TAO/tao/orbconf.h:
-	* TAO/TAO_IDL/include/idl.h:
-	  Support of Valuetypes if TAO_HAS_OBV resp. IDL_HAS_OBV is
-	  defined.
-	  This is far from complete. However
-	  + you are able to pass valuetypes as arguments in operation
-	  signatures (see examples/OBV).
-	    - Valuetype as member of other types (union, sequence ...) is
-	    missing until the compiler backend is provided with visitors
-	    for that.
-	  + A valuetype could have a valuetype as state member, ...
-	    - ... but currently the sharing of valuetypes in the context
-	    of an invocation is not yet implemented. This means you got
-	    two out of one (if two references point to one object) and
-	    cyclic references are not feasible.
-	  + The marshalling code accesses the state member data directly
-	    for optimization (-Wb,obv_opt_accessor).
-	    - This will be changed for unoptimized (standard) valuetypes,
-	      where the implementer should be able to override the
-	      accessor/modifier functions even for marshalling. Currently
-	      she isn't able to do so.
-	    - The marshalling does no fragmentation (chunking) yet. But
-	      this is required for custom marshalling and truncation.
-	    - Ordinary (not hashed) repository ids are used. Some code is
-	      missing that would optimize sending repo ids away (if the
-	      formal parameter is equal the current type) or that
-	      backreferences earlier send repository ids, when marshalling
-	      a graph.
-	    - The code generated for typedefs and forwards of valuetypes
-	      is not complete and will not compile.
-	    - Support of an interface is not yet there. Perhaps the TIE to
-	      a valuetype may give comparable functionality.
- 	    - Abstract interfaces are not implemented too.
-	    - TypeCode for valuetypes are missing, and without that,
-	      packing a valuetype into an any is not yet possible.
-	    - init () is not yet mapped to create () in the _init
-	      class. But you can declare create () on your own in your
-	      factory class.
-	    - Some helper classes (e.g. _var for ValueFactory) are
-	      missing.
-	  And I have confused a few issues on constness in modifier
-	  functions and members (in _init) which should be private and
-	  friend of another class, but it didn't want to compile right. I
-	  will correct these points, when I have the time.
+        * TAO/tao/Makefile:
+        * TAO/TAO_IDL/Makefile:
+        * TAO/tao/orbconf.h:
+        * TAO/TAO_IDL/include/idl.h:
+          Support of Valuetypes if TAO_HAS_OBV resp. IDL_HAS_OBV is
+          defined.
+          This is far from complete. However
+          + you are able to pass valuetypes as arguments in operation
+          signatures (see examples/OBV).
+            - Valuetype as member of other types (union, sequence ...) is
+            missing until the compiler backend is provided with visitors
+            for that.
+          + A valuetype could have a valuetype as state member, ...
+            - ... but currently the sharing of valuetypes in the context
+            of an invocation is not yet implemented. This means you got
+            two out of one (if two references point to one object) and
+            cyclic references are not feasible.
+          + The marshalling code accesses the state member data directly
+            for optimization (-Wb,obv_opt_accessor).
+            - This will be changed for unoptimized (standard) valuetypes,
+              where the implementer should be able to override the
+              accessor/modifier functions even for marshalling. Currently
+              she isn't able to do so.
+            - The marshalling does no fragmentation (chunking) yet. But
+              this is required for custom marshalling and truncation.
+            - Ordinary (not hashed) repository ids are used. Some code is
+              missing that would optimize sending repo ids away (if the
+              formal parameter is equal the current type) or that
+              backreferences earlier send repository ids, when marshalling
+              a graph.
+            - The code generated for typedefs and forwards of valuetypes
+              is not complete and will not compile.
+            - Support of an interface is not yet there. Perhaps the TIE to
+              a valuetype may give comparable functionality.
+            - Abstract interfaces are not implemented too.
+            - TypeCode for valuetypes are missing, and without that,
+              packing a valuetype into an any is not yet possible.
+            - init () is not yet mapped to create () in the _init
+              class. But you can declare create () on your own in your
+              factory class.
+            - Some helper classes (e.g. _var for ValueFactory) are
+              missing.
+          And I have confused a few issues on constness in modifier
+          functions and members (in _init) which should be private and
+          friend of another class, but it didn't want to compile right. I
+          will correct these points, when I have the time.
 
-	* TAO/examples/OBV/Typed_Events [new]:
-	  Demonstration of Typed Events, e.g. measuring values. The idea
-	  is to have common attributes (time and origin id) and operations
-	  (do_print()) in a base class.
-	  The event (temperature, position...) that is derived from the
-	  base is created in one process and is passed (type safe) to
-	  another process which invokes member function of the base class
-	  to do something with this concrete event (e.g. show, perform a
-	  test).
-	  (Naturally, the receiving process must have an implementation of
-	  the valuetypes.)
+        * TAO/examples/OBV/Typed_Events [new]:
+          Demonstration of Typed Events, e.g. measuring values. The idea
+          is to have common attributes (time and origin id) and operations
+          (do_print()) in a base class.
+          The event (temperature, position...) that is derived from the
+          base is created in one process and is passed (type safe) to
+          another process which invokes member function of the base class
+          to do something with this concrete event (e.g. show, perform a
+          test).
+          (Naturally, the receiving process must have an implementation of
+          the valuetypes.)
 
-	* TAO_IDL/idl_global.h:
-	* TAO_IDL/utl_global.cpp:
-	* TAO_IDL/drv_args.cpp:
-	* TAO_IDL/be/be_args.cpp:
-	  New TAO_IDL options
-	    -Gv   enable OBV (Valuetype)
-	    -Sv   disable OBV (Valuetype) (currently default)
- 	          read option with idl_global->obv_support()
-	    -Wb,obv_opt_accessor  Nonvirtual inline accessor/modifier
-	    functions
-	  Currently it is necessary to use compiled marshalling (-Gc) when
-	  using the valuetype feature.
+        * TAO_IDL/idl_global.h:
+        * TAO_IDL/utl_global.cpp:
+        * TAO_IDL/drv_args.cpp:
+        * TAO_IDL/be/be_args.cpp:
+          New TAO_IDL options
+            -Gv   enable OBV (Valuetype)
+            -Sv   disable OBV (Valuetype) (currently default)
+                  read option with idl_global->obv_support()
+            -Wb,obv_opt_accessor  Nonvirtual inline accessor/modifier
+            functions
+          Currently it is necessary to use compiled marshalling (-Gc) when
+          using the valuetype feature.
 
-	* TAO_IDL/fe/idl.ll:
-	* TAO_IDL/fe/fe_init.cpp:
-	  Compiler FE recognizes the OBV token (abstract, custom, init,
-	  private, public, supports, truncatable, valuetype) (CORBA 2.3
-	  3.2.4), but only if it is compiled with IDL_HAS_OBV and -Gv is
-	  given.
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/fe_init.cpp:
+          Compiler FE recognizes the OBV token (abstract, custom, init,
+          private, public, supports, truncatable, valuetype) (CORBA 2.3
+          3.2.4), but only if it is compiled with IDL_HAS_OBV and -Gv is
+          given.
 
-	* TAO_IDL/fe/idl.yy:
-	  There are some new productions in the parser. member is now a
-	  wrapper for member_i, which previously was member but now
-	  accesses $0 as visibility parameter.
+        * TAO_IDL/fe/idl.yy:
+          There are some new productions in the parser. member is now a
+          wrapper for member_i, which previously was member but now
+          accesses $0 as visibility parameter.
 
-	* TAO_IDL/include/ast_generator.h:
-	* TAO_IDL/be/be_generator.cpp:
-	* TAO_IDL/include/ast_interface.h:
-	* TAO_IDL/ast/ast_interface.cpp:
-	* TAO_IDL/include/ast_interface_fwd.h:
-	* TAO_IDL/ast/ast_interface_fwd.cpp:
-	* TAO_IDL/include/ast_field.h:
-	* TAO_IDL/ast/ast_field.cpp:
-	* TAO_IDL/be_include/be_field.h:
-	* TAO_IDL/be/be_field.cpp:
-	* TAO_IDL/be_include/be_valuetype.h [new]:
-	* TAO_IDL/be/be_valuetype.cpp [new]:
-	* TAO_IDL/include/fe_interface_header.h:
-	* TAO_IDL/fe/fe_interface_header.cpp:
-	  AST_Interface is currently used for valuetypes too.  (This
-	  attempt was made for better staying in sync with the rushing TAO
-	  development.)
-	  Though lots of code for name lookup and inheritance rules can be
-	  reused. AST_Interface has the new methods is_valuetype(),
-	  is_abstract_valuetype() and is_abstract_interface() which allows
-	  the frontend to distinguish them. Later on a new AST_ class
-	  should  be refactored which is a base class to the IDL types
-	  that provide inheritance.
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/include/ast_interface_fwd.h:
+        * TAO_IDL/ast/ast_interface_fwd.cpp:
+        * TAO_IDL/include/ast_field.h:
+        * TAO_IDL/ast/ast_field.cpp:
+        * TAO_IDL/be_include/be_field.h:
+        * TAO_IDL/be/be_field.cpp:
+        * TAO_IDL/be_include/be_valuetype.h [new]:
+        * TAO_IDL/be/be_valuetype.cpp [new]:
+        * TAO_IDL/include/fe_interface_header.h:
+        * TAO_IDL/fe/fe_interface_header.cpp:
+          AST_Interface is currently used for valuetypes too.  (This
+          attempt was made for better staying in sync with the rushing TAO
+          development.)
+          Though lots of code for name lookup and inheritance rules can be
+          reused. AST_Interface has the new methods is_valuetype(),
+          is_abstract_valuetype() and is_abstract_interface() which allows
+          the frontend to distinguish them. Later on a new AST_ class
+          should  be refactored which is a base class to the IDL types
+          that provide inheritance.
 
-	  Some shared code in idl.yy is now in AST_Interface::redefine()
-	  and AST_Interface::fwd_redefinition_helper(). Forward definition
-	  is a little changed, that the dummy full definition be_ object
-	  stored in AST_InterfaceFwd is of the right type.
+          Some shared code in idl.yy is now in AST_Interface::redefine()
+          and AST_Interface::fwd_redefinition_helper(). Forward definition
+          is a little changed, that the dummy full definition be_ object
+          stored in AST_InterfaceFwd is of the right type.
 
-	  FE_InterfaceHeader::compile_inheritance () is extended with the
-	  rules to check right inheritance of valuetypes and abstract
-	  interfaces.
-	  The constructor of FE_InterfaceHeader has now a default
-	  parameter which let the derived FE_obv_header invoke
-	  compile_inheritance () at later time.
+          FE_InterfaceHeader::compile_inheritance () is extended with the
+          rules to check right inheritance of valuetypes and abstract
+          interfaces.
+          The constructor of FE_InterfaceHeader has now a default
+          parameter which let the derived FE_obv_header invoke
+          compile_inheritance () at later time.
 
-	* TAO_IDL/be_include/be.h:
-	* TAO_IDL/be_include/be_codegen.h:
-	* TAO_IDL/be_include/be_visitor.h:
-	* TAO_IDL/be_include/be_visitor_module/module.h:
-	* TAO_IDL/be_include/be_visitor_root/root.h:
-	* TAO_IDL/be_include/be_visitor_argument/arglist.h:
-	* TAO_IDL/be_include/be_visitor_argument/compiled_marshal_cs.h:
-	* TAO_IDL/be_include/be_visitor_argument/compiled_marshal_ss.h:
-	* TAO_IDL/be_include/be_visitor_argument/post_docall_compiled_cs.h:
-	* TAO_IDL/be_include/be_visitor_argument/upcall_ss.h:
-	* TAO_IDL/be_include/be_visitor_argument/vardecl_ss.h:
-	* TAO_IDL/be_include/be_visitor_field/field_ch.h:
-	* TAO_IDL/be_include/be_visitor_operation/compiled_marshal.h:
-	* TAO_IDL/be_include/be_visitor_operation/rettype*.h:
-	* TAO_IDL/be_include/be_visitor_valuetype.h [new]:
-	* TAO_IDL/be_include/be_visitor_valuetype_fwd.h [new]:
-	* TAO_IDL/be_include/be_visitor_valuetype/*.h [new]:
-	* TAO_IDL/be/be_visitor.cpp:
-	* TAO_IDL/be/be_visitor_factory.cpp:
-	* TAO_IDL/be/be_visitor_module/module.cpp:
-	* TAO_IDL/be/be_visitor_root/root.cpp:
-	* TAO_IDL/be/be_visitor_argument/arglist.cpp:
-	* TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp:
-	* TAO_IDL/be/be_visitor_argument/compiled_marshal_ss.cpp:
-	* TAO_IDL/be/be_visitor_argument/post_docall_compiled_cs.cpp:
-	* TAO_IDL/be/be_visitor_argument/upcall_ss.cpp:
-	* TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
-	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
-	* TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp:
-	* TAO_IDL/be/be_visitor_operation/rettype*.cpp:
-	* TAO_IDL/be/be_visitor_valuetype_fwd.cpp [new]:
-	* TAO_IDL/be/be_visitor_valuetype/*.cpp [new]:
+        * TAO_IDL/be_include/be.h:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_visitor.h:
+        * TAO_IDL/be_include/be_visitor_module/module.h:
+        * TAO_IDL/be_include/be_visitor_root/root.h:
+        * TAO_IDL/be_include/be_visitor_argument/arglist.h:
+        * TAO_IDL/be_include/be_visitor_argument/compiled_marshal_cs.h:
+        * TAO_IDL/be_include/be_visitor_argument/compiled_marshal_ss.h:
+        * TAO_IDL/be_include/be_visitor_argument/post_docall_compiled_cs.h:
+        * TAO_IDL/be_include/be_visitor_argument/upcall_ss.h:
+        * TAO_IDL/be_include/be_visitor_argument/vardecl_ss.h:
+        * TAO_IDL/be_include/be_visitor_field/field_ch.h:
+        * TAO_IDL/be_include/be_visitor_operation/compiled_marshal.h:
+        * TAO_IDL/be_include/be_visitor_operation/rettype*.h:
+        * TAO_IDL/be_include/be_visitor_valuetype.h [new]:
+        * TAO_IDL/be_include/be_visitor_valuetype_fwd.h [new]:
+        * TAO_IDL/be_include/be_visitor_valuetype/*.h [new]:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/be/be_visitor_factory.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+        * TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/compiled_marshal_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/post_docall_compiled_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/upcall_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype*.cpp:
+        * TAO_IDL/be/be_visitor_valuetype_fwd.cpp [new]:
+        * TAO_IDL/be/be_visitor_valuetype/*.cpp [new]:
 
-	  The visiting of valuetype is integrated into the root and module
-	  visitors. The OBV_ classes resp. namespaces are generated in an
-	  extra pass over the syntax tree.
+          The visiting of valuetype is integrated into the root and module
+          visitors. The OBV_ classes resp. namespaces are generated in an
+          extra pass over the syntax tree.
 
-	* tao/corba.h:
-	* tao/corbafwd.h:
-	* tao/ValueBase.h [new]:
-	* tao/ValueBase.i [new]:
-	* tao/ValueBase.cpp [new]:
-	  All valuetypes inherit from the CORBA::ValueBase. It has
-	  abstract operations for the reference counting, which are
-	  implemented by multiply inherit from
-	  e.g. CORBA::DefaultValueRefCountBase.
-	  _copy_value () is not yet implemented.
-	  There is some internal stuff for doing [un]marshalling and
-	  dynamic type conversion (used by _downcast ()), whose
-	  underlaying mechanism is like in the tao_idl compiler
-	  itself:
-	    The static member _downcast () calls a virtual function, which
-	    is implemented from the IDL compiler, with an id of the wanted
-	    type. These it is compared against the actual id of the
-	    object. In case of mismatch the ancestors of the valuetype are
-	    called (in depth first order).
-	  _downcast () is used during unmarshaling too. This may result in
-	  quite undeterministic real time behaviour. The worst case would
-	  be that the _downcast walks the complete inheritance graph.
-	  The detailed marshaling is best studied from the comments in
-	  ValueBase.cpp.
+        * tao/corba.h:
+        * tao/corbafwd.h:
+        * tao/ValueBase.h [new]:
+        * tao/ValueBase.i [new]:
+        * tao/ValueBase.cpp [new]:
+          All valuetypes inherit from the CORBA::ValueBase. It has
+          abstract operations for the reference counting, which are
+          implemented by multiply inherit from
+          e.g. CORBA::DefaultValueRefCountBase.
+          _copy_value () is not yet implemented.
+          There is some internal stuff for doing [un]marshalling and
+          dynamic type conversion (used by _downcast ()), whose
+          underlaying mechanism is like in the tao_idl compiler
+          itself:
+            The static member _downcast () calls a virtual function, which
+            is implemented from the IDL compiler, with an id of the wanted
+            type. These it is compared against the actual id of the
+            object. In case of mismatch the ancestors of the valuetype are
+            called (in depth first order).
+          _downcast () is used during unmarshaling too. This may result in
+          quite undeterministic real time behaviour. The worst case would
+          be that the _downcast walks the complete inheritance graph.
+          The detailed marshaling is best studied from the comments in
+          ValueBase.cpp.
 
-	* tao/ValueFactory.h [new]:
-	* tao/ValueFactory.i [new]:
-	* tao/ValueFactory.cpp [new]:
-	* tao/ValueFactory_Map.h [new]:
-	* tao/ValueFactory_Map.i [new]:
-	* tao/ValueFactory_Map.cpp [new]:
-	  The map of registered valuetype factories.
-	  TAO_OBV_REGISTER_FACTORY macro is for on the fly factory
-	  registration, but its not like in the OMG specs.
+        * tao/ValueFactory.h [new]:
+        * tao/ValueFactory.i [new]:
+        * tao/ValueFactory.cpp [new]:
+        * tao/ValueFactory_Map.h [new]:
+        * tao/ValueFactory_Map.i [new]:
+        * tao/ValueFactory_Map.cpp [new]:
+          The map of registered valuetype factories.
+          TAO_OBV_REGISTER_FACTORY macro is for on the fly factory
+          registration, but its not like in the OMG specs.
 
-	* tao/ORB.h:
-	* tao/ORB.cpp:
-	  Integration of the factory map for valuetypes with the ORB.
-	  It is accessed through CORBA_ORB::register_value_factory (),
-	  unregister_value_factory () and lookup_value_factory ().
-	  This needs some revision to make the changing of the map thread
-	  safe and changes to make it per ORB and not per process as it is
-	  currently.
+        * tao/ORB.h:
+        * tao/ORB.cpp:
+          Integration of the factory map for valuetypes with the ORB.
+          It is accessed through CORBA_ORB::register_value_factory (),
+          unregister_value_factory () and lookup_value_factory ().
+          This needs some revision to make the changing of the map thread
+          safe and changes to make it per ORB and not per process as it is
+          currently.
 
-	* */Makefile:
-	  Many makefile dependencies updated.
+        * */Makefile:
+          Many makefile dependencies updated.
 
-	* examples/Simple/chat/Makefile:
-	  The dependencies did not include Client_i.cpp or Server_i.cpp
+        * examples/Simple/chat/Makefile:
+          The dependencies did not include Client_i.cpp or Server_i.cpp
 
-	* orbsvcs/tests/Trading/Makefile:
-	  Added dependencies to for parallel compilation.
+        * orbsvcs/tests/Trading/Makefile:
+          Added dependencies to for parallel compilation.
 
 Thu May  6 09:24:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
-	  Small changes in debugging messages.
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+          Small changes in debugging messages.
 
 Wed May 05 15:11:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
