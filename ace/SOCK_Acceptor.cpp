@@ -219,6 +219,51 @@ ACE_SOCK_Acceptor::dump (void) const
   ACE_TRACE ("ACE_SOCK_Acceptor::dump");
 }
 
+int
+ACE_SOCK_Acceptor::open (const ACE_Addr &local_sap,
+                         ACE_Protocol_Info *protocolinfo,
+                         ACE_SOCK_GROUP g,
+                         u_long flags,
+                         int reuse_addr,
+                         int protocol_family,
+                         int backlog,
+                         int protocol)
+{
+  ACE_TRACE ("ACE_SOCK_Acceptor::open");
+  ACE_UNUSED_ARG (local_sap);
+  ACE_UNUSED_ARG (protocolinfo);
+  ACE_UNUSED_ARG (g);
+  ACE_UNUSED_ARG (flags);
+  ACE_UNUSED_ARG (reuse_addr);
+  ACE_UNUSED_ARG (protocol_family);
+  ACE_UNUSED_ARG (backlog);
+  ACE_UNUSED_ARG (protocol);
+  ACE_NOTSUP_RETURN (-1);
+}
+
+ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
+                                      ACE_Protocol_Info *protocolinfo,
+                                      ACE_SOCK_GROUP g,
+                                      u_long flags,
+                                      int reuse_addr,
+                                      int protocol_family,
+                                      int backlog,
+                                      int protocol)
+{
+  ACE_TRACE ("ACE_SOCK_Acceptor::ACE_SOCK_Acceptor");
+  if (this->open (local_sap,
+                  protocolinfo,
+                  g,
+                  flags,
+		  reuse_addr,
+		  protocol_family,
+		  backlog,
+		  protocol) == -1)
+    ACE_ERROR ((LM_ERROR,
+		ASYS_TEXT ("%p\n"),
+		ASYS_TEXT ("ACE_SOCK_Acceptor")));
+}
+
 // General purpose routine for performing server ACE_SOCK creation.
 
 int
