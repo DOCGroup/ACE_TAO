@@ -5260,6 +5260,22 @@ TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_ExceptionHolder, &_tc_TAO_tc_Messaging_ExceptionHolder)
 TAO_NAMESPACE_END
 
+void
+tao_Messaging_ExceptionHolder_add_ref (
+    Messaging::ExceptionHolder *p
+  )
+{
+  CORBA::add_ref (p);
+}
+
+void
+tao_Messaging_ExceptionHolder_remove_ref (
+    Messaging::ExceptionHolder *p
+  )
+{
+  CORBA::remove_ref (p);
+}
+
 // *************************************************************
 // Operations for class Messaging::ExceptionHolder_var
 // *************************************************************
@@ -5357,6 +5373,22 @@ Messaging::ExceptionHolder_var::_retn (void)
   ExceptionHolder* tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
+}
+
+void
+Messaging::ExceptionHolder_var::tao_add_ref (
+    ExceptionHolder *p
+  )
+{
+  CORBA::add_ref (p);
+}
+
+void
+Messaging::ExceptionHolder_var::tao_remove_ref (
+    ExceptionHolder *p
+  )
+{
+  CORBA::remove_ref (p);
 }
 
 // *************************************************************
