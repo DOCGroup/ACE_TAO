@@ -1,3 +1,17 @@
+Sat May 29 13:40:41 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/TAO.{h, cpp} (TAO_ORB_Manager):
+	added <activate_poa_manager> method to put the POA manager into
+	the <Active> state for processing the requests.  This is useful
+	for clients, which are not going to call "orb->run", yet want to
+	be able to process incoming CORBA requests while waiting on CORBA
+	requests sent to servers.
+	* orbsvcs/tests/Simple_Naming/client.cpp:
+	added a call to TAO_ORB_Manager::activate_poa_manager in client
+	initialization code, so client can respond to incoming requests
+	(this fixes a problem in Exception test that surfaced due to
+	recent updates to the POA).
+
 Fri May 28 23:11:56 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Connect.cpp:
