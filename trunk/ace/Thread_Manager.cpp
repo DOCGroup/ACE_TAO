@@ -1271,6 +1271,10 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
 
   if (do_thr_exit)
     {
+#if 0
+      // @@ This callback is now taken care of by TSS_Cleanup.  Do we
+      //    need it anymore?
+
       // On Win32, if we really wants to exit from a thread, we must
       // first  clean up the thread specific storage.  By doing so,
       // ACE_Thread_Manager::exit will be called again with
@@ -1278,6 +1282,7 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
       // exiting the thread.)  After the following call returns, we
       // are safe to exit this thread.
       delete ACE_Thread_Exit::instance ();
+#endif /* 0 */
       ACE_Thread::exit (status);
     }
 #endif /* ACE_WIN32 */
