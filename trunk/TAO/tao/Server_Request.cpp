@@ -57,7 +57,7 @@ IIOP_ServerRequest::IIOP_ServerRequest (TAO_InputCDR &input,
                                         CORBA::ORB_ptr the_orb,
                                         TAO_POA *the_poa,
                                         CORBA::Environment &env)
-  : operation_ (),
+  : operation_ (0),
     incoming_ (&input),
     outgoing_ (&output),
     response_expected_ (CORBA::B_FALSE),
