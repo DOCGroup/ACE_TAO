@@ -208,6 +208,14 @@ SOURCE=.\poa.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\poaC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\poaS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\principa.cpp
 # End Source File
 # Begin Source File

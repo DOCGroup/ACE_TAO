@@ -2988,7 +2988,7 @@ void POA_PortableServer::_tao_collocated_POA::deactivate_object (
 }
 
 CORBA::Object_ptr POA_PortableServer::_tao_collocated_POA::create_reference (
-    const PortableServer::RepositoryId intf,
+    const char *intf,
     CORBA::Environment &_tao_environment
   )
 {
@@ -3000,7 +3000,7 @@ CORBA::Object_ptr POA_PortableServer::_tao_collocated_POA::create_reference (
 
 CORBA::Object_ptr POA_PortableServer::_tao_collocated_POA::create_reference_with_id (
     const PortableServer::ObjectId & oid,
-    const PortableServer::RepositoryId intf,
+    const char *intf,
     CORBA::Environment &_tao_environment
   )
 {

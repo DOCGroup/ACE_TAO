@@ -2312,6 +2312,11 @@ class Current;
 
   static CORBA::TypeCode_ptr _tc_Current;
 
+  static char *ObjectId_to_string (const PortableServer::ObjectId &id);
+  static wchar_t *ObjectId_to_wstring (const PortableServer::ObjectId &id);
+  static PortableServer::ObjectId *string_to_ObjectId (const char *id);
+  static PortableServer::ObjectId *wstring_to_ObjectId (const wchar_t *id);
+
 };
 
 

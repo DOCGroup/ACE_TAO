@@ -52,7 +52,7 @@
 class TAO_POA;
 class TAO_POA_Manager;
 
-class TAO_Thread_Policy : public POA_PortableServer::ThreadPolicy
+class TAO_Export TAO_Thread_Policy : public POA_PortableServer::ThreadPolicy
 {
 public:
   TAO_Thread_Policy (PortableServer::ThreadPolicyValue value);
@@ -69,7 +69,7 @@ protected:
   PortableServer::ThreadPolicyValue value_;
 };
 
-class TAO_Lifespan_Policy : public POA_PortableServer::LifespanPolicy
+class TAO_Export TAO_Lifespan_Policy : public POA_PortableServer::LifespanPolicy
 {
 public:
   TAO_Lifespan_Policy (PortableServer::LifespanPolicyValue value);
@@ -86,7 +86,7 @@ protected:
   PortableServer::LifespanPolicyValue value_;
 };
 
-class TAO_Id_Uniqueness_Policy : public POA_PortableServer::IdUniquenessPolicy
+class TAO_Export TAO_Id_Uniqueness_Policy : public POA_PortableServer::IdUniquenessPolicy
 {
 public:
   TAO_Id_Uniqueness_Policy (PortableServer::IdUniquenessPolicyValue value);
@@ -103,7 +103,7 @@ protected:
   PortableServer::IdUniquenessPolicyValue value_;
 };
 
-class TAO_Id_Assignment_Policy : public POA_PortableServer::IdAssignmentPolicy
+class TAO_Export TAO_Id_Assignment_Policy : public POA_PortableServer::IdAssignmentPolicy
 {
 public:
   TAO_Id_Assignment_Policy (PortableServer::IdAssignmentPolicyValue value);
@@ -120,7 +120,7 @@ protected:
   PortableServer::IdAssignmentPolicyValue value_;
 };
 
-class TAO_Implicit_Activation_Policy : public POA_PortableServer::ImplicitActivationPolicy
+class TAO_Export TAO_Implicit_Activation_Policy : public POA_PortableServer::ImplicitActivationPolicy
 {
 public:
   TAO_Implicit_Activation_Policy (PortableServer::ImplicitActivationPolicyValue value);
@@ -137,7 +137,7 @@ protected:
   PortableServer::ImplicitActivationPolicyValue value_;
 };
 
-class TAO_Servant_Retention_Policy : public POA_PortableServer::ServantRetentionPolicy
+class TAO_Export TAO_Servant_Retention_Policy : public POA_PortableServer::ServantRetentionPolicy
 {
 public:
   TAO_Servant_Retention_Policy (PortableServer::ServantRetentionPolicyValue value);
@@ -154,7 +154,7 @@ protected:
   PortableServer::ServantRetentionPolicyValue value_;
 };
 
-class TAO_Request_Processing_Policy : public POA_PortableServer::RequestProcessingPolicy
+class TAO_Export TAO_Request_Processing_Policy : public POA_PortableServer::RequestProcessingPolicy
 {
 public:
   TAO_Request_Processing_Policy (PortableServer::RequestProcessingPolicyValue value);
@@ -171,7 +171,7 @@ protected:
   PortableServer::RequestProcessingPolicyValue value_;
 };
 
-class TAO_POA_Policies
+class TAO_Export TAO_POA_Policies
 {
 public:
 
@@ -221,10 +221,8 @@ protected:
   PortableServer::RequestProcessingPolicyValue request_processing_;
 };
 
-class TAO_POA : public POA_PortableServer::POA
+class TAO_Export TAO_POA : public POA_PortableServer::POA
 {
-  friend class TAO_Adapter_Activator;
-
 public:
 
   typedef ACE_CString String;
@@ -363,6 +361,14 @@ public:
   virtual PortableServer::Servant locate_servant (const TAO::ObjectKey &key,
                                                   CORBA::Environment &env);
 
+  static char name_separator (void);
+
+  static char id_separator (void);
+
+  static CORBA::ULong name_separator_length (void);
+
+  static CORBA::ULong id_separator_length (void);
+
 protected:
 
   virtual PortableServer::Servant locate_servant_i (const TAO::ObjectKey &key,
@@ -460,7 +466,7 @@ protected:
                          PortableServer::ObjectId_out id,
                          CORBA::Boolean &persistent);
 
-  virtual CORBA::Boolean persistent (void);
+  virtual CORBA::Boolean persistent (void);  
 
   virtual const String &object_key_type (void);
 
@@ -473,14 +479,6 @@ protected:
   static const wchar_t *ObjectId_to_const_wstring (const PortableServer::ObjectId &id);
   
   static const char *ObjectKey_to_const_string (const TAO::ObjectKey &key);
-
-  static char name_separator (void);
-
-  static char id_separator (void);
-
-  static CORBA::ULong name_separator_length (void);
-
-  static CORBA::ULong id_separator_length (void);
 
   String name_;
 
@@ -515,10 +513,9 @@ protected:
   CORBA::ULong counter_;
 };
 
-class TAO_POA_Manager : public POA_PortableServer::POAManager
+class TAO_Export TAO_POA_Manager : public POA_PortableServer::POAManager
 {
   friend class TAO_POA;
-  friend class TAO_Adapter_Activator;
 
 public:
   enum Processing_State
@@ -577,22 +574,16 @@ protected:
   POA_COLLECTION poa_collection_; 
 };
 
-class TAO_Adapter_Activator : public POA_PortableServer::AdapterActivator
+class TAO_Export TAO_Adapter_Activator : public POA_PortableServer::AdapterActivator
 {
 public:
 
   virtual CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,
                                           const char *name,
                                           CORBA::Environment &env);
-
-protected:
-
-  virtual CORBA::Boolean unknown_adapter_i (TAO_POA *parent,
-                                            const TAO_POA::String &name,
-                                            CORBA::Environment &env);  
 };
 
-class TAO_Strategy_POA : public TAO_POA
+class TAO_Export TAO_Strategy_POA : public TAO_POA
 {
 public:
 
@@ -633,7 +624,7 @@ protected:
   typedef TAO_Strategy_POA SELF;
 };
 
-class TAO_Strategy_POA_Manager : public TAO_POA_Manager
+class TAO_Export TAO_Strategy_POA_Manager : public TAO_POA_Manager
 {
 public:
 
@@ -652,7 +643,7 @@ protected:
   typedef TAO_Strategy_POA_Manager SELF;
 };
 
-class TAO_POA_Current : public POA_PortableServer::Current
+class TAO_Export TAO_POA_Current : public POA_PortableServer::Current
 {
   // = TITLE
   //

@@ -2912,3 +2912,28 @@ static const CORBA::Long _oc_PortableServer_Current[] =
 static CORBA::TypeCode _tc__tc_PortableServer_Current (CORBA::tk_objref, sizeof (_oc_PortableServer_Current), (unsigned char *) &_oc_PortableServer_Current, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_Current = &_tc__tc_PortableServer_Current;
 
+char *
+PortableServer::ObjectId_to_string (const PortableServer::ObjectId &id)
+{
+  return TAO_POA::ObjectId_to_string (id);
+}
+
+wchar_t *
+PortableServer::ObjectId_to_wstring (const PortableServer::ObjectId &id)
+{
+  return TAO_POA::ObjectId_to_wstring (id);
+}
+
+PortableServer::ObjectId *
+PortableServer::string_to_ObjectId (const char *id)
+{
+  return TAO_POA::string_to_ObjectId (id);
+}
+
+PortableServer::ObjectId *
+PortableServer::wstring_to_ObjectId (const wchar_t *id)
+{
+  return TAO_POA::wstring_to_ObjectId (id);
+}
+
+
