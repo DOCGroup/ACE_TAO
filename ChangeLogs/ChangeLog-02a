@@ -1,3 +1,10 @@
+Fri Aug 11 13:20:40 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* apps/gperf/src/gperf_lib.dsp: Changed the format for generated
+	  debug info from C7 to "Program Database" to conform to rest of
+	  the ACE project files.  Thanks to Espen Harlinn
+	  <espen.harlinn@seamos.no> for reporting this.
+
 Fri Aug 11 11:06:30 2000  David L. Levine <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_osf1_4.0.GNU: moved
