@@ -1,3 +1,12 @@
+Wed Jul 14 09:44:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/Param_Test/param_test/idl:
+	* TAO/tests/Param_Test/var_struct.cpp:
+	  Added some members to the struct - types smaller than 4 bytes between
+	  the dynamic types and a double at the beginning. Also added the checks
+	  in test_validity(). This will test more thoroughly for a recurrence of
+	  the alignment problems that were recently fixed.
+
 Wed Jul 14 02:27:44 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Collocation/Coll_Tester.cpp:
