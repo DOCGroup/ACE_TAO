@@ -1,3 +1,9 @@
+Wed Oct 15 12:10:39 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ACE-INSTALL.html: Updated the documentation to make it 
+	  clear that setenv is a TCSH/CSHism.  Thanks to David McKen
+ 	  <cic_3_b@yahoo.com> for reporting this.
+
 Wed Oct 15 13:22:32 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_borland.GNU:

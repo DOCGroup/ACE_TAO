@@ -1095,15 +1095,21 @@ need to do:<P>
       name of the root of the directory where you keep the ACE wrapper
       source tree.  The ACE recursive Makefile scheme needs this information.
       There are several ways to set the ACE_ROOT variable.  For
-      instance, in my .login file I have the following entry:<P>
+      instance, in my .login file for TSCH/CSH I have the following entry:<P>
 
       <pre><code>
       % setenv ACE_ROOT /home/cs/faculty/schmidt/ACE_wrappers
       </code></pre><P>
 
-      However, if you're building a number of versions of ACE, e.g., for
-      different OS platforms or for different releases of ACE, you might use
-      the following approach:
+      BTW, if you're running BASH or Bourne Shell you'll need to do the following:
+
+      <pre><code>
+      % ACE_ROOT=/home/cs/faculty/schmidt/ACE_wrappers; export ACE_ROOT
+      </code></pre><P>
+
+      If you're building a number of versions of ACE, however, (e.g., for
+      different OS platforms or for different releases of ACE) you might use
+      the following approach (again assuming TCSH/CSH):
 
       <pre><code>
       % setenv ACE_ROOT $cwd
