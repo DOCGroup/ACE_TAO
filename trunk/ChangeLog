@@ -1,3 +1,17 @@
+Fri Mar 12 11:03:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Auto_IncDec_Test.cpp:
+        * tests/CDR_File_Test.cpp:
+        * tests/Capabilities_Test.cpp:
+        * tests/Get_Opt_Test.cpp:
+        * tests/Log_Msg_Test.cpp:
+        * tests/Logging_Strategy_Test.cpp:
+        * tests/Max_Default_Port_Test_IPV6.cpp:
+        * tests/Token_Strategy_Test.cpp:
+        * tests/Obstack_Test.cpp:
+          The test_config.h file must be included as first file else we don't
+          get log files in our SuSE 9 ACE build which has set ACE_NLOGGING.
+
 Thu Mar 11 17:00:14 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/WIN32_Asynch_IO.cpp (handle_output): Be sure to unregister this
