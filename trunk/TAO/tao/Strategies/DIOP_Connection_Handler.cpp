@@ -263,12 +263,6 @@ TAO_DIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
   return 0;
 }
 
-ACE_HANDLE
-TAO_DIOP_Connection_Handler::fetch_handle (void)
-{
-  return this->get_handle ();
-}
-
 int
 TAO_DIOP_Connection_Handler::resume_handler (void)
 {
@@ -344,7 +338,7 @@ TAO_DIOP_Connection_Handler::handle_input (ACE_HANDLE)
   this->incr_pending_upcalls ();
 
   TAO_Resume_Handle  resume_handle (this->orb_core (),
-                                    this->fetch_handle ());
+                                    this->get_handle ());
 
   int retval = this->transport ()->handle_input_i (resume_handle);
 

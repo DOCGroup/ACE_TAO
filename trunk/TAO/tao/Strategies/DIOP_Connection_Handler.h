@@ -114,9 +114,6 @@ public:
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
 
-  /// Return the underlying handle
-  virtual ACE_HANDLE fetch_handle (void);
-
   /// Event handler overload..
   virtual int resume_handler (void);
 

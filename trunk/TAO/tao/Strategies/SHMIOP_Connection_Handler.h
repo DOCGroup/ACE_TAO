@@ -84,9 +84,6 @@ public:
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
 
-  /// Return the underlying handle
-  virtual ACE_HANDLE fetch_handle (void);
-
   /// Documented in ACE_Event_Handler
   virtual int handle_output (ACE_HANDLE);
 
