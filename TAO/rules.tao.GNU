@@ -20,7 +20,7 @@ endif
 ifndef COMSPEC
   ifdef ComSpec
     #### ACE+TAO use COMSPEC, but ComSpec is defined.
-    COMPSPEC = $(ComSpec)
+    COMSPEC = $(ComSpec)
   endif # ComSpec
 endif # ! COMPSPEC
 
@@ -111,7 +111,7 @@ CPPFLAGS += \
 #### Build rules.
 ####
 ifndef COMSPEC
-  #### Assume we're not on a WIN32 host.
+  #### Assume we're on a WIN32 host.
   ifneq (1,$(VXWORKS))
     #### These don't work on NT host for Tornado II.
     IDL_EXT=C.h C.i C.cpp S.h S.i S.cpp S_T.h S_T.i S_T.cpp

@@ -128,7 +128,7 @@ ifeq (,$(LN_S))
   ifndef COMSPEC
     ifdef ComSpec
       #### ACE+TAO use COMSPEC, but ComSpec is defined.
-      COMPSPEC = $(ComSpec)
+      COMSPEC = $(ComSpec)
     endif # ComSpec
   endif # ! COMPSPEC
 
