@@ -1180,7 +1180,7 @@ TAO_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
 }
 
 int
-TAO_Client_Connection_Handler::close (u_long flags)
+TAO_Client_Connection_Handler::close (u_long)
 {
   this->destroy ();
 
