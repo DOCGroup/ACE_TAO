@@ -663,7 +663,4 @@ JAWS_File::update (void) const
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Guard<ACE_SYNCH_RW_MUTEX>;
-template class ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>;
-template class ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
