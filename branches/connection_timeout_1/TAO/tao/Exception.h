@@ -72,7 +72,10 @@ public:
   // = These are TAO-specific extensions.
 
   /// Return the repository ID of the Exception.
-  const char *_id (void) const;
+  const char *_rep_id (void) const;
+
+  /// Return the name of the Exception.
+  const char *_name (void) const;
 
   /// Will be overridden in the concrete derived classes.
   virtual CORBA::TypeCode_ptr _type (void) const;
@@ -81,7 +84,8 @@ public:
   virtual int _is_a (const char* repository_id) const;
 
   /// Constructor from a respository id.
-  CORBA_Exception (const char* repository_id);
+  CORBA_Exception (const char *repository_id,
+                   const char *local_name);
 
   /// Print the exception <ex> to output determined by <f>.  This
   /// function is not CORBA compliant.
@@ -130,8 +134,9 @@ protected:
   // Default constructor is protected.
 
 private:
-  /// Storage of our repository id.
+  /// Storage of our repository id and local name.
   char *id_;
+  char *name_;
 };
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -168,7 +173,8 @@ public:
   // = TAO specific extension.
 
   /// Constructor from a repository id.
-  CORBA_UserException (const char* repository_id);
+  CORBA_UserException (const char *repository_id,
+                       const char *local_name);
 
   virtual int _is_a (const char *interface_id) const;
 
@@ -253,14 +259,16 @@ protected:
 
   /// Constructor using a repository id.
   CORBA_SystemException (const char *repository_id,
+                         const char *local_name,
                          CORBA::ULong code,
                          CORBA::CompletionStatus completed);
 
   /// Return the exception description associated with the given OMG
   /// minor code.
   static const char *_tao_get_omg_exception_description (
-    const CORBA::SystemException &exc,
-    CORBA::ULong minor_code);
+      const CORBA::SystemException &exc,
+      CORBA::ULong minor_code
+    );
 
 private:
   /// Minor code.
@@ -282,7 +290,10 @@ public: \
   CORBA_ ## name (void); \
   CORBA_ ## name (CORBA::ULong code, \
                   CORBA::CompletionStatus completed) \
-    : CORBA_SystemException ("IDL:omg.org/CORBA/" #name ":1.0", code, completed) \
+    : CORBA_SystemException ("IDL:omg.org/CORBA/" #name ":1.0", \
+                             #name, \
+                             code, \
+                             completed) \
     { } \
   static CORBA_##name * _downcast (CORBA_Exception* exception); \
   virtual int _is_a (const char* type_id) const; \
@@ -371,7 +382,8 @@ public:
   /// Create a CORBA::SystemException given the interface repository ID.
   static CORBA_SystemException *create_system_exception (
       const char *id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    );
 
 
   /**

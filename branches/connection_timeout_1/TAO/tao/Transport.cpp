@@ -788,7 +788,7 @@ TAO_Transport::handle_input_i (TAO_Resume_Handle &rh,
         {
           if (TAO_debug_level > 2)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_LIB_TEXT("TAO (%P|%t) TAO::handle_input_i,")
+                        ACE_LIB_TEXT("TAO (%P|%t) Transport::handle_input_i,")
                         ACE_LIB_TEXT("error while parsing the head of the queue \n")));
 
           this->tms_->connection_closed ();

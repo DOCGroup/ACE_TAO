@@ -98,7 +98,6 @@ TAO_DIOP_Connector::close (void)
 int
 TAO_DIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 {
-
   TAO_DIOP_Endpoint *diop_endpoint =
     this->remote_endpoint (endpoint);
 

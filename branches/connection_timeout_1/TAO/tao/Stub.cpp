@@ -465,7 +465,7 @@ TAO_Stub::get_policy (CORBA::PolicyType type
   // e.g., to add methods for policy specific reconciliation, etc.
 
   return this->get_client_policy (type
-                                   ACE_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Policy_ptr
@@ -480,7 +480,7 @@ TAO_Stub::get_client_policy (CORBA::PolicyType type
   if (this->policies_ != 0)
     {
       result = this->policies_->get_policy (type
-                                             ACE_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
     }
 
@@ -488,7 +488,7 @@ TAO_Stub::get_client_policy (CORBA::PolicyType type
     {
       TAO_Policy_Current &policy_current = this->orb_core_->policy_current ();
       result = policy_current.get_policy (type
-                                           ACE_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
     }
 
@@ -502,7 +502,7 @@ TAO_Stub::get_client_policy (CORBA::PolicyType type
       if (policy_manager != 0)
         {
           result = policy_manager->get_policy (type
-                                                ACE_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (CORBA::Policy::_nil ());
         }
     }
@@ -574,7 +574,7 @@ TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types
     return 0;
 
   return this->policies_->get_policy_overrides (types
-                                                 ACE_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Boolean
@@ -635,7 +635,7 @@ TAO_Stub::sync_strategy (void)
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
   int has_synchronization;
-  int scope;
+  Messaging::SyncScope scope;
 
   this->orb_core_->call_sync_scope_hook (this,
                                          has_synchronization,
@@ -652,110 +652,117 @@ TAO_Stub::sync_strategy (void)
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
-CORBA::Policy *
+CORBA::Policy_ptr
 TAO_Stub::relative_roundtrip_timeout (void)
 {
-  CORBA::Policy *result = 0;
+  CORBA::Policy_var p;
 
   // No need to lock, the stub only changes its policies at
   // construction time...
   if (this->policies_ != 0)
-      result = this->policies_->get_cached_policy (TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
+    p = this->policies_->get_cached_policy (
+          TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
 
   // No need to lock, the object is in TSS storage....
-  if (result == 0)
+  if (CORBA::is_nil (p.in ()))
     {
       TAO_Policy_Current &policy_current =
         this->orb_core_->policy_current ();
-      result = policy_current.get_cached_policy (TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
+      p = policy_current.get_cached_policy (
+            TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
     }
 
   // @@ Must lock, but is is harder to implement than just modifying
   //    this call: the ORB does take a lock to modify the policy
   //    manager
-  if (result == 0)
+  if (CORBA::is_nil (p.in ()))
     {
       TAO_Policy_Manager *policy_manager =
         this->orb_core_->policy_manager ();
       if (policy_manager != 0)
-        result = policy_manager->get_cached_policy (TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
+        p = policy_manager->get_cached_policy (
+              TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
     }
 
-  if (result == 0)
-    result = this->orb_core_->get_default_policies ()->get_cached_policy (TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
+  if (CORBA::is_nil (p.in ()))
+    p = this->orb_core_->get_default_policies ()->get_cached_policy (
+          TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
 
-  return result;
+  return p._retn ();
 }
 
-#endif /* TAO_HAS_REALTIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
 
-CORBA::Policy *
+CORBA::Policy_ptr
 TAO_Stub::sync_scope (void)
 {
-  CORBA::Policy *result = 0;
+  CORBA::Policy_var p;
 
   // No need to lock, the stub only changes its policies at
   // construction time...
   if (this->policies_ != 0)
-    result = this->policies_->get_cached_policy (TAO_CACHED_POLICY_SYNC_SCOPE);
+    p = this->policies_->get_cached_policy (TAO_CACHED_POLICY_SYNC_SCOPE);
 
   // If there are no cached policies, look at the thread or ORB level
   // for the policy.
-  if (result == 0)
-    this->orb_core_->stubless_sync_scope (result);
+  if (CORBA::is_nil (p.in ()))
+    p = this->orb_core_->stubless_sync_scope ();
 
-  return result;
+  return p._retn ();
 }
 
 #endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-CORBA::Policy *
+CORBA::Policy_ptr
 TAO_Stub::buffering_constraint (void)
 {
-  CORBA::Policy *result = 0;
+  CORBA::Policy_var p;
 
   // No need to lock, the stub only changes its policies at
   // construction time...
 
   if (this->policies_ != 0)
     {
-      result =
-        this->policies_->get_cached_policy (TAO_CACHED_POLICY_BUFFERING_CONSTRAINT);
+      p =
+        this->policies_->get_cached_policy (
+          TAO_CACHED_POLICY_BUFFERING_CONSTRAINT);
     }
 
   // No need to lock, the object is in TSS storage....
-  if (result == 0)
+  if (CORBA::is_nil (p.in ()))
     {
       TAO_Policy_Current &policy_current =
         this->orb_core_->policy_current ();
 
-      result =
-        policy_current.get_cached_policy (TAO_CACHED_POLICY_BUFFERING_CONSTRAINT);
+      p =
+        policy_current.get_cached_policy (
+          TAO_CACHED_POLICY_BUFFERING_CONSTRAINT);
     }
 
   // @@ Must lock, but is is harder to implement than just modifying
   //    this call: the ORB does take a lock to modify the policy
   //    manager
-  if (result == 0)
+  if (CORBA::is_nil (p.in ()))
     {
       TAO_Policy_Manager *policy_manager =
         this->orb_core_->policy_manager ();
       if (policy_manager != 0)
         {
-          result =
-            policy_manager->get_cached_policy (TAO_CACHED_POLICY_BUFFERING_CONSTRAINT);
+          p =
+            policy_manager->get_cached_policy (
+              TAO_CACHED_POLICY_BUFFERING_CONSTRAINT);
         }
     }
 
-  if (result == 0)
-    result = this->orb_core_->default_buffering_constraint ();
+  if (CORBA::is_nil (p.in ()))
+    p = this->orb_core_->default_buffering_constraint ();
 
-  return result;
+  return p._retn ();
 }
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
@@ -767,7 +774,11 @@ TAO_Stub::buffering_constraint (void)
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
 template class auto_ptr<TAO_Policy_Set>;
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
 template class ACE_Auto_Basic_Ptr<TAO_Policy_Set>;
+#  endif  /* ACE_LACKS_AUTO_PTR */
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -776,7 +787,11 @@ template class ACE_Auto_Basic_Ptr<TAO_Policy_Set>;
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
 #pragma instantiate auto_ptr<TAO_Policy_Set>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Policy_Set>
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
+#    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Policy_Set>
+#  endif  /* ACE_LACKS_AUTO_PTR */
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 

@@ -958,7 +958,10 @@ const char* CORBA::PollableSet::_interface_repository_id (void) const
 
 // Default constructor.
 CORBA::PollableSet::NoPossiblePollable::NoPossiblePollable (void)
-  : CORBA_UserException ("IDL:omg.org/CORBA/PollableSet/NoPossiblePollable:1.0")
+  : CORBA_UserException (
+        "IDL:omg.org/CORBA/PollableSet/NoPossiblePollable:1.0",
+        "NoPossiblePollable"
+      )
 {
 }
 
@@ -969,7 +972,10 @@ CORBA::PollableSet::NoPossiblePollable::~NoPossiblePollable (void)
 
 // Copy constructor.
 CORBA::PollableSet::NoPossiblePollable::NoPossiblePollable (const ::CORBA::PollableSet::NoPossiblePollable &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
 }
 
@@ -984,7 +990,7 @@ CORBA::PollableSet::NoPossiblePollable::operator= (const ::CORBA::PollableSet::N
 CORBA::PollableSet::NoPossiblePollable *
 CORBA::PollableSet::NoPossiblePollable::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/PollableSet/NoPossiblePollable:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/PollableSet/NoPossiblePollable:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (NoPossiblePollable *, exc);
     }
@@ -1036,7 +1042,10 @@ void CORBA::PollableSet::NoPossiblePollable::_tao_decode (
 
 // Default constructor.
 CORBA::PollableSet::UnknownPollable::UnknownPollable (void)
-  : CORBA_UserException ("IDL:omg.org/CORBA/PollableSet/UnknownPollable:1.0")
+  : CORBA_UserException (
+        "IDL:omg.org/CORBA/PollableSet/UnknownPollable:1.0",
+        "UnknownPollable"
+      )
 {
 }
 
@@ -1047,7 +1056,10 @@ CORBA::PollableSet::UnknownPollable::~UnknownPollable (void)
 
 // Copy constructor.
 CORBA::PollableSet::UnknownPollable::UnknownPollable (const ::CORBA::PollableSet::UnknownPollable &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
 }
 
@@ -1062,7 +1074,7 @@ CORBA::PollableSet::UnknownPollable::operator= (const ::CORBA::PollableSet::Unkn
 CORBA::PollableSet::UnknownPollable *
 CORBA::PollableSet::UnknownPollable::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/PollableSet/UnknownPollable:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/PollableSet/UnknownPollable:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (UnknownPollable *, exc);
     }

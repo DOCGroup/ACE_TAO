@@ -238,7 +238,7 @@ CORBA::Policy::Policy (
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA::PolicyError &_tao_aggregate)
 {
   // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
+  if (strm << _tao_aggregate._rep_id ())
   {
     // now marshal the members (if any)
     if (
@@ -281,7 +281,7 @@ CORBA::Boolean TAO_Export operator>> (
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA::InvalidPolicies &_tao_aggregate)
 {
   // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
+  if (strm << _tao_aggregate._rep_id ())
   {
     // now marshal the members (if any)
     if (

@@ -31,7 +31,8 @@ ACE_RCSID (tao,
 
 
 CORBA_TypeCode::Bounds::Bounds (void)
-  : CORBA_UserException ("IDL:omg.org/CORBA/TypeCode/Bounds:1.0")
+  : CORBA_UserException ("IDL:omg.org/CORBA/TypeCode/Bounds:1.0",
+                         "Bounds")
 {
 }
 
@@ -72,8 +73,11 @@ void CORBA_TypeCode::Bounds::_tao_encode (
     ACE_ENV_ARG_DECL
   ) const
 {
-  if (cdr << this->_id ())
-    return;
+  if (cdr << this->_rep_id ())
+    {
+      return;
+    }
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -85,7 +89,8 @@ void CORBA_TypeCode::Bounds::_tao_decode (TAO_InputCDR &
 // ****************************************************************
 
 CORBA_TypeCode::BadKind::BadKind (void)
-  : CORBA_UserException ("IDL:omg.org/CORBA/TypeCode/BadKind:1.0")
+  : CORBA_UserException ("IDL:omg.org/CORBA/TypeCode/BadKind:1.0",
+                         "BadKind")
 {
 }
 
@@ -119,8 +124,11 @@ void CORBA_TypeCode::BadKind::_tao_encode (
     ACE_ENV_ARG_DECL
   ) const
 {
-  if (cdr << this->_id ())
-    return;
+  if (cdr << this->_rep_id ())
+    {
+      return;
+    }
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 

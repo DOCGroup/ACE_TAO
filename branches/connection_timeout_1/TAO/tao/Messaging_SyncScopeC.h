@@ -23,14 +23,12 @@
 #define _TAO_IDL_ORIG_MESSAGING_SYNCSCOPEC_H_
 
 #include "ace/pre.h"
-#include "tao/corbafwd.h"
+
+#include "corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "TAO_Export.h"
-#include "IOPC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -60,20 +58,16 @@ TAO_NAMESPACE  Messaging
   typedef CORBA::Short SyncScope;
   typedef CORBA::Short_out SyncScope_out;
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_SyncScope;
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_NONE;
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_WITH_TRANSPORT;
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_WITH_SERVER;
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_WITH_TARGET;
-  
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_EAGER_BUFFERING;
-  
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_DELAYED_BUFFERING;
-  
-  
+
+
 }
 TAO_NAMESPACE_CLOSE // module Messaging
 

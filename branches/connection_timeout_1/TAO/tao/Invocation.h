@@ -32,7 +32,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Synch_Reply_Dispatcher.h"
-#include "TAOC.h"
+#include "Messaging_SyncScopeC.h"
 #include "operation_details.h"
 #include "target_specification.h"
 
@@ -171,7 +171,7 @@ public:
   CORBA::Boolean received_location_forward (void) const;
 
   /// Accessor for the stub associated with this invocation.
-  TAO_Stub * stub(void);
+  TAO_Stub * stub (void);
 
   /// Return the TAO_Transport in use for the current Invocation
   /// object.
@@ -198,11 +198,6 @@ public:
   ACE_Time_Value *max_wait_time (void);
 
   CORBA::ULong& profile_index (void);
-
-protected:
-
-  //  int valid_end_point_found_;
-  //  int client_protocol_index
 
 protected:
 
@@ -246,7 +241,6 @@ protected:
   void location_forward_i (TAO_Stub *stubobj
                            ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-
 
 protected:
 
@@ -462,12 +456,12 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Accessor for private member.
-  TAO::SyncScope sync_scope (void);
+  Messaging::SyncScope sync_scope (void);
 
 private:
 
   /// Our sync scope.
-  TAO::SyncScope sync_scope_;
+  Messaging::SyncScope sync_scope_;
 };
 
 // ****************************************************************

@@ -1,3 +1,66 @@
+Fri Apr 26 18:24:02 2002  Balachandran Natarajan  <bala@guajira.cs.wustl.edu>
+
+	* tao/BoundsC.cpp:
+	* tao/BoundsC.i:
+	* tao/Cache_Entries.h:
+	* tao/ClientRequestInfo_i.cpp:  
+  	* tao/Environment.cpp:
+  	* tao/Exception.cpp:
+  	* tao/Exception.h:
+  	* tao/GIOP_Message_Base.cpp:
+  	* tao/GIOP_Message_Base.h:
+  	* tao/GIOP_Message_Generator_Parser_12.cpp:
+  	* tao/GIOP_Message_Lite.cpp:
+  	* tao/IIOP_Acceptor.cpp:
+  	* tao/IIOP_Connector.cpp:
+  	* tao/IIOP_Connector.h:
+  	* tao/IOPC.cpp:
+  	* tao/Invocation.cpp:
+  	* tao/Invocation.h:
+  	* tao/Invocation.i:
+  	* tao/Makefile:
+  	* tao/Messaging_SyncScopeC.cpp:
+  	* tao/Messaging_SyncScopeC.h:
+  	* tao/Messaging_SyncScopeC.i:
+  	* tao/NVList.cpp:
+  	* tao/ORB.cpp:
+  	* tao/ORBInitializer_Registry.cpp:
+  	* tao/ORBInitializer_Registry.h:
+  	* tao/ORB_Core.cpp:
+  	* tao/ORB_Core.h:
+  	* tao/ORB_Table.cpp:
+  	* tao/ORB_Table.h:
+  	* tao/ORB_Table.inl:
+  	* tao/PICurrent.cpp:
+  	* tao/PICurrent.inl:
+  	* tao/PolicyC.cpp:
+	* tao/PolicyC.i:
+	* tao/PollableC.cpp:
+	* tao/PortableInterceptorC.cpp:
+	* tao/PortableInterceptorC.i:
+	* tao/Stub.cpp:
+	* tao/Stub.h:
+	* tao/TAOC.cpp:
+	* tao/TAOC.h:
+	* tao/TAOC.i:
+	* tao/Transport.cpp:
+	* tao/Transport_Connector.cpp:
+	* tao/Transport_Connector.h:
+	* tao/Typecode.cpp:
+	* tao/WrongTransactionC.cpp:
+	* tao/WrongTransactionC.i:
+	* tao/default_resource.cpp:
+	* tao/orbconf.h:
+	* tao/Messaging/Makefile:
+	* tao/RTCORBA/Makefile:
+	* tao/Strategies/DIOP_Connector.cpp:
+	* tao/Strategies/DIOP_Connector.h:
+	* tao/Strategies/Makefile:
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.h:
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.h: Merged with the main trunk.
+
 Fri Apr 26 13:18:53 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Strategies/UIOP_Connector.cpp:

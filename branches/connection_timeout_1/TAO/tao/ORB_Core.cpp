@@ -245,7 +245,7 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-CORBA::Policy *
+CORBA::Policy_ptr
 TAO_ORB_Core::default_buffering_constraint (void) const
 {
   return this->default_policies_->
@@ -1824,6 +1824,7 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
       // contains references to objects, which themselves may contain
       // reference to this ORB.
       this->object_ref_table_.destroy ();
+      this->pi_current_ = 0;  // For the sake of consistency.
     }
 }
 
@@ -1845,7 +1846,8 @@ TAO_ORB_Core::destroy (ACE_ENV_SINGLE_ARG_DECL)
   //
 
   // Shutdown the ORB and block until the shutdown is complete.
-  this->shutdown (1 ACE_ENV_ARG_PARAMETER);
+  this->shutdown (1
+                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Now remove it from the ORB table so that it's ORBid may be
@@ -1860,38 +1862,79 @@ TAO_ORB_Core::destroy (ACE_ENV_SINGLE_ARG_DECL)
 void
 TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
 {
-  size_t len = 0;
+  size_t len = 0;   // The length of the interceptor array.
+  size_t ilen = 0;  // The incremental length of the interceptor array.
 
 #if TAO_HAS_INTERCEPTORS == 1
   TAO_ClientRequestInterceptor_List::TYPE &client_interceptors =
     this->client_request_interceptors_.interceptors ();
 
   len = client_interceptors.size ();
+  ilen = len;
   for (size_t i = 0; i < len; ++i)
     {
-      client_interceptors[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      // Destroy the interceptors in reverse order in case the array
+      // list is only partially destroyed and another invocation
+      // occurs afterwards.
+      --ilen;
+
+      client_interceptors[ilen]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
+
+      // Since Interceptor::destroy() can throw an exception, decrease
+      // the size of the interceptor array incrementally since some
+      // interceptors may not have been destroyed yet.  Note that this
+      // size reduction is fast since no memory is actually
+      // deallocated.
+      client_interceptors.size (ilen);
     }
 
   TAO_ServerRequestInterceptor_List::TYPE &server_interceptors =
     this->server_request_interceptors_.interceptors ();
 
   len = server_interceptors.size ();
+  ilen = len;
   for (size_t j = 0; j < len; ++j)
     {
-      server_interceptors[j]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      // Destroy the interceptors in reverse order in case the array
+      // list is only partially destroyed and another invocation
+      // occurs afterwards.
+      --ilen;
+
+      server_interceptors[ilen]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
+
+      // Since Interceptor::destroy() can throw an exception, decrease
+      // the size of the interceptor array incrementally since some
+      // interceptors may not have been destroyed yet.  Note that this
+      // size reduction is fast since no memory is actually
+      // deallocated.
+      server_interceptors.size (ilen);
     }
+
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
   TAO_IORInterceptor_List::TYPE &ior_interceptors =
     this->ior_interceptors_.interceptors ();
 
   len = ior_interceptors.size ();
+  ilen = len;
   for (size_t k = 0; k < len; ++k)
     {
-      ior_interceptors[k]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      // Destroy the interceptors in reverse order in case the array
+      // list is only partially destroyed and another invocation
+      // occurs afterwards.
+      --ilen;
+
+      ior_interceptors[ilen]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
+
+      // Since Interceptor::destroy() can throw an exception, decrease
+      // the size of the interceptor array incrementally since some
+      // interceptors may not have been destroyed yet.  Note that this
+      // size reduction is fast since no memory is actually
+      // deallocated.
+      ior_interceptors.size (ilen);
     }
 }
 
@@ -2513,7 +2556,7 @@ TAO_ORB_Core::implrepo_service (void)
 void
 TAO_ORB_Core::call_sync_scope_hook (TAO_Stub *stub,
                                     int &has_synchronization,
-                                    int &scope)
+                                    Messaging::SyncScope &scope)
 {
   if (TAO_ORB_Core::sync_scope_hook_ == 0)
     {
@@ -2526,18 +2569,18 @@ TAO_ORB_Core::call_sync_scope_hook (TAO_Stub *stub,
 
 TAO_Sync_Strategy &
 TAO_ORB_Core::get_sync_strategy (TAO_Stub *,
-                                 int &scope)
+                                 Messaging::SyncScope &scope)
 {
 
-  if (scope == TAO::SYNC_WITH_TRANSPORT ||
-      scope == TAO::SYNC_WITH_SERVER ||
-      scope == TAO::SYNC_WITH_TARGET)
+  if (scope == Messaging::SYNC_WITH_TRANSPORT
+      || scope == Messaging::SYNC_WITH_SERVER
+      || scope == Messaging::SYNC_WITH_TARGET)
     return this->transport_sync_strategy ();
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-  if (scope == TAO::SYNC_NONE ||
-      scope == TAO::SYNC_EAGER_BUFFERING)
+  if (scope == Messaging::SYNC_NONE
+      || scope == TAO::SYNC_EAGER_BUFFERING)
     return this->eager_buffering_sync_strategy ();
 
   if (scope == TAO::SYNC_DELAYED_BUFFERING)
@@ -2557,9 +2600,11 @@ TAO_ORB_Core::set_sync_scope_hook (Sync_Scope_Hook hook)
 
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
 
-void
-TAO_ORB_Core::stubless_sync_scope (CORBA::Policy *&result)
+CORBA::Policy_ptr
+TAO_ORB_Core::stubless_sync_scope (void)
 {
+  CORBA::Policy_var result;
+
   // No need to lock, the object is in TSS storage....
   TAO_Policy_Current &policy_current =
     this->policy_current ();
@@ -2568,18 +2613,20 @@ TAO_ORB_Core::stubless_sync_scope (CORBA::Policy *&result)
   // @@ Must lock, but is is harder to implement than just modifying
   //    this call: the ORB does take a lock to modify the policy
   //    manager
-  if (result == 0)
+  if (CORBA::is_nil (result.in ()))
     {
       TAO_Policy_Manager *policy_manager =
         this->policy_manager ();
       if (policy_manager != 0)
-        result = policy_manager->get_cached_policy (TAO_CACHED_POLICY_SYNC_SCOPE);
+        result = policy_manager->get_cached_policy (
+                   TAO_CACHED_POLICY_SYNC_SCOPE);
     }
 
-  if (result == 0)
-    result = this->default_policies_->get_cached_policy (TAO_CACHED_POLICY_SYNC_SCOPE);
+  if (CORBA::is_nil (result.in ()))
+    result = this->default_policies_->get_cached_policy (
+               TAO_CACHED_POLICY_SYNC_SCOPE);
 
-  return;
+  return result._retn ();
 }
 
 #endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
@@ -2606,45 +2653,49 @@ TAO_ORB_Core::set_timeout_hook (Timeout_Hook hook)
   return;
 }
 
-CORBA::Policy *
+CORBA::Policy_ptr
 TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
 {
-  CORBA::Policy *result = 0;
+  CORBA::Policy_var result;
 
-#if (TAO_HAS_CORBA_MESSAGING == 1 && TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+#if (TAO_HAS_CORBA_MESSAGING == 1 \
+     && TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
   // No need to lock, the object is in TSS storage....
   TAO_Policy_Current &policy_current =
     this->policy_current ();
-  result = policy_current.get_cached_policy (TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
+  result = policy_current.get_cached_policy (
+             TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
 
   // @@ Must lock, but is is harder to implement than just modifying
   //    this call: the ORB does take a lock to modify the policy
   //    manager
-  if (result == 0)
+  if (CORBA::is_nil (result.in ()))
     {
       TAO_Policy_Manager *policy_manager =
         this->policy_manager ();
       if (policy_manager != 0)
-        result = policy_manager->get_cached_policy (TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
+        result = policy_manager->get_cached_policy (
+          TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
     }
 
-  if (result == 0)
-    result = this->default_policies_->get_cached_policy (TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
+  if (CORBA::is_nil (result.in ()))
+    result = this->default_policies_->get_cached_policy (
+               TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 && TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1
+          && TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
-  return result;
-
+  return result._retn ();
 }
 
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-CORBA::Policy *
+CORBA::Policy_ptr
 TAO_ORB_Core::get_cached_policy (TAO_Cached_Policy_Type type)
 {
-  CORBA::Policy *result = 0;
+  CORBA::Policy_var result;
 
   // @@ Must lock, but is is harder to implement than just modifying
   //    this call: the ORB does take a lock to modify the policy
@@ -2654,10 +2705,10 @@ TAO_ORB_Core::get_cached_policy (TAO_Cached_Policy_Type type)
   if (policy_manager != 0)
     result = policy_manager->get_cached_policy (type);
 
-  if (result == 0)
+  if (CORBA::is_nil (result.in ()))
     result = this->get_default_policies ()->get_cached_policy (type);
 
-  return result;
+  return result._retn ();
 }
 
 #endif /* (TAO_HAS_CORBA_MESSAGING == 1) */

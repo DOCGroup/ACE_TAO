@@ -97,7 +97,8 @@ TAO_NAMESPACE_DEFINE (const CORBA::Short, UNSUPPORTED_POLICY_VALUE, 4)
 TAO_NAMESPACE_END
 // Default constructor.
 CORBA::PolicyError::PolicyError (void)
-  : CORBA_UserException ("IDL:omg.org/CORBA/PolicyError:1.0")
+  : CORBA_UserException ("IDL:omg.org/CORBA/PolicyError:1.0",
+                         "PolicyError")
 {
 }
 
@@ -108,7 +109,10 @@ CORBA::PolicyError::~PolicyError (void)
 
 // Copy constructor.
 CORBA::PolicyError::PolicyError (const ::CORBA::PolicyError &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
   this->reason = _tao_excp.reason;
 }
@@ -131,7 +135,7 @@ void CORBA::PolicyError::_tao_any_destructor (void *_tao_void_pointer)
 CORBA::PolicyError *
 CORBA::PolicyError::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/PolicyError:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/PolicyError:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (PolicyError *, exc);
     }
@@ -194,7 +198,8 @@ void CORBA::PolicyError::_tao_decode (
 CORBA::PolicyError::PolicyError (
     CORBA::PolicyErrorCode _tao_reason
   )
-  : CORBA_UserException ("IDL:omg.org/CORBA/PolicyError:1.0")
+  : CORBA_UserException ("IDL:omg.org/CORBA/PolicyError:1.0",
+                         "PolicyError")
 {
   this->reason = _tao_reason;
 }
@@ -362,7 +367,10 @@ void CORBA::InvalidPolicies::_tao_seq_UShort::_tao_any_destructor (void *_tao_vo
 
 // Default constructor.
 CORBA::InvalidPolicies::InvalidPolicies (void)
-  : CORBA_UserException ("IDL:omg.org/CORBA/InvalidPolicies:1.0")
+  : CORBA_UserException (
+        "IDL:omg.org/CORBA/InvalidPolicies:1.0",
+        "InvalidPolicies"
+      )
 {
 }
 
@@ -373,7 +381,10 @@ CORBA::InvalidPolicies::~InvalidPolicies (void)
 
 // Copy constructor.
 CORBA::InvalidPolicies::InvalidPolicies (const ::CORBA::InvalidPolicies &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
   this->indices = _tao_excp.indices;
 }
@@ -396,7 +407,7 @@ void CORBA::InvalidPolicies::_tao_any_destructor (void *_tao_void_pointer)
 CORBA::InvalidPolicies *
 CORBA::InvalidPolicies::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/InvalidPolicies:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/InvalidPolicies:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (InvalidPolicies *, exc);
     }
@@ -459,7 +470,10 @@ void CORBA::InvalidPolicies::_tao_decode (
 CORBA::InvalidPolicies::InvalidPolicies (
     const CORBA::InvalidPolicies::_tao_seq_UShort & _tao_indices
   )
-  : CORBA_UserException ("IDL:omg.org/CORBA/InvalidPolicies:1.0")
+  : CORBA_UserException (
+        "IDL:omg.org/CORBA/InvalidPolicies:1.0",
+        "InvalidPolicies"
+      )
 {
   this->indices = _tao_indices;
 }

@@ -4,7 +4,11 @@
 /**
  *  @file Connector.h
  *
+<<<<<<< Transport_Connector.h
  *  $Id$
+=======
+ *  $Id$
+>>>>>>> 1.3.2.1
  *
  *  Define the interface for the Connector component in TAO's
  *  pluggable protocol framework.

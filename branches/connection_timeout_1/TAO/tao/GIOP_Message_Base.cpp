@@ -905,7 +905,7 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
       if (response_required)
         {
           result = this->send_reply_exception (transport,
-                                               this->orb_core_,
+                                               output,
                                                request_id,
                                                &request.reply_service_info (),
                                                &ACE_ANY_EXCEPTION);
@@ -963,7 +963,7 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
                                     CORBA::COMPLETED_MAYBE);
 
           result = this->send_reply_exception (transport,
-                                               this->orb_core_,
+                                               output,
                                                request_id,
                                                &request.reply_service_info (),
                                                &exception);
@@ -1357,31 +1357,12 @@ TAO_GIOP_Message_Base::
 int
 TAO_GIOP_Message_Base::send_reply_exception (
     TAO_Transport *transport,
-    TAO_ORB_Core* orb_core,
+    TAO_OutputCDR &output,
     CORBA::ULong request_id,
     IOP::ServiceContextList *svc_info,
     CORBA::Exception *x
   )
 {
-  // Create a new output CDR stream
-  char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
-#if defined(ACE_HAS_PURIFY)
-  (void) ACE_OS::memset (repbuf,
-                         '\0',
-                         sizeof repbuf);
-#endif /* ACE_HAS_PURIFY */
-  TAO_OutputCDR output (repbuf,
-                        sizeof repbuf,
-                        TAO_ENCAP_BYTE_ORDER,
-                        orb_core->output_cdr_buffer_allocator (),
-                        orb_core->output_cdr_dblock_allocator (),
-                        orb_core->output_cdr_msgblock_allocator (),
-                        orb_core->orb_params ()->cdr_memcpy_tradeoff (),
-                        TAO_DEF_GIOP_MAJOR,
-                        TAO_DEF_GIOP_MINOR,
-                        orb_core->to_iso8859 (),
-                        orb_core->to_unicode ());
-
   TAO_Pluggable_Reply_Params_Base reply_params;
   reply_params.request_id_ = request_id;
   reply_params.svc_ctx_.length (0);
