@@ -1,3 +1,10 @@
+Wed May 23 11:37:02 2001  Paul Calabrese <calabrese_p@ociweb.com>
+
+        * docs/Options.html:
+
+          Added the -ORBLogFile option.  Removed the -ORBCollocation
+          yes option (it is deprecated).  Did some minor reformatting.
+
 Wed May 23 09:36:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * examples/PluggableUDP/tests/Basic/client.dsp:
