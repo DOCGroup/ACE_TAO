@@ -1,3 +1,29 @@
+Fri Jul 07 15:04:43 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+	
+	* tao/RT_Policy_i.h: 
+	  
+	  Removed code review comment.
+        
+        * tao/RT_Policy_i.cpp:
+
+          Modified <_tao_encode> and <_tao_decode> imlpementation
+          for client exposed policies to make those more compact
+          and/or efficient.
+
+	* tao/RTCORBAC.cpp: 
+
+	  Removed code review comment.
+
+	* tao/Profile.cpp (policies): 
+
+	  Changed memory allocation model to improve
+	  the method performance.
+
+	* tao/Policy_Factory.h:
+	  
+	  Extended class documentation.
+	  
+
 Fri Jul  7 14:47:46 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/IFR_Service/Makefile:
