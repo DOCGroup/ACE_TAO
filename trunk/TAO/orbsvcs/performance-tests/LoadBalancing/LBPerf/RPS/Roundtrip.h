@@ -7,18 +7,6 @@
 #include /**/ "ace/pre.h"
 
 #include "TestS.h"
-#include <iostream>
-#include <stdlib.h>
-#include <unistd.h>
-#include <map>
-#include <string>
-#include <vector>
-#include <set>
-#include <iterator>
-#include <functional>
-#include <fstream>
-#include <sys/types.h>
-#include <regex.h>
 
 #if defined (_MSC_VER)
 # if (_MSC_VER >= 1200)
@@ -38,14 +26,7 @@ public:
 
   // = The skeleton methods
   virtual Test::Timestamp test_method (Test::Timestamp send_time,
-		                       Test::number cl_number,
-		                       Test::number it_number
-                                       ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual Test::Timestamp test_method_2 (Test::Timestamp send_time,
-		                       Test::number cl_number,
-		                       Test::number it_number
+		                       Test::number cl_number
                                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 

@@ -120,7 +120,7 @@ main (int argc, char *argv[])
       for (int j = 0; j < 100; ++j)
         {
           ACE_hrtime_t start = 0;
-          (void) roundtrip->test_method_2 (start, number, j ACE_ENV_ARG_PARAMETER);
+          (void) roundtrip->test_method (start, number ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -145,8 +145,8 @@ main (int argc, char *argv[])
 	  }
 	  */
 
-          (void) roundtrip->test_method (start, number,
-					 i ACE_ENV_ARG_PARAMETER);
+          (void) roundtrip->test_method (start, number
+					 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
