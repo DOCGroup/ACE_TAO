@@ -1,3 +1,15 @@
+Tue Sep 29 12:20:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/releasenotes/ec.html: 
+	  Documented the latest feaures of the EC.
+
+	* docs/releasenotes/orbcore.html: 
+	  Documented some of the latest optimizations implemented in the
+	  ORB.
+
+	* docs/releasenotes/TODO.html: 
+	  Yet another task for the EC.
+
 Tue Sep 29 11:08:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile: 

@@ -28,7 +28,7 @@
       subsystems. (See: <a href="../configurations.html">Configuration
       Guide</a>.)</LI>
 
-  <LI>Supports <TT>resolve_initial_references("&ltCORBA Service&gt")</TT>
+  <LI>Supports <TT>resolve_initial_references("&lt;CORBA Service&gt;")</TT>
 	using ACE support for multicast.</LI>
 </UL><p>
 
@@ -54,11 +54,6 @@
       only sane way to get arond the problem.  Though there may be a
       better way.<p>
 
-  <LI>The current demarshalling scheme may not work in cases of
-      complex types such as sequences of unions or anys or object
-      references.  The engine has difficulty determining the dynamic
-      type of the objects.<p>
-
   <LI>Object references for objects dynamically created within
       a server may not have proper host.</em> (See also <a
       href="#hostfix">recent fix</a>.)
@@ -82,6 +77,37 @@
 <b>Recently Completed Work:</b>
 
 <UL>
+      <LI>The ORB&nbsp;Core is ready to throw exceptions received from
+	the wire as a native C++ exception.
+	Similarly, on the server side, native C++ exceptions are
+	catched and sent over the wire to the client.
+      </LI>
+
+      <LI>Added new option <CODE>-ORBiioplite</CODE> when this option
+	is enabled the ORB removes a few fields of the GIOP messages
+	that are normally not used, such as the version numbers, the
+	magic 'GIOP'  string, the service context, the Principal
+	object, etc.
+	This option give us a slight performance improvement but it is
+	important for extremely low-latency systems (such as
+	avionics),
+	that fortunately have tightly controlled
+	environments so this kind of optimization is safe to use.
+      </LI>
+
+      <LI>The buffers for outgoing CDR streams are allocated from TSS
+	memory pools,
+	reducing locking on the critical path.
+      </LI>
+
+      <LI>Several optimizations on the critical path have been
+	implemented,
+	carefully removing excesive locking,
+	memory allocations and data copying.
+	In some cases special demarshaling and marshaling functions
+	where written for the request headers.
+      </LI>
+
   <li>Adding a new option into TAO_Resource_Factory to control the
       internal lock used by ORB's reacotr.  With
       "<code>-ORBreactorlock null</code>" added into
@@ -424,18 +450,11 @@
 
   <li>Internal restructuring:
       <ol>
-        <li>Remove <code>_FAR</code> from all code.</li>
-
-        <li>Rework underlayment to eliminate <code>IUnknown</code> class.</li>
-
         <li>Create some sort of internal "request" object which
             carries enough context to suport deferred method invocation
             such as one might find in the thread-pool approach or
             wherever queuing might occur.</li>
 
-        <li>Rethink the entire memory allocation model used by the
-            ORB.  The current one from SSIIOP may no longer be suitable
-            for our purposes.</li>
       </ol>
   </li>
 
@@ -466,12 +485,6 @@
 
         <li>Compile and verify ACE and TAO on Linux using the Kuck and
             Associates, Inc. (KAI) compiler tools.</li>
-        <LI>CORBA::TypeCode is causing a memory leak.  Since objects
-            of this type are rather static in nature, this is
-            currently not a big deal.  However, it should be fixed
-            soon. </LI>
-        <LI>CORBA_Exception::Release is not working correctly as the
-            memory is never really freed. </LI>
       </ol>
   </li>
 
@@ -489,7 +502,6 @@
             because of the high overhead associated with it. </LI>
       </ol>
   </li>
-
 
 </UL>
 
