@@ -15,3 +15,7 @@ unix2dos diffs\UShortSeq.diff
 diff -wub orig/DomainC.cpp DomainC.cpp > diffs/Domain.diff
 unix2dos diffs\Domain.diff
 
+diff -wub orig/GIOPS.cpp GIOPS.cpp > diffs/GIOP.diff
+diff -wub orig/GIOPS.h GIOPS.h >> diffs/GIOP.diff
+unix2dos diffs\GIOP.diff
+

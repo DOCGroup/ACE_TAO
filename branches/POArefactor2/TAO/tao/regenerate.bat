@@ -1,5 +1,9 @@
 tao_idl.exe -o orig -Gp -Gd -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao PortableInterceptor.pidl
+tao_idl.exe -o orig -Gp -Gd -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao Current.pidl
+tao_idl.exe -o orig -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao AnySeq.pidl
+tao_idl.exe -o orig -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao CharSeq.pidl
 tao_idl.exe -o orig -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao WStringSeq.pidl
+tao_idl.exe -o orig -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao GIOP.pidl
 tao_idl.exe -o orig -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao WCharSeq.pidl
 tao_idl.exe -o orig -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao ULongSeq.pidl
 tao_idl.exe -o orig -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao ULongLongSeq.pidl
@@ -34,3 +38,4 @@ patch < diffs/Policy.diff
 patch < diffs/Typecode_types.diff
 patch < diffs/UShortSeq.diff
 patch < diffs/Domain.diff
+patch < diffs/GIOP.diff

@@ -38,6 +38,7 @@
 #include "tao/CORBA_methods.h"
 #include "tao/Sequence_T.h"
 #include "tao/Typecode_typesC.h"
+#include "tao/TAO_Export.h"
 
 // Forward declarations.
 class TAO_InputCDR;
