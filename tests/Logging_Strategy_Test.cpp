@@ -169,7 +169,7 @@ count_files (void)
 static int
 get_statistic (char *f_name)
 {
-  struct stat buf;
+  ACE_stat buf;
   int result;
 
   // Get data associated with "file_name":
