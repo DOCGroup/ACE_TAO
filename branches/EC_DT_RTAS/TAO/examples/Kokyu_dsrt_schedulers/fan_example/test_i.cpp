@@ -153,5 +153,6 @@ Simple_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "shutdown request from client\n"));
+  this->server_->shutdown();
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
