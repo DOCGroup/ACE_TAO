@@ -407,6 +407,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
   // bursty contention during numerous short calls to the same server.
 
   CDR::mb_align (&msg.start_);
+
   if (CDR::grow (&msg.start_, TAO_GIOP_HEADER_LEN) == -1)
     return TAO_GIOP::MessageError;
 
