@@ -18,17 +18,15 @@ LDLIBS = ../IDL_Cubit/.obj/cubitC.o \
 	 ../IDL_Cubit/.obj/cubitS.o \
 	 -lorbsvcs -lTAO
 
-PROG_SRCS = client.cpp dii_cubit_test.cpp
+PROG_SRCS = client.cpp
 
 LSRC = $(PROG_SRCS)
 
 CUBIT_CLT_OBJS = client.o 
 
-DII_CUBIT_TEST_OBJS = dii_cubit_test.o
-
 CFLAGS += -I../IDL_Cubit
 
-BIN = client dii_cubit_test
+BIN = client
 BUILD = $(BIN) ../IDL_Cubit/server
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 VBIN = $(BIN:%=%$(VAR))
@@ -63,9 +61,6 @@ client:	$(addprefix $(VDIR),$(CUBIT_CLT_OBJS))
 ../IDL_Cubit/server:
 	cd ../IDL_Cubit; $(MAKE) BUILD=server
 	
-dii_cubit_test: $(addprefix $(VDIR),$(DII_CUBIT_TEST_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
-
 realclean: clean
 	-/bin/rm -rf cubitC.* cubitS.* cubitS_T.*
 
