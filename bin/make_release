@@ -398,9 +398,9 @@ sub check_workspace () {
   if ($kit =~ /^ace/) {
     chdir 'ACE_wrappers'  ||  die "$0: unable to chdir ACE_wrappers\n";
   } elsif ($kit =~ /tao/) {
-    chdir 'ACE_wrappers/TAO' || die "$0: unable to chdir ACE_wrappers/TAO\n";
+    chdir 'TAO' || die "$0: unable to chdir ACE_wrappers/TAO\n";
   } elsif ($kit =~ /ciao/) {
-    chdir 'ACE_wrappers/TAO/CIAO' || die "$0: unable to chdir ACE_wrappers/TAO/CIAO\n";
+    chdir 'CIAO' || die "$0: unable to chdir ACE_wrappers/TAO/CIAO\n";
   }
 
   if (@out_of_date) {
