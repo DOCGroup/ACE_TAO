@@ -35,7 +35,7 @@ extern "C" {
 
 #ifndef PACE_SOCKLEN_T
 #define PACE_SOCKLEN_T
-# if PACE_LYNXOS == 0x300 || PACE_LYNXOS == 0x310 || PACE_SUNOS == 551 || PACE_SUNOS == 560
+# if PACE_LYNXOS == 0x300 || PACE_LYNXOS == 0x310 || PACE_SUNOS == 551 || PACE_SUNOS == 560 || PACE_QNX == 600
     typedef int pace_socklen_t;
 # else
     typedef socklen_t pace_socklen_t;

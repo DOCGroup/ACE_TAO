@@ -99,6 +99,11 @@ ifeq ($(PACE_SYSNAME),HP-UX)
   CFLAGS += -DPACE_HAS_POSIX -D_REENTRANT
 endif
 
+ifeq ($(PACE_SYSNAME),QNX)
+  VPATH := .:posix:$(VPATH)
+  CFLAGS += -DPACE_QNX=$(PACE_SYSVER) -D_REENTRANT
+endif
+
 ifeq ($(debug),)
   ifeq (,$(findstring $(CFLAGS),$(CCFLAGS)))
     CCFLAGS += -DPACE_NDEBUG
