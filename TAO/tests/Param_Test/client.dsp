@@ -81,6 +81,29 @@ LINK32=link.exe
 
 # Name "client - Win32 Release"
 # Name "client - Win32 Debug"
+# Begin Group "Source Files"
+
+# PROP Default_Filter ".cpp"
+# Begin Source File
+
+SOURCE=.\any.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\bd_long_seq.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\bd_short_seq.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\bd_str_seq.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\bd_struct_seq.cpp
+# End Source File
 # Begin Source File
 
 SOURCE=.\client.cpp
@@ -91,12 +114,216 @@ SOURCE=.\driver.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\fixed_array.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\fixed_struct.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\helper.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\nested_struct.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\objref.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\options.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\Param_TestC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Param_TestS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\results.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\short.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\tmplinst.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\typecode.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ub_any_seq.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ub_long_seq.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ub_objref_seq.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ub_short_seq.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ub_str_seq.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ub_string.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ub_struct_seq.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\var_array.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\var_struct.cpp
+# End Source File
+# End Group
+# Begin Group "Header Files"
+
+# PROP Default_Filter ".h"
+# Begin Source File
+
+SOURCE=.\any.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\bd_long_seq.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\bd_short_seq.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\bd_str_seq.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\bd_struct_seq.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\client.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\driver.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\fixed_array.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\fixed_struct.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\helper.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\nested_struct.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\objref.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\options.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Param_TestC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Param_TestS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\results.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\short.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\typecode.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ub_any_seq.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ub_long_seq.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ub_objref_seq.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ub_short_seq.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ub_str_seq.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ub_string.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ub_struct_seq.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\var_array.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\var_struct.h
+# End Source File
+# End Group
+# Begin Group "Include Files"
+
+# PROP Default_Filter ".i"
+# Begin Source File
+
+SOURCE=.\Param_TestC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Param_TestS.i
+# End Source File
+# End Group
+# Begin Group "IDL Files"
+
+# PROP Default_Filter ".idl"
 # Begin Source File
 
 SOURCE=.\param_test.idl
@@ -158,21 +385,6 @@ BuildCmds= \
 !ENDIF 
 
 # End Source File
-# Begin Source File
-
-SOURCE=.\param_testC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\param_testS.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\results.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\tests.cpp
-# End Source File
+# End Group
 # End Target
 # End Project
