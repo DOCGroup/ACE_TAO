@@ -1,3 +1,7 @@
+Sat Nov 14 14:29:47 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.2.41 released.
+
 Fri Nov 13 18:26:24 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Typecode_Constants.cpp (init): Qualified CompletionStatus to
