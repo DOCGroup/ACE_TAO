@@ -151,7 +151,7 @@ InputPath=.\Load_Balancer.idl
 InputName=Load_Balancer
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	tao_idl $(InputName).idl
+	tao_idl -Ge 1 $(InputName).idl
 
 # End Custom Build
 

@@ -162,8 +162,8 @@ USERDEP__IDENT="..\..\..\bin\tao_idl.exe"
 InputPath=.\Identity.idl
 InputName=Identity
 
-"$InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	tao_idl $(InputName).idl
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	tao_idl -Ge 1 $(InputName).idl
 
 # End Custom Build
 
@@ -184,7 +184,7 @@ InputPath=.\Load_Balancer.idl
 InputName=Load_Balancer
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	tao_idl $(InputName).idl
+	tao_idl -Ge 1 $(InputName).idl
 
 # End Custom Build
 
