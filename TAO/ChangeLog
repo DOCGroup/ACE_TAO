@@ -1,3 +1,10 @@
+Tue Apr 22 13:51:45 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp:
+
+          Only #include <sys/loadavg.h> if ACE_HAS_SYS_LOADAVG_H is defined. 
+          It only exists with SunOS 5.7 and later.
+
 Tue Apr 22 14:26:31 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tao\RTPortableServer\RT_Servant_Dispatcher.cpp: 
