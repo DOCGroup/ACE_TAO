@@ -2,6 +2,7 @@
 // $Id$
 
 #include "CosECConsumer.h"
+#include <ace/Get_Opt.h>
 
 CosECConsumer::CosECConsumer ()
   :event_count_ (1)
