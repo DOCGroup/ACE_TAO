@@ -1,3 +1,13 @@
+Wed Oct 22 05:59:16 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/tests/RTCosScheduling/Makefile.RTCosScheduling_Server: 
+	* orbsvcs/tests/RTCosScheduling/Makefile.RTCosScheduling_Client: 
+	* orbsvcs/tests/RTCosScheduling/RTCosScheduling.mpc: 
+	  Made the IDL_Files section empty for client and server
+	  projects. If we did not do this, the stub and skeleton files
+	  were getting compiled once with building the commonlib file and
+	  again while buidling the server and client. 
+
 Tue Oct 21 12:13:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ORB.h: Removed virtual qualifiers that went in as part of
