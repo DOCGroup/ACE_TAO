@@ -1,3 +1,8 @@
+Thu Mar 23 17:38:34 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/MEM_SAP.cpp: Removed a redundant "defined".  Thanks to David
+	  Wicks <swicks@continuum-corp.com> for noticing this.
+
 Thu Mar 23 15:26:52 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* PROBLEM-REPORT-FORM:
