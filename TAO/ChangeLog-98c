@@ -1,3 +1,8 @@
+Thu Oct 08 09:50:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/releasenotes/orbcore.html (Miscellany): Fixed a dead link.
+	  Thanks to Mark Weel <weel@lucent.com> for reporting this.
+
 Wed Oct 07 23:27:07 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.22 released.
