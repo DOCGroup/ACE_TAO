@@ -300,14 +300,16 @@ typedef ACE_UINT16 ACE_USHORT16;
 #  define ACE_UINT64_LITERAL(n) n ## ull
 #endif /* ! ACE_WIN32 */
 
-// cast from UINT64 to a double requires an
-// intermediate cast to INT64 on some platforms
+// Cast from UINT64 to a double requires an intermediate cast to INT64
+// on some platforms.
 #if defined (ACE_WIN32)
-#  define ACE_UINT64_DBLCAST_ADAPTER(n) \
-  ACE_static_cast (__int64, n)
-#else  /* ! ACE_WIN32 */
+#  define ACE_UINT64_DBLCAST_ADAPTER(n) ACE_static_cast (__int64, n)
+#elif defined (ACE_LACKS_LONGLONG_T)
+   // Only use the low 32 bits.
+#  define ACE_UINT64_DBLCAST_ADAPTER(n) ACE_U64_TO_U32 (n)
+#else  /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */
 #  define ACE_UINT64_DBLCAST_ADAPTER(n) n
-#endif /* ! ACE_WIN32 */
+#endif /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */
 
 
 // The number of bytes in a void *.
