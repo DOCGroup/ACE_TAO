@@ -64,10 +64,10 @@ public:
   // Returns a pointer to the underlying <fd_set>.  Returns 0 if
   // <size_> == 0.
 
-#if defined(ACE_HAS_BIG_FD_SET)
+#if defined (ACE_HAS_BIG_FD_SET)
   void operator= (const ACE_Handle_Set &);
   // Assignment operator optimizes for cases where <size_> == 0.
-#endif
+#endif /* ACE_HAS_BIG_FD_SET */
 
   void dump (void) const;
   // Dump the state of an object.
@@ -82,10 +82,10 @@ private:
   ACE_HANDLE max_handle_;
   // Current max handle.
 
-#if defined(ACE_HAS_BIG_FD_SET)
+#if defined (ACE_HAS_BIG_FD_SET)
   ACE_HANDLE min_handle_;
   // Current min handle.
-#endif
+#endif /* ACE_HAS_BIG_FD_SET */
 
   fd_set mask_;
   // Bitmask.
@@ -103,10 +103,10 @@ private:
   // Counts the number of bits enabled in N.  Uses a table lookup to
   // speed up the count.
 
-#if defined(ACE_HAS_BIG_FD_SET)
+#if defined (ACE_HAS_BIG_FD_SET)
   static int bitpos (u_long bit);
   // Find the bitpos in bit counting of right to left.
-#endif
+#endif /* ACE_HAS_BIG_FD_SET */
 
   void set_max (ACE_HANDLE max);
   // Resets the MAX_FD after a clear of the original MAX_FD.
@@ -146,9 +146,9 @@ private:
 
 #if defined (ACE_WIN32)
   u_int handle_index_; 
-#elif !defined(ACE_HAS_BIG_FD_SET) 
+#elif !defined (ACE_HAS_BIG_FD_SET) 
   int handle_index_; 
-#elif defined(ACE_HAS_BIG_FD_SET)
+#elif defined (ACE_HAS_BIG_FD_SET)
   int handle_index_; 
   u_long oldlsb_;
 #endif /* ACE_WIN32 */
@@ -157,18 +157,18 @@ private:
   int word_num_;
   // Number of the word we're iterating over (typically between 0..7).
 
-#if defined(ACE_HAS_BIG_FD_SET)
+#if defined (ACE_HAS_BIG_FD_SET)
   int word_max_;
   // Number max of the words with a possible bit on.
-#endif
+#endif /* ACE_HAS_BIG_FD_SET */
 
-#if !defined (ACE_WIN32) && !defined(ACE_HAS_BIG_FD_SET)
+#if !defined (ACE_WIN32) && !defined (ACE_HAS_BIG_FD_SET)
   fd_mask word_val_;
   // Value of the bits in the word we're iterating on.
-#elif !defined (ACE_WIN32) && defined(ACE_HAS_BIG_FD_SET)
+#elif !defined (ACE_WIN32) && defined (ACE_HAS_BIG_FD_SET)
   u_long word_val_;
   // Value of the bits in the word we're iterating on.
-#endif /* ACE_WIN32 && ACE_HAS_BIG_FD_SET */
+#endif /* !ACE_WIN32 && !ACE_HAS_BIG_FD_SET */
 };
 
 #if defined (__ACE_INLINE__)
