@@ -1277,6 +1277,8 @@ struct cancel_state
 
 #   if (_WIN32_WCE < 400)
 typedef unsigned long  ptrdiff_t;    // evc3, PocketPC don't defined ptrdiff_t
+#   else
+#     include /**/ <stddef.h>        // WinCE .NET puts it in stddef.h
 #   endif
 
 //typedef DWORD  nlink_t;

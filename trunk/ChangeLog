@@ -1,3 +1,8 @@
+Tue Dec 31 17:50:39 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.h: For WinCE 4 (.NET) and up, include <stddef.h> rather than
+          typedef-ing ptrdiff_t.
+
 Tue Dec 31 17:26:41 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/tests.mpc (DLL Test Lib): Add dllflags = ACE_BUILD_SVC_DLL to
