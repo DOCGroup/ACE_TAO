@@ -66,26 +66,33 @@ public: // Should be protected:
   // = Enqueue and dequeue methods.
 
   // For the following five method if <timeout> == 0, the caller will
-  // block until action is possible, else will wait until the absolute
-  // time specified in *<timeout> elapses).  These calls will return,
-  // however, when queue is closed, deactivated, when a signal occurs,
-  // or if the time specified in timeout elapses, (in which case errno
-  // = EWOULDBLOCK).
+  // block until action is possible, else will wait until the
+  // <{absolute}> time specified in *<timeout> elapses).  These calls
+  // will return, however, when queue is closed, deactivated, when a
+  // signal occurs, or if the time specified in timeout elapses, (in
+  // which case errno = EWOULDBLOCK).
 
-  int putq (ACE_Message_Block *, ACE_Time_Value *tv = 0);
-  // Insert message into the message queue.
+  int putq (ACE_Message_Block *, ACE_Time_Value *timeout = 0);
+  // Insert message into the message queue.  Note that <timeout> uses
+  // <{absolute}> time rather than <{relative}> time.
 
-  int getq (ACE_Message_Block *&mb, ACE_Time_Value *tv = 0);
-  // Extract the first message from the queue (blocking).
+  int getq (ACE_Message_Block *&mb, ACE_Time_Value *timeout = 0);
+  // Extract the first message from the queue (blocking).  Note that
+  // <timeout> uses <{absolute}> time rather than <{relative}> time.
 
-  int ungetq (ACE_Message_Block *, ACE_Time_Value *tv = 0);
-  // Return a message to the queue.
+  int ungetq (ACE_Message_Block *, ACE_Time_Value *timeout = 0);
+  // Return a message to the queue.  Note that <timeout> uses
+  // <{absolute}> time rather than <{relative}> time.
 
-  int reply (ACE_Message_Block *, ACE_Time_Value *tv = 0);
-  // Turn the message around and send it back down the Stream.
+  int reply (ACE_Message_Block *, ACE_Time_Value *timeout = 0);
+  // Turn the message around and send it back down the Stream.  Note
+  // that <timeout> uses <{absolute}> time rather than <{relative}>
+  // time.
 
-  int put_next (ACE_Message_Block *msg, ACE_Time_Value *tv = 0);
-  // Transfer message to the adjacent ACE_Task in a ACE_Stream.
+  int put_next (ACE_Message_Block *msg, ACE_Time_Value *timeout = 0);
+  // Transfer message to the adjacent ACE_Task in a ACE_Stream.  Note
+  // that <timeout> uses <{absolute}> time rather than <{relative}>
+  // time.
 
   int can_put (ACE_Message_Block *);
   // Tests whether we can enqueue a message without blocking.

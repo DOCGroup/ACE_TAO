@@ -108,43 +108,48 @@ public:
                                  ACE_Time_Value *timeout = 0);
   // Retrieve the first <ACE_Message_Block> without removing it.
   // Returns -1 on failure, else the number of items still on the
-  // queue.
+  // queue.  Note that <timeout> uses <{absolute}> time rather than
+  // <{relative}> time.
 
   virtual int enqueue_prio (ACE_Message_Block *new_item,
                             ACE_Time_Value *timeout = 0);
   // Enqueue an <ACE_Message_Block *> into the <Message_Queue> in
   // accordance with its <msg_priority> (0 is lowest priority).  FIFO
   // order is maintained when messages of the same priority are
-  // inserted consecutively.  Returns -1 on failure, else the number
-  // of items still on the queue.
+  // inserted consecutively.  Note that <timeout> uses <{absolute}>
+  // time rather than <{relative}> time.  Returns -1 on failure, else
+  // the number of items still on the queue.
 
   virtual int enqueue (ACE_Message_Block *new_item,
                        ACE_Time_Value *timeout = 0);
   // This is an alias for <enqueue_prio>.  It's only here for
   // backwards compatibility and will go away in a subsequent release.
-  // Please use <enqueue_prio> instead.
+  // Please use <enqueue_prio> instead.  Note that <timeout> uses
+  // <{absolute}> time rather than <{relative}> time.
 
   virtual int enqueue_tail (ACE_Message_Block *new_item,
                             ACE_Time_Value *timeout = 0);
-  // Enqueue an <ACE_Message_Block *> at the end of the queue.
-  // Returns -1 on failure, else the number of items still on the
-  // queue.
+  // Enqueue an <ACE_Message_Block *> at the end of the queue.  Note
+  // that <timeout> uses <{absolute}> time rather than <{relative}>
+  // time.  Returns -1 on failure, else the number of items still on
+  // the queue.
 
   virtual int enqueue_head (ACE_Message_Block *new_item,
                             ACE_Time_Value *timeout = 0);
-  // Enqueue an <ACE_Message_Block *> at the head of the queue.
-  // Returns -1 on failure, else the number of items still on the
-  // queue.
+  // Enqueue an <ACE_Message_Block *> at the head of the queue.  Note
+  // that <timeout> uses <{absolute}> time rather than <{relative}>
+  // time.  Returns -1 on failure, else the number of items still on
+  // the queue.
 
   virtual int dequeue (ACE_Message_Block *&first_item,
                        ACE_Time_Value *timeout = 0);
-  // Same as the following.
-
+  // This method is an alias for the following method:
   virtual int dequeue_head (ACE_Message_Block *&first_item,
                             ACE_Time_Value *timeout = 0);
   // Dequeue and return the <ACE_Message_Block *> at the head of the
-  // queue.  Returns -1 on failure, else the number of items still on
-  // the queue.
+  // queue.  Note that <timeout> uses <{absolute}> time rather than
+  // <{relative}> time.  Returns -1 on failure, else the number of
+  // items still on the queue.
 
   // = Check if queue is full/empty.
   virtual int is_full (void);
