@@ -1,3 +1,15 @@
+Sat Dec 11 16:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/LongDoubleSeq.pidl:
+        * tao/LongLongSeq.pidl:
+          Updated regeneration instructions
+
+        * tao/LongDoubleSeqA.cpp
+        * tao/LongDoubleSeqC.{h,cpp}:
+        * tao/LongLongSeqA.cpp
+        * tao/LongLongSeqC.{h,cpp}:
+          Regenerated
+
 Sat Dec 11 16:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DoubleSeq.pidl:
