@@ -2,6 +2,22 @@
 
 // $Id$
 
+// ============================================================================
+//
+// = LIBRARY
+//   ORBSVCS AVStreams
+//
+// = FILENAME
+//   Endpoint_Strategy_T.h
+//
+// = AUTHOR
+//    Sumedh Mungee <sumedh@cs.wustl.edu>
+//    Nagarajan Surendran <naga@cs.wustl.edu>
+//
+//
+// ============================================================================
+
+
 #ifndef TAO_AV_ENDPOINT_STRATEGY_T_H
 #define TAO_AV_ENDPOINT_STRATEGY_T_H
 
@@ -47,7 +63,7 @@ protected:
 
   TAO_ORB_Manager *orb_manager_;
   // ORB manager, used to activate the objects
-  
+
 };
 // ----------------------------------------------------------------------
 

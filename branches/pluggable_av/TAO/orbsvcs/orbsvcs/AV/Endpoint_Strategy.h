@@ -5,7 +5,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    cos
+//   ORBSVCS AVStreams
 //
 // = FILENAME
 //   Endpoint_Strategy.h

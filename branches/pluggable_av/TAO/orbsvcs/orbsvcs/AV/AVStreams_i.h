@@ -5,7 +5,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    cos
+//   ORBSVCS (AVStreams)
 //
 // = FILENAME
 //   AVStreams_i.h
@@ -182,7 +182,7 @@ public:
 };
 
 
-class TAO_ORBSVCS_Export TAO_Basic_StreamCtrl 
+class TAO_ORBSVCS_Export TAO_Basic_StreamCtrl
   : public virtual POA_AVStreams::Basic_StreamCtrl,
     public virtual TAO_PropertySet,
     public virtual PortableServer::RefCountServantBase
@@ -196,21 +196,21 @@ public:
   // Default Constructor
 
   virtual void stop (const AVStreams::flowSpec &the_spec,
-                     CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                     CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::noSuchFlow));
   // Stop the transfer of data of the stream
   // Empty the_spec means apply operation to all flows
 
   virtual void start (const AVStreams::flowSpec &the_spec,
-                      CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                      CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::noSuchFlow));
   // Start the transfer of data in the stream.
   // Empty the_spec means apply operation to all flows
 
   virtual void destroy (const AVStreams::flowSpec &the_spec,
-                        CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                        CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::noSuchFlow));
   // Tears down the stream. This will close the connection, and delete
@@ -219,15 +219,15 @@ public:
 
   virtual CORBA::Boolean modify_QoS (AVStreams::streamQoS &new_qos,
                                      const AVStreams::flowSpec &the_spec,
-                                     CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                     CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::noSuchFlow,
                      AVStreams::QoSRequestFailed));
   // Changes the QoS associated with the stream
   // Empty the_spec means apply operation to all flows
 
-  virtual void push_event (const struct CosPropertyService::Property & the_event,  
-                           CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+  virtual void push_event (const struct CosPropertyService::Property & the_event,
+                           CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Used by StreamEndPoint and VDev to inform StreamCtrl of events.
   // E.g., loss of flow, reestablishment of flow, etc..
@@ -235,7 +235,7 @@ public:
   virtual void set_FPStatus (const AVStreams::flowSpec &the_spec,
                              const char *fp_name,
                              const CORBA::Any &fp_settings,
-                             CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                             CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::noSuchFlow,
                      AVStreams::FPError));
@@ -288,7 +288,7 @@ class TAO_ORBSVCS_Export TAO_Negotiator
 public:
   virtual CORBA::Boolean negotiate (AVStreams::Negotiator_ptr remote_negotiator,
                                     const AVStreams::streamQoS &qos_spec,
-                                    CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ()) 
+                                    CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
@@ -343,7 +343,7 @@ public:
                                     AVStreams::MMDevice_ptr b_party,
                                     AVStreams::streamQoS &the_qos,
                                     const AVStreams::flowSpec &the_flows,
-                                    CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                    CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::streamOpFailed,
                      AVStreams::noSuchFlow,
@@ -369,7 +369,7 @@ public:
 
   virtual void unbind_dev (AVStreams::MMDevice_ptr dev,
                            const AVStreams::flowSpec & the_spec,
-                           CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ()) 
+                           CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::streamOpFailed,
                      AVStreams::noSuchFlow));
@@ -382,7 +382,7 @@ public:
                      AVStreams::noSuchFlow));
   // Unbind the_ep from the stream. Empty the_spec means apply to all flows.
 
-  virtual void unbind (CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+  virtual void unbind (CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::streamOpFailed));
   // unbind the stream. Same effect as Basic_StreamCtrl::destroy ()
@@ -395,7 +395,7 @@ public:
 
   virtual CORBA::Boolean modify_QoS (AVStreams::streamQoS &new_qos,
                                      const AVStreams::flowSpec &the_spec,
-                                     CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                     CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::noSuchFlow,
                      AVStreams::QoSRequestFailed));
@@ -414,7 +414,7 @@ protected:
     AVStreams::flowSpec flowspec_;
     AVStreams::streamQoS qos_;
   };
-  
+
   ACE_Hash_Map_Manager <MMDevice_Map_Hash_Key,MMDevice_Map_Entry,ACE_Null_Mutex> mmdevice_a_map_;
   ACE_Hash_Map_Manager <MMDevice_Map_Hash_Key,MMDevice_Map_Entry,ACE_Null_Mutex> mmdevice_b_map_;
   TAO_MCastConfigIf *mcastconfigif_;
@@ -456,7 +456,7 @@ public:
 
   virtual void set_format (const char * flowName,
                            const char * format_name,
-                           CORBA::Environment &ACE_TRY_ENV = 
+                           CORBA::Environment &ACE_TRY_ENV =
                            CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::notSupported));
@@ -468,14 +468,14 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::PropertyException,
                      AVStreams::streamOpFailed));
-  
+
 protected:
   int in_flowSpec (const AVStreams::flowSpec& flow_spec, const char *flow_name);
   // checks whether the flowname is  in the flow_spec.
 
   ACE_SOCK_Dgram_Mcast sock_mcast_;
   // Multicast socket.
-  
+
   CosPropertyService::Properties initial_configuration_;
   // Initial configuration to be distributed to all B parties when they join.
 
@@ -485,10 +485,10 @@ protected:
 
 // Forward declarations.
 class TAO_AV_TCP_Flow_Handler;
-class TAO_AV_UDP_Flow_Handler; 
+class TAO_AV_UDP_Flow_Handler;
 class TAO_AV_UDP_MCast_Flow_Handler;
-class TAO_SFP_Object;
-class TAO_SFP_Callback;
+class TAO_AV_Protocol_Object;
+class TAO_AV_Callback;
 
 class TAO_ORBSVCS_Export TAO_Base_StreamEndPoint
 {
@@ -528,20 +528,20 @@ public:
                                                       CORBA::Environment &env = CORBA::Environment::default_environment ()) = 0;
   // Application needs to define this
 
-  virtual int make_tcp_flow_handler (TAO_AV_TCP_Flow_Handler *&handler);
-  // call to make a new flow handler for a tcp connection.
-  
-  virtual int make_udp_flow_handler (TAO_AV_UDP_Flow_Handler *&handler);
-  // call to make a new flow handler for a dgram flow.
+//   virtual int make_tcp_flow_handler (TAO_AV_TCP_Flow_Handler *&handler);
+//   // call to make a new flow handler for a tcp connection.
 
-  virtual int make_dgram_mcast_flow_handler (TAO_AV_UDP_MCast_Flow_Handler *&handler);
-  // call to make a new flow handler for a mcast dgram flow.
-  
-  virtual int get_sfp_callback (const char *flowname,
-                                TAO_SFP_Callback *&callback);
-  
-  virtual int get_sfp_object (const char *flowname,
-                              TAO_SFP_Object *&sfp_object);
+//   virtual int make_udp_flow_handler (TAO_AV_UDP_Flow_Handler *&handler);
+//   // call to make a new flow handler for a dgram flow.
+
+//   virtual int make_dgram_mcast_flow_handler (TAO_AV_UDP_MCast_Flow_Handler *&handler);
+//   // call to make a new flow handler for a mcast dgram flow.
+
+  virtual int get_callback (const char *flowname,
+                            TAO_AV_Callback *&callback);
+
+  virtual int set_protocol_object (const char *flowname,
+                                   TAO_AV_Protocol_Object *object);
 };
 
 // Forward declarations.
@@ -564,7 +564,7 @@ public:
   // Constructor
 
   virtual void stop (const AVStreams::flowSpec &the_spec,
-                     CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                     CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::noSuchFlow));
    // Stop the stream. Empty the_spec means, for all the flows
@@ -595,7 +595,7 @@ public:
                                              CORBA::Boolean is_mcast,
                                              AVStreams::streamQoS &qos,
                                              AVStreams::flowSpec &the_spec,
-                                             CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                             CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::streamOpDenied,
                      AVStreams::noSuchFlow,
@@ -606,19 +606,19 @@ public:
 
   virtual CORBA::Boolean modify_QoS (AVStreams::streamQoS &new_qos,
                                      const AVStreams::flowSpec &the_flows,
-                                     CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                     CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::noSuchFlow,
                      AVStreams::QoSRequestFailed));
   // Change the transport qos on a stream
 
   virtual CORBA::Boolean set_protocol_restriction (const AVStreams::protocolSpec &the_pspec,
-                                                   CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                                   CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Used to restrict the set of protocols
 
   virtual void disconnect (const AVStreams::flowSpec &the_spec,
-                           CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                           CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::noSuchFlow,
                      AVStreams::streamOpFailed));
@@ -627,21 +627,21 @@ public:
   virtual void set_FPStatus (const AVStreams::flowSpec &the_spec,
                              const char *fp_name,
                              const CORBA::Any &fp_settings,
-                             CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                             CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::noSuchFlow,
                      AVStreams::FPError));
   // Used to control the flow
 
   virtual CORBA::Object_ptr get_fep (const char *flow_name,
-                                     CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                     CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::notSupported,
                      AVStreams::noSuchFlow));
   // Not implemented in the light profile, throws notsupported
 
   virtual char * add_fep (CORBA::Object_ptr the_fep,
-                          CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                          CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::notSupported,
                      AVStreams::streamOpFailed));
@@ -655,18 +655,18 @@ public:
   // Not implemented in the light profile, throws notsupported
 
   virtual void set_negotiator (AVStreams::Negotiator_ptr new_negotiator,
-                               CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                               CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Used to "attach" a negotiator to the endpoint
 
   virtual void set_key (const char *flow_name,
                         const AVStreams::key & the_key,
-                        CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                        CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Used for public key encryption.
 
   virtual void set_source_id (CORBA::Long source_id,
-                              CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                              CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Used to set a unique id for packets sent by this streamendpoint
 
@@ -719,15 +719,13 @@ protected:
   AVStreams::key key_;
   // Key used for encryption.
 
-  ACE_SOCK_Dgram_Mcast mcast_dgram_;
-  // Multicast socket.
-
   u_short mcast_port_;
   ACE_UINT32 mcast_addr_;
   ACE_Hash_Map_Manager <TAO_String_Hash_Key, TAO_AV_UDP_MCast_Flow_Handler *,ACE_Null_Mutex> dgram_mcast_handler_map_;
   TAO_AV_FlowSpecSet forward_flow_spec_set;
   TAO_AV_FlowSpecSet reverse_flow_spec_set;
   AVStreams::StreamEndPoint_ptr peer_sep_;
+  AVStreams::SFPStatus *sfp_status_;
 };
 
 
@@ -743,7 +741,7 @@ public:
   // Constructor
 
   virtual void stop (const AVStreams::flowSpec &the_spec,
-                     CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                     CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::noSuchFlow));
    // Stop the stream. Empty the_spec means, for all the flows
@@ -756,29 +754,29 @@ public:
 
   virtual CORBA::Boolean multiconnect (AVStreams::streamQoS &the_qos,
                                        AVStreams::flowSpec &the_spec,
-                                       CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                       CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow, 
-                     AVStreams::QoSRequestFailed, 
+                     AVStreams::noSuchFlow,
+                     AVStreams::QoSRequestFailed,
                      AVStreams::streamOpFailed));
   // Used for ATM-style multicast
 
   virtual CORBA::Boolean connect_leaf (AVStreams::StreamEndPoint_B_ptr the_ep,
                                        AVStreams::streamQoS &the_qos,
                                        const AVStreams::flowSpec &the_flows,
-                                       CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                       CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed, 
+                     AVStreams::streamOpFailed,
                      AVStreams::noSuchFlow,
-                     AVStreams::QoSRequestFailed, 
+                     AVStreams::QoSRequestFailed,
                      AVStreams::notSupported));
   // Used for ATM-style multicast
 
   virtual void disconnect_leaf (AVStreams::StreamEndPoint_B_ptr the_ep,
                                 const AVStreams::flowSpec &theSpec,
-                                CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed, 
+                     AVStreams::streamOpFailed,
                      AVStreams::noSuchFlow));
   // Used to remove a multicast leaf
 
@@ -804,11 +802,11 @@ public:
 
   virtual CORBA::Boolean multiconnect (AVStreams::streamQoS &the_qos,
                                        AVStreams::flowSpec &the_spec,
-                                       CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                       CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed, 
+                     AVStreams::streamOpFailed,
                      AVStreams::noSuchFlow,
-                     AVStreams::QoSRequestFailed, 
+                     AVStreams::QoSRequestFailed,
                      AVStreams::FPError));
   // Used for internet-style multicast
 
@@ -832,10 +830,10 @@ public:
                                    AVStreams::VDev_ptr the_peer_dev,
                                    AVStreams::streamQoS &the_qos,
                                    const AVStreams::flowSpec &the_spec,
-                                   CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                   CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow, 
-                     AVStreams::QoSRequestFailed, 
+                     AVStreams::noSuchFlow,
+                     AVStreams::QoSRequestFailed,
                      AVStreams::streamOpFailed));
   // Called to tell the vdev who the streamctrl, peer vdev is
 
@@ -843,40 +841,40 @@ public:
                                          AVStreams::MCastConfigIf_ptr a_mcastconfigif,
                                          AVStreams::streamQoS &the_qos,
                                          const AVStreams::flowSpec &the_spec,
-                                         CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                         CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow, 
-                     AVStreams::QoSRequestFailed, 
+                     AVStreams::noSuchFlow,
+                     AVStreams::QoSRequestFailed,
                      AVStreams::streamOpFailed));
   // Used to set the streamctrl and multicast device
 
   virtual void configure (const CosPropertyService::Property &the_config_mesg,
-                          CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                          CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::PropertyException, 
+                     AVStreams::PropertyException,
                      AVStreams::streamOpFailed));
   // Called by the peer VDev to configure the device (catch all)
 
   virtual void set_format (const char *flowName,
                            const char *format_name,
-                           CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                           CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::notSupported));
   // Used to set a format on a flowname
 
   virtual void set_dev_params (const char *flowName,
                                const CosPropertyService::Properties &new_params,
-                               CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                               CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::PropertyException, 
+                     AVStreams::PropertyException,
                      AVStreams::streamOpFailed));
   // Used to set device parameters
 
   virtual CORBA::Boolean modify_QoS (AVStreams::streamQoS &the_qos,
                                      const AVStreams::flowSpec &the_spec,
-                                     CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                     CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow, 
+                     AVStreams::noSuchFlow,
                      AVStreams::QoSRequestFailed));
   // Called to change QoS of the device
 
@@ -907,7 +905,7 @@ class TAO_ORBSVCS_Export TAO_MMDevice
 {
   // = DESCRIPTION
   //     Implements a factory to create Endpoints and VDevs
-  
+
 public:
 
   enum MMDevice_Type {MMDEVICE_A = 0,MMDEVICE_B = 1};
@@ -927,10 +925,10 @@ public:
                                            AVStreams::streamQoS &the_qos,
                                            CORBA::Boolean_out is_met,
                                            const AVStreams::flowSpec &the_spec,
-                                           CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                           CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed, 
-                     AVStreams::noSuchFlow, 
+                     AVStreams::streamOpFailed,
+                     AVStreams::noSuchFlow,
                      AVStreams::QoSRequestFailed));
   // Can be used to request the MMDevice to create a new StreamCtrl,
   // and call bind_devs on it
@@ -939,10 +937,10 @@ public:
                                                  AVStreams::streamQoS &the_qos,
                                                  CORBA::Boolean_out is_met,
                                                  const AVStreams::flowSpec &the_spec,
-                                                 CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                                 CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed, 
-                     AVStreams::noSuchFlow, 
+                     AVStreams::streamOpFailed,
+                     AVStreams::noSuchFlow,
                      AVStreams::QoSRequestFailed));
   // Multicast bind
 
@@ -952,12 +950,12 @@ public:
                                                      CORBA::Boolean_out met_qos,
                                                      char *&named_vdev,
                                                      const AVStreams::flowSpec &the_spec,
-                                                     CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                                     CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed, 
-                     AVStreams::streamOpDenied, 
+                     AVStreams::streamOpFailed,
+                     AVStreams::streamOpDenied,
                      AVStreams::notSupported,
-                     AVStreams::QoSRequestFailed, 
+                     AVStreams::QoSRequestFailed,
                      AVStreams::noSuchFlow));
   // Called by StreamCtrl to create a "A" type streamandpoint and vdev
 
@@ -967,40 +965,40 @@ public:
                                                      CORBA::Boolean_out met_qos,
                                                      char *&named_vdev,
                                                      const AVStreams::flowSpec &the_spec,
-                                                     CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                                     CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed, 
-                     AVStreams::streamOpDenied, 
+                     AVStreams::streamOpFailed,
+                     AVStreams::streamOpDenied,
                      AVStreams::notSupported,
-                     AVStreams::QoSRequestFailed, 
+                     AVStreams::QoSRequestFailed,
                      AVStreams::noSuchFlow));
   // Called by StreamCtrl to create a "B" type streamandpoint and vdev
 
   virtual void destroy (AVStreams::StreamEndPoint_ptr the_ep,
                         const char *vdev_name,
-                        CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                        CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::notSupported));
   // Remove the StreamEndPoint and the related vdev
 
   virtual char * add_fdev (CORBA::Object_ptr the_fdev,
-                           CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                           CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::notSupported, 
+                     AVStreams::notSupported,
                      AVStreams::streamOpFailed));
   // Not supported in the light profile, raises notsupported
 
   virtual CORBA::Object_ptr get_fdev (const char *flow_name,
-                                      CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                      CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::notSupported, 
+                     AVStreams::notSupported,
                      AVStreams::noSuchFlow));
   // Not supported in the light profile, raises notsupported
 
   virtual void remove_fdev (const char *flow_name,
                             CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::notSupported, 
+                     AVStreams::notSupported,
                      AVStreams::noSuchFlow));
   // Not supported in the light profile, raises notsupported
 
@@ -1046,34 +1044,34 @@ public:
   TAO_FlowConnection (void);
   // default constructor.
 
-  virtual void stop (CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+  virtual void stop (CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // stop this flow.
 
-  virtual void start (CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+  virtual void start (CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // start this flow.
 
-  virtual void destroy (CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+  virtual void destroy (CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // destroy this flow.
 
   virtual CORBA::Boolean modify_QoS (AVStreams::QoS & new_qos,
-                                     CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                     CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::QoSRequestFailed));
   // modify the QoS for this flow.
 
   virtual CORBA::Boolean use_flow_protocol (const char * fp_name,
                                             const CORBA::Any & fp_settings,
-                                            CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                            CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::FPError, 
+                     AVStreams::FPError,
                      AVStreams::notSupported));
   // use the specified flow protocol for this flow.
 
   virtual void push_event (const AVStreams::streamEvent & the_event,
-                           CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                           CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // pushes an event , to be handled by the application.
@@ -1081,35 +1079,35 @@ public:
   virtual CORBA::Boolean connect_devs (AVStreams::FDev_ptr a_party,
                                        AVStreams::FDev_ptr b_party,
                                        AVStreams::QoS & the_qos,
-                                       CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                       CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed, 
-                     AVStreams::streamOpDenied, 
+                     AVStreams::streamOpFailed,
+                     AVStreams::streamOpDenied,
                      AVStreams::QoSRequestFailed));
   // connect 2 Flow Devices.
- 
+
   virtual CORBA::Boolean connect (AVStreams::FlowProducer_ptr flow_producer,
                                   AVStreams::FlowConsumer_ptr flow_consumer,
                                   AVStreams::QoS & the_qos,
-                                  CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                  CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::formatMismatch, 
-                     AVStreams::FEPMismatch, 
+                     AVStreams::formatMismatch,
+                     AVStreams::FEPMismatch,
                      AVStreams::alreadyConnected));
   // Connect a flow producer and consumer under this flow connection.
 
-  virtual CORBA::Boolean disconnect (CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+  virtual CORBA::Boolean disconnect (CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // disconnect this flow connection.
 
   virtual CORBA::Boolean add_producer (AVStreams::FlowProducer_ptr flow_producer,
                                        AVStreams::QoS & the_qos,
-                                       CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                       CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::alreadyConnected,
                      AVStreams::notSupported));
   // adds the producer to this flow connection.
- 
+
   virtual CORBA::Boolean add_consumer (AVStreams::FlowConsumer_ptr flow_consumer,
                                        AVStreams::QoS & the_qos,
                                        CORBA::Environment &env = CORBA::Environment::default_environment ())
@@ -1118,7 +1116,7 @@ public:
   // adds a consumer to this flow connection.
 
   virtual CORBA::Boolean drop (AVStreams::FlowEndPoint_ptr target,
-                               CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                               CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::notConnected));
   // drops a flow endpoint from the flow.
@@ -1139,7 +1137,7 @@ class TAO_ORBSVCS_Export TAO_FlowEndPoint :
 {
   // = DESCRIPTION
   //     This class is used per flow e.g video flow and an audio flow
-  //     to encapuslate the transport details. 
+  //     to encapuslate the transport details.
 
 public:
 
@@ -1147,56 +1145,56 @@ public:
   //default constructor.
 
   virtual CORBA::Boolean lock (CORBA::Environment &env =
-                               CORBA::Environment::default_environment ()) 
+                               CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // lock the flow endpoint for a particular flow.
 
   virtual void unlock (CORBA::Environment &env =
-                       CORBA::Environment::default_environment ()) 
+                       CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // unlock the flow endpoint for subsequent use.
 
   virtual void stop (CORBA::Environment &env =
-                     CORBA::Environment::default_environment ()) 
+                     CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // stop this flow, to be overridden by the application.  
+  // stop this flow, to be overridden by the application.
 
   virtual void start (CORBA::Environment &env =
-                      CORBA::Environment::default_environment ()) 
+                      CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // start this flow, to be overridden by the application.
 
   virtual void destroy (CORBA::Environment &env =
-                        CORBA::Environment::default_environment ()) 
+                        CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // destroy this flow.
 
-  virtual AVStreams::StreamEndPoint_ptr related_sep(CORBA::Environment &env = 
-                                                    CORBA::Environment::default_environment ()) 
+  virtual AVStreams::StreamEndPoint_ptr related_sep(CORBA::Environment &env =
+                                                    CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // get method for the related streamendpoint under which this
   // flowendpoint is.
 
   virtual void related_sep (AVStreams::StreamEndPoint_ptr related_sep,
-                            CORBA::Environment &env = 
-                            CORBA::Environment::default_environment ()) 
+                            CORBA::Environment &env =
+                            CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // set method for the related streamendpoint under which this
   // flowendpoint is.
 
-  virtual AVStreams::FlowConnection_ptr related_flow_connection(CORBA::Environment &env = 
-                                                                CORBA::Environment::default_environment ()) 
+  virtual AVStreams::FlowConnection_ptr related_flow_connection(CORBA::Environment &env =
+                                                                CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // accessor for the related flow connection attribute.
 
   virtual void related_flow_connection (AVStreams::FlowConnection_ptr related_flow_connection,
-                                        CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                        CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // set method for the related flow connection attribute.
 
-  virtual AVStreams::FlowEndPoint_ptr get_connected_fep (CORBA::Environment &env = 
-                                                         CORBA::Environment::default_environment ()) 
+  virtual AVStreams::FlowEndPoint_ptr get_connected_fep (CORBA::Environment &env =
+                                                         CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::notConnected,
                      AVStreams::notSupported));
@@ -1204,42 +1202,42 @@ public:
 
   virtual CORBA::Boolean use_flow_protocol (const char * fp_name,
                                             const CORBA::Any & fp_settings,
-                                            CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                            CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::FPError, 
+                     AVStreams::FPError,
                      AVStreams::notSupported));
   /// use the specified flow protocol.
 
   virtual void set_format (const char * format,
-                           CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                           CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::notSupported));
   // sets the data format.
 
   virtual void set_dev_params (const CosPropertyService::Properties & new_settings,
-                               CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                               CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::PropertyException, 
+                     AVStreams::PropertyException,
                      AVStreams::streamOpFailed));
   // sets the device parameters.
 
   virtual void set_protocol_restriction (const AVStreams::protocolSpec & the_spec,
-                                         CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                         CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::notSupported));
   // sets the list of protocols to be used.
 
   virtual CORBA::Boolean is_fep_compatible (AVStreams::FlowEndPoint_ptr fep,
-                                            CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                            CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::formatMismatch, 
+                     AVStreams::formatMismatch,
                      AVStreams::deviceQosMismatch));
   // checks whether the passed flowendpoint is compatible with this.
 
   virtual CORBA::Boolean set_peer (AVStreams::FlowConnection_ptr the_fc,
                                    AVStreams::FlowEndPoint_ptr the_peer_fep,
                                    AVStreams::QoS & the_qos,
-                                   CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                   CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::QoSRequestFailed,
                      AVStreams::streamOpFailed));
@@ -1249,7 +1247,7 @@ public:
                                          AVStreams::MCastConfigIf_ptr a_mcastconfigif,
                                          AVStreams::QoS & the_qos,
                                          CORBA::Environment &env =
-                                         CORBA::Environment::default_environment ()) 
+                                         CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::QoSRequestFailed));
   // sets the multicast peer flowendpoint, not implemented.
@@ -1259,10 +1257,10 @@ public:
                                           const char * address,
                                           const char * use_flow_protocol,
                                           CORBA::Environment &env =
-                                          CORBA::Environment::default_environment ()) 
+                                          CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::failedToConnect,
-                     AVStreams::FPError, 
+                     AVStreams::FPError,
                      AVStreams::QoSRequestFailed));
   // connect to the peer endpoint.
 
@@ -1278,10 +1276,10 @@ public:
                                AVStreams::FlowProducer_ptr peer,
                                char *& flowProtocol,
                                CORBA::Environment &env =
-                               CORBA::Environment::default_environment ()) 
+                               CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::failedToListen, 
-                     AVStreams::FPError, 
+                     AVStreams::failedToListen,
+                     AVStreams::FPError,
                      AVStreams::QoSRequestFailed));
 
   // listen request from the peer.
@@ -1290,7 +1288,7 @@ public:
                                CORBA::Boolean is_mcast,
                                AVStreams::FlowProducer_ptr peer,
                                char *& flowProtocol,
-                               CORBA::Environment &env = CORBA::Environment::default_environment ()); 
+                               CORBA::Environment &env = CORBA::Environment::default_environment ());
   // applications should override this method.
 
 protected:
@@ -1323,7 +1321,7 @@ public:
                                 CORBA::Boolean_out is_met,
                                 const char * address,
                                 const char * use_flow_protocol,
-                                CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::failedToConnect,
                      AVStreams::notSupported,
@@ -1333,17 +1331,17 @@ public:
   // connect to the multicast address, not implemented.
 
   virtual char * get_rev_channel (const char * pcol_name,
-                                  CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                  CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // get the reverse channel, to be used for feedback for protocols like UDP.
 
   virtual void set_key (const AVStreams::key & the_key,
-                        CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                        CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // sets the public key  to be used for encryption of the data.
 
   virtual void set_source_id (CORBA::Long source_id,
-                              CORBA::Environment &env =CORBA::Environment::default_environment()) 
+                              CORBA::Environment &env =CORBA::Environment::default_environment())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // sets the source id of this flow producer so that it can be used
   // to distinguish this producer from others in the multicast case.
@@ -1378,7 +1376,7 @@ public:
                                                        AVStreams::QoS & the_qos,
                                                        CORBA::Boolean_out met_qos,
                                                        char *& named_fdev,
-                                                       CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                                       CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::streamOpFailed,
                      AVStreams::streamOpDenied,
@@ -1398,7 +1396,7 @@ public:
                                                        AVStreams::QoS & the_qos,
                                                        CORBA::Boolean_out met_qos,
                                                        char *& named_fdev,
-                                                       CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                                       CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::streamOpFailed,
                      AVStreams::streamOpDenied,
@@ -1410,14 +1408,14 @@ public:
                                                        AVStreams::QoS & the_qos,
                                                        CORBA::Boolean_out met_qos,
                                                        char *& named_fdev,
-                                                       CORBA::Environment &env = CORBA::Environment::default_environment ()); 
+                                                       CORBA::Environment &env = CORBA::Environment::default_environment ());
   // bridge method for the application to override the consumer object
   // creation. Default implementation creates a TAO_FlowConsumer.
 
   virtual AVStreams::FlowConnection_ptr bind (AVStreams::FDev_ptr peer_device,
                                               AVStreams::QoS & the_qos,
                                               CORBA::Boolean_out is_met,
-                                              CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                              CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::streamOpFailed,
                      AVStreams::QoSRequestFailed));
@@ -1426,7 +1424,7 @@ public:
   virtual AVStreams::FlowConnection_ptr bind_mcast (AVStreams::FDev_ptr first_peer,
                                                     AVStreams::QoS & the_qos,
                                                     CORBA::Boolean_out is_met,
-                                                    CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                                    CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::streamOpFailed,
                      AVStreams::QoSRequestFailed));
@@ -1435,7 +1433,7 @@ public:
   virtual void destroy (AVStreams::FlowEndPoint_ptr the_ep,
                         const char * fdev_name,
                         CORBA::Environment &env =
-                        CORBA::Environment::default_environment ()) 
+                        CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::notSupported));
   // destroys this FDev.
@@ -1463,7 +1461,7 @@ public:
 
   virtual AVStreams::Position get_media_position (AVStreams::PositionOrigin an_origin,
                                                   AVStreams::PositionKey a_key,
-                                                  CORBA::Environment &env = CORBA::Environment::default_environment ()) 
+                                                  CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::MediaControl::PostionKeyNotSupported)) =0;
 
@@ -1509,7 +1507,7 @@ public:
 
   char *token (void);
   // Returns the next token.
-  
+
   int num_tokens (void);
   // Number of tokens.
 
@@ -1534,8 +1532,8 @@ public:
   //     An helper entry class in the flow spec sequence passed to bind_devs.
   enum Direction
   {
-    TAO_AV_INVALID   = -1, 
-    TAO_AV_DIR_IN    =  0, 
+    TAO_AV_INVALID   = -1,
+    TAO_AV_DIR_IN    =  0,
     TAO_AV_DIR_OUT   =  1
   };
 
@@ -1568,7 +1566,7 @@ public:
 
   virtual ACE_Addr *address (void);
   // Address of the carrier protocol.
-  
+
   virtual char * address_str (void);
   // Address in string format i. hostname:port.
 
@@ -1595,13 +1593,15 @@ public:
   virtual void transport (TAO_AV_Transport *transport);
   virtual TAO_AV_Flow_Handler* handler (void);
   virtual void handler (TAO_AV_Flow_Handler *handler);
+  virtual TAO_AV_Protocol_Object* protocol_object (void);
+  virtual void protocol_object (TAO_AV_Protocol_Object *object);
 protected:
   int parse_flow_protocol_string (char *flow_options_string);
   // parses the flow protocol string with tokens separated by :
-  
+
   int set_direction (char *direction_string);
   // sets the direction flag.
-  
+
   int parse_address (char *format_string);
   // sets the address for this flow.
 
@@ -1610,7 +1610,7 @@ protected:
 
   ACE_Addr *address_;
   // Addr information for the carrier protocol.
-  
+
   char *address_str_;
   // Addr in string format i.e hostname:port.
 
@@ -1619,22 +1619,22 @@ protected:
 
   Direction direction_;
   // Direction of this flow.
-  
+
   char *direction_str_;
   // string representation of the direction.
 
   char *flowname_;
   // name of this flow.
-  
+
   TAO_AV_Core::Protocol protocol_;
   // name of the protocol used.
 
   char *carrier_protocol_;
   // carrier protocol string.
-  
+
   char *flow_protocol_;
   // flow protocol string.
-  
+
   int use_flow_protocol_;
   char *entry_;
   // The flowspec entry;
@@ -1643,6 +1643,7 @@ protected:
   ACE_Addr *local_addr_;
   TAO_AV_Transport *transport_;
   TAO_AV_Flow_Handler *handler_;
+  TAO_AV_Protocol_Object *protocol_object_;
 };
 
 class TAO_ORBSVCS_Export TAO_Forward_FlowSpec_Entry
@@ -1699,7 +1700,7 @@ public:
 
   virtual int parse (const char* flowSpec_entry);
   // construct the entry from a string specified by the flowSpec grammar.
-};  
+};
 
 class TAO_ORBSVCS_Export TAO_AV_QoS
 {

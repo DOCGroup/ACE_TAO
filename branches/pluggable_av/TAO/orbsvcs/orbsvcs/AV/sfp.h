@@ -23,6 +23,7 @@
 #include "ace/INET_Addr.h"
 
 #include "Transport.h"
+#include "Policy.h"
 
 #define TAO_SFP_MAGIC_NUMBER_LEN 4
 #define TAO_SFP_MESSAGE_TYPE_OFFSET 5
@@ -31,30 +32,30 @@
 //#define TAO_SFP_MAX_PACKET_SIZE ACE_MAX_DGRAM_SIZE
 #define TAO_SFP_MAX_PACKET_SIZE 132
 
-class TAO_ORBSVCS_Export TAO_SFP_Callback
-{
-  // =TITLE
-  //    Callback interface for SFP.
-  //
-  // =Description
-  //    Application should create a callback object which they
-  //    register with the SFP. The SFP implementation notifies the
-  //    applicationn of any changes in the stream status like stream
-  //    established, stream ended.
-public:
-  virtual int start_failed (void);
-  // This is called for both active and passive start.
+// class TAO_ORBSVCS_Export TAO_SFP_Callback
+// {
+//   // =TITLE
+//   //    Callback interface for SFP.
+//   //
+//   // =Description
+//   //    Application should create a callback object which they
+//   //    register with the SFP. The SFP implementation notifies the
+//   //    applicationn of any changes in the stream status like stream
+//   //    established, stream ended.
+// public:
+//   virtual int start_failed (void);
+//   // This is called for both active and passive start.
 
-  virtual int stream_established (void);
-  // This is a callback for both active and passive stream
-  // establshment.
+//   virtual int stream_established (void);
+//   // This is a callback for both active and passive stream
+//   // establshment.
 
-  virtual int receive_frame (ACE_Message_Block *frame);
-  // upcall to the application to receive a frame.
+//   virtual int receive_frame (ACE_Message_Block *frame);
+//   // upcall to the application to receive a frame.
 
-  virtual void end_stream (void);
-  // called when the EndofStream message is received.
-};
+//   virtual void end_stream (void);
+//   // called when the EndofStream message is received.
+// };
 
 class TAO_SFP_Fragment_Node
 {
@@ -208,20 +209,19 @@ protected:
 
 typedef ACE_Singleton <TAO_SFP_Base,ACE_SYNCH_MUTEX> TAO_SFP_BASE;
 class TAO_ORBSVCS_Export TAO_SFP_Object
+  :public TAO_AV_Protocol_Object
 {
 public:
-  virtual int start (void);
-  virtual int stop (void);
-  TAO_SFP_Object (TAO_AV_Transport *transport = 0);
-  int send_frame (ACE_Message_Block *frame);
-  int end_stream (void);
-  void transport (TAO_AV_Transport *transport);
+  TAO_SFP_Object (TAO_AV_Callback *callback,
+                  TAO_AV_Transport *transport = 0);
+  virtual int send_frame (ACE_Message_Block *frame,
+                          ACE_UINT32 timestamp = 0);
+  virtual int end_stream (void);
 protected:
   ACE_Message_Block *get_fragment (ACE_Message_Block *&frame,
                                    size_t initial_len,
                                    size_t &last_mb_orig_len,
                                    size_t &last_mb_current_len);
-  TAO_AV_Transport *transport_;
   CORBA::ULong sequence_num_;
   CORBA::ULong source_id_;
   CORBA::ULong credit_;
@@ -231,14 +231,13 @@ class TAO_SFP_UDP_Receiver_Handler
   :public TAO_AV_UDP_Flow_Handler
 {
 public:
-  TAO_SFP_UDP_Receiver_Handler (TAO_SFP_Callback *callback);
+  TAO_SFP_UDP_Receiver_Handler (TAO_AV_Callback *callback);
   virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
   virtual int start (void);
   virtual int stop  (void);
 protected:
-  TAO_SFP_Callback *callback_;
   TAO_SFP_Frame_State state_;
 };
 
@@ -263,7 +262,7 @@ class TAO_ORBSVCS_Export TAO_SFP_UDP_Protocol_Factory
 public:
   TAO_SFP_UDP_Protocol_Factory (void);
   ~TAO_SFP_UDP_Protocol_Factory (void);
-  
+
   virtual int match_protocol (TAO_AV_Core::Protocol protocol);
   // verify protocol is a match.
 
