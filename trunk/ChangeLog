@@ -1,3 +1,10 @@
+Tue Feb 24 17:58:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/Hash_Map_Manager_T.{h,i}:
+	  Added protected accessor methods cur_size and table. People which
+          create a derived class can use these accessors. Thanks to Ganesh Pai
+	  <GPai@sonusnet.com> for the idea.
+
 Tue Feb 24 17:34:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Synch-Benchmarks/Perf_Test/Adaptive_Lock_Performance_Test_Base.h:
