@@ -12,56 +12,92 @@
 <h3>
 TAO IDL compiler User's Guide</h3>
 
-<h2>
-Scope</h2>
-This document describes the options and features of TAO IDL compiler, it
-is not a reference manual or tutorial on IDL.
-<h2>
-Generated Files</h2>
-The IDL compiler generates 6 files from each <tt>.idl</tt> file, the file
-names are obtained by taking the IDL basename and appending <tt>C.h</tt>,
-<tt>C.i</tt>,
-<tt>C.cpp</tt>,
-<tt>S.h</tt>,
-<tt>S.i</tt>
-and <tt>S.cpp</tt>; the client stubs are declared in the <tt>C.h</tt> file,
-the skeletons in the <tt>S.h</tt> file. Please see the Options list on
-how to get different suffixes for these files.
-<p>Both clients and servers should link against the object files for the
-stubs and skeletons, this is needed to transparently support collocated
-objects.
-<h2>
-Operation Lookup Strategies</h2>
-The server skeleton can make use of different lookup strategies to match
-the incoming operation with the correct operation at the servant.
-<br>Dynamic Hashing and Perfect Hashing are the two different operation
-lookup strategies that are currently supported in tao_idl.
-<br>By default, tao_idl tries to use Perfect Hashing strategy. <a href="http://www.cs.wustl.edu/~schmidt/gperf.ps.gz">gperf
-</a>generates
-the lookup methods for this strategy.
-<br>ACE_HAS_GPERF has been defined for the platforms where gperf works.
-This includes Solaris and NT.
-<p>To make use of Perfect Hashing:
+<h2> Scope</h2> This document describes the options and features of
+TAO IDL compiler.  It is not a reference manual or tutorial on OMG
+IDL.  For more information on OMG IDL see the <A
+HREF="http://www.omg.org/library/c2indx.html">online CORBA
+specification</A> and the <A
+HREF="http://www.triodia.com/staff/michi-henning.html">Advanced CORBA
+Programming with C++</A> book. <P>
+
+<HR><P>
+<h3>Generated Files</h3>
+
+The IDL compiler generates 9 files from each <tt>.idl</tt> file.  The
+file names are obtained by taking the IDL <EM>basename</EM> and
+appending the following suffixes (see the list of TAO's IDL compiler
+<A HREF="#options">options</A> on how to get different suffixes for
+these files:) <P>
+
+<UL>
+<LI> <EM>Client stubs</EM> -- <tt>C.h</tt>, <tt>C.i</tt>, and <tt>C.cpp</tt>
+<LI> <EM>Server skeletons</EM> -- <tt>S.h</tt>, <tt>S.i</tt>, and
+<tt>S.cpp</tt>
+<LI> <EM>Server skeleton templates </EM> -- <tt>S_T.h</tt>, <tt>S_T.i</tt>,
+and <tt>S_T.cpp</tt>
+</UL>
+
+TAO's IDL compiler creates separate <TT>*.i</TT> and <TT>*S_T.*</TT>
+files to improve the performance of the generated code.  Fortunately,
+you only need to <CODE>#include</CODE> the client stubs declared in
+the <tt>C.h</tt> file and the skeletons in the <tt>S.h</tt> file in
+your code. <P>
+
+To transparently support collocated objects, clients and servers
+should both link with the object files for the stubs and skeletons.
+If your clients are ``pure'', <EM>i.e.</EM>, they don't need
+collocation, you can give an option to the IDL compiler to avoid
+linking clients with the skeletons. <P>
+
+<HR><P>
+<h3>
+Operation Demuxing Strategies</h3>
+
+The server skeleton can use different demuxing strategies to match the
+incoming operation with the correct operation at the servant.  TAO's
+IDL compiler supports perfect hashing, binary search, and dynamic
+hashing demuxing strategies.  By default, TAO's IDL compiler tries to
+generate perfect hash functions, which is generally the most <A
+HREF="http://www.cs.wustl.edu/~schmidt/COOTS-99.ps.gz">efficient and
+predictable operation demuxing technique</A>.  To generate perfect
+hash functions, TAO's IDL compiler uses <a
+href="http://www.cs.wustl.edu/~schmidt/gperf.ps.gz">gperf </a>, which
+is a general-purpose perfect hash function generator. <P>
+
+To configure TAO's IDL compiler to support perfect hashing please do
+the following:
+
 <ul>
-<li>
-Build the gperf program at $ACE_ROOT/apps/gperf. (This build also leaves
-a copy/link of the gperf program at the $ACE_ROOT/bin directory).</li>
+<LI> Enable <CODE>ACE_HAS_GPERF</CODE> when building ACE and TAO.
+This macro has been defined for the platforms where <CODE>gperf</CODE>
+has been tested, which includes most <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE-versions-i.html">platforms</A>
+that ACE runs on. <P>
 
-<li>
-Set the environment variable $ACE_ROOT appropriately or add $ACE_ROOT/bin
-to the PATH.</li>
+<li> Build the <CODE>gperf</CODE> in $ACE_ROOT/apps/gperf.  This build
+also leaves a copy/link of the gperf program at the $ACE_ROOT/bin
+directory.<P>
 
-<li>
-Use -g option for the tao_idl or set the PATH accordingly to use gperf
-located at other places other than $ACE_ROOT/bin.</li>
+<li> Set the environment variable $ACE_ROOT appropriately or add
+$ACE_ROOT/bin to your search path. <P>
+
+<li> Use the <CODE>-g</CODE> option for the TAO IDL compiler or set
+your search path accordingly to install <CODE>gperf</CODE> in a
+directory other than $ACE_ROOT/bin.
 </ul>
 
-<h2>
-Options</h2>
-The IDL compiler invokes your <tt>C</tt> (or <tt>C++</tt>) preprocessor
-to resolve included IDL files, it receives the common options for preprocessors
-(such as <tt>-D</tt> or <tt>-I</tt>); but also receives other options that
-are specific to it.
+Note that if you can't use perfect hashing for some reason the next
+best operation demuxing strategy is binary search, which can be
+configured using TAO's IDL compiler <A HREF="#options">options</A>.<P>
+
+<HR><P>
+<h3><A NAME="options">TAO's IDL Compiler Options</A></h3>
+
+TAO's IDL compiler invokes your <tt>C</tt> (or <tt>C++</tt>)
+preprocessor to resolve included IDL files.  It receives the common
+options for preprocessors (such as <tt>-D</tt> or <tt>-I</tt>).  It
+also receives other options that are specific to it. <P>
+
 <table BORDER=2 CELLSPACING=2 CELLPADDING=0 >
 <tr>
 <th>Option</th>
@@ -148,31 +184,31 @@ macro.&nbsp;</td>
 <td><tt>-H perfect_hash</tt></td>
 
 <td>To specify the IDL compiler to generate skelton code that uses perfect
-hashed operation lookup strategy, which is the default strategy. Perfect
+hashed operation demuxing strategy, which is the default strategy. Perfect
 hashing uses <a href="http://www.cs.wustl.edu/~schmidt/gperf.ps.gz">gperf
 </a>program,
-to generate lookup methods.&nbsp;</td>
+to generate demuxing methods.&nbsp;</td>
 </tr>
 
 <tr NAME="H dynamic_hash">
 <td><tt>-H dynamic_hash</tt></td>
 
 <td>To specify the IDL compiler to generate skelton code that uses dynamic
-hashed operation lookup strategy.&nbsp;</td>
+hashed operation demuxing strategy.&nbsp;</td>
 </tr>
 
 <tr NAME="H binary_search">
 <td><tt>-H binary_search</tt></td>
 
 <td>To specify the IDL compiler to generate skelton code that uses binary
-search based operation lookup strategy.&nbsp;</td>
+search based operation demuxing strategy.&nbsp;</td>
 </tr>
 
 <tr NAME="H linear_search">
 <td><tt>-H linear_search</tt></td>
 
 <td>To specify the IDL compiler to generate skelton code that uses linear
-search based operation lookup strategy.</td>
+search based operation demuxing strategy.  Note that this option is for testing purposes only and should not be used for production code since it's inefficient.</td>
 </tr>
 
 
@@ -365,11 +401,12 @@ for now)&nbsp;</td>
 
 <td>Suppress generation of the TypeCodes</td>
 </tr>
-</table>
+</table> <P>
 
-<hr>
-<address>
-<i><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></i></address>
+<P><HR><P>
+Back to the TAO <A HREF="index.html">documentation</A>.
+
+<!--#include virtual="/~schmidt/cgi-sig.html" -->
 
 </body>
 </html>
