@@ -1065,19 +1065,38 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
           this->policies ().request_processing () == PortableServer::USE_SERVANT_MANAGER &&
           !CORBA::is_nil (this->servant_activator_.in ()))
         {
-          for (TAO_Object_Table::iterator iterator = this->active_object_map ().begin ();
-               iterator != this->active_object_map ().end () && env.exception () == 0;
-               iterator++)
-            {
-              PortableServer::POA_var self = this->_this (env);
-              if (env.exception () != 0)
-                return;
+          PortableServer::POA_var self = this->_this (env);
+          if (env.exception () != 0)
+            return;
 
-              this->servant_activator_->etherealize ((*iterator).ext_id_,
+          while (1)
+            {
+              TAO_Object_Table::iterator iterator = this->active_object_map ().begin ();
+              if (iterator == this->active_object_map ().end () || env.exception () != 0)
+                break;
+
+              PortableServer::Servant servant = 0;
+              PortableServer::ObjectId id ((*iterator).ext_id_);
+              
+              int result = this->active_object_map ().unbind (id, servant);
+              if (result != 0)
+                {
+                  CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
+                  env.exception (exception);
+                  return;
+                }
+              
+              CORBA::Boolean remaining_activations = CORBA::B_FALSE;
+
+              if (this->policies ().id_uniqueness () == PortableServer::MULTIPLE_ID &&
+                  this->active_object_map ().find (servant) != -1)
+                remaining_activations = CORBA::B_TRUE;
+
+              this->servant_activator_->etherealize (id,
                                                      self.in (),
-                                                     (*iterator).int_id_,
+                                                     servant,
                                                      CORBA::B_TRUE,
-                                                     CORBA::B_FALSE, // @@
+                                                     remaining_activations,
                                                      env);
             }
         }
@@ -1446,7 +1465,7 @@ TAO_POA::deactivate_object_i (const PortableServer::ObjectId &oid,
 
   // If there is no active object associated with the specified Object
   // Id, the operation raises an ObjectNotActive exception.
-  if (result == -1)
+  if (result != 0)
     {
       CORBA::Exception *exception = new PortableServer::POA::ObjectNotActive;
       env.exception (exception);
@@ -1465,17 +1484,17 @@ TAO_POA::deactivate_object_i (const PortableServer::ObjectId &oid,
   // deactivated. It is the responsibility of the object
   // implementation to refrain from destroying the servant while it is
   // active with any Id.
-  PortableServer::POA_var self = this->_this (env);
-  if (env.exception () != 0)
-    return;
-  
   if (!CORBA::is_nil (this->servant_activator_.in ()))
     {
-      CORBA::Boolean remaining_activations;
-      if (this->active_object_map ().find (servant) != -1)
+      PortableServer::POA_var self = this->_this (env);
+      if (env.exception () != 0)
+        return;
+  
+      CORBA::Boolean remaining_activations = CORBA::B_FALSE;
+
+      if (this->policies ().id_uniqueness () == PortableServer::MULTIPLE_ID &&
+          this->active_object_map ().find (servant) != -1)
         remaining_activations = CORBA::B_TRUE;
-      else
-        remaining_activations = CORBA::B_FALSE;    
 
       this->servant_activator_->etherealize (oid,
                                              self.in (),
