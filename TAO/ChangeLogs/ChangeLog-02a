@@ -1,3 +1,12 @@
+Thu Nov  1 14:01:15 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/IIOP_Acceptor.cpp:
+        * tao/Strategies/DIOP_Acceptor.cpp:
+
+          Fixed a bug in *_Acceptor::probe_interfaces().  Initialize the
+          array of char*'s to 0, directly after allocation.  Thanks to Mike
+          Letchworth <mletchwo@cisco.com> for reporting this.
+
 Wed Oct 31 17:32:38 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/IFR_BaseS.cpp:
