@@ -16,32 +16,45 @@ int main (int argc, char *argv[])
   char buf[BUFSIZ];
 
   ACE_SOCK_Stream cli_stream;
-  ACE_INET_Addr remote_addr (r_port, host);
 
-  ACE_DEBUG ((LM_DEBUG, "starting non-blocking connect\n"));
   // Initiate timed, non-blocking connection with server.
   ACE_SOCK_Connector con;
                                                         
   // Attempt a non-blocking connect to the server, reusing the local
   // addr if necessary.
+#if defined (VXWORKS)
+  ACE_DEBUG ((LM_DEBUG, "starting connect\n"));
+
+  fprintf (stderr,
+          "CPP-inclient.cpp:  you'll need to hard code the hostname:port on VxWorks!!!!\n");
+  ACE_INET_Addr remote_addr ("<hard-coded hostname:10002");
+  if (con.connect (cli_stream, remote_addr) == -1)
+#else
+  ACE_DEBUG ((LM_DEBUG, "starting non-blocking connect\n"));
+
+  ACE_INET_Addr remote_addr (r_port, host);
   if (con.connect (cli_stream, remote_addr, (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
+#endif /* VXWORKS */
     {
       if (errno != EWOULDBLOCK)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "connection failed"), 1);
 
       ACE_DEBUG ((LM_DEBUG, "starting timed connect\n"));
 
+#if !defined (VXWORKS)
       // Check if non-blocking connection is in progress, 
       // and wait up to timeout seconds for it to complete.
-
       if (con.complete (cli_stream, &remote_addr, &timeout) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "connection failed"), 1);
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "complete failed"), 1);
       else
 	ACE_DEBUG ((LM_DEBUG, "connected to %s\n", remote_addr.get_host_name ()));
+#endif /* !VXWORKS */
     }
 
+#if !defined (VXWORKS)
   if (cli_stream.disable (ACE_NONBLOCK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "disable"), 1);    
+#endif /* !VXWORKS */
 
   // Send data to server (correctly handles "incomplete writes").
   
