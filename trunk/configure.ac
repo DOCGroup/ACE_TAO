@@ -7290,8 +7290,9 @@ AC_CONFIG_FILES([
   ace-config.1
   Makefile
   ace/Makefile
-  ace/RMCast/Makefile
+  ace/HTBP/Makefile
   ace/QoS/Makefile
+  ace/RMCast/Makefile
   ace/SSL/Makefile
   ace/TMCast/Makefile
   apps/Makefile
