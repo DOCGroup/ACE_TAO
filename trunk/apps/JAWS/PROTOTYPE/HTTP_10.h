@@ -36,6 +36,10 @@ public:
 
 private:
   int parse_request (JAWS_HTTP_10_Request *info, JAWS_Data_Block *data);
+  int parse_headers (JAWS_HTTP_10_Request *info, ACE_Message_Block &mb);
+  int parse_header_type (JAWS_HTTP_10_Request *info, ACE_Message_Block &mb);
+  int parse_header_value (JAWS_HTTP_10_Request *info, ACE_Message_Block &mb);
+  char * skipset (const char *set, char *start, char *end);
 
 };
 
@@ -77,13 +81,29 @@ public:
   JAWS_HTTP_10_Request (void);
   ~JAWS_HTTP_10_Request (void);
 
+  int end_of_line (void) const;
+  void end_of_line (int flag);
+
+  const char *last_header_type (void) const;
+  void last_header_type (char *ht);
+
+  const char *last_header_value (void) const;
+  void last_header_value (char *hv);
+
+  int last_header_length (void) const;
+  void last_header_length (int len);
+
+  char *header_buf (void);
+
+  void append_last_header_value (char c);
+  void reduce_last_header_value (void);
+  void resize_last_header_value (void);
+
+  void create_next_header_value (char *ht, char *hv);
+
   int reset (char *buffer, int buflen);
 
   void parse_request_line (char *request_line);
-  void parse_header_line (char *header_line);
-
-  int complete_header_line (char *line);
-  int end_of_line (char *&line, int &offset) const;
 
   int got_request_line (void) const;
   int end_of_headers (void) const;
@@ -104,7 +124,6 @@ public:
   const char *uri (const char *s);
   const char *version (const char *s);
   const char *path (const char *s);
-
 
   int type (void);
 
@@ -140,22 +159,35 @@ public:
 
   enum
   {
-    MAX_STATUS_CODE = 599
+    MAX_STATUS_CODE = 599,
+    MAX_HEADER_LENGTH = 8192
   };
+  // Note that RFC 822 does not mention the maximum length of a header
+  // line.  So in theory, there is no maximum length.
+  // In Apache, they assume that each header line should not exceed
+  // 8K.  Who am I to disagree?
+
 
 private:
   int got_request_line_;
   int end_of_headers_;
+  int end_of_line_;
+  char *last_header_type_;
+  char *last_header_value_;
+  int last_header_length_;
   int status_;
   int type_;
   int content_length_;
   int datalen_;
+  int status_msglen_;
 
   char *data_;
   char *method_;
   char *uri_;
   char *version_;
   char *path_;
+
+  char header_buf_[MAX_HEADER_LENGTH];
 
   JAWS_HTTP_10_Headers table_;
 };

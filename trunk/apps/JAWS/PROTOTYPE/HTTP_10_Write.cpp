@@ -38,6 +38,7 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
               (info->uri () ? info->uri () : "="),
               (info->version () ? info->version () : "HTTP/0.9")));
 
+#if 0
   JAWS_HTTP_10_Headers *table = info->table ();
   Symbol_Table_Iterator &iter = table->iter ();
   for (iter.first (); ! iter.is_done (); iter.next ())
@@ -56,4 +57,34 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
     }
 
   return -1;
+#else
+
+  if (info->type () != JAWS_HTTP_10_Request::GET)
+    info->status (JAWS_HTTP_10_Request::STATUS_NOT_IMPLEMENTED);
+
+  if (info->status () != JAWS_HTTP_10_Request::STATUS_OK)
+    {
+      char *msg =
+        "<html><head><title>HTTP/1.0 500 Internal Server Error</title>"
+        "<body><h1>Server Error</h1>HTTP/1.0 500 Internal Server Error"
+        "</body></html>";
+
+      io->send_error_message (handler, msg, sizeof (msg));
+      if (handler->status () == JAWS_IO_Handler::WRITE_OK)
+        return 0;
+    }
+  else
+    {
+      io->transmit_file (handler,
+                         info->path (),
+                         "",
+                         0,
+                         "",
+                         0);
+      if (handler->status () == JAWS_IO_Handler::TRANSMIT_OK)
+        return 0;
+    }
+
+  return -1;
+#endif
 }
