@@ -17,8 +17,8 @@ PROG_SRCS =	svr.cpp clnt.cpp cubit.cpp \
 
 LSRC = $(PROG_SRCS)
 
-CUBIT_SVR_OBJS = svr.o cubit.o cubit_i.o cubitS.o
-CUBIT_CLT_OBJS = clnt.o cubit.o cubitC.o
+CUBIT_SVR_OBJS = svr.o cubit_i.o cubitS.o
+CUBIT_CLT_OBJS = clnt.o cubitC.o
 
 BASIC_SVR_OBJS = test1.o test1_svr.o
 BASIC_CLT_OBJS = test1.o test1_clnt.o

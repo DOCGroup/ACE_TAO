@@ -165,7 +165,7 @@ private:
   DEMUX_STRATEGY type_;
 };
 
-typedef ACE_Singleton<TAO_Operation_Table_Parameters, ACE_RW_Mutex> TAO_OP_TABLE_PARAMETERS;
+typedef ACE_Singleton<TAO_Operation_Table_Parameters, ACE_SYNCH_RW_MUTEX> TAO_OP_TABLE_PARAMETERS;
 
 class TAO_Operation_Table_Factory
 {
@@ -175,6 +175,6 @@ public:
   ~TAO_Operation_Table_Factory (void);
 };
 
-typedef ACE_Singleton<TAO_Operation_Table_Factory, ACE_RW_Mutex> TAO_OP_TABLE_FACTORY;
+typedef ACE_Singleton<TAO_Operation_Table_Factory, ACE_SYNCH_RW_MUTEX> TAO_OP_TABLE_FACTORY;
 
 #endif /* TAO_OPTABLE_H */
