@@ -656,7 +656,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value &cur_ti
             break;
         }
 
-      if (next_earliest_time == this->wheel_size_)
+      if (next_earliest == this->wheel_size_)
         break;
 
       earliest = next_earliest;
