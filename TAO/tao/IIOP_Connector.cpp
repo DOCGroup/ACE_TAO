@@ -51,7 +51,7 @@ TAO_IIOP_Connect_Creation_Strategy::make_svc_handler (
 // ****************************************************************
 
 typedef ACE_Cached_Connect_Strategy<TAO_IIOP_Client_Connection_Handler,
-                                    TAO_SOCK_CONNECTOR,
+                                    ACE_SOCK_CONNECTOR,
                                     TAO_Cached_Connector_Lock>
         TAO_CACHED_CONNECT_STRATEGY;
 
@@ -380,7 +380,7 @@ TAO_IIOP_Connector::object_key_delimiter (void) const
 
 
 #define TAO_SVC_TUPLE ACE_Svc_Tuple<TAO_IIOP_Client_Connection_Handler>
-#define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<TAO_IIOP_Client_Connection_Handler, TAO_SOCK_CONNECTOR, TAO_Cached_Connector_Lock>
+#define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_CONNECTOR, TAO_Cached_Connector_Lock>
 #define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -390,17 +390,17 @@ template class ACE_Unbounded_Stack<ACE_INET_Addr>;
 template class ACE_Unbounded_Stack_Iterator<ACE_INET_Addr>;
 
 template class ACE_Creation_Strategy<TAO_IIOP_Client_Connection_Handler>;
-template class ACE_Connect_Strategy<TAO_IIOP_Client_Connection_Handler, TAO_SOCK_CONNECTOR>;
-template class ACE_Strategy_Connector<TAO_IIOP_Client_Connection_Handler, TAO_SOCK_CONNECTOR>;
+template class ACE_Connect_Strategy<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Strategy_Connector<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_NOOP_Creation_Strategy<TAO_IIOP_Client_Connection_Handler>;
 template class ACE_Concurrency_Strategy<TAO_IIOP_Client_Connection_Handler>;
 template class ACE_NOOP_Concurrency_Strategy<TAO_IIOP_Client_Connection_Handler>;
 template class ACE_Recycling_Strategy<TAO_IIOP_Client_Connection_Handler>;
-template class ACE_Connector<TAO_IIOP_Client_Connection_Handler, TAO_SOCK_CONNECTOR>;
+template class ACE_Connector<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_CONNECTOR>;
 
 template class ACE_Node<TAO_IIOP_Client_Connection_Handler *>;
 
-template class ACE_Svc_Handler<TAO_SOCK_STREAM, ACE_NULL_SYNCH>;
+template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class CACHED_CONNECT_STRATEGY;
 template class REFCOUNTED_HASH_RECYCLABLE_ADDR;
 template class ACE_Map_Manager<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
@@ -442,17 +442,17 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR,
 #pragma instantiate ACE_Unbounded_Stack_Iterator<ACE_INET_Addr>
 
 #pragma instantiate ACE_Creation_Strategy<TAO_IIOP_Client_Connection_Handler>
-#pragma instantiate ACE_Connect_Strategy<TAO_IIOP_Client_Connection_Handler, TAO_SOCK_CONNECTOR>
-#pragma instantiate ACE_Strategy_Connector<TAO_IIOP_Client_Connection_Handler, TAO_SOCK_CONNECTOR>
+#pragma instantiate ACE_Connect_Strategy<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Strategy_Connector<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_CONNECTOR>
 #pragma instantiate ACE_NOOP_Creation_Strategy<TAO_IIOP_Client_Connection_Handler>
 #pragma instantiate ACE_Concurrency_Strategy<TAO_IIOP_Client_Connection_Handler>
 #pragma instantiate ACE_NOOP_Concurrency_Strategy<TAO_IIOP_Client_Connection_Handler>
 #pragma instantiate ACE_Recycling_Strategy<TAO_IIOP_Client_Connection_Handler>
-#pragma instantiate ACE_Connector<TAO_IIOP_Client_Connection_Handler, TAO_SOCK_CONNECTOR>
+#pragma instantiate ACE_Connector<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_CONNECTOR>
 
 #pragma instantiate ACE_Node<TAO_IIOP_Client_Connection_Handler *>
 
-#pragma instantiate ACE_Svc_Handler<TAO_SOCK_STREAM, ACE_NULL_SYNCH>
+#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate CACHED_CONNECT_STRATEGY
 #pragma instantiate REFCOUNTED_HASH_RECYCLABLE_ADDR
 #pragma instantiate TAO_SVC_TUPLE

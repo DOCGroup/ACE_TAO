@@ -1,3 +1,16 @@
+Sat Jul 17 12:48:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/orbconf.h:
+	* tao/IIOP_Acceptor.cpp:
+	* tao/IIOP_Connect.h:
+	* tao/IIOP_Connector.cpp:
+	* tao/IIOP_Connector.h:
+	* tao/UIOP_Acceptor.cpp:
+	* tao/UIOP_Connector.cpp:
+	  Removed the bogus TAO_SOCK_* and TAO_LSOCK_* macros, the
+	  pluggable protocols framework provides the right solution for
+	  that problem.
+
 Fri Jul 16 22:39:15 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Acceptor_Impl: This file contained a class that inherited

@@ -30,8 +30,7 @@
 #include "tao/Pluggable.h"
 #include "tao/IIOP_Connect.h"
 
-typedef ACE_Strategy_Connector<TAO_IIOP_Client_Connection_Handler, TAO_SOCK_CONNECTOR>
-        TAO_IIOP_BASE_CONNECTOR;
+typedef ACE_Strategy_Connector<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_CONNECTOR> TAO_IIOP_BASE_CONNECTOR;
 
 // ****************************************************************
 
