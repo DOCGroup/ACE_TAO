@@ -1,3 +1,25 @@
+Tue May  9 13:33:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* * TAO_IDL/be/be_visitor_factory.cpp be/be_visitor_valuetype.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/field_cdr_ci.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/marshal_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ci.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
+	* TAO_IDL/be_include/be_visitor_valuetype.h:
+	* TAO_IDL/be_include/be_visitor_valuetype/field_cs.h:
+	  Added Files:
+	* TAO_IDL/be/be_visitor_valuetype/field_cdr_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/field_ci.cpp:
+	* TAO_IDL/be_include/be_visitor_valuetype/field_cdr_ch.h:
+	* TAO_IDL/be_include/be_visitor_valuetype/field_ci.h:
+	  Anonymous sequence members of valuetypes were getting 
+	  their inline functions generated in the C.cpp file. Also, there
+	  was no delcaration of their CDR operators. This fix closes
+	  out [BUGID:554].
+
 Tue May 09 10:19:35 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/RTCorba/Multiple_Endpoints/Common/RTCORBA_Common.dsp:
