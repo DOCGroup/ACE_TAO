@@ -25,11 +25,11 @@ public:
   typedef char const * const_value_type;
 
   typedef details::string_traits<char,true> element_traits;
-  typedef details::unbounded_reference_allocation_traits<char*,element_traits,true> allocation_traits;
+  typedef details::unbounded_reference_allocation_traits<value_type,element_traits,true> allocation_traits;
 
   typedef details::string_sequence_element<element_traits> element_type;
 
-  typedef details::generic_sequence<char*, allocation_traits, element_traits> implementation_type;
+  typedef details::generic_sequence<value_type, allocation_traits, element_traits> implementation_type;
 
   inline unbounded_string_sequence()
     : impl_()

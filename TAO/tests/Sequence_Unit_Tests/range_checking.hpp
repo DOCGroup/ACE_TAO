@@ -45,6 +45,16 @@ struct range_checking
     // Applications and tests can specialize this function to define
     // their own behavior
   }
+
+  inline static void check_length(
+      CORBA::ULong & /* new_length */,
+      CORBA::ULong /* maximum */)
+  {
+    /*
+    if (maximum < new_length)
+      new_length = maximum;
+    */
+  }
 };
 
 } // namespace details

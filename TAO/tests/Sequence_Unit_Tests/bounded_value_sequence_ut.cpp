@@ -50,6 +50,13 @@ struct Tester
     BOOST_CHECK_MESSAGE(f.expect(1), f);
   }
 
+  void test_set_length_more_than_maximum()
+  {
+    tested_sequence x;
+
+    BOOST_CHECK_THROW(x.length(64), std::runtime_error);
+  }
+
   value_type * alloc_and_init_buffer()
   {
     value_type * buf = tested_sequence::allocbuf();
@@ -249,6 +256,9 @@ struct Tester
 
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_set_length_less_than_maximum,
+                shared_this));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_set_length_more_than_maximum,
                 shared_this));
 
     ts->add(BOOST_CLASS_TEST_CASE(
