@@ -36,7 +36,17 @@ ACE_Handle_Set::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-// Table that maps bytes to counts of the enabled bits.
+// Table that maps bytes to counts of the enabled bits in each value
+// from 0 to 255,
+// 
+// nbits_[0] == 0
+//
+// because there are no bits enabled for the value 0.
+//
+// nbits_[5] == 2
+//
+// because there are 2 bits enabled in the value 5, i.e., it's
+// 101 in binary.
 
 const char ACE_Handle_Set::nbits_[256] = 
 {
