@@ -1,3 +1,10 @@
+Wed Feb 25 11:39:38 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/codecs.mpb:
+
+          Removed unnecessary macros.  I missed this one in the previous
+          commit.
+
 Wed Feb 25 11:28:11 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/OS_NS_unistd.inl:
