@@ -13,6 +13,16 @@
 
 ACE_RCSID(ESF, ESF_Peer_Admin, "$Id$")
 
+#if defined (__BORLANDC__)
+
+template<class EC,class P,class I,class R>
+TAO_ESF_Peer_Admin<EC,P,I,R>::TAO_ESF_Peer_Admin (EC *ec)
+  :  TAO_ESF_Proxy_Admin<EC,P,I> (ec)
+{
+}
+
+#endif /* __BORLANDC__ */
+
 template<class EC, class P,class I, class PEER>
 TAO_ESF_Peer_Admin<EC,P,I,PEER>::~TAO_ESF_Peer_Admin (void)
 {
