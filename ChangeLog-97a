@@ -1,3 +1,8 @@
+Tue Jun 24 13:02:51 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/SString.h (ACE_SString ctor): changed "allocator" to "alloc".
+	  Thanks to Brian Mendel <bmendel@mdc.com> for reporting this.
+
 Tue Jun 24 12:58:28 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
 	* include/makeinclude/platform_irix6.4*: Shuts up useless warnings
