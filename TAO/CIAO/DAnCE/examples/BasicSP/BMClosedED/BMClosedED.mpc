@@ -4,7 +4,7 @@
 
 project(BMClosedED_DnC_stub): ciao_client_dnc {
   after += BasicSP_DnC_stub
-  sharedname = BMClosedED_DnC_stub
+  sharedname = BMClosedED_stub
 
   idlflags += -Wb,stub_export_macro=BMCLOSEDED_STUB_Export 
   idlflags += -Wb,stub_export_include=BMClosedED_stub_export.h 
@@ -27,7 +27,7 @@ project(BMClosedED_DnC_stub): ciao_client_dnc {
 project(BMClosedED_DnC_svnt) : ciao_servant_dnc {
   after += BasicSP_DnC_svnt BMClosedED_DnC_stub
 
-  sharedname = BMClosedED_DnC_svnt
+  sharedname = BMClosedED_svnt
 
   libs    += BMClosedED_DnC_stub BasicSP_DnC_stub 
   libs    += BasicSP_DnC_svnt
@@ -58,7 +58,7 @@ project(BMClosedED_DnC_svnt) : ciao_servant_dnc {
 project(BMClosedED_DnC_exec) : ciao_component_dnc {
   after      += BMClosedED_DnC_svnt
 
-  sharedname = BMClosedED_DnC_exec
+  sharedname = BMClosedED_exec
 
   libs       += BMClosedED_DnC_stub BMClosedED_DnC_svnt 
   libs       += BasicSP_DnC_stub BasicSP_DnC_svnt
