@@ -50,7 +50,7 @@ public:
   // release a buffer pointed by <buf>.  Return -1 if the <shm_malloc_>
   // is not initialized.
 
-  off_t set_buf_len (const void *buf,
+  off_t set_buf_len (void *buf,
                      size_t n);
   // Set the length of buf (containing information) to <n> bytes.
   // Return the offset of the <buf> relative to the base address.
