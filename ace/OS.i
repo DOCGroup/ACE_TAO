@@ -4301,15 +4301,14 @@ ACE_OS::event_wait (ACE_event_t *event)
         {
           event->waiting_threads_++;
 
-          while (event->is_signaled_ == 0)
-            if (ACE_OS::cond_wait (&event->condition_,
-                                   &event->lock_) != 0)
-              {
-                result = -1;
-                error = errno;
-                break;
-                // Something went wrong...
-              }
+          if (ACE_OS::cond_wait (&event->condition_,
+                                 &event->lock_) != 0)
+            {
+              result = -1;
+              error = errno;
+              break;
+              // Something went wrong...
+            }
 
           event->waiting_threads_--;
         }
@@ -4400,6 +4399,7 @@ ACE_OS::event_timedwait (ACE_event_t *event,
               result = -1;
               error = errno;
             }
+
           event->waiting_threads_--;
         }
 
@@ -5207,7 +5207,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
 
 ACE_INLINE int
 ACE_OS::ioctl (ACE_HANDLE socket,
-               u_long io_control_code,	
+               u_long io_control_code,
                ACE_QoS &ace_qos,
                u_long *bytes_returned,
                void *buffer_p,
@@ -5216,18 +5216,18 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                ACE_OVERLAPPED_COMPLETION_FUNC func)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  
+
   QOS qos;
   DWORD qos_len = sizeof (QOS);
-  
+
   if (io_control_code == SIO_SET_QOS)
     {
       qos.SendingFlowspec = ace_qos.sending_flowspec ();
       qos.ReceivingFlowspec = ace_qos.receiving_flowspec ();
       qos.ProviderSpecific = (WSABUF) ace_qos.provider_specific ();
-      
+
       qos_len += ace_qos.provider_specific ().iov_len;
-      
+
       ACE_SOCKCALL_RETURN (::WSAIoctl ((ACE_SOCKET) socket,
                                        io_control_code,
                                        &qos,
@@ -5242,7 +5242,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
     }
   else
     {
-      
+
       ACE_SOCKCALL_RETURN (::WSAIoctl ((ACE_SOCKET) socket,
                                        io_control_code,
                                        buffer_p,
@@ -5254,7 +5254,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                                        func),
                            int,
                            SOCKET_ERROR);
-      
+
       ACE_Flow_Spec sending_flowspec (qos.SendingFlowspec.TokenRate,
                                       qos.SendingFlowspec.TokenBucketSize,
                                       qos.SendingFlowspec.PeakBandwidth,
@@ -5271,7 +5271,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
 #endif /* ACE_HAS_WINSOCK2_GQOS */
                                       0,
                                       0);
-      
+
       ACE_Flow_Spec receiving_flowspec (qos.ReceivingFlowspec.TokenRate,
                                         qos.ReceivingFlowspec.TokenBucketSize,
                                         qos.ReceivingFlowspec.PeakBandwidth,
@@ -5288,12 +5288,12 @@ ACE_OS::ioctl (ACE_HANDLE socket,
 #endif /* ACE_HAS_WINSOCK2_GQOS */
                                         0,
                                         0);
-      
+
       ace_qos.sending_flowspec (sending_flowspec);
       ace_qos.receiving_flowspec (receiving_flowspec);
       ace_qos.provider_specific (*((struct iovec *) (&qos.ProviderSpecific)));
     }
-  
+
 #else
   ACE_UNUSED_ARG (socket);
   ACE_UNUSED_ARG (io_control_code);
