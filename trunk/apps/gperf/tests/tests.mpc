@@ -4,7 +4,7 @@ project(cinset): gperf_test {
   verbatim(gnuace, bottom) {
     all: runtests
 
-    runtests:
+    runtests: cout
     "	@echo "Testing cout"
     "	./cout -v < c.gperf > cout.out
     "	-diff -b c.exp cout.out"
@@ -26,7 +26,7 @@ project(adainset): gperf_test {
   verbatim(gnuace, bottom) {
     all: runtests
 
-    runtests:
+    runtests: aout
     "	@echo "Testing aout"
     "	./aout -v < ada.gperf > aout.out
     "	-diff -b ada-res.exp aout.out"
@@ -48,7 +48,7 @@ project(c++inset): gperf_test {
   verbatim(gnuace, bottom) {
     all: runtests
 
-    runtests:
+    runtests: c++out
     "	@echo "Testing c++out"
     "	./c++out -v < c++.gperf > c++out.out
     "	-diff -b c++-res.exp c++out.out"
@@ -70,7 +70,7 @@ project(preinset): gperf_test {
   verbatim(gnuace, bottom) {
     all: runtests
 
-    runtests:
+    runtests: preout
     "	@echo "Testing preout"
     "	./preout -v < adadefs.gperf > preout.out
     "	-diff -b ada-pred.exp preout.out"
@@ -92,7 +92,7 @@ project(m3inset): gperf_test {
   verbatim(gnuace, bottom) {
     all: runtests
 
-    runtests:
+    runtests: m3out
     "	@echo "Testing m3out"
     "	./m3out -v < modula3.gperf > m3out.out
     "	-diff -b modula.exp m3out.out"
@@ -114,7 +114,7 @@ project(pinset): gperf_test {
   verbatim(gnuace, bottom) {
     all: runtests
 
-    runtests:
+    runtests: pout
     "	@echo "Testing pout"
     "	./pout -v < pascal.gperf > pout.out
     "	-diff -b pascal.exp pout.out"
@@ -136,7 +136,7 @@ project(iinset): gperf_test {
   verbatim(gnuace, bottom) {
     all: runtests
 
-    runtests:
+    runtests: iout
     "	@echo "Testing iout"
     "	./iout -v < idl.gperf > iout.out
     "	-diff -b idl.exp iout.out"
@@ -159,7 +159,7 @@ project(iinset2): gperf_test {
   verbatim(gnuace, bottom) {
     all: runtests
 
-    runtests:
+    runtests: iout2
     "	@echo "Testing iout2"
     "	./iout2 -v < idl.gperf > iout2.out
     "	-diff -b idl.exp iout2.out"
@@ -181,7 +181,7 @@ project(tinset): gperf_test {
   verbatim(gnuace, bottom) {
     all: runtests
 
-    runtests:
+    runtests: tout
     "	@echo "Testing tout"
     "	./tout -v < corba.gperf > tout.out
     "	-diff -b corba.exp tout.out"
@@ -203,7 +203,7 @@ project(taoinset): gperf_test {
   verbatim(gnuace, bottom) {
     all: runtests
 
-    runtests:
+    runtests: taoout
     "	@echo "Testing taoout"
     "	./taoout -v < tao.gperf > taoout.out
     "	-diff -b tao.exp taoout.out"
