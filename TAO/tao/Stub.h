@@ -40,6 +40,11 @@ class TAO_Policy_Set;
 
 class TAO_Profile;
 
+/// Forward declaration for ObjectKey
+namespace TAO
+{
+  class ObjectKey;
+}
 // Function pointer returning a pointer to CORBA::Exception. This is used to
 // describe the allocator for user-defined exceptions that are used internally
 // by the interpreter.
@@ -181,7 +186,10 @@ public:
   // Manage the base (non-forwarded) profiles.
   /// returns a pointer to the profile_in_use object.  This object
   /// retains ownership of this profile.
-  TAO_Profile *profile_in_use (void) ;
+  TAO_Profile *profile_in_use (void);
+
+  /// Return the ObjectKey
+  const TAO::ObjectKey &object_key (void) const;
 
   /**
    * Copy of the profile list, user must free memory when done.

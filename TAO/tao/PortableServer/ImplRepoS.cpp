@@ -583,7 +583,7 @@ void POA_ImplementationRepository::_TAO_ServerObject_ThruPOA_Proxy_Impl::ping (
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
+      _collocated_tao_target_->_stubobj ()->object_key (),
       "ping",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER
@@ -623,7 +623,7 @@ void POA_ImplementationRepository::_TAO_ServerObject_ThruPOA_Proxy_Impl::shutdow
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
+      _collocated_tao_target_->_stubobj ()->object_key (),
       "shutdown",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER
@@ -3056,7 +3056,7 @@ void POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::activ
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
+      _collocated_tao_target_->_stubobj ()->object_key (),
       "activate_server",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER
@@ -3102,7 +3102,7 @@ char * POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::act
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
+      _collocated_tao_target_->_stubobj ()->object_key (),
       "activate_server_with_startup",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER
@@ -3147,7 +3147,7 @@ void POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::regis
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
+      _collocated_tao_target_->_stubobj ()->object_key (),
       "register_server",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER
@@ -3191,7 +3191,7 @@ void POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::rereg
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
+      _collocated_tao_target_->_stubobj ()->object_key (),
       "reregister_server",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER
@@ -3235,7 +3235,7 @@ void POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::remov
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
+      _collocated_tao_target_->_stubobj ()->object_key (),
       "remove_server",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER
@@ -3278,7 +3278,7 @@ void POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::shutd
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
+      _collocated_tao_target_->_stubobj ()->object_key (),
       "shutdown_server",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER
@@ -3324,7 +3324,7 @@ char * POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::ser
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
+      _collocated_tao_target_->_stubobj ()->object_key (),
       "server_is_running",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER
@@ -3369,7 +3369,7 @@ void POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::serve
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
+      _collocated_tao_target_->_stubobj ()->object_key (),
       "server_is_shutting_down",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER
@@ -3413,7 +3413,7 @@ void POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::find 
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
+      _collocated_tao_target_->_stubobj ()->object_key (),
       "find",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER
@@ -3458,7 +3458,7 @@ void POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::list 
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
+      _collocated_tao_target_->_stubobj ()->object_key (),
       "list",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER
@@ -5859,7 +5859,7 @@ CORBA::Boolean POA_ImplementationRepository::_TAO_ServerInformationIterator_Thru
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
+      _collocated_tao_target_->_stubobj ()->object_key (),
       "next_n",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER
@@ -5901,7 +5901,7 @@ void POA_ImplementationRepository::_TAO_ServerInformationIterator_ThruPOA_Proxy_
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
+      _collocated_tao_target_->_stubobj ()->object_key (),
       "destroy",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER
