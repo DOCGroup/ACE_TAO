@@ -1,3 +1,8 @@
+Sun Jun  6 17:42:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/tao_idl.cpp:
+	  Fixed DRV_drive() it is taking a const char* now
+
 Sun Jun  6 15:14:13 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
 	* TAO_IDL/fe/keywords.dat: The type of keyword_ in
