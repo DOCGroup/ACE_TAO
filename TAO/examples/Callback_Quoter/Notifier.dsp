@@ -1,5 +1,5 @@
 # Microsoft Developer Studio Project File - Name="Notifier" - Package Owner=<4>
-# Microsoft Developer Studio Generated Build File, Format Version 5.00
+# Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
@@ -17,12 +17,12 @@ CFG=Notifier - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Notifier - Win32 Release" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "Notifier - Win32 Release" (based on "Win32 (x86) Console Application")
 !MESSAGE "Notifier - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -158,13 +158,60 @@ SOURCE=.\NotifierS.i
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\Notifier.idl
-USERDEP__NOTIF="..\..\..\bin\tao_idl.exe"	
+SOURCE=.\Consumer.idl
 
 !IF  "$(CFG)" == "Notifier - Win32 Release"
 
 !ELSEIF  "$(CFG)" == "Notifier - Win32 Debug"
 
+USERDEP__CONSU="..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
+InputPath=.\Consumer.idl
+InputName=Consumer
+
+BuildCmds= \
+	tao_idl $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notifier.idl
+
+!IF  "$(CFG)" == "Notifier - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Notifier - Win32 Debug"
+
+USERDEP__NOTIF="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Notifier.idl
 InputName=Notifier
