@@ -27,8 +27,10 @@ CosProperty_Hash_Key::CosProperty_Hash_Key (const CosPropertyService::PropertyNa
 int
 CosProperty_Hash_Key::operator == (const CosProperty_Hash_Key &CosProperty_Hash_Key) const   
 {
-  ACE_DEBUG ((LM_DEBUG, "CosProperty_Hash_Key::operator == : %s == %s \n",
-              this->pname_.in (), CosProperty_Hash_Key.pname_.in ()));
+  ACE_DEBUG ((LM_DEBUG,
+              "CosProperty_Hash_Key::operator == : %s == %s \n",
+              this->pname_.in (),
+              CosProperty_Hash_Key.pname_.in ()));
 
   return ACE_OS::strcmp (this->pname_.in (),
                          CosProperty_Hash_Key.pname_.in ()) == 0;
@@ -61,7 +63,8 @@ CosProperty_Hash_Value::CosProperty_Hash_Value (const CORBA::Any &anyvalue)
     {
       pvalue_.replace (anyvalue.type (),
                        anyvalue.value (),
-                       CORBA::B_FALSE, TAO_TRY_ENV);
+                       CORBA::B_FALSE,
+                       TAO_TRY_ENV);
     }
   TAO_CATCH (CORBA::SystemException, sysex)
     {
