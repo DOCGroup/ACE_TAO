@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
-
-/* $Id$ */
+// $Id$
 
 // ============================================================================
 //
@@ -24,36 +23,35 @@
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "tao/tao_util.h"
 
-
 class Video_Server_StreamEndPoint
   : public virtual TAO_Server_StreamEndPoint
-// = TITLE
-//    Server Stream Endpoint for A/V Streams demo
-// = DESCRIPTION
-//    Encapsulates server side transport functionality
 {
+  // = TITLE
+  //    Server Stream Endpoint for A/V Streams demo.
+  //
+  // = DESCRIPTION
+  //    Encapsulates server side transport functionality.
 public:
-  Video_Server_StreamEndPoint ();
+  Video_Server_StreamEndPoint (void);
   
-  // Handles stream stoppage
   virtual void handle_stop (const AVStreams::flowSpec &the_spec,
                             CORBA::Environment &env);
+  // Handles stream stoppage.
   
-  // Handles stream start. Starts the flow of data
   virtual void handle_start (const AVStreams::flowSpec &the_spec,  
                              CORBA::Environment &env);
+  // Handles stream start. Starts the flow of data.
   
-  // Handles the destruction of the stream, tears down the transport
   virtual void handle_destroy (const AVStreams::flowSpec &the_spec,  
                                CORBA::Environment &env);
+  // Handles the destruction of the stream, tears down the transport.
 
-  // Handles stream bind, establishes the transport
   virtual CORBA::Boolean handle_connection_requested (AVStreams::StreamEndPoint_ptr initiator, 
                                                       CORBA::Boolean is_mcast, 
                                                       AVStreams::streamQoS &qos, 
                                                       AVStreams::flowSpec &the_spec,  
                                                       CORBA::Environment &env);
-
+  // Handles stream bind, establishes the transport.
 };
 
 #endif /* AVSTREAMS_SERVER_H */
