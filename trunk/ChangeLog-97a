@@ -1,3 +1,15 @@
+Wed May 14 15:45:30 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Local_Name_Space_T.h,
+	  ace/Map_Manager.h,
+	  ace/Hash_Map_Manager.h,
+	  ace/SString.h,
+	  ace/Hash_Map_Manager.cpp: 
+	
+	  Changed all uses of the identifier "allocator" to "alloc" to
+ 	  avoid conflicts with MSVC++ STL 5.0.  Thanks to William
+ 	  L. Gerecke <gerecke@rayva.org> for reporting this.
+
 Wed May 14 15:00:58 1997    <irfan@TWOSTEP>
 
 	* Time_Service_Test.cpp (main): Fixed typo in the svc.conf
