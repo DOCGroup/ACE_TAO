@@ -170,9 +170,9 @@ void
 Client_i::run (void)
 {
   if (this->ts_->thread_per_rate_ == 0)
-    this->do_priority_inversion_test (&this->client_thread_manager_);
+    this->do_priority_inversion_test ();
   else
-    this->do_thread_per_rate_test (&this->client_thread_manager_);
+    this->do_thread_per_rate_test ();
 }
 
 #if defined (VXWORKS)
@@ -231,7 +231,7 @@ Client_i::get_context_switches (void)
 }
 
 void
-Client_i::output_latency (Task_State *ts)
+Client_i::output_latency (void)
 {
   FILE *latency_file_handle = 0;
   char latency_file[BUFSIZ];
@@ -334,10 +334,10 @@ Client_i::calc_util_time (void)
 }
 
 int
-Client_i::activate_high_client (ACE_Thread_Manager *thread_manager)
+Client_i::activate_high_client (void)
 {
   ACE_NEW_RETURN (this->high_priority_client_,
-                  Client (thread_manager,
+                  Client (&this->client_thread_manager_,
                           this->ts_,
                           0),
                   -1);
@@ -374,7 +374,7 @@ Client_i::activate_high_client (ACE_Thread_Manager *thread_manager)
 }
 
 int
-Client_i::activate_low_client (ACE_Thread_Manager *thread_manager)
+Client_i::activate_low_client (void)
 {
   ACE_NEW_RETURN (this->low_priority_client_,
                   Client *[this->ts_->thread_count_],
@@ -400,7 +400,7 @@ Client_i::activate_low_client (ACE_Thread_Manager *thread_manager)
        i--)
     {
       ACE_NEW_RETURN (this->low_priority_client_ [i - 1],
-                      Client (thread_manager,
+                      Client (&this->client_thread_manager_,
                               this->ts_,
                               i),
                       -1);
@@ -544,7 +544,7 @@ Client_i::print_latency_stats (void)
       // Output the latency values to a file, tab separated, to import
       // it to Excel to calculate jitter, in the mean time we come up
       // with the sqrt() function.
-      output_latency (this->ts_);
+      output_latency ();
 #elif defined (CHORUS)
       ACE_DEBUG ((LM_DEBUG,
                   "Test done.\n"
@@ -555,16 +555,16 @@ Client_i::print_latency_stats (void)
       // Output the latency values to a file, tab separated, to import
       // it to Excel to calculate jitter, in the mean time we come up
       // with the sqrt() function.
-      output_latency (this->ts_);
+      output_latency ();
 #else /* !CHORUS */
       ACE_DEBUG ((LM_DEBUG, "Test done.\n"
                   "High priority client latency : %f msec, jitter: %f msec\n"
                   "Low priority client latency : %f msec, jitter: %f msec\n",
-                  this->high_priority_client_->get_high_priority_latency (),
-                  this->high_priority_client_->get_high_priority_jitter (),
-                  this->low_priority_client_[0]->get_low_priority_latency (),
-                  this->low_priority_client_[0]->get_low_priority_jitter ()));
-      // output_latency (this->ts_);
+                  this->high_priority_client_->get_high_priority_latency ()/ACE_ONE_SECOND_IN_MSECS,
+                  this->high_priority_client_->get_high_priority_jitter ()/ACE_ONE_SECOND_IN_MSECS,
+                  this->low_priority_client_[0]->get_low_priority_latency ()/ACE_ONE_SECOND_IN_MSECS,
+                  this->low_priority_client_[0]->get_low_priority_jitter ()/ACE_ONE_SECOND_IN_MSECS));
+      // output_latency ();
 #endif /* !VXWORKS && !CHORUS */
     }
 }
@@ -620,8 +620,7 @@ Client_i::print_priority_inversion_stats (void)
 }
 
 int
-Client_i::start_servant (Task_State *ts,
-                         ACE_Thread_Manager &thread_manager)
+Client_i::start_servant (void)
 {
   char high_thread_args[BUFSIZ];
 
@@ -647,7 +646,7 @@ Client_i::start_servant (Task_State *ts,
                   Cubit_Task ((const char *) high_thread_args,
                               (const char *) "internet",
                               (u_int) 1,
-                              &thread_manager,
+                              &this->server_thread_manager_,
                               (u_int) 0), // task id 0.
                   -1);
 
@@ -667,25 +666,19 @@ Client_i::start_servant (Task_State *ts,
                  "(%P|%t) %p\n"
                  "\thigh_priority_task->activate failed"));
 
-   ACE_DEBUG ((LM_DEBUG,
-               "(%t) Waiting for argument parsing\n"));
-
+   //   ACE_DEBUG ((LM_DEBUG,"(%t) Waiting for argument parsing\n"));
    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ready_mon, GLOBALS::instance ()->ready_mtx_,-1));
-
    while (!GLOBALS::instance ()->ready_)
      GLOBALS::instance ()->ready_cnd_.wait ();
-
-   ACE_DEBUG ((LM_DEBUG,
-               "(%t) Argument parsing waiting done\n"));
-
+   //   ACE_DEBUG ((LM_DEBUG,"(%t) Argument parsing waiting done\n"));
+   // wait for all the threads.
    GLOBALS::instance ()->barrier_->wait ();
-
    this->ts_->one_ior_ = high_priority_task->get_servant_ior (0);
    return 0;
 }
 
 int
-Client_i::do_priority_inversion_test (ACE_Thread_Manager *thread_manager)
+Client_i::do_priority_inversion_test (void)
 {
   this->timer_.start ();
 #if defined (VXWORKS)
@@ -697,61 +690,45 @@ Client_i::do_priority_inversion_test (ACE_Thread_Manager *thread_manager)
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) <<<<<<< starting test on %D\n"));
   GLOBALS::instance ()->num_of_objs = 1;
-  ACE_Thread_Manager server_thread_manager;
   GLOBALS::instance ()->use_name_service = 0;
 
   for (u_int j = 0; j < this->ts_->argc_; j++)
     if (ACE_OS::strcmp (this->ts_->argv_[j], "-u") == 0)
       {
-        start_servant (this->ts_,
-                       server_thread_manager);
+        this->start_servant ();
         break;
       }
-
-  // Create the clients.
-  int result = this->activate_high_client (thread_manager);
-
+  // Create and activate the high priority client.
+  int result = this->activate_high_client ();
   if (result < 0)
     return result;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "(%t) Waiting for argument parsing\n"));
-
+  //  ACE_DEBUG ((LM_DEBUG,"(%t) Waiting for argument parsing\n"));
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ready_mon, this->ts_->ready_mtx_,-1));
-
   // wait on the condition variable until the high priority thread wakes us up.
   while (!this->ts_->ready_)
     this->ts_->ready_cnd_.wait ();
-
-  ACE_DEBUG ((LM_DEBUG,
-              "(%t) Argument parsing waiting done\n"));
-  result = this->activate_low_client (thread_manager);
-
+  //  ACE_DEBUG ((LM_DEBUG,"(%t) Argument parsing waiting done\n"));
+  // create and activate the low priority clients.
+  result = this->activate_low_client ();
   if (result < 0)
     return result;
-
+  // activate the utilization thread if necessary.
   result = this->activate_util_thread ();
-
   if (result < 0)
     return result;
-
   // Wait for all the client threads to be initialized before going
   // any further.
   this->ts_->barrier_->wait ();
-
   STOP_QUANTIFY;
   CLEAR_QUANTIFY;
-
   // collect the context switch data.
   this->get_context_switches ();
-
   // Wait for all the client threads to exit (except the utilization
   // thread).
-  thread_manager->wait ();
+  this->client_thread_manager_.wait ();
   STOP_QUANTIFY;
-
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) >>>>>>> ending test on %D\n"));
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) >>>>>>> ending test on %D\n"));
 
   this->timer_.stop ();
   this->timer_.elapsed_time (this->delta_);
@@ -775,18 +752,18 @@ Client_i::do_priority_inversion_test (ACE_Thread_Manager *thread_manager)
 }
 
 int
-Client_i::do_thread_per_rate_test (ACE_Thread_Manager *thread_manager)
+Client_i::do_thread_per_rate_test (void)
 {
-  Client CB_20Hz_client (thread_manager,
+  Client CB_20Hz_client (&this->client_thread_manager_,
                          this->ts_,
                          CB_20HZ_CONSUMER);
-  Client CB_10Hz_client (thread_manager,
+  Client CB_10Hz_client (&this->client_thread_manager_,
                          this->ts_,
                          CB_10HZ_CONSUMER);
-  Client CB_5Hz_client (thread_manager,
+  Client CB_5Hz_client (&this->client_thread_manager_,
                         this->ts_,
                         CB_5HZ_CONSUMER);
-  Client CB_1Hz_client (thread_manager,
+  Client CB_1Hz_client (&this->client_thread_manager_,
                         this->ts_,
                         CB_1HZ_CONSUMER);
   ACE_Sched_Priority priority;
@@ -867,7 +844,7 @@ Client_i::do_thread_per_rate_test (ACE_Thread_Manager *thread_manager)
                 "(%P|%t) errno = %p: activate failed\n"));
 
   // Wait for all the threads to exit.
-  thread_manager->wait ();
+  this->client_thread_manager_.wait ();
 
   ACE_DEBUG ((LM_DEBUG,
               "Test done.\n"
