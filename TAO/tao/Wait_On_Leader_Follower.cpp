@@ -20,7 +20,10 @@ TAO_Wait_On_Leader_Follower::~TAO_Wait_On_Leader_Follower (void)
 int
 TAO_Wait_On_Leader_Follower::register_handler (void)
 {
-  return this->transport_->register_handler ();
+  if (this->is_registered_ == 0)
+    return this->transport_->register_handler ();
+
+  return 1;
 }
 
 int
@@ -34,9 +37,8 @@ TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
                                               int two_way)
 {
   // Register the handler.
-  // @@ We could probably move this somewhere else, and remove this
-  //    function totally. (Alex).
-  this->transport_->register_handler ();
+  if (this->is_registered_ == 0)
+      this->transport_->register_handler ();
 
   // Send the request.
   return this->TAO_Wait_Strategy::sending_request (orb_core,
@@ -151,18 +153,18 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
                                   ACE_TEXT ("cond == 0 || cond->wait (tv) == -1\n"),
                                   this->transport_));
 
-                    if (leader_follower.remove_follower (&node) == -1 
+                    if (leader_follower.remove_follower (&node) == -1
                      && reply_received == 0)
                       {
-                        // Remove follower can fail because either 
-                        // 1) the reply arrived, or 
+                        // Remove follower can fail because either
+                        // 1) the reply arrived, or
                         // 2) somebody elected us as leader, or
                         // 3) the connection got closed.
                         //
                         // reply_received is 1, if the reply arrived.
                         // reply_received is 0, if the reply did not arrive yet.
                         // reply_received is -1, if the connection got closed
-                        // 
+                        //
                         // Therefore:
                         // If remove_follower fails and reply_received is 0, we know that
                         // we got elected as a leader. As we cannot be the leader (remember
@@ -171,12 +173,12 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
                         // ACE_DEBUG ((LM_DEBUG,
                         //            "TAO (%P|%t) TAO_Wait_On_Leader_Follower::wait - "
                         //            "We got elected as leader, but have timeout\n"));
-                        
+
                         if (leader_follower.elect_new_leader () == -1)
                           ACE_ERROR ((LM_ERROR,
                                       "TAO (%P|%t) TAO_Wait_On_Leader_Follower::wait - "
                                       "elect_new_leader failed\n"));
-                                      
+
                       }
                     return -1;
                   }

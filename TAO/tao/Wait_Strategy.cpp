@@ -4,9 +4,15 @@
 
 ACE_RCSID(tao, Wait_Strategy, "$Id$")
 
+#if !defined (__ACE_INLINE__)
+# include "Wait_Strategy.inl"
+#endif /* __ACE_INLINE__ */
+
 // Constructor.
 TAO_Wait_Strategy::TAO_Wait_Strategy (TAO_Transport *transport)
-  : transport_ (transport)
+  : transport_ (transport),
+    is_registered_ (0)
+
 {
 }
 
@@ -46,4 +52,3 @@ TAO_Wait_Strategy::connection_closed (int &reply_received,
   // acquire any mutex to set the reply_received flag.
   reply_received = -1;
 }
-
