@@ -2177,9 +2177,9 @@ ACE_WFMO_Reactor_Notify::handle_signal (int signum,
   for (int i = 1; ; i++)
     {
       ACE_Message_Block *mb = 0;
-
-      if (this->message_queue_.dequeue_head
-          (mb, (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
+      // Copy ACE_Time_Value::zero since dequeue_head will modify it.
+      ACE_Time_Value zero_timeout (ACE_Time_Value::zero);
+      if (this->message_queue_.dequeue_head (mb, &zero_timeout) == -1)
         {
           if (errno == EWOULDBLOCK)
             // We've reached the end of the processing, return
