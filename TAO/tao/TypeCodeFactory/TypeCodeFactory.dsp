@@ -121,7 +121,7 @@ LINK32=link.exe
 # PROP Use_MFC 2
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir ""
-# PROP Intermediate_Dir "DLL\MFC_Relase\TypeCodeFactory"
+# PROP Intermediate_Dir "DLL\MFC_Release\TypeCodeFactory"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /I "..\.." /I "..\..\.." /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_TYPECODEFACTORY_BUILD_DLL" /YX /FD /c
