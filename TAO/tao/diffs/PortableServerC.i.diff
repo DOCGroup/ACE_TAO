@@ -143,7 +143,7 @@
 +
 +ACE_INLINE PortableServer::IdUniquenessPolicy_ptr
 +tao_PortableServer_IdUniquenessPolicy_narrow (
-+    CORBA::Object *p TAO_ENV_ARG_PARAMETER
++    CORBA::Object *p TAO_ENV_ARG_DECL
 +  )
 +{
 +  return PortableServer::IdUniquenessPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
