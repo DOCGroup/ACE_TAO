@@ -22,11 +22,6 @@
 //#define MAXNAMLEN FILENAME_MAX
 //#define __unix__
 
-// OpenVMS does not support symlinks and does not define this.
-// Defining this as 0 effectively cancels out the one bit of code using this in
-// OS_NS_stdlib.cpp.
-#define MAXSYMLINKS 0
-
 #define ACE_OPENVMS
 #define ACE_DLL_SUFFIX ACE_LIB_TEXT("")
 
@@ -73,6 +68,7 @@
 #define ACE_LACKS_FCNTL 1
 
 #define ACE_LACKS_REALPATH 1
+#define ACE_LACKS_SYMLINKS
 
 #define ACE_LACKS_TIMESPEC_T    1
 #define ACE_LACKS_CONST_TIMESPEC_PTR 1
