@@ -8,6 +8,10 @@ Mon Jan 12 12:30:34 1998  David L. Levine  <levine@cs.wustl.edu>
           to int to avoid signed/unsigned comparison.  Thanks to Gonzo for
           reporting this.
 
+        * tests/Service_Config.test: changed type of VARIETIES to u_int to
+          avoid signed/unsigned comparison in main.  Thanks to Gonzo for
+          reporting this.
+
 Sun Jan 11 23:02:07 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/SString_Test.cpp (main): Removed the "silly" strings from
