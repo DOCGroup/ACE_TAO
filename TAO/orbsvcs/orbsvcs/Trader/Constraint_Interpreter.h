@@ -33,8 +33,8 @@ class TAO_Constraint_Interpreter : public TAO_Interpreter
 //
 // = DESCRIPTION
 //   TAO_Constraint_Interpreter will first build an expression tree
-//   representing the constraint expression using Lex and Yacc. Then, using a
-//   TAO_Constraint_Validator, it will validate the semantic
+//   representing the constraint expression using Lex and Yacc. Then,
+//   using a TAO_Constraint_Validator, it will validate the semantic
 //   correctness of the tree. When the evaluate method is invoked with
 //   an Offer, the TAO_Constraint_Interpreter will construct an
 //   EvaluationVisitor, which will evaluate the tree and decide
