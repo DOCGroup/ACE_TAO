@@ -1,3 +1,10 @@
+Thu May 18 10:37:30 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS_Dirent.h:
+
+          It looks like LynxOS needed sys/types.h to be included
+          before dirent.h.
+
 Thu May 18 10:29:49 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Makefile:
