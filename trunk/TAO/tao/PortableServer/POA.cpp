@@ -321,7 +321,7 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
       ACE_TRY
         {
           this->imr_notify_startup (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
