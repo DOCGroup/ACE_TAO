@@ -158,7 +158,7 @@ sub search_include_path {
   my($file)  = shift;
   my($found) = undef;
 
-  foreach my $include (@{$self->{'include'}}, '.') {
+  foreach my $include ('.', @{$self->{'include'}}) {
     if (-r "$include/$file") {
       $found = "$include/$file";
       last;

@@ -127,7 +127,6 @@ sub parse_line {
             $status = 0;
           }
 
-          $self->{'current_workspace_name'} = undef;
           $self->{'modified_count'} = 0;
           $self->{'workspace_name'} = undef;
           $self->{'projects'}       = [];
@@ -464,6 +463,11 @@ sub write_workspace {
     if (defined $self->{'projects'}->[0]) {
       my($fh)   = new FileHandle();
       my($dir)  = dirname($name);
+
+      ## Verify and possibly modify the dependencies
+      if ($addfile) {
+        $self->verify_build_ordering();
+      }
 
       if ($dir ne '.') {
         mkpath($dir, 0, 0777);
@@ -857,6 +861,7 @@ sub get_modified_workspace_name {
 
   if (!defined $previous_workspace_name{$type}->{$pwd}) {
     $previous_workspace_name{$type}->{$pwd} = $wsname;
+    $self->{'current_workspace_name'} = undef;
   }
   else {
     my($prefix) = ($name eq $wsname ? $name : "$name.$wsname");
@@ -881,6 +886,40 @@ sub generate_recursive_input_list {
   my($self) = shift;
   my($dir)  = shift;
   return $self->extension_recursive_input_list($dir, $wsext);
+}
+
+
+sub verify_build_ordering {
+  my($self)     = shift;
+  my($projects) = $self->get_projects();
+  my($pjs)      = $self->get_project_info();
+
+  foreach my $project (@$projects) {
+    my($name, $deps) = @{$$pjs{$project}};
+    if (defined $deps && $deps ne '') {
+      my($darr) = $self->create_array($deps);
+      foreach my $dep (@$darr) {
+        my($found) = 0;
+        ## Avoid cirular dependencies
+        if ($dep ne $name && $dep ne basename($project)) {
+          foreach my $p (@$projects) {
+            if ($dep eq $$pjs{$p}->[0] || $dep eq basename($p)) {
+              $found = 1;
+              last;
+            }
+          }
+          if (!$found) {
+            if (defined $ENV{MPC_VERBOSE_ORDERING}) {
+              print "WARNING: '$name' references '$dep' which has " .
+                    "not been processed\n";
+            }
+            $deps =~ s/\s*"$dep"\s*/ /g;
+          }
+        }
+      }
+      $$pjs{$project}->[1] = $deps;
+    }
+  }
 }
 
 # ************************************************************

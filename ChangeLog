@@ -1,3 +1,20 @@
+Wed Apr 30 08:37:29 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Parser.pm:
+
+          Search the current directory for include files first instead of
+          last.
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Convert project name spaces to underscores.
+
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Fixed a bug in generated workspace naming.  Also, added build
+          ordering verification.  To enable invalid ordering warnings set
+          the MPC_VERBOSE_ORDERING environment variable.
+
 Wed Apr 30 07:40:51 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * apps/gperf/src/Hash_Table.cpp:

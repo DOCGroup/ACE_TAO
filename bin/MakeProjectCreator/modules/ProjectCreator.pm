@@ -285,14 +285,15 @@ sub parse_line {
 
         ## Set up some initial values
         if (defined $name) {
-          $name =~ s/^\(\s*//;
-          $name =~ s/\s*\)$//;
           if ($name =~ /[\/\\]/) {
             $status = 0;
             $errorString = 'ERROR: Projects can not have a slash ' .
                            'or a back slash in the name';
           }
           else {
+            $name =~ s/^\(\s*//;
+            $name =~ s/\s*\)$//;
+            $name =~ s/\s/_/g;
             $self->process_assignment('project_name', $name);
           }
         }
@@ -1271,12 +1272,17 @@ sub generate_defaults {
   if (!defined $self->get_assignment('project_name')) {
     my($current) = $self->get_current_input();
     if ($current eq '') {
-      $self->process_assignment('project_name', $self->base_directory());
+      my($base) = $self->base_directory();
+      $base =~ s/\s/_/g;
+      $self->process_assignment('project_name', $base);
     }
     else {
       ## Since files on UNIX can have back slashes, we transform them
       ## into underscores.
       $current =~ s/\\/_/g;
+
+      ## Convert spaces to underscores
+      $current =~ s/\s/_/g;
 
       ## Take off the extension
       $current =~ s/\.[^\.]+$//;
