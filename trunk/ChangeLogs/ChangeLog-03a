@@ -1,3 +1,10 @@
+Mon Feb 11 16:31:04 2002  Ossama Othman  <ossama@uci.edu>
+
+	* bin/make_pretty.pl (is_warning):
+
+	  Do not flag Fuzz's "#pragma warning(push)/(pop)" test title as a
+	  warning.
+
 Mon Feb 11 13:49:35 2002  Ossama Othman  <ossama@uci.edu>
 
 	* bin/fuzz.pl (check_for_push_and_pop):

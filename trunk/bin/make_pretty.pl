@@ -197,7 +197,7 @@ sub is_warning ()
 
     # Look for warnings
 
-    return 1 if ((/warning/i && !/ warning\(s\)/)
+    return 1 if ((/warning/i && !/ warning\(s\)/ && !/pragma warning\(s\)/)
                  || /info: /i
                  || /^make.*\*\*\*/
                  || /^error \(future\)/i);
