@@ -295,7 +295,9 @@ TAO_Marshal_Struct::deep_copy (CORBA::TypeCode_ptr  tc,
                   if (env.exception () == 0)
                     {
                       // get the alignment of the field
+#if defined(TAO_NEEDS_UNUSED_VARIABLES)                      
                       CORBA::Long alignment = param->alignment (env);
+#endif                      
                       if (env.exception () == 0)
                         {
                           switch (param->_kind)

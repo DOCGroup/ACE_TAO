@@ -430,7 +430,9 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                 case CORBA::tk_except:
                   {
                     CORBA::ULong length;
+#if defined(TAO_NEEDS_UNUSED_VARIABLES)                    
                     CORBA::Octet *buffer;
+#endif                    
 
                     continue_decoding = stream->get_ulong (length);
                     if (!continue_decoding)
