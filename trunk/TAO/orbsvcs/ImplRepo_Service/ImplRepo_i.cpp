@@ -954,7 +954,7 @@ IR_Iterator::next_n (CORBA::ULong how_many,
 
 // Destroys the iterator.
 
-void IR_Iterator::destroy (CORBA::Environment &ACE_TRY_ENV)
+void IR_Iterator::destroy (CORBA::Environment &)
    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

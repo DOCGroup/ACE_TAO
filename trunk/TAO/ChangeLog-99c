@@ -1,3 +1,8 @@
+Wed Jun 23 15:54:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (destroy): Fixed
+	  warnings by remving an extra argument.
+
 Wed Jun 23 15:50:53 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/MT_Cubit/Globals.h:
