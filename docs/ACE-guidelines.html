@@ -42,9 +42,9 @@ bgcolor="#ffffff">
         reading code.  And, it avoids mangling problems with email
         and net news.<p>
 
-	<li>Try to avoid creating files with exceesively long names (45 characters).
-        Moreover, ensure that the names of generated files eg. MakeProjectCreator,
-        tao_idl do not also go beyond that limit. Some operating
+	<li>Try to avoid creating files with excessively long names (45 characters).
+        Moreover, ensure that the names of generated files e.g. <code>MakeProjectCreator</code>,
+        <code>tao_idl</code> do not also go beyond that limit. Some operating
         systems cannot handle very long file names correctly.<p>
 
     <li>If you add a comment to code that is directed to, or
@@ -56,7 +56,7 @@ bgcolor="#ffffff">
         <strong><code>-?</code></strong> command line argument, are
         provided to the program.<p>
 
-    <li>A program entry poing <code>main</code> can take any of the
+    <li>A program entry point <code>main</code> can take any of the
         three forms:
         <p><pre>
         int main (int argc, char *argv[])
@@ -64,15 +64,15 @@ bgcolor="#ffffff">
         int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         </pre></p>
         Of them, the entry point <code>main</code> always gives you
-        the command line arguemnt in char strings form.  The entry
+        the command line argument in char strings form.  The entry
         point <code>wmain</code> currently can only be used under
-        Win32 and it returns the command line arguments in wchar
+        Win32 and it returns the command line arguments in <code>wchar</code>
         strings format.  Defining the <code>ACE_TMAIN</code> as the
         program entry point is the more portable form.  The command
         line arguments are given in char strings in most cases,
-        or wchar strings when <code>ACE_USES_WCHAR</code> is defined.
+        or <code>wchar</code> strings when <code>ACE_USES_WCHAR</code> is defined.
         See <code>$ACE_ROOT/docs/wchar.txt</code> for more information
-        on ACE support on wchar.
+        on ACE support on <code>wchar</code>.
 
     <li>The program entry point function, in any form mentioned above, must
         always be declared with arguments, <em>e.g.</em>,
@@ -100,21 +100,24 @@ bgcolor="#ffffff">
 
         Please declare the second argument as <code>ACE_TCHAR *[]</code>
         instead of <code>ACE_TCHAR **</code> or <code>char *[]</CODE>.
-        Ancient versions of MSC
+        Ancient versions of MSC++
         complained about <code>ACE_TCHAR **</code> and <code>char
         *[]</CODE> is not Unicode-compliant.<p>
 
         <code>main</code> must also return 0 on successful
         termination, and non-zero otherwise.<p>
 
-    <li>Avoid use of floating point types (float and double) and operations
+    <li>Avoid use of floating point types (<code>float</code> and
+	    <code>double</code>) and operations
         unless absolutely necessary.  Not all ACE platforms support them.
-        Therefore, wherever they are used, ACE_LACKS_FLOATING_POINT
+        Therefore, wherever they are used, <code>ACE_LACKS_FLOATING_POINT</code>
         conditional code must be also be used.<p>
 
-    <li>Avoid including the string ``Error'' in a source code filename.
-        GNU Make's error messages start with ``Error''.  So, it's much
-        easier to search for errors if filenames don't contain ``Error''.<p>
+    <li>Avoid including the string "<code>Error</code>" in a source
+	    code filename. GNU Make's error messages start with
+	    "<code>Error</code>".  So, it's much easier to search for
+	    errors if filenames don't contain "<code>Error</code>".<p>
+
 
     <li>Narrow interfaces are better than wide interfaces.  If there
         isn't a need for an interface, leave it out.  This eases maintenance,
@@ -193,13 +196,13 @@ bgcolor="#ffffff">
     <li>Always insert a <strong><code>/**/</code></strong> between an
         <strong><code>#include</code></strong> and
         <strong><code>filename</code></strong>, for system headers and
-        <strong><code>ace/pre.h</code></strong> and 
-        <strong><code>ace/post.h</code></strong> as 
-        shown in the above example.  This avoids dependency problems 
+        <strong><code>ace/pre.h</code></strong> and
+        <strong><code>ace/post.h</code></strong> as
+        shown in the above example.  This avoids dependency problems
         with Visual C++ and prevents Doxygen from including the
         headers in the file reference trees.  <p>
 
-    <li>Be very careful with names of macros, enum values, and variables
+    <li>Be very careful with names of macros, <code>enum</code> values, and variables
         It's always best to prefix them with something like <code>ACE_</code>
         or <code>TAO_</code>.  There are too many system headers out
         there that #define <code>OK</code>, <code>SUCCESS</code>,
@@ -213,8 +216,8 @@ bgcolor="#ffffff">
 #if __FreeBSD__ &lt; 3
 </pre>
 
-will evaluate true on any platform where __FreeBSD__ is not defined.
-The correct way to write that guard is:
+will evaluate true on any platform where <code>__FreeBSD__</code> is
+not defined.  The correct way to write that guard is:
 <pre>
 #if defined (__FreeBSD__)  &&  __FreeBSD__ &lt; 3
 </pre>
@@ -324,8 +327,8 @@ The correct way to write that guard is:
       To avoid multiple inclusions of the <code>.cpp</code> file it
       should also be protected as in:
       <pre>
-      #ifndef FOO_T_C
-      #define FOO_T_C
+      #ifndef FOO_T_CPP
+      #define FOO_T_CPP
 
       #include "Foo_T.h"
       #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -335,8 +338,6 @@ The correct way to write that guard is:
       #if !defined (__ACE_INLINE__)
       #include "ace/Foo_T.inl"
       #endif /* __ACE_INLINE__ */
-
-      ACE_RCSID(lib, Foo_T, "$<!-- -->Id$")
 
       // put your template code here
 
@@ -437,7 +438,7 @@ The correct way to write that guard is:
         file_name [i] = '\0';
         </pre><p>
 
-   <li>Prefix operators are sometimes more efficient than postfix
+   <li>Prefix operators are generally more efficient than postfix
        operators.  Therefore, they are preferred over their postfix
        counterparts where the expression value is not used.<p>
 
@@ -462,9 +463,10 @@ The correct way to write that guard is:
     less error prone, and will help you avoid bugs caused due to the
     precedence of <strong> <code> ?: </code> </strong>, compared with other
     operators in an expression.
-    
-    <li>When a class provides operator==, it must also provide
-        operator!=.  Also, both these operators must be const.
+
+    <li>When a class provides <code>operator==</code>, it must also provide
+        <code>operator!=</code>.  Also, both these operators must be
+        <code>const</code> and return <code>bool</code>.
 
     <li>Avoid unnecessary parenthesis.  We're not writing Lisp :-)<p>
 
@@ -513,21 +515,23 @@ Foo::bar ()
 }
 </pre><p>
 
-        <li>The notable exception is virtual functions, which should never be
-          inlined.<p>
+        <li>The notable exception is virtual functions, which should
+            generally not be inlined.<p>
 
         <li>Big (more than 10 lines) and complex function (more than one if ()
           statement, or a switch, or a loop) should not be inlined.<p>
 
         <li>Medium sized stuff depends on how performance critical it is.
-          If you know that it's in the critical path, then make it inline.<p>
+          If you know that it's in the critical path, then make it
+		inline.  When in doubt, profile the code.<p>
       </ul>
 
     <li><code>ACE_Export</code> must be inserted between the
         <code>class</code> keyword and class name for all classes that
         are exported from libraries, as shown in the example above.
         <strong>However</strong>, do <strong>not</strong> use
-        <code>ACE_Export</code> for template classes!<p>
+        <code>ACE_Export</code> for template classes or classes that
+	are not used out of the ACE library, for example.!<p>
 
     <li>Mutators and accessors should be of this form:<p>
 
@@ -569,10 +573,6 @@ Foo::bar ()
         be compared or assigned with <strong>0</strong>.  The definition
         of <strong>NULL</strong> is implementation dependent, so it is
         difficult to use portably without casting.<p>
-
-    <li>Never use TRUE, true, or anything else other than 1 to indicate
-        true.  Never use FALSE, false, or anything else other than 0 to
-        indicate false.<p>
 
     <li>Never cast a pointer to or from an <strong><code>int</code></strong>.
         On all currently supported ACE platforms, it is safe to cast
@@ -643,7 +643,7 @@ Foo::bar ()
         But, beware if the initialization is of a static variable.
         A static variable is only initialized the first time its
         declaration is seen.  Of course, we should avoid using
-        static variables at all.<p>
+        static (and non-constant) variables at all.<p>
 
     <li>It is usually clearer to write conditionals that have
         both branches without a negated condition.  For example,<p>
@@ -672,26 +672,9 @@ Foo::bar ()
           }
         </pre><p>
 
-    <li>If a cast is necessary, avoid use of function-style casts,
-        <em>e.g.</em>, <code>int (foo)</code>.  Instead, use
-        one of the ACE cast macros:
-
-        <pre>
-        return ACE_static_cast(size_t, this-&gt;count_) &gt; that-&gt;size_;
-        </pre><p>
-
-        The general usage guidelines for the four styles of casts are:<p>
-        <ul>
-          <li><strong>ACE_const_cast</strong>: use to cast away
-            constness, or volatile-ness.<p>
-          <li><strong>ACE_static_cast</strong>: use to cast between
-            compatible types, such as downcasting a pointer or narrowing
-            an integer.<p>
-          <li><strong>ACE_reinterpret_cast</strong>: use only when
-            ACE_static_cast is not suitable.<p>
-          <li><strong>ACE_dynamic_cast</strong>: avoid, unless you really
-            want to type check at run-time.<p>
-        </ul>
+    <li>If a cast is necessary, avoid use of C-style "sledgehammer"
+	    casts.  Use standard C++ casts
+	    (e.g. <code>static_cast&lt;int&gt; (foo)</code>) instead.<p>
 
     <li>In general, if instances of a class should not be copied,
         then a private copy constructor and assignment operator should
@@ -716,9 +699,10 @@ Foo::bar ()
         classes as well.  Though for consistency and maximum safety, it
         should be avoided for non-template classes.<p>
 
-    <li>Never use <code>bool</code>, <code>BOOL</code>, or similar
-        types.  (CORBA::Boolean is acceptable).  Use <code>int</code>
-        or <code>u_int</code> instead for boolean types.<p>
+    <li>Never use <code>BOOL</code>, or similar types.
+	    (<code>ACE_CDR::Boolean</code> and
+	    <code>CORBA::Boolean</code> are acceptable).  Use the
+	    standard C++ <code>bool</code> for boolean variables, instead.<p>
 
     <li>Functions should always return -1 to indicate failure, and
         0 or greater to indicate success.<p>
@@ -755,19 +739,20 @@ Foo::bar ()
   <li><strong>WCHAR conformity</strong><p>
 
   <ul>
-     <li>For ACE, use ACE_TCHAR instead of char for strings and ACE_TEXT ()
-         around string literals.  Exceptions are char arrays used for data
-         and strings that need to remain as 1 byte characters.
+     <li>For ACE, use <code>ACE_TCHAR</code> instead of char for strings and <code>ACE_TEXT()</code>
+         around string literals.  Exceptions are <code>char</code>
+	    arrays used for data  and strings that need to remain as 1
+	    byte characters.
 
-     <li>If you have a char string that needs to be converted to ACE_TCHAR,
-         use the ACE_TEXT_CHAR_TO_TCHAR () macro.  If you have a ACE_TCHAR
-         string that needs to be converted to a char string, use the
-         ACE_TEXT_ALWAYS_CHAR () macro
+     <li>If you have a char string that needs to be converted to <code>ACE_TCHAR</code>,
+         use the <code>ACE_TEXT_CHAR_TO_TCHAR()</code> macro.  If you have a <code>ACE_TCHAR</code>
+         string that needs to be converted to a <code>char</code> string, use the
+         <code>ACE_TEXT_ALWAYS_CHAR()</code> macro
 
-     <li>Do not use the Win32 TCHAR macros.  The wide character-ness of ACE
+     <li>Do not use the Win32 <code>TCHAR</code> macros.  The wide character-ness of ACE
          is separate from UNICODE and _UNICODE.
 
-     <li>For TAO, don't use ACE_TCHAR or ACE_TEXT.  The CORBA specification
+     <li>For TAO, don't use <code>ACE_TCHAR</code> or <code>ACE_TEXT</code>.  The CORBA specification
          defines APIs as using char.  So most of the time there is no need
          to use wide characters.
   </ul><P>
@@ -918,13 +903,14 @@ Foo::bar ()
 <h3><a href="http://www.cs.wustl.edu/~schmidt/ACE-overview.html">ACE</a>
   Usage Guidelines</h3>
 <ul>
-  <li>Always use the <strong><code>ACE_OS</code></strong> 
+  <li>Always use the <strong><code>ACE_OS</code></strong>
       namespace functions instead of bare OS system calls.<p>
 
   <li>As a general rule, the only functions that should go into the
-      <strong><code>ACE_OS</code></strong> class are ones that have
-      direct equivalents on some OS platform.  Functions that are
-      extensions should go in the <strong><code>ACE</code></strong> class.<p>
+      <strong><code>ACE_OS</code></strong> namespace are ones that
+	have direct equivalents on some OS platform.  Functions that
+	are extensions should go in the
+	<strong><code>ACE</code></strong> namespace.<p>
 
   <li>Use the <strong><code>ACE_SYNCH_MUTEX</code></strong> macro,
       instead of using one of the specific mutexes, such as
@@ -951,10 +937,6 @@ Foo::bar ()
       assumed that only one thread exists during static construction.
       This allows statics suchs as locks to be safely created.  We do not
       want to violate this assumption.<p>
-
-  <li>Do not use run-time type identification (RTTI) directly since some platforms
-      do not support it.  Instead, use the ACE macros, e.g.,
-      <CODE>ACE_static_cast()</CODE>, <CODE>ACE_dynamic_cast()</CODE>, etc.<p>
 
   <li>Do not use C++ exception handling directly.  Some platforms do
       not support it.  And, it can impose an execution speed penalty.
@@ -1087,7 +1069,7 @@ ChangeLogTag: Thu Jul 22 09:55:10 1999  David L. Levine
 <ul>
   <li>Always make sure that a change builds and executes correctly
     on at least one platform before checking it into the CVS repository.
-    All changes <strong>must</strong> be tested with egcs before commiting.
+    All changes <strong>must</strong> be tested with g++ before commiting.
     That means you may need to test on at least two platforms.<p>
 </ul>
 
@@ -1112,8 +1094,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
       </pre><p>
 
   <li>Never, never, never start the first line of a script
-    with ``#'', unless the first line is ``#! /bin/sh''.
-    With just ``#'', t/csh users will spawn a new shell.
+    with "<code>#</code>", unless the first line is "<code>#! /bin/sh</code>".
+    With just "<code>#</code>", t/csh users will spawn a new shell.
     That will cause their <code>.[t]cshrc</code> to be
     processed, possibly clobbering a necessary part of
     their environment.<p>
@@ -1164,32 +1146,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 </ul>
 
 
-<hr>
-<h3><a href="http://www.cs.wustl.edu/~doc/PACE/">PACE</a>
-  Software Development Guidelines</h3>
-
-PACE code should be developed following the ACE guidelines
-above, with these exceptions:
-<ul>
-  <li>An <code>if</code> statement that has just one statement must
-    be written with the braces:
-
-<pre>
-if (condition)
-  {
-    statement;
-  }
-</pre>
-
-This avoids bugs caused by subsequent insertion of code:
-
-<pre>
-  if (condition)
-    ACE_OS::fprintf (stderr, "I need to see what's going on here\n");
-    statement;  /* Ooops!  This statement will always be executed!!!! */
-</pre>
-</ul>
-
 
 <hr>
 <h3><a href="http://www.cs.wustl.edu/~schmidt/rules.html">ACE
@@ -1198,8 +1154,12 @@ This avoids bugs caused by subsequent insertion of code:
 
 <hr><p>
   <font size=-1>
-    Last modified <!--#echo var="LAST_MODIFIED" -->.<p>
-  </font>
+<!-- hhmts start -->
+Last modified: Thu Jan 20 22:48:08 PST 2005
+<!-- hhmts end -->
+  </font><p>
+
+
 
 Back to <A HREF="index.html">ACE Documentation Home</A>.
 
