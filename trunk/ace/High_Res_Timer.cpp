@@ -100,18 +100,18 @@ ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time)
   // Then it converts that to nanoseconds by dividing by the scale
   // factor to convert to usec, and multiplying by 1000.)
   // The cast avoids a MSVC 4.1 compiler warning about narrowing.
-#if defined (ACE_HAS_LONGLONG_T)
+#if defined (ACE_WIN32) || defined (ACE_HAS_LONGLONG_T)
   u_long nseconds = (u_long) ((this->end_ - this->start_) % global_scale_factor_ * 1000 / global_scale_factor_);
 #else
   u_long nseconds = (u_long) ((this->end_ - this->start_).lo () % global_scale_factor_ * 1000 / global_scale_factor_);
-#endif /* ACE_HAS_LONGLONG_T */
+#endif /* ACE_WIN32 || ACE_HAS_LONGLONG_T */
 
   // Get just the microseconds (dropping any left over nanoseconds).
-#if defined (ACE_HAS_LONGLONG_T)
+#if defined (ACE_WIN32) || defined (ACE_HAS_LONGLONG_T)
   ACE_hrtime_t useconds; 
 #else
   u_long useconds; 
-#endif /* ACE_HAS_LONGLONG_T */
+#endif /* ACE_WIN32 || ACE_HAS_LONGLONG_T */
   useconds = (this->end_ - this->start_) / global_scale_factor_;
 
 #if ! defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
@@ -147,18 +147,18 @@ ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanoseconds)
   // Then it converts that to nanoseconds by dividing by the scale
   // factor to convert to usec, and multiplying by 1000.)
   // The cast avoids a MSVC 4.1 compiler warning about narrowing.
-#if defined (ACE_HAS_LONGLONG_T)
+#if defined (ACE_WIN32) || defined (ACE_HAS_LONGLONG_T)
   u_long nseconds = (u_long) ((this->end_ - this->start_) % global_scale_factor_ * 1000 / global_scale_factor_);
 #else
   u_long nseconds = (u_long) ((this->end_ - this->start_).lo () % global_scale_factor_ * 1000 / global_scale_factor_);
-#endif /* ACE_HAS_LONGLONG_T */
+#endif /* ACE_WIN32 || ACE_HAS_LONGLONG_T */
 
   // Get just the microseconds (dropping any left over nanoseconds).
-#if defined (ACE_HAS_LONGLONG_T)
+#if defined (ACE_WIN32) || defined (ACE_HAS_LONGLONG_T)
   ACE_hrtime_t useconds; 
 #else
   u_long useconds; 
-#endif /* ACE_HAS_LONGLONG_T */
+#endif /* ACE_WIN32 || ACE_HAS_LONGLONG_T */
   useconds = (this->end_ - this->start_) / global_scale_factor_;
 
   // Total nanoseconds in a single 64-bit value.
@@ -176,21 +176,21 @@ ACE_High_Res_Timer::print_ave (const char *str, const int count, ACE_HANDLE hand
   this->elapsed_time (total_nanoseconds);
 
   // Separate to seconds and nanoseconds.
-  ACE_hrtime_t total_secs  = total_nanoseconds / 1000000000;
-#if defined (ACE_HAS_LONGLONG_T)
+  u_long total_secs  = (u_long) (total_nanoseconds / 1000000000);
+#if defined (ACE_WIN32) || defined (ACE_HAS_LONGLONG_T)
   u_long extra_nsecs = (u_long) (total_nanoseconds % 1000000000);
 #else
   // Ignore the hi portion of the ACE_hrtime_t.
   u_long extra_nsecs = total_nanoseconds.lo () % 1000000000;
-#endif /* ACE_HAS_LONGLONG_T */
+#endif /* ACE_WIN32 || ACE_HAS_LONGLONG_T */
 
   char buf[100];
   if (count > 1)
     {
       ACE_hrtime_t avg_nsecs = total_nanoseconds / count;
-      ACE_OS::sprintf (buf, " count = %d, total (secs %lld, usecs %lu), avg usecs = %lld\n",
+      ACE_OS::sprintf (buf, " count = %d, total (secs %lu, usecs %lu), avg usecs = %lu\n",
              count, total_secs, (extra_nsecs + 500) / 1000,
-             (avg_nsecs + 500) / 1000);
+             (u_long) ((avg_nsecs + 500) / 1000));
     }
   else
     ACE_OS::sprintf (buf, " total %3lld.%06lu secs\n",
@@ -210,21 +210,21 @@ ACE_High_Res_Timer::print_total (const char *str, const int count, ACE_HANDLE ha
   this->elapsed_time (total_nanoseconds);
 
   // Separate to seconds and nanoseconds.
-  ACE_hrtime_t total_secs  = total_nanoseconds / 1000000000;
-#if defined (ACE_HAS_LONGLONG_T)
+  u_long total_secs  = (u_long) (total_nanoseconds / 1000000000);
+#if defined (ACE_WIN32) || defined (ACE_HAS_LONGLONG_T)
   u_long extra_nsecs = (u_long) (total_nanoseconds % 1000000000);
 #else
   // Ignore the hi portion of the ACE_hrtime_t.
   u_long extra_nsecs = total_nanoseconds.lo () % 1000000000;
-#endif /* ACE_HAS_LONGLONG_T */
+#endif /* ACE_WIN32 || ACE_HAS_LONGLONG_T */
 
   char buf[100];
   if (count > 1)
     {
       ACE_hrtime_t avg_nsecs   = this->total_ / count;
-      ACE_OS::sprintf (buf, " count = %d, total (secs %lld, usecs %lu), avg usecs = %lld\n",
+      ACE_OS::sprintf (buf, " count = %d, total (secs %lu, usecs %lu), avg usecs = %lu\n",
              count, total_secs, (extra_nsecs + 500) / 1000,
-             (avg_nsecs + 500) / 1000);
+             (u_long) ((avg_nsecs + 500) / 1000));
     }
   else
     ACE_OS::sprintf (buf, " total %3lld.%06lu secs\n",
