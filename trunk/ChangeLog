@@ -1,3 +1,9 @@
+Tue Dec 26 18:53:06 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * performance-tests/Server_Concurrency/Makefile:
+          The tests make no sense if threads are disabled, so they are not
+          compiled under that configuration.
+
 Tue Dec 26 18:31:08 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Naming/test_open.cpp:
