@@ -1,3 +1,8 @@
+Tue Oct 29 07:38:44 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/EC_MT_Mcast/Makefile.bor:
+          Added new BCB makefile for this test.
+
 Mon Oct 28 22:11:12 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/TAO_Singleton_Manager.cpp:
@@ -14,30 +19,30 @@ Mon Oct 28 22:11:12 2002  Ossama Othman  <ossama@uci.edu>
 
 Mon Oct 28 19:18:25 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.CosNotification: 
+	* orbsvcs/orbsvcs/Makefile.CosNotification:
 
-	* orbsvcs/orbsvcs/Notify/Service.h: 	
-	* orbsvcs/orbsvcs/Notify/Pending_Worker_T.h: 
-	* orbsvcs/orbsvcs/Notify/Pending_Worker_T.cpp: 	
-	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.h: 
-	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp: 	
+	* orbsvcs/orbsvcs/Notify/Service.h:
+	* orbsvcs/orbsvcs/Notify/Pending_Worker_T.h:
+	* orbsvcs/orbsvcs/Notify/Pending_Worker_T.cpp:
+	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
+	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
 
 	  Added init methods with base class signatures to avoid compile
 	  warnings
-	
-	* orbsvcs/orbsvcs/Notify/EventChannelFactory.h: 
-	* orbsvcs/orbsvcs/Notify/Admin.h: 	
-	* orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp: 	
-	  
+
+	* orbsvcs/orbsvcs/Notify/EventChannelFactory.h:
+	* orbsvcs/orbsvcs/Notify/Admin.h:
+	* orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:
+
 	  Made the TAO_NS_Object_Id_Seq definition public so it can be
 	  accessed from other classes.
 
-	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp: 
+	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
 
 	  Put the pacing_interval_.value () into an ACE_Time_Value before
 	  checking with ACE_Time_Value::zero.
 
-	* orbsvcs/orbsvcs/Notify/Factory.cpp: 
+	* orbsvcs/orbsvcs/Notify/Factory.cpp:
 
 	  Removed duplicate template instantitaion of TAO_NS_EventType.
 
@@ -88,7 +93,7 @@ Mon Oct 28 14:20:32 2002  Irfan Pyarali  <irfan@oomworks.com>
 	  POA allows multiple simultaneous calls to Servant Locators.
 
 	  The following files were added:
-        
+
 	  - tests/POA/MT_Servant_Locator/MT_Servant_Locator.cpp
 	  - tests/POA/MT_Servant_Locator/MT_Servant_Locator.dsp
 	  - tests/POA/MT_Servant_Locator/MT_Servant_Locator.dsw
@@ -99,13 +104,13 @@ Mon Oct 28 14:20:32 2002  Irfan Pyarali  <irfan@oomworks.com>
 	  - tests/POA/MT_Servant_Locator/test.idl
 
 	  The following files were modified:
-	
+
 	  - $ACE_ROOT/bin/auto_run_tests.lst
 	  - tests/TAO_Tests.dsw
 	  - tests/POA/Makefile
 	  - tests/POA/Makefile.bor
 	  - tests/POA/README
-	
+
 Mon Oct 28 14:20:32 2002  Irfan Pyarali  <irfan@oomworks.com>
 
 	* Following are fixes for bug 1317.  Thanks to Ossama for pointing
@@ -114,7 +119,7 @@ Mon Oct 28 14:20:32 2002  Irfan Pyarali  <irfan@oomworks.com>
 	* tao\TAO_Internal.cpp (open_services_i): If available, allow the
 	  Adapter Factory to setup by calling init().  This is similar to
 	  what we do for RT-CORBA.
-	
+
 	* tao\ORB_Core.cpp (poa_factory_name): Added accessor.
 
 	* tao\RTPortableServer\RT_Object_Adapter_Factory.h: Changed
