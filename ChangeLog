@@ -1,3 +1,19 @@
+Fri Apr 25 10:37:49 2003  Steve Huston  <shuston@riverace.com>
+
+	* bin/PerlACE/Process_Win32.pm: Change the CE test control to use the
+	  value of the ACE_WINCE_TEST_CONTROLLER environment variable as the
+	  program name to start the controller with. It still assumes that
+	  the only CE controller is PocketController Enterprise. Also
+	  allows the ACE_PCE_DEVICE environment variable to contain the
+	  PocketController device connect options. The value should start with
+	  -l and end with a semi-colon. The generated command script no longer
+	  includes a "reset /s" command, so the sleep(10) is removed and the
+	  PocketController command includes the -d;-e options to disconnect
+	  and exit Pocket Controller after the script finishes. This requires
+	  Pocket Controller Enterprise v4.
+	  Also changed the PocketController default sleep time from 60 to 70
+	  seconds - Atomic_Op_Test was running about 62 and timing out.
+
 Fri Apr 25 08:12:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_auto_compile.pl:
