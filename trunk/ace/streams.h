@@ -121,6 +121,8 @@
 #       include /**/ <iomanip.h>
 #     endif /* _MSC_VER */
 #     include /**/ <strstrea.h> // VSB
+#   else
+#     include /**/ <strstream.h>
 #   endif /* ACE_WIN32 */
 
 # endif /* ! ACE_HAS_STANDARD_CPP_LIBRARY */
