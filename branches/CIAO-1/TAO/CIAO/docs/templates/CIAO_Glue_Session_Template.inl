@@ -61,7 +61,7 @@ ACE_INLINE [operation return_type]
 ACE_INLINE
 [ciao module name]::[component name]_Context::[component name]_Context (::Components::CCMHome_ptr home,
                                                                         ::CIAO::Session_Container *c,
-                                                                        [component name]_Servant *sv)
+                                                                        [ciao module name]::[component name]_Servant *sv)
   : home_ (::Components::CCMHome::_duplicate (home)),
     container_ (c),
     servant_ (sv)
@@ -170,7 +170,7 @@ ACE_INLINE
   : executor_ (CCM_[component name]::_duplicate (exe)),
     container_ (c)
 {
-  this->context_ = new [component name]_Context (h, c, this);
+  this->context_ = new [ciao module name]::[component name]_Context (h, c, this);
 }
 
 ACE_INLINE
@@ -271,8 +271,8 @@ ACE_INLINE
 [ciao module name]::[component name]_Servant::[event type]Consumer_[consumer name]_Servant::[event type]Consumer_[consumer name]_Servant
   (CCM_[component name]_ptr executor,
    CCM_[component name]_Context_ptr c)
-  : executor_ (CCM_[event type]Consumer::_duplicate (executor)),
-    ctx_ (CCM_[component name]_Context::_duplicate (c))
+    : executor_ (CCM_[component name]::_duplicate (executor)),
+      ctx_ (CCM_[component name]_Context::_duplicate (c))
 {
 }
 
@@ -285,7 +285,7 @@ ACE_INLINE CORBA::Object_ptr
 [ciao module name]::[component name]_Servant::[event type]Consumer_[consumer name]_Servant::_get_component (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->ctx_->get_CCM_Object (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->ctx_->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 ACE_INLINE void
@@ -294,7 +294,8 @@ ACE_INLINE void
    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->executor_->push_[consumer name] (evt ACE_ENV_ARG);
+  this->executor_->push_[consumer name] (evt
+                                         ACE_ENV_ARG_PARAMETER);
 }
 
 ##  foreach [type] in (all parents of eventtype, if any, not including EventConsumerBase)
@@ -313,7 +314,7 @@ ACE_INLINE void
 
 ##end foreach [consumer name]
 
-    // Operations for emits interfaces.
+// Operations for emits interfaces.
 ##foreach [emit name] with [eventtype] in (list of all emitters) generate:
 ACE_INLINE void
 [ciao module name]::[component name]_Servant::connect_[emit name] ([eventtype]Consumer_ptr c
@@ -334,7 +335,7 @@ ACE_INLINE [eventtype]Consumer_ptr
 }
 ##end foreach [emit name] with [eventtype]
 
-    // Operations for publishes interfaces.
+// Operations for publishes interfaces.
 ##foreach [publish name] with [eventtype] in (list of all publishers) generate:
 ACE_INLINE ::Components::Cookie_ptr
 [ciao module name]::[component name]_Servant::subscribe_[publish name] ([eventtype]Consumer_ptr c

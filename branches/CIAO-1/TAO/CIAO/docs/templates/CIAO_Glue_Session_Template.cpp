@@ -51,12 +51,6 @@ CORBA::Object_ptr
   ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class TAO::Utils::Servant_Var<[facet type]>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO::Utils::Servant_Var<[facet type]>;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 ##end foreach [facet type]
 
 
@@ -87,8 +81,8 @@ template class TAO::Utils::Servant_Var<[facet type]>;
        ++iter)
     {
       ACE_Active_Map_Manager<[uses type]_var>::ENTRY &entry = *iter;
-      retv[i].objref = [uses type]::_narrow (entry.int_id_.in ());
-      retv[i].ck = new CIAO::Map_Key_Cookie (entry.ext_id_);
+      retv[i]->objref = [uses type]::_narrow (entry.int_id_.in ());
+      retv[i]->ck = new CIAO::Map_Key_Cookie (entry.ext_id_);
       ++i;
     }
 
@@ -99,7 +93,8 @@ template class TAO::Utils::Servant_Var<[facet type]>;
 
 ##foreach [event name] with [eventtype] in (list of all event sources) generate:
 void
-[ciao module name]::[component name]_Context::push_[event name] ([eventtype]_ptr ev ACE_ENV_ARG_DECL)
+[ciao module name]::[component name]_Context::push_[event name] ([eventtype]_ptr ev
+                                                                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 ##  if [event name] belongs to an 'emits' port
@@ -114,7 +109,8 @@ void
        ++iter)
     {
       ACE_Active_Map_Manager<[eventtype]Consumer_var>::ENTRY &entry = *iter;
-      [eventtype]Consumer_var c = [eventtype]Consumer::_narrow (entry.int_id_.in ());
+      [eventtype]Consumer_var c
+        = [eventtype]Consumer::_narrow (entry.int_id_.in ());
       c->push_[eventtype] (ev
                            ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -294,13 +290,13 @@ CORBA::Object_ptr
       if (CORBA::is_nil (fexe.in ()))
         ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-      // @@ What's the auto_ptr for servant?
-      TAO::Utils::Servant_Var<[facet type]_Servant> svt =
-        new [facet type]_Servant (fexe.in (),
-                                  this->context_);
+      [ciao module name]::[facet type]_Servant *svt =
+        new [ciao module name]::[facet type]_Servant (fexe.in (),
+                                                      this->context_);
+      PortableServer::ServantBase_var safe_servant (svt);
 
-      CORBA::Object_var obj = this->container_->_install_servant (svc.in ()
-                                                                  ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_var obj = this->container_->install_servant (svc.in ()
+                                                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       [facet type]_var fo = [facet type]::_narrow (obj
@@ -326,10 +322,11 @@ void
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::BadEventType))
 {
-  [eventtype] *ev_type = [eventtype]::_downcast (ev);
+  [eventtype]_var ev_type = [eventtype]::_downcast (ev);
   if (ev_type != 0)
     {
-      this->push_[eventtype] (ev ACE_ENV_ARG);
+      this->push_[eventtype] (ev_type.in ()
+                              ACE_ENV_ARG_PARAMETER);
       return;
     }
 
@@ -340,19 +337,18 @@ void
 
 // get_component implementation.
 [eventtype]Consumer_ptr
-[ciao module name]::[component name]_Servant::get_consumer_[consumer name] (ACE_ENV_SINGLE_ARG)
+[ciao module name]::[component name]_Servant::get_consumer_[consumer name] (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-    [eventtype]Consumer_var consumes_[consumer name]_;
-
   if (CORBA::is_nil (this->consumes_[consumer name]_.in ()))
     {
-      TAO::Utils::Servant_Var<[eventtype]Consumer_[consumer name]_Servant> svt =
-        new [eventtype]Consumer_[consumer name]_Servant (this->executor_,
-                                                         this->context_);
+      [ciao module name]::[component name]_Servant::[eventtype]Consumer_[consumer name]_Servant *svt =
+        new [ciao module name]::[component name]_Servant::[eventtype]Consumer_[consumer name]_Servant (this->executor_,
+                                                                             this->context_);
+      PortableServer::ServantBase_var safe_servant (svt);
 
-      CORBA::Object_var obj = this->container_->_install_servant (svt.in ()
-                                                                  ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_var obj = this->container_->install_servant (svt
+                                                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       [eventtype]Consumer_var eco = [eventtype]Consumer::_narrow (obj
@@ -398,6 +394,7 @@ CORBA::Object_ptr
       = new ::Components::FacetDescriptions (#99); // #99 = number of all provided
                                                    // facets including those inherited
                                                    // from parent component(s).
+  collection->length (#99);
 
   ::Components::FacetDescription_var x;
   CORBA::ULong i = 0;
@@ -410,7 +407,7 @@ CORBA::Object_ptr
   x->type_id ((const char *) "[facet type's repo id]"); //
   x->facet_ref (this->provide_[facet name] (ACE_ENV_SINGLE_ARG_PARAMETER));
 
-  collection[i] = x;
+  collection[i] = x._retn ();
   ++i;
 ##end foreach [facet name] with [facet type]
 
@@ -426,25 +423,28 @@ CORBA::Object_ptr
 {
   ::Components::FacetDescriptions_var collection
       = new ::Components::FacetDescriptions (names.length ());
+  collection->length (names.length ());
 
   ::Components::FacetDescription_var x;
   CORBA::ULong i = 0;
   for (; i < names.length (); ++i)
     {
+      x = new ::OBV_Components::FacetDescription;
+
       // We probably need a more efficient way, e.g., a hash map, to handle all these.
 ##foreach [facet name] with [facet type] in (list of all provided interfaces) generate:
-      if (ACE_OS_String::strcmp (names[i].in (), "[facet name]") == 0)
+      (else) if (ACE_OS_String::strcmp (names[i].in (), "[facet name]") == 0)
         {
-          x = new ::OBV_Components::FacetDescription;
-
           x->Name ((const char *)"[facet name]");
           x->type_id ((const char *) "[facet type's repo id]"); //
-          x->facet_ref (this->provide_facet ("[facet name]" ACE_ENV_ARG_PARAMETER));
+          x->facet_ref (this->provide_[facet name] (ACE_ENV_SINGLE_ARG_PARAMETER));
 
-          collection[i] = x;
         }
 ##end foreach [facet name] with [facet type]
-      ACE_THROW_RETURN (::Components::InvalidName (), 0);
+      else
+        ACE_THROW_RETURN (::Components::InvalidName (), 0);
+
+      collection[i] = x._retn ();
     }
   return collection._retn ();
 }
@@ -558,9 +558,11 @@ CORBA::Object_ptr
 ##  if [receptacle name] is a simplex receptacle ('uses')
       [receptacle name]Connections_var retv =
         new ::Components::ConnectionConnections (1);
+      retv->length (1);
 
-      retv[0].ck = 0;
-      retv[0].objref = this->get_connection_[receptacle name] (ACE_ENV_SINGLE_ARG_PARAMETER);
+      retv[0] = new OBV_Components::ConnectionDescription;
+      retv[0]->ck = 0;
+      retv[0]->objref = this->get_connection_[receptacle name] (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       return retv._retn ();
@@ -581,18 +583,21 @@ CORBA::Object_ptr
   ::Components::ReceptacleDescriptions_var retv =
       new ::Components::ReceptacleDescriptions (#99); // #99 is number of receptacles
                                                       // this component has.
+  retv->length (#99);
   CORBA::ULong i = 0;
 
 ##foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
-  retv[i].Name ((const char *) "[receptacle name]");
-  retv[i].type_id ((const char *) "[uses type repo id]");
+  retv[i] = new OBV_Components::ReceptacleDescription;
+
+  retv[i]->Name ((const char *) "[receptacle name]");
+  retv[i]->type_id ((const char *) "[uses type repo id]");
 ##  if [receptacle name] is a simplex receptacle ('uses')
-  retv[i].is_multiple (0);
+  retv[i]->is_multiple (0);
 ##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
-  retv[i].is_multiple (1);
+  retv[i]->is_multiple (1);
 ##  endif [receptacle name]
-  retv[i].connections (*this->get_connections ("[receptacle name]"
-                                               ACE_ENV_ARG_PARAMETER));
+  retv[i]->connections (*this->get_connections ("[receptacle name]"
+                                                ACE_ENV_ARG_PARAMETER));
   ++i;
 ##end foreach [receptacle name] with [uses type]
 
@@ -607,25 +612,28 @@ CORBA::Object_ptr
 {
   ::Components::ReceptacleDescriptions_var retv =
       new ::Components::ReceptacleDescriptions (names.length ());
+  retv->length (names.length ());
 
   CORBA::ULong i = 0;
   for (; i < names.length (); ++i)
     {
+      retv[i] = new OBV_ReceptacleDescription;
 ##foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
-      if (ACE_OS_String::strcmp (name, "[receptacle name]") == 0)
+      (else) if (ACE_OS_String::strcmp (name, "[receptacle name]") == 0)
         {
-          retv[i].Name ((const char *) "[receptacle name]");
-          retv[i].type_id ((const char *) "[uses type repo id]");
+          retv[i]->Name ((const char *) "[receptacle name]");
+          retv[i]->type_id ((const char *) "[uses type repo id]");
 ##  if [receptacle name] is a simplex receptacle ('uses')
-          retv[i].is_multiple (0);
+          retv[i]->is_multiple (0);
 ##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
-          retv[i].is_multiple (1);
+          retv[i]->is_multiple (1);
 ##  endif [receptacle name]
-          retv[i].connections (*this->get_connections ("[receptacle name]"
+          retv[i]->connections (*this->get_connections ("[receptacle name]"
                                                        ACE_ENV_ARG_PARAMETER));
         }
 ##end foreach [receptacle name] with [uses type]
-      ACE_THROW_RETURN (::Components::InvalidName (), 0);
+      else
+        ACE_THROW_RETURN (::Components::InvalidName (), 0);
     }
   return retv._retn ();
 }
@@ -643,7 +651,7 @@ CORBA::Object_ptr
 
 ##foreach [consumer name] with [eventtype] in (list of all consumers) generate:
   if (ACE_OS_String::strcmp (sink_name, "[consumer name]") == 0)
-    return this->get_consumer_[consumer name] (ACE_ENV_SINGLE_ARG_PARAMATER);
+    return this->get_consumer_[consumer name] (ACE_ENV_SINGLE_ARG_PARAMETER);
 ##end foreach [consumer name] with [eventtype]
   ACE_THROW_RETURN (Components::InvalidName (), 0);
 }
@@ -764,14 +772,18 @@ void
   ::Components::ConsumerDescriptions_var retv =
       new ::Components::ConsumerDescriptions (#99); // #99 is the number of consumers
                                                     // this component has.
+  retv->length (#99);
+
   CORBA::ULong i = 0;
 ##foreach [consumer name] with [eventtype] in (list of all consumers) generate:
-  retv[i].Name ("[consumer name]");
-  retv[i].type_id ("[eventtype]Consumer repo id");
-  [eventtype]Consumer_var c = this->get_consumer_[consumer name] (ACE_ENV_SINGLE_ARG_PARAMETER);
+  retv[i] = new OBV_Components::ConsumerDescription;
+  retv[i]->Name ("[consumer name]");
+  retv[i]->type_id ("[eventtype]Consumer repo id");
+  [eventtype]Consumer_var c
+    = this->get_consumer_[consumer name] (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  retv[i].consumer (c.in ());
+  retv[i]->consumer (c.in ());
 ##end foreach [consumer name] with [eventtype]
 
   return retv._retn ();
@@ -785,23 +797,27 @@ void
 {
   ::Components::ConsumerDescriptions_var retv =
       new ::Components::ConsumerDescriptions (names.length ());
+  retv->length (names.length ());
 
   CORBA::ULong i = 0;
   for (; i < names.length (); ++i)
     {
+      retv[i] = new OBV_Components::ConsumerDescription;
+
 ##foreach [consumer name] with [eventtype] in (list of all consumers) generate:
-      if (ACE_OS_String::strcmp (names[i].in (), "[consumer name]") == 0)
+      (else) if (ACE_OS_String::strcmp (names[i].in (), "[consumer name]") == 0)
         {
-          retv[i].Name ("[consumer name]");
-          retv[i].type_id ("[eventtype]Consumer repo id");
+          retv[i]->Name ("[consumer name]");
+          retv[i]->type_id ("[eventtype]Consumer repo id");
           [eventtype]Consumer_var c =
             this->get_consumer_[consumer name] (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
-          retv[i].consumer (c.in ());
+          retv[i]->consumer (c.in ());
         }
 ##end foreach [consumer name] with [eventtype]
-      ACE_THROW_RETURN (::Components::InvalidName (), 0);
+      else
+        ACE_THROW_RETURN (::Components::InvalidName (), 0);
     }
   return retv._retn ();
 }
@@ -813,11 +829,14 @@ void
   ::Components::EmitterDescriptions_var retv =
       new ::Components::EmitterDescriptions (#99); // #99 is the number of emitters
                                                     // this component has.
+  retv->length (#99);
+
   CORBA::ULong i = 0;
 ##foreach [emit name] with [eventtype] in (list of all emitters) generate:
-  retv[i].Name ("[emit name]");
-  retv[i].type_id ("[eventtype]Consumer repo id");
-  retv[i].consumer ([eventtype]Consumer::_duplicate (this->context_->ciao_emits_[emit name]_consumer_));
+  retv[i] = new OBV_Components::EmitterDescription;
+  retv[i]->Name ("[emit name]");
+  retv[i]->type_id ("[eventtype]Consumer repo id");
+  retv[i]->consumer ([eventtype]Consumer::_duplicate (this->context_->ciao_emits_[emit name]_consumer_));
 ##end foreach [emitter name] with [eventtype]
 
   return retv._retn ();
@@ -831,19 +850,23 @@ void
 {
   ::Components::EmitterDescriptions_var retv =
       new ::Components::EmitterDescriptions (names.length ());
+  retv->length (names.length ());
 
   CORBA::ULong i = 0;
   for (; i < names.length (); ++i)
     {
+      retv[i] = new OBV_Components::EmitterDescription;
+
 ##foreach [emit name] with [eventtype] in (list of all emitters) generate:
-      if (ACE_OS_String::strcmp (names[i].in (), "[emit name]") == 0)
+      (else) if (ACE_OS_String::strcmp (names[i].in (), "[emit name]") == 0)
         {
-          retv[i].Name ("[emit name]");
-          retv[i].type_id ("[eventtype]Consumer repo id");
-  retv[i].consumer ([eventtype]Consumer::_duplicate (this->context_->ciao_emits_[emit name]_consumer_));
+          retv[i]->Name ("[emit name]");
+          retv[i]->type_id ("[eventtype]Consumer repo id");
+  retv[i]->consumer ([eventtype]Consumer::_duplicate (this->context_->ciao_emits_[emit name]_consumer_));
         }
 ##end foreach [consumer name] with [eventtype]
-      ACE_THROW_RETURN (::Components::InvalidName (), 0);
+      else
+        ACE_THROW_RETURN (::Components::InvalidName (), 0);
     }
   return retv._retn ();
 }

@@ -1,3 +1,27 @@
+Thu Mar 13 20:11:49 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.idl:
+	* examples/handcrafted/Display/GPS/GPS.idl:
+	* examples/handcrafted/Display/Configuration-0.png: Updated the
+	  port names so they make more sense in the context.  Thanks to
+	  Dave Sharp and Wendy Rolls for the suggestions.
+
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.h: Added the
+	  missing factory entry point for the servant home.
+
+	* examples/handcrafted/Display/GPS/GPSE.idl:
+	* examples/handcrafted/Display/GPS/GPS_svnt.cpp:
+	* examples/handcrafted/Display/GPS/GPS_svnt.h:
+	* examples/handcrafted/Display/GPS/GPS_svnt.inl: Added new
+	  "generated" code.
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp:
+	* docs/templates/CIAO_Glue_Session_Template.h:
+	* docs/templates/CIAO_Glue_Session_Template.inl:
+	* docs/templates/Executor.idl: Updated templates based on the code
+	  they generated (manually.  Did I mention how much fun it was to
+	  generate code manually?)
+
 Wed Mar 12 23:29:27 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/generate_component_mpc.pl: Fixed an incomplete library

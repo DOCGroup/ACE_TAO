@@ -24,6 +24,9 @@
 //
 // ===========================================================
 
+#ifndef [component_idl]E_IDL
+#define [component_idl]E_IDL
+
 #include "CCM_Container.idl"    // Found in $(CIAO_ROOT)/ciao
                                 // For various definitions of container
                                 // internal/callback interfaces
@@ -239,3 +242,5 @@ module [module_name] {
 ##if there are module definitions, preserve them all
 };
 ##endif
+
+#endif /* [component_idl]E_IDL */
