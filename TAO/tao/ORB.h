@@ -742,7 +742,7 @@ public:
                            Environment &env = CORBA_Environment::default_environment ());
   // ORB initialisation, per OMG document 94-9-46.
 
-  // = The following two methods are TAO-specific extensions. 
+  // = The following two methods are TAO-specific extensions.
   static ORB_ptr instance (void);
   // Returns a pointer to the "default ORB."
 
@@ -789,6 +789,7 @@ private:
 #include "tao/Sequence_T.h"
 #include "tao/Object_KeyC.h"
 #include "tao/Union.h"
+#include "tao/Exception.h"
 
 class STUB_Object;
 // Forward declarations.
@@ -811,6 +812,16 @@ public:
 
   // ORB_Core has special privileges
   friend class TAO_ORB_Core;
+
+  class TAO_Export InvalidName : public CORBA_UserException
+  {
+  public:
+    InvalidName (void);
+
+    virtual void _raise (void);
+    InvalidName* _narrow (CORBA_Exception *ex);
+    virtual int _is_a (const char* interface_id) const;
+  };
 
   static CORBA::ORB_ptr _duplicate (CORBA::ORB_ptr orb);
   // Return a duplicate of <{orb}>.  When work with this duplicate is
@@ -892,7 +903,11 @@ public:
   // currently supported.
 
   CORBA_Object_ptr resolve_initial_references (CORBA::String name,
-                                               ACE_Time_Value *timeout = 0);
+                                               CORBA_Environment &_env = CORBA_Environment::default_environment ());
+
+  CORBA_Object_ptr resolve_initial_references (CORBA::String name,
+                                               ACE_Time_Value *timeout,
+                                               CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // This method acts as a mini-bootstrapping Naming Service, which is
   // provided by the ORB for certain well-known object references.
   // TAO supports the "NameService", "TradingService", "RootPOA", and
