@@ -29,10 +29,13 @@
 #include "ace/Containers.h"
 #include "ace/Hash_Map_Manager.h"
 #include "log_export.h"
+#include "PersistStore.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#define PERSISTENT_LOG_FILE_NAME "LOG.DATA"
 
 #define LOG_DEFAULT_MAX_REC_LIST_LEN 30
 
@@ -137,8 +140,14 @@ class TAO_Log_Export LogRecordStore
   CORBA::ULong max_rec_list_len_;
   // The max size of the record list returned in a query.
 
+  PersistStore persist_store_;
+  // The persistence storage
+
   LogRecordStore::LOG_RECORD_HASH_MAP rec_hash_;
   // The hash of LogRecord ids to LogRecord 's
+
+  char file_name_[256];
+  // Persistent log file name.
 
 };
 
