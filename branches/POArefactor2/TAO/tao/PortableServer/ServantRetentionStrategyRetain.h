@@ -45,7 +45,8 @@ namespace TAO
         TAO_POA *poa,
         IdUniquenessStrategy* id_uniqueness_strategy,
         IdAssignmentStrategy* id_assignment_strategy,
-        RequestProcessingStrategy* request_processing_strategy);
+        RequestProcessingStrategy* request_processing_strategy
+        ACE_ENV_ARG_DECL);
 
       virtual int is_servant_in_map (PortableServer::Servant servant,
                                      int &wait_occurred_restart_call);

@@ -238,7 +238,9 @@ namespace TAO
                                                       system_id,
                                                       servant_upcall,
                                                       poa_current_impl,
-                                                      wait_occurred_restart_call);
+                                                      wait_occurred_restart_call
+                                                      ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
 
       if (servant == 0)
       {
