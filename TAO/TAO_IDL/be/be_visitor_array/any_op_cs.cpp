@@ -85,10 +85,12 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << "{" << be_idt_nl
       << "ACE_TRY_NEW_ENV" << be_nl
       << "{" << be_idt_nl
-      << "CORBA::TypeCode_var type = _tao_any.type ();" << be_nl
-      << "if (!type->equivalent (" << node->tc_name ()
-      << ", ACE_TRY_ENV)) return 0; // not equal" << be_nl
-      << "ACE_TRY_CHECK;" << be_nl
+      << "CORBA::TypeCode_var type = _tao_any.type ();" << be_nl << be_nl
+      << "CORBA::Boolean result = type->equivalent (" << node->tc_name ()
+      << ", ACE_TRY_ENV);" << be_nl
+      << "ACE_TRY_CHECK;" << be_nl << be_nl
+      << "if (!result)" << be_idt_nl
+      << "return 0; // not equivalent" << be_uidt_nl << be_nl
       << "if (_tao_any.any_owns_data ())" << be_nl
       << "{" << be_idt_nl
       << "_tao_elem = (" << node->name () << "_slice *)_tao_any.value ();"
