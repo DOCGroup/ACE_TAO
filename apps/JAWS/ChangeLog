@@ -2,7 +2,7 @@ Tue Aug 25 10:18:16 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * clients/Caching/URL_Properties.cpp: removed explicit
           ACE_Auto_Basic_Array_Ptr <char> instantiation because it's
-          now in libACE.  Rreplaced char with ASYS_TCHAR in
+          now in libACE.  Replaced char with ASYS_TCHAR in
           ACE_Auto_Basic_Array_Ptr parameter, for consistency with
           tests/Reactor_Performance_Test.cpp.  This file doesn't
           compile with g++/Solaris, but the Makefile doesn't build it
