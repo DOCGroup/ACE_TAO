@@ -780,8 +780,7 @@ HEADER_FILES = \
   post.h \
   pre.h \
   streams.h \
-  svc_export.h \
-  ws2tcpip.h
+  svc_export.h 
 ## Make sure config.h and config-all.h are in the above header list!
 
 INLINE_FILES = \
