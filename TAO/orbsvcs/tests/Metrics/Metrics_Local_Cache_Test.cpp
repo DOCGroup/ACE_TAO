@@ -9,7 +9,7 @@
 #include "tao/RTCORBA/Multi_Priority_Mapping.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "orbsvcs/Metrics/Metrics_Logger.h"
-#include "orbsvcs/Rate_Group_Info.h"
+#include "Rate_Group_Info.h"
 
 #include "Metrics_Local_Cache_Test.h"
 
@@ -663,7 +663,7 @@ TAO_Metrics_Local_Cache_Test::init (int argc, char *argv[])
 // Runs the TAO_Metrics_Local_Cache_Test.
 
 int
-TAO_Metrics_Local_Cache_Test::run (CORBA_Environment& ACE_TRY_ENV)
+TAO_Metrics_Local_Cache_Test::run (CORBA::Environment& ACE_TRY_ENV)
 {
   int result = 0;
   ACE_Thread_Manager orb_thread_manager;
@@ -877,7 +877,7 @@ TAO_Metrics_Local_Cache_Test::run_orb (void *that)
 
 
 void TAO_Metrics_Local_Cache_Test_PushConsumer::
-push (const RtecEventComm::EventSet &, CORBA_Environment &)
+push (const RtecEventComm::EventSet &, CORBA::Environment &)
 {
    ACE_Time_Value pause_tv;
 
@@ -912,7 +912,7 @@ push (const RtecEventComm::EventSet &, CORBA_Environment &)
 }
 
 void TAO_Metrics_Local_Cache_Test_PushConsumer::
-disconnect_push_consumer (CORBA_Environment &)
+disconnect_push_consumer (CORBA::Environment &)
 {
    ACE_DEBUG ((LM_DEBUG,
                "TAO_Metrics_Local_Cache_Test_PushConsumer::"
