@@ -223,7 +223,6 @@ Standard_Event_Persistence_Factory::root()
   return this->root_;
 }
 
-ACE_FACTORY_DECLARE (TAO_Notify_Serv, Standard_Event_Persistence)
 ACE_FACTORY_DEFINE (TAO_Notify_Serv, Standard_Event_Persistence)
 
 }

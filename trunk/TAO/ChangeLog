@@ -1,3 +1,12 @@
+Wed Nov 24 13:44:00 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Standard_Event_Persistence.h:
+        * orbsvcs/orbsvcs/Notify/Standard_Event_Persistence.cpp:
+        * orbsvcs/orbsvcs/Notify/XML_Topology_Factory.h:
+        * orbsvcs/orbsvcs/Notify/XML_Topology_Factory.cpp:
+
+          Moved the ACE_FACTORY_DECLARE out of the .cpp into the .h.
+
 Wed Nov 24 13:16:59 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * performance-tests/Protocols/sender.cpp:

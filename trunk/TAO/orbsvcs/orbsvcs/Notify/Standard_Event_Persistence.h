@@ -124,5 +124,7 @@ namespace TAO_Notify
 
 }
 
+ACE_FACTORY_DECLARE (TAO_Notify_Serv, Standard_Event_Persistence)
+
 #include /**/ "ace/post.h"
 #endif /* STANDARD_EVENT_PERSISTENCE_H */
