@@ -1,3 +1,14 @@
+Tue Mar 30 08:48:06 2004  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/TAO_Tests.dsw:
+        * tests/CodeSets/libs/Makefile.bor:
+        * tests/CodeSets/libs/UCS4_UTF16/Makefile.bor:
+        * tests/CodeSets/libs/UCS4_UTF16/CodeSets_Libs_UCS4_UTF16.bor:
+        * tests/CodeSets/libs/UCS4_UTF16/CodeSets_Libs_UCS4_UTF16.dsp:
+
+          Add the wide character codeset translator test to the shipped
+          Borland and MSVC 6 build environments.
+
 Tue Mar 30 13:19:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/MT_IIOP_SSL/Makefile:
@@ -10,7 +21,7 @@ Mon Mar 29 21:34:30 2004  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	  Fixed byte ordering problems that prevented DSI gateways on a
 	  different byte order to communicate with clients and servers
-	  running on different byte orders.  Thanks To Mouna Seri 
+	  running on different byte orders.  Thanks To Mouna Seri
           <seri@crhc.uiuc.edu> for reporting the problem.
 
 Mon Mar 29 11:46:49 2004  Chad Elliott  <elliott_c@ociweb.com>
