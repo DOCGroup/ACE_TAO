@@ -1,3 +1,8 @@
+Fri Aug 27 16:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ObjRefTemplate/ObjectReferenceTemplate_i.cpp:
+          Added .in() to silence gcc warning about better conversion
+
 Fri Aug 27 10:07:17 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/Contained_i.cpp:
@@ -8,9 +13,9 @@ Fri Aug 27 10:07:17 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/orbsvcs/IFRService/PrimitiveDef_i.cpp:
         * orbsvcs/orbsvcs/IFRService/Repository_i.cpp:
         * orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
-        
+
           Added logical ORs of CORBA::OMGVMCID to the minor codes
-          in raised exceptions. Thanks to Ossama Othman 
+          in raised exceptions. Thanks to Ossama Othman
           <ossama@dre.vanderbilt.edu> for pointing out this
           oversight.
 
