@@ -25,7 +25,7 @@
 set -e
 
 # If paginator environment variable isn't set then use `more'.
-test -z $PAGER && PAGER=more
+PAGER=${PAGER:-more}
 
 usage()
 {
