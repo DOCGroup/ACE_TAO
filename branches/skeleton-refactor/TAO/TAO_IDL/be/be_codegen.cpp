@@ -1590,7 +1590,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
   this->gen_any_file_includes ();
 
   // Includes whatever arg helper template classes that may be needed.
-  this->gen_arg_file_includes (this->client_stubs_);
+  this->gen_stub_arg_file_includes (this->client_stubs_);
 
   // strcmp() is used with interfaces and exceptions.
   if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
@@ -1622,6 +1622,9 @@ TAO_CodeGen::gen_skel_src_includes (void)
                               "tao/PortableServer/Object_Adapter.h");
   this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableServer/Operation_Table.h");
+
+  this->gen_skel_arg_file_includes (this->server_skeletons_);
+
   this->gen_standard_include (this->server_skeletons_,
                               "tao/TAO_Server_Request.h");
   this->gen_standard_include (this->server_skeletons_,
@@ -1644,15 +1647,11 @@ TAO_CodeGen::gen_skel_src_includes (void)
   if (be_global->gen_thru_poa_collocation ()
       || be_global->gen_direct_collocation ())
     {
-      this->gen_arg_file_includes (this->server_skeletons_);
+      // Collocation skeleton code doesn't use "SArg" variants.
+      this->gen_stub_arg_file_includes (this->server_skeletons_);
     }
 
-
-
   // The following header must always be included.
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/PortableInterceptor.h");
-
   if (be_global->gen_amh_classes ())
     {
       this->gen_standard_include (this->server_skeletons_,
@@ -1662,18 +1661,6 @@ TAO_CodeGen::gen_skel_src_includes (void)
       this->gen_standard_include (this->server_skeletons_,
                                   "ace/Auto_Functor.h");
     }
-
-  // Include Portable Interceptor related headers.
-  *this->server_skeletons_ << "\n#if TAO_HAS_INTERCEPTORS == 1";
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/PortableServer/PICurrent_Guard.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/PortableServer/ServerRequestInfo.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/PortableServer/ServerInterceptorAdapter.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/RequestInfo_Util.h");
-  *this->server_skeletons_ << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n";
 
   this->gen_standard_include (this->server_skeletons_,
                               "ace/Dynamic_Service.h");
@@ -1789,7 +1776,7 @@ TAO_CodeGen::gen_var_file_includes (void)
 }
 
 void
-TAO_CodeGen::gen_arg_file_includes (TAO_OutStream *stream)
+TAO_CodeGen::gen_stub_arg_file_includes (TAO_OutStream * stream)
 {
   this->gen_cond_file_include (
       idl_global->decls_seen_masks.basic_arg_seen_,
@@ -1842,6 +1829,65 @@ TAO_CodeGen::gen_arg_file_includes (TAO_OutStream *stream)
   this->gen_cond_file_include (
       idl_global->decls_seen_masks.var_size_arg_seen_,
       "tao/Var_Size_Argument_T.h",
+      stream
+    );
+}
+
+
+void
+TAO_CodeGen::gen_skel_arg_file_includes (TAO_OutStream * stream)
+{
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.basic_arg_seen_,
+      "tao/PortableServer/Basic_SArguments.h",
+      stream
+    );
+
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.bd_string_arg_seen_,
+      "tao/PortableServer/BD_String_SArgument_T.h",
+      stream
+    );
+
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.fixed_array_arg_seen_,
+      "tao/PortableServer/Fixed_Array_SArgument_T.h",
+      stream
+    );
+
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.fixed_size_arg_seen_,
+      "tao/PortableServer/Fixed_Size_SArgument_T.h",
+      stream
+    );
+
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.object_arg_seen_,
+      "tao/PortableServer/Object_SArgument_T.h",
+      stream
+    );
+
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.special_basic_arg_seen_,
+      "tao/PortableServer/Special_Basic_SArguments.h",
+      stream
+    );
+
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.ub_string_arg_seen_,
+      "tao/PortableServer/UB_String_SArguments.h",
+      stream
+    );
+
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.var_array_arg_seen_,
+      "tao/PortableServer/Var_Array_SArgument_T.h",
+      stream
+    );
+
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.var_size_arg_seen_,
+      "tao/PortableServer/Var_Size_SArgument_T.h",
       stream
     );
 }

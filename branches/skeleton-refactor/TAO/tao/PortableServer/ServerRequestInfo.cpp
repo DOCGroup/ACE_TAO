@@ -130,7 +130,7 @@ TAO::ServerRequestInfo::exceptions (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   // Generate the exception list on demand.
-  Dynamic::ExceptionList *exception_list =
+  Dynamic::ExceptionList * const exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
@@ -138,13 +138,13 @@ TAO::ServerRequestInfo::exceptions (ACE_ENV_SINGLE_ARG_DECL)
 
   exception_list->length (this->nexceptions_);
 
-  CORBA::TypeCode_ptr * const begin = this->exceptions_;
-  CORBA::TypeCode_ptr * const end   = this->exceptions_ + this->nexceptions_;
+  CORBA::TypeCode_ptr ** const begin = this->exceptions_;
+  CORBA::TypeCode_ptr ** const end   = this->exceptions_ + this->nexceptions_;
 
   CORBA::ULong e = 0;
-  for (CORBA::TypeCode_ptr * i = begin; i != end; ++i, ++e)
+  for (CORBA::TypeCode_ptr ** i = begin; i != end; ++i, ++e)
     {
-      TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (i, 1);
+      TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (*i, 1);
       (*exception_list)[e] = tcp_object;
     }
 

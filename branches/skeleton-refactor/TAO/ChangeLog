@@ -1,4 +1,18 @@
-Wed Oct 20 00:04:52 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+Wed Oct 20 03:00:34 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be_include/be_codegen.h:
+
+	  Added new "gen_skel_arg_file_includes()" method that is
+	  responsible for generated "TAO::SArgument" related header
+	  include directives.
+
+	* TAO_IDL/be/be_codegen.cpp (gen_skel_src_includes):
+
+	  No longer any need to include server request interceptor related
+	  headers.
+
+	  Generate include directives for "TAO::SArgument" related
+	  headers.
 
 	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
 	* TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
@@ -7,6 +21,34 @@ Wed Oct 20 00:04:52 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  TAO::RequestInfo_Util::make_any() call in generated
 	  stub/skeleton a static constant.  There is no reason for it to
 	  be otherwise.
+
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+
+	  Overhauled generated skeleton to use new lightweight
+	  implementation (most of the code has been moved to the
+	  TAO_PortableServer library!).
+
+	  No longer any need to generate per-operation ServerRequestInfo
+	  classes.
+	
+	* TAO_IDL/be/be_visitor_operation.cpp:
+	* TAO_IDL/be_include/be_visitor_operation.h:
+
+	  Added exceptionlist_ss.{h,cpp} include directives to pull in
+	  skeleton exception list visitor.
+
+	* TAO_IDL/be_include/be_visitor_operation/operation.h:
+
+	  Nuked trailing whitespace.
+
+	* TAO_IDL/be_include/be_visitor_operation/operation_ss.h:
+
+	* TAO_IDL/be/be_visitor_operation/exceptlist_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_operation/exceptlist_ss.h:
+
+	  New visitor that generates user exception TypeCode array for use
+	  by skeleton.  The generated array is lighterweight than the one
+	  generated for the stubs.
 
 	* tao/Argument.h:
 
