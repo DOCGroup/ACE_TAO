@@ -54,8 +54,7 @@ main (int, char *[])
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ace_sv_message_queue.send"), 1);
     }
 
-  /* NOTREACHED */
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
