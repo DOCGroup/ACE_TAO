@@ -64,7 +64,7 @@ TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
                            ACE_ENV_ARG_DECL)
 {
   // this-> on the following line confuses VC6
-  TAO_Notify::Topology_Object::init (ecf);
+  TAO_Notify::Topology_Object::init (ecf ACE_ENV_ARG_PARAMETER);
 
   this->ecf_ = ecf;
 
@@ -131,7 +131,7 @@ TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
                            ACE_ENV_ARG_DECL)
 {
   // this-> on the following line confuses VC6
-  TAO_Notify::Topology_Parent::init (ecf);
+  TAO_Notify::Topology_Parent::init (ecf ACE_ENV_ARG_PARAMETER);
 
   this->ecf_ = ecf;
 
