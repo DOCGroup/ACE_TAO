@@ -10,6 +10,8 @@ CXX             = $(CC)
 CFLAGS          += -pthread
 
 #### These flags can only be used with cxx Version 6.0 and later.
+#### They can be enabled on the gmake command line with CXX_VER=POST_5X,
+#### or by setting the CXX_VER environment variable to POST_5X.
 # WARNING_FLAGS +=
 # 9:   nested comment not allowed, but there's one in /usr/include/pdsc.h
 # 111: statement is unreachable
@@ -20,8 +22,10 @@ CFLAGS          += -pthread
 # 401: base_class_with_nonvirtual_dtor
 # 550: set_but_not_used
 # 835: unreferenced_function_param
-# WARNING_FLAGS   += -w0 -msg_display_number -msg_display_tag \
-#                    -msg_disable 9,111,174,193,236,340,401,550,835
+ifeq ($(CXX_VER),POST_5X)
+  WARNING_FLAGS += -w0 -msg_display_number -msg_display_tag \
+                   -msg_disable 9,111,174,193,236,340,401,550,835
+endif
 
 CCFLAGS         += $(CFLAGS) -ptr ptrepository $(WARNING_FLAGS)
 DCFLAGS         += -g -O0
