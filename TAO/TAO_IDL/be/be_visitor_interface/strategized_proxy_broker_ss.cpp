@@ -70,7 +70,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (be_interface 
       << "select_proxy ("
       << be_idt << be_idt_nl // idt = 2
       << "::" << node->full_name () << " *object" << be_nl
-      << "TAO_ENV_ARG_DECL"
+      << "ACE_ENV_ARG_DECL"
       << be_uidt_nl // idt = 1
       << ")"
       << be_uidt_nl // idt = 0
@@ -78,7 +78,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (be_interface 
       << be_idt_nl // idt = 1
       << "int strategy ="
       << be_idt_nl // idt = 2
-      << "TAO_ORB_Core::collocation_strategy (object TAO_ENV_ARG_PARAMETER);"
+      << "TAO_ORB_Core::collocation_strategy (object ACE_ENV_ARG_PARAMETER);"
       << be_nl
       << "ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);"
       << be_uidt_nl << be_nl // idt = 1
@@ -86,7 +86,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (be_interface 
       << be_idt_nl // idt = 2
       << "return *this->proxy_cache_[strategy];"
       << be_uidt_nl << be_nl // idt = 1
-      << "this->create_proxy (strategy TAO_ENV_ARG_PARAMETER);"
+      << "this->create_proxy (strategy ACE_ENV_ARG_PARAMETER);"
       << be_nl
       << "ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);"
       << be_nl << be_nl
@@ -101,7 +101,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (be_interface 
       << be_idt << be_idt_nl // idt = 2
       << "int strategy"
       << be_nl
-      << "TAO_ENV_ARG_DECL"
+      << "ACE_ENV_ARG_DECL"
       << be_uidt_nl // idt = 1
       << ")"
       << be_uidt_nl // idt = 0

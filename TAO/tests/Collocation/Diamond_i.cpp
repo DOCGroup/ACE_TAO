@@ -13,7 +13,7 @@ Top_i::~Top_i ()
 }
 
 char *
-Top_i::shape (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Top_i::shape (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
@@ -32,7 +32,7 @@ Left_i::~Left_i ()
 }
 
 char *
-Left_i::shape (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Left_i::shape (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
@@ -41,7 +41,7 @@ Left_i::shape (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 char *
-Left_i::color (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Left_i::color (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
@@ -60,7 +60,7 @@ Right_i::~Right_i ()
 }
 
 char *
-Right_i::shape (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Right_i::shape (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
@@ -69,7 +69,7 @@ Right_i::shape (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 char *
-Right_i::color (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Right_i::color (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
@@ -79,7 +79,7 @@ Right_i::color (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 CORBA::Long
-Right_i::width (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Right_i::width (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
@@ -98,7 +98,7 @@ Buttom_i::~Buttom_i ()
 }
 
 char *
-Buttom_i::shape (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Buttom_i::shape (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
@@ -107,7 +107,7 @@ Buttom_i::shape (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 char *
-Buttom_i::color (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Buttom_i::color (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
@@ -116,7 +116,7 @@ Buttom_i::color (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 CORBA::Long
-Buttom_i::width (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Buttom_i::width (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
@@ -125,7 +125,7 @@ Buttom_i::width (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 char *
-Buttom_i::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Buttom_i::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))

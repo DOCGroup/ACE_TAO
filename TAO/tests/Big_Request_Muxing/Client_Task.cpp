@@ -30,18 +30,18 @@ Client_Task::svc (void)
   for (CORBA::ULong j = 0; j != payload.length (); ++j)
     payload[j] = (j % 256);
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->validate_connection (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->validate_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("PolicyCurrent"
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       CORBA::PolicyCurrent_var policy_current =
-        CORBA::PolicyCurrent::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+        CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Any scope_as_any;
@@ -53,17 +53,17 @@ Client_Task::svc (void)
       policy_list[0] =
         this->orb_->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                                    scope_as_any
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       policy_current->set_policy_overrides (policy_list,
                                             CORBA::ADD_OVERRIDE
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       for (int i = 0; i != this->event_count_; ++i)
         {
-          this->payload_receiver_->more_data (payload TAO_ENV_ARG_PARAMETER);
+          this->payload_receiver_->more_data (payload ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -76,13 +76,13 @@ Client_Task::svc (void)
 }
 
 void
-Client_Task::validate_connection (TAO_ENV_SINGLE_ARG_DECL)
+Client_Task::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
       for (int i = 0; i != 100; ++i)
         {
-          (void) this->payload_receiver_->get_message_count (TAO_ENV_SINGLE_ARG_PARAMETER);
+          (void) this->payload_receiver_->get_message_count (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

@@ -58,10 +58,10 @@ public:
                          TAO_Notify_QoSAdmin_i* const qos_properties);
   // Init the task
 
-  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
   // shutdown this task.
 
-  virtual int process_event (TAO_Notify_Command *mb TAO_ENV_ARG_DECL, ACE_Time_Value *tv = 0);
+  virtual int process_event (TAO_Notify_Command *mb ACE_ENV_ARG_DECL, ACE_Time_Value *tv = 0);
   // Process the command.
 
   virtual void update_admin (TAO_Notify_AdminProperties& admin);
@@ -102,7 +102,7 @@ class TAO_Notify_Export TAO_Notify_Shutdown_Command : public TAO_Notify_Command
 
   TAO_Notify_Shutdown_Command (void);
 
-  virtual int execute (TAO_ENV_SINGLE_ARG_DECL);
+  virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
   // Returns -1. This signals worker threads to finish servicing requests.
 };
 

@@ -36,14 +36,14 @@ public:
                             CORBA::ULong thread_count,
                             CORBA::ULong message_count,
                             Test::Session_List &session_list
-                            TAO_ENV_ARG_DECL);
+                            ACE_ENV_ARG_DECL);
 
   /// Shutdown all the peers
-  void shutdown_all_peers (TAO_ENV_SINGLE_ARG_DECL);
+  void shutdown_all_peers (ACE_ENV_SINGLE_ARG_DECL);
 
   // = The skeleton methods
   virtual void add_peer (Test::Peer_ptr peer
-                         TAO_ENV_ARG_DECL)
+                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -26,7 +26,7 @@ Airplane_i::~Airplane_i (void)
 // Returns a random plane and page number
 
 char *
-Airplane_i::get_plane (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Airplane_i::get_plane (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level)

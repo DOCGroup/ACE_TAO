@@ -16,7 +16,7 @@ TAO_Notify_Collection_Factory* TAO_Notify_Factory::collection_factory_ = 0;
 TAO_Notify_EMO_Factory* TAO_Notify_Factory::emo_factory_ = 0;
 
 void
-TAO_Notify_Factory::init (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Factory::init (ACE_ENV_SINGLE_ARG_DECL)
 {
   co_factory_ =
     ACE_Dynamic_Service <TAO_Notify_CO_Factory>::instance (TAO_NOTIFY_DEF_CO_FACTORY_NAME);

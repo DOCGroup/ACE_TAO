@@ -22,7 +22,7 @@ TAO_Dynamic_Adapter::create_request (
     CORBA::ExceptionList_ptr /* exceptions */,
     CORBA::Request_ptr & /* request */,
     CORBA::Flags /* req_flags */
-    TAO_ENV_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PARAMETER */
+    ACE_ENV_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */
   )
 {
 }
@@ -31,7 +31,7 @@ CORBA::Request_ptr
 TAO_Dynamic_Adapter::request (CORBA::Object_ptr /* obj */,
                               CORBA::ORB_ptr /* orb */,
                               const char * /* op */
-                              TAO_ENV_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PARAMETER */)
+                              ACE_ENV_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
 {
   return 0;
 }
@@ -71,7 +71,7 @@ TAO_Dynamic_Adapter::server_request_release (CORBA::ServerRequest_ptr)
 
 void
 TAO_Dynamic_Adapter::create_exception_list (CORBA::ExceptionList_ptr &
-                                            TAO_ENV_ARG_DECL_NOT_USED)
+                                            ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 

@@ -17,7 +17,7 @@ McastHello::McastHello (CORBA::ORB_ptr orb,
 }
 
 void
-McastHello::send_forty_two (CORBA::Long forty_two TAO_ENV_ARG_DECL_NOT_USED)
+McastHello::send_forty_two (CORBA::Long forty_two ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->status_ == 0 &&
@@ -30,8 +30,8 @@ McastHello::send_forty_two (CORBA::Long forty_two TAO_ENV_ARG_DECL_NOT_USED)
 }
 
 void
-McastHello::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+McastHello::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }

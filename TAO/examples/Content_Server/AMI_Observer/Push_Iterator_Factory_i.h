@@ -53,7 +53,7 @@ public:
   Web_Server::Metadata_Type *register_callback
     (const char *pathname,
      Web_Server::Callback_ptr client_callback
-     TAO_ENV_ARG_DECL)
+     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Web_Server::Error_Result));
   // This registration method passes a <Callback> that the Web server

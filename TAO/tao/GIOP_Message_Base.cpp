@@ -133,14 +133,14 @@ TAO_GIOP_Message_Base::generate_reply_header (
                            -1);
     }
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Now call the implementation for the rest of the header
       int result =
         this->generator_parser_->write_reply_header (cdr,
                                                      params
-                                                      TAO_ENV_ARG_PARAMETER);
+                                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!result)
@@ -700,14 +700,14 @@ TAO_GIOP_Message_Base::generate_exception_reply (
 {
   // A new try/catch block, but if something goes wrong now we have no
   // hope, just abort.
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       // Make the GIOP & reply header.
       this->generate_reply_header (cdr,
                                    params);
-      x._tao_encode (cdr TAO_ENV_ARG_PARAMETER);
+      x._tao_encode (cdr ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA_Exception, ex)
@@ -780,7 +780,7 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
 
   int parse_error = 0;
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       parse_error =
@@ -801,7 +801,7 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
           this->orb_core_,
           request,
           forward_to
-          TAO_ENV_ARG_PARAMETER);
+          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!CORBA::is_nil (forward_to.in ()))
@@ -967,7 +967,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
 
   CORBA::Boolean response_required = 1;
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       int parse_error =
@@ -1014,7 +1014,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
           this->orb_core_,
           server_request,
           forward_to
-           TAO_ENV_ARG_PARAMETER);
+           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!CORBA::is_nil (forward_to.in ()))

@@ -25,7 +25,7 @@ TAO_SSLIOP_Server_Invocation_Interceptor::
 
 char *
 TAO_SSLIOP_Server_Invocation_Interceptor::name (
-    TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("TAO_SSLIOP_Server_Invocation_Interceptor");
@@ -33,7 +33,7 @@ TAO_SSLIOP_Server_Invocation_Interceptor::name (
 
 void
 TAO_SSLIOP_Server_Invocation_Interceptor::destroy (
-    TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -42,7 +42,7 @@ TAO_SSLIOP_Server_Invocation_Interceptor::destroy (
 void
 TAO_SSLIOP_Server_Invocation_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr /* ri */
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -56,7 +56,7 @@ TAO_SSLIOP_Server_Invocation_Interceptor::receive_request_service_contexts (
   //          accept or reject requests on a per-object basis
   //          instead on a per-endpoint basis.
   CORBA::Boolean no_ssl =
-    this->ssliop_current_->no_context (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->ssliop_current_->no_context (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (no_ssl && this->qop_ != Security::SecQOPNoProtection)
@@ -70,7 +70,7 @@ TAO_SSLIOP_Server_Invocation_Interceptor::receive_request_service_contexts (
       // exception.  Otherwise, it will return a DER encoded X509
       // certificate.
       SSLIOP::ASN_1_Cert_var cert =
-        this->ssliop_current_->get_peer_certificate (TAO_ENV_SINGLE_ARG_PARAMETER);
+        this->ssliop_current_->get_peer_certificate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // @@ The following debugging code works but I don't think that
@@ -128,7 +128,7 @@ TAO_SSLIOP_Server_Invocation_Interceptor::receive_request_service_contexts (
 void
 TAO_SSLIOP_Server_Invocation_Interceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr /* ri */
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -137,7 +137,7 @@ TAO_SSLIOP_Server_Invocation_Interceptor::receive_request (
 void
 TAO_SSLIOP_Server_Invocation_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr /* ri */
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -145,7 +145,7 @@ TAO_SSLIOP_Server_Invocation_Interceptor::send_reply (
 void
 TAO_SSLIOP_Server_Invocation_Interceptor::send_exception (
     PortableInterceptor::ServerRequestInfo_ptr /* ri */
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -154,7 +154,7 @@ TAO_SSLIOP_Server_Invocation_Interceptor::send_exception (
 void
 TAO_SSLIOP_Server_Invocation_Interceptor::send_other (
     PortableInterceptor::ServerRequestInfo_ptr /* ri */
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {

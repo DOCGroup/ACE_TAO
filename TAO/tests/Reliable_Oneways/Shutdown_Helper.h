@@ -25,7 +25,7 @@ public:
   Shutdown_Helper (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

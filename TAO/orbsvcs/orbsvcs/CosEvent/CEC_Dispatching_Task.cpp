@@ -33,7 +33,7 @@ TAO_CEC_Dispatching_Task::svc (void)
               continue;
             }
 
-          int result = command->execute (TAO_ENV_SINGLE_ARG_PARAMETER);
+          int result = command->execute (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_Message_Block::release (mb);
@@ -54,7 +54,7 @@ TAO_CEC_Dispatching_Task::svc (void)
 void
 TAO_CEC_Dispatching_Task::push (TAO_CEC_ProxyPushSupplier *proxy,
                                 CORBA::Any& event
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
 {
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
@@ -82,7 +82,7 @@ TAO_CEC_Dispatch_Command::~TAO_CEC_Dispatch_Command (void)
 // ****************************************************************
 
 int
-TAO_CEC_Shutdown_Task_Command::execute (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_CEC_Shutdown_Task_Command::execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return -1;
 }
@@ -95,9 +95,9 @@ TAO_CEC_Push_Command::~TAO_CEC_Push_Command (void)
 }
 
 int
-TAO_CEC_Push_Command::execute (TAO_ENV_SINGLE_ARG_DECL)
+TAO_CEC_Push_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->proxy_->push_to_consumer (this->event_ TAO_ENV_ARG_PARAMETER);
+  this->proxy_->push_to_consumer (this->event_ ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
   return 0;
 }

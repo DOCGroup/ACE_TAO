@@ -84,7 +84,7 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
         }
       *os << be_nl;
     }
-  *os << "TAO_ENV_ARG_DECL"
+  *os << "ACE_ENV_ARG_DECL"
       << be_uidt_nl << ")" << be_uidt;
 
   if (be_global->use_raw_throw ())
@@ -116,7 +116,7 @@ be_visitor_amh_operation_sh::visit_attribute (be_attribute *node)
 
   if (!be_global->exception_support ())
     {
-      *os << "TAO_ENV_SINGLE_ARG_DECL";
+      *os << "ACE_ENV_SINGLE_ARG_DECL";
     }
   *os << be_uidt_nl << ")" << be_uidt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException)) = 0;\n" << be_nl;
@@ -141,7 +141,7 @@ be_visitor_amh_operation_sh::visit_attribute (be_attribute *node)
 
   if (!be_global->exception_support ())
     {
-      *os << be_nl << "TAO_ENV_SINGLE_ARG_DECL";
+      *os << be_nl << "ACE_ENV_SINGLE_ARG_DECL";
     }
   *os << be_uidt_nl << ")" << be_uidt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException)) = 0;\n" << be_nl;
@@ -164,7 +164,7 @@ be_visitor_amh_operation_sh::generate_shared_prologue (be_decl *node,
       << "TAO_ServerRequest &_tao_req," << be_nl
       << "void *_tao_obj," << be_nl
       << "void *_tao_servant_upcall" << be_nl
-      << "TAO_ENV_ARG_DECL" << be_uidt_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ");" << be_uidt << "\n\n";
 
   // We need the interface node in which this operation was defined. However,

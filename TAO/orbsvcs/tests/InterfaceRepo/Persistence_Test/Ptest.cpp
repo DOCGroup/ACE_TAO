@@ -25,7 +25,7 @@ Ptest::init (int argc,
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
                                     0
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       int retval = this->parse_args (argc,
@@ -36,7 +36,7 @@ Ptest::init (int argc,
 
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("InterfaceRepository"
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (object.in ()))
@@ -51,7 +51,7 @@ Ptest::init (int argc,
 
       this->repo_ =
         CORBA::Repository::_narrow (object.in ()
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->repo_.in ()))
@@ -75,17 +75,17 @@ Ptest::init (int argc,
 int
 Ptest::run (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       if (this->query_ == 1)
         {
-          this->query (TAO_ENV_SINGLE_ARG_PARAMETER);
+          this->query (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       else
         {
-          this->populate (TAO_ENV_SINGLE_ARG_PARAMETER);
+          this->populate (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -131,7 +131,7 @@ Ptest::parse_args (int argc,
 }
 
 void
-Ptest::populate (TAO_ENV_SINGLE_ARG_DECL)
+Ptest::populate (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((
       LM_DEBUG,
@@ -142,17 +142,17 @@ Ptest::populate (TAO_ENV_SINGLE_ARG_DECL)
   members.length (2);
   members[0].name = CORBA::string_dup ("long_mem");
   members[0].type_def = this->repo_->get_primitive (CORBA::pk_long
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  members[0].type = members[0].type_def->type (TAO_ENV_SINGLE_ARG_PARAMETER);
+  members[0].type = members[0].type_def->type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   members[1].name = CORBA::string_dup ("array_mem");
   members[1].type_def = this->repo_->create_array (5,
                                                    members[0].type_def.in ()
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  members[1].type = members[1].type_def->type (TAO_ENV_SINGLE_ARG_PARAMETER);
+  members[1].type = members[1].type_def->type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
 
@@ -160,7 +160,7 @@ Ptest::populate (TAO_ENV_SINGLE_ARG_DECL)
                                                           "my_struct",
                                                           "1.0",
                                                           members
-                                                          TAO_ENV_ARG_PARAMETER);
+                                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::EnumMemberSeq def_members (2);
@@ -173,12 +173,12 @@ Ptest::populate (TAO_ENV_SINGLE_ARG_DECL)
                                                     "my_enum",
                                                     "1.0",
                                                     def_members
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-Ptest::query (TAO_ENV_SINGLE_ARG_DECL)
+Ptest::query (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((
       LM_DEBUG,
@@ -194,7 +194,7 @@ Ptest::query (TAO_ENV_SINGLE_ARG_DECL)
 
   CORBA::ContainedSeq_var contents = this->repo_->contents (CORBA::dk_all,
                                                             0
-                                                            TAO_ENV_ARG_PARAMETER);
+                                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::ULong length = contents->length ();
@@ -209,12 +209,12 @@ Ptest::query (TAO_ENV_SINGLE_ARG_DECL)
   CORBA::ULong i = 0;
 
   CORBA::StructDef_var svar = CORBA::StructDef::_narrow (contents[i]
-                                                         TAO_ENV_ARG_PARAMETER);
+                                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (svar.in ()));
 
-  CORBA::StructMemberSeq_var out_members = svar->members (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::StructMemberSeq_var out_members = svar->members (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   length = out_members->length ();
@@ -265,6 +265,6 @@ Ptest::query (TAO_ENV_SINGLE_ARG_DECL)
   ACE_UNUSED_ARG (members);
 #endif /* ACE_NDEBUG */
 
-  svar->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+  svar->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }

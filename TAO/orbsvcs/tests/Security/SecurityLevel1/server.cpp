@@ -42,12 +42,12 @@ main (int argc, char *argv[])
     {
       /// Our regular ORB Initialization.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       /// Get a reference to the RootPOA.
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (object.in ()))
@@ -57,11 +57,11 @@ main (int argc, char *argv[])
 
       /// Narrow down the reference to the currect interface.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -69,13 +69,13 @@ main (int argc, char *argv[])
 
       // Resolve reference to SecurityCurrent Object.
       object = orb->resolve_initial_references ("SecurityCurrent"
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Narrow it down to get the correct reference.
       SecurityLevel1::Current_var ss_current =
         SecurityLevel1::Current::_narrow (object.in ()
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (ss_current.in ()))
@@ -87,12 +87,12 @@ main (int argc, char *argv[])
       SLevel1_Server_i level1_server (orb.in (), ss_current.in ());
 
       SLevel1_Server_var server =
-        level1_server._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        level1_server._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
         orb->object_to_string (server.in ()
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // If the ior_output_file exists, output the ior to it
@@ -108,17 +108,17 @@ main (int argc, char *argv[])
           ACE_OS::fclose (output_file);
         }
 
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Start the ORB
-      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      root_poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }

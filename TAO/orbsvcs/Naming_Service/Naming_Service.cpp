@@ -28,7 +28,7 @@ TAO_Naming_Service::init (int argc,
 {
   int result;
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       this->argc_ = argc;
@@ -36,7 +36,7 @@ TAO_Naming_Service::init (int argc,
 
       // Initialize the ORB
       this->orb_ =
-        CORBA::ORB_init (this->argc_, this->argv_, 0 TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (this->argc_, this->argv_, 0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse the args for '-t' option. If '-t' option is passed, do
@@ -109,17 +109,17 @@ TAO_Naming_Service::parse_args (int argc,
 
 // Run the ORB event loop.
 int
-TAO_Naming_Service::run (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Naming_Service::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (time_ == 0)
     {
-      this->orb_->run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
     }
   else
     {
       ACE_Time_Value tv (time_);
-      this->orb_->run (tv TAO_ENV_ARG_PARAMETER);
+      this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
     }
 

@@ -58,10 +58,10 @@ tao_DynamicAny_DynAny_nil (
 ACE_INLINE DynamicAny::DynAny_ptr
 tao_DynamicAny_DynAny_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return DynamicAny::DynAny::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return DynamicAny::DynAny::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -108,10 +108,10 @@ tao_DynamicAny_DynFixed_nil (
 ACE_INLINE DynamicAny::DynFixed_ptr
 tao_DynamicAny_DynFixed_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return DynamicAny::DynFixed::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return DynamicAny::DynFixed::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -158,10 +158,10 @@ tao_DynamicAny_DynEnum_nil (
 ACE_INLINE DynamicAny::DynEnum_ptr
 tao_DynamicAny_DynEnum_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return DynamicAny::DynEnum::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return DynamicAny::DynEnum::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -1382,10 +1382,10 @@ tao_DynamicAny_DynStruct_nil (
 ACE_INLINE DynamicAny::DynStruct_ptr
 tao_DynamicAny_DynStruct_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return DynamicAny::DynStruct::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return DynamicAny::DynStruct::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -1432,10 +1432,10 @@ tao_DynamicAny_DynUnion_nil (
 ACE_INLINE DynamicAny::DynUnion_ptr
 tao_DynamicAny_DynUnion_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return DynamicAny::DynUnion::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return DynamicAny::DynUnion::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -2250,10 +2250,10 @@ tao_DynamicAny_DynSequence_nil (
 ACE_INLINE DynamicAny::DynSequence_ptr
 tao_DynamicAny_DynSequence_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return DynamicAny::DynSequence::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return DynamicAny::DynSequence::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -2300,10 +2300,10 @@ tao_DynamicAny_DynArray_nil (
 ACE_INLINE DynamicAny::DynArray_ptr
 tao_DynamicAny_DynArray_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return DynamicAny::DynArray::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return DynamicAny::DynArray::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -2350,10 +2350,10 @@ tao_DynamicAny_DynValue_nil (
 ACE_INLINE DynamicAny::DynValue_ptr
 tao_DynamicAny_DynValue_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return DynamicAny::DynValue::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return DynamicAny::DynValue::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -2404,10 +2404,10 @@ tao_DynamicAny_DynAnyFactory_nil (
 ACE_INLINE DynamicAny::DynAnyFactory_ptr
 tao_DynamicAny_DynAnyFactory_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return DynamicAny::DynAnyFactory::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return DynamicAny::DynAnyFactory::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *

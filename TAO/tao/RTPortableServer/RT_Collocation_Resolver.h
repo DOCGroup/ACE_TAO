@@ -38,7 +38,7 @@ public:
 
   /// Is <object> collocated?
   virtual CORBA::Boolean is_collocated (CORBA::Object_ptr object
-                                        TAO_ENV_ARG_DECL) const;
+                                        ACE_ENV_ARG_DECL) const;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTPortableServer, TAO_RT_Collocation_Resolver)

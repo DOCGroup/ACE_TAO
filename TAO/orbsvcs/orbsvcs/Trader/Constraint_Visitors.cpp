@@ -507,14 +507,14 @@ sequence_does_contain (CORBA::Any* sequence,
   // wrapper uses the [] operator to locate the target element in the
   // sequence.
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   CORBA::Boolean return_value = 0;
   CORBA::TypeCode_var type = sequence->type ();
   CORBA::TCKind sequence_type = CORBA::tk_void;
   ACE_TRY
     {
       sequence_type =
-        TAO_Sequence_Extracter_Base::sequence_type (type.in () TAO_ENV_ARG_PARAMETER);
+        TAO_Sequence_Extracter_Base::sequence_type (type.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -594,7 +594,7 @@ operator () (TAO_DynSequence_i& dyn_any,
   int return_value = 0;
   ACE_TRY_NEW_ENV
     {
-      CORBA::Short value = dyn_any.get_short (TAO_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::Short value = dyn_any.get_short (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       return_value = (value == element);
     }
@@ -613,7 +613,7 @@ operator () (TAO_DynSequence_i& dyn_any,
   int return_value = 0;
   ACE_TRY_NEW_ENV
     {
-      CORBA::UShort value = dyn_any.get_ushort (TAO_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::UShort value = dyn_any.get_ushort (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       return_value = (value == element);
     }
@@ -632,7 +632,7 @@ operator () (TAO_DynSequence_i& dyn_any,
   int return_value = 0;
   ACE_TRY_NEW_ENV
     {
-      CORBA::Long value = dyn_any.get_long (TAO_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::Long value = dyn_any.get_long (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       return_value = (value == element);
     }
@@ -651,7 +651,7 @@ operator () (TAO_DynSequence_i& dyn_any,
   int return_value = 0;
   ACE_TRY_NEW_ENV
     {
-      CORBA::ULong value = dyn_any.get_ulong (TAO_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::ULong value = dyn_any.get_ulong (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       return_value = (value == element);
     }
@@ -670,7 +670,7 @@ operator () (TAO_DynSequence_i& dyn_any,
   int return_value = 0;
   ACE_TRY_NEW_ENV
     {
-      CORBA::Float value = dyn_any.get_float (TAO_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::Float value = dyn_any.get_float (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       return_value = (value == element);
     }
@@ -686,7 +686,7 @@ operator () (TAO_DynSequence_i& dyn_any,
   int return_value = 0;
   ACE_TRY_NEW_ENV
     {
-      CORBA::Double value = dyn_any.get_short (TAO_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::Double value = dyn_any.get_short (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       return_value = (value == element);
     }
@@ -702,7 +702,7 @@ operator () (TAO_DynSequence_i& dyn_any,
   int return_value = 0;
   ACE_TRY_NEW_ENV
     {
-    CORBA::Boolean value = (CORBA::Boolean) dyn_any.get_short (TAO_ENV_SINGLE_ARG_PARAMETER);
+    CORBA::Boolean value = (CORBA::Boolean) dyn_any.get_short (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       return_value = (value == element);
     }
@@ -718,7 +718,7 @@ operator () (TAO_DynSequence_i& dyn_any,
   int return_value = 0;
   ACE_TRY_NEW_ENV
     {
-      const char* value = dyn_any.get_string (TAO_ENV_SINGLE_ARG_PARAMETER);
+      const char* value = dyn_any.get_string (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       return_value = (ACE_OS::strcmp (value, element) == 0);
     }
@@ -999,13 +999,13 @@ visit_in (TAO_Binary_Constraint* binary_in)
 
   if (right_type == TAO_SEQUENCE)
     {
-      TAO_ENV_DECLARE_NEW_ENV;
+      ACE_DECLARE_NEW_CORBA_ENV;
       CORBA::Boolean types_match = 0;
       CORBA::TCKind seq_type = CORBA::tk_void;
       ACE_TRY
         {
           seq_type =
-            TAO_Sequence_Extracter_Base::sequence_type (prop_type TAO_ENV_ARG_PARAMETER);
+            TAO_Sequence_Extracter_Base::sequence_type (prop_type ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY

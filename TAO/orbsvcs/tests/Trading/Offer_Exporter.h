@@ -25,12 +25,12 @@ public:
 
   TAO_Offer_Exporter (CosTrading::Lookup_ptr lookup_if,
                       CORBA::Boolean verbose
-                      TAO_ENV_ARG_DECL)
+                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   ~TAO_Offer_Exporter (void);
 
-  void export_offers (TAO_ENV_SINGLE_ARG_DECL)
+  void export_offers (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::Register::InvalidObjectRef,
                      CosTrading::IllegalServiceType,
@@ -43,7 +43,7 @@ public:
                      CosTrading::DuplicatePropertyName));
   // Export a number of offers to the Trading Service.
 
-  void export_offers_to_all (TAO_ENV_SINGLE_ARG_DECL)
+  void export_offers_to_all (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::Register::InvalidObjectRef,
                      CosTrading::IllegalServiceType,
@@ -57,21 +57,21 @@ public:
   // Export a number of offers to all traders accessible by the
   // bootstrapped trader.
 
-  void withdraw_offers (TAO_ENV_SINGLE_ARG_DECL)
+  void withdraw_offers (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalOfferId,
                      CosTrading::UnknownOfferId,
                      CosTrading::Register::ProxyOfferId));
   // Withdraw all exported offers.
 
-  void describe_offers (TAO_ENV_SINGLE_ARG_DECL)
+  void describe_offers (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalOfferId,
                      CosTrading::UnknownOfferId,
                      CosTrading::Register::ProxyOfferId));
   // Describe all the offers registered with the bootstrapped trader.
 
-  void modify_offers (TAO_ENV_SINGLE_ARG_DECL)
+  void modify_offers (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::NotImplemented,
                      CosTrading::IllegalOfferId,
@@ -86,7 +86,7 @@ public:
                      CosTrading::DuplicatePropertyName));
   // Remove some properties and change some properties in each offer.
 
-  void withdraw_offers_using_constraints (TAO_ENV_SINGLE_ARG_DECL)
+  void withdraw_offers_using_constraints (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTrading::UnknownServiceType,
@@ -96,15 +96,15 @@ public:
 
 private:
 
-  CosTrading::OfferIdSeq* grab_offerids (TAO_ENV_SINGLE_ARG_DECL)
+  CosTrading::OfferIdSeq* grab_offerids (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::NotImplemented));
 
-  void create_offers (TAO_ENV_SINGLE_ARG_DECL);
+  void create_offers (ACE_ENV_SINGLE_ARG_DECL);
   // Fill in each of the offer structures.
 
   void export_to (CosTrading::Register_ptr reg
-                  TAO_ENV_ARG_DECL)
+                  ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::Register::InvalidObjectRef,
                      CosTrading::IllegalServiceType,

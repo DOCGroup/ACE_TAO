@@ -42,45 +42,45 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test started.\n"));
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      // Create and register factories. 
-     
-      OBV_AnyTest::VA_init *va_factory = 0; 
-      ACE_NEW_RETURN (va_factory, 
+      // Create and register factories.
+
+      OBV_AnyTest::VA_init *va_factory = 0;
+      ACE_NEW_RETURN (va_factory,
                       OBV_AnyTest::VA_init,
                       1); // supplied by mapping
 
       orb->register_value_factory (va_factory->tao_repository_id (),
                                    va_factory
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       va_factory->_remove_ref (); // release ownership
 
 
-      OBV_AnyTest::VB_init *vb_factory = 0; 
-      ACE_NEW_RETURN (vb_factory, 
+      OBV_AnyTest::VB_init *vb_factory = 0;
+      ACE_NEW_RETURN (vb_factory,
                       OBV_AnyTest::VB_init,
                       1); // supplied by mapping
 
       orb->register_value_factory (vb_factory->tao_repository_id (),
                                    vb_factory
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       vb_factory->_remove_ref (); // release ownership
 
       // Obtain reference to the object
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       OBV_AnyTest::Test_var test =
-        OBV_AnyTest::Test::_narrow(tmp.in () TAO_ENV_ARG_PARAMETER);
+        OBV_AnyTest::Test::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (test.in ()))
@@ -93,7 +93,7 @@ main (int argc, char *argv[])
 
       // Do local test
 
-      OBV_AnyTest::VA_var va1, va2; 
+      OBV_AnyTest::VA_var va1, va2;
       ACE_NEW_RETURN (va1, OBV_OBV_AnyTest::VA, 1);
       ACE_NEW_RETURN (va2, OBV_OBV_AnyTest::VA, 1);
 
@@ -106,7 +106,7 @@ main (int argc, char *argv[])
 
       // Test both copying and non-copying version of operator<<=
       a1 <<= va1.in ();
-      
+
       OBV_AnyTest::VA *pva = va2._retn();
       a2 <<= &pva;
 
@@ -114,29 +114,29 @@ main (int argc, char *argv[])
 
       if (!(a1 >>= dst) || dst->id () != magic)
         {
-          ACE_ERROR_RETURN ((LM_DEBUG, 
+          ACE_ERROR_RETURN ((LM_DEBUG,
                              "(%P|%t) client - test failed.\n"),
                             1);
         }
 
       if (!(a2 >>= dst) || dst->id () != magic)
         {
-          ACE_ERROR_RETURN ((LM_DEBUG, 
+          ACE_ERROR_RETURN ((LM_DEBUG,
                              "(%P|%t) client - test failed.\n"),
                             1);
         }
 
       // Now do remote test
-      
+
       // STEP 1.
       CORBA::Any_var result = test->get_something (
           0
-          TAO_ENV_ARG_PARAMETER);
+          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!(*result >>= dst) || dst->id () != magic)
         {
-          ACE_ERROR_RETURN ((LM_DEBUG, 
+          ACE_ERROR_RETURN ((LM_DEBUG,
                              "(%P|%t) client - test failed.\n"),
                             1);
         }
@@ -145,20 +145,20 @@ main (int argc, char *argv[])
       OBV_AnyTest::VB* dst_vb = 0;
       result = test->get_something (
           1
-          TAO_ENV_ARG_PARAMETER);
+          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!(*result >>= dst_vb) || dst_vb->id () != magic)
         {
-          ACE_ERROR_RETURN ((LM_DEBUG, 
+          ACE_ERROR_RETURN ((LM_DEBUG,
                              "(%P|%t) client - test failed.\n"),
                             1);
         }
 
-      test->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test finished.\n"));

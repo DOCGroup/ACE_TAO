@@ -117,7 +117,7 @@ public:
   /// to the transport
 
   virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec
-                                                      TAO_ENV_ARG_DECL_NOT_USED);
+                                                      ACE_ENV_ARG_DECL_NOT_USED);
   /// Called when a sender makes a connection request.
 
 private:
@@ -174,7 +174,7 @@ public:
 
   int init (int argc,
             char **argv
-            TAO_ENV_ARG_DECL_NOT_USED);
+            ACE_ENV_ARG_DECL_NOT_USED);
   /// Initialize data components.
 
   int parse_args (int argc,
@@ -194,7 +194,7 @@ public:
   void stream_destroyed (void);
   /// Called when stream destroyed
 
-  void shut_down (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void shut_down (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
   ///Unbind the sender and receiver from the Naming Service
 
 protected:

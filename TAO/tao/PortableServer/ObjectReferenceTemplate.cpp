@@ -26,7 +26,7 @@ TAO_ObjectReferenceTemplate::~TAO_ObjectReferenceTemplate (void)
 }
 
 char *
-TAO_ObjectReferenceTemplate::server_id (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ObjectReferenceTemplate::server_id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ Priyanka, you're not conforming to the C++ mapping.  Do a
@@ -36,7 +36,7 @@ TAO_ObjectReferenceTemplate::server_id (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 char *
-TAO_ObjectReferenceTemplate::orb_id (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ObjectReferenceTemplate::orb_id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ Priyanka, you're not conforming to the C++ mapping.  Do a
@@ -46,7 +46,7 @@ TAO_ObjectReferenceTemplate::orb_id (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 PortableInterceptor::AdapterName *
-TAO_ObjectReferenceTemplate::adapter_name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ObjectReferenceTemplate::adapter_name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ Priyanka, you're not conforming to the C++ mapping.  You must
@@ -62,7 +62,7 @@ CORBA::Object *
 TAO_ObjectReferenceTemplate::make_object (
   const char * intf,
   const PortableInterceptor::ObjectId & id
-  TAO_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL)
   // @@ Priyanka, is this method supposed to have an exception
   //    specification?
 {
@@ -78,21 +78,21 @@ TAO_ObjectReferenceTemplate::make_object (
   CORBA::Object_var object =
     this->poa_->invoke_key_to_object (intf,
                                       *user_id
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // @@ Priyanka, what purpose does this object_to_string() call
   //    serve?  Can't you remove it?
   CORBA::String_var ior =
     this->poa_->orb_core ().orb ()->object_to_string (object.in ()
-                                                      TAO_ENV_ARG_PARAMETER);
+                                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return object._retn ();
 }
 
 void
-TAO_ObjectReferenceTemplate::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ObjectReferenceTemplate::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   // @@ Priyanka, this is a reference counted object.  You cannot
   //    directly call delete() on the instance.  Use the reference

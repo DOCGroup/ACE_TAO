@@ -14,7 +14,7 @@ ACE_RCSID (BiDir_GIOP, BiDir_ORBInitializer, "$Id$")
 void
 TAO_BiDir_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //
@@ -23,18 +23,18 @@ TAO_BiDir_ORBInitializer::pre_init (
 void
 TAO_BiDir_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->register_policy_factories (info
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 TAO_BiDir_ORBInitializer::register_policy_factories (
   PortableInterceptor::ORBInitInfo_ptr info
-  TAO_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL)
 {
   /// Register the BiDir policy factories.
   PortableInterceptor::PolicyFactory_ptr temp_factory =
@@ -62,7 +62,7 @@ TAO_BiDir_ORBInitializer::register_policy_factories (
   type = BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE;
   info->register_policy_factory (type,
                                  policy_factory.in ()
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 }

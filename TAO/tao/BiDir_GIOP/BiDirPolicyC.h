@@ -109,7 +109,7 @@ TAO_NAMESPACE  BiDirPolicy
     static BidirectionalPolicy_ptr tao_duplicate (BidirectionalPolicy_ptr);
     static void tao_release (BidirectionalPolicy_ptr);
     static BidirectionalPolicy_ptr tao_nil (void);
-    static BidirectionalPolicy_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static BidirectionalPolicy_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -164,11 +164,11 @@ class TAO_BiDirGIOP_Export BidirectionalPolicy: public virtual CORBA::Policy
     static BidirectionalPolicy_ptr _duplicate (BidirectionalPolicy_ptr obj);
     static BidirectionalPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static BidirectionalPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static BidirectionalPolicy_ptr _nil (void)
       {
@@ -176,7 +176,7 @@ class TAO_BiDirGIOP_Export BidirectionalPolicy: public virtual CORBA::Policy
       }
 
     virtual BiDirPolicy::BidirectionalPolicyValue value (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException

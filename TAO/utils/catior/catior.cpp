@@ -25,7 +25,7 @@
 
 static CORBA::Boolean
 catiiop (char* string
-         TAO_ENV_ARG_DECL)
+         ACE_ENV_ARG_DECL)
 {
   // NIL objref encodes as just "iiop:" ... which has already been
   // removed, so we see it as an empty string.
@@ -133,7 +133,7 @@ cat_profile_helper(TAO_InputCDR& stream, const char *protocol);
 
 static CORBA::Boolean
 catior (char* str
-        TAO_ENV_ARG_DECL_NOT_USED)
+        ACE_ENV_ARG_DECL_NOT_USED)
 {
   // Unhex the bytes, and make a CDR deencapsulation stream from the
   // resulting data.
@@ -292,7 +292,7 @@ catior (char* str
 
 static CORBA::Boolean
 catpoop (char* string
-        TAO_ENV_ARG_DECL)
+        ACE_ENV_ARG_DECL)
 {
   if (!string || !*string)
     return 0;
@@ -411,8 +411,8 @@ main (int argc, char *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, "f:n:");
 
-  TAO_ENV_DECLARE_NEW_ENV;
-  CORBA::ORB_var orb_var =  CORBA::ORB_init (argc, argv, "TAO" TAO_ENV_ARG_PARAMETER);
+  ACE_DECLARE_NEW_CORBA_ENV;
+  CORBA::ORB_var orb_var =  CORBA::ORB_init (argc, argv, "TAO" ACE_ENV_ARG_PARAMETER);
   CORBA::Boolean b = 0;
   int opt;
 
@@ -476,7 +476,7 @@ main (int argc, char *argv[])
                                          aString.length () - prefixLength);
                     subString[subString.length ()] = '\0';
                     str = subString.rep ();
-                    b = catior (str TAO_ENV_ARG_PARAMETER);
+                    b = catior (str ACE_ENV_ARG_PARAMETER);
                   }
                 else if (aString.find ("iiop:") == 0)
                   {
@@ -491,7 +491,7 @@ main (int argc, char *argv[])
                                          aString.length () - prefixLength);
                     //subString[subString.length () - 1] = '\0';
                     str = subString.rep ();
-                    b = catiiop (str TAO_ENV_ARG_PARAMETER);
+                    b = catiiop (str ACE_ENV_ARG_PARAMETER);
                   }
                 else if (aString.find (":IR:") > 0)
                   {
@@ -499,7 +499,7 @@ main (int argc, char *argv[])
                                 "decoding an POOP IOR\n"));
 
                     str = aString.rep ();
-                    b = catpoop (str TAO_ENV_ARG_PARAMETER);
+                    b = catpoop (str ACE_ENV_ARG_PARAMETER);
                   }
                 else
                   ACE_ERROR ((LM_ERROR,

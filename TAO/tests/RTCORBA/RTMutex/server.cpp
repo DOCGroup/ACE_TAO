@@ -66,22 +66,22 @@ test_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
     {
       RTCORBA::Mutex_var my_mutex;
 
-      my_mutex = rt_orb->create_mutex (TAO_ENV_SINGLE_ARG_PARAMETER);
+      my_mutex = rt_orb->create_mutex (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      my_mutex->lock (TAO_ENV_SINGLE_ARG_PARAMETER);
+      my_mutex->lock (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      my_mutex->unlock (TAO_ENV_SINGLE_ARG_PARAMETER);
+      my_mutex->unlock (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      my_mutex->lock (TAO_ENV_SINGLE_ARG_PARAMETER);
+      my_mutex->lock (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      my_mutex->unlock (TAO_ENV_SINGLE_ARG_PARAMETER);
+      my_mutex->unlock (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      rt_orb->destroy_mutex (my_mutex.in () TAO_ENV_ARG_PARAMETER);
+      rt_orb->destroy_mutex (my_mutex.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }
@@ -109,7 +109,7 @@ test_named_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
       CORBA::Boolean created_flag;
 
       larry_mutex1 = rt_orb->create_named_mutex ("larry",
-                                                 created_flag TAO_ENV_ARG_PARAMETER);
+                                                 created_flag ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (created_flag != 1)
@@ -119,7 +119,7 @@ test_named_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
 
       moe_mutex1 = rt_orb->create_named_mutex ("moe",
                                                created_flag
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (created_flag != 1)
@@ -127,10 +127,10 @@ test_named_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
                            "ERROR: Expected named mutex moe to be created, but it wasn't\n"),
                           1);
 
-      larry_mutex1->lock (TAO_ENV_SINGLE_ARG_PARAMETER);
+      larry_mutex1->lock (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      larry_mutex1->unlock (TAO_ENV_SINGLE_ARG_PARAMETER);
+      larry_mutex1->unlock (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Test creating the mutex a second time
@@ -138,7 +138,7 @@ test_named_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
         RTCORBA::Mutex_var larry_mutex2;
         larry_mutex2 = rt_orb->create_named_mutex ("larry",
                                                    created_flag
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         if (created_flag != 0)
@@ -153,10 +153,10 @@ test_named_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
                              "ERROR: Should have gotten the same mutex, but didn't\n"),
                             1);
 
-        larry_mutex2->lock (TAO_ENV_SINGLE_ARG_PARAMETER);
+        larry_mutex2->lock (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        larry_mutex2->unlock (TAO_ENV_SINGLE_ARG_PARAMETER);
+        larry_mutex2->unlock (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
 
@@ -164,7 +164,7 @@ test_named_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
       {
         RTCORBA::Mutex_var larry_mutex3;
         larry_mutex3 = rt_orb->open_named_mutex ("larry"
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         // test the pointers...
@@ -174,24 +174,24 @@ test_named_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
                              "ERROR: Should have gotten the same mutex, but didn't\n"),
                             1);
 
-        larry_mutex3->lock (TAO_ENV_SINGLE_ARG_PARAMETER);
+        larry_mutex3->lock (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        larry_mutex3->unlock (TAO_ENV_SINGLE_ARG_PARAMETER);
+        larry_mutex3->unlock (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
 
       // Make sure that nothing has been broken behind the scenes.
-      larry_mutex1->lock (TAO_ENV_SINGLE_ARG_PARAMETER);
+      larry_mutex1->lock (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      larry_mutex1->unlock (TAO_ENV_SINGLE_ARG_PARAMETER);
+      larry_mutex1->unlock (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      rt_orb->destroy_mutex (larry_mutex1.in () TAO_ENV_ARG_PARAMETER);
+      rt_orb->destroy_mutex (larry_mutex1.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      rt_orb->destroy_mutex (moe_mutex1.in () TAO_ENV_ARG_PARAMETER);
+      rt_orb->destroy_mutex (moe_mutex1.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -216,7 +216,7 @@ test_named_mutex_exception (RTCORBA::RTORB_ptr rt_orb)
     {
       RTCORBA::Mutex_var larry_mutex1;
 
-      larry_mutex1 = rt_orb->open_named_mutex ("larry" TAO_ENV_ARG_PARAMETER);
+      larry_mutex1 = rt_orb->open_named_mutex ("larry" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -340,7 +340,7 @@ test_mutex_threads (RTCORBA::RTORB_ptr rt_orb)
 
   ACE_TRY_NEW_ENV
     {
-      RTCORBA::Mutex_ptr mutex = rt_orb->create_mutex (TAO_ENV_SINGLE_ARG_PARAMETER);
+      RTCORBA::Mutex_ptr mutex = rt_orb->create_mutex (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       test_data.mutex = mutex;
@@ -385,7 +385,7 @@ mutex_test_try_lock_thread (void *args)
     {
       // check that try_lock (0) returns false
       ACE_DEBUG ((LM_DEBUG,"attempting try_lock (0) - expect failure (but no exceptions) \n"));
-      result = mutex->try_lock (0u TAO_ENV_ARG_PARAMETER);
+      result = mutex->try_lock (0u ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (result)
@@ -405,7 +405,7 @@ mutex_test_try_lock_thread (void *args)
                       "attempting try_lock (5 sec) - expect failure after 5 secs (but no exceptions)\n"));
 
           timer.start ();
-          result = mutex->try_lock (50000000u /*5sec*/ TAO_ENV_ARG_PARAMETER);
+          result = mutex->try_lock (50000000u /*5sec*/ ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           timer.stop ();
 
@@ -456,12 +456,12 @@ test_mutex_try_lock (RTCORBA::RTORB_ptr rt_orb)
 
   ACE_TRY_NEW_ENV
     {
-      RTCORBA::Mutex_ptr mutex = rt_orb->create_mutex (TAO_ENV_SINGLE_ARG_PARAMETER);
+      RTCORBA::Mutex_ptr mutex = rt_orb->create_mutex (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Test out try_lock and keep the lock so that the spawned task
       // can test out try_lock failure cases
-      result = mutex->try_lock (0u TAO_ENV_ARG_PARAMETER);
+      result = mutex->try_lock (0u ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (!result)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -506,7 +506,7 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       // ORB.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse arguments.
@@ -515,10 +515,10 @@ main (int argc, char *argv[])
 
       // RTORB.
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RTORB" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RTORB" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ()
-                                                           TAO_ENV_ARG_PARAMETER);
+                                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
         return 1;

@@ -146,7 +146,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << be_nl
       << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
       << "const char* logical_type_id" << be_nl
-      << "TAO_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+      << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
       << ");\n" << be_uidt_nl;
 
   *os << "virtual void* _downcast (" << be_idt << be_idt_nl
@@ -158,7 +158,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "TAO_ServerRequest &req," << be_nl
       << "void *obj," << be_nl
       << "void *servant_upcall" << be_nl
-      << "TAO_ENV_ARG_DECL" << be_uidt_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ");\n" << be_uidt_nl;
 
   // Add a skeleton for our _non_existent method.
@@ -166,7 +166,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "TAO_ServerRequest &req," << be_nl
       << "void *obj," << be_nl
       << "void *servant_upcall" << be_nl
-      << "TAO_ENV_ARG_DECL" << be_uidt_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ");\n" << be_uidt_nl;
 
   // Add a skeleton for our _interface method.
@@ -174,14 +174,14 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "TAO_ServerRequest &req," << be_nl
       << "void *obj," << be_nl
       << "void *servant_upcall" << be_nl
-      << "TAO_ENV_ARG_DECL" << be_uidt_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ");\n" << be_uidt_nl;
 
   // Add the dispatch method.
   *os << "virtual void _dispatch (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
       << "void *_servant_upcall" << be_nl
-      << "TAO_ENV_ARG_DECL" << be_uidt_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ");\n" << be_uidt_nl;
 
   this->this_method (node);
@@ -313,7 +313,7 @@ be_visitor_interface_sh::this_method (be_interface *node)
 
   // Print out the _this() method.
   *os << "::" << node->full_name () << " *_this (" << be_idt << be_idt_nl
-      << "TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+      << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
       << ");\n" << be_uidt;
 }
 

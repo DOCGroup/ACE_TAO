@@ -32,22 +32,22 @@ class Supplier : public POA_CosEventComm::PushSupplier
   //   the CosEC and sends events to it.
 public:
   void open (CosEventChannelAdmin::EventChannel_ptr event_channel
-             TAO_ENV_ARG_DECL);
+             ACE_ENV_ARG_DECL);
   // This method connects the supplier to the EC.
 
-  void close (TAO_ENV_SINGLE_ARG_DECL);
+  void close (ACE_ENV_SINGLE_ARG_DECL);
   // Disconnect from the EC.
 
-  void connect (TAO_ENV_SINGLE_ARG_DECL);
+  void connect (ACE_ENV_SINGLE_ARG_DECL);
 
-  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
+  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
   // Disconnect from the EC, but do not forget about it or close it.
 
   void send_event (const CORBA::Any &data
-                   TAO_ENV_ARG_DECL);
+                   ACE_ENV_ARG_DECL);
   // Send one event.
 
-  virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));

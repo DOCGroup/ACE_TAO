@@ -15,14 +15,14 @@ Request_Interceptor::Request_Interceptor (const char *name)
 
 char *
 Request_Interceptor::name (
-    TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->name_.in ());
 }
 
 void
-Request_Interceptor::destroy (TAO_ENV_SINGLE_ARG_DECL)
+Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 

@@ -28,7 +28,7 @@ Gateway_i (CORBA::ORB_ptr orb,
 
 void
 Gateway_i::invoke (CORBA::ServerRequest_ptr request
-                   TAO_ENV_ARG_DECL)
+                   ACE_ENV_ARG_DECL)
 {
   PortableServer::ObjectId_var target_id =
     this->poa_current_->get_object_id ();
@@ -38,12 +38,12 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
 
   CORBA::Object_var target_object =
     this->orb_->string_to_object (stringified_object_id.in ()
-                                  TAO_ENV_ARG_DECL);
+                                  ACE_ENV_ARG_DECL);
   ACE_CHECK;
 
   // Use the IfR interfaces to query the NVList for this object...
   CORBA::InterfaceDef_var interface =
-    target_object->_get_interface (TAO_ENV_ARG_DECL);
+    target_object->_get_interface (ACE_ENV_ARG_DECL);
   ACE_CHECK;
 
   if (CORBA::is_nil (interface.in ()))
@@ -63,7 +63,7 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
 
   // Save the result typecode...
   CORBA::TypeCode_var result_typecode =
-    operation.in ()->result (TAO_ENV_ARG_DECL);
+    operation.in ()->result (ACE_ENV_ARG_DECL);
   ACE_CHECK;
 
   CORBA::ParDescriptionSeq_var parameters =
@@ -73,7 +73,7 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
   CORBA::NVList_ptr arguments;
   this->orb_->create_list (parameters->length (),
                            arguments
-                           TAO_ENV_ARG_DECL);
+                           ACE_ENV_ARG_DECL);
   ACE_CHECK;
 
   CORBA::Flags flags;
@@ -105,12 +105,12 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
       arguments->add_value (parameters[i].name,
                             any,
                             flags
-                            TAO_ENV_ARG_DECL);
+                            ACE_ENV_ARG_DECL);
       ACE_CHECK;
     }
 
   // Extract the values of the arguments from the DSI ServerRequest
-  request->arguments (arguments TAO_ENV_ARG_DECL);
+  request->arguments (arguments ACE_ENV_ARG_DECL);
 
   // Use the NVList (with values) to create a DII Request...
   CORBA::Request_var dii_request;
@@ -118,7 +118,7 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
   CORBA::NamedValue *named_value;
 
   this->orb_->create_named_value (named_value
-                                  TAO_ENV_ARG_DECL);
+                                  ACE_ENV_ARG_DECL);
   ACE_CHECK;
 
   CORBA::ContextList *context_list = 0;
@@ -132,7 +132,7 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
                                   context_list, /* Context List */
                                   dii_request.inout (),
                                   CORBA::Flags (0)
-                                  TAO_ENV_ARG_DECL);
+                                  ACE_ENV_ARG_DECL);
   ACE_CHECK;
 
   // Set the return type...
@@ -141,7 +141,7 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
   ACE_TRY
     {
       // Make the DII request
-      dii_request->invoke (TAO_ENV_ARG_DECL);
+      dii_request->invoke (ACE_ENV_ARG_DECL);
       ACE_TRY_CHECK;
 
       // At this point the NVList contains all the out and inout
@@ -172,7 +172,7 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
 CORBA::RepositoryId
 Gateway_i::_primary_interface (const PortableServer::ObjectId &,
                                PortableServer::POA_ptr
-                               TAO_ENV_ARG_DECL_NOT_USED)
+                               ACE_ENV_ARG_DECL_NOT_USED)
 {
   return 0;
 }

@@ -38,7 +38,7 @@ static const char *PP_Test_i_Timeprobe_Description[] =
 
 enum
 {
-  // Timeprobe description table start key 
+  // Timeprobe description table start key
   PP_TEST_I_SEND_ONEWAY_START = 10100,
   PP_TEST_I_SEND_ONEWAY_END,
 
@@ -72,11 +72,11 @@ Pluggable_Test_Factory_i::~Pluggable_Test_Factory_i (void)
 }
 
 Pluggable_Test_ptr
-Pluggable_Test_Factory_i::make_pluggable_test (TAO_ENV_SINGLE_ARG_DECL)
+Pluggable_Test_Factory_i::make_pluggable_test (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (PP_TEST_I_MAKE_PLUGGABLE_START);
-  return my_pluggable_test_._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return my_pluggable_test_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 // Constructor
@@ -95,7 +95,7 @@ PP_Test_i::~PP_Test_i (void)
 // Oneway send
 
 void
-PP_Test_i::send_oneway (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+PP_Test_i::send_oneway (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (PP_TEST_I_SEND_ONEWAY_START);
@@ -104,7 +104,7 @@ PP_Test_i::send_oneway (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 // Twoway send
 
 void
-PP_Test_i::send_void (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+PP_Test_i::send_void (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (PP_TEST_I_SEND_VOID_START);
@@ -112,7 +112,7 @@ PP_Test_i::send_void (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 // Shutdown.
 
-void PP_Test_i::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+void PP_Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

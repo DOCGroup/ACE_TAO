@@ -119,7 +119,7 @@ main (int argc, char *argv[])
         CORBA::ORB_init (argc,
                          argv,
                          ""
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -127,7 +127,7 @@ main (int argc, char *argv[])
 
        CORBA::Object_var object =
         orb->string_to_object (ior
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (register_smart_proxy == 1)
         {
@@ -151,7 +151,7 @@ main (int argc, char *argv[])
 
       Test_var server =
         Test::_narrow (object.in ()
-                       TAO_ENV_ARG_PARAMETER);
+                       ACE_ENV_ARG_PARAMETER);
 
       if (CORBA::is_nil (server.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -174,7 +174,7 @@ main (int argc, char *argv[])
            // Record current time.
            ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 
-           price = server->box_prices (TAO_ENV_SINGLE_ARG_PARAMETER);
+           price = server->box_prices (ACE_ENV_SINGLE_ARG_PARAMETER);
            ACE_TRY_CHECK;
 
            if (price < 300)
@@ -194,13 +194,13 @@ main (int argc, char *argv[])
 
        marker.dump_stats ("buying tickets ", gsf);
 
-       server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+       server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       /*
 
       Test_var server1 =
         Test::_narrow (object.in ()
-                       TAO_ENV_ARG_PARAMETER);
+                       ACE_ENV_ARG_PARAMETER);
 
       if (CORBA::is_nil (server1.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -223,7 +223,7 @@ main (int argc, char *argv[])
            // Record current time.
            ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 
-           price1 = server1->box_prices (TAO_ENV_SINGLE_ARG_PARAMETER);
+           price1 = server1->box_prices (ACE_ENV_SINGLE_ARG_PARAMETER);
            ACE_TRY_CHECK;
 
            if (price1 < 300)
@@ -243,7 +243,7 @@ main (int argc, char *argv[])
 
        marker1.dump_stats ("buying tickets using a default proxy ", gsf1);
 
-       server1->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+       server1->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       */
     }

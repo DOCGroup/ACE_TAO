@@ -40,59 +40,59 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      // Create factories. 
-     
-      OBV_FactoryTest::BaseValue_init *base_factory = 0; 
-      ACE_NEW_RETURN (base_factory, 
+      // Create factories.
+
+      OBV_FactoryTest::BaseValue_init *base_factory = 0;
+      ACE_NEW_RETURN (base_factory,
                       OBV_FactoryTest::BaseValue_init,
                       1); // supplied by mapping
 
       orb->register_value_factory (base_factory->tao_repository_id (),
-                                   base_factory 
-                                   TAO_ENV_ARG_PARAMETER);
+                                   base_factory
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       base_factory->_remove_ref (); // release ownership
 
 
 
       OBV_FactoryTest::Value1_init *value1_factory = 0;
-      ACE_NEW_RETURN (value1_factory, 
+      ACE_NEW_RETURN (value1_factory,
                       OBV_FactoryTest::Value1_init,
                       1); // supplied by mapping
 
       orb->register_value_factory (value1_factory->tao_repository_id (),
                                    value1_factory
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       value1_factory->_remove_ref ();
-      
+
 
 
       OBV_FactoryTest::Value2_init *value2_factory = 0;
-      ACE_NEW_RETURN (value2_factory, 
+      ACE_NEW_RETURN (value2_factory,
                       Value2_init_impl,
                       1); // custom implementation
 
       orb->register_value_factory (value2_factory->tao_repository_id (),
-                                   value2_factory 
-                                   TAO_ENV_ARG_PARAMETER);
+                                   value2_factory
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       value2_factory->_remove_ref ();
 
 
       // Obtain reference to the object
       CORBA::Object_var tmp =
-        orb->string_to_object(ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       OBV_FactoryTest::Test_var test =
-        OBV_FactoryTest::Test::_narrow(tmp.in () TAO_ENV_ARG_PARAMETER);
+        OBV_FactoryTest::Test::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (test.in ()))
@@ -103,22 +103,22 @@ main (int argc, char *argv[])
                           1);
       }
 
-      // Now perform the test. I don't check return values. 
+      // Now perform the test. I don't check return values.
       // I just hope to get MARSHAL.
-      OBV_FactoryTest::BaseValue_var base_value = 
-        test->get_base_value (TAO_ENV_SINGLE_ARG_PARAMETER);
+      OBV_FactoryTest::BaseValue_var base_value =
+        test->get_base_value (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      OBV_FactoryTest::Value1_var value1 = 
-        test->get_value1 (TAO_ENV_SINGLE_ARG_PARAMETER);
+      OBV_FactoryTest::Value1_var value1 =
+        test->get_value1 (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      OBV_FactoryTest::Value2_var value2 = 
-        test->get_value2 (TAO_ENV_SINGLE_ARG_PARAMETER);
+      OBV_FactoryTest::Value2_var value2 =
+        test->get_value2 (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Test factories.
-      
+
       value2 = value2_factory->create_default (1);
 
       OBV_FactoryTest::BaseValue::BV_Data data;
@@ -128,10 +128,10 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test finished\n"));
 
-      test->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

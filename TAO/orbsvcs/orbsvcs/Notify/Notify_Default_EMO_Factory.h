@@ -70,21 +70,21 @@ class TAO_Notify_Export TAO_Notify_Default_EMO_Factory : public TAO_Notify_EMO_F
   virtual int init (int argc, char* argv[]);
   virtual int fini (void);
 
-  virtual TAO_Notify_Event_Manager* create_event_manager (TAO_Notify_EventChannel_i* channel TAO_ENV_ARG_DECL);
+  virtual TAO_Notify_Event_Manager* create_event_manager (TAO_Notify_EventChannel_i* channel ACE_ENV_ARG_DECL);
   // Create an event manager.
 
-  virtual TAO_Notify_Event_Map* create_event_map (TAO_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Notify_Event_Map* create_event_map (ACE_ENV_SINGLE_ARG_DECL);
   // Create the event map.
 
-  virtual TAO_Notify_Event_Processor* create_event_processor (TAO_Notify_Event_Manager* event_manager TAO_ENV_ARG_DECL);
+  virtual TAO_Notify_Event_Processor* create_event_processor (TAO_Notify_Event_Manager* event_manager ACE_ENV_ARG_DECL);
   // Create event processor.
 
   // = Create processing tasks.
-  virtual TAO_Notify_Worker_Task* create_source_eval_task (TAO_ENV_SINGLE_ARG_DECL);
-  virtual TAO_Notify_Worker_Task* create_lookup_task (TAO_ENV_SINGLE_ARG_DECL);
-  virtual TAO_Notify_Worker_Task* create_listener_eval_task ( TAO_ENV_SINGLE_ARG_DECL);
-  virtual TAO_Notify_Worker_Task* create_dispatching_task (TAO_ENV_SINGLE_ARG_DECL);
-  virtual TAO_Notify_Worker_Task* create_updates_task (TAO_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Notify_Worker_Task* create_source_eval_task (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Notify_Worker_Task* create_lookup_task (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Notify_Worker_Task* create_listener_eval_task ( ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Notify_Worker_Task* create_dispatching_task (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Notify_Worker_Task* create_updates_task (ACE_ENV_SINGLE_ARG_DECL);
 
   virtual void destroy_source_eval_task (TAO_Notify_Worker_Task* task);
   virtual void destroy_lookup_task (TAO_Notify_Worker_Task* task);
@@ -97,7 +97,7 @@ class TAO_Notify_Export TAO_Notify_Default_EMO_Factory : public TAO_Notify_EMO_F
 
 protected:
   //= Protected Methods
-  TAO_Notify_Worker_Task* create_task (int mt, int tp_size TAO_ENV_ARG_DECL);
+  TAO_Notify_Worker_Task* create_task (int mt, int tp_size ACE_ENV_ARG_DECL);
   // Create a worker task, mt => is this a MT task, if so, tp_size is thread pool size.
 
   int preallocate_tasks (void);

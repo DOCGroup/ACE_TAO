@@ -24,7 +24,7 @@ TAO_LoadBalancer::~TAO_LoadBalancer (void)
 void
 TAO_LoadBalancer::parse_args (int argc,
                               char *argv[]
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
 {
   ACE_Get_Opt get_opts (argc, argv, "i:o:s:h");
 
@@ -65,31 +65,31 @@ TAO_LoadBalancer::parse_args (int argc,
 void
 TAO_LoadBalancer::init (int argc,
                         char *argv[]
-                        TAO_ENV_ARG_DECL)
+                        ACE_ENV_ARG_DECL)
 {
-  this->orb_ = CORBA::ORB_init (argc, argv, 0 TAO_ENV_ARG_PARAMETER);
+  this->orb_ = CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Get the POA from the ORB.
   CORBA::Object_var poa =
-    this->orb_->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
+    this->orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Get the POA object.
   this->root_poa_ = PortableServer::POA::_narrow (poa.in ()
-                                                  TAO_ENV_ARG_PARAMETER);
+                                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Get the POA_Manager.
   PortableServer::POAManager_var poa_manager =
-    this->root_poa_->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Check the non-ORB arguments.
-  this->parse_args (argc, argv TAO_ENV_ARG_PARAMETER);
+  this->parse_args (argc, argv ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Initialize the LoadBalancer servant.
@@ -104,11 +104,11 @@ TAO_LoadBalancer::init (int argc,
                                 this->root_poa_.in ()));
 
   CORBA::Object_var obj =
-    this->balancer_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->balancer_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::String_var str =
-    this->orb_->object_to_string (obj.in () TAO_ENV_ARG_PARAMETER);
+    this->orb_->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   FILE *lb_ior = ACE_OS::fopen (this->load_balancer_file_, "w");
@@ -129,7 +129,7 @@ TAO_LoadBalancer::usage (const char *cmd) const
 }
 
 void
-TAO_LoadBalancer::run (TAO_ENV_SINGLE_ARG_DECL)
+TAO_LoadBalancer::run (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->orb_->run (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
 }

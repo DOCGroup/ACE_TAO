@@ -48,14 +48,14 @@ public:
   // Constructor
 
   void push (const CORBA::Any &event
-             TAO_ENV_ARG_DECL)
+             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL)
+  void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void connect (CosEventChannelAdmin::ConsumerAdmin_ptr admin
-                TAO_ENV_ARG_DECL);
-  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
+                ACE_ENV_ARG_DECL);
+  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
 
 protected:
   RND_Driver *driver_;
@@ -82,7 +82,7 @@ public:
   RND_Timer (RND_Driver *driver);
 
   void push (const CORBA::Any &event
-             TAO_ENV_ARG_DECL)
+             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
@@ -109,15 +109,15 @@ public:
   // Constructor
 
   void connect (CosEventChannelAdmin::SupplierAdmin_ptr admin
-                TAO_ENV_ARG_DECL);
-  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
+                ACE_ENV_ARG_DECL);
+  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
 
-  void push_new_event (TAO_ENV_SINGLE_ARG_DECL);
+  void push_new_event (ACE_ENV_SINGLE_ARG_DECL);
   void push (CORBA::Any &event
-             TAO_ENV_ARG_DECL);
+             ACE_ENV_ARG_DECL);
   // Push a single event...
 
-  virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual int svc (void);
@@ -147,11 +147,11 @@ public:
   // Run the test
 
   void timer (const CORBA::Any &e
-              TAO_ENV_ARG_DECL);
+              ACE_ENV_ARG_DECL);
   // The main timer has expired
 
   void event (const CORBA::Any &e
-              TAO_ENV_ARG_DECL);
+              ACE_ENV_ARG_DECL);
   // One of the consumers has received an event
 
 private:

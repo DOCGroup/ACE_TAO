@@ -58,7 +58,7 @@ public:
   static TAO_SSLIOP_Credentials_ptr tao_nil (void);
   static TAO_SSLIOP_Credentials_ptr tao_narrow (
       CORBA::Object *
-      TAO_ENV_ARG_DECL_NOT_USED
+      ACE_ENV_ARG_DECL_NOT_USED
     );
   static CORBA::Object * tao_upcast (void *);
 
@@ -109,11 +109,11 @@ public:
   /// Return a duplicate (specifically a deep copy) of this credential
   /// object.
   virtual SecurityLevel2::Credentials_ptr copy (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void destroy (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the invocation credentials type this object is.
@@ -133,79 +133,79 @@ public:
    * (i.e. Security::SecTargetCredentials) is returned.
    */
   virtual Security::InvocationCredentialsType credentials_type (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Security::AuthenticationStatus authentication_state (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual char * mechanism (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Security::AssociationOptions accepting_options_supported (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void accepting_options_supported (
       Security::AssociationOptions accepting_options_supported
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Security::AssociationOptions accepting_options_required (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void accepting_options_required (
       Security::AssociationOptions accepting_options_required
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Security::AssociationOptions invocation_options_supported (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void invocation_options_supported (
       Security::AssociationOptions invocation_options_supported
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Security::AssociationOptions invocation_options_required (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void invocation_options_required (
       Security::AssociationOptions invocation_options_required
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Boolean get_security_feature (
       Security::CommunicationDirection direction,
       Security::SecurityFeature feature
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Boolean set_attributes (
       const Security::AttributeList & requested_attributes,
       Security::AttributeList_out actual_attributes
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Security::AttributeList * get_attributes (
       const Security::AttributeTypeList & attributes
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Verify that this credential is still valid.
   virtual CORBA::Boolean is_valid (
       Security::UtcT_out expiry_time
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Boolean refresh (
       const CORBA::Any & refresh_data
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   //@{
@@ -244,12 +244,12 @@ public:
 
   static TAO_SSLIOP_Credentials_ptr _narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
 
   static TAO_SSLIOP_Credentials_ptr _unchecked_narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
 
   static TAO_SSLIOP_Credentials_ptr _nil (void)

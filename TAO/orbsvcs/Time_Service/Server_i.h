@@ -42,13 +42,13 @@ public:
 
   int init (int argc,
             char *argv[]
-            TAO_ENV_ARG_DECL);
+            ACE_ENV_ARG_DECL);
   // Initialize the Server state.
 
-  int run (TAO_ENV_SINGLE_ARG_DECL);
+  int run (ACE_ENV_SINGLE_ARG_DECL);
   // Run the orb.
 
-  int init_naming_service (TAO_ENV_SINGLE_ARG_DECL);
+  int init_naming_service (ACE_ENV_SINGLE_ARG_DECL);
   // Initialises the name server.
 
   int create_server (void);

@@ -96,7 +96,7 @@ public:
   static CORBA_DomainManager_ptr tao_nil (void);
   static CORBA_DomainManager_ptr tao_narrow (
       CORBA::Object *
-      TAO_ENV_ARG_DECL_NOT_USED
+      ACE_ENV_ARG_DECL_NOT_USED
     );
   static CORBA::Object * tao_upcast (void *);
 
@@ -159,11 +159,11 @@ public:
 
   static CORBA_DomainManager_ptr _narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   static CORBA_DomainManager_ptr _unchecked_narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static CORBA_DomainManager_ptr _nil (void)
@@ -175,7 +175,7 @@ public:
 
   virtual CORBA::Policy_ptr get_domain_policy (
       CORBA::PolicyType policy_type
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -183,7 +183,7 @@ public:
 
   virtual CORBA::Boolean _is_a (
       const CORBA::Char *type_id
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   virtual void *_tao_QueryInterface (ptr_arith_t type);
 
@@ -233,7 +233,7 @@ private:
         virtual CORBA::Policy_ptr get_domain_policy (
         CORBA::Object_ptr _collocated_tao_target_,
         CORBA::PolicyType policy_type
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -265,7 +265,7 @@ public:
   virtual CORBA::Policy_ptr get_domain_policy (
       CORBA::Object_ptr _collocated_tao_target_,
       CORBA::PolicyType policy_type
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -293,7 +293,7 @@ public:
   virtual ~_TAO_CORBA_DomainManager_Proxy_Broker (void);
   virtual _TAO_CORBA_DomainManager_Proxy_Impl &select_proxy (
     CORBA_DomainManager *object
-    TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   ) = 0;
 
 protected:
@@ -320,7 +320,7 @@ public:
 
   virtual _TAO_CORBA_DomainManager_Proxy_Impl &select_proxy (
     CORBA_DomainManager *object
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   );
 
 private:
@@ -383,7 +383,7 @@ public:
   static CORBA_ConstructionPolicy_ptr tao_nil (void);
   static CORBA_ConstructionPolicy_ptr tao_narrow (
       CORBA::Object *
-      TAO_ENV_ARG_DECL_NOT_USED
+      ACE_ENV_ARG_DECL_NOT_USED
     );
   static CORBA::Object * tao_upcast (void *);
 
@@ -446,12 +446,12 @@ public:
 
   static CORBA_ConstructionPolicy_ptr _narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static CORBA_ConstructionPolicy_ptr _unchecked_narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static CORBA_ConstructionPolicy_ptr _nil (void)
@@ -464,7 +464,7 @@ public:
   virtual void make_domain_manager (
       CORBA_InterfaceDef_ptr object_type,
       CORBA::Boolean constr_policy
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -472,7 +472,7 @@ public:
 
   virtual CORBA::Boolean _is_a (
       const CORBA::Char *type_id
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   virtual void *_tao_QueryInterface (ptr_arith_t type);
@@ -524,7 +524,7 @@ public:
     CORBA::Object_ptr _collocated_tao_target_,
     CORBA_InterfaceDef_ptr object_type,
     CORBA::Boolean constr_policy
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -557,7 +557,7 @@ public:
       CORBA::Object_ptr _collocated_tao_target_,
       CORBA_InterfaceDef_ptr object_type,
       CORBA::Boolean constr_policy
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -586,7 +586,7 @@ public:
   virtual ~_TAO_CORBA_ConstructionPolicy_Proxy_Broker (void);
   virtual _TAO_CORBA_ConstructionPolicy_Proxy_Impl &select_proxy (
     CORBA_ConstructionPolicy *object
-    TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   ) = 0;
 
 protected:
@@ -612,7 +612,7 @@ public:
 
   virtual _TAO_CORBA_ConstructionPolicy_Proxy_Impl &select_proxy (
     CORBA_ConstructionPolicy *object
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   );
 
 private:
@@ -682,7 +682,7 @@ public:
   virtual void _downcast (
       void* target,
       CORBA_Object *src
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   virtual CORBA_Object* _upcast (void *src) const;
 };

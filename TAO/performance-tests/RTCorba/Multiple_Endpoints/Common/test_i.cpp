@@ -12,7 +12,7 @@ ACE_RCSID(Latency, test_i, "$Id$")
 
 void
 Test_i::test_method (CORBA::Long id
-                     TAO_ENV_ARG_DECL_NOT_USED)
+                     ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)
@@ -23,16 +23,16 @@ Test_i::test_method (CORBA::Long id
 
 void
 Test_i::shutdown (const char *orb_id
-                  TAO_ENV_ARG_DECL_NOT_USED TAO_ENV_SINGLE_ARG_PARAMETER)
+                  ACE_ENV_ARG_DECL_NOT_USED ACE_ENV_SINGLE_ARG_PARAMETER)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int argc = 0;
   CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         0,
                                         orb_id
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  orb->shutdown (0 TAO_ENV_ARG_PARAMETER);
+  orb->shutdown (0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }

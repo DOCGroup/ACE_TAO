@@ -37,7 +37,7 @@ TAO_Default_Endpoint_Selector::~TAO_Default_Endpoint_Selector (void)
 void
 TAO_Default_Endpoint_Selector::select_endpoint (
   TAO_GIOP_Invocation *invocation
-  TAO_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL)
 {
   do
     {
@@ -45,7 +45,7 @@ TAO_Default_Endpoint_Selector::select_endpoint (
       invocation->endpoint (invocation->profile ()->endpoint ());
 
       int status =
-        this->endpoint_from_profile (invocation TAO_ENV_ARG_PARAMETER);
+        this->endpoint_from_profile (invocation ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (status == 1)
@@ -62,7 +62,7 @@ TAO_Default_Endpoint_Selector::select_endpoint (
 // @@ RTCORBA_Subsetting - next should be deprecated...
 void
 TAO_Default_Endpoint_Selector::next (TAO_GIOP_Invocation *
-                                     TAO_ENV_ARG_DECL_NOT_USED)
+                                     ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("This method is DEPRECATED!\n")));
   // if (invocation->stub_->next_profile_retry () == 0)
@@ -74,7 +74,7 @@ void
 TAO_Default_Endpoint_Selector::forward (TAO_GIOP_Invocation
                                         *invocation,
                                         const TAO_MProfile &mprofile
-                                        TAO_ENV_ARG_DECL)
+                                        ACE_ENV_ARG_DECL)
 {
   invocation->stub ()->add_forward_profiles (mprofile);
   // This has to be and is thread safe.
@@ -111,7 +111,7 @@ TAO_Default_Endpoint_Selector::close_connection (TAO_GIOP_Invocation *invocation
 int
 TAO_Default_Endpoint_Selector::endpoint_from_profile (
     TAO_GIOP_Invocation *invocation
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
 {
   size_t endpoint_count =
     invocation->profile ()->endpoint_count();
@@ -124,7 +124,7 @@ TAO_Default_Endpoint_Selector::endpoint_from_profile (
           TAO_Base_Transport_Property desc (invocation->endpoint ());
 
           int status =
-            invocation->perform_call (desc TAO_ENV_ARG_PARAMETER);
+            invocation->perform_call (desc ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
           // Check if the invocation has completed.

@@ -658,7 +658,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Dynamic::Parameter
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (Dynamic::_tc_Parameter TAO_ENV_ARG_PARAMETER);
+    CORBA::Boolean result = type->equivalent (Dynamic::_tc_Parameter ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -749,7 +749,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Dynamic::Parameter
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (Dynamic::_tc_ParameterList TAO_ENV_ARG_PARAMETER);
+    CORBA::Boolean result = type->equivalent (Dynamic::_tc_ParameterList ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -840,7 +840,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Dynamic::Exception
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (Dynamic::_tc_ExceptionList TAO_ENV_ARG_PARAMETER);
+    CORBA::Boolean result = type->equivalent (Dynamic::_tc_ExceptionList ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)

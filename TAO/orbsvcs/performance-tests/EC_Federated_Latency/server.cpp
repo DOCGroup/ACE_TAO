@@ -83,7 +83,7 @@ int main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -91,12 +91,12 @@ int main (int argc, char *argv[])
 
       CORBA::Object_var manager_object =
         orb->resolve_initial_references ("ORBPolicyManager"
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::PolicyManager_var policy_manager =
         CORBA::PolicyManager::_narrow (manager_object.in ()
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Any sync_scope;
@@ -107,19 +107,19 @@ int main (int argc, char *argv[])
       policy_list[0] =
         orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                             sync_scope
-                            TAO_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       policy_manager->set_policy_overrides (policy_list,
                                             CORBA::SET_OVERRIDE
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -128,10 +128,10 @@ int main (int argc, char *argv[])
                           1);
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Servant_var<ECFL_Coordinator> coordinator_impl (
@@ -142,11 +142,11 @@ int main (int argc, char *argv[])
               );
 
       Control::Coordinator_var coordinator =
-        coordinator_impl->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        coordinator_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
-        orb->object_to_string (coordinator.in () TAO_ENV_ARG_PARAMETER);
+        orb->object_to_string (coordinator.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Output the ior to the <ior_output_file>
@@ -159,18 +159,18 @@ int main (int argc, char *argv[])
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
-      root_poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -55,18 +55,18 @@ public:
                               int byte_order = TAO_ENCAP_BYTE_ORDER);
 
   /// Send request, without blocking until any reply comes back.
-  virtual int invoke (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual int invoke (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Establishes a connection to the remote server, initializes
   /// headers etc.
-  void start (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
 
   /// Must be overridden.
-  virtual int invoke_i (TAO_ENV_SINGLE_ARG_DECL)
+  virtual int invoke_i (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   /// Reply dispatcher for the current asynchronous invocation.
@@ -104,7 +104,7 @@ protected:
 
   /// Implementation of the invoke() methods, handles the basic
   /// send/reply code and the system exceptions.
-  virtual int invoke_i (TAO_ENV_SINGLE_ARG_DECL)
+  virtual int invoke_i (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

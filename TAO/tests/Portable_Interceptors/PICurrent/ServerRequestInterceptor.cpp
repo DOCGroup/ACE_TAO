@@ -15,14 +15,14 @@ ServerRequestInterceptor::ServerRequestInterceptor (
 }
 
 char *
-ServerRequestInterceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+ServerRequestInterceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("ServerRequestInterceptor");
 }
 
 void
-ServerRequestInterceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+ServerRequestInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -30,12 +30,12 @@ ServerRequestInterceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 ServerRequestInterceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr ri
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
 
-  CORBA::String_var op = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (ACE_OS::strcmp (op.in (), "invoke_me") != 0)
@@ -50,7 +50,7 @@ ServerRequestInterceptor::receive_request_service_contexts (
 
   ACE_TRY
     {
-      ri->set_slot (this->slot_id_, data TAO_ENV_ARG_PARAMETER);
+      ri->set_slot (this->slot_id_, data ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (PortableInterceptor::InvalidSlot, ex)
@@ -76,7 +76,7 @@ ServerRequestInterceptor::receive_request_service_contexts (
 void
 ServerRequestInterceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -85,11 +85,11 @@ ServerRequestInterceptor::receive_request (
 void
 ServerRequestInterceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr ri
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
-  CORBA::String_var op = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (ACE_OS::strcmp (op.in (), "invoke_me") != 0)
@@ -102,7 +102,7 @@ ServerRequestInterceptor::send_reply (
       // Retrieve the data stored in the RSC.  This data should be
       // different from the original data stored into the RSC by the
       // receive_request_service_contexts() interception point.
-      data = ri->get_slot (this->slot_id_ TAO_ENV_ARG_PARAMETER);
+      data = ri->get_slot (this->slot_id_ ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (PortableInterceptor::InvalidSlot, ex)
@@ -144,7 +144,7 @@ ServerRequestInterceptor::send_reply (
 void
 ServerRequestInterceptor::send_exception (
     PortableInterceptor::ServerRequestInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -153,7 +153,7 @@ ServerRequestInterceptor::send_exception (
 void
 ServerRequestInterceptor::send_other (
     PortableInterceptor::ServerRequestInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {

@@ -49,17 +49,17 @@ parse_args (int argc, char *argv[])
 
 void
 run_test (Simple_Server_ptr server
-          TAO_ENV_ARG_DECL);
+          ACE_ENV_ARG_DECL);
 
 int
 main (int argc, char *argv[])
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -67,23 +67,23 @@ main (int argc, char *argv[])
 
       // Primary server
       CORBA::Object_var object_primary =
-        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       //Secondary server
       CORBA::Object_var object_secondary =
-        orb->string_to_object (name TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object (name ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get an object reference for the ORBs IORManipultion object!
       CORBA_Object_ptr IORM =
         orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
                                          0
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       TAO_IOP::TAO_IOR_Manipulation_ptr iorm =
-        TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM TAO_ENV_ARG_PARAMETER);
+        TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       TAO_IOP::TAO_IOR_Manipulation::IORList iors (2);
@@ -91,12 +91,12 @@ main (int argc, char *argv[])
       iors [0] = object_primary;
       iors [1] = object_secondary;
 
-      CORBA_Object_var merged = iorm->merge_iors (iors TAO_ENV_ARG_PARAMETER);
+      CORBA_Object_var merged = iorm->merge_iors (iors ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Combined IOR stuff
       Simple_Server_var server =
-        Simple_Server::_narrow (merged.in () TAO_ENV_ARG_PARAMETER);
+        Simple_Server::_narrow (merged.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -107,7 +107,7 @@ main (int argc, char *argv[])
                             1);
         }
 
-      run_test (server.in () TAO_ENV_ARG_PARAMETER);
+      run_test (server.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -120,7 +120,7 @@ main (int argc, char *argv[])
 }
 
 void run_test (Simple_Server_ptr server
-               TAO_ENV_ARG_DECL)
+               ACE_ENV_ARG_DECL)
 {
   for (int loop = 0; loop < 10; loop++)
     {
@@ -129,7 +129,7 @@ void run_test (Simple_Server_ptr server
           // Make a remote call
           cout << "Remote call "<<endl;
           CORBA::Long ret=
-            server->remote_call (TAO_ENV_SINGLE_ARG_PARAMETER);
+            server->remote_call (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           cout << "The retval is .. " << ret << endl;

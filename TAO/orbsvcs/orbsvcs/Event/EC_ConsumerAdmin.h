@@ -38,7 +38,7 @@ class TAO_EC_ProxyPushConsumer;
  * <H2> Memory Management</H2>
  * It does not assume ownership of the TAO_EC_Event_Channel object;
  * but it *does* assume ownership of the TAO_EC_ProxyPushSupplier_Set
- * object. 
+ * object.
  *
  * <H2>Locking</H2>
  * No provisions for locking, access must be serialized externally.
@@ -60,11 +60,11 @@ public:
 
   // = The RtecEventChannelAdmin::ConsumerAdmin methods...
   virtual RtecEventChannelAdmin::ProxyPushSupplier_ptr
-      obtain_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+      obtain_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
           ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The PortableServer::ServantBase methods
-  virtual PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL);
+  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
 
 private:
   /// Store the default POA.

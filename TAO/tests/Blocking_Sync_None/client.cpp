@@ -46,18 +46,18 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test::Blocking_Sync_None_var blocking_sync_none =
-        Test::Blocking_Sync_None::_narrow(tmp.in () TAO_ENV_ARG_PARAMETER);
+        Test::Blocking_Sync_None::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (blocking_sync_none.in ()))
@@ -67,11 +67,11 @@ main (int argc, char *argv[])
                           1);
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("PolicyCurrent" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("PolicyCurrent" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::PolicyCurrent_var policy_current =
-        CORBA::PolicyCurrent::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+        CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (policy_current.in ()))
@@ -86,14 +86,14 @@ main (int argc, char *argv[])
       policies[0] =
         orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                             scope_as_any
-                            TAO_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      policies[0]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      policies[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       const int payload_length = 65536;
@@ -111,7 +111,7 @@ main (int argc, char *argv[])
 
           blocking_sync_none->slow_operation (payload,
                                               sleep_microseconds
-                                              TAO_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_Time_Value elapsed = ACE_OS::gettimeofday ();
@@ -123,10 +123,10 @@ main (int argc, char *argv[])
             }
         }
 
-      blocking_sync_none->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      blocking_sync_none->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (blocked_calls > iterations / 20)

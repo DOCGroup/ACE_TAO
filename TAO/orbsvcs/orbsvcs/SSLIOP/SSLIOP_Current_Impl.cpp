@@ -23,7 +23,7 @@ TAO_SSLIOP_Current_Impl::~TAO_SSLIOP_Current_Impl (void)
 Security::AttributeList *
 TAO_SSLIOP_Current_Impl::get_attributes (
     const Security::AttributeTypeList &attributes
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong len = attributes.length ();
@@ -126,7 +126,7 @@ TAO_SSLIOP_Current_Impl::get_attributes (
 
 SecurityLevel2::ReceivedCredentials_ptr
 TAO_SSLIOP_Current_Impl::received_credentials (
-    TAO_ENV_SINGLE_ARG_DECL)
+    ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_SSLIOP_X509_var cert = ::SSL_get_peer_certificate (this->ssl_);

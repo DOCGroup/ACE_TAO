@@ -14,28 +14,28 @@ Oneway_Buffering::Oneway_Buffering (CORBA::ORB_ptr orb,
 
 void
 Oneway_Buffering::receive_data (const Test::Payload &the_payload
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->admin_->request_received (the_payload.length () TAO_ENV_ARG_PARAMETER);
+  this->admin_->request_received (the_payload.length () ACE_ENV_ARG_PARAMETER);
 }
 
 void
-Oneway_Buffering::flush (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Oneway_Buffering::flush (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
-Oneway_Buffering::sync (TAO_ENV_SINGLE_ARG_DECL)
+Oneway_Buffering::sync (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->admin_->flush (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->admin_->flush (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-Oneway_Buffering::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+Oneway_Buffering::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }

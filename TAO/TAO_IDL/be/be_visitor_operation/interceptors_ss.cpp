@@ -199,35 +199,35 @@ be_visitor_operation_interceptors_ss::
   // Here I still need to generate the other methods + private args
   *os << "virtual Dynamic::ParameterList * arguments ("
       << be_idt << be_idt_nl
-      << "TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+      << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
       << ")" << be_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException));"
       << be_uidt_nl << be_nl;
 
   *os << "virtual Dynamic::ExceptionList * exceptions ("
       << be_idt << be_idt_nl
-      << "TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+      << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
       << ")" << be_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException));"
       << be_uidt_nl << be_nl;
 
   *os << "virtual CORBA::Any * result ("
       << be_idt << be_idt_nl
-      << "TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+      << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
       << ")" << be_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException));"
       << be_uidt_nl << be_nl;
 
   *os << "virtual char * target_most_derived_interface ("
       << be_idt << be_idt_nl
-      << "TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)"
+      << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)"
       << be_uidt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException));"
       << be_uidt_nl << be_nl;
 
   *os << "virtual CORBA::Boolean target_is_a (" << be_idt << be_idt_nl
       << "const char * id" << be_nl
-      << "TAO_ENV_ARG_DECL_WITH_DEFAULTS)"
+      << "ACE_ENV_ARG_DECL_WITH_DEFAULTS)"
       << be_uidt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException));\n"
       << be_uidt_nl;
@@ -635,12 +635,12 @@ be_visitor_operation_interceptors_ss::
         }
     }
 
-  *os << "::arguments (TAO_ENV_SINGLE_ARG_DECL)" << be_idt_nl
+  *os << "::arguments (ACE_ENV_SINGLE_ARG_DECL)" << be_idt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
       << "{" << be_idt_nl
       << "// Generate the argument list on demand." << be_nl
       << "Dynamic::ParameterList *parameter_list ="  << be_idt_nl
-      << "TAO_RequestInfo_Util::make_parameter_list (TAO_ENV_SINGLE_ARG_PARAMETER);"
+      << "TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_PARAMETER);"
       << be_uidt_nl
       << "ACE_CHECK_RETURN (0);" << be_nl
       << be_nl;
@@ -737,7 +737,7 @@ be_visitor_operation_interceptors_ss::
         }
     }
 
-  *os << "::exceptions (TAO_ENV_SINGLE_ARG_DECL)"<< be_idt_nl
+  *os << "::exceptions (ACE_ENV_SINGLE_ARG_DECL)"<< be_idt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
       << "{" << be_idt_nl;
 
@@ -745,7 +745,7 @@ be_visitor_operation_interceptors_ss::
     {
       *os << "// Generate the exception list on demand." << be_nl
           << "Dynamic::ExceptionList *exception_list ="  << be_idt_nl
-          << "TAO_RequestInfo_Util::make_exception_list (TAO_ENV_SINGLE_ARG_PARAMETER);"
+          << "TAO_RequestInfo_Util::make_exception_list (ACE_ENV_SINGLE_ARG_PARAMETER);"
           << be_uidt_nl
           << "ACE_CHECK_RETURN (0);" << be_nl
           << be_nl;
@@ -834,7 +834,7 @@ be_visitor_operation_interceptors_ss::
         }
     }
 
-  *os << "::result (TAO_ENV_SINGLE_ARG_DECL)"<< be_idt_nl
+  *os << "::result (ACE_ENV_SINGLE_ARG_DECL)"<< be_idt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
       << "{" << be_idt_nl;
 
@@ -849,7 +849,7 @@ be_visitor_operation_interceptors_ss::
           // Return an Any with tk_void TypeCode.
           *os << "CORBA::Boolean tk_void_any = 1;" << be_nl
               << "CORBA::Any *result_any ="  << be_idt_nl
-              << "TAO_RequestInfo_Util::make_any (tk_void_any TAO_ENV_ARG_PARAMETER);"
+              << "TAO_RequestInfo_Util::make_any (tk_void_any ACE_ENV_ARG_PARAMETER);"
               << be_uidt_nl
               << "ACE_CHECK_RETURN (0);" << be_nl
               << be_nl
@@ -859,7 +859,7 @@ be_visitor_operation_interceptors_ss::
         {
           *os << "CORBA::Boolean tk_void_any = 0;" << be_nl
               << "CORBA::Any *result_any ="  << be_idt_nl
-              << "TAO_RequestInfo_Util::make_any (tk_void_any TAO_ENV_ARG_PARAMETER);"
+              << "TAO_RequestInfo_Util::make_any (tk_void_any ACE_ENV_ARG_PARAMETER);"
               << be_uidt_nl
               << "ACE_CHECK_RETURN (0);" << be_nl
               << be_nl
@@ -941,7 +941,7 @@ be_visitor_operation_interceptors_ss::
 
   *os << "::target_most_derived_interface ("
       << be_idt << be_idt_nl
-      << "TAO_ENV_SINGLE_ARG_DECL_NOT_USED)" << be_uidt_nl
+      << "ACE_ENV_SINGLE_ARG_DECL_NOT_USED)" << be_uidt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
       << "{" << be_idt_nl
       << "return" << be_idt_nl
@@ -987,10 +987,10 @@ be_visitor_operation_interceptors_ss::
 
   *os << "::target_is_a (" << be_idt << be_idt_nl
       << "const char * id" << be_nl
-      << "TAO_ENV_ARG_DECL)" << be_uidt_nl
+      << "ACE_ENV_ARG_DECL)" << be_uidt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
       << "{" << be_idt_nl
-      << "return this->_tao_impl->_is_a (id TAO_ENV_ARG_PARAMETER);"
+      << "return this->_tao_impl->_is_a (id ACE_ENV_ARG_PARAMETER);"
       << be_uidt_nl << "}" << be_nl << be_nl;
 
   // -----------------------------------------------------------------

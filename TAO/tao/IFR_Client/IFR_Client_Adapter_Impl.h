@@ -56,12 +56,12 @@ public:
   virtual CORBA_InterfaceDef_ptr get_interface (
       CORBA::ORB_ptr orb,
       const char *repo_id
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual CORBA_InterfaceDef_ptr get_interface_remote (
       const CORBA::Object_ptr target
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   // Used to force the initialization of the ORB code.

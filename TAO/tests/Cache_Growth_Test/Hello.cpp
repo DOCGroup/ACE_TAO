@@ -14,7 +14,7 @@ Hello::Hello (CORBA::ORB_ptr orb)
 }
 
 char *
-Hello::get_string (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Hello::get_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->orb_->orb_core ()->lane_resources ().transport_cache ().current_size () > 1)
@@ -27,8 +27,8 @@ Hello::get_string (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Hello::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+Hello::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }

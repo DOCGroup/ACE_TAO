@@ -38,11 +38,11 @@ public:
   // Destructor.
 
   virtual void get_name (CORBA::String_out name
-                         TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns the name of this object.
 
-  PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL)
+  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Method for the POA that will return the persistent POA_ptr stored
   // in here..

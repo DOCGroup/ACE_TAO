@@ -40,19 +40,19 @@ main (int argc, char *argv[])
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "client_sum_orb" TAO_ENV_ARG_DECL);
+        CORBA::ORB_init (argc, argv, "client_sum_orb" ACE_ENV_ARG_DECL);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var obj =
-        orb->string_to_object (ior TAO_ENV_ARG_DECL);
+        orb->string_to_object (ior ACE_ENV_ARG_DECL);
       ACE_TRY_CHECK;
 
       ObjectReferenceTemplate::ORT_test_var server =
         ObjectReferenceTemplate::ORT_test::_narrow (obj.in ()
-                                                    TAO_ENV_ARG_DECL);
+                                                    ACE_ENV_ARG_DECL);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -68,7 +68,7 @@ main (int argc, char *argv[])
       //    No need initialize twice.
       CORBA::Boolean result = 1;
 
-      result = server->request_server (TAO_ENV_SINGLE_ARG_DECL);
+      result = server->request_server (ACE_ENV_SINGLE_ARG_DECL);
       ACE_TRY_CHECK;
 
       if (result == 0)

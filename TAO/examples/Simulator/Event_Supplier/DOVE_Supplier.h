@@ -45,9 +45,9 @@ public:
   int init (void);
   // Initialize the ORB and the connection to the Name Service
 
-  int connect (const char * MIB_name = 0, 
+  int connect (const char * MIB_name = 0,
                const char* es_name = 0,
-               const char * ss_name = 0, 
+               const char * ss_name = 0,
                ACE_Scheduler_Factory::POD_RT_Info * pod_rt_info = 0);
   // Connect to the event service.
 
@@ -77,7 +77,7 @@ private:
 
   public:
 
-    virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+    virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
     }

@@ -38,17 +38,17 @@ main (int argc, char *argv[])
 
   Control control (toplevel);
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Client client (orb.in ());
 
-      client.parse_args (argc, argv TAO_ENV_ARG_PARAMETER);
+      client.parse_args (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       client.add_callback (control);
@@ -79,7 +79,7 @@ Client::~Client (void)
 void
 Client::parse_args (int argc,
                     char *argv[]
-                    TAO_ENV_ARG_DECL)
+                    ACE_ENV_ARG_DECL)
 {
   const char *ior = "file://test.ior";
 
@@ -102,11 +102,11 @@ Client::parse_args (int argc,
       }
 
   CORBA::Object_var object =
-    this->orb_->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+    this->orb_->string_to_object (ior ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->server_ =
-    Stopwatch::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+    Stopwatch::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil(this->server_.in ()))
@@ -157,10 +157,10 @@ Client::stop_callback (Widget /*widget*/,
 void
 Client::start_hook (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->server_->start (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->server_->start (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -175,10 +175,10 @@ Client::start_hook (void)
 void
 Client::stop_hook (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->server_->stop (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->server_->stop (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

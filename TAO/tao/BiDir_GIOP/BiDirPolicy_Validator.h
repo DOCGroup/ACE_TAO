@@ -41,10 +41,10 @@ public:
   TAO_BiDirPolicy_Validator (TAO_ORB_Core &orb_core);
 
   virtual void validate_impl (TAO_Policy_Set &policies
-                              TAO_ENV_ARG_DECL);
+                              ACE_ENV_ARG_DECL);
 
   virtual void merge_policies_impl (TAO_Policy_Set &policies
-                                    TAO_ENV_ARG_DECL);
+                                    ACE_ENV_ARG_DECL);
 
   virtual CORBA::Boolean legal_policy_impl (CORBA::PolicyType type);
 

@@ -20,10 +20,10 @@ class ior_mcast_Client_i
   ior_mcast_Client_i (void);
   ~ior_mcast_Client_i (void);
 
-  int run (TAO_ENV_SINGLE_ARG_DECL);
+  int run (ACE_ENV_SINGLE_ARG_DECL);
   // Execute the client example code.
 
-  int init (int& argc, char *argv[] TAO_ENV_ARG_DECL);
+  int init (int& argc, char *argv[] ACE_ENV_ARG_DECL);
   // Initialize the client communication endpoint with the server.
 
  private:

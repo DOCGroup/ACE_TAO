@@ -116,7 +116,7 @@ TAO_NAMESPACE  PortableServer
     static POA_ptr tao_nil (void);
     static POA_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -201,7 +201,7 @@ TAO_NAMESPACE  PortableServer
     virtual void _downcast (
         void* target,
         CORBA_Object *src
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     virtual CORBA_Object* _upcast (void *src) const;
   };
@@ -467,12 +467,12 @@ TAO_NAMESPACE  PortableServer
 
     virtual void _tao_encode (
         TAO_OutputCDR &
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       ) const;
 
     virtual void _tao_decode (
         TAO_InputCDR &
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
 
     static ForwardRequest *_downcast (CORBA::Exception *);
@@ -519,12 +519,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ForwardRequest;
 
     virtual void _tao_encode (
         TAO_OutputCDR &
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       ) const;
 
     virtual void _tao_decode (
         TAO_InputCDR &
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
 
     static NotAGroupObject *_downcast (CORBA::Exception *);
@@ -771,7 +771,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     static ThreadPolicy_ptr tao_nil (void);
     static ThreadPolicy_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -829,12 +829,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
     static ThreadPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static ThreadPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static ThreadPolicy_ptr _nil (void)
@@ -843,7 +843,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       }
 
     virtual ::PortableServer::ThreadPolicyValue value (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -918,7 +918,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     static LifespanPolicy_ptr tao_nil (void);
     static LifespanPolicy_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -976,12 +976,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
     static LifespanPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static LifespanPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static LifespanPolicy_ptr _nil (void)
@@ -990,7 +990,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       }
 
     virtual ::PortableServer::LifespanPolicyValue value (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1063,7 +1063,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     static IdUniquenessPolicy_ptr tao_nil (void);
     static IdUniquenessPolicy_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -1121,12 +1121,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
     static IdUniquenessPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static IdUniquenessPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static IdUniquenessPolicy_ptr _nil (void)
@@ -1135,7 +1135,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       }
 
     virtual ::PortableServer::IdUniquenessPolicyValue value (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1208,7 +1208,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     static IdAssignmentPolicy_ptr tao_nil (void);
     static IdAssignmentPolicy_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -1266,12 +1266,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
     static IdAssignmentPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static IdAssignmentPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static IdAssignmentPolicy_ptr _nil (void)
@@ -1280,7 +1280,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       }
 
     virtual ::PortableServer::IdAssignmentPolicyValue value (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1355,7 +1355,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     static ImplicitActivationPolicy_ptr tao_nil (void);
     static ImplicitActivationPolicy_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -1413,12 +1413,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
     static ImplicitActivationPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static ImplicitActivationPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static ImplicitActivationPolicy_ptr _nil (void)
@@ -1427,7 +1427,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       }
 
     virtual ::PortableServer::ImplicitActivationPolicyValue value (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1504,7 +1504,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     static ServantRetentionPolicy_ptr tao_nil (void);
     static ServantRetentionPolicy_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -1562,12 +1562,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
     static ServantRetentionPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static ServantRetentionPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static ServantRetentionPolicy_ptr _nil (void)
@@ -1576,7 +1576,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       }
 
     virtual ::PortableServer::ServantRetentionPolicyValue value (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1654,7 +1654,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     static RequestProcessingPolicy_ptr tao_nil (void);
     static RequestProcessingPolicy_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -1712,12 +1712,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
     static RequestProcessingPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static RequestProcessingPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static RequestProcessingPolicy_ptr _nil (void)
@@ -1726,7 +1726,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       }
 
     virtual ::PortableServer::RequestProcessingPolicyValue value (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1791,7 +1791,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     static POAManager_ptr tao_nil (void);
     static POAManager_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -1849,12 +1849,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
     static POAManager_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static POAManager_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static POAManager_ptr _nil (void)
@@ -1885,12 +1885,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         );
 
       static AdapterInactive *_downcast (CORBA::Exception *);
@@ -1913,7 +1913,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
     typedef State &State_out;
     virtual void activate (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -1923,7 +1923,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 #if (TAO_HAS_MINIMUM_POA == 0)
 
     virtual void hold_requests (
-        CORBA::Boolean wait_for_completion TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        CORBA::Boolean wait_for_completion ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -1931,7 +1931,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       )) = 0;
 
     virtual void discard_requests (
-        CORBA::Boolean wait_for_completion TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        CORBA::Boolean wait_for_completion ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -1940,7 +1940,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
     virtual void deactivate (
         CORBA::Boolean etherealize_objects,
-        CORBA::Boolean wait_for_completion TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        CORBA::Boolean wait_for_completion ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -1950,7 +1950,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
     virtual ::PortableServer::POAManager::State get_state (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2015,7 +2015,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     static AdapterActivator_ptr tao_nil (void);
     static AdapterActivator_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -2073,12 +2073,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
     static AdapterActivator_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static AdapterActivator_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static AdapterActivator_ptr _nil (void)
@@ -2088,7 +2088,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
     virtual CORBA::Boolean unknown_adapter (
         PortableServer::POA_ptr parent,
-        const char * name TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        const char * name ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2152,7 +2152,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     static ServantManager_ptr tao_nil (void);
     static ServantManager_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -2210,12 +2210,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
     static ServantManager_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static ServantManager_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static ServantManager_ptr _nil (void)
@@ -2281,7 +2281,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     static ServantActivator_ptr tao_nil (void);
     static ServantActivator_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -2339,12 +2339,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
     static ServantActivator_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static ServantActivator_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static ServantActivator_ptr _nil (void)
@@ -2354,7 +2354,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
     virtual ::PortableServer::Servant incarnate (
         const PortableServer::ObjectId & oid,
-        PortableServer::POA_ptr adapter TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableServer::POA_ptr adapter ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
 #if (TAO_HAS_MINIMUM_CORBA == 0)
       ACE_THROW_SPEC ((
@@ -2372,7 +2372,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         PortableServer::POA_ptr adapter,
         PortableServer::Servant serv,
         CORBA::Boolean cleanup_in_progress,
-        CORBA::Boolean remaining_activations TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        CORBA::Boolean remaining_activations ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2436,7 +2436,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     static ServantLocator_ptr tao_nil (void);
     static ServantLocator_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -2497,12 +2497,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
     static ServantLocator_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static ServantLocator_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static ServantLocator_ptr _nil (void)
@@ -2514,7 +2514,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         const PortableServer::ObjectId & oid,
         PortableServer::POA_ptr adapter,
         const char * operation,
-        PortableServer::ServantLocator::Cookie & the_cookie TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableServer::ServantLocator::Cookie & the_cookie ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
 #if (TAO_HAS_MINIMUM_CORBA == 0)
       ACE_THROW_SPEC ((
@@ -2532,7 +2532,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         PortableServer::POA_ptr adapter,
         const char * operation,
         PortableServer::ServantLocator::Cookie the_cookie,
-        PortableServer::Servant the_servant TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableServer::Servant the_servant ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2596,7 +2596,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     static POA_ptr tao_nil (void);
     static POA_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -2655,12 +2655,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
     static POA_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static POA_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static POA_ptr _nil (void)
@@ -2695,12 +2695,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         );
 
       static AdapterAlreadyExists *_downcast (CORBA::Exception *);
@@ -2736,12 +2736,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         );
 
       static AdapterNonExistent *_downcast (CORBA::Exception *);
@@ -2778,12 +2778,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         );
 
       static InvalidPolicy *_downcast (CORBA::Exception *);
@@ -2823,12 +2823,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         );
 
       static NoServant *_downcast (CORBA::Exception *);
@@ -2865,12 +2865,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         );
 
       static ObjectAlreadyActive *_downcast (CORBA::Exception *);
@@ -2906,12 +2906,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         );
 
       static ObjectNotActive *_downcast (CORBA::Exception *);
@@ -2947,12 +2947,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         );
 
       static ServantAlreadyActive *_downcast (CORBA::Exception *);
@@ -2988,12 +2988,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         );
 
       static ServantNotActive *_downcast (CORBA::Exception *);
@@ -3029,12 +3029,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         );
 
       static WrongAdapter *_downcast (CORBA::Exception *);
@@ -3070,12 +3070,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         );
 
       static WrongPolicy *_downcast (CORBA::Exception *);
@@ -3091,7 +3091,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     virtual ::PortableServer::POA_ptr create_POA (
         const char * adapter_name,
         PortableServer::POAManager_ptr a_POAManager,
-        const CORBA::PolicyList & policies TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        const CORBA::PolicyList & policies ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -3101,7 +3101,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
     virtual ::PortableServer::POA_ptr find_POA (
         const char * adapter_name,
-        CORBA::Boolean activate_it TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        CORBA::Boolean activate_it ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -3110,7 +3110,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
     virtual void destroy (
         CORBA::Boolean etherealize_objects,
-        CORBA::Boolean wait_for_completion TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        CORBA::Boolean wait_for_completion ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -3119,7 +3119,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 #if (TAO_HAS_MINIMUM_POA == 0)
 
     virtual ::PortableServer::ThreadPolicy_ptr create_thread_policy (
-        PortableServer::ThreadPolicyValue value TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableServer::ThreadPolicyValue value ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -3128,21 +3128,21 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
     virtual ::PortableServer::LifespanPolicy_ptr create_lifespan_policy (
-        PortableServer::LifespanPolicyValue value TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableServer::LifespanPolicyValue value ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual ::PortableServer::IdUniquenessPolicy_ptr create_id_uniqueness_policy (
-        PortableServer::IdUniquenessPolicyValue value TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableServer::IdUniquenessPolicyValue value ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual ::PortableServer::IdAssignmentPolicy_ptr create_id_assignment_policy (
-        PortableServer::IdAssignmentPolicyValue value TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableServer::IdAssignmentPolicyValue value ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -3151,21 +3151,21 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 #if (TAO_HAS_MINIMUM_POA == 0)
 
     virtual ::PortableServer::ImplicitActivationPolicy_ptr create_implicit_activation_policy (
-        PortableServer::ImplicitActivationPolicyValue value TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableServer::ImplicitActivationPolicyValue value ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual ::PortableServer::ServantRetentionPolicy_ptr create_servant_retention_policy (
-        PortableServer::ServantRetentionPolicyValue value TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableServer::ServantRetentionPolicyValue value ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual ::PortableServer::RequestProcessingPolicy_ptr create_request_processing_policy (
-        PortableServer::RequestProcessingPolicyValue value TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableServer::RequestProcessingPolicyValue value ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -3174,28 +3174,28 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
     virtual char * the_name (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual ::PortableServer::POA_ptr the_parent (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual ::PortableServer::POAList * the_children (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual ::PortableServer::POAManager_ptr the_POAManager (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -3204,21 +3204,21 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 #if (TAO_HAS_MINIMUM_POA == 0)
 
     virtual ::PortableServer::AdapterActivator_ptr the_activator (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual void the_activator (
-        PortableServer::AdapterActivator_ptr the_activator TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableServer::AdapterActivator_ptr the_activator ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual ::PortableServer::ServantManager_ptr get_servant_manager (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -3226,7 +3226,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       )) = 0;
 
     virtual void set_servant_manager (
-        PortableServer::ServantManager_ptr imgr TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableServer::ServantManager_ptr imgr ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -3234,7 +3234,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       )) = 0;
 
     virtual ::PortableServer::Servant get_servant (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -3243,7 +3243,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       )) = 0;
 
     virtual void set_servant (
-        PortableServer::Servant p_servant TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableServer::Servant p_servant ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -3253,7 +3253,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
     virtual ::PortableServer::ObjectId * activate_object (
-        PortableServer::Servant p_servant TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableServer::Servant p_servant ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -3263,7 +3263,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
     virtual void activate_object_with_id (
         const PortableServer::ObjectId & id,
-        PortableServer::Servant p_servant TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableServer::Servant p_servant ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -3273,7 +3273,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       )) = 0;
 
     virtual void deactivate_object (
-        const PortableServer::ObjectId & oid TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        const PortableServer::ObjectId & oid ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -3282,7 +3282,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       )) = 0;
 
     virtual CORBA::Object_ptr create_reference (
-        const char * intf TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        const char * intf ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -3291,7 +3291,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
     virtual CORBA::Object_ptr create_reference_with_id (
         const PortableServer::ObjectId & oid,
-        const char * intf TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        const char * intf ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -3299,7 +3299,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       )) = 0;
 
     virtual ::PortableServer::ObjectId * servant_to_id (
-        PortableServer::Servant p_servant TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableServer::Servant p_servant ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -3308,7 +3308,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       )) = 0;
 
     virtual CORBA::Object_ptr servant_to_reference (
-        PortableServer::Servant p_servant TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableServer::Servant p_servant ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -3317,7 +3317,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       )) = 0;
 
     virtual ::PortableServer::Servant reference_to_servant (
-        CORBA::Object_ptr reference TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        CORBA::Object_ptr reference ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -3327,7 +3327,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       )) = 0;
 
     virtual ::PortableServer::ObjectId * reference_to_id (
-        CORBA::Object_ptr reference TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        CORBA::Object_ptr reference ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -3336,7 +3336,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       )) = 0;
 
     virtual ::PortableServer::Servant id_to_servant (
-        const PortableServer::ObjectId & oid TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        const PortableServer::ObjectId & oid ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -3345,7 +3345,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       )) = 0;
 
     virtual CORBA::Object_ptr id_to_reference (
-        const PortableServer::ObjectId & oid TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        const PortableServer::ObjectId & oid ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -3354,7 +3354,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       )) = 0;
 
     virtual ::CORBA::OctetSeq * id (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -3363,7 +3363,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 #if (TAO_HAS_MINIMUM_POA == 0)
 
     virtual ::PortableServer::ObjectId * create_id_for_reference (
-        CORBA::Object_ptr the_ref TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        CORBA::Object_ptr the_ref ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -3371,7 +3371,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       )) = 0;
 
     virtual ::PortableServer::IDs * reference_to_ids (
-        CORBA::Object_ptr the_ref TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        CORBA::Object_ptr the_ref ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -3380,7 +3380,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
     virtual void associate_reference_with_id (
         CORBA::Object_ptr ref,
-        const PortableServer::ObjectId & oid TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        const PortableServer::ObjectId & oid ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -3389,7 +3389,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
     virtual void disassociate_reference_with_id (
         CORBA::Object_ptr ref,
-        const PortableServer::ObjectId & oid TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        const PortableServer::ObjectId & oid ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -3456,7 +3456,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     static Current_ptr tao_nil (void);
     static Current_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -3514,12 +3514,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
     static Current_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static Current_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static Current_ptr _nil (void)
@@ -3550,12 +3550,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         );
 
       static NoContext *_downcast (CORBA::Exception *);
@@ -3569,7 +3569,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 #endif /* end #if !defined */
 
     virtual ::PortableServer::POA_ptr get_POA (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -3577,7 +3577,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       )) = 0;
 
     virtual ::PortableServer::ObjectId * get_object_id (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,

@@ -49,7 +49,7 @@ Test_Objref_Struct::opname (void) const
 
 void
 Test_Objref_Struct::dii_req_invoke (CORBA::Request *req
-                                    TAO_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_.in ();
@@ -57,7 +57,7 @@ Test_Objref_Struct::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (Param_Test::_tc_Objref_Struct);
 
-  req->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
+  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   Param_Test::Objref_Struct *tmp;
@@ -65,13 +65,13 @@ Test_Objref_Struct::dii_req_invoke (CORBA::Request *req
   this->ret_ = new Param_Test::Objref_Struct (*tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 TAO_ENV_ARG_PARAMETER);
+    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o2->value () >>= tmp;
   this->inout_ = new Param_Test::Objref_Struct (*tmp);
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 TAO_ENV_ARG_PARAMETER);
+    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o3->value () >>= tmp;
   this->out_ = new Param_Test::Objref_Struct (*tmp);
@@ -79,7 +79,7 @@ Test_Objref_Struct::dii_req_invoke (CORBA::Request *req
 
 int
 Test_Objref_Struct::init_parameters (Param_Test_ptr objref
-                                     TAO_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -88,14 +88,14 @@ Test_Objref_Struct::init_parameters (Param_Test_ptr objref
       // Set the long member.
       this->in_.x = gen->gen_long ();
 
-      this->in_.y = objref->make_coffee (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->in_.y = objref->make_coffee (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Coffee::Desc d;
       d.name = gen->gen_string ();
 
       this->in_.y->description (d
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
             this->inout_->x = 0;
@@ -136,7 +136,7 @@ Test_Objref_Struct::reset_parameters (void)
 
 int
 Test_Objref_Struct::run_sii_test (Param_Test_ptr objref
-                                  TAO_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -145,7 +145,7 @@ Test_Objref_Struct::run_sii_test (Param_Test_ptr objref
       this->ret_ = objref->test_objref_struct (this->in_,
                                                this->inout_.inout (),
                                                out
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       return 0;
@@ -168,7 +168,7 @@ Test_Objref_Struct::check_validity (void)
       || this->in_.x != this->ret_->x)
     return 0;
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
@@ -180,16 +180,16 @@ Test_Objref_Struct::check_validity (void)
           return 0;
         }
 
-      Coffee::Desc_var s_in = this->in_.y->description (TAO_ENV_SINGLE_ARG_PARAMETER);
+      Coffee::Desc_var s_in = this->in_.y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      Coffee::Desc_var s_out = this->out_->y->description (TAO_ENV_SINGLE_ARG_PARAMETER);
+      Coffee::Desc_var s_out = this->out_->y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      Coffee::Desc_var s_inout = this->inout_->y->description (TAO_ENV_SINGLE_ARG_PARAMETER);
+      Coffee::Desc_var s_inout = this->inout_->y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      Coffee::Desc_var s_ret = this->ret_->y->description (TAO_ENV_SINGLE_ARG_PARAMETER);
+      Coffee::Desc_var s_ret = this->ret_->y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (ACE_OS::strcmp (s_in->name, s_out->name) != 0
@@ -231,21 +231,21 @@ Test_Objref_Struct::print_values (void)
               this->out_->x,
               this->ret_->x ));
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
 
-      Coffee::Desc_var s_in = this->in_.y->description (TAO_ENV_SINGLE_ARG_PARAMETER);
+      Coffee::Desc_var s_in = this->in_.y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      Coffee::Desc_var s_out = this->out_->y->description (TAO_ENV_SINGLE_ARG_PARAMETER);
+      Coffee::Desc_var s_out = this->out_->y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      Coffee::Desc_var s_inout = this->inout_->y->description (TAO_ENV_SINGLE_ARG_PARAMETER);
+      Coffee::Desc_var s_inout = this->inout_->y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      Coffee::Desc_var s_ret = this->ret_->y->description (TAO_ENV_SINGLE_ARG_PARAMETER);
+      Coffee::Desc_var s_ret = this->ret_->y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,

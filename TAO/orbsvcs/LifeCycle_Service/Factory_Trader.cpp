@@ -47,7 +47,7 @@ Factory_Trader::Factory_Trader (int debug_level)
 
       // Set the service type repository
       support_Attributes_ptr_->type_repos
-                     (this->repository_._this (TAO_ENV_SINGLE_ARG_PARAMETER));
+                     (this->repository_._this (ACE_ENV_SINGLE_ARG_PARAMETER));
       ACE_TRY_CHECK;
 
       // Add the "Factory" type to the repository
@@ -102,7 +102,7 @@ Factory_Trader::add_type ()
                                   GENERIC_FACTORY_INTERFACE_REPOSITORY_ID,
                                   propStructSeq,
                                   superTypeSeq
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -147,7 +147,7 @@ Factory_Trader::_cxx_export (const char * name,
       register_ptr->_cxx_export (CORBA::Object::_duplicate (object_ptr),
                                  CORBA::string_dup("GenericFactory"),
                                  propertySeq
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
     }
@@ -192,7 +192,7 @@ Factory_Trader::query (const char* constraint)
                          CosTrading::OfferSeq_out(offerSeq_ptr),               // results
                          CosTrading::OfferIterator_out(offerIterator_ptr),     // more results
                          CosTrading::PolicyNameSeq_out(policyNameSeq_ptr)      // Policies
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Initialize

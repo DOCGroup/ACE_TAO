@@ -49,7 +49,7 @@ public:
   virtual TAO_Stub *create_stub (const char *repository_id,
                                  const TAO_MProfile &profiles,
                                  TAO_ORB_Core *orb_core
-                                 TAO_ENV_ARG_DECL) = 0;
+                                 ACE_ENV_ARG_DECL) = 0;
 };
 
 #include "ace/post.h"

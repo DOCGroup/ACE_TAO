@@ -29,9 +29,9 @@ TAO_Notify_Event_Processor::~TAO_Notify_Event_Processor ()
 
 void
 TAO_Notify_Event_Processor::init (TAO_Notify_QoSAdmin_i* qos_properties
-                                  TAO_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
 {
-  this->lookup_task_ = this->emo_factory_->create_lookup_task (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->lookup_task_ = this->emo_factory_->create_lookup_task (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Get hold of the admin properties.
@@ -43,15 +43,15 @@ TAO_Notify_Event_Processor::init (TAO_Notify_QoSAdmin_i* qos_properties
 }
 
 void
-TAO_Notify_Event_Processor::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Event_Processor::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->lookup_task_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->lookup_task_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
 TAO_Notify_Event_Processor::evaluate_source_filter (TAO_Notify_Event* event,
                                                     TAO_Notify_EventSource* event_source
-                                                    TAO_ENV_ARG_DECL)
+                                                    ACE_ENV_ARG_DECL)
 {
   // TODO: use cache allocator here.
   // @@ Pradeep: you shouldn't be allocating at all!  If this must go
@@ -64,22 +64,22 @@ TAO_Notify_Event_Processor::evaluate_source_filter (TAO_Notify_Event* event,
     ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
                           "Evaluating listener filter\n"));
 
-  event_source->filter_eval_task ()->process_event (mb TAO_ENV_ARG_PARAMETER);
+  event_source->filter_eval_task ()->process_event (mb ACE_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_Notify_Event_Processor::lookup_subscriptions (TAO_Notify_Event* event,
                                                   TAO_Notify_EventSource* /*event_source*/
-                                                  TAO_ENV_ARG_DECL)
+                                                  ACE_ENV_ARG_DECL)
 {
   TAO_Notify_Lookup_Command* lookup =
     new TAO_Notify_Lookup_Command (this, event, this->event_manager_->event_map ());
 
-  this->lookup_task_->process_event (lookup TAO_ENV_ARG_PARAMETER);
+  this->lookup_task_->process_event (lookup ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_Event_Processor::evaluate_listener_filter (TAO_Notify_Event* event, TAO_Notify_EventListener* event_listener, CORBA::Boolean eval_parent TAO_ENV_ARG_DECL)
+TAO_Notify_Event_Processor::evaluate_listener_filter (TAO_Notify_Event* event, TAO_Notify_EventListener* event_listener, CORBA::Boolean eval_parent ACE_ENV_ARG_DECL)
 {
   // @@ Pradeep: you should use ACE_NEW here....
   // @@ Pradeep: do you really need to allocate this guy from the
@@ -90,14 +90,14 @@ TAO_Notify_Event_Processor::evaluate_listener_filter (TAO_Notify_Event* event, T
   TAO_Notify_Listener_Filter_Eval_Command* mb =
     new TAO_Notify_Listener_Filter_Eval_Command (this, event, event_listener, eval_parent);
 
-  event_listener->filter_eval_task ()->process_event (mb TAO_ENV_ARG_PARAMETER);
+  event_listener->filter_eval_task ()->process_event (mb ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_Event_Processor::dispatch_event (TAO_Notify_Event* event, TAO_Notify_EventListener* event_listener TAO_ENV_ARG_DECL)
+TAO_Notify_Event_Processor::dispatch_event (TAO_Notify_Event* event, TAO_Notify_EventListener* event_listener ACE_ENV_ARG_DECL)
 {
   TAO_Notify_Event_Dispatch_Command* dispatch =
     new TAO_Notify_Event_Dispatch_Command (this, event, event_listener);
 
-  event_listener->event_dispatch_task ()->process_event (dispatch TAO_ENV_ARG_PARAMETER);
+  event_listener->event_dispatch_task ()->process_event (dispatch ACE_ENV_ARG_PARAMETER);
 }

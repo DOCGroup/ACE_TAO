@@ -46,7 +46,7 @@ public:
   virtual TAO_Stub *create_stub (const char *repository_id,
                                  const TAO_MProfile &profiles,
                                  TAO_ORB_Core *orb_core
-                                 TAO_ENV_ARG_DECL);
+                                 ACE_ENV_ARG_DECL);
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, TAO_RT_Stub_Factory)

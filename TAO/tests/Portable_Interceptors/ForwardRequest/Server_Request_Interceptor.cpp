@@ -21,7 +21,7 @@ void
 Server_Request_Interceptor::forward_references (
   CORBA::Object_ptr obj1,
   CORBA::Object_ptr obj2
-  TAO_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (obj1) || CORBA::is_nil (obj2))
@@ -36,14 +36,14 @@ Server_Request_Interceptor::forward_references (
 }
 
 char *
-Server_Request_Interceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Server_Request_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("Server_Request_Interceptor");
 }
 
 void
-Server_Request_Interceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Server_Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::release (this->obj_[0]);
@@ -53,14 +53,14 @@ Server_Request_Interceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 Server_Request_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr ri
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
   this->request_count_++;
 
   CORBA::Boolean response_expected =
-    ri->response_expected (TAO_ENV_SINGLE_ARG_PARAMETER);
+    ri->response_expected (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!response_expected)   // A one-way request.
@@ -93,12 +93,12 @@ Server_Request_Interceptor::receive_request_service_contexts (
 void
 Server_Request_Interceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr ri
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
   CORBA::Boolean response_expected =
-    ri->response_expected (TAO_ENV_SINGLE_ARG_PARAMETER);
+    ri->response_expected (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!response_expected)   // A one-way request.
@@ -135,7 +135,7 @@ Server_Request_Interceptor::receive_request (
 void
 Server_Request_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -143,7 +143,7 @@ Server_Request_Interceptor::send_reply (
 void
 Server_Request_Interceptor::send_exception (
     PortableInterceptor::ServerRequestInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -152,12 +152,12 @@ Server_Request_Interceptor::send_exception (
 void
 Server_Request_Interceptor::send_other (
     PortableInterceptor::ServerRequestInfo_ptr ri
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
   CORBA::Boolean response_expected =
-    ri->response_expected (TAO_ENV_SINGLE_ARG_PARAMETER);
+    ri->response_expected (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!response_expected)   // A one-way request.
@@ -169,7 +169,7 @@ Server_Request_Interceptor::send_other (
   // This will throw an exception if a location forward has not
   // occured.  If an exception is thrown then something is wrong with
   // the PortableInterceptor::ForwardRequest support.
-  CORBA::Object_var forward = ri->forward_reference (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::Object_var forward = ri->forward_reference (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (forward.in ()))

@@ -33,14 +33,14 @@ Client_Request_Interceptor::_remove_ref (void)
 }
 
 char *
-Client_Request_Interceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Client_Request_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Client_Request_Interceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Client_Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -48,7 +48,7 @@ Client_Request_Interceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 Client_Request_Interceptor::send_poll (
     PortableInterceptor::ClientRequestInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Do Nothing
@@ -57,7 +57,7 @@ Client_Request_Interceptor::send_poll (
 void
 Client_Request_Interceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -67,7 +67,7 @@ Client_Request_Interceptor::send_request (
 void
 Client_Request_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr ri
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -76,7 +76,7 @@ Client_Request_Interceptor::receive_reply (
       // Try to get the RTCorbaPriority context.  If its not there,
       // report the fact via an exception.
       IOP::ServiceContext_var sc =
-        ri->get_reply_service_context (IOP::RTCorbaPriority TAO_ENV_ARG_PARAMETER);
+        ri->get_reply_service_context (IOP::RTCorbaPriority ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -95,7 +95,7 @@ Client_Request_Interceptor::receive_reply (
 void
 Client_Request_Interceptor::receive_other (
     PortableInterceptor::ClientRequestInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -104,7 +104,7 @@ Client_Request_Interceptor::receive_other (
 void
 Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -114,18 +114,18 @@ Client_Request_Interceptor::receive_exception (
       int argc = 0;
       this->orb_ = CORBA::ORB_init (argc, 0,
                                     this->orb_id_.in ()
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
-  CORBA::String_var operation = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Object_var target = ri->target (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::Object_var target = ri->target (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::String_var ior =
-    this->orb_->object_to_string (target.in () TAO_ENV_ARG_PARAMETER);
+    this->orb_->object_to_string (target.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -139,6 +139,6 @@ Client_Request_Interceptor::receive_exception (
   // Try to get the RTCorbaPriority context.  If its not there,
   // report the fact via an exception.
   IOP::ServiceContext_var sc =
-    ri->get_reply_service_context (IOP::RTCorbaPriority TAO_ENV_ARG_PARAMETER);
+    ri->get_reply_service_context (IOP::RTCorbaPriority ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }

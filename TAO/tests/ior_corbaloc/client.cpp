@@ -23,7 +23,7 @@
 int main (int argc, char *argv [])
 {
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
@@ -31,12 +31,12 @@ int main (int argc, char *argv [])
       IOR_corbaloc_Client_i client;
 
       int init_result;
-      init_result = client.init (argc, argv TAO_ENV_ARG_PARAMETER);
+      init_result = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         if (init_result == 0)
           {
-            client.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+            client.run (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
           }
         return 0;

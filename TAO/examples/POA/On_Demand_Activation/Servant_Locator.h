@@ -33,7 +33,7 @@ public:
                                              PortableServer::POA_ptr adapter,
                                              const char *operation,
                                              PortableServer::ServantLocator::Cookie &the_cookie
-                                             TAO_ENV_ARG_DECL)
+                                             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::ForwardRequest));
   // This method is invoked by a POA whenever it receives a request
@@ -44,7 +44,7 @@ public:
                            const char *operation,
                            PortableServer::ServantLocator::Cookie the_cookie,
                            PortableServer::Servant the_servant
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // This method is invoked whenever a MyFooServant completes a
   // request.

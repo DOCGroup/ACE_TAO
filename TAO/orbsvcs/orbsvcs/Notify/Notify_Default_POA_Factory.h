@@ -47,41 +47,41 @@ public:
   virtual int init (int argc, char* argv[]);
   virtual int fini (void);
 
-  PortableServer::POA_ptr create_event_channel_POA (PortableServer::POA_ptr parent_poa TAO_ENV_ARG_DECL);
+  PortableServer::POA_ptr create_event_channel_POA (PortableServer::POA_ptr parent_poa ACE_ENV_ARG_DECL);
   // Create the POA to activate Event Channels in.
 
-  PortableServer::POA_ptr create_supplier_admin_POA (PortableServer::POA_ptr parent_poa, CORBA::Long new_poa_id TAO_ENV_ARG_DECL);
+  PortableServer::POA_ptr create_supplier_admin_POA (PortableServer::POA_ptr parent_poa, CORBA::Long new_poa_id ACE_ENV_ARG_DECL);
   // Create the POA to activate SA's in.
 
-  PortableServer::POA_ptr create_consumer_admin_POA (PortableServer::POA_ptr parent_poa, CORBA::Long new_poa_id TAO_ENV_ARG_DECL);
+  PortableServer::POA_ptr create_consumer_admin_POA (PortableServer::POA_ptr parent_poa, CORBA::Long new_poa_id ACE_ENV_ARG_DECL);
   // Create the POA to activate CA's in.
 
-  PortableServer::POA_ptr create_proxy_pushconsumer_POA (PortableServer::POA_ptr parent_poa, CORBA::Long new_poa_id TAO_ENV_ARG_DECL);
+  PortableServer::POA_ptr create_proxy_pushconsumer_POA (PortableServer::POA_ptr parent_poa, CORBA::Long new_poa_id ACE_ENV_ARG_DECL);
   // Create the POA to activate proxy push consumers in.
 
-  PortableServer::POA_ptr create_proxy_pushsupplier_POA (PortableServer::POA_ptr parent_poa, CORBA::Long new_poa_id TAO_ENV_ARG_DECL);
+  PortableServer::POA_ptr create_proxy_pushsupplier_POA (PortableServer::POA_ptr parent_poa, CORBA::Long new_poa_id ACE_ENV_ARG_DECL);
   // Create the POA to activate proxy push suppliers in.
 
   // = Object activation and POA methods
-  CORBA::Object_ptr activate_object_with_id (CORBA::Long id, PortableServer::POA_ptr poa,PortableServer::Servant servant TAO_ENV_ARG_DECL);
+  CORBA::Object_ptr activate_object_with_id (CORBA::Long id, PortableServer::POA_ptr poa,PortableServer::Servant servant ACE_ENV_ARG_DECL);
   // Converts <id> to an ObjectId and registers with the POA <poa>.
 
-  CORBA::Object_ptr activate_object (PortableServer::POA_ptr poa,PortableServer::Servant servant TAO_ENV_ARG_DECL);
+  CORBA::Object_ptr activate_object (PortableServer::POA_ptr poa,PortableServer::Servant servant ACE_ENV_ARG_DECL);
   // Registers with the POA <poa>.
 
-  CORBA::Object_ptr servant_to_reference (PortableServer::POA_ptr poa,PortableServer::Servant servant TAO_ENV_ARG_DECL);
+  CORBA::Object_ptr servant_to_reference (PortableServer::POA_ptr poa,PortableServer::Servant servant ACE_ENV_ARG_DECL);
   // Registers with the POA <poa>.
 
-  CORBA::Object_ptr id_to_reference (CORBA::Long id, PortableServer::POA_ptr poa TAO_ENV_ARG_DECL);
+  CORBA::Object_ptr id_to_reference (CORBA::Long id, PortableServer::POA_ptr poa ACE_ENV_ARG_DECL);
   // Look for the Object with id <id> in <poa>.
 
-  void destroy_POA (PortableServer::POA_ptr poa TAO_ENV_ARG_DECL);
+  void destroy_POA (PortableServer::POA_ptr poa ACE_ENV_ARG_DECL);
   // Destroy the <poa>
 
-  void deactivate_object (CORBA::Object_ptr obj, PortableServer::POA_ptr poa TAO_ENV_ARG_DECL);
+  void deactivate_object (CORBA::Object_ptr obj, PortableServer::POA_ptr poa ACE_ENV_ARG_DECL);
   // Deactivate the object.
 
-  void deactivate_object (PortableServer::Servant servant, PortableServer::POA_ptr TAO_ENV_ARG_DECL);
+  void deactivate_object (PortableServer::Servant servant, PortableServer::POA_ptr ACE_ENV_ARG_DECL);
   // Deactivate the object.
 
 protected:
@@ -90,7 +90,7 @@ protected:
   PortableServer::ObjectId* long_to_ObjectId (const CORBA::Long id);
   // Converts a CORBA::Long to an ObjectId
 
-  PortableServer::POA_ptr create_generic_childPOA_i (const char* child_poa_name, PortableServer::POA_ptr parent_poa TAO_ENV_ARG_DECL);
+  PortableServer::POA_ptr create_generic_childPOA_i (const char* child_poa_name, PortableServer::POA_ptr parent_poa ACE_ENV_ARG_DECL);
   // Create the POA with the most generic policies required of our POA's.
 
 };

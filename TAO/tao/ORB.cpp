@@ -136,7 +136,7 @@ void CORBA_ORB::InvalidName::_raise (void)
 }
 
 void CORBA_ORB::InvalidName::_tao_encode (TAO_OutputCDR &cdr
-                                          TAO_ENV_ARG_DECL) const
+                                          ACE_ENV_ARG_DECL) const
 {
   if (cdr << *this)
     return;
@@ -144,7 +144,7 @@ void CORBA_ORB::InvalidName::_tao_encode (TAO_OutputCDR &cdr
 }
 
 void CORBA_ORB::InvalidName::_tao_decode (TAO_InputCDR &cdr
-                                          TAO_ENV_ARG_DECL)
+                                          ACE_ENV_ARG_DECL)
 {
   if (cdr >> *this)
     return;
@@ -187,18 +187,18 @@ CORBA_ORB::~CORBA_ORB (void)
 
 void
 CORBA_ORB::shutdown (CORBA::Boolean wait_for_completion
-                     TAO_ENV_ARG_DECL)
+                     ACE_ENV_ARG_DECL)
 {
-  this->check_shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->orb_core ()->shutdown (wait_for_completion
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-CORBA_ORB::destroy (TAO_ENV_SINGLE_ARG_DECL)
+CORBA_ORB::destroy (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->orb_core () == 0)
     {
@@ -221,7 +221,7 @@ CORBA_ORB::destroy (TAO_ENV_SINGLE_ARG_DECL)
                   this->orb_core ()->orbid ()));
     }
 
-  this->orb_core ()->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->orb_core ()->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Now invalidate the pointer to the ORB_Core that created this
@@ -230,55 +230,55 @@ CORBA_ORB::destroy (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CORBA_ORB::run (TAO_ENV_SINGLE_ARG_DECL)
+CORBA_ORB::run (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->run (0 TAO_ENV_ARG_PARAMETER);
+  this->run (0 ACE_ENV_ARG_PARAMETER);
 }
 
 void
-CORBA_ORB::run (ACE_Time_Value &tv TAO_ENV_ARG_DECL)
+CORBA_ORB::run (ACE_Time_Value &tv ACE_ENV_ARG_DECL)
 {
-  this->run (&tv TAO_ENV_ARG_PARAMETER);
+  this->run (&tv ACE_ENV_ARG_PARAMETER);
 }
 
 void
 CORBA_ORB::run (ACE_Time_Value *tv
-                TAO_ENV_ARG_DECL)
+                ACE_ENV_ARG_DECL)
 {
-  this->check_shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->orb_core ()->run (tv, 0 TAO_ENV_ARG_PARAMETER);
+  this->orb_core ()->run (tv, 0 ACE_ENV_ARG_PARAMETER);
 }
 
 void
-CORBA_ORB::perform_work (TAO_ENV_SINGLE_ARG_DECL)
+CORBA_ORB::perform_work (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->perform_work (0 TAO_ENV_ARG_PARAMETER);
+  this->perform_work (0 ACE_ENV_ARG_PARAMETER);
 }
 
 void
-CORBA_ORB::perform_work (ACE_Time_Value &tv TAO_ENV_ARG_DECL)
+CORBA_ORB::perform_work (ACE_Time_Value &tv ACE_ENV_ARG_DECL)
 {
-  this->perform_work (&tv TAO_ENV_ARG_PARAMETER);
+  this->perform_work (&tv ACE_ENV_ARG_PARAMETER);
 }
 
 void
 CORBA_ORB::perform_work (ACE_Time_Value *tv
-                         TAO_ENV_ARG_DECL)
+                         ACE_ENV_ARG_DECL)
 {
   // This method should not be called if the ORB has been shutdown.
-  this->check_shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->orb_core ()->run (tv, 1 TAO_ENV_ARG_PARAMETER);
+  this->orb_core ()->run (tv, 1 ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Boolean
-CORBA_ORB::work_pending (ACE_Time_Value &tv TAO_ENV_ARG_DECL)
+CORBA_ORB::work_pending (ACE_Time_Value &tv ACE_ENV_ARG_DECL)
 {
   // This method should not be called if the ORB has been shutdown.
-  this->check_shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   int result = this->orb_core_->reactor ()->work_pending (tv);
@@ -292,10 +292,10 @@ CORBA_ORB::work_pending (ACE_Time_Value &tv TAO_ENV_ARG_DECL)
 }
 
 CORBA::Boolean
-CORBA_ORB::work_pending (TAO_ENV_SINGLE_ARG_DECL)
+CORBA_ORB::work_pending (ACE_ENV_SINGLE_ARG_DECL)
 {
   // This method should not be called if the ORB has been shutdown.
-  this->check_shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   int result = this->orb_core_->reactor ()->work_pending ();
@@ -313,7 +313,7 @@ CORBA_ORB::work_pending (TAO_ENV_SINGLE_ARG_DECL)
 void
 CORBA_ORB::create_list (CORBA::Long count,
                         CORBA::NVList_ptr &new_list
-                        TAO_ENV_ARG_DECL)
+                        ACE_ENV_ARG_DECL)
 {
   ACE_ASSERT (CORBA::ULong (count) <= UINT_MAX);
 
@@ -351,7 +351,7 @@ CORBA_ORB::create_list (CORBA::Long count,
 
 void
 CORBA_ORB::create_exception_list (CORBA::ExceptionList_ptr &list
-                                  TAO_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
 {
   TAO_Dynamic_Adapter *dynamic_adapter =
     ACE_Dynamic_Service<TAO_Dynamic_Adapter>::instance (
@@ -359,12 +359,12 @@ CORBA_ORB::create_exception_list (CORBA::ExceptionList_ptr &list
       );
 
   dynamic_adapter->create_exception_list (list
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
 }
 
 void
 CORBA_ORB::create_environment (CORBA::Environment_ptr &environment
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
 {
   ACE_NEW_THROW_EX (environment,
                     CORBA::Environment (),
@@ -377,7 +377,7 @@ CORBA_ORB::create_environment (CORBA::Environment_ptr &environment
 
 void
 CORBA_ORB::create_named_value (CORBA::NamedValue_ptr &nv
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
 {
   ACE_NEW_THROW_EX (nv,
                     CORBA::NamedValue,
@@ -395,7 +395,7 @@ CORBA::Boolean
 CORBA_ORB::get_service_information (
   CORBA::ServiceType /* service_type */,
   CORBA::ServiceInformation_out /* service_information */
-  TAO_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
                       CORBA_SystemException::_tao_minor_code (
@@ -407,7 +407,7 @@ CORBA_ORB::get_service_information (
 
 void
 CORBA_ORB::create_context_list (CORBA::ContextList_ptr &
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (
                CORBA_SystemException::_tao_minor_code (
@@ -418,7 +418,7 @@ CORBA_ORB::create_context_list (CORBA::ContextList_ptr &
 
 void
 CORBA_ORB::get_default_context (CORBA::Context_ptr &
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (
                CORBA_SystemException::_tao_minor_code (
@@ -429,7 +429,7 @@ CORBA_ORB::get_default_context (CORBA::Context_ptr &
 
 void
 CORBA_ORB::send_multiple_requests_oneway (const CORBA_ORB_RequestSeq &
-                                          TAO_ENV_ARG_DECL)
+                                          ACE_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (
                CORBA_SystemException::_tao_minor_code (
@@ -440,7 +440,7 @@ CORBA_ORB::send_multiple_requests_oneway (const CORBA_ORB_RequestSeq &
 
 void
 CORBA_ORB::send_multiple_requests_deferred (const CORBA_ORB_RequestSeq &
-                                            TAO_ENV_ARG_DECL)
+                                            ACE_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (
                CORBA_SystemException::_tao_minor_code (
@@ -451,7 +451,7 @@ CORBA_ORB::send_multiple_requests_deferred (const CORBA_ORB_RequestSeq &
 
 void
 CORBA_ORB::get_next_response (CORBA_Request_ptr &
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (
                CORBA_SystemException::_tao_minor_code (
@@ -461,7 +461,7 @@ CORBA_ORB::get_next_response (CORBA_Request_ptr &
 }
 
 CORBA::Boolean
-CORBA_ORB::poll_next_response (TAO_ENV_SINGLE_ARG_DECL)
+CORBA_ORB::poll_next_response (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
                       CORBA_SystemException::_tao_minor_code (
@@ -478,7 +478,7 @@ CORBA_ORB::create_struct_tc (
     const char *id,
     const char *name,
     const CORBA_StructMemberSeq & members
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -496,7 +496,7 @@ CORBA_ORB::create_struct_tc (
   return adapter->create_struct_tc (id,
                                     name,
                                     members
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
@@ -505,7 +505,7 @@ CORBA_ORB::create_union_tc (
     const char *name,
     CORBA::TypeCode_ptr discriminator_type,
     const CORBA_UnionMemberSeq & members
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -524,7 +524,7 @@ CORBA_ORB::create_union_tc (
                                    name,
                                    discriminator_type,
                                    members
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
@@ -532,7 +532,7 @@ CORBA_ORB::create_enum_tc (
     const char *id,
     const char *name,
     const CORBA_EnumMemberSeq & members
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -550,7 +550,7 @@ CORBA_ORB::create_enum_tc (
   return adapter->create_enum_tc (id,
                                   name,
                                   members
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
@@ -558,7 +558,7 @@ CORBA_ORB::create_alias_tc (
     const char *id,
     const char *name,
     CORBA::TypeCode_ptr original_type
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -576,7 +576,7 @@ CORBA_ORB::create_alias_tc (
   return adapter->create_alias_tc (id,
                                    name,
                                    original_type
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
@@ -584,7 +584,7 @@ CORBA_ORB::create_exception_tc (
     const char *id,
     const char *name,
     const CORBA_StructMemberSeq & members
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -602,14 +602,14 @@ CORBA_ORB::create_exception_tc (
   return adapter->create_exception_tc (id,
                                        name,
                                        members
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
 CORBA_ORB::create_interface_tc (
     const char *id,
     const char *name
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -626,13 +626,13 @@ CORBA_ORB::create_interface_tc (
 
   return adapter->create_interface_tc (id,
                                        name
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
 CORBA_ORB::create_string_tc (
     CORBA::ULong bound
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -648,13 +648,13 @@ CORBA_ORB::create_string_tc (
     }
 
   return adapter->create_string_tc (bound
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
 CORBA_ORB::create_wstring_tc (
     CORBA::ULong bound
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -670,14 +670,14 @@ CORBA_ORB::create_wstring_tc (
     }
 
   return adapter->create_wstring_tc (bound
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
 CORBA_ORB::create_fixed_tc (
     CORBA::UShort digits,
     CORBA::UShort scale
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -694,14 +694,14 @@ CORBA_ORB::create_fixed_tc (
 
   return adapter->create_fixed_tc (digits,
                                    scale
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
 CORBA_ORB::create_sequence_tc (
     CORBA::ULong bound,
     CORBA::TypeCode_ptr element_type
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -718,14 +718,14 @@ CORBA_ORB::create_sequence_tc (
 
   return adapter->create_sequence_tc (bound,
                                       element_type
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
 CORBA_ORB::create_array_tc (
     CORBA::ULong length,
     CORBA::TypeCode_ptr element_type
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -742,7 +742,7 @@ CORBA_ORB::create_array_tc (
 
   return adapter->create_array_tc (length,
                                    element_type
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
@@ -752,7 +752,7 @@ CORBA_ORB::create_value_tc (
     CORBA::ValueModifier type_modifier,
     CORBA::TypeCode_ptr concrete_base,
     const CORBA_ValueMemberSeq & members
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -772,7 +772,7 @@ CORBA_ORB::create_value_tc (
                                    type_modifier,
                                    concrete_base,
                                    members
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
@@ -780,7 +780,7 @@ CORBA_ORB::create_value_box_tc (
     const char *id,
     const char *name,
     CORBA::TypeCode_ptr boxed_type
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -798,14 +798,14 @@ CORBA_ORB::create_value_box_tc (
   return adapter->create_value_box_tc (id,
                                        name,
                                        boxed_type
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
 CORBA_ORB::create_native_tc (
     const char *id,
     const char *name
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -822,13 +822,13 @@ CORBA_ORB::create_native_tc (
 
   return adapter->create_native_tc (id,
                                     name
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
 CORBA_ORB::create_recursive_tc (
     const char *id
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -844,14 +844,14 @@ CORBA_ORB::create_recursive_tc (
     }
 
   return adapter->create_recursive_tc (id
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
 CORBA_ORB::create_abstract_interface_tc (
     const char *id,
     const char *name
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -868,14 +868,14 @@ CORBA_ORB::create_abstract_interface_tc (
 
   return adapter->create_abstract_interface_tc (id,
                                                 name
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
 CORBA_ORB::create_local_interface_tc (
     const char *id,
     const char *name
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -892,7 +892,7 @@ CORBA_ORB::create_local_interface_tc (
 
   return adapter->create_local_interface_tc (id,
                                              name
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
 }
 
 // ****************************************************************
@@ -900,19 +900,19 @@ CORBA_ORB::create_local_interface_tc (
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_root_poa (TAO_ENV_SINGLE_ARG_DECL)
+CORBA_ORB::resolve_root_poa (ACE_ENV_SINGLE_ARG_DECL)
 {
-  return this->orb_core_->root_poa (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->orb_core_->root_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_poa_current (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+CORBA_ORB::resolve_poa_current (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return this->orb_core_->poa_current ();
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_policy_manager (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+CORBA_ORB::resolve_policy_manager (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
@@ -933,7 +933,7 @@ CORBA_ORB::resolve_policy_manager (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_policy_current (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+CORBA_ORB::resolve_policy_current (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
@@ -950,7 +950,7 @@ CORBA_ORB::resolve_policy_current (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 CORBA::Object_ptr
 CORBA_ORB::resolve_service (TAO_MCAST_SERVICEID mcast_service_id
-                            TAO_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL)
 {
   const char *env_service_ior [] =
   {
@@ -988,7 +988,7 @@ CORBA_ORB::resolve_service (TAO_MCAST_SERVICEID mcast_service_id
  if (ACE_OS::strcmp (service_ior.c_str (), "") != 0)
    {
      return_value =
-       this->string_to_object (service_ior.c_str () TAO_ENV_ARG_PARAMETER);
+       this->string_to_object (service_ior.c_str () ACE_ENV_ARG_PARAMETER);
      ACE_CHECK_RETURN (CORBA_Object::_nil ());
 
      // Return ior.
@@ -1054,45 +1054,45 @@ CORBA_ORB::resolve_service (TAO_MCAST_SERVICEID mcast_service_id
 
 CORBA_Object_ptr
 CORBA_ORB::resolve_initial_references (const char *name
-                                       TAO_ENV_ARG_DECL)
+                                       ACE_ENV_ARG_DECL)
 {
   return this->resolve_initial_references (name,
                                            0
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_Object_ptr
 CORBA_ORB::resolve_initial_references (const char *name,
                                        ACE_Time_Value *timeout
-                                       TAO_ENV_ARG_DECL)
+                                       ACE_ENV_ARG_DECL)
 {
   // This method should not be called if the ORB has been shutdown.
-  this->check_shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   if (ACE_OS::strcmp (name, TAO_OBJID_ROOTPOA) == 0)
-    return this->resolve_root_poa (TAO_ENV_SINGLE_ARG_PARAMETER);
+    return this->resolve_root_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_POACURRENT) == 0)
-    return this->resolve_poa_current (TAO_ENV_SINGLE_ARG_PARAMETER);
+    return this->resolve_poa_current (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_POLICYMANAGER) == 0)
-    return this->resolve_policy_manager (TAO_ENV_SINGLE_ARG_PARAMETER);
+    return this->resolve_policy_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_POLICYCURRENT) == 0)
-    return this->resolve_policy_current (TAO_ENV_SINGLE_ARG_PARAMETER);
+    return this->resolve_policy_current (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_IORMANIPULATION) == 0)
-    return this->orb_core ()->resolve_ior_manipulation (TAO_ENV_SINGLE_ARG_PARAMETER);
+    return this->orb_core ()->resolve_ior_manipulation (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_IORTABLE) == 0)
-    return this->orb_core ()->resolve_ior_table (TAO_ENV_SINGLE_ARG_PARAMETER);
+    return this->orb_core ()->resolve_ior_table (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_DYNANYFACTORY) == 0)
-    return this->orb_core ()->resolve_dynanyfactory (TAO_ENV_SINGLE_ARG_PARAMETER);
+    return this->orb_core ()->resolve_dynanyfactory (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_TYPECODEFACTORY) == 0)
-    return this->orb_core ()->resolve_typecodefactory (TAO_ENV_SINGLE_ARG_PARAMETER);
+    return this->orb_core ()->resolve_typecodefactory (ACE_ENV_SINGLE_ARG_PARAMETER);
 
 
   // -----------------------------------------------------------------
@@ -1102,7 +1102,7 @@ CORBA_ORB::resolve_initial_references (const char *name,
   CORBA::Object_var result =
     this->orb_core ()->object_ref_table ().resolve_initial_references (
       name
-      TAO_ENV_ARG_PARAMETER);
+      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   if (!CORBA::is_nil (result.in ()))
@@ -1117,7 +1117,7 @@ CORBA_ORB::resolve_initial_references (const char *name,
   /// Is the service name in the IOR Table.
   if (this->orb_core_->init_ref_map ()->find (object_id, ior) == 0)
     return this->string_to_object (ior.c_str ()
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
 
   /// May be trying the explicitly specified services and the well
   /// known services should be tried first before falling on to default
@@ -1129,7 +1129,7 @@ CORBA_ORB::resolve_initial_references (const char *name,
   if (ACE_OS::strcmp (name, TAO_OBJID_NAMESERVICE) == 0)
     {
       result = this->resolve_service (NAMESERVICE
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
       if (!CORBA::is_nil (result.in ()))
@@ -1138,7 +1138,7 @@ CORBA_ORB::resolve_initial_references (const char *name,
   else if (ACE_OS::strcmp (name, TAO_OBJID_TRADINGSERVICE) == 0)
     {
       result = this->resolve_service (TRADINGSERVICE
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
       if (!CORBA::is_nil (result.in ()))
@@ -1147,7 +1147,7 @@ CORBA_ORB::resolve_initial_references (const char *name,
   else if (ACE_OS::strcmp (name, TAO_OBJID_IMPLREPOSERVICE) == 0)
     {
       result = this->resolve_service (IMPLREPOSERVICE
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
       if (!CORBA::is_nil (result.in ()))
@@ -1156,7 +1156,7 @@ CORBA_ORB::resolve_initial_references (const char *name,
   else if (ACE_OS::strcmp (name, TAO_OBJID_INTERFACEREP) == 0)
     {
       result = this->resolve_service (INTERFACEREPOSERVICE
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
       if (!CORBA::is_nil (result.in ()))
@@ -1166,7 +1166,7 @@ CORBA_ORB::resolve_initial_references (const char *name,
   // Is not one of the well known services, try to find it in the
   // InitRef table....check the defaultinitref values also.
 
-  result = this->orb_core ()->resolve_rir (name TAO_ENV_ARG_PARAMETER);
+  result = this->orb_core ()->resolve_rir (name ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   if (!CORBA::is_nil (result.in ()))
@@ -1179,7 +1179,7 @@ CORBA_ORB::resolve_initial_references (const char *name,
 void
 CORBA_ORB::register_initial_reference (const char * id,
                                        CORBA::Object_ptr obj
-                                       TAO_ENV_ARG_DECL)
+                                       ACE_ENV_ARG_DECL)
 {
   if (id == 0)
     ACE_THROW (CORBA::ORB::InvalidName ());
@@ -1188,27 +1188,27 @@ CORBA_ORB::register_initial_reference (const char * id,
 
   TAO_Object_Ref_Table &table = this->orb_core_->object_ref_table ();
 
-  table.register_initial_reference (id, obj TAO_ENV_ARG_PARAMETER);
+  table.register_initial_reference (id, obj ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 
 CORBA_ORB_ObjectIdList_ptr
-CORBA_ORB::list_initial_services (TAO_ENV_SINGLE_ARG_DECL)
+CORBA_ORB::list_initial_services (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->check_shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return
-    this->orb_core ()->list_initial_references (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->orb_core ()->list_initial_references (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-CORBA_ORB::check_shutdown (TAO_ENV_SINGLE_ARG_DECL)
+CORBA_ORB::check_shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->orb_core () != 0)
     {
-      this->orb_core ()->check_shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->orb_core ()->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
   else
@@ -1228,7 +1228,7 @@ CORBA_ORB::check_shutdown (TAO_ENV_SINGLE_ARG_DECL)
 // ****************************************************************
 
 void
-CORBA_ORB::init_orb_globals (TAO_ENV_SINGLE_ARG_DECL)
+CORBA_ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
 {
   // This method should be invoked atomically.  It is the caller's
   // responsibility to ensure that this condition is satisfied.
@@ -1247,7 +1247,7 @@ CORBA_ORB::init_orb_globals (TAO_ENV_SINGLE_ARG_DECL)
   TAO_TypeCodes::init ();
 
   // initialize the system exceptions
-  TAO_Exceptions::init (TAO_ENV_SINGLE_ARG_PARAMETER);
+  TAO_Exceptions::init (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Verify some of the basic implementation requirements.  This test
@@ -1296,7 +1296,7 @@ CORBA_ORB::init_orb_globals (TAO_ENV_SINGLE_ARG_DECL)
     tmp_cf_initializer;
 
   PortableInterceptor::register_orb_initializer (cf_initializer.in ()
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // -------------------------------------------------------------
@@ -1322,7 +1322,7 @@ CORBA_ORB::init_orb_globals (TAO_ENV_SINGLE_ARG_DECL)
   orb_initializer = temp_orb_initializer;
 
   PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 #endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -1344,7 +1344,7 @@ CORBA_ORB::init_orb_globals (TAO_ENV_SINGLE_ARG_DECL)
   pi_initializer = temp_pi_initializer;
 
   PortableInterceptor::register_orb_initializer (pi_initializer.in ()
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 }
@@ -1412,7 +1412,7 @@ CORBA::ORB_init (int &argc,
   if (TAO_Singleton_Manager::instance ()->init () == -1)
     return CORBA::ORB::_nil ();
 
-  CORBA_ORB::init_orb_globals (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA_ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
   // Make sure the following is done after the global ORB
@@ -1551,11 +1551,11 @@ CORBA::ORB_init (int &argc,
   // Call the ORBInitializer::pre_init() on each registered ORB
   // initializer.
   TAO_ORBInitializer_Registry::instance ()->pre_init (orb_init_info.in ()
-                                                      TAO_ENV_ARG_PARAMETER);
+                                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
   // Initialize the ORB Core instance.
-  result = safe_oc->init (argc, argv TAO_ENV_ARG_PARAMETER);
+  result = safe_oc->init (argc, argv ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
   // Check for errors and return nil pseudo-reference on error.
@@ -1570,7 +1570,7 @@ CORBA::ORB_init (int &argc,
   // Call the ORBInitializer::post_init() on each registered ORB
   // initializer.
   TAO_ORBInitializer_Registry::instance ()->post_init (orb_init_info.in ()
-                                                       TAO_ENV_ARG_PARAMETER);
+                                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
   // Invalidate the ORBInitInfo instance to prevent future
@@ -1599,10 +1599,10 @@ CORBA::ORB_init (int &argc,
 // Object reference stringification.
 char *
 CORBA_ORB::object_to_string (CORBA::Object_ptr obj
-                             TAO_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
 {
   // This method should not be called if the ORB has been shutdown.
-  this->check_shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (!CORBA::is_nil (obj) && obj->_is_local ())
@@ -1730,7 +1730,7 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj
       // For now we just use the first profile.
       TAO_Profile *profile = mp.get_profile (0);
 
-      return profile->to_string (TAO_ENV_SINGLE_ARG_PARAMETER);
+      return profile->to_string (ACE_ENV_SINGLE_ARG_PARAMETER);
     }
 }
 
@@ -1739,10 +1739,10 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj
 
 CORBA::Object_ptr
 CORBA_ORB::string_to_object (const char *str
-                             TAO_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
 {
   // This method should not be called if the ORB has been shutdown.
-  this->check_shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Check for NULL pointer
@@ -1761,7 +1761,7 @@ CORBA_ORB::string_to_object (const char *str
     {
       return ior_parser->parse_string (str,
                                        this
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
     }
 
 
@@ -1769,15 +1769,15 @@ CORBA_ORB::string_to_object (const char *str
                        ior_prefix,
                        sizeof ior_prefix - 1) == 0)
     return this->ior_string_to_object (str + sizeof ior_prefix - 1
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
   else
-    return this->url_ior_string_to_object (str TAO_ENV_ARG_PARAMETER);
+    return this->url_ior_string_to_object (str ACE_ENV_ARG_PARAMETER);
 }
 
 // ****************************************************************
 
 char *
-CORBA_ORB::id (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+CORBA_ORB::id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return CORBA::string_dup (this->orb_core_->orbid ());
 }
@@ -1787,9 +1787,9 @@ CORBA_ORB::id (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 CORBA::Policy_ptr
 CORBA_ORB::create_policy (CORBA::PolicyType type,
                           const CORBA::Any& val
-                          TAO_ENV_ARG_DECL)
+                          ACE_ENV_ARG_DECL)
 {
-  this->check_shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   /// Attempt to obtain the policy from the policy factory registry.
@@ -1797,7 +1797,7 @@ CORBA_ORB::create_policy (CORBA::PolicyType type,
     this->orb_core_->policy_factory_registry ()->create_policy (
       type,
       val
-      TAO_ENV_ARG_PARAMETER);
+      ACE_ENV_ARG_PARAMETER);
 }
 
 // Destringify OMG-specified "IOR" string.
@@ -1807,7 +1807,7 @@ CORBA_ORB::create_policy (CORBA::PolicyType type,
 
 CORBA::Object_ptr
 CORBA_ORB::ior_string_to_object (const char *str
-                                 TAO_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL)
 {
   // Unhex the bytes, and make a CDR deencapsulation stream from the
   // resulting data.
@@ -1866,7 +1866,7 @@ CORBA_ORB::ior_string_to_object (const char *str
 
 CORBA::Object_ptr
 CORBA_ORB::url_ior_string_to_object (const char* str
-                                     TAO_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
 {
   TAO_MProfile mprofile;
   // It is safe to declare this on the stack since the contents of
@@ -1879,7 +1879,7 @@ CORBA_ORB::url_ior_string_to_object (const char* str
     this->orb_core_->connector_registry ()->make_mprofile (
       str,
       mprofile
-      TAO_ENV_ARG_PARAMETER);
+      ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN (CORBA::Object::_nil ());   // Return nil.
 
@@ -1896,7 +1896,7 @@ CORBA_ORB::url_ior_string_to_object (const char* str
   // Now make the TAO_Stub.
   TAO_Stub *data = this->orb_core_->create_stub ((char *) 0,
                                                  mprofile
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   TAO_Stub_Auto_Ptr safe_objdata (data);
@@ -1991,7 +1991,7 @@ CORBA::ValueFactory_ptr
 CORBA_ORB::register_value_factory (
   const char *repository_id,
   CORBA::ValueFactory_ptr factory
-  TAO_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL)
 {
 // %! guard, and ACE_Null_Mutex in the map
 // do _add_ref here not in map->rebind
@@ -2020,7 +2020,7 @@ CORBA_ORB::register_value_factory (
 
 void
 CORBA_ORB::unregister_value_factory (const char * /* repository_id */
-                                     TAO_ENV_ARG_DECL_NOT_USED)
+                                     ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_ERROR((LM_ERROR, ACE_TEXT ("(%N:%l) function not implemented\n")));
   // %! TODO
@@ -2028,7 +2028,7 @@ CORBA_ORB::unregister_value_factory (const char * /* repository_id */
 
 CORBA::ValueFactory_ptr
 CORBA_ORB::lookup_value_factory (const char *repository_id
-                                 TAO_ENV_ARG_DECL_NOT_USED)
+                                 ACE_ENV_ARG_DECL_NOT_USED)
 {
 // %! guard
 // do _add_ref here not in map->find

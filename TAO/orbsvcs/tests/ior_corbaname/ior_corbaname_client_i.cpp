@@ -34,7 +34,7 @@ IOR_corbaname_Client_i::~IOR_corbaname_Client_i (void)
 }
 
 int
-IOR_corbaname_Client_i::run (TAO_ENV_SINGLE_ARG_DECL)
+IOR_corbaname_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
 {
 
   ACE_TRY
@@ -63,12 +63,12 @@ IOR_corbaname_Client_i::run (TAO_ENV_SINGLE_ARG_DECL)
       // Resolve the stringified name.
       CORBA::Object_var factory_object =
         this->orb_->string_to_object (corbaname_url.c_str ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Narrow
       corbaname::Status_var factory =
-        corbaname::Status::_narrow (factory_object.in () TAO_ENV_ARG_PARAMETER);
+        corbaname::Status::_narrow (factory_object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (factory.in ()))
@@ -81,7 +81,7 @@ IOR_corbaname_Client_i::run (TAO_ENV_SINGLE_ARG_DECL)
 
       // Invoke a request on the server
       CORBA::Boolean ret_value =
-        factory->print_status (TAO_ENV_SINGLE_ARG_PARAMETER);
+        factory->print_status (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (ret_value == 0)
@@ -117,7 +117,7 @@ IOR_corbaname_Client_i::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
 
@@ -126,7 +126,7 @@ IOR_corbaname_Client_i::init (int argc, char **argv)
         CORBA::ORB_init (this->argc_,
                          this->argv_,
                          "" /* the ORB name, it can be anything! */
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // There must be at least one argument, the file that has to be

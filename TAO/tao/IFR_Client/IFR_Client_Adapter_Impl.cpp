@@ -41,12 +41,12 @@ CORBA_InterfaceDef_ptr
 TAO_IFR_Client_Adapter_Impl::get_interface (
     CORBA::ORB_ptr orb,
     const char *repo_id
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
   CORBA::Object_var obj =
     orb->resolve_initial_references ("InterfaceRepository"
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_InterfaceDef::_nil ());
 
   if (CORBA::is_nil (obj.in ()))
@@ -57,7 +57,7 @@ TAO_IFR_Client_Adapter_Impl::get_interface (
 
   CORBA_Repository_var repo =
     CORBA_Repository::_narrow (obj.in ()
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_InterfaceDef::_nil ());
 
   if (CORBA::is_nil (repo.in ()))
@@ -67,7 +67,7 @@ TAO_IFR_Client_Adapter_Impl::get_interface (
     }
 
   CORBA_Contained_var result = repo->lookup_id (repo_id
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_InterfaceDef::_nil ());
 
   if (CORBA::is_nil (result.in ()))
@@ -77,14 +77,14 @@ TAO_IFR_Client_Adapter_Impl::get_interface (
   else
     {
       return CORBA_InterfaceDef::_narrow (result.in ()
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
     }
 }
 
 CORBA_InterfaceDef_ptr
 TAO_IFR_Client_Adapter_Impl::get_interface_remote (
     const CORBA::Object_ptr target
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
   CORBA_InterfaceDef_ptr _tao_retval = CORBA_InterfaceDef::_nil ();
@@ -112,17 +112,17 @@ TAO_IFR_Client_Adapter_Impl::get_interface_remote (
 
       for (;;)
         {
-          _tao_call.start (TAO_ENV_SINGLE_ARG_PARAMETER);
+          _tao_call.start (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
 
           _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag)
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           int _invoke_status =
-            _tao_call.invoke (0, 0 TAO_ENV_ARG_PARAMETER);
+            _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (_invoke_status == TAO_INVOKE_RESTART)

@@ -27,7 +27,7 @@ Echo_Client_i::run (const char *name,
   if (client.init (name,argc, argv) == -1)
     return -1;
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
@@ -43,7 +43,7 @@ Echo_Client_i::run (const char *name,
             break;
 
           CORBA::String_var s = client->echo_string (buf
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG,
@@ -52,7 +52,7 @@ Echo_Client_i::run (const char *name,
         }
 
       if (client.shutdown () == 1)
-        client->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+        client->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 

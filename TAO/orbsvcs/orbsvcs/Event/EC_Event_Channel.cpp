@@ -101,7 +101,7 @@ TAO_EC_Event_Channel::~TAO_EC_Event_Channel (void)
 }
 
 void
-TAO_EC_Event_Channel::activate (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EC_Event_Channel::activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   this->dispatching_->activate ();
   this->timeout_generator_->activate ();
@@ -110,7 +110,7 @@ TAO_EC_Event_Channel::activate (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-TAO_EC_Event_Channel::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+TAO_EC_Event_Channel::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->dispatching_->shutdown ();
   this->timeout_generator_->shutdown ();
@@ -118,144 +118,144 @@ TAO_EC_Event_Channel::shutdown (TAO_ENV_SINGLE_ARG_DECL)
   this->consumer_control_->shutdown ();
 
   PortableServer::POA_var consumer_poa =
-    this->consumer_admin_->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->consumer_admin_->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   PortableServer::ObjectId_var consumer_id =
-    consumer_poa->servant_to_id (this->consumer_admin_ TAO_ENV_ARG_PARAMETER);
+    consumer_poa->servant_to_id (this->consumer_admin_ ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  consumer_poa->deactivate_object (consumer_id.in () TAO_ENV_ARG_PARAMETER);
+  consumer_poa->deactivate_object (consumer_id.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   PortableServer::POA_var supplier_poa =
-    this->supplier_admin_->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->supplier_admin_->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   PortableServer::ObjectId_var supplier_id =
-    supplier_poa->servant_to_id (this->supplier_admin_ TAO_ENV_ARG_PARAMETER);
+    supplier_poa->servant_to_id (this->supplier_admin_ ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  supplier_poa->deactivate_object (supplier_id.in () TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  this->supplier_admin_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  supplier_poa->deactivate_object (supplier_id.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->consumer_admin_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->supplier_admin_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->consumer_admin_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
 }
 
 void
 TAO_EC_Event_Channel::connected (TAO_EC_ProxyPushConsumer* consumer
-                                 TAO_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL)
 {
-  this->consumer_admin_->peer_connected (consumer TAO_ENV_ARG_PARAMETER);
+  this->consumer_admin_->peer_connected (consumer ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  this->supplier_admin_->connected (consumer TAO_ENV_ARG_PARAMETER);
+  this->supplier_admin_->connected (consumer ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  this->observer_strategy_->connected (consumer TAO_ENV_ARG_PARAMETER);
+  this->observer_strategy_->connected (consumer ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 TAO_EC_Event_Channel::reconnected (TAO_EC_ProxyPushConsumer* consumer
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
 {
-  this->consumer_admin_->peer_reconnected (consumer TAO_ENV_ARG_PARAMETER);
+  this->consumer_admin_->peer_reconnected (consumer ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  this->supplier_admin_->reconnected (consumer TAO_ENV_ARG_PARAMETER);
+  this->supplier_admin_->reconnected (consumer ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  this->observer_strategy_->connected (consumer TAO_ENV_ARG_PARAMETER);
+  this->observer_strategy_->connected (consumer ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 TAO_EC_Event_Channel::disconnected (TAO_EC_ProxyPushConsumer* consumer
-                                    TAO_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
 {
-  this->consumer_admin_->peer_disconnected (consumer TAO_ENV_ARG_PARAMETER);
+  this->consumer_admin_->peer_disconnected (consumer ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  this->supplier_admin_->disconnected (consumer TAO_ENV_ARG_PARAMETER);
+  this->supplier_admin_->disconnected (consumer ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  this->observer_strategy_->disconnected (consumer TAO_ENV_ARG_PARAMETER);
+  this->observer_strategy_->disconnected (consumer ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 TAO_EC_Event_Channel::connected (TAO_EC_ProxyPushSupplier* supplier
-                                 TAO_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL)
 {
-  this->supplier_admin_->peer_connected (supplier TAO_ENV_ARG_PARAMETER);
+  this->supplier_admin_->peer_connected (supplier ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  this->consumer_admin_->connected (supplier TAO_ENV_ARG_PARAMETER);
+  this->consumer_admin_->connected (supplier ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  this->observer_strategy_->connected (supplier TAO_ENV_ARG_PARAMETER);
+  this->observer_strategy_->connected (supplier ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 TAO_EC_Event_Channel::reconnected (TAO_EC_ProxyPushSupplier* supplier
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
 {
-  this->supplier_admin_->peer_reconnected (supplier TAO_ENV_ARG_PARAMETER);
+  this->supplier_admin_->peer_reconnected (supplier ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  this->consumer_admin_->reconnected (supplier TAO_ENV_ARG_PARAMETER);
+  this->consumer_admin_->reconnected (supplier ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  this->observer_strategy_->connected (supplier TAO_ENV_ARG_PARAMETER);
+  this->observer_strategy_->connected (supplier ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 TAO_EC_Event_Channel::disconnected (TAO_EC_ProxyPushSupplier* supplier
-                                    TAO_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
 {
-  this->supplier_admin_->peer_disconnected (supplier TAO_ENV_ARG_PARAMETER);
+  this->supplier_admin_->peer_disconnected (supplier ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  this->consumer_admin_->disconnected (supplier TAO_ENV_ARG_PARAMETER);
+  this->consumer_admin_->disconnected (supplier ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  this->observer_strategy_->disconnected (supplier TAO_ENV_ARG_PARAMETER);
+  this->observer_strategy_->disconnected (supplier ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 RtecEventChannelAdmin::ConsumerAdmin_ptr
-TAO_EC_Event_Channel::for_consumers (TAO_ENV_SINGLE_ARG_DECL)
+TAO_EC_Event_Channel::for_consumers (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->consumer_admin_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->consumer_admin_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
-TAO_EC_Event_Channel::for_suppliers (TAO_ENV_SINGLE_ARG_DECL)
+TAO_EC_Event_Channel::for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->supplier_admin_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->supplier_admin_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-TAO_EC_Event_Channel::destroy (TAO_ENV_SINGLE_ARG_DECL)
+TAO_EC_Event_Channel::destroy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 RtecEventChannelAdmin::Observer_Handle
 TAO_EC_Event_Channel::append_observer (
        RtecEventChannelAdmin::Observer_ptr observer
-       TAO_ENV_ARG_DECL)
+       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
         RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER))
 {
-  return this->observer_strategy_->append_observer (observer TAO_ENV_ARG_PARAMETER);
+  return this->observer_strategy_->append_observer (observer ACE_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_EC_Event_Channel::remove_observer (
        RtecEventChannelAdmin::Observer_Handle handle
-       TAO_ENV_ARG_DECL)
+       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
         RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER))
 {
-  this->observer_strategy_->remove_observer (handle TAO_ENV_ARG_PARAMETER);
+  this->observer_strategy_->remove_observer (handle ACE_ENV_ARG_PARAMETER);
 }

@@ -77,7 +77,7 @@ public:
                          int unique_id_policy,
                          int persistent_id_policy,
                          const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters
-                         TAO_ENV_ARG_DECL);
+                         ACE_ENV_ARG_DECL);
   // Constructor.
 
   ~TAO_Active_Object_Map (void);

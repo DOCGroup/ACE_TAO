@@ -69,17 +69,17 @@ class TAO_Notify_Export TAO_Notify_ConsumerAdmin_i : public TAO_Notify_EventList
   virtual CORBA::ULong _decr_refcnt (void);
 
   // = The Servant methods
-  virtual void _add_ref (TAO_ENV_SINGLE_ARG_DECL);
-  virtual void _remove_ref (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
 
   //= TAO_Notify_EventListener methods
-  virtual void dispatch_event (TAO_Notify_Event &event TAO_ENV_ARG_DECL);
+  virtual void dispatch_event (TAO_Notify_Event &event ACE_ENV_ARG_DECL);
   // Callback methods to supply the event to the listener.
 
-  virtual CORBA::Boolean evaluate_filter (TAO_Notify_Event &event, CORBA::Boolean eval_parent TAO_ENV_ARG_DECL);
+  virtual CORBA::Boolean evaluate_filter (TAO_Notify_Event &event, CORBA::Boolean eval_parent ACE_ENV_ARG_DECL);
   // Evaluates true if this event is acceptable by the listener.
 
-  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
   // Ask the listener to relinqish any bindings and prepare to be disposed.
 
   virtual TAO_Notify_Worker_Task* event_dispatch_task (void);
@@ -92,10 +92,10 @@ class TAO_Notify_Export TAO_Notify_ConsumerAdmin_i : public TAO_Notify_EventList
   void init (CosNotifyChannelAdmin::AdminID myID,
              CosNotifyChannelAdmin::InterFilterGroupOperator myOperator,
              PortableServer::POA_ptr my_POA
-             TAO_ENV_ARG_DECL);
+             ACE_ENV_ARG_DECL);
   // Initialize the Consumer Admin.
 
-  CosNotifyChannelAdmin::ConsumerAdmin_ptr get_ref (TAO_ENV_SINGLE_ARG_DECL);
+  CosNotifyChannelAdmin::ConsumerAdmin_ptr get_ref (ACE_ENV_SINGLE_ARG_DECL);
   // Return the CORBA object for this servant.
 
   TAO_Notify_Event_Manager* get_event_manager (void);
@@ -104,13 +104,13 @@ class TAO_Notify_Export TAO_Notify_ConsumerAdmin_i : public TAO_Notify_EventList
   TAO_Notify_FilterAdmin_i& get_filter_admin (void);
   // Get our filter admin.
 
-  void deactivate_proxy_pushsupplier (PortableServer::Servant servant TAO_ENV_ARG_DECL);
+  void deactivate_proxy_pushsupplier (PortableServer::Servant servant ACE_ENV_ARG_DECL);
   // Deactivate servant from <proxy_pushsupplier_POA_>.
 
-  void register_listener (TAO_Notify_EventListener *listener TAO_ENV_ARG_DECL);
+  void register_listener (TAO_Notify_EventListener *listener ACE_ENV_ARG_DECL);
   // Register with parent for subscription updates.
 
-  void unregister_listener (TAO_Notify_EventListener *listener TAO_ENV_ARG_DECL);
+  void unregister_listener (TAO_Notify_EventListener *listener ACE_ENV_ARG_DECL);
   // Unregister with parent from subscription updates.
 
   void proxy_pushsupplier_destroyed (CosNotifyChannelAdmin::ProxyID proxyID);
@@ -118,28 +118,28 @@ class TAO_Notify_Export TAO_Notify_ConsumerAdmin_i : public TAO_Notify_EventList
 
   // = Interface methods
   virtual CosNotifyChannelAdmin::AdminID MyID (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual CosNotifyChannelAdmin::EventChannel_ptr MyChannel (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual CosNotifyFilter::MappingFilter_ptr priority_filter (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -147,14 +147,14 @@ virtual CosNotifyFilter::MappingFilter_ptr priority_filter (
 
 virtual void priority_filter (
     CosNotifyFilter::MappingFilter_ptr priority_filter
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual CosNotifyFilter::MappingFilter_ptr lifetime_filter (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -162,21 +162,21 @@ virtual CosNotifyFilter::MappingFilter_ptr lifetime_filter (
 
 virtual void lifetime_filter (
     CosNotifyFilter::MappingFilter_ptr lifetime_filter
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual CosNotifyChannelAdmin::ProxyIDSeq * pull_suppliers (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual CosNotifyChannelAdmin::ProxyIDSeq * push_suppliers (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -184,7 +184,7 @@ virtual CosNotifyChannelAdmin::ProxyIDSeq * push_suppliers (
 
 virtual CosNotifyChannelAdmin::ProxySupplier_ptr get_proxy_supplier (
     CosNotifyChannelAdmin::ProxyID proxy_id
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -194,7 +194,7 @@ virtual CosNotifyChannelAdmin::ProxySupplier_ptr get_proxy_supplier (
 virtual CosNotifyChannelAdmin::ProxySupplier_ptr obtain_notification_pull_supplier (
     CosNotifyChannelAdmin::ClientType ctype,
     CosNotifyChannelAdmin::ProxyID_out proxy_id
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -204,7 +204,7 @@ virtual CosNotifyChannelAdmin::ProxySupplier_ptr obtain_notification_pull_suppli
 virtual CosNotifyChannelAdmin::ProxySupplier_ptr obtain_notification_push_supplier (
     CosNotifyChannelAdmin::ClientType ctype,
     CosNotifyChannelAdmin::ProxyID_out proxy_id
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -212,14 +212,14 @@ virtual CosNotifyChannelAdmin::ProxySupplier_ptr obtain_notification_push_suppli
   ));
 
 virtual void destroy (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual CosNotification::QoSProperties * get_qos (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -227,7 +227,7 @@ virtual CosNotification::QoSProperties * get_qos (
 
 virtual void set_qos (
     const CosNotification::QoSProperties & qos
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -237,7 +237,7 @@ virtual void set_qos (
 virtual void validate_qos (
     const CosNotification::QoSProperties & required_qos,
     CosNotification::NamedPropertyRangeSeq_out available_qos
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -247,7 +247,7 @@ virtual void validate_qos (
 virtual void subscription_change (
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -256,7 +256,7 @@ virtual void subscription_change (
 
 virtual CosNotifyFilter::FilterID add_filter (
     CosNotifyFilter::Filter_ptr new_filter
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -264,7 +264,7 @@ virtual CosNotifyFilter::FilterID add_filter (
 
 virtual void remove_filter (
     CosNotifyFilter::FilterID filter
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -273,7 +273,7 @@ virtual void remove_filter (
 
 virtual CosNotifyFilter::Filter_ptr get_filter (
     CosNotifyFilter::FilterID filter
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -281,28 +281,28 @@ virtual CosNotifyFilter::Filter_ptr get_filter (
   ));
 
 virtual CosNotifyFilter::FilterIDSeq * get_all_filters (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual void remove_all_filters (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -310,16 +310,16 @@ virtual CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (
 
 protected:
   // = Helper methods
-  void destroy_i (TAO_ENV_SINGLE_ARG_DECL);
+  void destroy_i (ACE_ENV_SINGLE_ARG_DECL);
   // Destroy CA
 
- CORBA::Object_ptr obtain_struct_proxy_pushsupplier_i (CosNotifyChannelAdmin::ProxyID proxy_id TAO_ENV_ARG_DECL);
+ CORBA::Object_ptr obtain_struct_proxy_pushsupplier_i (CosNotifyChannelAdmin::ProxyID proxy_id ACE_ENV_ARG_DECL);
  // Obtain a proxy pushsupplier object
 
- CORBA::Object_ptr obtain_proxy_pushsupplier_i (CosNotifyChannelAdmin::ProxyID proxy_id TAO_ENV_ARG_DECL);
+ CORBA::Object_ptr obtain_proxy_pushsupplier_i (CosNotifyChannelAdmin::ProxyID proxy_id ACE_ENV_ARG_DECL);
  // Obtain a structured proxy pushsupplier object.
 
- CORBA::Object_ptr obtain_sequence_proxy_pushsupplier_i (CosNotifyChannelAdmin::ProxyID proxy_id TAO_ENV_ARG_DECL);
+ CORBA::Object_ptr obtain_sequence_proxy_pushsupplier_i (CosNotifyChannelAdmin::ProxyID proxy_id ACE_ENV_ARG_DECL);
  // Obtain a sequence proxy pushsupplier object.
 
  // = Data members
@@ -400,7 +400,7 @@ public:
   TAO_Notify_Filter_Command_Worker (TAO_Notify_Event* event, TAO_Notify_Event_Processor* event_processor, CORBA::Boolean eval_parent);
 
   // = TAO_ESF_Worker method
-  void work (TAO_Notify_EventListener* listener TAO_ENV_ARG_DECL);
+  void work (TAO_Notify_EventListener* listener ACE_ENV_ARG_DECL);
 
 protected:
   TAO_Notify_Event* event_;
@@ -423,7 +423,7 @@ public:
   ~TAO_Notify_Dispatch_Command_Worker ();
 
   // = TAO_ESF_Worker method
-  void work (TAO_Notify_EventListener* listener TAO_ENV_ARG_DECL);
+  void work (TAO_Notify_EventListener* listener ACE_ENV_ARG_DECL);
 
 protected:
   TAO_Notify_Event* event_;

@@ -50,41 +50,41 @@ public:
   // Destructor
 
   virtual CORBA::DefinitionKind def_kind (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return our definition kind.
 
   virtual void destroy (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Remove the repository entry.
 
   virtual void destroy_i (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA_Contained::Description *describe (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
   virtual CORBA_Contained::Description *describe_i (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
   virtual CORBA_InterfaceDef_ptr interface_type (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA_InterfaceDef_ptr interface_type_i (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 };

@@ -73,7 +73,7 @@ public:
   /// object reference into the right type.
   virtual void _downcast (void *target,
                           CORBA_Object *src
-                          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Used for sequences of object to convert from the derived type
   /// into the Object class.

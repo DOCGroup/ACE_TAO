@@ -34,7 +34,7 @@ MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
                                 PortableServer::POA_ptr poa,
                                 const char * /* operation */,
                                 PortableServer::ServantLocator::Cookie &cookie
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
@@ -67,7 +67,7 @@ MyFooServantLocator::postinvoke (const PortableServer::ObjectId & /* oid */,
                                  const char * /* operation */,
                                  PortableServer::ServantLocator::Cookie cookie,
                                  PortableServer::Servant servant
-                                 TAO_ENV_ARG_DECL_NOT_USED)
+                                 ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Check the passed servant with the cookie.

@@ -38,7 +38,7 @@ public:
   /** @name The Control::Coordinator methods
    */
   virtual void join (Control::Peer_ptr peer
-                     TAO_ENV_ARG_DECL)
+                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 

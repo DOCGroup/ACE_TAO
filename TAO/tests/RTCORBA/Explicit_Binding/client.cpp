@@ -54,7 +54,7 @@ main (int argc, char *argv[])
 
       // ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse arguments.
@@ -63,29 +63,29 @@ main (int argc, char *argv[])
 
       // RTORB.
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RTORB" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RTORB" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ()
-                                                           TAO_ENV_ARG_PARAMETER);
+                                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
         return 1;
 
       // PolicyCurrent.
       object = orb->resolve_initial_references ("PolicyCurrent"
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       CORBA::PolicyCurrent_var policy_current =
-        CORBA::PolicyCurrent::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+        CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (policy_current.in (), "PolicyCurrent")
           == -1)
         return 1;
 
       // Test object.
-      object = orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+      object = orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      Test_var server = Test::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+      Test_var server = Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (server.in (), "server") == -1)
         return 1;
@@ -108,12 +108,12 @@ main (int argc, char *argv[])
       policy_list.length (1);
       policy_list[0] =
         rt_orb->create_client_protocol_policy (protocols
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       policy_current->set_policy_overrides (policy_list,
                                             CORBA::SET_OVERRIDE
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -121,7 +121,7 @@ main (int argc, char *argv[])
 
       CORBA::PolicyList_var pols;
       int status = server->_validate_connection (pols.out ()
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!status)
@@ -134,7 +134,7 @@ main (int argc, char *argv[])
       // NO new connections should get established.
       ACE_DEBUG ((LM_DEBUG,
                   "\n     Test 2\n"));
-      server->test_method (TAO_ENV_SINGLE_ARG_PARAMETER);
+      server->test_method (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Test 3: Check that <validate_connection> detects policy
@@ -150,16 +150,16 @@ main (int argc, char *argv[])
       protocols[0].protocol_type = TAO_TAG_UIOP_PROFILE;
       policy_list[0] =
         rt_orb->create_client_protocol_policy (protocols
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       policy_current->set_policy_overrides (policy_list,
                                             CORBA::SET_OVERRIDE
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       status = server->_validate_connection (pols.out ()
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (status)
@@ -188,14 +188,14 @@ main (int argc, char *argv[])
       protocols[0].protocol_type = TAO_TAG_SHMEM_PROFILE;
       policy_list[0] =
         rt_orb->create_client_protocol_policy (protocols
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       policy_current->set_policy_overrides (policy_list,
                                             CORBA::SET_OVERRIDE
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

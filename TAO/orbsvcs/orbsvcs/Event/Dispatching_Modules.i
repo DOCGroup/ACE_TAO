@@ -156,9 +156,9 @@ ACE_ES_Dispatching_Base::open (ACE_ES_Consumer_Module *up,
 
 ACE_INLINE void
 ACE_ES_Dispatching_Base::connected (ACE_Push_Consumer_Proxy *consumer
-                                    TAO_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
 {
-  down_->connected (consumer TAO_ENV_ARG_PARAMETER);
+  down_->connected (consumer ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE void
@@ -170,9 +170,9 @@ ACE_ES_Dispatching_Base::disconnected (ACE_Push_Consumer_Proxy *consumer)
 
 ACE_INLINE void
 ACE_ES_Dispatching_Base::disconnecting (ACE_Push_Consumer_Proxy *consumer
-                                        TAO_ENV_ARG_DECL)
+                                        ACE_ENV_ARG_DECL)
 {
-  down_->disconnecting (consumer TAO_ENV_ARG_PARAMETER);
+  down_->disconnecting (consumer ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE void

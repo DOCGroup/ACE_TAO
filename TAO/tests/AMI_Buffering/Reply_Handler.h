@@ -25,22 +25,22 @@ public:
   Reply_Handler (void);
 
   // = The skeleton methods
-  virtual void receive_data (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void receive_data (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual void receive_data_excep (Test::AMI_AMI_BufferingExceptionHolder *holder
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void sync (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void sync (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual void sync_excep (Test::AMI_AMI_BufferingExceptionHolder *holder
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual void shutdown_excep (Test::AMI_AMI_BufferingExceptionHolder *holder
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

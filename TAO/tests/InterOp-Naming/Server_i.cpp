@@ -78,14 +78,14 @@ Server_i::add_IOR_to_table (CORBA::String_var ior)
       CORBA::Object_var table_object =
         this->orb_manager_.orb ()->resolve_initial_references (
             "IORTable"
-            TAO_ENV_ARG_PARAMETER);
+            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in () TAO_ENV_ARG_PARAMETER);
+        IORTable::Table::_narrow (table_object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      adapter->bind (this->ins_, ior.in () TAO_ENV_ARG_PARAMETER);
+      adapter->bind (this->ins_, ior.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, ex)
@@ -101,14 +101,14 @@ Server_i::add_IOR_to_table (CORBA::String_var ior)
 int
 Server_i::init (int argc,
                 char *argv[]
-                TAO_ENV_ARG_DECL)
+                ACE_ENV_ARG_DECL)
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create a child POA under the root POA.
   if (this->orb_manager_.init_child_poa (argc,
                                          argv,
                                          "child_poa"
-                                         TAO_ENV_ARG_PARAMETER) == -1)
+                                         ACE_ENV_ARG_PARAMETER) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init_child_poa"),
@@ -134,7 +134,7 @@ Server_i::init (int argc,
       CORBA::String_var str  =
         this->orb_manager_.activate_under_child_poa ("INS_servant",
                                                      &this->servant_
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -167,10 +167,10 @@ Server_i::init (int argc,
 }
 
 int
-Server_i::run (TAO_ENV_SINGLE_ARG_DECL)
+Server_i::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Run the main event loop for the ORB.
-  if (this->orb_manager_.run (TAO_ENV_SINGLE_ARG_PARAMETER) == -1)
+  if (this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Server_i::run"),
                       -1);

@@ -58,44 +58,44 @@ public:
   // Destructor.
 
   virtual CORBA::DefinitionKind def_kind (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Accessor for the readonly attribute.
 
   virtual void destroy (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // May not be called on a repository - raises BAD_INV_ORDER.
 
   virtual CORBA_Contained_ptr lookup_id (
       const char *search_id
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA_Contained_ptr lookup_id_i (
       const char *search_id
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr get_canonical_typecode (
       CORBA::TypeCode_ptr tc
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr get_canonical_typecode_i (
       CORBA::TypeCode_ptr tc
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::PrimitiveDef_ptr get_primitive (
       CORBA::PrimitiveKind kind
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC (( CORBA::SystemException));
   // No locking necessary because the database is not
@@ -103,67 +103,67 @@ public:
 
   virtual CORBA_StringDef_ptr create_string (
       CORBA::ULong bound
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA_StringDef_ptr create_string_i (
       CORBA::ULong bound
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA_WstringDef_ptr create_wstring (
       CORBA::ULong bound
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA_WstringDef_ptr create_wstring_i (
       CORBA::ULong bound
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA_SequenceDef_ptr create_sequence (
       CORBA::ULong bound,
       CORBA_IDLType_ptr element_type
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC (( CORBA::SystemException));
 
   CORBA_SequenceDef_ptr create_sequence_i (
       CORBA::ULong bound,
       CORBA_IDLType_ptr element_type
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC (( CORBA::SystemException));
 
   virtual CORBA_ArrayDef_ptr create_array (
       CORBA::ULong length,
       CORBA_IDLType_ptr element_type
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA_ArrayDef_ptr create_array_i (
       CORBA::ULong length,
       CORBA_IDLType_ptr element_type
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA_FixedDef_ptr create_fixed (
       CORBA::UShort digits,
       CORBA::Short scale
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA_FixedDef_ptr create_fixed_i (
       CORBA::UShort digits,
       CORBA::Short scale
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 

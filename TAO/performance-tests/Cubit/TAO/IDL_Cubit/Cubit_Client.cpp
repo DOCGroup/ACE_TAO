@@ -382,7 +382,7 @@ Cubit_Client::check_enabled (u_int mask) const
 // Exercise the union.  Cube a union.
 
 void
-Cubit_Client::cube_union (TAO_ENV_SINGLE_ARG_DECL)
+Cubit_Client::cube_union (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
@@ -398,7 +398,7 @@ Cubit_Client::cube_union (TAO_ENV_SINGLE_ARG_DECL)
         ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_UNION_START);
 
         r = this->cubit_->cube_union (u
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       }
 
       ACE_TRY_CHECK;
@@ -426,7 +426,7 @@ Cubit_Client::cube_union (TAO_ENV_SINGLE_ARG_DECL)
         ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_UNION_START);
 
         r = this->cubit_->cube_union (u
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       }
 
       ACE_TRY_CHECK;
@@ -459,7 +459,7 @@ Cubit_Client::cube_union (TAO_ENV_SINGLE_ARG_DECL)
 
 void
 Cubit_Client::cube_short (int i
-                          TAO_ENV_ARG_DECL)
+                          ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -471,7 +471,7 @@ Cubit_Client::cube_short (int i
         ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_SHORT_START);
 
         ret_short = cubit_->cube_short (arg_short
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
       }
 
       ACE_TRY_CHECK;
@@ -510,12 +510,12 @@ Cubit_Client::cube_short (int i
 
 void
 Cubit_Client::cube_oneway (int
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
       ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_ONEWAY_START);
-      this->cubit_->cube_oneway (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->cubit_->cube_oneway (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       this->call_count_++;
     }
@@ -531,12 +531,12 @@ Cubit_Client::cube_oneway (int
 
 void
 Cubit_Client::cube_void (int
-                         TAO_ENV_ARG_DECL)
+                         ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
       ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_VOID_START);
-      this->cubit_->cube_void (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->cubit_->cube_void (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       this->call_count_++;
     }
@@ -554,7 +554,7 @@ Cubit_Client::cube_void (int
 
 void
 Cubit_Client::cube_octet (int i
-                          TAO_ENV_ARG_DECL)
+                          ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -566,7 +566,7 @@ Cubit_Client::cube_octet (int i
         ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_OCTET_START);
 
         ret_octet = this->cubit_->cube_octet (arg_octet
-                                              TAO_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
       }
 
       ACE_TRY_CHECK;
@@ -606,7 +606,7 @@ Cubit_Client::cube_octet (int i
 
 void
 Cubit_Client::cube_long (int i
-                         TAO_ENV_ARG_DECL)
+                         ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -618,7 +618,7 @@ Cubit_Client::cube_long (int i
         ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_LONG_START);
 
         ret_long = this->cubit_->cube_long (arg_long
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       }
 
       ACE_TRY_CHECK;
@@ -661,7 +661,7 @@ Cubit_Client::cube_long (int i
 
 void
 Cubit_Client::cube_struct (int i
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -679,7 +679,7 @@ Cubit_Client::cube_struct (int i
         ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_STRUCT_START);
 
         ret_struct = this->cubit_->cube_struct (arg_struct
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
       }
 
       ACE_TRY_CHECK;
@@ -718,7 +718,7 @@ Cubit_Client::cube_struct (int i
 void
 Cubit_Client::cube_long_sequence (int,
                                   int l
-                                  TAO_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -746,7 +746,7 @@ Cubit_Client::cube_long_sequence (int,
 
         this->cubit_->cube_long_sequence (input,
                                           vout
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
       }
 
       ACE_TRY_CHECK;
@@ -791,7 +791,7 @@ Cubit_Client::cube_long_sequence (int,
 void
 Cubit_Client::cube_octet_sequence (int,
                                    int l
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -820,7 +820,7 @@ Cubit_Client::cube_octet_sequence (int,
 
         this->cubit_->cube_octet_sequence (input,
                                            vout
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
       }
 
       ACE_TRY_CHECK;
@@ -866,7 +866,7 @@ Cubit_Client::cube_octet_sequence (int,
 void
 Cubit_Client::cube_many_sequence (int,
                                   int l
-                                  TAO_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -902,7 +902,7 @@ Cubit_Client::cube_many_sequence (int,
 
         this->cubit_->cube_many_sequence (input,
                                           vout
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
       }
 
       ACE_TRY_CHECK;
@@ -951,7 +951,7 @@ void
 Cubit_Client::cube_rti_data (int,
                              int numUpdates,
                              int numAttrs
-                             TAO_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -1022,7 +1022,7 @@ Cubit_Client::cube_rti_data (int,
 
         this->cubit_->cube_rti_data (input,
                                      vout
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
       }
 
       ACE_TRY_CHECK;
@@ -1054,7 +1054,7 @@ Cubit_Client::cube_rti_data (int,
 
 void
 Cubit_Client::cube_any (int i
-                        TAO_ENV_ARG_DECL)
+                        ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -1069,7 +1069,7 @@ Cubit_Client::cube_any (int i
       {
         ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_ANY_START);
         ret_any = this->cubit_->cube_any (arg_any
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
       }
       ACE_TRY_CHECK;
 
@@ -1114,7 +1114,7 @@ Cubit_Client::cube_any (int i
 
 void
 Cubit_Client::cube_any_struct (int i
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -1134,7 +1134,7 @@ Cubit_Client::cube_any_struct (int i
       {
         ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_ANY_STRUCT_START);
         ret_any = this->cubit_->cube_any_struct (arg_any
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
       }
       ACE_TRY_CHECK;
 
@@ -1246,7 +1246,7 @@ Cubit_Client::run ()
 
   // Show the results one type at a time.
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // VOID
@@ -1259,7 +1259,7 @@ Cubit_Client::run ()
           for (i = 0; i < this->loop_count_; ++i)
             {
               this->cube_void (i
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 
@@ -1280,7 +1280,7 @@ Cubit_Client::run ()
           for (i = 0; i < this->loop_count_; ++i)
             {
               this->cube_short (i
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 
@@ -1301,7 +1301,7 @@ Cubit_Client::run ()
           for (i = 0; i < this->loop_count_; ++i)
             {
               this->cube_octet (i
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 
@@ -1322,7 +1322,7 @@ Cubit_Client::run ()
           for (i = 0; i < this->loop_count_; ++i)
             {
               this->cube_long (i
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 
@@ -1342,7 +1342,7 @@ Cubit_Client::run ()
           for (i = 0; i < this->loop_count_; ++i)
             {
               this->cube_struct (i
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 
@@ -1362,7 +1362,7 @@ Cubit_Client::run ()
 
           for (i = 0; i < this->loop_count_; ++i)
             {
-              this->cube_union (TAO_ENV_SINGLE_ARG_PARAMETER);
+              this->cube_union (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 
@@ -1384,7 +1384,7 @@ Cubit_Client::run ()
             {
               this->cube_long_sequence (this->loop_count_,
                                         4
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 
@@ -1406,7 +1406,7 @@ Cubit_Client::run ()
             {
               this->cube_long_sequence (this->loop_count_,
                                         1024
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 
@@ -1433,7 +1433,7 @@ Cubit_Client::run ()
                 {
                   this->cube_octet_sequence (this->loop_count_,
                                              bytes_in_octet_sequence_
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
                 }
             }
@@ -1443,7 +1443,7 @@ Cubit_Client::run ()
                 {
                   this->cube_octet_sequence (this->loop_count_,
                                              16
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
                 }
             }
@@ -1466,7 +1466,7 @@ Cubit_Client::run ()
             {
               this->cube_octet_sequence (this->loop_count_,
                                          4096
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 
@@ -1488,7 +1488,7 @@ Cubit_Client::run ()
             {
               this->cube_many_sequence (this->loop_count_,
                                         4
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 
@@ -1510,7 +1510,7 @@ Cubit_Client::run ()
             {
               this->cube_many_sequence (this->loop_count_,
                                         1024
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 
@@ -1531,15 +1531,15 @@ Cubit_Client::run ()
           for (i = 0; i < this->loop_count_; ++i)
             {
               this->cube_short (i
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               this->cube_octet (i
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               this->cube_long (i
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 
@@ -1561,7 +1561,7 @@ Cubit_Client::run ()
               this->cube_rti_data (this->loop_count_,
                                    2,
                                    5
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 
@@ -1582,7 +1582,7 @@ Cubit_Client::run ()
           for (i = 0; i < this->loop_count_; ++i)
             {
               this->cube_oneway (i
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 
@@ -1603,7 +1603,7 @@ Cubit_Client::run ()
           for (i = 0; i < this->loop_count_; ++i)
             {
               this->cube_any (i
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 
@@ -1623,7 +1623,7 @@ Cubit_Client::run ()
           for (i = 0; i < this->loop_count_; ++i)
             {
               this->cube_any_struct (i
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
 
               ACE_TRY_CHECK;
             }
@@ -1636,7 +1636,7 @@ Cubit_Client::run ()
         }
 
       this->shutdown_server (this->shutdown_
-                             TAO_ENV_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -1651,7 +1651,7 @@ Cubit_Client::run ()
 
 int
 Cubit_Client::shutdown_server (int do_shutdown
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
 {
   if (do_shutdown)
     {
@@ -1660,7 +1660,7 @@ Cubit_Client::shutdown_server (int do_shutdown
 
       ACE_TRY_EX(NOT_COLLOCATED)
         {
-          this->cubit_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+          this->cubit_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (NOT_COLLOCATED);
         }
       ACE_CATCHANY
@@ -1714,7 +1714,7 @@ Cubit_Client::init (int argc, char **argv)
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
                                     "internet"
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
@@ -1744,12 +1744,12 @@ Cubit_Client::init (int argc, char **argv)
 
       CORBA::Object_var factory_object =
         this->orb_->string_to_object (this->cubit_factory_key_
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->factory_ =
         Cubit_Factory::_narrow (factory_object.in()
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->factory_.in ()))
@@ -1765,7 +1765,7 @@ Cubit_Client::init (int argc, char **argv)
 
       // Now retrieve the Cubit obj ref corresponding to the key.
       this->cubit_ =
-        this->factory_->make_cubit (TAO_ENV_SINGLE_ARG_PARAMETER);
+        this->factory_->make_cubit (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->cubit_.in ()))

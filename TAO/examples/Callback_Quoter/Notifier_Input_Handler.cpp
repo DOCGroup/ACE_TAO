@@ -52,7 +52,7 @@ Notifier_Input_Handler::~Notifier_Input_Handler (void)
 // the object name is bound to the naming server.
 
 int
-Notifier_Input_Handler::init_naming_service (TAO_ENV_SINGLE_ARG_DECL)
+Notifier_Input_Handler::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 {
 
   CORBA::ORB_var orb = this->orb_manager_.orb ();
@@ -69,15 +69,15 @@ Notifier_Input_Handler::init_naming_service (TAO_ENV_SINGLE_ARG_DECL)
   // (re)Bind the object.
   ACE_TRY
     {
-      Notifier_var notifier_obj = notifier_i_._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+      Notifier_var notifier_obj = notifier_i_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->orb_manager_.activate_poa_manager (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->orb_manager_.activate_poa_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       naming_server_->rebind (notifier_obj_name,
                               notifier_obj.in()
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }
@@ -142,7 +142,7 @@ Notifier_Input_Handler::parse_args (void)
 int
 Notifier_Input_Handler::init (int argc,
                               char *argv[]
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
 {
 
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
@@ -154,7 +154,7 @@ Notifier_Input_Handler::init (int argc,
   if (this->orb_manager_.init_child_poa (this->argc_,
                                          this->argv_,
                                          "child_poa"
-                                         TAO_ENV_ARG_PARAMETER) == -1)
+                                         ACE_ENV_ARG_PARAMETER) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init_child_poa"),
@@ -187,7 +187,7 @@ Notifier_Input_Handler::init (int argc,
   CORBA::String_var str  =
     this->orb_manager_.activate_under_child_poa ("Notifier",
                                                  &this->notifier_i_
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -204,14 +204,14 @@ Notifier_Input_Handler::init (int argc,
 
   if (this->using_naming_service_)
     {
-      this->init_naming_service (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->init_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
     }
   return 0;
 }
 
 int
-Notifier_Input_Handler::run (TAO_ENV_SINGLE_ARG_DECL)
+Notifier_Input_Handler::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Run the main event loop for the ORB.
 
@@ -219,7 +219,7 @@ Notifier_Input_Handler::run (TAO_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG,
               " Type \"q\" to quit \n "));
 
-  int result = this->orb_manager_.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+  int result = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (result == -1)
@@ -237,7 +237,7 @@ Notifier_Input_Handler::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
@@ -259,7 +259,7 @@ Notifier_Input_Handler::handle_input (ACE_HANDLE)
         {
           // @@ Please remove this call if it's not used.
           // (this->notifier_i_.consumer_map_).close();
-          this->notifier_i_.shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+          this->notifier_i_.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

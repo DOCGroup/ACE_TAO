@@ -9,36 +9,36 @@ TAO_Policy_Manager::TAO_Policy_Manager (void)
 ACE_INLINE CORBA::Policy_ptr
 TAO_Policy_Manager::get_policy (
       CORBA::PolicyType policy
-      TAO_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
-  return this->impl_.get_policy (policy TAO_ENV_ARG_PARAMETER);
+  return this->impl_.get_policy (policy ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::PolicyList *
 TAO_Policy_Manager::get_policy_overrides (
         const CORBA::PolicyTypeSeq & ts
-        TAO_ENV_ARG_DECL)
+        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
                        CORBA::SystemException
                        ))
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
-  return this->impl_.get_policy_overrides (ts TAO_ENV_ARG_PARAMETER);
+  return this->impl_.get_policy_overrides (ts ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE void
 TAO_Policy_Manager::set_policy_overrides (
         const CORBA::PolicyList & policies,
         CORBA::SetOverrideType set_add
-        TAO_ENV_ARG_DECL)
+        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
                        CORBA::SystemException,
                        CORBA_InvalidPolicies
                        ))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-  this->impl_.set_policy_overrides (policies, set_add TAO_ENV_ARG_PARAMETER);
+  this->impl_.set_policy_overrides (policies, set_add ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Policy_ptr
@@ -73,9 +73,9 @@ TAO_Policy_Current_Impl::TAO_Policy_Current_Impl (void)
 ACE_INLINE CORBA::Policy_ptr
 TAO_Policy_Current_Impl::get_policy (
       CORBA::PolicyType policy
-      TAO_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL)
 {
-  return this->manager_impl_.get_policy (policy TAO_ENV_ARG_PARAMETER);
+  return this->manager_impl_.get_policy (policy ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Policy_ptr
@@ -89,35 +89,35 @@ TAO_Policy_Current_Impl::get_cached_policy (TAO_Cached_Policy_Type type)
 ACE_INLINE CORBA::Policy_ptr
 TAO_Policy_Current::get_policy (
       CORBA::PolicyType policy
-      TAO_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL)
 {
   TAO_Policy_Current_Impl &impl = this->implementation ();
 
-  return impl.get_policy (policy TAO_ENV_ARG_PARAMETER);
+  return impl.get_policy (policy ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::PolicyList *
 TAO_Policy_Current::get_policy_overrides (
         const CORBA::PolicyTypeSeq & ts
-        TAO_ENV_ARG_DECL)
+        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 
 {
   TAO_Policy_Current_Impl &impl = this->implementation ();
 
-  return impl.get_policy_overrides (ts TAO_ENV_ARG_PARAMETER);
+  return impl.get_policy_overrides (ts ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE void
 TAO_Policy_Current::set_policy_overrides (const CORBA::PolicyList & policies,
                                           CORBA::SetOverrideType set_add
-                                          TAO_ENV_ARG_DECL)
+                                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CORBA_InvalidPolicies))
 {
   TAO_Policy_Current_Impl &impl = this->implementation ();
 
-  impl.set_policy_overrides (policies, set_add TAO_ENV_ARG_PARAMETER);
+  impl.set_policy_overrides (policies, set_add ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Policy_ptr

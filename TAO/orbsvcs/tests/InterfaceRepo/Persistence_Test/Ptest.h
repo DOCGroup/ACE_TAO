@@ -50,8 +50,8 @@ public:
   // Execute test code.
 
 private:
-  void populate (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  void query (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void populate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void query (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // The two IFR tests.
 
   int parse_args (int argc,

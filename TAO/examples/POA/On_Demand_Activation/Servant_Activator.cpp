@@ -30,7 +30,7 @@ MyFooServantActivator::MyFooServantActivator (CORBA::ORB_ptr orb)
 PortableServer::Servant
 MyFooServantActivator::incarnate (const PortableServer::ObjectId &oid,
                                   PortableServer::POA_ptr poa
-                                  TAO_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
@@ -56,7 +56,7 @@ MyFooServantActivator::etherealize (const PortableServer::ObjectId &,
                                     PortableServer::Servant servant,
                                     CORBA::Boolean ,
                                     CORBA::Boolean remaining_activations
-                                    TAO_ENV_ARG_DECL_NOT_USED)
+                                    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // If there are no remaining activations i.e ObjectIds associated

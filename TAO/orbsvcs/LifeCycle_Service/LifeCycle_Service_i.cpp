@@ -35,7 +35,7 @@ Life_Cycle_Service_i::~Life_Cycle_Service_i (void)
 
 CORBA::Boolean
 Life_Cycle_Service_i::supports (const CosLifeCycle::Key &
-                                TAO_ENV_ARG_DECL_NOT_USED)
+                                ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
@@ -44,7 +44,7 @@ Life_Cycle_Service_i::supports (const CosLifeCycle::Key &
 CORBA::Object_ptr
 Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
                                      const CosLifeCycle::Criteria &the_criteria
-                                     TAO_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosLifeCycle::NoFactory,
                    CosLifeCycle::InvalidCriteria,
@@ -64,7 +64,7 @@ Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
       if (this->debug_level_ >= 2)
         ACE_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: getFilter will be called.\n"));
 
-      char* filter = criteria_Evaluator.getFilter (TAO_ENV_SINGLE_ARG_PARAMETER);
+      char* filter = criteria_Evaluator.getFilter (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       if (this->debug_level_ >= 2)
@@ -97,7 +97,7 @@ Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
             {
               genericFactory_var =
                 CosLifeCycle::GenericFactory::_narrow (genericFactoryObj_ptr
-                                                       TAO_ENV_ARG_PARAMETER);
+                                                       ACE_ENV_ARG_PARAMETER);
               // ACE_TRY_CHECK;
             }
           ACE_CATCHANY
@@ -120,7 +120,7 @@ Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
           // Now retrieve the Object obj ref corresponding to the key.
           CORBA::Object_var object_var = genericFactory_var->create_object (factory_key,
                                                                             the_criteria
-                                                                            TAO_ENV_ARG_PARAMETER);
+                                                                            ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           if (this->debug_level_ >= 2)
@@ -150,7 +150,7 @@ Life_Cycle_Service_i::register_factory (const char * name,
                                         const char * location,
                                         const char * description,
                                         CORBA::Object_ptr object
-                                        TAO_ENV_ARG_DECL_NOT_USED)
+                                        ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC (( CORBA::SystemException))
 {
   if (factory_trader_ptr_ == 0)

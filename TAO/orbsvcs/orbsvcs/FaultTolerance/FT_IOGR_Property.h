@@ -76,7 +76,7 @@ public:
 
   virtual CORBA::Boolean set_property (
       CORBA::Object_ptr ior
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -87,7 +87,7 @@ public:
   virtual CORBA::Boolean set_primary (
       CORBA::Object_ptr ior1,
       CORBA::Object_ptr ior2
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -98,7 +98,7 @@ public:
 
   virtual CORBA::Object_ptr get_primary (
       CORBA::Object_ptr ior
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -108,7 +108,7 @@ public:
 
   virtual CORBA::Boolean is_primary_set (
       CORBA::Object_ptr ior
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException

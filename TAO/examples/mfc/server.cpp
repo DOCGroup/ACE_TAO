@@ -50,22 +50,22 @@ spawn_my_orb_thread (void *)
         CORBA::ORB_init (__argc,
                          __argv,
                          orb_name
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var orb_obj =
-        the_orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
+        the_orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var the_root_poa =
-        PortableServer::POA::_narrow (orb_obj.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (orb_obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var the_poa_manager =
-        the_root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        the_root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      the_poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      the_poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Initializing the NamingService
@@ -75,7 +75,7 @@ spawn_my_orb_thread (void *)
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
-        the_orb->object_to_string (orb_servant.in () TAO_ENV_ARG_PARAMETER);
+        the_orb->object_to_string (orb_servant.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       FILE *output_file = ACE_OS::fopen ("ior.txt",
@@ -85,7 +85,7 @@ spawn_my_orb_thread (void *)
                        ior.in ());
       ACE_OS::fclose (output_file);
 
-      the_orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      the_orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -125,11 +125,11 @@ CServerApp::~CServerApp()
         CORBA::ORB_init (argc,
                          argv,
                          orb_name
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       the_shutdown_orb->shutdown (0, // wait_for_completion
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_Thread_Manager::instance ()->wait ();

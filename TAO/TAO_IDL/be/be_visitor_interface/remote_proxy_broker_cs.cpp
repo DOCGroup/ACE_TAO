@@ -77,7 +77,7 @@ be_visitor_interface_remote_proxy_broker_cs::visit_interface (be_interface *node
       <<node->full_remote_proxy_broker_name () << "::"
       << "select_proxy (" << be_idt_nl
       << "::" << node->full_name () << " *" << be_nl
-      << "TAO_ENV_ARG_DECL_NOT_USED" << be_uidt_nl << ")"
+      << "ACE_ENV_ARG_DECL_NOT_USED" << be_uidt_nl << ")"
       << be_uidt_nl << "{" << be_idt_nl // idt = 1
       << "return this->remote_proxy_impl_;"
       << be_uidt_nl << "}" << be_nl << be_nl;

@@ -31,12 +31,12 @@ public:
   ~Notify_Structured_Push_Consumer ();
 
   void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin
-                TAO_ENV_ARG_DECL)
+                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   void push_structured_event(const CosNotification::StructuredEvent&
-                             TAO_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   ACE_CString name_;

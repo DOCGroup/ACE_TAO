@@ -58,7 +58,7 @@ Test_ObjRef_Sequence::opname (void) const
 
 void
 Test_ObjRef_Sequence::dii_req_invoke (CORBA::Request *req
-                                      TAO_ENV_ARG_DECL)
+                                      ACE_ENV_ARG_DECL)
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_.in ();
@@ -66,7 +66,7 @@ Test_ObjRef_Sequence::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (Param_Test::_tc_Coffee_Mix);
 
-  req->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
+  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   Param_Test::Coffee_Mix *tmp;
@@ -74,13 +74,13 @@ Test_ObjRef_Sequence::dii_req_invoke (CORBA::Request *req
   this->ret_ = new Param_Test::Coffee_Mix (*tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 TAO_ENV_ARG_PARAMETER);
+    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o2->value () >>= tmp;
   this->inout_ = new Param_Test::Coffee_Mix (*tmp);
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 TAO_ENV_ARG_PARAMETER);
+    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o3->value () >>= tmp;
   this->out_ = new Param_Test::Coffee_Mix (*tmp);
@@ -88,7 +88,7 @@ Test_ObjRef_Sequence::dii_req_invoke (CORBA::Request *req
 
 int
 Test_ObjRef_Sequence::init_parameters (Param_Test_ptr objref
-                                       TAO_ENV_ARG_DECL)
+                                       ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -106,7 +106,7 @@ Test_ObjRef_Sequence::init_parameters (Param_Test_ptr objref
         {
           // generate some arbitrary string to be filled into the ith location in
           // the sequence
-          this->in_[i] = objref->make_coffee (TAO_ENV_SINGLE_ARG_PARAMETER);
+          this->in_[i] = objref->make_coffee (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // select a Coffee flavor at random
@@ -117,7 +117,7 @@ Test_ObjRef_Sequence::init_parameters (Param_Test_ptr objref
           Coffee_ptr tmp = this->in_[i];
 
           tmp->description (desc
-                            TAO_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -144,7 +144,7 @@ Test_ObjRef_Sequence::reset_parameters (void)
 
 int
 Test_ObjRef_Sequence::run_sii_test (Param_Test_ptr objref
-                                    TAO_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -153,7 +153,7 @@ Test_ObjRef_Sequence::run_sii_test (Param_Test_ptr objref
       this->ret_ = objref->test_coffe_mix (this->in_,
                                            this->inout_.inout (),
                                            out
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       return 0;
@@ -171,23 +171,23 @@ Test_ObjRef_Sequence::run_sii_test (Param_Test_ptr objref
 CORBA::Boolean
 Test_ObjRef_Sequence::check_validity (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       this->compare (this->in_,
                      this->inout_.in ()
-                     TAO_ENV_ARG_PARAMETER);
+                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->compare (this->in_,
                      this->out_.in ()
-                     TAO_ENV_ARG_PARAMETER);
+                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->compare (this->in_,
                      this->ret_.in ()
-                     TAO_ENV_ARG_PARAMETER);
+                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       return 1;
@@ -233,7 +233,7 @@ Test_ObjRef_Sequence::print_values (void)
 CORBA::Boolean
 Test_ObjRef_Sequence::compare (const Param_Test::Coffee_Mix &s1,
                                const Param_Test::Coffee_Mix &s2
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -261,12 +261,12 @@ Test_ObjRef_Sequence::compare (const Param_Test::Coffee_Mix &s1,
               return 0;
             }
 
-          Coffee::Desc_var desc1 = vs1->description (TAO_ENV_SINGLE_ARG_PARAMETER);
+          Coffee::Desc_var desc1 = vs1->description (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           CORBA::String_var n1 = desc1->name.in ();
 
-          Coffee::Desc_var desc2 = vs2->description (TAO_ENV_SINGLE_ARG_PARAMETER);
+          Coffee::Desc_var desc2 = vs2->description (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           CORBA::String_var n2 = desc2->name.in ();

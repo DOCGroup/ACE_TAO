@@ -80,18 +80,18 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test::Factory_var factory =
-        Test::Factory::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+        Test::Factory::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (factory.in ()))
@@ -117,7 +117,7 @@ main (int argc, char *argv[])
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
           references[i] =
-            factory->create_simple_object (TAO_ENV_SINGLE_ARG_PARAMETER);
+            factory->create_simple_object (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -141,7 +141,7 @@ main (int argc, char *argv[])
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
-          references[j]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+          references[j]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -160,7 +160,7 @@ main (int argc, char *argv[])
 
       if (do_shutdown)
         {
-          factory->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+          factory->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

@@ -165,12 +165,12 @@ PP_Test_Client::parse_args (void)
 void
 PP_Test_Client::send_oneway (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SEND_ONEWAY_START);
-      this->objref_->send_oneway (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->objref_->send_oneway (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       this->call_count_++;
     }
@@ -190,12 +190,12 @@ PP_Test_Client::send_oneway (void)
 void
 PP_Test_Client::send_void (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SEND_VOID_START);
-      this->objref_->send_void (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->objref_->send_void (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       this->call_count_++;
     }
@@ -259,7 +259,7 @@ PP_Test_Client::run ()
 int
 PP_Test_Client::shutdown_server (int do_shutdown)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
@@ -268,7 +268,7 @@ PP_Test_Client::shutdown_server (int do_shutdown)
           ACE_DEBUG ((LM_DEBUG,
                       "shutdown on Pluggable_Test object\n"));
 
-          this->objref_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+          this->objref_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
 
           ACE_TRY_CHECK;
 
@@ -290,7 +290,7 @@ PP_Test_Client::shutdown_server (int do_shutdown)
 int
 PP_Test_Client::run_oneway (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
@@ -312,7 +312,7 @@ PP_Test_Client::run_oneway (void)
 
           ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SERVER_SHUTDOWN_START);
 
-          this->objref_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+          this->objref_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG,
@@ -333,7 +333,7 @@ PP_Test_Client::run_oneway (void)
 int
 PP_Test_Client::run_void (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
@@ -355,7 +355,7 @@ PP_Test_Client::run_void (void)
 
           ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SERVER_SHUTDOWN_START);
 
-          this->objref_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+          this->objref_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG,
@@ -404,7 +404,7 @@ PP_Test_Client::init (int argc, char **argv)
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
                                     "internet"
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -422,12 +422,12 @@ PP_Test_Client::init (int argc, char **argv)
 
       CORBA::Object_var factory_object =
         this->orb_->string_to_object (this->factory_key_
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->factory_ =
         Pluggable_Test_Factory::_narrow (factory_object.in()
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->factory_.in ()))
@@ -444,7 +444,7 @@ PP_Test_Client::init (int argc, char **argv)
       // Now retrieve the Pluggable_Test obj ref corresponding to the key.
       ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_MAKE_PLUGGABLE_START);
 
-      this->objref_ = this->factory_->make_pluggable_test (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->objref_ = this->factory_->make_pluggable_test (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->objref_.in ()))

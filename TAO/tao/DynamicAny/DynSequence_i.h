@@ -53,24 +53,24 @@ public:
   // Destructor.
 
   void init (CORBA_TypeCode_ptr tc
-             TAO_ENV_ARG_DECL);
+             ACE_ENV_ARG_DECL);
   // Initialize using just a TypeCode.
 
   void init (const CORBA_Any& any
-             TAO_ENV_ARG_DECL);
+             ACE_ENV_ARG_DECL);
   // Initialize using an Any.
 
   // = LocalObject methods.
   static TAO_DynSequence_i *_narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   virtual void *_tao_QueryInterface (ptr_arith_t type);
 
   // = Functions specific to DynSequence.
 
   virtual CORBA::ULong get_length (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -78,7 +78,7 @@ public:
 
   virtual void set_length (
       CORBA::ULong len
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -86,7 +86,7 @@ public:
       ));
 
   virtual DynamicAny::AnySeq * get_elements (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -94,7 +94,7 @@ public:
 
   virtual void set_elements (
       const DynamicAny::AnySeq & value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -103,7 +103,7 @@ public:
       ));
 
   virtual DynamicAny::DynAnySeq * get_elements_as_dyn_any (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -111,7 +111,7 @@ public:
 
   virtual void set_elements_as_dyn_any (
       const DynamicAny::DynAnySeq & value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -124,7 +124,7 @@ public:
 
   virtual void from_any (
       const CORBA::Any & value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -133,7 +133,7 @@ public:
       ));
 
   virtual CORBA::Any * to_any (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -141,21 +141,21 @@ public:
 
   virtual CORBA::Boolean equal (
       DynamicAny::DynAny_ptr dyn_any
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual void destroy (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual DynamicAny::DynAny_ptr current_component (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -164,7 +164,7 @@ public:
 
 private:
   // Utility, turns the type of elements contained in the sequence.
-  CORBA::TypeCode_ptr get_element_type (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  CORBA::TypeCode_ptr get_element_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   // Called by both versions of init().
   void init_common (void);

@@ -36,28 +36,28 @@ TAO_PriorityModelPolicy::~TAO_PriorityModelPolicy (void)
 }
 
 RTCORBA::PriorityModel
-TAO_PriorityModelPolicy::priority_model (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_PriorityModelPolicy::priority_model (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->priority_model_;
 }
 
 RTCORBA::Priority
-TAO_PriorityModelPolicy::server_priority (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_PriorityModelPolicy::server_priority (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->server_priority_;
 }
 
 CORBA::PolicyType
-TAO_PriorityModelPolicy::policy_type (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_PriorityModelPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::PRIORITY_MODEL_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
-TAO_PriorityModelPolicy::copy (TAO_ENV_SINGLE_ARG_DECL)
+TAO_PriorityModelPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_PriorityModelPolicy* tmp;
@@ -70,7 +70,7 @@ TAO_PriorityModelPolicy::copy (TAO_ENV_SINGLE_ARG_DECL)
   return tmp;
 }
 
-void TAO_PriorityModelPolicy::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+void TAO_PriorityModelPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -135,21 +135,21 @@ TAO_ThreadpoolPolicy::~TAO_ThreadpoolPolicy (void)
 }
 
 RTCORBA::ThreadpoolId
-TAO_ThreadpoolPolicy::threadpool (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ThreadpoolPolicy::threadpool (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->id_;
 }
 
 CORBA::PolicyType
-TAO_ThreadpoolPolicy::policy_type (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ThreadpoolPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::THREADPOOL_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
-TAO_ThreadpoolPolicy::copy (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ThreadpoolPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ThreadpoolPolicy* tmp;
@@ -162,7 +162,7 @@ TAO_ThreadpoolPolicy::copy (TAO_ENV_SINGLE_ARG_DECL)
   return tmp;
 }
 
-void TAO_ThreadpoolPolicy::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+void TAO_ThreadpoolPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -198,14 +198,14 @@ TAO_PrivateConnectionPolicy::~TAO_PrivateConnectionPolicy (void)
 }
 
 CORBA::PolicyType
-TAO_PrivateConnectionPolicy::policy_type (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_PrivateConnectionPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::PRIVATE_CONNECTION_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
-TAO_PrivateConnectionPolicy::copy (TAO_ENV_SINGLE_ARG_DECL)
+TAO_PrivateConnectionPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_PrivateConnectionPolicy* tmp;
@@ -219,7 +219,7 @@ TAO_PrivateConnectionPolicy::copy (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_PrivateConnectionPolicy::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_PrivateConnectionPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -253,7 +253,7 @@ TAO_PriorityBandedConnectionPolicy::~TAO_PriorityBandedConnectionPolicy (void)
 
 RTCORBA::PriorityBands *
 TAO_PriorityBandedConnectionPolicy::priority_bands (
-    TAO_ENV_SINGLE_ARG_DECL)
+    ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RTCORBA::PriorityBands *tmp;
@@ -267,14 +267,14 @@ TAO_PriorityBandedConnectionPolicy::priority_bands (
 }
 
 CORBA::PolicyType
-TAO_PriorityBandedConnectionPolicy::policy_type (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_PriorityBandedConnectionPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
-TAO_PriorityBandedConnectionPolicy::copy (TAO_ENV_SINGLE_ARG_DECL)
+TAO_PriorityBandedConnectionPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_PriorityBandedConnectionPolicy *tmp;
@@ -287,7 +287,7 @@ TAO_PriorityBandedConnectionPolicy::copy (TAO_ENV_SINGLE_ARG_DECL)
   return tmp;
 }
 
-void TAO_PriorityBandedConnectionPolicy::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+void TAO_PriorityBandedConnectionPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -345,7 +345,7 @@ TAO_TCP_Properties::~TAO_TCP_Properties (void)
 }
 
 CORBA::Long
-TAO_TCP_Properties::send_buffer_size (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_TCP_Properties::send_buffer_size (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->send_buffer_size_;
@@ -353,14 +353,14 @@ TAO_TCP_Properties::send_buffer_size (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 TAO_TCP_Properties::send_buffer_size (CORBA::Long send_buffer_size
-                                      TAO_ENV_ARG_DECL_NOT_USED)
+                                      ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->send_buffer_size_ = send_buffer_size;
 }
 
 CORBA::Long
-TAO_TCP_Properties::recv_buffer_size (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_TCP_Properties::recv_buffer_size (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->recv_buffer_size_;
@@ -368,14 +368,14 @@ TAO_TCP_Properties::recv_buffer_size (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 TAO_TCP_Properties::recv_buffer_size (CORBA::Long recv_buffer_size
-                                      TAO_ENV_ARG_DECL_NOT_USED)
+                                      ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->recv_buffer_size_ = recv_buffer_size;
 }
 
 CORBA::Boolean
-TAO_TCP_Properties::keep_alive (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_TCP_Properties::keep_alive (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->keep_alive_;
@@ -383,14 +383,14 @@ TAO_TCP_Properties::keep_alive (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 TAO_TCP_Properties::keep_alive (CORBA::Boolean keep_alive
-                                TAO_ENV_ARG_DECL_NOT_USED)
+                                ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->keep_alive_ = keep_alive;
 }
 
 CORBA::Boolean
-TAO_TCP_Properties::dont_route (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_TCP_Properties::dont_route (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->dont_route_;
@@ -398,13 +398,13 @@ TAO_TCP_Properties::dont_route (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 TAO_TCP_Properties::dont_route (CORBA::Boolean dont_route
-                                TAO_ENV_ARG_DECL_NOT_USED)
+                                ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->dont_route_ = dont_route;
 }
 
-CORBA::Boolean TAO_TCP_Properties::no_delay (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+CORBA::Boolean TAO_TCP_Properties::no_delay (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->no_delay_;
@@ -412,7 +412,7 @@ CORBA::Boolean TAO_TCP_Properties::no_delay (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 TAO_TCP_Properties::no_delay (CORBA::Boolean no_delay
-                              TAO_ENV_ARG_DECL_NOT_USED)
+                              ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->no_delay_ = no_delay;
@@ -464,7 +464,7 @@ TAO_Unix_Domain_Properties::~TAO_Unix_Domain_Properties (void)
 }
 
 CORBA::Long
-TAO_Unix_Domain_Properties::send_buffer_size (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Unix_Domain_Properties::send_buffer_size (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->send_buffer_size_;
@@ -472,14 +472,14 @@ TAO_Unix_Domain_Properties::send_buffer_size (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 TAO_Unix_Domain_Properties::send_buffer_size (CORBA::Long send_buffer_size
-                                              TAO_ENV_ARG_DECL_NOT_USED)
+                                              ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->send_buffer_size_ = send_buffer_size;
 }
 
 CORBA::Long
-TAO_Unix_Domain_Properties::recv_buffer_size (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Unix_Domain_Properties::recv_buffer_size (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->recv_buffer_size_;
@@ -487,7 +487,7 @@ TAO_Unix_Domain_Properties::recv_buffer_size (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 TAO_Unix_Domain_Properties::recv_buffer_size (CORBA::Long recv_buffer_size
-                                              TAO_ENV_ARG_DECL_NOT_USED)
+                                              ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->recv_buffer_size_ = recv_buffer_size;
@@ -523,7 +523,7 @@ TAO_SMEM_Properties::~TAO_SMEM_Properties (void)
 
 
 CORBA::Long
-TAO_SMEM_Properties::preallocate_buffer_size (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_SMEM_Properties::preallocate_buffer_size (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->preallocate_buffer_size_;
@@ -531,14 +531,14 @@ TAO_SMEM_Properties::preallocate_buffer_size (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 TAO_SMEM_Properties::preallocate_buffer_size (CORBA::Long preallocate_buffer_size
-                                              TAO_ENV_ARG_DECL_NOT_USED)
+                                              ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->preallocate_buffer_size_ = preallocate_buffer_size;
 }
 
 char *
-TAO_SMEM_Properties::mmap_filename (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_SMEM_Properties::mmap_filename (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->mmap_filename_.rep ();
@@ -546,14 +546,14 @@ TAO_SMEM_Properties::mmap_filename (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 TAO_SMEM_Properties::mmap_filename (const char * mmap_filename
-                                    TAO_ENV_ARG_DECL_NOT_USED)
+                                    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->mmap_filename_.set (mmap_filename);
 }
 
 char *
-TAO_SMEM_Properties::mmap_lockname (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_SMEM_Properties::mmap_lockname (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->mmap_lockname_.rep ();
@@ -561,7 +561,7 @@ TAO_SMEM_Properties::mmap_lockname (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 TAO_SMEM_Properties::mmap_lockname (const char * mmap_lockname
-                                    TAO_ENV_ARG_DECL_NOT_USED)
+                                    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->mmap_lockname_.set (mmap_lockname);
@@ -609,7 +609,7 @@ TAO_ServerProtocolPolicy::~TAO_ServerProtocolPolicy (void)
 }
 
 RTCORBA::ProtocolList *
-TAO_ServerProtocolPolicy::protocols (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ServerProtocolPolicy::protocols (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RTCORBA::ProtocolList *tmp;
@@ -623,14 +623,14 @@ TAO_ServerProtocolPolicy::protocols (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::PolicyType
-TAO_ServerProtocolPolicy::policy_type (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ServerProtocolPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::SERVER_PROTOCOL_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
-TAO_ServerProtocolPolicy::copy (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ServerProtocolPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ServerProtocolPolicy* tmp;
@@ -644,7 +644,7 @@ TAO_ServerProtocolPolicy::copy (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_ServerProtocolPolicy::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ServerProtocolPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -664,7 +664,7 @@ TAO_ServerProtocolPolicy::hook (TAO_ORB_Core *orb_core,
   CORBA::Policy_var policy =
     orb_core->get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       RTCORBA::ServerProtocolPolicy_var server_protocols_policy;
@@ -674,7 +674,7 @@ TAO_ServerProtocolPolicy::hook (TAO_ORB_Core *orb_core,
         {
           server_protocols_policy =
             RTCORBA::ServerProtocolPolicy::_narrow (policy.in ()
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           server_protocols =
@@ -694,7 +694,7 @@ TAO_ServerProtocolPolicy::hook (TAO_ORB_Core *orb_core,
                       properties =
                         RTCORBA::ProtocolProperties::_narrow (
                           protocols[j].transport_protocol_properties.in ()
-                          TAO_ENV_ARG_PARAMETER);
+                          ACE_ENV_ARG_PARAMETER);
                       ACE_TRY_CHECK;
 
                       if (ACE_OS::strcmp (protocol_type,
@@ -706,7 +706,7 @@ TAO_ServerProtocolPolicy::hook (TAO_ORB_Core *orb_core,
                       properties =
                         RTCORBA::ProtocolProperties::_narrow (
                           protocols[j].transport_protocol_properties.in ()
-                          TAO_ENV_ARG_PARAMETER);
+                          ACE_ENV_ARG_PARAMETER);
                       ACE_TRY_CHECK;
 
                         if (ACE_OS::strcmp (protocol_type, "uiop") == 0)
@@ -727,7 +727,7 @@ TAO_ServerProtocolPolicy::hook (TAO_ORB_Core *orb_core,
             {
               server_protocols_policy =
                 RTCORBA::ServerProtocolPolicy::_narrow (policy.in ()
-                                                        TAO_ENV_ARG_PARAMETER);
+                                                        ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               server_protocols =
@@ -747,7 +747,7 @@ TAO_ServerProtocolPolicy::hook (TAO_ORB_Core *orb_core,
                           properties =
                             RTCORBA::ProtocolProperties::_narrow (
                               protocols[j].transport_protocol_properties.in ()
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
                           ACE_TRY_CHECK;
 
                           if (ACE_OS::strcmp (protocol_type, "iiop") == 0)
@@ -759,7 +759,7 @@ TAO_ServerProtocolPolicy::hook (TAO_ORB_Core *orb_core,
                           properties =
                             RTCORBA::ProtocolProperties::_narrow (
                               protocols[j].transport_protocol_properties.in ()
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
                           ACE_TRY_CHECK;
 
                           if (ACE_OS::strcmp (protocol_type, "uiop") == 0)
@@ -774,16 +774,16 @@ TAO_ServerProtocolPolicy::hook (TAO_ORB_Core *orb_core,
         {
           RTCORBA::TCPProtocolProperties_var tcp_properties =
             RTCORBA::TCPProtocolProperties::_narrow (properties.in ()
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           send_buffer_size =
-            tcp_properties->send_buffer_size (TAO_ENV_SINGLE_ARG_PARAMETER);
+            tcp_properties->send_buffer_size (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
           recv_buffer_size =
-            tcp_properties->recv_buffer_size (TAO_ENV_SINGLE_ARG_PARAMETER);
+            tcp_properties->recv_buffer_size (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          no_delay = tcp_properties->no_delay (TAO_ENV_SINGLE_ARG_PARAMETER);
+          no_delay = tcp_properties->no_delay (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -791,17 +791,17 @@ TAO_ServerProtocolPolicy::hook (TAO_ORB_Core *orb_core,
         {
           RTCORBA::UnixDomainProtocolProperties_var uiop_properties =
             RTCORBA::UnixDomainProtocolProperties::_narrow (properties.in ()
-                                                            TAO_ENV_ARG_PARAMETER);
+                                                            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (!CORBA::is_nil (uiop_properties.in ()))
             {
               // Extract and locally store properties of interest.
               send_buffer_size =
-                uiop_properties->send_buffer_size (TAO_ENV_SINGLE_ARG_PARAMETER);
+                uiop_properties->send_buffer_size (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
               recv_buffer_size =
-                uiop_properties->recv_buffer_size (TAO_ENV_SINGLE_ARG_PARAMETER);
+                uiop_properties->recv_buffer_size (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
         }
@@ -854,7 +854,7 @@ TAO_ClientProtocolPolicy::~TAO_ClientProtocolPolicy ()
 }
 
 RTCORBA::ProtocolList *
-TAO_ClientProtocolPolicy::protocols (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ClientProtocolPolicy::protocols (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RTCORBA::ProtocolList *tmp;
@@ -868,14 +868,14 @@ TAO_ClientProtocolPolicy::protocols (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::PolicyType
-TAO_ClientProtocolPolicy::policy_type (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ClientProtocolPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
-TAO_ClientProtocolPolicy::copy (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ClientProtocolPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ClientProtocolPolicy* tmp;
@@ -889,7 +889,7 @@ TAO_ClientProtocolPolicy::copy (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_ClientProtocolPolicy::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ClientProtocolPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -908,7 +908,7 @@ TAO_ClientProtocolPolicy::hook (TAO_ORB_Core *orb_core,
   CORBA::Policy_var policy =
     orb_core->policy_manager ()->get_cached_policy (TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL);
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       RTCORBA::ClientProtocolPolicy_var client_protocols_policy;
@@ -918,7 +918,7 @@ TAO_ClientProtocolPolicy::hook (TAO_ORB_Core *orb_core,
         {
           client_protocols_policy =
             RTCORBA::ClientProtocolPolicy::_narrow (policy.in ()
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           client_protocols =
@@ -938,7 +938,7 @@ TAO_ClientProtocolPolicy::hook (TAO_ORB_Core *orb_core,
                       properties =
                         RTCORBA::ProtocolProperties::_narrow (
                           protocols[j].transport_protocol_properties.in ()
-                          TAO_ENV_ARG_PARAMETER);
+                          ACE_ENV_ARG_PARAMETER);
                       ACE_TRY_CHECK;
 
                       if (ACE_OS::strcmp (protocol_type, "iiop") == 0)
@@ -949,7 +949,7 @@ TAO_ClientProtocolPolicy::hook (TAO_ORB_Core *orb_core,
                       properties =
                         RTCORBA::ProtocolProperties::_narrow (
                           protocols[j].transport_protocol_properties.in ()
-                          TAO_ENV_ARG_PARAMETER);
+                          ACE_ENV_ARG_PARAMETER);
                       ACE_TRY_CHECK;
 
                       if (ACE_OS::strcmp (protocol_type, "uiop") == 0)
@@ -971,7 +971,7 @@ TAO_ClientProtocolPolicy::hook (TAO_ORB_Core *orb_core,
             {
               client_protocols_policy =
                 RTCORBA::ClientProtocolPolicy::_narrow (policy.in ()
-                                                        TAO_ENV_ARG_PARAMETER);
+                                                        ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               client_protocols =
@@ -990,7 +990,7 @@ TAO_ClientProtocolPolicy::hook (TAO_ORB_Core *orb_core,
                           properties =
                             RTCORBA::ProtocolProperties::_narrow (
                               protocols[j].transport_protocol_properties.in ()
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
                           ACE_TRY_CHECK;
 
                           if (ACE_OS::strcmp (protocol_type, "iiop") == 0)
@@ -1002,7 +1002,7 @@ TAO_ClientProtocolPolicy::hook (TAO_ORB_Core *orb_core,
                           properties =
                             RTCORBA::ProtocolProperties::_narrow (
                               protocols[j].transport_protocol_properties.in ()
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
                           ACE_TRY_CHECK;
 
                           if (ACE_OS::strcmp (protocol_type, "uiop") == 0)
@@ -1017,16 +1017,16 @@ TAO_ClientProtocolPolicy::hook (TAO_ORB_Core *orb_core,
         {
           RTCORBA::TCPProtocolProperties_var tcp_properties =
             RTCORBA::TCPProtocolProperties::_narrow (properties.in ()
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           send_buffer_size =
-            tcp_properties->send_buffer_size (TAO_ENV_SINGLE_ARG_PARAMETER);
+            tcp_properties->send_buffer_size (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
           recv_buffer_size =
-            tcp_properties->recv_buffer_size (TAO_ENV_SINGLE_ARG_PARAMETER);
+            tcp_properties->recv_buffer_size (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          no_delay = tcp_properties->no_delay (TAO_ENV_SINGLE_ARG_PARAMETER);
+          no_delay = tcp_properties->no_delay (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -1034,14 +1034,14 @@ TAO_ClientProtocolPolicy::hook (TAO_ORB_Core *orb_core,
         {
           RTCORBA::UnixDomainProtocolProperties_var uiop_properties =
             RTCORBA::UnixDomainProtocolProperties::_narrow (properties.in ()
-                                                            TAO_ENV_ARG_PARAMETER);
+                                                            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (!CORBA::is_nil (uiop_properties.in ()))
             {
               // Extract and locally store properties of interest.
               send_buffer_size =
-                uiop_properties->send_buffer_size (TAO_ENV_SINGLE_ARG_PARAMETER);
+                uiop_properties->send_buffer_size (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
               recv_buffer_size =
                 uiop_properties->recv_buffer_size ();

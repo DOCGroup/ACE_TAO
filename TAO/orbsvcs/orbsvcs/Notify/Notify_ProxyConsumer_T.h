@@ -52,24 +52,24 @@ public:
   virtual ~TAO_Notify_ProxyConsumer (void);
   // Destructor
 
-  void init (CosNotifyChannelAdmin::ProxyID myID TAO_ENV_ARG_DECL);
+  void init (CosNotifyChannelAdmin::ProxyID myID ACE_ENV_ARG_DECL);
   // Init the Proxy.
 
   // = TAO_Notify_EventSource methods.
-  virtual CORBA::Boolean evaluate_filter (TAO_Notify_Event &event TAO_ENV_ARG_DECL);
+  virtual CORBA::Boolean evaluate_filter (TAO_Notify_Event &event ACE_ENV_ARG_DECL);
   // Evaluates true if this event is acceptable by the Source.
 
   TAO_Notify_Worker_Task* filter_eval_task (void);
   // The Worker task associated with the event listener for filter evaluation.
 
-  virtual CosNotifyChannelAdmin::SupplierAdmin_ptr MyAdmin (TAO_ENV_SINGLE_ARG_DECL)
+  virtual CosNotifyChannelAdmin::SupplierAdmin_ptr MyAdmin (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   virtual CosNotification::EventTypeSeq * obtain_subscription_types (
     CosNotifyChannelAdmin::ObtainInfoMode mode
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -78,7 +78,7 @@ public:
   virtual void offer_change (
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -89,7 +89,7 @@ public:
   // so we can update the qos on our tasks.
   virtual void set_qos (
     const CosNotification::QoSProperties & qos
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -98,10 +98,10 @@ public:
 
 protected:
   // = Helper methods
-  void on_connected (TAO_ENV_SINGLE_ARG_DECL);
+  void on_connected (ACE_ENV_SINGLE_ARG_DECL);
   // Derived classes should call this when their suppliers connect.
 
-  void on_disconnected (TAO_ENV_SINGLE_ARG_DECL);
+  void on_disconnected (ACE_ENV_SINGLE_ARG_DECL);
   // Derived classes should call this when their suppliers disconnect.
 
   // = Data members

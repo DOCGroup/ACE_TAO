@@ -47,7 +47,7 @@ public:
   virtual TAO_EC_Filter*
       build (TAO_EC_ProxyPushSupplier *supplier,
              RtecEventChannelAdmin::ConsumerQOS& qos
-             TAO_ENV_ARG_DECL) const = 0;
+             ACE_ENV_ARG_DECL) const = 0;
 
 };
 
@@ -72,7 +72,7 @@ public:
   // = The TAO_EC_Filter_Builder methods...
   TAO_EC_Filter* build (TAO_EC_ProxyPushSupplier *supplier,
                         RtecEventChannelAdmin::ConsumerQOS& qos
-                        TAO_ENV_ARG_DECL) const;
+                        ACE_ENV_ARG_DECL) const;
 };
 
 // ****************************************************************

@@ -23,7 +23,7 @@ TAO_LB_ReplicaProxy::TAO_LB_ReplicaProxy (void)
 
 void
 TAO_LB_ReplicaProxy::current_load (CORBA::Float load
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ Ossama: this is the point were the load dampening should
@@ -35,11 +35,11 @@ TAO_LB_ReplicaProxy::current_load (CORBA::Float load
   this->current_load_ = load;
   // ACE_DEBUG ((LM_DEBUG, "Load[%x] = %f\n", long(this), load));
 
-  this->balancer_->load_changed (this TAO_ENV_ARG_PARAMETER);
+  this->balancer_->load_changed (this ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_LB_ReplicaProxy::disconnect (TAO_ENV_SINGLE_ARG_DECL)
+TAO_LB_ReplicaProxy::disconnect (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((LoadBalancing::ReplicaProxy::NotConnected,
                    CORBA::SystemException))
 {
@@ -49,7 +49,7 @@ TAO_LB_ReplicaProxy::disconnect (TAO_ENV_SINGLE_ARG_DECL)
 
   if (this->connected_)
     {
-      this->balancer_->disconnect (this TAO_ENV_ARG_PARAMETER);
+      this->balancer_->disconnect (this ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       this->connected_ = 0;
@@ -64,7 +64,7 @@ void
 TAO_LB_ReplicaProxy::connect (TAO_LB_LoadBalancer *balancer,
                               LoadBalancing::ReplicaControl_ptr control,
                               CORBA::Object_ptr replica
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((LoadBalancing::ReplicaProxy::NilControl,
                    LoadBalancing::ReplicaProxy::NilReplica,
                    CORBA::SystemException))

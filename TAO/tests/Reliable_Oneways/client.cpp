@@ -69,13 +69,13 @@ parse_args (int argc, char *argv[])
 }
 
 void run_test_sync_with_target (Test::Oneway_Receiver_ptr oneway_receiver
-                                TAO_ENV_ARG_DECL);
+                                ACE_ENV_ARG_DECL);
 void run_test_sync_with_server (Test::Oneway_Receiver_ptr oneway_receiver
-                                TAO_ENV_ARG_DECL);
+                                ACE_ENV_ARG_DECL);
 void run_test_sync_with_transport (Test::Oneway_Receiver_ptr oneway_receiver
-                                   TAO_ENV_ARG_DECL);
+                                   ACE_ENV_ARG_DECL);
 void run_test_sync_none (Test::Oneway_Receiver_ptr oneway_receiver
-                         TAO_ENV_ARG_DECL);
+                         ACE_ENV_ARG_DECL);
 
 
 int
@@ -84,18 +84,18 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test::Oneway_Receiver_var oneway_receiver =
-        Test::Oneway_Receiver::_narrow(tmp.in () TAO_ENV_ARG_PARAMETER);
+        Test::Oneway_Receiver::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (oneway_receiver.in ()))
@@ -110,28 +110,28 @@ main (int argc, char *argv[])
         {
           ACE_DEBUG ((LM_DEBUG, "Running SYNC_WITH_TARGET\n"));
           run_test_sync_with_target (oneway_receiver.in ()
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       else if (test_sync_with_server)
         {
           ACE_DEBUG ((LM_DEBUG, "Running SYNC_WITH_SERVER\n"));
           run_test_sync_with_server (oneway_receiver.in ()
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       else if (test_sync_with_transport)
         {
           ACE_DEBUG ((LM_DEBUG, "Running SYNC_WITH_TRANSPORT\n"));
           run_test_sync_with_transport (oneway_receiver.in ()
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       else
         {
           ACE_DEBUG ((LM_DEBUG, "Running SYNC_NONE\n"));
           run_test_sync_none (oneway_receiver.in ()
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -147,7 +147,7 @@ main (int argc, char *argv[])
                     "ERROR: Mismatched number of calls (%d + %d != %d)\n",
                     successful_calls, failed_calls, iterations));
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -163,18 +163,18 @@ main (int argc, char *argv[])
 
 void
 set_sync_scope_policy (Messaging::SyncScope sync_scope
-                       TAO_ENV_ARG_DECL)
+                       ACE_ENV_ARG_DECL)
 {
   int argc = 0;
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, 0, "" TAO_ENV_ARG_PARAMETER);
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, 0, "" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Object_var object =
-    orb->resolve_initial_references ("PolicyCurrent" TAO_ENV_ARG_PARAMETER);
+    orb->resolve_initial_references ("PolicyCurrent" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::PolicyCurrent_var policy_current =
-    CORBA::PolicyCurrent::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+    CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (policy_current.in ()))
@@ -189,14 +189,14 @@ set_sync_scope_policy (Messaging::SyncScope sync_scope
   policies[0] =
     orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                         scope_as_any
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  policies[0]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+  policies[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -204,7 +204,7 @@ void
 run_one_iteration (int i,
                    Test::Oneway_Receiver_ptr oneway_receiver,
                    Test::Shutdown_Helper_ptr shutdown_helper
-                   TAO_ENV_ARG_DECL)
+                   ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -212,14 +212,14 @@ run_one_iteration (int i,
         {
           ACE_DEBUG ((LM_DEBUG, "Destroying object\n"));
           server_status = DESTROYED;
-          oneway_receiver->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+          oneway_receiver->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       if (i == 2 * iterations / 3)
         {
           ACE_DEBUG ((LM_DEBUG, "Shutting down server process\n"));
           server_status = SHUTDOWN;
-          shutdown_helper->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+          shutdown_helper->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -228,7 +228,7 @@ run_one_iteration (int i,
     }
   ACE_ENDTRY;
 
-  oneway_receiver->raise_no_permission (TAO_ENV_SINGLE_ARG_PARAMETER);
+  oneway_receiver->raise_no_permission (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -243,13 +243,13 @@ call_failed (const CORBA::SystemException &ex)
 
 void
 run_test_sync_with_target (Test::Oneway_Receiver_ptr oneway_receiver
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
 {
-  set_sync_scope_policy (Messaging::SYNC_WITH_TARGET TAO_ENV_ARG_PARAMETER);
+  set_sync_scope_policy (Messaging::SYNC_WITH_TARGET ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   Test::Shutdown_Helper_var shutdown_helper =
-    oneway_receiver->get_shutdown_helper (TAO_ENV_SINGLE_ARG_PARAMETER);
+    oneway_receiver->get_shutdown_helper (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   int had_comm_failure = 0;
@@ -258,7 +258,7 @@ run_test_sync_with_target (Test::Oneway_Receiver_ptr oneway_receiver
       ACE_TRY
         {
           run_one_iteration (i, oneway_receiver, shutdown_helper.in ()
-                             TAO_ENV_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCH (CORBA::NO_PERMISSION, ex)
@@ -300,13 +300,13 @@ run_test_sync_with_target (Test::Oneway_Receiver_ptr oneway_receiver
 
 void
 run_test_sync_with_server (Test::Oneway_Receiver_ptr oneway_receiver
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
 {
-  set_sync_scope_policy (Messaging::SYNC_WITH_SERVER TAO_ENV_ARG_PARAMETER);
+  set_sync_scope_policy (Messaging::SYNC_WITH_SERVER ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   Test::Shutdown_Helper_var shutdown_helper =
-    oneway_receiver->get_shutdown_helper (TAO_ENV_SINGLE_ARG_PARAMETER);
+    oneway_receiver->get_shutdown_helper (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   int had_comm_failure = 0;
@@ -315,7 +315,7 @@ run_test_sync_with_server (Test::Oneway_Receiver_ptr oneway_receiver
       ACE_TRY
         {
           run_one_iteration (i, oneway_receiver, shutdown_helper.in ()
-                             TAO_ENV_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (server_status == DESTROYED
@@ -361,37 +361,37 @@ run_test_sync_with_server (Test::Oneway_Receiver_ptr oneway_receiver
 /// Helper routine to run the sync_with_transport and sync_none tests.
 void
 run_test_unreliable (Test::Oneway_Receiver_ptr oneway_receiver
-                     TAO_ENV_ARG_DECL);
+                     ACE_ENV_ARG_DECL);
 
 void
 run_test_sync_with_transport (Test::Oneway_Receiver_ptr oneway_receiver
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
 {
-  set_sync_scope_policy (Messaging::SYNC_WITH_TRANSPORT TAO_ENV_ARG_PARAMETER);
+  set_sync_scope_policy (Messaging::SYNC_WITH_TRANSPORT ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  run_test_unreliable (oneway_receiver TAO_ENV_ARG_PARAMETER);
+  run_test_unreliable (oneway_receiver ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 run_test_sync_none (Test::Oneway_Receiver_ptr oneway_receiver
-                    TAO_ENV_ARG_DECL)
+                    ACE_ENV_ARG_DECL)
 {
-  set_sync_scope_policy (Messaging::SYNC_NONE TAO_ENV_ARG_PARAMETER);
+  set_sync_scope_policy (Messaging::SYNC_NONE ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  run_test_unreliable (oneway_receiver TAO_ENV_ARG_PARAMETER);
+  run_test_unreliable (oneway_receiver ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 
 void
 run_test_unreliable (Test::Oneway_Receiver_ptr oneway_receiver
-                     TAO_ENV_ARG_DECL)
+                     ACE_ENV_ARG_DECL)
 {
   Test::Shutdown_Helper_var shutdown_helper =
-    oneway_receiver->get_shutdown_helper (TAO_ENV_SINGLE_ARG_PARAMETER);
+    oneway_receiver->get_shutdown_helper (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   int undetected = 0;
@@ -401,7 +401,7 @@ run_test_unreliable (Test::Oneway_Receiver_ptr oneway_receiver
       ACE_TRY
         {
           run_one_iteration (i, oneway_receiver, shutdown_helper.in ()
-                             TAO_ENV_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // A few failures can go undetected...

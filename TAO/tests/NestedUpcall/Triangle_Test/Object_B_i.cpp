@@ -36,7 +36,7 @@ Object_B_i::~Object_B_i (void)
 
 void
 Object_B_i::foo (Object_A_ptr theObject_A_ptr
-                 TAO_ENV_ARG_DECL)
+                 ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -48,7 +48,7 @@ Object_B_i::foo (Object_A_ptr theObject_A_ptr
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) BEGIN Object_B_i::foo: Trying to call Object A\n"));
 
-      theObject_A_ptr->finish (TAO_ENV_SINGLE_ARG_PARAMETER);
+      theObject_A_ptr->finish (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Start to wait on this variable, it is set to true

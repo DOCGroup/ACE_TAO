@@ -66,11 +66,11 @@ public:
 
   virtual Security::AuthenticationMethodList * get_supported_authen_methods (
       const char * mechanism
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Security::OIDList * supported_mech_oids (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Authenticate the principal, request privileges and create
@@ -93,7 +93,7 @@ public:
       SecurityLevel2::Credentials_out creds,
       CORBA::Any_out continuation_data,
       CORBA::Any_out auth_specific_data
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Security::AuthenticationStatus continue_credentials_acquisition (
@@ -101,12 +101,12 @@ public:
         SecurityLevel2::Credentials_ptr creds,
         CORBA::Any_out continuation_data,
         CORBA::Any_out auth_specific_data
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual IOP::TaggedComponentList * create_ior_components (
       SecurityLevel2::Credentials_ptr creds_list
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Security::AssociationStatus init_security_context (
@@ -120,7 +120,7 @@ public:
       const Security::ChannelBindings & chan_binding,
       Security::OpaqueBuffer_out security_token,
       SecurityReplaceable::ClientSecurityContext_out security_context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Security::AssociationStatus accept_security_context (
@@ -128,11 +128,11 @@ public:
       const Security::ChannelBindings & chan_bindings,
       const Security::Opaque & in_token,
       Security::Opaque_out out_token
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Security::MechandOptionsList * get_supported_mechs (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:

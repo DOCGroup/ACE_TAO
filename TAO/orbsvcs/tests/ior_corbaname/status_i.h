@@ -9,9 +9,9 @@
 
 class corbaname_Status_i : public POA_corbaname::Status {
 public:
-  corbaname_Status_i (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  corbaname_Status_i (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
-  CORBA::Boolean print_status (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Boolean print_status (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 };

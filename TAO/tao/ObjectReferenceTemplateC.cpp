@@ -981,7 +981,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableIntercepto
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (PortableInterceptor::_tc_ObjectReferenceTemplateSeq TAO_ENV_ARG_PARAMETER);
+    CORBA::Boolean result = type->equivalent (PortableInterceptor::_tc_ObjectReferenceTemplateSeq ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)

@@ -51,7 +51,7 @@ AccountManager_i::set_orb_manager (TAO_ORB_Manager *orb_manager)
 Bank::Account_ptr
 AccountManager_i::open (const char *name,
                         CORBA::Float initial_balance
-                        TAO_ENV_ARG_DECL)
+                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Account_i *result = 0;
@@ -99,13 +99,13 @@ AccountManager_i::open (const char *name,
 
 void
 AccountManager_i::close (Bank::Account_ptr account
-                         TAO_ENV_ARG_DECL)
+                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
     {
       CORBA::String_var name =
-        CORBA::string_dup (account->name (TAO_ENV_SINGLE_ARG_PARAMETER));
+        CORBA::string_dup (account->name (ACE_ENV_SINGLE_ARG_PARAMETER));
 
       ACE_TRY_CHECK;
 
@@ -130,7 +130,7 @@ AccountManager_i::close (Bank::Account_ptr account
 }
 
 void
-AccountManager_i::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+AccountManager_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

@@ -42,7 +42,7 @@ public:
   Client_i (CORBA::ORB_ptr orb);
   // Our constructor
 
-  void init (TAO_ENV_SINGLE_ARG_DECL);
+  void init (ACE_ENV_SINGLE_ARG_DECL);
   // Initialize the ORB etc.
 
 private:

@@ -1280,7 +1280,7 @@ TAO_NAMESPACE  IOP
     static Codec_ptr tao_duplicate (Codec_ptr);
     static void tao_release (Codec_ptr);
     static Codec_ptr tao_nil (void);
-    static Codec_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static Codec_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -1335,11 +1335,11 @@ class TAO_Export Codec : public virtual CORBA_Object
   static Codec_ptr _duplicate (Codec_ptr obj);
   static Codec_ptr _narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   static Codec_ptr _unchecked_narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   static Codec_ptr _nil (void)
     {
@@ -1369,12 +1369,12 @@ class TAO_Export Codec : public virtual CORBA_Object
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         );
 
       static InvalidTypeForEncoding *_downcast (CORBA::Exception *);
@@ -1410,12 +1410,12 @@ class TAO_Export Codec : public virtual CORBA_Object
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         );
 
       static FormatMismatch *_downcast (CORBA::Exception *);
@@ -1451,12 +1451,12 @@ class TAO_Export Codec : public virtual CORBA_Object
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         );
 
       static TypeMismatch *_downcast (CORBA::Exception *);
@@ -1471,7 +1471,7 @@ class TAO_Export Codec : public virtual CORBA_Object
 
     virtual CORBA::OctetSeq * encode (
         const CORBA::Any & data
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -1480,7 +1480,7 @@ class TAO_Export Codec : public virtual CORBA_Object
 
     virtual CORBA::Any * decode (
         const CORBA::OctetSeq & data
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -1489,7 +1489,7 @@ class TAO_Export Codec : public virtual CORBA_Object
 
     virtual CORBA::OctetSeq * encode_value (
         const CORBA::Any & data
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -1499,7 +1499,7 @@ class TAO_Export Codec : public virtual CORBA_Object
     virtual CORBA::Any * decode_value (
         const CORBA::OctetSeq & data,
         CORBA::TypeCode_ptr tc
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -1619,7 +1619,7 @@ class TAO_Export Codec : public virtual CORBA_Object
     static CodecFactory_ptr tao_duplicate (CodecFactory_ptr);
     static void tao_release (CodecFactory_ptr);
     static CodecFactory_ptr tao_nil (void);
-    static CodecFactory_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static CodecFactory_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -1674,11 +1674,11 @@ class TAO_Export CodecFactory : public virtual CORBA_Object
   static CodecFactory_ptr _duplicate (CodecFactory_ptr obj);
   static CodecFactory_ptr _narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   static CodecFactory_ptr _unchecked_narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   static CodecFactory_ptr _nil (void)
     {
@@ -1708,12 +1708,12 @@ class TAO_Export CodecFactory : public virtual CORBA_Object
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         );
 
       static UnknownEncoding *_downcast (CORBA::Exception *);
@@ -1728,7 +1728,7 @@ class TAO_Export CodecFactory : public virtual CORBA_Object
 
     virtual IOP::Codec_ptr create_codec (
         const IOP::Encoding & enc
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,

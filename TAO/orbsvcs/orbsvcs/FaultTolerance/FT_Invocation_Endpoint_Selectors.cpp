@@ -32,11 +32,11 @@ TAO_FT_Invocation_Endpoint_Selector::~TAO_FT_Invocation_Endpoint_Selector (void)
 void
 TAO_FT_Invocation_Endpoint_Selector::select_endpoint (
   TAO_GIOP_Invocation *invocation
-  TAO_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL)
 {
 
   int retval = this->select_endpoint_i (invocation
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (retval == 0)
@@ -47,7 +47,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_endpoint (
                     "Falling back on the default selection routines \n"));
 
       TAO_Default_Endpoint_Selector::select_endpoint (invocation
-                                                      TAO_ENV_ARG_PARAMETER);
+                                                      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -57,7 +57,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_endpoint (
 // @@ RTCORBA_Subsetting - next should be deprecated...
 void
 TAO_FT_Invocation_Endpoint_Selector::next (TAO_GIOP_Invocation *
-                                     TAO_ENV_ARG_DECL_NOT_USED)
+                                     ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("This method is DEPRECATED!\n")));
   // if (invocation->stub_->next_profile_retry () == 0)
@@ -69,7 +69,7 @@ void
 TAO_FT_Invocation_Endpoint_Selector::forward (TAO_GIOP_Invocation
                                         *invocation,
                                         const TAO_MProfile &mprofile
-                                        TAO_ENV_ARG_DECL)
+                                        ACE_ENV_ARG_DECL)
 {
   invocation->stub ()->add_forward_profiles (mprofile);
   // This has to be and is thread safe.
@@ -106,11 +106,11 @@ TAO_FT_Invocation_Endpoint_Selector::close_connection (TAO_GIOP_Invocation *invo
 int
 TAO_FT_Invocation_Endpoint_Selector::select_endpoint_i(
     TAO_GIOP_Invocation *invocation
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
 {
   int retval =
     this->select_primary (invocation
-                          TAO_ENV_ARG_PARAMETER);
+                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
 
@@ -166,7 +166,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_endpoint_i(
 
           int status =
             this->endpoint_from_profile (invocation
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
           if (status == 1)
@@ -185,7 +185,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_endpoint_i(
 int
 TAO_FT_Invocation_Endpoint_Selector::select_primary (
     TAO_GIOP_Invocation *invoc
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
 {
   // Get the current profile
   TAO_Profile *temp_profile =
@@ -199,7 +199,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
       retval =
         this->check_profile_for_primary (invoc,
                                          temp_profile
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
     }
   else
@@ -255,7 +255,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
       retval =
         this->check_profile_for_primary (invoc,
                                          temp_profile
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       if (retval == 1 || retval == -1)
@@ -287,7 +287,7 @@ int
 TAO_FT_Invocation_Endpoint_Selector::check_profile_for_primary (
     TAO_GIOP_Invocation *invocation,
     TAO_Profile*pfile
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
 {
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = IOP::TAG_FT_PRIMARY;
@@ -310,7 +310,7 @@ TAO_FT_Invocation_Endpoint_Selector::check_profile_for_primary (
 
       int status =
         this->endpoint_from_profile (invocation
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       if (status == 1)

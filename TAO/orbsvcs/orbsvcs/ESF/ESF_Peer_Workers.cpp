@@ -13,12 +13,12 @@ ACE_RCSID(ESF, ESF_Peer_Workers, "$Id$")
 
 template<class P, class R> void
 TAO_ESF_Peer_Connected<P,R>::work (P *proxy
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
 {
-  proxy->connected (this->peer_ TAO_ENV_ARG_PARAMETER);
+  proxy->connected (this->peer_ ACE_ENV_ARG_PARAMETER);
   ACE_CHECK; // Shouldn't happen, just following the discipline
 
-  this->peer_->connected (proxy TAO_ENV_ARG_PARAMETER);
+  this->peer_->connected (proxy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK; // Shouldn't happen, just following the discipline
 }
 
@@ -26,12 +26,12 @@ TAO_ESF_Peer_Connected<P,R>::work (P *proxy
 
 template<class P, class R> void
 TAO_ESF_Peer_Reconnected<P,R>::work (P *proxy
-                                     TAO_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
 {
-  proxy->reconnected (this->peer_ TAO_ENV_ARG_PARAMETER);
+  proxy->reconnected (this->peer_ ACE_ENV_ARG_PARAMETER);
   ACE_CHECK; // Shouldn't happen, just following the discipline
 
-  this->peer_->reconnected (proxy TAO_ENV_ARG_PARAMETER);
+  this->peer_->reconnected (proxy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK; // Shouldn't happen, just following the discipline
 }
 
@@ -39,12 +39,12 @@ TAO_ESF_Peer_Reconnected<P,R>::work (P *proxy
 
 template<class P, class R> void
 TAO_ESF_Peer_Disconnected<P,R>::work (P *proxy
-                                      TAO_ENV_ARG_DECL)
+                                      ACE_ENV_ARG_DECL)
 {
-  proxy->disconnected (this->peer_ TAO_ENV_ARG_PARAMETER);
+  proxy->disconnected (this->peer_ ACE_ENV_ARG_PARAMETER);
   ACE_CHECK; // Shouldn't happen, just following the discipline
 
-  this->peer_->disconnected (proxy TAO_ENV_ARG_PARAMETER);
+  this->peer_->disconnected (proxy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK; // Shouldn't happen, just following the discipline
 }
 

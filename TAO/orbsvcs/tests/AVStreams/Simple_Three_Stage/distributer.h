@@ -116,12 +116,12 @@ public:
 
   int init (int argc,
             char **argv
-            TAO_ENV_ARG_DECL_NOT_USED);
+            ACE_ENV_ARG_DECL_NOT_USED);
   // Initialize data components.
 
   void bind_to_mmdevice (AVStreams::MMDevice_ptr &mmdevice,
                          const ACE_CString &mmdevice_name
-                         TAO_ENV_ARG_DECL);
+                         ACE_ENV_ARG_DECL);
   // Resolve the reference of the mmdevice from the naming service.
 
   TAO_StreamCtrl *receiver_streamctrl (void);

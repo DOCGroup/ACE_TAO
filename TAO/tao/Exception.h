@@ -93,9 +93,9 @@ public:
   virtual ACE_CString _info (void) const = 0;
 
   virtual void _tao_encode (TAO_OutputCDR &cdr
-                            TAO_ENV_ARG_DECL_NOT_USED) const = 0;
+                            ACE_ENV_ARG_DECL_NOT_USED) const = 0;
   virtual void _tao_decode (TAO_InputCDR &cdr
-                            TAO_ENV_ARG_DECL_NOT_USED) = 0;
+                            ACE_ENV_ARG_DECL_NOT_USED) = 0;
 
   /// Used in the non-copying Any insertion operator.
   static void _tao_any_destructor (void *);
@@ -227,9 +227,9 @@ public:
   virtual ACE_CString _info (void) const;
 
   virtual void _tao_encode (TAO_OutputCDR &cdr
-                            TAO_ENV_ARG_DECL_NOT_USED) const;
+                            ACE_ENV_ARG_DECL_NOT_USED) const;
   virtual void _tao_decode (TAO_InputCDR &cdr
-                            TAO_ENV_ARG_DECL_NOT_USED);
+                            ACE_ENV_ARG_DECL_NOT_USED);
 
   /// Helper to create a minor status value.
   static CORBA::ULong _tao_minor_code (u_int location,
@@ -343,16 +343,16 @@ public:
                                       const char *name,
                                       char *buf,
                                       size_t buflen
-                                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Make the TypeCode for the CORBA::UnknownUserException standard
   /// exception.
   static void make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp
-                                          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Runtime initialization of all standard exception typecodes.
   /// Called from <CORBA::ORB_init>.
-  static void init (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  static void init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// Runtime finalization of all standard exception typecodes.
   static void fini (void);
@@ -360,7 +360,7 @@ public:
   /// Create a CORBA::SystemException given the interface repository ID.
   static CORBA_SystemException *create_system_exception (
       const char *id
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   /**

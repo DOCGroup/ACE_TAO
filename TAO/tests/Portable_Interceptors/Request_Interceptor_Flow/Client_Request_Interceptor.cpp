@@ -15,13 +15,13 @@ Client_Request_Interceptor::Client_Request_Interceptor (const char *name)
 void
 Client_Request_Interceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr ri
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
 
   CORBA::Boolean client_side =
-    this->client_side_test (ri TAO_ENV_ARG_PARAMETER);
+    this->client_side_test (ri ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!client_side)
@@ -35,7 +35,7 @@ Client_Request_Interceptor::send_request (
     {
       // Determine which test scenario we are in
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (TAO_ENV_SINGLE_ARG_PARAMETER);
+        ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       Test::TestScenario scenario;
@@ -75,12 +75,12 @@ Client_Request_Interceptor::send_request (
 void
 Client_Request_Interceptor::send_poll (
     PortableInterceptor::ClientRequestInfo_ptr ri
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   CORBA::Boolean client_side =
-    this->client_side_test (ri TAO_ENV_ARG_PARAMETER);
+    this->client_side_test (ri ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!client_side)
@@ -96,12 +96,12 @@ Client_Request_Interceptor::send_poll (
 void
 Client_Request_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr ri
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   CORBA::Boolean client_side =
-    this->client_side_test (ri TAO_ENV_ARG_PARAMETER);
+    this->client_side_test (ri ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!client_side)
@@ -117,7 +117,7 @@ Client_Request_Interceptor::receive_reply (
     {
       // Determine which test scenario we are in
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (TAO_ENV_SINGLE_ARG_PARAMETER);
+        ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       Test::TestScenario scenario;
@@ -155,13 +155,13 @@ Client_Request_Interceptor::receive_reply (
 void
 Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
 
   CORBA::Boolean client_side =
-    this->client_side_test (ri TAO_ENV_ARG_PARAMETER);
+    this->client_side_test (ri ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!client_side)
@@ -177,7 +177,7 @@ Client_Request_Interceptor::receive_exception (
     {
       // Determine which test scenario we are in
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (TAO_ENV_SINGLE_ARG_PARAMETER);
+        ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       Test::TestScenario scenario;
@@ -192,12 +192,12 @@ Client_Request_Interceptor::receive_exception (
           switch (scenario)
             {
             case 4:
-              exception = ri->received_exception (TAO_ENV_SINGLE_ARG_PARAMETER);
+              exception = ri->received_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_CHECK;
 
               tc = exception->type ();
 
-              id = tc->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+              id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_CHECK;
 
               if (ACE_OS_String::strcmp (id, "IDL:Test/X:1.0") == 0)
@@ -239,13 +239,13 @@ Client_Request_Interceptor::receive_exception (
 void
 Client_Request_Interceptor::receive_other (
     PortableInterceptor::ClientRequestInfo_ptr ri
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
 
   CORBA::Boolean client_side =
-    this->client_side_test (ri TAO_ENV_ARG_PARAMETER);
+    this->client_side_test (ri ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!client_side)
@@ -261,9 +261,9 @@ Client_Request_Interceptor::receive_other (
 CORBA::Boolean
 Client_Request_Interceptor::client_side_test (
   PortableInterceptor::ClientRequestInfo_ptr info
-  TAO_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL)
 {
-  CORBA::String_var op = info->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var op = info->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return ACE_OS_String::strcmp (op.in (), "client_test") == 0 ? 1 : 0;

@@ -98,7 +98,7 @@ TAO_NAMESPACE  RTPortableServer
     static POA_ptr tao_duplicate (POA_ptr);
     static void tao_release (POA_ptr);
     static POA_ptr tao_nil (void);
-    static POA_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static POA_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -153,11 +153,11 @@ class TAO_RTPortableServer_Export POA: public virtual PortableServer::POA
     static POA_ptr _duplicate (POA_ptr obj);
     static POA_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static POA_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static POA_ptr _nil (void)
       {
@@ -167,7 +167,7 @@ class TAO_RTPortableServer_Export POA: public virtual PortableServer::POA
     virtual CORBA::Object_ptr create_reference_with_priority (
         const char * intf,
         RTCORBA::Priority priority
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -178,7 +178,7 @@ class TAO_RTPortableServer_Export POA: public virtual PortableServer::POA
         const PortableServer::ObjectId & oid,
         const char * intf,
         RTCORBA::Priority priority
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -188,7 +188,7 @@ class TAO_RTPortableServer_Export POA: public virtual PortableServer::POA
     virtual PortableServer::ObjectId * activate_object_with_priority (
         PortableServer::Servant p_servant,
         RTCORBA::Priority priority
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -200,7 +200,7 @@ class TAO_RTPortableServer_Export POA: public virtual PortableServer::POA
         const PortableServer::ObjectId & oid,
         PortableServer::Servant p_servant,
         RTCORBA::Priority priority
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,

@@ -74,7 +74,7 @@ EC_BCast::modify_attributes (TAO_EC_Event_Channel_Attributes&)
 }
 
 void
-EC_BCast::execute_test (TAO_ENV_SINGLE_ARG_DECL)
+EC_BCast::execute_test (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_ECG_UDP_Sender sender;
   TAO_ECG_UDP_Out_Endpoint endpoint;
@@ -83,7 +83,7 @@ EC_BCast::execute_test (TAO_ENV_SINGLE_ARG_DECL)
 
   Simple_Address_Server address_server_impl (udp_addr);
   RtecUDPAdmin::AddrServer_var address_server =
-    address_server_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+    address_server_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (endpoint.dgram ().open (ACE_Addr::sap_any) == -1)
@@ -95,15 +95,15 @@ EC_BCast::execute_test (TAO_ENV_SINGLE_ARG_DECL)
   sender.init (this->event_channel_.in (),
                address_server.in (),
                &endpoint
-               TAO_ENV_ARG_PARAMETER);
+               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   RtecEventChannelAdmin::ConsumerQOS sub;
   int shutdown_event_type;
-  this->build_consumer_qos (0, sub, shutdown_event_type TAO_ENV_ARG_PARAMETER);
+  this->build_consumer_qos (0, sub, shutdown_event_type ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  sender.open (sub TAO_ENV_ARG_PARAMETER);
+  sender.open (sub ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   TAO_ECG_UDP_Receiver receiver;
@@ -116,7 +116,7 @@ EC_BCast::execute_test (TAO_ENV_SINGLE_ARG_DECL)
                  address_server.in (),
                  this->orb_->orb_core ()->reactor (),
                  expire, 5
-                 TAO_ENV_ARG_PARAMETER);
+                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   udp_eh.reactor (this->orb_->orb_core ()->reactor ());
@@ -127,16 +127,16 @@ EC_BCast::execute_test (TAO_ENV_SINGLE_ARG_DECL)
     }
 
   RtecEventChannelAdmin::SupplierQOS pub;
-  this->build_supplier_qos (0, pub, shutdown_event_type TAO_ENV_ARG_PARAMETER);
+  this->build_supplier_qos (0, pub, shutdown_event_type ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  receiver.open (pub TAO_ENV_ARG_PARAMETER);
+  receiver.open (pub ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (this->allocate_tasks () == -1)
     return;
 
-  this->activate_tasks (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->activate_tasks (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (this->verbose ())
@@ -159,10 +159,10 @@ EC_BCast::execute_test (TAO_ENV_SINGLE_ARG_DECL)
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "BCast (%P|%t) suppliers finished\n"));
 
-  receiver.close (TAO_ENV_SINGLE_ARG_PARAMETER);
+  receiver.close (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  sender.close (TAO_ENV_SINGLE_ARG_PARAMETER);
+  sender.close (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // @@ Deactivate all the objects...!
@@ -170,12 +170,12 @@ EC_BCast::execute_test (TAO_ENV_SINGLE_ARG_DECL)
   {
     // Deactivate the Address Server
     PortableServer::POA_var poa =
-      address_server_impl._default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
+      address_server_impl._default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
     PortableServer::ObjectId_var id =
-      poa->servant_to_id (&address_server_impl TAO_ENV_ARG_PARAMETER);
+      poa->servant_to_id (&address_server_impl ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
-    poa->deactivate_object (id.in () TAO_ENV_ARG_PARAMETER);
+    poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     if (this->verbose ())
@@ -201,7 +201,7 @@ Simple_Address_Server (const ACE_INET_Addr& address)
 void
 Simple_Address_Server::get_addr (const RtecEventComm::EventHeader&,
                                  RtecUDPAdmin::UDP_Addr& address
-                                 TAO_ENV_ARG_DECL_NOT_USED)
+                                 ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   address = this->address_;

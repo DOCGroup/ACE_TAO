@@ -64,7 +64,7 @@ void CORBA_Bounds::_raise ()
 }
 
 void CORBA_Bounds::_tao_encode (TAO_OutputCDR &cdr
-                                TAO_ENV_ARG_DECL) const
+                                ACE_ENV_ARG_DECL) const
 {
   if (cdr << *this)
     return;
@@ -72,7 +72,7 @@ void CORBA_Bounds::_tao_encode (TAO_OutputCDR &cdr
 }
 
 void CORBA_Bounds::_tao_decode (TAO_InputCDR &cdr
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
 {
   if (cdr >> *this)
     return;
@@ -123,7 +123,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Bounds *&_tao_ele
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equal (CORBA::_tc_Bounds TAO_ENV_ARG_PARAMETER)) return 0; // not equal
+    if (!type->equal (CORBA::_tc_Bounds ACE_ENV_ARG_PARAMETER)) return 0; // not equal
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {

@@ -16,7 +16,7 @@ Sender_i::~Sender_i (void)
 
 void
 Sender_i::active_objects (CORBA::Short no_threads
-                          TAO_ENV_ARG_DECL_NOT_USED /*TAO_ENV_SINGLE_ARG_PARAMETER */ )
+                          ACE_ENV_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER */ )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->active_objects_ = no_threads;
@@ -25,7 +25,7 @@ Sender_i::active_objects (CORBA::Short no_threads
 
 void
 Sender_i::send_ready_message (Test::Receiver_ptr receiver
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -38,14 +38,14 @@ Sender_i::send_ready_message (Test::Receiver_ptr receiver
        i < this->number_;
        ++i)
     {
-      receiver->receive_call (TAO_ENV_SINGLE_ARG_PARAMETER);
+      receiver->receive_call (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 
 }
 
 void
-Sender_i::ping (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /*TAO_ENV_SINGLE_ARG_PARAMETER*/)
+Sender_i::ping (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return;

@@ -17,24 +17,24 @@ CORBA::Object_ptr
 Loader::create_object (CORBA::ORB_ptr orb,
                        int,
                        char * []
-                       TAO_ENV_ARG_DECL)
+                       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
     {
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var mgr =
-        poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      mgr->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test_i *test;
@@ -42,7 +42,7 @@ Loader::create_object (CORBA::ORB_ptr orb,
                       CORBA::Object::_nil ());
 
       PortableServer::ServantBase_var tmp = test;
-      obj = test->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+      obj = test->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       return obj._retn ();

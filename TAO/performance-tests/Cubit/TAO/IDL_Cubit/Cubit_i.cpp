@@ -126,10 +126,10 @@ Cubit_Factory_i::~Cubit_Factory_i (void)
 }
 
 Cubit_ptr
-Cubit_Factory_i::make_cubit (TAO_ENV_SINGLE_ARG_DECL)
+Cubit_Factory_i::make_cubit (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return my_cubit_._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return my_cubit_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
@@ -152,7 +152,7 @@ Cubit_i::~Cubit_i (void)
 }
 
 PortableServer::POA_ptr
-Cubit_i::_default_POA (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Cubit_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -164,14 +164,14 @@ Cubit_i::set_default_poa (PortableServer::POA_ptr poa)
 }
 
 void
-Cubit_i::cube_oneway (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Cubit_i::cube_oneway (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_ONEWAY_START);
 }
 
 void
-Cubit_i::cube_void (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Cubit_i::cube_void (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_VOID_START);
@@ -181,7 +181,7 @@ Cubit_i::cube_void (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 CORBA::Octet
 Cubit_i::cube_octet (CORBA::Octet o
-                     TAO_ENV_ARG_DECL_NOT_USED)
+                     ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_OCTET_START);
@@ -193,7 +193,7 @@ Cubit_i::cube_octet (CORBA::Octet o
 
 CORBA::Short
 Cubit_i::cube_short (CORBA::Short s
-                     TAO_ENV_ARG_DECL_NOT_USED)
+                     ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_SHORT_START);
@@ -205,7 +205,7 @@ Cubit_i::cube_short (CORBA::Short s
 
 CORBA::Long
 Cubit_i::cube_long (CORBA::Long l
-                    TAO_ENV_ARG_DECL_NOT_USED)
+                    ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_LONG_START);
@@ -217,7 +217,7 @@ Cubit_i::cube_long (CORBA::Long l
 
 Cubit::Many
 Cubit_i::cube_struct (const Cubit::Many &values
-                      TAO_ENV_ARG_DECL_NOT_USED)
+                      ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_STRUCT_START);
@@ -235,7 +235,7 @@ Cubit_i::cube_struct (const Cubit::Many &values
 
 Cubit::oneof
 Cubit_i::cube_union (const Cubit::oneof &values
-                     TAO_ENV_ARG_DECL_NOT_USED)
+                     ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_UNION_START);
@@ -269,7 +269,7 @@ Cubit_i::cube_union (const Cubit::oneof &values
 void
 Cubit_i::cube_long_sequence (const Cubit::long_seq &input,
                              Cubit::long_seq_out output
-                             TAO_ENV_ARG_DECL_NOT_USED)
+                             ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_LONG_SEQUENCE_START);
@@ -296,7 +296,7 @@ Cubit_i::cube_long_sequence (const Cubit::long_seq &input,
 void
 Cubit_i::cube_octet_sequence (const Cubit::octet_seq &input,
                               Cubit::octet_seq_out output
-                              TAO_ENV_ARG_DECL_NOT_USED)
+                              ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_OCTET_SEQUENCE_START);
@@ -337,7 +337,7 @@ Cubit_i::cube_octet_sequence (const Cubit::octet_seq &input,
 void
 Cubit_i::cube_many_sequence (const Cubit::many_seq & input,
                              Cubit::many_seq_out output
-                             TAO_ENV_ARG_DECL_NOT_USED)
+                             ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_MANY_SEQUENCE_START);
@@ -371,7 +371,7 @@ Cubit_i::cube_many_sequence (const Cubit::many_seq & input,
 void
 Cubit_i::cube_rti_data (const Cubit::RtiPacket &input,
                         Cubit::RtiPacket_out output
-                        TAO_ENV_ARG_DECL_NOT_USED)
+                        ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_LONG_SEQUENCE_START);
@@ -403,7 +403,7 @@ Cubit_i::cube_rti_data (const Cubit::RtiPacket &input,
 
 CORBA::Any *
 Cubit_i::cube_any (const CORBA::Any & any
-                   TAO_ENV_ARG_DECL_NOT_USED)
+                   ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_ANY_START);
@@ -420,7 +420,7 @@ Cubit_i::cube_any (const CORBA::Any & any
 
 CORBA::Any *
 Cubit_i::cube_any_struct (const CORBA::Any & any
-                          TAO_ENV_ARG_DECL_NOT_USED)
+                          ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_ANY_STRUCT_START);
@@ -439,7 +439,7 @@ Cubit_i::cube_any_struct (const CORBA::Any & any
 
 // Shutdown.
 
-void Cubit_i::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+void Cubit_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

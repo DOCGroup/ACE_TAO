@@ -81,11 +81,11 @@ main (int argc, char *argv[])
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Simple_Server_var server =
-        Simple_Server::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+        Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -107,7 +107,7 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
 
-      server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -133,7 +133,7 @@ Client::Client (int niterations,
 int
 Client::svc (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       for (int i = 0; i < this->niterations_; ++i)
@@ -144,15 +144,15 @@ Client::svc (void)
           CORBA::String_var argv0 = CORBA::string_dup ("dummy_argv");
           char* argv[1] = { argv0.inout () };
           CORBA::ORB_var orb =
-            CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+            CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           CORBA::Object_var object =
-            orb->string_to_object (this->ior_ TAO_ENV_ARG_PARAMETER);
+            orb->string_to_object (this->ior_ ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           Simple_Server_var server =
-            Simple_Server::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+            Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (CORBA::is_nil (server.in ()))
@@ -163,7 +163,7 @@ Client::svc (void)
                                 1);
             }
 
-          server->test_method (TAO_ENV_SINGLE_ARG_PARAMETER);
+          server->test_method (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
           if (TAO_debug_level > 0 && i % 100 == 0)
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));

@@ -30,9 +30,9 @@ TAO_Notify_Event_Dispatch_Command::~TAO_Notify_Event_Dispatch_Command ()
 }
 
 int
-TAO_Notify_Event_Dispatch_Command::execute (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Event_Dispatch_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->event_listener_->dispatch_event (*this->event_ TAO_ENV_ARG_PARAMETER);
+  this->event_listener_->dispatch_event (*this->event_ ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;

@@ -39,7 +39,7 @@ Consumer_Signal_Handler::handle_signal (int /* signum */,
               " Exiting on receiving ^C\n"));
 
   quit_on_signal ();
-  
+
   return 0;
 }
 
@@ -66,13 +66,13 @@ Consumer_Signal_Handler::quit_on_signal (void)
     {
       if (consumer_handler_->unregistered_ != 1
           && consumer_handler_->registered_ == 1)
-	{
-	  this->consumer_handler_->server_->unregister_callback 
+        {
+          this->consumer_handler_->server_->unregister_callback
             (this->consumer_handler_->consumer_var_.in ());
-	  ACE_DEBUG ((LM_DEBUG,
-		      "Consumer Unregistered\n"));
+          ACE_DEBUG ((LM_DEBUG,
+                      "Consumer Unregistered\n"));
         }
-      this->consumer_handler_->consumer_servant_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->consumer_handler_->consumer_servant_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -66,13 +66,13 @@ public:
   void register_policy_factory (
     CORBA::PolicyType type,
     PortableInterceptor::PolicyFactory_ptr policy_factory
-    TAO_ENV_ARG_DECL);
+    ACE_ENV_ARG_DECL);
 
   /// Construct a policy of the given type with the information
   /// contained in the CORBA::Any <value>.
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                    const CORBA::Any &value
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CORBA::PolicyError));
 

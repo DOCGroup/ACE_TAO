@@ -129,7 +129,7 @@ int be_visitor_root::visit_root (be_root *node)
               << "tao_" << ifwd->flat_name ()
               << "_narrow (" << be_idt << be_idt_nl
               << "CORBA::Object *" << be_nl
-              << "TAO_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
+              << "ACE_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
               << ");" << be_uidt_nl
               << be_global->stub_export_macro () << be_nl
               << "CORBA::Object *" << be_nl

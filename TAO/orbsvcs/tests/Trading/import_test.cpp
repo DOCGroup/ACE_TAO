@@ -11,7 +11,7 @@ main (int argc, char** argv)
   ACE_TRY_NEW_ENV
     {
       TAO_ORB_Manager orb_manager;
-      orb_manager.init (argc, argv TAO_ENV_ARG_PARAMETER);
+      orb_manager.init (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Command line argument interpretation.
@@ -23,7 +23,7 @@ main (int argc, char** argv)
       char* ior = parse_args.ior ();
       CORBA::Object_var trading_obj = (ior == 0) ?
         orb->resolve_initial_references ("TradingService") :
-        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (trading_obj.in ()))
@@ -34,19 +34,19 @@ main (int argc, char** argv)
       // Narrow the lookup interface.
       ACE_DEBUG ((LM_DEBUG, "*** Narrowing the lookup interface.\n"));
       CosTrading::Lookup_var lookup_if =
-        CosTrading::Lookup::_narrow (trading_obj.in () TAO_ENV_ARG_PARAMETER);
+        CosTrading::Lookup::_narrow (trading_obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Run the Offer Importer tests
       ACE_DEBUG ((LM_DEBUG, "*** Running the Offer Importer tests.\n"));
       TAO_Offer_Importer offer_importer (lookup_if.in (), ! parse_args.quiet ());
 
-      offer_importer.perform_queries (TAO_ENV_SINGLE_ARG_PARAMETER);
+      offer_importer.perform_queries (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args.federated ())
         {
-          offer_importer.perform_directed_queries (TAO_ENV_SINGLE_ARG_PARAMETER);
+          offer_importer.perform_directed_queries (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

@@ -52,7 +52,7 @@ Test_AnySeq::opname (void) const
 
 void
 Test_AnySeq::dii_req_invoke (CORBA::Request *req
-                             TAO_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
 {
   req->add_in_arg ("s1") <<= this->in_.in ();
   req->add_inout_arg ("s2") <<= this->inout_.in ();
@@ -60,7 +60,7 @@ Test_AnySeq::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (Param_Test::_tc_AnySeq);
 
-  req->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
+  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   Param_Test::AnySeq* tmp;
@@ -68,13 +68,13 @@ Test_AnySeq::dii_req_invoke (CORBA::Request *req
   this->ret_ = new Param_Test::AnySeq (*tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 TAO_ENV_ARG_PARAMETER);
+    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o2->value () >>= tmp;
   this->inout_ = new Param_Test::AnySeq (*tmp);
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 TAO_ENV_ARG_PARAMETER);
+    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o3->value () >>= tmp;
   this->out_ = new Param_Test::AnySeq (*tmp);
@@ -82,7 +82,7 @@ Test_AnySeq::dii_req_invoke (CORBA::Request *req
 
 int
 Test_AnySeq::init_parameters (Param_Test_ptr objref
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -124,7 +124,7 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref
             ACE_TRY
               {
                 // get access to a Coffee Object
-                Coffee_var cobj = objref->make_coffee (TAO_ENV_SINGLE_ARG_PARAMETER);
+                Coffee_var cobj = objref->make_coffee (ACE_ENV_SINGLE_ARG_PARAMETER);
                 ACE_TRY_CHECK;
 
                 // insert the coffee object into the Any
@@ -198,7 +198,7 @@ Test_AnySeq::reset_parameters (void)
 
 int
 Test_AnySeq::run_sii_test (Param_Test_ptr objref
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -207,7 +207,7 @@ Test_AnySeq::run_sii_test (Param_Test_ptr objref
       this->ret_ = objref->test_anyseq (this->in_.in (),
                                         this->inout_.inout (),
                                         out
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       return 0;

@@ -447,7 +447,7 @@ main (int argc, char *argv [])
 
       orb_Manager.init (argc,
                         argv
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 

@@ -12,7 +12,7 @@ PortableInterceptor::SlotId slot_id = 2093843221;
 void
 ServerORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr /* info */
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -20,10 +20,10 @@ ServerORBInitializer::pre_init (
 void
 ServerORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ::slot_id = info->allocate_slot_id (TAO_ENV_SINGLE_ARG_PARAMETER);
+  ::slot_id = info->allocate_slot_id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   PortableInterceptor::ServerRequestInterceptor_ptr tmp;
@@ -39,6 +39,6 @@ ServerORBInitializer::post_init (
   PortableInterceptor::ServerRequestInterceptor_var interceptor = tmp;
 
   info->add_server_request_interceptor (interceptor.in ()
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }

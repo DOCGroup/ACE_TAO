@@ -44,12 +44,12 @@ public:
   ~TAO_Strategized_Object_Proxy_Broker (void);
 
   virtual TAO_Object_Proxy_Impl &select_proxy (CORBA::Object_ptr object
-                                               TAO_ENV_ARG_DECL);
+                                               ACE_ENV_ARG_DECL);
 
 private:
 
   void create_proxy (int collocation_strategy
-                     TAO_ENV_ARG_DECL);
+                     ACE_ENV_ARG_DECL);
 
 private:
 

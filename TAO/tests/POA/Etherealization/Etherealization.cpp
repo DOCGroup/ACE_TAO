@@ -22,7 +22,7 @@
 class test_i : public POA_test
 {
 public:
-  void method (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /*TAO_ENV_SINGLE_ARG_PARAMETER*/)
+  void method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
@@ -37,7 +37,7 @@ class test_i_with_reference_counting : public virtual PortableServer::RefCountSe
                                        public virtual POA_test
 {
 public:
-  void method (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
@@ -53,7 +53,7 @@ class Servant_Activator : public PortableServer::ServantActivator
 public:
   PortableServer::Servant incarnate (const PortableServer::ObjectId &oid,
                                      PortableServer::POA_ptr poa
-                                     TAO_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::ForwardRequest));
 
@@ -62,14 +62,14 @@ public:
                     PortableServer::Servant servant,
                     CORBA::Boolean cleanup_in_progress,
                     CORBA::Boolean remaining_activations
-                    TAO_ENV_ARG_DECL)
+                    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 PortableServer::Servant
 Servant_Activator::incarnate (const PortableServer::ObjectId &id,
                               PortableServer::POA_ptr
-                              TAO_ENV_ARG_DECL_NOT_USED)
+                              ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
@@ -94,7 +94,7 @@ Servant_Activator::etherealize (const PortableServer::ObjectId &id,
                                 PortableServer::Servant servant,
                                 CORBA::Boolean,
                                 CORBA::Boolean
-                                TAO_ENV_ARG_DECL_NOT_USED)
+                                ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::String_var object_name =
@@ -114,7 +114,7 @@ Servant_Activator::etherealize (const PortableServer::ObjectId &id,
 int
 main (int argc, char **argv)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
@@ -122,24 +122,24 @@ main (int argc, char **argv)
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             0
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Obtain the RootPOA.
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA"
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::PolicyList policies (3);
@@ -148,29 +148,29 @@ main (int argc, char **argv)
       // ID Assignment Policy
       policies[0] =
         root_poa->create_id_assignment_policy (PortableServer::USER_ID
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Lifespan Policy
       policies[1] =
         root_poa->create_lifespan_policy (PortableServer::PERSISTENT
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Request Processing Policy
       policies[2] =
         root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var child_poa =
         root_poa->create_POA ("child",
                               poa_manager.in (),
                               policies
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Create servant activator.
@@ -179,7 +179,7 @@ main (int argc, char **argv)
 
       // Set servant_activator as the servant_manager of child POA.
       child_poa->set_servant_manager (servant_manager.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       {
@@ -191,19 +191,19 @@ main (int argc, char **argv)
         object =
           child_poa->create_reference_with_id (id.in (),
                                                "IDL:test:1.0"
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         test_var test =
           test::_narrow (object.in ()
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        test->method (TAO_ENV_SINGLE_ARG_PARAMETER);
+        test->method (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         child_poa->deactivate_object (id.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
 
@@ -216,19 +216,19 @@ main (int argc, char **argv)
         object =
           child_poa->create_reference_with_id (id.in (),
                                                "IDL:test:1.0"
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         test_var test =
           test::_narrow (object.in ()
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        test->method (TAO_ENV_SINGLE_ARG_PARAMETER);
+        test->method (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         child_poa->deactivate_object (id.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
 

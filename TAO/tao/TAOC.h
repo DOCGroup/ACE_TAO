@@ -176,7 +176,7 @@ TAO_NAMESPACE  TAO
     static BufferingConstraintPolicy_ptr tao_duplicate (BufferingConstraintPolicy_ptr);
     static void tao_release (BufferingConstraintPolicy_ptr);
     static BufferingConstraintPolicy_ptr tao_nil (void);
-    static BufferingConstraintPolicy_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static BufferingConstraintPolicy_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -231,11 +231,11 @@ class TAO_Export BufferingConstraintPolicy: public virtual CORBA::Policy
     static BufferingConstraintPolicy_ptr _duplicate (BufferingConstraintPolicy_ptr obj);
     static BufferingConstraintPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static BufferingConstraintPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static BufferingConstraintPolicy_ptr _nil (void)
       {
@@ -243,7 +243,7 @@ class TAO_Export BufferingConstraintPolicy: public virtual CORBA::Policy
       }
 
     virtual TAO::BufferingConstraint buffering_constraint (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException

@@ -86,10 +86,10 @@ public:
    */
   virtual int filter (const RtecEventComm::EventSet& event,
                       TAO_EC_QOS_Info& qos_info
-                      TAO_ENV_ARG_DECL) = 0;
+                      ACE_ENV_ARG_DECL) = 0;
   virtual int filter_nocopy (RtecEventComm::EventSet& event,
                              TAO_EC_QOS_Info& qos_info
-                             TAO_ENV_ARG_DECL) = 0;
+                             ACE_ENV_ARG_DECL) = 0;
 
   /**
    * This is called by the children when they accept an event and
@@ -99,10 +99,10 @@ public:
    */
   virtual void push (const RtecEventComm::EventSet& event,
                      TAO_EC_QOS_Info& qos_info
-                     TAO_ENV_ARG_DECL) = 0;
+                     ACE_ENV_ARG_DECL) = 0;
   virtual void push_nocopy (RtecEventComm::EventSet& event,
                             TAO_EC_QOS_Info& qos_info
-                            TAO_ENV_ARG_DECL) = 0;
+                            ACE_ENV_ARG_DECL) = 0;
 
   /// Clear any saved state, must reset and assume no events have been
   /// received.
@@ -134,7 +134,7 @@ public:
    */
   virtual int add_dependencies (const RtecEventComm::EventHeader& header,
                                 const TAO_EC_QOS_Info& qos_info
-                                TAO_ENV_ARG_DECL) = 0;
+                                ACE_ENV_ARG_DECL) = 0;
 
   /**
    * Obtain the QOS information for this filter, the default
@@ -143,7 +143,7 @@ public:
    * Returns 0 on success and -1 on failure
    */
   virtual void get_qos_info (TAO_EC_QOS_Info& qos_info
-                             TAO_ENV_ARG_DECL);
+                             ACE_ENV_ARG_DECL);
 
 private:
   /// The parent...
@@ -175,22 +175,22 @@ public:
   // TAO_EC_Filter.
   virtual int filter (const RtecEventComm::EventSet& event,
                       TAO_EC_QOS_Info& qos_info
-                      TAO_ENV_ARG_DECL);
+                      ACE_ENV_ARG_DECL);
   virtual int filter_nocopy (RtecEventComm::EventSet& event,
                              TAO_EC_QOS_Info& qos_info
-                             TAO_ENV_ARG_DECL);
+                             ACE_ENV_ARG_DECL);
   virtual void push (const RtecEventComm::EventSet& event,
                      TAO_EC_QOS_Info& qos_info
-                     TAO_ENV_ARG_DECL);
+                     ACE_ENV_ARG_DECL);
   virtual void push_nocopy (RtecEventComm::EventSet& event,
                             TAO_EC_QOS_Info& qos_info
-                            TAO_ENV_ARG_DECL);
+                            ACE_ENV_ARG_DECL);
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
   virtual int can_match (const RtecEventComm::EventHeader& header) const;
   virtual int add_dependencies (const RtecEventComm::EventHeader& header,
                                 const TAO_EC_QOS_Info &qos_info
-                                TAO_ENV_ARG_DECL);
+                                ACE_ENV_ARG_DECL);
 };
 
 // ****************************************************************

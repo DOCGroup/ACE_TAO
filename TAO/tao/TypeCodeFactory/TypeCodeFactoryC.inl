@@ -50,10 +50,10 @@ tao_CORBA_TypeCodeFactory_nil (
 ACE_INLINE CORBA_TypeCodeFactory_ptr
 tao_CORBA_TypeCodeFactory_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return CORBA_TypeCodeFactory::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return CORBA_TypeCodeFactory::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *

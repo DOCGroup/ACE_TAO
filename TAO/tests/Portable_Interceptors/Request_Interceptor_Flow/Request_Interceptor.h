@@ -59,10 +59,10 @@ public:
    */
   //@{
   /// Return the name of this Requestinterceptor.
-  virtual char * name (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 

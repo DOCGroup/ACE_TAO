@@ -29,7 +29,7 @@ Receiver_i::~Receiver_i (void)
 
 void
 Receiver_i::message (const char *msg
-                     TAO_ENV_ARG_DECL_NOT_USED)
+                     ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -40,7 +40,7 @@ Receiver_i::message (const char *msg
 }
 
 void
-Receiver_i::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Receiver_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
  ACE_THROW_SPEC ((
       CORBA::SystemException
     ))

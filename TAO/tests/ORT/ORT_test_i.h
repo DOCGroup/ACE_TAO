@@ -25,7 +25,7 @@ class ORT_test_i : public virtual POA_ObjectReferenceTemplate::ORT_test
   /// Constructor
   ORT_test_i ();
 
-  CORBA::Boolean request_server (TAO_ENV_SINGLE_ARG_DECL)
+  CORBA::Boolean request_server (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

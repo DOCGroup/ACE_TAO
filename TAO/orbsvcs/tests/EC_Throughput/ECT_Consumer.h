@@ -45,10 +45,10 @@ public:
                 int type_start,
                 int type_count,
                 RtecEventChannelAdmin::EventChannel_ptr ec
-                TAO_ENV_ARG_DECL);
+                ACE_ENV_ARG_DECL);
   // This method connects the consumer to the EC.
 
-  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
+  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
   // Disconnect from the EC.
 
   void dump_results (const char* name,
@@ -59,9 +59,9 @@ public:
   // Add our throughput and latency statistics to <stats>
 
   virtual void push (const RtecEventComm::EventSet& events
-                     TAO_ENV_ARG_DECL)
+                     ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 

@@ -58,7 +58,7 @@ main (int argc, char *argv[])
         CORBA::ORB_init (argc,
                          argv,
                          ""
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -66,7 +66,7 @@ main (int argc, char *argv[])
 
        CORBA::Object_var object =
         orb->string_to_object (ior
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // To use the smart proxy just enter it as a svc.conf
@@ -74,7 +74,7 @@ main (int argc, char *argv[])
 
       Test_var server =
         Test::_narrow (object.in ()
-                       TAO_ENV_ARG_PARAMETER);
+                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -85,7 +85,7 @@ main (int argc, char *argv[])
 
       server->method (0);
 
-      server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
     }

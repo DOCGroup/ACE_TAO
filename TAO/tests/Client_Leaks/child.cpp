@@ -11,14 +11,14 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (argc < 2)
         {
           // Paranoia, we should have an auto_ptr-like gadget for
           // this.
-          orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+          orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -27,10 +27,10 @@ main (int argc, char *argv[])
         }
 
       CORBA::Object_var object =
-        orb->string_to_object (argv[1] TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object (argv[1] ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       Test::Startup_Callback_var startup_callback =
-        Test::Startup_Callback::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+        Test::Startup_Callback::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (CORBA::is_nil (startup_callback.in ()))
         {
@@ -40,11 +40,11 @@ main (int argc, char *argv[])
         }
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -53,7 +53,7 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Process *process_impl;
@@ -63,23 +63,23 @@ main (int argc, char *argv[])
       PortableServer::ServantBase_var owner_transfer(process_impl);
 
       Test::Process_var process =
-        process_impl->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        process_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      startup_callback->started (process.in () TAO_ENV_ARG_PARAMETER);
+      startup_callback->started (process.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_Time_Value tv (50, 0);
-      orb->run (tv TAO_ENV_ARG_PARAMETER);
+      orb->run (tv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      root_poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

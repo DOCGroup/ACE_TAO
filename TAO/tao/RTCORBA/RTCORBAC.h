@@ -367,7 +367,7 @@ TAO_NAMESPACE  RTCORBA
     static PriorityModelPolicy_ptr tao_nil (void);
     static PriorityModelPolicy_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -425,12 +425,12 @@ TAO_NAMESPACE  RTCORBA
 
     static PriorityModelPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static PriorityModelPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static PriorityModelPolicy_ptr _nil (void)
@@ -439,14 +439,14 @@ TAO_NAMESPACE  RTCORBA
       }
 
     virtual RTCORBA::PriorityModel priority_model (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual RTCORBA::Priority server_priority (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -512,7 +512,7 @@ TAO_NAMESPACE  RTCORBA
     static ThreadpoolPolicy_ptr tao_nil (void);
     static ThreadpoolPolicy_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -570,12 +570,12 @@ TAO_NAMESPACE  RTCORBA
 
     static ThreadpoolPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static ThreadpoolPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static ThreadpoolPolicy_ptr _nil (void)
@@ -584,7 +584,7 @@ TAO_NAMESPACE  RTCORBA
       }
 
     virtual RTCORBA::ThreadpoolId threadpool (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -648,7 +648,7 @@ TAO_NAMESPACE  RTCORBA
     static ProtocolProperties_ptr tao_nil (void);
     static ProtocolProperties_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -707,12 +707,12 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     static ProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static ProtocolProperties_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static ProtocolProperties_ptr _nil (void)
@@ -1010,7 +1010,7 @@ class TAO_RTCORBA_Export ProtocolProperties
     static ServerProtocolPolicy_ptr tao_nil (void);
     static ServerProtocolPolicy_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -1068,12 +1068,12 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     static ServerProtocolPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static ServerProtocolPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static ServerProtocolPolicy_ptr _nil (void)
@@ -1082,7 +1082,7 @@ class TAO_RTCORBA_Export ProtocolProperties
       }
 
     virtual RTCORBA::ProtocolList * protocols (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1148,7 +1148,7 @@ class TAO_RTCORBA_Export ProtocolProperties
     static ClientProtocolPolicy_ptr tao_nil (void);
     static ClientProtocolPolicy_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -1206,12 +1206,12 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     static ClientProtocolPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static ClientProtocolPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static ClientProtocolPolicy_ptr _nil (void)
@@ -1220,7 +1220,7 @@ class TAO_RTCORBA_Export ProtocolProperties
       }
 
     virtual RTCORBA::ProtocolList * protocols (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1286,7 +1286,7 @@ class TAO_RTCORBA_Export ProtocolProperties
     static PrivateConnectionPolicy_ptr tao_nil (void);
     static PrivateConnectionPolicy_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -1344,12 +1344,12 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     static PrivateConnectionPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static PrivateConnectionPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static PrivateConnectionPolicy_ptr _nil (void)
@@ -1415,7 +1415,7 @@ class TAO_RTCORBA_Export ProtocolProperties
     static TCPProtocolProperties_ptr tao_nil (void);
     static TCPProtocolProperties_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -1473,12 +1473,12 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     static TCPProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static TCPProtocolProperties_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static TCPProtocolProperties_ptr _nil (void)
@@ -1487,7 +1487,7 @@ class TAO_RTCORBA_Export ProtocolProperties
       }
 
     virtual CORBA::Long send_buffer_size (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1495,14 +1495,14 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     virtual void send_buffer_size (
         CORBA::Long send_buffer_size
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual CORBA::Long recv_buffer_size (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1510,14 +1510,14 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     virtual void recv_buffer_size (
         CORBA::Long recv_buffer_size
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual CORBA::Boolean keep_alive (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1525,14 +1525,14 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     virtual void keep_alive (
         CORBA::Boolean keep_alive
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual CORBA::Boolean dont_route (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1540,14 +1540,14 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     virtual void dont_route (
         CORBA::Boolean dont_route
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual CORBA::Boolean no_delay (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1555,7 +1555,7 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     virtual void no_delay (
         CORBA::Boolean no_delay
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1619,7 +1619,7 @@ class TAO_RTCORBA_Export ProtocolProperties
     static GIOPProtocolProperties_ptr tao_nil (void);
     static GIOPProtocolProperties_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -1677,12 +1677,12 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     static GIOPProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static GIOPProtocolProperties_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static GIOPProtocolProperties_ptr _nil (void)
@@ -1748,7 +1748,7 @@ class TAO_RTCORBA_Export ProtocolProperties
     static UnixDomainProtocolProperties_ptr tao_nil (void);
     static UnixDomainProtocolProperties_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -1806,12 +1806,12 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     static UnixDomainProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static UnixDomainProtocolProperties_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static UnixDomainProtocolProperties_ptr _nil (void)
@@ -1820,7 +1820,7 @@ class TAO_RTCORBA_Export ProtocolProperties
       }
 
     virtual CORBA::Long send_buffer_size (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1828,14 +1828,14 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     virtual void send_buffer_size (
         CORBA::Long send_buffer_size
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual CORBA::Long recv_buffer_size (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1843,7 +1843,7 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     virtual void recv_buffer_size (
         CORBA::Long recv_buffer_size
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1907,7 +1907,7 @@ class TAO_RTCORBA_Export ProtocolProperties
     static SharedMemoryProtocolProperties_ptr tao_nil (void);
     static SharedMemoryProtocolProperties_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -1965,12 +1965,12 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     static SharedMemoryProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static SharedMemoryProtocolProperties_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static SharedMemoryProtocolProperties_ptr _nil (void)
@@ -1979,7 +1979,7 @@ class TAO_RTCORBA_Export ProtocolProperties
       }
 
     virtual CORBA::Long preallocate_buffer_size (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1987,14 +1987,14 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     virtual void preallocate_buffer_size (
         CORBA::Long preallocate_buffer_size
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual char * mmap_filename (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2002,14 +2002,14 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     virtual void mmap_filename (
         const char * mmap_filename
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual char * mmap_lockname (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2017,7 +2017,7 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     virtual void mmap_lockname (
         const char * mmap_lockname
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2302,7 +2302,7 @@ class TAO_RTCORBA_Export ProtocolProperties
     static PriorityBandedConnectionPolicy_ptr tao_nil (void);
     static PriorityBandedConnectionPolicy_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -2360,12 +2360,12 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     static PriorityBandedConnectionPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static PriorityBandedConnectionPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static PriorityBandedConnectionPolicy_ptr _nil (void)
@@ -2374,7 +2374,7 @@ class TAO_RTCORBA_Export ProtocolProperties
       }
 
     virtual RTCORBA::PriorityBands * priority_bands (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2438,7 +2438,7 @@ class TAO_RTCORBA_Export ProtocolProperties
     static Current_ptr tao_nil (void);
     static Current_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -2496,12 +2496,12 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     static Current_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static Current_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static Current_ptr _nil (void)
@@ -2510,7 +2510,7 @@ class TAO_RTCORBA_Export ProtocolProperties
       }
 
     virtual RTCORBA::Priority the_priority (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2518,7 +2518,7 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     virtual void the_priority (
         RTCORBA::Priority the_priority
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2582,7 +2582,7 @@ class TAO_RTCORBA_Export ProtocolProperties
     static Mutex_ptr tao_nil (void);
     static Mutex_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -2640,12 +2640,12 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     static Mutex_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static Mutex_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static Mutex_ptr _nil (void)
@@ -2654,14 +2654,14 @@ class TAO_RTCORBA_Export ProtocolProperties
       }
 
     virtual void lock (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual void unlock (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2669,7 +2669,7 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     virtual CORBA::Boolean try_lock (
         TimeBase::TimeT max_wait
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2733,7 +2733,7 @@ class TAO_RTCORBA_Export ProtocolProperties
     static RTORB_ptr tao_nil (void);
     static RTORB_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -2791,12 +2791,12 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     static RTORB_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static RTORB_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static RTORB_ptr _nil (void)
@@ -2805,7 +2805,7 @@ class TAO_RTCORBA_Export ProtocolProperties
       }
 
     virtual RTCORBA::Mutex_ptr create_mutex (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2813,7 +2813,7 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     virtual void destroy_mutex (
         RTCORBA::Mutex_ptr the_mutex
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2842,12 +2842,12 @@ class TAO_RTCORBA_Export ProtocolProperties
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         );
 
       static MutexNotFound *_downcast (CORBA::Exception *);
@@ -2863,7 +2863,7 @@ class TAO_RTCORBA_Export ProtocolProperties
     virtual RTCORBA::Mutex_ptr create_named_mutex (
         const char * name,
         CORBA::Boolean_out created_flag
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2871,7 +2871,7 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     virtual RTCORBA::Mutex_ptr open_named_mutex (
         const char * name
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -2884,7 +2884,7 @@ class TAO_RTCORBA_Export ProtocolProperties
         CORBA::Boolean keep_alive,
         CORBA::Boolean dont_route,
         CORBA::Boolean no_delay
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2913,12 +2913,12 @@ class TAO_RTCORBA_Export ProtocolProperties
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         );
 
       static InvalidThreadpool *_narrow (CORBA::Exception *);
@@ -2939,7 +2939,7 @@ class TAO_RTCORBA_Export ProtocolProperties
         CORBA::Boolean allow_request_buffering,
         CORBA::ULong max_buffered_requests,
         CORBA::ULong max_request_buffer_size
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2952,7 +2952,7 @@ class TAO_RTCORBA_Export ProtocolProperties
         CORBA::Boolean allow_request_buffering,
         CORBA::ULong max_buffered_requests,
         CORBA::ULong max_request_buffer_size
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2960,7 +2960,7 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     virtual void destroy_threadpool (
         RTCORBA::ThreadpoolId threadpool
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -2970,7 +2970,7 @@ class TAO_RTCORBA_Export ProtocolProperties
     virtual RTCORBA::PriorityModelPolicy_ptr create_priority_model_policy (
         RTCORBA::PriorityModel priority_model,
         RTCORBA::Priority server_priority
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2978,7 +2978,7 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     virtual RTCORBA::ThreadpoolPolicy_ptr create_threadpool_policy (
         RTCORBA::ThreadpoolId threadpool
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2986,7 +2986,7 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     virtual RTCORBA::PriorityBandedConnectionPolicy_ptr create_priority_banded_connection_policy (
         const RTCORBA::PriorityBands & priority_bands
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2994,7 +2994,7 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     virtual RTCORBA::ServerProtocolPolicy_ptr create_server_protocol_policy (
         const RTCORBA::ProtocolList & protocols
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -3002,14 +3002,14 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     virtual RTCORBA::ClientProtocolPolicy_ptr create_client_protocol_policy (
         const RTCORBA::ProtocolList & protocols
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual RTCORBA::PrivateConnectionPolicy_ptr create_private_connection_policy (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException

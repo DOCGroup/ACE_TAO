@@ -118,7 +118,7 @@ TAO_SHMIOP_Connector::close (void)
 int
 TAO_SHMIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
                                TAO_Transport_Descriptor_Interface *desc
-                               TAO_ENV_ARG_DECL_NOT_USED)
+                               ACE_ENV_ARG_DECL_NOT_USED)
 {
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
@@ -427,7 +427,7 @@ TAO_SHMIOP_Connector::create_profile (TAO_InputCDR& cdr)
 }
 
 TAO_Profile *
-TAO_SHMIOP_Connector::make_profile (TAO_ENV_SINGLE_ARG_DECL)
+TAO_SHMIOP_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
 {
   // The endpoint should be of the form:
   //    N.n@port/object_key

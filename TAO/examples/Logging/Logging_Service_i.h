@@ -58,14 +58,14 @@ public:
 
   int init (int argc,
             char **argv
-            TAO_ENV_ARG_DECL);
+            ACE_ENV_ARG_DECL);
   // Initialize the Logger_Server state - parsing arguments and ...
 
-  int run (TAO_ENV_SINGLE_ARG_DECL);
+  int run (ACE_ENV_SINGLE_ARG_DECL);
   // Run the ORB.
 
   Logger_ptr make_logger (const char *name
-                          TAO_ENV_ARG_DECL);
+                          ACE_ENV_ARG_DECL);
   // This function creates and returns a logger with the given <name>.
   // Currently, <name> is unused.
 
@@ -73,7 +73,7 @@ private:
   int parse_args (void);
   // Parses the commandline arguments.
 
-  int init_naming_service (TAO_ENV_SINGLE_ARG_DECL);
+  int init_naming_service (ACE_ENV_SINGLE_ARG_DECL);
   // Initialises the name server and registers logger_factory with the
   // name server.
 

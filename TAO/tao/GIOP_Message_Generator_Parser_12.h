@@ -61,7 +61,7 @@ public:
   virtual int write_reply_header (
       TAO_OutputCDR &output,
       TAO_Pluggable_Reply_Params_Base &reply
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 

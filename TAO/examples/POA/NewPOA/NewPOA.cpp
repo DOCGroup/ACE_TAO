@@ -28,14 +28,14 @@ ACE_RCSID(NewPOA, NewPOA, "$Id$")
 
 void
 print_poa (PortableServer::POA_ptr poa
-           TAO_ENV_ARG_DECL)
+           ACE_ENV_ARG_DECL)
 {
   CORBA::String_var poa_name =
-    poa->the_name (TAO_ENV_SINGLE_ARG_PARAMETER);
+    poa->the_name (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::OctetSeq_var poa_id =
-    poa->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+    poa->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -58,7 +58,7 @@ print_poa (PortableServer::POA_ptr poa
               "\n"));
 
   PortableServer::POAList_var children =
-    poa->the_children (TAO_ENV_SINGLE_ARG_PARAMETER);
+    poa->the_children (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   for (CORBA::ULong index = 0;
@@ -66,7 +66,7 @@ print_poa (PortableServer::POA_ptr poa
        ++index)
     {
       print_poa (children[index].in ()
-                 TAO_ENV_ARG_PARAMETER);
+                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -74,7 +74,7 @@ print_poa (PortableServer::POA_ptr poa
 int
 main (int argc, char **argv)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
@@ -82,18 +82,18 @@ main (int argc, char **argv)
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             0
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA"
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // _narrow() the Object to get the POA object, i.e., the root_poa.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Policies for the new POAs
@@ -102,12 +102,12 @@ main (int argc, char **argv)
 
       // Threading policy
       policies[0] =
-        root_poa->create_thread_policy (PortableServer::ORB_CTRL_MODEL TAO_ENV_ARG_PARAMETER);
+        root_poa->create_thread_policy (PortableServer::ORB_CTRL_MODEL ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Lifespan policy
       policies[1] =
-        root_poa->create_lifespan_policy (PortableServer::TRANSIENT TAO_ENV_ARG_PARAMETER);
+        root_poa->create_lifespan_policy (PortableServer::TRANSIENT ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Creation of the firstPOA
@@ -116,7 +116,7 @@ main (int argc, char **argv)
         root_poa->create_POA (name.c_str (),
                               PortableServer::POAManager::_nil (),
                               policies
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Creation of the new POA, i.e. firstPOA/secondPOA
@@ -125,7 +125,7 @@ main (int argc, char **argv)
         first_poa->create_POA (name.c_str (),
                                PortableServer::POAManager::_nil (),
                                policies
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Creating thirdPOA.
@@ -135,7 +135,7 @@ main (int argc, char **argv)
         root_poa->create_POA (name.c_str (),
                               PortableServer::POAManager::_nil (),
                               policies
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Creation of the new POAs over, so destroy the Policy_ptr's.
@@ -144,26 +144,26 @@ main (int argc, char **argv)
            ++i)
         {
           CORBA::Policy_ptr policy = policies[i];
-          policy->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+          policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
       // Get the names of all the POAs and print them out.
 
       CORBA::String_var root_poa_name =
-        root_poa->the_name (TAO_ENV_SINGLE_ARG_PARAMETER);
+        root_poa->the_name (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var first_poa_name =
-        first_poa->the_name (TAO_ENV_SINGLE_ARG_PARAMETER);
+        first_poa->the_name (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var second_poa_name =
-        second_poa->the_name (TAO_ENV_SINGLE_ARG_PARAMETER);
+        second_poa->the_name (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var third_poa_name =
-        third_poa->the_name (TAO_ENV_SINGLE_ARG_PARAMETER);
+        third_poa->the_name (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -174,7 +174,7 @@ main (int argc, char **argv)
                   third_poa_name.in ()));
 
       print_poa (root_poa.in ()
-                 TAO_ENV_ARG_PARAMETER);
+                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }

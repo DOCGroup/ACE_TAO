@@ -50,7 +50,7 @@ public:
   // = Some functions common to all Dynamic Any types.
 
   virtual CORBA::TypeCode_ptr type (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -58,7 +58,7 @@ public:
 
   virtual void assign (
       DynamicAny::DynAny_ptr dyn_any
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -67,7 +67,7 @@ public:
 
   virtual void insert_boolean (
       CORBA::Boolean value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -77,7 +77,7 @@ public:
 
   virtual void insert_octet (
       CORBA::Octet value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -87,7 +87,7 @@ public:
 
   virtual void insert_char (
       CORBA::Char value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -97,7 +97,7 @@ public:
 
   virtual void insert_short (
       CORBA::Short value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -107,7 +107,7 @@ public:
 
   virtual void insert_ushort (
       CORBA::UShort value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -117,7 +117,7 @@ public:
 
   virtual void insert_long (
       CORBA::Long value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -127,7 +127,7 @@ public:
 
   virtual void insert_ulong (
       CORBA::ULong value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -137,7 +137,7 @@ public:
 
   virtual void insert_float (
       CORBA::Float value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -147,7 +147,7 @@ public:
 
   virtual void insert_double (
       CORBA::Double value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -157,7 +157,7 @@ public:
 
   virtual void insert_string (
       const char * value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -167,7 +167,7 @@ public:
 
   virtual void insert_reference (
       CORBA::Object_ptr value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -177,7 +177,7 @@ public:
 
   virtual void insert_typecode (
       CORBA::TypeCode_ptr value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -187,7 +187,7 @@ public:
 
   virtual void insert_longlong (
       CORBA::LongLong value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -197,7 +197,7 @@ public:
 
   virtual void insert_ulonglong (
       CORBA::ULongLong value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -207,7 +207,7 @@ public:
 
   virtual void insert_longdouble (
       CORBA::LongDouble value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -217,7 +217,7 @@ public:
 
   virtual void insert_wchar (
       CORBA::WChar value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -227,7 +227,7 @@ public:
 
   virtual void insert_wstring (
       const CORBA::WChar * value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -237,7 +237,7 @@ public:
 
   virtual void insert_any (
       const CORBA::Any & value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -247,7 +247,7 @@ public:
 
   virtual void insert_dyn_any (
       DynamicAny::DynAny_ptr value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -258,7 +258,7 @@ public:
 #ifdef TAO_HAS_VALUETYPE
   virtual void insert_val (
       CORBA::ValueBase_ptr value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -268,7 +268,7 @@ public:
 #endif /* TAO_HAS_VALUETYPE */
 
   virtual CORBA::Boolean get_boolean (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -277,7 +277,7 @@ public:
       ));
 
   virtual CORBA::Octet get_octet (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -286,7 +286,7 @@ public:
       ));
 
   virtual CORBA::Char get_char (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -295,7 +295,7 @@ public:
       ));
 
   virtual CORBA::Short get_short (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -304,7 +304,7 @@ public:
       ));
 
   virtual CORBA::UShort get_ushort (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -313,7 +313,7 @@ public:
       ));
 
   virtual CORBA::Long get_long (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -322,7 +322,7 @@ public:
       ));
 
   virtual CORBA::ULong get_ulong (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -331,7 +331,7 @@ public:
       ));
 
   virtual CORBA::Float get_float (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -340,7 +340,7 @@ public:
       ));
 
   virtual CORBA::Double get_double (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -349,7 +349,7 @@ public:
       ));
 
   virtual char * get_string (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -358,7 +358,7 @@ public:
       ));
 
   virtual CORBA::Object_ptr get_reference (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -367,7 +367,7 @@ public:
       ));
 
   virtual CORBA::TypeCode_ptr get_typecode (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -376,7 +376,7 @@ public:
       ));
 
   virtual CORBA::LongLong get_longlong (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -385,7 +385,7 @@ public:
       ));
 
   virtual CORBA::ULongLong get_ulonglong (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -394,7 +394,7 @@ public:
       ));
 
   virtual CORBA::LongDouble get_longdouble (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -403,7 +403,7 @@ public:
       ));
 
   virtual CORBA::WChar get_wchar (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -412,7 +412,7 @@ public:
       ));
 
   virtual CORBA::WChar * get_wstring (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -421,7 +421,7 @@ public:
       ));
 
   virtual CORBA::Any * get_any (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -430,7 +430,7 @@ public:
       ));
 
   virtual DynamicAny::DynAny_ptr get_dyn_any (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -440,7 +440,7 @@ public:
 
 #ifdef TAO_HAS_VALUETYPE
   virtual CORBA::ValueBase_ptr get_val (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -451,35 +451,35 @@ public:
 
   virtual CORBA::Boolean seek (
       CORBA::Long index
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual void rewind (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual CORBA::Boolean next (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual DynamicAny::DynAny_ptr copy (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual CORBA::ULong component_count (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -498,7 +498,7 @@ protected:
   void set_flag (
       DynamicAny::DynAny_ptr component,
       CORBA::Boolean destroying
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -533,7 +533,7 @@ protected:
 private:
   // Utility functions used by insert_* and get_*.
 
-  DynamicAny::DynAny_ptr check_component (TAO_ENV_SINGLE_ARG_DECL)
+  DynamicAny::DynAny_ptr check_component (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -541,14 +541,14 @@ private:
       ));
 
   void check_type (CORBA::TypeCode_ptr tc
-                   TAO_ENV_ARG_DECL)
+                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch
       ));
 
   CORBA::TypeCode_ptr check_type_and_unalias (CORBA::TypeCode_ptr tc
-                                              TAO_ENV_ARG_DECL)
+                                              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch

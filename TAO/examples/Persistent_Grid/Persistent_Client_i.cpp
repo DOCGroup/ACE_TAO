@@ -58,14 +58,14 @@ Persistent_Client_i::run (const char *name,
   if (this->parse_args (argc, argv) == -1)
     return -1;
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       // Make the Grid.
       Grid_ptr grid = client->make_grid (width_,
                                          height_
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -78,7 +78,7 @@ Persistent_Client_i::run (const char *name,
             {
               CORBA::Long ret_val = grid->get (index_,
                                                ctr
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               ACE_DEBUG ((LM_DEBUG,
@@ -87,12 +87,12 @@ Persistent_Client_i::run (const char *name,
         }
 
       if (client.shutdown () == 1) {
-        client->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+        client->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
 
       if (this->remove_ == 1) {
-        client->cleanup (TAO_ENV_SINGLE_ARG_PARAMETER);
+        client->cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
     }

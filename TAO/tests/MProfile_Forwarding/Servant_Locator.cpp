@@ -42,7 +42,7 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
                             PortableServer::POA_ptr /* poa_ptr */,
                             const char * /*operation*/,
                             PortableServer::ServantLocator::Cookie & /* cookie */
-                            TAO_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
@@ -59,7 +59,7 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
   // Combined IOR stuff
   Simple_Server_var server =
     Simple_Server::_narrow (this->objref_.in ()
-                            TAO_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -80,7 +80,7 @@ Servant_Locator::postinvoke (const PortableServer::ObjectId &,
                              const char *,
                              PortableServer::ServantLocator::Cookie ,
                              PortableServer::Servant
-                             TAO_ENV_ARG_DECL_NOT_USED)
+                             ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

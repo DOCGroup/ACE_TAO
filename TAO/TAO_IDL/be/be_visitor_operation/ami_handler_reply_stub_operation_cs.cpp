@@ -113,13 +113,13 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (be_op
       << "CORBA::ULong reply_status";
 
   *os << be_nl
-      << "TAO_ENV_ARG_DECL";
+      << "ACE_ENV_ARG_DECL";
 
   *os << ")" << be_uidt << be_uidt_nl;
 
   // Generate the actual code for the stub. However, if any of the argument
   // types is "native", we flag a MARSHAL exception.
-  // last argument - is always TAO_ENV_ARG_PARAMETER
+  // last argument - is always ACE_ENV_ARG_PARAMETER
   *os << "{\n" << be_idt;
 
   // Generate any pre stub info if and only if none of our parameters is of the
@@ -148,7 +148,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (be_op
       << "_tao_reply_handler_object =" << be_idt_nl;
 
   *os << parent->full_name ();
-  *os << "::_narrow(_tao_reply_handler TAO_ENV_ARG_PARAMETER);" << be_uidt_nl;
+  *os << "::_narrow(_tao_reply_handler ACE_ENV_ARG_PARAMETER);" << be_uidt_nl;
 
   *os << "ACE_CHECK;" << be_nl << be_nl
       << "// Exception handling" << be_nl
@@ -249,7 +249,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (be_op
 
   if (!be_global->exception_support ())
     {
-      *os << " TAO_ENV_ARG_PARAMETER";
+      *os << " ACE_ENV_ARG_PARAMETER";
     }
 
   *os << be_uidt_nl << ");" << be_uidt_nl;

@@ -48,14 +48,14 @@ Test_Nested_Struct::opname (void) const
 }
 
 void
-Test_Nested_Struct::dii_req_invoke (CORBA::Request *req TAO_ENV_ARG_DECL)
+Test_Nested_Struct::dii_req_invoke (CORBA::Request *req ACE_ENV_ARG_DECL)
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_.in ();
   req->add_out_arg ("s3") <<= this->out_.in ();
   req->set_return_type (Param_Test::_tc_Nested_Struct);
 
-  req->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
+  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   Param_Test::Nested_Struct *tmp;
@@ -63,13 +63,13 @@ Test_Nested_Struct::dii_req_invoke (CORBA::Request *req TAO_ENV_ARG_DECL)
   this->ret_ = new Param_Test::Nested_Struct (*tmp);
 
   CORBA::NamedValue_ptr arg2 =
-    req->arguments ()->item (1 TAO_ENV_ARG_PARAMETER);
+    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *arg2->value () >>= tmp;
   this->inout_ = new Param_Test::Nested_Struct (*tmp);
 
   CORBA::NamedValue_ptr arg3 =
-    req->arguments ()->item (2 TAO_ENV_ARG_PARAMETER);
+    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *arg3->value () >>= tmp;
   this->out_ = new Param_Test::Nested_Struct (*tmp);
@@ -77,7 +77,7 @@ Test_Nested_Struct::dii_req_invoke (CORBA::Request *req TAO_ENV_ARG_DECL)
 
 int
 Test_Nested_Struct::init_parameters (Param_Test_ptr
-                                     TAO_ENV_ARG_DECL_NOT_USED)
+                                     ACE_ENV_ARG_DECL_NOT_USED)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -131,7 +131,7 @@ Test_Nested_Struct::reset_parameters (void)
 
 int
 Test_Nested_Struct::run_sii_test (Param_Test_ptr objref
-                                  TAO_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -139,7 +139,7 @@ Test_Nested_Struct::run_sii_test (Param_Test_ptr objref
       this->ret_ = objref->test_nested_struct (this->in_,
                                                this->inout_.inout (),
                                                out
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       return 0;

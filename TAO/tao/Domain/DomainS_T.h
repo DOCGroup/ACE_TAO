@@ -62,11 +62,11 @@
 
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
     CORBA::Policy_ptr get_domain_policy (
         CORBA::PolicyType policy_type
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -112,33 +112,33 @@
 
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
     void make_domain_manager (
         CORBA::InterfaceDef_ptr object_type,
         CORBA::Boolean constr_policy
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
     CORBA::PolicyType policy_type (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
     CORBA::Policy_ptr copy (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
     void destroy (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException

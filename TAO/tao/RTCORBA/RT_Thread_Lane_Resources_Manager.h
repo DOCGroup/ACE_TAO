@@ -47,7 +47,7 @@ public:
   void finalize (void);
 
   /// Open default resources.
-  int open_default_resources (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int open_default_resources (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// Shutdown reactor.
   void shutdown_reactor (void);

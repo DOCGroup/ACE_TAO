@@ -59,10 +59,10 @@ tao_CORBA_Current_nil (
 CORBA_Current_ptr
 tao_CORBA_Current_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return CORBA_Current::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return CORBA_Current::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -184,10 +184,10 @@ CORBA_Current_var::tao_nil (void)
 ::CORBA_Current_ptr
 CORBA_Current_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::CORBA_Current::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::CORBA_Current::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -268,15 +268,15 @@ CORBA_Current::CORBA_Current (void)
 
   CORBA_Current_ptr CORBA_Current::_narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
   {
-    return CORBA_Current::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+    return CORBA_Current::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
   }
 
   CORBA_Current_ptr CORBA_Current::_unchecked_narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL_NOT_USED
+      ACE_ENV_ARG_DECL_NOT_USED
     )
   {
     if (CORBA::is_nil (obj))

@@ -24,9 +24,9 @@ public:
   // Print out the results and any errors
 
   // = The skeleton methods
-  virtual void worker_started (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void worker_started (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void worker_finished (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void worker_finished (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

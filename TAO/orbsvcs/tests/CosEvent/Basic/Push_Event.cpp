@@ -12,24 +12,24 @@ main (int argc, char* argv[])
 {
   TAO_CEC_Default_Factory::init_svcs ();
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
@@ -38,23 +38,23 @@ main (int argc, char* argv[])
                                                   poa.in ());
 
       TAO_CEC_EventChannel ec_impl (attributes);
-      ec_impl.activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ec_impl.activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CosEventChannelAdmin::EventChannel_var event_channel =
-        ec_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        ec_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
 
       // Obtain the consumer admin..
       CosEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-        event_channel->for_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
+        event_channel->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Obtain the supplier admin..
       CosEventChannelAdmin::SupplierAdmin_var supplier_admin =
-        event_channel->for_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
+        event_channel->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
@@ -64,7 +64,7 @@ main (int argc, char* argv[])
       CEC_Counting_Supplier supplier_00;
 
       supplier_00.connect (supplier_admin.in ()
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
@@ -72,7 +72,7 @@ main (int argc, char* argv[])
       CEC_Counting_Supplier supplier_01;
 
       supplier_01.connect (supplier_admin.in ()
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
@@ -80,7 +80,7 @@ main (int argc, char* argv[])
       CEC_Counting_Supplier supplier_10;
 
       supplier_10.connect (supplier_admin.in ()
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
@@ -88,7 +88,7 @@ main (int argc, char* argv[])
       CEC_Counting_Supplier supplier_11;
 
       supplier_11.connect (supplier_admin.in ()
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
@@ -97,14 +97,14 @@ main (int argc, char* argv[])
       // connnect to the event channel....
       CEC_Counting_Consumer consumer_00 ("Consumer/00");
       consumer_00.connect (consumer_admin.in ()
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
 
       CEC_Counting_Consumer consumer_01 ("Consumer/01");
       consumer_01.connect (consumer_admin.in ()
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
@@ -144,32 +144,32 @@ main (int argc, char* argv[])
 
       // ****************************************************************
 
-      consumer_01.disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
+      consumer_01.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      consumer_00.disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
+      consumer_00.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      supplier_11.disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
+      supplier_11.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      supplier_10.disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
+      supplier_10.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      supplier_01.disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
+      supplier_01.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      supplier_00.disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      // ****************************************************************
-
-      event_channel->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      supplier_00.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
 
-      poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
+      event_channel->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      // ****************************************************************
+
+      poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************

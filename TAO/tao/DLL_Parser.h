@@ -84,7 +84,7 @@ public:
   virtual int match_prefix (const char *ior_string) const;
   virtual CORBA::Object_ptr parse_string (const char *ior,
                                           CORBA::ORB_ptr orb
-                                          TAO_ENV_ARG_DECL_NOT_USED)
+                                          ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

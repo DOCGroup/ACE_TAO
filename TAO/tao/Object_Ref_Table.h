@@ -62,13 +62,13 @@ public:
   /// ID to it.
   void register_initial_reference (const char * id,
                                    CORBA::Object_ptr obj
-                                   TAO_ENV_ARG_DECL);
+                                   ACE_ENV_ARG_DECL);
 
   /// Return the object reference associated with the given ID.
   /// A duplicate is returned.
   CORBA::Object_ptr resolve_initial_references (
     const char * id
-    TAO_ENV_ARG_DECL);
+    ACE_ENV_ARG_DECL);
 
   /// Explicitly destroy the contents of the object reference table.
   void destroy (void);

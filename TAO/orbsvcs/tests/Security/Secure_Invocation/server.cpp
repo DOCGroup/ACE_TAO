@@ -40,11 +40,11 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (obj.in ()))
@@ -54,23 +54,23 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       obj = orb->resolve_initial_references ("SecurityCurrent"
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       SecurityLevel2::Current_var security_current =
         SecurityLevel2::Current::_narrow (obj.in ()
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (security_current.in ()))
@@ -82,11 +82,11 @@ main (int argc, char *argv[])
       Foo_i server_impl (orb.in (), security_current.in ());
 
       Foo::Bar_var server =
-        server_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        server_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
-        orb->object_to_string (server.in () TAO_ENV_ARG_PARAMETER);
+        orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
@@ -104,20 +104,20 @@ main (int argc, char *argv[])
           ACE_OS::fclose (output_file);
         }
 
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "\n"
                   "Event loop finished.\n"));
 
-      root_poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

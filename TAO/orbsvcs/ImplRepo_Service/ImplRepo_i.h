@@ -40,7 +40,7 @@ public:
 
   /// IOR_LookupTable_Callback method.  Will return an IOR
   char *find_ior (const ACE_CString &object_name
-                  TAO_ENV_ARG_DECL)
+                  ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound));
 
   // = Interface methods
@@ -48,7 +48,7 @@ public:
   /// Starts up the server <server> if not already running.
   virtual void activate_server (
       const char *server
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC ((
           CORBA::SystemException,
           ImplementationRepository::Administration::NotFound,
@@ -60,7 +60,7 @@ public:
   virtual void register_server (
       const char *server,
       const ImplementationRepository::StartupOptions &options
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC ((
           CORBA::SystemException,
           ImplementationRepository::Administration::AlreadyRegistered
@@ -70,20 +70,20 @@ public:
   virtual void reregister_server (
       const char *server,
       const ImplementationRepository::StartupOptions &options
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Removes the server <server> from the repository.
   virtual void remove_server (
       const char *server
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC ((CORBA::SystemException,
                        ImplementationRepository::Administration::NotFound));
 
   /// Attempts to gracefully shut down the server,
   virtual void shutdown_server (
       const char *server
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC ((CORBA::SystemException,
                        ImplementationRepository::Administration::NotFound));
 
@@ -93,14 +93,14 @@ public:
       const char *server,
       const char *location,
       ImplementationRepository::ServerObject_ptr server_object
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC ((CORBA::SystemException,
                        ImplementationRepository::Administration::NotFound));
 
   /// What the server should call before it shuts down.
   virtual void server_is_shutting_down (
       const char *server
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC ((CORBA::SystemException,
                        ImplementationRepository::Administration::NotFound));
 
@@ -108,7 +108,7 @@ public:
   virtual void find (
       const char *server,
       ImplementationRepository::ServerInformation_out info
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC ((CORBA::SystemException,
                        ImplementationRepository::Administration::NotFound));
 
@@ -118,17 +118,17 @@ public:
       CORBA::ULong how_many,
       ImplementationRepository::ServerInformationList_out server_list,
       ImplementationRepository::ServerInformationIterator_out server_iterator
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Initialize the Server state - parsing arguments and waiting.
-  int init (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// Cleans up any state created by init ().
-  int fini (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int fini (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// Runs the orb.
-  int run (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 private:
   /// Implementation of activate_server.  <check_startup> is a flag to check
@@ -136,7 +136,7 @@ private:
   ACE_TString activate_server_i (
       const char *server,
       const int check_startup
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC ((
           CORBA::SystemException,
           ImplementationRepository::Administration::NotFound,
@@ -146,7 +146,7 @@ private:
   /// This method starts the server process.
   void start_server_i (
       const char *server
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC ((
           CORBA::SystemException,
           ImplementationRepository::Administration::NotFound,

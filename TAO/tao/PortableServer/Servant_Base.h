@@ -47,30 +47,30 @@ public:
   // Destructor.
 
   virtual PortableServer::POA_ptr _default_POA (
-                                                TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+                                                ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   // Returns the default POA for this servant.
 
   virtual CORBA::Boolean _is_a (const char* logical_type_id
-                                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   // Local implementation of the CORBA::Object::_is_a method.
 
-  virtual CORBA::Boolean _non_existent (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual CORBA::Boolean _non_existent (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Default <_non_existent>: always returns false.
 
   virtual CORBA_InterfaceDef_ptr _get_interface (
-                                                 TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+                                                 ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 
   virtual void *_downcast (const char *repository_id) = 0;
   // Get the correct vtable.
 
-  virtual TAO_Stub *_create_stub (TAO_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Stub *_create_stub (ACE_ENV_SINGLE_ARG_DECL);
   // This is an auxiliar method for _this() and _narrow().
 
   virtual void _dispatch (TAO_ServerRequest &request,
                           void *servant_upcall
-                          TAO_ENV_ARG_DECL) = 0;
+                          ACE_ENV_ARG_DECL) = 0;
   // Dispatches a request to the object: find the operation, cast the
   // type to the most derived type, demarshall all the parameters from
   // the request and finally invokes the operation, storing the
@@ -93,12 +93,12 @@ protected:
                                             void *servant_upcall,
                                             void *derived_this
                                             // CORBA::Environment &ACE_TRY_ENV);
-                                            TAO_ENV_ARG_DECL);
+                                            ACE_ENV_ARG_DECL);
 
   virtual void asynchronous_upcall_dispatch (TAO_ServerRequest &req,
                                              void *servant_upcall,
                                              void *derived_this
-                                             TAO_ENV_ARG_DECL);
+                                             ACE_ENV_ARG_DECL);
   //CORBA::Environment &ACE_TRY_ENV);
 
   virtual int _find (const char *opname,
@@ -153,10 +153,10 @@ public:
   ~TAO_RefCountServantBase (void);
   // Destructor.
 
-  virtual void _add_ref (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Increase reference count by one.
 
-  virtual void _remove_ref (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Decreases reference count by one; if the resulting reference
   // count equals zero, _remove_ref invokes delete on its this pointer
   // in order to destroy the servant.
@@ -241,13 +241,13 @@ class TAO_PortableServer_Export TAO_Local_ServantBase
   //     registered with the POA.
   //
 protected:
-  TAO_Stub *_create_stub (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  TAO_Stub *_create_stub (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // This is an auxiliar method for _this().  Make sure *not* to
   // register with the default POA.
 
   void _dispatch (TAO_ServerRequest &request,
                   void *servant_upcall
-                  TAO_ENV_ARG_DECL);
+                  ACE_ENV_ARG_DECL);
   // Throws CORBA::BAD_OPERATION exception.
 };
 

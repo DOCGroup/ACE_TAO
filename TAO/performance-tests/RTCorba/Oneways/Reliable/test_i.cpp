@@ -11,7 +11,7 @@ ACE_RCSID(Reliable, test_i, "$Id$")
 
 void
 Test_i::oneway_work_test (CORBA::ULong work
-                          TAO_ENV_ARG_DECL_NOT_USED)
+                          ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   for (CORBA::ULong i = 0; i < work; i++)
@@ -25,14 +25,14 @@ Test_i::oneway_work_test (CORBA::ULong work
 
 void
 Test_i::oneway_payload_test (const Test::data &
-                             TAO_ENV_ARG_DECL_NOT_USED)
+                             ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Test_i::twoway_work_test (CORBA::ULong work
-                          TAO_ENV_ARG_DECL_NOT_USED)
+                          ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   for (CORBA::ULong i = 0; i < work; i++)
@@ -45,9 +45,9 @@ Test_i::twoway_work_test (CORBA::ULong work
 }
 
 void
-Test_i::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED TAO_ENV_SINGLE_ARG_PARAMETER)
+Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED ACE_ENV_SINGLE_ARG_PARAMETER)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
 }

@@ -42,7 +42,7 @@ TAO_EC_Timeout_Adapter::handle_timeout (const ACE_Time_Value & /* tv */,
       TAO_EC_QOS_Info qos_info = filter->qos_info ();
       filter->push_to_proxy (single_event,
                              qos_info
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

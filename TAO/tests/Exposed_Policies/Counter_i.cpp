@@ -21,30 +21,30 @@ Counter_Servant::~Counter_Servant (void)
 // Counter Interface Methods Implementation.
 
 void
-Counter_Servant::increment (TAO_ENV_SINGLE_ARG_DECL_NOT_USED/*TAO_ENV_SINGLE_ARG_PARAMETER*/)
+Counter_Servant::increment (ACE_ENV_SINGLE_ARG_DECL_NOT_USED/*ACE_ENV_SINGLE_ARG_PARAMETER*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ++this->count_;
 }
 
 CORBA::Long
-Counter_Servant::get_count (TAO_ENV_SINGLE_ARG_DECL_NOT_USED/*TAO_ENV_SINGLE_ARG_PARAMETER*/)
+Counter_Servant::get_count (ACE_ENV_SINGLE_ARG_DECL_NOT_USED/*ACE_ENV_SINGLE_ARG_PARAMETER*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->count_;
 }
 
 void
-Counter_Servant::reset (TAO_ENV_SINGLE_ARG_DECL_NOT_USED/*TAO_ENV_SINGLE_ARG_PARAMETER*/)
+Counter_Servant::reset (ACE_ENV_SINGLE_ARG_DECL_NOT_USED/*ACE_ENV_SINGLE_ARG_PARAMETER*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->count_ = 0;
 }
 
 void
-Counter_Servant::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+Counter_Servant::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->policy_tester_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->policy_tester_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_TRY_CHECK;
 }

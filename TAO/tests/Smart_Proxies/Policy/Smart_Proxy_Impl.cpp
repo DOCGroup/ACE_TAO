@@ -11,7 +11,7 @@ Smart_Test_Factory::Smart_Test_Factory (int one_shot_factory)
 
 Test_ptr
 Smart_Test_Factory::create_proxy (Test_ptr proxy
-                                  TAO_ENV_ARG_DECL_NOT_USED)
+                                  ACE_ENV_ARG_DECL_NOT_USED)
  {
    ACE_DEBUG ((LM_DEBUG,
                "create_smart_proxy\n"));
@@ -30,7 +30,7 @@ Smart_Test_Proxy::Smart_Test_Proxy (Test_ptr proxy)
 
 CORBA::Short
 Smart_Test_Proxy::method (CORBA::Short boo
-                          TAO_ENV_ARG_DECL)
+                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Test::Oops))
 {
@@ -41,7 +41,7 @@ Smart_Test_Proxy::method (CORBA::Short boo
   ACE_TRY
     {
       retval = TAO_Test_Smart_Proxy_Base::method (boo
-                                                  TAO_ENV_ARG_PARAMETER);
+                                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (Test::Oops, reason)

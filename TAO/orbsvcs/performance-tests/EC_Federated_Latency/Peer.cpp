@@ -35,23 +35,23 @@ ECFL_Peer::~ECFL_Peer (void)
 
 void
 ECFL_Peer::init (PortableServer::POA_ptr root_poa
-                 TAO_ENV_ARG_DECL)
+                 ACE_ENV_ARG_DECL)
 {
   TAO_EC_Event_Channel_Attributes attr (root_poa, root_poa);
   Servant_var<TAO_EC_Event_Channel> ec_impl (
          new TAO_EC_Event_Channel (attr)
          );
 
-  ec_impl->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+  ec_impl->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->event_channel_ =
-    ec_impl->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+    ec_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 RtecEventChannelAdmin::EventChannel_ptr
-ECFL_Peer::channel (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+ECFL_Peer::channel (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RtecEventChannelAdmin::EventChannel::_duplicate (this->event_channel_.in ());
@@ -59,23 +59,23 @@ ECFL_Peer::channel (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 ECFL_Peer::connect (RtecEventChannelAdmin::EventChannel_ptr remote_ec
-                    TAO_ENV_ARG_DECL)
+                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // ACE_DEBUG ((LM_DEBUG, "(%P|%t) Connecting....\n"));
   Servant_var<TAO_EC_Gateway_IIOP> gateway (new TAO_EC_Gateway_IIOP);
   gateway->init (remote_ec,
                  this->event_channel_.in ()
-                 TAO_ENV_ARG_PARAMETER);
+                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   RtecEventChannelAdmin::Observer_var observer =
-    gateway->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+    gateway->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   RtecEventChannelAdmin::Observer_Handle h =
     this->event_channel_->append_observer (observer.in ()
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   gateway->observer_handle (h);
@@ -83,24 +83,24 @@ ECFL_Peer::connect (RtecEventChannelAdmin::EventChannel_ptr remote_ec
 
 Control::Loopback_ptr
 ECFL_Peer::setup_loopback (CORBA::Long experiment_id
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Servant_var<ECFL_Loopback> loopback (new ECFL_Loopback);
 
   loopback->init (experiment_id,
                   this->event_channel_.in ()
-                  TAO_ENV_ARG_PARAMETER);
+                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (Control::Loopback::_nil ());
 
-  return loopback->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return loopback->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 Control::Samples *
 ECFL_Peer::run_experiment (CORBA::Long experiment_id,
                            CORBA::Long iterations,
                            CORBA::Long_out gsf
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Servant_var<ECFL_Consumer> consumer (
@@ -108,14 +108,14 @@ ECFL_Peer::run_experiment (CORBA::Long experiment_id,
                              iterations)
           );
 
-  consumer->connect (this->event_channel_.in () TAO_ENV_ARG_PARAMETER);
+  consumer->connect (this->event_channel_.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   Servant_var<ECFL_Supplier> supplier (
           new ECFL_Supplier (experiment_id)
           );
 
-  supplier->connect (this->event_channel_.in () TAO_ENV_ARG_PARAMETER);
+  supplier->connect (this->event_channel_.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // ACE_DEBUG ((LM_DEBUG, "Connected consumer & supplier\n"));
@@ -132,13 +132,13 @@ ECFL_Peer::run_experiment (CORBA::Long experiment_id,
       ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
                                      creation);
       // push one event...
-      supplier->push (event TAO_ENV_ARG_PARAMETER);
+      supplier->push (event ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
 
-  supplier->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
+  supplier->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  consumer->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
+  consumer->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   ACE_DEBUG ((LM_DEBUG, "Calibrating high res timer ...."));
@@ -150,13 +150,13 @@ ECFL_Peer::run_experiment (CORBA::Long experiment_id,
 }
 
 void
-ECFL_Peer::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+ECFL_Peer::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->event_channel_->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->event_channel_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 

@@ -41,14 +41,14 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (::parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var obj =
-        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (obj.in ()))
@@ -57,7 +57,7 @@ main (int argc, char *argv[])
                           -1);
 
       TX_Object_var txObject =
-        TX_Object::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
+        TX_Object::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       DataSeq data_input;
@@ -74,19 +74,19 @@ main (int argc, char *argv[])
                   "Sending  octet sequence of length:\t%u\n",
                   data_input.length()));
 
-      txObject->send (data_input TAO_ENV_ARG_PARAMETER);
+      txObject->send (data_input ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       DataSeq_var data_output;
 
-      txObject->recv (data_output.out () TAO_ENV_ARG_PARAMETER);
+      txObject->recv (data_output.out () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "Received octet sequence of length:\t%u\n",
                   data_output->length()));
 
-      txObject->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      txObject->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Sanity check

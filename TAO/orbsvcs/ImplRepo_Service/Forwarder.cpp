@@ -31,11 +31,11 @@ ImR_Forwarder::ImR_Forwarder (ImplRepo_i *imr_impl)
   ACE_TRY_NEW_ENV
     {
       CORBA::Object_var tmp =
-        orb->resolve_initial_references ("POACurrent" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("POACurrent" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->poa_current_var_ =
-        PortableServer::Current::_narrow (tmp.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::Current::_narrow (tmp.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -65,7 +65,7 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
                           PortableServer::POA_ptr poa,
                           const char *,
                           PortableServer::ServantLocator::Cookie &
-                          TAO_ENV_ARG_DECL)
+                          ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException, PortableServer::ForwardRequest))
 {
   CORBA::ORB_var orb = OPTIONS::instance ()->orb ();
@@ -79,7 +79,7 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
 
       ior = this->imr_impl_->activate_server_i (poa->the_name (),
                                                 1
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Add the key
@@ -99,7 +99,7 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
       if (OPTIONS::instance()->debug () >= 2)
         ACE_DEBUG ((LM_DEBUG, "Forwarding to %s\n", ior.c_str ()));
 
-      forward_obj = orb->string_to_object (ior.c_str () TAO_ENV_ARG_PARAMETER);
+      forward_obj = orb->string_to_object (ior.c_str () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }
@@ -136,7 +136,7 @@ ImR_Forwarder::postinvoke (const PortableServer::ObjectId &,
                            const char * ,
                            PortableServer::ServantLocator::Cookie ,
                            PortableServer::Servant servant
-                           TAO_ENV_ARG_DECL_NOT_USED)
+                           ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   delete servant;

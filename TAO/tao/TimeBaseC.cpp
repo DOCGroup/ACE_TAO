@@ -359,7 +359,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TimeBase::UtcT *&_
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (TimeBase::_tc_UtcT TAO_ENV_ARG_PARAMETER);
+    CORBA::Boolean result = type->equivalent (TimeBase::_tc_UtcT ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -442,7 +442,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TimeBase::Interval
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (TimeBase::_tc_IntervalT TAO_ENV_ARG_PARAMETER);
+    CORBA::Boolean result = type->equivalent (TimeBase::_tc_IntervalT ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)

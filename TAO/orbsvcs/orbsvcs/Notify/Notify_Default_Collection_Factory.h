@@ -51,10 +51,10 @@ public:
   virtual int fini (void);
 
   // = Methods to create listener collections.
-  virtual TAO_Notify_EventListener_List* create_event_listener_list (TAO_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Notify_EventListener_List* create_event_listener_list (ACE_ENV_SINGLE_ARG_DECL);
   // Create the event listener list.
 
- virtual TAO_Notify_UpdateListener_List* create_update_listener_list (TAO_ENV_SINGLE_ARG_DECL);
+ virtual TAO_Notify_UpdateListener_List* create_update_listener_list (ACE_ENV_SINGLE_ARG_DECL);
   // create update listener list.
 };
 

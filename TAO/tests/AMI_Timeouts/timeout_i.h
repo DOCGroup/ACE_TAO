@@ -33,10 +33,10 @@ public:
   ~Timeout_i ();
 
   virtual void sendTimeToWait (CORBA::Long msec
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -52,12 +52,12 @@ public:
 
   ~TimeoutHandler_i ();
 
-  virtual void sendTimeToWait (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void sendTimeToWait (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void sendTimeToWait_excep (
       AMI_TimeoutObjExceptionHolder * excep_holder
-      TAO_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void reset_reply_counter ();

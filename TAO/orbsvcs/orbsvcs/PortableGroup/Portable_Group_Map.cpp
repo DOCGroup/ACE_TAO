@@ -44,7 +44,7 @@ TAO_Portable_Group_Map::~TAO_Portable_Group_Map (void)
 void
 TAO_Portable_Group_Map::add_groupid_objectkey_pair (PortableGroup::TagGroupTaggedComponent *group_id,
                                                     const TAO_ObjectKey &key
-                                                    TAO_ENV_ARG_DECL)
+                                                    ACE_ENV_ARG_DECL)
 {
   Map_Entry *new_entry;
 
@@ -96,7 +96,7 @@ TAO_Portable_Group_Map::add_groupid_objectkey_pair (PortableGroup::TagGroupTagge
 void
 TAO_Portable_Group_Map::remove_groupid_objectkey_pair (const PortableGroup::TagGroupTaggedComponent* /*group_id*/,
                                                        const TAO_ObjectKey &/*key*/
-                                                       TAO_ENV_ARG_DECL_NOT_USED)
+                                                       ACE_ENV_ARG_DECL_NOT_USED)
 {
 
 }
@@ -107,7 +107,7 @@ TAO_Portable_Group_Map::dispatch (PortableGroup::TagGroupTaggedComponent* group_
                                   TAO_ORB_Core *orb_core,
                                   TAO_ServerRequest &request,
                                   CORBA::Object_out forward_to
-                                  TAO_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
 {
   // Look up the GroupId.
   Map_Entry *entry;
@@ -129,7 +129,7 @@ TAO_Portable_Group_Map::dispatch (PortableGroup::TagGroupTaggedComponent* group_
           orb_core->adapter_registry ()->dispatch (entry->key,
                                                    request,
                                                    forward_to
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
           // Reset the read pointer in the message block.

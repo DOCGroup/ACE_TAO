@@ -44,7 +44,7 @@ Logger_Server::parse_args (void)
 int
 Logger_Server::init (int argc,
                      char *argv[]
-                     TAO_ENV_ARG_DECL)
+                     ACE_ENV_ARG_DECL)
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -54,7 +54,7 @@ Logger_Server::init (int argc,
   if (this->orb_manager_.init_child_poa (argc,
                                          argv,
                                          "child_poa"
-                                         TAO_ENV_ARG_PARAMETER) == -1)
+                                         ACE_ENV_ARG_PARAMETER) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init_child_poa"),
@@ -62,7 +62,7 @@ Logger_Server::init (int argc,
 
   ACE_CHECK_RETURN (-1);
 
-  this->orb_manager_.activate_poa_manager (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->orb_manager_.activate_poa_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Parse the command line arguments.
@@ -76,14 +76,14 @@ Logger_Server::init (int argc,
   CORBA::String_var str =
     this->orb_manager_.activate_under_child_poa ("logger_factory",
                                                  &this->factory_impl_
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
     if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "The IOR is: <%s>\n",
                 str.in ()));
 
     // Initialize the naming service
-    int ret = this->init_naming_service (TAO_ENV_SINGLE_ARG_PARAMETER);
+    int ret = this->init_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
     if (ret != 0)
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -99,7 +99,7 @@ Logger_Server::init (int argc,
 // and logger_factory object.
 
 int
-Logger_Server::init_naming_service (TAO_ENV_SINGLE_ARG_DECL_NOT_USED TAO_ENV_SINGLE_ARG_PARAMETER)
+Logger_Server::init_naming_service (ACE_ENV_SINGLE_ARG_DECL_NOT_USED ACE_ENV_SINGLE_ARG_PARAMETER)
 {
   // Get pointers to the ORB and child POA
   CORBA::ORB_var orb = this->orb_manager_.orb ();
@@ -111,7 +111,7 @@ Logger_Server::init_naming_service (TAO_ENV_SINGLE_ARG_DECL_NOT_USED TAO_ENV_SIN
     return -1;
 
   // Create an instance of the Logger_Factory
-  Logger_Factory_var factory = this->factory_impl_._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+  Logger_Factory_var factory = this->factory_impl_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   //Register the logger_factory
@@ -120,16 +120,16 @@ Logger_Server::init_naming_service (TAO_ENV_SINGLE_ARG_DECL_NOT_USED TAO_ENV_SIN
   factory_name[0].id = CORBA::string_dup ("Logger_Factory");
   this->my_name_server_->bind (factory_name,
                                factory.in ()
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 int
-Logger_Server::run (TAO_ENV_SINGLE_ARG_DECL)
+Logger_Server::run (ACE_ENV_SINGLE_ARG_DECL)
 {
-  int ret = this->orb_manager_.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+  int ret = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
   if (ret == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

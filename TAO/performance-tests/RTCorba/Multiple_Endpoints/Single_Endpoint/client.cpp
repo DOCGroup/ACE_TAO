@@ -141,18 +141,18 @@ main (int argc, char *argv[])
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test_var server =
-        Test::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+        Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -165,12 +165,12 @@ main (int argc, char *argv[])
 
       // Obtain Priority Mapping used by the ORB.
       object = orb->resolve_initial_references ("PriorityMappingManager"
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RTCORBA::PriorityMappingManager_var mapping_manager =
         RTCORBA::PriorityMappingManager::_narrow (object.in ()
-                                              TAO_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (mapping_manager.in ()))
@@ -222,7 +222,7 @@ main (int argc, char *argv[])
         }
       throughput.dump_results ("Aggregated", gsf);
 
-      server->shutdown ("" TAO_ENV_ARG_PARAMETER);
+      server->shutdown ("" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }
@@ -286,11 +286,11 @@ Client::svc (void)
         {
           /*    CORBA::PolicyList_var pols;
           server_->_validate_connection (pols.out ()
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
           */
 
           server_->test_method (this->id_
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -305,7 +305,7 @@ Client::svc (void)
 
           // Invoke method.
           server_->test_method (this->id_
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // Grab timestamp again.

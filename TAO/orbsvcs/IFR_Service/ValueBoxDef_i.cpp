@@ -24,23 +24,23 @@ TAO_ValueBoxDef_i::~TAO_ValueBoxDef_i (void)
 }
 
 CORBA::DefinitionKind
-TAO_ValueBoxDef_i::def_kind (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ValueBoxDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_ValueBox;
 }
 
 CORBA::TypeCode_ptr
-TAO_ValueBoxDef_i::type (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ValueBoxDef_i::type (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
-  return this->type_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
-TAO_ValueBoxDef_i::type_i (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ValueBoxDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString id;
@@ -66,31 +66,31 @@ TAO_ValueBoxDef_i::type_i (TAO_ENV_SINGLE_ARG_DECL)
 
   TAO_IDLType_i *impl =
     this->repo_->servant_factory ()->create_idltype (boxed_key
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   auto_ptr<TAO_IDLType_i> safety (impl);
 
-  CORBA::TypeCode_var tc = impl->type_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var tc = impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   return this->repo_->tc_factory ()->create_value_box_tc (id.c_str (),
                                                           name.c_str (),
                                                           tc.in ()
-                                                          TAO_ENV_ARG_PARAMETER);
+                                                          ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_IDLType_ptr
-TAO_ValueBoxDef_i::original_type_def (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ValueBoxDef_i::original_type_def (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA_IDLType::_nil ());
 
-  return this->original_type_def_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->original_type_def_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA_IDLType_ptr
-TAO_ValueBoxDef_i::original_type_def_i (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ValueBoxDef_i::original_type_def_i (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString boxed_type;
@@ -115,32 +115,32 @@ TAO_ValueBoxDef_i::original_type_def_i (TAO_ENV_SINGLE_ARG_DECL)
   CORBA::Object_var obj =
     this->repo_->servant_factory ()->create_objref (def_kind,
                                                     boxed_type.c_str ()
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_IDLType::_nil ());
 
   return CORBA_IDLType::_narrow (obj.in ()
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_ValueBoxDef_i::original_type_def (CORBA_IDLType_ptr original_type_def
-                                      TAO_ENV_ARG_DECL)
+                                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
   this->original_type_def_i (original_type_def
-                             TAO_ENV_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_ValueBoxDef_i::original_type_def_i (CORBA_IDLType_ptr original_type_def
-                                        TAO_ENV_ARG_DECL)
+                                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ObjectId_var oid =
     this->repo_->ir_poa ()->reference_to_id (original_type_def
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::String_var boxed_type =

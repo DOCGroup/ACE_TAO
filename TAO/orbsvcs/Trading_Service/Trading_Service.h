@@ -62,10 +62,10 @@ public:
 
   int init (int argc,
             char *argv[]
-            TAO_ENV_ARG_DECL);
+            ACE_ENV_ARG_DECL);
   // Initialize the Trading Service with arguments.
 
-  int run (TAO_ENV_SINGLE_ARG_DECL);
+  int run (ACE_ENV_SINGLE_ARG_DECL);
   // Run the Trading Service.
 
   int shutdown (void);

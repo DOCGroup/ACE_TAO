@@ -15,12 +15,12 @@ main (int argc, char *argv[])
     {
       /// Our regular ORB Initialization.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       /// Get a reference to the RootPOA.
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -30,18 +30,18 @@ main (int argc, char *argv[])
 
       /// Narrow down the reference to the currect interface.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       SLevel1_Server_i level1_server ();
 
       SLevel1_Server_var server =
-        level1_server._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        level1_server._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
         orb->object_to_string (server.in ()
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // If the ior_output_file exists, output the ior to it
@@ -60,7 +60,7 @@ main (int argc, char *argv[])
       // Start the ORB
       orb->run ();
 
-      root_poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }

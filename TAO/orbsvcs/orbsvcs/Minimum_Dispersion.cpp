@@ -36,7 +36,7 @@ TAO_LB_Minimum_Dispersion_Strategy::~TAO_LB_Minimum_Dispersion_Strategy (void)
 }
 
 CORBA::Object_ptr
-TAO_LB_Minimum_Dispersion_Strategy::replica (TAO_ENV_SINGLE_ARG_DECL)
+TAO_LB_Minimum_Dispersion_Strategy::replica (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   for ( ; ; )
@@ -84,7 +84,7 @@ TAO_LB_Minimum_Dispersion_Strategy::replica (TAO_ENV_SINGLE_ARG_DECL)
         ACE_TRY
           {
             CORBA::Boolean non_existent =
-              object->_non_existent (TAO_ENV_SINGLE_ARG_PARAMETER);
+              object->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
             if (!non_existent)
               {
@@ -130,7 +130,7 @@ TAO_LB_Minimum_Dispersion_Strategy::remove (TAO_LB_ReplicaProxy *proxy)
 
 void
 TAO_LB_Minimum_Dispersion_Strategy::load_changed (TAO_LB_ReplicaProxy *proxy
-                                               TAO_ENV_ARG_DECL)
+                                               ACE_ENV_ARG_DECL)
 {
   int send_load_advisory = 0;
 
@@ -185,7 +185,7 @@ TAO_LB_Minimum_Dispersion_Strategy::load_changed (TAO_LB_ReplicaProxy *proxy
   // dispersion we tolerate before starting to send advisories.
   if (send_load_advisory == 2)
     {
-      proxy->control_->high_load_advisory (TAO_ENV_SINGLE_ARG_PARAMETER);
+      proxy->control_->high_load_advisory (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       return;  // We may not throw an exception, so explicitly return.
@@ -199,7 +199,7 @@ TAO_LB_Minimum_Dispersion_Strategy::load_changed (TAO_LB_ReplicaProxy *proxy
   // construction time...
   if (send_load_advisory == 1)
     {
-      proxy->control_->nominal_load_advisory (TAO_ENV_SINGLE_ARG_PARAMETER);
+      proxy->control_->nominal_load_advisory (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 }

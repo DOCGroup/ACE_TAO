@@ -77,7 +77,7 @@ AdminProperties_Test::parse_args(int argc, char *argv[])
                      "-consumers [consumers] "
                      "-suppliers [suppliers] "
                      "-event_count [event_count]\n",
-                     argv[0], 
+                     argv[0],
                      argv[0]));
 
           arg_shifter.consume_arg ();
@@ -93,14 +93,14 @@ AdminProperties_Test::parse_args(int argc, char *argv[])
 }
 
 int
-AdminProperties_Test::init (int argc, 
-                            char *argv [] 
-                            TAO_ENV_ARG_DECL)
+AdminProperties_Test::init (int argc,
+                            char *argv []
+                            ACE_ENV_ARG_DECL)
 {
   // Initialize base class.
-  Notify_Test_Client::init (argc, 
-                            argv 
-                            TAO_ENV_ARG_PARAMETER);
+  Notify_Test_Client::init (argc,
+                            argv
+                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   CosNotifyChannelAdmin::ChannelID id;
@@ -108,21 +108,21 @@ AdminProperties_Test::init (int argc,
   // Initialize the admin object.
   initial_admin_.length (4);
 
-  this->initial_admin_[0].name = 
+  this->initial_admin_[0].name =
     CORBA::string_dup (CosNotification::MaxQueueLength);
   this->initial_admin_[0].value <<= this->max_queue_length_;
 
 
-  this->initial_admin_[1].name = 
+  this->initial_admin_[1].name =
     CORBA::string_dup (CosNotification::MaxSuppliers);
   this->initial_admin_[1].value <<= this->max_suppliers_;
 
-  this->initial_admin_[2].name = 
+  this->initial_admin_[2].name =
     CORBA::string_dup (CosNotification::MaxConsumers);
   this->initial_admin_[2].value <<= this->max_consumers_;
 
 
-  this->initial_admin_[3].name = 
+  this->initial_admin_[3].name =
     CORBA::string_dup (CosNotification::RejectNewEvents);
   this->initial_admin_[3].value <<= CORBA::Any::from_boolean (
                                         this->reject_new_events_
@@ -131,7 +131,7 @@ AdminProperties_Test::init (int argc,
   this->ec_ = notify_factory_->create_channel (this->initial_qos_,
                                                this->initial_admin_,
                                                id
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
@@ -139,16 +139,16 @@ AdminProperties_Test::init (int argc,
 
   CosNotifyChannelAdmin::AdminID adminid;
 
-  this->supplier_admin_ = ec_->new_for_suppliers (this->ifgop_, 
-                                                  adminid 
-                                                  TAO_ENV_ARG_PARAMETER);
+  this->supplier_admin_ = ec_->new_for_suppliers (this->ifgop_,
+                                                  adminid
+                                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
-  this->consumer_admin_ = ec_->new_for_consumers (this->ifgop_, 
-                                                  adminid 
-                                                  TAO_ENV_ARG_PARAMETER);
+  this->consumer_admin_ = ec_->new_for_consumers (this->ifgop_,
+                                                  adminid
+                                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
@@ -157,20 +157,20 @@ AdminProperties_Test::init (int argc,
 }
 
 void
-AdminProperties_Test::run_test (TAO_ENV_SINGLE_ARG_DECL)
+AdminProperties_Test::run_test (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->create_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->create_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->create_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->create_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->send_events (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->send_events (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-AdminProperties_Test::create_suppliers (TAO_ENV_SINGLE_ARG_DECL)
+AdminProperties_Test::create_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Create the requested number of suppliers.
   // @@ CosNotifyChannelAdmin::AdminID adminid;
@@ -187,12 +187,12 @@ AdminProperties_Test::create_suppliers (TAO_ENV_SINGLE_ARG_DECL)
         {
           ACE_NEW (supplier,
                    TAO_Notify_StructuredPushSupplier ());
-          supplier->init (root_poa_.in () 
-                          TAO_ENV_ARG_PARAMETER);
+          supplier->init (root_poa_.in ()
+                          ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          supplier->connect (this->supplier_admin_.in () 
-                             TAO_ENV_ARG_PARAMETER);
+          supplier->connect (this->supplier_admin_.in ()
+                             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -205,7 +205,7 @@ AdminProperties_Test::create_suppliers (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-AdminProperties_Test::create_consumers (TAO_ENV_SINGLE_ARG_DECL)
+AdminProperties_Test::create_consumers (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Create the requested number of suppliers.
   // @@ CosNotifyChannelAdmin::AdminID adminid;
@@ -222,12 +222,12 @@ AdminProperties_Test::create_consumers (TAO_ENV_SINGLE_ARG_DECL)
         {
           ACE_NEW (consumer,
                    TAO_Notify_StructuredPushConsumer ());
-          consumer->init (root_poa_.in () 
-                          TAO_ENV_ARG_PARAMETER);
+          consumer->init (root_poa_.in ()
+                          ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          consumer->connect (this->consumer_admin_.in () 
-                             TAO_ENV_ARG_PARAMETER);
+          consumer->connect (this->consumer_admin_.in ()
+                             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -240,7 +240,7 @@ AdminProperties_Test::create_consumers (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-AdminProperties_Test::send_events (TAO_ENV_SINGLE_ARG_DECL)
+AdminProperties_Test::send_events (ACE_ENV_SINGLE_ARG_DECL)
 {
   // operations:
   CosNotification::StructuredEvent event;
@@ -279,12 +279,12 @@ AdminProperties_Test::send_events (TAO_ENV_SINGLE_ARG_DECL)
   ACE_NEW (supplier,
            TAO_Notify_StructuredPushSupplier ());
 
-  supplier->init (root_poa_.in () 
-                  TAO_ENV_ARG_PARAMETER);
+  supplier->init (root_poa_.in ()
+                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  supplier->connect (this->supplier_admin_.in () 
-                     TAO_ENV_ARG_PARAMETER);
+  supplier->connect (this->supplier_admin_.in ()
+                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   int i = 0;
@@ -297,7 +297,7 @@ AdminProperties_Test::send_events (TAO_ENV_SINGLE_ARG_DECL)
           // Any.
           event.remainder_of_body <<= (CORBA::Long)i;
 
-          supplier->send_event (event TAO_ENV_ARG_PARAMETER);
+          supplier->send_event (event ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -323,12 +323,12 @@ main (int argc, char* argv[])
 
   ACE_TRY_NEW_ENV
     {
-      test.init (argc, 
+      test.init (argc,
                  argv
-                 TAO_ENV_ARG_PARAMETER);
+                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      test.run_test (TAO_ENV_SINGLE_ARG_PARAMETER);
+      test.run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::UserException, ue)

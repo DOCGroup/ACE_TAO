@@ -48,7 +48,7 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (be_interface 
   *os << "virtual " << "::" << node->full_base_proxy_impl_name () << " &" << "select_proxy (" << be_idt_nl;
 
   *os << "::" << node->full_name () << " *object" << be_nl
-      << "TAO_ENV_ARG_DECL" << be_uidt_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
 
@@ -56,7 +56,7 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (be_interface 
       << "// Helper methods that takes care to create the proxy" << be_nl
       << "// as soon as their use is necessary." << be_nl
       << "void create_proxy (" << be_idt_nl << "int collocation_strategy"
-      << be_nl << "TAO_ENV_ARG_DECL"
+      << be_nl << "ACE_ENV_ARG_DECL"
       << be_uidt_nl << ");"
       << be_nl << be_nl
       << "// Caches the proxy implementations. The proxy implementation" << be_nl

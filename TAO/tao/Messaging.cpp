@@ -15,7 +15,7 @@ exception_holder_raise (TAO_Exception_Data *exception_data,
                         CORBA::ULong marshaled_data_length,
                         CORBA::Boolean byte_order,
                         CORBA::Boolean is_system_exception
-                        TAO_ENV_ARG_DECL)
+                        ACE_ENV_ARG_DECL)
 {
   TAO_InputCDR _tao_in ((const char*) marshaled_data,
                         marshaled_data_length,
@@ -30,7 +30,7 @@ exception_holder_raise (TAO_Exception_Data *exception_data,
       ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                  CORBA::COMPLETED_YES));
     }
-  
+
   if (is_system_exception)
     {
       CORBA::ULong minor = 0;
@@ -41,7 +41,7 @@ exception_holder_raise (TAO_Exception_Data *exception_data,
                                    CORBA::COMPLETED_MAYBE));
       CORBA::SystemException* exception =
         TAO_Exceptions::create_system_exception (type_id.in ()
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (exception == 0)
@@ -53,9 +53,9 @@ exception_holder_raise (TAO_Exception_Data *exception_data,
         }
       exception->minor (minor);
       exception->completed (CORBA::CompletionStatus (completion));
-      
+
       // Raise the exception.
-      TAO_ENV_RAISE (exception);
+      ACE_ENV_RAISE (exception);
 
       return;
     }
@@ -67,24 +67,24 @@ exception_holder_raise (TAO_Exception_Data *exception_data,
     {
       if (ACE_OS::strcmp (type_id.in (), exception_data[i].id) != 0)
         continue;
-          
+
       CORBA::Exception *exception = exception_data[i].alloc ();
-          
+
       if (exception == 0)
         ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
                                      CORBA::COMPLETED_YES));
-      exception->_tao_decode (_tao_in TAO_ENV_ARG_PARAMETER);
+      exception->_tao_decode (_tao_in ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       // Raise the exception.
-      TAO_ENV_RAISE (exception);
-          
+      ACE_ENV_RAISE (exception);
+
       return;
     }
-      
+
   // If we couldn't find the right exception, report it as
   // CORBA::UNKNOWN.
-      
+
   // @@ It would seem like if the remote exception is a
   //    UserException we can assume that the request was
   //    completed.

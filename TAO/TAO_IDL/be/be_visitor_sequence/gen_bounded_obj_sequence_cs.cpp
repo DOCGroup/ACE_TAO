@@ -230,7 +230,7 @@ be_visitor_sequence_cs::gen_bounded_obj_sequence (be_sequence *node)
           << full_class_name << "::_downcast (" << be_idt << be_idt_nl
                 << "void* target," << be_nl
                 << "CORBA_Object *src" << be_nl
-                << "TAO_ENV_ARG_DECL" << be_uidt_nl
+                << "ACE_ENV_ARG_DECL" << be_uidt_nl
                 << ")" << be_uidt_nl
                 << "{" << be_idt_nl;
 
@@ -247,12 +247,12 @@ be_visitor_sequence_cs::gen_bounded_obj_sequence (be_sequence *node)
         {
           bt->accept (visitor);
 
-          *os << "::_narrow (src TAO_ENV_ARG_PARAMETER);";
+          *os << "::_narrow (src ACE_ENV_ARG_PARAMETER);";
         }
       else
         {
           *os << "tao_" << pt->flat_name ()
-              << "_narrow (src TAO_ENV_ARG_PARAMETER);";
+              << "_narrow (src ACE_ENV_ARG_PARAMETER);";
         }
 
       *os << be_nl

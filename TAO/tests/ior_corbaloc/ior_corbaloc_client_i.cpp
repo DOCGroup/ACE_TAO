@@ -33,7 +33,7 @@ IOR_corbaloc_Client_i::~IOR_corbaloc_Client_i (void)
 }
 
 int
-IOR_corbaloc_Client_i::run (TAO_ENV_SINGLE_ARG_DECL)
+IOR_corbaloc_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
 {
 
   ACE_TRY
@@ -45,13 +45,13 @@ IOR_corbaloc_Client_i::run (TAO_ENV_SINGLE_ARG_DECL)
 
       // Resolve the name
       CORBA::Object_var factory_object =
-        this->naming_context_->resolve (name TAO_ENV_ARG_PARAMETER);
+        this->naming_context_->resolve (name ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Narrow
       corbaloc::Status_var factory =
         corbaloc::Status::_narrow (factory_object.in ()
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (factory.in ()))
@@ -64,7 +64,7 @@ IOR_corbaloc_Client_i::run (TAO_ENV_SINGLE_ARG_DECL)
 
       // Invoke a request on the server
       CORBA::Boolean ret_value =
-        factory->print_status (TAO_ENV_ARG_PARAMETER);
+        factory->print_status (ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (ret_value != 0)
@@ -95,7 +95,7 @@ IOR_corbaloc_Client_i::run (TAO_ENV_SINGLE_ARG_DECL)
 int
 IOR_corbaloc_Client_i::init (int& argc,
                              char *argv[]
-                             TAO_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
 {
 
   ACE_TRY
@@ -106,7 +106,7 @@ IOR_corbaloc_Client_i::init (int& argc,
         CORBA::ORB_init (argc,
                          argv,
                          "" /* the ORB name, it can be anything! */
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
 
       if(argc < 2){
               ACE_DEBUG((LM_DEBUG, "\nUsage:\n  %s [corbaloc URL for NameService]\n", argv[0]));
@@ -118,7 +118,7 @@ IOR_corbaloc_Client_i::init (int& argc,
       // Get a reference to the Naming Service
       CORBA::Object_var naming_context_object =
         orb->string_to_object (corbaloc_url_.c_str()
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (naming_context_object.in ()))
@@ -129,7 +129,7 @@ IOR_corbaloc_Client_i::init (int& argc,
       // Narrow to get the correct reference
       this->naming_context_ =
         CosNaming::NamingContextExt::_narrow (naming_context_object.in ()
-                                              TAO_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->naming_context_.in ()))

@@ -58,18 +58,18 @@ public:
   CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
 
   void merge_policies (const CORBA::PolicyList &policies
-                       TAO_ENV_ARG_DECL);
+                       ACE_ENV_ARG_DECL);
 
   void merge_policy (const CORBA::Policy_ptr policy
-                     TAO_ENV_ARG_DECL);
+                     ACE_ENV_ARG_DECL);
 
   void validate_policies (TAO_Policy_Validator &validator,
                           TAO_ORB_Core &orb_core
-                          TAO_ENV_ARG_DECL);
+                          ACE_ENV_ARG_DECL);
 
   // Add all of the client exposed policies to the specified list.
   void add_client_exposed_fixed_policies (CORBA::PolicyList *client_exposed_policies
-                                          TAO_ENV_ARG_DECL);
+                                          ACE_ENV_ARG_DECL);
 
   TAO_Policy_Set &policies (void);
 

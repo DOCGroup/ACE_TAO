@@ -69,10 +69,10 @@ private:
                     const char *msg);
   // Prepares the <Log_Record> for logging.
 
-  int init_naming_service (TAO_ENV_SINGLE_ARG_DECL);
+  int init_naming_service (ACE_ENV_SINGLE_ARG_DECL);
   // Initialises the name server and resolves the logger_factory
 
-  int init_loggers (TAO_ENV_SINGLE_ARG_DECL);
+  int init_loggers (ACE_ENV_SINGLE_ARG_DECL);
   // Instantiates the 2 logger member variables
 
   void show_record (Logger::Log_Record &newrec);

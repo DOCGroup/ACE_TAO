@@ -50,10 +50,10 @@ tao_ImplementationRepository_ServerObject_nil (
 ACE_INLINE ImplementationRepository::ServerObject_ptr
 tao_ImplementationRepository_ServerObject_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ImplementationRepository::ServerObject::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ImplementationRepository::ServerObject::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -1490,10 +1490,10 @@ tao_ImplementationRepository_Administration_nil (
 ACE_INLINE ImplementationRepository::Administration_ptr
 tao_ImplementationRepository_Administration_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ImplementationRepository::Administration::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ImplementationRepository::Administration::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -1551,10 +1551,10 @@ tao_ImplementationRepository_ServerInformationIterator_nil (
 ACE_INLINE ImplementationRepository::ServerInformationIterator_ptr
 tao_ImplementationRepository_ServerInformationIterator_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ImplementationRepository::ServerInformationIterator::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ImplementationRepository::ServerInformationIterator::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *

@@ -14,13 +14,13 @@ void
 TAO_Request_Dispatcher::dispatch (TAO_ORB_Core *orb_core,
                                   TAO_ServerRequest &request,
                                   CORBA::Object_out forward_to
-                                  TAO_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Dispatch based on object key
   orb_core->adapter_registry ()->dispatch (request.object_key (),
                                            request,
                                            forward_to
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }

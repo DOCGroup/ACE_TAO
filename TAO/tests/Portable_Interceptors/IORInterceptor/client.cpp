@@ -37,7 +37,7 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -51,23 +51,23 @@ main (int argc, char *argv[])
         temp_initializer;
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "client_orb" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "client_orb" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var obj =
-        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       FOO::test_var server =
-        FOO::test::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
+        FOO::test::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -78,7 +78,7 @@ main (int argc, char *argv[])
                             1);
         }
 
-      server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

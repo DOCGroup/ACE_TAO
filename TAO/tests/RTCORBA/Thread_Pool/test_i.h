@@ -23,15 +23,15 @@ public:
   /// Test method.
   CORBA::Long method (CORBA::Long client_id,
                       CORBA::Long iteration
-                      TAO_ENV_ARG_DECL_NOT_USED)
+                      ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Shutdown the server.
-  void shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Our POA.
-  PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL);
+  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
 
 private:
   /// ORB.

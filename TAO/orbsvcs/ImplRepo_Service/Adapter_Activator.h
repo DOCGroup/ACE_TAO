@@ -36,7 +36,7 @@ public:
   virtual CORBA::Boolean unknown_adapter (
     PortableServer::POA_ptr parent,
     const char *name
-    TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   )
     ACE_THROW_SPEC ((CORBA::SystemException));
 

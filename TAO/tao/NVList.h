@@ -181,44 +181,44 @@ public:
   ~CORBA_NVList (void);
 
   /// return the current number of elements in the list
-  CORBA::ULong count (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
+  CORBA::ULong count (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
   /// add an element and just initialize the flags
   CORBA_NamedValue_ptr add (CORBA::Flags
-                            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// add an element and initialize its name and flags
   CORBA_NamedValue_ptr add_item (const char *,
                                  CORBA::Flags
-                                 TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// initializes a value, name, and flags
   CORBA_NamedValue_ptr add_value (const char *,
                                   const CORBA::Any &,
                                   CORBA::Flags
-                                  TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// just like add_item. In addition, memory management of char * name
   /// is taken over by the NVList
   CORBA_NamedValue_ptr add_item_consume (char *,
                                          CORBA::Flags
-                                         TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// just like add_value. In addition, the NVList controls the memory
   /// management of the char *name and Any *value parameter
   CORBA_NamedValue_ptr add_value_consume (char *,
                                           CORBA::Any_ptr,
                                           CORBA::Flags
-                                          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// retrieve the item at the nth location. Raises Bounds
   CORBA_NamedValue_ptr item (CORBA::ULong n
-                             TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   //  CORBA::Status
   /// remove element at index n. Raises Bounds
   void remove (CORBA::ULong n
-               TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   // The pseudo object static methods..
   static CORBA_NVList* _duplicate (CORBA_NVList*);
@@ -239,19 +239,19 @@ public:
   void _tao_incoming_cdr (TAO_InputCDR &cdr,
                           int flag,
                           int &lazy_evaluation
-                          TAO_ENV_ARG_DECL);
+                          ACE_ENV_ARG_DECL);
 
   /// Encode the NVList into the CDR stream. <flag> masks the type of
   /// arguments (IN, OUT or INOUT) that are to be marshaled.
   void _tao_encode (TAO_OutputCDR &cdr,
                     TAO_ORB_Core *orb_core,
                     int flag
-                    TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Decode the NVList arguments from the <cdr> stream.
   void _tao_decode (TAO_InputCDR &cdr,
                     int flag
-                    TAO_ENV_ARG_DECL);
+                    ACE_ENV_ARG_DECL);
 
   /**
    * Return the required alignment to marshal the NVList without any
@@ -281,11 +281,11 @@ private:
   /// helper to increase the list size. This is used by all the add_
   /// methods of the NVList class
   CORBA_NamedValue_ptr add_element (CORBA::Flags
-                                    TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Lazy evaluation routine to fill up the Anys in the NVList from
   /// the CDR stream.
-  void evaluate (TAO_ENV_SINGLE_ARG_DECL);
+  void evaluate (ACE_ENV_SINGLE_ARG_DECL);
 
 private:
   /// internal list of parameters stored as NamedValues

@@ -53,7 +53,7 @@ int main (int argc, char *argv[])
         orb_initializer;
 
       PortableInterceptor::register_orb_initializer (orb_initializer_var.in ()
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
@@ -62,7 +62,7 @@ int main (int argc, char *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             ""
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -70,13 +70,13 @@ int main (int argc, char *argv[])
 
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA"
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Narrow
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Check for nil references
@@ -87,18 +87,18 @@ int main (int argc, char *argv[])
 
       // Get poa_manager reference
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_ENV_ARG_PARAMETER);
+        root_poa->the_POAManager (ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Activate it.
-      poa_manager->activate (TAO_ENV_ARG_PARAMETER);
+      /// Activate it.
+      poa_manager->activate (ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       //@}
 
       // First lets check if the new -ORBId, -ORBServerId options are
       // working correctly.
-      // @@ Priyanka, use "orb->id (TAO_ENV_SINGLE_ARG_PARAMETER)"
+      // @@ Priyanka, use "orb->id (ACE_ENV_SINGLE_ARG_PARAMETER)"
       //    here.  It is standard and portable.  Don't forget the
       //    ACE_TRY_CHECK.
       // @@ On second thought.  The ORB_init test already tests the
@@ -130,40 +130,40 @@ int main (int argc, char *argv[])
         root_poa->create_POA ("FIRST_POA",
                               poa_manager.in (),
                               policies
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var second_poa =
         root_poa->create_POA ("SECOND_POA",
                               poa_manager.in (),
                               policies
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var third_poa =
         first_poa->create_POA ("THIRD_POA",
-                               poa_manager.in (),
-                               policies
-                               TAO_ENV_ARG_PARAMETER);
+                              poa_manager.in (),
+                              policies
+                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var fourth_poa =
         second_poa->create_POA ("FOURTH_POA",
                                 poa_manager.in (),
                                 policies
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ORT_test_i ort_test_impl;
 
-      // Activate
-      obj = ort_test_impl._this (TAO_ENV_ARG_PARAMETER);
+      /// Activate
+      obj = ort_test_impl._this (ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Narrow it down.
       ObjectReferenceTemplate::ORT_test_var ort_test =
         ObjectReferenceTemplate::ORT_test::_narrow (obj.in ()
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Check for nil reference
@@ -176,7 +176,7 @@ int main (int argc, char *argv[])
 
       // Convert the object reference to a string format.
       CORBA::String_var ior =
-        orb->object_to_string (ort_test.in () TAO_ENV_ARG_PARAMETER);
+        orb->object_to_string (ort_test.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // If the ior_output_file exists, output the IOR to it.
@@ -193,7 +193,7 @@ int main (int argc, char *argv[])
           ACE_OS::fclose (output_file);
         }
 
-      orb->run (TAO_ENV_ARG_PARAMETER);
+      orb->run (ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

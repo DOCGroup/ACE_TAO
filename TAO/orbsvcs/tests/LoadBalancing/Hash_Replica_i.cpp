@@ -15,12 +15,12 @@ Hash_Replica_Impl::Hash_Replica_Impl (Hash_ReplicaControl *control)
 
 CORBA::ULong
 Hash_Replica_Impl::do_hash (const char *str
-                            TAO_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->reject_requests_)
     {
-      this->control_->request_rejected (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->control_->request_rejected (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
       return 0;
     }

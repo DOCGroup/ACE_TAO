@@ -136,7 +136,7 @@ TAO_NT_Notify_Service::svc (void)
   ACE_TRY
     {
       report_status (SERVICE_RUNNING);
-      notify_service.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      notify_service.run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

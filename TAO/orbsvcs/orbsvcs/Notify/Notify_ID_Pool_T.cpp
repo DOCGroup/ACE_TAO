@@ -51,7 +51,7 @@ TAO_Notify_ID_Pool_Ex<ID_TYPE, ID_TYPE_SEQ>::~TAO_Notify_ID_Pool_Ex ()
 }
 
 template <class ID_TYPE, class ID_TYPE_SEQ> ID_TYPE_SEQ*
-TAO_Notify_ID_Pool_Ex<ID_TYPE, ID_TYPE_SEQ>::get_sequence (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ID_Pool_Ex<ID_TYPE, ID_TYPE_SEQ>::get_sequence (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Figure out the length of the list.
   size_t len = this->active_list_.size ();

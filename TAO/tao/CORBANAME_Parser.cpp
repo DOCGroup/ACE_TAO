@@ -29,7 +29,7 @@ CORBA::Object_ptr
 TAO_CORBANAME_Parser::
 parse_string_dynamic_request_helper (CORBA::Object_ptr naming_context,
                                      ACE_CString &key_string
-                                     TAO_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_ptr _tao_retval = CORBA::Object::_nil ();
@@ -50,14 +50,14 @@ parse_string_dynamic_request_helper (CORBA::Object_ptr naming_context,
 
   for (;;)
     {
-      _tao_call.start (TAO_ENV_SINGLE_ARG_PARAMETER);
+      _tao_call.start (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
 
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag)
-           TAO_ENV_ARG_PARAMETER
+           ACE_ENV_ARG_PARAMETER
         );
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
@@ -73,7 +73,7 @@ parse_string_dynamic_request_helper (CORBA::Object_ptr naming_context,
       int _invoke_status = 0;
       ACE_TRY
         {
-          _invoke_status = _tao_call.invoke (0, 0 TAO_ENV_ARG_PARAMETER);
+          _invoke_status = _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK (CORBA::Object::_nil ());
         }
       ACE_CATCH (CORBA::UNKNOWN, ex)
@@ -126,7 +126,7 @@ parse_string_dynamic_request_helper (CORBA::Object_ptr naming_context,
 CORBA::Object_ptr
 TAO_CORBANAME_Parser::parse_string (const char *ior,
                                     CORBA::ORB_ptr orb
-                                    TAO_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -178,7 +178,7 @@ TAO_CORBANAME_Parser::parse_string (const char *ior,
       // Obtain a reference to the naming context
       CORBA::Object_var name_context =
         orb->string_to_object (corbaloc_addr.c_str ()
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Check if the Object reference is nil.
@@ -189,7 +189,7 @@ TAO_CORBANAME_Parser::parse_string (const char *ior,
 
       CORBA::Boolean is_a =
         name_context->_is_a ("IDL:omg.org/CosNaming/NamingContextExt:1.0"
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!is_a)
@@ -203,7 +203,7 @@ TAO_CORBANAME_Parser::parse_string (const char *ior,
       // Make a dynamic request for resolve_str in this naming context
       obj = this->parse_string_dynamic_request_helper (name_context.in (),
                                                        key_string
-                                                        TAO_ENV_ARG_PARAMETER);
+                                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, ex)

@@ -84,13 +84,13 @@ public:
    */
   int connect (TAO_GIOP_Invocation *invocation,
                TAO_Transport_Descriptor_Interface *desc
-               TAO_ENV_ARG_DECL);
+               ACE_ENV_ARG_DECL);
 
   /// Parse a string containing a URL style IOR and return an
   /// MProfile.
   int make_mprofile (const char *ior,
                      TAO_MProfile &mprofile
-                     TAO_ENV_ARG_DECL);
+                     ACE_ENV_ARG_DECL);
 
   /// Create a profile based on the contents of <cdr>
   TAO_Profile* create_profile (TAO_InputCDR& cdr);

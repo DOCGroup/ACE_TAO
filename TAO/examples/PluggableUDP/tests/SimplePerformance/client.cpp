@@ -69,15 +69,15 @@ int main (int argc, char *argv[])
           CORBA::ORB_init (argc,
                            argv,
                            "ORB_Test_Client"
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var object =
-        orb->string_to_object (iorFile TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object (iorFile ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Simple_Server_var server =
-        Simple_Server::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+        Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -90,7 +90,7 @@ int main (int argc, char *argv[])
 
       CORBA::String_var string =
         orb->object_to_string (server.in ()
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -103,7 +103,7 @@ int main (int argc, char *argv[])
 
       //ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -143,7 +143,7 @@ Client::svc (void)
 
       // This sets up the connector, so that we do not incur
       // the overhead on the first call in the loop.
-      server_->sendCharSeq (charSeq TAO_ENV_ARG_PARAMETER);
+      server_->sendCharSeq (charSeq ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       timer.start ();
@@ -153,10 +153,10 @@ Client::svc (void)
         {
           client_count++;
 
-          server_->sendCharSeq (charSeq TAO_ENV_ARG_PARAMETER);
+          server_->sendCharSeq (charSeq ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          //server_->sendOctetSeq (octetSeq TAO_ENV_ARG_PARAMETER);
+          //server_->sendOctetSeq (octetSeq ACE_ENV_ARG_PARAMETER);
 
           //ACE_DEBUG ((LM_DEBUG, "."));
         }
@@ -177,7 +177,7 @@ Client::svc (void)
                   dur / this->niterations_,
                   1000000 / (dur / this->niterations_)));
 
-      server_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      server_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }

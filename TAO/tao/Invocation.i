@@ -53,7 +53,7 @@ TAO_GIOP_Invocation::received_location_forward (void) const
 
 ACE_INLINE void
 TAO_GIOP_Invocation::init_inconsistent_policies (
-    TAO_ENV_SINGLE_ARG_DECL)
+    ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_NEW_THROW_EX (this->inconsistent_policies_,

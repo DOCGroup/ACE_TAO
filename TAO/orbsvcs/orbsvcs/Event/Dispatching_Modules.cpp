@@ -152,11 +152,11 @@ int
 ACE_ES_Dispatching_Base::dispatch_event (ACE_ES_Dispatch_Request *request,
                                          u_long &command_action)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Forward the request.
-      up_->push (request TAO_ENV_ARG_PARAMETER);
+      up_->push (request ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -241,9 +241,9 @@ ACE_ES_Priority_Dispatching::initialize_queues (void)
 
 void
 ACE_ES_Priority_Dispatching::connected (ACE_Push_Consumer_Proxy *consumer
-                                        TAO_ENV_ARG_DECL)
+                                        ACE_ENV_ARG_DECL)
 {
-  down_->connected (consumer TAO_ENV_ARG_PARAMETER);
+  down_->connected (consumer ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // This code does dynamic allocation of channel dispatch threads.
@@ -255,7 +255,7 @@ ACE_ES_Priority_Dispatching::connected (ACE_Push_Consumer_Proxy *consumer
   // We have to tell the lower portions of the channel about the
   // consumer first.  This is so that any changes to the consumer's
   // qos will take effect when we get the dispatch priority.
-  down_->connected (consumer TAO_ENV_ARG_PARAMETER);
+  down_->connected (consumer ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   RtecScheduler::OS_Priority priority =
@@ -338,7 +338,7 @@ ACE_ES_Priority_Dispatching::disconnected (ACE_Push_Consumer_Proxy *consumer)
 // <request> has been dynamically allocated by the filtering module.
 void
 ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
 {
   ACE_TIMEPROBE (TAO_DISPATCHING_MODULES_PUSH_SOURCE_TYPE_CORRELATION_MODULE);
 
@@ -355,14 +355,14 @@ ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request
          thread_priority,
          subpriority,
          preemption_priority
-          TAO_ENV_ARG_PARAMETER);
+          ACE_ENV_ARG_PARAMETER);
 #else
       ACE_Scheduler_Factory::server ()->priority
         (request->rt_info (),
          thread_priority,
          subpriority,
          preemption_priority
-          TAO_ENV_ARG_PARAMETER);
+          ACE_ENV_ARG_PARAMETER);
 #endif
       ACE_TIMEPROBE (TAO_DISPATCHING_MODULES_PRIORITY_DISPATCHING_PUSH_PRIORITY_OBTAINED);
       ACE_CHECK;
@@ -619,7 +619,7 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period_t &period,
                          "ACE_ES_Dispatch_Queue::open_queue"), -1);
     case 0:
       {
-        TAO_ENV_DECLARE_NEW_ENV;
+        ACE_DECLARE_NEW_CORBA_ENV;
         ACE_TRY
           {// @@ TODO: Handle exceptions...
 #if 1
@@ -634,7 +634,7 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period_t &period,
                ORBSVCS_Time::zero (),
                1,
                RtecScheduler::OPERATION
-                TAO_ENV_ARG_PARAMETER);
+                ACE_ENV_ARG_PARAMETER);
 #else
             ACE_Scheduler_Factory::server()->set (rt_info_,
                                                   RtecScheduler::VERY_HIGH_CRITICALITY,
@@ -646,7 +646,7 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period_t &period,
                                                   ORBSVCS_Time::zero (),
                                                   1,
                                                   RtecScheduler::OPERATION
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
 #endif
             ACE_TRY_CHECK;
           }
@@ -686,7 +686,7 @@ ACE_ES_EFD_Dispatching::ACE_ES_EFD_Dispatching (ACE_EventChannel *channel)
 
 void
 ACE_ES_EFD_Dispatching::push (ACE_ES_Dispatch_Request *request
-                              TAO_ENV_ARG_DECL_NOT_USED)
+                              ACE_ENV_ARG_DECL_NOT_USED)
 {
   // If it's a request to forward an event, it needs a reference to us
   // to call dispatch_event.
@@ -727,11 +727,11 @@ ACE_ES_RTU_Dispatching::dispatch_event (ACE_ES_Dispatch_Request *request,
   // Store the priority of the task currently running.
   channel_->rtu_manager ()->priority (request->priority ());
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Forward the request.
-      up_->push (request TAO_ENV_ARG_PARAMETER);
+      up_->push (request ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -759,10 +759,10 @@ ACE_ES_RTU_Dispatching::dispatch_event (ACE_ES_Dispatch_Request *request,
 
 void
 ACE_ES_RTU_Dispatching::push (ACE_ES_Dispatch_Request *request
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
 {
   // First enqueue the message in the proper queue.
-  ACE_ES_Priority_Dispatching::push (request TAO_ENV_ARG_PARAMETER);
+  ACE_ES_Priority_Dispatching::push (request ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // If the current event is higher priority (lower value) than the

@@ -46,7 +46,7 @@ ImplRepo_i::ImplRepo_i (void)
 
 char *
 ImplRepo_i::find_ior (const ACE_CString &object_name
-                      TAO_ENV_ARG_DECL)
+                      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound))
 {
   ACE_TString endpoint;
@@ -68,7 +68,7 @@ ImplRepo_i::find_ior (const ACE_CString &object_name
   ACE_TRY
     {
       endpoint = this->activate_server_i (poa_name.c_str (), 1
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -97,21 +97,21 @@ ImplRepo_i::find_ior (const ACE_CString &object_name
 
 void
 ImplRepo_i::activate_server (const char *server
-                             TAO_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::Administration::NotFound,
                      ImplementationRepository::Administration::CannotActivate))
 {
   // Since this is called through the Admin interface, we should ignore some
   // of the activation modes.  Also ignore the return value.
-  this->activate_server_i (server, 0 TAO_ENV_ARG_PARAMETER);
+  this->activate_server_i (server, 0 ACE_ENV_ARG_PARAMETER);
 }
 
 
 ACE_TString
 ImplRepo_i::activate_server_i (const char *server,
                                const int check_startup
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::Administration::NotFound,
                      ImplementationRepository::Administration::CannotActivate))
@@ -158,11 +158,11 @@ ImplRepo_i::activate_server_i (const char *server,
       ACE_TRY
         {
           CORBA::Object_var object =
-            orb->string_to_object (server_object_ior.c_str () TAO_ENV_ARG_PARAMETER);
+            orb->string_to_object (server_object_ior.c_str () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ImplementationRepository::ServerObject_var server_object =
-            ImplementationRepository::ServerObject::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+            ImplementationRepository::ServerObject::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (CORBA::is_nil (server_object.in ()))
@@ -174,7 +174,7 @@ ImplRepo_i::activate_server_i (const char *server,
             }
 
           // Check to see if we can ping it
-          server_object->ping (TAO_ENV_SINGLE_ARG_PARAMETER);
+          server_object->ping (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY
@@ -229,7 +229,7 @@ ImplRepo_i::activate_server_i (const char *server,
 
 void
 ImplRepo_i::start_server_i (const char *server
-                            TAO_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::Administration::NotFound,
                      ImplementationRepository::Administration::CannotActivate))
@@ -399,7 +399,7 @@ ImplRepo_i::ready_check (const char *server)
   ACE_TString ping_object_ior, location;
   ImplementationRepository::ServerObject_var ping_object;
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   // <end> is the end of the window where we can get a response before
   // timing out
@@ -428,12 +428,12 @@ ImplRepo_i::ready_check (const char *server)
   ACE_TRY_EX (ping1)
     {
       CORBA::Object_var object =
-        orb->string_to_object (ping_object_ior.c_str () TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object (ping_object_ior.c_str () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (ping1);
 
       ping_object =
         ImplementationRepository::ServerObject::_narrow (object.in ()
-                                                         TAO_ENV_ARG_PARAMETER);
+                                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (ping1);
 
       if (CORBA::is_nil (ping_object.in ()))
@@ -471,7 +471,7 @@ ImplRepo_i::ready_check (const char *server)
           if (OPTIONS::instance()->debug () >= 2)
             ACE_DEBUG ((LM_DEBUG, "Pinging Server...\n"));
 
-          ping_object->ping (TAO_ENV_SINGLE_ARG_PARAMETER);
+          ping_object->ping (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (ping2);
 
           if (OPTIONS::instance()->debug () >= 2)
@@ -504,7 +504,7 @@ ImplRepo_i::ready_check (const char *server)
 void
 ImplRepo_i::register_server (const char *server,
                              const ImplementationRepository::StartupOptions &options
-                             TAO_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::Administration::AlreadyRegistered))
 {
@@ -576,7 +576,7 @@ ImplRepo_i::register_server (const char *server,
 void
 ImplRepo_i::reregister_server (const char *server,
                                const ImplementationRepository::StartupOptions &options
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (OPTIONS::instance ()->readonly ())
@@ -628,7 +628,7 @@ ImplRepo_i::reregister_server (const char *server,
 
 void
 ImplRepo_i::remove_server (const char *server
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::Administration::NotFound))
 {
@@ -658,7 +658,7 @@ char *
 ImplRepo_i::server_is_running (const char *server,
                                const char *location,
                                ImplementationRepository::ServerObject_ptr server_object
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::Administration::NotFound))
 {
@@ -673,7 +673,7 @@ ImplRepo_i::server_is_running (const char *server,
 
   // Get the stringified server_object_ior
   ACE_TCHAR *server_object_ior = orb->object_to_string (server_object
-                                                        TAO_ENV_ARG_PARAMETER);
+                                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (this->repository_.update (server, location, server_object_ior) == 0)
@@ -720,7 +720,7 @@ ImplRepo_i::server_is_running (const char *server,
 
   if (profile)
     {
-      new_location = profile->to_string (TAO_ENV_SINGLE_ARG_PARAMETER);
+      new_location = profile->to_string (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
   else
@@ -751,7 +751,7 @@ ImplRepo_i::server_is_running (const char *server,
 
 void
 ImplRepo_i::server_is_shutting_down (const char *server
-                                     TAO_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::Administration::NotFound))
 {
@@ -774,18 +774,18 @@ ImplRepo_i::server_is_shutting_down (const char *server
 
 
 int
-ImplRepo_i::init (TAO_ENV_SINGLE_ARG_DECL)
+ImplRepo_i::init (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::ORB_var orb = OPTIONS::instance ()->orb ();
 
   ACE_TRY
     {
       CORBA::Object_var table_object =
-        orb->resolve_initial_references ("IORTable" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("IORTable" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in () TAO_ENV_ARG_PARAMETER);
+        IORTable::Table::_narrow (table_object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (CORBA::is_nil (adapter.in ()))
         {
@@ -793,12 +793,12 @@ ImplRepo_i::init (TAO_ENV_SINGLE_ARG_DECL)
         }
       else
         {
-          adapter->set_locator (this->locator_.in () TAO_ENV_ARG_PARAMETER);
+          adapter->set_locator (this->locator_.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
       CORBA::Object_var root_poa_object =
-        orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (root_poa_object.in ()))
@@ -808,11 +808,11 @@ ImplRepo_i::init (TAO_ENV_SINGLE_ARG_DECL)
 
       // Get the POA object.
       this->root_poa_ = PortableServer::POA::_narrow (root_poa_object.in ()
-                                                      TAO_ENV_ARG_PARAMETER);
+                                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        this->root_poa_->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        this->root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::PolicyList policies (2);
@@ -821,20 +821,20 @@ ImplRepo_i::init (TAO_ENV_SINGLE_ARG_DECL)
       // Id Assignment policy
       policies[0] =
         this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID
-                                                      TAO_ENV_ARG_PARAMETER);
+                                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Lifespan policy
       policies[1] =
         this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->imr_poa_ =
         this->root_poa_->create_POA ("ImplRepoService",
                                      poa_manager.in (),
                                      policies
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
 
       // Warning!  If create_POA fails, then the policies won't be
       // destroyed and there will be hell to pay in memory leaks!
@@ -844,7 +844,7 @@ ImplRepo_i::init (TAO_ENV_SINGLE_ARG_DECL)
       for (CORBA::ULong i = 0; i < policies.length (); ++i)
         {
           CORBA::Policy_ptr policy = policies[i];
-          policy->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+          policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -857,23 +857,23 @@ ImplRepo_i::init (TAO_ENV_SINGLE_ARG_DECL)
 
       this->imr_poa_->activate_object_with_id (imr_id.in (),
                                                this
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the IMR object
       CORBA::Object_var imr_obj =
-        this->imr_poa_->id_to_reference (imr_id.in () TAO_ENV_ARG_PARAMETER);
+        this->imr_poa_->id_to_reference (imr_id.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // And its string
 
       this->imr_ior_ =
-        orb->object_to_string (imr_obj.in () TAO_ENV_ARG_PARAMETER);
+        orb->object_to_string (imr_obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Register with INS.
       adapter->bind ("ImplRepoService", this->imr_ior_.in ()
-                     TAO_ENV_ARG_PARAMETER);
+                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (OPTIONS::instance ()->debug () >= 2)
@@ -896,7 +896,7 @@ ImplRepo_i::init (TAO_ENV_SINGLE_ARG_DECL)
       // Register the Adapter_Activator reference to be the RootPOA's
       // Adapter Activator.
 
-      this->root_poa_->the_activator (this->activator_ TAO_ENV_ARG_PARAMETER);
+      this->root_poa_->the_activator (this->activator_ ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get reactor instance from TAO.
@@ -1025,18 +1025,18 @@ ImplRepo_i::setup_multicast (ACE_Reactor *reactor)
 
 
 int
-ImplRepo_i::fini (TAO_ENV_SINGLE_ARG_DECL)
+ImplRepo_i::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::ORB_var orb = OPTIONS::instance ()->orb ();
 
   ACE_TRY
     {
       CORBA::Object_var table_object =
-        orb->resolve_initial_references ("IORTable" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("IORTable" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in () TAO_ENV_ARG_PARAMETER);
+        IORTable::Table::_narrow (table_object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (CORBA::is_nil (adapter.in ()))
         {
@@ -1045,14 +1045,14 @@ ImplRepo_i::fini (TAO_ENV_SINGLE_ARG_DECL)
       else
         {
           adapter->set_locator (IORTable::Locator::_nil ()
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
-      this->imr_poa_->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
+      this->imr_poa_->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->root_poa_->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
+      this->root_poa_->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -1066,13 +1066,13 @@ ImplRepo_i::fini (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 int
-ImplRepo_i::run (TAO_ENV_SINGLE_ARG_DECL)
+ImplRepo_i::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::ORB_var orb = OPTIONS::instance ()->orb ();
 
   PortableServer::POAManager_var poa_manager =
-    this->imr_poa_->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
-  poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->imr_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Get a new iterator
@@ -1108,7 +1108,7 @@ ImplRepo_i::run (TAO_ENV_SINGLE_ARG_DECL)
         {
           if (activation == ImplementationRepository::AUTO_START)
             this->activate_server (server_entry->ext_id_.c_str ()
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY
@@ -1126,7 +1126,7 @@ ImplRepo_i::run (TAO_ENV_SINGLE_ARG_DECL)
     }
 
 
-  orb->run (0 TAO_ENV_ARG_PARAMETER);
+  orb->run (0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -1158,7 +1158,7 @@ ImplRepo_i::~ImplRepo_i (void)
 void
 ImplRepo_i::find (const char *server,
                   ImplementationRepository::ServerInformation_out info
-                  TAO_ENV_ARG_DECL)
+                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ImplementationRepository::Administration::NotFound))
 {
@@ -1202,7 +1202,7 @@ void
 ImplRepo_i::list (CORBA::ULong how_many,
                   ImplementationRepository::ServerInformationList_out server_list,
                   ImplementationRepository::ServerInformationIterator_out server_iterator
-                  TAO_ENV_ARG_DECL)
+                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Initialize the out variables, so if we return early, they will
@@ -1285,9 +1285,9 @@ ImplRepo_i::list (CORBA::ULong how_many,
       ACE_TRY
         {
           PortableServer::ObjectId_var id =
-            this->root_poa_->activate_object (imr_iter TAO_ENV_ARG_PARAMETER);
+            this->root_poa_->activate_object (imr_iter ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          server_iterator = imr_iter->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+          server_iterator = imr_iter->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY
@@ -1306,7 +1306,7 @@ ImplRepo_i::list (CORBA::ULong how_many,
  */
 void
 ImplRepo_i::shutdown_server (const char *server
-                             TAO_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ImplementationRepository::Administration::NotFound))
 {
@@ -1332,12 +1332,12 @@ ImplRepo_i::shutdown_server (const char *server
       ACE_TRY
         {
           CORBA::Object_var object =
-            orb->string_to_object (server_object_ior.c_str () TAO_ENV_ARG_PARAMETER);
+            orb->string_to_object (server_object_ior.c_str () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ImplementationRepository::ServerObject_var server_object =
             ImplementationRepository::ServerObject::_narrow (object.in ()
-                                                             TAO_ENV_ARG_PARAMETER);
+                                                             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (CORBA::is_nil (server_object.in ()))
@@ -1349,7 +1349,7 @@ ImplRepo_i::shutdown_server (const char *server
             }
 
           // Call shutdown
-          server_object->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+          server_object->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // Remove running info from repository

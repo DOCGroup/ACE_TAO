@@ -18,28 +18,28 @@ Test_i::Test_i (PortableServer::POA_ptr poa)
 }
 
 CORBA::Long
-Test_i::instance_count (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Test_i::instance_count (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return Test_i::instance_count_;
 }
 
 void
-Test_i::destroy (TAO_ENV_SINGLE_ARG_DECL)
+Test_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::POA_var poa =
-    this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   PortableServer::ObjectId_var oid =
-    poa->servant_to_id (this TAO_ENV_ARG_PARAMETER);
+    poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  poa->deactivate_object (oid.in () TAO_ENV_ARG_PARAMETER);
+  poa->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 PortableServer::POA_ptr
-Test_i::_default_POA (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Test_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());

@@ -19,10 +19,10 @@ Policy_Verifier::~Policy_Verifier (void)
 void
 Policy_Verifier::init (int argc,
                        char *argv[]
-                       TAO_ENV_ARG_DECL)
+                       ACE_ENV_ARG_DECL)
 {
   this->orb_ =
-    CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+    CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_Arg_Shifter arg_shifter (argc, argv);
@@ -34,7 +34,7 @@ Policy_Verifier::init (int argc,
       if ((arg = arg_shifter.get_the_parameter ("-POAConfigFile")))
         {
           this->rt_poa_properties_ =
-            RT_Properties::read_from (arg TAO_ENV_ARG_PARAMETER);
+            RT_Properties::read_from (arg ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
           this->priority_bands_ =
             this->rt_poa_properties_->priority_bands ().length ();
@@ -42,7 +42,7 @@ Policy_Verifier::init (int argc,
       else if ((arg = arg_shifter.get_the_parameter ("-ObjectConfigFile")))
         {
           this->rt_object_properties_ =
-            RT_Properties::read_from (arg TAO_ENV_ARG_PARAMETER);
+            RT_Properties::read_from (arg ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
       else if ((arg = arg_shifter.get_the_parameter ("-BaseObjectIOR")))
@@ -89,26 +89,26 @@ Policy_Verifier::init (int argc,
 
   // Get the Object references.
   CORBA::Object_var object = this->orb_->string_to_object (this->base_object_ref_
-                                                           TAO_ENV_ARG_PARAMETER);
+                                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!Policy_Verifier::check_reference (object.in (), "Invalid IOR file!\n"))
     return;
 
-  this->base_object_ = Counter::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+  this->base_object_ = Counter::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!Policy_Verifier::check_reference (this->base_object_.in (),
                                          "Unable to convert the IOR to the proper object reference.\n"))
     return;
 
-  object = this->orb_->string_to_object (this->overridden_object_ref_ TAO_ENV_ARG_PARAMETER);
+  object = this->orb_->string_to_object (this->overridden_object_ref_ ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!Policy_Verifier::check_reference (object.in (), "Invalid IOR file!\n"))
     return;
 
-  this->overridden_object_ = Counter::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+  this->overridden_object_ = Counter::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!Policy_Verifier::check_reference (this->overridden_object_.in (),
@@ -118,30 +118,30 @@ Policy_Verifier::init (int argc,
 }
 
 void
-Policy_Verifier::run (TAO_ENV_SINGLE_ARG_DECL )
+Policy_Verifier::run (ACE_ENV_SINGLE_ARG_DECL )
 {
   this->verify_reference (this->base_object_.in (),
                           this->rt_poa_properties_
-                          TAO_ENV_ARG_PARAMETER);
+                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->verify_reference (this->overridden_object_.in (),
                           this->rt_object_properties_
-                          TAO_ENV_ARG_PARAMETER);
+                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 Policy_Verifier::verify_reference (Counter_ptr object,
                                    RT_Properties *rt_properties
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
 {
 
   ACE_TRY
     {
       CORBA::Policy_var policy_var =
         object->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE
-                             TAO_ENV_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (Policy_Verifier::check_reference (policy_var.in (), "Unable to get Priority Policy.\n"))
@@ -150,11 +150,11 @@ Policy_Verifier::verify_reference (Counter_ptr object,
             RTCORBA::PriorityModelPolicy::_narrow (policy_var.in ());
 
           RTCORBA::PriorityModel priority_model =
-            priority_policy->priority_model (TAO_ENV_SINGLE_ARG_PARAMETER);
+            priority_policy->priority_model (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           RTCORBA::Priority priority =
-            priority_policy->server_priority (TAO_ENV_SINGLE_ARG_PARAMETER);
+            priority_policy->server_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (priority_model == RTCORBA::SERVER_DECLARED)
@@ -175,14 +175,14 @@ Policy_Verifier::verify_reference (Counter_ptr object,
         }
 
       policy_var = object->_get_policy (RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
       if (Policy_Verifier::check_reference (policy_var.in (),
                                           "Unable to get Priority Banded Policy\n"))
         {
 
           RTCORBA::PriorityBandedConnectionPolicy_var priority_banded_policy =
             RTCORBA::PriorityBandedConnectionPolicy::_narrow (policy_var.in ()
-                                                              TAO_ENV_ARG_PARAMETER);
+                                                              ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
 
@@ -219,16 +219,16 @@ Policy_Verifier::verify_reference (Counter_ptr object,
             }
         }
       policy_var = object->_get_policy (RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
       if (Policy_Verifier::check_reference (policy_var.in (),
                                             "Unable to get Client Protocol Policy\n"))
         {
           RTCORBA::ClientProtocolPolicy_var client_protocol_policy =
-            RTCORBA::ClientProtocolPolicy::_narrow (policy_var.in () TAO_ENV_ARG_PARAMETER);
+            RTCORBA::ClientProtocolPolicy::_narrow (policy_var.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           RTCORBA::ProtocolList_var protocol_list =
-            client_protocol_policy->protocols (TAO_ENV_SINGLE_ARG_PARAMETER);
+            client_protocol_policy->protocols (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           for (unsigned int  i = 0; i < protocol_list->length (); i++)

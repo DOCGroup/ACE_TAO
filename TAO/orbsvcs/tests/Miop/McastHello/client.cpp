@@ -39,14 +39,14 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
@@ -54,7 +54,7 @@ main (int argc, char *argv[])
        * a multicast reference (yet...).
        */
       Test::McastHello_var hello =
-        Test::McastHello::_unchecked_narrow (tmp.in () TAO_ENV_ARG_PARAMETER);
+        Test::McastHello::_unchecked_narrow (tmp.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (hello.in ()))
@@ -65,13 +65,13 @@ main (int argc, char *argv[])
                             1);
         }
 
-      hello->send_forty_two (42 TAO_ENV_ARG_PARAMETER);
+      hello->send_forty_two (42 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      hello->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

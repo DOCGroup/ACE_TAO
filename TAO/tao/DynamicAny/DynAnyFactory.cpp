@@ -35,18 +35,18 @@ TAO_DynAnyFactory::TAO_DynAnyFactory (void)
 // to extract the TCKind of possibly aliased types.
 CORBA::TCKind
 TAO_DynAnyFactory::unalias (CORBA_TypeCode_ptr tc
-                            TAO_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL)
 {
-  CORBA::TCKind tck = tc->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TCKind tck = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::tk_null);
 
   while (tck == CORBA::tk_alias)
     {
-      CORBA_TypeCode_var temp = tc->content_type (TAO_ENV_SINGLE_ARG_PARAMETER);
+      CORBA_TypeCode_var temp = tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::tk_null);
 
       tck = TAO_DynAnyFactory::unalias (temp.in ()
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::tk_null);
     }
 
@@ -56,18 +56,18 @@ TAO_DynAnyFactory::unalias (CORBA_TypeCode_ptr tc
 // Same as above, but returns the type code.
 CORBA::TypeCode_ptr
 TAO_DynAnyFactory::strip_alias (CORBA_TypeCode_ptr tc
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
 {
   CORBA_TypeCode_var retval = CORBA::TypeCode::_duplicate (tc);
-  CORBA::TCKind tck = retval->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TCKind tck = retval->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   while (tck == CORBA::tk_alias)
     {
-      retval = retval->content_type (TAO_ENV_SINGLE_ARG_PARAMETER);
+      retval = retval->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
-      tck = retval->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+      tck = retval->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
     }
 
@@ -77,36 +77,36 @@ TAO_DynAnyFactory::strip_alias (CORBA_TypeCode_ptr tc
 DynamicAny::DynAny_ptr
 TAO_DynAnyFactory::create_dyn_any (
       const CORBA::Any & value
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAnyFactory::InconsistentTypeCode
     ))
 {
-  return TAO_DynAnyFactory::make_dyn_any (value TAO_ENV_ARG_PARAMETER);
+  return TAO_DynAnyFactory::make_dyn_any (value ACE_ENV_ARG_PARAMETER);
 }
 
 DynamicAny::DynAny_ptr
 TAO_DynAnyFactory::create_dyn_any_from_type_code (
       CORBA::TypeCode_ptr type
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAnyFactory::InconsistentTypeCode
     ))
 {
-  return TAO_DynAnyFactory::make_dyn_any (type TAO_ENV_ARG_PARAMETER);
+  return TAO_DynAnyFactory::make_dyn_any (type ACE_ENV_ARG_PARAMETER);
 }
 
 DynamicAny::DynAny_ptr
 TAO_DynAnyFactory::make_dyn_any (const CORBA_Any &any
-                                 TAO_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL)
 {
   CORBA::TypeCode_var tc = any.type ();
   CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ()
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DynamicAny::DynAny::_nil ());
 
   switch (kind)
@@ -139,7 +139,7 @@ TAO_DynAnyFactory::make_dyn_any (const CORBA_Any &any
           ACE_CHECK_RETURN (0);
 
           ACE_Auto_Basic_Ptr<TAO_DynAny_i> dp (p);
-          p->init (any TAO_ENV_ARG_PARAMETER);
+          p->init (any ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           return dp.release ();
@@ -155,7 +155,7 @@ TAO_DynAnyFactory::make_dyn_any (const CORBA_Any &any
           ACE_CHECK_RETURN (0);
 
           ACE_Auto_Basic_Ptr<TAO_DynStruct_i> dp (p);
-          p->init (any TAO_ENV_ARG_PARAMETER);
+          p->init (any ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           return dp.release ();
@@ -170,7 +170,7 @@ TAO_DynAnyFactory::make_dyn_any (const CORBA_Any &any
           ACE_CHECK_RETURN (0);
 
           ACE_Auto_Basic_Ptr<TAO_DynSequence_i> dp (p);
-          p->init (any TAO_ENV_ARG_PARAMETER);
+          p->init (any ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           return dp.release ();
@@ -185,7 +185,7 @@ TAO_DynAnyFactory::make_dyn_any (const CORBA_Any &any
           ACE_CHECK_RETURN (0);
 
           ACE_Auto_Basic_Ptr<TAO_DynUnion_i> dp (p);
-          p->init (any TAO_ENV_ARG_PARAMETER);
+          p->init (any ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           return dp.release ();
@@ -200,7 +200,7 @@ TAO_DynAnyFactory::make_dyn_any (const CORBA_Any &any
           ACE_CHECK_RETURN (0);
 
           ACE_Auto_Basic_Ptr<TAO_DynEnum_i> dp (p);
-          p->init (any TAO_ENV_ARG_PARAMETER);
+          p->init (any ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           return dp.release ();
@@ -215,7 +215,7 @@ TAO_DynAnyFactory::make_dyn_any (const CORBA_Any &any
           ACE_CHECK_RETURN (0);
 
           ACE_Auto_Basic_Ptr<TAO_DynArray_i> dp (p);
-          p->init (any TAO_ENV_ARG_PARAMETER);
+          p->init (any ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           return dp.release ();
@@ -241,10 +241,10 @@ TAO_DynAnyFactory::make_dyn_any (const CORBA_Any &any
 
 DynamicAny::DynAny_ptr
 TAO_DynAnyFactory::make_dyn_any (CORBA::TypeCode_ptr tc
-                                 TAO_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL)
 {
   CORBA::TCKind kind =
-    TAO_DynAnyFactory::unalias (tc TAO_ENV_ARG_PARAMETER);
+    TAO_DynAnyFactory::unalias (tc ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DynamicAny::DynAny::_nil ());
 
   switch (kind)
@@ -277,7 +277,7 @@ TAO_DynAnyFactory::make_dyn_any (CORBA::TypeCode_ptr tc
           ACE_CHECK_RETURN (0);
 
           ACE_Auto_Basic_Ptr<TAO_DynAny_i> dp (p);
-          p->init (tc TAO_ENV_ARG_PARAMETER);
+          p->init (tc ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           return dp.release ();
@@ -293,7 +293,7 @@ TAO_DynAnyFactory::make_dyn_any (CORBA::TypeCode_ptr tc
           ACE_CHECK_RETURN (0);
 
           ACE_Auto_Basic_Ptr<TAO_DynStruct_i> dp (p);
-          p->init (tc TAO_ENV_ARG_PARAMETER);
+          p->init (tc ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           return dp.release ();
@@ -308,7 +308,7 @@ TAO_DynAnyFactory::make_dyn_any (CORBA::TypeCode_ptr tc
           ACE_CHECK_RETURN (0);
 
           ACE_Auto_Basic_Ptr<TAO_DynSequence_i> dp (p);
-          p->init (tc TAO_ENV_ARG_PARAMETER);
+          p->init (tc ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           return dp.release ();
@@ -323,7 +323,7 @@ TAO_DynAnyFactory::make_dyn_any (CORBA::TypeCode_ptr tc
           ACE_CHECK_RETURN (0);
 
           ACE_Auto_Basic_Ptr<TAO_DynUnion_i> dp (p);
-          p->init (tc TAO_ENV_ARG_PARAMETER);
+          p->init (tc ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           return dp.release ();
@@ -338,7 +338,7 @@ TAO_DynAnyFactory::make_dyn_any (CORBA::TypeCode_ptr tc
           ACE_CHECK_RETURN (0);
 
           ACE_Auto_Basic_Ptr<TAO_DynEnum_i> dp (p);
-          p->init (tc TAO_ENV_ARG_PARAMETER);
+          p->init (tc ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           return dp.release ();
@@ -353,7 +353,7 @@ TAO_DynAnyFactory::make_dyn_any (CORBA::TypeCode_ptr tc
           ACE_CHECK_RETURN (0);
 
           ACE_Auto_Basic_Ptr<TAO_DynArray_i> dp (p);
-          p->init (tc TAO_ENV_ARG_PARAMETER);
+          p->init (tc ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           return dp.release ();

@@ -12,7 +12,7 @@ Web_Server::Metadata_Type *
 Push_Iterator_Factory_i::register_callback
   (const char *pathname,
    Web_Server::Callback_ptr client_callback
-   TAO_ENV_ARG_DECL)
+   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException, Web_Server::Error_Result))
 {
   if (CORBA::is_nil (client_callback))  // @@ Will it ever be nil?
@@ -43,7 +43,7 @@ Push_Iterator_Factory_i::register_callback
   PortableServer::ServantBase_var tmp (handler);
 
   // Start sending data to the client callback object.
-  handler->run (TAO_ENV_SINGLE_ARG_PARAMETER);
+  handler->run (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   ACE_stat file_status;

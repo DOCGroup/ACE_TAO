@@ -24,7 +24,7 @@ INS_i::orb (CORBA::ORB_ptr o)
 }
 
 char *
-INS_i::test_ins (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+INS_i::test_ins (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   ACE_DEBUG ((LM_DEBUG,

@@ -68,7 +68,7 @@ Consumer_Client::parse_args (int argc, char *argv[])
           {
             discard_policy = CosNotification::DeadlineOrder;
 #if !defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
-            ACE_ERROR_RETURN ((LM_ERROR,   
+            ACE_ERROR_RETURN ((LM_ERROR,
                                "This order policy requires timed message "
                                "blocks.\nPlease #define "
                                "ACE_HAS_TIMED_MESSAGE_BLOCKS in your "
@@ -101,13 +101,13 @@ Consumer_Client::parse_args (int argc, char *argv[])
 
 static CosNotifyChannelAdmin::ConsumerAdmin_ptr
 create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
-                      TAO_ENV_ARG_DECL)
+                      ACE_ENV_ARG_DECL)
 {
   CosNotifyChannelAdmin::AdminID adminid = 0;
   CosNotifyChannelAdmin::ConsumerAdmin_var admin =
     ec->new_for_consumers (CosNotifyChannelAdmin::OR_OP,
                            adminid
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN (0);
 
@@ -120,7 +120,7 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
   added[0].domain_name =  CORBA::string_dup ("*");
   added[0].type_name = CORBA::string_dup ("*");
 
-  admin->subscription_change (added, removed TAO_ENV_ARG_PARAMETER);
+  admin->subscription_change (added, removed ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return CosNotifyChannelAdmin::ConsumerAdmin::_duplicate (admin.in ());
@@ -130,7 +130,7 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
 static void
 create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
                   Notify_Test_Client* client
-                  TAO_ENV_ARG_DECL)
+                  ACE_ENV_ARG_DECL)
 {
   // startup the consumer
   Notify_Structured_Push_Consumer* consumer_1;
@@ -141,10 +141,10 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
                                           expected,
                                           client->done ()),
                     CORBA::NO_MEMORY ());
-  consumer_1->init (client->root_poa () TAO_ENV_ARG_PARAMETER);
+  consumer_1->init (client->root_poa () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  consumer_1->connect (admin TAO_ENV_ARG_PARAMETER);
+  consumer_1->connect (admin ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -159,21 +159,21 @@ int main (int argc, char* argv[])
     {
       Consumer_Client client;
 
-      status = client.init (argc, argv TAO_ENV_ARG_PARAMETER);
+      status = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (status == 0)
         {
           CosNotifyChannelAdmin::EventChannel_var ec =
-            client.create_event_channel ("MyEventChannel", 1 TAO_ENV_ARG_PARAMETER);
+            client.create_event_channel ("MyEventChannel", 1 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           CORBA::ORB_ptr orb = client.orb ();
           CORBA::Object_var object =
-                              orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+                              orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          sig_var sig = sig::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+          sig_var sig = sig::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (CORBA::is_nil (sig.in ()))
@@ -185,16 +185,16 @@ int main (int argc, char* argv[])
             }
 
           CosNotifyChannelAdmin::ConsumerAdmin_var admin =
-            create_consumeradmin (ec.in () TAO_ENV_ARG_PARAMETER);
+            create_consumeradmin (ec.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (!CORBA::is_nil (admin.in ()))
             {
-              create_consumers (admin.in (), &client TAO_ENV_ARG_PARAMETER);
+              create_consumers (admin.in (), &client ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               // Tell the supplier to go
-              sig->go (TAO_ENV_SINGLE_ARG_PARAMETER);
+              sig->go (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               CORBA::Boolean wait_more = 1;

@@ -18,7 +18,7 @@ Object_Factory_i::Object_Factory_i (CORBA::ORB_ptr orb, CORBA::ULong len)
 
 //factory method to create first object
 Two_Objects_Test::First_ptr
-Object_Factory_i::create_first (TAO_ENV_SINGLE_ARG_DECL)
+Object_Factory_i::create_first (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   First_i *first_impl;
@@ -29,14 +29,14 @@ Object_Factory_i::create_first (TAO_ENV_SINGLE_ARG_DECL)
                     CORBA::NO_MEMORY() );
 
   Two_Objects_Test::First_var first =
-    first_impl->_this (TAO_ENV_SINGLE_ARG_PARAMETER );
+    first_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER );
 
   return first._retn();
 }
 
 //factory method to create second object
 Two_Objects_Test::Second_ptr
-Object_Factory_i::create_second (TAO_ENV_SINGLE_ARG_DECL)
+Object_Factory_i::create_second (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Second_i *second_impl;
@@ -47,7 +47,7 @@ Object_Factory_i::create_second (TAO_ENV_SINGLE_ARG_DECL)
                     CORBA::NO_MEMORY ());
 
   Two_Objects_Test::Second_var second =
-    second_impl->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+    second_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   return second._retn();
 }

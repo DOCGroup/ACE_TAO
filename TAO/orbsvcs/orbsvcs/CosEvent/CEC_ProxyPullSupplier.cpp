@@ -31,13 +31,13 @@ TAO_CEC_ProxyPullSupplier::~TAO_CEC_ProxyPullSupplier (void)
 }
 
 CosEventChannelAdmin::ProxyPullSupplier_ptr
-TAO_CEC_ProxyPullSupplier::activate (TAO_ENV_SINGLE_ARG_DECL)
+TAO_CEC_ProxyPullSupplier::activate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosEventChannelAdmin::ProxyPullSupplier_var result;
   ACE_TRY
     {
-      result = this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+      result = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -49,18 +49,18 @@ TAO_CEC_ProxyPullSupplier::activate (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_CEC_ProxyPullSupplier::deactivate (TAO_ENV_SINGLE_ARG_DECL)
+TAO_CEC_ProxyPullSupplier::deactivate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
     {
       PortableServer::POA_var poa =
-        this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
+        this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       PortableServer::ObjectId_var id =
-        poa->servant_to_id (this TAO_ENV_ARG_PARAMETER);
+        poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      poa->deactivate_object (id.in () TAO_ENV_ARG_PARAMETER);
+      poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -74,7 +74,7 @@ TAO_CEC_ProxyPullSupplier::deactivate (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_CEC_ProxyPullSupplier::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+TAO_CEC_ProxyPullSupplier::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Save the consumer we where connected to, we need to send a
   // disconnect message to it.
@@ -90,7 +90,7 @@ TAO_CEC_ProxyPullSupplier::shutdown (TAO_ENV_SINGLE_ARG_DECL)
     consumer = this->consumer_._retn ();
   }
 
-  this->deactivate (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (consumer.in ()))
@@ -98,7 +98,7 @@ TAO_CEC_ProxyPullSupplier::shutdown (TAO_ENV_SINGLE_ARG_DECL)
 
   ACE_TRY
     {
-      consumer->disconnect_pull_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
+      consumer->disconnect_pull_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -112,7 +112,7 @@ TAO_CEC_ProxyPullSupplier::shutdown (TAO_ENV_SINGLE_ARG_DECL)
 CORBA::Boolean
 TAO_CEC_ProxyPullSupplier::consumer_non_existent (
       CORBA::Boolean_out disconnected
-      TAO_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL)
 {
   ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,
@@ -132,7 +132,7 @@ TAO_CEC_ProxyPullSupplier::consumer_non_existent (
     }
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
-  return this->consumer_->_non_existent (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->consumer_->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
 #else
   return 0;
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -140,7 +140,7 @@ TAO_CEC_ProxyPullSupplier::consumer_non_existent (
 
 void
 TAO_CEC_ProxyPullSupplier::push (const CORBA::Any &event
-                                 TAO_ENV_ARG_DECL_NOT_USED)
+                                 ACE_ENV_ARG_DECL_NOT_USED)
 {
   if (this->is_connected () == 0)
     return;
@@ -154,7 +154,7 @@ TAO_CEC_ProxyPullSupplier::push (const CORBA::Any &event
 }
 
 CORBA::Any *
-TAO_CEC_ProxyPullSupplier::pull (TAO_ENV_SINGLE_ARG_DECL)
+TAO_CEC_ProxyPullSupplier::pull (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosEventComm::Disconnected))
 {
@@ -176,7 +176,7 @@ TAO_CEC_ProxyPullSupplier::pull (TAO_ENV_SINGLE_ARG_DECL)
 
 CORBA::Any *
 TAO_CEC_ProxyPullSupplier::try_pull (CORBA::Boolean_out has_event
-                                     TAO_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected))
 {
   has_event = 0;
@@ -232,7 +232,7 @@ TAO_CEC_ProxyPullSupplier::_decr_refcnt (void)
 void
 TAO_CEC_ProxyPullSupplier::connect_pull_consumer (
       CosEventComm::PullConsumer_ptr pull_consumer
-      TAO_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosEventChannelAdmin::AlreadyConnected))
 {
@@ -264,7 +264,7 @@ TAO_CEC_ProxyPullSupplier::connect_pull_consumer (
           // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
           ACE_CHECK;
 
-          this->event_channel_->reconnected (this TAO_ENV_ARG_PARAMETER);
+          this->event_channel_->reconnected (this ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
         return;
@@ -276,12 +276,12 @@ TAO_CEC_ProxyPullSupplier::connect_pull_consumer (
   }
 
   // Notify the event channel...
-  this->event_channel_->connected (this TAO_ENV_ARG_PARAMETER);
+  this->event_channel_->connected (this ACE_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_CEC_ProxyPullSupplier::disconnect_pull_supplier (
-      TAO_ENV_SINGLE_ARG_DECL)
+      ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosEventComm::PullConsumer_var consumer;
@@ -302,7 +302,7 @@ TAO_CEC_ProxyPullSupplier::disconnect_pull_supplier (
   }
 
   // Notify the event channel....
-  this->event_channel_->disconnected (this TAO_ENV_ARG_PARAMETER);
+  this->event_channel_->disconnected (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (consumer.in ()))
@@ -312,7 +312,7 @@ TAO_CEC_ProxyPullSupplier::disconnect_pull_supplier (
     {
       ACE_TRY
         {
-          consumer->disconnect_pull_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
+          consumer->disconnect_pull_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY
@@ -327,19 +327,19 @@ TAO_CEC_ProxyPullSupplier::disconnect_pull_supplier (
 }
 
 PortableServer::POA_ptr
-TAO_CEC_ProxyPullSupplier::_default_POA (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_CEC_ProxyPullSupplier::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 void
-TAO_CEC_ProxyPullSupplier::_add_ref (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_CEC_ProxyPullSupplier::_add_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   this->_incr_refcnt ();
 }
 
 void
-TAO_CEC_ProxyPullSupplier::_remove_ref (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_CEC_ProxyPullSupplier::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   this->_decr_refcnt ();
 }

@@ -82,7 +82,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
           << "_tao_elem = " << node->full_name () << "::_nil ();" << be_nl
           << "CORBA::TypeCode_var type = _tao_any.type ();" << be_nl << be_nl
           << "CORBA::Boolean result = type->equivalent (" << node->tc_name ()
-          << " TAO_ENV_ARG_PARAMETER);" << be_nl
+          << " ACE_ENV_ARG_PARAMETER);" << be_nl
           << "ACE_TRY_CHECK;" << be_nl << be_nl
           << "if (!result)" << be_idt_nl
           << "return 0; // not equivalent" << be_uidt_nl << be_nl

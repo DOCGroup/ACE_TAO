@@ -159,13 +159,13 @@ public:
    * NON-THREAD SAFE.
    */
   CORBA::ULong hash (CORBA::ULong max
-                     TAO_ENV_ARG_DECL);
+                     ACE_ENV_ARG_DECL);
 
 protected:
 
   /// This method handle the dynamic allocation of the data member
   /// <policy_list_>.
- void create_policy_list (TAO_ENV_SINGLE_ARG_DECL);
+ void create_policy_list (ACE_ENV_SINGLE_ARG_DECL);
 
 public:
 
@@ -175,12 +175,12 @@ public:
 
   /// Gets the policies list associated with the profiles
   /// owned by the TAO_MProfile.
-  CORBA::PolicyList *policy_list (TAO_ENV_SINGLE_ARG_DECL);
+  CORBA::PolicyList *policy_list (ACE_ENV_SINGLE_ARG_DECL);
 
 protected:
 
   /// Initialize the policy list, demarsharling the policy.
-  void init_policy_list (TAO_ENV_SINGLE_ARG_DECL);
+  void init_policy_list (ACE_ENV_SINGLE_ARG_DECL);
 
 protected:
   /// Stores the policy list for the profile of this MProfile.

@@ -43,22 +43,22 @@ ECT_Supplier_Driver::~ECT_Supplier_Driver (void)
 
 void
 ECT_Supplier_Driver::shutdown_consumer (void*
-                                        TAO_ENV_ARG_DECL_NOT_USED)
+                                        ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 
 int
 ECT_Supplier_Driver::run (int argc, char* argv[])
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -67,11 +67,11 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (this->parse_args (argc, argv))
@@ -136,7 +136,7 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
         }
 
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (naming_obj.in ()))
@@ -145,7 +145,7 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
                           1);
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in () TAO_ENV_ARG_PARAMETER);
+        CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CosNaming::Name schedule_name (1);
@@ -153,20 +153,20 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
       schedule_name[0].id = CORBA::string_dup ("ScheduleService");
 
       CORBA::Object_var sched_obj =
-        naming_context->resolve (schedule_name TAO_ENV_ARG_PARAMETER);
+        naming_context->resolve (schedule_name ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (CORBA::is_nil (sched_obj.in ()))
         return 1;
       RtecScheduler::Scheduler_var scheduler =
         RtecScheduler::Scheduler::_narrow (sched_obj.in ()
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       CosNaming::Name name (1);
       name.length (1);
       name[0].id = CORBA::string_dup ("EventService");
 
       CORBA::Object_var ec_obj =
-        naming_context->resolve (name TAO_ENV_ARG_PARAMETER);
+        naming_context->resolve (name ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecEventChannelAdmin::EventChannel_var channel;
@@ -174,20 +174,20 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
         channel = RtecEventChannelAdmin::EventChannel::_nil ();
       else
         channel = RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ()
-                                                                TAO_ENV_ARG_PARAMETER);
+                                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->connect_suppliers (scheduler.in (),
                                channel.in ()
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "connected supplier(s)\n"));
 
-      this->activate_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->activate_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "suppliers are active\n"));
@@ -203,17 +203,17 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
 
       this->dump_results ();
 
-      this->disconnect_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->disconnect_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "suppliers disconnected\n"));
 
       // @@ Deactivate the suppliers (as CORBA Objects?)
 
-      root_poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "orb and poa destroyed\n"));
@@ -234,7 +234,7 @@ void
 ECT_Supplier_Driver::connect_suppliers
     (RtecScheduler::Scheduler_ptr scheduler,
      RtecEventChannelAdmin::EventChannel_ptr channel
-     TAO_ENV_ARG_DECL)
+     ACE_ENV_ARG_DECL)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
@@ -252,13 +252,13 @@ ECT_Supplier_Driver::connect_suppliers
                                     this->type_start_,
                                     this->type_count_,
                                     channel
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
-ECT_Supplier_Driver::activate_suppliers (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+ECT_Supplier_Driver::activate_suppliers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
@@ -267,11 +267,11 @@ ECT_Supplier_Driver::activate_suppliers (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-ECT_Supplier_Driver::disconnect_suppliers (TAO_ENV_SINGLE_ARG_DECL)
+ECT_Supplier_Driver::disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
-      this->suppliers_[i]->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->suppliers_[i]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       delete this->suppliers_[i];

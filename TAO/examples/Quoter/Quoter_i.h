@@ -44,7 +44,7 @@ public:
   // Destructor
 
   virtual CORBA::Long get_quote (const char *stock_name
-                                 TAO_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Stock::Invalid_Stock,
                        Stock::Invalid_Quoter));
@@ -54,7 +54,7 @@ public:
 
   virtual CosLifeCycle::LifeCycleObject_ptr copy (CosLifeCycle::FactoryFinder_ptr there,
                                                   const CosLifeCycle::Criteria &the_criteria
-                                                  TAO_ENV_ARG_DECL)
+                                                  ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosLifeCycle::NoFactory,
                        CosLifeCycle::NotCopyable,
@@ -64,7 +64,7 @@ public:
 
   virtual void move (CosLifeCycle::FactoryFinder_ptr there,
                      const CosLifeCycle::Criteria &the_criteria
-                     TAO_ENV_ARG_DECL)
+                     ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosLifeCycle::NoFactory,
                        CosLifeCycle::NotMovable,
@@ -72,7 +72,7 @@ public:
                        CosLifeCycle::CannotMeetCriteria));
   // Move this object using <there>
 
-  virtual void remove (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void remove (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosLifeCycle::NotRemovable));
   // Removes the object.
@@ -105,11 +105,11 @@ public:
   ~Quoter_Factory_i (void);
   // Destructor.
 
-  int init (TAO_ENV_SINGLE_ARG_DECL);
+  int init (ACE_ENV_SINGLE_ARG_DECL);
   // Initialize everything in the factory
 
   virtual Stock::Quoter_ptr create_quoter (const char *name
-                                           TAO_ENV_ARG_DECL)
+                                           ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Stock::Invalid_Quoter));
   // Return the quoter by the id <name>.

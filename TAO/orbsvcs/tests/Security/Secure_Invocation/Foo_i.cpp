@@ -16,7 +16,7 @@ Foo_i::Foo_i (CORBA::ORB_ptr orb,
 }
 
 void
-Foo_i::baz (TAO_ENV_SINGLE_ARG_DECL)
+Foo_i::baz (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Foo::Bar::NoSecurityAttributes))
 {
@@ -37,7 +37,7 @@ Foo_i::baz (TAO_ENV_SINGLE_ARG_DECL)
   // Get the desired security attributes
   Security::AttributeList_var attribute_list =
     this->current_->get_attributes (attribute_type_list
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // If the SecurityLevel1::Current::get_attributes() call above
@@ -109,8 +109,8 @@ Foo_i::baz (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Foo_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+Foo_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }

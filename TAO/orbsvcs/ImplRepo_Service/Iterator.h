@@ -41,12 +41,12 @@ public:
   virtual CORBA::Boolean next_n (
       CORBA::ULong how_many,
       ImplementationRepository::ServerInformationList_out server_list
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Destroys the iterator.
-  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

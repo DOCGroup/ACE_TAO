@@ -54,7 +54,7 @@ public:
   /// Select the endpoint and set <invocation>'s <profile_> and
   /// <endpoint_> data members accordingly.
   virtual void select_endpoint (TAO_GIOP_Invocation *invocation
-                                TAO_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
 
   /**
    * This method must be called when previously selected endpoint
@@ -63,7 +63,7 @@ public:
    * <select_endpoint> call picks a new endpoint.
    */
     virtual void next (TAO_GIOP_Invocation *invocation
-                   TAO_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+                   ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
 
   /**
    * This method must be called if the invocation attempt on a
@@ -73,7 +73,7 @@ public:
    */
   virtual void forward (TAO_GIOP_Invocation *invocation,
                         const TAO_MProfile &mprofile
-                        TAO_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+                        ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
 
   /// Update the state to indicate that the selected endpoint/profile
   /// were used successfully.
@@ -108,12 +108,12 @@ public:
   virtual ~TAO_Default_Endpoint_Selector (void);
 
   virtual void select_endpoint (TAO_GIOP_Invocation *invocation
-                                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   virtual void next (TAO_GIOP_Invocation *invocation
-                     TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   virtual void forward (TAO_GIOP_Invocation *invocation,
                         const TAO_MProfile &mprofile
-                        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   virtual void success (TAO_GIOP_Invocation *invocation);
   virtual void close_connection (TAO_GIOP_Invocation *invocation);
 
@@ -121,7 +121,7 @@ protected:
   /// This method selects an endpoint from the profile in the
   /// invocation object.
   int endpoint_from_profile (TAO_GIOP_Invocation *invocation
-                             TAO_ENV_ARG_DECL);
+                             ACE_ENV_ARG_DECL);
 };
 
 #if defined (__ACE_INLINE__)

@@ -56,24 +56,24 @@ public:
   // Destructor.
 
   virtual TimeBase::TimeT time (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // For the readonly attribute <time>.
 
-  virtual TimeBase::InaccuracyT  inaccuracy (TAO_ENV_SINGLE_ARG_DECL)
+  virtual TimeBase::InaccuracyT  inaccuracy (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // For the readonly attribute <inaccuracy>.
 
-  virtual TimeBase::TdfT tdf (TAO_ENV_SINGLE_ARG_DECL)
+  virtual TimeBase::TdfT tdf (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // For the readonly attribute <tdf>, which is the "time displacement
   // factor".
 
-  virtual TimeBase::UtcT utc_time (TAO_ENV_SINGLE_ARG_DECL)
+  virtual TimeBase::UtcT utc_time (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // For the readonly attribute <utc_time>.
 
-  CosTime::UTO_ptr absolute_time (TAO_ENV_SINGLE_ARG_DECL)
+  CosTime::UTO_ptr absolute_time (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Absolute time = Relative time + Base time.
   // ?? Find out more about the Base Time, UTC and
@@ -81,13 +81,13 @@ public:
 
   CosTime::TimeComparison compare_time (CosTime::ComparisonType comparison_type,
                                         CosTime::UTO_ptr uto
-                                        TAO_ENV_ARG_DECL)
+                                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Compares the time contained in the object with the time in the
   // supplied uto according to the supplied comparison type.
 
   CosTime::TIO_ptr time_to_interval (CosTime::UTO_ptr
-                                     TAO_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns a TIO representing the time interval between the time in
   // the object and the time in the UTO passed as a parameter. The
@@ -95,7 +95,7 @@ public:
   // two UTOs. Inaccuracies are ignored.  Note the result of this
   // operation is meaningless if the base times of UTOs are different.
 
-  CosTime::TIO_ptr interval (TAO_ENV_SINGLE_ARG_DECL)
+  CosTime::TIO_ptr interval (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns a TIO object representing the error interval around the
   // time value in the UTO.

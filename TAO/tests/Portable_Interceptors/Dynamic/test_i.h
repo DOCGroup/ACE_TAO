@@ -28,22 +28,22 @@ public:
   // ctor
 
   void normal (CORBA::Long arg
-               TAO_ENV_ARG_DECL_NOT_USED)
+               ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Long calculate (
                          CORBA::Long one,
                          CORBA::Long two
-                         TAO_ENV_ARG_DECL_NOT_USED)
+                         ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void user (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void user (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,Test_Interceptors::Silly));
 
-  void system (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void system (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

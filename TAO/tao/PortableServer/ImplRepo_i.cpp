@@ -17,21 +17,21 @@ ServerObject_i::ServerObject_i (CORBA::ORB_ptr orb,
 }
 
 void
-ServerObject_i::ping (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+ServerObject_i::ping (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
-ServerObject_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+ServerObject_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 PortableServer::POA_ptr
-ServerObject_i::_default_POA (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+ServerObject_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

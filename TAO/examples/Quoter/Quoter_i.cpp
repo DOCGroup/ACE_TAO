@@ -45,7 +45,7 @@ Quoter_Factory_i::~Quoter_Factory_i (void)
 
 // Initialize everything in the factory
 
-int Quoter_Factory_i::init (TAO_ENV_SINGLE_ARG_DECL)
+int Quoter_Factory_i::init (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_NEW_RETURN (this->my_quoters_,
                   Quoter_i *[this->quoter_num_],
@@ -62,18 +62,18 @@ int Quoter_Factory_i::init (TAO_ENV_SINGLE_ARG_DECL)
       const char *location_string = "POA::activate";
       ACE_TRY
         {
-          this->poa_ptr_->activate_object (this->my_quoters_[i] TAO_ENV_ARG_PARAMETER);
+          this->poa_ptr_->activate_object (this->my_quoters_[i] ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           location_string = "_this";
-          Stock::Quoter_var quoter_var = this->my_quoters_[i]->_this(TAO_ENV_SINGLE_ARG_PARAMETER);
+          Stock::Quoter_var quoter_var = this->my_quoters_[i]->_this(ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           location_string = "CORBA::ORB::object_to_string";
           // Stringify the object reference and print it out.
           CORBA::String_var quoter_ior =
             TAO_ORB_Core_instance()->orb()->object_to_string (quoter_var.in ()
-                                                              TAO_ENV_ARG_PARAMETER);
+                                                              ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY
@@ -93,7 +93,7 @@ int Quoter_Factory_i::init (TAO_ENV_SINGLE_ARG_DECL)
 
 Stock::Quoter_ptr
 Quoter_Factory_i::create_quoter (const char *
-                                 TAO_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Stock::Invalid_Quoter))
 {
@@ -102,7 +102,7 @@ Quoter_Factory_i::create_quoter (const char *
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Quoter %d Created\n", this->next_quoter_));
 
-  return my_quoters_[this->next_quoter_]->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return my_quoters_[this->next_quoter_]->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 
@@ -131,7 +131,7 @@ Quoter_i::~Quoter_i (void)
 
 CORBA::Long
 Quoter_i::get_quote (char const *
-                     TAO_ENV_ARG_DECL_NOT_USED)
+                     ACE_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Stock::Invalid_Stock,
                        Stock::Invalid_Quoter))
@@ -145,7 +145,7 @@ Quoter_i::get_quote (char const *
 CosLifeCycle::LifeCycleObject_ptr
 Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
                 const CosLifeCycle::Criteria &/*the_criteria*/
-                TAO_ENV_ARG_DECL)
+                ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosLifeCycle::NoFactory,
                        CosLifeCycle::NotCopyable,
@@ -177,7 +177,7 @@ CosLifeCycle::LifeCycleObject::_nil ();
       // Find an appropriate factory over there.
       exception_message = "While trying to find a factory.\n";
       CosLifeCycle::Factories *factories_ptr =
-        there->find_factories (factoryKey TAO_ENV_ARG_PARAMETER);
+        there->find_factories (factoryKey ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Now it is known that there is at least one factory.
@@ -192,7 +192,7 @@ CosLifeCycle::LifeCycleObject::_nil ();
         exception_message = "While narrowing.\n";
         CosLifeCycle::GenericFactory_var generic_Factory_var =
           CosLifeCycle::GenericFactory::_narrow (generic_FactoryObj_ptr
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         if (CORBA::is_nil (generic_Factory_var.in ()))
@@ -215,11 +215,11 @@ CosLifeCycle::LifeCycleObject::_nil ();
           CORBA::Object_var quoterObject_var =
             generic_Factory_var->create_object (genericFactoryName,
                                                 criteria
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           exception_message = "While narrowing object";
-          quoter_var = Stock::Quoter::_narrow (quoterObject_var.in() TAO_ENV_ARG_PARAMETER);
+          quoter_var = Stock::Quoter::_narrow (quoterObject_var.in() ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (CORBA::is_nil (quoter_var.in ()))
@@ -272,7 +272,7 @@ CosLifeCycle::LifeCycleObject::_nil ();
 void
 Quoter_i::move (CosLifeCycle::FactoryFinder_ptr /* there */,
                 const CosLifeCycle::Criteria & /* the_criteria */
-                TAO_ENV_ARG_DECL)
+                ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosLifeCycle::NoFactory,
                        CosLifeCycle::NotMovable,
@@ -289,7 +289,7 @@ Quoter_i::move (CosLifeCycle::FactoryFinder_ptr /* there */,
 // Removes the object.  Once we shut down the ORB we can call it a day.
 
 void
-Quoter_i::remove (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Quoter_i::remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosLifeCycle::NotRemovable))
 {

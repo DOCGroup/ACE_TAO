@@ -25,10 +25,10 @@ class SLevel1_Server_i : public POA_SLevel1_Server
   SLevel1_Server_i ();
 
   ///
-  CORBA::Boolean authorize_level1 (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  CORBA::Boolean authorize_level1 (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Boolean authorize_level2 (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  CORBA::Boolean authorize_level2 (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   static int authorized_1;

@@ -56,15 +56,15 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -73,11 +73,11 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -86,11 +86,11 @@ main (int argc, char *argv[])
       Timeout_i timeout_i (orb.in ());
 
       TimeoutObj_var timeout_var =
-        timeout_i._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        timeout_i._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
-        orb->object_to_string (timeout_var.in () TAO_ENV_ARG_PARAMETER);
+        orb->object_to_string (timeout_var.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
@@ -108,14 +108,14 @@ main (int argc, char *argv[])
           ACE_OS::fclose (output_file);
         }
 
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Instantiate reply handler
       TimeoutHandler_i timeoutHandler_i;
 
       AMI_TimeoutObjHandler_var timeoutHandler_var =
-        timeoutHandler_i._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        timeoutHandler_i._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Instantiate client
@@ -128,7 +128,7 @@ main (int argc, char *argv[])
       client->activate ();
       */
 
-      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
@@ -136,10 +136,10 @@ main (int argc, char *argv[])
 
       root_poa->destroy (1,  // ethernalize objects
                          0  // wait for completion
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       //delete client;

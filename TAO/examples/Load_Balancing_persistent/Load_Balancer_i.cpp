@@ -39,7 +39,7 @@ Object_Group_Factory_i::~Object_Group_Factory_i (void)
 }
 
 PortableServer::POA_ptr
-Object_Group_Factory_i::_default_POA (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Object_Group_Factory_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
@@ -48,7 +48,7 @@ Object_Group_Factory_i::_default_POA (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 Load_Balancer::Object_Group_ptr
 Object_Group_Factory_i::make_round_robin (const char * id
-                                          TAO_ENV_ARG_DECL)
+                                          ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::duplicate_group))
 {
@@ -74,12 +74,12 @@ Object_Group_Factory_i::make_round_robin (const char * id
 
   return this->make_group (0,
                            id
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
 }
 
 void
 Object_Group_Factory_i::unbind_round_robin (const char * id
-                                            TAO_ENV_ARG_DECL)
+                                            ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::no_such_group))
 {
@@ -120,7 +120,7 @@ Object_Group_Factory_i::unbind_round_robin (const char * id
 
 Load_Balancer::Object_Group_ptr
 Object_Group_Factory_i::make_random (const char * id
-                                     TAO_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::duplicate_group))
 {
@@ -146,13 +146,13 @@ Object_Group_Factory_i::make_random (const char * id
 
   return this->make_group (1,
                            id
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
 }
 
 
 void
 Object_Group_Factory_i::unbind_random (const char * id
-                                       TAO_ENV_ARG_DECL)
+                                       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::no_such_group))
 {
@@ -193,7 +193,7 @@ Object_Group_Factory_i::unbind_random (const char * id
 Load_Balancer::Object_Group_ptr
 Object_Group_Factory_i::make_group (int random,
                                     const char * id
-                                    TAO_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::duplicate_group))
 {
@@ -237,15 +237,15 @@ Object_Group_Factory_i::make_group (int random,
   ACE_CHECK_RETURN (group._retn ());
 
   // Register with the poa, begin using ref. counting.
-  group = group_servant->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+  group = group_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (group._retn ());
 
-  group_servant->_remove_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
+  group_servant->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (Load_Balancer::Object_Group::_nil ());
 
   CORBA::String_var ior =
     this->orb_->object_to_string (group.in ()
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (Load_Balancer::Object_Group::_nil ());
 
 
@@ -287,7 +287,7 @@ Object_Group_Factory_i::make_group (int random,
 
   // Update the value of flags_
   this->update_flags (random
-                      TAO_ENV_ARG_PARAMETER);
+                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (Load_Balancer::Object_Group::_nil ());
 
   if (result == -1)
@@ -309,7 +309,7 @@ Object_Group_Factory_i::make_group (int random,
 
 Load_Balancer::Object_Group_ptr
 Object_Group_Factory_i::resolve (const char * id
-                                 TAO_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::no_such_group))
 {
@@ -358,7 +358,7 @@ Object_Group_Factory_i::resolve (const char * id
     {
       this->mem_pool_->find (flags_name_bind,
                              (void *&)this->flags_);
-      this->update_objects (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->update_objects (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (Load_Balancer::Object_Group::_nil ());
     }
 
@@ -375,12 +375,12 @@ Object_Group_Factory_i::resolve (const char * id
 
   CORBA_Object_var objref =
     this->orb_->string_to_object (ior
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (Load_Balancer::Object_Group::_nil ());
 
   Load_Balancer::Object_Group_ptr
     object_group = Load_Balancer::Object_Group::_narrow (objref.in ()
-                                                         TAO_ENV_ARG_PARAMETER);
+                                                         ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN (Load_Balancer::Object_Group::_nil ());
 
@@ -403,7 +403,7 @@ Object_Group_Factory_i::resolve (const char * id
 
 Load_Balancer::Group_List *
 Object_Group_Factory_i::list_groups (int random
-                                     TAO_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
 {
   Load_Balancer::Group_List * list;
 
@@ -444,23 +444,23 @@ Object_Group_Factory_i::list_groups (int random
 }
 
 Load_Balancer::Group_List *
-Object_Group_Factory_i::round_robin_groups (TAO_ENV_SINGLE_ARG_DECL)
+Object_Group_Factory_i::round_robin_groups (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return list_groups (0 TAO_ENV_ARG_PARAMETER);
+  return list_groups (0 ACE_ENV_ARG_PARAMETER);
 }
 
 Load_Balancer::Group_List *
-Object_Group_Factory_i::random_groups (TAO_ENV_SINGLE_ARG_DECL)
+Object_Group_Factory_i::random_groups (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return list_groups (1 TAO_ENV_ARG_PARAMETER);
+  return list_groups (1 ACE_ENV_ARG_PARAMETER);
 }
 
 
 void
 Object_Group_Factory_i::update_flags (int random
-                                      TAO_ENV_ARG_DECL)
+                                      ACE_ENV_ARG_DECL)
 {
   //First check whether we have memory for flags_
   if (!this->flags_)
@@ -503,7 +503,7 @@ Object_Group_Factory_i::update_flags (int random
 }
 
 void
-Object_Group_Factory_i::update_objects (TAO_ENV_SINGLE_ARG_DECL)
+Object_Group_Factory_i::update_objects (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Create an appropriate servant.
   Object_Group_i * group_servant = 0;
@@ -583,7 +583,7 @@ Object_Group_i::~Object_Group_i (void)
 
 
 PortableServer::POA_ptr
-Object_Group_i::_default_POA (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Object_Group_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
@@ -591,7 +591,7 @@ Object_Group_i::_default_POA (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 
 char *
-Object_Group_i::id (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Object_Group_i::id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (id_.c_str ());
@@ -599,14 +599,14 @@ Object_Group_i::id (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 Object_Group_i::bind (const Load_Balancer::Member & member
-                      TAO_ENV_ARG_DECL)
+                      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Load_Balancer::duplicate_member))
 {
 
   if (this->members_ == 0)
     {
-      ACE_CString id = this->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CString id = this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       id += server_id_name_bind;
@@ -665,7 +665,7 @@ Object_Group_i::bind (const Load_Balancer::Member & member
   // member's id into <member_id_list_>.
 
   ACE_CString id = dll_name_bind;
-  id += this->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+  id += this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
 
@@ -699,14 +699,14 @@ Object_Group_i::bind (const Load_Balancer::Member & member
 
 void
 Object_Group_i::unbind (const char * id
-                        TAO_ENV_ARG_DECL)
+                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Load_Balancer::no_such_member))
 {
   // Check whether the this->member_ is NULL
   if (this->members_ == 0)
     {
-      ACE_CString id = this->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CString id = this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       id += server_id_name_bind;
@@ -729,7 +729,7 @@ Object_Group_i::unbind (const char * id
   if (this->member_id_list_ == 0)
     {
       ACE_CString id = dll_name_bind;
-      id += this->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+      id += this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       if (this->allocator_->find (id.c_str (),
@@ -753,7 +753,7 @@ Object_Group_i::unbind (const char * id
 
 char *
 Object_Group_i::resolve_with_id (const char * id
-                                 TAO_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Load_Balancer::no_such_member))
 {
@@ -773,12 +773,12 @@ Object_Group_i::resolve_with_id (const char * id
 }
 
 Load_Balancer::Member_ID_List *
-Object_Group_i::members (TAO_ENV_SINGLE_ARG_DECL)
+Object_Group_i::members (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Load_Balancer::Member_ID_List * list = 0;
 
-  this->read_from_memory (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->read_from_memory (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // Figure out the length of the list.
@@ -807,29 +807,29 @@ Object_Group_i::members (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Object_Group_i::destroy (TAO_ENV_SINGLE_ARG_DECL)
+Object_Group_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Deregister with POA.
   PortableServer::POA_var poa =
-    this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   PortableServer::ObjectId_var id =
     poa->servant_to_id (this
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   poa->deactivate_object (id.in ()
-                          TAO_ENV_ARG_PARAMETER);
+                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-Object_Group_i::read_from_memory (TAO_ENV_SINGLE_ARG_DECL)
+Object_Group_i::read_from_memory (ACE_ENV_SINGLE_ARG_DECL)
 {
     // Sanity check needs to be done in all the places
-  ACE_CString id = this->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CString id = this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!this->members_)
@@ -848,7 +848,7 @@ Object_Group_i::read_from_memory (TAO_ENV_SINGLE_ARG_DECL)
   if (!this->member_id_list_)
     {
       id = dll_name_bind;
-      id += this->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+      id += this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       if (this->allocator_->find (id.c_str (),
@@ -871,12 +871,12 @@ Random_Object_Group::Random_Object_Group (const char *id,
 }
 
 char *
-Random_Object_Group::resolve (TAO_ENV_SINGLE_ARG_DECL)
+Random_Object_Group::resolve (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Load_Balancer::no_such_member))
 {
 
-  this->read_from_memory (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->read_from_memory (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   size_t group_size = this->members_->current_size ();
@@ -911,13 +911,13 @@ RR_Object_Group::RR_Object_Group (const char *id,
 }
 
 char *
-RR_Object_Group::resolve (TAO_ENV_SINGLE_ARG_DECL)
+RR_Object_Group::resolve (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Load_Balancer::no_such_member))
 {
   char *objref = 0;
 
-  this->read_from_memory (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->read_from_memory (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   size_t group_size = this->members_->current_size ();
@@ -949,14 +949,14 @@ RR_Object_Group::resolve (TAO_ENV_SINGLE_ARG_DECL)
 
 void
 RR_Object_Group::unbind (const char *id
-                         TAO_ENV_ARG_DECL)
+                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Load_Balancer::no_such_member))
 {
 
   if (this->members_ == 0)
     {
-      ACE_CString id = this->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CString id = this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       id += server_id_name_bind;
@@ -982,7 +982,7 @@ RR_Object_Group::unbind (const char *id
   if (this->member_id_list_ == 0)
     {
       ACE_CString id = dll_name_bind;
-      id += this->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+      id += this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       if (this->allocator_->find (id.c_str (),

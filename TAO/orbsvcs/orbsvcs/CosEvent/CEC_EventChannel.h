@@ -117,11 +117,11 @@ public:
 
   /// Start the internal threads (if any), etc.
   /// After this call the EC can be used.
-  virtual void activate (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual void activate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// Shutdown any internal threads, cleanup all the internal
   /// structures, flush all the messages, etc.
-  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// Access the dispatching module....
   TAO_CEC_Dispatching* dispatching (void) const;
@@ -183,32 +183,32 @@ public:
   /// Used to inform the EC that a Consumer has connected or
   /// disconnected from it.
   virtual void connected (TAO_CEC_ProxyPushConsumer*
-                          TAO_ENV_ARG_DECL_NOT_USED);
+                          ACE_ENV_ARG_DECL_NOT_USED);
   virtual void reconnected (TAO_CEC_ProxyPushConsumer*
-                            TAO_ENV_ARG_DECL_NOT_USED);
+                            ACE_ENV_ARG_DECL_NOT_USED);
   virtual void disconnected (TAO_CEC_ProxyPushConsumer*
-                             TAO_ENV_ARG_DECL_NOT_USED);
+                             ACE_ENV_ARG_DECL_NOT_USED);
   virtual void connected (TAO_CEC_ProxyPullConsumer*
-                          TAO_ENV_ARG_DECL_NOT_USED);
+                          ACE_ENV_ARG_DECL_NOT_USED);
   virtual void reconnected (TAO_CEC_ProxyPullConsumer*
-                            TAO_ENV_ARG_DECL_NOT_USED);
+                            ACE_ENV_ARG_DECL_NOT_USED);
   virtual void disconnected (TAO_CEC_ProxyPullConsumer*
-                             TAO_ENV_ARG_DECL_NOT_USED);
+                             ACE_ENV_ARG_DECL_NOT_USED);
 
   /// Used to inform the EC that a Supplier has connected or
   /// disconnected from it.
   virtual void connected (TAO_CEC_ProxyPushSupplier*
-                          TAO_ENV_ARG_DECL_NOT_USED);
+                          ACE_ENV_ARG_DECL_NOT_USED);
   virtual void reconnected (TAO_CEC_ProxyPushSupplier*
-                            TAO_ENV_ARG_DECL_NOT_USED);
+                            ACE_ENV_ARG_DECL_NOT_USED);
   virtual void disconnected (TAO_CEC_ProxyPushSupplier*
-                             TAO_ENV_ARG_DECL_NOT_USED);
+                             ACE_ENV_ARG_DECL_NOT_USED);
   virtual void connected (TAO_CEC_ProxyPullSupplier*
-                          TAO_ENV_ARG_DECL_NOT_USED);
+                          ACE_ENV_ARG_DECL_NOT_USED);
   virtual void reconnected (TAO_CEC_ProxyPullSupplier*
-                            TAO_ENV_ARG_DECL_NOT_USED);
+                            ACE_ENV_ARG_DECL_NOT_USED);
   virtual void disconnected (TAO_CEC_ProxyPullSupplier*
-                             TAO_ENV_ARG_DECL_NOT_USED);
+                             ACE_ENV_ARG_DECL_NOT_USED);
 
   // Simple flags to control the EC behavior, set by the application
   // at construction time.
@@ -232,17 +232,17 @@ public:
   /// The default implementation is:
   ///    this->consumer_admin ()->_this (env);
   virtual CosEventChannelAdmin::ConsumerAdmin_ptr
-      for_consumers (TAO_ENV_SINGLE_ARG_DECL)
+      for_consumers (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// The default implementation is:
   ///    this->supplier_admin ()->_this (env);
   virtual CosEventChannelAdmin::SupplierAdmin_ptr
-      for_suppliers (TAO_ENV_SINGLE_ARG_DECL)
+      for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Commit suicide.
-  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

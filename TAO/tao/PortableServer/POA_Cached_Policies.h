@@ -56,7 +56,7 @@ public:
 
   /// Update the cached policy values.
   void update (TAO_POA_Policy_Set &policy_set
-               TAO_ENV_ARG_DECL);
+               ACE_ENV_ARG_DECL);
 
   /// Accessor methods to cached values.
   PortableServer::ThreadPolicyValue thread (void) const;
@@ -77,7 +77,7 @@ protected:
 
   /// Helper method to update a particular policy.
   void update_policy (const CORBA::Policy_ptr policy
-                      TAO_ENV_ARG_DECL);
+                      ACE_ENV_ARG_DECL);
 
   PortableServer::ThreadPolicyValue thread_;
 

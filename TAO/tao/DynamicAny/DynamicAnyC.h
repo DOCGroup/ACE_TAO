@@ -99,7 +99,7 @@ TAO_NAMESPACE  DynamicAny
     static DynAny_ptr tao_duplicate (DynAny_ptr);
     static void tao_release (DynAny_ptr);
     static DynAny_ptr tao_nil (void);
-    static DynAny_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static DynAny_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -154,11 +154,11 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
     static DynAny_ptr _duplicate (DynAny_ptr obj);
     static DynAny_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static DynAny_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static DynAny_ptr _nil (void)
       {
@@ -188,12 +188,12 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         );
 
       static InvalidValue *_downcast (CORBA::Exception *);
@@ -229,12 +229,12 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         );
 
       static TypeMismatch *_downcast (CORBA::Exception *);
@@ -248,7 +248,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 #endif /* end #if !defined */
 
     virtual CORBA::TypeCode_ptr type (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -256,7 +256,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
     virtual void assign (
         DynamicAny::DynAny_ptr dyn_any
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -265,7 +265,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
     virtual void from_any (
         const CORBA::Any & value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -274,7 +274,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::Any * to_any (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -282,21 +282,21 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
     virtual CORBA::Boolean equal (
         DynamicAny::DynAny_ptr dyn_any
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual void destroy (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual DynamicAny::DynAny_ptr copy (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -304,7 +304,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
     virtual void insert_boolean (
         CORBA::Boolean value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -314,7 +314,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
     virtual void insert_octet (
         CORBA::Octet value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -324,7 +324,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
     virtual void insert_char (
         CORBA::Char value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -334,7 +334,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
     virtual void insert_short (
         CORBA::Short value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -344,7 +344,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
     virtual void insert_ushort (
         CORBA::UShort value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -354,7 +354,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
     virtual void insert_long (
         CORBA::Long value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -364,7 +364,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
     virtual void insert_ulong (
         CORBA::ULong value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -374,7 +374,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
     virtual void insert_float (
         CORBA::Float value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -384,7 +384,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
     virtual void insert_double (
         CORBA::Double value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -394,7 +394,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
     virtual void insert_string (
         const char * value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -404,7 +404,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
     virtual void insert_reference (
         CORBA::Object_ptr value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -414,7 +414,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
     virtual void insert_typecode (
         CORBA::TypeCode_ptr value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -424,7 +424,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
     virtual void insert_longlong (
         CORBA::LongLong value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -434,7 +434,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
     virtual void insert_ulonglong (
         CORBA::ULongLong value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -444,7 +444,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
     virtual void insert_longdouble (
         CORBA::LongDouble value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -454,7 +454,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
     virtual void insert_wchar (
         CORBA::WChar value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -464,7 +464,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
     virtual void insert_wstring (
         const CORBA::WChar * value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -474,7 +474,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
     virtual void insert_any (
         const CORBA::Any & value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -484,7 +484,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
     virtual void insert_dyn_any (
         DynamicAny::DynAny_ptr value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -494,7 +494,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
     virtual void insert_val (
         CORBA::ValueBase_ptr value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -503,7 +503,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::Boolean get_boolean (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -512,7 +512,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::Octet get_octet (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -521,7 +521,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::Char get_char (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -530,7 +530,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::Short get_short (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -539,7 +539,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::UShort get_ushort (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -548,7 +548,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::Long get_long (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -557,7 +557,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::ULong get_ulong (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -566,7 +566,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::Float get_float (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -575,7 +575,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::Double get_double (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -584,7 +584,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
       )) = 0;
 
     virtual char * get_string (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -593,7 +593,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::Object_ptr get_reference (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -602,7 +602,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::TypeCode_ptr get_typecode (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -611,7 +611,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::LongLong get_longlong (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -620,7 +620,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::ULongLong get_ulonglong (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -629,7 +629,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::LongDouble get_longdouble (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -638,7 +638,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::WChar get_wchar (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -647,7 +647,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::WChar * get_wstring (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -656,7 +656,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::Any * get_any (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -665,7 +665,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
       )) = 0;
 
     virtual DynamicAny::DynAny_ptr get_dyn_any (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -674,7 +674,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::ValueBase_ptr get_val (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -684,35 +684,35 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
 
     virtual CORBA::Boolean seek (
         CORBA::Long index
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual void rewind (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual CORBA::Boolean next (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual CORBA::ULong component_count (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual DynamicAny::DynAny_ptr current_component (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -774,7 +774,7 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
     static DynFixed_ptr tao_duplicate (DynFixed_ptr);
     static void tao_release (DynFixed_ptr);
     static DynFixed_ptr tao_nil (void);
-    static DynFixed_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static DynFixed_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -829,11 +829,11 @@ class TAO_DynamicAny_Export DynFixed: public virtual DynAny
     static DynFixed_ptr _duplicate (DynFixed_ptr obj);
     static DynFixed_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static DynFixed_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static DynFixed_ptr _nil (void)
       {
@@ -841,7 +841,7 @@ class TAO_DynamicAny_Export DynFixed: public virtual DynAny
       }
 
     virtual char * get_value (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -849,7 +849,7 @@ class TAO_DynamicAny_Export DynFixed: public virtual DynAny
 
     virtual CORBA::Boolean set_value (
         const char * val
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -912,7 +912,7 @@ class TAO_DynamicAny_Export DynFixed: public virtual DynAny
     static DynEnum_ptr tao_duplicate (DynEnum_ptr);
     static void tao_release (DynEnum_ptr);
     static DynEnum_ptr tao_nil (void);
-    static DynEnum_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static DynEnum_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -967,11 +967,11 @@ class TAO_DynamicAny_Export DynEnum: public virtual DynAny
     static DynEnum_ptr _duplicate (DynEnum_ptr obj);
     static DynEnum_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static DynEnum_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static DynEnum_ptr _nil (void)
       {
@@ -979,7 +979,7 @@ class TAO_DynamicAny_Export DynEnum: public virtual DynAny
       }
 
     virtual char * get_as_string (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -987,7 +987,7 @@ class TAO_DynamicAny_Export DynEnum: public virtual DynAny
 
     virtual void set_as_string (
         const char * value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -995,7 +995,7 @@ class TAO_DynamicAny_Export DynEnum: public virtual DynAny
       )) = 0;
 
     virtual CORBA::ULong get_as_ulong (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1003,7 +1003,7 @@ class TAO_DynamicAny_Export DynEnum: public virtual DynAny
 
     virtual void set_as_ulong (
         CORBA::ULong value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -1498,7 +1498,7 @@ class TAO_DynamicAny_Export DynEnum: public virtual DynAny
     static DynStruct_ptr tao_duplicate (DynStruct_ptr);
     static void tao_release (DynStruct_ptr);
     static DynStruct_ptr tao_nil (void);
-    static DynStruct_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static DynStruct_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -1553,11 +1553,11 @@ class TAO_DynamicAny_Export DynStruct: public virtual DynAny
     static DynStruct_ptr _duplicate (DynStruct_ptr obj);
     static DynStruct_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static DynStruct_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static DynStruct_ptr _nil (void)
       {
@@ -1565,7 +1565,7 @@ class TAO_DynamicAny_Export DynStruct: public virtual DynAny
       }
 
     virtual char * current_member_name (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -1574,7 +1574,7 @@ class TAO_DynamicAny_Export DynStruct: public virtual DynAny
       )) = 0;
 
     virtual CORBA::TCKind current_member_kind (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -1583,7 +1583,7 @@ class TAO_DynamicAny_Export DynStruct: public virtual DynAny
       )) = 0;
 
     virtual DynamicAny::NameValuePairSeq * get_members (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1591,7 +1591,7 @@ class TAO_DynamicAny_Export DynStruct: public virtual DynAny
 
     virtual void set_members (
         const DynamicAny::NameValuePairSeq & value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -1600,7 +1600,7 @@ class TAO_DynamicAny_Export DynStruct: public virtual DynAny
       )) = 0;
 
     virtual DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1608,7 +1608,7 @@ class TAO_DynamicAny_Export DynStruct: public virtual DynAny
 
     virtual void set_members_as_dyn_any (
         const DynamicAny::NameDynAnyPairSeq & value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -1671,7 +1671,7 @@ class TAO_DynamicAny_Export DynStruct: public virtual DynAny
     static DynUnion_ptr tao_duplicate (DynUnion_ptr);
     static void tao_release (DynUnion_ptr);
     static DynUnion_ptr tao_nil (void);
-    static DynUnion_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static DynUnion_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -1726,11 +1726,11 @@ class TAO_DynamicAny_Export DynUnion: public virtual DynAny
     static DynUnion_ptr _duplicate (DynUnion_ptr obj);
     static DynUnion_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static DynUnion_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static DynUnion_ptr _nil (void)
       {
@@ -1738,7 +1738,7 @@ class TAO_DynamicAny_Export DynUnion: public virtual DynAny
       }
 
     virtual DynamicAny::DynAny_ptr get_discriminator (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1746,7 +1746,7 @@ class TAO_DynamicAny_Export DynUnion: public virtual DynAny
 
     virtual void set_discriminator (
         DynamicAny::DynAny_ptr d
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -1754,7 +1754,7 @@ class TAO_DynamicAny_Export DynUnion: public virtual DynAny
       )) = 0;
 
     virtual void set_to_default_member (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -1762,7 +1762,7 @@ class TAO_DynamicAny_Export DynUnion: public virtual DynAny
       )) = 0;
 
     virtual void set_to_no_active_member (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -1770,21 +1770,21 @@ class TAO_DynamicAny_Export DynUnion: public virtual DynAny
       )) = 0;
 
     virtual CORBA::Boolean has_no_active_member (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual CORBA::TCKind discriminator_kind (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual DynamicAny::DynAny_ptr member (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -1792,7 +1792,7 @@ class TAO_DynamicAny_Export DynUnion: public virtual DynAny
       )) = 0;
 
     virtual char * member_name (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -1800,7 +1800,7 @@ class TAO_DynamicAny_Export DynUnion: public virtual DynAny
       )) = 0;
 
     virtual CORBA::TCKind member_kind (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -2007,7 +2007,7 @@ class TAO_DynamicAny_Export DynUnion: public virtual DynAny
       virtual void _downcast (
           void* target,
           CORBA_Object *src
-          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
       virtual CORBA_Object* _upcast (void *src) const;
 
@@ -2163,7 +2163,7 @@ class TAO_DynamicAny_Export DynUnion: public virtual DynAny
     static DynSequence_ptr tao_duplicate (DynSequence_ptr);
     static void tao_release (DynSequence_ptr);
     static DynSequence_ptr tao_nil (void);
-    static DynSequence_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static DynSequence_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -2218,11 +2218,11 @@ class TAO_DynamicAny_Export DynSequence: public virtual DynAny
     static DynSequence_ptr _duplicate (DynSequence_ptr obj);
     static DynSequence_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static DynSequence_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static DynSequence_ptr _nil (void)
       {
@@ -2230,7 +2230,7 @@ class TAO_DynamicAny_Export DynSequence: public virtual DynAny
       }
 
     virtual CORBA::ULong get_length (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2238,7 +2238,7 @@ class TAO_DynamicAny_Export DynSequence: public virtual DynAny
 
     virtual void set_length (
         CORBA::ULong len
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -2246,7 +2246,7 @@ class TAO_DynamicAny_Export DynSequence: public virtual DynAny
       )) = 0;
 
     virtual DynamicAny::AnySeq * get_elements (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2254,7 +2254,7 @@ class TAO_DynamicAny_Export DynSequence: public virtual DynAny
 
     virtual void set_elements (
         const DynamicAny::AnySeq & value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -2263,7 +2263,7 @@ class TAO_DynamicAny_Export DynSequence: public virtual DynAny
       )) = 0;
 
     virtual DynamicAny::DynAnySeq * get_elements_as_dyn_any (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2271,7 +2271,7 @@ class TAO_DynamicAny_Export DynSequence: public virtual DynAny
 
     virtual void set_elements_as_dyn_any (
         const DynamicAny::DynAnySeq & value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -2334,7 +2334,7 @@ class TAO_DynamicAny_Export DynSequence: public virtual DynAny
     static DynArray_ptr tao_duplicate (DynArray_ptr);
     static void tao_release (DynArray_ptr);
     static DynArray_ptr tao_nil (void);
-    static DynArray_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static DynArray_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -2389,11 +2389,11 @@ class TAO_DynamicAny_Export DynArray: public virtual DynAny
     static DynArray_ptr _duplicate (DynArray_ptr obj);
     static DynArray_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static DynArray_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static DynArray_ptr _nil (void)
       {
@@ -2401,7 +2401,7 @@ class TAO_DynamicAny_Export DynArray: public virtual DynAny
       }
 
     virtual DynamicAny::AnySeq * get_elements (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2409,7 +2409,7 @@ class TAO_DynamicAny_Export DynArray: public virtual DynAny
 
     virtual void set_elements (
         const DynamicAny::AnySeq & value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -2418,7 +2418,7 @@ class TAO_DynamicAny_Export DynArray: public virtual DynAny
       )) = 0;
 
     virtual DynamicAny::DynAnySeq * get_elements_as_dyn_any (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2426,7 +2426,7 @@ class TAO_DynamicAny_Export DynArray: public virtual DynAny
 
     virtual void set_elements_as_dyn_any (
         const DynamicAny::DynAnySeq & value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -2489,7 +2489,7 @@ class TAO_DynamicAny_Export DynArray: public virtual DynAny
     static DynValue_ptr tao_duplicate (DynValue_ptr);
     static void tao_release (DynValue_ptr);
     static DynValue_ptr tao_nil (void);
-    static DynValue_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static DynValue_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -2544,11 +2544,11 @@ class TAO_DynamicAny_Export DynValue: public virtual DynAny
     static DynValue_ptr _duplicate (DynValue_ptr obj);
     static DynValue_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static DynValue_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static DynValue_ptr _nil (void)
       {
@@ -2556,7 +2556,7 @@ class TAO_DynamicAny_Export DynValue: public virtual DynAny
       }
 
     virtual char * current_member_name (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -2565,7 +2565,7 @@ class TAO_DynamicAny_Export DynValue: public virtual DynAny
       )) = 0;
 
     virtual CORBA::TCKind current_member_kind (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -2574,7 +2574,7 @@ class TAO_DynamicAny_Export DynValue: public virtual DynAny
       )) = 0;
 
     virtual DynamicAny::NameValuePairSeq * get_members (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2582,7 +2582,7 @@ class TAO_DynamicAny_Export DynValue: public virtual DynAny
 
     virtual void set_members (
         const DynamicAny::NameValuePairSeq & value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -2591,7 +2591,7 @@ class TAO_DynamicAny_Export DynValue: public virtual DynAny
       )) = 0;
 
     virtual DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2599,7 +2599,7 @@ class TAO_DynamicAny_Export DynValue: public virtual DynAny
 
     virtual void set_members_as_dyn_any (
         const DynamicAny::NameDynAnyPairSeq & value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -2662,7 +2662,7 @@ class TAO_DynamicAny_Export DynValue: public virtual DynAny
     static DynAnyFactory_ptr tao_duplicate (DynAnyFactory_ptr);
     static void tao_release (DynAnyFactory_ptr);
     static DynAnyFactory_ptr tao_nil (void);
-    static DynAnyFactory_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static DynAnyFactory_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -2717,11 +2717,11 @@ class TAO_DynamicAny_Export DynAnyFactory : public virtual CORBA_Object
     static DynAnyFactory_ptr _duplicate (DynAnyFactory_ptr obj);
     static DynAnyFactory_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static DynAnyFactory_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static DynAnyFactory_ptr _nil (void)
       {
@@ -2751,12 +2751,12 @@ class TAO_DynamicAny_Export DynAnyFactory : public virtual CORBA_Object
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
+          ACE_ENV_ARG_DECL_NOT_USED
         );
 
       static InconsistentTypeCode *_downcast (CORBA::Exception *);
@@ -2771,7 +2771,7 @@ class TAO_DynamicAny_Export DynAnyFactory : public virtual CORBA_Object
 
     virtual DynamicAny::DynAny_ptr create_dyn_any (
         const CORBA::Any & value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -2780,7 +2780,7 @@ class TAO_DynamicAny_Export DynAnyFactory : public virtual CORBA_Object
 
     virtual DynamicAny::DynAny_ptr create_dyn_any_from_type_code (
         CORBA::TypeCode_ptr type
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,

@@ -38,18 +38,18 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test::Receiver_var receiver =
-        Test::Receiver::_narrow(tmp.in () TAO_ENV_ARG_PARAMETER);
+        Test::Receiver::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (receiver.in ()))
@@ -72,13 +72,13 @@ main (int argc, char *argv[])
         }
       ACE_Thread_Manager::instance ()->wait ();
 
-      CORBA::Long count = receiver->get_event_count (TAO_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::Long count = receiver->get_event_count (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "(%P) - Receiver got %d messages\n",
                   count));
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

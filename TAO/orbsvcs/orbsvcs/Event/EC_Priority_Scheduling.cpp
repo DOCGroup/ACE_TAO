@@ -20,7 +20,7 @@ void
 TAO_EC_Priority_Scheduling::add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *supplier,
       TAO_EC_ProxyPushConsumer *consumer
-      TAO_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG, "add_proxy_supplier_dependencies - %x %x\n",
               supplier, consumer));
@@ -40,11 +40,11 @@ TAO_EC_Priority_Scheduling::add_proxy_supplier_dependencies (
                                   os_priority,
                                   p_subpriority,
                                   p_priority
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
       qos_info.preemption_priority = p_priority;
 
-      supplier->add_dependencies (header, qos_info TAO_ENV_ARG_PARAMETER);
+      supplier->add_dependencies (header, qos_info ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -53,7 +53,7 @@ void
 TAO_EC_Priority_Scheduling::schedule_event (const RtecEventComm::EventSet &event,
                                             TAO_EC_ProxyPushConsumer *consumer,
                                             TAO_EC_Supplier_Filter *filter
-                                            TAO_ENV_ARG_DECL)
+                                            ACE_ENV_ARG_DECL)
 {
   RtecEventChannelAdmin::SupplierQOS qos =
     consumer->publications ();
@@ -84,13 +84,13 @@ TAO_EC_Priority_Scheduling::schedule_event (const RtecEventComm::EventSet &event
                                       os_priority,
                                       p_subpriority,
                                       p_priority
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
           qos_info.preemption_priority = p_priority;
         }
 
       filter->push_scheduled_event (single_event, qos_info
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }

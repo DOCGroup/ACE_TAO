@@ -191,7 +191,7 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
       *os << "virtual void _downcast (" << be_idt << be_idt_nl
                 << "void* target," << be_nl
                 << "CORBA_Object *src" << be_nl
-                << "TAO_ENV_ARG_DECL_WITH_DEFAULTS"  << be_uidt_nl
+                << "ACE_ENV_ARG_DECL_WITH_DEFAULTS"  << be_uidt_nl
                 << ");" << be_uidt_nl;
 
       *os << "virtual CORBA_Object* _upcast (void *src) const;";

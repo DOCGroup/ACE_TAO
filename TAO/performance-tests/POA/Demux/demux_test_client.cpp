@@ -45,7 +45,7 @@ Demux_Test_Client::~Demux_Test_Client (void)
 
 int
 Demux_Test_Client::init (int argc, char *argv []
-                         TAO_ENV_ARG_DECL)
+                         ACE_ENV_ARG_DECL)
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -55,7 +55,7 @@ Demux_Test_Client::init (int argc, char *argv []
     {
       // get the underlying ORB
       this->orb_ =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (GET_ORB);
     }
   ACE_CATCHANY
@@ -102,13 +102,13 @@ Demux_Test_Client::init (int argc, char *argv []
         ACE_TRY_EX (IOR)
           {
             CORBA::Object_var objref = this->orb_->string_to_object (str
-                                                                     TAO_ENV_ARG_PARAMETER);
+                                                                     ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK_EX (IOR);
 
             // now narrow to Demux_Test object
 
             this->demux_test_[i][j] = Demux_Test::_narrow (objref.in ()
-                                                           TAO_ENV_ARG_PARAMETER);
+                                                           ACE_ENV_ARG_PARAMETER);
 
             ACE_TRY_CHECK_EX (IOR);
 
@@ -252,7 +252,7 @@ Demux_Test_Client::parse_args (void)
 
 // The main program for Demux_Test
 int
-Demux_Test_Client::run (TAO_ENV_SINGLE_ARG_DECL)
+Demux_Test_Client::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   // open a temporary results file
   if ((this->result_fp_ = ACE_OS::fopen ("results.dat", "w")) == 0)
@@ -267,19 +267,19 @@ Demux_Test_Client::run (TAO_ENV_SINGLE_ARG_DECL)
       switch (this->is_)
         {
         case Demux_Test_Client::LINEAR:
-          (void) this->run_linear_test (TAO_ENV_SINGLE_ARG_PARAMETER);
+          (void) this->run_linear_test (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (RUN);
           break;
         case Demux_Test_Client::RANDOM:
-          (void) this->run_random_test (TAO_ENV_SINGLE_ARG_PARAMETER);
+          (void) this->run_random_test (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (RUN);
           break;
         case Demux_Test_Client::BEST:
-          (void) this->run_best_test (TAO_ENV_SINGLE_ARG_PARAMETER);
+          (void) this->run_best_test (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (RUN);
           break;
         case Demux_Test_Client::WORST:
-          (void) this->run_worst_test (TAO_ENV_SINGLE_ARG_PARAMETER);
+          (void) this->run_worst_test (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (RUN);
           break;
         }
@@ -301,7 +301,7 @@ Demux_Test_Client::run (TAO_ENV_SINGLE_ARG_DECL)
   ACE_TRY_EX (SHUTDOWN)
     {
       // call the shutdown method one the first object
-      this->demux_test_[0][0]->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->demux_test_[0][0]->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (SHUTDOWN);
     }
   ACE_CATCHANY
@@ -329,7 +329,7 @@ Demux_Test_Client::run (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 int
-Demux_Test_Client::run_linear_test (TAO_ENV_SINGLE_ARG_DECL)
+Demux_Test_Client::run_linear_test (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::ULong j, k, l, m;
   ACE_hrtime_t start, end;
@@ -342,7 +342,7 @@ Demux_Test_Client::run_linear_test (TAO_ENV_SINGLE_ARG_DECL)
             start = ACE_OS::gethrtime ();
 
             // invoke the method
-            this->op_db_[l].op_ (this->demux_test_[j][k].in () TAO_ENV_ARG_PARAMETER);
+            this->op_db_[l].op_ (this->demux_test_[j][k].in () ACE_ENV_ARG_PARAMETER);
 
             end = ACE_OS::gethrtime ();
 
@@ -355,7 +355,7 @@ Demux_Test_Client::run_linear_test (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 int
-Demux_Test_Client::run_random_test (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Demux_Test_Client::run_random_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   ACE_DEBUG ((LM_DEBUG,
               "ERROR : Random test\n"));
@@ -363,7 +363,7 @@ Demux_Test_Client::run_random_test (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 int
-Demux_Test_Client::run_best_test (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Demux_Test_Client::run_best_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   ACE_DEBUG ((LM_DEBUG,
               "ERROR : Best Test\n"));
@@ -371,7 +371,7 @@ Demux_Test_Client::run_best_test (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 int
-Demux_Test_Client::run_worst_test (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Demux_Test_Client::run_worst_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   ACE_DEBUG ((LM_DEBUG,
               "ERROR : Worst test\n"));

@@ -33,7 +33,7 @@ CORBA::Long
 AMI_Test_i::foo (CORBA::Long_out out_l,
                  CORBA::Long in_l,
                  const char* in_str
-                 TAO_ENV_ARG_DECL)
+                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    A::DidTheRightThing))
 {
@@ -58,7 +58,7 @@ AMI_Test_i::foo (CORBA::Long_out out_l,
 
 
 void
-AMI_Test_i::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+AMI_Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
@@ -66,7 +66,7 @@ AMI_Test_i::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 
 CORBA::Long
-AMI_Test_i::yadda (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+AMI_Test_i::yadda (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -77,7 +77,7 @@ AMI_Test_i::yadda (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 AMI_Test_i::yadda (CORBA::Long yadda
-                   TAO_ENV_ARG_DECL_NOT_USED)
+                   ACE_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

@@ -31,7 +31,7 @@ Life_Cycle_Service_Server::~Life_Cycle_Service_Server (void)
       CosNaming::Name generic_Factory_Name (2);
       generic_Factory_Name.length (2);
       generic_Factory_Name[0].id = CORBA::string_dup ("LifeCycle_Service");
-      this->namingContext_var_->unbind (generic_Factory_Name TAO_ENV_ARG_PARAMETER);
+      this->namingContext_var_->unbind (generic_Factory_Name ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -44,13 +44,13 @@ Life_Cycle_Service_Server::~Life_Cycle_Service_Server (void)
 int
 Life_Cycle_Service_Server::init (int argc,
                                      char *argv[]
-                                     TAO_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
 {
   int retval = 0;
 
   retval = this->orb_manager_.init (argc,
                                     argv
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (retval == -1)
@@ -61,7 +61,7 @@ Life_Cycle_Service_Server::init (int argc,
 
 
   // Activate the POA manager
-  retval = this->orb_manager_.activate_poa_manager (TAO_ENV_SINGLE_ARG_PARAMETER);
+  retval = this->orb_manager_.activate_poa_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (retval == -1)
@@ -82,7 +82,7 @@ Life_Cycle_Service_Server::init (int argc,
   // Activate the object.
   CORBA::String_var str  =
     this->orb_manager_.activate (this->life_Cycle_Service_i_ptr_
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (this->debug_level_ >= 2)
@@ -97,7 +97,7 @@ Life_Cycle_Service_Server::init (int argc,
 
       // Get the Naming Service object reference.
       CORBA::Object_var namingObj_var =
-        orb_manager_.orb()->resolve_initial_references ("NameService" TAO_ENV_ARG_PARAMETER);
+        orb_manager_.orb()->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (namingObj_var.in ()))
@@ -106,7 +106,7 @@ Life_Cycle_Service_Server::init (int argc,
 
       // Narrow the object reference to a Naming Context.
       namingContext_var_ = CosNaming::NamingContext::_narrow (namingObj_var.in ()
-                                                              TAO_ENV_ARG_PARAMETER);
+                                                              ACE_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
@@ -122,12 +122,12 @@ Life_Cycle_Service_Server::init (int argc,
       life_Cycle_Service_Name.length (1);
       life_Cycle_Service_Name[0].id = CORBA::string_dup ("Life_Cycle_Service");
 
-      CORBA::Object_ptr tmp = this->life_Cycle_Service_i_ptr_->_this(TAO_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::Object_ptr tmp = this->life_Cycle_Service_i_ptr_->_this(ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       namingContext_var_->bind (life_Cycle_Service_Name,
                                 tmp
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (this->debug_level_ >= 2)
@@ -145,13 +145,13 @@ Life_Cycle_Service_Server::init (int argc,
 
 
 int
-Life_Cycle_Service_Server::run (TAO_ENV_SINGLE_ARG_DECL)
+Life_Cycle_Service_Server::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->debug_level_ >= 1)
     ACE_DEBUG ((LM_DEBUG,
                 "\nLifeCycle Service: Life_Cycle_Service_Server is running\n"));
 
-  orb_manager_.orb()->run (TAO_ENV_SINGLE_ARG_PARAMETER);
+  orb_manager_.orb()->run (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -202,14 +202,14 @@ main (int argc, char *argv [])
     {
       int check = life_Cycle_Service_Server.init (argc,
                                                   argv
-                                                  TAO_ENV_ARG_PARAMETER);
+                                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (check)
         return 1;
       else
         {
-          life_Cycle_Service_Server.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+          life_Cycle_Service_Server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK
         }
     }

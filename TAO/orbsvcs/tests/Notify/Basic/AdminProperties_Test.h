@@ -34,21 +34,21 @@ public:
   AdminProperties_Test (void);
   ~AdminProperties_Test (void);
 
-  int parse_args (int argc, 
+  int parse_args (int argc,
                   char *argv[]) ;
 
-  int init (int argc, 
-            char *argv [] 
-            TAO_ENV_ARG_DECL);
+  int init (int argc,
+            char *argv []
+            ACE_ENV_ARG_DECL);
   // Initialization.
 
-  void run_test (TAO_ENV_SINGLE_ARG_DECL);
+  void run_test (ACE_ENV_SINGLE_ARG_DECL);
   // Run the test.
 
 protected:
-  void create_suppliers (TAO_ENV_SINGLE_ARG_DECL);
-  void create_consumers (TAO_ENV_SINGLE_ARG_DECL);
-  void send_events (TAO_ENV_SINGLE_ARG_DECL);
+  void create_suppliers (ACE_ENV_SINGLE_ARG_DECL);
+  void create_consumers (ACE_ENV_SINGLE_ARG_DECL);
+  void send_events (ACE_ENV_SINGLE_ARG_DECL);
 
   // Data Members
   CosNotifyChannelAdmin::EventChannel_var ec_;

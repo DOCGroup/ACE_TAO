@@ -223,111 +223,24 @@ const size_t TAO_DEFAULT_ORB_TABLE_SIZE = 16;
 # error "tao/orbconf.h: You can only use exceptions in TAO if ACE supports them"
 #endif /* TAO_HAS_EXCEPTIONS */
 
-//@{
-/**
- * @name Native C++ exceptions portability macros.
- *
- * The following macros are used to write code portable between
- * platforms with and without native C++ exception support.  Their
- * main goal is to hide the presence of the CORBA::Environment
- * argument, but they collaborate with the ACE_TRY_* macros to emulate
- * the try/catch blocks.
- */
-
-/// Define a macro to emit code only when CORBA::Environment is used
-#if !defined (TAO_HAS_EXCEPTIONS) || defined (TAO_ENV_BKWD_COMPAT)
-#  define TAO_ENV_EMIT_CODE(X) X
-#else
-#  define TAO_ENV_EMIT_CODE(X)
-#endif /* TAO_HAS_EXCEPTIONS && !TAO_ENV_BKWD_COMPAT */
-
-/// Another macro to emit code only when CORBA::Environment is used
-#if !defined (TAO_HAS_EXCEPTIONS) || defined (TAO_ENV_BKWD_COMPAT)
-#  define TAO_ENV_EMIT_CODE2(X,Y) X,Y
-#else
-#  define TAO_ENV_EMIT_CODE2(X,Y)
-#endif /* TAO_HAS_EXCEPTIONS && !TAO_ENV_BKWD_COMPAT */
-
-/// Helper macro
-#define TAO_ENV_EMIT_DUMMY
-
-/// Declare a CORBA::Environment argument as the last argument of a
-/// function
-/**
- * Normally this macro is used as follows:
- *
- * <CODE>void my_funct (int x, int y TAO_ENV_ARG_DECL);</CODE>
- *
- * Its purpose is to provide TAO developers (and users) with a
- * mechanism to write code that is portable to platforms with and
- * without native C++ exceptions.
- */
-#define TAO_ENV_ARG_DECL \
-    TAO_ENV_EMIT_CODE2(TAO_ENV_EMIT_DUMMY, \
-                       CORBA::Environment &ACE_TRY_ENV)
-
-/// Declare a CORBA::Environment argument with the default value
-/// obtained from the TAO orb.  Similar to TAO_ENV_ARG_DECL
-#define TAO_ENV_ARG_DECL_WITH_DEFAULTS \
-    TAO_ENV_EMIT_CODE2(TAO_ENV_EMIT_DUMMY, \
-                       CORBA::Environment &ACE_TRY_ENV = \
-                           TAO_default_environment ())
-
-/// Declare a CORBA::Environment argument that is not used by the
-/// function definition.
-/**
- * Similar to TAO_ENV_ARG_DECL, but the formal parameter name is
- * dropped to avoid warnings about unused parameters
- */
-#define TAO_ENV_ARG_DECL_NOT_USED \
-    TAO_ENV_EMIT_CODE2(TAO_ENV_EMIT_DUMMY, \
-                       CORBA::Environment &)
-
-/// Declare a CORBA::Environment argument for methods that do not take
-/// any other parameters
-#define TAO_ENV_SINGLE_ARG_DECL \
-    TAO_ENV_EMIT_CODE(CORBA::Environment &ACE_TRY_ENV)
-
-/// Declare a CORBA::Environment argument with a default value for
-/// methods that do not take any other parameters
-#define TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS \
-    TAO_ENV_EMIT_CODE(CORBA::Environment &ACE_TRY_ENV = \
-                          TAO_default_environment ())
-
-/// Declare a CORBA::Environment argument for for ethods
-#define TAO_ENV_SINGLE_ARG_DECL_NOT_USED \
-    TAO_ENV_EMIT_CODE(CORBA::Environment &)
-
-/// Use the CORBA::Environment argument is a nested call
-#define TAO_ENV_ARG_PARAMETER \
-    TAO_ENV_EMIT_CODE2(TAO_ENV_EMIT_DUMMY, \
-                       ACE_TRY_ENV)
-
-/// Use the CORBA::Environment argument is a nested call, assuming the
-/// called function take only the ACE_TRY_ENV argument.
-#define TAO_ENV_SINGLE_ARG_PARAMETER \
-    TAO_ENV_EMIT_CODE(ACE_TRY_ENV)
-
-/// Eliminate unused argument warnings about ACE_TRY_ENV
-#define TAO_ENV_ARG_NOT_USED \
-    TAO_ENV_EMIT_CODE(ACE_UNUSED_ARG(ACE_TRY_ENV))
-
-/// Declare a CORBA::Environment variable.
-/**
- * Used in methods that do not take such an argument, or do not take
- * it when compiled with native C++ exceptions, but use the argument
- * in all platforms
- */
-#define TAO_ENV_DECLARE_NEW_ENV \
-    TAO_ENV_EMIT_CODE(ACE_DECLARE_NEW_CORBA_ENV)
-//@}
-
-#if !defined (TAO_HAS_EXCEPTIONS)
-// This thing can be moved into the above when we drop TAO_ENV_BKWD_COMPAT.
-#  define TAO_ENV_RAISE(ex) ACE_TRY_ENV.exception (ex)
-#else
-#  define TAO_ENV_RAISE(ex) (ex)->_raise ()
-#endif /* TAO_HAS_EXCEPTIONS */
+//-------- begin deprecated -----------------------------------------------
+// The TAO_ENV_ macros have been renamed to ACE_ENV_
+// and have been moved to $ACE_ROOT/ace/CORBA_macros.h.
+// Please only use the latter.
+// The macros below are deprecated and may be removed soon.
+#define TAO_ENV_EMIT_CODE(X)                  ACE_ENV_EMIT_CODE(X)
+#define TAO_ENV_EMIT_CODE2(X,Y)               ACE_ENV_EMIT_CODE2(X,Y)
+#define TAO_ENV_ARG_DECL                      ACE_ENV_ARG_DECL
+#define TAO_ENV_ARG_DECL_WITH_DEFAULTS        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+#define TAO_ENV_ARG_DECL_NOT_USED             ACE_ENV_ARG_DECL_NOT_USED
+#define TAO_ENV_SINGLE_ARG_DECL               ACE_ENV_SINGLE_ARG_DECL
+#define TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+#define TAO_ENV_SINGLE_ARG_DECL_NOT_USED      ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+#define TAO_ENV_ARG_PARAMETER                 ACE_ENV_ARG_PARAMETER
+#define TAO_ENV_SINGLE_ARG_PARAMETER          ACE_ENV_SINGLE_ARG_PARAMETER
+#define TAO_ENV_ARG_NOT_USED                  ACE_ENV_ARG_NOT_USED
+#define TAO_ENV_RAISE(ex)                     ACE_ENV_RAISE(ex)
+//-------- end deprecated -------------------------------------------------
 
 // BC++ seems to have a different convention for detecting Win32 than
 // VC++.

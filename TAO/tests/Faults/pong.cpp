@@ -56,7 +56,7 @@ void
 run_client (CORBA::ORB_ptr orb,
             PingObject_ptr server,
             PingObject_ptr callback
-            TAO_ENV_ARG_DECL)
+            ACE_ENV_ARG_DECL)
 {
   // Run the client requests in a separate routine to isolate the
   // exceptions...
@@ -68,11 +68,11 @@ run_client (CORBA::ORB_ptr orb,
       ACE_TRY
         {
           reason = "Exception during ping call";
-          server->ping (callback TAO_ENV_ARG_PARAMETER);
+          server->ping (callback ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // Run for <period> milliseconds, to receive the reply
-          orb->run (tv TAO_ENV_ARG_PARAMETER);
+          orb->run (tv ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // Terminate the client if:
@@ -83,7 +83,7 @@ run_client (CORBA::ORB_ptr orb,
             {
               ACE_DEBUG ((LM_DEBUG, "Shutting down server\n"));
               reason = "Exception during server shutdown";
-              server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+              server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
         }
@@ -115,22 +115,22 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // create child poa with PERSISTENT policy
@@ -139,36 +139,36 @@ main (int argc, char *argv[])
       policies.length (2);
       policies[0] =
         root_poa->create_lifespan_policy(PortableServer::PERSISTENT
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       policies[1] =
         root_poa->create_implicit_activation_policy(PortableServer::IMPLICIT_ACTIVATION
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var persistent_poa =
         root_poa->create_POA("persistent",
                              poa_manager.in (),
                              policies
-                             TAO_ENV_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      policies[0]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      policies[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      policies[1]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      policies[1]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PingObject_var server =
-        PingObject::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+        PingObject::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -183,7 +183,7 @@ main (int argc, char *argv[])
                             persistent_poa.in ());
 
       PingObject_var callback =
-        callback_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        callback_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
@@ -191,13 +191,13 @@ main (int argc, char *argv[])
       run_client (orb.in (),
                   server.in (),
                   callback.in ()
-                  TAO_ENV_ARG_PARAMETER);
+                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      persistent_poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
+      persistent_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      root_poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

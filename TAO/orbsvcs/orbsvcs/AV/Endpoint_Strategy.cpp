@@ -53,7 +53,7 @@ TAO_AV_Endpoint_Strategy::~TAO_AV_Endpoint_Strategy (void)
 int
 TAO_AV_Endpoint_Strategy::create_A (AVStreams::StreamEndPoint_A_ptr & /* stream_endpoint */,
                                     AVStreams::VDev_ptr & /* vdev */
-                                    TAO_ENV_ARG_DECL_NOT_USED)
+                                    ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "(%P|%t) Error creating A endpoint\n"),
@@ -67,7 +67,7 @@ TAO_AV_Endpoint_Strategy::create_A (AVStreams::StreamEndPoint_A_ptr & /* stream_
 int
 TAO_AV_Endpoint_Strategy::create_B (AVStreams::StreamEndPoint_B_ptr & /* stream_endpoint */,
                                     AVStreams::VDev_ptr & /*vdev */
-                                    TAO_ENV_ARG_DECL_NOT_USED)
+                                    ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "(%P|%t) Error creating B endpoint\n"),
@@ -156,19 +156,19 @@ TAO_AV_Endpoint_Process_Strategy::activate (void)
                        "remove"),
                       -1);
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Get ourselves a Naming service
-      this->bind_to_naming_service (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->bind_to_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the stream endpoint created by the child from the naming service
-      this->get_stream_endpoint (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->get_stream_endpoint (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the Vdev created by the child from the naming service
-      this->get_vdev (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->get_vdev (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -183,7 +183,7 @@ TAO_AV_Endpoint_Process_Strategy::activate (void)
 
 // Get ourselves a Naming service reference
 int
-TAO_AV_Endpoint_Process_Strategy::bind_to_naming_service (TAO_ENV_SINGLE_ARG_DECL)
+TAO_AV_Endpoint_Process_Strategy::bind_to_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
@@ -191,7 +191,7 @@ TAO_AV_Endpoint_Process_Strategy::bind_to_naming_service (TAO_ENV_SINGLE_ARG_DEC
         return 0;
 
       CORBA::Object_var naming_obj =
-        TAO_ORB_Core_instance ()->orb ()->resolve_initial_references ("NameService" TAO_ENV_ARG_PARAMETER);
+        TAO_ORB_Core_instance ()->orb ()->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (naming_obj.in ()))
@@ -200,7 +200,7 @@ TAO_AV_Endpoint_Process_Strategy::bind_to_naming_service (TAO_ENV_SINGLE_ARG_DEC
                           -1);
       this->naming_context_ =
         CosNaming::NamingContext::_narrow (naming_obj.in ()
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -215,7 +215,7 @@ TAO_AV_Endpoint_Process_Strategy::bind_to_naming_service (TAO_ENV_SINGLE_ARG_DEC
 
 // Get the VDev created in the child process from the namingservice
 int
-TAO_AV_Endpoint_Process_Strategy::get_vdev (TAO_ENV_SINGLE_ARG_DECL)
+TAO_AV_Endpoint_Process_Strategy::get_vdev (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
@@ -236,13 +236,13 @@ TAO_AV_Endpoint_Process_Strategy::get_vdev (TAO_ENV_SINGLE_ARG_DECL)
       // Get the CORBA::Object
       CORBA::Object_var vdev =
         this->naming_context_->resolve (VDev_Name
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Narrow it
       this->vdev_ =
         AVStreams::VDev::_narrow (vdev.in ()
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Check if valid
@@ -280,7 +280,7 @@ TAO_AV_Endpoint_Process_Strategy_A::~TAO_AV_Endpoint_Process_Strategy_A (void)
 int
 TAO_AV_Endpoint_Process_Strategy_A::create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
                                            AVStreams::VDev_ptr &vdev
-                                           TAO_ENV_ARG_DECL_NOT_USED)
+                                           ACE_ENV_ARG_DECL_NOT_USED)
 {
   // use the baseclass activate
   if (this->activate () == -1)
@@ -297,7 +297,7 @@ TAO_AV_Endpoint_Process_Strategy_A::create_A (AVStreams::StreamEndPoint_A_ptr &s
 
 // Gets the stream endpoint object reference from the naming service
 int
-TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint (TAO_ENV_SINGLE_ARG_DECL)
+TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
@@ -319,13 +319,13 @@ TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint (TAO_ENV_SINGLE_ARG_DECL
       // Get the CORBA::Object
       CORBA::Object_var stream_endpoint_a =
         this->naming_context_->resolve (Stream_Endpoint_A_Name
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Narrow the reference
       this->stream_endpoint_a_ =
         AVStreams::StreamEndPoint_A::_narrow (stream_endpoint_a.in ()
-                                              TAO_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Check for validity
@@ -363,7 +363,7 @@ TAO_AV_Endpoint_Process_Strategy_B::~TAO_AV_Endpoint_Process_Strategy_B (void)
 int
 TAO_AV_Endpoint_Process_Strategy_B::create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
                                               AVStreams::VDev_ptr &vdev
-                                              TAO_ENV_ARG_DECL)
+                                              ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -374,7 +374,7 @@ TAO_AV_Endpoint_Process_Strategy_B::create_B (AVStreams::StreamEndPoint_B_ptr &s
 
     if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Process_Strategy_B::create_B ()\n: stream_endpoint is:%s\n",
                 TAO_ORB_Core_instance ()->orb ()->object_to_string (this->stream_endpoint_b_
-                                                                    TAO_ENV_ARG_PARAMETER)));
+                                                                    ACE_ENV_ARG_PARAMETER)));
     ACE_TRY_CHECK;
     stream_endpoint = this->stream_endpoint_b_;
     vdev = this->vdev_;
@@ -391,7 +391,7 @@ TAO_AV_Endpoint_Process_Strategy_B::create_B (AVStreams::StreamEndPoint_B_ptr &s
 
 // Gets the B type stream_endpoint from the Naming service
 int
-TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint (TAO_ENV_SINGLE_ARG_DECL)
+TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
@@ -413,13 +413,13 @@ TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint (TAO_ENV_SINGLE_ARG_DECL
       // Get the CORBA::Object reference
       CORBA::Object_var stream_endpoint_b =
         this->naming_context_->resolve (Stream_Endpoint_B_Name
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Narrow the reference
       this->stream_endpoint_b_ =
         AVStreams::StreamEndPoint_B::_narrow (stream_endpoint_b.in ()
-                                              TAO_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Check for validity

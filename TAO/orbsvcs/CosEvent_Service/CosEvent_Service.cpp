@@ -13,12 +13,12 @@ main (int argc, char* argv[])
 {
   TAO_CEC_Default_Factory::init_svcs ();
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Intialize the ORB
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, 0 TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Call TAO_CEC_Event_Loader::init (argc, argv) from here.
@@ -41,11 +41,11 @@ main (int argc, char* argv[])
       //    to 1 by default or something like that...
       //    Don't worry about this change yet... Let's get all the changes
       //    in and then we can fix the EC shutdown problem...
-      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Destroy the ORB
-      orb->destroy(TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

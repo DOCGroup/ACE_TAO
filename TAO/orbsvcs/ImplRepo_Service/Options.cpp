@@ -250,7 +250,7 @@ Options::init (int argc, ACE_TCHAR *argv[])
       this->orb_ = CORBA::ORB_init (orb_argc,
                                     orb_args.argv (),
                                     0
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -32,14 +32,14 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG, "---------------------------------------------\n"));
   ACE_DEBUG ((LM_DEBUG, "Running the IOGRManipulation Tests.\n"));
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Retrieve the ORB.
       CORBA::ORB_var orb_ = CORBA::ORB_init (argc,
                                              argv,
                                              0
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       // **********************************************************************
 
@@ -47,23 +47,23 @@ main (int argc, char *argv[])
       CORBA::Object_var IORM =
         orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
                                           0
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       TAO_IOP::TAO_IOR_Manipulation_var iorm =
                TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in ()
-                                                       TAO_ENV_ARG_PARAMETER);
+                                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       // **********************************************************************
 
       // Create a few fictitious IORs
       CORBA::Object_var name1 =
         orb_->string_to_object ("iiop://acme.cs.wustl.edu:6060/xyz"
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       CORBA::Object_var name2 =
         orb_->string_to_object ("iiop://tango.cs.wustl.edu:7070/xyz"
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // **********************************************************************
@@ -75,7 +75,7 @@ main (int argc, char *argv[])
       // **********************************************************************
 
       CORBA::Object_var merged =
-        iorm->merge_iors (iors TAO_ENV_ARG_PARAMETER);
+        iorm->merge_iors (iors ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Check for set and get primaries
@@ -84,7 +84,7 @@ main (int argc, char *argv[])
       TAO_FT_IOGR_Property prop (ft_tag_component);
 
       CORBA::Boolean retval =
-        iorm->set_primary (&prop, name2.in (), merged.in () TAO_ENV_ARG_PARAMETER);
+        iorm->set_primary (&prop, name2.in (), merged.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (retval != 0)
@@ -100,7 +100,7 @@ main (int argc, char *argv[])
       // Check whether a primary has been set
       retval = iorm->is_primary_set (&prop,
                                      merged.in ()
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (retval)
@@ -120,7 +120,7 @@ main (int argc, char *argv[])
       CORBA::Object_var prim =
         iorm->get_primary (&prop,
                            merged.in ()
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Check whether we got back the right primary
@@ -160,7 +160,7 @@ main (int argc, char *argv[])
       // Set the property
       retval = iorm->set_property (&prop,
                                    merged.in ()
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (retval)

@@ -58,10 +58,10 @@ tao_IORTable_Table_nil (
 ACE_INLINE IORTable::Table_ptr
 tao_IORTable_Table_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return IORTable::Table::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return IORTable::Table::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -108,10 +108,10 @@ tao_IORTable_Locator_nil (
 ACE_INLINE IORTable::Locator_ptr
 tao_IORTable_Locator_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return IORTable::Locator::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return IORTable::Locator::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *

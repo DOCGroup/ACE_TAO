@@ -246,30 +246,30 @@ TAO_Notify_Any::event_type (void) const
 
 CORBA::Boolean
 TAO_Notify_Any::do_match (CosNotifyFilter::Filter_ptr filter
-                          TAO_ENV_ARG_DECL)
+                          ACE_ENV_ARG_DECL)
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
                           "TAO_Notify_Any::do_match ()\n"));
 
-  return filter->match (*this->data_ TAO_ENV_ARG_PARAMETER);
+  return filter->match (*this->data_ ACE_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_Notify_Any::do_push (CosEventComm::PushConsumer_ptr consumer
-                         TAO_ENV_ARG_DECL) const
+                         ACE_ENV_ARG_DECL) const
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
                           "TAO_Notify_Any::do_push ("
                           "CosEventComm::PushConsumer_ptr)\n"));
 
-  consumer->push (*this->data_ TAO_ENV_ARG_PARAMETER);
+  consumer->push (*this->data_ ACE_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_Notify_Any::do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer
-                         TAO_ENV_ARG_DECL) const
+                         ACE_ENV_ARG_DECL) const
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
@@ -282,7 +282,7 @@ TAO_Notify_Any::do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer
   event.header.fixed_header.event_type.type_name = CORBA::string_dup ("%ANY");
   event.header.fixed_header.event_type.domain_name = CORBA::string_dup ("");
 
-  consumer->push_structured_event (event TAO_ENV_ARG_PARAMETER);
+  consumer->push_structured_event (event ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -290,7 +290,7 @@ TAO_Notify_Any::do_push (CosNotifyComm::SequencePushConsumer_ptr consumer,
                          const TAO_Notify_QoSAdmin_i& /*qos_admin*/,
                          CosNotification::EventBatch& /*unsent*/,
                          int /*flush_queue*/
-                         TAO_ENV_ARG_DECL) const
+                         ACE_ENV_ARG_DECL) const
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
@@ -307,7 +307,7 @@ TAO_Notify_Any::do_push (CosNotifyComm::SequencePushConsumer_ptr consumer,
   events.length (1);
   events[0] = event;
 
-  consumer->push_structured_events (events TAO_ENV_ARG_PARAMETER);
+  consumer->push_structured_events (events ACE_ENV_ARG_PARAMETER);
 }
 
 // ****************************************************************
@@ -420,18 +420,18 @@ TAO_Notify_StructuredEvent::event_type (void) const
 
 CORBA::Boolean
 TAO_Notify_StructuredEvent::do_match (CosNotifyFilter::Filter_ptr filter
-                                      TAO_ENV_ARG_DECL)
+                                      ACE_ENV_ARG_DECL)
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
                           "TAO_Notify_StructuredEvent::do_match ()\n"));
 
-  return filter->match_structured (*this->data_ TAO_ENV_ARG_PARAMETER);
+  return filter->match_structured (*this->data_ ACE_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_Notify_StructuredEvent::do_push (CosEventComm::PushConsumer_ptr consumer
-                                     TAO_ENV_ARG_DECL) const
+                                     ACE_ENV_ARG_DECL) const
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
@@ -443,18 +443,18 @@ TAO_Notify_StructuredEvent::do_push (CosEventComm::PushConsumer_ptr consumer
   any <<= *this->data_;
   // is the typecode set by this operation or do we need to set it explicity.
 
-  consumer->push (any TAO_ENV_ARG_PARAMETER);
+  consumer->push (any ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_StructuredEvent::do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer TAO_ENV_ARG_DECL) const
+TAO_Notify_StructuredEvent::do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer ACE_ENV_ARG_DECL) const
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
                           "TAO_Notify_StructuredEvent::do_push ("
                           "CosNotifyComm::StructuredPushConsumer_ptr)\n"));
 
-  consumer->push_structured_event (*this->data_ TAO_ENV_ARG_PARAMETER);
+  consumer->push_structured_event (*this->data_ ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -462,7 +462,7 @@ TAO_Notify_StructuredEvent::do_push (CosNotifyComm::SequencePushConsumer_ptr con
                                      const TAO_Notify_QoSAdmin_i& /*qos_admin*/,
                                      CosNotification::EventBatch& /*unsent*/,
                                      int /*flush_queue*/
-                                     TAO_ENV_ARG_DECL) const
+                                     ACE_ENV_ARG_DECL) const
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
@@ -473,5 +473,5 @@ TAO_Notify_StructuredEvent::do_push (CosNotifyComm::SequencePushConsumer_ptr con
   events.length (1);
   events[0] = *this->data_;
 
-  consumer->push_structured_events (events TAO_ENV_ARG_PARAMETER);
+  consumer->push_structured_events (events ACE_ENV_ARG_PARAMETER);
 }

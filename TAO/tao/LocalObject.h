@@ -55,25 +55,25 @@ public:
    * CORBA_Object.  I'll take the easier route for now.
    */
   static CORBA_LocalObject_ptr _narrow (CORBA::Object_ptr obj
-                                        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// No-op it is just here to simplify some templates.
   static CORBA_LocalObject_ptr _unchecked_narrow (
              CORBA::Object_ptr obj
-             TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
   /// Always returns false.
-  virtual CORBA::Boolean _non_existent (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual CORBA::Boolean _non_existent (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// Throws CORBA::NO_IMPLEMENT.
   virtual CORBA::ImplementationDef_ptr
-      _get_implementation (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+      _get_implementation (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// Gets info about object from the Interface Repository.
   virtual CORBA_InterfaceDef_ptr _get_interface (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     );
 
   /// Throws NO_IMPLEMENT.
@@ -83,7 +83,7 @@ public:
                                 CORBA::NamedValue_ptr result,
                                 CORBA::Request_ptr &request,
                                 CORBA::Flags req_flags
-                                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   virtual void _create_request (CORBA::Context_ptr ctx,
                                 const CORBA::Char *operation,
@@ -93,11 +93,11 @@ public:
                                 CORBA::ContextList_ptr ctxtlist,
                                 CORBA::Request_ptr &request,
                                 CORBA::Flags req_flags
-                                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Throws NO_IMPLEMENT.
   virtual CORBA::Request_ptr _request (const CORBA::Char *operation
-                                       TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -106,32 +106,32 @@ public:
   /// Throws CORBA::NO_IMPLEMENT.
   CORBA::Policy_ptr _get_policy (
       CORBA::PolicyType type
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   /// Throws CORBA::NO_IMPLEMENT.
   CORBA::Policy_ptr _get_client_policy (
       CORBA::PolicyType type
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   /// Throws CORBA::NO_IMPLEMENT.
   CORBA::Object_ptr _set_policy_overrides (
       const CORBA::PolicyList & policies,
       CORBA::SetOverrideType set_add
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   /// Throws CORBA::NO_IMPLEMENT.
   CORBA::PolicyList * _get_policy_overrides (
       const CORBA::PolicyTypeSeq & types
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   /// Throws CORBA::NO_IMPLEMENT.
   CORBA::Boolean _validate_connection (
       CORBA::PolicyList_out inconsistent_policies
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
@@ -142,7 +142,7 @@ public:
    * non-unique.
    */
   virtual CORBA::ULong _hash (CORBA::ULong maximum
-                              TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * Try to determine if this object is the same as <other_obj>.  This
@@ -151,7 +151,7 @@ public:
    * protocols are in use) there is no default implementation.
    */
   virtual CORBA::Boolean _is_equivalent (CORBA_Object_ptr other_obj
-                                         TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC (());
 
   // = Reference count managment.
@@ -164,7 +164,7 @@ public:
   // = TAO extensions
 
   /// Throws CORBA::NO_IMPLEMENT.
-  virtual TAO_ObjectKey *_key (TAO_ENV_SINGLE_ARG_DECL);
+  virtual TAO_ObjectKey *_key (ACE_ENV_SINGLE_ARG_DECL);
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   /// Useful for template programming.

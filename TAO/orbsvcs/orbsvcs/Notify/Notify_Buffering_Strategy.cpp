@@ -27,7 +27,7 @@ TAO_Notify_Buffering_Strategy::~TAO_Notify_Buffering_Strategy ()
 }
 
 void
-TAO_Notify_Buffering_Strategy::execute (ACE_Message_Queue<ACE_SYNCH>* msg_queue, TAO_Notify_Command *mb TAO_ENV_ARG_DECL_NOT_USED /*TAO_ENV_SINGLE_ARG_PARAMETER*/, ACE_Time_Value *tv)
+TAO_Notify_Buffering_Strategy::execute (ACE_Message_Queue<ACE_SYNCH>* msg_queue, TAO_Notify_Command *mb ACE_ENV_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/, ACE_Time_Value *tv)
 {
   // use_max_queue_ may be set to 0.  If max_events_per_consumer_ is
   // 0, then we are going to use the maximum queue length regardless.

@@ -55,27 +55,27 @@ public:
   /// $TAO_ROOT/tao/Invocation_Endpoint_Selectors.h  for details of
   /// documentation.
   virtual void select_endpoint (TAO_GIOP_Invocation *invocation
-                                TAO_ENV_ARG_DECL);
+                                ACE_ENV_ARG_DECL);
 
   virtual void next (TAO_GIOP_Invocation *invocation
-                     TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   virtual void forward (TAO_GIOP_Invocation *invocation,
                         const TAO_MProfile &mprofile
-                        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   virtual void success (TAO_GIOP_Invocation *invocation);
   virtual void close_connection (TAO_GIOP_Invocation *invocation);
 
 protected:
 
   int select_endpoint_i (TAO_GIOP_Invocation *invoc
-                         TAO_ENV_ARG_DECL);
+                         ACE_ENV_ARG_DECL);
 
   int select_primary (TAO_GIOP_Invocation *invocation
-                      TAO_ENV_ARG_DECL);
+                      ACE_ENV_ARG_DECL);
 
   int check_profile_for_primary (TAO_GIOP_Invocation *,
                                  TAO_Profile *
-                                 TAO_ENV_ARG_DECL);
+                                 ACE_ENV_ARG_DECL);
 
 private:
 

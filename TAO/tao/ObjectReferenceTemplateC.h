@@ -173,7 +173,7 @@ TAO_NAMESPACE  PortableInterceptor
     static const char* _tao_obv_static_repository_id ();
 
     virtual CORBA::Object_ptr make_object (
-        const char *, const PortableInterceptor::ObjectId & TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        const char *, const PortableInterceptor::ObjectId & ACE_ENV_ARG_DECL_WITH_DEFAULTS
 
       ) = 0;
 
@@ -287,13 +287,13 @@ TAO_NAMESPACE  PortableInterceptor
       virtual const char* _tao_obv_repository_id () const;
       static const char* _tao_obv_static_repository_id ();
 
-      virtual char * server_id (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      virtual char * server_id (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
 
     ) = 0;
-    virtual char * orb_id (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    virtual char * orb_id (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
 
   ) = 0;
-  virtual ::PortableInterceptor::AdapterName * adapter_name (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+  virtual ::PortableInterceptor::AdapterName * adapter_name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
 
 ) = 0;
 

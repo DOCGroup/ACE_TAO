@@ -20,7 +20,7 @@ POA_Destroyer::~POA_Destroyer ()
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY {
     this->poa_->destroy (1, 1
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
   } ACE_CATCHANY {
     // @@ This event should be logged...

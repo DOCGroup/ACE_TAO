@@ -43,8 +43,8 @@ public:
 
   void activate (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
                  int period
-                 TAO_ENV_ARG_DECL);
-  void deactivate (TAO_ENV_SINGLE_ARG_DECL);
+                 ACE_ENV_ARG_DECL);
+  void deactivate (ACE_ENV_SINGLE_ARG_DECL);
   // Connect as a consumer to receive a TIMEOUT every <period>
   // milliseconds.
   // The class pushes an event (in its supplier role) every time it
@@ -55,21 +55,21 @@ public:
                 int published_type,
                 int event_source,
                 int event_type
-                TAO_ENV_ARG_DECL);
+                ACE_ENV_ARG_DECL);
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
                 const RtecEventChannelAdmin::SupplierQOS &qos
-                TAO_ENV_ARG_DECL);
-  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
+                ACE_ENV_ARG_DECL);
+  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
   // Simple connect/disconnect methods..
 
   void push (const RtecEventComm::EventSet& events
-             TAO_ENV_ARG_DECL)
+             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The Consumer side methods.
 
-  virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 
@@ -108,7 +108,7 @@ public:
   void stop (void);
   CORBA::ULong push_count (void);
 
-  void run (TAO_ENV_SINGLE_ARG_DECL);
+  void run (ACE_ENV_SINGLE_ARG_DECL);
   // Run a single iteration of the test
 
 private:

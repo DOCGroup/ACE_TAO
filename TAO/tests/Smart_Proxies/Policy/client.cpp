@@ -68,26 +68,26 @@ run_test (CORBA::ORB_ptr orb_ptr,
         {
           object =
             orb->string_to_object (ior1
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
         }
       else
         {
           object =
             orb->string_to_object (ior2
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
         }
       ACE_TRY_CHECK;
 
       Test_var server =
         Test::_narrow (object.in ()
-                       TAO_ENV_ARG_PARAMETER);
+                       ACE_ENV_ARG_PARAMETER);
       if (CORBA::is_nil (server.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Object reference is nil\n"),
                           1);
 
       server->method (0);
-      server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
     }
@@ -109,7 +109,7 @@ main (int argc, char *argv[])
         CORBA::ORB_init (argc,
                          argv,
                          ""
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)

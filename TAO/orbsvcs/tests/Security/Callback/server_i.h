@@ -32,14 +32,14 @@ public:
   virtual ~server_i (void);
 
   virtual void set_client (client_ptr c
-                           TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void test_request (const char *msg
-                             TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

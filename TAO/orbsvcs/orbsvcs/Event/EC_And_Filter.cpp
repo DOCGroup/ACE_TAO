@@ -59,12 +59,12 @@ TAO_EC_And_Filter::size (void) const
 int
 TAO_EC_And_Filter::filter (const RtecEventComm::EventSet& event,
                            TAO_EC_QOS_Info& qos_info
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
 {
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin (); i != end; ++i)
     {
-      int n = (*i)->filter (event, qos_info TAO_ENV_ARG_PARAMETER);
+      int n = (*i)->filter (event, qos_info ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
       if (n == 0)
         return 0;
@@ -73,7 +73,7 @@ TAO_EC_And_Filter::filter (const RtecEventComm::EventSet& event,
   // All children accepted the event, push up...
   if (this->parent () != 0)
     {
-      this->parent ()->push (event, qos_info TAO_ENV_ARG_PARAMETER);
+      this->parent ()->push (event, qos_info ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
 
@@ -83,12 +83,12 @@ TAO_EC_And_Filter::filter (const RtecEventComm::EventSet& event,
 int
 TAO_EC_And_Filter::filter_nocopy (RtecEventComm::EventSet& event,
                                   TAO_EC_QOS_Info& qos_info
-                                  TAO_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
 {
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin (); i != end; ++i)
     {
-      int n = (*i)->filter_nocopy (event, qos_info TAO_ENV_ARG_PARAMETER);
+      int n = (*i)->filter_nocopy (event, qos_info ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
       if (n == 0)
         return 0;
@@ -97,7 +97,7 @@ TAO_EC_And_Filter::filter_nocopy (RtecEventComm::EventSet& event,
   // All children accepted the event, push up...
   if (this->parent () != 0)
     {
-      this->parent ()->push (event, qos_info TAO_ENV_ARG_PARAMETER);
+      this->parent ()->push (event, qos_info ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
 
@@ -107,14 +107,14 @@ TAO_EC_And_Filter::filter_nocopy (RtecEventComm::EventSet& event,
 void
 TAO_EC_And_Filter::push (const RtecEventComm::EventSet&,
                          TAO_EC_QOS_Info&
-                         TAO_ENV_ARG_DECL_NOT_USED)
+                         ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 
 void
 TAO_EC_And_Filter::push_nocopy (RtecEventComm::EventSet&,
                                 TAO_EC_QOS_Info&
-                                TAO_ENV_ARG_DECL_NOT_USED)
+                                ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 
@@ -165,7 +165,7 @@ int
 TAO_EC_And_Filter::add_dependencies (
       const RtecEventComm::EventHeader&,
       const TAO_EC_QOS_Info&
-      TAO_ENV_ARG_DECL_NOT_USED)
+      ACE_ENV_ARG_DECL_NOT_USED)
 {
   return 0;
 }

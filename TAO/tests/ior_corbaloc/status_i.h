@@ -9,9 +9,9 @@
 
 class corbaloc_Status_i : public POA_corbaloc::Status {
 public:
-  corbaloc_Status_i (TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+  corbaloc_Status_i (ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  CORBA::Boolean print_status (TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Boolean print_status (ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     throw (CORBA::SystemException);
 
   void set_name(const char *name){  server_name_=name; }

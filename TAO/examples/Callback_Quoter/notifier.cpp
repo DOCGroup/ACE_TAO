@@ -14,17 +14,17 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG,
               "\n\tNotifier\n\n"));
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      int rc = notifier.init (argc, argv TAO_ENV_ARG_PARAMETER);
+      int rc = notifier.init (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (rc == -1)
         return 1;
       else
         {
-          notifier.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+          notifier.run (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

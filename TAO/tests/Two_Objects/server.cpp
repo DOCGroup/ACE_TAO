@@ -62,17 +62,17 @@ main (int argc, char *argv[])
     {
       // Initialize the ORB
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get initial reference to the Root POA
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Narrow down to the appropriate type
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -82,7 +82,7 @@ main (int argc, char *argv[])
 
       // Get referencee to the POA manager
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse the arguments
@@ -102,13 +102,13 @@ main (int argc, char *argv[])
       // _this method registers the object withe the POA and returns
       // an object reference
       Two_Objects_Test::Object_Factory_var factory =
-        factory_impl->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        factory_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Convert the object reference to a string so that it can
       // be saved in a file and used by clinet programs later
       CORBA::String_var ior =
-        orb->object_to_string (factory.in () TAO_ENV_ARG_PARAMETER);
+        orb->object_to_string (factory.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // If the ior_output_file exists, output the ior to it
@@ -124,7 +124,7 @@ main (int argc, char *argv[])
       ACE_OS::fclose (output_file);
 
       // Activate the POA manager
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Instantiate the specified # of worker threads
@@ -141,10 +141,10 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) event loop finished\n"));
 
-      root_poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

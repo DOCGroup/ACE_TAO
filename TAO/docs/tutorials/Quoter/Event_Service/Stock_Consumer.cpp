@@ -31,7 +31,7 @@ Stock_Consumer::disconnect ()
 
 void
 Stock_Consumer::push (const CORBA::Any& data
-                      TAO_ENV_ARG_DECL_NOT_USED)
+                      ACE_ENV_ARG_DECL_NOT_USED)
   throw (CORBA::SystemException)
 {
   Quoter::Event *event;
@@ -45,7 +45,7 @@ Stock_Consumer::push (const CORBA::Any& data
 }
 
 void
-Stock_Consumer::disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Stock_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     throw (CORBA::SystemException)
 {
   this->supplier_proxy_ = CosEventChannelAdmin::ProxyPushSupplier::_nil ();

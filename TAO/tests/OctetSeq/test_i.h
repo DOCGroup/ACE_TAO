@@ -36,18 +36,18 @@ public:
             const Test::OctetSeq& seq,
             CORBA::Double verification_token,
             CORBA::Double_out returned_token
-            TAO_ENV_ARG_DECL_NOT_USED)
+            ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((Test::OutOfRange));
 
   Test::OctetSeq* get (Test::Index i
-                       TAO_ENV_ARG_DECL_NOT_USED)
+                       ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,Test::OutOfRange));
 
   CORBA::ULong get_crc (Test::Index i
-                        TAO_ENV_ARG_DECL_NOT_USED)
+                        ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,Test::OutOfRange));
 
-  void shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

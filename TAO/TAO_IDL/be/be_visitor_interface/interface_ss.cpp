@@ -137,7 +137,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                          " copy ctor generation failed\n"),
                         -1);
     }
-    
+
 
 
   *os << "  TAO_ServantBase (rhs)" << be_uidt_nl
@@ -166,7 +166,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "TAO_ServerRequest &_tao_server_request, " << be_nl
       << "void * _tao_object_reference," << be_nl
       << "void * /* Servant_Upcall */" << be_nl
-      << "TAO_ENV_ARG_DECL" << be_uidt_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << "TAO_InputCDR &_tao_in = _tao_server_request.incoming ();" << be_nl;
@@ -185,7 +185,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
     }
 
-  *os << "_tao_retval = _tao_impl->_is_a (value.in () TAO_ENV_ARG_PARAMETER);"
+  *os << "_tao_retval = _tao_impl->_is_a (value.in () ACE_ENV_ARG_PARAMETER);"
       << be_nl;
   *os << "ACE_CHECK;" << be_nl << be_nl;
   *os << "_tao_server_request.init_reply ();" << be_nl;
@@ -212,13 +212,13 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "TAO_ServerRequest &_tao_server_request, " << be_nl
       << "void * _tao_object_reference," << be_nl
       << "void * /* Servant_Upcall */" << be_nl
-      << "TAO_ENV_ARG_DECL" << be_uidt_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << full_skel_name << " *_tao_impl = ("
       << full_skel_name << " *) _tao_object_reference;" << be_nl;
   *os << "CORBA::Boolean _tao_retval =" << be_idt_nl
-      << "_tao_impl->_non_existent (TAO_ENV_SINGLE_ARG_PARAMETER);"
+      << "_tao_impl->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);"
       << be_uidt_nl;
   *os << "ACE_CHECK;" << be_nl << be_nl;
   *os << "_tao_server_request.init_reply ();" << be_nl;
@@ -239,7 +239,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "TAO_ServerRequest &_tao_server_request, " << be_nl
       << "void * _tao_object_reference," << be_nl
       << "void * /* Servant_Upcall */" << be_nl
-      << "TAO_ENV_ARG_DECL" << be_uidt_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << full_skel_name << " *_tao_impl = ("
@@ -258,7 +258,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "ACE_TRY" << be_idt_nl
       << "{" << be_idt_nl
       << "_tao_retval = " << be_idt_nl
-      << "_tao_impl->_get_interface (TAO_ENV_SINGLE_ARG_PARAMETER);"
+      << "_tao_impl->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);"
       << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl << be_nl
       << "_tao_server_request.init_reply ();" << be_nl << be_nl
@@ -286,7 +286,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "CORBA::Boolean " << full_skel_name
       << "::_is_a (" << be_idt << be_idt_nl
       << "const char* value" << be_nl
-      << "TAO_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
+      << "ACE_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "const char *base_id = \"IDL:org.omg/CORBA/Object:1.0\";" << be_nl
@@ -360,9 +360,9 @@ be_visitor_interface_ss::this_method (be_interface *node)
   // the _this () operation
   *os << node->full_name () << "*" << be_nl
       << node->full_skel_name ()
-      << "::_this (TAO_ENV_SINGLE_ARG_DECL)" << be_nl
+      << "::_this (ACE_ENV_SINGLE_ARG_DECL)" << be_nl
       << "{" << be_idt_nl // idt = 1
-      << "TAO_Stub *stub = this->_create_stub (TAO_ENV_SINGLE_ARG_PARAMETER);"
+      << "TAO_Stub *stub = this->_create_stub (ACE_ENV_SINGLE_ARG_PARAMETER);"
       << be_nl
       << "ACE_CHECK_RETURN (0);" << be_nl << be_nl
       << "TAO_Stub_Auto_Ptr safe_stub (stub);" << be_nl << be_nl;
@@ -398,13 +398,13 @@ be_visitor_interface_ss::dispatch_method (be_interface *node)
       << "::_dispatch (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
       << "void *servant_upcall" << be_nl
-      << "TAO_ENV_ARG_DECL" << be_uidt_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << "this->synchronous_upcall_dispatch (req," << be_nl
       << "                                   servant_upcall," << be_nl
       << "                                   this" << be_nl
-      << "                                   TAO_ENV_ARG_PARAMETER);"
+      << "                                   ACE_ENV_ARG_PARAMETER);"
       << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 }

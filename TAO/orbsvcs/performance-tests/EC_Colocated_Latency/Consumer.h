@@ -34,10 +34,10 @@ public:
   /// Connect to the event channel
   void connect (RtecEventChannelAdmin::EventChannel_ptr ec,
                 int event_type
-                TAO_ENV_ARG_DECL);
+                ACE_ENV_ARG_DECL);
 
   /// Disconnect from the event channel
-  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
+  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Access the history of samples
   ACE_Sample_History &sample_history (void);
@@ -46,9 +46,9 @@ public:
   /** @name The RtecEventComm::PushConsumer methods
    */
   virtual void push (const RtecEventComm::EventSet& events
-                     TAO_ENV_ARG_DECL)
+                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 

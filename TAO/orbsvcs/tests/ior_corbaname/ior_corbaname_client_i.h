@@ -39,7 +39,7 @@ class IOR_corbaname_Client_i
   IOR_corbaname_Client_i (void);
   ~IOR_corbaname_Client_i (void);
 
-  int run (TAO_ENV_SINGLE_ARG_DECL);
+  int run (ACE_ENV_SINGLE_ARG_DECL);
   // Execute the client example code.
 
   int init (int argc, char **argv);

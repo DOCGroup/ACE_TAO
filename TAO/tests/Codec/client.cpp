@@ -39,21 +39,21 @@ verify_data (Foo::Bar *original, Foo::Bar *extracted)
 int
 main (int argc, char *argv[])
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "my_orb" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "my_orb" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Obtain a reference to the CodecFactory.
       CORBA::Object_var obj =
         orb->resolve_initial_references ("CodecFactory"
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       IOP::CodecFactory_var codec_factory =
-        IOP::CodecFactory::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
+        IOP::CodecFactory::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ----------------------------------------------------------
@@ -67,7 +67,7 @@ main (int argc, char *argv[])
 
       // Obtain the CDR encapsulation Codec.
       IOP::Codec_var codec =
-        codec_factory->create_codec (encoding TAO_ENV_ARG_PARAMETER);
+        codec_factory->create_codec (encoding ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ----------------------------------------------------------
@@ -101,11 +101,11 @@ main (int argc, char *argv[])
 
       // Start out with the encode() method, i.e. the one that
       // includes the TypeCode in the CDR encapsulation.
-      encoded_data = codec->encode (data TAO_ENV_ARG_PARAMETER);
+      encoded_data = codec->encode (data ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Extract the data from the octet sequence.
-      decoded_data = codec->decode (encoded_data.in () TAO_ENV_ARG_PARAMETER);
+      decoded_data = codec->decode (encoded_data.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       decoded_data.in() >>= extracted_value;
@@ -127,13 +127,13 @@ main (int argc, char *argv[])
 
       // Now use the encode_value() method, i.e. the one that does
       // *not* include the TypeCode in the CDR encapsulation.
-      encoded_data = codec->encode_value (data TAO_ENV_ARG_PARAMETER);
+      encoded_data = codec->encode_value (data ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Extract the data from the octet sequence.
       decoded_data = codec->decode_value (encoded_data.in (),
                                           Foo::_tc_Bar
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       decoded_data.in() >>= extracted_value;

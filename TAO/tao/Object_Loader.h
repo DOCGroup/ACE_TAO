@@ -47,7 +47,7 @@ public:
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                            int argc,
                                            char *argv []
-                                           TAO_ENV_ARG_DECL_NOT_USED)
+                                           ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
 

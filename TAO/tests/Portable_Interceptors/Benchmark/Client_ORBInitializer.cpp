@@ -17,7 +17,7 @@ Client_ORBInitializer::Client_ORBInitializer (int interceptor_type)
 void
 Client_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -25,7 +25,7 @@ Client_ORBInitializer::pre_init (
 void
 Client_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -68,6 +68,6 @@ Client_ORBInitializer::post_init (
   PortableInterceptor::ClientRequestInterceptor_var interceptor = tmp;
 
   info->add_client_request_interceptor (interceptor.in ()
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }

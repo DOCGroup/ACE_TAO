@@ -56,7 +56,7 @@ public:
 
   virtual ~TAO_Offer_Iterator (void);
 
-  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // BEGIN SPEC
   // The destroy operation destroys the iterator. No further
@@ -69,7 +69,7 @@ public:
   // Add an offer to the collection of offers the iterator will
   // iterate over.
 
-  virtual CORBA::ULong max_left (TAO_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::ULong max_left (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::UnknownMaxLeft)) = 0;
 
@@ -83,7 +83,7 @@ public:
 
   virtual CORBA::Boolean next_n (CORBA::ULong n,
                                  CosTrading::OfferSeq_out offers
-                                 TAO_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
   // BEGIN SPEC
   // The next_n operation returns a set of service offers in the
@@ -135,12 +135,12 @@ public:
 
   virtual CORBA::Boolean next_n (CORBA::ULong n,
                                  CosTrading::OfferSeq_out offers
-                                 TAO_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Deposit at maximum n offers into the return sequence and return 1,
   // or return 0 if the iterator is done and no offers are returned.
 
-  virtual CORBA::ULong max_left (TAO_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::ULong max_left (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::UnknownMaxLeft));
   // Return the number of items left in the iterator.
@@ -191,15 +191,15 @@ public:
 
   virtual CORBA::Boolean next_n (CORBA::ULong n,
                                  CosTrading::OfferSeq_out offers
-                                 TAO_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Retrieve n offers from the set of iterators.
 
-  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Destroy the collection of iterators.
 
-  virtual CORBA::ULong max_left (TAO_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::ULong max_left (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     CosTrading::UnknownMaxLeft));
   // Determine how many offers are left in the collection.
@@ -246,7 +246,7 @@ class TAO_Offer_Id_Iterator :
 
   ~TAO_Offer_Id_Iterator (void);
 
-  virtual CORBA::ULong max_left(TAO_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::ULong max_left(ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::UnknownMaxLeft));
   // The max_left operation returns the number of offer identifiers
@@ -255,7 +255,7 @@ class TAO_Offer_Id_Iterator :
   // identifiers (e.g., if the iterator determines its set of offer
   // identifiers through lazy evaluation).
 
-  virtual void destroy(TAO_ENV_SINGLE_ARG_DECL)
+  virtual void destroy(ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The destroy operation destroys the iterator. No further
   // operations can be invoked on an iterator after it has been
@@ -263,7 +263,7 @@ class TAO_Offer_Id_Iterator :
 
   virtual CORBA::Boolean next_n(CORBA::ULong _n,
                                 CosTrading::OfferIdSeq_out _ids
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The next_n operation returns a set of offer identifiers in the
   // output parameter "ids." The operation returns n offer identifiers

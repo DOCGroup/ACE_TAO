@@ -129,12 +129,12 @@ public:
    * This encapsulates
    */
   virtual void for_each (TAO_ESF_Worker<PROXY> *worker
-                         TAO_ENV_ARG_DECL) = 0;
+                         ACE_ENV_ARG_DECL) = 0;
 
   /// Insert a new element into the collection.  The collection assumes
   /// ownership of the element.
   virtual void connected (PROXY *proxy
-                          TAO_ENV_ARG_DECL) = 0;
+                          ACE_ENV_ARG_DECL) = 0;
 
   /**
    * Insert an element into the collection.  No errors can be raised
@@ -144,14 +144,14 @@ public:
    * collection.
    */
   virtual void reconnected (PROXY *proxy
-                            TAO_ENV_ARG_DECL) = 0;
+                            ACE_ENV_ARG_DECL) = 0;
 
   /// Remove an element from the collection.
   virtual void disconnected (PROXY *proxy
-                             TAO_ENV_ARG_DECL) = 0;
+                             ACE_ENV_ARG_DECL) = 0;
 
   /// The EC is shutting down, must release all the elements.
-  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL) = 0;
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL) = 0;
 };
 
 // ****************************************************************

@@ -32,11 +32,11 @@ TAO_PICurrent::~TAO_PICurrent (void)
 
 CORBA::Any *
 TAO_PICurrent::get_slot (PortableInterceptor::SlotId id
-                         TAO_ENV_ARG_DECL)
+                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::InvalidSlot))
 {
-  this->check_validity (id TAO_ENV_ARG_PARAMETER);
+  this->check_validity (id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   TAO_PICurrent_Impl *impl = this->tsc ();
@@ -48,17 +48,17 @@ TAO_PICurrent::get_slot (PortableInterceptor::SlotId id
                         0);
     }
 
-  return impl->get_slot (id TAO_ENV_ARG_PARAMETER);
+  return impl->get_slot (id ACE_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_PICurrent::set_slot (PortableInterceptor::SlotId id,
                          const CORBA::Any & data
-                         TAO_ENV_ARG_DECL)
+                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::InvalidSlot))
 {
-  this->check_validity (id TAO_ENV_ARG_PARAMETER);
+  this->check_validity (id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   TAO_PICurrent_Impl *impl = this->tsc ();
@@ -69,7 +69,7 @@ TAO_PICurrent::set_slot (PortableInterceptor::SlotId id,
                                        CORBA::COMPLETED_NO));
     }
 
-  impl->set_slot (id, data TAO_ENV_ARG_PARAMETER);
+  impl->set_slot (id, data ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -109,7 +109,7 @@ TAO_PICurrent_Impl::~TAO_PICurrent_Impl (void)
 
 CORBA::Any *
 TAO_PICurrent_Impl::get_slot (PortableInterceptor::SlotId id
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::InvalidSlot))
 {
@@ -155,7 +155,7 @@ TAO_PICurrent_Impl::get_slot (PortableInterceptor::SlotId id
 void
 TAO_PICurrent_Impl::set_slot (PortableInterceptor::SlotId id,
                               const CORBA::Any & data
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::InvalidSlot))
 {
@@ -241,13 +241,13 @@ TAO_PICurrent_Impl::copy (TAO_PICurrent_Impl &rhs, CORBA::Boolean deep_copy)
 
       this->slot_table_.size (new_size);
 
-      TAO_ENV_DECLARE_NEW_ENV;
+      ACE_DECLARE_NEW_CORBA_ENV;
       ACE_TRY
         {
           for (size_t i = 0; i < new_size; ++i)
             {
               this->slot_table_[i] =
-                rhs.get_slot (i TAO_ENV_ARG_PARAMETER);  // Deep copy
+                rhs.get_slot (i ACE_ENV_ARG_PARAMETER);  // Deep copy
               ACE_TRY_CHECK;
             }
         }

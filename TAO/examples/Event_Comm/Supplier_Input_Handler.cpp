@@ -109,7 +109,7 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE)
           // reference...  event.value_ = ...
 
           // Forward <Event> to all <Consumers>.
-          notifier->push (event TAO_ENV_ARG_PARAMETER);
+          notifier->push (event ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY

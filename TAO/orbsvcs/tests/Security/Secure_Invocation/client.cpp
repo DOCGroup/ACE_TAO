@@ -14,7 +14,7 @@ const char *ior = "file://test.ior";
 void
 insecure_invocation_test (CORBA::ORB_ptr orb,
                           CORBA::Object_ptr obj
-                          TAO_ENV_ARG_DECL)
+                          ACE_ENV_ARG_DECL)
 {
   // Disable protection for this insecure invocation test.
 
@@ -27,7 +27,7 @@ insecure_invocation_test (CORBA::ORB_ptr orb,
   CORBA::Policy_var policy =
     orb->create_policy (Security::SecQOPPolicy,
                         no_protection
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::PolicyList policy_list (1);
@@ -39,11 +39,11 @@ insecure_invocation_test (CORBA::ORB_ptr orb,
   CORBA::Object_var object =
     obj->_set_policy_overrides (policy_list,
                                 CORBA::SET_OVERRIDE
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   Foo::Bar_var server =
-    Foo::Bar::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+    Foo::Bar::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (server.in ()))
@@ -60,7 +60,7 @@ insecure_invocation_test (CORBA::ORB_ptr orb,
     {
       // This invocation should result in a CORBA::NO_PERMISSION
       // exception.
-      server->baz (TAO_ENV_SINGLE_ARG_PARAMETER);
+      server->baz (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::NO_PERMISSION, exc)
@@ -83,10 +83,10 @@ insecure_invocation_test (CORBA::ORB_ptr orb,
 
 void
 secure_invocation_test (CORBA::Object_ptr object
-                        TAO_ENV_ARG_DECL)
+                        ACE_ENV_ARG_DECL)
 {
   Foo::Bar_var server =
-    Foo::Bar::_narrow (object TAO_ENV_ARG_PARAMETER);
+    Foo::Bar::_narrow (object ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (server.in ()))
@@ -100,10 +100,10 @@ secure_invocation_test (CORBA::Object_ptr object
     }
 
   // This invocation should return successfully.
-  server->baz (TAO_ENV_SINGLE_ARG_PARAMETER);
+  server->baz (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -138,14 +138,14 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // This test sets creates a Security::QOPPolicy with the
@@ -154,17 +154,17 @@ main (int argc, char *argv[])
       // then result in a CORBA::NO_PERMISSION exception.
       //
       // The server is not shutdown by this test.
-      insecure_invocation_test (orb.in (), object.in () TAO_ENV_ARG_PARAMETER);
+      insecure_invocation_test (orb.in (), object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // This test uses the default secure SSLIOP settings to securely
       // invoke a method on the server.  No exception should occur.
       //
       // The server *is* shutdown by this test.
-      secure_invocation_test (object.in () TAO_ENV_ARG_PARAMETER);
+      secure_invocation_test (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

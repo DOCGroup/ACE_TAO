@@ -91,7 +91,7 @@ TAO_Notify_StructuredEvents::event_type (void) const
 
 CORBA::Boolean
 TAO_Notify_StructuredEvents::do_match (CosNotifyFilter::Filter_ptr filter
-                                       TAO_ENV_ARG_DECL)
+                                       ACE_ENV_ARG_DECL)
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
@@ -104,7 +104,7 @@ TAO_Notify_StructuredEvents::do_match (CosNotifyFilter::Filter_ptr filter
   for (CORBA::ULong i = 0; i < length; i++)
     {
       CORBA::Boolean matched = filter->match_structured (this->data_[i]
-                                                         TAO_ENV_ARG_PARAMETER);
+                                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       if (matched)
@@ -124,7 +124,7 @@ TAO_Notify_StructuredEvents::do_match (CosNotifyFilter::Filter_ptr filter
 
 void
 TAO_Notify_StructuredEvents::do_push (CosEventComm::PushConsumer_ptr consumer
-                                      TAO_ENV_ARG_DECL) const
+                                      ACE_ENV_ARG_DECL) const
 {
   CORBA::ULong sending_length  = (this->match_called_ ?
                                          this->matching_.length () :
@@ -134,14 +134,14 @@ TAO_Notify_StructuredEvents::do_push (CosEventComm::PushConsumer_ptr consumer
       CORBA::Any any;
       any <<= this->data_[(this->match_called_ ?
                                   this->matching_[i] : i)];
-      consumer->push (any TAO_ENV_ARG_PARAMETER);
+      consumer->push (any ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
 TAO_Notify_StructuredEvents::do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer
-                                      TAO_ENV_ARG_DECL) const
+                                      ACE_ENV_ARG_DECL) const
 {
   CORBA::ULong sending_length  = (this->match_called_ ?
                                          this->matching_.length () :
@@ -150,7 +150,7 @@ TAO_Notify_StructuredEvents::do_push (CosNotifyComm::StructuredPushConsumer_ptr 
     {
       consumer->push_structured_event (this->data_[(this->match_called_ ?
                                           this->matching_[i] : i)]
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -161,7 +161,7 @@ TAO_Notify_StructuredEvents::do_push (
                             const TAO_Notify_QoSAdmin_i& qos_admin,
                             CosNotification::EventBatch& unsent,
                             int flush_queue
-                            TAO_ENV_ARG_DECL) const
+                            ACE_ENV_ARG_DECL) const
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
@@ -190,7 +190,7 @@ TAO_Notify_StructuredEvents::do_push (
         {
           matched[i] = unsent[i];
         }
-      consumer->push_structured_events (matched TAO_ENV_ARG_PARAMETER);
+      consumer->push_structured_events (matched ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       // Shift the rest of the unsent messages to the front.
@@ -229,7 +229,7 @@ TAO_Notify_StructuredEvents::do_push (
                                           this->matching_[index] : index)];
                 start++;
               }
-            consumer->push_structured_events (matched TAO_ENV_ARG_PARAMETER);
+            consumer->push_structured_events (matched ACE_ENV_ARG_PARAMETER);
             ACE_CHECK;
 
             unsent.length (0);
@@ -245,7 +245,7 @@ TAO_Notify_StructuredEvents::do_push (
                                               this->matching_[start] : start)];
                     start++;
                   }
-                consumer->push_structured_events (matched TAO_ENV_ARG_PARAMETER);
+                consumer->push_structured_events (matched ACE_ENV_ARG_PARAMETER);
                 ACE_CHECK;
               }
           }

@@ -65,7 +65,7 @@ class TAO_Notify_Service
   // Destructor.
 
   int init (int argc, char *argv[]
-            TAO_ENV_ARG_DECL);
+            ACE_ENV_ARG_DECL);
   // Initializes the Service.
   // Returns 0 on success, -1 on error.
 
@@ -73,7 +73,7 @@ class TAO_Notify_Service
   // run the Service.
   // Returns 0 on success, -1 on error.
 
-  void shutdown (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Shutdown the Service.
   // Returns 0 on success, -1 on error.
 
@@ -81,10 +81,10 @@ class TAO_Notify_Service
   //
 protected:
   int init_ORB (int& argc, char *argv []
-                TAO_ENV_ARG_DECL);
+                ACE_ENV_ARG_DECL);
   // initialize the ORB.
 
-  int resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL);
+  int resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
   // Resolve the naming service.
 
   int parse_args (int argc, char *argv []);

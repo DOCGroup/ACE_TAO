@@ -68,14 +68,14 @@ public:
   // Increment and decrement the reference count.
 
   // = The Servant methods
-  virtual void _add_ref (TAO_ENV_SINGLE_ARG_DECL);
-  virtual void _remove_ref (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
 
   // = Notify_Update_Listener methods
-  virtual void dispatch_update (TAO_Notify_EventType_List& added_list, TAO_Notify_EventType_List& removed_list TAO_ENV_ARG_DECL);
+  virtual void dispatch_update (TAO_Notify_EventType_List& added_list, TAO_Notify_EventType_List& removed_list ACE_ENV_ARG_DECL);
 
   virtual CosNotifyChannelAdmin::ProxyType MyType (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -84,7 +84,7 @@ public:
   virtual void validate_event_qos (
     const CosNotification::QoSProperties & required_qos,
     CosNotification::NamedPropertyRangeSeq_out available_qos
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -92,7 +92,7 @@ public:
   ));
 
  virtual CosNotification::QoSProperties * get_qos (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -100,7 +100,7 @@ public:
 
   virtual void set_qos (
     const CosNotification::QoSProperties & qos
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -110,7 +110,7 @@ public:
   virtual void validate_qos (
     const CosNotification::QoSProperties & required_qos,
     CosNotification::NamedPropertyRangeSeq_out available_qos
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -119,7 +119,7 @@ public:
 
   virtual CosNotifyFilter::FilterID add_filter (
     CosNotifyFilter::Filter_ptr new_filter
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -127,7 +127,7 @@ public:
 
   virtual void remove_filter (
     CosNotifyFilter::FilterID filter
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -136,7 +136,7 @@ public:
 
   virtual CosNotifyFilter::Filter_ptr get_filter (
     CosNotifyFilter::FilterID filter
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -144,14 +144,14 @@ public:
   ));
 
   virtual CosNotifyFilter::FilterIDSeq * get_all_filters (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
   virtual void remove_all_filters (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -160,10 +160,10 @@ public:
   const TAO_Notify_QoSAdmin_i& qos_admin (void) const;
 
 protected:
-  virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed TAO_ENV_ARG_DECL) = 0;
+  virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed ACE_ENV_ARG_DECL) = 0;
   // Derived types should implement this to deliver the update.
 
-  virtual void setup_qos_policies (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void setup_qos_policies (ACE_ENV_SINGLE_ARG_DECL);
   // Derived types may implement this if they need to do something
   // directly after setting the qos policies.
 

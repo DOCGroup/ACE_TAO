@@ -60,7 +60,7 @@ public:
   virtual int close (void);
   virtual int connect (TAO_GIOP_Invocation *invocation,
                        TAO_Transport_Descriptor_Interface *desc
-                       TAO_ENV_ARG_DECL);
+                       ACE_ENV_ARG_DECL);
   virtual TAO_Profile *create_profile (TAO_InputCDR& cdr);
   //@}
 
@@ -71,7 +71,7 @@ protected:
    *
    * Please check the documentation in Pluggable.h.
    */
-  virtual TAO_Profile * make_profile (TAO_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Profile * make_profile (ACE_ENV_SINGLE_ARG_DECL);
 
   /// IIOP-specific connection establishment.
   /**
@@ -79,7 +79,7 @@ protected:
    */
   int iiop_connect (TAO_SSLIOP_Endpoint *ssliop_endpoint,
                     TAO_GIOP_Invocation *invocation
-                    TAO_ENV_ARG_DECL);
+                    ACE_ENV_ARG_DECL);
 
   /// SSLIOP-specific connection establishment.
   int ssliop_connect (TAO_SSLIOP_Endpoint *ssliop_endpoint,
@@ -87,14 +87,14 @@ protected:
                       const Security::EstablishTrust &trust,
                       TAO_GIOP_Invocation *invocation,
                       TAO_Transport_Descriptor_Interface *desc
-                      TAO_ENV_ARG_DECL);
+                      ACE_ENV_ARG_DECL);
 
   /// Retrieve SSLIOP credentials from the policy overrides list and
   /// set up the underlying SSL connection to use the X.509
   /// certificates stored within them.
   TAO_SSLIOP_Credentials * retrieve_credentials (TAO_Stub *stub,
                                                  SSL *ssl
-                                                 TAO_ENV_ARG_DECL);
+                                                 ACE_ENV_ARG_DECL);
 
 public:
 

@@ -51,18 +51,18 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Simple_Server_var server =
-        Simple_Server::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+        Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -76,7 +76,7 @@ main (int argc, char *argv[])
       for (int i = 0; i != niterations; ++i)
         {
           CORBA::Long r =
-            server->test_method (i TAO_ENV_ARG_PARAMETER);
+            server->test_method (i ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (r != i)
@@ -89,7 +89,7 @@ main (int argc, char *argv[])
 
       if (do_shutdown)
         {
-          server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+          server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

@@ -52,19 +52,19 @@ public:
    * @name CORBA::Policy Methods
    */
   //@{
-  virtual CORBA::PolicyType policy_type (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Policy_ptr copy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 
   /// Return the list of mechanism types associated with this policy.
   virtual Security::MechanismTypeList mechanisms (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:

@@ -42,7 +42,7 @@ class TAO_DynamicInterface_Export TAO_DynamicImplementation
   //    circumstances may lead to unpredictable results.
 public:
   virtual void invoke (CORBA::ServerRequest_ptr request
-                       TAO_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+                       ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
   // The invoke() method receives requests issued to any CORBA object
   // incarnated by the DSI servant and performs the processing
   // necessary to execute the request.
@@ -50,13 +50,13 @@ public:
   virtual CORBA::RepositoryId _primary_interface (
       const PortableServer::ObjectId &oid,
       PortableServer::POA_ptr poa
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
 
   // The _primary_interface() method receives an ObjectId value and a
   // POA_ptr as input parameters and returns a valid RepositoryId
   // representing the most-derived interface for that oid.
 
-  CORBA::Object_ptr _this (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  CORBA::Object_ptr _this (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Returns a CORBA::Object_ptr for the target object.
 
 protected:
@@ -67,12 +67,12 @@ protected:
   virtual void *_downcast (const char *repository_id);
   // Simply returns "this"
 
-  virtual TAO_Stub *_create_stub (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual TAO_Stub *_create_stub (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // This is an auxiliary method for _this() and _narrow().
 
   virtual void _dispatch (TAO_ServerRequest &request,
                           void *context
-                          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   // Turns around and calls invoke.
 };
 

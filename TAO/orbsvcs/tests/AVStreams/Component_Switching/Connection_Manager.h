@@ -48,32 +48,32 @@ public:
 
   void bind_to_receivers (const ACE_CString &sender_name,
                           AVStreams::MMDevice_ptr sender
-                          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   // Method that binds the sender to the Naming Service and retreives
   // the references of any registered receivers.
 
-  void connect_to_receivers (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void connect_to_receivers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Connect to the receivers that we found.
 
   void bind_to_sender (const ACE_CString &sender_name,
                        const ACE_CString &receiver_name,
                        AVStreams::MMDevice_ptr receiver
-                       TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   // Bind receiver to the sender.
 
-  void connect_to_sender (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void connect_to_sender (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Connect to the sender that we found.
 
-  void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Destroy all streams.
 
   void destroy (const ACE_CString &flowname
-                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   // Destroy streams associated with <flowname>.
 
   void unbind_sender (const ACE_CString &sender_name,
                       AVStreams::MMDevice_ptr sender_mmdevice
-                      TAO_ENV_ARG_DECL_WITH_DEFAULTS) ;
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS) ;
   // Unbind the sender from the Naming Service
 
   void unbind_receiver (const ACE_CString &sender_name,
@@ -83,7 +83,7 @@ public:
 
   void add_streamctrl (const ACE_CString &flowname,
                        TAO_StreamEndPoint *endpoint
-                       TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   // Add new streamctrl.
 
   // Map of receivers.
@@ -111,10 +111,10 @@ public:
 
 protected:
 
-  void find_receivers (TAO_ENV_SINGLE_ARG_DECL);
+  void find_receivers (ACE_ENV_SINGLE_ARG_DECL);
 
   void add_to_receivers (CosNaming::BindingList &binding_list
-                         TAO_ENV_ARG_DECL);
+                         ACE_ENV_ARG_DECL);
 
   TAO_Naming_Client naming_client_;
   // The Naming Service client.

@@ -47,9 +47,9 @@ EC_Throughput::modify_attributes (TAO_EC_Event_Channel_Attributes&)
 }
 
 void
-EC_Throughput::execute_test (TAO_ENV_SINGLE_ARG_DECL)
+EC_Throughput::execute_test (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->EC_Driver::execute_test (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->EC_Driver::execute_test (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void

@@ -15,19 +15,19 @@ main (int argc, char *argv[])
       CORBA::ORB_var the_orb = CORBA::ORB_init (argc,
                                                 argv,
                                                 orb_name
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var orb_obj =
-        the_orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
+        the_orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var the_root_poa =
-        PortableServer::POA::_narrow (orb_obj.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (orb_obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var the_poa_manager =
-        the_root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        the_root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Retrieving the servants IOR from a file
@@ -37,13 +37,13 @@ main (int argc, char *argv[])
         "file://ior.txt";
 
       orb_obj =
-        the_orb->string_to_object (filename TAO_ENV_ARG_PARAMETER);
+        the_orb->string_to_object (filename ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       cout << "Narrowing the IOR!" << endl;
 
       W32_Test_Interface_var mycall =
-        W32_Test_Interface::_narrow (orb_obj.in () TAO_ENV_ARG_PARAMETER);
+        W32_Test_Interface::_narrow (orb_obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       cout << "Sending the Request!" << endl;

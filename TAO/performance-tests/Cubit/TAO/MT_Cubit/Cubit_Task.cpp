@@ -64,14 +64,14 @@ Cubit_Task::svc (void)
                        "Create Servants failed.\n"),
                       -1);
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       GLOBALS::instance ()->barrier_->wait ();
 
       // Handle requests for this object until we're killed, or one of
       // the methods asks us to exit.
-      int r = this->orb_manager_.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      int r = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (r == -1)
@@ -84,7 +84,7 @@ Cubit_Task::svc (void)
       CORBA::ORB_var orb =
         this->orb_manager_.orb ();
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -105,7 +105,7 @@ Cubit_Task::svc (void)
 int
 Cubit_Task::initialize_orb (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       ACE_ARGV args (this->orbargs_);
@@ -122,7 +122,7 @@ Cubit_Task::initialize_orb (void)
                                                  argv,
                                                  "persistent_poa",
                                                  orb_name
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (r == -1)
         return -1;
@@ -166,23 +166,23 @@ Cubit_Task::get_servant_ior (u_int index)
 int
 Cubit_Task::create_servants (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       CORBA::Object_var obj =
         this->orb_->resolve_initial_references ("RootPOA"
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var manager =
-        poa->the_POAManager(TAO_ENV_SINGLE_ARG_PARAMETER);
+        poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      manager->activate(TAO_ENV_SINGLE_ARG_PARAMETER);
+      manager->activate(ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Create the array of cubit implementations.
@@ -232,13 +232,13 @@ Cubit_Task::create_servants (void)
           // some client.  Then release the object.
 
           Cubit_var cubit =
-            this->servants_[i]->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+            this->servants_[i]->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
 
           CORBA::String_var str =
             this->orb_->object_to_string (cubit.in ()
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           this->servants_iors_[i] =

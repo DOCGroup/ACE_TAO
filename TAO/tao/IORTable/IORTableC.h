@@ -95,7 +95,7 @@ TAO_NAMESPACE  IORTable
     static Locator_ptr tao_duplicate (Locator_ptr);
     static void tao_release (Locator_ptr);
     static Locator_ptr tao_nil (void);
-    static Locator_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static Locator_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -157,12 +157,12 @@ TAO_NAMESPACE  IORTable
 
     virtual void _tao_encode (
         TAO_OutputCDR &
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       ) const;
 
     virtual void _tao_decode (
         TAO_InputCDR &
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
 
     static AlreadyBound *_downcast (CORBA::Exception *);
@@ -200,12 +200,12 @@ TAO_NAMESPACE  IORTable
 
     virtual void _tao_encode (
         TAO_OutputCDR &
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       ) const;
 
     virtual void _tao_decode (
         TAO_InputCDR &
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
 
     static NotFound *_downcast (CORBA::Exception *);
@@ -257,7 +257,7 @@ TAO_NAMESPACE  IORTable
     static Table_ptr tao_duplicate (Table_ptr);
     static void tao_release (Table_ptr);
     static Table_ptr tao_nil (void);
-    static Table_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static Table_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -312,11 +312,11 @@ class TAO_IORTable_Export Table : public virtual CORBA_Object
     static Table_ptr _duplicate (Table_ptr obj);
     static Table_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static Table_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static Table_ptr _nil (void)
       {
@@ -326,7 +326,7 @@ class TAO_IORTable_Export Table : public virtual CORBA_Object
     virtual void bind (
         const char * object_key,
         const char * IOR
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -336,7 +336,7 @@ class TAO_IORTable_Export Table : public virtual CORBA_Object
     virtual void rebind (
         const char * object_key,
         const char * IOR
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -344,7 +344,7 @@ class TAO_IORTable_Export Table : public virtual CORBA_Object
 
     virtual void unbind (
         const char * object_key
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -353,7 +353,7 @@ class TAO_IORTable_Export Table : public virtual CORBA_Object
 
     virtual void set_locator (
         IORTable::Locator_ptr the_locator
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -393,11 +393,11 @@ class TAO_IORTable_Export Locator : public virtual CORBA_Object
     static Locator_ptr _duplicate (Locator_ptr obj);
     static Locator_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static Locator_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static Locator_ptr _nil (void)
       {
@@ -406,7 +406,7 @@ class TAO_IORTable_Export Locator : public virtual CORBA_Object
 
     virtual char * locate (
         const char * object_key
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,

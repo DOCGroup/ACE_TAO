@@ -4,14 +4,14 @@
 
 int main (int argc, char *argv[])
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       Server_i svr_i;
 
       int init_result;
 
-      init_result = svr_i.init (argc, argv TAO_ENV_ARG_PARAMETER);
+      init_result = svr_i.init (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (init_result != 0)

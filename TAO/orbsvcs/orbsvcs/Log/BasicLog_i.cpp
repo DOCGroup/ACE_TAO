@@ -21,7 +21,7 @@ BasicLog_i::~BasicLog_i ()
 }
 
 void
-BasicLog_i::destroy (TAO_ENV_SINGLE_ARG_DECL)
+BasicLog_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Remove ourselves from the list of logs.
@@ -29,15 +29,15 @@ BasicLog_i::destroy (TAO_ENV_SINGLE_ARG_DECL)
 
   // Deregister with POA.
   PortableServer::POA_var poa =
-    this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   PortableServer::ObjectId_var id =
     poa->servant_to_id (this
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   poa->deactivate_object (id.in ()
-                          TAO_ENV_ARG_PARAMETER);
+                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }

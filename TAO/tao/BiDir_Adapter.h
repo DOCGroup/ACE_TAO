@@ -43,7 +43,7 @@ public:
   virtual int activate (CORBA::ORB_ptr,
                         int argc,
                         char *argv []
-                        TAO_ENV_ARG_DECL)
+                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   virtual void load_policy_validators (TAO_Policy_Validator &validator)

@@ -46,12 +46,12 @@ public:
   // Destructor.
 
   virtual CosConcurrencyControl::LockSet_ptr create (
-      TAO_ENV_SINGLE_ARG_DECL)
+      ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CosConcurrencyControl::LockSet_ptr create_related (
       CosConcurrencyControl::LockSet_ptr which
-      TAO_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

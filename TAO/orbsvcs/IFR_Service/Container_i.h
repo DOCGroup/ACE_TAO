@@ -54,39 +54,39 @@ public:
   // Destructor.
 
   virtual void destroy (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Remove our contents.
 
   virtual void destroy_i (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA_Contained_ptr lookup (
       const char *search_name
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA_Contained_ptr lookup_i (
       const char *search_name
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA_ContainedSeq *contents (
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA_ContainedSeq *contents_i (
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -95,7 +95,7 @@ public:
       CORBA::Long levels_to_search,
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -104,7 +104,7 @@ public:
       CORBA::Long levels_to_search,
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -112,7 +112,7 @@ public:
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited,
       CORBA::Long max_returned_objs
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -120,7 +120,7 @@ public:
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited,
       CORBA::Long max_returned_objs
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -128,7 +128,7 @@ public:
       const char *id,
       const char *name,
       const char *version
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -136,7 +136,7 @@ public:
       const char *id,
       const char *name,
       const char *version
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -146,7 +146,7 @@ public:
       const char *version,
       CORBA_IDLType_ptr type,
       const CORBA::Any & value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -156,7 +156,7 @@ public:
       const char *version,
       CORBA_IDLType_ptr type,
       const CORBA::Any & value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -165,7 +165,7 @@ public:
       const char *name,
       const char *version,
       const CORBA_StructMemberSeq &members
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -174,7 +174,7 @@ public:
       const char *name,
       const char *version,
       const CORBA_StructMemberSeq &members
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -184,7 +184,7 @@ public:
       const char *version,
       CORBA_IDLType_ptr discriminator_type,
       const CORBA_UnionMemberSeq &members
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -194,7 +194,7 @@ public:
       const char *version,
       CORBA_IDLType_ptr discriminator_type,
       const CORBA_UnionMemberSeq &members
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -203,7 +203,7 @@ public:
       const char *name,
       const char *version,
       const CORBA_EnumMemberSeq &members
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -212,7 +212,7 @@ public:
       const char *name,
       const char *version,
       const CORBA_EnumMemberSeq &members
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -221,7 +221,7 @@ public:
       const char *name,
       const char *version,
       CORBA_IDLType_ptr original_type
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -230,7 +230,7 @@ public:
       const char *name,
       const char *version,
       CORBA_IDLType_ptr original_type
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -239,7 +239,7 @@ public:
       const char *name,
       const char *version,
       const CORBA_InterfaceDefSeq &base_interfaces
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -248,7 +248,7 @@ public:
       const char *name,
       const char *version,
       const CORBA_InterfaceDefSeq &base_interfaces
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -263,7 +263,7 @@ public:
       const CORBA_ValueDefSeq &abstract_base_values,
       const CORBA_InterfaceDefSeq & supported_interfaces,
       const CORBA_InitializerSeq &initializers
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -278,7 +278,7 @@ public:
       const CORBA_ValueDefSeq &abstract_base_values,
       const CORBA_InterfaceDefSeq & supported_interfaces,
       const CORBA_InitializerSeq &initializers
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -287,7 +287,7 @@ public:
       const char *name,
       const char *version,
       CORBA_IDLType_ptr original_type_def
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -296,7 +296,7 @@ public:
       const char *name,
       const char *version,
       CORBA_IDLType_ptr original_type_def
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -305,7 +305,7 @@ public:
       const char *name,
       const char *version,
       const CORBA_StructMemberSeq &members
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -314,7 +314,7 @@ public:
       const char *name,
       const char *version,
       const CORBA_StructMemberSeq &members
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -322,7 +322,7 @@ public:
       const char *id,
       const char *name,
       const char *version
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -330,7 +330,7 @@ public:
       const char *id,
       const char *name,
       const char *version
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -339,7 +339,7 @@ public:
       const char *name,
       const char *version,
       const CORBA_AbstractInterfaceDefSeq &base_interfaces
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -348,7 +348,7 @@ public:
       const char *name,
       const char *version,
       const CORBA_AbstractInterfaceDefSeq &base_interfaces
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -357,7 +357,7 @@ public:
       const char *name,
       const char *version,
       const CORBA_InterfaceDefSeq &base_interfaces
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -366,13 +366,13 @@ public:
       const char *name,
       const char *version,
       const CORBA_InterfaceDefSeq &base_interfaces
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Boolean name_exists (
       const char *name
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Checks for local existence of <name>.
@@ -381,7 +381,7 @@ protected:
    void store_label (
       ACE_Configuration_Section_Key key,
       const CORBA::Any &value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Store a union member's label value.
@@ -389,7 +389,7 @@ protected:
   CORBA::Boolean pre_exist (
       const char *id,
       const char *name
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Bundles id_exists and name_exists together.
@@ -427,19 +427,19 @@ private:
       CORBA::Long levels_to_search,
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   CORBA::Boolean id_exists (
       const char *id
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Checks for global existence of the repo id.
 
   CORBA::Boolean valid_container (
       const CORBA::DefinitionKind op_kind
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Is this operation valid for this container type?

@@ -26,7 +26,7 @@ ifr_removing_visitor::visit_scope (UTL_Scope *node)
 
       AST_Decl *d = 0;
 
-      TAO_ENV_DECLARE_NEW_ENV;
+      ACE_DECLARE_NEW_CORBA_ENV;
       ACE_TRY
         {
           // Continue until each element is visited.
@@ -54,7 +54,7 @@ ifr_removing_visitor::visit_scope (UTL_Scope *node)
 
               CORBA_Contained_var top_level =
                 be_global->repository ()->lookup_id (d->repoID ()
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               if (!CORBA::is_nil (top_level.in ()))
@@ -62,7 +62,7 @@ ifr_removing_visitor::visit_scope (UTL_Scope *node)
                   // All we have to do is call destroy() on each IR object
                   // in the global scope, because destroy() works on all
                   // the contents recursively.
-                  top_level->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+                  top_level->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
                   ACE_TRY_CHECK;
                 }
 

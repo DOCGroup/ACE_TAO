@@ -59,14 +59,14 @@ TAO_EC_Disjunction_Filter::size (void) const
 int
 TAO_EC_Disjunction_Filter::filter (const RtecEventComm::EventSet& event,
                                    TAO_EC_QOS_Info& qos_info
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
 {
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin ();
        i != end;
        ++i)
     {
-      int n = (*i)->filter (event, qos_info TAO_ENV_ARG_PARAMETER);
+      int n = (*i)->filter (event, qos_info ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
       if (n != 0)
         return n;
@@ -77,14 +77,14 @@ TAO_EC_Disjunction_Filter::filter (const RtecEventComm::EventSet& event,
 int
 TAO_EC_Disjunction_Filter::filter_nocopy (RtecEventComm::EventSet& event,
                                    TAO_EC_QOS_Info& qos_info
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
 {
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin ();
        i != end;
        ++i)
     {
-      int n = (*i)->filter (event, qos_info TAO_ENV_ARG_PARAMETER);
+      int n = (*i)->filter (event, qos_info ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
       if (n != 0)
         return n;
@@ -95,19 +95,19 @@ TAO_EC_Disjunction_Filter::filter_nocopy (RtecEventComm::EventSet& event,
 void
 TAO_EC_Disjunction_Filter::push (const RtecEventComm::EventSet& event,
                                  TAO_EC_QOS_Info& qos_info
-                                 TAO_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL)
 {
   if (this->parent () != 0)
-    this->parent ()->push (event, qos_info TAO_ENV_ARG_PARAMETER);
+    this->parent ()->push (event, qos_info ACE_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_EC_Disjunction_Filter::push_nocopy (RtecEventComm::EventSet& event,
                                  TAO_EC_QOS_Info& qos_info
-                                 TAO_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL)
 {
   if (this->parent () != 0)
-    this->parent ()->push_nocopy (event, qos_info TAO_ENV_ARG_PARAMETER);
+    this->parent ()->push_nocopy (event, qos_info ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -157,7 +157,7 @@ int
 TAO_EC_Disjunction_Filter::add_dependencies (
       const RtecEventComm::EventHeader&,
       const TAO_EC_QOS_Info &
-      TAO_ENV_ARG_DECL_NOT_USED)
+      ACE_ENV_ARG_DECL_NOT_USED)
 {
   return 0;
 }

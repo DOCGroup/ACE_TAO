@@ -120,14 +120,14 @@ Initiator_Server::parse_args (void)
 int
 Initiator_Server::init (int argc,
                        char** argv
-                       TAO_ENV_ARG_DECL)
+                       ACE_ENV_ARG_DECL)
 {
   // Call the init of TAO_ORB_Manager to create a child POA
   // under the root POA.
   this->orb_manager_.init_child_poa (argc,
                                      argv,
                                      "child_poa"
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   this->argc_ = argc;
@@ -148,11 +148,11 @@ Initiator_Server::init (int argc,
 
       CORBA::Object_var object_A_obj_var =
         this->orb_manager_.orb()->string_to_object (this->object_A_key_
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->object_A_var_ =
-        Object_A::_narrow (object_A_obj_var.in() TAO_ENV_ARG_PARAMETER);
+        Object_A::_narrow (object_A_obj_var.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->object_A_var_.in ()))
@@ -170,11 +170,11 @@ Initiator_Server::init (int argc,
 
       CORBA::Object_var object_B_obj_var =
         this->orb_manager_.orb()->string_to_object (this->object_B_key_
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->object_B_var_ =
-        Object_B::_narrow (object_B_obj_var.in() TAO_ENV_ARG_PARAMETER);
+        Object_B::_narrow (object_B_obj_var.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->object_B_var_.in ()))
@@ -188,7 +188,7 @@ Initiator_Server::init (int argc,
                   this->object_A_key_));
       ACE_DEBUG ((LM_DEBUG, "Object B received OK\n"));
 
-      this->orb_manager_.activate_poa_manager (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->orb_manager_.activate_poa_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
@@ -210,7 +210,7 @@ Initiator_Server::init (int argc,
 
   this->str_ =
     this->orb_manager_.activate (this->initiator_i_ptr_
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
               this->str_.in ()));
@@ -221,7 +221,7 @@ Initiator_Server::init (int argc,
 
 
 int
-Initiator_Server::run (TAO_ENV_SINGLE_ARG_DECL)
+Initiator_Server::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
@@ -230,10 +230,10 @@ Initiator_Server::run (TAO_ENV_SINGLE_ARG_DECL)
                   "foo on Object A\n"));
 
       Initiator_var initiator =
-        this->initiator_i_ptr_->_this(TAO_ENV_SINGLE_ARG_PARAMETER);
+        this->initiator_i_ptr_->_this(ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->object_A_var_->foo (initiator.in () TAO_ENV_ARG_PARAMETER);
+      this->object_A_var_->foo (initiator.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG,
                   "Initiator_Server::run: Returned from invoke "
@@ -261,11 +261,11 @@ Initiator_Server::~Initiator_Server (void)
   if (this->object_B_key_ != 0)
     ACE_OS::free (this->object_B_key_);
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       this->orb_manager_.deactivate (this->str_.in ()
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -285,18 +285,18 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG,
               "\n \t NestedUpCalls.Triangle_Test: Initiator Server \n \n"));
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       int retval =
-        initiator_Server.init (argc, argv TAO_ENV_ARG_PARAMETER);
+        initiator_Server.init (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (retval == -1)
         return 1;
       else
         {
-          initiator_Server.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+          initiator_Server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

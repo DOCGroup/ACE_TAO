@@ -31,14 +31,14 @@ TAO_ClientRequestInfo_i::~TAO_ClientRequestInfo_i (void)
 }
 
 CORBA::Object_ptr
-TAO_ClientRequestInfo_i::target (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ClientRequestInfo_i::target (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::Object::_duplicate (this->target_);
 }
 
 CORBA::Object_ptr
-TAO_ClientRequestInfo_i::effective_target (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ClientRequestInfo_i::effective_target (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->reply_status_ == PortableInterceptor::LOCATION_FORWARD)
@@ -53,7 +53,7 @@ TAO_ClientRequestInfo_i::effective_target (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 IOP::TaggedProfile *
-TAO_ClientRequestInfo_i::effective_profile (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ClientRequestInfo_i::effective_profile (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   IOP::TaggedProfile *tagged_profile = 0;
@@ -81,7 +81,7 @@ TAO_ClientRequestInfo_i::effective_profile (TAO_ENV_SINGLE_ARG_DECL)
 // exception from an Any. This method is in place just to be compliant
 // with the spec.
 CORBA::Any *
-TAO_ClientRequestInfo_i::received_exception (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ClientRequestInfo_i::received_exception (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->reply_status_ != PortableInterceptor::SYSTEM_EXCEPTION
@@ -116,7 +116,7 @@ TAO_ClientRequestInfo_i::received_exception (TAO_ENV_SINGLE_ARG_DECL)
 
 char *
 TAO_ClientRequestInfo_i::received_exception_id (
-    TAO_ENV_SINGLE_ARG_DECL)
+    ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->reply_status_ != PortableInterceptor::SYSTEM_EXCEPTION
@@ -133,7 +133,7 @@ TAO_ClientRequestInfo_i::received_exception_id (
 IOP::TaggedComponent *
 TAO_ClientRequestInfo_i::get_effective_component (
     IOP::ComponentId id
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Tagged_Components &ecs =
@@ -178,7 +178,7 @@ TAO_ClientRequestInfo_i::get_effective_component (
 IOP::TaggedComponentSeq *
 TAO_ClientRequestInfo_i::get_effective_components (
     IOP::ComponentId id
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Tagged_Components &ecs =
@@ -232,14 +232,14 @@ TAO_ClientRequestInfo_i::get_effective_components (
 
 CORBA::Policy_ptr
 TAO_ClientRequestInfo_i::get_request_policy (CORBA::PolicyType type
-                                           TAO_ENV_ARG_DECL)
+                                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ Do we need to look anywhere else for the request policies?
 
 #if TAO_HAS_CORBA_MESSAGING == 1
   return this->target_->_get_policy (type
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
 #else
   ACE_UNUSED_ARG (type);
 
@@ -256,7 +256,7 @@ void
 TAO_ClientRequestInfo_i::add_request_service_context (
     const IOP::ServiceContext & service_context,
     CORBA::Boolean replace
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the service context from the list
@@ -271,7 +271,7 @@ TAO_ClientRequestInfo_i::add_request_service_context (
 }
 
 CORBA::ULong
-TAO_ClientRequestInfo_i::request_id (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ClientRequestInfo_i::request_id (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @todo We may have to worry about AMI once we support interceptors
@@ -351,14 +351,14 @@ TAO_ClientRequestInfo_i::request_id (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 char *
-TAO_ClientRequestInfo_i::operation (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ClientRequestInfo_i::operation (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->invocation_->operation ());
 }
 
 Dynamic::ParameterList *
-TAO_ClientRequestInfo_i::arguments (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ClientRequestInfo_i::arguments (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
@@ -367,7 +367,7 @@ TAO_ClientRequestInfo_i::arguments (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 Dynamic::ExceptionList *
-TAO_ClientRequestInfo_i::exceptions (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ClientRequestInfo_i::exceptions (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
@@ -376,7 +376,7 @@ TAO_ClientRequestInfo_i::exceptions (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 Dynamic::ContextList *
-TAO_ClientRequestInfo_i::contexts (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ClientRequestInfo_i::contexts (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
@@ -385,7 +385,7 @@ TAO_ClientRequestInfo_i::contexts (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 Dynamic::RequestContext *
-TAO_ClientRequestInfo_i::operation_context (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ClientRequestInfo_i::operation_context (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
@@ -394,7 +394,7 @@ TAO_ClientRequestInfo_i::operation_context (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Any *
-TAO_ClientRequestInfo_i::result (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ClientRequestInfo_i::result (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
@@ -403,7 +403,7 @@ TAO_ClientRequestInfo_i::result (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Boolean
-TAO_ClientRequestInfo_i::response_expected (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ClientRequestInfo_i::response_expected (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->response_expected_;
@@ -411,7 +411,7 @@ TAO_ClientRequestInfo_i::response_expected (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 # if TAO_HAS_CORBA_MESSAGING == 1
 CORBA::Short
-TAO_ClientRequestInfo_i::sync_scope (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ClientRequestInfo_i::sync_scope (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_GIOP_Oneway_Invocation *inv =
@@ -434,7 +434,7 @@ TAO_ClientRequestInfo_i::sync_scope (TAO_ENV_SINGLE_ARG_DECL)
 #endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 PortableInterceptor::ReplyStatus
-TAO_ClientRequestInfo_i::reply_status (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ClientRequestInfo_i::reply_status (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->reply_status_ == -1)
@@ -447,7 +447,7 @@ TAO_ClientRequestInfo_i::reply_status (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Object_ptr
-TAO_ClientRequestInfo_i::forward_reference (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ClientRequestInfo_i::forward_reference (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->reply_status_ != PortableInterceptor::LOCATION_FORWARD)
@@ -463,7 +463,7 @@ TAO_ClientRequestInfo_i::forward_reference (TAO_ENV_SINGLE_ARG_DECL)
 
 CORBA::Any *
 TAO_ClientRequestInfo_i::get_slot (PortableInterceptor::SlotId id
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::InvalidSlot))
 {
@@ -486,13 +486,13 @@ TAO_ClientRequestInfo_i::get_slot (PortableInterceptor::SlotId id
   // side.  No copying is necessary.
   return
     pi_current->get_slot (id
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
 }
 
 IOP::ServiceContext *
 TAO_ClientRequestInfo_i::get_request_service_context (
     IOP::ServiceId id
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the service context from the list
@@ -501,14 +501,14 @@ TAO_ClientRequestInfo_i::get_request_service_context (
 
   return this->get_service_context_i (service_context_list,
                                       id
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
 }
 
 
 IOP::ServiceContext *
 TAO_ClientRequestInfo_i::get_reply_service_context (
     IOP::ServiceId id
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the service context from the list
@@ -517,14 +517,14 @@ TAO_ClientRequestInfo_i::get_reply_service_context (
 
   return this->get_service_context_i (service_context_list,
                                       id
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
 }
 
 IOP::ServiceContext *
 TAO_ClientRequestInfo_i::get_service_context_i (
     TAO_Service_Context &service_context_list,
     IOP::ServiceId id
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Create a new service context to be returned.  Assume

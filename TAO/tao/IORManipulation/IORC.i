@@ -70,10 +70,10 @@ tao_TAO_IOP_TAO_IOR_Property_nil (
 ACE_INLINE TAO_IOP::TAO_IOR_Property_ptr
 tao_TAO_IOP_TAO_IOR_Property_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return TAO_IOP::TAO_IOR_Property::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return TAO_IOP::TAO_IOR_Property::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -494,10 +494,10 @@ tao_TAO_IOP_TAO_IOR_Manipulation_nil (
 ACE_INLINE TAO_IOP::TAO_IOR_Manipulation_ptr
 tao_TAO_IOP_TAO_IOR_Manipulation_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return TAO_IOP::TAO_IOR_Manipulation::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return TAO_IOP::TAO_IOR_Manipulation::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *

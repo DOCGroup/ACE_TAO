@@ -68,10 +68,10 @@ TAO_EC_MT_Dispatching::push (TAO_EC_ProxyPushSupplier* proxy,
                              RtecEventComm::PushConsumer_ptr consumer,
                              const RtecEventComm::EventSet& event,
                              TAO_EC_QOS_Info& qos_info
-                             TAO_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
 {
   RtecEventComm::EventSet event_copy = event;
-  this->push_nocopy (proxy, consumer, event_copy, qos_info TAO_ENV_ARG_PARAMETER);
+  this->push_nocopy (proxy, consumer, event_copy, qos_info ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -79,11 +79,11 @@ TAO_EC_MT_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                     RtecEventComm::PushConsumer_ptr consumer,
                                     RtecEventComm::EventSet& event,
                                     TAO_EC_QOS_Info&
-                                    TAO_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
 {
   // Double checked locking....
   if (this->active_ == 0)
     this->activate ();
 
-  this->task_.push (proxy, consumer, event TAO_ENV_ARG_PARAMETER);
+  this->task_.push (proxy, consumer, event ACE_ENV_ARG_PARAMETER);
 }

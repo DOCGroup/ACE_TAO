@@ -39,15 +39,15 @@ public:
   // Destructor.
 
   void init (int argc, char *argv[]
-             TAO_ENV_ARG_DECL);
+             ACE_ENV_ARG_DECL);
   // Initialize the service
 
-  void run (TAO_ENV_SINGLE_ARG_DECL);
+  void run (ACE_ENV_SINGLE_ARG_DECL);
   // Run the TAO_Loadbalancer.
 
 protected:
   void parse_args (int argc, char *argv[]
-                   TAO_ENV_ARG_DECL);
+                   ACE_ENV_ARG_DECL);
   // parses the arguments.
 
   void usage (const char *msg) const;
