@@ -133,12 +133,10 @@ namespace CIAO
               // increase the length of the sequence
               CORBA::ULong i (cid.capability.length ());
               cid.capability.length (i + 1);
-              
-              // fetch the handler
-              Cap_Handler cap_handler (iter_, false);
 
               // delegate the populating process
-              cap_handler.process_Capability (cid.capability[i]);
+              CAP_Handler::process_Capability (this->iter_,
+                                               cid.capability[i]);
             }
           else if (node_name == XStr (ACE_TEXT ("implements")))
             {
