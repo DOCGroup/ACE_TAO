@@ -1,3 +1,7 @@
+Tue Mar 13 15:13:48 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Logging_Strategy_Test.cpp: Fixed Unicode related bugs.
+
 Tue Mar 13 10:04:06 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/TCP/run_test.pl:
@@ -43,7 +47,7 @@ Mon Mar 12 16:30:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 Mon Mar 12 16:21:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tests/Logging_Strategy_Test.cpp (main): Fixed a couple of
-          warnings in VxWorks build. Couple of more warnings are left. 
+          warnings in VxWorks build. Couple of more warnings are left.
 
 Mon Mar 12 14:16:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
