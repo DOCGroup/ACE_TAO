@@ -16,6 +16,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined KOKYU_HAS_RELEASE_GUARD
+
 #include "kokyu_export.h"
 #include "Kokyu_defs.h"
 #include "ace/Event_Handler.h"
@@ -47,21 +49,21 @@ class Dispatch_Deferrer : public ACE_Event_Handler
  public:
   Dispatch_Deferrer();
   //Default constructor
-  
+
   ~Dispatch_Deferrer();
   //Destructor
-  
+
   int init(const Dispatch_Deferrer_Attributes& attr);
-  
+
   int dispatch (Dispatch_Queue_Item *qitem);
-  
+
   virtual int handle_timeout (const ACE_Time_Value &current_time,
-			      const void *act = 0);
+                              const void *act = 0);
   //TODO: what if need higher resolution timers?
-  
+
  private:
   ACE_Deadline_Message_Strategy msg_strat_;
-  
+
   ///Stores the Dispatch_Commands in earliest-release-time order,
   ///until they are dispatched. I decided to use an
   ///ACE_Dynamic_Message_Queue because it supports deadline
@@ -70,7 +72,7 @@ class Dispatch_Deferrer : public ACE_Event_Handler
   ///Default_Dispatcher_Impl rather than allocate some structure to
   ///hold the Dispatch_Command and QoSDescriptor.
   ACE_Dynamic_Message_Queue<ACE_SYNCH> rgq_;
-  
+
   //Stores timer_ids from the Reactor (longs) using the
   //Dispatch_Queue_Item the timer is for as the key. Used to
   //cancel timers if they expire and are enqueued before the
@@ -78,14 +80,16 @@ class Dispatch_Deferrer : public ACE_Event_Handler
   typedef ACE_Map_Manager<Dispatch_Queue_Item*,long,ACE_Thread_Mutex> Timer_Map;
 
   Timer_Map timers_;
-  
+
   ///Manages timers for the Dispatch_Commands
   ACE_Reactor react_;
-  
+
   Dispatcher_Task* task_;
 };
 
 } //namespace Kokyu
+
+#endif //defined KOKYU_HAS_RELEASE_GUARD
 
 #if defined (__ACE_INLINE__)
 #include "Dispatch_Deferrer.i"
