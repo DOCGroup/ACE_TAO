@@ -1,3 +1,11 @@
+Mon Jul 24 20:13:59 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
+
+	* bin/split-cpp:
+	  Initial check-in. This script is used to split up C++ source files
+	  into smaller C++ source files, each containing one static data
+	  declaration or one function definition. For more information, see
+	  the comments at the top of the file.
+
 Mon Jul 24 20:02:03 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Process_Manager: Replaced ACE_Thread_Mutex with
