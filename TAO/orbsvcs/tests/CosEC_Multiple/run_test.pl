@@ -11,6 +11,7 @@ require ACEutils;
 
 #event count
 $ev_count = 2;
+$status = 0;
 
 # setup CosEC params such that..
 # cos event service name = "cosec1"
@@ -27,59 +28,76 @@ $CosEC2_params = "-n cosec2 -e 20 -o 5 -p \"6 21\"";
 sub cosec_multiple_test1
 {
     # first start the Naming service..
-    $SV1 = Process::Create ($EXEPREFIX."../../Naming_Service/Naming_Service".$EXE_EXT,"");
+    $SV1 = Process::Create ($EXEPREFIX."../../Naming_Service/Naming_Service".$EXE_EXT, "");
 
     sleep 10;
 
     # now start the Rt EC..
-    $SV2 = Process::Create ($EXEPREFIX."../../Event_Service/Event_Service".$EXE_EXT,"");
+    $SV2 = Process::Create ($EXEPREFIX."../../Event_Service/Event_Service".$EXE_EXT, "");
 
     sleep 10;
 
     # now start the CosEC1..
-    $SV3 = Process::Create ($EXEPREFIX."../../CosEvent_Service/CosEvent_Service".$EXE_EXT,$CosEC1_params);
+    $SV3 = Process::Create ($EXEPREFIX."../../CosEvent_Service/CosEvent_Service".$EXE_EXT, $CosEC1_params);
 
     sleep 10;
 
     # now start the CosEC2..
-    $SV4 = Process::Create ($EXEPREFIX."../../CosEvent_Service/CosEvent_Service".$EXE_EXT,$CosEC2_params);
+    $SV4 = Process::Create ($EXEPREFIX."../../CosEvent_Service/CosEvent_Service".$EXE_EXT, $CosEC2_params);
 
     sleep 10;
 
     #start 1 consumer that uses CosEC1 to receive events
-    $CONS = Process::Create ($EXEPREFIX."consumer".$EXE_EXT,"-n cosec1 -c $ev_count");
+    $CONS = Process::Create ($EXEPREFIX."consumer".$EXE_EXT, "-n cosec1 -c $ev_count");
 
     sleep 10;
 
     #start 1 supplier  that uses CosEC2 to send events
-    $SUPP = Process::Create ($EXEPREFIX."supplier".$EXE_EXT,"-n cosec2 -c $ev_count");
+    $SUPP = Process::Create ($EXEPREFIX."supplier".$EXE_EXT, "-n cosec2 -c $ev_count");
 
     sleep 10;
 
     #wait for the supplier to finish
-    $SUPP->Wait ();
+    if ($SUPP->TimedWait (60) == -1) {
+      print STDERR "ERROR: supplier timedout\n";
+      $status = 1;
+      $SUPP->Kill (); $SUPP->TimedWait (1);
+    }
 
 
     #wait for the consumer to finish
-    $CONS->Wait ();
+    if ($CONS->TimedWait (60) == -1) {
+      print STDERR "ERROR: consumer timedout\n";
+      $status = 1;
+      $CONS->Kill (); $CONS->TimedWait (1);
+    }
 
     #----------
  #start 1 consumer that uses CosEC1 to receive events
-    $CONS2 = Process::Create ($EXEPREFIX."consumer".$EXE_EXT,"-n cosec2 -c $ev_count");
+    $CONS2 = Process::Create ($EXEPREFIX."consumer".$EXE_EXT, "-n cosec2 -c $ev_count");
 
     sleep 10;
 
     #start 1 supplier  that uses CosEC2 to send events
-    $SUPP2 = Process::Create ($EXEPREFIX."supplier".$EXE_EXT,"-n cosec1 -c $ev_count");
+    $SUPP2 = Process::Create ($EXEPREFIX."supplier".$EXE_EXT, "-n cosec1 -c $ev_count");
 
     sleep 10;
 
     #wait for the supplier to finish
-    $SUPP2->Wait ();
+    if ($SUPP2->TimedWait (60) == -1) {
+      print STDERR "ERROR: supplier2 timedout\n";
+      $status = 1;
+      $SUPP2->Kill (); $SUPP2->TimedWait (1);
+    }
 
 
     #wait for the consumer to finish
-    $CONS2->Wait ();
+    if ($CONS2->TimedWait (60) == -1) {
+      print STDERR "ERROR: consumer2 timedout\n";
+      $status = 1;
+      $CONS2->Kill (); $CONS2->TimedWait (1);
+    }
+
     #----------
     # cleanup..
     $SV1->Kill ();
@@ -87,10 +105,10 @@ sub cosec_multiple_test1
     $SV3->Kill ();
     $SV4->Kill ();
 
-    $SV1->Wait ();
-    $SV2->Wait ();
-    $SV3->Wait ();
-    $SV4->Wait ();
+    $SV1->TimedWait (1);
+    $SV2->TimedWait (1);
+    $SV3->TimedWait (1);
+    $SV4->TimedWait (1);
 }
 
 # Parse the arguments
@@ -114,3 +132,5 @@ for ($i = 0; $i <= $#ARGV; $i++)
 }
 
 cosec_multiple_test1 ();
+
+exit $status;
