@@ -7,6 +7,7 @@
 #include "ace/OS_main.h"
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
+#include "ace/Reactor.h"
 #include "ace/Signal.h"
 
 ACE_RCSID(CCM_App, SC_Server, "$Id$")
@@ -15,11 +16,11 @@ class Event_Handler : public ACE_Event_Handler
 {
 public:
   virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_close (ACE_HANDLE, 
+  virtual int handle_close (ACE_HANDLE,
 			    ACE_Reactor_Mask);
 };
 
-int 
+int
 Event_Handler::handle_input (ACE_HANDLE handle)
 {
   char buf[BUFSIZ];
@@ -28,18 +29,18 @@ Event_Handler::handle_input (ACE_HANDLE handle)
   if (n == -1)
     return -1;
   else if (n == 0)
-    ACE_ERROR_RETURN ((LM_DEBUG, 
+    ACE_ERROR_RETURN ((LM_DEBUG,
                        ACE_TEXT ("shutting down on EOF\n")),
                       -1);
   else if (ACE_OS::write (ACE_STDOUT, buf, n) != n)
-    ACE_ERROR_RETURN ((LM_DEBUG, 
+    ACE_ERROR_RETURN ((LM_DEBUG,
                        ACE_TEXT ("%p\n"), ACE_TEXT ("write failed")),
                        -1);
   else
     return 0;
 }
 
-int 
+int
 Event_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG,

@@ -9,6 +9,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Config.h"
+#include "ace/Reactor.h"
 #include "ace/Service_Object.h"
 
 

@@ -1,3 +1,32 @@
+Sat Jan 29 16:12:37 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * apps/Gateway/Gateway/gatewayd.cpp:
+        * examples/APG/Svc_Config/HA_Status_Static.h:
+        * examples/ASX/CCM_App/SC_Server.cpp:
+        * examples/Connection/blocking/SPIPE-acceptor.h:
+        * examples/Connection/blocking/SPIPE-connector.h:
+        * examples/Connection/misc/test_upipe.h:
+        * examples/Reactor/FIFO/server.cpp:
+        * examples/Reactor/Misc/notification.cpp:
+        * examples/Reactor/Misc/test_demuxing.cpp:
+        * examples/Reactor/Misc/test_signals_1.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.h:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_CODgram.h:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Dgram.h:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.h:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.h:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Stream.h:
+        * examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.h:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Timeout.h:
+        * examples/Service_Configurator/IPC-tests/server/server_test.cpp:
+        * examples/Service_Configurator/Misc/Timer_Service.h:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test.cpp:
+        * tests/Logging_Strategy_Test.cpp:
+        * tests/Service_Config_Test.cpp:
+
+        Fixed compile errors due to (now) missing includes because of include
+        reductions done to Service_Config.h and Svc_Handler.h.
+
 Sat Jan 29 00:39:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/ace.m4:
