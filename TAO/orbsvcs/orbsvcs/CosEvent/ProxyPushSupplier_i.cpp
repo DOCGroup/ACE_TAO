@@ -5,7 +5,7 @@
 #include "orbsvcs/CosEventChannelAdminS.h"
 #include "orbsvcs/CosEventCommS.h"
 #include "orbsvcs/RtecEventCommS.h"
-#include "CosEvent/ProxyPushSupplier_i.h"
+#include "ProxyPushSupplier_i.h"
 
 class PushConsumerWrapper : public POA_RtecEventComm::PushConsumer
 {
