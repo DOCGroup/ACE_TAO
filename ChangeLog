@@ -1,3 +1,12 @@
+Tue Nov 11 15:13:36 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * examples/ASX/CCM_App/Makefile:
+          Added depend and realclean targets to force them to call
+          Makefile.CCM_App. Updated dependencies.
+
+        * examples/ASX/CCM_App/Makefile.CCM_App:
+          Added MAKEFILE variable, and updated dependencies.
+
 Mon Nov 10 17:02:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/CDR_Stream.i:
