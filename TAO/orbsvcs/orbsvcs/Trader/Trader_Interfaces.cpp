@@ -39,7 +39,7 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Lookup (void)
 {
   ACE_GUARD (TRADER_LOCK_TYPE, trader_mon, this->lock_);
-  for (Request_Ids::ITERATOR riter (this->request_ids_);
+  for (ACE_TYPENAME Request_Ids::ITERATOR riter (this->request_ids_);
        ! riter.done ();
        riter.advance ())
     {
@@ -234,7 +234,7 @@ lookup_one_type (const char* type,
   // @@ Would have used Offer_Database::offer_iterator for less
   // coupling between TAO_Lookup and Offer_Database, but g++ barfs on
   // that.
-  TAO_Offer_Database<MAP_LOCK_TYPE>::offer_iterator
+  ACE_TYPENAME TAO_Offer_Database<MAP_LOCK_TYPE>::offer_iterator
     offer_iter (type, offer_database);
 
   while (offer_filter.ok_to_consider_more () &&
@@ -845,7 +845,7 @@ seen_request_id (TAO_Policies& policies,
     TAO_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), CORBA::B_TRUE);
 
   ACE_GUARD_RETURN (TRADER_LOCK_TYPE, trader_mon, this->lock_, CORBA::B_TRUE);
-  for (Request_Ids::ITERATOR riter (this->request_ids_);
+  for (ACE_TYPENAME Request_Ids::ITERATOR riter (this->request_ids_);
        ! riter.done ();
        riter.advance ())
     {
@@ -893,10 +893,11 @@ TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Register (void)
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::OfferId
-TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::export (CORBA::Object_ptr reference,
-                              const char *type,
-                              const CosTrading::PropertySeq &properties,
-                              CORBA::Environment& _env)
+TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
+export (CORBA::Object_ptr reference,
+        const char *type,
+        const CosTrading::PropertySeq &properties,
+        CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException,
                   CosTrading::Register::InvalidObjectRef,
                   CosTrading::IllegalServiceType,
@@ -913,7 +914,7 @@ TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::export (CORBA::Object_ptr referenc
     TAO_THROW_RETURN (CosTrading::Register::InvalidObjectRef (), 0);
 
   // Get service type map
-  Offer_Database &offer_database = this->trader_.offer_database ();
+  TAO_Offer_Database<MAP_LOCK_TYPE> &offer_database = this->trader_.offer_database ();
 
   CosTrading::Offer* offer = 0;
   TAO_Support_Attributes_Impl& support_attrs =
@@ -969,7 +970,7 @@ TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::withdraw (const char *id,
                    CosTrading::Register::ProxyOfferId))
 {
   // Get service type map.
-  Offer_Database &offer_database = this->trader_.offer_database ();
+  TAO_Offer_Database<MAP_LOCK_TYPE> &offer_database = this->trader_.offer_database ();
   offer_database.remove_offer ((CosTrading::OfferId) id, _env);
 }
 
@@ -985,7 +986,7 @@ describe (const char *id,
 {
   // Get service type map.
   char* type = 0;
-  Offer_Database &offer_database = this->trader_.offer_database ();
+  TAO_Offer_Database<MAP_LOCK_TYPE> &offer_database = this->trader_.offer_database ();
 
   // Perform a lookup to find the offer.
   CosTrading::Offer* offer =
@@ -1036,7 +1037,7 @@ modify (const char *id,
     this->trader_.support_attributes ();
   CosTradingRepos::ServiceTypeRepository_ptr rep =
     support_attrs.service_type_repos ();
-  Offer_Database &offer_database = this->trader_.offer_database ();
+  TAO_Offer_Database<MAP_LOCK_TYPE> &offer_database = this->trader_.offer_database ();
 
   CosTrading::Offer* offer = offer_database.
     lookup_offer (ACE_const_cast (CosTrading::OfferId, id), type, _env);
@@ -1083,7 +1084,7 @@ withdraw_using_constraint (const char *type,
     support_attrs = this->trader_.support_attributes ();
   CosTradingRepos::ServiceTypeRepository_ptr rep =
     support_attrs.service_type_repos ();
-  Offer_Database &offer_database =  this->trader_.offer_database ();
+  TAO_Offer_Database<MAP_LOCK_TYPE> &offer_database =  this->trader_.offer_database ();
   CORBA::Boolean dp_support = support_attrs.supports_dynamic_properties ();
   TAO_String_Queue ids;
 
@@ -1094,23 +1095,25 @@ withdraw_using_constraint (const char *type,
 
   // Try to find the map of offers of desired service type.
   // @@ Again, should be Offer_Database::offer_iterator
-  TAO_Offer_Database<MAP_LOCK_TYPE>::offer_iterator
-    offer_iter (type, offer_database);
-  TAO_Constraint_Validator validator (type_struct.in ());
-  TAO_Constraint_Interpreter constr_inter (validator, constr, _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
-
-  while (offer_iter.has_more_offers ())
-    {
-      CosTrading::Offer* offer = offer_iter.get_offer ();
-      // Add offer if it matches the constraints
-
-      TAO_Constraint_Evaluator evaluator (offer, dp_support);
-      if (constr_inter.evaluate (evaluator))
-        ids.enqueue_tail (offer_iter.get_id ());
-
-      offer_iter.next_offer ();
-    }
+  {
+    ACE_TYPENAME TAO_Offer_Database<MAP_LOCK_TYPE>::offer_iterator
+      offer_iter (type, offer_database);
+    TAO_Constraint_Validator validator (type_struct.in ());
+    TAO_Constraint_Interpreter constr_inter (validator, constr, _env);
+    TAO_CHECK_ENV_RETURN_VOID (_env);
+    
+    while (offer_iter.has_more_offers ())
+      {
+        CosTrading::Offer* offer = offer_iter.get_offer ();
+        // Add offer if it matches the constraints
+        
+        TAO_Constraint_Evaluator evaluator (offer, dp_support);
+        if (constr_inter.evaluate (evaluator))
+          ids.enqueue_tail (offer_iter.get_id ());
+        
+        offer_iter.next_offer ();
+      }
+  }
 
   if (ids.size () != 0)
     {
@@ -1700,7 +1703,7 @@ TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::describe_link (const char *name,
     TAO_THROW_RETURN (CosTrading::Link::IllegalLinkName (name), 0);
 
   // Ensure this isn't a duplicate link name.
-  Links::ENTRY* link_entry = 0;
+  ACE_TYPENAME Links::ENTRY* link_entry = 0;
   TAO_String_Hash_Key link_name (name);
   if (this->links_.find (link_name, link_entry) == -1)
     TAO_THROW_RETURN (CosTrading::Link::UnknownLinkName (name), 0);
@@ -1756,7 +1759,7 @@ TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::list_links (CORBA::Environment& _env)
     CosTrading::LinkNameSeq::allocbuf (size);
 
   // Copy the link names into the buffer.
-  for (Links::iterator links_iter (this->links_);
+  for (ACE_TYPENAME Links::iterator links_iter (this->links_);
        ! links_iter.done ();
        links_iter++)
     link_seq[i++] = CORBA::string_dup ((*links_iter).ext_id_.in ());
@@ -1782,7 +1785,7 @@ modify_link (const char *name,
     TAO_THROW (CosTrading::Link::IllegalLinkName (name));
 
   // Ensure this isn't a duplicate link name.
-  Links::ENTRY* link_entry = 0;
+  ACE_TYPENAME Links::ENTRY* link_entry = 0;
   TAO_String_Hash_Key link_name (name);
   if (this->links_.find (link_name, link_entry) == -1)
     TAO_THROW (CosTrading::Link::UnknownLinkName (name));
