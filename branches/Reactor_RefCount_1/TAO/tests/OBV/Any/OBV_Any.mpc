@@ -1,0 +1,14 @@
+project(OBV Any Server): server {
+  Source_Files {
+    AnyS_impl.cpp
+    server.cpp
+  }
+}
+
+project(OBV Any Client): client {
+  Source_Files {
+    AnyC.cpp
+    client.cpp
+  }
+}
+

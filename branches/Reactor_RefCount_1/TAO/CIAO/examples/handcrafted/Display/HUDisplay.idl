@@ -1,0 +1,48 @@
+// $Id$
+
+/**
+ * @file HUDisplay.idl
+ *
+ * Definition of events, and common interfaces used in HUDisplay module.
+ *
+ * @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+
+#ifndef HUDISPLAY_IDL
+#define HUDISPLAY_IDL
+
+#include "ciao/CCM_Component.idl"
+
+module HUDisplay
+{
+  /**
+   * @brief interface opmode defines the "operation mode" interface.
+   */
+  interface opmode
+  {
+    void start ();
+
+    void stop ();
+
+    boolean active ();
+  };
+
+  /**
+   * @brief a timed event that happens at some fix rate.
+   */
+  eventtype tick
+    {
+      // We could put a timestamp here if desired.
+    };
+
+  /**
+   * @brief interface position allows querying of a coordination.
+   */
+  interface position
+  {
+    long posx ();
+    long posy ();
+  };
+};
+
+#endif /* HUDISPLAY_IDL */

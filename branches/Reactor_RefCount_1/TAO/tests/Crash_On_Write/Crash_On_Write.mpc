@@ -1,0 +1,15 @@
+project(Crash On Write Server): server {
+  Source_Files {
+    Oneway_Receiver.cpp
+    Crash_Task.cpp
+    server.cpp
+  }
+}
+
+project(Crash On Write Client): client {
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+}
+

@@ -1,0 +1,7 @@
+#
+# Makefile for building the ior_corbaloc test executables
+#
+
+MAKEFILES = server.bor client.bor corbaname_client.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

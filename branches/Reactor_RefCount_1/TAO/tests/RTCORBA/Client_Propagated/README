@@ -1,0 +1,50 @@
+$Id$
+
+This is a unit test for RTCORBA::CLIENT_PROPAGATED priority model.
+
+Scenario:
+--------
+
+Server creates a POA with RTCORBA::CLIENT_PROPAGATED priority model
+policy and registers a servant with it.  Client obtains the object
+reference and verifies that it does have the RTCORBA::CLIENT_PROPAGATED
+priority model set.  Client then performs several invocations on the
+object, changing the priority of its thread before each.  The client
+also passes its thread priority as an argument to each operation.
+For each invocation, the servant checks that it's thread priority is
+equivalent to the priority of the invoking client thread, which we know
+from the operation argument.  In addition, the server verifies that
+it's starting thread priority (before entering ORB event loop) is the
+same as it's ending thread priority (ater ORB shutdown), to insure
+that the thread servicing the requests at client propagated priority
+is always returned to its original priority.
+
+To run (on Unix):
+-------
+$./server
+$./client
+
+Options:
+--------
+server [-o ior_output_file]
+client [-k server_ior]
+
+Expected output:
+----------------
+Client executable produces no output (unless there are errors).
+Server should produces the following if there are no errors (the
+priority numbers may differ from platform to platform):
+
+$server
+Activated as <IOR:010000000d00000049444c3a546573743a312e300000000001000000000000
+00a6000000010102cd15000000636f727269646f2e63732e777573746c2e65647500cde304230000
+0014010f004e5354c5c9a539bd0105000100000001000000000000000100000001000000cd040000
+00000000000800000001cdcdcd004f4154010000001400000001cdcdcd0100010000000000090101
+0000000000004f41540400000001cd0000020000001a00000001cdcdcd01000000020041540a0000
+0001cdcdcd000000000000>
+
+Client priority: 0  Servant thread priority: 0
+Client priority: 1  Servant thread priority: 1
+Client priority: 2  Servant thread priority: 2
+Server ORB event loop finished
+Final priority of the servant thread = its initial priority

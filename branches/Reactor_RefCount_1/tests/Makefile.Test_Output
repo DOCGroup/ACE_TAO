@@ -1,0 +1,55 @@
+#----------------------------------------------------------------------------
+#       $Id$
+#
+#       Makefile for the Test_Output library
+#----------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+#       Local macros
+#----------------------------------------------------------------------------
+
+LIB     = libTest_Output.a
+SHLIB   = libTest_Output.$(SOEXT)
+FILES   = Test_Output
+LSRC    = $(addsuffix .cpp,$(FILES))
+
+LIBS   += $(ACELIB)
+
+BUILD   = $(VLIB) $(VSHLIB)
+
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+
+# To remake the Test_Output source with xlC on AIX, it works
+# best to wipe out any previously-created tempinc directory.
+# The compiler/linker isn't too smart about instantiating templates...
+ifdef TEMPINCDIR
+COMPILE.cc := $(RM) -rf tempinc; $(COMPILE.cc)
+endif
+
+#----------------------------------------------------------------------------
+#       Local targets
+#----------------------------------------------------------------------------
+
+ifeq ($(shared_libs),1)
+ifneq ($(SHLIB),)
+CPPFLAGS     += -DTEST_OUTPUT_BUILD_DLL
+endif
+endif
+
+#----------------------------------------------------------------------------
+#       Dependencies
+#----------------------------------------------------------------------------
+# DO NOT DELETE THIS LINE -- g++dep uses it.
+# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+
+
+# IF YOU PUT ANYTHING HERE IT WILL GO AWAY

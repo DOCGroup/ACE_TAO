@@ -1,0 +1,11 @@
+project(idl3) : aceexe {
+  exename = idl3
+  includes += .. $(SPIRIT_DIR) $(SPIRIT_DIR)/miniboost
+  Source_Files {
+    idl3.cpp
+    idl3_grammar.cpp
+  }
+  Header_Files {
+    idl3_grammar.h
+  }
+}

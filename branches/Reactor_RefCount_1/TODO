@@ -1,0 +1,264 @@
+============================================================================
+                              ACE/TAO TODO List
+============================================================================
+
+ACE and TAO
+-----------
+For notes about what things need to be done for ACE and TAO, see their
+respective release notes.
+
+
+ACE/TAO Configuration Project
+-----------------------------
+1.	Add support for Linux netdb reentrant functions  (LOW PRIORITY)
+2.	Add support for Linux sysinfo().   (LOW PRIORITY)
+3.	Change tests that need ACE_CONVERT_WARNINGS_TO_ERRORS and possibly
+	others to use regular expression searches instead.    (MAYBE NOT)
+4.	Process all of the remaining TODOs and FIXMEs in configure.in.
+5.	Ensure the configure script will work for cross-compiled platforms.
+6.	Make sure failed autoconf test programs in config.log failed for
+	the "right" reasons, not due to some typo, for example.
+7.	Figure out the best way to choose interface numbers for the libACE.la
+	-version-info libtool flag.
+8.	Integrate the remaining ACE subdirectories into the automake scheme.
+9.	Verify that the new automake build scheme works, i.e. everything
+	gets built correctly.
+10.	Really test the configure script and automake build scheme; really
+        "pound" on them.  (e.g. test and make sure everything works on
+	as many platforms as possible).
+11.	Write documentation on how to maintain the Autoconf and Automake files.
+	HOWTOs/tutorials on how to use Auto{conf,make} and libtool would be
+	good, too.
+12.	Implement remaining configure script options (e.g. --enable-optimize).
+13.	Make sure all of the ACE feature macros are supported by the configure
+	script.
+14.	Modify ace/Makefile.am and tao/Makefile.am so that the template
+	sources are always included in the distribution (though not
+	necessarily the installation).
+15.	Verify that the contents of the `AUTHORS' file is correct.
+16.	Add some information to the `NEWS' file.
+17.     Add subset dependencies to subsets.m4 for libACE_Token and
+        libACE_Other.
+18.     Add ACE subset library support to the ace-config script.
+19.     Fix/check the minimum/maximum thread priority test.
+20.     Verify that the asynchronous IO checks actually work properly.
+21.     ACE_TEMPLATES_REQUIRE_SOURCE test fails for the wrong reasons
+        Solaris' linker claims that the function Foo<int>::Foo<int> (int)
+        doesn't exist.  Where is it getting function Foo<int>::Foo<int> (int)
+        from?  It should be getting function Foo<int>::Foo (int).
+22.     Fix tests/Makefile.am to conditionally build some of the tests
+        since some of the ACE components that are needed for the tests
+        may not have been built.
+23.     Repeat #22 for other binaries in ACE.
+24.	Need to implement and/or verify tests for the following ACE macros:
+
+/* Define this if you don't want debug version ACE search for debug version
+   DLLs first before looking for the DLL names specified. */
+#undef ACE_DISABLE_DEBUG_DLL_CHECK
+
++ACE_DONT_INCLUDE_ACE_SIGNAL_H
+
++ACE_HAS_BROKEN_ACCEPT_ADDR
+
+/* Platform doesn't cast MAP_FAILED to a (void *). */
+#undef ACE_HAS_BROKEN_MAP_FAILED
+
+/* Compiler/platform has the wrong prototype for t_error(), i.e.,
+   t_error(char *) rather than t_error(const char *). */
+#undef ACE_HAS_BROKEN_T_ERROR
+
+/* Platform has Fast-Light (FL) toolkit installed */
+#undef ACE_HAS_FL
+
++ACE_HAS_FORE_ATM_WS2
++ACE_HAS_FORE_ATM_XTI
++ACE_HAS_IP6
++ACE_HAS_LIMITED_SELECT
++ACE_HAS_PHARLAP_RT
+-ACE_HAS_PTHREAD_SIGMASK
++ACE_HAS_STD_TEMPLATE_SPECIALIZATION
++ACE_HAS_TK
++ACE_HAS_WINSOCK2_GQOS
++ACE_LACKS_CHAR_RIGHT_SHIFTS
++ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS
++ACE_LACKS_NULL_PTHREAD_STATUS
++ACE_LACKS_PTHREAD_SIGMASK
+-ACE_LACKS_SCHED_H
++ACE_LACKS_TCP_NODELAY
++ACE_NEEDS_SCHED_H
++ACE_USES_OLD_TERMIOS_STRUCT
+
+
+
+/* Compiler enforces C++ One Definition Rule */
+#undef ACE_HAS_ONE_DEFINITION_RULE
+
+/* Platform has void (*)(...) prototype for pthread_key_create() destructor
+   (e.g., LynxOS). */
+#undef ACE_HAS_STDARG_THR_DEST
+
+/* Platform/compiler supports Win32 structural exceptions */
+#undef ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS
+
+/* Platform, such as AIX4, needs to wrap #include of sys/socket.h with
+   #undef/#define of __cplusplus. */
+#undef ACE_HAS_AIX_BROKEN_SOCKET_HEADER
+
+/* Compiler/platform correctly calls init()/fini() for shared libraries */
+#undef ACE_HAS_AUTOMATIC_INIT_FINI
+
+/* Compiler has integer overflow problem with bit-shift operations. */
+#undef ACE_HAS_BROKEN_BITSHIFT
+
+/* Earlier versions of HP/UX C++ are damned... */
+#undef ACE_HAS_BROKEN_HPUX_TEMPLATES
+
+/* FIXME: What does this do and what do we test for? */
+#undef ACE_HAS_BROKEN_IF_HEADER
+
+/* TODO: WE HAVE A TEST FOR THIS, BUT WE NEED TO KNOW IF IT WORKS! */
+/* Platform headers don't support <msg.h> prototypes */
+#undef ACE_HAS_BROKEN_MSG_H
+
+/* MSVC has trouble with defining STL containers for nested structs and
+   classes */
+#undef ACE_HAS_BROKEN_NESTED_TEMPLATES
+
+/* Platform has a bug with non-blocking connects (e.g., WinNT 4.0) */
+#undef ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS
+
+/* OS/compiler's header files are inconsistent with libC definition of
+   rand_r(). */
+#undef ACE_HAS_BROKEN_RANDR
+
+/* OS/Compiler's header files are not consistent with readv() definition. */
+#undef ACE_HAS_BROKEN_READV
+
+/* OS header files have some problems with XTI (HP/UX 11). */
+#undef ACE_HAS_BROKEN_XTI_MACROS
+
+/* Build ACE using the frigging PC DLL nonsense... */
+#undef ACE_HAS_DLL
+
+/* Needed for pSoS -- FIXME: need a better description */
+#undef ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_FILE
+
+/* Optimize ACE_Handle_Set::count_bits for select() operations (common case) */
+#undef ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
+
+/* Platform supports IP multicast */
+#undef ACE_HAS_IP_MULTICAST
+
+/* Platform supports IPv6 */
+#undef ACE_HAS_IP6
+
+/* Causes the ACE_Object_Manager instance to be created in
+   main (int, char *[]), instead of as a static (global) instance. */
+#undef ACE_HAS_NONSTATIC_OBJECT_MANAGER
+
+/* Compiler/platform has "big" fd_set, i.e. large number of bits set
+   in fd_set passed back from select(). */
+#undef ACE_HAS_BIG_FD_SET
+
+/* Platform supports MT safe mktime() call (do any of them?) */
+#undef ACE_HAS_MT_SAFE_MKTIME
+
+/* Sockets may be called in multi-threaded programs */
+#undef ACE_HAS_MT_SAFE_SOCKETS
+
+/* Use the semaphore implementation of ACE_Message_Queue rather than the
+   emulated condition variable (NT and VxWorks). */
+#undef ACE_HAS_OPTIMIZED_MESSAGE_QUEUE
+
+/* Purify'ing.  Defined on command line. */
+#undef ACE_HAS_PURIFY
+
+/* Quantify'ing.  Defined on command line. */
+#undef ACE_HAS_QUANTIFY
+
+/* Platform will recurse infinitely on thread exits from TSS cleanup routines
+   (e.g., AIX) */
+#undef ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
+
+/* Compiler typedefs wchar with char. */
+#undef ACE_HAS_WCHAR_TYPEDEFS_CHAR
+
+/* For Win32: Use Select_Reactor as default implementation of Reactor instead
+   of WFMO_Reactor. */
+#undef ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL
+
+/* Platform has bug with sigismember() (HP/UX 11). */
+#undef ACE_HAS_SIGISMEMBER_BUG
+
+/* Compiler requires extern "C" functions for signals. */
+#undef ACE_HAS_SIG_C_FUNC
+
+/* Use the STRICT compilation mode on Win32. */
+#undef ACE_HAS_STRICT
+
+/* Compiler/platform has strange hostent API for socket *_r() calls */
+#undef ACE_HAS_STRUCT_NETDB_DATA
+
+/* HP/UX has an undefined syscall for GETRUSAGE... */
+#undef ACE_HAS_SYSCALL_GETRUSAGE
+
+/* Platform allows multiple threads to call accept() on the same port
+   (e.g., WinNT). */
+#undef ACE_HAS_THREAD_SAFE_ACCEPT
+
+/* The pthread_keycreate() routine *must* take extern C functions. */
+#undef ACE_HAS_THR_C_DEST
+
+/* The pthread_create() routine *must* take extern C functions. */
+#undef ACE_HAS_THR_C_FUNC
+
+/* Platform/compiler supports WCHAR */
+#undef ACE_HAS_WCHAR
+
+/* The Win32 platform supports WinSock 2.0 */
+#undef ACE_HAS_WINSOCK2
+
+/* No system support for replacing any previous mappings. */
+#undef ACE_LACKS_AUTO_MMAP_REPLACEMENT
+
+/* pthread_cond_timedwait does *not* reset the time argument when
+   the lock is acquired. */
+#undef ACE_LACKS_COND_TIMEDWAIT_RESET
+
+/* Platform forgot const in cond_timewait (e.g., HP/UX). */
+#undef ACE_LACKS_CONST_TIMESPEC_PTR
+
+/* Platform lacks SYSV message queue prototypes */
+#undef ACE_LACKS_SYSV_MSQ_PROTOS
+
+/* Required by platforms with small default stacks. */
+#undef ACE_NEEDS_HUGE_THREAD_STACKSIZE
+
+///// FIX THIS TEST /////
+/* Platform needs regexpr.h for regular expression support */
+#undef ACE_NEEDS_REGEXPR_H
+
+///// FIX THIS TEST /////
+/* Platform needs to #include <sched.h> to get thread scheduling defs. */
+#undef ACE_NEEDS_SCHED_H
+
+/* OS has LWPs, and when the priority of a bound thread is set, then the LWP
+   priority must be set also. */
+#undef ACE_NEEDS_LWP_PRIO_SET
+
+/* Platform redefines the t_... names (UnixWare) */
+#undef ACE_REDEFINES_XTI_FUNCTIONS
+
+/* Compiler's template mechanism must use a pragma.  This is used for AIX's
+   C++ compiler. */
+#undef ACE_TEMPLATES_REQUIRE_PRAGMA
+
+/* Platform uses assembly symbols instead of C symbols in dlsym() */
+#undef ACE_USES_ASM_SYMBOL_IN_DLSYM
+
+/* When linking MFC as a static library is desired */
+#undef ACE_USES_STATIC_MFC
+
+/* A parameter list indicating the version of WinSock (e.g., "1, 1" is
+   version 1.1). */
+#undef ACE_WSOCK_VERSION
