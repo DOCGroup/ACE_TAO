@@ -12,6 +12,9 @@ ACE_RCSID (tao,
 
 #include "Empty_Param_TypeCode.h"
 #include "Objref_TypeCode.h"
+#include "String_TypeCode.h"
+#include "Value_TypeCode.h"
+
 #include "tao/TC_Constants_Forward.h"
 
 namespace TAO
@@ -19,6 +22,7 @@ namespace TAO
   namespace TypeCode
   {
     // Notice that these are all statically instantiated and not
+    // exported.  There CORBA::TypeCode_ptr counterparts are, however,
     // exported.
 
     Empty_Param tc_null       (CORBA::tk_null);
@@ -40,11 +44,57 @@ namespace TAO
     Empty_Param tc_TypeCode   (CORBA::tk_TypeCode);
     Empty_Param tc_Principal  (CORBA::tk_Principal);
 
+    // --------------
+
+    String<TAO::Null_RefCount_Policy> tc_string  (CORBA::tk_string, 0);
+    String<TAO::Null_RefCount_Policy> tc_wstring (CORBA::tk_wstring, 0);
+
+    // --------------
+
     char const tc_object_id[]   = "IDL:omg.org/CORBA/Object:1.0";
     char const tc_object_name[] = "Object";
     Objref<char const *,
            CORBA::tk_objref,
-           TAO::Null_RefCount_Policy> tc_object (tc_object_id, tc_object_name);
+           TAO::Null_RefCount_Policy> tc_Object (tc_object_id, tc_object_name);
+
+    char const tc_component_id[]   = "IDL:omg.org/CORBA/CCMObject:1.0";
+    char const tc_component_name[] = "CCMObject";
+    Objref<char const *,
+           CORBA::tk_component,
+           TAO::Null_RefCount_Policy> tc_Component (tc_component_id,
+						    tc_component_name);
+
+    char const tc_home_id[]   = "IDL:omg.org/CORBA/CCMHome:1.0";
+    char const tc_home_name[] = "CCMHome";
+    Objref<char const *,
+           CORBA::tk_home,
+           TAO::Null_RefCount_Policy> tc_Home (tc_home_id, tc_home_name);
+
+    // --------------
+
+    char const tc_value_base_id[]   = "IDL:omg.org/CORBA/ValueBase:1.0";
+    char const tc_value_base_name[] = "ValueBase";
+    Value<char const *,
+	  Field<char const *> *,
+	  CORBA::tk_value,
+	  TAO::Null_RefCount_policy> tc_ValueBase (tc_value_base_id,
+						   tc_value_base_name,
+						   CORBA::VM_NONE,
+						   0,  // Nil TypeCode
+						   0,  // Field array
+						   0); // Field count
+
+    char const tc_event_base_id[]   = "IDL:omg.org/CORBA/EventBase:1.0";
+    char const tc_event_base_name[] = "EventBase";
+    Value<char const *,
+	  Field<char const *> *,
+	  CORBA::tk_event,
+	  TAO::Null_RefCount_policy> tc_EventBase (tc_event_base_id,
+						   tc_event_base_name,
+						   CORBA::VM_NONE,
+						   0,  // Nil TypeCode
+						   0,  // Field array
+						   0); // Field count
 
   }  // End TypeCode namespace
 }  // End TAO namespace
@@ -78,5 +128,14 @@ namespace CORBA
   TypeCode_ptr const _tc_TypeCode   = &TAO::TypeCode::tc_TypeCode;
   TypeCode_ptr const _tc_Principal  = &TAO::TypeCode::tc_Principal;
 
-  TypeCode_ptr const _tc_Object     = &TAO::TypeCode::tc_object;
+  TypeCode_ptr const _tc_string     = &TAO::TypeCode::tc_string;
+  TypeCode_ptr const _tc_wstring    = &TAO::TypeCode::tc_wstring;
+
+  TypeCode_ptr const _tc_Object     = &TAO::TypeCode::tc_Object;
+  TypeCode_ptr const _tc_Component  = &TAO::TypeCode::tc_Component;
+  TypeCode_ptr const _tc_Home       = &TAO::TypeCode::tc_Home;
+
+  TypeCode_ptr const _tc_ValueBase  = &TAO::TypeCode::tc_ValueBase;
+  TypeCode_ptr const _tc_EventBase  = &TAO::TypeCode::tc_EventBase;
+
 }

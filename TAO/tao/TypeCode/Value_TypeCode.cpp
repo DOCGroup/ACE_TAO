@@ -426,7 +426,10 @@ TAO::TypeCode::Value<StringType,
                       RefCountPolicy>::concrete_base_type (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
-  return CORBA::TypeCode::_duplicate (*(this->concrete_base_));
+  return
+    this->concrete_base_ == 0
+    ? CORBA::TypeCode::_nil ()
+    : CORBA::TypeCode::_duplicate (*(this->concrete_base_));
 }
 
 
