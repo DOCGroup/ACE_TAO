@@ -1,3 +1,9 @@
+Sat Apr  1 12:50:33 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Lite.cpp:
+	* tao/GIOP_Server_Request.cpp: Fixed compiler errors in Minimum
+	  CORBA build. 
+
 Sat Apr  1 12:09:56 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Lite.cpp (write_reply_header): Fixed a warning

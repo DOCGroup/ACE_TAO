@@ -9,6 +9,7 @@
 #include "tao/operation_details.h"
 #include "tao/GIOP_Server_Request.h"
 #include "tao/GIOP_Message_Headers.h"
+#include "tao/target_specification.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Lite.i"
@@ -465,7 +466,7 @@ TAO_GIOP_Message_Lite::
                                output);
 
   // Write the service context list
-#if defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 1)
   output << reply.service_context_notowned ();
 #else
   if (reply.params_ == 0)
@@ -1243,7 +1244,10 @@ TAO_GIOP_Message_Lite::
   reply_params.request_id_ = request_id;
   reply_params.svc_ctx_.length (0);
   reply_params.service_context_notowned (&reply_params.svc_ctx_);
+
+#if (TAO_HAS_MINIMUM_CORBA == 0)
   reply_params.params_ = 0;
+#endif /*TAO_HAS_MINIMUM_CORBA*/
 
   // A new try/catch block, but if something goes wrong now we have no
   // hope, just abort.
