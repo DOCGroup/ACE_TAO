@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:153
+// be\be_codegen.cpp:153
 
 #ifndef _TAO_IDL_ORIG_LONGLONGSEQC_H_
 #define _TAO_IDL_ORIG_LONGLONGSEQC_H_
@@ -40,6 +40,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/TAO_Export.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
 #include "tao/Sequence_T.h"
@@ -59,9 +60,7 @@
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -70,13 +69,13 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// w:\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:48
 
 namespace CORBA
 {
   
   // TAO_IDL - Generated from
-  // w:\ace_wrappers\tao\tao_idl\be\be_visitor_sequence/sequence_ch.cpp:101
+  // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_LONGLONGSEQ_CH_)
 #define _CORBA_LONGLONGSEQ_CH_
@@ -124,17 +123,17 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // w:\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_LongLongSeq;
 
 // TAO_IDL - Generated from
-// w:\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:66
 
 } // module CORBA
 
 // TAO_IDL - Generated from
-// .\be\be_visitor_traits.cpp:59
+// be\be_visitor_traits.cpp:59
 
 // Traits specializations.
 namespace TAO
@@ -142,7 +141,7 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// w:\ace_wrappers\tao\tao_idl\be\be_visitor_sequence/any_op_ch.cpp:52
+// be\be_visitor_sequence/any_op_ch.cpp:52
 
 TAO_Export void operator<<= (CORBA::Any &, const CORBA::LongLongSeq &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, CORBA::LongLongSeq*); // noncopying version
@@ -150,7 +149,7 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::LongLongSeq *&
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::LongLongSeq *&);
 
 // TAO_IDL - Generated from
-// w:\ace_wrappers\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:71
+// be\be_visitor_sequence/cdr_op_ch.cpp:71
 
 #if !defined _TAO_CDR_OP_CORBA_LongLongSeq_H_
 #define _TAO_CDR_OP_CORBA_LongLongSeq_H_
@@ -167,13 +166,13 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_LongLongSeq_H_ */
 
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:958
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
 #include "LongLongSeqC.inl"
-#endif /* defined __ACE_INLINE__ */
+#endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
@@ -184,4 +183,5 @@ TAO_Export CORBA::Boolean operator>> (
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
+
 
