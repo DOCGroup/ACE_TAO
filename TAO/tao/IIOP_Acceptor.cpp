@@ -36,20 +36,19 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (void)
 //    multihomed machine with an acceptor listening on the wildcard
 //    address), hence the "Right Thing" seems to be that we pass an
 //    MProfile that is filled up by the TAO_Acceptor class.
+// @@ Right, I agree but for now we assume single endpoint.  fredk
 
 int
 TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                                     TAO_MProfile &mprofile)
 {
 
-  // @@ For now we use teh IIOP address that has been
-  // stored away in the ORB core.  This is an optimization to get
-  // around DNS lookups!
-  ACE_INET_Addr new_address;
+  ACE_INET_Addr addr;
+  // do a getsockname () to get the address
   if (base_acceptor_.acceptor ().get_local_addr (new_address) == -1)
     return 0;
 
-  // we only make one
+  // @@ we only make one for now
   int count = mprofile.profile_count ();
   if ((mprofile.size () - count) < 1)
     {
@@ -59,18 +58,11 @@ TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
 
   TAO_IIOP_Profile *pfile;
   ACE_NEW_RETURN (pfile,
-                  TAO_IIOP_Profile (new_address, object_key),
+                  TAO_IIOP_Profile (this->host_,
+                                    this->port_,
+                                    key,
+                                    addr),
                   -1);
-  // @@ Fred:  I removed the host() and addr() methods from the ORB core
-  //           before you added this method.  Any ideas on how to cache
-  //           this value as per Carlos' suggestion in the is_collocated()
-  //           method below?
-//   ACE_NEW_RETURN (pfile,
-//                   TAO_IIOP_Profile (orb_params->host (),
-//                                     orb_params->addr ().get_port_number (),
-//                                     key,
-//                                     orb_params->addr ()),
-//                   -1);
 
   if (mprofile.give_profile (pfile) == -1)
     return -1;
@@ -112,7 +104,6 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   // calling the open method will cause the system to assign
   // an ephemeral port number number.
   if (this->base_acceptor_.open (
-       // orb_core->orb_params ()->addr (),
        addr,
        orb_core->reactor(),
        orb_core->server_factory ()->creation_strategy (),
