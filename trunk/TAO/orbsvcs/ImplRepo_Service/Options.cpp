@@ -16,7 +16,7 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/ARGV.h"
 
-#if defined (ACE_WIN32
+#if defined (ACE_WIN32)
 const HKEY SERVICE_REG_ROOT = HKEY_LOCAL_MACHINE;
 const ACE_TCHAR *SERVICE_REG_PATH =
   ACE_TEXT ("SYSTEM\\CurrentControlSet\\Services\\TAOImplRepo\\Parameters");
