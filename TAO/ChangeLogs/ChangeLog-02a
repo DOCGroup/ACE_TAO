@@ -1,3 +1,10 @@
+Sun Apr  7 07:32:40 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* TAO-inheritance.pdf:
+	* TAO-inheritance.ps.gz: Removed these files from the
+	  distribution. They are outdated. The doxygen documentation
+	  should be more useful since it has the latest documentation. 
+	  
 Sun Apr 07 10:31:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/MT_BiDir/server.bor:
