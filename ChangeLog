@@ -1,3 +1,9 @@
+Tue Mar 19 15:17:25 2002  Dante J. Cannarozzi  <djc2@cs.wustl.edu>
+
+	* ace/Containers_T.h: with the help of Matt Hampton
+        <mph2@cs.wustl.edu> updated doxygen comments for container classes
+        with more details at the request of Steve Huston.
+
 Tue Mar 19 02:40:00 2002  Si Mong Park  <spark@ociweb.com>
 
         * ace/OS_String.h:
