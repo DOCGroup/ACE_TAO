@@ -312,7 +312,8 @@ be_visitor_sequence_ci::gen_unbounded_sequence (be_sequence *node)
       << "if (this->buffer_ == 0)" << be_nl
       << "{" << be_idt_nl
       << "result = " << class_name << "::allocbuf (this->length_);" << be_nl
-      << "this->buffer_ = result;" << be_uidt_nl
+      << "this->buffer_ = result;" << be_nl
+      << "this->release_ = 1;" << be_uidt_nl
       << "}" << be_nl
       << "else" << be_nl
       << "{" << be_idt_nl

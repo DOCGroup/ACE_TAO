@@ -707,6 +707,7 @@ CORBA_NameValuePair_out::operator-> (void)
       {
         result = _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::allocbuf (this->length_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {

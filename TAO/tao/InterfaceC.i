@@ -870,6 +870,7 @@ IR_IDLType_out::operator-> (void)
       {
         result = _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::allocbuf (this->maximum_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -1220,6 +1221,7 @@ IR_InterfaceDefSeq_out::operator[] (CORBA::ULong index)
       {
         result = _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::allocbuf (this->maximum_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -1570,6 +1572,7 @@ IR_ValueDefSeq_out::operator[] (CORBA::ULong index)
       {
         result = _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::allocbuf (this->maximum_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -1920,6 +1923,7 @@ IR_ComponentDefSeq_out::operator[] (CORBA::ULong index)
       {
         result = _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::allocbuf (this->maximum_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -2270,6 +2274,7 @@ IR_ProvidesDefSeq_out::operator[] (CORBA::ULong index)
       {
         result = _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::allocbuf (this->maximum_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -2620,6 +2625,7 @@ IR_UsesDefSeq_out::operator[] (CORBA::ULong index)
       {
         result = _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::allocbuf (this->maximum_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -2970,6 +2976,7 @@ IR_HomeDefSeq_out::operator[] (CORBA::ULong index)
       {
         result = _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::allocbuf (this->maximum_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -3320,6 +3327,7 @@ IR_EmitsDefSeq_out::operator[] (CORBA::ULong index)
       {
         result = _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::allocbuf (this->maximum_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -3670,6 +3678,7 @@ IR_PublishesDefSeq_out::operator[] (CORBA::ULong index)
       {
         result = _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::allocbuf (this->maximum_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -4020,6 +4029,7 @@ IR_ConsumesDefSeq_out::operator[] (CORBA::ULong index)
       {
         result = _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::allocbuf (this->maximum_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -4370,6 +4380,7 @@ IR_FactoryDefSeq_out::operator[] (CORBA::ULong index)
       {
         result = _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::allocbuf (this->maximum_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -4720,6 +4731,7 @@ IR_FinderDefSeq_out::operator[] (CORBA::ULong index)
       {
         result = _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::allocbuf (this->maximum_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -5250,6 +5262,7 @@ IR_StructMember_out::operator-> (void)
       {
         result = _TAO_Unbounded_Sequence_IR_StructMemberSeq::allocbuf (this->length_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -5796,6 +5809,7 @@ IR_Initializer_out::operator-> (void)
       {
         result = _TAO_Unbounded_Sequence_IR_InitializerSeq::allocbuf (this->length_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -6342,6 +6356,7 @@ IR_UnionMember_out::operator-> (void)
       {
         result = _TAO_Unbounded_Sequence_IR_UnionMemberSeq::allocbuf (this->length_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -7271,6 +7286,7 @@ IR_Container::Description_out::operator-> (void)
       {
         result = _TAO_Unbounded_Sequence_IR_Container_DescriptionSeq::allocbuf (this->length_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -11537,6 +11553,7 @@ IR_ExceptionDescription_out::operator-> (void)
       {
         result = _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::allocbuf (this->maximum_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -11891,6 +11908,7 @@ IR_ExceptionDefSeq_out::operator[] (CORBA::ULong index)
       {
         result = _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::allocbuf (this->length_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -12801,6 +12819,7 @@ IR_ParameterDescription_out::operator-> (void)
       {
         result = _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::allocbuf (this->length_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -13925,6 +13944,7 @@ IR_RepositoryIdSeq_out::operator[] (CORBA::ULong index)
       {
         result = _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::allocbuf (this->length_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -14295,6 +14315,7 @@ IR_OpDescriptionSeq_out::operator[] (CORBA::ULong index)
       {
         result = _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::allocbuf (this->length_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -15205,6 +15226,7 @@ IR_ValueMember_out::operator-> (void)
       {
         result = _TAO_Unbounded_Sequence_IR_ValueMemberSeq::allocbuf (this->length_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -17043,6 +17065,7 @@ IR_UsesDescription_out::operator-> (void)
       {
         result = _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::allocbuf (this->length_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -17413,6 +17436,7 @@ IR_ProvidesDescSeq_out::operator[] (CORBA::ULong index)
       {
         result = _TAO_Unbounded_Sequence_IR_UsesDescSeq::allocbuf (this->length_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {

@@ -141,6 +141,7 @@
       {
         result = _TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort::allocbuf (this->length_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -694,6 +695,7 @@ CORBA_Policy_out::operator-> (void)
       {
         result = _TAO_Unbounded_Object_Sequence_CORBA_PolicyList::allocbuf (this->maximum_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
@@ -1048,6 +1050,7 @@ CORBA_PolicyList_out::operator[] (CORBA::ULong index)
       {
         result = _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq::allocbuf (this->length_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {

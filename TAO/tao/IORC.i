@@ -145,6 +145,7 @@
       {
         result = _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList::allocbuf (this->maximum_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {

@@ -3472,6 +3472,10 @@ SOURCE=.\Asynch_Reply_Dispatcher.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\BoundsC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Buffering_Constraint_Policy.h
 # End Source File
 # Begin Source File
