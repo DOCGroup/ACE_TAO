@@ -76,7 +76,8 @@ CPPFLAGS += \
 	$(CC_FLAGS) \
 	$(CC_DEFINES) \
 	$(CC_EH) \
-	$(CC_MT)
+	$(CC_MT) \
+	-DTAO_HAS_DYNAMIC_PROPERTY_BUG
 
 ifndef exceptions
 CPPFLAGS += -DOS_NO_EXCEPTION_SPECIFIER
