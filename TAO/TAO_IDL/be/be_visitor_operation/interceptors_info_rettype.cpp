@@ -150,6 +150,13 @@ be_visitor_operation_interceptors_info_rettype::visit_predefined_type (be_predef
   else
     bt = node;
 
+  // ACE_NESTED_CLASS macros needed for MSVC, but only for stub code,
+  // because otherwise the types are not defined in the
+  // same scope, which they must be to use ACE_NESTED_CLASS.
+
+  be_decl* scope =
+    be_scope::narrow_from_scope (bt->defined_in ())->decl ();
+
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
@@ -157,10 +164,25 @@ be_visitor_operation_interceptors_info_rettype::visit_predefined_type (be_predef
       break;
     case AST_PredefinedType::PT_any:
       *os << bt->name () << " *";
-      break;
+      break;  
     default:
-      *os << bt->name ();
-      break;
+      {
+        if (bt->is_nested () 
+            && (scope->node_type () == AST_Decl::NT_interface
+                || scope->node_type () == AST_Decl::NT_union ))
+          {
+            *os << "ACE_NESTED_CLASS (";
+            *os << scope->name () << ", ";
+            *os << bt->local_name ();
+	          *os  << ")";
+          }
+        else
+          {
+            *os << bt->name ();
+          }
+
+        break;
+      }
     }
 
   return 0;
@@ -224,9 +246,13 @@ be_visitor_operation_interceptors_info_rettype::visit_structure (be_structure *n
     bt = this->ctx_->alias ();
   else
     bt = node;
-  // ACE_NESTED_CLASS macros needed for MSVC.
-  be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-  
+  // ACE_NESTED_CLASS macros needed for MSVC, but only for stub code,
+  // because otherwise the types are not defined in the
+  // same scope, which they must be to use ACE_NESTED_CLASS.
+
+  be_decl* scope =
+    be_scope::narrow_from_scope (bt->defined_in ())->decl ();
+
   if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface 
                                || scope->node_type () == AST_Decl::NT_union ))
     {
