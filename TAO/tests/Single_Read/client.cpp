@@ -99,16 +99,16 @@ main (int argc, char **argv)
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      test::data data (data_bytes);
-      data.length (data_bytes);
+      test::data the_data0 (data_bytes);
+      the_data0.length (data_bytes);
 
       data_bytes *= 10;
-      test::data data1 (data_bytes);
-      data.length (data_bytes);
+      test::data the_data1 (data_bytes);
+      the_data1.length (data_bytes);
 
       data_bytes /= 100;
-      test::data data2 (data_bytes);
-      data.length (data_bytes);
+      test::data the_data2 (data_bytes);
+      the_data2.length (data_bytes);
 
       for (CORBA::ULong i = 1; i <= iterations; ++i)
         {
@@ -118,19 +118,19 @@ main (int argc, char **argv)
 
           // Invoke the oneway method.
           test_object->method (i,
-                               data,
+                               the_data0,
                                ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           // Invoke the oneway method.
           test_object->method (i,
-                               data1,
+                               the_data1,
                                ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           // Invoke the oneway method.
           test_object->method (i,
-                               data2,
+                               the_data2,
                                ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }

@@ -26,7 +26,7 @@ unlink $iorfile2;
 # available range.
 
 $server_args =
-    "-p $iorfile1 -o $iorfile2 -a 65 -b 75 -c 70 -ORBSvcConf server.conf "
+    "-p $iorfile1 -o $iorfile2 -a 65 -b 75 -c 70 -ORBDebugLevel 0 -ORBSvcConf server.conf "
     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=65 "
     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=75 "
     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=73 ";
@@ -40,7 +40,7 @@ if ($^O eq "MSWin32")
                     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=1 ";
 }
 
-$client_args = "-p file://$iorfile1 -o file://$iorfile2";
+$client_args = "-p file://$iorfile1 -o file://$iorfile2 -ORBDebugLevel 10";
 
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
                        $server_args);

@@ -233,8 +233,8 @@ oneway_payload_test (Test_ptr server,
   QuantifyStartRecordingData ();
 #endif /* USING_QUANTIFY */
 
-  Test::data data (payload_size);
-  data.length (payload_size);
+  Test::data the_data (payload_size);
+  the_data.length (payload_size);
 
   for (CORBA::ULong i = 0; i != iterations; ++i)
     {
@@ -242,7 +242,7 @@ oneway_payload_test (Test_ptr server,
       ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 #endif /* USING_TIMERS */
 
-      server->oneway_payload_test (data,
+      server->oneway_payload_test (the_data,
                                    ACE_TRY_ENV);
       ACE_CHECK;
 

@@ -101,19 +101,19 @@ Position_impl::do_print (CORBA::Environment &ACE_TRY_ENV)
 }
 
 CORBA::Float Position_impl::x (CORBA::Environment &ACE_TRY_ENV)
-{ 
+{
   ACE_UNUSED_ARG (ACE_TRY_ENV);
   return this->xyz()[0];
 }
 
 void Position_impl::x (CORBA::Float x, CORBA::Environment &ACE_TRY_ENV)
-{ 
+{
   ACE_UNUSED_ARG (ACE_TRY_ENV);
-  this->xyz()[0] = x; 
+  this->xyz()[0] = x;
 }
 
 CORBA::Float Position_impl::y (CORBA::Environment &ACE_TRY_ENV)
-{ 
+{
   ACE_UNUSED_ARG (ACE_TRY_ENV);
   return this->xyz()[1];
 }
@@ -268,7 +268,8 @@ Event_List_impl::store_event (Event* e, CORBA::Environment &ACE_TRY_ENV)
   // guard against the access to the list from another thread.
   // But this is omitted in this example.
 
-   Event_List_Link_var new_link (new Event_List_Link_impl (e));
+  Event_List_Link_var new_link (ACE_static_cast(Event_List_Link*,
+                                                new Event_List_Link_impl (e)));
 
    // We need a new link to store the reference to the event e.
    // But if we'd had assigned the newly created instance directly through
@@ -391,7 +392,8 @@ Temperature_Criterion_impl::
 Temperature_Criterion_impl (CORBA::ULong origin_id, CORBA::Float temp)
 {
   this->origin_id_ (origin_id);
-  Temperature_var tmp (new Temperature_impl (temp));
+  Temperature_var tmp (ACE_static_cast(Temperature*,
+                                       new Temperature_impl (temp)));
   this->meltingpoint (tmp.in ());
 }
 
@@ -568,7 +570,7 @@ Criterion_List_impl::store_criterion (Criterion *c, CORBA::Environment &ACE_TRY_
   ACE_UNUSED_ARG (ACE_TRY_ENV);
   if (!my_list ())
     {
-      Event_List_var ev(new Event_List_impl);
+      Event_List_var ev(ACE_static_cast(Event_List*,new Event_List_impl));
       my_list (ev);
     }
 
