@@ -1,4 +1,8 @@
-Mon Aug 02 17:17:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Mon Aug 02 17:24:05 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h (ACE_DL_TYPE): Only WinCE uses wchar_t DL type, we'll
+	  just deal with this in ACE_OS::dlsym instead of defining
+	  different types here.
 
 	* ace/OS.i (dlsym): GetProcAddress is defined differently on
 	  Windows CE and other Win32 platforms so we need to treat them
