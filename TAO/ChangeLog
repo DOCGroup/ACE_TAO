@@ -5,7 +5,7 @@ Tue Nov 23 21:34:11 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  Fixed a memory leak that occured when the CORBA::Any being
 	  marshaled into the CDR encapsulation didn't contain a populated
 	  ACE_Message_Block.  Thanks to Lothar Werzinger <lothar at xcerla
-	  dot com> for reporting the leak.q
+	  dot com> for reporting the leak.
 
 Tue Nov 23 11:45:27 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
