@@ -85,6 +85,7 @@ Test_Task::close (u_long)
   return 0;
 }
 
+int
 Test_Task::svc (void)
 {
   // Every thread must register the same stream to write to file.
@@ -175,6 +176,7 @@ main (int argc, char **)
 
   // Register a signal handler.
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+  ACE_UNUSED_ARG (sa);
 
   ACE_Reactor *reactor1 = ACE_Service_Config::reactor ();
   ACE_Reactor *reactor2 = new ACE_Reactor ();

@@ -26,6 +26,7 @@ main (int argc, char *argv[])
 
   // Register a signal handler.
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+  ACE_UNUSED_ARG (sa);
 
   for (int i = 0; i < iterations && !done; i++)
     {
