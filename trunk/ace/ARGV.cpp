@@ -195,7 +195,7 @@ ACE_ARGV::~ACE_ARGV (void)
   for (int i = 0; this->argv_[i] != 0; i++)
     ACE_OS::free ((void *) this->argv_[i]);
 
-  ACE_OS::free ((void *) this->argv_);
-  delete this->buf_;
+  delete [] this->argv_;
+  delete [] this->buf_;
 }
 
