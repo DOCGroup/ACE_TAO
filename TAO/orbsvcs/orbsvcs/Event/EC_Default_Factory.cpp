@@ -950,7 +950,7 @@ TAO_EC_Default_Factory::create_supplier_control (TAO_EC_Event_Channel* ec)
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, this->orbid_);
 
-      ACE_Time_Value rate (0, this->consumer_control_period_);
+      ACE_Time_Value rate (0, this->supplier_control_period_);
       return new TAO_EC_Reactive_SupplierControl (rate, ec, orb.in ());
     }
   return 0;
