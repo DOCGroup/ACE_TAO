@@ -1,3 +1,23 @@
+Mon Aug 16 17:08:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_cs.cpp:
+	  Removed code commented out with #if 0.
+
+	* TAO_IDL/be_include/be_visitor_sequence/sequence_ch.h:
+	* TAO_IDL/be_include/be_visitor_sequence/sequence_ci.h:
+	* TAO_IDL/be_include/be_visitor_sequence/sequence_cs.h:
+	  Added declarations for methods in new files listed below.
+
+	* TAO_IDL/be/be_visitor_sequence.cpp:
+	  Added #includes for new files listed below.
+
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_cs.cpp:
+	  New files containing methods corresponding to those in
+	  gen_bounded_str_sequence_c*.cpp.
+
 Mon Aug 16 16:20:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_string.cpp:
