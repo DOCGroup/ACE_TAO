@@ -43,7 +43,7 @@ TAO_EC_Priority_Dispatching::activate (void)
       ACE_TRY
         {
           RtecScheduler::Period_t period =
-            ACE_CU64_TO_U32 (ACE_Scheduler_Rates[i]);
+            ACE_U64_TO_U32 (ACE_Scheduler_Rates[i]);
           char buf[128];
           ACE_OS::sprintf (buf, "Dispatching_Task-%d.us", period);
 
