@@ -1,3 +1,9 @@
+Fri Mar 28 14:24:11 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+	* orbsvcs/tests/InterfaceRepo/Latency_Test/Latency Test.dsp:
+	  Renamed to Latency_Test.dsp. Autobuild doesn't seem to like
+	  spaces.
+
 Fri Mar 28 12:35:51 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 	* tests/ORB_init/Portspan/portspan.dsp:
