@@ -49,7 +49,7 @@
 // Arg traits specializations.
 namespace TAO
 {
-};
+}
 
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/typecode_defn.cpp:284
@@ -58,18 +58,18 @@ static const CORBA::Long _oc_Messaging_Priority[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   35,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5072), 
-  ACE_NTOHL (0x696f7269), 
-  ACE_NTOHL (0x74793a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5072),
+  ACE_NTOHL (0x696f7269),
+  ACE_NTOHL (0x74793a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/Priority:1.0
     9,
-  ACE_NTOHL (0x5072696f), 
-  ACE_NTOHL (0x72697479), 
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
   ACE_NTOHL (0x0),  // name = Priority
     CORBA::tk_short,
 
@@ -96,19 +96,19 @@ static const CORBA::Long _oc_Messaging_RebindMode[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   37,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5265), 
-  ACE_NTOHL (0x62696e64), 
-  ACE_NTOHL (0x4d6f6465), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5265),
+  ACE_NTOHL (0x62696e64),
+  ACE_NTOHL (0x4d6f6465),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Messaging/RebindMode:1.0
     11,
-  ACE_NTOHL (0x52656269), 
-  ACE_NTOHL (0x6e644d6f), 
+  ACE_NTOHL (0x52656269),
+  ACE_NTOHL (0x6e644d6f),
   ACE_NTOHL (0x64650000),  // name = RebindMode
     CORBA::tk_short,
 
@@ -135,19 +135,19 @@ static const CORBA::Long _oc_Messaging_RoutingType[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   38,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f526f), 
-  ACE_NTOHL (0x7574696e), 
-  ACE_NTOHL (0x67547970), 
-  ACE_NTOHL (0x653a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f526f),
+  ACE_NTOHL (0x7574696e),
+  ACE_NTOHL (0x67547970),
+  ACE_NTOHL (0x653a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Messaging/RoutingType:1.0
     12,
-  ACE_NTOHL (0x526f7574), 
-  ACE_NTOHL (0x696e6754), 
+  ACE_NTOHL (0x526f7574),
+  ACE_NTOHL (0x696e6754),
   ACE_NTOHL (0x79706500),  // name = RoutingType
     CORBA::tk_short,
 
@@ -174,18 +174,18 @@ static const CORBA::Long _oc_Messaging_Ordering[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   35,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f4f72), 
-  ACE_NTOHL (0x64657269), 
-  ACE_NTOHL (0x6e673a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f4f72),
+  ACE_NTOHL (0x64657269),
+  ACE_NTOHL (0x6e673a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/Ordering:1.0
     9,
-  ACE_NTOHL (0x4f726465), 
-  ACE_NTOHL (0x72696e67), 
+  ACE_NTOHL (0x4f726465),
+  ACE_NTOHL (0x72696e67),
   ACE_NTOHL (0x0),  // name = Ordering
     CORBA::tk_ushort,
 

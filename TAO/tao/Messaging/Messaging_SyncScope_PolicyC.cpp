@@ -48,14 +48,14 @@
 // Arg traits specializations.
 namespace TAO
 {
-};
+}
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for Messaging::SyncScopePolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::SyncScopePolicy_ptr
 TAO::Objref_Traits<Messaging::SyncScopePolicy>::tao_duplicate (
     Messaging::SyncScopePolicy_ptr p
@@ -64,7 +64,7 @@ TAO::Objref_Traits<Messaging::SyncScopePolicy>::tao_duplicate (
   return Messaging::SyncScopePolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<Messaging::SyncScopePolicy>::tao_release (
     Messaging::SyncScopePolicy_ptr p
@@ -73,14 +73,14 @@ TAO::Objref_Traits<Messaging::SyncScopePolicy>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::SyncScopePolicy_ptr
 TAO::Objref_Traits<Messaging::SyncScopePolicy>::tao_nil (void)
 {
   return Messaging::SyncScopePolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::SyncScopePolicy>::tao_marshal (
     Messaging::SyncScopePolicy_ptr p,
@@ -91,7 +91,7 @@ TAO::Objref_Traits<Messaging::SyncScopePolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*Messaging__TAO_SyncScopePolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -102,7 +102,7 @@ Messaging::SyncScopePolicy::SyncScopePolicy (void)
 Messaging::SyncScopePolicy::~SyncScopePolicy (void)
 {}
 
-void 
+void
 Messaging::SyncScopePolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   SyncScopePolicy *_tao_tmp_pointer =
@@ -120,10 +120,10 @@ Messaging::SyncScopePolicy::_narrow (
     {
       return SyncScopePolicy::_nil ();
     }
-  
+
   SyncScopePolicy_ptr proxy =
     dynamic_cast<SyncScopePolicy_ptr> (_tao_objref);
-  
+
   return SyncScopePolicy::_duplicate (proxy);
 }
 
@@ -134,7 +134,7 @@ Messaging::SyncScopePolicy::_duplicate (SyncScopePolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -189,21 +189,21 @@ static const CORBA::Long _oc_Messaging_SyncScopePolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   42,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5379), 
-  ACE_NTOHL (0x6e635363), 
-  ACE_NTOHL (0x6f706550), 
-  ACE_NTOHL (0x6f6c6963), 
-  ACE_NTOHL (0x793a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5379),
+  ACE_NTOHL (0x6e635363),
+  ACE_NTOHL (0x6f706550),
+  ACE_NTOHL (0x6f6c6963),
+  ACE_NTOHL (0x793a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Messaging/SyncScopePolicy:1.0
     16,
-  ACE_NTOHL (0x53796e63), 
-  ACE_NTOHL (0x53636f70), 
-  ACE_NTOHL (0x65506f6c), 
+  ACE_NTOHL (0x53796e63),
+  ACE_NTOHL (0x53636f70),
+  ACE_NTOHL (0x65506f6c),
   ACE_NTOHL (0x69637900),  // name = SyncScopePolicy
   };
 
@@ -304,7 +304,7 @@ operator>>= (
     TAO_Objref_Var_T<
         Messaging::SyncScopePolicy
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         Messaging::SyncScopePolicy
@@ -326,7 +326,7 @@ operator>>= (
     TAO_Objref_Var_T< \
         Messaging::SyncScopePolicy
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::SyncScopePolicy
@@ -337,5 +337,5 @@ operator>>= (
         Messaging::SyncScopePolicy \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
