@@ -36,8 +36,6 @@ pace_asctime_r (const pace_tm * time, char * buf)
   if (asctime_r (time, buf, 26) == -1) /* ??? */
     return (char*) 0;
   return buf;
-#elif (PACE_SUNOS)
-  return asctime_r (time, buf, 26);
 #else
   return asctime_r (time, buf);
 #endif /* PACE_LYNXOS */
@@ -127,7 +125,7 @@ PACE_INLINE
 char *
 pace_ctime_r (const pace_time_t * clock, char * buf)
 {
-# if (PACE_SUNOS) || (PACE_LYNXOS)
+# if (PACE_LYNXOS)
   return ctime_r (clock, buf, 26);
 # else
   return ctime_r (clock, buf);

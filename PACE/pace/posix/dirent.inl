@@ -37,14 +37,14 @@ int
 pace_readdir_r (PACE_DIR * dirp, pace_dirent * entry,
                 pace_dirent ** result)
 {
-#if (PACE_SUNOS)
+#if (PACE_LYNXOS)
   *result = readdir_r (dirp, entry);
   if (*result == 0)
     return errno;
   return 0;
 #else
   return readdir_r (dirp, entry, result);
-#endif /* PACE_SUNOS */
+#endif /* PACE_LYNXOS */
 }
 #endif /* PACE_HAS_POSIX_CLSR_UOF */
 
