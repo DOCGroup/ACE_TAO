@@ -117,8 +117,8 @@ TAO_Bounded_Sequence<T, MAX>::freebuf (T *buffer)
 
 template <class T, size_t MAX> ACE_INLINE
 TAO_Bounded_Sequence<T, MAX>::TAO_Bounded_Sequence (void)
-  : TAO_Bounded_Base_Sequence (MAX, 0, allocbuf (MAX), 1)
 {
+  this->maximum_ = MAX;
 }
 
 template <class T, size_t MAX> ACE_INLINE
