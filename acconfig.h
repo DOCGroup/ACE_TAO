@@ -610,9 +610,9 @@
 /* Platform contains <poll.h> */
 #undef ACE_HAS_POLL
 
-/* The ACE_Malloc<> class uses "position-independent" features
-   provided by ACE_Based_Pointer<>. */
-#undef ACE_HAS_POSITION_INDEPENDENT_MALLOC
+/* Platform supports "position-independent" features provided by
+   ACE_Based_Pointer<>. */
+#undef ACE_HAS_POSITION_INDEPENDENT_POINTERS
 
 /* Platform supports POSIX O_NONBLOCK semantics */
 #undef ACE_HAS_POSIX_NONBLOCK
