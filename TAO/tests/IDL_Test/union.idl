@@ -172,3 +172,24 @@ union X switch (XType)
       } a;
 };
 
+enum FieldType
+{
+    FTYPE_CHAR,
+    FTYPE_VARCHAR,
+    FTYPE_DEFCHAR
+};
+
+union FieldValue switch (FieldType)
+{
+    case FTYPE_CHAR:
+    case FTYPE_VARCHAR:
+       string strValue;
+    default:
+       string defstr;
+};
+
+
+struct Field
+{
+    FieldValue value;
+};
