@@ -1,3 +1,10 @@
+Wed Dec  5 12:44:28 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO-INSTALL.html:
+	  Removed instructions about not compiling ACE with Orbix support,
+	  the instructions are superfluous because ACE does not support
+	  Orbix anymore.
+
 Wed Dec  5 12:17:50 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/driver/drv_args.cpp:
@@ -7,7 +14,7 @@ Wed Dec  5 12:17:50 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
           Removed the ACE_TEXT wrapper from more instances of strings passed
           to ACE_DEBUG and ACE_ERROR where the 'L' prepend would not be
-          appropriate. Thanks again to Johnny Willemesen 
+          appropriate. Thanks again to Johnny Willemesen
           <johnny_willemsen@planet.nl> for pointing out the ones in TAO_IDL.
 
 Wed Dec 05 08:03:04 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
@@ -18,12 +25,12 @@ Wed Dec 05 08:03:04 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  by Chatchai Khunboa <ckhumboa@gmu.edu>.
 
 	* tao/Strategies/DIOP_Transport.cpp:
-	  
+
 	  Changed the implementation of send_i to return always the number
 	  of bytes which were due to be sent. As we do not care that we sent
-	  parts of a message (UDP), this is correct behavior and avoids 
-	  problems with the non-blocking send implementation.	
- 
+	  parts of a message (UDP), this is correct behavior and avoids
+	  problems with the non-blocking send implementation.
+
 
 Tue Dec 04 21:35:04 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
