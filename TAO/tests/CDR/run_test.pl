@@ -7,6 +7,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "../../../bin";
 require ACEutils;
+use Cwd;
 
 $brace="\#\#\#\#\#";
 %tests = ("basic_types" => "-n 256 -l 10",
@@ -16,8 +17,22 @@ $brace="\#\#\#\#\#";
 	  "allocator" => "");
 $test = "";
 $args = "";
+$cwd  = getcwd();
 $| = 1;
 print STDERR "\n";
+
+for($i = 0; $i <= $#ARGV; $i++) {
+  if ($ARGV[$i] eq '-chorus') {
+    $i++;
+    if (defined $ARGV[$i]) {
+      $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
+    }
+    else {
+      print STDERR "The -chorus option requires the hostname of the target\n";
+      exit(1);
+    }
+  }
+}
 
 sub run_test
 {
@@ -28,7 +43,7 @@ sub run_test
     $TST = Process::Create  ($EXEPREFIX."$test".$EXE_EXT,
                              "$args");
     print STDERR "\t$test RUNNING\n";
-    $retval = $TST->TimedWait (60);
+    $retval = $TST->TimedWait (90);
     if ($retval == -1) {
       print STDERR "ERROR $brace $test $args TIMEOUT\n";
       $TST->Kill (); $TST->TimedWait (5);

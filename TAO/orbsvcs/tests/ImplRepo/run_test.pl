@@ -8,14 +8,16 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "../../../../bin";
 
 require ACEutils;
+use Cwd;
 
-$airplane_ior = "airplane.ior";
-$nestea_ior = "nestea.ior";
-$implrepo_ior = "implrepo.ior";
+$cwd = getcwd();
+$airplane_ior = "$cwd$DIR_SEPARATOR" . "airplane.ior";
+$nestea_ior = "$cwd$DIR_SEPARATOR" . "nestea.ior";
+$implrepo_ior = "$cwd$DIR_SEPARATOR" . "implrepo.ior";
 
 $refstyle = " -ORBobjrefstyle URL";
 
-$implrepo_server = "..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".
+$implrepo_server = $EXEPREFIX."..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".
                    $DIR_SEPARATOR."ImplRepo_Service".$EXE_EXT;
 
 if ($^O eq "MSWin32")
@@ -24,7 +26,7 @@ if ($^O eq "MSWin32")
 }
 else
 {
-  $tao_imr = "..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".
+  $tao_imr = $EXEPREFIX."..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".
             $DIR_SEPARATOR."tao_imr".$EXE_EXT;
 }
 
@@ -160,8 +162,9 @@ for ($i = 0; $i <= $#ARGV; $i++)
   {
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?")
     {
-      print "run_test test\n";
+      print "run_test [-chorus <target>] test\n";
       print "\n";
+      print "-chorus <target>   -- Runs the test on Chorus target\n";
       print "test               -- Runs a specific test\n";
       print "                      airplane, airplane_ir, nestea, nestea_ir, both_ir\n";
       exit;
@@ -191,7 +194,17 @@ for ($i = 0; $i <= $#ARGV; $i++)
       both_ir_test ();
       exit;
     }
-
+    if ($ARGV[$i] eq '-chorus') {
+      $i++;
+      if (defined $ARGV[$i]) {
+        $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
+      }
+      else {
+        print STDERR "The -chorus option requires the hostname of the target\n";
+        exit(1);
+      }
+      last SWITCH;
+    }
     print "run_test: Unknown Option: ".$ARGV[$i]."\n";
   }
 }

@@ -8,12 +8,27 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 unshift @INC, '../../../../bin';
 require Process;
 require ACEutils;
+use Cwd;
 
-$NS_ior = "NameService.ior";
+$cwd = getcwd();
+$NS_ior = "$cwd$DIR_SEPARATOR" . "NameService.ior";
 $sleeptime = 3;
 $status = 0;
 
-$NS = Process::Create ("..".$DIR_SEPARATOR
+for($i = 0; $i <= $#ARGV; $i++) {
+  if ($ARGV[$i] eq '-chorus') {
+    $i++;
+    if (defined $ARGV[$i]) {
+      $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
+    }
+    else {
+      print STDERR "The -chorus option requires the hostname of the target\n";
+      exit(1);
+    }
+  }
+}
+
+$NS = Process::Create ($EXEPREFIX."..".$DIR_SEPARATOR
 		       ."..".$DIR_SEPARATOR
 		       ."Naming_Service".$DIR_SEPARATOR
 		       ."Naming_Service".$EXE_EXT,
@@ -25,7 +40,7 @@ if (ACE::waitforfile_timed ($NS_ior, 5) == -1) {
   exit 1;
 }
 
-$ES = Process::Create ("..".$DIR_SEPARATOR
+$ES = Process::Create ($EXEPREFIX."..".$DIR_SEPARATOR
 		       ."..".$DIR_SEPARATOR
 		       ."Event_Service".$DIR_SEPARATOR
 		       ."Event_Service".$EXE_EXT,
@@ -33,7 +48,7 @@ $ES = Process::Create ("..".$DIR_SEPARATOR
 
 sleep $sleeptime;
 
-$TEST = Process::Create (".".$DIR_SEPARATOR."Event_Latency".$EXE_EXT,
+$TEST = Process::Create ($EXEPREFIX.".".$DIR_SEPARATOR."Event_Latency".$EXE_EXT,
 			 "-ORBInitRef NameService=file://$NS_ior"
 			 ." -j -m 100");
 

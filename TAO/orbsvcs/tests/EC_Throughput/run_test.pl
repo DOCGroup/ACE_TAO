@@ -8,14 +8,28 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 unshift @INC, '../../../../bin';
 require Process;
 require ACEutils;
+use Cwd;
 
+$cwd = getcwd();
+for($i = 0; $i <= $#ARGV; $i++) {
+  if ($ARGV[$i] eq '-chorus') {
+    $i++;
+    if (defined $ARGV[$i]) {
+      $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
+    }
+    else {
+      print STDERR "The -chorus option requires the hostname of the target\n";
+      exit(1);
+    }
+  }                     
+}
 print STDERR "================ Collocated tests, single threaded\n";
 
 $T = Process::Create ($EXEPREFIX."ECT_Throughput".$EXE_EXT,
-		      " -ORBsvcconf ec.conf -m new -u 10000 -n 1 -t 0"
-		      . " -c 4");
+		      " -ORBsvcconf $cwd$DIR_SEPARATOR" . "ec.conf" .
+                      " -m new -u 10000 -n 1 -t 0 -c 4");
 
-if ($T->TimedWait (60) == -1) {
+if ($T->TimedWait (120) == -1) {
   print STDERR "ERROR: test timedout\n";
   $T->Kill (); $T->TimedWait (1);
   exit 1;
@@ -24,8 +38,8 @@ if ($T->TimedWait (60) == -1) {
 print STDERR "================ Collocated tests, single threaded\n";
 
 $T = Process::Create ($EXEPREFIX."ECT_Throughput".$EXE_EXT,
-		      " -ORBsvcconf ec.mt.conf -m new -u 10000 -n 1 -t 0"
-		      . " -c 4");
+		      " -ORBsvcconf $cwd$DIR_SEPARATOR" . "ec.mt.conf" .
+                      " -m new -u 10000 -n 1 -t 0 -c 4");
 
 if ($T->TimedWait (60) == -1) {
   print STDERR "ERROR: test timedout\n";
@@ -38,7 +52,7 @@ print STDERR "================ Remote test\n";
 $ns_ior = "NameService.ior";
 
 unlink $ns_ior;
-$NS = Process::Create ("..".$DIR_SEPARATOR.
+$NS = Process::Create ($EXEPREFIX."..".$DIR_SEPARATOR.
                        "..".$DIR_SEPARATOR.
                        "Naming_Service".$DIR_SEPARATOR.
                        "Naming_Service".$EXE_EXT,
@@ -50,12 +64,12 @@ if (ACE::waitforfile_timed ($ns_ior, 5) == -1) {
   exit 1;
 }
 
-$ES = Process::Create ("..".$DIR_SEPARATOR.
+$ES = Process::Create ($EXEPREFIX."..".$DIR_SEPARATOR.
                        "..".$DIR_SEPARATOR.
                        "Event_Service".$DIR_SEPARATOR.
                        "Event_Service".$EXE_EXT,
                        " -ORBInitRef NameService=file://$ns_ior "
-                       ." -ORBSvcConf ec.conf "
+                       ." -ORBSvcConf $cwd$DIR_SEPARATOR" . "ec.conf "
 		       . " -t NEW");
 
 sleep 5;

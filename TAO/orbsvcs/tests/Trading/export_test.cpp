@@ -124,8 +124,16 @@ main (int argc, char** argv)
       ACE_DEBUG ((LM_DEBUG, "*** Offer Exporter tests complete.\n"));
       ACE_DEBUG ((LM_DEBUG, "*** Now serving dynamic properties.\n"));
 
+      size_t offset = 0;
+      char file[1024];
+      ACE_OS::strcpy(file, argv[0]);
+      if ((offset = ACE_OS::strrchr(file, '/')) != 0) {
+        offset -= ((size_t)file - 1);
+      }
+      ACE_OS::strcpy(file + offset, "export_test_ready");
+
       FILE *ready_file =
-        ACE_OS::fopen ("export_test_ready", "w");
+        ACE_OS::fopen (file, "w");
       ACE_OS::fprintf (ready_file, "The export test is ready\n");
       ACE_OS::fclose (ready_file);
 

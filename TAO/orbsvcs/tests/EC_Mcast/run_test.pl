@@ -7,12 +7,29 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 unshift @INC, '../../../../bin';
 require Process;
+use Cwd;
+
+$cwd = getcwd();
+for($i = 0; $i <= $#ARGV; $i++) {
+  if ($ARGV[$i] eq '-chorus') {
+    $i++;
+    if (defined $ARGV[$i]) {
+      $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
+    }
+    else {
+      print STDERR "The -chorus option requires the hostname of the target\n";
+      exit(1);
+    }
+  }
+}
 
 # Run two copies of the same test...
 $T1 = Process::Create ($EXEPREFIX."EC_Mcast".$EXE_EXT,
-		       " -c sample.cfg -n 100 -t 50000 -f Set02");
+		       " -c $cwd$DIR_SEPARATOR" .
+		       "sample.cfg -n 100 -t 50000 -f Set02");
 $T2 = Process::Create ($EXEPREFIX."EC_Mcast".$EXE_EXT,
-		       " -c sample.cfg -n 100 -t 50000 -f Set02");
+		       " -c $cwd$DIR_SEPARATOR" .
+		       "sample.cfg -n 100 -t 50000 -f Set02");
 
 if ($T1->TimedWait (60) == -1) {
   print STDERR "ERROR: test1 timedout\n";

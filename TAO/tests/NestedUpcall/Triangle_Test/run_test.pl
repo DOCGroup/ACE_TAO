@@ -8,9 +8,24 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 unshift @INC, '../../../../bin';
 require Process;
 require ACEutils;
+use Cwd;
 
-$ior1file = "servera.ior";
-$ior2file = "serverb.ior";
+$cwd = getcwd();
+$ior1file = "$cwd$DIR_SEPARATOR" . "servera.ior";
+$ior2file = "$cwd$DIR_SEPARATOR" . "serverb.ior";
+
+for($i = 0; $i <= $#ARGV; $i++) {
+  if ($ARGV[$i] eq '-chorus') {
+    $i++;
+    if (defined $ARGV[$i]) {
+      $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
+    }
+    else {
+      print STDERR "The -chorus option requires the hostname of the target\n";
+      exit(1);
+    }
+  }
+}
 
 #  Make sure these aren't hanging around
 unlink $ior1file;

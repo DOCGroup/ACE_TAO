@@ -8,10 +8,12 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "../../../../bin";
 
 require ACEutils;
+use Cwd;
 
-$server_ior = "server_ior";
-$clerk_ior = "clerk_ior";
-$implrepo_ior = "implrepo.ior";
+$cwd = getcwd();
+$server_ior = "$cwd$DIR_SEPARATOR" . "server_ior";
+$clerk_ior = "$cwd$DIR_SEPARATOR" . "clerk_ior";
+$implrepo_ior = "$cwd$DIR_SEPARATOR" . "implrepo.ior";
 $status = 0;
 
 # Make sure the files are gone, so we can wait on them.
@@ -19,8 +21,8 @@ $status = 0;
 unlink $server_ior;
 unlink $clerk_ior;
 
-$server_program = "..$DIR_SEPARATOR..$DIR_SEPARATOR"."Time_Service".$DIR_SEPARATOR."Time_Service_Server".$EXE_EXT;
-$clerk_program = "..$DIR_SEPARATOR..$DIR_SEPARATOR"."Time_Service".$DIR_SEPARATOR."Time_Service_Clerk".$EXE_EXT;
+$server_program = $EXEPREFIX."..$DIR_SEPARATOR..$DIR_SEPARATOR"."Time_Service".$DIR_SEPARATOR."Time_Service_Server".$EXE_EXT;
+$clerk_program = $EXEPREFIX."..$DIR_SEPARATOR..$DIR_SEPARATOR"."Time_Service".$DIR_SEPARATOR."Time_Service_Clerk".$EXE_EXT;
 $client_program = $EXEPREFIX."client".$EXE_EXT;
 
 sub time_service_test_using_naming_service
@@ -109,8 +111,9 @@ for ($i = 0; $i <= $#ARGV; $i++)
   {
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?")
     {
-      print "run_test <use_naming> or <use_files>\n";
+      print "run_test [-chorus <target>] <use_naming> or <use_files>\n";
       print "\n";
+      print "-chorus <target>         -- Run the test on the Chorus target\n";
       print "use_naming               -- Runs the test using Naming Service\n";
       print "use_files                -- Runs the test using IOR Files\n";
       exit;
@@ -127,7 +130,17 @@ for ($i = 0; $i <= $#ARGV; $i++)
       time_service_test_using_files ();
       last SWITCH;
     }
-
+    if ($ARGV[$i] eq '-chorus') {
+      $i++;
+      if (defined $ARGV[$i]) {
+        $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
+      }
+      else {
+        print STDERR "The -chorus option requires the hostname of the target\n";
+        exit(1);
+      }
+      last SWITCH;
+    }
     print "run_test: Unknown Option: ".$ARGV[$i]."\n";
   }
 }

@@ -13,7 +13,7 @@ PortableInterceptor::ClientRequestInterceptor_ptr interceptor = 0;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "e");
+  ACE_Get_Opt get_opts (argc, argv, "ef:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -21,6 +21,9 @@ parse_args (int argc, char *argv[])
       {
       case 'e':
       break;
+      case 'f':
+        ior = get_opts.optarg;
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,

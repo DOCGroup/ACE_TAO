@@ -7,15 +7,30 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 unshift @INC, '../../../bin';
 require ACEutils;
+use Cwd;
 
-$iorfile = "ior";
+$cwd = getcwd();
+$iorfile = "$cwd$DIR_SEPARATOR" . "ior";
+
+for($i = 0; $i <= $#ARGV; $i++) {
+  if ($ARGV[$i] eq '-chorus') {
+    $i++;
+    if (defined $ARGV[$i]) {
+      $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
+    }
+    else {
+      print STDERR "The -chorus option requires the hostname of the target\n";
+      exit(1);
+    }
+  }
+}
 
 sub run_client
 {
   my $args = shift;
 
   $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
-                         $args);
+                         "-k file://$iorfile " . $args);
 
   $client = $CL->TimedWait (200);
   if ($client == -1) {
@@ -84,7 +99,7 @@ unlink $iorfile;
 
 print STDERR "\n\n*** Single threaded server ***\n\n\n";
 
-$SV = Process::Create ($EXEPREFIX."server$EXE_EXT");
+$SV = Process::Create ($EXEPREFIX."server$EXE_EXT", "-o $iorfile");
 
 if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile>\n";
@@ -110,7 +125,9 @@ if ($server != 0 || $client != 0) {
 print STDERR "\n\n*** Thread-Pool server ***\n\n\n";
 
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT",
-                       "multi_threaded_event_loop.conf -e 5");
+                       " -o $iorfile -e 5" .
+                       "$cwd$DIR_SEPARATOR" .
+                       "multi_threaded_event_loop.conf");
 
 if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile>\n";

@@ -5,11 +5,15 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
+
+
 use lib "../../../bin";
 require ACEutils;
 require Process;
+use Cwd;
 
-$iorfile = "server.ior";
+$cwd = getcwd();
+$iorfile = "$cwd$DIR_SEPARATOR" . "server.ior";
 $invocation = "sii";
 $num = 5;
 $other = "";
@@ -76,7 +80,7 @@ for ($i = 0; $i <= $#ARGV; $i++)
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?")
     {
       print "Run_Test Perl script for TAO Param Test\n\n";
-      print "run_test [-n num] [-d] [-onewin] [-h] [-t type] [-i (dii|sii)]\n";
+      print "run_test [-n num] [-d] [-onewin] [-h] [-t type] [-i (dii|sii)] [-chorus <target>]\n";
       print "\n";
       print "-n num              -- runs the client num times\n";
       print "-d                  -- runs each in debug mode\n";
@@ -84,7 +88,19 @@ for ($i = 0; $i <= $#ARGV; $i++)
       print "-h                  -- prints this information\n";
       print "-t type             -- runs only one type of param test\n";
       print "-i (dii|sii)        -- Changes the type of invocation\n";
+      print "-chorus <target>    -- Run tests on chorus target\n";
       exit 0;
+    }
+    if ($ARGV[$i] eq '-chorus') {
+      $i++;
+      if (defined $ARGV[$i]) {
+        $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
+      }
+      else {
+        print STDERR "The -chorus option requires the hostname of the target\n";
+        exit(1);
+      }
+      last SWITCH;
     }
     if ($ARGV[$i] eq "-n")
     {

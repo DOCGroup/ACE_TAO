@@ -12,24 +12,39 @@ unshift @INC, '../../../../bin';
 require Process;
 require ACEutils;
 require Uniqueid;
+use Cwd;
 
+$cwd = getcwd();
 # Amount of delay (in seconds) between starting a server and a client
 # to allow proper server initialization.
 $sleeptime = 8;
 
 # Variables for command-line arguments to client and server
 # executables.
-$ns_multicast_port = 10000 + uniqueid ();
+$ns_multicast_port = 10001 + uniqueid (); # Can not be 10000 on Chorus 4.0
 $ns_orb_port = 12000 + uniqueid ();
-$iorfile = "ns.ior";
-$persistent_ior_file = "pns.ior";
-$persistent_log_file = "test_log";
-$data_file = "test_run.data";
+$iorfile = "$cwd$DIR_SEPARATOR" . "ns.ior";
+$persistent_ior_file = "$cwd$DIR_SEPARATOR" . "pns.ior";
+$persistent_log_file = "$cwd$DIR_SEPARATOR" . "test_log";
+$data_file = "$cwd$DIR_SEPARATOR" . "test_run.data";
+
+for($i = 0; $i <= $#ARGV; $i++) {
+  if ($ARGV[$i] eq '-chorus') {
+    $i++;
+    if (defined $ARGV[$i]) {
+      $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
+    }
+    else {
+      print STDERR "The -chorus option requires the hostname of the target\n";
+      exit(1);
+    }
+  }                     
+}
 
 sub name_server
 {
   my $args = "@_ "."-ORBnameserviceport $ns_multicast_port -o $iorfile";
-  my $prog = "..$DIR_SEPARATOR..$DIR_SEPARATOR".
+  my $prog = $EXEPREFIX."..$DIR_SEPARATOR..$DIR_SEPARATOR".
       "Naming_Service".$DIR_SEPARATOR.
           "Naming_Service".$EXE_EXT;
 
@@ -131,7 +146,7 @@ if ($server == -1) {
 unlink $iorfile;
 
 $FL = Process::Create ($EXEPREFIX."process-m-output.pl",
-                       " test_run.data 15");
+                       " $data_file 15");
 $filter = $FL->TimedWait (60);
 if ($filter == -1) {
   print STDERR "ERROR: filter timedout\n";

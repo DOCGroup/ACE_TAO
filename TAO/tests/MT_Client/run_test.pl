@@ -7,27 +7,40 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 unshift @INC, '../../../bin';
 require ACEutils;
+use Cwd;
 
-$client_conf="client.global.conf";
+$cwd = getcwd();
+$client_conf="$cwd$DIR_SEPARATOR" ."client.global.conf";
 $client_process="client";
 $debug_level='0';
 $threads='10';
 $status = 0;
 
-foreach $i (@ARGV) {
-  if ($i eq '-tss') {
-    $client_conf = "client.tss.conf";
-  } elsif ($i eq '-debug') {
+for($i = 0; $i <= $#ARGV; $i++) {
+  if ($ARGV[$i] eq '-chorus') {
+    $i++;
+    if (defined $ARGV[$i]) {
+      $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
+    }
+    else {
+      print STDERR "The -chorus option requires the hostname of the target\n";
+      exit(1);
+    }
+  }
+  elsif ($ARGV[$i] eq '-tss') {
+    $client_conf = "$cwd$DIR_SEPARATOR" . "client.tss.conf";
+  } elsif ($ARGV[$i] eq '-debug') {
     $debug_level = '1';
-  } elsif ($i eq '-creation') {
+  } elsif ($ARGV[$i] eq '-creation') {
     $client_process = 'orb_creation';
     $threads='2';
   }
 }
 
-$iorfile = "server.ior";
+$iorfile = "$cwd$DIR_SEPARATOR" ."server.ior";
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
-                       " -ORBsvcconf server.conf  -ORBdebuglevel $debug_level"
+                       " -ORBsvcconf " . "$cwd$DIR_SEPARATOR" ."server.conf ".
+                       " -ORBdebuglevel $debug_level"
                        . " -o $iorfile");
 
 if (ACE::waitforfile_timed ($iorfile, 30) == -1) {

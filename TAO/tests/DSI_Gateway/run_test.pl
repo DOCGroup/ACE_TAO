@@ -7,26 +7,41 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 unshift @INC, '../../../bin';
 require ACEutils;
+use Cwd;
 
-$svfile = "server.ior";
+$cwd = getcwd();
+for($i = 0; $i <= $#ARGV; $i++) {
+  if ($ARGV[$i] eq '-chorus') {
+    $i++;
+    if (defined $ARGV[$i]) {
+      $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
+    }
+    else {
+      print STDERR "The -chorus option requires the hostname of the target\n";
+      exit(1);
+    }
+  }
+}
+
+$svfile = "$cwd$DIR_SEPARATOR" . "server.ior";
 unlink $svfile;
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
                        " -o $svfile");
 
 if (ACE::waitforfile_timed ($svfile, 5) == -1) {
-  print STDERR "ERROR: cannot find file <$iorfile>\n";
+  print STDERR "ERROR: cannot find file <$svfile>\n";
   $SV->Kill (); $SV->TimedWait (1);
   exit 1;
 }
 
-$gwfile = "gateway.ior";
+$gwfile = "$cwd$DIR_SEPARATOR" . "gateway.ior";
 unlink $gwfile;
 $GW = Process::Create ($EXEPREFIX."gateway$EXE_EXT ",
                        " -k file://$svfile"
 		       . " -o $gwfile");
 
 if (ACE::waitforfile_timed ($gwfile, 5) == -1) {
-  print STDERR "ERROR: cannot find file <$iorfile>\n";
+  print STDERR "ERROR: cannot find file <$gwfile>\n";
   $GW->Kill (); $GW->TimedWait (1);
   exit 1;
 }

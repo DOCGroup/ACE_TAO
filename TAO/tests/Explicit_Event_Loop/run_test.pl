@@ -9,9 +9,24 @@ use lib "../../../bin";
 
 require ACEutils;
 require Process;
+use Cwd;
+
+$cwd = getcwd();
+for($i = 0; $i <= $#ARGV; $i++) {
+  if ($ARGV[$i] eq '-chorus') {
+    $i++;
+    if (defined $ARGV[$i]) {
+      $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
+    }
+    else {
+      print STDERR "The -chorus option requires the hostname of the target\n";
+      exit(1);
+    }
+  }
+}
 
 $status = 0;
-$iorfile = "chapter_test.ior";
+$iorfile = "$cwd$DIR_SEPARATOR" . "chapter_test.ior";
 unlink $iorfile;
 
 

@@ -19,14 +19,14 @@ CosEC_Multiple::~CosEC_Multiple (void)
 int
 CosEC_Multiple::init (int argc, char *argv[])
 {
-  if (this->parse_args (argc, argv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "parse error returned error.\n"),
-                      -1);
-
   if (init_ORB (argc, argv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "init_ORB returned error.\n"),
+                      -1);
+
+  if (this->parse_args (argc, argv) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "parse error returned error.\n"),
                       -1);
 
   if (init_CosEC () == -1)
