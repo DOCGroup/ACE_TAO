@@ -5,6 +5,10 @@ Mon Jul 19 09:50:31 1999  Steve Huston  <shuston@riverace.com>
           types necessary for this class is available at template link
           time.
 
+        * apps/gperf/src/Options.h: If on PharLap ETS, clear out its definition
+          of EOS to avoid compile errors. Thanks to David Hauck
+          <davidh@realtimeint.com> for this fix.
+
 Mon Jul 19 08:12:30 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_tru64_cxx.GNU: added support
