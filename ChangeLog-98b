@@ -15,7 +15,9 @@ Tue Dec 01 13:48:51 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
           under 3.0 (excluded.)
 
         * ace/OS.i (sigwait): FreeBSD 3.0 supports sigwait.  Changed the
-          ifdef condition to support sigwait for 3.0 or above.
+ 	  ifdef condition to support sigwait for 3.0 or above.  Thanks to
+ 	  Bob McWhirter <bob@werken.com> and Russell L. Carter
+ 	  <rcarter@dnstoo.consys.com> for helping to track this down.
 
 Tue Dec 01 12:59:57 1998  James CE Johnson <jcej@lads.com>
 
