@@ -1,3 +1,31 @@
+Fri Apr 12 15:39:50 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Connector_Impl.cpp: Dont add the handler to the reactor. 
+
+	* tao/IIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.cpp: Add the handler to the
+	  reactor after the transport has been cached. 
+
+	  The above changes helps to works around a race condition. The
+	  race occurs in the following scenario:
+
+	  - the handler is added to the reactor as soon as the connection
+ 	    is established
+	  - the server crashes and a thread waiting on the reactor closes
+	    down the connection. As the connection handler and transports
+	    have not been ref counted (yet) they could be completely
+	    destroyed. 
+	  - the thread that initiated the connection would try to
+	    duplicate a null transport and try adding that to cache and
+	    all hell would break loose. 
+
+	  The methodology adopted is to delay adding the handler to the
+	  reactor till the handler is added to cache. This would make sure
+	  that the transport is refcounted and hence the thread making the
+	  connection will have a valid pointer to take action and do the
+	  cleanup when it finds that the connection is closed. 
+
 Fri Apr 12 14:14:01 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Connector_Registry.cpp:
