@@ -1,3 +1,80 @@
+Fri Oct 31 08:39:54 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL Compiler - Intermediate commit of all improved features.
+
+	* be/be_type.* : Improved the nested_type_name method such that it
+	now takes an additional parameter called suffix that has a default
+	value of NULL. Carlos, Sergio, and myself independently found an
+	extremely bad piece of code that was getting generated that looked
+	like the following:
+		ACE_NESTED_CLASS (XXXX, YYYY)_ptr
+
+	The new convention is to pass the suffix such as "_ptr", or "_var"
+	or "_out" to this method so that it can generate valid code of the
+	form:
+		ACE_NESTED_CLASS (XXXX, YYYY_ptr)
+
+	* be/be_decl.cpp : All the methods such as repoID (), flatname
+	(), etc now check if the corresponding data member was created or
+	not. If they are not, the corresponding private method e.g.,
+	compute_repoID (), are invoked. This way we do not have to call
+	all these private methods in the constructors of all the derived
+	be classes. The one compelling reason to do it this way is because
+	the "names" for certain types are not available at construction
+	time, e.g., sequences. A name to a sequence is assigned from the
+	context it is in i.e., whether it was a named sequence in the form
+	of a "typedef" statement or it was an anonymous sequence.
+
+	As of this commit, all calls to such compute_*  methods in the
+	constructors of all the derived be classes are commented out and
+	will eventually disappear in the next commit.
+
+	* be/be_decl.cpp : One more change in be_decl.cpp is to add the
+	case for "interface_fwd" in the generation of the _var and _out
+	definitions and implementations.
+
+	* be/be_helper.* : Added two new methods called "gen_ifdef_macro"
+	and "gen_endif". These are required to generate the #if !defined
+	(...) <code> #endif macros. These are very essential if the IDL
+	has forward declarations of interfaces. Forward declarations of
+	interfaces must generate a forward class declaration. In addition,
+	it has to typedef the "_ptr" type and define the "_var" and "_out"
+	types. However, the real "be_interface" class does this too which
+	can result in "multiple declarations" errors from the C++
+	compiler. Hence we use this scheme. As in the case of the
+	nested_type_name method mentioned above, this method also takes a
+	default "suffix" parameter (= 0). This is required for the "_var",
+	"_ptr", and "_out" suffixes.
+
+	* be/be_interface.cpp
+	  be/be_interface_fwd.cpp:
+
+	Used the TAO_OutStream::gen_ifdef_macro () and gen_endif methods
+	for the definitions of the _ptr, _var, and _out classes and their
+	implementations.
+
+	*be/be_sequence.* : Lot of modifications and change in the design
+	in terms of handling the base types that themselves could be
+	sequences. Although the AST_Sequence i.e., OMG IDL does not define
+	a "sequence" to be a scope producing construct like structs or
+	unions, we choose to make "be_sequence" to be a scope producing
+	construct. This is no way alters the OMG IDL language because the
+	front-end is still the same. "be_sequence" was made to inherit
+	from scope because the sequence mapping gives rise to a C++ class
+	which is a scoping construct. This way, base types that turn out
+	to be anonymous sequences can be assigned a parent scope and their
+	name generation will fall in line with other classes.
+
+	There are certain features missing with sequences at this commit
+	time, but this should reduce tweaking the generated code to a
+	large extent.
+
+	* be/be_state.cpp: Update the code for handling sequences and
+	typedefs. Typedefs should be handled properly now.
+
+	* All other *.cpp files: Either commented out the compute_* calls
+	in the constructors or removed them.
+
 Fri Oct 31 03:00:09 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/orb_core.cpp: Moved call to connector's open() into init(),
@@ -38,41 +115,41 @@ Fri Oct 31 01:03:05 1997    <irfan@TWOSTEP>
 
 Thu Oct 30 22:50:44 1997    <coryan@MILONGA>
 
-	* tao/corba.h: 
+	* tao/corba.h:
 	  Added a definition for ACE_NESTED_CLASS, maybe it is defined in
 	  some place else, but I couldn't find it.
 
-	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be/be_interface.cpp:
 	  Fixed the definition for skeleton destructors.
 
-	* TAO_IDL/be/be_helper.cpp: 
+	* TAO_IDL/be/be_helper.cpp:
 	  Added a lot of redundant ACE_OS::fflush() calls. Apparently we
 	  have two FILE* or file descriptors over the same file, bt the
 	  fflush hides the problem.
 
-	* TAO_IDL/be/be_decl.cpp: 
+	* TAO_IDL/be/be_decl.cpp:
 	  Fixed inconsistency between operator-> declaration and
 	  definition for _out classes.
 
 Thu Oct 30 14:06:54 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
-	* TAO_IDL/fe/Makefile: 
-	Added an expression to the sed command in the rule to construct 
-	lex.yy.cpp, that replaces ECHO with TAO_ECHO, because a 
-	different ECHO macro is already defined in 
+	* TAO_IDL/fe/Makefile:
+	Added an expression to the sed command in the rule to construct
+	lex.yy.cpp, that replaces ECHO with TAO_ECHO, because a
+	different ECHO macro is already defined in
 	/usr/include/sys/termios.h
 
-	* TAO_IDL/fe/idl.ll: 
+	* TAO_IDL/fe/idl.ll:
 	Fixed some warnings about nested comments.
-	Changed the declaration of variable i to outside of 
+	Changed the declaration of variable i to outside of
 	the 'for' initialization to avoid obsolete binding warnings.
-	
-	* TAO_IDL/be/be_interface_fwd.cpp (gen_client_header): 
+
+	* TAO_IDL/be/be_interface_fwd.cpp (gen_client_header):
 	Added ACE_UNUSED_ARG macro to avoid unused variable warning,
 	for variable i.
 
-	* TAO_IDL/be/be_constant.cpp (exprtype_to_string): 
-	* TAO_IDL/util/utl_error.cpp (exprtype_to_string): 
+	* TAO_IDL/be/be_constant.cpp (exprtype_to_string):
+	* TAO_IDL/util/utl_error.cpp (exprtype_to_string):
 	Added case statements to handle the rest of un-handled
 	enumerations from AST_Expression::ExprType.  These will
 	handle a default value (i.e. NULL).  Enumerations added are:
@@ -93,7 +170,7 @@ Thu Oct 30 03:40:26 1997    <nw1@COYOTE>
 
 	* tests/Cubit/TAO/DII_Cubit/client.dsp:
 	* tests/Cubit/TAO/DII_Cubit/server.dsp:  Updated include files
-	  path and libarary path. 
+	  path and libarary path.
 
 	* tao/giop.cpp (close_connection): Use ACE_HANDLE instead of int.
 
@@ -103,8 +180,8 @@ Thu Oct 30 02:53:20 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Thu Oct 30 02:20:21 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
-	* tests/IDL_Cubit: 
-	Added more comments and changed the header to be ACE'ified.  
+	* tests/IDL_Cubit:
+	Added more comments and changed the header to be ACE'ified.
 	Make output more consistent.
 
 Thu Oct 30 02:12:27 1997 Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
@@ -116,7 +193,7 @@ Thu Oct 30 02:12:27 1997 Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
 	handcrafted "original" Cubit example.
 
 	* tests/Cubit/COOL: Added the COOL version of the Cubit test. The
-	COOL version is written for Chorus COOL version 4.1.	
+	COOL version is written for Chorus COOL version 4.1.
 
 Wed Oct 29 22:26:10 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
@@ -136,8 +213,8 @@ Wed Oct 29 22:26:10 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 Wed Oct 29 20:47:47 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
-	* tests/IDL_Cubit/clnt.cpp: 
-	* tests/IDL_Cubit/clnt.h: 
+	* tests/IDL_Cubit/clnt.cpp:
+	* tests/IDL_Cubit/clnt.h:
 	Cleaned up the code.  Added ACE_Profile_Timer to time the calls.
 	Changed copyright header.  Added more comments.
 
@@ -186,7 +263,7 @@ Wed Oct 29 15:59:30 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
 	* tests/IDL_Cubit/clnt.cpp: OO'ified the code. Added class
 	Cubit_Client.
-	* tests/IDL_Cubit/clnt.h: added this file to contain  the class 
+	* tests/IDL_Cubit/clnt.h: added this file to contain  the class
 	definition.
 
 Wed Oct 29 11:01:11 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
