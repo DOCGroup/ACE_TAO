@@ -1,3 +1,62 @@
+Sun Apr 06 20:36:39 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/CIAO_Installation_Data.ini:
+	* examples/handcrafted/Display/HUDisplay.cad:
+	* examples/handcrafted/Display/GPS/GPS.csd:
+	* examples/handcrafted/Display/GPS/GPS.ssd:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.csd:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.ssd:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI.csd:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI.ssd:
+	* examples/handcrafted/Display/RateGen/RateGen.csd:
+	* examples/handcrafted/Display/RateGen/RateGen.ssd: Removed these
+	  files as they have already been moved to the
+	  examples/handcrafted/Display/descriptors/ subdirectory.
+
+	* examples/handcrafted/Display/NOTE: Updated obsolete notes.
+
+	  Thanks to Andrey Nechypurenko
+	  <Andrey.Nechypurenko@mchp.siemens.de> for the following
+	  changes.  He reported, motivated or sent patches for them.
+
+	* examples/handcrafted/Display/descriptors/NOTE.txt: Fixed several
+	  typos.
+
+	* examples/handcrafted/Display/descriptors/DuelDisplay.cad:
+	* examples/handcrafted/Display/descriptors/GPS_tracing.csd:
+	* examples/handcrafted/Display/descriptors/HUDisplayGUI.cad:
+	* examples/handcrafted/Display/descriptors/RemoteDisplayGUI.cad:
+	  Updated these assembly descriptors to use the new GPS component
+	  that emulate a trace (instead of the random coordinates).
+
+	* examples/handcrafted/Display/NavDisplay/client.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/run_test.pl:
+	  Removed these testing artifacts because NavDisplay component
+	  requires other component to function properly.
+
+	* tools/XML_Helpers/Assembly_Spec.inl: Fixed VC7.1 compilation
+	  error.
+
+	* examples/handcrafted/Display/GPS/GPS.mpc:
+	* examples/handcrafted/Display/GPS/GPS_tracing_exec.cpp:
+	* examples/handcrafted/Display/GPS/GPS_tracing_exec.h: Added a
+	  new implementation for the GPS component.  This implementation
+	  simulates coordinates of a trace instead of some random
+	  positions.
+
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.mpc:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/DetailView.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/MapView.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.h:
+	  Please find in attachment slightly modified version of
+	  NavDisplayGUI. I have modified it slightly mainly in order to
+	  let the GUI component to find background and animation images
+	  either based on ACE_ROOT or using ../NavDisplayGUI_exec/.
+
+	* examples/handcrafted/Display/NavDisplayGUI_exec/README: Removed
+	  the mentioning of run_test.pl.  It's no longer valid.
+
 Sat Apr 05 20:08:27 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ciao/CCM_Deployment.idl:

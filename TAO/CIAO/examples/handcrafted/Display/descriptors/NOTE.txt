@@ -41,14 +41,17 @@ test.dat:
                  from the default daemon shell.
 
   HUDisplayGUI.cad: Same as HUDisplay.cad, but instead of a text-based
-                    NavDisplay component, this descriptor instantiate
-                    a GUI NavDisplay window.
+                    NavDisplay component and a GPS component that
+                    generates random coordinations, this descriptor
+                    instantiate a GUI NavDisplay window and a GPS
+                    component that emulate a trace.
 
   RemoteDisplay.cad: This descriptor causes the NavDisplay component
                      to be instantiated in the "Remote" daemon.
 
   RemoteDisplayGUI.cad: Similar to RemoteDisplay.cad but uses a
-                        GUI-based NavDisplay component.
+                        GUI-based NavDisplay and the tracing GPS
+                        components.
 
   DuelDisplay.cad: A combination of HUDisplay.cad and
                    RemoteDisplayGUI.cad.  This example uses 4
@@ -59,7 +62,7 @@ Unfortunately, there's no run_test.pl for starting and running these
 example configurations/assemblies as these daemons/managers programs
 are still under development.  You will need several shell windows for
 them.  All the following step should be run from this subdirectory
-($CIAO_ROOT/examples/handcrafted/Displaydescriptors/).  Here are the
+($CIAO_ROOT/examples/handcrafted/Display/descriptors/).  Here are the
 steps to demonstrate the examples:
 
 Step 1:
@@ -83,7 +86,7 @@ Step 2:
   does the assembly work.  This should also be started in a separate
   shell window.
 
-    $(CIAO_ROOT/CIAO/tools/Assembly_Deployer/Assembly_Manager -o ior -c test.dat
+    $(CIAO_ROOT)/tools/Assembly_Deployer/Assembly_Manager -o ior -c test.dat
 
 Step 3:
 =======
@@ -112,7 +115,7 @@ Step 4:
 
   Once the controller is running, check out the Daemon window (for
   text-based NavDisplay component) or the GUI window for the output.
-  Once you are happy with it, press <entry> in this shell window to
+  Once you are happy with it, press <enter> in this shell window to
   terminate the controller program and you will stop the RateGen
   component from sending out more event.
 

@@ -47,7 +47,7 @@ CIAO::Assembly_Placement::Container::destination (const char *des)
 ACE_INLINE const char *
 CIAO::Assembly_Placement::Container::destination (void) const
 {
-  if (this->destination_.length == 0)
+  if (this->destination_.length () == 0)
     return 0;
   return this->destination_.c_str ();
 }

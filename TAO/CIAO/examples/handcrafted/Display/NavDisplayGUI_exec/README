@@ -5,12 +5,3 @@ i.e. ACE_HAS_QT since this example does not relyes on Qt Reactor and
 communicates with GUI part using QApplication::postMessage() and
 simple Command Pattern based framework.  But be sure that QTDIR
 environment variable is pointed to your Qt instalation directory.
-
-This example uses the test client application from ../NavDisplay
-directory.  You can use run_test.pl located in this directory (not in
-../NavDisplay) to run the example.
-
-The expected behaviour - you should be able to see the moving red dot
-over the map and changing values of x and y coordinates in
-corresponding edit boxes. After several seconds the red dot stops and
-then after five seconds the application will be automatically closed.

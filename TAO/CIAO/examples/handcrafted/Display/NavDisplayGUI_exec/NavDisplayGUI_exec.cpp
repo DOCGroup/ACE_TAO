@@ -17,7 +17,7 @@ static char *argv[] =
 
 /// Default constructor.
 MyImpl::NavDisplayGUI_exec_impl::NavDisplayGUI_exec_impl ()
-: unit_(1, "Model T3+"), loc_(50, 20, 0), dx_(1), dy_(2)
+: unit_(1, "Model T3+"), loc_(50, 20, 0)
 {
   ACE_DEBUG ((LM_DEBUG, "MyImpl::NavDisplayGUI_exec_impl::NavDisplayGUI_exec_impl ()\n"));
 }
@@ -52,11 +52,6 @@ MyImpl::NavDisplayGUI_exec_impl::push_Refresh (HUDisplay::tick_ptr ev
 
   loc_.x_ = lx % 500;
   loc_.y_ = ly % 300;
-
-//   if(loc_.x_ > 500) dx_ = -1;
-//   if(loc_.x_ < 10) dx_ = 1;
-//   if(loc_.y_ > 300) dy_ = -1;
-//   if(loc_.y_ < 10) dy_ = 1;
 
   this->unit_.setLocation(loc_);
 
