@@ -671,14 +671,14 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator* (void)
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator== (ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &rhs)
+ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator== (const ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &rhs) const
 {
   ACE_TRACE ("ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator==");
   return (this->map_man_ == rhs.map_man_ && this->next_ == rhs.next_);
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator!= (ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &rhs)
+ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator!= (const ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &rhs) const
 {
   ACE_TRACE ("ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator!=");
   return (this->next_ != rhs.next_ || this->map_man_ != rhs.map_man_);
