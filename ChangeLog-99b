@@ -9,6 +9,13 @@ Thu Jul 08 11:35:53 1999  David L. Levine  <levine@cs.wustl.edu>
           with Tornado II/VxWorks 5.4.  It's not enabled by default
           in ACE.
 
+Thu Jul  8 11:31:13 1999  Steve Huston  <shuston@riverace.com>
+
+        * tests/Message_Queue_Test.cpp: Added a test to see the correct errno
+          is set for a timed-out dequeue operation.
+
+Thu Jul 08 11:30:43 1999  David L. Levine  <levine@cs.wustl.edu>
+
         * ACE-INSTALL.html: added note about the uninitialized
           variable warnings from (the old) egcs that is
           distributed with Wind River's Tornado II.
