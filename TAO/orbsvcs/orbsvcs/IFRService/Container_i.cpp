@@ -10,10 +10,12 @@
 
 #include "tao/IFR_Client/IFR_ComponentsC.h"
 
+#include "tao/CDR.h"
+
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID (IFRService, 
-           Container_i, 
+ACE_RCSID (IFRService,
+           Container_i,
            "$Id$")
 
 const char *TAO_Container_i::tmp_name_holder_ = 0;
@@ -86,11 +88,11 @@ TAO_Container_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
           // This entry may already have been destroyed.
           if (status == 0)
             {
-              TAO_IDLType_i *impl = 
+              TAO_IDLType_i *impl =
                 TAO_IFR_Service_Utils::path_to_idltype (path,
                                                         this->repo_);
 
-              CORBA::DefinitionKind def_kind = 
+              CORBA::DefinitionKind def_kind =
                 impl->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_CHECK;
 
@@ -118,7 +120,7 @@ TAO_Container_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
                                               "refs",
                                               1);
     }
-    
+
   // Destroy definitions.
 
   ACE_Configuration_Section_Key defns_key;
@@ -127,9 +129,9 @@ TAO_Container_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
                                           "defns",
                                           0,
                                           defns_key);
-   
+
   // Store our section key for later in case this method is
-  // called recursively                               
+  // called recursively
   ACE_Configuration_Section_Key holder = this->section_key_;
 
   // This section may not have been created.
@@ -164,7 +166,7 @@ TAO_Container_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
       // Restore our original section key, in case this method was
       // called recursively.
       this->section_key (holder);
-      
+
       this->repo_->config ()->remove_section (this->section_key_,
                                               "defns",
                                               1);
@@ -390,7 +392,7 @@ TAO_Container_i::lookup_i (const char *search_name
                                             id.c_str (),
                                             path);
 
-  CORBA::Object_var obj = 
+  CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (path,
                                               this->repo_
                                               ACE_ENV_ARG_PARAMETER);
@@ -736,7 +738,7 @@ TAO_Container_i::create_module_i (const char *id,
   // by most of the other creation methods, so a blank one gets passed in.
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
-  ACE_TString path = 
+  ACE_TString path =
     TAO_IFR_Service_Utils::create_common (this->def_kind (),
                                           CORBA::dk_Module,
                                           this->section_key_,
@@ -795,7 +797,7 @@ TAO_Container_i::create_constant_i (const char *id,
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
-  ACE_TString path = 
+  ACE_TString path =
     TAO_IFR_Service_Utils::create_common (this->def_kind (),
                                           CORBA::dk_Constant,
                                           this->section_key_,
@@ -889,7 +891,7 @@ TAO_Container_i::create_struct_i (const char *id,
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
-  ACE_TString path = 
+  ACE_TString path =
     TAO_IFR_Service_Utils::create_common (this->def_kind (),
                                           CORBA::dk_Struct,
                                           this->section_key_,
@@ -931,7 +933,7 @@ TAO_Container_i::create_struct_i (const char *id,
                                                 "name",
                                                 members[i].name.in ());
 
-      member_path = 
+      member_path =
         TAO_IFR_Service_Utils::reference_to_path (members[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (member_key,
@@ -939,7 +941,7 @@ TAO_Container_i::create_struct_i (const char *id,
                                                 member_path);
     }
 
-  CORBA::DefinitionKind def_kind = 
+  CORBA::DefinitionKind def_kind =
     this->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::StructDef::_nil ());
 
@@ -996,7 +998,7 @@ TAO_Container_i::create_union_i (const char *id,
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
-  ACE_TString path = 
+  ACE_TString path =
     TAO_IFR_Service_Utils::create_common (this->def_kind (),
                                           CORBA::dk_Union,
                                           this->section_key_,
@@ -1011,7 +1013,7 @@ TAO_Container_i::create_union_i (const char *id,
   ACE_CHECK_RETURN (CORBA::UnionDef::_nil ());
 
   // Add a field to hold the path to the discriminator type.
-  char *disc_path = 
+  char *disc_path =
     TAO_IFR_Service_Utils::reference_to_path (discriminator_type);
 
   this->repo_->config ()->set_string_value (new_key,
@@ -1059,7 +1061,7 @@ TAO_Container_i::create_union_i (const char *id,
                          ACE_ENV_ARG_PARAMETER);
     }
 
-  CORBA::DefinitionKind def_kind = 
+  CORBA::DefinitionKind def_kind =
     this->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::UnionDef::_nil ());
 
@@ -1113,7 +1115,7 @@ TAO_Container_i::create_enum_i (const char *id,
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
-  ACE_TString path = 
+  ACE_TString path =
     TAO_IFR_Service_Utils::create_common (this->def_kind (),
                                           CORBA::dk_Enum,
                                           this->section_key_,
@@ -1149,7 +1151,7 @@ TAO_Container_i::create_enum_i (const char *id,
                                                 members[i].in ());
     }
 
-  CORBA::DefinitionKind def_kind = 
+  CORBA::DefinitionKind def_kind =
     this->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::EnumDef::_nil ());
 
@@ -1203,7 +1205,7 @@ TAO_Container_i::create_alias_i (const char *id,
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
-  ACE_TString path = 
+  ACE_TString path =
     TAO_IFR_Service_Utils::create_common (this->def_kind (),
                                           CORBA::dk_Alias,
                                           this->section_key_,
@@ -1218,7 +1220,7 @@ TAO_Container_i::create_alias_i (const char *id,
   ACE_CHECK_RETURN (CORBA::AliasDef::_nil ());
 
   // Get the path to our original type and store it.
-  char *unalias_path = 
+  char *unalias_path =
     TAO_IFR_Service_Utils::reference_to_path (original_type);
 
   this->repo_->config ()->set_string_value (new_key,
@@ -1267,7 +1269,7 @@ TAO_Container_i::create_interface_i (const char *id,
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
-  ACE_TString path = 
+  ACE_TString path =
     TAO_IFR_Service_Utils::create_common (this->def_kind (),
                                           CORBA::dk_Interface,
                                           this->section_key_,
@@ -1296,7 +1298,7 @@ TAO_Container_i::create_interface_i (const char *id,
       // Store the path to each base interface.
       for (CORBA::ULong i = 0; i < length; ++i)
         {
-          inherited_path = 
+          inherited_path =
             TAO_IFR_Service_Utils::reference_to_path (
                 base_interfaces[i].in ()
               );
@@ -1434,7 +1436,7 @@ TAO_Container_i::create_value_box_i (const char *id,
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
-  ACE_TString path = 
+  ACE_TString path =
     TAO_IFR_Service_Utils::create_common (this->def_kind (),
                                           CORBA::dk_ValueBox,
                                           this->section_key_,
@@ -1449,7 +1451,7 @@ TAO_Container_i::create_value_box_i (const char *id,
   ACE_CHECK_RETURN (CORBA::ValueBoxDef::_nil ());
 
   // Get the path to our original type and store it.
-  char *boxed_path = 
+  char *boxed_path =
     TAO_IFR_Service_Utils::reference_to_path (original_type_def);
 
   this->repo_->config ()->set_string_value (new_key,
@@ -1498,7 +1500,7 @@ TAO_Container_i::create_exception_i (const char *id,
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
-  ACE_TString path = 
+  ACE_TString path =
     TAO_IFR_Service_Utils::create_common (this->def_kind (),
                                           CORBA::dk_Exception,
                                           this->section_key_,
@@ -1539,7 +1541,7 @@ TAO_Container_i::create_exception_i (const char *id,
                                                 "name",
                                                 members[i].name.in ());
 
-      member_path = 
+      member_path =
         TAO_IFR_Service_Utils::reference_to_path (members[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (member_key,
@@ -1586,7 +1588,7 @@ TAO_Container_i::create_native_i (const char *id,
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
-  ACE_TString path = 
+  ACE_TString path =
     TAO_IFR_Service_Utils::create_common (this->def_kind (),
                                           CORBA::dk_Native,
                                           this->section_key_,
@@ -1646,7 +1648,7 @@ TAO_Container_i::create_abstract_interface_i (
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
-  ACE_TString path = 
+  ACE_TString path =
     TAO_IFR_Service_Utils::create_common (this->def_kind (),
                                           CORBA::dk_AbstractInterface,
                                           this->section_key_,
@@ -1676,7 +1678,7 @@ TAO_Container_i::create_abstract_interface_i (
       // Store the path to each base interface.
       for (CORBA::ULong i = 0; i < length; ++i)
         {
-          inherited_path = 
+          inherited_path =
             TAO_IFR_Service_Utils::reference_to_path (base_interfaces[i]);
 
           char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
@@ -1732,7 +1734,7 @@ TAO_Container_i::create_local_interface_i (
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
-  ACE_TString path = 
+  ACE_TString path =
     TAO_IFR_Service_Utils::create_common (this->def_kind (),
                                           CORBA::dk_LocalInterface,
                                           this->section_key_,
@@ -1784,7 +1786,7 @@ TAO_Container_i::create_local_interface_i (
                                            ACE_ENV_ARG_PARAMETER);
 }
 
-CORBA::ExtValueDef_ptr 
+CORBA::ExtValueDef_ptr
 TAO_Container_i::create_ext_value (
       const char *id,
       const char *name,
@@ -1818,7 +1820,7 @@ TAO_Container_i::create_ext_value (
                                    ACE_ENV_ARG_PARAMETER);
 }
 
-CORBA::ExtValueDef_ptr 
+CORBA::ExtValueDef_ptr
 TAO_Container_i::create_ext_value_i (
       const char *id,
       const char *name,
@@ -1885,7 +1887,7 @@ TAO_Container_i::create_ext_value_i (
                            initializers[i].exceptions);
         }
     }
-    
+
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Value,
@@ -1980,7 +1982,7 @@ TAO_Container_i::lookup_name_recursive (
 
           if (levels_to_search == -1 || levels_to_search > 1)
             {
-              TAO_Container_i *impl = 
+              TAO_Container_i *impl =
                 TAO_IFR_Service_Utils::path_to_container (path,
                                                           this->repo_);
 
@@ -2434,7 +2436,7 @@ TAO_Container_i::create_value_common (
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_TString path;
-  path = 
+  path =
     TAO_IFR_Service_Utils::create_common (container_kind,
                                           CORBA::dk_Value,
                                           container_key,
@@ -2461,9 +2463,9 @@ TAO_Container_i::create_value_common (
                                              (CORBA::ULong) is_truncatable);
   if (!CORBA::is_nil (base_value))
     {
-      const char *base_path = 
+      const char *base_path =
         TAO_IFR_Service_Utils::reference_to_path (base_value);
-          
+
       // Get the servant's key into the temporary key holder, because
       // the name clash checker for base valuetypes is static, and has
       // no other way to know about a specific key.
@@ -2479,7 +2481,7 @@ TAO_Container_i::create_value_common (
                                           CORBA::dk_Value
                                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (path);
-          
+
       ACE_TString base_value_id;
       this->repo_->config ()->get_string_value (TAO_IFR_Service_Utils::tmp_key_,
                                                 "id",
@@ -2502,18 +2504,18 @@ TAO_Container_i::create_value_common (
       this->repo_->config ()->set_integer_value (bases_key,
                                                  "count",
                                                  length);
-                                 
+
       ACE_TString base_id;
       const char *base_path = 0;
       char *stringified = 0;
 
       for (CORBA::ULong i = 0; i < length; ++i)
         {
-          base_path = 
+          base_path =
             TAO_IFR_Service_Utils::reference_to_path (
                 abstract_base_values[i].in ()
               );
-              
+
           // Get the servant's key into the temporary key holder, because
           // the name clash checker for base interfaces is static, and has
           // no other way to know about a specific key.
@@ -2529,7 +2531,7 @@ TAO_Container_i::create_value_common (
                                               CORBA::dk_Value
                                               ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (path);
-          
+
           this->repo_->config ()->get_string_value (
               TAO_IFR_Service_Utils::tmp_key_,
               "id",
@@ -2559,14 +2561,14 @@ TAO_Container_i::create_value_common (
       CORBA::ULong kind = 0;
       CORBA::Boolean concrete_seen = 0;
       CORBA::DefinitionKind def_kind;
-          
+
       for (CORBA::ULong i = 0; i < length; ++i)
         {
-          supported_path = 
+          supported_path =
             TAO_IFR_Service_Utils::reference_to_path (
                 supported_interfaces[i].in ()
               );
-              
+
           // Get the servant's key into the temporary key holder, because
           // the name clash checker for base interfaces is static, and has
           // no other way to know about a specific key.
@@ -2579,7 +2581,7 @@ TAO_Container_i::create_value_common (
                                       "def_kind",
                                       kind);
           def_kind = ACE_static_cast (CORBA::DefinitionKind, kind);
-          
+
           if (def_kind == CORBA::dk_Interface)
             {
               if (concrete_seen == 0)
@@ -2592,8 +2594,8 @@ TAO_Container_i::create_value_common (
                                                       CORBA::COMPLETED_NO),
                                     path);
                 }
-            }                            
-          
+            }
+
           TAO_IFR_Service_Utils::name_exists (&TAO_ValueDef_i::name_clash,
                                               new_key,
                                               this->repo_,
@@ -2612,6 +2614,6 @@ TAO_Container_i::create_value_common (
                                                     supported_id);
         }
     }
-    
+
   return path;
 }
