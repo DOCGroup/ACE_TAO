@@ -19,7 +19,7 @@
 public class PushConsumerFactory {
 
   private org.omg.CORBA.ORB orb_;
-  private org.omg.CORBA.BOA boa_;
+  private org.omg.PortableServer.POA poa_;
   private org.omg.CORBA.Object naming_service_object_;
 
   private DataHandler dataHandler_;
@@ -51,10 +51,20 @@ public class PushConsumerFactory {
 	    orb_ = org.omg.CORBA.ORB.init (applet, null);
 	  }
 	  else { // not running as an Applet, but as an normal Application
-	    orb_ = org.omg.CORBA.ORB.init ();
+	    orb_ = org.omg.CORBA.ORB.init (args, null);
 	  }
-	  boa_ = orb_.BOA_init ();
 	  
+          System.out.println ("Initialized ORB");
+	  
+          org.omg.CORBA.Object obj =
+	    orb_.resolve_initial_references ("RootPOA");
+
+          System.out.println ("Obtained RootPOA");
+
+	  poa_ = org.omg.PortableServer.POAHelper.narrow (obj);
+	  
+          System.out.println ("Narrowed RootPOA");
+
 	  // Get the Naming Service initial reference
 	  
 	  // Name Service Lookup cannot be used when running as an Applet
@@ -78,7 +88,7 @@ public class PushConsumerFactory {
           while (args.length > arg_index) 
             {
               // Count an event service name
-              if ((args[arg_index].equals ("-ORBeventservicename")) && 
+              if ((args[arg_index].equals ("-eventservicename")) && 
                   (args.length > arg_index + 1)) 
                 {
                   System.out.println ("switch [" + args[arg_index] + "]");
@@ -87,7 +97,7 @@ public class PushConsumerFactory {
                   ++ec_names_count_;
                 }
               // Count a scheduling service name
-              else if ((args[arg_index].equals ("-ORBscheduleservicename")) && 
+              else if ((args[arg_index].equals ("-scheduleservicename")) && 
                   (args.length > arg_index + 1)) 
                 {
                   System.out.println ("switch [" + args[arg_index] + "]");
@@ -135,7 +145,7 @@ public class PushConsumerFactory {
           while (args.length > arg_index) 
             {
               // Set an event service name.
-              if ((args[arg_index].equals ("-ORBeventservicename")) && 
+              if ((args[arg_index].equals ("-eventservicename")) && 
                   (args.length > arg_index + 1)) 
                 {
                   ec_names_[ec_names_count_] = args[arg_index + 1];
@@ -143,7 +153,7 @@ public class PushConsumerFactory {
                   arg_index += 2;
                 }
               // Set a schedule service name.
-              else if ((args[arg_index].equals ("-ORBscheduleservicename")) && 
+              else if ((args[arg_index].equals ("-scheduleservicename")) && 
                   (args.length > arg_index + 1)) 
                 {
                   ss_names_[ss_names_count_] = args[arg_index + 1];
@@ -198,6 +208,11 @@ public class PushConsumerFactory {
               ss_names_ [0] = "ScheduleService";
             }
       } 
+      catch (org.omg.CORBA.ORBPackage.InvalidName e)
+	{
+	  System.err.println ("CosNaming.NamingContextPackage.InvalidName");
+	  System.err.println (e);
+	}
       catch(org.omg.CORBA.SystemException e) {
 	System.err.println ("PushConsumerFactory constructor: ORB and Name Service initialization");
 	System.err.println(e);
@@ -292,7 +307,7 @@ public class PushConsumerFactory {
                                   ec_names_[ec_number]  + ": demo_consumer_" +
                                   ec_number + ".");
 
-	      PushConsumer pushConsumer_ = new PushConsumer (orb_, 
+	      PushConsumer pushConsumer_ = new PushConsumer (orb_, poa_, 
                                                              dataHandler_,
                                                              use_queueing_);
 	      System.out.println ("Initializing the Push Consumer for " +
@@ -301,17 +316,14 @@ public class PushConsumerFactory {
 
 	      pushConsumer_.open_consumer (event_channel_, scheduler_, 
                                            "demo_consumer_" + ec_number);
-	
-              boa_.obj_is_ready (pushConsumer_);
-
             }
 
   
   	  // Tell the CORBA environment that we are ready
 	  	  
-	  System.out.println ("boa.obj_is_ready succeeded"); 
-	  
-	  boa_.impl_is_ready ();
+	  System.out.println ("PushConsumer registered with POA"); 
+	  poa_.the_POAManager ().activate ();
+	  System.out.println ("POA Activated"); 
 	}
       catch (CosNaming.NamingContextPackage.CannotProceed e)
 	{
@@ -328,6 +340,11 @@ public class PushConsumerFactory {
 	  System.err.println ("CosNaming.NamingContextPackage.NotFound");
 	  System.err.println (e);
 	
+	}
+      catch (org.omg.PortableServer.POAManagerPackage.AdapterInactive e)
+	{
+	  System.err.println ("org.omg.PortableServer.POAManagerPackage.AdapterInactive");
+	  System.err.println (e);
 	}
       catch (Object_is_null_exception e)
 	{
