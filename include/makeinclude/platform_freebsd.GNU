@@ -27,7 +27,6 @@ PIC             = -fpic
 AR              = ar
 ARFLAGS         = ruv
 RANLIB          = ranlib
-BIN_TRUE        = /usr/bin/true
 
 SOFLAGS = $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
