@@ -26,6 +26,12 @@ namespace CIAO
   {
   }
 
+  Container::Container (CORBA::ORB_ptr o, Container_Impl *container_impl)
+    : orb_ (CORBA::ORB::_duplicate (o))
+  {
+    this->container_impl_ = container_impl;
+  }
+
   Container::~Container ()
   {
   }
@@ -53,9 +59,10 @@ namespace CIAO
   }
 
   Session_Container::Session_Container (CORBA::ORB_ptr o,
+                                        Container_Impl *container_impl,
                                         bool static_config_flag,
                                         const Static_Config_EntryPoints_Maps* maps)
-  : Container (o),
+  : Container (o, container_impl),
     number_ (0),
     static_config_flag_ (static_config_flag),
     static_entrypts_maps_ (maps),

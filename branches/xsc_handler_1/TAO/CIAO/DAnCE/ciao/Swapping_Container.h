@@ -40,7 +40,7 @@ namespace CIAO
   {
   public:
 
-    Swapping_Container (CORBA::ORB_ptr o);
+    Swapping_Container (CORBA::ORB_ptr o, Container_Impl *container_impl);
 
     virtual ~Swapping_Container (void);
 
