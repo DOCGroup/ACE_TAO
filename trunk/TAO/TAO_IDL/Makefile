@@ -34,6 +34,7 @@ endif # VXWORKS
 #----------------------------------------------------------------------------
 
 ifdef VXWORKS
+default_vxworks:
 	@echo The IDL compiler won\'t run or build for VxWorks.
 else
 
