@@ -44,6 +44,11 @@ endif # TAO_ORBSVCS
 #### Macro customization.
 ####
 ifeq ($(findstring g++,$(CXX)),g++)
+  ifeq ($(ACE_HAS_GNUG_PRE_2_8),1)
+    #### g++ < 2.8 complains about unused parameters in generated code.
+    CCFLAGS += -Wno-unused
+  endif # g++ < 2.8
+
   ifneq ($(findstring egcs-2.91,$(shell $(CXX) --version)),)
 
     #### egcs 2.91.57 seems to go overboard:
