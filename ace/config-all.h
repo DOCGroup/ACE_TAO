@@ -246,7 +246,7 @@
 // *_cast<> operators
 // ============================================================================
 
-# if defined (ACE_HAS_ANSI_CASTS) && ACE_HAS_ANSI_CASTS != 0
+# if defined (ACE_HAS_ANSI_CASTS)
 
 #   define ACE_sap_any_cast(TYPE)                                      reinterpret_cast<TYPE> (const_cast<ACE_Addr &> (ACE_Addr::sap_any))
 
