@@ -46,7 +46,7 @@
 #ifndef TAO_CORBA_DOMAIN_PIDL
 #define TAO_CORBA_DOMAIN_PIDL
 
-#include <Policy.pidl>
+#include <tao/Policy.pidl>
 #include <InterfaceDef.pidl>
 
 #pragma prefix "omg.org"
