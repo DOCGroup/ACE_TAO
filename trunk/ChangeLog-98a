@@ -1,3 +1,14 @@
+Tue Mar 17 15:13:17 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/High_Res_Timer.cpp (dump): fleshed out the implementation.
+
+        * ace/Profile_Timer.{h,cpp} (dump): implemented for platforms
+          w/o ACE_HAS_PRUSAGE_T and ACE_HAS_GETRUSAGE.
+
+        * ace/OS.i (gethrtime): with ACE_HAS_CLOCK_GETTIME, carefully
+          construct return value to avoid arithmetic overflow if
+          ACE_LACKS_LONGLONG_T.
+
 Mon Mar 16 22:18:07 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/IPC_SAP.cpp: Moved return values outside of the #ifdefs to
