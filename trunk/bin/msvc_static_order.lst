@@ -66,6 +66,7 @@ TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/CosEC_RtEC_Based_lib.dsp
 TAO/tests/Smart_Proxies/Collocation/Smart_Proxies_Collocation_TestStubsLib.dsp
 TAO/tests/Collocation/Collocation_Test_Stub.dsp
 TAO/examples/POA/Generic_Servant/POA_Generic_Servant_Lib.dsp
+TAO/examples/Simple/time-date/Simple_Time_Date_Lib.dsp
 TAO/docs/tutorials/Quoter/idl/Quoter_Idl_Lib.dsp
 TAO/performance-tests/RTCorba/Multiple_Endpoints/Common/RTCORBA_Common.dsp
 tests/Test_Output.dsp
