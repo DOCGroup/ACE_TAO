@@ -5,7 +5,7 @@
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
 ifndef TAO_ROOT
@@ -16,46 +16,50 @@ LDLIBS = -lorbsvcs -lTAO
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs \
             -I$(TAO_ROOT)
 
-IDL_SRC	= AirplaneS.cpp AirplaneC.cpp
+IDL_SRC = AirplaneS.cpp AirplaneC.cpp
 PROG_SRCS = Repository.cpp \
-	    Repository_Test.cpp \
-	    airplane_client.cpp \
-	    airplane_server.cpp \
-	    airplane_client_i.cpp \
-	    airplane_server_i.cpp \
-	    airplane_i.cpp \
+            Repository_Test.cpp \
+            airplane_client.cpp \
+            airplane_server.cpp \
+            airplane_client_i.cpp \
+            airplane_server_i.cpp \
+            airplane_i.cpp \
             IR_Helper.cpp
 
 SRC=$(IDL_SRC) $(PROG_SRCS)
 
 AIRPLANE_CLIENT_OBJS =  AirplaneC.o \
-		        AirplaneS.o \
-		        airplane_client.o \
-		        airplane_client_i.o
+                        AirplaneS.o \
+                        airplane_client.o \
+                        airplane_client_i.o
 
 AIRPLANE_SERVER_OBJS =  AirplaneC.o \
-		        AirplaneS.o \
-		        airplane_server.o \
-		        airplane_server_i.o \
-		        airplane_i.o \
+                        AirplaneS.o \
+                        airplane_server.o \
+                        airplane_server_i.o \
+                        airplane_i.o \
                         IR_Helper.o
 
-REPOSITORY_TEST_OBJS =	../../../ImplRepo_Service/$(VDIR)/Repository.o \
-			Repository_Test.o
+REPOSITORY_TEST_OBJS =  ../../../ImplRepo_Service/$(VDIR)/Repository.o \
+                        Repository_Test.o
 
-BIN = airplane_server \
-      airplane_client \
-      Repository_Test
-
-BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (ImplRepo,$(findstring ImplRepo,$(TAO_ORBSVCS)))
+  BIN += airplane_server \
+         airplane_client \
+         Repository_Test
+endif # ImplRepo
+
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -64,24 +68,24 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
 #----------------------------------------------------------------------------
-#	Local targets
+#       Local targets
 #----------------------------------------------------------------------------
 
 IDL_EXT=C.h C.i C.cpp S.h S.i S.cpp S_T.h S_T.i S_T.cpp
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), Airplane$(ext))
 
-airplane_server:	$(addprefix $(VDIR),$(AIRPLANE_SERVER_OBJS))
+airplane_server: $(addprefix $(VDIR),$(AIRPLANE_SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-airplane_client:	$(addprefix $(VDIR),$(AIRPLANE_CLIENT_OBJS))
+airplane_client: $(addprefix $(VDIR),$(AIRPLANE_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 Repository_Test: $(addprefix $(VDIR),$(REPOSITORY_TEST_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-/bin/rm -rf $(foreach ext, $(IDL_EXT), Airplane$(ext))
+	-$(RM) $(foreach ext, $(IDL_EXT), Airplane$(ext))
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

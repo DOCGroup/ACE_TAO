@@ -5,7 +5,7 @@
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
 ifndef TAO_ROOT
@@ -15,33 +15,37 @@ endif
 LDLIBS = -lorbsvcs -lTAO
 
 PROG_SRCS = \
-	server.cpp \
-	clerk.cpp \
-	Clerk_i.cpp \
-	Server_i.cpp \
-	IR_Helper.cpp \
+        server.cpp \
+        clerk.cpp \
+        Clerk_i.cpp \
+        Server_i.cpp \
+        IR_Helper.cpp \
 
 SRC = $(PROG_SRCS)
 
 SIMPLE_SVR_OBJS = IR_Helper.o \
-	Server_i.o \
-	server.o \
+        Server_i.o \
+        server.o \
 
 SIMPLE_CRK_OBJS = Clerk_i.o \
-	clerk.o \
+        clerk.o \
 
-BIN = server \
-      clerk
-
-BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (Time,$(findstring Time,$(TAO_ORBSVCS)))
+  BIN += server \
+         clerk
+endif # Time
+
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -51,20 +55,22 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
 #----------------------------------------------------------------------------
-#	Local targets
+#       Local targets
 #----------------------------------------------------------------------------
 
 
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/Naming_Service
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
-server:	$(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
+server: $(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-clerk:	$(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
+clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-realclean: clean
+#----------------------------------------------------------------------------
+#	Dependencies
+#----------------------------------------------------------------------------
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
