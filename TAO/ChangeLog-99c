@@ -7,12 +7,13 @@ Tue May 18 11:43:13 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	the Reply Dispatcher strategies. (Synchronous and Asynchronous). 
 
 	* tao/IIOP_RMS.h :
-	* tao/IIOP_RMS.cpp: Implementation of two
-	different Request Multiplexing Strategies. 
+	* tao/IIOP_RMS.cpp: Implementation of two different Request
+	Multiplexing Strategies. (Multiplexed and Exclusive)
 
 	* tao/IIOP_Wait_Strategy.h: 
 	* tao/IIOP_Wait_Strategy.cpp: Implementations for the three
-	different Wait strategies. 
+	different Wait strategies (Wait_On_Read, Wait On Reactor and Wait
+	on Leader Follower). 
 
 	<Transport> object creates Request Multiplexing Strategy <RMS>
 	object and <Wait Strategy> object.
@@ -30,7 +31,7 @@ Tue May 18 11:43:13 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	Right now the <Wait Strategy> is hard coded to be only <Wait On
 	Read> and the <RMS> is hard coded to be only
 	<Exclusive_RMS>. Since we want to block on read in the
-	<Wait_On_Read> strategy, the <GIOP::recv_request> call now taked
+	<Wait_On_Read> strategy, the <GIOP::recv_request> call now takes
 	additional parameter whether to block for the whole reply or
 	not. Non-blocking case is not yet tested fully. 
 
