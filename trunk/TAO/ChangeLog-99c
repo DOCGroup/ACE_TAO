@@ -1,3 +1,36 @@
+Mon Aug 30 23:24:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Makefile:
+	* tao/Priority_Mapping.h:
+	* tao/Priority_Mapping.cpp:
+	* tao/Direct_Priority_Mapping.cpp:
+	* tao/Direct_Priority_Mapping.h:
+	* tao/Direct_Priority_Mapping.i:
+	* tao/Linear_Priority_Mapping.cpp:
+	* tao/Linear_Priority_Mapping.h:
+	* tao/Linear_Priority_Mapping.i:
+	* tao/default_resource.h:
+	* tao/default_resource.cpp:
+	  The TAO_Priority_Mapping class is trivial now, two derived
+	  classes implement simple priority mapping strategies.
+	  Linear_Priority_Mapping uses a linear map between the full range 
+	  of priorities in a scheduling class to the full range of
+	  CORBA priorities.
+	  Direct_Priority_Mapping uses a simpler mapping where a suitable
+	  offset is used to map the minimum CORBA priority to the minimum
+	  native priority.
+
+	* tao/Messaging_Policy_i.h:
+	* tao/Messaging_Policy_i.cpp:
+	  Use ServantBase_var for exception safety.
+
+	* tao/RT_Current.h:
+	  Need "tao/Exception.h" for platforms that implement throw specs.
+
+	* tao/ORB_Core.cpp:
+	* tao/Single_Reactor.cpp:
+	  Minor cosmetic fixes.
+
 Mon Aug 30 17:10:30 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* TAO-INSTALL.html: Added a note on Connection Caching feature

@@ -5,7 +5,6 @@
 #if defined (TAO_HAS_RT_CORBA)
 
 #include "tao/Priority_Mapping.h"
-#include "ace/Sched_Params.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Priority_Mapping.i"
@@ -13,11 +12,8 @@
 
 ACE_RCSID(tao, Priority_Mapping, "$Id$")
 
-TAO_Priority_Mapping::TAO_Priority_Mapping (int policy)
-  :  policy_ (policy)
+TAO_Priority_Mapping::TAO_Priority_Mapping (void)
 {
-  this->min_ = ACE_Sched_Params::priority_min (this->policy_);
-  this->max_ = ACE_Sched_Params::priority_max (this->policy_);
 }
 
 TAO_Priority_Mapping::~TAO_Priority_Mapping (void)
@@ -25,53 +21,17 @@ TAO_Priority_Mapping::~TAO_Priority_Mapping (void)
 }
 
 CORBA::Boolean
-TAO_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
-                                 RTCORBA::NativePriority &native_priority)
+TAO_Priority_Mapping::to_native (RTCORBA::Priority,
+                                 RTCORBA::NativePriority &)
 {
-  if (corba_priority < 0)
-    return 0;
-
-  native_priority =
-    this->min_
-    + ((this->max_ - this->min_)
-       * corba_priority
-       / (RTCORBA::maxPriority - RTCORBA::minPriority));
-
-  return 1;
+  return 0;
 }
 
 CORBA::Boolean
-TAO_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
-                                RTCORBA::Priority &corba_priority)
+TAO_Priority_Mapping::to_CORBA (RTCORBA::NativePriority,
+                                RTCORBA::Priority &)
 {
-  if ((this->min_ < this->max_
-       && (native_priority < this->min_
-           || native_priority > this->max_))
-      || (this->min_ > this->max_
-          && (native_priority < this->max_
-              || native_priority > this->min_)))
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Priority_Mapping::to_CORBA: "
-                  " priority %d out of range [%d,%d]\n",
-                  native_priority, this->min_, this->max_));
-      return 0;
-    }
-
-  int delta = this->max_ - this->min_;
-  if (delta != 0)
-    {
-      corba_priority =
-        RTCORBA::minPriority
-        + ((RTCORBA::maxPriority - RTCORBA::minPriority)
-           * native_priority / delta);
-    }
-  else
-    {
-      corba_priority = this->min_;
-    }
-
-  return 1;
+  return 0;
 }
 
 #endif /* TAO_HAS_RT_CORBA */

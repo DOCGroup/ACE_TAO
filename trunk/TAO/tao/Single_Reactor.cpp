@@ -68,7 +68,7 @@ TAO_Single_Reactor::shutdown_all (void)
   // Wakeup all the threads waiting blocked in the event loop, this
   // does not guarantee that they will all go away, but reduces the
   // load on the POA....
-  ACE_Reactor *reactor = 
+  ACE_Reactor *reactor =
     this->reactor ();
 
   reactor->wakeup_all_threads ();
@@ -86,4 +86,3 @@ TAO_Single_Reactor::shutdown_all (void)
 
   return 0;
 }
-

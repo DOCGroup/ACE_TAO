@@ -11,7 +11,8 @@
 #include "tao/Connector_Registry.h"
 #include "tao/Single_Reactor.h"
 #include "tao/Reactor_Per_Priority.h"
-#include "tao/Priority_Mapping.h"
+#include "tao/Direct_Priority_Mapping.h"
+#include "tao/Linear_Priority_Mapping.h"
 
 #include "ace/Select_Reactor.h"
 #include "ace/FlReactor.h"
@@ -37,7 +38,8 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
     connection_caching_type_ (TAO_CONNECTION_CACHING_STRATEGY),
     purge_percentage_ (TAO_PURGE_PERCENT),
     reactor_mask_signals_ (1),
-    sched_policy_ (ACE_SCHED_OTHER)
+    sched_policy_ (ACE_SCHED_OTHER),
+    priority_mapping_type_ (TAO_PRIORITY_MAPPING_LINEAR)
 {
 }
 
@@ -284,6 +286,27 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
               ACE_DEBUG ((LM_DEBUG,
                           "TAO_Default_Factory - unknown argument"
                           " <%s> for -ORBSchedPolicy\n", name));
+          }
+      }
+
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 "-ORBPriorityMapping") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
+
+            if (ACE_OS::strcasecmp (name,
+                                    "linear") == 0)
+              this->priority_mapping_type_ = TAO_PRIORITY_MAPPING_LINEAR;
+            else if (ACE_OS::strcasecmp (name,
+                                         "direct") == 0)
+              this->priority_mapping_type_ = TAO_PRIORITY_MAPPING_DIRECT;
+            else
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO_Default_Factory - unknown argument"
+                          " <%s> for -ORBPriorityMapping\n", name));
           }
       }
 
@@ -627,9 +650,24 @@ TAO_Default_Resource_Factory::get_priority_mapping (void)
   return 0;
 #else
   TAO_Priority_Mapping *pm;
-  ACE_NEW_RETURN (pm,
-                  TAO_Priority_Mapping (this->sched_policy_),
-                  0);
+  switch (this->priority_mapping_type_)
+    {
+    case TAO_PRIORITY_MAPPING_LINEAR:
+      ACE_NEW_RETURN (pm,
+                      TAO_Linear_Priority_Mapping (this->sched_policy_),
+                      0);
+      break;
+    case TAO_PRIORITY_MAPPING_DIRECT:
+      ACE_NEW_RETURN (pm,
+                      TAO_Direct_Priority_Mapping (this->sched_policy_),
+                      0);
+      break;
+    default:
+      ACE_NEW_RETURN (pm,
+                      TAO_Priority_Mapping,
+                      0);
+      break;
+    }
   return pm;
 #endif /* TAO_HAS_RT_CORBA */
 }
