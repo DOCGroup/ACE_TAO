@@ -110,8 +110,6 @@ reverseclean:
 ####   APPLY_NEW_TAG [enabled]: set to null to disable
 ####   CHECK [disabled]: set to -n to see what make_release will do, but not
 ####     do it
-####   GENERATE_MAN_PAGES [enabled]: set to null to disable regeneration of
-####     the ACE_wrappers/man/ hierarchy
 ####   INSTALL_KIT [enabled]: set to null to not install in public
 ####     ftp/http directory on host ace
 ####   REL [beta]: set to minor or major, optionally, when applying a new tag
@@ -120,7 +118,7 @@ reverseclean:
 #### Example creation of ACE-only kit, version ACE-5_0_1 from current
 #### workspace:
 #### make release ACE_TAG='-ta ACE-5_0_1' APPLY_NEW_TAG= \
-####   GENERATE_MAN_PAGES= INSTALL_KIT= ZIP_FILES=-z
+####   INSTALL_KIT= ZIP_FILES=-z
 
 CONTROLLED_FILES = \
         ACE-INSTALL.html \
@@ -205,7 +203,7 @@ ZIP_FILES          =
 #### The release target creates the ACE (only) kit.
 release: $(APPLY_NEW_TAG)
 	@$(ACE_ROOT)/bin/make_release -k ace $(ACE_TAG) \
-         $(INSTALL_KIT) $(GENERATE_MAN_PAGES) $(ZIP_FILES) $(CHECK)
+         $(INSTALL_KIT) $(ZIP_FILES) $(CHECK)
 
 tag:
 	@$(ACE_ROOT)/bin/make_release $(CHECK) -k ace -v $(REL) -u
@@ -215,18 +213,22 @@ tag:
 #### creates the combined ACE-TAO kit.
 releasetao:
 	@$(ACE_ROOT)/bin/make_release -k ace+tao $(ACE_TAG) $(TAO_TAG) \
-         $(INSTALL_KIT) $(GENERATE_MAN_PAGES) $(ZIP_FILES) $(CHECK)
+         $(INSTALL_KIT) $(ZIP_FILES) $(CHECK)
 
 #### The following target is for use by the CIAO Makefile.  It should not
 #### be called directly from the command line.  The releaseciao target
 #### creates the combined ACE+TAO+CIAO kit.
 releaseciao:
 	@$(ACE_ROOT)/bin/make_release -k ace+tao+ciao $(ACE_TAG) $(TAO_TAG) $(CIAO_TAG) \
-         $(INSTALL_KIT) $(GENERATE_MAN_PAGES) $(ZIP_FILES) $(CHECK)
+         $(INSTALL_KIT) $(ZIP_FILES) $(CHECK)
 
 #### The releaseall target:
 releaseall: $(APPLY_NEW_TAG)
 	@cd TAO  &&  $(MAKE) -s releaseall REL=$(REL)
+
+### Generate man pages
+genmanpages:
+	@$(ACE_ROOT)/bin/generate_rel_manpages
 
 .PHONY: show_controlled_files show_release_files show_release_lib_files
 .PHONY: show_release_tag_files
