@@ -1,4 +1,26 @@
-Wed Oct 16 11:44:27 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+Wed Oct 16 12:18:03 2002  Stephen Torri <storri@cse.wustl.edu>
+
+	* examples/C++v1/Makefile:
+	* examples/C++NPv1/Makefile.Iterative_Logging_Server:
+	* examples/C++NPv1/Makefile.Logging_Client:
+	* examples/C++NPv1/Makefile.Reactive_Logging_Server:
+	* examples/C++NPv1/Makefile.Reactive_Logging_Server_Ex:
+	* examples/C++NPv1/Makefile.RT_Thread_Per_Connection_Logging_Server:
+	* examples/C++NPv1/Makefile.Thread_Per_Connection_Logging_Server:
+	* examples/C++NPv1/Makefile.wProcess_Per_Connection_Logging_Server:
+
+          Renamed from *.mak to Makefile.* to avoid looking like an
+          exported MSVC project NMAKE file. (Following Steve Huston's
+	  change to examples/C++v2).
+
+	  Fixed Make error that make realclean was not in Makefile.
+
+	* tests/Recursive_Condition_Test.cpp:
+
+	  Changed function call of signal() to broadcast() to awaken
+	  multiple threads waiting on a shared condition variable.
+
+Oct 16 11:44:27 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Thread_Manager.cpp (check_state):  Changed to return 0 if
 	  the thread id is not managed by the Thread_Manager.

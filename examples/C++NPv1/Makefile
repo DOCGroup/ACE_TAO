@@ -9,22 +9,25 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-all :  Logging_Client \
+EXAMPLES = Logging_Client \
        Iterative_Logging_Server \
        Process_Per_Connection_Logging_Server \
        Thread_Per_Connection_Logging_Server
 
-Logging_Client :
-	$(MAKE) -f Logging_Client.mak
+all:
+	@for ex in $(EXAMPLES); \
+	do \
+		$(MAKE) -f Makefile.$$ex; \
+	done
 
-Iterative_Logging_Server :
-	$(MAKE) -f Iterative_Logging_Server.mak
+clean:
+	@for ex in $(EXAMPLES); \
+	do \
+		$(MAKE) -f Makefile.$$ex clean; \
+	done
 
-Process_Per_Connection_Logging_Server :
-	$(MAKE) -f Process_Per_Connection_Logging_Server.mak
-
-RT_Thread_Per_Connection_Logging_Server :
-	$(MAKE) -f RT_Thread_Per_Connection_Logging_Server.mak
-
-Thread_Per_Connection_Logging_Server :
-	$(MAKE) -f Thread_Per_Connection_Logging_Server.mak
+realclean:
+	@for ex in $(EXAMPLES); \
+	do \
+		$(MAKE) -f Makefile.$$ex realclean; \
+	done	
