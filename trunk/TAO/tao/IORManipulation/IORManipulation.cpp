@@ -119,13 +119,10 @@ TAO_IOR_Manipulation_impl::merge_iors (
 
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
 
-  TAO_Stub *stub = 0;
-  ACE_NEW_THROW_EX (stub,
-                    TAO_Stub (id._retn (),  // give the id string to stub
-                              Merged_Profiles,
-                              orb_core),
-                    CORBA::NO_MEMORY ());
-
+  TAO_Stub *stub = orb_core->create_stub (id._retn (), // give the id string
+                                          Merged_Profiles,
+                                          orb_core,
+                                          ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Make the stub memory allocation exception safe for the duration
@@ -227,13 +224,10 @@ TAO_IOR_Manipulation_impl::remove_profiles (
 
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
 
-  TAO_Stub *stub = 0;
-  ACE_NEW_THROW_EX (stub,
-                    TAO_Stub (id._retn (), // give id string to stub
-                              Diff_Profiles,
-                              orb_core),
-                    CORBA::NO_MEMORY ());
-
+  TAO_Stub *stub = orb_core->create_stub (id._retn (), // give the id string
+                                          Diff_Profiles,
+                                          orb_core,
+                                          ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Make the stub memory allocation exception safe for the duration

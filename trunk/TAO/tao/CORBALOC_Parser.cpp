@@ -299,16 +299,10 @@ TAO_CORBALOC_Parser::make_stub_from_mprofile (CORBA::ORB_ptr orb,
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Create a TAO_Stub.
-  TAO_Stub *data = 0;
-  ACE_NEW_THROW_EX (data,
-                    TAO_Stub ((const char *) 0,
-                              mprofile,
-                              orb->orb_core ()),
-                    CORBA::NO_MEMORY (
-                      CORBA_SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
+  TAO_Stub *data = orb->orb_core ()->create_stub ((const char *) 0,
+                                                  mprofile,
+                                                  orb->orb_core (),
+                                                  ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   TAO_Stub_Auto_Ptr safe_data (data);
