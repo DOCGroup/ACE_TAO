@@ -34,7 +34,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // loop variables
   size_t i, j;
-  sockaddr *pointer;
+  sockaddr_in *pointer;
 
   // The port will always be this
   u_short port = 80;
@@ -94,7 +94,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Array of sockaddrs that will repeatedly be passed into the
   // get_addresses accessor of Multihomed_INET_Addr
   const size_t num_sockaddrs = 6;
-  sockaddr in_out_sockaddr[num_sockaddrs];
+  sockaddr_in in_out_sockaddr[num_sockaddrs];
 
   // Run the test with a varying number of secondary addresses
   for (i = 0; i <= num_secondaries; ++i)  {
