@@ -1,6 +1,7 @@
 // @(#) $Id$
 //
 // Copyright 1994-1995 by Sun Microsystems Inc.
+// Copyright 1997-2002 by Washington University
 // All Rights Reserved
 //
 // ORB:         CORBA_Object operations
@@ -70,14 +71,30 @@ CORBA_Object::_add_ref (void)
 void
 CORBA_Object::_remove_ref (void)
 {
-  // Note that we check if the reference count in the TAO_Stub is one
-  // instead of zero since the reference count was increased by one in
-  // the CORBA::Object constructor.  This object's destructor cleans
-  // up the remaining TAO_Stub reference (that cleanup should not be
-  // done here).
-  if (this->protocol_proxy_ != 0
-      && this->protocol_proxy_->_decr_refcnt () == 1)
+  // Hijack the lock and reference count of the underlying TAO_Stub
+  // object.
+  // @@ There may be a race condition here.  We may have to put the
+  //    lock back into this class.
+  if (this->protocol_proxy_ != 0)
     {
+      TAO_Stub * stub;
+
+      {
+        ACE_GUARD (TAO_SYNCH_MUTEX,
+                   mon,
+                   this->protocol_proxy_->refcount_lock ());
+
+        CORBA::ULong & refcnt = this->protocol_proxy_->refcount ();
+
+        refcnt--;
+        if (refcnt != 0)
+          return;
+
+        stub = this->protocol_proxy_;
+        this->protocol_proxy_ = 0;
+      }
+
+      stub->destroy ();
       delete this;
     }
 }
@@ -118,7 +135,7 @@ CORBA_Object::_is_a (const char *type_id
   //
   // XXX if type_id is that of CORBA_Object, "yes, we comply" :-)
 
-  if (this->is_local_)
+  if (this->protocol_proxy_ == 0)
     ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 
   if (this->_stubobj ()->type_id.in () != 0
