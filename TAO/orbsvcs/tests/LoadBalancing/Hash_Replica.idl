@@ -1,0 +1,12 @@
+// -*- C++ -*-
+// $Id$
+
+interface Hash_Replica
+{
+  // = DESCRIPTION
+  //    This Replica interface provides a simple hashing function.
+
+  unsigned long do_hash (in string str, out string hashed_str);
+  // Perform a simple hashing operation on the input string <str> and
+  // return the hashed string <hash_str>.
+};
