@@ -58,7 +58,7 @@ class Cubit;
 typedef Cubit *Cubit_ptr;
 typedef Cubit_ptr Cubit_ref;
 
-class Cubit : public virtual CORBA::Object
+class Cubit : public virtual CORBA_Object
 {
 public:
  
@@ -86,7 +86,7 @@ public:
 protected:
   Cubit (void) { }
   Cubit (STUB_Object *objref)
-    : CORBA::Object (objref) { }
+    : CORBA_Object (objref) { }
   virtual ~Cubit (void) { }
 };
 
