@@ -1,23 +1,30 @@
+Fri Jan  2 14:07:21 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/AV.dsp:
+        * orbsvcs/orbsvcs/AV_Static.dsp:
+
+          Changed the md5c.c to md5c.cpp.
+
 Fri Jan 02 13:09:19 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Smart_Proxies/Collocation/Collocation.dsp:
-	* tests/Smart_Proxies/Collocation/Smart_Proxies.dsp:
+        * tests/Smart_Proxies/Collocation/Collocation.dsp:
+        * tests/Smart_Proxies/Collocation/Smart_Proxies.dsp:
 
-	  Fixed the release and debug build configurations.
+          Fixed the release and debug build configurations.
 
 Fri Jan  2 12:39:15 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Makefile.av:
+        * orbsvcs/orbsvcs/Makefile.av:
 
-	  Updated dependancies. Moved a 'C' source to the CPP source list
-	  since it was decided to rname a C file as a CPP file.
+          Updated dependancies. Moved a 'C' source to the CPP source list
+          since it was decided to rname a C file as a CPP file.
 
 Fri Jan  2 11:56:04 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * orbsvcs/tests/LoadBalancing/GenericFactory/Makefile:
         * orbsvcs/tests/LoadBalancing/GenericFactory/Makefile.bor:
-        
-	  Added a new sub-directory Manage_Object_Group to be compiled.
+
+          Added a new sub-directory Manage_Object_Group to be compiled.
 
 Fri Jan  2 11:37:09 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
