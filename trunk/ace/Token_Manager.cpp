@@ -43,10 +43,12 @@ ACE_Token_Manager::instance (void)
   // case.  Double-Check pattern rules.
   if (token_manager_ == 0)
     {
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
       ACE_TOKEN_CONST::MUTEX *lock =
         ACE_Managed_Object<ACE_TOKEN_CONST::MUTEX>::get_preallocated_object
           (ACE_Object_Manager::ACE_TOKEN_MANAGER_CREATION_LOCK);
       ACE_GUARD_RETURN (ACE_TOKEN_CONST::MUTEX, ace_mon, *lock, 0);
+#endif /* ACE_MT_SAFE */
 
       if (token_manager_ == 0)
         {
