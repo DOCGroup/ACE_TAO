@@ -1,3 +1,10 @@
+Fri Jul  6 07:43:15 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/IFR_Service/Makefile:
+
+          Disable building this for Visual Age C++ due to the fact that the
+          using keyword is not properly supported.
+
 Fri Jul  6 07:38:55 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
