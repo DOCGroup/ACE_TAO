@@ -8,6 +8,8 @@ Wed Apr 26 20:11:09 2000  Carlos O'Ryan  <coryan@uci.edu>
 	* tao/GIOPC.h:
 	* tao/GIOPC.i:
 	* tao/GIOPC.cpp:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
 	  The TAO_Base_Union class has been removed.  It was required for
 	  interpretive marshaling, that is not in use anymore.  This is
 	  part of the fixes for [BUGID:135]

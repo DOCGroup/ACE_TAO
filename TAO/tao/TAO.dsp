@@ -2988,25 +2988,6 @@ SOURCE=.\UIOP_Transport.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Union.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\ValueBase.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
