@@ -174,7 +174,7 @@ main (int argc, char **)
     }
 
   // Register a signal handler.
-  ACE_Sig_Action sa (ACE_SignalHandler (handler), SIGINT);
+  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
 
   ACE_Reactor *reactor1 = ACE_Service_Config::reactor ();
   ACE_Reactor *reactor2 = new ACE_Reactor ();
