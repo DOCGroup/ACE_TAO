@@ -25,7 +25,7 @@ Sat Jun 19 12:59:28 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  environment variables. This handle is denoted as a command line
 	  option to IDL as -Ge 1
 
-	  - A case that is vice-versa to the above. THe option for such a
+	  - A case that is vice-versa to the above. The option for such a
 	  case id -Ge 0
 	
 	* docs/compiler.html: Added documentation for the -u option in the
