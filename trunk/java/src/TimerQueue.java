@@ -112,7 +112,6 @@ public class TimerQueue implements Runnable
 	      timeout = new TimeValue ();
 	    try
 	      {
-		//		System.out.println (timeout);
 		// Extract the earliest time from the queue and do a timed wait
 		this.obj_.timedWait (timeout);
 		
@@ -214,10 +213,9 @@ public class TimerQueue implements Runnable
       {
 	if (this.isEmpty () || futureTime.lessThan (this.earliestTime ()))
 	  {
-	    // Place at the beginning of the list.
+	    // Insert the node into (the beginning of) the queue to be
+	    // scheduled. 
 	    this.reschedule (node);
-	    this.obj_.condition (true);
-	    this.reset_ = true;
 
 	    // Notify the waiting thread so that it can reschedule
 	    // using the earliest timeout
@@ -342,6 +340,10 @@ public class TimerQueue implements Runnable
       {
 	expired.next_ = this.head_;
 	this.head_ = expired;
+	// Set the condition to true so that the waiting thread can be
+	// notified and it can reschedule.
+	this.obj_.condition (true);
+	this.reset_ = true;
       }
     else
       {
