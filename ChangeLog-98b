@@ -1,3 +1,8 @@
+Tue Aug 25 13:36:10 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tests/Aio_Platform_Test.cpp (do_sysconf): Fixed the VxWorks
+	warnings. 
+
 Tue Aug 25 13:04:00 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Memory_Pool: Added virtual destructors.
