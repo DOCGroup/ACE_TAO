@@ -1,3 +1,10 @@
+Mon Dec 28 11:21:40 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Strategies.h: Put the "virtual" keyword in from of the
+ 	  ~ACE_Reactor_Notification_Strategy to make it clear
+ 	  that this destructor is virtual.  Thanks to Greg Gallant
+	  <greg.gallant@jhuapl.edu> for pointing this out.
+
 Mon Dec 28 11:12:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: added SunOS 5.7 (Solaris 7) info.
