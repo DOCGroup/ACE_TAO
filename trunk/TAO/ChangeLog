@@ -1,3 +1,13 @@
+Sun Jul 6 12:41:03 UTC 2003  Johnny Willemsne  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Event/lib/Makefile:
+          Removed include of rules.bin.GNU because we are building a library,
+          so this is not needed. Maybe this fixes the problem we see on our
+          cygwin/mingw build systems that the dll build is not removed from
+          the ace directory with reaclean, so with a new build the dll is
+          not copied and we link with an old version of the dll resulting in
+          a lot of link errors.
+
 Sat Jul 5 13:39:10 UTC 2003  Johnny Willemsne  <jwillemsen@remedy.nl>
 
         * orbsvcs/IFR_Service/Makefile:
