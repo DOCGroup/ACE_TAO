@@ -95,6 +95,7 @@ namespace CIAO
     {
       servant->destroy (oid);
     }
+    this->container_->delete_servant_map (oid);
   }
 
   // Operations for keyless home interface.
