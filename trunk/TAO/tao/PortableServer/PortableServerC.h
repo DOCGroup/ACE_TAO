@@ -4358,12 +4358,16 @@ TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::Reques
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::RequestProcessingPolicy_ptr *); // non-copying
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::RequestProcessingPolicy_ptr &);
 
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
 
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::POAManager_ptr); // copying
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::POAManager_ptr *); // non-copying
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::POAManager_ptr &);
+
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/any_op_ch.cpp:52
@@ -4407,12 +4411,16 @@ TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::Servan
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ServantLocator_ptr *); // non-copying
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ServantLocator_ptr &);
 
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
 
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::POA_ptr); // copying
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::POA_ptr *); // non-copying
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::POA_ptr &);
+
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/any_op_ch.cpp:52
@@ -4494,12 +4502,16 @@ TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::POA::W
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::POA::WrongPolicy *&); // deprecated
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, const PortableServer::POA::WrongPolicy *&);
 
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
 
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::Current_ptr); // copying
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::Current_ptr *); // non-copying
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::Current_ptr &);
+
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/any_op_ch.cpp:52

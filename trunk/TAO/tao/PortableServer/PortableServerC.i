@@ -1186,6 +1186,8 @@ PortableServer::ThreadPolicy::marshal (TAO_OutputCDR &)
 
 #endif /* end #if !defined */
 
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
@@ -1230,6 +1232,8 @@ PortableServer::IdAssignmentPolicy::marshal (TAO_OutputCDR &)
 }
 
 #endif /* end #if !defined */
+
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
@@ -1276,6 +1280,8 @@ PortableServer::RequestProcessingPolicy::marshal (TAO_OutputCDR &)
 
 #endif /* end #if !defined */
 
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
@@ -1290,6 +1296,8 @@ PortableServer::POAManager::marshal (TAO_OutputCDR &)
 }
 
 #endif /* end #if !defined */
+
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
