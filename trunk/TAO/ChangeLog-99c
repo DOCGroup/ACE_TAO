@@ -1,3 +1,9 @@
+Mon Jun 28 11:25:47 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* TAO_IDL/Makefile:
+
+	  Updated dependencies.
+
 Mon Jun 28 11:17:45 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/append.cpp:
