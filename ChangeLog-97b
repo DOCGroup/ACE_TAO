@@ -6,7 +6,7 @@ Thu Nov 20 08:36:54 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
 Wed Nov 19 23:24:03 1997    <nw1@CHA-CHA>
 
-	* ace/Reactor.h: Rearragned macros so we use Select_Reactor as
+	* ace/Reactor.cpp: Rearragned macros so we use Select_Reactor as
  	  default if we don't have Winsock2.  Irfan did it, not me.
 
 Wed Nov 19 22:11:20 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
