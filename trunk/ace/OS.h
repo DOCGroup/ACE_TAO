@@ -2563,16 +2563,18 @@ typedef void (*ACE_SignalHandlerV)(...);
 #     if defined(__BORLANDC__)
 #       if (__BORLANDC__ >= 0x0530) /* Borland C++ Builder 3.0 */
 #         define ACE_SEH_TRY try
+#         define ACE_SEH_EXCEPT(X) __except(X)
 #         define ACE_SEH_FINALLY __finally
 #       else
-#         define ACE_SEH_TRY try
-#         define ACE_SEH_FINALLY catch(...)
+#         define ACE_SEH_TRY if (1)
+#         define ACE_SEH_EXCEPT(X) while (0)
+#         define ACE_SEH_FINALLY if (1)
 #       endif
 #     else
 #       define ACE_SEH_TRY __try
+#       define ACE_SEH_EXCEPT(X) __except(X)
 #       define ACE_SEH_FINALLY __finally
 #     endif /* __BORLANDC__ */
-#     define ACE_SEH_EXCEPT(X) __except(X)
 typedef int (*ACE_SEH_EXCEPT_HANDLER)(void *);
 // Prototype of win32 structured exception handler functions.
 // They are used to get the exception handling expression or

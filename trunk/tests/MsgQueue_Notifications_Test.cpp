@@ -6,7 +6,7 @@
 //    tests
 // 
 // = FILENAME
-//    Message_Queue_Notification_Test.cpp
+//    MsgQueue_Notification_Test.cpp
 //
 // = DESCRIPTION
 //      This is a test to illustrate the notification mechanisms in
@@ -134,7 +134,7 @@ Message_Handler::make_message (void)
 int
 main (int, ASYS_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Message_Queue_Notifications_Test"));
+  ACE_START_TEST (ASYS_TEXT ("MsgQueue_Notifications_Test"));
 
 #if defined (ACE_HAS_THREADS)
   ACE_Reactor reactor; 

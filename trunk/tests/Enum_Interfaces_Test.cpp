@@ -41,6 +41,13 @@ main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Enum_Interfaces_Test"));
 
+  struct utsname uname;
+  ACE_OS::uname(&uname);
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Machine: %s running on %s\n"),
+              uname.nodename, uname.machine ));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Platform: %s, %s, %s\n"),
+              uname.sysname, uname.release, uname.version ));
+
   ACE_INET_Addr *the_addr_array;
   size_t how_many = 0;
 

@@ -47,7 +47,7 @@ protected:
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "LOCK_SOCK_Acceptor.cpp"
+#include "ace/LOCK_SOCK_Acceptor.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

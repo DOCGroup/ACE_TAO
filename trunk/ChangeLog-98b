@@ -1,3 +1,62 @@
+Mon Jul  6 22:32:19 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
+
+	* ace/ace_bcc.ide: 
+	Updates for Borland C++ 5.x.
+
+	* ace/config-win32.h: 
+	Made sure ACE_HAS_WINNT4 and _WIN32_WINNT are always defined if
+	they were not explicitly defined.
+
+	* ace/config-win32-borland.h: 
+	* ace/config-win32-common.h: 
+	Moved all the Borland definitions to a config-win32-borland.h
+	file.
+
+	* ace/OS.h (ACE_SEH_TRY): 
+	Added correct support for Borland C++ 5.x.
+
+	* ace/OS.cpp: 
+	Replaced the ugly hack to access wProcessorArchitecture under
+	Borland compilers for an even uglier hack, but that will work on
+	every Borland compiler, as long as the members of SYSTEM_INFO are
+	consistent. See the code and get sick!
+
+	* ace/LOCK_SOCK_Acceptor.h: 
+	* ace/Array.cpp: 
+	* ace/Arg_Shifter.cpp: 
+	Were missing an "ace/" in some includes.
+
+	* tests/tests_bcc.ide: 
+	Added all (well, most) of the tests to the project file.
+
+	* tests/Makefile: 
+	* tests/Message_Queue_Notifications_Test.cpp: 
+	* tests/Message_Queue_Notifications_Test.bpr: 
+	* tests/Message_Queue_Notifications_Test.dsp: 
+	* tests/MsgQueue_Notifications_Test.cpp: 
+	* tests/MsgQueue_Notifications_Test.bpr: 
+	* tests/MsgQueue_Notifications_Test.dsp: 
+	* tests/run_tests.bat: 
+	* tests/run_tests.psosim: 
+	* tests/run_tests.sh: 
+	* tests/run_tests.vxworks: 
+	* tests/tests.bpg: 
+	* tests/tests.dsw: 
+	* tests/tests.mak: 
+	* tests/WinCE/Message_Queue_Notifications_Test.dsp: 
+	* tests/WinCE/MsgQueue_Notifications_Test.dsp: 
+	* tests/version_tests/Message_Queue_Notification_Test.dsp: 
+	* tests/version_tests/MsgQueue_Notifications_Test.dsp  : 
+	Changed name of Message_Queue_Notifications_Test to
+	MsgQueue_Notifications_Test, to avoid problems with Borland
+	compilers.
+
+	* tests/Enum_Interfaces_Test.cpp: 
+	Added some output to test ACE_OS::uname().
+
+	* tests/Basic_Types_Test.cpp: 
+	Changed a couple of debug lines to contain only one \n.
+
 Mon Jul  6 14:24:11 EET DST 1998 Wei Chiang <chiang@horizon.ntc.nokia.com>
 	
 	* tests/CLASSIX/CLASSIX_Con_Acc_Test.cpp:

@@ -40,12 +40,12 @@ typedef unsigned __int64 ACE_UINT64;
 #endif /* ACE_HAS_ANSI_CASTS && ACE_HAS_ANSI_CASTS == 0 */
 
 // Only MSVC 5.0 definitions
-#if (_MSC_VER >= 1100 || __BORLANDC__ >= 0x500)
+#if (_MSC_VER >= 1100)
   #if !defined (ACE_HAS_WINCE)
     #define ACE_HAS_SIG_ATOMIC_T
   #endif /* ACE_HAS_WINCE */
 #define ACE_HAS_TYPENAME_KEYWORD
-#endif /* _MSC_VER >= 1100 || __BORLANDC__ >= 0x500 */
+#endif /* _MSC_VER >= 1100 */
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
@@ -66,9 +66,7 @@ typedef unsigned __int64 ACE_UINT64;
 // Platform supports POSIX O_NONBLOCK semantics.
 //define ACE_HAS_POSIX_NONBLOCK
 
-#if !defined (__BORLANDC__)
 #define ACE_LACKS_MODE_MASKS
-#endif /* __BORLANDC__ */
 #define ACE_LACKS_STRRECVFD
 
 // Compiler/platform has correctly prototyped header files.
@@ -113,11 +111,6 @@ typedef unsigned __int64 ACE_UINT64;
 //define ACE_HAS_SYS_SIGLIST
 
 #define ACE_WIN32
-
-#if defined (__BORLANDC__)
-#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-#define ACE_HAS_BROKEN_SAP_ANY
-#endif /* __BORLANDC__ */
 
 //#define ACE_HAS_ALLOC_HOOKS
 #define ACE_TEMPLATES_REQUIRE_SOURCE
@@ -407,41 +400,9 @@ typedef unsigned __int64 ACE_UINT64;
 #define ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION EXCEPTION_CONTINUE_SEARCH
 #endif /* ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION */
 
-/* Borland C++ Builder definitions. */
-#if (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530)
-
-#if 0
-#ifdef ACE_HAS_NONSTATIC_OBJECT_MANAGER
-#undef ACE_HAS_NONSTATIC_OBJECT_MANAGER
-#endif
-#define ACE_HAS_NONSTATIC_OBJECT_MANAGER 1
-#endif
-
-#ifdef ACE_HAS_STANDARD_CPP_LIBRARY
-#undef ACE_HAS_STANDARD_CPP_LIBRARY
-#endif
-#define ACE_HAS_STANDARD_CPP_LIBRARY 1
-
-#ifdef ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
-#undef ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
-#endif
-#define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-
-#ifdef ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER
-#undef ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER
-#endif
-#define ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER 1
-
-#ifdef ACE_HAS_USING_KEYWORD
-#undef ACE_HAS_USING_KEYWORD
-#endif
-#define ACE_HAS_USING_KEYWORD 1
-
-#ifdef ACE_SIZEOF_LONG_DOUBLE
-#undef ACE_SIZEOF_LONG_DOUBLE
-#endif
-#define ACE_SIZEOF_LONG_DOUBLE 10
-
-#endif /* (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) */
+/*
+ * Borland Compilers.
+ */
+#include <ace/config-win32-borland.h>
 
 #endif /* ACE_WIN32_COMMON_H */
