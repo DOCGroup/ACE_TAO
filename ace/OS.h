@@ -3981,10 +3981,10 @@ public:
   static int hostname (char *name,
                        size_t maxnamelen);
 
-  // WinCE only supports UNICODE, so we don't need these functions.
-#if !defined (ACE_HAS_WINCE)
   // = A set of wrappers for explicit dynamic linking.
   static int dlclose (ACE_SHLIB_HANDLE handle);
+  // WinCE only supports UNICODE, so we don't need these functions.
+#if !defined (ACE_HAS_WINCE)
   static char *dlerror (void);
   static ACE_SHLIB_HANDLE dlopen (ACE_DL_TYPE filename,
                                   int mode = ACE_DEFAULT_SHLIB_MODE);
@@ -4092,7 +4092,7 @@ public:
   static void exit (int status = 0);
   static pid_t fork (void);
   static pid_t fork (const char *program_name);
-  static pid_t fork_exec (char *argv[]);
+  static pid_t fork_exec (ASYS_TCHAR *argv[]);
   // Forks and exec's a process in a manner that works on Solaris and
   // NT.  argv[0] must be the full path name to the executable.
 
@@ -4659,6 +4659,7 @@ public:
                          int base);
   static double strtod (const char *s,
                         char **endptr);
+  static int ace_isspace (const char s);
 
 #if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
   // = These go here since they are needed for TAO.
@@ -4700,7 +4701,7 @@ public:
   static long strtol (const wchar_t *s,
                       wchar_t **ptr,
                       int base);
-  //static int isspace (wint_t c);
+  static int ace_isspace (wchar_t c);
 
 #if defined (ACE_WIN32)
   static wchar_t *strstr (const wchar_t *s,
@@ -4745,9 +4746,13 @@ public:
                           int perms = 0,
                           LPSECURITY_ATTRIBUTES sa = 0);
   static int unlink (const wchar_t *path);
+#if defined (ACE_HAS_WINCE)
+  static wchar_t *dlerror (void);
+#endif /* !ACE_HAS_WINCE */
   static ACE_SHLIB_HANDLE dlopen (ACE_WIDE_DL_TYPE filename,
 
                                   int mode = ACE_DEFAULT_SHLIB_MODE);
+  static void *dlsym (ACE_SHLIB_HANDLE handle, ACE_WIDE_DL_TYPE symbol);
   static wchar_t *mktemp (wchar_t *t);
   static int mkdir (const wchar_t *path,
                     mode_t mode = ACE_DEFAULT_DIR_PERMS);

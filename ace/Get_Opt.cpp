@@ -44,8 +44,8 @@
 ACE_ALLOC_HOOK_DEFINE(ACE_Get_Opt)
 
 ACE_Get_Opt::ACE_Get_Opt (int argc, 
-			  char **argv,
-			  const char *optstring, 
+			  ASYS_TCHAR **argv,
+			  const ASYS_TCHAR *optstring, 
 			  int skip, 
 			  int report_errors)
   : optarg (0), 
@@ -82,7 +82,7 @@ ACE_Get_Opt::operator () (void)
     }
 
   int opt; // Character checked for validity.
-  const char *oli; // Option letter index.
+  const ASYS_TCHAR *oli; // Option letter index.
 
   if (this->nextchar_ == 0 || *this->nextchar_ == '\0')
     { 
@@ -91,7 +91,7 @@ ACE_Get_Opt::operator () (void)
       if (this->optind >= this->argc_ 
 	  || *(this->nextchar_ = this->argv_[this->optind]) != '-') 
 	{
-	  this->nextchar_ = "";
+	  this->nextchar_ = ASYS_TEXT ("");
 	  return EOF;
 	}
 
@@ -100,7 +100,7 @@ ACE_Get_Opt::operator () (void)
 	{	
 	  // Found "--".
 	  ++this->optind;
-	  this->nextchar_ = "";
+	  this->nextchar_ = ASYS_TEXT ("");
 	  return EOF;
 	}
     }			
@@ -120,7 +120,7 @@ ACE_Get_Opt::operator () (void)
 	++this->optind;
 
       if (this->opterr && *this->optstring_ != ':')
-	ACE_ERROR ((LM_ERROR, "%s: illegal option -- %c\n", 
+	ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%s: illegal option -- %c\n"), 
 		    this->argv_[0], opt));
       return '?';
     }
@@ -138,20 +138,20 @@ ACE_Get_Opt::operator () (void)
       else if (this->argc_ <= ++this->optind) 
 	{ 
 	  // No arg.
-	  this->nextchar_ = "";
+	  this->nextchar_ = ASYS_TEXT ("");
 
 	  if (*this->optstring_ == ':')
 	    return ':';
 	  if (this->opterr)
 	    ACE_ERROR ((LM_ERROR,
-			"%s: option requires an argument -- %c\n",
+			ASYS_TEXT ("%s: option requires an argument -- %c\n"),
 			this->argv_[0], opt));
 	  return '?';
 	}
       else // White space.
 	this->optarg = this->argv_[this->optind];
 
-      this->nextchar_ = "";
+      this->nextchar_ = ASYS_TEXT ("");
       ++this->optind;
     }
 

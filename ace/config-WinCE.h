@@ -88,6 +88,11 @@
 // temporary workspace
 #define  FILE  void             // Try to map FILE* to HANDLE
 #define ostream FILE                  // Fake a ostream for now.
+#if !defined (BUFSIZ)
+#  define BUFSIZ   1024
+#endif /* BUFSIZ */
+
+#define EOF  -1
 
 typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 typedef long off_t;

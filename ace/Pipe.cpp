@@ -35,7 +35,8 @@ ACE_Pipe::open (void)
     result = -1;
   else
     {
-      ACE_INET_Addr sv_addr (my_addr.get_port_number (), "localhost");
+      ACE_INET_Addr sv_addr (my_addr.get_port_number (),
+                             ASYS_TEXT ("localhost"));
       
       // Establish a connection within the same process.
       if (connector.connect (writer, sv_addr) == -1)
@@ -114,7 +115,7 @@ ACE_Pipe::ACE_Pipe (ACE_HANDLE handles[2])
   ACE_TRACE ("ACE_Pipe::ACE_Pipe");
 
   if (this->open (handles) == -1)
-    ACE_ERROR ((LM_ERROR, "ACE_Pipe::ACE_Pipe"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Pipe::ACE_Pipe")));
 }
 
 ACE_Pipe::ACE_Pipe (ACE_HANDLE read, 

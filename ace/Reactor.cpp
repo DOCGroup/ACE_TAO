@@ -4,9 +4,11 @@
 #include "ace/Reactor.h"
 #include "ace/Reactor_Impl.h"
 #include "ace/Handle_Set.h"
-#include "ace/Service_Config.h"
+#if !defined (ACE_HAS_WINCE)
+#  include "ace/Service_Config.h"
+#  include "ace/WFMO_Reactor.h"
+#endif /* !ACE_HAS_WINCE */
 #include "ace/Select_Reactor.h"
-#include "ace/WFMO_Reactor.h"
 #include "ace/Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
@@ -112,11 +114,14 @@ ACE_Reactor::run_event_loop (void)
     {
       int result = ACE_Reactor::instance ()->handle_events ();
 
+#if !defined (ACE_HAS_WINCE)
       if (ACE_Service_Config::reconfig_occurred ())
 	ACE_Service_Config::reconfigure ();
+      else
+#endif /* !ACE_HAS_WINCE */
 
-      else if (result == -1)
-	return -1;
+        if (result == -1)
+          return -1;
     }
   /* NOTREACHED */
   return 0;
@@ -135,10 +140,13 @@ ACE_Reactor::run_event_loop (ACE_Time_Value &tv)
     {
       int result = ACE_Reactor::instance ()->handle_events (tv);
 
+#if !defined (ACE_HAS_WINCE)
       if (ACE_Service_Config::reconfig_occurred ())
 	ACE_Service_Config::reconfigure ();
-      else if (result <= 0)
-	return result;
+      else 
+#endif /* !ACE_HAS_WINCE */
+        if (result <= 0)
+          return result;
     }
 
   /* NOTREACHED */

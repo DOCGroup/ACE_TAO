@@ -2,7 +2,9 @@
 
 #define ACE_BUILD_DLL
 #include "ace/Malloc.h"
-#include "ace/Service_Config.h"
+#if !defined (ACE_HAS_WINCE)
+#  include "ace/Service_Config.h"
+#endif /* !ACE_HAS_WINCE */
 #include "ace/SString.h"
 
 #include "ace/streams.h"

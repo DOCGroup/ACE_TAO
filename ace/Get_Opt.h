@@ -28,8 +28,8 @@ class ACE_Export ACE_Get_Opt
   //    This is a C++ wrapper for getopt(3c).
 public:
   ACE_Get_Opt (int argc, 
-	       char **argv, 
-	       const char *optstring, 
+	       ASYS_TCHAR **argv, 
+	       const ASYS_TCHAR *optstring, 
 	       int skip_argv0 = 1, 
 	       int report_errors = 0);
   // Initialize the internal data when the first call is made.  Start
@@ -74,7 +74,7 @@ public:
 
   // = Public data members (should be hidden...).
 
-  char *optarg;
+  ASYS_TCHAR *optarg;
   // For communication from <operator()> to the caller.  When
   // <operator()> finds an option that takes an argument, the argument
   // value is returned here.
@@ -98,7 +98,7 @@ public:
   int argc_;
   // Holds the <argc> count.
 
-  char **argv_;
+  ASYS_TCHAR **argv_;
   // Holds the <argv> pointer.  
 
   void dump (void) const;
@@ -109,7 +109,7 @@ public:
 
 private:
   
-  char *nextchar_;
+  ASYS_TCHAR *nextchar_;
   // The next char to be scanned in the option-element in which the
   // last option character we returned was found.  This allows us to
   // pick up the scan where we left off.
@@ -117,7 +117,7 @@ private:
   // If this is zero, or a null string, it means resume the scan
   // by advancing to the next <argv>-element.
 
-  const char *optstring_;
+  const ASYS_TCHAR *optstring_;
   // Holds the option string.  
 };
 

@@ -57,7 +57,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Manager (size_t size,
   ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Manager");
 
   if (this->open (size, alloc) == -1)
-    ACE_ERROR ((LM_ERROR, "ACE_Map_Manager\n"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Map_Manager\n")));
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
@@ -69,7 +69,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Manager (ACE_Allocator *alloc
 {
   ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Manager");
   if (this->open (ACE_DEFAULT_MAP_SIZE, alloc) == -1)
-    ACE_ERROR ((LM_ERROR, "ACE_Map_Manager\n"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Map_Manager\n")));
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int

@@ -139,7 +139,7 @@ ACE_Stream<ACE_SYNCH_USE>::pop (int flags)
 // ACE_Stream.
 
 template <ACE_SYNCH_DECL> int
-ACE_Stream<ACE_SYNCH_USE>::remove (const char *name, 
+ACE_Stream<ACE_SYNCH_USE>::remove (const ASYS_TCHAR *name, 
 				 int flags)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::remove");
@@ -172,7 +172,7 @@ ACE_Stream<ACE_SYNCH_USE>::remove (const char *name,
 }
 
 template <ACE_SYNCH_DECL> ACE_Module<ACE_SYNCH_USE> *
-ACE_Stream<ACE_SYNCH_USE>::find (const char *name)
+ACE_Stream<ACE_SYNCH_USE>::find (const ASYS_TCHAR *name)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::find");
   for (ACE_Module<ACE_SYNCH_USE> *mod = this->stream_head_; 
