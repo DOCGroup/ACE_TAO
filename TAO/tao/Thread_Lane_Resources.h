@@ -24,6 +24,7 @@ class TAO_ORB_Core;
 class TAO_Acceptor_Registry;
 class TAO_Transport_Cache_Manager;
 class TAO_Leader_Follower;
+class TAO_MProfile;
 
 /**
  * @class TAO_Thread_Lane_Resources
@@ -42,8 +43,8 @@ public:
   /// Destructor.
   ~TAO_Thread_Lane_Resources (void);
 
-  /// Checks if the acceptor registry has been created.
-  int has_acceptor_registry_been_created (void) const;
+  // Does <mprofile> belong to us?
+  int is_collocated (const TAO_MProfile &mprofile);
 
   /// Open the acceptor registry.
   int open_acceptor_registry (int ignore_address,
@@ -67,6 +68,10 @@ public:
   // @}
 
 private:
+
+  /// Checks if the acceptor registry has been created.
+  int has_acceptor_registry_been_created (void) const;
+
   /// ORB_Core related to this thread lane.
   TAO_ORB_Core &orb_core_;
 

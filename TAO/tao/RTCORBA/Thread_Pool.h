@@ -96,6 +96,9 @@ public:
   /// Wait for threads to exit.
   void wait (void);
 
+  // Does <mprofile> belong to us?
+  int is_collocated (const TAO_MProfile &mprofile);
+
   /// Create the static threads - only called once.
   int create_static_threads (void);
 
@@ -195,6 +198,9 @@ public:
   /// Wait for threads to exit.
   void wait (void);
 
+  // Does <mprofile> belong to us?
+  int is_collocated (const TAO_MProfile &mprofile);
+
   /// Create the static threads - only called once.
   int create_static_threads (void);
 
@@ -262,6 +268,9 @@ public:
 
   /// Wait for threads to exit.
   void wait (void);
+
+  // Does <mprofile> belong to us?
+  int is_collocated (const TAO_MProfile &mprofile);
 
   /// Create a threadpool without lanes.
   RTCORBA::ThreadpoolId

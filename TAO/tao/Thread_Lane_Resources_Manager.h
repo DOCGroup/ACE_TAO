@@ -24,6 +24,7 @@
 class TAO_ORB_Core;
 class TAO_Thread_Lane_Resources;
 class TAO_LF_Strategy;
+class TAO_MProfile;
 
 /**
  * @class TAO_Thread_Lane_Resources_Manager
@@ -51,6 +52,9 @@ public:
 
   /// Shutdown reactor.
   virtual void shutdown_reactor (void) = 0;
+
+  // Does <mprofile> belong to us?
+  virtual int is_collocated (const TAO_MProfile& mprofile) = 0;
 
   /// @name Accessors
   // @{

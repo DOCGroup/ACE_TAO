@@ -64,6 +64,12 @@ TAO_Default_Thread_Lane_Resources_Manager::shutdown_reactor (void)
   this->lane_resources_->shutdown_reactor ();
 }
 
+int
+TAO_Default_Thread_Lane_Resources_Manager::is_collocated (const TAO_MProfile &mprofile)
+{
+  return this->lane_resources_->is_collocated (mprofile);
+}
+
 TAO_Thread_Lane_Resources_Manager *
 TAO_Default_Thread_Lane_Resources_Manager_Factory::create_thread_lane_resources_manager (TAO_ORB_Core &core)
 {

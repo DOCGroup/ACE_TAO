@@ -1716,9 +1716,6 @@ TAO_ORB_Core::create_collocated_object (TAO_Stub *stub,
 int
 TAO_ORB_Core::is_collocated (const TAO_MProfile& mprofile)
 {
-  if (!this->lane_resources ().has_acceptor_registry_been_created ())
-    return 0;
-
   // @@ Lots of issues arise when dealing with collocation.  What about
   //    forwarding or what if this is a multi-profile IOR where the order is
   //    significant and only one of the profiles is collocated.  For example
@@ -1730,7 +1727,7 @@ TAO_ORB_Core::is_collocated (const TAO_MProfile& mprofile)
   //    address (ORB Host) but not the object_key.  This should be checked
   //    also.
 
-  return this->lane_resources ().acceptor_registry ().is_collocated (mprofile);
+  return this->thread_lane_resources_manager ().is_collocated (mprofile);
 }
 
 // ****************************************************************

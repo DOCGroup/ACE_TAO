@@ -39,7 +39,7 @@ test_i::method (CORBA::Long client_id,
                 iteration));
   else
     ACE_DEBUG ((LM_DEBUG,
-                "Request in thread %t (default pool id) for client %d iteration %d\n",
+                "Request in thread %t (default thread pool) for client %d iteration %d\n",
                 client_id,
                 iteration));
 

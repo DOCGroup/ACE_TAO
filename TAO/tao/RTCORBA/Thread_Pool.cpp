@@ -178,6 +178,12 @@ TAO_Thread_Lane::wait (void)
 }
 
 int
+TAO_Thread_Lane::is_collocated (const TAO_MProfile &mprofile)
+{
+  return this->resources_.is_collocated (mprofile);
+}
+
+int
 TAO_Thread_Lane::create_static_threads (void)
 {
   // Create static threads.
@@ -412,6 +418,24 @@ TAO_Thread_Pool::wait (void)
 }
 
 int
+TAO_Thread_Pool::is_collocated (const TAO_MProfile &mprofile)
+{
+  // Finalize all the lanes.
+  for (CORBA::ULong i = 0;
+       i != this->number_of_lanes_;
+       ++i)
+    {
+      int result =
+        this->lanes_[i]->is_collocated (mprofile);
+
+      if (result)
+        return result;
+    }
+
+  return 0;
+}
+
+int
 TAO_Thread_Pool::create_static_threads (void)
 {
   for (CORBA::ULong i = 0;
@@ -546,6 +570,24 @@ TAO_Thread_Pool_Manager::wait (void)
        iterator != this->thread_pools_.end ();
        ++iterator)
     (*iterator).int_id_->wait ();
+}
+
+int
+TAO_Thread_Pool_Manager::is_collocated (const TAO_MProfile &mprofile)
+{
+  // Finalize all the pools.
+  for (THREAD_POOLS::ITERATOR iterator = this->thread_pools_.begin ();
+       iterator != this->thread_pools_.end ();
+       ++iterator)
+    {
+      int result =
+        (*iterator).int_id_->is_collocated (mprofile);
+
+      if (result)
+        return result;
+    }
+
+  return 0;
 }
 
 RTCORBA::ThreadpoolId
