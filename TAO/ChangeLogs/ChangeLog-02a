@@ -1,3 +1,8 @@
+Sun Apr 29 08:30:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/IDL_Test/Makefile.bor (CPPDIR): Added a missing
+	  rule. Thanks to Johnny Willemsen for pointing this out.
+
 Sat Apr 28 10:40:01 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * examples/PluggableUDP/DIOP/DIOP_Acceptor.cpp:
@@ -9,7 +14,7 @@ Sat Apr 28 10:40:01 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 Fri Apr 27 22:20:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/IDL_Test/Makefile.bor: Added rules for the new idl file,
-	  full.idl. 
+	  full.idl.
 
 Fri Apr 27 22:15:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -75,7 +80,7 @@ Fri Apr 27 16:01:34 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Fri Apr 27 11:58:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Synch_Reply_Dispatcher.cpp (dispatch_reply): 
+	* tao/Synch_Reply_Dispatcher.cpp (dispatch_reply):
 	* tao/Asynch_Reply_Dispatcher.cpp: Changed the steal_from () calls
 	  to steal_data () calls.  This removes the allocations along the
 	  critical path. The call steal_from () spent 48.5% of the time
@@ -83,8 +88,8 @@ Fri Apr 27 11:58:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  allocations as per quantify) which should be gone now. We still
 	  see a problem when we transfer data_blocks. The transfer does a
 	  release which seems to occupy 35% of the time which would be
-	  almost impossible to do away with. 
-	
+	  almost impossible to do away with.
+
 Fri Apr 27 11:45:58 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/POA/Single_Threaded_POA/run_test.pl:
@@ -294,6 +299,7 @@ Wed Apr 25 12:00:04 2001  Jeff Parsons <parsons@cs.wustl.edu>
           Reformatted some output stream statements to avoid
           fuzz errors.
 
+>>>>>>> 1.3389
 Wed Apr 25 11:20:54 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_interface/ami_interface_ch.cpp:

@@ -106,6 +106,9 @@ $(IDLDIR)\enum_in_structC.cpp $(IDLDIR)\enum_in_structS.cpp: $(IDLDIR)\enum_in_s
 $(IDLDIR)\fullC.cpp $(IDLDIR)\fullS.cpp: $(IDLDIR)\full.idl
 	$(TAO_IDL) $**
 
+$(IDLDIR)\fwdC.cpp $(IDLDIR)\fwdS.cpp: $(IDLDIR)\fwd.idl
+	$(TAO_IDL) $**
+
 $(IDLDIR)\generic_objectC.cpp $(IDLDIR)\generic_objectS.cpp: $(IDLDIR)\generic_object.idl
 	$(TAO_IDL) $**
 
@@ -147,4 +150,3 @@ $(IDLDIR)\reopen_include1C.cpp $(IDLDIR)\reopen_include1S.cpp: $(IDLDIR)\reopen_
 
 $(IDLDIR)\reopen_include2C.cpp $(IDLDIR)\reopen_include2S.cpp: $(IDLDIR)\reopen_include2.idl
 	$(TAO_IDL) $**
-
