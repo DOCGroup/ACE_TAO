@@ -1,3 +1,10 @@
+Tue Aug 22 12:05:40 2000  Priyanka Gontla <pgontla@ece.uci.edu>
+
+        * orbsvcs/orbsvcs/CosEvent/CosNaming.dsp:
+        * orbsvcs/orbsvcs/CosEvent/CosTrading.dsp:
+        * orbsvcs/orbsvcs/CosEvent/CosEvent.dsp:
+	  Updated the project files.
+
 Tue Aug 22 11:20:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
