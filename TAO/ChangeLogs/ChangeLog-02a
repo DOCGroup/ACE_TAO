@@ -1,3 +1,14 @@
+Fri Nov 24 19:21:29 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/remote_proxy_impl_cs.cpp:
+	  
+	  Minor Aesthetic fixes for the generated code.
+	
+	* TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:
+	  
+	  Added implementation of the default ctor, that was chopped away
+	  while fixing the indentation.
+
 Fri Nov 24 17:14:16 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp
