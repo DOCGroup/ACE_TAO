@@ -20,7 +20,7 @@
 #if ! defined (ACE_THREAD_PRIORITY_H)
 #define ACE_THREAD_PRIORITY_H
 
-class ACE_Thread_Priority
+class  ACE_Export ACE_Thread_Priority
   // = TITLE
   //
   // = DESCRIPTION
