@@ -40,7 +40,7 @@ Mechanisms in ACE).</FONT>
 <BR><FONT COLOR="#FF0000">//Accept data from the remote host using the
 datgram component local_</FONT>
 <BR>int accept_data(){
-<BR>&nbsp;if(local_.recv(data_buf,SIZE_DATA,remote_addr_)!=-1){
+<BR>&nbsp;if(local_.recv(data_buf,DATA_BUFFER_SIZE,remote_addr_)!=-1){
 <BR>&nbsp; ACE_DEBUG((LM_DEBUG, "Data received from remote server %s
 <BR>&nbsp;&nbsp;&nbsp;&nbsp; was: %s \n" ,remote_addr_.get_host_name(),
 data_buf));
@@ -56,10 +56,10 @@ sent wait for a reply from</FONT>
 <BR>int send_data(){
 <BR>&nbsp;ACE_DEBUG((LM_DEBUG,"Preparing to send data to server %s:%d\n",
 <BR>&nbsp;&nbsp; remote_addr_.get_host_name(),remote_addr_.get_port_number()));
-<BR>&nbsp;ACE_OS::sprintf(data_buf,"Client says hello");
+<BR>&nbsp;ACE_OS::strcpy(data_buf,"Client says hello");
 <BR>&nbsp;
 <BR>&nbsp;while(local_.send
-<BR>&nbsp;&nbsp;&nbsp; (data_buf,ACE_OS::strlen(data_buf),remote_addr_)!=-1){
+<BR>&nbsp;&nbsp;&nbsp; (data_buf,ACE_OS::strlen(data_buf)+1,remote_addr_)!=-1){
 <BR>&nbsp; ACE_OS::sleep(1);
 <BR>&nbsp; if(accept_data()==-1)
 <BR>&nbsp;&nbsp; break;
@@ -81,6 +81,7 @@ sent wait for a reply from</FONT>
 <BR>&nbsp;}
 <BR>Client client(argv[1],ACE_OS::atoi(argv[2]));
 <BR>client.send_data();
+<BR>return 0;
 <BR>}
 <BR>&nbsp;
 <BR>&nbsp;<A HREF="ex05.html">Next Example</A>

@@ -41,7 +41,7 @@ Accept it and display it.</FONT>
 <BR><FONT COLOR="#FF0000">// After recieveing data immediately send some
 data back to the remote.</FONT>
 <BR>int accept_data(){
-<BR>&nbsp;while(local_.recv(data_buf,SIZE_DATA,remote_addr_)!=-1){
+<BR>&nbsp;while(local_.recv(data_buf,DATA_BUFFER_SIZE,remote_addr_)!=-1){
 <BR>&nbsp; ACE_DEBUG((LM_DEBUG, "Data received from remote %s was %s \n"
 <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ,remote_addr_.get_host_name(), data_buf));
 <BR>&nbsp; ACE_OS::sleep(1);
@@ -57,9 +57,9 @@ the datagram component local_</FONT>
 <BR>int send_data(){
 <BR>&nbsp;ACE_DEBUG((LM_DEBUG,"Preparing to send reply to client %s:%d\n",
 <BR>&nbsp; remote_addr_.get_host_name(),remote_addr_.get_port_number()));
-<BR>&nbsp;ACE_OS::sprintf(data_buf,"Server says hello to you too");
+<BR>&nbsp;ACE_OS::strcpy(data_buf,"Server says hello to you too");
 <BR>&nbsp;if(
-<BR>&nbsp;local_.send(data_buf, ACE_OS::strlen(data_buf),remote_addr_)==-1)
+<BR>&nbsp;local_.send(data_buf, ACE_OS::strlen(data_buf)+1,remote_addr_)==-1)
 <BR>&nbsp; return -1;
 <BR>&nbsp;else
 <BR>&nbsp; return 0;
@@ -75,6 +75,7 @@ the datagram component local_</FONT>
 <P>int main(int argc, char *argv[]){
 <BR>&nbsp;Server server(ACE_OS::atoi(argv[1]));
 <BR>&nbsp;server.accept_data();
+<BR>&nbsp;return 0;
 <BR>}
 
 <P>&nbsp;<A HREF="ex04.html">Next Example</A>
