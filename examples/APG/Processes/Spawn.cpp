@@ -146,7 +146,7 @@ public:
 
     ACE_TCHAR str[128];
     ACE_OS::sprintf (str, ACE_TEXT ("(%d) Enter your command\n"),
-                     ACE_OS::getpid ());
+                     static_cast<int> (ACE_OS::getpid ()));
     ACE_OS::write (ACE_STDOUT, str, ACE_OS::strlen (str));
     this->readLine (str);
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P) Executed: %C\n"),
