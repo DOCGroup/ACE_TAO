@@ -7,19 +7,19 @@
 CFG=Helper_Test - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "Helper_Test.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "Helper_Test.mak" CFG="Helper_Test - Win32 Debug"
-!MESSAGE
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
+!MESSAGE 
 !MESSAGE "Helper_Test - Win32 Release" (based on "Win32 (x86) Console Application")
 !MESSAGE "Helper_Test - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE
+!MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -76,7 +76,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 aced.lib ACEXMLd.lib ACEXML_Parserd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\ace" /libpath:"..\..\..\..\ACEXML\Common" /libpath:"..\..\..\..\ACEXML\parser\parser"
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
@@ -85,6 +85,14 @@ LINK32=link.exe
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+# Begin Source File
+
+SOURCE=.\Assembly_Handlers.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Assembly_Spec.cpp
+# End Source File
 # Begin Source File
 
 SOURCE=.\Cascadable_DocHandler.cpp
@@ -105,6 +113,22 @@ SOURCE=.\XML_Utils.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Source File
+
+SOURCE=.\Assembly_Handlers.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Assembly_Handlers.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Assembly_Spec.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Assembly_Spec.inl
+# End Source File
 # Begin Source File
 
 SOURCE=.\Softpkg_Handlers.h

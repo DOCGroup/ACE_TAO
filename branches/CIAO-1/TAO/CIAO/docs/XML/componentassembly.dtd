@@ -95,7 +95,7 @@
     , ( providesport
       | componentsupportedinterface
       | existinginterface
-      | hoameinterface
+      | homeinterface
       )
     ) >
 <!ATTLIST connectinterface

@@ -58,7 +58,7 @@ project(NavDisplay_exec) : ciao_server {
 
 project (NavDisplay_client) : ciao_client {
   exename = client
-  depends += NavDisplay_stub
+  depends += NavDisplay_stub HUDisplay_stub
 
   IDL_Files {
   }

@@ -51,6 +51,10 @@ if (defined $opt_p) {
     $stub_depend = "depends += $opt_p".'_stub';
     $svnt_depend = "$opt_p".'_svnt';
     $lib_depend = "$opt_p".'_stub '."$opt_p".'_svnt';
+    $client_depend = "$com_name".'_stub '."$opt_p"."_stub";
+}
+else {
+    $client_depend = "$com_name".'_stub';
 }
 
 if (defined $opt_l) {
@@ -62,7 +66,7 @@ if (defined $opt_c) {
 '
 project ('."$com_name".'_client) : ciao_client {
   exename = client
-  depends += '."$com_name".'_stub
+  depends += '."$client_depend".'
 
   IDL_Files {
   }
