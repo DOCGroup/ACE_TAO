@@ -1,3 +1,10 @@
+Sat Dec 20 15:04:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Array_VarOut_T.h:
+        * tao/BiDir_Adapter.h:
+          Removed not needed ; after the c++ namespace closure to fix Tru64
+          CC compiler warning.
+
 Sat Dec 20 14:06:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/*.bor:
@@ -263,15 +270,15 @@ Fri Dec 12 11:35:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.h:
         * orbsvcs/orbsvcs/LoadBalancing/LB_Random.cpp:
         * orbsvcs/orbsvcs/Log/Log_i.cpp:
-        
+
           Added some explicit casting to elininate warnings by MSVC 7.1.
-          
+
         * tao/Typecode.cpp:
-        
+
           Added memory leak fix overlooked in
-          
+
           Sat Nov 29 11:42:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
-          
+
           Thanks again to Harvinder Sawhney <harvinder_sawhney@agilent.com>
           for suggesting these fixes.
 
