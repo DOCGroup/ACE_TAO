@@ -83,6 +83,13 @@ MyImpl::RoundTrip_exec_i::set_session_context (Components::SessionContext_ptr ct
 }
 
 void
+MyImpl::RoundTrip_exec_i::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
+{
+}
+
+void
 MyImpl::RoundTrip_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
@@ -93,6 +100,14 @@ MyImpl::RoundTrip_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
   // Starting method!
   //set_priority();
+}
+
+void
+MyImpl::RoundTrip_exec_i::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
+{
+
 }
 
 void

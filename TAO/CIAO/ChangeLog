@@ -1,3 +1,35 @@
+Sun Jul  4 22:13:37 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* performance-tests/Benchmark/RoundTrip/RoundTrip_exec.cpp:
+	* performance-tests/Benchmark/RoundTrip/RoundTrip_exec.h:
+	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
+	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.h:
+
+	  Added ciao_preactivate () and ciao_postactivate () methods. 
+
+	* performance-tests/Protocols/Receiver/Receiver.mpc:
+	* performance-tests/Protocols/Sender/Sender.mpc:
+
+	  Did the following 
+
+	  (1) Changed the name of the shared object to Protocol_*_stub and
+	  Protocol_*_svnt. This was needed since there are other examples
+	  that have named the libraries as Sender_stub and
+	  Receiver_stub. Since all of these libraries are written to
+	  $ACE_ROOT/lib, one library overwrites the other and all hell
+	  breaks loose. 
+
+	  (2) The executor librares are not being compiled now. We have
+	  used the requires += dummy to prevent them from compiling. The
+	  executor code depends on a header file that hasn't been checked
+	  in. I am informing the code author about this. Till the author
+	  fixes the code, the executor code will  not be compiled. 
+	
+	* performance-tests/Protocols/Controller/Controller.mpc:
+
+	  They now link to Protocol_*_stubs. 
+
+
 Sun Jul  4 19:05:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* examples/handcrafted/BasicSP_EC/BasicSP.mpc:
