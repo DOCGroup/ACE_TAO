@@ -1,3 +1,11 @@
+Sun Mar  5 21:32:45 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * ace/CDR_Stream.cpp:
+          When allocating a new buffer in ACE_CDR::grow() we must leave
+          enough room for the buffer required by the user *and* space to
+          adjust the alignment.  Thanks to Bala and Jeff for tracking this
+          down.
+
 Fri Mar 03 17:01:54 2000  Steve Huston  <shuston@riverace.com>
 
         * tests/Malloc_Test.cpp: Changed a couple of straggling
