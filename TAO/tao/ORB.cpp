@@ -1295,6 +1295,11 @@ CORBA::ORB_init (int &argc,
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
                             *ACE_Static_Object_Lock::instance (), 0));
 
+  // This (init_orb_globals) must come *after* ORB Core initialization.
+  // Make sure initialization of TAO globals only occurs once.
+  CORBA_ORB::init_orb_globals (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
   // Get ORB Core
   // @@ As part of the ORB re-architecture this will the point where
   //    we locate the right ORB (from a table) and use that one
@@ -1311,11 +1316,6 @@ CORBA::ORB_init (int &argc,
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
     }
-
-  // This (init_orb_globals) must come *after* ORB Core initialization.
-  // Make sure initialization of TAO globals only occurs once.
-  CORBA_ORB::init_orb_globals (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
 
   // @@ We may only want to set this if ORB_init() has 0 argc/argv
   // parameters.
