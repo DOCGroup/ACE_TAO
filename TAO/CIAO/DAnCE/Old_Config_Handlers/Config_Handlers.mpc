@@ -44,39 +44,3 @@ project (Config_Handlers) : ciao_deployment_stub, ifr_client, valuetype, xerces,
     XercesString.cpp
   }
 }
-
-project (XSC_Config_Handlers) : ciao_deployment_stub, ifr_client, xerces, exceptions {
-
-  requires += dummy_label
-
-  sharedname = XSC_Config_Handlers
-  dynamicflags   = CONFIG_HANDLER_BUILD_DLL
-  includes += .
-  libs     += CIAO_DnC_Server
-
-  Source_Files {
-    Basic_Deployment_Data.cpp
-    ccd.cpp
-    cdd.cpp
-    cdp.cpp
-    cid.cpp
-    cpd.cpp
-    Deployment.cpp
-    iad.cpp
-    pcd.cpp
-    toplevel.cpp
-  }
-
-  Header_Files {
-    Basic_Deployment_Data.hpp
-    ccd.hpp
-    cdd.hpp
-    cdp.hpp
-    cid.hpp
-    cpd.hpp
-    Deployment.hpp
-    iad.hpp
-    pcd.hpp
-    toplevel.hpp
-  }
-}
