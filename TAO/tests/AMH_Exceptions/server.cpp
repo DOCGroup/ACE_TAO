@@ -94,7 +94,7 @@ public:
 protected:
   int *argc_;
   char **argv_;
-  static char *ior_output_file_;
+  char *ior_output_file_;
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
 
@@ -110,16 +110,17 @@ private:
 #include "ace/Get_Opt.h"
 #include "tao/Strategies/advanced_resource.h"
 
-char *ST_AMH_Server::ior_output_file_  = (char *) "test.ior";
-
 ST_AMH_Server::ST_AMH_Server (int* argc, char **argv)
   : argc_ (argc)
   , argv_ (argv)
+  , ior_output_file_ (ACE_OS::strdup ("test.ior"))
 {
 }
 
 ST_AMH_Server::~ST_AMH_Server ()
 {
+  delete this->ior_output_file_;
+
   ACE_TRY_NEW_ENV
     {
       this->root_poa_->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
@@ -133,6 +134,7 @@ ST_AMH_Server::~ST_AMH_Server ()
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught:");
     }
   ACE_ENDTRY;
+
 }
 
 int
