@@ -1,0 +1,10 @@
+//
+// $Id$
+//
+
+interface test
+{
+  void method (in unsigned long work);
+
+  void shutdown ();
+};
