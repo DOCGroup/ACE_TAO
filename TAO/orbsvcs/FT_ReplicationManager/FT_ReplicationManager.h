@@ -16,6 +16,7 @@
 #define FT_REPLICATION_MANAGER_H_
 
 #include /**/ "ace/pre.h"
+#include <ace/ACE.h>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

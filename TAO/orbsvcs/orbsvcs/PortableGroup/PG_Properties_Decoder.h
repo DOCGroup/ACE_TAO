@@ -17,13 +17,16 @@
 #include "orbsvcs/CosNamingC.h"
 #include "portablegroup_export.h"
 
-#include "ace/Map_T.h"
+#include "ace/Hash_Map_Manager.h"
 
 namespace TAO_PG
 {
   class TAO_PortableGroup_Export Properties_Decoder
   {
-    typedef ACE_Hash_Map_Manager<ACE_CString, const PortableGroup::Value *, ACE_SYNCH_NULL_MUTEX> ValueMap;
+    typedef ACE_Hash_Map_Manager<
+      ACE_CString, 
+      const PortableGroup::Value *, 
+      ACE_SYNCH_NULL_MUTEX> ValueMap;
   public:
     Properties_Decoder (const PortableGroup::Properties & property_set);
     ~Properties_Decoder ();

@@ -1,5 +1,6 @@
 project : taoserver, orbsvcsexe, fault_tolerance, iormanip, ftorb {
   exename  = FT_ReplicationManager
+  after += FaultDetector
   Source_Files {
     FT_ReplicationManager.cpp
     FT_ReplicationManager_Main.cpp

@@ -80,7 +80,7 @@ int TAO::PG_Object_Group_Map::destroy_group (PortableGroup::ObjectGroup_ptr obje
       ::TAO::PG_Object_Group *,
       ACE_Hash<ACE_UINT64>,
       ACE_Equal_To<ACE_UINT64>,
-      TAO_Synch_Mutex>;
+      TAO_SYNCH_MUTEX>;
 
   template class ACE_Hash_Map_Entry <
       PortableGroup::ObjectGroupId,
@@ -91,7 +91,7 @@ int TAO::PG_Object_Group_Map::destroy_group (PortableGroup::ObjectGroup_ptr obje
       ::TAO::PG_Object_Group *,
       ACE_Hash<ACE_UINT64>,
       ACE_Equal_To<ACE_UINT64>,
-      TAO_Synch_Mutex>;
+      TAO_SYNCH_MUTEX>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -100,7 +100,7 @@ int TAO::PG_Object_Group_Map::destroy_group (PortableGroup::ObjectGroup_ptr obje
       ::TAO::PG_Object_Group *,
       ACE_Hash<ACE_UINT64>,
       ACE_Equal_To<ACE_UINT64>,
-      TAO_Synch_Mutex>;
+      TAO_SYNCH_MUTEX>;
 
 # pragma instantiate ACE_Hash_Map_Entry <
       PortableGroup::ObjectGroupId,
@@ -111,6 +111,6 @@ int TAO::PG_Object_Group_Map::destroy_group (PortableGroup::ObjectGroup_ptr obje
       ::TAO::PG_Object_Group *,
       ACE_Hash<ACE_UINT64>,
       ACE_Equal_To<ACE_UINT64>,
-      TAO_Synch_Mutex>;
+      TAO_SYNCH_MUTEX>;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -1,3 +1,17 @@
+Sun Nov  9 12:40:10 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
+        * orbsvcs/Fault_Detector/Fault_Detector.mpc:
+        * orbsvcs/Fault_Notifier/Fault_Notifier.mpc:
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Map.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.cpp:
+          Resolving build errors/warnings in linux & solaris builds.
+
+
 Sat Nov  8 17:01:29 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.h:
