@@ -26,7 +26,7 @@ TAO_Connection_Purging_Strategy::TAO_Connection_Purging_Strategy (
 }
 
 
-TAO_Connection_Purging_Strategy::~TAO_Connection_Purging_Strategy ()
+TAO_Connection_Purging_Strategy::~TAO_Connection_Purging_Strategy (void)
 {
   if (TAO_debug_level > 0)
     {
@@ -72,7 +72,7 @@ TAO_Connection_Purging_Strategy::close_entries(DESCRIPTOR_SET& sorted_set)
               // which will call remove_item_i() on us.
               item->close_connection ();
             }
-        }  
+        }
       delete prop;
     }
 }
@@ -98,13 +98,13 @@ TAO_ULong_Connection_Purging_Strategy::fill_set_i (DESCRIPTOR_SET& sorted_set)
   int current_size = this->tracking_map_.current_size ();
   int amount = current_size - this->cache_maximum ();
 
-  if (TAO_debug_level > 0) 
+  if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - ")
                             ACE_TEXT ("TAO_ULong_Connection_Purging_Strategy")
                             ACE_TEXT ("::fill_set_i - %d %d\n"),
                             current_size,
-                            this->cache_maximum ())); 
+                            this->cache_maximum ()));
     }
 
   if (amount >= 0)
@@ -224,4 +224,3 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Cache_ExtId, unsigned long, 
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Cache_ExtId, unsigned long, ACE_Hash<TAO_Cache_ExtId>, ACE_Equal_To<TAO_Cache_ExtId>, ACE_Null_Mutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

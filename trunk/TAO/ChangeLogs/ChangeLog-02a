@@ -1,3 +1,11 @@
+Thu May 17 12:12:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Connection_Purging_Strategy.cpp:
+	* tao/Connection_Purging_Strategy.h:
+	* tao/Connection_Purging_Strategy.inl:
+	* tao/LRU_Connection_Purging_Strategy.h: Left @@Chad comments
+	  after a quick review. 
+
 Thu May 17 12:10:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Strategies/GIOP_Message_NonReactive_Handler.cpp: Added a
