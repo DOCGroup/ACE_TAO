@@ -1,3 +1,9 @@
+Thu Aug  8 23:11:30 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* include/makeinclude/rules.nested.GNU: Reverted this change "Thu
+	  Aug  8 18:28:34 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>"
+	  since it would break our daily builds.
+
 Thu Aug  8 18:28:34 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* include/makeinclude/rules.nested.GNU: If we fail during a recursive

@@ -14,7 +14,7 @@ ifneq ($(DIRS),)
 	@cmd /c "FOR /D %i IN ($(DIRS)) DO $(MAKE) -C %i $(@:.nested=)"
   else  # ! Windows
 	@for dir in $(DIRS); do \
-        $(MAKE) -f $(MAKEFILE) -C $$dir $(@:.nested=) $(ACE_NESTED_COMMAND) || exit 1; \
+        $(MAKE) -f $(MAKEFILE) -C $$dir $(@:.nested=) $(ACE_NESTED_COMMAND); \
         done
   endif # ! Windows
 endif # DIRS
