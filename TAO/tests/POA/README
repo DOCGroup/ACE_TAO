@@ -40,14 +40,3 @@ Object Adapter (POA) interfaces and their usage scenarios.
                 a servant can call itself or other servants in the
                 same POA while in an upcall.
 
-	. Multiple_Deactivation
-
-		Regression test for:
-
-		http://ace.cs.wustl.edu/bugzilla/show_bug.cgi?id=834
-
-		The test creates a single object reference and
-		deactivates it three times in the context of a
-		request.   The servant verifies that the destructor is
-		not invoked in this context, and that reference
-		counting rules are properly followed.
