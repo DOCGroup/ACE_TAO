@@ -1294,9 +1294,7 @@ AST_Decl::original_local_name (Identifier *local_name)
         == local_name->get_string ())
     {
       // CSting class is good to do this stuff.
-      ACE_CString name_str (local_name->get_string (),
-                            0,
-                            0);
+      ACE_CString name_str (local_name->get_string ());
 
       // Remove _cxx_.
       name_str = name_str.substr (ACE_OS::strlen ("_cxx_"));
