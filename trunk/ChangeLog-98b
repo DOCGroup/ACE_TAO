@@ -1,3 +1,7 @@
+Mon Oct 12 15:59:00 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Message_Block.cpp (size): removed unused local "old_base".
+
 Mon Oct 12 11:24:45 PDT 1998  James Hu  <jxh@entera.com>
 
 	* Asynch_IO.cpp: Minor changes to deal with FMR error.
@@ -20,12 +24,12 @@ Mon Oct 12 12:14:45 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 Mon Oct 12 10:43:09 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* ace/Asynch_IO.cpp (ACE_Asynch_Result): Fixed a double deletion
-	problem. Thanks to James Hu for reporting this. 
+	problem. Thanks to James Hu for reporting this.
 
 Mon Oct 12 09:43:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Containers_T.h: 
-	* ace/Containers_T.cpp: 
+	* ace/Containers_T.h:
+	* ace/Containers_T.cpp:
 	  Added a new method to modify the size of an ACE_Array.
 
 Mon Oct 12 09:23:49 1998  David L. Levine  <levine@cs.wustl.edu>
