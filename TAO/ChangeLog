@@ -1,3 +1,9 @@
+Fri Oct 10 09:17:42 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/server.dsp:
+	  Recreated this file to fix build errors (Error: no project
+	  loaded) in MSVC6.
+
 Fri Oct 10 12:31:53 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FaultTolerance.bor
