@@ -54,6 +54,15 @@ Test_i::try_and_create_POA (ACE_ENV_SINGLE_ARG_DECL)
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
+  ACE_CATCH (CORBA::TRANSIENT, ex)
+    {
+      // A transient exception exception may be expected,
+      // so we won't print out the word exception but we
+      // will let the user know that a transient exception occurred
+      ACE_DEBUG ((LM_DEBUG,
+                  "CORBA::TRANSIENT in Test_i::try_and_create_POA\n"));
+      return 1;
+    }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
@@ -61,7 +70,6 @@ Test_i::try_and_create_POA (ACE_ENV_SINGLE_ARG_DECL)
       return 1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (1);
 
   return 0;
 }

@@ -43,7 +43,7 @@ sub test_body
 
    # Redirect STDERR to a log file so that
    # we can make sure that we got a warning
-   open(STDERR, '>&SAVEERR');
+   open(SAVEERR, ">&STDERR");
    open(STDERR, ">$result_file");
 
    $TAO_IFR->Arguments("-ORBInitRef InterfaceRepository=file://$ifr_ior_file -Cw $idl_file");
@@ -51,7 +51,7 @@ sub test_body
 
    # Close the log file and restore STDERR
    close(STDERR);
-   open(SAVEERR, '>&STDERR');
+   open(STDERR, ">&SAVEERR");
 
    if (! -r $result_file) {
       print STDERR "ERROR: cannot find $result_file\n";

@@ -1,3 +1,16 @@
+Fri Dec 17 13:03:03 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Bug_1395_Regression/Test_i.cpp:
+        * orbsvcs/tests/Bug_1395_Regression/run_test.pl:
+
+          Fixed this test to restart the server after restarting the
+          locator so that the server can find the locator's new IOR.
+
+        * orbsvcs/tests/Bug_1436_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_1437_Regression/run_test.pl:
+
+          Fixed some bugs in my file handle dup'ing code.
+
 Fri Dec 17 10:38:53 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/Bug_1436_Regression/run_test.pl:
