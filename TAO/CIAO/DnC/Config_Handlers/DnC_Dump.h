@@ -70,6 +70,8 @@ namespace Deployment
 
     static void dump (const ::Deployment::ExternalReferenceEndpoint &ere);
 
+    static void dump (const ::Deployment::Domain &domain);
+
     ///   ... Zillions of such things ....
 
    };
