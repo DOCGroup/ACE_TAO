@@ -7093,8 +7093,8 @@ ACE_OS::getservbyname_r (const ACE_TCHAR *svc,
 #elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (result);
-  ACE_SOCKCALL_RETURN (::getservbyname (ACE_const_char (char *, svc), 
-                                        ACE_const_char (char *, proto)),
+  ACE_SOCKCALL_RETURN (::getservbyname (ACE_const_cast (char *, svc), 
+                                        ACE_const_cast (char *, proto)),
                        struct servent *, 
                        0);
 #else
