@@ -1,3 +1,11 @@
+Tue Jul 11 21:05:58 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * pace/unistd.h,pace/posix/unistd.inl:
+          1) pace_execl{,e,p} weren't declared/defined with
+             PACE_INLINE, so they were being put into each .o.
+          2) Reordered some of the function definitions in
+             posix/unistd.inl, so that they appear before all uses.
+
 Tue Jul 11 19:31:13 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * pace/stdio.h: fixed copy+paste error in comment:
