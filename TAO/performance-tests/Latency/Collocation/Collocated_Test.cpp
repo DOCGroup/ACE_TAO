@@ -5,6 +5,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Sched_Params.h"
+#include "ace/OS_NS_errno.h"
 
 #include "tao/Strategies/advanced_resource.h"
 
