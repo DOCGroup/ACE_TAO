@@ -1,3 +1,50 @@
+Sat May 17 00:06:04 1997    <irfan@TWOSTEP>
+
+	* apps/Gateway/Gateway/Proxy_Handler.cpp (open): Turn on
+ 	  non-blocking I/O only after the Channel is done sending the id
+ 	  to the Peer.
+
+	* apps/Gateway/Gateway/Gateway.cpp: 
+
+	  - Added necessary DLL build macros. 
+
+	  - Removed error checking for Reactor::remove_handler() for STDIN
+ 	    as STDIN is never registered with the Reactor on Win32.
+
+	  - Fixed the registration of SIGINT.
+
+	  - blocking_semantics_ should be 1 when blocking is on and not 0.
+
+	  - Since the Connector is currently broken with respect to
+ 	    non-blocking connects, I have put a temporary fix such that
+ 	    only blocking connects are done. Revert this after the
+ 	    Connector is fixed.
+
+	* apps/Gateway/Gateway/Event_Channel.cpp: 
+
+	  - Only if socket_queue_size > 0, do we set a new value.
+
+	  - In reinitiate_proxy_connection(), we must unbind the proxy
+ 	    from the proxy_map_ as we are no longer responsible for
+ 	    this. The Connector should now be responsible for this.
+
+	* apps/Gateway/Gateway/Concrete_Proxy_Handlers.cpp: Added
+ 	  necessary DLL build macros.
+
+	* apps/Gateway/Peer/Peer.cpp: 
+
+	  - Added include file and necessary DLL build macros. 
+
+	  - Removed error checking for Reactor::remove_handler() for STDIN
+ 	    as STDIN is never registered with the Reactor on Win32.
+
+	  - Fixed the registration of SIGINT.
+
+	* apps/Gateway/Peer: Added Win32 makefiles.
+
+	* ace/ACE.cpp (read_adapter): Handle for the read_adapter should
+ 	  always be STDIN.
+
 Fri May 16 18:43:17 1997  Nanbor Wang  <nw1@number.wustl.edu>
 
 	* ace/config-freebsd.h: Minor modification for working on FreeBSD
