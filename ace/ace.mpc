@@ -466,7 +466,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     "       -e 's/ NULL/ 0/g' \\"
     "       -e 's/ace_yyerror[ ]*(\"/ace_yyerror (ACE_SVC_CONF_PARAM->yyerrno, ACE_SVC_CONF_PARAM->yylineno, \"/g' \\"
     "       -e 's/ace_yyerror[ ]*(ace_yymsg/ace_yyerror (ACE_SVC_CONF_PARAM->yyerrno, ACE_SVC_CONF_PARAM->yylineno, ace_yymsg/g' \\"
-    "       -e 's/yyerror (int yyerrno, int yylineno, const ACE_TCHAR/ (int yyerrno, int yylineno, const char/' \\"
+    "       -e 's/ace_yyerror (int ace_yyerrno, int ace_yylineno, const ACE_TCHAR/ace_yyerror (int ace_yyerrno, int ace_yylineno, const char/' \\"
     "       -e 's@#include <stdio\.h>@@' \\"
     "       -e 's/Svc_Conf\\.tab\\.c/Svc_Conf_y.cpp/g' < Svc_Conf.tab.c > /tmp/$@"
     "	cp /tmp/$@ $@"
