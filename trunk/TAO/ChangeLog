@@ -1,3 +1,50 @@
+Sun Jul 18 08:54:29 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/PolicyFactory_Registry.cpp (factory_exists):
+	* tao/PolicyFactory_Registry.h (factory_exists):
+
+	  New method that allows the caller to determine if a
+	  PolicyFactory corresponding to the given PolicyType exists in
+	  the registry.  Part of the create_POA() policy fix described
+	  below.
+
+	* tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp
+	  (destroy_interceptors):
+
+	  Prevent exceptions from being propagated to the caller.  The
+	  exception specification on this method is empty since this
+	  method performs resource cleanup.  Fixes a memory leak that
+	  would occur if an exception was thrown in an
+	  IORInterceptor::destroy() call, and an abort caused by a call to
+	  the unexpected exception handler.
+
+	* tao/PortableServer/Default_Policy_Validator.cpp
+	  (legal_policy_impl):
+
+	  Consider a PolicyType with a corresponding registered
+	  PolicyFactory to be legal.  This addresses the problem where the
+	  POA would not accept user defined policies that have a
+	  corresponding PolicyFactory registered with the ORB, e.g. the
+	  CSIv2 SecurityLevel3::ObjectCredentialsPolicy, when calling
+	  PortableServer::POA::create_POA().
+
+	* tests/Portable_Interceptors/PolicyFactory/IORInterceptor.cpp:
+	* tests/Portable_Interceptors/PolicyFactory/IORInterceptor.h:
+	* tests/Portable_Interceptors/PolicyFactory/PI_PolicyFactory.mpc:
+	* tests/Portable_Interceptors/PolicyFactory/Policy.cpp:
+	* tests/Portable_Interceptors/PolicyFactory/Policy.h:
+	* tests/Portable_Interceptors/PolicyFactory/PolicyFactory.cpp:
+	* tests/Portable_Interceptors/PolicyFactory/PolicyFactory.h:
+	* tests/Portable_Interceptors/PolicyFactory/README:
+	* tests/Portable_Interceptors/PolicyFactory/Server_ORBInitializer.cpp:
+	* tests/Portable_Interceptors/PolicyFactory/Server_ORBInitializer.h:
+	* tests/Portable_Interceptors/PolicyFactory/run_test.pl:
+	* tests/Portable_Interceptors/PolicyFactory/server.cpp:
+	* tests/Portable_Interceptors/PolicyFactory/test.idl:
+
+	  New regression test to verify properly functioning
+	  PortableInterceptor::PolicyFactory support.
+
 Sun Jul 18 00:59:21 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
 	* tests/QtTests/server.cpp:
