@@ -8,13 +8,6 @@
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================
-#ifndef TAO_PG_PROPERTIES_ENCODER_H
-#define TAO_PG_PROPERTIES_ENCODER_H
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 namespace TAO_PG
 {
   ACE_INLINE
@@ -37,14 +30,15 @@ namespace TAO_PG
   }
 
   ACE_INLINE
-  NamedValue &
+  Properties_Encoder::NamedValue &
   Properties_Encoder::NamedValue::operator = (const Properties_Encoder::NamedValue & rhs)
   {
     if (this != &rhs)
     {
-      this->name_ = rhs->name_;
-      this->value_ = rhs->value_;
+      this->name_ = rhs.name_;
+      this->value_ = rhs.value_;
     }
+    return *this;
   }
 
   ACE_INLINE
@@ -63,4 +57,3 @@ namespace TAO_PG
 
 } //namespace TAO_PG
 
-#endif // TAO_PG_PROPERTIES_ENCODER_H
