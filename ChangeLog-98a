@@ -1,4 +1,7 @@
-Fri Jan  9 19:07:38 1998  Nanbor Wang  <nw1@cs.wustl.edu>
+Fri Jan  9 19:11:39 1998  Nanbor Wang  <nw1@cs.wustl.edu>
+
+	* tests/Map_Manager_Test.cpp (test_hash_map_manager): Added
+	  ACE_UNUSED_ARG to eliminate warnings.
 
 	* ace/Hash_Map_Manager.cpp (rbegin): Added more static cast to
 	  eliminate warning messages.
