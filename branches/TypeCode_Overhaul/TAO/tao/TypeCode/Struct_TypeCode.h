@@ -31,6 +31,20 @@ namespace TAO
 {
   namespace TypeCode
   {
+    template <CORBA::TCKind KIND> Struct_Traits;
+
+    template <>
+    struct Struct_Traits<CORBA::tk_struct>
+    {
+      enum { kind = CORBA::tk_struct };
+    };
+
+    template <>
+    struct Struct_Traits<CORBA::tk_except>
+    {
+      enum { kind = CORBA::tk_except };
+    };
+
 
     /**
      * @class Struct
@@ -41,7 +55,10 @@ namespace TAO
      * This class implements a @c CORBA::TypeCode for an OMG IDL
      * @c struct.
      */
-    template <typename StringType, class FieldArrayType, class RefCountPolicy>
+    template <typename StringType,
+              class FieldArrayType,
+              class StructTraits,
+              class RefCountPolicy>
     class Struct
       : public CORBA::TypeCode,
         private RefCountPolicy
@@ -123,6 +140,8 @@ namespace TAO
       /// Array of @c TAO::TypeCode fields representing structure of the
       /// OMG IDL defined @c struct.
       FieldArrayType const fields_;
+
+      //@}
 
     };
 
