@@ -8,6 +8,7 @@
 #include "ace/Event_Handler.h"
 #include "ace/Log_Msg.h"
 #include "ace/Reactor.h"
+#include "ace/Semaphore.h"
 
 class CallerId;
 class MessageType;

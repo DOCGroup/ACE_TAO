@@ -30,6 +30,11 @@ public:
                const void *arg,
                const ACE_Time_Value &cur_time);
 
+  /// This method is called when a timer is registered.
+  int registration (PTimerQueue &timer_queue,
+                    ACE_Event_Handler *handler,
+                    const void *arg);
+
   // This method is called when the timer is canceled.
   int cancellation (PTimerQueue &timer_queue,
                     PCB *handler);

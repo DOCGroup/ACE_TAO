@@ -34,6 +34,7 @@ protected:
 #include "ace/Message_Block.h"
 #include "ace/Message_Queue.h"
 #include "ace/SOCK_Stream.h"
+#include "ace/Synch.h"
 
 class ClientService : public ACE_Event_Handler
 {
@@ -254,6 +255,8 @@ LoopStopper::handle_signal (int, siginfo_t *, ucontext_t *)
 // Listing 12
 
 // Listing 13 code/ch07
+#include "ace/Signal.h"
+
 class LogSwitcher : public ACE_Event_Handler
 {
 public:

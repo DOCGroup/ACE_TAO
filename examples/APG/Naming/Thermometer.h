@@ -4,6 +4,7 @@
 #ifndef THERMOMETER_H
 #define THERMOMETER_H
 
+#include "ace/OS_NS_stdlib.h"
 #include "ace/Log_Msg.h"
 
 class Thermometer
