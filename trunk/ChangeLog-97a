@@ -1,3 +1,11 @@
+Tue Jul 01 14:47:22 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/High_Res_Timer.{h,i} (gettime): use gettime () static function
+	  to wrap all calls to ACE_OS::gethrtime ().  On ACE_WIN32, if the
+	  global scale factor has not been set, then use
+	  ACE_OS::gettimeofday () instead of ACE_OS::gethrtime (), because
+	  gettimeofday doesn't need the scale factor.
+
 Mon Jun 30 17:28:53 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* Makefile (RELEASE_FILES): Removed the rpc++ directory from the
