@@ -1341,7 +1341,10 @@ template class ACE_Singleton<TAO_GLOBAL_Collocation_Table, ACE_SYNCH_MUTEX>;
 template class ACE_Node<ACE_SYNCH_CONDITION*>;
 template class ACE_Unbounded_Set<ACE_SYNCH_CONDITION*>;
 template class ACE_Unbounded_Set_Iterator<ACE_SYNCH_CONDITION*>;
-
+# if !defined (ACE_HAS_TEMPLATE_TYPEDEFS)
+    template class ACE_Thread_Condition<ACE_Thread_Mutex>;
+    template class ACE_Condition<ACE_Thread_Mutex>;
+# endif /* ! ACE_HAS_TEMPLATE_TYPEDEFS */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Env_Value<int>
 #pragma instantiate ACE_Env_Value<u_int>
@@ -1386,6 +1389,10 @@ template class ACE_Unbounded_Set_Iterator<ACE_SYNCH_CONDITION*>;
 #pragma instantiate ACE_Node<ACE_SYNCH_CONDITION*>
 #pragma instantiate ACE_Unbounded_Set<ACE_SYNCH_CONDITION*>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_SYNCH_CONDITION*>
+# if !defined (ACE_HAS_TEMPLATE_TYPEDEFS)
+#   pragma instantiate ACE_Thread_Condition<ACE_Thread_Mutex>
+#   pragma instantiate ACE_Condition<ACE_Thread_Mutex>
+# endif /* ! ACE_HAS_TEMPLATE_TYPEDEFS */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 ACE_FACTORY_DEFINE (TAO, TAO_Resource_Factory)
