@@ -6,9 +6,7 @@
 //    tests
 //
 // = FILENAME
-// @@ Kirthika, please rename this test to be DLL_Test.cpp to be
-// consistent with out other naming conventions in this directory.
-//    DLL_Wrapper_Test.cpp
+//    DLL_Test.cpp
 //
 // = DESCRIPTION
 //    This test illustrates the use of <ACE_DLL> wrapper class.
@@ -21,6 +19,13 @@
 #include "test_config.h" /* Include first to enable ACE_ASSERT. */
 #include "ace/DLL.h"
 #include "ace/Auto_Ptr.h"
+
+// Considering UNIX OS to be default.
+# if defined (ACE_HAS_WIN32)
+#   define ACE_OBJ_SUFFIX ".obj"
+# else
+#   define ACE_OBJ_SUFFIX ".o"
+#endif
 
 class Hello 
 {
@@ -71,8 +76,9 @@ typedef Hello *(*TC)(void);
 int 
 main (void)
 { 
-  ACE_START_TEST (ASYS_TEXT ("DLL_Test"));
+  ACE_START_TEST ("DLL_Test");
 
+  // *done ACE_OBJ_SUFFIX*
   // @@ Kirthika, it turns out that with Windows NT you can't pass a 0
   // in and have it default to the symbols in the executable.
   // Therefore, you'll have to use something like ".obj/DLL_Test.o" on
@@ -81,17 +87,11 @@ main (void)
   // out).
   ACE_DLL ace_dll_obj;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "before opening\n"));
-
-  if (0 != open (".obj/DLL_Test.o",0,1))
+  if (0 != ace_dll_obj.open (ACE_OS::strcat(".obj/DLL_Test",
+                                            ACE_OBJ_SUFFIX)))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cant open the library\n"),
+                       ace_dll_obj.error()),
                        -1);
-  ACE_DEBUG ((LM_DEBUG,
-              "after opening\n"));
-
-  
   //*done* 
   // @@ Kirthika, I recommend that you don't use the constructor to
   // open the DLL_Test file, but rather use the "open()" method since
@@ -100,9 +100,9 @@ main (void)
 
   TC f = (TC) ace_dll_obj.symbol ("get_hello");
 
-  if ( f == NULL)
+  if (f == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cant obtain symbol: get_hello\n"),
+                       ace_dll_obj.error()),
                       -1);
   // *done*
   // @@ Kirthika, please make sure to test whether <f> is a NULL
