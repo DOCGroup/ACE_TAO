@@ -1,3 +1,20 @@
+Wed May 23 14:26:07 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/include/drv_private.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Applied patches sent in by Craig Rodrigues <rodrigc@mediaone.net> 
+          to enable the IDL compiler to process multiple files. The
+          code that was there worked on Solaris, but not on Linux or Win32.
+          These changes have made it work portably. Also moved some
+          global declarations to allow their use by more than one file,
+          and made the usual ACE-ification and cosmetic changes.
+
 Wed May 23 13:01:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/RTCORBA/Thread_Pool/client.cpp: Changed the default number
