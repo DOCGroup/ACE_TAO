@@ -168,8 +168,13 @@ copied instead of appended to the CDR stream.</TD></TR>
 	    homogenous environments..</TD></TR>
 <TR>
 <TD><CODE>-ORBdotteddecimaladdresses</CODE> <EM>boolean (0 / 1)</EM></TD>
-<TD><A name="-ORBdotteddecimaladdresses"></a> Use the dotted decimal 
+<TD><A name="-ORBdotteddecimaladdresses"></a> Use the dotted decimal
             notation for addresses.</TD></TR>
+<TR>
+<TD><CODE>-ORBInitRef</CODE> <EM>ObjectId=IOR</EM></TD>
+<TD><A name="-ORBInitRef"></a> Specify a mapping between an ObjectId and an IOR. The IOR could be in the OMG IOR
+    form or in the URL form. More formats for the IOR will be supported soon. This mapping is used by the
+    resolve_initial_references () and overrides the orb-install-time defaults.</TD></TR>
 </TABLE>
 </P>
 </blockquote>
@@ -247,7 +252,7 @@ for a purely Reactor-driven concurrency strategy or
 <TD><CODE>-ORBtablesize</CODE> <EM>object table size</EM></TD>
 <TD>Specify the size of the object table. If not specified, the default value
 is 64.</TD></TR>
-<TR> 
+<TR>
 
 <TD><CODE>-ORBuseridpolicydemuxstrategy</CODE> <EM>user id policy
 based demultiplexing strategy</EM></TD> <TD>Specify the demultiplexing
@@ -332,7 +337,7 @@ no forwarding is used or only a single threaded client.
 <TR>
 <TD><CODE>-ORBclientconnectionhandler</CODE> <EM>MT / ST</EM></TD>
 <TD><A name="-ORBclientconnectionhandler"></a> ST means use the
-single-threaded client connection handler and MT means use the 
+single-threaded client connection handler and MT means use the
 multi-threaded client connection handler .</TD></TR>
 </TABLE>
 </P>
