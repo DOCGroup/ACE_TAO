@@ -290,7 +290,7 @@ Input_Task::parse_commands (const char *buf)
 
     case 4: // Exit the program.
       return -1;
-      break;
+      ACE_NOTREACHED(break);
 
     default:
       this->usage ();

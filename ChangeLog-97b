@@ -1,3 +1,10 @@
+Mon Oct 13 15:39:12 1997  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
+
+	* examples/Shared_Malloc/test_persistence.cpp: 
+	* examples/Timer_Queue/Thread_Timer_Queue_Test.cpp: 
+	  Added a couple of ACE_NOTREACHED, thanks to Torbjorn Lindgren
+	  <tl@funcom.no> for pointing out this one.
+
 Mon Oct 13 15:41:32 1997  Steve Huston  <shuston@riverace.com>
 
 	* ace/Select_Reactor.i, Priority_Reactor.i: Moved code for the
