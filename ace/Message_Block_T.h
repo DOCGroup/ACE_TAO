@@ -19,8 +19,8 @@
 
 #include "ace/Message_Block.h"
 
-template<class ACE_LOCK>
-class ACE_Export ACE_Locked_Data_Block : public ACE_Data_Block
+template <class ACE_LOCK>
+class ACE_Locked_Data_Block : public ACE_Data_Block
 {
   // = TITLE
   //   A Data_Block with a concrete locking strategy.
