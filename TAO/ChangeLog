@@ -1,3 +1,20 @@
+Wed Dec  8 15:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CONV_FRAMEC.{h,cpp,i,inl}:
+        * tao/CONV_FRAMES.{h,cpp,i,inl}:
+        * tao/CONV_FRAMES_T.{h,cpp,i,inl}:
+        * tao/CONV_FRAMEA.cpp:
+          Regenerated and replace .i file with .inl variant
+
+        * tao/Makefile.am:
+          Updated because of change above
+
+        * tao/diffs/CONV_FRAME.diff:
+          Removed these files, no diffs are needed anymore
+
+        * tao/CONV_FRAME.pidl:
+          Removed instructions about applying patches, not needed anymore
+
 Wed Dec  8 15:41:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/TimeBaseC.{h,cpp,i,inl}:
