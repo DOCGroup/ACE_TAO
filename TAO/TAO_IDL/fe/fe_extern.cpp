@@ -74,7 +74,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include	"fe_private.h"
 
-#include 	"utl_error.h"
+#include 	"utl_err.h"
 #include	"utl_indenter.h"
 #include	"utl_string.h"
 
