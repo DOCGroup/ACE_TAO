@@ -16,4 +16,7 @@ project(RTCORBAEvent) : orbsvcslib, core, rtevent, naming, rtportableserver {
       Event/EC_RTCORBA_Factory.cpp
     }
   }
+
+  Template_Files {
+  }
 }

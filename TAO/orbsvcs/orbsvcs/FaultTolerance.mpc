@@ -30,4 +30,7 @@ project(FaultTolerance): orbsvcslib, core, notification, ftorb, portablegroup, m
       FT_ReplicationManagerC.cpp
     }
   }
+
+  Template_Files {
+  }
 }

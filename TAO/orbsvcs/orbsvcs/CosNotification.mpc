@@ -44,6 +44,9 @@ project(CosNotification) : orbsvcslib, core, event {
     NotifyExtC.inl
     Event_ForwarderC.inl
   }
+
+  Template_Files {
+  }
  
   // explicit Resource_Files to avoid including _Skel & _Serv rc files.
   Resource_Files{
@@ -84,6 +87,9 @@ project(CosNotification_Skel) : orbsvcslib, core, notification, event_skel, port
     CosNotifyChannelAdminS.inl
     NotifyExtS.inl
     Event_ForwarderS.inl
+  }
+
+  Template_Files {
   }
 }
 
@@ -169,5 +175,8 @@ project(CosNotification_Serv) : orbsvcslib, core, notification_skel, dynamicany,
       Notify/Structured/StructuredPushConsumer.cpp
       Notify/Structured/StructuredPushSupplier.cpp
     }
+  }
+
+  Template_Files {
   }
 }

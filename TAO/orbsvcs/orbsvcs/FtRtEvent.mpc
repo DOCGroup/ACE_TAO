@@ -32,6 +32,9 @@ project (FtRtEvent) : orbsvcslib, core, ftorbutils, rtevent, naming, minimum_cor
       FtRtEvent/Utils
     }
   }
+
+  Template_Files {
+  }
 }
 
 project (FTRT_ClientORB) :  messaging, orbsvcslib, core {
@@ -47,6 +50,12 @@ project (FTRT_ClientORB) :  messaging, orbsvcslib, core {
     FTRT_ClientORB {
       FtRtEvent/ClientORB
     }
+  }
+
+  Inline_Files {
+  }
+
+  Template_Files {
   }
 }
 

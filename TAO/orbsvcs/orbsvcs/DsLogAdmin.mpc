@@ -26,6 +26,9 @@ project(DsLogAdmin) : orbsvcslib, core {
     DsLogAdminC.inl
     DsLogNotificationC.inl
   }
+
+  Template_Files {
+  }
     
   // explicit Resource_Files to avoid including _Skel & _Serv rc files.
   Resource_Files {
@@ -55,6 +58,9 @@ project(DsLogAdmin_Skel) : orbsvcslib, core, dslogadmin, portableserver {
     DsLogAdminS.inl
     DsLogNotificationS.inl
   }
+
+  Template_Files {
+  }
 }
 
 
@@ -79,5 +85,11 @@ project(DsLogAdmin_Serv) : orbsvcslib, core, dslogadmin_skel, dynamicany, etcl, 
       Log/Log_i.cpp
       Log/PersistStore.cpp
     }
+  }
+
+  Inline_Files {
+  }
+
+  Template_Files {
   }
 }

@@ -24,6 +24,9 @@ project(CosNaming) : orbsvcslib, core {
   Inline_Files {
     CosNamingC.inl
   }
+
+  Template_Files {
+  }
  
   // explicit Resource_Files to avoid including _Skel & _Serv rc files.
   Resource_Files{
@@ -49,6 +52,9 @@ project(CosNaming_Skel) : orbsvcslib, core, naming, portableserver {
 
   Inline_Files {
     CosNamingS.inl
+  }
+
+  Template_Files {
   }
 }
  
@@ -82,5 +88,8 @@ project(CosNaming_Serv) : orbsvcslib, core, naming_skel, messaging, svc_utils, i
   Header_Files {
     Naming/naming_export.h
     Naming/Naming_Server.h
+  }
+
+  Template_Files {
   }
 }
