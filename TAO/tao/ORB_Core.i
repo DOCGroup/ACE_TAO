@@ -41,10 +41,16 @@ TAO_ORB_Core::orb (void)
 }
 
 ACE_INLINE TAO_POA *
-TAO_ORB_Core::root_poa (void)
+TAO_ORB_Core::root_poa (const char *adapter_name,
+                        TAO_POA_Manager *poa_manager,
+                        const TAO_POA_Policies *policies,
+                        TAO_Object_Table *active_object_map)
 {
   if (TAO_OC_RETRIEVE (root_poa) == 0)
-    this->create_and_set_root_poa ();
+    this->create_and_set_root_poa (adapter_name,
+                                   poa_manager,
+                                   policies,
+                                   active_object_map);
 
   return this->root_poa_;
 }

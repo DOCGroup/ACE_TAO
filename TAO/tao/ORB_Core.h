@@ -113,7 +113,10 @@ public:
 
   // = Set/get <Acceptor> for the POA.
   TAO_POA *root_poa (TAO_POA *np);
-  TAO_POA *root_poa (void);
+  TAO_POA *root_poa (const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
+                     TAO_POA_Manager *poa_manager = 0,
+                     const TAO_POA_Policies *policies = 0,
+                     TAO_Object_Table *active_object_map = 0);
 
   ACE_INET_Addr &addr (void);
   // Accessors for the local address on which we're listening.
@@ -172,7 +175,10 @@ private:
   ACE_Thread_Manager *thr_mgr_;
   // Used to manage threads within the ORB
 
-  void create_and_set_root_poa (void);
+  void create_and_set_root_poa (const char *adapter_name,
+                                TAO_POA_Manager *poa_manager,
+                                const TAO_POA_Policies *policies,
+                                TAO_Object_Table *active_object_map);
   // Initialize the root POA.
 
   TAO_CONNECTOR *connector_;
