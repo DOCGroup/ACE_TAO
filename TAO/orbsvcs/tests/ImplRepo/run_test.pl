@@ -22,7 +22,7 @@ unlink $implrepo_ior;
 sub airplane_test
 {
   $SV = Process::Create ($EXEPREFIX."airplane_server".$Process::EXE_EXT,
-                         "-o $airplane_ior -r");
+                         "-o $airplane_ior");
 
   ACE::waitforfile ($airplane_ior);
 
