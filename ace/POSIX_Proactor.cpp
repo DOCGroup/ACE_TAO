@@ -637,87 +637,101 @@ ACE_POSIX_AIOCB_Proactor::handle_events (unsigned long milli_seconds)
       if (errno ==  EAGAIN)
         return 0;
       else
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%N:%l:(%P | %t)::%p\n",
-                           "ACE_POSIX_AIOCB_Proactor::handle_events:"
-                           "aio_suspend failed"),
-                          -1);
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "%N:%l:(%P | %t)::%p\n",
+                      "ACE_POSIX_AIOCB_Proactor::handle_events:"
+                      "aio_suspend failed"));
+          
+          return 0;
+        }
     }
-
-  // No errors, check which aio has finished.
+  
+  // Retrive the result pointer.
+  ACE_POSIX_Asynch_Result *asynch_result = 0;
   size_t ai;
   int error_status = 0;
   int return_status = 0;
-  for (ai = 0; ai < this->aiocb_list_max_size_; ai++)
-    {
-      // Dont process null blocks.
-      if (aiocb_list_ [ai] == 0)
-        continue;
 
-      // Analyze error and return values.
-
-      // Get the error status of the aio_ operation.
-      error_status = aio_error (aiocb_list_[ai]);
-      if (error_status == -1)
-        // <aio_error> itself has failed.
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%N:%l:(%P | %t)::%p\n",
-                           "ACE_POSIX_AIOCB_Proactor::handle_events:"
-                           "<aio_error> has failed"),
-                          -1);
-
-      // Continue the loop if <aio_> operation is still in progress. 
-      if (error_status == EINPROGRESS)
-        continue;
-
-      // Handle cancel'ed asynchronous operation. We dont have to call
-      // <aio_return> in this case, since return_status is going to be
-      // -1. We will pass 0 for the <bytes_transferred> in this case
-      if (error_status == ECANCELED)
-        {
-          return_status = 0;
-          break;
-        }
-
-      // Error_status is not -1 and not EINPROGRESS. So, an <aio_>
-      // operation has finished (successfully or unsuccessfully!!!)
-      // Get the return_status of the <aio_> operation.
-      return_status = aio_return (aiocb_list_[ai]);
-
-      if (return_status == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%N:%l:(%P | %t)::%p\n",
-                           "ACE_POSIX_AIOCB_Proactor::handle_events:"
-                           "<aio_return> failed"),
-                          -1);
-      else
-        // This AIO has finished.
-        break;
-    }
-  
-  // Something should have completed.
-  ACE_ASSERT (ai != this->aiocb_list_max_size_);
-
-  // Retrive the result pointer.
-  ACE_POSIX_Asynch_Result *asynch_result = this->result_list_ [ai];
+  // !!! Protected area.
+  {
+    ACE_Guard<ACE_Thread_Mutex> locker (this->mtx_AIOCB_);
     
-  // ACE_reinterpret_cast (ACE_POSIX_Asynch_Result *,
-  //                   this->aiocb_list_[ai]);
-  // ACE_dynamic_cast (ACE_POSIX_Asynch_Result *,
-  //                   this->aiocb_list_[ai]);
-
-  // Invalidate entry in the aiocb list.
-  this->aiocb_list_[ai] = 0;
-  this->result_list_ [ai] = 0;
-  this->aiocb_list_cur_size_--;
-
+    for (ai = 0; ai < this->aiocb_list_max_size_; ai++)
+      {
+        // Dont process null blocks.
+        if (aiocb_list_ [ai] == 0)
+          continue;
+        
+        // = Analyze error and return values.
+        
+        // Get the error status of the aio_ operation.
+        error_status = aio_error (aiocb_list_[ai]);
+        if (error_status == -1)
+          // <aio_error> itself has failed.
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%N:%l:(%P | %t)::%p\n",
+                             "ACE_POSIX_AIOCB_Proactor::handle_events:"
+                             "<aio_error> has failed"),
+                            -1);
+        
+        // Continue the loop if <aio_> operation is still in progress. 
+        if (error_status == EINPROGRESS)
+          continue;
+        
+        // Handle cancel'ed asynchronous operation. We dont have to call
+        // <aio_return> in this case, since return_status is going to be
+        // -1. We will pass 0 for the <bytes_transferred> in this case
+        if (error_status == ECANCELED)
+          {
+            return_status = 0;
+            break;
+          }
+        else if (error_status == 0)
+          {
+            // Error_status is not -1 and not EINPROGRESS. So, an <aio_>
+            // operation has finished (successfully or unsuccessfully!!!)
+            // Get the return_status of the <aio_> operation.
+            return_status = aio_return (aiocb_list_[ai]);
+            
+            if (return_status == -1)
+              {
+                ACE_DEBUG ((LM_ERROR,
+                            "%N:%l:(%P | %t)::%p\n",
+                            "ACE_POSIX_AIOCB_Proactor::handle_events:"
+                            "<aio_return> failed to transfer any data\n"));
+                
+                return_status = 0;
+              }
+            
+            break;
+          }
+      }
+    
+    // Something should have completed.
+    ACE_ASSERT (ai != this->aiocb_list_max_size_);
+    
+    // Retrive the result pointer.
+    asynch_result = this->result_list_ [ai];
+    
+    // ACE_reinterpret_cast (ACE_POSIX_Asynch_Result *,
+    //                   this->aiocb_list_[ai]);
+    // ACE_dynamic_cast (ACE_POSIX_Asynch_Result *,
+    //                   this->aiocb_list_[ai]);
+    
+    // Invalidate entry in the aiocb list.
+    this->aiocb_list_[ai] = 0;
+    this->result_list_ [ai] = 0;
+    this->aiocb_list_cur_size_--;
+  } // !! End of protected area.
+    
   // Call the application code.
   this->application_specific_code (asynch_result,
                                    return_status, // Bytes transferred.
                                    1,             // Success
                                    0,             // No completion key.
                                    error_status); // Error
-
+  
   // Success
   return 1;
 }
@@ -737,9 +751,14 @@ ACE_POSIX_AIOCB_Proactor::application_specific_code (ACE_POSIX_Asynch_Result *as
 }
 
 int
-ACE_POSIX_AIOCB_Proactor::register_aio_with_proactor (ACE_POSIX_Asynch_Result *result)
+ACE_POSIX_AIOCB_Proactor::register_aio_with_proactor (ACE_POSIX_Asynch_Result *result, int operation)
 {
   ACE_TRACE ("ACE_POSIX_AIOCB_Proactor::register_aio_with_proactor");
+
+  // Protect the atomic action , which is: find free slot , start IO ,
+  // save ptr in the lists  
+  
+  ACE_Guard<ACE_Thread_Mutex> locker (this->mtx_AIOCB_);
 
   if (result == 0)
     {
@@ -774,6 +793,30 @@ ACE_POSIX_AIOCB_Proactor::register_aio_with_proactor (ACE_POSIX_Asynch_Result *r
                        "Error:Asynch_Operation: No space to store the <aio> info.\n"),
                       -1);
 
+  // Start the IO.
+  if (operation == 0)
+    {
+      // Read
+      if (aio_read (result) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error:%p\n",
+                             "Asynch_Read_XXXX: aio_read queueing failed\n"),
+                            -1);
+        }
+    }
+  else 
+    {
+      // write
+      if (aio_write (result) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error:%p\n",
+                             "Asynch_Read_XXXX: aio_read queueing failed\n"),
+                            -1);
+        }
+    }
+      
   // Store the pointers.
   this->aiocb_list_[ai] = result; 
   this->result_list_ [ai] = result;
@@ -1177,13 +1220,16 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
 
           // Failure.
           if (return_status == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%N:%l:(%P | %t)::%p\n",
-                               "ACE_POSIX_SIG_Proactor::handle_events:"
-                               "<aio_return> failed"),
-                              -1);
-        }
+            {
+              ACE_DEBUG ((LM_ERROR,
+                          "%N:%l:(%P | %t)::%p\n",
+                          "ACE_POSIX_SIG_Proactor::handle_events:"
+                          "<aio_return> failed to transfer any data\n"));
 
+              return_status = 0;
+            }
+        }
+      
       // error status and return status are obtained. Dispatch the
       // completion . 
       this->application_specific_code (asynch_result,

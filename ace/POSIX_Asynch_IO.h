@@ -202,7 +202,7 @@ protected:
   virtual ~ACE_POSIX_AIOCB_Asynch_Operation (void);
   // Destructor.
 
-  int register_aio_with_proactor (ACE_POSIX_Asynch_Result *result);
+  int register_aio_with_proactor (ACE_POSIX_Asynch_Result *result, int operation);
   // This call is for the POSIX implementation. This method is used by
   // <ACE_Asynch_Operation> to store some information with the
   // Proactor after an <aio_> call is issued, so that the Proactor can
@@ -210,6 +210,9 @@ protected:
   // Passing a '0' ptr returns the status, indicating whether there
   // are slots available or no. Passing a valid ptr stores the ptr
   // with the Proactor.
+  // When Op is 0, read operation is started. 1 starts write
+  // operation. Thanks to Alex Libman <alibman@baltimore.com> for
+  // suggesting this.  
 
   ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor_;
   // It is easy to get this specific implementation proactor here,

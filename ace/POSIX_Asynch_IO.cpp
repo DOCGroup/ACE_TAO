@@ -229,9 +229,9 @@ ACE_POSIX_AIOCB_Asynch_Operation::~ACE_POSIX_AIOCB_Asynch_Operation (void)
 // return 0 if yes, else return -1. If a valid ptr is passed, keep it
 // in a free slot.
 int
-ACE_POSIX_AIOCB_Asynch_Operation::register_aio_with_proactor (ACE_POSIX_Asynch_Result *result)
+ACE_POSIX_AIOCB_Asynch_Operation::register_aio_with_proactor (ACE_POSIX_Asynch_Result *result, int operation)
 {
-  return this->posix_proactor ()->register_aio_with_proactor (result);
+  return this->posix_proactor ()->register_aio_with_proactor (result, operation);
 }
 
 // *********************************************************************
@@ -433,45 +433,20 @@ ACE_POSIX_AIOCB_Asynch_Read_Stream::~ACE_POSIX_AIOCB_Asynch_Read_Stream (void)
 int
 ACE_POSIX_AIOCB_Asynch_Read_Stream::shared_read (ACE_POSIX_Asynch_Read_Stream_Result *result)
 {
-  // AIO_CONTROL_BLOCKS strategy.
-
-  // Store this <result> with the proactor.
-
-  // Make sure there is space in the aiocb list.
-  if (this->register_aio_with_proactor (0) == -1)
-    {
-      // @@ Set errno to EAGAIN so that applications will know this as
-      // a queueing failure and try again this aio_read it they want.
-      errno = EAGAIN;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Fatal error:%N:%l:%p\n",
-                         "AIOContol Block Array is full!!!. Didnt issue the aio call"),
-                        -1);
-    }
-
   // Setup AIOCB.
 
   // We are not making use of the RT signal queueing in this
   // strategy.
   result->aio_sigevent.sigev_notify = SIGEV_NONE;
 
-  // Fire off the aio read.
-  if (aio_read (result) == -1)
-    // Queueing failed.
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error:%p\n",
-                       "Asynch_Read_Stream: aio_read queueing failed"),
-                      -1);
-
-  // <aio_read> successfully issued. Store the <result> with
-  // proactor.
-  if (this->register_aio_with_proactor (result) == -1)
-    // This shouldn't happen anyway, since we have already checked for
-    // availability of free slots.
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Fatal error:%N:%l:%p\n",
-                       "AIOContol Block Array is full!!!. Didnt issue the aio call"),
-                      -1);
+  // Give 0 for operation parameter.
+  if (this->register_aio_with_proactor (result, 0) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Fatal error:%N:%l:%p\n",
+                         "AIOContol Block Array is full!!!. Didnt issue the aio call"),
+                        -1);
+    }
 
   // <aio_read> successfully issued and ptr stored.
   return 0;
@@ -779,37 +754,17 @@ ACE_POSIX_AIOCB_Asynch_Write_Stream::~ACE_POSIX_AIOCB_Asynch_Write_Stream (void)
 int
 ACE_POSIX_AIOCB_Asynch_Write_Stream::shared_write (ACE_POSIX_Asynch_Write_Stream_Result *result)
 {
-  // AIO_CONTROL_BLOCKS strategy.
-
-  // Make sure there is space in the aiocb list.
-  if (this->register_aio_with_proactor (0) == -1)
-    {
-      // @@ Set errno to EAGAIN so that applications will know this as
-      // a queueing failure and try again this aio_read it they want.
-      errno = EAGAIN;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Fatal error:%N:%l:%p\n",
-                         "AIOContol Block Array is full!!!. Didnt issue the aio call"),
-                        -1);
-    }
-
   // Setup AIOCB.
   result->aio_sigevent.sigev_notify = SIGEV_NONE;
-
-  // Fire off the aio write.
-  if (aio_write (result) == -1)
-    // Queueing failed.
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error:%p\n",
-                       "Asynch_Write_Stream: aio_write queueing failed"),
-                      -1);
-
-  // Success. Store the <result> with Proactor.
-  if (this->register_aio_with_proactor (result) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Fatal error:%N:%l:%p\n",
-                       "AIOContol Block Array is full!!!"),
-                      -1);
+  
+  // Issure write. 1 means write.
+  if (this->register_aio_with_proactor (result, 1) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Fatal error:%N:%l:%p\n",
+                         "AIOContol Block Array is full!!!"),
+                        -1);
+    }
 
   // Aio successfully issued.
   return 0;
