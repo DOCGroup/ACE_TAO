@@ -1,13 +1,13 @@
 // $Id$
 
-#include "server_impl.h"
+#include "server_i.h"
 
 ACE_RCSID(Time, server, "$Id$")
 
 int
 main (int argc, char *argv[])
 {
-  Server_Impl server;
+  server_i server;
 
   ACE_DEBUG ((LM_DEBUG, "\n\ttime and date server\n\n"));
   TAO_TRY

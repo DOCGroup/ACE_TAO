@@ -4,10 +4,10 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/tests/Simple
+//    TAO/tests/Simple/time
 // 
 // = FILENAME
-//    simple_object_impl.h
+//    Time_i.h
 //
 // = DESCRIPTION
 //    This class implements the Time interface.
@@ -17,22 +17,15 @@
 // 
 // ============================================================================
 
-#if !defined (TIME_IMPL_H)
-#define	TIME_IMPL_H
+#if !defined (TIME_I_H)
+#define	TIME_I_H
 
 #include "TimeS.h"
 
-// Forward declarations.
-class Time_Impl;
-
-// Typedefs.
-typedef Time_Impl *Time_Impl_ptr;
-typedef Time_Impl_ptr Time_Impl_ref;
-
-class Time_Impl: public POA_Time
+class Time_i: public POA_Time
 {
   // = TITLE
-  //    Simple Time Object Implementation
+  //    Time Object Implementation
   //
   // = DESCRIPTION
   //    Implementation of a simple object that has two methods, one that 
@@ -40,10 +33,10 @@ class Time_Impl: public POA_Time
   //    shuts down the server.  
 public:
   // = Initialization and termination methods.
-  Time_Impl (const char *obj_name = 0);
+  Time_i (CORBA::ORB_ptr orb);
   // Constructor
 
-  ~Time_Impl (void);
+  ~Time_i (void);
   // Destructor
 
   virtual CORBA::Long time (CORBA::Environment &env);
@@ -51,6 +44,10 @@ public:
 
   virtual void shutdown (CORBA::Environment &env);
   // Shutdown the server.
+
+private:
+  CORBA::ORB_var orb_;
+  // ORB pointer
 };
 
-#endif /* TIME_IMPL_H */
+#endif /* TIME_I_H */

@@ -15,22 +15,26 @@ endif # ! TAO_ROOT
 LDLIBS = -lTAO
 
 IDL_SRC	= TimeC.cpp TimeS.cpp
-PROG_SRCS = client.cpp \
-	client_impl.cpp \
+
+PROG_SRCS = \
+	client.cpp \
+	client_i.cpp \
 	server.cpp \
-	server_impl.cpp \
-	time_impl.cpp \
+	server_i.cpp \
+	Time_i.cpp \
 
 SRC = $(IDL_SRC) $(PROG_SRCS)
 
-SIMPLE_CLT_OBJS = TimeC.o \
+SIMPLE_CLT_OBJS = \
+		TimeC.o \
 		TimeS.o \
-		client_impl.o \
+		client_i.o \
 		client.o
-SIMPLE_SVR_OBJS = TimeC.o \
+SIMPLE_SVR_OBJS = \
+		TimeC.o \
 		TimeS.o \
-		time_impl.o \
-		server_impl.o \
+		Time_i.o \
+		server_i.o \
 		server.o
 
 BIN = server \
