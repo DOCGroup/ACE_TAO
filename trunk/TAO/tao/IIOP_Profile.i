@@ -17,7 +17,13 @@ TAO_IIOP_Profile::object_key (TAO_ObjectKey& objkey)
 ACE_INLINE TAO_ObjectKey *
 TAO_IIOP_Profile::_key (void) const
 {
-  return new TAO_ObjectKey (this->object_key_);
+  TAO_ObjectKey *key = 0;
+
+  ACE_NEW_RETURN (key,
+                  TAO_ObjectKey (this->object_key_),
+                  0);
+
+  return key;
 }
 
 ACE_INLINE const ACE_INET_Addr&
