@@ -43,7 +43,8 @@ test_duplicates (size_t count)
 
   for (size_t i = 0; i < count; i++)
     {
-      size_t handle = ACE_static_cast(size_t, ACE_OS::rand () % ACE_Handle_Set::MAXSIZE);
+      size_t handle =
+        ACE_static_cast (size_t, ACE_OS::rand () % ACE_Handle_Set::MAXSIZE);
 
       if (ACE_ODD (handle))
         {
@@ -73,16 +74,24 @@ static ACE_HANDLE handle_vector[] =
 {
   (ACE_HANDLE) 0,
   (ACE_HANDLE) 1,
+  (ACE_HANDLE) 31,
+#if defined(ACE_DEFAULT_REACTOR_SIZE) && ACE_DEFAULT_REACTOR_SIZE > 32
   (ACE_HANDLE) 32,
   (ACE_HANDLE) 63,
+#if defined(ACE_DEFAULT_REACTOR_SIZE) && ACE_DEFAULT_REACTOR_SIZE > 64
   (ACE_HANDLE) 64,
   (ACE_HANDLE) 65,
   (ACE_HANDLE) 127,
+#if defined(ACE_DEFAULT_REACTOR_SIZE) && ACE_DEFAULT_REACTOR_SIZE > 128
   (ACE_HANDLE) 128,
   (ACE_HANDLE) 129,
-#if defined(ACE_DEFAULT_REACTOR_SIZE) && ACE_DEFAULT_REACTOR_SIZE >= 255
+  (ACE_HANDLE) 254,
+#if defined(ACE_DEFAULT_REACTOR_SIZE) && ACE_DEFAULT_REACTOR_SIZE > 255
   (ACE_HANDLE) 255,
-#endif
+#endif /* ACE_DEFAULT_REACTOR_SIZE > 255 */
+#endif /* ACE_DEFAULT_REACTOR_SIZE > 128 */
+#endif /* ACE_DEFAULT_REACTOR_SIZE > 64 */
+#endif /* ACE_DEFAULT_REACTOR_SIZE > 32 */
   ACE_INVALID_HANDLE
 };
 
@@ -175,7 +184,8 @@ test_performance (size_t max_handles,
               et.real_time / count));
 #else  /* ! ACE_LACKS_FLOATING_POINT */
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
+              ASYS_TEXT ("real time = %f secs, user time = %f secs, ")
+                ASYS_TEXT ("system time = %f secs\n"),
               et.real_time,
               et.user_time,
               et.system_time));
@@ -193,8 +203,10 @@ main (int argc, ASYS_TCHAR *argv[])
   ACE_START_TEST (ASYS_TEXT ("Handle_Set_Test"));
 
   int count = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_Handle_Set::MAXSIZE;
-  size_t max_handles = argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_Handle_Set::MAXSIZE;
-  size_t max_iterations = argc > 3 ? ACE_OS::atoi (argv[3]) : ACE_MAX_ITERATIONS;
+  size_t max_handles =
+    argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_Handle_Set::MAXSIZE;
+  size_t max_iterations =
+    argc > 3 ? ACE_OS::atoi (argv[3]) : ACE_MAX_ITERATIONS;
 
   test_duplicates (count);
   test_boundaries ();
