@@ -1143,12 +1143,13 @@ Spivak</a> and <a href="mailto:vishal@cs.wustl.edu">Vishal Kachroo</a>
 
 OMG defined CORBA Naming Service (spec <a
 href="ftp://ftp.omg.org/pub/docs/formal/97-07-12.pdf">here</a>) to
-provide a basic service location mechanism for CORBA systems.  Naming
-Service manages a hierarchy of name to object reference mappings.
-Servers register themselves with the Naming Service by providing their
-name and object reference.  Clients can then use the Naming Service to
-obtain an object reference for the service of interest based on its
-name.  <p>
+provide a basic service location mechanism for CORBA systems.
+CosNaming manages a hierarchy of name-to-object-reference mappings.
+Anything, but typically the server process hosting an object, may bind
+an object reference with a name in the Naming Service by providing the
+name and object reference.  Interested parties (typically clients) can
+then use the Naming Service to resolve a name to an object reference.
+<p>
 
 More recently, CORBA Naming Service was subsumed/extended by the CORBA
 Interoperable Naming Service, a.k.a. INS (spec <A
@@ -1162,20 +1163,22 @@ with the orb at install time. <a href="../INS.html">This page</a>
 provides a brief description of additional features INS provides, and
 how they are implemented in TAO.  <P>
 
-<p>Current status (as of 30th Apr 2000):
+<p>Current status (as of 18 May 2001):
 <ul>
-<li>
-Implementation of the CORBA Naming Service spec is completed.  TAO's
-Naming Service provides an optional persistence capability.</li>
+<li>The Naming Service now <em>does not</em> do listen for multicast
+discovery as the default.  Use <code>-m1</code> option to turn it on.
 </ul>
-Recently completed work:
+Recent work:
+<ul>
+<li>Changed default for multicast discovery to 
+</ul>
+Features:
 <ul>
 <li>
 Added support for Persistence (using memory-mapped files).  Persistence
 feature is optional, and is controlled by the command line argument.</li>
 
-<li>
-Updated the implementation of the Naming Service to use new ACE
+<li>Updated the implementation of the Naming Service to use new ACE
 exception macros.</li>
 <li>
 Added support for the InterOperable Naming Service, which enables the
@@ -1187,15 +1190,14 @@ for non-locality-constrained objects. Two options -ORBInitRef and
 arbitrary services.
 </li>
 
-<li>Added support for the Naming service to act like an agent: to understand IIOP
-request messages from clients and respond with reply messages with a
-LOCATION_FORWARD/OBJECT_NOT_EXIST status. The Naming Service can be
-configured through ORB options to register arbitrary services given
-the URL-format IOR for the service. The resolve_initial_references ()
-resolves a service in the following order :
-<br>1. -ORBInitRef
-<br>2. -ORBDefaultInitRef
-<br>3. Multicast to service.
+<li>Added support for the Naming service to act like an agent: to
+understand IIOP request messages from clients and respond with reply
+messages with a <code>LOCATION_FORWARD/OBJECT_NOT_EXIST</code>
+status. The Naming Service can be configured through ORB options to
+register arbitrary services given the URL-format IOR for the
+service. The <code>resolve_initial_references ()</code> resolves a service in the
+following order : <ol><li><code>-ORBInitRef</code><li><code>-ORBDefaultInitRef</code>
+<li>Multicast discovery</ol>
 </li>
 <li>
 Added a test for the InterOperable Naming Service that works in
@@ -1215,13 +1217,16 @@ following features are now supported:
 Future work:
 <ul>
 <li>
-Support for a load balancing feature similar to the one present in ORBIX.
-It will be possible to bind a group of objects under a single name, and when a client attempts to resolve the name in question, a preset policy (e.g., random, round robin, etc.) will determine which one of the object references from the group will be returned.
+Support for a load balancing feature similar to the one present in
+ORBIX.  It will be possible to bind a group of objects under a single
+name, and when a client attempts to resolve the name in question, a
+preset policy (e.g., random, round robin, etc.) will determine which
+one of the object references from the group will be returned.
 </li>
 <li>
-Support for the Naming Service to handle the IIOP
-LocateRequest messages and respond with LocateReply messages with a
-LOCATION_FORWARD/OBJECT_NOT_EXIST status.
+Support for the Naming Service to handle the IIOP LocateRequest
+messages and respond with LocateReply messages with a
+<code>LOCATION_FORWARD/OBJECT_NOT_EXIST</code> status.
 </li>
 </ul>
 
