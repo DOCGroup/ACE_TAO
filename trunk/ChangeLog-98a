@@ -1,3 +1,9 @@
+Thu Mar 26 20:53:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Containers.{h,i,cpp}: Changed the template parameter name
+	  <SIZE> to <ACE_SIZE> to avoid namespace polution.  Thank to John
+	  Mulhern <9107@MN3.LAWSON.lawson.com> for suggestion this.
+
 Thu Mar 26 17:23:38 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.36, released Thu Mar 26 17:23:38 1998.
@@ -44,7 +50,7 @@ Tue Mar 24 18:14:18 1998  Steve Huston  <shuston@riverace.com>
 
 Tue Mar 24 09:00:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/auto_compile: 
+	* bin/auto_compile:
 	  Missing newline after the "DISABLED" message.
 
 Tue Mar 24 07:38:44 1998  David L. Levine  <levine@cs.wustl.edu>
