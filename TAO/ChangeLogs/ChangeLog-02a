@@ -1,3 +1,14 @@
+Mon Dec 17 23:26:47 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.cpp:
+	  Moved "ace/Reactor.h" include *after* the local includes.  That
+	  makes it easier to detect errors in the local header files.
+
+	* orbsvcs/orbsvcs/ESF/ESF_Delayed_Command.cpp:
+	  Fixed info messages under Tru64/CXX, there was some useless code
+	  left over from before the corba-env-clean changes.
+
 Mon Dec 17 17:15:55 2001  Justin Michel  <michel_j@ociweb.com>
 
 	* tao/tests/ORB_init/Portspan/Portspan.dsp:
@@ -21,16 +32,16 @@ Mon Dec 17 10:09:55 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
 	  orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.cpp:
-	
+
 	  Added #include "ace/Reactor.h" to fix compile errors in TRU64CXX
 
 	* orbsvcs/orbsvcs/AV/RTP.cpp:
-	  
+
 	  Added #include "tao/debug.h" to fix compile errors.
 
 Mon Dec 17 07:23:47 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* docs/performance.html: Added some comments to the document. 
+	* docs/performance.html: Added some comments to the document.
 
 Sun Dec 16 10:33:47 2001  Ossama Othman  <ossama@uci.edu>
 

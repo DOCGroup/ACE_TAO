@@ -1,6 +1,5 @@
 // $Id$
 
-#include "ace/Reactor.h"
 #include "CEC_Reactive_Pulling_Strategy.h"
 #include "CEC_ProxyPullConsumer.h"
 #include "CEC_EventChannel.h"
@@ -9,6 +8,8 @@
 
 #include "tao/Messaging.h"
 #include "tao/ORB_Core.h"
+
+#include "ace/Reactor.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "CEC_Reactive_Pulling_Strategy.i"

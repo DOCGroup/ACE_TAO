@@ -38,10 +38,6 @@ TAO_ESF_Connected_Command<Target,Object>::execute (void* arg)
 template<class Target, class Object> int
 TAO_ESF_Reconnected_Command<Target,Object>::execute (void* arg)
 {
-  CORBA::Environment *env = &TAO_default_environment ();
-  if (arg != 0)
-    env = ACE_static_cast(CORBA::Environment*, arg);
-
   if (arg != 0)
     {
       TAO_ENV_EMIT_CODE (CORBA::Environment &ACE_TRY_ENV =
