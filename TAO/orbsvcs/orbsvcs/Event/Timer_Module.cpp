@@ -1,5 +1,7 @@
 // $Id$
 
+#include "ace/Functor.h"
+
 #include "orbsvcs/orbsvcs/Event/ReactorTask.h"
 #include "orbsvcs/orbsvcs/Event/Timer_Module.h"
 
@@ -8,6 +10,28 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, Timer_Module, "$Id$")
+
+#include "tao/Timeprobe.h"
+
+#if defined (ACE_ENABLE_TIMEPROBES)
+static const char *TAO_Timer_Module_Timeprobe_Description[] =
+{
+  "Timer_Module - start execute",
+  "Timer_Module - end execute"
+};
+
+enum
+{
+  // Timeprobe description table start key
+  TAO_EC_TIMER_MODULE_START_EXECUTE = 5400,
+  TAO_EC_TIMER_MOUDLE_END_EXECUTE
+};
+
+// Setup Timeprobes
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Timer_Module_Timeprobe_Description,
+                                  TAO_EC_TIMER_MODULE_START_EXECUTE);
+
+#endif /* ACE_ENABLE_TIMEPROBES */
 
 // ****************************************************************
 
@@ -34,6 +58,7 @@ TAO_EC_ST_Timer_Module::activate (void)
 void
 TAO_EC_ST_Timer_Module::shutdown (void)
 {
+  this->reactor_->cancel_timer (&this->timeout_handler_);
 }
 
 RtecScheduler::handle_t
@@ -45,20 +70,34 @@ TAO_EC_ST_Timer_Module::rt_info (RtecScheduler::Preemption_Priority_t)
 
 int
 TAO_EC_ST_Timer_Module::schedule_timer (RtecScheduler::Preemption_Priority_t,
-                                        ACE_Event_Handler* eh,
-                                        void* act,
+                                        ACE_Command_Base* act,
                                         const ACE_Time_Value& delta,
                                         const ACE_Time_Value& interval)
 {
-  return this->reactor_->schedule_timer (eh, act, delta, interval);
+  return this->reactor_->schedule_timer (&this->timeout_handler_,
+                                         ACE_static_cast(void*,act),
+                                         delta, interval);
 }
 
 int
 TAO_EC_ST_Timer_Module::cancel_timer (RtecScheduler::Preemption_Priority_t,
                                       int id,
-                                      const void*& act)
+                                      ACE_Command_Base*& act)
 {
-  return this->reactor_->cancel_timer (id, &act);
+  const void *vp;
+
+  int result = 
+    this->reactor_->cancel_timer (id, &vp);
+  if (result == 0)
+    {
+      ACE_ERROR ((LM_ERROR, "TAO_EC_ST_Timer_Module::cancel_timer: "
+                  "Tried to cancel nonexistent timer.\n"));
+      act = 0;
+    }
+  else
+    act = ACE_static_cast (ACE_Command_Base *, vp);
+
+  return result;
 }
 
 int
@@ -138,6 +177,7 @@ TAO_EC_RPT_Timer_Module::shutdown (void)
     {
       if (this->reactorTasks[i] != 0)
 	this->reactorTasks[i]->shutdown_task ();
+      this->reactorTasks[i]->get_reactor ().cancel_timer (&this->timeout_handler_);
     }
 
   if (this->ThrMgr ()->wait () == -1)
@@ -152,20 +192,36 @@ TAO_EC_RPT_Timer_Module::rt_info (RtecScheduler::Preemption_Priority_t priority)
 
 int
 TAO_EC_RPT_Timer_Module::schedule_timer (RtecScheduler::Preemption_Priority_t priority,
-                                         ACE_Event_Handler* eh,
-                                         void* act,
+                                         ACE_Command_Base* act,
                                          const ACE_Time_Value& delta,
                                          const ACE_Time_Value& interval)
 {
-  return this->GetReactorTask (priority)->get_reactor ().schedule_timer (eh, act, delta, interval);
+  ACE_Reactor& reactor = this->GetReactorTask (priority)->get_reactor ();
+  return reactor.schedule_timer (&this->timeout_handler_,
+                                 ACE_static_cast(void*,act),
+                                 delta, interval);
 }
 
 int
 TAO_EC_RPT_Timer_Module::cancel_timer (RtecScheduler::Preemption_Priority_t priority,
                                        int id,
-                                       const void*& act)
+                                       ACE_Command_Base*& act)
 {
-  return this->GetReactorTask (priority)->get_reactor ().cancel_timer (id, &act);
+  const void* vp;
+  ACE_Reactor& reactor = this->GetReactorTask (priority)->get_reactor ();
+
+  int result = 
+    reactor.cancel_timer (id, &vp);
+  if (result == 0)
+    {
+      ACE_ERROR ((LM_ERROR, "TAO_EC_ST_Timer_Module::cancel_timer: "
+                  "Tried to cancel nonexistent timer.\n"));
+      act = 0;
+    }
+  else
+    act = ACE_static_cast (ACE_Command_Base *, vp);
+
+  return result;
 }
 
 int
@@ -181,3 +237,26 @@ TAO_EC_RPT_Timer_Module::reactor (RtecScheduler::Preemption_Priority_t priority)
 {
   return &this->GetReactorTask (priority)->get_reactor ();
 }
+
+// ****************************************************************
+
+int
+TAO_EC_Timeout_Handler::handle_timeout (const ACE_Time_Value &,
+					const void *vp)
+{
+  ACE_Command_Base *act = ACE_static_cast(ACE_Command_Base*,
+                                          ACE_const_cast(void*,vp));
+
+  if (act == 0)
+    ACE_ERROR_RETURN ((LM_ERROR, "ACE_ES_Priority_Timer::handle_timeout: "
+                       "received act == 0!!!.\n"), 0);
+
+  {
+    ACE_FUNCTION_TIMEPROBE (TAO_EVENT_CHANNEL_ES_PRIORITY_QUEUE_START_EXECUTE);
+
+    act->execute ();
+  }
+
+  return 0;
+}
+

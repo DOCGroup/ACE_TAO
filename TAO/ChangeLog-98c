@@ -1,3 +1,32 @@
+Thu Nov 19 10:15:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/Timer_Module.h: 
+	* orbsvcs/orbsvcs/Event/Timer_Module.i: 
+	* orbsvcs/orbsvcs/Event/Timer_Module.cpp: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.i: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	  If the event channel was configured with a reactive Timer_Module
+	  the Event_Handler used for timeouts was destroyed with the EC,
+	  but could still be registered with the Reactor dispatching the
+	  timeouts.
+	  The solution was to make the Timer_Module responsible for
+	  mapping the Reactor timeouts Event dispatching, in this way the
+	  Timer_Module::shutdown() method is able to cancel any timers
+	  from the Reactor before getting destroyed.
+	  Thanks to Dave Meyer <dmeyer@std.saic.com> and Russ
+          Noseworthy <rnosewor@objectsciences.com> for pointing this out.
+
+	* orbsvcs/orbsvcs/Event/Module_Factory.h: 
+	  Fixed typo in forward declaration.
+
+	* orbsvcs/Event_Service/Event_Service.cpp: 
+	  Added an option so we can choose a reactive event service from
+	  the command line.
+
+	* docs/releasenotes/TODO.html: 
+	  Updated.
+
 Wed Nov 18 15:49:52 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/ORB_Strategies_T.cpp: added ifndef protection against
