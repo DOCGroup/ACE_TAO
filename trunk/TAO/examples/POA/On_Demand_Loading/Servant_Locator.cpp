@@ -25,8 +25,8 @@ ACE_RCSID(On_Demand_Activation, Servant_Locator, "$Id$")
 // Initialization.
 
 ServantLocator_i::ServantLocator_i (CORBA::ORB_ptr orb)
-  :servant_manager_ (orb), 
-   counter_ (0)
+  : servant_manager_ (orb), 
+    counter_ (0)
 {
 }
 
@@ -34,21 +34,23 @@ ServantLocator_i::ServantLocator_i (CORBA::ORB_ptr orb)
 
 PortableServer::Servant
 ServantLocator_i::preinvoke (const PortableServer::ObjectId &oid,
-                                PortableServer::POA_ptr poa,
-                                const char * /* operation */,
-                                PortableServer::ServantLocator::Cookie &cookie,
-                                CORBA::Environment &env)
+                             PortableServer::POA_ptr poa,
+                             const char * /* operation */,
+                             PortableServer::ServantLocator::Cookie &cookie,
+                             CORBA::Environment &env)
 {
   // Convert ObjectID to String.
 
-  CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
+  CORBA::String_var s = 
+    PortableServer::ObjectId_to_string (oid);
 
   // If ObjectID string has a Foo Substring create and return a
   // MyFooServant.
 
-  PortableServer::Servant servant = this->servant_manager_.obtain_servant (s.in (),
-                                                                           poa,
-                                                                           27);
+  PortableServer::Servant servant =
+    this->servant_manager_.obtain_servant (s.in (),
+                                           poa,
+                                           27);
   if (servant != 0)
     {
       // Return the servant as the cookie , used as a check when
@@ -69,35 +71,34 @@ ServantLocator_i::preinvoke (const PortableServer::ObjectId &oid,
 
 void
 ServantLocator_i::postinvoke (const PortableServer::ObjectId &oid,
-                                 PortableServer::POA_ptr /* poa */,
-                                 const char * /* operation */,
-                                 PortableServer::ServantLocator::Cookie cookie,
-                                 PortableServer::Servant servant,
-                                 CORBA::Environment &/* env */)
+                              PortableServer::POA_ptr /* poa */,
+                              const char * /* operation */,
+                              PortableServer::ServantLocator::Cookie cookie,
+                              PortableServer::Servant servant,
+                              CORBA::Environment &/* env */)
 {
   // Check the passed servant with the cookie.
 
   PortableServer::Servant my_servant =
-    ACE_reinterpret_cast (PortableServer::Servant, cookie);
+    ACE_reinterpret_cast (PortableServer::Servant,
+                          cookie);
   
   ACE_ASSERT (servant == my_servant);
 
   this->servant_manager_.destroy_servant (servant, 
                                           oid);
-  
   // To avoid warning about unused variable with ACE_NDEBUG.
   ACE_UNUSED_ARG (my_servant);
 }
 
 // This method returns an ObjectId when given an dll name and the
-// factory function to be invoked in the dll.The format of the
+// factory function to be invoked in the dll.  The format of the
 // ObjectId is libname:factory_function.
 
 PortableServer::ObjectId_var
 ServantLocator_i::create_dll_object_id (const char *dllname,
                                            const char *factory_function)
 {
-
   return this->servant_manager_.create_dll_object_id (dllname,
                                                       factory_function);
 }

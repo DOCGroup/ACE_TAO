@@ -25,22 +25,26 @@ main (int argc, char **argv)
   
   TAO_TRY
     {
+      // @@ Kirthika, it's not clear what the TAO_CHECK_ENV macros are
+      // doing here, i.e., how do they check for exceptions since the
+      // TAO_TRY_ENV isn't passed into any of the calls.  Can you
+      // please address this question somehow?  I think what you
+      // should be doing is passing the exception into these methods
+      // as a parameter, but I'm not sure exactly what you're trying
+      // to do.
       server.init (argc, argv);
       TAO_CHECK_ENV;
   
-      // This poa is used to test the Servant Activator interface and
+      // This POA is used to test the Servant Activator interface and
       // hence has an RETAIN policy.
       PortableServer::POA_var first_poa = 
-        server.create_poa ("firstPOA",
-                           1);
+        server.create_poa ("firstPOA", 1);
       TAO_CHECK_ENV;
 
       // This poa is used to test the Servant Activator interface and
       // hence has an NONRETAIN policy.
       PortableServer::POA_var second_poa =
-        server.create_poa ("secondPOA",
-                           0);
-
+        server.create_poa ("secondPOA", 0);
       TAO_CHECK_ENV;
      
       // The Servant Activator interface is created and initialised.
@@ -54,7 +58,6 @@ main (int argc, char **argv)
       // The server begins processing requests.
       server.run ();
       TAO_CHECK_ENV; 
-    
     }
   TAO_CATCHANY
     {
@@ -63,5 +66,5 @@ main (int argc, char **argv)
     }
   TAO_ENDTRY;
 
-return 0;
+  return 0;
 }

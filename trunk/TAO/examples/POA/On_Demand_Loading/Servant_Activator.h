@@ -31,7 +31,6 @@ class ServantActivator_i : public POA_PortableServer::ServantActivator
   //   This class associates an unassociated servant with an object in
   //   the POA Active Object Map.
 public:
-  
   ServantActivator_i (CORBA::ORB_ptr orb);
   // Initialization.
 
@@ -41,6 +40,9 @@ public:
   // This method is invoked by a POA with USE_SERVANT_MANAGER and
   // RETAIN policies, whenever it receives a request for a
   // MyFooServant object that is not currently active.
+  // @@ Kirthika, please explain briefly what THIS method does
+  // whenever it is invoked, i.e., explain the use of the
+  // ServantManager stuff...
 
   virtual void etherealize (const PortableServer::ObjectId &oid,
                             PortableServer::POA_ptr adapter,
@@ -50,6 +52,9 @@ public:
                             CORBA::Environment &env);
   // This method is invoked whenever a MyFooServant for a MyFoo object
   // is deactivated.
+  // @@ Kirthika, please explain briefly what THIS method does
+  // whenever it is invoked, i.e., explain the use of the
+  // ServantManager stuff...
 
   PortableServer::ObjectId_var create_dll_object_id (const char *dllname,
                                                      const char *factory_function);
@@ -58,7 +63,9 @@ public:
 
 private:
   ServantManager_i servant_manager_;
-  // An ServantManager object which provides utility methods.
+  // An ServantManager object that provides utility methods.
+  // @@ Kirthika, briefly summarize what these methods accomplish (in
+  // general).
 };
 
 #endif /* SERVANT_ACTIVATOR_H */

@@ -9,8 +9,8 @@
 //     Servant_Activator.cpp
 //
 // = DESCRIPTION
-//     Implementation of ServantActivator_i, which is used by a
-//     POA with a RETAIN policy.
+//     Implementation of <ServantActivator_i>, which is used by a POA
+//     with a RETAIN policy.
 //
 // = AUTHOR
 //     Kirthika Parameswaran <kirthika@cs.wustl.edu>
@@ -37,7 +37,8 @@ ServantActivator_i::incarnate (const PortableServer::ObjectId &oid,
                                CORBA::Environment &env)
 {
   // Convert ObjectId to String.
-   CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
+   CORBA::String_var s =
+     PortableServer::ObjectId_to_string (oid);
  
   // Activate and return the servant else exception.
   PortableServer::Servant servant =
