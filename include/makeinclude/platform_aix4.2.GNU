@@ -15,7 +15,9 @@ static_libs = 1
 CC	    = xlC
 CXX	    = xlC_r
 CCFLAGS     += $(CFLAGS)
-DCFLAGS     += -g -qcheck=nobounds:div:null -qinitauto=5F
+# -qinitauto seems useful, but when built with -qinitauto=5F, the
+# Process_Strategy_Test went CPU bound in ostream, so I removed it (S. Huston)
+DCFLAGS     += -g -qcheck=nobounds:div:null
 DLD	    = makeC++SharedLib_r
 LD          = $(CXX)
 # -qextchk is handy, but produces false type mismatches when linking
