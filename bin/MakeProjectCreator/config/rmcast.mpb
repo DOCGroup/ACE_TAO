@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : acelib {
+project : acelib, exceptions {
   requires += rmcast
   after    += RMCast
   libs     += ACE_RMCast

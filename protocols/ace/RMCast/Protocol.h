@@ -67,7 +67,7 @@ namespace ACE_RMCast
 
       Header (istream& is)
       {
-        is >> id_ >> size_;
+        (void) (is >> id_ >> size_);
       }
 
     public:
