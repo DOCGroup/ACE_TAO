@@ -129,7 +129,7 @@ test_map_manager (size_t table_size, size_t iterations)
   for (i = 0; i < iterations; i++)
     ACE_ASSERT (map.bind (i, i) != -1);
 
-#if defined (ACE_TEST_STL_ITERATOR_FUNCTIONS
+#if defined (ACE_TEST_STL_ITERATOR_FUNCTIONS)
   {
     ENTRY item;
     for (MAP_MANAGER::iterator iter = map.begin ();
