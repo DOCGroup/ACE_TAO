@@ -97,7 +97,8 @@
 #define ACE_HAS_SUNOS4_GETTIMEOFDAY
 #define LINUX 2.0.27
 
-// Platform supports IP multicast
+// ONLY define this if you have config'd multicast into a 2.x kernel.
+// If you do anything else, we've never tested it!
 #define ACE_HAS_IP_MULTICAST
 
 // Turns off the tracing feature.
