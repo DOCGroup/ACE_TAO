@@ -50,6 +50,14 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+namespace TAO
+{
+  namespace Portable_Server
+  {
+    class Non_Servant_Upcall;
+  }
+}
+
 // ****************************************************************
 
 enum TAO_SERVANT_LOCATION
@@ -615,40 +623,7 @@ public:
     const poa_name &folded_name_;
   };
 
-  /**
-   * @class Non_Servant_Upcall
-   *
-   * @brief This class helps us with a recursive thread lock without
-   * using a recursive thread lock.  Non_Servant_Upcall has a
-   * magic constructor and destructor.  We unlock the
-   * Object_Adapter lock for the duration of the non-servant
-   * (i.e., adapter activator and servant activator) upcalls;
-   * reacquiring once the upcalls complete.  Even though we are
-   * releasing the lock, other threads will not be able to make
-   * progress since
-   * <Object_Adapter::non_servant_upcall_in_progress_> has been
-   * set.
-   */
-  class TAO_PortableServer_Export Non_Servant_Upcall
-  {
-  public:
-
-    /// Constructor.
-    Non_Servant_Upcall (TAO_POA &poa);
-
-    /// Destructor.
-    ~Non_Servant_Upcall (void);
-
-    TAO_POA &poa (void) const;
-
-  protected:
-
-    TAO_Object_Adapter &object_adapter_;
-    TAO_POA &poa_;
-    Non_Servant_Upcall *previous_;
-  };
-
-  friend class Non_Servant_Upcall;
+  friend class TAO::Portable_Server::Non_Servant_Upcall;
 
   /**
    * @class Servant_Upcall
@@ -843,7 +818,7 @@ public:
 
   /// Pointer to the non-servant upcall in progress.  If no non-servant
   /// upcall is in progress, this pointer is zero.
-  Non_Servant_Upcall *non_servant_upcall_in_progress (void) const;
+  TAO::Portable_Server::Non_Servant_Upcall *non_servant_upcall_in_progress (void) const;
 
 private:
 
@@ -858,7 +833,7 @@ private:
 
   /// Pointer to the non-servant upcall in progress.  If no non-servant
   /// upcall is in progress, this pointer is zero.
-  Non_Servant_Upcall *non_servant_upcall_in_progress_;
+  TAO::Portable_Server::Non_Servant_Upcall *non_servant_upcall_in_progress_;
 
   /// Current nesting level of non_servant_upcalls.
   unsigned int non_servant_upcall_nesting_level_;

@@ -164,7 +164,7 @@ public:
 
   friend class TAO_Object_Adapter;
   friend class TAO_Object_Adapter::Servant_Upcall;
-  friend class TAO_Object_Adapter::Non_Servant_Upcall;
+  friend class TAO::Portable_Server::Non_Servant_Upcall;
   friend class TAO_POA_Current_Impl;
   friend class TAO_POA_Manager;
   friend class TAO_RT_Collocation_Resolver;

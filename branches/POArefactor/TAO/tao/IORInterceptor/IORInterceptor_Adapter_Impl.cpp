@@ -5,6 +5,7 @@
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 #include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Non_Servant_Upcall.h"
 
 ACE_RCSID (IORInterceptor,
            IORInterceptor_Adapter_Impl,
@@ -109,7 +110,7 @@ TAO_IORInterceptor_Adapter_Impl::establish_components (
 
   // Release the POA during IORInterceptor calls to avoid potential
   // deadlocks.
-  TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*poa);
+  TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*poa);
   ACE_UNUSED_ARG (non_servant_upcall);
 
   for (size_t i = 0; i < interceptor_count; ++i)
