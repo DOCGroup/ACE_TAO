@@ -88,7 +88,7 @@ ACE_TSS_Emulation::ts_object (const ACE_thread_key_t key)
         // Zero the entire TSS array.  Do it manually instead of using
         // memset, for optimum speed.  Though, memset may be faster :-)
         void **tss_base_p =
-          reinterpret_cast> (void **> (taskIdCurrent->ACE_VXWORKS_SPARE);
+          reinterpret_cast<void **> (taskIdCurrent->ACE_VXWORKS_SPARE);
         for (u_int i = 0; i < ACE_TSS_THREAD_KEYS_MAX; ++i, ++tss_base_p)
           {
             *tss_base_p = 0;
