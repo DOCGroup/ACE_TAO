@@ -278,7 +278,19 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
     {
       *os << "_tao_environment.exception (new CORBA::MARSHAL "
 	  << "(CORBA::COMPLETED_NO));" << be_nl;
-      *os << "return _tao_retval;\n";
+      // return the appropriate return value
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (bt->accept (visitor) == -1))
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_cs::"
+                             "visit_operation - "
+                             "codegen for return var failed\n"),
+                            -1);
+        }
     }
   else
     {
@@ -371,6 +383,24 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
       // end the do_static_call
       *os << be_uidt_nl;
       *os << ");\n";
+
+      // if there is an exception, return
+      os->indent ();
+      *os << "if (_tao_environment.exception ())" << be_idt << "\n";
+      // return the appropriate return value
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (bt->accept (visitor) == -1))
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_cs::"
+                             "visit_operation - "
+                             "codegen for return var failed\n"),
+                            -1);
+        }
+      *os << be_uidt;
 
       // do any post processing for the retval
       ctx = *this->ctx_;

@@ -1,3 +1,12 @@
+Mon Jun 29 11:00:26 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+
+	After the call to do_static_call, we were not checking if some
+	exception was raised. This was causing major problems if there was
+	any post do_static_call processing such as narrowing to be
+	done. Thanks to Seth Widoff for reporting the problem.
+
 Sun Jun 28 21:33:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/GIOP.cpp: replaced ACE_SYNCH_RW_MUTEX with
