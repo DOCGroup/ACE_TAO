@@ -42,7 +42,8 @@ IDL_SRCS= \
 	LifeCycleService \
 	CosTrading \
 	AVStreams \
-	Null_MediaCtrl
+	Null_MediaCtrl\
+	sfp
 
 IDL_FILES = \
 	$(addsuffix S, $(IDL_SRCS)) \
