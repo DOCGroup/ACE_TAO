@@ -2,7 +2,7 @@ Wed Jun 17 19:01:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	  The following changes provide an interface for ACE programmers
 	  of more finer control over how Win32 structured exceptions are
-	  handled.  Thanks to Detlef Backer <Detlef.Backer@med.siemens.de>
+	  handled.  Thanks to Detlef Becker <Detlef.Becker@med.siemens.de>
 	  for contemplating the idea and passing it to us.
 
 	* ace/Log_Msg.{h,cpp} (seh_except_{selector,handler}): Added
