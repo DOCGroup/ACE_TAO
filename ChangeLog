@@ -1,3 +1,7 @@
+Fri Oct 05 05:51:12 2001  Balachandran  <bala@cs.wustl.edu>
+
+        * ACE version 5.2 released.
+
 Thu Oct  4 17:38:21 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Synch.h: Added some comments to explain the rationale for
