@@ -1,22 +1,27 @@
+Tue Jun  8 15:47:06 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
+
+	* ace/Env_Value_T.h: Added a new ACE_Convert() function that works
+ 	  for const char *'s.  Thanks to David for reporting this.
+
 Tue Jun 08 13:46:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h (wmain): Added a new macro to tweak the wchat_t version
-	  of main program entry point to create the non-static
-	  Object_Manager.  This is only enabled if UNICODE and ACE_WIN32
-	  is defined (although you can also use wmain under non-UNICODE
-	  environment.)
+ 	  of main program entry point to create the non-static
+ 	  Object_Manager.  This is only enabled if UNICODE and ACE_WIN32
+ 	  is defined (although you can also use wmain under non-UNICODE
+ 	  environment).
 
 Mon Jun 07 14:34:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/CORBA_macros.h: The member function for dumping
-	  TAO_Exception is changed to _tao_print_exception.
+ 	  TAO_Exception is changed to _tao_print_exception.
 
 Tue Jun 08 14:44:07 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Thread_Manager_Test.cpp (main): on Sun only, added 5
-          second sleep before the "main thread finished" printout.
-          It might help (but certainly doesn't prevent) avoid an
-          occasional thread lib panic on SunOS 5.5 through 5.7.
+ 	  second sleep before the "main thread finished" printout.  It
+ 	  might help (but certainly doesn't prevent) avoid an occasional
+ 	  thread lib panic on SunOS 5.5 through 5.7.
 
 Tue Jun 08 14:01:51 1999  David L. Levine  <levine@cs.wustl.edu>
 
