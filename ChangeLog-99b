@@ -1,3 +1,18 @@
+Mon Jul  5 20:45:21 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.(h i): Added code for support of pthread suspend/resume and
+          pthreads reader-writer locks. These features are enabled by setting
+          the ACE_HAS_PTHREADS_UNIX98_EXT and removing ACE_LACKS_RWLOCK_T.
+
+        * ace/config-hpux11.h: Added ACE_HAS_PTHREADS_UNIX98_EXT and removed
+          ACE_LACKS_RWLOCK_T - this enables native reader/writer locks as well
+          as thread suspend and reusme.
+
+        * ace/README: Added ACE_HAS_PTHREADS_UNIX98_EXT.
+
+        * apps/JAWS/server/HTTP_Config.(h cpp):
+        * apps/JAWS/server/HTTP_Response.( h cpp): const-corrected char *.
+
 Mon Jul  5 16:39:50 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
 	* ACE-INSTALL.html: Updated the discussion to point out
