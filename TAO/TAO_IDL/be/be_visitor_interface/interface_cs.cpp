@@ -494,7 +494,7 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
           << "_Factory_function_pointer" << be_nl
           << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
           << ");" << be_uidt << be_nl
-          << "return TAO_" << node->local_name ()
+          << "return TAO_" << node->flat_name ()
           << "_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (proxy);"
           << be_uidt << be_uidt_nl
           << "}" << be_nl << be_nl;
