@@ -1,3 +1,9 @@
+Fri Sep 17 00:25:17 2004  Olli Savia  <ops@iki.fi>
+
+        * ace/IOStream_T.h:
+        * ace/Object_Manager.cpp:
+          Changed NULL to 0 to silence compile time warning.
+
 Thu Sep 16 14:14:31 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/config/event_serv.mpb:
