@@ -1068,8 +1068,7 @@ ACE_Pagefile_Memory_Pool::acquire (size_t nbytes,
   // small and/or we didn't map the whole shared memory section
   if (this->shared_cb_->sh_.mapped_size_
       > this->local_cb_.sh_.mapped_size_
-      || this->shared_cb_->sh_.free_size_
-      < (int) rounded_bytes)
+      || this->shared_cb_->sh_.free_size_ < rounded_bytes)
     {
       size_t append = 0;
       if (rounded_bytes > this->shared_cb_->sh_.free_size_)
@@ -1081,8 +1080,7 @@ ACE_Pagefile_Memory_Pool::acquire (size_t nbytes,
 
   // Get the block from extra space and update shared and local
   // control block
-  if (this->shared_cb_->sh_.free_size_
-      < (int) rounded_bytes)
+  if (this->shared_cb_->sh_.free_size_ < rounded_bytes)
     return result;
 
   result = (void *)((char *) this->local_cb_.mapped_base_
