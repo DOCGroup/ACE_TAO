@@ -1,3 +1,16 @@
+Wed Sep 15 15:01:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_exception.h:
+	* TAO_IDL/be/be_exception.cpp:
+	* TAO_IDL/be/be_visitor_exception/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_exception/cdr_op_ci.cpp:
+	  Minimal implementation of C++ ostream operator for
+	  IDL exceptions. Only the repository ID is output
+	  at present. This is not part of the spec, so as
+	  it becomes clearer what folks want from this,
+	  some or all of the exception members may be 
+	  output as well.
+
 Wed Sep 15 13:51:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Sequence_T.i:
