@@ -1,3 +1,10 @@
+Fri Oct  5 18:16:53 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/SString.h:
+	* ace/SString.cpp: Changes the usage of ostream to
+	  ACE_OSTREAM_TYPE. Thanks to Russ Noseworthy for letting us
+	  know. 
+
 Thu Oct  4 07:10:01 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/RB_Tree.*: Added support for using the "ACE_Allocator" parameters
