@@ -62,7 +62,7 @@ BIN2 = airplane_server \
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
-TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (ImplRepo,$(findstring ImplRepo,$(TAO_ORBSVCS)))
   BIN = $(BIN2)
 endif # ImplRepo

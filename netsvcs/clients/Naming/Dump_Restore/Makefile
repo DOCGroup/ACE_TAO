@@ -29,7 +29,7 @@ SHLIB2  = libDump_Restore.$(SOEXT)
 
 #### If the ACE library wasn't built with sufficient components, don't
 #### try to build here.
-ACE_BUILD_COMPONENTS := $(shell $(ACE_ROOT)/bin/ace_components --ace)
+ACE_BUILD_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --ace)
 ifeq (Other,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
   BIN = $(BIN2)
   LIB = $(LIB2)

@@ -1,51 +1,57 @@
+Sun Jul 04 15:41:34 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * many Makefiles: call ace_components via sh, instead of
+          directly in the make $(shell) command.  This allows it
+          to work on platforms that don't have /bin/sh, such as NT.
+
 Sun Jul  4 12:34:24 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Timer_Hash_T.cpp (cancel): Reversed a comparison from
-	  <= to > to make the ACE_ASSERT replacement work properly.
-  	  Thanks to David Levine for reporting this.
+        * ace/Timer_Hash_T.cpp (cancel): Reversed a comparison from
+          <= to > to make the ACE_ASSERT replacement work properly.
+          Thanks to David Levine for reporting this.
 
-	* tests/Thread_Pool_Test.cpp (open): We need to define 'int i'
-	  outside of the for loop to keep EGCS from complaining for some
- 	  reason.
+        * tests/Thread_Pool_Test.cpp (open): We need to define 'int i'
+          outside of the for loop to keep EGCS from complaining for some
+          reason.
 
-	* ace/Timer_Heap_T.cpp: Reformatted this code to conform to 
-	  the ACE programming guidelines.
-	
-	* ace/Timer_Heap_T.cpp (schedule): Replaced an ad hoc check for
-	  allocator failure with the ACE_ALLOCATOR_RETURN macro.
+        * ace/Timer_Heap_T.cpp: Reformatted this code to conform to
+          the ACE programming guidelines.
 
-	* ace/RB_Tree.cpp: Modified Carlo's change so that we add an
-	  extra set of parens in a special way, rather than using a new
- 	  macro.  This is more consistent with how we deal with this
- 	  problem in other parts of ACE.	
-  
-	* ace/RB_Tree.cpp (insert_i): Removed an unreachable statement.
-	  Thanks to David Levine for reporting this.
+        * ace/Timer_Heap_T.cpp (schedule): Replaced an ad hoc check for
+          allocator failure with the ACE_ALLOCATOR_RETURN macro.
+
+        * ace/RB_Tree.cpp: Modified Carlo's change so that we add an
+          extra set of parens in a special way, rather than using a new
+          macro.  This is more consistent with how we deal with this
+          problem in other parts of ACE.
+
+        * ace/RB_Tree.cpp (insert_i): Removed an unreachable statement.
+          Thanks to David Levine for reporting this.
 
 Sat Jul  3 22:12:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Object_Manager.cpp (get_singleton_lock): 
-	  Fixed one of the ACE_Thread_Mutex version of this method. One of 
-	  the braces after an if() statement got "accidentaly" removed;
-	  binding the "else" part of the statement to the previous if()
-	  instead.
+        * ace/Object_Manager.cpp (get_singleton_lock):
+          Fixed one of the ACE_Thread_Mutex version of this method. One of
+          the braces after an if() statement got "accidentaly" removed;
+          binding the "else" part of the statement to the previous if()
+          instead.
 
 Sat Jul  3 18:54:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/RB_Tree.cpp:
-	  If the "constructor" parameter in an ACE_NEW_RETURN macro has a
-	  comma in it (such as Foo(x,y,z)) we need to replace it with a
-	  macro, so it is seen as a single token by the pre-processor.
-	  Otherwise it (the pre-processor) gets confused and uses
-	  the comma as separator. Thanks to David for detecting this one.
+        * ace/RB_Tree.cpp:
+          If the "constructor" parameter in an ACE_NEW_RETURN macro has a
+          comma in it (such as Foo(x,y,z)) we need to replace it with a
+          macro, so it is seen as a single token by the pre-processor.
+          Otherwise it (the pre-processor) gets confused and uses
+          the comma as separator. Thanks to David for detecting this one.
 
 Sat Jul  3 15:57:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/SOCK_Dgram_Mcast.cpp:
-	  Fixed error code return, it should be -1 not ACE_INVALID_HANDLE
+        * ace/SOCK_Dgram_Mcast.cpp:
+          Fixed error code return, it should be -1 not ACE_INVALID_HANDLE
 
-	* ace/SOCK_Connector.cpp:
-	  Fixed stray comment characters.
+        * ace/SOCK_Connector.cpp:
+          Fixed stray comment characters.
 
 Sat Jul 03 14:04:10 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -55,39 +61,39 @@ Sat Jul 03 14:04:10 1999  David L. Levine  <levine@cs.wustl.edu>
 
 Sat Jul  3 12:05:46 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/SOCK_Dgram_Mcast: Modified the subscribe() method to return
-	  0 or -1 rather than ACE_HANDLE.  Thanks to Vidya Narayanan
- 	  <CVN065@lmpsil02.comm.mot.com> for suggesting this.
+        * ace/SOCK_Dgram_Mcast: Modified the subscribe() method to return
+          0 or -1 rather than ACE_HANDLE.  Thanks to Vidya Narayanan
+          <CVN065@lmpsil02.comm.mot.com> for suggesting this.
 
-	* ace/SOCK_Acceptor,
-	  ace/SOCK_Connector,
-	  ace/SOCK: Added the ACE_Protocol_Info *, ACE_SOCK_GROUP, and
- 	  flags parameters to these classes so we can pass down the GQoS
-	  information.  Thanks to Vidya Narayanan
- 	  <CVN065@lmpsil02.comm.mot.com> for suggesting this.
+        * ace/SOCK_Acceptor,
+          ace/SOCK_Connector,
+          ace/SOCK: Added the ACE_Protocol_Info *, ACE_SOCK_GROUP, and
+          flags parameters to these classes so we can pass down the GQoS
+          information.  Thanks to Vidya Narayanan
+          <CVN065@lmpsil02.comm.mot.com> for suggesting this.
 
-	* ace/SOCK.h: Added the reuse_addr parameter to open() and the 
-	  ACE_SOCK constructor.
+        * ace/SOCK.h: Added the reuse_addr parameter to open() and the
+          ACE_SOCK constructor.
 
-	* tests/Future_Set_Test.cpp (main): We were casting a const ASYS_TCHAR *
-	  to u_int, yikes!	  
+        * tests/Future_Set_Test.cpp (main): We were casting a
+          const ASYS_TCHAR * to u_int, yikes!
 
-	* ace/RB_Tree.cpp: Cleaned up the code so it's conformant with the
-	  ACE programming style, particularly for dynamic memory
- 	  allocation (which wasn't using ACE_NEW).
+        * ace/RB_Tree.cpp: Cleaned up the code so it's conformant with the
+          ACE programming style, particularly for dynamic memory
+          allocation (which wasn't using ACE_NEW).
 
-	* ace/ACE.cpp (get_ip_interfaces): Cleaned up the code so it conforms
-	  to the ACE programming guidelines.
+        * ace/ACE.cpp (get_ip_interfaces): Cleaned up the code so it conforms
+          to the ACE programming guidelines.
 
-	* ace/Timer_Hash_T.cpp: Fixed a number mistakes where the return
-	  value of new wasn't being checked.
+        * ace/Timer_Hash_T.cpp: Fixed a number mistakes where the return
+          value of new wasn't being checked.
 
-	* ace/Timer_Heap_T.cpp,
-  	  ace/Timer_Wheel_T.cpp: Removed the apparently extraneous parens
- 	  used in the ACE_NEW* macros in order to keep EGCS 2.95 happy.
-  	  Thanks to Jody Hagins and Arturo Montes
- 	  <mitosys@colomsat.com.co> for reporting this.  BTW, if this
- 	  causes problems on any compilers please let me know.
+        * ace/Timer_Heap_T.cpp,
+          ace/Timer_Wheel_T.cpp: Removed the apparently extraneous parens
+          used in the ACE_NEW* macros in order to keep EGCS 2.95 happy.
+          Thanks to Jody Hagins and Arturo Montes
+          <mitosys@colomsat.com.co> for reporting this.  BTW, if this
+          causes problems on any compilers please let me know.
 
         * ace: Reformatted all the ACE_NEW* macros so they conform to
           ACE programming style.

@@ -13,7 +13,7 @@ LIBNAME  = libECTests
 LIB2      = $(LIBNAME).a
 SHLIB2    = $(LIBNAME).$(SOEXT)
 
-TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (Event2,$(findstring Event2,$(TAO_ORBSVCS)))
   LIB = $(LIB2)
   SHLIB = $(SHLIB2)
