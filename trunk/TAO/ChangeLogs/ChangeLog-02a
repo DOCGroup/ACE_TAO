@@ -211,7 +211,8 @@ Wed Sep  5 17:26:12 2001 Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.i:
 
-	  Added a missing parameter to the ACE_DEBUG statement to print the flow name.
+	  Added a missing parameter to the ACE_DEBUG statement to print
+	  the flow name.  
 
 	* orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
 
