@@ -17,6 +17,8 @@ TAO_Internal::open_services (int& argc, char** argv)
       return ACE_Service_Config::open (argc, argv);
 #endif
     }
+  else
+    return 0;
 }
 
 ACE_INLINE int
