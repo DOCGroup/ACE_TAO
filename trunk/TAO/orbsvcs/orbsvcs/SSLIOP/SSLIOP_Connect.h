@@ -23,22 +23,21 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Acceptor.h"
-#include "ace/SOCK_Acceptor.h"
+#include "ace/SSL_SOCK_Stream.h"
 #include "ace/Synch.h"
 #include "ace/Svc_Handler.h"
 
 #include "tao/corbafwd.h"
 #include "tao/Wait_Strategy.h"
 
-#include "tao/SSLIOP_Transport.h"
+#include "SSLIOP_Transport.h"
 
 // Forward Decls
 class TAO_ORB_Core;
 class TAO_ORB_Core_TSS_Resources;
 
 
-typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+typedef ACE_Svc_Handler<ACE_SSL_SOCK_STREAM, ACE_NULL_SYNCH>
         TAO_SVC_HANDLER;
 
 // ****************************************************************
@@ -171,7 +170,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "tao/SSLIOP_Connect.i"
+#include "SSLIOP_Connect.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_SSLIOP_CONNECT_H */
