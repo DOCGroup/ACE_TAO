@@ -6021,7 +6021,7 @@ ACE_INLINE double
 ACE_OS::difftime (time_t t1, time_t t0)
 {
 #if defined (ACE_DIFFTIME)
-  return ACE_DIFFTIME(t1, t0);
+  return ACE_DIFFTIME (t1, t0);
 #else
   return ::difftime (t1, t0);
 #endif /* ACE_DIFFTIME */
