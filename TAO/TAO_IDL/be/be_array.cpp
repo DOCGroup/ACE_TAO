@@ -197,14 +197,16 @@ int
 be_array::gen_dimensions (TAO_OutStream *os, 
                           unsigned short slice)
 {
-  unsigned long i;   // loop index
+   // Loop index.
+   unsigned long i;
 
-  // print our dimensions
-  for (i = (slice?1:0); i < this->n_dims (); i++)
+  // Print our dimensions.
+  for (i = (slice ? 1 : 0); i < this->n_dims (); i++)
     {
-      AST_Expression *expr = this->dims ()[i]; // retrieve the ith
+      // Retrieve the ith.
+      AST_Expression *expr = this->dims ()[i];
 
-      // dimension value
+      // Dimension value.
       if ((expr == NULL) || ((expr != NULL) && (expr->ev () == NULL)))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -213,6 +215,7 @@ be_array::gen_dimensions (TAO_OutStream *os,
                              "bad array dimension\n"),
                             -1);
         }
+
       if (expr->ev ()->et == AST_Expression::EV_ulong)
         {
           *os << "[" << ((int)expr->ev ()->u.ulval) << "]";
@@ -226,6 +229,7 @@ be_array::gen_dimensions (TAO_OutStream *os,
                             -1);
         }
     }
+
   return 0;
 }
 
