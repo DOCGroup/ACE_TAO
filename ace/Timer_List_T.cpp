@@ -219,7 +219,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::schedule (const TYPE &type,
 // Locate and update the inteval on the timer_id
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int 
-ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::reset_interval (const long timer_id, 
+ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::reset_interval (long timer_id, 
                                                            const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_Timer_List_T::reset_interval");
@@ -232,8 +232,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::reset_interval (const long timer_id,
 
   ACE_Timer_Node_T<TYPE> *node =
     ACE_reinterpret_cast (ACE_Timer_Node_T<TYPE> *,
-                          ACE_const_cast (long,
-                                          timer_id));
+                          timer_id);
 
   node->set_interval (interval);
 

@@ -312,7 +312,7 @@ public:
   // accidentally deleting the wrong timer.  Returns -1 on failure
   // (which is guaranteed never to be a valid <timer_id>.
 
-  virtual int reset_timer_interval (const long timer_id, 
+  virtual int reset_timer_interval (long timer_id, 
                                     const ACE_Time_Value &interval) = 0;
   // Resets the interval of the timer represented by <timer_id> to
   // <interval>, which is specified in relative time to the current

@@ -358,7 +358,7 @@ ACE_Reactor::resume_handlers (void)
 
 ACE_INLINE int
 ACE_Reactor::reset_timer_interval
-  (const long timer_id, 
+  (long timer_id, 
    const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_Reactor::reset_timer_interval");

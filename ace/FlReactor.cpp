@@ -254,7 +254,7 @@ ACE_FlReactor::reset_timeout (void)
 
 int
 ACE_FlReactor::reset_timer_interval
-  (const long timer_id,
+  (long timer_id,
    const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_FlReactor::reset_timer_interval");
