@@ -31,7 +31,7 @@
 
 #include "ace/config-g++-common.h"
 
-#include <_mingw.h>
+#include /**/ <_mingw.h>
 
 #define ACE_LACKS_MODE_MASKS
 #define ACE_HAS_USER_MODE_MASKS
