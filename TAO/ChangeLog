@@ -1,4 +1,4 @@
-Sat Jan 29 23:36:49 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+Sat Jan 29 23:58:18 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/AMH/Sink_Server/AMH_Servant.cpp:
 	* examples/Event_Comm/Consumer_Input_Handler.h:
@@ -8,9 +8,13 @@ Sat Jan 29 23:36:49 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* orbsvcs/ImplRepo_Service/Activator_Info.h:
 	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
 	* orbsvcs/LoadBalancer/LoadMonitor.cpp:
+	* orbsvcs/TAO_Service/TAO_Service.cpp:
 	* orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/TimeStamp.h:
 	* orbsvcs/tests/InterfaceRepo/Application_Test/test_i.cpp:
 	* orbsvcs/tests/Notify/lib/Driver.h:
+	* tao/CORBALOC_Parser.h:
+	* tao/Messaging/Messaging.cpp:
+	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
 	* tests/MProfile_Forwarding/Manager.cpp:
 
 	  Added missing header include directives that are necessary due

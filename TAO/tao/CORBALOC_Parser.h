@@ -22,9 +22,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Profile.h"
 #include "ace/Service_Config.h"
 #include "ace/Array.h"
-#include "tao/Profile.h"
+#include "ace/SString.h"
 
 class TAO_MProfile;
 
