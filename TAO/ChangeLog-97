@@ -6669,4 +6669,6 @@ Wed Mar 19 10:25:21 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 Thu Mar 13 14:06:28 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-        * ChangeLog: Added the ChangeLog.
+        * ChangeLog: Added the ChangeLog.  We'd like to thank David
+ 	  Brownell <david-b@pacbell.net>, the original author of SunSoft
+ 	  IIOP, for helping to launch TAO off in the right direction!
