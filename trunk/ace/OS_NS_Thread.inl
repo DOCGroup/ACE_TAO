@@ -819,6 +819,7 @@ ACE_OS::event_init (ACE_event_t *event,
   ACE_UNUSED_ARG (sa);
   event->manual_reset_ = manual_reset;
   event->is_signaled_ = initial_state;
+  event->auto_event_signaled_ = false;
   event->waiting_threads_ = 0;
 
   int result = ACE_OS::cond_init (&event->condition_,
@@ -937,6 +938,7 @@ ACE_OS::event_reset (ACE_event_t *event)
     {
       // Reset event.
       event->is_signaled_ = 0;
+      event->auto_event_signaled_ = false;
 
       // Now we can let go of the lock.
       ACE_OS::mutex_unlock (&event->lock_);
@@ -965,14 +967,15 @@ ACE_OS::event_signal (ACE_event_t *event)
       // Manual-reset event.
       if (event->manual_reset_ == 1)
         {
-          // signal event
-          event->is_signaled_ = 1;
           // wakeup all
           if (ACE_OS::cond_broadcast (&event->condition_) != 0)
             {
               result = -1;
               error = errno;
             }
+
+          // signal event
+          event->is_signaled_ = 1;
         }
       // Auto-reset event
       else
@@ -980,13 +983,14 @@ ACE_OS::event_signal (ACE_event_t *event)
           if (event->waiting_threads_ == 0)
             // No waiters: signal event.
             event->is_signaled_ = 1;
-
           // Waiters: wakeup one waiter.
           else if (ACE_OS::cond_signal (&event->condition_) != 0)
             {
               result = -1;
               error = errno;
             }
+
+          event->auto_event_signaled_ = true;
         }
 
       // Now we can let go of the lock.
@@ -1072,8 +1076,11 @@ ACE_OS::event_timedwait (ACE_event_t *event,
         // event is currently signaled
         {
           if (event->manual_reset_ == 0)
-            // AUTO: reset state
-            event->is_signaled_ = 0;
+            {
+              // AUTO: reset state
+              event->is_signaled_ = 0;
+              event->auto_event_signaled_ = false;
+            }
         }
       else
         // event is currently not signaled
@@ -1087,15 +1094,23 @@ ACE_OS::event_timedwait (ACE_event_t *event,
           if (use_absolute_time == 0)
             absolute_timeout += ACE_OS::gettimeofday ();
 
-          while (event->is_signaled_ == 0)
-            if (ACE_OS::cond_timedwait (&event->condition_,
-                                        &event->lock_,
-                                        &absolute_timeout) != 0)
-              {
-                result = -1;
-                error = errno;
-                break;
-              }
+          while (event->is_signaled_ == 0 &&
+                 event->auto_event_signaled_ == false)
+            {
+              if (ACE_OS::cond_timedwait (&event->condition_,
+                                          &event->lock_,
+                                          &absolute_timeout) != 0)
+                {
+                  result = -1;
+                  error = errno;
+                  break;
+                }
+            }
+
+          // Reset the auto_event_signaled_ to false now that we have
+          // woken up.
+          if (event->auto_event_signaled_ == true)
+            event->auto_event_signaled_ = false;
 
           event->waiting_threads_--;
         }
@@ -1148,15 +1163,22 @@ ACE_OS::event_wait (ACE_event_t *event)
         {
           event->waiting_threads_++;
 
-          while (event->is_signaled_ == 0)
-            if (ACE_OS::cond_wait (&event->condition_,
-                                   &event->lock_) != 0)
-              {
-                result = -1;
-                error = errno;
-                // Something went wrong...
-                break;
+          while (event->is_signaled_ == 0 &&
+                 event->auto_event_signaled_ == false)
+            {
+              if (ACE_OS::cond_wait (&event->condition_,
+                                     &event->lock_) != 0)
+                {
+                  result = -1;
+                  error = errno;
+                  // Something went wrong...
+                  break;
               }
+            }
+
+          // Reset it since we have woken up.
+          if (event->auto_event_signaled_ == true)
+            event->auto_event_signaled_ = false;
 
           event->waiting_threads_--;
         }
