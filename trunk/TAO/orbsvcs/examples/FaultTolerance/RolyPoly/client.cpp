@@ -179,7 +179,7 @@ main (int argc, char *argv[])
         ACE_DEBUG ((LM_INFO,
                     "client: received %d\n",
                     number));
-        sleep (1);
+        ACE_OS::sleep (1);
       }
 
       server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
