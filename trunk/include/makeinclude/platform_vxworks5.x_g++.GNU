@@ -11,6 +11,8 @@
 ####    because it contains identifiers with ".", e.g., ".cpp", in them:
 ####    add a global variable or function to that .cpp file.  See
 ####    ace/IOStream_T.cpp for an explanation and example.
+#### 3) If you're building on a WIN32 host, be sure that $(CC) is on
+####    your PATH (or is a full pathname).
 
 VXWORKS = 1
 CROSS-COMPILE = 1
@@ -160,7 +162,15 @@ PIC             =
 
 #### Tornado II uses egcs
 ifndef ACE_CC
-  ACE_CC := $(shell PATH=${PATH} type $(CC) | sed -e 's/.* is //')
+  ifdef COMSPEC
+    #### Assume we're on a WIN32 host.  Further, assume that $(CC)
+    #### is on the user's PATH.
+    ACE_CC := $(CC)
+  else  # ! COMSPEC
+    #### Don't use this on WIN32 host, because the shell there seems
+    #### to have trouble exec'ing sed.
+    ACE_CC := $(shell PATH=${PATH} type $(CC) | sed -e 's/.* is //')
+  endif # ! COMSPEC
 endif # ! ACE_CC
 ifndef ACE_CC_VERSION
   ACE_CC_VERSION := $(shell $(ACE_CC) --version)
