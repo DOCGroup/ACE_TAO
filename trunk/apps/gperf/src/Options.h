@@ -72,6 +72,12 @@ enum Option_Type
 // g++ doesn't seem to do the right thing with them at the
 // moment... ;-(
 
+// PharLap ETS defines EOS as well... so if building for ETS, clear out
+// their EOS.
+#if defined (ACE_HAS_PHARLAP) && defined (EOS)
+# undef EOS
+#endif /* ACE_HAS_PHARLAP && EOS */
+
 enum
 {
   MAX_KEY_POS = 128 - 1,    // Max size of each word's key set.
