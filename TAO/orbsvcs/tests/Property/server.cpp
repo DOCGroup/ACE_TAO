@@ -60,23 +60,20 @@ main (int argc, char ** argv)
                             TAO_TRY_ENV);
       TAO_CHECK_ENV;
       CORBA::Any any_val;
-#if 0
+
       // Make this IOR as one of the properties in there.
-   
       any_val <<= propsetdef_impl->_this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-#endif  
-#if 0
-      // Make this IOR as one of the properties in there.
+
       CORBA::Object_var ior = propsetdef_impl->_this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
       CORBA::Object_ptr ior_ptr = ior.in ();
-      any_val.replace (CORBA::_tc_Object,
-                       &ior_ptr,
-                       1,
-                       TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-#endif
+      any_val <<= ior_ptr;
+      // any_val.replace (CORBA::_tc_Object,
+      //                  &ior_ptr,
+      //                  1,
+      //                  TAO_TRY_ENV);
+      // TAO_CHECK_ENV;
       
       propsetdef_impl->define_property_with_mode ("PropertySetDef_IOR",
                                                   any_val,
