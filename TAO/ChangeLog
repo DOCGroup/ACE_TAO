@@ -1,3 +1,9 @@
+Tue Aug 17 17:32:39 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* {docs,examples,orbsvcs,performance-tests,utils}/.../*.{cpp,h,idl}:
+
+	  Changed #include <orbsvcs/orbsvcs/...> to #include <orbsvcs/...>.
+
 Tue Aug 17 17:56:23 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:
