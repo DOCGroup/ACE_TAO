@@ -1,3 +1,13 @@
+Wed Feb  2 17:29:34 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+	  One more fix to this file. Nothing was breaking, but
+	  it was pointed out, again by Christopher Kohlhoff
+	  <chris@kohlhoff.com> that, even though the members
+	  with multiple case labels were getting generated only
+	  once, the encapsulated length was calculated as if
+	  they were included more than once.
+
 Wed Feb  2 14:14:52 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
