@@ -42,11 +42,7 @@
 
 class Policy_Factory;
 
-// @@ Angelo: ACE's automatic documentation tools need to have all the
-// base classes in the same line, I hate it too, so just fix it.
-class TAO_Export TAO_PriorityModelPolicy :
-  public RTCORBA::PriorityModelPolicy,
-  public TAO_Local_RefCounted_Object
+class TAO_Export TAO_PriorityModelPolicy :  public RTCORBA::PriorityModelPolicy, public TAO_Local_RefCounted_Object
 {
   // = TITLE
   //   RTCORBA::PriorityModelPolicy implementation
@@ -117,9 +113,7 @@ private:
 
 //*************************************************************************
 
-class TAO_Export TAO_ThreadpoolPolicy :
-  public RTCORBA::ThreadpoolPolicy,
-  public TAO_Local_RefCounted_Object
+class TAO_Export TAO_ThreadpoolPolicy : public RTCORBA::ThreadpoolPolicy, public TAO_Local_RefCounted_Object
 {
   // = TITLE
   //   RTCORBA::ThreadpoolPolicy implementation
@@ -163,9 +157,7 @@ private:
 
 //*************************************************************************
 
-class TAO_Export TAO_PrivateConnectionPolicy :
-  public RTCORBA::PrivateConnectionPolicy,
-  public TAO_Local_RefCounted_Object
+class TAO_Export TAO_PrivateConnectionPolicy : public RTCORBA::PrivateConnectionPolicy, public TAO_Local_RefCounted_Object
 {
   // = TITLE
   //   RTCORBA::PrivateConnectionPolicy implementation
@@ -201,9 +193,7 @@ public:
 
 //*************************************************************************
 
-class TAO_Export TAO_PriorityBandedConnectionPolicy :
-  public RTCORBA::PriorityBandedConnectionPolicy,
-  public TAO_Local_RefCounted_Object
+class TAO_Export TAO_PriorityBandedConnectionPolicy : public RTCORBA::PriorityBandedConnectionPolicy, public TAO_Local_RefCounted_Object
 {
   // = TITLE
   //   RTCORBA::PriorityBandedConnectionPolicy implementation
@@ -270,9 +260,7 @@ private:
 
 //*************************************************************************
 
-class TAO_Export TAO_ServerProtocolPolicy :
-  public RTCORBA::ServerProtocolPolicy,
-  public TAO_Local_RefCounted_Object
+class TAO_Export TAO_ServerProtocolPolicy : public RTCORBA::ServerProtocolPolicy, public TAO_Local_RefCounted_Object
 {
   // = TITLE
   //   RTCORBA::ServerProtocolPolicy implementation
@@ -322,9 +310,7 @@ private:
 
 //*************************************************************************
 
-class TAO_Export TAO_ClientProtocolPolicy :
-  public RTCORBA::ClientProtocolPolicy,
-  public TAO_Local_RefCounted_Object
+class TAO_Export TAO_ClientProtocolPolicy : public RTCORBA::ClientProtocolPolicy, public TAO_Local_RefCounted_Object
 {
   // = TITLE
   //   RTCORBA::ClientProtocolPolicy implementation
@@ -389,9 +375,7 @@ private:
 
 //*************************************************************************
 
-class TAO_Export TAO_TCP_Properties :
-  public RTCORBA::TCPProtocolProperties,
-  public TAO_Local_RefCounted_Object
+class TAO_Export TAO_TCP_Properties : public RTCORBA::TCPProtocolProperties, public TAO_Local_RefCounted_Object
 
 {
   // = TITLE
@@ -479,9 +463,7 @@ private:
 
 //*************************************************************************
 
-class TAO_Export TAO_Unix_Domain_Properties :
-  public RTCORBA::UnixDomainProtocolProperties,
-  public TAO_Local_RefCounted_Object
+class TAO_Export TAO_Unix_Domain_Properties : public RTCORBA::UnixDomainProtocolProperties, public TAO_Local_RefCounted_Object
 {
   // = TITLE
   //   RTCORBA::UnixDomainProtocolProperties implementation.
@@ -521,6 +503,21 @@ public:
                                  TAO_default_environment ())
     ACE_THROW_SPEC (());
 
+  virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+  // This method writes the CDR encapsulation of an instance of 
+  // UnixDomainProperties. This Protocol Property in TAO specific,
+  // so there is no order of encapsulation specified in the 
+  // RT CORBA Spec. The current implementation encodes the field
+  // according to the order of declaration (i.e. first is encoded
+  // send_buffer_size and then recv_buffer_size).
+
+  virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+  // This method reads an instance of UnixDomainProperties from
+  // a CDR encapsulation. This Protocol Property in TAO specific,
+  // so there is no order of encapsulation specified in the 
+  // RT CORBA Spec. The current implementation expect the field
+  // according to the order of declaration.
+
 private:
 
   // = Attributes.
@@ -530,9 +527,7 @@ private:
 
 //*************************************************************************
 
-class TAO_Export TAO_SMEM_Properties :
-  public RTCORBA::SharedMemoryProtocolProperties,
-  public TAO_Local_RefCounted_Object
+class TAO_Export TAO_SMEM_Properties : public RTCORBA::SharedMemoryProtocolProperties, public TAO_Local_RefCounted_Object
 {
   // = TITLE
   //   RTCORBA::SharedMemoryProtocolProperties implementation.
@@ -580,6 +575,20 @@ public:
                               TAO_default_environment ())
     ACE_THROW_SPEC (());
 
+  virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+  // This method writes the CDR encapsulation of an instance of 
+  // SMEMProperties. This Protocol Property in TAO specific,
+  // so there is no order of encapsulation specified in the 
+  // RT CORBA Spec. The current implementation encodes the field
+  // according to the order of declaration.
+
+  virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+  // This method reads an instance of SMEMProperties from
+  // a CDR encapsulation. This Protocol Property in TAO specific,
+  // so there is no order of encapsulation specified in the 
+  // RT CORBA Spec. The current implementation expect the field
+  // according to the order of declaration.
+  
 private:
 
   // = Attributes.
@@ -590,9 +599,7 @@ private:
 
 //*************************************************************************
 
-class TAO_Export TAO_GIOP_Properties :
-  public RTCORBA::GIOPProtocolProperties,
-  public TAO_Local_RefCounted_Object
+class TAO_Export TAO_GIOP_Properties : public RTCORBA::GIOPProtocolProperties, public TAO_Local_RefCounted_Object
 {
 public:
   virtual ~TAO_GIOP_Properties ();
