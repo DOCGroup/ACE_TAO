@@ -151,12 +151,13 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   *os << be_nl << be_nl
       << node->name () << "::~" << node->local_name ()
       << " (void)" << be_nl
-      << "{}" << be_nl << be_nl;
+      << "{}";
 
 
   if (be_global->any_support ())
     {
-      *os << "void "
+      *os << be_nl << be_nl
+          << "void "
           << node->name () << "::_tao_any_destructor (void *_tao_void_pointer)" 
           << be_nl
           << "{" << be_idt_nl
@@ -164,6 +165,13 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
           << node->local_name () << "*, _tao_void_pointer);" << be_nl
           << "delete tmp;" << be_uidt_nl
           << "}";
+    }
+
+  // If Any operators are generated, that code will take care of this.
+  if (!be_global->any_support ())
+    {
+      // This is a no-op unless our element is a managed type.
+      this->gen_managed_type_tmplinst (node, bt);
     }
 
   if (this->ctx_->tdef () != 0)
@@ -176,6 +184,114 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   return 0;
 }
 
+void
+be_visitor_sequence_cs::gen_managed_type_tmplinst (be_sequence *node,
+                                                   be_type *bt)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  switch (node->managed_type ())
+    {
+      case be_sequence::MNG_OBJREF:
+        os->gen_ifdef_AHETI ();
+
+        *os << be_nl << be_nl
+            << "template class" << be_idt_nl
+            << "TAO_Object_Manager<" << be_idt << be_idt_nl
+            << bt->name () << "," << be_nl
+            << bt->name () << "_var," << be_nl
+            << bt->fwd_helper_name () << "_life" << be_uidt_nl
+            << ">;" << be_uidt << be_uidt;
+
+        os->gen_elif_AHETI ();
+     
+        *os << be_nl << be_nl
+            << "# pragma instantiate \\" << be_idt << be_idt_nl
+            << "TAO_Object_Manager< \\" << be_idt << be_idt_nl
+            << bt->name () << ", \\" << be_nl
+            << bt->name () << "_var, \\" << be_nl
+            << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
+            << ">" << be_uidt << be_uidt << be_uidt;
+            
+        os->gen_endif_AHETI ();
+        
+        break;       
+      case be_sequence::MNG_ABSTRACT:
+        os->gen_ifdef_AHETI ();
+
+        *os << be_nl << be_nl
+            << "template class" << be_idt_nl
+            << "TAO_Abstract_Manager<" << be_idt << be_idt_nl
+            << bt->name () << "," << be_nl
+            << bt->name () << "_var," << be_nl
+            << bt->fwd_helper_name () << "_life" << be_uidt_nl
+            << ">;" << be_uidt << be_uidt;
+
+        os->gen_elif_AHETI ();
+     
+        *os << be_nl << be_nl
+            << "# pragma instantiate \\" << be_idt << be_idt_nl
+            << "TAO_Abstract_Manager< \\" << be_idt << be_idt_nl
+            << bt->name () << ", \\" << be_nl
+            << bt->name () << "_var, \\" << be_nl
+            << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
+            << ">" << be_uidt << be_uidt << be_uidt;
+            
+        os->gen_endif_AHETI ();
+        
+        break;       
+      case be_sequence::MNG_VALUE:
+        os->gen_ifdef_AHETI ();
+
+        *os << be_nl << be_nl
+            << "template class" << be_idt_nl
+            << "TAO_Valuetype_Manager<" << be_idt << be_idt_nl
+            << bt->name () << "," << be_nl
+            << bt->name () << "_var," << be_nl
+            << bt->fwd_helper_name () << "_life" << be_uidt_nl
+            << ">;" << be_uidt << be_uidt;
+
+        os->gen_elif_AHETI ();
+     
+        *os << be_nl << be_nl
+            << "# pragma instantiate \\" << be_idt << be_idt_nl
+            << "TAO_Valuetype_Manager< \\" << be_idt << be_idt_nl
+            << bt->name () << ", \\" << be_nl
+            << bt->name () << "_var, \\" << be_nl
+            << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
+            << ">" << be_uidt << be_uidt << be_uidt;
+            
+        os->gen_endif_AHETI ();
+        
+        break;
+      case be_sequence::MNG_PSEUDO:
+        os->gen_ifdef_AHETI ();
+
+        *os << be_nl << be_nl
+            << "template class" << be_idt_nl
+            << "TAO_Pseudo_Object_Manager<" << be_idt << be_idt_nl
+            << bt->name () << "," << be_nl
+            << bt->name () << "_var" << be_uidt_nl
+            << ">;" << be_uidt << be_uidt;
+
+        os->gen_elif_AHETI ();
+     
+        *os << be_nl << be_nl
+            << "# pragma instantiate \\" << be_idt << be_idt_nl
+            << "TAO_Pseudo_Object_Manager< \\" << be_idt << be_idt_nl
+            << bt->name () << ", \\" << be_nl
+            << bt->name () << "_var \\" << be_uidt_nl
+            << ">" << be_uidt << be_uidt << be_uidt;
+            
+        os->gen_endif_AHETI ();
+        
+        break;
+      default:
+        //  String and Wstring managed types are not template classes.
+        break;
+    }
+}
+
 int
 be_visitor_sequence_cs::gen_varout_tmplinst (be_sequence *node,
                                              be_type *bt)
@@ -186,322 +302,322 @@ be_visitor_sequence_cs::gen_varout_tmplinst (be_sequence *node,
 
   switch (node->managed_type ())
     {
-    case be_sequence::MNG_OBJREF:
-      *os << be_nl << be_nl
-          << "template class" << be_idt_nl
-          << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
-          << node->name () << "," << be_nl
-          << "TAO_Object_Manager<" << be_idt << be_idt_nl
-          << bt->name () << "," << be_nl
-          << bt->name () << "_var," << be_nl
-          << bt->fwd_helper_name () << "_life" << be_uidt_nl
-          << ">" << be_uidt << be_uidt_nl
-          << ">;" << be_uidt << be_uidt;
-
-      *os << be_nl << be_nl
-          << "template class" << be_idt_nl
-          << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
-          << node->name () << "," << be_nl
-          << node->name () << "_var," << be_nl
-          << "TAO_Object_Manager<" << be_idt << be_idt_nl
-          << bt->name () << "," << be_nl
-          << bt->name () << "_var," << be_nl
-          << bt->fwd_helper_name () << "_life" << be_uidt_nl
-          << ">" << be_uidt << be_uidt_nl
-          << ">;" << be_uidt << be_uidt;
-
-      break;
-    case be_sequence::MNG_ABSTRACT:
-      *os << be_nl << be_nl
-          << "template class" << be_idt_nl
-          << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
-          << node->name () << "," << be_nl
-          << "TAO_Abstract_Manager<" << be_idt << be_idt_nl
-          << bt->name () << "," << be_nl
-          << bt->name () << "_var," << be_nl
-          << bt->fwd_helper_name () << "_life" << be_uidt_nl
-          << ">" << be_uidt << be_uidt_nl
-          << ">;" << be_uidt << be_uidt;
-
-      *os << be_nl << be_nl
-          << "template class" << be_idt_nl
-          << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
-          << node->name () << "," << be_nl
-          << node->name () << "_var," << be_nl
-          << "TAO_Abstract_Manager<" << be_idt << be_idt_nl
-          << bt->name () << "," << be_nl
-          << bt->name () << "_var," << be_nl
-          << bt->fwd_helper_name () << "_life" << be_uidt_nl
-          << ">" << be_uidt << be_uidt_nl
-          << ">;" << be_uidt << be_uidt;
-
-      break;
-    case be_sequence::MNG_PSEUDO:
-      *os << be_nl << be_nl
-          << "template class" << be_idt_nl
-          << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
-          << node->name () << "," << be_nl
-          << "TAO_Pseudo_Object_Manager<" << be_idt << be_idt_nl
-          << bt->name () << "," << be_nl
-          << bt->name () << "_var" << be_uidt_nl
-          << ">" << be_uidt << be_uidt_nl
-          << ">;" << be_uidt << be_uidt;
-
-      *os << be_nl << be_nl
-          << "template class" << be_idt_nl
-          << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
-          << node->name () << "," << be_nl
-          << node->name () << "_var," << be_nl
-          << "TAO_Pseudo_Object_Manager<" << be_idt << be_idt_nl
-          << bt->name () << "," << be_nl
-          << bt->name () << "_var" << be_uidt_nl
-          << ">" << be_uidt << be_uidt_nl
-          << ">;" << be_uidt << be_uidt;
-
-      break;
-    case be_sequence::MNG_VALUE:
-      *os << be_nl << be_nl
-          << "template class" << be_idt_nl
-          << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
-          << node->name () << "," << be_nl
-          << "TAO_Valuetype_Manager<" << be_idt << be_idt_nl
-          << bt->name () << "," << be_nl
-          << bt->name () << "_var," << be_nl
-          << bt->fwd_helper_name () << "_life" << be_uidt_nl
-          << ">" << be_uidt << be_uidt_nl
-          << ">;" << be_uidt << be_uidt;
-
-      *os << be_nl << be_nl
-          << "template class" << be_idt_nl
-          << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
-          << node->name () << "," << be_nl
-          << node->name () << "_var," << be_nl
-          << "TAO_Valuetype_Manager<" << be_idt << be_idt_nl
-          << bt->name () << "," << be_nl
-          << bt->name () << "_var," << be_nl
-          << bt->fwd_helper_name () << "_life" << be_uidt_nl
-          << ">" << be_uidt << be_uidt_nl
-          << ">;" << be_uidt << be_uidt;
-
-      break;
-    case be_sequence::MNG_STRING:
-      *os << be_nl << be_nl
-          << "template class" << be_idt_nl
-          << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
-          << node->name () << "," << be_nl
-          <<"TAO_SeqElem_String_Manager" << be_uidt_nl
-          << ">;" << be_uidt << be_uidt;
-
-      *os << be_nl << be_nl
-          << "template class" << be_idt_nl
-          << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
-          << node->name () << "," << be_nl
-          << node->name () << "_var," << be_nl
-          << "TAO_SeqElem_String_Manager" << be_uidt_nl
-          << ">;" << be_uidt << be_uidt;
-
-      break;
-    case be_sequence::MNG_WSTRING:
-      *os << be_nl << be_nl
-          << "template class" << be_idt_nl
-          << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
-          << node->name () << "," << be_nl
-          <<"TAO_SeqElem_WString_Manager" << be_uidt_nl
-          << ">;" << be_uidt << be_uidt;
-
-      *os << be_nl << be_nl
-          << "template class" << be_idt_nl
-          << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
-          << node->name () << "," << be_nl
-          << node->name () << "_var," << be_nl
-          << "TAO_SeqElem_WString_Manager" << be_uidt_nl
-          << ">;" << be_uidt << be_uidt;
-
-      break;
-    default: // not a managed type
-      {
-        AST_Type::SIZE_TYPE st = bt->size_type ();
-
+      case be_sequence::MNG_OBJREF:
         *os << be_nl << be_nl
             << "template class" << be_idt_nl
-            << (st == AST_Type::FIXED ? "TAO_FixedSeq_Var_T<" 
-                                      : "TAO_VarSeq_Var_T<")
-            << be_idt << be_idt_nl
-            << node->local_name () << "," << be_nl
-            << bt->name () << be_uidt_nl
+            << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
+            << node->name () << "," << be_nl
+            << "TAO_Object_Manager<" << be_idt << be_idt_nl
+            << bt->name () << "," << be_nl
+            << bt->name () << "_var," << be_nl
+            << bt->fwd_helper_name () << "_life" << be_uidt_nl
+            << ">" << be_uidt << be_uidt_nl
             << ">;" << be_uidt << be_uidt;
 
         *os << be_nl << be_nl
             << "template class" << be_idt_nl
             << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
-            << node->local_name () << "," << be_nl
-            << node->local_name () << "_var," << be_nl
-            << bt->name () << be_uidt_nl
+            << node->name () << "," << be_nl
+            << node->name () << "_var," << be_nl
+            << "TAO_Object_Manager<" << be_idt << be_idt_nl
+            << bt->name () << "," << be_nl
+            << bt->name () << "_var," << be_nl
+            << bt->fwd_helper_name () << "_life" << be_uidt_nl
+            << ">" << be_uidt << be_uidt_nl
             << ">;" << be_uidt << be_uidt;
-      }
 
-      break;
+        break;
+      case be_sequence::MNG_ABSTRACT:
+        *os << be_nl << be_nl
+            << "template class" << be_idt_nl
+            << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
+            << node->name () << "," << be_nl
+            << "TAO_Abstract_Manager<" << be_idt << be_idt_nl
+            << bt->name () << "," << be_nl
+            << bt->name () << "_var," << be_nl
+            << bt->fwd_helper_name () << "_life" << be_uidt_nl
+            << ">" << be_uidt << be_uidt_nl
+            << ">;" << be_uidt << be_uidt;
+
+        *os << be_nl << be_nl
+            << "template class" << be_idt_nl
+            << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
+            << node->name () << "," << be_nl
+            << node->name () << "_var," << be_nl
+            << "TAO_Abstract_Manager<" << be_idt << be_idt_nl
+            << bt->name () << "," << be_nl
+            << bt->name () << "_var," << be_nl
+            << bt->fwd_helper_name () << "_life" << be_uidt_nl
+            << ">" << be_uidt << be_uidt_nl
+            << ">;" << be_uidt << be_uidt;
+
+        break;
+      case be_sequence::MNG_PSEUDO:
+        *os << be_nl << be_nl
+            << "template class" << be_idt_nl
+            << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
+            << node->name () << "," << be_nl
+            << "TAO_Pseudo_Object_Manager<" << be_idt << be_idt_nl
+            << bt->name () << "," << be_nl
+            << bt->name () << "_var" << be_uidt_nl
+            << ">" << be_uidt << be_uidt_nl
+            << ">;" << be_uidt << be_uidt;
+
+        *os << be_nl << be_nl
+            << "template class" << be_idt_nl
+            << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
+            << node->name () << "," << be_nl
+            << node->name () << "_var," << be_nl
+            << "TAO_Pseudo_Object_Manager<" << be_idt << be_idt_nl
+            << bt->name () << "," << be_nl
+            << bt->name () << "_var" << be_uidt_nl
+            << ">" << be_uidt << be_uidt_nl
+            << ">;" << be_uidt << be_uidt;
+
+        break;
+      case be_sequence::MNG_VALUE:
+        *os << be_nl << be_nl
+            << "template class" << be_idt_nl
+            << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
+            << node->name () << "," << be_nl
+            << "TAO_Valuetype_Manager<" << be_idt << be_idt_nl
+            << bt->name () << "," << be_nl
+            << bt->name () << "_var," << be_nl
+            << bt->fwd_helper_name () << "_life" << be_uidt_nl
+            << ">" << be_uidt << be_uidt_nl
+            << ">;" << be_uidt << be_uidt;
+
+        *os << be_nl << be_nl
+            << "template class" << be_idt_nl
+            << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
+            << node->name () << "," << be_nl
+            << node->name () << "_var," << be_nl
+            << "TAO_Valuetype_Manager<" << be_idt << be_idt_nl
+            << bt->name () << "," << be_nl
+            << bt->name () << "_var," << be_nl
+            << bt->fwd_helper_name () << "_life" << be_uidt_nl
+            << ">" << be_uidt << be_uidt_nl
+            << ">;" << be_uidt << be_uidt;
+
+        break;
+      case be_sequence::MNG_STRING:
+        *os << be_nl << be_nl
+            << "template class" << be_idt_nl
+            << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
+            << node->name () << "," << be_nl
+            <<"TAO_SeqElem_String_Manager" << be_uidt_nl
+            << ">;" << be_uidt << be_uidt;
+
+        *os << be_nl << be_nl
+            << "template class" << be_idt_nl
+            << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
+            << node->name () << "," << be_nl
+            << node->name () << "_var," << be_nl
+            << "TAO_SeqElem_String_Manager" << be_uidt_nl
+            << ">;" << be_uidt << be_uidt;
+
+        break;
+      case be_sequence::MNG_WSTRING:
+        *os << be_nl << be_nl
+            << "template class" << be_idt_nl
+            << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
+            << node->name () << "," << be_nl
+            <<"TAO_SeqElem_WString_Manager" << be_uidt_nl
+            << ">;" << be_uidt << be_uidt;
+
+        *os << be_nl << be_nl
+            << "template class" << be_idt_nl
+            << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
+            << node->name () << "," << be_nl
+            << node->name () << "_var," << be_nl
+            << "TAO_SeqElem_WString_Manager" << be_uidt_nl
+            << ">;" << be_uidt << be_uidt;
+
+        break;
+      default: // not a managed type
+        {
+          AST_Type::SIZE_TYPE st = bt->size_type ();
+
+          *os << be_nl << be_nl
+              << "template class" << be_idt_nl
+              << (st == AST_Type::FIXED ? "TAO_FixedSeq_Var_T<" 
+                                        : "TAO_VarSeq_Var_T<")
+              << be_idt << be_idt_nl
+              << node->local_name () << "," << be_nl
+              << bt->name () << be_uidt_nl
+              << ">;" << be_uidt << be_uidt;
+
+          *os << be_nl << be_nl
+              << "template class" << be_idt_nl
+              << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
+              << node->local_name () << "," << be_nl
+              << node->local_name () << "_var," << be_nl
+              << bt->name () << be_uidt_nl
+              << ">;" << be_uidt << be_uidt;
+        }
+
+        break;
     }
 
   os->gen_elif_AHETI ();
      
   switch (node->managed_type ())
     {
-    case be_sequence::MNG_OBJREF:
-      *os << be_nl << be_nl
-          << "# pragma instantiate \\" << be_idt << be_idt_nl
-          << "TAO_MngSeq_Var_T< \\" << be_idt << be_idt_nl
-          << node->name () << ", \\" << be_nl
-          << "TAO_Object_Manager< \\" << be_idt << be_idt_nl
-          << bt->name () << ", \\" << be_nl
-          << bt->name () << "_var, \\" << be_nl
-          << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
-          << "> \\" << be_uidt << be_uidt_nl
-          << ">" << be_uidt << be_uidt << be_uidt;
-
-      *os << be_nl << be_nl
-          << "# pragma instantiate \\" << be_idt << be_idt_nl
-          << "TAO_Seq_Out_T< \\" << be_idt << be_idt_nl
-          << node->name () << ", \\" << be_nl
-          << node->name () << "_var, \\" << be_nl
-          << "TAO_Object_Manager< \\" << be_idt << be_idt_nl
-          << bt->name () << ", \\" << be_nl
-          << bt->name () << "_var, \\" << be_nl
-          << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
-          << "> \\" << be_uidt << be_uidt_nl
-          << ">" << be_uidt << be_uidt;
-
-      break;
-    case be_sequence::MNG_ABSTRACT:
-      *os << be_nl << be_nl
-          << "# pragma instantiate \\" << be_idt_nl
-          << "TAO_MngSeq_Var_T< \\" << be_idt << be_idt_nl
-          << node->name () << ", \\" << be_nl
-          << "TAO_Abstract_Manager< \\" << be_idt << be_idt_nl
-          << bt->name () << ", \\" << be_nl
-          << bt->name () << "_var, \\" << be_nl
-          << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
-          << "> \\" << be_uidt << be_uidt_nl
-          << ">" << be_uidt << be_uidt;
-
-      *os << be_nl << be_nl
-          << "# pragma instantiate \\" << be_idt_nl
-          << "TAO_Seq_Out_T< \\" << be_idt << be_idt_nl
-          << node->name () << ", \\" << be_nl
-          << node->name () << "_var, \\" << be_nl
-          << "TAO_Abstract_Manager< \\" << be_idt << be_idt_nl
-          << bt->name () << ", \\" << be_nl
-          << bt->name () << "_var, \\" << be_nl
-          << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
-          << "> \\" << be_uidt << be_uidt_nl
-          << ">" << be_uidt << be_uidt;
-
-      break;
-    case be_sequence::MNG_PSEUDO:
-      *os << be_nl << be_nl
-          << "# pragma instantiate \\" << be_idt_nl
-          << "TAO_MngSeq_Var_T< \\" << be_idt << be_idt_nl
-          << node->name () << ", \\" << be_nl
-          << "TAO_Pseudo_Object_Manager< \\" << be_idt << be_idt_nl
-          << bt->name () << ", \\" << be_nl
-          << bt->name () << "_var \\" << be_uidt_nl
-          << "> \\" << be_uidt << be_uidt_nl
-          << ">" << be_uidt << be_uidt;
-
-      *os << be_nl << be_nl
-          << "# pragma instantiate \\" << be_idt_nl
-          << "TAO_Seq_Out_T< \\" << be_idt << be_idt_nl
-          << node->name () << ", \\" << be_nl
-          << node->name () << "_var, \\" << be_nl
-          << "TAO_Pseudo_Object_Manager< \\" << be_idt << be_idt_nl
-          << bt->name () << ", \\" << be_nl
-          << bt->name () << "_var \\" << be_uidt_nl
-          << "> \\" << be_uidt << be_uidt_nl
-          << ">" << be_uidt << be_uidt;
-
-      break;
-    case be_sequence::MNG_VALUE:
-      *os << be_nl << be_nl
-          << "# pragma instantiate \\" << be_idt_nl
-          << "TAO_MngSeq_Var_T< \\" << be_idt << be_idt_nl
-          << node->name () << ", \\" << be_nl
-          << "TAO_Valuetype_Manager< \\" << be_idt << be_idt_nl
-          << bt->name () << ", \\" << be_nl
-          << bt->name () << "_var, \\" << be_nl
-          << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
-          << "> \\" << be_uidt << be_uidt_nl
-          << ">" << be_uidt << be_uidt;
-
-      *os << be_nl << be_nl
-          << "# pragma instantiate \\" << be_idt_nl
-          << "TAO_Seq_Out_T< \\" << be_idt << be_idt_nl
-          << node->name () << ", \\" << be_nl
-          << node->name () << "_var, \\" << be_nl
-          << "TAO_Valuetype_Manager< \\" << be_idt << be_idt_nl
-          << bt->name () << ", \\" << be_nl
-          << bt->name () << "_var, \\" << be_nl
-          << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
-          << "> \\" << be_uidt << be_uidt_nl
-          << ">" << be_uidt << be_uidt;
-
-      break;
-    case be_sequence::MNG_STRING:
-      *os << be_nl << be_nl
-          << "# pragma instantiate \\" << be_idt_nl
-          << "TAO_MngSeq_Var_T< \\" << be_idt << be_idt_nl
-          << node->name () << ", \\" << be_nl
-          <<"TAO_SeqElem_String_Manager \\" << be_uidt_nl
-          << ">" << be_uidt << be_uidt;
-
-      *os << be_nl << be_nl
-          << "# pragma instantiate \\" << be_idt_nl
-          << "TAO_Seq_Out_T< \\" << be_idt << be_idt_nl
-          << node->name () << ", \\" << be_nl
-          << node->name () << "_var, \\" << be_nl
-          << "TAO_SeqElem_String_Manager \\" << be_uidt_nl
-          << ">" << be_uidt << be_uidt;
-
-      break;
-    case be_sequence::MNG_WSTRING:
-      *os << be_nl << be_nl
-          << "# pragma instantiate \\" << be_idt_nl
-          << "TAO_MngSeq_Var_T< \\" << be_idt << be_idt_nl
-          << node->name () << ", \\" << be_nl
-          <<"TAO_SeqElem_WString_Manager \\" << be_uidt_nl
-          << ">" << be_uidt << be_uidt;
-
-      *os << be_nl << be_nl
-          << "# pragma instantiate \\" << be_idt_nl
-          << "TAO_Seq_Out_T< \\" << be_idt << be_idt_nl
-          << node->name () << ", \\" << be_nl
-          << node->name () << "_var, \\" << be_nl
-          << "TAO_SeqElem_WString_Manager \\" << be_uidt_nl
-          << ">" << be_uidt << be_uidt;
-
-      break;
-    default: // not a managed type
-      {
-        AST_Type::SIZE_TYPE st = bt->size_type ();
+      case be_sequence::MNG_OBJREF:
+        *os << be_nl << be_nl
+            << "# pragma instantiate \\" << be_idt << be_idt_nl
+            << "TAO_MngSeq_Var_T< \\" << be_idt << be_idt_nl
+            << node->name () << ", \\" << be_nl
+            << "TAO_Object_Manager< \\" << be_idt << be_idt_nl
+            << bt->name () << ", \\" << be_nl
+            << bt->name () << "_var, \\" << be_nl
+            << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
+            << "> \\" << be_uidt << be_uidt_nl
+            << ">" << be_uidt << be_uidt << be_uidt;
 
         *os << be_nl << be_nl
+            << "# pragma instantiate \\" << be_idt << be_idt_nl
+            << "TAO_Seq_Out_T< \\" << be_idt << be_idt_nl
+            << node->name () << ", \\" << be_nl
+            << node->name () << "_var, \\" << be_nl
+            << "TAO_Object_Manager< \\" << be_idt << be_idt_nl
+            << bt->name () << ", \\" << be_nl
+            << bt->name () << "_var, \\" << be_nl
+            << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
+            << "> \\" << be_uidt << be_uidt_nl
+            << ">" << be_uidt << be_uidt;
+
+        break;
+      case be_sequence::MNG_ABSTRACT:
+        *os << be_nl << be_nl
             << "# pragma instantiate \\" << be_idt_nl
-            << (st == AST_Type::FIXED ? "TAO_FixedSeq_Var_T< \\" 
-                                      : "TAO_VarSeq_Var_T< \\")
-            << be_idt << be_idt_nl
-            << node->local_name () << ", \\" << be_nl
-            << bt->name () << " \\" << be_uidt_nl
+            << "TAO_MngSeq_Var_T< \\" << be_idt << be_idt_nl
+            << node->name () << ", \\" << be_nl
+            << "TAO_Abstract_Manager< \\" << be_idt << be_idt_nl
+            << bt->name () << ", \\" << be_nl
+            << bt->name () << "_var, \\" << be_nl
+            << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
+            << "> \\" << be_uidt << be_uidt_nl
             << ">" << be_uidt << be_uidt;
 
         *os << be_nl << be_nl
             << "# pragma instantiate \\" << be_idt_nl
             << "TAO_Seq_Out_T< \\" << be_idt << be_idt_nl
-            << node->local_name () << ", \\" << be_nl
-            << node->local_name () << "_var, \\" << be_nl
-            << bt->name () << " \\" << be_uidt_nl
+            << node->name () << ", \\" << be_nl
+            << node->name () << "_var, \\" << be_nl
+            << "TAO_Abstract_Manager< \\" << be_idt << be_idt_nl
+            << bt->name () << ", \\" << be_nl
+            << bt->name () << "_var, \\" << be_nl
+            << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
+            << "> \\" << be_uidt << be_uidt_nl
             << ">" << be_uidt << be_uidt;
-      }
 
-      break;
+        break;
+      case be_sequence::MNG_PSEUDO:
+        *os << be_nl << be_nl
+            << "# pragma instantiate \\" << be_idt_nl
+            << "TAO_MngSeq_Var_T< \\" << be_idt << be_idt_nl
+            << node->name () << ", \\" << be_nl
+            << "TAO_Pseudo_Object_Manager< \\" << be_idt << be_idt_nl
+            << bt->name () << ", \\" << be_nl
+            << bt->name () << "_var \\" << be_uidt_nl
+            << "> \\" << be_uidt << be_uidt_nl
+            << ">" << be_uidt << be_uidt;
+
+        *os << be_nl << be_nl
+            << "# pragma instantiate \\" << be_idt_nl
+            << "TAO_Seq_Out_T< \\" << be_idt << be_idt_nl
+            << node->name () << ", \\" << be_nl
+            << node->name () << "_var, \\" << be_nl
+            << "TAO_Pseudo_Object_Manager< \\" << be_idt << be_idt_nl
+            << bt->name () << ", \\" << be_nl
+            << bt->name () << "_var \\" << be_uidt_nl
+            << "> \\" << be_uidt << be_uidt_nl
+            << ">" << be_uidt << be_uidt;
+
+        break;
+      case be_sequence::MNG_VALUE:
+        *os << be_nl << be_nl
+            << "# pragma instantiate \\" << be_idt_nl
+            << "TAO_MngSeq_Var_T< \\" << be_idt << be_idt_nl
+            << node->name () << ", \\" << be_nl
+            << "TAO_Valuetype_Manager< \\" << be_idt << be_idt_nl
+            << bt->name () << ", \\" << be_nl
+            << bt->name () << "_var, \\" << be_nl
+            << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
+            << "> \\" << be_uidt << be_uidt_nl
+            << ">" << be_uidt << be_uidt;
+
+        *os << be_nl << be_nl
+            << "# pragma instantiate \\" << be_idt_nl
+            << "TAO_Seq_Out_T< \\" << be_idt << be_idt_nl
+            << node->name () << ", \\" << be_nl
+            << node->name () << "_var, \\" << be_nl
+            << "TAO_Valuetype_Manager< \\" << be_idt << be_idt_nl
+            << bt->name () << ", \\" << be_nl
+            << bt->name () << "_var, \\" << be_nl
+            << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
+            << "> \\" << be_uidt << be_uidt_nl
+            << ">" << be_uidt << be_uidt;
+
+        break;
+      case be_sequence::MNG_STRING:
+        *os << be_nl << be_nl
+            << "# pragma instantiate \\" << be_idt_nl
+            << "TAO_MngSeq_Var_T< \\" << be_idt << be_idt_nl
+            << node->name () << ", \\" << be_nl
+            <<"TAO_SeqElem_String_Manager \\" << be_uidt_nl
+            << ">" << be_uidt << be_uidt;
+
+        *os << be_nl << be_nl
+            << "# pragma instantiate \\" << be_idt_nl
+            << "TAO_Seq_Out_T< \\" << be_idt << be_idt_nl
+            << node->name () << ", \\" << be_nl
+            << node->name () << "_var, \\" << be_nl
+            << "TAO_SeqElem_String_Manager \\" << be_uidt_nl
+            << ">" << be_uidt << be_uidt;
+
+        break;
+      case be_sequence::MNG_WSTRING:
+        *os << be_nl << be_nl
+            << "# pragma instantiate \\" << be_idt_nl
+            << "TAO_MngSeq_Var_T< \\" << be_idt << be_idt_nl
+            << node->name () << ", \\" << be_nl
+            <<"TAO_SeqElem_WString_Manager \\" << be_uidt_nl
+            << ">" << be_uidt << be_uidt;
+
+        *os << be_nl << be_nl
+            << "# pragma instantiate \\" << be_idt_nl
+            << "TAO_Seq_Out_T< \\" << be_idt << be_idt_nl
+            << node->name () << ", \\" << be_nl
+            << node->name () << "_var, \\" << be_nl
+            << "TAO_SeqElem_WString_Manager \\" << be_uidt_nl
+            << ">" << be_uidt << be_uidt;
+
+        break;
+      default: // not a managed type
+        {
+          AST_Type::SIZE_TYPE st = bt->size_type ();
+
+          *os << be_nl << be_nl
+              << "# pragma instantiate \\" << be_idt_nl
+              << (st == AST_Type::FIXED ? "TAO_FixedSeq_Var_T< \\" 
+                                        : "TAO_VarSeq_Var_T< \\")
+              << be_idt << be_idt_nl
+              << node->local_name () << ", \\" << be_nl
+              << bt->name () << " \\" << be_uidt_nl
+              << ">" << be_uidt << be_uidt;
+
+          *os << be_nl << be_nl
+              << "# pragma instantiate \\" << be_idt_nl
+              << "TAO_Seq_Out_T< \\" << be_idt << be_idt_nl
+              << node->local_name () << ", \\" << be_nl
+              << node->local_name () << "_var, \\" << be_nl
+              << bt->name () << " \\" << be_uidt_nl
+              << ">" << be_uidt << be_uidt;
+        }
+
+        break;
     }
 
   os->gen_endif_AHETI ();
