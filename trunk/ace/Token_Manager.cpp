@@ -262,10 +262,12 @@ ACE_Token_Manager::dump (void) const
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Map_Manager <ACE_Token_Name, ACE_Tokens *, ACE_Null_Mutex>;
+template class ACE_Map_Iterator_Base<ACE_Token_Name, ACE_Tokens *, ACE_Null_Mutex>;
 template class ACE_Map_Iterator<ACE_Token_Name, ACE_Tokens *, ACE_Null_Mutex>;
 template class ACE_Map_Entry <ACE_Token_Name, ACE_Tokens *>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Map_Manager <ACE_Token_Name, ACE_Tokens *, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Iterator_Base<ACE_Token_Name, ACE_Tokens *, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Iterator<ACE_Token_Name, ACE_Tokens *, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Entry <ACE_Token_Name, ACE_Tokens *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
