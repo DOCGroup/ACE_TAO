@@ -27,5 +27,5 @@ if $__TOS_AIX__ {
                 opt(level, 3),
                 gen(enumsize, small)
         platformLibSearchPath = "../ace"
-        group platformLinkLibs = "libACEshr.a"
+        group platformLinkLibs = "libACE.a"
 }
