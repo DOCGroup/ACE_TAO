@@ -50,8 +50,10 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       return 0;
     }
 
+  AST_Decl::NodeType nt = bt->node_type ();
+
   // If our base type is an anonymous sequence, generate code for it here.
-  if (bt->node_type () == AST_Decl::NT_sequence)
+  if (nt == AST_Decl::NT_sequence)
     {
       if (bt->accept (this) != 0)
         {
@@ -210,13 +212,23 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       this->gen_varout_tmplinst (node,
                                  bt);
 
-      // Dont generate if the type is composed of Octets
-      if (ACE_OS::strcmp (bt->nested_type_name (idl_global->root ()),
-                          "CORBA::Octet") !=0)
+      if (nt == AST_Decl::NT_typedef)
         {
-          if (this->gen_base_class_tmplinst (node,
-                                             bt) == -1)
-            return -1;
+          be_typedef *td = be_typedef::narrow_from_decl (bt);
+          nt = td->base_node_type ();
+        }
+
+      // Explicit instantiations for unbounded sequences with elements of
+      // basic IDL types are in TAO. Sequences of (w)strings in TAO are
+      // specializations and so are not template classes.
+      if (nt != AST_Decl::NT_pre_defined
+          && nt != AST_Decl::NT_string
+          && nt != AST_Decl::NT_wstring)
+        {
+          if (this->gen_base_class_tmplinst (node, bt) == -1)
+            {
+              return -1;
+            }
         }
     }
 
