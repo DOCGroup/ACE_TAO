@@ -288,6 +288,18 @@ ACE_Message_Block::total_capacity (void) const
   return size;
 }
 
+void
+ACE_Message_Block::set_ID (ACE_Object_Counter::object_id id)
+{
+  this->oid_ = id;
+}
+
+const ACE_Object_Counter::object_id&
+ACE_Message_Block::get_ID (void)
+{
+  return this->oid_;
+}
+
 ACE_Data_Block::ACE_Data_Block (void)
   : type_ (ACE_Message_Block::MB_DATA),
     cur_size_ (0),
@@ -373,11 +385,9 @@ ACE_Message_Block::ACE_Message_Block (const char *data,
                 ACE_LIB_TEXT ("ACE_Message_Block")));
 }
 
-ACE_Message_Block::ACE_Message_Block (ACE_Allocator *message_block_allocator,
-                                      const ACE_Object_Counter::object_id* oid)
+ACE_Message_Block::ACE_Message_Block (ACE_Allocator *message_block_allocator)
   : flags_ (0),
-    data_block_ (0),
-    oid_ (oid)
+    data_block_ (0)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
@@ -520,11 +530,9 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
 
 ACE_Message_Block::ACE_Message_Block (ACE_Data_Block *data_block,
                                       ACE_Message_Block::Message_Flags flags,
-                                      ACE_Allocator *message_block_allocator,
-                                      const ACE_Object_Counter::object_id* oid)
+                                      ACE_Allocator *message_block_allocator)
   : flags_ (flags),
-    data_block_ (0),
-    oid_ (oid)
+    data_block_ (0)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 

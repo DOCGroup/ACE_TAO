@@ -14,7 +14,7 @@ class ACE_Object_Counter
 
     struct object_id {
       uint32_t id;
-      uint32_t tid;
+      uint64_t tid;
       uint32_t queue_id;
     };
 
@@ -40,10 +40,6 @@ class ACE_Queue_Counter
 
 typedef ACE_TSS_Singleton<ACE_Object_Counter, ACE_Null_Mutex> ObjectCounterSingleton;
 #define ACE_OBJECT_COUNTER ObjectCounterSingleton::instance()
-
-#if defined (__ACE_INLINE__)
-#include "Counter.i"
-#endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
 #endif /* OBJECT_COUNTER_H */
