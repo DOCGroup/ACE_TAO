@@ -363,13 +363,13 @@
   ACE_Guard<MUTEX> OBJ (LOCK); \
     if (OBJ.locked () == 0) ACE_THROW_INT (EXCEPTION);
 
-# define ACE_READ_GUARD_THROW_EX(MUTEX,OBJ,LOCK) \
+# define ACE_READ_GUARD_THROW_EX(MUTEX,OBJ,LOCK,EXCEPTION) \
   ACE_Read_Guard<MUTEX> OBJ (LOCK); \
-    if (OBJ.locked () == 0) return;
+    if (OBJ.locked () == 0) ACE_THROW_INT (EXCEPTION);
 
-# define ACE_WRITE_GUARD_THROW_EX(MUTEX,OBJ,LOCK) \
+# define ACE_WRITE_GUARD_THROW_EX(MUTEX,OBJ,LOCK,EXCEPTION) \
   ACE_Write_Guard<MUTEX> OBJ (LOCK); \
-    if (OBJ.locked () == 0) return;
+    if (OBJ.locked () == 0) ACE_THROW_INT (EXCEPTION);
 
 // The following ACE_GUARD_THROW* macros are to be depricated soon.
 // -------------------- Start Depricated --------------------

@@ -1,3 +1,9 @@
+Mon May 17 15:08:45 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/CORBA_macros.h:
+	  Fixed implementation of the ACE_READ_GUARD_THROW_EX and
+	  ACE_WRITE_GUARD_THROW_EX macros.
+
 Mon May 17 15:12:54 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * test/Thread_Manager_Test.cpp: use a hash map, instead of
