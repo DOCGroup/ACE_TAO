@@ -228,6 +228,10 @@ SOURCE=.\PortableServerC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RT_Acceptor_Filters.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\RTPortableServerC.cpp
 # End Source File
 # Begin Source File
@@ -336,6 +340,10 @@ SOURCE=.\PortableServerC.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\RT_Acceptor_Filters.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\RTPortableServerC.h
 # End Source File
 # Begin Source File
@@ -405,6 +413,10 @@ SOURCE=.\POAManager.i
 # Begin Source File
 
 SOURCE=.\PortableServerC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_Acceptor_Filters.i
 # End Source File
 # Begin Source File
 
