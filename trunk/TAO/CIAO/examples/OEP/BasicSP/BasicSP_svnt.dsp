@@ -45,7 +45,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /machine:IX86
-# ADD LINK32 advapi32.lib user32.lib BasicSP_stub.lib CIAO_Server.lib TAO_PortableServer.lib TAO_IORInterceptor.lib TAO_ObjRefTemplate.lib TAO_Security.lib CIAO_Container.lib TAO.lib TAO_IFR_Client.lib TAO_Valuetype.lib CIAO_Client.lib ACE.lib /nologo /subsystem:windows /dll /pdb:"..\..\..\..\..\bin\BasicSP_svnt.pdb" /machine:I386 /out:"..\..\..\..\..\bin\BasicSP_svnt.dll" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\IORInterceptor" /libpath:"..\..\..\..\tao\ObjRefTemplate" /libpath:"..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\tao\IFR_Client" /libpath:"..\..\..\..\tao\Valuetype" /libpath:"..\..\..\ciao" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /version:1.3.1
+# ADD LINK32 BasicSP_stub.lib CIAO_Server.lib TAO_PortableServer.lib TAO_IORInterceptor.lib TAO_ObjRefTemplate.lib TAO_Security.lib CIAO_Container.lib TAO.lib TAO_IFR_Client.lib TAO_Valuetype.lib CIAO_Client.lib ACE.lib /nologo /subsystem:windows /dll /pdb:"..\..\..\..\..\bin\BasicSP_svnt.pdb" /machine:I386 /out:"..\..\..\..\..\bin\BasicSP_svnt.dll" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\IORInterceptor" /libpath:"..\..\..\..\tao\ObjRefTemplate" /libpath:"..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\tao\IFR_Client" /libpath:"..\..\..\..\tao\Valuetype" /libpath:"..\..\..\ciao" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /version:1.3.1
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "BasicSP_svnt DLL - Win32 Debug"
@@ -64,7 +64,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /machine:IX86
-# ADD LINK32 advapi32.lib user32.lib BasicSP_stubd.lib CIAO_Serverd.lib TAO_PortableServerd.lib TAO_IORInterceptord.lib TAO_ObjRefTemplated.lib TAO_Securityd.lib CIAO_Containerd.lib TAOd.lib TAO_IFR_Clientd.lib TAO_Valuetyped.lib CIAO_Clientd.lib ACEd.lib /nologo /subsystem:windows /dll /incremental:no /pdb:"..\..\..\..\..\bin\BasicSP_svntd.pdb" /debug /machine:I386 /out:"..\..\..\..\..\bin\BasicSP_svntd.dll" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\IORInterceptor" /libpath:"..\..\..\..\tao\ObjRefTemplate" /libpath:"..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\tao\IFR_Client" /libpath:"..\..\..\..\tao\Valuetype" /libpath:"..\..\..\ciao" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /version:1.3.1
+# ADD LINK32 BasicSP_stubd.lib CIAO_Serverd.lib TAO_PortableServerd.lib TAO_IORInterceptord.lib TAO_ObjRefTemplated.lib TAO_Securityd.lib CIAO_Containerd.lib TAOd.lib TAO_IFR_Clientd.lib TAO_Valuetyped.lib CIAO_Clientd.lib ACEd.lib /nologo /subsystem:windows /dll /incremental:no /pdb:"..\..\..\..\..\bin\BasicSP_svntd.pdb" /debug /machine:I386 /out:"..\..\..\..\..\bin\BasicSP_svntd.dll" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\IORInterceptor" /libpath:"..\..\..\..\tao\ObjRefTemplate" /libpath:"..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\tao\IFR_Client" /libpath:"..\..\..\..\tao\Valuetype" /libpath:"..\..\..\ciao" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /version:1.3.1
 # SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
@@ -102,7 +102,48 @@ SOURCE=.\BasicSPS.i
 # PROP Default_Filter ""
 # Begin Source File
 
+SOURCE=.\NOTE.txt
+# End Source File
+# Begin Source File
+
 SOURCE=.\README
+# End Source File
+# End Group
+# Begin Group "IDL Files"
+
+# PROP Default_Filter "idl"
+# Begin Source File
+
+SOURCE=.\BasicSP.idl
+
+!IF  "$(CFG)" == "BasicSP_svnt DLL - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+USERDEP__BASIC="..\..\..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputPath)
+InputPath=.\BasicSP.idl
+InputName=BasicSP
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	..\..\..\..\..\bin\tao_idl -o . -Wb,stub_export_macro=BASICSP_STUB_Export -Wb,stub_export_include=BasicSP_stub_export.h -Wb,skel_export_macro=BASICSP_SVNT_Export -Wb,skel_export_include=BasicSP_svnt_export.h -Wb,pre_include="ace\pre.h" -Wb,post_include="ace\post.h" -I ..\..\.. -I ..\..\..\.. -I ..\..\..\ciao -I ..\..\..\..\orbsvcs\orbsvcs -Ge 1 -Sc $(InputPath)
+
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "BasicSP_svnt DLL - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+USERDEP__BASIC="..\..\..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputPath)
+InputPath=.\BasicSP.idl
+InputName=BasicSP
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	..\..\..\..\..\bin\tao_idl -o . -Wb,stub_export_macro=BASICSP_STUB_Export -Wb,stub_export_include=BasicSP_stub_export.h -Wb,skel_export_macro=BASICSP_SVNT_Export -Wb,skel_export_include=BasicSP_svnt_export.h -Wb,pre_include="ace\pre.h" -Wb,post_include="ace\post.h" -I ..\..\.. -I ..\..\..\.. -I ..\..\..\ciao -I ..\..\..\..\orbsvcs\orbsvcs -Ge 1 -Sc $(InputPath)
+
+# End Custom Build
+
+!ENDIF 
+
 # End Source File
 # End Group
 # End Target

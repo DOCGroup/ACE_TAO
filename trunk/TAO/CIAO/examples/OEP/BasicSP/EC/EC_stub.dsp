@@ -37,7 +37,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "Release\EC_stub"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD CPP /nologo /MD /W3 /GR /GX /Zi /O2 /I "..\..\..\.." /I "..\..\..\..\ciao" /I "..\..\..\..\.." /I "..\..\..\..\..\tao" /I "..\..\..\..\..\.." /D NDEBUG=1 /D WIN32=1 /D _WINDOWS=1 /D EC_STUB_BUILD_DLL=1 /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /Zi /O2 /I "..\..\..\..\..\orbsvcs\orbsvcs" /I "..\..\..\.." /I "..\..\..\..\ciao" /I "..\..\..\..\.." /I "..\..\..\..\..\tao" /I "..\..\..\..\..\.." /D NDEBUG=1 /D WIN32=1 /D _WINDOWS=1 /D EC_STUB_BUILD_DLL=1 /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409 /i "..\..\..\.." /i "..\..\..\..\ciao" /i "..\..\..\..\.." /i "..\..\..\..\..\tao" /i "..\..\..\..\..\.." /d NDEBUG=1
@@ -45,7 +45,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /machine:IX86
-# ADD LINK32 advapi32.lib user32.lib TAO.lib TAO_IFR_Client.lib TAO_Valuetype.lib CIAO_Client.lib ACE.lib /nologo /subsystem:windows /dll /pdb:"..\..\..\..\..\..\bin\EC_stub.pdb" /machine:I386 /out:"..\..\..\..\..\..\bin\EC_stub.dll" /libpath:"..\..\..\..\..\tao\IFR_Client" /libpath:"..\..\..\..\..\tao\Valuetype" /libpath:"..\..\..\..\ciao" /libpath:"..\..\..\..\..\tao" /libpath:"..\..\..\..\..\..\ace" /version:1.3.1
+# ADD LINK32 TAO.lib TAO_Security.lib TAO_IFR_Client.lib TAO_Valuetype.lib CIAO_Client.lib ACE.lib /nologo /subsystem:windows /dll /pdb:"..\..\..\..\..\..\bin\EC_stub.pdb" /machine:I386 /out:"..\..\..\..\..\..\bin\EC_stub.dll" /libpath:"..\..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\..\tao\IFR_Client" /libpath:"..\..\..\..\..\tao\Valuetype" /libpath:"..\..\..\..\ciao" /libpath:"..\..\..\..\..\tao" /libpath:"..\..\..\..\..\..\ace" /version:1.3.1
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "EC_stub DLL - Win32 Debug"
@@ -120,7 +120,7 @@ InputPath=.\EC.idl
 InputName=EC
 
 BuildCmds= \
-	..\..\..\..\..\..\bin\tao_idl -o . -Wb,stub_export_macro=EC_STUB_Export -Wb,stub_export_include=EC_stub_export.h -Wb,skel_export_macro=EC_SVNT_Export -Wb,skel_export_include=EC_svnt_export.h -Wb,pre_include="ace\pre.h" -Wb,post_include="ace\post.h" -I ..\..\..\.. -I ..\..\..\..\.. -I ..\..\..\..\..\orbsvcs\orbsvcs -Ge 1 -Sc $(InputPath)
+	..\..\..\..\..\..\bin\tao_idl -o . -Wb,stub_export_macro=EC_STUB_Export -Wb,stub_export_include=EC_stub_export.h -Wb,skel_export_macro=EC_SVNT_Export -Wb,skel_export_include=EC_svnt_export.h -Wb,pre_include="ace\pre.h" -Wb,post_include="ace\post.h" -I ..\..\..\.. -I ..\..\..\..\.. -I ..\..\..\..\ciao -I ..\..\..\..\..\orbsvcs\orbsvcs -Ge 1 -Sc $(InputPath)
 
 ".\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
