@@ -52,5 +52,6 @@ protected:
 # include "tao/Policy_Factory.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 
 #endif // defined (RTPOLICY_FACTORY_H_)
