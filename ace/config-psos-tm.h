@@ -200,5 +200,6 @@
 #if !defined (ACE_PSOS_TBD)
 #define ACE_PSOS_TBD
 #endif /* ACE_PSOS_TBD */
+#define ACE_LACKS_MKFIFO
 
 #endif /* ACE_CONFIG_H */
