@@ -114,6 +114,7 @@ TAO_IIOP_Connection_Handler::open (void*)
       return -1;
     }
 
+
   if (TAO_debug_level > 0)
     {
       ACE_TCHAR client[MAXHOSTNAMELEN + 16];
@@ -131,6 +132,8 @@ TAO_IIOP_Connection_Handler::open (void*)
   // Set the id in the transport now that we're active.
   // Use C-style cast b/c otherwise we get warnings on lots of compilers
   this->transport ()->id ((int) this->get_handle ());
+
+  this->state_changed (TAO_LF_Event::LFS_SUCCESS);
 
   return 0;
 }
@@ -221,9 +224,11 @@ TAO_IIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
       this->set_handle (ACE_INVALID_HANDLE);
     }
 
+  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
+
   // If the upcall count is zero start the cleanup.
   if (upcalls == 0)
-    this->handle_close_i ();
+    this->decr_refcount ();
 
   return 0;
 }
@@ -263,8 +268,6 @@ TAO_IIOP_Connection_Handler::handle_close_i (void)
   // suicide.
   this->destroy ();
 }
-
-
 
 int
 TAO_IIOP_Connection_Handler::resume_handler (void)
@@ -365,11 +368,11 @@ TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE)
 
   if (upcalls == 0)
     {
-      this->handle_close_i ();
+      this->decr_refcount ();
 
-      // As we have already performed the handle closing we dont want
-      // to return a  -1. Doing so would make the reactor call
-      // handle_close () which could be harmful.
+      // As we have already performed the handle closing (indirectly)
+      // we dont want to return a  -1. Doing so would make the reactor
+      // call handle_close () which could be harmful.
       retval = 0;
     }
   else if (upcalls < 0)

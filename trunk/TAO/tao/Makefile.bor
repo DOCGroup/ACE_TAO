@@ -33,6 +33,7 @@ OBJFILES = \
 	$(OBJDIR)\BiDir_Adapter.obj \
 	$(OBJDIR)\Bind_Dispatcher_Guard.obj \
 	$(OBJDIR)\Block_Flushing_Strategy.obj \
+	$(OBJDIR)\Blocked_Connect_Strategy.obj \
 	$(OBJDIR)\BoundsC.obj \
 	$(OBJDIR)\Buffering_Constraint_Policy.obj \
 	$(OBJDIR)\CDR.obj \
@@ -50,6 +51,7 @@ OBJFILES = \
 	$(OBJDIR)\CodecFactory.obj \
 	$(OBJDIR)\CodecFactory_ORBInitializer.obj \
 	$(OBJDIR)\Collocation_Resolver.obj \
+	$(OBJDIR)\Connect_Strategy.obj \
 	$(OBJDIR)\Default_Collocation_Resolver.obj \
 	$(OBJDIR)\Connection_Purging_Strategy.obj \
 	$(OBJDIR)\Connection_handler.obj \
@@ -109,6 +111,7 @@ OBJFILES = \
 	$(OBJDIR)\LF_Follower.obj \
 	$(OBJDIR)\LF_Follower_Auto_Adder.obj \
 	$(OBJDIR)\LF_Follower_Auto_Ptr.obj \
+	$(OBJDIR)\LF_Connect_Strategy.obj \
 	$(OBJDIR)\LF_Strategy.obj \
 	$(OBJDIR)\LF_Strategy_Complete.obj \
 	$(OBJDIR)\LRU_Connection_Purging_Strategy.obj \
@@ -155,6 +158,7 @@ OBJFILES = \
 	$(OBJDIR)\Protocol_Factory.obj \
 	$(OBJDIR)\Protocols_Hooks.obj \
 	$(OBJDIR)\Queued_Message.obj \
+	$(OBJDIR)\Reactive_Connect_Strategy.obj \
 	$(OBJDIR)\Reactive_Flushing_Strategy.obj \
 	$(OBJDIR)\Remote_Object_Proxy_Broker.obj \
 	$(OBJDIR)\Remote_Object_Proxy_Impl.obj \

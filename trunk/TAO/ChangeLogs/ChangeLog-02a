@@ -1,3 +1,210 @@
+Sat Apr 27 16:54:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Makefile.bor (OBJFILES): 
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp: Added the new files to the project files.  
+
+	This checkin is to add support for non-blocking connects. The code
+        is merged from the branch in to the main trunk.
+	
+	Fri Apr 26 21:56:33 2002  Balachandran Natarajan  <bala@guajira.cs.wustl.edu>
+
+	* tao/DynamicAny/DynamicAnyC.cpp:
+	* tao/DynamicInterface/Unknown_User_Exception.cpp:
+	* tao/IORManipulation/IORC.cpp:
+	* tao/IORManipulation/IORC.i:
+	* tao/IORTable/IORTableC.cpp:
+	* tao/IORTable/IORTableC.i:
+	* tao/Messaging/Messaging.h:
+	* tao/Messaging/Messaging_ORBInitializer.cpp:
+	* tao/Messaging/Messaging_PolicyFactory.cpp:
+	* tao/Messaging/Messaging_Policy_i.cpp:
+	* tao/Messaging/Messaging_Policy_i.h:
+	* tao/PortableServer/Active_Object_Map.cpp:
+	* tao/PortableServer/ImplRepoC.cpp:
+	* tao/PortableServer/ImplRepoC.i:
+	* tao/PortableServer/Object_Adapter.cpp:
+	* tao/PortableServer/POA.cpp:
+	* tao/PortableServer/PortableServerC.cpp:
+	* tao/PortableServer/PortableServerC.i:
+	* tao/RTCORBA/RTCORBAC.cpp: Yet another merge with the main trunk.
+
+
+	Fri Apr 26 18:24:02 2002  Balachandran Natarajan  <bala@guajira.cs.wustl.edu>
+
+	* tao/BoundsC.cpp:
+	* tao/BoundsC.i:
+	* tao/Cache_Entries.h:
+	* tao/ClientRequestInfo_i.cpp:  
+  	* tao/Environment.cpp:
+  	* tao/Exception.cpp:
+  	* tao/Exception.h:
+  	* tao/GIOP_Message_Base.cpp:
+  	* tao/GIOP_Message_Base.h:
+  	* tao/GIOP_Message_Generator_Parser_12.cpp:
+  	* tao/GIOP_Message_Lite.cpp:
+  	* tao/IIOP_Acceptor.cpp:
+  	* tao/IIOP_Connector.cpp:
+  	* tao/IIOP_Connector.h:
+  	* tao/IOPC.cpp:
+  	* tao/Invocation.cpp:
+  	* tao/Invocation.h:
+  	* tao/Invocation.i:
+  	* tao/Makefile:
+  	* tao/Messaging_SyncScopeC.cpp:
+  	* tao/Messaging_SyncScopeC.h:
+  	* tao/Messaging_SyncScopeC.i:
+  	* tao/NVList.cpp:
+  	* tao/ORB.cpp:
+  	* tao/ORBInitializer_Registry.cpp:
+  	* tao/ORBInitializer_Registry.h:
+  	* tao/ORB_Core.cpp:
+  	* tao/ORB_Core.h:
+  	* tao/ORB_Table.cpp:
+  	* tao/ORB_Table.h:
+  	* tao/ORB_Table.inl:
+  	* tao/PICurrent.cpp:
+  	* tao/PICurrent.inl:
+  	* tao/PolicyC.cpp:
+	* tao/PolicyC.i:
+	* tao/PollableC.cpp:
+	* tao/PortableInterceptorC.cpp:
+	* tao/PortableInterceptorC.i:
+	* tao/Stub.cpp:
+	* tao/Stub.h:
+	* tao/TAOC.cpp:
+	* tao/TAOC.h:
+	* tao/TAOC.i:
+	* tao/Transport.cpp:
+	* tao/Transport_Connector.cpp:
+	* tao/Transport_Connector.h:
+	* tao/Typecode.cpp:
+	* tao/WrongTransactionC.cpp:
+	* tao/WrongTransactionC.i:
+	* tao/default_resource.cpp:
+	* tao/orbconf.h:
+	* tao/Messaging/Makefile:
+	* tao/RTCORBA/Makefile:
+	* tao/Strategies/DIOP_Connector.cpp:
+	* tao/Strategies/DIOP_Connector.h:
+	* tao/Strategies/Makefile:
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.h:
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.h: Merged with the main trunk.
+
+	Fri Apr 26 13:18:53 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.h:
+	* tao/Strategies/UIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.h:
+	* tao/Strategies/DIOP_Connector.cpp:
+	* tao/Strategies/DIOP_Connector.h:
+	* tao/Strategies/DIOP_Connection_Handler.cpp: Made the changes
+	  made for IIOP to the above protocols.
+
+        Fri Apr 26 12:53:13 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Connector.cpp:
+	* tao/IIOP_Connection_Handler.cpp: Removed vague debug statement
+
+	Tue Apr 23 12:16:01 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Connection_Handler.cpp:
+	* tao/Connection_Handler.h:
+	* tao/Connection_Handler.inl: Removed the virtual method
+	  shutdown_object ().  Made the handle_close_i () implemented in
+	  all protocols a pure virtual method in this class. 
+
+	  The decr_refcount () calls handle_close_i () when the refcount
+	  reaches zero instead of shutdown_object ().
+	
+	* tao/IIOP_Connection_Handler.cpp: When the upcall count reaches
+	  zero, we call decr_refcount () in handle_close () and
+	  handle_input (). 
+
+	* tao/Connector_Impl.cpp: Incremented the refcount of the
+	  connection handler as soon as it is created, since we are aware
+	  that this handler could land up in the reactor if the right
+	  strategies are used. 
+
+	* tao/IIOP_Connector.cpp: Decermented the refcount of the handler
+	  after the wait () call. Unsuccesful connects will destroy the
+	  handler at this point. 
+
+	Mon Apr 22 17:53:04 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Connection_Handler.cpp:
+	* tao/Connection_Handler.h:
+	* tao/Connection_Handler.inl: Added reference count to check the
+	  life time of the handlers. Added a method shutdown_object () for
+	  memory management.
+	
+	* tao/IIOP_Connection_Handler.cpp:
+	* tao/IIOP_Connection_Handler.h: Implement concrete
+	  implementations for shutdown_object ().
+
+	Mon Apr 22 13:21:05 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Connect_Strategy.h:
+	* tao/Connect_Strategy.cpp: Base class for the new strategies for
+	  establishing non-blocking connections.
+
+	* tao/LF_Connect_Strategy.h:
+	* tao/LF_Connect_Strategy.cpp:
+	* tao/Blocked_Connect_Strategy.h:
+	* tao/Blocked_Connect_Strategy.cpp:
+	* tao/Reactive_Connect_Strategy.h:
+	* tao/Reactive_Connect_Strategy.cpp: Concrete connect strategies. 
+
+	* tao/Client_Strategy_Factory.cpp:
+	* tao/Client_Strategy_Factory.h: Added a new virtual method,
+	  create_connect_strategy ().
+
+	* tao/default_client.cpp:
+	* tao/default_client.h: Concrete implementations for the
+	  create_connect_strategy (). 
+	
+	* tao/Connection_Handler.cpp:
+	* tao/Connection_Handler.h: 
+	* tao/Connection_Handler.inl: This class inherits from LF_Event to
+	  indicate/signal the change in state from "wait for a connection"
+	  to "completed connection" in the case of non-blocking
+	  connections. Added two new methods to query the status of the
+	  connection. 
+	
+	* tao/IIOP_Connection_Handler.cpp: On completion of the connection
+	  successfully the status of the LF_Event is changed to
+	  LFS_SUCCESS and in case the connection initiation fails, we set
+	  the LFS_FAILURE. 
+
+	* tao/IIOP_Connector.cpp:
+	* tao/IIOP_Connector.h: Merged from the main trunk and used the
+	  strategies to establish connections. 
+	
+	* tao/LF_Event.cpp:
+	* tao/LF_Event.h: Added a new event LFS_CONNECTION_WAIT to the
+	  list of LF_Events. 
+
+	* tao/Transport_Connector.cpp:
+	* tao/Transport_Connector.h:
+	* tao/Transport_Connector.inl: Added new methods to create and
+	  store the connect strategy. 
+
+	* tao/Strategies/DIOP_Connector.cpp:
+	* tao/Strategies/DIOP_Connector.h:
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.h:
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.h: Merged from the main trunk
+	
+	* tao/*Makefile: Updated dependencies.
+
+
+
 Sat Apr 27 12:41:50 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* orbsvcs/orbsvcs/IFRService/IFR_Service_Loader.cpp~:

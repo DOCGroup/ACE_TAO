@@ -11,7 +11,7 @@
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Invocation.h"
 #include "tao/Thread_Lane_Resources.h"
-
+#include "tao/Connect_Strategy.h"
 ACE_RCSID(Strategies,
           UIOP_Connector,
           "$Id$")
@@ -68,6 +68,9 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
   this->orb_core (orb_core);
 
+  // Create our connect strategy
+  this->create_connect_strategy ();
+
   if (this->init_uiop_properties () != 0)
     return -1;
 
@@ -107,6 +110,7 @@ TAO_UIOP_Connector::close (void)
 
 
 int
+<<<<<<< UIOP_Connector.cpp
 TAO_UIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 {
   if (endpoint->tag () != TAO_TAG_UIOP_PROFILE)
@@ -143,6 +147,45 @@ TAO_UIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 }
 
 int
+=======
+TAO_UIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
+{
+  if (endpoint->tag () != TAO_TAG_UIOP_PROFILE)
+    return -1;
+
+  TAO_UIOP_Endpoint *uiop_endpoint =
+    ACE_dynamic_cast (TAO_UIOP_Endpoint *,
+                      endpoint );
+  if (uiop_endpoint == 0)
+    return -1;
+
+   const ACE_UNIX_Addr &remote_address =
+     uiop_endpoint->object_addr ();
+
+   // @@ Note, POSIX.1g renames AF_UNIX to AF_LOCAL.
+   // Verify that the remote ACE_UNIX_Addr was initialized properly.
+   // Failure can occur if hostname lookup failed when initializing the
+   // remote ACE_INET_Addr.
+   if (remote_address.get_type () != AF_UNIX)
+     {
+       if (TAO_debug_level > 0)
+         {
+           ACE_DEBUG ((LM_DEBUG,
+                       ACE_LIB_TEXT ("TAO (%P|%t) UIOP failure.\n")
+                       ACE_LIB_TEXT ("TAO (%P|%t) This is most likely ")
+                       ACE_LIB_TEXT ("due to a hostname lookup ")
+                       ACE_LIB_TEXT ("failure.\n")));
+         }
+
+       return -1;
+     }
+
+   return 0;
+}
+
+
+
+int
 TAO_UIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                                      TAO_Transport_Descriptor_Interface *desc)
 {
@@ -151,11 +194,8 @@ TAO_UIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                   ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
                   ACE_TEXT ("looking for UIOP connection.\n")));
 
-  ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
-
   TAO_UIOP_Endpoint *uiop_endpoint =
-    ACE_dynamic_cast (TAO_UIOP_Endpoint *,
-                      desc->endpoint ());
+    this->remote_endpoint (desc->endpoint ());
 
   if (uiop_endpoint == 0)
     return -1;
@@ -163,7 +203,6 @@ TAO_UIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
   const ACE_UNIX_Addr &remote_address =
     uiop_endpoint->object_addr ();
 
-  int result = 0;
   TAO_UIOP_Connection_Handler *svc_handler = 0;
 
   if (TAO_debug_level > 2)
@@ -171,29 +210,33 @@ TAO_UIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                 ACE_TEXT ("(%P|%t) UIOP_Connector::connect ")
                 ACE_TEXT ("making a new connection \n")));
 
-  // Purge connections (if necessary)
-  this->orb_core ()->lane_resources ().transport_cache ().purge ();
+  ACE_Time_Value *max_wait_time =
+    invocation->max_wait_time ();
 
-  if (max_wait_time != 0)
-    {
-      ACE_Synch_Options synch_options (ACE_Synch_Options::USE_TIMEOUT,
-                                       *max_wait_time);
+  ACE_Synch_Options synch_options;
 
-      // We obtain the transport in the <svc_handler> variable. As
-      // we know now that the connection is not available in Cache
-      // we can make a new connection
-      result = this->base_connector_.connect (svc_handler,
-                                              remote_address,
-                                              synch_options);
-    }
-  else
+  this->active_connect_strategy_->synch_options (max_wait_time,
+                                                 synch_options);
+
+
+  int result =
+    this->base_connector_.connect (svc_handler,
+                                   remote_address,
+                                   synch_options);
+
+  if (result == -1 && errno == EWOULDBLOCK)
     {
-      // We obtain the transport in the <svc_handler> variable. As
-      // we know now that the connection is not available in Cache
-      // we can make a new connection
-      result = this->base_connector_.connect (svc_handler,
-                                              remote_address);
+      result =
+        this->active_connect_strategy_->wait (svc_handler,
+                                              max_wait_time);
     }
+
+
+  // Reduce the refcount to the svc_handler that we have. The
+  // increment to the handler is done in make_svc_handler (). Now
+  // that we dont need the reference to it anymore we can decrement
+  // the refcount whether the connection is successful ot not.
+  svc_handler->decr_refcount ();
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -368,146 +411,19 @@ TAO_UIOP_Connector::init_uiop_properties (void)
   return 0;
 }
 
-
-#if 0
-/**
- * @todo Needs to be removed
- */
-int
-TAO_UIOP_Connector::preconnect (const char *preconnects)
+TAO_UIOP_Endpoint *
+TAO_UIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 {
-  // Check for the proper protocol prefix.
-  if (this->check_prefix (preconnects) != 0)
-    return 0; // Failure: zero successful preconnections
+  if (endpoint->tag () != TAO_TAG_UIOP_PROFILE)
+    return 0;
 
-  const char *protocol_removed =
-    ACE_OS::strstr (preconnects, "://") + 3;
-  // "+ 3" since strlen of "://" is 3.
+  TAO_UIOP_Endpoint *uiop_endpoint =
+    ACE_dynamic_cast (TAO_UIOP_Endpoint *,
+                      endpoint );
+  if (uiop_endpoint == 0)
+    return 0;
 
-  char *preconnections =
-    ACE_OS::strdup (protocol_removed);
-
-  int successes = 0;
-  if (preconnections)
-    {
-      ACE_UNIX_Addr dest;
-      ACE_Unbounded_Stack<ACE_UNIX_Addr> dests;
-
-      size_t num_connections;
-
-      char *nextptr = 0;
-      char *where = 0;
-
-      for (where = ACE::strsplit_r (preconnections, ",", nextptr);
-           where != 0;
-           where = ACE::strsplit_r (0, ",", nextptr))
-        {
-          char *rendezvous_point = where;
-
-          int version_offset = 0;
-          // Additional offset to remove version from preconnect, if
-          // it exists.
-
-          if (isdigit (rendezvous_point[0]) &&
-              rendezvous_point[1] == '.' &&
-              isdigit (rendezvous_point[2]) &&
-              rendezvous_point[3] == '@')
-            version_offset = 4;
-
-          // @@ For now, we just drop the version prefix.  However, at
-          // some point in the future the version may become useful.
-
-          dest.set (rendezvous_point + version_offset);
-
-          dests.push (dest);
-        }
-
-      // Create an array of addresses from the stack, as well as an
-      // array of eventual handlers.
-      num_connections = dests.size ();
-      ACE_UNIX_Addr *remote_addrs = 0;
-      TAO_UIOP_Connection_Handler **handlers = 0;
-      char *failures = 0;
-
-      ACE_NEW_RETURN (remote_addrs,
-                      ACE_UNIX_Addr[num_connections],
-                      -1);
-
-      ACE_Auto_Basic_Array_Ptr<ACE_UNIX_Addr> safe_remote_addrs (remote_addrs);
-
-      ACE_NEW_RETURN (handlers,
-                      TAO_UIOP_Connection_Handler *[num_connections],
-                      -1);
-
-      ACE_Auto_Basic_Array_Ptr<TAO_UIOP_Connection_Handler *>
-        safe_handlers (handlers);
-
-      ACE_NEW_RETURN (failures,
-                      char[num_connections],
-                      -1);
-
-      // No longer need to worry about exception safety at this point.
-      remote_addrs = safe_remote_addrs.release ();
-      handlers = safe_handlers.release ();
-
-      size_t slot = 0;
-
-      // Fill in the remote address array
-      while (dests.pop (remote_addrs[slot]) == 0)
-        handlers[slot++] = 0;
-
-      // Finally, try to connect.
-      this->base_connector_.connect_n (num_connections,
-                                       handlers,
-                                       remote_addrs,
-                                       failures);
-
-      // Loop over all the failures and set the handlers that
-      // succeeded to idle state.
-      for (slot = 0;
-           slot < num_connections;
-           ++slot)
-        {
-          if (!failures[slot])
-            {
-              TAO_UIOP_Endpoint endpoint (remote_addrs[slot]);
-
-              TAO_Base_Transport_Property prop (&endpoint);
-
-              // Add the handler to Cache
-              int retval =
-                this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&prop,
-                                                                                         handlers[slot]->transport ());
-              ++successes;
-
-              if (retval != 0 && TAO_debug_level > 4)
-                ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("TAO (%P|%t) Unable to add handles\n"),
-                            ACE_TEXT ("to cache \n")));
-
-              if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_DEBUG,
-                            "TAO (%P|%t) Preconnection <%s> succeeded.\n",
-                            remote_addrs[slot].get_path_name ()));
-            }
-          else if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) Preconnection <%s> failed.\n",
-                        remote_addrs[slot].get_path_name ()));
-        }
-
-      ACE_OS::free (preconnections);
-
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) UIOP preconnections: %d successes and "
-                    "%d failures.\n",
-                    successes,
-                    num_connections - successes));
-    }
-
-  return successes;
+  return uiop_endpoint;
 }
-#endif /*if 0*/
 
 #endif /* TAO_HAS_UIOP == 1 */

@@ -40,8 +40,8 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release"
 # PROP Target_Dir ""
-MTL=midl.exe
 LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /Zi /O2 /I "../../" /I "../" /D "_WINDOWS" /D "_CONSOLE" /D "NDEBUG" /D "WIN32" /D "TAO_AS_STATIC_LIBS" /D "ACE_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -66,8 +66,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug"
 # PROP Target_Dir ""
-MTL=midl.exe
 LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /GX /Zi /Od /I "../../" /I "../" /D "_WINDOWS" /D "_CONSOLE" /D "_DEBUG" /D "WIN32" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -143,6 +143,10 @@ SOURCE=.\Block_Flushing_Strategy.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Blocked_Connect_Strategy.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\BoundsC.cpp
 # End Source File
 # Begin Source File
@@ -192,6 +196,10 @@ SOURCE=.\CodecFactory_ORBInitializer.cpp
 # Begin Source File
 
 SOURCE=.\Collocation_Resolver.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connect_Strategy.cpp
 # End Source File
 # Begin Source File
 
@@ -451,6 +459,10 @@ SOURCE=.\Leader_Follower_Flushing_Strategy.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\LF_Connect_Strategy.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\LF_Event.cpp
 # End Source File
 # Begin Source File
@@ -656,6 +668,10 @@ SOURCE=.\Protocols_Hooks.cpp
 # Begin Source File
 
 SOURCE=.\Queued_Message.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Reactive_Connect_Strategy.cpp
 # End Source File
 # Begin Source File
 
@@ -911,6 +927,10 @@ SOURCE=.\Block_Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Blocked_Connect_Strategy.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\BoundsC.h
 # End Source File
 # Begin Source File
@@ -964,6 +984,10 @@ SOURCE=.\CodecFactory_ORBInitializer.h
 # Begin Source File
 
 SOURCE=.\Collocation_Resolver.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connect_Strategy.h
 # End Source File
 # Begin Source File
 
@@ -1247,6 +1271,10 @@ SOURCE=.\Leader_Follower_Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\LF_Connect_Strategy.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\LF_Event.h
 # End Source File
 # Begin Source File
@@ -1500,6 +1528,10 @@ SOURCE=.\Queued_Message.h
 # Begin Source File
 
 SOURCE=.\Queued_Message.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Reactive_Connect_Strategy.h
 # End Source File
 # Begin Source File
 
