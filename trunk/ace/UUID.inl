@@ -105,106 +105,92 @@ namespace ACE_Utils
     this->pid_ = pid;
   }
 
-  ACE_INLINE UUID&
-  UUID::operator = (const UUID &right)
-  {
-    *this = right;
-    return *this;
-  }
+  //ACE_INLINE bool
+  //UUID::operator == (const UUID &right) const
+  //{
+  //  UUID rt (right);
+  //  if ((timeLow_ != rt.timeLow ()) ||
+  //      (timeMid_ != rt.timeMid ()) ||
+  //      (timeHiAndVersion_ != rt.timeHiAndVersion ()) ||
+  //      (clockSeqHiAndReserved_ != rt.clockSeqHiAndReserved ()) ||
+  //      (clockSeqLow_ != rt.clockSeqLow ()) ||
+  //      (node_ != rt.node ()))
+  //    {
+  //      return false;
+  //    }
 
-  ACE_INLINE bool
-  UUID::operator == (const UUID &right) const
-  {
-    UUID rt (right);
-    if ((timeLow_ != rt.timeLow ()) ||
-        (timeMid_ != rt.timeMid ()) ||
-        (timeHiAndVersion_ != rt.timeHiAndVersion ()) ||
-        (clockSeqHiAndReserved_ != rt.clockSeqHiAndReserved ()) ||
-        (clockSeqLow_ != rt.clockSeqLow ()) ||
-        (node_ != rt.node ()))
-      {
-        return false;
-      }
+  //  return true;
+  //}
 
-    return true;
-  }
+  //ACE_INLINE bool
+  //UUID::operator != (const UUID &right) const
+  //{
+  //  return !(*this == right);
+  //}
 
-  ACE_INLINE bool
-  UUID::operator != (const UUID &right) const
-  {
-    return !(*this == right);
-  }
-
-  ACE_INLINE bool
-UUID::operator < (const UUID &rt) const
-  {
-    UUID right (rt);
-    if ((timeLow_ < right.timeLow ()) ||
-        (timeMid_ < right.timeMid ()) ||
-        (timeHiAndVersion_ < right.timeHiAndVersion ()) ||
-        (clockSeqHiAndReserved_ < right.clockSeqHiAndReserved ()) ||
-        (clockSeqLow_ < right.clockSeqLow ()) ||
-        (node_ < right.node ()))
-      {
-        return true;
-      }
-
-    return false;
-  }
-
-  ACE_INLINE bool
-  UUID::operator > (const UUID &right) const
-  {
-    return right < *this;
-  }
-
-  ACE_INLINE bool
-  UUID::operator <= (const UUID &right) const
-  {
-    return !(*this > right);
-  }
-
-  ACE_INLINE bool
-  UUID::operator >= (const UUID &right) const
-  {
-    return !(*this < right);
-  }
-
-  ACE_INLINE UUID_node&
-  UUID_node::operator = (const UUID_node &right)
-  {
-    *this = right;
-    return *this;
-  }
-
-  ACE_INLINE bool
-  UUID_node::operator == (const UUID_node& rt) const
-  {
-    UUID_node right = rt;
-    for (size_t i = 0; i < NODE_ID_SIZE; ++i)
-    {
-      if (nodeID_ [i] != right.nodeID ()[i])
-        {
-          return false;
-        }
-    }
-    return true;
-  }
-
-  ACE_INLINE bool
-  UUID_node::operator != (const UUID_node& right) const
-  {
-    return !(*this == right);
-  }
-
-  ACE_INLINE bool
-  UUID_node::operator < (const UUID_node& rt) const
-  {
-    UUID_node right = rt;
-    for (size_t i = 0; i < NODE_ID_SIZE; ++i)
-      if (nodeID_ [i] < right.nodeID ()[i])
-      return true;
-
-    return false;
-  }
+//  ACE_INLINE bool
+//UUID::operator < (const UUID &rt) const
+//  {
+//    UUID right (rt);
+//    if ((timeLow_ < right.timeLow ()) ||
+//        (timeMid_ < right.timeMid ()) ||
+//        (timeHiAndVersion_ < right.timeHiAndVersion ()) ||
+//        (clockSeqHiAndReserved_ < right.clockSeqHiAndReserved ()) ||
+//        (clockSeqLow_ < right.clockSeqLow ()) ||
+//        (node_ < right.node ()))
+//      {
+//        return true;
+//      }
+//
+//    return false;
+//  }
+//
+//  ACE_INLINE bool
+//  UUID::operator > (const UUID &right) const
+//  {
+//    return right < *this;
+//  }
+//
+//  ACE_INLINE bool
+//  UUID::operator <= (const UUID &right) const
+//  {
+//    return !(*this > right);
+//  }
+//
+//  ACE_INLINE bool
+//  UUID::operator >= (const UUID &right) const
+//  {
+//    return !(*this < right);
+//  }
+//
+//  ACE_INLINE bool
+//  UUID_node::operator == (const UUID_node& rt) const
+//  {
+//    UUID_node right = rt;
+//    for (size_t i = 0; i < NODE_ID_SIZE; ++i)
+//    {
+//      if (nodeID_ [i] != right.nodeID ()[i])
+//        {
+//          return false;
+//        }
+//    }
+//    return true;
+//  }
+//
+//  ACE_INLINE bool
+//  UUID_node::operator != (const UUID_node& right) const
+//  {
+//    return !(*this == right);
+//  }
+//
+//  ACE_INLINE bool
+//  UUID_node::operator < (const UUID_node& rt) const
+//  {
+//    UUID_node right = rt;
+//    for (size_t i = 0; i < NODE_ID_SIZE; ++i)
+//      if (nodeID_ [i] < right.nodeID ()[i])
+//      return true;
+//
+//    return false;
+//  }
 };

@@ -1030,3 +1030,10 @@ project(Reactor Registration Test) : acetest {
   Header_Files {
   }
 }
+
+project(UUID Test) : acetest {
+  exename = UUIDTest
+  Source_Files {
+    UUIDTest.cpp
+  }
+}

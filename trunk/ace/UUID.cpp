@@ -56,18 +56,6 @@ namespace ACE_Utils
     node_release_ = 1;
   }
 
-  UUID::UUID(const UUID &right)
-    : timeLow_ (0),
-      timeMid_ (0),
-      timeHiAndVersion_ (0),
-      clockSeqHiAndReserved_ (0),
-      clockSeqLow_ (0),
-      as_string_ (0)
-  {
-    node_release_ = 0;
-    *this = right;
-  }
-
   /// Construct a UUID from a string representation of an UUID.
   UUID::UUID (const ACE_CString& uuid_string)
     : timeLow_ (0),
@@ -95,7 +83,9 @@ namespace ACE_Utils
     /// Special case for the nil UUID.
     if (uuid_string == *NIL_UUID.to_string())
       {
-        *this = NIL_UUID;
+        bool copy_constructor_not_supported = false;
+        ACE_ASSERT(copy_constructor_not_supported);
+        //*this = NIL_UUID;
         return;
       }
 
