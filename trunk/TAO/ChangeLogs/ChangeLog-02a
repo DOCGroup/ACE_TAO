@@ -1,7 +1,7 @@
 Thu Jun 15 13:20:49 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/Stub.h
-        * tao/Stub.cpp
+	* tao/Stub.h:
+        * tao/Stub.cpp:
 
           Added methods to get client exposed policies, and added
 	  member variable to cache those client exposed policies.
