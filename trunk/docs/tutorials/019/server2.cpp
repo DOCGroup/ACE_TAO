@@ -4,13 +4,21 @@
 #include "shmem.h"
 
 int
-main (int, char *[])
+main (int, char *argv[])
 {
         // Be sure the segment is sized to hold our object.
     ACE_Shared_Memory_SV shm_server (SHM_KEY, sizeof(SharedData), 
                                      ACE_Shared_Memory_SV::ACE_CREATE);
 
     char *shm = (char *) shm_server.malloc ();
+
+    if( ! shm )
+    {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n\t(%P|%t) Cannot create shared memory segment.\n"
+                           "\tUse 'ipcs' to see if it already exists\n", 
+                           argv[0]),100);
+    }
 
     ACE_DEBUG ((LM_INFO, "(%P|%t) Shared Memory is at 0x%x\n",
                 shm ));
