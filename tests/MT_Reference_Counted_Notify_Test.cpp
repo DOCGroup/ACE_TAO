@@ -392,7 +392,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "\n\nTesting Select Reactor....\n\n"));
 
-      test<ACE_Select_Reactor> test_select_reactor (extra_iterations_not_needed);
+      test<ACE_Select_Reactor> test (extra_iterations_not_needed);
+      ACE_UNUSED_ARG (test);
     }
 
   if (test_tp_reactor)
@@ -400,7 +401,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "\n\nTesting TP Reactor....\n\n"));
 
-      test<ACE_TP_Reactor> test_tp_reactor (extra_iterations_not_needed);
+      test<ACE_TP_Reactor> test (extra_iterations_not_needed);
+      ACE_UNUSED_ARG (test);
     }
 
 #if defined (ACE_WIN32)
@@ -410,8 +412,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "\n\nTesting WFMO Reactor....\n\n"));
 
-      test<ACE_WFMO_Reactor> test_wfmo_reactor (extra_iterations_needed);
+      test<ACE_WFMO_Reactor> test (extra_iterations_needed);
+      ACE_UNUSED_ARG (test);
     }
+
+#else /* ACE_WIN32 */
+
+  ACE_UNUSED_ARG (extra_iterations_needed);
 
 #endif /* ACE_WIN32 */
 

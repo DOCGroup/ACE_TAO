@@ -64,12 +64,12 @@ ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::registration (TIMER_QUEUE &,
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
-ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::preinvoke (TIMER_QUEUE & /* timer_queue */,
-                                                           ACE_Event_Handler *event_handler,
-                                                           const void *arg,
-                                                           int recurring_timer,
-                                                           const ACE_Time_Value &cur_time,
-                                                           const void *&upcall_act)
+ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::preinvoke (TIMER_QUEUE &,
+                                                           ACE_Event_Handler *,
+                                                           const void *,
+                                                           int,
+                                                           const ACE_Time_Value &,
+                                                           const void *&)
 {
   // This method should never be invoked since we don't invoke
   // expire() on the buckets.
@@ -79,11 +79,11 @@ ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::preinvoke (TIMER_QUEUE & /* time
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::postinvoke (TIMER_QUEUE &,
-                                                            ACE_Event_Handler *event_handler,
-                                                            const void *arg,
-                                                            int recurring_timer,
-                                                            const ACE_Time_Value &cur_time,
-                                                            const void *upcall_act)
+                                                            ACE_Event_Handler *,
+                                                            const void *,
+                                                            int,
+                                                            const ACE_Time_Value &,
+                                                            const void *)
 {
   // This method should never be invoked since we don't invoke
   // expire() on the buckets.
@@ -94,10 +94,10 @@ ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::postinvoke (TIMER_QUEUE &,
 // Calls up to timer_hash's upcall functor
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::timeout (TIMER_QUEUE &,
-                                                         ACE_Event_Handler *event_handler,
-                                                         const void *arg,
-                                                         int recurring_timer,
-                                                         const ACE_Time_Value &cur_time)
+                                                         ACE_Event_Handler *,
+                                                         const void *,
+                                                         int,
+                                                         const ACE_Time_Value &)
 {
   // This method should never be invoked since we don't invoke
   // expire() on the buckets.
@@ -107,8 +107,8 @@ ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::timeout (TIMER_QUEUE &,
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::cancellation (TIMER_QUEUE &,
-                                                              ACE_Event_Handler *event_handler,
-                                                              int dont_call)
+                                                              ACE_Event_Handler *,
+                                                              int)
 {
   // Cancellation will be handled by the upcall functor of the timer
   // hash.
@@ -691,7 +691,6 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::expire (const ACE_Time_Value 
              && this->table_[i]->earliest_time () <= cur_time)
         {
           expired = this->table_[i]->remove_first ();
-          TYPE type = expired->get_type ();
           const void *act = expired->get_act ();
           int reclaim = 1;
 

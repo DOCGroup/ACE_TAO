@@ -243,7 +243,7 @@ cancellation_test<TIMER_QUEUE>::cancellation_test (const char *timer_queue_type)
   };
 
   for (int i = 0;
-       i < sizeof configs / (sizeof (int) * 5);
+       i < (int) (sizeof configs / (sizeof (int) * 5));
        i++)
     {
       TIMER_QUEUE timer_queue;
@@ -635,10 +635,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "\nCancellation test...\n\n"));
 
-      if (heap)  cancellation_test<ACE_Timer_Heap>  timer_heap  ("ACE_Timer_Heap");
-      if (list)  cancellation_test<ACE_Timer_List>  timer_list  ("ACE_Timer_List");
-      if (hash)  cancellation_test<ACE_Timer_Hash>  timer_hash  ("ACE_Timer_Hash");
-      if (wheel) cancellation_test<ACE_Timer_Wheel> timer_wheel ("ACE_Timer_Wheel");
+      if (heap)  { cancellation_test<ACE_Timer_Heap>  test ("ACE_Timer_Heap");  ACE_UNUSED_ARG (test); }
+      if (list)  { cancellation_test<ACE_Timer_List>  test ("ACE_Timer_List");  ACE_UNUSED_ARG (test); }
+      if (hash)  { cancellation_test<ACE_Timer_Hash>  test ("ACE_Timer_Hash");  ACE_UNUSED_ARG (test); }
+      if (wheel) { cancellation_test<ACE_Timer_Wheel> test ("ACE_Timer_Wheel"); ACE_UNUSED_ARG (test); }
     }
 
   if (test_expire)
@@ -646,10 +646,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "\nExpire test...\n\n"));
 
-      if (heap)  expire_test<ACE_Timer_Heap>  timer_heap  ("ACE_Timer_Heap");
-      if (list)  expire_test<ACE_Timer_List>  timer_list  ("ACE_Timer_List");
-      if (hash)  expire_test<ACE_Timer_Hash>  timer_hash  ("ACE_Timer_Hash");
-      if (wheel) expire_test<ACE_Timer_Wheel> timer_wheel ("ACE_Timer_Wheel");
+      if (heap)  { expire_test<ACE_Timer_Heap>  test ("ACE_Timer_Heap");  ACE_UNUSED_ARG (test); }
+      if (list)  { expire_test<ACE_Timer_List>  test ("ACE_Timer_List");  ACE_UNUSED_ARG (test); }
+      if (hash)  { expire_test<ACE_Timer_Hash>  test ("ACE_Timer_Hash");  ACE_UNUSED_ARG (test); }
+      if (wheel) { expire_test<ACE_Timer_Wheel> test ("ACE_Timer_Wheel"); ACE_UNUSED_ARG (test); }
     }
 
   if (test_one_upcall)
@@ -657,10 +657,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "\nOne upcall at a time test...\n\n"));
 
-      if (heap)  upcall_test<ACE_Timer_Heap>  timer_heap  ("ACE_Timer_Heap");
-      if (list)  upcall_test<ACE_Timer_List>  timer_list  ("ACE_Timer_List");
-      if (hash)  upcall_test<ACE_Timer_Hash>  timer_hash  ("ACE_Timer_Hash");
-      if (wheel) upcall_test<ACE_Timer_Wheel> timer_wheel ("ACE_Timer_Wheel");
+      if (heap)  { upcall_test<ACE_Timer_Heap>  test ("ACE_Timer_Heap");  ACE_UNUSED_ARG (test); }
+      if (list)  { upcall_test<ACE_Timer_List>  test ("ACE_Timer_List");  ACE_UNUSED_ARG (test); }
+      if (hash)  { upcall_test<ACE_Timer_Hash>  test ("ACE_Timer_Hash");  ACE_UNUSED_ARG (test); }
+      if (wheel) { upcall_test<ACE_Timer_Wheel> test ("ACE_Timer_Wheel"); ACE_UNUSED_ARG (test); }
     }
 
   if (test_simple)
@@ -668,10 +668,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "\nSimple test...\n\n"));
 
-      if (heap)  simple_test<ACE_Timer_Heap>  timer_heap  ("ACE_Timer_Heap");
-      if (list)  simple_test<ACE_Timer_List>  timer_list  ("ACE_Timer_List");
-      if (hash)  simple_test<ACE_Timer_Hash>  timer_hash  ("ACE_Timer_Hash");
-      if (wheel) simple_test<ACE_Timer_Wheel> timer_wheel ("ACE_Timer_Wheel");
+      if (heap)  { simple_test<ACE_Timer_Heap>  test ("ACE_Timer_Heap");  ACE_UNUSED_ARG (test); }
+      if (list)  { simple_test<ACE_Timer_List>  test ("ACE_Timer_List");  ACE_UNUSED_ARG (test); }
+      if (hash)  { simple_test<ACE_Timer_Hash>  test ("ACE_Timer_Hash");  ACE_UNUSED_ARG (test); }
+      if (wheel) { simple_test<ACE_Timer_Wheel> test ("ACE_Timer_Wheel"); ACE_UNUSED_ARG (test); }
     }
 
   ACE_END_TEST;

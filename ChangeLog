@@ -1,3 +1,32 @@
+Thu May 15 18:12:10 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* ace/WFMO_Reactor (find_handler): 
+
+	  Fixed minor oversights.
+
+	* ace/Timer_Hash_T.cpp: 
+	* ace/Connector.cpp: 
+
+	  Fixed unused arg warnings.
+
+	* tests/MT_Reference_Counted_Event_Handler_Test.cpp: 
+
+	  - Added a Pipe class. It is a replica of the ACE_Pipe class.
+	  Only difference is that this class always uses two sockets to
+	  create the pipe, even on platforms that support pipes.
+
+	  - Removed some test cases that don't work on Linux.
+
+	* tests/MT_Reference_Counted_Event_Handler_Test.cpp: 
+	* tests/MT_Reference_Counted_Notify_Test.cpp:
+	* tests/Reference_Counted_Event_Handler_Test.cpp:
+	* tests/Reactor_Registration_Test.cpp:
+	* tests/Timer_Cancellation_Test.cpp:
+	* tests/Timer_Queue_Reference_Counting_Test.cpp:
+	
+	  - Fixed member ordering in constructors.
+	  - Fixed unused arg warnings.
+
 Wed May 14 17:56:13 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* ace/OS.i: 

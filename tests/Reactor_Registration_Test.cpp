@@ -57,7 +57,7 @@ Event_Handler::Event_Handler (ACE_Reactor &reactor,
   if (read == ACE_INVALID_HANDLE)
     {
       result =
-		        this->pipe_.open ();
+                        this->pipe_.open ();
       ACE_ASSERT (result == 0);
       ACE_UNUSED_ARG (result);
     }
@@ -111,8 +111,8 @@ Event_Handler::handle_input (ACE_HANDLE handle)
 }
 
 int
-Event_Handler::handle_close (ACE_HANDLE handle,
-                             ACE_Reactor_Mask close_mask)
+Event_Handler::handle_close (ACE_HANDLE,
+                             ACE_Reactor_Mask)
 {
   switch (iteration)
     {
