@@ -314,16 +314,19 @@ CORBA_POA::handle_request (TAO_GIOP_RequestHeader hdr,
   
   IIOP_ServerRequest svr_req (&request_body, this->orb (), this);
 
-  svr_req.opname_ = hdr.operation; // why are we copying this when we can just pass in
-                                   // a handle to the hdr?
+  // Why are we copying this when we can just pass in a handle to the
+  // hdr?
+  svr_req.opname_ = hdr.operation; 
 
-  this->dispatch (hdr.object_key, svr_req, 0 /* this is IIOP residue */, env);
+  this->dispatch (hdr.object_key,
+                  svr_req,
+                  0, // this is IIOP residue 
+                  env);
 
-  // FIXME! I don't think this should happen yet!
   svr_req.release ();
 
   // If no reply is necessary (i.e., oneway), then return!
-  if (! hdr.response_expected)
+  if (hdr.response_expected == 0)
     return;
   
   // Otherwise check for correct parameter handling, and reply as
@@ -354,8 +357,9 @@ CORBA_POA::handle_request (TAO_GIOP_RequestHeader hdr,
       env.exception (new CORBA::BAD_INV_ORDER (CORBA::COMPLETED_NO));
     }
 
+  // Standard exceptions only.
   if (env.exception () != 0) 
-    {	// standard exceptions only
+    {	
       CORBA::Environment env2;
       CORBA::Exception *x = env.exception ();
       CORBA::TypeCode_ptr except_tc = x->type ();
@@ -363,8 +367,10 @@ CORBA_POA::handle_request (TAO_GIOP_RequestHeader hdr,
       response.put_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
       (void) response.encode (except_tc, x, 0, env2);
     }
+
+  // Any exception at all.
   else if (svr_req.exception_)
-    {	// any exception at all
+    {	
       CORBA::Exception *x;
       CORBA::TypeCode_ptr except_tc;
 
@@ -381,8 +387,10 @@ CORBA_POA::handle_request (TAO_GIOP_RequestHeader hdr,
 
       (void) response.encode (except_tc, x, 0, env);
     }
+
+  // Normal reply.
   else
-    {				// normal reply
+    {				
       // First finish the GIOP header ...
       response.put_ulong (TAO_GIOP_NO_EXCEPTION);
 
@@ -394,8 +402,10 @@ CORBA_POA::handle_request (TAO_GIOP_RequestHeader hdr,
 	  (void) response.encode (tc, value, 0, env);
 	}
 
-      // ... followed by "inout" and "out" parameters, left to right
-      for (u_int i = 0; i < svr_req.params_->count (); i++)
+      // ... Followed by "inout" and "out" parameters, left to right
+      for (u_int i = 0;
+           i < svr_req.params_->count ();
+           i++)
 	{
 	  CORBA::NamedValue_ptr	nv = svr_req.params_->item (i);
 	  CORBA::Any_ptr any;
