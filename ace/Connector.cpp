@@ -403,7 +403,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect_i
     return this->activate_svc_handler (sh);
 
   // Delegate to connection strategy.
-  if (use_reactor && errno == EWOULDBLOCK)
+  if (use_reactor && ACE_OS::last_error () == EWOULDBLOCK)
     {
       // If the connection hasn't completed and we are using
       // non-blocking semantics then register
