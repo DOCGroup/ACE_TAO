@@ -1,4 +1,9 @@
-Fri Jul  9 15:54:58 1999  Ossama Othman  <othman@cs.wustl.edu>
+Fri Jul  9 16:04:42 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/Invocation.cpp (start):
+
+	  Removed request_hdr time probe.  It is replaced by the time
+	  probes described below.
 
 	* tao/{IIOP,UIOP}_Transport.cpp (start_request):
 
