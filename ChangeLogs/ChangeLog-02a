@@ -1,3 +1,9 @@
+Tue Jan 30 01:05:51 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/OS.h: #define _SC_AIO_MAX to 1 if it's not set by default.
+	  Thanks to Jean-Francois Daune <Daune@IBA.be> for reporting this
+	  fix for VxWorks.
+
 Mon Jan 20 18:36:41 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Message_Querue_T.h (ACE_Message_Queue_Ex): Use _USE

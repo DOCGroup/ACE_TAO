@@ -52,6 +52,10 @@ enum ACE_Recyclable_State
   ACE_RECYCLABLE_UNKNOWN
 };
 
+#if !defined (_SC_AIO_MAX)
+#define _SC_AIO_MAX 1
+#endif /* _SC_AIO_MAX */
+
 #if !defined (ACE_DEFAULT_PAGEFILE_POOL_BASE)
 #define ACE_DEFAULT_PAGEFILE_POOL_BASE (void *) 0
 #endif /* ACE_DEFAULT_PAGEFILE_POOL_BASE */
