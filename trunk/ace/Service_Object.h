@@ -22,7 +22,14 @@
 
 class ACE_Export ACE_Service_Object : public ACE_Event_Handler, public ACE_Shared_Object
   // = TITLE
-  //     Provide the abstract base class common to all services 
+  //     Provide the abstract base class common to all service
+  //     implementations.  
+  //
+  // = DESCRIPTION
+  //     Classes that inherit from <ACE_Service_Objects> are capable
+  //     of being registered with the <ACE_Reactor> (due to the
+  //     <ACE_Event_Handler>, as well as being dynamically linked by
+  //     the <ACE_Service_Config> (due to the <ACE_Shared_Object>).
 {
 public:
   // = Initialization and termination methods.
@@ -30,44 +37,54 @@ public:
   virtual ~ACE_Service_Object (void);
 
   virtual int suspend (void);
-    // Temporarily disable a service without removing it completely 
+    // Temporarily disable a service without removing it completely.
+
   virtual int resume (void);
-    // Re-enable a previously suspended service 
+    // Re-enable a previously suspended service.
 };
+
+// Forward decl.
+class ACE_Service_Type_Impl;
 
 class ACE_Export ACE_Service_Type
   // = TITLE
-  //     Provide the class hierarchy that defines the contents of
-  //     the Service Repository search structure.
+  //      Keeps track of information related to the various
+  //      <ACE_Service_Type_Impl> subclasses.  
+  //
+  // = DESCRIPTION
+  //      This class acts as the interface of the "Bridge" pattern.
 {
 public:
   enum
   {
-    DELETE_OBJ = 1, // Delete the payload object.
-    DELETE_THIS = 2 // Delete the enclosing object.
+    DELETE_OBJ = 1, 
+    // Delete the payload object.
+
+    DELETE_THIS = 2 
+    // Delete the enclosing object.
   };
 
   // = Initialization and termination methods.
-  ACE_Service_Type (const void *object, 
-		    const char *s_name, 
-		    u_int flags = 0);
-  virtual ~ACE_Service_Type (void);
-
-  // = Pure virtual interface (must be defined by the subclass).
-  virtual int suspend (void) const = 0;
-  virtual int resume (void) const = 0;
-  virtual int init (int argc, char *argv[]) const = 0;
-  virtual int fini (void) const;
-  virtual int info (char **str, size_t len) const = 0;
-
-  const void *object (void) const;
-  // The pointer to the service.
-
+  ACE_Service_Type (const char *n, 
+		      ACE_Service_Type_Impl *o, 
+		      const ACE_SHLIB_HANDLE handle, 
+		      int active);
+  ~ACE_Service_Type (void);
+			 
   const char *name (void) const;
-  // Get the name of the service.
-
   void name (const char *);
-  // Set the name of the service.
+
+  const ACE_Service_Type_Impl *type (void) const;
+  void type (const ACE_Service_Type_Impl *, 
+	     int active = 1);
+
+  ACE_SHLIB_HANDLE handle (void) const;
+  void handle (const ACE_SHLIB_HANDLE);
+
+  void suspend (void) const;
+  void resume (void) const;
+  int  active (void) const;
+  void active (int);
 
   void dump (void) const;
   // Dump the state of an object.
@@ -75,15 +92,18 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-protected:
-  const char *name_;
-  // Name of the service.
+private:
+  const char *name_;   
+  // Humanly readible name of svc.
 
-  const void *obj_;
-  // Pointer to object that implements the service.
+  const ACE_Service_Type_Impl *type_;
+  // Pointer to C++ object that implements the svc.
 
-  u_int flags_;
-  // Flags that control serivce behavior (particularly deletion).
+  ACE_SHLIB_HANDLE handle_; 
+  // Handle to shared object file (non-zero if dynamically linked).
+
+  int active_;  
+  // 1 if svc is currently active, otherwise 0.
 };
 
 class ACE_Export ACE_Service_Object_Ptr

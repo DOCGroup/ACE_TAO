@@ -8,7 +8,7 @@
 #include "ace/Malloc.h"
 #include "ace/Service_Manager.h"
 #include "ace/Service_Repository.h"
-#include "ace/Service_Record.h"
+#include "ace/Service_Types.h"
 #include "ace/Containers.h"
 #include "ace/Auto_Ptr.h"
 
@@ -281,12 +281,12 @@ ACE_Service_Config::initialize (const char svc_name[],
 {
   ACE_TRACE ("ACE_Service_Config::initialize");
   ACE_ARGV args (parameters);
-  ACE_Service_Record  *srp = 0;
+  ACE_Service_Type  *srp = 0;
 
   ACE_DEBUG ((LM_DEBUG, "opening static service %s\n", svc_name));
 
   if (ACE_Service_Repository::instance()->find (svc_name,
-						(const ACE_Service_Record **) &srp) == -1)
+						(const ACE_Service_Type **) &srp) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%s not found\n", svc_name), -1);
 
   else if (srp->type ()->init (args.argc (), args.argv ()) == -1)
@@ -303,7 +303,7 @@ ACE_Service_Config::initialize (const char svc_name[],
 // the designated shared object in this file.
 
 int
-ACE_Service_Config::initialize (const ACE_Service_Record *sr,
+ACE_Service_Config::initialize (const ACE_Service_Type *sr,
 				char  parameters[])
 {
   ACE_TRACE ("ACE_Service_Config::initialize");
@@ -378,7 +378,7 @@ ACE_Service_Config::load_static_svcs (void)
     {
       ACE_Static_Svc_Descriptor *ssd = *ssdp;
 
-      ACE_Service_Type *stp =
+      ACE_Service_Type_Impl *stp =
 	ace_create_service_type (ssd->name_,
 				 ssd->type_,
 				 (const void *) (*ssd->alloc_)(),
@@ -386,9 +386,9 @@ ACE_Service_Config::load_static_svcs (void)
       if (stp == 0)
 	continue;
 
-      ACE_Service_Record *sr;
+      ACE_Service_Type *sr;
 
-      ACE_NEW_RETURN (sr, ACE_Service_Record (ssd->name_, stp,
+      ACE_NEW_RETURN (sr, ACE_Service_Type (ssd->name_, stp,
 					      0, ssd->active_), -1);
 
       if (ACE_Service_Repository::instance()->insert (sr) == -1)

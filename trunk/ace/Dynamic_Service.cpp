@@ -25,12 +25,12 @@ template <class SERVICE> SERVICE *
 ACE_Dynamic_Service<SERVICE>::instance (const char *name)
 {
   ACE_TRACE ("ACE_Dynamic_Service::instance");
-  const ACE_Service_Record *svc_rec;
+  const ACE_Service_Type *svc_rec;
   
   if (ACE_Service_Repository::instance ()->find (name, &svc_rec) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "svc_rep"), 0);
 
-  const ACE_Service_Type *type = svc_rec->type ();
+  const ACE_Service_Type_Impl *type = svc_rec->type ();
   
   if (type == 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "type"), 0);

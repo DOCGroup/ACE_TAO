@@ -1,4 +1,22 @@
-Thu Sep 11 15:22:51 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Thu Sep 11 21:07:25 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Service_Object.h: Moved the ACE_Service_Type class into the
+ 	  Service_Object.h file since this is "publically" visible to
+ 	  applications.
+
+	* ace/Service_Types.h: Improved the documentation of the
+ 	  ACE_Service_Type subclass implementations.
+
+	* ace/Service_Types: Changed the name next_ to link_ to be
+ 	  consistent with the accessor name.
+
+	* ace: Renamed Service_Record.{h,i,cpp} to Service_Types.{h,i,cpp}
+ 	  to reflect the recent change in names.
+
+	* ace/Service_Object.h: Renamed ACE_Service_Type to
+ 	  ACE_Service_Type_Impl and ACE_Service_Record to ACE_Service_Type
+ 	  in order to emphasize the use of the Bridge pattern.  Thanks to
+ 	  Eric Newton for motivating this.
 
 	* ace/Svc_Conf.y: Removed the warning about Service name being
  	  different from Module name.  I'm not sure why this was

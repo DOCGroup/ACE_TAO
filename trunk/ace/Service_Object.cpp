@@ -11,6 +11,52 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Object)
 
+ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type)
+
+void
+ACE_Service_Type::dump (void) const
+{
+  ACE_TRACE ("ACE_Service_Type::dump");
+}
+
+ACE_Service_Type::ACE_Service_Type (const char *n,
+					ACE_Service_Type_Impl *t,
+					const ACE_SHLIB_HANDLE h,
+					int active)
+  : name_ (0),
+    type_ (t),
+    handle_ (h),
+    active_ (active)
+{
+  ACE_TRACE ("ACE_Service_Type::ACE_Service_Type");
+  this->name (n);
+}
+
+ACE_Service_Type::~ACE_Service_Type (void)
+{
+  ACE_TRACE ("ACE_Service_Type::~ACE_Service_Type");
+  this->type_->fini ();
+  if (this->handle_ != 0)
+    ACE_OS::dlclose ((ACE_SHLIB_HANDLE) this->handle_);
+  delete [] (char *) this->name_;
+}
+
+void
+ACE_Service_Type::suspend (void) const
+{
+  ACE_TRACE ("ACE_Service_Type::suspend");
+  ((ACE_Service_Type *) this)->active_ = 0;
+  this->type_->suspend ();
+}
+
+void
+ACE_Service_Type::resume (void) const
+{
+  ACE_TRACE ("ACE_Service_Type::resume");
+  ((ACE_Service_Type *) this)->active_ = 1;
+  this->type_->resume ();
+}
+
 ACE_Service_Object::ACE_Service_Object (void)
 {
   ACE_TRACE ("ACE_Service_Object::ACE_Service_Object");
@@ -35,49 +81,3 @@ ACE_Service_Object::resume (void)
   return 0;
 }
 
-ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type)
-
-void
-ACE_Service_Type::dump (void) const
-{
-  ACE_TRACE ("ACE_Service_Type::dump");
-}
-
-ACE_Service_Type::ACE_Service_Type (const void *so, 
-				    const char *s_name, 
-				    unsigned int f)
-  : name_ (0),
-    obj_ (so), 
-    flags_ (f)
-{
-  ACE_TRACE ("ACE_Service_Type::ACE_Service_Type");
-  this->name (s_name);
-}
-
-ACE_Service_Type::~ACE_Service_Type (void)
-{
-  ACE_TRACE ("ACE_Service_Type::~ACE_Service_Type");
-
-  // It's ok to call this, even though we may have already deleted it
-  // in the fini() method since it would then be NULL.
-  delete [] (char *) this->name_;
-}
-
-int
-ACE_Service_Type::fini (void) const
-{
-  ACE_TRACE ("ACE_Service_Type::fini");
-  ACE_DEBUG ((LM_DEBUG, "destroying %s, flags = %d\n", 
-	     this->name_, this->flags_));
-
-  delete [] (char *) this->name_;
-  ((ACE_Service_Type *) this)->name_ = 0;
-
-  if (ACE_BIT_ENABLED (this->flags_, ACE_Service_Type::DELETE_OBJ))
-    operator delete ((void *) this->object ());	// cast to remove const-ness
-
-  if (ACE_BIT_ENABLED (this->flags_, ACE_Service_Type::DELETE_THIS))
-    delete (ACE_Service_Type *) this; 
-
-  return 0;
-}

@@ -787,7 +787,7 @@ ACE_HAS_THREADS:
      include/Queue.h
      include/STREAM.h
      include/Stream_Modules.h
-     include/Service_Record.h
+     include/Service_Types.h
      include/Thread_Spawn.h
      include/Synch.h
      include/Thr_Manager.h

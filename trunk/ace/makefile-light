@@ -233,7 +233,7 @@ Acceptor.o: Acceptor.C \
   $(ACE_ROOT)/include/ace/Log_Record.i \
   $(ACE_ROOT)/include/ace/Log_Msg.i \
   $(ACE_ROOT)/include/ace/Service_Repository.h \
-  $(ACE_ROOT)/include/ace/Service_Record.h \
+  $(ACE_ROOT)/include/ace/Service_Types.h \
   $(ACE_ROOT)/include/ace/Service_Object.h \
   $(ACE_ROOT)/include/ace/Shared_Object.h \
   $(ACE_ROOT)/include/ace/Stream.h \
@@ -286,7 +286,7 @@ Connector.o: Connector.C \
   $(ACE_ROOT)/include/ace/Log_Record.i \
   $(ACE_ROOT)/include/ace/Log_Msg.i \
   $(ACE_ROOT)/include/ace/Service_Repository.h \
-  $(ACE_ROOT)/include/ace/Service_Record.h \
+  $(ACE_ROOT)/include/ace/Service_Types.h \
   $(ACE_ROOT)/include/ace/Service_Object.h \
   $(ACE_ROOT)/include/ace/Shared_Object.h \
   $(ACE_ROOT)/include/ace/Stream.h \
@@ -788,7 +788,7 @@ Svc_Handler.o: Svc_Handler.C \
   $(ACE_ROOT)/include/ace/Token.h \
   $(ACE_ROOT)/include/ace/Reactor.i \
   $(ACE_ROOT)/include/ace/Service_Repository.h \
-  $(ACE_ROOT)/include/ace/Service_Record.h \
+  $(ACE_ROOT)/include/ace/Service_Types.h \
   $(ACE_ROOT)/include/ace/Stream.h \
   $(ACE_ROOT)/include/ace/Module.h \
   $(ACE_ROOT)/include/ace/Svc_Handler.i

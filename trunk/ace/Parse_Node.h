@@ -17,7 +17,7 @@
 #if !defined (ACE_PARSE_NODE_H)
 #define ACE_PARSE_NODE_H
 
-#include "ace/Service_Record.h"
+#include "ace/Service_Types.h"
 
 class ACE_Export ACE_Parse_Node
   // = TITLE
@@ -104,7 +104,7 @@ public:
   virtual ~ACE_Static_Node (void);
 
   virtual void apply (void);
-  virtual const ACE_Service_Record *record (void) const;
+  virtual const ACE_Service_Type *record (void) const;
   char *parameters (void) const;
 
   void dump (void) const;
@@ -122,10 +122,10 @@ class ACE_Export ACE_Dynamic_Node : public ACE_Static_Node
   //     Handle a dynamically linked node.
 {
 public:
-  ACE_Dynamic_Node (const ACE_Service_Record *, char *params);
+  ACE_Dynamic_Node (const ACE_Service_Type *, char *params);
   virtual ~ACE_Dynamic_Node (void);
 
-  virtual const ACE_Service_Record *record (void) const;
+  virtual const ACE_Service_Type *record (void) const;
   virtual void apply (void);
 
   void dump (void) const;
@@ -135,7 +135,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  const ACE_Service_Record *record_;
+  const ACE_Service_Type *record_;
 };
 
 class ACE_Export ACE_Stream_Node : public ACE_Parse_Node
