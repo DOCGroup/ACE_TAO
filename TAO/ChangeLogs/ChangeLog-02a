@@ -1,3 +1,19 @@
+Wed Jul 11 18:00:13 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Invocation_Endpoint_Selectors.cpp (select_endpoint):
+
+	  Applied patch from Wayne Erchak <werchak@stentor.com> that fixes
+	  problem where the endpoint list in a given profile was not
+	  iterated through during connection failures.  "Fail-over"
+	  semantics for a non-RTCORBA configure ORB once again work.
+	  [Bug 927]
+
+	* orbsvcs/orbsvcs/Security/EstablishTrustPolicy.h:
+	* orbsvcs/orbsvcs/Security/QOPPolicy.h:
+
+	  Added Doxygen comments for the TAO_QOPPolicy and
+	  TAO_EstablishTrustPolicy classes.
+
 Wed Jul 11 16:03:49 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Security/EstablishTrustPolicy.h:
