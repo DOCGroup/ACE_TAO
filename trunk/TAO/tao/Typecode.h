@@ -158,6 +158,15 @@ public:
   /// for tk_sequence, tk_array, and tk_alias.
   CORBA::TypeCode_ptr content_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
+  /// Returns the visibility (public/private) of the member at index 'slot'.
+  /// Raises (BadKind, Bounds). Useful for tk_value only.
+  CORBA::Visibility member_visibility (CORBA::ULong slot
+                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS) const;
+
+  /// Returns the value modifier. Raises (BadKind). Useful for tk_value only.
+  CORBA::ValueModifier type_modifier (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    ) const;
 
   /// Returns the concrete base type. Raises (BadKind); Useful
   /// for tk_value only.
@@ -349,16 +358,29 @@ private:
   /// which have a lock.
   CORBA::Long private_default_index_i (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
-  /// returns length, raises (BadKind). Used for tk_string,
-  /// tk_sequence, and tk_array
+  /// Returns length, raises (BadKind). Used for tk_string,
+  /// tk_sequence, and tk_array.
   CORBA::Long private_length (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
-  /// returns the content type (element type). Raises (BadKind); Useful
-  /// for tk_sequence, tk_array, and tk_alias
+  /// Returns the content type (element type). Raises (BadKind); Useful
+  /// for tk_sequence, tk_array, and tk_alias.
   CORBA::TypeCode_ptr private_content_type (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     ) const;
 
+  /// Returns the visibility (public/private) of the member at index 'slot'.
+  /// Raises (BadKind, Bounds). Useful for tk_value only.
+  CORBA::Visibility private_member_visibility (
+      CORBA::ULong slot
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    ) const;
+
+  /// Returns the value modifier. Raises (BadKind). Useful for tk_value only.
+  CORBA::ValueModifier private_type_modifier (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    ) const;
+
+  /// Returns the concrete base type. Raises (BadKind). Useful for tk_value only.
   CORBA::TypeCode_ptr private_concrete_base_type (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     ) const;
@@ -497,20 +519,24 @@ public:
   CORBA::Boolean tc_length_known_;
   CORBA::Boolean tc_content_type_known_;
   CORBA::Boolean tc_discrim_pad_size_known_;
+  CORBA::Boolean tc_member_visibility_list_known_;
+  CORBA::Boolean tc_type_modifier_known_;
   CORBA::Boolean tc_concrete_base_type_known_;
 
   // = These data members store the precomputed values
-  char *  tc_id_;
-  char *  tc_name_;
-  CORBA::ULong   tc_member_count_;
+  char *tc_id_;
+  char *tc_name_;
+  CORBA::ULong tc_member_count_;
   CORBA::TypeCode_ptr *tc_member_type_list_;
   char **tc_member_name_list_;
   CORBA::Any_ptr *tc_member_label_list_;
   CORBA::TypeCode_ptr tc_discriminator_type_;
-  CORBA::Long   tc_default_index_used_;
-  CORBA::ULong   tc_length_;
-  CORBA::TypeCode_ptr  tc_content_type_;
-  CORBA::TypeCode_ptr  tc_concrete_base_type_;
+  CORBA::Long tc_default_index_used_;
+  CORBA::ULong tc_length_;
+  CORBA::TypeCode_ptr tc_content_type_;
+  CORBA::Visibility *tc_member_visibility_list_;
+  CORBA::ValueModifier tc_type_modifier_;
+  CORBA::TypeCode_ptr tc_concrete_base_type_;
 };
 
 /**
