@@ -1,3 +1,8 @@
+Wed Mar  5 08:54:53 CST 2003 Pradeep Gore <pradeep@oomworks.com>
+
+	* orbsvcs/Notify_Service/NT_Notify_Service.cpp:
+	  Corrected the changed service driver name.
+
 Wed Mar  5 06:14:34 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
 	* tao/Makefile.bor (OBJFILES): 
