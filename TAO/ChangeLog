@@ -1,3 +1,9 @@
+Tue Dec 30 11:25:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTCORBA/RTCORBA_includeC.h:
+        * tao/RTScheduling/RTScheduler_includeC.h:
+          Removed not needed ; after c++ namespace closure.
+
 Tue Dec 30 08:34:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FtRtEvent.mpc:
