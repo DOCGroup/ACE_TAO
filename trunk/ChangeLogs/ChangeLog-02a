@@ -1,3 +1,8 @@
+Fri Apr 26 14:39:37 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/Proactor_Test.cpp: Use default proactor type for platform
+          if no specific proactor type for platform is chosen.
+
 Fri Apr 26 11:39:22 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/examples.dsw:
