@@ -117,9 +117,9 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 12.3.1.
      */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_shm_open (const char * name,
-                                 int oflag,
-                                 pace_mode_t mode);
+  PACE_INLINE PACE_HANDLE pace_shm_open (const char * name,
+                                         int oflag,
+                                         pace_mode_t mode);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
   /* Requires PACE_POSIX_C_SOURCE > 2. */
 
