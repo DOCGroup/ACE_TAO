@@ -1,3 +1,31 @@
+Mon Sep 27 15:43:57 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* ast/ast_enum.cpp:
+	* ast/ast_exception.cpp:
+	* ast/ast_interface.cpp:
+	* ast/ast_module.cpp:
+	* ast/ast_operation.cpp:
+	* ast/ast_structure.cpp:
+	* ast/ast_union.cpp:
+	* be/be_operation.cpp:
+	* include/utl_scope.h:
+	* util/utl_scope.cpp:
+	  Changes to make the IDL compiler CORBA 2.3 compliant in
+	  name resolution. The rules are much stricter than before, and
+	  the add_to_referenced() function did not maintain enough
+	  information to detect every clash. So, in addition to the list
+	  of AST_Decls that add_to_referenced maintains, a new list
+	  of Identifiers was added, maintained by add_to_referenced()
+	  and add_to_scope(). Since the signature of the function changed,
+	  the calls to it in other code were modified as well.
+
+	* orbsvcs/orbsvcs/LifeCycleService.idl:
+	* examples/Load_Balancer.idl:
+	* examples/Quoter/Quoter.idl:
+	* examples/Simple/bank/Bank.idl:
+	  With the new stricter rules, these IDL files were
+	  found to contain name clashes.
+
 Mon Sep 27 15:19:18 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.cpp:
