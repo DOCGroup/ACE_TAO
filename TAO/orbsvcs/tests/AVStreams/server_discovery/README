@@ -48,7 +48,7 @@ My goals for this first demo were modest. And became increasingly more
 modest as I began meeting failure at every door. My full intentions
 are described in my thesis (doc/papers/ugthesis_seth), but since I can 
 already sense your guffawing at the notion of reading my thesis, I'll
-summarize for you, right now. Essentially, I wanted  the initial query
+summarize for you -- right now. Essentially, I wanted  the initial query
 to the Trading Service to be as productive as possible, eliminating
 the possibility that attempting to connect to a server in the returned 
 offers will fail. Thus, that initial query will should include things
@@ -172,6 +172,14 @@ process of the AV client, and passes it the name of the movie and the
 IOR of the MMDevice interface. The AV client then transmutes the IOR
 to an MMDevice object reference, and establishes the AV
 stream. Hoorah! 
+
+WHAT'S WRONG WITH THE DEMO?
+
+Well, the first native method invocation --- get_server_names ---
+works as verified by ACE_DEBUG messages, but hangs on returning from
+it. Once this problem is solved, all that remains is to ensure the GUI 
+looks and works as I've envisioned, and to code the interaction between
+the Server Discovery and A/V client.
 
 That, my friend, is the demo in an anxiously written nutshell. Enjoy!
 Don't forget to set the JAVA_ROOT enivronment variable to the location 
