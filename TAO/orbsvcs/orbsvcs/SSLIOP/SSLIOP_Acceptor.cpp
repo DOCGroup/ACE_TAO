@@ -48,6 +48,8 @@ TAO_SSLIOP_Acceptor::TAO_SSLIOP_Acceptor (void)
     concurrency_strategy_ (0),
     accept_strategy_ (0)
 {
+  // Initialize the default SSL port to zero.
+  this->ssl_component_.port = 0;
 }
 
 TAO_SSLIOP_Acceptor::~TAO_SSLIOP_Acceptor (void)
@@ -182,7 +184,10 @@ TAO_SSLIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   //    pick the "default interface" and only listen on that IP
   //    address.
 
-  ACE_INET_Addr addr (u_short(0), this->address_.get_host_addr ());
+  // this->ssl_component_.port is initialized to zero or it is set in
+  // this->parse_options().
+  ACE_INET_Addr addr (this->ssl_component_.port,
+                      this->address_.get_host_addr ());
 
   return this->open_i (orb_core, addr);
 }
