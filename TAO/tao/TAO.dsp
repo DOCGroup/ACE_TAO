@@ -1069,6 +1069,25 @@ SOURCE=.\InconsistentTypeCodeC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Interceptor.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\InterceptorC.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
@@ -2525,6 +2544,10 @@ SOURCE=.\InconsistentTypeCodeC.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Interceptor.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\InterceptorC.h
 # End Source File
 # Begin Source File
@@ -2886,6 +2909,10 @@ SOURCE=.\IIOP_Connect.i
 # Begin Source File
 
 SOURCE=.\IIOP_ORB.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Interceptor.i
 # End Source File
 # Begin Source File
 
