@@ -1,3 +1,12 @@
+Tue Nov 14 10:41:03 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/RTCORBA/Server_Protocol/client_nt.conf: 
+	* tests/RTCORBA/Client_Protocol/run_test.pl: 
+
+	* tests/RTCORBA/Server_Protocol/client_nt.conf: 
+	* tests/RTCORBA/Server_Protocol/run_test.pl: 
+	  Updated to make some minor changes to make them run on NT.
+		
 Tue Nov 14 12:36:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Asynch_Invocation.cpp:
