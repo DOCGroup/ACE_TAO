@@ -110,4 +110,37 @@ TAO_ThruPOA_Object_Proxy_Impl::_get_interface (const CORBA::Object_ptr target,
   return 0;
 }
 
+CORBA_Object_ptr
+TAO_ThruPOA_Object_Proxy_Impl::_get_component (const CORBA::Object_ptr target,
+                                               CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_TRY
+    {
+      TAO_Object_Adapter::Servant_Upcall servant_upcall (
+          target->_stubobj ()->servant_orb_var ()->orb_core ()
+        );
+
+      CORBA::Object_var forward_to;
+
+      servant_upcall.prepare_for_upcall (
+         target->_object_key (),
+         "_get_component",
+         forward_to.out (),
+         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      return servant_upcall.servant ()->_get_component (ACE_TRY_ENV);
+    }
+  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+    {
+    }
+  ACE_CATCHANY
+    {
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}
+
 #endif // TAO_HAS_MINIMUM_CORBA == 0 //

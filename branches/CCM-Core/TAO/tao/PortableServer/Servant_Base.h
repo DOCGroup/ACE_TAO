@@ -65,6 +65,11 @@ public:
         TAO_default_environment ()
     );
 
+  virtual CORBA_Object_ptr _get_component (
+      CORBA_Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    );
+
   virtual void *_downcast (const char *repository_id) = 0;
   // Get the correct vtable.
 
