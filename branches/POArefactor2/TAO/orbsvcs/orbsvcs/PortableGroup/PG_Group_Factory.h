@@ -23,7 +23,7 @@
 
 #include "ace/Hash_Map_Manager.h"
 #include "portablegroup_export.h"
-#include "tao/PortableServer/PortableServerC.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/PortableGroupC.h"
 #include "PG_Object_Group_Manipulator.h"
 

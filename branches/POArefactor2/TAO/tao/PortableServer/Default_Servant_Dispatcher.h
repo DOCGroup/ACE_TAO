@@ -54,15 +54,14 @@ public:
                     TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state);
 
   /// Factory method for creating new POA's.
-  TAO_POA *create_POA (const ACE_CString &name,
-                       TAO_POA_Manager &poa_manager,
-                       const TAO_POA_Policy_Set &policies,
-                       TAO_POA *parent,
-                       ACE_Lock &lock,
-                       TAO_SYNCH_MUTEX &thread_lock,
-                       TAO_ORB_Core &orb_core,
-                       TAO_Object_Adapter *object_adapter
-                       ACE_ENV_ARG_DECL);
+  TAO_POA *create_Root_POA (const ACE_CString &name,
+                            TAO_POA_Manager &poa_manager,
+                            const TAO_POA_Policy_Set &policies,
+                            ACE_Lock &lock,
+                            TAO_SYNCH_MUTEX &thread_lock,
+                            TAO_ORB_Core &orb_core,
+                            TAO_Object_Adapter *object_adapter
+                            ACE_ENV_ARG_DECL);
 };
 
 #include /**/ "ace/post.h"

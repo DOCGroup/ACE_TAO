@@ -695,15 +695,14 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
   // Construct a new POA
   TAO_POA::String root_poa_name (TAO_DEFAULT_ROOTPOA_NAME);
   this->root_ =
-    this->servant_dispatcher_->create_POA (root_poa_name,
-                                           *poa_manager,
-                                           policies,
-                                           0,
-                                           this->lock (),
-                                           this->thread_lock (),
-                                           this->orb_core_,
-                                           this
-                                           ACE_ENV_ARG_PARAMETER);
+    this->servant_dispatcher_->create_Root_POA (root_poa_name,
+                                                *poa_manager,
+                                                policies,
+                                                this->lock (),
+                                                this->thread_lock (),
+                                                this->orb_core_,
+                                                this
+                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // The Object_Adapter will keep a reference to the Root POA so that

@@ -12,10 +12,9 @@ TAO_PG_Servant_Dispatcher::~TAO_PG_Servant_Dispatcher (void)
 }
 
 TAO_POA *
-TAO_PG_Servant_Dispatcher::create_POA (const ACE_CString &name,
+TAO_PG_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
                                             TAO_POA_Manager &poa_manager,
                                             const TAO_POA_Policy_Set &policies,
-                                            TAO_POA *parent,
                                             ACE_Lock &lock,
                                             TAO_SYNCH_MUTEX &thread_lock,
                                             TAO_ORB_Core &orb_core,
@@ -28,7 +27,7 @@ TAO_PG_Servant_Dispatcher::create_POA (const ACE_CString &name,
                     TAO_GOA (name,
                              poa_manager,
                              policies,
-                             parent,
+                             0,
                              lock,
                              thread_lock,
                              orb_core,

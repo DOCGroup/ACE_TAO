@@ -11,7 +11,7 @@
 #ifndef _PORTABLEGROUP_IDL_
 #define _PORTABLEGROUP_IDL_
 
-#include "tao/PortableServer/PortableServer.pidl"
+#include "tao/PortableServer/PortableServer_include.pidl"
 #include "CosNaming.idl"
 #include "tao/IOP.pidl"
 #include "tao/GIOP.pidl"
