@@ -21,18 +21,20 @@ use DependencyWriterFactory;
 # ************************************************************
 
 sub new {
-  my($class)   = shift;
-  my($macros)  = shift;
-  my($options) = shift;
-  my($ipaths)  = shift;
-  my($replace) = shift;
-  my($type)    = shift;
-  my($self)    = bless {'pre'     => new Preprocessor($macros,
-                                                      $options, $ipaths),
-                        'replace' => $replace,
-                        'dwrite'  => DependencyWriterFactory::create($type),
-                        'cwd'     => undef,
-                       }, $class;
+  my($class)    = shift;
+  my($macros)   = shift;
+  my($options)  = shift;
+  my($ipaths)   = shift;
+  my($replace)  = shift;
+  my($type)     = shift;
+  my($noinline) = shift;
+  my($self)     = bless {'pre'      => new Preprocessor($macros,
+                                                        $options, $ipaths),
+                         'replace'  => $replace,
+                         'dwrite'   => DependencyWriterFactory::create($type),
+                         'noinline' => $noinline,
+                         'cwd'      => undef,
+                        }, $class;
 
   ## Set the current working directory, but
   ## escape regular expression special characters
@@ -79,7 +81,18 @@ sub process {
   }
 
   ## Sort the dependencies to make them reproducible
-  @files = sort @files;
+  if ($self->{'noinline'}) {
+    my(@copy) = sort @files;
+    @files = ();
+    for(my $i = 0; $i <= $#copy; ++$i) {
+      if ($copy[$i] !~ /\.i(nl)?$/) {
+        push(@files, $copy[$i]);
+      }
+    }
+  }
+  else {
+    @files = sort @files;
+  }
 
   ## Generate the dependency string
   return $self->{'dwrite'}->process($objects, \@files);
