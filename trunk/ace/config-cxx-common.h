@@ -13,7 +13,7 @@
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_SIGNED_CHAR
 # if defined (linux)
-#   define ACE_LACKS_ACE_IOSTREAM
+#   define ACE_HAS_CPLUSPLUS_HEADERS
 # endif /* linux */
 # define DEC_CXX
 # if (__DECCXX_VER >= 60090010)
