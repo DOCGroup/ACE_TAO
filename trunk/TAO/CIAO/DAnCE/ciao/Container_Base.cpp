@@ -299,3 +299,21 @@ CIAO::Session_Container::uninstall_component (Components::CCMObject_ptr objref,
 
   oid = id._retn ();
 }
+
+CORBA::Object_ptr
+CIAO::Session_Container::generate_reference (const char *obj_id,
+                                             const char *repo_id
+                                             ACE_ENV_ARG_DECL)
+{
+  PortableServer::ObjectId_var oid =
+    PortableServer::string_to_ObjectId (obj_id);
+
+  CORBA::Object_var objref = 
+    this->poa_->create_reference_with_id (oid.in (),
+                                          repo_id
+                                          ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+  return objref._retn ();
+}
+

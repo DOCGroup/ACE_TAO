@@ -1,3 +1,13 @@
+Thu Sep  9 10:30:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/ciao/Container_Base.cpp:
+        * DAnCE/ciao/Container_Base.h:
+        * ciao/Container_Base.cpp:
+          
+          Added generate_reference() method to DAnCE version of
+          Container_Base, and fixed ACE_CHECK macro mistake in
+          both versions.
+
 Wed Sep  8 11:52:45 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/ciao/Servant_Impl_Base.h:

@@ -198,6 +198,12 @@ namespace CIAO
                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    // Analog of the POA method that creates an object reference from
+    // an object id string.  
+    CORBA::Object_ptr generate_reference (const char *obj_id,
+                                          const char *repo_id
+                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
   protected:
     long number_;
 
