@@ -1,0 +1,35 @@
+// $Id$
+// ================================================================
+//
+// = FILENAME
+//   Dir_Service.idl
+//
+// = DESCRIPTION
+//   The Dir_Service IDL interface.
+//
+// = AUTHOR    
+//   Kirthika Parameswaran <kirthika@cs.wustl.edu>
+//
+// ================================================================
+
+interface Dir_Service
+{
+  // = TITLE
+  //   The interface for Directory Service.
+  //
+  // = DESCRIPTION
+  //   This interface can be used for any directory assistance.
+  
+  long tele_number (in string name);
+  // A simple twoway operation, the idea is to verify that the telephone number
+  // can be located.
+
+  oneway void end_note ();
+  // A simple oneway operation, which can be used before ending the session.
+
+  oneway void area_codes_info ();
+  // A oneway operation which describes the area codes.
+  
+  void shutdown ();
+  // Shutdown the server.
+};
