@@ -1,5 +1,13 @@
 Mon Apr  9 18:48:02 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
+	* include/makeinclude/Makefile.rtems: Zapped 
+  
+          export RTEMS_MAKEFILE_PATH=/opt/rtems/sparc-rtems/erc32/
+	  
+	  so that the environment variable is obtained from the users
+ 	  environment.  Thanks to Joel Sherrill <joel@OARcorp.com> for
+ 	  this fix.
+
 	* ace/Log_Msg.h: Only define the ACE_ASSERT macro if it's not
 	  already defined.  This make it easy for developers to override
  	  this macro in their config.h file.  Thanks to Nathalie D'Amours
