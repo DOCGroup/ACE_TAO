@@ -1,25 +1,39 @@
 // $Id$
 
         This directory contains the files that implement the TAO
-Naming Service.  The TAO Naming Service uses IP Multicast to process
+Naming server.  The TAO Naming Service uses IP Multicast to process
 client "resolve_initial_references()" requests.
 
 To Run:
 ======
 
-% Naming_Service [-ORBport port] 
+% Naming_Service [-ORBport port]
                  [-ORBobjrefstyle url]
                  [-ORBnameserviceport nsport]
-                 [-s context_size] 
+                 [-o ior_output_file]
+                 [-p pid_file_name]
+                 [-s context_size]
                  [-t time]
+                 [-f persitence_file_name]
 
 Arguments:
 ==========
         port
                  The ORB port.
 
-        nsport 
+        nsport
                 Multicast port.
+
+
+        output_file
+                The name of the file, in which to store IOR of the
+                root Naming Service context.  (This file can then be
+                used by clients instead of multicast, to obtain the
+                Naming Service IOR).
+
+       pid_file_name
+                The name of the file, in which to store the process id
+                of the Naming Service server.
 
         context_size
                  Size of the hash table allocated upon the creation of
@@ -31,10 +45,42 @@ Arguments:
                 How long the server should listen for requests before
                 exiting.
 
+        persistence_file_name
+                The name of the file to use to store/read from the
+                persistent state of the Naming Service.
+
 Environment Variables:
 =====================
 
-        NameServicePort - Multicast port.
+        NameServicePort - Multicast port to listen on for
+        "resolve_initial_references" requests.
+
+Persistence:
+===========
+TAO Naming Service has an optional persistence capability.  By
+default, a non-persistent version of the Naming Service is used.
+Supplying "-f" command-line option to the server causes a persistent
+version of the Naming Service to run.
+
+The file, which name is supplied along with the "-f" option, is used to store the
+persistent state of the Naming Service, i.e., all Naming Contexts and
+all their bindings.  When "-f" option is specified:
+
+    1. If the specified file does not exist, the file is created
+       and used to store the state of the Naming Service.  An initial
+       (root) Naming Context is also created.
+
+    2. If the specified file exists, it is scanned and:
+                        a) If any inconsistency is detected in the
+                        stored state, the server exits.  A
+                        noncorrupted version of the file must be used.
+
+                        b) If no Naming Contexts exist, an initial
+                        (root) Naming Context is created.
+
+                        c) If one or more Naming Contexts exist, the
+                        state stored in the file becomes the state of
+                        the Naming Service.
 
 Sample Run:
 ==========
@@ -81,11 +127,9 @@ These two techniques may be needed in an environment where
         1. There is more than one NamingService, to avoid the
            confusion of a server registering its object with one
            NamingService and the client getting the reply from some
-           other NamingService. 
+           other NamingService.
 
         2. The OS platform doesn't support multicast.
 
         3. The client or server isn't written using TAO, and therefore
            doesn't use TAO's multicast NameService resolution protocol.
-
-
