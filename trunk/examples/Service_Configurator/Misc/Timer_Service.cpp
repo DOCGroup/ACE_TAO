@@ -99,7 +99,8 @@ ACE_STATIC_SVC_DEFINE (Timer_Service_1,
 		       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 
-// The following is a "Factory" used by the <ACE_Service_Config> and
+// The following are "Factories" used by the <ACE_Service_Config> and
 // svc.conf file to dynamically initialize the state of the Timer
-// Service.
+// Services.
+ACE_SVC_FACTORY_DEFINE (Timer_Service_1)
 ACE_SVC_FACTORY_DEFINE (Timer_Service_2)
