@@ -530,6 +530,7 @@ public:
   virtual void dispatch_servant (const TAO_ObjectKey &key,
                                  CORBA::ServerRequest &req,
                                  void *context,
+                                 TAO_ORB_Core *orb_core,
                                  CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
   virtual int locate_servant (const TAO_ObjectKey &key,
@@ -673,6 +674,7 @@ protected:
                                                             const char *operation,
                                                             PortableServer::ObjectId &id,
                                                             TAO_POA *&poa_impl,
+                                                            TAO_ORB_Core *orb_core,
                                                             CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
   virtual TAO_POA *locate_poa_i (const TAO_ObjectKey &key,
@@ -682,6 +684,7 @@ protected:
   virtual void dispatch_servant_i (const TAO_ObjectKey &key,
                                    CORBA::ServerRequest &req,
                                    void *context,
+                                   TAO_ORB_Core *orb_core,
                                    CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
   virtual void pre_invoke (const TAO_ObjectKey &key,

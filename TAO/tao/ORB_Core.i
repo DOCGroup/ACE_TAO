@@ -139,11 +139,19 @@ TAO_ORB_Core::using_collocation (CORBA::Boolean use_col)
 
 #if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)  &&  (!defined (__GNUG__) || (__GNUC__ > 2 || __GNUC_MINOR__ >= 90))
 # if defined (__ACE_INLINE__) || (!defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && !defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA))
-ACE_INLINE size_t
+
+ACE_INLINE u_long
+ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>::hash_i (void) const
+{
+  return this->t_.get_ip_address () + this->t_.get_port_number ();
+}
+
+ACE_INLINE u_long
 ACE_Hash_Addr<ACE_INET_Addr>::hash_i (const ACE_INET_Addr &addr) const
 {
   return addr.get_ip_address () + addr.get_port_number ();
 }
+
 # endif /* __ACE_INLINE__ */
 #endif /* ACE_HAS_TEMPLATE_SPECIALIZATION && egcs, if __GNUG__ */
 

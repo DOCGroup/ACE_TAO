@@ -716,7 +716,7 @@ public:
   // Compares two hash values.
 
 private:
-  size_t hash_i (const ADDR_T &) const;
+  u_long hash_i (const ADDR_T &) const;
   // This is the method that actually performs the non-cached hash
   // computation.  It should typically be specialized.
 
@@ -744,13 +744,16 @@ public:
   virtual ~ACE_Refcounted_Hash_Recyclable (void);
   // Destructor
 
-  u_long hash (void) const;
-  // Computes and returns hash value.  
-
   int operator== (const ACE_Refcounted_Hash_Recyclable<T> &rhs) const;
   // Compares two instances.
 
+  int operator== (const T &rhs) const;
+  // Compares two instances.
+
 protected:
+  u_long hash_i (void) const;
+  // Computes and returns hash value.  
+
   T t_;
 };
 
@@ -861,9 +864,7 @@ public:
           CONNECT_STRATEGY;
 
   // = Typedefs for managing the map
-  typedef ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR> 
-          HASH_ADDRESS;
-  typedef ACE_Refcounted_Hash_Recyclable<HASH_ADDRESS> 
+  typedef ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR> 
           REFCOUNTED_HASH_RECYCLABLE_ADDRESS;
   typedef ACE_Hash_Map_Manager <REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Null_Mutex> 
           CONNECTION_MAP;
@@ -899,8 +900,7 @@ protected:
                     int reuse_addr,
                     int flags,
                     int perms,
-                    ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR> &search_addr,
-                    ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR> >, SVC_HANDLER *> *&entry,
+                    ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, SVC_HANDLER *> *&entry,
                     int &found);
 
   int find_or_create_svc_handler_i (SVC_HANDLER *&sh,
@@ -910,8 +910,7 @@ protected:
                                     int reuse_addr,
                                     int flags,
                                     int perms,
-                                    ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR> &search_addr,
-                                    ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR> >, SVC_HANDLER *> *&entry,
+                                    ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, SVC_HANDLER *> *&entry,
                                     int &found);
 
   CONNECTION_MAP connection_cache_;

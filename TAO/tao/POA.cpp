@@ -2137,6 +2137,7 @@ TAO_POA::locate_poa_and_servant_i (const TAO_ObjectKey &key,
                                    const char *operation,
                                    PortableServer::ObjectId &id,
                                    TAO_POA *&poa_impl,
+                                   TAO_ORB_Core *orb_core,
                                    CORBA::Environment &env)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_POA_LOCATE_POA_AND_SERVANT_I_START);
@@ -2292,7 +2293,6 @@ TAO_POA::locate_poa_and_servant_i (const TAO_ObjectKey &key,
             return 0;
 
           // Remember the cookie
-          TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
           TAO_POA_Current *poa_current = orb_core->poa_current ();
           poa_current->locator_cookie (cookie);
 
@@ -2311,6 +2311,7 @@ void
 TAO_POA::dispatch_servant (const TAO_ObjectKey &key,
                            CORBA::ServerRequest &req,
                            void *context,
+                           TAO_ORB_Core *orb_core,                           
                            CORBA::Environment &env)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_POA_DISPATCH_SERVANT_START);
@@ -2318,13 +2319,14 @@ TAO_POA::dispatch_servant (const TAO_ObjectKey &key,
   // Lock access to the POAManager for the duration of this transaction
   TAO_POA_READ_GUARD (ACE_Lock, monitor, this->lock (), env);
 
-  this->dispatch_servant_i (key, req, context, env);
+  this->dispatch_servant_i (key, req, context, orb_core, env);
 }
 
 void
 TAO_POA::dispatch_servant_i (const TAO_ObjectKey &key,
                              CORBA::ServerRequest &req,
                              void *context,
+                             TAO_ORB_Core *orb_core,
                              CORBA::Environment &env)
 {
   PortableServer::ObjectId id;
@@ -2332,7 +2334,6 @@ TAO_POA::dispatch_servant_i (const TAO_ObjectKey &key,
   const char *operation = req.operation ();
 
   // Setup for POA Current
-  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
   TAO_POA_Current current_context;
   // Set the current context and remember the old one
   TAO_POA_Current *previous_context = orb_core->poa_current (&current_context);
@@ -2341,6 +2342,7 @@ TAO_POA::dispatch_servant_i (const TAO_ObjectKey &key,
                                                                     operation,
                                                                     id,
                                                                     poa,
+                                                                    orb_core,
                                                                     env);
   if (env.exception () != 0 || servant == 0)
     return;
