@@ -1,9 +1,17 @@
+Sat Dec 29 15:53:30 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* orbsvcs/Notify_Service/Makefile: Updated the Makefile to 
+	  ensure that the Notify_Service executable is built using both
+ 	  the Notify_Server.cpp and Notify_Service.cpp files.  Thanks
+	  to Venkita for noticing this.
+
 Fri Dec 28 15:30:40 2001  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface.cpp:
-	  Removed an ACE_DEBUG statement that was causing SUN_OS builds 
-	  to fail.  The DEBUG statement should have been removed anyways
-	  before the file was initially commited.
+	  Removed an ACE_DEBUG statement that was causing SUN_OS builds to
+ 	  fail.  The DEBUG statement should have been removed anyways
+ 	  before the file was initially commited.  Thanks to Venkita for
+ 	  noticing this.
 
 Fri Dec 28 16:29:05 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 

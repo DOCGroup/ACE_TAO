@@ -6,11 +6,9 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LDLIBS = -lTAO_CosNotification -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_DynamicAny -lTAO_IORTable -lTAO_PortableServer -lTAO
-
 SRC = Notify_Server.cpp Notify_Service.cpp
 
-NOTIFY_OBJS=$(LSRC:.cpp=.o)
+LDLIBS = -lTAO_CosNotification -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_DynamicAny -lTAO_IORTable -lTAO_PortableServer -lTAO
 
 BIN2 = Notify_Service
 
