@@ -20,12 +20,7 @@ module Test
      * request.
      */
     Timestamp test_method (in Timestamp send_time,
-                           in number cl_number,
-                           in number it_number);
-
-    Timestamp test_method_2 (in Timestamp send_time,
-                           in number cl_number,
-                           in number it_number);
+                           in number cl_number);
 
     /// Shutdown the ORB
     void shutdown ();
