@@ -485,7 +485,7 @@ TAO_Codeset_Item::TAO_Codeset_Item (const char *name)
 
 TAO_Codeset_Item::~TAO_Codeset_Item (void)
 {
-  delete [] this->name_;
+  ACE_OS::free (this->name_);
 }
 
 const char *
