@@ -58,3 +58,8 @@ TAO/orbsvcs/orbsvcs/IFRService.dsp
 TAO/orbsvcs/orbsvcs/RT_Notification.dsp
 TAO/orbsvcs/Naming_Service/Naming_Service.dsp
 tests/Test_Output.dsp
+TAO/orbsvcs/FT_ReplicationManager/FT_ReplicationManager_Lib.dsp
+TAO/orbsvcs/orbsvcs/FTRT_ClientORB.dsp
+TAO/orbsvcs/tests/Event/lib/Event_Test_Lib.dsp
+TAO/orbsvcs/tests/Event/Mcast/Common/ECMcastTests_lib.dsp
+TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/CosEC_RtEC_Based_lib.dsp
