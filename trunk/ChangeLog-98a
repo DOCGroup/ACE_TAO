@@ -2,7 +2,7 @@ Tue Apr 28 23:08:10 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Hash_Map_Manager.cpp: Bugs fixed.
 
-	* tests/Map_Manager_Test.cpp: Added assertion test on the number
+	* tests/Map_Manager_Test.cpp: Added assertion tests on the number
 	  of iterations to ensure the test does run correctly.
 
 	* tests/Map_Manager_Test.cpp (main): Disabled the VERBOSE_LITE
