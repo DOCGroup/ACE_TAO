@@ -1,3 +1,8 @@
+Wed Nov 17 11:50:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/IdAssignmentStrategySystem.cpp:
+          Return true in has_system_id(), not false, stupid copy/paste error
+
 Wed Nov 17 11:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/ServantRetentionStrategyNonRetain.cpp:
