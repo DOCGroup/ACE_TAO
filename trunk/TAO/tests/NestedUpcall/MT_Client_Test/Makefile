@@ -26,10 +26,8 @@ CLIENT_OBJS = MT_Client_TestS.o MT_Client_TestC.o \
 SERVER_OBJS = MT_Client_TestS.o MT_Client_TestC.o server.o \
         MT_Object_i.o
 
-BIN = client server
-BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
+BIN = client server
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -47,8 +45,7 @@ include $(TAO_ROOT)/taoconfig.mk
 #       Local targets
 #----------------------------------------------------------------------------
 
-LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
-CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
+LDFLAGS += -L$(TAO_ROOT)/tao
 
 .PRECIOUS: MT_Client_TestC.h MT_Client_TestC.i MT_Client_TestC.cpp
 .PRECIOUS: MT_Client_TestS.h MT_Client_TestS.i MT_Client_TestS.cpp
@@ -61,7 +58,11 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-/bin/rm -rf MT_Client_Test[CS].* MT_Client_TestS_T.*
+	-$(RM) MT_Client_Test[CS].* MT_Client_TestS_T.*
+
+#----------------------------------------------------------------------------
+#       Dependencies
+#----------------------------------------------------------------------------
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
