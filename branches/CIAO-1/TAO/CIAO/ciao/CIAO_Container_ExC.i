@@ -325,7 +325,7 @@ Components::StateIdValue::~StateIdValue (void)
 ACE_INLINE const char* 
 Components::StateIdValue::_tao_obv_static_repository_id ()
 {
-  return "IDL:Components/StateIdValue:1.0";
+  return "IDL:omg.org/Components/StateIdValue:1.0";
 }
 
 // TAO_IDL - Generated from
@@ -350,7 +350,7 @@ Components::PersistentIdValue::~PersistentIdValue (void)
 ACE_INLINE const char* 
 Components::PersistentIdValue::_tao_obv_static_repository_id ()
 {
-  return "IDL:Components/PersistentIdValue:1.0";
+  return "IDL:omg.org/Components/PersistentIdValue:1.0";
 }
 
 // TAO_IDL - Generated from 
@@ -367,7 +367,7 @@ Components::SegmentDescr::~SegmentDescr (void)
 ACE_INLINE const char* 
 Components::SegmentDescr::_tao_obv_static_repository_id ()
 {
-  return "IDL:Components/SegmentDescr:1.0";
+  return "IDL:omg.org/Components/SegmentDescr:1.0";
 }
 
 // TAO_IDL - Generated from 

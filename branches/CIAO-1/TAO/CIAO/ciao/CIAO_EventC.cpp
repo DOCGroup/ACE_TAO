@@ -48,15 +48,17 @@
 static const CORBA::Long _oc_Components_EventBase[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  29,
+  37,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f45), 
   ACE_NTOHL (0x76656e74), 
   ACE_NTOHL (0x42617365), 
   ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:Components/EventBase:1.0
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Components/EventBase:1.0
   10,
   ACE_NTOHL (0x4576656e), 
   ACE_NTOHL (0x74426173), 
@@ -1020,7 +1022,7 @@ Components::EventConsumerBase::_narrow (
     {
       CORBA::Boolean is_a =
         obj->_is_a (
-            "IDL:Components/EventConsumerBase:1.0"
+            "IDL:omg.org/Components/EventConsumerBase:1.0"
             ACE_ENV_ARG_PARAMETER
           );
       ACE_CHECK_RETURN (EventConsumerBase::_nil ());
@@ -1122,7 +1124,7 @@ Components::EventConsumerBase::_is_a (
   if (
       !ACE_OS::strcmp (
           (char *)value,
-          "IDL:Components/EventConsumerBase:1.0"
+          "IDL:omg.org/Components/EventConsumerBase:1.0"
         ) ||
       !ACE_OS::strcmp (
           (char *)value,
@@ -1174,7 +1176,7 @@ void *Components::EventConsumerBase::_tao_QueryInterface (ptr_arith_t type)
 
 const char* Components::EventConsumerBase::_interface_repository_id (void) const
 {
-  return "IDL:Components/EventConsumerBase:1.0";
+  return "IDL:omg.org/Components/EventConsumerBase:1.0";
 }
 
 // TAO_IDL - Generated from
@@ -1206,8 +1208,10 @@ void Components::EventConsumerBase::push_event (
 static const CORBA::Long _oc_Components_EventConsumerBase[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  37,
+  45,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f45), 
@@ -1216,7 +1220,7 @@ static const CORBA::Long _oc_Components_EventConsumerBase[] =
   ACE_NTOHL (0x756d6572), 
   ACE_NTOHL (0x42617365), 
   ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:Components/EventConsumerBase:1.0
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Components/EventConsumerBase:1.0
   18,
   ACE_NTOHL (0x4576656e), 
   ACE_NTOHL (0x74436f6e), 
@@ -1248,8 +1252,10 @@ TAO_NAMESPACE_END
 static const CORBA::Long _oc_Components_ConsumerDescription[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  39,
+  47,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f43), 
@@ -1258,7 +1264,7 @@ static const CORBA::Long _oc_Components_ConsumerDescription[] =
   ACE_NTOHL (0x65736372), 
   ACE_NTOHL (0x69707469), 
   ACE_NTOHL (0x6f6e3a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:Components/ConsumerDescription:1.0
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Components/ConsumerDescription:1.0
   20,
   ACE_NTOHL (0x436f6e73), 
   ACE_NTOHL (0x756d6572), 
@@ -1349,10 +1355,12 @@ static const CORBA::Long _oc_Components_ConsumerDescription[] =
   ACE_NTOHL (0x756d6572), 
   ACE_NTOHL (0x0),  // name = consumer
   CORBA::tk_objref, // typecode kind
-  72, // encapsulation length
+  80, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
-    37,
+    45,
     ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
     ACE_NTOHL (0x436f6d70), 
     ACE_NTOHL (0x6f6e656e), 
     ACE_NTOHL (0x74732f45), 
@@ -1361,7 +1369,7 @@ static const CORBA::Long _oc_Components_ConsumerDescription[] =
     ACE_NTOHL (0x756d6572), 
     ACE_NTOHL (0x42617365), 
     ACE_NTOHL (0x3a312e30), 
-    ACE_NTOHL (0x0),  // repository ID = IDL:Components/EventConsumerBase:1.0
+    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Components/EventConsumerBase:1.0
     18,
     ACE_NTOHL (0x4576656e), 
     ACE_NTOHL (0x74436f6e), 
@@ -1880,8 +1888,10 @@ void Components::ConsumerDescriptions::_tao_any_destructor (void *_tao_void_poin
 static const CORBA::Long _oc_Components_ConsumerDescriptions[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  40,
+  48,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f43), 
@@ -1890,7 +1900,7 @@ static const CORBA::Long _oc_Components_ConsumerDescriptions[] =
   ACE_NTOHL (0x65736372), 
   ACE_NTOHL (0x69707469), 
   ACE_NTOHL (0x6f6e733a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:Components/ConsumerDescriptions:1.0
+  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/Components/ConsumerDescriptions:1.0
   21,
   ACE_NTOHL (0x436f6e73), 
   ACE_NTOHL (0x756d6572), 
@@ -1899,13 +1909,15 @@ static const CORBA::Long _oc_Components_ConsumerDescriptions[] =
   ACE_NTOHL (0x696f6e73), 
   ACE_NTOHL (0x0),  // name = ConsumerDescriptions
   CORBA::tk_sequence, // typecode kind
-  480, // encapsulation length
+  496, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_value, // typecode kind
-    464, // encapsulation length
+    480, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
-      39,
+      47,
       ACE_NTOHL (0x49444c3a), 
+      ACE_NTOHL (0x6f6d672e), 
+      ACE_NTOHL (0x6f72672f), 
       ACE_NTOHL (0x436f6d70), 
       ACE_NTOHL (0x6f6e656e), 
       ACE_NTOHL (0x74732f43), 
@@ -1914,7 +1926,7 @@ static const CORBA::Long _oc_Components_ConsumerDescriptions[] =
       ACE_NTOHL (0x65736372), 
       ACE_NTOHL (0x69707469), 
       ACE_NTOHL (0x6f6e3a31), 
-      ACE_NTOHL (0x2e300000),  // repository ID = IDL:Components/ConsumerDescription:1.0
+      ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Components/ConsumerDescription:1.0
       20,
       ACE_NTOHL (0x436f6e73), 
       ACE_NTOHL (0x756d6572), 
@@ -2005,10 +2017,12 @@ static const CORBA::Long _oc_Components_ConsumerDescriptions[] =
       ACE_NTOHL (0x756d6572), 
       ACE_NTOHL (0x0),  // name = consumer
       CORBA::tk_objref, // typecode kind
-      72, // encapsulation length
+      80, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
-        37,
+        45,
         ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
         ACE_NTOHL (0x436f6d70), 
         ACE_NTOHL (0x6f6e656e), 
         ACE_NTOHL (0x74732f45), 
@@ -2017,7 +2031,7 @@ static const CORBA::Long _oc_Components_ConsumerDescriptions[] =
         ACE_NTOHL (0x756d6572), 
         ACE_NTOHL (0x42617365), 
         ACE_NTOHL (0x3a312e30), 
-        ACE_NTOHL (0x0),  // repository ID = IDL:Components/EventConsumerBase:1.0
+        ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Components/EventConsumerBase:1.0
         18,
         ACE_NTOHL (0x4576656e), 
         ACE_NTOHL (0x74436f6e), 
@@ -2055,8 +2069,10 @@ TAO_NAMESPACE_END
 static const CORBA::Long _oc_Components_EmitterDescription[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  38,
+  46,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f45), 
@@ -2065,7 +2081,7 @@ static const CORBA::Long _oc_Components_EmitterDescription[] =
   ACE_NTOHL (0x73637269), 
   ACE_NTOHL (0x7074696f), 
   ACE_NTOHL (0x6e3a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:Components/EmitterDescription:1.0
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Components/EmitterDescription:1.0
   19,
   ACE_NTOHL (0x456d6974), 
   ACE_NTOHL (0x74657244), 
@@ -2156,10 +2172,12 @@ static const CORBA::Long _oc_Components_EmitterDescription[] =
   ACE_NTOHL (0x756d6572), 
   ACE_NTOHL (0x0),  // name = consumer
   CORBA::tk_objref, // typecode kind
-  72, // encapsulation length
+  80, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
-    37,
+    45,
     ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
     ACE_NTOHL (0x436f6d70), 
     ACE_NTOHL (0x6f6e656e), 
     ACE_NTOHL (0x74732f45), 
@@ -2168,7 +2186,7 @@ static const CORBA::Long _oc_Components_EmitterDescription[] =
     ACE_NTOHL (0x756d6572), 
     ACE_NTOHL (0x42617365), 
     ACE_NTOHL (0x3a312e30), 
-    ACE_NTOHL (0x0),  // repository ID = IDL:Components/EventConsumerBase:1.0
+    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Components/EventConsumerBase:1.0
     18,
     ACE_NTOHL (0x4576656e), 
     ACE_NTOHL (0x74436f6e), 
@@ -2687,8 +2705,10 @@ void Components::EmitterDescriptions::_tao_any_destructor (void *_tao_void_point
 static const CORBA::Long _oc_Components_EmitterDescriptions[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  39,
+  47,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f45), 
@@ -2697,7 +2717,7 @@ static const CORBA::Long _oc_Components_EmitterDescriptions[] =
   ACE_NTOHL (0x73637269), 
   ACE_NTOHL (0x7074696f), 
   ACE_NTOHL (0x6e733a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:Components/EmitterDescriptions:1.0
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Components/EmitterDescriptions:1.0
   20,
   ACE_NTOHL (0x456d6974), 
   ACE_NTOHL (0x74657244), 
@@ -2705,13 +2725,15 @@ static const CORBA::Long _oc_Components_EmitterDescriptions[] =
   ACE_NTOHL (0x69707469), 
   ACE_NTOHL (0x6f6e7300),  // name = EmitterDescriptions
   CORBA::tk_sequence, // typecode kind
-  480, // encapsulation length
+  496, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_value, // typecode kind
-    464, // encapsulation length
+    480, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
-      38,
+      46,
       ACE_NTOHL (0x49444c3a), 
+      ACE_NTOHL (0x6f6d672e), 
+      ACE_NTOHL (0x6f72672f), 
       ACE_NTOHL (0x436f6d70), 
       ACE_NTOHL (0x6f6e656e), 
       ACE_NTOHL (0x74732f45), 
@@ -2720,7 +2742,7 @@ static const CORBA::Long _oc_Components_EmitterDescriptions[] =
       ACE_NTOHL (0x73637269), 
       ACE_NTOHL (0x7074696f), 
       ACE_NTOHL (0x6e3a312e), 
-      ACE_NTOHL (0x30000000),  // repository ID = IDL:Components/EmitterDescription:1.0
+      ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Components/EmitterDescription:1.0
       19,
       ACE_NTOHL (0x456d6974), 
       ACE_NTOHL (0x74657244), 
@@ -2811,10 +2833,12 @@ static const CORBA::Long _oc_Components_EmitterDescriptions[] =
       ACE_NTOHL (0x756d6572), 
       ACE_NTOHL (0x0),  // name = consumer
       CORBA::tk_objref, // typecode kind
-      72, // encapsulation length
+      80, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
-        37,
+        45,
         ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
         ACE_NTOHL (0x436f6d70), 
         ACE_NTOHL (0x6f6e656e), 
         ACE_NTOHL (0x74732f45), 
@@ -2823,7 +2847,7 @@ static const CORBA::Long _oc_Components_EmitterDescriptions[] =
         ACE_NTOHL (0x756d6572), 
         ACE_NTOHL (0x42617365), 
         ACE_NTOHL (0x3a312e30), 
-        ACE_NTOHL (0x0),  // repository ID = IDL:Components/EventConsumerBase:1.0
+        ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Components/EventConsumerBase:1.0
         18,
         ACE_NTOHL (0x4576656e), 
         ACE_NTOHL (0x74436f6e), 
@@ -2861,8 +2885,10 @@ TAO_NAMESPACE_END
 static const CORBA::Long _oc_Components_SubscriberDescription[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  41,
+  49,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f53), 
@@ -2872,7 +2898,7 @@ static const CORBA::Long _oc_Components_SubscriberDescription[] =
   ACE_NTOHL (0x63726970), 
   ACE_NTOHL (0x74696f6e), 
   ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:Components/SubscriberDescription:1.0
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Components/SubscriberDescription:1.0
   22,
   ACE_NTOHL (0x53756273), 
   ACE_NTOHL (0x63726962), 
@@ -3019,10 +3045,12 @@ static const CORBA::Long _oc_Components_SubscriberDescription[] =
   ACE_NTOHL (0x756d6572), 
   ACE_NTOHL (0x0),  // name = consumer
   CORBA::tk_objref, // typecode kind
-  72, // encapsulation length
+  80, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
-    37,
+    45,
     ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
     ACE_NTOHL (0x436f6d70), 
     ACE_NTOHL (0x6f6e656e), 
     ACE_NTOHL (0x74732f45), 
@@ -3031,7 +3059,7 @@ static const CORBA::Long _oc_Components_SubscriberDescription[] =
     ACE_NTOHL (0x756d6572), 
     ACE_NTOHL (0x42617365), 
     ACE_NTOHL (0x3a312e30), 
-    ACE_NTOHL (0x0),  // repository ID = IDL:Components/EventConsumerBase:1.0
+    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Components/EventConsumerBase:1.0
     18,
     ACE_NTOHL (0x4576656e), 
     ACE_NTOHL (0x74436f6e), 
@@ -3550,8 +3578,10 @@ void Components::SubscriberDescriptions::_tao_any_destructor (void *_tao_void_po
 static const CORBA::Long _oc_Components_SubscriberDescriptions[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  42,
+  50,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f53), 
@@ -3561,7 +3591,7 @@ static const CORBA::Long _oc_Components_SubscriberDescriptions[] =
   ACE_NTOHL (0x63726970), 
   ACE_NTOHL (0x74696f6e), 
   ACE_NTOHL (0x733a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:Components/SubscriberDescriptions:1.0
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Components/SubscriberDescriptions:1.0
   23,
   ACE_NTOHL (0x53756273), 
   ACE_NTOHL (0x63726962), 
@@ -3570,13 +3600,15 @@ static const CORBA::Long _oc_Components_SubscriberDescriptions[] =
   ACE_NTOHL (0x7074696f), 
   ACE_NTOHL (0x6e730000),  // name = SubscriberDescriptions
   CORBA::tk_sequence, // typecode kind
-  680, // encapsulation length
+  696, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_value, // typecode kind
-    664, // encapsulation length
+    680, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
-      41,
+      49,
       ACE_NTOHL (0x49444c3a), 
+      ACE_NTOHL (0x6f6d672e), 
+      ACE_NTOHL (0x6f72672f), 
       ACE_NTOHL (0x436f6d70), 
       ACE_NTOHL (0x6f6e656e), 
       ACE_NTOHL (0x74732f53), 
@@ -3586,7 +3618,7 @@ static const CORBA::Long _oc_Components_SubscriberDescriptions[] =
       ACE_NTOHL (0x63726970), 
       ACE_NTOHL (0x74696f6e), 
       ACE_NTOHL (0x3a312e30), 
-      ACE_NTOHL (0x0),  // repository ID = IDL:Components/SubscriberDescription:1.0
+      ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Components/SubscriberDescription:1.0
       22,
       ACE_NTOHL (0x53756273), 
       ACE_NTOHL (0x63726962), 
@@ -3733,10 +3765,12 @@ static const CORBA::Long _oc_Components_SubscriberDescriptions[] =
       ACE_NTOHL (0x756d6572), 
       ACE_NTOHL (0x0),  // name = consumer
       CORBA::tk_objref, // typecode kind
-      72, // encapsulation length
+      80, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
-        37,
+        45,
         ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
         ACE_NTOHL (0x436f6d70), 
         ACE_NTOHL (0x6f6e656e), 
         ACE_NTOHL (0x74732f45), 
@@ -3745,7 +3779,7 @@ static const CORBA::Long _oc_Components_SubscriberDescriptions[] =
         ACE_NTOHL (0x756d6572), 
         ACE_NTOHL (0x42617365), 
         ACE_NTOHL (0x3a312e30), 
-        ACE_NTOHL (0x0),  // repository ID = IDL:Components/EventConsumerBase:1.0
+        ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Components/EventConsumerBase:1.0
         18,
         ACE_NTOHL (0x4576656e), 
         ACE_NTOHL (0x74436f6e), 
@@ -3783,8 +3817,10 @@ TAO_NAMESPACE_END
 static const CORBA::Long _oc_Components_PublisherDescription[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  40,
+  48,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f50), 
@@ -3793,7 +3829,7 @@ static const CORBA::Long _oc_Components_PublisherDescription[] =
   ACE_NTOHL (0x44657363), 
   ACE_NTOHL (0x72697074), 
   ACE_NTOHL (0x696f6e3a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:Components/PublisherDescription:1.0
+  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/Components/PublisherDescription:1.0
   21,
   ACE_NTOHL (0x5075626c), 
   ACE_NTOHL (0x69736865), 
@@ -3885,10 +3921,12 @@ static const CORBA::Long _oc_Components_PublisherDescription[] =
   ACE_NTOHL (0x756d6572), 
   ACE_NTOHL (0x0),  // name = consumer
   CORBA::tk_alias, // typecode kind for typedefs
-  492, // encapsulation length
+  516, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
-    42,
+    50,
     ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
     ACE_NTOHL (0x436f6d70), 
     ACE_NTOHL (0x6f6e656e), 
     ACE_NTOHL (0x74732f53), 
@@ -3898,7 +3936,7 @@ static const CORBA::Long _oc_Components_PublisherDescription[] =
     ACE_NTOHL (0x63726970), 
     ACE_NTOHL (0x74696f6e), 
     ACE_NTOHL (0x733a312e), 
-    ACE_NTOHL (0x30000000),  // repository ID = IDL:Components/SubscriberDescriptions:1.0
+    ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Components/SubscriberDescriptions:1.0
     23,
     ACE_NTOHL (0x53756273), 
     ACE_NTOHL (0x63726962), 
@@ -3907,13 +3945,15 @@ static const CORBA::Long _oc_Components_PublisherDescription[] =
     ACE_NTOHL (0x7074696f), 
     ACE_NTOHL (0x6e730000),  // name = SubscriberDescriptions
     CORBA::tk_sequence, // typecode kind
-    404, // encapsulation length
+    420, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       CORBA::tk_value, // typecode kind
-      388, // encapsulation length
+      404, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
-        41,
+        49,
         ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
         ACE_NTOHL (0x436f6d70), 
         ACE_NTOHL (0x6f6e656e), 
         ACE_NTOHL (0x74732f53), 
@@ -3923,7 +3963,7 @@ static const CORBA::Long _oc_Components_PublisherDescription[] =
         ACE_NTOHL (0x63726970), 
         ACE_NTOHL (0x74696f6e), 
         ACE_NTOHL (0x3a312e30), 
-        ACE_NTOHL (0x0),  // repository ID = IDL:Components/SubscriberDescription:1.0
+        ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Components/SubscriberDescription:1.0
         22,
         ACE_NTOHL (0x53756273), 
         ACE_NTOHL (0x63726962), 
@@ -3933,7 +3973,7 @@ static const CORBA::Long _oc_Components_PublisherDescription[] =
         ACE_NTOHL (0x6e000000),  // name = SubscriberDescription
         0, // value modifier
         0xffffffff, // indirection
-        0xfffffe0c, // negative offset (-500)
+        0xfffffdfc, // negative offset (-516)
         2, // member count
         3,
         ACE_NTOHL (0x636b0000),  // name = ck
@@ -3995,10 +4035,12 @@ static const CORBA::Long _oc_Components_PublisherDescription[] =
         ACE_NTOHL (0x756d6572), 
         ACE_NTOHL (0x0),  // name = consumer
         CORBA::tk_objref, // typecode kind
-        72, // encapsulation length
+        80, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
-          37,
+          45,
           ACE_NTOHL (0x49444c3a), 
+          ACE_NTOHL (0x6f6d672e), 
+          ACE_NTOHL (0x6f72672f), 
           ACE_NTOHL (0x436f6d70), 
           ACE_NTOHL (0x6f6e656e), 
           ACE_NTOHL (0x74732f45), 
@@ -4007,7 +4049,7 @@ static const CORBA::Long _oc_Components_PublisherDescription[] =
           ACE_NTOHL (0x756d6572), 
           ACE_NTOHL (0x42617365), 
           ACE_NTOHL (0x3a312e30), 
-          ACE_NTOHL (0x0),  // repository ID = IDL:Components/EventConsumerBase:1.0
+          ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Components/EventConsumerBase:1.0
           18,
           ACE_NTOHL (0x4576656e), 
           ACE_NTOHL (0x74436f6e), 
@@ -4532,8 +4574,10 @@ void Components::PublisherDescriptions::_tao_any_destructor (void *_tao_void_poi
 static const CORBA::Long _oc_Components_PublisherDescriptions[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  41,
+  49,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f50), 
@@ -4543,7 +4587,7 @@ static const CORBA::Long _oc_Components_PublisherDescriptions[] =
   ACE_NTOHL (0x72697074), 
   ACE_NTOHL (0x696f6e73), 
   ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:Components/PublisherDescriptions:1.0
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Components/PublisherDescriptions:1.0
   22,
   ACE_NTOHL (0x5075626c), 
   ACE_NTOHL (0x69736865), 
@@ -4552,13 +4596,15 @@ static const CORBA::Long _oc_Components_PublisherDescriptions[] =
   ACE_NTOHL (0x74696f6e), 
   ACE_NTOHL (0x73000000),  // name = PublisherDescriptions
   CORBA::tk_sequence, // typecode kind
-  904, // encapsulation length
+  936, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_value, // typecode kind
-    888, // encapsulation length
+    920, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
-      40,
+      48,
       ACE_NTOHL (0x49444c3a), 
+      ACE_NTOHL (0x6f6d672e), 
+      ACE_NTOHL (0x6f72672f), 
       ACE_NTOHL (0x436f6d70), 
       ACE_NTOHL (0x6f6e656e), 
       ACE_NTOHL (0x74732f50), 
@@ -4567,7 +4613,7 @@ static const CORBA::Long _oc_Components_PublisherDescriptions[] =
       ACE_NTOHL (0x44657363), 
       ACE_NTOHL (0x72697074), 
       ACE_NTOHL (0x696f6e3a), 
-      ACE_NTOHL (0x312e3000),  // repository ID = IDL:Components/PublisherDescription:1.0
+      ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/Components/PublisherDescription:1.0
       21,
       ACE_NTOHL (0x5075626c), 
       ACE_NTOHL (0x69736865), 
@@ -4659,10 +4705,12 @@ static const CORBA::Long _oc_Components_PublisherDescriptions[] =
       ACE_NTOHL (0x756d6572), 
       ACE_NTOHL (0x0),  // name = consumer
       CORBA::tk_alias, // typecode kind for typedefs
-      492, // encapsulation length
+      516, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
-        42,
+        50,
         ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
         ACE_NTOHL (0x436f6d70), 
         ACE_NTOHL (0x6f6e656e), 
         ACE_NTOHL (0x74732f53), 
@@ -4672,7 +4720,7 @@ static const CORBA::Long _oc_Components_PublisherDescriptions[] =
         ACE_NTOHL (0x63726970), 
         ACE_NTOHL (0x74696f6e), 
         ACE_NTOHL (0x733a312e), 
-        ACE_NTOHL (0x30000000),  // repository ID = IDL:Components/SubscriberDescriptions:1.0
+        ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Components/SubscriberDescriptions:1.0
         23,
         ACE_NTOHL (0x53756273), 
         ACE_NTOHL (0x63726962), 
@@ -4681,13 +4729,15 @@ static const CORBA::Long _oc_Components_PublisherDescriptions[] =
         ACE_NTOHL (0x7074696f), 
         ACE_NTOHL (0x6e730000),  // name = SubscriberDescriptions
         CORBA::tk_sequence, // typecode kind
-        404, // encapsulation length
+        420, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           CORBA::tk_value, // typecode kind
-          388, // encapsulation length
+          404, // encapsulation length
             TAO_ENCAP_BYTE_ORDER, // byte order
-            41,
+            49,
             ACE_NTOHL (0x49444c3a), 
+            ACE_NTOHL (0x6f6d672e), 
+            ACE_NTOHL (0x6f72672f), 
             ACE_NTOHL (0x436f6d70), 
             ACE_NTOHL (0x6f6e656e), 
             ACE_NTOHL (0x74732f53), 
@@ -4697,7 +4747,7 @@ static const CORBA::Long _oc_Components_PublisherDescriptions[] =
             ACE_NTOHL (0x63726970), 
             ACE_NTOHL (0x74696f6e), 
             ACE_NTOHL (0x3a312e30), 
-            ACE_NTOHL (0x0),  // repository ID = IDL:Components/SubscriberDescription:1.0
+            ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Components/SubscriberDescription:1.0
             22,
             ACE_NTOHL (0x53756273), 
             ACE_NTOHL (0x63726962), 
@@ -4707,7 +4757,7 @@ static const CORBA::Long _oc_Components_PublisherDescriptions[] =
             ACE_NTOHL (0x6e000000),  // name = SubscriberDescription
             0, // value modifier
             0xffffffff, // indirection
-            0xfffffe0c, // negative offset (-500)
+            0xfffffdfc, // negative offset (-516)
             2, // member count
             3,
             ACE_NTOHL (0x636b0000),  // name = ck
@@ -4769,10 +4819,12 @@ static const CORBA::Long _oc_Components_PublisherDescriptions[] =
             ACE_NTOHL (0x756d6572), 
             ACE_NTOHL (0x0),  // name = consumer
             CORBA::tk_objref, // typecode kind
-            72, // encapsulation length
+            80, // encapsulation length
               TAO_ENCAP_BYTE_ORDER, // byte order
-              37,
+              45,
               ACE_NTOHL (0x49444c3a), 
+              ACE_NTOHL (0x6f6d672e), 
+              ACE_NTOHL (0x6f72672f), 
               ACE_NTOHL (0x436f6d70), 
               ACE_NTOHL (0x6f6e656e), 
               ACE_NTOHL (0x74732f45), 
@@ -4781,7 +4833,7 @@ static const CORBA::Long _oc_Components_PublisherDescriptions[] =
               ACE_NTOHL (0x756d6572), 
               ACE_NTOHL (0x42617365), 
               ACE_NTOHL (0x3a312e30), 
-              ACE_NTOHL (0x0),  // repository ID = IDL:Components/EventConsumerBase:1.0
+              ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Components/EventConsumerBase:1.0
               18,
               ACE_NTOHL (0x4576656e), 
               ACE_NTOHL (0x74436f6e), 
@@ -8738,7 +8790,7 @@ Components::Events::_narrow (
     {
       CORBA::Boolean is_a =
         obj->_is_a (
-            "IDL:Components/Events:1.0"
+            "IDL:omg.org/Components/Events:1.0"
             ACE_ENV_ARG_PARAMETER
           );
       ACE_CHECK_RETURN (Events::_nil ());
@@ -8840,7 +8892,7 @@ Components::Events::_is_a (
   if (
       !ACE_OS::strcmp (
           (char *)value,
-          "IDL:Components/Events:1.0"
+          "IDL:omg.org/Components/Events:1.0"
         ) ||
       !ACE_OS::strcmp (
           (char *)value,
@@ -8892,7 +8944,7 @@ void *Components::Events::_tao_QueryInterface (ptr_arith_t type)
 
 const char* Components::Events::_interface_repository_id (void) const
 {
-  return "IDL:Components/Events:1.0";
+  return "IDL:omg.org/Components/Events:1.0";
 }
 
 // TAO_IDL - Generated from
@@ -9160,14 +9212,16 @@ void Components::Events::connect_consumer (
 static const CORBA::Long _oc_Components_Events[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  26,
+  34,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f45), 
   ACE_NTOHL (0x76656e74), 
   ACE_NTOHL (0x733a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:Components/Events:1.0
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Components/Events:1.0
   7,
   ACE_NTOHL (0x4576656e), 
   ACE_NTOHL (0x74730000),  // name = Events

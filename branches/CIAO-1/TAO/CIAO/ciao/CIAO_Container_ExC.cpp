@@ -47,9 +47,11 @@
 
 static const CORBA::Long _oc_Components_BadComponentReferenceReason[] =
 {
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  47,
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  55,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f42), 
@@ -60,8 +62,8 @@ static const CORBA::Long _oc_Components_BadComponentReferenceReason[] =
   ACE_NTOHL (0x656e6365), 
   ACE_NTOHL (0x52656173), 
   ACE_NTOHL (0x6f6e3a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:Components/BadComponentReferenceReason:1.0
-  28,
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Components/BadComponentReferenceReason:1.0
+28,
   ACE_NTOHL (0x42616443), 
   ACE_NTOHL (0x6f6d706f), 
   ACE_NTOHL (0x6e656e74), 
@@ -70,20 +72,20 @@ static const CORBA::Long _oc_Components_BadComponentReferenceReason[] =
   ACE_NTOHL (0x65526561), 
   ACE_NTOHL (0x736f6e00),  // name = BadComponentReferenceReason
   3, // member count
-  20,
+20,
   ACE_NTOHL (0x4e4f4e5f), 
   ACE_NTOHL (0x4c4f4341), 
   ACE_NTOHL (0x4c5f5245), 
   ACE_NTOHL (0x46455245), 
   ACE_NTOHL (0x4e434500),  // name = NON_LOCAL_REFERENCE
-  24,
+24,
   ACE_NTOHL (0x4e4f4e5f), 
   ACE_NTOHL (0x434f4d50), 
   ACE_NTOHL (0x4f4e454e), 
   ACE_NTOHL (0x545f5245), 
   ACE_NTOHL (0x46455245), 
   ACE_NTOHL (0x4e434500),  // name = NON_COMPONENT_REFERENCE
-  16,
+16,
   ACE_NTOHL (0x57524f4e), 
   ACE_NTOHL (0x475f434f), 
   ACE_NTOHL (0x4e544149), 
@@ -113,15 +115,17 @@ TAO_NAMESPACE_END
 static const CORBA::Long _oc_Components_CatalogBase[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  31,
+  39,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f43), 
   ACE_NTOHL (0x6174616c), 
   ACE_NTOHL (0x6f674261), 
   ACE_NTOHL (0x73653a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:Components/CatalogBase:1.0
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Components/CatalogBase:1.0
   12,
   ACE_NTOHL (0x43617461), 
   ACE_NTOHL (0x6c6f6742), 
@@ -170,14 +174,16 @@ TAO_NAMESPACE_END
 static const CORBA::Long _oc_Components_TypeId[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  26,
+  34,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f54), 
   ACE_NTOHL (0x79706549), 
   ACE_NTOHL (0x643a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:Components/TypeId:1.0
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Components/TypeId:1.0
   7,
   ACE_NTOHL (0x54797065), 
   ACE_NTOHL (0x49640000),  // name = TypeId
@@ -230,15 +236,17 @@ TAO_NAMESPACE_END
 static const CORBA::Long _oc_Components_SegmentId[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  29,
+  37,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f53), 
   ACE_NTOHL (0x65676d65), 
   ACE_NTOHL (0x6e744964), 
   ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:Components/SegmentId:1.0
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Components/SegmentId:1.0
   10,
   ACE_NTOHL (0x5365676d), 
   ACE_NTOHL (0x656e7449), 
@@ -270,14 +278,16 @@ TAO_NAMESPACE_END
 static const CORBA::Long _oc_Components_FacetId[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  27,
+  35,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f46), 
   ACE_NTOHL (0x61636574), 
   ACE_NTOHL (0x49643a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:Components/FacetId:1.0
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Components/FacetId:1.0
   8,
   ACE_NTOHL (0x46616365), 
   ACE_NTOHL (0x74496400),  // name = FacetId
@@ -373,14 +383,16 @@ void Components::IdData::_tao_any_destructor (void *_tao_void_pointer)
 static const CORBA::Long _oc_Components_IdData[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  26,
+  34,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f49), 
   ACE_NTOHL (0x64446174), 
   ACE_NTOHL (0x613a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:Components/IdData:1.0
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Components/IdData:1.0
   7,
   ACE_NTOHL (0x49644461), 
   ACE_NTOHL (0x74610000),  // name = IdData
@@ -416,15 +428,17 @@ TAO_NAMESPACE_END
 static const CORBA::Long _oc_Components_PersistentId[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  32,
+  40,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f50), 
   ACE_NTOHL (0x65727369), 
   ACE_NTOHL (0x7374656e), 
   ACE_NTOHL (0x7449643a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:Components/PersistentId:1.0
+  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/Components/PersistentId:1.0
   13,
   ACE_NTOHL (0x50657273), 
   ACE_NTOHL (0x69737465), 
@@ -472,15 +486,17 @@ TAO_NAMESPACE_END
 static const CORBA::Long _oc_Components_StateIdType[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  31,
+  39,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f53), 
   ACE_NTOHL (0x74617465), 
   ACE_NTOHL (0x49645479), 
   ACE_NTOHL (0x70653a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:Components/StateIdType:1.0
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Components/StateIdType:1.0
   12,
   ACE_NTOHL (0x53746174), 
   ACE_NTOHL (0x65496454), 
@@ -511,7 +527,7 @@ TAO_NAMESPACE_END
 
 Components::BadComponentReference::BadComponentReference (void)
   : CORBA_UserException (
-        "IDL:Components/BadComponentReference:1.0",
+        "IDL:omg.org/Components/BadComponentReference:1.0",
         "BadComponentReference"
       )
 {
@@ -547,7 +563,7 @@ void Components::BadComponentReference::_tao_any_destructor (void *_tao_void_poi
 Components::BadComponentReference *
 Components::BadComponentReference::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:Components/BadComponentReference:1.0", exc->_rep_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/Components/BadComponentReference:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (BadComponentReference *, exc);
     }
@@ -615,7 +631,7 @@ void Components::BadComponentReference::_tao_decode (
 Components::BadComponentReference::BadComponentReference (
     Components::BadComponentReferenceReason _tao_reason
   )  : CORBA_UserException (
-        "IDL:Components/BadComponentReference:1.0",
+        "IDL:omg.org/Components/BadComponentReference:1.0",
         "BadComponentReference"
       )
 {
@@ -634,8 +650,10 @@ CORBA::TypeCode_ptr Components::BadComponentReference::_type (void) const
 static const CORBA::Long _oc_Components_BadComponentReference[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  41,
+  49,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f42), 
@@ -645,7 +663,7 @@ static const CORBA::Long _oc_Components_BadComponentReference[] =
   ACE_NTOHL (0x65666572), 
   ACE_NTOHL (0x656e6365), 
   ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:Components/BadComponentReference:1.0
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Components/BadComponentReference:1.0
   22,
   ACE_NTOHL (0x42616443), 
   ACE_NTOHL (0x6f6d706f), 
@@ -658,10 +676,12 @@ static const CORBA::Long _oc_Components_BadComponentReference[] =
   ACE_NTOHL (0x72656173), 
   ACE_NTOHL (0x6f6e0000),  // name = reason
   CORBA::tk_enum, // typecode kind
-  164, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    47,
+  172, // encapsulation length
+TAO_ENCAP_BYTE_ORDER, // byte order
+    55,
     ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
     ACE_NTOHL (0x436f6d70), 
     ACE_NTOHL (0x6f6e656e), 
     ACE_NTOHL (0x74732f42), 
@@ -672,8 +692,8 @@ static const CORBA::Long _oc_Components_BadComponentReference[] =
     ACE_NTOHL (0x656e6365), 
     ACE_NTOHL (0x52656173), 
     ACE_NTOHL (0x6f6e3a31), 
-    ACE_NTOHL (0x2e300000),  // repository ID = IDL:Components/BadComponentReferenceReason:1.0
-    28,
+    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Components/BadComponentReferenceReason:1.0
+28,
     ACE_NTOHL (0x42616443), 
     ACE_NTOHL (0x6f6d706f), 
     ACE_NTOHL (0x6e656e74), 
@@ -682,20 +702,20 @@ static const CORBA::Long _oc_Components_BadComponentReference[] =
     ACE_NTOHL (0x65526561), 
     ACE_NTOHL (0x736f6e00),  // name = BadComponentReferenceReason
     3, // member count
-    20,
+20,
     ACE_NTOHL (0x4e4f4e5f), 
     ACE_NTOHL (0x4c4f4341), 
     ACE_NTOHL (0x4c5f5245), 
     ACE_NTOHL (0x46455245), 
     ACE_NTOHL (0x4e434500),  // name = NON_LOCAL_REFERENCE
-    24,
+24,
     ACE_NTOHL (0x4e4f4e5f), 
     ACE_NTOHL (0x434f4d50), 
     ACE_NTOHL (0x4f4e454e), 
     ACE_NTOHL (0x545f5245), 
     ACE_NTOHL (0x46455245), 
     ACE_NTOHL (0x4e434500),  // name = NON_COMPONENT_REFERENCE
-    16,
+16,
     ACE_NTOHL (0x57524f4e), 
     ACE_NTOHL (0x475f434f), 
     ACE_NTOHL (0x4e544149), 
@@ -725,7 +745,7 @@ TAO_NAMESPACE_END
 
 Components::PolicyMismatch::PolicyMismatch (void)
   : CORBA_UserException (
-        "IDL:Components/PolicyMismatch:1.0",
+        "IDL:omg.org/Components/PolicyMismatch:1.0",
         "PolicyMismatch"
       )
 {
@@ -759,7 +779,7 @@ void Components::PolicyMismatch::_tao_any_destructor (void *_tao_void_pointer)
 Components::PolicyMismatch *
 Components::PolicyMismatch::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:Components/PolicyMismatch:1.0", exc->_rep_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/Components/PolicyMismatch:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (PolicyMismatch *, exc);
     }
@@ -831,8 +851,10 @@ CORBA::TypeCode_ptr Components::PolicyMismatch::_type (void) const
 static const CORBA::Long _oc_Components_PolicyMismatch[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  34,
+  42,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f50), 
@@ -840,7 +862,7 @@ static const CORBA::Long _oc_Components_PolicyMismatch[] =
   ACE_NTOHL (0x794d6973), 
   ACE_NTOHL (0x6d617463), 
   ACE_NTOHL (0x683a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:Components/PolicyMismatch:1.0
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Components/PolicyMismatch:1.0
   15,
   ACE_NTOHL (0x506f6c69), 
   ACE_NTOHL (0x63794d69), 
@@ -871,7 +893,7 @@ TAO_NAMESPACE_END
 
 Components::PersistenceNotAvailable::PersistenceNotAvailable (void)
   : CORBA_UserException (
-        "IDL:Components/PersistenceNotAvailable:1.0",
+        "IDL:omg.org/Components/PersistenceNotAvailable:1.0",
         "PersistenceNotAvailable"
       )
 {
@@ -905,7 +927,7 @@ void Components::PersistenceNotAvailable::_tao_any_destructor (void *_tao_void_p
 Components::PersistenceNotAvailable *
 Components::PersistenceNotAvailable::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:Components/PersistenceNotAvailable:1.0", exc->_rep_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/Components/PersistenceNotAvailable:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (PersistenceNotAvailable *, exc);
     }
@@ -977,8 +999,10 @@ CORBA::TypeCode_ptr Components::PersistenceNotAvailable::_type (void) const
 static const CORBA::Long _oc_Components_PersistenceNotAvailable[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  43,
+  51,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f50), 
@@ -988,7 +1012,7 @@ static const CORBA::Long _oc_Components_PersistenceNotAvailable[] =
   ACE_NTOHL (0x74417661), 
   ACE_NTOHL (0x696c6162), 
   ACE_NTOHL (0x6c653a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:Components/PersistenceNotAvailable:1.0
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Components/PersistenceNotAvailable:1.0
   24,
   ACE_NTOHL (0x50657273), 
   ACE_NTOHL (0x69737465), 
@@ -1021,7 +1045,7 @@ TAO_NAMESPACE_END
 
 Components::UnknownActualHome::UnknownActualHome (void)
   : CORBA_UserException (
-        "IDL:Components/UnknownActualHome:1.0",
+        "IDL:omg.org/Components/UnknownActualHome:1.0",
         "UnknownActualHome"
       )
 {
@@ -1055,7 +1079,7 @@ void Components::UnknownActualHome::_tao_any_destructor (void *_tao_void_pointer
 Components::UnknownActualHome *
 Components::UnknownActualHome::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:Components/UnknownActualHome:1.0", exc->_rep_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/Components/UnknownActualHome:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (UnknownActualHome *, exc);
     }
@@ -1127,8 +1151,10 @@ CORBA::TypeCode_ptr Components::UnknownActualHome::_type (void) const
 static const CORBA::Long _oc_Components_UnknownActualHome[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  37,
+  45,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f55), 
@@ -1137,7 +1163,7 @@ static const CORBA::Long _oc_Components_UnknownActualHome[] =
   ACE_NTOHL (0x7475616c), 
   ACE_NTOHL (0x486f6d65), 
   ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:Components/UnknownActualHome:1.0
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Components/UnknownActualHome:1.0
   18,
   ACE_NTOHL (0x556e6b6e), 
   ACE_NTOHL (0x6f776e41), 
@@ -1169,7 +1195,7 @@ TAO_NAMESPACE_END
 
 Components::ProxyHomeNotSupported::ProxyHomeNotSupported (void)
   : CORBA_UserException (
-        "IDL:Components/ProxyHomeNotSupported:1.0",
+        "IDL:omg.org/Components/ProxyHomeNotSupported:1.0",
         "ProxyHomeNotSupported"
       )
 {
@@ -1203,7 +1229,7 @@ void Components::ProxyHomeNotSupported::_tao_any_destructor (void *_tao_void_poi
 Components::ProxyHomeNotSupported *
 Components::ProxyHomeNotSupported::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:Components/ProxyHomeNotSupported:1.0", exc->_rep_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/Components/ProxyHomeNotSupported:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (ProxyHomeNotSupported *, exc);
     }
@@ -1275,8 +1301,10 @@ CORBA::TypeCode_ptr Components::ProxyHomeNotSupported::_type (void) const
 static const CORBA::Long _oc_Components_ProxyHomeNotSupported[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  41,
+  49,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f50), 
@@ -1286,7 +1314,7 @@ static const CORBA::Long _oc_Components_ProxyHomeNotSupported[] =
   ACE_NTOHL (0x7570706f), 
   ACE_NTOHL (0x72746564), 
   ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:Components/ProxyHomeNotSupported:1.0
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Components/ProxyHomeNotSupported:1.0
   22,
   ACE_NTOHL (0x50726f78), 
   ACE_NTOHL (0x79486f6d), 
@@ -1319,7 +1347,7 @@ TAO_NAMESPACE_END
 
 Components::InvalidStateIdData::InvalidStateIdData (void)
   : CORBA_UserException (
-        "IDL:Components/InvalidStateIdData:1.0",
+        "IDL:omg.org/Components/InvalidStateIdData:1.0",
         "InvalidStateIdData"
       )
 {
@@ -1353,7 +1381,7 @@ void Components::InvalidStateIdData::_tao_any_destructor (void *_tao_void_pointe
 Components::InvalidStateIdData *
 Components::InvalidStateIdData::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:Components/InvalidStateIdData:1.0", exc->_rep_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/Components/InvalidStateIdData:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (InvalidStateIdData *, exc);
     }
@@ -1425,8 +1453,10 @@ CORBA::TypeCode_ptr Components::InvalidStateIdData::_type (void) const
 static const CORBA::Long _oc_Components_InvalidStateIdData[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  38,
+  46,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f49), 
@@ -1435,7 +1465,7 @@ static const CORBA::Long _oc_Components_InvalidStateIdData[] =
   ACE_NTOHL (0x61746549), 
   ACE_NTOHL (0x64446174), 
   ACE_NTOHL (0x613a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:Components/InvalidStateIdData:1.0
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Components/InvalidStateIdData:1.0
   19,
   ACE_NTOHL (0x496e7661), 
   ACE_NTOHL (0x6c696453), 
@@ -1790,7 +1820,7 @@ void *Components::HomeRegistration::_tao_QueryInterface (ptr_arith_t type)
 
 const char* Components::HomeRegistration::_interface_repository_id (void) const
 {
-  return "IDL:Components/HomeRegistration:1.0";
+  return "IDL:omg.org/Components/HomeRegistration:1.0";
 }
 
 // TAO_IDL - Generated from
@@ -1799,8 +1829,10 @@ const char* Components::HomeRegistration::_interface_repository_id (void) const
 static const CORBA::Long _oc_Components_HomeRegistration[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  36,
+  44,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f48), 
@@ -1808,7 +1840,7 @@ static const CORBA::Long _oc_Components_HomeRegistration[] =
   ACE_NTOHL (0x65676973), 
   ACE_NTOHL (0x74726174), 
   ACE_NTOHL (0x696f6e3a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:Components/HomeRegistration:1.0
+  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/Components/HomeRegistration:1.0
   17,
   ACE_NTOHL (0x486f6d65), 
   ACE_NTOHL (0x52656769), 
@@ -2176,7 +2208,7 @@ void *Components::CCM2Context::_tao_QueryInterface (ptr_arith_t type)
 
 const char* Components::CCM2Context::_interface_repository_id (void) const
 {
-  return "IDL:Components/CCM2Context:1.0";
+  return "IDL:omg.org/Components/CCM2Context:1.0";
 }
 
 // TAO_IDL - Generated from
@@ -2185,15 +2217,17 @@ const char* Components::CCM2Context::_interface_repository_id (void) const
 static const CORBA::Long _oc_Components_CCM2Context[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  31,
+  39,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f43), 
   ACE_NTOHL (0x434d3243), 
   ACE_NTOHL (0x6f6e7465), 
   ACE_NTOHL (0x78743a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:Components/CCM2Context:1.0
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Components/CCM2Context:1.0
   12,
   ACE_NTOHL (0x43434d32), 
   ACE_NTOHL (0x436f6e74), 
@@ -2559,7 +2593,7 @@ void *Components::ProxyHomeRegistration::_tao_QueryInterface (ptr_arith_t type)
 
 const char* Components::ProxyHomeRegistration::_interface_repository_id (void) const
 {
-  return "IDL:Components/ProxyHomeRegistration:1.0";
+  return "IDL:omg.org/Components/ProxyHomeRegistration:1.0";
 }
 
 // TAO_IDL - Generated from
@@ -2568,8 +2602,10 @@ const char* Components::ProxyHomeRegistration::_interface_repository_id (void) c
 static const CORBA::Long _oc_Components_ProxyHomeRegistration[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  41,
+  49,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f50), 
@@ -2579,7 +2615,7 @@ static const CORBA::Long _oc_Components_ProxyHomeRegistration[] =
   ACE_NTOHL (0x73747261), 
   ACE_NTOHL (0x74696f6e), 
   ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:Components/ProxyHomeRegistration:1.0
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Components/ProxyHomeRegistration:1.0
   22,
   ACE_NTOHL (0x50726f78), 
   ACE_NTOHL (0x79486f6d), 
@@ -2976,7 +3012,7 @@ void *Components::Session2Context::_tao_QueryInterface (ptr_arith_t type)
 
 const char* Components::Session2Context::_interface_repository_id (void) const
 {
-  return "IDL:Components/Session2Context:1.0";
+  return "IDL:omg.org/Components/Session2Context:1.0";
 }
 
 // TAO_IDL - Generated from
@@ -2985,8 +3021,10 @@ const char* Components::Session2Context::_interface_repository_id (void) const
 static const CORBA::Long _oc_Components_Session2Context[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  35,
+  43,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f53), 
@@ -2994,7 +3032,7 @@ static const CORBA::Long _oc_Components_Session2Context[] =
   ACE_NTOHL (0x6f6e3243), 
   ACE_NTOHL (0x6f6e7465), 
   ACE_NTOHL (0x78743a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:Components/Session2Context:1.0
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Components/Session2Context:1.0
   16,
   ACE_NTOHL (0x53657373), 
   ACE_NTOHL (0x696f6e32), 
@@ -3025,15 +3063,17 @@ TAO_NAMESPACE_END
 static const CORBA::Long _oc_Components_StateIdValue[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  32,
+  40,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f53), 
   ACE_NTOHL (0x74617465), 
   ACE_NTOHL (0x49645661), 
   ACE_NTOHL (0x6c75653a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:Components/StateIdValue:1.0
+  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/Components/StateIdValue:1.0
   13,
   ACE_NTOHL (0x53746174), 
   ACE_NTOHL (0x65496456), 
@@ -3681,7 +3721,7 @@ void *Components::StateIdFactory::_tao_QueryInterface (ptr_arith_t type)
 
 const char* Components::StateIdFactory::_interface_repository_id (void) const
 {
-  return "IDL:Components/StateIdFactory:1.0";
+  return "IDL:omg.org/Components/StateIdFactory:1.0";
 }
 
 // TAO_IDL - Generated from
@@ -3690,8 +3730,10 @@ const char* Components::StateIdFactory::_interface_repository_id (void) const
 static const CORBA::Long _oc_Components_StateIdFactory[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  34,
+  42,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f53), 
@@ -3699,7 +3741,7 @@ static const CORBA::Long _oc_Components_StateIdFactory[] =
   ACE_NTOHL (0x49644661), 
   ACE_NTOHL (0x63746f72), 
   ACE_NTOHL (0x793a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:Components/StateIdFactory:1.0
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Components/StateIdFactory:1.0
   15,
   ACE_NTOHL (0x53746174), 
   ACE_NTOHL (0x65496446), 
@@ -3730,8 +3772,10 @@ TAO_NAMESPACE_END
 static const CORBA::Long _oc_Components_PersistentIdValue[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  37,
+  45,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f50), 
@@ -3740,7 +3784,7 @@ static const CORBA::Long _oc_Components_PersistentIdValue[] =
   ACE_NTOHL (0x74496456), 
   ACE_NTOHL (0x616c7565), 
   ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:Components/PersistentIdValue:1.0
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Components/PersistentIdValue:1.0
   18,
   ACE_NTOHL (0x50657273), 
   ACE_NTOHL (0x69737465), 
@@ -3754,17 +3798,19 @@ static const CORBA::Long _oc_Components_PersistentIdValue[] =
   4,
   ACE_NTOHL (0x70696400),  // name = pid
   CORBA::tk_alias, // typecode kind for typedefs
-  124, // encapsulation length
+  132, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
-    32,
+    40,
     ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
     ACE_NTOHL (0x436f6d70), 
     ACE_NTOHL (0x6f6e656e), 
     ACE_NTOHL (0x74732f50), 
     ACE_NTOHL (0x65727369), 
     ACE_NTOHL (0x7374656e), 
     ACE_NTOHL (0x7449643a), 
-    ACE_NTOHL (0x312e3000),  // repository ID = IDL:Components/PersistentId:1.0
+    ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/Components/PersistentId:1.0
     13,
     ACE_NTOHL (0x50657273), 
     ACE_NTOHL (0x69737465), 
@@ -4138,15 +4184,17 @@ Components::PersistentIdValue_init::tao_repository_id (void)
 static const CORBA::Long _oc_Components_SegmentDescr[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  32,
+  40,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f53), 
   ACE_NTOHL (0x65676d65), 
   ACE_NTOHL (0x6e744465), 
   ACE_NTOHL (0x7363723a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:Components/SegmentDescr:1.0
+  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/Components/SegmentDescr:1.0
   13,
   ACE_NTOHL (0x5365676d), 
   ACE_NTOHL (0x656e7444), 
@@ -4159,17 +4207,19 @@ static const CORBA::Long _oc_Components_SegmentDescr[] =
   4,
   ACE_NTOHL (0x73696400),  // name = sid
   CORBA::tk_value, // typecode kind
-  72, // encapsulation length
+  80, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
-    32,
+    40,
     ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
     ACE_NTOHL (0x436f6d70), 
     ACE_NTOHL (0x6f6e656e), 
     ACE_NTOHL (0x74732f53), 
     ACE_NTOHL (0x74617465), 
     ACE_NTOHL (0x49645661), 
     ACE_NTOHL (0x6c75653a), 
-    ACE_NTOHL (0x312e3000),  // repository ID = IDL:Components/StateIdValue:1.0
+    ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/Components/StateIdValue:1.0
     13,
     ACE_NTOHL (0x53746174), 
     ACE_NTOHL (0x65496456), 
@@ -4185,17 +4235,19 @@ static const CORBA::Long _oc_Components_SegmentDescr[] =
   4,
   ACE_NTOHL (0x73656700),  // name = seg
   CORBA::tk_alias, // typecode kind for typedefs
-  60, // encapsulation length
+  68, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
-    29,
+    37,
     ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
     ACE_NTOHL (0x436f6d70), 
     ACE_NTOHL (0x6f6e656e), 
     ACE_NTOHL (0x74732f53), 
     ACE_NTOHL (0x65676d65), 
     ACE_NTOHL (0x6e744964), 
     ACE_NTOHL (0x3a312e30), 
-    ACE_NTOHL (0x0),  // repository ID = IDL:Components/SegmentId:1.0
+    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Components/SegmentId:1.0
     10,
     ACE_NTOHL (0x5365676d), 
     ACE_NTOHL (0x656e7449), 
@@ -4697,8 +4749,10 @@ void Components::SegmentDescrSeq::_tao_any_destructor (void *_tao_void_pointer)
 static const CORBA::Long _oc_Components_SegmentDescrSeq[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  35,
+  43,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f53), 
@@ -4706,27 +4760,29 @@ static const CORBA::Long _oc_Components_SegmentDescrSeq[] =
   ACE_NTOHL (0x6e744465), 
   ACE_NTOHL (0x73637253), 
   ACE_NTOHL (0x65713a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:Components/SegmentDescrSeq:1.0
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Components/SegmentDescrSeq:1.0
   16,
   ACE_NTOHL (0x5365676d), 
   ACE_NTOHL (0x656e7444), 
   ACE_NTOHL (0x65736372), 
   ACE_NTOHL (0x53657100),  // name = SegmentDescrSeq
   CORBA::tk_sequence, // typecode kind
-  260, // encapsulation length
+  284, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_value, // typecode kind
-    244, // encapsulation length
+    268, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
-      32,
+      40,
       ACE_NTOHL (0x49444c3a), 
+      ACE_NTOHL (0x6f6d672e), 
+      ACE_NTOHL (0x6f72672f), 
       ACE_NTOHL (0x436f6d70), 
       ACE_NTOHL (0x6f6e656e), 
       ACE_NTOHL (0x74732f53), 
       ACE_NTOHL (0x65676d65), 
       ACE_NTOHL (0x6e744465), 
       ACE_NTOHL (0x7363723a), 
-      ACE_NTOHL (0x312e3000),  // repository ID = IDL:Components/SegmentDescr:1.0
+      ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/Components/SegmentDescr:1.0
       13,
       ACE_NTOHL (0x5365676d), 
       ACE_NTOHL (0x656e7444), 
@@ -4739,17 +4795,19 @@ static const CORBA::Long _oc_Components_SegmentDescrSeq[] =
       4,
       ACE_NTOHL (0x73696400),  // name = sid
       CORBA::tk_value, // typecode kind
-      72, // encapsulation length
+      80, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
-        32,
+        40,
         ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
         ACE_NTOHL (0x436f6d70), 
         ACE_NTOHL (0x6f6e656e), 
         ACE_NTOHL (0x74732f53), 
         ACE_NTOHL (0x74617465), 
         ACE_NTOHL (0x49645661), 
         ACE_NTOHL (0x6c75653a), 
-        ACE_NTOHL (0x312e3000),  // repository ID = IDL:Components/StateIdValue:1.0
+        ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/Components/StateIdValue:1.0
         13,
         ACE_NTOHL (0x53746174), 
         ACE_NTOHL (0x65496456), 
@@ -4765,17 +4823,19 @@ static const CORBA::Long _oc_Components_SegmentDescrSeq[] =
       4,
       ACE_NTOHL (0x73656700),  // name = seg
       CORBA::tk_alias, // typecode kind for typedefs
-      60, // encapsulation length
+      68, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
-        29,
+        37,
         ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
         ACE_NTOHL (0x436f6d70), 
         ACE_NTOHL (0x6f6e656e), 
         ACE_NTOHL (0x74732f53), 
         ACE_NTOHL (0x65676d65), 
         ACE_NTOHL (0x6e744964), 
         ACE_NTOHL (0x3a312e30), 
-        ACE_NTOHL (0x0),  // repository ID = IDL:Components/SegmentId:1.0
+        ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Components/SegmentId:1.0
         10,
         ACE_NTOHL (0x5365676d), 
         ACE_NTOHL (0x656e7449), 
@@ -5135,7 +5195,7 @@ void *Components::ComponentId::_tao_QueryInterface (ptr_arith_t type)
 
 const char* Components::ComponentId::_interface_repository_id (void) const
 {
-  return "IDL:Components/ComponentId:1.0";
+  return "IDL:omg.org/Components/ComponentId:1.0";
 }
 
 // TAO_IDL - Generated from
@@ -5144,15 +5204,17 @@ const char* Components::ComponentId::_interface_repository_id (void) const
 static const CORBA::Long _oc_Components_ComponentId[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  31,
+  39,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f43), 
   ACE_NTOHL (0x6f6d706f), 
   ACE_NTOHL (0x6e656e74), 
   ACE_NTOHL (0x49643a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:Components/ComponentId:1.0
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Components/ComponentId:1.0
   12,
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
@@ -5546,7 +5608,7 @@ void *Components::Entity2Context::_tao_QueryInterface (ptr_arith_t type)
 
 const char* Components::Entity2Context::_interface_repository_id (void) const
 {
-  return "IDL:Components/Entity2Context:1.0";
+  return "IDL:omg.org/Components/Entity2Context:1.0";
 }
 
 // TAO_IDL - Generated from
@@ -5555,8 +5617,10 @@ const char* Components::Entity2Context::_interface_repository_id (void) const
 static const CORBA::Long _oc_Components_Entity2Context[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  34,
+  42,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f45), 
@@ -5564,7 +5628,7 @@ static const CORBA::Long _oc_Components_Entity2Context[] =
   ACE_NTOHL (0x7932436f), 
   ACE_NTOHL (0x6e746578), 
   ACE_NTOHL (0x743a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:Components/Entity2Context:1.0
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Components/Entity2Context:1.0
   15,
   ACE_NTOHL (0x456e7469), 
   ACE_NTOHL (0x74793243), 
@@ -5931,7 +5995,7 @@ void *Components::ExecutorLocator::_tao_QueryInterface (ptr_arith_t type)
 
 const char* Components::ExecutorLocator::_interface_repository_id (void) const
 {
-  return "IDL:Components/ExecutorLocator:1.0";
+  return "IDL:omg.org/Components/ExecutorLocator:1.0";
 }
 
 // TAO_IDL - Generated from
@@ -5940,8 +6004,10 @@ const char* Components::ExecutorLocator::_interface_repository_id (void) const
 static const CORBA::Long _oc_Components_ExecutorLocator[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  35,
+  43,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f45), 
@@ -5949,7 +6015,7 @@ static const CORBA::Long _oc_Components_ExecutorLocator[] =
   ACE_NTOHL (0x746f724c), 
   ACE_NTOHL (0x6f636174), 
   ACE_NTOHL (0x6f723a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:Components/ExecutorLocator:1.0
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Components/ExecutorLocator:1.0
   16,
   ACE_NTOHL (0x45786563), 
   ACE_NTOHL (0x75746f72), 
@@ -6302,7 +6368,7 @@ void *Components::HomeExecutorBase::_tao_QueryInterface (ptr_arith_t type)
 
 const char* Components::HomeExecutorBase::_interface_repository_id (void) const
 {
-  return "IDL:Components/HomeExecutorBase:1.0";
+  return "IDL:omg.org/Components/HomeExecutorBase:1.0";
 }
 
 // TAO_IDL - Generated from
@@ -6311,8 +6377,10 @@ const char* Components::HomeExecutorBase::_interface_repository_id (void) const
 static const CORBA::Long _oc_Components_HomeExecutorBase[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  36,
+  44,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f48), 
@@ -6320,7 +6388,7 @@ static const CORBA::Long _oc_Components_HomeExecutorBase[] =
   ACE_NTOHL (0x78656375), 
   ACE_NTOHL (0x746f7242), 
   ACE_NTOHL (0x6173653a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:Components/HomeExecutorBase:1.0
+  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/Components/HomeExecutorBase:1.0
   17,
   ACE_NTOHL (0x486f6d65), 
   ACE_NTOHL (0x45786563), 
@@ -6718,7 +6786,7 @@ CORBA::Boolean operator>>= (
         
         if (ACE_OS::strcmp (
                 interface_repository_id.in (),
-                "IDL:Components/BadComponentReference:1.0")
+                "IDL:omg.org/Components/BadComponentReference:1.0")
               )
           {
             return 0;
@@ -6854,7 +6922,7 @@ CORBA::Boolean operator>>= (
         
         if (ACE_OS::strcmp (
                 interface_repository_id.in (),
-                "IDL:Components/PolicyMismatch:1.0")
+                "IDL:omg.org/Components/PolicyMismatch:1.0")
               )
           {
             return 0;
@@ -6990,7 +7058,7 @@ CORBA::Boolean operator>>= (
         
         if (ACE_OS::strcmp (
                 interface_repository_id.in (),
-                "IDL:Components/PersistenceNotAvailable:1.0")
+                "IDL:omg.org/Components/PersistenceNotAvailable:1.0")
               )
           {
             return 0;
@@ -7126,7 +7194,7 @@ CORBA::Boolean operator>>= (
         
         if (ACE_OS::strcmp (
                 interface_repository_id.in (),
-                "IDL:Components/UnknownActualHome:1.0")
+                "IDL:omg.org/Components/UnknownActualHome:1.0")
               )
           {
             return 0;
@@ -7262,7 +7330,7 @@ CORBA::Boolean operator>>= (
         
         if (ACE_OS::strcmp (
                 interface_repository_id.in (),
-                "IDL:Components/ProxyHomeNotSupported:1.0")
+                "IDL:omg.org/Components/ProxyHomeNotSupported:1.0")
               )
           {
             return 0;
@@ -7398,7 +7466,7 @@ CORBA::Boolean operator>>= (
         
         if (ACE_OS::strcmp (
                 interface_repository_id.in (),
-                "IDL:Components/InvalidStateIdData:1.0")
+                "IDL:omg.org/Components/InvalidStateIdData:1.0")
               )
           {
             return 0;

@@ -1365,7 +1365,7 @@ TAO_NAMESPACE_END
 
 static const CORBA::Long _oc_Components_Transaction_Status[] =
 {
-    TAO_ENCAP_BYTE_ORDER, // byte order
+  TAO_ENCAP_BYTE_ORDER, // byte order
   38,
   ACE_NTOHL (0x49444c3a), 
   ACE_NTOHL (0x436f6d70), 
@@ -1377,44 +1377,44 @@ static const CORBA::Long _oc_Components_Transaction_Status[] =
   ACE_NTOHL (0x74617475), 
   ACE_NTOHL (0x733a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:Components/Transaction/Status:1.0
-  7,
+7,
   ACE_NTOHL (0x53746174), 
   ACE_NTOHL (0x75730000),  // name = Status
   9, // member count
-  7,
+7,
   ACE_NTOHL (0x41435449), 
   ACE_NTOHL (0x56450000),  // name = ACTIVE
-  16,
+16,
   ACE_NTOHL (0x4d41524b), 
   ACE_NTOHL (0x45445f52), 
   ACE_NTOHL (0x4f4c4c42), 
   ACE_NTOHL (0x41434b00),  // name = MARKED_ROLLBACK
-  9,
+9,
   ACE_NTOHL (0x50524550), 
   ACE_NTOHL (0x41524544), 
   ACE_NTOHL (0x0),  // name = PREPARED
-  10,
+10,
   ACE_NTOHL (0x434f4d4d), 
   ACE_NTOHL (0x49545445), 
   ACE_NTOHL (0x44000000),  // name = COMMITTED
-  12,
+12,
   ACE_NTOHL (0x524f4c4c), 
   ACE_NTOHL (0x45445f42), 
   ACE_NTOHL (0x41434b00),  // name = ROLLED_BACK
-  15,
+15,
   ACE_NTOHL (0x4e4f5f54), 
   ACE_NTOHL (0x52414e53), 
   ACE_NTOHL (0x41435449), 
   ACE_NTOHL (0x4f4e0000),  // name = NO_TRANSACTION
-  10,
+10,
   ACE_NTOHL (0x50524550), 
   ACE_NTOHL (0x4152494e), 
   ACE_NTOHL (0x47000000),  // name = PREPARING
-  11,
+11,
   ACE_NTOHL (0x434f4d4d), 
   ACE_NTOHL (0x49545449), 
   ACE_NTOHL (0x4e470000),  // name = COMMITTING
-  13,
+13,
   ACE_NTOHL (0x524f4c4c), 
   ACE_NTOHL (0x494e475f), 
   ACE_NTOHL (0x4241434b), 

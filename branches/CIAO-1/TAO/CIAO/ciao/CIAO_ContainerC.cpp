@@ -48,15 +48,17 @@
 static const CORBA::Long _oc_Components_Principal[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  29,
+  37,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f50), 
   ACE_NTOHL (0x72696e63), 
   ACE_NTOHL (0x6970616c), 
   ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:Components/Principal:1.0
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Components/Principal:1.0
   10,
   ACE_NTOHL (0x5072696e), 
   ACE_NTOHL (0x63697061), 
@@ -428,7 +430,7 @@ void *Components::CCMContext::_tao_QueryInterface (ptr_arith_t type)
 
 const char* Components::CCMContext::_interface_repository_id (void) const
 {
-  return "IDL:Components/CCMContext:1.0";
+  return "IDL:omg.org/Components/CCMContext:1.0";
 }
 
 // TAO_IDL - Generated from
@@ -437,15 +439,17 @@ const char* Components::CCMContext::_interface_repository_id (void) const
 static const CORBA::Long _oc_Components_CCMContext[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  30,
+  38,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f43), 
   ACE_NTOHL (0x434d436f), 
   ACE_NTOHL (0x6e746578), 
   ACE_NTOHL (0x743a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:Components/CCMContext:1.0
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Components/CCMContext:1.0
   11,
   ACE_NTOHL (0x43434d43), 
   ACE_NTOHL (0x6f6e7465), 
@@ -474,9 +478,11 @@ TAO_NAMESPACE_END
 
 static const CORBA::Long _oc_Components_CCMExceptionReason[] =
 {
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  38,
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  46,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f43), 
@@ -485,45 +491,45 @@ static const CORBA::Long _oc_Components_CCMExceptionReason[] =
   ACE_NTOHL (0x696f6e52), 
   ACE_NTOHL (0x6561736f), 
   ACE_NTOHL (0x6e3a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:Components/CCMExceptionReason:1.0
-  19,
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Components/CCMExceptionReason:1.0
+19,
   ACE_NTOHL (0x43434d45), 
   ACE_NTOHL (0x78636570), 
   ACE_NTOHL (0x74696f6e), 
   ACE_NTOHL (0x52656173), 
   ACE_NTOHL (0x6f6e0000),  // name = CCMExceptionReason
   7, // member count
-  13,
+13,
   ACE_NTOHL (0x53595354), 
   ACE_NTOHL (0x454d5f45), 
   ACE_NTOHL (0x52524f52), 
   ACE_NTOHL (0x0),  // name = SYSTEM_ERROR
-  13,
+13,
   ACE_NTOHL (0x43524541), 
   ACE_NTOHL (0x54455f45), 
   ACE_NTOHL (0x52524f52), 
   ACE_NTOHL (0x0),  // name = CREATE_ERROR
-  13,
+13,
   ACE_NTOHL (0x52454d4f), 
   ACE_NTOHL (0x56455f45), 
   ACE_NTOHL (0x52524f52), 
   ACE_NTOHL (0x0),  // name = REMOVE_ERROR
-  14,
+14,
   ACE_NTOHL (0x4455504c), 
   ACE_NTOHL (0x49434154), 
   ACE_NTOHL (0x455f4b45), 
   ACE_NTOHL (0x59000000),  // name = DUPLICATE_KEY
-  11,
+11,
   ACE_NTOHL (0x46494e44), 
   ACE_NTOHL (0x5f455252), 
   ACE_NTOHL (0x4f520000),  // name = FIND_ERROR
-  17,
+17,
   ACE_NTOHL (0x4f424a45), 
   ACE_NTOHL (0x43545f4e), 
   ACE_NTOHL (0x4f545f46), 
   ACE_NTOHL (0x4f554e44), 
   ACE_NTOHL (0x0),  // name = OBJECT_NOT_FOUND
-  15,
+15,
   ACE_NTOHL (0x4e4f5f53), 
   ACE_NTOHL (0x5543485f), 
   ACE_NTOHL (0x454e5449), 
@@ -552,7 +558,7 @@ TAO_NAMESPACE_END
 
 Components::CCMException::CCMException (void)
   : CORBA_UserException (
-        "IDL:Components/CCMException:1.0",
+        "IDL:omg.org/Components/CCMException:1.0",
         "CCMException"
       )
 {
@@ -588,7 +594,7 @@ void Components::CCMException::_tao_any_destructor (void *_tao_void_pointer)
 Components::CCMException *
 Components::CCMException::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:Components/CCMException:1.0", exc->_rep_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/Components/CCMException:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (CCMException *, exc);
     }
@@ -656,7 +662,7 @@ void Components::CCMException::_tao_decode (
 Components::CCMException::CCMException (
     Components::CCMExceptionReason _tao_reason
   )  : CORBA_UserException (
-        "IDL:Components/CCMException:1.0",
+        "IDL:omg.org/Components/CCMException:1.0",
         "CCMException"
       )
 {
@@ -675,15 +681,17 @@ CORBA::TypeCode_ptr Components::CCMException::_type (void) const
 static const CORBA::Long _oc_Components_CCMException[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  32,
+  40,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f43), 
   ACE_NTOHL (0x434d4578), 
   ACE_NTOHL (0x63657074), 
   ACE_NTOHL (0x696f6e3a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:Components/CCMException:1.0
+  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/Components/CCMException:1.0
   13,
   ACE_NTOHL (0x43434d45), 
   ACE_NTOHL (0x78636570), 
@@ -694,10 +702,12 @@ static const CORBA::Long _oc_Components_CCMException[] =
   ACE_NTOHL (0x72656173), 
   ACE_NTOHL (0x6f6e0000),  // name = reason
   CORBA::tk_enum, // typecode kind
-  216, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    38,
+  224, // encapsulation length
+TAO_ENCAP_BYTE_ORDER, // byte order
+    46,
     ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
     ACE_NTOHL (0x436f6d70), 
     ACE_NTOHL (0x6f6e656e), 
     ACE_NTOHL (0x74732f43), 
@@ -706,45 +716,45 @@ static const CORBA::Long _oc_Components_CCMException[] =
     ACE_NTOHL (0x696f6e52), 
     ACE_NTOHL (0x6561736f), 
     ACE_NTOHL (0x6e3a312e), 
-    ACE_NTOHL (0x30000000),  // repository ID = IDL:Components/CCMExceptionReason:1.0
-    19,
+    ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Components/CCMExceptionReason:1.0
+19,
     ACE_NTOHL (0x43434d45), 
     ACE_NTOHL (0x78636570), 
     ACE_NTOHL (0x74696f6e), 
     ACE_NTOHL (0x52656173), 
     ACE_NTOHL (0x6f6e0000),  // name = CCMExceptionReason
     7, // member count
-    13,
+13,
     ACE_NTOHL (0x53595354), 
     ACE_NTOHL (0x454d5f45), 
     ACE_NTOHL (0x52524f52), 
     ACE_NTOHL (0x0),  // name = SYSTEM_ERROR
-    13,
+13,
     ACE_NTOHL (0x43524541), 
     ACE_NTOHL (0x54455f45), 
     ACE_NTOHL (0x52524f52), 
     ACE_NTOHL (0x0),  // name = CREATE_ERROR
-    13,
+13,
     ACE_NTOHL (0x52454d4f), 
     ACE_NTOHL (0x56455f45), 
     ACE_NTOHL (0x52524f52), 
     ACE_NTOHL (0x0),  // name = REMOVE_ERROR
-    14,
+14,
     ACE_NTOHL (0x4455504c), 
     ACE_NTOHL (0x49434154), 
     ACE_NTOHL (0x455f4b45), 
     ACE_NTOHL (0x59000000),  // name = DUPLICATE_KEY
-    11,
+11,
     ACE_NTOHL (0x46494e44), 
     ACE_NTOHL (0x5f455252), 
     ACE_NTOHL (0x4f520000),  // name = FIND_ERROR
-    17,
+17,
     ACE_NTOHL (0x4f424a45), 
     ACE_NTOHL (0x43545f4e), 
     ACE_NTOHL (0x4f545f46), 
     ACE_NTOHL (0x4f554e44), 
     ACE_NTOHL (0x0),  // name = OBJECT_NOT_FOUND
-    15,
+15,
     ACE_NTOHL (0x4e4f5f53), 
     ACE_NTOHL (0x5543485f), 
     ACE_NTOHL (0x454e5449), 
@@ -1097,7 +1107,7 @@ void *Components::EnterpriseComponent::_tao_QueryInterface (ptr_arith_t type)
 
 const char* Components::EnterpriseComponent::_interface_repository_id (void) const
 {
-  return "IDL:Components/EnterpriseComponent:1.0";
+  return "IDL:omg.org/Components/EnterpriseComponent:1.0";
 }
 
 // TAO_IDL - Generated from
@@ -1106,8 +1116,10 @@ const char* Components::EnterpriseComponent::_interface_repository_id (void) con
 static const CORBA::Long _oc_Components_EnterpriseComponent[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  39,
+  47,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f45), 
@@ -1116,7 +1128,7 @@ static const CORBA::Long _oc_Components_EnterpriseComponent[] =
   ACE_NTOHL (0x65436f6d), 
   ACE_NTOHL (0x706f6e65), 
   ACE_NTOHL (0x6e743a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:Components/EnterpriseComponent:1.0
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Components/EnterpriseComponent:1.0
   20,
   ACE_NTOHL (0x456e7465), 
   ACE_NTOHL (0x72707269), 
@@ -1484,7 +1496,7 @@ void *Components::SessionContext::_tao_QueryInterface (ptr_arith_t type)
 
 const char* Components::SessionContext::_interface_repository_id (void) const
 {
-  return "IDL:Components/SessionContext:1.0";
+  return "IDL:omg.org/Components/SessionContext:1.0";
 }
 
 // TAO_IDL - Generated from
@@ -1493,8 +1505,10 @@ const char* Components::SessionContext::_interface_repository_id (void) const
 static const CORBA::Long _oc_Components_SessionContext[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  34,
+  42,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f53), 
@@ -1502,7 +1516,7 @@ static const CORBA::Long _oc_Components_SessionContext[] =
   ACE_NTOHL (0x6f6e436f), 
   ACE_NTOHL (0x6e746578), 
   ACE_NTOHL (0x743a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:Components/SessionContext:1.0
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Components/SessionContext:1.0
   15,
   ACE_NTOHL (0x53657373), 
   ACE_NTOHL (0x696f6e43), 
@@ -1869,7 +1883,7 @@ void *Components::SessionComponent::_tao_QueryInterface (ptr_arith_t type)
 
 const char* Components::SessionComponent::_interface_repository_id (void) const
 {
-  return "IDL:Components/SessionComponent:1.0";
+  return "IDL:omg.org/Components/SessionComponent:1.0";
 }
 
 // TAO_IDL - Generated from
@@ -1878,8 +1892,10 @@ const char* Components::SessionComponent::_interface_repository_id (void) const
 static const CORBA::Long _oc_Components_SessionComponent[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  36,
+  44,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f53), 
@@ -1887,7 +1903,7 @@ static const CORBA::Long _oc_Components_SessionComponent[] =
   ACE_NTOHL (0x6f6e436f), 
   ACE_NTOHL (0x6d706f6e), 
   ACE_NTOHL (0x656e743a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:Components/SessionComponent:1.0
+  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/Components/SessionComponent:1.0
   17,
   ACE_NTOHL (0x53657373), 
   ACE_NTOHL (0x696f6e43), 
@@ -2241,7 +2257,7 @@ void *Components::SessionSynchronization::_tao_QueryInterface (ptr_arith_t type)
 
 const char* Components::SessionSynchronization::_interface_repository_id (void) const
 {
-  return "IDL:Components/SessionSynchronization:1.0";
+  return "IDL:omg.org/Components/SessionSynchronization:1.0";
 }
 
 // TAO_IDL - Generated from
@@ -2250,8 +2266,10 @@ const char* Components::SessionSynchronization::_interface_repository_id (void) 
 static const CORBA::Long _oc_Components_SessionSynchronization[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  42,
+  50,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f53), 
@@ -2261,7 +2279,7 @@ static const CORBA::Long _oc_Components_SessionSynchronization[] =
   ACE_NTOHL (0x6f6e697a), 
   ACE_NTOHL (0x6174696f), 
   ACE_NTOHL (0x6e3a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:Components/SessionSynchronization:1.0
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Components/SessionSynchronization:1.0
   23,
   ACE_NTOHL (0x53657373), 
   ACE_NTOHL (0x696f6e53), 
@@ -2630,7 +2648,7 @@ void *Components::EntityContext::_tao_QueryInterface (ptr_arith_t type)
 
 const char* Components::EntityContext::_interface_repository_id (void) const
 {
-  return "IDL:Components/EntityContext:1.0";
+  return "IDL:omg.org/Components/EntityContext:1.0";
 }
 
 // TAO_IDL - Generated from
@@ -2639,8 +2657,10 @@ const char* Components::EntityContext::_interface_repository_id (void) const
 static const CORBA::Long _oc_Components_EntityContext[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  33,
+  41,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f45), 
@@ -2648,7 +2668,7 @@ static const CORBA::Long _oc_Components_EntityContext[] =
   ACE_NTOHL (0x79436f6e), 
   ACE_NTOHL (0x74657874), 
   ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:Components/EntityContext:1.0
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Components/EntityContext:1.0
   14,
   ACE_NTOHL (0x456e7469), 
   ACE_NTOHL (0x7479436f), 
@@ -3015,7 +3035,7 @@ void *Components::EntityComponent::_tao_QueryInterface (ptr_arith_t type)
 
 const char* Components::EntityComponent::_interface_repository_id (void) const
 {
-  return "IDL:Components/EntityComponent:1.0";
+  return "IDL:omg.org/Components/EntityComponent:1.0";
 }
 
 // TAO_IDL - Generated from
@@ -3024,8 +3044,10 @@ const char* Components::EntityComponent::_interface_repository_id (void) const
 static const CORBA::Long _oc_Components_EntityComponent[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  35,
+  43,
   ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74732f45), 
@@ -3033,7 +3055,7 @@ static const CORBA::Long _oc_Components_EntityComponent[] =
   ACE_NTOHL (0x79436f6d), 
   ACE_NTOHL (0x706f6e65), 
   ACE_NTOHL (0x6e743a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:Components/EntityComponent:1.0
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Components/EntityComponent:1.0
   16,
   ACE_NTOHL (0x456e7469), 
   ACE_NTOHL (0x7479436f), 
@@ -3289,7 +3311,7 @@ CORBA::Boolean operator>>= (
         
         if (ACE_OS::strcmp (
                 interface_repository_id.in (),
-                "IDL:Components/CCMException:1.0")
+                "IDL:omg.org/Components/CCMException:1.0")
               )
           {
             return 0;

@@ -34,7 +34,7 @@ Components::EventBase::~EventBase (void)
 ACE_INLINE const char* 
 Components::EventBase::_tao_obv_static_repository_id ()
 {
-  return "IDL:Components/EventBase:1.0";
+  return "IDL:omg.org/Components/EventBase:1.0";
 }
 
 // TAO_IDL - Generated from
@@ -70,7 +70,7 @@ Components::ConsumerDescription::~ConsumerDescription (void)
 ACE_INLINE const char* 
 Components::ConsumerDescription::_tao_obv_static_repository_id ()
 {
-  return "IDL:Components/ConsumerDescription:1.0";
+  return "IDL:omg.org/Components/ConsumerDescription:1.0";
 }
 
 // TAO_IDL - Generated from 
@@ -533,7 +533,7 @@ Components::EmitterDescription::~EmitterDescription (void)
 ACE_INLINE const char* 
 Components::EmitterDescription::_tao_obv_static_repository_id ()
 {
-  return "IDL:Components/EmitterDescription:1.0";
+  return "IDL:omg.org/Components/EmitterDescription:1.0";
 }
 
 // TAO_IDL - Generated from 
@@ -996,7 +996,7 @@ Components::SubscriberDescription::~SubscriberDescription (void)
 ACE_INLINE const char* 
 Components::SubscriberDescription::_tao_obv_static_repository_id ()
 {
-  return "IDL:Components/SubscriberDescription:1.0";
+  return "IDL:omg.org/Components/SubscriberDescription:1.0";
 }
 
 // TAO_IDL - Generated from 
@@ -1459,7 +1459,7 @@ Components::PublisherDescription::~PublisherDescription (void)
 ACE_INLINE const char* 
 Components::PublisherDescription::_tao_obv_static_repository_id ()
 {
-  return "IDL:Components/PublisherDescription:1.0";
+  return "IDL:omg.org/Components/PublisherDescription:1.0";
 }
 
 // TAO_IDL - Generated from 
