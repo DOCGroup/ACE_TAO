@@ -294,10 +294,8 @@ Manager::make_iors_register (CORBA::Environment &ACE_TRY_ENV)
 int
 Manager::run (CORBA::Environment &ACE_TRY_ENV)
 {
-  if (this->orb_->run (ACE_TRY_ENV) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       "Error in run \n"),
-                       -1);
+  this->orb_->run (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

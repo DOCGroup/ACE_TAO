@@ -185,7 +185,7 @@ Consumer_Handler::via_naming_service (void)
       ACE_TRY_CHECK;
 
     }
-  ACE_CATCHANY 
+  ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Consumer_Handler::via_naming_service\n");
       return -1;
@@ -200,7 +200,7 @@ Consumer_Handler::via_naming_service (void)
 int
 Consumer_Handler::init (int argc, char **argv)
 {
-  
+
   this->argc_ = argc;
   this->argv_ = argv;
 
@@ -217,13 +217,13 @@ Consumer_Handler::init (int argc, char **argv)
                                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-    
+
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   "parse_args failed\n"),
                           -1);
-      
+
       if (this->interactive_ == 1)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -231,11 +231,11 @@ Consumer_Handler::init (int argc, char **argv)
                       " * Registration <type 'r'>\n "
                       " * Unregistration <type 'u'>\n "
                       " * Quit <type 'q'>\n "));
-          
+
           ACE_NEW_RETURN (consumer_input_handler_,
                           Consumer_Input_Handler (this),
                           -1);
-      
+
           if (ACE_Event_Handler::register_stdin_handler
               (consumer_input_handler_,
                this->orb_->orb_core ()->reactor (),
@@ -244,12 +244,12 @@ Consumer_Handler::init (int argc, char **argv)
                                "%p\n",
                                "register_stdin_handler"),
                               -1);
-          
+
           // Register the signal event handler for ^C
           ACE_NEW_RETURN (consumer_signal_handler_,
                           Consumer_Signal_Handler (this),
                           -1);
-          
+
           if (this->reactor_used ()->register_handler
               (SIGINT,
                consumer_signal_handler_) == -1)
@@ -268,18 +268,18 @@ Consumer_Handler::init (int argc, char **argv)
          }
       else
         {
-          
+
           if (this->ior_ == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%s: no ior specified\n",
                                this->argv_[0]),
                               -1);
-          
+
           CORBA::Object_var server_object =
             this->orb_->string_to_object (this->ior_,
                                           ACE_TRY_ENV);
           ACE_TRY_CHECK;
-          
+
           if (CORBA::is_nil (server_object.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
                                "invalid ior <%s>\n",
@@ -312,13 +312,13 @@ Consumer_Handler::run (void)
   ACE_TRY
     {
       // Obtain and activate the RootPOA.
-     CORBA::Object_var obj = 
+     CORBA::Object_var obj =
             this->orb_->resolve_initial_references ("RootPOA");
 
      PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in (), ACE_TRY_ENV);
      ACE_TRY_CHECK;
-     
+
      PortableServer::POAManager_var poa_manager=
        root_poa->the_POAManager (ACE_TRY_ENV);
      ACE_TRY_CHECK;
@@ -331,22 +331,22 @@ Consumer_Handler::run (void)
                      -1);
      // Set the orb in the consumer_ object.
      this->consumer_servant_->orb (this->orb_.in ());
-     
+
      // Get the consumer stub (i.e consumer object) pointer.
      this->consumer_var_ =
        this->consumer_servant_->_this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;  
-      
+      ACE_TRY_CHECK;
+
       if (this->interactive_ == 0)
         {
-          
+
           // Register with the server.
           this->server_->register_callback (this->stock_name_,
                                             this->threshold_value_,
                                             this->consumer_var_.in (),
                                             ACE_TRY_ENV);
           ACE_TRY_CHECK;
-          
+
           // Note the registration.
           this->registered_ = 1;
           this->unregistered_ = 0;
@@ -356,8 +356,9 @@ Consumer_Handler::run (void)
         }
 
       // Run the ORB.
-      this->orb_->run ();
-  
+      this->orb_->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
     }
   ACE_CATCHANY
     {
@@ -365,7 +366,7 @@ Consumer_Handler::run (void)
       return -1;
     }
   ACE_ENDTRY;
-  
+
   return 0;
 }
 

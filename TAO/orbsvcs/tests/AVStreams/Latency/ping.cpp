@@ -94,26 +94,26 @@ int main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       parse_args (argc, argv);
-      
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, 
+
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv);
-      
+
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA");
-      
+
       PortableServer::POA_var poa
         = PortableServer::POA::_narrow (obj.in ());
-      
+
       PortableServer::POAManager_var mgr
         = poa->the_POAManager ();
-      
+
       mgr->activate ();
-      
+
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       poa.in (),
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       // Register the video mmdevice object with the ORB
       Reactive_Strategy *reactive_strategy;
       ACE_NEW_RETURN (reactive_strategy,
@@ -174,8 +174,9 @@ int main (int argc, char *argv[])
         }
 
       ACE_Time_Value tv (120, 0);
-      if (orb->run (tv) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
+      orb->run (tv, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       ACE_DEBUG ((LM_DEBUG, "Calibrating scale factory . . . "));

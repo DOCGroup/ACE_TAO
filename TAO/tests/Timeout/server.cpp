@@ -52,7 +52,7 @@ main (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
-      
+
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -66,7 +66,7 @@ main (int argc, char *argv[])
       Simple_Server_var server =
         server_impl._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       CORBA::String_var ior =
 	orb->object_to_string (server.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -89,7 +89,8 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      orb->run ();
+      orb->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
     }

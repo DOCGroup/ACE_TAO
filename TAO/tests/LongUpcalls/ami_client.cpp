@@ -96,7 +96,8 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       ACE_Time_Value tv (30, 0);
-      orb->run (tv);
+      orb->run (tv, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       controller_impl.dump_results ();
 

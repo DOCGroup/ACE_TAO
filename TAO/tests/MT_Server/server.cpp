@@ -147,6 +147,15 @@ Worker::Worker (CORBA::ORB_ptr orb)
 int
 Worker::svc (void)
 {
-  this->orb_->run ();
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      this->orb_->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+    }
+  ACE_ENDTRY;
   return 0;
 }

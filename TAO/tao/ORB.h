@@ -222,7 +222,7 @@ public:
    * If an error occurs during initialization or a run-time this
    * method will return -1.
    */
-  int run (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  void run (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   /**
    * Instructs the ORB to initialize itself and run its event loop in
@@ -234,8 +234,8 @@ public:
    * we've returned since we've been asked to shut down the value of 1
    * is returned.
    */
-  int run (ACE_Time_Value &tv,
-           CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  void run (ACE_Time_Value &tv,
+            CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   /**
    * Instructs the ORB to initialize itself and run its event loop in
@@ -247,8 +247,8 @@ public:
    * Otherwise, if we've returned since we've been asked to shut down
    * the value of 1 is returned.
    */
-  int run (ACE_Time_Value *tv,
-           CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  void run (ACE_Time_Value *tv,
+            CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   /// Returns an indication of whether the ORB needs to perform some
   /// work.
@@ -261,14 +261,14 @@ public:
    * behavior can be modified by passing an appropriate
    * <ACE_Time_Value>.
    */
-  int perform_work (CORBA_Environment &ACE_TRY_ENV =
-                    TAO_default_environment ());
-  int perform_work (ACE_Time_Value &,
-                    CORBA_Environment &ACE_TRY_ENV =
-                    TAO_default_environment ());
-  int perform_work (ACE_Time_Value *,
-                    CORBA_Environment &ACE_TRY_ENV =
-                    TAO_default_environment ());
+  void perform_work (CORBA_Environment &ACE_TRY_ENV =
+                     TAO_default_environment ());
+  void perform_work (ACE_Time_Value &,
+                     CORBA_Environment &ACE_TRY_ENV =
+                     TAO_default_environment ());
+  void perform_work (ACE_Time_Value *,
+                     CORBA_Environment &ACE_TRY_ENV =
+                     TAO_default_environment ());
 
   /**
    * This operation instructs the ORB to shut down. Shutting down the

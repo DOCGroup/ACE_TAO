@@ -34,7 +34,7 @@ __fastcall TORBThread::~TORBThread ()
   catch (CORBA::Exception&)
     {
     }
-  
+
   WaitFor ();
 }
 //---------------------------------------------------------------------------

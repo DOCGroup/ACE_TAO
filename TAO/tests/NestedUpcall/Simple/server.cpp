@@ -33,7 +33,18 @@ Server_Task::Server_Task (CORBA::ORB_ptr orb)
 int
 Server_Task::svc (void)
 {
-  return this->orb_->run ();
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      this->orb_->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      return -1;
+    }
+  ACE_ENDTRY;
+  return 0;
 }
 
 static int

@@ -22,6 +22,7 @@ public:
   /// Implement the CORBA methods
   //@{
   void response (Test::TimeStamp,
+                 const Test::Payload &,
                  CORBA::Environment &)
     ACE_THROW_SPEC (());
   //@}

@@ -25,7 +25,7 @@ main (int argc, char* argv[])
       TAO_CEC_Event_Loader event_service;
 
       // To intialise the service
-      int result = 
+      int result =
         event_service.init (argc, argv);
 
       if (result == -1)

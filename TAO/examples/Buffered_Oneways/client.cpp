@@ -308,7 +308,8 @@ main (int argc, char **argv)
           ACE_Time_Value sleep_interval (0,
                                          interval * 1000);
 
-          orb->run (sleep_interval);
+          orb->run (sleep_interval, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
 
       // Shutdown server.

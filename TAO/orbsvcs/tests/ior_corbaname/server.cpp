@@ -39,7 +39,7 @@ int main (int argc, char* argv[])
       corbaname_Status_i status_i;
 
       // Activate it to obtain the reference
-      corbaname::Status_var status = 
+      corbaname::Status_var status =
         status_i._this ();
 
       // Get a reference to Naming Context
@@ -58,7 +58,7 @@ int main (int argc, char* argv[])
       name.length (1);
       name[0].id = CORBA::string_dup ("STATUS");
 
-      naming_context->bind (name, 
+      naming_context->bind (name,
                             status.in (),
                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -72,12 +72,12 @@ int main (int argc, char* argv[])
       orb->destroy ();
 
     }
-  ACE_CATCH (CORBA::SystemException, ex) 
+  ACE_CATCH (CORBA::SystemException, ex)
     {
       ACE_PRINT_EXCEPTION (ex, "CORBA exception raised in server!");
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
-  
+
   return 0;
 }

@@ -648,7 +648,7 @@ ImplRepo_i::server_is_running (const char *server,
     ACE_DEBUG ((LM_DEBUG, " at %s\n", location));
 
   // Get the stringified server_object_ior
-  ACE_TCHAR *server_object_ior = orb->object_to_string (server_object, 
+  ACE_TCHAR *server_object_ior = orb->object_to_string (server_object,
                                                         ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
@@ -986,13 +986,13 @@ ImplRepo_i::run (CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA::ORB_var orb = OPTIONS::instance ()->orb ();
 
-  PortableServer::POAManager_var poa_manager = 
+  PortableServer::POAManager_var poa_manager =
     this->imr_poa_->the_POAManager (ACE_TRY_ENV);
   poa_manager->activate (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
   // Get a new iterator
-  auto_ptr<Server_Repository::HASH_IMR_ITER> 
+  auto_ptr<Server_Repository::HASH_IMR_ITER>
     server_iter (this->repository_.new_iterator ());
 
   // Check for a memory error.
@@ -1010,7 +1010,7 @@ ImplRepo_i::run (CORBA::Environment &ACE_TRY_ENV)
       server_iter->advance ();
 
       ACE_TString logical, server, command_line, working_directory;
-      ImplementationRepository::ActivationMode activation 
+      ImplementationRepository::ActivationMode activation
         = ImplementationRepository::NORMAL;
       ImplementationRepository::EnvironmentList environment_vars ;
 
@@ -1042,13 +1042,9 @@ ImplRepo_i::run (CORBA::Environment &ACE_TRY_ENV)
     }
 
 
-  int status = orb->run (0, ACE_TRY_ENV);
+  orb->run (0, ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  if (status == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error: In IMR_Server_i::run"),
-                      -1);
   return 0;
 }
 
@@ -1166,7 +1162,7 @@ ImplRepo_i::list (CORBA::ULong how_many,
       ACE_TString location, server_ior;
 
       ImplementationRepository::EnvironmentList environment_vars;
-      ImplementationRepository::ActivationMode activation = 
+      ImplementationRepository::ActivationMode activation =
         ImplementationRepository::NORMAL;
 
       server_entry->int_id_->get_running_info (location, server_ior);
@@ -1255,7 +1251,7 @@ ImplRepo_i::shutdown_server (const char *server,
           ACE_TRY_CHECK;
 
           ImplementationRepository::ServerObject_var server_object =
-            ImplementationRepository::ServerObject::_narrow (object.in (), 
+            ImplementationRepository::ServerObject::_narrow (object.in (),
                                                              ACE_TRY_ENV);
           ACE_TRY_CHECK;
 

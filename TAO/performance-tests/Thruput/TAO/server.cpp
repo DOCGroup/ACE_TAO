@@ -193,8 +193,8 @@ main (int argc, char **argv)
 
       // Handle requests for this object until we're killed, or one of the
       // methods asks us to exit.
-      if (orb_var->run () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), -1);
+      orb_var->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

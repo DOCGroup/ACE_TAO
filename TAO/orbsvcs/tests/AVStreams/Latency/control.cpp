@@ -75,25 +75,25 @@ int main (int argc, char *argv[])
     {
 
       parse_args (argc, argv);
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, 
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv);
-      
+
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA");
-      
+
       PortableServer::POA_var poa
         = PortableServer::POA::_narrow (obj.in ());
-      
+
       PortableServer::POAManager_var mgr
         = poa->the_POAManager ();
-      
+
       mgr->activate ();
-      
+
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       poa.in (),
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       // Connect the two streams and run them...
       AVStreams::flowSpec flow_spec (2);
       flow_spec.length (2);
@@ -151,8 +151,9 @@ int main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       ACE_Time_Value tv (0, milliseconds * 1000);
-      if (orb->run (tv) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
+      orb->run (tv, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       flow_spec.length (0);

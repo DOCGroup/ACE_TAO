@@ -140,17 +140,13 @@ Life_Cycle_Service_Server::init (int argc,
 int
 Life_Cycle_Service_Server::run (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-
   if (this->debug_level_ >= 1)
     ACE_DEBUG ((LM_DEBUG,
                 "\nLifeCycle Service: Life_Cycle_Service_Server is running\n"));
-  
-  if (orb_manager_.orb()->run () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "run"),
-                      -1);
+
+  orb_manager_.orb()->run (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
   return 0;
 }
 
@@ -172,7 +168,7 @@ Life_Cycle_Service_Server::parse_args (void)
         break;
       default:
         exit_code = 1;
-        ACE_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
                     "%s: unknown arg, -%c\n",
                     this->argv_[0], char(opt)));
       case '?':
@@ -218,5 +214,3 @@ main (int argc, char *argv [])
   ACE_ENDTRY;
   return 0;
 }
-
-

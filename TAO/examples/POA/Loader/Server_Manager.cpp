@@ -367,11 +367,8 @@ Server_i::run (void)
       ACE_TRY_CHECK;
 
       // Run the ORB.
-      if (orb_->run () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "CORBA::ORB::run"),
-                          -1);
+      orb_->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

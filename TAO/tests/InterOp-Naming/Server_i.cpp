@@ -79,7 +79,7 @@ Server_i::add_IOR_to_table (CORBA::String_var ior)
             "IORTable",
             ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       IORTable::Table_var adapter =
         IORTable::Table::_narrow (table_object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;

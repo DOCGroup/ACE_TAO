@@ -152,7 +152,16 @@ Consumer_Handler::run (void)
               "Running the Consumer...\n"));
 
   // Run the ORB.
-  this->orb_->run ();
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      this->orb_->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+    }
+  ACE_ENDTRY;
   return 0;
 }
 

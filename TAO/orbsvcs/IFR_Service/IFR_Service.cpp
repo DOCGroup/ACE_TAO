@@ -119,16 +119,8 @@ IFR_Service::init (int argc,
 int
 IFR_Service::run (CORBA::Environment &ACE_TRY_ENV)
 {
-  int status = this->orb_->run (0,
-                                ACE_TRY_ENV);
+  this->orb_->run (0, ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-
-  if (status == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Error: IFR_Service::run"),
-                        -1);
-    }
 
   return 0;
 }
