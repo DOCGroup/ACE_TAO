@@ -469,7 +469,7 @@ ACE_INET_Addr::set_addr (void *addr, int /* len */)
   else if (getfamily->sin_family == AF_INET6)
     {
       struct sockaddr_in6 *in6 = ACE_static_cast (struct sockaddr_in6*, addr);
-      this->set_port_number (in6->sin6_port, 0)
+      this->set_port_number (in6->sin6_port, 0);
       this->set_address (ACE_reinterpret_cast (const char*, &in6->sin6_addr),
                          sizeof (in6->sin6_addr),
                          0);

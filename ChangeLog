@@ -1,3 +1,7 @@
+Tue Nov  5 15:51:29 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/INET_Addr.cpp (set_addr): Add missing ';' in the IPv6 case.
+
 Tue Nov  5 20:26:33 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* tests/tests.mpc:  Added Multicast_Test entry.
