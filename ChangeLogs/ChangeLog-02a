@@ -1,18 +1,23 @@
+Thu May 25 09:07:16 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/OS_String.cpp:
+          Removed a few ACE_INLINEs.
+
 Wed May 24 20:27:26 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/OS_String.h:
+        * ace/OS_String.h:
 
-	  Changed "u_long" to "unsigned long."  The u_long typedef wasn't
-	  being pulled in, so just use the basic type.  This avoids having
-	  to pull in a header, and fixes a compile time problem.
+          Changed "u_long" to "unsigned long."  The u_long typedef wasn't
+          being pulled in, so just use the basic type.  This avoids having
+          to pull in a header, and fixes a compile time problem.
 
 Wed May 24 20:18:59 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Select_Reactor_Base.cpp (open):
+        * ace/Select_Reactor_Base.cpp (open):
 
-	  Temporarily backed out change that added ability to set handle
-	  limit to value greater than FD_SETSIZE.  It breaks platforms
-	  that don't support getrlimit().
+          Temporarily backed out change that added ability to set handle
+          limit to value greater than FD_SETSIZE.  It breaks platforms
+          that don't support getrlimit().
 
 Wed May 24 18:56:16 2000  Darrell Brunsch <brunsch@uci.edu>:
 
