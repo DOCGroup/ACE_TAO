@@ -885,6 +885,13 @@ Thu Feb 20 09:23:51 2003  Ossama Othman  <ossama@uci.edu>
           ACE_SSL_SOCK_{Acceptor,Connector} classes.  They are
           unnecessary.
 
+Wed Feb 19 10:41:20 2003  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp:
+          In run_worker(), use ACE_reinterpret_cast, not ACE_static_cast,
+          to convert an int to an ACE_HANDLE. Thanks to Vince Mounts
+          <vince@mounts.cc> for reporting this.
+
 Tue Feb 11 17:14:56 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
         * ace/TTY_IO.cpp: Fixed several problems with DTR enabling.  Thanks to
