@@ -1,8 +1,14 @@
+Fri Jul 07 09:36:05 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/IPC_SAP/SOCK_SAP/FD-unserver.cpp (handle_client):
+          cast result of ACE_OS::getpid () to int, and print as an int,
+          to avoid compiler warning about mismatched format specifier.
+
 Thu Jul  6 10:36:46 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/ACE.cpp: Fixed the timestamp() call so that it returns a string with
-	  the date that also contains the year.  Thanks to Nicoletta Viale
- 	  <nicoletta.viale@sodalia.it> for reporting this.
+        * ace/ACE.cpp: Fixed the timestamp() call so that it returns a string
+          with the date that also contains the year.  Thanks to Nicoletta Viale
+          <nicoletta.viale@sodalia.it> for reporting this.
 
 Thu Jul 06 10:59:41 2000  David L. Levine  <levine@cs.wustl.edu>
 
@@ -19,34 +25,36 @@ Thu Jul 06 10:51:19 2000  David L. Levine  <levine@cs.wustl.edu>
 Wed Jul  5 23:36:12 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
         * ace/OS.i:
-          Added PACE functionality to funcitons whose counterparts were
+          Added PACE functionality to functions whose counterparts were
           recent additions to PACE.
 
 Wed Jul  5 20:00:00 2000  Bruce Trask  <brucetrask@aol.com>
-         
+
         * tao/GIOP_Message_Acceptors.cpp:
           Modified TAO_GIOP_Message_Acceptors::process_client_request
           function so that it does not make the reply to the request.
           The reply send is being moved up to allow for the later addition
           of the asynch server.
-        
+
         * tao/GIOP_Message_Acceptors.h:
           Moved send_reply_exception into the public interface.
-        
+
         * tao/GIOP_Message_Lite.cpp:
-          Made identical changes as to GIOP_Message_Acceptors::process_client_request
+          Made identical changes as to
+          GIOP_Message_Acceptors::process_client_request
           to move the reply send.
-        
+
         * tao/GIOP_Server_Request.cpp,.h:
           Added a transport member variable to TAO_GIOP_ServerRequest class
           and initialization of this member variable in the constructor.
-          Also removed the transport param from TAO_GIOP_ServerRequest::send_no_exception_reply
-          function as this is it no longer required to be passed in as a 
+          Also removed the transport param from
+          TAO_GIOP_ServerRequest::send_no_exception_reply
+          function as this is it no longer required to be passed in as a
           parameter.
-     
+
         * tao/GIOP_Server_Request.cpp,.h:
           Added two new functions: TAO_GIOP_ServerRequest::tao_send_reply()
-          and TAO_GIOP_ServerRequest::tao_send_reply_exception.  These are the 
+          and TAO_GIOP_ServerRequest::tao_send_reply_exception.  These are the
           new functions that will initiate the reply send.
 
         * tao/Servant_Base.cpp:
@@ -56,7 +64,7 @@ Wed Jul  5 20:00:00 2000  Bruce Trask  <brucetrask@aol.com>
 
         * tao_idl\be\be_visitor_interface\interface_ss.cpp:
           Added call to synchronous_upcall_dispatch which will initiate
-          the reply for synchronous calls. 
+          the reply for synchronous calls.
 
 Wed Jul  5 14:04:50 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
