@@ -1,7 +1,20 @@
+Wed Jan  8 17:44:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Typecode.h:
+        * tao/Typecode.cpp:
+
+          Completed addition of eventtype typecode support, 
+          also cosmetic changes.
+
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.h:
+
+          Additional factoring out of common code.
+
 Wed Jan  8 11:40:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-        * tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
-        * tao/TypeCodeFactory/TypeCodeFactoryC.h:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.h:
 
           Fixed typos.
 

@@ -300,24 +300,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
       cdr << members[index].type.in ();
     }
 
-  ACE_Message_Block consolidated_block;
-
-  ACE_CDR::consolidate (&consolidated_block,
-                        cdr.begin ());
-
-  CORBA::TypeCode_ptr union_typecode =
-    CORBA::TypeCode::_nil ();
-
-  ACE_NEW_THROW_EX (union_typecode,
-                    CORBA_TypeCode (CORBA::tk_union,
-                                    consolidated_block.length (),
-                                    consolidated_block.rd_ptr (),
-                                    0,
-                                    0),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-  return union_typecode;
+  return this->assemble_tc (cdr,
+                            CORBA::tk_union
+                            ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
@@ -373,24 +358,9 @@ TAO_TypeCodeFactory_i::create_enum_tc (
       cdr << members[index].in ();
     }
 
-  ACE_Message_Block consolidated_block;
-
-  ACE_CDR::consolidate (&consolidated_block,
-                        cdr.begin ());
-
-  CORBA::TypeCode_ptr enum_typecode =
-    CORBA::TypeCode::_nil ();
-
-  ACE_NEW_THROW_EX (enum_typecode,
-                    CORBA_TypeCode (CORBA::tk_enum,
-                                    consolidated_block.length (),
-                                    consolidated_block.rd_ptr (),
-                                    0,
-                                    0),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-  return enum_typecode;
+  return this->assemble_tc (cdr,
+                            CORBA::tk_enum
+                            ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
@@ -402,60 +372,11 @@ TAO_TypeCodeFactory_i::create_alias_tc (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (name != 0 && !this->valid_name (name))
-    {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (15,
-                                          CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
-    }
-
-  if (id != 0 && !this->valid_id (id))
-    {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (16,
-                                          CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
-    }
-
-  CORBA::Boolean valid_content =
-    this->valid_content_type (original_type
-                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-  if (!valid_content)
-    {
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (2,
-                                             CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
-    }
-
-  TAO_OutputCDR cdr;
-
-  cdr << TAO_ENCAP_BYTE_ORDER;
-
-  cdr << id;
-
-  cdr << name;
-
-  cdr << original_type;
-
-  ACE_Message_Block consolidated_block;
-
-  ACE_CDR::consolidate (&consolidated_block,
-                        cdr.begin ());
-
-  CORBA::TypeCode_ptr alias_typecode =
-    CORBA::TypeCode::_nil ();
-
-  ACE_NEW_THROW_EX (alias_typecode,
-                    CORBA_TypeCode (CORBA::tk_alias,
-                                    consolidated_block.length (),
-                                    consolidated_block.rd_ptr (),
-                                    0,
-                                    0),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-  return alias_typecode;
+  return this->alias_value_box_tc_common (id,
+                                          name,
+                                          original_type,
+                                          CORBA::tk_alias
+                                          ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
@@ -581,61 +502,11 @@ TAO_TypeCodeFactory_i::create_value_box_tc (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (name != 0 && !this->valid_name (name))
-    {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (15,
-                                          CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
-    }
-
-  // Repo id may not be null for valueboxtype.
-  if (id == 0 || !this->valid_id (id))
-    {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (16,
-                                          CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
-    }
-
-  CORBA::Boolean valid_content =
-    this->valid_content_type (boxed_type
-                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-  if (!valid_content)
-    {
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (2,
-                                             CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
-    }
-
-  TAO_OutputCDR cdr;
-
-  cdr << TAO_ENCAP_BYTE_ORDER;
-
-  cdr << id;
-
-  cdr << name;
-
-  cdr << boxed_type;
-
-  ACE_Message_Block consolidated_block;
-
-  ACE_CDR::consolidate (&consolidated_block,
-                        cdr.begin ());
-
-  CORBA::TypeCode_ptr value_box_typecode =
-    CORBA::TypeCode::_nil ();
-
-  ACE_NEW_THROW_EX (value_box_typecode,
-                    CORBA_TypeCode (CORBA::tk_value_box,
-                                    consolidated_block.length (),
-                                    consolidated_block.rd_ptr (),
-                                    0,
-                                    0),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-  return value_box_typecode;
+  return this->alias_value_box_tc_common (id,
+                                          name,
+                                          boxed_type,
+                                          CORBA::tk_value_box
+                                          ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
@@ -754,7 +625,6 @@ TAO_TypeCodeFactory_i::compute_default_label (
   struct disc_types
   {
     CORBA::Char char_val;
-    CORBA::WChar wchar_val;
     CORBA::Boolean bool_val;
     CORBA::Short short_val;
     CORBA::UShort ushort_val;
@@ -768,7 +638,6 @@ TAO_TypeCodeFactory_i::compute_default_label (
   } dv, u;
 
   dv.char_val = 0;
-  dv.wchar_val = 0;
   dv.bool_val = 0;
   dv.short_val = ACE_INT16_MIN;
   dv.ushort_val = 0;
@@ -802,14 +671,6 @@ TAO_TypeCodeFactory_i::compute_default_label (
               if (u.char_val == dv.char_val)
                 {
                   dv.char_val++;
-                  success = 0;
-                }
-              break;
-            case CORBA::tk_wchar:
-              members[i].label >>= CORBA::Any::to_wchar (u.wchar_val);
-              if (u.wchar_val == dv.wchar_val)
-                {
-                  dv.wchar_val++;
                   success = 0;
                 }
               break;
@@ -891,9 +752,6 @@ TAO_TypeCodeFactory_i::compute_default_label (
     case CORBA::tk_char:
       cdr << CORBA::Any::from_char (dv.char_val);
       break;
-    case CORBA::tk_wchar:
-      cdr << CORBA::Any::from_wchar (dv.wchar_val);
-      break;
     case CORBA::tk_boolean:
       cdr << CORBA::Any::from_boolean (dv.bool_val);
       break;
@@ -954,24 +812,9 @@ TAO_TypeCodeFactory_i::create_tc_common (
 
   cdr << name;
 
-  ACE_Message_Block consolidated_block;
-
-  ACE_CDR::consolidate (&consolidated_block,
-                        cdr.begin ());
-
-  CORBA::TypeCode_ptr result =
-    CORBA::TypeCode::_nil ();
-
-  ACE_NEW_THROW_EX (result,
-                    CORBA_TypeCode (kind,
-                                    consolidated_block.length (),
-                                    consolidated_block.rd_ptr (),
-                                    0,
-                                    0),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-  return result;
+  return this->assemble_tc (cdr,
+                            kind
+                            ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
@@ -988,19 +831,9 @@ TAO_TypeCodeFactory_i::string_wstring_tc_common (
 
   cdr << bound;
 
-  CORBA::TypeCode_ptr new_typecode =
-    CORBA::TypeCode::_nil ();
-
-  ACE_NEW_THROW_EX (new_typecode,
-                    CORBA_TypeCode (kind,
-                                    cdr.total_length (),
-                                    cdr.buffer (),
-                                    0,
-                                    0),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-  return new_typecode;
+  return this->assemble_tc (cdr,
+                            kind
+                            ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
@@ -1032,24 +865,9 @@ TAO_TypeCodeFactory_i::sequence_array_tc_common (
 
   cdr << bound;
 
-  ACE_Message_Block consolidated_block;
-
-  ACE_CDR::consolidate (&consolidated_block,
-                        cdr.begin ());
-
-  CORBA::TypeCode_ptr new_typecode =
-    CORBA::TypeCode::_nil ();
-
-  ACE_NEW_THROW_EX (new_typecode,
-                    CORBA_TypeCode (kind,
-                                    consolidated_block.length (),
-                                    consolidated_block.rd_ptr (),
-                                    0,
-                                    0),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-  return new_typecode;
+  return this->assemble_tc (cdr,
+                            kind
+                            ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
@@ -1137,24 +955,9 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
       cdr << tc_holder;
     }
 
-  ACE_Message_Block consolidated_block;
-
-  ACE_CDR::consolidate (&consolidated_block,
-                        cdr.begin ());
-
-  CORBA::TypeCode_ptr new_typecode =
-    CORBA::TypeCode::_nil ();
-
-  ACE_NEW_THROW_EX (new_typecode,
-                    CORBA_TypeCode (kind,
-                                    consolidated_block.length (),
-                                    consolidated_block.rd_ptr (),
-                                    0,
-                                    0),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-  return new_typecode;
+  return this->assemble_tc (cdr,
+                            kind
+                            ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
@@ -1204,24 +1007,9 @@ TAO_TypeCodeFactory_i::alias_value_box_tc_common (
 
   cdr << underlying_type;
 
-  ACE_Message_Block consolidated_block;
-
-  ACE_CDR::consolidate (&consolidated_block,
-                        cdr.begin ());
-
-  CORBA::TypeCode_ptr new_typecode =
-    CORBA::TypeCode::_nil ();
-
-  ACE_NEW_THROW_EX (new_typecode,
-                    CORBA_TypeCode (kind,
-                                    consolidated_block.length (),
-                                    consolidated_block.rd_ptr (),
-                                    0,
-                                    0),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-  return new_typecode;
+  return this->assemble_tc (cdr,
+                            kind
+                            ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
@@ -1322,24 +1110,9 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
       cdr << members[index].access;
     }
 
-  ACE_Message_Block consolidated_block;
-
-  ACE_CDR::consolidate (&consolidated_block,
-                        cdr.begin ());
-
-  CORBA::TypeCode_ptr new_typecode =
-    CORBA::TypeCode::_nil ();
-
-  ACE_NEW_THROW_EX (new_typecode,
-                    CORBA_TypeCode (kind,
-                                    consolidated_block.length (),
-                                    consolidated_block.rd_ptr (),
-                                    0,
-                                    0),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-  return new_typecode;
+  return this->assemble_tc (cdr,
+                            kind
+                            ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Boolean
@@ -1401,6 +1174,17 @@ TAO_TypeCodeFactory_i::valid_content_type (CORBA::TypeCode_ptr tc
   CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
+  CORBA::TypeCode_var tmp;
+
+  while (kind == CORBA::tk_alias)
+    {
+      tmp = tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      kind = tmp->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+    }
+
   if (kind == CORBA::tk_null
       || kind == CORBA::tk_void
       || kind == CORBA::tk_except)
@@ -1428,24 +1212,25 @@ TAO_TypeCodeFactory_i::unique_label_values (const CORBA::UnionMemberSeq &members
   struct label_types
   {
     CORBA::Char char_val;
-    CORBA::WChar wchar_val;
     CORBA::Boolean bool_val;
     CORBA::Short short_val;
     CORBA::UShort ushort_val;
     CORBA::Long long_val;
     CORBA::ULong ulong_val;
     CORBA::ULong enum_val;
-    // TODO - handle (u)longlong types
+    CORBA::ULongLong ulonglong_val;
+    CORBA::LongLong longlong_val;
   } s;
 
   s.char_val = 0;
-  s.wchar_val = 0;
   s.bool_val = 0;
   s.short_val = 0;
   s.ushort_val = 0;
   s.long_val = 0;
   s.ulong_val = 0;
   s.enum_val = 0;
+  s.ulonglong_val = 0;
+  s.longlong_val = ACE_CDR_LONGLONG_INITIALIZER;
 
   // Two cases - one for signed and one for unsigned discriminator types.
   if (disc_kind == CORBA::tk_long
@@ -1516,15 +1301,6 @@ TAO_TypeCodeFactory_i::unique_label_values (const CORBA::UnionMemberSeq &members
                 }
 
               break;
-            case CORBA::tk_wchar:
-              members[i].label >>= CORBA::Any::to_wchar (s.wchar_val);
-
-              if (checker.insert (s.wchar_val) != 0)
-                {
-                  return 0;
-                }
-
-              break;
             case CORBA::tk_ushort:
               members[i].label >>= s.ushort_val;
 
@@ -1586,6 +1362,31 @@ TAO_TypeCodeFactory_i::valid_disc_type (CORBA::TypeCode_ptr tc
     }
 
   return 0;
+}
+
+CORBA::TypeCode_ptr 
+TAO_TypeCodeFactory_i::assemble_tc (TAO_OutputCDR &cdr,
+                                    CORBA::TCKind kind
+                                    ACE_ENV_ARG_DECL)
+{
+  ACE_Message_Block consolidated_block;
+
+  ACE_CDR::consolidate (&consolidated_block,
+                        cdr.begin ());
+
+  CORBA::TypeCode_ptr new_typecode =
+    CORBA::TypeCode::_nil ();
+
+  ACE_NEW_THROW_EX (new_typecode,
+                    CORBA_TypeCode (kind,
+                                    consolidated_block.length (),
+                                    consolidated_block.rd_ptr (),
+                                    0,
+                                    0),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+  return new_typecode;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
