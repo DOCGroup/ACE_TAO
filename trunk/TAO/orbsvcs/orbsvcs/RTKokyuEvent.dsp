@@ -56,7 +56,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 TAO_Svc_Utils.lib TAO_RTSched.lib TAO_RTEvent.lib ace.lib TAO.lib TAO_PortableServer.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_RTKokyuEvent.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO_Svc_Utils.lib TAO_RTSched.lib TAO_RTEvent.lib ace.lib TAO.lib TAO_PortableServer.lib Kokyu.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_RTKokyuEvent.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\..\Kokyu"
 
 !ELSEIF  "$(CFG)" == "RTKokyuEvent - Win32 Debug"
 
@@ -83,7 +83,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAO_Svc_Utilsd.lib TAO_RTSchedd.lib TAO_RTEventd.lib TAOd.lib aced.lib TAO_PortableServerd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_RTKokyuEventd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO_Svc_Utilsd.lib TAO_RTSchedd.lib TAO_RTEventd.lib TAOd.lib aced.lib TAO_PortableServerd.lib Kokyud.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_RTKokyuEventd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"  /libpath:"..\..\..\Kokyu"
 
 !ELSEIF  "$(CFG)" == "RTKokyuEvent - Win32 MFC Debug"
 
@@ -112,7 +112,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 TAOd.lib aced.lib TAO_Svc_Utilsd.lib TAO_RTSchedd.lib TAO_RTEventd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_RTKokyuEventd.dll" /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 TAOmfcd.lib acemfcd.lib TAO_Svc_Utilsmfcd.lib TAO_RTSchedmfcd.lib TAO_RTEventmfcd.lib TAO_PortableServermfcd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_RTKokyuEventmfcd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAOmfcd.lib acemfcd.lib TAO_Svc_Utilsmfcd.lib TAO_RTSchedmfcd.lib TAO_RTEventmfcd.lib TAO_PortableServermfcd.lib Kokyumfcd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_RTKokyuEventmfcd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"  /libpath:"..\..\..\Kokyu"
 
 !ELSEIF  "$(CFG)" == "RTKokyuEvent - Win32 MFC Release"
 
@@ -141,7 +141,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 ace.lib TAO.lib TAO_Svc_Utils.lib TAO_RTSched.lib TAO_RTEvent.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_RTKokyuEvent.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 acemfc.lib TAOmfc.lib TAO_Svc_Utilsmfc.lib TAO_RTSchedmfc.lib TAO_RTEventmfc.lib TAO_PortableServermfc.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_RTKokyuEventmfc.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 acemfc.lib TAOmfc.lib TAO_Svc_Utilsmfc.lib TAO_RTSchedmfc.lib TAO_RTEventmfc.lib TAO_PortableServermfc.lib Kokyumfc.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_RTKokyuEventmfc.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"  /libpath:"..\..\..\Kokyu"
 
 !ENDIF 
 
