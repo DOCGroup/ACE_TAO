@@ -16,7 +16,10 @@ BIN_UNCHECKED = VoidData
 
 SRC = $(addsuffix .cpp, $(BIN_UNCHECKED))
 
-CLIENT_OBJS = test_client.o testC.o 
+IDL_FILES = test
+IDL_SRC = testC.cpp testS.cpp
+
+CLIENT_OBJS = test_client.o testC.o
 
 BUILD = $(BIN)
 VBIN = $(BIN:%=%$(VAR))
@@ -46,11 +49,13 @@ include $(TAO_ROOT)/taoconfig.mk
 #       Local targets
 #----------------------------------------------------------------------------
 
+.PRECIOUS: $(foreach ext, $(IDL_EXT), test$(ext))
+
 VoidData: $(addprefix $(VDIR),$(CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(RT_TAO_CLNT_LIBS) $(POSTLINK)
 
 realclean: clean
-	-$(RM) 
+	-$(RM)
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
