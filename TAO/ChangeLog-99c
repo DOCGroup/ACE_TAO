@@ -1,3 +1,13 @@
+Mon Jun 28 15:11:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
+	  Use the ACE_TRY macros to write portable code when dealing with
+	  exceptions.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/server.cpp:
+	  Don't use print_exception directly, use the ACE_PRINT_EXCEPTION
+	  macro instead.
+
 Mon Jun 28 15:01:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/GIOP.i:
