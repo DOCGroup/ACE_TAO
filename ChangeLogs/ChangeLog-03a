@@ -1,3 +1,12 @@
+Thu Jan  2 16:11:38 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* ace/config-freebsd.h: Fix use of macros for FreeBSD 4.6:
+          ACE_LACKS_RWLOCK_T, ACE_LACKS_READDIR_R, ACE_LACKS_SETSCHED,
+          ACE_LACKS_PTHREAD_THR_SIGSETMASK. Do not define SCHED_RR,
+	  SCHED_IO, SCHED_FIFO, SCHED_OTHER for FreeBSD >= 4.0, since they
+	  are defined in sched.h. Thanks to Craig Rodrigues for providng
+	  the patch.
+
 Thu Jan  2 13:33:01 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Refcounted_Auto_Ptr.i:

@@ -17,7 +17,9 @@
 #endif /* ! __ACE_INLINE__ */
 
 #if (__FreeBSD_version < 220000)
+#if defined (ACE_HAS_THREADS) 
 #error Threads are not supported.
+#endif /* ACE_HAS_THREADS */
 #endif /* __FreeBSD_version < 220000 */
 
 #define ACE_SIZEOF_LONG_DOUBLE 12
@@ -45,12 +47,11 @@
 #define ACE_LACKS_SETPGID
 #define ACE_LACKS_SETREGID
 #define ACE_LACKS_SETREUID
+#define ACE_LACKS_PTHREAD_CANCEL
 #endif /* __FreeBSD_version < 420000 */
 
 #define ACE_HAS_ALT_CUSERID
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
-#define ACE_LACKS_RWLOCK_T
-#define ACE_LACKS_READDIR_R
 #define ACE_HAS_SIG_MACROS
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
@@ -59,21 +60,27 @@
 
 #if (__FreeBSD_version < 400000)
 #define ACE_LACKS_SIGSET
+#define ACE_LACKS_RWLOCK_T
+#define ACE_LACKS_READDIR_R
+#define ACE_LACKS_SETSCHED
+#define ACE_LACKS_PTHREAD_THR_SIGSETMASK
+#define ACE_LACKS_UCONTEXT_H
 #endif
 
 #define ACE_NEEDS_SCHED_H
 
-// Use of <malloc.h> is deprecated.
-#define ACE_LACKS_MALLOC_H
-
-// sched.h still not fully support on FreeBSD ?
-// this is taken from /usr/src/lib/libc_r/uthread/pthread-private.h
+#if (__FreeBSD_version < 400000)
 enum schedparam_policy {
         SCHED_RR,
         SCHED_IO,
         SCHED_FIFO,
         SCHED_OTHER
 };
+#endif
+
+// Use of <malloc.h> is deprecated.
+#define ACE_LACKS_MALLOC_H
+
 
 // This won't be necessary after it is fixed in the system include headers.
 extern "C" { char * cuserid (char *s); }
@@ -111,10 +118,6 @@ extern "C" { char * cuserid (char *s); }
 
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 #define ACE_LACKS_SIGINFO_H
-
-#if (__FreeBSD_version < 400000)
-#define ACE_LACKS_UCONTEXT_H
-#endif
 
 #define ACE_LACKS_SI_ADDR
 
@@ -196,16 +199,7 @@ extern "C" { char * cuserid (char *s); }
 #endif /* ! ACE_MT_SAFE */
 #endif /* ACE_HAS_THREADS */
 
-#if (__FreeBSD_version > 400000)
-#define ACE_LACKS_SETSCHED
-#endif
-
-#if (__FreeBSD_version < 420000)
-#define ACE_LACKS_PTHREAD_CANCEL
-#endif 
-
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
-#define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 #define ACE_LACKS_CONDATTR_PSHARED
 #define ACE_LACKS_MUTEXATTR_PSHARED
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
@@ -222,6 +216,7 @@ extern "C" { char * cuserid (char *s); }
 #define ACE_HAS_UCONTEXT_T
 #define ACE_HAS_SOCKLEN_T
 #define ACE_HAS_GETIFADDRS
+#define ACE_HAS_PTHREADS_UNIX98_EXT
 #endif
 
 // Note, on FreeBSD 5, POSIX aio is now an optional kernel module which
