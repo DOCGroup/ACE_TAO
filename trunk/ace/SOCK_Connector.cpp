@@ -98,8 +98,10 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
   else if (!(errno == EWOULDBLOCK || errno == ETIMEDOUT))
     {
       // If things have gone wrong, close down and return an error.
+      int saved_errno = errno;
       this->close ();
       new_stream.set_handle (ACE_INVALID_HANDLE);
+      errno = saved_errno;
     }
   return result;
 }
