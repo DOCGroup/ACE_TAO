@@ -1,3 +1,12 @@
+Tue Jun 15 14:32:43 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-hpux-10.x.h: Added ACE_HAS_BROKEN_T_ERROR.
+
+        * ace/config-hpux-10.x-hpc++.h:
+          Added ACE_HAS_STD_TEMPLATE_SPECIALIZATION.
+
+        * ace/OS.i (t_error): Changed naked cast to ACE_const_cast.
+
 Tue Jun 15 13:44:04 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/OS.h: Moved the typedef of ACE_SIGNAL_C_FUNC to after when
