@@ -1,3 +1,8 @@
+Mon Oct 20 23:42:48 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tao/stub.i (STUB_Object): Removed a stray default value from the
+ 	STUB_Object constructor...  Thanks to Carlos for noticing this.
+
 Mon Oct 20 22:50:48 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.13, released Mon Oct 20 22:50:48 1997.
