@@ -6,6 +6,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/SString.h"
 
+//#include "Config_Handlers/DnC_Dump.h"
+
 #if !defined (__ACE_INLINE__)
 # include "DomainApplicationManager_Impl.inl"
 #endif /* __ACE_INLINE__ */
@@ -56,6 +58,9 @@ init (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
+
+      //Deployment::DnC_Dump::dump (this->plan_);
+
       // (1) Call get_plan_info() method to get the total number
       //     of child plans and list of NodeManager names, and
       // (2) Check the validity of the global deployment plan.
@@ -345,6 +350,7 @@ startLaunch (const ::Deployment::Properties & configProperty,
                    ::Deployment::InvalidProperty))
 {
   ACE_UNUSED_ARG (start);
+  ACE_DEBUG ((LM_DEBUG, "CIAO::DomainApplicationManager_Impl::startLaunch.\n"));
   ACE_TRY
     {
       // Invoke startLaunch() operations on each cached NodeApplicationManager
@@ -420,6 +426,7 @@ finishLaunch (::CORBA::Boolean start
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
 {
+  ACE_DEBUG ((LM_DEBUG, "CIAO::DomainApplicationManager_Impl::finishLaunch.\n"));
   ACE_TRY
     {
       // Invoke finishLaunch() operation on each cached NodeApplication object.
@@ -484,6 +491,7 @@ start (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Deployment::StartError))
 {
+  ACE_DEBUG ((LM_DEBUG, "CIAO::DomainApplicationManager_Impl::start.\n"));
   ACE_TRY
     {
       // Invoke start() operation on each cached NodeApplication object.
@@ -523,6 +531,7 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Deployment::StopError))
 {
+  ACE_DEBUG ((LM_DEBUG, "CIAO::DomainApplicationManager_Impl::destroyApplication.\n"));
   ACE_TRY
     {
       // Invoke destroyManager() operation on each cached

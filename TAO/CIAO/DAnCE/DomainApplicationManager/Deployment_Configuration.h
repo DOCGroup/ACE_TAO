@@ -25,6 +25,7 @@
 
 #include "DeploymentC.h"
 #include "DomainApplicationManager/DomainApplicationManager_Export.h"
+#include "ace/SString.h"
 #include "tao/Valuetype/ValueBase.h"
 #include "tao/Valuetype/Valuetype_Adapter_Impl.h"
 #include "ace/SString.h"
