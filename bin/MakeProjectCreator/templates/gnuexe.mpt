@@ -1,3 +1,1 @@
 conditional_include "idl_compiler"
-
-ssl_libs = ssl crypto

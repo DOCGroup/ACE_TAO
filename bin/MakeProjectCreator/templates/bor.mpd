@@ -20,9 +20,6 @@ OBJFILES = \
 <%endfor%>
 <%endif%>
 
-EXTERNAL_LIBS = \
-<%if(ssl)%><%foreach(ssl_libs)%> <%ssl_lib%>.lib<%endfor%><%endif%>
-
 LFLAGS = \
 <%foreach(libpaths)%>
 	-j<%libpath%>\$(CONFIG_SUBDIR) -j<%libpath%> \
@@ -38,7 +35,7 @@ LIBFILES = \
 <%foreach(lit_libs)%>
 	<%lit_lib%>.lib \
 <%endfor%>
-	$(EXTERNAL_LIBS)
+
 <%if(idl_files)%>
 
 IDLFILES = \

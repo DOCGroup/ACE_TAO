@@ -29,7 +29,6 @@ Release {
   type_is_dynamic       = 1
   type_is_binary        = 1
   pdb                   = 1
-  ssl_libs              = libeay32 ssleay32
 }
 
 Debug {
@@ -44,7 +43,6 @@ Debug {
   type_is_dynamic       = 1
   type_is_binary        = 1
   pdb                   = 1
-  ssl_libs              = libeay32 ssleay32
 }
 
 Static Release {
@@ -89,7 +87,6 @@ MFC Release {
   type_is_dynamic       = 1
   type_is_binary        = 1
   pdb                   = 1
-  ssl_libs              = libeay32 ssleay32
 }
 
 MFC Debug {
@@ -104,7 +101,6 @@ MFC Debug {
   type_is_dynamic       = 1
   type_is_binary        = 1
   pdb                   = 1
-  ssl_libs              = libeay32 ssleay32
 }
 
 Static MFC Release {

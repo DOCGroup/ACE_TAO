@@ -1,0 +1,14 @@
+feature(ssl) {
+// When all of ACE and TAO are switched over to MPC, uncomment the
+// following lines and remove this comment.
+//  includes += $(SSL_ROOT)/include
+//  libpaths += $(SSL_ROOT)/lib
+
+  specific(borland, nmake, em3, vc6, vc7, vc71) {
+    lit_libs += libeay32 ssleay32
+  }
+
+  specific(gnuace, make) {
+    lit_libs += ssl crypto
+  }
+}

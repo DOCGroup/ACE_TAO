@@ -7,7 +7,6 @@ default_platform_long = "WCE ARM"
 configurations        = "Static Release" "Static Debug"
 type_is_binary        = 1
 common_defines        = UNICODE _UNICODE
-ssl_libs              = libeay32 ssleay32
 need_staticflags      = 1
 pdb                   = 1
 stack                 =

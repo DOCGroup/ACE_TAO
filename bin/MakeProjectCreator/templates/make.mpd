@@ -64,9 +64,6 @@ LDLIBS       +=<%foreach(defaultlibs)%> -l<%defaultlib%><%endfor%>
 <%if(lit_libs)%>
 LDLIBS       +=<%foreach(lit_libs)%> -l<%lit_lib%><%endfor%>
 <%endif%>
-<%if(ssl)%>
-LDLIBS       +=<%foreach(ssl_libs)%> -l<%ssl_lib%><%endfor%>
-<%endif%>
 OUTPUT_OPTION = -o $@
 <%marker(macros)%>
 
