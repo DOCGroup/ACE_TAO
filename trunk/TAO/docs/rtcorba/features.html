@@ -204,9 +204,17 @@ leaving it up to implementations.&nbsp; Below is a summary TAO defaults. </p>
 
 <h3><a name="threadpools">Threadpools</a></h3>
 
-<p>This feature is still in progress.&nbsp; Until it is fully supported, follow
-these steps to obtain <i>threadpool with lane</i>
-functionality in TAO:</p>
+<ul>
+
+<li>Initial support for ThreadPools is now available in TAO.  Users
+can use the standard RT-CORBA APIs to create thread pools.  See
+<code>$TAO_ROOT/tests/RTCORBA/Thread_Pool</code> for an example.
+However, a lot more work needs to go into partitioning ORB resources
+among the thread pool lanes before the feature is completely
+supported. <p>
+
+<li> Until it is fully supported, follow these steps to obtain
+<i>threadpool with lane</i> functionality in TAO:</p>
 
 <ol>
   <li>Include <CODE>&quot;tao/Pool_Per_Endpoint.h&quot;</CODE> into the server's
@@ -230,20 +238,25 @@ and 60, you would specify:<br>
   <li>Do not use <i>RTCORBA::ThreadpoolPolicy</i></li>
 </ol>
 
-<p>For an example of following the steps above, see <CODE>$TAO/tests/RTCORBA/Server_Declared</CODE>.&nbsp; The limitation of
-this method is that the threadpool is global, <i>i.e.</i>, available to all POAs in the
-ORB.&nbsp; There is no way to create additional threadpools and associate them with
-selected POAs.&nbsp; <i>Threadpool without lanes</i> functionality is not yet
+<p>For an example of following the steps above, see
+<CODE>$TAO/tests/RTCORBA/Server_Declared</CODE>.&nbsp; The limitation
+of this method is that the threadpool is global, <i>i.e.</i>,
+available to all POAs in the ORB.&nbsp; There is no way to create
+additional threadpools and associate them with selected POAs.&nbsp;
+<i>Threadpool without lanes</i> functionality is not yet
 available.</p>
 
-<p>Threadpool threads are the ones doing all the work in the ORB: no additional internal threads
-are created by the ORB for such tasks as I/O.&nbsp;&nbsp;</p>
+<p>Threadpool threads are the ones doing all the work in the ORB: no
+additional internal threads are created by the ORB for such tasks as
+I/O.&nbsp;&nbsp;</p>
 
-<p>More documentation will be available here once threadpools are fully supported.&nbsp;
-Also, see <a href="#valid_configurations">Priority Policies</a> section, which
-contains information on how threadpools interact with
-<i>
+<p>More documentation will be available here once threadpools are
+fully supported.&nbsp; Also, see <a
+href="#valid_configurations">Priority Policies</a> section, which
+contains information on how threadpools interact with <i>
 PriorityBandedConnectionPolicy</i> and <i>PriorityModelPolicy</i>.</p>
+
+</ul>
 
 <h3><a name="valid_configurations">Priority Policies</a></h3>
 
