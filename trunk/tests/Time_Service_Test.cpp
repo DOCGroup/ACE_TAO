@@ -40,11 +40,6 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Time_Service_Test"));
 
-#if defined (ACE_LACKS_FORK) && !defined (ACE_WIN32)
-  ACE_ERROR ((LM_INFO,
-              ACE_TEXT ("fork is not supported on this platform\n")));
-#else  /* ! ACE_LACKS_FORK || ACE_WIN32 */
-
   // Make sure that the backing store is not there. We need to make
   // sure because this test kills the Time Clerk and on some platforms
   // the Clerk is not allowed to do a graceful shutdown. By cleaning
@@ -119,7 +114,6 @@ run_main (int, ACE_TCHAR *[])
   // graceful shutdown and the backing store file is left behind.
   if (clerk.wait () != 0)
     ACE_OS::unlink (backing_store);
-#endif /* ! ACE_LACKS_FORK || ACE_WIN32 */
 
   ACE_END_TEST;
   return 0;

@@ -34,8 +34,6 @@
 
 ACE_RCSID(tests, Process_Manager_Test, "Process_Manager_Test.cpp,v 4.11 1999/09/02 04:36:30 schmidt Exp")
 
-#if (!defined (ACE_LACKS_FORK) || defined (ACE_WIN32))
-
 static u_int debug_test = 0;
 
 class Exit_Handler : public ACE_Event_Handler
@@ -303,14 +301,3 @@ run_main (int argc, ACE_TCHAR *argv[])
   return test_status;
 }
 
-#else /* (!ACE_LACKS_FORK || ACE_WIN32) */
-int
-run_main (int, ACE_TCHAR *[])
-{
-  ACE_START_TEST (ACE_TEXT ("Process_Manager_Test"));
-  ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("The ACE Process Manager is not supported on this platform\n")));
-  ACE_END_TEST;
-  return 0;
-}
-#endif /* (!ACE_LACKS_FORK || ACE_WIN32) */

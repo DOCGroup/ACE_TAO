@@ -30,7 +30,7 @@
 
 ACE_RCSID(tests, Signal_Test, "$Id$")
 
-#if !defined (ACE_LACKS_FORK) && !defined (ACE_LACKS_UNIX_SIGNALS)
+#if !defined (ACE_LACKS_UNIX_SIGNALS)
 
 // Global options.
 static size_t n_iterations = 100000;
@@ -485,8 +485,8 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Signal_Test"));
   ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("The ACE_Process capability is not supported on this platform\n")));
+              ACE_TEXT ("The Unix Signals capability is not supported on this platform\n")));
   ACE_END_TEST;
   return 0;
 }
-#endif /* !ACE_LACKS_FORK && !defined (ACE_LACKS_UNIX_SIGNALS) */
+#endif /* !defined (ACE_LACKS_UNIX_SIGNALS) */
