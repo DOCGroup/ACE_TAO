@@ -40,10 +40,10 @@ TAO_Cleanup_Func_Registry::cleanup (ACE_Array_Base<void *> &ts_objects)
 {
   size_t len = ts_objects.size ();
 
-  // The allocated slot may never been used.  It is therefore possible
-  // that the TSS array size maybe less than the cleanup function
-  // size.  However, there is still a one-to-one correspondence
-  // between cleanup_func[foo] and ts_object[foo].
+  // The allocated slot may never have been used.  It is therefore
+  // possible that the TSS array size may be less than the cleanup
+  // function size.  However, there is still a one-to-one
+  // correspondence between cleanup_func[foo] and ts_object[foo].
 
   ACE_ASSERT (len <= this->cleanup_funcs_.size ());
 
