@@ -42,11 +42,19 @@ public:
   // Initialize the client communication endpoint with server.
 
 private:
+  enum Operation {ALL, ADD, REMOVE, UPDATE, LIST};
+
+  void print_usage (Operation op);
+  // Print out information about an operation.
+
   int read_ior (char *filename);
   // Function to read the server ior from a file.
 
   int parse_args (void);
   // Parses the arguments passed on the command line.
+
+  int parse_add_args (void);
+  // Parses arguments specific to the ADD command.
 
   int argc_;
   // # of arguments on the command line.

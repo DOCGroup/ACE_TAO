@@ -35,7 +35,6 @@ struct Repository_Record
   Repository_Record ();
   Repository_Record (const Repository_Record &);
   Repository_Record (const ASYS_TCHAR *c,
-                     const ASYS_TCHAR *e,
                      const ASYS_TCHAR *w,
                      const ASYS_TCHAR *h,
                      const unsigned short p,
@@ -50,7 +49,6 @@ struct Repository_Record
 
   // Fields
   ASYS_TCHAR *comm_line;
-  ASYS_TCHAR *env;
   ASYS_TCHAR *wdir;
   ASYS_TCHAR *host;
   unsigned short port;
@@ -92,7 +90,6 @@ public:
 
   // = Accessor methods
   int get_comm_line (ACE_TString key, ASYS_TCHAR *&comm_line);
-  int get_env (ACE_TString key, ASYS_TCHAR *&env);
   int get_wdir (ACE_TString key, ASYS_TCHAR *&wdir);
   int get_ping_ior (ACE_TString key, ASYS_TCHAR *&ping_ior);
   int get_hostport (ACE_TString key, ASYS_TCHAR *&host, unsigned short &port);

@@ -8,7 +8,6 @@ ACE_RCSID(ImplRepo_Service, Repository, "$Id$")
 
 Repository_Record::Repository_Record ()
 : comm_line (ACE::strnew ("")),
-  env (ACE::strnew ("")),
   wdir (ACE::strnew ("")),
   host (ACE::strnew ("")),
   port (0),
@@ -19,7 +18,6 @@ Repository_Record::Repository_Record ()
 
 Repository_Record::Repository_Record (const Repository_Record &r)
 : comm_line (ACE::strnew (r.comm_line)),
-  env (ACE::strnew (r.env)),
   wdir (ACE::strnew (r.wdir)),
   host (ACE::strnew (r.host)),
   port (r.port),
@@ -29,13 +27,11 @@ Repository_Record::Repository_Record (const Repository_Record &r)
 }
 
 Repository_Record::Repository_Record (const ASYS_TCHAR *c,
-                                      const ASYS_TCHAR *e,
                                       const ASYS_TCHAR *w,
                                       const ASYS_TCHAR *h,
                                       const unsigned short p,
                                       const ASYS_TCHAR *pi)
 : comm_line (ACE::strnew (c)),
-  env (ACE::strnew (e)),
   wdir (ACE::strnew (w)),
   host (ACE::strnew (h)),
   port (p),
@@ -46,7 +42,6 @@ Repository_Record::Repository_Record (const ASYS_TCHAR *c,
 Repository_Record::~Repository_Record ()
 {
   delete [] this->comm_line;
-  delete [] this->env;
   delete [] this->wdir;
   delete [] this->host;
   delete [] this->ping_ior;
@@ -59,13 +54,11 @@ Repository_Record::operator= (Repository_Record &r)
     return *this;
 
   delete [] this->comm_line;
-  delete [] this->env;
   delete [] this->wdir;
   delete [] this->host;
   delete [] this->ping_ior;
 
   this->comm_line = ACE::strnew (r.comm_line);
-  this->env = ACE::strnew (r.env);
   this->wdir = ACE::strnew (r.wdir);
   this->host = ACE::strnew (r.host);
   this->port = r.port;
@@ -148,22 +141,6 @@ Repository::get_comm_line (ACE_TString key, ASYS_TCHAR *&comm_line)
     {
       ACE_NEW_RETURN (comm_line, ASYS_TCHAR [ACE_OS::strlen (rec->comm_line) + 1], -1);
       ACE_OS::strcpy (comm_line, rec->comm_line);
-    }
-
-  return retval;
-}
-
-
-int
-Repository::get_env (ACE_TString key, ASYS_TCHAR *&env)
-{
-  Repository_Record *rec;
-  int retval = this->repository_.find (key, rec);
-
-  if (retval == 0)
-    {
-      ACE_NEW_RETURN (env, ASYS_TCHAR [ACE_OS::strlen (rec->env) + 1], -1);
-      ACE_OS::strcpy (env, rec->env);
     }
 
   return retval;
