@@ -38,7 +38,7 @@ Initiator_i::~Initiator_i (void)
 
 
 void
-Initiator_i::foo_object_B (CORBA::Environment &env)
+Initiator_i::foo_object_B (CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) BEGIN Initiator_i::foo_object_B ()\n"));

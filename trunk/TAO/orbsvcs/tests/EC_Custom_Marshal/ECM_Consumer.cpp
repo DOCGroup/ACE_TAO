@@ -174,8 +174,8 @@ Driver::run (int argc, char* argv[])
 }
 
 void
-Driver::push_consumer (void* consumer_cookie,
-                       ACE_hrtime_t arrival,
+Driver::push_consumer (void* /* consumer_cookie */,
+                       ACE_hrtime_t /* arrival */,
                        const RtecEventComm::EventSet& events,
                        CORBA::Environment &TAO_IN_ENV)
 {

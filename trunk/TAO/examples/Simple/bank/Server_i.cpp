@@ -62,7 +62,7 @@ Server_i::parse_args (void)
 // Initialisation of Naming Service and registering the AccountManager Object
 
 int
-Server_i::init_naming_service (CORBA::Environment& env)
+Server_i::init_naming_service (CORBA::Environment &)
 {
   TAO_TRY
     {

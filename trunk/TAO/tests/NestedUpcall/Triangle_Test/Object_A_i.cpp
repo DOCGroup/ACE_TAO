@@ -37,7 +37,7 @@ Object_A_i::~Object_A_i (void)
 
 void
 Object_A_i::foo (Initiator_ptr initiator_ptr,
-                    CORBA::Environment &env)
+                    CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) BEGIN Object_A_i::foo ()\n"));
@@ -61,7 +61,7 @@ Object_A_i::foo (Initiator_ptr initiator_ptr,
 }
 
 void
-Object_A_i::finish (CORBA::Environment &env)
+Object_A_i::finish (CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) BEGIN Object_A_i::finish ()\n"));

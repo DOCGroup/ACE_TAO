@@ -29,7 +29,7 @@ ACE_Runtime_Scheduler (int config_count,
 
 RtecScheduler::handle_t
 ACE_Runtime_Scheduler::create (const char *entry_point,
-                               CORBA::Environment &TAO_IN_ENV)
+                               CORBA::Environment &)
      TAO_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::DUPLICATE_NAME))
 {
@@ -192,11 +192,10 @@ ACE_Runtime_Scheduler::entry_point_priority (const char * entry_point,
 
 void
 ACE_Runtime_Scheduler::add_dependency (RtecScheduler::handle_t handle,
-                                            RtecScheduler::handle_t dependency,
-                                            CORBA::Long number_of_calls,
-                                            RtecScheduler::Dependency_Type_t
-                                              dependency_type,
-                                            CORBA::Environment &TAO_IN_ENV)
+                                       RtecScheduler::handle_t /* dependency */,
+                                       CORBA::Long /* number_of_calls */,
+                                       RtecScheduler::Dependency_Type_t /* dependency_type */,
+                                       CORBA::Environment &TAO_IN_ENV)
      TAO_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::UNKNOWN_TASK))
 {
@@ -226,12 +225,12 @@ ACE_Runtime_Scheduler::add_dependency (RtecScheduler::handle_t handle,
 // this is a no-op.
 
 void
-ACE_Runtime_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
-                                           CORBA::Long maximum_priority,
-                                           RtecScheduler::RT_Info_Set_out infos,
-                                           RtecScheduler::Config_Info_Set_out configs,
-                                           RtecScheduler::Scheduling_Anomaly_Set_out anomalies,
-                                           CORBA::Environment &TAO_IN_ENV)
+ACE_Runtime_Scheduler::compute_scheduling (CORBA::Long /* minimum_priority */,
+                                           CORBA::Long /* maximum_priority */,
+                                           RtecScheduler::RT_Info_Set_out /* infos */,
+                                           RtecScheduler::Config_Info_Set_out /* configs */,
+                                           RtecScheduler::Scheduling_Anomaly_Set_out /* anomalies */,
+                                           CORBA::Environment &)
      TAO_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
                       RtecScheduler::INSUFFICIENT_THREAD_PRIORITY_LEVELS,

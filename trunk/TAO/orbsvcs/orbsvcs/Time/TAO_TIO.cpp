@@ -19,7 +19,7 @@ TAO_TIO::~TAO_TIO (void)
 // This is the get method for the attribute time interval.
 
 TimeBase::IntervalT
-TAO_TIO::time_interval (CORBA::Environment &env)
+TAO_TIO::time_interval (CORBA::Environment &)
 {
   return attr_time_interval;
 }
@@ -33,7 +33,7 @@ TAO_TIO::time_interval (CORBA::Environment &env)
 CosTime::OverlapType
 TAO_TIO::spans (CosTime::UTO_ptr uto,
 		CosTime::TIO_out overlap,
-		CORBA::Environment &env)
+		CORBA::Environment &)
 {
   TAO_TIO *tio = 0;
 
@@ -140,7 +140,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
 CosTime::OverlapType
 TAO_TIO::overlaps (CosTime::TIO_ptr tio,
 		   CosTime::TIO_out overlap,
-		   CORBA::Environment &env)
+		   CORBA::Environment &)
 {
   TAO_TIO *tio_i = 0;
 

@@ -960,8 +960,8 @@ ACE_RMS_Scheduler_Strategy::dynamic_subpriority (Dispatch_Entry &entry,
 
 int
 ACE_RMS_Scheduler_Strategy::dynamic_subpriority_comp
-  (const Dispatch_Entry &first_entry,
-   const Dispatch_Entry &second_entry)
+  (const Dispatch_Entry & /* first_entry */,
+   const Dispatch_Entry & /* second_entry */)
 {
   return 0;
 }
@@ -1027,8 +1027,8 @@ ACE_MLF_Scheduler_Strategy::instance ()
 //   static priority under MLF.
 
 int
-ACE_MLF_Scheduler_Strategy::priority_comp (const Dispatch_Entry &first_entry,
-                                           const Dispatch_Entry &second_entry)
+ACE_MLF_Scheduler_Strategy::priority_comp (const Dispatch_Entry & /* first_entry */,
+                                           const Dispatch_Entry & /* second_entry */)
 {
   return 0;
 }
@@ -1050,7 +1050,7 @@ ACE_MLF_Scheduler_Strategy::sort (
 // = Default constructor.
 
 ACE_MLF_Scheduler_Strategy::ACE_MLF_Scheduler_Strategy (
-  ACE_DynScheduler::Preemption_Priority minimum_critical_priority)
+  ACE_DynScheduler::Preemption_Priority /* minimum_critical_priority */)
   :ACE_Scheduler_Strategy (0)
 {
 }
@@ -1161,8 +1161,8 @@ ACE_EDF_Scheduler_Strategy::instance ()
 //   equivalent static priority under EDF.
 
 int
-ACE_EDF_Scheduler_Strategy::priority_comp (const Dispatch_Entry &first_entry,
-                                           const Dispatch_Entry &second_entry)
+ACE_EDF_Scheduler_Strategy::priority_comp (const Dispatch_Entry & /* first_entry */,
+                                           const Dispatch_Entry & /* second_entry */)
 {
   return 0;
 }
@@ -1184,7 +1184,7 @@ ACE_EDF_Scheduler_Strategy::sort (
 // = Default constructor.
 
 ACE_EDF_Scheduler_Strategy::ACE_EDF_Scheduler_Strategy (
-  ACE_DynScheduler::Preemption_Priority minimum_critical_priority)
+  ACE_DynScheduler::Preemption_Priority /* minimum_critical_priority */)
   :ACE_Scheduler_Strategy (0)
 {
 }
@@ -1561,8 +1561,8 @@ ACE_Criticality_Scheduler_Strategy::dynamic_subpriority (Dispatch_Entry &entry,
 
 int
 ACE_Criticality_Scheduler_Strategy::dynamic_subpriority_comp
-  (const Dispatch_Entry &first_entry,
-   const Dispatch_Entry &second_entry)
+  (const Dispatch_Entry & /* first_entry */,
+   const Dispatch_Entry & /* second_entry */)
 {
   return 0;
 }

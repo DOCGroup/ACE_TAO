@@ -53,7 +53,7 @@ MyFooServant::simply_doit (CORBA::Environment &/*env*/)
 }
 
 void
-MyFooServant::shutdown (CORBA::Environment &env)
+MyFooServant::shutdown (CORBA::Environment &)
 {
   this->orb_->shutdown ();
 }
@@ -117,8 +117,8 @@ extern "C" GENERIC_SERVANT_Export void destroy_servant (const PortableServer::Ob
 // This function will take care of the destruction of the servant.
 
 void
-destroy_servant (const PortableServer::ObjectId &oid,
-                PortableServer::POA_ptr poa,
+destroy_servant (const PortableServer::ObjectId & /* oid */,
+                PortableServer::POA_ptr /* poa */,
                  PortableServer::Servant servant)
 {
   delete servant;

@@ -163,7 +163,7 @@ Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer,
 void
 Notifier_i::market_status (const char *stock_name,
                            CORBA::Long stock_value,
-                           CORBA::Environment &ACE_TRY_ENV)
+                           CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
 	      "Notifier_i:: The stockname is %s with price %d\n",
@@ -217,7 +217,7 @@ Notifier_i::market_status (const char *stock_name,
 }
 
 void
-Notifier_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
+Notifier_i::shutdown (CORBA::Environment &)
 {
   if ( this->consumer_map_.close () > 0)
     ACE_ERROR ((LM_ERROR,

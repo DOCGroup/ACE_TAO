@@ -29,14 +29,14 @@ Consumer_i::~Consumer_i (void)
 
 void
 Consumer_i::push (const Callback_Quoter::Info &data,
-                  CORBA::Environment &ACE_TRY_ENV)
+                  CORBA::Environment &)
 {
   // On getting the needed information you now proceed to the next
   // step, which could be obtaining the shares.
 
   ACE_DEBUG ((LM_DEBUG,
               "Selling 10,000 %s shares at %d!!\n",
-	      data.stock_name.in (),
+	            data.stock_name.in (),
               data.value));
 }
 

@@ -31,7 +31,7 @@ Consumer_Signal_Handler:: ~Consumer_Signal_Handler (void)
 
 // Method to handle the ^C signal.
 int
-Consumer_Signal_Handler::handle_signal (int signum,
+Consumer_Signal_Handler::handle_signal (int /* signum */,
                                         siginfo_t*,
                                         ucontext_t*)
 {

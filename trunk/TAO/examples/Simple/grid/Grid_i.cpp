@@ -76,27 +76,27 @@ Grid_i::get (CORBA::Short x,
 // Access methods.
 
 CORBA::Short 
-Grid_i::width (CORBA::Environment &ACE_TRY_ENV)
+Grid_i::width (CORBA::Environment &A)
 {
   return this->width_;
 }
 
 CORBA::Short 
-Grid_i::height (CORBA::Environment &ACE_TRY_ENV)
+Grid_i::height (CORBA::Environment &)
 {
   return this->height_;
 }
 
 void 
 Grid_i::width (CORBA::Short x,
-	       CORBA::Environment &ACE_TRY_ENV)
+	       CORBA::Environment &)
 {
   this->width_ = x;
 }
 
 void 
 Grid_i::height (CORBA::Short y,
-		CORBA::Environment &ACE_TRY_ENV)
+		CORBA::Environment &)
 {
   this->height_ = y;
 }
@@ -104,7 +104,7 @@ Grid_i::height (CORBA::Short y,
 // Destroy the grid
 
 void 
-Grid_i::destroy (CORBA::Environment &ACE_TRY_ENV)
+Grid_i::destroy (CORBA::Environment &)
 {
   // Delete the array.
 

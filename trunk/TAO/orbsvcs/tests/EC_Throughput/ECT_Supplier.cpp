@@ -202,7 +202,7 @@ Test_Supplier::svc ()
 }
 
 void
-Test_Supplier::disconnect_push_supplier (CORBA::Environment& TAO_IN_ENV)
+Test_Supplier::disconnect_push_supplier (CORBA::Environment &)
 {
 }
 

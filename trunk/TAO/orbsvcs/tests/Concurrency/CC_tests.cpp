@@ -94,7 +94,7 @@ Test_Single_Lock_With_Mode::~Test_Single_Lock_With_Mode (void)
 }
 
 int
-Test_Single_Lock_With_Mode::run (int times_to_run)
+Test_Single_Lock_With_Mode::run (int /* times_to_run */)
 {
   CORBA::Boolean lock_not_held;
 
@@ -173,7 +173,7 @@ Test_Setup_LockSet::~Test_Setup_LockSet (void)
 }
 
 int
-Test_Setup_LockSet::run (int times_to_run)
+Test_Setup_LockSet::run (int /* times_to_run */)
 {
   TAO_TRY
     {
@@ -218,7 +218,7 @@ Test_Use_Already_Created_LockSet::~Test_Use_Already_Created_LockSet (void)
 }
 
 int
-Test_Use_Already_Created_LockSet::run (int times_to_run)
+Test_Use_Already_Created_LockSet::run (int /* times_to_run */)
 {
   TAO_TRY
     {
@@ -263,7 +263,7 @@ Test_Unlock_Already_Created_LockSet::~Test_Unlock_Already_Created_LockSet (void)
 }
 
 int
-Test_Unlock_Already_Created_LockSet::run (int times_to_run)
+Test_Unlock_Already_Created_LockSet::run (int /* times_to_run */)
 {
   TAO_TRY
     {
@@ -304,7 +304,7 @@ Test_Release_Not_Held_Lock::~Test_Release_Not_Held_Lock (void)
 }
 
 int
-Test_Release_Not_Held_Lock::run (int times_to_run)
+Test_Release_Not_Held_Lock::run (int /* times_to_run */)
 {
   CORBA::Boolean lock_not_held;
 

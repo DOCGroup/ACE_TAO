@@ -44,7 +44,7 @@ Account_i::balance (CORBA::Environment &)
 
 void
 Account_i::deposit (CORBA::Float deposit,
-		    CORBA::Environment &env)
+		    CORBA::Environment &)
 {
   balance_ += deposit;
 }
@@ -60,14 +60,14 @@ Account_i::withdraw (CORBA::Float withdrawl,
 }
 
 char *
-Account_i::name (CORBA::Environment &env)
+Account_i::name (CORBA::Environment &)
 {
   return CORBA::string_dup (name_);
 }
 
 void
 Account_i::name (const char *name,
-		 CORBA::Environment &env)
+		 CORBA::Environment &)
 {
   name_ = CORBA::string_dup (name);
 }

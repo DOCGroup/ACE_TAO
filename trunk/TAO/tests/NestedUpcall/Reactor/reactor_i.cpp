@@ -18,7 +18,7 @@ Reactor_i::~Reactor_i (void)
 // register...with nothing
 CORBA::Long
 Reactor_i::register_handler (EventHandler_ptr eh,
-                             CORBA::Environment &env)
+                             CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) BEGIN Reactor_i::register_handler ()\n"));
@@ -46,7 +46,7 @@ Reactor_i::register_handler (EventHandler_ptr eh,
 }
 
 void
-Reactor_i::set_value (CORBA::Environment &env)
+Reactor_i::set_value (CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) doing Reactor_i::set_value()\n"));
@@ -73,7 +73,7 @@ Reactor_i::decrement (EventHandler_ptr eh,
 }
 
 void
-Reactor_i::stop (CORBA::Environment &env)
+Reactor_i::stop (CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) stopping.\n"));
   TAO_ORB_Core_instance ()->orb ()->shutdown ();

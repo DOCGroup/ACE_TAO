@@ -41,7 +41,7 @@ TAO_CosEC_SupplierAdmin_i::obtain_push_consumer (CORBA::Environment &TAO_IN_ENV)
 }
 
 CosEventChannelAdmin::ProxyPullConsumer_ptr
-TAO_CosEC_SupplierAdmin_i::obtain_pull_consumer (CORBA::Environment &TAO_IN_ENV)
+TAO_CosEC_SupplierAdmin_i::obtain_pull_consumer (CORBA::Environment &)
 {
   // TODO: implement this.
   return CosEventChannelAdmin::ProxyPullConsumer::_nil ();

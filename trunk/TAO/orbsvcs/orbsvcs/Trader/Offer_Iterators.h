@@ -89,7 +89,7 @@ public:
   // END SPEC
  protected:
 
-  TAO_Offer_Iterator (TAO_Offer_Iterator& iter) {}
+  TAO_Offer_Iterator (TAO_Offer_Iterator &) {}
   // To satisfy g++'s insane lust for copy constructors...
 
   TAO_Offer_Iterator& operator=(const TAO_Offer_Iterator&);

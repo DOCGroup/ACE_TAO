@@ -55,13 +55,13 @@ My_Test_Object::~My_Test_Object (void)
 }
 
 CORBA::Short
-My_Test_Object::id (CORBA::Environment &TAO_IN_ENV)
+My_Test_Object::id (CORBA::Environment &)
 {
   return id_;
 }
 
 void
-My_Test_Object::id (CORBA::Short id, CORBA::Environment &TAO_IN_ENV)
+My_Test_Object::id (CORBA::Short id, CORBA::Environment &)
 {
   id_ = id;
 }

@@ -36,7 +36,7 @@ Object_B_i::~Object_B_i (void)
 
 void
 Object_B_i::foo (Object_A_ptr object_A_ptr,
-                    CORBA::Environment &env)
+                    CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) BEGIN Object_B_i::foo ()\n"));

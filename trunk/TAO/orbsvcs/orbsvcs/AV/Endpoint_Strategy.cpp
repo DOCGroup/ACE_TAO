@@ -46,9 +46,9 @@ TAO_AV_Endpoint_Strategy::~TAO_AV_Endpoint_Strategy (void)
 // subclasses need only define the calls that they want to support,
 // and the remaining calls will fail automagically
 int
-TAO_AV_Endpoint_Strategy::create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
-                                    AVStreams::VDev_ptr &vdev,
-                                    CORBA::Environment &env)
+TAO_AV_Endpoint_Strategy::create_A (AVStreams::StreamEndPoint_A_ptr & /* stream_endpoint */,
+                                    AVStreams::VDev_ptr & /* vdev */,
+                                    CORBA::Environment &)
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "(%P|%t) Error creating A endpoint\n"),
@@ -60,9 +60,9 @@ TAO_AV_Endpoint_Strategy::create_A (AVStreams::StreamEndPoint_A_ptr &stream_endp
 // subclasses need only define the calls that they want to support,
 // and the remaining calls will fail automagically
 int
-TAO_AV_Endpoint_Strategy::create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
-                                    AVStreams::VDev_ptr &vdev,
-                                    CORBA::Environment &env)
+TAO_AV_Endpoint_Strategy::create_B (AVStreams::StreamEndPoint_B_ptr & /* stream_endpoint */,
+                                    AVStreams::VDev_ptr & /*vdev */,
+                                    CORBA::Environment &)
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "(%P|%t) Error creating B endpoint\n"),
@@ -254,7 +254,7 @@ TAO_AV_Endpoint_Process_Strategy_A::~TAO_AV_Endpoint_Process_Strategy_A (void)
 int
 TAO_AV_Endpoint_Process_Strategy_A::create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
                                            AVStreams::VDev_ptr &vdev,
-                                           CORBA::Environment &env)
+                                           CORBA::Environment &)
 {
   // use the baseclass activate
   if (this->activate () == -1)
@@ -327,7 +327,7 @@ TAO_AV_Endpoint_Process_Strategy_B::~TAO_AV_Endpoint_Process_Strategy_B (void)
 int
 TAO_AV_Endpoint_Process_Strategy_B::create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
                                            AVStreams::VDev_ptr &vdev,
-                                           CORBA::Environment &env)
+                                           CORBA::Environment &)
 {
   TAO_TRY
     {

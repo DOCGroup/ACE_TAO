@@ -150,7 +150,7 @@ TAO_Constraint_Evaluator::visit_max (TAO_Unary_Constraint* unary_max)
 }
 
 int
-TAO_Constraint_Evaluator::visit_random (TAO_Noop_Constraint* noop_random)
+TAO_Constraint_Evaluator::visit_random (TAO_Noop_Constraint *)
 {
   TAO_Literal_Constraint random ((CORBA::Long) (ACE_OS::rand ()));
   this->queue_.enqueue_head (random);
@@ -158,7 +158,7 @@ TAO_Constraint_Evaluator::visit_random (TAO_Noop_Constraint* noop_random)
 }
 
 int
-TAO_Constraint_Evaluator::visit_first (TAO_Noop_Constraint* noop_first)
+TAO_Constraint_Evaluator::visit_first (TAO_Noop_Constraint *)
 {
   TAO_Literal_Constraint first ((CORBA::Long) 0);
   this->queue_.enqueue_head (first);
@@ -803,13 +803,13 @@ TAO_Constraint_Validator::visit_constraint (TAO_Unary_Constraint* constraint)
 }
 
 int
-TAO_Constraint_Validator::visit_first (TAO_Noop_Constraint* noop)
+TAO_Constraint_Validator::visit_first (TAO_Noop_Constraint *)
 {
   return 0;
 }
 
 int
-TAO_Constraint_Validator::visit_random (TAO_Noop_Constraint* noop)
+TAO_Constraint_Validator::visit_random (TAO_Noop_Constraint *)
 {
   return 0;
 }
@@ -1150,14 +1150,14 @@ visit_not_equal (TAO_Binary_Constraint* boolean_neq)
 
 int
 TAO_Constraint_Validator::
-visit_literal (TAO_Literal_Constraint* literal)
+visit_literal (TAO_Literal_Constraint *)
 {
   return 0;
 }
 
 int
 TAO_Constraint_Validator::
-visit_property (TAO_Property_Constraint* literal)
+visit_property (TAO_Property_Constraint *)
 {
   return 0;
 }

@@ -25,7 +25,7 @@ TAO_UTO::~TAO_UTO (void)
 // Get Method for the readonly attribute time.
 
 TimeBase::TimeT
-TAO_UTO::time (CORBA::Environment &env)
+TAO_UTO::time (CORBA::Environment &)
 {
   return attr_utc_time_.time;
 }
@@ -33,7 +33,7 @@ TAO_UTO::time (CORBA::Environment &env)
 // Get method for the readonly attribute inaccuracy.
 
 TimeBase::InaccuracyT
-TAO_UTO::inaccuracy (CORBA::Environment &env)
+TAO_UTO::inaccuracy (CORBA::Environment &)
 {
   return attr_utc_time_.inacclo + attr_utc_time_.inacchi;
 }
@@ -41,7 +41,7 @@ TAO_UTO::inaccuracy (CORBA::Environment &env)
 // Get method for the readonly attribute tdf.
 
 TimeBase::TdfT
-TAO_UTO::tdf (CORBA::Environment &env)
+TAO_UTO::tdf (CORBA::Environment &)
 {
   return attr_utc_time_.tdf;
 }
@@ -49,7 +49,7 @@ TAO_UTO::tdf (CORBA::Environment &env)
 // Get method for the readonly attribute utc_time.
 
 TimeBase::UtcT
-TAO_UTO::utc_time (CORBA::Environment &env)
+TAO_UTO::utc_time (CORBA::Environment &)
 {
   return attr_utc_time_;
 }
@@ -58,7 +58,7 @@ TAO_UTO::utc_time (CORBA::Environment &env)
 // the Base Time, UTC and Distributed Time Sync. Algos. [3].
 
 CosTime::UTO_ptr
-TAO_UTO::absolute_time (CORBA::Environment &env)
+TAO_UTO::absolute_time (CORBA::Environment &)
 {
   return 0;
 }
@@ -69,7 +69,7 @@ TAO_UTO::absolute_time (CORBA::Environment &env)
 CosTime::TimeComparison
 TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
                        CosTime::UTO_ptr uto,
-                       CORBA::Environment &env)
+                       CORBA::Environment &)
 {
   TAO_TRY
     {

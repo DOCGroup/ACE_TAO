@@ -23,8 +23,8 @@ Timer_Helper::~Timer_Helper (void)
 }
 
 int
-Timer_Helper::handle_timeout (const ACE_Time_Value &time,
-			      const void *arg)
+Timer_Helper::handle_timeout (const ACE_Time_Value &,
+			      const void *)
 {
   int no_of_servers = 0;
   CORBA::ULongLong sum = 0;

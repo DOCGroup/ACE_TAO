@@ -47,7 +47,7 @@ TAO_CosEC_EventChannel_i::init (const RtecEventChannelAdmin::ConsumerQOS &consum
 }
 
 CosEventChannelAdmin::ConsumerAdmin_ptr
-TAO_CosEC_EventChannel_i::for_consumers (CORBA::Environment &TAO_IN_ENV)
+TAO_CosEC_EventChannel_i::for_consumers (CORBA::Environment &)
 {
   // @@ Pradeep: you must make a copy here, because the caller is
   // responsible of removing this object.
@@ -56,7 +56,7 @@ TAO_CosEC_EventChannel_i::for_consumers (CORBA::Environment &TAO_IN_ENV)
 }
 
 CosEventChannelAdmin::SupplierAdmin_ptr
-TAO_CosEC_EventChannel_i::for_suppliers (CORBA::Environment &TAO_IN_ENV)
+TAO_CosEC_EventChannel_i::for_suppliers (CORBA::Environment &)
 {
   // @@ Pradeep: you must make a copy here, because the caller is
   // responsible of removing this object, same here..

@@ -143,7 +143,7 @@ Logger_i::logv2 (const Logger::Log_Record &log_rec,
 void
 Logger_i::logv (const Logger::Log_Record &log_rec,
                Logger::Verbosity_Level verbosity,
-               CORBA::Environment &TAO_IN_ENV)
+               CORBA::Environment &)
 {
   // Create an <ACE_Log_Record> to leverage existing logging
   // code. Since Logger::Log_Priority enum tags don't cleanly map to
