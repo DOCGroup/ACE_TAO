@@ -1,3 +1,8 @@
+Sat Mar 15 12:20:45 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/tests.dsw:
+	* tests/Recursive_Condition_Bug_Test.dsp: Added a new project file.
+
 Sat Mar 15 10:55:01 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tests/Makefile:
@@ -7,7 +12,7 @@ Sat Mar 15 10:55:01 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tests: Added a new Recursive_Condition_Bug_Test.cpp to check
 	  that the fix from Leonid Kvetnyi is correct and doesn't cause
-	  other problems.  
+	  other problems.
 
 	* tests/Recursive_Condition_Test.cpp (ACE_TMAIN): Minor reformatting.
 
@@ -16,13 +21,13 @@ Sat Mar 15 10:55:01 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 	  Thanks to Leonid Kvetnyi <leonidk@nice.com> for this fix.
 
 	* ace/Event_Handler_T.h: Changed
-  
+
           typedef int (T::*SIG_HANDLER) (ACE_HANDLE, siginfo_t*, ucontext_t*);
 
 	  to this
 
 	  typedef int (T::*SIG_HANDLER) (int, siginfo_t*, ucontext_t*);
-  
+
           so that we're consistent across platforms where ACE_HANDLE is a
  	  HANDLE, not an int!  Thanks to Johnny Willemsen
  	  <jwillemsen@remedy.nl> for reporting this.
