@@ -300,4 +300,15 @@
 
 #endif /* ! ACE_CORBA_HAS_EXCEPTIONS */
 
+// Print out a TAO exception.  This is not CORBA compliant.
+# define ACE_PRINT_TAO_EXCEPTION(EX,INFO) \
+  EX.print_exception (INFO)
+
+// Print out a CORBA exception.  There is not portable way to
+// dump a CORBA exception.  If you are using other ORB implementation,
+// redefine the macro to get what you want.
+# if !defined ACE_PRINT_EXCEPTION
+#   define ACE_PRINT_EXCEPTION(EX,INFO) ACE_PRINT_TAO_EXCEPTION(EX,INFO)
+# endif /* ACE_PRINT_EXCEPTION */
+
 #endif /* ACE_CORBA_MACROS_H */
