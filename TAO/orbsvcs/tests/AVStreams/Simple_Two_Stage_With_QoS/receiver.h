@@ -42,6 +42,10 @@ public:
                      TAO_AV_frame_info *frame_info,
                      const ACE_Addr &peer_address);
 
+  // Called when the sender is done sending data and wants to close
+  // down the connection.
+  int handle_destroy (void);
+
 private:
   int frame_count_;
   // Keeping a count of the incoming frames.
