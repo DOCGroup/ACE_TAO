@@ -210,26 +210,22 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::svc (void)
   while (this->active_)
     {
 # if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
-
       // Temporarily suspend ownership of the timer queue mutex in
-      // order to dispatch deferred execution commands.  These commands
-      // are to be treated as executing in a context "external" to the
-      // timer queue adapter, and thus must compete separately for this lock.
+      // order to dispatch deferred execution commands.  These
+      // commands are to be treated as executing in a context
+      // "external" to the timer queue adapter, and thus must compete
+      // separately for this lock.
       mutex_.release ();
       this->dispatch_commands ();
 
-      // Re-acquire ownership of the timer queue mutex in order
-      // to restore the "internal" timer queue adapter context
+      // Re-acquire ownership of the timer queue mutex in order to
+      // restore the "internal" timer queue adapter context
       mutex_.acquire ();
-
-
 # endif /* ACE_HAS_DEFERRED_TIMER_COMMANDS */
 
       // If the queue is empty, sleep until there is a change on it.
       if (this->timer_queue_.is_empty ())
-        {
-          this->condition_.wait ();
-        }
+        this->condition_.wait ();
       else
         {
           // Compute the remaining time, being careful not to sleep
