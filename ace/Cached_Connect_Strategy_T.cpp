@@ -278,7 +278,7 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::cached_connect (SVC_HANDLER *&sh,
 
       if (errno == EWOULDBLOCK)
         errno = ENOTSUP;
-      else if (ACE::out_of_handles (errno))
+      else if (ACE::out_of_handles (errno) || errno == EADDRINUSE)
         {
           // If the connect failed due to the process running out of
           // file descriptors then, auto_purging of some connections
