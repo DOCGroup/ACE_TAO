@@ -17,7 +17,7 @@
 #include "AVStreams_i.h"
 
 // ----------------------------------------------------------------------
-// TAO_Basic_StreamCtrl
+// TAO_Basic_StreamCtrl_i
 // ----------------------------------------------------------------------
 
 TAO_Basic_StreamCtrl::TAO_Basic_StreamCtrl (void)
@@ -68,7 +68,9 @@ void
 TAO_Basic_StreamCtrl::push_event (const char *the_event,  
                                   CORBA::Environment &env)
 {
-  ACE_UNUSED_ARG (the_event);
+  ACE_DEBUG ((LM_DEBUG, 
+              "\n(%P|%t) Recieved event \"%s\"",
+              the_event));
   ACE_UNUSED_ARG (env);
 }
 
@@ -122,7 +124,33 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
                            const AVStreams::flowSpec &the_flows,  
                            CORBA::Environment &env)
 {
-  return 0;
+  // Check to see if we have non-nil parties to bind!
+  if (CORBA::is_nil (a_party) || 
+      CORBA::is_nil (b_party))
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "(%p|%t) TAO_StreamCtrl::bind_devs: "
+                       "a_party or b_party is null!\n"),
+                      0);
+  
+  // Request a_party to create the endpoint and vdev
+  AVStreams::StreamEndPoint_A_ptr stream_endpoint_a;
+  AVStreams::VDev_var vdev_var;
+  AVStreams::VDev_out vdev_a (vdev_var);
+  CORBA::Boolean met_qos;
+  char *named_vdev;
+  flowSpec the_spec;
+  
+  stream_endpoint_a =
+    a_party-> create_A (this->_this (env),
+                        vdev_a,
+                        the_qos,
+                        met_qos,
+                        named_vdev,
+                        the_spec,
+                        env);
+  TAO_CHECK_ENV_RETURN (env, 0);
+  
+  ACE_DEBUG ((LM_DEBUG,"(%p|%t) TAO_StreamCtrl::create_A: succeeded"));
 }
   
 CORBA::Boolean 
@@ -133,6 +161,11 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr a_party,
                       CORBA::Environment &env)
 {
   return 0;
+}
+
+void 
+TAO_StreamCtrl::unbind (CORBA::Environment &env)
+{
 }
 
 void 
@@ -381,16 +414,17 @@ TAO_VDev::~TAO_VDev (void)
 
 TAO_MMDevice::TAO_MMDevice (void)
 {
+  ACE_DEBUG ((LM_DEBUG,"\n(%P|%t) TAO_MMDevice created"));
 }
 
 AVStreams::StreamEndPoint_A_ptr  
 TAO_MMDevice::create_A (AVStreams::StreamCtrl_ptr the_requester, 
-                                                   AVStreams::VDev_out the_vdev, 
-                                                   AVStreams::streamQoS &the_qos, 
-                                                   CORBA::Boolean_out met_qos, 
-                                                   char *&named_vdev, 
-                                                   const AVStreams::flowSpec &the_spec,  
-                                                   CORBA::Environment &env)
+                        AVStreams::VDev_out the_vdev, 
+                        AVStreams::streamQoS &the_qos, 
+                        CORBA::Boolean_out met_qos, 
+                        char *&named_vdev, 
+                        const AVStreams::flowSpec &the_spec,  
+                        CORBA::Environment &env)
 {
   return 0;
 }
@@ -407,6 +441,8 @@ TAO_MMDevice::create_B (AVStreams::StreamCtrl_ptr the_requester,
   return 0;
 }
 
+// create a streamctrl which is colocated with me, use that streamctrl
+// to bind the peer_device with me.
 AVStreams::StreamCtrl_ptr  
 TAO_MMDevice::bind (AVStreams::MMDevice_ptr peer_device,
                     AVStreams::streamQoS &the_qos,
@@ -414,6 +450,32 @@ TAO_MMDevice::bind (AVStreams::MMDevice_ptr peer_device,
                     const AVStreams::flowSpec &the_spec,
                     CORBA::Environment &env)
 {
+#if 0
+  TAO_TRY
+    {
+      TAO_StreamCtrl *stream_ctrl = new TAO_StreamCtrl ();
+      if (stream_ctrl == 0)
+        return 0;
+      stream_ctrl->bind_devs (peer_device,
+                              this->_this (TAO_TRY_ENV),
+                              the_qos,
+                              the_spec,
+                              TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      return stream_ctrl;
+    }
+  TAO_CATCH (CORBA::SystemException, sysex)
+    {
+      TAO_TRY_ENV.print_exception ("System Exception");
+      return -1;
+    }
+  TAO_CATCH (CORBA::UserException, userex)
+    {
+      TAO_TRY_ENV.print_exception ("User Exception");
+      return -1;
+    }
+  TAO_ENDTRY;
+#endif
   return 0;
 }
 
@@ -458,3 +520,4 @@ TAO_MMDevice::remove_fdev (const char *flow_name,
 TAO_MMDevice::~TAO_MMDevice (void)
 {
 }
+
