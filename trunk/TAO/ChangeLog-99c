@@ -1,3 +1,10 @@
+Wed Jun 30 13:36:29 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	Fixed the exception warnings for the following:
+	* orbsvcs/tests/Time/Client_i.cpp 
+	* TAO_ROOT/tests/InterOp-Naming/Server_i.cpp
+	* TAO_ROOT/tests/InterOp-Naming/INS_test_server.cpp
+
 Wed Jun 30 12:03:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* examples/Simple/bank/Account_i.cpp: 
