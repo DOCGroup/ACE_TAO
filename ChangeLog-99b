@@ -1,3 +1,10 @@
+Fri Feb 19 21:44:31 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * ace/OS.i: Was using two many arguments to thread_mutex_lock () 
+          and ACE_OS::thread_mutex_trylock ().
+
+        * ace/Synch.i: Typo in comment
+
 Fri Feb 19 18:18:13 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.{h,i,cpp}: Added ACE_OS_WString and ACE_OS_CString which
@@ -1296,7 +1303,7 @@ Sun Jan 24 14:23:07 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
         * ace/SString.cpp: The substring() method did not check for zero
           length.  Thanks to Mike Goldman for this fix.
 
-Sun Jan 24 02:08:57 1999  Carlos O'Ryan  <coryan@cs.wus   tl.edu>
+Sun Jan 24 02:08:57 1999  Carlos O'Ryan  <coryan@cs.wus...tl.edu>
 
         * websvcs/lib/URL_Addr.cpp:
         * websvcs/lib/URL_Addr.h:
@@ -1672,7 +1679,7 @@ Mon Jan 18 23:07:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
           yet.  Apparently, fopen does not open file with
           FILE_SHARE_DELETE.
 
-Mon Jan 18 22:54:18 1999  Darrell Brunsch <brunsch@cs.w   ustl.edu>
+Mon Jan 18 22:54:18 1999  Darrell Brunsch <brunsch@cs.w...ustl.edu>
 
         * ace/ace_dll.dsp:
         * ace/ace_lib.dsp:
@@ -2062,7 +2069,7 @@ Thu Jan 14 16:18:37 EST 1999  James CE Johnson  <jcej@lads.com>
 Thu Jan 14 11:46:25 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
         * ace/Synch_T.h: Pointed out that we can only parameterize
-          ACE_Condition<> with ACE_Thread_Mutex and ACE_   Null_Mutex.
+          ACE_Condition<> with ACE_Thread_Mutex and ACE_...Null_Mutex.
           Thanks to Knut-Havard Aksnes <knut@orion.no> for reporting
           this.
 
@@ -2447,7 +2454,7 @@ Tue Jan  5 00:59:04 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
           protect against race conditions if multiple threads call
           remove() simultaneously.  However, if this happens it's a sign
           that the application was designed incorrectly...  Thanks to Paul
-          Felix <pef@fluent.com> and Irfan for tracking this down.   
+          Felix <pef@fluent.com> and Irfan for tracking this down....
 
         * ace/FILE: Added new methods, seek() and tell(), that are more
           intuitively named than the existing position() methods.  The
