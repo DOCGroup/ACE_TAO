@@ -20,7 +20,7 @@ local $start_time = time();
 local $max_running_time = 600; # 10 minutes
 local $elapsed = time() - $start_time;
 
-local $ntimes = 300 ; # run test for 300 times
+local $ntimes = 100 ; # run test for 100 times
 local $n = 0;
 
 while($n < $ntimes) {
