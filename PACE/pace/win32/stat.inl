@@ -13,12 +13,16 @@
  *
  * ============================================================================= */
 
+#include <windows.h>
+
 #if (PACE_HAS_POSIX_FA_UOF)
 PACE_INLINE
 int
 pace_chmod (const char * path, pace_mode_t mode)
 {
-  return chmod (path, mode);
+  PACE_UNUSED_ARG (path);
+  PACE_UNUSED_ARG (mode);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_FA_UOF */
 
@@ -27,16 +31,18 @@ PACE_INLINE
 int
 pace_fchmod (int fildes, pace_mode_t mode)
 {
-  return fchmod (fildes, mode);
+  PACE_UNUSED_ARG (fildes);
+  PACE_UNUSED_ARG (mode);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
 #if (PACE_HAS_POSIX_FS_UOF)
 PACE_INLINE
 int
-pace_fstat (int fildes, struct stat * buf)
+pace_fstat (int fildes, pace_stat_s * buf)
 {
-  return fstat (fildes, buf);
+  return _fstat (fildes, buf);
 }
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
@@ -45,7 +51,16 @@ PACE_INLINE
 int
 pace_mkdir (const char * path, pace_mode_t mode)
 {
-  return mkdir (path, mode);
+  PACE_UNUSED_ARG (mode);
+  if (CreateDirectory (path, NULL))
+    {
+      return 0;
+    }
+  else
+    {
+      errno = GetLastError ();
+      return -1;
+    }
 }
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
@@ -54,16 +69,18 @@ PACE_INLINE
 int
 pace_mkfifo (const char * path, pace_mode_t mode)
 {
-  return mkfifo (path, mode);
+  PACE_UNUSED_ARG (path);
+  PACE_UNUSED_ARG (mode);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_F_UOF */
 
 #if (PACE_HAS_POSIX_FS_UOF)
 PACE_INLINE
 int
-pace_stat (const char * path, struct stat * buf)
+pace_stat (const char * path, pace_stat_s * buf)
 {
-  return stat (path, buf);
+  return _stat (path, buf);
 }
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
@@ -72,6 +89,6 @@ PACE_INLINE
 pace_mode_t
 pace_umask (pace_mode_t cmask)
 {
-  return umask (cmask);
+  return _umask (cmask);
 }
 #endif /* PACE_HAS_POSIX_FA_UOF */

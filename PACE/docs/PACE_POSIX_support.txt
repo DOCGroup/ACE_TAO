@@ -149,3 +149,13 @@ FILE                    linux   lynxos  sunos   win32
   sigwait()                                     x
   sigwaitinfo()                                 x
 .............................................................  
+<stat.h>
+  chmod()                                       x
+  fchmod()                                      x
+  fstat()                                       -N
+  mkdir()                                       -E
+  mkfifo()                                      x
+  stat()                                        -N
+  umask()                                       -N
+.............................................................  
+  
