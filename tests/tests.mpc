@@ -15,7 +15,7 @@ project(DLL Test Lib) : acelib {
   sharedname = DLL_Test
 
   Source_Files {
-    DLL_Test.cpp
+    DLL_Test_Impl.cpp
   }
   Header_Files {
     test_config.h
