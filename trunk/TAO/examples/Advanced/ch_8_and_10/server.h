@@ -45,7 +45,7 @@ public:
                                 throw(CORBA::SystemException);
     virtual void            location(const char * loc)
                                 throw(CORBA::SystemException);
-    
+
     // Constructor and destructor
     Thermometer_impl(CCS::AssetType anum, const char * location);
     virtual ~Thermometer_impl();
@@ -150,10 +150,10 @@ private:
         {
             switch (m_sc) {
             case CCS::Controller::LOCATION:
-                return strcmp(p.second->location(), m_str) == 0;
+                return ::strcmp(p.second->location(), m_str) == 0;
                 break;
             case CCS::Controller::MODEL:
-                return strcmp(p.second->model(), m_str) == 0;
+                return ::strcmp(p.second->model(), m_str) == 0;
                 break;
             default:
               assert(0);  // Precondition violation
