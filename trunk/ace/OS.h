@@ -337,11 +337,11 @@
 
 // This is necessary to work around bugs with Win32 non-blocking
 // connects...
-#if !defined (ACE_NON_BLOCKING_BUG_DELAY)
-#define ACE_NON_BLOCKING_BUG_DELAY 35000
-#endif /* ACE_NON_BLOCKING_BUG_DELAY */
+#  if !defined (ACE_NON_BLOCKING_BUG_DELAY)
+#    define ACE_NON_BLOCKING_BUG_DELAY 35000
+#  endif /* ACE_NON_BLOCKING_BUG_DELAY */
 
-#if defined (_DEBUG) && !defined (ACE_HAS_WINCE)
+#  if defined (_DEBUG) && !defined (ACE_HAS_WINCE)
 class ACE_No_Heap_Check
 {
 public:
@@ -352,12 +352,12 @@ public:
 private:
   int old_state;
 };
-#define ACE_NO_HEAP_CHECK ACE_No_Heap_Check ____no_heap;
-#else /* !_DEBUG*/
-#define ACE_NO_HEAP_CHECK
-#endif /* _DEBUG*/
+#    define ACE_NO_HEAP_CHECK ACE_No_Heap_Check ____no_heap;
+#  else /* !_DEBUG */
+#    define ACE_NO_HEAP_CHECK
+#  endif /* _DEBUG */
 #else /* !ACE_WIN32 */
-#define ACE_NO_HEAP_CHECK
+#  define ACE_NO_HEAP_CHECK
 #endif /* ACE_WIN32 */
 
 // Increase the range of "address families".
@@ -1560,7 +1560,7 @@ struct cancel_state
 #endif  /* ACE_LACKS_SYS_TYPES_H */
 
 #include /**/ <sys/stat.h>
-#endif /*ACE_HAS_WINCE */
+#endif /* ACE_HAS_WINCE */
 
 #if defined (ACE_NEW_THROWS_EXCEPTIONS)
 // I know this works for HP aC++... if <stdexcept> is used, it introduces other
@@ -2192,13 +2192,18 @@ protected:
 # include /**/ <new.h>
 # include /**/ <signal.h>
 # include /**/ <errno.h>
+# include /**/ <fcntl.h>
 #endif /* ACE_HAS_WINCE */
 # include /**/ <limits.h>
 # include /**/ <ctype.h>
 # include /**/ <string.h>
 # include /**/ <stdlib.h>
-# include /**/ <fcntl.h>
 # include /**/ <float.h>
+
+#if defined (ACE_HAS_WINCE)
+#define islower iswlower
+#define isdigit iswdigit
+#endif /* ACE_HAS_WINCE */
 
 // If the user wants minimum IOStream inclusion, we will just include
 // the forward declarations
