@@ -133,6 +133,11 @@ public:
     INVALID
   };
 
+  enum {
+    /// Max size of name.
+    MAX_NAME_LEN = 255
+  };
+
   /// destructor
   virtual ~ACE_Configuration (void);
 
@@ -228,10 +233,9 @@ public:
    * data type in <type>.  Returns 0 on success (entry is found),
    * -1 on error
    */
-  virtual int find_value(const ACE_Configuration_Section_Key& key,
-                         const ACE_TCHAR* name,
-                         VALUETYPE& type) = 0;
-
+  virtual int find_value (const ACE_Configuration_Section_Key& key,
+                          const ACE_TCHAR* name,
+                          VALUETYPE& type) = 0;
 
   /// Removes the the value <name> from <key>.  returns non zero on
   /// error.
@@ -304,7 +308,7 @@ protected:
     (const ACE_Configuration_Section_Key& key);
 
   /**
-   * tests to see if <name> is valid.  <name> must be < 255 characters
+   * tests to see if <name> is valid.  <name> must be < MAX_NAME_LEN characters
    * and not contain the path separator '\', brackets [] or = (maybe
    * just restrict to alphanumeric?) returns non zero if name is not
    * valid
