@@ -1,3 +1,14 @@
+Tue May 25 12:02:52 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* DnC/Deployment.xsd:
+
+	  Initial set of "normalization" changes.
+	
+	
+        * DnC/Deployment.xsd.orig:
+        * DnC/XMI.xsd.orig:
+
+	  Added backup copies.
 
 Mon May 24 14:13:51 2004  Gan Deng  <gan.deng@vanderbilt.edu>
 
