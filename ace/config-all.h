@@ -422,12 +422,12 @@
 
 #    define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
    do { try { POINTER = new CONSTRUCTOR; } \
-        catch (ACE_bad_alloc) { errno = ENOMEM; return RET_VAL; } \
+        catch (ACE_bad_alloc) { errno = ENOMEM; POINTER = 0; return RET_VAL; } \
    } while (0)
 
 #    define ACE_NEW(POINTER,CONSTRUCTOR) \
    do { try { POINTER = new CONSTRUCTOR; } \
-        catch (ACE_bad_alloc) { errno = ENOMEM; return; } \
+        catch (ACE_bad_alloc) { errno = ENOMEM; POINTER = 0; return; } \
    } while (0)
 #  endif /* ACE_HAS_NEW_NOTHROW */
 
