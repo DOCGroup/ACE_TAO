@@ -64,7 +64,8 @@ class Producer extends CommonTask
   {
     // Keep reading stdin, until we reach EOF. 
 
-      DataInputStream in = new DataInputStream (System.in);
+      BufferedReader in = new BufferedReader(new InputStreamReader(System.in)); 
+
       String msg = null;
       try
 	{
