@@ -1,7 +1,7 @@
 // $Id$
 #include <orb.idl>
 #include "tao/ULongSeq.pidl"
-#include "Property.idl"
+#include "Deployment_Core.idl"
 
 module Deployment {
 
@@ -291,32 +291,6 @@ module Deployment {
     void updateDomain (in ::CORBA::StringSeq elements, in Domain domainSubset, in DomainUpdateKind updateKind);
   };
 
-  typedef sequence < Object > Endpoints;
-
-  struct Connection {
-    string name;
-    Endpoints endpoint;
-  };
-
-  typedef sequence < Connection > Connections;
-
-  exception StartError {
-    string name;
-    string reason;
-  };
-
-  exception InvalidConnection {
-    string name;
-    string reason;
-  };
-
-  interface Application {
-    void finishLaunch (in Connections providedReference, in boolean start)
-      raises (StartError, InvalidConnection);
-    void start ()
-      raises (StartError);
-  };
-
   exception InvalidProperty {
     string name;
     string reason;
@@ -370,10 +344,6 @@ module Deployment {
       raises (StopError);
   };
 
-  interface NodeApplication :
-      Application
-  {
-  };
 
   interface DomainApplication :
       Application

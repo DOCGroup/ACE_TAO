@@ -162,9 +162,9 @@ CIAO::Session_Container::ciao_install_home (const char *exe_dll_name,
                                             const char *sv_entrypt
                                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::Deployment::UnknownImplId,
-                   Components::Deployment::ImplEntryPointNotFound,
-                   Components::Deployment::InstallationFailure))
+                   Deployment::UnknownImplId,
+                   Deployment::ImplEntryPointNotFound,
+                   Deployment::InstallationFailure))
 {
   ACE_DLL executor_dll, servant_dll;
   HomeFactory hcreator=0;
@@ -173,23 +173,23 @@ CIAO::Session_Container::ciao_install_home (const char *exe_dll_name,
   if (this->static_config_flag_ == 0)
     {
       if (exe_dll_name == 0 || sv_dll_name == 0)
-        ACE_THROW_RETURN (Components::Deployment::UnknownImplId (), 0);
+        ACE_THROW_RETURN (Deployment::UnknownImplId (), 0);
 
       if (executor_dll.open (exe_dll_name,
                              ACE_DEFAULT_SHLIB_MODE,
                              0) != 0)
-        ACE_THROW_RETURN (Components::Deployment::UnknownImplId (), 0);
+        ACE_THROW_RETURN (Deployment::UnknownImplId (), 0);
 
       if (servant_dll.open (sv_dll_name,
                             ACE_DEFAULT_SHLIB_MODE,
                             0) != 0)
         {
           executor_dll.close ();
-          ACE_THROW_RETURN (Components::Deployment::UnknownImplId (), 0);
+          ACE_THROW_RETURN (Deployment::UnknownImplId (), 0);
         }
 
       if (exe_entrypt == 0 || sv_entrypt == 0)
-        ACE_THROW_RETURN (Components::Deployment::ImplEntryPointNotFound (), 0);
+        ACE_THROW_RETURN (Deployment::ImplEntryPointNotFound (), 0);
 
       hcreator = (HomeFactory) executor_dll.symbol (exe_entrypt);
       screator = (ServantFactory) servant_dll.symbol (sv_entrypt);
@@ -199,7 +199,7 @@ CIAO::Session_Container::ciao_install_home (const char *exe_dll_name,
       if ( static_entrypts_maps_ == 0 ||
            static_entrypts_maps_->home_creator_funcptr_map_ == 0 ||
            static_entrypts_maps_->home_servant_creator_funcptr_map_ == 0)
-        ACE_THROW_RETURN (Components::Deployment::ImplEntryPointNotFound (), 0);
+        ACE_THROW_RETURN (Deployment::ImplEntryPointNotFound (), 0);
 
       ACE_CString exe_entrypt_str (exe_entrypt);
       static_entrypts_maps_->home_creator_funcptr_map_->
@@ -211,11 +211,11 @@ CIAO::Session_Container::ciao_install_home (const char *exe_dll_name,
     }
 
   if (hcreator == 0 || screator == 0)
-    ACE_THROW_RETURN (Components::Deployment::ImplEntryPointNotFound (), 0);
+    ACE_THROW_RETURN (Deployment::ImplEntryPointNotFound (), 0);
 
   Components::HomeExecutorBase_var home_executor = hcreator ();
   if (CORBA::is_nil (home_executor.in ()))
-    ACE_THROW_RETURN (Components::Deployment::InstallationFailure (), 0);
+    ACE_THROW_RETURN (Deployment::InstallationFailure (), 0);
 
   PortableServer::Servant home_servant = screator (home_executor.in (),
                                                    this
@@ -223,7 +223,7 @@ CIAO::Session_Container::ciao_install_home (const char *exe_dll_name,
   ACE_CHECK_RETURN (0);
 
   if (home_servant == 0)
-    ACE_THROW_RETURN (Components::Deployment::InstallationFailure (), 0);
+    ACE_THROW_RETURN (Deployment::InstallationFailure (), 0);
 
   PortableServer::ServantBase_var safe (home_servant);
 

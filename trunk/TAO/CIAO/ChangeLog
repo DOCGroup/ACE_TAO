@@ -1,14 +1,55 @@
+Tue May 25 13:05:35 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/Deployment.idl:
+	* DnC/Property.idl:
+	* DnC/Deployment.mpc:
+	* DnC/Deployment_stub_export.h:
+	* DnC/Deployment_stub_export.h:
+	* DnC/Core/Container_Impl.h:
+	* DnC/Core/Container_Impl.inl:
+	* DnC/Core/Container_Impl.cpp:
+	* DnC/Core/CCM_Deplyment.idl:
+
+     	  Removed these files. Everything is moved into the DnC/Core
+	  directory, also the Deployment.idl is splited into
+	  Deployment.idl and Deployment_Core.idl. The first one contains
+	  information needed for DnC runtime except NodeApplication.
+	  The latter file combines the old Container with NodeApplication.
+
+	* DnC/Core/Deployment.idl:
+	* DnC/Core/Deployment_Core.mpc:
+	* DnC/Core/Deployment_stub_export.h:
+	* DnC/Core/Deployment_stub_export.h:
+	* DnC/Core/NodeApplication_Impl.h:
+	* DnC/Core/NodeApplication_Impl.inl:
+	* DnC/Core/NodeApplication_Impl.cpp:
+	  Added these files.
+
+	* DnC/Core/CCM_Core.mpc:
+	  This file updated to reflect the chages above.
+
+	  The idea is to use the old container as the NodeApplication and
+	  the ComponentServer. This implies that new process will be
+	  spawned upon new NodeApplication is created.
+
+	  In turn the NodeApplicationManager will be collocated with
+	  NodeManager.
+
+	  These changes give us advantages for implementing the spec in an
+	  effecient way without inccuring much confilicts with the Spec.
+
+
 Tue May 25 12:06:37 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* tests/RTCCM/Priority_Test/Workers/IOB_Worker_exec.cpp: 
-	* tests/RTCCM/Priority_Test/Workers/CB_Worker_exec.cpp: 
-	* tests/RTCCM/Priority_Test/Controllers/Controller_exec.{cpp,h}: 
+	* tests/RTCCM/Priority_Test/Workers/IOB_Worker_exec.cpp:
+	* tests/RTCCM/Priority_Test/Workers/CB_Worker_exec.cpp:
+	* tests/RTCCM/Priority_Test/Controllers/Controller_exec.{cpp,h}:
 	* tests/RTCCM/Priority_Test/Controllers/Rate_Controller.{cpp,h}:
-	 
+
 	  Fixed compile errors regarding pure virtual functions not being
 	  implemented. Added empty method definitions for ciao_preactivate
 	  and ciao_postactivate.
-	
+
 Tue May 25 12:08:48 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/NodeManager/Node_Daemon.cpp:
