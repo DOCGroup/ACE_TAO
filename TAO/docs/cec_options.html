@@ -100,9 +100,9 @@ static CEC_Factory "-CECDispatching reactive ....."
           </TD>
         </TR>
 
-        <!-- <TR NAME="CECORBId"> -->
+        <!-- <TR NAME="CECUseORBId"> -->
         <TR>
-          <TD><CODE>-CECORBId</CODE>
+          <TD><CODE>-CECUseORBId</CODE>
             <EM>orbid</EM>
           </TD>
           <TD>Set the name of the ORB used by the event service, only
@@ -178,7 +178,7 @@ static CEC_Factory "-CECDispatching reactive ....."
               The argument is a colon separated list of flags, with
               the following semantics:
               <TABLE>
-              <TR><TH>Flag</TH><TH>Description</TH><
+              <TR><TH>Flag</TH><TH>Description</TH>
               </TR>
               <TR>
                 <TD>MT</TD>
@@ -318,7 +318,7 @@ static CEC_Factory "-CECDispatching reactive ....."
 
         <TR><TD><CODE>busy_hwm</CODE></TD>
           <TD>When using the delayed strategy to update
-            ProxyPushSupplier sets this flag controls the maximum
+            ProxyPushSupplier sets, this flag controls the maximum
             number of thread that can simultaneously iterate over the
             set before blocking.
             It can be used to avoid starvation in delayed updates on
@@ -328,7 +328,7 @@ static CEC_Factory "-CECDispatching reactive ....."
 
         <TR><TD><CODE>max_write_delay</CODE></TD>
           <TD>When using the delayed strategy to update
-            ProxyPushSupplier sets this flag controls the maximum
+            ProxyPushSupplier sets, this flag controls the maximum
             number of threads that will initiate dispatching
             <B>after</B> a change has been posted.
             Any thread after that is blocked until the operations are
