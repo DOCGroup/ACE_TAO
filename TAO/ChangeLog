@@ -1,3 +1,9 @@
+Fri Dec 12 14:15:04 2003  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Synch_Invocation.cpp:
+
+	  Some more cosmetic fixes.
+
 Fri Dec 12 11:35:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
