@@ -565,14 +565,14 @@ private:
 #   define ACE_UNUSED_ARG(a) (a)
 # endif /* ghs */
 
-# if defined (__sgi) || defined (DEC_CXX) || defined(__BORLANDC__) || defined (__KCC)
+# if defined (__sgi) || defined (ghs) || defined (DEC_CXX) || defined(__BORLANDC__) || defined (__KCC)
 #   define ACE_NOTREACHED(a)
-# else
+# else  /* ! defined . . . */
 #   define ACE_NOTREACHED(a) a
-# endif /* defined (__sgi) || defined (ghs) || defined (DEC_CXX) || defined(__BORLANDC__) */
+# endif /* ! defined . . . */
 
 # if defined (ACE_NEEDS_FUNC_DEFINITIONS)
-// It just evaporated ;-) Not pleasant.
+    // It just evaporated ;-)  Not pleasant.
 #   define ACE_UNIMPLEMENTED_FUNC(f)
 # else
 #   define ACE_UNIMPLEMENTED_FUNC(f) f;
@@ -5351,7 +5351,7 @@ public:
   static int sigprocmask (int how,
                           const sigset_t *nsp,
                           sigset_t *osp);
-  
+
   static int pthread_sigmask (int how,
                               const sigset_t *nsp,
                               sigset_t *osp);
