@@ -18,6 +18,7 @@
 //
 // ============================================================================
 
+#include "ace/OS_NS_unistd.h"
 #include "Peer.h"
 
 ACE_RCSID(Peer, peerd, "$Id$")
@@ -25,7 +26,7 @@ ACE_RCSID(Peer, peerd, "$Id$")
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  if (ACE_OS::access (ACE_DEFAULT_SVC_CONF, F_OK) != 0) 
+  if (ACE_OS::access (ACE_DEFAULT_SVC_CONF, F_OK) != 0)
     {
       // Use static linking.
       ACE_Service_Object_Ptr sp = ACE_SVC_INVOKE (Peer_Factory);
@@ -44,9 +45,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Destructor of <ACE_Service_Object_Ptr> automagically call
       // <fini>.
     }
-  else 
+  else
     {
-      if (ACE_Service_Config::open (argc, argv) == -1) 
+      if (ACE_Service_Config::open (argc, argv) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("open")),
