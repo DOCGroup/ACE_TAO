@@ -150,7 +150,7 @@ CORBA_Any::operator= (const CORBA_Any &src)
   if (this->any_owns_data_ && this->value_ != 0)
     {
       DEEP_FREE (this->type_, this->value_, 0, env);
-      delete this->value_;
+      ::operator delete (this->value_);
       this->value_ = 0;
 
       if (this->type_ != 0)
@@ -200,7 +200,7 @@ CORBA_Any::~CORBA_Any (void)
       if (this->value_)
         {
           DEEP_FREE (this->type_, this->value_, 0, env);
-	  delete this->value_;
+	  ::operator delete (this->value_);
           this->value_ = 0;
         }
     }
@@ -226,7 +226,7 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
   if (this->any_owns_data_ && this->value_ != 0)
     {
       DEEP_FREE (this->type_, this->value_, 0, env);
-      delete this->value_;
+      ::operator delete (this->value_);
       this->value_ = 0;
     }
 
