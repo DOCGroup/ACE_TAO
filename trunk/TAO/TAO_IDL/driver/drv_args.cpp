@@ -453,7 +453,7 @@ DRV_parse_args(long ac, char **av)
                       "To use Perfect Hashing\n"
                       "\t-Build gperf at $ACE_ROOT/apps/gperf/src\n"
                       "\t-Set the environment variable $ACE_ROOT appropriately or add $ACE_ROOT/bin to the PATH\n"
-                      "\t-Refer to Operation Lookup section in the TAO IDL User Guide ($TAO_ROOT/docs/compiler.html) for more details")); 
+                      "\t-Refer to Operation Lookup section in the TAO IDL User Guide ($TAO_ROOT/docs/compiler.html) for more details\n"));
           
           // Switching over to Dynamic Hashing.
           cg->lookup_strategy (TAO_CodeGen::TAO_DYNAMIC_HASH);
