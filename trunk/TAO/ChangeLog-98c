@@ -1,53 +1,59 @@
+Sun Jan 03 22:42:22 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Time/TAO_UTO.cpp (TAO_UTO): moved "/2" out of
+          the ACE_U64_TO_U32 conversion, because dividing an ACE_U_LongLong
+          by an int results in an ACE_UINT32.
+
 Sun Jan  3 22:01:37 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* orbsvcs/Time_Service/Server_i.cpp:
-	  Used rebind () instead of bind (). Because servers dont handle ^C,
-	  once bound contexts stay bound till the Naming Service is up.
-	  This was already being done for clerks. Commented out the IR part.
-	  Fixed warnings in init() and run() methods.
+        * orbsvcs/Time_Service/Server_i.cpp:
+          Used rebind () instead of bind (). Because servers dont handle ^C,
+          once bound contexts stay bound till the Naming Service is up.
+          This was already being done for clerks. Commented out the IR part.
+          Fixed warnings in init() and run() methods.
 
-	* orbsvcs/Time_Service/Server_i.h:
-	  Added some comments. Also commented out the IR part, so I could
-	  fix the warnings pointed out by David and check the files in.
+        * orbsvcs/Time_Service/Server_i.h:
+          Added some comments. Also commented out the IR part, so I could
+          fix the warnings pointed out by David and check the files in.
 
-	* orbsvcs/Time_Service/Clerk_i.cpp:
-	  Added some comments. Commented out the IR part. Removed warnings
-	  for unreferenced variables
+        * orbsvcs/Time_Service/Clerk_i.cpp:
+          Added some comments. Commented out the IR part. Removed warnings
+          for unreferenced variables
 
 Sun Jan 03 21:39:49 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/POA.cpp (encode_sequence_to_string): Removed extra call to
- 	  isascii().  It's followed by an isprint(): if byte is printable,
- 	  then it must be ascii.  Thanks to David Levine and Chris
- 	  Cleeland for helping with this.
+        * tao/POA.cpp (encode_sequence_to_string): Removed extra call to
+          isascii().  It's followed by an isprint(): if byte is printable,
+          then it must be ascii.  Thanks to David Levine and Chris
+          Cleeland for helping with this.
 
 Sun Jan  3 21:10:42 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	Addded a new function to check if it is the first server or clerk.
-	If it is then get a new context and bind it to the Name Server.
-	The subsequent servers and clerks will bind to this context. The
-	way this was being done previously is by clearing the exception
-	and checking the return value of NamingContext::resolve (). Was
-	working fine on Solaris but threw an exception on NT. I am now
-	handling the exception appropriately. Also corrected a memory
-	problem using CORBA::string_dup.
+        Addded a new function to check if it is the first server or clerk.
+        If it is then get a new context and bind it to the Name Server.
+        The subsequent servers and clerks will bind to this context. The
+        way this was being done previously is by clearing the exception
+        and checking the return value of NamingContext::resolve (). Was
+        working fine on Solaris but threw an exception on NT. I am now
+        handling the exception appropriately. Also corrected a memory
+        problem using CORBA::string_dup.
 
-	* orbsvcs/Time_Service/Server_i.cpp:
-	* orbsvcs/Time_Service/Server_i.h:
-	* orbsvcs/Time_Service/Clerk_i.cpp:
-	* orbsvcs/Time_Service/Clerk_i.h:
+        * orbsvcs/Time_Service/Server_i.cpp:
+        * orbsvcs/Time_Service/Server_i.h:
+        * orbsvcs/Time_Service/Clerk_i.cpp:
+        * orbsvcs/Time_Service/Clerk_i.h:
 
 Sun Jan  3 20:30:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* docs/releasenotes/index.html: added TAO Scheduling Service section
+        * docs/releasenotes/index.html: added TAO Scheduling Service section
 
 Sun Jan  3 19:22:23 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/CosEvent_Service/CosEvent_Service.h:
-	* orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
-	* orbsvcs/CosEvent_Service/README:
-	* orbsvcs/CosEvent_Service/Makefile:
-	  added the above files for the COS Event Service.
+        * orbsvcs/CosEvent_Service/CosEvent_Service.h:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
+        * orbsvcs/CosEvent_Service/README:
+        * orbsvcs/CosEvent_Service/Makefile:
+          added the above files for the COS Event Service.
 
 Sun Jan  3 18:56:51 1999  Jeff Parsons <jp4@cs.wustl.edu>
 
@@ -58,63 +64,63 @@ Sun Jan  3 18:56:51 1999  Jeff Parsons <jp4@cs.wustl.edu>
 
 Sun Jan  3 18:54:29  1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/POA/On_Demand_Loading/On_Demand_Loading.dsw:
-	* examples/POA/On_Demand_Loading/"POA On_Demand_Loading Server.dsp":
-	  Added the NT workspace for the On_Demand_Loading example.
+        * examples/POA/On_Demand_Loading/On_Demand_Loading.dsw:
+        * examples/POA/On_Demand_Loading/"POA On_Demand_Loading Server.dsp":
+          Added the NT workspace for the On_Demand_Loading example.
 
-	* examples/POA/Loader/Loader.dsp:
-	* examples/POA/Loader/"POA Loader Server.dsp":
-	  Added the NT workspace for the Loader example.
+        * examples/POA/Loader/Loader.dsp:
+        * examples/POA/Loader/"POA Loader Server.dsp":
+          Added the NT workspace for the Loader example.
 
-	* examples/POA/Generic_Servant/Server.dsp:
-	  Changed the settings of the project so that MyFoo.dll is produced as output.
+        * examples/POA/Generic_Servant/Server.dsp:
+          Changed the settings of the project so that MyFoo.dll is produced as output.
 
 Sun Jan  3 19:27:01 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* tao/Managed_Types.{h,i,cpp}:
+        * tao/Managed_Types.{h,i,cpp}:
 
-	  Three new files added. These define and implement the various
-	  manager classes such as TAO_String_Manager,
-	  TAO_SeqElem_String_Manager that are required by the IDL to C++
-	  mapping for struct members that are strings and sequences of
-	  strings, respectively. We had to resort to two different
-	  managers because the managed type for sequence of strings must
-	  obey the value of the release data member of the sequence
-	  class. Other than this, the semantics are the same.
+          Three new files added. These define and implement the various
+          manager classes such as TAO_String_Manager,
+          TAO_SeqElem_String_Manager that are required by the IDL to C++
+          mapping for struct members that are strings and sequences of
+          strings, respectively. We had to resort to two different
+          managers because the managed type for sequence of strings must
+          obey the value of the release data member of the sequence
+          class. Other than this, the semantics are the same.
 
-	* tao/ORB.h:
+        * tao/ORB.h:
 
-	  Included the newly added Managed_Types.h file.
+          Included the newly added Managed_Types.h file.
 
-	* tao/{Sequence, Sequence_T}.{h,i,cpp}:
+        * tao/{Sequence, Sequence_T}.{h,i,cpp}:
 
-	  Moved the TAO_String_Manager to the Managed_Types.* files. In
-	  addition, we now use TAO_SeqElem_String_Manager for the return
-	  type of the [] operator.
+          Moved the TAO_String_Manager to the Managed_Types.* files. In
+          addition, we now use TAO_SeqElem_String_Manager for the return
+          type of the [] operator.
 
-	* TAO_IDL/be/be_visitor_array/array.cpp (visit_string):
+        * TAO_IDL/be/be_visitor_array/array.cpp (visit_string):
 
-	  Arrays of strings now use the TAO_String_Manager as its element
-	  type instead of CORBA::String_var. This was required to conform
-	  to the IDL->C++ mapping.
+          Arrays of strings now use the TAO_String_Manager as its element
+          type instead of CORBA::String_var. This was required to conform
+          to the IDL->C++ mapping.
 
-	* TAO_IDL/be/be_visitor_field/field_ch.cpp (visit_string):
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp (visit_string):
 
-	  Struct memebrs that are strings now use the TAO_String_Manager
-	  as its type instead of CORBA::String_var. This was required to conform
-	  to the IDL->C++ mapping.
+          Struct memebrs that are strings now use the TAO_String_Manager
+          as its type instead of CORBA::String_var. This was required to conform
+          to the IDL->C++ mapping.
 
-	* TAO_IDL/be/be_visitor_sequence/elemtype.cpp
-	  TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ch.cpp
-	  TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp
+        * TAO_IDL/be/be_visitor_sequence/elemtype.cpp
+          TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ch.cpp
+          TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp
 
-	  The generated code now produces TAO_SeqElem_String_Manager
-	  instead of TAO_String_Manager for the [] operator.
+          The generated code now produces TAO_SeqElem_String_Manager
+          instead of TAO_String_Manager for the [] operator.
 
-	* docs/releasenotes/index.html:
+        * docs/releasenotes/index.html:
 
-	  Updated to reflect latest status. Also, removed some old
-	  comments that are no longer applicable.
+          Updated to reflect latest status. Also, removed some old
+          comments that are no longer applicable.
 
 Sun Jan  3 17:32:27 1999  Jeff Parsons <jp4@cs.wustl.edu>
 
@@ -125,19 +131,19 @@ Sun Jan  3 17:32:27 1999  Jeff Parsons <jp4@cs.wustl.edu>
 
 Sun Jan  3 13:12:27 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	Added the TAO_ORBSVCS_Export macro to the following files.
+        Added the TAO_ORBSVCS_Export macro to the following files.
 
-	* orbsvcs/orbsvcs/Time/Timer_Helper.h
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.h
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h
-	* orbsvcs/orbsvcs/Time/TAO_UTO.h
-	* orbsvcs/orbsvcs/Time/TAO_TIO.h
+        * orbsvcs/orbsvcs/Time/Timer_Helper.h
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.h
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h
+        * orbsvcs/orbsvcs/Time/TAO_UTO.h
+        * orbsvcs/orbsvcs/Time/TAO_TIO.h
 
 Sat Jan  2 17:32:35 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp:
-	  split the <init> method over 3 other  methods -
-	  <init_ORB>, <init_RtEC> and <init_CosEC>.
+        * orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp:
+          split the <init> method over 3 other  methods -
+          <init_ORB>, <init_RtEC> and <init_CosEC>.
 
 Sat Jan 02 11:15:48 1999  David L. Levine  <levine@cs.wustl.edu>
 
