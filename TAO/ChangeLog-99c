@@ -1,3 +1,19 @@
+Wed Dec  1 17:04:34 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+	  Removed separate throughput test run. The 
+	  ACE_Throughput_Stats class handles latency and throughput
+	  and doesn't add appreciable overhead to the 
+	  throughput results.
+
+	* performance-tests/RTCorba/Oneways/Reliable/client_test.pl:
+	  New perl script that just runs the client. This makes it
+	  easier to run all the tests with various parameters when
+	  client and server are on different machines.
+
+	* performance-tests/RTCorba/Oneways/Reliable/README:
+	  Updated to reflect the above changes.
+
 Wed Dec  1 13:52:25 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_interface.cpp:
