@@ -1,6 +1,9 @@
 /* -*- c++ -*- */
 // $Id$
 
+// @@ James, please add a standard "header" here like you see in all
+// the other ACE headerfiles.
+
 #ifndef ACE_CACHE_MANAGER_H
 #define ACE_CACHE_MANAGER_H
 
@@ -8,7 +11,12 @@
 #include "ace/ACE.h"
 #include "ace/Synch.h"
 
+// @@ James, this #include is wrong...
 #include "ace_Cache_Manager_T.h"
+
+// @@ James, can you please update ALL of these classes and methods to
+// use the standard ACE commenting style, i.e., add = TITLE and =
+// DESCRIPTION headers and comments for each method.
 
 class ACE_String_Hash_Functor
 {
@@ -20,6 +28,8 @@ private:
   int i_;
 };
 
+// @@ James, can you put these functors into the same place that the
+// ones used by Irfan in the Hash_Map_Manager_Ex file are used?!
 class ACE_String_Equal_Functor
 {
 public:
@@ -41,6 +51,5 @@ typedef ACE_Cache_Manager<const char *,
                           ACE_String_Hash_Functor,
                           ACE_String_Equal_Functor>
         ACE_String_Counted_Cache_Manager;
-
 
 #endif /* ACE_CACHE_MANAGER_H */

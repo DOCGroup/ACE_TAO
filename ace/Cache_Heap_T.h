@@ -1,10 +1,14 @@
 /* -*- c++ -*- */
 // $Id$
 
+// @@ James, please add a standard "header" here like you see in all
+// the other ACE headerfiles.
+
 #ifndef ACE_CACHE_HEAP_T_H
 #define ACE_CACHE_HEAP_T_H
 
 #include "ace/Malloc.h"
+// @@ James, this #include is wrong...
 #include "ace_Cache_Object.h"
 
 // Forward declarations
@@ -14,6 +18,9 @@ class ACE_Cache_Manager;
 template <class EXT_ID, class FACTORY, class HASH_FUNC, class EQ_FUNC>
 class ACE_Cache_Heap_Item;
 
+// @@ James, can you please update ALL of these classes and methods to
+// use the standard ACE commenting style, i.e., add = TITLE and =
+// DESCRIPTION headers and comments for each method.
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN>
 class ACE_Cache_Heap
@@ -21,11 +28,13 @@ class ACE_Cache_Heap
 // standalone data structure.
 {
 public:
+  typedef ACE_Cache_Manager<EXT_ID, FACT, H_FN, E_FN> 
+          Cache_Manager;
+  typedef ACE_Cache_Heap_Item<EXT_ID, FACT, H_FN, E_FN> 
+          Cache_Heap_Item;   
 
-  typedef ACE_Cache_Manager<EXT_ID, FACT, H_FN, E_FN> Cache_Manager;
-  typedef ACE_Cache_Heap_Item<EXT_ID, FACT, H_FN, E_FN> Cache_Heap_Item;
-
-  ACE_Cache_Heap (ACE_Allocator *alloc = 0, size_t maxsize = 8192);
+  ACE_Cache_Heap (ACE_Allocator *alloc = 0,
+                  size_t maxsize = 8192);
   // maxsize is the total number of objects the in memory cache is
   // willing to manage
 
@@ -72,29 +81,28 @@ private:
   size_t size_;
 
   Cache_Heap_Item **heap_;
-
 };
 
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN>
 class ACE_Cache_Heap_Item
 {
-
   friend class ACE_Cache_Heap<EXT_ID, FACT, H_FN, E_FN>;
 
 public:
-
   ACE_Cache_Heap_Item (const EXT_ID &ext_id, ACE_Cache_Object *const &int_id);
-  unsigned int priority (void);
+  u_int priority (void);
 
 private:
-
   EXT_ID ext_id_;
   ACE_Cache_Object *int_id_;
 
   size_t heap_idx_;
-
 };
+
+// @@ James, please also make sure that you add the 
+// #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+// stuff as well... (see other template files to see how this works).
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace_Cache_Heap_T.cpp"
