@@ -39,18 +39,18 @@ static const CORBA::Long _oc_PortableServer_POAList[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   39,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f50), 
-  ACE_NTOHL (0x4f414c69), 
-  ACE_NTOHL (0x73743a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f50),
+  ACE_NTOHL (0x4f414c69),
+  ACE_NTOHL (0x73743a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableServer/POAList:1.0
     8,
-  ACE_NTOHL (0x504f414c), 
+  ACE_NTOHL (0x504f414c),
   ACE_NTOHL (0x69737400),  // name = POAList
     CORBA::tk_sequence, // typecode kind
   8, // encapsulation length
@@ -73,8 +73,6 @@ namespace PortableServer
     &_tc_TAO_tc_PortableServer_POAList;
 }
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/typecode_defn.cpp:295
 
@@ -82,14 +80,14 @@ static const CORBA::Long _oc_PortableServer_POA[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   35,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f50), 
-  ACE_NTOHL (0x4f413a32), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f50),
+  ACE_NTOHL (0x4f413a32),
   ACE_NTOHL (0x2e330000),  // repository ID = IDL:omg.org/PortableServer/POA:2.3
     4,
   ACE_NTOHL (0x504f4100),  // name = POA
@@ -109,7 +107,7 @@ namespace PortableServer
     &_tc_TAO_tc_PortableServer_POA;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/any_op_cs.cpp:54
 
 
@@ -181,8 +179,6 @@ CORBA::Boolean operator>>= (
       );
 }
 
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
@@ -252,7 +248,7 @@ operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -324,7 +320,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -396,7 +392,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -468,7 +464,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -544,7 +540,7 @@ CORBA::Boolean operator>>= (
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -616,7 +612,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -688,7 +684,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -760,7 +756,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -832,7 +828,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -904,7 +900,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -1108,4 +1104,4 @@ CORBA::Boolean operator>>= (
         PortableServer::POAList \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
