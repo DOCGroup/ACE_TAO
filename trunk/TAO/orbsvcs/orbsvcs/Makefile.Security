@@ -2492,8 +2492,8 @@ endif
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
-  SecurityC.i $(TAO_ROOT)/tao/ORB_Core.h \
+  $(TAO_ROOT)/tao/ServicesC.i SecurityC.i \
+  $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Resource_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
@@ -3656,11 +3656,11 @@ endif
   $(TAO_ROOT)/tao/ServicesS_T.h \
   $(TAO_ROOT)/tao/ServicesS_T.i \
   $(TAO_ROOT)/tao/ServicesS_T.cpp \
-  $(TAO_ROOT)/tao/ServicesS.i \
-  SecurityC.h Security/security_export.h \
+  $(TAO_ROOT)/tao/ServicesS.i SecurityC.h \
+  Security/security_export.h \
   $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
-  SecurityC.i SecurityS_T.h SecurityS_T.i SecurityS_T.cpp SecurityS.i \
+  $(TAO_ROOT)/tao/StringSeqC.i SecurityC.i \
+  SecurityS_T.h SecurityS_T.i SecurityS_T.cpp SecurityS.i \
   $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
   $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
   $(ACE_ROOT)/ace/Map_T.h \

@@ -410,8 +410,7 @@ endif
   $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp
 
 .obj/CosNotifyChannelAdminC.o .obj/CosNotifyChannelAdminC.so .shobj/CosNotifyChannelAdminC.o .shobj/CosNotifyChannelAdminC.so: CosNotifyChannelAdminC.cpp \
-  CosNotifyChannelAdminC.h \
-  $(ACE_ROOT)/ace/pre.h \
+  CosNotifyChannelAdminC.h $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -1472,8 +1471,7 @@ endif
   $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp
 
 .obj/CosEventChannelAdminC.o .obj/CosEventChannelAdminC.so .shobj/CosEventChannelAdminC.o .shobj/CosEventChannelAdminC.so: CosEventChannelAdminC.cpp \
-  CosEventChannelAdminC.h \
-  $(ACE_ROOT)/ace/pre.h \
+  CosEventChannelAdminC.h $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -2744,9 +2742,8 @@ endif
   $(ACE_ROOT)/ace/Malloc_Allocator.i
 
 .obj/CosNotifyChannelAdminS.o .obj/CosNotifyChannelAdminS.so .shobj/CosNotifyChannelAdminS.o .shobj/CosNotifyChannelAdminS.so: CosNotifyChannelAdminS.cpp \
-  CosNotifyChannelAdminS.h \
-  $(ACE_ROOT)/ace/pre.h CosNotificationS.h \
-  CosNotificationC.h \
+  CosNotifyChannelAdminS.h $(ACE_ROOT)/ace/pre.h \
+  CosNotificationS.h CosNotificationC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -3252,8 +3249,7 @@ endif
 
 .obj/CosNotifyCommS.o .obj/CosNotifyCommS.so .shobj/CosNotifyCommS.o .shobj/CosNotifyCommS.so: CosNotifyCommS.cpp CosNotifyCommS.h \
   $(ACE_ROOT)/ace/pre.h CosNotificationS.h \
-  CosNotificationC.h \
-  $(TAO_ROOT)/tao/ORB.h \
+  CosNotificationC.h $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4701,9 +4697,9 @@ endif
   $(ACE_ROOT)/ace/Malloc_Allocator.i
 
 .obj/CosEventChannelAdminS.o .obj/CosEventChannelAdminS.so .shobj/CosEventChannelAdminS.o .shobj/CosEventChannelAdminS.so: CosEventChannelAdminS.cpp \
-  CosEventChannelAdminS.h \
-  $(ACE_ROOT)/ace/pre.h CosEventCommS.h \
-  CosEventCommC.h $(TAO_ROOT)/tao/ORB.h \
+  CosEventChannelAdminS.h $(ACE_ROOT)/ace/pre.h \
+  CosEventCommS.h CosEventCommC.h \
+  $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5178,8 +5174,8 @@ endif
   $(ACE_ROOT)/ace/Malloc_Allocator.i
 
 .obj/NotifyExtS.o .obj/NotifyExtS.so .shobj/NotifyExtS.o .shobj/NotifyExtS.so: NotifyExtS.cpp NotifyExtS.h \
-  $(ACE_ROOT)/ace/pre.h \
-  CosNotifyChannelAdminS.h CosNotificationS.h CosNotificationC.h \
+  $(ACE_ROOT)/ace/pre.h CosNotifyChannelAdminS.h \
+  CosNotificationS.h CosNotificationC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -5687,8 +5683,7 @@ endif
 
 .obj/Event_ForwarderS.o .obj/Event_ForwarderS.so .shobj/Event_ForwarderS.o .shobj/Event_ForwarderS.so: Event_ForwarderS.cpp Event_ForwarderS.h \
   $(ACE_ROOT)/ace/pre.h CosNotificationS.h \
-  CosNotificationC.h \
-  $(TAO_ROOT)/tao/ORB.h \
+  CosNotificationC.h $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -6195,8 +6190,7 @@ endif
 
 .obj/Method_Request_Dispatch.o .obj/Method_Request_Dispatch.so .shobj/Method_Request_Dispatch.o .shobj/Method_Request_Dispatch.so: Notify/Method_Request_Dispatch.cpp \
   Notify/Method_Request_Dispatch.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -6553,15 +6547,14 @@ endif
   $(TAO_ROOT)/tao/TimeBaseC.i \
   NotifyExtC.h \
   NotifyExtC.i \
-  Notify/Property_T.h \
-  $(ACE_ROOT)/ace/SString.h \
+  Notify/Property_T.h $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/String_Base.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  Notify/Property_T.inl Notify/Property_T.cpp Notify/PropertySeq.h \
+  $(ACE_ROOT)/ace/SString.i Notify/Property_T.inl \
+  Notify/Property_T.cpp Notify/PropertySeq.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   Notify/PropertySeq.inl Notify/Event.inl Notify/Method_Request.inl \
   Notify/Refcountable.h Notify/Refcountable.inl \
@@ -6591,8 +6584,7 @@ endif
   Notify/ConsumerAdmin.inl
 
 .obj/PushSupplier.o .obj/PushSupplier.so .shobj/PushSupplier.o .shobj/PushSupplier.so: Notify/Any/PushSupplier.cpp Notify/Any/PushSupplier.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -6976,8 +6968,7 @@ endif
 
 .obj/Notify_Extensions.o .obj/Notify_Extensions.so .shobj/Notify_Extensions.o .shobj/Notify_Extensions.so: Notify/Notify_Extensions.cpp \
   Notify/Notify_Extensions.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -7014,8 +7005,7 @@ endif
   $(ACE_ROOT)/ace/Lock.inl
 
 .obj/Event_Manager.o .obj/Event_Manager.so .shobj/Event_Manager.o .shobj/Event_Manager.so: Notify/Event_Manager.cpp Notify/Event_Manager.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -7377,15 +7367,14 @@ endif
   $(TAO_ROOT)/tao/TimeBaseC.i \
   NotifyExtC.h \
   NotifyExtC.i \
-  Notify/Property_T.h \
-  $(ACE_ROOT)/ace/SString.h \
+  Notify/Property_T.h $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/String_Base.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  Notify/Property_T.inl Notify/Property_T.cpp Notify/PropertySeq.h \
+  $(ACE_ROOT)/ace/SString.i Notify/Property_T.inl \
+  Notify/Property_T.cpp Notify/PropertySeq.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   Notify/PropertySeq.inl Notify/Event.inl Notify/Proxy.h Notify/Object.h \
   Notify/QoSProperties.h Notify/Property_Boolean.h \
@@ -7433,8 +7422,7 @@ endif
   Notify/Consumer_Map.h Notify/Supplier_Map.h
 
 .obj/Admin.o .obj/Admin.so .shobj/Admin.o .shobj/Admin.so: Notify/Admin.cpp Notify/Admin.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -7788,8 +7776,7 @@ endif
   $(ACE_ROOT)/ace/Synch_T.cpp \
   Notify/AdminProperties.inl Notify/Refcountable.h \
   Notify/Refcountable.inl Notify/Object.inl Notify/ID_Factory.inl \
-  Notify/Event.h \
-  $(ACE_ROOT)/ace/Copy_Disabled.h \
+  Notify/Event.h $(ACE_ROOT)/ace/Copy_Disabled.h \
   Event_ForwarderS.h \
   CosNotifyChannelAdminS.h \
   CosEventChannelAdminS.h \
@@ -7850,8 +7837,7 @@ endif
   Notify/Proxy.inl Notify/EventChannel.h Notify/EventChannel.inl
 
 .obj/AdminProperties.o .obj/AdminProperties.so .shobj/AdminProperties.o .shobj/AdminProperties.so: Notify/AdminProperties.cpp Notify/AdminProperties.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -8162,8 +8148,7 @@ endif
   Notify/AdminProperties.inl
 
 .obj/AnyEvent.o .obj/AnyEvent.so .shobj/AnyEvent.o .shobj/AnyEvent.so: Notify/Any/AnyEvent.cpp Notify/Any/AnyEvent.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -8171,8 +8156,7 @@ endif
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  Notify/Event.h \
+  $(ACE_ROOT)/ace/ACE_export.h Notify/Event.h \
   $(ACE_ROOT)/ace/Copy_Disabled.h \
   $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
@@ -8520,15 +8504,14 @@ endif
   $(TAO_ROOT)/tao/TimeBaseC.i \
   NotifyExtC.h \
   NotifyExtC.i \
-  Notify/Property_T.h \
-  $(ACE_ROOT)/ace/SString.h \
+  Notify/Property_T.h $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/String_Base.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  Notify/Property_T.inl Notify/Property_T.cpp Notify/PropertySeq.h \
+  $(ACE_ROOT)/ace/SString.i Notify/Property_T.inl \
+  Notify/Property_T.cpp Notify/PropertySeq.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   Notify/PropertySeq.inl Notify/Event.inl Notify/EventType.h \
   Notify/EventType.inl Notify/Any/AnyEvent.inl Notify/Consumer.h \
@@ -8550,8 +8533,7 @@ endif
 
 .obj/CosEC_ProxyPushConsumer.o .obj/CosEC_ProxyPushConsumer.so .shobj/CosEC_ProxyPushConsumer.o .shobj/CosEC_ProxyPushConsumer.so: Notify/Any/CosEC_ProxyPushConsumer.cpp \
   Notify/Any/CosEC_ProxyPushConsumer.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -8988,8 +8970,7 @@ endif
 
 .obj/CosEC_ProxyPushSupplier.o .obj/CosEC_ProxyPushSupplier.so .shobj/CosEC_ProxyPushSupplier.o .shobj/CosEC_ProxyPushSupplier.so: Notify/Any/CosEC_ProxyPushSupplier.cpp \
   Notify/Any/CosEC_ProxyPushSupplier.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -9425,8 +9406,7 @@ endif
 
 .obj/ProxyPushConsumer.o .obj/ProxyPushConsumer.so .shobj/ProxyPushConsumer.o .shobj/ProxyPushConsumer.so: Notify/Any/ProxyPushConsumer.cpp \
   Notify/Any/ProxyPushConsumer.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -9863,8 +9843,7 @@ endif
 
 .obj/ProxyPushSupplier.o .obj/ProxyPushSupplier.so .shobj/ProxyPushSupplier.o .shobj/ProxyPushSupplier.so: Notify/Any/ProxyPushSupplier.cpp \
   Notify/Any/ProxyPushSupplier.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -10299,8 +10278,7 @@ endif
   Notify/Any/PushConsumer.h Notify/Any/PushConsumer.inl
 
 .obj/PushConsumer.o .obj/PushConsumer.so .shobj/PushConsumer.o .shobj/PushConsumer.so: Notify/Any/PushConsumer.cpp Notify/Any/PushConsumer.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -10685,8 +10663,7 @@ endif
 
 .obj/Buffering_Strategy.o .obj/Buffering_Strategy.so .shobj/Buffering_Strategy.o .shobj/Buffering_Strategy.so: Notify/Buffering_Strategy.cpp \
   Notify/Buffering_Strategy.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -10944,8 +10921,7 @@ endif
   CosEventChannelAdminC.i \
   CosNotifyChannelAdminC.i \
   NotifyExtC.i \
-  Notify/Property_T.h \
-  $(ACE_ROOT)/ace/SString.h \
+  Notify/Property_T.h $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -10954,8 +10930,8 @@ endif
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  Notify/Property_T.inl Notify/Property_T.cpp Notify/PropertySeq.h \
+  $(ACE_ROOT)/ace/SString.i Notify/Property_T.inl \
+  Notify/Property_T.cpp Notify/PropertySeq.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Null_Mutex.h \
   Notify/PropertySeq.inl Notify/AdminProperties.h \
@@ -11074,8 +11050,7 @@ endif
   $(TAO_ROOT)/tao/debug.h
 
 .obj/Builder.o .obj/Builder.so .shobj/Builder.o .shobj/Builder.so: Notify/Builder.cpp Notify/Builder.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -11506,8 +11481,7 @@ endif
   Notify/Event_Map_T.inl Notify/Event_Map_T.cpp Notify/Worker_Task.h \
   Notify/Method_Request.h Notify/Method_Request.inl \
   Notify/Worker_Task.inl Notify/Reactive_Task.h Notify/Reactive_Task.inl \
-  Notify/ThreadPool_Task.h \
-  $(ACE_ROOT)/ace/Task.h \
+  Notify/ThreadPool_Task.h $(ACE_ROOT)/ace/Task.h \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -11592,8 +11566,7 @@ endif
   ESF/ESF_Shutdown_Proxy.cpp
 
 .obj/Consumer.o .obj/Consumer.so .shobj/Consumer.o .shobj/Consumer.so: Notify/Consumer.cpp Notify/Consumer.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -11977,8 +11950,7 @@ endif
   $(TAO_ROOT)/tao/debug.h
 
 .obj/ConsumerAdmin.o .obj/ConsumerAdmin.so .shobj/ConsumerAdmin.o .shobj/ConsumerAdmin.so: Notify/ConsumerAdmin.cpp Notify/ConsumerAdmin.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -12279,8 +12251,7 @@ endif
   Notify/Admin.h Notify/FilterAdmin.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   Notify/ID_Factory.h Notify/Object.h Notify/QoSProperties.h \
-  Notify/PropertySeq.h \
-  $(ACE_ROOT)/ace/SString.h \
+  Notify/PropertySeq.h $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -12347,8 +12318,7 @@ endif
   $(ACE_ROOT)/ace/Synch_T.cpp \
   Notify/AdminProperties.inl Notify/Refcountable.h \
   Notify/Refcountable.inl Notify/Object.inl Notify/ID_Factory.inl \
-  Notify/Event.h \
-  $(ACE_ROOT)/ace/Copy_Disabled.h \
+  Notify/Event.h $(ACE_ROOT)/ace/Copy_Disabled.h \
   Event_ForwarderS.h \
   Event_ForwarderC.h \
   Event_ForwarderC.i \
@@ -12404,8 +12374,7 @@ endif
   Notify/Seq_Worker_T.inl Notify/Seq_Worker_T.cpp
 
 .obj/Event.o .obj/Event.so .shobj/Event.o .shobj/Event.so: Notify/Event.cpp Notify/Event.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -12761,22 +12730,20 @@ endif
   $(TAO_ROOT)/tao/TimeBaseC.i \
   NotifyExtC.h \
   NotifyExtC.i \
-  Notify/Property_T.h \
-  $(ACE_ROOT)/ace/SString.h \
+  Notify/Property_T.h $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/String_Base.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  Notify/Property_T.inl Notify/Property_T.cpp Notify/PropertySeq.h \
+  $(ACE_ROOT)/ace/SString.i Notify/Property_T.inl \
+  Notify/Property_T.cpp Notify/PropertySeq.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   Notify/PropertySeq.inl Notify/Event.inl \
   $(TAO_ROOT)/tao/debug.h
 
 .obj/EventChannel.o .obj/EventChannel.so .shobj/EventChannel.o .shobj/EventChannel.so: Notify/EventChannel.cpp Notify/EventChannel.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -13212,8 +13179,7 @@ endif
 
 .obj/EventChannelFactory.o .obj/EventChannelFactory.so .shobj/EventChannelFactory.o .shobj/EventChannelFactory.so: Notify/EventChannelFactory.cpp \
   Notify/EventChannelFactory.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -13626,8 +13592,7 @@ endif
   Notify/Seq_Worker_T.cpp
 
 .obj/EventType.o .obj/EventType.so .shobj/EventType.o .shobj/EventType.so: Notify/EventType.cpp Notify/EventType.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -13833,8 +13798,7 @@ endif
   $(ACE_ROOT)/ace/Log_Priority.h
 
 .obj/EventTypeSeq.o .obj/EventTypeSeq.so .shobj/EventTypeSeq.o .shobj/EventTypeSeq.so: Notify/EventTypeSeq.cpp Notify/EventTypeSeq.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -13842,8 +13806,7 @@ endif
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  Notify/EventType.h \
+  $(ACE_ROOT)/ace/ACE_export.h Notify/EventType.h \
   CosNotificationC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
@@ -14024,8 +13987,7 @@ endif
   Notify/EventTypeSeq.inl
 
 .obj/Default_Factory.o .obj/Default_Factory.so .shobj/Default_Factory.o .shobj/Default_Factory.so: Notify/Default_Factory.cpp Notify/Default_Factory.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -14033,8 +13995,7 @@ endif
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  Notify/Factory.h \
+  $(ACE_ROOT)/ace/ACE_export.h Notify/Factory.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/Service_Object.h \
@@ -14848,8 +14809,7 @@ endif
   $(ACE_ROOT)/ace/Synch_T.cpp \
   Notify/AdminProperties.inl Notify/Refcountable.h \
   Notify/Refcountable.inl Notify/Object.inl Notify/ID_Factory.inl \
-  Notify/Event.h \
-  $(ACE_ROOT)/ace/Copy_Disabled.h \
+  Notify/Event.h $(ACE_ROOT)/ace/Copy_Disabled.h \
   Event_ForwarderS.h \
   CosNotifyChannelAdminS.h \
   CosEventChannelAdminS.h \
@@ -14870,8 +14830,7 @@ endif
   Notify/Event.inl Notify/FilterAdmin.inl
 
 .obj/ID_Factory.o .obj/ID_Factory.so .shobj/ID_Factory.o .shobj/ID_Factory.so: Notify/ID_Factory.cpp Notify/ID_Factory.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -14973,8 +14932,7 @@ endif
   $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Atomic_Op.i \
-  Notify/Object.h \
+  $(ACE_ROOT)/ace/Atomic_Op.i Notify/Object.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -15192,8 +15150,7 @@ endif
   Notify/Refcountable.inl Notify/Object.inl Notify/ID_Factory.inl
 
 .obj/Method_Request.o .obj/Method_Request.so .shobj/Method_Request.o .shobj/Method_Request.so: Notify/Method_Request.cpp Notify/Method_Request.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -15549,21 +15506,19 @@ endif
   $(TAO_ROOT)/tao/TimeBaseC.i \
   NotifyExtC.h \
   NotifyExtC.i \
-  Notify/Property_T.h \
-  $(ACE_ROOT)/ace/SString.h \
+  Notify/Property_T.h $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/String_Base.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  Notify/Property_T.inl Notify/Property_T.cpp Notify/PropertySeq.h \
+  $(ACE_ROOT)/ace/SString.i Notify/Property_T.inl \
+  Notify/Property_T.cpp Notify/PropertySeq.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   Notify/PropertySeq.inl Notify/Event.inl Notify/Method_Request.inl
 
 .obj/Object.o .obj/Object.so .shobj/Object.o .shobj/Object.so: Notify/Object.cpp Notify/Object.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -15949,8 +15904,7 @@ endif
   $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
   $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
   Notify/Properties.inl Notify/Builder.h Notify/Builder.inl \
-  Notify/ThreadPool_Task.h \
-  $(ACE_ROOT)/ace/Task.h \
+  Notify/ThreadPool_Task.h $(ACE_ROOT)/ace/Task.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
@@ -16021,8 +15975,7 @@ endif
 
 .obj/Method_Request_Lookup.o .obj/Method_Request_Lookup.so .shobj/Method_Request_Lookup.o .shobj/Method_Request_Lookup.so: Notify/Method_Request_Lookup.cpp \
   Notify/Method_Request_Lookup.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -16382,15 +16335,14 @@ endif
   $(TAO_ROOT)/tao/TimeBaseC.i \
   NotifyExtC.h \
   NotifyExtC.i \
-  Notify/Property_T.h \
-  $(ACE_ROOT)/ace/SString.h \
+  Notify/Property_T.h $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/String_Base.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  Notify/Property_T.inl Notify/Property_T.cpp Notify/PropertySeq.h \
+  $(ACE_ROOT)/ace/SString.i Notify/Property_T.inl \
+  Notify/Property_T.cpp Notify/PropertySeq.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   Notify/PropertySeq.inl Notify/Event.inl Notify/Method_Request.inl \
   Notify/ProxyConsumer.h Notify/Refcountable_Guard_T.h \
@@ -16451,8 +16403,7 @@ endif
 
 .obj/Method_Request_Shutdown.o .obj/Method_Request_Shutdown.so .shobj/Method_Request_Shutdown.o .shobj/Method_Request_Shutdown.so: Notify/Method_Request_Shutdown.cpp \
   Notify/Method_Request_Shutdown.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -16809,15 +16760,14 @@ endif
   $(TAO_ROOT)/tao/TimeBaseC.i \
   NotifyExtC.h \
   NotifyExtC.i \
-  Notify/Property_T.h \
-  $(ACE_ROOT)/ace/SString.h \
+  Notify/Property_T.h $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/String_Base.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  Notify/Property_T.inl Notify/Property_T.cpp Notify/PropertySeq.h \
+  $(ACE_ROOT)/ace/SString.i Notify/Property_T.inl \
+  Notify/Property_T.cpp Notify/PropertySeq.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   Notify/PropertySeq.inl Notify/Event.inl Notify/Method_Request.inl \
   Notify/Method_Request_Shutdown.inl Notify/ThreadPool_Task.h \
@@ -16900,8 +16850,7 @@ endif
 
 .obj/CosNotify_Service.o .obj/CosNotify_Service.so .shobj/CosNotify_Service.o .shobj/CosNotify_Service.so: Notify/CosNotify_Service.cpp \
   Notify/CosNotify_Service.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -16909,8 +16858,7 @@ endif
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  Notify/Service.h \
+  $(ACE_ROOT)/ace/ACE_export.h Notify/Service.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
@@ -17374,8 +17322,7 @@ endif
   $(TAO_ROOT)/tao/debug.h
 
 .obj/Peer.o .obj/Peer.so .shobj/Peer.o .shobj/Peer.so: Notify/Peer.cpp Notify/Peer.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -17757,8 +17704,7 @@ endif
   $(TAO_ROOT)/tao/debug.h
 
 .obj/POA_Helper.o .obj/POA_Helper.so .shobj/POA_Helper.o .shobj/POA_Helper.so: Notify/POA_Helper.cpp Notify/POA_Helper.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -17895,8 +17841,7 @@ endif
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
   Notify/POA_Helper.inl \
-  $(TAO_ROOT)/tao/debug.h \
-  Notify/ID_Factory.h \
+  $(TAO_ROOT)/tao/debug.h Notify/ID_Factory.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
@@ -17943,8 +17888,7 @@ endif
   $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Atomic_Op.i \
-  Notify/Object.h \
+  $(ACE_ROOT)/ace/Atomic_Op.i Notify/Object.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
@@ -18084,8 +18028,7 @@ endif
   Notify/Refcountable.inl Notify/Object.inl Notify/ID_Factory.inl
 
 .obj/Properties.o .obj/Properties.so .shobj/Properties.o .shobj/Properties.so: Notify/Properties.cpp Notify/Properties.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -18388,8 +18331,7 @@ endif
   $(TAO_ROOT)/tao/debug.h
 
 .obj/PropertySeq.o .obj/PropertySeq.so .shobj/PropertySeq.o .shobj/PropertySeq.so: Notify/PropertySeq.cpp Notify/PropertySeq.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -18616,8 +18558,7 @@ endif
   Notify/PropertySeq.inl
 
 .obj/Property_Boolean.o .obj/Property_Boolean.so .shobj/Property_Boolean.o .shobj/Property_Boolean.so: Notify/Property_Boolean.cpp Notify/Property_Boolean.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -18845,8 +18786,7 @@ endif
   Notify/PropertySeq.inl
 
 .obj/Proxy.o .obj/Proxy.so .shobj/Proxy.o .shobj/Proxy.so: Notify/Proxy.cpp Notify/Proxy.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -18854,8 +18794,7 @@ endif
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  Notify/Object.h \
+  $(ACE_ROOT)/ace/ACE_export.h Notify/Object.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -19246,8 +19185,7 @@ endif
   Notify/Properties.inl Notify/POA_Helper.h Notify/POA_Helper.inl
 
 .obj/ProxyConsumer.o .obj/ProxyConsumer.so .shobj/ProxyConsumer.o .shobj/ProxyConsumer.so: Notify/ProxyConsumer.cpp Notify/ProxyConsumer.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -19605,15 +19543,14 @@ endif
   $(TAO_ROOT)/tao/TimeBaseC.i \
   NotifyExtC.h \
   NotifyExtC.i \
-  Notify/Property_T.h \
-  $(ACE_ROOT)/ace/SString.h \
+  Notify/Property_T.h $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/String_Base.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  Notify/Property_T.inl Notify/Property_T.cpp Notify/PropertySeq.h \
+  $(ACE_ROOT)/ace/SString.i Notify/Property_T.inl \
+  Notify/Property_T.cpp Notify/PropertySeq.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   Notify/PropertySeq.inl Notify/Event.inl Notify/Proxy.h Notify/Object.h \
   Notify/QoSProperties.h Notify/Property_Boolean.h \
@@ -19627,8 +19564,8 @@ endif
   Notify/EventTypeSeq.inl Notify/FilterAdmin.h Notify/ID_Factory.h \
   Notify/ID_Factory.inl Notify/FilterAdmin.inl Notify/Admin.h \
   Notify/Admin.inl Notify/Proxy.inl Notify/ProxyConsumer.inl \
-  $(TAO_ROOT)/tao/debug.h \
-  Notify/Supplier.h Notify/Peer.h Notify/Peer.inl Notify/Supplier.inl \
+  $(TAO_ROOT)/tao/debug.h Notify/Supplier.h \
+  Notify/Peer.h Notify/Peer.inl Notify/Supplier.inl \
   Notify/Event_Manager.h \
   ESF/ESF_Worker.h \
   ESF/ESF_Worker.i \
@@ -19677,8 +19614,7 @@ endif
   Notify/SupplierAdmin.inl
 
 .obj/ProxySupplier.o .obj/ProxySupplier.so .shobj/ProxySupplier.o .shobj/ProxySupplier.so: Notify/ProxySupplier.cpp Notify/ProxySupplier.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -19686,8 +19622,7 @@ endif
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  Notify/Event.h \
+  $(ACE_ROOT)/ace/ACE_export.h Notify/Event.h \
   $(ACE_ROOT)/ace/Copy_Disabled.h \
   $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
@@ -20035,15 +19970,14 @@ endif
   $(TAO_ROOT)/tao/TimeBaseC.i \
   NotifyExtC.h \
   NotifyExtC.i \
-  Notify/Property_T.h \
-  $(ACE_ROOT)/ace/SString.h \
+  Notify/Property_T.h $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/String_Base.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  Notify/Property_T.inl Notify/Property_T.cpp Notify/PropertySeq.h \
+  $(ACE_ROOT)/ace/SString.i Notify/Property_T.inl \
+  Notify/Property_T.cpp Notify/PropertySeq.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   Notify/PropertySeq.inl Notify/Event.inl Notify/Proxy.h Notify/Object.h \
   Notify/QoSProperties.h Notify/Property_Boolean.h \
@@ -20120,8 +20054,7 @@ endif
   Notify/ConsumerAdmin.inl
 
 .obj/QoSProperties.o .obj/QoSProperties.so .shobj/QoSProperties.o .shobj/QoSProperties.so: Notify/QoSProperties.cpp Notify/QoSProperties.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -20379,8 +20312,7 @@ endif
   Notify/QoSProperties.inl
 
 .obj/Reactive_Task.o .obj/Reactive_Task.so .shobj/Reactive_Task.o .shobj/Reactive_Task.so: Notify/Reactive_Task.cpp Notify/Reactive_Task.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -20737,15 +20669,14 @@ endif
   $(TAO_ROOT)/tao/TimeBaseC.i \
   NotifyExtC.h \
   NotifyExtC.i \
-  Notify/Property_T.h \
-  $(ACE_ROOT)/ace/SString.h \
+  Notify/Property_T.h $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/String_Base.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  Notify/Property_T.inl Notify/Property_T.cpp Notify/PropertySeq.h \
+  $(ACE_ROOT)/ace/SString.i Notify/Property_T.inl \
+  Notify/Property_T.cpp Notify/PropertySeq.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   Notify/PropertySeq.inl Notify/Event.inl Notify/Method_Request.inl \
   Notify/Refcountable.h Notify/Refcountable.inl Notify/Worker_Task.inl \
@@ -20755,8 +20686,7 @@ endif
   Notify/Timer_Reactor.inl
 
 .obj/Refcountable.o .obj/Refcountable.so .shobj/Refcountable.o .shobj/Refcountable.so: Notify/Refcountable.cpp Notify/Refcountable.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -20866,8 +20796,7 @@ endif
 .obj/SequenceProxyPushConsumer.o .obj/SequenceProxyPushConsumer.so .shobj/SequenceProxyPushConsumer.o .shobj/SequenceProxyPushConsumer.so:  \
  Notify/Sequence/SequenceProxyPushConsumer.cpp \
   Notify/Sequence/SequenceProxyPushConsumer.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -21306,8 +21235,7 @@ endif
 .obj/SequenceProxyPushSupplier.o .obj/SequenceProxyPushSupplier.so .shobj/SequenceProxyPushSupplier.o .shobj/SequenceProxyPushSupplier.so:  \
  Notify/Sequence/SequenceProxyPushSupplier.cpp \
   Notify/Sequence/SequenceProxyPushSupplier.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -21758,8 +21686,7 @@ endif
 
 .obj/SequencePushConsumer.o .obj/SequencePushConsumer.so .shobj/SequencePushConsumer.o .shobj/SequencePushConsumer.so: Notify/Sequence/SequencePushConsumer.cpp \
   Notify/Sequence/SequencePushConsumer.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -21864,8 +21791,7 @@ endif
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/Atomic_Op.i \
   $(ACE_ROOT)/ace/Synch_Traits.h \
-  $(ACE_ROOT)/ace/Event_Handler.i \
-  Notify/Event.h \
+  $(ACE_ROOT)/ace/Event_Handler.i Notify/Event.h \
   $(ACE_ROOT)/ace/Copy_Disabled.h \
   $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
@@ -22118,15 +22044,14 @@ endif
   $(TAO_ROOT)/tao/TimeBaseC.i \
   NotifyExtC.h \
   NotifyExtC.i \
-  Notify/Property_T.h \
-  $(ACE_ROOT)/ace/SString.h \
+  Notify/Property_T.h $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/String_Base.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  Notify/Property_T.inl Notify/Property_T.cpp Notify/PropertySeq.h \
+  $(ACE_ROOT)/ace/SString.i Notify/Property_T.inl \
+  Notify/Property_T.cpp Notify/PropertySeq.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   Notify/PropertySeq.inl Notify/Event.inl Notify/Consumer.h Notify/Peer.h \
   Notify/EventTypeSeq.h Notify/EventType.h Notify/EventType.inl \
@@ -22171,8 +22096,7 @@ endif
 
 .obj/SequencePushSupplier.o .obj/SequencePushSupplier.so .shobj/SequencePushSupplier.o .shobj/SequencePushSupplier.so: Notify/Sequence/SequencePushSupplier.cpp \
   Notify/Sequence/SequencePushSupplier.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -22556,8 +22480,7 @@ endif
 
 .obj/StructuredEvent.o .obj/StructuredEvent.so .shobj/StructuredEvent.o .shobj/StructuredEvent.so: Notify/Structured/StructuredEvent.cpp \
   Notify/Structured/StructuredEvent.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -22565,8 +22488,7 @@ endif
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  Notify/Event.h \
+  $(ACE_ROOT)/ace/ACE_export.h Notify/Event.h \
   $(ACE_ROOT)/ace/Copy_Disabled.h \
   $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
@@ -22914,15 +22836,14 @@ endif
   $(TAO_ROOT)/tao/TimeBaseC.i \
   NotifyExtC.h \
   NotifyExtC.i \
-  Notify/Property_T.h \
-  $(ACE_ROOT)/ace/SString.h \
+  Notify/Property_T.h $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/String_Base.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  Notify/Property_T.inl Notify/Property_T.cpp Notify/PropertySeq.h \
+  $(ACE_ROOT)/ace/SString.i Notify/Property_T.inl \
+  Notify/Property_T.cpp Notify/PropertySeq.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   Notify/PropertySeq.inl Notify/Event.inl Notify/EventType.h \
   Notify/EventType.inl Notify/Structured/StructuredEvent.inl \
@@ -22945,8 +22866,7 @@ endif
 .obj/StructuredProxyPushConsumer.o .obj/StructuredProxyPushConsumer.so .shobj/StructuredProxyPushConsumer.o .shobj/StructuredProxyPushConsumer.so:  \
  Notify/Structured/StructuredProxyPushConsumer.cpp \
   Notify/Structured/StructuredProxyPushConsumer.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -23385,8 +23305,7 @@ endif
 .obj/StructuredProxyPushSupplier.o .obj/StructuredProxyPushSupplier.so .shobj/StructuredProxyPushSupplier.o .shobj/StructuredProxyPushSupplier.so:  \
  Notify/Structured/StructuredProxyPushSupplier.cpp \
   Notify/Structured/StructuredProxyPushSupplier.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -23824,8 +23743,7 @@ endif
 
 .obj/StructuredPushConsumer.o .obj/StructuredPushConsumer.so .shobj/StructuredPushConsumer.o .shobj/StructuredPushConsumer.so: Notify/Structured/StructuredPushConsumer.cpp \
   Notify/Structured/StructuredPushConsumer.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -24210,8 +24128,7 @@ endif
 
 .obj/StructuredPushSupplier.o .obj/StructuredPushSupplier.so .shobj/StructuredPushSupplier.o .shobj/StructuredPushSupplier.so: Notify/Structured/StructuredPushSupplier.cpp \
   Notify/Structured/StructuredPushSupplier.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -24594,8 +24511,7 @@ endif
   Notify/Structured/StructuredPushSupplier.inl
 
 .obj/Supplier.o .obj/Supplier.so .shobj/Supplier.o .shobj/Supplier.so: Notify/Supplier.cpp Notify/Supplier.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -24978,8 +24894,7 @@ endif
 
 .obj/Subscription_Change_Worker.o .obj/Subscription_Change_Worker.so .shobj/Subscription_Change_Worker.o .shobj/Subscription_Change_Worker.so: Notify/Subscription_Change_Worker.cpp \
   Notify/Subscription_Change_Worker.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -25364,8 +25279,7 @@ endif
   Notify/Refcountable_Guard_T.cpp Notify/Proxy.inl
 
 .obj/SupplierAdmin.o .obj/SupplierAdmin.so .shobj/SupplierAdmin.o .shobj/SupplierAdmin.so: Notify/SupplierAdmin.cpp Notify/SupplierAdmin.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -25666,8 +25580,7 @@ endif
   Notify/Admin.h Notify/FilterAdmin.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   Notify/ID_Factory.h Notify/Object.h Notify/QoSProperties.h \
-  Notify/PropertySeq.h \
-  $(ACE_ROOT)/ace/SString.h \
+  Notify/PropertySeq.h $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -25734,8 +25647,7 @@ endif
   $(ACE_ROOT)/ace/Synch_T.cpp \
   Notify/AdminProperties.inl Notify/Refcountable.h \
   Notify/Refcountable.inl Notify/Object.inl Notify/ID_Factory.inl \
-  Notify/Event.h \
-  $(ACE_ROOT)/ace/Copy_Disabled.h \
+  Notify/Event.h $(ACE_ROOT)/ace/Copy_Disabled.h \
   Event_ForwarderS.h \
   Event_ForwarderC.h \
   Event_ForwarderC.i \
@@ -25791,8 +25703,7 @@ endif
   Notify/Seq_Worker_T.inl Notify/Seq_Worker_T.cpp
 
 .obj/ThreadPool_Task.o .obj/ThreadPool_Task.so .shobj/ThreadPool_Task.o .shobj/ThreadPool_Task.so: Notify/ThreadPool_Task.cpp Notify/ThreadPool_Task.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -26169,8 +26080,7 @@ endif
   NotifyExtC.i \
   Notify/Property_Boolean.h Notify/Property_Boolean.inl \
   Notify/AdminProperties.inl Notify/Worker_Task.h Notify/Method_Request.h \
-  Notify/Event.h \
-  $(ACE_ROOT)/ace/Copy_Disabled.h \
+  Notify/Event.h $(ACE_ROOT)/ace/Copy_Disabled.h \
   Event_ForwarderS.h \
   CosNotificationS.h \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
@@ -26297,8 +26207,7 @@ endif
   Notify/Timer_Queue.inl
 
 .obj/Worker_Task.o .obj/Worker_Task.so .shobj/Worker_Task.o .shobj/Worker_Task.so: Notify/Worker_Task.cpp Notify/Worker_Task.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -26655,23 +26564,21 @@ endif
   $(TAO_ROOT)/tao/TimeBaseC.i \
   NotifyExtC.h \
   NotifyExtC.i \
-  Notify/Property_T.h \
-  $(ACE_ROOT)/ace/SString.h \
+  Notify/Property_T.h $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/String_Base.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  Notify/Property_T.inl Notify/Property_T.cpp Notify/PropertySeq.h \
+  $(ACE_ROOT)/ace/SString.i Notify/Property_T.inl \
+  Notify/Property_T.cpp Notify/PropertySeq.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   Notify/PropertySeq.inl Notify/Event.inl Notify/Method_Request.inl \
   Notify/Refcountable.h Notify/Refcountable.inl Notify/Worker_Task.inl
 
 .obj/Notify_Default_CO_Factory.o .obj/Notify_Default_CO_Factory.so .shobj/Notify_Default_CO_Factory.o .shobj/Notify_Default_CO_Factory.so: Notify/Notify_Default_CO_Factory.cpp \
   Notify/Notify_Default_CO_Factory.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -26684,8 +26591,7 @@ endif
 .obj/Notify_Default_Collection_Factory.o .obj/Notify_Default_Collection_Factory.so .shobj/Notify_Default_Collection_Factory.o .shobj/Notify_Default_Collection_Factory.so:  \
  Notify/Notify_Default_Collection_Factory.cpp \
   Notify/Notify_Default_Collection_Factory.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -26697,8 +26603,7 @@ endif
 
 .obj/Notify_Default_EMO_Factory.o .obj/Notify_Default_EMO_Factory.so .shobj/Notify_Default_EMO_Factory.o .shobj/Notify_Default_EMO_Factory.so: Notify/Notify_Default_EMO_Factory.cpp \
   Notify/Notify_Default_EMO_Factory.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -26710,8 +26615,7 @@ endif
 
 .obj/Notify_Default_POA_Factory.o .obj/Notify_Default_POA_Factory.so .shobj/Notify_Default_POA_Factory.o .shobj/Notify_Default_POA_Factory.so: Notify/Notify_Default_POA_Factory.cpp \
   Notify/Notify_Default_POA_Factory.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -27190,8 +27094,7 @@ endif
 
 .obj/Method_Request_Updates.o .obj/Method_Request_Updates.so .shobj/Method_Request_Updates.o .shobj/Method_Request_Updates.so: Notify/Method_Request_Updates.cpp \
   Notify/Method_Request_Updates.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -27205,8 +27108,7 @@ endif
   $(ACE_ROOT)/ace/Exception_Macros.h \
   Notify/Method_Request_Updates_T.inl \
   $(TAO_ROOT)/tao/debug.h \
-  $(TAO_ROOT)/tao/TAO_Export.h \
-  Notify/Peer.h \
+  $(TAO_ROOT)/tao/TAO_Export.h Notify/Peer.h \
   CosNotificationC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
@@ -27578,8 +27480,7 @@ endif
   Notify/Method_Request.inl Notify/Method_Request_Updates.inl
 
 .obj/Timer_Reactor.o .obj/Timer_Reactor.so .shobj/Timer_Reactor.o .shobj/Timer_Reactor.so: Notify/Timer_Reactor.cpp Notify/Timer_Reactor.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -27587,8 +27488,7 @@ endif
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  Notify/Timer.h \
+  $(ACE_ROOT)/ace/ACE_export.h Notify/Timer.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
@@ -27970,8 +27870,7 @@ endif
   Notify/Properties.inl
 
 .obj/Timer_Queue.o .obj/Timer_Queue.so .shobj/Timer_Queue.o .shobj/Timer_Queue.so: Notify/Timer_Queue.cpp Notify/Timer_Queue.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -27979,8 +27878,7 @@ endif
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  Notify/Timer.h \
+  $(ACE_ROOT)/ace/ACE_export.h Notify/Timer.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
@@ -28109,8 +28007,7 @@ endif
 
 .obj/Batch_Buffering_Strategy.o .obj/Batch_Buffering_Strategy.so .shobj/Batch_Buffering_Strategy.o .shobj/Batch_Buffering_Strategy.so: Notify/Sequence/Batch_Buffering_Strategy.cpp \
   Notify/Sequence/Batch_Buffering_Strategy.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -28467,15 +28364,14 @@ endif
   $(TAO_ROOT)/tao/TimeBaseC.i \
   NotifyExtC.h \
   NotifyExtC.i \
-  Notify/Property_T.h \
-  $(ACE_ROOT)/ace/SString.h \
+  Notify/Property_T.h $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/String_Base.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  Notify/Property_T.inl Notify/Property_T.cpp Notify/PropertySeq.h \
+  $(ACE_ROOT)/ace/SString.i Notify/Property_T.inl \
+  Notify/Property_T.cpp Notify/PropertySeq.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   Notify/PropertySeq.inl Notify/Event.inl Notify/Method_Request.inl \
   Notify/Buffering_Strategy.h \
@@ -28500,8 +28396,7 @@ endif
 
 .obj/CosNotify_Initializer.o .obj/CosNotify_Initializer.so .shobj/CosNotify_Initializer.o .shobj/CosNotify_Initializer.so: Notify/CosNotify_Initializer.cpp \
   Notify/CosNotify_Initializer.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -28827,8 +28722,7 @@ endif
 
 .obj/Method_Request_Event.o .obj/Method_Request_Event.so .shobj/Method_Request_Event.o .shobj/Method_Request_Event.so: Notify/Method_Request_Event.cpp \
   Notify/Method_Request_Event.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -29185,22 +29079,20 @@ endif
   $(TAO_ROOT)/tao/TimeBaseC.i \
   NotifyExtC.h \
   NotifyExtC.i \
-  Notify/Property_T.h \
-  $(ACE_ROOT)/ace/SString.h \
+  Notify/Property_T.h $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/String_Base.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  Notify/Property_T.inl Notify/Property_T.cpp Notify/PropertySeq.h \
+  $(ACE_ROOT)/ace/SString.i Notify/Property_T.inl \
+  Notify/Property_T.cpp Notify/PropertySeq.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   Notify/PropertySeq.inl Notify/Event.inl Notify/Method_Request.inl \
   Notify/Method_Request_Event.inl
 
 .obj/ETCL_Filter.o .obj/ETCL_Filter.so .shobj/ETCL_Filter.o .shobj/ETCL_Filter.so: Notify/ETCL_Filter.cpp Notify/ETCL_Filter.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -29512,8 +29404,7 @@ endif
 
 .obj/ETCL_FilterFactory.o .obj/ETCL_FilterFactory.so .shobj/ETCL_FilterFactory.o .shobj/ETCL_FilterFactory.so: Notify/ETCL_FilterFactory.cpp \
   Notify/ETCL_FilterFactory.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/pre.h Notify/notify_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \

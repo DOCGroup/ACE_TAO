@@ -79,8 +79,7 @@ endif
 
 
 .obj/RT_Application_Command.o .obj/RT_Application_Command.so .shobj/RT_Application_Command.o .shobj/RT_Application_Command.so: RT_Application_Command.cpp \
-  RT_Application_Command.h \
-  $(ACE_ROOT)/ace/pre.h \
+  RT_Application_Command.h $(ACE_ROOT)/ace/pre.h \
   rt_notify_test_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
@@ -339,6 +338,7 @@ endif
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
@@ -365,8 +365,7 @@ endif
   $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.i
 
 .obj/RT_POA_Command.o .obj/RT_POA_Command.so .shobj/RT_POA_Command.o .shobj/RT_POA_Command.so: RT_POA_Command.cpp RT_POA_Command.h \
-  $(ACE_ROOT)/ace/pre.h \
-  rt_notify_test_export.h \
+  $(ACE_ROOT)/ace/pre.h rt_notify_test_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -643,6 +642,7 @@ endif
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
@@ -656,8 +656,7 @@ endif
   ../lib/Name.h
 
 .obj/RT_Priority_Mapping.o .obj/RT_Priority_Mapping.so .shobj/RT_Priority_Mapping.o .shobj/RT_Priority_Mapping.so: RT_Priority_Mapping.cpp RT_Priority_Mapping.h \
-  $(ACE_ROOT)/ace/pre.h \
-  rt_notify_test_export.h \
+  $(ACE_ROOT)/ace/pre.h rt_notify_test_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -927,6 +926,7 @@ endif
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
@@ -1211,8 +1211,7 @@ endif
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
-  ../lib/Command.h \
-  $(ACE_ROOT)/ace/Arg_Shifter.h \
+  ../lib/Command.h $(ACE_ROOT)/ace/Arg_Shifter.h \
   RT_Application_Command.h ../lib/Application_Command.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

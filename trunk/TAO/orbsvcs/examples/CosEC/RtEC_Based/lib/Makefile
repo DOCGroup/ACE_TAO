@@ -276,7 +276,7 @@ endif
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
@@ -500,7 +500,7 @@ endif
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
@@ -561,8 +561,7 @@ endif
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
-  rtec_cosec_export.h \
-  $(ACE_ROOT)/ace/Auto_Ptr.h \
+  rtec_cosec_export.h $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
@@ -757,7 +756,7 @@ endif
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
@@ -1022,7 +1021,7 @@ endif
   $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
@@ -1083,8 +1082,7 @@ endif
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
-  rtec_cosec_export.h \
-  $(ACE_ROOT)/ace/Auto_Ptr.h \
+  rtec_cosec_export.h $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
@@ -1279,7 +1277,7 @@ endif
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
@@ -1573,7 +1571,7 @@ endif
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \

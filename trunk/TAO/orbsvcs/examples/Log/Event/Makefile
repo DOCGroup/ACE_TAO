@@ -243,7 +243,7 @@ endif
   $(TAO_ROOT)/tao/ORB.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Log/eventlog_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
@@ -465,7 +465,7 @@ endif
   $(TAO_ROOT)/tao/ORB.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Log/eventlog_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
@@ -687,7 +687,7 @@ endif
   $(TAO_ROOT)/tao/ORB.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Log/eventlog_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
@@ -909,7 +909,7 @@ endif
   $(TAO_ROOT)/tao/ORB.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Log/eventlog_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \

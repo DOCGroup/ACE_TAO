@@ -800,8 +800,7 @@ endif
   $(TAO_ROOT)/tao/ServicesS_T.i \
   $(TAO_ROOT)/tao/ServicesS_T.cpp \
   $(TAO_ROOT)/tao/ServicesS.i \
-  CosPropertyServiceC.h \
-  $(TAO_ROOT)/tao/ORB.h \
+  CosPropertyServiceC.h $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/OBV_Constants.h \
   $(TAO_ROOT)/tao/ORB.i \

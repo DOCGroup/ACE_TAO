@@ -530,8 +530,7 @@ require_warning:
   $(TAO_ROOT)/tao/ServicesS_T.cpp \
   $(TAO_ROOT)/tao/ServicesS.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServerS.h \
-  RTCosSchedulingC.h \
-  $(TAO_ROOT)/tao/ORB.h \
+  RTCosSchedulingC.h $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/OBV_Constants.h \
   $(TAO_ROOT)/tao/ORB.i \

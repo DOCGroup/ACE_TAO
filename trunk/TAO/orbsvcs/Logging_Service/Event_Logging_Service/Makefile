@@ -261,7 +261,7 @@ Event_Logging_Service: $(addprefix $(VDIR),$(LOG_OBJS))
   $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Log/eventlog_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
@@ -377,7 +377,6 @@ Event_Logging_Service: $(addprefix $(VDIR),$(LOG_OBJS))
   $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.cpp \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.h \
   $(ACE_ROOT)/ace/Message_Queue.h \

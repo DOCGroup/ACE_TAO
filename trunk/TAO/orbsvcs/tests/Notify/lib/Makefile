@@ -298,8 +298,7 @@ realclean: clean
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  Activation_ManagerC.i \
+  $(TAO_ROOT)/tao/ORB.i Activation_ManagerC.i \
   $(TAO_ROOT)/tao/Exception_Data.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.h \
   $(TAO_ROOT)/tao/Invocation_Utils.h \
@@ -372,8 +371,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Basic_Argument_T.cpp
 
 .obj/Activation_ManagerS.o .obj/Activation_ManagerS.so .shobj/Activation_ManagerS.o .shobj/Activation_ManagerS.so: Activation_ManagerS.cpp Activation_ManagerS.h \
-  Activation_ManagerC.h \
-  $(TAO_ROOT)/tao/ORB.h \
+  Activation_ManagerC.h $(TAO_ROOT)/tao/ORB.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -547,8 +545,7 @@ realclean: clean
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  Activation_ManagerC.i \
+  $(TAO_ROOT)/tao/ORB.i Activation_ManagerC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -838,8 +835,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Malloc_Allocator.h \
   $(ACE_ROOT)/ace/Malloc_Allocator.i
 
-.obj/Peer.o .obj/Peer.so .shobj/Peer.o .shobj/Peer.so: Peer.cpp Peer.h \
-  $(ACE_ROOT)/ace/pre.h notify_test_export.h \
+.obj/Peer.o .obj/Peer.so .shobj/Peer.o .shobj/Peer.so: Peer.cpp Peer.h $(ACE_ROOT)/ace/pre.h \
+  notify_test_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -1067,6 +1064,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
@@ -1088,8 +1086,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i Peer.inl \
   $(ACE_ROOT)/ace/Arg_Shifter.h Name.h \
-  LookupManager.h \
-  $(ACE_ROOT)/ace/Singleton.h \
+  LookupManager.h $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \
   $(ACE_ROOT)/ace/TSS_T.cpp \
@@ -1121,8 +1118,8 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/NotifyExtC.i
 
 .obj/StructuredPushConsumer.o .obj/StructuredPushConsumer.so .shobj/StructuredPushConsumer.o .shobj/StructuredPushConsumer.so: StructuredPushConsumer.cpp \
-  StructuredPushConsumer.h \
-  $(ACE_ROOT)/ace/pre.h notify_test_export.h \
+  StructuredPushConsumer.h $(ACE_ROOT)/ace/pre.h \
+  notify_test_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -1340,6 +1337,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
@@ -1424,11 +1422,9 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i Peer.inl \
-  Peer_T.inl Peer_T.cpp \
-  $(ACE_ROOT)/ace/Arg_Shifter.h Name.h \
-  LookupManager.h \
-  $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/SString.i Peer.inl Peer_T.inl \
+  Peer_T.cpp $(ACE_ROOT)/ace/Arg_Shifter.h Name.h \
+  LookupManager.h $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \
   $(ACE_ROOT)/ace/TSS_T.cpp \
@@ -1677,6 +1673,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
@@ -1761,11 +1758,9 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i Peer.inl \
-  Peer_T.inl Peer_T.cpp \
-  $(ACE_ROOT)/ace/Arg_Shifter.h Name.h \
-  LookupManager.h \
-  $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/SString.i Peer.inl Peer_T.inl \
+  Peer_T.cpp $(ACE_ROOT)/ace/Arg_Shifter.h Name.h \
+  LookupManager.h $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \
   $(ACE_ROOT)/ace/TSS_T.cpp \
@@ -2013,6 +2008,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
@@ -2097,11 +2093,9 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i Peer.inl \
-  Peer_T.inl Peer_T.cpp \
-  $(ACE_ROOT)/ace/Arg_Shifter.h Name.h \
-  LookupManager.h \
-  $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/SString.i Peer.inl Peer_T.inl \
+  Peer_T.cpp $(ACE_ROOT)/ace/Arg_Shifter.h Name.h \
+  LookupManager.h $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \
   $(ACE_ROOT)/ace/TSS_T.cpp \
@@ -2131,8 +2125,8 @@ realclean: clean
   Options_Parser.h Consumer_T.inl Consumer_T.cpp PushConsumer.inl
 
 .obj/StructuredPushSupplier.o .obj/StructuredPushSupplier.so .shobj/StructuredPushSupplier.o .shobj/StructuredPushSupplier.so: StructuredPushSupplier.cpp \
-  StructuredPushSupplier.h \
-  $(ACE_ROOT)/ace/pre.h notify_test_export.h \
+  StructuredPushSupplier.h $(ACE_ROOT)/ace/pre.h \
+  notify_test_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -2350,6 +2344,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
@@ -2434,11 +2429,9 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i Peer.inl \
-  Peer_T.inl Peer_T.cpp \
-  $(ACE_ROOT)/ace/Arg_Shifter.h Name.h \
-  LookupManager.h \
-  $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/SString.i Peer.inl Peer_T.inl \
+  Peer_T.cpp $(ACE_ROOT)/ace/Arg_Shifter.h Name.h \
+  LookupManager.h $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \
   $(ACE_ROOT)/ace/TSS_T.cpp \
@@ -2687,6 +2680,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
@@ -2771,11 +2765,9 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i Peer.inl \
-  Peer_T.inl Peer_T.cpp \
-  $(ACE_ROOT)/ace/Arg_Shifter.h Name.h \
-  LookupManager.h \
-  $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/SString.i Peer.inl Peer_T.inl \
+  Peer_T.cpp $(ACE_ROOT)/ace/Arg_Shifter.h Name.h \
+  LookupManager.h $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \
   $(ACE_ROOT)/ace/TSS_T.cpp \
@@ -3023,6 +3015,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
@@ -3107,11 +3100,9 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i Peer.inl \
-  Peer_T.inl Peer_T.cpp \
-  $(ACE_ROOT)/ace/Arg_Shifter.h Name.h \
-  LookupManager.h \
-  $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/SString.i Peer.inl Peer_T.inl \
+  Peer_T.cpp $(ACE_ROOT)/ace/Arg_Shifter.h Name.h \
+  LookupManager.h $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \
   $(ACE_ROOT)/ace/TSS_T.cpp \
@@ -3292,8 +3283,7 @@ realclean: clean
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(TAO_ROOT)/tao/debug.h \
-  $(TAO_ROOT)/tao/TAO_Export.h \
-  Task_Stats.inl \
+  $(TAO_ROOT)/tao/TAO_Export.h Task_Stats.inl \
   $(ACE_ROOT)/ace/High_Res_Timer.h \
   $(ACE_ROOT)/ace/High_Res_Timer.i \
   Notify_StructuredPushConsumer.h StructuredPushConsumer.h \
@@ -3414,6 +3404,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
@@ -3474,9 +3465,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i Peer.inl \
-  Peer_T.inl Peer_T.cpp \
-  $(ACE_ROOT)/ace/Arg_Shifter.h Name.h \
+  $(ACE_ROOT)/ace/SString.i Peer.inl Peer_T.inl \
+  Peer_T.cpp $(ACE_ROOT)/ace/Arg_Shifter.h Name.h \
   LookupManager.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
@@ -3706,6 +3696,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
@@ -3790,11 +3781,9 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i Peer.inl \
-  Peer_T.inl Peer_T.cpp \
-  $(ACE_ROOT)/ace/Arg_Shifter.h Name.h \
-  LookupManager.h \
-  $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/SString.i Peer.inl Peer_T.inl \
+  Peer_T.cpp $(ACE_ROOT)/ace/Arg_Shifter.h Name.h \
+  LookupManager.h $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \
   $(ACE_ROOT)/ace/TSS_T.cpp \
@@ -3881,8 +3870,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Null_Condition.h \
   $(ACE_ROOT)/ace/Null_Mutex.h \
   $(ACE_ROOT)/ace/Barrier.h \
-  $(ACE_ROOT)/ace/Barrier.inl \
-  Direct_Supplier.inl
+  $(ACE_ROOT)/ace/Barrier.inl Direct_Supplier.inl
 
 .obj/Relay_Consumer.o .obj/Relay_Consumer.so .shobj/Relay_Consumer.o .shobj/Relay_Consumer.so: Relay_Consumer.cpp Relay_Consumer.h \
   $(ACE_ROOT)/ace/pre.h notify_test_export.h \
@@ -3893,8 +3881,8 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  Direct_Consumer.h Periodic_Consumer.h Task_Stats.h \
+  $(ACE_ROOT)/ace/ACE_export.h Direct_Consumer.h \
+  Periodic_Consumer.h Task_Stats.h \
   $(ACE_ROOT)/ace/OS_NS_time.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
@@ -4036,8 +4024,7 @@ realclean: clean
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(TAO_ROOT)/tao/debug.h \
-  $(TAO_ROOT)/tao/TAO_Export.h \
-  Task_Stats.inl \
+  $(TAO_ROOT)/tao/TAO_Export.h Task_Stats.inl \
   $(ACE_ROOT)/ace/High_Res_Timer.h \
   $(ACE_ROOT)/ace/High_Res_Timer.i \
   Notify_StructuredPushConsumer.h StructuredPushConsumer.h \
@@ -4158,6 +4145,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
@@ -4218,9 +4206,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i Peer.inl \
-  Peer_T.inl Peer_T.cpp \
-  $(ACE_ROOT)/ace/Arg_Shifter.h Name.h \
+  $(ACE_ROOT)/ace/SString.i Peer.inl Peer_T.inl \
+  Peer_T.cpp $(ACE_ROOT)/ace/Arg_Shifter.h Name.h \
   LookupManager.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
@@ -4493,6 +4480,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
@@ -4537,8 +4525,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/NotifyExtC.i \
   Supplier_T.h Peer_T.h Peer.h Peer.inl Peer_T.inl Peer_T.cpp \
   $(ACE_ROOT)/ace/Arg_Shifter.h Name.h \
-  LookupManager.h \
-  $(ACE_ROOT)/ace/Singleton.h \
+  LookupManager.h $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \
   $(ACE_ROOT)/ace/TSS_T.cpp \
@@ -4624,11 +4611,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Null_Condition.h \
   $(ACE_ROOT)/ace/Null_Mutex.h \
   $(ACE_ROOT)/ace/Barrier.h \
-  $(ACE_ROOT)/ace/Barrier.inl \
-  Periodic_Consumer.h Notify_StructuredPushConsumer.h \
-  StructuredPushConsumer.h Consumer_T.h Consumer_T.inl Consumer_T.cpp \
-  StructuredPushConsumer.inl Activation_ManagerS.h Activation_ManagerC.h \
-  Activation_ManagerC.i Activation_ManagerS.i \
+  $(ACE_ROOT)/ace/Barrier.inl Periodic_Consumer.h \
+  Notify_StructuredPushConsumer.h StructuredPushConsumer.h Consumer_T.h \
+  Consumer_T.inl Consumer_T.cpp StructuredPushConsumer.inl \
+  Activation_ManagerS.h Activation_ManagerC.h Activation_ManagerC.i \
+  Activation_ManagerS.i \
   $(ACE_ROOT)/ace/os_include/os_netdb.h \
   Command_Builder.h \
   $(ACE_ROOT)/ace/Service_Config.h \
@@ -4821,8 +4808,7 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
-  LookupManager.h \
-  $(ACE_ROOT)/ace/Singleton.h \
+  LookupManager.h $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \
   $(ACE_ROOT)/ace/TSS_T.cpp \
@@ -4898,6 +4884,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
@@ -4908,8 +4895,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h Name.h \
-  Activation_Manager.h \
-  $(ACE_ROOT)/ace/SString.h \
+  Activation_Manager.h $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -5036,12 +5022,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Null_Condition.h \
   $(ACE_ROOT)/ace/Null_Mutex.h \
   $(ACE_ROOT)/ace/Barrier.h \
-  $(ACE_ROOT)/ace/Barrier.inl \
-  Periodic_Consumer.h Notify_StructuredPushConsumer.h \
-  StructuredPushConsumer.h Consumer_T.h Consumer_T.inl Consumer_T.cpp \
-  StructuredPushConsumer.inl Activation_ManagerS.h Activation_ManagerC.h \
-  Activation_ManagerC.i Activation_ManagerS.i Driver_Base.h \
-  Priority_Mapping.h
+  $(ACE_ROOT)/ace/Barrier.inl Periodic_Consumer.h \
+  Notify_StructuredPushConsumer.h StructuredPushConsumer.h Consumer_T.h \
+  Consumer_T.inl Consumer_T.cpp StructuredPushConsumer.inl \
+  Activation_ManagerS.h Activation_ManagerC.h Activation_ManagerC.i \
+  Activation_ManagerS.i Driver_Base.h Priority_Mapping.h
 
 .obj/Command.o .obj/Command.so .shobj/Command.o .shobj/Command.so: Command.cpp Command.h \
   $(ACE_ROOT)/ace/pre.h notify_test_export.h \
@@ -5638,8 +5623,8 @@ realclean: clean
   $(TAO_ROOT)/tao/ORB.i Name.h
 
 .obj/ConsumerAdmin_Command.o .obj/ConsumerAdmin_Command.so .shobj/ConsumerAdmin_Command.o .shobj/ConsumerAdmin_Command.so: ConsumerAdmin_Command.cpp \
-  ConsumerAdmin_Command.h \
-  $(ACE_ROOT)/ace/pre.h notify_test_export.h \
+  ConsumerAdmin_Command.h $(ACE_ROOT)/ace/pre.h \
+  notify_test_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -5877,6 +5862,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
@@ -5884,8 +5870,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
   Command.h $(ACE_ROOT)/ace/Arg_Shifter.h \
-  LookupManager.h \
-  $(ACE_ROOT)/ace/Singleton.h \
+  LookupManager.h $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \
   $(ACE_ROOT)/ace/TSS_T.cpp \
@@ -6291,8 +6276,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Lock_Adapter_T.cpp \
   $(TAO_ROOT)/tao/ORB_Core.i \
   $(ACE_ROOT)/ace/Sched_Params.h \
-  $(ACE_ROOT)/ace/Sched_Params.i \
-  LookupManager.h \
+  $(ACE_ROOT)/ace/Sched_Params.i LookupManager.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -6306,6 +6290,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
@@ -6375,13 +6360,12 @@ realclean: clean
   $(TAO_ROOT)/tao/debug.h Task_Stats.inl \
   $(ACE_ROOT)/ace/High_Res_Timer.h \
   $(ACE_ROOT)/ace/High_Res_Timer.i \
-  StructuredEvent.h \
-  $(ACE_ROOT)/ace/Barrier.h \
-  $(ACE_ROOT)/ace/Barrier.inl \
-  Periodic_Consumer.h Notify_StructuredPushConsumer.h \
-  StructuredPushConsumer.h Consumer_T.h Consumer_T.inl Consumer_T.cpp \
-  StructuredPushConsumer.inl Activation_ManagerS.h Activation_ManagerC.h \
-  Activation_ManagerC.i Activation_ManagerS.i
+  StructuredEvent.h $(ACE_ROOT)/ace/Barrier.h \
+  $(ACE_ROOT)/ace/Barrier.inl Periodic_Consumer.h \
+  Notify_StructuredPushConsumer.h StructuredPushConsumer.h Consumer_T.h \
+  Consumer_T.inl Consumer_T.cpp StructuredPushConsumer.inl \
+  Activation_ManagerS.h Activation_ManagerC.h Activation_ManagerC.i \
+  Activation_ManagerS.i
 
 .obj/EventChannel_Command.o .obj/EventChannel_Command.so .shobj/EventChannel_Command.o .shobj/EventChannel_Command.so: EventChannel_Command.cpp EventChannel_Command.h \
   $(ACE_ROOT)/ace/pre.h notify_test_export.h \
@@ -6622,6 +6606,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
@@ -7014,6 +6999,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
@@ -7266,6 +7252,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
@@ -7273,8 +7260,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
   Command.h $(ACE_ROOT)/ace/Arg_Shifter.h \
-  LookupManager.h \
-  $(ACE_ROOT)/ace/Singleton.h \
+  LookupManager.h $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \
   $(ACE_ROOT)/ace/TSS_T.cpp \
@@ -7562,6 +7548,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
@@ -7573,8 +7560,8 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h Name.h
 
-.obj/Name.o .obj/Name.so .shobj/Name.o .shobj/Name.so: Name.cpp Name.h \
-  $(ACE_ROOT)/ace/pre.h notify_test_export.h \
+.obj/Name.o .obj/Name.so .shobj/Name.o .shobj/Name.so: Name.cpp Name.h $(ACE_ROOT)/ace/pre.h \
+  notify_test_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -7803,6 +7790,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
@@ -8112,6 +8100,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
@@ -8360,6 +8349,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
@@ -8367,8 +8357,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
   Command.h $(ACE_ROOT)/ace/Arg_Shifter.h \
-  LookupManager.h \
-  $(ACE_ROOT)/ace/Singleton.h \
+  LookupManager.h $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \
   $(ACE_ROOT)/ace/TSS_T.cpp \
@@ -8763,6 +8752,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
@@ -8770,8 +8760,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
   Command.h $(ACE_ROOT)/ace/Arg_Shifter.h \
-  LookupManager.h \
-  $(ACE_ROOT)/ace/Singleton.h \
+  LookupManager.h $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \
   $(ACE_ROOT)/ace/TSS_T.cpp \
@@ -8919,9 +8908,9 @@ realclean: clean
   $(ACE_ROOT)/ace/Null_Condition.h \
   $(ACE_ROOT)/ace/Null_Mutex.h \
   $(ACE_ROOT)/ace/Barrier.h \
-  $(ACE_ROOT)/ace/Barrier.inl \
-  Direct_Supplier.h Direct_Supplier.inl Activation_Manager.h \
-  Task_Callback.h Periodic_Consumer.h Notify_StructuredPushConsumer.h \
+  $(ACE_ROOT)/ace/Barrier.inl Direct_Supplier.h \
+  Direct_Supplier.inl Activation_Manager.h Task_Callback.h \
+  Periodic_Consumer.h Notify_StructuredPushConsumer.h \
   StructuredPushConsumer.h Consumer_T.h Consumer_T.inl Consumer_T.cpp \
   StructuredPushConsumer.inl Activation_ManagerS.h Activation_ManagerC.h \
   Activation_ManagerC.i Activation_ManagerS.i
@@ -9077,8 +9066,7 @@ realclean: clean
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(TAO_ROOT)/tao/debug.h \
-  $(TAO_ROOT)/tao/TAO_Export.h \
-  Task_Stats.inl \
+  $(TAO_ROOT)/tao/TAO_Export.h Task_Stats.inl \
   $(ACE_ROOT)/ace/High_Res_Timer.h \
   $(ACE_ROOT)/ace/High_Res_Timer.i \
   Notify_StructuredPushConsumer.h StructuredPushConsumer.h \
@@ -9199,6 +9187,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
@@ -9259,9 +9248,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i Peer.inl \
-  Peer_T.inl Peer_T.cpp \
-  $(ACE_ROOT)/ace/Arg_Shifter.h Name.h \
+  $(ACE_ROOT)/ace/SString.i Peer.inl Peer_T.inl \
+  Peer_T.cpp $(ACE_ROOT)/ace/Arg_Shifter.h Name.h \
   LookupManager.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
@@ -9498,6 +9486,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
@@ -9582,11 +9571,9 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i Peer.inl \
-  Peer_T.inl Peer_T.cpp \
-  $(ACE_ROOT)/ace/Arg_Shifter.h Name.h \
-  LookupManager.h \
-  $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/SString.i Peer.inl Peer_T.inl \
+  Peer_T.cpp $(ACE_ROOT)/ace/Arg_Shifter.h Name.h \
+  LookupManager.h $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \
   $(ACE_ROOT)/ace/TSS_T.cpp \
@@ -9943,8 +9930,8 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i
 
 .obj/SupplierAdmin_Command.o .obj/SupplierAdmin_Command.so .shobj/SupplierAdmin_Command.o .shobj/SupplierAdmin_Command.so: SupplierAdmin_Command.cpp \
-  SupplierAdmin_Command.h \
-  $(ACE_ROOT)/ace/pre.h notify_test_export.h \
+  SupplierAdmin_Command.h $(ACE_ROOT)/ace/pre.h \
+  notify_test_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -10182,6 +10169,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
@@ -10189,8 +10177,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
   Command.h $(ACE_ROOT)/ace/Arg_Shifter.h \
-  LookupManager.h \
-  $(ACE_ROOT)/ace/Singleton.h \
+  LookupManager.h $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \
   $(ACE_ROOT)/ace/TSS_T.cpp \

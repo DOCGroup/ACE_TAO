@@ -529,8 +529,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/os_include/sys/os_un.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Arg_Shifter.h \
-  Trading_Service.h \
+  $(ACE_ROOT)/ace/Arg_Shifter.h Trading_Service.h \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -911,8 +910,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/os_include/sys/os_un.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Arg_Shifter.h \
-  Trading_Service.h \
+  $(ACE_ROOT)/ace/Arg_Shifter.h Trading_Service.h \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \

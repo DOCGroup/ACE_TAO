@@ -613,8 +613,7 @@ endif
 
 .obj/CEC_EventChannel.o .obj/CEC_EventChannel.so .shobj/CEC_EventChannel.o .shobj/CEC_EventChannel.so: CosEvent/CEC_EventChannel.cpp \
   CosEvent/CEC_EventChannel.h \
-  $(ACE_ROOT)/ace/pre.h \
-  CosEvent/CEC_Factory.h \
+  $(ACE_ROOT)/ace/pre.h CosEvent/CEC_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -4274,8 +4273,7 @@ endif
 
 .obj/CEC_Default_Factory.o .obj/CEC_Default_Factory.so .shobj/CEC_Default_Factory.o .shobj/CEC_Default_Factory.so: CosEvent/CEC_Default_Factory.cpp \
   CosEvent/CEC_Default_Factory.h \
-  $(ACE_ROOT)/ace/pre.h \
-  CosEvent/CEC_Factory.h \
+  $(ACE_ROOT)/ace/pre.h CosEvent/CEC_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -5237,8 +5235,7 @@ endif
   $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp
 
 .obj/CosEventChannelAdminC.o .obj/CosEventChannelAdminC.so .shobj/CosEventChannelAdminC.o .shobj/CosEventChannelAdminC.so: CosEventChannelAdminC.cpp \
-  CosEventChannelAdminC.h \
-  $(ACE_ROOT)/ace/pre.h \
+  CosEventChannelAdminC.h $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -5970,9 +5967,9 @@ endif
   $(ACE_ROOT)/ace/Malloc_Allocator.i
 
 .obj/CosEventChannelAdminS.o .obj/CosEventChannelAdminS.so .shobj/CosEventChannelAdminS.o .shobj/CosEventChannelAdminS.so: CosEventChannelAdminS.cpp \
-  CosEventChannelAdminS.h \
-  $(ACE_ROOT)/ace/pre.h CosEventCommS.h \
-  CosEventCommC.h $(TAO_ROOT)/tao/ORB.h \
+  CosEventChannelAdminS.h $(ACE_ROOT)/ace/pre.h \
+  CosEventCommS.h CosEventCommC.h \
+  $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Basic_Types.h \

@@ -73,8 +73,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
-  $(ACE_ROOT)/ace/Get_Opt.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -354,8 +353,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/FaultTolerance/FT_ServerService_Activate.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/FaultTolerance/FT_ServerORB_export.h
 
-.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
-  $(ACE_ROOT)/ace/Get_Opt.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -918,8 +916,7 @@ realclean: clean
   testS_T.h testS_T.i testS_T.cpp testS.i
 
 .obj/Server_ORBInitializer.o .obj/Server_ORBInitializer.so .shobj/Server_ORBInitializer.o .shobj/Server_ORBInitializer.so: Server_ORBInitializer.cpp \
-  Server_ORBInitializer.h \
-  $(ACE_ROOT)/ace/pre.h \
+  Server_ORBInitializer.h $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/LocalObject.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/config-all.h \
@@ -1393,8 +1390,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup_Simple_DSC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup_Simple_DSC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/FT_CORBA_ORBC.i \
-  $(TAO_ROOT)/tao/ORB_Constants.h \
-  testS.h \
+  $(TAO_ROOT)/tao/ORB_Constants.h testS.h \
   $(TAO_ROOT)/tao/PortableInterceptorS.h \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
@@ -1640,8 +1636,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/IOP_CodecC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  testC.i \
-  $(TAO_ROOT)/tao/Exception_Data.h \
+  testC.i $(TAO_ROOT)/tao/Exception_Data.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.h \
   $(TAO_ROOT)/tao/Invocation_Utils.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.inl \

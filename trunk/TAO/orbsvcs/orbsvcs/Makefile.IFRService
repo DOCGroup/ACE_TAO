@@ -9206,8 +9206,7 @@ endif
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/IFR_BasicS.o .obj/IFR_BasicS.so .shobj/IFR_BasicS.o .shobj/IFR_BasicS.so: IFRService/IFR_BasicS.cpp IFRService/IFR_BasicS.h \
-  $(ACE_ROOT)/ace/pre.h \
-  IFRService/IFR_BaseS.h \
+  $(ACE_ROOT)/ace/pre.h IFRService/IFR_BaseS.h \
   $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
@@ -10182,8 +10181,8 @@ endif
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/IFR_ExtendedS.o .obj/IFR_ExtendedS.so .shobj/IFR_ExtendedS.o .shobj/IFR_ExtendedS.so: IFRService/IFR_ExtendedS.cpp IFRService/IFR_ExtendedS.h \
-  $(ACE_ROOT)/ace/pre.h \
-  IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+  $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+  IFRService/IFR_BaseS.h \
   $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \

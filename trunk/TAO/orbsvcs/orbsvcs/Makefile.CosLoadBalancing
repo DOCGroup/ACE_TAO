@@ -8460,8 +8460,8 @@ endif
   $(TAO_ROOT)/tao/Messaging/TAO_ExtC.h \
   $(TAO_ROOT)/tao/Messaging/TAO_ExtC.i \
   $(TAO_ROOT)/tao/TAOC.h \
-  $(TAO_ROOT)/tao/TAOC.i \
-  PortableGroupC.h PortableGroup/portablegroup_export.h CosNamingC.h \
+  $(TAO_ROOT)/tao/TAOC.i PortableGroupC.h \
+  PortableGroup/portablegroup_export.h CosNamingC.h \
   Naming/naming_export.h CosNamingC.i \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOP_CodecC.h \

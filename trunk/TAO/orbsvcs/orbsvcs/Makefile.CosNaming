@@ -2068,9 +2068,8 @@ endif
   CosNamingS_T.cpp \
   CosNamingS.i \
   Naming/naming_export.h \
-  $(ACE_ROOT)/ace/Null_Mutex.h \
-  Naming/nsconf.h Naming/Transient_Naming_Context.h \
-  Naming/Hash_Naming_Context.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h Naming/nsconf.h \
+  Naming/Transient_Naming_Context.h Naming/Hash_Naming_Context.h \
   $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
   $(ACE_ROOT)/ace/Recursive_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/SString.h \
@@ -2653,8 +2652,7 @@ endif
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  Naming/Storable.inl
+  $(ACE_ROOT)/ace/SString.i Naming/Storable.inl
 
 .obj/Storable_Naming_Context.o .obj/Storable_Naming_Context.so .shobj/Storable_Naming_Context.o .shobj/Storable_Naming_Context.so: Naming/Storable_Naming_Context.cpp \
   Naming/Storable_Naming_Context.h \
@@ -3439,8 +3437,7 @@ endif
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  Naming/Storable.inl \
+  $(ACE_ROOT)/ace/SString.i Naming/Storable.inl \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_NS_sys_stat.h \

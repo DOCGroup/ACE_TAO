@@ -2013,10 +2013,10 @@ endif
   Log/rteventlog_export.h RtecEventChannelAdminC.h Event/event_export.h \
   RtecEventCommC.h TimeBaseC.h svc_utils_export.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  TimeBaseC.i RtecDefaultEventDataC.h RtecDefaultEventDataC.i \
-  RtecEventCommC.i RtecBaseC.h RtecBaseC.i RtecEventChannelAdminC.i \
-  DsLogAdminC.h Log/log_export.h DsLogAdminC.i RTEventLogAdminC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.i TimeBaseC.i \
+  RtecDefaultEventDataC.h RtecDefaultEventDataC.i RtecEventCommC.i \
+  RtecBaseC.h RtecBaseC.i RtecEventChannelAdminC.i DsLogAdminC.h \
+  Log/log_export.h DsLogAdminC.i RTEventLogAdminC.i \
   $(TAO_ROOT)/tao/Exception_Data.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.h \
   $(TAO_ROOT)/tao/Invocation_Utils.h \
@@ -2099,8 +2099,8 @@ endif
   $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp
 
 .obj/RTEventLogAdminS.o .obj/RTEventLogAdminS.so .shobj/RTEventLogAdminS.o .shobj/RTEventLogAdminS.so: RTEventLogAdminS.cpp RTEventLogAdminS.h \
-  $(ACE_ROOT)/ace/pre.h \
-  RtecEventChannelAdminS.h RtecEventCommS.h TimeBaseS.h \
+  $(ACE_ROOT)/ace/pre.h RtecEventChannelAdminS.h \
+  RtecEventCommS.h TimeBaseS.h \
   $(TAO_ROOT)/tao/TimeBaseS.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
   $(TAO_ROOT)/tao/ORB.h \
@@ -2281,8 +2281,8 @@ endif
   $(TAO_ROOT)/tao/TimeBaseS_T.h \
   $(TAO_ROOT)/tao/TimeBaseS_T.i \
   $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
-  $(TAO_ROOT)/tao/TimeBaseS.i \
-  TimeBaseC.h svc_utils_export.h TimeBaseC.i \
+  $(TAO_ROOT)/tao/TimeBaseS.i TimeBaseC.h \
+  svc_utils_export.h TimeBaseC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \

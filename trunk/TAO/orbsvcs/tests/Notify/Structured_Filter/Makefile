@@ -285,6 +285,7 @@ realclean:
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
@@ -376,8 +377,8 @@ realclean:
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i ../lib/Peer.inl \
   ../lib/Peer_T.inl ../lib/Peer_T.cpp \
-  $(ACE_ROOT)/ace/Arg_Shifter.h \
-  ../lib/Name.h ../lib/LookupManager.h \
+  $(ACE_ROOT)/ace/Arg_Shifter.h ../lib/Name.h \
+  ../lib/LookupManager.h \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \
@@ -650,6 +651,7 @@ realclean:
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
@@ -732,8 +734,8 @@ realclean:
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i ../lib/Peer.inl \
   ../lib/Peer_T.inl ../lib/Peer_T.cpp \
-  $(ACE_ROOT)/ace/Arg_Shifter.h \
-  ../lib/Name.h ../lib/LookupManager.h \
+  $(ACE_ROOT)/ace/Arg_Shifter.h ../lib/Name.h \
+  ../lib/LookupManager.h \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \
@@ -983,6 +985,7 @@ realclean:
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
@@ -1069,8 +1072,8 @@ realclean:
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i ../lib/Peer.inl \
   ../lib/Peer_T.inl ../lib/Peer_T.cpp \
-  $(ACE_ROOT)/ace/Arg_Shifter.h \
-  ../lib/Name.h ../lib/LookupManager.h \
+  $(ACE_ROOT)/ace/Arg_Shifter.h ../lib/Name.h \
+  ../lib/LookupManager.h \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \

@@ -267,7 +267,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
@@ -537,7 +537,7 @@ realclean: clean
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
@@ -853,8 +853,7 @@ realclean: clean
 
 .obj/CosEventChannelFactory_i.o .obj/CosEventChannelFactory_i.so .shobj/CosEventChannelFactory_i.o .shobj/CosEventChannelFactory_i.so: CosEventChannelFactory_i.cpp \
   CosEventChannelFactory_i.h \
-  $(ACE_ROOT)/ace/pre.h \
-  CosEventChannelFactoryS.h \
+  $(ACE_ROOT)/ace/pre.h CosEventChannelFactoryS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
@@ -1032,7 +1031,7 @@ realclean: clean
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
@@ -1077,7 +1076,6 @@ realclean: clean
   $(ACE_ROOT)/ace/DLL.h \
   $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
   $(ACE_ROOT)/ace/Service_Object.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Defaults.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.i \
@@ -1262,7 +1260,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
@@ -1275,8 +1273,7 @@ realclean: clean
 
 .obj/FactoryDriver.o .obj/FactoryDriver.so .shobj/FactoryDriver.o .shobj/FactoryDriver.so: FactoryDriver.cpp FactoryDriver.h \
   CosEventChannelFactory_i.h \
-  $(ACE_ROOT)/ace/pre.h \
-  CosEventChannelFactoryS.h \
+  $(ACE_ROOT)/ace/pre.h CosEventChannelFactoryS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
@@ -1454,7 +1451,7 @@ realclean: clean
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
@@ -1558,8 +1555,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Get_Opt.i
 
 .obj/main.o .obj/main.so .shobj/main.o .shobj/main.so: main.cpp FactoryDriver.h CosEventChannelFactory_i.h \
-  $(ACE_ROOT)/ace/pre.h \
-  CosEventChannelFactoryS.h \
+  $(ACE_ROOT)/ace/pre.h CosEventChannelFactoryS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
@@ -1737,7 +1733,7 @@ realclean: clean
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
@@ -1829,7 +1825,6 @@ realclean: clean
   $(ACE_ROOT)/ace/DLL.h \
   $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
   $(ACE_ROOT)/ace/Service_Object.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Defaults.h \
   $(ACE_ROOT)/ace/Service_Config.h \

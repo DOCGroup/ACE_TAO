@@ -319,8 +319,8 @@ lib_warning:
   $(ACE_ROOT)/ace/Log_Priority.h
 
 .obj/EC_Kokyu_Filter_Builder.o .obj/EC_Kokyu_Filter_Builder.so .shobj/EC_Kokyu_Filter_Builder.o .shobj/EC_Kokyu_Filter_Builder.so: Event/EC_Kokyu_Filter_Builder.cpp \
-  Event/EC_Kokyu_Filter.h \
-  $(ACE_ROOT)/ace/pre.h Event/EC_Filter.h \
+  Event/EC_Kokyu_Filter.h $(ACE_ROOT)/ace/pre.h \
+  Event/EC_Filter.h \
   RtecEventCommC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
@@ -873,8 +873,7 @@ lib_warning:
 
 .obj/EC_Kokyu_Dispatching.o .obj/EC_Kokyu_Dispatching.so .shobj/EC_Kokyu_Dispatching.o .shobj/EC_Kokyu_Dispatching.so: Event/EC_Kokyu_Dispatching.cpp \
   Event/EC_Kokyu_Dispatching.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Event/EC_Dispatching.h \
+  $(ACE_ROOT)/ace/pre.h Event/EC_Dispatching.h \
   RtecEventCommC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \

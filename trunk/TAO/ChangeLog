@@ -1,3 +1,10 @@
+Sun Feb 29 08:40:15 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/Makefile*:
+
+	  Regenerated it again since there were a few errors the last
+	  time. 
+
 Sun Feb 29 08:28:15 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/Makefile*:

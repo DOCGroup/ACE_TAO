@@ -1195,8 +1195,7 @@ $(foreach ext, $(IDL_EXT), RtecScheduler$(ext)): RtecBase.idl
   RtecBaseC.i \
   RtecSchedulerC.i \
   Scheduler_Factory.i \
-  Sched/Config_Scheduler.h \
-  $(ACE_ROOT)/ace/OS.h \
+  Sched/Config_Scheduler.h $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_NS_arpa_inet.h \
   $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
   $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
@@ -1471,8 +1470,8 @@ $(foreach ext, $(IDL_EXT), RtecScheduler$(ext)): RtecBase.idl
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  Sched/SchedEntry.h Sched/sched_export.h \
+  $(ACE_ROOT)/ace/SString.i Sched/SchedEntry.h \
+  Sched/sched_export.h \
   RtecSchedulerC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
@@ -1581,8 +1580,7 @@ $(foreach ext, $(IDL_EXT), RtecScheduler$(ext)): RtecBase.idl
   Sched/SchedEntry.i \
   $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
   $(ACE_ROOT)/ace/Recursive_Thread_Mutex.inl \
-  Sched/DynSched.i \
-  $(ACE_ROOT)/ace/Sched_Params.h \
+  Sched/DynSched.i $(ACE_ROOT)/ace/Sched_Params.h \
   $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/ace/Null_Mutex.h
 
@@ -2385,8 +2383,7 @@ $(foreach ext, $(IDL_EXT), RtecScheduler$(ext)): RtecBase.idl
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
-  Sched/SchedEntry.i \
-  $(ACE_ROOT)/ace/SString.h \
+  Sched/SchedEntry.i $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -3047,8 +3044,8 @@ $(foreach ext, $(IDL_EXT), RtecScheduler$(ext)): RtecBase.idl
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  Sched/SchedEntry.h Sched/sched_export.h \
+  $(ACE_ROOT)/ace/SString.i Sched/SchedEntry.h \
+  Sched/sched_export.h \
   RtecSchedulerC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
@@ -3336,11 +3333,11 @@ $(foreach ext, $(IDL_EXT), RtecScheduler$(ext)): RtecBase.idl
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  Sched/sched_export.h TimeBaseC.h svc_utils_export.h \
+  $(TAO_ROOT)/tao/ORB.i Sched/sched_export.h \
+  TimeBaseC.h svc_utils_export.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  TimeBaseC.i RtecBaseC.h RtecBaseC.i RtecSchedulerC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.i TimeBaseC.i \
+  RtecBaseC.h RtecBaseC.i RtecSchedulerC.i \
   $(TAO_ROOT)/tao/Exception_Data.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.h \
   $(TAO_ROOT)/tao/Invocation_Utils.h \
@@ -3607,8 +3604,8 @@ $(foreach ext, $(IDL_EXT), RtecScheduler$(ext)): RtecBase.idl
   $(TAO_ROOT)/tao/TimeBaseS_T.h \
   $(TAO_ROOT)/tao/TimeBaseS_T.i \
   $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
-  $(TAO_ROOT)/tao/TimeBaseS.i \
-  TimeBaseC.h svc_utils_export.h TimeBaseC.i \
+  $(TAO_ROOT)/tao/TimeBaseS.i TimeBaseC.h \
+  svc_utils_export.h TimeBaseC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \

@@ -831,8 +831,8 @@ endif # !def TAO_IDL_PREPROCESSOR
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
-  $(ACE_ROOT)/ace/Containers_T.cpp \
-  be_extern.h ../../TAO_IDL/include/idl_defines.h \
+  $(ACE_ROOT)/ace/Containers_T.cpp be_extern.h \
+  ../../TAO_IDL/include/idl_defines.h \
   ../../TAO_IDL/include/global_extern.h \
   ../../TAO_IDL/include/TAO_IDL_FE_Export.h \
   ../../TAO_IDL/include/idl_global.h \

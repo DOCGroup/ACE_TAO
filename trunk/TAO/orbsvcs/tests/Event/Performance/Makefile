@@ -407,9 +407,8 @@ endif
   $(ACE_ROOT)/ace/Stream_Modules.h \
   $(ACE_ROOT)/ace/Stream_Modules.cpp \
   $(ACE_ROOT)/ace/Null_Condition.h \
-  $(ACE_ROOT)/ace/Null_Mutex.h \
-  ../lib/Driver.i ../lib/Consumer.h \
-  $(ACE_ROOT)/ace/OS_NS_time.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h ../lib/Driver.i \
+  ../lib/Consumer.h $(ACE_ROOT)/ace/OS_NS_time.h \
   $(ACE_ROOT)/ace/OS_NS_time.inl \
   ../lib/Supplier.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
@@ -766,8 +765,7 @@ endif
   $(ACE_ROOT)/ace/Stream_Modules.h \
   $(ACE_ROOT)/ace/Stream_Modules.cpp \
   $(ACE_ROOT)/ace/Null_Condition.h \
-  $(ACE_ROOT)/ace/Null_Mutex.h \
-  ../lib/Driver.i \
+  $(ACE_ROOT)/ace/Null_Mutex.h ../lib/Driver.i \
   $(ACE_ROOT)/ace/OS_NS_time.h \
   $(ACE_ROOT)/ace/OS_NS_time.inl \
   ../lib/Supplier.h \
@@ -1129,9 +1127,8 @@ endif
   $(ACE_ROOT)/ace/Stream_Modules.h \
   $(ACE_ROOT)/ace/Stream_Modules.cpp \
   $(ACE_ROOT)/ace/Null_Condition.h \
-  $(ACE_ROOT)/ace/Null_Mutex.h \
-  ../lib/Driver.i ../lib/Consumer.h \
-  $(ACE_ROOT)/ace/OS_NS_time.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h ../lib/Driver.i \
+  ../lib/Consumer.h $(ACE_ROOT)/ace/OS_NS_time.h \
   $(ACE_ROOT)/ace/OS_NS_time.inl \
   ../lib/Supplier.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
@@ -2395,9 +2392,8 @@ endif
   $(ACE_ROOT)/ace/Stream_Modules.h \
   $(ACE_ROOT)/ace/Stream_Modules.cpp \
   $(ACE_ROOT)/ace/Null_Condition.h \
-  $(ACE_ROOT)/ace/Null_Mutex.h \
-  ../lib/Driver.i ../lib/Consumer.h \
-  $(ACE_ROOT)/ace/OS_NS_time.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h ../lib/Driver.i \
+  ../lib/Consumer.h $(ACE_ROOT)/ace/OS_NS_time.h \
   $(ACE_ROOT)/ace/OS_NS_time.inl \
   ../lib/Supplier.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
@@ -2754,8 +2750,7 @@ endif
   $(ACE_ROOT)/ace/Stream_Modules.h \
   $(ACE_ROOT)/ace/Stream_Modules.cpp \
   $(ACE_ROOT)/ace/Null_Condition.h \
-  $(ACE_ROOT)/ace/Null_Mutex.h \
-  ../lib/Driver.i \
+  $(ACE_ROOT)/ace/Null_Mutex.h ../lib/Driver.i \
   $(ACE_ROOT)/ace/OS_NS_time.h \
   $(ACE_ROOT)/ace/OS_NS_time.inl \
   ../lib/Supplier.h \
@@ -3117,9 +3112,8 @@ endif
   $(ACE_ROOT)/ace/Stream_Modules.h \
   $(ACE_ROOT)/ace/Stream_Modules.cpp \
   $(ACE_ROOT)/ace/Null_Condition.h \
-  $(ACE_ROOT)/ace/Null_Mutex.h \
-  ../lib/Driver.i ../lib/Consumer.h \
-  $(ACE_ROOT)/ace/OS_NS_time.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h ../lib/Driver.i \
+  ../lib/Consumer.h $(ACE_ROOT)/ace/OS_NS_time.h \
   $(ACE_ROOT)/ace/OS_NS_time.inl \
   ../lib/Supplier.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
