@@ -14,6 +14,9 @@ Sun Aug 30 07:44:54 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-g++-common.h,ace/README,tests/Conn_Test.cpp:
           added ACE_HAS_OLD_GNUG.  Thanks to Doug for this suggestion.
 
+        * ace/Token.cpp (ACE_Token_Queue_Entry ctor): added
+          ACE_UNUSED_ARG (m) ifdef ACE_TOKEN_USES_SEMAPHORE.
+
 Sun Aug 30 00:14:29 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/Service_Object.cpp (fini): Make sure to check the
