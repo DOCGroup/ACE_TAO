@@ -236,7 +236,7 @@ server (void *arg)
         }
       if (result == -1)
         {
-          if (errno == EWOULDBLOCK)
+          if (errno == EWOULDBLOCK || errno == EAGAIN)
             ACE_DEBUG ((LM_DEBUG,
                         ASYS_TEXT ("(%P|%t) no connections available, going back to accepting\n")));
           else
@@ -290,6 +290,8 @@ spawn (void)
         }
 
       server ((void *) &peer_acceptor);
+
+      peer_acceptor.close();
 
       // Reap the child pids.
       for (pid_t pid; (pid = ACE_OS::wait ()) != -1; )
