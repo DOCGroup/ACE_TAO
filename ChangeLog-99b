@@ -1,3 +1,12 @@
+Wed Jul 28 16:16:27 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.cpp (set): Fixed a unsigned/signed conversion problem
+	  that caused negative usec value in ACE_Time_Value.  Thanks to
+	  Jerry D. De Master <jdemaste@ipdinc.com> for reporting the bug.
+	  (FILETIME): Removed some unused macros for dealing with older
+	  Borland C++ compilers.  Thanks to Jody and Gonzo for confirming
+	  this.
+
 Wed Jul 28 13:44:15 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACE-INSTALL.html: Remind users to pick the right configurations
