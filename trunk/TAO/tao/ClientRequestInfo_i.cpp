@@ -55,12 +55,6 @@ TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (TAO_GIOP_Invocation *inv,
 
 TAO_ClientRequestInfo_i::~TAO_ClientRequestInfo_i (void)
 {
-  // Make sure the TSC no longer considers the current RSC its peer
-  // since that RSC is destroyed when this ClienRequestInfo object is
-  // destroyed.
-  TAO_PICurrent_Impl *tsc = this->rs_pi_current_.pi_peer ();
-  if (tsc != 0)
-    tsc->pi_peer (0);
 }
 
 CORBA::Object_ptr
