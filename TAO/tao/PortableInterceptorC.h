@@ -46,7 +46,7 @@
 #include "PI_ForwardC.h"
 #include "tao/Messaging_SyncScopeC.h"
 #include "tao/IOP_CodecC.h"
-#include "tao/Policy_ForwardC.h"
+#include "tao/PolicyC.h"
 #include "tao/CurrentC.h"
 
 #if defined (TAO_EXPORT_MACRO)
