@@ -14,6 +14,9 @@
 #define TAO_UIPMC_MESSAGE_BLOCK_DATA_ITERATOR_H
 #include /**/ "ace/pre.h"
 
+#include "ace/os_include/sys/os_uio.h"
+#include "ace/os_include/os_stddef.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
