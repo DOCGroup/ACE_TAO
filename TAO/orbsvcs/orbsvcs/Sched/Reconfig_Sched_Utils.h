@@ -20,8 +20,7 @@
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/RtecSchedulerS.h"
 
-class TAO_Reconfig_Scheduler_Entry
-{
+class TAO_ORBSVCS_Export TAO_Reconfig_Scheduler_Entry
   // = TITLE
   //   An implementation class used to store interim scheduling results
   //   such as DFS finishing order, etc.
@@ -30,7 +29,7 @@ class TAO_Reconfig_Scheduler_Entry
   //   This class improves the performance of the Reconfig Scheduler
   //   by saving information from one computation for use in other
   //   computations, and simplifies the implementation logic.
-
+{
 public:
 
   // @@ TO DO - add support for conjunctions and disjunctions.
@@ -41,11 +40,8 @@ public:
   TAO_Reconfig_Scheduler_Entry (RtecScheduler::RT_Info &rt_info);
   // Constructor.
 
-  ACE_Scheduler_Factory::POD_RT_Info & orig_rt_info_data ();
-  // Accessor for stored orginal RT_Info data.
-
-  void orig_rt_info_data (const RtecScheduler::RT_Info &);
-  // Store original RT_Info data.
+  RtecScheduler::RT_Info & orig_rt_info_data ();
+  // Accessor for stored original RT_Info data.
 
   RtecScheduler::RT_Info * actual_rt_info ();
   // Accessor for actual RT_Info.
@@ -113,10 +109,10 @@ public:
   // Mutator for flag indicating whether node has unresolved local
   // dependencies.
 
-  RtecScheduler::Period effective_period ();
+  RtecScheduler::Period_t effective_period ();
   // Accessor for effective period of corresponding RT_Info.
 
-  void effective_period (RtecScheduler::Period p);
+  void effective_period (RtecScheduler::Period_t p);
   // Mutator for effective period of corresponding RT_Info.
 
   CORBA::Long effective_exec_multiplier ();
@@ -167,10 +163,10 @@ private:
   // Flag indicating whether or not there are unresolved local
   // dependencies in the entry's dependency call chain.
 
-  RtecScheduler::Period effective_period_;
+  RtecScheduler::Period_t effective_period_;
   // Effective period of corresponding RT_Info.
 
-  RtecScheduler::Time effective_exec_multiplier_;
+  CORBA::Long effective_exec_multiplier_;
   // Effective execution time multiplier for corresponding RT_Info.
 };
 
@@ -182,7 +178,6 @@ private:
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> 
 class TAO_Reconfig_Sched_Entry_Visitor
-{
   // = TITLE
   //   An abstract base class for scheduler entry visitors.
   //
@@ -190,14 +185,28 @@ class TAO_Reconfig_Sched_Entry_Visitor
   //   This class improves the performance of the Reconfig Scheduler
   //   by saving information from one computation for use in other
   //   computations, and simplifies the implementation logic.
-
+{
 public:
 
+  typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+                                  RtecScheduler::Dependency_Set*, 
+                                  ACE_Hash<RtecScheduler::handle_t>, 
+                                  ACE_Equal_To<RtecScheduler::handle_t>,
+                                  ACE_LOCK> DEPENDENCY_SET_MAP;
+  // Type of map used for O(1) lookup of RT_Info
+  // dependency sets by caller or called handle.
+
+  typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t, 
+                                  RtecScheduler::RT_Info*, 
+                                  ACE_Hash<RtecScheduler::handle_t>, 
+                                  ACE_Equal_To<RtecScheduler::handle_t>, 
+                                  ACE_LOCK> RT_INFO_MAP;
+  // Type of map used for O(1) lookup of RT_Infos by their handles.
+
+
   TAO_Reconfig_Sched_Entry_Visitor 
-    (TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-       DEPENDENCY_SET_MAP & dependency_map,
-     TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-       RT_INFO_MAP & rt_info_map);
+    (DEPENDENCY_SET_MAP & dependency_map,
+     RT_INFO_MAP & rt_info_map);
   // Constructor.
 
   virtual int visit (TAO_Reconfig_Scheduler_Entry &);
@@ -208,12 +217,10 @@ public:
 
 
 protected:
-  TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-    DEPENDENCY_SET_MAP & dependency_map_;
+  DEPENDENCY_SET_MAP & dependency_map_;
   // Map of dependencies between RT_Info handles.
 
-  TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-    RT_INFO_MAP & rt_info_map_;
+  RT_INFO_MAP & rt_info_map_;
   // Map of handles into RT_Infos.
 
   virtual int unconditional_action (TAO_Reconfig_Scheduler_Entry &rse);
@@ -244,20 +251,17 @@ protected:
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> 
 class TAO_RSE_Reset_Visitor :
   public TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
-{
   // = TITLE
   //   A scheduler entry visitor that resets nodes.
   //
   // = DESCRIPTION
   //   This class resets each node it visits to an initial state
   //   prior to the first DFS traversal for topological sorting.
-
+{
 public:
   TAO_RSE_Reset_Visitor
-    (TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-       DEPENDENCY_SET_MAP & dependency_map,
-     TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-       RT_INFO_MAP & rt_info_map);
+    (TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
+     TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
   // Constructor.
 
 protected:
@@ -275,7 +279,6 @@ protected:
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> 
 class TAO_RSE_DFS_Visitor :
   public TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
-{
   // = TITLE
   //   A scheduler entry visitor that marks nodes with DFS start
   //   and finish times.
@@ -283,14 +286,12 @@ class TAO_RSE_DFS_Visitor :
   // = DESCRIPTION
   //   This class does DFS traversal marking of each node it visits,
   //   as appropriate according to DFS state markers.
-
+{
 public:
 
   TAO_RSE_DFS_Visitor
-    (TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-       DEPENDENCY_SET_MAP & dependency_map,
-     TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-       RT_INFO_MAP & rt_info_map);
+    (TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
+     TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
   // Constructor.
 
 protected:
@@ -325,7 +326,6 @@ private:
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> 
 class TAO_RSE_SCC_Visitor :
   public TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
-{
   // = TITLE
   //   A scheduler entry visitor that checks for cycles in the graph.
   //
@@ -333,14 +333,12 @@ class TAO_RSE_SCC_Visitor :
   //   This class, when applied to nodes in the transpose of the DFS graph as
   //   ordered for the strongly connected components algorithm, will
   //   flag cycles in the graph.
-
+{
 public:
 
   TAO_RSE_SCC_Visitor
-    (TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-       DEPENDENCY_SET_MAP & dependency_map,
-     TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-       RT_INFO_MAP & rt_info_map);
+    (TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
+     TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
   // Constructor.
 
   int number_of_cycles (void);
@@ -400,10 +398,9 @@ private:
 };
 
 
-template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> 
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 class TAO_RSE_Propagation_Visitor :
   public TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
-{
   // = TITLE 
   //   A scheduler entry visitor that propagates effective periods and
   //   execution time multipliers between nodes in a topologically
@@ -412,14 +409,12 @@ class TAO_RSE_Propagation_Visitor :
   // = DESCRIPTION
   //   This class computes the effective period of each node, according to
   //   its dependencies, and the period and threads it specifies.
-
+{
 public:
 
   TAO_RSE_Propagation_Visitor
-    (TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-       DEPENDENCY_SET_MAP & dependency_map,
-     TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-       RT_INFO_MAP & rt_info_map);
+    (TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
+     TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
   // Constructor.
 
   int unresolved_locals (void);
@@ -467,43 +462,126 @@ private:
   // Number of nodes with thread specification errors.
 };
 
-CDG - TBD - create classes to sort an array of entry pointers, add arrays
-            of entry pointers to the scheduler, can fill in these arrays in the
-            create method of the scheduler, expanding arrays as needed (see note in scheduler)
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> 
+class TAO_RSE_Priority_Visitor :
+  public TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
+  // = TITLE 
+  //   A scheduler entry visitor that assigns static priority and
+  //   subpriority values to entries in an array already sorted in
+  //   static <priority, subpriority> order.
+  //
+  // = DESCRIPTION
+  //   The visitor uses the parameterized strategy type to determine
+  //   priority and subpriority boundaries.
+{
+public:
 
-CDG - TBD - Scheduling Strategy classes (Base and MUF for now: RMS, EDF, MLF later)
+  TAO_RSE_Priority_Visitor ();
+  // Constructor.
 
-GENERAL (adapter)
+    virtual int visit (TAO_Reconfig_Scheduler_Entry &);
+  // Visit a Reconfig Scheduler Entry.  This method
+  // assigns a priority and subpriority value to each
+  // entry.  Priorities are assigned in increasing value
+  // order, with lower numbers corresponding to higher
+  // priorities.  
 
-    a. static int operation_sort_method (void *, void *)
-       This should be able to just cast the void * args to RtecScheduer::RT_Info * args
-       and return the result of a call to the priority_comp method
+private:
 
-    b. sched entry pointer array[] sort method
+  TAO_Reconfig_Scheduler_Entry *previous_entry_;
+  // Pointer to previous entry most recently seen in the iteration.
 
-PRIO
+  TAO_Reconfig_Scheduler_Entry *first_subpriority_entry_;
+  // Pointer to first subpriority entry in the priority level.
 
-    c. static priority comparison method
+  RtecScheduler::Preemption_Priority_t priority_;
+  // Current priority value.
 
-    d. static subpriority comparison method
+  RtecScheduler::Preemption_Subpriority_t subpriority_;
+  // Current subpriority value.
 
-    f. whether or not an RT_Info change will affect static priority or subpriority
-       int RECONFIG_SCHED_STRATEGY::priority_comp (const RtecScheduler::RT_Info &s,
-                                                   const RtecScheduler::RT_Info &t)
-			// returns -1 if s < t in <priority, subpriority>,
-                        // 0 if same, and 1 if t > s.
+  RtecScheduler::OS_Priority os_priority_;
+  // Current OS (thread) priority value.
+};
 
-CHARACTERISTICS
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> 
+class TAO_RSE_Utilization_Visitor :
+  public TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
+  // = TITLE 
+  //   A scheduler entry visitor that accumulates utilization separately
+  //   for the critical operations and the non-critical operations.
+  //
+  // = DESCRIPTION
+  //   The visitor uses the parameterized strategy type to determine
+  //   whether or not a given operation is critical.
+{
+public:
 
-    g. whether or not an operation is critical, based on its characteristics
+  TAO_RSE_Utilization_Visitor ();
+  // Constructor.
 
-    h. static dispatch configuration from an RT_Info, based on its characteristics
+    virtual int visit (TAO_Reconfig_Scheduler_Entry &);
+  // Visit a Reconfig Scheduler Entry.  This method
+  // determines the utilization by the entry, and
+  // adds it to the critical or non-critical utilization,
+  // depending on whether or not the strategy says the
+  // operation is critical.
 
-    i. whether or not an RT_Info change will affect propagation of characteristics
-      int RECONFIG_SCHED_STRATEGY::needs_propagation (const RtecScheduler::RT_Info &s,
-                                                      const RtecScheduler::RT_Info &t)
-			// returns 1 if s differs from t in propagation values, 0 if same.
+  double critical_utilization ();
+  // Accessor for utilization by critical operations.
 
+  double noncritical_utilization ();
+  // Accessor for utilization by noncritical operations.
+
+private:
+
+  double critical_utilization_;
+  // Utilization by critical operations.
+
+  double noncritical_utilization_;
+  // Utilization by noncritical operations.
+};
+
+
+class TAO_MUF_Reconfig_Sched_Strategy
+  // = TITLE 
+  //   A scheduler entry visitor that accumulates utilization separately
+  //   for the critical operations and the non-critical operations.
+  //
+  // = DESCRIPTION
+  //   The visitor uses the parameterized strategy type to determine
+  //   whether or not a given operation is critical.
+{
+public:
+
+  static int total_priority_comp (const void *, const void *);
+  // Ordering function used to qsort an array of TAO_Reconfig_Scheduler_Entry
+  // pointers into a total <priority, subpriority> ordering.  Returns -1 if the
+  // first one is higher, 0 if they're the same, and 1 if the second one is higher.
+
+  static int compare_priority (TAO_Reconfig_Scheduler_Entry &,
+                               TAO_Reconfig_Scheduler_Entry &);
+  // Compares two entries by priority alone.  Returns -1 if the
+  // first one is higher, 0 if they're the same, and 1 if the second one is higher.
+
+
+  static int compare_subpriority (TAO_Reconfig_Scheduler_Entry &,
+                                  TAO_Reconfig_Scheduler_Entry &);
+  // Compares two entries by subpriority alone.  Returns -1 if the
+  // first one is higher, 0 if they're the same, and 1 if the second one is higher.
+
+  static int priority_diff (RtecScheduler::RT_Info &s,
+                            RtecScheduler::RT_Info &t);
+  // Compares two RT_Infos by priority alone.  Returns -1 if the
+  // first one is higher, 0 if they're the same, and 1 if the second one is higher.
+
+  static int is_critical (TAO_Reconfig_Scheduler_Entry &rse);
+  // Determines whether or not an entry is critical, based on operation characteristics.
+  // returns 1 if critical, 0 if not
+
+  // @@ TBD - a method to fill in a static dispatch configuration from an RT_Info,
+  //          based on its characteristics.
+};
 
 #if defined (__ACE_INLINE__)
 #include "orbsvcs/Reconfig_Sched_Utils.i"

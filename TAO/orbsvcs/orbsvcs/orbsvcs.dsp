@@ -17985,6 +17985,36 @@ NODEP_CPP_REACT=\
 # End Source File
 # Begin Source File
 
+SOURCE=.\Sched\Reconfig_Sched_Utils.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Sched\Reconfig_Scheduler.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\RT_Task.cpp
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
@@ -25518,6 +25548,14 @@ SOURCE=.\Naming\Persistent_Naming_Context.h
 # Begin Source File
 
 SOURCE=.\Event\ReactorTask.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Sched\Reconfig_Sched_Utils.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Sched\Reconfig_Scheduler.h
 # End Source File
 # Begin Source File
 

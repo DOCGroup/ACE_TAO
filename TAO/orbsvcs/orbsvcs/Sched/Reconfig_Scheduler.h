@@ -17,6 +17,8 @@
 #ifndef TAO_RECONFIG_SCHEDULER_H
 #define TAO_RECONFIG_SCHEDULER_H
 
+#include "ace/Hash_Map_Manager.h"
+#include "ace/RB_Tree.h"
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/RtecSchedulerS.h"
 #include "Reconfig_Sched_Utils.h"
@@ -41,6 +43,8 @@ class TAO_ORBSVCS_Export TAO_Reconfig_Scheduler :
   //
 public:
 
+  // @@ TBD - check throw specs against method definitions
+
   TAO_Reconfig_Scheduler ();
   // Default constructor.
 
@@ -56,7 +60,7 @@ public:
 
   int init (int config_count,
             ACE_Scheduler_Factory::POD_Config_Info config_info[],
-            int entry_count,
+            int rt_info_count,
             ACE_Scheduler_Factory::POD_RT_Info rt_info[],
             int dependency_count,
             ACE_Scheduler_Factory::POD_Dependency_Info dependency_info[],
@@ -177,8 +181,8 @@ public:
 
 protected:
 
-  // @@ TODO - use a memento to save and restore scheduler state without
-  //           breaking encapsulation, particularly of these flags.
+  // @@ TBD - use a memento to save and restore scheduler state without
+  //          breaking encapsulation, particularly of these flags.
 
   enum Stability_Flags 
   {
@@ -210,8 +214,8 @@ protected:
   };
   // Flags indicating stability conditions of schedule.
 
-  typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t, 
-                                  RtecScheduler::RT_Info*, 
+  typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+	                              RtecScheduler::RT_Info*, 
                                   ACE_Hash<RtecScheduler::handle_t>, 
                                   ACE_Equal_To<RtecScheduler::handle_t>, 
                                   ACE_LOCK> RT_INFO_MAP;
@@ -233,12 +237,10 @@ protected:
   typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
                                   RtecScheduler::Dependency_Set*, 
                                   ACE_Hash<RtecScheduler::handle_t>, 
-                                  ACE_Equal_To<RtecScheduler::handle_t>, 
+                                  ACE_Equal_To<RtecScheduler::handle_t>,
                                   ACE_LOCK> DEPENDENCY_SET_MAP;
   // Type of map used for O(1) lookup of RT_Info
   // dependency sets by caller or called handle.
-
-CDG - TBD - check throw specs against method definitions
 
   virtual RtecScheduler::RT_Info * create_i (const char * entry_point,
                                              RtecScheduler::handle_t handle,
@@ -260,8 +262,7 @@ CDG - TBD - check throw specs against method definitions
                       RtecScheduler::Importance_t importance,
                       RtecScheduler::Quantum_t quantum,
                       CORBA::Long threads,
-                      RtecScheduler::Info_Type_t info_type
-                      u_long *change_flags = 0)
+                      RtecScheduler::Info_Type_t info_type);
   // Internal method to set characteristics of the passed RT_Info.
 
   virtual RtecScheduler::handle_t lookup_i (const char * entry_point,
@@ -291,6 +292,17 @@ CDG - TBD - check throw specs against method definitions
   // Internal method that registers a dependency between two RT_Infos.
   // Assumes it is being called with all locks held, and does *not*
   // set any schedule stability flags.
+
+  virtual void map_dependency_i (RtecScheduler::handle_t key,
+                                 RtecScheduler::handle_t handle,
+                                 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP map,
+                                 CORBA::Long number_of_calls,
+                                 RtecScheduler::Dependency_Type_t dependency_type,
+                                 CORBA::Environment &env)
+     TAO_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::UNKNOWN_TASK));
+  // This method installs a dependency in a dependency set map.
+
 
   virtual void dfs_traverse_i (CORBA::Environment &_env)
     TAO_THROW_SPEC ((CORBA::SystemException,
@@ -343,9 +355,6 @@ CDG - TBD - check throw specs against method definitions
   RT_INFO_TREE rt_info_tree_;
   // Map for O(1) lookup of RT_Infos by handle.
 
-  SCHED_ENTRY_MAP sched_entry_map_;
-  // Map for O(1) lookup of scheduling infos by RT_Info handle.
-
   DEPENDENCY_SET_MAP calling_dependency_set_map_;
   // Map for O(1) lookup of RT_Info dependency 
   // set by the caller operation's handle.
@@ -379,6 +388,12 @@ CDG - TBD - check throw specs against method definitions
 
   RtecScheduler::Preemption_Priority_t last_scheduled_priority_;
   // Stores the last priority for which an operation can be scheduled
+
+  double noncritical_utilization_;
+  // Utilization by noncritical tasks.
+
+  double critical_utilization_;
+  // Utilization by critical tasks.
 
   ACE_LOCK mutex_;
   // Mutual exclusion lock for the scheduler itself.  This is needed to
