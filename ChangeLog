@@ -1,14 +1,25 @@
+Tue Jan  4 14:40:17 2000  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/OS.h:
+
+	  AIX defines "off64_t" as its 64 bit offset type.  Typedef
+	  ACE_LOFF_T as that type if ACE_HAS_LLSEEK or ACE_HAS_LSEEK64 is
+	  defined.  This should correct a problem that occurred during an
+	  AIX configure script run.  Thanks to Mike Winter for pointing
+	  this out.
+
 Tue Jan  4 14:09:51 2000  Ossama Othman  <othman@cs.wustl.edu>
 
 	* configure.in:
 
 	  Fixed test that checks if sched.h is needed for thread
 	  scheduling definitions.  This should correct problems discovered
-	  on RedHat 6.1 installations.
+	  on RedHat 6.1 installations.  Thanks to 
 
 	  Improved sys_nerr and sys_errlist[] tests by checking for
 	  external global variables in libraries.  This should correct a
-	  problem discovered in an AIX configure script run.
+	  problem discovered in an AIX configure script run.  Thanks to
+	  Mike Winter for providing feedback.
 
 Tue Jan  4 13:23:26 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
