@@ -120,7 +120,7 @@ Thread_Handler::Thread_Handler (int delay,
   // Create N new threads of control Thread_Handlers.
 
   for (size_t i = 0; i < n_threads; i++)
-    if (ACE_Thread::spawn (&Thread_Handler::svc_run, 
+    if (ACE_Thread::spawn ((ACE_THR_FUNC) &Thread_Handler::svc_run, 
 			   new Thread_Handler (i + 1),
 			   THR_NEW_LWP | THR_DETACHED) != 0)
       ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Thread::spawn"));
