@@ -1,3 +1,8 @@
+Sun Apr 22 19:59:06 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/AV/Transport.cpp:
+          Removed unused variable.
+
 Sun Apr 22 19:44:02 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Oneway_Buffering/README:

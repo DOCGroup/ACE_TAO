@@ -66,7 +66,7 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
       ACE_Addr *address = entry->address ();
       const char *flow_protocol = entry->flow_protocol_str ();
       const char *transport_protocol = entry->carrier_protocol_str ();
-		  
+
       if (ACE_OS::strcmp (flow_protocol,"") == 0)
         flow_protocol = transport_protocol;
 
@@ -119,7 +119,7 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                                                    av_core,
                                                    (*flow_factory)->factory ()) == -1)
                                 return -1;
-			      
+
                               TAO_AV_Transport *transport = 0;
                               if (connector->connect (entry,
                                                       transport) == -1)
@@ -301,7 +301,7 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
       if (address == 0)
         {
           this->open_default (endpoint,
-			      av_core, 
+			      av_core,
 			      entry);
           continue;
         }
@@ -320,14 +320,13 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                 {
                   TAO_AV_TransportFactorySetItor transport_factory_end =
                     av_core->transport_factories ()->end ();
-		  
-		  int i = 1;
+
                   for (TAO_AV_TransportFactorySetItor transport_factory =
                          av_core->transport_factories ()->begin ();
                        transport_factory != transport_factory_end;
                        ++transport_factory)
                     {
-		      
+
                       if ((*transport_factory)->factory ()->match_protocol (transport_protocol))
                         {
                           TAO_AV_Acceptor *acceptor =
