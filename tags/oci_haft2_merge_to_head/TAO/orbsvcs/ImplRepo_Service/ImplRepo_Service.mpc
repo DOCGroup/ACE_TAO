@@ -1,0 +1,37 @@
+project : orbsvcsexe, core, acexml, minimum_corba, svc_utils, iortable {
+  exename  = ImplRepo_Service
+  Source_Files {
+    Adapter_Activator.cpp
+    Forwarder.cpp
+    ImR_Locator.cpp
+    ImR_Locator_i.cpp
+  }
+}
+
+
+project(ImR_Activator) : orbsvcsexe, core, acexml, minimum_corba, svc_utils, iortable, strategies {
+  exename  = ImR_Activator
+  Source_Files {
+    ImR_Activator.cpp
+    ImR_Activator_i.cpp
+    Iterator.cpp
+    Locator.cpp
+    Options.cpp
+    Server_Info.cpp
+    Server_Repository.cpp
+    Repository_Configuration.cpp
+    XML_ContentHandler.cpp
+    NT_Service.cpp
+  }
+}
+
+
+project(tao_imr) : orbsvcsexe, core, acexml, minimum_corba, svc_utils, iortable {
+  exename  = tao_imr
+  Source_Files {
+    tao_imr.cpp
+    tao_imr_i.cpp
+  }
+}
+
+

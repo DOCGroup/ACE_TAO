@@ -1,0 +1,17 @@
+project(*Server): namingexe {
+  Source_Files {
+    Content_Iterator_i.cpp
+    Iterator_Factory_i.cpp
+    server.cpp
+  }
+}
+
+project(*Client): namingexe {
+  exename = client
+
+  Source_Files {
+    Web_ServerC.cpp
+    client.cpp
+  }
+}
+

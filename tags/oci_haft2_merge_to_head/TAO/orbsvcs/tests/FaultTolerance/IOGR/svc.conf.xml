@@ -1,0 +1,7 @@
+<?xml version='1.0'?>
+<!-- Converted from ./orbsvcs/tests/FaultTolerance/IOGR/svc.conf by svcconf-convert.pl -->
+<ACE_Svc_Conf>
+ <dynamic id="FT_Service_Activate" type="Service_Object">
+   <initializer path="TAO_FT_ORB" init="_make_TAO_FT_Service_Activate"/>
+ </dynamic>
+</ACE_Svc_Conf>

@@ -1,0 +1,3 @@
+project(Nested Non Servant Upcalls): server, minimum_corba {
+  exename = Nested_Non_Servant_Upcalls
+}

@@ -1,0 +1,37 @@
+# $Id$
+
+Number of Paths vs Throughput of High Priority Path with period = 10ms
+and Load = 30
+=======================================================================
+
+In this experiment we have 1 high priority path and several low
+priority paths sending events over the Notification Service.
+
+We increase the number of low priority paths as 1, 5, 10 and 20 and
+measure the throughput.
+
+Running the experiment:
+======================
+
+Run the "run_all.pl" script in this directory to run the test using RT-Notification.
+as "run_all.pl --rt"
+
+If you want to generate results using the CosNotification, run as
+"run_all.pl --cos"
+
+To generate the data for both cases run as "run_all.pl --all"
+
+The RT-Notification results are generated in the Paths_X/rt_output directory.
+The CosNotification results are generated in the Paths_X/cos_output directory.
+
+e.g., Paths_5/rt_output/c_oth_1.dat would contain the statistics
+recorded for consumer #1 of the set of 5 paths.
+
+
+Expected Results:
+================
+
+For RT-Notification: The Throughput of the high priority task should remain at 100Hz. while
+the remaining paths should share the remainder of the capacity.
+
+For CosNotification: The throughput of *all* the paths is shared.

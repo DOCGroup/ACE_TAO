@@ -1,0 +1,12 @@
+project(*imore) : aceexe {
+  exename = imore
+  Source_Files {
+    imore.cpp
+  }
+}
+project(*process) : aceexe {
+  exename = process
+  Source_Files {
+    process.cpp
+  }
+}

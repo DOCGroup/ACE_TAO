@@ -1,0 +1,3 @@
+project(POA Wait For Completion): taoserver {
+  exename = wait_for_completion
+}

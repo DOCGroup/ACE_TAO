@@ -1,0 +1,25 @@
+--- orig/IOP_CodecC.h	2003-04-27 09:41:09.000000000 -0500
++++ ./IOP_CodecC.h	2003-04-27 10:09:46.000000000 -0500
+@@ -30,17 +30,16 @@
+ 
+ #ifndef _TAO_IDL_ORIG_IOP_CODECC_H_
+ #define _TAO_IDL_ORIG_IOP_CODECC_H_
+-
+ #include "ace/pre.h"
+-
+-#include "tao/corba.h"
++#include "tao/corbafwd.h"
+ 
+ #if !defined (ACE_LACKS_PRAGMA_ONCE)
+ # pragma once
+ #endif /* ACE_LACKS_PRAGMA_ONCE */
+-
+-
+-#include "TAO_Export.h"
++#include "tao/TAO_Export.h"
++#include "tao/Any_T.h"
++#include "tao/VarOut_T.h"
++#include "tao/Any_T.h"
+ 
+ #if defined (TAO_EXPORT_MACRO)
+ #undef TAO_EXPORT_MACRO

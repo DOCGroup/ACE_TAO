@@ -1,0 +1,12 @@
+project(*client) : aceexe, qos {
+  exename = client
+  Source_Files {
+    diffserv_test.cpp
+  }
+}
+project(*server) : aceexe, qos {
+  exename = server
+  Source_Files {
+    server.cpp
+  }
+}

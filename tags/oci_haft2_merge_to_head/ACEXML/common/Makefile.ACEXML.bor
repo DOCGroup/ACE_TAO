@@ -1,0 +1,113 @@
+# Makefile for building the ACEXML library with Borland C++ Builder
+
+NAME = ACEXML
+
+NAME = ACEXML
+
+
+OBJFILES = \
+	$(OBJDIR)\AttributesImpl.obj \
+	$(OBJDIR)\Attributes_Def_Builder.obj \
+	$(OBJDIR)\CharStream.obj \
+	$(OBJDIR)\DTD_Manager.obj \
+	$(OBJDIR)\DefaultHandler.obj \
+	$(OBJDIR)\Element_Def_Builder.obj \
+	$(OBJDIR)\Encoding.obj \
+	$(OBJDIR)\Env.obj \
+	$(OBJDIR)\Exception.obj \
+	$(OBJDIR)\FileCharStream.obj \
+	$(OBJDIR)\HttpCharStream.obj \
+	$(OBJDIR)\InputSource.obj \
+	$(OBJDIR)\LocatorImpl.obj \
+	$(OBJDIR)\Mem_Map_Stream.obj \
+	$(OBJDIR)\NamespaceSupport.obj \
+	$(OBJDIR)\SAXExceptions.obj \
+	$(OBJDIR)\StrCharStream.obj \
+	$(OBJDIR)\StreamFactory.obj \
+	$(OBJDIR)\Transcode.obj \
+	$(OBJDIR)\URL_Addr.obj \
+	$(OBJDIR)\Validator.obj \
+	$(OBJDIR)\XMLFilterImpl.obj \
+	$(OBJDIR)\XML_Codecs.obj \
+	$(OBJDIR)\ZipCharStream.obj
+
+EXTERNAL_LIBS = \
+ \
+
+LFLAGS = \
+	-j..\..\ace\$(CONFIG_SUBDIR) -j..\..\ace \
+	-L..\..\ace\$(CONFIG_SUBDIR) -L..\..\ace \
+  -j$(CORE_BINDIR) \
+  -L$(CORE_BINDIR)
+
+LIBFILES = \
+	ACE$(LIB_DECORATOR).lib \
+	$(EXTERNAL_LIBS)
+
+
+
+!ifdef STATIC
+LIB_FLAGS = -DACE_AS_STATIC_LIBS
+DLL_FLAGS =
+!else
+LIB_FLAGS =
+DLL_FLAGS = -DACEXML_BUILD_DLL
+!endif
+
+CFLAGS = \
+	-I..\.. \
+	$(LIB_FLAGS) \
+	$(DLL_FLAGS)
+
+CPPDIR = .
+
+INCLUDES = \
+	ACEXML_Export.h \
+	Attributes.h \
+	AttributesImpl.h \
+	Attributes_Def_Builder.h \
+	CharStream.h \
+	ContentHandler.h \
+	DTDHandler.h \
+	DTD_Manager.h \
+	DefaultHandler.h \
+	Element_Def_Builder.h \
+	Encoding.h \
+	EntityResolver.h \
+	Env.h \
+	ErrorHandler.h \
+	Exception.h \
+	FileCharStream.h \
+	HttpCharStream.h \
+	InputSource.h \
+	Locator.h \
+	LocatorImpl.h \
+	Mem_Map_Stream.h \
+	NamespaceSupport.h \
+	SAXExceptions.h \
+	StrCharStream.h \
+	StreamFactory.h \
+	Transcode.h \
+	URL_Addr.h \
+	Validator.h \
+	XMLFilter.h \
+	XMLFilterImpl.h \
+	XMLReader.h \
+	XML_Codecs.h \
+	XML_Macros.h \
+	XML_Types.h \
+	ZipCharStream.h \
+	AttributesImpl.i \
+	DefaultHandler.i \
+	Env.i \
+	Exception.i \
+	LocatorImpl.i \
+	NamespaceSupport.i \
+	SAXExceptions.i \
+	Transcode.i \
+	URL_Addr.inl \
+	XMLFilterImpl.i
+
+BASE_BINDIR = ..\..\bin
+
+!include <$(ACE_ROOT)\include\makeinclude\build_library.bor>

@@ -1,0 +1,5 @@
+project : taolib, core {
+  sharedname   = TAO_IFR_Client
+  dynamicflags = TAO_IFR_CLIENT_BUILD_DLL
+  include_dir  = tao/IFR_Client
+}

@@ -1,0 +1,4 @@
+project : portableserver {
+  after   += Messaging
+  libs    += TAO_Messaging
+}

@@ -1,0 +1,21 @@
+project(*Server): taoserver {
+  idlflags += -Gd
+
+  Source_Files {
+    Multiple_Impl.cpp
+    Collocation_Tester.cpp
+    server.cpp
+  }
+}
+
+project(*Client): taoserver {
+  exename   = client
+  idlflags += -Gd
+
+  Source_Files {
+    Multiple_Impl.cpp
+    Collocation_Tester.cpp
+    client.cpp
+  }
+}
+

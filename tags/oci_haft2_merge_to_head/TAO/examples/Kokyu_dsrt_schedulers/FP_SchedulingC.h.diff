@@ -1,0 +1,13 @@
+--- FP_SchedulingC.h.orig	Mon Sep  1 11:06:33 2003
++++ FP_SchedulingC.h	Mon Sep  1 11:06:58 2003
+@@ -41,8 +41,8 @@
+ 
+ #include "Kokyu_dsrt_schedulers_export.h"
+ 
+-#include "tao/RTScheduling/RTSchedulerC.h"
+-#include "tao/RTCORBA/RTCORBAC.h"
++#include "tao/RTScheduling/RTScheduler.h"
++#include "tao/RTCORBA/RTCORBA.h"
+ 
+ #if defined (TAO_EXPORT_MACRO)
+ #undef TAO_EXPORT_MACRO

@@ -1,0 +1,5 @@
+project : taolib, core {
+  sharedname   = TAO_BiDirGIOP
+  dynamicflags = TAO_BIDIRGIOP_BUILD_DLL
+  include_dir  = tao/BiDir_GIOP
+}

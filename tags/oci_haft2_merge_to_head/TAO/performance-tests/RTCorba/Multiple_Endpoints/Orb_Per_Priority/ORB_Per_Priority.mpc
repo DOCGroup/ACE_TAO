@@ -1,0 +1,11 @@
+project(*server): rt_server, strategies, rtcorbacommon {
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(*client): rt_client, strategies, rtcorbacommon {
+  Source_Files {
+    client.cpp
+  }
+}

@@ -1,0 +1,18 @@
+project(*server): taoserver, strategies {
+  avoids += minimum_corba
+
+  Source_Files {
+    Roundtrip.cpp
+    server.cpp
+  }
+}
+
+project(*client): taoclient, strategies {
+  avoids += minimum_corba
+
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+}
+

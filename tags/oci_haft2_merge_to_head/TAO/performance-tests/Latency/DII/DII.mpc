@@ -1,0 +1,18 @@
+project(*latency server): taoserver, strategies {
+  avoids += minimum_corba
+
+  Source_Files {
+    Roundtrip.cpp
+    server.cpp
+  }
+}
+
+project(*latency client): taoserver, strategies, dynamicinterface {
+  exename  = client
+  avoids  += minimum_corba
+
+  Source_Files {
+    client.cpp
+  }
+}
+

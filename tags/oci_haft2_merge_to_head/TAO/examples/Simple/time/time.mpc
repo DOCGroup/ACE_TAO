@@ -1,0 +1,17 @@
+project(*server): namingexe {
+  Source_Files {
+    Time_i.cpp
+    server.cpp
+    ../Simple_util.cpp
+  }
+}
+
+project(*client): namingexe {
+  exename = client
+
+  Source_Files {
+    client.cpp
+    ../Simple_util.cpp
+    Time_Client_i.cpp
+  }
+}

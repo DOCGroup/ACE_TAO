@@ -1,0 +1,26 @@
+--- orig/CurrentC.h	Mon Aug 20 22:09:47 2001
++++ CurrentC.h	Mon Aug 20 22:10:47 2001
+@@ -19,11 +19,11 @@
+ // Information about TAO is available at:
+ //     http://www.cs.wustl.edu/~schmidt/TAO.html
+ 
+-#ifndef _TAO_IDL_CURRENTC_H_
+-#define _TAO_IDL_CURRENTC_H_
++#ifndef _TAO_IDL_CORBA_CURRENTC_H_
++#define _TAO_IDL_CORBA_CURRENTC_H_
+ 
+ #include "ace/pre.h"
+-#include "tao/corba.h"
++#include "tao/Object.h"
+ 
+ #if !defined (ACE_LACKS_PRAGMA_ONCE)
+ # pragma once
+@@ -193,7 +193,7 @@
+ 
+ 
+ #if defined (__ACE_INLINE__)
+-#include "CurrentC.i"
++#include "tao/CurrentC.i"
+ #endif /* defined INLINE */
+ 
+ #if defined(_MSC_VER) && (_MSC_VER >= 1200)

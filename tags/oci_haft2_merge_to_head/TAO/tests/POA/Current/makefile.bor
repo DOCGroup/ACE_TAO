@@ -1,0 +1,24 @@
+#
+# Makefile for building the Current test
+#
+
+NAME = Current
+
+
+OBJFILES = \
+	$(OBJDIR)\Current.obj
+
+CPPDIR = .
+
+CFLAGS = \
+        $(ACE_CFLAGS) \
+        $(TAO_CFLAGS) \
+        $(TAO_PORTABLESERVER_CFLAGS)
+
+LIBFILES = \
+        $(ACE_LIB) \
+        $(TAO_LIB) \
+        $(TAO_PORTABLESERVER_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+

@@ -1,0 +1,28 @@
+
+#
+# Makefile for building	the ACE	SSL library with Borland C++Builder
+#
+
+!ifdef SSL_ROOT
+NAME = ACE_SSL
+!endif
+
+OBJFILES = \
+	$(OBJDIR)\SSL_Context.obj \
+	$(OBJDIR)\SSL_SOCK.obj \
+	$(OBJDIR)\SSL_SOCK_Acceptor.obj	\
+	$(OBJDIR)\SSL_SOCK_Connector.obj \
+	$(OBJDIR)\SSL_SOCK_Stream.obj \
+	$(OBJDIR)\SSL_Asynch_Stream.obj \
+	$(OBJDIR)\SSL_Asynch_BIO.obj
+
+CFLAGS = $(ACE_CFLAGS) $(SSL_CFLAGS) $(ACE_SSL_CFLAGS) -DACE_SSL_BUILD_DLL
+
+LIBFILES = $(ACE_LIB) $(SSL_LIB)
+
+CPPDIR = .
+
+INCDIR_NAME = ace\SSL
+INCLUDES = *.h *.i *.inl
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>

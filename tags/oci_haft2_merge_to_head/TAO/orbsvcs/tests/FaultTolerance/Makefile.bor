@@ -1,0 +1,11 @@
+
+#
+# Makefile for building the TAO obsvcs examples
+#
+
+DIRS = \
+        IOGR \
+        IOGRManipulation \
+	GroupRef_Manipulation
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -1,0 +1,53 @@
+#----------------------------------------------------------------------------
+#       GNU Makefile
+#----------------------------------------------------------------------------
+MAKEFILE        = Makefile.ACEXML_XML_Svc_Conf_Parser
+DEPENDENCY_FILE = .depend.Makefile.ACEXML_XML_Svc_Conf_Parser
+LIB_UNCHECKED   = libACEXML_XML_Svc_Conf_Parser.a
+SHLIB_UNCHECKED = libACEXML_XML_Svc_Conf_Parser.$(SOEXT)
+
+
+
+FILES = \
+  Svcconf \
+  Svcconf_Handler
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+
+LIB   = $(LIB_UNCHECKED)
+SHLIB = $(SHLIB_UNCHECKED)
+
+ACE_SHLIBS = -lACE
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+LSRC   = $(addsuffix .cpp, $(FILES))
+
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+
+CPPFLAGS     += -I../../..
+ifeq ($(static_libs),1)
+  ifneq ($(LIB),)
+    CPPFLAGS += -DACE_AS_STATIC_LIBS
+  endif
+endif
+
+
+LDFLAGS      += -L../../../ACEXML/common -L../../../ACEXML/parser/parser -L../../../ace
+
+
+
+ACE_SHLIBS  = -lACEXML_Parser -lACEXML $(ACELIB)
+#----------------------------------------------------------------------------
+#       Local targets
+#----------------------------------------------------------------------------
+
+realclean: clean 
+ifneq ($(GENERATED_DIRTY),)
+	-$(RM) -r $(GENERATED_DIRTY)
+endif
+

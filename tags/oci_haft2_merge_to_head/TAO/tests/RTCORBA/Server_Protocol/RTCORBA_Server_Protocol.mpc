@@ -1,0 +1,13 @@
+project(*Server): strategies, rt_server {
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(*Client): strategies, rt_client {
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+}
+

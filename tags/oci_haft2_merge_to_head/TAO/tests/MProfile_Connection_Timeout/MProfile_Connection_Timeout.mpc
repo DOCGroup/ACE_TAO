@@ -1,0 +1,13 @@
+project(*Server): taoserver, messaging, iormanip {
+  Source_Files {
+    test_i.cpp
+    server.cpp
+  }
+}
+
+project(*Client): taoclient, messaging, iormanip {
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+}

@@ -1,0 +1,43 @@
+#----------------------------------------------------------------------------
+# $Id$
+#
+# Makefile for the SLDex library in the C++NPv2, Chapter 5 example.
+#----------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+#       Local macros
+#----------------------------------------------------------------------------
+
+SHLIB   = libSLDex.$(SOEXT)
+FILES   = SLDex \
+          Logging_Acceptor \
+          Logging_Event_Handler \
+          Logging_Event_Handler_Ex \
+          Logging_Handler \
+          Server_Shutdown
+LSRC    = $(addsuffix .cpp,$(FILES))
+
+LIBS   += $(ACELIB)
+
+BUILD   = $(VSHLIB)
+
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+
+#----------------------------------------------------------------------------
+#       Local targets
+#----------------------------------------------------------------------------
+
+ifeq ($(shared_libs),1)
+ifneq ($(SHLIB),)
+CPPFLAGS     += -DSLDEX_BUILD_DLL
+endif
+endif

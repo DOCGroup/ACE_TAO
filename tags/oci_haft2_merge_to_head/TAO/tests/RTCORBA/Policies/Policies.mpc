@@ -1,0 +1,3 @@
+project(RTCORBA Policies Server): rt_server {
+  exename = Policies
+}

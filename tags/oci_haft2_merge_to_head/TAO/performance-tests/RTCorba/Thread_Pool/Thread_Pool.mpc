@@ -1,0 +1,12 @@
+project(*RTCorba server): rt_server {
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(*RTCorba client): rt_client {
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+}

@@ -1,0 +1,78 @@
+# Makefile for building the Starter exe with Borland C++ Builder
+
+NAME = Starter
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe
+
+OBJFILES = \
+	$(OBJDIR)\Starter.obj \
+	$(OBJDIR)\SynchC.obj \
+	$(OBJDIR)\SynchS.obj \
+	$(OBJDIR)\Synch_i.obj
+
+LFLAGS = \
+	-j..\..\..\..\lib\$(CONFIG_SUBDIR) -j..\..\..\..\lib \
+	-L..\..\..\..\lib\$(CONFIG_SUBDIR) -L..\..\..\..\lib \
+  -j$(CORE_BINDIR) \
+  -L$(CORE_BINDIR)
+
+LIBFILES = \
+	TAO_RTScheduler$(LIB_DECORATOR).lib \
+	TAO_RTPortableServer$(LIB_DECORATOR).lib \
+	TAO_RTCORBA$(LIB_DECORATOR).lib \
+	TAO_CosNaming$(LIB_DECORATOR).lib \
+	TAO_Svc_Utils$(LIB_DECORATOR).lib \
+	TAO_IORTable$(LIB_DECORATOR).lib \
+	TAO_PortableServer$(LIB_DECORATOR).lib \
+	TAO_IORInterceptor$(LIB_DECORATOR).lib \
+	TAO_Valuetype$(LIB_DECORATOR).lib \
+	TAO_ObjRefTemplate$(LIB_DECORATOR).lib \
+	TAO$(LIB_DECORATOR).lib \
+	ACE$(LIB_DECORATOR).lib \
+
+
+IDLFILES = \
+	$(IDLDIR)\Synch.idl
+
+!ifdef STATIC
+LIB_FLAGS = -DTAO_AS_STATIC_LIBS -DTAO_AS_STATIC_LIBS -DACE_AS_STATIC_LIBS
+DLL_FLAGS =
+!else
+LIB_FLAGS =
+DLL_FLAGS =
+!endif
+
+CFLAGS = \
+	-I..\..\..\orbsvcs \
+	-I..\..\.. \
+	-I..\..\..\tao \
+	-I..\..\..\.. \
+	$(LIB_FLAGS) \
+	$(DLL_FLAGS)
+
+CPPDIR = .;..
+
+IDLDIR = ..
+
+INCLUDES = \
+	..\Starter.h \
+	..\SynchC.h \
+	..\SynchS.h \
+	..\Synch_i.h \
+	..\SynchC.i \
+	..\SynchS.i \
+	..\Synch.idl
+
+all: idl_src_files
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+
+#
+# IDL Build rules
+#
+
+idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
+
+# IDL File Directory: ..
+..\SynchS.cpp ..\SynchC.cpp: ..\Synch.idl
+	$(TAO_IDL) -o .. -Ge 1 -Sc -Wb,pre_include=ace\pre.h -Wb,post_include=ace\post.h -Gv -Ge 1 -Sc -Wb,pre_include=ace\pre.h -Wb,post_include=ace\post.h $**

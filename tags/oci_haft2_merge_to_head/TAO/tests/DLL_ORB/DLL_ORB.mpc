@@ -1,0 +1,39 @@
+project(*Test Client Module): taolib_with_idl {
+  sharedname    = Test_Client_Module
+  dynamicflags  = TEST_CLIENT_MODULE_BUILD_DLL
+
+  Source_Files {
+    TestC.cpp
+    Test_Client_Module.cpp
+  }  
+}
+
+project(*Test Server Module) : taolib_with_idl, portableserver {
+  sharedname   = Test_Server_Module
+  dynamicflags = TEST_SERVER_MODULE_BUILD_DLL
+
+  Source_Files {
+    Test_Server_Module.cpp
+    Test_i.cpp
+  }
+}
+
+project(*Server) : taoexe {
+  exename = server
+  IDL_Files {
+  }
+
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(*Client): taoclient {
+  IDL_Files {
+  }
+
+  Source_Files {
+    client.cpp
+  }
+}
+

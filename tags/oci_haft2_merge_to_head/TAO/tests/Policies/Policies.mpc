@@ -1,0 +1,3 @@
+project(Policies Manipulation): taoserver, messaging, corba_messaging {
+  exename = Manipulation
+}

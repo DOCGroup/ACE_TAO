@@ -1,0 +1,20 @@
+#
+# Makefile for building the Reactor_Timer_Queue_Test example
+#
+
+NAME = main_reactor
+
+OBJFILES = \
+        $(OBJDIR)\Reactor_Timer_Queue_Test.obj \
+        $(OBJDIR)\main_reactor.obj
+
+CPPDIR = .
+
+LIBFILES = \
+        $(ACE_LIB)
+
+CFLAGS = \
+        $(ACE_CFLAGS)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+

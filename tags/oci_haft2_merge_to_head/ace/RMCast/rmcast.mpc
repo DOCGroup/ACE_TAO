@@ -1,0 +1,6 @@
+project(RMCast) : acelib, core {
+  requires    += rmcast
+  sharedname   = ACE_RMCast
+  dynamicflags = ACE_RMCAST_BUILD_DLL
+  include_dir  = ace/RMCast
+}

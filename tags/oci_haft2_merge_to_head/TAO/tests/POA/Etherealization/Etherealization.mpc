@@ -1,0 +1,3 @@
+project(POA Etherealization): taoserver, minimum_corba {
+  exename = Etherealization
+}

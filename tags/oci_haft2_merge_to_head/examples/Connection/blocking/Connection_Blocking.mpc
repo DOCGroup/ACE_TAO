@@ -1,0 +1,16 @@
+project(*acceptor) : aceexe {
+  exename = acceptor
+  Source_Files {
+    SPIPE-acceptor.cpp
+    test_spipe_acceptor.cpp
+  }
+}
+
+project(*connector) : aceexe {
+  exename = connector
+  Source_Files {
+    SPIPE-connector.cpp
+    test_spipe_connector.cpp
+  }
+}
+

@@ -1,0 +1,44 @@
+#
+# Makefile for building the Naming Service executable
+#
+
+NAME = LifeCycle_Service
+
+OBJFILES = \
+        $(OBJDIR)\LifeCycle_Service.obj \
+        $(OBJDIR)\LifeCycle_Service_i.obj \
+        $(OBJDIR)\Factory_Trader.obj \
+        $(OBJDIR)\Criteria_Evaluator.obj
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_NAMING_CFLAGS) \
+	$(TAO_SVC_UTILS_CFLAGS) \
+	$(TAO_LIFECYCLE_CFLAGS) \
+	$(TAO_TRADING_CFLAGS) \
+	$(TAO_IORTABLE_CFLAGS) \
+	$(TAO_DYNAMICANY_CFLAGS) \
+	$(TAO_VALUETYPE_CFLAGS) \
+	$(TAO_IORINTERCEPTOR_CFLAGS) \
+	$(TAO_ORT_CFLAGS)
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB) \
+	$(TAO_NAMING_LIB) \
+	$(TAO_SVC_UTILS_LIB) \
+	$(TAO_LIFECYCLE_LIB) \
+	$(TAO_TRADING_LIB) \
+	$(TAO_IORTABLE_LIB) \
+	$(TAO_DYNAMICANY_LIB) \
+	$(TAO_VALUETYPE_LIB) \
+	$(TAO_IORINTERCEPTOR_LIB) \
+	$(TAO_ORT_LIB)
+
+
+CPPDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_exe.bor>

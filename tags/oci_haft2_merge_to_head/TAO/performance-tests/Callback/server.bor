@@ -1,0 +1,44 @@
+#
+# Makefile for building the callback performance-tests server
+#
+
+NAME = server
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
+
+OBJFILES = \
+        $(OBJDIR)\callbackC.obj \
+        $(OBJDIR)\callbackS.obj \
+        $(OBJDIR)\callback_i.obj \
+        $(OBJDIR)\server_i.obj \
+	$(OBJDIR)\server.obj
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+        $(TAO_PORTABLESERVER_CFLAGS) \
+        $(TAO_STRATEGIES_CFLAGS) \
+        $(TAO_MESSAGING_CFLAGS)
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB) \
+        $(TAO_STRATEGIES_LIB) \
+        $(TAO_MESSAGING_LIB)
+
+IDLFILES = \
+        $(IDLDIR)\callback.idl
+
+CPPDIR = .
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\callbackS.cpp $(IDLDIR)\callbackC.cpp: $(IDLDIR)\callback.idl
+	$(TAO_IDL) $**

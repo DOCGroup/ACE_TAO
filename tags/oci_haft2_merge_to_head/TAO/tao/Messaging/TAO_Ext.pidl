@@ -1,0 +1,60 @@
+// -*- IDL -*-
+
+// ================================================================
+/**
+ *  @file TAO_Ext.pidl
+ *
+ *  $Id$
+ *
+ *  This file contains extensions to the TAO-specific idl interfaces
+ *  (not part of CORBA  2.6) defined in $TAO_ROOT/tao
+ *
+ *  The steps to regenerate the code are as follows:
+ *
+ * 1. Run the tao_idl compiler on the pidl file.  The command used for
+ *   this is:
+ *
+ *   tao_idl
+ *       -o orig -Gp -Gd -Ge 1
+ *       -Wb,export_macro=TAO_Messaging_Export
+ *       -Wb,pre_include="ace/pre.h"
+ *       -Wb,post_include="ace/post.h"
+ *       -Wb,export_include="tao/corbafwd.h" TAO_Ext.pidl
+ *
+ *   2. Then patch the generated code.  The patch fixes the interface
+ *   repository IDs, disables the code under certain configurations,
+ *   and eliminates cycles in the include dependencies.
+ *
+ *   Apply patches using the following commands:
+ *
+ *   patch < diffs/TAO_ExtC.h.diff
+ *   patch < diffs/TAO_ExtC.i.diff
+ *   patch < diffs/TAO_ExtC.cpp.diff
+ *
+ *   @note The diffs were generated with these commands:
+ *
+ *   diff -wBbu orig/TAO_ExtC.h TAO_ExtC.h > diffs/TAO_ExtC.diff
+ *   diff -wBbu orig/TAO_ExtC.i TAO_ExtC.i >> diffs/TAO_ExtC.diff
+ *   diff -wBbu orig/TAO_ExtC.cpp TAO_ExtC.cpp >> diffs/TAO_ExtC.diff
+ */
+// ================================================================
+
+#ifndef TAO_TAO_EXT_IDL
+#define TAO_TAO_EXT_IDL
+
+#include "Policy.pidl"
+#include "TimeBase.pidl"
+
+#pragma prefix "tao"
+
+module TAO
+{
+  const CORBA::PolicyType CONNECTION_TIMEOUT_POLICY_TYPE = 0x54410008;
+
+    local interface ConnectionTimeoutPolicy : CORBA::Policy {
+    readonly attribute TimeBase::TimeT relative_expiry;
+    };
+
+};
+
+#endif /* TAO_TAO_EXT_IDL */

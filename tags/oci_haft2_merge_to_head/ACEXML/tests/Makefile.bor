@@ -1,0 +1,32 @@
+#----------------------------------------------------------------------------
+#       Borland Workspace
+#----------------------------------------------------------------------------
+
+!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
+
+all:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Transcoder_Test.bor all
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.NamespaceSupport_Test.bor all
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.HttpCharStream_Test.bor all
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ContentHandler_Test.bor all
+
+clean:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Transcoder_Test.bor clean
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.NamespaceSupport_Test.bor clean
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.HttpCharStream_Test.bor clean
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ContentHandler_Test.bor clean
+
+realclean:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Transcoder_Test.bor realclean
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.NamespaceSupport_Test.bor realclean
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.HttpCharStream_Test.bor realclean
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ContentHandler_Test.bor realclean
+
+install:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Transcoder_Test.bor install
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.NamespaceSupport_Test.bor install
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.HttpCharStream_Test.bor install
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ContentHandler_Test.bor install
+
+regenerate:
+	/usr/bin/perl /build/kitty/ACE_wrappers/bin/mwc.pl -type borland ACEXML.mwc

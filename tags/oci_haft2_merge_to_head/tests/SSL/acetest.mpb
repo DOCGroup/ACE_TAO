@@ -1,0 +1,17 @@
+project : aceexe {
+
+  after += Test_Output
+  libs  += Test_Output
+
+  Source_Files {
+    $(ACE_ROOT)/tests/Main.cpp
+  }
+  Header_Files {
+  }
+  Resource_Files {
+  }
+  Documentation_Files {
+  }
+  Inline_Files {
+  }
+}

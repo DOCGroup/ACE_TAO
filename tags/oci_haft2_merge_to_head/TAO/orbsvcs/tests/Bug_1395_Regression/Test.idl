@@ -1,0 +1,7 @@
+// $Id$
+
+interface Test
+{
+   long try_and_create_POA ();
+   void shutdown();
+};

@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                      "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+  <HEAD>
+    <!-- $Id$ -->
+    <TITLE>ACE+TAO Performance and Footprint Metrics</TITLE>
+    <LINK href="Stats.css" rel="stylesheet" type="text/css">
+  </HEAD>
+  <BODY>
+
+    <!--#include file="navigation.html"-->
+
+    <P>These pages track footprint and performance metrics for ACE+TAO.
+      The results are collected on one of our nightly regression tests. 
+      The complete source for the tests is available as part of the
+      ACE+TAO
+      <A HREF="http://ace.cs.wustl.edu/Download.html">
+	distribution
+      </A>.
+      The hardware and software configuration used for these tests is
+      described <A HREF="configuration.shtml">here</A>.
+      Notice, however, that the results contained here may be
+      different from what you will obtain using a TAO release or beta
+      kit, since the experiments are based on our current source tree.
+    </P>
+
+    <P>More information about ACE+TAO footprints, and the continuing
+      effort to reduce the library and application's code size can be
+      found in the
+      <A HREF="http://ace.cs.wustl.edu/cvsweb/ace-latest.cgi/ACE_wrappers/docs/ACE-subsets.html">
+	ACE+TAO subsetting
+      </A>
+      page.
+    </P>
+
+    <HR>
+
+    <H2>Performance Results</H2>
+
+    <P>ORB throughput, in requests per second,
+      using the performance test in:
+      <CODE>$ACE_ROOT/TAO/performance-tests/Single_Threaded_Latency</CODE>,
+      the ORB configuration is optimized for single threaded
+      applications using the <CODE>svc.conf</CODE> file in said
+      directory.
+      The test is executed over the loopback interface, using the
+      <CODE>run_test.pl</CODE> driver script in the same directory.
+    </P>
+    <DIV align="center">
+      <IMG alt="Single Threaded"
+	src="images/Single_Threaded.png"
+	width="640" height="480">
+    </DIV>
+
+    <HR>
+
+    <H2>Footprint Results</H2>
+
+    <P>Client footprint, in kilobytes, text and data segments for the test in 
+      <CODE>$ACE_ROOT/TAO/tests/ORB_init</CODE>.
+    </P>
+    <DIV align="center">
+      <IMG alt="ORB_init"
+	src="images/ORB_init_size.png"
+	width="640" height="480">
+    </DIV>
+
+    <P>Server footprint, in kilobytes, text and data segments for the test in 
+      <CODE>$ACE_ROOT/TAO/tests/ORB_init</CODE>.
+    </P>
+    <DIV align="center">
+      <IMG alt="ORB_destroy"
+	src="images/ORB_destroy_size.png"
+	width="640" height="480">
+    </DIV>
+
+<!--#include file="footer.html"-->
+
+  </BODY>
+</HTML>

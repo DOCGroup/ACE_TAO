@@ -1,0 +1,18 @@
+project : aceexe {
+
+  requires += rmcast
+  after += Test_Output
+  libs  += Test_Output
+
+  Source_Files {
+    Main.cpp
+  }
+  Header_Files {
+  }
+  Resource_Files {
+  }
+  Documentation_Files {
+  }
+  Inline_Files {
+  }
+}

@@ -1,0 +1,13 @@
+project(*server): taoserver, namingexe, property {
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(*client): server, namingexe, property {
+  exename  = client
+  Source_Files {
+    server.cpp
+  }
+}
+
