@@ -153,7 +153,7 @@ add_inheritance_flat (AST_Interface *i)
 {
   AST_Interface **oiseen_flat;
 
-  // Make sure there's space for one more
+  // Make sure there's space for one more.
   if (iallocated_flat == iused_flat)
     {
       if (iallocated_flat == 0)
@@ -180,7 +180,7 @@ add_inheritance_flat (AST_Interface *i)
         }
     }
 
-  // OK, now insert it
+  // OK, now insert it.
   iseen_flat[iused_flat++] = i;
 }
 
@@ -285,7 +285,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
   iused = 0;
   iused_flat = 0;
 
-  //Compute expanded flattened non-repeating list of interfaces
+  // Compute expanded flattened non-repeating list of interfaces
   // which this one inherits from.
 
   // Loop twice if nl and supports are nonempty.
@@ -298,14 +298,14 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
 
           while (!l->is_done ())
             {
-              // Check that scope stack is valid
+              // Check that scope stack is valid.
               if (idl_global->scopes  ()->top () == 0)
                 {
                   idl_global->err ()->lookup_error (l->item ());
                   return;
                 }
 
-              // Look it up
+              // Look it up.
               UTL_Scope *s = idl_global->scopes ()->top ();
 
               d = s->lookup_by_name  (l->item (),
@@ -399,8 +399,8 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
       nl = supports;
     }
 
-  // OK, install in interface header
-  // First the flat list (all ancestors)
+  // OK, install in interface header.
+  // First the flat list (all ancestors).
   this->pd_inherits_flat = new AST_Interface *[iused_flat];
 
   for (j = 0; j < iused_flat; j++)
@@ -410,7 +410,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
 
   this->pd_n_inherits_flat = iused_flat;
 
-  // Then the list of immediate ancestors
+  // Then the list of immediate ancestors.
   ACE_NEW (this->pd_inherits,
            AST_Interface *[iused]);
 
@@ -452,7 +452,7 @@ FE_InterfaceHeader::check_supports (AST_Interface *)
   return 0;
 }
 
-// Data accessors
+// Data accessors.
 
 UTL_ScopedName *
 FE_InterfaceHeader::interface_name (void)
@@ -539,7 +539,7 @@ FE_obv_header::FE_obv_header (UTL_ScopedName *n,
                        supports);
 }
 
-// check_ methods called from compile_inheritance()
+// check_ methods called from compile_inheritance().
 idl_bool
 FE_obv_header::check_first (AST_Interface *i)
 {

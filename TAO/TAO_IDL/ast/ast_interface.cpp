@@ -820,6 +820,11 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
                                         UTL_Scope *s,
                                         UTL_StrList *p)
 {
+  if (i == 0)
+    {
+      return;
+    }
+
   // Fwd redefinition should be in the same scope, so local
   // lookup is all that's needed.
   AST_Decl *d = s->lookup_by_name_local (i->local_name (), 
@@ -827,61 +832,69 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
 
   AST_Interface *fd = 0;
 
-  if (i != NULL && d != 0)
+  if (d != 0)
     {
-      // See if we're defining a forward declared interface.
-      if (d->node_type () == AST_Decl::NT_interface)
+      // If this interface has been forward declared in a previous opening
+      // of the module it's defined in, the lookup will find the
+      // forward declaration.
+      if (d->node_type () == AST_Decl::NT_interface_fwd)
         {
-          // Narrow to an interface
-          fd = AST_Interface::narrow_from_decl (d);
+          AST_InterfaceFwd *fwd_def = 
+            AST_InterfaceFwd::narrow_from_decl (d);
 
-          // Successful?
-          if (fd == 0)
+          fd = fwd_def->full_definition ();
+        }
+      // In all other cases, the lookup will find an interface node.
+      else if (d->node_type () == AST_Decl::NT_interface)
+        {
+          fd = AST_Interface::narrow_from_decl (d);
+        }
+
+      // Successful?
+      if (fd == 0)
+        {
+          // Should we give an error here?
+          // No, look in fe_add_interface.
+        }
+      // If it is a forward declared interface..
+      else if (!fd->is_defined ())
+        {
+          // Check if redefining in same scope. If a module is reopened,
+          // a new pointer in created, and the first term below will be
+          // true. In that case, the scoped names must be compared.
+          if (fd->defined_in () != s
+              && !AST_Interface::compare_names (fd,
+                                                i))
             {
-              // Should we give an error here?
-              // No, look in fe_add_interface.
+              idl_global->err ()->error2 (UTL_Error::EIDL_SCOPE_CONFLICT,
+                                          i,
+                                          fd);
             }
-          // If it is a forward declared interface..
-          else if (!fd->is_defined ())
+          // All OK, do the redefinition.
+          else
             {
-              // Check if redefining in same scope. If a module is reopened,
-              // a new pointer in created, and the first term below will be
-              // true. In that case, the scoped names must be compared.
-              if (fd->defined_in () != s
-                  && !AST_Interface::compare_names (fd,
-                                                    i))
+              // Only redefinition of the same kind.
+              if (i->is_local () != fd->is_local ()
+#             ifdef IDL_HAS_VALUETYPE
+                  || i->is_valuetype () != fd->is_valuetype ()
+                  || i->is_abstract_valuetype () != 
+                       fd->is_abstract_valuetype ()
+                  || i->is_abstract () != fd->is_abstract ()
+#             endif /* IDL_HAS_VALUETYPE */
+                  )
                 {
-                  idl_global->err ()->error2 (UTL_Error::EIDL_SCOPE_CONFLICT,
+                  idl_global->err ()->error2 (UTL_Error::EIDL_REDEF,
                                               i,
                                               fd);
+                  return;
                 }
-              // All OK, do the redefinition.
-              else
-                {
-                  // Only redefinition of the same kind.
-                  if (i->is_local () != fd->is_local ()
-#                 ifdef IDL_HAS_VALUETYPE
-                      || i->is_valuetype () != fd->is_valuetype ()
-                      || i->is_abstract_valuetype () != 
-                           fd->is_abstract_valuetype ()
-                      || i->is_abstract () != fd->is_abstract ()
-#                 endif /* IDL_HAS_VALUETYPE */
-                      )
-                    {
-                      idl_global->err ()->error2 (UTL_Error::EIDL_REDEF,
-                                                  i,
-                                                  fd);
-                      return;
-                    }
 
+              fd->redefine (i,
+                            p);
 
-                  fd->redefine (i,
-                                p);
-
-                  // Use full definition node.
-                  delete i;
-                  i = fd;
-                }
+              // Use full definition node.
+              delete i;
+              i = fd;
             }
         }
     }
