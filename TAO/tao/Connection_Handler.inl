@@ -44,53 +44,6 @@ TAO_Connection_Handler::is_connect_successful (void) const
 }
 
 ACE_INLINE int
-TAO_Connection_Handler::incr_refcount (void)
-{
-  ACE_GUARD_RETURN (ACE_Lock,
-                    ace_mon,
-                    *this->pending_upcall_lock_, -1);
-
-  return ++this->reference_count_;
-}
-
-ACE_INLINE void
-TAO_Connection_Handler::decr_refcount (void)
-{
-  {
-    ACE_GUARD (ACE_Lock,
-               ace_mon,
-               *this->pending_upcall_lock_);
-
-    --this->reference_count_;
-  }
-
-  if (this->reference_count_ == 0)
-    this->handle_close_i ();
-}
-
-ACE_INLINE int
-TAO_Connection_Handler::incr_pending_upcalls (void)
-{
-  ACE_GUARD_RETURN (ACE_Lock,
-                    ace_mon,
-                    *this->pending_upcall_lock_, -1);
-
-  return ++this->pending_upcalls_;
-
-
-}
-
-ACE_INLINE int
-TAO_Connection_Handler::decr_pending_upcalls (void)
-{
-  ACE_GUARD_RETURN (ACE_Lock,
-                    ace_mon,
-                    *this->pending_upcall_lock_, -1);
-
-  return --this->pending_upcalls_;
-}
-
-ACE_INLINE int
 TAO_Connection_Handler::pending_upcalls (void) const
 {
   return this->pending_upcalls_;
