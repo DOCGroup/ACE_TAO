@@ -50,6 +50,7 @@ sub new {
   $self->{'addtemp'}       = $addtemp;
   $self->{'addproj'}       = $addproj;
   $self->{'toplevel'}      = $toplevel;
+  $self->{'files_written'} = [];
 
   return $self;
 }
@@ -61,8 +62,8 @@ sub collect_line {
   my($lref)        = shift;
   my($line)        = shift;
   my($status)      = 1;
-  my($errorString) = '';   
-      
+  my($errorString) = '';
+
   $$lref .= $self->strip_line($line);
 
   if ($$lref =~ /\\$/) {
@@ -115,6 +116,9 @@ sub generate {
   my($self)   = shift;
   my($input)  = shift;
   my($status) = 1;
+
+  ## Reset the files_written array between processing each file
+  $self->{'files_written'}  = [];
 
   ## Allow subclasses to reset values before
   ## each call to generate().
@@ -384,6 +388,27 @@ sub get_addproj {
 sub get_toplevel {
   my($self) = shift;
   return $self->{'toplevel'};
+}
+
+
+sub add_file_written {
+  my($self) = shift;
+  my($file) = shift;
+
+  foreach my $written (@{$self->{'files_written'}}) {
+    if ($written eq $file) {
+      print "WARNING: $file has been overwritten by a " .
+            "$self->{'grammar_type'} with a duplicate name.\n";
+      last;
+    }
+  }
+  push(@{$self->{'files_written'}}, $file);
+}
+
+
+sub get_files_written {
+  my($self) = shift;
+  return $self->{'files_written'};
 }
 
 # ************************************************************
