@@ -2185,8 +2185,25 @@ extern "C" int sigwait (sigset_t *set);
 #include /**/ <tiuser.h> 
 #endif /* ACE_HAS_TIUSER_H */
 
+/* Set the proper handle type for dynamically-loaded libraries. */
+/* Also define a default 'mode' for loading a library - the names and values */
+/* differ between OSes, so if you write code that uses the mode, be careful */
+/* of the platform differences. */
 #if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
 #include /**/ <dlfcn.h>
+typedef void *ACE_SHLIB_HANDLE;
+const int ACE_DEFAULT_SHLIB_MODE = RTLD_LAZY;
+#elif defined (ACE_WIN32)
+typedef HINSTANCE ACE_SHLIB_HANDLE;
+const int ACE_DEFAULT_SHLIB_MODE = 0;
+#elif defined (__hpux)
+# if __cplusplus >= 199707L
+#include /**/ <dl.h>
+# else
+#include /**/ <cxxdl.h>
+# endif /* HP aC++ vs. HP C++ */
+typedef shl_t ACE_SHLIB_HANDLE;
+const int ACE_DEFAULT_SHLIB_MODE = BIND_DEFERRED;
 #endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 
 #if defined (ACE_HAS_SOCKIO_H)
@@ -2855,10 +2872,11 @@ public:
   static int hostname (char *name, size_t maxnamelen);
 
   // = A set of wrappers for explicit dynamic linking.
-  static int dlclose (void *handle);
+  static int dlclose (ACE_SHLIB_HANDLE handle);
   static char *dlerror (void);
-  static void *dlopen (ACE_DL_TYPE filename, int mode);
-  static void *dlsym (void *handle, ACE_DL_TYPE symbol);
+  static ACE_SHLIB_HANDLE dlopen (ACE_DL_TYPE filename,
+				  int mode = ACE_DEFAULT_SHLIB_MODE);
+  static void *dlsym (ACE_SHLIB_HANDLE handle, ACE_DL_TYPE symbol);
 
   // = A set of wrappers for stdio file operations.
   static int last_error (void);
@@ -3255,7 +3273,8 @@ public:
   static int hostname (wchar_t *name, size_t maxnamelen);
   static ACE_HANDLE open (const wchar_t *filename, int mode, int perms = 0);
   static int unlink (const wchar_t *path);
-  static void *dlopen (ACE_WIDE_DL_TYPE filename, int mode);
+  static ACE_SHLIB_HANDLE dlopen (ACE_WIDE_DL_TYPE filename,
+				  int mode = ACE_DEFAULT_SHLIB_MODE);
   static wchar_t *mktemp (wchar_t *t);
   static int mkdir (const wchar_t *path, mode_t mode = ACE_DEFAULT_DIR_PERMS);
   static int chdir (const wchar_t *path);
@@ -3434,6 +3453,26 @@ private:
    do { POINTER = ALLOCATOR; \
      if (POINTER == 0) { errno = ENOMEM; return; } \
    } while (0)
+
+#if defined (ACE_HAS_SIGNAL_SAFE_OS_CALLS)
+// The following two macros ensure that system calls are properly
+// restarted (if necessary) when interrupts occur.
+#define ACE_OSCALL(OP,TYPE,FAILVALUE,RESULT) \
+  do \
+    RESULT = (TYPE) OP; \
+  while (RESULT == FAILVALUE && errno == EINTR && ACE_LOG_MSG->restart ())
+#define ACE_OSCALL_RETURN(OP,TYPE,FAILVALUE) \
+  do { \
+    TYPE ace_result_; \
+    do \
+      ace_result_ = (TYPE) OP; \
+    while (ace_result_ == FAILVALUE && errno == EINTR && ACE_LOG_MSG->restart ()); \
+    return ace_result_; \
+  } while (0)
+#else
+#define ACE_OSCALL_RETURN(OP,TYPE,FAILVALUE) do { TYPE ace_result_ = FAILVALUE; ace_result_ = ace_result_; return OP; } while (0)
+#define ACE_OSCALL(OP,TYPE,FAILVALUE,RESULT) do { RESULT = (TYPE) OP; } while (0)
+#endif /* ACE_HAS_SIGNAL_SAFE_OS_CALLS */
 
 #if !defined (ACE_DEFAULT_MUTEX_A)
 #define ACE_DEFAULT_MUTEX_A "ACE_MUTEX"
