@@ -34,7 +34,6 @@
 #include "ace/CORBA_macros.h"
 #include "ace/SString.h"
 
-
 class TAO_OutputCDR;
 class TAO_InputCDR;
 
@@ -146,7 +145,7 @@ namespace CORBA
    * @brief User exceptions are those defined by application developers
    * using OMG-IDL.
    */
-  class TAO_Export UserException : public CORBA::Exception
+  class TAO_Export UserException : public Exception
   {
   public:
 
@@ -275,17 +274,12 @@ namespace CORBA
   // inside the ORB.  All minor codes should be symbolically catalogued.
 
 #define TAO_SYSTEM_EXCEPTION(name) \
-  class TAO_Export name : public CORBA::SystemException \
+  class TAO_Export name : public SystemException \
   { \
   public: \
     name (void); \
     name (CORBA::ULong code, \
-          CORBA::CompletionStatus completed) \
-      : CORBA::SystemException ("IDL:omg.org/CORBA/" #name ":1.0", \
-                                #name, \
-                                code, \
-                                completed) \
-      { } \
+          CORBA::CompletionStatus completed); \
     static name * _downcast (CORBA::Exception* exception); \
     virtual int _is_a (const char* type_id) const; \
     virtual void _raise (void); \
