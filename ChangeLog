@@ -1,3 +1,13 @@
+Wed Jul  2 23:34:18 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/RMCast/RMCast_Fragment_Test.dsp:
+        * tests/RMCast/RMCast_Membership_Test.dsp:
+        * tests/RMCast/RMCast_Reassembly_Test.dsp:
+        * tests/RMCast/RMCast_Reordering_Test.dsp:
+        * tests/RMCast/RMCast_Retransmission_Test.dsp:
+        * tests/RMCast/RMCast_UDP_Best_Effort_Test.dsp:
+          Added Main.cpp to the projects.
+
 Wed Jul  2 23:10:25 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/RMCast/Makefile:
