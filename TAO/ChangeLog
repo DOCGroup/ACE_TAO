@@ -1,3 +1,9 @@
+Thu Dec 23 16:35:22 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
+
+	  Fixed warnings in VC6 builds.
+
 Thu Dec 23 14:44:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
