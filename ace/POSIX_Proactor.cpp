@@ -1204,14 +1204,9 @@ ACE_POSIX_AIOCB_Proactor::cancel_aiocb ( ACE_POSIX_Asynch_Result * result )
 
 ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (void)
 {
-  // = Mask all the signals, keep a mask set with ACE_SIGRTMIN and set
-  //   up signal handler for SIGRTMIN.
-
-  // Mask all the signals.
-  if (this->mask_all () != 0)
-    return;
-
-  // = Keep a mask set with ACE_SIGRTMIN.
+  // = Set up the mask we'll use to block waiting for SIGRTMIN. Use that
+  // to add it to the signal mask for this thread, and also set the process
+  // signal action to pass signal information when we want it.
 
   // Clear the signal set.
   if (sigemptyset (&this->RT_completion_signals_) == -1)
@@ -1224,15 +1219,15 @@ ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (void)
     ACE_ERROR ((LM_ERROR,
                 "Error:%p\n",
                 "Couldnt init the RT completion signal set"));
-
-  // Set up the signal handler for SIGRTMIN.
-  setup_signal_handler (ACE_SIGRTMIN);
+  this->mask_signals (&this->RT_completion_signals_);
+  // Set up the signal action for SIGRTMIN.
+  this->setup_signal_handler (ACE_SIGRTMIN);
 }
 
 ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (const sigset_t signal_set)
 {
   // = Keep <Signal_set> with the Proactor, mask all the signals and
-  //   setup signal handlers for the signals in the <signal_set>.
+  //   setup signal actions for the signals in the <signal_set>.
 
   // = Keep <signal_set> with the Proactor.
 
@@ -1242,25 +1237,9 @@ ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (const sigset_t signal_set)
                 "Error:(%P | %t):%p\n",
                 "sigemptyset failed"));
 
-  //  Put the <signal_set>.
-  if (ACE_OS::pthread_sigmask (SIG_SETMASK, &signal_set, 0) != 0)
-    ACE_ERROR ((LM_ERROR,
-                "Error:(%P | %t):%p\n",
-                "pthread_sigmask failed"));
-
-  // Get the <signal_set> back from the OS.
-  if (ACE_OS::pthread_sigmask (SIG_SETMASK, 0, &this->RT_completion_signals_) != 0)
-    ACE_ERROR ((LM_ERROR,
-                "Error:(%P | %t):%p\n",
-                "ACE_OS::pthread_sigmask failed"));
-
-
-  // Mask all the signals.
-  if (this->mask_all () != 0)
-    return;
-
-  // For each signal number present in the <signal_set>, set up the
-  // signal handler.
+  // For each signal number present in the <signal_set>, add it to
+  // the signal set we use, and also set up its process signal action
+  // to allow signal info to be passed into sigwait/sigtimedwait.
   int member = 0;
   for (int si = ACE_SIGRTMIN; si <= ACE_SIGRTMAX; si++)
     {
@@ -1273,10 +1252,15 @@ ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (const sigset_t signal_set)
                     "sigismember failed"));
       else if (member == 1)
         {
-          if (this->setup_signal_handler (si) == -1)
-            return;
+          sigaddset (&this->RT_completion_signals_, si);
+          this->setup_signal_handler (si);
         }
     }
+
+  // Mask all the signals.
+  this->mask_signals (&this->RT_completion_signals_);
+
+  return;
 }
 
 ACE_POSIX_SIG_Proactor::~ACE_POSIX_SIG_Proactor (void)
@@ -1439,18 +1423,14 @@ ACE_POSIX_SIG_Proactor::create_asynch_timer (ACE_Handler &handler,
 int
 ACE_POSIX_SIG_Proactor::setup_signal_handler (int signal_number) const
 {
-  // Set up the handler(actually Null handler) for this real-time
-  // signal.
+  // Set up the specified signal so that signal information will be
+  // passed to sigwaitinfo/sigtimedwait. Don't change the default
+  // signal handler - having a handler and waiting for the signal can
+  // produce undefined behavior.
   struct sigaction reaction;
   sigemptyset (&reaction.sa_mask);   // Nothing else to mask.
   reaction.sa_flags = SA_SIGINFO;    // Realtime flag.
-#if defined (SA_SIGACTION)
-  // Lynx says, it is better to set this bit, to be portable.
-  reaction.sa_flags &= SA_SIGACTION;
-#endif /* SA_SIGACTION */
-  // Null handler function.
-  reaction.sa_sigaction =
-    ACE_SIGNAL_C_FUNC (&ACE_POSIX_SIG_Proactor::null_handler);
+  reaction.sa_sigaction = ACE_SIGNAL_C_FUNC (SIG_DFL);
   int sigaction_return = ACE_OS::sigaction (signal_number,
                                             &reaction,
                                             0);
@@ -1462,37 +1442,15 @@ ACE_POSIX_SIG_Proactor::setup_signal_handler (int signal_number) const
   return 0;
 }
 
-void
-ACE_POSIX_SIG_Proactor::null_handler (int signal_number,
-                                      siginfo_t * /* info */,
-                                      void *      /* context */)
-{
-  ACE_ERROR ((LM_ERROR,
-              "Error:(%P | %t):ACE_POSIX_SIG_Proactor::null_handler called,"
-              "Signal number %d,"
-              "Mask all the RT signals for this thread\n",
-              signal_number));
-}
 
 int
-ACE_POSIX_SIG_Proactor::mask_all (void) const
+ACE_POSIX_SIG_Proactor::mask_signals (const sigset_t *signals) const
 {
-  sigset_t full_set;
-
-  // Get full set.
-  if (sigfillset (&full_set) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error:(%P | %t):%p\n",
-                       "sigfillset failed"),
-                      -1);
-
-  // Mask them.
-  if (ACE_OS::pthread_sigmask (SIG_SETMASK, &full_set, 0) != 0)
+  if (ACE_OS::pthread_sigmask (SIG_BLOCK, signals, 0) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:(%P | %t):%p\n",
                        "pthread_sigmask failed"),
                       -1);
-
   return 0;
 }
 
@@ -1503,7 +1461,7 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
   siginfo_t sig_info;
 
   // Mask all the signals.
-  if (this->mask_all () != 0)
+  if (this->mask_signals (&this->RT_completion_signals_) != 0)
     return -1;
 
   // Wait for the signals.

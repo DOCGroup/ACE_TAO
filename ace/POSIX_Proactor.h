@@ -467,12 +467,8 @@ protected:
   /// To setup the handler for a real-time signbal.
   int setup_signal_handler (int signal_number) const;
 
-  /// Dummy signal handler. This wont get called at all, since we are
-  /// going to be masking the signal in all the threads.
-  static void null_handler (int signal_number, siginfo_t *info, void *context);
-
-  /// To mask all the signals in a thread.
-  int mask_all (void) const;
+  /// To mask all the specified signals in a thread.
+  int mask_signals (const sigset_t *signals) const;
 
   /**
    * Dispatch a single set of events.  If <milli_seconds> elapses
