@@ -160,9 +160,6 @@ class TAO_Export TAO_InputCDR : public ACE_InputCDR
   //   support all OMG-IDL datatypes, even those not supported
   //   directly by put/get primitives.
 public:
-  friend class TAO_GIOP;
-  // This class is able to "read" an InputCDR from a socket.
-
   TAO_InputCDR (const char* buf,
                 size_t bufsiz,
                 int byte_order = ACE_CDR_BYTE_ORDER,
