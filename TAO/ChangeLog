@@ -1,3 +1,10 @@
+Wed Aug 27 06:22:21 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/InterfaceRepo_IDL3_Test.mpc:
+
+          Set the IDL_Files to empty since the idl file in this directory
+          isn't meant to be compiled.
+
 Tue Aug 26 17:57:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/Makefile:
@@ -18,88 +25,88 @@ Tue Aug 26 17:57:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Aug 26 16:19:30 2003  George Edwards <g.edwards@vanderbilt.edu>
 
-        * tests/OBV/Collocated/Forward/Client_Task.cpp 
-        * tests/OBV/Collocated/Forward/Client_Task.h 
-        * tests/OBV/Collocated/Forward/Collocated_Test.cpp 
-        * tests/OBV/Collocated/Forward/OBV_Forward.mpc 
-        * tests/OBV/Collocated/Forward/Server_Task.cpp 
-        * tests/OBV/Collocated/Forward/Server_Task.h 
-        * tests/OBV/Collocated/Forward/Test_impl.cpp 
-        * tests/OBV/Collocated/Forward/Test_impl.h 
-        * tests/OBV/Collocated/Forward/TreeBase.idl 
-        * tests/OBV/Collocated/Forward/TreeController.idl 
-        * tests/OBV/Collocated/Forward/TreeNode.idl 
-        * tests/OBV/Collocated/Forward/run_test.pl 
+        * tests/OBV/Collocated/Forward/Client_Task.cpp
+        * tests/OBV/Collocated/Forward/Client_Task.h
+        * tests/OBV/Collocated/Forward/Collocated_Test.cpp
+        * tests/OBV/Collocated/Forward/OBV_Forward.mpc
+        * tests/OBV/Collocated/Forward/Server_Task.cpp
+        * tests/OBV/Collocated/Forward/Server_Task.h
+        * tests/OBV/Collocated/Forward/Test_impl.cpp
+        * tests/OBV/Collocated/Forward/Test_impl.h
+        * tests/OBV/Collocated/Forward/TreeBase.idl
+        * tests/OBV/Collocated/Forward/TreeController.idl
+        * tests/OBV/Collocated/Forward/TreeNode.idl
+        * tests/OBV/Collocated/Forward/run_test.pl
 
           Added new test for Bugzilla 1390.
 
 Tue Aug 26 15:16:30 2003  Yamuna Krishnamurthy <yamuna@oomworks.com>
 
-	* orbsvcs/orbsvcs/AV/UDP.cpp: 
+        * orbsvcs/orbsvcs/AV/UDP.cpp:
 
-	  Set the local control address to the appropriate address for RTP
-	  flow protocols in TAO_AV_UDP_Connector::connect.
+          Set the local control address to the appropriate address for RTP
+          flow protocols in TAO_AV_UDP_Connector::connect.
 
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.i: 	
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.i:
 
-	  In TAO_FlowSpec_Entry::parse_flow_protocol_string checked if
-	  flow_string was null string.
+          In TAO_FlowSpec_Entry::parse_flow_protocol_string checked if
+          flow_string was null string.
 
-	* orbsvcs/orbsvcs/AV/RTP.cpp: 
+        * orbsvcs/orbsvcs/AV/RTP.cpp:
 
-	  Copied the data received into host_byte_order_payload_ when not
-	  required to correct the network byte ordering.
+          Copied the data received into host_byte_order_payload_ when not
+          required to correct the network byte ordering.
 
-	* orbsvcs/tests/AVStreams/Component_Switching/sender.cpp: 
+        * orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
 
-	  Removed the signal handler.
-	
+          Removed the signal handler.
+
         * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp:
 
-	  Took care of '\r' and '\n' characters terminating the endpoint
-	  info strings in the address file.
+          Took care of '\r' and '\n' characters terminating the endpoint
+          info strings in the address file.
 
-	* orbsvcs/tests/AVStreams/Modify_QoS/Makefile: 
+        * orbsvcs/tests/AVStreams/Modify_QoS/Makefile:
 
-	  Updated dependencies.
-	
-	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 	
-	* orbsvcs/tests/AVStreams/Full_Profile/ftp.h: 		
+          Updated dependencies.
 
-	  Added local and peer addresses to be specified through command
-	  line arguments.
+        * orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Full_Profile/ftp.h:
 
-	* orbsvcs/tests/AVStreams/Full_Profile/run_test.pl: 			
-	 
-	  Added test for TCP protocol.
+          Added local and peer addresses to be specified through command
+          line arguments.
 
-	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp: 	
-	* orbsvcs/tests/AVStreams/Pluggable/ftp.h: 		
+        * orbsvcs/tests/AVStreams/Full_Profile/run_test.pl:
 
-	  Added local and peer addresses to be specified through command
-	  line arguments.
+          Added test for TCP protocol.
 
-	* orbsvcs/tests/AVStreams/Pluggable/run_test.pl: 			
-	 
-	  Added test for TCP and RTP/UDP protocol.
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.h:
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp: 	
+          Added local and peer addresses to be specified through command
+          line arguments.
 
-	  Added default local address. Set the peer address.
-	
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl: 		
-	
-	  Added test for TCP and RTP/UDP protocol.
+        * orbsvcs/tests/AVStreams/Pluggable/run_test.pl:
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp: 	
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.h  : 	
+          Added test for TCP and RTP/UDP protocol.
 
-  	  Added local and peer addresses to be specified through command
-	  line arguments.
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp:
+
+          Added default local address. Set the peer address.
+
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl:
+
+          Added test for TCP and RTP/UDP protocol.
+
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.h  :
+
+          Added local and peer addresses to be specified through command
+          line arguments.
 
 Tue Aug 26 14:13:35 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile.RTSched: Updated dependencies.
+        * orbsvcs/orbsvcs/Makefile.RTSched: Updated dependencies.
 
 Tue Aug 26 18:56:32 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -108,8 +115,8 @@ Tue Aug 26 18:56:32 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Aug 26 13:34:16 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp: Fixed variable
-	  redefinition error in Win2K_MSVC6_DLL_Core build.
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp: Fixed variable
+          redefinition error in Win2K_MSVC6_DLL_Core build.
 
 Tue Aug 26 17:59:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -125,52 +132,52 @@ Tue Aug 26 17:59:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Aug 26 09:21:32 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/Portable_Interceptors/Collocated/Dynamic/Collocated_Test.cpp (named_orbs):
+        * tests/Portable_Interceptors/Collocated/Dynamic/Collocated_Test.cpp (named_orbs):
 
-	  Removed this unused static global variable.  Fixes a
-	  compile-time warning.
+          Removed this unused static global variable.  Fixes a
+          compile-time warning.
 
 Tue Aug 26 09:16:55 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/Portable_Interceptors/Dynamic/test_i.cpp (the_structure):
+        * tests/Portable_Interceptors/Dynamic/test_i.cpp (the_structure):
 
-	  Fixed "return-statement with no value" warning.
+          Fixed "return-statement with no value" warning.
 
 Tue Aug 26 09:15:44 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp (fini):
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp (fini):
 
-	  Fixed emulated exception macro usage.
+          Fixed emulated exception macro usage.
 
 Tue Aug 26 09:06:19 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp
-	  (generate_class_definition):
+        * TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp
+          (generate_class_definition):
 
-	  Declared a constant variable in interceptor related code in the
-	  generated stub as "const".
+          Declared a constant variable in interceptor related code in the
+          generated stub as "const".
 
-	* TAO_IDL/be/be_visitor_operation/interceptors_result.cpp
-	  (visit_union):
+        * TAO_IDL/be/be_visitor_operation/interceptors_result.cpp
+          (visit_union):
 
-	  Distinguish between variable and fixed length unions when
-	  generating the PortableInterceptor::RequestInfo::result()
-	  implementation.
+          Distinguish between variable and fixed length unions when
+          generating the PortableInterceptor::RequestInfo::result()
+          implementation.
 
 Tue Aug 26 11:03:01 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
-	  Fixed undefined variable compile error in Solaris_9_Forte7 build.
+        * examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
+          Fixed undefined variable compile error in Solaris_9_Forte7 build.
 
 Tue Aug 26 10:46:51 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Scheduler_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.cpp:
-	* orbsvcs/examples/RtEC/Kokyu/Service.cpp:
-	* orbsvcs/examples/RtEC/Schedule/Service.cpp:
-	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp:
-	  Added appropriate explicit template instantiations to get rid of errors in
-	  RH71_Explicit_Templates build.
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.cpp:
+        * orbsvcs/examples/RtEC/Kokyu/Service.cpp:
+        * orbsvcs/examples/RtEC/Schedule/Service.cpp:
+        * orbsvcs/Scheduling_Service/Scheduling_Service.cpp:
+          Added appropriate explicit template instantiations to get rid of errors in
+          RH71_Explicit_Templates build.
 
 Tue Aug 26 08:23:22 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -179,16 +186,16 @@ Tue Aug 26 08:23:22 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Aug 25 20:20:00 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h:
-	* orbsvcs/orbsvcs/RtecScheduler.idl: Fixed throw specifications to
-	  fix compile warnings in Win2K_BCB6_Pro_Static_Release build.
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h:
+        * orbsvcs/orbsvcs/RtecScheduler.idl: Fixed throw specifications to
+          fix compile warnings in Win2K_BCB6_Pro_Static_Release build.
 
 Mon Aug 25 14:47:53 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Collocated_ORBInitializer.cpp (pre_init):
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Collocated_ORBInitializer.cpp (pre_init):
 
-	  Fixed "unused argument" warning.
+          Fixed "unused argument" warning.
 
 Mon Aug 25 16:24:38 2003  George Edwards <g.edwards@vanderbilt.edu>
 
@@ -209,34 +216,34 @@ Mon Aug 25 13:56:22 2003  George Edwards <g.edwards@vanderbilt.edu>
 
 Mon Aug 25 12:30:52 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* docs/releasenotes/index.html:
+        * docs/releasenotes/index.html:
 
-	  Updated load balancer release notes.
+          Updated load balancer release notes.
 
 Mon Aug 25 12:00:30 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_operation/interceptors_result.cpp
-	  (visit_sequence, visit_structure, visit_union):
+        * TAO_IDL/be/be_visitor_operation/interceptors_result.cpp
+          (visit_sequence, visit_structure, visit_union):
 
-	  Force the copying version of the Any insertion operator to be
-	  used when inserting variable length types in the Any return
-	  value of the operation-specific
-	  PortableInterceptor::RequestInfo::result() implementation.
-	  Fixes a segmentation fault due to double deletion of the object
-	  inserted into the Any.  Thanks to Philip Leishman
-	  <leishman@rheinmetall-de.com> for detecting the original problem
-	  with variable length structures.
+          Force the copying version of the Any insertion operator to be
+          used when inserting variable length types in the Any return
+          value of the operation-specific
+          PortableInterceptor::RequestInfo::result() implementation.
+          Fixes a segmentation fault due to double deletion of the object
+          inserted into the Any.  Thanks to Philip Leishman
+          <leishman@rheinmetall-de.com> for detecting the original problem
+          with variable length structures.
 
-	* tests/Portable_Interceptors/Dynamic/client.cpp:
-	* tests/Portable_Interceptors/Dynamic/interceptors.cpp:
-	* tests/Portable_Interceptors/Dynamic/interceptors.h:
-	* tests/Portable_Interceptors/Dynamic/test.idl:
-	* tests/Portable_Interceptors/Dynamic/test_i.cpp:
-	* tests/Portable_Interceptors/Dynamic/test_i.h:
+        * tests/Portable_Interceptors/Dynamic/client.cpp:
+        * tests/Portable_Interceptors/Dynamic/interceptors.cpp:
+        * tests/Portable_Interceptors/Dynamic/interceptors.h:
+        * tests/Portable_Interceptors/Dynamic/test.idl:
+        * tests/Portable_Interceptors/Dynamic/test_i.cpp:
+        * tests/Portable_Interceptors/Dynamic/test_i.h:
 
-	  Added code that exercises
-	  PortableInterceptor::RequestInfo::result() method when variable
-	  length structures are used as return types.
+          Added code that exercises
+          PortableInterceptor::RequestInfo::result() method when variable
+          length structures are used as return types.
 
 Mon Aug 25 18:41:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -285,10 +292,10 @@ Mon Aug 25 08:41:13 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 Mon Aug 25 08:05:38 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/examples/RtEC/Schedule/Schedule.h:
-	* orbsvcs/examples/RtEC/Schedule/Service.cpp: Fixed compile errors
-	  caused by changes to compute_scheduling and dump_schedule
-	  methods.
+        * orbsvcs/examples/RtEC/Schedule/Schedule.h:
+        * orbsvcs/examples/RtEC/Schedule/Service.cpp: Fixed compile errors
+          caused by changes to compute_scheduling and dump_schedule
+          methods.
 
 Mon Aug 25 08:02:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
