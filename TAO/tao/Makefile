@@ -97,6 +97,10 @@ ORB_CORE_FILES = \
 
 DYNAMIC_ANY_FILES =
 
+ifndef minimum_corba
+  minimum_corba = 0
+endif # minimum_corba
+
 ifeq ($(minimum_corba),0)
 
 POA_FILES += \

@@ -1,3 +1,13 @@
+Fri Mar 19 03:24:34 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Singleton.cpp (instance): Commented out the call to
+	  ACE_Object_Manager::at_exit().  Currently, this is causing
+	  multiple instances of ACE_Object_Manager to get created, and
+	  hence causing all sorts of problems.
+
+	* ace/OS.cpp (cleanup_tss): Removed the call to
+	  free_all_keys_left() as per David's instructions.
+
 Fri Mar 19 00:15:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	The following changes are specific to WindowsCE.  They are
