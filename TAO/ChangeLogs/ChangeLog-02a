@@ -1,3 +1,12 @@
+Thu Mar 14 13:50:59 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        Committing this change for Scott Harris <harris_s@ociweb.com>.
+
+        * orbsvcs/examples/Security/Send_File/Send_File_Server.dsp:
+
+          Changed %ACE_ROOT%/bin/tao_idl to a relative path to be consistent
+          with other project files.
+
 Thu Mar 14 13:44:15 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         Committing this change for Yan Dai <dai_y@ociweb.com>.
