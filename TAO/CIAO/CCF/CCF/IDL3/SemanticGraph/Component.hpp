@@ -43,9 +43,39 @@ namespace CCF
         static_type_info ();
 
       protected:
+        User ()
+        {
+          type_info (static_type_info ());
+        }
+      };
+
+
+      class MultiUser : public virtual User
+      {
+      public:
+        static Introspection::TypeInfo const&
+        static_type_info ();
+
+      protected:
         friend class Graph<Node, Edge>;
 
-        User ()
+        MultiUser ()
+        {
+          type_info (static_type_info ());
+        }
+      };
+
+
+      class SingleUser : public virtual User
+      {
+      public:
+        static Introspection::TypeInfo const&
+        static_type_info ();
+
+      protected:
+        friend class Graph<Node, Edge>;
+
+        SingleUser ()
         {
           type_info (static_type_info ());
         }

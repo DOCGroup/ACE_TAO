@@ -22,12 +22,16 @@ namespace CCF
           Uses (Context& c);
 
           virtual void
+          multiple ();
+
+          virtual void
           type (IdentifierPtr const& id);
 
           virtual void
           name (SimpleIdentifierPtr const& id);
 
         private:
+          bool multiple_;
           SemanticGraph::Interface* type_;
         };
       }

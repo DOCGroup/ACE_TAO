@@ -56,6 +56,45 @@ namespace CCF
       static_type_info () { return user_; }
 
 
+      // MultiUser
+      //
+      //
+      namespace
+      {
+        TypeInfo
+        multi_user_init_ ()
+        {
+          TypeInfo ti (typeid (MultiUser));
+          ti.add_base (Access::PUBLIC, true, User::static_type_info ());
+          return ti;
+        }
+
+        TypeInfo multi_user_ (multi_user_init_ ());
+      }
+
+      TypeInfo const& MultiUser::
+      static_type_info () { return multi_user_; }
+
+
+      // SingleUser
+      //
+      //
+      namespace
+      {
+        TypeInfo
+        single_user_init_ ()
+        {
+          TypeInfo ti (typeid (SingleUser));
+          ti.add_base (Access::PUBLIC, true, User::static_type_info ());
+          return ti;
+        }
+
+        TypeInfo single_user_ (single_user_init_ ());
+      }
+
+      TypeInfo const& SingleUser::
+      static_type_info () { return single_user_; }
+
       // Publisher
       //
       //
