@@ -10,7 +10,7 @@ LSRC = RtEC_Based_CosEC.cpp
 
 ES_OBJS=$(LSRC:.cpp=.o)
 
-LDLIBS = -lTAO_RTEC_COSEC -lTAO_CosEvent -lTAO_RTEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_Messaging -lTAO_IORTable -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_RTEC_COSEC -lTAO_CosEvent -lTAO_RTEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_Messaging -lTAO_IORTable $(TAO_SRVR_LIBS)
 
 BIN2 = RtEC_Based_CosEC
 
