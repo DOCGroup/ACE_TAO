@@ -35,10 +35,10 @@
 const int SOURCE_ID = 1001;
 
 static const char usage [] = 
-"[-? |\n"
-"            [-O[RBport] ORB port number]"
-"            [-m <count> of messages to send [100]"
-"            [-f name of schedler input data file]]";
+"[[-?]\n"
+"                 [-O[RBport] ORB port number]\n"
+"                 [-m <count> of messages to send [100]\n"
+"                 [-f name of schedler input data file]]\n";
 
 static u_int total_messages = 100;
 
@@ -551,38 +551,34 @@ get_options (int argc,
 {
   // We need the 'O' in get_opt() because we also want to have ORB
   // parameters, they all start with 'O'.
-  ACE_Get_Opt get_opt (argc, argv, "O:?m:f:");
+  ACE_Get_Opt get_opt (argc, argv, "m:f:");
   int opt;
   int temp;
 
-  while ((opt = get_opt ()) != EOF)
+  while ((opt = get_opt ()) != -1)
     {
       switch (opt) 
         {
-        case '?':
-          ACE_DEBUG ((LM_DEBUG,
-                      "Usage: %s %s\n",
-                      argv[0], usage));
-          ACE_OS::exit (0);
-          break;
         case 'm':
           temp = ACE_OS::atoi (get_opt.optarg);
           if (temp > 0)
             {
               total_messages = (u_int) temp;
-              cout << "Messages to send:" << total_messages << endl;
+               ACE_DEBUG ((LM_DEBUG,
+                           "Messages to send: %d\n", 
+                           total_messages));
             }
           else
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%s: count must be > 0",
                                argv[0]),
-                              1);
+                               1);
           break;
         case 'f':
           input_file_name = get_opt.optarg;
 
           if (!input_file_name || ACE_OS::strlen (input_file_name) > 0)
-            cout << "Reading file!<< endl;
+            ACE_DEBUG ((LM_DEBUG,"Reading file!\n"));
           else
             {
               input_file_name = 0;
@@ -592,17 +588,13 @@ get_options (int argc,
                                 1);
             }
           break;
-        case 'O': // This is kind of tricky, it is actually read by the
-                  // ORB later.
-          break;
         default:
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "%s: unknown arg, -%c\n"
-                             "Usage: %s %s\n",
-                             argv[0], char(opt),
-                             argv[0],
-                             usage),
-                            1);
+        case '?':
+          ACE_DEBUG ((LM_DEBUG,
+                      "Usage: %s %s\n",
+                      argv[0], usage));
+          ACE_OS::exit (0);
+          break;
         }
     }
 
@@ -634,6 +626,7 @@ main (int argc, char *argv [])
                          TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
+
       // Connect to the RootPOA.
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
@@ -656,7 +649,7 @@ main (int argc, char *argv [])
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable get the Naming Service.\n"),
+                           " (%P|%t) Unable to get the Naming Service.\n"),
                           1);
 
       CosNaming::NamingContext_var naming_context =
