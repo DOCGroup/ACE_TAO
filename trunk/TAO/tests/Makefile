@@ -21,7 +21,8 @@ DIRS  = CDR \
 	FL_Cube \
 	POA \
 	IORManipulation \
-	Timeout
+	Timeout \
+	Connection_Purging 
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
