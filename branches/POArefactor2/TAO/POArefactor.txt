@@ -1,3 +1,28 @@
+Thu Oct 28 10:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Servant_Retention_Strategy.{cpp,h}:
+          Added servant_to_id as empty methods with just the text from the
+          spec. The POA should call this strategy first, this then has to do
+          some more, but all relationships are not clear yet.
+
+        * tao/PortableServer/ThreadPolicyFactory.h
+          Made this a pure virtual base class
+
+        * tao/PortableServer/ThreadPolicyFactoryImpl.cpp
+        * tao/PortableServer/ThreadPolicyFactoryImpl.h
+          The real factory implementation
+
+        * tao/PortableServer/ThreadPolicyFactory.cpp
+          Zapped this file
+
+        * tao/PortableServer/PolicyFactory.h
+          Reduced needed includes
+
+        * tao/PortableServer/Object_Adapter.cpp
+        * tao/PortableServer/POA.cpp
+        * tao/PortableServer/PortableServer_PolicyFactory.cpp
+          Changed for ThreadPolicyFactory
+
 Wed Oct 27 14:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.cpp:
