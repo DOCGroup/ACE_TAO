@@ -1,3 +1,8 @@
+Mon Jul 29 19:46:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl
+
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/*.bor:
+          Added missing libraries for fixing link errors in static build.
+
 Mon Jul 29 12:43:39 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * docs/releasenotes/index.html:
@@ -12,8 +17,8 @@ Mon Jul 29 16:12:18 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 Mon Jul 29 08:46:11 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/examples/ORT/Gateway_i.cpp: 
-	* orbsvcs/examples/PSS/Server_i.cpp: 
+	* orbsvcs/examples/ORT/Gateway_i.cpp:
+	* orbsvcs/examples/PSS/Server_i.cpp:
 	  Fixed warnings from GCC 3.0 compiler.
 
 Mon Jul 29 13:18:13 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
@@ -89,14 +94,14 @@ Sun Jul 28 09:03:08 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	Wed Jul 24 22:30:29 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Synch_Queued_Message.h:
-	* tao/Synch_Queued_Message.cpp: 
-	* tao/Asynch_Queued_Message.h (TAO_Asynch_Queued_Message): 
+	* tao/Synch_Queued_Message.cpp:
+	* tao/Asynch_Queued_Message.h (TAO_Asynch_Queued_Message):
 	* tao/Asynch_Queued_Message.cpp: Added comments and spruced up
 	  line spacings.
 
 	* tao/Transport.cpp: Added a debug statement for logging
-	  purposes. 
-	
+	  purposes.
+
 
 	Mon Jul 22 17:52:04 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -104,10 +109,10 @@ Sun Jul 28 09:03:08 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  allocating memory  for the return path. Using TSS created
 	  problems when we were trying to move the unsent messages from
 	  the TSS to global pool. The message block makes things to crash
-	  horribly, especially at places that you have no clue about. 
-	
+	  horribly, especially at places that you have no clue about.
+
 	* tao/Transport.cpp: Do not reset the allocators since it is not
-	  required. 
+	  required.
 
 	Tue Jul 16 07:06:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -178,10 +183,10 @@ Sun Jul 28 08:13:59 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Sat Jul 27 17:27:34 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/examples/ORT/Gateway_ObjRef_Factory.h: 
-	* orbsvcs/examples/ORT/Gateway_ObjRef_Factory.cpp: 
+	* orbsvcs/examples/ORT/Gateway_ObjRef_Factory.h:
+	* orbsvcs/examples/ORT/Gateway_ObjRef_Factory.cpp:
 	  Fixed the throw_specs.
-	
+
 Sat Jul 27 07:38:32 CDT 2002 Pradeep Gore <pradeep@oomworks.com>
 
 	* docs/releasenotes/index.html:
