@@ -79,6 +79,9 @@
 # define ACE_HAS_GNU_CSTRING_H
 # define ACE_HAS_SSIZE_T
 
+// We have to explicitly instantiate static template members
+# define ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION
+
 # if !defined (ACE_MT_SAFE) || ACE_MT_SAFE != 0
     // ACE_MT_SAFE is #defined below, for all compilers.
 #   if !defined (_REENTRANT)

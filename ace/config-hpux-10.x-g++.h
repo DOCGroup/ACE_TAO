@@ -22,6 +22,9 @@
 #define ACE_HAS_SSIZE_T
 #define _CLOCKID_T
 
+// We have to explicitly instantiate static template members
+# define ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION
+
 #include "ace/config-hpux-10.x.h"
 
 #include /**/ "ace/post.h"

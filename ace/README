@@ -320,6 +320,11 @@ ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT  When a base-class is a
                                         specialization of a class template
                                         then this class template must be
                                         explicitly exported
+ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION  For the GCC compiler
+                                        on AIX, HPUX and VxWorks we have to
+                                        explicitly instantiate static template
+                                        members else we get multiple instances
+                                        of the same static.
 ACE_HAS_GETPAGESIZE                     Platform supports
                                         getpagesize() call (otherwise,
                                         ACE_PAGE_SIZE must be defined,
