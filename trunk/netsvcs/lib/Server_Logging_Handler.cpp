@@ -36,7 +36,6 @@ ACE_Server_Logging_Acceptor::parse_args (int argc, char *argv[])
 	  ACE_ERROR_RETURN ((LM_ERROR, 
 			    "%n:\n[-p server-port]\n%a", 1),
 			   -1);
-	  break;
 	}
     }
 
@@ -224,7 +223,6 @@ ACE_Thr_Server_Logging_Acceptor::parse_args (int argc, char *argv[])
 	  ACE_ERROR_RETURN ((LM_ERROR, 
 			    "%n:\n[-p server-port]\n%a", 1),
 			   -1);
-	  break;
 	}
     }
 
