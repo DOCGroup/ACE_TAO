@@ -181,18 +181,36 @@
 #define ACE_ALLOC_HOOK_DEFINE(CLASS) 
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-#if defined (VXWORKS)
+#if defined (ACE_LACKS_KEY_T)
+#if defined (ACE_WIN32)
+// Win32 doesn't use numeric values to name its semaphores, it uses
+// strings!
+typedef char *key_t;
+#else
 typedef int key_t;
+#endif /* ACE_WIN32 */
+#endif /* ACE_LACKS_KEY_T */
+
+#if defined (VXWORKS)
 #include /**/ <vxWorks.h>
 #endif /* VXWORKS */
-
-#if defined (CHORUS)
-#include /**/ <chorus.h>
-#endif /* CHORUS */
 
 // This file should be a link to the platform/compiler-specific
 // configuration file (e.g., config-sunos5-sunc++-4.x.h).  
 #include "ace/config.h"
+
+#if defined (ACE_LACKS_FILELOCKS)
+struct flock 
+{
+  short	l_type;
+  short	l_whence;
+  off_t	l_start;
+  off_t	l_len;		/* len == 0 means until end of file */
+  long	l_sysid;
+  pid_t	l_pid;
+  long	l_pad[4];		/* reserve area */
+};
+#endif /* ACE_LACKS_FILELOCKS */
 
 #if defined (ACE_HAS_CHARPTR_SPRINTF)
 #define ACE_SPRINTF_ADAPTER(X) ::strlen (X)
@@ -1237,10 +1255,6 @@ typedef int ACE_thread_key_t;
 #include /**/ <errno.h>
 #include /**/ <stdlib.h>
 
-#if defined (CHORUS)		// This must come after limits.h is included
-#define MAXPATHLEN _POSIX_PATH_MAX
-#endif /* CHORUS */
-
 // This must come after signal.h is #included.
 #if defined (SCO)
 #define SIGIO SIGPOLL
@@ -1333,7 +1347,11 @@ typedef void (__cdecl *ACE_SignalHandlerV)(int);
 typedef void (*ACE_SignalHandler)(int);
 typedef void (*ACE_SignalHandlerV)(...);
 #else /* This is necessary for some older broken version of cfront */
+#if defined (SIG_PF)
 #define ACE_SignalHandler SIG_PF
+#else
+typedef void (*ACE_SignalHandler)(int);	
+#endif /* SIG_PF */
 typedef void (*ACE_SignalHandlerV)(...);
 #endif /* ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES */
 
@@ -1438,7 +1456,6 @@ typedef void (*ACE_SignalHandlerV)(...);
 #define RUSAGE_SELF 1
 
 struct shmaddr { };
-struct shmid_ds { };
 struct msqid_ds {};
 
 // Fake the UNIX rusage structure.  Perhaps we can add more to this
@@ -1448,10 +1465,6 @@ struct rusage
   FILETIME ru_utime;
   FILETIME ru_stime;
 };
-
-// Win32 doesn't use numeric values to name its semaphores, it uses
-// strings!
-typedef char *key_t;
 
 // MMAP flags
 #define PROT_READ PAGE_READONLY
@@ -1544,7 +1557,6 @@ inline DWORD ACE_HIGH_DWORD (ACE_QWORD q) { return (DWORD) (q >> 32); }
 
 // Win32 dummies to help compilation.
 
-typedef void *sigset_t;    // Who knows?
 typedef int mode_t;
 typedef int uid_t;
 typedef int gid_t;
@@ -1558,7 +1570,6 @@ struct t_discon { };
 struct t_unitdata { };
 struct t_uderr { };
 struct netbuf { };
-struct flock { }; // not used with Win32 locking...
 
 // Wrapper for NT Events.
 typedef HANDLE ACE_event_t;
@@ -1753,7 +1764,28 @@ extern "C" {
 #if !defined (ACE_LACKS_TCP_H)
 #include /**/ <netinet/tcp.h>
 #endif /* ACE_LACKS_TCP_H */
-#if defined (VXWORKS)
+
+#if defined (CHORUS)
+#include /**/ <chorus.h>
+#include /**/ <cx/select.h>
+#include /**/ <sys/uio.h>
+#include /**/ <time.h>
+#include /**/ <sys/ioctl.h>
+#include /**/ <dirent.h>
+#include /**/ <sys/stat.h>
+#include /**/ <unistd.h>
+#include /**/ <pwd.h>
+#include /**/ <stdfileio.h>
+
+// This must come after limits.h is included
+#define MAXPATHLEN _POSIX_PATH_MAX
+
+typedef cx_fd_mask fd_mask;
+#ifndef howmany
+#define howmany(x, y)   (((x)+((y)-1))/(y))
+#endif /* howmany */
+typedef void (*__sighandler_t)(int); // keep Signal compilation happy
+#elif defined (VXWORKS)
 #include /**/ <sys/times.h>
 #else
 #include /**/ <sys/uio.h>
@@ -1918,9 +1950,9 @@ extern "C"
 #if defined (ACE_HAS_BROKEN_MSG_H)
 #define _KERNEL
 #endif /* ACE_HAS_BROKEN_MSG_H */
-#if !defined (VXWORKS)
+#if !defined (ACE_LACKS_SYSV_MSG_H)
 #include /**/ <sys/msg.h>
-#endif /* VXWORKS */
+#endif /* ACE_LACKS_SYSV_MSG_H */
 #if defined (ACE_HAS_BROKEN_MSG_H)
 #undef _KERNEL
 #endif /* ACE_HAS_BROKEN_MSG_H */
@@ -1990,6 +2022,10 @@ typedef fd_set ACE_FD_SET_TYPE;
 #endif /* FILENAME_MAX */
 #endif /* MAXNAMELEN */
 
+#if defined (ACE_LACKS_SIGSET)
+typedef void *sigset_t; 
+#endif /* ACE_LACKS_SIGSET */
+
 #if defined (ACE_LACKS_SIGACTION)
 struct sigaction 
 {
@@ -2008,6 +2044,26 @@ struct sigaction
 #if !defined (SIGINT)
 #define SIGINT 2
 #endif /* SIGINT */
+
+#if !defined (SIGSEGV)
+#define SIGSEGV 11
+#endif /* SIGSEGV */
+
+#if !defined (SIG_DFL)
+#define SIG_DFL ((__sighandler_t)0)
+#endif /* SIG_DFL */
+
+#if !defined (SIG_IGN)
+#define SIG_IGN ((__sighandler_t)1)     /* ignore signal */
+#endif /* SIG_IGN */
+
+#if !defined (SIG_ERR)
+#define SIG_ERR ((__sighandler_t)-1)    /* error return from signal */
+#endif /* SIG_ERR */
+
+#if !defined (SIGIO)
+#define SIGIO 29
+#endif /* SIGSEGV */
 
 #if !defined (SIGQUIT)
 #define SIGQUIT 3

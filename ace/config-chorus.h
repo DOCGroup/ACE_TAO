@@ -20,6 +20,9 @@
 #undef linux
 #endif
 
+#define ACE_LACKS_SYSV_SHMEM
+#define ACE_LACKS_SYSV_MSG_H
+#define ACE_LACKS_KEY_T
 #define ACE_LACKS_EXEC
 #define ACE_LACKS_SIGACTION
 #define ACE_LACKS_SIGSET
@@ -30,10 +33,10 @@
 #define ACE_LACKS_STRRECVFD
 
 #define ACE_HAS_CPLUSPLUS_HEADERS
+#define ACE_HAS_LONG_MAP_FAILED
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
-#define ACE_HAS_SYSV_IPC		
-#define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
+//#define ACE_HAS_SYSV_IPC		
 
 #define ACE_NEEDS_WRITEV
 #define ACE_NEEDS_READV
@@ -48,9 +51,6 @@
 #define ACE_LACKS_MALLOC_T
 #define ACE_LACKS_MEMORY_H
 #define ACE_LACKS_PARAM_H
-
-// Compiler/platform supports sys_siglist array.
-//#define ACE_HAS_SYS_SIGLIST
 
 // Compiler supports the ssize_t typedef.
 #define ACE_HAS_SSIZE_T
@@ -81,7 +81,7 @@
 
 // Yes, we do have threads.
 #define ACE_HAS_THREADS
-#define ACE_HAS_POSIX_SEM
+//#define ACE_HAS_POSIX_SEM
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 #define ACE_MT_SAFE
 // And they're even POSIX pthreads
