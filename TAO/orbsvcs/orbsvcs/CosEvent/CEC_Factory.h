@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef TAO_CEC_FACTORY_H
+#include "ace/pre.h"
 #define TAO_CEC_FACTORY_H
 
 #include "orbsvcs/orbsvcs_export.h"
@@ -163,4 +164,5 @@ public:
 #include "CEC_Factory.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_CEC_FACTORY_H */

@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_H
+#include "ace/pre.h"
 #define TAO_H
 
 #include "tao/corbafwd.h"
@@ -165,4 +166,5 @@ protected:
 };
 
 
+#include "ace/post.h"
 #endif /* TAO_H */

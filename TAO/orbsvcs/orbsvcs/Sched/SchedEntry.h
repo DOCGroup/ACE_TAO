@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef SCHEDENTRY_H
+#include "ace/pre.h"
 #define SCHEDENTRY_H
 
 #include "orbsvcs/RtecSchedulerC.h"
@@ -105,8 +106,8 @@ public:
   enum DFS_Status {NOT_VISITED, VISITED, FINISHED};
 
   // Status of merging dispatches.
-  enum Propagation_Status {SUCCEEDED, 
-                           TWO_WAY_DISJUNCTION, 
+  enum Propagation_Status {SUCCEEDED,
+                           TWO_WAY_DISJUNCTION,
                            TWO_WAY_CONJUNCTION,
                            INTERNAL_ERROR,
                            UNRECOGNIZED_INFO_TYPE};
@@ -635,6 +636,7 @@ private:
 #include "SchedEntry.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* SCHEDENTRY_H */
 
 // EOF

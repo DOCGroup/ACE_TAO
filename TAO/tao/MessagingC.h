@@ -19,6 +19,7 @@
 // ================================================================
 
 #ifndef TAO_IDL_MESSAGINGC_H
+#include "ace/pre.h"
 #define TAO_IDL_MESSAGINGC_H
 
 #include "tao/orbconf.h"
@@ -2239,4 +2240,5 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::Poller_ptr &);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
+#include "ace/post.h"
 #endif /* TAO_IDL_MESSAGINGC_H */

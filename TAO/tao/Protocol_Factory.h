@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef TAO_PROTOCOL_FACTORY_H
+#include "ace/pre.h"
 #define TAO_PROTOCOL_FACTORY_H
 
 #include "ace/Service_Object.h"
@@ -62,4 +63,5 @@ public:
   // create the endpoint only if the user requests one.
 };
 
+#include "ace/post.h"
 #endif /* TAO_PROTOCOL_FACTORY_H */

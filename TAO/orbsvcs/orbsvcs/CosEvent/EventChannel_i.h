@@ -19,6 +19,7 @@
 // ============================================================================
 
 #ifndef EVENTCHANNEL_I_H
+#include "ace/pre.h"
 #define EVENTCHANNEL_I_H
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
@@ -99,4 +100,5 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* EVENTCHANNEL_I_H */

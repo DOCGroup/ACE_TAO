@@ -15,6 +15,7 @@
 // =====================================================================
 
 #ifndef TAO_CONSTRAINT_NODES_H
+#include "ace/pre.h"
 #define TAO_CONSTRAINT_NODES_H
 
 #include "Constraint_Tokens.h"
@@ -327,4 +328,5 @@ class TAO_Literal_Constraint : public TAO_Constraint
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* TAO_CONSTRAINT_NODES_H */

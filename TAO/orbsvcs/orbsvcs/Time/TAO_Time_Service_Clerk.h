@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_TIME_SERVICE_CLERK_H
+#include "ace/pre.h"
 #define TAO_TIME_SERVICE_CLERK_H
 
 #include "ace/Reactor.h"
@@ -132,4 +133,5 @@ private:
   // the event handler.
 };
 
+#include "ace/post.h"
 #endif /* TIME_SERVICE_CLERK_H */

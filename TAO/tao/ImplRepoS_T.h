@@ -8,6 +8,7 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #ifndef _TAO_IDL_IMPLREPOS_T_H_
+#include "ace/pre.h"
 #define _TAO_IDL_IMPLREPOS_T_H_
 
 #if defined(_MSC_VER)
@@ -36,4 +37,5 @@
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* ifndef */

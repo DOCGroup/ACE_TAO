@@ -17,6 +17,7 @@
 // ==========================================================================
 
 #ifndef TAO_NOTIFY_CONSTRAINT_INTERPRETER_H
+#include "ace/pre.h"
 #define TAO_NOTIFY_CONSTRAINT_INTERPRETER_H
 
 #include "orbsvcs/Trader/Constraint_Nodes.h"
@@ -54,4 +55,5 @@ public:
   // Returns true if the constraint is evaluated successfully by
   // the evaluator.
 };
+#include "ace/post.h"
 #endif /* TAO_NOTIFY_CONSTRAINT_INTERPRETER_H */

@@ -11,6 +11,7 @@
 //
 
 #ifndef OBJECTIDLIST_H_
+#include "ace/pre.h"
 #define OBJECTIDLIST_H_
 
 #include "tao/corbafwd.h"
@@ -142,4 +143,5 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_ORB_ObjectIdList &);
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* ifndef */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef TAO_CLIENT_STRATEGY_FACTORY_H
+#include "ace/pre.h"
 #define TAO_CLIENT_STRATEGY_FACTORY_H
 
 #include "ace/Service_Object.h"
@@ -59,4 +60,5 @@ public:
   // Create the lock to be used by the cached connector.
 };
 
+#include "ace/post.h"
 #endif /* TAO_CLIENT_STRATEGY_FACTORY_H */

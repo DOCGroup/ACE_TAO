@@ -21,6 +21,7 @@
 // somebody will use the same one in another file, it is hard to find
 // them and change them automatically, etc. etc.
 #ifndef TAO_GIOP_MESSAGE_CONNECTORS_
+#include "ace/pre.h"
 #define TAO_GIOP_MESSAGE_CONNECTORS_
 #include "tao/GIOP_Message_Base.h"
 
@@ -123,4 +124,5 @@ private:
 # include "tao/GIOP_Message_Connectors.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /*TAO_GIOP_MESSAGE_CONNECTORS*/

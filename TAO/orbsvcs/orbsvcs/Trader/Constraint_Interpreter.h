@@ -15,6 +15,7 @@
 // ========================================================================
 
 #ifndef TAO_CONSTRAINT_INTERPRETER_H
+#include "ace/pre.h"
 #define TAO_CONSTRAINT_INTERPRETER_H
 
 #include "Constraint_Nodes.h"
@@ -154,4 +155,5 @@ private:
   // The ordered list of offers.
 };
 
+#include "ace/post.h"
 #endif /* TAO_CONSTRAINT_INTERPRETER_H */

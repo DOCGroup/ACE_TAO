@@ -9,6 +9,7 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #ifndef _TAO_IDL_INTERFACEC_H_
+#include "ace/pre.h"
 #define _TAO_IDL_INTERFACEC_H_
 
 #include "tao/corbafwd.h"
@@ -8764,4 +8765,5 @@ operator>> (TAO_InputCDR &, CORBA::ValueBoxDef_ptr &);
 #endif /* _MSC_VER */
 
 #endif /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
+#include "ace/post.h"
 #endif /* ifndef */

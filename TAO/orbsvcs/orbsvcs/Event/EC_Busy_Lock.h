@@ -23,6 +23,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_BUSY_LOCK_H
+#include "ace/pre.h"
 #define TAO_EC_BUSY_LOCK_H
 
 #include "ace/OS.h"
@@ -66,4 +67,5 @@ private:
 #pragma implementation ("EC_Busy_Lock.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* TAO_EC_BUSY_LOCK_H */

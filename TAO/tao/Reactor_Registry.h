@@ -14,6 +14,7 @@
 // ============================================================================
 
 #ifndef TAO_REACTOR_REGISTRY_H
+#include "ace/pre.h"
 #define TAO_REACTOR_REGISTRY_H
 
 #include "tao/corbafwd.h"
@@ -81,4 +82,5 @@ private:
 # include "tao/Reactor_Registry.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_REACTOR_REGISTRY_H */

@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef TAO_AV_PROTOCOL_FACTORY_T_H
+#include "ace/pre.h"
 #define TAO_AV_PROTOCOL_FACTORY_T_H
 
 #include "ace/Service_Object.h"
@@ -97,4 +98,5 @@ public:
   virtual const char *control_flow_factory (void);
 };
 
+#include "ace/post.h"
 #endif /* TAO_AV_PROTOCOL_FACTORY_T_H */

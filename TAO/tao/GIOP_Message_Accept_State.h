@@ -15,6 +15,7 @@
 //     Balachandran Natarajan <bala@cs.wustl.edu>
 // ============================================================================
 #ifndef TAO_GIOP_MESSAGE_ACCEPT_STATE_H
+#include "ace/pre.h"
 #define TAO_GIOP_MESSAGE_ACCEPT_STATE_H
 #include "tao/GIOP_Server_Request.h"
 #include "tao/GIOP_Assorted_Headers.h"
@@ -129,4 +130,5 @@ class TAO_GIOP_Message_Accept_Impl
 # include "tao/GIOP_Message_Accept_State.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /*_TAO_GIOP_MESSAGE_ACCEPT_STATE_H_*/

@@ -16,6 +16,7 @@
 // ========================================================================
 
 #ifndef TAO_REGISTER_OFFER_ITERATOR_H
+#include "ace/pre.h"
 #define TAO_REGISTER_OFFER_ITERATOR_H
 
 #include "Offer_Iterators.h"
@@ -87,4 +88,5 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* TAO_REGISTER_OFFER_ITERATOR_H */

@@ -16,6 +16,7 @@
 //
 // ==========================================================================
 #ifndef TAO_LOCKING_H
+#include "ace/pre.h"
 #define TAO_LOCKING_H
 
 #include "tao/corba.h"
@@ -44,4 +45,5 @@ ACE_Read_Guard<MUTEX> OBJ (LOCK); \
 if (OBJ.locked () == 0) \
   TAO_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), RETURN);
 
+#include "ace/post.h"
 #endif /* TAO_LOCKING_H */

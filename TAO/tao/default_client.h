@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef TAO_DEFAULT_CLIENT_H
+#include "ace/pre.h"
 #define TAO_DEFAULT_CLIENT_H
 
 #include "tao/Client_Strategy_Factory.h"
@@ -94,4 +95,5 @@ private:
 ACE_STATIC_SVC_DECLARE (TAO_Default_Client_Strategy_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Client_Strategy_Factory)
 
+#include "ace/post.h"
 #endif /* TAO_DEFAULT_CLIENT_H */

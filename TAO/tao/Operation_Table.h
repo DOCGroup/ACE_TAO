@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef TAO_OPTABLE_H
+#include "ace/pre.h"
 #define TAO_OPTABLE_H
 
 #include "ace/Hash_Map_Manager.h"
@@ -336,4 +337,5 @@ typedef ACE_Singleton<TAO_Operation_Table_Factory,
                       ACE_SYNCH_RECURSIVE_MUTEX>
         TAO_OP_TABLE_FACTORY;
 
+#include "ace/post.h"
 #endif /* TAO_OPTABLE_H */

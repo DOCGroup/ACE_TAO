@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef TAO_SERVANT_BASE_H
+#include "ace/pre.h"
 #define TAO_SERVANT_BASE_H
 
 #include "tao/corbafwd.h"
@@ -323,4 +324,5 @@ protected:
 # include "tao/Servant_Base.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_SERVANT_BASE_H */

@@ -18,6 +18,7 @@
 // ================================================================
 
 #ifndef TAO_IDL_POLLABLES_H
+#include "ace/pre.h"
 #define TAO_IDL_POLLABLES_H
 
 #include "tao/PollableC.h"
@@ -238,4 +239,5 @@ TAO_NAMESPACE_CLOSE
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 && TAO_HAS_AMI_POLLER == 1 */
 
+#include "ace/post.h"
 #endif /* ifndef */

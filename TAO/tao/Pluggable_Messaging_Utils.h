@@ -19,6 +19,7 @@
 // @@ Bala: blank lines don't cost you any money, please don't try to
 // save them, i can borrow you some if you need them ;-)
 #ifndef TAO_PLUGGABLE_MESSAGING_UTILS_H
+#include "ace/pre.h"
 #define TAO_PLUGGABLE_MESSAGING_UTILS_H
 #include "tao/IOPC.h"
 
@@ -123,4 +124,5 @@ typedef enum Exception_Types
 #include "tao/Pluggable_Messaging_Utils.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /*_TAO_PLUGGABLE_MESSAGING_UTILS_H_ */

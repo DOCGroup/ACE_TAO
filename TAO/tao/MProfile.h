@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_MPROFILE_H
+#include "ace/pre.h"
 #define TAO_MPROFILE_H
 
 #include "tao/corbafwd.h"
@@ -188,4 +189,5 @@ private:
 # include "tao/MProfile.i"
 #endif /*__ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /*TAO_MPROFILE_H */

@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_CONNECTOR_REGISTRY_H
+#include "ace/pre.h"
 #define TAO_CONNECTOR_REGISTRY_H
 
 #include "tao/Pluggable.h"
@@ -126,4 +127,5 @@ private:
 #include "tao/Connector_Registry.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_CONNECTOR_REGISTRY_H */

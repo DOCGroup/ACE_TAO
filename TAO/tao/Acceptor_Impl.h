@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef TAO_ACCEPTOR_IMPL_H
+#include "ace/pre.h"
 #define TAO_ACCEPTOR_IMPL_H
 
 #include "ace/Acceptor.h"
@@ -109,4 +110,5 @@ protected:
 #pragma implementation ("Acceptor_Impl.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* TAO_ACCEPTOR_IMPL_H */

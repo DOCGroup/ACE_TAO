@@ -14,6 +14,7 @@
 //    integrated in to TAO by Balachandran Natarajan <bala@cs.wustl.edu>
 // ============================================================================
 #ifndef _TAO_QTRESOURCE_H
+#include "ace/pre.h"
 #define _TAO_QTRESOURCE_H
 
 #include "tao/default_resource.h"
@@ -58,4 +59,5 @@ ACE_STATIC_SVC_DECLARE( TAO_QtResource_Factory )
 ACE_FACTORY_DECLARE   ( TAO, TAO_QtResource_Factory )
 
 #endif /*ACE_HAS_QT */
+#include "ace/post.h"
 #endif /* QTRESOURCE_H */

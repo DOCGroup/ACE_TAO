@@ -16,6 +16,7 @@
 // ==========================================================================
 
 #ifndef NOTIFY_EVENTCHANNELFACTORY_I_H
+#include "ace/pre.h"
 #define NOTIFY_EVENTCHANNELFACTORY_I_H
 
 #include "Notify_ID_Pool_T.h"
@@ -118,4 +119,5 @@ virtual CosNotifyChannelAdmin::EventChannel_ptr get_event_channel (
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* NOTIFY_EVENTCHANNELFACTORY_I_H */

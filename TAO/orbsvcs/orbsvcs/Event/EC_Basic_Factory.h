@@ -23,6 +23,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_BASIC_FACTORY_H
+#include "ace/pre.h"
 #define TAO_EC_BASIC_FACTORY_H
 
 #include "EC_Factory.h"
@@ -122,4 +123,5 @@ public:
 #include "EC_Basic_Factory.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_EC_BASIC_FACTORY_H */

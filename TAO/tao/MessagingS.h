@@ -9,6 +9,7 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #ifndef TAO_IDL_MESSAGINGS_H
+#include "ace/pre.h"
 #define TAO_IDL_MESSAGINGS_H
 
 #include "tao/orbconf.h"
@@ -2037,4 +2038,5 @@ TAO_NAMESPACE_CLOSE
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
+#include "ace/post.h"
 #endif /* TAO_IDL_MESSAGINGS_H */

@@ -21,6 +21,7 @@
 // ============================================================================
 
 #ifndef TAO_ORB_CONFIG_H
+#include "ace/pre.h"
 #define TAO_ORB_CONFIG_H
 
 #include "ace/OS.h"
@@ -597,4 +598,5 @@ and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
 #define TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT "5000"
 #endif /* TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT */
 
+#include "ace/post.h"
 #endif  /* TAO_ORB_CONFIG_H */

@@ -16,6 +16,7 @@
 // ==========================================================================
 
 #ifndef TAO_NOTIFY_EVENTCHANNEL_I_H_
+#include "ace/pre.h"
 #define TAO_NOTIFY_EVENTCHANNEL_I_H_
 
 #include "Notify_ID_Pool_T.h"
@@ -294,4 +295,5 @@ virtual void destroy (
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* TAO_NOTIFY_EVENTCHANNEL_I_H_ */

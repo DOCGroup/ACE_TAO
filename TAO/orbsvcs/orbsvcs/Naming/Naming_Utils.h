@@ -19,6 +19,7 @@
 // ============================================================================
 
 #ifndef TAO_NAMING_UTILS_H
+#include "ace/pre.h"
 #define TAO_NAMING_UTILS_H
 
 #include "tao/corba.h"
@@ -169,4 +170,5 @@ protected:
   // Reference to the root Naming Context.
 };
 
+#include "ace/post.h"
 #endif /* TAO_NAMING_UTILS_H */

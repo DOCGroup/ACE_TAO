@@ -17,6 +17,7 @@
 // ==========================================================================
 
 #ifndef NOTIFY_CONSTRAINT_VISITORS_H
+#include "ace/pre.h"
 #define NOTIFY_CONSTRAINT_VISITORS_H
 
 #include "ace/Hash_Map_Manager.h"
@@ -37,4 +38,5 @@ class TAO_ORBSVCS_Export TAO_Notify_Constraint_Evaluator : public TAO_Constraint
   // Used to lookup property name and values
 };
 
+#include "ace/post.h"
 #endif /* NOTIFY_CONSTRAINT_VISITORS_H */

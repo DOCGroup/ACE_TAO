@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef TAO_AV_UDP_H
+#include "ace/pre.h"
 #define TAO_AV_UDP_H
 
 #include "ace/OS.h"
@@ -216,4 +217,5 @@ ACE_FACTORY_DECLARE (TAO_ORBSVCS, TAO_AV_UDP_Factory)
 #include "UDP.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_AV_UDP_H */

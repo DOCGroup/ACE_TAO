@@ -16,6 +16,7 @@
 //
 // ==========================================================================
 #ifndef TAO_NOTIFY_QOSADMIN_I_H
+#include "ace/pre.h"
 #define TAO_NOTIFY_QOSADMIN_I_H
 
 #include "orbsvcs/CosNotificationS.h"
@@ -64,4 +65,5 @@ public:
     CosNotification::UnsupportedQoS
   ));
 };
+#include "ace/post.h"
 #endif /* TAO_NOTIFY_QOSADMIN_I_H */

@@ -87,6 +87,8 @@ BE_prep_arg(char *s, idl_bool)
   const char stub_arg_macro[]="stub_export_macro=";
   const char stub_arg_include[]="stub_export_include=";
   const char arg_pch_include[]="pch_include=";
+  const char arg_pre_include[]="pre_include=";
+  const char arg_post_include[]="post_include=";
 #ifdef IDL_HAS_VALUETYPE
   const char obv_opt_accessor[]="obv_opt_accessor";
 #endif /* IDL_HAS_VALUETYPE */
@@ -131,6 +133,16 @@ BE_prep_arg(char *s, idl_bool)
         {
           char* val = arg + sizeof (arg_pch_include) - 1;
           idl_global->pch_include (val);
+        }
+      else if (ACE_OS::strstr (arg, arg_pre_include) == arg)
+        {
+          char* val = arg + sizeof (arg_pre_include) - 1;
+          idl_global->pre_include (val);
+        }
+      else if (ACE_OS::strstr (arg, arg_post_include) == arg)
+        {
+          char* val = arg + sizeof (arg_post_include) - 1;
+          idl_global->post_include (val);
         }
 #  ifdef IDL_HAS_VALUETYPE
       else if (ACE_OS::strstr (arg, obv_opt_accessor) == arg)

@@ -295,7 +295,7 @@ InputPath=.\AVStreams.idl
 InputName=AVStreams
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao   -Wb,export_macro=TAO_AV_Export            -Wb,export_include=AV/AV_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h   -Wb,post_include=ace/post.h   -Wb,export_macro=TAO_AV_Export            -Wb,export_include=AV/AV_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -334,7 +334,7 @@ InputPath=.\AVStreams.idl
 InputName=AVStreams
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_AV_Export                                                   -Wb,export_include=AV/AV_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h   -Wb,post_include=ace/post.h  -Wb,export_macro=TAO_AV_Export                                                   -Wb,export_include=AV/AV_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -380,7 +380,7 @@ InputPath=.\Null_MediaCtrl.idl
 InputName=Null_MediaCtrl
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao   -Wb,export_macro=TAO_AV_Export            -Wb,export_include=AV/AV_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h   -Wb,post_include=ace/post.h   -Wb,export_macro=TAO_AV_Export            -Wb,export_include=AV/AV_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -419,7 +419,7 @@ InputPath=.\Null_MediaCtrl.idl
 InputName=Null_MediaCtrl
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_AV_Export                                                   -Wb,export_include=AV/AV_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h   -Wb,post_include=ace/post.h  -Wb,export_macro=TAO_AV_Export                                                   -Wb,export_include=AV/AV_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -465,7 +465,7 @@ InputPath=.\sfp.idl
 InputName=sfp
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao   -Wb,export_macro=TAO_AV_Export            -Wb,export_include=AV/AV_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h   -Wb,post_include=ace/post.h   -Wb,export_macro=TAO_AV_Export            -Wb,export_include=AV/AV_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -504,7 +504,7 @@ InputPath=.\sfp.idl
 InputName=sfp
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_AV_Export                                                   -Wb,export_include=AV/AV_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h   -Wb,post_include=ace/post.h  -Wb,export_macro=TAO_AV_Export                                                   -Wb,export_include=AV/AV_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

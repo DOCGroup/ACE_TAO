@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef TAO_PERSISTENT_CONTEXT_INDEX_H
+#include "ace/pre.h"
 #define TAO_PERSISTENT_CONTEXT_INDEX_H
 
 #include "Persistent_Entries.h"
@@ -147,4 +148,5 @@ private:
   // The reference to the root Naming Context.
 };
 
+#include "ace/post.h"
 #endif /* TAO_PERSISTENT_CONTEXT_INDEX_H */

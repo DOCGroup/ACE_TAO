@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef TAO_VALUEFACTORY_H
+#include "ace/pre.h"
 #define TAO_VALUEFACTORY_H
 
 #include "tao/corbafwd.h"
@@ -95,4 +96,5 @@ private:
 #endif /* __ACE_INLINE__) */
 
 #endif /* TAO_HAS_VALUETYPE */
+#include "ace/post.h"
 #endif /* TAO_VALUEFACTORY_H */

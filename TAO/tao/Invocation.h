@@ -27,6 +27,7 @@
 // ============================================================================
 
 #ifndef TAO_INVOCATION_H
+#include "ace/pre.h"
 #define TAO_INVOCATION_H
 
 #include "tao/CDR.h"
@@ -302,4 +303,5 @@ private:
 # include "tao/Invocation.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_INVOCATION_H */

@@ -17,6 +17,7 @@
 // ==========================================================================
 
 #ifndef NOTIFY_FILTER_FACTORY_I_H
+#include "ace/pre.h"
 #define NOTIFY_FILTER_FACTORY_I_H
 
 #include "orbsvcs/orbsvcs/CosNotifyFilterS.h"
@@ -72,4 +73,5 @@ public:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* NOTIFY_FILTER_FACTORY_I_H */

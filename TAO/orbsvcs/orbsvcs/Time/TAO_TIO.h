@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_TIO_H
+#include "ace/pre.h"
 #define TAO_TIO_H
 
 #include "tao/TAO.h"
@@ -80,4 +81,5 @@ private:
   // its fields filled in with the corresponding values from the TIO.
 };
 
+#include "ace/post.h"
 #endif /* TAO_TIO_H */

@@ -10,6 +10,7 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #ifndef TAO_IDL_DOMAINC_H
+#include "ace/pre.h"
 #define TAO_IDL_DOMAINC_H
 
 #include "tao/corbafwd.h"
@@ -340,4 +341,5 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &,
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* TAO_IDL_DOMAINC_H */

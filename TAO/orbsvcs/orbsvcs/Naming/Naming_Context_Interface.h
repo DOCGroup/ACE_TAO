@@ -14,6 +14,7 @@
 // ============================================================================
 
 #ifndef TAO_NAMING_CONTEXT_INTERFACE_H
+#include "ace/pre.h"
 #define TAO_NAMING_CONTEXT_INTERFACE_H
 
 #include "orbsvcs/CosNamingS.h"
@@ -291,4 +292,5 @@ public:
 };
 
 
+#include "ace/post.h"
 #endif /* TAO_NAMING_CONTEXT_INTERFACE_H */

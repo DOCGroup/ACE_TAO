@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ORBSVCS_TIME_UTILITIES_H
+#include "ace/pre.h"
 #define ORBSVCS_TIME_UTILITIES_H
 
 #include "orbsvcs/TimeBaseC.h"
@@ -70,4 +71,5 @@ public:
 #include "orbsvcs/Time_Utilities.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ORBSVCS_TIME_UTILITIES_H */

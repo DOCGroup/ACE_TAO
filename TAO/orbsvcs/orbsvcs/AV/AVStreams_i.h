@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef AVSTREAMS_I_H
+#include "ace/pre.h"
 #define AVSTREAMS_I_H
 
 #include "ace/OS.h"
@@ -1561,4 +1562,5 @@ protected:
 
 #include "Flows_T.h"
 
+#include "ace/post.h"
 #endif /* AVSTREAMS_I_H */

@@ -19,6 +19,7 @@
 // ============================================================================
 
 #ifndef CONSUMERADMIN_I_H
+#include "ace/pre.h"
 #define CONSUMERADMIN_I_H
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
@@ -76,4 +77,5 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* CONSUMERADMIN_I_H */

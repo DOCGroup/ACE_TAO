@@ -27,6 +27,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_DEFAULTS_H
+#include "ace/pre.h"
 #define TAO_EC_DEFAULTS_H
 
 #ifndef TAO_EC_ENABLE_DEBUG_MESSAGES
@@ -143,4 +144,5 @@
 # define TAO_EC_DEFAULT_SUPPLIER_CONTROL_PERIOD 5000000 /* usecs */
 #endif /* TAO_EC_DEFAULT_SUPPLIER_CONTROL_PERIOD */
 
+#include "ace/post.h"
 #endif /* TAO_EC_DEFAULTS_H */

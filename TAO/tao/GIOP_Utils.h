@@ -18,6 +18,7 @@
 //     
 // ============================================================================
 #ifndef TAO_GIOP_UTILS_H
+#include "ace/pre.h"
 #define TAO_GIOP_UTILS_H
 #include "tao/Pluggable_Messaging.h"
 #include "tao/Object.h"
@@ -265,4 +266,5 @@ public:
 # include "tao/GIOP_Utils.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /*TAO_GIOP_UTILS_H */

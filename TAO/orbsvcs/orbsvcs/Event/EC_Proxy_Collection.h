@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_PROXY_COLLECTION_H
+#include "ace/pre.h"
 #define TAO_EC_PROXY_COLLECTION_H
 
 #include "EC_Busy_Lock.h"
@@ -357,4 +358,5 @@ private:
 #pragma implementation ("EC_Proxy_Collection.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* TAO_EC_PROXY_COLLECTION_H */

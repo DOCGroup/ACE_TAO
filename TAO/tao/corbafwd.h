@@ -25,6 +25,7 @@
 // ============================================================================
 
 #ifndef TAO_CORBAFWD_H
+#include "ace/pre.h"
 #define TAO_CORBAFWD_H
 
 // @@ TODO take the portion that we need of ace/CDR_Stream.h into
@@ -1829,4 +1830,5 @@ typedef TAO_ObjectKey *TAO_ObjectKey_ptr;
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* TAO_CORBAFWD_H */

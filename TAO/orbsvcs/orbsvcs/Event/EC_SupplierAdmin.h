@@ -23,6 +23,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_SUPPLIERADMIN_H
+#include "ace/pre.h"
 #define TAO_EC_SUPPLIERADMIN_H
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
@@ -186,4 +187,5 @@ public:
 #include "EC_SupplierAdmin.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_EC_SUPPLIERADMIN_H */

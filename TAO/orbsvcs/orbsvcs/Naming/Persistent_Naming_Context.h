@@ -14,6 +14,7 @@
 // ============================================================================
 
 #ifndef TAO_PERSISTENT_NAMING_CONTEXT_H
+#include "ace/pre.h"
 #define TAO_PERSISTENT_NAMING_CONTEXT_H
 
 #include "Hash_Naming_Context.h"
@@ -235,4 +236,5 @@ protected:
   // Also, we get the allocator needed to initialize us from this guy.
 };
 
+#include "ace/post.h"
 #endif /* TAO_PERSISTENT_NAMING_CONTEXT_H */

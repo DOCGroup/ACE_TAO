@@ -8,6 +8,7 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #ifndef _TAO_IDL_BOUNDSC_H_
+#include "ace/pre.h"
 #define _TAO_IDL_BOUNDSC_H_
 
 #include "tao/corbafwd.h"
@@ -85,4 +86,5 @@ CORBA::Boolean  operator>> (TAO_InputCDR &, CORBA::Bounds &);
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* ifndef */

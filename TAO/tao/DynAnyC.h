@@ -23,6 +23,7 @@
 // ============================================================================
 
 #ifndef TAO_IDL_CORBA_DYNANYC_H_
+#include "ace/pre.h"
 #define TAO_IDL_CORBA_DYNANYC_H_
 
 #include "tao/orbconf.h"
@@ -1573,4 +1574,5 @@ extern  CORBA::TypeCode_ptr  _tc_CORBA_DynArray;
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
+#include "ace/post.h"
 #endif /* if !defined */

@@ -30,6 +30,7 @@
 // should be no such name clashes.
 
 #ifndef _TAO_IDL_GIOPC_H_
+#include "ace/pre.h"
 #define _TAO_IDL_GIOPC_H_
 
 #include "tao/corbafwd.h"
@@ -303,4 +304,5 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, GIOP::TargetAddress &);
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* ifndef */

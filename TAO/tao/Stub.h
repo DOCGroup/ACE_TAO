@@ -29,6 +29,7 @@
 // ============================================================================
 
 #ifndef TAO_STUB_H
+#include "ace/pre.h"
 #define TAO_STUB_H
 
 #include "tao/Pluggable.h"
@@ -557,4 +558,5 @@ protected:
 # include "tao/Stub.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_STUB_H */

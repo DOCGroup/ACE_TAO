@@ -17,6 +17,7 @@
 // ============================================================================
 
 #ifndef TAO_AV_NIL_H
+#include "ace/pre.h"
 #define TAO_AV_NIL_H
 
 #include "Policy.h"
@@ -42,4 +43,5 @@
 //   // end the stream.
 // };
 
+#include "ace/post.h"
 #endif /* TAO_AV_NIL_H */

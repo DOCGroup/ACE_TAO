@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef TAO_ENTRIES_H
+#include "ace/pre.h"
 #define TAO_ENTRIES_H
 
 #include "ace/Hash_Map_Manager.h"
@@ -129,4 +130,5 @@ public:
   const char * kind (void);
 };
 
+#include "ace/post.h"
 #endif /* TAO_ENTRIES_H */

@@ -19,6 +19,7 @@
 //
 // ============================================================================
 #ifndef TAO_GIOP_MESSAGE_H
+#include "ace/pre.h"
 #define TAO_GIOP_MESSAGE_H
 
 #include "tao/Pluggable_Messaging.h"
@@ -175,4 +176,5 @@ const size_t TAO_GIOP_MESSAGE_TYPE_OFFSET  = 7;
 # include "tao/GIOP_Message_Base.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /*TAO_GIOP_MESSAGE_H*/

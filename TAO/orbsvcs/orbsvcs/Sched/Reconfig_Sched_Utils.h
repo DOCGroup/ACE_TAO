@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef TAO_RECONFIG_SCHED_UTILS_H
+#include "ace/pre.h"
 #define TAO_RECONFIG_SCHED_UTILS_H
 
 #include "ace/inc_user_config.h"
@@ -285,4 +286,5 @@ public:
 
 #endif /* __GNUC__ */
 
+#include "ace/post.h"
 #endif /* TAO_RECONFIG_SCHED_UTILS_H */

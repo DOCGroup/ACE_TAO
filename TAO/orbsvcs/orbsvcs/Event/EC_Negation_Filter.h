@@ -23,6 +23,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_NEGATION_FILTER_H
+#include "ace/pre.h"
 #define TAO_EC_NEGATION_FILTER_H
 
 #include "EC_Filter.h"
@@ -90,4 +91,5 @@ private:
 #include "EC_Negation_Filter.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_EC_NEGATION_FILTER_H */

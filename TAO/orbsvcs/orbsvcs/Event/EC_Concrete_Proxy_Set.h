@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_CONCRETE_PROXY_SET_H
+#include "ace/pre.h"
 #define TAO_EC_CONCRETE_PROXY_SET_H
 
 #include "tao/corba.h"
@@ -113,4 +114,5 @@ private:
 #pragma implementation ("EC_Concrete_Proxy_Set.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* TAO_EC_CONCRETE_PROXY_SET_H */

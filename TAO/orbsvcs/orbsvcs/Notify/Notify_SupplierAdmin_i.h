@@ -17,6 +17,7 @@
 // ==========================================================================
 
 #ifndef TAO_NOTIFY_SUPPLIERADMIN_I_H
+#include "ace/pre.h"
 #define TAO_NOTIFY_SUPPLIERADMIN_I_H
 
 #include "Notify_ID_Pool_T.h"
@@ -284,4 +285,5 @@ protected:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* TAO_NOTIFY_SUPPLIERADMIN_I_H */

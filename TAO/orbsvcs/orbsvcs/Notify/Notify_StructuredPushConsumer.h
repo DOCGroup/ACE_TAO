@@ -18,6 +18,7 @@
 // ==========================================================================
 
 #ifndef NOTIFY_STRUCTUREDPUSHCONSUMER_H
+#include "ace/pre.h"
 #define NOTIFY_STRUCTUREDPUSHCONSUMER_H
 
 #include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
@@ -105,4 +106,5 @@ protected:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* NOTIFY_STRUCTUREDPUSHCONSUMER_H */
