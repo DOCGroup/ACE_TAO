@@ -189,6 +189,10 @@
 #  define ACE_INFINITE 10000000
 #endif
 
+// Manually tweak the malloc control block paddings to properly align
+// things.
+#define ACE_PI_CONTROL_BLOCK_ALIGN_LONGS  2
+
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYSCALL_H
 // But doesn't have a prototype for syscall()
@@ -279,6 +283,7 @@
 
 // Platform has the sigwait function in a header file
 #define ACE_HAS_SIGWAIT
+#define ACE_HAS_SIGTIMEDWAIT
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC
