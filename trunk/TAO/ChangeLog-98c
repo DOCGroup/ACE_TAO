@@ -1,3 +1,8 @@
+Fri Apr 10 15:11:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/GIOP.cpp (message_name): Fixed a missing increment by 1
+	  code.  Thanks to Sumedh for noticing the bug.
+
 Fri Apr 10 10:41:04 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Param_Test/tmplinst.cpp: 
