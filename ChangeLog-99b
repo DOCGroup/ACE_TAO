@@ -1,3 +1,8 @@
+Wed Jun 16 12:00:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* ace/SOCK_Dgram_Mcast.cpp:
+	  Changed a -1 to ACE_INVALID_HANDLE.
+
 Wed Jun 16 07:40:05 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Thread_Manager_Test.cpp: updated comment about not
