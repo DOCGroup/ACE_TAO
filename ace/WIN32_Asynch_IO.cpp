@@ -1956,6 +1956,7 @@ ACE_WIN32_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
       case ERROR_IO_PENDING:
         // The IO will complete proactively: the OVERLAPPED will still
         // get queued.
+        initiate_result = 0;
         break;
 
       default:
@@ -1966,11 +1967,11 @@ ACE_WIN32_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
         {
           ACE_DEBUG ((LM_ERROR,
                       ACE_LIB_TEXT ("%p\n"),
-                      ACE_LIB_TEXT ("ReadFile")));
+                      ACE_LIB_TEXT ("WSARecvFrom")));
         }
 
         delete result;
-
+        initiate_result = -1;
         break;
     }
 
@@ -1982,6 +1983,7 @@ ACE_WIN32_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
     // addr contains the peer address
     // flags was updated
     number_of_bytes_recvd = bytes_recvd;
+    initiate_result = 1;
   }
 
   return initiate_result;
@@ -2236,6 +2238,7 @@ ACE_WIN32_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
       case ERROR_IO_PENDING:
         // The IO will complete proactively: the OVERLAPPED will still
         // get queued.
+        initiate_result = 0;
         break;
 
       default:
@@ -2246,11 +2249,11 @@ ACE_WIN32_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
         {
           ACE_DEBUG ((LM_ERROR,
                       ACE_LIB_TEXT ("%p\n"),
-                      ACE_LIB_TEXT ("ReadFile")));
+                      ACE_LIB_TEXT ("WSASendTo")));
         }
 
         delete result;
-
+        initiate_result = -1;
         break;
     }
 
@@ -2262,6 +2265,7 @@ ACE_WIN32_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
     // addr contains the peer address
     // flags was updated
     number_of_bytes_sent = bytes_sent;
+    initiate_result = 1;
   }
 
   return initiate_result;

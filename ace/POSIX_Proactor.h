@@ -9,7 +9,7 @@
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  *  @author Tim Harrison <harrison@cs.wustl.edu>
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
- *  @author Roger Tragin <rtragin@cuseeme.com>
+ *  @author Roger Tragin <r.tragin@computer.org>
  */
 //=============================================================================
 

@@ -3345,12 +3345,18 @@ ACE_POSIX_Asynch_Read_Dgram_Result::ACE_POSIX_Asynch_Read_Dgram_Result (ACE_Hand
                                                                         int signal_number)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Read_Dgram_Result_Impl(),
-    ACE_POSIX_Asynch_Result (handler, act, event, 0, 0, priority, signal_number)
-	
+    ACE_POSIX_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
+    bytes_to_read_ (bytes_to_read),
+    message_block_ (message_block),
+    remote_address_ (0),
+    addr_len_ (0),
+    flags_ (flags),
+    handle_ (handle)
 {
-	this->aio_fildes = handle;	
-	this->aio_nbytes = bytes_to_read;
-	ACE_NEW(this->remote_address_, ACE_INET_Addr);
+  ACE_ASSERT(protocol_family == PF_INET);
+  this->aio_fildes = handle;	
+  this->aio_nbytes = bytes_to_read;
+  ACE_NEW(this->remote_address_, ACE_INET_Addr);
 
 }
 
@@ -3389,29 +3395,6 @@ ACE_POSIX_Asynch_Write_Dgram_Result::bytes_to_write (void) const
 {
   return this->bytes_to_write_;
 }
-
-int
-ACE_POSIX_Asynch_Write_Dgram_Result::remote_address (ACE_Addr& addr) const
-{
-  int retVal = -1;  // failure
-
-  // make sure the addresses are of the same type
-  if (addr.get_type () == this->remote_address_->get_type ())
-  { // copy the remote_address_ into addr
-    addr.set_addr (this->remote_address_->get_addr (),
-                   this->remote_address_->get_size ());
-    retVal = 0; // success
-  }
-
-  return retVal;
-}
-
-sockaddr *
-ACE_POSIX_Asynch_Write_Dgram_Result::saddr () const
-{
-  return (sockaddr *) this->remote_address_->get_addr ();
-}
-
 
 int
 ACE_POSIX_Asynch_Write_Dgram_Result::flags (void) const
@@ -3509,7 +3492,11 @@ ACE_POSIX_Asynch_Write_Dgram_Result::ACE_POSIX_Asynch_Write_Dgram_Result (ACE_Ha
                                                                           int signal_number)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Write_Dgram_Result_Impl(),
-    ACE_POSIX_Asynch_Result (handler, act, event, 0, 0, priority, signal_number)
+    ACE_POSIX_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
+    bytes_to_write_ (bytes_to_write),
+    message_block_ (message_block),
+    flags_ (flags),
+    handle_ (handle)
 	
 {
 	this->aio_fildes = handle;	
@@ -3544,7 +3531,6 @@ ACE_POSIX_Asynch_Write_Dgram_Result::complete (u_long bytes_transferred,
 
 ACE_POSIX_Asynch_Write_Dgram_Result::~ACE_POSIX_Asynch_Write_Dgram_Result (void)
 {
-  delete this->remote_address_;
 }
 
 /***************************************************************************/
@@ -3554,32 +3540,21 @@ ACE_POSIX_AIOCB_Asynch_Read_Dgram::~ACE_POSIX_AIOCB_Asynch_Read_Dgram (void)
 
 ssize_t
 ACE_POSIX_AIOCB_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
-                                         u_long num_bytes_to_read,
+                                         size_t &number_of_bytes_recvd,
                                          int flags,
                                          int protocol_family,
                                          const void *act,
                                          int priority,
                                          int signal_number)
 {
-  // Create the Asynch_Result.
-  ACE_POSIX_Asynch_Read_Dgram_Result *result = 0;
-  ACE_NEW_RETURN (result,
-    ACE_POSIX_Asynch_Read_Dgram_Result (*this->handler_,
-                                        this->handle_,
-                                        message_block,
-                                        num_bytes_to_read,
-                                        flags,
-                                        protocol_family,
-                                        act,
-                                        this->posix_aiocb_proactor_->get_handle (),
-                                        priority,
-                                        signal_number),
-                  -1);
-  
-  result->aio_sigevent.sigev_notify = SIGEV_NONE;
-  
-  // try start read
-  return register_and_start_aio (result, 0);
+  ACE_UNUSED_ARG (message_block);
+  ACE_UNUSED_ARG (number_of_bytes_recvd);
+  ACE_UNUSED_ARG (flags);
+  ACE_UNUSED_ARG (protocol_family);
+  ACE_UNUSED_ARG (act);
+  ACE_UNUSED_ARG (priority);
+  ACE_UNUSED_ARG (signal_number);
+  ACE_NOTSUP_RETURN (-1);
 }
 
 int
@@ -3620,39 +3595,21 @@ ACE_POSIX_SIG_Asynch_Read_Dgram::~ACE_POSIX_SIG_Asynch_Read_Dgram (void)
 
 ssize_t
 ACE_POSIX_SIG_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
-                                       u_long num_bytes_to_read,
+                                       size_t &number_of_bytes_recvd,
                                        int flags,
                                        int protocol_family,
                                        const void *act,
                                        int priority,
                                        int signal_number)
 {
-  // Create the Asynch_Result.
-  ACE_POSIX_Asynch_Read_Dgram_Result *result = 0;
-  ACE_NEW_RETURN (result,
-    ACE_POSIX_Asynch_Read_Dgram_Result (*this->handler_,
-                                        this->handle_,
-                                        message_block,
-                                        num_bytes_to_read,
-                                        flags,
-                                        protocol_family,
-                                        act,
-                                        this->posix_sig_proactor_->get_handle (),
-                                        priority,
-                                        signal_number),
-                  -1);
-
-  // Do the scatter/gather recv.
-  size_t bytes_recvd = 0;
-  int initiate_result = aio_read (result);
-
-  if (initiate_result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error:%N%l:%p\n",
-                       "Asynch_Read_Stream: aio_read queueing failed"),
-                      -1);
-
-  return initiate_result;
+  ACE_UNUSED_ARG (message_block);
+  ACE_UNUSED_ARG (number_of_bytes_recvd);
+  ACE_UNUSED_ARG (flags);
+  ACE_UNUSED_ARG (protocol_family);
+  ACE_UNUSED_ARG (act);
+  ACE_UNUSED_ARG (priority);
+  ACE_UNUSED_ARG (signal_number);
+  ACE_NOTSUP_RETURN (-1);
 }
 
 int
@@ -3701,80 +3658,14 @@ ACE_POSIX_AIOCB_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
                                           int priority,
                                           int signal_number)
 {
-	int initiate_result =0;
-	/*
-  // Calculate the total number of bytes to send.
-  u_long bytes_to_send = 0;
-  for (int i = 0; i < buffer_count; ++i)
-  {
-    bytes_to_send += buffers[i].iov_len;
-  }
-
-  // Create the Asynch_Result.
-  ACE_POSIX_Asynch_Write_Dgram_Result *result = 0;
-  ACE_NEW_RETURN (result,
-                  ACE_POSIX_Asynch_Write_Dgram_Result (*this->handler_,
-                                                       this->handle_,
-                                                       bytes_to_send,
-                                                       flags,
-                                                       addr,
-                                                       act,
-                                                       this->win32_proactor_->get_handle (),
-                                                       priority,
-                                                       signal_number),
-                  -1);
-
-  // do the scatter/gather recv
-  size_t bytes_sent = 0;
-  int initiate_result = ACE_OS::sendto (result->handle (),
-                                        buffers,
-                                        buffer_count,
-                                        bytes_sent,
-                                        result->flags_,
-                                        result->saddr (),
-                                        result->addr_len_,
-                                        result,
-                                        0);
-
-  if (initiate_result == SOCKET_ERROR)
-  {
-    // If initiate failed, check for a bad error.
-    ACE_OS::set_errno_to_last_error ();
-    switch (errno)
-    {
-      case ERROR_IO_PENDING:
-        // The IO will complete proactively: the OVERLAPPED will still
-        // get queued.
-        break;
-
-      default:
-        // Something else went wrong: the OVERLAPPED will not get
-        // queued.
-
-        if (ACE::debug ())
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      ACE_LIB_TEXT ("%p\n"),
-                      ACE_LIB_TEXT ("ReadFile")));
-        }
-
-        delete result;
-
-        break;
-    }
-
-  }
-  else
-  {
-    // Immediate success: the OVERLAPPED will still get queued.
-    // number_of_bytes_recvd contains the number of bytes recvd
-    // addr contains the peer address
-    // flags was updated
-    number_of_bytes_sent = bytes_sent;
-  }
-  */
-
-  return initiate_result;
+  ACE_UNUSED_ARG (message_block);
+  ACE_UNUSED_ARG (number_of_bytes_sent);
+  ACE_UNUSED_ARG (flags);
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (act);
+  ACE_UNUSED_ARG (priority);
+  ACE_UNUSED_ARG (signal_number);
+  ACE_NOTSUP_RETURN (-1);
 }
 
 int
@@ -3821,80 +3712,14 @@ ACE_POSIX_SIG_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
                                         int priority,
                                         int signal_number)
 {
-	int initiate_result =0;
-	/*
-  // Calculate the total number of bytes to send.
-  u_long bytes_to_send = 0;
-  for (int i = 0; i < buffer_count; ++i)
-  {
-    bytes_to_send += buffers[i].iov_len;
-  }
-
-  // Create the Asynch_Result.
-  ACE_POSIX_Asynch_Write_Dgram_Result *result = 0;
-  ACE_NEW_RETURN (result,
-                  ACE_POSIX_Asynch_Write_Dgram_Result (*this->handler_,
-                                                       this->handle_,
-                                                       bytes_to_send,
-                                                       flags,
-                                                       addr,
-                                                       act,
-                                                       this->win32_proactor_->get_handle (),
-                                                       priority,
-                                                       signal_number),
-                  -1);
-
-  // do the scatter/gather recv
-  size_t bytes_sent = 0;
-  int initiate_result = ACE_OS::sendto (result->handle (),
-                                        buffers,
-                                        buffer_count,
-                                        bytes_sent,
-                                        result->flags_,
-                                        result->saddr (),
-                                        result->addr_len_,
-                                        result,
-                                        0);
-
-  if (initiate_result == SOCKET_ERROR)
-  {
-    // If initiate failed, check for a bad error.
-    ACE_OS::set_errno_to_last_error ();
-    switch (errno)
-    {
-      case ERROR_IO_PENDING:
-        // The IO will complete proactively: the OVERLAPPED will still
-        // get queued.
-        break;
-
-      default:
-        // Something else went wrong: the OVERLAPPED will not get
-        // queued.
-
-        if (ACE::debug ())
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      ACE_LIB_TEXT ("%p\n"),
-                      ACE_LIB_TEXT ("ReadFile")));
-        }
-
-        delete result;
-
-        break;
-    }
-
-  }
-  else
-  {
-    // Immediate success: the OVERLAPPED will still get queued.
-    // number_of_bytes_recvd contains the number of bytes recvd
-    // addr contains the peer address
-    // flags was updated
-    number_of_bytes_sent = bytes_sent;
-  }
-  */
-
-  return initiate_result;
+  ACE_UNUSED_ARG (message_block);
+  ACE_UNUSED_ARG (number_of_bytes_sent);
+  ACE_UNUSED_ARG (flags);
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (act);
+  ACE_UNUSED_ARG (priority);
+  ACE_UNUSED_ARG (signal_number);
+  ACE_NOTSUP_RETURN (-1);
 }
 
 int
