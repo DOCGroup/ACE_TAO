@@ -167,10 +167,15 @@ ifeq ($(templates),)
     templates = explicit
   else
     ifeq (C++ 5.3,$(findstring C++ 5.3,$(CC_VERSION)))
-      # Set this to automaic if automatic template instantiation works for you.
+      # Set this to automatic if automatic template instantiation works for you.
       templates = explicit
     else
+      ifeq (C++ 5.5,$(findstring C++ 5.5,$(CC_VERSION)))
+        # SunForte8 has no problems using implicit templates 
+        templates = implicit
+      else 
         templates = explicit
+      endif
     endif
   endif
 endif
