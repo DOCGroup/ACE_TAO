@@ -66,7 +66,7 @@ JAWS_Synch_IO::receive_file (const char *filename,
 			     int initial_data_length,
 			     int entire_length)
 {
-  ACE_Filecache_Handle handle (filename, entire_length);
+  ACE_Filecache_Handle handle (filename, entire_length, 1);
 
   int result = handle.error ();
 
@@ -255,7 +255,7 @@ JAWS_Asynch_IO::receive_file (const char *filename,
   ACE_Message_Block *mb = 0;
   ACE_Filecache_Handle *handle;
 
-  ACE_NEW (handle, ACE_Filecache_Handle (filename, entire_length));
+  ACE_NEW (handle, ACE_Filecache_Handle (filename, entire_length, 0));
 
   int result = handle->error ();
 
@@ -301,7 +301,7 @@ JAWS_Asynch_IO::transmit_file (const char *filename,
 			       int trailer_size)
 {
   ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer = 0;
-  ACE_Filecache_Handle *handle = new ACE_Filecache_Handle (filename);
+  ACE_Filecache_Handle *handle = new ACE_Filecache_Handle (filename, 0);
 
   int result = handle->error ();
 
