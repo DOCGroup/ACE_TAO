@@ -130,21 +130,6 @@ private:
 
   int set_signals (void);
 
-  // data members
-  int inet_port_;
-
-  char *unix_port_;
-  char* atm_port_;
-
-  struct FdTable
-  {
-    int fd;   /* -1 -- free item, >=0 -- fd value */
-    int type;
-    unsigned stime;  /* setup time, in seconds */
-    int state;
-  } * fdTable_;
-
-  int size_;
 };
 
 #endif // _MPEG_SERVER_H
