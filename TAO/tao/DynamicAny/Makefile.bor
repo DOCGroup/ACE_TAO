@@ -7,6 +7,7 @@ NAME = TAO_DynamicAny
 OBJFILES = \
 	$(OBJDIR)\DynamicAny.obj \
 	$(OBJDIR)\DynamicAnyC.obj \
+	$(OBJDIR)\DynCommon.obj \
 	$(OBJDIR)\DynAny_i.obj \
 	$(OBJDIR)\DynAnyFactory.obj \
 	$(OBJDIR)\DynArray_i.obj \

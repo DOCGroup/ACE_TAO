@@ -40,6 +40,8 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release\DynamicAny"
 # PROP Target_Dir ""
+LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "_WINDOWS" /D "_CONSOLE" /D "NDEBUG" /D "WIN32" /D "TAO_AS_STATIC_LIBS" /D "ACE_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -64,6 +66,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug\DynamicAny"
 # PROP Target_Dir ""
+LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_WINDOWS" /D "_CONSOLE" /D "_DEBUG" /D "WIN32" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -82,15 +86,6 @@ LIB32=link.exe -lib
 
 # Name "DynamicAny_Static - Win32 Static Release"
 # Name "DynamicAny_Static - Win32 Static Debug"
-# Begin Group "Template Files"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\DynUnion_i_T.cpp
-# PROP Exclude_From_Build 1
-# End Source File
-# End Group
 # Begin Group "Inline Files"
 
 # PROP Default_Filter "i"
@@ -128,6 +123,10 @@ SOURCE=.\DynArray_i.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\DynCommon.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\DynEnum_i.h
 # End Source File
 # Begin Source File
@@ -141,10 +140,6 @@ SOURCE=.\DynStruct_i.h
 # Begin Source File
 
 SOURCE=.\DynUnion_i.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\DynUnion_i_T.h
 # End Source File
 # End Group
 # Begin Group "Source Files"
@@ -169,6 +164,10 @@ SOURCE=.\DynAnyFactory.cpp
 # Begin Source File
 
 SOURCE=.\DynArray_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\DynCommon.cpp
 # End Source File
 # Begin Source File
 
