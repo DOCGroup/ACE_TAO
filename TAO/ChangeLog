@@ -1,3 +1,10 @@
+Fri Nov 14 04:53:28 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/RTScheduling/Scheduling_Interceptor/Makefile:
+          Moved the testC.o and testS.o objects in from of the
+          test_client.o and test_server.o objects in the CLIENT_OBJS and
+          SERVER_OBJS lists to force them to get created first.
+
 Fri Nov 14 03:47:33 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/examples/RtEC/Kokyu/Makefile:
