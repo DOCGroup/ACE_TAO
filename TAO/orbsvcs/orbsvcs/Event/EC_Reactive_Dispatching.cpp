@@ -10,6 +10,7 @@
 ACE_RCSID(Event, EC_Reactive_Dispatching, "$Id$")
 
 TAO_EC_Reactive_Dispatching::TAO_EC_Reactive_Dispatching (void)
+  : TAO_EC_Dispatching ()
 {
 }
 

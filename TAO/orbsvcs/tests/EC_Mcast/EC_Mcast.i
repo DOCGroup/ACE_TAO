@@ -5,7 +5,7 @@
 ACE_INLINE int
 ECM_Federation::sender_local_addr (ACE_INET_Addr& addr)
 {
-  return this->sender_.get_local_addr (addr);
+  return this->sender_->get_local_addr (addr);
 }
 
 

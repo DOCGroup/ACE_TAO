@@ -569,6 +569,8 @@ ECM_Federation::ECM_Federation (char* name,
      consumer_names_ (consumer_names),
      addr_server_ (mcast_port)
 {
+  sender_ = TAO_ECG_UDP_Sender::create();
+
   ACE_NEW (this->supplier_ipaddr_, CORBA::ULong[this->supplier_types_]);
   ACE_NEW (this->consumer_ipaddr_, CORBA::ULong[this->consumer_types_]);
 
@@ -600,14 +602,14 @@ ECM_Federation::open (TAO_ECG_UDP_Out_Endpoint *endpoint,
     this->addr_server (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->sender_.init (ec,
-                      addr_server.in (),
-                      endpoint
-                      ACE_ENV_ARG_PARAMETER);
+  this->sender_->init (ec,
+                       addr_server.in (),
+                       endpoint
+                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // @@ TODO Make this a parameter....
-  this->sender_.mtu (64);
+  this->sender_->mtu (64);
 
   // The worst case execution time is far less than 2
   // milliseconds, but that is a safe estimate....
@@ -622,16 +624,14 @@ ECM_Federation::open (TAO_ECG_UDP_Out_Endpoint *endpoint,
       qos.insert_type (this->consumer_ipaddr (i), 0);
     }
   RtecEventChannelAdmin::ConsumerQOS qos_copy = qos.get_ConsumerQOS ();
-  this->sender_.open (qos_copy ACE_ENV_ARG_PARAMETER);
+  this->sender_->connect (qos_copy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 ECM_Federation::close (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->sender_.close (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  this->sender_.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->sender_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -897,17 +897,22 @@ ECM_Local_Federation::ECM_Local_Federation (ECM_Federation *federation,
      event_count_ (0),
      last_publication_change_ (0),
      last_subscription_change_ (0),
-     mcast_eh_ (&receiver_),
+     mcast_eh_ (0),
      seed_ (0),
      subscription_change_period_ (10000),
      publication_change_period_ (10000)
 {
+  receiver_ = TAO_ECG_UDP_Receiver::create();
+
+  ACE_NEW (mcast_eh_, TAO_ECG_Mcast_EH((&*receiver_)));
+
   ACE_NEW (this->subscription_subset_,
            CORBA::Boolean[this->consumer_types ()]);
 }
 
 ECM_Local_Federation::~ECM_Local_Federation (void)
 {
+  delete mcast_eh_;
   delete[] this->subscription_subset_;
 }
 
@@ -1039,7 +1044,7 @@ ECM_Local_Federation::consumer_push (ACE_hrtime_t,
 
 void
 ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
-                                     TAO_ECG_UDP_Out_Endpoint* ignore_from
+                                     TAO_ECG_Refcounted_Endpoint ignore_from
                                      ACE_ENV_ARG_DECL)
 {
   RtecUDPAdmin::AddrServer_var addr_server =
@@ -1048,16 +1053,10 @@ ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
 
   ACE_Reactor* reactor = TAO_ORB_Core_instance ()->reactor ();
 
-  // @@ This should be parameters...
-  ACE_Time_Value expire_interval (1, 0);
-  const int max_timeouts = 5;
-  this->receiver_.init (ec,
-                        ignore_from,
-                        addr_server.in (),
-                        reactor,
-                        expire_interval,
-                        max_timeouts
-                        ACE_ENV_ARG_PARAMETER);
+  this->receiver_->init (ec,
+                         ignore_from,
+                         addr_server.in ()
+                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   const int bufsize = 512;
@@ -1067,9 +1066,9 @@ ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
 
   RtecEventComm::EventSourceID source = ACE::crc32 (buf);
 
-  this->mcast_eh_.reactor (reactor);
+  this->mcast_eh_->reactor (reactor);
 
-  this->mcast_eh_.open (ec ACE_ENV_ARG_PARAMETER);
+  this->mcast_eh_->open (ec ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_SupplierQOS_Factory qos;
@@ -1082,7 +1081,7 @@ ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
 
   RtecEventChannelAdmin::SupplierQOS qos_copy =
     qos.get_SupplierQOS ();
-  this->receiver_.open (qos_copy ACE_ENV_ARG_PARAMETER);
+  this->receiver_->connect (qos_copy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 
@@ -1091,12 +1090,9 @@ ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
 void
 ECM_Local_Federation::close_receiver (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->receiver_.close (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->receiver_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  this->receiver_.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  this->mcast_eh_.close (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->mcast_eh_->shutdown ();
 }
 
 void
