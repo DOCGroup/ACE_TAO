@@ -1,5 +1,9 @@
 Thu Oct 30 17:49:56 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* tests/Priority_Task_Test.cpp (main): Moved "int status" out of
+ 	  the #if defined (ACE_HAS_THREADS) so that it will compile when
+ 	  the platform *doesn't* have threads.
+
 	* ace/Synch_T.i (ACE_TSS): Added a missing ':' that was causing
  	  problems on platforms that lack threads.  Thanks to Laura
  	  Paterno <lpaterno@d0chb.fnal.gov> for helping to track this
