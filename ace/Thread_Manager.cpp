@@ -794,7 +794,7 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
   this->thr_list_.remove (td);
 
 #if defined (VXWORKS)
-  if (tid && ACE_OS::strcmp (tid, "==ace_t==") == 0)
+  if (tid && ACE_OS::strncmp (tid, "==ace_t==", 9) == 0)
     {
       delete tid;
     }
@@ -893,19 +893,20 @@ ACE_Thread_Manager::cancel_thr (ACE_Thread_Descriptor *td, int)
 }
 
 int
-ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int arg)
+ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int signum)
 {
   ACE_TRACE ("ACE_Thread_Manager::kill_thr");
 
-  int signum = (int) arg;
+  ACE_thread_t tid = td->thr_id_;
+#if defined (VXWORKS)
+  tid += ACE_OS::strncmp (tid, "==ace_t==", 9) == 0  ?  9  :  0;
+#endif /* VXWORKS */
 
-  int result = ACE_Thread::kill ((ACE_thread_t) td->thr_id_,
-                                 signum);
+  int result = ACE_Thread::kill (tid, signum);
 
   if (result != 0)
     {
-      // Only remove a thread from us when there is a
-      // "real" error.
+      // Only remove a thread from us when there is a "real" error.
       if (errno != ENOTSUP)
         this->thr_to_be_removed_.enqueue_tail (td);
 
