@@ -22,7 +22,7 @@ Barrier_Test
 Basic_Types_Test
 Buffer_Stream_Test
 Cache_Map_Manager_Test
-Cached_Conn_Test: !LynxOS !VxWorks
+Cached_Conn_Test: !LynxOS
 Cached_Accept_Conn_Test: !VxWorks
 Capabilities_Test
 CDR_Test
@@ -45,7 +45,7 @@ Hash_Map_Bucket_Iterator_Test
 High_Res_Timer_Test
 IOStream_Test
 Lazy_Map_Manager_Test
-Log_Msg_Test: !VxWorks
+Log_Msg_Test
 Logging_Strategy_Test: !STATIC !ST
 Map_Manager_Test
 Map_Test
@@ -67,8 +67,8 @@ Object_Manager_Test
 OrdMultiSet_Test
 OS_Test
 Pipe_Test: !MSVC !chorus !VxWorks
-Priority_Buffer_Test: !VxWorks
-Priority_Reactor_Test: !chorus !VxWorks
+Priority_Buffer_Test
+Priority_Reactor_Test: !chorus
 Priority_Task_Test: !Unicos
 Process_Manager_Test: ALL MSVC !DISABLED
 Process_Mutex_Test: !MSVC !chorus !VxWorks

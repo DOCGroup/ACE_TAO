@@ -203,7 +203,7 @@ ifdef VXWORKS
 all: run_test.vxworks
 
 run_test.vxworks: run_test.lst
-	run_test.pl -v -Config STATIC -Config CHECK_RESOURCES > run_test.vxworks
+	run_test.pl -v -Config STATIC -Config CHECK_RESOURCES -o run_test.vxworks
 endif
 
 realclean: clean
