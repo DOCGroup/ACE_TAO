@@ -2138,7 +2138,7 @@ endif # GHS
   Functor_T.cpp
 
 .obj/Get_Opt.o .obj/Get_Opt.so .shobj/Get_Opt.o .shobj/Get_Opt.so: Get_Opt.cpp Get_Opt.h \
-  pre.h SString.h \
+  pre.h \
   SStringfwd.h \
   Basic_Types.h \
   config-all.h \
@@ -2151,21 +2151,22 @@ endif # GHS
   ace_wchar.inl \
   ACE_export.h \
   Basic_Types.i \
-  String_Base.h \
-  String_Base_Const.h \
+  Containers.h \
+  Containers.i \
+  Containers_T.h \
+  Node.h Node.cpp \
+  Array_Base.h \
   Global_Macros.h \
   OS_Export.h \
+  OS.h \
+  OS_Dirent.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_Dirent.inl \
   OS_String.h \
   OS_String.inl \
   OS_Memory.h \
-  OS_Errno.h \
-  OS_Errno.inl \
   OS_Memory.inl \
-  String_Base.i \
-  Malloc_Base.h \
-  OS.h \
-  OS_Dirent.h \
-  OS_Dirent.inl \
   OS_TLI.h \
   OS_TLI.inl \
   Time_Value.h \
@@ -2174,8 +2175,22 @@ endif # GHS
   Min_Max.h \
   streams.h \
   Trace.h OS.i \
-  String_Base.cpp \
-  ACE.h \
+  Malloc_Base.h \
+  Array_Base.inl \
+  Array_Base.cpp \
+  Unbounded_Set.h \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  Log_Msg.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
+  OS_Log_Msg_Attributes.inl \
+  Unbounded_Queue.h \
+  Unbounded_Queue.inl \
+  Unbounded_Queue.cpp \
+  Containers_T.i \
+  Containers_T.cpp \
+  Get_Opt.i ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -2186,11 +2201,12 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i Malloc.h \
-  Log_Msg.h \
-  Log_Priority.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
+  ACE.i SString.h \
+  String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  String_Base.cpp \
+  Malloc.h \
   Malloc.i \
   Malloc_T.h \
   Synch.h Synch.i \
@@ -2221,27 +2237,11 @@ endif # GHS
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
-  Unbounded_Set.h \
-  Node.h Node.cpp \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
   Memory_Pool.i \
   Auto_Ptr.h \
   Auto_Ptr.i \
   Auto_Ptr.cpp \
-  SString.i \
-  Containers.h \
-  Containers.i \
-  Containers_T.h \
-  Array_Base.h \
-  Array_Base.inl \
-  Array_Base.cpp \
-  Unbounded_Queue.h \
-  Unbounded_Queue.inl \
-  Unbounded_Queue.cpp \
-  Containers_T.i \
-  Containers_T.cpp \
-  Get_Opt.i
+  SString.i
 
 .obj/Hash_Map_Manager.o .obj/Hash_Map_Manager.so .shobj/Hash_Map_Manager.o .shobj/Hash_Map_Manager.so: Hash_Map_Manager.cpp \
   Hash_Map_Manager.h \
@@ -3525,10 +3525,8 @@ endif # GHS
   ACE.i
 
 .obj/Logging_Strategy.o .obj/Logging_Strategy.so .shobj/Logging_Strategy.o .shobj/Logging_Strategy.so: Logging_Strategy.cpp \
-  Get_Opt.h pre.h \
-  SString.h \
-  SStringfwd.h \
-  Basic_Types.h \
+  ACE.h pre.h \
+  OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -3537,33 +3535,27 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ACE_export.h \
-  Basic_Types.i \
-  String_Base.h \
-  String_Base_Const.h \
-  Global_Macros.h \
+  OS_Dirent.h \
   OS_Export.h \
-  OS_String.h \
-  OS_String.inl \
-  OS_Memory.h \
   OS_Errno.h \
   OS_Errno.inl \
-  OS_Memory.inl \
-  String_Base.i \
-  Malloc_Base.h \
-  OS.h \
-  OS_Dirent.h \
   OS_Dirent.inl \
+  OS_String.h \
+  Basic_Types.h \
+  ACE_export.h \
+  Basic_Types.i \
+  OS_String.inl \
+  OS_Memory.h \
+  OS_Memory.inl \
   OS_TLI.h \
   OS_TLI.inl \
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
+  Global_Macros.h \
   Min_Max.h \
   streams.h \
   Trace.h OS.i \
-  String_Base.cpp \
-  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -3574,56 +3566,23 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i Malloc.h \
+  ACE.i Get_Opt.h \
+  SStringfwd.h \
+  Containers.h \
+  Containers.i \
+  Containers_T.h \
+  Node.h Node.cpp \
+  Array_Base.h \
+  Malloc_Base.h \
+  Array_Base.inl \
+  Array_Base.cpp \
+  Unbounded_Set.h \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl \
-  Malloc.i \
-  Malloc_T.h \
-  Synch.h Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
-  Thread_Adapter.h \
-  Base_Thread_Adapter.h \
-  Base_Thread_Adapter.inl \
-  Thread_Adapter.inl \
-  Thread.i \
-  Synch_T.cpp \
-  Malloc_Allocator.h \
-  Malloc_Allocator.i \
-  Free_List.h \
-  Free_List.i \
-  Free_List.cpp \
-  Malloc_T.i \
-  Malloc_T.cpp \
-  Memory_Pool.h \
-  Event_Handler.h \
-  Event_Handler.i \
-  Signal.h \
-  Signal.i \
-  Mem_Map.h \
-  Mem_Map.i \
-  SV_Semaphore_Complex.h \
-  SV_Semaphore_Simple.h \
-  SV_Semaphore_Simple.i \
-  SV_Semaphore_Complex.i \
-  Unbounded_Set.h \
-  Node.h Node.cpp \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
-  Memory_Pool.i \
-  Auto_Ptr.h \
-  Auto_Ptr.i \
-  Auto_Ptr.cpp \
-  SString.i \
-  Containers.h \
-  Containers.i \
-  Containers_T.h \
-  Array_Base.h \
-  Array_Base.inl \
-  Array_Base.cpp \
   Unbounded_Queue.h \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
@@ -3634,12 +3593,29 @@ endif # GHS
   Handle_Set.h \
   Handle_Set.i \
   Timer_Queue.h \
+  Synch.h Synch.i \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  Thread_Adapter.h \
+  Base_Thread_Adapter.h \
+  Base_Thread_Adapter.inl \
+  Thread_Adapter.inl \
+  Thread.i \
+  Synch_T.cpp \
   Timer_Queue_T.h \
+  Free_List.h \
+  Free_List.i \
+  Free_List.cpp \
   Test_and_Set.h \
+  Event_Handler.h \
+  Event_Handler.i \
   Test_and_Set.i \
   Test_and_Set.cpp \
   Timer_Queue_T.i \
   Timer_Queue_T.cpp \
+  Signal.h \
+  Signal.i \
   Reactor.i \
   Reactor_Impl.h \
   Logging_Strategy.h \
@@ -3907,10 +3883,8 @@ endif # GHS
   Unbounded_Queue.cpp \
   ARGV.i
 
-.obj/Process_Manager.o .obj/Process_Manager.so .shobj/Process_Manager.o .shobj/Process_Manager.so: Process_Manager.cpp \
-  Synch_T.h pre.h \
-  Synch.h \
-  ACE_export.h \
+.obj/Process_Manager.o .obj/Process_Manager.so .shobj/Process_Manager.o .shobj/Process_Manager.so: Process_Manager.cpp ACE.h \
+  pre.h OS.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -3919,7 +3893,6 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS.h \
   OS_Dirent.h \
   OS_Export.h \
   OS_Errno.h \
@@ -3927,6 +3900,7 @@ endif # GHS
   OS_Dirent.inl \
   OS_String.h \
   Basic_Types.h \
+  ACE_export.h \
   Basic_Types.i \
   OS_String.inl \
   OS_Memory.h \
@@ -3940,7 +3914,18 @@ endif # GHS
   Min_Max.h \
   streams.h \
   Trace.h OS.i \
-  Synch.i \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i Synch_T.h \
+  Synch.h Synch.i \
   Synch_T.i \
   Thread.h \
   Thread_Adapter.h \
@@ -3963,18 +3948,7 @@ endif # GHS
   String_Base.i \
   Malloc_Base.h \
   String_Base.cpp \
-  ACE.h \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i Malloc.h \
+  Malloc.h \
   Malloc.i \
   Malloc_T.h \
   Malloc_Allocator.h \
@@ -6787,6 +6761,66 @@ endif # GHS
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl
 
+.obj/Multihomed_INET_Addr.o .obj/Multihomed_INET_Addr.so .shobj/Multihomed_INET_Addr.o .shobj/Multihomed_INET_Addr.so: Multihomed_INET_Addr.cpp \
+  Multihomed_INET_Addr.h \
+  pre.h \
+  INET_Addr.h \
+  Sock_Connect.h \
+  ACE_export.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS.h \
+  OS_Dirent.h \
+  OS_Export.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_Dirent.inl \
+  OS_String.h \
+  Basic_Types.h \
+  Basic_Types.i \
+  OS_String.inl \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Global_Macros.h \
+  Min_Max.h \
+  streams.h \
+  Trace.h OS.i \
+  Sock_Connect.i \
+  Addr.h Addr.i \
+  INET_Addr.i \
+  Containers_T.h \
+  Containers.h \
+  Containers.i \
+  Node.h Node.cpp \
+  Array_Base.h \
+  Malloc_Base.h \
+  Array_Base.inl \
+  Array_Base.cpp \
+  Unbounded_Set.h \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  Log_Msg.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
+  OS_Log_Msg_Attributes.inl \
+  Unbounded_Queue.h \
+  Unbounded_Queue.inl \
+  Unbounded_Queue.cpp \
+  Containers_T.i \
+  Containers_T.cpp \
+  Multihomed_INET_Addr.i
+
 .obj/IPC_SAP.o .obj/IPC_SAP.so .shobj/IPC_SAP.o .shobj/IPC_SAP.so: IPC_SAP.cpp IPC_SAP.h \
   pre.h \
   Flag_Manip.h \
@@ -7740,6 +7774,236 @@ endif # GHS
   ACE.i SOCK_IO.i \
   Handle_Set.h \
   Handle_Set.i
+
+.obj/SOCK_SEQPACK_Acceptor.o .obj/SOCK_SEQPACK_Acceptor.so .shobj/SOCK_SEQPACK_Acceptor.o .shobj/SOCK_SEQPACK_Acceptor.so: SOCK_SEQPACK_Acceptor.cpp \
+  SOCK_SEQPACK_Acceptor.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  ACE_export.h \
+  SOCK_SEQPACK_Association.h \
+  SOCK_IO.h \
+  SOCK.h Addr.h \
+  Addr.i \
+  IPC_SAP.h \
+  Flag_Manip.h \
+  OS.h \
+  OS_Dirent.h \
+  OS_Export.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_Dirent.inl \
+  OS_String.h \
+  Basic_Types.h \
+  Basic_Types.i \
+  OS_String.inl \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Global_Macros.h \
+  Min_Max.h \
+  streams.h \
+  Trace.h OS.i \
+  Flag_Manip.i \
+  IPC_SAP.i \
+  SOCK.i ACE.h \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i SOCK_IO.i \
+  INET_Addr.h \
+  INET_Addr.i \
+  SOCK_SEQPACK_Association.i \
+  Multihomed_INET_Addr.h \
+  Containers_T.h \
+  Containers.h \
+  Containers.i \
+  Node.h Node.cpp \
+  Array_Base.h \
+  Malloc_Base.h \
+  Array_Base.inl \
+  Array_Base.cpp \
+  Unbounded_Set.h \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  Log_Msg.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
+  OS_Log_Msg_Attributes.inl \
+  Unbounded_Queue.h \
+  Unbounded_Queue.inl \
+  Unbounded_Queue.cpp \
+  Containers_T.i \
+  Containers_T.cpp \
+  Multihomed_INET_Addr.i \
+  SOCK_SEQPACK_Acceptor.i \
+  Synch.h Synch.i \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  Thread_Adapter.h \
+  Base_Thread_Adapter.h \
+  Base_Thread_Adapter.inl \
+  Thread_Adapter.inl \
+  Thread.i \
+  Synch_T.cpp \
+  Auto_Ptr.h \
+  Auto_Ptr.i \
+  Auto_Ptr.cpp
+
+.obj/SOCK_SEQPACK_Association.o .obj/SOCK_SEQPACK_Association.so .shobj/SOCK_SEQPACK_Association.o .shobj/SOCK_SEQPACK_Association.so: SOCK_SEQPACK_Association.cpp \
+  SOCK_SEQPACK_Association.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  ACE_export.h \
+  SOCK_IO.h \
+  SOCK.h Addr.h \
+  Addr.i \
+  IPC_SAP.h \
+  Flag_Manip.h \
+  OS.h \
+  OS_Dirent.h \
+  OS_Export.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_Dirent.inl \
+  OS_String.h \
+  Basic_Types.h \
+  Basic_Types.i \
+  OS_String.inl \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Global_Macros.h \
+  Min_Max.h \
+  streams.h \
+  Trace.h OS.i \
+  Flag_Manip.i \
+  IPC_SAP.i \
+  SOCK.i ACE.h \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i SOCK_IO.i \
+  INET_Addr.h \
+  INET_Addr.i \
+  SOCK_SEQPACK_Association.i \
+  Auto_Ptr.h \
+  Auto_Ptr.i \
+  Auto_Ptr.cpp \
+  Log_Msg.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
+  OS_Log_Msg_Attributes.inl
+
+.obj/SOCK_SEQPACK_Connector.o .obj/SOCK_SEQPACK_Connector.so .shobj/SOCK_SEQPACK_Connector.o .shobj/SOCK_SEQPACK_Connector.so: SOCK_SEQPACK_Connector.cpp \
+  SOCK_SEQPACK_Connector.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  ACE_export.h \
+  SOCK_SEQPACK_Association.h \
+  SOCK_IO.h \
+  SOCK.h Addr.h \
+  Addr.i \
+  IPC_SAP.h \
+  Flag_Manip.h \
+  OS.h \
+  OS_Dirent.h \
+  OS_Export.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_Dirent.inl \
+  OS_String.h \
+  Basic_Types.h \
+  Basic_Types.i \
+  OS_String.inl \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Global_Macros.h \
+  Min_Max.h \
+  streams.h \
+  Trace.h OS.i \
+  Flag_Manip.i \
+  IPC_SAP.i \
+  SOCK.i ACE.h \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i SOCK_IO.i \
+  INET_Addr.h \
+  INET_Addr.i \
+  SOCK_SEQPACK_Association.i \
+  Multihomed_INET_Addr.h \
+  Containers_T.h \
+  Containers.h \
+  Containers.i \
+  Node.h Node.cpp \
+  Array_Base.h \
+  Malloc_Base.h \
+  Array_Base.inl \
+  Array_Base.cpp \
+  Unbounded_Set.h \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  Log_Msg.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
+  OS_Log_Msg_Attributes.inl \
+  Unbounded_Queue.h \
+  Unbounded_Queue.inl \
+  Unbounded_Queue.cpp \
+  Containers_T.i \
+  Containers_T.cpp \
+  Multihomed_INET_Addr.i \
+  SOCK_SEQPACK_Connector.i
 
 .obj/SOCK_Stream.o .obj/SOCK_Stream.so .shobj/SOCK_Stream.o .shobj/SOCK_Stream.so: SOCK_Stream.cpp SOCK_Stream.h \
   pre.h SOCK_IO.h \
@@ -12734,7 +12998,6 @@ endif # GHS
 
 .obj/Service_Manager.o .obj/Service_Manager.so .shobj/Service_Manager.o .shobj/Service_Manager.so: Service_Manager.cpp \
   Get_Opt.h pre.h \
-  SString.h \
   SStringfwd.h \
   Basic_Types.h \
   config-all.h \
@@ -12747,21 +13010,22 @@ endif # GHS
   ace_wchar.inl \
   ACE_export.h \
   Basic_Types.i \
-  String_Base.h \
-  String_Base_Const.h \
+  Containers.h \
+  Containers.i \
+  Containers_T.h \
+  Node.h Node.cpp \
+  Array_Base.h \
   Global_Macros.h \
   OS_Export.h \
+  OS.h \
+  OS_Dirent.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_Dirent.inl \
   OS_String.h \
   OS_String.inl \
   OS_Memory.h \
-  OS_Errno.h \
-  OS_Errno.inl \
   OS_Memory.inl \
-  String_Base.i \
-  Malloc_Base.h \
-  OS.h \
-  OS_Dirent.h \
-  OS_Dirent.inl \
   OS_TLI.h \
   OS_TLI.inl \
   Time_Value.h \
@@ -12770,6 +13034,39 @@ endif # GHS
   Min_Max.h \
   streams.h \
   Trace.h OS.i \
+  Malloc_Base.h \
+  Array_Base.inl \
+  Array_Base.cpp \
+  Unbounded_Set.h \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  Log_Msg.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
+  OS_Log_Msg_Attributes.inl \
+  Unbounded_Queue.h \
+  Unbounded_Queue.inl \
+  Unbounded_Queue.cpp \
+  Containers_T.i \
+  Containers_T.cpp \
+  Get_Opt.i \
+  Service_Repository.h \
+  Synch.h Synch.i \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  Thread_Adapter.h \
+  Base_Thread_Adapter.h \
+  Base_Thread_Adapter.inl \
+  Thread_Adapter.inl \
+  Thread.i \
+  Synch_T.cpp \
+  Service_Repository.i \
+  Service_Config.h \
+  SString.h \
+  String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
   String_Base.cpp \
   ACE.h \
   Flag_Manip.h \
@@ -12783,22 +13080,8 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i Malloc.h \
-  Log_Msg.h \
-  Log_Priority.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
-  Thread_Adapter.h \
-  Base_Thread_Adapter.h \
-  Base_Thread_Adapter.inl \
-  Thread_Adapter.inl \
-  Thread.i \
-  Synch_T.cpp \
   Malloc_Allocator.h \
   Malloc_Allocator.i \
   Free_List.h \
@@ -12817,30 +13100,11 @@ endif # GHS
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
-  Unbounded_Set.h \
-  Node.h Node.cpp \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
   Memory_Pool.i \
   Auto_Ptr.h \
   Auto_Ptr.i \
   Auto_Ptr.cpp \
   SString.i \
-  Containers.h \
-  Containers.i \
-  Containers_T.h \
-  Array_Base.h \
-  Array_Base.inl \
-  Array_Base.cpp \
-  Unbounded_Queue.h \
-  Unbounded_Queue.inl \
-  Unbounded_Queue.cpp \
-  Containers_T.i \
-  Containers_T.cpp \
-  Get_Opt.i \
-  Service_Repository.h \
-  Service_Repository.i \
-  Service_Config.h \
   XML_Svc_Conf.h \
   Service_Config.i \
   Reactor.h \
@@ -16429,7 +16693,6 @@ endif # GHS
 
 .obj/Naming_Context.o .obj/Naming_Context.so .shobj/Naming_Context.o .shobj/Naming_Context.so: Naming_Context.cpp \
   Get_Opt.h pre.h \
-  SString.h \
   SStringfwd.h \
   Basic_Types.h \
   config-all.h \
@@ -16442,21 +16705,22 @@ endif # GHS
   ace_wchar.inl \
   ACE_export.h \
   Basic_Types.i \
-  String_Base.h \
-  String_Base_Const.h \
+  Containers.h \
+  Containers.i \
+  Containers_T.h \
+  Node.h Node.cpp \
+  Array_Base.h \
   Global_Macros.h \
   OS_Export.h \
+  OS.h \
+  OS_Dirent.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_Dirent.inl \
   OS_String.h \
   OS_String.inl \
   OS_Memory.h \
-  OS_Errno.h \
-  OS_Errno.inl \
   OS_Memory.inl \
-  String_Base.i \
-  Malloc_Base.h \
-  OS.h \
-  OS_Dirent.h \
-  OS_Dirent.inl \
   OS_TLI.h \
   OS_TLI.inl \
   Time_Value.h \
@@ -16465,6 +16729,27 @@ endif # GHS
   Min_Max.h \
   streams.h \
   Trace.h OS.i \
+  Malloc_Base.h \
+  Array_Base.inl \
+  Array_Base.cpp \
+  Unbounded_Set.h \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  Log_Msg.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
+  OS_Log_Msg_Attributes.inl \
+  Unbounded_Queue.h \
+  Unbounded_Queue.inl \
+  Unbounded_Queue.cpp \
+  Containers_T.i \
+  Containers_T.cpp \
+  Get_Opt.i \
+  Naming_Context.h \
+  SString.h \
+  String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
   String_Base.cpp \
   ACE.h \
   Flag_Manip.h \
@@ -16478,10 +16763,6 @@ endif # GHS
   Sock_Connect.h \
   Sock_Connect.i \
   ACE.i Malloc.h \
-  Log_Msg.h \
-  Log_Priority.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
   Synch.h Synch.i \
@@ -16512,28 +16793,11 @@ endif # GHS
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
-  Unbounded_Set.h \
-  Node.h Node.cpp \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
   Memory_Pool.i \
   Auto_Ptr.h \
   Auto_Ptr.i \
   Auto_Ptr.cpp \
   SString.i \
-  Containers.h \
-  Containers.i \
-  Containers_T.h \
-  Array_Base.h \
-  Array_Base.inl \
-  Array_Base.cpp \
-  Unbounded_Queue.h \
-  Unbounded_Queue.inl \
-  Unbounded_Queue.cpp \
-  Containers_T.i \
-  Containers_T.cpp \
-  Get_Opt.i \
-  Naming_Context.h \
   Service_Object.h \
   Shared_Object.h \
   Shared_Object.i \
