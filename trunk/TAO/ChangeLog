@@ -1,3 +1,9 @@
+Mon Sep 27 06:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/Activator_NT_Service.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_NT_Service.cpp:
+          Fixed incorrect emulated exception macro usage
+
 Mon Sep 27 06:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
