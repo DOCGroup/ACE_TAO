@@ -1,3 +1,9 @@
+Mon Nov 29 07:19:16 2004  Ciju John  <john_c@ociweb.com>
+
+        * orbsvcs/tests/Notify/Discarding/run_test.pl:
+          Increased startup time for sequence server as tests on
+          some machines were failing.
+
 Mon Nov 29 13:15:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
 	* orbsvcs/tests/FT_App/FT_ReplicationManagerController.cpp:
