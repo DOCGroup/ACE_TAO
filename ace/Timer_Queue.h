@@ -97,6 +97,9 @@ public:
   // seen, else 1.
 };
 
+// Forward declaration.
+class ACE_Upcall_Strategy;
+
 class ACE_Export ACE_Timer_Queue
   // = TITLE 
   //      Provides an interface to timers.
@@ -108,8 +111,10 @@ class ACE_Export ACE_Timer_Queue
 {
 public: 
   // = Initialization and termination methods.
-  ACE_Timer_Queue (void);
-  // Default constructor.
+  ACE_Timer_Queue (ACE_Upcall_Strategy *upcall_strategy = 0);
+  // Default constructor. <expire> will call <upcall_strategy->upcall>
+  // if <upcall_strategy> is not 0. Else it will call <handle_timeout>
+  // on the <Event_Handler>
 
   virtual ~ACE_Timer_Queue (void);
   // Destructor - make virtual for proper destruction of inherited
@@ -187,6 +192,11 @@ public:
   void timer_skew (const ACE_Time_Value &skew);
   const ACE_Time_Value &timer_skew (void) const;
 
+#if defined (ACE_MT_SAFE)
+  ACE_Recursive_Thread_Mutex &lock (void); 
+  // Synchronization variable used by the queue
+#endif /* ACE_MT_SAFE */
+
   virtual void dump (void) const;
   // Dump the state of an object.
 
@@ -194,6 +204,13 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
+
+  virtual void upcall (ACE_Event_Handler *handler,
+		       const void *arg,
+		       const ACE_Time_Value &cur_time);
+  // This method will call <handle_timeout> on the <handler> or will
+  // forward the parameters to an upcall strategy (if one is present)
+
   virtual void reschedule (ACE_Timer_Node *) = 0;
   // Reschedule an "interval" <ACE_Timer_Node>.
 
@@ -213,6 +230,9 @@ protected:
 
   ACE_Time_Value (*gettimeofday_)(void);
   // Pointer to function that returns the current time of day.
+
+  ACE_Upcall_Strategy *upcall_strategy_;
+  // Upcall Strategy for callbacks
 
 private:
   ACE_Time_Value timeout_;

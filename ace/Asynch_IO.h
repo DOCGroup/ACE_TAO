@@ -87,6 +87,9 @@ public:
 		     u_long offset_high = 0);
   // Constructor 
 
+  virtual ~ACE_Asynch_Result (void);
+  // Destructor 
+
 protected:
   virtual void complete (u_long bytes_transferred,
 			 int success,
@@ -814,8 +817,13 @@ public:
 
   /*
     virtual void handle_notify (const ACE_Asynch_Notify::Result &result);
-    virtual void handle_timeout (const ACE_Asynch_Timeout::Result &result);
-    */
+  */
+
+  virtual void handle_timeout (const ACE_Time_Value &tv,
+			       const void *act = 0);
+  // Called when timer expires.
+  // <tv> was the requested time value and
+  // <act> is the ACT passed when scheduling the timer
 
   ACE_Proactor *proactor (void);
   // Get the proactor associated with this handler.
