@@ -221,42 +221,45 @@ be_operation::gen_client_stubs (void)
       else
 	prim = bt;
       if (prim->size_type () == be_decl::VARIABLE)
-	{
-	  switch (bt->node_type ())
-	    {
-	    case AST_Decl::NT_interface:
-	    case AST_Decl::NT_interface_fwd:
-	    case AST_Decl::NT_string:
-	      // no need of size here
-	      *cs << "0}";
-	      break;
-	    case AST_Decl::NT_pre_defined:
-	      {
-		be_predefined_type *bpd = be_predefined_type::narrow_from_decl
-		  (bt);
-		if (bpd->pt () == AST_PredefinedType::PT_pseudo)
-		  // no need of size here
-		  *cs << "0}";
-		else
-		  *cs << "sizeof (" << bt->name () << ")}";
-	      }
-	      break;
-	    default:
-	      *cs << "sizeof (" << bt->name () << ")}";
-	    }
-	}
+        {
+          switch (prim->node_type ())
+            {
+            case AST_Decl::NT_interface:
+            case AST_Decl::NT_interface_fwd:
+            case AST_Decl::NT_string:
+            case AST_Decl::NT_sequence:
+            case AST_Decl::NT_struct:
+            case AST_Decl::NT_union:
+              // no need of size here
+              *cs << "0}";
+              break;
+            case AST_Decl::NT_pre_defined:
+              {
+                be_predefined_type *bpd = be_predefined_type::narrow_from_decl
+                  (bt);
+                if (bpd->pt () == AST_PredefinedType::PT_pseudo)
+                  // no need of size here
+                  *cs << "0}";
+                else
+                  *cs << "sizeof (" << bt->name () << ")}";
+              }
+              break;
+            default:
+              *cs << "sizeof (" << bt->name () << ")}";
+            }
+        }
       else
-	*cs << "0}";
+        *cs << "0}";
       paramtblsize++;
 
       // if we have any arguments, get each one of them
       if (this->nmembers () > 0)
 	{
 	  // if there are elements in this scope
-	  
+
 	  si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
 	  // instantiate a scope iterator.
-	  
+
 	  while (!(si->is_done ()))
 	    {
 	      // get the next AST decl node
@@ -285,7 +288,7 @@ be_operation::gen_client_stubs (void)
 			// Are we returning a pointer to value? i.e.,
 			// is the type variable? If it is, we must
 			// tell the stub what is the size of the top
-			// level structure 
+			// level structure
 			if (bt->size_type () == be_decl::VARIABLE)
 			  {
 			    switch (bt->node_type ())
@@ -345,7 +348,7 @@ be_operation::gen_client_stubs (void)
 	}
       // insert the size of the paramdata table
       *cs << paramtblsize << ", ";
-      
+
       // insert the address of the paramdata table
       *cs << this->flatname () << "_paramdata, ";
 
@@ -438,7 +441,7 @@ be_operation::gen_client_stubs (void)
       cs->incr_indent ();
       *cs << "env.exception (new CORBA::DATA_CONVERSION "
 	  << "(CORBA::COMPLETED_NO));" << nl;
-      
+
       // return the appropriate error value on exception
       cg->push (TAO_CodeGen::TAO_OPERATION_RETVAL_EXCEPTION_CS);
       s = cg->make_state ();
@@ -473,14 +476,41 @@ be_operation::gen_client_stubs (void)
 
       // if our return type is not void, then pass the address of retval
       if (!bpd || (bpd->pt () != AST_PredefinedType::PT_void))
-	{
-	  *cs << ", &retval";
-	}
+        {
+          be_type *prim;
+          if (bt->node_type () == AST_Decl::NT_typedef)
+            {
+              be_typedef *tdef = be_typedef::narrow_from_decl (bt);
+              prim = tdef->primitive_base_type ();
+            }
+          else
+            prim = bt;
+          if (prim->size_type () == be_decl::VARIABLE)
+            {
+              switch (prim->node_type ())
+                {
+                case AST_Decl::NT_interface:
+                case AST_Decl::NT_interface_fwd:
+                case AST_Decl::NT_string:
+                  *cs << ", &retval";
+                  break;
+                case AST_Decl::NT_sequence:
+                case AST_Decl::NT_struct:
+                case AST_Decl::NT_union:
+                  *cs << ", retval";
+                  break;
+                default:
+                  *cs << ", &retval";
+                }
+            }
+          else
+            *cs << ", &retval";
+        }
       else
-	{
-	  // pass a 0
-	  *cs << ", 0";
-	}
+        {
+          // pass a 0
+          *cs << ", 0";
+        }
 
       cg->push (TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS);
       if (be_scope::gen_client_stubs () == -1)
@@ -631,7 +661,7 @@ be_operation::gen_server_skeletons (void)
       // define an NVList to hold arguments
       *ss << "CORBA::NVList_ptr \t nvlist;" << nl;
       // define a variable that will eventually point to our
-      // implementation object 
+      // implementation object
       *ss << intf->full_skel_name () << "_ptr \t impl = ("
 	  << intf->full_skel_name () << "_ptr) _tao_object_reference;"
 	  << nl;
@@ -799,7 +829,7 @@ be_operation::gen_server_skeletons (void)
       cg->pop ();
 
       // make the upcall
-      //  *ss << "impl = (" << intf->full_skel_name () 
+      //  *ss << "impl = (" << intf->full_skel_name ()
       //      << "_ptr) _tao_object_reference->get_subclass ();"
       //  << nl;
       if (!bpd || (bpd->pt () != AST_PredefinedType::PT_void))
@@ -854,7 +884,7 @@ be_operation::gen_server_skeletons (void)
 	}
       *ss << "\n";
     }
-  
+
   ss->decr_indent ();
   *ss << "}\n\n";
 
