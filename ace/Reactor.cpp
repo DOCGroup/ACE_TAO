@@ -878,9 +878,9 @@ ACE_Reactor::ACE_Reactor (ACE_Sig_Handler *sh,
   : timer_queue_ (0),
     delete_timer_queue_ (0),
     requeue_position_ (-1), // Requeue at end of waiters by default.
-    initialized_ (0),
+    initialized_ (0)
 #if defined (ACE_MT_SAFE)
-    token_ (*this)
+    , token_ (*this)
 #endif /* ACE_MT_SAFE */
 {
   ACE_TRACE ("ACE_Reactor::ACE_Reactor");
@@ -897,9 +897,9 @@ ACE_Reactor::ACE_Reactor (size_t size,
   : timer_queue_ (0),
     delete_timer_queue_ (0),
     requeue_position_ (-1), // Requeue at end of waiters by default.
-    initialized_ (0),
+    initialized_ (0)
 #if defined (ACE_MT_SAFE)
-    token_ (*this)
+    , token_ (*this)
 #endif /* ACE_MT_SAFE */
 {
   ACE_TRACE ("ACE_Reactor::ACE_Reactor");

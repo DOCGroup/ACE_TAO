@@ -110,7 +110,9 @@ main (int argc, char *argv[])
       
       // Spawn ACE_MAX_ITERATIONS processes which will contend for the lock
       ACE_Process servers[ACE_MAX_ITERATIONS];
-      for (int i = 0; i < ACE_MAX_ITERATIONS; i++)
+      int i;
+
+      for (i = 0; i < ACE_MAX_ITERATIONS; i++)
 	{	  
 	  ACE_ASSERT (servers[i].start (s_argv) != -1);
 

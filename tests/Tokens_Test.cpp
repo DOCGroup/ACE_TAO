@@ -58,8 +58,6 @@ run_thread (void *vp)
   ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
   ACE_NEW_THREAD;
   Test_Params *tp = (Test_Params *) vp;
-  const char *name1 = tp->token1_->name ();
-  const char *name2 = tp->token2_->name ();
   ACE_Token_Collection collection (1, tp->collection_name_);
   collection.insert (*(tp->token1_));
   collection.insert (*(tp->token2_));

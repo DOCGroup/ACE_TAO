@@ -57,7 +57,7 @@ Pipe_Thr_Test::init (int, char **)
 int
 Pipe_Thr_Test::svc (void)
 {
-  size_t length = options.msg_size ();
+  ssize_t length = options.msg_size ();
   ACE_HANDLE handle = this->pipe_handles[1];
   char *from;
   ACE_NEW_RETURN (from, char[length], -1);

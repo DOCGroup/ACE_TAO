@@ -11,12 +11,12 @@ typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
 
 // Default address for shared memory mapped files and SYSV shared
 // memory (defaults to 64 M).
-const char *REQUEST_BASE_ADDR = ((char *) (64 * 1024 * 1024));
+void *REQUEST_BASE_ADDR = ((void *) (64 * 1024 * 1024));
 const char *REQUEST_STRING = "hello from request repository";
 
 // Default address for shared memory mapped files and SYSV shared
 // memory (defaults to 64 M).
-const char *RESPONSE_BASE_ADDR = ((char *) (128 * 1024 * 1024));
+void *RESPONSE_BASE_ADDR = ((void *) (128 * 1024 * 1024));
 const char *RESPONSE_STRING = "hello from response repository";
 
 int 
