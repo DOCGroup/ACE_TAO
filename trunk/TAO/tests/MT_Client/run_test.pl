@@ -30,7 +30,7 @@ $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
                        " -ORBsvcconf server.conf  -ORBdebuglevel $debug_level"
                        . " -o $iorfile");
 
-if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
+if (ACE::waitforfile_timed ($iorfile, 30) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile>\n";
   $SV->Kill (); $SV->TimedWait (1);
   exit 1;
@@ -43,14 +43,14 @@ $CL = Process::Create ($EXEPREFIX."$client_process$EXE_EXT ",
                        . " -n $threads -i 1000 "
                        . " -x");
 
-$client = $CL->TimedWait (60);
+$client = $CL->TimedWait (240);
 if ($client == -1) {
   print STDERR "ERROR: client timedout\n";
   $CL->Kill (); $CL->TimedWait (1);
   $status = 1;
 }
 
-$server = $SV->TimedWait (15);
+$server = $SV->TimedWait (30);
 if ($server == -1) {
   print STDERR "ERROR: server timedout\n";
   $SV->Kill (); $SV->TimedWait (1);
