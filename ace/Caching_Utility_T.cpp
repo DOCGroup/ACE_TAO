@@ -38,7 +38,7 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_cac
 
   // Calculate the no of entries to remove from the cache depending
   // upon the <purge_percent>.
-  size_t entries_to_remove = (purge_percent / 100 * current_map_size) + 0.5;
+  size_t entries_to_remove = size_t ((double (purge_percent) / 100 * current_map_size) + 0.5);
 
   KEY *key_to_remove = 0;
   VALUE *value_to_remove = 0;
