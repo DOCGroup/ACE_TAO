@@ -722,8 +722,9 @@ main (int argc, char *argv [])
                suspend_resume_test.elapsed_time ())
             {
               context_switch_test_stats.
-                sample (ping_suspend_resume_test.elapsed_time () -
-                        suspend_resume_test.elapsed_time ());
+                sample ((ping_suspend_resume_test.elapsed_time () -
+                         suspend_resume_test.elapsed_time ()) /
+                        ACE_static_cast (ACE_UINT32, 1u));
 
               ACE_DEBUG ((LM_INFO, "context switch time is (%.3f - %.3f)/2 = "
                                    "%.3f microseconds\n",
@@ -751,7 +752,8 @@ main (int argc, char *argv [])
       // Wait for all tasks to exit.
       ACE_Thread_Manager::instance ()->wait ();
 
-      yield_test_stats.sample (yield_test.elapsed_time ());
+      yield_test_stats.sample (yield_test.elapsed_time () /
+                               ACE_static_cast (ACE_UINT32, 1u));
 
       // Try _really_ hard not to use floating point.
       ACE_DEBUG ((LM_INFO, "context switch time from yield test is %u.%03u "
