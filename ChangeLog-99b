@@ -1,3 +1,11 @@
+Tue Mar  2 10:33:47 1999  James CE Johnson  <jcej@lads.com>
+
+	* ace/IOStream_T.{cpp|h|i}: Christopher Healey
+ 	<chealey@entera.com> noticed occasional core dumps from
+ 	~ACE_IOStream on heavily loaded systems.  It turns out that
+ 	streambuf_ was being deleted out from under the object.  These
+ 	three files include his patches for this problem.
+
 Tue Mar  2 02:28:54 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/CDR_Stream.h (do_byte_swap): This accessor function should

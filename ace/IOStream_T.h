@@ -1,7 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
-// ============================================================================
+//
+============================================================================
 //
 // = LIBRARY
 //    ace
@@ -17,7 +18,8 @@
 //    Instead, it should #include "ace/IOStream.h".  That's because
 //    we only put some conditional compilations in that file.
 //
-// ============================================================================
+//
+============================================================================
 
 #ifndef ACE_IOSTREAM_T_H
 #define ACE_IOSTREAM_T_H
@@ -31,8 +33,10 @@
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
 #if defined (ACE_HAS_STRING_CLASS)
-template <class STREAM> STREAM & operator>> (STREAM &stream, ACE_Quoted_String &str);
-template <class STREAM> STREAM & operator<< (STREAM &stream, ACE_Quoted_String &str);
+template <class STREAM> STREAM & operator>> (STREAM &stream,
+ACE_Quoted_String &str);
+template <class STREAM> STREAM & operator<< (STREAM &stream,
+ACE_Quoted_String &str);
 #endif /* defined (ACE_HAS_STRING_CLASS) */
 
 template <class STREAM>
@@ -44,6 +48,12 @@ public:
                    int io_mode = ios::in | ios::out);
   // We will be given a STREAM by the iostream object which creates
   // us.  See the ACE_IOStream template for how that works.  Like
+  // other streambuf objects, we can be input-only, output-only or
+  // both.
+
+  ACE_Streambuf_T (u_int streambuf_size = ACE_STREAMBUF_SIZE,
+                   int io_mode = ios::in | ios::out);
+  // We will create the STREAM by ourselves.  Like
   // other streambuf objects, we can be input-only, output-only or
   // both.
 
@@ -71,7 +81,12 @@ protected:
 };
 
 template <class STREAM>
-class ACE_IOStream : public iostream, public STREAM
+class ACE_IOStream : public STREAM,
+                     protected ACE_Streambuf_T<STREAM>,
+  // This is where all of the action takes place.  The
+ACE_Streambuf_T<STREAM>
+  // is the interface to the underlying STREAM.
+                     public iostream
 {
   // = TITLE
   //     A template adapter for creating an iostream-like object using
@@ -115,8 +130,6 @@ public:
   // on STREAM.
 
   virtual ~ACE_IOStream (void);
-  // We have to get rid of the <streambuf_> ourselves since we gave it
-  // to the <iostream> base class;
 
   virtual int close (void);
   // The only ambituity in the multiple inheritance is the <close>
@@ -166,8 +179,10 @@ public:
 #endif /* !ACE_WIN32 */
       return (0);
     }
-  virtual int ipfx0(void)         {  return ipfx (0); }  // Optimized ipfx(0)
-  virtual int ipfx1(void)                                // Optimized ipfx(1)
+  virtual int ipfx0(void)         {  return ipfx (0); }  // Optimized
+ipfx(0)
+  virtual int ipfx1(void)                                // Optimized
+ipfx(1)
     {
       if (good())
         {
@@ -191,8 +206,10 @@ public:
   virtual void osfx (void)        {  if (flags() & unitbuf) flush(); }
 #else
 #if defined (__GNUC__)
-  virtual int ipfx0(void)         { return iostream::ipfx0 (); }  // Optimized ipfx(0)
-  virtual int ipfx1(void)         { return iostream::ipfx1(); }  // Optimized ipfx(1)
+  virtual int ipfx0(void)         { return iostream::ipfx0 (); }  //
+Optimized ipfx(0)
+  virtual int ipfx1(void)         { return iostream::ipfx1(); }  //
+Optimized ipfx(1)
 #else
   virtual int ipfx0(void)         {  return iostream::ipfx (0); }
   virtual int ipfx1(void)         {  return iostream::ipfx (1); }
@@ -207,19 +224,14 @@ public:
   // Allow the programmer to provide a timeout for read operations.
   // Give it a pointer to NULL to block forever.
 
-protected:
-  ACE_Streambuf_T<STREAM> *streambuf_;
-  // This is where all of the action takes place.  The streambuf_ is
-  // the interface to the underlying STREAM.
-
 private:
   // = Private methods.
 
   // We move these into the private section so that they cannot be
   // used by the application programmer.  This is necessary because
-  // streambuf_ will be buffering IO on the STREAM object.  If these
-  // functions were used in your program, there is a danger of getting
-  // the datastream out of sync.
+  // the ACE_Streambuf_T<STREAM> will be buffering IO on the STREAM object.
+  // If these functions were used in your program, there is a danger of
+  // getting the datastream out of sync.
   ACE_UNIMPLEMENTED_FUNC (ssize_t send (...))
   ACE_UNIMPLEMENTED_FUNC (ssize_t recv (...))
   ACE_UNIMPLEMENTED_FUNC (ssize_t send_n (...))
@@ -271,7 +283,8 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("IOStream_T.cpp")
+#pragma implementation "IOStream_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 #endif /* ACE_LACKS_ACE_IOSTREAM */
 #endif /* ACE_IOSTREAM_T_H */
+
