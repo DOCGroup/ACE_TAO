@@ -326,6 +326,10 @@ SOURCE=.\Env.i
 
 SOURCE=.\Exception.i
 # End Source File
+# Begin Source File
+
+SOURCE=.\URL_Addr.inl
+# End Source File
 # End Group
 # End Target
 # End Project
