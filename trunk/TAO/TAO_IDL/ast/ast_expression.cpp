@@ -99,7 +99,8 @@ AST_Expression::AST_Expression (UTL_ScopedName *nm)
     pd_ev (0),
     pd_v1 (0),
     pd_v2 (0),
-    pd_n (nm)
+    pd_n (nm),
+    tdef (0)
 {
   this->fill_definition_details ();
 }
@@ -111,7 +112,8 @@ AST_Expression::AST_Expression (AST_Expression *v,
     pd_ev (0),
     pd_v1 (0),
     pd_v2 (0),
-    pd_n (0)
+    pd_n (0),
+    tdef (0)
 {
   this->fill_definition_details ();
 
@@ -133,7 +135,8 @@ AST_Expression::AST_Expression (ExprComb c,
     pd_ev (0),
     pd_v1 (ev1),
     pd_v2 (ev2),
-    pd_n (0)
+    pd_n (0),
+    tdef (0)
 {
   this->fill_definition_details ();
 }
@@ -144,7 +147,8 @@ AST_Expression::AST_Expression (short sv)
     pd_ev (0),
     pd_v1 (0),
     pd_v2 (0),
-    pd_n (0)
+    pd_n (0),
+    tdef (0)
 {
   this->fill_definition_details ();
 
@@ -161,7 +165,8 @@ AST_Expression::AST_Expression (unsigned short usv)
     pd_ev (0),
     pd_v1 (0),
     pd_v2 (0),
-    pd_n (0)
+    pd_n (0),
+    tdef (0)
 {
   this->fill_definition_details ();
 
@@ -178,7 +183,8 @@ AST_Expression::AST_Expression (long lv)
     pd_ev (0),
     pd_v1 (0),
     pd_v2 (0),
-    pd_n (0)
+    pd_n (0),
+    tdef (0)
 {
   this->fill_definition_details ();
 
@@ -196,7 +202,8 @@ AST_Expression::AST_Expression (long lv,
     pd_ev (0),
     pd_v1 (0),
     pd_v2 (0),
-    pd_n (0)
+    pd_n (0),
+    tdef (0)
 {
   this->fill_definition_details ();
 
@@ -214,7 +221,8 @@ AST_Expression::AST_Expression (unsigned long ulv)
     pd_ev (0),
     pd_v1 (0),
     pd_v2 (0),
-    pd_n (0)
+    pd_n (0),
+    tdef (0)
 {
   this->fill_definition_details ();
 
@@ -231,7 +239,8 @@ AST_Expression::AST_Expression (float fv)
     pd_ev (0),
     pd_v1 (0),
     pd_v2 (0),
-    pd_n (0)
+    pd_n (0),
+    tdef (0)
 {
   this->fill_definition_details ();
 
@@ -248,7 +257,8 @@ AST_Expression::AST_Expression (double dv)
     pd_ev (0),
     pd_v1 (0),
     pd_v2 (0),
-    pd_n (0)
+    pd_n (0),
+    tdef (0)
 {
   this->fill_definition_details ();
 
@@ -265,7 +275,8 @@ AST_Expression::AST_Expression (char cv)
     pd_ev (0),
     pd_v1 (0),
     pd_v2 (0),
-    pd_n (0)
+    pd_n (0),
+    tdef (0)
 {
   this->fill_definition_details ();
 
@@ -282,7 +293,8 @@ AST_Expression::AST_Expression (ACE_OutputCDR::from_wchar wcv)
     pd_ev (0),
     pd_v1 (0),
     pd_v2 (0),
-    pd_n (0)
+    pd_n (0),
+    tdef (0)
 {
   this->fill_definition_details ();
 
@@ -299,7 +311,8 @@ AST_Expression::AST_Expression (unsigned char ov)
     pd_ev (0),
     pd_v1 (0),
     pd_v2 (0),
-    pd_n (0)
+    pd_n (0),
+    tdef (0)
 {
   this->fill_definition_details ();
 
@@ -316,7 +329,8 @@ AST_Expression::AST_Expression (UTL_String *sv)
     pd_ev (0),
     pd_v1 (0),
     pd_v2 (0),
-    pd_n (0)
+    pd_n (0),
+    tdef (0)
 {
   this->fill_definition_details ();
 
@@ -333,7 +347,8 @@ AST_Expression::AST_Expression (char *sv)
     pd_ev (0),
     pd_v1 (0),
     pd_v2 (0),
-    pd_n (0)
+    pd_n (0),
+    tdef (0)
 {
   this->fill_definition_details ();
 
@@ -349,7 +364,6 @@ AST_Expression::~AST_Expression (void)
 }
 
 AST_Expression::AST_ExprValue::AST_ExprValue (void)
-  : tdef (0)
 {
 }
 
@@ -2102,10 +2116,10 @@ AST_Expression::check_and_coerce (AST_Expression::ExprType t,
 
   if (d != 0 && d->node_type () == AST_Decl::NT_typedef)
     {
-      this->pd_ev->tdef = d;
+      this->tdef = d;
     }
 
-  return this->coerce (t);;
+  return this->coerce (t);
 }
 
 // Coerce "this" to the ExprType required. Returns a copy of the
@@ -2481,6 +2495,12 @@ AST_Expression::compare (AST_Expression *vc)
     }
 
   return I_FALSE;
+}
+
+AST_Decl *
+AST_Expression::get_tdef (void) const
+{
+  return this->tdef;
 }
 
 // Helper functions for expression dumpers.
