@@ -3,6 +3,8 @@
 
 #include "CosTimeBase.idl"
 
+#pragma prefix "omg.org"
+
 module CosTime
 {
   // = TITLE

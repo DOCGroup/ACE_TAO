@@ -2,6 +2,8 @@
 
 #include "CosEventComm.idl"
 
+#pragma prefix "omg.org"
+
 module CosEventChannelAdmin
 {
   // = TITLE
