@@ -1,10 +1,11 @@
 dnl -------------------------------------------------------------------------
 dnl       $Id$
 dnl
-dnl       features.m4
+dnl       aio.m4
 dnl
 dnl       ACE M4 include file which contains ACE specific M4 macros
-dnl       that determine availablility of certain OS features for ACE.
+dnl       that determine availablility of POSIX asynchronous IO
+dnl       support.
 dnl
 dnl -------------------------------------------------------------------------
 

@@ -1211,6 +1211,7 @@ pkginclude_HEADERS = \
 
 ## Clean up template repositories, etc.
 clean-local:
-	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
-	-rm -f gcctemp.c gcctemp so_locations
-	-rm -rf ptrepository SunWS_cache Templates.DB
+	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core core.*
+	-rm -rf cxx_repository ptrepository ti_files
+	-rm -rf Templates.DB gcctemp.c gcctemp so_locations *.ics
+	-rm -rf templateregistry SunWS_cache ir.out

@@ -1,3 +1,108 @@
+Tue Nov 18 15:58:00 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* configure.ac (AC_PROC_CC, AC_PROG_CPP, AC_PROG_CC_C_O):
+
+	  No need to check for a C compiler and preprocessor.  ACE is only
+	  compiled with a C++ compiler.
+
+	  (AC_LIBTOOL_TAGS):
+
+	  Added call to this Libtool autoconf macro to only enable C++
+	  library support.  C and FORTRAN support are unnecessary.  Note
+	  that this forces a requirement on Libtool 1.5 or better.
+
+	  (ACE_CHECK_TLS):
+
+	  Only run the OpenSSL detection tests if SSL support is enabled
+	  by the user.
+
+	* m4/ace.m4:
+
+	  Enable TLS/SSL support by default.
+
+	* m4/aio.m4:
+	* m4/features.m4:
+
+	  Renamed `features.m4' file to `aio.m4' to better reflect the
+	  contents of this file, namely asynchronous IO checks.
+
+	* m4/config_h.m4 (AH_BOTTOM):
+
+	  Prevent Emacs from inadvertently applying the "Local Variables"
+	  block to be placed in the generated "config.h" header to this
+	  Autoconf/M4 file by splitting the words "Local" and "Variables"
+	  into two separate concatenated M4 quoted blocks.
+
+	* m4/tls.m4:
+
+	  New Autoconf OpenSSL detection tests.
+
+	* ace/Makefile.am (clean-local):
+
+	  Updated list of additional files/directories unknown to the
+	  standard "clean" target to be cleaned.
+
+	* ace/SSL/Makefile.am:
+
+	  (AM_CPPFLAGS):
+
+	  Add preprocessor flags necessary to build applications with
+	  OpenSSL support.  Detected at "configure-time".
+
+	  (libACE_SSL_la_LIBADD):
+
+	  Link the OpenSSL libraries detected at "configure-time."
+
+	* tests/Makefile.am (SUBDIRS):
+
+	  Build the SSL test subdirectory.
+
+	  (noinst_SCRIPTS):
+
+	  Removed non-existent files from this list.  Fixes some build
+	  problems.
+
+	  (libTest_Output_la_LDFLAGS):
+
+	  Removed "-module" libtool flag from libTest_Output.* linker
+	  flags.  This library is meant to be linked at build time, not
+	  loaded dynamically.
+
+	  (*_SOURCES, LDADD):
+
+	  No need to add `Main.cpp' to all test source lists.  Simply
+	  adding `Main.o' to $(LDADD) is much cleaner and provides the
+	  same effect.
+
+	  (Reference_Counted_Event_Handler_Test_SOURCES):
+
+	  Fixed source file list.  This test is now built correctly.
+
+	  (EXTRA_DIST):
+
+	  Added `Main.cpp' to the list of files to be explicitly
+	  distributed with the ACE distribution when building a
+	  distribution with the Autoconf support.
+
+	  (all-local):
+
+	  "$(top_srcdir/tests" -> "$(srcdir)".  The latter is cleaner and
+	  provides the same effect/result.
+
+	  (clean-local):
+
+	  Updated list of additional files/directories unknown to the
+	  standard "clean" target to be cleaned.
+
+	  (distclean-local):
+
+	  Removed `bin' directory from the list of directories to be
+	  erased.  It hasn't been generated for quite some time.
+
+	* tests/SSL/Makefile.am:
+
+	  New Automake Makefile template for the ACE_SSL library test.
+
 Tue Nov 18 16:37:21 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* examples/IPC_SAP/DEV_SAP/reader/reader.cpp (main): Changed
@@ -68,6 +173,7 @@ Mon Nov 17 20:34:27 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
         * etc/ciao.doxygen:
         * bin/generate_doxygen.pl:
+
           Added doxygen configuration file for ciao.
 
 Mon Nov 17 20:12:53 2003  Tao Lu  <lu@dre.vanderbilt.edu>

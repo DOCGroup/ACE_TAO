@@ -10,7 +10,10 @@
 
 INCLUDES = -I$(top_builddir) -I$(top_srcdir)
 
+AM_CPPFLAGS = @ACE_TLS_CPPFLAGS@
+
 lib_LTLIBRARIES = libACE_SSL.la
+libACE_SSL_la_LIBADD = $(top_builddir)/ace/libACE.la @ACE_TLS_LIBS@
 
 libACE_SSL_la_SOURCES = \
   SSL_Asynch_BIO.cpp \
@@ -20,8 +23,6 @@ libACE_SSL_la_SOURCES = \
   SSL_SOCK_Acceptor.cpp \
   SSL_SOCK_Connector.cpp \
   SSL_SOCK_Stream.cpp
-
-libACE_SSL_la_LIBADD = $(top_builddir)/ace/libACE.la
 
 HEADER_FILES = \
   SSL_Asynch_BIO.h \
