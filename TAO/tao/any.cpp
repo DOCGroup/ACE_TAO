@@ -321,6 +321,9 @@ CORBA_Any::CORBA_Any (const CORBA_Any &src)
 CORBA_Any &
 CORBA_Any::operator= (const CORBA_Any &src)
 {
+  CORBA::Environment env;
+  size_t size;
+
   if (this == &src)
     {
       this->AddRef ();
@@ -338,9 +341,6 @@ CORBA_Any::operator= (const CORBA_Any &src)
 
   this->orb_owns_data_ = CORBA::B_TRUE;
   this->refcount_ = 1;
-
-  CORBA::Environment env;
-  size_t size;
 
   this->type_->AddRef ();
 
