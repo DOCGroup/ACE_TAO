@@ -1,3 +1,52 @@
+Fri May 28 18:46:11 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
+
+          Added method visit_eventtype_fwd(), so the implied
+          IDL for a forward declared eventtype Foo (namely the
+          associated FooConsumer interface) can be added to the
+          AST and used before the eventtype is fully defined.
+
+        * TAO_IDL/be/be_visitor_eventtype_fwd.cpp:
+        * TAO_IDL/be/be_visitor_eventtype_fwd/eventtype_fwd_ch.cpp:
+
+          Added code to the eventtype_fwd visitor to generate a
+          forward declaration of the associated consumer interface.
+          
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be_include/be_decl.h:
+
+          Added flag and accessors specific to the ccm_pre_proc
+          visitor, to mark the forward declared eventtype as
+          processed by this visitor, in order to prevent its
+          being processed again when the full definition is seen.
+
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Added code to return a forward declared eventtype's
+          associated full-definition node from a lookup, similar
+          to what is already done for interfaces, valuetypes and
+          components.
+
+        * TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/buffer_type.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_arglist_ch.cpp:
+
+          Fixed several mistakes in generated code when ValueBase 
+          appears in a union, struct, exception, sequence, or array.
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Fixed parsing code to recognize and handle CORBA::Object
+          as the interface type of a provides or uses declaration.
+
 Thu May 27 18:28:59 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any_Basic_Impl.cpp:

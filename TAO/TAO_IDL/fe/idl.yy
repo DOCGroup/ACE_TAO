@@ -4408,16 +4408,20 @@ provides_decl :
           
           if (c != 0)
             {
-              AST_Decl *d = s->lookup_by_name ($2,
+              AST_Decl *d = s->lookup_by_name (tao_yyvsp[-1].idlist,
                                                I_TRUE);
-
               if (d == 0)
                 {
-                  idl_global->err ()->lookup_error ($2);
+                  idl_global->err ()->lookup_error (tao_yyvsp[-1].idlist);
                 }
               else if (d->node_type () != AST_Decl::NT_interface)
                 {
-                  idl_global->err ()->interface_expected (d);
+                  if (ACE_OS::strcmp (d->local_name ()->get_string (), 
+                                      "Object")
+                        != 0)
+                    {
+                      idl_global->err ()->interface_expected (d);
+                    }
                 }
               else
                 {
@@ -4425,11 +4429,11 @@ provides_decl :
                     AST_Interface::narrow_from_decl (d);
 
                   AST_Component::port_description pd;
-                  pd.id = $3;
+                  pd.id = tao_yyvsp[0].idval;
                   pd.impl = interface_type;
                   c->provides ().enqueue_tail (pd);
                 }
-            }  
+            }
         }
         ;
 
@@ -4489,11 +4493,16 @@ uses_decl :
 
           if (d == 0)
             {
-              idl_global->err ()->lookup_error ($3);
+              idl_global->err ()->lookup_error (tao_yyvsp[-1].idlist);
             }
           else if (d->node_type () != AST_Decl::NT_interface)
             {
-              idl_global->err ()->interface_expected (d);
+              if (ACE_OS::strcmp (d->local_name ()->get_string (), 
+                                  "Object")
+                    != 0)
+                {
+                  idl_global->err ()->interface_expected (d);
+                }
             }
           else
             {

@@ -155,8 +155,6 @@ be_visitor_valuetype_init_arglist_ch::gen_throw_spec (be_factory *node)
 
           *os << "," << be_nl;
           *os << excp->name ();
-          AST_Decl *d = ScopeAsDecl (excp->defined_in ());
-          *os << d->repoID ();
         }
     }
 

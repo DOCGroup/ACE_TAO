@@ -23,6 +23,7 @@
 #include "be_visitor_eventtype_fwd.h"
 #include "be_visitor_valuetype_fwd.h"
 #include "be_visitor_context.h"
+#include "be_helper.h"
 
 #include "be_visitor_eventtype_fwd/eventtype_fwd_ch.cpp"
 #include "be_visitor_eventtype_fwd/any_op_ch.cpp"

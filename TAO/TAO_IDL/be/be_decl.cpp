@@ -89,7 +89,8 @@ be_decl::be_decl (void)
     srv_outarg_tmpl_class_gen_ (I_FALSE),
     srv_outarg_pragma_inst_gen_ (I_FALSE),
     srv_retarg_tmpl_class_gen_ (I_FALSE),
-    srv_retarg_pragma_inst_gen_ (I_FALSE)
+    srv_retarg_pragma_inst_gen_ (I_FALSE),
+    ccm_pre_proc_gen_ (I_FALSE)
 {
 }
 
@@ -136,7 +137,8 @@ be_decl::be_decl (AST_Decl::NodeType type,
     srv_outarg_tmpl_class_gen_ (I_FALSE),
     srv_outarg_pragma_inst_gen_ (I_FALSE),
     srv_retarg_tmpl_class_gen_ (I_FALSE),
-    srv_retarg_pragma_inst_gen_ (I_FALSE)
+    srv_retarg_pragma_inst_gen_ (I_FALSE),
+    ccm_pre_proc_gen_ (I_FALSE)
 {
 }
 
@@ -561,6 +563,12 @@ be_decl::srv_inline_gen (void)
   return this->srv_inline_gen_;
 }
 
+idl_bool
+be_decl::ccm_pre_proc_gen (void)
+{
+  return this->ccm_pre_proc_gen_;
+}
+
 // Set the flag indicating that code generation is done.
 void
 be_decl::cli_hdr_gen (idl_bool val)
@@ -784,6 +792,14 @@ be_decl::srv_inline_gen (idl_bool val)
 {
   this->srv_inline_gen_ = val;
 }
+
+void
+be_decl::ccm_pre_proc_gen (idl_bool val)
+{
+  this->ccm_pre_proc_gen_ = val;
+}
+
+//==========================================
 
 int
 be_decl::accept (be_visitor *visitor)
