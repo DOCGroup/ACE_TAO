@@ -169,8 +169,9 @@ main (int argc,
 
       Client_Task client_tasks (client_object.in (),
                                 server.in ());
-      
+
       client_tasks.svc ();
+
 
       if (shutdown_server)
         {
