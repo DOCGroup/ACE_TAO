@@ -1,3 +1,12 @@
+Wed Apr 10 17:34:32 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
+
+	  The recent "ace/OS.h" inclusion reductions prevented a pragma
+	  that disables a MSVC 6 warning about an overly long debugging
+	  symbol from occurring.  Explicitly disable that warning in this
+	  file to silence the warning.
+
 Wed Apr 10 17:15:08 2002  Ossama Othman  <ossama@uci.edu>
 
 	Run-time memory requirement reductions:
