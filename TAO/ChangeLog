@@ -1,3 +1,11 @@
+Mon Feb 23 10:59:03 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp:
+          Fixed unused parameter warning in release build.
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Group_Manager.cpp:
+          Fixed auto_ptr.reset() problem in VC6 build.
+
 Sat Feb 21 09:36:45 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* tao/Codeset_Manager.cpp (TAO_Codeset_Item): Replaced

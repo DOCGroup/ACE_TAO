@@ -317,6 +317,8 @@ FtEventServiceInterceptor::send_exception (
   ACE_CHECK;
 
   ACE_DEBUG((LM_DEBUG, "%s return Exception\n", operation.in()));
+#else
+  ACE_UNUSED_ARG(ri);
 #endif
 }
 
