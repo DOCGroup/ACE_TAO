@@ -1,3 +1,26 @@
+Thu Oct 28 14:45:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader.h:
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+
+	  Thanks to patch from Bill Somerville <bill@classdesign.com>
+	  which allows scoped names (::) for ServiceRepository. The change
+	  does the following 
+
+	  (1) Addition of a static function that checks for valid service
+	  type names. 
+
+	  (2) Addition of a static function that checks for link names
+	  (this implementation internally calls is_valid_property_name
+	  ()). 
+	  
+	* orbsvcs/tests/Trading/TT_Info.cpp:
+
+	  The test now checks for scoped names. 
+
 Thu Oct 28 07:39:15 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * performance-tests/Latency/AMI/run_test.pl:

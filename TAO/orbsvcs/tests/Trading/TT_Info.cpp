@@ -9,11 +9,11 @@ ACE_RCSID(Trading, TT_Info, "$Id$")
 
 const char* TT_Info::INTERFACE_NAMES[] =
 {
-  "Remote_IO",
-  "Plotter",
-  "Printer",
-  "File_System",
-  "PostScript_Printer"
+  "TAO_Trader_Test::Remote_IO",
+  "TAO_Trader_Test::Plotter",
+  "TAO_Trader_Test::Printer",
+  "TAO_Trader_Test::File_System",
+  "TAO_Trader_Test::PostScript_Printer"
 };
 
 const char* TT_Info::REMOTE_IO_NAME = "Remote_IO";
