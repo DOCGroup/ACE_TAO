@@ -60,6 +60,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "BiDirGIOP"=.\tao\BiDir_GIOP\TAO_BiDir_GIOP.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Concurrency_Service"=.\orbsvcs\Concurrency_Service\Concurrency_Service.dsp - Package Owner=<4>
 
 Package=<5>
@@ -339,22 +351,6 @@ Package=<4>
     Project_Dep_Name TAO DLL
     End Project Dependency
 }}}
-
-###############################################################################
-
-Project: "BiDirGIOP"=.\tao\BiDir_GIOP\TAO_BiDir_GIOP.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-}}}
-
 
 ###############################################################################
 
@@ -949,7 +945,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TypeCodeFactory_DLL"=.\orbsvcs\IFR_Service\TypeCodeFactory_DLL.dsp - Package Owner=<4>
+Project: "TypeCodeFactory"=.\tao\TypeCodeFactory\TypeCodeFactory.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -957,9 +953,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name IFR_Client
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -1023,3 +1016,4 @@ Package=<3>
 }}}
 
 ###############################################################################
+
