@@ -85,6 +85,11 @@ public:
   // Conditionally acquire a write lock.  If the locking mechanism
   // doesn't support read locks then this just calls <acquire>.
 
+  virtual int tryacquire_write_upgrade (void);
+  // Conditionally try to upgrade a lock held for read to a write lock.
+  // If the locking mechanism doesn't support read locks then this just
+  // calls <acquire>. Returns 0 on success, -1 on failure.
+
   virtual int remove (void);
   // Explicitly destroy the lock.
 
@@ -149,6 +154,9 @@ public:
   // Release the lock.
 
   virtual int tryacquire_write (void);
+  // Release the lock.
+
+  virtual int tryacquire_write_upgrade (void);
   // Release the lock.
 
   virtual int remove (void);
