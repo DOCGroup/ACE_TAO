@@ -1,12 +1,13 @@
 # This is a Perl script that runs the client and all the other servers that
 # are needed
 
-use Win32::Process;
+use Process;
 
-$nsiorfile = $ENV{TEMP}."\\qns_ior";
+$nsiorfile = "qns_ior";
 
-# amount of delay between running the 
-$sleeptime = 2;
+# amount of delay between running the servers
+
+$sleeptime = 1;
 
 # variables for parameters
 
@@ -23,7 +24,8 @@ $leave = 0;
 $ior = 0;
 $done = "";
 $debug = "";
-$mt = "";
+$cm = "";
+$sm = "";
 $other = "";
 
 sub read_nsior
@@ -37,60 +39,58 @@ sub read_nsior
 
 sub name_server
 {
-	my $exe = sprintf ("..\\..\\orbsvcs\\Naming_Service\\Naming_Service.exe %s". 
-	                   " -ORBport %d -ORBobjrefstyle url -o %s",
-	                   $other,
-	                   $nsport,
-	                   $nsiorfile);
+	my $args = sprintf ("%s -ORBport %d -ORBobjrefstyle url -o %s",
+	                    $other,
+	                    $nsport,
+	                    $nsiorfile);
 
-	Win32::Process::Create ($NS, "..\\..\\orbsvcs\\Naming_Service\\Naming_Service.exe",
-	                        $exe, 1, CREATE_NEW_CONSOLE, ".");
+	$NS = Process::Create ("..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."orbsvcs".$DIR_SEPARATOR.
+	                       "Naming_Service".$DIR_SEPARATOR."Naming_Service".$Process::EXE_EXT, $args);
+
 }
 
 sub server
 {
-	my $exe = sprintf ("server.exe %s %s -ORBport %d -ORBobjrefstyle url -ORBnameserviceior %s -ORBsvcconf server.conf",
+	my $args = sprintf ("%s %s %s -ORBport %d -ORBobjrefstyle url -ORBnameserviceior %s -ORBsvcconf server.conf",
 	                   $other,
-			           $debug,
-			           $svport,
-			           $ior);
+                           $debug,
+                           $sm,
+                           $svport,
+                           $ior);
 
-	Win32::Process::Create ($SV, "server.exe",
-	                        $exe, 1, CREATE_NEW_CONSOLE, ".");
+	$SV = Process::Create ("server".$Process::EXE_EXT, $args);
 }
 
 sub factory_finder
 {
-	my $exe = sprintf ("Factory_Finder.exe %s -ORBport %d -ORBobjrefstyle url -ORBnameserviceior %s -ORBsvcconf svc.conf",
-	                   $other,
-			           $ffport,
-			           $ior);
+	my $args = sprintf ("%s -ORBport %d -ORBobjrefstyle url -ORBnameserviceior %s -ORBsvcconf svc.conf",
+	                    $other,
+	                    $ffport,
+	                    $ior);
 	
-	Win32::Process::Create ($FF, "Factory_Finder.exe",
-	                        $exe, 1, CREATE_NEW_CONSOLE, ".");
-
+	$FF = Process::Create ("Factory_Finder".$Process::EXE_EXT, $args);
 }
 
 sub generic_factory
 {
-	my $exe = sprintf ("Generic_Factory.exe %s -ORBport %d -ORBobjrefstyle url -ORBnameserviceior %s -ORBsvcconf svc.conf",
-	                   $other,
-			           $gfport,
-			           $ior);
+	my $args = sprintf ("%s -ORBport %d -ORBobjrefstyle url -ORBnameserviceior %s -ORBsvcconf svc.conf",
+	                    $other,
+	                    $gfport,
+	                    $ior);
 
-	Win32::Process::Create ($GF, "Generic_Factory.exe",
-	                        $exe, 1, CREATE_NEW_CONSOLE, ".");
 
+	print ("Generic_Factory".$Process::EXE_EXT);
+	$GF = Process::Create ("Generic_Factory".$Process::EXE_EXT, $args);
 }
 
 sub client
 {
-	my $exe = sprintf ("client.exe %s %s %s -ORBobjrefstyle url -ORBport %d -ORBnameserviceior %s -ORBsvcconf client.conf",
+	my $exe = sprintf ("client".$Process::EXE_EXT." %s %s %s -ORBobjrefstyle url -ORBport %d -ORBnameserviceior %s -ORBsvcconf client.conf",
 	                   $other,
-			           $debug,
-			           $mt,
-			           $clport,
-			           $ior);
+	                   $debug,
+	                   $cm,
+	                   $clport,
+	                   $ior);
 
 	for ($j = 0; $j < $n; $j++)
 	{
@@ -105,13 +105,14 @@ for ($i = 0; $i <= $#ARGV; $i++)
 	SWITCH: {
 		if ($ARGV[i] eq "-h" || $ARGV[i] eq "-?")
 		{
-			print "run_test [-n num] [-leave] [-d] [-h] [-m] [-ns|sv|ff|cl|gf]\n";
+			print "run_test [-n num] [-leave] [-d] [-h] [-cm] [-sm] [-ns|sv|ff|cl|gf]\n";
 			print "\n";
 			print "-n num              -- runs the client num times\n";
 			print "-leave              -- leaves the servers running and their windows open\n";
 			print "-d	               -- runs each in debug mode\n";
 			print "-h                  -- prints this information\n";
-			print "-m                  -- use more than one thread in the client\n";
+			print "-cm                 -- use more than one thread in the client\n";
+			print "-sm                 -- use more than one thread in the server\n";
 			print "-ns -sv -ff -cl -gf -- runs only one of the executables\n";
 			exit;
 		}
@@ -123,14 +124,20 @@ for ($i = 0; $i <= $#ARGV; $i++)
 		}
 		if ($ARGV[i] eq "-d")
 		{
-			$debug = "-d";
+			$debug = $debug." -d";
 			last SWITCH;
 		}
-		if ($ARGV[i] eq "-m")
+		if ($ARGV[i] eq "-cm")
 		{
-			$mt = "-m";
+			$cm = "-m";
 			last SWITCH;
 		}
+		if ($ARGV[i] eq "-sm")
+		{
+			$sm = "-m";
+			last SWITCH;
+		}
+
 		if ($ARGV[i] eq "-leave")
 		{
 			$leave = 1;
@@ -161,7 +168,7 @@ for ($i = 0; $i <= $#ARGV; $i++)
 			client;
 			exit;
 		}
-		# all other args are ignored.
+		$other = $other." ".$ARGV[i];
 	}
 }
 
@@ -187,8 +194,8 @@ client ();
 
 if (leave == 0)
 {
-	$GF->Kill (0);
-	$FF->Kill (0);
-	$SV->Kill (0);
-	$NS->Kill (0);
+	$GF->Kill ();
+	$FF->Kill ();
+	$SV->Kill ();
+	$NS->Kill ();
 }
