@@ -25,7 +25,8 @@
 // Default constructor
 
 TAO_Naming_Server::TAO_Naming_Server (void)
-  :  ior_multicast_ (0), naming_context_name_ ("NameService")
+  :  ior_multicast_ (0),
+     naming_context_name_ ("NameService")
 {
 }
 
@@ -39,8 +40,8 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_var &orb,
   this->init (orb, child_poa, argc, argv);
 }
 
-// Function to initialize the name server object under the passed orb
-// and poa
+// Function to initialize the name server object under the passed ORB
+// and POA.
 
 int
 TAO_Naming_Server::init (CORBA::ORB_var &orb,
@@ -162,15 +163,18 @@ TAO_Naming_Server::init (CORBA::ORB_var &orb,
 	    orb->resolve_initial_references ("NameService");
 
 	  if (CORBA::is_nil (default_ns))
-	    ACE_ERROR ((LM_ERROR, "%p\n", "NameService"));
+	    ACE_ERROR ((LM_ERROR,
+                        "%p\n",
+                        "NameService"));
 
 	  CosNaming::NamingContext_var default_ctx =
-	    CosNaming::NamingContext::_narrow (default_ns.in (), TAO_TRY_ENV);
+	    CosNaming::NamingContext::_narrow (default_ns.in (),
+                                               TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 
-	  // Temporary hack, to see if this works as expected.  Need to
-	  // add code to walk the naming tree from root to the context
-	  // represented by this server
+	  // Temporary hack, to see if this works as expected.  Need
+	  // to add code to walk the naming tree from root to the
+	  // context represented by this server
 	  PortableServer::ObjectId_var id =
 	    PortableServer::string_to_ObjectId (this->naming_context_name_);
 
@@ -196,7 +200,7 @@ TAO_Naming_Server::init (CORBA::ORB_var &orb,
 		      "listening as object <%s>\n",
 		      this->naming_service_ior_.in ()));
 
-	  // Bind our context into the default name server
+	  // Bind our context into the default name server.
 	  CosNaming::Name ctx_name (1);
 	  ctx_name.length (1);
 	  ctx_name[0].id = CORBA::string_dup (naming_context_name_);
