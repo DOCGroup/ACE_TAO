@@ -109,7 +109,7 @@ Handler::handle_input (ACE_HANDLE fd)
   // Read fixed part of message.
   Message message;
   size_t fixed_size_of_message =
-    sizeof Message::Type + sizeof size_t;
+    sizeof (Message::Type) + sizeof (size_t);
 
   ssize_t result =
     ACE::recv_n (fd,
@@ -202,7 +202,7 @@ test_reactor_upcall (ACE_Reactor &reactor)
                   message);
 
   size_t size_of_data_message =
-    sizeof Message::Type + sizeof size_t + data_message.size_;
+    sizeof (Message::Type) + sizeof (size_t) + data_message.size_;
 
   for (int i = 0;
        i < number_of_messages;
@@ -223,7 +223,7 @@ test_reactor_upcall (ACE_Reactor &reactor)
   shutdown_message.size_ = 0;
 
   size_t size_of_shutdown_message =
-    sizeof Message::Type + sizeof size_t;
+    sizeof (Message::Type) + sizeof (size_t);
 
   // This should trigger a call to <handle_input>.
   result =
