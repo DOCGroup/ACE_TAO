@@ -1,3 +1,18 @@
+Tue May 05 02:15:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Svc_Conf_l.cpp: I know, I know.  I shouldn't mess with this
+	  file directly.  But I couldn't manufacture this file even with
+	  the stock Svc_Conf.l using Doug's flex.  So, I reckon I'll just
+	  check this in now and fix the Svc_Conf_l.diff later.
+
+	* ace/Service_Config.{h,cpp} (process_directive): Standard CE
+	  stuff. 
+
+	* WindozeCE/WinAdapter*.*: 
+	* WindozeCE/WindozeCE*.*: Replaced the old adapter for CE with a
+	  new one.  The new version allows uses to scroll thru the
+	  "console" output. 
+
 Mon May 04 17:09:39 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Misc/context_switch_time.cpp: lots of
