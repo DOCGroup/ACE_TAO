@@ -118,10 +118,7 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << "_tao_any," << be_nl
       << node->name () << "_forany::_tao_any_destructor," << be_nl
       << node->tc_name () << "," << be_nl
-      << "const_cast<" << be_idt << be_idt_nl
-      << "const " << node->name () << "_slice *&> (" << be_nl
       << "_tao_elem.out ()" << be_uidt_nl
-      << ")" << be_uidt << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "}";
 
