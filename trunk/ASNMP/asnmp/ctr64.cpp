@@ -61,6 +61,7 @@ Counter64::Counter64( unsigned long long llw )
 
 //------------------[ copy constructor ]---------------------------------
 Counter64::Counter64( const Counter64 &ctr64 )
+  : SnmpSyntax (ctr64)
 {
   smival.syntax = sNMP_SYNTAX_CNTR64;
   smival.value.hNumber.hipart = ctr64.high();
