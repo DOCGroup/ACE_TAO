@@ -641,7 +641,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
         //
         CORBA::Object_var orbPolicyManagerObj = 
 	  orb->resolve_initial_references ("ORBPolicyManager"
-			                   ACE_ARG_ENV_PARAMETER);
+			                   ACE_ENV_ARG_PARAMETER);
 	ACE_TRY_CHECK;
 
         CORBA::PolicyManager_var orbPolicyManager =
