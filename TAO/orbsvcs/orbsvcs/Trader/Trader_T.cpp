@@ -309,11 +309,11 @@ extract (const CORBA::Any& any_value, SEQ_TYPE *& seq)
     {
       CORBA::TypeCode_var any_type = any_value.type ();
       CORBA::TCKind kind_1 =
-        TAO_Sequence_Extracter_Base::sequence_type (any_type, TAO_TRY_ENV);
+        TAO_Sequence_Extracter_Base::sequence_type (any_type.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
       CORBA::TCKind kind_2 =
-        TAO_Sequence_Extracter_Base::sequence_type (this->typecode_,
+        TAO_Sequence_Extracter_Base::sequence_type (this->typecode_.in (),
                                                     TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -328,14 +328,14 @@ extract (const CORBA::Any& any_value, SEQ_TYPE *& seq)
               TAO_InputCDR stream ((ACE_Message_Block*) any_value.value ());
 
               CORBA::Boolean decode_succeded =
-                (stream.decode (this->typecode_, seq, 0, TAO_TRY_ENV) ==
+                (stream.decode (this->typecode_.in (), seq, 0, TAO_TRY_ENV) ==
                  CORBA::TypeCode::TRAVERSE_CONTINUE);
               TAO_CHECK_ENV;
               
               if (decode_succeded)
                 {
                   CORBA::TypeCode_var type = any_value.type ();
-                  ((CORBA::Any *) &any_value)->replace (type,
+                  ((CORBA::Any *) &any_value)->replace (type.in (),
                                                         seq,
                                                         1,
                                                         TAO_TRY_ENV);

@@ -1152,7 +1152,7 @@ merge_properties (CosTrading::PropertySeq& modifies,
               CORBA::Environment _env;
               CORBA::TypeCode_var prop_type = prop_eval.property_type (i);
 
-              if (! type_def->equal (prop_type, _env))
+              if (! type_def->equal (prop_type.in (), _env))
                 TAO_THROW (CosTrading::PropertyTypeMismatch (mname, modifies[i]));
             }
 
