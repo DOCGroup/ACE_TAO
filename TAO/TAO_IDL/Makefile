@@ -170,9 +170,9 @@ ifneq ($(CROSS-COMPILE),)
 	@echo Nothing to clean in TAO_IDL on CROSS-COMPILE platforms.
 else  # ! CROSS-COMPILE
 
-  ifeq ($(findstring g++,$(CXX)),g++)
-    CCFLAGS += #-Wno-switch
-  endif # g++
+#  ifeq ($(findstring g++,$(CXX)),g++)
+#    CCFLAGS += -Wno-switch
+#  endif # g++
 
   CPPFLAGS += -Iinclude -Ibe_include -Ife
   ifneq ($(CPP_LOCATION),)
