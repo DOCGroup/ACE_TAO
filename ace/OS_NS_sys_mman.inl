@@ -6,7 +6,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_macros.h"
 #include "ace/OS_NS_errno.h"
-#include "ace/os_include/sys/os_mman.h"
 
 #if defined (__Lynx__)
 #  include "ace/OS_NS_sys_stat.h"
