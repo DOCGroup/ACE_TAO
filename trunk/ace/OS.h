@@ -3039,7 +3039,7 @@ typedef void (*ACE_Sig_Handler_Ex) (int, siginfo_t *siginfo, ucontext_t *ucontex
 
 #if defined (ACE_REDEFINES_XTI_FUNCTIONS)
 #include /**/ <xti.h>
-#if defined (UNIXWARE)         /* They apparantly forgot one... */
+#if defined (UNIXWARE_2_0)         /* They apparantly forgot one... */
 extern "C" int _xti_error(char *);
 #endif /* UNIXWARE */
 #endif /* ACE_REDEFINES_XTI_FUNCTIONS */

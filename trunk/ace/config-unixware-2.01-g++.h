@@ -80,6 +80,7 @@
 // Compiling for UNIXWARE
 #if !defined (UNIXWARE)
 #define UNIXWARE
+#define UNIXARE_2_0
 #endif /* UNIXWARE */
 
 // These seem to be missing... Process_Manager uses them
