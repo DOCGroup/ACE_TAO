@@ -10,7 +10,8 @@
 
 DIRS  =	lib \
 	Basic \
-	performance-tests \
+	performance-tests/RedGreen \
+	performance-tests/Filter \
         Blocking \
         Discarding \
         MT_Dispatching \
