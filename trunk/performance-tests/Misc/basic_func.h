@@ -74,4 +74,4 @@ class Foo_d_v : public Foo_v
     virtual void v_func ();
 };
 
-#endif /8 BASIC_FUNC_H */
+#endif /* BASIC_FUNC_H */
