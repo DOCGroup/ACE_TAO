@@ -186,20 +186,27 @@ Logger_Client::run (void)
       Logger::Log_Record rec1;
       Logger::Log_Record rec2;
       Logger::Log_Record rec3;
-
+      Logger::Log_Record rec4;
+        ;
       // Setup the first log record
       this->init_record (rec1,
                          Logger::LM_DEBUG,
-                         "Praise Bob! (1)\n");
+                         "log() test (1) \n");
 
       // Setup the second log record
       this->init_record (rec2,
-                         Logger::LM_ERROR,
-                         "Beware The Stark Fist of Removal. (2)\n");
+                         Logger::LM_MAX,
+                         "log() test (2) \n");
 
+      // Setup the third log record
       this->init_record (rec3,
                          Logger::LM_INFO,
-                         "Bob loves you. Logv test successful. (3)\n");
+                         "logv() test (3) \n");
+
+      // Setup the fourth log record
+      this->init_record (rec4,
+                         Logger::LM_EMERGENCY,
+                         "log2() test (4) \n");
 
       // If debugging, output the new log records
       if (TAO_debug_level > 0)
@@ -215,13 +222,17 @@ Logger_Client::run (void)
           ACE_DEBUG ((LM_DEBUG,
                       "\nThird log record created. Contents:\n"));
           this->show_record (rec3);
+
+          ACE_DEBUG ((LM_DEBUG,
+                      "\nFourth log record created. Contents:\n"));
+          this->show_record (rec4);
         }
 
       // Change the verbosity.
       this->logger_1_->verbosity (Logger::VERBOSE_LITE, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      // Log the first Log_Record
+      // Log the first Log_Record (VERBOSE_LITE)
       this->logger_1_->log (rec1, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -229,17 +240,27 @@ Logger_Client::run (void)
       this->logger_2_->verbosity (Logger::VERBOSE, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      // Log the second Log_Record.
+      // Log the second Log_Record (VERBOSE)
       this->logger_2_->log (rec2, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      // Change the verbosity one last time
+      // Change the verbosity again 
       this->logger_2_->verbosity (Logger::SILENT, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      // Log the third log record using logv ()
+      // Log the third log record using logv() (this shows if the
+      // verbosity level overrides the logger's verbosity level)
       this->logger_2_->logv (rec3, Logger::VERBOSE, TAO_TRY_ENV);
+      
+      // Change the verbosity again (so that regular log msgs can be
+      // seen again)
+      this->logger_2_->verbosity (Logger::VERBOSE, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      // Log the fourth record using log2()
+      this->logger_2_->log2 (rec4, TAO_TRY_ENV);
     }
+
   TAO_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("run");
