@@ -657,10 +657,10 @@ AV_Server::init (int argc,
   TAO_CHECK_ENV_RETURN (env,-1);
 
   // Register the video mmdevice object with the ORB
-
   ACE_NEW_RETURN (this->video_mmdevice_,
                   Video_Server_MMDevice (this->naming_context_.in ()),
                   -1);
+
   // create the video server mmdevice with the naming service pointer.
   this->orb_manager_.activate_under_child_poa ("Video_MMDevice",
                                                this->video_mmdevice_,
