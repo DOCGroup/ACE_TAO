@@ -1159,7 +1159,7 @@ sub check_for_non_bool_operators ()
                   }
 
                 if ($found_bool == 0 && $found_return_type == 0
-                    && /((^\w+)|(\s+\w+))\s*$/
+                    && /^(?:\w+|\s+\w+)\s*$/
                     && !/[^\w]return\s*$/)
                   {
                     $found_return_type = 1;
@@ -1168,7 +1168,7 @@ sub check_for_non_bool_operators ()
                   }
 
                 if ($found_bool == 0
-                    && /(?<![^\w]bool)(\s+|\w+::)operator\s*(?:!|<|<=|>|>=|==|!=|&&|\|\|)\s*\(/
+                    && /(?<![^\w]bool)(\s+|\w+::|>\s*::)operator\s*(?:!|<|<=|>|>=|==|!=|&&|\|\|)\s*\(/
                     && !/\(.*operator\s*(?:!|<|<=|>|>=|==|!=|&&|\|\|)\s*\(/
                     && !/^\s*return\s+/) {
                     print_error ("non-bool return type for operator in $file on line $line");
