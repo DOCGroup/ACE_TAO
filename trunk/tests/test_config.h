@@ -98,7 +98,7 @@ typedef size_t KEY;
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM); \
   if (ace_file_stream.set_output (program) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "set_output failed"), -1); \
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting %s test at %D\n", program));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting %s test at %D\n", program))
 
 #define ACE_END_TEST \
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Ending %s test at %D\n", program)); \
@@ -133,6 +133,12 @@ typedef size_t KEY;
       ACE_OS::close (fd_init_log); \
       ACE_OS::unlink (temp); \
     }
+
+#if defined (ghs)
+# // Rename main to ace_main for compatibility with run_tests.vxworks.
+# undef ACE_MAIN
+# define ACE_MAIN ace_main
+#endif /* ghs */
 #else /* ! VXWORKS */
 #define ACE_INIT_LOG(NAME) \
   char temp[MAXPATHLEN]; \
