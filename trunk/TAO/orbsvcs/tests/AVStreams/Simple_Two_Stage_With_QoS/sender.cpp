@@ -71,7 +71,7 @@ Sender::Sender (void)
     frame_count_ (0),
     filename_ ("input"),
     input_file_ (0),
-    protocol_ ("QoS_UDP"),
+    protocol_ ("UDP"),
     frame_rate_ (1.0),
     mb_ (BUFSIZ),
     address_ (0),
@@ -103,8 +103,19 @@ Sender::parse_args (int argc,
           this->filename_ = opts.opt_arg ();
           break;
         case 'p':
-          this->protocol_ = opts.opt_arg ();
-          break;
+	    this->protocol_ = opts.opt_arg ();
+#ifdef ACE_HAS_RAPI
+	    if (this->protocol_ != ACE_CString ("QoS_UDP"))
+	      ACE_ERROR_RETURN ((LM_ERROR,
+				 "When rapi=1 protocol must be QoS_UDP\n"),
+				-1);
+#else 
+  	    if (this->protocol_ == ACE_CString ("QoS_UDP"))
+	      ACE_ERROR_RETURN ((LM_ERROR,
+		  	         "When rapi=0 protocol must not be QoS_UDP\n"),
+				-1);
+#endif //ACE_HAS_RAPI
+	    break;
         case 'r':
           this->frame_rate_ = (double)ACE_OS::atoi (opts.opt_arg ());
           break;
@@ -137,6 +148,7 @@ Sender::fill_qos (AVStreams::streamQoS &qos)
   qos.length (1);
   qos [0].QoSType =  CORBA::string_dup ("Data_Receiver");
 
+#ifdef ACE_HAS_RAPI
   qos [0].QoSParams.length (10);
 
   qos [0].QoSParams [0].property_name = CORBA::string_dup ("Service_Type");
@@ -169,6 +181,12 @@ Sender::fill_qos (AVStreams::streamQoS &qos)
 
   qos [0].QoSParams [9].property_name = CORBA::string_dup ("Priority");
   qos [0].QoSParams [9].property_value <<= (CORBA::ULong) 1;
+#else
+  qos [0].QoSParams.length (1);
+  qos [0].QoSParams [0].property_name = CORBA::string_dup ("Diffserv_Codepoint");
+  qos [0].QoSParams [0].property_value <<= (CORBA::Long) 63;
+#endif //ACE_HAS_RAPI
+
 
 }
 
@@ -448,7 +466,7 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
                                                 "IN",
                                                 "USER_DEFINED",
                                                 "",
-                                                "QoS_UDP",
+                                                this->protocol_.c_str (),
                                                 0);
               AVStreams::flowSpec flow_spec (1);
               flow_spec.length (1);
@@ -463,6 +481,17 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
             }
 
         } // end while
+
+      // File reading is complete, destroy the stream.
+      AVStreams::flowSpec stop_spec;
+      this->streamctrl_->destroy (stop_spec
+                                  ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
+      // Shut the orb down.
+      TAO_AV_CORE::instance ()->orb ()->shutdown (0
+                                                  ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
     }
   ACE_CATCHANY
@@ -527,8 +556,6 @@ main (int argc,
       // Start sending data.
       result = SENDER::instance ()->pace_data (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      orb->run ();
     }
   ACE_CATCHANY
     {
