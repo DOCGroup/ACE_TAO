@@ -1,3 +1,32 @@
+Thu Apr 25 15:46:39 2002  Steve Huston  <shuston@riverace.com>
+
+        POSIX asynch I/O improvements/corrections submitted by Alex
+        Libman <alibman@ihug.com.au>:
+
+        * ace/POSIX_CB_Proactor.{h i cpp}: New POSIX Proactor implementation
+          that makes use of the AIO facility's callback feature. This has
+          only been tested on SGI Irix.
+
+        * ace/Makefile: Added POSIX_CB_Proactor.
+
+        * ace/POSIX_Proactor.{h cpp}: Refactored some code and added better
+          cancellation/cleanup handling.  Added hooks for the new
+          ACE_POSIX_CB_Proactor class and refactored methods
+          close(), get_result_status(), create_result_aiocb_list(), and
+          delete_result_aiocb_list().
+
+        * ace/SUN_Proactor.{h cpp}: Add the new get_result_status() method
+          and refactored the old results code into the new method.  Also,
+          make good use of the new aiocb create/delete methods.  Improvements
+          to operation status detection based on input from Sun.
+
+        * tests/Proactor_Test.cpp:  Add support for new ACE_POSIX_CB_Proactor.
+          Added a log lock to be sure all messages from one transaction are
+          logged together.  Also, sets up full duplex I/O for Windows and
+          Solaris; half duplex for all others due to general weakness in
+          AIO subsystems. If further testing reveals that more can be set
+          to full duplex, this can be expanded.
+
 Thu Apr 25 14:02:38 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/MT_Reactor_Upcall_Test.cpp: Fixed compile errors by using

@@ -30,11 +30,7 @@ ACE_SUN_Proactor::ACE_SUN_Proactor (size_t max_aio_operations)
 // Destructor.
 ACE_SUN_Proactor::~ACE_SUN_Proactor (void)
 {
-  // stop asynch accept task
-  this->get_asynch_pseudo_task ().stop ();
-
-  // to provide correct virtual calls
-  delete_notify_manager ();
+  this->close ();
 }
 
 int
@@ -151,84 +147,96 @@ ACE_SUN_Proactor::handle_events (u_long milli_seconds)
 
 }
 
+int
+ACE_SUN_Proactor::get_result_status (ACE_POSIX_Asynch_Result* asynch_result,
+                                     int &error_status,
+                                     int &return_status)
+{
+
+   // Get the error status of the aio_ operation.
+   error_status  = asynch_result->aio_resultp.aio_errno;
+   return_status = asynch_result->aio_resultp.aio_return;
+
+   // ****** from Sun man pages *********************
+   // Upon completion of the operation both aio_return and aio_errno
+   // are set to reflect the result of the operation.
+   // AIO_INPROGRESS is not a value used by the system
+   // so the client may detect a change in state
+   // by initializing aio_return to this value.
+
+   if (return_status == AIO_INPROGRESS || error_status == EINPROGRESS)
+     {
+       return_status = 0;
+       return 0;  // not completed
+     }
+
+#if 0
+   if (error_status == -1)   // should never be
+      ACE_ERROR ((LM_ERROR,
+                  "%N:%l:(%P | %t)::%p\n",
+                  "ACE_SUN_Proactor::get_result_status:"
+                  "<aio_errno> has failed\n"));
+#endif /* 0 */
+
+   if (return_status < 0)
+    {
+      return_status = 0; // zero bytes transferred
+#if 0
+      if (error_status == 0)  // nonsense
+        ACE_ERROR ((LM_ERROR,   
+                    "%N:%l:(%P | %t)::%p\n",
+                    "ACE_SUN_Proactor::get_result_status:"
+                    "<aio_return> failed\n"));
+#endif /* 0 */
+    }
+
+   return 1; // completed
+}
+
 ACE_POSIX_Asynch_Result *
 ACE_SUN_Proactor::find_completed_aio (aio_result_t *result,
-                                       int &error_status,
-                                       int &return_status)
+                                      int &error_status,
+                                      int &return_status)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, mutex_, 0));
 
   size_t ai;
   error_status = -1;
-  return_status= 0;
+  return_status = 0;
 
-  //  we call find_completed_aio always with result != 0
+  // we call find_completed_aio always with result != 0
         
   for (ai = 0; ai < aiocb_list_max_size_; ai++)
     if (aiocb_list_[ai] !=0 &&                 //check for non zero
         result == &aiocb_list_[ai]->aio_resultp)
       break;
-  
-  if (ai >= aiocb_list_max_size_)   // not found 
-    return 0;
 
-  error_status = result->aio_errno;
-  return_status= result->aio_return;    
+  if (ai >= aiocb_list_max_size_)   // not found
+    return 0;                       // means somebody else uses aio directly!!!
 
-  if (error_status == -1)   // should never be
-    {
+  ACE_POSIX_Asynch_Result *asynch_result = result_list_[ai];
+
+  if (this->get_result_status (asynch_result,
+                               error_status,
+                               return_status) == 0)
+    { // should never be
+#if 0
       ACE_ERROR ((LM_ERROR,
                   "%N:%l:(%P | %t)::%p\n",
                   "ACE_SUN_Proactor::find_completed_aio:"
-                  "<aio_errno> has failed\n"));
-
-      return_status = 0;  
-
-      // we should notify user, otherwise : 
-      // memory leak for result and "hanging" user
-      // what was before : 
-
-      // aiocb_list_[ai] = 0;
-      // result_list_[ai] = 0;
-      // aiocb_list_cur_size_--;
-      // return 0;
+                  "should never be !!!\n"));
+#endif /* 0 */
+      return 0;
     }
 
-  switch (error_status)
-    {
-    case EINPROGRESS :            // should never be
-    case AIO_INPROGRESS :         // according to SUN doc
-      return 0;   
-
-    case ECANCELED :              // canceled
-      return_status = 0;
-      break;
-
-    case 0 :                      // no error
-      if (return_status == -1)   // return_status should be >= 0
-        {
-          ACE_ERROR ((LM_ERROR,   
-                    "%N:%l:(%P | %t)::%p\n",
-                    "ACE_SUN_Proactor::find_completed_aio:"
-                    "<aio_return> failed\n"));
-
-          return_status = 0;      // zero bytes transferred
-        }
-      break;
-
-    default :                     // other errors
-      if (return_status == -1)  // normal status for I/O Error
-        return_status = 0;        // zero bytes transferred 
-      break;
-    }
-
-  ACE_POSIX_Asynch_Result *asynch_result = result_list_[ai];
+  if (return_status < 0)
+     return_status = 0;    // zero bytes transferred
 
   aiocb_list_[ai] = 0;
   result_list_[ai] = 0;
   aiocb_list_cur_size_--;
 
-  num_started_aio_ --;
+  num_started_aio_--;
 
   start_deferred_aio ();
   //make attempt to start deferred AIO
@@ -250,23 +258,21 @@ ACE_SUN_Proactor::start_aio (ACE_POSIX_Asynch_Result *result)
   int ret_val;
   const ACE_TCHAR *ptype;
 
-  // Start IO
+  // ****** from Sun man pages *********************
+  // Upon completion of the operation both aio_return and aio_errno
+  // are set to reflect the result of the operation.
+  // AIO_INPROGRESS is not a value used by the system
+  // so the client may detect a change in state
+  // by initializing aio_return to this value.
+  result->aio_resultp.aio_return = AIO_INPROGRESS;
+  result->aio_resultp.aio_errno  = EINPROGRESS;
 
+  // Start IO
   switch (result->aio_lio_opcode)
     {
     case LIO_READ : 
-      ptype = "read";
+      ptype = ACE_LIB_TEXT ("read");
       ret_val = aioread (result->aio_fildes,
-                        (char *) result->aio_buf,
-                        result->aio_nbytes,
-                        result->aio_offset,
-                        SEEK_SET,
-                        &result->aio_resultp);
-      break;
-
-    case LIO_WRITE :
-      ptype = "write"; 
-      ret_val = aiowrite (result->aio_fildes,
                          (char *) result->aio_buf,
                          result->aio_nbytes,
                          result->aio_offset,
@@ -274,27 +280,37 @@ ACE_SUN_Proactor::start_aio (ACE_POSIX_Asynch_Result *result)
                          &result->aio_resultp);
       break;
 
+    case LIO_WRITE :
+      ptype = ACE_LIB_TEXT ("write");
+      ret_val = aiowrite (result->aio_fildes,
+                          (char *) result->aio_buf,
+                          result->aio_nbytes,
+                          result->aio_offset,
+                          SEEK_SET,
+                          &result->aio_resultp);
+      break;
+
     default:
-      ptype = "?????"; 
+      ptype = ACE_LIB_TEXT ("?????");
       ret_val = -1;
       break;
     }
-        
+
   if (ret_val == 0)
     {
-      num_started_aio_ ++ ;
-      if (num_started_aio_ == 1)  // wake up condition  
+      num_started_aio_++;
+      if (num_started_aio_ == 1)  // wake up condition
         condition_.broadcast ();
     }
   else // if (ret_val == -1)
     {
       if (errno == EAGAIN)  //try later, it will be deferred AIO
-         ret_val = 1 ;
+         ret_val = 1;
       else
          ACE_ERROR ((LM_ERROR,
-                "%N:%l:(%P | %t)::start_aio: aio%s %p\n",
-                ptype,
-                "queueing failed\n"));
+                     ACE_LIB_TEXT ("%N:%l:(%P | %t)::start_aio: aio%s %p\n"),
+                     ptype,
+                     ACE_LIB_TEXT ("queueing failed\n")));
     }
 
   return ret_val;
