@@ -4,6 +4,7 @@
 
 #include "LoadBalancingI.h"
 
+#include "LB_ReplicaLocator.h"
 #include "LB_Balancing_Strategy.h"
 
 ACE_RCSID (LoadBalancing,
@@ -14,8 +15,7 @@ ACE_RCSID (LoadBalancing,
 // Implementation skeleton constructor
 TAO_LoadBalancing_ReplicationManager_i::TAO_LoadBalancing_ReplicationManager_i
 (void)
-  : locator_ (this),
-    poa_ (),
+  : poa_ (),
     lock_ (),
     object_group_map_ (),
     property_manager_ (),

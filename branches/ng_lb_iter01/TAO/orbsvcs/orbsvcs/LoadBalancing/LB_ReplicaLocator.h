@@ -23,6 +23,7 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/PortableServerC.h"
+#include "tao/LocalObject.h"
 
 // Forward declaration.
 class TAO_LoadBalancing_ReplicationManager_i;
@@ -36,7 +37,8 @@ class TAO_LoadBalancing_ReplicationManager_i;
  * a replica returned by the Load Balancer.
  */
 class TAO_LB_ReplicaLocator
-  : public virtual PortableServer::ServantLocator
+  : public virtual PortableServer::ServantLocator,
+    public virtual TAO_Local_RefCounted_Object
 {
 public:
 

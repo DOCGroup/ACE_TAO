@@ -24,7 +24,6 @@
 
 #include "orbsvcs/LoadBalancingS.h"
 
-#include "LB_ReplicaLocator.h"
 #include "LB_ObjectGroup_Map.h"
 #include "LB_PropertyManager.h"
 #include "LB_GenericFactory.h"
@@ -302,10 +301,6 @@ private:
     LoadBalancing::FactoryInfos &factory_infos) const;
 
 private:
-
-  /// The object that tells the invoking client to forward its requests
-  /// from the LoadBalancer to an actual replica.
-  TAO_LB_ReplicaLocator locator_;
 
   /// The POA that dispatches requests to the ReplicaLocator.
   PortableServer::POA_var poa_;
