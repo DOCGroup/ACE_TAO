@@ -81,8 +81,8 @@ ACE_Blob_Reader::ACE_Blob_Reader (ACE_Message_Block * mb,
                                   size_t length,
                                   size_t offset,
                                   char *filename,
-                                  char *request_prefix,
-                                  char *request_suffix) :
+                                  const char *request_prefix,
+                                  const char *request_suffix) :
   ACE_Blob_Handler (mb, length, offset, filename),
   request_prefix_ (request_prefix),
   request_suffix_ (request_suffix)
@@ -210,8 +210,8 @@ ACE_Blob_Reader::receive_reply (void)
         len = sizeof buf;
       if (peer().recv_n (buf, len) != len)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
-			   "ACE_Blob_Reader::receiveReply():Read error" ),
-			  -1);
+                           "ACE_Blob_Reader::receiveReply():Read error" ),
+                          -1);
       offset_left -= len;
     }
 
@@ -243,8 +243,8 @@ ACE_Blob_Writer::ACE_Blob_Writer (ACE_Message_Block * mb,
                                   size_t length,
                                   size_t offset,
                                   char *filename,
-                                  char *request_prefix,
-                                  char *request_suffix) :
+                                  const char *request_prefix,
+                                  const char *request_suffix) :
   ACE_Blob_Handler (mb, length, offset, filename),
   request_prefix_ (request_prefix),
   request_suffix_ (request_suffix)
@@ -257,7 +257,7 @@ ACE_Blob_Writer::send_request (void)
   // Check for sanity -- check if we have any data to send.
   if (offset_+ length_ > mb_->length ())
     ACE_ERROR_RETURN((LM_ERROR, "%p\n",
-		      "ACE_Blob_Writer::sendRequest():Invalid offset/length"), -1);
+                      "ACE_Blob_Writer::sendRequest():Invalid offset/length"), -1);
 
   // Determine the length of the header message we will be sending to
   // the server. Note that we add 32 for safety -- this corresponds to
@@ -274,7 +274,7 @@ ACE_Blob_Writer::send_request (void)
 
   // Create the header, store the actual length in mesglen
   mesglen = ACE_OS::sprintf (mesg, "%s /%s %s %d\n\n",
-			     request_prefix_, filename_, request_suffix_, length_);
+                             request_prefix_, filename_, request_suffix_, length_);
 
   // Send the header followed by the data
 
@@ -340,4 +340,3 @@ template class ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
