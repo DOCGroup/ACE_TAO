@@ -594,13 +594,8 @@ void
 TAO_Object_Adapter::check_close (int wait_for_completion,
                                  CORBA::Environment &ACE_TRY_ENV)
 {
-  // @@ Irfan: this seems suspect, say I am in the middle of an upcall
-  // to ORB A, and I decide to shutdown ORB B as part of that, does
-  // this global function have enough context to verify that this is
-  // valid?  IMHO it should be a method in the Object_Adapter, that
-  // only bails out if we are in the middle of an upcall to its
-  // ORB. Comments?
-  TAO_POA::check_for_valid_wait_for_completions (wait_for_completion,
+  TAO_POA::check_for_valid_wait_for_completions (this->orb_core (),
+                                                 wait_for_completion,
                                                  ACE_TRY_ENV);
   ACE_CHECK;
 }
@@ -1449,7 +1444,9 @@ TAO_POA_Current_Impl::setup (TAO_POA *p,
   // Set the current context and remember the old one.
   this->tss_resources_ = TAO_TSS_RESOURCES::instance ();
 
-  this->previous_current_impl_ = this->tss_resources_->poa_current_impl_;
+  this->previous_current_impl_ =
+    ACE_static_cast (TAO_POA_Current_Impl *,
+                     this->tss_resources_->poa_current_impl_);
   this->tss_resources_->poa_current_impl_ = this;
 
   // Setup is complete.

@@ -137,6 +137,12 @@ TAO_Object_Adapter::root_poa (void) const
   return this->root_;
 }
 
+ACE_INLINE TAO_ORB_Core &
+TAO_Object_Adapter::orb_core (void) const
+{
+  return this->orb_core_;
+}
+
 // ****************************************************************
 
 ACE_INLINE TAO_POA &
