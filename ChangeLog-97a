@@ -1,5 +1,9 @@
 Thu Mar 20 12:25:30 1997    <harrison@samba.cs.wustl.edu>
 
+	* ace/ace.{mak,mdp}: Build->Settings->Code Generation->Processor is
+	  now set to "Pentium" instead of "Blend*" for Debug and Release
+ 	  builds.
+
 	* ace/config-win32-msvc4.x.h:
 	* ace/config-win32-msvc2.0.h:
 	* ace/config-winnt-4.0-msvc4.x.h: Only define ACE_HAS_PENTIUM when
