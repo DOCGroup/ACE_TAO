@@ -1,3 +1,9 @@
+Tue Apr 23 16:01:47 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst: Prevented the Miop/McastHello test from
+	  running in SUNCC51 builds. SUNCC51 is too broken. Time to remove
+	  the build of the scoreboard.
+
 Tue Apr 23 11:31:43 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Dev_Poll_Reactor.inl (ACE_Dev_Poll_Handler_Guard):
