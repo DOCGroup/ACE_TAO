@@ -14,6 +14,7 @@
 
 #include "ftrtec_export.h"
 #include "orbsvcs/FtRtecEventChannelAdminS.h"
+#include "orbsvcs/RtecSchedulerC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,7 +30,8 @@ public:
 
 
   TAO_FTEC_Event_Channel(CORBA::ORB_var orb,
-                         PortableServer::POA_var poa);
+                         PortableServer::POA_var poa,
+                         RtecScheduler::Scheduler_var scheduler);
 
   ~TAO_FTEC_Event_Channel();
 
@@ -175,6 +177,7 @@ private:
   CORBA::ORB_var orb_;
   PortableServer::POA_var poa_, persistent_poa_;
   TAO_FTEC_Event_Channel_Impl* ec_impl_;
+  RtecScheduler::Scheduler_var scheduler_;
 };
 
 #endif

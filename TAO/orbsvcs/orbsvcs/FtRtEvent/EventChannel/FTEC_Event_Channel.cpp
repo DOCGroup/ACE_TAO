@@ -21,10 +21,12 @@ ACE_RCSID (EventChannel,
            "$Id$")
 
 TAO_FTEC_Event_Channel::TAO_FTEC_Event_Channel(CORBA::ORB_var orb,
-                                               PortableServer::POA_var poa)
+                                               PortableServer::POA_var poa,
+                                               RtecScheduler::Scheduler_var scheduler)
 :    orb_(orb)
 ,    poa_(poa)
 ,    ec_impl_(NULL)
+,    scheduler_(scheduler)
 {
 }
 
@@ -118,6 +120,7 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership
 
     TAO_EC_Event_Channel_Attributes attr (persistent_poa_.in (),
       persistent_poa_.in ());
+    attr.scheduler = scheduler_.in();
 
 
     TAO_FTEC_Event_Channel_Impl* ec;

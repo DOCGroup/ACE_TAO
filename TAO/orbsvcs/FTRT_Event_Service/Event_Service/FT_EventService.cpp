@@ -13,6 +13,8 @@
 #include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
 #include "orbsvcs/FtRtEvent/Utils/Log.h"
 #include "orbsvcs/FtRtEvent/Utils/RT_Task.h"
+#include "orbsvcs/Event/EC_Default_Factory.h"
+
 #ifndef WIN32
 #include <sys/time.h>
 #endif
@@ -34,6 +36,7 @@ class Fault_Event_Service  : public TAO_FTEC_Event_Channel
 public:
   Fault_Event_Service(CORBA::ORB_var orb,
     PortableServer::POA_var poa,
+    RtecScheduler::Scheduler_var scheduler,
     int fault_no);
 
 private:
@@ -48,8 +51,9 @@ private:
 
 Fault_Event_Service::Fault_Event_Service(CORBA::ORB_var orb, 
                                          PortableServer::POA_var poa,
+                                         RtecScheduler::Scheduler_var scheduler,
                                          int fault_no)
-: TAO_FTEC_Event_Channel(orb, poa), msg_count_(0), fault_no_(fault_no)
+: TAO_FTEC_Event_Channel(orb, poa,scheduler), msg_count_(0), fault_no_(fault_no)
 {
 }
 
@@ -83,6 +87,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   RT_Task::set_current();
 
+  TAO_EC_Default_Factory::init_svcs ();
   FT_EventService event_service;
   return event_service.run (argc, argv);
 }
@@ -150,7 +155,10 @@ FT_EventService::run(int argc, ACE_TCHAR* argv[])
       CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
-    setup_scheduler(naming_context.in() ACE_ENV_ARG_PARAMETER);
+    RtecScheduler::Scheduler_var scheduler = 
+      setup_scheduler(naming_context.in() 
+                      ACE_ENV_ARG_PARAMETER);
+
     ACE_CHECK_RETURN(-1);
 
 
@@ -159,7 +167,7 @@ FT_EventService::run(int argc, ACE_TCHAR* argv[])
 
     // Activate the Event channel implementation
 
-    Fault_Event_Service ec(orb_, root_poa, fault_no_);
+    Fault_Event_Service ec(orb_, root_poa, scheduler, fault_no_);
 
     FtRtecEventChannelAdmin::EventChannel_var ec_ior =
       ec.activate(membership_
@@ -262,7 +270,7 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
   return 0;
 }
 
-void
+RtecScheduler::Scheduler_var
 FT_EventService::setup_scheduler(CosNaming::NamingContext_ptr naming_context
                                  ACE_ENV_ARG_DECL)
 {
@@ -273,7 +281,7 @@ FT_EventService::setup_scheduler(CosNaming::NamingContext_ptr naming_context
             CORBA::NO_MEMORY());
 
         scheduler = this->sched_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+        ACE_CHECK_RETURN(scheduler);
 
         if (ACE_Scheduler_Factory::server(scheduler.in()) == -1)
             ACE_ERROR((LM_ERROR,"Unable to install scheduler\n"));
@@ -297,25 +305,26 @@ FT_EventService::setup_scheduler(CosNaming::NamingContext_ptr naming_context
                     CORBA::NO_MEMORY());
 
                 scheduler = this->sched_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-                ACE_CHECK;
+                ACE_CHECK_RETURN(scheduler);
 
                 // Register the servant with the Naming Context....
                 naming_context->rebind (schedule_name, scheduler.in ()
                     ACE_ENV_ARG_PARAMETER);
-                ACE_CHECK;
+                ACE_CHECK_RETURN(scheduler);
             }
             else
             {
                 CORBA::Object_var tmp =
                     naming_context->resolve (schedule_name ACE_ENV_ARG_PARAMETER);
-                ACE_CHECK;
+                ACE_CHECK_RETURN(scheduler);
 
                 scheduler = RtecScheduler::Scheduler::_narrow (tmp.in ()
                     ACE_ENV_ARG_PARAMETER);
-                ACE_CHECK;
+                ACE_CHECK_RETURN(scheduler);
             }
         }
     }
+    return scheduler;
 }
 
 int
