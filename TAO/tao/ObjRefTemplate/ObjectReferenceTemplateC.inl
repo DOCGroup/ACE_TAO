@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from 
-// be/be_visitor_valuetype/valuetype_ci.cpp:56
+// be\be_visitor_valuetype/valuetype_ci.cpp:56
 
 ACE_INLINE
 PortableInterceptor::ObjectReferenceFactory::ObjectReferenceFactory (void)
@@ -44,7 +44,7 @@ PortableInterceptor::ObjectReferenceFactory::_tao_obv_static_repository_id ()
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_valuetype/valuetype_ci.cpp:56
+// be\be_visitor_valuetype/valuetype_ci.cpp:56
 
 ACE_INLINE
 PortableInterceptor::ObjectReferenceTemplate::ObjectReferenceTemplate (void)

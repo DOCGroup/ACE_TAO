@@ -34,7 +34,7 @@
 #define _IORINFO_IDL_
 
 #include "tao/PortableInterceptor.pidl"
-#include "tao/ObjRefTemplate/ObjectReferenceTemplate.pidl"
+#include "tao/ObjRefTemplate/ObjectReferenceTemplate_include.pidl"
 
 module PortableInterceptor
 {

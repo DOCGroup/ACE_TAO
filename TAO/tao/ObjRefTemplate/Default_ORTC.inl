@@ -42,4 +42,3 @@ TAO_Default_ORT::ObjectReferenceTemplate::_tao_obv_static_repository_id ()
 {
   return "IDL:TAO_Default_ORT/ObjectReferenceTemplate:1.0";
 }
-
