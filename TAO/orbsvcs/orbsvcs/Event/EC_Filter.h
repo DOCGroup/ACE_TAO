@@ -65,7 +65,7 @@ public:
   virtual ~TAO_EC_Filter (void);
   // destructor...
 
-  const TAO_EC_Filter* parent (void) const;
+  TAO_EC_Filter* parent (void) const;
   // Obtain the parent of this filter.
 
   void adopt_child (TAO_EC_Filter* child);
@@ -77,16 +77,26 @@ public:
   // @@ TODO: strategize this...
 
   virtual int filter (const RtecEventComm::EventSet& event,
-                      const TAO_EC_QOS_Info& qos_info,
+                      TAO_EC_QOS_Info& qos_info,
                       CORBA::Environment& env) = 0;
+  virtual int filter_nocopy (RtecEventComm::EventSet& event,
+                             TAO_EC_QOS_Info& qos_info,
+                             CORBA::Environment& env) = 0;
   // Filter this event, returns 1 if the event is accepted, 0
   // otherwise.
+  // Notice that there are two versions of the method, if the event is
+  // not const then filter can take ownership of the event.
 
   virtual void push (const RtecEventComm::EventSet& event,
-                     const TAO_EC_QOS_Info& qos_info,
+                     TAO_EC_QOS_Info& qos_info,
                      CORBA::Environment& env) = 0;
+  virtual void push_nocopy (RtecEventComm::EventSet& event,
+                            TAO_EC_QOS_Info& qos_info,
+                            CORBA::Environment& env) = 0;
   // This is called by the children when they accept an event and
   // which to pass it up.
+  // Notice that there are two versions of the method, if the event is
+  // not const then filter can take ownership of the event.
 
   virtual void clear (void) = 0;
   // Clear any saved state, must reset and assume no events have been
@@ -97,7 +107,7 @@ public:
 
   typedef ACE_Array<RtecEventComm::EventHeader> Headers;
 
-  virtual void event_ids (Headers& headerset) = 0;
+  virtual void event_ids (Headers& headers) = 0;
   // Compute the disjunction of all the event types that could be of
   // interest for this filter (and its children).
 
@@ -111,8 +121,16 @@ private:
 class TAO_EC_Null_Filter : public TAO_EC_Filter
 {
   // = TITLE
+  //   A null filter
   //
   // = DESCRIPTION
+  //   This filter accepts any kind of event, it is useful for the
+  //   implementation:
+  //   a) Consumers that accept all events
+  //   b) Consumers that trust the filtering done at the Supplier
+  //      layer.
+  //   c) Event Channels that don't do filtering (such as CosEC
+  //      backends)
   //
   // = MEMORY MANAGMENT
   //
@@ -123,14 +141,20 @@ public:
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
   virtual int filter (const RtecEventComm::EventSet& event,
-                      const TAO_EC_QOS_Info& qos_info,
+                      TAO_EC_QOS_Info& qos_info,
                       CORBA::Environment& env);
+  virtual int filter_nocopy (RtecEventComm::EventSet& event,
+                             TAO_EC_QOS_Info& qos_info,
+                             CORBA::Environment& env);
   virtual void push (const RtecEventComm::EventSet& event,
-                     const TAO_EC_QOS_Info& qos_info,
+                     TAO_EC_QOS_Info& qos_info,
                      CORBA::Environment& env);
+  virtual void push_nocopy (RtecEventComm::EventSet& event,
+                            TAO_EC_QOS_Info& qos_info,
+                            CORBA::Environment& env);
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
-  virtual void event_ids (TAO_EC_Filter::Headers& headerset);
+  virtual void event_ids (TAO_EC_Filter::Headers& headers);
 };
 
 // ****************************************************************
@@ -148,14 +172,20 @@ public:
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
   virtual int filter (const RtecEventComm::EventSet& event,
-                      const TAO_EC_QOS_Info& qos_info,
+                      TAO_EC_QOS_Info& qos_info,
                       CORBA::Environment& env);
+  virtual int filter_nocopy (RtecEventComm::EventSet& event,
+                             TAO_EC_QOS_Info& qos_info,
+                             CORBA::Environment& env);
   virtual void push (const RtecEventComm::EventSet& event,
-                     const TAO_EC_QOS_Info& qos_info,
+                     TAO_EC_QOS_Info& qos_info,
                      CORBA::Environment& env);
+  virtual void push_nocopy (RtecEventComm::EventSet& event,
+                            TAO_EC_QOS_Info& qos_info,
+                            CORBA::Environment& env);
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
-  virtual void event_ids (TAO_EC_Filter::Headers& headerset);
+  virtual void event_ids (TAO_EC_Filter::Headers& headers);
 };
 
 // ****************************************************************
@@ -173,14 +203,20 @@ public:
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
   virtual int filter (const RtecEventComm::EventSet& event,
-                      const TAO_EC_QOS_Info& qos_info,
+                      TAO_EC_QOS_Info& qos_info,
                       CORBA::Environment& env);
+  virtual int filter_nocopy (RtecEventComm::EventSet& event,
+                             TAO_EC_QOS_Info& qos_info,
+                             CORBA::Environment& env);
   virtual void push (const RtecEventComm::EventSet& event,
-                     const TAO_EC_QOS_Info& qos_info,
+                     TAO_EC_QOS_Info& qos_info,
                      CORBA::Environment& env);
+  virtual void push_nocopy (RtecEventComm::EventSet& event,
+                            TAO_EC_QOS_Info& qos_info,
+                            CORBA::Environment& env);
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
-  virtual void event_ids (TAO_EC_Filter::Headers& headerset);
+  virtual void event_ids (TAO_EC_Filter::Headers& headers);
 };
 
 // ****************************************************************
@@ -198,14 +234,20 @@ public:
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
   virtual int filter (const RtecEventComm::EventSet& event,
-                      const TAO_EC_QOS_Info& qos_info,
+                      TAO_EC_QOS_Info& qos_info,
                       CORBA::Environment& env);
+  virtual int filter_nocopy (RtecEventComm::EventSet& event,
+                             TAO_EC_QOS_Info& qos_info,
+                             CORBA::Environment& env);
   virtual void push (const RtecEventComm::EventSet& event,
-                     const TAO_EC_QOS_Info& qos_info,
+                     TAO_EC_QOS_Info& qos_info,
                      CORBA::Environment& env);
+  virtual void push_nocopy (RtecEventComm::EventSet& event,
+                            TAO_EC_QOS_Info& qos_info,
+                            CORBA::Environment& env);
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
-  virtual void event_ids (TAO_EC_Filter::Headers& headerset);
+  virtual void event_ids (TAO_EC_Filter::Headers& headers);
 };
 
 // ****************************************************************

@@ -6,7 +6,7 @@ TAO_EC_Filter::TAO_EC_Filter (void)
 {
 }
 
-ACE_INLINE const TAO_EC_Filter*
+ACE_INLINE TAO_EC_Filter*
 TAO_EC_Filter::parent (void) const
 {
   return this->parent_;
