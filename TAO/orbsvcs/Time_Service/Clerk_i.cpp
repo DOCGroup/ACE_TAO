@@ -52,49 +52,52 @@ Clerk_i::read_ior (const char *filename)
                        "[CLIENT] Process/Thread Id : (%P/%t) Unable to read ior: %p\n"),
                       -1);
 
-  // @@ Vishal, can you please reorganize this code to use a for()
-  // loop rather than a while() loop?
   int nreplaced = ior_buffer.replaced ();
 
-  while (nreplaced--)
+  TAO_TRY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "iors -> |%s|\n",
-                  str));
-      TAO_TRY
+      for (; nreplaced; nreplaced--)
         {
+          ACE_DEBUG ((LM_DEBUG,
+                      "iors -> |%s|\n",
+                      str));
+
           CORBA::Object_var objref =
             this->orb_->string_to_object (str,
 					  TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
+          if (nreplaced != 0)
+            str = str + ACE_OS::strlen (str) + 1;
+
           // Return if the server reference is nil.
-          if (CORBA::is_nil (objref.in ()))
-            // @@ Vishal, note that if you take this return you won't
-            // close down the file or free the buffer.  Can you please
-            // reorganize this code to handle this case?
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "IOR for the server is Null\n"),
-                              -1);
+          if (CORBA::is_nil (objref.in ()) || nreplaced == 0)
+            {
+              // clean up before returning.
+
+              ACE_OS::close (f_handle);
+              ior_buffer.alloc ()->free (data);
+
+              if (CORBA::is_nil (objref.in ()))
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "IOR for the server is Null\n"),
+                                -1);
+            }
+
           CosTime::TimeService_ptr server =
             CosTime::TimeService::_narrow (objref.in (),
                                            TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
 	  this->insert_server (server);
-        }
-      TAO_CATCHANY
-        {
-          TAO_TRY_ENV.print_exception ("Exception");
-        }
-      TAO_ENDTRY;
 
-      if (nreplaced != 0)
-          str = str + ACE_OS::strlen (str) + 1;
-   }
-
-  ACE_OS::close (f_handle);
-  ior_buffer.alloc ()->free (data);
+        }
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Exception");
+    }
+  TAO_ENDTRY;
 
   return 0;
 }
