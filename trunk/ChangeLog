@@ -1,3 +1,15 @@
+Thu May 22 07:28:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/TP_Reactor.h:
+	* ace/TP_Reactor.cpp: Reverted changes from this "Thu May 22
+	  00:16:11 UTC 2003  Don Hinton  <dhinton@dresystems.com>". The
+	  right fix for compilers that emit warnings when trying to
+	  override only a few methods from a set of overloaded methods in
+	  the derived class, is to completely declare all the other
+	  overloaded methods. In the definition of the methods that we
+	  dont plan to override we should simply call the base class
+	  implementation.
+
 Thu May 22 11:29:54 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h:
