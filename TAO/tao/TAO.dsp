@@ -667,10 +667,6 @@ SOURCE=.\PICurrent_ORBInitializer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Pluggable.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Pluggable_Messaging.cpp
 # End Source File
 # Begin Source File
@@ -859,7 +855,15 @@ SOURCE=.\Transport.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Transport_Acceptor.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Transport_Cache_Manager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport_Connector.cpp
 # End Source File
 # Begin Source File
 
@@ -1455,10 +1459,6 @@ SOURCE=.\PICurrent_ORBInitializer.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Pluggable.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Pluggable_Messaging.h
 # End Source File
 # Begin Source File
@@ -1659,7 +1659,15 @@ SOURCE=.\Transport.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Transport_Acceptor.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Transport_Cache_Manager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport_Connector.h
 # End Source File
 # Begin Source File
 
@@ -2115,10 +2123,6 @@ SOURCE=.\PICurrent.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\Pluggable.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Pluggable_Messaging.i
 # End Source File
 # Begin Source File
@@ -2247,7 +2251,15 @@ SOURCE=.\Transport.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\Transport_Acceptor.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Transport_Cache_Manager.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport_Connector.inl
 # End Source File
 # Begin Source File
 
