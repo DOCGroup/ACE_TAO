@@ -21,21 +21,20 @@ BUILD 	= $(BIN)
 
 LOGGING_OBJS = 	Logging_Service_i.o Logging_Service.o 
 
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif # ! TAO_ROOT
+
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
-include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 #include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
-
-ifndef TAO_ROOT
-  TAO_ROOT = $(ACE_ROOT)/TAO
-endif # ! TAO_ROOT
 
 TSS_ORB_FLAG = #-DTAO_HAS_TSS_ORBCORE
 

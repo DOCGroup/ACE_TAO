@@ -30,7 +30,7 @@ Logger_Server::parse_args (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " [-d]"
-			   " [-n] service-name"
+			   " [-n service-name]"
                            "\n",
                            argv_ [0]),
                           -1);

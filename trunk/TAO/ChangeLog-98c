@@ -1,3 +1,14 @@
+Wed Aug  5 14:17:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Log/Logger_i.cpp: 
+	  Added missing template instantiations.
+
+	* orbsvcs/Logging_Service/Makefile: 
+	  Moved the TAO_ROOT definition to the top.
+
+	* orbsvcs/Logging_Service/Logging_Service_i.cpp: 
+	  Fixed usage message.
+
 Wed Aug  5 11:21:29 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/server.cpp: 
