@@ -35,6 +35,101 @@ inline RtecScheduler::Period_t time_val_to_period (const ACE_Time_Value &tv)
   return (tv.sec () * 1000000 + tv.usec ())*10;
 }
 
+class Consumer_EC : public Kokyu_EC
+{
+public:
+  Consumer_EC(void)
+  {
+  } //Consumer_EC()
+
+  ~Consumer_EC(void)
+  {
+  } //~Consumer_EC()
+
+  void set_up_supp_and_cons(ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     , RtecScheduler::UNKNOWN_TASK
+                     , RtecScheduler::INTERNAL
+                     , RtecScheduler::SYNCHRONIZATION_FAILURE
+                     ))
+  {
+    // *************************************************************
+    // Create a consumer, intialize its RT_Info structures, and
+    // connnect to the event channel....
+
+    //// CONSUMER 2_2 ////
+    Consumer * consumer_impl2_2;
+    ACE_NEW(consumer_impl2_2,
+            Consumer);
+
+    ACE_Time_Value tv(6,0);
+    consumer_impl2_2->setWorkTime(tv);
+    //consumer's rate will get propagated from the supplier.
+    //so no need to specify a period here.
+    tv.set(6,0);
+    add_consumer(consumer_impl2_2,
+                 "consumer2_2",
+                 tv,
+                 ACE_ES_EVENT_UNDEFINED+2,
+                 RtecScheduler::VERY_HIGH_CRITICALITY,
+                 RtecScheduler::VERY_HIGH_IMPORTANCE
+                 ACE_ENV_ARG_PARAMETER
+                 );
+    ACE_CHECK;
+
+    //// CONSUMER 3 ////
+    Consumer * consumer_impl3;
+    ACE_NEW(consumer_impl3,
+            Consumer);
+
+    tv.set(12,0);
+    consumer_impl3->setWorkTime(tv);
+    //consumer's rate will get propagated from the supplier.
+    //so no need to specify a period here.
+    tv.set(0,0);
+    add_consumer(consumer_impl3,
+                 "consumer3",
+                 tv,
+                 ACE_ES_EVENT_UNDEFINED+3,
+                 RtecScheduler::VERY_HIGH_CRITICALITY,
+                 RtecScheduler::VERY_HIGH_IMPORTANCE
+                 ACE_ENV_ARG_PARAMETER
+                 );
+    ACE_CHECK;
+
+    // *************************************************************
+    // Create Supplier, intialize its RT_Info structures, and
+    // connnect to the event channel....
+
+    //// SUPPLIER 3 ////
+    Supplier * supplier_impl3;
+    ACE_NEW(supplier_impl3,
+            Supplier(4));
+    Timeout_Consumer * timeout_consumer_impl3;
+    ACE_NEW(timeout_consumer_impl3,
+            Timeout_Consumer(supplier_impl3));
+    tv.set(12,0); //period
+    add_supplier_with_timeout(supplier_impl3,
+                              "supplier3",
+                              ACE_ES_EVENT_UNDEFINED+3,
+                              timeout_consumer_impl3,
+                              "supplier3_timeout_consumer",
+                              tv,
+                              RtecScheduler::LOW_CRITICALITY,
+                              RtecScheduler::LOW_IMPORTANCE
+                              ACE_ENV_ARG_PARAMETER
+                              );
+    ACE_CHECK;
+
+    //TODO: Delay activation of Supplier3 for 5.1 seconds (phase offset)
+
+    //Kokyu_EC::start(ACE_ENV_SINGLE_ARG_PARAMETER);
+    //ACE_CHECK;
+  } //set_up_supp_and_cons()
+
+}; //class Consumer_EC
+
 int parse_args (int argc, char *argv[]);
 
 int
@@ -63,7 +158,7 @@ ACE_TRY
   // ORB initialization boiler plate...
   CORBA::ORB_var orb =
     CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   if (parse_args (argc, argv) == -1)
     {
@@ -74,151 +169,32 @@ ACE_TRY
 
   CORBA::Object_var object =
     orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
   PortableServer::POA_var poa =
     PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
   PortableServer::POAManager_var poa_manager =
     poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
   poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
-
-  // ****************************************************************
-
-  Kokyu_EC kokyu_ec;
-  if (kokyu_ec.init(sched_type.c_str(), poa.in()) == -1)
-    ACE_ERROR_RETURN((LM_ERROR, "Unable to initialize Kokyu_EC"), 1);
-
-  // *************************************************************
-  // Create a consumer, intialize its RT_Info structures, and
-  // connnect to the event channel....
-
-  //// CONSUMER 2_2 ////
-  ACE_Time_Value tv(6,0);
-  Consumer consumer_impl2_2(tv);
-  RtecEventChannelAdmin::ProxyPushSupplier_var  proxy_supplier2_2;
-
-  //consumer's rate will get propagated from the supplier.
-  //so no need to specify a period here. Specifying
-  //criticality is crucial since it propagates from
-  //consumer to supplier.
-  tv.set(6,0);
-  TimeBase::TimeT tmp;
-  ORBSVCS_Time::Time_Value_to_TimeT (tmp, tv);
-
-  RtEventChannelAdmin::SchedInfo info;
-  info.criticality = RtecScheduler::VERY_HIGH_CRITICALITY;
-  info.period = time_val_to_period (tv);
-  info.importance = RtecScheduler::VERY_HIGH_IMPORTANCE;
-  info.threads = 0;
-  info.info_type = RtecScheduler::OPERATION;
-
-  RtecEventComm::PushConsumer_var consumer2_2 =
-    consumer_impl2_2._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
-
-  RtecScheduler::handle_t consumer2_2_rt_info =
-    kokyu_ec.register_consumer("consumer2_2",
-                               info,
-                               ACE_ES_EVENT_UNDEFINED+2,
-                               consumer2_2.in(),
-                               proxy_supplier2_2.out()
-                               ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
-  ACE_UNUSED_ARG(consumer2_2_rt_info);
-
-  //// CONSUMER 3 ////
-  tv.set(12,0);
-  Consumer consumer_impl3(tv);
-  RtecEventChannelAdmin::ProxyPushSupplier_var  proxy_supplier3;
-
-  info.criticality = RtecScheduler::VERY_HIGH_CRITICALITY;
-  info.importance = RtecScheduler::VERY_HIGH_IMPORTANCE;
-
-  RtecEventComm::PushConsumer_var consumer3 =
-    consumer_impl3._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
-
-  RtecScheduler::handle_t consumer3_rt_info =
-    kokyu_ec.register_consumer("consumer3",
-                               info,
-                               ACE_ES_EVENT_UNDEFINED+3,
-                               consumer3.in(),
-                               proxy_supplier3.out()
-                               ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
-  ACE_UNUSED_ARG(consumer3_rt_info);
-
-  // *************************************************************
-  // Create Supplier, intialize its RT_Info structures, and
-  // connnect to the event channel....
-
-  //// SUPPLIER 3 ////
-  Supplier supplier_impl3(4);
-  Timeout_Consumer timeout_consumer_impl3(&supplier_impl3);
-
-  RtecEventComm::EventSourceID supplier_id3 = 4;
-
-  RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy3;
-  RtecEventComm::PushSupplier_var supplier3;
-
-  supplier3 = supplier_impl3._this(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  RtecScheduler::handle_t supplier3_rt_info =
-    kokyu_ec.register_supplier("supplier3",
-                               supplier_id3,
-                               ACE_ES_EVENT_UNDEFINED+3,
-                               supplier3.in(),
-                               consumer_proxy3.out()
-                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  supplier_impl3.set_consumer_proxy(consumer_proxy3.in());
-
-  ACE_DEBUG ((LM_DEBUG, "suppliers connected\n"));
-  //Timer Registration part
-  //Timeout consumers for the suppliers.
-
-  RtecEventChannelAdmin::ProxyPushSupplier_var timeout_supplier_proxy3;
-  RtecEventComm::PushConsumer_var safe_timeout_consumer3;
-
-  safe_timeout_consumer3= timeout_consumer_impl3._this(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  tv.set(12,0); //Period
-
-  info.criticality = RtecScheduler::LOW_CRITICALITY;
-  info.period = time_val_to_period (tv);
-  info.importance = RtecScheduler::LOW_IMPORTANCE;
-  info.threads = 0;
-  info.info_type = RtecScheduler::OPERATION;
-
-  RtecScheduler::handle_t supplier3_timeout_consumer_rt_info =
-    kokyu_ec.register_consumer("supplier3_timeout_consumer",
-                               info,
-                               ACE_ES_EVENT_INTERVAL_TIMEOUT,
-                               safe_timeout_consumer3.in(),
-                               timeout_supplier_proxy3.out()
-                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  ACE_DEBUG ((LM_DEBUG, "timeout consumers connected\n"));
-
-  kokyu_ec.add_dependency (supplier3_timeout_consumer_rt_info,
-                           supplier3_rt_info,
-                           1,
-                           RtecBase::TWO_WAY_CALL
-                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // ****************************************************************
-  RtEventChannelAdmin::RtSchedEventChannel_var kokyu_ec_ior =
-    kokyu_ec._this(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
-  CORBA::String_var ior = orb->object_to_string(kokyu_ec_ior.in()
+  Consumer_EC consumer_ec;
+  if (consumer_ec.init(sched_type.c_str(), poa.in()) == -1) {
+    ACE_ERROR_RETURN((LM_ERROR, "Unable to initialize Consumer_EC"), 1);
+  }
+
+  consumer_ec.set_up_supp_and_cons(ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // ****************************************************************
+  RtEventChannelAdmin::RtSchedEventChannel_var consumer_ec_ior =
+    consumer_ec._this(ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  CORBA::String_var ior = orb->object_to_string(consumer_ec_ior.in()
                                                 ACE_ENV_ARG_PARAMETER);
 
   ACE_OS::fprintf(ior_output_file, ior.in());
@@ -234,8 +210,8 @@ ACE_TRY
 
   // The schedule is returned in this variables....
 
-  kokyu_ec.start(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  consumer_ec.start(ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
   // ****************************************************************
 
@@ -245,19 +221,24 @@ ACE_TRY
   int prio = ACE_Sched_Params::priority_max (ACE_SCHED_FIFO);
   ACE_OS::thr_setprio (thr_handle, prio);
 
+#ifdef ACE_HAS_DSUI
   //@BT: Timeouts start when orb starts, similar to starting the DT worker thread
   //DSUI_EVENT_LOG (MAIN_GROUP_FAM, WORKER_ACTIVATED, 1, 0, NULL);
   tv = ACE_OS::gettimeofday();
   ACE_DEBUG((LM_DEBUG,"Consumer_EC thread %t WORKER_ACTIVATED at %u\n",tv.msec()));
-#ifdef ACE_HAS_DSUI
   DSUI_EVENT_LOG (MAIN_GROUP_FAM, WORKER_ACTIVATED, 0, 0, NULL);
 #endif //ACE_HAS_DSUI
 
+#ifdef ACE_HAS_DSUI
   EC_Event_Limit* e_limit = new EC_Event_Limit (TAO_ORB_Core_instance(), ds_cntl);
+#else
+  EC_Event_Limit* e_limit = new EC_Event_Limit (TAO_ORB_Core_instance());
+#endif //ACE_HAS_DSUI
   ACE_Time_Value ticker (125);
   orb->orb_core()->reactor()->schedule_timer(e_limit,0, ticker);
 
   orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
   // ****************************************************************
 
