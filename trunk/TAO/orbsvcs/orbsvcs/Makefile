@@ -36,6 +36,7 @@ FILES= $(IDL_FILES) \
 	Scheduler_Factory \
 	Runtime_Scheduler \
 	Scheduler_Utilities \
+	util \
 	tmplinst
 
 # Compile using av=1 to compile the AVStreams stuff.
