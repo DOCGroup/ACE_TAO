@@ -2,10 +2,10 @@
 
 This application tests different features of TAO's Naming Service.
 
-To run all tests automatically - 
+To run all tests automatically -
 	execute Perl script run_test.pl
 
-To run tests manually - 
+To run tests manually -
 	start Naming Service ($TAO_ROOT/orbsvcs/Naming_Service/Naming_Service),
 	 then run ./client with one of the following options below.
 
@@ -20,6 +20,16 @@ The following options exist:
 -i 	Run the Iterator test of the Naming Service.
 
 -y      Run the Destroy test of the Naming Service.
+
+-m      Run the MT test of the Naming Service.  Requires integer
+        argument specifying number of thread to spawn.  (If running
+        this test manually, its output should be redirected to some
+        file, say, "foo".  Then, process-m-output.pl script can be
+        used to analyze the test output and print out a diagnostic
+        message.  Invoke the script with
+        "process-m-output.pl foo number_of_threads", where
+        <number_of_threads> is the argument that was supplied with "-m"
+        option to the client.)
 
 If no option is specified, Simple test is run.  If more than one
 option is specified, only one test runs.
@@ -47,13 +57,23 @@ Unbound name OK
 
 ********************************************
 
+MT Test.
+
+Spawns a specified number of threads.  Threads concurrently attempt to
+bind (), resolve (), and unbind () the object reference.
+
+Expected Output (produced by the output processing script):
+
+Multithreaded output is ok
+*******************************************
+
 Tree Test.
 
 Checks all Naming Service functions with a tree of Naming Contexts.
 
-root->bind_new_context (level1) 
+root->bind_new_context (level1)
 
-new = root->new_context (), new->bind (foo, obj), and 
+new = root->new_context (), new->bind (foo, obj), and
   root->bind_context (level1/level2, new)
 
 We now have root->level1->level2->foo
@@ -63,7 +83,7 @@ root->unbind (level1/level2/foo).
 root->bind (level1/level2/foo, obj).
 
 new = root->new_context()
-root->rebind_context(level1/level2, new) 
+root->rebind_context(level1/level2, new)
 
 root->bind (level1/level2/foo obj)
 root->resolve (level1/level2/foo)
@@ -71,7 +91,7 @@ root->rebind (level1/level2/foo, obj2) to have a different object under the name
 root->resolve (level1/level2/foo) to make sure correct reference is returned.
 
 
-Expected Output: 
+Expected Output:
 
 All funtions work properly
 ********************************************
@@ -81,7 +101,7 @@ Exceptions Test.
 Makes sure that Naming Service throws exceptions as expected, and data
 inside exceptions is set correctly.
 
-Create a tree of Naming Contexts: root context -> level1 -> level2.  
+Create a tree of Naming Contexts: root context -> level1 -> level2.
 
 Bind an object with the name foo into each of the Naming Contexts.
 
@@ -113,11 +133,11 @@ Checks iterator functions.
 Bind () objects with the following names foo1, foo2, foo3, and foo4
 into the root Naming Context.
 
-root->lists (1, bl, iter)  
-iter->next_one () 
-iter->next_n (2, bl) 
+root->lists (1, bl, iter)
+iter->next_one ()
+iter->next_n (2, bl)
 iter->next_one () - should return false
-iter->destroy () 
+iter->destroy ()
 
 
 Expected Output:
@@ -129,7 +149,7 @@ Fourth binding: foo4
 
 *********************************************
 
-Destroy Test. 
+Destroy Test.
 
 Makes sure destroy method is working properly.
 
