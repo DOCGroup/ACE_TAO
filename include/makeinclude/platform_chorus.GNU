@@ -40,9 +40,8 @@ CCFLAGS         += $(CFLAGS) -fno-implicit-templates    \
                    -D_POSIX_THREAD_SAFE_FUNCTIONS
 
 ifeq ($(exceptions),1)
-else  # ! exceptions
-  CCFLAGS += -fno-exceptions
-endif # ! exceptions
+  CCFLAGS += -fhandle-exceptions
+endif # exceptions
 
 #DCFLAGS         += -gstabs+
 INCLDIRS        += -I$(INC_DIR)/posix                   \
