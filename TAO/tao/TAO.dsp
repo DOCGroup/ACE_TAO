@@ -1104,6 +1104,10 @@ SOURCE=.\Basic_Arguments.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\BD_String_Argument_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\BiDir_Adapter.h
 # End Source File
 # Begin Source File
@@ -2640,6 +2644,11 @@ SOURCE=.\Array_VarOut_T.cpp
 # Begin Source File
 
 SOURCE=.\Basic_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\BD_String_Argument_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
