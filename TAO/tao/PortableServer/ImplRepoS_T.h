@@ -19,10 +19,14 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_IMPLREPOS_T_H_
-#define _TAO_IDL_IMPLREPOS_T_H_
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:604
+
+#ifndef _TAO_IDL_ORIG_IMPLREPOS_T_H_
+#define _TAO_IDL_ORIG_IMPLREPOS_T_H_
 
 #include "ace/pre.h"
+
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)
@@ -30,9 +34,17 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root_sth.cpp:116
+
 #if defined (ACE_HAS_USING_KEYWORD)
 TAO_NAMESPACE  POA_ImplementationRepository
 {
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:87
+  
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
   class  ServerObject_tie : public ServerObject
@@ -42,9 +54,13 @@ TAO_NAMESPACE  POA_ImplementationRepository
     // the T& ctor
     ServerObject_tie (T &t, PortableServer::POA_ptr poa);
     // ctor taking a POA
-    ServerObject_tie (T *tp, CORBA::Boolean release=1);
+    ServerObject_tie (T *tp, CORBA::Boolean release = 1);
     // ctor taking pointer and an ownership flag
-    ServerObject_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release=1);
+    ServerObject_tie (
+        T *tp,
+        PortableServer::POA_ptr poa,
+        CORBA::Boolean release = 1
+      );
     // ctor with T*, ownership flag and a POA
     ~ServerObject_tie (void);
     // dtor
@@ -54,7 +70,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
     // return the underlying object
     void _tied_object (T &obj);
     // set the underlying object
-    void _tied_object (T *obj, CORBA::Boolean release=1);
+    void _tied_object (T *obj, CORBA::Boolean release = 1);
     // set the underlying object and the ownership flag
     CORBA::Boolean _is_owner (void);
     // do we own it
@@ -65,23 +81,28 @@ TAO_NAMESPACE  POA_ImplementationRepository
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       );
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+    
     void ping (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
     
-        void shutdown (
-        
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+    
+    void shutdown (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
-      private:
+  
+  private:
     T *ptr_;
     PortableServer::POA_var poa_;
     CORBA::Boolean rel_;
@@ -90,7 +111,10 @@ TAO_NAMESPACE  POA_ImplementationRepository
     ServerObject_tie (const ServerObject_tie &);
     void operator= (const ServerObject_tie &);
   };
-
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:87
+  
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
   class  Administration_tie : public Administration
@@ -100,9 +124,13 @@ TAO_NAMESPACE  POA_ImplementationRepository
     // the T& ctor
     Administration_tie (T &t, PortableServer::POA_ptr poa);
     // ctor taking a POA
-    Administration_tie (T *tp, CORBA::Boolean release=1);
+    Administration_tie (T *tp, CORBA::Boolean release = 1);
     // ctor taking pointer and an ownership flag
-    Administration_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release=1);
+    Administration_tie (
+        T *tp,
+        PortableServer::POA_ptr poa,
+        CORBA::Boolean release = 1
+      );
     // ctor with T*, ownership flag and a POA
     ~Administration_tie (void);
     // dtor
@@ -112,7 +140,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
     // return the underlying object
     void _tied_object (T &obj);
     // set the underlying object
-    void _tied_object (T *obj, CORBA::Boolean release=1);
+    void _tied_object (T *obj, CORBA::Boolean release = 1);
     // set the underlying object and the ownership flag
     CORBA::Boolean _is_owner (void);
     // do we own it
@@ -123,6 +151,10 @@ TAO_NAMESPACE  POA_ImplementationRepository
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       );
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+    
     void activate_server (
         const char * server
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -133,7 +165,10 @@ TAO_NAMESPACE  POA_ImplementationRepository
         , ImplementationRepository::CannotActivate
       ));
     
-        char * activate_server_with_startup (
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+    
+    char * activate_server_with_startup (
         const char * server,
         CORBA::Long check_startup
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -144,7 +179,10 @@ TAO_NAMESPACE  POA_ImplementationRepository
         , ImplementationRepository::CannotActivate
       ));
     
-        void register_server (
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+    
+    void register_server (
         const char * server,
         const ImplementationRepository::StartupOptions & options
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -154,7 +192,10 @@ TAO_NAMESPACE  POA_ImplementationRepository
         , ImplementationRepository::AlreadyRegistered
       ));
     
-        void reregister_server (
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+    
+    void reregister_server (
         const char * server,
         const ImplementationRepository::StartupOptions & options
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -163,7 +204,10 @@ TAO_NAMESPACE  POA_ImplementationRepository
         CORBA::SystemException
       ));
     
-        void remove_server (
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+    
+    void remove_server (
         const char * server
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
@@ -172,7 +216,10 @@ TAO_NAMESPACE  POA_ImplementationRepository
         , ImplementationRepository::NotFound
       ));
     
-        void shutdown_server (
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+    
+    void shutdown_server (
         const char * server
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
@@ -181,7 +228,10 @@ TAO_NAMESPACE  POA_ImplementationRepository
         , ImplementationRepository::NotFound
       ));
     
-        char * server_is_running (
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+    
+    char * server_is_running (
         const char * server,
         const char * addr,
         ImplementationRepository::ServerObject_ptr server_object
@@ -192,7 +242,10 @@ TAO_NAMESPACE  POA_ImplementationRepository
         , ImplementationRepository::NotFound
       ));
     
-        void server_is_shutting_down (
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+    
+    void server_is_shutting_down (
         const char * server
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
@@ -201,7 +254,10 @@ TAO_NAMESPACE  POA_ImplementationRepository
         , ImplementationRepository::NotFound
       ));
     
-        void find (
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+    
+    void find (
         const char * server,
         ImplementationRepository::ServerInformation_out info
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -211,7 +267,10 @@ TAO_NAMESPACE  POA_ImplementationRepository
         , ImplementationRepository::NotFound
       ));
     
-        void list (
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+    
+    void list (
         CORBA::ULong how_many,
         ImplementationRepository::ServerInformationList_out server_list,
         ImplementationRepository::ServerInformationIterator_out server_iterator
@@ -220,8 +279,8 @@ TAO_NAMESPACE  POA_ImplementationRepository
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
-      private:
+  
+  private:
     T *ptr_;
     PortableServer::POA_var poa_;
     CORBA::Boolean rel_;
@@ -230,7 +289,10 @@ TAO_NAMESPACE  POA_ImplementationRepository
     Administration_tie (const Administration_tie &);
     void operator= (const Administration_tie &);
   };
-
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:87
+  
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
   class  ServerInformationIterator_tie : public ServerInformationIterator
@@ -240,9 +302,13 @@ TAO_NAMESPACE  POA_ImplementationRepository
     // the T& ctor
     ServerInformationIterator_tie (T &t, PortableServer::POA_ptr poa);
     // ctor taking a POA
-    ServerInformationIterator_tie (T *tp, CORBA::Boolean release=1);
+    ServerInformationIterator_tie (T *tp, CORBA::Boolean release = 1);
     // ctor taking pointer and an ownership flag
-    ServerInformationIterator_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release=1);
+    ServerInformationIterator_tie (
+        T *tp,
+        PortableServer::POA_ptr poa,
+        CORBA::Boolean release = 1
+      );
     // ctor with T*, ownership flag and a POA
     ~ServerInformationIterator_tie (void);
     // dtor
@@ -252,7 +318,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
     // return the underlying object
     void _tied_object (T &obj);
     // set the underlying object
-    void _tied_object (T *obj, CORBA::Boolean release=1);
+    void _tied_object (T *obj, CORBA::Boolean release = 1);
     // set the underlying object and the ownership flag
     CORBA::Boolean _is_owner (void);
     // do we own it
@@ -263,6 +329,10 @@ TAO_NAMESPACE  POA_ImplementationRepository
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       );
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+    
     CORBA::Boolean next_n (
         CORBA::ULong how_many,
         ImplementationRepository::ServerInformationList_out server_list
@@ -272,15 +342,17 @@ TAO_NAMESPACE  POA_ImplementationRepository
         CORBA::SystemException
       ));
     
-        void destroy (
-        
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+    
+    void destroy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
-      private:
+  
+  private:
     T *ptr_;
     PortableServer::POA_var poa_;
     CORBA::Boolean rel_;
@@ -289,20 +361,20 @@ TAO_NAMESPACE  POA_ImplementationRepository
     ServerInformationIterator_tie (const ServerInformationIterator_tie &);
     void operator= (const ServerInformationIterator_tie &);
   };
-
 }
 TAO_NAMESPACE_CLOSE // module ImplementationRepository
 #endif /* ACE_HAS_USING_KEYWORD */
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1141
 
 #if defined (__ACE_INLINE__)
 #include "ImplRepoS_T.i"
 #endif /* defined INLINE */
 
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ImplRepoS_T.cpp"
 #endif /* defined REQUIRED SOURCE */
-
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("ImplRepoS_T.cpp")

@@ -2136,7 +2136,7 @@ TAO_POA::reference_to_servant_i (CORBA::Object_ptr reference
   int result = -1;
   if (this->cached_policies_.servant_retention () == PortableServer::RETAIN)
     {
-      TAO_ObjectKey_var key = reference->_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+      TAO::ObjectKey_var key = reference->_key (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       // If the object reference was not created by this POA, the
@@ -2265,7 +2265,7 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference
   // POA on which the operation is being performed.  If the object
   // reference was not created by this POA, the WrongAdapter exception
   // is raised.
-  TAO_ObjectKey_var key = reference->_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  TAO::ObjectKey_var key = reference->_key (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   PortableServer::ObjectId system_id;
@@ -2429,7 +2429,7 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id
                                                                            priority) == 0)
     {
       // Create object key.
-      TAO_ObjectKey_var key = this->create_object_key (system_id.in ());
+      TAO::ObjectKey_var key = this->create_object_key (system_id.in ());
 
       // Ask the ORB to create you a reference
       return this->key_to_object (key.in (),
@@ -3378,7 +3378,7 @@ TAO_POA::invoke_key_to_object (const char *intf,
     }
 
   // Create object key.
-  TAO_ObjectKey_var key = this->create_object_key (system_id.in ());
+  TAO::ObjectKey_var key = this->create_object_key (system_id.in ());
 
   CORBA::Object_var object = 0;
 
