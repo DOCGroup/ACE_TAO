@@ -73,7 +73,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_string.h"
 #include "utl_identifier.h"
 #include "drv_extern.h"
-#include "ace/Process.h"
 #include "../tao/Version.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -139,6 +138,19 @@ DRV_init (int &argc, char *argv[])
   return BE_init (argc, argv);
 }
 
+void
+DRV_refresh (void)
+{
+  idl_global->set_err_count (0);
+  idl_global->set_filename (0);
+  idl_global->set_main_filename (0);
+  idl_global->set_real_filename (0);
+  idl_global->set_stripped_filename (0);
+//  idl_global->set_import (I_TRUE);
+//  idl_global->set_in_main_file (I_FALSE);
+  idl_global->set_lineno (-1);
+}
+
 /*
 ** Drive the compilation
 **
@@ -176,29 +188,6 @@ DRV_drive (const char *s)
     }
 
   DRV_pre_proc (s);
-  AST_Generator *gen = be_global->generator_init ();
-
-  if (gen == 0)
-    {
-      ACE_ERROR ((
-          LM_ERROR,
-          ACE_TEXT ("IDL: DRV_generator_init() failed to create ")
-          ACE_TEXT ("generator, exiting\n")
-        ));
-
-      ACE_OS::exit (99);
-    }
-  else
-    {
-      idl_global->set_gen (gen);
-    } 
-
-  // Initialize AST and load predefined types.
-  FE_populate ();
-
-  // For the IDL compiler, this has to come after FE_populate().
-  // For the IFR loader, it does nothing.
-  BE_post_init ();
 
   // Parse.
   if (idl_global->compile_flags () & IDL_CF_INFORMATIVE)
@@ -275,60 +264,8 @@ DRV_drive (const char *s)
     {
       ACE_OS::exit (static_cast<int> (error_count));
     }
-
-  // Exit cleanly.
-  ACE_OS::exit (0);
-}
-
-// Fork off a process, wait for it to die.
-void
-DRV_fork (void)
-{
-  // We get this from the BE because it is implemented 
-  // differently in the IFR backend.
-  ACE_CString arg_string = be_global->spawn_options ();
-
-  for (DRV_file_index = 0;
-       DRV_file_index < DRV_nfiles;
-       ++DRV_file_index)
-    {
-      ACE_Process_Options options (1,
-                                   TAO_IDL_COMMAND_LINE_BUFFER_SIZE);
-      options.creation_flags (ACE_Process_Options::NO_EXEC);
-      options.command_line ("%s %s %s",
-                            idl_global->prog_name (),
-                            arg_string.c_str (),
-                            DRV_files[DRV_file_index]);
-      ACE_Process manager;
-      pid_t child_pid = manager.spawn (options);
-
-      if (child_pid == 0)
-        {
-          // OK, do it to this file (in the child).
-          DRV_drive (DRV_files[DRV_file_index]);
-          ACE_OS::exit (0);
-        }
-
-      if (child_pid == ACE_INVALID_PID)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("IDL: spawn failed\n")));
-
-          ACE_OS::exit (99);
-        }
-
-      // child_pid is the process id of something at this point.
-      if (manager.wait () == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("IDL: wait failed\n")));
-
-          ACE_OS::exit (99);
-        }
-    }
-
-  // Now the parent process can exit.
-  ACE_OS::exit (0);
+    
+  DRV_refresh ();
 }
 
 /*
@@ -368,28 +305,56 @@ main (int argc, char *argv[])
       ACE_OS::exit (0);
     }
 
-  // Fork off a process for each file to process. Fork only if
-  // there is more than one file to process.
-  if (DRV_nfiles > 1)
+  // If there are no input files, no sense going any further.
+  if (DRV_nfiles == 0)
     {
-      // DRV_fork never returns.
-      DRV_fork ();
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("IDL: No input files\n")));
+
+      ACE_OS::exit (99);
+    }
+
+  AST_Generator *gen = be_global->generator_init ();
+
+  if (gen == 0)
+    {
+      ACE_ERROR ((
+          LM_ERROR,
+          ACE_TEXT ("IDL: DRV_generator_init() failed to create ")
+          ACE_TEXT ("generator, exiting\n")
+        ));
+
+      ACE_OS::exit (99);
     }
   else
     {
-      // Do the one file we have to parse.
-      // Check if stdin and handle file name appropriately.
-      if (DRV_nfiles == 0)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("IDL: No input files\n")));
+      idl_global->set_gen (gen);
+    } 
 
-          ACE_OS::exit (99);
-        }
+  // Initialize AST and load predefined types.
+  FE_populate ();
 
-      DRV_file_index = 0;
+  // For the IDL compiler, this has to come after FE_populate().
+  // For the IFR loader, it does nothing.
+  BE_post_init ();
+
+  // Seed the random number generator used for creating unique
+  // temporary filenames.
+  srand ((unsigned int) time (0));
+  
+  for (DRV_file_index = 0;
+       DRV_file_index < DRV_nfiles;
+       ++DRV_file_index)
+    {
       DRV_drive (DRV_files[DRV_file_index]);
     }
+    
+  delete be_global;
+  be_global = 0;
+  
+  idl_global->fini ();  
+  delete idl_global;
+  idl_global = 0;
 
   ACE_OS::exit (0);
 

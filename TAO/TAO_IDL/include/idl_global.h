@@ -531,6 +531,9 @@ public:
   
   int check_gperf (void);
   // Currently called only from IDL backend, but could be useful elsewhere.
+  
+  void fini (void);
+  // Do final cleanup just before process exits.
 
 private:
   // Data

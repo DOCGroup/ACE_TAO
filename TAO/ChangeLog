@@ -1,3 +1,29 @@
+Thu Jul  1 20:01:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/ast/ast_root.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_root.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/include/ast_root.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_global.cpp:
+        
+          Changed the method of processing multiple file in a single
+          execution from forking off separate processes for each
+          file to simply iterating over the files in a single
+          process. Unique temporary filenames are now created using
+          random numbers instead of process ids as before.
+          
+        * orbsvcs/IFR_Service/be_produce.cpp:
+        
+          Removed the deletion of pointers to the global data classes,
+          since these pointers are now reused for each file processed.
+          The final deletion of these pointers now occurs in the main()
+          loop of the executable. A similar change was made to 
+          TAO_IDL/be/be_produce.cpp as part of the changes above.
+
 Thu Jul  1 08:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA/Multi_Priority_Mapping.{h,cpp}:
