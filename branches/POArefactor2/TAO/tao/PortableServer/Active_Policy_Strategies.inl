@@ -26,7 +26,7 @@ namespace TAO
     }
 
     ACE_INLINE
-    Id_Uniqueness_Strategy *
+    IdUniquenessStrategy *
     Active_Policy_Strategies::id_uniqueness_strategy (void) const
     {
       return id_uniqueness_strategy_;

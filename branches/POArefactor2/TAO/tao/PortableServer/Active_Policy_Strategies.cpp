@@ -18,6 +18,7 @@
 #include "LifespanStrategy.h"
 #include "LifespanStrategyFactory.h"
 #include "IdUniquenessStrategy.h"
+#include "IdUniquenessStrategyFactory.h"
 #include "ImplicitActivationStrategy.h"
 #include "ImplicitActivationStrategyFactory.h"
 #include "ServantRetentionStrategy.h"
@@ -121,21 +122,24 @@ namespace TAO
 
       id_assignment_strategy_->strategy_init (poa);
 
-      switch (policies.id_uniqueness())
-      {
-        case ::PortableServer::UNIQUE_ID :
-        {
-          ACE_NEW (id_uniqueness_strategy_, Unique_Id_Uniqueness_Strategy);
-          break;
-        }
-        case ::PortableServer::MULTIPLE_ID :
-        {
-          ACE_NEW (id_uniqueness_strategy_, Multiple_Id_Uniqueness_Strategy);
-          break;
-        }
-      }
+      /**/
 
-      id_uniqueness_strategy_->strategy_init (poa);
+      IdUniquenessStrategyFactory *id_uniqueness_strategy_factory =
+        ACE_Dynamic_Service<IdUniquenessStrategyFactory>::instance ("IdUniquenessStrategyFactory");
+
+      if (id_uniqueness_strategy_factory == 0)
+        {
+          ACE_Service_Config::process_directive (ACE_TEXT("dynamic IdUniquenessStrategyFactory Service_Object *")
+                                                 ACE_TEXT("TAO_PortableServer:_make_IdUniquenessStrategyFactoryImpl()"));
+          id_uniqueness_strategy_factory =
+            ACE_Dynamic_Service<IdUniquenessStrategyFactory>::instance ("IdUniquenessStrategyFactory");
+        }
+
+      if (id_uniqueness_strategy_factory != 0)
+        id_uniqueness_strategy_ = id_uniqueness_strategy_factory->create (policies.id_uniqueness());
+
+      if (id_uniqueness_strategy_ != 0)
+        id_uniqueness_strategy_->strategy_init (poa);
 
       /**/
 

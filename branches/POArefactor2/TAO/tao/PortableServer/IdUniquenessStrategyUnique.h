@@ -10,13 +10,14 @@
  */
 //=============================================================================
 
-#ifndef TAO_ID_UNIQUENESS_STRATEGY_H
-#define TAO_ID_UNIQUENESS_STRATEGY_H
+#ifndef TAO_ID_UNIQUENESSSTRATEGYUNIQUE_H
+#define TAO_ID_UNIQUENESSSTRATEGYUNIQUE_H
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "Policy_Strategy.h"
 #include "PS_ForwardC.h"
+#include "IdUniquenessStrategy.h"
+#include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,24 +25,31 @@
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
+namespace CORBA
+{
+  class PolicyError;
+  class PolicyList;
+}
+
 namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export IdUniquenessStrategy :
-       public virtual Policy_Strategy
+    class TAO_PortableServer_Export Unique_Id_Uniqueness_Strategy :
+       public virtual IdUniquenessStrategy
     {
     public:
-      virtual ~IdUniquenessStrategy (void);
+      Unique_Id_Uniqueness_Strategy (void);
 
-      /*
-       * Validate if the  servant may be activated
-       * @retval true This servant may be activated
-       * @retval false This servant may not be activated
-       */
+      virtual ~Unique_Id_Uniqueness_Strategy (void);
+
+      void strategy_init (TAO_POA *poa);
+
       virtual bool validate (PortableServer::Servant servant,
                              int &wait_occurred_restart_call
-                             ACE_ENV_ARG_DECL) = 0;
+                             ACE_ENV_ARG_DECL);
+    private:
+      TAO_POA* poa_;
     };
   }
 }
@@ -49,4 +57,4 @@ namespace TAO
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #include /**/ "ace/post.h"
-#endif /* TAO_ID_UNIQUENESS_STRATEGY_H */
+#endif /* TAO_ID_UNIQUENESSSTRATEGYUNIQUE_H */
