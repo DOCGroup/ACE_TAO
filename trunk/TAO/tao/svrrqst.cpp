@@ -41,16 +41,16 @@ IIOP_ServerRequest::~IIOP_ServerRequest (void)
   if (exception_)
     delete exception_;
 }
- 
+
 ULONG __stdcall
 IIOP_ServerRequest::AddRef (void)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0));
- 
+
   ACE_ASSERT (refcount_ > 0);
   return refcount_++;
 }
- 
+
 ULONG __stdcall
 IIOP_ServerRequest::Release (void)
 {
@@ -66,22 +66,22 @@ IIOP_ServerRequest::Release (void)
   delete this;
   return 0;
 }
- 
+
 HRESULT __stdcall
 IIOP_ServerRequest::QueryInterface (REFIID riid,
 				    void **ppv)
 {
   ACE_ASSERT (refcount_ > 0);
   *ppv = 0;
- 
+
   if (IID_IIOP_ServerRequest == riid
       || IID_CORBA_ServerRequest == riid
       || IID_IUnknown == riid)
     *ppv = this;
- 
+
   if (*ppv == 0)
     return ResultFromScode (E_NOINTERFACE);
- 
+
  (void) AddRef ();
   return NOERROR;
 }
@@ -99,7 +99,7 @@ IIOP_ServerRequest::params (CORBA::NVList_ptr list,
   this->params_ = list;
 
   // Then unmarshal each "in" and "inout" parameter.
-  for (u_int i = 0; i < list->count (); i++) 
+  for (u_int i = 0; i < list->count (); i++)
     {
       CORBA::NamedValue_ptr nv = list->item (i);
 
@@ -121,20 +121,25 @@ IIOP_ServerRequest::params (CORBA::NVList_ptr list,
       tc->AddRef ();
 
       void *value;
-      ACE_NEW (value, char [tc->size (env)]);
+      if (!any->value ())
+        { // not preallocated
+          ACE_NEW (value, char [tc->size (env)]);
 
-      any->replace (tc, value, CORBA::B_TRUE, env);
+          any->replace (tc, value, CORBA::B_TRUE, env);
 
-      // Decrement the refcount of "tc".
-      //
-      // The earlier AddRef is needed since Any::replace () releases
-      // the typecode inside the Any.  Without the dup, the reference
-      // count can go to zero, and the typecode would then be deleted.
-      //
-      // This Release ensures that the reference count is correct so
-      // the typecode can be deleted some other time.
+          // Decrement the refcount of "tc".
+          //
+          // The earlier AddRef is needed since Any::replace () releases
+          // the typecode inside the Any.  Without the dup, the reference
+          // count can go to zero, and the typecode would then be deleted.
+          //
+          // This Release ensures that the reference count is correct so
+          // the typecode can be deleted some other time.
 
-      tc->Release ();
+          tc->Release ();
+        }
+      else
+        value = (void *)any->value ();
 
       // Then just unmarshal the value.
       (void) incoming_->decode (tc, value, 0, env);
@@ -143,9 +148,9 @@ IIOP_ServerRequest::params (CORBA::NVList_ptr list,
   // If any data is left over, it'd be context values ... else error.
   // We don't support context values, so it's always an error.
 
-  if (incoming_->bytes_remaining () != 0) 
+  if (incoming_->bytes_remaining () != 0)
     {
-      dmsg1 ("params (), %d bytes remaining (error)", 
+      dmsg1 ("params (), %d bytes remaining (error)",
 	     incoming_->bytes_remaining ());
       env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
     }
@@ -165,7 +170,7 @@ IIOP_ServerRequest::result (CORBA::Any_ptr value,
     env.exception (new CORBA::BAD_INV_ORDER (CORBA::COMPLETED_NO));
   else
     retval_ = value;
-    
+
   // XXX send the message now!
 }
 
@@ -178,7 +183,7 @@ IIOP_ServerRequest::exception (CORBA::ExceptionType type,
 {
   if (!params_ || retval_ || exception_)
     env.exception (new CORBA::BAD_INV_ORDER (CORBA::COMPLETED_NO));
-  else 
+  else
     {
       env.clear ();
       exception_ = value;
