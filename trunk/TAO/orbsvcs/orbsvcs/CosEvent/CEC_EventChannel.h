@@ -66,7 +66,7 @@ public:
   int supplier_reconnect;
 
   /**
-   * It not zero the event channel will send disconnect callbacks when
+   * If not zero the event channel will send disconnect callbacks when
    * a disconnect method is called on a Proxy.  In other words, if a
    * consumer calls disconnect_push_supplier() on its proxy the EC
    * will invoke disconnect_push_consumer() on the consumer.  A
