@@ -13,8 +13,8 @@
  *
  * ============================================================================= */
 
-#include "pace/socket.h"
+#include "pace/sys/socket.h"
 
 #if !defined (PACE_HAS_INLINE)
-# include "pace/posix/socket.inl"
+# include "pace/posix/sys/socket.inl"
 #endif /* ! PACE_HAS_INLINE */
