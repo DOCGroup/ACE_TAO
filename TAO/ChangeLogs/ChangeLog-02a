@@ -1,4 +1,29 @@
-The Sep 12 18:00:00 2000  Carlos O'Ryan  <coryan@uci.edu>
+Tue Sep 12 21:29:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_module,.cpp:
+	* TAO_IDL/fe/fe_interface_header.cpp:
+	* TAO_IDL/util/utl_scope.cpp:
+
+	  In an example sent in by Russell Mora <rd.mora@router.econz.co.nz>,
+	  the lookup of an interface's parents when they are declared as
+	  parents was going into an infinite loop. When that was fixed,
+	  the lookup of the parents failed unless they had a fully
+	  scoped name. All this happened in the case where the parents
+	  were defined in other openings of the containing (nested) module,
+	  included from other IDL files. Added a guard against the infinite
+	  loop in UTL_Scope::lookup_by_name_local() and modified the logic
+	  of AST_Module::look_in_previous().
+
+	  Also used this opportunity to make these files over to conform
+	  to the ACE style guidelines.
+
+	* tests/IDL_Test/reopened_include1.idl:
+	* tests/IDL_Test/reopened_includes.idl:
+	* tests/IDL_Test/reopened_modules.idl:
+
+	  Added Russell's example to the above files in the IDL test suite.
+
+Tue Sep 12 18:00:00 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Event_Comm/Consumer.dsp:
         * examples/Event_Comm/Notifier.dsp:
