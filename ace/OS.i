@@ -5768,7 +5768,7 @@ ACE_INLINE struct hostent *
 ACE_OS::gethostbyaddr_r (const char *addr,
                          int length,
                          int type,
-                         hostent *result,
+                         struct hostent *result,
                          ACE_HOSTENT_DATA buffer,
                          int *h_errnop)
 {
@@ -5846,7 +5846,7 @@ ACE_OS::gethostbyaddr_r (const char *addr,
 
 ACE_INLINE struct hostent *
 ACE_OS::gethostbyname_r (const char *name,
-                         hostent *result,
+                         struct hostent *result,
                          ACE_HOSTENT_DATA buffer,
                          int *h_errnop)
 {

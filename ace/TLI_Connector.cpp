@@ -41,8 +41,8 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
                             const char device[],
                             struct t_info *info,
                             int rwf,
-                            netbuf *udata,
-                            netbuf *opt)
+                            struct netbuf *udata,
+                            struct netbuf *opt)
 {
   ACE_TRACE ("ACE_TLI_Connector::connect");
   int result = 0;

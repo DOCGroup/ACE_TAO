@@ -299,9 +299,7 @@ ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::~ACE_Event_Handler_Handle_Tim
 }
 
 template <class ACE_LOCK> int
-ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::timeout (ACE_Timer_Queue_T<ACE_Event_Handler *,
-                                                            ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>,
-                                                            ACE_LOCK> &timer_queue,
+ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::timeout (TIMER_QUEUE &timer_queue,
                                                             ACE_Event_Handler *handler,
                                                             const void *act,
                                                             const ACE_Time_Value &cur_time)
@@ -314,9 +312,7 @@ ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::timeout (ACE_Timer_Queue_T<AC
 }
 
 template <class ACE_LOCK> int
-ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::cancellation (ACE_Timer_Queue_T<ACE_Event_Handler *,
-                                                                 ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>,
-                                                                 ACE_LOCK> &timer_queue,
+ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::cancellation (TIMER_QUEUE &timer_queue,
                                                                  ACE_Event_Handler *handler)
 {
   ACE_UNUSED_ARG (timer_queue);
@@ -328,9 +324,7 @@ ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::cancellation (ACE_Timer_Queue
 }
 
 template <class ACE_LOCK> int
-ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::deletion (ACE_Timer_Queue_T<ACE_Event_Handler *,
-                                                             ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>,
-                                                             ACE_LOCK> &timer_queue,
+ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::deletion (TIMER_QUEUE &timer_queue,
                                                              ACE_Event_Handler *handler,
                                                              const void *arg)
 {

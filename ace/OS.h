@@ -4642,7 +4642,7 @@ public:
                       const ACE_TCHAR *symbol);
   //@}
 
-  //{@ @name A set of wrappers for stdio file operations.
+  //@{ @name A set of wrappers for stdio file operations.
   static int last_error (void);
   static void last_error (int);
   static int set_errno_to_last_error (void);

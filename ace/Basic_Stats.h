@@ -43,13 +43,13 @@ public:
   /// Record one sample.
   void sample (ACE_UINT64 value);
 
-  /// Update the values to reflect the stats in @param rhs
+  /// Update the values to reflect the stats in @a rhs.
   void accumulate (const ACE_Basic_Stats &rhs);
 
   /// Dump all the samples
   /**
    * Prints out the results, using @param msg as a prefix for each
-   * message and scaling all the numbers by @param scale_factor.
+   * message and scaling all the numbers by @a scale_factor.
    * The latter is useful because high resolution timer samples are
    * acquired in clock ticks, but often presented in microseconds.
    */
@@ -74,7 +74,7 @@ private:
 
   /// The sum of all the values
   ACE_UINT64 sum_;
-  
+
   /// The sum of the square of all the values
   ACE_UINT64 sum2_;
 };

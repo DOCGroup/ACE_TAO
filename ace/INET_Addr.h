@@ -128,11 +128,10 @@ public:
            int address_family = AF_UNSPEC);
 
   /**
-   * Initializes an <ACE_INET_Addr> from a @param port_number and an
-   * Internet @param ip_addr.  If @param encode is non-zero then the
-   * port number and IP address are converted into network byte order,
-   * otherwise they are assumed to be in network byte order already and
-   * are passed straight through.
+   * Initializes an <ACE_INET_Addr> from a @a port_number and an Internet
+   * @a ip_addr.  If @a encode is non-zero then the port number and IP address
+   * are converted into network byte order, otherwise they are assumed to be
+   * in network byte order already and are passed straight through.
    */
   int set (u_short port_number,
            ACE_UINT32 ip_addr = INADDR_ANY,
