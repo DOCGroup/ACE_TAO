@@ -27,7 +27,7 @@ const char * success = "SUCCEEDED";
 const char * failure = "***FAILED***";
 
 int
-main (int argc, char *argv)
+main (int argc, char **argv)
 {
   /* Test creating/opening a file. */
   FILE *file;
@@ -37,29 +37,32 @@ main (int argc, char *argv)
 
   file = pace_fopen (filename,
                      mode);
-  if (file == 0) {
-    printf("pace_fopen %s\n", failure);
-    return -1;
-  }
+  if (file == 0)
+    {
+      printf("pace_fopen %s\n", failure);
+      return -1;
+    }
 
   printf("pace_fopen %s\n", success);
 
   /* Test writing to a file. */
   retval = pace_fputs (string1,
                        file);
-  if (retval == EOF) {
-    printf("pace_fputs %s\n", failure);
-    return -1;
-  }
+  if (retval == EOF)
+    {
+      printf("pace_fputs %s\n", failure);
+      return -1;
+    }
 
   printf("pace_fputs %s\n", success);
 
   /* Test flushing a file. */
   retval = pace_fflush (file);
-  if (retval != 0) {
-    printf("pace_fflush %s\n", failure);
-    return -1;
-  }
+  if (retval != 0)
+    {
+      printf("pace_fflush %s\n", failure);
+      return -1;
+    }
 
   printf("pace_fflush %s\n", success);
 
@@ -67,10 +70,11 @@ main (int argc, char *argv)
   retval = pace_fseek (file,
                        0,
                        0);
-  if (retval != 0) {
-    printf("pace_fseek %s\n", failure);
-    return -1;
-  }
+  if (retval != 0)
+    {
+      printf("pace_fseek %s\n", failure);
+      return -1;
+    }
 
   printf("pace_fseek %s\n", success);
 
@@ -78,27 +82,30 @@ main (int argc, char *argv)
   retval2 = pace_fgets (buffer,
                         sizeof(buffer),
                         file);
-  if (retval2 == 0) {
-    printf("pace_fgets %s\n", failure);
-    return -1;
-  }
+  if (retval2 == 0)
+    {
+      printf("pace_fgets %s\n", failure);
+      return -1;
+    }
 
   printf("pace_fgets %s\n", success);
 
   if (strcmp(buffer,
-             string1) != 0) {
-    printf("strcmp of pace_fgets %s\n", failure);
-    return -1;
-  }
+             string1) != 0)
+    {
+      printf("strcmp of pace_fgets %s\n", failure);
+      return -1;
+    }
 
   printf("strcmp of pace_fgets %s\n", success);
 
   /* Test closing a file. */
   retval = pace_fclose (file);
-  if (retval != 0) {
-    printf("pace_fclose %s\n", failure);
-    return -1;
-  }
+  if (retval != 0)
+    {
+      printf("pace_fclose %s\n", failure);
+      return -1;
+    }
 
   printf("pace_fclose %s\n", success);
 

@@ -30,6 +30,7 @@ INCLDIRS = -I$(PACE_ROOT)
 # IRIX (64 bit)     IRIX64
 # IRIX (32 bit)     IRIX (unconfirmed)
 # HPUX              HP-UX
+# AIX               AIX
 
 # Solaris is POSIX - change this when the platform directories get
 # squared away
@@ -57,30 +58,17 @@ PSRC=$(addsuffix .c,$(BIN))
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+ACELIB =
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
-
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-
-#INCLDIRS += -I$(PACE_ROOT)
-#INCLDIRS = -I$(PACE_ROOT)
-
-#LDFLAGS += -L$(PACE_ROOT)/pace -lPACE
-#LDFLAGS = -L$(PACE_ROOT)/pace -lPACE
-#LDFLAGS -= -L$(ACE_ROOT)/ace -lACE
-#LDFLAGS =
-#VLDLIBS -= -L$(ACE_ROOT)/ace -lACE
-#VLDLIBS = -L$(PACE_ROOT)/pace -lPACE
-VLDLIBS = -lposix4
 
 ifndef SOEXT
   SOEXT=so
 endif
 
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
-
-ACELIB =
 
 # To build multiple executables in the same directory on AIX, it works
 # best to wipe out any previously-created tempinc directory.
