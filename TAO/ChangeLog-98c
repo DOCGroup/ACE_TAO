@@ -1,3 +1,7 @@
+Wed Nov 05 01:41:34 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* TAO version 0.0.22, released Wed Nov 05 01:41:34 1997.
+
 Wed Nov  5 00:48:58 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
 	* tests/Thruput_test/utils.cpp: Delete static definitions of 
