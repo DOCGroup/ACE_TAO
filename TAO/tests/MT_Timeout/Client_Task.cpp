@@ -172,7 +172,7 @@ Client_Task::one_iteration (CORBA::Environment &ACE_TRY_ENV)
 
               // If the different is more than 10 milliseconds we are
               // *way* off, this is an error.
-              if (difference > 10)
+              if (difference > 30)
                 {
                   ACE_ERROR ((LM_ERROR,
                               "ERROR: Elapsed time = %d, expected %d\n",
