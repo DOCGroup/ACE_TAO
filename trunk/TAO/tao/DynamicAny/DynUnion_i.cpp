@@ -716,7 +716,7 @@ TAO_DynUnion_i::to_any (CORBA::Environment& ACE_TRY_ENV)
   TAO_InputCDR disc_cdr (disc_mb,
                          disc_any->_tao_byte_order ());
 
-  (void) TAO_Marshal_Object::perform_append (disc_tc,
+  (void) TAO_Marshal_Object::perform_append (disc_tc.in (),
                                              &disc_cdr,
                                              &out_cdr,
                                              ACE_TRY_ENV);
@@ -735,7 +735,7 @@ TAO_DynUnion_i::to_any (CORBA::Environment& ACE_TRY_ENV)
   TAO_InputCDR member_cdr (member_mb,
                            member_any->_tao_byte_order ());
 
-  (void) TAO_Marshal_Object::perform_append (member_tc,
+  (void) TAO_Marshal_Object::perform_append (member_tc.in (),
                                              &member_cdr,
                                              &out_cdr,
                                              ACE_TRY_ENV);
