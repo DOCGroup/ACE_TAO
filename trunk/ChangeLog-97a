@@ -1,3 +1,9 @@
+Fri Jun 27 07:53:58 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* tests/Message_Queue_Notifications_Test.cpp (handle_output,
+	  handle_exception,main): added ACE_UNUSED_ARG (fd) to avoid
+	  compilation warnings about unused arguments.
+
 Fri Jun 27 01:08:54 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Connector.cpp (create_AST): Replaced the gratuitous #ifdef
