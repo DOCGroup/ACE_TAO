@@ -1,3 +1,9 @@
+﻿Wed Dec 10 11:42:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/Bug_1330_Regression/Bug_1330_Client.dsp:
+          Fixed release configuration, this should be the last for the 
+          1.3.6 release
+
 Wed Dec 10 10:25:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Collocation_Tests/Collocation_Tests.mpc:
