@@ -17,11 +17,11 @@ CORBA::Boolean
 TAO_DynamicImplementation::_is_a (const char *logical_type_id
                                   ACE_ENV_ARG_DECL)
 {
-  CORBA::RepositoryId id =
+  CORBA::RepositoryId_var id =
     this->get_id_from_primary_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return ACE_OS::strcmp (logical_type_id, id) == 0;
+  return ACE_OS::strcmp (logical_type_id, id.in ()) == 0;
 }
 
 CORBA::Object_ptr
@@ -59,12 +59,14 @@ TAO_DynamicImplementation::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
                         0);
     }
 
-  CORBA::RepositoryId id =
+  CORBA::RepositoryId_var id =
     this->get_id_from_primary_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
+  // This doesn't take multiple ORBs into account, but it's being
+  // used only to resolve the IFR, so we should be ok.
   return adapter->get_interface (TAO_ORB_Core_instance ()->orb (),
-                                 id
+                                 id.in ()
                                  ACE_ENV_ARG_PARAMETER);
 }
 
@@ -113,7 +115,7 @@ TAO_DynamicImplementation::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
       );
   ACE_CHECK_RETURN (0);
 
-  CORBA::RepositoryId pinterface =
+  CORBA::RepositoryId_var pinterface =
     this->_primary_interface (poa_current_impl->object_id (),
                               poa.in ()
                               ACE_ENV_ARG_PARAMETER);
@@ -121,7 +123,7 @@ TAO_DynamicImplementation::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
 
   return 
     poa_current_impl->poa ()->key_to_stub (poa_current_impl->object_key (),
-                                           pinterface,
+                                           pinterface.in (),
                                            poa_current_impl->priority ()
                                            ACE_ENV_ARG_PARAMETER);
 }
@@ -137,7 +139,6 @@ TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
       if (!CORBA::is_nil (request.forward_location ()))
         {
           request.init_reply ();
-
           request.tao_send_reply ();
 
           // No need to invoke in this case.
