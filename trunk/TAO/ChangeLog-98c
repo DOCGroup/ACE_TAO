@@ -11,6 +11,8 @@ Thu Aug 13 09:14:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tests/Param_Test/run_test.pl: 
 	* tests/Param_Test/run_test.sh: 
 	* tests/Param_Test/tests.h: 
+	* tests/Param_Test/longlong.h: 
+	* tests/Param_Test/longlong.cpp: 
 	  Added a new test to check if <long long> works.
 
 	* orbsvcs/orbsvcs/CosTimeBase.idl: 
