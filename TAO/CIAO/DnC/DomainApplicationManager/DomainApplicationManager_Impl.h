@@ -206,6 +206,9 @@ namespace CIAO
     bool
     get_outgoing_connections_i (const char * instname, Deployment::Connections * retv);
 
+    // Dump connections, a static method
+    static void dump_connections (const ::Deployment::Connections & connections);
+
   protected:
     /// location of the Domainapplication
     CORBA::String_var domainapp_path_;
