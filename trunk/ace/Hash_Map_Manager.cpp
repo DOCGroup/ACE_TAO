@@ -398,12 +398,12 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::shared_find (const EXT_ID &ext_i
                                                              u_long &loc)
 {
   loc = this->hash (ext_id) % this->total_size_;
-  
+
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp = this->table_[loc].next_;
-  
+
   while (temp != &this->table_[loc] && this->equal (temp->ext_id_, ext_id) == 0)
     temp = temp->next_;
-  
+
   if (temp == &this->table_[loc])
     {
       errno = ENOENT;
@@ -705,7 +705,7 @@ ACE_Hash_Map_Entry<EXT_ID, INT_ID>&
 ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator* (void)
 {
   ACE_TRACE ("ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator*");
-  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *retv;
+  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *retv = 0;
 
   ACE_ASSERT (this->next (retv) != 0);
   return *retv;
