@@ -134,7 +134,7 @@ Supplier::run (int argc, char* argv[])
                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-  
+
       ACE_DEBUG ((LM_DEBUG,
                   "Create returned logid = %d\n",logid));
 
@@ -190,7 +190,7 @@ Supplier::run (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "Calling EventLog::get_n_records...\n"));
 #ifndef ACE_LACKS_LONGLONG_T
-      CORBA::Long retval = event_log->get_n_records (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::ULongLong retval = event_log->get_n_records (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 #else
       CORBA::Long retval = event_log->get_n_records (ACE_ENV_SINGLE_ARG_PARAMETER).lo();
@@ -217,10 +217,10 @@ Supplier::run (int argc, char* argv[])
         event_log->query (QUERY_LANG, QUERY_1, iter_out);
 
       CORBA::ULong j = 0;
-      for (; j < rec_list->length();++j)  
+      for (; j < rec_list->length();++j)
 #ifndef ACE_LACKS_LONGLONG_T
       ACE_DEBUG ((LM_DEBUG,
-                  "id = %Q, time= %Q\n", 
+                  "id = %Q, time= %Q\n",
                   rec_list[j].id, rec_list[j].time));
 #else
       ACE_DEBUG ((LM_DEBUG,
