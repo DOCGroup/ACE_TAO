@@ -124,7 +124,7 @@ module RtecScheduler
     Dependency_Set dependencies;
 
     // The OS thread priority for processing the
-    // events generated from this RT_Info.
+    // events generated from this RT_Info.=
     OS_Priority priority;
 
     // For ordering RT_Info's with equal priority.
@@ -222,6 +222,9 @@ module RtecScheduler
 
   exception SYNCHRONIZATION_FAILURE {};
   // Problems acquiring a synchronization resource.
+
+  exception INTERNAL {};
+  // Problems with the internal scheduler data structures.
 
   typedef sequence<RT_Info> RT_Info_Set;
 
