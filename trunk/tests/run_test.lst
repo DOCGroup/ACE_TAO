@@ -46,6 +46,7 @@ Handle_Set_Test
 Hash_Map_Manager_Test
 Hash_Map_Bucket_Iterator_Test
 High_Res_Timer_Test
+INET_Addr_Test
 IOStream_Test
 Lazy_Map_Manager_Test
 Log_Msg_Test
