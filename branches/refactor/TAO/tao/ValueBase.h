@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/corbafwd.h"
+#include "tao/Value_VarOut_T.h"
 
 #include "ace/Basic_Types.h"           /* for ptr_arith_t */
 #include "ace/Synch_T.h"
@@ -35,7 +36,16 @@ namespace CORBA
   TAO_NAMESPACE_INLINE_FUNCTION void add_ref (ValueBase *);
   TAO_NAMESPACE_INLINE_FUNCTION void remove_ref (ValueBase *);
 
-  class ValueBase_var;
+  class ValueBase;
+
+  struct TAO_Export tao_ValueBase_life
+  {
+    static void tao_add_ref (ValueBase *);
+    static void tao_remove_ref (ValueBase *);
+  };
+
+  typedef TAO_Value_Var_T<ValueBase, tao_ValueBase_life> ValueBase_var;
+  typedef TAO_Value_Out_T<ValueBase, tao_ValueBase_life> ValueBase_out;
 
   /**
    * @class ValueBase
@@ -116,68 +126,6 @@ namespace CORBA
 #endif /* SUN_CC_HAS_PVFC_BUG */
 
   }; // ValueBase
-
-  /**
-   * @class ValueBase_var
-   *
-   * @brief _var class for ValueBase
-   */
-  class TAO_Export ValueBase_var
-  {
-  public:
-    ValueBase_var (void);
-    ValueBase_var (CORBA::ValueBase *);
-    ValueBase_var (const ValueBase_var &);
-    ~ValueBase_var (void);
-
-    ValueBase_var &operator= (CORBA::ValueBase *);
-    ValueBase_var &operator= (const ValueBase_var &);
-    CORBA::ValueBase *operator-> (void) const;
-
-    operator const CORBA::ValueBase *() const;
-    operator CORBA::ValueBase *&();
-
-    /// in, inout, out, _retn
-    CORBA::ValueBase *in (void) const;
-    CORBA::ValueBase *&inout (void);
-    CORBA::ValueBase *&out (void);
-    CORBA::ValueBase *_retn (void);
-    CORBA::ValueBase *ptr (void) const;
-
-    static CORBA::ValueBase * tao_duplicate (CORBA::ValueBase *);
-    static void tao_release (CORBA::ValueBase *);
-    static CORBA::ValueBase * tao_nil (void);
-    static CORBA::ValueBase * tao_narrow (CORBA::ValueBase *
-                                          ACE_ENV_ARG_DECL_NOT_USED);
-    static CORBA::ValueBase * tao_upcast (void *);
-
-  private:
-    CORBA::ValueBase *ptr_;
-  };
-
-  /**
-   * @class ValueBase_out
-   *
-   * @brief _out class for CORBA::ValueBase
-   *
-   * _out class for CORBA::ValueBase
-   */
-  class TAO_Export ValueBase_out
-  {
-  public:
-    ValueBase_out (CORBA::ValueBase *&);
-    ValueBase_out (ValueBase_var &);
-    ValueBase_out (const ValueBase_out &);
-    ValueBase_out &operator= (const ValueBase_out &);
-    ValueBase_out &operator= (const ValueBase_var &);
-    ValueBase_out &operator= (CORBA::ValueBase *);
-    operator CORBA::ValueBase *&();
-    CORBA::ValueBase *&ptr (void);
-    CORBA::ValueBase *operator-> (void);
-
-  private:
-    CORBA::ValueBase *&ptr_;
-  };
 
   /**
    * @class DefaultValueRefCountBase

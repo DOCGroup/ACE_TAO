@@ -54,196 +54,260 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   switch (node->managed_type ())
     {
     case be_sequence::MNG_OBJREF:
-      {
-        be_interface *elem = be_interface::narrow_from_decl (bt);
+      if (node->unbounded ())
+        {
+          *os << be_nl << be_nl
+              << "template class" << be_idt_nl 
+              << "TAO_Unbounded_Object_Sequence<" << be_idt << be_idt_nl
+              << bt->name () << "," << be_nl
+              << bt->name () << "_var," << be_nl
+              << bt->fwd_helper_name () << "_life," << be_nl
+              << bt->fwd_helper_name () << "_cast" << be_uidt_nl
+              << ">;" << be_uidt << be_uidt_nl;
+        }
+      else
+        {
+          *os << be_nl << be_nl
+              << "template class" << be_idt_nl 
+              << "TAO_Bounded_Object_Sequence<" << be_idt << be_idt_nl
+              << bt->name () << "," << be_nl
+              << bt->name () << "_var," << be_nl
+              << bt->fwd_helper_name () << "_life," << be_nl
+              << bt->fwd_helper_name () << "_cast," << be_nl
+              << node->max_size ()->ev ()->u.ulval << be_uidt_nl
+              << ">;" << be_uidt << be_uidt;
+        }
 
-        if (node->unbounded ())
-          {
-            *os << be_nl << be_nl
-                << "template class" << be_idt_nl 
-                << "TAO_Unbounded_Object_Sequence<" << be_idt << be_idt_nl
-                << elem->name () << "," << be_nl
-                << elem->name () << "_var," << be_nl
-                << elem->fwd_helper_name () << "_life," << be_nl
-                << elem->fwd_helper_name () << "_cast" << be_uidt_nl
-                << ">;" << be_uidt << be_uidt_nl;
-          }
-        else
-          {
-            *os << be_nl << be_nl
-                << "template class" << be_idt_nl 
-                << "TAO_Bounded_Object_Sequence<" << be_idt << be_idt_nl
-                << elem->name () << "," << be_nl
-                << elem->name () << "_var," << be_nl
-                << elem->fwd_helper_name () << "_life," << be_nl
-                << elem->fwd_helper_name () << "_cast," << be_nl
-                << node->max_size ()->ev ()->u.ulval << be_uidt_nl
-                << ">;" << be_uidt << be_uidt;
-          }
+      // Instantiate the _var and _out types only if we are not anonymous.
+      if (this->ctx_->tdef () != 0)
+        {
+          *os << be_nl << be_nl
+              << "template class" << be_idt_nl
+              << "TAO_VarSeq_Var_T<" << be_idt << be_idt_nl
+              << node->name () << "," << be_nl
+              << "TAO_Object_Manager<" << be_idt << be_idt_nl
+              << bt->name () << "," << be_nl
+              << bt->name () << "_var," << be_nl
+              << bt->fwd_helper_name () << "_life" << be_uidt_nl
+              << ">" << be_uidt << be_uidt_nl
+              << ">;" << be_uidt << be_uidt;
 
-        // Instantiate the _var and _out types only if we are not anonymous.
-        if (this->ctx_->tdef () != 0)
-          {
-            *os << be_nl << be_nl
-                << "template class" << be_idt_nl
-                << "TAO_VarSeq_Var_T<" << be_idt << be_idt_nl
-                << node->name () << "," << be_nl
-                << "TAO_Object_Manager<" << be_idt << be_idt_nl
-                << elem->name () << "," << be_nl
-                << elem->name () << "_var," << be_nl
-                << elem->fwd_helper_name () << "_life" << be_uidt_nl
-                << ">" << be_uidt << be_uidt_nl
-                << ">;" << be_uidt << be_uidt;
-
-            *os << be_nl << be_nl
-                << "template class" << be_idt_nl
-                << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
-                << node->name () << "," << be_nl
-                << node->name () << "_var," << be_nl
-                << "TAO_Object_Manager<" << be_idt << be_idt_nl
-                << elem->name () << "," << be_nl
-                << elem->name () << "_var," << be_nl
-                << elem->fwd_helper_name () << "_life" << be_uidt_nl
-                << ">" << be_uidt << be_uidt_nl
-                << ">;" << be_uidt << be_uidt;
-          }
-      }
+          *os << be_nl << be_nl
+              << "template class" << be_idt_nl
+              << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
+              << node->name () << "," << be_nl
+              << node->name () << "_var," << be_nl
+              << "TAO_Object_Manager<" << be_idt << be_idt_nl
+              << bt->name () << "," << be_nl
+              << bt->name () << "_var," << be_nl
+              << bt->fwd_helper_name () << "_life" << be_uidt_nl
+              << ">" << be_uidt << be_uidt_nl
+              << ">;" << be_uidt << be_uidt;
+        }
 
       break;
     case be_sequence::MNG_ABSTRACT:
-      {
-        be_interface *elem = be_interface::narrow_from_decl (bt);
+      if (node->unbounded ())
+        {
+          *os << be_nl << be_nl
+              << "template class" << be_idt_nl 
+              << "TAO_Unbounded_Abstract_Sequence<" << be_idt << be_idt_nl
+              << bt->name () << "," << be_nl
+              << bt->name () << "_var," << be_nl
+              << bt->fwd_helper_name () << "_life" << be_uidt_nl
+              << ">;" << be_uidt << be_uidt;
+        }
+      else
+        {
+          *os << be_nl << be_nl
+              << "template class" << be_idt_nl 
+              << "TAO_Bounded_Abstract_Sequence<" << be_idt << be_idt_nl
+              << bt->name () << "," << be_nl
+              << bt->name () << "_var," << be_nl
+              << bt->fwd_helper_name () << "_life," << be_nl
+              << node->max_size ()->ev ()->u.ulval << be_uidt_nl
+              << ">;" << be_uidt << be_uidt;
+        }
 
-        if (node->unbounded ())
-          {
-            *os << be_nl << be_nl
-                << "template class" << be_idt_nl 
-                << "TAO_Unbounded_Abstract_Sequence<" << be_idt << be_idt_nl
-                << elem->name () << "," << be_nl
-                << elem->name () << "_var," << be_nl
-                << elem->fwd_helper_name () << "_life" << be_uidt_nl
-                << ">;" << be_uidt << be_uidt;
-          }
-        else
-          {
-            *os << be_nl << be_nl
-                << "template class" << be_idt_nl 
-                << "TAO_Bounded_Abstract_Sequence<" << be_idt << be_idt_nl
-                << elem->name () << "," << be_nl
-                << elem->name () << "_var," << be_nl
-                << elem->fwd_helper_name () << "_life," << be_nl
-                << node->max_size ()->ev ()->u.ulval << be_uidt_nl
-                << ">;" << be_uidt << be_uidt;
-          }
+      // Instantiate the _var and _out types only if we are not anonymous.
+      if (this->ctx_->tdef () != 0)
+        {
+          *os << be_nl << be_nl
+              << "template class" << be_idt_nl
+              << "TAO_VarSeq_Var_T<" << be_idt << be_idt_nl
+              << node->name () << "," << be_nl
+              << "TAO_Abstract_Manager<" << be_idt << be_idt_nl
+              << bt->name () << "," << be_nl
+              << bt->name () << "_var," << be_nl
+              << bt->fwd_helper_name () << "_life" << be_uidt_nl
+              << ">" << be_uidt << be_uidt_nl
+              << ">;" << be_uidt << be_uidt;
 
-        // Instantiate the _var and _out types only if we are not anonymous.
-        if (this->ctx_->tdef () != 0)
-          {
-            *os << be_nl << be_nl
-                << "template class" << be_idt_nl
-                << "TAO_VarSeq_Var_T<" << be_idt << be_idt_nl
-                << node->name () << "," << be_nl
-                << "TAO_Abstract_Manager<" << be_idt << be_idt_nl
-                << elem->name () << "," << be_nl
-                << elem->name () << "_var," << be_nl
-                << elem->fwd_helper_name () << "_life" << be_uidt_nl
-                << ">" << be_uidt << be_uidt_nl
-                << ">;" << be_uidt << be_uidt;
-
-            *os << be_nl << be_nl
-                << "template class" << be_idt_nl
-                << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
-                << node->name () << "," << be_nl
-                << node->name () << "_var," << be_nl
-                << "TAO_Abstract_Manager<" << be_idt << be_idt_nl
-                << elem->name () << "," << be_nl
-                << elem->name () << "_var," << be_nl
-                << elem->fwd_helper_name () << "_life" << be_uidt_nl
-                << ">" << be_uidt << be_uidt_nl
-                << ">;" << be_uidt << be_uidt;
-              }
-      }
+          *os << be_nl << be_nl
+              << "template class" << be_idt_nl
+              << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
+              << node->name () << "," << be_nl
+              << node->name () << "_var," << be_nl
+              << "TAO_Abstract_Manager<" << be_idt << be_idt_nl
+              << bt->name () << "," << be_nl
+              << bt->name () << "_var," << be_nl
+              << bt->fwd_helper_name () << "_life" << be_uidt_nl
+              << ">" << be_uidt << be_uidt_nl
+              << ">;" << be_uidt << be_uidt;
+            }
 
       break;
     case be_sequence::MNG_PSEUDO:
       if (node->unbounded ())
         {
+          *os << be_nl << be_nl
+              << "template class" << be_idt_nl 
+              << "TAO_Unbounded_Pseudo_Sequence<" << be_idt << be_idt_nl
+              << bt->name () << "," << be_nl
+              << bt->name () << "_var" << be_uidt_nl
+              << ">;" << be_uidt << be_uidt;
         }
       else
         {
+          *os << be_nl << be_nl
+              << "template class" << be_idt_nl 
+              << "TAO_Bounded_Pseudo_Sequence<" << be_idt << be_idt_nl
+              << bt->name () << "," << be_nl
+              << bt->name () << "_var," << be_nl
+              << node->max_size ()->ev ()->u.ulval << be_uidt_nl
+              << ">;" << be_uidt << be_uidt;
         }
+
+      // Instantiate the _var and _out types only if we are not anonymous.
+      if (this->ctx_->tdef () != 0)
+        {
+          *os << be_nl << be_nl
+              << "template class" << be_idt_nl
+              << "TAO_VarSeq_Var_T<" << be_idt << be_idt_nl
+              << node->name () << "," << be_nl
+              << "TAO_Pseudo_Object_Manager<" << be_idt << be_idt_nl
+              << bt->name () << "," << be_nl
+              << bt->name () << "_var" << be_uidt_nl
+              << ">" << be_uidt << be_uidt_nl
+              << ">;" << be_uidt << be_uidt;
+
+          *os << be_nl << be_nl
+              << "template class" << be_idt_nl
+              << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
+              << node->name () << "," << be_nl
+              << node->name () << "_var," << be_nl
+              << "TAO_Pseudo_Object_Manager<" << be_idt << be_idt_nl
+              << bt->name () << "," << be_nl
+              << bt->name () << "_var" << be_uidt_nl
+              << ">" << be_uidt << be_uidt_nl
+              << ">;" << be_uidt << be_uidt;
+            }
 
       break;
     case be_sequence::MNG_VALUE:
-      {
-        be_interface *elem = be_interface::narrow_from_decl (bt);
-
-        if (node->unbounded ())
-          {
-            *os << be_nl << be_nl
-                << "template class" << be_idt_nl 
-                << "TAO_Unbounded_Valuetype_Sequence<" << be_idt << be_idt_nl
-                << elem->name () << "," << be_nl
-                << elem->name () << "_var," << be_nl
-                << elem->fwd_helper_name () << "_life" << be_uidt_nl
-                << ">;" << be_uidt << be_uidt;
-          }
-        else
-          {
-            *os << be_nl << be_nl
-                << "template class" << be_idt_nl 
-                << "TAO_Bounded_Valuetype_Sequence<" << be_idt << be_idt_nl
-                << elem->name () << "," << be_nl
-                << elem->name () << "_var," << be_nl
-                << elem->fwd_helper_name () << "_life," << be_nl
-                << node->max_size ()->ev ()->u.ulval << be_uidt_nl
-                << ">;" << be_uidt << be_uidt;
-          }
-
-        // Instantiate the _var and _out types only if we are not anonymous.
-        if (this->ctx_->tdef () != 0)
-          {
-            *os << be_nl << be_nl
-                << "template class" << be_idt_nl
-                << "TAO_VarSeq_Var_T<" << be_idt << be_idt_nl
-                << node->name () << "," << be_nl
-                << "TAO_Valuetype_Manager<" << be_idt << be_idt_nl
-                << elem->name () << "," << be_nl
-                << elem->name () << "_var," << be_nl
-                << elem->fwd_helper_name () << "_life" << be_uidt_nl
-                << ">" << be_uidt << be_uidt_nl
-                << ">;" << be_uidt << be_uidt;
-
-            *os << be_nl << be_nl
-                << "template class" << be_idt_nl
-                << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
-                << node->name () << "," << be_nl
-                << node->name () << "_var," << be_nl
-                << "TAO_Valuetype_Manager<" << be_idt << be_idt_nl
-                << elem->name () << "," << be_nl
-                << elem->name () << "_var," << be_nl
-                << elem->fwd_helper_name () << "_life" << be_uidt_nl
-                << ">" << be_uidt << be_uidt_nl
-                << ">;" << be_uidt << be_uidt;
-              }
-      }
-
-      break;
-    case be_sequence::MNG_STRING:
       if (node->unbounded ())
         {
+          *os << be_nl << be_nl
+              << "template class" << be_idt_nl 
+              << "TAO_Unbounded_Valuetype_Sequence<" << be_idt << be_idt_nl
+              << bt->name () << "," << be_nl
+              << bt->name () << "_var," << be_nl
+              << bt->fwd_helper_name () << "_life" << be_uidt_nl
+              << ">;" << be_uidt << be_uidt;
         }
       else
         {
+          *os << be_nl << be_nl
+              << "template class" << be_idt_nl 
+              << "TAO_Bounded_Valuetype_Sequence<" << be_idt << be_idt_nl
+              << bt->name () << "," << be_nl
+              << bt->name () << "_var," << be_nl
+              << bt->fwd_helper_name () << "_life," << be_nl
+              << node->max_size ()->ev ()->u.ulval << be_uidt_nl
+              << ">;" << be_uidt << be_uidt;
+        }
+
+      // Instantiate the _var and _out types only if we are not anonymous.
+      if (this->ctx_->tdef () != 0)
+        {
+          *os << be_nl << be_nl
+              << "template class" << be_idt_nl
+              << "TAO_VarSeq_Var_T<" << be_idt << be_idt_nl
+              << node->name () << "," << be_nl
+              << "TAO_Valuetype_Manager<" << be_idt << be_idt_nl
+              << bt->name () << "," << be_nl
+              << bt->name () << "_var," << be_nl
+              << bt->fwd_helper_name () << "_life" << be_uidt_nl
+              << ">" << be_uidt << be_uidt_nl
+              << ">;" << be_uidt << be_uidt;
+
+          *os << be_nl << be_nl
+              << "template class" << be_idt_nl
+              << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
+              << node->name () << "," << be_nl
+              << node->name () << "_var," << be_nl
+              << "TAO_Valuetype_Manager<" << be_idt << be_idt_nl
+              << bt->name () << "," << be_nl
+              << bt->name () << "_var," << be_nl
+              << bt->fwd_helper_name () << "_life" << be_uidt_nl
+              << ">" << be_uidt << be_uidt_nl
+              << ">;" << be_uidt << be_uidt;
+            }
+
+      break;
+    case be_sequence::MNG_STRING:
+      if (! node->unbounded ())
+        {
+          *os << be_nl << be_nl
+              << "template class TAO_Bounded_String_Sequence<" << be_nl
+              << node->max_size ()->ev ()->u.ulval << ">;";
+        }
+
+      // Instantiate the _var and _out types only if we are not anonymous.
+      if (this->ctx_->tdef () != 0)
+        {
+          *os << be_nl << be_nl
+              << "template class" << be_idt_nl
+              << "TAO_VarSeq_Var_T<" << be_idt << be_idt_nl
+              << node->name () << "," << be_nl
+              <<"TAO_SeqElem_String_Manager" << be_uidt_nl
+              << ">;" << be_uidt << be_uidt;
+
+          *os << be_nl << be_nl
+              << "template class" << be_idt_nl
+              << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
+              << node->name () << "," << be_nl
+              << node->name () << "_var," << be_nl
+              << "TAO_SeqElem_String_Manager" << be_uidt_nl
+              << ">;" << be_uidt << be_uidt;
         }
 
       break;
     case be_sequence::MNG_WSTRING:
-      if (node->unbounded ())
+      if (! node->unbounded ())
         {
+          *os << be_nl << be_nl
+              << "template class TAO_Bounded_WString_Sequence<"
+              << node->max_size ()->ev ()->u.ulval << ">;";
         }
-      else
+
+      // Instantiate the _var and _out types only if we are not anonymous.
+      if (this->ctx_->tdef () != 0)
         {
+          *os << be_nl << be_nl
+              << "template class" << be_idt_nl
+              << "TAO_VarSeq_Var_T<" << be_idt << be_idt_nl
+              << node->name () << "," << be_nl
+              <<"TAO_SeqElem_WString_Manager" << be_uidt_nl
+              << ">;" << be_uidt << be_uidt;
+
+          *os << be_nl << be_nl
+              << "template class" << be_idt_nl
+              << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
+              << node->name () << "," << be_nl
+              << node->name () << "_var," << be_nl
+              << "TAO_SeqElem_WString_Manager" << be_uidt_nl
+              << ">;" << be_uidt << be_uidt;
         }
 
       break;
@@ -324,196 +388,260 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   switch (node->managed_type ())
     {
     case be_sequence::MNG_OBJREF:
-      {
-        be_interface *elem = be_interface::narrow_from_decl (bt);
+      if (node->unbounded ())
+        {
+          *os << be_nl << be_nl
+              << "# pragma instantiate \\" << be_idt << be_idt_nl
+              << "TAO_Unbounded_Object_Sequence< \\" << be_idt << be_idt_nl
+              << bt->name () << ", \\" << be_nl
+              << bt->name () << "_var, \\" << be_nl
+              << bt->fwd_helper_name () << "_life, \\" << be_nl
+              << bt->fwd_helper_name () << "_cast, \\" << be_uidt_nl
+              << ">" << be_uidt << be_uidt << be_uidt << be_uidt;
+        }
+      else
+        {
+          *os << be_nl << be_nl
+              << "# pragma instantiate \\" << be_idt << be_idt_nl
+              << "TAO_Bounded_Object_Sequence< \\" << be_idt << be_idt_nl
+              << bt->name () << ", \\" << be_nl
+              << bt->name () << "_var, \\" << be_nl
+              << bt->fwd_helper_name () << "_life, \\" << be_nl
+              << bt->fwd_helper_name () << "_cast \\" << be_nl
+              << node->max_size ()->ev ()->u.ulval << " \\" << be_uidt_nl
+              << ">" << be_uidt << be_uidt << be_uidt << be_uidt;
+        }
 
-        if (node->unbounded ())
-          {
-            *os << be_nl << be_nl
-                << "# pragma instantiate \\" << be_idt << be_idt_nl
-                << "TAO_Unbounded_Object_Sequence< \\" << be_idt << be_idt_nl
-                << elem->name () << ", \\" << be_nl
-                << elem->name () << "_var, \\" << be_nl
-                << elem->fwd_helper_name () << "_life, \\" << be_nl
-                << elem->fwd_helper_name () << "_cast, \\" << be_uidt_nl
-                << ">" << be_uidt << be_uidt << be_uidt << be_uidt;
-          }
-        else
-          {
-            *os << be_nl << be_nl
-                << "# pragma instantiate \\" << be_idt << be_idt_nl
-                << "TAO_Bounded_Object_Sequence< \\" << be_idt << be_idt_nl
-                << elem->name () << ", \\" << be_nl
-                << elem->name () << "_var, \\" << be_nl
-                << elem->fwd_helper_name () << "_life, \\" << be_nl
-                << elem->fwd_helper_name () << "_cast \\" << be_nl
-                << node->max_size ()->ev ()->u.ulval << " \\" << be_uidt_nl
-                << ">" << be_uidt << be_uidt << be_uidt << be_uidt;
-          }
+      // Instantiate the _var and _out types only if we are not anonymous.
+      if (this->ctx_->tdef () != 0)
+        {
+          *os << be_nl << be_nl
+              << "# pragma instantiate \\" << be_idt << be_idt_nl
+              << "TAO_VarSeq_Var_T< \\" << be_idt << be_idt_nl
+              << node->name () << ", \\" << be_nl
+              << "TAO_Object_Manager< \\" << be_idt << be_idt_nl
+              << bt->name () << ", \\" << be_nl
+              << bt->name () << "_var, \\" << be_nl
+              << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
+              << "> \\" << be_uidt << be_uidt_nl
+              << ">" << be_uidt << be_uidt << be_uidt;
 
-        // Instantiate the _var and _out types only if we are not anonymous.
-        if (this->ctx_->tdef () != 0)
-          {
-            *os << be_nl << be_nl
-                << "# pragma instantiate \\" << be_idt << be_idt_nl
-                << "TAO_VarSeq_Var_T< \\" << be_idt << be_idt_nl
-                << node->name () << ", \\" << be_nl
-                << "TAO_Object_Manager< \\" << be_idt << be_idt_nl
-                << elem->name () << ", \\" << be_nl
-                << elem->name () << "_var, \\" << be_nl
-                << elem->fwd_helper_name () << "_life \\" << be_uidt_nl
-                << "> \\" << be_uidt << be_uidt_nl
-                << ">" << be_uidt << be_uidt << be_uidt;
-
-            *os << be_nl << be_nl
-                << "# pragma instantiate \\" << be_idt << be_idt_nl
-                << "TAO_Seq_Out_T< \\" << be_idt << be_idt_nl
-                << node->name () << ", \\" << be_nl
-                << node->name () << "_var, \\" << be_nl
-                << "TAO_Object_Manager< \\" << be_idt << be_idt_nl
-                << elem->name () << ", \\" << be_nl
-                << elem->name () << "_var, \\" << be_nl
-                << elem->fwd_helper_name () << "_life \\" << be_uidt_nl
-                << "> \\" << be_uidt << be_uidt_nl
-                << ">" << be_uidt << be_uidt;
-          }
-      }
+          *os << be_nl << be_nl
+              << "# pragma instantiate \\" << be_idt << be_idt_nl
+              << "TAO_Seq_Out_T< \\" << be_idt << be_idt_nl
+              << node->name () << ", \\" << be_nl
+              << node->name () << "_var, \\" << be_nl
+              << "TAO_Object_Manager< \\" << be_idt << be_idt_nl
+              << bt->name () << ", \\" << be_nl
+              << bt->name () << "_var, \\" << be_nl
+              << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
+              << "> \\" << be_uidt << be_uidt_nl
+              << ">" << be_uidt << be_uidt;
+        }
 
       break;
     case be_sequence::MNG_ABSTRACT:
-      {
-        be_interface *elem = be_interface::narrow_from_decl (bt);
+      if (node->unbounded ())
+        {
+          *os << be_nl << be_nl
+              << "# pragma instantiate \\" << be_idt_nl 
+              << "TAO_Unbounded_Abstract_Sequence< \\" << be_idt << be_idt_nl
+              << bt->name () << ", \\" << be_nl
+              << bt->name () << "_var, \\" << be_nl
+              << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
+              << ">" << be_uidt << be_uidt;
+        }
+      else
+        {
+          *os << be_nl << be_nl
+              << "# pragma instantiate \\" << be_idt_nl 
+              << "TAO_Bounded_Abstract_Sequence< \\" << be_idt << be_idt_nl
+              << bt->name () << ", \\" << be_nl
+              << bt->name () << "_var, \\" << be_nl
+              << bt->fwd_helper_name () << "_life, \\" << be_nl
+              << node->max_size ()->ev ()->u.ulval << " \\" << be_uidt_nl
+              << ">" << be_uidt << be_uidt;
+        }
 
-        if (node->unbounded ())
-          {
-            *os << be_nl << be_nl
-                << "# pragma instantiate \\" << be_idt_nl 
-                << "TAO_Unbounded_Abstract_Sequence< \\" << be_idt << be_idt_nl
-                << elem->name () << ", \\" << be_nl
-                << elem->name () << "_var, \\" << be_nl
-                << elem->fwd_helper_name () << "_life \\" << be_uidt_nl
-                << ">" << be_uidt << be_uidt;
-          }
-        else
-          {
-            *os << be_nl << be_nl
-                << "# pragma instantiate \\" << be_idt_nl 
-                << "TAO_Bounded_Abstract_Sequence< \\" << be_idt << be_idt_nl
-                << elem->name () << ", \\" << be_nl
-                << elem->name () << "_var, \\" << be_nl
-                << elem->fwd_helper_name () << "_life, \\" << be_nl
-                << node->max_size ()->ev ()->u.ulval << " \\" << be_uidt_nl
-                << ">" << be_uidt << be_uidt;
-          }
+      // Instantiate the _var and _out types only if we are not anonymous.
+      if (this->ctx_->tdef () != 0)
+        {
+          *os << be_nl << be_nl
+              << "# pragma instantiate \\" << be_idt_nl
+              << "TAO_VarSeq_Var_T< \\" << be_idt << be_idt_nl
+              << node->name () << ", \\" << be_nl
+              << "TAO_Abstract_Manager< \\" << be_idt << be_idt_nl
+              << bt->name () << ", \\" << be_nl
+              << bt->name () << "_var, \\" << be_nl
+              << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
+              << "> \\" << be_uidt << be_uidt_nl
+              << ">" << be_uidt << be_uidt;
 
-        // Instantiate the _var and _out types only if we are not anonymous.
-        if (this->ctx_->tdef () != 0)
-          {
-            *os << be_nl << be_nl
-                << "# pragma instantiate \\" << be_idt_nl
-                << "TAO_VarSeq_Var_T< \\" << be_idt << be_idt_nl
-                << node->name () << ", \\" << be_nl
-                << "TAO_Abstract_Manager< \\" << be_idt << be_idt_nl
-                << elem->name () << ", \\" << be_nl
-                << elem->name () << "_var, \\" << be_nl
-                << elem->fwd_helper_name () << "_life \\" << be_uidt_nl
-                << "> \\" << be_uidt << be_uidt_nl
-                << ">" << be_uidt << be_uidt;
-
-            *os << be_nl << be_nl
-                << "# pragma instantiate \\" << be_idt_nl
-                << "TAO_Seq_Out_T< \\" << be_idt << be_idt_nl
-                << node->name () << ", \\" << be_nl
-                << node->name () << "_var, \\" << be_nl
-                << "TAO_Abstract_Manager< \\" << be_idt << be_idt_nl
-                << elem->name () << ", \\" << be_nl
-                << elem->name () << "_var, \\" << be_nl
-                << elem->fwd_helper_name () << "_life \\" << be_uidt_nl
-                << "> \\" << be_uidt << be_uidt_nl
-                << ">" << be_uidt << be_uidt;
-          }
-      }
+          *os << be_nl << be_nl
+              << "# pragma instantiate \\" << be_idt_nl
+              << "TAO_Seq_Out_T< \\" << be_idt << be_idt_nl
+              << node->name () << ", \\" << be_nl
+              << node->name () << "_var, \\" << be_nl
+              << "TAO_Abstract_Manager< \\" << be_idt << be_idt_nl
+              << bt->name () << ", \\" << be_nl
+              << bt->name () << "_var, \\" << be_nl
+              << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
+              << "> \\" << be_uidt << be_uidt_nl
+              << ">" << be_uidt << be_uidt;
+        }
 
       break;
     case be_sequence::MNG_PSEUDO:
       if (node->unbounded ())
         {
+          *os << be_nl << be_nl
+              << "# pragma instantiate \\" << be_idt_nl 
+              << "TAO_Unbounded_Pseudo_Sequence< \\" << be_idt << be_idt_nl
+              << bt->name () << ", \\" << be_nl
+              << bt->name () << "_var \\" << be_uidt_nl
+              << ">" << be_uidt << be_uidt;
         }
       else
         {
+          *os << be_nl << be_nl
+              << "# pragma instantiate \\" << be_idt_nl 
+              << "TAO_Bounded_Pseudo_Sequence< \\" << be_idt << be_idt_nl
+              << bt->name () << ", \\" << be_nl
+              << bt->name () << "_var, \\" << be_nl
+              << node->max_size ()->ev ()->u.ulval << " \\" << be_uidt_nl
+              << ">" << be_uidt << be_uidt;
+        }
+
+      // Instantiate the _var and _out types only if we are not anonymous.
+      if (this->ctx_->tdef () != 0)
+        {
+          *os << be_nl << be_nl
+              << "# pragma instantiate \\" << be_idt_nl
+              << "TAO_VarSeq_Var_T< \\" << be_idt << be_idt_nl
+              << node->name () << ", \\" << be_nl
+              << "TAO_Pseudo_Object_Manager< \\" << be_idt << be_idt_nl
+              << bt->name () << ", \\" << be_nl
+              << bt->name () << "_var \\" << be_uidt_nl
+              << "> \\" << be_uidt << be_uidt_nl
+              << ">" << be_uidt << be_uidt;
+
+          *os << be_nl << be_nl
+              << "# pragma instantiate \\" << be_idt_nl
+              << "TAO_Seq_Out_T< \\" << be_idt << be_idt_nl
+              << node->name () << ", \\" << be_nl
+              << node->name () << "_var, \\" << be_nl
+              << "TAO_Pseudo_Object_Manager< \\" << be_idt << be_idt_nl
+              << bt->name () << ", \\" << be_nl
+              << bt->name () << "_var \\" << be_uidt_nl
+              << "> \\" << be_uidt << be_uidt_nl
+              << ">" << be_uidt << be_uidt;
         }
 
       break;
     case be_sequence::MNG_VALUE:
-      {
-        be_interface *elem = be_interface::narrow_from_decl (bt);
-
-        if (node->unbounded ())
-          {
-            *os << be_nl << be_nl
-                << "# pragma instantiate \\" << be_idt_nl 
-                << "TAO_Unbounded_Valuetype_Sequence< \\" << be_idt << be_idt_nl
-                << elem->name () << ", \\" << be_nl
-                << elem->name () << "_var, \\" << be_nl
-                << elem->fwd_helper_name () << "_life \\" << be_uidt_nl
-                << ">" << be_uidt << be_uidt;
-          }
-        else
-          {
-            *os << be_nl << be_nl
-                << "# pragma instantiate \\" << be_idt_nl 
-                << "TAO_Bounded_Valuetype_Sequence< \\" << be_idt << be_idt_nl
-                << elem->name () << ", \\" << be_nl
-                << elem->name () << "_var, \\" << be_nl
-                << elem->fwd_helper_name () << "_life, \\" << be_nl
-                << node->max_size ()->ev ()->u.ulval << " \\" << be_uidt_nl
-                << ">" << be_uidt << be_uidt;
-          }
-
-        // Instantiate the _var and _out types only if we are not anonymous.
-        if (this->ctx_->tdef () != 0)
-          {
-            *os << be_nl << be_nl
-                << "# pragma instantiate \\" << be_idt_nl
-                << "TAO_VarSeq_Var_T< \\" << be_idt << be_idt_nl
-                << node->name () << ", \\" << be_nl
-                << "TAO_Valuetype_Manager< \\" << be_idt << be_idt_nl
-                << elem->name () << ", \\" << be_nl
-                << elem->name () << "_var, \\" << be_nl
-                << elem->fwd_helper_name () << "_life \\" << be_uidt_nl
-                << "> \\" << be_uidt << be_uidt_nl
-                << ">" << be_uidt << be_uidt;
-
-            *os << be_nl << be_nl
-                << "# pragma instantiate \\" << be_idt_nl
-                << "TAO_Seq_Out_T< \\" << be_idt << be_idt_nl
-                << node->name () << ", \\" << be_nl
-                << node->name () << "_var, \\" << be_nl
-                << "TAO_Valuetype_Manager< \\" << be_idt << be_idt_nl
-                << elem->name () << ", \\" << be_nl
-                << elem->name () << "_var, \\" << be_nl
-                << elem->fwd_helper_name () << "_life \\" << be_uidt_nl
-                << "> \\" << be_uidt << be_uidt_nl
-                << ">" << be_uidt << be_uidt;
-          }
-      }
-
-      break;
-    case be_sequence::MNG_STRING:
       if (node->unbounded ())
         {
+          *os << be_nl << be_nl
+              << "# pragma instantiate \\" << be_idt_nl 
+              << "TAO_Unbounded_Valuetype_Sequence< \\" << be_idt << be_idt_nl
+              << bt->name () << ", \\" << be_nl
+              << bt->name () << "_var, \\" << be_nl
+              << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
+              << ">" << be_uidt << be_uidt;
         }
       else
         {
+          *os << be_nl << be_nl
+              << "# pragma instantiate \\" << be_idt_nl 
+              << "TAO_Bounded_Valuetype_Sequence< \\" << be_idt << be_idt_nl
+              << bt->name () << ", \\" << be_nl
+              << bt->name () << "_var, \\" << be_nl
+              << bt->fwd_helper_name () << "_life, \\" << be_nl
+              << node->max_size ()->ev ()->u.ulval << " \\" << be_uidt_nl
+              << ">" << be_uidt << be_uidt;
+        }
+
+      // Instantiate the _var and _out types only if we are not anonymous.
+      if (this->ctx_->tdef () != 0)
+        {
+          *os << be_nl << be_nl
+              << "# pragma instantiate \\" << be_idt_nl
+              << "TAO_VarSeq_Var_T< \\" << be_idt << be_idt_nl
+              << node->name () << ", \\" << be_nl
+              << "TAO_Valuetype_Manager< \\" << be_idt << be_idt_nl
+              << bt->name () << ", \\" << be_nl
+              << bt->name () << "_var, \\" << be_nl
+              << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
+              << "> \\" << be_uidt << be_uidt_nl
+              << ">" << be_uidt << be_uidt;
+
+          *os << be_nl << be_nl
+              << "# pragma instantiate \\" << be_idt_nl
+              << "TAO_Seq_Out_T< \\" << be_idt << be_idt_nl
+              << node->name () << ", \\" << be_nl
+              << node->name () << "_var, \\" << be_nl
+              << "TAO_Valuetype_Manager< \\" << be_idt << be_idt_nl
+              << bt->name () << ", \\" << be_nl
+              << bt->name () << "_var, \\" << be_nl
+              << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
+              << "> \\" << be_uidt << be_uidt_nl
+              << ">" << be_uidt << be_uidt;
+        }
+
+      break;
+    case be_sequence::MNG_STRING:
+      if (! node->unbounded ())
+        {
+          *os << be_nl << be_nl
+              << "# pragma instantiate TAO_Bounded_String_Sequence< \\" << be_nl
+              << node->max_size ()->ev ()->u.ulval << ">";
+        }
+
+      // Instantiate the _var and _out types only if we are not anonymous.
+      if (this->ctx_->tdef () != 0)
+        {
+          *os << be_nl << be_nl
+              << "# pragma instantiate \\" << be_idt_nl
+              << "TAO_VarSeq_Var_T< \\" << be_idt << be_idt_nl
+              << node->name () << ", \\" << be_nl
+              <<"TAO_SeqElem_String_Manager \\" << be_uidt_nl
+              << ">" << be_uidt << be_uidt;
+
+          *os << be_nl << be_nl
+              << "# pragma instantiate \\" << be_idt_nl
+              << "TAO_Seq_Out_T< \\" << be_idt << be_idt_nl
+              << node->name () << ", \\" << be_nl
+              << node->name () << "_var, \\" << be_nl
+              << "TAO_SeqElem_String_Manager \\" << be_uidt_nl
+              << ">" << be_uidt << be_uidt;
         }
 
       break;
     case be_sequence::MNG_WSTRING:
-      if (node->unbounded ())
+      if (! node->unbounded ())
         {
+          *os << be_nl << be_nl
+              << "# pragma instantiate TAO_Bounded_WString_Sequence<"
+              << node->max_size ()->ev ()->u.ulval << ">";
         }
-      else
+
+      // Instantiate the _var and _out types only if we are not anonymous.
+      if (this->ctx_->tdef () != 0)
         {
+          *os << be_nl << be_nl
+              << "# pragma instantiate \\" << be_idt_nl
+              << "TAO_VarSeq_Var_T< \\" << be_idt << be_idt_nl
+              << node->name () << ", \\" << be_nl
+              <<"TAO_SeqElem_WString_Manager \\" << be_uidt_nl
+              << ">" << be_uidt << be_uidt;
+
+          *os << be_nl << be_nl
+              << "# pragma instantiate \\" << be_idt_nl
+              << "TAO_Seq_Out_T< \\" << be_idt << be_idt_nl
+              << node->name () << ", \\" << be_nl
+              << node->name () << "_var, \\" << be_nl
+              << "TAO_SeqElem_WString_Manager \\" << be_uidt_nl
+              << ">" << be_uidt << be_uidt;
         }
 
       break;

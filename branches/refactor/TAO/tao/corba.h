@@ -68,8 +68,10 @@
 #include "tao/Object_KeyC.h"
 #include "tao/ObjectIdListC.h"
 
+// Template _var and _out classes.
 #include "tao/Objref_VarOut_T.h"
 #include "tao/Value_VarOut_T.h"
+#include "tao/Pseudo_VarOut_T.h"
 #include "tao/Seq_VarOut_T.h"
 #include "tao/Array_VarOut_T.h"
 #include "tao/VarOut_T.h"

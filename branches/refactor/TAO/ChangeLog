@@ -34,6 +34,7 @@ Thu Mar 27 03:00:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Pseudo_VarOut_T.cpp:
         * tao/Pseudo_VarOut_T.h:
+        * tao/Pseudo_VarOut_T.inl:
 
 	  New files for the _var and _out classes for
 	  CORBA::Object and CORBA::TypeCode.

@@ -150,8 +150,6 @@ namespace CORBA
   // CORBA::TypeCode typedefs.
   class TypeCode;
   typedef TypeCode * TypeCode_ptr;
-  class TypeCode_var;
-  class TypeCode_out;
 
   /**
    * @name CORBA String Memory Management
@@ -242,8 +240,6 @@ namespace CORBA
 
   class Object;
   typedef Object *Object_ptr;
-  class Object_var;
-  class Object_out;
 
   class LocalObject;
   typedef LocalObject *LocalObject_ptr;
@@ -281,9 +277,6 @@ namespace CORBA
   class TypeCodeFactory_var;
 
   class ValueBase;
-  typedef ValueBase *ValueBase_ptr;
-  class ValueBase_var;
-  class ValueBase_out;
   class ValueFactoryBase;
   class ValueFactoryBase_var;
   typedef ValueFactoryBase *ValueFactory;

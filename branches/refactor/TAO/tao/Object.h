@@ -21,25 +21,29 @@
 
 #include "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/Policy_ForwardC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Policy_ForwardC.h"
 #include "tao/Object_KeyC.h"
+#include "tao/Pseudo_VarOut_T.h"
 #include "ace/Synch.h"
 
 class TAO_Stub;
 class TAO_Abstract_ServantBase;
 class TAO_Object_Proxy_Broker;
-class TAO_ObjectKey;
 
 namespace CORBA
 {
   class InterfaceDef;
   typedef InterfaceDef *InterfaceDef_ptr;
+
+  class Object;
+
+  typedef TAO_Pseudo_Var_T<Object> Object_var;
+  typedef TAO_Pseudo_Out_T<Object, Object_var> Object_out;
 
   /**
    * @class Object
@@ -303,77 +307,6 @@ namespace CORBA
      */
     TAO_SYNCH_MUTEX * refcount_lock_;
 
-  };
-
-  /**
-   * @class Object_var
-   *
-   * @brief Object_var
-   *
-   * Object_var.
-   */
-  class TAO_Export Object_var : private TAO_Base_var
-  {
-  public:
-    Object_var (void); // default constructor
-    Object_var (CORBA::Object_ptr);
-    Object_var (const Object_var &); // copy constructor
-    ~Object_var (void); // destructor
-
-    Object_var &operator= (CORBA::Object_ptr);
-    Object_var &operator= (const Object_var &);
-    CORBA::Object_ptr operator-> (void) const;
-
-    /// in, inout, out, _retn
-    operator const CORBA::Object_ptr &() const;
-    operator CORBA::Object_ptr &();
-    CORBA::Object_ptr in (void) const;
-    CORBA::Object_ptr &inout (void);
-    CORBA::Object_ptr &out (void);
-    CORBA::Object_ptr _retn (void);
-    CORBA::Object_ptr ptr (void) const;
-
-    static CORBA::Object_ptr tao_duplicate (CORBA::Object_ptr);
-    static void tao_release (CORBA::Object_ptr);
-    static CORBA::Object_ptr tao_nil (void);
-    static CORBA::Object_ptr tao_narrow (CORBA::Object *
-                                         ACE_ENV_ARG_DECL);
-    static CORBA::Object * tao_upcast (void *);
-
-  private:
-
-    // Unimplemented - Prevent widening assignment.
-    Object_var (const TAO_Base_var &rhs);
-    Object_var &operator= (const TAO_Base_var &rhs);
-
-  private:
-
-    CORBA::Object_ptr ptr_;
-
-  };
-
-  /**
-   * @class Object_out
-   *
-   * @brief Object_out
-   *
-   * Object_out
-   */
-  class TAO_Export Object_out
-  {
-  public:
-    Object_out (CORBA::Object_ptr &);
-    Object_out (Object_var &);
-    Object_out (const Object_out &);
-    Object_out &operator= (const Object_out &);
-    Object_out &operator= (const Object_var &);
-    Object_out &operator= (CORBA::Object_ptr);
-    operator CORBA::Object_ptr &();
-    CORBA::Object_ptr &ptr (void);
-    CORBA::Object_ptr operator-> (void);
-
-  private:
-    CORBA::Object_ptr &ptr_;
   };
 }   // End CORBA namespace.
 

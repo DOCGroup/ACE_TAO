@@ -68,6 +68,34 @@ CORBA::Object::Object (TAO_Stub * protocol_proxy,
     }
 }
 
+CORBA::Object_ptr
+CORBA::Object::_unchecked_narrow (CORBA::Object_ptr obj
+                                  ACE_ENV_ARG_DECL_NOT_USED)
+{
+  if (CORBA::is_nil (obj))
+    {
+      return CORBA::Object::_nil ();
+    }
+
+  if (obj->is_local_)
+    {
+    return
+      ACE_reinterpret_cast (
+          CORBA::Object_ptr,
+          obj->_tao_QueryInterface (
+                   ACE_reinterpret_cast (
+                       ptr_arith_t,
+                       &CORBA::Object::_tao_class_id
+                     )
+                 )
+        );
+    }
+  else
+    {
+      return CORBA::Object::_duplicate (obj);
+    }
+}
+
 void
 CORBA::Object::_add_ref (void)
 {

@@ -263,17 +263,20 @@ be_sequence::managed_type (void)
               be_predefined_type::narrow_from_decl (prim_type);
             AST_PredefinedType::PredefinedType pt = bpd->pt ();
 
-            if (pt == AST_PredefinedType::PT_pseudo)
+            switch (pt)
               {
-                this->mt_ = be_sequence::MNG_PSEUDO;
-              }
-            else if (pt == AST_PredefinedType::PT_object)
-              {
-                this->mt_ = be_sequence::MNG_OBJREF;
-              }
-            else
-              {
-                this->mt_ = be_sequence::MNG_NONE;
+                case AST_PredefinedType::PT_pseudo:
+                  this->mt_ = be_sequence::MNG_PSEUDO;
+                  break;
+                case AST_PredefinedType::PT_object:
+                  this->mt_ = be_sequence::MNG_PSEUDO;
+                  break;
+                case AST_PredefinedType::PT_value:
+                  this->mt_ = be_sequence::MNG_VALUE;
+                  break;
+                default:
+                  this->mt_ = be_sequence::MNG_NONE;
+                  break;
               }
           }
           break;

@@ -296,6 +296,7 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_object:
+    case AST_PredefinedType::PT_value:
     case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_any:
       return this->visit_node (node);
@@ -705,7 +706,8 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
             AST_PredefinedType::PredefinedType pdt = pt->pt ();
 
             if (pdt == AST_PredefinedType::PT_pseudo
-                || pdt == AST_PredefinedType::PT_object)
+                || pdt == AST_PredefinedType::PT_object
+                || pdt == AST_PredefinedType::PT_value)
               {
                 *os << "_tao_marshal_flag = (strm >> _tao_sequence[i].out ());"
                     << be_uidt_nl;
@@ -837,7 +839,8 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
             AST_PredefinedType::PredefinedType pdt = pt->pt ();
 
             if (pdt == AST_PredefinedType::PT_pseudo
-                || pdt == AST_PredefinedType::PT_object)
+                || pdt == AST_PredefinedType::PT_object
+                || pdt == AST_PredefinedType::PT_value)
               {
                 *os << "_tao_marshal_flag = (strm << _tao_sequence[i].in ());";
               }

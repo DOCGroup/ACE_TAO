@@ -26,6 +26,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Exception.h"
+#include "tao/Pseudo_VarOut_T.h"
 
 // Forward declarations
 class TAO_InputCDR;
@@ -38,6 +39,11 @@ namespace TAO
 
 namespace CORBA
 {
+  class TypeCode;
+  
+  typedef TAO_Pseudo_Var_T<TypeCode> TypeCode_var;
+  typedef TAO_Pseudo_Out_T<TypeCode, TypeCode_var> TypeCode_out;
+
   /**
    * @class TypeCode
    *
@@ -526,64 +532,6 @@ namespace CORBA
     char *non_aligned_buffer_;
 
     OFFSET_MAP *offset_map_;
-  };
-
-  /**
-   * @class TypeCode_var
-   *
-   * @brief A smart pointer for TypeCodes.
-   *
-   * Implements the _var class for the TypeCode pseudo object.
-   */
-  class TAO_Export TypeCode_var
-  {
-  public:
-    TypeCode_var (void); // default constructor
-    TypeCode_var (TypeCode_ptr);
-    TypeCode_var (const TypeCode_var &); // copy constructor
-    ~TypeCode_var (void); // destructor
-
-    TypeCode_var &operator= (TypeCode_ptr);
-    TypeCode_var &operator= (const TypeCode_var &);
-    TypeCode_ptr operator-> (void) const;
-
-    /// in, inout, out, _retn
-    operator const TypeCode_ptr &() const;
-    operator TypeCode_ptr &();
-    TypeCode_ptr in (void) const;
-    TypeCode_ptr &inout (void);
-    TypeCode_ptr &out (void);
-    TypeCode_ptr _retn (void);
-    TypeCode_ptr ptr (void) const;
-
-  private:
-    TypeCode_ptr ptr_;
-  };
-
-  /**
-   * @class TypeCode_out
-   *
-   * @brief The _out class for TypeCode.
-   *
-   * Implements the _out class for the TypeCode pseudo object.
-   */
-  class TAO_Export TypeCode_out
-  {
-  public:
-    TypeCode_out (TypeCode_ptr &);
-    TypeCode_out (TypeCode_var &);
-    TypeCode_out (const TypeCode_out &);
-    TypeCode_out &operator= (const TypeCode_out &);
-    TypeCode_out &operator= (TypeCode_ptr);
-    operator TypeCode_ptr &();
-    TypeCode_ptr &ptr (void);
-    TypeCode_ptr operator-> (void);
-
-  private:
-    TypeCode_ptr &ptr_;
-
-    /// Assignment from _var not allowed
-    TypeCode_out &operator= (const TypeCode_var &);
   };
 }  // End CORBA namespace
 
