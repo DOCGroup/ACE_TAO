@@ -118,11 +118,11 @@ DRV_usage (void)
   cerr << GTDEVEL (" -Dname[=value]\t\tdefines name for preprocessor\n");
   cerr << GTDEVEL (" -E\t\t\truns preprocessor only, prints on stdout\n");
   cerr << GTDEVEL (" -Idir\t\t\tincludes dir in search path for preprocessor\n");
-  cerr << GTDEVEL (" -g <perfect_hasher>\tPath for the GPERF program. Default is $ACE_ROOT/bin/gperf\n");
+  cerr << GTDEVEL (" -g <gperf_path>\tPath for the GPERF program. Default is $ACE_ROOT/bin/gperf\n");
   cerr << GTDEVEL (" -hc\t\t\tClient's header file name ending. Default is C.h\n");
   cerr << GTDEVEL (" -hs\t\t\tServer's header file name ending. Default is S.h\n");
   cerr << GTDEVEL (" -hT\t\t\tServer's template hdr file name ending. Default is S_T.h\n");
-  cerr << GTDEVEL (" -H dynamic\t\tTo force dynamic-hashed operation lookup strategy. Default is perfect hashing\n");
+  cerr << GTDEVEL (" -H dynamic_hash\t\tTo force dynamic-hashed operation lookup strategy. Default is perfect hashing\n");
   cerr << GTDEVEL (" -o <output_dir>\tOutput directory for the generated files. Default is current directory\n");
   cerr << GTDEVEL (" -ss\t\t\tServer's skeleton file name ending. Default is S.cpp\n");
   cerr << GTDEVEL (" -sT\t\t\tServer's template skeleton file name ending. Default is S_T.cpp\n");
@@ -293,19 +293,24 @@ DRV_parse_args (long ac, char **av)
               break;
     
               // Operation lookup strategy.
-              // <perfect> or <dynamic>
+              // <perfect_hash>, <dynamic_hash> or <binary_search>
               // Default is perfect.
             case 'H':
-              if (ACE_OS::strcmp (av[i+1], "dynamic") == 0)
+              if (ACE_OS::strcmp (av[i+1], "dynamic_hash") == 0)
                 cg->lookup_strategy (TAO_CodeGen::TAO_DYNAMIC_HASH);
-              // else Perfect Hash, the default strategy.
+              else if (ACE_OS::strcmp (av[i+1], "perfect_hash") == 0)
+                cg->lookup_strategy (TAO_CodeGen::TAO_PERFECT_HASH);
+              else if (ACE_OS::strcmp (av[i+1], "binary_search") == 0)
+                cg->lookup_strategy (TAO_CodeGen::TAO_BINARY_SEARCH);
+              else if (ACE_OS::strcmp (av[i+1], "linear_search") == 0)
+                cg->lookup_strategy (TAO_CodeGen::TAO_LINEAR_SEARCH);
               i++;
               break;
      
               // Path for the perfect hash generator(gperf) program. Default
               // is $ACE_ROOT/bin/gperf.
             case 'g':
-              idl_global->perfect_hasher (av[i+1]);
+              idl_global->gperf_path (av[i+1]);
               i++;
               break;
       
@@ -507,15 +512,17 @@ DRV_parse_args (long ac, char **av)
   // Let us try to use Perfect Hashing Operation Lookup Strategy. Let
   // us check whether things are fine with GPERF.
 #if defined (ACE_HAS_GPERF)
-  // If Perfect Hashing Strategy has been selected, let us make sure
-  // that it exists and will work.
-  if (cg->lookup_strategy () == TAO_CodeGen::TAO_PERFECT_HASH)
+  // If Perfect Hashing or Binary Search or Linear Search strategies
+  // have been selected, let us make sure that it exists and will
+  // work. 
+  if ((cg->lookup_strategy () == TAO_CodeGen::TAO_PERFECT_HASH) || \
+      (cg->lookup_strategy () == TAO_CodeGen::TAO_BINARY_SEARCH))
     {
       // Testing whether GPERF works or no.
       int return_value = DRV_check_gperf ();
       if (return_value == -1)
         {
-          // If perfect_hasher is an absolute path, try to call this
+          // If gperf_path is an absolute path, try to call this
           // again with 
           ACE_DEBUG ((LM_DEBUG,
                       "TAO_IDL: warning, gperf could not be executed, using Dynamic Hash OpLookup instead of Perfect Hashing\n"
@@ -531,7 +538,8 @@ DRV_parse_args (long ac, char **av)
 #else /* Not ACE_HAS_GPERF */
   // If GPERF is not there, we cannot use PERFECT_HASH strategy. Let
   // us go for DYNAMIC_HASH.
-  if (cg->lookup_strategy () == TAO_CodeGen::TAO_PERFECT_HASH)
+  if ((cg->lookup_strategy () == TAO_CodeGen::TAO_PERFECT_HASH) || 
+      (cg->lookup_strategy () == TAO_CodeGen::TAO_BINARY_SEARCH))
     cg->lookup_strategy (TAO_CodeGen::TAO_DYNAMIC_HASH);
 #endif /* ACE_HAS_GPERF */    
 
@@ -551,22 +559,22 @@ DRV_check_gperf (void)
 {
   // If absolute path is not specified yet, let us call just
   // "gperf". Hopefully PATH is set up correctly to locate the gperf. 
-  if (idl_global->perfect_hasher () == 0)
-    idl_global->perfect_hasher ("gperf");
+  if (idl_global->gperf_path () == 0)
+    idl_global->gperf_path ("gperf");
   
   // If we have absolute path for the <gperf> rather than just the
   // executable name <gperf>, make sure the file exists
   // firsts. Otherwise just call <gperf>. Probably PATH is set
   // correctly to take care of this.
-  if (ACE_OS::strcmp (idl_global->perfect_hasher (), "gperf") != 0)
+  if (ACE_OS::strcmp (idl_global->gperf_path (), "gperf") != 0)
     {
       // It is absolute path. Check the existance, permissions and
       // the modes. 
-      if (ACE_OS::access (idl_global->perfect_hasher (), 
+      if (ACE_OS::access (idl_global->gperf_path (), 
                           F_OK | X_OK) == -1)
         // Problem with the file. No point in having the absolute
         // path. Swith to "gperf".
-        idl_global->perfect_hasher ("gperf");
+        idl_global->gperf_path ("gperf");
     }
   
   // Just call gperf in silent mode. It will come and immly exit.
@@ -579,7 +587,7 @@ DRV_check_gperf (void)
   process_options.command_line ("%s"
                                 " "
                                 "-V",
-                                idl_global->perfect_hasher ());
+                                idl_global->gperf_path ());
   
   // Spawn a process for gperf.
   if (process_manager.spawn (process_options) == -1)
