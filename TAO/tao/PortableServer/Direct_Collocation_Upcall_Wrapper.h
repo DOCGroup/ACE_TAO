@@ -24,9 +24,10 @@
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
 #include "tao/Collocation_Strategy.h"
-#include "tao/Pseudo_VarOut_T.h"
 #include "tao/Exception.h"
 #include "ace/CORBA_macros.h"
+#include "tao/CORBA_methods.h"
+#include "tao/Pseudo_VarOut_T.h"
 
 namespace CORBA
 {
