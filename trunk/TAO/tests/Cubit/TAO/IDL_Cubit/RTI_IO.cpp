@@ -18,7 +18,9 @@ print_RtiPacket (Cubit::RtiPacket const &arg)
 
   for (CORBA::ULong j = 0; j < arg.msgs.length (); ++j) 
     {
-      ACE_DEBUG ((LM_DEBUG, "* message * %d\n", j));
+      ACE_DEBUG ((LM_DEBUG,
+                  "* message * %d\n",
+                  j));
 
       Cubit::RtiObjectUpdateMessageHeader const &oumh = arg.msgs[j].oumh ();
 
