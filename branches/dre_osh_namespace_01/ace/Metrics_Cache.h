@@ -14,7 +14,7 @@
 #ifndef ACE_METRICS_CACHE_H
 #define ACE_METRICS_CACHE_H
 
-#include "ace/OS.h"
+#include "ace/Timeprobe.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

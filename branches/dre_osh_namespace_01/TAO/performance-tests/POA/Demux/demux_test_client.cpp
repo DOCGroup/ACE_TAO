@@ -15,6 +15,8 @@
 
 #include "demux_test_client.h"
 #include "tao/debug.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_time.h"
 
 // Constructor
 Demux_Test_Client::Demux_Test_Client (void)

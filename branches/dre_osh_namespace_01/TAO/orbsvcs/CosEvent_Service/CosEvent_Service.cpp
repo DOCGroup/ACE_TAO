@@ -6,6 +6,7 @@
 #include "orbsvcs/CosEvent/CEC_Event_Loader.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
+#include "ace/OS_main.h"
 
 ACE_RCSID(CosEvent_Service, CosEvent_Service, "$Id$")
 

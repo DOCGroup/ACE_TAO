@@ -21,7 +21,10 @@
 
 #include "test_config.h"
 #include "ace/Message_Block.h"
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Lock_Adapter_T.h"
+#include "ace/OS_NS_string.h"
+#include "ace/Thread_Mutex.h"
 
 ACE_RCSID(tests, Simple_Message_Block_Test, "$Id$")
 

@@ -20,7 +20,6 @@
 #ifndef ACE_TESTS_TP_REACTOR_TEST_H
 #define ACE_TESTS_TP_REACTOR_TEST_H
 
-#include "ace/OS.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"

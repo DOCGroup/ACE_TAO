@@ -7,6 +7,7 @@
 
 // -- ACE Include --
 #include "ace/Arg_Shifter.h"
+#include "ace/OS_NS_stdio.h"
 
 // -- RTCORBA Include --
 #include "tao/RTCORBA/RT_Policy_i.h"

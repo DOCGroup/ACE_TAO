@@ -6,6 +6,7 @@
 #include "Server_ORBInitializer.h"
 
 #include "tao/ORBInitializer_Registry.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (Service_Context_Manipulation,
            server,

@@ -116,10 +116,10 @@ ACE_SPIPE_Addr::set (const ACE_TCHAR *addr,
       ACE_OS::strcat (temp, ACE_LIB_TEXT ("\\pipe\\"));
       ACE_OS::strcat (temp, colonp + 1);
     }
-  len += ACE_static_cast (int, ACE_OS_String::strlen (temp));
+  len += ACE_static_cast (int, ACE_OS::strlen (temp));
   this->ACE_Addr::base_set (AF_SPIPE, len);
 
-  ACE_OS_String::strcpy (this->SPIPE_addr_.rendezvous_, temp);
+  ACE_OS::strcpy (this->SPIPE_addr_.rendezvous_, temp);
 #else
   this->ACE_Addr::base_set (AF_SPIPE,
                             ACE_OS::strlen (addr) + 1 + len);

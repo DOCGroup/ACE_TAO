@@ -22,6 +22,7 @@
 
 #include "tao/ORB.h"
 #include "tao/debug.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(CDR, growth, "$Id$")
 

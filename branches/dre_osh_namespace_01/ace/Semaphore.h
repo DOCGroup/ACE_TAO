@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"
+#include "ace/OS_NS_Thread.h"
 
 class ACE_Time_Value;
 
@@ -103,7 +103,7 @@ public:
 
   /// Increment the semaphore by <release_count>, potentially
   /// unblocking waiting threads.
-  int release (u_int release_count);
+  int release (unsigned int release_count);
 
   /**
    * Acquire semaphore ownership.  This calls <acquire> and is only

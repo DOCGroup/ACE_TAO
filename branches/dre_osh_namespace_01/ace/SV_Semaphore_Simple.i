@@ -3,6 +3,9 @@
 
 // SV_Semaphore_Simple.i
 
+#include "ace/Global_Macros.h"
+#include "ace/OS_NS_Thread.h"
+
 ASYS_INLINE int
 ACE_SV_Semaphore_Simple::control (int cmd, 
 				  semun arg, 

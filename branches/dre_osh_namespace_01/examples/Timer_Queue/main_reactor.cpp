@@ -29,6 +29,7 @@
                                      information */
 #endif  /* _MSC_VER */
 
+#include "ace/OS_main.h"
 #include "ace/Auto_Ptr.h"
 #include "Reactor_Timer_Queue_Test.h"
 #include "Driver.h"

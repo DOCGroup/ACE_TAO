@@ -37,6 +37,13 @@
   =====================================================================*/
 
 #include "asnmp/address.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_arpa_inet.h"
+#include "ace/OS_NS_netdb.h"
+#include "ace/OS_NS_stdlib.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/os_include/os_ctype.h"
+#include "ace/OS_Memory.h"
 
 ACE_RCSID(asnmp, address, "$Id$")
 
@@ -88,7 +95,7 @@ unsigned char& Address::operator[]( const int position)
 // overloaded equivlence operator, are two addresses equal?
 int operator==( const Address &lhs, const Address &rhs)
 {
-  if ( strcmp( (const char*) lhs, (const char*)rhs)==0)
+  if ( ACE_OS::strcmp( (const char*) lhs, (const char*)rhs)==0)
     return 1;
   else
     return 0;
@@ -106,7 +113,7 @@ int operator!=( const Address &lhs, const Address &rhs)
 // overloaded > operator, is a1 > a2
 int operator>( const Address &lhs, const Address &rhs)
 {
-  if ( strcmp( (const char*) lhs, (const char*)rhs)>0)
+  if (ACE_OS::strcmp( (const char*) lhs, (const char*)rhs)>0)
     return 1;
   else
     return 0;
@@ -136,7 +143,7 @@ int operator<=( const Address &lhs,const Address &rhs)
 // overloaded < operator, is a1 < a2
 int operator<( const Address &lhs, const Address &rhs)
 {
-  if ( strcmp( (const char*) lhs, (const char*)rhs)<0)
+  if (ACE_OS::strcmp( (const char*) lhs, (const char*)rhs)<0)
     return 1;
   else
     return 0;
@@ -148,7 +155,7 @@ int operator==( const Address &lhs,const char *rhs)
 {
   if (!rhs && !lhs.valid())
     return 1;
-  if (strcmp( (const char *) lhs, rhs)== 0)
+  if (ACE_OS::strcmp( (const char *) lhs, rhs)== 0)
     return 1;
   else
     return 0;
@@ -167,7 +174,7 @@ int operator>( const Address &lhs,const char *rhs)
 {
   if (!rhs)
     return lhs.valid();  // if lhs valid then > 0, else invalid !> 0
-  if (strcmp( (const char *) lhs, rhs)> 0)
+  if (ACE_OS::strcmp( (const char *) lhs, rhs)> 0)
     return 1;
   else
     return 0;
@@ -179,7 +186,7 @@ int operator>=( const Address &lhs,const char *rhs)
 {
   if (!rhs)
     return 1; // always >= 0
-  if (strcmp( (const char *) lhs, rhs)>= 0)
+  if (ACE_OS::strcmp( (const char *) lhs, rhs)>= 0)
     return 1;
   else
     return 0;
@@ -191,7 +198,7 @@ int operator<( const Address &lhs,const char *rhs)
 {
   if (!rhs)
     return 0; // always >= 0
-  if (strcmp( (const char *) lhs, rhs)< 0)
+  if (ACE_OS::strcmp( (const char *) lhs, rhs)< 0)
     return 1;
   else
     return 0;
@@ -203,7 +210,7 @@ int operator<=( const Address &lhs,const char *rhs)
 {
   if (!rhs)
     return !lhs.valid(); // invalid == 0, else valid > 0
-  if (strcmp( (const char *) lhs, rhs)<= 0)
+  if (ACE_OS::strcmp( (const char *) lhs, rhs)<= 0)
     return 1;
   else
     return 0;
@@ -451,7 +458,7 @@ int IpAddress::parse_dotted_ipstring( const char *inaddr)
     return 0;
 
   // look for dot token separator
-  ip_token = strtok( (char *) temp,".");
+  ip_token = ACE_OS::strtok( (char *) temp,".");
 
   // while more tokens..
   while ( ip_token != 0) {
@@ -467,12 +474,12 @@ int IpAddress::parse_dotted_ipstring( const char *inaddr)
     if (( value > 0)&& ( value <=255))
       address_buffer[token_count] = (unsigned char) value;
     else
-      if ( strcmp(ip_token,"0")==0)
+      if (ACE_OS::strcmp(ip_token,"0")==0)
         address_buffer[token_count]= (unsigned char) 0;
       else
         error_status = 1;
     token_count++;
-    ip_token = strtok( 0, ".");
+    ip_token = ACE_OS::strtok( 0, ".");
   }
 
   // gota be four in len

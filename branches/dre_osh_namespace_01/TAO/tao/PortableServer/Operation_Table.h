@@ -24,7 +24,8 @@
 #include "tao/Object.h"
 #include "tao/TAO_Singleton.h"
 #include "tao/Collocation_Strategy.h"
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Null_Mutex.h"
 #include "ace/Hash_Map_Manager.h"
 
 class TAO_ServerRequest;

@@ -3,6 +3,7 @@
 // Send a file through ACE_SPIPE communication channel by
 // breaking it (the file) into pieces.
 
+#include "ace/OS_main.h"
 #include "ace/Mem_Map.h"
 #include "ace/SPIPE_Connector.h"
 #include "ace/Get_Opt.h"

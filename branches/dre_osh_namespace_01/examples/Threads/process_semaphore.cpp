@@ -3,7 +3,8 @@
 // This program tests ACE_Process_Semaphore.  To run it, open 3 or 4
 // windows and run this program in each window...
 
-#include "ace/Synch.h"
+#include "ace/OS_main.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Signal.h"
 #include "ace/Log_Msg.h"
 #include "ace/Process_Semaphore.h"

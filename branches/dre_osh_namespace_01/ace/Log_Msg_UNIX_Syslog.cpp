@@ -8,6 +8,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Log_Msg_UNIX_Syslog.h"
 #include "ace/Log_Record.h"
+#include "ace/os_include/os_syslog.h"
 
 // NOTE:
 //   The ACE_Log_Msg_UNIX_Syslog class can use the openlog(),
@@ -83,13 +84,13 @@ ACE_Log_Msg_UNIX_Syslog::log (ACE_Log_Record &log_record)
   ACE_OS::strcpy (message, log_record.msg_data ());
   ACE_TCHAR *strtokp;
 
-  for (ACE_TCHAR *line = ACE_OS_String::strtok_r (message,
-                                                  ACE_LIB_TEXT ("\n"),
-                                                  &strtokp);
+  for (ACE_TCHAR *line = ACE_OS::strtok_r (message,
+                                           ACE_LIB_TEXT ("\n"),
+                                           &strtokp);
        line != 0;
-       line = ACE_OS_String::strtok_r (0,
-                                       ACE_LIB_TEXT ("\n"),
-                                       &strtokp))
+       line = ACE_OS::strtok_r (0,
+                                ACE_LIB_TEXT ("\n"),
+                                &strtokp))
     {
       // Format the message line.  Note that the processing for
       // VERBOSE is the same as for VERBOSE_LITE, since syslog()

@@ -26,11 +26,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"
 #include "ace/MEM_Stream.h"
 #include "ace/Reactor.h"
 #include "ace/Svc_Handler.h"
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 

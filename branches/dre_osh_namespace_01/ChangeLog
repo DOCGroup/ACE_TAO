@@ -1,3 +1,21 @@
+Fri Oct 31 15:07:26 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * header reduction on sun. 
+
+Fri Oct 31 03:00:20 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * header reductions.
+
+Mon Oct 27 22:25:06 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ?
+          Fixed Sun compile errors. 
+
+Mon Oct 27 20:43:33 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ?
+          Beaucoup des changement...
+
 Fri Oct 31 14:29:07 2003  Edward R. Mulholland  <emulholl@atl.lmco.com>
 
         * performance-tests/SCTP/run_spectrum.pl:
@@ -199,7 +217,7 @@ Mon Oct 27 11:17:03 2003  Gautam Thaker  <gthaker@atl.lmco.com>
           Fixed a previously made change that was using sizes for tests as
           n**2 rather than 2**n!
 
-Sat Oct 25 10:51:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Fat Oct 25 10:51:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-common.h: Fixed compile problem in this file
 

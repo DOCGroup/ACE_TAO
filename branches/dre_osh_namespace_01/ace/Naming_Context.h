@@ -27,6 +27,7 @@
 #include "ace/Service_Object.h"
 #include "ace/Name_Proxy.h"
 #include "ace/Name_Space.h"
+#include "ace/os_include/os_netdb.h"
 
 // Forward decl
 class ACE_Name_Options;

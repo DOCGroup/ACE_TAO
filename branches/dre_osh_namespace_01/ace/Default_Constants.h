@@ -326,13 +326,7 @@
 // A simple free list which doen't allocate/deallocate elements.
 # define ACE_PURE_FREE_LIST 2
 
-# if defined (INTEGRITY)
-# define ACE_MAX_USERID 32
-# endif
-
 # if defined (ACE_WIN32)
-
-#define ACE_MAX_USERID 32
 
 // This is necessary to work around bugs with Win32 non-blocking
 // connects...
@@ -522,6 +516,16 @@ const unsigned int ACE_CONNECTOR_HANDLER_MAP_SIZE = 16;
 
 #define ACE_DEFAULT_LOCALNAME ACE_LIB_TEXT (ACE_DEFAULT_LOCALNAME_A)
 #define ACE_DEFAULT_GLOBALNAME ACE_LIB_TEXT (ACE_DEFAULT_GLOBALNAME_A)
+
+# if defined (ACE_WIN32)
+    // The "null" device on Win32.
+#   define ACE_DEV_NULL "nul"
+#   define ACE_SYSCALL_FAILED 0xFFFFFFFF
+# else /* !ACE_WIN32 */
+    // The "null" device on UNIX.
+#   define ACE_DEV_NULL "/dev/null"
+#   define ACE_SYSCALL_FAILED -1
+# endif /* ACE_WIN32 */
 
 #include /**/ "ace/post.h"
 #endif /*ACE_DEFAULT_CONSTANTS_H*/

@@ -17,7 +17,9 @@
 // ============================================================================
 
 #include "tests/test_config.h"
-#include "ace/OS.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_sys_stat.h"
+#include "ace/Guard_T.h"
 #include "ace/Object_Manager.h"
 #include "ace/streams.h"
 #include "ace/Framework_Component.h"

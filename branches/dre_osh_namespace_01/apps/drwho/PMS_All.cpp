@@ -5,6 +5,8 @@
 #include "PMS_All.h"
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_pwd.h"
 
 // This function packs the located friends userids, plus the machines
 // they are logged into (along with the inactive and active counts on
@@ -80,7 +82,7 @@ Protocol_Record *
 PMS_All::insert_protocol_info (Protocol_Record &protocol_record)
 {
   Protocol_Record *prp = PM_Server::insert_protocol_info (protocol_record);
-  passwd *pwent = getpwnam (prp->get_login ());
+  passwd *pwent = ACE_OS::getpwnam (prp->get_login ());
   char *cp = (char *) ACE_OS::strchr (prp->set_real
                                       (pwent == 0
                                        ? prp->get_login () :

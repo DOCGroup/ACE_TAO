@@ -52,7 +52,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
                                     const ACEXML_Char *qName ACEXML_ENV_ARG_DECL)
       ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  if (ACE_OS_String::strcmp (qName, ACE_TEXT ("dynamic")) == 0)
+  if (ACE_OS::strcmp (qName, ACE_TEXT ("dynamic")) == 0)
     {
       ACE_Parsed_Info *active_info = (this->in_stream_def_ == 0 ?
                                       &this->parsed_info_ :
@@ -158,7 +158,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
           this->parsed_info_.reset ();
         }
     }
-  else if (ACE_OS_String::strcmp (qName, ACE_TEXT ("static")) == 0)
+  else if (ACE_OS::strcmp (qName, ACE_TEXT ("static")) == 0)
     {
       if (this->in_stream_def_)
         {
@@ -188,11 +188,11 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
           this->parsed_info_.reset ();
         }
     }
-  else if (ACE_OS_String::strcmp (qName, ACE_TEXT ("module")) == 0)
+  else if (ACE_OS::strcmp (qName, ACE_TEXT ("module")) == 0)
     {
       this->in_module_ = 0;
     }
-  else if (ACE_OS_String::strcmp (qName, ACE_TEXT ("streamdef")) == 0)
+  else if (ACE_OS::strcmp (qName, ACE_TEXT ("streamdef")) == 0)
     {
 //       ACE_DEBUG ((LM_INFO, ACE_TEXT ("Apply stream %s of type %s\n"),
 //                   this->stream_info_.name (),
@@ -204,7 +204,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
       this->stream_svc_type_ = 0;
       this->stream_ = 0;
     }
-  else if (ACE_OS_String::strcmp (qName, ACE_TEXT ("stream")) == 0)
+  else if (ACE_OS::strcmp (qName, ACE_TEXT ("stream")) == 0)
     {
 //       ACE_DEBUG ((LM_INFO, ACE_TEXT ("Apply stream %s of type %s\n"),
 //                   this->stream_info_.name (),
@@ -267,20 +267,20 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
                                       ACEXML_Attributes *alist ACEXML_ENV_ARG_DECL)
       ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  if (ACE_OS_String::strcmp (qName, ACE_TEXT ("dynamic")) == 0)
+  if (ACE_OS::strcmp (qName, ACE_TEXT ("dynamic")) == 0)
     {
       this->get_dynamic_attrs (alist ACEXML_ENV_ARG_PARAMETER);
     }
-  else if (ACE_OS_String::strcmp (qName, ACE_TEXT ("initializer")) == 0)
+  else if (ACE_OS::strcmp (qName, ACE_TEXT ("initializer")) == 0)
     {
       this->get_initializer_attrs (alist ACEXML_ENV_ARG_PARAMETER);
 
     }
-  else if (ACE_OS_String::strcmp (qName, ACE_TEXT ("static")) == 0)
+  else if (ACE_OS::strcmp (qName, ACE_TEXT ("static")) == 0)
     {
       this->get_static_attrs (alist ACEXML_ENV_ARG_PARAMETER);
     }
-  else if (ACE_OS_String::strcmp (qName, ACE_TEXT ("stream")) == 0)
+  else if (ACE_OS::strcmp (qName, ACE_TEXT ("stream")) == 0)
     {
       this->get_stream_id (alist ACEXML_ENV_ARG_PARAMETER);
 
@@ -299,17 +299,17 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
 //       ACE_DEBUG ((LM_INFO, ACE_TEXT ("Retrieve stream %s from repository\n"),
 //                   this->stream_info_.name ()));
     }
-  else if (ACE_OS_String::strcmp (qName, ACE_TEXT ("streamdef")) == 0)
+  else if (ACE_OS::strcmp (qName, ACE_TEXT ("streamdef")) == 0)
     {
       this->in_stream_def_ = 1;
       // @@ Set up stream service object
     }
-  else if (ACE_OS_String::strcmp (qName, ACE_TEXT ("module")) == 0)
+  else if (ACE_OS::strcmp (qName, ACE_TEXT ("module")) == 0)
     {
       this->in_stream_def_ = 0;
       this->in_module_ = 1;
     }
-  else if (ACE_OS_String::strcmp (qName, ACE_TEXT ("resume")) == 0)
+  else if (ACE_OS::strcmp (qName, ACE_TEXT ("resume")) == 0)
     {
       this->get_id (alist ACEXML_ENV_ARG_PARAMETER);
       if (this->in_module_)
@@ -339,7 +339,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
         }
       this->parsed_info_.reset ();
     }
-  else if (ACE_OS_String::strcmp (qName, ACE_TEXT ("suspend")) == 0)
+  else if (ACE_OS::strcmp (qName, ACE_TEXT ("suspend")) == 0)
     {
       this->get_id (alist ACEXML_ENV_ARG_PARAMETER);
       if (this->in_module_)
@@ -369,7 +369,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
         }
       this->parsed_info_.reset ();
     }
-  else if (ACE_OS_String::strcmp (qName, ACE_TEXT ("remove")) == 0)
+  else if (ACE_OS::strcmp (qName, ACE_TEXT ("remove")) == 0)
     {
       this->get_id (alist ACEXML_ENV_ARG_PARAMETER);
       if (this->in_module_)
@@ -399,7 +399,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
         }
       this->parsed_info_.reset ();
     }
-  else if (ACE_OS_String::strcmp (qName, ACE_TEXT ("ACE_Svc_Conf")) == 0)
+  else if (ACE_OS::strcmp (qName, ACE_TEXT ("ACE_Svc_Conf")) == 0)
     {
       // Main document tag. no-op.
 //       ACE_DEBUG ((LM_INFO, ACE_TEXT ("ACE_Svc_Conf tag\n")));
@@ -493,7 +493,7 @@ ACEXML_Svcconf_Handler::get_stream_id (ACEXML_Attributes *alist ACEXML_ENV_ARG_D
   if (alist != 0)
     for (size_t i = 0; i < alist->getLength (); ++i)
       {
-        if (ACE_OS_String::strcmp (alist->getQName (i), ACE_TEXT ("id")) == 0)
+        if (ACE_OS::strcmp (alist->getQName (i), ACE_TEXT ("id")) == 0)
           {
             this->stream_info_.name (alist->getValue (i));
           }
@@ -512,7 +512,7 @@ ACEXML_Svcconf_Handler::get_id (ACEXML_Attributes *alist ACEXML_ENV_ARG_DECL)
   if (alist != 0)
     for (size_t i = 0; i < alist->getLength (); ++i)
       {
-        if (ACE_OS_String::strcmp (alist->getQName (i), ACE_TEXT ("id")) == 0)
+        if (ACE_OS::strcmp (alist->getQName (i), ACE_TEXT ("id")) == 0)
           {
             this->parsed_info_.name (alist->getValue (i));
           }
@@ -534,17 +534,17 @@ ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist ACEXML_ENV_A
                                &this->stream_info_);
       for (size_t i = 0; i < alist->getLength (); ++i)
         {
-          if (ACE_OS_String::strcmp (alist->getQName (i), ACE_TEXT ("id")) == 0)
+          if (ACE_OS::strcmp (alist->getQName (i), ACE_TEXT ("id")) == 0)
             {
               info->name (alist->getValue (i));
             }
-          else if (ACE_OS_String::strcmp (alist->getQName (i), ACE_TEXT ("status")) == 0)
+          else if (ACE_OS::strcmp (alist->getQName (i), ACE_TEXT ("status")) == 0)
             {
-              if (ACE_OS_String::strcmp (alist->getValue (i), ACE_TEXT ("inactive")) == 0)
+              if (ACE_OS::strcmp (alist->getValue (i), ACE_TEXT ("inactive")) == 0)
                 {
                   info->active (0);
                 }
-              else if (ACE_OS_String::strcmp (alist->getValue (i), ACE_TEXT ("active")) == 0)
+              else if (ACE_OS::strcmp (alist->getValue (i), ACE_TEXT ("active")) == 0)
                 {
                   info->active (1);
                 }
@@ -553,17 +553,17 @@ ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist ACEXML_ENV_A
                   ACEXML_THROW_RETURN (ACEXML_SAXException (ACE_TEXT ("Invalid attribute value, expecting 'active' or 'inactive'\n")), -1);
                 }
             }
-          else if (ACE_OS_String::strcmp (alist->getQName (i), ACE_TEXT ("type")) == 0)
+          else if (ACE_OS::strcmp (alist->getQName (i), ACE_TEXT ("type")) == 0)
             {
-              if (ACE_OS_String::strcasecmp (alist->getValue (i), ACE_TEXT ("service_object")) == 0)
+              if (ACE_OS::strcasecmp (alist->getValue (i), ACE_TEXT ("service_object")) == 0)
                 {
                   info->service_type (ACE_Service_Type::SERVICE_OBJECT);
                 }
-              else if (ACE_OS_String::strcasecmp (alist->getValue (i), ACE_TEXT ("stream")) == 0)
+              else if (ACE_OS::strcasecmp (alist->getValue (i), ACE_TEXT ("stream")) == 0)
                 {
                   info->service_type (ACE_Service_Type::STREAM);
                 }
-              else if (ACE_OS_String::strcasecmp (alist->getValue (i), ACE_TEXT ("module")) == 0)
+              else if (ACE_OS::strcasecmp (alist->getValue (i), ACE_TEXT ("module")) == 0)
                 {
                   info->service_type (ACE_Service_Type::MODULE);
                 }
@@ -591,15 +591,15 @@ ACEXML_Svcconf_Handler::get_initializer_attrs (ACEXML_Attributes *alist ACEXML_E
                                &this->stream_info_);
       for (size_t i = 0; i < alist->getLength (); ++i)
         {
-          if (ACE_OS_String::strcmp (alist->getQName (i), ACE_TEXT ("init")) == 0)
+          if (ACE_OS::strcmp (alist->getQName (i), ACE_TEXT ("init")) == 0)
             {
               info->init_func (alist->getValue (i));
             }
-          else if (ACE_OS_String::strcmp (alist->getQName (i), ACE_TEXT ("path")) == 0)
+          else if (ACE_OS::strcmp (alist->getQName (i), ACE_TEXT ("path")) == 0)
             {
               info->path (alist->getValue (i));
             }
-          else if (ACE_OS_String::strcmp (alist->getQName (i), ACE_TEXT ("params")) == 0)
+          else if (ACE_OS::strcmp (alist->getQName (i), ACE_TEXT ("params")) == 0)
             {
               info->init_params (alist->getValue (i));
             }
@@ -622,11 +622,11 @@ ACEXML_Svcconf_Handler::get_static_attrs (ACEXML_Attributes *alist ACEXML_ENV_AR
                                &this->stream_info_);
       for (size_t i = 0; i < alist->getLength (); ++i)
         {
-          if (ACE_OS_String::strcmp (alist->getQName (i), ACE_TEXT ("id")) == 0)
+          if (ACE_OS::strcmp (alist->getQName (i), ACE_TEXT ("id")) == 0)
             {
               info->name (alist->getValue (i));
             }
-          else if (ACE_OS_String::strcmp (alist->getQName (i), ACE_TEXT ("params")) == 0)
+          else if (ACE_OS::strcmp (alist->getQName (i), ACE_TEXT ("params")) == 0)
             {
               info->init_params (alist->getValue (i));
             }

@@ -40,6 +40,7 @@
 #include "ace/Reactor_Notification_Strategy.h"
 #include "ace/Atomic_Op.h"
 #include "ace/Barrier.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(tests, Message_Queue_Notifications_Test, "$Id$")
 

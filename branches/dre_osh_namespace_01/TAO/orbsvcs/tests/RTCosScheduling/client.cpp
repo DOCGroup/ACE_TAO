@@ -15,6 +15,7 @@
 #include <orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.h>
 #include "ace/Get_Opt.h"
 #include "tao/debug.h"
+#include "ace/OS_main.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

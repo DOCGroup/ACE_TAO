@@ -650,7 +650,7 @@ ACE_Registry::make_name (const ACE_TString &string)
                                          new_position - last_position);
           // Skip past the seperator
           new_position +=
-            ACE_OS_String::strlen (ACE_Registry::STRING_SEPARATOR);
+            ACE_OS::strlen (ACE_Registry::STRING_SEPARATOR);
         }
       else
         {

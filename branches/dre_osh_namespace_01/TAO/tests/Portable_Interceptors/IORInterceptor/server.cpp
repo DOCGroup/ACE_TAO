@@ -6,6 +6,7 @@
 #include "FOO_IORInterceptor_ORBInitializer.h"
 
 #include "tao/ORBInitializer_Registry.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (IORInterceptor,
            server,

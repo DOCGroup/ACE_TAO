@@ -4,6 +4,7 @@
 #include "test.h"
 #include "ace/streams.h"
 #include "ace/Malloc.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(SV_Message_Queues, MQ_Client, "$Id$")
 

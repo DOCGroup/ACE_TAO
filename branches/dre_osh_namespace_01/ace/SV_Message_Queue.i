@@ -3,7 +3,8 @@
 
 // SV_Message_Queue.i
 
-#include "ace/SV_Message_Queue.h"
+#include "ace/Global_Macros.h"
+#include "ace/OS_NS_sys_msg.h"
 
 // Open a message queue using the <external_id>.
 

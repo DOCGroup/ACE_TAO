@@ -1,16 +1,19 @@
 // $Id$
 
 #include "ace/Log_Record.h"
-#include "ace/Log_Msg.h"
-#include "ace/ACE.h"
-
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-# include "ace/streams.h"
-#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 # include "ace/Log_Record.i"
 #endif
+
+#include "ace/Log_Msg.h"
+#include "ace/ACE.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_time.h"
+
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+# include "ace/streams.h"
+#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
 ACE_RCSID(ace, Log_Record, "$Id$")
 

@@ -13,6 +13,7 @@
 #include "ace/Stream.h"
 #include "ace/Module.h"
 #include "ace/Task.h"
+#include "ace/OS_NS_time.h"
 
 ACE_RCSID(Message_Queue, buffer_stream, "$Id$")
 

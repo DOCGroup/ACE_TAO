@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Trading_Service.h"
+#include "ace/OS_main.h"
 
 // Driver function for the TAO Trading Service.
 

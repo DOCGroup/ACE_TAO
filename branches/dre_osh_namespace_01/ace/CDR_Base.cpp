@@ -1,10 +1,12 @@
 #include "ace/CDR_Base.h"
-#include "ace/Message_Block.h"
-#include "ace/OS.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ace/CDR_Base.inl"
 #endif /* ! __ACE_INLINE__ */
+
+#include "ace/Message_Block.h"
+#include "ace/OS_Memory.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (ace,
            CDR_Base,

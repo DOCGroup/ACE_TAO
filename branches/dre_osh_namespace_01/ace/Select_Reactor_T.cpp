@@ -13,6 +13,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/Thread.h"
 #include "ace/Timer_Heap.h"
+#include "ace/OS_NS_sys_select.h"
+#include "ace/OS_NS_sys_stat.h"
 
 // For timer_queue_
 #include "ace/Recursive_Thread_Mutex.h"

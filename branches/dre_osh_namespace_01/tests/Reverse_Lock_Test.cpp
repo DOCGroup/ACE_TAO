@@ -19,7 +19,10 @@
 // ============================================================================
 
 #include "test_config.h"
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
+#include "ace/Guard_T.h"
+#include "ace/Reverse_Lock_T.h"
 
 ACE_RCSID(tests, Reverse_Lock_Test, "$Id$")
 

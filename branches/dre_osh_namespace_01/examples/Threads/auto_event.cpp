@@ -7,8 +7,9 @@
 // by the writer. The writer thread calculates the value and signals
 // the reader when the calculation completes.
 
+#include "ace/OS_main.h"
 #include "ace/Service_Config.h"
-#include "ace/Synch.h"
+#include "ace/Auto_Event.h"
 #include "ace/Singleton.h"
 #include "ace/Thread_Manager.h"
 

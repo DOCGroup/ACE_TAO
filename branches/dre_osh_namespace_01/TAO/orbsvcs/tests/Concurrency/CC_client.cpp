@@ -23,6 +23,7 @@
 #include "tao/debug.h"
 
 #include "ace/Read_Buffer.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(Concurrency, CC_client, "$Id$")
 

@@ -51,8 +51,14 @@
 
 #if defined (VXWORKS)
 #  include /**/ <sigLib.h>
-#  define NSIG (_NSIGS + 1)
 #endif /* VXWORKS */
+
+// should this be extern "C" {}?
+#if defined (CHORUS)
+#     if  !defined(CHORUS_4)
+typedef void (*__sighandler_t)(int); // keep Signal compilation happy
+#     endif
+#endif /* CHORUS */
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
@@ -89,6 +95,14 @@ extern "C"
 #if !defined (ACE_HAS_SIG_ATOMIC_T)
    typedef int sig_atomic_t;
 #endif /* !ACE_HAS_SIG_ATOMIC_T */
+
+# if !defined (SA_SIGINFO)
+#   define SA_SIGINFO 0
+# endif /* SA_SIGINFO */
+
+# if !defined (SA_RESTART)
+#   define SA_RESTART 0
+# endif /* SA_RESTART */
 
 #if !defined (SIGHUP)
 #  define SIGHUP 0
@@ -180,6 +194,21 @@ extern "C"
 #  endif /* NSIG */
 #endif /* ACE_PSOS && !ACE_PSOSIM */
 
+#if defined (VXWORKS)
+#  define NSIG (_NSIGS + 1)
+#elif defined (__Lynx__)
+   // LynxOS Neutrino sets NSIG to the highest-numbered signal.
+#  define ACE_NSIG (NSIG + 1)
+#elif defined (__rtems__)
+#  define ACE_NSIG (SIGRTMAX)
+#elif defined(__BORLANDC__) && (__BORLANDC__ >= 0x600)
+#  define ACE_NSIG _NSIG
+#else
+   // All other platforms set NSIG to one greater than the
+   // highest-numbered signal.
+#  define ACE_NSIG NSIG
+#endif /* __Lynx__ */
+
 #if defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES)
    // Prototypes for both signal() and struct sigaction are consistent..
   //#  if defined (ACE_HAS_SIG_C_FUNC)
@@ -258,6 +287,32 @@ extern "C"
 #endif /* ACE_SIGRTMAX */
 
 #endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
+
+#if defined (DIGITAL_UNIX)
+   // sigwait is yet another macro on Digital UNIX 4.0, just causing
+   // trouble when introducing member functions with the same name.
+   // Thanks to Thilo Kielmann" <kielmann@informatik.uni-siegen.de> for
+   // this fix.
+#  if defined  (__DECCXX_VER)
+#    undef sigwait
+     // cxx on Digital Unix 4.0 needs this declaration.  With it,
+     // <::_Psigwait> works with cxx -pthread.  g++ does _not_ need
+     // it.
+     int _Psigwait __((const sigset_t *set, int *sig));
+#  elif defined (__KCC)
+#    undef sigwait
+     inline int sigwait (const sigset_t* set, int* sig)
+       { return _Psigwait (set, sig); }
+#  endif /* __DECCXX_VER */
+#elif !defined (ACE_HAS_SIGWAIT)
+#  if defined(__rtems__)
+     int sigwait (const sigset_t *set, int *sig);
+#  else
+     int sigwait (sigset_t *set);
+#  endif /* __rtems__ */
+#endif /* ! DIGITAL_UNIX && ! ACE_HAS_SIGWAIT */
+
+  typedef void (*ACE_SIGNAL_C_FUNC)(int,siginfo_t*,void*);
 
 #ifdef __cplusplus
 }

@@ -15,7 +15,7 @@
 #include /**/ "ace/pre.h"
 
 #if defined (ACE_DONT_INCLUDE_ACE_SIGNAL_H)
-# error ace/Signal.h was #included instead of signal.h by ace/OS.h:  fix!!!!
+# error ace/Signal.h was #included instead of signal.h by ace/OS_NS_signal.h:  fix!!!!
 #endif /* ACE_DONT_INCLUDE_ACE_SIGNAL_H */
 
 #include "ace/ACE_export.h"
@@ -25,6 +25,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Event_Handler.h"
+
+// Type of the extended signal handler.
+typedef void (*ACE_Sig_Handler_Ex) (int, siginfo_t *siginfo, ucontext_t *ucontext);
 
 // This worksaround a horrible bug with HP/UX C++...
 typedef struct sigaction ACE_SIGACTION;

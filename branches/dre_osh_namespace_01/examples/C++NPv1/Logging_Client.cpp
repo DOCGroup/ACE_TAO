@@ -4,7 +4,7 @@
 ** Copyright 2001 Addison Wesley. All Rights Reserved.
 */
 
-#include "ace/OS.h"
+#include "ace/OS_NS_sys_time.h"
 #include "ace/CDR_Stream.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Connector.h"

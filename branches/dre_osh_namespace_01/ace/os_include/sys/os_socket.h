@@ -141,12 +141,62 @@ extern "C"
 #  define ACE_PROTOCOL_FAMILY_INET PF_INET
 #endif /* ACE_HAS_IPV6 */
 
+#if defined (ACE_HAS_SOCKLEN_T)
+typedef socklen_t ACE_SOCKET_LEN;
+#elif defined (ACE_HAS_SIZET_SOCKET_LEN)
+typedef size_t ACE_SOCKET_LEN;
+#else
+typedef int ACE_SOCKET_LEN;
+#endif /* ACE_HAS_SIZET_SOCKET_LEN */
+
 #if defined (ACE_HAS_LKSCTP)
 extern "C"
 {
 #include /**/ <netinet/sctp.h>
 }
 #endif /* ACE_HAS_LKSCTP */
+
+# if defined (ACE_LACKS_TIMEDWAIT_PROTOTYPES)
+
+  ssize_t recv_timedwait (ACE_HANDLE handle,
+                          char *buf,
+                          int len,
+                          int flags,
+                          struct timespec *timeout);
+
+  ssize_t recvmsg_timedwait (ACE_HANDLE handle,
+                             struct msghdr *msg,
+                             int flags,
+                             struct timespec *timeout);
+
+  ssize_t recvfrom_timedwait (ACE_HANDLE handle,
+                              char *buf,
+                              int len,
+                              int flags,
+                              struct sockaddr *addr,
+                              int *addrlen,
+                              struct timespec *timeout);
+
+  ssize_t send_timedwait (ACE_HANDLE handle,
+                          const char *buf,
+                          int len,
+                          int flags,
+                          struct timespec *timeout);
+
+  ssize_t sendmsg_timedwait (ACE_HANDLE handle,
+                             ACE_SENDMSG_TYPE *msg,
+                             int flags,
+                             struct timespec *timeout);
+
+  ssize_t sendto_timedwait (ACE_HANDLE handle,
+                            const char *buf,
+                            int len,
+                            int flags,
+                            const struct sockaddr *addr,
+                            int addrlen,
+                            struct timespec *timeout);
+
+# endif /* ACE_LACKS_TIMEDWAIT_PROTOTYPES */
 
 #ifdef __cplusplus
 }

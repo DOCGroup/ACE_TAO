@@ -3,6 +3,8 @@
 
 // FIFO.i
 
+#include "ace/OS_NS_unistd.h"
+
 ACE_INLINE int
 ACE_FIFO::get_local_addr (const ACE_TCHAR *&r) const
 {

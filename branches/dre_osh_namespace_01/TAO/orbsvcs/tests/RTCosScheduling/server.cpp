@@ -20,6 +20,7 @@
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"
 #include "tao/ORB_Core.h"
+#include "ace/OS_main.h"
 
 
 char *node_        = NULL;

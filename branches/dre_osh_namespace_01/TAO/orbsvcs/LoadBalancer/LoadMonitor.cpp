@@ -7,6 +7,7 @@
 #include "tao/ORB_Core.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/OS_main.h"
 
 
 ACE_RCSID (LoadBalancer,

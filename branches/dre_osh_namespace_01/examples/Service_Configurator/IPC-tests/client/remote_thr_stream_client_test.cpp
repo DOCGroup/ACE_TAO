@@ -2,11 +2,13 @@
 
 // Test program for the INET ACE_TLI-SAPs...
 
+#include "ace/OS_main.h"
 #include "ace/Mem_Map.h"
 #include "ace/TLI_Connector.h"
 #include "ace/INET_Addr.h"
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(client, remote_thr_stream_client_test, "$Id$")
 

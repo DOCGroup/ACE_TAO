@@ -6,6 +6,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
 #include "ace/DLL_Manager.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_dlfcn.h"
 
 ACE_RCSID(ace, DLL, "$Id$")
 
@@ -119,7 +121,7 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
   if (this->dll_handle_)
     {
       // If we have a good handle and its the same name, just return.
-      if (ACE_OS_String::strcmp (this->dll_name_, dll_filename) == 0)
+      if (ACE_OS::strcmp (this->dll_name_, dll_filename) == 0)
         return 0;
       else
         this->close ();

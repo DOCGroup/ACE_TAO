@@ -2,18 +2,18 @@
 // $Id$
 
 #include "ace/Addr.h"
-#include "ace/Log_Msg.h"
-#include "ace/OS.h"
-
 ACE_RCSID(ace, Addr, "$Id$")
-
-// Note: this object requires static construction and destruction.
-/* static */
-const ACE_Addr ACE_Addr::sap_any (AF_ANY, -1);
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Addr.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Log_Msg.h"
+#include "ace/os_include/sys/os_socket.h"
+
+// Note: this object requires static construction and destruction.
+/* static */
+const ACE_Addr ACE_Addr::sap_any (AF_ANY, -1);
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Addr)
 

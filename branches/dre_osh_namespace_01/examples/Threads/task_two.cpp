@@ -4,6 +4,7 @@
 // zillions of tasks and then wait for them using both polling and the
 // ACE Thread Manager.
 
+#include "ace/OS_main.h"
 #include "ace/Task.h"
 
 #include "ace/Service_Config.h"

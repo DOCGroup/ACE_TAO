@@ -7,6 +7,7 @@
 // circular include problems.
 #include "ace/Message_Queue.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_sys_time.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -9,6 +9,8 @@
 #include "ace/Mem_Map.h"
 
 #include "JAWS/Export.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
 
 class JAWS_Export JAWS_FILE : public ACE_FILE_IO
 //

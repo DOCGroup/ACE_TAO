@@ -6,6 +6,11 @@
 #include "ace/SOCK_Dgram_Mcast.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_errno.h"
+#include "ace/os_include/net/os_if.h"
+#include "ace/os_include/arpa/os_inet.h"
+
 ACE_RCSID (ace,
            SOCK_Dgram_Mcast,
            "$Id$")
@@ -31,13 +36,13 @@ public:
     {
       if (ip_addr.addr_to_string (ret_string, len, 1) == -1)
         {
-          ACE_OS_String::strcpy (ret_string, ACE_LIB_TEXT ("<?>"));
+          ACE_OS::strcpy (ret_string, ACE_LIB_TEXT ("<?>"));
         }
       else
         {
           ACE_TCHAR *pc;
           if (clip_portnum
-              && (pc = ACE_OS_String::strchr (ret_string, ACE_LIB_TEXT (':'))))
+              && (pc = ACE_OS::strchr (ret_string, ACE_LIB_TEXT (':'))))
             *pc = ACE_LIB_TEXT ('\0'); // clip port# info.
         }
     }
@@ -99,10 +104,10 @@ ACE_SOCK_Dgram_Mcast::dump (void) const
                              ACE_NTOHL (pm->imr_interface.s_addr));
       ACE_SDM_helpers::addr_to_string (if_addr, iface_string, 
                                        sizeof iface_string, 1);
-      if (ACE_OS_String::strcmp (iface_string, ACE_LIB_TEXT ("0.0.0.0")) == 0)
+      if (ACE_OS::strcmp (iface_string, ACE_LIB_TEXT ("0.0.0.0")) == 0)
         // Receives on system default iface. (Note that null_iface_opt_
         // option processing has already occurred.)
-        ACE_OS_String::strcpy (iface_string, ACE_LIB_TEXT ("<default>"));
+        ACE_OS::strcpy (iface_string, ACE_LIB_TEXT ("<default>"));
 
       // Dump info.
       ACE_DEBUG ((LM_DEBUG, 
@@ -155,7 +160,7 @@ ACE_SOCK_Dgram_Mcast::open (const ACE_INET_Addr &mcast_addr,
                       reuse_addr) == -1)
     return -1;
 
-  return open_i (mcast_addr, net_if, reuse_addr);
+  return this->open_i (mcast_addr, net_if, reuse_addr);
 }
 
 int
@@ -222,8 +227,8 @@ ACE_SOCK_Dgram_Mcast::open_i (const ACE_INET_Addr &mcast_addr,
                                       &(send_mreq.imr_interface),
                                       sizeof send_mreq.imr_interface) == -1)
         return -1;
-      this->send_net_if_ = new ACE_TCHAR[ACE_OS_String::strlen (net_if) + 1];
-      ACE_OS_String::strcpy (this->send_net_if_, net_if);
+      this->send_net_if_ = new ACE_TCHAR[ACE_OS::strlen (net_if) + 1];
+      ACE_OS::strcpy (this->send_net_if_, net_if);
 #else
       // Send interface option not supported - ignore it.
       // (We may have been invoked by ::subscribe, so we have to allow
@@ -657,7 +662,7 @@ ACE_SOCK_Dgram_Mcast::make_multicast_ifaddr (ip_mreq *ret_mreq,
       // Look up the interface by number, not name.
       if_address.ifr_ifno = ACE_OS::atoi (net_if);
 #else
-      ACE_OS_String::strcpy (if_address.ifr_name, net_if);
+      ACE_OS::strcpy (if_address.ifr_name, net_if);
 #endif /* defined (ACE_PSOS) */
 
       if (ACE_OS::ioctl (this->get_handle (),

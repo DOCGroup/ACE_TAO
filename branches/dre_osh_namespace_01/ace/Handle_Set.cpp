@@ -7,11 +7,27 @@
 #include "ace/Handle_Set.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/OS.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(ace, Handle_Set, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Handle_Set)
+
+  // ACE_MSB_MASK is only used here.
+# if defined (ACE_HAS_BROKEN_BITSHIFT)
+  // This might not be necessary any more:  it was added prior to the
+  // (fd_mask) cast being added to the version below.  Maybe that cast
+  // will fix the problem on tandems.    Fri Dec 12 1997 David L. Levine
+#   define ACE_MSB_MASK (~(ACE_UINT32 (1) << ACE_UINT32 (NFDBITS - 1)))
+# else
+  // This needs to go here to avoid overflow problems on some compilers.
+#   if defined (ACE_WIN32)
+    //  Does ACE_WIN32 have an fd_mask?
+#     define ACE_MSB_MASK (~(1 << (NFDBITS - 1)))
+#   else  /* ! ACE_WIN32 */
+#     define ACE_MSB_MASK (~((fd_mask) 1 << (NFDBITS - 1)))
+#   endif /* ! ACE_WIN32 */
+# endif /* ACE_HAS_BROKEN_BITSHIFT */
 
 #if defined (__BORLANDC__) && !defined (ACE_WIN32)
 // The Borland C++ compiler on Linux also doesn't have fds_bits, but has __fds_bits.
