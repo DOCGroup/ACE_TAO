@@ -91,6 +91,12 @@ public:
   /// Get the RAPI file descriptor for RSVP events.
   virtual ACE_HANDLE rsvp_events_handle (void);
 
+   virtual void  rsvp_event_type (RSVP_Event_Type event_type);
+  ///Set the RAPI event that last occured
+
+  virtual RSVP_Event_Type rsvp_event_type (void);
+  ///Get the RAPI event that last occured
+
   /// Get the destination address for this RAPI session.
   virtual ACE_INET_Addr dest_addr (void) const;
 
@@ -207,6 +213,12 @@ public:
 
   /// Get the file descriptor of the underlying socket.
   virtual ACE_HANDLE rsvp_events_handle (void);
+
+  virtual void  rsvp_event_type (RSVP_Event_Type event_type);
+  ///Set the RAPI event that last occured
+  
+  virtual RSVP_Event_Type rsvp_event_type (void);
+  ///Get the RAPI event that last occured
 
   /// GQoS version.
   virtual int version ();

@@ -101,6 +101,11 @@ typedef ACE_Hash_Map_Manager <TAO_String_Hash_Key,AVStreams::FlowEndPoint_ptr,AC
 typedef ACE_Hash_Map_Entry <TAO_String_Hash_Key,AVStreams::FlowEndPoint_ptr> FlowEndPoint_Map_Entry;
 typedef ACE_Hash_Map_Iterator <TAO_String_Hash_Key,AVStreams::FlowEndPoint_ptr,ACE_Null_Mutex>  FlowEndPoint_Map_Iterator;
 
+typedef ACE_Hash_Map_Manager <TAO_String_Hash_Key,TAO_AV_Flow_Handler*,ACE_Null_Mutex>  Flow_Handler_Map;
+typedef ACE_Hash_Map_Entry <TAO_String_Hash_Key,TAO_AV_Flow_Handler*> Flow_Handler_Map_Entry;
+typedef ACE_Hash_Map_Iterator <TAO_String_Hash_Key,TAO_AV_Flow_Handler*,ACE_Null_Mutex>  Flow_Handler_Map_Iterator;
+
+
 #include "AV_Core.h"
 
 class TAO_AV_Export AV_Null_MediaCtrl
@@ -516,6 +521,7 @@ class TAO_AV_Flow_Handler;
  * by applications that want to provide more control features.
  */
 class TAO_AV_Export TAO_Base_StreamEndPoint
+  :public virtual TAO_PropertySet
 {
 
   // @@Naga: Rename this class to TAO_Base_EndPoint since both stream and flowendpoints derive from it.
@@ -561,12 +567,15 @@ public:
                                    TAO_AV_Protocol_Object *object);
 
   virtual void set_flow_handler (const char *flowname,
-                            TAO_AV_Flow_Handler *handler);
+				 TAO_AV_Flow_Handler *handler);
 
   TAO_AV_QoS &qos (void);
+
   
-private:
+protected:
   TAO_AV_QoS qos_;
+  Flow_Handler_Map flow_handler_map_;
+
 };
 
 // Forward declarations.
@@ -583,8 +592,8 @@ class TAO_Reverse_FlowSpec_Entry;
 class TAO_AV_Export TAO_StreamEndPoint
   : public virtual POA_AVStreams::StreamEndPoint,
     public virtual TAO_Base_StreamEndPoint,
-    public virtual TAO_PropertySet,
     public virtual PortableServer::RefCountServantBase
+//public virtual TAO_PropertySet
 {
 
 public:
@@ -639,7 +648,11 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::noSuchFlow,
                      AVStreams::QoSRequestFailed));
-
+  
+  virtual int change_qos (AVStreams::streamQoS &new_qos,
+			  const AVStreams::flowSpec &the_flows,
+			  CORBA::Environment &env = CORBA::Environment::default_environment ());
+  
   /// Used to restrict the set of protocols
   virtual CORBA::Boolean set_protocol_restriction (const AVStreams::protocolSpec &the_pspec,
                                                    CORBA::Environment &env = CORBA::Environment::default_environment ())
@@ -1203,7 +1216,7 @@ protected:
 class TAO_AV_Export TAO_FlowEndPoint :
   public virtual POA_AVStreams::FlowEndPoint,
   public virtual TAO_PropertySet,
-  public virtual PortableServer::RefCountServantBase,
+  //  public virtual PortableServer::RefCountServantBase,
   public virtual TAO_Base_StreamEndPoint
 {
 
