@@ -716,7 +716,61 @@ CORBA::Boolean
 Command_Handler::fast_forward (void)
                                
 {
-  ::ff ();
+  //  ::ff ();
+   // CORBA call
+  unsigned char tmp;
+  Video_Control::FFpara_var para (new Video_Control::FFpara);
+  /*
+  fprintf(stderr, "CTR: FF . . .\n");
+  */
+  if (shared->live) {
+    beep();
+  }
+  else {
+    this->stop_playing ();
+    if (shared->nextGroup < 0)
+      shared->nextGroup = 0;
+    if (videoSocket >= 0 && shared->nextGroup < shared->totalGroups)
+      {
+        NewCmd(CmdFF);
+        shared->needHeader = 0;
+        shared->framesPerSecond = shared->config.ffFPS /
+          shared->patternSize;
+        shared->usecPerFrame = (int)(1000000.0 / (float)shared->config.ffFPS) *
+          shared->patternSize;
+        
+        shared->VStimeAdvance =
+	  max(shared->config.VStimeAdvance, DEFAULT_VStimeAdvance) * 1000;
+        if (shared->VStimeAdvance < shared->usecPerFrame)
+          shared->VStimeAdvance = shared->usecPerFrame;
+        
+        para->VStimeAdvance = shared->VStimeAdvance;
+        para->sn = shared->cmdsn;
+        para->nextGroup = shared->nextGroup;
+        para->usecPerFrame = shared->usecPerFrame;
+        para->framesPerSecond = shared->framesPerSecond;
+        startTime = get_usec();
+        TAO_TRY
+          {
+            CORBA::Boolean result;
+            result = this->video_control_->fast_forward (para.in (),
+                                                         TAO_TRY_ENV);
+            TAO_CHECK_ENV;
+            if (result == (CORBA::B_FALSE))
+              return -1;
+            ACE_DEBUG ((LM_DEBUG,"(%P|%t) fast_forward success \n"));
+          }
+        TAO_CATCHANY
+          {
+            TAO_TRY_ENV.print_exception ("video_control_->fast_forward_video (..)");
+            return -1;
+          }
+        TAO_ENDTRY;
+        start_timer();
+      }
+  }
+  tmp = CmdDONE;
+  CmdWrite(&tmp, 1);
   return 0;
 }
 
@@ -755,7 +809,7 @@ Command_Handler::play (int auto_exp,
   /*
  fprintf (stderr, "CTR: PLAY . . .\n");
  */
-  stop_playing ();
+  this->stop_playing ();
 
   if (!shared->live && !shared->config.rt && videoSocket >= 0) {
     /* rtplay turned off only when video avaible and not want RT play */
@@ -1066,7 +1120,7 @@ Command_Handler::stop (void)
   /*
     fprintf(stderr, "CTR: STOP . . .\n");
   */
-  stop_playing();
+  this->stop_playing ();
 
   if (shared->live && videoSocket >= 0) {
     Fprintf(stderr, "CTR live video stat: average disp frame rate: %5.2f fps\n",
@@ -1324,29 +1378,20 @@ Command_Handler::stop_playing (void)
       if (videoSocket >= 0)
         {
           // CORBA call
-          if (precmd == CmdPLAY)
+          TAO_TRY
             {
-              TAO_TRY
-                {
-                  CORBA::Boolean result =
-                    this->video_control_->stop (shared->cmdsn,
-                                                TAO_TRY_ENV);
-                  if (result == (CORBA::B_FALSE))
-                    return -1;
-                }
-              TAO_CATCHANY
-                {
-                  TAO_TRY_ENV.print_exception ("video_control_->stop(..)");
-                  return -1;
-                }
-              TAO_ENDTRY;
+              CORBA::Boolean result =
+                this->video_control_->stop (shared->cmdsn,
+                                            TAO_TRY_ENV);
+              if (result == (CORBA::B_FALSE))
+                return -1;
             }
-          else
+          TAO_CATCHANY
             {
-              int cmdsn = htonl(shared->cmdsn);
-              VideoWrite(&tmp, 1);
-              VideoWrite(&cmdsn, 4);
+              TAO_TRY_ENV.print_exception ("video_control_->stop(..)");
+              return -1;
             }
+          TAO_ENDTRY;
         }
     
       /* stop timer and sleep for a while */

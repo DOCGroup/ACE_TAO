@@ -1638,12 +1638,14 @@ static int timerUPF;
 static int wait_usr2 = 0;
 static int last_disp_fid = 0;
 
+#if 0
 static void stop_playing(void)
 {
   unsigned char precmd = shared->cmd;
   
   if (precmd == CmdFF || precmd == CmdFB || precmd == CmdPLAY)
   {
+
     unsigned char tmp = CmdSTOP;
     NewCmd(CmdSTOP);
     
@@ -1685,6 +1687,7 @@ static void stop_playing(void)
       shared->nextGroup = shared->currentGroup + 1;
   }
 }
+#endif 
 
 static void loopBack(void)
 {
