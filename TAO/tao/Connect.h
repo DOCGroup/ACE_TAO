@@ -113,8 +113,9 @@ public:
 
   virtual int handle_message (TAO_InputCDR &msg,
                               TAO_OutputCDR &response,
-			      int &response_required,
-			      CORBA::Environment &env);
+                              int &response_required,
+                              CORBA::ULong &request_id,
+                              CORBA::Environment &env);
   // Handle processing of the request residing in <msg>, setting
   // <response_required> to zero if the request is for a oneway or
   // non-zero if for a two-way and <response> to any necessary
@@ -124,8 +125,9 @@ public:
 protected:
   virtual int handle_locate (TAO_InputCDR &msg,
                              TAO_OutputCDR &response,
-			     int &response_required,
-			     CORBA::Environment &env);
+                             int &response_required,
+                             CORBA::ULong &request_id,
+                             CORBA::Environment &env);
   // Handle processing of the location request residing in <msg>,
   // setting <response_required> to one if no errors are encountered.
   // The LocateRequestReply is placed into <response>.  In case of
@@ -134,6 +136,10 @@ protected:
 
   virtual void send_response (TAO_OutputCDR &response);
   // Send <response> to the client on the other end.
+  
+  void send_error (CORBA::ULong request_id, CORBA::Environment &env);
+  // Send <error> to the client on the other end, which
+  // means basically sending the exception.
 
   // = Event Handler overloads
 
