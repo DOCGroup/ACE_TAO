@@ -46,6 +46,10 @@ namespace TAO
       {
         // dependent on type create the correct strategy.
       }
+
+      bool
+      is_servant_in_map (PortableServer::Servant servant,
+                         int &wait_occurred_restart_call) = 0;
     };
 
     class TAO_PortableServer_Export Retain_Servant_Retention_Strategy :

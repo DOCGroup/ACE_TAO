@@ -25,64 +25,79 @@
 // Forward references.
 class TAO_POA_Policy_Set;
 
-class TAO_PortableServer_Export TAO_POA_Cached_Policies
+namespace TAO
 {
-public:
-
-  enum PriorityModel
+  namespace Portable_Server
   {
-    CLIENT_PROPAGATED,
-    SERVER_DECLARED,
-    NOT_SPECIFIED
-  };
+    class TAO_PortableServer_Export Cached_Policies
+    {
+    public:
 
-  TAO_POA_Cached_Policies ();
+      enum PriorityModel
+      {
+        CLIENT_PROPAGATED,
+        SERVER_DECLARED,
+        NOT_SPECIFIED
+      };
 
-  ~TAO_POA_Cached_Policies (void);
+      Cached_Policies ();
 
-  /// Update the cached policy values.
-  void update (TAO_POA_Policy_Set &policy_set
-               ACE_ENV_ARG_DECL);
+      ~Cached_Policies (void);
 
-  /// Accessor methods to cached values.
-  PortableServer::ThreadPolicyValue thread (void) const;
-  PortableServer::LifespanPolicyValue lifespan (void) const;
-  PortableServer::IdUniquenessPolicyValue id_uniqueness (void) const;
-  PortableServer::IdAssignmentPolicyValue id_assignment (void) const;
-  PortableServer::ImplicitActivationPolicyValue implicit_activation (void) const;
-  PortableServer::ServantRetentionPolicyValue servant_retention (void) const;
-  PortableServer::RequestProcessingPolicyValue request_processing (void) const;
-  PriorityModel priority_model (void) const;
-  CORBA::Short server_priority (void) const;
+      /// Update the cached policy values.
+      void update (TAO_POA_Policy_Set &policy_set
+                   ACE_ENV_ARG_DECL);
 
-  void priority_model (PriorityModel priority_model);
-  void server_priority (CORBA::Short priority);
-  void implicit_activation (PortableServer::ImplicitActivationPolicyValue value);
+      /// Accessor methods to cached values.
+      PortableServer::ThreadPolicyValue thread (void) const;
+      PortableServer::LifespanPolicyValue lifespan (void) const;
+      PortableServer::IdUniquenessPolicyValue id_uniqueness (void) const;
+      PortableServer::IdAssignmentPolicyValue id_assignment (void) const;
+      PortableServer::ImplicitActivationPolicyValue implicit_activation (void) const;
+      PortableServer::ServantRetentionPolicyValue servant_retention (void) const;
+      PortableServer::RequestProcessingPolicyValue request_processing (void) const;
+      PriorityModel priority_model (void) const;
+      CORBA::Short server_priority (void) const;
 
-protected:
+      void priority_model (PriorityModel priority_model);
+      void server_priority (CORBA::Short priority);
+      void implicit_activation (PortableServer::ImplicitActivationPolicyValue value);
 
-  /// Helper method to update a particular policy.
-  void update_policy (const CORBA::Policy_ptr policy
-                      ACE_ENV_ARG_DECL);
+    protected:
 
-  PortableServer::ThreadPolicyValue thread_;
+      /// Helper method to update a particular policy.
+      void update_policy (const CORBA::Policy_ptr policy
+                          ACE_ENV_ARG_DECL);
 
-  PortableServer::LifespanPolicyValue lifespan_;
+      PortableServer::ThreadPolicyValue thread_;
 
-  PortableServer::IdUniquenessPolicyValue id_uniqueness_;
+      PortableServer::LifespanPolicyValue lifespan_;
 
-  PortableServer::IdAssignmentPolicyValue id_assignment_;
+      PortableServer::IdUniquenessPolicyValue id_uniqueness_;
 
-  PortableServer::ImplicitActivationPolicyValue implicit_activation_;
+      PortableServer::IdAssignmentPolicyValue id_assignment_;
 
-  PortableServer::ServantRetentionPolicyValue servant_retention_;
+      PortableServer::ImplicitActivationPolicyValue implicit_activation_;
 
-  PortableServer::RequestProcessingPolicyValue request_processing_;
+      PortableServer::ServantRetentionPolicyValue servant_retention_;
 
-  PriorityModel priority_model_;
+      PortableServer::RequestProcessingPolicyValue request_processing_;
 
-  CORBA::Short server_priority_;
-};
+      PriorityModel priority_model_;
+
+      CORBA::Short server_priority_;
+    };
+
+    /**
+     * This class stores the active policy strategies used for a certain POA.
+     */
+    class TAO_PortableServer_Export Active_Policy_Strategies
+    {
+      public:
+    };
+  }
+}
+
 
 #if defined (__ACE_INLINE__)
 # include "POA_Cached_Policies.i"

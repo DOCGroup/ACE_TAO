@@ -393,7 +393,7 @@ public:
   TAO_POA_Policy_Set &policies (void);
 
   /// Accessor for cached POA policies.
-  TAO_POA_Cached_Policies &cached_policies (void);
+  TAO::Portable_Server::Cached_Policies &cached_policies (void);
 
   /// This method gives the policies that are exposed to the client.
   /// These policies are shipped within the IOR.
@@ -920,7 +920,7 @@ protected:
   /// Adapter can be accepting, rejecting etc.
   PortableInterceptor::AdapterState adapter_state_;
 
-  TAO_POA_Cached_Policies cached_policies_;
+  TAO::Portable_Server::Cached_Policies cached_policies_;
 
   int delete_active_object_map_;
 

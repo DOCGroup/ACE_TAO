@@ -1,3 +1,21 @@
+Thu Sep 30 13:31:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Servant_Retention_Strategy.h:
+          Added is_servant_in_map
+
+        * tao/PortableServer/Upcall_Wrapper.h:
+          No need to add path
+
+        * tao/PortableServer/POA_Cachec_Policies.{h,cpp,i}:
+          Renamed TAO_POA_Cached_Policies to Cached_Policies in the
+          TAO::Portable_Server namespace.
+          Added empty class Active_Policy_Strategies class, the idea is that
+          each POA gets an instance of this class and uses the policy
+          strategies by retrieving them from this class
+
+        * tao/POA.{h,i}:
+          Updated because of Cached_Policies change above
+
 Thu Sep 30 13:17:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Object_Adapter_Factory.h:
