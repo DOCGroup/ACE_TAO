@@ -1,3 +1,8 @@
+Tue Mar 24 18:14:18 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/Env_Value_T.h: added #include "ace/OS.h" to get the definition
+	  for ACE_static_cast - AIX xlC needs it for auto template generation.
+
 Tue Mar 24 09:00:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* bin/auto_compile: 
