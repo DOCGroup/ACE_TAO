@@ -1,3 +1,10 @@
+Tue Nov  3 16:10:49 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* docs/configurations.html: The macro
+ 	  TAO_USE_DOTTED_DECIMAL_ADDRESSES was given as
+ 	  TAO_USES_DOTTED_DECIMAL_ADDRESES in docs/configuration.html.
+  	  Thanks to Byron Harris for reporting this!
+
 Tue Nov  3 14:39:05 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/mpeg/mpeg_shared/Receiver.idl: 
