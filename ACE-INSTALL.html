@@ -183,14 +183,20 @@ and Alpha platforms.  With glibc 2 distributions, such as RedHat 5.0,
 you'll need at least the following additions:<p>
 
     <ul>
-      <li>egcs 1.0.1 or later
+      <li>egcs 1.0.2 or later
       <li>glibc-2.0.7-7 (from ftp://sunsite.unc.edu/pub/gnu)
     </ul><p>
+
+<strong>NOTE:</strong>: Be careful when installing egcs.  If
+you don't remove your old gcc and libg++ RPMs, it's best to
+install egcs in a different directory than /usr, such as /usr/local,
+and set your PATH and LD_LIBRARY_PATH accordingly.<p>
 
 With some glibc-2.0.6 versions, you may need to apply some <A
 HREF="os-patches/linux-patches.html">patches</A> to get ACE working with
 LinuxThreads.  Some of the patches are necessary with Alpha CPUs and
-with some older kernels.<P>
+with some older kernels.  egcs 1.0.1 can also be used, but it
+may need patches, described in the patches file, as well.<P>
 
 Some of the ACE tests fail on older, pre-glibc-2 Linux platforms.<p>
 
