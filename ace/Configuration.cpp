@@ -200,7 +200,7 @@ ACE_Configuration::validate_name (const ACE_TCHAR* name)
        // Make sure it doesn't contain any invalid characters 
        *pos != '\0'; 
        pos++) 
-    if (ACE_OS::strchr (ACE_LIB_TEXT ("\\/]["), *pos)) 
+    if (ACE_OS::strchr (ACE_LIB_TEXT ("\\]["), *pos)) 
       return -1; 
 
   // Make sure its not too long. 
