@@ -1,3 +1,13 @@
+Mon Jul 26 17:09:09 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Object_Manager.{h,cpp},Makefile: don't create the
+          ACE_TOKEN_MANAGER_CREATION_LOCK and
+          ACE_TOKEN_INVARIANTS_CREATION_LOCK preallocated objects
+          if the Token component isn't build.  This gets rid of
+          unresolved references to the ACE_Token_Proxy compoents
+          on VxWorks/g++ when Token isn't built.  Thanks to
+          Stephane Chatre <schatre@oresis.com> for reporting this.
+
 Mon Jul 26 17:02:08 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/wrapper_macros.GNU: don't override
