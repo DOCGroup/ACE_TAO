@@ -19,7 +19,7 @@ BIN2 =  Throughput \
 	Latency_Server
 
 PSRC=$(addsuffix .cpp,$(BIN2))
-LDLIBS = -lECTests -lTAO_RTEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_Messaging -lTAO_PortableServer -lTAO_Strategies -lTAO
+LDLIBS = -lECTests -lTAO_RTEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_Messaging -lTAO_PortableServer $(TAO_SRVR_LIBS)
 
 CPPFLAGS += -I../lib -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
         $(foreach svc, $(TAO_ORBSVCS), -DTAO_ORBSVCS_HAS_$(svc))

@@ -19,7 +19,7 @@ CLIENT_OBJS = \
 	Notify_Logging_Service.o \
 	Notify_Logging_Server.o
 
-LDLIBS = -lTAO_DsNotifyLogAdmin -lTAO_DsEventLogAdmin -lTAO_DsLogAdmin -lTAO_CosNotification -lTAO_ETCL -lTAO_CosNaming -lTAO_IORTable -lTAO_DynamicAny -lTAO_Messaging -lTAO_PortableServer -lTAO -lACE
+LDLIBS = -lTAO_DsNotifyLogAdmin -lTAO_DsEventLogAdmin -lTAO_DsLogAdmin -lTAO_CosNotification -lTAO_ETCL -lTAO_CosNaming -lTAO_IORTable -lTAO_DynamicAny -lTAO_Messaging $(TAO_SRVR_LIBS) -lACE
 
 BIN2 = Notify_Logging_Service
 

@@ -1,3 +1,26 @@
+Sun May 11 09:28:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/LoadBalancer/Makefile.LoadManager:
+	* orbsvcs/LoadBalancer/Makefile.LoadMonitor:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile:
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile:
+	* orbsvcs/Trading_Service/Makefile:
+	* orbsvcs/tests/Concurrency/Makefile:
+	* orbsvcs/tests/CosEvent/Basic/Makefile:
+	* orbsvcs/tests/EC_Custom_Marshal/Makefile:
+	* orbsvcs/tests/EC_MT_Mcast/Makefile:
+	* orbsvcs/tests/EC_Mcast/Makefile:
+	* orbsvcs/tests/EC_Multiple/Makefile:
+	* orbsvcs/tests/EC_Throughput/Makefile:
+	* orbsvcs/tests/Event/Basic/Makefile:
+	* orbsvcs/tests/Event/Performance/Makefile:
+	* orbsvcs/tests/Property/Makefile:
+	* orbsvcs/tests/Sched_Conf/Makefile:
+	* orbsvcs/tests/Simple_Naming/Makefile:
+	* orbsvcs/tests/Time/Makefile: Another set fixes to get static
+	  builds linking fine. 
+
 Sun May 11 09:26:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bug_1482_Regression/Makefile: Updated dependencies once

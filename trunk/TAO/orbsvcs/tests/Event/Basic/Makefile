@@ -29,7 +29,7 @@ BIN2 =   Reconnect \
 	Random
 
 PSRC=$(addsuffix .cpp,$(BIN2)) Schedule.cpp
-LDLIBS = -lECTests -lTAO_RTEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_Messaging -lTAO_IORTable -lTAO_PortableServer -lTAO
+LDLIBS = -lECTests -lTAO_RTEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_Messaging -lTAO_IORTable $(TAO_SRVR_LIBS)
 
 CPPFLAGS += -I../lib -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
         $(foreach svc, $(TAO_ORBSVCS), -DTAO_ORBSVCS_HAS_$(svc))
