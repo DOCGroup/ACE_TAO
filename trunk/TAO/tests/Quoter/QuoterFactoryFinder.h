@@ -6,37 +6,53 @@
 //    QuoterFactoryFinder.cpp
 //
 // = DESCRIPTION
-//   Factory Finder for the Quoter example
+//   Server for the Quoter Factory Finder 
 //
 // = AUTHOR
 //    Michael Kircher (mk1@cs.wustl.edu)
 //
 // ============================================================================
 
-#include "quoterS.h"
+#include "ace/Get_Opt.h"
+#include "tao/tao.h"
+#include "QuoterFactoryFinder_Impl.h"
 
 #if !defined (QUOTER_FACTORY_FINDER_H)
 #define QUOTER_FACTORY_FINDER_H
 
-class QuoterFactoryFinder_i : public POA_Stock::QuoterFactoryFinder 
+class QuoterFactoryFinder_Server
 {
   // = TILE
-  //   A CosLifeCycle conforming Factory Finder for the Quoter
-  //   example. It uses the Naming Service to find a fitting factory.
+  //   Server object for the Quoter Factory Finder
 
 public:
-  QuoterFactoryFinder_i (void);
-  ~QuoterFactoryFinder_i (void);
+  QuoterFactoryFinder_Server (void);
+  // Default constructor
 
-  virtual CosLifeCycle::Factories * find_factories (const CosLifeCycle::Key & factory_key,
-                                                    CORBA::Environment &_tao_environment);
-  // Returns a squence of Factories if factories matching the
-  // factory_key were found. If no factory was found, then the
-  // NoFactory exception, defined in CosLifeCycle, is raised.
+  ~QuoterFactoryFinder_Server (void);
+  // Destructor
+
+  int init (int argc, char *argv[], CORBA::Environment& env);
+  // Initialize the Quoter_Server state - parsing arguments and ...
+
+  int run (CORBA::Environment& env);
+  // Run the orb 
+
+  unsigned int parse_args ();
+  // parse the passed parameters
 
 private:
-  CosNaming::NamingContext_var quoterNamingContext_var_;    
-  // Hold a reference to the Quoter example naming context.
+  TAO_ORB_Manager orb_manager_;
+  // instance of the ORB Manager
+
+  QuoterFactoryFinder_i quoterFactoryFinder_Impl_;
+  // instance of the Quoter Factory Finder
+
+  int argc_;
+  // Number of commandline arguments.
+
+  char **argv_;
+  // commandline arguments.
 };
 
 #endif /* QUOTER_FACTORY_FINDER_H */
