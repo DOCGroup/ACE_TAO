@@ -51,8 +51,21 @@ public:
   static int supported ();
   // Returns 1 if high-resolution time is supported on the platform, 0 if not.
 
+  static void global_scale_factor (double gsf);
+  // <gsf> is used as a global scale factor.  Any High_Res_Timers
+  // constructed with scale_factor == 0 will check and use <gsf> if
+  // set.  This allows applications to set the scale factor just once
+  // for all High_Res_Timers.  The scale factors passed to
+  // constructors take precedence to global_scale_factor_.
+
+  static ACE_Time_Value gettimeofday (void);
+  // Calls ACE_High_Res_Timer::hrtime_to_tv passing ACE_OS::gethrtime
+  // and global_scale_factor_.  This function can be used to
+  // parameterize objects such as ACE_Timer_Queue::gettimeofday.
+
   ACE_High_Res_Timer (double scale_factor = 0);
-  // Initialize the timer.
+  // Initialize the timer.  The <scale_factor> takes precedence to
+  // global_scale_factor_.
 
   void reset (void);
   // Reinitialize the timer.
@@ -102,6 +115,11 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
+  static void hrtime_to_tv (ACE_Time_Value &tv,
+			    ACE_hrtime_t hrt, 
+			    double scale_factor);
+  // Converts an <hrt> to <tv> using the <scale_factor>.
+
   ACE_hrtime_t start_;
   // Starting time.
 
@@ -115,6 +133,8 @@ private:
   // Start time of incremental timing.
 
   double scale_factor_;
+
+  static double global_scale_factor_;
 };
 
 #if defined (__ACE_INLINE__)

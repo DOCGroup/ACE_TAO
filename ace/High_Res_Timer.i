@@ -14,6 +14,11 @@ ACE_High_Res_Timer::ACE_High_Res_Timer (double scale_factor)
   : scale_factor_ (scale_factor)
 {
   ACE_TRACE ("ACE_High_Res_Timer::ACE_High_Res_Timer");
+
+  // <scale_factor> takes precendence over the global_scale_factor_.
+  if (scale_factor_ == 0)
+    scale_factor_ = ACE_High_Res_Timer::global_scale_factor_;
+
   this->reset ();
 }
 
@@ -54,3 +59,34 @@ ACE_High_Res_Timer::elapsed_microseconds (ACE_hrtime_t &usecs) const
     usecs = (this->end_ - this->start_) / 1000L;
   }
 }
+
+ACE_INLINE void
+ACE_High_Res_Timer::global_scale_factor (double gsf)
+{
+  global_scale_factor_ = gsf;
+}
+
+ACE_INLINE void
+ACE_High_Res_Timer::hrtime_to_tv (ACE_Time_Value &tv,
+				  ACE_hrtime_t hrt, 
+				  double scale_factor)
+{
+  if (scale_factor > 0) {
+    tv.sec ((ACE_hrtime_t) (hrt / 1000000L / scale_factor));
+    tv.usec ((ACE_hrtime_t) (hrt % 1000000L / scale_factor));
+  } else {
+    tv.sec (hrt / 1000000L);
+    tv.usec (hrt % 1000000L);
+  }
+}
+
+ACE_INLINE ACE_Time_Value
+ACE_High_Res_Timer::gettimeofday (void)
+{
+  ACE_Time_Value tv;
+  ACE_High_Res_Timer::hrtime_to_tv (tv,
+				    ACE_OS::gethrtime (),
+				    ACE_High_Res_Timer::global_scale_factor_);
+  return tv;
+}
+
