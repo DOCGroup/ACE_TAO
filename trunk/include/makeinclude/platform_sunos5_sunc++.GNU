@@ -34,6 +34,17 @@ CCFLAGS         += $(CFLAGS) -features=castop # -pta
 DCFLAGS         += -g
 DLD             = $(CXX)
 
+#### RTTI can coexist with ACE, but it doesn't use it.  To enable,
+#### add rtti=1 to your make invocation.  Sun C++ 4.2 (and later?)
+#### only support this option.
+ifdef rtti
+  CCFLAGS += -features=rtti
+else
+  #### ACE_LACKS_RTTI is necessary with -features=castop, but
+  #### without -features=rtti, to convert dynamic_cast to static_cast.
+  CCFLAGS += -DACE_LACKS_RTTI
+endif # rtti
+
 #### Exception handling breaks on MP machines prior to Sun C++ 4.2
 #### with jumbo patch 104631-02, see ace/config-sunos5.5.h.
 #### If you are using a version of Sun C++ prior to 4,2, or haven't
@@ -44,13 +55,6 @@ DLD             = $(CXX)
 ifndef exceptions
   CCFLAGS += -noex
 endif # ! exceptions
-
-#### RTTI can coexist with ACE, but it doesn't use it.  To enable,
-#### add rtti=1 to your make invocation.  Sun C++ 4.2 (and later?)
-#### only support this option.
-ifdef rtti
-  CCFLAGS += -features=rtti -DACE_HAS_RTTI
-endif # rtti
 
 LD              = $(CXX)
 

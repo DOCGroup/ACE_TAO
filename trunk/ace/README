@@ -160,7 +160,6 @@ ACE_LACKS_GETS                          Platform lacks ::gets (), or it's desire
 ACE_LACKS_INLINE_FUNCTIONS              Platform can't handle "inline" keyword correctly.
 ACE_LACKS_NETDB_REENTRANT_FUNCTIONS     Platform does not support reentrant netdb functions (getprotobyname_r, getprotobynumber_r, gethostbyaddr_r, gethostbyname_r, getservbyname_r).
 ACE_HAS_REGEX                           Platform supports the POSIX regular expression library
-ACE_HAS_RTTI                            Platform supports RTTI.  See the Sun CC platform macros file for example usage.
 ACE_HAS_SELECT_H                        Platform has special header for select().
 ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL For Win32: Use Select_Reactor as default implementation of Reactor instead of WFMO_Reactor.
 ACE_HAS_SEMUN                           Compiler/platform defines a union semun for SysV shared memory
