@@ -119,4 +119,15 @@ template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS && !ACE_POSIX_AIOCB_PROACTOR*/
+#else /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS && !ACE_POSIX_AIOCB_PROACTOR*/
+
+int 
+main (int, char *[])
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "This example is multithreaded version of test_timeout_st.cpp\n"
+              "This doesnt work on this platform !!!\n"));
+  return 1;
+}
+
+#endif /*  ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS && !ACE_POSIX_AIOCB_PROACTOR*/
