@@ -858,14 +858,13 @@ Command_Handler::init_video_channel (char *phostname, char *videofile)
             }
             while (msgo + msgs < pkts) {
               ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
-              cerr << "expecting a packet of size " << sizeof (*msg)                   << endl;
+              //              cerr << "expecting a packet of size " << sizeof (*msg)                   << endl;
 
               VideoRead(buf, sizeof(*msg));
               //~~ we need to read the first frame from the 
               //  data socket instead of control socket.
               //              SocketRecv(dataSocket, buf, size);
-              ACE_DEBUG ((LM_DEBUG,"packetsn = %d,msgsn = %d\n",
-                          msg->packetsn,msg->msgsn));
+              //              ACE_DEBUG ((LM_DEBUG,"packetsn = %d,msgsn = %d\n",msg->packetsn,msg->msgsn));
               pkts = ntohl(msg->packetSize);
               msgo = ntohl(msg->msgOffset);
               msgs = ntohl(msg->msgSize);
