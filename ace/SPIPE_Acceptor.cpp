@@ -112,7 +112,8 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
       this->set_handle (handle);
       this->overlapped_.hEvent = this->event_.handle();
       this->event_.reset();
-      ACE_ASSERT(::ConnectNamedPipe (handle, &this->overlapped_) == FALSE);
+      BOOL result = ::ConnectNamedPipe (handle, &this->overlapped_);
+      ACE_ASSERT(result == FALSE);
       status = ::GetLastError();
       if (status == ERROR_PIPE_CONNECTED)
 	this->already_connected_ = TRUE;
