@@ -8,7 +8,7 @@
 
 ACE_RCSID (Strategies, UIOP_Transport, "$Id$")
 
-#include "UIOP_Connect.h"
+#include "UIOP_Connection_Handler.h"
 #include "UIOP_Profile.h"
 #include "tao/Timeprobe.h"
 #include "tao/CDR.h"

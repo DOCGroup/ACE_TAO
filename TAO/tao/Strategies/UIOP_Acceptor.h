@@ -33,8 +33,10 @@
 
 #include "ace/Acceptor.h"
 #include "ace/LSOCK_Acceptor.h"
-#include "UIOP_Connect.h"
+#include "UIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
+#include "tao/GIOP_Message_State.h"
+
 
 // TAO UIOP_Acceptor concrete call defination
 
@@ -55,10 +57,10 @@ public:
   virtual ~TAO_UIOP_Acceptor (void);
   // Destructor
 
-  typedef ACE_Strategy_Acceptor<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR> TAO_UIOP_BASE_ACCEPTOR;
-  typedef TAO_Creation_Strategy<TAO_UIOP_Server_Connection_Handler> TAO_UIOP_CREATION_STRATEGY;
-  typedef TAO_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler> TAO_UIOP_CONCURRENCY_STRATEGY;
-  typedef TAO_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR> TAO_UIOP_ACCEPT_STRATEGY;
+  typedef ACE_Strategy_Acceptor<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR> TAO_UIOP_BASE_ACCEPTOR;
+  typedef TAO_Creation_Strategy<TAO_UIOP_Connection_Handler> TAO_UIOP_CREATION_STRATEGY;
+  typedef TAO_Concurrency_Strategy<TAO_UIOP_Connection_Handler> TAO_UIOP_CONCURRENCY_STRATEGY;
+  typedef TAO_Accept_Strategy<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR> TAO_UIOP_ACCEPT_STRATEGY;
 
   // = The TAO_Acceptor methods, check the documentation in
   //   Pluggable.h for details.
