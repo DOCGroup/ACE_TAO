@@ -1,3 +1,11 @@
+Mon Oct  7 17:16:42 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/DsLogAdmin_Static.dsp:
+
+	  Added missing `DsLogNotification.idl' and corresponding
+	  stub/skeleton files to the project.  Addresses build problems in
+	  our Win32 static builds.
+
 Mon Oct  7 17:04:45 2002  Ossama Othman  <ossama@uci.edu>
 
 	* TAOACE.dsw:
