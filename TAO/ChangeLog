@@ -1,3 +1,8 @@
+Sat Apr 26 11:08:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Messaging/Messaging_No_ImplC.cpp: Missing template
+	  instantiations.
+
 Sat Apr 26 10:58:31 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/PolicyC.cpp: Removed duplicate template instantiations.
