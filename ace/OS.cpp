@@ -743,7 +743,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
   return ACE_OS::thr_setprio (sched_params.priority ());
 
 #else
-  ACE_NOTSUP_RETURN (ENOTSUP);
+  ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STHREADS */
 }
 
@@ -2198,6 +2198,7 @@ ACE_OS::fork (const char *program_name)
 {
   // ACE_TRACE ("ACE_OS::fork");
 #if defined (ACE_WIN32) || defined (VXWORKS)
+  ACE_UNUSED_ARG (program_name);
   ACE_NOTSUP_RETURN (pid_t (-1));
 #else
   pid_t pid = ::fork ();
