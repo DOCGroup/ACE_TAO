@@ -58,7 +58,7 @@ ACE_Naming_Context::open (Context_Scope_Type scope_in, int lite)
 {
   ACE_TRACE ("ACE_Naming_Context::open");
   ACE_OS::hostname (this->hostname_, 
-		    (sizeof this->hostname_ / sizeof char));
+		    (sizeof this->hostname_ / sizeof (char)));
 
   this->netnameserver_host_ = this->name_options_->nameserver_host ();
   this->netnameserver_port_ = this->name_options_->nameserver_port ();
