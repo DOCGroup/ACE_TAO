@@ -170,11 +170,11 @@ TAO_MProfile::size (void) const
 }
 
 ACE_INLINE const TAO_Profile*
-TAO_MProfile::get_profile (CORBA::ULong index) const
+TAO_MProfile::get_profile (CORBA::ULong slot) const
 {
-  if (index >= this->last_)
+  if (slot >= this->last_)
     return 0;
-  return this->pfiles_[index];
+  return this->pfiles_[slot];
 }
 
 ACE_INLINE TAO_Profile_ptr *

@@ -122,12 +122,14 @@ operator= (const TAO_Unbounded_String_Sequence &rhs)
 }
 
 TAO_SeqElem_String_Manager
-TAO_Unbounded_String_Sequence::operator[] (CORBA::ULong index) const
+TAO_Unbounded_String_Sequence::operator[] (CORBA::ULong slot) const
 {
-  ACE_ASSERT (index < this->maximum_);
+  ACE_ASSERT (slot < this->maximum_);
   char **const tmp =
-    ACE_reinterpret_cast (char **ACE_CAST_CONST, this->buffer_);
-  return TAO_SeqElem_String_Manager (tmp + index, this->release_);
+    ACE_reinterpret_cast (char **ACE_CAST_CONST,
+                          this->buffer_);
+  return TAO_SeqElem_String_Manager (tmp + slot,
+                                     this->release_);
 }
 
 char* *

@@ -4,6 +4,7 @@
 
 // These should never be non-NULL, but the method
 // is required of pseudo objects.
+
 ACE_INLINE CORBA_Context*
 CORBA_Context::_duplicate (CORBA_Context* x)
 {
@@ -204,8 +205,10 @@ CORBA_ContextList::_nil (void)
 // Inline operations for class CORBA_ContextList_var
 // *************************************************************
 
+// default constructor
+
 ACE_INLINE
-CORBA_ContextList_var::CORBA_ContextList_var (void) // default constructor
+CORBA_ContextList_var::CORBA_ContextList_var (void) 
   : ptr_ (CORBA_ContextList::_nil ())
 {}
 
@@ -220,8 +223,9 @@ CORBA_ContextList_var::ptr (void) const
   return this->ptr_;
 }
 
+// copy constructor
 ACE_INLINE
-CORBA_ContextList_var::CORBA_ContextList_var (const CORBA_ContextList_var &p) // copy constructor
+CORBA_ContextList_var::CORBA_ContextList_var (const CORBA_ContextList_var &p) 
   : ptr_ (p.ptr_->_duplicate ())
 {}
 

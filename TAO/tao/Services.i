@@ -260,9 +260,9 @@ CORBA_ServiceDetail::_tao_seq_Octet_var::operator CORBA_ServiceDetail::_tao_seq_
 }
 
 ACE_INLINE CORBA::Octet &
-CORBA_ServiceDetail::_tao_seq_Octet_var::operator[] (CORBA::ULong index)
+CORBA_ServiceDetail::_tao_seq_Octet_var::operator[] (CORBA::ULong slot)
 {
-  return this->ptr_->operator[] (index);
+  return this->ptr_->operator[] (slot);
 }
 
 ACE_INLINE const CORBA_ServiceDetail::_tao_seq_Octet &
@@ -357,9 +357,9 @@ CORBA_ServiceDetail::_tao_seq_Octet_out::operator-> (void)
 }
 
 ACE_INLINE CORBA::Octet &
-CORBA_ServiceDetail::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
+CORBA_ServiceDetail::_tao_seq_Octet_out::operator[] (CORBA::ULong slot)
 {
-  return this->ptr_->operator[] (index);
+  return this->ptr_->operator[] (slot);
 }
 
 
@@ -783,9 +783,9 @@ CORBA_ServiceInformation::_tao_seq_ServiceOption_var::operator CORBA_ServiceInfo
 }
 
 ACE_INLINE CORBA::ServiceOption &
-CORBA_ServiceInformation::_tao_seq_ServiceOption_var::operator[] (CORBA::ULong index)
+CORBA_ServiceInformation::_tao_seq_ServiceOption_var::operator[] (CORBA::ULong slot)
 {
-  return this->ptr_->operator[] (index);
+  return this->ptr_->operator[] (slot);
 }
 
 ACE_INLINE const CORBA_ServiceInformation::_tao_seq_ServiceOption &
@@ -880,9 +880,9 @@ CORBA_ServiceInformation::_tao_seq_ServiceOption_out::operator-> (void)
 }
 
 ACE_INLINE CORBA::ServiceOption &
-CORBA_ServiceInformation::_tao_seq_ServiceOption_out::operator[] (CORBA::ULong index)
+CORBA_ServiceInformation::_tao_seq_ServiceOption_out::operator[] (CORBA::ULong slot)
 {
-  return this->ptr_->operator[] (index);
+  return this->ptr_->operator[] (slot);
 }
 
 
@@ -1137,9 +1137,9 @@ CORBA_ServiceInformation::_tao_seq_ServiceDetail_var::operator CORBA_ServiceInfo
 }
 
 ACE_INLINE CORBA_ServiceDetail &
-CORBA_ServiceInformation::_tao_seq_ServiceDetail_var::operator[] (CORBA::ULong index)
+CORBA_ServiceInformation::_tao_seq_ServiceDetail_var::operator[] (CORBA::ULong slot)
 {
-  return this->ptr_->operator[] (index);
+  return this->ptr_->operator[] (slot);
 }
 
 ACE_INLINE const CORBA_ServiceInformation::_tao_seq_ServiceDetail &
@@ -1234,9 +1234,9 @@ CORBA_ServiceInformation::_tao_seq_ServiceDetail_out::operator-> (void)
 }
 
 ACE_INLINE CORBA_ServiceDetail &
-CORBA_ServiceInformation::_tao_seq_ServiceDetail_out::operator[] (CORBA::ULong index)
+CORBA_ServiceInformation::_tao_seq_ServiceDetail_out::operator[] (CORBA::ULong slot)
 {
-  return this->ptr_->operator[] (index);
+  return this->ptr_->operator[] (slot);
 }
 
 

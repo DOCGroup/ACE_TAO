@@ -25,8 +25,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-////////////////////////////////////////////////////////////////////////////////
-
 // Forward declarations.
 class TAO_Id_Uniqueness_Strategy;
 class TAO_Lifespan_Strategy;
@@ -48,7 +46,6 @@ public:
     //     Value field of the active object map.
     //
     // = DESCRIPTION
-    //
     //     We need a mapping from and to all of the following fields:
     //     <user_id>, <system_id>, and <servant>.  Therefore, we keep
     //     all the fields together in the map.
@@ -56,6 +53,7 @@ public:
     Map_Entry (void);
     // Default constructor.
 
+    // @@ Irfan, can you please add a comment for each of these fields?
     PortableServer::ObjectId user_id_;
     PortableServer::ObjectId system_id_;
     PortableServer::Servant servant_;
@@ -229,8 +227,6 @@ public:
   // Size of the system id produced by the map.
 };
 
-////////////////////////////////////////////////////////////////////////////////
-
 class TAO_Id_Uniqueness_Strategy
 {
   // = TITLE
@@ -240,7 +236,6 @@ class TAO_Id_Uniqueness_Strategy
   //     Strategy for implementing points of variation between the
   //     UNIQUE_ID and the MULTIPLE_ID policies.
 public:
-
   virtual ~TAO_Id_Uniqueness_Strategy (void);
   // Virtual destructor.
 
@@ -280,8 +275,6 @@ protected:
   // Pointer to the active map.
 };
 
-////////////////////////////////////////////////////////////////////////////////
-
 class TAO_Unique_Id_Strategy : public TAO_Id_Uniqueness_Strategy
 {
   // = TITLE
@@ -318,8 +311,6 @@ public:
   // Are there any remaining activations of <servant> in the active
   // object map?  Can be used with any policy.
 };
-
-////////////////////////////////////////////////////////////////////////////////
 
 class TAO_Multiple_Id_Strategy : public TAO_Id_Uniqueness_Strategy
 {
@@ -358,8 +349,6 @@ public:
   // object map?  Can be used with any policy.
 };
 
-////////////////////////////////////////////////////////////////////////////////
-
 class TAO_Lifespan_Strategy
 {
   // = TITLE
@@ -388,8 +377,6 @@ protected:
   // Pointer to the active map.
 };
 
-////////////////////////////////////////////////////////////////////////////////
-
 class TAO_Transient_Strategy : public TAO_Lifespan_Strategy
 {
   // = TITLE
@@ -398,15 +385,12 @@ class TAO_Transient_Strategy : public TAO_Lifespan_Strategy
   // = DESCRIPTION
   //     Strategy for the TRANSIENT policy.
 public:
-
   virtual int find_servant_using_system_id_and_user_id (const PortableServer::ObjectId &system_id,
                                                         const PortableServer::ObjectId &user_id,
                                                         PortableServer::Servant &servant,
                                                         TAO_Active_Object_Map::Map_Entry *&entry);
   // Can be used with any policy.
 };
-
-////////////////////////////////////////////////////////////////////////////////
 
 class TAO_Persistent_Strategy : public TAO_Lifespan_Strategy
 {
@@ -416,7 +400,6 @@ class TAO_Persistent_Strategy : public TAO_Lifespan_Strategy
   // = DESCRIPTION
   //     Strategy for the PERSISTENT policy.
 public:
-
   virtual int find_servant_using_system_id_and_user_id (const PortableServer::ObjectId &system_id,
                                                         const PortableServer::ObjectId &user_id,
                                                         PortableServer::Servant &servant,
@@ -424,8 +407,6 @@ public:
   // Can be used with any policy.
 
 };
-
-////////////////////////////////////////////////////////////////////////////////
 
 class TAO_Id_Assignment_Strategy
 {
@@ -436,7 +417,6 @@ class TAO_Id_Assignment_Strategy
   //     Strategy for implementing points of variation between the
   //     USER_ID and the SYSTEM_ID policies.
 public:
-
   virtual ~TAO_Id_Assignment_Strategy (void);
   // Virtual destructor.
 
@@ -453,8 +433,6 @@ protected:
   // Pointer to the active map.
 };
 
-////////////////////////////////////////////////////////////////////////////////
-
 class TAO_User_Id_Strategy : public TAO_Id_Assignment_Strategy
 {
   // = TITLE
@@ -463,13 +441,10 @@ class TAO_User_Id_Strategy : public TAO_Id_Assignment_Strategy
   // = DESCRIPTION
   //     Strategy for the USER_ID policy.
 public:
-
   virtual int bind_using_system_id (PortableServer::Servant servant,
                                     TAO_Active_Object_Map::Map_Entry *&entry);
   // Must be used with SYSTEM_ID policy.
 };
-
-////////////////////////////////////////////////////////////////////////////////
 
 class TAO_System_Id_With_Unique_Id_Strategy : public TAO_Id_Assignment_Strategy
 {
@@ -479,13 +454,10 @@ class TAO_System_Id_With_Unique_Id_Strategy : public TAO_Id_Assignment_Strategy
   // = DESCRIPTION
   //     Strategy for the SYSTEM_ID policy (with UNIQUE_ID policy).
 public:
-
   virtual int bind_using_system_id (PortableServer::Servant servant,
                                     TAO_Active_Object_Map::Map_Entry *&entry);
   // Must be used with SYSTEM_ID policy.
 };
-
-////////////////////////////////////////////////////////////////////////////////
 
 class TAO_System_Id_With_Multiple_Id_Strategy : public TAO_Id_Assignment_Strategy
 {
@@ -495,13 +467,10 @@ class TAO_System_Id_With_Multiple_Id_Strategy : public TAO_Id_Assignment_Strateg
   // = DESCRIPTION
   //     Strategy for the SYSTEM_ID policy (with MULTIPLE_ID policy).
 public:
-
   virtual int bind_using_system_id (PortableServer::Servant servant,
                                     TAO_Active_Object_Map::Map_Entry *&entry);
   // Must be used with SYSTEM_ID policy.
 };
-
-////////////////////////////////////////////////////////////////////////////////
 
 class TAO_Id_Hint_Strategy
 {
@@ -512,10 +481,10 @@ class TAO_Id_Hint_Strategy
   //     Strategy for implementing points of variation between the
   //     active hint and the no hint policies.
 public:
-
   virtual ~TAO_Id_Hint_Strategy (void);
   // Virtual destructor.
 
+  // @@ Irfan, can you please add comments to these methods.
   virtual int recover_key (const PortableServer::ObjectId &system_id,
                            PortableServer::ObjectId &user_id) = 0;
 
@@ -532,8 +501,6 @@ public:
                          TAO_Active_Object_Map::Map_Entry &entry) = 0;
 };
 
-////////////////////////////////////////////////////////////////////////////////
-
 class TAO_Active_Hint_Strategy : public TAO_Id_Hint_Strategy
 {
   // = TITLE
@@ -542,7 +509,7 @@ class TAO_Active_Hint_Strategy : public TAO_Id_Hint_Strategy
   // = DESCRIPTION
   //     Strategy for adding active hints to ids.
 public:
-
+  // @@ Irfan, can you please add comments to these methods.
   TAO_Active_Hint_Strategy (CORBA::ULong map_size);
 
   virtual ~TAO_Active_Hint_Strategy (void);
@@ -571,8 +538,6 @@ public:
   system_id_map system_id_map_;
 };
 
-////////////////////////////////////////////////////////////////////////////////
-
 class TAO_No_Hint_Strategy : public TAO_Id_Hint_Strategy
 {
   // = TITLE
@@ -581,7 +546,7 @@ class TAO_No_Hint_Strategy : public TAO_Id_Hint_Strategy
   // = DESCRIPTION
   //     Strategy for not adding active hints to ids.
 public:
-
+  // @@ Irfan, can you please add comments to these methods.
   virtual ~TAO_No_Hint_Strategy (void);
   // Virtual destructor.
 
@@ -600,8 +565,6 @@ public:
   virtual int system_id (PortableServer::ObjectId_out system_id,
                          TAO_Active_Object_Map::Map_Entry &entry);
 };
-
-////////////////////////////////////////////////////////////////////////////////
 
 #if defined (__ACE_INLINE__)
 # include "tao/Active_Object_Map.i"

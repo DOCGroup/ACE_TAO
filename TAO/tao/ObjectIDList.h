@@ -84,7 +84,7 @@ public:
   operator const CORBA_ORB_ObjectIdList &() const;
   operator CORBA_ORB_ObjectIdList &();
   operator CORBA_ORB_ObjectIdList &() const;
-  TAO_SeqElem_String_Manager operator[] (CORBA::ULong index);
+  TAO_SeqElem_String_Manager operator[] (CORBA::ULong slot);
   // in, inout, out, _retn
   const CORBA_ORB_ObjectIdList &in (void) const;
   CORBA_ORB_ObjectIdList &inout (void);
@@ -113,7 +113,7 @@ public:
   operator CORBA_ORB_ObjectIdList *&();
   CORBA_ORB_ObjectIdList *&ptr (void);
   CORBA_ORB_ObjectIdList *operator-> (void);
-  TAO_SeqElem_String_Manager operator[] (CORBA::ULong index);
+  TAO_SeqElem_String_Manager operator[] (CORBA::ULong slot);
 
 private:
   CORBA_ORB_ObjectIdList *&ptr_;

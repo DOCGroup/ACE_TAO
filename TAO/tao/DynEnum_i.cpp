@@ -20,19 +20,19 @@
 #include "tao/DynEnum_i.h"
 #include "tao/InconsistentTypeCodeC.h"
 
-//////////////////////////////////////////////////////////////////////
 // Constructors and destructor
 
-TAO_DynEnum_i::TAO_DynEnum_i (const CORBA_Any& any)
+TAO_DynEnum_i::TAO_DynEnum_i (const CORBA_Any &any)
   : type_ (any.type ()),
     value_ (0)
 {
   CORBA::Environment env;
 
   // The type will be correct if this constructor called from a
-  // factory function, but it could also be called by the
-  // user, so.....
-  if (TAO_DynAny_i::unalias (this->type_.in (), env) == CORBA::tk_enum)
+  // factory function, but it could also be called by the user,
+  // so.....
+  if (TAO_DynAny_i::unalias (this->type_.in (),
+                             env) == CORBA::tk_enum)
     {
       // Get the CDR stream of the argument.
       ACE_Message_Block* mb = any._tao_get_cdr ();
@@ -54,7 +54,7 @@ TAO_DynEnum_i::TAO_DynEnum_i (CORBA_TypeCode_ptr tc)
   // Need to check if called by user.
   if (TAO_DynAny_i::unalias (tc,
                              env)
-        != CORBA::tk_enum)
+      != CORBA::tk_enum)
     env.exception (new CORBA_ORB_InconsistentTypeCode);
 }
 
@@ -62,10 +62,9 @@ TAO_DynEnum_i::~TAO_DynEnum_i (void)
 {
 }
 
-//////////////////////////////////////////////////////////////////////
 // Functions specific to DynEnum
 
-char*
+char *
 TAO_DynEnum_i::value_as_string (CORBA::Environment& env)
 {
   return CORBA::string_dup (this->type_.in ()->member_name (this->value_,
@@ -73,8 +72,8 @@ TAO_DynEnum_i::value_as_string (CORBA::Environment& env)
 }
 
 void
-TAO_DynEnum_i::value_as_string (const char* value_as_string,
-                                CORBA::Environment& env)
+TAO_DynEnum_i::value_as_string (const char *value_as_string,
+                                CORBA::Environment &env)
 {
   CORBA::ULong count = this->type_.in ()->member_count (env);
   CORBA::ULong i;
@@ -109,7 +108,6 @@ TAO_DynEnum_i::value_as_ulong (CORBA::ULong value_as_ulong,
     env.exception (new CORBA_DynAny::InvalidValue);
 }
 
-//////////////////////////////////////////////////////////////////////
 // Common functions
 
 void
@@ -144,7 +142,8 @@ void
 TAO_DynEnum_i::from_any (const CORBA_Any& any,
                          CORBA::Environment &env)
 {
-  if (TAO_DynAny_i::unalias (any.type (), env) == CORBA::tk_enum)
+  if (TAO_DynAny_i::unalias (any.type (),
+                             env) == CORBA::tk_enum)
     {
       // Get the CDR stream of the argument.
       ACE_Message_Block* mb = any._tao_get_cdr ();
@@ -164,7 +163,7 @@ TAO_DynEnum_i::to_any (CORBA::Environment& ACE_TRY_ENV)
 
   out_cdr.write_ulong (this->value_);
 
-  CORBA_Any* retval;
+  CORBA_Any *retval;
   ACE_NEW_THROW_EX (retval,
                     CORBA_Any (this->type_.in (),
                                0,
@@ -193,10 +192,10 @@ TAO_DynEnum_i::next (CORBA::Environment &)
 }
 
 CORBA::Boolean
-TAO_DynEnum_i::seek (CORBA::Long index,
+TAO_DynEnum_i::seek (CORBA::Long slot,
                      CORBA::Environment &)
 {
-  if (index == 0)
+  if (slot == 0)
     return 1;
   else
     return 0;
@@ -208,7 +207,6 @@ TAO_DynEnum_i::rewind (CORBA::Environment &)
 {
 }
 
-/////////////////////////////////////////////////////////////////
 // Insert and get functions
 //
 // These have no meaning for the enum type, but someone could

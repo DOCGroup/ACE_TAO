@@ -143,11 +143,11 @@ public:
   operator const char *() const;
   // only read privileges.
 
-  char &operator[] (CORBA::ULong index);
-  // allows access and modification using an index.
+  char &operator[] (CORBA::ULong slot);
+  // allows access and modification using an slot.
 
-  char operator[] (CORBA::ULong index) const;
-  // allows only accessing thru an index.
+  char operator[] (CORBA::ULong slot) const;
+  // allows only accessing thru an slot.
 
     // = in, out, out, and _retn operations.
     // ORBOS/97-05-15, Appendix C.2
@@ -248,11 +248,11 @@ public:
   operator const CORBA::WChar *() const;
   // only read privileges.
 
-  CORBA::WChar &operator[] (CORBA::ULong index);
-  // allows access and modification using an index.
+  CORBA::WChar &operator[] (CORBA::ULong slot);
+  // allows access and modification using an slot.
 
-  CORBA::WChar operator[] (CORBA::ULong index) const;
-  // allows only accessing thru an index.
+  CORBA::WChar operator[] (CORBA::ULong slot) const;
+  // allows only accessing thru an slot.
 
     // = in, out, out, and _retn operations.
     // ORBOS/97-05-15, Appendix C.2

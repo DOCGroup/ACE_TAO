@@ -10,7 +10,7 @@
 //     Client_Strategy_Factory.h
 //
 // = AUTHOR
-//     Chris Cleeland
+//     Chris Cleeland <cleeland@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -27,10 +27,10 @@ class TAO_Wait_Strategy;
 class TAO_Transport;
 
 class TAO_Export TAO_Client_Strategy_Factory : public ACE_Service_Object
+{
   // = TITLE
   //    Abstract factory used by the client to manufacture various
   //    strategies used on the client-side.
-{
 public:
   // = Intialization and termination methods.
   TAO_Client_Strategy_Factory (void);
@@ -40,15 +40,15 @@ public:
   // Destructor
 
   virtual ACE_Lock* create_iiop_profile_lock (void);
-  // create the lock for the forwarding IIOP Profile used by
-  // the TAO_GIOP_Invocation::location_forward and the
-  // TAO_GIOP_Invocation::start
+  // Create the lock for the forwarding IIOP Profile used by the
+  // <TAO_GIOP_Invocation::location_forward> and the
+  // <TAO_GIOP_Invocation::start>.
 
   virtual TAO_Transport_Mux_Strategy *create_transport_mux_strategy (void);
   // Create the correct client request muxing strategy.
 
   virtual TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
-  // Create the correct client wait_for_reply strategy.
+  // Create the correct client <wait_for_reply> strategy.
 };
 
 #endif /* TAO_CLIENT_STRATEGY_FACTORY_H */

@@ -1512,7 +1512,7 @@ TAO_NAMESPACE  Messaging
     operator const PolicyValueSeq &() const;
     operator PolicyValueSeq &();
     operator PolicyValueSeq &() const;
-    PolicyValue &operator[] (CORBA::ULong index);
+    PolicyValue &operator[] (CORBA::ULong slot);
     // in, inout, out, _retn
     const PolicyValueSeq &in (void) const;
     PolicyValueSeq &inout (void);
@@ -1535,7 +1535,7 @@ TAO_NAMESPACE  Messaging
     operator PolicyValueSeq *&();
     PolicyValueSeq *&ptr (void);
     PolicyValueSeq *operator-> (void);
-    PolicyValue &operator[] (CORBA::ULong index);
+    PolicyValue &operator[] (CORBA::ULong slot);
 
   private:
     PolicyValueSeq *&ptr_;

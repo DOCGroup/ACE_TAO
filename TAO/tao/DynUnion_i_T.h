@@ -44,7 +44,7 @@ class DU_Extractor : public DU_Extractor_base
   //    TAO_DynUnion_i or even at global scope in the same file.
   //
 public:
-  virtual ~DU_Extractor ();
+  virtual ~DU_Extractor (void);
 
   virtual CORBA::Boolean check_match (const CORBA_Any& inside_any,
                                       const CORBA_Any& outside_any);

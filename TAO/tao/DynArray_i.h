@@ -45,20 +45,19 @@ public:
   ~TAO_DynArray_i (void);
   // destructor
 
-  // Functions specific to DynArray
-
-  // Assign/dump elements using IDL defined type AnySeq
+  // = Functions specific to DynArray
 
   CORBA_AnySeq_ptr get_elements (CORBA::Environment &ACE_TRY_ENV);
+  // Assign/dump elements using IDL defined type AnySeq
 
   void set_elements (const CORBA_AnySeq& value,
                      CORBA::Environment &ACE_TRY_ENV);
 
-  // Functions common to all Dynamic Any types
+  // = Functions common to all Dynamic Any types
 
   void assign (CORBA_DynAny_ptr dyn_any,
                CORBA::Environment &ACE_TRY_ENV);
-  // Sets the value of the receiver to the value of the argument
+  // Sets the value of the receiver to the value of the argument.
 
   CORBA_DynAny_ptr copy (CORBA::Environment &ACE_TRY_ENV);
   // Creates a copy
@@ -77,14 +76,14 @@ public:
   // Returns the (constant) type
 
   CORBA_DynAny_ptr current_component (CORBA::Environment &ACE_TRY_ENV);
-  // Used in iterating through the contents
+  // Used in iterating through the contents.
 
   CORBA::Boolean next (CORBA::Environment &ACE_TRY_ENV);
   // Returns next component
 
-  CORBA::Boolean seek (CORBA::Long index,
+  CORBA::Boolean seek (CORBA::Long slot,
                        CORBA::Environment &ACE_TRY_ENV);
-  // Jump to component at <index>
+  // Jump to component at <slot>
 
   void rewind (CORBA::Environment &ACE_TRY_ENV);
   // Makes first component the current one
@@ -124,35 +123,20 @@ public:
   void insert_any (const CORBA::Any& value,
                    CORBA::Environment &ACE_TRY_ENV);
   CORBA::Boolean get_boolean (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Octet get_octet (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Char get_char (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Short get_short (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::UShort get_ushort (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Long get_long (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::ULong get_ulong (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Float get_float (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Double get_double (CORBA::Environment &ACE_TRY_ENV);
-
-  char * get_string (CORBA::Environment &ACE_TRY_ENV);
-
+  char *get_string (CORBA::Environment &ACE_TRY_ENV);
   CORBA::Object_ptr get_reference (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::TypeCode_ptr get_typecode (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::LongLong get_longlong (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::ULongLong get_ulonglong (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::WChar get_wchar (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Any_ptr get_any (CORBA::Environment &ACE_TRY_ENV);
 
 private:
@@ -167,7 +151,7 @@ private:
   // Holds the typecode of the array
 
   CORBA::Long index_;
-  // Index of the current component
+  // Slot of the current component
 
   ACE_Array_Base<CORBA_DynAny_var> da_members_;
   // Each component is also a DynAny

@@ -46,35 +46,30 @@ ACE_RCSID(tao, CDR, "$Id$")
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_CDR_Timeprobe_Description[] =
-  {
-    "OutputCDR::ctor[1] - enter",
-    "OutputCDR::ctor[1] - leave",
-    "OutputCDR::ctor[2] - enter",
-    "OutputCDR::ctor[2] - leave",
-    "OutputCDR::ctor[3] - enter",
-    "OutputCDR::ctor[3] - leave"
-  };
+{
+  "OutputCDR::ctor[1] - enter",
+  "OutputCDR::ctor[1] - leave",
+  "OutputCDR::ctor[2] - enter",
+  "OutputCDR::ctor[2] - leave",
+  "OutputCDR::ctor[3] - enter",
+  "OutputCDR::ctor[3] - leave"
+};
 
 enum
-  {
-    TAO_OUTPUT_CDR_CTOR1_ENTER = 2000,
-    TAO_OUTPUT_CDR_CTOR1_LEAVE,
-    TAO_OUTPUT_CDR_CTOR2_ENTER,
-    TAO_OUTPUT_CDR_CTOR2_LEAVE,
-    TAO_OUTPUT_CDR_CTOR3_ENTER,
-    TAO_OUTPUT_CDR_CTOR3_LEAVE
-  };
-
+{
+  TAO_OUTPUT_CDR_CTOR1_ENTER = 2000,
+  TAO_OUTPUT_CDR_CTOR1_LEAVE,
+  TAO_OUTPUT_CDR_CTOR2_ENTER,
+  TAO_OUTPUT_CDR_CTOR2_LEAVE,
+  TAO_OUTPUT_CDR_CTOR3_ENTER,
+  TAO_OUTPUT_CDR_CTOR3_LEAVE
+};
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_CDR_Timeprobe_Description,
                                   TAO_OUTPUT_CDR_CTOR1_ENTER);
 
 #endif /* ACE_ENABLE_TIMEPROBES */
-
-// ****************************************************************
-// ****************************************************************
-// ****************************************************************
 
 TAO_OutputCDR::TAO_OutputCDR (size_t size,
                               int byte_order,
@@ -135,18 +130,23 @@ TAO_OutputCDR::encode (CORBA::TypeCode_ptr tc,
                        CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Marshal_Object *mobj =
-    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object (tc,
-                                                           ACE_TRY_ENV);
+    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object 
+    (tc, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
   if (!mobj)
     return CORBA::TypeCode::TRAVERSE_STOP;
 
-  return mobj->encode (tc, data, data2, this, ACE_TRY_ENV);
+  return mobj->encode (tc,
+                       data,
+                       data2,
+                       this,
+                       ACE_TRY_ENV);
 }
 
 CORBA::Boolean
-operator<< (TAO_OutputCDR& cdr, const CORBA::Any &x)
+operator<< (TAO_OutputCDR& cdr,
+            const CORBA::Any &x)
 {
   // @@ This function should *not* use the interpreter, there must be
   // a way to do this with just CDR operations!!!!
@@ -251,14 +251,19 @@ TAO_InputCDR::decode (CORBA::TypeCode_ptr tc,
                       CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Marshal_Object *mobj =
-    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object (tc,
-                                                           ACE_TRY_ENV);
+    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object 
+    (tc, ACE_TRY_ENV);
+
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
   if (!mobj)
     return CORBA::TypeCode::TRAVERSE_STOP;
 
-  return mobj->decode (tc, data, data2, this, ACE_TRY_ENV);
+  return mobj->decode (tc,
+                       data,
+                       data2,
+                       this,
+                       ACE_TRY_ENV);
 }
 
 CORBA::TypeCode::traverse_status
@@ -266,18 +271,21 @@ TAO_InputCDR::skip (CORBA::TypeCode_ptr tc,
                     CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Marshal_Object *mobj =
-    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object (tc,
-                                                           ACE_TRY_ENV);
+    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object 
+    (tc, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
   if (mobj == 0)
     return CORBA::TypeCode::TRAVERSE_STOP;
 
-  return mobj->skip (tc, this, ACE_TRY_ENV);
+  return mobj->skip (tc,
+                     this,
+                     ACE_TRY_ENV);
 }
 
 CORBA::Boolean
-operator>> (TAO_InputCDR& cdr, CORBA::Any &x)
+operator>> (TAO_InputCDR &cdr,
+            CORBA::Any &x)
 {
   ACE_TRY_NEW_ENV
     {

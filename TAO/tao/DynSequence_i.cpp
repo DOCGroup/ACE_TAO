@@ -1,5 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
+
 // ===================================================================
 //
 // = LIBRARY
@@ -20,8 +21,7 @@
 #include "tao/DynSequence_i.h"
 #include "tao/InconsistentTypeCodeC.h"
 
-//////////////////////////////////////////////////////////////////////
-// Constructors and destructor
+// Constructors and destructor.
 
 TAO_DynSequence_i::TAO_DynSequence_i (const CORBA_Any& any)
   : type_ (any.type ()),
@@ -31,27 +31,28 @@ TAO_DynSequence_i::TAO_DynSequence_i (const CORBA_Any& any)
   CORBA::Environment env;
 
   // The type will be correct if this constructor called from a
-  // factory function, but it could also be called by the
-  // user, so.....
+  // factory function, but it could also be called by the user,
+  // so.....
   if (TAO_DynAny_i::unalias (this->type_.in (),
-                             env)
-       == CORBA::tk_sequence)
+                             env) == CORBA::tk_sequence)
     {
       // Get the CDR stream of the argument.
-      ACE_Message_Block* mb = any._tao_get_cdr ();
+      ACE_Message_Block *mb = any._tao_get_cdr ();
 
       TAO_InputCDR cdr (mb);
 
       CORBA::ULong length;
 
-      // If the any is a sequence, first 4 bytes of cdr hold the length.
+      // If the any is a sequence, first 4 bytes of cdr hold the
+      // length.
       cdr.read_ulong (length);
 
       // Resize the array.
       this->da_members_.size (length);
 
       // Get the type of the sequence elments.
-      CORBA::TypeCode_ptr field_tc = this->get_element_type (env);
+      CORBA::TypeCode_ptr field_tc =
+        this->get_element_type (env);
 
       for (CORBA::ULong i = 0; i < length; i++)
         {
@@ -65,7 +66,6 @@ TAO_DynSequence_i::TAO_DynSequence_i (const CORBA_Any& any)
           this->da_members_[i] =
             TAO_DynAny_i::create_dyn_any (field_any,
                                           env);
-
           // Move to the next field in the CDR stream.
           cdr.skip (field_tc);
         }
@@ -76,6 +76,7 @@ TAO_DynSequence_i::TAO_DynSequence_i (const CORBA_Any& any)
 
 // Can't set the length from just the typecode, so we'll
 // do it upon initialization.
+
 TAO_DynSequence_i::TAO_DynSequence_i (CORBA_TypeCode_ptr tc)
   : type_ (CORBA::TypeCode::_duplicate (tc)),
     index_ (0),
@@ -94,7 +95,6 @@ TAO_DynSequence_i::~TAO_DynSequence_i (void)
 {
 }
 
-///////////////////////////////////////////////////////////////////////
 // Functions specific to DynSequence
 
 CORBA::ULong
@@ -133,7 +133,8 @@ TAO_DynSequence_i::get_elements (CORBA::Environment& ACE_TRY_ENV)
   // Initialize each Any.
   for (CORBA::ULong i = 0; i < length; i++)
     {
-      CORBA::Any_var temp = this->da_members_[i]->to_any (ACE_TRY_ENV);
+      CORBA::Any_var temp =
+        this->da_members_[i]->to_any (ACE_TRY_ENV);
       (*elements)[i] = temp.in ();
     }
 
@@ -156,7 +157,8 @@ TAO_DynSequence_i::set_elements (const CORBA_AnySeq& value,
       return;
     }
 
-  CORBA::TypeCode_ptr element_type = this->get_element_type (env);
+  CORBA::TypeCode_ptr element_type =
+    this->get_element_type (env);
 
   for (CORBA::ULong i = 0; i < length; i++)
     {
@@ -179,7 +181,6 @@ TAO_DynSequence_i::set_elements (const CORBA_AnySeq& value,
     }
 }
 
-//////////////////////////////////////////////////////////////////////
 // Common functions
 
 void
@@ -207,7 +208,9 @@ void
 TAO_DynSequence_i::destroy (CORBA::Environment &env)
 {
   // Do a deep destroy
-  for (CORBA::ULong i = 0; i < this->da_members_.size (); i++)
+  for (CORBA::ULong i = 0;
+       i < this->da_members_.size ();
+       i++)
     if (!CORBA::is_nil (this->da_members_[i].in ()))
       this->da_members_[i]->destroy (env);
 
@@ -223,12 +226,14 @@ TAO_DynSequence_i::from_any (const CORBA_Any& any,
                                 env))
     {
       // Get the CDR stream of the argument.
-      ACE_Message_Block* mb = any._tao_get_cdr ();
+      ACE_Message_Block *mb =
+        any._tao_get_cdr ();
       TAO_InputCDR cdr (mb);
 
       CORBA::ULong arg_length;
 
-      // If the any is a sequence, first 4 bytes of cdr hold the length.
+      // If the any is a sequence, first 4 bytes of cdr hold the
+      // length.
       cdr.read_ulong (arg_length);
 
       CORBA::ULong length = this->da_members_.size ();
@@ -242,9 +247,12 @@ TAO_DynSequence_i::from_any (const CORBA_Any& any,
           return;
         }
 
-      CORBA::TypeCode_ptr field_tc = this->get_element_type (env);
+      CORBA::TypeCode_ptr field_tc =
+        this->get_element_type (env);
 
-      for (CORBA::ULong i = 0; i < arg_length; i++)
+      for (CORBA::ULong i = 0;
+           i < arg_length;
+           i++)
         {
           // This Any constructor is a TAO extension.
           CORBA_Any field_any (field_tc,
@@ -285,9 +293,11 @@ TAO_DynSequence_i::to_any (CORBA::Environment& ACE_TRY_ENV)
         }
 
       // Recursive step
-      CORBA_Any_var field_any = this->da_members_[i]->to_any (ACE_TRY_ENV);
+      CORBA_Any_var field_any =
+        this->da_members_[i]->to_any (ACE_TRY_ENV);
 
-      ACE_Message_Block* field_mb = field_any->_tao_get_cdr ();
+      ACE_Message_Block *field_mb =
+        field_any->_tao_get_cdr ();
 
       TAO_InputCDR field_cdr (field_mb);
 
@@ -315,7 +325,9 @@ TAO_DynSequence_i::type (CORBA::Environment &)
 }
 
 // If the DynAny has been initialized but this component has not, the
-// first call to current_component will create the pointer and return it.
+// first call to current_component will create the pointer and return
+// it.
+
 CORBA_DynAny_ptr
 TAO_DynSequence_i::current_component (CORBA::Environment &env)
 {
@@ -343,13 +355,13 @@ TAO_DynSequence_i::next (CORBA::Environment &)
 }
 
 CORBA::Boolean
-TAO_DynSequence_i::seek (CORBA::Long index,
+TAO_DynSequence_i::seek (CORBA::Long slot,
                          CORBA::Environment &)
 {
-  if (index < 0 || index >= (CORBA::Long) this->da_members_.size ())
+  if (slot < 0 || slot >= (CORBA::Long) this->da_members_.size ())
     return 0;
 
-  this->index_ = index;
+  this->index_ = slot;
   return 1;
 }
 
@@ -359,7 +371,6 @@ TAO_DynSequence_i::rewind (CORBA::Environment &)
   this->index_ = 0;
 }
 
-///////////////////////////////////////////////////////////////////////
 // The insert-primitive and get-primitive functions are required
 // by the spec of all types of DynAny, although if the top level
 // members aren't primitive types, these functions aren't too helpful.
@@ -367,7 +378,6 @@ TAO_DynSequence_i::rewind (CORBA::Environment &)
 // indicate that next() is called in the body of each of these, and
 // it has been so implemented here.
 
-///////////////////////////////////////////////////////////////////////
 // Insert functions
 
 void
@@ -594,7 +604,6 @@ TAO_DynSequence_i::insert_any (const CORBA::Any& value,
     env.exception (new CORBA_DynAny::InvalidValue);
 }
 
-///////////////////////////////////////////////////////////////////////
 // Get functions
 
 // If the current component has not been intialized, these
@@ -627,7 +636,8 @@ CORBA::Octet
 TAO_DynSequence_i::get_octet (CORBA::Environment &env)
 {
   CORBA::Octet val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
@@ -649,7 +659,8 @@ CORBA::Char
 TAO_DynSequence_i::get_char (CORBA::Environment &env)
 {
   CORBA::Char val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
@@ -671,7 +682,8 @@ CORBA::Short
 TAO_DynSequence_i::get_short (CORBA::Environment &env)
 {
   CORBA::Short val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
@@ -693,7 +705,8 @@ CORBA::UShort
 TAO_DynSequence_i::get_ushort (CORBA::Environment &env)
 {
   CORBA::UShort val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
@@ -715,7 +728,8 @@ CORBA::Long
 TAO_DynSequence_i::get_long (CORBA::Environment &env)
 {
   CORBA::Long val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
@@ -737,7 +751,8 @@ CORBA::ULong
 TAO_DynSequence_i::get_ulong (CORBA::Environment &env)
 {
   CORBA::ULong val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
@@ -759,7 +774,8 @@ CORBA::Float
 TAO_DynSequence_i::get_float (CORBA::Environment &env)
 {
   CORBA::Float val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
@@ -781,7 +797,8 @@ CORBA::Double
 TAO_DynSequence_i::get_double (CORBA::Environment &env)
 {
   CORBA::Double val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
@@ -803,7 +820,8 @@ char *
 TAO_DynSequence_i::get_string (CORBA::Environment &env)
 {
   CORBA::Char *val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
@@ -825,7 +843,8 @@ CORBA::Object_ptr
 TAO_DynSequence_i::get_reference (CORBA::Environment &env)
 {
   CORBA_Object_ptr val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
@@ -847,7 +866,8 @@ CORBA::TypeCode_ptr
 TAO_DynSequence_i::get_typecode (CORBA::Environment &env)
 {
   CORBA_TypeCode_ptr val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
@@ -873,7 +893,8 @@ TAO_DynSequence_i::get_longlong (CORBA::Environment &env)
 #else  /* ! ACE_LACKS_LONGLONG_T */
   CORBA::LongLong val = 0;
 #endif /* ! ACE_LACKS_LONGLONG_T */
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
@@ -895,7 +916,8 @@ CORBA::ULongLong
 TAO_DynSequence_i::get_ulonglong (CORBA::Environment &env)
 {
   CORBA::ULongLong val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
@@ -917,7 +939,8 @@ CORBA::WChar
 TAO_DynSequence_i::get_wchar (CORBA::Environment &env)
 {
   CORBA::WChar val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
@@ -939,7 +962,8 @@ CORBA::Any_ptr
 TAO_DynSequence_i::get_any (CORBA::Environment &env)
 {
   CORBA_Any_ptr val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
@@ -957,12 +981,13 @@ TAO_DynSequence_i::get_any (CORBA::Environment &env)
   return val;
 }
 
-//////////////////////////////////////////////////////////////////////
 // Private utility function.
+
 CORBA::TypeCode_ptr
 TAO_DynSequence_i::get_element_type (CORBA::Environment& env)
 {
-  CORBA::TypeCode_ptr element_type = this->type_.in ();
+  CORBA::TypeCode_ptr element_type =
+    this->type_.in ();
 
   // Strip away aliases (if any) on top of the outer type
   while (element_type->kind (env) != CORBA::tk_sequence)

@@ -2905,9 +2905,9 @@ Messaging::PolicyValueSeq_var::operator Messaging::PolicyValueSeq &() const// ca
 }
 
 ACE_INLINE Messaging::PolicyValue &
-Messaging::PolicyValueSeq_var::operator[] (CORBA::ULong index)
+Messaging::PolicyValueSeq_var::operator[] (CORBA::ULong slot)
 {
-  return this->ptr_->operator[] (index);
+  return this->ptr_->operator[] (slot);
 }
 
 ACE_INLINE const Messaging::PolicyValueSeq &
@@ -3002,9 +3002,9 @@ Messaging::PolicyValueSeq_out::operator-> (void)
 }
 
 ACE_INLINE Messaging::PolicyValue &
-Messaging::PolicyValueSeq_out::operator[] (CORBA::ULong index)
+Messaging::PolicyValueSeq_out::operator[] (CORBA::ULong slot)
 {
-  return this->ptr_->operator[] (index);
+  return this->ptr_->operator[] (slot);
 }
 
 #if defined(TAO_POLLER)

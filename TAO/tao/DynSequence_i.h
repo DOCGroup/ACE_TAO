@@ -45,58 +45,58 @@ public:
   ~TAO_DynSequence_i (void);
   // destructor
 
-  // Functions specific to DynSequence
-
-  // Get and set length of sequence
+  // = Functions specific to DynSequence
 
   CORBA::ULong length (CORBA::Environment &ACE_TRY_ENV);
+  // Get length of sequence.
 
   void length (CORBA::ULong length,
                CORBA::Environment &ACE_TRY_ENV);
-
-  // Assign and dump elements using IDL defined type AnySeq
+  // Set length of sequence.
 
   CORBA_AnySeq_ptr get_elements (CORBA::Environment &ACE_TRY_ENV);
+  // Get elements using IDL defined type AnySeq.
 
   void set_elements (const CORBA_AnySeq& value,
                      CORBA::Environment &ACE_TRY_ENV);
+  // Set elements using IDL defined type AnySeq.
 
-  // Functions common to all Dynamic Any types
+  // = Functions common to all Dynamic Any types
 
   void assign (CORBA_DynAny_ptr dyn_any,
                CORBA::Environment &ACE_TRY_ENV);
-  // Sets the value of the receiver to the value of the argument
+  // Sets the value of the receiver to the value of the argument.
 
   CORBA_DynAny_ptr copy (CORBA::Environment &ACE_TRY_ENV);
-  // Creates a copy
+  // Creates a copy.
 
   void destroy (CORBA::Environment &ACE_TRY_ENV);
-  // Makes sure the contents are disposed of correctly
+  // Makes sure the contents are disposed of correctly.
 
   void from_any (const CORBA::Any& any,
                  CORBA::Environment &ACE_TRY_ENV);
-  // Assigns value from an Any argument
+  // Assigns value from an Any argument.
 
   CORBA::Any_ptr to_any (CORBA::Environment &ACE_TRY_ENV);
-  // Outputs contents as an Any
+  // Outputs contents as an Any.
 
   CORBA::TypeCode_ptr type (CORBA::Environment &ACE_TRY_ENV);
-  // Returns the (constant) type
+  // Returns the (constant) type.
 
   CORBA_DynAny_ptr current_component (CORBA::Environment &ACE_TRY_ENV);
-  // Used in iterating through the contents
+  // Used in iterating through the contents.
 
   CORBA::Boolean next (CORBA::Environment &ACE_TRY_ENV);
-  // Returns next component
+  // Returns next component.
 
-  CORBA::Boolean seek (CORBA::Long index,
+  CORBA::Boolean seek (CORBA::Long slot,
                        CORBA::Environment &ACE_TRY_ENV);
-  // Jump to component at <index>
+  // Jump to component at <slot>.
 
   void rewind (CORBA::Environment &ACE_TRY_ENV);
-  // Makes first component the current one
+  // Makes first component the current one.
 
-  // Insert and get functions
+  // = Insert and get functions
 
   void insert_boolean (CORBA::Boolean value,
                        CORBA::Environment &ACE_TRY_ENV);
@@ -131,35 +131,20 @@ public:
   void insert_any (const CORBA::Any& value,
                    CORBA::Environment &ACE_TRY_ENV);
   CORBA::Boolean get_boolean (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Octet get_octet (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Char get_char (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Short get_short (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::UShort get_ushort (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Long get_long (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::ULong get_ulong (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Float get_float (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Double get_double (CORBA::Environment &ACE_TRY_ENV);
-
-  char * get_string (CORBA::Environment &ACE_TRY_ENV);
-
+  char *get_string (CORBA::Environment &ACE_TRY_ENV);
   CORBA::Object_ptr get_reference (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::TypeCode_ptr get_typecode (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::LongLong get_longlong (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::ULongLong get_ulonglong (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::WChar get_wchar (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Any_ptr get_any (CORBA::Environment &ACE_TRY_ENV);
 
 private:
@@ -178,7 +163,7 @@ private:
   TAO_DynSequence_i (void);
   // Must be instantiated with at least a typecode
 
-  // Use copy() or assign() instead of these
+  // = Use copy() or assign() instead of these
   TAO_DynSequence_i (const TAO_DynSequence_i &src);
   TAO_DynSequence_i &operator= (const TAO_DynSequence_i &src);
 };

@@ -93,9 +93,9 @@ CORBA_ORB_ObjectIdList_var::operator CORBA_ORB_ObjectIdList &() const// cast
 }
 
 ACE_INLINE TAO_SeqElem_String_Manager
-CORBA_ORB_ObjectIdList_var::operator[] (CORBA::ULong index)
+CORBA_ORB_ObjectIdList_var::operator[] (CORBA::ULong slot)
 {
-  return this->ptr_->operator[] (index);
+  return this->ptr_->operator[] (slot);
 }
 
 ACE_INLINE const CORBA_ORB_ObjectIdList &
@@ -190,9 +190,9 @@ CORBA_ORB_ObjectIdList_out::operator-> (void)
 }
 
 ACE_INLINE TAO_SeqElem_String_Manager
-CORBA_ORB_ObjectIdList_out::operator[] (CORBA::ULong index)
+CORBA_ORB_ObjectIdList_out::operator[] (CORBA::ULong slot)
 {
-  return this->ptr_->operator[] (index);
+  return this->ptr_->operator[] (slot);
 }
 
 

@@ -1,30 +1,31 @@
+Sat Jun  5 23:17:39 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
+
+	* Replaced all uses of "index" with "slot" to avoid problems with
+ 	  broken C++ compilers that define a macro called "index".
+
 Tue May  4 14:24:27 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* src/Options.cpp (parse_args): Removed %a flag from -v option and
-	used ACE_OS::exit (0) instead. 
+	  used ACE_OS::exit (0) instead. 
 
 Mon Apr 26 15:42:54 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tests/test-{1,2,3,4,5}.exp:
-
-	  Forgot to update the expected test output to reflect the
-	  version string update listed below.
+	* tests/test-{1,2,3,4,5}.exp: Forgot to update the expected test
+ 	  output to reflect the version string update listed below.
 
 Mon Apr 26 10:42:08 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* src/Version.cpp (version_string): 
+	* src/Version.cpp (version_string): Updated version string to "2.8
+ 	  (ACE version)" since 2.7 is used by the old Cygnus maintained
+ 	  gperf.
 
-	  Updated version string to "2.8 (ACE version)" since 2.7 is used
-	  by the old Cygnus maintained gperf.
-
-	* src/*.{h,cpp}:
-
-	  Updated copyright/distribution information to GPL v2 style notice.
+	* src/*.{h,cpp}: Updated copyright/distribution information to GPL
+ 	  v2 style notice.
 
 Sun Apr 25 16:16:12 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* mdate-sh: Added this file to the CVS repository.  It will be
-	  used once the auto{conf,make} integrations are in place.
+ 	  used once the auto{conf,make} integrations are in place.
 
 Sun Apr 25 16:13:40 1999  Ossama Othman  <othman@cs.wustl.edu>
 
@@ -34,49 +35,42 @@ Sat Apr 24 18:18:35 1999  Ossama Othman  <othman@cs.wustl.edu>
 	
 	* gperf.1:
 	* gperf.info:
-	* gperf.texi:
-
-	  Added missing quote, cosmetic fix, regenerated gperf.info.
+	* gperf.texi: Added missing quote, cosmetic fix, regenerated
+ 	  gperf.info.
 	
 	* src/Key_List.cpp
 	* src/Options.h: 
-	* src/Options.cpp: 
+	* src/Options.cpp: Merged Cygnus patch that allows the user to
+ 	  specify a default fill expression/value in the keyword table.
+  	  Updated help message with new `-F' option.  Made some cosmetic
+ 	  fixes to the help message, too.
 
-	  Merged Cygnus patch that allows the user to specify a default
-	  fill expression/value in the keyword table.  Updated help
-	  message with new `-F' option.  Made some cosmetic fixes to the
-	  help message, too.
+	* tests/test.cpp: Minor spelling correction in comment
 
-	* tests/test.cpp: 
-
-	  Minor spelling correction in comment
-
-	* tests/test-6.exp:
-
-	  Updated with new expected gperf output.
+	* tests/test-6.exp: Updated with new expected gperf output.
 	
 Mon Nov  9 23:37:09 1998  Vishal Kachroo <vishal@cs.wustl.edu>
 
 	* src/Key_List.cpp: Fixed the problem with Binary and Linear
-	Search code. 
+ 	  Search code.
 
 Sat Oct 10 18:40:56 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* tests/test-6.exp (Usage): copied the output of gperf -h option
-	into test-6.exp. This test was failing because it didn't have 
-	the -b option previously. Thanks to David for reporting the failure
-	of tests.
+ 	  into test-6.exp. This test was failing because it didn't have
+ 	  the -b option previously. Thanks to David for reporting the
+ 	  failure of tests.
 	
 	* src/Options.cpp : Changed the option case 'h' to include the
- 	following line " -b/t Code for Linear Search".
+ 	  following line " -b/t Code for Linear Search".
 
 Fri Oct  9 01:06:56 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* src/Options.cpp : 
-	* src/Key_List.cpp (output_linear_search_function): 
-	Changed option -z to -b for generating linear search. Removed
-	<len> parameter from the lookup code. We dont need <len> in the
-	generated code in the case of linear/binary search options.
+	* src/Key_List.cpp (output_linear_search_function): Changed option
+ 	  -z to -b for generating linear search. Removed <len> parameter
+ 	  from the lookup code. We dont need <len> in the generated code
+ 	  in the case of linear/binary search options.
 
 Thu Oct  8 17:40:19 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
@@ -94,7 +88,6 @@ Wed Oct  7 01:20:35 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	  Updated thif file to the current help message. Thanks to Hans
 	  for reporting this.
 
-
 Tue Oct  6 11:51:47 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* src/Key_List.cpp (Key_List): Fixed g++ warnings.
@@ -105,18 +98,19 @@ Tue Oct  6 02:48:37 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	Search code generated from GPERF.
 
 	* src/Options.cpp (parse_args): Added the -B option for the binary
-	search.
+	  search.
 
 	* src/Options.h (enum Option_Type): Added the BINARYSEARCH in the
-	enumeration.
+	  enumeration.
 
-	* src/Key_List.cpp : Added the function output_binary_search_function
-	(void). Changed the output function to include the Binary Search option.
-	Used option[BINARYSEARCH] to distinguish the binary search case from the
-	hashing case.
+	* src/Key_List.cpp : Added the function
+ 	  output_binary_search_function(void). Changed the output function
+ 	  to include the Binary Search option.  Used option[BINARYSEARCH]
+ 	  to distinguish the binary search case from the hashing case.
 
-	* src/Key_List.h : Added the prototype for output_binary_search_function.
-	Also added the key_sort variable to enable sorting based on key values.
+	* src/Key_List.h : Added the prototype for
+ 	  output_binary_search_function.  Also added the key_sort variable
+ 	  to enable sorting based on key values.
 
 
 Mon Oct  5 18:24:15 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
@@ -139,51 +133,50 @@ Sat Oct  3 19:36:52 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	* src/Options.h:
 	* src/Options.cpp:
 	* src/Key_List.h:
-	* src/Key_List.cpp:
-		Reverted all the changes done for Binary Search.
+	* src/Key_List.cpp: Reverted all the changes done for Binary
+ 	  Search.
 
 Sat Oct  3 17:51:10 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/test-6.exp:
-	  Added the new -B option.
+	* tests/test-6.exp: Added the new -B option.
 
 Sat Oct  3 13:47:40 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* src/Key_List.cpp (output_binary_search_function): Added a new
-	line after binary search code.
+ 	  line after binary search code.
 
 Sat Oct  3 10:11:15 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* src/Options.cpp (parse_args): Changed the option for binary
-	search to '-B'
+ 	  search to '-B'
 
 Fri Oct  2 21:38:54 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* src/Options.cpp (parse_args): Added the -b option for the binary
-	search.
+ 	  search.
 
 	* src/Options.h (enum Option_Type): Added the BINARYSEARCH in the
-	enumeration.
+ 	  enumeration.
 
-	* src/Key_List.cpp : Added the function output_binary_search_function
-	(void). Changed the output function to include the Binary Search option.
-	Used option[BINARYSEARCH] to distinguish the binary search case from the
-	hashing case.
+	* src/Key_List.cpp : Added the function
+ 	  output_binary_search_function (void). Changed the output
+ 	  function to include the Binary Search option.  Used
+ 	  option[BINARYSEARCH] to distinguish the binary search case from
+ 	  the hashing case.
 
-	* src/Key_List.h : Added the prototype for output_binary_search_function.
-	Also added the key_sort variable to enable sorting based on key values.
-
+	* src/Key_List.h : Added the prototype for
+ 	  output_binary_search_function.  Also added the key_sort variable
+ 	  to enable sorting based on key values.
 
 Thu Oct  1 12:40:59 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* src/Options.cpp (parse_args): Comments for Vishal to incorporate
-	Binary Seach on to GPERF.
+ 	  Binary Seach on to GPERF.
 
 Wed Sep 30 16:55:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Makefile:
-	  Updated dependencies, added a realclean target to remove the
-	  output from the tests.
+	* tests/Makefile: Updated dependencies, added a realclean target
+ 	  to remove the output from the tests.
 
 Wed Sep 30 12:41:29 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -192,15 +185,15 @@ Wed Sep 30 12:41:29 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Mon Sep 28 13:18:05 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests: Updated all the test-*.exp files to reflect the
-	  latest "unsigned" changes.
+	* tests: Updated all the test-*.exp files to reflect the latest
+ 	  "unsigned" changes.
 
 	* src/Key_List.cpp (output_hash_function): Fixed another use of
  	  int to be unsigned int.
 
 	* tests/test.cpp: Fixed the signature of in_word_set() to be
-	  consistent with the new gperf.  Thanks to David Levine and
-	  Carlos O'Ryan for this fix.
+ 	  consistent with the new gperf.  Thanks to David Levine and
+ 	  Carlos O'Ryan for this fix.
 
 Sun Sep 27 00:04:18 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 

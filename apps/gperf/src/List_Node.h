@@ -72,7 +72,7 @@ public:
   int occurrence;
   // A metric for frequency of key set occurrences.
 
-  int index;
+  int slot;
   // Position of this node relative to other nodes.
 };
 

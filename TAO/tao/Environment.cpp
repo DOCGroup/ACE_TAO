@@ -70,7 +70,7 @@ CORBA_Environment::CORBA_Environment (TAO_ORB_Core* orb_core)
 {
   orb_core->default_environment (this);
 }
-#endif
+#endif /* 0 */
 
 CORBA::ULong
 CORBA_Environment::_incr_refcnt (void)
@@ -84,6 +84,7 @@ CORBA_Environment::_decr_refcnt (void)
 {
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
+
     this->refcount_--;
     if (this->refcount_ != 0)
       return this->refcount_;
@@ -170,6 +171,8 @@ CORBA_Environment::default_environment ()
 int
 CORBA::Environment::exception_type (void) const
 {
+  // @@ Carlos, is this stuff that's properly "transformed" for EBCDIC
+  // platforms?!
   static char sysex_prefix [] = "IDL:omg.org/CORBA/";
   static char typecode_extra [] = "TypeCode/";
   static char poa_prefix [] = "IDL:PortableServer/";
@@ -177,19 +180,24 @@ CORBA::Environment::exception_type (void) const
   if (!this->exception_)
     return CORBA::NO_EXCEPTION;
 
-  // All exceptions currently (CORBA 2.0) defined in the CORBA
-  // scope are system exceptions ... except for a couple that
-  // are related to TypeCodes.
+  // All exceptions currently (CORBA 2.0) defined in the CORBA scope
+  // are system exceptions ... except for a couple that are related to
+  // TypeCodes.
 
   const char *id = this->exception_->_id ();
 
-  if ((ACE_OS::strncmp (id, sysex_prefix, sizeof sysex_prefix - 1) == 0
+  if ((ACE_OS::strncmp (id,
+                        sysex_prefix,
+                        sizeof sysex_prefix - 1) == 0
        && ACE_OS::strncmp (id + sizeof sysex_prefix - 1,
-                           typecode_extra, sizeof typecode_extra - 1) != 0)
-      || ACE_OS::strncmp (id, poa_prefix, sizeof poa_prefix - 1) == 0)
+                           typecode_extra,
+                           sizeof typecode_extra - 1) != 0)
+      || ACE_OS::strncmp (id,
+                          poa_prefix,
+                          sizeof poa_prefix - 1) == 0)
     return CORBA::SYSTEM_EXCEPTION;
-
-  return CORBA::USER_EXCEPTION;
+  else
+    return CORBA::USER_EXCEPTION;
 }
 
 const char*
@@ -212,15 +220,15 @@ CORBA::Environment::print_exception (const char *info,
     {
       const char *id = this->exception_->_id ();
 
-      ACE_DEBUG ((LM_ERROR, "TAO: (%P|%t) EXCEPTION, %s\n", info));
+      ACE_DEBUG ((LM_ERROR,
+                  "TAO: (%P|%t) EXCEPTION, %s\n",
+                  info));
 
       CORBA::SystemException *x2 =
         CORBA_SystemException::_narrow (this->exception_);
 
       if (x2 != 0)
-        {
-          x2->print_exception_tao_ ();
-        }
+        x2->print_exception_tao_ ();
       else
         // @@ we can use the exception's typecode to dump all the data
         // held within it ...
@@ -233,8 +241,6 @@ CORBA::Environment::print_exception (const char *info,
     ACE_DEBUG ((LM_ERROR,
                 "TAO: (%P|%t) no exception\n"));
 }
-
-// *********************************************************
 
 CORBA_Environment_var &
 CORBA_Environment_var::operator= (CORBA_Environment_ptr p)
@@ -255,6 +261,9 @@ CORBA_Environment_var::operator= (const CORBA_Environment_var &r)
   if (this->ptr_ != 0)
     delete this->ptr_;
 
+  // @@ Carlos, shouldn't we be checking for "new" failure?  If so,
+  // shouldn't we not be passing back *this but instead make this a
+  // "void" function?
   this->ptr_ = new CORBA::Environment (*r.ptr_);
   return *this;
 }
