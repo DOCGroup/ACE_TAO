@@ -1,3 +1,16 @@
+Wed Jul  3 15:09:47 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_string.cpp:
+        * TAO_IDL/be/be_string.cpp:
+        * TAO_IDL/fe/fe_declarator.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Moved size type computation for strings to the front
+          end node class, and fixed a bug in error-checking
+          regarding the use of forward declared structs and
+          unions.
+
 Wed Jul  3 12:08:57 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* tests/Makefile (DIRS):
