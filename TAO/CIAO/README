@@ -34,6 +34,7 @@ and also the libraries they depends on.
 
   $CIAO_ROOT/ciao/
 
+  $CIAO_ROOT/tools/XML_Helpers
   $CIAO_ROOT/tools/ComponentServer
   $CIAO_ROOT/tools/ServerActivator
   $CIAO_ROOT/tools/Assembly_Deployer
