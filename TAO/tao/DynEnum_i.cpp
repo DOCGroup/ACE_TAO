@@ -165,7 +165,7 @@ TAO_DynEnum_i::to_any (CORBA::Environment& _env)
   ACE_NEW_THROW_RETURN (retval,
                         CORBA_Any (this->type_.in (),
                                    out_cdr.begin ()),
-                        CORBA::NO_MEMORY,
+                        CORBA::NO_MEMORY (),
                         0);
   return retval;
 }
