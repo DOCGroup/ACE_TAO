@@ -9,7 +9,9 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-EXAMPLES = Reactor_Logging_Server display_logfile
+EXAMPLES = Reactor_Logging_Server \
+           Select_Reactor_Logging_Server \
+           display_logfile
 
 all:
 	@for ex in $(EXAMPLES); \
