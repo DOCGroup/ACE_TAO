@@ -442,9 +442,19 @@ class TAO_ORBSVCS_Export TAO_MMDevice
   // Destructor
 };
 
+
 template<class T>
 class TAO_ORBSVCS_Export TAO_Client_MMDevice 
   : public virtual TAO_MMDevice
+// = DESCRIPTION
+//     Specialiized MMDevice, meant to generate type "A"
+//     endpoints. This is meant to be used on the client side
+//     Trying to create a B type endpoint using this  class will
+//     result in an  error
+//     This class is templatized by the Stream endpoint
+//     that is to be created using create_A. The user
+//     of this class can thus use this as a factory to create
+//     user-defined stream-endpoints
 {
 public:
   TAO_Client_MMDevice ();
@@ -472,6 +482,15 @@ public:
 template<class T>
 class TAO_ORBSVCS_Export TAO_Server_MMDevice 
   : public virtual TAO_MMDevice
+// = DESCRIPTION
+//     Specialiized MMDevice, meant to generate type "B"
+//     endpoints. This is meant to be used on the server side
+//     Trying to create a A type endpoint using this  class will
+//     result in an  error
+//     This class is templatized by the Stream endpoint
+//     that is to be created using create_A. The user
+//     of this class can thus use this as a factory to create
+//     user-defined stream-endpoints
 {
 public:
   TAO_Server_MMDevice (void);
