@@ -29,5 +29,5 @@ SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 ESOBUILD = $(COMPILEESO.cc) $(PIC) -shared -o $(VSHDIR)$*.so $<
 PRELIB  = (echo "int main() { return 0; }" > gcctemp.c && \
           $(COMPILE.cc) -o gcctemp.o gcctemp.c && \
-          $(LINK.cc) -o gcctemp gcctemp.o $^ $(LDFLAGS) $(LIBS); \
+          $(LINK.cc) -o gcctemp gcctemp.o $^ $(LDFLAGS) $(VLDLIBS); \
           status=$$?; exit $$status)
