@@ -31,11 +31,15 @@ namespace CIAO
    * @class RTEventService
    *
    * An implementation of EventServiceBase using the RT event channel.
+   *
+   * @@ (GD) There should be a place where the deployment tool could
+   *         specify the RT Event Channel service configuration file.
+   *         This should be the place where the RtecEventChannel servant was
+   *         first time initialized.
    */
   class RTEventService :
     public virtual EventServiceBase
   {
-
   public:
 
     RTEventService (CORBA::ORB_ptr orb,
@@ -235,6 +239,9 @@ namespace CIAO
     virtual EventServiceType service_type (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    //@@ (GD) There should be a place where the deployment tool could
+	//        set up the rt_event_qos properties for Consumer Config.
+
     virtual RtecEventChannelAdmin::ConsumerQOS * rt_event_qos (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -284,6 +291,9 @@ namespace CIAO
 
     EventServiceType service_type (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
+
+    //@@ (GD) There should be a place where the deployment tool could
+	//        set up the rt_event_qos properties for Supplier Config.
 
     RtecEventChannelAdmin::SupplierQOS * rt_event_qos (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));

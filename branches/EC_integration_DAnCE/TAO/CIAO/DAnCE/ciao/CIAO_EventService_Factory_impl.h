@@ -63,6 +63,8 @@ namespace CIAO
     // library. Further, they probably need to be delegated to the
     // underlying concrete type to create it for you instead of
     // providing interfaces.
+    // @@ (GD) I feel this is the place where use could provide a parameter
+    //         which specifies the event channel service configuration file.
     void create_rt_event_channel (
         ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((

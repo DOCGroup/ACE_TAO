@@ -16,6 +16,7 @@
 #include "CIAO_CosNotify.h"
 
 #include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/orbsvcs/Event/EC_Default_Factory.h"
 
 /// Initialize the RTEventService object. Will eventually be moved to a separate init ()
 /// method so exceptions can be handled properly.
@@ -253,6 +254,7 @@ namespace CIAO
 
   // @@ George, not sure how we plan to get the svc.conf file options
   // into the channel. Just a place holder to think about it.
+  // @@ (GD) One place we could set the Event Channel Attributes.
   void
   EventService_Factory_impl::create_rt_event_channel (
       ACE_ENV_SINGLE_ARG_DECL)
@@ -260,6 +262,9 @@ namespace CIAO
       CORBA::SystemException))
   {
     ACE_DEBUG ((LM_DEBUG, "CIAO::EventService_Factory_impl::create_rt_event_channel\n"));
+
+    // @@ (GD) Anything else to do to get the svc.conf file options?
+	TAO_EC_Default_Factory::init_svcs ();
 
     TAO_EC_Event_Channel_Attributes attributes (this->root_poa_.in (),
                                                 this->root_poa_.in ());
