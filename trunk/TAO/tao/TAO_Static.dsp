@@ -811,6 +811,10 @@ SOURCE=.\Timeprobe.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Transport.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Transport_Mux_Strategy.h
 # End Source File
 # Begin Source File
@@ -1428,6 +1432,10 @@ SOURCE=.\TimeBaseS.i
 # Begin Source File
 
 SOURCE=.\TimeBaseS_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport.inl
 # End Source File
 # Begin Source File
 
@@ -2128,6 +2136,10 @@ SOURCE=.\TimeBaseC.cpp
 # Begin Source File
 
 SOURCE=.\TimeBaseS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport.cpp
 # End Source File
 # Begin Source File
 
