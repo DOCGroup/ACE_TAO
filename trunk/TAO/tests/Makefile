@@ -23,7 +23,8 @@ DIRS  = CDR \
 	IORManipulation \
 	Timeout \
 	Connection_Purging \
-	ORB_init
+	ORB_init \
+	Smart_Proxies
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
