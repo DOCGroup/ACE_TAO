@@ -36,13 +36,12 @@ USELIB("..\ace\aced.lib");
 #if defined (CHORUS)
   // Chorus can't handle 100 iterations:
   //   [amThrd.C:154]: Failed to allocate an AmActor
+  // NOTE: this was before we set the stack size, below.  It
+  //   might work with the default n_iterations now.
   static size_t n_iterations = 45;
-#elif defined (__Lynx__)  &&  defined (__powerpc__)
-  // The test hangs after 68 iterations on our LynxOS/PPC host.
-  static size_t n_iterations = 65;
-#else  /* ! CHORUS  &&  ! (__Lynx__ && __powerpc__) */
+#else  /* ! CHORUS */
   static size_t n_iterations = 100;
-#endif /* ! CHORUS  &&  ! (__Lynx__ && __powerpc__) */
+#endif /* ! CHORUS */
 static size_t n_threads = ACE_MAX_THREADS;
 
 static void
@@ -87,9 +86,21 @@ main (int, ASYS_TCHAR *[])
 
 #if defined (ACE_HAS_THREADS)
   ACE_Recursive_Thread_Mutex rm;
+
+  size_t stack_sizes [ACE_MAX_THREADS];
+  for (unsigned int i = 0; i < ACE_MAX_THREADS; ++i)
+    stack_sizes[i] = 100000;
+
   ACE_Thread_Manager::instance ()->spawn_n (n_threads,
                                             ACE_THR_FUNC (worker),
-                                            (void *) &rm);
+                                            (void *) &rm,
+                                            THR_NEW_LWP | THR_JOINABLE,
+                                            ACE_DEFAULT_THREAD_PRIORITY,
+                                            -1, /* grp_id */
+                                            0,  /* task base */
+                                            0,  /* thread handles array */
+                                            0,  /* stack array */
+                                            stack_sizes);
   ACE_Thread_Manager::instance ()->wait ();
 #else
   ACE_ERROR ((LM_ERROR,
