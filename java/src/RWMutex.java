@@ -6,7 +6,7 @@
  * = FILENAME
  *    RWMutex.java
  *
- *@author Irfan Pyarali
+ *@author Ross Dargahi (rossd@krinfo.com), Prashant Jain, and Irfan Pyarali
  *
  *************************************************/
 
