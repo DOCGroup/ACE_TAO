@@ -7,19 +7,19 @@
 CFG=TAO Static - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "TAO_Static.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "TAO_Static.mak" CFG="TAO Static - Win32 Debug"
-!MESSAGE
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
+!MESSAGE 
 !MESSAGE "TAO Static - Win32 Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "TAO Static - Win32 Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE
+!MESSAGE 
 
 # Begin Project
 # PROP Scc_ProjName ""
@@ -75,7 +75,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo /out:"TAOsd.lib"
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
@@ -84,6 +84,10 @@ LIB32=link.exe -lib
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
+# Begin Source File
+
+SOURCE=.\Active_Object_Map.cpp
+# End Source File
 # Begin Source File
 
 SOURCE=.\Any.cpp
@@ -206,6 +210,10 @@ SOURCE=.\Invocation.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Managed_Types.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Marshal.cpp
 # End Source File
 # Begin Source File
@@ -219,10 +227,6 @@ SOURCE=.\Object.cpp
 # Begin Source File
 
 SOURCE=.\Object_KeyC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Object_Table.cpp
 # End Source File
 # Begin Source File
 
@@ -316,6 +320,10 @@ SOURCE=.\Union.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
+# Begin Source File
+
+SOURCE=.\Active_Object_Map.h
+# End Source File
 # Begin Source File
 
 SOURCE=.\align.h
@@ -415,6 +423,10 @@ SOURCE=.\IIOP_ORB.h
 # Begin Source File
 
 SOURCE=.\InconsistentTypeCodeC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Managed_Types.h
 # End Source File
 # Begin Source File
 
@@ -550,6 +562,10 @@ SOURCE=.\varout.h
 # PROP Default_Filter "*.i"
 # Begin Source File
 
+SOURCE=.\Active_Object_Map.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\any.i
 # End Source File
 # Begin Source File
@@ -587,6 +603,10 @@ SOURCE=.\IIOP_Object.i
 # Begin Source File
 
 SOURCE=.\IIOP_ORB.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Managed_Types.i
 # End Source File
 # Begin Source File
 
