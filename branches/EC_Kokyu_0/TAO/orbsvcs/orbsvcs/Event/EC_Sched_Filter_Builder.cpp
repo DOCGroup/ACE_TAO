@@ -33,14 +33,16 @@ TAO_EC_Sched_Filter_Builder::build (
     RtecScheduler::Scheduler::_narrow (tmp.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
+#if 0 //by VS
   // @@ How do we figure out which parent???
   RtecScheduler::handle_t parent_info =
     scheduler->lookup ("Dispatching_Task-250000.us" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
+#endif
 
   return this->recursive_build (supplier, qos, pos,
                                 scheduler.in (),
-                                parent_info
+                                0 //parent_info
                                  ACE_ENV_ARG_PARAMETER);
 }
 
@@ -144,6 +146,34 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
       ACE_CHECK_RETURN (0);
       return filter;
     }
+#if 1 //added by VS
+  else if (e.header.type == ACE_ES_GLOBAL_DESIGNATOR)
+    {
+      CORBA::ULong npos = pos+1;
+      const RtecEventComm::Event& e = qos.dependencies[npos].event;
+
+      RtecScheduler::handle_t body_info = qos.dependencies[npos].rt_info;
+
+      RtecScheduler::RT_Info_var info =
+        scheduler->get (body_info ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      ACE_CString name = info->entry_point.in ();
+
+      TAO_EC_Sched_Filter *filter;
+      ACE_NEW_RETURN (filter,
+                      TAO_EC_Sched_Filter (name.c_str (),
+                                           body_info,
+                                           scheduler,
+                                           new TAO_EC_Type_Filter (e.header),
+                                           body_info,
+                                           0,
+                                           RtecScheduler::OPERATION),
+                      0);
+
+      return filter;
+    }
+#endif
 
   else if (e.header.type == ACE_ES_EVENT_TIMEOUT
            || e.header.type == ACE_ES_EVENT_INTERVAL_TIMEOUT

@@ -43,6 +43,7 @@ TAO_EC_Priority_Dispatching::activate (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   for (int i = 0; i < this->ntasks_; ++i)
     {
+#if 0 //ifdef'd by VS
       ACE_TRY
         {
           RtecScheduler::Period_t period =
@@ -72,6 +73,8 @@ TAO_EC_Priority_Dispatching::activate (void)
           // Ignore exceptions..
         }
       ACE_ENDTRY;
+
+#endif //ifdef 0 end by VS
 
       ACE_NEW (this->tasks_[i],
                TAO_EC_Dispatching_Task (&this->thread_manager_));

@@ -202,6 +202,8 @@ TAO_EC_Sched_Filter::init_rt_info (ACE_ENV_SINGLE_ARG_DECL)
   if (this->rt_info_computed_)
     return;
 
+#if 0 //ifdef'ed by VS
+
   // Provide dummy values the scheduler will compute them based on the
   // dependencies and the fact that this is a DISJUNCTION.
   this->scheduler_->set (this->rt_info_,
@@ -216,6 +218,7 @@ TAO_EC_Sched_Filter::init_rt_info (ACE_ENV_SINGLE_ARG_DECL)
                          this->info_type_
                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+#endif  //ifdef'ed by VS
 
 #if 0
   ChildrenIterator end = this->end ();
@@ -243,7 +246,7 @@ TAO_EC_Sched_Filter::init_rt_info (ACE_ENV_SINGLE_ARG_DECL)
     }
 #endif /* 0 */
 
-#if 1
+#if 0 //ifdef changed from 1 to 0 by VS
   if (this->body_info_ != this->rt_info_)
     {
       this->scheduler_->add_dependency (this->rt_info_,
@@ -262,7 +265,7 @@ TAO_EC_Sched_Filter::init_rt_info (ACE_ENV_SINGLE_ARG_DECL)
     }
 #endif /* 0 */
 
-#if 1
+#if 0 //ifdef changed from 1 to 0 by VS
   this->scheduler_->add_dependency (this->parent_info_,
                                     this->rt_info_,
                                     1,

@@ -36,6 +36,10 @@ public:
   /// Constructor
   TAO_EC_Sched_Factory (void);
 
+  /// Helper function to register the sched factory into the service
+  /// configurator.
+  static int init_svcs (void);
+
   /// destructor...
   virtual ~TAO_EC_Sched_Factory (void);
 
