@@ -51,9 +51,10 @@ CCFLAGS		+= $(CFLAGS) $(THR_DEFS) -DHPUX_VERS=$(HPUX_VERS) -DACE_LACKS_PRAGMA_ON
 # Additionally, on HP-UX 10.20, suppress 495 to shut up the warnings from
 # the system header files.  667 is also suppressed, but the compiler still
 # tells you there was a future error, but at least you can pick out any real
-# errors by quickly scanning the output.
+# errors by quickly scanning the output. 829 is suppressed because the
+# system headers have offending string literals assigned to char *.
 ifeq ($(word 2,$(HPVERS_WORDS)), 10)
-CCFLAGS         += +W495,667
+CCFLAGS         += +W495,667,829
 endif
 DCFLAGS		+= -g
 DLD		= $(CXX) $(CCFLAGS)
