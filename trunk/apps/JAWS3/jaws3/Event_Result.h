@@ -5,6 +5,7 @@
 #define JAWS_EVENT_RESULT_H
 
 #include "ace/OS_NS_errno.h"
+#include "ace/os_include/os_stddef.h"   /* Needed for size_t */
 
 #include "jaws3/Export.h"
 

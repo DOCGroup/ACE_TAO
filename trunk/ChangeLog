@@ -1,3 +1,10 @@
+Mon Aug  2 15:20:37 2004  Steve Huston  <shuston@riverace.com>
+
+	* apps/JAWS3/jaws3/Event_Result.h: Added #include
+	  "ace/os_include/os_stddef.h" to pick up size_t for platforms where
+	  it's not defined by the compiler, such as Cygwin. Thanks to
+	  Johnny Willemsen for reporting this.
+
 Mon Aug  2 08:55:17 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Containers_T.h: The class ACE_Fixed_Set had some bugs in
