@@ -47,7 +47,7 @@ class TAO_Tagged_Profile;
 //    Please think about designs that do not require separate state
 //    objects, a good side effect: that should reduce code size...
 // @@ Carlos:I need sometime to think on this. Will surely do.
-class TAO_GIOP_ServerRequest;
+class TAO_ServerRequest;
 class TAO_OutputCDR;
 class TAO_GIOP_Locate_Status_Msg;
 class TAO_Pluggable_Reply_Params;
@@ -64,7 +64,7 @@ class TAO_Export TAO_GIOP_Message_Accept_State
   //
 public:
 
-  virtual int parse_request_header (TAO_GIOP_ServerRequest &) = 0;
+  virtual int parse_request_header (TAO_ServerRequest &) = 0;
   // Parse the Request Header from the incoming stream. This will do a
   // version specific parsing of the incoming Request header
 
@@ -136,7 +136,7 @@ class TAO_Export TAO_GIOP_Message_Accept_State_10 : public TAO_GIOP_Message_Acce
   //
 
 public:
-  virtual int parse_request_header (TAO_GIOP_ServerRequest &);
+  virtual int parse_request_header (TAO_ServerRequest &);
   // Parse the Request Header from the incoming stream. This will do a
   // version specific parsing of the incoming Request header
 
@@ -186,7 +186,7 @@ class TAO_Export TAO_GIOP_Message_Accept_State_12 : public TAO_GIOP_Message_Acce
   //
 
 public:
-  virtual int parse_request_header (TAO_GIOP_ServerRequest &);
+  virtual int parse_request_header (TAO_ServerRequest &);
   // Parse the Request Header from the incoming stream. This will do a
   // version specific parsing of the incoming Request header
 

@@ -12,10 +12,8 @@
 #include "Operation_Table.h"
 
 #include "tao/PolicyS.h"
-#include "tao/Server_Request.h"
-#include "tao/NVList.h"
+#include "tao/TAO_Server_Request.h"
 #include "tao/Stub.h"
-#include "tao/Typecode.h"
 #include "tao/ORB_Core.h"
 
 class TAO_CORBA_Policy_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
@@ -179,7 +177,7 @@ POA_CORBA::Policy::~Policy (void)
 }
 
 void POA_CORBA::Policy::_get_policy_type_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -207,7 +205,7 @@ void POA_CORBA::Policy::_get_policy_type_skel (
 }
 
 void POA_CORBA::Policy::copy_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -235,7 +233,7 @@ void POA_CORBA::Policy::copy_skel (
 }
 
 void POA_CORBA::Policy::destroy_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -255,7 +253,7 @@ void POA_CORBA::Policy::destroy_skel (
   }
 
 void POA_CORBA::Policy::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -279,7 +277,7 @@ void POA_CORBA::Policy::_is_a_skel (
 }
 
 void POA_CORBA::Policy::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -320,7 +318,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_Policy:1.0") == 0)
   return 0;
 }
 
-void POA_CORBA::Policy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_CORBA::Policy::_dispatch (TAO_ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
   this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }

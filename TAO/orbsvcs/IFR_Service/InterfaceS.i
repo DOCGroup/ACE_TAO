@@ -9,7 +9,7 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 ACE_INLINE void POA_IR::Contained::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -24,7 +24,7 @@ ACE_INLINE void POA_IR::Contained::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::Contained::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -39,7 +39,7 @@ ACE_INLINE void POA_IR::Contained::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::Container::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -54,7 +54,7 @@ ACE_INLINE void POA_IR::Container::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::Container::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -69,7 +69,7 @@ ACE_INLINE void POA_IR::Container::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::IDLType::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -84,7 +84,7 @@ ACE_INLINE void POA_IR::IDLType::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::IDLType::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -99,7 +99,7 @@ ACE_INLINE void POA_IR::IDLType::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::Repository::lookup_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -114,7 +114,7 @@ ACE_INLINE void POA_IR::Repository::lookup_skel (
     );
 }
 ACE_INLINE void POA_IR::Repository::contents_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -129,7 +129,7 @@ ACE_INLINE void POA_IR::Repository::contents_skel (
     );
 }
 ACE_INLINE void POA_IR::Repository::lookup_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -144,7 +144,7 @@ ACE_INLINE void POA_IR::Repository::lookup_name_skel (
     );
 }
 ACE_INLINE void POA_IR::Repository::describe_contents_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -159,7 +159,7 @@ ACE_INLINE void POA_IR::Repository::describe_contents_skel (
     );
 }
 ACE_INLINE void POA_IR::Repository::create_module_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -174,7 +174,7 @@ ACE_INLINE void POA_IR::Repository::create_module_skel (
     );
 }
 ACE_INLINE void POA_IR::Repository::create_constant_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -189,7 +189,7 @@ ACE_INLINE void POA_IR::Repository::create_constant_skel (
     );
 }
 ACE_INLINE void POA_IR::Repository::create_struct_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -204,7 +204,7 @@ ACE_INLINE void POA_IR::Repository::create_struct_skel (
     );
 }
 ACE_INLINE void POA_IR::Repository::create_union_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -219,7 +219,7 @@ ACE_INLINE void POA_IR::Repository::create_union_skel (
     );
 }
 ACE_INLINE void POA_IR::Repository::create_enum_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -234,7 +234,7 @@ ACE_INLINE void POA_IR::Repository::create_enum_skel (
     );
 }
 ACE_INLINE void POA_IR::Repository::create_alias_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -249,7 +249,7 @@ ACE_INLINE void POA_IR::Repository::create_alias_skel (
     );
 }
 ACE_INLINE void POA_IR::Repository::create_interface_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -264,7 +264,7 @@ ACE_INLINE void POA_IR::Repository::create_interface_skel (
     );
 }
 ACE_INLINE void POA_IR::Repository::create_value_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -279,7 +279,7 @@ ACE_INLINE void POA_IR::Repository::create_value_skel (
     );
 }
 ACE_INLINE void POA_IR::Repository::create_value_box_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -294,7 +294,7 @@ ACE_INLINE void POA_IR::Repository::create_value_box_skel (
     );
 }
 ACE_INLINE void POA_IR::Repository::create_exception_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -309,7 +309,7 @@ ACE_INLINE void POA_IR::Repository::create_exception_skel (
     );
 }
 ACE_INLINE void POA_IR::Repository::create_native_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -324,7 +324,7 @@ ACE_INLINE void POA_IR::Repository::create_native_skel (
     );
 }
 ACE_INLINE void POA_IR::Repository::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -339,7 +339,7 @@ ACE_INLINE void POA_IR::Repository::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::Repository::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -354,7 +354,7 @@ ACE_INLINE void POA_IR::Repository::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentRepository::lookup_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -369,7 +369,7 @@ ACE_INLINE void POA_IR::ComponentRepository::lookup_id_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentRepository::get_canonical_typecode_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -384,7 +384,7 @@ ACE_INLINE void POA_IR::ComponentRepository::get_canonical_typecode_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentRepository::get_primitive_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -399,7 +399,7 @@ ACE_INLINE void POA_IR::ComponentRepository::get_primitive_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentRepository::create_string_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -414,7 +414,7 @@ ACE_INLINE void POA_IR::ComponentRepository::create_string_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentRepository::create_wstring_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -429,7 +429,7 @@ ACE_INLINE void POA_IR::ComponentRepository::create_wstring_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentRepository::create_sequence_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -444,7 +444,7 @@ ACE_INLINE void POA_IR::ComponentRepository::create_sequence_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentRepository::create_array_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -459,7 +459,7 @@ ACE_INLINE void POA_IR::ComponentRepository::create_array_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentRepository::create_fixed_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -474,7 +474,7 @@ ACE_INLINE void POA_IR::ComponentRepository::create_fixed_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentRepository::lookup_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -489,7 +489,7 @@ ACE_INLINE void POA_IR::ComponentRepository::lookup_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentRepository::contents_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -504,7 +504,7 @@ ACE_INLINE void POA_IR::ComponentRepository::contents_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentRepository::lookup_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -519,7 +519,7 @@ ACE_INLINE void POA_IR::ComponentRepository::lookup_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentRepository::describe_contents_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -534,7 +534,7 @@ ACE_INLINE void POA_IR::ComponentRepository::describe_contents_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentRepository::create_module_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -549,7 +549,7 @@ ACE_INLINE void POA_IR::ComponentRepository::create_module_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentRepository::create_constant_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -564,7 +564,7 @@ ACE_INLINE void POA_IR::ComponentRepository::create_constant_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentRepository::create_struct_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -579,7 +579,7 @@ ACE_INLINE void POA_IR::ComponentRepository::create_struct_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentRepository::create_union_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -594,7 +594,7 @@ ACE_INLINE void POA_IR::ComponentRepository::create_union_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentRepository::create_enum_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -609,7 +609,7 @@ ACE_INLINE void POA_IR::ComponentRepository::create_enum_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentRepository::create_alias_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -624,7 +624,7 @@ ACE_INLINE void POA_IR::ComponentRepository::create_alias_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentRepository::create_interface_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -639,7 +639,7 @@ ACE_INLINE void POA_IR::ComponentRepository::create_interface_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentRepository::create_value_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -654,7 +654,7 @@ ACE_INLINE void POA_IR::ComponentRepository::create_value_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentRepository::create_value_box_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -669,7 +669,7 @@ ACE_INLINE void POA_IR::ComponentRepository::create_value_box_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentRepository::create_exception_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -684,7 +684,7 @@ ACE_INLINE void POA_IR::ComponentRepository::create_exception_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentRepository::create_native_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -699,7 +699,7 @@ ACE_INLINE void POA_IR::ComponentRepository::create_native_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentRepository::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -714,7 +714,7 @@ ACE_INLINE void POA_IR::ComponentRepository::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentRepository::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -729,7 +729,7 @@ ACE_INLINE void POA_IR::ComponentRepository::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::lookup_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -744,7 +744,7 @@ ACE_INLINE void POA_IR::ModuleDef::lookup_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::contents_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -759,7 +759,7 @@ ACE_INLINE void POA_IR::ModuleDef::contents_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::lookup_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -774,7 +774,7 @@ ACE_INLINE void POA_IR::ModuleDef::lookup_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::describe_contents_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -789,7 +789,7 @@ ACE_INLINE void POA_IR::ModuleDef::describe_contents_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::create_module_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -804,7 +804,7 @@ ACE_INLINE void POA_IR::ModuleDef::create_module_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::create_constant_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -819,7 +819,7 @@ ACE_INLINE void POA_IR::ModuleDef::create_constant_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::create_struct_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -834,7 +834,7 @@ ACE_INLINE void POA_IR::ModuleDef::create_struct_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::create_union_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -849,7 +849,7 @@ ACE_INLINE void POA_IR::ModuleDef::create_union_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::create_enum_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -864,7 +864,7 @@ ACE_INLINE void POA_IR::ModuleDef::create_enum_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::create_alias_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -879,7 +879,7 @@ ACE_INLINE void POA_IR::ModuleDef::create_alias_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::create_interface_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -894,7 +894,7 @@ ACE_INLINE void POA_IR::ModuleDef::create_interface_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::create_value_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -909,7 +909,7 @@ ACE_INLINE void POA_IR::ModuleDef::create_value_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::create_value_box_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -924,7 +924,7 @@ ACE_INLINE void POA_IR::ModuleDef::create_value_box_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::create_exception_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -939,7 +939,7 @@ ACE_INLINE void POA_IR::ModuleDef::create_exception_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::create_native_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -954,7 +954,7 @@ ACE_INLINE void POA_IR::ModuleDef::create_native_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::_get_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -969,7 +969,7 @@ ACE_INLINE void POA_IR::ModuleDef::_get_id_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::_set_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -984,7 +984,7 @@ ACE_INLINE void POA_IR::ModuleDef::_set_id_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::_get_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -999,7 +999,7 @@ ACE_INLINE void POA_IR::ModuleDef::_get_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::_set_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1014,7 +1014,7 @@ ACE_INLINE void POA_IR::ModuleDef::_set_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::_get_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1029,7 +1029,7 @@ ACE_INLINE void POA_IR::ModuleDef::_get_version_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::_set_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1044,7 +1044,7 @@ ACE_INLINE void POA_IR::ModuleDef::_set_version_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::_get_defined_in_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1059,7 +1059,7 @@ ACE_INLINE void POA_IR::ModuleDef::_get_defined_in_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::_get_absolute_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1074,7 +1074,7 @@ ACE_INLINE void POA_IR::ModuleDef::_get_absolute_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::_get_containing_repository_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1089,7 +1089,7 @@ ACE_INLINE void POA_IR::ModuleDef::_get_containing_repository_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::describe_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1104,7 +1104,7 @@ ACE_INLINE void POA_IR::ModuleDef::describe_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::move_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1119,7 +1119,7 @@ ACE_INLINE void POA_IR::ModuleDef::move_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1134,7 +1134,7 @@ ACE_INLINE void POA_IR::ModuleDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::ModuleDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1149,7 +1149,7 @@ ACE_INLINE void POA_IR::ModuleDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::ConstantDef::_get_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1164,7 +1164,7 @@ ACE_INLINE void POA_IR::ConstantDef::_get_id_skel (
     );
 }
 ACE_INLINE void POA_IR::ConstantDef::_set_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1179,7 +1179,7 @@ ACE_INLINE void POA_IR::ConstantDef::_set_id_skel (
     );
 }
 ACE_INLINE void POA_IR::ConstantDef::_get_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1194,7 +1194,7 @@ ACE_INLINE void POA_IR::ConstantDef::_get_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ConstantDef::_set_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1209,7 +1209,7 @@ ACE_INLINE void POA_IR::ConstantDef::_set_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ConstantDef::_get_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1224,7 +1224,7 @@ ACE_INLINE void POA_IR::ConstantDef::_get_version_skel (
     );
 }
 ACE_INLINE void POA_IR::ConstantDef::_set_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1239,7 +1239,7 @@ ACE_INLINE void POA_IR::ConstantDef::_set_version_skel (
     );
 }
 ACE_INLINE void POA_IR::ConstantDef::_get_defined_in_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1254,7 +1254,7 @@ ACE_INLINE void POA_IR::ConstantDef::_get_defined_in_skel (
     );
 }
 ACE_INLINE void POA_IR::ConstantDef::_get_absolute_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1269,7 +1269,7 @@ ACE_INLINE void POA_IR::ConstantDef::_get_absolute_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ConstantDef::_get_containing_repository_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1284,7 +1284,7 @@ ACE_INLINE void POA_IR::ConstantDef::_get_containing_repository_skel (
     );
 }
 ACE_INLINE void POA_IR::ConstantDef::describe_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1299,7 +1299,7 @@ ACE_INLINE void POA_IR::ConstantDef::describe_skel (
     );
 }
 ACE_INLINE void POA_IR::ConstantDef::move_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1314,7 +1314,7 @@ ACE_INLINE void POA_IR::ConstantDef::move_skel (
     );
 }
 ACE_INLINE void POA_IR::ConstantDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1329,7 +1329,7 @@ ACE_INLINE void POA_IR::ConstantDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::ConstantDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1344,7 +1344,7 @@ ACE_INLINE void POA_IR::ConstantDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::TypedefDef::_get_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1359,7 +1359,7 @@ ACE_INLINE void POA_IR::TypedefDef::_get_id_skel (
     );
 }
 ACE_INLINE void POA_IR::TypedefDef::_set_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1374,7 +1374,7 @@ ACE_INLINE void POA_IR::TypedefDef::_set_id_skel (
     );
 }
 ACE_INLINE void POA_IR::TypedefDef::_get_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1389,7 +1389,7 @@ ACE_INLINE void POA_IR::TypedefDef::_get_name_skel (
     );
 }
 ACE_INLINE void POA_IR::TypedefDef::_set_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1404,7 +1404,7 @@ ACE_INLINE void POA_IR::TypedefDef::_set_name_skel (
     );
 }
 ACE_INLINE void POA_IR::TypedefDef::_get_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1419,7 +1419,7 @@ ACE_INLINE void POA_IR::TypedefDef::_get_version_skel (
     );
 }
 ACE_INLINE void POA_IR::TypedefDef::_set_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1434,7 +1434,7 @@ ACE_INLINE void POA_IR::TypedefDef::_set_version_skel (
     );
 }
 ACE_INLINE void POA_IR::TypedefDef::_get_defined_in_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1449,7 +1449,7 @@ ACE_INLINE void POA_IR::TypedefDef::_get_defined_in_skel (
     );
 }
 ACE_INLINE void POA_IR::TypedefDef::_get_absolute_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1464,7 +1464,7 @@ ACE_INLINE void POA_IR::TypedefDef::_get_absolute_name_skel (
     );
 }
 ACE_INLINE void POA_IR::TypedefDef::_get_containing_repository_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1479,7 +1479,7 @@ ACE_INLINE void POA_IR::TypedefDef::_get_containing_repository_skel (
     );
 }
 ACE_INLINE void POA_IR::TypedefDef::describe_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1494,7 +1494,7 @@ ACE_INLINE void POA_IR::TypedefDef::describe_skel (
     );
 }
 ACE_INLINE void POA_IR::TypedefDef::move_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1509,7 +1509,7 @@ ACE_INLINE void POA_IR::TypedefDef::move_skel (
     );
 }
 ACE_INLINE void POA_IR::TypedefDef::_get_type_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1524,7 +1524,7 @@ ACE_INLINE void POA_IR::TypedefDef::_get_type_skel (
     );
 }
 ACE_INLINE void POA_IR::TypedefDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1539,7 +1539,7 @@ ACE_INLINE void POA_IR::TypedefDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::TypedefDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1554,7 +1554,7 @@ ACE_INLINE void POA_IR::TypedefDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::lookup_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1569,7 +1569,7 @@ ACE_INLINE void POA_IR::StructDef::lookup_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::contents_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1584,7 +1584,7 @@ ACE_INLINE void POA_IR::StructDef::contents_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::lookup_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1599,7 +1599,7 @@ ACE_INLINE void POA_IR::StructDef::lookup_name_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::describe_contents_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1614,7 +1614,7 @@ ACE_INLINE void POA_IR::StructDef::describe_contents_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::create_module_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1629,7 +1629,7 @@ ACE_INLINE void POA_IR::StructDef::create_module_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::create_constant_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1644,7 +1644,7 @@ ACE_INLINE void POA_IR::StructDef::create_constant_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::create_struct_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1659,7 +1659,7 @@ ACE_INLINE void POA_IR::StructDef::create_struct_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::create_union_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1674,7 +1674,7 @@ ACE_INLINE void POA_IR::StructDef::create_union_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::create_enum_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1689,7 +1689,7 @@ ACE_INLINE void POA_IR::StructDef::create_enum_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::create_alias_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1704,7 +1704,7 @@ ACE_INLINE void POA_IR::StructDef::create_alias_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::create_interface_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1719,7 +1719,7 @@ ACE_INLINE void POA_IR::StructDef::create_interface_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::create_value_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1734,7 +1734,7 @@ ACE_INLINE void POA_IR::StructDef::create_value_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::create_value_box_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1749,7 +1749,7 @@ ACE_INLINE void POA_IR::StructDef::create_value_box_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::create_exception_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1764,7 +1764,7 @@ ACE_INLINE void POA_IR::StructDef::create_exception_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::create_native_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1779,7 +1779,7 @@ ACE_INLINE void POA_IR::StructDef::create_native_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::_get_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1794,7 +1794,7 @@ ACE_INLINE void POA_IR::StructDef::_get_id_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::_set_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1809,7 +1809,7 @@ ACE_INLINE void POA_IR::StructDef::_set_id_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::_get_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1824,7 +1824,7 @@ ACE_INLINE void POA_IR::StructDef::_get_name_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::_set_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1839,7 +1839,7 @@ ACE_INLINE void POA_IR::StructDef::_set_name_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::_get_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1854,7 +1854,7 @@ ACE_INLINE void POA_IR::StructDef::_get_version_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::_set_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1869,7 +1869,7 @@ ACE_INLINE void POA_IR::StructDef::_set_version_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::_get_defined_in_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1884,7 +1884,7 @@ ACE_INLINE void POA_IR::StructDef::_get_defined_in_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::_get_absolute_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1899,7 +1899,7 @@ ACE_INLINE void POA_IR::StructDef::_get_absolute_name_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::_get_containing_repository_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1914,7 +1914,7 @@ ACE_INLINE void POA_IR::StructDef::_get_containing_repository_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::describe_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1929,7 +1929,7 @@ ACE_INLINE void POA_IR::StructDef::describe_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::move_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1944,7 +1944,7 @@ ACE_INLINE void POA_IR::StructDef::move_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::_get_type_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1959,7 +1959,7 @@ ACE_INLINE void POA_IR::StructDef::_get_type_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1974,7 +1974,7 @@ ACE_INLINE void POA_IR::StructDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::StructDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -1989,7 +1989,7 @@ ACE_INLINE void POA_IR::StructDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::lookup_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2004,7 +2004,7 @@ ACE_INLINE void POA_IR::UnionDef::lookup_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::contents_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2019,7 +2019,7 @@ ACE_INLINE void POA_IR::UnionDef::contents_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::lookup_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2034,7 +2034,7 @@ ACE_INLINE void POA_IR::UnionDef::lookup_name_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::describe_contents_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2049,7 +2049,7 @@ ACE_INLINE void POA_IR::UnionDef::describe_contents_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::create_module_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2064,7 +2064,7 @@ ACE_INLINE void POA_IR::UnionDef::create_module_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::create_constant_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2079,7 +2079,7 @@ ACE_INLINE void POA_IR::UnionDef::create_constant_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::create_struct_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2094,7 +2094,7 @@ ACE_INLINE void POA_IR::UnionDef::create_struct_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::create_union_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2109,7 +2109,7 @@ ACE_INLINE void POA_IR::UnionDef::create_union_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::create_enum_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2124,7 +2124,7 @@ ACE_INLINE void POA_IR::UnionDef::create_enum_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::create_alias_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2139,7 +2139,7 @@ ACE_INLINE void POA_IR::UnionDef::create_alias_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::create_interface_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2154,7 +2154,7 @@ ACE_INLINE void POA_IR::UnionDef::create_interface_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::create_value_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2169,7 +2169,7 @@ ACE_INLINE void POA_IR::UnionDef::create_value_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::create_value_box_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2184,7 +2184,7 @@ ACE_INLINE void POA_IR::UnionDef::create_value_box_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::create_exception_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2199,7 +2199,7 @@ ACE_INLINE void POA_IR::UnionDef::create_exception_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::create_native_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2214,7 +2214,7 @@ ACE_INLINE void POA_IR::UnionDef::create_native_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::_get_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2229,7 +2229,7 @@ ACE_INLINE void POA_IR::UnionDef::_get_id_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::_set_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2244,7 +2244,7 @@ ACE_INLINE void POA_IR::UnionDef::_set_id_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::_get_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2259,7 +2259,7 @@ ACE_INLINE void POA_IR::UnionDef::_get_name_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::_set_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2274,7 +2274,7 @@ ACE_INLINE void POA_IR::UnionDef::_set_name_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::_get_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2289,7 +2289,7 @@ ACE_INLINE void POA_IR::UnionDef::_get_version_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::_set_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2304,7 +2304,7 @@ ACE_INLINE void POA_IR::UnionDef::_set_version_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::_get_defined_in_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2319,7 +2319,7 @@ ACE_INLINE void POA_IR::UnionDef::_get_defined_in_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::_get_absolute_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2334,7 +2334,7 @@ ACE_INLINE void POA_IR::UnionDef::_get_absolute_name_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::_get_containing_repository_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2349,7 +2349,7 @@ ACE_INLINE void POA_IR::UnionDef::_get_containing_repository_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::describe_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2364,7 +2364,7 @@ ACE_INLINE void POA_IR::UnionDef::describe_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::move_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2379,7 +2379,7 @@ ACE_INLINE void POA_IR::UnionDef::move_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::_get_type_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2394,7 +2394,7 @@ ACE_INLINE void POA_IR::UnionDef::_get_type_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2409,7 +2409,7 @@ ACE_INLINE void POA_IR::UnionDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::UnionDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2424,7 +2424,7 @@ ACE_INLINE void POA_IR::UnionDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::EnumDef::_get_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2439,7 +2439,7 @@ ACE_INLINE void POA_IR::EnumDef::_get_id_skel (
     );
 }
 ACE_INLINE void POA_IR::EnumDef::_set_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2454,7 +2454,7 @@ ACE_INLINE void POA_IR::EnumDef::_set_id_skel (
     );
 }
 ACE_INLINE void POA_IR::EnumDef::_get_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2469,7 +2469,7 @@ ACE_INLINE void POA_IR::EnumDef::_get_name_skel (
     );
 }
 ACE_INLINE void POA_IR::EnumDef::_set_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2484,7 +2484,7 @@ ACE_INLINE void POA_IR::EnumDef::_set_name_skel (
     );
 }
 ACE_INLINE void POA_IR::EnumDef::_get_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2499,7 +2499,7 @@ ACE_INLINE void POA_IR::EnumDef::_get_version_skel (
     );
 }
 ACE_INLINE void POA_IR::EnumDef::_set_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2514,7 +2514,7 @@ ACE_INLINE void POA_IR::EnumDef::_set_version_skel (
     );
 }
 ACE_INLINE void POA_IR::EnumDef::_get_defined_in_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2529,7 +2529,7 @@ ACE_INLINE void POA_IR::EnumDef::_get_defined_in_skel (
     );
 }
 ACE_INLINE void POA_IR::EnumDef::_get_absolute_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2544,7 +2544,7 @@ ACE_INLINE void POA_IR::EnumDef::_get_absolute_name_skel (
     );
 }
 ACE_INLINE void POA_IR::EnumDef::_get_containing_repository_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2559,7 +2559,7 @@ ACE_INLINE void POA_IR::EnumDef::_get_containing_repository_skel (
     );
 }
 ACE_INLINE void POA_IR::EnumDef::describe_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2574,7 +2574,7 @@ ACE_INLINE void POA_IR::EnumDef::describe_skel (
     );
 }
 ACE_INLINE void POA_IR::EnumDef::move_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2589,7 +2589,7 @@ ACE_INLINE void POA_IR::EnumDef::move_skel (
     );
 }
 ACE_INLINE void POA_IR::EnumDef::_get_type_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2604,7 +2604,7 @@ ACE_INLINE void POA_IR::EnumDef::_get_type_skel (
     );
 }
 ACE_INLINE void POA_IR::EnumDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2619,7 +2619,7 @@ ACE_INLINE void POA_IR::EnumDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::EnumDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2634,7 +2634,7 @@ ACE_INLINE void POA_IR::EnumDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::AliasDef::_get_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2649,7 +2649,7 @@ ACE_INLINE void POA_IR::AliasDef::_get_id_skel (
     );
 }
 ACE_INLINE void POA_IR::AliasDef::_set_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2664,7 +2664,7 @@ ACE_INLINE void POA_IR::AliasDef::_set_id_skel (
     );
 }
 ACE_INLINE void POA_IR::AliasDef::_get_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2679,7 +2679,7 @@ ACE_INLINE void POA_IR::AliasDef::_get_name_skel (
     );
 }
 ACE_INLINE void POA_IR::AliasDef::_set_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2694,7 +2694,7 @@ ACE_INLINE void POA_IR::AliasDef::_set_name_skel (
     );
 }
 ACE_INLINE void POA_IR::AliasDef::_get_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2709,7 +2709,7 @@ ACE_INLINE void POA_IR::AliasDef::_get_version_skel (
     );
 }
 ACE_INLINE void POA_IR::AliasDef::_set_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2724,7 +2724,7 @@ ACE_INLINE void POA_IR::AliasDef::_set_version_skel (
     );
 }
 ACE_INLINE void POA_IR::AliasDef::_get_defined_in_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2739,7 +2739,7 @@ ACE_INLINE void POA_IR::AliasDef::_get_defined_in_skel (
     );
 }
 ACE_INLINE void POA_IR::AliasDef::_get_absolute_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2754,7 +2754,7 @@ ACE_INLINE void POA_IR::AliasDef::_get_absolute_name_skel (
     );
 }
 ACE_INLINE void POA_IR::AliasDef::_get_containing_repository_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2769,7 +2769,7 @@ ACE_INLINE void POA_IR::AliasDef::_get_containing_repository_skel (
     );
 }
 ACE_INLINE void POA_IR::AliasDef::describe_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2784,7 +2784,7 @@ ACE_INLINE void POA_IR::AliasDef::describe_skel (
     );
 }
 ACE_INLINE void POA_IR::AliasDef::move_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2799,7 +2799,7 @@ ACE_INLINE void POA_IR::AliasDef::move_skel (
     );
 }
 ACE_INLINE void POA_IR::AliasDef::_get_type_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2814,7 +2814,7 @@ ACE_INLINE void POA_IR::AliasDef::_get_type_skel (
     );
 }
 ACE_INLINE void POA_IR::AliasDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2829,7 +2829,7 @@ ACE_INLINE void POA_IR::AliasDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::AliasDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2844,7 +2844,7 @@ ACE_INLINE void POA_IR::AliasDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::NativeDef::_get_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2859,7 +2859,7 @@ ACE_INLINE void POA_IR::NativeDef::_get_id_skel (
     );
 }
 ACE_INLINE void POA_IR::NativeDef::_set_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2874,7 +2874,7 @@ ACE_INLINE void POA_IR::NativeDef::_set_id_skel (
     );
 }
 ACE_INLINE void POA_IR::NativeDef::_get_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2889,7 +2889,7 @@ ACE_INLINE void POA_IR::NativeDef::_get_name_skel (
     );
 }
 ACE_INLINE void POA_IR::NativeDef::_set_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2904,7 +2904,7 @@ ACE_INLINE void POA_IR::NativeDef::_set_name_skel (
     );
 }
 ACE_INLINE void POA_IR::NativeDef::_get_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2919,7 +2919,7 @@ ACE_INLINE void POA_IR::NativeDef::_get_version_skel (
     );
 }
 ACE_INLINE void POA_IR::NativeDef::_set_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2934,7 +2934,7 @@ ACE_INLINE void POA_IR::NativeDef::_set_version_skel (
     );
 }
 ACE_INLINE void POA_IR::NativeDef::_get_defined_in_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2949,7 +2949,7 @@ ACE_INLINE void POA_IR::NativeDef::_get_defined_in_skel (
     );
 }
 ACE_INLINE void POA_IR::NativeDef::_get_absolute_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2964,7 +2964,7 @@ ACE_INLINE void POA_IR::NativeDef::_get_absolute_name_skel (
     );
 }
 ACE_INLINE void POA_IR::NativeDef::_get_containing_repository_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2979,7 +2979,7 @@ ACE_INLINE void POA_IR::NativeDef::_get_containing_repository_skel (
     );
 }
 ACE_INLINE void POA_IR::NativeDef::describe_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -2994,7 +2994,7 @@ ACE_INLINE void POA_IR::NativeDef::describe_skel (
     );
 }
 ACE_INLINE void POA_IR::NativeDef::move_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3009,7 +3009,7 @@ ACE_INLINE void POA_IR::NativeDef::move_skel (
     );
 }
 ACE_INLINE void POA_IR::NativeDef::_get_type_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3024,7 +3024,7 @@ ACE_INLINE void POA_IR::NativeDef::_get_type_skel (
     );
 }
 ACE_INLINE void POA_IR::NativeDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3039,7 +3039,7 @@ ACE_INLINE void POA_IR::NativeDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::NativeDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3054,7 +3054,7 @@ ACE_INLINE void POA_IR::NativeDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::PrimitiveDef::_get_type_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3069,7 +3069,7 @@ ACE_INLINE void POA_IR::PrimitiveDef::_get_type_skel (
     );
 }
 ACE_INLINE void POA_IR::PrimitiveDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3084,7 +3084,7 @@ ACE_INLINE void POA_IR::PrimitiveDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::PrimitiveDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3099,7 +3099,7 @@ ACE_INLINE void POA_IR::PrimitiveDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::StringDef::_get_type_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3114,7 +3114,7 @@ ACE_INLINE void POA_IR::StringDef::_get_type_skel (
     );
 }
 ACE_INLINE void POA_IR::StringDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3129,7 +3129,7 @@ ACE_INLINE void POA_IR::StringDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::StringDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3144,7 +3144,7 @@ ACE_INLINE void POA_IR::StringDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::WstringDef::_get_type_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3159,7 +3159,7 @@ ACE_INLINE void POA_IR::WstringDef::_get_type_skel (
     );
 }
 ACE_INLINE void POA_IR::WstringDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3174,7 +3174,7 @@ ACE_INLINE void POA_IR::WstringDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::WstringDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3189,7 +3189,7 @@ ACE_INLINE void POA_IR::WstringDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::FixedDef::_get_type_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3204,7 +3204,7 @@ ACE_INLINE void POA_IR::FixedDef::_get_type_skel (
     );
 }
 ACE_INLINE void POA_IR::FixedDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3219,7 +3219,7 @@ ACE_INLINE void POA_IR::FixedDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::FixedDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3234,7 +3234,7 @@ ACE_INLINE void POA_IR::FixedDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::SequenceDef::_get_type_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3249,7 +3249,7 @@ ACE_INLINE void POA_IR::SequenceDef::_get_type_skel (
     );
 }
 ACE_INLINE void POA_IR::SequenceDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3264,7 +3264,7 @@ ACE_INLINE void POA_IR::SequenceDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::SequenceDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3279,7 +3279,7 @@ ACE_INLINE void POA_IR::SequenceDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::ArrayDef::_get_type_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3294,7 +3294,7 @@ ACE_INLINE void POA_IR::ArrayDef::_get_type_skel (
     );
 }
 ACE_INLINE void POA_IR::ArrayDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3309,7 +3309,7 @@ ACE_INLINE void POA_IR::ArrayDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::ArrayDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3324,7 +3324,7 @@ ACE_INLINE void POA_IR::ArrayDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::_get_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3339,7 +3339,7 @@ ACE_INLINE void POA_IR::ExceptionDef::_get_id_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::_set_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3354,7 +3354,7 @@ ACE_INLINE void POA_IR::ExceptionDef::_set_id_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::_get_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3369,7 +3369,7 @@ ACE_INLINE void POA_IR::ExceptionDef::_get_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::_set_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3384,7 +3384,7 @@ ACE_INLINE void POA_IR::ExceptionDef::_set_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::_get_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3399,7 +3399,7 @@ ACE_INLINE void POA_IR::ExceptionDef::_get_version_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::_set_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3414,7 +3414,7 @@ ACE_INLINE void POA_IR::ExceptionDef::_set_version_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::_get_defined_in_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3429,7 +3429,7 @@ ACE_INLINE void POA_IR::ExceptionDef::_get_defined_in_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::_get_absolute_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3444,7 +3444,7 @@ ACE_INLINE void POA_IR::ExceptionDef::_get_absolute_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::_get_containing_repository_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3459,7 +3459,7 @@ ACE_INLINE void POA_IR::ExceptionDef::_get_containing_repository_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::describe_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3474,7 +3474,7 @@ ACE_INLINE void POA_IR::ExceptionDef::describe_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::move_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3489,7 +3489,7 @@ ACE_INLINE void POA_IR::ExceptionDef::move_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::lookup_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3504,7 +3504,7 @@ ACE_INLINE void POA_IR::ExceptionDef::lookup_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::contents_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3519,7 +3519,7 @@ ACE_INLINE void POA_IR::ExceptionDef::contents_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::lookup_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3534,7 +3534,7 @@ ACE_INLINE void POA_IR::ExceptionDef::lookup_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::describe_contents_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3549,7 +3549,7 @@ ACE_INLINE void POA_IR::ExceptionDef::describe_contents_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::create_module_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3564,7 +3564,7 @@ ACE_INLINE void POA_IR::ExceptionDef::create_module_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::create_constant_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3579,7 +3579,7 @@ ACE_INLINE void POA_IR::ExceptionDef::create_constant_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::create_struct_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3594,7 +3594,7 @@ ACE_INLINE void POA_IR::ExceptionDef::create_struct_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::create_union_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3609,7 +3609,7 @@ ACE_INLINE void POA_IR::ExceptionDef::create_union_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::create_enum_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3624,7 +3624,7 @@ ACE_INLINE void POA_IR::ExceptionDef::create_enum_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::create_alias_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3639,7 +3639,7 @@ ACE_INLINE void POA_IR::ExceptionDef::create_alias_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::create_interface_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3654,7 +3654,7 @@ ACE_INLINE void POA_IR::ExceptionDef::create_interface_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::create_value_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3669,7 +3669,7 @@ ACE_INLINE void POA_IR::ExceptionDef::create_value_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::create_value_box_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3684,7 +3684,7 @@ ACE_INLINE void POA_IR::ExceptionDef::create_value_box_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::create_exception_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3699,7 +3699,7 @@ ACE_INLINE void POA_IR::ExceptionDef::create_exception_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::create_native_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3714,7 +3714,7 @@ ACE_INLINE void POA_IR::ExceptionDef::create_native_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3729,7 +3729,7 @@ ACE_INLINE void POA_IR::ExceptionDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::ExceptionDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3744,7 +3744,7 @@ ACE_INLINE void POA_IR::ExceptionDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::AttributeDef::_get_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3759,7 +3759,7 @@ ACE_INLINE void POA_IR::AttributeDef::_get_id_skel (
     );
 }
 ACE_INLINE void POA_IR::AttributeDef::_set_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3774,7 +3774,7 @@ ACE_INLINE void POA_IR::AttributeDef::_set_id_skel (
     );
 }
 ACE_INLINE void POA_IR::AttributeDef::_get_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3789,7 +3789,7 @@ ACE_INLINE void POA_IR::AttributeDef::_get_name_skel (
     );
 }
 ACE_INLINE void POA_IR::AttributeDef::_set_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3804,7 +3804,7 @@ ACE_INLINE void POA_IR::AttributeDef::_set_name_skel (
     );
 }
 ACE_INLINE void POA_IR::AttributeDef::_get_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3819,7 +3819,7 @@ ACE_INLINE void POA_IR::AttributeDef::_get_version_skel (
     );
 }
 ACE_INLINE void POA_IR::AttributeDef::_set_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3834,7 +3834,7 @@ ACE_INLINE void POA_IR::AttributeDef::_set_version_skel (
     );
 }
 ACE_INLINE void POA_IR::AttributeDef::_get_defined_in_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3849,7 +3849,7 @@ ACE_INLINE void POA_IR::AttributeDef::_get_defined_in_skel (
     );
 }
 ACE_INLINE void POA_IR::AttributeDef::_get_absolute_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3864,7 +3864,7 @@ ACE_INLINE void POA_IR::AttributeDef::_get_absolute_name_skel (
     );
 }
 ACE_INLINE void POA_IR::AttributeDef::_get_containing_repository_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3879,7 +3879,7 @@ ACE_INLINE void POA_IR::AttributeDef::_get_containing_repository_skel (
     );
 }
 ACE_INLINE void POA_IR::AttributeDef::describe_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3894,7 +3894,7 @@ ACE_INLINE void POA_IR::AttributeDef::describe_skel (
     );
 }
 ACE_INLINE void POA_IR::AttributeDef::move_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3909,7 +3909,7 @@ ACE_INLINE void POA_IR::AttributeDef::move_skel (
     );
 }
 ACE_INLINE void POA_IR::AttributeDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3924,7 +3924,7 @@ ACE_INLINE void POA_IR::AttributeDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::AttributeDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3939,7 +3939,7 @@ ACE_INLINE void POA_IR::AttributeDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::OperationDef::_get_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3954,7 +3954,7 @@ ACE_INLINE void POA_IR::OperationDef::_get_id_skel (
     );
 }
 ACE_INLINE void POA_IR::OperationDef::_set_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3969,7 +3969,7 @@ ACE_INLINE void POA_IR::OperationDef::_set_id_skel (
     );
 }
 ACE_INLINE void POA_IR::OperationDef::_get_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3984,7 +3984,7 @@ ACE_INLINE void POA_IR::OperationDef::_get_name_skel (
     );
 }
 ACE_INLINE void POA_IR::OperationDef::_set_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -3999,7 +3999,7 @@ ACE_INLINE void POA_IR::OperationDef::_set_name_skel (
     );
 }
 ACE_INLINE void POA_IR::OperationDef::_get_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4014,7 +4014,7 @@ ACE_INLINE void POA_IR::OperationDef::_get_version_skel (
     );
 }
 ACE_INLINE void POA_IR::OperationDef::_set_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4029,7 +4029,7 @@ ACE_INLINE void POA_IR::OperationDef::_set_version_skel (
     );
 }
 ACE_INLINE void POA_IR::OperationDef::_get_defined_in_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4044,7 +4044,7 @@ ACE_INLINE void POA_IR::OperationDef::_get_defined_in_skel (
     );
 }
 ACE_INLINE void POA_IR::OperationDef::_get_absolute_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4059,7 +4059,7 @@ ACE_INLINE void POA_IR::OperationDef::_get_absolute_name_skel (
     );
 }
 ACE_INLINE void POA_IR::OperationDef::_get_containing_repository_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4074,7 +4074,7 @@ ACE_INLINE void POA_IR::OperationDef::_get_containing_repository_skel (
     );
 }
 ACE_INLINE void POA_IR::OperationDef::describe_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4089,7 +4089,7 @@ ACE_INLINE void POA_IR::OperationDef::describe_skel (
     );
 }
 ACE_INLINE void POA_IR::OperationDef::move_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4104,7 +4104,7 @@ ACE_INLINE void POA_IR::OperationDef::move_skel (
     );
 }
 ACE_INLINE void POA_IR::OperationDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4119,7 +4119,7 @@ ACE_INLINE void POA_IR::OperationDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::OperationDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4134,7 +4134,7 @@ ACE_INLINE void POA_IR::OperationDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::lookup_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4149,7 +4149,7 @@ ACE_INLINE void POA_IR::InterfaceDef::lookup_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::contents_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4164,7 +4164,7 @@ ACE_INLINE void POA_IR::InterfaceDef::contents_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::lookup_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4179,7 +4179,7 @@ ACE_INLINE void POA_IR::InterfaceDef::lookup_name_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::describe_contents_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4194,7 +4194,7 @@ ACE_INLINE void POA_IR::InterfaceDef::describe_contents_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::create_module_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4209,7 +4209,7 @@ ACE_INLINE void POA_IR::InterfaceDef::create_module_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::create_constant_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4224,7 +4224,7 @@ ACE_INLINE void POA_IR::InterfaceDef::create_constant_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::create_struct_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4239,7 +4239,7 @@ ACE_INLINE void POA_IR::InterfaceDef::create_struct_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::create_union_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4254,7 +4254,7 @@ ACE_INLINE void POA_IR::InterfaceDef::create_union_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::create_enum_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4269,7 +4269,7 @@ ACE_INLINE void POA_IR::InterfaceDef::create_enum_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::create_alias_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4284,7 +4284,7 @@ ACE_INLINE void POA_IR::InterfaceDef::create_alias_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::create_interface_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4299,7 +4299,7 @@ ACE_INLINE void POA_IR::InterfaceDef::create_interface_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::create_value_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4314,7 +4314,7 @@ ACE_INLINE void POA_IR::InterfaceDef::create_value_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::create_value_box_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4329,7 +4329,7 @@ ACE_INLINE void POA_IR::InterfaceDef::create_value_box_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::create_exception_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4344,7 +4344,7 @@ ACE_INLINE void POA_IR::InterfaceDef::create_exception_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::create_native_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4359,7 +4359,7 @@ ACE_INLINE void POA_IR::InterfaceDef::create_native_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::_get_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4374,7 +4374,7 @@ ACE_INLINE void POA_IR::InterfaceDef::_get_id_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::_set_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4389,7 +4389,7 @@ ACE_INLINE void POA_IR::InterfaceDef::_set_id_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::_get_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4404,7 +4404,7 @@ ACE_INLINE void POA_IR::InterfaceDef::_get_name_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::_set_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4419,7 +4419,7 @@ ACE_INLINE void POA_IR::InterfaceDef::_set_name_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::_get_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4434,7 +4434,7 @@ ACE_INLINE void POA_IR::InterfaceDef::_get_version_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::_set_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4449,7 +4449,7 @@ ACE_INLINE void POA_IR::InterfaceDef::_set_version_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::_get_defined_in_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4464,7 +4464,7 @@ ACE_INLINE void POA_IR::InterfaceDef::_get_defined_in_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::_get_absolute_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4479,7 +4479,7 @@ ACE_INLINE void POA_IR::InterfaceDef::_get_absolute_name_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::_get_containing_repository_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4494,7 +4494,7 @@ ACE_INLINE void POA_IR::InterfaceDef::_get_containing_repository_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::describe_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4509,7 +4509,7 @@ ACE_INLINE void POA_IR::InterfaceDef::describe_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::move_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4524,7 +4524,7 @@ ACE_INLINE void POA_IR::InterfaceDef::move_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::_get_type_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4539,7 +4539,7 @@ ACE_INLINE void POA_IR::InterfaceDef::_get_type_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4554,7 +4554,7 @@ ACE_INLINE void POA_IR::InterfaceDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::InterfaceDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4569,7 +4569,7 @@ ACE_INLINE void POA_IR::InterfaceDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueMemberDef::_get_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4584,7 +4584,7 @@ ACE_INLINE void POA_IR::ValueMemberDef::_get_id_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueMemberDef::_set_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4599,7 +4599,7 @@ ACE_INLINE void POA_IR::ValueMemberDef::_set_id_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueMemberDef::_get_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4614,7 +4614,7 @@ ACE_INLINE void POA_IR::ValueMemberDef::_get_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueMemberDef::_set_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4629,7 +4629,7 @@ ACE_INLINE void POA_IR::ValueMemberDef::_set_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueMemberDef::_get_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4644,7 +4644,7 @@ ACE_INLINE void POA_IR::ValueMemberDef::_get_version_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueMemberDef::_set_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4659,7 +4659,7 @@ ACE_INLINE void POA_IR::ValueMemberDef::_set_version_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueMemberDef::_get_defined_in_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4674,7 +4674,7 @@ ACE_INLINE void POA_IR::ValueMemberDef::_get_defined_in_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueMemberDef::_get_absolute_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4689,7 +4689,7 @@ ACE_INLINE void POA_IR::ValueMemberDef::_get_absolute_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueMemberDef::_get_containing_repository_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4704,7 +4704,7 @@ ACE_INLINE void POA_IR::ValueMemberDef::_get_containing_repository_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueMemberDef::describe_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4719,7 +4719,7 @@ ACE_INLINE void POA_IR::ValueMemberDef::describe_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueMemberDef::move_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4734,7 +4734,7 @@ ACE_INLINE void POA_IR::ValueMemberDef::move_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueMemberDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4749,7 +4749,7 @@ ACE_INLINE void POA_IR::ValueMemberDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueMemberDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4764,7 +4764,7 @@ ACE_INLINE void POA_IR::ValueMemberDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::lookup_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4779,7 +4779,7 @@ ACE_INLINE void POA_IR::ValueDef::lookup_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::contents_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4794,7 +4794,7 @@ ACE_INLINE void POA_IR::ValueDef::contents_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::lookup_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4809,7 +4809,7 @@ ACE_INLINE void POA_IR::ValueDef::lookup_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::describe_contents_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4824,7 +4824,7 @@ ACE_INLINE void POA_IR::ValueDef::describe_contents_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::create_module_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4839,7 +4839,7 @@ ACE_INLINE void POA_IR::ValueDef::create_module_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::create_constant_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4854,7 +4854,7 @@ ACE_INLINE void POA_IR::ValueDef::create_constant_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::create_struct_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4869,7 +4869,7 @@ ACE_INLINE void POA_IR::ValueDef::create_struct_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::create_union_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4884,7 +4884,7 @@ ACE_INLINE void POA_IR::ValueDef::create_union_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::create_enum_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4899,7 +4899,7 @@ ACE_INLINE void POA_IR::ValueDef::create_enum_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::create_alias_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4914,7 +4914,7 @@ ACE_INLINE void POA_IR::ValueDef::create_alias_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::create_interface_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4929,7 +4929,7 @@ ACE_INLINE void POA_IR::ValueDef::create_interface_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::create_value_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4944,7 +4944,7 @@ ACE_INLINE void POA_IR::ValueDef::create_value_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::create_value_box_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4959,7 +4959,7 @@ ACE_INLINE void POA_IR::ValueDef::create_value_box_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::create_exception_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4974,7 +4974,7 @@ ACE_INLINE void POA_IR::ValueDef::create_exception_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::create_native_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -4989,7 +4989,7 @@ ACE_INLINE void POA_IR::ValueDef::create_native_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::_get_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5004,7 +5004,7 @@ ACE_INLINE void POA_IR::ValueDef::_get_id_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::_set_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5019,7 +5019,7 @@ ACE_INLINE void POA_IR::ValueDef::_set_id_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::_get_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5034,7 +5034,7 @@ ACE_INLINE void POA_IR::ValueDef::_get_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::_set_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5049,7 +5049,7 @@ ACE_INLINE void POA_IR::ValueDef::_set_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::_get_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5064,7 +5064,7 @@ ACE_INLINE void POA_IR::ValueDef::_get_version_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::_set_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5079,7 +5079,7 @@ ACE_INLINE void POA_IR::ValueDef::_set_version_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::_get_defined_in_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5094,7 +5094,7 @@ ACE_INLINE void POA_IR::ValueDef::_get_defined_in_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::_get_absolute_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5109,7 +5109,7 @@ ACE_INLINE void POA_IR::ValueDef::_get_absolute_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::_get_containing_repository_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5124,7 +5124,7 @@ ACE_INLINE void POA_IR::ValueDef::_get_containing_repository_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::describe_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5139,7 +5139,7 @@ ACE_INLINE void POA_IR::ValueDef::describe_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::move_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5154,7 +5154,7 @@ ACE_INLINE void POA_IR::ValueDef::move_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::_get_type_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5169,7 +5169,7 @@ ACE_INLINE void POA_IR::ValueDef::_get_type_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5184,7 +5184,7 @@ ACE_INLINE void POA_IR::ValueDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5199,7 +5199,7 @@ ACE_INLINE void POA_IR::ValueDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueBoxDef::_get_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5214,7 +5214,7 @@ ACE_INLINE void POA_IR::ValueBoxDef::_get_id_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueBoxDef::_set_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5229,7 +5229,7 @@ ACE_INLINE void POA_IR::ValueBoxDef::_set_id_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueBoxDef::_get_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5244,7 +5244,7 @@ ACE_INLINE void POA_IR::ValueBoxDef::_get_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueBoxDef::_set_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5259,7 +5259,7 @@ ACE_INLINE void POA_IR::ValueBoxDef::_set_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueBoxDef::_get_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5274,7 +5274,7 @@ ACE_INLINE void POA_IR::ValueBoxDef::_get_version_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueBoxDef::_set_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5289,7 +5289,7 @@ ACE_INLINE void POA_IR::ValueBoxDef::_set_version_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueBoxDef::_get_defined_in_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5304,7 +5304,7 @@ ACE_INLINE void POA_IR::ValueBoxDef::_get_defined_in_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueBoxDef::_get_absolute_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5319,7 +5319,7 @@ ACE_INLINE void POA_IR::ValueBoxDef::_get_absolute_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueBoxDef::_get_containing_repository_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5334,7 +5334,7 @@ ACE_INLINE void POA_IR::ValueBoxDef::_get_containing_repository_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueBoxDef::describe_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5349,7 +5349,7 @@ ACE_INLINE void POA_IR::ValueBoxDef::describe_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueBoxDef::move_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5364,7 +5364,7 @@ ACE_INLINE void POA_IR::ValueBoxDef::move_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueBoxDef::_get_type_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5379,7 +5379,7 @@ ACE_INLINE void POA_IR::ValueBoxDef::_get_type_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueBoxDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5394,7 +5394,7 @@ ACE_INLINE void POA_IR::ValueBoxDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::ValueBoxDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5409,7 +5409,7 @@ ACE_INLINE void POA_IR::ValueBoxDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::ProvidesDef::_get_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5424,7 +5424,7 @@ ACE_INLINE void POA_IR::ProvidesDef::_get_id_skel (
     );
 }
 ACE_INLINE void POA_IR::ProvidesDef::_set_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5439,7 +5439,7 @@ ACE_INLINE void POA_IR::ProvidesDef::_set_id_skel (
     );
 }
 ACE_INLINE void POA_IR::ProvidesDef::_get_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5454,7 +5454,7 @@ ACE_INLINE void POA_IR::ProvidesDef::_get_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ProvidesDef::_set_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5469,7 +5469,7 @@ ACE_INLINE void POA_IR::ProvidesDef::_set_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ProvidesDef::_get_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5484,7 +5484,7 @@ ACE_INLINE void POA_IR::ProvidesDef::_get_version_skel (
     );
 }
 ACE_INLINE void POA_IR::ProvidesDef::_set_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5499,7 +5499,7 @@ ACE_INLINE void POA_IR::ProvidesDef::_set_version_skel (
     );
 }
 ACE_INLINE void POA_IR::ProvidesDef::_get_defined_in_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5514,7 +5514,7 @@ ACE_INLINE void POA_IR::ProvidesDef::_get_defined_in_skel (
     );
 }
 ACE_INLINE void POA_IR::ProvidesDef::_get_absolute_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5529,7 +5529,7 @@ ACE_INLINE void POA_IR::ProvidesDef::_get_absolute_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ProvidesDef::_get_containing_repository_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5544,7 +5544,7 @@ ACE_INLINE void POA_IR::ProvidesDef::_get_containing_repository_skel (
     );
 }
 ACE_INLINE void POA_IR::ProvidesDef::describe_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5559,7 +5559,7 @@ ACE_INLINE void POA_IR::ProvidesDef::describe_skel (
     );
 }
 ACE_INLINE void POA_IR::ProvidesDef::move_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5574,7 +5574,7 @@ ACE_INLINE void POA_IR::ProvidesDef::move_skel (
     );
 }
 ACE_INLINE void POA_IR::ProvidesDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5589,7 +5589,7 @@ ACE_INLINE void POA_IR::ProvidesDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::ProvidesDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5604,7 +5604,7 @@ ACE_INLINE void POA_IR::ProvidesDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::UsesDef::_get_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5619,7 +5619,7 @@ ACE_INLINE void POA_IR::UsesDef::_get_id_skel (
     );
 }
 ACE_INLINE void POA_IR::UsesDef::_set_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5634,7 +5634,7 @@ ACE_INLINE void POA_IR::UsesDef::_set_id_skel (
     );
 }
 ACE_INLINE void POA_IR::UsesDef::_get_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5649,7 +5649,7 @@ ACE_INLINE void POA_IR::UsesDef::_get_name_skel (
     );
 }
 ACE_INLINE void POA_IR::UsesDef::_set_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5664,7 +5664,7 @@ ACE_INLINE void POA_IR::UsesDef::_set_name_skel (
     );
 }
 ACE_INLINE void POA_IR::UsesDef::_get_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5679,7 +5679,7 @@ ACE_INLINE void POA_IR::UsesDef::_get_version_skel (
     );
 }
 ACE_INLINE void POA_IR::UsesDef::_set_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5694,7 +5694,7 @@ ACE_INLINE void POA_IR::UsesDef::_set_version_skel (
     );
 }
 ACE_INLINE void POA_IR::UsesDef::_get_defined_in_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5709,7 +5709,7 @@ ACE_INLINE void POA_IR::UsesDef::_get_defined_in_skel (
     );
 }
 ACE_INLINE void POA_IR::UsesDef::_get_absolute_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5724,7 +5724,7 @@ ACE_INLINE void POA_IR::UsesDef::_get_absolute_name_skel (
     );
 }
 ACE_INLINE void POA_IR::UsesDef::_get_containing_repository_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5739,7 +5739,7 @@ ACE_INLINE void POA_IR::UsesDef::_get_containing_repository_skel (
     );
 }
 ACE_INLINE void POA_IR::UsesDef::describe_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5754,7 +5754,7 @@ ACE_INLINE void POA_IR::UsesDef::describe_skel (
     );
 }
 ACE_INLINE void POA_IR::UsesDef::move_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5769,7 +5769,7 @@ ACE_INLINE void POA_IR::UsesDef::move_skel (
     );
 }
 ACE_INLINE void POA_IR::UsesDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5784,7 +5784,7 @@ ACE_INLINE void POA_IR::UsesDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::UsesDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5799,7 +5799,7 @@ ACE_INLINE void POA_IR::UsesDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::EventDef::_get_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5814,7 +5814,7 @@ ACE_INLINE void POA_IR::EventDef::_get_id_skel (
     );
 }
 ACE_INLINE void POA_IR::EventDef::_set_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5829,7 +5829,7 @@ ACE_INLINE void POA_IR::EventDef::_set_id_skel (
     );
 }
 ACE_INLINE void POA_IR::EventDef::_get_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5844,7 +5844,7 @@ ACE_INLINE void POA_IR::EventDef::_get_name_skel (
     );
 }
 ACE_INLINE void POA_IR::EventDef::_set_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5859,7 +5859,7 @@ ACE_INLINE void POA_IR::EventDef::_set_name_skel (
     );
 }
 ACE_INLINE void POA_IR::EventDef::_get_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5874,7 +5874,7 @@ ACE_INLINE void POA_IR::EventDef::_get_version_skel (
     );
 }
 ACE_INLINE void POA_IR::EventDef::_set_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5889,7 +5889,7 @@ ACE_INLINE void POA_IR::EventDef::_set_version_skel (
     );
 }
 ACE_INLINE void POA_IR::EventDef::_get_defined_in_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5904,7 +5904,7 @@ ACE_INLINE void POA_IR::EventDef::_get_defined_in_skel (
     );
 }
 ACE_INLINE void POA_IR::EventDef::_get_absolute_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5919,7 +5919,7 @@ ACE_INLINE void POA_IR::EventDef::_get_absolute_name_skel (
     );
 }
 ACE_INLINE void POA_IR::EventDef::_get_containing_repository_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5934,7 +5934,7 @@ ACE_INLINE void POA_IR::EventDef::_get_containing_repository_skel (
     );
 }
 ACE_INLINE void POA_IR::EventDef::describe_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5949,7 +5949,7 @@ ACE_INLINE void POA_IR::EventDef::describe_skel (
     );
 }
 ACE_INLINE void POA_IR::EventDef::move_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5964,7 +5964,7 @@ ACE_INLINE void POA_IR::EventDef::move_skel (
     );
 }
 ACE_INLINE void POA_IR::EventDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5979,7 +5979,7 @@ ACE_INLINE void POA_IR::EventDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::EventDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -5994,7 +5994,7 @@ ACE_INLINE void POA_IR::EventDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::EmitsDef::is_a_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6009,7 +6009,7 @@ ACE_INLINE void POA_IR::EmitsDef::is_a_skel (
     );
 }
 ACE_INLINE void POA_IR::EmitsDef::_get_event_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6024,7 +6024,7 @@ ACE_INLINE void POA_IR::EmitsDef::_get_event_skel (
     );
 }
 ACE_INLINE void POA_IR::EmitsDef::_get_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6039,7 +6039,7 @@ ACE_INLINE void POA_IR::EmitsDef::_get_id_skel (
     );
 }
 ACE_INLINE void POA_IR::EmitsDef::_set_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6054,7 +6054,7 @@ ACE_INLINE void POA_IR::EmitsDef::_set_id_skel (
     );
 }
 ACE_INLINE void POA_IR::EmitsDef::_get_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6069,7 +6069,7 @@ ACE_INLINE void POA_IR::EmitsDef::_get_name_skel (
     );
 }
 ACE_INLINE void POA_IR::EmitsDef::_set_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6084,7 +6084,7 @@ ACE_INLINE void POA_IR::EmitsDef::_set_name_skel (
     );
 }
 ACE_INLINE void POA_IR::EmitsDef::_get_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6099,7 +6099,7 @@ ACE_INLINE void POA_IR::EmitsDef::_get_version_skel (
     );
 }
 ACE_INLINE void POA_IR::EmitsDef::_set_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6114,7 +6114,7 @@ ACE_INLINE void POA_IR::EmitsDef::_set_version_skel (
     );
 }
 ACE_INLINE void POA_IR::EmitsDef::_get_defined_in_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6129,7 +6129,7 @@ ACE_INLINE void POA_IR::EmitsDef::_get_defined_in_skel (
     );
 }
 ACE_INLINE void POA_IR::EmitsDef::_get_absolute_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6144,7 +6144,7 @@ ACE_INLINE void POA_IR::EmitsDef::_get_absolute_name_skel (
     );
 }
 ACE_INLINE void POA_IR::EmitsDef::_get_containing_repository_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6159,7 +6159,7 @@ ACE_INLINE void POA_IR::EmitsDef::_get_containing_repository_skel (
     );
 }
 ACE_INLINE void POA_IR::EmitsDef::describe_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6174,7 +6174,7 @@ ACE_INLINE void POA_IR::EmitsDef::describe_skel (
     );
 }
 ACE_INLINE void POA_IR::EmitsDef::move_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6189,7 +6189,7 @@ ACE_INLINE void POA_IR::EmitsDef::move_skel (
     );
 }
 ACE_INLINE void POA_IR::EmitsDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6204,7 +6204,7 @@ ACE_INLINE void POA_IR::EmitsDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::EmitsDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6219,7 +6219,7 @@ ACE_INLINE void POA_IR::EmitsDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::PublishesDef::is_a_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6234,7 +6234,7 @@ ACE_INLINE void POA_IR::PublishesDef::is_a_skel (
     );
 }
 ACE_INLINE void POA_IR::PublishesDef::_get_event_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6249,7 +6249,7 @@ ACE_INLINE void POA_IR::PublishesDef::_get_event_skel (
     );
 }
 ACE_INLINE void POA_IR::PublishesDef::_get_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6264,7 +6264,7 @@ ACE_INLINE void POA_IR::PublishesDef::_get_id_skel (
     );
 }
 ACE_INLINE void POA_IR::PublishesDef::_set_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6279,7 +6279,7 @@ ACE_INLINE void POA_IR::PublishesDef::_set_id_skel (
     );
 }
 ACE_INLINE void POA_IR::PublishesDef::_get_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6294,7 +6294,7 @@ ACE_INLINE void POA_IR::PublishesDef::_get_name_skel (
     );
 }
 ACE_INLINE void POA_IR::PublishesDef::_set_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6309,7 +6309,7 @@ ACE_INLINE void POA_IR::PublishesDef::_set_name_skel (
     );
 }
 ACE_INLINE void POA_IR::PublishesDef::_get_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6324,7 +6324,7 @@ ACE_INLINE void POA_IR::PublishesDef::_get_version_skel (
     );
 }
 ACE_INLINE void POA_IR::PublishesDef::_set_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6339,7 +6339,7 @@ ACE_INLINE void POA_IR::PublishesDef::_set_version_skel (
     );
 }
 ACE_INLINE void POA_IR::PublishesDef::_get_defined_in_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6354,7 +6354,7 @@ ACE_INLINE void POA_IR::PublishesDef::_get_defined_in_skel (
     );
 }
 ACE_INLINE void POA_IR::PublishesDef::_get_absolute_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6369,7 +6369,7 @@ ACE_INLINE void POA_IR::PublishesDef::_get_absolute_name_skel (
     );
 }
 ACE_INLINE void POA_IR::PublishesDef::_get_containing_repository_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6384,7 +6384,7 @@ ACE_INLINE void POA_IR::PublishesDef::_get_containing_repository_skel (
     );
 }
 ACE_INLINE void POA_IR::PublishesDef::describe_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6399,7 +6399,7 @@ ACE_INLINE void POA_IR::PublishesDef::describe_skel (
     );
 }
 ACE_INLINE void POA_IR::PublishesDef::move_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6414,7 +6414,7 @@ ACE_INLINE void POA_IR::PublishesDef::move_skel (
     );
 }
 ACE_INLINE void POA_IR::PublishesDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6429,7 +6429,7 @@ ACE_INLINE void POA_IR::PublishesDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::PublishesDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6444,7 +6444,7 @@ ACE_INLINE void POA_IR::PublishesDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::ConsumesDef::is_a_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6459,7 +6459,7 @@ ACE_INLINE void POA_IR::ConsumesDef::is_a_skel (
     );
 }
 ACE_INLINE void POA_IR::ConsumesDef::_get_event_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6474,7 +6474,7 @@ ACE_INLINE void POA_IR::ConsumesDef::_get_event_skel (
     );
 }
 ACE_INLINE void POA_IR::ConsumesDef::_get_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6489,7 +6489,7 @@ ACE_INLINE void POA_IR::ConsumesDef::_get_id_skel (
     );
 }
 ACE_INLINE void POA_IR::ConsumesDef::_set_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6504,7 +6504,7 @@ ACE_INLINE void POA_IR::ConsumesDef::_set_id_skel (
     );
 }
 ACE_INLINE void POA_IR::ConsumesDef::_get_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6519,7 +6519,7 @@ ACE_INLINE void POA_IR::ConsumesDef::_get_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ConsumesDef::_set_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6534,7 +6534,7 @@ ACE_INLINE void POA_IR::ConsumesDef::_set_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ConsumesDef::_get_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6549,7 +6549,7 @@ ACE_INLINE void POA_IR::ConsumesDef::_get_version_skel (
     );
 }
 ACE_INLINE void POA_IR::ConsumesDef::_set_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6564,7 +6564,7 @@ ACE_INLINE void POA_IR::ConsumesDef::_set_version_skel (
     );
 }
 ACE_INLINE void POA_IR::ConsumesDef::_get_defined_in_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6579,7 +6579,7 @@ ACE_INLINE void POA_IR::ConsumesDef::_get_defined_in_skel (
     );
 }
 ACE_INLINE void POA_IR::ConsumesDef::_get_absolute_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6594,7 +6594,7 @@ ACE_INLINE void POA_IR::ConsumesDef::_get_absolute_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ConsumesDef::_get_containing_repository_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6609,7 +6609,7 @@ ACE_INLINE void POA_IR::ConsumesDef::_get_containing_repository_skel (
     );
 }
 ACE_INLINE void POA_IR::ConsumesDef::describe_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6624,7 +6624,7 @@ ACE_INLINE void POA_IR::ConsumesDef::describe_skel (
     );
 }
 ACE_INLINE void POA_IR::ConsumesDef::move_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6639,7 +6639,7 @@ ACE_INLINE void POA_IR::ConsumesDef::move_skel (
     );
 }
 ACE_INLINE void POA_IR::ConsumesDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6654,7 +6654,7 @@ ACE_INLINE void POA_IR::ConsumesDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::ConsumesDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6669,7 +6669,7 @@ ACE_INLINE void POA_IR::ConsumesDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::_get_base_interfaces_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6684,7 +6684,7 @@ ACE_INLINE void POA_IR::ComponentDef::_get_base_interfaces_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::_set_base_interfaces_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6699,7 +6699,7 @@ ACE_INLINE void POA_IR::ComponentDef::_set_base_interfaces_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::_get_is_abstract_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6714,7 +6714,7 @@ ACE_INLINE void POA_IR::ComponentDef::_get_is_abstract_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::_set_is_abstract_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6729,7 +6729,7 @@ ACE_INLINE void POA_IR::ComponentDef::_set_is_abstract_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::_get_is_local_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6744,7 +6744,7 @@ ACE_INLINE void POA_IR::ComponentDef::_get_is_local_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::_set_is_local_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6759,7 +6759,7 @@ ACE_INLINE void POA_IR::ComponentDef::_set_is_local_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::is_a_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6774,7 +6774,7 @@ ACE_INLINE void POA_IR::ComponentDef::is_a_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::create_attribute_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6789,7 +6789,7 @@ ACE_INLINE void POA_IR::ComponentDef::create_attribute_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::create_operation_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6804,7 +6804,7 @@ ACE_INLINE void POA_IR::ComponentDef::create_operation_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::lookup_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6819,7 +6819,7 @@ ACE_INLINE void POA_IR::ComponentDef::lookup_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::contents_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6834,7 +6834,7 @@ ACE_INLINE void POA_IR::ComponentDef::contents_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::lookup_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6849,7 +6849,7 @@ ACE_INLINE void POA_IR::ComponentDef::lookup_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::describe_contents_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6864,7 +6864,7 @@ ACE_INLINE void POA_IR::ComponentDef::describe_contents_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::create_module_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6879,7 +6879,7 @@ ACE_INLINE void POA_IR::ComponentDef::create_module_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::create_constant_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6894,7 +6894,7 @@ ACE_INLINE void POA_IR::ComponentDef::create_constant_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::create_struct_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6909,7 +6909,7 @@ ACE_INLINE void POA_IR::ComponentDef::create_struct_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::create_union_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6924,7 +6924,7 @@ ACE_INLINE void POA_IR::ComponentDef::create_union_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::create_enum_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6939,7 +6939,7 @@ ACE_INLINE void POA_IR::ComponentDef::create_enum_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::create_alias_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6954,7 +6954,7 @@ ACE_INLINE void POA_IR::ComponentDef::create_alias_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::create_interface_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6969,7 +6969,7 @@ ACE_INLINE void POA_IR::ComponentDef::create_interface_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::create_value_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6984,7 +6984,7 @@ ACE_INLINE void POA_IR::ComponentDef::create_value_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::create_value_box_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -6999,7 +6999,7 @@ ACE_INLINE void POA_IR::ComponentDef::create_value_box_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::create_exception_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7014,7 +7014,7 @@ ACE_INLINE void POA_IR::ComponentDef::create_exception_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::create_native_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7029,7 +7029,7 @@ ACE_INLINE void POA_IR::ComponentDef::create_native_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::_get_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7044,7 +7044,7 @@ ACE_INLINE void POA_IR::ComponentDef::_get_id_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::_set_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7059,7 +7059,7 @@ ACE_INLINE void POA_IR::ComponentDef::_set_id_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::_get_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7074,7 +7074,7 @@ ACE_INLINE void POA_IR::ComponentDef::_get_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::_set_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7089,7 +7089,7 @@ ACE_INLINE void POA_IR::ComponentDef::_set_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::_get_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7104,7 +7104,7 @@ ACE_INLINE void POA_IR::ComponentDef::_get_version_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::_set_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7119,7 +7119,7 @@ ACE_INLINE void POA_IR::ComponentDef::_set_version_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::_get_defined_in_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7134,7 +7134,7 @@ ACE_INLINE void POA_IR::ComponentDef::_get_defined_in_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::_get_absolute_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7149,7 +7149,7 @@ ACE_INLINE void POA_IR::ComponentDef::_get_absolute_name_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::_get_containing_repository_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7164,7 +7164,7 @@ ACE_INLINE void POA_IR::ComponentDef::_get_containing_repository_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::describe_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7179,7 +7179,7 @@ ACE_INLINE void POA_IR::ComponentDef::describe_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::move_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7194,7 +7194,7 @@ ACE_INLINE void POA_IR::ComponentDef::move_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::_get_type_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7209,7 +7209,7 @@ ACE_INLINE void POA_IR::ComponentDef::_get_type_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7224,7 +7224,7 @@ ACE_INLINE void POA_IR::ComponentDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::ComponentDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7239,7 +7239,7 @@ ACE_INLINE void POA_IR::ComponentDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::PrimaryKeyDef::_get_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7254,7 +7254,7 @@ ACE_INLINE void POA_IR::PrimaryKeyDef::_get_id_skel (
     );
 }
 ACE_INLINE void POA_IR::PrimaryKeyDef::_set_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7269,7 +7269,7 @@ ACE_INLINE void POA_IR::PrimaryKeyDef::_set_id_skel (
     );
 }
 ACE_INLINE void POA_IR::PrimaryKeyDef::_get_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7284,7 +7284,7 @@ ACE_INLINE void POA_IR::PrimaryKeyDef::_get_name_skel (
     );
 }
 ACE_INLINE void POA_IR::PrimaryKeyDef::_set_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7299,7 +7299,7 @@ ACE_INLINE void POA_IR::PrimaryKeyDef::_set_name_skel (
     );
 }
 ACE_INLINE void POA_IR::PrimaryKeyDef::_get_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7314,7 +7314,7 @@ ACE_INLINE void POA_IR::PrimaryKeyDef::_get_version_skel (
     );
 }
 ACE_INLINE void POA_IR::PrimaryKeyDef::_set_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7329,7 +7329,7 @@ ACE_INLINE void POA_IR::PrimaryKeyDef::_set_version_skel (
     );
 }
 ACE_INLINE void POA_IR::PrimaryKeyDef::_get_defined_in_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7344,7 +7344,7 @@ ACE_INLINE void POA_IR::PrimaryKeyDef::_get_defined_in_skel (
     );
 }
 ACE_INLINE void POA_IR::PrimaryKeyDef::_get_absolute_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7359,7 +7359,7 @@ ACE_INLINE void POA_IR::PrimaryKeyDef::_get_absolute_name_skel (
     );
 }
 ACE_INLINE void POA_IR::PrimaryKeyDef::_get_containing_repository_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7374,7 +7374,7 @@ ACE_INLINE void POA_IR::PrimaryKeyDef::_get_containing_repository_skel (
     );
 }
 ACE_INLINE void POA_IR::PrimaryKeyDef::describe_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7389,7 +7389,7 @@ ACE_INLINE void POA_IR::PrimaryKeyDef::describe_skel (
     );
 }
 ACE_INLINE void POA_IR::PrimaryKeyDef::move_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7404,7 +7404,7 @@ ACE_INLINE void POA_IR::PrimaryKeyDef::move_skel (
     );
 }
 ACE_INLINE void POA_IR::PrimaryKeyDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7419,7 +7419,7 @@ ACE_INLINE void POA_IR::PrimaryKeyDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::PrimaryKeyDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7434,7 +7434,7 @@ ACE_INLINE void POA_IR::PrimaryKeyDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::FactoryDef::_get_result_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7449,7 +7449,7 @@ ACE_INLINE void POA_IR::FactoryDef::_get_result_skel (
     );
 }
 ACE_INLINE void POA_IR::FactoryDef::_get_result_def_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7464,7 +7464,7 @@ ACE_INLINE void POA_IR::FactoryDef::_get_result_def_skel (
     );
 }
 ACE_INLINE void POA_IR::FactoryDef::_set_result_def_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7479,7 +7479,7 @@ ACE_INLINE void POA_IR::FactoryDef::_set_result_def_skel (
     );
 }
 ACE_INLINE void POA_IR::FactoryDef::_get_params_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7494,7 +7494,7 @@ ACE_INLINE void POA_IR::FactoryDef::_get_params_skel (
     );
 }
 ACE_INLINE void POA_IR::FactoryDef::_set_params_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7509,7 +7509,7 @@ ACE_INLINE void POA_IR::FactoryDef::_set_params_skel (
     );
 }
 ACE_INLINE void POA_IR::FactoryDef::_get_mode_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7524,7 +7524,7 @@ ACE_INLINE void POA_IR::FactoryDef::_get_mode_skel (
     );
 }
 ACE_INLINE void POA_IR::FactoryDef::_set_mode_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7539,7 +7539,7 @@ ACE_INLINE void POA_IR::FactoryDef::_set_mode_skel (
     );
 }
 ACE_INLINE void POA_IR::FactoryDef::_get_contexts_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7554,7 +7554,7 @@ ACE_INLINE void POA_IR::FactoryDef::_get_contexts_skel (
     );
 }
 ACE_INLINE void POA_IR::FactoryDef::_set_contexts_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7569,7 +7569,7 @@ ACE_INLINE void POA_IR::FactoryDef::_set_contexts_skel (
     );
 }
 ACE_INLINE void POA_IR::FactoryDef::_get_exceptions_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7584,7 +7584,7 @@ ACE_INLINE void POA_IR::FactoryDef::_get_exceptions_skel (
     );
 }
 ACE_INLINE void POA_IR::FactoryDef::_set_exceptions_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7599,7 +7599,7 @@ ACE_INLINE void POA_IR::FactoryDef::_set_exceptions_skel (
     );
 }
 ACE_INLINE void POA_IR::FactoryDef::_get_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7614,7 +7614,7 @@ ACE_INLINE void POA_IR::FactoryDef::_get_id_skel (
     );
 }
 ACE_INLINE void POA_IR::FactoryDef::_set_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7629,7 +7629,7 @@ ACE_INLINE void POA_IR::FactoryDef::_set_id_skel (
     );
 }
 ACE_INLINE void POA_IR::FactoryDef::_get_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7644,7 +7644,7 @@ ACE_INLINE void POA_IR::FactoryDef::_get_name_skel (
     );
 }
 ACE_INLINE void POA_IR::FactoryDef::_set_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7659,7 +7659,7 @@ ACE_INLINE void POA_IR::FactoryDef::_set_name_skel (
     );
 }
 ACE_INLINE void POA_IR::FactoryDef::_get_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7674,7 +7674,7 @@ ACE_INLINE void POA_IR::FactoryDef::_get_version_skel (
     );
 }
 ACE_INLINE void POA_IR::FactoryDef::_set_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7689,7 +7689,7 @@ ACE_INLINE void POA_IR::FactoryDef::_set_version_skel (
     );
 }
 ACE_INLINE void POA_IR::FactoryDef::_get_defined_in_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7704,7 +7704,7 @@ ACE_INLINE void POA_IR::FactoryDef::_get_defined_in_skel (
     );
 }
 ACE_INLINE void POA_IR::FactoryDef::_get_absolute_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7719,7 +7719,7 @@ ACE_INLINE void POA_IR::FactoryDef::_get_absolute_name_skel (
     );
 }
 ACE_INLINE void POA_IR::FactoryDef::_get_containing_repository_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7734,7 +7734,7 @@ ACE_INLINE void POA_IR::FactoryDef::_get_containing_repository_skel (
     );
 }
 ACE_INLINE void POA_IR::FactoryDef::describe_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7749,7 +7749,7 @@ ACE_INLINE void POA_IR::FactoryDef::describe_skel (
     );
 }
 ACE_INLINE void POA_IR::FactoryDef::move_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7764,7 +7764,7 @@ ACE_INLINE void POA_IR::FactoryDef::move_skel (
     );
 }
 ACE_INLINE void POA_IR::FactoryDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7779,7 +7779,7 @@ ACE_INLINE void POA_IR::FactoryDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::FactoryDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7794,7 +7794,7 @@ ACE_INLINE void POA_IR::FactoryDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::FinderDef::_get_result_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7809,7 +7809,7 @@ ACE_INLINE void POA_IR::FinderDef::_get_result_skel (
     );
 }
 ACE_INLINE void POA_IR::FinderDef::_get_result_def_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7824,7 +7824,7 @@ ACE_INLINE void POA_IR::FinderDef::_get_result_def_skel (
     );
 }
 ACE_INLINE void POA_IR::FinderDef::_set_result_def_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7839,7 +7839,7 @@ ACE_INLINE void POA_IR::FinderDef::_set_result_def_skel (
     );
 }
 ACE_INLINE void POA_IR::FinderDef::_get_params_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7854,7 +7854,7 @@ ACE_INLINE void POA_IR::FinderDef::_get_params_skel (
     );
 }
 ACE_INLINE void POA_IR::FinderDef::_set_params_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7869,7 +7869,7 @@ ACE_INLINE void POA_IR::FinderDef::_set_params_skel (
     );
 }
 ACE_INLINE void POA_IR::FinderDef::_get_mode_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7884,7 +7884,7 @@ ACE_INLINE void POA_IR::FinderDef::_get_mode_skel (
     );
 }
 ACE_INLINE void POA_IR::FinderDef::_set_mode_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7899,7 +7899,7 @@ ACE_INLINE void POA_IR::FinderDef::_set_mode_skel (
     );
 }
 ACE_INLINE void POA_IR::FinderDef::_get_contexts_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7914,7 +7914,7 @@ ACE_INLINE void POA_IR::FinderDef::_get_contexts_skel (
     );
 }
 ACE_INLINE void POA_IR::FinderDef::_set_contexts_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7929,7 +7929,7 @@ ACE_INLINE void POA_IR::FinderDef::_set_contexts_skel (
     );
 }
 ACE_INLINE void POA_IR::FinderDef::_get_exceptions_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7944,7 +7944,7 @@ ACE_INLINE void POA_IR::FinderDef::_get_exceptions_skel (
     );
 }
 ACE_INLINE void POA_IR::FinderDef::_set_exceptions_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7959,7 +7959,7 @@ ACE_INLINE void POA_IR::FinderDef::_set_exceptions_skel (
     );
 }
 ACE_INLINE void POA_IR::FinderDef::_get_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7974,7 +7974,7 @@ ACE_INLINE void POA_IR::FinderDef::_get_id_skel (
     );
 }
 ACE_INLINE void POA_IR::FinderDef::_set_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -7989,7 +7989,7 @@ ACE_INLINE void POA_IR::FinderDef::_set_id_skel (
     );
 }
 ACE_INLINE void POA_IR::FinderDef::_get_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8004,7 +8004,7 @@ ACE_INLINE void POA_IR::FinderDef::_get_name_skel (
     );
 }
 ACE_INLINE void POA_IR::FinderDef::_set_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8019,7 +8019,7 @@ ACE_INLINE void POA_IR::FinderDef::_set_name_skel (
     );
 }
 ACE_INLINE void POA_IR::FinderDef::_get_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8034,7 +8034,7 @@ ACE_INLINE void POA_IR::FinderDef::_get_version_skel (
     );
 }
 ACE_INLINE void POA_IR::FinderDef::_set_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8049,7 +8049,7 @@ ACE_INLINE void POA_IR::FinderDef::_set_version_skel (
     );
 }
 ACE_INLINE void POA_IR::FinderDef::_get_defined_in_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8064,7 +8064,7 @@ ACE_INLINE void POA_IR::FinderDef::_get_defined_in_skel (
     );
 }
 ACE_INLINE void POA_IR::FinderDef::_get_absolute_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8079,7 +8079,7 @@ ACE_INLINE void POA_IR::FinderDef::_get_absolute_name_skel (
     );
 }
 ACE_INLINE void POA_IR::FinderDef::_get_containing_repository_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8094,7 +8094,7 @@ ACE_INLINE void POA_IR::FinderDef::_get_containing_repository_skel (
     );
 }
 ACE_INLINE void POA_IR::FinderDef::describe_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8109,7 +8109,7 @@ ACE_INLINE void POA_IR::FinderDef::describe_skel (
     );
 }
 ACE_INLINE void POA_IR::FinderDef::move_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8124,7 +8124,7 @@ ACE_INLINE void POA_IR::FinderDef::move_skel (
     );
 }
 ACE_INLINE void POA_IR::FinderDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8139,7 +8139,7 @@ ACE_INLINE void POA_IR::FinderDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::FinderDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8154,7 +8154,7 @@ ACE_INLINE void POA_IR::FinderDef::destroy_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::_get_base_interfaces_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8169,7 +8169,7 @@ ACE_INLINE void POA_IR::HomeDef::_get_base_interfaces_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::_set_base_interfaces_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8184,7 +8184,7 @@ ACE_INLINE void POA_IR::HomeDef::_set_base_interfaces_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::_get_is_abstract_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8199,7 +8199,7 @@ ACE_INLINE void POA_IR::HomeDef::_get_is_abstract_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::_set_is_abstract_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8214,7 +8214,7 @@ ACE_INLINE void POA_IR::HomeDef::_set_is_abstract_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::_get_is_local_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8229,7 +8229,7 @@ ACE_INLINE void POA_IR::HomeDef::_get_is_local_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::_set_is_local_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8244,7 +8244,7 @@ ACE_INLINE void POA_IR::HomeDef::_set_is_local_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::is_a_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8259,7 +8259,7 @@ ACE_INLINE void POA_IR::HomeDef::is_a_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::create_attribute_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8274,7 +8274,7 @@ ACE_INLINE void POA_IR::HomeDef::create_attribute_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::create_operation_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8289,7 +8289,7 @@ ACE_INLINE void POA_IR::HomeDef::create_operation_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::lookup_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8304,7 +8304,7 @@ ACE_INLINE void POA_IR::HomeDef::lookup_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::contents_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8319,7 +8319,7 @@ ACE_INLINE void POA_IR::HomeDef::contents_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::lookup_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8334,7 +8334,7 @@ ACE_INLINE void POA_IR::HomeDef::lookup_name_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::describe_contents_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8349,7 +8349,7 @@ ACE_INLINE void POA_IR::HomeDef::describe_contents_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::create_module_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8364,7 +8364,7 @@ ACE_INLINE void POA_IR::HomeDef::create_module_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::create_constant_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8379,7 +8379,7 @@ ACE_INLINE void POA_IR::HomeDef::create_constant_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::create_struct_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8394,7 +8394,7 @@ ACE_INLINE void POA_IR::HomeDef::create_struct_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::create_union_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8409,7 +8409,7 @@ ACE_INLINE void POA_IR::HomeDef::create_union_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::create_enum_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8424,7 +8424,7 @@ ACE_INLINE void POA_IR::HomeDef::create_enum_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::create_alias_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8439,7 +8439,7 @@ ACE_INLINE void POA_IR::HomeDef::create_alias_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::create_interface_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8454,7 +8454,7 @@ ACE_INLINE void POA_IR::HomeDef::create_interface_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::create_value_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8469,7 +8469,7 @@ ACE_INLINE void POA_IR::HomeDef::create_value_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::create_value_box_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8484,7 +8484,7 @@ ACE_INLINE void POA_IR::HomeDef::create_value_box_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::create_exception_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8499,7 +8499,7 @@ ACE_INLINE void POA_IR::HomeDef::create_exception_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::create_native_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8514,7 +8514,7 @@ ACE_INLINE void POA_IR::HomeDef::create_native_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::_get_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8529,7 +8529,7 @@ ACE_INLINE void POA_IR::HomeDef::_get_id_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::_set_id_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8544,7 +8544,7 @@ ACE_INLINE void POA_IR::HomeDef::_set_id_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::_get_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8559,7 +8559,7 @@ ACE_INLINE void POA_IR::HomeDef::_get_name_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::_set_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8574,7 +8574,7 @@ ACE_INLINE void POA_IR::HomeDef::_set_name_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::_get_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8589,7 +8589,7 @@ ACE_INLINE void POA_IR::HomeDef::_get_version_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::_set_version_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8604,7 +8604,7 @@ ACE_INLINE void POA_IR::HomeDef::_set_version_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::_get_defined_in_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8619,7 +8619,7 @@ ACE_INLINE void POA_IR::HomeDef::_get_defined_in_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::_get_absolute_name_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8634,7 +8634,7 @@ ACE_INLINE void POA_IR::HomeDef::_get_absolute_name_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::_get_containing_repository_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8649,7 +8649,7 @@ ACE_INLINE void POA_IR::HomeDef::_get_containing_repository_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::describe_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8664,7 +8664,7 @@ ACE_INLINE void POA_IR::HomeDef::describe_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::move_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8679,7 +8679,7 @@ ACE_INLINE void POA_IR::HomeDef::move_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::_get_type_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8694,7 +8694,7 @@ ACE_INLINE void POA_IR::HomeDef::_get_type_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::_get_def_kind_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env
@@ -8709,7 +8709,7 @@ ACE_INLINE void POA_IR::HomeDef::_get_def_kind_skel (
     );
 }
 ACE_INLINE void POA_IR::HomeDef::destroy_skel (
-    CORBA::ServerRequest &req,
+    TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &env

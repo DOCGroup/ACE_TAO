@@ -17,6 +17,7 @@
 #define TAO_DSI_GATEWAY_TEST_DSI_H
 
 #include "testS.h"
+#include "tao/Server_Request.h"
 
 class DSI_Simple_Server : public PortableServer::DynamicImplementation
 {

@@ -2,12 +2,11 @@
 //$Id$
 
 #include "tao/GIOP_Message_Accept_State.h"
+#include "tao/GIOP_Message_Base.h"
 #include "tao/debug.h"
-#include "tao/GIOP_Server_Request.h"
+#include "tao/TAO_Server_Request.h"
 #include "tao/GIOP_Utils.h"
-//#include "tao/CDR.h"
 #include "tao/Pluggable_Messaging_Utils.h"
-#include "tao/NVList.h"
 #include "tao/Tagged_Profile.h"
 
 
@@ -20,8 +19,10 @@ ACE_RCSID(tao, GIOP_Message_Accept_State, "$Id$")
 
 
 void
-TAO_GIOP_Message_Accept_State::marshal_reply_status (TAO_OutputCDR &output,
-                                                     TAO_Pluggable_Reply_Params &reply)
+TAO_GIOP_Message_Accept_State::marshal_reply_status (
+    TAO_OutputCDR &output,
+    TAO_Pluggable_Reply_Params &reply
+  )
 {
   switch (reply.reply_status_)
     {
@@ -45,15 +46,17 @@ TAO_GIOP_Message_Accept_State::marshal_reply_status (TAO_OutputCDR &output,
 }
 
 CORBA::Boolean 
-TAO_GIOP_Message_Accept_State::
-  unmarshall_object_key (TAO_ObjectKey &object_key,
-                         TAO_InputCDR &input)
+TAO_GIOP_Message_Accept_State::unmarshall_object_key (
+    TAO_ObjectKey &object_key,
+    TAO_InputCDR &input
+  )
 {
   CORBA::Boolean hdr_status = 
     (CORBA::Boolean) input.good_bit ();
   
   CORBA::Long key_length = 0;
   hdr_status = hdr_status && input.read_long (key_length);
+
   if (hdr_status)
     {
       object_key.replace (key_length, 
@@ -66,32 +69,32 @@ TAO_GIOP_Message_Accept_State::
   return hdr_status;
 }
 
-
-
 CORBA::Boolean 
-TAO_GIOP_Message_Accept_State::
-unmarshall_iop_profile (TAO_Tagged_Profile & /*profile*/,
-                        TAO_InputCDR & /*cdr*/)
+TAO_GIOP_Message_Accept_State::unmarshall_iop_profile (
+    TAO_Tagged_Profile & /* profile */,
+    TAO_InputCDR & /* cdr */
+  )
 {
   return 0;
 }
 
 
 CORBA::Boolean 
-TAO_GIOP_Message_Accept_State::
-unmarshall_ref_addr (TAO_Tagged_Profile & /*profile*/,
-                     TAO_InputCDR & /*cdr*/)
+TAO_GIOP_Message_Accept_State::unmarshall_ref_addr (
+    TAO_Tagged_Profile & /* profile */,
+    TAO_InputCDR & /* cdr */
+  )
 {
   return 0;
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////
 // TAO_GIOP_Message_Accept_State_10 methods 
 ////////////////////////////////////////////////////////////////////////////////
 int
-TAO_GIOP_Message_Accept_State_10::
-  parse_request_header (TAO_GIOP_ServerRequest &request)
+TAO_GIOP_Message_Accept_State_10::parse_request_header (
+    TAO_ServerRequest &request
+  )
 {
   // Tear out the service context ... we currently ignore it, but it
   // should probably be passed to each ORB service as appropriate
@@ -114,6 +117,7 @@ TAO_GIOP_Message_Accept_State_10::
     (CORBA::Boolean) input.good_bit ();
 
   CORBA::ULong req_id;
+
   // Get the rest of the request header ...
   hdr_status = hdr_status && input.read_ulong (req_id);
 
@@ -134,10 +138,12 @@ TAO_GIOP_Message_Accept_State_10::
                                             input);
 
   ACE_CString operation_name;
+
   if (input.char_translator () == 0)
     {
       CORBA::ULong length = 0;
       hdr_status = hdr_status && input.read_ulong (length);
+
       if (hdr_status)
         {
           // Do not include NULL character at the end.
@@ -167,7 +173,7 @@ TAO_GIOP_Message_Accept_State_10::
     {
       CORBA::Principal_var principal;
 
-      // Beware extra data copying
+      // Beware extra data copying.
       input >> principal.out ();
 
       request.requesting_principal (principal.in ());
@@ -175,27 +181,22 @@ TAO_GIOP_Message_Accept_State_10::
       hdr_status = (CORBA::Boolean) input.good_bit ();
     }
 
-  // Set the header length info and offset info
-  // request.header_length (this->header_length ());
-  // request.message_size_offset (this->offset_length ());
-
   return hdr_status ? 0 : -1;
 }
 
-
 CORBA::Boolean
-TAO_GIOP_Message_Accept_State_10::
-  write_reply_header (TAO_OutputCDR &output,
-                      TAO_Pluggable_Reply_Params &reply,
-                      CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_GIOP_Message_Accept_State_10::write_reply_header (
+    TAO_OutputCDR &output,
+    TAO_Pluggable_Reply_Params &reply,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
-
-  // Write the service context list
+  // Write the service context list.
 #if (TAO_HAS_MINIMUM_CORBA == 1)
   output << reply.service_context_notowned ();
 #else
-  if (reply.params_ == 0)
+  if (reply.is_dsi_ == 0)
     {
       output << reply.service_context_notowned ();
     }
@@ -203,19 +204,24 @@ TAO_GIOP_Message_Accept_State_10::
     {
       // If lazy evaluation is enabled then we are going to insert an
       // extra node at the end of the service context list, just to
-      // force the appropiate padding.
+      // force the appropriate padding.
       // But first we take it out any of them..
       CORBA::ULong count = 0;
       IOP::ServiceContextList &svc_ctx =
         reply.service_context_notowned ();
       CORBA::ULong l = svc_ctx.length ();
       CORBA::ULong i;
+
       for (i = 0; i != l; ++i)
         {
           if (svc_ctx[i].context_id == TAO_SVC_CONTEXT_ALIGN)
-            continue;
+            {
+              continue;
+            }
+
           count++;
         }
+
       // Now increment it to account for the last dummy one...
       count++;
       
@@ -224,21 +230,25 @@ TAO_GIOP_Message_Accept_State_10::
       for (i = 0; i != l; ++i)
         {
           if (svc_ctx[i].context_id == TAO_SVC_CONTEXT_ALIGN)
-            continue;
+            {
+              continue;
+            }
+
           output << svc_ctx[i];
         }
 
     }
-  if (reply.params_ != 0)
+
+  if (reply.is_dsi_ == 1)
     {
       // @@ Much of this code is GIOP 1.1 specific and should be
-      ptr_arith_t target =
-        reply.params_->_tao_target_alignment ();
+      ptr_arith_t target = reply.dsi_nvlist_align_;
       
       ptr_arith_t current =
         ptr_arith_t (output.current_alignment ()) % ACE_CDR::MAX_ALIGNMENT;
       
       CORBA::ULong pad = 0;
+
       if (target == 0)
         {
           // We want to generate adequate padding to start the request
@@ -287,6 +297,7 @@ TAO_GIOP_Message_Accept_State_10::
       
       output << CORBA::ULong (TAO_SVC_CONTEXT_ALIGN);
       output << pad;
+
       for (CORBA::ULong j = 0; j != pad; ++j)
         {
           output << ACE_OutputCDR::from_octet(0);
@@ -305,11 +316,10 @@ TAO_GIOP_Message_Accept_State_10::
   return 1;
 }
 
-
-
 int
-TAO_GIOP_Message_Accept_State_10::
-  parse_locate_header (TAO_GIOP_Locate_Request_Header &request)
+TAO_GIOP_Message_Accept_State_10::parse_locate_header (
+    TAO_GIOP_Locate_Request_Header &request
+  )
 {
   // Get the stream
   TAO_InputCDR &msg = request.incoming_stream ();
@@ -331,13 +341,12 @@ TAO_GIOP_Message_Accept_State_10::
   return hdr_status ? 0 : -1;
 }
 
-
-
 CORBA::Boolean
-TAO_GIOP_Message_Accept_State_10::
-write_locate_reply_mesg (TAO_OutputCDR &output,
-                         CORBA::ULong request_id,
-                         TAO_GIOP_Locate_Status_Msg &status_info)
+TAO_GIOP_Message_Accept_State_10::write_locate_reply_mesg (
+    TAO_OutputCDR &output,
+    CORBA::ULong request_id,
+    TAO_GIOP_Locate_Status_Msg &status_info
+  )
 {
   // Make the header for the locate request
   output.write_ulong (request_id);
@@ -347,18 +356,22 @@ write_locate_reply_mesg (TAO_OutputCDR &output,
     {
       CORBA::Object_ptr object_ptr = 
         status_info.forward_location_var.in ();
+
       if ((output << object_ptr) == 0)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t|%N|%l) write_locate_reply_mesg-")
-                        ACE_TEXT (" cannot marshal object reference\n")));
+            {
+              ACE_DEBUG ((
+                  LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t|%N|%l) write_locate_reply_mesg-")
+                  ACE_TEXT (" cannot marshal object reference\n")
+                ));
+            }
         }
     }
 
   return 1;
 }
-
 
 CORBA::Octet
 TAO_GIOP_Message_Accept_State_10::major_version (void)
@@ -366,15 +379,11 @@ TAO_GIOP_Message_Accept_State_10::major_version (void)
   return (CORBA::Octet) 1;
 }
 
-
-
 CORBA::Octet
 TAO_GIOP_Message_Accept_State_10::minor_version (void)
 {
   return (CORBA::Octet) 0;
 }
-
-
 
 /////////////////////////////////////////////////////
 //  TAO_GIOP_Message_Accept_State_11
@@ -386,16 +395,15 @@ TAO_GIOP_Message_Accept_State_11::minor_version (void)
   return 1;
 }
 
-
-
 ////////////////////////////////////////////////////////////////////////////////
 // TAO_GIOP_Message_Accept_State_12 methods 
 ////////////////////////////////////////////////////////////////////////////////
 
-// The methods below are not complete
+// The methods below are not complete.
 int
-TAO_GIOP_Message_Accept_State_12::
-  parse_request_header (TAO_GIOP_ServerRequest &request)
+TAO_GIOP_Message_Accept_State_12::parse_request_header (
+    TAO_ServerRequest &request
+  )
 {
 
   // Get the input CDR in the request class
@@ -449,10 +457,12 @@ TAO_GIOP_Message_Accept_State_12::
     }
 
   ACE_CString operation_name;
+
   if (input.char_translator () == 0)
     {
       CORBA::ULong length = 0;
       hdr_status = hdr_status && input.read_ulong (length);
+
       if (hdr_status)
         {
           // Do not include NULL character at the end.
@@ -491,23 +501,23 @@ TAO_GIOP_Message_Accept_State_12::
   
   input >> service_info;
 
-  // Reset the read_ptr to an 8-byte boundary
+  // Reset the read_ptr to an 8-byte boundary.
   input.align_read_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR);
   
   return hdr_status ? 0 : -1;
 }
 
-
 int
-TAO_GIOP_Message_Accept_State_12::
-  parse_locate_header (TAO_GIOP_Locate_Request_Header &request)
+TAO_GIOP_Message_Accept_State_12::parse_locate_header (
+    TAO_GIOP_Locate_Request_Header &request
+  )
 {
-  // Get the stream 
+  // Get the stream .
   TAO_InputCDR &msg = request.incoming_stream ();
 
   CORBA::Boolean hdr_status = 1;
   
-  // Get the request id
+  // Get the request id.
   CORBA::ULong req_id = 0;
   hdr_status = msg.read_ulong (req_id);
   
@@ -547,12 +557,11 @@ TAO_GIOP_Message_Accept_State_12::
   return hdr_status ? 0 : -1;
 }
 
-
-
 CORBA::Boolean 
-TAO_GIOP_Message_Accept_State_12::
-  unmarshall_iop_profile (TAO_Tagged_Profile &profile_addr,
-                          TAO_InputCDR &input)
+TAO_GIOP_Message_Accept_State_12::unmarshall_iop_profile (
+    TAO_Tagged_Profile &profile_addr,
+    TAO_InputCDR &input
+  )
 {
   CORBA::Boolean hdr_status = 
     (CORBA::Boolean) input.good_bit ();
@@ -563,17 +572,17 @@ TAO_GIOP_Message_Accept_State_12::
     
   hdr_status &= input >> tagged_profile;
   
-  // Extract the object key from the TaggedProfile
+  // Extract the object key from the TaggedProfile.
   hdr_status &=profile_addr.extract_object_key (tagged_profile);
 
   return hdr_status;
 }
 
-
 CORBA::Boolean 
-TAO_GIOP_Message_Accept_State_12::
-  unmarshall_ref_addr (TAO_Tagged_Profile &profile_addr,
-                       TAO_InputCDR &input)
+TAO_GIOP_Message_Accept_State_12::unmarshall_ref_addr (
+    TAO_Tagged_Profile &profile_addr,
+    TAO_InputCDR &input
+  )
 {
   CORBA::Boolean hdr_status = 
     (CORBA::Boolean) input.good_bit ();
@@ -587,20 +596,18 @@ TAO_GIOP_Message_Accept_State_12::
   IOP::TaggedProfile &tag = 
     addr_info.ior.profiles [addr_info.selected_profile_index];
   
-  // Extract the object key from the TaggedProfile
+  // Extract the object key from the TaggedProfile.
   hdr_status &= profile_addr.extract_object_key (tag);
 
   return hdr_status;
 }
 
-
-
-
 CORBA::Boolean
-TAO_GIOP_Message_Accept_State_12::
-write_reply_header (TAO_OutputCDR & output,
-                    TAO_Pluggable_Reply_Params &reply,
-                    CORBA::Environment & /*ACE_TRY_ENV*/)
+TAO_GIOP_Message_Accept_State_12::write_reply_header (
+    TAO_OutputCDR & output,
+    TAO_Pluggable_Reply_Params &reply,
+    CORBA::Environment & /* ACE_TRY_ENV */
+  )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Write the request ID
@@ -628,7 +635,7 @@ write_reply_header (TAO_OutputCDR & output,
 #if (TAO_HAS_MINIMUM_CORBA == 1)
   output << reply.service_context_notowned ();
 #else
-  if (reply.params_ == 0)
+  if (reply.is_dsi_ == 0)
     {
       output << reply.service_context_notowned ();
     }
@@ -640,6 +647,7 @@ write_reply_header (TAO_OutputCDR & output,
       
       // Now marshal the rest of the service context objects
       output << l;
+
       for (CORBA::ULong i = 0; i != l; ++i)
         {
           output << svc_ctx[i];
@@ -649,17 +657,19 @@ write_reply_header (TAO_OutputCDR & output,
 #endif /*TAO_HAS_MINIMUM_CORBA */
   
   if (output.align_write_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR) == -1)
-    return 0;
+    {
+      return 0;
+    }
 
   return 1;
 }
 
-
 CORBA::Boolean 
-TAO_GIOP_Message_Accept_State_12::
-write_locate_reply_mesg (TAO_OutputCDR & output,
-                         CORBA::ULong request_id,
-                         TAO_GIOP_Locate_Status_Msg &status_info)
+TAO_GIOP_Message_Accept_State_12::write_locate_reply_mesg (
+    TAO_OutputCDR & output,
+    CORBA::ULong request_id,
+    TAO_GIOP_Locate_Status_Msg &status_info
+  )
 {
   output.write_ulong (request_id);
 
@@ -667,7 +677,9 @@ write_locate_reply_mesg (TAO_OutputCDR & output,
   output.write_ulong (status_info.status);
 
   if (output.align_write_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR) == -1)
-    return 0;
+    {
+      return 0;
+    }
 
   switch (status_info.status)
     {
@@ -678,12 +690,17 @@ write_locate_reply_mesg (TAO_OutputCDR & output,
       {
         CORBA::Object_ptr object_ptr = 
           status_info.forward_location_var.in ();
+
         if ((output << object_ptr) == 0)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t|%N|%l) write_locate_reply_mesg-")
-                        ACE_TEXT (" cannot marshal object reference\n")));
+            {
+              ACE_DEBUG ((
+                  LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t|%N|%l) write_locate_reply_mesg-")
+                  ACE_TEXT (" cannot marshal object reference\n")
+                ));
+            }
         }
       }
       break;

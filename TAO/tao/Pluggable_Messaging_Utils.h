@@ -44,19 +44,28 @@ class TAO_Export TAO_Pluggable_Reply_Params
   //   connector from the acceptor.
 public:
   TAO_Pluggable_Reply_Params (void);
-  // Ctor
+  // Constructor.
 
-  IOP::ServiceContextList  svc_ctx_;
-  // The IOP service context list
+  IOP::ServiceContextList svc_ctx_;
+  // The IOP service context list.
 
   CORBA::ULong request_id_;
-  // The request id for which the reply we (connector) has received
+  // The request id for which the reply we (connector) has received.
 
   // @@ Bala: this is (again) an GIOPism (to coin a word).  Other
   // protocol may choose to send different *messages* instead.
   // @@ Carlos: I agree. Please see above.
   CORBA::ULong reply_status_;
-  // The reply status
+  // The reply status.
+
+  CORBA::Boolean is_dsi_;
+  // Since this class no longer contains an NVList, this is the
+  // way to determine if the request was DSI, so we can use Carlos'
+  // service context list no-deep-copy optimization.
+
+  ptr_arith_t dsi_nvlist_align_;
+  // Info required for DSI optimization that pads the outgoing
+  // CDR stream according to the alignment of the NVList.
 
   IOP::ServiceContextList &service_context_notowned (void);
   void service_context_notowned (IOP::ServiceContextList *svc);
@@ -64,13 +73,6 @@ public:
   // own. This is useful for cases  where the application objects own
   // a service context list and would like to pass on their contents
   // without a copy.
-
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-  CORBA::NVList_ptr params_;
-  // NV params.
-  // @@ This is GIOPism. But we need to figure a way to get around
-  // this. Till then. It would be used only for DSI gateways
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
 private:
   IOP::ServiceContextList *service_context_;

@@ -11,7 +11,7 @@
 // -- TAO Include --
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
-#include "tao/Server_Request.h"
+#include "tao/TAO_Server_Request.h"
 #include "tao/Stub.h"
 #include "tao/Profile.h"
 #include "tao/MProfile.h"
@@ -230,7 +230,7 @@ TAO_Object_Adapter::create_lock (int enable_locking,
 
 void
 TAO_Object_Adapter::dispatch_servant (const TAO_ObjectKey &key,
-                                      CORBA::ServerRequest &req,
+                                      TAO_ServerRequest &req,
                                       void *context,
                                       CORBA::Environment &ACE_TRY_ENV)
 {
@@ -614,7 +614,7 @@ TAO_Object_Adapter::priority (void) const
 
 int
 TAO_Object_Adapter::dispatch (TAO_ObjectKey &key,
-                              CORBA::ServerRequest &request,
+                              TAO_ServerRequest &request,
                               void *context,
                               CORBA::Object_out forward_to,
                               CORBA::Environment &ACE_TRY_ENV)

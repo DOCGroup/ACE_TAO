@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Database_i.h"
+#include "tao/Server_Request.h"
 
 ACE_RCSID(DSI, Database_i, "$Id$")
 

@@ -14,7 +14,7 @@
 #include "MessagingS.h"
 #include "Operation_Table.h"
 #include "Object_Adapter.h"
-#include "tao/Server_Request.h"
+#include "tao/TAO_Server_Request.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 
@@ -199,7 +199,7 @@ POA_Messaging::ReplyHandler::~ReplyHandler (void)
 }
 
 void POA_Messaging::ReplyHandler::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -223,7 +223,7 @@ void POA_Messaging::ReplyHandler::_is_a_skel (
 }
 
 void POA_Messaging::ReplyHandler::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -264,7 +264,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/Messaging/ReplyHandler:1.0") =
   return 0;
 }
 
-void POA_Messaging::ReplyHandler::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_Messaging::ReplyHandler::_dispatch (TAO_ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
   this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }

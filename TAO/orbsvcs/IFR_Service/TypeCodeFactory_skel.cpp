@@ -19,8 +19,7 @@
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
-#include "tao/Server_Request.h"
-#include "tao/NVList.h"
+#include "tao/TAO_Server_Request.h"
 
 ACE_RCSID(IFR_Service, TypeCodeFactory_skel, "$Id$")
 
@@ -221,7 +220,7 @@ POA_CORBA::TypeCodeFactory::~TypeCodeFactory (void)
 }
 
 void POA_CORBA::TypeCodeFactory::create_struct_tc_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -260,7 +259,7 @@ void POA_CORBA::TypeCodeFactory::create_struct_tc_skel (
 }
 
 void POA_CORBA::TypeCodeFactory::create_union_tc_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -303,7 +302,7 @@ void POA_CORBA::TypeCodeFactory::create_union_tc_skel (
 }
 
 void POA_CORBA::TypeCodeFactory::create_enum_tc_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -342,7 +341,7 @@ void POA_CORBA::TypeCodeFactory::create_enum_tc_skel (
 }
 
 void POA_CORBA::TypeCodeFactory::create_alias_tc_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -381,7 +380,7 @@ void POA_CORBA::TypeCodeFactory::create_alias_tc_skel (
 }
 
 void POA_CORBA::TypeCodeFactory::create_exception_tc_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -421,7 +420,7 @@ void POA_CORBA::TypeCodeFactory::create_exception_tc_skel (
 }
 
 void POA_CORBA::TypeCodeFactory::create_interface_tc_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -457,7 +456,7 @@ void POA_CORBA::TypeCodeFactory::create_interface_tc_skel (
 }
 
 void POA_CORBA::TypeCodeFactory::create_string_tc_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -490,7 +489,7 @@ void POA_CORBA::TypeCodeFactory::create_string_tc_skel (
 }
 
 void POA_CORBA::TypeCodeFactory::create_wstring_tc_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -523,7 +522,7 @@ void POA_CORBA::TypeCodeFactory::create_wstring_tc_skel (
 }
 
 void POA_CORBA::TypeCodeFactory::create_fixed_tc_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -559,7 +558,7 @@ void POA_CORBA::TypeCodeFactory::create_fixed_tc_skel (
 }
 
 void POA_CORBA::TypeCodeFactory::create_sequence_tc_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -595,7 +594,7 @@ void POA_CORBA::TypeCodeFactory::create_sequence_tc_skel (
 }
 
 void POA_CORBA::TypeCodeFactory::create_array_tc_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -631,7 +630,7 @@ void POA_CORBA::TypeCodeFactory::create_array_tc_skel (
 }
 
 void POA_CORBA::TypeCodeFactory::create_value_tc_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -676,7 +675,7 @@ void POA_CORBA::TypeCodeFactory::create_value_tc_skel (
 }
 
 void POA_CORBA::TypeCodeFactory::create_value_box_tc_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -715,7 +714,7 @@ void POA_CORBA::TypeCodeFactory::create_value_box_tc_skel (
 }
 
 void POA_CORBA::TypeCodeFactory::create_native_tc_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -751,7 +750,7 @@ void POA_CORBA::TypeCodeFactory::create_native_tc_skel (
 }
 
 void POA_CORBA::TypeCodeFactory::create_recursive_tc_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -784,7 +783,7 @@ void POA_CORBA::TypeCodeFactory::create_recursive_tc_skel (
 }
 
 void POA_CORBA::TypeCodeFactory::create_abstract_interface_tc_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -820,7 +819,7 @@ void POA_CORBA::TypeCodeFactory::create_abstract_interface_tc_skel (
 }
 
 void POA_CORBA::TypeCodeFactory::create_component_tc_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -856,7 +855,7 @@ void POA_CORBA::TypeCodeFactory::create_component_tc_skel (
 }
 
 void POA_CORBA::TypeCodeFactory::create_home_tc_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -892,7 +891,7 @@ void POA_CORBA::TypeCodeFactory::create_home_tc_skel (
 }
 
 void POA_CORBA::TypeCodeFactory::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -916,7 +915,7 @@ void POA_CORBA::TypeCodeFactory::_is_a_skel (
 }
 
 void POA_CORBA::TypeCodeFactory::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -957,7 +956,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/TypeCodeFactory:1.0") ==
   return 0;
 }
 
-void POA_CORBA::TypeCodeFactory::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_CORBA::TypeCodeFactory::_dispatch (TAO_ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
   const char *opname = req.operation (); // retrieve operation name
