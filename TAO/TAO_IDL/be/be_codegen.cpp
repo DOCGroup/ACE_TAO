@@ -24,6 +24,7 @@
 #include "global_extern.h"
 #include "utl_string.h"
 #include "idl_defines.h"
+#include "ace/os_include/os_ctype.h"
 
 ACE_RCSID (be,
            be_codegen,
