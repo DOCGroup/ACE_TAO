@@ -630,6 +630,14 @@ template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, AVStreams::MMDevice_va
 template class ACE_Hash_Map_Iterator_Ex<ACE_CString, AVStreams::MMDevice_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, AVStreams::MMDevice_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 
+template class ACE_Hash_Map_Entry<ACE_CString, Endpoint_Addresses*>;
+template class ACE_Hash_Map_Manager<ACE_CString, Endpoint_Addresses*, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, Endpoint_Addresses*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, Endpoint_Addresses*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, Endpoint_Addresses*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, Endpoint_Addresses*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+
+
 template class ACE_Hash_Map_Entry<ACE_CString, TAO_AV_Protocol_Object *>;
 template class ACE_Hash_Map_Manager<ACE_CString, TAO_AV_Protocol_Object *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_AV_Protocol_Object *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
@@ -652,6 +660,13 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, AVStreams::StreamCt
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, AVStreams::MMDevice_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, AVStreams::MMDevice_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, AVStreams::MMDevice_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, Endpoint_Addresses*>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, Endpoint_Addresses*, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, Endpoint_Addresses*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, Endpoint_Addresses*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, Endpoint_Addresses*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, Endpoint_Addresses*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 
 #pragma instantiate ACE_Hash_Map_Entry<ACE_CString, TAO_AV_Protocol_Object *>
 #pragma instantiate ACE_Hash_Map_Manager<ACE_CString, TAO_AV_Protocol_Object *, ACE_Null_Mutex>
