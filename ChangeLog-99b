@@ -1,7 +1,14 @@
+Mon Apr 12 13:01:32 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/gethrtime.cpp (ACE_gethrtime),Makefile: added support for
+          rdtsc instruction with GHS on Intel targets.  Thanks to
+          Andy Alvarez <axab@eci-esyst.com> for providing the assembly
+          instructions to do this!
+
 Mon Apr 12 12:04:20 1999  Joe Hoffert  <joeh@cs.wustl.edu>
 
-	* ace/Makefile,ATM_Addr.cpp: 
-	  Added ACE_ATM_Addr class back into Makefile since it's working
+        * ace/Makefile,ATM_Addr.cpp:
+          Added ACE_ATM_Addr class back into Makefile since it's working
           now. Fixed address initialization problem in ACE_ATM_Addr.
           NOTE: This code currently only works with Solaris 2.5/2.6. Will
           need to update the code for FORE's implementation on Solaris 2.7.
@@ -16,10 +23,10 @@ Mon Apr 12 12:04:20 1999  Joe Hoffert  <joeh@cs.wustl.edu>
 
 Mon Apr 12 10:04:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* include/makeinclude/rules.local.GNU: 
-	  The default rule to compile .idl files is only enabled if
-	  TAO_ROOT is not defined, otherwise we should use the rule in
-	  $TAO_ROOT/rules.tao.GNU
+        * include/makeinclude/rules.local.GNU:
+          The default rule to compile .idl files is only enabled if
+          TAO_ROOT is not defined, otherwise we should use the rule in
+          $TAO_ROOT/rules.tao.GNU
 
 Mon Apr 12 00:18:23 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -27,35 +34,35 @@ Mon Apr 12 00:18:23 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sun Apr 11 17:06:53 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp (run_client): Fixed
-	  the warnings on Linux (config-linux.h).
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp (run_client): Fixed
+          the warnings on Linux (config-linux.h).
 
 Sun Apr 11 16:09:16 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp (run_client): Made
- 	  some fixes if ACE_MT_SAFE is false...  Thanks to Alex for
- 	  reporting these.
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp (run_client): Made
+          some fixes if ACE_MT_SAFE is false...  Thanks to Alex for
+          reporting these.
 
 Sun Apr 11 16:02:49 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp (create_handler):
-	  Fixed the warnings (control reaching end of block) and error (passing
-	  u_long to close) which showed up on Linux(with config-linux.h)
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp (create_handler):
+          Fixed the warnings (control reaching end of block) and error (passing
+          u_long to close) which showed up on Linux(with config-linux.h)
 
-	* performance-tests/Misc/preempt.cpp,
-	* examples/Threads/task_five.cpp: Replaced ACE_MT_SYNCH by
- 	  ACE_SYNCH to get it compile on Linux.
+        * performance-tests/Misc/preempt.cpp,
+        * examples/Threads/task_five.cpp: Replaced ACE_MT_SYNCH by
+          ACE_SYNCH to get it compile on Linux.
 
 Sun Apr 11 14:38:22 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* configure.in: Added test for ACE_NEEDS_FUNC_DEFINITIONS.
-  	  Corrected bug in ACE_TEMPLATES_REQUIRE_SOURCE test.
+        * configure.in: Added test for ACE_NEEDS_FUNC_DEFINITIONS.
+          Corrected bug in ACE_TEMPLATES_REQUIRE_SOURCE test.
 
 Sat Apr 10 14:02:11 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Malloc[_Base]: Added a new no-op constructor for
- 	  ACE_Allocator to hopefully work around a problem with DEC UNIX
- 	  C++.
+        * ace/Malloc[_Base]: Added a new no-op constructor for
+          ACE_Allocator to hopefully work around a problem with DEC UNIX
+          C++.
 
 Fri Apr 09 10:08:49 1999  David L. Levine  <levine@cs.wustl.edu>
 
