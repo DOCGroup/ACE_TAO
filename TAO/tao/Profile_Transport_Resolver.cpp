@@ -92,7 +92,7 @@ namespace TAO
 
     // Initialize the messaging object
     if (this->transport_->messaging_init (version.major,
-                                          version.major) == -1)
+                                          version.minor) == -1)
       ACE_THROW (CORBA::INTERNAL (
                         CORBA::SystemException::_tao_minor_code (
                           TAO_DEFAULT_MINOR_CODE,

@@ -1,3 +1,8 @@
+Wed Jul  9 14:46:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Profile_Transport_Resolver.cpp (TAO): Minor fix for the
+	  minor version of GIOP.
+
 Wed Jul  9 14:33:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Remote_Invocation.cpp (TAO): 
