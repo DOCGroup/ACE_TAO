@@ -186,8 +186,6 @@ endif
 #----------------------------------------------------------------------------
 
 ifeq ($(findstring g++,$(CXX)),g++)
-  CCFLAGS += -DACE_LACKS_PRAGMA_ONCE
-
   ifndef ACE_HAS_GNUG_PRE_2_8
     ifeq ($(CXX),g++)
       ACE_HAS_GNUG_PRE_2_8 := \
