@@ -224,7 +224,7 @@ Server_i::create_poa (const char *name,
       return 0;
     }
   ACE_ENDTRY;  
-  ACE_CHECK_RETURN (-1);
+  ACE_CHECK_RETURN (0);
 
   return my_poa;
 }
