@@ -990,7 +990,6 @@ Param_Test_i::test_complex_any (const CORBA::Any &a1,
   return ret._retn ();
 }
 
-#if 0
 Param_Test::Multdim_Array_slice *
 Param_Test_i::test_multdim_array (const Param_Test::Multdim_Array a1,
                                   Param_Test::Multdim_Array a2,
@@ -1005,8 +1004,6 @@ Param_Test_i::test_multdim_array (const Param_Test::Multdim_Array a1,
   ret = Param_Test::Multdim_Array_dup (a1);
   return ret;
 }
-
-#endif
 
 void
 Param_Test_i::shutdown (CORBA::Environment &)
