@@ -3,6 +3,8 @@ Thu Aug 12 16:24:16 1999  David L. Levine  <levine@cs.wustl.edu>
         * bin/make_release: chdir up a level before removing the
           staging directory.  Thanks to Carlos for pointing out
           that it's necessary, because we had chdir'd into it.
+          And for noticing that $build_commands got clobbered in
+          create_kit ().  Obey $generate_man_pages setting.
 
 Thu Aug 12 16:03:03 1999  David L. Levine  <levine@cs.wustl.edu>
 
