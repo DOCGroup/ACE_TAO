@@ -1,3 +1,9 @@
+Tue Nov  7 12:27:34 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+
+          Commented out some unused formal parameters.
+
 Tue Nov  7 12:04:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * TAO_IDL/TAO_IDL_BE_DLL.dsp:
