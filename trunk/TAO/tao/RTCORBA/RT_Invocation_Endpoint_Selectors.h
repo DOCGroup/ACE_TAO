@@ -34,9 +34,6 @@
 
 #include "tao/Invocation_Endpoint_Selectors.h"
 
-class TAO_MProfile;
-class TAO_Endpoint;
-
 /**
  * @class TAO_RT_Invocation_Endpoint_Selector
  *

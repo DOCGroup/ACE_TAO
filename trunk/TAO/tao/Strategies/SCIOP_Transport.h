@@ -88,7 +88,7 @@ protected:
 
 
 public:
-  /// @@TODO: These methods IMHO should have more meaningful
+  /// @todo These methods IMHO should have more meaningful
   /// names. The names seem to indicate nothing.
   virtual int send_request (TAO_Stub *stub,
                             TAO_ORB_Core *orb_core,

@@ -124,7 +124,7 @@ TLS_Client::run_tests (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG,
               "Calling BasicLog::get_n_records...\n"));
 #ifndef ACE_LACKS_LONGLONG_T
-  CORBA::Long retval = basic_log->get_n_records (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ULongLong retval = basic_log->get_n_records (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 #else
   CORBA::Long retval = basic_log->get_n_records (ACE_ENV_SINGLE_ARG_PARAMETER).lo();
@@ -154,7 +154,7 @@ TLS_Client::run_tests (ACE_ENV_SINGLE_ARG_DECL)
   for (; j < rec_list->length();++j)  //dhanvey added info
 #ifndef ACE_LACKS_LONGLONG_T
   ACE_DEBUG ((LM_DEBUG,
-              "id = %Q, time= %Q\n", 
+              "id = %Q, time= %Q\n",
               rec_list[j].id, rec_list[j].time));
 
 #else
