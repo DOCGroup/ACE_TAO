@@ -1,7 +1,15 @@
+Mon Jan 26 07:19:13 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/ftrteventchannel.mpb:
+        * bin/MakeProjectCreator/config/utils.mpb:
+
+          Added base projects for the TAO_FTRT_EventChannel and TAO_Utils
+          libraries.
+
 Sun Jan 25 18:05:31 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/Streams/RecordingDevice_Text.cpp: Fixed formatting
-	  to fit in its spots in the book.
+        * examples/APG/Streams/RecordingDevice_Text.cpp: Fixed formatting
+          to fit in its spots in the book.
 
 Sun Jan 25 20:46:03 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
@@ -20,69 +28,69 @@ Sun Jan 25 20:46:03 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
 Sun Jan 25 15:55:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/OS_NS_stdio.h:
-	  Removed check for ACE_MT_SAFE for the win32 specific methods.
+        * ace/OS_NS_stdio.h:
+          Removed check for ACE_MT_SAFE for the win32 specific methods.
 
 Sun Jan 25 09:11:40 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/msvc_mpc_auto_compile.pl:
+        * bin/msvc_mpc_auto_compile.pl:
 
-	  Some cosmetic fixes to get ACEXEML and Kokyu compiled well
-	  before other things. The dsw's in TAO hierarchy do not have the
-	  dsp's of ACE hierarchy included but for TAOACE.dsw.
+          Some cosmetic fixes to get ACEXEML and Kokyu compiled well
+          before other things. The dsw's in TAO hierarchy do not have the
+          dsp's of ACE hierarchy included but for TAOACE.dsw.
 
 Sun Jan 25 08:59:40 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* Kokyu/Kokyu.mwc:
-	* ACEXML/ACEXML.mwc:
+        * Kokyu/Kokyu.mwc:
+        * ACEXML/ACEXML.mwc:
 
-	  Added new workspace files. The above pieces should be compilable
-	  without going into TAO and using TAOACE.mwc.
+          Added new workspace files. The above pieces should be compilable
+          without going into TAO and using TAOACE.mwc.
 
 Sun Jan 25 12:26:19 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/Auto_IncDec_Test.cpp:
-	  Extended debug info with the total number of threads. This then shows
-	  that with Cygwin threads that exit are not removed from the
-	  thread manager
+        * tests/Auto_IncDec_Test.cpp:
+          Extended debug info with the total number of threads. This then shows
+          that with Cygwin threads that exit are not removed from the
+          thread manager
 
 Sun Jan 25 11:34:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/Tests.bor:
-	  Added SOCK_Test_IPv6
+        * tests/Tests.bor:
+          Added SOCK_Test_IPv6
 
 Sun Jan 25 11:26:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/config-borland-common.h:
-	  CBuilderX Preview doesn't support multithreaded builds, so removed
-	  fix for _endthreadex
+        * ace/config-borland-common.h:
+          CBuilderX Preview doesn't support multithreaded builds, so removed
+          fix for _endthreadex
 
 Sun Jan 25 10:49:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/msvc_static_compile.pl:
-	  Cleaned up some old stuff
+        * bin/msvc_static_compile.pl:
+          Cleaned up some old stuff
 
 Sat Jan 24 16:11:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/OS_NS_stdlib.inl:
+        * ace/OS_NS_stdlib.inl:
           With CBuilderX Preview putenv, wcstod, wcstol and wcstoul are in the
           std namespace, so added ACE_STD_NAMESPACE which expands to std with
           Borland, to nothing with other compilers.
 
-	* ace/OS_NS_stdio.inl:
-	  The vswprintf for Dinkum STL is different. CBuilderX Preview has
-	  std::tempnam, so added checking for borland version.
+        * ace/OS_NS_stdio.inl:
+          The vswprintf for Dinkum STL is different. CBuilderX Preview has
+          std::tempnam, so added checking for borland version.
 
-	* ace/OS_NS_stdio.cpp:
-	  vswprintf and vsnprintf are different with CBuilderX Preview
+        * ace/OS_NS_stdio.cpp:
+          vswprintf and vsnprintf are different with CBuilderX Preview
 
-	* ace/config-win32-borland.h:
-	  CBuilderX Preview has no itoa
+        * ace/config-win32-borland.h:
+          CBuilderX Preview has no itoa
 
 Sat Jan 24 15:29:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/config-win32-borland.h:
-	  CBuilderX Preview doesn't have wcsdup
+        * ace/config-win32-borland.h:
+          CBuilderX Preview doesn't have wcsdup
 
 Fri Jan 23 14:04:31 2004  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -108,13 +116,13 @@ Fri Jan 23 19:09:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 Fri Jan 23 10:04:00 2004  Gary Maxey <gary.maxey@hp.com>
 
         Fix for BUGID 1722, for Tandem NSK platform.
-	* ace/OS_NS_stdlib.inl:
+        * ace/OS_NS_stdlib.inl:
 
-	  Need to use spt_system() instead of system().
+          Need to use spt_system() instead of system().
 
-	* ace/OS_NS_sys_wait.inl:
+        * ace/OS_NS_sys_wait.inl:
 
-	  Need to use spt_waitpid() instead of waitpid()
+          Need to use spt_waitpid() instead of waitpid()
 
 Fri Jan 23 09:49:00 2004  Gary Maxey <gary.maxey@hp.com>
 
