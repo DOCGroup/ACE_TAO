@@ -11,7 +11,7 @@
 
 INFO	= 
 
-DIRS	= lib test
+DIRS	= lib #test
 
 CLONE	= 
 
