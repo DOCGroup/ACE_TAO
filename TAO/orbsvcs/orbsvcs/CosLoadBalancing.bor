@@ -43,7 +43,7 @@ OBJFILES = \
 	$(OBJDIR)\LB_Component.obj \
 	$(OBJDIR)\LB_CPU_Monitor.obj
 
-RESOURCE = $(OBJDIR)\LoadBalancing.res
+RESOURCE = $(OBJDIR)\CosLoadBalancing.res
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
@@ -60,7 +60,7 @@ CPPDIR = .;LoadBalancing
 IDLDIR = .
 
 INCDIR_NAME = orbsvcs\LoadBalancing
-INCLUDES = LoadBalancing\*.h LoadBalancing\*.i
+INCLUDES = LoadBalancing\*.h LoadBalancing\*.inl
 
 LIBFILES = \
 	$(ACE_LIB) \
