@@ -31,8 +31,8 @@ ACE_Registry_Name_Space::open (ACE_Name_Options *name_options)
   ACE_Registry::Naming_Context predefined;
 
   int result = ACE_Predefined_Naming_Contexts::connect (predefined,
-							HKEY_LOCAL_MACHINE,
-							host);
+                                                        HKEY_LOCAL_MACHINE,
+                                                        host);
   if (result != 0)
     ACE_ERROR_RETURN ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),
                        ACE_LIB_TEXT ("ACE_Predefined_Naming_Context::connect")),
@@ -48,18 +48,18 @@ ACE_Registry_Name_Space::open (ACE_Name_Options *name_options)
 
       // Create new context or bind to existing one
       result = predefined.bind_context (name,
-					this->context_);
+                                        this->context_);
       if (result != 0)
-	ACE_ERROR_RETURN ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("ACE_Registry::Naming_Context::bind_context")), result);
+        ACE_ERROR_RETURN ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("ACE_Registry::Naming_Context::bind_context")), result);
     }
   return 0;
 }
 
 
 int
-ACE_Registry_Name_Space::bind (const ACE_WString &name,
-			       const ACE_WString &value,
-			       const char *type)
+ACE_Registry_Name_Space::bind (const ACE_NS_WString &name,
+                               const ACE_NS_WString &value,
+                               const char *type)
 {
   // Pointer to data
   const ACE_USHORT16 *data = value.fast_rep ();
@@ -69,18 +69,18 @@ ACE_Registry_Name_Space::bind (const ACE_WString &name,
 
   // Represent value as an ACE_Registry::Object
   ACE_Registry::Object object ((void *) data,
-			       size,
-			       REG_SZ);
+                               size,
+                               REG_SZ);
   // Add new <key>/<value> pair
   return this->context_.bind (name.fast_rep(),
-			      object);
+                              object);
 }
 
 
 int
-ACE_Registry_Name_Space::rebind (const ACE_WString &name,
-				 const ACE_WString &value,
-				 const char *type)
+ACE_Registry_Name_Space::rebind (const ACE_NS_WString &name,
+                                 const ACE_NS_WString &value,
+                                 const char *type)
 {
   // Pointer to data
   const ACE_USHORT16 *data = value.fast_rep ();
@@ -90,25 +90,25 @@ ACE_Registry_Name_Space::rebind (const ACE_WString &name,
 
   // Represent value as an ACE_Registry::Object
   ACE_Registry::Object object ((void *) data,
-			       size,
-			       REG_SZ);
+                               size,
+                               REG_SZ);
   // Add new <key>/<value> pair
   return this->context_.rebind (name.fast_rep (),
-				object);
+                                object);
 }
 
 
 int
-ACE_Registry_Name_Space::unbind (const ACE_WString &name)
+ACE_Registry_Name_Space::unbind (const ACE_NS_WString &name)
 {
   return this->context_.unbind (name.fast_rep ());
 }
 
 
 int
-ACE_Registry_Name_Space::resolve (const ACE_WString &name,
-				  ACE_WString &value,
-				  char *&type)
+ACE_Registry_Name_Space::resolve (const ACE_NS_WString &name,
+                                  ACE_NS_WString &value,
+                                  char *&type)
 {
   // This object will be used to query the size of the data.
   // Note: The query_object.data will be null for this invocation.
@@ -123,8 +123,8 @@ ACE_Registry_Name_Space::resolve (const ACE_WString &name,
 
   // Represent new space as an ACE_Registry::Object
   ACE_Registry::Object object ((void *) value.fast_rep (),
-			       query_object.size (),
-			       REG_SZ);
+                               query_object.size (),
+                               REG_SZ);
 
   result = this->context_.resolve (name.fast_rep (), object);
   if (object.size () != query_object.size ())
@@ -138,11 +138,11 @@ ACE_Registry_Name_Space::resolve (const ACE_WString &name,
 
 int
 ACE_Registry_Name_Space:: list_names (ACE_WSTRING_SET &set,
-				      const ACE_WString &pattern)
+                                      const ACE_NS_WString &pattern)
 {
   ACE_BINDING_SET binding_set;
   int result = this->list_name_entries (binding_set,
-					pattern);
+                                        pattern);
   if (result != 0)
     return result;
 
@@ -160,11 +160,11 @@ ACE_Registry_Name_Space:: list_names (ACE_WSTRING_SET &set,
 
 int
 ACE_Registry_Name_Space::list_values (ACE_WSTRING_SET &set,
-				      const ACE_WString &pattern)
+                                      const ACE_NS_WString &pattern)
 {
   ACE_BINDING_SET binding_set;
   int result = this->list_name_entries (binding_set,
-					pattern);
+                                        pattern);
   if (result != 0)
     return result;
 
@@ -182,7 +182,7 @@ ACE_Registry_Name_Space::list_values (ACE_WSTRING_SET &set,
 
 int
 ACE_Registry_Name_Space::list_types (ACE_WSTRING_SET &set,
-				     const ACE_WString &pattern)
+                                     const ACE_NS_WString &pattern)
 {
   return 0;
 }
@@ -190,7 +190,7 @@ ACE_Registry_Name_Space::list_types (ACE_WSTRING_SET &set,
 
 int
 ACE_Registry_Name_Space::list_name_entries (ACE_BINDING_SET &set,
-					    const ACE_WString &pattern)
+                                            const ACE_NS_WString &pattern)
 {
   ACE_Registry::Binding_List list;
   int result = this->context_.list (list);
@@ -206,24 +206,24 @@ ACE_Registry_Name_Space::list_name_entries (ACE_BINDING_SET &set,
       ACE_Registry::Binding &binding = *i;
 
       if (binding.type () == ACE_Registry::OBJECT)
-	{
-	  // Key
-	  ACE_TString string = binding.name ();
-	  ACE_WString key (string.c_str ());
+        {
+          // Key
+          ACE_TString string = binding.name ();
+          ACE_NS_WString key (string.c_str ());
 
-	  // Value
-	  ACE_WString value;
-	  char *type = 0;
-	  result = this->resolve (key,
-				  value,
-				  type);
-	  if (result != 0)
-	    ACE_ERROR_RETURN ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("ACE_Registry::Naming_Context::resolve")), result);
+          // Value
+          ACE_NS_WString value;
+          char *type = 0;
+          result = this->resolve (key,
+                                  value,
+                                  type);
+          if (result != 0)
+            ACE_ERROR_RETURN ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("ACE_Registry::Naming_Context::resolve")), result);
 
-	  // Complete binding
-	  ACE_Name_Binding binding (key, value, type);
-	  set.insert (binding);
-	}
+          // Complete binding
+          ACE_Name_Binding binding (key, value, type);
+          set.insert (binding);
+        }
     }
   return 0;
 }
@@ -231,7 +231,7 @@ ACE_Registry_Name_Space::list_name_entries (ACE_BINDING_SET &set,
 
 int
 ACE_Registry_Name_Space::list_value_entries (ACE_BINDING_SET &set,
-					     const ACE_WString &pattern)
+                                             const ACE_NS_WString &pattern)
 {
   return this->list_name_entries (set, pattern);
 }
@@ -239,7 +239,7 @@ ACE_Registry_Name_Space::list_value_entries (ACE_BINDING_SET &set,
 
 int
 ACE_Registry_Name_Space::list_type_entries (ACE_BINDING_SET &set,
-					    const ACE_WString &pattern)
+                                            const ACE_NS_WString &pattern)
 {
   return this->list_name_entries (set, pattern);
 }
