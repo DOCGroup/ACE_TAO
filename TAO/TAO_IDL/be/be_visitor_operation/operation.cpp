@@ -846,7 +846,7 @@ be_visitor_operation::gen_marshal_and_invoke (
           << "{" << be_idt_nl;
 
       // If marshaling fails, raise exception (codesetting has various minors)
-      *os << "TAO_InputCDR::throw_stub_exception (errno "
+      *os << "TAO_OutputCDR::throw_stub_exception (errno "
           << "ACE_ENV_ARG_PARAMETER); "
           << be_nl;
       if (this->gen_check_interceptor_exception (bt) == -1)
