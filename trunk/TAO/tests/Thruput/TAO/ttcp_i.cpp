@@ -4,8 +4,7 @@
 #include "ttcp_decl.h"
 
 /* the ttcp_i class implementation */
-ttcp_sequence_i::ttcp_sequence_i(const char *obj_name)
-  : POA_ttcp_sequence (obj_name)
+ttcp_sequence_i::ttcp_sequence_i()
 {
   this->nbytes_ = 0;
   numCalls = 0;

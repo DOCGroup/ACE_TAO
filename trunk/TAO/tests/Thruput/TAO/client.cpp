@@ -25,14 +25,13 @@ int print_usage (void);
 char Usage[] =
      "Usage: client [-options] \n"
      "Common options:\n"
-     "-l ##   length of bufs read from or written to network (default 8192)\n"
-     "-v      verbose: print more statistics\n"
-     "-d ##   debug level\n"
-     "-f X    format for rate: k,K = kilo{bit,byte}; m,M = mega; g,G = giga\n"
-     "-h ##   Remote host to send data to\n"
-     "-p ##   Port number"
-     "-L ##   Output file name to store results\n"
-     "-S ##   Total Data Size to be sent\n"
+     "-i <ior> IOR string that the server outputs when started\n"
+     "-l ##    length of bufs read from or written to network (default 8192)\n"
+     "-v       verbose: print more statistics\n"
+     "-d ##    debug level\n"
+     "-f X     format for rate: k,K = kilo{bit,byte}; m,M = mega; g,G = giga\n"
+     "-L ##    Output file name to store results\n"
+     "-S ##    Total Data Size to be sent\n"
      "-q <type> Send Sequence: Enumeration for various data types:\n"
      "s = short, l = long,  d = double, c = char\n"
      "o = octet, S = BinStruct \n";
@@ -55,6 +54,7 @@ unsigned long nbytes;		// bytes on net
 unsigned long numCalls;		// # of I/O system calls
 double cput, realt;		// user, real time (seconds)
 unsigned long	dt;             // data type
+char * ior = 0;
 
 // declare variables for various message types
 ttcp_sequence::ShortSeq		*sseq;
@@ -82,20 +82,17 @@ main (int argc, char *argv[])
   ACE_UNUSED_ARG (objkey);
 
   // parse the arguments
-  ACE_Get_Opt get_opt (argc, argv, "d:vh:p:f:l:L:S:q:"); // Command line options
+  ACE_Get_Opt get_opt (argc, argv, "d:vf:l:L:S:q:i:"); // Command line options
   TAO_debug_level = 0;
   while ((c = get_opt ()) != -1)
     {
       switch (c)
 	{
-	case 'h':
-	  host = ACE_OS::strdup (get_opt.optarg);
+	case 'i':
+	  ior = ACE_OS::strdup (get_opt.optarg);
 	  break;
 	case 'L':
 	  title = ACE_OS::strdup (get_opt.optarg);
-	  break;
-	case 'p':
-	  port = ACE_OS::atoi (get_opt.optarg);
 	  break;
 	case 'd':
 	  TAO_debug_level = ACE_OS::atoi (get_opt.optarg);
@@ -156,23 +153,16 @@ main (int argc, char *argv[])
       return -1;
     }
 
-  // allocate storage to read the IOR string
-  str = CORBA::string_alloc (500);
-
-  sprintf (str, "iiop://%s:%d/TTCP_IIOP_test", host, port);
-
-  ACE_DEBUG ((LM_DEBUG, "Composed IOR string as: %s\n" , str));
+  ACE_DEBUG ((LM_DEBUG, "Read IOR string as: %s\n" , ior));
 
   // retrieve an object reference out of the stringified IOR
-  objref = orb_ptr->string_to_object (str, env);
+  objref = orb_ptr->string_to_object (ior, env);
 
   if (env.exception () != 0)
     {
       env.print_exception ("string_to_object", stdout);
       return -1;
     }
-  CORBA::string_free (str);
-
 
   if (!CORBA::is_nil (objref))
     {
