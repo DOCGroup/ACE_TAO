@@ -1,9 +1,68 @@
+Sun Jul 18 14:21:52 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_args.cpp:
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_interface_fwd.cpp:
+	* TAO_IDL/be/be_structure.cpp:
+	* TAO_IDL/be/be_union.cpp:
+	* TAO_IDL/be/be_valuetype.cpp:
+	* TAO_IDL/be/be_valuetype_fwd.cpp:
+	* TAO_IDL/be/be_visitor_array/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_array/array_ch.cpp:
+	* TAO_IDL/be/be_visitor_array/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_enum/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_enum/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_exception/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_exception/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/ami_handler_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/ami_handler_servant_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/ami_handler_stub_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/collocated_ami_handler_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/direct_collocated_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/thru_poa_collocated_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/tie_sh.cpp:
+	* TAO_IDL/be/be_visitor_module/module_ch.cpp:
+	* TAO_IDL/be/be_visitor_module/module_sh.cpp:
+	* TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_structure/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_structure/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
+	* TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp:
+	* TAO_IDL/be/be_visitor_union/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_union/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_union/union_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/obv_module.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+	* TAO_IDL/include/idl_global.h:
+	* TAO_IDL/util/utl_global.cpp: Separated the client and server
+	  export macros and export include files to allow building
+	  separate server and client DLLs.  4 new idl backend options are
+	  added, -Wb,skel_export_macro=xxx, -Wb,stub_export_macro=xxx,
+	  -Wb,skel_export_include=xxx.h, and
+	  -Wb,stub_export_include=xxx.h.  The original
+	  -Wb,export_macro=xxx and -Wb,export_include=xxx.h are still
+	  available and using the old option will be translated to the new
+	  options internally.  Thanks to Francois Bernier
+	  <fbernier@gel.ulaval.ca> for inspiring the change.
+
 Sat Jul 17 17:29:58 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_union.cpp:
 	  Changed compute_size_type() for unions to always return VARIABLE.
 	  This fixes a bug found when a union contains a struct which
-	  contains a different union composed of simple types. The inside 
+	  contains a different union composed of simple types. The inside
 	  union's size type comes back as FIXED, so it (rather than a
 	  pointer to it) becomes a struct member. Then the struct's size
 	  type also comes back as FIXED, so the outside union makes the
@@ -43,8 +102,8 @@ Sat Jul 17 12:38:08 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	  the exception from AlreadyMasked to NotMasked since (1) this is
  	  what's in the throw spec and (2) this appears to be the right
  	  exception.
-  
-	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp (validate_supertypes): 
+
+	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp (validate_supertypes):
 	  Changed the throw spec from CosTrading::DuplicatePropertyName to
  	  CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName
  	  because that's the type of exception that's thrown in the body
