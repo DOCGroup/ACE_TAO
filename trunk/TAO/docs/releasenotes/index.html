@@ -62,11 +62,9 @@ Point of contact: <A HREF="mailto:gokhale@cs.wustl.edu">Aniruddha Gokhale</A>
 
 <P>Current status: (As of April 23rd, 1998.)
 <UL>
-
 <LI>
 The &lt;&lt;= and >>= operators for user-defined types are now generated
-yet.
-</LI>
+yet.</LI>
 
 <LI>
 Completely redesigned the IDL compiler using the Visitor patterns. Many
@@ -171,7 +169,6 @@ added. Two backend options control the name of the export macro, and the
 name of an extra include file were the macro is defined; the options are
 <TT>-Wp,export_macro=MACRO_NAME</TT> <TT>-Wp,export_include=INCLUDE_NAME</TT>.</LI>
 </UL>
-
 Known bugs/unimplemented constructs:
 <UL>
 <LI>
@@ -306,8 +303,7 @@ Point of contact: <A HREF="mailto:irfan@cs.wustl.edu">Irfan Pyarali</A>
 <P>Current Status:
 <UL>
 <LI>
-TAO fully supports the POA spec. This section will carry updates as
-available.</LI>
+TAO fully supports the POA spec. This section will carry updates as available.</LI>
 </UL>
 Known issues:
 <DL>
@@ -317,7 +313,6 @@ Known issues:
 <DD>
 If an object which should be collocated is created via <TT>string_to_object</TT>,
 it is created as a remote object rather than collocated.</DD>
-
 </DL>
 Critical work:
 <UL>
@@ -369,28 +364,27 @@ Naming Service Specification</A>.
 <H3>
 <A NAME="tservices"></A>CORBA Trading Service</H3>
 Point of contact: <A HREF="mailto:sbw1@cs.wustl.edu">Seth Widoff</A>
-<p>
-Development is complete, and testing and debugging have commenced on
-the TAO Trading Service. Currently, it
-meets the Linked Trader conformance requirements, in that it supports
-the Lookup, Register, Admin, and Link interfaces. The Lookup interface supports
-subtype searching, preference sorting, dynamic property evaluation, federated queries,
-and concurrent queries as a multi-threaded servant.
-<p>
-The Trading Service uses the Object Space implementation of the Standard
+
+<P>Development is complete, and testing and debugging have commenced on
+the TAO Trading Service. Currently, it meets the Linked Trader conformance
+requirements, in that it supports the Lookup, Register, Admin, and Link
+interfaces. The Lookup interface supports subtype searching, preference
+sorting, dynamic property evaluation, federated queries, and concurrent
+queries as a multi-threaded servant.
+
+<P>The Trading Service uses the Object Space implementation of the Standard
 Template Library.
-<p>
-Future Work: <p>
 
-<ul>
-  <li> The Proxy Interface.
-  <li> Persistent storage of service types and offers.
-</ul>
+<P>Future Work:
+<UL>
+<LI>
+The Proxy Interface.</LI>
 
-
-<P>For general documentation of the Trading Service, please read <A HREF="http://www.omg.org/corba/sectrans.htm#trader">The
+<LI>
+Persistent storage of service types and offers.</LI>
+</UL>
+For general documentation of the Trading Service, please read <A HREF="http://www.omg.org/corba/sectrans.htm#trader">The
 Trading Service Specification.</A>
-
 
 <P>
 <HR>
@@ -398,13 +392,12 @@ Trading Service Specification.</A>
 <A NAME="pservices"></A>CORBA Property Service</H3>
 Point of contact: <A HREF="mailto:alex@cs.wustl.edu">Alexander Babu Arulanthu</A>
 
-<P>Current status (as of Mar 19, 1998)
+<P>Current status (as of May&nbsp; 02, 1998)
 <BR>&nbsp;
-<BR>&nbsp;&nbsp;&nbsp; It is under development and testing. TAO's&nbsp;
-AVStreams, which is currently being developed will make use of&nbsp; the
-Property Service.&nbsp;&nbsp;&nbsp;&nbsp; The primary PropertySet interface
-and the Iterator interfaces have been implemented and currently AVStreams'
-test application has started using them.
+<BR>All the interfaces of this service have been implemented.&nbsp; Please
+go through the&nbsp; test examples at&nbsp; $TAO/orbsvcs/tests/CosPropertyService.&nbsp;
+Property Service is&nbsp; now used by the AVStreams that is currently being
+developed for TAO. More testing is being done.
 
 <P>For general documentation of the Property Service, please read <A HREF="http://www.omg.org/corba/sectrans.htm#prop">The
 Property Service Specification.</A>
@@ -416,61 +409,63 @@ Property Service Specification.</A>
 Point of contact: <A HREF="mailto:tworm@cs.wustl.edu">Torben Worm</A>
 
 <P>Current status (as of March 25th):
-
 <UL>
-  <LI>The implementation of the service has been postponed until the
-  spec gets more clear.
+<LI>
+The implementation of the service has been postponed until the spec gets
+more clear.</LI>
 </UL>
-
-<P>Future Work:
-
+Future Work:
 <UL>
-  <LI>Implementation of the Concurrency Control Service.
+<LI>
+Implementation of the Concurrency Control Service.</LI>
 </UL>
-
-<P>For general documentation of the Concurrency Control Service, please read <A HREF="http://www.omg.org/corba/sectrans.htm#concur">The
-Concurrency Control Service Specification.</A>
+For general documentation of the Concurrency Control Service, please read
+<A HREF="http://www.omg.org/corba/sectrans.htm#concur">The Concurrency
+Control Service Specification.</A>
 
 <P>
 <HR>
-<H3><A NAME="av"></A>CORBA Audio/Video Control Service</H3>
+<H3>
+<A NAME="av"></A>CORBA Audio/Video Control Service</H3>
+Point of contact: <A HREF="mailto:sumedh@cs.wustl.edu">Sumedh Mungee</A>
+and <A HREF="mailto:naga@cs.wustl.edu">Nagarajan Surendran</A>
 
-Point of contact: <A HREF="mailto:sumedh@cs.wustl.edu">Sumedh
-Mungee</a> and <A HREF="mailto:naga@cs.wustl.edu">Nagarajan
-Surendran</a> <p>
+<P>This is an implementation of the OMG spec addressing the <A HREF="http://www.cs.wustl.edu/~sumedh/research/corbaav.pdf">Control
+and Management of Audio/Video Streams</A>.
 
-This is an implementation of the OMG spec addressing the <a
-href=http://www.cs.wustl.edu/~sumedh/research/corbaav.pdf>Control and
-Management of Audio/Video Streams</a>. <p>
+<P>We are currently implementing the various interfaces defined in the
+above spec. We are also working on building a audio/video streaming demo
+that will use the above service as the control mechanism and JAWS as an
+efficient transport and protocol processing framework.
 
-We are currently implementing the various interfaces defined in the
-above spec. We are also working on building a audio/video streaming
-demo that will use the above service as the control mechanism and JAWS
-as an efficient transport and protocol processing framework. <p>
+<P>Current Status:
+<UL>
+<LI>
+Implemented the handshake mechanism between the consumer and supplier of
+the stream.</LI>
 
-Current Status: <p>
+<LI>
+Implemented a simple version of the stream controller (StreamCtrl).</LI>
 
-<ul>
-  <li> Implemented the handshake mechanism between the consumer and
-      supplier of the stream.
-  <li> Implemented a simple version of the stream controller
-      (StreamCtrl).
-  <li> Implemented the VDev and StreamEndPoint base class
-      functionality.
-  <li> Implemented the MMDevice interface, which is a factory for
-      StreamEndPoint and VDev objects.
-</ul>
+<LI>
+Implemented the VDev and StreamEndPoint base class functionality.</LI>
 
-Work in progress: <p>
+<LI>
+Implemented the MMDevice interface, which is a factory for StreamEndPoint
+and VDev objects.</LI>
+</UL>
+Work in progress:
+<UL>
+<LI>
+Implementing the SFP protocol</LI>
 
-<ul>
-  <li> Implementing the SFP protocol
-  <li> Porting the distributed audio/video player developed at <a
-href=http://www.cse.ogi.edu/~scen/Player>OGI</a> to ACE (and in the
-      future to JAWS)
-  <li> Implementing the CORBA Stream controller for the above
-      audio/video player
-</ul>
+<LI>
+Porting the distributed audio/video player developed at <A HREF="http://www.cse.ogi.edu/~scen/Player">OGI</A>
+to ACE (and in the future to JAWS)</LI>
+
+<LI>
+Implementing the CORBA Stream controller for the above audio/video player</LI>
+</UL>
 
 <HR>
 <H3>
@@ -522,71 +517,64 @@ Future work:
 <H3>
 <A NAME="dove"></A>The DOVE Demo</H3>
 Point of contact: <A HREF="mailto:mk1@cec.wustl.edu">Michael Kircher</A>.
-<P>
-DOVE is described in detail on the following site:
-<A HREF="http://www.cs.wustl.edu/~schmidt/dove.html">DOVE documentation</A>
-<P>
-We focus on the following goals at the moment:
+
+<P>DOVE is described in detail on the following site: <A HREF="http://www.cs.wustl.edu/~schmidt/dove.html">DOVE
+documentation</A>
+
+<P>We focus on the following goals at the moment:
 <UL>
 <LI>
-Have a DOVE Browser running using Java Beans as vizualization components.
+Have a DOVE Browser running using Java Beans as vizualization components.</LI>
+
 <LI>
-Have the Event Channel as DOVE Agent running with an Event Consumer
-in the DOVE Browser.
+Have the Event Channel as DOVE Agent running with an Event Consumer in
+the DOVE Browser.</LI>
+
 <LI>
-Having a DOVE Management Information Base (MIB), which dumps all
-events transfered on the Event Channel
-into a file on persistent storage for later reuse.
-</LI>
+Having a DOVE Management Information Base (MIB), which dumps all events
+transfered on the Event Channel into a file on persistent storage for later
+reuse.</LI>
 </UL>
-<P>
 The DOVE Browser uses independent visualization components (Java Beans)
-and the Event Channel as DOVE Agent. Connections can be established
-between monitored metrics and the visualization components.
-<P>
-We have three major components:
-Observables (monitored metrics), Observers (a Java Bean
-for displaying the metric) and a DataHandler (for demultiplexing the
-monitored metrics to the appropriate Observables).
-Each component inherits from a base class, so that a certain behavior
-of the components can be assured for each component. Relationships
-between components are based on these base classes.
-<P>
-The used Java Beans are required to conform to some standards, as
-they have to support a function called "getProperty" which allows
-the DOVE Browser to determine if the vizualization capabilities of
-a specific Java Bean are sufficient to display the metric.
-A JavaBean is for example a Java Panel which shows a Graph of
-the delivered doubles. So all metrics can be displayed by this visualization
-component which can be expressed by a single double.
-<P>
-The DataHandler is connected to the Event Push Consumer (PUSH, because
-we use the push concept of the Event Service). The Event Push Consumer
-does not know what kind of data is transported. The only component
-knowing all the details about the dependencies of the metrics is
-the DataHandler. This separation allows easy extension and change
-of the demo.
-<P>
-<A HREF="http://students.cec.wustl.edu/~mk1/dove.html">Object Diagrams</A>
-are available about this new concept.
-<P>
-<P>
-Event Service events are used as communication between DOVE Applications
-and the DOVE Browser. The DOVE MIB analyses the event data field of all events
-and stores this information into a file. The event data filed is of
-type CORBA::Any and the DOVE MIB has no notion of what is conveyed in
-this field. So the DOVE MIB has to discover the content via the
-embedded type code information.
+and the Event Channel as DOVE Agent. Connections can be established between
+monitored metrics and the visualization components.
 
-Future work includes:
+<P>We have three major components: Observables (monitored metrics), Observers
+(a Java Bean for displaying the metric) and a DataHandler (for demultiplexing
+the monitored metrics to the appropriate Observables). Each component inherits
+from a base class, so that a certain behavior of the components can be
+assured for each component. Relationships between components are based
+on these base classes.
+
+<P>The used Java Beans are required to conform to some standards, as they
+have to support a function called "getProperty" which allows the DOVE Browser
+to determine if the vizualization capabilities of a specific Java Bean
+are sufficient to display the metric. A JavaBean is for example a Java
+Panel which shows a Graph of the delivered doubles. So all metrics can
+be displayed by this visualization component which can be expressed by
+a single double.
+
+<P>The DataHandler is connected to the Event Push Consumer (PUSH, because
+we use the push concept of the Event Service). The Event Push Consumer
+does not know what kind of data is transported. The only component knowing
+all the details about the dependencies of the metrics is the DataHandler.
+This separation allows easy extension and change of the demo.
+
+<P><A HREF="http://students.cec.wustl.edu/~mk1/dove.html">Object Diagrams</A>
+are available about this new concept.
+
+<P>Event Service events are used as communication between DOVE Applications
+and the DOVE Browser. The DOVE MIB analyses the event data field of all
+events and stores this information into a file. The event data filed is
+of type CORBA::Any and the DOVE MIB has no notion of what is conveyed in
+this field. So the DOVE MIB has to discover the content via the embedded
+type code information. Future work includes:
 <UL>
 <LI>
-Enhancing MIB functionality
-</LI>
+Enhancing MIB functionality</LI>
 </UL>
-<P>
-<HR>
 
+<HR>
 <H3>
 <A NAME="#VC"></A>How to add IDL files into your Visual C++ projects</H3>
 Point of contact: <A HREF="mailto:nw1@cs.wustl.edu">Nanbor Wang</A>.
@@ -638,9 +626,10 @@ Notice that these procedures only setup the IDL compiler to perform correctly.
 <P>p.s. If anyone knows how to set a default setting in VC so we don't
 need to perform these procedures every time a new project gets set up,
 please let us know. Thanks.
-<P>
 
+<P>
 <HR>
+
 <P>Back to the TAO <A HREF="../index.html">documentation index</A>.&nbsp;<!--#include virtual="/~schmidt/cgi-sig.html" -->
 </BODY>
 </HTML>
