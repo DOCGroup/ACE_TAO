@@ -58,6 +58,7 @@ main (int, char *[])
     ACE_ERROR_RETURN ((LM_DEBUG, "%n; %p (%s).\n",
                        "Server fork failed", APPLICATION), -1);
   else
+    ACE_DEBUG ((LM_DEBUG, "Server forked with pid = %d.\n", server.getpid ()));
 
   ACE_OS::sleep (3);
 
