@@ -343,15 +343,20 @@ TAO_Transport::recache_transport (TAO_Transport_Descriptor_Interface *desc)
 void
 TAO_Transport::mark_invalid (void)
 {
-  if (this->cache_map_entry_)
-    this->cache_map_entry_->int_id_.recycle_state
-      (ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE);
+  if (this->cache_map_entry_ != 0)
+    {
+      this->cache_map_entry_->int_id_.recycle_state (ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE);
+    }
 }
 
 int
 TAO_Transport::make_idle (void)
 {
-  return this->orb_core_->transport_cache ().make_idle (this->cache_map_entry_);
+  if (this->cache_map_entry_ != 0)
+    {
+      return this->orb_core_->transport_cache ().make_idle (this->cache_map_entry_);
+    }
+  return 0;
 }
 
 void
@@ -359,14 +364,16 @@ TAO_Transport::close_connection (void)
 {
   // Call handle close on the connection handler.
   // The event handler is as common as we can get
-  if (this->event_handler () != 0) {
-    this->event_handler ()->handle_close (ACE_INVALID_HANDLE,
-                                          ACE_Event_Handler::ALL_EVENTS_MASK);
-  }
+  if (this->event_handler () != 0)
+    {
+      this->event_handler ()->handle_close (ACE_INVALID_HANDLE,
+                                            ACE_Event_Handler::ALL_EVENTS_MASK);
+    }
 
   // Purge the entry
-  if (this->cache_map_entry_ != 0) {
-    this->orb_core_->transport_cache ().purge_entry (this->cache_map_entry_);
-    this->cache_map_entry_ = 0;
-  }
+  if (this->cache_map_entry_ != 0)
+    {
+      this->orb_core_->transport_cache ().purge_entry (this->cache_map_entry_);
+      this->cache_map_entry_ = 0;
+    }
 }
