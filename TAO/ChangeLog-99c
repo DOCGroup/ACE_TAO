@@ -1,3 +1,8 @@
+Wed Jun 23 13:56:52 1999  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* tests/Multiple_Inheritance/run_test.pl:
+	  Was timing out too soon, increased the wait time to compensate.
+
 Wed Jun 23 12:33:31 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/benchmark/client.cpp:
