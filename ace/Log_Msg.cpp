@@ -804,10 +804,12 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
             ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::SYSLOG);
         }
     }
-  else if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER))
+  else if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER) ||
+           ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::SYSLOG))
     {
       // If we are closing down logger, redirect logging to stderr.
       ACE_CLR_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER);
+      ACE_CLR_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::SYSLOG);
       ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::STDERR);
     }
 
@@ -2070,6 +2072,7 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
                           stderr);
 
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::CUSTOM) ||
+          ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::SYSLOG) ||
           ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER))
         {
           // Be sure that there is a message_queue_, with multiple threads.
@@ -2077,8 +2080,8 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
         }
 
 
-      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
-                           ACE_Log_Msg::LOGGER))
+      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER) ||
+          ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::SYSLOG))
         {
           result =
             ACE_Log_Msg_Manager::log_backend_->log (log_record);
