@@ -622,8 +622,10 @@ Cubit_Client::cube_long (int i,
 
       if (arg_long != ret_long)
         {
+          // CORBA::Long is 32 bits, which can be handled by %d on
+          // most platforms.
           ACE_ERROR ((LM_ERROR,
-                      "** cube_long (%ld) ERROR (--> %ld)\n",
+                      "** cube_long (%d) ERROR (--> %d)\n",
                       (CORBA::Long) this->func (i),
                       ret_long));
 
