@@ -1,8 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : dynamicany, portableserver {
+project : orbsvcslib {
   after     += CosTrading 
   libs      += TAO_CosTrading
-  tagchecks += Trader
 }
