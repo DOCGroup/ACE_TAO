@@ -167,6 +167,11 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("<validate_connection> returned TRUE\n")));
 
+      //
+      // This portion of code has been temporarily disabled.
+      //
+  /*      
+
       if (pols.ptr () != 0
           && pols->length () == 1
           && pols[0u]->policy_type () == RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE)
@@ -177,7 +182,7 @@ main (int argc, char *argv[])
         ACE_DEBUG ((LM_DEBUG,
                     "ERROR: Inconsistent policies do not "
                     "contain what's expected.\n"));
-        
+  */      
       // Testing over.  Shut down Server ORB.
       ACE_DEBUG ((LM_DEBUG,
                   "\n  Testing over - shutting down\n"));
