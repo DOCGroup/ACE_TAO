@@ -77,20 +77,21 @@ CXX = @CXX@
 CXXCPP = @CXXCPP@
 CXXFLAGS = @CXXFLAGS@
 DLLTOOL = @DLLTOOL@
+EXEEXT = @EXEEXT@
 GPERF = @GPERF@
-LD = @LD@
 LEX = @LEX@
 LIBTOOL = @LIBTOOL@
 LN_S = @LN_S@
 MAINT = @MAINT@
 MAKEINFO = @MAKEINFO@
-NM = @NM@
 OBJDUMP = @OBJDUMP@
+OBJEXT = @OBJEXT@
 PACKAGE = @PACKAGE@
 PROF = @PROF@
 PURIFY = @PURIFY@
 QUANTIFY = @QUANTIFY@
 RANLIB = @RANLIB@
+STRIP = @STRIP@
 VERSION = @VERSION@
 XTREACTOR_TEST_XLIBS = @XTREACTOR_TEST_XLIBS@
 YACC = @YACC@
@@ -192,13 +193,17 @@ libACE_la_LDFLAGS = $(X_LIBS)   -version-info @ACE_CURRENT@:@ACE_REVISION@:@ACE_
 # We also add any X libraries to the list.
 libACE_la_LIBADD = $(X_PRE_LIBS) $(ACE_XLIBS) $(X_EXTRA_LIBS)
 
-ACE_TEMPLATE_FILES =    Acceptor.cpp   Active_Map_Manager_T.cpp   Asynch_Acceptor.cpp   Auto_IncDec_T.cpp   Auto_Ptr.cpp   Based_Pointer_T.cpp   Connector.cpp   Containers_T.cpp   Cache_Map_Manager_T.cpp   Cached_Connect_Strategy_T.cpp   Caching_Strategies_T.cpp   Caching_Utility_T.cpp   Cleanup_Strategies_T.cpp   Dump_T.cpp   Dynamic_Service.cpp   Env_Value_T.cpp   Event_Handler_T.cpp   Free_List.cpp   Functor_T.cpp   Future.cpp   Future_Set.cpp   Hash_Map_Manager_T.cpp   Hash_Cache_Map_Manager_T.cpp   IOStream_T.cpp   LOCK_SOCK_Acceptor.cpp   Local_Name_Space_T.cpp   Malloc_T.cpp   Managed_Object.cpp   Map_Manager.cpp   Map_T.cpp   Message_Block_T.cpp   Message_Queue_T.cpp   Module.cpp   Pair_T.cpp   RB_Tree.cpp   Select_Reactor_T.cpp   Singleton.cpp   Strategies_T.cpp   Stream.cpp   Stream_Modules.cpp   Svc_Handler.cpp   Synch_T.cpp   Task_T.cpp   Template_Instantiations.cpp   Timeprobe_T.cpp   Timer_Hash_T.cpp   Timer_Heap_T.cpp   Timer_List_T.cpp   Timer_Queue_Adapters.cpp   Timer_Queue_T.cpp   Timer_Wheel_T.cpp   Typed_SV_Message.cpp   Typed_SV_Message_Queue.cpp
+TEMPLATE_FILES =    Acceptor.cpp   Active_Map_Manager_T.cpp   Asynch_Acceptor.cpp   Auto_IncDec_T.cpp   Auto_Ptr.cpp   Based_Pointer_T.cpp   Connector.cpp   Containers_T.cpp   Cache_Map_Manager_T.cpp   Cached_Connect_Strategy_T.cpp   Caching_Strategies_T.cpp   Caching_Utility_T.cpp   Cleanup_Strategies_T.cpp   Dump_T.cpp   Dynamic_Service.cpp   Env_Value_T.cpp   Event_Handler_T.cpp   Free_List.cpp   Functor_T.cpp   Future.cpp   Future_Set.cpp   Hash_Map_Manager_T.cpp   Hash_Cache_Map_Manager_T.cpp   IOStream_T.cpp   LOCK_SOCK_Acceptor.cpp   Local_Name_Space_T.cpp   Malloc_T.cpp   Managed_Object.cpp   Map_Manager.cpp   Map_T.cpp   Message_Block_T.cpp   Message_Queue_T.cpp   Module.cpp   Pair_T.cpp   RB_Tree.cpp   Select_Reactor_T.cpp   Singleton.cpp   Strategies_T.cpp   Stream.cpp   Stream_Modules.cpp   Svc_Handler.cpp   Synch_T.cpp   Task_T.cpp   Template_Instantiations.cpp   Timeprobe_T.cpp   Timer_Hash_T.cpp   Timer_Heap_T.cpp   Timer_List_T.cpp   Timer_Queue_Adapters.cpp   Timer_Queue_T.cpp   Timer_Wheel_T.cpp   Typed_SV_Message.cpp   Typed_SV_Message_Queue.cpp
 
 
-pkginclude_HEADERS =    ACE.h   ACE.i   ARGV.h   ARGV.i   ATM_Addr.h   ATM_Addr.i   ATM_Acceptor.h   ATM_Acceptor.i   ATM_Addr.h   ATM_Addr.i   ATM_Connector.h   ATM_Connector.i   ATM_Params.h   ATM_Params.i   ATM_QoS.h   ATM_QoS.i   ATM_Stream.h   ATM_Stream.i   Acceptor.h   Acceptor.i   Activation_Queue.h   Activation_Queue.i   Active_Map_Manager.h   Active_Map_Manager.i   Active_Map_Manager_T.h   Active_Map_Manager_T.i   Addr.h   Addr.i   Arg_Shifter.h   Array.h   Asynch_Acceptor.h   Asynch_Acceptor.i   Asynch_IO.h   Asynch_IO.i   Asynch_IO_Impl.h   Asynch_IO_Impl.i   Atomic_Op.i   Auto_IncDec_T.h   Auto_IncDec_T.i   Auto_Ptr.h   Auto_Ptr.i   Based_Pointer_Repository.h   Based_Pointer_T.h   Based_Pointer_T.i   Basic_Types.h   Basic_Types.i   CDR_Stream.h   CDR_Stream.i   CORBA_Handler.h   CORBA_Handler.i   CORBA_Ref.h   CORBA_Ref.i   CORBA_macros.h   Cache_Map_Manager_T.h   Cache_Map_Manager_T.i   Cached_Connect_Strategy_T.h   Cached_Connect_Strategy_T.i   Caching_Strategies_T.h   Caching_Strategies_T.i   Caching_Utility_T.h   Caching_Utility_T.i   Capabilities.h   Capabilities.i   Cleanup_Strategies_T.h   Cleanup_Strategies_T.i   Codeset_IBM1047.h   Configuration.h   Configuration.i   Connector.h   Connector.i   Containers.h   Containers.i   Containers_T.h   Containers_T.i   DEV.h   DEV.i   DEV_Addr.h   DEV_Addr.i   DEV_Connector.h   DEV_Connector.i   DEV_IO.h   DEV_IO.i   DLL.h   Date_Time.h   Date_Time.i   Dirent.h   Dirent.i   Dump.h   Dump_T.h   Dynamic.h   Dynamic.i   Dynamic_Service.h   Dynamic_Service.i   Env_Value_T.h   Env_Value_T.i   Event_Handler.h   Event_Handler.i   Event_Handler_T.h   Event_Handler_T.i   FIFO.h   FIFO.i   FIFO_Recv.h   FIFO_Recv.i   FIFO_Recv_Msg.h   FIFO_Recv_Msg.i   FIFO_Send.h   FIFO_Send.i   FIFO_Send_Msg.h   FIFO_Send_Msg.i   FILE.h   FILE.i   FILE_Addr.h   FILE_Addr.i   FILE_Connector.h   FILE_Connector.i   FILE_IO.h   FILE_IO.i   Filecache.h   FlReactor.h   FlReactor.i   Free_List.h   Free_List.i   Functor.h   Functor.i   Functor_T.h   Functor_T.i   Future.h   Future_Set.h   Get_Opt.h   Get_Opt.i   Handle_Set.h   Handle_Set.i   Hash_Cache_Map_Manager_T.h   Hash_Cache_Map_Manager_T.i   Hash_Map_Manager.h   Hash_Map_Manager.i   Hash_Map_Manager_T.h   Hash_Map_Manager_T.i   High_Res_Timer.h   High_Res_Timer.i   INET_Addr.h   INET_Addr.i   IOStream.h   IOStream_T.h   IOStream_T.i   IO_Cntl_Msg.h   IO_Cntl_Msg.i   IO_SAP.h   IO_SAP.i   IPC_SAP.h   IPC_SAP.i   LOCK_SOCK_Acceptor.h   LSOCK.h   LSOCK.i   LSOCK_Acceptor.h   LSOCK_Acceptor.i   LSOCK_CODgram.h   LSOCK_CODgram.i   LSOCK_Connector.h   LSOCK_Connector.i   LSOCK_Dgram.h   LSOCK_Dgram.i   LSOCK_Stream.h   LSOCK_Stream.i   Local_Name_Space.h   Local_Name_Space_T.h   Local_Tokens.h   Local_Tokens.i   Log_Msg.h   Log_Msg.i   Log_Priority.h   Log_Record.h   Log_Record.i   Malloc.h   Malloc.i   Malloc_Base.h   Malloc_T.h   Malloc_T.i   Managed_Object.h   Managed_Object.i   Map.h   Map.i   Map_Manager.h   Map_Manager.i   Map_T.h   Map_T.i   Mem_Map.h   Mem_Map.i   Memory_Pool.h   Memory_Pool.i   Message_Block.h   Message_Block.i   Message_Block_T.h   Message_Block_T.i   Message_Queue.h   Message_Queue.i   Message_Queue_T.h   Message_Queue_T.i   Method_Object.h   Method_Request.h   Module.h   Module.i   Msg_WFMO_Reactor.h   Msg_WFMO_Reactor.i   Multiplexor.h   Multiplexor.i   NT_Service.h   NT_Service.i   Name_Proxy.h   Name_Request_Reply.h   Name_Space.h   Naming_Context.h   OS.h   OS.i   Object_Manager.h   Object_Manager.i   Obstack.h   Obstack.i   POSIX_Asynch_IO.h   POSIX_Asynch_IO.i   POSIX_Proactor.h   POSIX_Proactor.i   Pair.h   Pair.i   Pair_T.h   Pair_T.i   Parse_Node.h   Parse_Node.i   Pipe.h   Pipe.i   Priority_Reactor.h   Priority_Reactor.i   Proactor.h   Proactor.i   Proactor_Impl.h   Process.h   Process.i   Process_Manager.h   Process_Manager.i   Profile_Timer.h   Profile_Timer.i   RB_Tree.h   RB_Tree.i   Reactor.h   Reactor.i   Reactor_Impl.h   Read_Buffer.h   Read_Buffer.i   Registry.h   Registry_Name_Space.h   Remote_Name_Space.h   Remote_Tokens.h   Remote_Tokens.i   SOCK.h   SOCK.i   SOCK_Acceptor.h   SOCK_Acceptor.i   SOCK_CODgram.h   SOCK_CODgram.i   SOCK_Connector.h   SOCK_Connector.i   SOCK_Dgram.h   SOCK_Dgram.i   SOCK_Dgram_Bcast.h   SOCK_Dgram_Bcast.i   SOCK_Dgram_Mcast.h   SOCK_Dgram_Mcast.i   SOCK_IO.h   SOCK_IO.i   SOCK_Stream.h   SOCK_Stream.i   SPIPE.h   SPIPE.i   SPIPE_Acceptor.h   SPIPE_Acceptor.i   SPIPE_Addr.h   SPIPE_Addr.i   SPIPE_Connector.h   SPIPE_Connector.i   SPIPE_Stream.h   SPIPE_Stream.i   SString.h   SString.i   SV_Message.h   SV_Message.i   SV_Message_Queue.h   SV_Message_Queue.i   SV_Semaphore_Complex.h   SV_Semaphore_Complex.i   SV_Semaphore_Simple.h   SV_Semaphore_Simple.i   SV_Shared_Memory.h   SV_Shared_Memory.i   Sched_Params.h   Sched_Params.i   Select_Reactor.h   Select_Reactor.i   Select_Reactor_Base.h   Select_Reactor_Base.i   Select_Reactor_T.h   Select_Reactor_T.i   Service_Config.h   Service_Config.i   Service_Manager.h   Service_Manager.i   Service_Object.h   Service_Object.i   Service_Repository.h   Service_Repository.i   Service_Types.h   Service_Types.i   Shared_Memory.h   Shared_Memory_MM.h   Shared_Memory_MM.i   Shared_Memory_SV.h   Shared_Memory_SV.i   Shared_Object.h   Shared_Object.i   Signal.h   Signal.i   Singleton.h   Singleton.i   Stats.h   Stats.i   Strategies.h   Strategies.i   Strategies_T.h   Strategies_T.i   Stream.h   Stream.i   Stream_Modules.h   Stream_Modules.i   Svc_Conf.h   Svc_Conf_Tokens.h   Svc_Handler.h   Svc_Handler.i   Synch.h   Synch.i   Synch_Options.h   Synch_Options.i   Synch_T.h   Synch_T.i   System_Time.h   TLI.h   TLI.i   TLI_Acceptor.h   TLI_Acceptor.i   TLI_Connector.h   TLI_Connector.i   TLI_Stream.h   TLI_Stream.i   TP_Reactor.h   TP_Reactor.i   TTY_IO.h   Task.h   Task.i   Task_T.h   Task_T.i   Thread.h   Thread.i   Thread_Manager.h   Thread_Manager.i   Time_Request_Reply.h   Time_Value.h   Timeprobe.h   Timeprobe.i   Timeprobe_T.h   Timer_Hash.h   Timer_Hash_T.h   Timer_Heap.h   Timer_Heap_T.h   Timer_List.h   Timer_List_T.h   Timer_Queue.h   Timer_Queue_Adapters.h   Timer_Queue_Adapters.i   Timer_Queue_T.h   Timer_Queue_T.i   Timer_Wheel.h   Timer_Wheel_T.h   TkReactor.h   Token.h   Token.i   Token_Collection.h   Token_Collection.i   Token_Invariants.h   Token_Invariants.i   Token_Manager.h   Token_Manager.i   Token_Request_Reply.h   Token_Request_Reply.i   Trace.h   Trace.i   Typed_SV_Message.h   Typed_SV_Message.i   Typed_SV_Message_Queue.h   Typed_SV_Message_Queue.i   UNIX_Addr.h   UNIX_Addr.i   UPIPE_Acceptor.h   UPIPE_Acceptor.i   UPIPE_Addr.h   UPIPE_Connector.h   UPIPE_Connector.i   UPIPE_Stream.h   UPIPE_Stream.i   Version.h   WFMO_Reactor.h   WFMO_Reactor.i   WIN32_Asynch_IO.h   WIN32_Asynch_IO.i   WIN32_Proactor.h   WIN32_Proactor.i   XTI_ATM_Mcast.h   XTI_ATM_Mcast.i   XtReactor.h   config.h   inc_user_config.h   iosfwd.h   streams.h   ws2tcpip.h   $(ACE_TEMPLATE_FILES)
+HEADER_FILES =    ACE.h   ARGV.h   ATM_Acceptor.h   ATM_Addr.h   ATM_Connector.h   ATM_Params.h   ATM_QoS.h   ATM_Stream.h   Acceptor.h   Activation_Queue.h   Active_Map_Manager.h   Active_Map_Manager_T.h   Addr.h   Arg_Shifter.h   Array.h   Asynch_Acceptor.h   Asynch_IO.h   Asynch_IO_Impl.h   Auto_IncDec_T.h   Auto_Ptr.h   Based_Pointer_Repository.h   Based_Pointer_T.h   Basic_Types.h   CDR_Stream.h   CORBA_Handler.h   CORBA_Ref.h   CORBA_macros.h   Cache_Map_Manager_T.h   Cached_Connect_Strategy_T.h   Caching_Strategies_T.h   Caching_Utility_T.h   Capabilities.h   Cleanup_Strategies_T.h   Codeset_IBM1047.h   Configuration.h   Connector.h   Containers.h   Containers_T.h   DEV.h   DEV_Addr.h   DEV_Connector.h   DEV_IO.h   DLL.h   Date_Time.h   Dirent.h   Dump.h   Dump_T.h   Dynamic.h   Dynamic_Service.h   Env_Value_T.h   Event_Handler.h   Event_Handler_T.h   FIFO.h   FIFO_Recv.h   FIFO_Recv_Msg.h   FIFO_Send.h   FIFO_Send_Msg.h   FILE.h   FILE_Addr.h   FILE_Connector.h   FILE_IO.h   Filecache.h   FlReactor.h   Free_List.h   Functor.h   Functor_T.h   Future.h   Future_Set.h   Get_Opt.h   Handle_Gobbler.h   Handle_Set.h   Hash_Cache_Map_Manager_T.h   Hash_Map_Manager.h   Hash_Map_Manager_T.h   Hash_Map_With_Allocator_T.h   High_Res_Timer.h   INET_Addr.h   IOStream.h   IOStream_T.h   IO_Cntl_Msg.h   IO_SAP.h   IPC_SAP.h   LOCK_SOCK_Acceptor.h   LSOCK.h   LSOCK_Acceptor.h   LSOCK_CODgram.h   LSOCK_Connector.h   LSOCK_Dgram.h   LSOCK_Stream.h   Local_Name_Space.h   Local_Name_Space_T.h   Local_Tokens.h   Log_Msg.h   Log_Priority.h   Log_Record.h   Malloc.h   Malloc_Base.h   Malloc_T.h   Managed_Object.h   Map.h   Map_Manager.h   Map_T.h   Mem_Map.h   Memory_Pool.h   Message_Block.h   Message_Block_T.h   Message_Queue.h   Message_Queue_T.h   Method_Object.h   Method_Request.h   Module.h   Msg_WFMO_Reactor.h   Multiplexor.h   NT_Service.h   Name_Proxy.h   Name_Request_Reply.h   Name_Space.h   Naming_Context.h   OS.h   Object_Manager.h   Obstack.h   POSIX_Asynch_IO.h   POSIX_Proactor.h   Pair.h   Pair_T.h   Parse_Node.h   Pipe.h   Priority_Reactor.h   Proactor.h   Proactor_Impl.h   Process.h   Process_Manager.h   Profile_Timer.h   QtReactor.h   RB_Tree.h   Reactor.h   Reactor_Impl.h   Read_Buffer.h   Registry.h   Registry_Name_Space.h   Remote_Name_Space.h   Remote_Tokens.h   SOCK.h   SOCK_Acceptor.h   SOCK_CODgram.h   SOCK_Connector.h   SOCK_Dgram.h   SOCK_Dgram_Bcast.h   SOCK_Dgram_Mcast.h   SOCK_IO.h   SOCK_Stream.h   SPIPE.h   SPIPE_Acceptor.h   SPIPE_Addr.h   SPIPE_Connector.h   SPIPE_Stream.h   SString.h   SV_Message.h   SV_Message_Queue.h   SV_Semaphore_Complex.h   SV_Semaphore_Simple.h   SV_Shared_Memory.h   Sched_Params.h   Select_Reactor.h   Select_Reactor_Base.h   Select_Reactor_T.h   Service_Config.h   Service_Manager.h   Service_Object.h   Service_Repository.h   Service_Types.h   Shared_Memory.h   Shared_Memory_MM.h   Shared_Memory_SV.h   Shared_Object.h   Signal.h   Singleton.h   Stats.h   Strategies.h   Strategies_T.h   Stream.h   Stream_Modules.h   Svc_Conf.h   Svc_Conf_Tokens.h   Svc_Handler.h   Synch.h   Synch_Options.h   Synch_T.h   System_Time.h   TLI.h   TLI_Acceptor.h   TLI_Connector.h   TLI_Stream.h   TP_Reactor.h   TTY_IO.h   Task.h   Task_T.h   Thread.h   Thread_Manager.h   Time_Request_Reply.h   Time_Value.h   Timeprobe.h   Timeprobe_T.h   Timer_Hash.h   Timer_Hash_T.h   Timer_Heap.h   Timer_Heap_T.h   Timer_List.h   Timer_List_T.h   Timer_Queue.h   Timer_Queue_Adapters.h   Timer_Queue_T.h   Timer_Wheel.h   Timer_Wheel_T.h   TkReactor.h   Token.h   Token_Collection.h   Token_Invariants.h   Token_Manager.h   Token_Request_Reply.h   Trace.h   Typed_SV_Message.h   Typed_SV_Message_Queue.h   UNIX_Addr.h   UPIPE_Acceptor.h   UPIPE_Addr.h   UPIPE_Connector.h   UPIPE_Stream.h   Version.h   WFMO_Reactor.h   WIN32_Asynch_IO.h   WIN32_Proactor.h   XTI_ATM_Mcast.h   XtReactor.h   config.h   inc_user_config.h   iosfwd.h   streams.h   ws2tcpip.h
 
 
-EXTRA_DIST = $(ACE_TEMPLATE_FILES)
+INLINE_FILES =    ACE.i   ARGV.i   ATM_Acceptor.i   ATM_Addr.i   ATM_Connector.i   ATM_Params.i   ATM_QoS.i   ATM_Stream.i   Acceptor.i   Activation_Queue.i   Active_Map_Manager.i   Active_Map_Manager_T.i   Addr.i   Asynch_Acceptor.i   Asynch_IO.i   Asynch_IO_Impl.i   Atomic_Op.i   Auto_IncDec_T.i   Auto_Ptr.i   Based_Pointer_T.i   Basic_Types.i   CDR_Stream.i   CORBA_Handler.i   CORBA_Ref.i   Cache_Map_Manager_T.i   Cached_Connect_Strategy_T.i   Caching_Strategies_T.i   Caching_Utility_T.i   Capabilities.i   Cleanup_Strategies_T.i   Configuration.i   Connector.i   Containers.i   Containers_T.i   DEV.i   DEV_Addr.i   DEV_Connector.i   DEV_IO.i   Date_Time.i   Dirent.i   Dynamic.i   Dynamic_Service.i   Env_Value_T.i   Event_Handler.i   Event_Handler_T.i   FIFO.i   FIFO_Recv.i   FIFO_Recv_Msg.i   FIFO_Send.i   FIFO_Send_Msg.i   FILE.i   FILE_Addr.i   FILE_Connector.i   FILE_IO.i   FlReactor.i   Free_List.i   Functor.i   Functor_T.i   Get_Opt.i   Handle_Gobbler.i   Handle_Set.i   Hash_Cache_Map_Manager_T.i   Hash_Map_Manager.i   Hash_Map_Manager_T.i   Hash_Map_With_Allocator_T.i   High_Res_Timer.i   INET_Addr.i   IOStream_T.i   IO_Cntl_Msg.i   IO_SAP.i   IPC_SAP.i   LSOCK.i   LSOCK_Acceptor.i   LSOCK_CODgram.i   LSOCK_Connector.i   LSOCK_Dgram.i   LSOCK_Stream.i   Local_Tokens.i   Log_Msg.i   Log_Record.i   Malloc.i   Malloc_T.i   Managed_Object.i   Map.i   Map_Manager.i   Map_T.i   Mem_Map.i   Memory_Pool.i   Message_Block.i   Message_Block_T.i   Message_Queue.i   Message_Queue_T.i   Module.i   Msg_WFMO_Reactor.i   Multiplexor.i   NT_Service.i   OS.i   Object_Manager.i   Obstack.i   POSIX_Asynch_IO.i   POSIX_Proactor.i   Pair.i   Pair_T.i   Parse_Node.i   Pipe.i   Priority_Reactor.i   Proactor.i   Process.i   Process_Manager.i   Profile_Timer.i   RB_Tree.i   Reactor.i   Read_Buffer.i   Remote_Tokens.i   SOCK.i   SOCK_Acceptor.i   SOCK_CODgram.i   SOCK_Connector.i   SOCK_Dgram.i   SOCK_Dgram_Bcast.i   SOCK_Dgram_Mcast.i   SOCK_IO.i   SOCK_Stream.i   SPIPE.i   SPIPE_Acceptor.i   SPIPE_Addr.i   SPIPE_Connector.i   SPIPE_Stream.i   SString.i   SV_Message.i   SV_Message_Queue.i   SV_Semaphore_Complex.i   SV_Semaphore_Simple.i   SV_Shared_Memory.i   Sched_Params.i   Select_Reactor.i   Select_Reactor_Base.i   Select_Reactor_T.i   Service_Config.i   Service_Manager.i   Service_Object.i   Service_Repository.i   Service_Types.i   Shared_Memory_MM.i   Shared_Memory_SV.i   Shared_Object.i   Signal.i   Singleton.i   Stats.i   Strategies.i   Strategies_T.i   Stream.i   Stream_Modules.i   Svc_Handler.i   Synch.i   Synch_Options.i   Synch_T.i   TLI.i   TLI_Acceptor.i   TLI_Connector.i   TLI_Stream.i   TP_Reactor.i   Task.i   Task_T.i   Thread.i   Thread_Manager.i   Timeprobe.i   Timer_Queue_Adapters.i   Timer_Queue_T.i   Token.i   Token_Collection.i   Token_Invariants.i   Token_Manager.i   Token_Request_Reply.i   Trace.i   Typed_SV_Message.i   Typed_SV_Message_Queue.i   UNIX_Addr.i   UPIPE_Acceptor.i   UPIPE_Connector.i   UPIPE_Stream.i   WFMO_Reactor.i   WIN32_Asynch_IO.i   WIN32_Proactor.i   XTI_ATM_Mcast.i
+
+
+pkginclude_HEADERS =    $(HEADER_FILES)   $(INLINE_FILES)   $(TEMPLATE_FILES)
+
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_HEADER = config.h
 CONFIG_CLEAN_FILES = 
@@ -430,69 +435,16 @@ DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
 
 TAR = tar
 GZIP_ENV = --best
-DEP_FILES =  .deps/ACE.P .deps/ARGV.P .deps/ATM_Acceptor.P \
-.deps/ATM_Addr.P .deps/ATM_Connector.P .deps/ATM_Params.P \
-.deps/ATM_QoS.P .deps/ATM_Stream.P .deps/Activation_Queue.P \
-.deps/Active_Map_Manager.P .deps/Addr.P .deps/Arg_Shifter.P \
-.deps/Asynch_IO.P .deps/Asynch_IO_Impl.P \
-.deps/Based_Pointer_Repository.P .deps/Basic_Types.P .deps/CDR_Stream.P \
-.deps/CORBA_Handler.P .deps/CORBA_Ref.P .deps/Capabilities.P \
-.deps/Codeset_IBM1047.P .deps/Configuration.P .deps/Containers.P \
-.deps/DEV.P .deps/DEV_Addr.P .deps/DEV_Connector.P .deps/DEV_IO.P \
-.deps/DLL.P .deps/Dirent.P .deps/Dump.P .deps/Dynamic.P \
-.deps/Event_Handler.P .deps/FIFO.P .deps/FIFO_Recv.P \
-.deps/FIFO_Recv_Msg.P .deps/FIFO_Send.P .deps/FIFO_Send_Msg.P \
-.deps/FILE.P .deps/FILE_Addr.P .deps/FILE_Connector.P .deps/FILE_IO.P \
-.deps/Filecache.P .deps/FlReactor.P .deps/Functor.P .deps/Get_Opt.P \
-.deps/Handle_Set.P .deps/Hash_Map_Manager.P .deps/High_Res_Timer.P \
-.deps/INET_Addr.P .deps/IOStream.P .deps/IO_SAP.P .deps/IPC_SAP.P \
-.deps/LSOCK.P .deps/LSOCK_Acceptor.P .deps/LSOCK_CODgram.P \
-.deps/LSOCK_Connector.P .deps/LSOCK_Dgram.P .deps/LSOCK_Stream.P \
-.deps/Local_Name_Space.P .deps/Local_Tokens.P .deps/Log_Msg.P \
-.deps/Log_Record.P .deps/Malloc.P .deps/Mem_Map.P .deps/Memory_Pool.P \
-.deps/Message_Block.P .deps/Message_Queue.P .deps/Method_Request.P \
-.deps/Msg_WFMO_Reactor.P .deps/Name_Proxy.P .deps/Name_Request_Reply.P \
-.deps/Name_Space.P .deps/Naming_Context.P .deps/OS.P \
-.deps/Object_Manager.P .deps/Obstack.P .deps/POSIX_Asynch_IO.P \
-.deps/POSIX_Proactor.P .deps/Parse_Node.P .deps/Pipe.P \
-.deps/Priority_Reactor.P .deps/Proactor.P .deps/Process.P \
-.deps/Process_Manager.P .deps/Profile_Timer.P .deps/Reactor.P \
-.deps/Read_Buffer.P .deps/Registry.P .deps/Registry_Name_Space.P \
-.deps/Remote_Name_Space.P .deps/Remote_Tokens.P .deps/SOCK.P \
-.deps/SOCK_Acceptor.P .deps/SOCK_CODgram.P .deps/SOCK_Connector.P \
-.deps/SOCK_Dgram.P .deps/SOCK_Dgram_Bcast.P .deps/SOCK_Dgram_Mcast.P \
-.deps/SOCK_IO.P .deps/SOCK_Stream.P .deps/SPIPE.P \
-.deps/SPIPE_Acceptor.P .deps/SPIPE_Addr.P .deps/SPIPE_Connector.P \
-.deps/SPIPE_Stream.P .deps/SString.P .deps/SV_Message.P \
-.deps/SV_Message_Queue.P .deps/SV_Semaphore_Complex.P \
-.deps/SV_Semaphore_Simple.P .deps/SV_Shared_Memory.P \
-.deps/Sched_Params.P .deps/Select_Reactor.P .deps/Select_Reactor_Base.P \
-.deps/Service_Config.P .deps/Service_Manager.P .deps/Service_Object.P \
-.deps/Service_Repository.P .deps/Service_Types.P .deps/Shared_Memory.P \
-.deps/Shared_Memory_MM.P .deps/Shared_Memory_SV.P .deps/Shared_Object.P \
-.deps/Signal.P .deps/Stats.P .deps/Strategies.P .deps/Svc_Conf_l.P \
-.deps/Svc_Conf_y.P .deps/Synch.P .deps/Synch_Options.P \
-.deps/System_Time.P .deps/TLI.P .deps/TLI_Acceptor.P \
-.deps/TLI_Connector.P .deps/TLI_Stream.P .deps/TP_Reactor.P \
-.deps/TTY_IO.P .deps/Task.P .deps/Thread.P .deps/Thread_Manager.P \
-.deps/Time_Request_Reply.P .deps/Timeprobe.P .deps/Timer_Hash.P \
-.deps/Timer_Heap.P .deps/Timer_List.P .deps/Timer_Queue.P \
-.deps/Timer_Wheel.P .deps/TkReactor.P .deps/Token.P \
-.deps/Token_Collection.P .deps/Token_Invariants.P .deps/Token_Manager.P \
-.deps/Token_Request_Reply.P .deps/Trace.P .deps/UNIX_Addr.P \
-.deps/UPIPE_Acceptor.P .deps/UPIPE_Connector.P .deps/UPIPE_Stream.P \
-.deps/WFMO_Reactor.P .deps/XTI_ATM_Mcast.P .deps/XtReactor.P \
-.deps/gethrtime.P
 SOURCES = $(libACE_la_SOURCES) $(EXTRA_libACE_la_SOURCES) $(libACE_OS_la_SOURCES) $(libACE_Utils_la_SOURCES) $(EXTRA_libACE_Utils_la_SOURCES) $(libACE_Logging_la_SOURCES) $(libACE_Threads_la_SOURCES) $(libACE_Demux_la_SOURCES) $(libACE_Connection_la_SOURCES) $(libACE_Sockets_la_SOURCES) $(libACE_IPC_la_SOURCES) $(libACE_Svcconf_la_SOURCES) $(libACE_Streams_la_SOURCES) $(libACE_Memory_la_SOURCES) $(libACE_Token_la_SOURCES) $(libACE_Other_la_SOURCES)
 OBJECTS = $(libACE_la_OBJECTS) $(libACE_OS_la_OBJECTS) $(libACE_Utils_la_OBJECTS) $(libACE_Logging_la_OBJECTS) $(libACE_Threads_la_OBJECTS) $(libACE_Demux_la_OBJECTS) $(libACE_Connection_la_OBJECTS) $(libACE_Sockets_la_OBJECTS) $(libACE_IPC_la_OBJECTS) $(libACE_Svcconf_la_OBJECTS) $(libACE_Streams_la_OBJECTS) $(libACE_Memory_la_OBJECTS) $(libACE_Token_la_OBJECTS) $(libACE_Other_la_OBJECTS)
 
 all: all-redirect
 .SUFFIXES:
-.SUFFIXES: .S .c .cpp .lo .o .s
+.SUFFIXES: .S .c .cpp .lo .o .obj .s
 $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
-	cd $(top_srcdir) && $(AUTOMAKE) --gnu ace/Makefile
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu --include-deps ace/Makefile
 
-Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status $(BUILT_SOURCES)
+Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) \
 	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
@@ -550,6 +502,14 @@ uninstall-libLTLIBRARIES:
 	  $(LIBTOOL)  --mode=uninstall rm -f $(DESTDIR)$(libdir)/$$p; \
 	done
 
+.c.o:
+	$(COMPILE) -c $<
+
+# FIXME: We should only use cygpath when building on Windows,
+# and only if it is available.
+.c.obj:
+	$(COMPILE) -c `cygpath -w $<`
+
 .s.o:
 	$(COMPILE) -c $<
 
@@ -558,6 +518,7 @@ uninstall-libLTLIBRARIES:
 
 mostlyclean-compile:
 	-rm -f *.o core *.core
+	-rm -f *.$(OBJEXT)
 
 clean-compile:
 
@@ -565,6 +526,9 @@ distclean-compile:
 	-rm -f *.tab.c
 
 maintainer-clean-compile:
+
+.c.lo:
+	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
 
 .s.lo:
 	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
@@ -625,6 +589,8 @@ libACE_Other.la: $(libACE_Other_la_OBJECTS) $(libACE_Other_la_DEPENDENCIES)
 	$(CXXLINK) -rpath $(libdir) $(libACE_Other_la_LDFLAGS) $(libACE_Other_la_OBJECTS) $(libACE_Other_la_LIBADD) $(LIBS)
 .cpp.o:
 	$(CXXCOMPILE) -c $<
+.cpp.obj:
+	$(CXXCOMPILE) -c `cygpath -w $<`
 .cpp.lo:
 	$(LTCXXCOMPILE) -c $<
 
@@ -677,11 +643,6 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 subdir = ace
 
 distdir: $(DISTFILES)
-	here=`cd $(top_builddir) && pwd`; \
-	top_distdir=`cd $(top_distdir) && pwd`; \
-	distdir=`cd $(distdir) && pwd`; \
-	cd $(top_srcdir) \
-	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu ace/Makefile
 	@for file in $(DISTFILES); do \
 	  d=$(srcdir); \
 	  if test -d $$d/$$file; then \
@@ -692,57 +653,6 @@ distdir: $(DISTFILES)
 	    || cp -p $$d/$$file $(distdir)/$$file || :; \
 	  fi; \
 	done
-
-DEPS_MAGIC := $(shell mkdir .deps > /dev/null 2>&1 || :)
-
--include $(DEP_FILES)
-
-mostlyclean-depend:
-
-clean-depend:
-
-distclean-depend:
-	-rm -rf .deps
-
-maintainer-clean-depend:
-
-%.o: %.c
-	@echo '$(COMPILE) -c $<'; \
-	$(COMPILE) -Wp,-MD,.deps/$(*F).pp -c $<
-	@-cp .deps/$(*F).pp .deps/$(*F).P; \
-	tr ' ' '\012' < .deps/$(*F).pp \
-	  | sed -e 's/^\\$$//' -e '/^$$/ d' -e '/:$$/ d' -e 's/$$/ :/' \
-	    >> .deps/$(*F).P; \
-	rm .deps/$(*F).pp
-
-%.lo: %.c
-	@echo '$(LTCOMPILE) -c $<'; \
-	$(LTCOMPILE) -Wp,-MD,.deps/$(*F).pp -c $<
-	@-sed -e 's/^\([^:]*\)\.o[ 	]*:/\1.lo \1.o :/' \
-	  < .deps/$(*F).pp > .deps/$(*F).P; \
-	tr ' ' '\012' < .deps/$(*F).pp \
-	  | sed -e 's/^\\$$//' -e '/^$$/ d' -e '/:$$/ d' -e 's/$$/ :/' \
-	    >> .deps/$(*F).P; \
-	rm -f .deps/$(*F).pp
-
-%.o: %.cpp
-	@echo '$(CXXCOMPILE) -c $<'; \
-	$(CXXCOMPILE) -Wp,-MD,.deps/$(*F).pp -c $<
-	@-cp .deps/$(*F).pp .deps/$(*F).P; \
-	tr ' ' '\012' < .deps/$(*F).pp \
-	  | sed -e 's/^\\$$//' -e '/^$$/ d' -e '/:$$/ d' -e 's/$$/ :/' \
-	    >> .deps/$(*F).P; \
-	rm .deps/$(*F).pp
-
-%.lo: %.cpp
-	@echo '$(LTCXXCOMPILE) -c $<'; \
-	$(LTCXXCOMPILE) -Wp,-MD,.deps/$(*F).pp -c $<
-	@-sed -e 's/^\([^:]*\)\.o[ 	]*:/\1.lo \1.o :/' \
-	  < .deps/$(*F).pp > .deps/$(*F).P; \
-	tr ' ' '\012' < .deps/$(*F).pp \
-	  | sed -e 's/^\\$$//' -e '/^$$/ d' -e '/:$$/ d' -e 's/$$/ :/' \
-	    >> .deps/$(*F).P; \
-	rm -f .deps/$(*F).pp
 info-am:
 info: info-am
 dvi-am:
@@ -784,19 +694,18 @@ distclean-generic:
 maintainer-clean-generic:
 mostlyclean-am:  mostlyclean-hdr mostlyclean-libLTLIBRARIES \
 		mostlyclean-compile mostlyclean-libtool \
-		mostlyclean-tags mostlyclean-depend mostlyclean-generic
+		mostlyclean-tags mostlyclean-generic
 
 mostlyclean: mostlyclean-am
 
 clean-am:  clean-hdr clean-libLTLIBRARIES clean-compile clean-libtool \
-		clean-tags clean-depend clean-generic mostlyclean-am \
-		clean-local
+		clean-tags clean-generic mostlyclean-am clean-local
 
 clean: clean-am
 
 distclean-am:  distclean-hdr distclean-libLTLIBRARIES distclean-compile \
-		distclean-libtool distclean-tags distclean-depend \
-		distclean-generic clean-am
+		distclean-libtool distclean-tags distclean-generic \
+		clean-am
 	-rm -f libtool
 
 distclean: distclean-am
@@ -804,8 +713,8 @@ distclean: distclean-am
 maintainer-clean-am:  maintainer-clean-hdr \
 		maintainer-clean-libLTLIBRARIES \
 		maintainer-clean-compile maintainer-clean-libtool \
-		maintainer-clean-tags maintainer-clean-depend \
-		maintainer-clean-generic distclean-am
+		maintainer-clean-tags maintainer-clean-generic \
+		distclean-am
 	@echo "This command is intended for maintainers to use;"
 	@echo "it deletes files that may require special tools to rebuild."
 
@@ -819,11 +728,10 @@ distclean-compile clean-compile maintainer-clean-compile \
 mostlyclean-libtool distclean-libtool clean-libtool \
 maintainer-clean-libtool uninstall-pkgincludeHEADERS \
 install-pkgincludeHEADERS tags mostlyclean-tags distclean-tags \
-clean-tags maintainer-clean-tags distdir mostlyclean-depend \
-distclean-depend clean-depend maintainer-clean-depend info-am info \
-dvi-am dvi check check-am installcheck-am installcheck all-recursive-am \
-install-exec-am install-exec install-data-am install-data install-am \
-install uninstall-am uninstall all-redirect all-am all installdirs \
+clean-tags maintainer-clean-tags distdir info-am info dvi-am dvi check \
+check-am installcheck-am installcheck all-recursive-am install-exec-am \
+install-exec install-data-am install-data install-am install \
+uninstall-am uninstall all-redirect all-am all installdirs \
 mostlyclean-generic distclean-generic clean-generic \
 maintainer-clean-generic clean mostlyclean distclean maintainer-clean
 
