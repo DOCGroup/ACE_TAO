@@ -303,6 +303,9 @@ private:
   ACE_Asynch_Read_File rf_;
   // rf (read file): for writing from the file
 
+  ACE_Asynch_Transmit_File tf_;
+  // Transmit file. 
+
   ACE_HANDLE input_file_;
   // File to read from
 
@@ -397,8 +400,7 @@ Sender::transmit_file (void)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::open"), -1);
 
   // Open ACE_Asynch_Transmit_File
-  ACE_Asynch_Transmit_File tf;
-  if (tf.open (*this) == -1)
+  if (this->tf_.open (*this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Asynch_Transmit_File::open"), -1);
 
   // Header and trailer data for the file.
@@ -409,7 +411,7 @@ Sender::transmit_file (void)
 						this->welcome_message_.length ());
   
   // Send it
-  if (tf.transmit_file (file_handle,
+  if (this->tf_.transmit_file (file_handle,
 			&this->header_and_trailer_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Asynch_Transmit_File::transmit_file"), -1); 
 

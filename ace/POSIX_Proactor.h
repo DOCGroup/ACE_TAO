@@ -170,7 +170,10 @@ protected:
 				  const void *completion_key,
 				  u_long error);
   // Protect against structured exceptions caused by user code when
-  // dispatching handles.
+  // dispatching handles. The <completion_key> is not very useful
+  // compared to <AST> that can be associated each asynchronous
+  // operation. <completion_key> is implemented right now for the
+  // POSIX Proators.
 };
 
 // Forward declarations.
