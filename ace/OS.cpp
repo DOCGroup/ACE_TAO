@@ -6164,10 +6164,6 @@ ACE_Object_Manager_Base::ACE_Object_Manager_Base (void)
 
 ACE_Object_Manager_Base::~ACE_Object_Manager_Base (void)
 {
-#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
-  // Clear the flag so that fini () doesn't delete again.
-  dynamically_allocated_ = 0;
-#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 }
 
 int
@@ -6215,6 +6211,8 @@ ACE_OS_Object_Manager::ACE_OS_Object_Manager ()
 
 ACE_OS_Object_Manager::~ACE_OS_Object_Manager ()
 {
+  if (dynamically_allocated_)
+    dynamically_allocated_ = 0;       // Don't delete this again in fini()
   fini ();
 }
 
@@ -6231,11 +6229,7 @@ ACE_OS_Object_Manager::instance (void)
 
       ACE_NEW_RETURN (instance_pointer, ACE_OS_Object_Manager, 0);
       ACE_ASSERT (instance_pointer == instance_);
-
-#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
       instance_pointer->dynamically_allocated_ = 1;
-#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
-
     }
 
   return instance_;
@@ -6367,14 +6361,23 @@ ACE_OS_Object_Manager::fini (void)
   // Indicate that the ACE_OS_Object_Manager instance has been shut down.
   object_manager_state_ = OBJ_MAN_SHUT_DOWN;
 
-#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
+  // If this was dynamically allocated by ACE (most likely in instance())
+  // then delete it now.  Further, the only way the <dynamically_allocated_>
+  // can be set is by way of ACE_OS_Object_Manager::instance().  So if the
+  // <dynamically_allocated_> flag is set, it's the instance, so mark it gone.
+  // If it's not dynamically created, then it could still be the singleton
+  // instance if it was created on a stack, or statically.  So if it is
+  // the singleton, mark it as gone as we are likely here as a result
+  // of a call from the dtor.
   if (dynamically_allocated_)
     {
-      delete instance_;
+      instance_ = 0;         // Need to do this first to prevent recursion
+      delete this;
     }
-#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
-
-  instance_ = 0;
+  else if (instance_ == this)
+    {
+      instance_ = 0;
+    }
 
   return 0;
 }
