@@ -19,6 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
 #include "tao/PortableServer/ServerObjectS.h"
 
 /**
@@ -35,7 +37,6 @@ class TAO_PortableServer_Export ServerObject_i
     public PortableServer::RefCountServantBase
 {
 public:
-
   /// Constructor.
   ServerObject_i (CORBA::ORB_ptr orb,
                   PortableServer::POA_ptr poa);
@@ -59,6 +60,8 @@ protected:
   /// POA that we are registered with.
   PortableServer::POA_var poa_;
 };
+
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 #include /**/ "ace/post.h"
 
