@@ -58,8 +58,8 @@ TAO_Operation_Table::~TAO_Operation_Table (void)
 
 // constructor
 TAO_Dynamic_Hash_OpTable::TAO_Dynamic_Hash_OpTable (const TAO_operation_db_entry *db,
-						    CORBA::ULong dbsize,
-						    CORBA::ULong hashtblsize,
+                                                    CORBA::ULong dbsize,
+                                                    CORBA::ULong hashtblsize,
                                                     ACE_Allocator *alloc)
   : hash_ (hashtblsize, alloc)
 {
@@ -154,8 +154,8 @@ TAO_Linear_Search_OpTable::find (const char *opname,
 
 // Active Demux search strategy
 TAO_Active_Demux_OpTable::TAO_Active_Demux_OpTable (const
-						    TAO_operation_db_entry *db,
-						    CORBA::ULong dbsize)
+                                                    TAO_operation_db_entry *db,
+                                                    CORBA::ULong dbsize)
   : next_ (0),
     tablesize_ (dbsize),
     tbl_ (0)
@@ -178,7 +178,7 @@ TAO_Active_Demux_OpTable::~TAO_Active_Demux_OpTable (void)
 
 int
 TAO_Active_Demux_OpTable::bind (const char *opname,
-				const TAO_Skeleton skel_ptr)
+                                const TAO_Skeleton skel_ptr)
 {
   CORBA::ULong i = ACE_OS::atoi (opname);
 
@@ -188,10 +188,10 @@ TAO_Active_Demux_OpTable::bind (const char *opname,
         // overwriting previous one
         return 1;
       else
-	{
-	  this->tbl_[i].skel_ptr_ = skel_ptr;
-	  return 0;
-	}
+        {
+          this->tbl_[i].skel_ptr_ = skel_ptr;
+          return 0;
+        }
     }
   return -1; // error
 }
@@ -368,6 +368,11 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<const char *, TAO_Skeleton, ACE_
 template class ACE_Hash_Map_Manager_Ex<const char *, TAO_Skeleton, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Entry<const char *, TAO_Skeleton>;
 template class ACE_Singleton<TAO_Operation_Table_Parameters, ACE_SYNCH_RECURSIVE_MUTEX>;
+#elif defined (ACE_HAS_GNU_REPO)
+// This is necessary with g++ 2.91.66 to avoid a couple of strange
+// unresolved ACE_Hash_Map_Entry symbols.  (Strange because c++filt
+// can't demangle them.)
+template class ACE_Hash_Map_Entry<char const *, void (*)(CORBA_ServerRequest &, void *, void *, CORBA_Environment &)>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<const char *, TAO_Skeleton, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<const char *, TAO_Skeleton, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>

@@ -1,199 +1,205 @@
+Sun Aug 29 21:53:57 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Operation_Table.cpp: with ACE_HAS_GNU_REPO, added
+          an odd ACE_Hash_Map_Entry explicit instantiation.  I don't
+          know why g++ 2.91.66 (on Linux) needs it, but it does. [Bug 248]
+
 Sat Aug 28 21:53:30 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h (TAO_Interpreter):
-	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp (TAO_Interpreter):
+        * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h (TAO_Interpreter):
+        * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp (TAO_Interpreter):
 
-	  Fixed single-threaded build problem.  Code was using
-	  ACE_Thread_Mutex instead of ACE_SYNCH_MUTEX, and ACE_Guard
-	  instead of ACE_GUARD_RETURN.
+          Fixed single-threaded build problem.  Code was using
+          ACE_Thread_Mutex instead of ACE_SYNCH_MUTEX, and ACE_Guard
+          instead of ACE_GUARD_RETURN.
 
 Sat Aug 28 16:40:29 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h (TAO_Interpreter):
-	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp (TAO_Interpreter):
-	  Fix for Bug#:236 - Added a Guard in the <build_tree> method to
-	  protect it from reentrance.  Thanks to <ujaehrig@desys.com> for
-	  reporting this bug and providing a fix.
+        * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h (TAO_Interpreter):
+        * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp (TAO_Interpreter):
+          Fix for Bug#:236 - Added a Guard in the <build_tree> method to
+          protect it from reentrance.  Thanks to <ujaehrig@desys.com> for
+          reporting this bug and providing a fix.
 
 Sat Aug 28 16:26:00 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tests/AMI/ami_test.dsw:
-	  MSVC workspace file to contain the already existing
-	  project files.
+        * tests/AMI/ami_test.dsw:
+          MSVC workspace file to contain the already existing
+          project files.
 
 Sat Aug 28 16:04:10 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/Acceptor_Registry.cpp (open):
+        * tao/Acceptor_Registry.cpp (open):
 
-	  Added exceptions for all errors conditions.
+          Added exceptions for all errors conditions.
 
-	* tao/ORB.cpp (url_ior_string_to_object):
+        * tao/ORB.cpp (url_ior_string_to_object):
 
-	  Made memory allocation of stub object exception safe by using
-	  TAO_Stub_Auto_Ptr class.
+          Made memory allocation of stub object exception safe by using
+          TAO_Stub_Auto_Ptr class.
 
-	* tao/ORB.cpp (ORB_init):
+        * tao/ORB.cpp (ORB_init):
 
-	  Changed error checks that return zero to return
-	  CORBA::ORB::_nil() instead.  Both are equivalent in TAO but it
-	  appears to be more technically correct to use the _nil() method.
+          Changed error checks that return zero to return
+          CORBA::ORB::_nil() instead.  Both are equivalent in TAO but it
+          appears to be more technically correct to use the _nil() method.
 
-	* tao/ORB_Core.h (TAO_ORB_Core):
+        * tao/ORB_Core.h (TAO_ORB_Core):
 
-	  Added missing ACE_THROW_SPEC to declaration of open() method.
+          Added missing ACE_THROW_SPEC to declaration of open() method.
 
-	* tao/ORB_Core.cpp (TAO_ORB_Core):
+        * tao/ORB_Core.cpp (TAO_ORB_Core):
 
-	  Change initialization of has_shutdown_ variable from 0 to 1,
-	  indicating that the ORB is instantiated in a shutdown state.
-	  The only way to (re)start the ORB is to call CORBA::ORB_init(),
-	  which calls TAO_ORB_Core::init().  For that reason, only
-	  TAO_ORB_Core::init() should change the ORB shutdown state to
-	  has_shutdown_ = 0, i.e. not shutdown.
+          Change initialization of has_shutdown_ variable from 0 to 1,
+          indicating that the ORB is instantiated in a shutdown state.
+          The only way to (re)start the ORB is to call CORBA::ORB_init(),
+          which calls TAO_ORB_Core::init().  For that reason, only
+          TAO_ORB_Core::init() should change the ORB shutdown state to
+          has_shutdown_ = 0, i.e. not shutdown.
 
-	* tao/ORB_Core.cpp (init):
+        * tao/ORB_Core.cpp (init):
 
-	  Memory allocation failure of ORB pseudo-object was returning
-	  zero, which indicated a successful return.  The memory
-	  allocation now returns -1 upon failure.
+          Memory allocation failure of ORB pseudo-object was returning
+          zero, which indicated a successful return.  The memory
+          allocation now returns -1 upon failure.
 
 Sat Aug 28 15:15:12 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_structure.cpp:
-	* TAO_IDL/be/be_union.cpp:
-	* TAO_IDL/be/be_visitor_array/array_cs.cpp:
-	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/ami_handler_stub_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_access_cs.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
-	  Replaced all code generation using 'new' with 'ACE_NEW'
-	  or 'ACE_NEW_RETURN'.
+        * TAO_IDL/be/be_structure.cpp:
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/ami_handler_stub_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_access_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+          Replaced all code generation using 'new' with 'ACE_NEW'
+          or 'ACE_NEW_RETURN'.
 
-	* TAO_IDL/be_include/be_codegen.h:
-	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
-	  Code generation for union copy constructor and
-	  assignment operator was using the same code block.
-	  Since, upon my replacement, one needs 'ACE_NEW'
-	  and the other needs 'ACE_NEW_RETURN', a new
-	  context sub-state enum value was created so we can
-	  branch at this point.
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+          Code generation for union copy constructor and
+          assignment operator was using the same code block.
+          Since, upon my replacement, one needs 'ACE_NEW'
+          and the other needs 'ACE_NEW_RETURN', a new
+          context sub-state enum value was created so we can
+          branch at this point.
 
-	* TAO_IDL/be_include/ami_handler_ch.h:
-	* TAO_IDL/be_include/ami_handler_cs.h:
-	* TAO_IDL/be/be_visitor_interface/ami_handler_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/ami_handler_cs.cpp:
-	  Files no longer used that have been removed from CVS.
+        * TAO_IDL/be_include/ami_handler_ch.h:
+        * TAO_IDL/be_include/ami_handler_cs.h:
+        * TAO_IDL/be/be_visitor_interface/ami_handler_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/ami_handler_cs.cpp:
+          Files no longer used that have been removed from CVS.
 
 Sat Aug 28 12:32:40 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp:
-	  Added a missing 2nd set of parens to the ACE_THROW_SPEC
-	  in the open() method.
+        * tao/ORB_Core.cpp:
+          Added a missing 2nd set of parens to the ACE_THROW_SPEC
+          in the open() method.
 
 Fri Aug 27 17:24:43 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/Tagged_Components.cpp (set_tao_priority):
+        * tao/Tagged_Components.cpp (set_tao_priority):
 
-	  Removed inadvertent stream insertion of orb_type variable.
-	  Thanks to Carlos for pointing this out.
+          Removed inadvertent stream insertion of orb_type variable.
+          Thanks to Carlos for pointing this out.
 
-	* tao/IIOP_Acceptor.cpp (parse_options):
-	* tao/UIOP_Acceptor.cpp (parse_options):
+        * tao/IIOP_Acceptor.cpp (parse_options):
+        * tao/UIOP_Acceptor.cpp (parse_options):
 
-	  Fixed valid endpoint priority range.
+          Fixed valid endpoint priority range.
 
-	* tao/UIOP_Acceptor.h:
-	* tao/UIOP_Acceptor.cpp:
+        * tao/UIOP_Acceptor.h:
+        * tao/UIOP_Acceptor.cpp:
 
-	  Forgot to remove inclusion of non-existent UIOP_Acceptor.i
-	  file.  UIOP_Acceptor.i was created temporarily but wasn't
-	  needed.
+          Forgot to remove inclusion of non-existent UIOP_Acceptor.i
+          file.  UIOP_Acceptor.i was created temporarily but wasn't
+          needed.
 
 Fri Aug 27 17:06:54 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/Protocol_Factory.h:
-	* tao/Protocol_Factory.cpp:
-	* tao/IIOP_Factory.h:
-	* tao/IIOP_Factory.cpp:
-	* tao/UIOP_Factory.h:
-	* tao/UIOP_Factory.cpp:
+        * tao/Protocol_Factory.h:
+        * tao/Protocol_Factory.cpp:
+        * tao/IIOP_Factory.h:
+        * tao/IIOP_Factory.cpp:
+        * tao/UIOP_Factory.h:
+        * tao/UIOP_Factory.cpp:
 
-	  Added an options_delimiter() method.  It returns the character
-	  used to mark where an endpoint begins and where its options begin.
+          Added an options_delimiter() method.  It returns the character
+          used to mark where an endpoint begins and where its options begin.
 
-	* tao/Acceptor_Registy.h:
-	* tao/Acceptor_Registry.cpp (open):
+        * tao/Acceptor_Registy.h:
+        * tao/Acceptor_Registry.cpp (open):
 
-	  Added support for passing endpoint options to corresponding
-	  Acceptor.
+          Added support for passing endpoint options to corresponding
+          Acceptor.
 
-	  Added CORBA::Environment argument to allow CORBA exceptions to
-	  be propagated up through the ORB when creating Acceptors.
+          Added CORBA::Environment argument to allow CORBA exceptions to
+          be propagated up through the ORB when creating Acceptors.
 
-	* tao/Pluggable.h:
-	* tao/IIOP_Acceptor.h:
-	* tao/IIOP_Acceptor.cpp:
-	* tao/UIOP_Acceptor.h:
-	* tao/UIOP_Acceptor.cpp:
+        * tao/Pluggable.h:
+        * tao/IIOP_Acceptor.h:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/UIOP_Acceptor.h:
+        * tao/UIOP_Acceptor.cpp:
 
-	  Added support for protocol specific option parsing.  This was
-	  originally designed to only accept an integer argument to set
-	  endpoint priorities, but it was simple enough to extend the
-	  functionality to the general case.
+          Added support for protocol specific option parsing.  This was
+          originally designed to only accept an integer argument to set
+          endpoint priorities, but it was simple enough to extend the
+          functionality to the general case.
 
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
 
-	  ORB::destroy() method has been added but it currently throws a
-	  CORBA::NO_IMPLEMENT exception.  This method will be used by the
-	  ORB::destroy() wrapper once it is implemented.
+          ORB::destroy() method has been added but it currently throws a
+          CORBA::NO_IMPLEMENT exception.  This method will be used by the
+          ORB::destroy() wrapper once it is implemented.
 
-	  init() method now resets flag that denotes that the ORB has
-	  shutdown to zero, indicating that the newly created ORB has not
-	  shutdown.  Previously, if an ORB was shutdown and then
-	  reinitialized with CORBA::ORB_init() then the shutdown flag would
-	  still indicate that it is shutdown.
+          init() method now resets flag that denotes that the ORB has
+          shutdown to zero, indicating that the newly created ORB has not
+          shutdown.  Previously, if an ORB was shutdown and then
+          reinitialized with CORBA::ORB_init() then the shutdown flag would
+          still indicate that it is shutdown.
 
-	  Added CORBA::Environment argument to open() method to allow
-	  CORBA exceptions to be propagated up through the ORB when
-	  opening Acceptors.
+          Added CORBA::Environment argument to open() method to allow
+          CORBA exceptions to be propagated up through the ORB when
+          opening Acceptors.
 
-	* tao/ORB.h:
-	* tao/ORB.cpp:
+        * tao/ORB.h:
+        * tao/ORB.cpp:
 
-	  CORBA 2.3 updates:
+          CORBA 2.3 updates:
 
-	  work_pending() and perform_work() now throw a
-	  CORBA::BAD_INV_ORDER exception if the ORB has been shutdown.
+          work_pending() and perform_work() now throw a
+          CORBA::BAD_INV_ORDER exception if the ORB has been shutdown.
 
-	  ORB::destroy() method has been added but it currently throws a
-	  CORBA::NO_IMPLEMENT exception.  More to come!
+          ORB::destroy() method has been added but it currently throws a
+          CORBA::NO_IMPLEMENT exception.  More to come!
 
-	* tao/ORB.cpp (object_to_string):
+        * tao/ORB.cpp (object_to_string):
 
-	  Fixed a segmentation fault that occurred when a bogus endpoint
-	  was specified on the command line in conjunction with the
-	  "-ORBObJRefStyle URL" option.
+          Fixed a segmentation fault that occurred when a bogus endpoint
+          was specified on the command line in conjunction with the
+          "-ORBObJRefStyle URL" option.
 
-	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp (set):
+        * orbsvcs/orbsvcs/Runtime_Scheduler.cpp (set):
 
-	  Removed a cast that I inadvertently added.
+          Removed a cast that I inadvertently added.
 
 Fri Aug 27 15:05:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
-	  Had to unconcatenate some code generating stream
-	  output statements to get the buffer to flush.
-	  Thanks to Michael Kircher and Darrell Brunsch for
-	  pointing out the problem.
+        * TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
+          Had to unconcatenate some code generating stream
+          output statements to get the buffer to flush.
+          Thanks to Michael Kircher and Darrell Brunsch for
+          pointing out the problem.
 
 Fri Aug 27 09:04:55 1999  David L. Levine  <levine@cs.wustl.edu>
 
