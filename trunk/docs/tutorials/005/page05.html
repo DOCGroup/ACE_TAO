@@ -1,0 +1,352 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>ACE Tutorial 005</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+   <META NAME="Author" CONTENT="Billy Quinn">
+   <META NAME="Description" CONTENT="A first step towards using ACE productively">
+</HEAD>
+<BODY text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">
+
+
+<CENTER><P><B><FONT SIZE=+2>ACE&nbsp;Tutorial 005<BR>
+Creating a MultiThreaded Server </FONT></B></P></CENTER>
+
+<P>
+<HR WIDTH="100%"></P>
+
+<P>The final piece in our multi-threaded server is the <I>Logging_Handler</I>
+class.&nbsp;As you might guess, this is the part which has been modified most
+from our previous server tutorial to include threads. This is a perfect demonstration
+of the decoupling effect of using the acceptor/connector model, whereby
+the connection oriented code is seperated from the actual processing which
+occurs after the connection has been established. :</P>
+
+<UL>
+<PRE>1. class Logging_Handler : public ACE_Svc_Handler&lt;ACE_SOCK_STREAM, ACE_NULL_SYNCH&gt;
+
+        {
+
+        
+
+        public:
+
+        
+
+2.       Logging_Handler (void) { };
+
+        
+
+3.        virtual void destroy (void)
+
+                { 
+
+4.               if (this-&gt;thread_reactorP-&gt;remove_handler(this,
+
+                     ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL) == -1)
+
+5.                     ACE_ERROR_RETURN ((LM_ERROR, &quot;can'(%P|%t) t remove service from reactor\n&quot;), -1);
+
+        
+
+                  // Decrement the handler tracking variable in the reactor to
+
+                  // indicate this service handler has terminated
+
+6.               --thread_reactorP-&gt;counter;
+
+        
+
+7.               this-&gt;peer ().close ();
+
+8.              delete this;
+
+                }
+
+        
+
+9.       static void *run_thread(Logging_Handler *this_)
+
+                {
+
+10.               Reactor_Derived thread_reactor;     
+
+        
+
+11.               this_-&gt;thread_reactorP = &amp;thread_reactor;
+
+12.               if (thread_reactor.register_handler(this_, ACE_Event_Handler::READ_MASK) == -1)
+
+13.                       ACE_ERROR_RETURN ((LM_ERROR,&quot;can'(%P|%t) t register with reactor\n&quot;), -1);
+                  
+
+                  // Increment our handler counter to account for this service handler
+
+14.               ++thread_reactor.counter;
+
+                
+
+15.               while( thread_reactor.counter &gt; 0 )
+
+                  {
+
+                        // If thread_reactor.counter = 0 then we have no more service
+                        // handlers connected to the reactor. We set a timeout value
+                        // of 1 second so that handle_events returns to us every
+                        // second.  This gives us a chance to check the count.  We
+			// need to do this because handle_events will block even
+                        // when there are no connections.  A better method might be
+			// to use ACE_Reactor_Notify but we'll save that for a later
+			// tutorial.
+
+16.                     thread_reactor.handle_events(ACE_Time_Value(1,0));
+
+                  }
+
+                } 
+
+        
+
+17.      virtual int open (void *)
+
+                {
+
+18.               ACE_Thread::spawn(&amp;Logging_Handler::run_thread,this);
+
+19.               return 0;
+
+                }
+
+        
+
+20.       virtual int close (u_long)
+
+                {
+
+21.               this-&gt;destroy ();
+
+22.               return 0;
+
+                }
+
+        
+
+        protected:
+
+        
+
+23.       virtual int handle_input (ACE_HANDLE)
+
+                {
+
+24.               char buf[128];
+
+25.               memset(buf,0,sizeof(buf));
+
+        
+
+26.               switch( this-&gt;peer().recv(buf,sizeof buf) )
+
+                  {
+
+27.               case -1:
+
+28.                 ACE_ERROR_RETURN ((LM_ERROR, &quot;(%P|%t) %p bad read\n&quot;, &quot;client logger&quot;), -1);
+
+29.               case 0:
+
+30.                 ACE_ERROR_RETURN ((LM_ERROR, &quot;(%P|%t) closing log daemon (fd = %d)\n&quot;, this-&gt;get_handle ()), -1);
+
+31.               default:
+
+32.                 ACE_DEBUG ((LM_DEBUG, &quot;(%P|%t) from client : %s&quot;,buf));                                                                                  </PRE>
+
+<PRE>                   }
+
+         
+
+33.               return 0;
+
+                }
+
+        
+
+        
+
+        private:
+
+34.       Reactor_Derived *thread_reactorP;
+
+          
+
+        };
+
+        
+
+</PRE>
+</UL>
+
+<P>
+<HR WIDTH="100%"></P>
+
+<P>Here's the step-by-step explanation:</P>
+
+<OL>
+<LI>We've apparently decided to be bold and use yet another ACE template
+to create our <I>Logging_Handler</I> object. From the manual, the <I>ACE_Svc_Handler</I>
+template <I>defines the interface for a service that exchanges data with
+its connected peer</I>. The first template argument specifies the kind
+of connection we want to have. As mentioned on the previous page, this
+<B>must</B> be compatible with the data type used to accept the connection.
+As for the second argument, I have no idea. Somebody please explain this
+to me.</LI>
+
+<LI>Our default constructor does nothing. We've moved anything with failure
+potential into the <TT>open()</TT> function. Should the constructor be virtual?</LI>
+
+<LI><TT>destroy()</TT> is called by our close function which is called when the
+<I>Logging_Handler</I> object needs to be cleaned up due to termination</LI>
+
+<LI>Unregister the <I>Logging_Handler</I> object (this) from the reactor
+which is associated with this <I>Logging_Handler</I> object. The reactor
+address is gotten by dereferencing the pointer (thread_reactor_P in this case)
+which is the pointer to the local reactor object. We pass in two flags
+to the remove_handler call, because the <I>Logging_Handler</I> was registered
+in read mode and therefore needs to be unregistered in the same manner.
+The flag DONT_CALL prevents the reactor from calling the <TT>destroy</TT> function of the <I>Logging_Handler</I> object, which is the default for unregistering an event handler. We have to use this flag because we would enter an infinite recursive loop due to the fact that the <TT>remove_handler</TT> is located in the <TT>destroy</TT> method and that would recall the <TT>destroy</TT> method by default, which would call the <TT>remove_handler</TT> method again, and so on. This is not good!! - and we would eventually blow the stack therefore causing all kinds of nasty things to happen.</LI>
+
+
+<LI>If this is called an error has occured while unregistering the <I>Logging_Handler</I>
+object so generate an error.</LI>
+
+<LI>Decrement the counter for the reactor which is associated with this
+<I>Logging_Handler</I>. This indicates that another connection has gone
+away and the reactor's main loop (<TT>handle_events()</TT>) will not loop any more if this was the last connection registered with the reactor.
+Since we will only have one connection per reactor , this is not really
+necessary in this tutorial , but our next tutorial will use this idea for
+multiple connections per reactor.</LI>
+
+<LI>Close the connection to the client. Notice that we use the <I>peer()</I>
+member function generated by the template. We should never need direct
+access to the actual connection object.</LI>
+
+<LI>Delete the current <I>Logging_Handler</TT> object from memory - This is necessary
+because memory has been dynamically allocated so it will not clean up automatically
+when the scope of this <I>Logging_Handler</I> object runs out.</LI>
+
+<LI>Our thread entry point. This is the function that is called when a
+<I>Logging_Handler</I> spawns off a thread to handle a specific question. Note
+it accepts a pointer to an object of type <I>Logging_Handler</I>. This is necessary
+since the function is static so it is shared among all of the instantiated
+objects of type <I>Logging_Handler</I>, and we need a reference to the object
+we are dealing with at run time.</LI>
+
+<LI>Declare the automatic variable of type <I>Reactor_Derived</I>. The variable is declared automatic so that it is placed on the thread's stack, and is therefore deleted automatically when the thread exits. Since we are running each reactor in a seperate thread, it is **vital** that the reactor is declared within the thread in which it will be demultiplexing events. If this variable is declared outside of the thread it will not respond to any event handlers which are registered within the thread. </LI>
+
+<LI>Sets up the pointer to point to our automatic variable thread_reactor.
+By doing this, we have a reference to this specfic thread reactor outside of the <I>run_thread</I>'s scope.</LI>
+
+<LI>Register the <I>Logging_Handler</I> object with the local reactor. If a successful registration occurs, the event handler will be placed in a table which the reactor iterates through to check for any data to be processed. The type of data which the reactor will check for on each of the event handlers is based on the flags which are passed into the <TT>register_handler</TT> function for that event handler. Note how the flag
+READ_MASK is passed in to indicate that the <I>Logging_Handler</I> object is expecting
+input of data.</LI>
+
+<LI>An error has occurred while registering in the handle (<TT>register_handler</TT>
+returned -1) so register an error using ACE_ERROR_RETURN predefined function
+call to handle error(write standard error,etc.).</LI>
+
+<LI>Increment the counter which is our tracking variable for the number
+of connections that the reactor is handling. As this tutorial has only
+one connection per reactor it is not really necessary here , but the concept
+will be used to handle multiple connections per reactor in the next tutorial.
+</LI>
+
+<LI>Loop while connections still are registered in the local reactor. The
+counter variable is used to hold the number of registered connections in
+the reactor. As this tutorial spawns a new thread for each connection ,
+each reactor will have only one connection registered with it. In this
+tutorial we could just exit when the connection is terminated, but as we
+will see in the next tutorial, multiple connections per reactor will be
+implemented to allow proper load balancing. </LI>
+
+<LI>Call the <TT>handle_events()</TT> function which causes the local reactor to iterate
+through all of its registered logging handlers and check for input. Note
+that we use the <I>ACE_Time_Value</I> class to set a timeout of 1 second. This
+breaks out of blocking mode so that the number of connections alive can
+be checked again . Apparently theres a bug in ACE whereby it blocks on
+a reactor even if no connections are present ?</LI>
+
+<LI>The <TT>open</TT> function contains all of our initialization logic.
+It is called by the acceptor when a new connection is accepted. If we fail
+to initialize for any reason, we will return an error code so that the
+acceptor can respond correctly. This could not be done in a constructor.</LI>
+
+<LI>Spawn off a thread to handle this <I>Logging_Handler.</I> The name
+of the function called is specifed as the first parameter, which in this
+case is the static function <TT>run_thread()</TT>. The thread then starts running
+at the function <TT>run_thread</TT>. Note also we need a reference to what connection
+handle we are referring to at run time (the variable this).</LI>
+
+<LI>Return 0 indicating success with the <TT>open</TT> function.</LI>
+
+<LI><TT>close()</TT> is called by the reactor when the <I>Logging_Handler</I> should
+terminate.</LI>
+
+<LI>Call the <TT>destroy()</TT> function which cleans up the <I>Logging_Handler</I> object (unregisters
+the reactor handles and deletes memory references..etc..)</LI>
+
+<LI>Return 0 to indicate success so the main reactor can continue running</LI>
+
+<LI><TI>handle_input()</TT> is where you do whatever your application requires
+when data is received from the client system. It is called by the reactor
+when it detects that one of its registered <I>Logging_Handlers </I>has
+some data ready to process.</LI>
+
+<LI>Create a storage space for the received data</LI>
+
+<LI>and make sure it is empty.</LI>
+
+<LI>Receive as much data as we can but don't overrun our buffer. For this
+simple example, we don't get too fancy. In a real application we would
+probably read some number of bytes (4?) and create a number from them.
+We would then use that number to decide how many more bytes to read. The
+number could be a simple byte count or it could be a packet type indicator
+which implies a bytecount.</LI>
+
+<LI>If <TT>recv()</TT> returns <I>-1</I> then there is something bad wrong
+with the connection so</LI>
+
+<LI>we return an <I>-1</I> to the reactor along with a failure message.
+We cannot continue after this.</LI>
+
+<LI>A <I>0</I> return from <TT>recv</TT> is not quite so bad. However, <TT>handle_input</TT>
+wouldn't have been called if there was no data to be read. So, we take
+this to be a sign that the client chose to shutdown the connection.</LI>
+
+<LI>Like the case above, we need to return a <I>-1</I> to the reactor so
+that we can be shutdown. </LI>
+
+<LI>Any other value from <I>recv</I> is taken to indicate the number of
+bytes received so</LI>
+
+<LI>we display the data to the user. In the real world, we could do an
+infinite number of things with the data.</LI>
+
+<LI>Return <I>0</I> if all is well with the receive so that the reactor
+will allow us to continue functioning.</LI>
+
+<LI>Declare the pointer which will store the address of the reactor associated
+with each <I>Logging_Handler</I>. Each <I>Logging_Handler</I> will have one of these.</LI>
+</OL>
+
+<P>Obviously this is a bit more complicated than the rest of the program.
+However, as you have probrably noticed, the application programmer is shielded
+from the underlying network programming details.</P>
+
+<P>
+<HR WIDTH="100%"></P>
+
+<CENTER><P>[<A HREF="..">Tutorial Index</A>] [<A HREF="page04.html">Previous
+Page</A>] [<A HREF="page06.html">Continue This Tutorial</A>] </P></CENTER>
+
+</BODY>
+</HTML>

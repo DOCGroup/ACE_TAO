@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>ACE Tutorial 004</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (Win95; I) [Netscape]">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <META NAME="Description" CONTENT="A first step towards using ACE productively">
+</HEAD>
+<BODY text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">
+
+
+<CENTER><P><B><FONT SIZE=+2>ACE&nbsp;Tutorial 004<BR>
+A much more clever Client</FONT></B></P></CENTER>
+
+<P>
+<HR WIDTH="100%"></P>
+
+<P>
+<HR WIDTH="100%"></P>
+
+<P>The code:</P>
+
+<UL>
+<PRE>        
+1.      #include &quot;ace/SOCK_Connector.h&quot;
+2.      #include &quot;ace/SString.h&quot;
+        
+3.      class Client : public ACE_SOCK_Stream
+        {
+        
+        public:
+4.              Client(void);
+5.              Client( const char * server, u_short port );
+        
+6.              int open( const char * server, u_short port );
+        
+7.              inline int initialized(void) { return mInitialized; }
+8.              inline int error(void)       { return mError; }
+        
+9.              Client operator&lt;&lt;( ACE_SString &amp; str );
+10.             Client operator&lt;&lt;( char * str );
+11.             Client operator&lt;&lt;( int  n );
+        
+        protected:
+        
+        private:
+12.       unsigned char mInitialized;
+13.       unsigned char mError;
+        
+        };
+        
+14.     Client::Client(void)
+        {
+15.       mInitialized = 0;
+16.       mError = 0;
+        }
+        
+17.     Client::Client( const char * server, u_short port )
+        {
+18.       mInitialized = 0;
+19.       mError = 0;
+20.       (void)open(server,port);
+        }
+        
+21.     int Client::open( const char * server, u_short port )
+        {
+22.       ACE_SOCK_Connector connector;
+23.       ACE_INET_Addr addr (port, server);
+        
+24.       if (connector.connect (*this, addr) == -1)
+          {
+25.         ACE_ERROR_RETURN ((LM_ERROR, &quot;%p\n&quot;, &quot;open&quot;), -1);
+          }
+        
+26.       mInitialized = 1;
+        
+27.       return(0);
+        }
+        
+28.     Client Client::operator&lt;&lt;( ACE_SString &amp; str )
+        {
+29.             if( initialized() &amp;&amp; ! error() )
+                {
+30.                     char * cp = str.rep();
+        
+31.                     mError = 0;
+        
+32.                     if( this-&gt;send_n(cp,strlen(cp)) == -1 )
+                        {
+33.                             mError = 1;
+                        }
+                }
+34.             else
+                {
+35.                     mError = 1;
+                }
+        
+36.             return *this ;
+        }
+        
+37.     Client Client::operator&lt;&lt; ( char * str )
+        {
+38.             ACE_SString newStr(str);
+        
+39.             *this &lt;&lt; newStr;
+        
+40.             return *this ;
+        }
+        
+41.     Client Client::operator&lt;&lt; ( int n )
+        {
+                // ACE_SString newStr;
+                // newStr = n;
+        
+42.             char buf[1024];
+43.             sprintf(buf,&quot;(%d)\n&quot;,n);
+44.             ACE_SString newStr(buf);
+        
+45.             *this &lt;&lt; newStr;
+        
+46.             return *this;
+        }
+        
+47.     int main (int argc, char *argv[])
+        {
+48.       const char *server_host = argc &gt; 1 ? argv[1]                : ACE_DEFAULT_SERVER_HOST;
+49.       u_short server_port     = argc &gt; 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_SERVER_PORT;
+50.       int max_iterations      = argc &gt; 3 ? ACE_OS::atoi (argv[3]) : 4;
+        
+51.       Client server(server_host,server_port);
+        
+52.       if( ! server.initialized() )
+          {
+53.         ACE_ERROR_RETURN ((LM_ERROR, &quot;%p\n&quot;, &quot;intialization&quot;), -1);
+          }
+        
+          
+54.       for (int i = 0; i &lt; max_iterations; i++)
+            {
+55.           server &lt;&lt; &quot;message = &quot; &lt;&lt; i+1;
+        
+56.           if ( server.error() )
+              {
+57.             ACE_ERROR_RETURN ((LM_ERROR, &quot;%p\n&quot;, &quot;send&quot;), -1);
+              }
+58.           else
+              {
+59.             ACE_OS::sleep (1);
+              }
+            }
+        
+60.       if (server.close () == -1)
+          {
+61.         ACE_ERROR_RETURN ((LM_ERROR, &quot;%p\n&quot;, &quot;close&quot;), -1);
+          }
+        
+62.       return 0;
+        }
+</PRE>
+</UL>
+
+<P>
+<HR WIDTH="100%"></P>
+
+<P>Now, the code description:</P>
+
+<OL></OL>
+
+<P>
+<HR WIDTH="100%"></P>
+
+<P>If you want to compile it yourself, here's the <A HREF="client.cpp">source</A>,
+the <A HREF="Makefile">Makefile</A>,
+and <A HREF="00SetEnv">Environment
+settings</A>. </P>
+
+<P>
+<HR WIDTH="100%"></P>
+
+<CENTER><P>[<A HREF="..">Tutorial
+Index</A>]</P></CENTER>
+
+</BODY>
+</HTML>
