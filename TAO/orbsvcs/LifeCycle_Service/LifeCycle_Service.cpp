@@ -46,18 +46,25 @@ Life_Cycle_Service_Server::init (int argc,
                                      char *argv[],
                                      CORBA::Environment& ACE_TRY_ENV)
 {
-  if (this->orb_manager_.init (argc,
-                               argv,
-                               ACE_TRY_ENV) == -1)
+  int retval = 0;
+  
+  retval = this->orb_manager_.init (argc,
+                                    argv,
+                                    ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  if (retval == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init"),
                       -1);
-  // @@ Oh well.  This should actually come before "if".
-  ACE_CHECK_RETURN (-1);
+
 
   // Activate the POA manager
-  if (this->orb_manager_.activate_poa_manager (ACE_TRY_ENV) == -1)
+  retval = this->orb_manager_.activate_poa_manager (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  if (retval == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "activate_poa_manager"), -1);
 
   ACE_CHECK_RETURN (-1);
