@@ -1479,7 +1479,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   if (::pthread_mutexattr_create (&attributes) == 0
 #if !defined (ACE_DOES_NOT_HAVE_SETKIND_NP)
       && ::pthread_mutexattr_setkind_np (&attributes, type) == 0
-#endif
+#endif /* ACE_HAS_DCETHREADS */
       && ::pthread_mutex_init (m, attributes) == 0)
 #else
     if (::pthread_mutexattr_init (&attributes) == 0

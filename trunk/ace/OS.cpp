@@ -3590,8 +3590,7 @@ ACE_PSOS_Time_t::init_simulator_time ()
 
 #endif /* ACE_PSOSIM */
 
-
-#endif  /* ACE_PSOS */
+#endif /* ACE_PSOS */
 
 #if defined (__DGUX) && defined (ACE_HAS_THREADS) && defined (_POSIX4A_DRAFT10_SOURCE)
 extern "C" int __d6_sigwait (sigset_t *set);
