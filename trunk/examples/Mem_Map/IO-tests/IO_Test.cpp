@@ -131,9 +131,9 @@ int
 Mmap1_Test::run_test (int iterations, FILE *input_fp, FILE *output_fp)
 {
   ACE_Mem_Map map_input (fileno (input_fp));
-  void *src = 0;
+  void *src = map_input.addr ();
 
-  if (map_input (src) == -1)
+  if (src == MAP_FAILED)
     ACE_ERROR_RETURN ((LM_ERROR, "%s", this->name ()), -1);
   else
     {
@@ -166,10 +166,10 @@ Mmap2_Test::run_test (int iterations, FILE *input_fp, FILE *output_fp)
   ACE_Mem_Map map_input (fileno (input_fp));
   int size = map_input.size ();
   ACE_Mem_Map map_output (fileno (output_fp), size, PROT_WRITE, MAP_SHARED);
-  void *src = 0;
-  void *dst = 0;
+  void *src = map_input.addr ();
+  void *dst = map_output.addr ();
 
-  if (map_input (src) == -1 || map_output (dst) == -1)
+  if (src == MAP_FAILED || dst == MAP_FAILED)
     return -1;
   else
     {
