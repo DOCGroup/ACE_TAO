@@ -53,7 +53,6 @@ namespace TAO
                                 ACE_ENV_ARG_DECL)
   {
     // Cache the target to a local variable.
-    // @@ NOTE: Leak if forwarded
     CORBA::Object *effective_target = this->target_;
 
     CORBA::Object_var tmp_mem;

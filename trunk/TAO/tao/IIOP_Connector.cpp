@@ -196,14 +196,10 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                       svc_handler->get_handle ()));
         }
 
-      // Wait for connection completion.  No need to specify timeout
-      // to wait() since the correct timeout was passed to the
-      // Connector. The Connector will close the handler in the case
-      // of timeouts, so the event will complete (either success or
-      // failure) within timeout.
+      // Wait for connection completion.
       result =
         this->active_connect_strategy_->wait (svc_handler,
-                                              0);
+                                              max_wait_time);
 
       if (TAO_debug_level > 2)
         {
