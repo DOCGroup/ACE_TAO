@@ -1,3 +1,21 @@
+Wed Nov 12 08:22:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RTCORBA/Persistent_IOR/server.cpp:
+          Added #include of ace/OS_NS_string.h to get ACE_OS::strlen
+
+        * tests/Smart_Proxies/Benchmark/client.cpp:
+        * tests/Smart_Proxies/Benchmark/server.cpp:
+        * tests/Smart_Proxies/Policy/client.cpp:
+        * tests/Smart_Proxies/Policy/server.cpp:
+          Added #include of ace/OS_NS_string.h to get ACE_OS::strdup
+
+        * tests/Strategies/server.cpp:
+          Added #include of ace/OS_NS_stdio.h to get ACE_OS::fopen/printf/fclose
+
+        * orbsvcs/tests/Notify/lib/Activation_Manager.cpp:
+        * orbsvcs/tests/Time/Client_i.cpp:
+          Added #include of ace/os_include/os_netdb.h to get MAXHOSTNAMELEN
+
 Wed Nov 12 07:40:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * examples/Kokyu_dsrt_schedulers/Makefile:
@@ -37,7 +55,7 @@ Tue Nov 11 14:54:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/DynamicInterface/Request.cpp:
 
-	  Fixed a compile error due to wrong environment variable usage.   
+	  Fixed a compile error due to wrong environment variable usage.
 
 Tue Nov 11 11:43:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
