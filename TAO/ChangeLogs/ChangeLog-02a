@@ -1,3 +1,12 @@
+Tue Jun 18 13:54:25 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* performance-tests/Latency/AMH/Single_Threaded/Roundtrip.cpp (test_method): 
+	  Continuing saga in learning to use correct CORBA Environment
+	  macros.  Had declared environment variable in both the method
+	  argument list as well as inside the definition of the method.
+	  Changed the argument list to ACE_ENV_ARG_DECL_NOT_USED. Should
+	  fix up the remaining builds (static and no-inline).
+
 Tue Jun 18 14:31:39 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tao/GIOP_Message_State.cpp:

@@ -26,7 +26,7 @@ Roundtrip::test_method (
 void
 Roundtrip::shutdown (
        Test::AMH_RoundtripResponseHandler_ptr _tao_rh
-       ACE_ENV_ARG_DECL)
+       ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DECLARE_NEW_CORBA_ENV;
