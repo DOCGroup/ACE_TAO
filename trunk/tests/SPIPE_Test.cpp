@@ -106,7 +106,7 @@ server (void *)
 static void
 spawn (void)
 {
-#if !defined (ACE_WIN32)
+#if !defined (ACE_WIN32) && !defined (VXWORKS)
   switch (ACE_OS::fork ())
     {
     case -1:
@@ -138,12 +138,12 @@ main (int, char *argv[])
 {
   ACE_START_TEST ("SPIPE_Test.cpp");
 
-#if defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32)
+#if defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32) || defined (VXWORKS)
   spawn ();
 #else
   ACE_ERROR ((LM_ERROR, 
 	      "SPIPE is not supported on this platform\n"));
-#endif /* defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32) */
+#endif /* defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32) || defined (VXWORKS) */
   ACE_END_TEST;
   return 0;
 }
