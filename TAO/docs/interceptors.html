@@ -11,15 +11,16 @@ vlink="#ff0f0f"
 bgcolor="#ffffff">
 
 <p>We have revised TAO's interceptor implementation so that it
-conforms to the
-<a href="ftp://ftp.omg.org/pub/docs/orbos/99-12-02.pdf">Portable
-Interceptor</A> specification.  The purpose of this document is to
-provide a transition guide for those who have used our old
-interceptors.  The old interceptors will no longer be supported now
-that we have the new mechanism in place.  A paper that describes TAO's
-portable interceptors and <A HREF="Smart_Proxies.html">smart
-proxies</A> is available <A
-HREF="http://www.cs.wustl.edu/~schmidt/PDF/smart_proxies.pdf">online</A>.</p>
+conforms to the Portable Interceptor specification which is now a part
+of the <a href="http://www.omg.org/cgi-bin/doc?formal/01-09-34">CORBA
+2.5</A> specification.  The purpose of this document is to provide a
+transition guide for those who have used our old interceptors.  The
+old interceptors will no longer be supported now that we have the new
+mechanism in place.  A paper that describes TAO's portable
+interceptors and <A HREF="Smart_Proxies.html">smart proxies</A> is
+available
+<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/smart_proxies.pdf">online</A>.
+</p>
 
 <hr><P>
 <h3><a name="toc">Table of Contents</a></h3>
@@ -39,33 +40,15 @@ HREF="http://www.cs.wustl.edu/~schmidt/PDF/smart_proxies.pdf">online</A>.</p>
 <p>Interceptors allow you to interpose other CORBA services to the ORB
 and extend the ORB's functionalities.  They are most commonly used in,
 but not limited to, Security Service, Transaction Service.  They are
-also for doing accounting and debugging distributed application.</p>
-
-<p>Although both CORBA 2.2 and 2.3 define an interceptor interface,
-the definitions are pretty much useless because it does not define how
-the interceptor should interact with an ORB.  Therefore, OMG is
-currently trying to define a "<a
-href="http://www.omg.org/techprocess/meetings/schedule/Portable_Interceptors_RFP.html">
-Portable Interceptor</a>" specification which will remedy the problems
-and allow application users to use interceptos from different venders
-with their ORBs. </p>
+also for accounting, auditing and debugging distributed applications.
+</p> 
 
 <hr><P>
 <h3><a name="implement">TAO's Implementation of "Portable
 Interceptors"</a></h3>
 
-<p>TAO's portable interceptor implementation was developped before
-even a joint submission was available.  There were several proposed
-standards which defined very different interfaces and capabilities.
-The old interceptor implementation provides a minimum subset of
-functionalities proposed in the initial submissions.  This approach
-has allowed TAO users to explore various use cases of interceptors and
-prevented users from adding code that depended on the interceptor
-features which would not be supported when the spec gets
-finalized.</p>
-
 <p>We have modifed TAO's interceptor interface to conform with the
-proposed spec.  The current implementation of interceptors consists of
+CORBA 2.5 spec.  The current implementation of interceptors consists of
 support for the <CODE>Dynamic</CODE> module as well as the canonical
 interception points including
 (1) <CODE>send_request</CODE>,
@@ -102,8 +85,8 @@ at <CODE>$TAO_ROOT/tests/Portable_Interceptors</CODE>.</p>
 <h3><a name="api">Transitting from TAO's Old "Portable"
 Interceptor APIs to the Standard Portable Interceptor APIs</a></h3>
 
-<p>Please refer to the working draft for details on the proposed
-Portable Interceptor interfaces. Below is the old but now obsolete
+<p>Please refer to CORBA 2.5 specification for details on the proposed
+Portable Interceptor interfaces.  Below is the old but now obsolete
 interceptor version in TAO.</p>
 
 <pre>
@@ -421,9 +404,7 @@ module PortableInterceptor
 <hr><P>
 <H3><a name="ref">References</a></H3>
 <UL>
-  <LI><A
-HREF="http://cgi.omg.org/cgi-bin/doc?ptc/01-03-04.pdf">ptc/2001-03-04</A>
-Portable Interceptors --  published draft with CORBA 2.4+ core chapters</LI>
+  <LI><A HREF="http://www.omg.org/cgi-bin/doc?formal/01-09-34">formal/2001-09-34</A> -- CORBA 2.5 Specification -- contains the Portable Interceptors chapter</LI>
 
 </UL>
 <hr>
