@@ -148,7 +148,7 @@ protected:
 
 #endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 
-class ACE_Thread_Descriptor_Base : public ACE_OS_Thread_Descriptor
+class ACE_Export ACE_Thread_Descriptor_Base : public ACE_OS_Thread_Descriptor
 {
   // = TITLE
   //     Basic information for thread descriptors.  These information

@@ -28,6 +28,17 @@ $(TARGET): $(OBJFILES) $(RESOURCE)
 	$(COMMON_LIBS) $(LIBFILES),, +
 	$(RESOURCE)
 !
+!ifndef DEBUG
+	@del $(TARGET:.exe=.tds)
+!endif
+
+clean:
+	@copy &&!
+@del $(OBJFILES:.obj=.obj ^
+@del ) $(RESOURCE)
+! clean_$(NAME)~.bat 1> NUL
+	-@clean_$(NAME)~.bat 2> NUL
+	@del clean_$(NAME)~.bat
 
 !ifdef CPPDIR
 .path.cpp = $(CPPDIR)

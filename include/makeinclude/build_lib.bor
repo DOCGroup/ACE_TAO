@@ -23,7 +23,15 @@ $(TARGET): $(OBJFILES)
 	$(AR) $(LIB_LFLAGS) $(TARGET) @&&!
 	+-$(**: = &^
 	+-)
-!       
+!
+
+clean:
+	@copy &&!
+@del $(OBJFILES:.obj=.obj ^
+@del )
+! clean_$(NAME)~.bat 1> NUL
+	-@clean_$(NAME)~.bat 2> NUL
+	@del clean_$(NAME)~.bat
 
 !ifdef CPPDIR
 .path.cpp = $(CPPDIR)

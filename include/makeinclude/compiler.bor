@@ -31,7 +31,7 @@
 !include <$(ACE_ROOT)\include\makeinclude\ace_flags.bor>
 
 #
-# BCB4 Settings (all we have for now)
+# Build tools
 #
 
 CC = bcc32
@@ -44,7 +44,7 @@ RC = brcc32
 #
 
 !ifdef DEBUG
-DEBUG_CFLAGS = -v -y -Od -r- -vi- -k
+DEBUG_CFLAGS = -v -y -Od -r- -vi- -k -D_DEBUG
 DEBUG_LFLAGS = -v
 !else
 DEBUG_CFLAGS = -O2 -DNDEBUG
