@@ -216,9 +216,3 @@ TAO_AV_UDP_MCast_Transport::recv (iovec *iov,
 {
   return handler_->get_mcast_socket ()->recv (iov,this->peer_addr_,0,timeout);
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_SOCK_Dgram_Mcast_Ex<ACE_Null_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_SOCK_Dgram_Mcast_Ex<ACE_Null_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
