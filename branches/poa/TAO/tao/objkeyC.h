@@ -8,39 +8,17 @@
 #if !defined (_TAO_IDL_OBJKEYC_H_)
 #define _TAO_IDL_OBJKEYC_H_
 
-class TAO_Export TAO{
+class TAO{
 public:
 
 #if !defined (_TAO__TAO_SEQ_OCTET_CH_)
 #define _TAO__TAO_SEQ_OCTET_CH_
 
   // *************************************************************
-  // class _tao_seq_Octet
+  // _tao_seq_Octet
   // *************************************************************
   
-  class TAO_Export _tao_seq_Octet
-  {
-  public:
-    _tao_seq_Octet (void); // default constructor
-    _tao_seq_Octet (CORBA::ULong max);
-    _tao_seq_Octet (CORBA::ULong max, CORBA::ULong length, 
-    	CORBA::Octet *value, CORBA::Boolean release=CORBA::B_FALSE);
-    _tao_seq_Octet(const _tao_seq_Octet &); // copy constructor
-    ~_tao_seq_Octet (void);
-    _tao_seq_Octet &operator= (const _tao_seq_Octet &);
-    CORBA::ULong maximum (void) const;
-    void length (CORBA::ULong);
-    CORBA::ULong length (void) const;
-    CORBA::Octet &operator[] (CORBA::ULong index);
-    const CORBA::Octet &operator[] (CORBA::ULong index) const;
-    static CORBA::Octet *allocbuf (CORBA::ULong nelems);
-    static void freebuf (CORBA::Octet *);
-  private:
-    CORBA::ULong maximum_;
-    CORBA::ULong length_;
-    CORBA::Octet *buffer_;
-    CORBA::Boolean release_;
-  };
+  typedef TAO_Unbounded_Sequence<CORBA::Octet > _tao_seq_Octet;
   typedef _tao_seq_Octet* _tao_seq_Octet_ptr;
   static CORBA::TypeCode_ptr _tc__tao_seq_Octet;
 
@@ -55,7 +33,7 @@ public:
   // class TAO::_tao_seq_Octet_var
   // *************************************************************
 
-  class TAO_Export _tao_seq_Octet_var
+  class _tao_seq_Octet_var
   {
   public:
     _tao_seq_Octet_var (void); // default constructor
@@ -90,7 +68,7 @@ public:
 #if !defined (_TAO__TAO_SEQ_OCTET___OUT_CH_)
 #define _TAO__TAO_SEQ_OCTET___OUT_CH_
 
-  class TAO_Export _tao_seq_Octet_out
+  class _tao_seq_Octet_out
   {
   public:
     _tao_seq_Octet_out (_tao_seq_Octet *&);
@@ -112,10 +90,10 @@ public:
 
 #endif // end #if !defined
 
-  typedef ACE_NESTED_CLASS (TAO,_tao_seq_Octet) ObjectKey;
-  typedef ObjectKey *ObjectKey_ptr; // cjc
-  typedef ACE_NESTED_CLASS (TAO,_tao_seq_Octet_var) ObjectKey_var;
-  typedef ACE_NESTED_CLASS (TAO,_tao_seq_Octet_out) ObjectKey_out;
+  typedef _tao_seq_Octet ObjectKey;
+  typedef _tao_seq_Octet_ptr ObjectKey_ptr;
+  typedef _tao_seq_Octet_var ObjectKey_var;
+  typedef _tao_seq_Octet_out ObjectKey_out;
 
   static CORBA::TypeCode_ptr _tc_ObjectKey;
 

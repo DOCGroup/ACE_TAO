@@ -88,8 +88,6 @@
 #include "tao/corbacom.h"
 #include "tao/objkeyC.h"
 
-typedef TAO::ObjectKey TAO_opaque;
-
 // individual CORBA classes
 #include "tao/sequence.h"
 #include "tao/sequence_T.h"
