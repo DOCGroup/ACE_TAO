@@ -524,7 +524,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::check_hin
   CONNECTION_MAP_ENTRY *possible_entry = (CONNECTION_MAP_ENTRY *) sh->recycling_act ();
 
   // Check to see if the hint svc_handler has been closed down
-  if (possible_entry->ext_id_.state () == ACE_Recyclable::CLOSED)
+  if (possible_entry->ext_id_.state () == ACE_RECYCLABLE_CLOSED)
     {
       // If close, decrement refcount
       if (possible_entry->ext_id_.decrement () == 0)
@@ -544,7 +544,9 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::check_hin
 
   // If hint is not closed, see if it is connected to the correct
   // address and is recyclable
-  else if (possible_entry->ext_id_ == remote_addr)
+  else if ((possible_entry->ext_id_.state () == ACE_RECYCLABLE_IDLE_AND_PURGABLE ||
+            possible_entry->ext_id_.state () == ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE) &&
+           possible_entry->ext_id_.subject () == remote_addr)
     {
       // Hint successful
       found = 1;
@@ -589,7 +591,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find_or_c
 
   // Try to find the address in the cache.  Only if we don't find it
   // do we create a new <SVC_HANDLER> and connect it with the server.
-  if (this->connection_cache_.find (search_addr, entry) == -1)
+  if (this->find (search_addr, entry) == -1)
     {
       // Set the flag
       found = 0;
@@ -796,7 +798,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
 
   // For all successful cases: mark the <svc_handler> in the cache
   // as being <in_use>.  Therefore recyclable is BUSY.
-  entry->ext_id_.state (ACE_Recyclable::BUSY);
+  entry->ext_id_.state (ACE_RECYCLABLE_BUSY);
 
   // And increment the refcount
   entry->ext_id_.increment ();
@@ -823,7 +825,34 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::cache_i (
 
   // Mark the <svc_handler> in the cache as not being <in_use>.
   // Therefore recyclable is IDLE.
-  entry->ext_id_.state (ACE_Recyclable::IDLE_AND_PURGABLE);
+  entry->ext_id_.state (ACE_RECYCLABLE_IDLE_AND_PURGABLE);
+
+  return 0;
+}
+
+template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::state (const void *recycling_act,
+                                                                              ACE_Recyclable_State new_state)
+{
+  // Synchronization is required here as the setting of the recyclable
+  // state must be done atomically with respect to other threads that
+  // are querying the cache.
+  ACE_GUARD_RETURN (MUTEX, ace_mon, *this->lock_, -1);
+
+  return this->state_i (recycling_act,
+                        new_state);
+}
+
+template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::state_i (const void *recycling_act,
+                                                                                ACE_Recyclable_State new_state)
+{
+  // The wonders and perils of ACT
+  CONNECTION_MAP_ENTRY *entry = (CONNECTION_MAP_ENTRY *) recycling_act;
+
+  // Mark the <svc_handler> in the cache as not being <in_use>.
+  // Therefore recyclable is IDLE.
+  entry->ext_id_.state (new_state);
 
   return 0;
 }
@@ -864,7 +893,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::mark_as_c
   CONNECTION_MAP_ENTRY *entry = (CONNECTION_MAP_ENTRY *) recycling_act;
 
   // Mark the <svc_handler> in the cache as CLOSED.
-  entry->ext_id_.state (ACE_Recyclable::CLOSED);
+  entry->ext_id_.state (ACE_RECYCLABLE_CLOSED);
 
   return 0;
 }
@@ -890,7 +919,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::cleanup_h
 
   // If the svc_handler state is closed and the refcount == 0, call
   // close() on svc_handler.
-  if (entry->ext_id_.state () == ACE_Recyclable::CLOSED &&
+  if (entry->ext_id_.state () == ACE_RECYCLABLE_CLOSED &&
       refcount == 0)
     {
       entry->int_id_->recycler (0, 0);
@@ -917,6 +946,44 @@ template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> ACE_Concurrency_S
 ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::concurrency_strategy (void) const
 {
   return this->concurrency_strategy_;
+}
+
+template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find (REFCOUNTED_HASH_RECYCLABLE_ADDRESS &search_addr,
+                                                                             ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, SVC_HANDLER *> *&entry)
+{
+  typedef ACE_Hash_Map_Bucket_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,
+                                       SVC_HANDLER *,
+                                       ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
+                                       ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
+                                       ACE_Null_Mutex>
+    CONNECTION_CACHE_BUCKET_ITERATOR;
+
+  CONNECTION_CACHE_BUCKET_ITERATOR iterator (this->connection_cache_,
+                                             search_addr);
+
+  CONNECTION_CACHE_BUCKET_ITERATOR end (this->connection_cache_,
+                                        search_addr,
+                                        1);
+
+  for (;
+       iterator != end;
+       ++iterator)
+    {
+      REFCOUNTED_HASH_RECYCLABLE_ADDRESS &addr = (*iterator).ext_id_;
+
+      if (addr.state () != ACE_RECYCLABLE_IDLE_AND_PURGABLE &&
+          addr.state () != ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE)
+        continue;
+
+      if (addr != search_addr)
+        continue;
+
+      entry = &(*iterator);
+      return 0;
+    }
+
+  return -1;
 }
 
 template <class SVC_HANDLER> void

@@ -333,7 +333,7 @@ template <class T> ASYS_INLINE
 ACE_Refcounted_Hash_Recyclable<T>::ACE_Refcounted_Hash_Recyclable (void)
   : ACE_Refcountable (0),
     ACE_Hashable (),
-    ACE_Recyclable (ACE_Recyclable::UNKNOWN),
+    ACE_Recyclable (ACE_RECYCLABLE_UNKNOWN),
     t_ ()
 {
 }
@@ -341,7 +341,7 @@ ACE_Refcounted_Hash_Recyclable<T>::ACE_Refcounted_Hash_Recyclable (void)
 template <class T> ASYS_INLINE
 ACE_Refcounted_Hash_Recyclable<T>::ACE_Refcounted_Hash_Recyclable (const T &t,
                                                                    int refcount,
-                                                                   ACE_Recyclable::State state)
+                                                                   ACE_Recyclable_State state)
   : ACE_Refcountable (refcount),
     ACE_Hashable (),
     ACE_Recyclable (state),
@@ -360,24 +360,23 @@ ACE_Refcounted_Hash_Recyclable<T>::hash_i (void) const
   return this->t_.hash ();
 }
 
-template <class T> ASYS_INLINE int
-ACE_Refcounted_Hash_Recyclable<T>::operator== (const ACE_Refcounted_Hash_Recyclable<T> &rhs) const
+template <class T> ASYS_INLINE T &
+ACE_Refcounted_Hash_Recyclable<T>::subject (void)
 {
-  if (this->state () != ACE_Recyclable::IDLE_AND_PURGABLE &&
-      this->state () != ACE_Recyclable::IDLE_BUT_NOT_PURGABLE)
-    return 0;
-  else
-    return this->t_ == rhs.t_;
+  return this->t_;
 }
 
 template <class T> ASYS_INLINE int
-ACE_Refcounted_Hash_Recyclable<T>::operator== (const T &rhs) const
+ACE_Refcounted_Hash_Recyclable<T>::operator== (const ACE_Refcounted_Hash_Recyclable<T> &rhs) const
 {
-  if (this->state () != ACE_Recyclable::IDLE_AND_PURGABLE &&
-      this->state () != ACE_Recyclable::IDLE_BUT_NOT_PURGABLE)
-    return 0;
-  else
-    return this->t_ == rhs;
+  return this->state () == rhs.state () &&
+         this->t_ == rhs.t_;
+}
+
+template <class T> ASYS_INLINE int
+ACE_Refcounted_Hash_Recyclable<T>::operator!= (const ACE_Refcounted_Hash_Recyclable<T> &rhs) const
+{
+  return !this->operator== (rhs);
 }
 
 template <class SVC_HANDLER> ASYS_INLINE int

@@ -71,6 +71,11 @@ public:
   // instead of closing it.  If the object does not have a recycler,
   // it will be closed.
 
+  virtual int state (ACE_Recyclable_State new_state);
+  // Call this method if you want to change the state of the
+  // <Svc_Handler>.  If the object does not have a recycler, this call
+  // will have no effect.
+
   virtual void cleanup_hint (void);
   // When the svc_handle is no longer needed around as a hint, call
   // this method.
@@ -138,7 +143,7 @@ public:
 
 public:
 
-  // = The following methods are not suppose to be public.  
+  // = The following methods are not suppose to be public.
 
   // Because friendship is *not* inherited in C++, these methods have
   // to be public.
@@ -238,7 +243,7 @@ protected:
 
   size_t current_buffer_size_;
   // Current size in bytes of the <Message_Queue> contents.
-  
+
   ACE_Time_Value next_timeout_;
   // Timeout value used to control when the buffer is flushed.
 

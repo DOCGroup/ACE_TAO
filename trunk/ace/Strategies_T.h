@@ -649,17 +649,17 @@ public:
 
   ACE_Refcounted_Hash_Recyclable (const T &t,
                                   int refcount = 0,
-                                  ACE_Recyclable::State state = ACE_Recyclable::UNKNOWN);
+                                  ACE_Recyclable_State state = ACE_RECYCLABLE_UNKNOWN);
   // Constructor.
 
   virtual ~ACE_Refcounted_Hash_Recyclable (void);
   // Destructor
 
   int operator== (const ACE_Refcounted_Hash_Recyclable<T> &rhs) const;
+  int operator!= (const ACE_Refcounted_Hash_Recyclable<T> &rhs) const;
   // Compares two instances.
 
-  int operator== (const T &rhs) const;
-  // Compares two instances.
+  T &subject ();
 
 protected:
   u_long hash_i (void) const;
@@ -747,6 +747,10 @@ public:
   virtual int cache (const void *recycling_act);
   // Add to cache.
 
+  virtual int state (const void *recycling_act,
+                     ACE_Recyclable_State new_state);
+  // Change state to <new_state>.
+
   virtual int mark_as_closed (const void *recycling_act);
   // Mark as closed.
 
@@ -782,11 +786,19 @@ public:
 
 protected:
 
+  int find (REFCOUNTED_HASH_RECYCLABLE_ADDRESS &search_addr,
+            ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, SVC_HANDLER *> *&entry);
+  // Find an idle handle.
+
   virtual int purge_i (const void *recycling_act);
   // Remove from cache (non-locking version).
 
   virtual int cache_i (const void *recycling_act);
   // Add to cache (non-locking version).
+
+  virtual int state_i (const void *recycling_act,
+                       ACE_Recyclable_State new_state);
+  // Change state to <new_state> (non-locking version).
 
   virtual int mark_as_closed_i (const void *recycling_act);
   // Mark as closed (non-locking version).

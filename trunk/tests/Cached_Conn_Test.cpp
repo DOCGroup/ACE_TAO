@@ -74,6 +74,7 @@ Svc_Handler::open (void *)
                 ASYS_TEXT ("opening Svc_Handler %d with handle %d\n"),
                 this,
                 this->peer ().get_handle ()));
+
   return 0;
 }
 
@@ -161,7 +162,8 @@ enum Caching_Strategy_Type
 };
 
 // Default number of clients/servers.
-static int default_iterations = 3000;
+static int default_iterations = 2000;
+static int listen_once = 1;
 static int iterations = default_iterations;
 static double purge_percentage = 20;
 static Caching_Strategy_Type caching_strategy_type = ACE_ALL;
@@ -212,9 +214,8 @@ cached_connect (STRATEGY_CONNECTOR &con,
                        ASYS_TEXT ("connection failed")),
                       -1);
 
-  // Svc_Handler is now idle, so mark it as such and let the cache
-  // recycle it.
-  svc_handler->idle (1);
+  // Reset Svc_Handler state.
+  svc_handler->state (ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE);
 
   return 0;
 }
@@ -262,37 +263,53 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
                                          &caching_connect_strategy,
                                          &activation_strategy);
 
+  // If <listen_once> is true, only one Acceptor is used for the test.
+  ACCEPTOR listen_one_time_acceptor;
+  ACE_INET_Addr server_addr;
+
+  int result = listen_one_time_acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &));
+  ACE_ASSERT (result == 0);
+
+  result = listen_one_time_acceptor.acceptor ().get_local_addr (server_addr);
+  ACE_ASSERT (result == 0);
+
   for (int i = 1; i <= iterations; ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("iteration %d\n"),
                   i));
 
-      // Acceptor
-      ACCEPTOR acceptor;
-      ACE_INET_Addr server_addr;
+      // If <listen_once> is false, one Acceptor is used for every
+      // iteration.
+      ACCEPTOR listen_multiple_times_acceptor;
 
-      // Bind acceptor to any port and then find out what the port
-      // was.
+      ACCEPTOR &acceptor = listen_once ?
+        listen_one_time_acceptor :
+        listen_multiple_times_acceptor;
 
-      if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &)) == -1)
+      if (!listen_once)
         {
-          out_of_sockets_handler ();
-          continue;
-        }
+          // Bind acceptor to any port and then find out what the port
+          // was.
+          if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &)) == -1)
+            {
+              out_of_sockets_handler ();
+              continue;
+            }
 
-      if (acceptor.acceptor ().get_local_addr (server_addr) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("%p\n"),
-                      ASYS_TEXT ("get_local_addr")));
-          ACE_ASSERT (0);
-        }
+          if (acceptor.acceptor ().get_local_addr (server_addr) == -1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ASYS_TEXT ("%p\n"),
+                          ASYS_TEXT ("get_local_addr")));
+              ACE_ASSERT (0);
+            }
 
-      if (debug)
-        ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("starting server at port %d\n"),
-                    server_addr.get_port_number ()));
+          if (debug)
+            ACE_DEBUG ((LM_DEBUG,
+                        ASYS_TEXT ("starting server at port %d\n"),
+                        server_addr.get_port_number ()));
+        }
 
       // Run the cached blocking test.
       int result = cached_connect (strategy_connector,
@@ -363,7 +380,7 @@ test_caching_strategy_type (void)
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "i:p:c:d");
+  ACE_Get_Opt get_opt (argc, argv, "l:i:p:c:d");
 
   int cc;
 
@@ -372,6 +389,9 @@ parse_args (int argc, char *argv[])
       {
       case 'd':
         debug = 1;
+        break;
+      case 'l':
+        listen_once = atoi (get_opt.optarg);
         break;
       case 'i':
         iterations = atoi (get_opt.optarg);
@@ -399,6 +419,7 @@ parse_args (int argc, char *argv[])
                     ASYS_TEXT ("usage: %s ")
                     ASYS_TEXT ("[-c (caching strategy: lru / lfu / fifo / null [default = all])] ")
                     ASYS_TEXT ("[-i (iterations)] ")
+                    ASYS_TEXT ("[-l (listen once)] ")
                     ASYS_TEXT ("[-d (addition debugging output)] ")
                     ASYS_TEXT ("[-p (purge percent)] "),
                     argv[0]));
@@ -416,6 +437,13 @@ main (int argc,
   int result = parse_args (argc, argv);
   if (result != 0)
     return result;
+
+  if (iterations == default_iterations &&
+      listen_once)
+    {
+      default_iterations *= 2;
+      iterations = default_iterations;
+    }
 
   // Start the test only if options are valid.
   ACE_START_TEST (ASYS_TEXT ("Cached_Conn_Test"));
@@ -517,6 +545,7 @@ template class ACE_Hash_Map_Manager_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_
 template class ACE_Hash_Map_Iterator_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Bucket_Iterator<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
 
 // = Caching_Strategy
 template class ACE_Hash_Cache_Map_Manager<ADDR, Svc_Handler *, H_KEY, C_KEYS, CACHING_STRATEGY, ATTRIBUTES>;
@@ -601,6 +630,7 @@ template class ACE_Recyclable_Handler_Caching_Utility<ADDR, CACHED_HANDLER, HASH
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Bucket_Iterator<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
 
 // = Caching_Strategy
 #pragma instantiate ACE_Hash_Cache_Map_Manager<ADDR, Svc_Handler *, H_KEY, C_KEYS, CACHING_STRATEGY, ATTRIBUTES>

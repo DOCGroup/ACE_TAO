@@ -1,3 +1,48 @@
+Thu Jul 15 20:23:39 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Cached_Conn_Test.cpp (test_connection_management): Changed
+	  the test to allow for both one listen endpoint or multiple
+	  listen endpoints.
+
+	* ace/Cached_Connect_Strategy_T.cpp:
+	* ace/Strategies_T.cpp
+
+	  - find: Since the comparison of
+	    REFCOUNTED_HASH_RECYCLABLE_ADDRESS doesn't work very well when
+	    trying to find an idle connection (because there are many idle
+	    states), we now use the new backet iterator to find a idle
+	    connection.
+
+	  - check_hint_i: Explicitly checks for idleness; previously it
+	    was simple checking !closed.
+
+	* ace/Strategies.h (ACE_Recyclable): Changed ACE_Recyclable::State
+	  to ACE_Recyclable_State.
+
+	* ace/Strategies_T.h (ACE_Refcounted_Hash_Recyclable):
+
+	  - Added operator!=(ACE_Refcounted_Hash_Recyclable<T>)
+	  - Removed operator==(T)
+	  - Added T &subject()
+	  - Change operator==(ACE_Refcounted_Hash_Recyclable<T>) to check
+	    for equality in state and subject.
+
+	* ace/Caching_Utility_T.cpp (minimum): Entries marked
+	  ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE should also be considered
+	  for purging.
+
+	* ace/Cleanup_Strategies_T.cpp (cleanup): The hash map of the
+	  connection cache may contain duplicates.  Therefore, we are not
+	  exactly sure which map entry will be removed when calling
+	  unbind().  Therefore, we use the other unbind() which gives us
+	  back the value of the entry that was removed.  This way will
+	  close the correct handler.
+
+	* ace/Svc_Handler.cpp (state): Added a new method that allows the
+	  user to explcitly set the state of the Svc_Handler. If the
+	  Svc_Handler does not have a recycler, this method will have no
+	  effect.
+
 Thu Jul 15 16:39:06 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* Makefile:

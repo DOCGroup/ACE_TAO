@@ -100,6 +100,10 @@ public:
   virtual int cache (const void *recycling_act) = 0;
   // Add to cache.
 
+  virtual int state (const void *recycling_act,
+                     ACE_Recyclable_State new_state) = 0;
+  // Change state to <new_state>.
+
   virtual int mark_as_closed (const void *recycling_act) = 0;
   // Mark as closed.
 
@@ -114,36 +118,18 @@ protected:
 class ACE_Export ACE_Recyclable
 {
 public:
-  enum State
-  {
-    IDLE_AND_PURGABLE,
-    // Idle and can be purged.
-
-    IDLE_BUT_NOT_PURGABLE,
-    // Idle but cannot be purged.
-
-    BUSY = 2,
-    // Busy (i.e., cannot be recycled or purged).
-
-    CLOSED = 3,
-    // Closed.
-
-    UNKNOWN = 4
-    // Unknown state.
-  };
-
   virtual ~ACE_Recyclable (void);
   // Destructor.
 
   // = Set/Get the recyclable bit
-  State state (void) const;
-  void state (State new_state);
+  ACE_Recyclable_State state (void) const;
+  void state (ACE_Recyclable_State new_state);
 
 protected:
-  ACE_Recyclable (State initial_state);
+  ACE_Recyclable (ACE_Recyclable_State initial_state);
   // Protected constructor.
 
-  State state_;
+  ACE_Recyclable_State state_;
   // Our state.
 };
 
