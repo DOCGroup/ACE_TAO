@@ -51,7 +51,7 @@ public:
       this->event_.signal ();
     }
 
-  virtual int handle_signal (int index, siginfo_t *, ucontext_t *)
+  virtual int handle_signal (int, siginfo_t *, ucontext_t *)
     {
       if (this->close_down_)
         return -1;
