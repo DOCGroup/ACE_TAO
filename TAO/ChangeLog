@@ -1,3 +1,16 @@
+Sat Dec 27 09:17:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/LB_server.cpp:
+
+	  Fixed warnings with g++.
+	
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Makefile: 
+
+	  Needed IORManip library. 
+	
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Manage_Object_Group.mpc:
+	  Fixed  a typo in the MPC file.
+
 Sat Dec 27 09:13:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Makefile:
