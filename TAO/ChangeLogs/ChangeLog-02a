@@ -1,3 +1,8 @@
+Sun Jan 14 07:05:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Transport.cpp : A stupid typo that was giving errors
+	  with g++ :( 
+
 Sat Jan 13 18:25:47 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Transport.cpp: Fixed a compile error in g++.
