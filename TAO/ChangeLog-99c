@@ -1,3 +1,9 @@
+Mon Nov 22 21:48:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp: 
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp: 
+	  Fixed the project files too.
+
 Mon Nov 22 20:47:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tao/GIOP_Server_Request.cpp:
