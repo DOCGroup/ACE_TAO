@@ -85,8 +85,10 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << node->repoID () << "\") == 0" << be_uidt_nl
       << ")" << be_uidt << be_uidt_nl
       << "{" << be_idt_nl;
+  *os << "STUB_Object* stub = obj->_stubobj ();" << be_nl
+      << "stub->_incr_refcnt ();" << be_nl;
   *os << node->name () << "_ptr new_obj = new "
-      << node->name () << "(obj->_stubobj ());" << be_nl
+      << node->name () << "(stub);" << be_nl
       << "return new_obj;" << be_uidt_nl
       << "} // end of if" << be_nl;
 

@@ -911,8 +911,6 @@ public:
   // provide some more of the CORBA support.  Implementations of this
   // "CORBA::ORB" class must know how to create stringify/destringify
   // their objrefs, as well as how to marshal and unmarshal them.
-  virtual CORBA::ULong _incr_refcnt (void);
-  virtual CORBA::ULong _decr_refcnt (void);
 
   int open (void);
   // Set up the ORB Core's acceptor to listen on the
@@ -926,6 +924,10 @@ public:
   static CORBA::Boolean orb_free_resources (void);
   // indicates if we have reached a point where all ORB owned resources will be
   // deallocated
+
+  // Reference counting...
+  virtual CORBA::ULong _incr_refcnt (void);
+  virtual CORBA::ULong _decr_refcnt (void);
 
   TAO_Leader_Follower_Info &leader_follower_info (void);
   // get access to the leader_follower_info

@@ -18,21 +18,6 @@
 # include "tao/Typecode.i"
 #endif /* ! __ACE_INLINE__ */
 
-// CORBA compliant duplicate
-CORBA::TypeCode_ptr
-CORBA_TypeCode::_duplicate (CORBA::TypeCode_ptr tc)
-{
-  if (tc)
-    tc->_incr_refcnt ();
-  return tc;
-}
-
-CORBA::TypeCode_ptr
-CORBA::TypeCode::_nil (void)
-{
-  return (CORBA::TypeCode_ptr)0;
-}
-
 CORBA_TypeCode::Bounds::Bounds (void)
   : CORBA_UserException (CORBA::_tc_Bounds)
 {
@@ -42,6 +27,8 @@ CORBA_TypeCode::BadKind::BadKind (void)
   : CORBA_UserException (CORBA::_tc_BadKind)
 {
 }
+
+// decreases the refcount and deletes when refcount reaches 0
 
 // Constructor for CONSTANT typecodes with empty parameter lists.
 // These are only created once, and those constants are shared.
@@ -204,20 +191,6 @@ CORBA_TypeCode::~CORBA_TypeCode (void)
       delete this->private_state_;
       this->private_state_ = 0;
     }
-}
-
-// decreases the refcount and deletes when refcount reaches 0
-
-void CORBA::release (CORBA::TypeCode_ptr tc)
-{
-  if (tc)
-    tc->_decr_refcnt ();
-}
-
-// returns true if the typecode is NULL
-CORBA::Boolean CORBA::is_nil (CORBA::TypeCode_ptr tc)
-{
-  return (CORBA::Boolean) (tc == 0);
 }
 
 // Return the i-th member typecode if it exists, else raise an
@@ -462,9 +435,15 @@ TC_Private_State::TC_Private_State (CORBA::TCKind kind)
 // and the subtree we hold.
 TC_Private_State::~TC_Private_State (void)
 {
-  // the following two just point into the buffer. So we just make it point to NUL
+  // the following just point into the buffer. So we just make it
+  // point to 0
   this->tc_id_ = 0;
-  this->tc_name_ = 0;
+
+  if (this->tc_name_ != 0)
+    {
+      CORBA::string_free (this->tc_name_);
+      this->tc_name_ = 0;
+    }
 
   // determine what kind of children we may have and free the space accordingly
   switch (this->tc_kind_)
@@ -587,41 +566,21 @@ TC_Private_State::~TC_Private_State (void)
 CORBA::ULong
 CORBA_TypeCode::_incr_refcnt (void)
 {
-  assert (this != 0);
-
-  if (this->orb_owns_)
-    return this->refcount_; // this better be 1
-  else if (parent_)
-    // we are owned by the parent
-    //    return parent_->Addref ();
-    return this->refcount_; // 1
-  else
-    return this->refcount_++;
+  return this->refcount_++;
 }
 
 CORBA::ULong
 CORBA_TypeCode::_decr_refcnt (void)
 {
-  ACE_ASSERT (this != 0);
-
-  u_long result;
-
-  if (this->orb_owns_)
-    result = this->refcount_; // 1
-  else if (this->parent_)
-    // return parent_->_decr_refcnt ();
-    result = this->refcount_; // 1
-  else
-    {
-      result = --this->refcount_;
-
-      if (result == 0)
-        delete this;
-
-      return result;
-    }
-
-  return result;
+  {
+    this->refcount_--;
+    if (this->refcount_ != 0)
+      return this->refcount_;
+  }
+  // @@ TODO This is an intentional memory leak to discover other
+  // problems..
+  delete this;
+  return 0;
 }
 
 // check if typecodes are equal. Equality is based on a mix of structural and
@@ -2226,7 +2185,7 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
       else if (!stream.read_ulong (temp) // default used
                  || !stream.read_ulong (temp))   // member count
         {
-          tc->_decr_refcnt ();
+          CORBA::release (tc);
           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
           return 0;
         }
@@ -2246,7 +2205,7 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
             || !stream.skip_string ()         // member name
             || !skip_typecode (stream))
           {   // member typecode
-            tc->_decr_refcnt ();
+            CORBA::release (tc);
             env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
             return 0;
           }
@@ -2257,11 +2216,11 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
                          env) != CORBA::TypeCode::TRAVERSE_CONTINUE
           || !stream.skip_string ())            // member name
         {
-          tc->_decr_refcnt ();
+          CORBA::release (tc);
           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
           return 0;
         }
-      tc->_decr_refcnt ();
+      CORBA::release (tc);
 
       if (stream.decode (CORBA::_tc_TypeCode,
                         &tc, this,

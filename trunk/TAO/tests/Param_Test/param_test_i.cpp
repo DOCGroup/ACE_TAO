@@ -418,6 +418,9 @@ Param_Test_i::test_objref (Coffee_ptr o1,
       Coffee_var myobj = obj_._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
+      if (!CORBA::is_nil (o2))
+	CORBA::release (o2);
+
       if (myobj->_is_equivalent (o1, env))
         {
           o2 = Coffee::_duplicate (myobj.in ());

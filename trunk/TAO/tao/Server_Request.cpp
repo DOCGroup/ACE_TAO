@@ -32,23 +32,6 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Server_Request_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-CORBA_ServerRequest *
-CORBA_ServerRequest::_duplicate (CORBA_ServerRequest *req)
-{
-  if (req)
-    {
-      req->_incr_refcnt ();
-      return req;
-    }
-  return (CORBA_ServerRequest *) 0;
-}
-
-CORBA_ServerRequest *
-CORBA_ServerRequest::_nil (void)
-{
-  return (CORBA_ServerRequest *) 0;
-}
-
 IIOP_ServerRequest::IIOP_ServerRequest (TAO_InputCDR &input,
                                         TAO_OutputCDR &output,
                                         CORBA::ORB_ptr the_orb,
@@ -62,7 +45,6 @@ IIOP_ServerRequest::IIOP_ServerRequest (TAO_InputCDR &input,
     retval_ (0),
     exception_ (0),
     exception_type_ (TAO_GIOP_NO_EXCEPTION),
-    refcount_ (1),
     orb_ (the_orb),
     poa_ (the_poa),
     service_info_ (),
@@ -155,7 +137,6 @@ IIOP_ServerRequest::IIOP_ServerRequest (CORBA::ULong &request_id,
     retval_ (0),
     exception_ (0),
     exception_type_ (TAO_GIOP_NO_EXCEPTION),
-    refcount_ (1),
     orb_ (the_orb),
     poa_ (the_poa),
     service_info_ (0),
@@ -175,25 +156,9 @@ IIOP_ServerRequest::~IIOP_ServerRequest (void)
     delete this->retval_;
   if (this->exception_)
     delete this->exception_;
-}
-
-CORBA::ULong
-IIOP_ServerRequest::_incr_refcnt (void)
-{
-  ACE_ASSERT (this->refcount_ > 0);
-  return this->refcount_++;
-}
-
-CORBA::ULong
-IIOP_ServerRequest::_decr_refcnt (void)
-{
-  ACE_ASSERT (this != 0);
-
-  if (--this->refcount_ != 0)
-    return this->refcount_;
-
-  delete this;
-  return 0;
+#if defined (TAO_COPY_OPNAME)
+  CORBA::string_free (this->operation_);
+#endif
 }
 
 // Unmarshal in/inout params, and set up to marshal the appropriate
@@ -229,9 +194,7 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
       // This is exactly what the TAO IDL compiler generated skeletons do.
 
       CORBA::Any_ptr any = nv->value ();
-      CORBA::TypeCode_ptr tc = any->type ();
-
-      tc->_incr_refcnt ();
+      CORBA::TypeCode_ptr tc = CORBA::TypeCode::_duplicate (any->type ());
 
       void *value;
       if (!any->value ())
@@ -247,15 +210,15 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
 
           // Decrement the refcount of "tc".
           //
-          // The earlier _incr_refcnt is needed since Any::replace ()
-	  // releases the typecode inside the Any.  Without the dup,
-	  // the reference count can go to zero, and the typecode
-	  // would then be deleted.
+          // The earlier TypeCode::_duplicate is needed since
+	  // Any::replace () releases the typecode inside the Any.
+	  // Without the dup, the reference count can go to zero, and
+	  // the typecode would then be deleted.
           //
-          // This _decr_refcnt ensures that the reference count is
-	  // correct so the typecode can be deleted some other time.
+          // This _release that the reference count is correct so the
+	  // typecode can be deleted some other time.
 
-          tc->_decr_refcnt ();
+          CORBA::release (tc);
         }
       else
         value = (void *)any->value (); // memory was already preallocated

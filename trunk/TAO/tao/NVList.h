@@ -43,14 +43,20 @@ public:
   ~CORBA_NamedValue (void);
   // destructor - manages the name and value
 
-  // = Methods required for COM IUnknown support.
+  // The pseudo object static methods..
+  static CORBA_NamedValue* _duplicate (CORBA_NamedValue*);
+  static CORBA_NamedValue* _nil (void);
 
+  // = Reference counting.
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
 
 private:
-  u_int refcount_;
-  // refcount used in release
+  CORBA::ULong refcount_;
+  // maintains how many references exist to this object
+
+  ACE_SYNCH_MUTEX refcount_lock_;
+  // Protects the reference count.
 
   CORBA::Any any_;
   // holds the value
@@ -122,13 +128,15 @@ public:
   CORBA::NamedValue_ptr item (CORBA::ULong n, CORBA::Environment &env);
   // retrieve the item at the nth location. Raises Bounds
 
-
   //  CORBA::Status
   void remove (CORBA::ULong n, CORBA::Environment &env);
   // remove element at index n. Raises Bounds
 
-  // = Methods required for COM IUnknown support
+  // The pseudo object static methods..
+  static CORBA_NVList* _duplicate (CORBA_NVList*);
+  static CORBA_NVList* _nil (void);
 
+  // = Reference counting.
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
 
@@ -149,6 +157,9 @@ private:
 
   CORBA::ULong refcount_;
   // maintains how many references exist to this object
+
+  ACE_SYNCH_MUTEX refcount_lock_;
+  // Protects the reference count.
 
   friend class CORBA_ORB;
   friend class CORBA_Request;

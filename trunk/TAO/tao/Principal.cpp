@@ -10,44 +10,31 @@
 #include "tao/Principal.i"
 #endif /* __ACE_INLINE__ */
 
-void
-CORBA::release (CORBA::Principal_ptr principal)
-{
-  if (principal)
-    principal->_decr_refcnt ();
-}
-
-CORBA::Boolean
-CORBA::is_nil (CORBA::Principal_ptr principal)
-{
-  return (CORBA::Boolean) (principal == 0);
-}
-
 CORBA_Principal::CORBA_Principal (void)
 {
-}
-
-CORBA_Principal::~CORBA_Principal (void)
-{
-  assert (refcount_ == 0);
 }
 
 CORBA::ULong
 CORBA_Principal::_incr_refcnt (void)
 {
-  return ++refcount_;
+  return this->refcount_++;
 }
 
 CORBA::ULong
 CORBA_Principal::_decr_refcnt (void)
 {
   {
-    if (--refcount_ != 0)
-      return refcount_;
+    this->refcount_--;
+    if (this->refcount_ != 0)
+      return this->refcount_;
   }
 
   delete this;
   return 0;
+}
+
+CORBA_Principal::~CORBA_Principal (void)
+{
 }
 
 TAO_OutputCDR&

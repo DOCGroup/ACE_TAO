@@ -1,3 +1,111 @@
+Tue Jul 21 14:19:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* General pass though memory managment:
+	  + Added the pseudo-object mandatory methods (T::_duplicate,
+	  T::_nil()) missing in several classes.
+	  + Normalized the use of reference counting, all the classes
+	  follow the same protocol.
+	  + Added locks to protect reference counting mechanisms.
+	  + Fixed problems in STUB_Object memory managment.
+	  + The CORBA::release(), CORBA::is_nil(), T::_nil() and
+	  T::_duplicate() methods are on the .i files now.
+
+	* tao/Any.h: 
+	* tao/Any.i: 
+	* tao/Any.cpp: 
+	  Anys don't need reference counting, they are regular C++ object
+	  and (per the spec) their contents are deep copied by the copy
+	  ctor, the assignment operator and other methods.
+	  Also fixed several methods that did *not* duplicate the
+	  TypeCode, per the spec, they have to do it; we use
+	  TypeCode::_duplicate() for that purpose, not the (propietary)
+	  _incr_refcnt()
+
+	* tao/Server_Request.h: 
+	* tao/Server_Request.i: 
+	* tao/Server_Request.cpp: 
+	  The CORBA::release(), CORBA::is_nil(), T::_nil() and
+	  T::_duplicate() methods are on the .i files now.
+	  NOTE: Server_Request objects in TAO are magical, the
+	  _duplicate() method returns 0 and release() does nothing.
+	  The problem starts because Server_Request is allocated from the
+	  stack (to speed up things), hence reference counting would be
+	  useless. Adding a clone() method will work better, but the
+	  Server_Request holds pointers to several positions in the CDR
+	  stream, we could clone the CDR stream, but a normal
+	  Server_Request does not own it....  In our opinion (Carlos and
+	  Irfan) we need not worry about this until we find a use case for
+	  it.
+
+	* tao/Typecode_Constants.cpp: 
+	  Use CORBA::release() instead of calling the delete operator
+	  directly, this removed some nasty FMR and FMW problems at
+	  shutdown.
+
+	* TAO_IDL/be/be_visitor_argument/post_upcall_ss.cpp: 
+	  The generated code leaked object references passed as
+	  inout arguments.
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp: 
+	  The generated code did not manage STUB_Object memory properly.
+
+	* tao/IIOP_Object.h: 
+	* tao/IIOP_Object.i: 
+	* tao/IIOP_Object.cpp: 
+	  Refcount follows the same pattern as for the pseudo-objects, it
+	  starts at 1, it is stored in a CORBA::ULong and delete happens
+	  when count reaches 0.
+
+	* tao/NVList.h: 
+	* tao/NVList.i: 
+	* tao/NVList.cpp: 
+	* tao/ORB.h: 
+	* tao/ORB.i: 
+	* tao/ORB.cpp: 
+	* tao/Exception.h: 
+	* tao/Exception.cpp: 
+	  Pseudo object methods revision.
+
+	* tao/Object.h: 
+	* tao/Object.i: 
+	* tao/Object.cpp: 
+	  Added locking to the reference count; this should *not* affect
+	  the critical path, hence it is a *good* change.
+
+	* tao/CurrentC.cpp: 
+	* tao/POAC.cpp: 
+	* tao/PolicyC.cpp: 
+	  Hand crafted the changes in the IDL compiler (mostly fixes to
+	  STUB_Object memory managment).
+
+	* tao/Principal.h: 
+	* tao/Principal.i: 
+	* tao/Principal.cpp: 
+	* tao/Request.h: 
+	* tao/Request.i: 
+	* tao/Request.cpp: 
+	  Completed the pseudo object support for this class.
+
+	* tao/Typecode.h: 
+	* tao/Typecode.i: 
+	* tao/Typecode.cpp: 
+	  ORB owned typecodes follow the same memory rules as normal
+	  ones. Since the ORB always holds a reference to them they just
+	  survive for a longer time.
+
+	* tao/decode.cpp: 
+	  Corrections to the memory managment of STUB_Objects; the
+	  CORBA_Object does release them, but it does not increase the
+	  refcnt on the ctor.
+
+	* tao/deep_copy.cpp: 
+	  Used T::_duplicate instead of the (propietary)
+	  object->_incr_refcnt().
+
+	* tests/Param_Test/param_test_i.cpp: 
+	  The objref test was not releasing its inout argument before
+	  changing it.
+
 Tue Jul 21 12:09:40 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tests/NestedUpcall/MT_Client_Test/run_test.pl:

@@ -231,16 +231,6 @@ public:
   CORBA::Boolean operator>>= (to_object) const;
   // extract an object reference
 
-  // = ALLOCATION
-  void *operator new (size_t, const void *p);
-  // Placement new.
-
-  void *operator new (size_t s);
-  // Default new.
-
-  void operator delete (void *p);
-  // Default delete
-
   // the following are unsafe operations
   // ORBOS/90-01-11, pg 672: For C++ mapping using the CORBA::Environment
   // parameter, two forms of the replace method are provided.
@@ -266,11 +256,6 @@ public:
   // CORBA spec (ORBOS/98-01-11) it returns a non-zero value
   // otherwise. TAO does *not* guarantee that this value may be casted
   // to the contained type safely.
-
-  // = Memory management methods.
-
-  CORBA::ULong _incr_refcnt (void);
-  CORBA::ULong _decr_refcnt (void);
 
   // = Debugging method.
 

@@ -482,8 +482,8 @@ Test_ECG::run (int argc, char* argv[])
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ready_mon, this->ready_mtx_, 1);
       this->ready_ = 1;
       this->test_start_ = ACE_OS::gethrtime ();
-      ready_mon.release ();
       this->ready_cnd_.broadcast ();
+      ready_mon.release ();
 
       ACE_DEBUG ((LM_DEBUG, "activate the  EC\n"));
 

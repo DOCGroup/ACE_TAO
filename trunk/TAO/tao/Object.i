@@ -5,14 +5,20 @@
 ACE_INLINE CORBA::ULong
 CORBA_Object::_incr_refcnt (void)
 {
-  return ++this->refcount_;
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->refcount_lock_, 0);
+  return this->refcount_++;
 }
 
 ACE_INLINE CORBA::ULong
 CORBA_Object::_decr_refcnt (void)
 {
-  if (--this->refcount_ != 0)
-    return this->refcount_;
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->refcount_lock_, 0);
+    this->refcount_--;
+    if (this->refcount_ != 0)
+      return this->refcount_;
+  }
+
   delete this;
   return 0;
 }
@@ -36,7 +42,7 @@ CORBA_Object::_nil (void)
 ACE_INLINE CORBA::Boolean
 CORBA::is_nil (CORBA::Object_ptr obj)
 {
-  return (CORBA::Boolean) (obj == 0);
+  return obj == 0;
 }
 
 ACE_INLINE STUB_Object *

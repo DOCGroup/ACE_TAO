@@ -35,7 +35,9 @@ CORBA_Current_ptr CORBA_Current::_narrow (
          || obj->_servant()->_downcast ("IDL:CORBA/Current:1.0") == 0
       )
   {
-    CORBA_Current_ptr new_obj = new CORBA_Current(obj->_stubobj ());
+    STUB_Object *stub = obj->_stubobj ();
+    stub->_incr_refcnt ();
+    CORBA_Current_ptr new_obj = new CORBA_Current(stub);
     return new_obj;
   } // end of if
   STUB_Object *stub = obj->_servant ()->_create_stub (env);

@@ -63,11 +63,10 @@ CORBA_Any::value (void) const
 // typecode ...
 
 CORBA_Any::CORBA_Any (void)
-  : type_ (CORBA::_tc_null),
+  : type_ (CORBA::TypeCode::_duplicate (CORBA::_tc_null)),
     value_ (0),
     cdr_ (0),
-    any_owns_data_ (CORBA::B_FALSE),
-    refcount_ (1)
+    any_owns_data_ (CORBA::B_FALSE)
 {
 }
 
@@ -78,13 +77,11 @@ CORBA_Any::CORBA_Any (void)
 CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr tc,
                       void *value,
                       CORBA::Boolean any_owns_data)
-  : type_ (tc),
+  : type_ (CORBA::TypeCode::_duplicate (tc)),
     value_ (value),
     cdr_ (0),
-    any_owns_data_ (any_owns_data),
-    refcount_ (1)
+    any_owns_data_ (any_owns_data)
 {
-  tc->_incr_refcnt ();
   // if the Any owns the data, we encode the "value" into a CDR stream and
   // store it. We also destroy the "value" since we own it.
   if (this->any_owns_data_)
@@ -105,15 +102,16 @@ CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr tc,
 
 // Copy constructor for "Any".
 CORBA_Any::CORBA_Any (const CORBA_Any &src)
-  : type_ (src.type_ != 0 ? src.type_ : CORBA::_tc_null),
-    value_ (0),
+  : value_ (0),
     cdr_ (0),
-    any_owns_data_ (CORBA::B_TRUE),
-    refcount_ (1)
+    any_owns_data_ (CORBA::B_TRUE)
 {
-  CORBA::Environment env;
+  if (src.type_ != 0)
+    this->type_ = CORBA::TypeCode::_duplicate (src.type_);
+  else
+    this->type_ = CORBA::TypeCode::_duplicate (CORBA::_tc_null);
 
-  this->type_->_incr_refcnt ();
+  CORBA::Environment env;
 
   // does the source own its data? If not, then it is not in the message block
   // form and must be encoded. Else we must simply duplicate the message block
@@ -143,7 +141,6 @@ CORBA_Any::operator= (const CORBA_Any &src)
   // check if it is a self assignment
   if (this == &src)
     {
-      this->_incr_refcnt ();
       return *this;
     }
 
@@ -163,19 +160,20 @@ CORBA_Any::operator= (const CORBA_Any &src)
 	  // seems to depend on the actual data type. Until we fix
 	  // this I'm afraid we will have to leave with a memory leak
 	  // (coryan).
-          // delete this->value_;
+	  // delete this->value_;
         }
 
-      if (this->type_)
-        this->type_->_decr_refcnt ();
+      if (this->type_ != 0)
+	CORBA::release (this->type_);
     }
 
   // Now copy the contents of the source to ourselves.
-  this->type_ = (src.type_) != 0 ? src.type_ : CORBA::_tc_null;
-  this->type_->_incr_refcnt ();
+  if (src.type_ != 0)
+    this->type_ = CORBA::TypeCode::_duplicate (src.type_);
+  else
+    this->type_ = CORBA::TypeCode::_duplicate (CORBA::_tc_null);
   this->value_ = 0;
   this->any_owns_data_ = CORBA::B_TRUE;
-  this->refcount_ = 1;
 
   // does the source own its data? If not, then it is not in the message block
   // form and must be encoded. Else we must simply duplicate the message block
@@ -196,17 +194,9 @@ CORBA_Any::operator= (const CORBA_Any &src)
 
 // Destructor for an "Any" deep-frees memory if needed.
 //
-// NOTE that the assertion below will fire on application programmer
-// errors, such as using _incr/_decr_refcnt out of sync with the true
-// lifetime of an Any value allocated on the stack.  BUT it involves
-// changing the refcounting policy so that it's initialized to zero,
-// not one ... which policy affects the whole source base, and not
-// just this data type.  Get to this later.
 
 CORBA_Any::~CORBA_Any (void)
 {
-  // assert (this->refcount_ == 0);
-
   // decrement the refcount on the Message_Block we hold, it does not
   // matter if we own the data or not, because we always own the
   // message block (i.e. it is always cloned or duplicated.
@@ -224,13 +214,13 @@ CORBA_Any::~CORBA_Any (void)
 	  // seems to depend on the actual data type. Until we fix
 	  // this I'm afraid we will have to leave with a memory leak
 	  // (coryan).
-          // delete this->value_;
+	  // delete this->value_;
           this->value_ = 0;
         }
     }
 
   if (this->type_)
-    this->type_->_decr_refcnt ();
+    CORBA::release (this->type_);
 
 }
 
@@ -242,10 +232,6 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
                     CORBA::Boolean any_owns_data,
                     CORBA::Environment &env)
 {
-  // we may be replacing ourselves. So before releasing our typecode, we
-  // increment the refcount of the one that will be assigned to us.
-  tc->_incr_refcnt ();
-
   // decrement the refcount on the Message_Block we hold, it does not
   // matter if we own the data or not, because we always own the
   // message block (i.e. it is always cloned or duplicated.
@@ -260,16 +246,16 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
 	  // seems to depend on the actual data type. Until we fix
 	  // this I'm afraid we will have to leave with a memory leak
 	  // (coryan).
-          // delete this->value_;
+	  // delete this->value_;
         }
     }
 
   // release our current typecode
   if (this->type_ != 0)
-    this->type_->_decr_refcnt ();
+    CORBA::release (this->type_);
 
   // assign new typecode
-  this->type_ = tc;
+  this->type_ = CORBA::TypeCode::_duplicate (tc);
   this->value_ = (void *) value;
   this->any_owns_data_ = any_owns_data;
   this->cdr_ = 0;
@@ -629,26 +615,6 @@ CORBA_Any::operator>>= (to_object obj) const
     return CORBA::B_FALSE;
 }
 
-CORBA::ULong
-CORBA_Any::_incr_refcnt (void)
-{
-  return ++refcount_;
-}
-
-CORBA::ULong
-CORBA_Any::_decr_refcnt (void)
-{
-  {
-    ACE_ASSERT (this != 0);
-
-    if (--refcount_ != 0)
-      return refcount_;
-  }
-
-  delete this;
-  return 0;
-}
-
 // ----------------------------------------------------------------------
 // Any_var type
 // ----------------------------------------------------------------------
@@ -670,7 +636,7 @@ CORBA::Any_var &
 CORBA_Any_var::operator= (const CORBA::Any_var& r)
 {
   if (this->ptr_ != 0)
-    delete (this->ptr_);
+    delete this->ptr_;
 
   this->ptr_ = new CORBA::Any (*r.ptr_);
   return *this;
