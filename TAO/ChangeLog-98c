@@ -1,6 +1,17 @@
+Fri Nov 14 13:02:52 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* tao/decode.cpp: TAO_Marshal_Objref::decode line 615 which tried
+	to set the underlying object_addr was invoking an incorrect inline
+	function because of lack of passing an argument to the object_addr
+	() method. Specifically, due to the lask of argment, the
+	"retrieve" method was getting called whereas we wanted the "set"
+	method. All we do is pass a 0 (NUL) argument. This suffices
+	because we have already decoded the host and port number. So all
+	information is with us to set the server address.
+
 Fri Nov 14 00:03:20 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/iiopobj.cpp (Profile): Modified the code to consistently 
+	* tao/iiopobj.cpp (Profile): Modified the code to consistently
 	  store a NUL at the end of each object key string.
 
 Fri Nov 14 00:29:09 1997  David L. Levine  <levine@cs.wustl.edu>
@@ -21,7 +32,7 @@ Thu Nov 13 19:11:36 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 	* tao/iiopobj.h: Replaced the use of "localhost" with
  	   ACE_DEFAULT_SERVER_HOST.  This is necessary to support broken
  	   platforms like MVS that don't support "localhost"...
-	  
+
 	* TAO/tests/Cubit/TAO/IDL_Cubit/svr.cpp (parse_args): Assume for
  	  the moment that any arguments starting with `-O' are `-ORB' or
  	  `-OA'.  This should be fixed by having the ORB_init() and
