@@ -114,6 +114,7 @@ int be_visitor_exception_ctor::visit_field (be_field *node)
     }
 
   *os << " _tao_" << node->local_name ();
+
   return 0;
 }
 
@@ -253,10 +254,11 @@ int be_visitor_exception_ctor::visit_predefined_type (be_predefined_type *node)
         }
       else
         {
-          *os << "const " << bt->name () << "_ptr ";
+          *os << "const " << bt->name ();
         }
 
       *os << " &";
+
       return 0;
     }
   else if (pt == AST_PredefinedType::PT_pseudo
@@ -311,6 +313,7 @@ int be_visitor_exception_ctor::visit_sequence (be_sequence *node)
     }
 
   *os << " &";
+
   return 0;
 }
 
@@ -354,6 +357,7 @@ int be_visitor_exception_ctor::visit_structure (be_structure *node)
     }
 
   *os << " &";
+
   return 0;
 }
 
@@ -381,6 +385,7 @@ int be_visitor_exception_ctor::visit_union (be_union *node)
     }
 
   *os << " &";
+
   return 0;
 }
 

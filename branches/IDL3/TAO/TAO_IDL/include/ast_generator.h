@@ -77,6 +77,7 @@ class UTL_LabelList;
 class UTL_ExprList;
 class AST_StructureFwd;
 class AST_UnionFwd;
+class AST_ValueTypeFwd;
 
 // Defines base class for node generators.
 
@@ -101,10 +102,10 @@ public:
   // Create a node representing an interface.
   virtual AST_Interface *create_interface (
       UTL_ScopedName *n,
-      AST_Interface **ih,
-      long nih,
-      AST_Interface **ih_flat,
-      long nih_flat,
+      AST_Interface **inherits,
+      long n_inherits,
+      AST_Interface **inherits_flat,
+      long n_inherits_flat,
       idl_bool local,
       idl_bool abstract
     );
@@ -117,15 +118,24 @@ public:
     );
 
   // Create a node representing a valuetype.
-  virtual AST_Interface *create_valuetype (
+  virtual AST_ValueType *create_valuetype (
       UTL_ScopedName *n,
-      AST_Interface **ih,
-      long nih
+      AST_Interface **inherits,
+      long n_inherits,
+      AST_ValueType *inherits_concrete,
+      AST_Interface **inherits_flat,
+      long n_inherits_flat,
+      AST_Interface **supports,
+      long n_supports,
+      AST_Interface *supports_concrete,
+      idl_bool abstract,
+      idl_bool truncatable
     );
 
   // Create a node representing a forward declaration of a valuetype.
-  virtual AST_InterfaceFwd *create_valuetype_fwd (
-      UTL_ScopedName *n
+  virtual AST_ValueTypeFwd *create_valuetype_fwd (
+      UTL_ScopedName *n,
+      idl_bool abstract
     );
 
   // Create a node representing an exception.

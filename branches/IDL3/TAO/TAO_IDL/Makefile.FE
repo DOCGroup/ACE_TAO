@@ -60,6 +60,8 @@ FILES = fe/fe_declarator \
         ast/ast_union_fwd \
         ast/ast_union_branch \
         ast/ast_union_label \
+        ast/ast_valuetype \
+        ast/ast_valuetype_fwd \
         ast/ast_generator \
         ast/ast_redef \
         ast/ast_recursive \

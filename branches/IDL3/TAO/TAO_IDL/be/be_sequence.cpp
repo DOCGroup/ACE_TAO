@@ -237,35 +237,12 @@ be_sequence::managed_type (void)
         {
         case AST_Decl::NT_interface:
         case AST_Decl::NT_interface_fwd:
-          {
-            int is_valuetype = 0;
-            be_interface *bf = be_interface::narrow_from_decl (prim_type);
-
-            if (bf != 0)
-              {
-                is_valuetype = bf->is_valuetype ();
-              }
-            else
-              {
-                be_interface_fwd *bff = 
-                  be_interface_fwd::narrow_from_decl (prim_type);
-
-                if (bff != 0)
-                  {
-                    is_valuetype = bff->is_valuetype ();
-                  }
-              }
-            if (is_valuetype)
-              {
-                this->mt_ = be_sequence::MNG_VALUE;
-              }
-            else
-              {
-                this->mt_ = be_sequence::MNG_OBJREF;
-              }
-
+          this->mt_ = be_sequence::MNG_OBJREF;
           break;
-          }
+        case AST_Decl::NT_valuetype:
+        case AST_Decl::NT_valuetype_fwd:
+          this->mt_ = be_sequence::MNG_VALUE;
+          break;
         case AST_Decl::NT_string:
           this->mt_ = be_sequence::MNG_STRING;
           break;

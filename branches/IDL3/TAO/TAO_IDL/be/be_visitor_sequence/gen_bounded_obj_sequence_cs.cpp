@@ -74,23 +74,6 @@ be_visitor_sequence_cs::gen_bounded_obj_sequence (be_sequence *node)
       bt_is_defined = ibt->is_defined ();
     }
 
-  int is_valuetype = 0;
-  be_interface *bf = be_interface::narrow_from_decl (pt);
-
-  if (bf != 0)
-    {
-      is_valuetype = bf->is_valuetype ();
-    }
-  else
-    {
-      be_interface_fwd *bff = be_interface_fwd::narrow_from_decl (pt);
-
-      if (bff != 0)
-        {
-          is_valuetype = bff->is_valuetype ();
-        }
-    }
-
   const char * class_name = node->instance_name ();
 
   static char full_class_name [NAMEBUFSIZE];
@@ -191,7 +174,7 @@ be_visitor_sequence_cs::gen_bounded_obj_sequence (be_sequence *node)
       << "for (CORBA::ULong i = nl; i < ol; ++i)" << be_nl
       << "{" << be_idt_nl;
 
-  if (is_valuetype)
+  if (pt->node_type () == AST_Decl::NT_valuetype)
     {
       *os << "if (tmp[i] != 0)" << be_idt_nl
           << "tmp[i]->_remove_ref ();" << be_uidt_nl

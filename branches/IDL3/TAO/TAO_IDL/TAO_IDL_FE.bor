@@ -38,6 +38,8 @@ OBJFILES = \
 	$(OBJDIR)\ast_union_fwd.obj \
 	$(OBJDIR)\ast_union_branch.obj \
 	$(OBJDIR)\ast_union_label.obj \
+	$(OBJDIR)\ast_valuetype.obj \
+	$(OBJDIR)\ast_valuetype_fwd.obj \
 	$(OBJDIR)\ast_visitor.obj \
 	$(OBJDIR)\fe_declarator.obj \
 	$(OBJDIR)\fe_extern.obj \

@@ -112,32 +112,16 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   *os << be_idt_nl <<": ";
 
   int i;  // loop index
-  int n_inherits_valuetypes = 0;
-  idl_bool valuebase_inherited = 0;
+  be_valuetype *inherited = 0;
 
   if (node->n_inherits () > 0)
     {
       for (i = 0; i < node->n_inherits (); ++i)
         {
-          // %! move is_nested() and nested_type_name() to
-          // AST_Interface, then type AST_Interface can be used
-          be_interface *inherited =
-            be_interface::narrow_from_decl (node->inherits ()[i]);
+          inherited =
+            be_valuetype::narrow_from_decl (node->inherits ()[i]);
 
-          if (!inherited->is_valuetype ()
-              && !inherited->is_abstract ())
-            {
-              continue;
-            }
-
-          ++ n_inherits_valuetypes;
-
-          if (inherited->is_valuetype())
-            {
-              valuebase_inherited = 1;
-            }
-
-          if (n_inherits_valuetypes > 1)
+          if (i > 0)
             {
               *os << ",";
 
@@ -165,26 +149,18 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           *os << inherited->nested_type_name (scope);
         }  // end of for loop
 
-      if (n_inherits_valuetypes > 0)
+      if (i > 0)
         {
-          if (n_inherits_valuetypes > 1)
+          if (i > 1)
             {
               *os << be_uidt;
             }
 
           *os << be_uidt_nl;
-      }
-  }
-
-  if (!valuebase_inherited)
-    {
-      // We do not inherit from any valuetype, hence we do so from the base
-      // CORBA::ValueBase class.
-      if (n_inherits_valuetypes > 1)
-        {
-          *os << ", ";
         }
-
+    }
+  else
+    {
       *os << "public virtual CORBA_ValueBase" << be_uidt_nl;
     }
 
@@ -245,7 +221,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       << "virtual void *_tao_obv_narrow (ptr_arith_t);" << be_nl;
 
   // Support for marshalling.
-  if (!node->is_abstract_valuetype ())
+  if (!node->is_abstract ())
     {
       *os << "virtual CORBA::Boolean "
           << "_tao_marshal_v (TAO_OutputCDR &);" << be_nl;
@@ -281,7 +257,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
     }
   else // Need a way to access the state of derived OBV_ classes.
     {
-      if (!node->is_abstract_valuetype ())
+      if (!node->is_abstract ())
         {
           *os << be_uidt_nl << "protected:" << be_idt_nl;
           *os << "virtual CORBA::Boolean _tao_marshal__"

@@ -162,15 +162,15 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
   this->ctx_->node (node);
   this->ctx_->attribute (node);
 
-  be_operation op (node->field_type (),
-                   AST_Operation::OP_noflags,
-                   node->name (),
-                   0,
-                   0);
+  be_operation get_op (node->field_type (),
+                       AST_Operation::OP_noflags,
+                       node->name (),
+                       0,
+                       0);
 
-  op.set_name ((UTL_IdList *) node->name ()->copy ());
+  get_op.set_name ((UTL_IdList *) node->name ()->copy ());
 
-  if (this->visit_operation (&op) == -1)
+  if (this->visit_operation (&get_op) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_attribute::"
@@ -201,16 +201,16 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
   arg.set_name ((UTL_IdList *) node->name ()->copy ());
 
   // Create the operation.
-  be_operation op2 (&rt,
-                    AST_Operation::OP_noflags,
-                    node->name (),
-                    0,
-                    0);
+  be_operation set_op (&rt,
+                       AST_Operation::OP_noflags,
+                       node->name (),
+                       0,
+                       0);
 
-  op.set_name ((UTL_IdList *) node->name ()->copy ());
-  op.add_argument_to_scope (&arg);
+  set_op.set_name ((UTL_IdList *) node->name ()->copy ());
+  set_op.add_argument_to_scope (&arg);
 
- if (this->visit_operation (&op2) == -1)
+ if (this->visit_operation (&set_op) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_attribute::"
@@ -1004,7 +1004,7 @@ be_visitor_valuetype::gen_field_pd (be_field *node)
 int
 be_visitor_valuetype::gen_init_defn (be_valuetype *node)
 {
-  if (node->is_abstract_valuetype ())
+  if (node->is_abstract ())
     {
       return 0;
     }
@@ -1030,7 +1030,7 @@ be_visitor_valuetype::gen_init_defn (be_valuetype *node)
 int
 be_visitor_valuetype::gen_init_impl (be_valuetype *node)
 {
-  if (node->is_abstract_valuetype ())
+  if (node->is_abstract ())
     {
       return 0;
     }
@@ -1135,7 +1135,7 @@ be_visitor_valuetype::determine_factory_style (be_valuetype* node)
 }
 
 idl_bool
-be_visitor_valuetype::have_operation(be_valuetype* node)
+be_visitor_valuetype::have_operation (be_valuetype* node)
 {
   // Check whatever scope we get for operations/attributes.
 
@@ -1200,35 +1200,26 @@ be_visitor_valuetype::have_operation(be_valuetype* node)
         } // end of for loop
     } // end of if
 
-  //Now traverse inheritance tree.
-  int i;  // loop index
+  // Now traverse inheritance tree.
+  long i;  // loop index
+  long n_inherits = node->n_inherits ();
+  AST_Interface **inherits = node->inherits ();
 
-  AST_Interface *iface =
-    AST_Interface::narrow_from_scope (node);
-
-  for (i = 0; i < iface->n_inherits (); ++i)
+  for (i = 0; i < n_inherits; ++i)
     {
-      AST_Interface *inherited =
-        AST_Interface::narrow_from_decl (iface->inherits ()[i]);
-
-      if (!inherited || !inherited->is_valuetype())
-        {
-          continue;
-        }
-
-      be_valuetype *vt = be_valuetype::narrow_from_decl(node->inherits ()[i]);
+      be_valuetype *vt = be_valuetype::narrow_from_decl (inherits[i]);
 
       if (vt != 0)
         {
           have_operation = have_operation ||
-            be_visitor_valuetype::have_operation(vt);
+            be_visitor_valuetype::have_operation (vt);
 
-          if(have_operation)
+          if (have_operation)
             {
               break;
             }
         }
-    }  // end of for loop
+    }
 
   return have_operation;
 }
@@ -1239,7 +1230,7 @@ be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
   // VT needs RefCounter if it has concrete factory and
   // none of its base VT has ref_counter
 
-  if (determine_factory_style(node) != FS_CONCRETE_FACTORY)
+  if (determine_factory_style (node) != FS_CONCRETE_FACTORY)
     {
       return 0;
     }
@@ -1247,14 +1238,6 @@ be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
   // Now go thru our base VTs and see if one has already.
   for (int i = 0; i < node->n_inherits (); ++i)
     {
-      AST_Interface *inherited =
-        AST_Interface::narrow_from_decl (node->inherits ()[i]);
-
-      if (!inherited || !inherited->is_valuetype ())
-        {
-          continue;
-        }
-
       be_valuetype *vt = be_valuetype::narrow_from_decl (node->inherits ()[i]);
 
       if (vt != 0)
@@ -1274,7 +1257,7 @@ be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
 {
 
   // Just try to find a VT with concrete factory in inheritance tree.
-  if(node == 0)
+  if (node == 0)
     {
       return 0;
     }
@@ -1287,14 +1270,6 @@ be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
   // Now go thru our base VTs.
   for (int i = 0; i < node->n_inherits (); ++i)
     {
-      AST_Interface *inherited =
-        AST_Interface::narrow_from_decl (node->inherits ()[i]);
-
-      if (!inherited || !inherited->is_valuetype ())
-        {
-          continue;
-        }
-
       be_valuetype *vt = be_valuetype::narrow_from_decl (node->inherits ()[i]);
 
       if (vt != 0)

@@ -106,8 +106,10 @@ public:
     EIDL_ILLEGAL_RAISES,        // Error in "raises" clause
     EIDL_ILLEGAL_CONTEXT,       // Error in "context" clause
     EIDL_CANT_INHERIT,          // Cannot inherit from non-interface
+    EIDL_CANT_SUPPORT,          // Cannot support a non-interface
     EIDL_LOOKUP_ERROR,          // Identifier not found
     EIDL_INHERIT_FWD_ERROR,     // Cannot inherit from fwd decl interface
+    EIDL_SUPPORTS_FWD_ERROR,    // Cannot support a fwd decl interface
     EIDL_CONSTANT_EXPECTED,     // We got something else..
     EIDL_NAME_CASE_ERROR,       // Identifier spellings differ only in case
     EIDL_NAME_CASE_WARNING,     // Same as above, but only a warning
@@ -201,7 +203,28 @@ public:
   void inheritance_error (UTL_ScopedName *n,
                           AST_Decl *d);
 
-  void abstract_inheritance_error (UTL_ScopedName *n);
+  // Report an attempt to use a forward declared interface which
+  // hasn't been defined yet in an inheritance spec
+  void supports_fwd_error  (UTL_ScopedName *n,
+                            AST_Interface *f);
+
+  // Report an attempt to inherit from something other than an interface
+  void supports_error (UTL_ScopedName *n,
+                       AST_Decl *d);
+
+  // Report an attempt to illegally inherit from an abstract type.
+  void abstract_inheritance_error (UTL_ScopedName *v,
+                                   UTL_ScopedName *i);
+
+  // Report an attempt to support more then one abstract type.
+  void abstract_support_error (UTL_ScopedName *v,
+                               UTL_ScopedName *i);
+
+  // A concrete supported interface must inherit from all concrete
+  // interfaces supported by the valuetype's ancestors, and all of
+  // those conrete interfaces' ancestors.
+  void concrete_supported_inheritance_error (UTL_ScopedName *v,
+                                             UTL_ScopedName *i);
 
   // Report an error while evaluating an expression (division by zero, etc.)
   void eval_error (AST_Expression *d);

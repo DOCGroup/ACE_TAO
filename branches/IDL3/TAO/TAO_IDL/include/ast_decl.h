@@ -120,6 +120,8 @@ public:
       , NT_root                     // Denotes the root of AST
       , NT_interface                // Denotes an interface
       , NT_interface_fwd            // Fwd declared interface
+      , NT_valuetype                // Denotes a valuetype
+      , NT_valuetype_fwd            // Fwd declared valuetype
       , NT_const                    // Denotes a constant
       , NT_except                   // Denotes an exception
       , NT_attr                     // Denotes an attribute

@@ -93,6 +93,8 @@ class AST_PredefinedType;
 class AST_Module;
 class AST_Interface;
 class AST_InterfaceFwd;
+class AST_ValueType;
+class AST_ValueTypeFwd;
 class AST_Constant;
 class AST_Exception;
 class AST_Attribute;
@@ -144,6 +146,10 @@ public:
   virtual AST_Interface *add_interface (AST_Interface *i);
 
   virtual AST_InterfaceFwd *add_interface_fwd (AST_InterfaceFwd *i);
+
+  virtual AST_ValueType *add_valuetype (AST_ValueType *i);
+
+  virtual AST_ValueTypeFwd *add_valuetype_fwd (AST_ValueTypeFwd *i);
 
   virtual AST_Constant *add_constant (AST_Constant *c);
 
@@ -334,9 +340,13 @@ private:
 
   virtual AST_Interface *fe_add_interface (AST_Interface *i);
 
-  virtual AST_InterfaceFwd *fe_add_interface_fwd (AST_InterfaceFwd  *i);
+  virtual AST_InterfaceFwd *fe_add_interface_fwd (AST_InterfaceFwd *i);
 
-  virtual AST_Constant *fe_add_constant (AST_Constant *c);
+  virtual AST_ValueType *fe_add_valuetype (AST_ValueType *i);
+
+  virtual AST_ValueTypeFwd *fe_add_valuetype_fwd (AST_ValueTypeFwd *i);
+
+  virtual AST_Constant *fe_add_constant (AST_Constant *i);
 
   virtual AST_Exception *fe_add_exception (AST_Exception *e);
 

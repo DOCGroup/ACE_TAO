@@ -135,11 +135,18 @@ error_string (UTL_Error::ErrorCode c)
     case UTL_Error::EIDL_ILLEGAL_CONTEXT:
       return "error in context(..) clause, ";
     case UTL_Error::EIDL_CANT_INHERIT:
+      // More intelligible message printed by error routine.
+      return "";
+    case UTL_Error::EIDL_CANT_SUPPORT:
+      // More intelligible message printed by error routine.
       return "";
     case UTL_Error::EIDL_LOOKUP_ERROR:
       return "error in lookup of symbol: ";
     case UTL_Error::EIDL_INHERIT_FWD_ERROR:
-      /* More intelligible message printed by error routine */
+      // More intelligible message printed by error routine.
+      return "";
+    case UTL_Error::EIDL_SUPPORTS_FWD_ERROR:
+      // More intelligible message printed by error routine.
       return "";
     case UTL_Error::EIDL_CONSTANT_EXPECTED:
       return "constant expected: ";
@@ -252,19 +259,17 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
   case IDL_GlobalData::PS_ConstDeclSeen:
     return "Malformed const declaration";
   case IDL_GlobalData::PS_ExceptDeclSeen:
-    return
-      "Malformed exception declaration";
+    return "Malformed exception declaration";
   case IDL_GlobalData::PS_InterfaceDeclSeen:
-    return
-      "Malformed interface declaration";
+    return "Malformed interface declaration";
+  case IDL_GlobalData::PS_ValuetypeDeclSeen:
+    return "Malformed value type declaration";
   case IDL_GlobalData::PS_ModuleDeclSeen:
     return "Malformed module declaration";
   case IDL_GlobalData::PS_AttrDeclSeen:
-    return
-      "Malformed attribute declaration";
+    return "Malformed attribute declaration";
   case IDL_GlobalData::PS_OpDeclSeen:
-    return
-      "Malformed operation declaration";
+    return "Malformed operation declaration";
   case IDL_GlobalData::PS_ModuleSeen:
     return "Missing module identifier following MODULE keyword";
   case IDL_GlobalData::PS_ModuleIDSeen:
@@ -277,12 +282,22 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Illegal syntax following module body statement(s)";
   case IDL_GlobalData::PS_InterfaceSeen:
     return "Missing interface identifier following INTERFACE keyword";
+  case IDL_GlobalData::PS_ValuetypeSeen:
+    return "Missing interface identifier following VALUETYPE keyword";
   case IDL_GlobalData::PS_InterfaceIDSeen:
     return "Illegal syntax following interface identifier";
+  case IDL_GlobalData::PS_ValuetypeIDSeen:
+    return "Illegal syntax following value type identifier";
   case IDL_GlobalData::PS_InheritSpecSeen:
     return "Missing '{' or illegal syntax following inheritance spec";
   case IDL_GlobalData::PS_InterfaceForwardSeen:
     return "Missing ';' following forward interface declaration";
+  case IDL_GlobalData::PS_ValuetypeForwardSeen:
+    return "Missing ';' following forward value type declaration";
+  case IDL_GlobalData::PS_StructForwardSeen:
+    return "Missing ';' following forward struct declaration";
+  case IDL_GlobalData::PS_UnionForwardSeen:
+    return "Missing ';' following forward union declaration";
   case IDL_GlobalData::PS_InterfaceSqSeen:
     return "Illegal syntax following interface '{' opener";
   case IDL_GlobalData::PS_InterfaceQsSeen:
@@ -696,7 +711,7 @@ UTL_Error::inheritance_fwd_error (UTL_ScopedName *n,
                     f->file_name ());
   ACE_ERROR ((LM_ERROR,
               "interface "));
-  n->dump (*ACE_DEFAULT_LOG_STREAM);;
+  n->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               " cannot inherit from forward declared interface "));
   f->local_name ()->dump (*ACE_DEFAULT_LOG_STREAM);
@@ -716,27 +731,106 @@ UTL_Error::inheritance_error (UTL_ScopedName *n,
   n->dump (*ACE_DEFAULT_LOG_STREAM);;
   ACE_ERROR ((LM_ERROR,
               " attempts to inherit from "));
+  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR,
+              "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+// Report an attempt to support an interface which was only
+// declared forward but not yet defined.
+void
+UTL_Error::supports_fwd_error (UTL_ScopedName *n,
+                               AST_Interface *f)
+{
+  idl_error_header (EIDL_SUPPORTS_FWD_ERROR,
+                    f->line (),
+                    f->file_name ());
+  ACE_ERROR ((LM_ERROR,
+              "interface "));
+  n->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR,
+              " cannot support forward declared interface "));
+  f->local_name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR,
+              "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+// Report an attempt to support something other than an interface.
+void
+UTL_Error::supports_error (UTL_ScopedName *n,
+                           AST_Decl *d)
+{
+  idl_error_header (EIDL_CANT_SUPPORT,
+                    idl_global->lineno (),
+                    idl_global->filename ());
+  n->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR,
+              " attempts to support "));
   d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
   ACE_ERROR ((LM_ERROR,
               "\n"));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
-// Report inheritance from non-abstract valuetype.
+// Report illegal inheritance from non-abstract valuetype or interface.
 void
-UTL_Error::abstract_inheritance_error (UTL_ScopedName *n)
+UTL_Error::abstract_inheritance_error (UTL_ScopedName *v,
+                                       UTL_ScopedName *i)
 {
   idl_error_header (EIDL_CANT_INHERIT,
                     idl_global->lineno (),
                     idl_global->filename ());
   ACE_ERROR ((LM_ERROR,
               " abstract valuetype "));
-  n->dump (*ACE_DEFAULT_LOG_STREAM);;
+  v->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
-              " attempts to inherit from nonabstract type\n"));
+              " attempts to inherit from nonabstract type: "));
+  i->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR,
+              "\n"));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
+// Report illegal support of non-abstract interface.
+void
+UTL_Error::abstract_support_error (UTL_ScopedName *v,
+                                   UTL_ScopedName *i)
+{
+  idl_error_header (EIDL_CANT_SUPPORT,
+                    idl_global->lineno (),
+                    idl_global->filename ());
+  ACE_ERROR ((LM_ERROR,
+              " valuetype "));
+  v->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR,
+              " attempts to support more than one concrete type: "));
+  i->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR,
+              "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+void
+UTL_Error::concrete_supported_inheritance_error (UTL_ScopedName *v,
+                                                 UTL_ScopedName *i)
+{
+  idl_error_header (EIDL_CANT_SUPPORT,
+                    idl_global->lineno (),
+                    idl_global->filename ());
+  ACE_ERROR ((LM_ERROR,
+              " valuetype "));
+  v->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR,
+              " supports concrete interface that does not inherit from"
+              " all ancestors of valuetype's ancestor's concrete supported"
+              " interface: "));
+  i->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR,
+              "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
 
 // Report an error while evaluating an expression.
 void
@@ -807,7 +901,7 @@ UTL_Error::enum_val_lookup_failure (AST_Union *u,
               " union %s,  enum %s,  enumerator ",
               u->local_name ()->get_string (),
               e->local_name ()->get_string ()));
-  n->dump (*ACE_DEFAULT_LOG_STREAM);;
+  n->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
   idl_global->set_err_count (idl_global->err_count () + 1);

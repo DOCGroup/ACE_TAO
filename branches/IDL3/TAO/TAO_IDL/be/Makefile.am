@@ -49,10 +49,12 @@ libbe_la_SOURCES = \
   be_stream_factory.cpp \
   be_string.cpp \
   be_structure.cpp \
+  be_structure_fwd.cpp \
   be_sunsoft.cpp \
   be_type.cpp \
   be_typedef.cpp \
   be_union.cpp \
+  be_union_fwd.cpp \
   be_union_branch.cpp \
   be_union_label.cpp \
   be_valuetype.cpp \

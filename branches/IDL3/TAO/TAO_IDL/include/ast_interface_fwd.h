@@ -91,7 +91,6 @@ public:
   virtual idl_bool is_local (void);
   virtual idl_bool is_valuetype (void);
   virtual idl_bool is_abstract_valuetype (void);
-  virtual void set_abstract_valuetype (void);
 
   // Cleanup function.
   virtual void destroy (void);

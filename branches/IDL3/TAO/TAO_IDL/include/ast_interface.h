@@ -90,26 +90,21 @@ public:
 
   virtual ~AST_Interface (void);
 
+  // This serves for both interfaces and value types.
   static void fwd_redefinition_helper (AST_Interface *&i,
                                        UTL_Scope *s);
 
+  // This serves only for interfaces, but it is called
+  // from the corresponding AST_ValueType function().
   virtual void redefine (AST_Interface *from);
 
-  AST_Interface **inherits (void);
+  AST_Interface **inherits (void) const;
 
-  void set_inherits (AST_Interface **i);
+  long n_inherits (void) const;
 
-  long n_inherits (void);
+  AST_Interface **inherits_flat (void) const;
 
-  void set_n_inherits (long i);
-
-  AST_Interface **inherits_flat (void);
-
-  void set_inherits_flat (AST_Interface **i);
-
-  long n_inherits_flat (void);
-
-  void set_n_inherits_flat (long i);
+  long n_inherits_flat (void) const;
 
   void be_add_operation (AST_Operation *);
 
@@ -119,18 +114,10 @@ public:
   // Is this interface defined? This predicate returns FALSE when an
   // interface was forward declared but not defined yet, and TRUE in
   // all other cases.
-  virtual idl_bool is_defined (void)
+  idl_bool is_defined (void)
   {
     return (pd_n_inherits < 0) ? I_FALSE : I_TRUE;
   }
-
-  idl_bool is_valuetype (void);
-
-  void set_valuetype (void);
-
-  idl_bool is_abstract_valuetype (void);
-
-  void set_abstract_valuetype (void);
 
   // Check if any member's name clashes with a parent's
   // member's name, or if any parents' members' names
@@ -152,11 +139,6 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
 protected:
-
-  idl_bool is_valuetype_;
-  //
-
-private:
   // Data.
 
   // Immediate ancestors.
@@ -195,8 +177,6 @@ private:
   virtual AST_Typedef *fe_add_typedef (AST_Typedef *t);
 
   virtual AST_Native *fe_add_native (AST_Native *n);
-
-  virtual AST_Factory *fe_add_factory (AST_Factory *f);
 };
 
 #endif           // _AST_INTERFACE_AST_INTERFACE_HH

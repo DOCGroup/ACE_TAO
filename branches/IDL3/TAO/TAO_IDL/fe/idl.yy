@@ -86,8 +86,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 #include "ast_generator.h"
 #include "ast_module.h"
-#include "ast_interface.h"
-#include "ast_interface_fwd.h"
+#include "ast_valuetype.h"
+#include "ast_valuetype_fwd.h"
 #include "utl_string.h"
 #include "ast_constant.h"
 #include "fe_declarator.h"
@@ -384,6 +384,36 @@ definition
 //      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
+        | component
+        {
+//      | component
+          idl_global->set_parse_state (IDL_GlobalData::PS_ComponentSeen);
+        }
+          ';'
+        {
+//      ';'
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+        }
+        | home_decl
+        {
+//      | home_decl
+          idl_global->set_parse_state (IDL_GlobalData::PS_HomeDeclSeen);
+        }
+          ';'
+        {
+//      ';'
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+        }
+        | event
+        {
+//      | event
+          idl_global->set_parse_state (IDL_GlobalData::PS_EventSeen);
+        }
+          ';'
+        {
+//      ';'
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+        }
         | error
         {
 //      | error
@@ -466,7 +496,7 @@ interface :
             {
               i = 
                 idl_global->gen ()->create_interface (
-                                        $1->interface_name (),
+                                        $1->name (),
                                         $1->inherits (),
                                         $1->n_inherits (),
                                         $1->inherits_flat (),
@@ -488,7 +518,7 @@ interface :
           idl_global->scopes ().push (i);
 
           // This FE_InterfaceHeader class isn't destroyed with the AST.
-          $1->interface_name ()->destroy ();
+          $1->name ()->destroy ();
           delete $1;
           $1 = 0;
         }
@@ -544,7 +574,10 @@ interface_header :
                             0);
           ACE_NEW_RETURN ($$,
                           FE_InterfaceHeader (&n,
-                                              $2),
+                                              $2,
+                                              I_FALSE,
+                                              I_FALSE,
+                                              I_TRUE),
                           1);
         }
         |
@@ -563,7 +596,10 @@ interface_header :
                             0);
           ACE_NEW_RETURN ($$,
                           FE_InterfaceHeader (&n, 
-                                              $3),
+                                              $3,
+                                              I_TRUE,
+                                              I_FALSE,
+                                              I_TRUE),
                           1);
         }
         |
@@ -625,28 +661,39 @@ value_concrete_decl :
         {
 // value_concrete_decl : value_header
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_ValueType *v = 0;
           AST_Interface *i = 0;
 
           if (s != 0 && $1 != 0) 
             {
-              i = 
+              v = 
                 idl_global->gen ()->create_valuetype (
-                                        $1->interface_name (),
-                                        $1->inherits (),
-                                        $1->n_inherits ()
-                                      );
+                    $1->name (),
+                    $1->inherits (),
+                    $1->n_inherits (),
+                    $1->inherits_concrete (),
+                    $1->inherits_flat (),
+                    $1->n_inherits_flat (),
+                    $1->supports (),
+                    $1->n_supports (),
+                    $1->supports_concrete (),
+                    I_FALSE,
+                    $1->truncatable ()
+                  );
+              i = AST_Interface::narrow_from_decl (v);
               AST_Interface::fwd_redefinition_helper (i, 
                                                       s);
+              v = AST_ValueType::narrow_from_decl (i);
               /*
                * Add the valuetype to its definition scope
                */
-              (void) s->fe_add_interface (i);
+              (void) s->fe_add_valuetype (v);
             }
 
           /*
            * Push it on the scope stack
            */
-          idl_global->scopes ().push (i);
+          idl_global->scopes ().push (v);
         }
         '{'
         {
@@ -679,36 +726,39 @@ value_abs_decl :
         {
 // value_abs_decl : IDL_ABSTRACT value_header
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Valuetype *v = 0;
           AST_Interface *i = 0;
 
           if (s != 0 && $2 != 0) 
             {
-              if ($2->n_concrete() > 0) 
-                {
-                  idl_global->err ()->abstract_inheritance_error (
-                                          $2->interface_name ()
-                                        );
-                }
-
-              i = 
+              v = 
                 idl_global->gen ()->create_valuetype (
-                                        $2->interface_name (),
-                                        $2->inherits (),
-                                        $2->n_inherits ()
-                                      );
-              i->set_abstract_valuetype ();
+                    $2->name (),
+                    $2->inherits (),
+                    $2->n_inherits (),
+                    $2->inherits_concrete (),
+                    $2->inherits_flat (),
+                    $2->n_inherits_flat (),
+                    $2->supports (),
+                    $2->n_supports (),
+                    $2->supports_concrete (),
+                    I_TRUE,
+                    I_FALSE
+                  );
+              i = AST_Interface::narrow_from_decl (v);
               AST_Interface::fwd_redefinition_helper (i, 
                                                       s);
+              v = AST_ValueType::narrow_from_decl (i);
               /*
                * Add the valuetype to its definition scope
                */
-              (void) s->fe_add_interface (i);
+              (void) s->fe_add_valuetype (v);
             }
 
           /*
            * Push it on the scope stack.
            */
-          idl_global->scopes ().push (i);
+          idl_global->scopes ().push (v);
         }
         '{'
         {
@@ -750,7 +800,8 @@ value_header :
           ACE_NEW_RETURN ($$,
                           FE_obv_header (sn,
                                          $3,
-                                         $4),
+                                         $4,
+                                         $2),
                           1);      
         }
         ;
@@ -791,13 +842,10 @@ opt_truncatable :
 
 supports_spec :
         IDL_SUPPORTS
-        scoped_name
+        at_least_one_scoped_name
         {
-// supports_spec : IDL_SUPPORTS scoped_name
-          ACE_NEW_RETURN ($$,
-                          UTL_NameList ($2, 
-                                        0),
-                          1);
+// supports_spec : IDL_SUPPORTS at_least_one_scoped_name
+          $$ = $2;
         }
         |   /* EMPTY */
         {
@@ -814,8 +862,8 @@ value_forward_decl :
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ($2, 
                             0);
-          AST_InterfaceFwd *f = 0;
-          idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceForwardSeen);
+          AST_ValueTypeFwd *f = 0;
+          idl_global->set_parse_state (IDL_GlobalData::PS_ValuetypeForwardSeen);
 
           /*
            * Create a node representing a forward declaration of an
@@ -823,9 +871,9 @@ value_forward_decl :
            */
           if (s != 0) 
             {
-              f = idl_global->gen()->create_valuetype_fwd (&n);
-              f->set_abstract_valuetype ();
-              (void) s->fe_add_interface_fwd (f);
+              f = idl_global->gen ()->create_valuetype_fwd (&n,
+                                                           I_TRUE);
+              (void) s->fe_add_valuetype_fwd (f);
             }
         }
         |
@@ -835,8 +883,8 @@ value_forward_decl :
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ($1, 
                             0);
-          AST_InterfaceFwd *f = 0;
-          idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceForwardSeen);
+          AST_ValueTypeFwd *f = 0;
+          idl_global->set_parse_state (IDL_GlobalData::PS_ValuetypeForwardSeen);
 
           /*
            * Create a node representing a forward declaration of an
@@ -844,8 +892,9 @@ value_forward_decl :
            */
           if (s != 0) 
             {
-              f = idl_global->gen ()->create_valuetype_fwd (&n);
-              (void) s->fe_add_interface_fwd (f);
+              f = idl_global->gen ()->create_valuetype_fwd (&n,
+                                                            I_FALSE);
+              (void) s->fe_add_valuetype_fwd (f);
             }
         }
         ;
@@ -1086,7 +1135,7 @@ scoped_name
         }
         ;
 
-id: IDENTIFIER
+id : IDENTIFIER
         {
 // id: IDENTIFIER
           ACE_NEW_RETURN ($$,
@@ -2661,7 +2710,7 @@ element_spec :
 struct_forward_type 
         : struct_decl 
         {
-// struct_forward_type : struct_header
+// struct_forward_type : struct_decl
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ($1, 
                             0);
@@ -2681,6 +2730,7 @@ struct_forward_type
 union_forward_type 
         : union_decl 
         {
+// union_forward_type : union_decl
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ($1, 
                             0);
@@ -3876,6 +3926,223 @@ typeprefix_dcl
                    );
             }
         }
+        ;
+
+component 
+        : component_decl
+        | component_forward_decl
+        ;
+
+component_forward_decl :
+        IDL_COMPONENT 
+        id
+        ;
+
+component_decl :
+        component_header 
+        '{' 
+        component_exports 
+        '}'
+        ;
+
+component_header :
+        IDL_COMPONENT 
+        id 
+        component_inheritance_spec 
+        supports_spec
+        ;
+
+component_inheritance_spec 
+        : ':' 
+          scoped_name
+        | /* EMPTY */
+        ;
+
+component_exports 
+        : component_exports component_export
+        | /* EMPTY */
+        ;
+
+component_export 
+        : provides_decl
+          ';'
+        | uses_decl
+          ';'
+        | emits_decl
+          ';'
+        | publishes_decl
+          ';'
+        | consumes_decl
+          ';'
+        | attribute
+          ';'
+        ;
+
+provides_decl :
+        IDL_PROVIDES 
+        interface_type 
+        id
+        ;
+
+interface_type 
+        : scoped_name
+        | IDL_OBJECT
+        ;
+
+uses_decl :
+        IDL_USES 
+        opt_multiple 
+        interface_type 
+        id
+        ;
+
+opt_multiple
+        : IDL_MULTIPLE
+        | /* EMPTY */
+        ;
+
+emits_decl :
+        IDL_EMITS 
+        scoped_name 
+        id
+        ;
+
+publishes_decl :
+        IDL_PUBLISHES 
+        scoped_name 
+        id
+        ;
+
+consumes_decl :
+        IDL_CONSUMES 
+        scoped_name 
+        id
+        ;
+
+home_decl :
+        home_header 
+        home_body
+        ;
+
+home_header :
+        IDL_HOME 
+        id 
+        home_inheritance_spec 
+        supports_spec 
+        IDL_MANAGES 
+        scoped_name 
+        primary_key_spec
+        ;
+
+home_inheritance_spec 
+        : ':'
+          scoped_name
+        | /* EMPTY */
+        ;
+
+primary_key_spec 
+        : IDL_PRIMARYKEY
+          scoped_name
+        | /* EMPTY */
+        ;
+
+home_body :
+        '{'
+        home_exports
+        '}'
+        ;
+
+home_exports 
+        : home_exports home_export
+        | /* EMPTY */
+        ;
+
+home_export 
+        : export
+        | factory_decl
+          ';'
+        | finder_decl
+          ';'
+        ;
+
+factory_decl :
+        IDL_FACTORY
+        id
+        init_parameter_list
+        opt_raises
+        ;
+        
+finder_decl :
+        IDL_FINDER
+        id
+        init_parameter_list
+        opt_raises
+        ;
+        
+event
+        : event_decl
+        | event_abs_decl
+        | event_forward_decl
+        ;
+
+event_forward_decl
+        : event_abs_forward_decl
+        | event_concrete_forward_decl
+        ;
+
+event_concrete_forward_decl :
+        IDL_EVENTTYPE
+        id
+        ;        
+        
+event_abs_forward_decl :
+        IDL_ABSTRACT
+        IDL_EVENTTYPE
+        id
+        ;
+
+event_abs_decl :
+        event_abs_header
+        event_rest_of_header
+        '{'
+        exports
+        '}'
+        ;
+
+event_abs_header :
+        IDL_ABSTRACT
+        IDL_EVENTTYPE
+        id
+        ;
+
+event_custom_header :
+        IDL_CUSTOM
+        IDL_EVENTTYPE
+        id
+        ;
+
+event_plain_header :
+        IDL_EVENTTYPE
+        id
+        ;   
+        
+event_rest_of_header :     
+        opt_truncatable
+        inheritance_spec
+        supports_spec
+        ;
+
+event_decl :
+        event_header
+        event_rest_of_header
+        '{'
+        value_elements
+        '}'
+        ;
+
+event_header
+        : event_custom_header
+        | event_plain_header
         ;
 
 %%

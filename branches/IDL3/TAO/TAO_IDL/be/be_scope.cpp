@@ -2,7 +2,7 @@
 // $Id$
 //
 #include "be_scope.h"
-#include "be_interface.h"
+#include "be_valuetype.h"
 #include "be_module.h"
 #include "be_exception.h"
 #include "be_union.h"
@@ -52,10 +52,12 @@ be_scope::comma (void) const
 be_decl *
 be_scope::decl (void)
 {
-  switch (this->scope_node_type())
+  switch (this->scope_node_type ())
     {
     case AST_Decl::NT_interface:
       return be_interface::narrow_from_scope (this);
+    case AST_Decl::NT_valuetype:
+      return be_valuetype::narrow_from_scope (this);
     case AST_Decl::NT_module:
       return be_module::narrow_from_scope (this);
     case AST_Decl::NT_root:

@@ -323,6 +323,13 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
                   be_valuetype (inherit_name,
                                 0,
                                 0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
                                 0),
                   0);
 
@@ -364,15 +371,21 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
                   AST_Interface_ptr[1],
                   0);
 
-  p_intf[0] = ACE_static_cast (AST_Interface *,
-                               inherit_vt);
+  p_intf[0] = inherit_vt;
 
   be_valuetype *excep_holder = 0;
   ACE_NEW_RETURN (excep_holder,
-                  be_valuetype (excep_holder_name,  // name
-                                p_intf,             // list of inherited
-                                1,                  // number of inherited
-                                0),                 // set abstract
+                  be_valuetype (0,
+                                p_intf,
+                                1,
+                                inherit_vt,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0),
                   0);
 
   excep_holder->set_name (excep_holder_name);

@@ -39,7 +39,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
     }
 
   // Generate the class name.
-  be_type  *pt;
+  be_type *pt;
 
   if (bt->node_type () == AST_Decl::NT_typedef)
     {
@@ -146,24 +146,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       << "{" << be_idt_nl
       << "buf[i] = ";
 
-  int is_valuetype = 0;
-  be_interface *bf = be_interface::narrow_from_decl (pt);
-
-  if (bf != 0)
-    {
-      is_valuetype = bf->is_valuetype ();
-    }
-  else
-    {
-      be_interface_fwd *bff = be_interface_fwd::narrow_from_decl (pt);
-
-      if (bff != 0)
-        {
-          is_valuetype = bff->is_valuetype ();
-        }
-    }
-
-  if (is_valuetype)
+  if (pt->node_type () == AST_Decl::NT_valuetype)
     {
       *os << "0;";
     }
@@ -196,7 +179,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       << "{" << be_idt_nl
       << "if (buffer[i] != ";
 
-  if (is_valuetype)
+  if (pt->node_type () == AST_Decl::NT_valuetype)
     {
       *os << "0)" << be_idt_nl
           << "{" << be_idt_nl
@@ -281,7 +264,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       << "for (CORBA::ULong i = 0; i < rhs.length_; i++)" << be_idt_nl
       << "{" << be_idt_nl;
 
-  if (is_valuetype)
+  if (pt->node_type () == AST_Decl::NT_valuetype)
     {
       *os << "if (tmp2[i] != 0)" << be_idt_nl
           << "tmp2[i]->_add_ref ();" << be_uidt_nl
@@ -337,7 +320,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_idt_nl
       << "{" << be_idt_nl;
 
-  if (is_valuetype)
+  if (pt->node_type () == AST_Decl::NT_valuetype)
     {
       *os << "if (tmp[i] != 0)" << be_idt_nl
           << "tmp[i]->_remove_ref ();" << be_uidt_nl
@@ -387,7 +370,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       << "for (CORBA::ULong i=0; i < rhs.length_; ++i)" << be_idt_nl
       << "{" << be_idt_nl;
 
-  if (is_valuetype)
+  if (pt->node_type () == AST_Decl::NT_valuetype)
     {
       *os << "if (tmp2[i] != 0)" << be_idt_nl
           << "tmp2[i]->_add_ref ();" << be_uidt_nl
@@ -430,7 +413,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
     }
   else
     {
-      if (is_valuetype)
+      if (pt->node_type () == AST_Decl::NT_valuetype)
         {
           *os << "TAO_Valuetype_Manager<";
         }
@@ -461,7 +444,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
     }
   else
     {
-      if (is_valuetype)
+      if (pt->node_type () == AST_Decl::NT_valuetype)
         {
         *os << "return TAO_Valuetype_Manager<";
         }

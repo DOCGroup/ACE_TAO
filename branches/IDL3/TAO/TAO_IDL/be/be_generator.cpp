@@ -245,29 +245,54 @@ be_generator::create_interface_fwd (UTL_ScopedName *n,
   return retval;
 }
 
-AST_Interface *
+AST_ValueType *
 be_generator::create_valuetype (UTL_ScopedName *n,
-                                AST_Interface **ih,
-                                long nih)
+                                AST_Interface **inherits,
+                                long n_inherits,
+                                AST_ValueType *inherits_concrete,
+                                AST_Interface **inherits_flat,
+                                long n_inherits_flat,
+                                AST_Interface **supports,
+                                long n_supports,
+                                AST_Interface *supports_concrete,
+                                idl_bool abstract,
+                                idl_bool truncatable)
 {
   be_valuetype *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_valuetype (n,
-                                ih,
-                                nih),
+                                inherits,
+                                n_inherits,
+                                inherits_concrete,
+                                inherits_flat,
+                                n_inherits_flat,
+                                supports,
+                                n_supports,
+                                supports_concrete,
+                                abstract,
+                                truncatable),
                   0);
 
   return retval;
 }
 
-AST_InterfaceFwd *
-be_generator::create_valuetype_fwd (UTL_ScopedName *n)
+AST_ValueTypeFwd *
+be_generator::create_valuetype_fwd (UTL_ScopedName *n,
+                                    idl_bool abstract)
 {
   be_valuetype_fwd *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_valuetype_fwd (this->create_valuetype (n,
                                                             0,
-                                                            -1),
+                                                            -1,
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            abstract,
+                                                            0),
                                     n),
                   0);
 

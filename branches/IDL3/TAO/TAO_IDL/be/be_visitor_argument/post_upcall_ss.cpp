@@ -30,7 +30,7 @@ ACE_RCSID (be_visitor_argument,
 be_visitor_args_post_upcall_ss::be_visitor_args_post_upcall_ss (
     be_visitor_context *ctx
   )
-  : be_visitor_args (ctx)
+  : be_visitor_scope (ctx)
 {
 }
 

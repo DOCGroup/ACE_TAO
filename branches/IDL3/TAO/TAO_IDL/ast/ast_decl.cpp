@@ -741,7 +741,7 @@ AST_Decl::set_id_with_typeid (char *value)
         AST_Interface *iface = 
           AST_Interface::narrow_from_scope (this->defined_in ());
 
-        if (iface == 0 || iface->is_valuetype () == 0)
+        if (iface == 0 || iface->node_type () == AST_Decl::NT_valuetype == 0)
           {
             idl_global->err ()->error1 (UTL_Error::EIDL_INVALID_TYPEID,
                                         this);

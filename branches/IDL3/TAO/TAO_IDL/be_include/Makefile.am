@@ -41,10 +41,12 @@ noinst_HEADERS = \
   be_stream_factory.h \
   be_string.h \
   be_structure.h \
+  be_structure_fwd.h \
   be_sunsoft.h \
   be_type.h \
   be_typedef.h \
   be_union.h \
+  be_union_fwd.h \
   be_union_branch.h \
   be_union_label.h \
   be_valuetype.h \

@@ -84,7 +84,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_union_fwd.h"
 #include "ast_structure_fwd.h"
 #include "ast_native.h"
-#include "ast_factory.h"
 #include "ast_visitor.h"
 #include "ast_extern.h"
 #include "utl_err.h"
@@ -98,8 +97,7 @@ ACE_RCSID (ast,
            "$Id$")
 
 AST_Interface::AST_Interface (void)
-  : is_valuetype_ (0),
-    pd_inherits (0),
+  : pd_inherits (0),
     pd_n_inherits (0),
     pd_inherits_flat (0),
     pd_n_inherits_flat (0)
@@ -120,7 +118,6 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
     UTL_Scope (AST_Decl::NT_interface),
     COMMON_Base (local,
                  abstract),
-    is_valuetype_ (0),
     pd_inherits (ih),
     pd_n_inherits (nih),
     pd_inherits_flat (ih_flat),
@@ -134,40 +131,15 @@ AST_Interface::~AST_Interface (void)
 
 // Public operations.
 
-idl_bool
-AST_Interface::is_valuetype (void)
-{
-  return this->is_valuetype_;
-}
-
-void
-AST_Interface::set_valuetype (void)
-{
-  this->is_valuetype_ = 1;
-}
-
-idl_bool
-AST_Interface::is_abstract_valuetype (void)
-{
-  return this->is_valuetype_ && this->is_abstract_;
-}
-
-void
-AST_Interface::set_abstract_valuetype (void)
-{
-  this->is_valuetype_ = 1;
-  this->is_abstract_ = 1;
-}
-
 void
 AST_Interface::be_replace_operation (AST_Decl *old_op,
                                      AST_Decl *new_op)
 {
-  replace_scope (old_op,
-                 new_op);
+  this->replace_scope (old_op,
+                       new_op);
 
-  replace_referenced (old_op,
-                      new_op);
+  this->replace_referenced (old_op,
+                            new_op);
 }
 
 void
@@ -981,86 +953,20 @@ AST_Interface::fe_add_native (AST_Native *t)
   return t;
 }
 
-AST_Factory *
-AST_Interface::fe_add_factory (AST_Factory *f)
-{
-  AST_Decl *d = 0;
-
-  // Can't add to interface which was not yet defined.
-  if (!this->is_defined ())
-    {
-      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED,
-                                  this,
-                                  f);
-      return 0;
-    }
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (f, I_FALSE)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      f,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, f->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      f,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (f->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (f,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (f);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (f,
-                           I_FALSE,
-                           f->local_name ());
-
-  return f;
-}
-
 // Dump this AST_Interface node to the ostream o.
 void
 AST_Interface::dump (ACE_OSTREAM_TYPE &o)
 {
-  if (this->is_valuetype ())
+  if (this->is_abstract ())
     {
-      if (this->is_abstract_valuetype ())
-        {
-          o << "abstract ";
-        }
-
-      o << "valuetype ";
+      o << "abstract ";
     }
-  else
+  else if (this->is_local ())
     {
-      if (this->is_abstract ())
-        {
-          o << "abstract ";
-        }
-      else if (this->is_local ())
-        {
-          o << "local ";
-        }
-
-      o << "interface ";
+      o << "local ";
     }
+
+  o << "interface ";
 
   this->local_name ()->dump (o);
   o << " ";
@@ -1069,7 +975,7 @@ AST_Interface::dump (ACE_OSTREAM_TYPE &o)
     {
       o << ": ";
 
-      for (long i = 0; i < this->pd_n_inherits; i++)
+      for (long i = 0; i < this->pd_n_inherits; ++i)
         {
           this->pd_inherits[i]->local_name ()->dump (o);
 
@@ -1081,11 +987,14 @@ AST_Interface::dump (ACE_OSTREAM_TYPE &o)
     }
 
   o << " {\n";
+
   UTL_Scope::dump (o);
   idl_global->indent ()->skip_to (o);
+
   o << "}";
 }
 
+// This serves for both interfaces and valuetypes.
 void
 AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
                                         UTL_Scope *s)
@@ -1113,10 +1022,13 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
           return;
         }
 
+      AST_Decl::NodeType nt = d->node_type ();
+
       // If this interface has been forward declared in a previous opening
       // of the module it's defined in, the lookup will find the
       // forward declaration.
-      if (d->node_type () == AST_Decl::NT_interface_fwd)
+      if (nt == AST_Decl::NT_interface_fwd
+          || nt == AST_Decl::NT_valuetype_fwd)
         {
           AST_InterfaceFwd *fwd_def =
             AST_InterfaceFwd::narrow_from_decl (d);
@@ -1124,7 +1036,8 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
           fd = fwd_def->full_definition ();
         }
       // In all other cases, the lookup will find an interface node.
-      else if (d->node_type () == AST_Decl::NT_interface)
+      else if (nt == AST_Decl::NT_interface
+               || nt == AST_Decl::NT_valuetype)
         {
           fd = AST_Interface::narrow_from_decl (d);
         }
@@ -1151,11 +1064,12 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
           // All OK, do the redefinition.
           else
             {
+              AST_Decl::NodeType fd_nt = fd->node_type ();
+              AST_Decl::NodeType i_nt = i->node_type ();
+
               // Only redefinition of the same kind.
               if (i->is_local () != fd->is_local ()
-                  || i->is_valuetype () != fd->is_valuetype ()
-                  || i->is_abstract_valuetype () !=
-                       fd->is_abstract_valuetype ()
+                  || i_nt != fd_nt
                   || i->is_abstract () != fd->is_abstract ()
                   )
                 {
@@ -1175,8 +1089,8 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
     }
 }
 
-// Data accessors.
-
+// This serves only for interfaces. AST_ValueType has its
+// own redefine() function which calls this one.
 void
 AST_Interface::redefine (AST_Interface *from)
 {
@@ -1185,10 +1099,10 @@ AST_Interface::redefine (AST_Interface *from)
   // definition, which may be in a different scope.
   // Since 'this' will replace 'from' upon returning
   // from here, we have to update the scope now.
-  this->set_inherits (from->inherits ());
-  this->set_n_inherits (from->n_inherits ());
-  this->set_inherits_flat (from->inherits_flat ());
-  this->set_n_inherits_flat (from->n_inherits_flat ());
+  this->pd_inherits = from->pd_inherits;
+  this->pd_n_inherits = from->pd_n_inherits;
+  this->pd_inherits_flat = from->pd_inherits_flat;
+  this->pd_n_inherits_flat = from->pd_n_inherits_flat;
 
   // We've already checked for inconsistent prefixes.
   this->prefix (ACE::strnew (from->prefix ()));
@@ -1202,52 +1116,30 @@ AST_Interface::redefine (AST_Interface *from)
   this->ifr_fwd_added_ = from->ifr_fwd_added_;
 }
 
+// Data accessors.
+
 AST_Interface **
-AST_Interface::inherits (void)
+AST_Interface::inherits (void) const
 {
   return this->pd_inherits;
 }
 
-void
-AST_Interface::set_inherits (AST_Interface **i)
-{
-  this->pd_inherits = i;
-}
-
 long
-AST_Interface::n_inherits (void)
+AST_Interface::n_inherits (void) const
 {
   return this->pd_n_inherits;
 }
 
-void
-AST_Interface::set_n_inherits (long i)
-{
-  this->pd_n_inherits = i;
-}
-
 AST_Interface **
-AST_Interface::inherits_flat (void)
+AST_Interface::inherits_flat (void) const
 {
   return this->pd_inherits_flat;
 }
 
-void
-AST_Interface::set_inherits_flat (AST_Interface **i)
-{
-  this->pd_inherits_flat = i;
-}
-
 long
-AST_Interface::n_inherits_flat (void)
+AST_Interface::n_inherits_flat (void) const
 {
   return pd_n_inherits_flat;
-}
-
-void
-AST_Interface::set_n_inherits_flat (long i)
-{
-  this->pd_n_inherits_flat = i;
 }
 
 void
@@ -1403,14 +1295,7 @@ AST_Interface::destroy (void)
 int
 AST_Interface::ast_accept (ast_visitor *visitor)
 {
-  if (this->is_valuetype_)
-    {
-      return visitor->visit_valuetype (this);
-    }
-  else
-    {
-      return visitor->visit_interface (this);
-    }
+  return visitor->visit_interface (this);
 }
 
 // Narrowing methods.

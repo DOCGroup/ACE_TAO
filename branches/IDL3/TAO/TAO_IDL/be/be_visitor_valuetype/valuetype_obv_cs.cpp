@@ -45,16 +45,19 @@ int
 be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
 {
   // only visit non-abstract non-imported valuetype
-  if (node->is_abstract_valuetype () || node->imported ())
-    return 0;
+  if (node->is_abstract () || node->imported ())
+    {
+      return 0;
+    }
 
   TAO_OutStream *os = this->ctx_->stream ();
 
   // OBV_ class has no accessors or modifiers if we are optimizing
   // or the valuetype is abstract.
-  if (!(node->opt_accessor () || node->is_abstract_valuetype () ))
+  if (!(node->opt_accessor () || node->is_abstract ()))
     {
       os->indent ();
+
       *os << "CORBA::Boolean " << be_nl
           << node->full_obv_skel_name ()
           << "::_tao_marshal__" << node->flat_name ()

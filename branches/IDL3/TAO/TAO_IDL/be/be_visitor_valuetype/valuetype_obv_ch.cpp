@@ -45,7 +45,7 @@ int
 be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
 {
   // Only visit non-abstract non-imported valuetype.
-  if (node->is_abstract_valuetype () || node->imported ())
+  if (node->is_abstract () || node->imported ())
     {
       return 0;
     }
@@ -99,14 +99,14 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       //
 
       int i = 0;
+      AST_Interface *inherited = 0;
+
       for (; i < node->n_inherits (); ++i)
         {
-          AST_Interface *inherited =
-            AST_Interface::narrow_from_decl(node->inherits ()[i]);
+          inherited = node->inherits ()[i];
 
-          // we need only concrete valuetypes
-          if (!inherited->is_valuetype ()
-              || inherited->is_abstract ())
+          // We need only concrete valuetypes.
+          if (inherited->is_abstract ())
             {
               continue;
             }

@@ -238,6 +238,14 @@ SOURCE=.\ast\ast_union_label.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ast\ast_valuetype.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ast\ast_valuetype_fwd.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ast\ast_visitor.cpp
 # End Source File
 # Begin Source File
@@ -478,6 +486,14 @@ SOURCE=.\include\ast_union_label.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\include\ast_valuetype.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_valuetype_fwd.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\include\ast_visitor.h
 # End Source File
 # Begin Source File
@@ -583,6 +599,10 @@ SOURCE=.\include\utl_string.h
 # Begin Source File
 
 SOURCE=.\include\utl_strlist.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\fe\y.tab.h
 # End Source File
 # End Group
 # End Target

@@ -38,7 +38,7 @@ be_visitor_valuetype_init_cs::~be_visitor_valuetype_init_cs (void)
 int
 be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
 {
-  if (node->is_abstract_valuetype ())
+  if (node->is_abstract ())
     {
       return 0;
     }
