@@ -125,9 +125,6 @@ public:
   ///  Initializes the <ACE_Time_Value> object from a <timespec_t>.
   ACE_Time_Value (const timespec_t &t);
 
-  /// Copy constructor.
-  ACE_Time_Value (const ACE_Time_Value &tv);
-
 # if defined (ACE_WIN32)
   ///  Initializes the ACE_Time_Value object from a Win32 FILETIME
   ACE_Time_Value (const FILETIME &ft);
