@@ -373,6 +373,11 @@ typedef int key_t;
   #endif /* __GNUC__ */
 #endif /* VXWORKS */
 
+#if defined (ACE_HAS_RENAMED_MAIN)
+// Rename "main ()" to "ace_main ()".
+#define main(ARGC,ARGV) ace_main(ARGC, ARGV)
+#endif /* ACE_HAS_RENAMED_MAIN */
+
 #if defined (ACE_HAS_CHARPTR_SPRINTF)
 #define ACE_SPRINTF_ADAPTER(X) ::strlen (X)
 #else
