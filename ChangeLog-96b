@@ -1,3 +1,61 @@
+Sun Oct 27 11:25:00 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS: modified the ACE_OSCALL_RETURN macro so that we'll
+	  no longer have zillions of warnings about _result not
+	  used...
+
+	* ace/Synch_T: Changed the use of ACE_Mutex for ACE_TSS to
+ 	  ACE_Thread_Mutex.
+
+	* ace: Added the necessary template specializations to get ACE
+ 	  compiled correctly with G++.
+
+	* ace/Log_Msg.h: There were some places in the ACE_{DEBUG,ERROR}
+ 	  macros that should have been using __ace_error but there still
+ 	  using errno (which is wrong since this might be changed due to
+ 	  side-effects of calling ACE_Log_Msg::instance()).  I found this
+ 	  problem due to the use of -Wall with G++!  As a result of this
+	  fix, ACE now compiles much more cleanly with gcc -Wall.
+
+	* ace/Strategy: Improved the scheme used to define the PEER_ADDR
+ 	  type of the ACE_Accept_Strategy so that it will work correctly
+ 	  on platforms whose C++ compilers aren't quite up to handling all
+ 	  variants of template typedefs.  In particular, many platforms
+ 	  don't support the use of template typedefs in parameter names...
+
+	* ace/OS: HP/UX omitted the const in the prototype of
+ 	  const_timewait().  Therefore, I added a new typedef to handle
+ 	  this and updated all the HP/UX config*.h files.
+
+	* ace: Added a new config file (config-sunos5.5-sunc++-4.1.h)
+ 	  which reflects the fact that SunC++ 4.1 fixes template bugs that
+ 	  prevented earlier versions from supporting template typedefs
+ 	  correctly.  The new config file #defines
+ 	  ACE_HAS_TEMPLATE_TYPEDEFS.
+
+Sat Oct 26 02:22:25 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace: On the advice of David Levine, I compiled ACE with gcc
+ 	  -Wall and started to fix lots of minor warnings (e.g.,
+ 	  misordered data member initializations).
+
+	* ace/Local_Tokens.h: Changed the destructors of ACE_Mutex_Token,
+ 	  ACE_RW_Token, ACE_Token_Proxy, and ACE_RW_Token to be virtual.
+
+	* ace/Synch_T.h: Changed the destructor of ACE_TSS to be virtual.
+
+	* ace/OS: Changed the prototype of ACE_OS::select() so that it
+ 	  uses const ACE_Time_Value *.
+
+	* Updated all uses of ACE_Malloc to use the new ACE_*_MEMORY_POOL
+ 	  #defines.  This makes it possible to use the ACE_Malloc<> scheme
+ 	  with lame C++ compilers.
+
+	* ace/ACE: Changed the interface of the new timed send/recv calls
+ 	  to use ACE_Time_Value *, which makes it easier to determine
+	  the blocking semantics at runtime.  Thanks to Bill Fulton
+ 	  <bill@fasttrack2.bscc.bls.com> for suggesting this.
+
 Sat Oct 26 15:55:02 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/OS.h: We determined that MSVC++ is capable of supporting
@@ -7,12 +65,76 @@ Sat Oct 26 15:55:02 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 Fri Oct 25 23:16:16 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
+	* examples/Shared_Malloc/test_multiple_mallocs.cpp: Added a new
+ 	  test that demonstrates the new ability of ACE_Malloc<> to to
+ 	  handle multiple mallocs rooted at different base addresses.
+
 	* ace/Memory_Pool: Fixed this stuff so that it works even when C++
  	  compilers can't grok template typedefs.
 
 	* ace: Put all the macros that handle the fact that many C++
  	  compilers have broken template implementations into one place
 	  (OS.h), rather than having this spread out in many files.
+
+	* In ACE_MMAP_Memory_Pool::init_acquire (), we reset errno to 0 in
+ 	  the case where the file already exists (and errno == EEXIST).
+
+	* Added an ACE_*_Memory_Pool_Options class to each Memory Pool
+ 	  class. The Options class allows detailed parameters to be passed
+ 	  to the constructor of the Memory Pool class. Since a typedef'd
+ 	  Options class was added to every Memory Pool class, this gave us
+ 	  the ability to use traits in ACE_Malloc and
+ 	  ACE_Allocator_Adapter to construct generic Memory Pools that can
+ 	  be initialized uniquely for each instance of ACE_Malloc.  Note
+ 	  that this new feature only works for C++ compilers that support
+ 	  template typedefs correctly (e.g., MSVC++ 4.x, SunC++ 4.1,
+	  and the AIX C++ compiler).
+
+	* Added additional constructors to ACE_Malloc and
+ 	  ACE_Allocator_Adapter to allow Options to be passed in to Memory
+ 	  Pool.
+
+	* Added an extra field in ACE_Name_Options which allows
+ 	  specification of the base address of the memory pool. This is
+ 	  now used by ACE_Local_Name_Space::create_manager() to create an
+ 	  ACE_Allocator_Adapter.  This now allows us to have multiple
+ 	  ACE_Naming_Context simultaneously in the same process address
+ 	  space.
+
+	* Also added error checking for constructors (in
+ 	  ACE_Local_Name_Space and ACE_Malloc) by checking errno
+ 	  values. This is a "hack" since we currently do not use exception
+ 	  handling.
+
+Thu Oct 24 02:43:11 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Connection/misc/Makefile: The Makefile in
+ 	  ACE_wrappers/examples/Connection/misc seems to have been
+ 	  truncated.  I replaced it.  Thanks to Alan Stewart
+ 	  <axs2@osi.com> for reporting this.
+
+	* examples/IPC_SAP/SOCK_SAP/CPP-{inclient,inserver}.cpp: Updated
+ 	  these examples to use the new timed send()/recv() operations.
+
+	* ace/SOCK_IO: Added timed send()/recv() methods, using the base
+ 	  level implementations in class ACE.
+
+	* ace/ACE: Added timed send()/recv() methods.
+
+Wed Oct 23 19:56:45 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp (main): Changed the
+ 	  behavior of the test program so that it doesn't take a
+ 	  local_addr, but rather will use the default (this prevents a
+ 	  common problem that happens when users run the test without
+ 	  reading the README file).
+
+	* ace/ACE.cpp: Added a new method (get_flags) that returns the
+ 	  current setting of flags associated with handle.
+
+	* Start of a brave new world: ACE is now under CVS version
+ 	  control...  Thanks to David Levine and Chris Cleeland
+	  for making this happen.
 
 Sat Oct 19 12:33:56 1996  David L. Levine  <levine@cs.wustl.edu>
 

@@ -44,7 +44,7 @@
 #define ACE_HEX_DUMP(X) \
   do { int __ace_error = errno; \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    ace___->set (__FILE__, __LINE__, 0, errno, ace___->restart (), \
+    ace___->set (__FILE__, __LINE__, 0, __ace_error, ace___->restart (), \
     ace___->msg_ostream ()); \
     ace___->log_hexdump X; \
    } while (0)
@@ -69,7 +69,7 @@
 #define ACE_DEBUG(X) \
   do { int __ace_error = errno; \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    ace___->set (__FILE__, __LINE__, 0, errno, ace___->restart (), ace___->msg_ostream ()); \
+    ace___->set (__FILE__, __LINE__, 0, __ace_error, ace___->restart (), ace___->msg_ostream ()); \
     ace___->log X; \
   } while (0)
 #define ACE_ERROR_INIT(VALUE, FLAGS) \

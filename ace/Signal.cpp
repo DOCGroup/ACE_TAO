@@ -179,7 +179,7 @@ int
 ACE_Sig_Handler::remove_handler (int signum, 
 				 ACE_Sig_Action *new_disp,
 				 ACE_Sig_Action *old_disp,
-				 int sigkey)
+				 int)
 {
   ACE_TRACE ("ACE_Sig_Handler::remove_handler");
   ACE_MT (ACE_TSS_Guard<ACE_Recursive_Thread_Mutex> m (ACE_Sig_Handler::ace_sig_handler_lock_));
@@ -370,7 +370,7 @@ int
 ACE_Sig_Handlers::register_handler (int signum, 
 				    ACE_Event_Handler *new_sh, 
 				    ACE_Sig_Action *new_disp, 
-				    ACE_Event_Handler **old_sh,
+				    ACE_Event_Handler **,
 				    ACE_Sig_Action *old_disp)
 {
   ACE_TRACE ("ACE_Sig_Handlers::register_handler");
@@ -626,6 +626,7 @@ ACE_Sig_Handlers::handler (int signum, ACE_Event_Handler *new_sh)
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_TSS_Guard<ACE_Recursive_Thread_Mutex>;
 template class ACE_Fixed_Set<ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS>;
 template class ACE_Fixed_Set_Iterator<ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

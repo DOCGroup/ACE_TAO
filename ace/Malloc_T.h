@@ -32,32 +32,26 @@ class ACE_Allocator_Adapter : public ACE_Allocator
 public:
   // Trait.
   typedef MALLOC ALLOCATOR;
-  typedef MALLOC::MEMORY_POOL_OPTIONS MEMORY_POOL_OPTIONS;
+
+#if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
+  // The following code will break C++ compilers that don't support
+  // template typedefs correctly.
+  typedef const MALLOC::MEMORY_POOL_OPTIONS *MEMORY_POOL_OPTIONS;
+#else
+  typedef const void *MEMORY_POOL_OPTIONS;
+#endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
   // = Initialization.
   ACE_Allocator_Adapter (const char *pool_name = 0);
-  // Constructor.
+
   ACE_Allocator_Adapter (const char *pool_name,
-			 const char *lock_name);
-  // Constructor.
-  ACE_Allocator_Adapter (const MEMORY_POOL_OPTIONS &options,
-			 const char *pool_name,
-			 const char *lock_name)
-    : allocator_ (options, pool_name, lock_name)
-    { 
+			 const char *lock_name,
+			 MEMORY_POOL_OPTIONS options = 0)
+      : allocator_ (pool_name, lock_name, options)
+    {
       ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter");
     }
-
-  // Constructor (must be here to avoid template bugs).
-
-  ACE_Allocator_Adapter (const MEMORY_POOL_OPTIONS &options,
-			 const char *pool_name = 0)
-    : allocator_ (options, pool_name)
-    { 
-      ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter");
-    }
-
-  // Constructor.
+  // Constructor (this has to be inline to avoid bugs with some C++ compilers.
 
   // = Memory Management
 
@@ -137,7 +131,7 @@ public:
 
 private:
   ALLOCATOR allocator_;
-  // ALLOCATOR instance. 
+  // ALLOCATOR instance, which is owned by the adapter.
 };
 
 // Forward declaration.
@@ -169,40 +163,21 @@ public:
   // name (if necessary).
 
   ACE_Malloc (const char *pool_name,
-	      const char *lock_name);
-  // Initialize ACE_Malloc.  This constructor passes <pool_name> to
-  // initialize the memory pool, and uses <lock_name> to automatically
-  // extract out the name used for the underlying lock name (if
-  // necessary).
-
-  ACE_Malloc (const MEMORY_POOL_OPTIONS &options,
-	      const char *pool_name,
-	      const char *lock_name)
-    : memory_pool_ (options, pool_name),
-      lock_ (lock_name)
-    {
-      ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, LOCK>::ACE_Malloc");
-      this->open ();
-    }
+	      const char *lock_name,
+	      const ACE_MEM_POOL_OPTIONS *options = 0);
   // Initialize ACE_Malloc.  This constructor passes <pool_name> to
   // initialize the memory pool, and uses <lock_name> to automatically
   // extract out the name used for the underlying lock name (if
   // necessary).  In addition, <options> is passed through to
   // initialize the underlying memory pool.
 
-  ACE_Malloc (const MEMORY_POOL_OPTIONS &options,
-	      const char *pool_name = 0)
-    : memory_pool_ (options, pool_name),
-      lock_ (pool_name == 0 ? 0 : ACE::basename (pool_name, 
-						 ACE_DIRECTORY_SEPARATOR_CHAR))
-    {
-      ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, LOCK>::ACE_Malloc");
-      this->open ();
-    }
-
-  // Initialize ACE_Malloc.  This constructor passes <pool_name> to
-  // initialize the memory pool.  In addition, <options> is passed
-  // through to initialize the underlying memory pool.
+#if !defined (ACE_HAS_TEMPLATE_TYPEDEFS)
+  ACE_Malloc (const char *pool_name,
+	      const char *lock_name,
+	      const void *options = 0);
+  // This is necessary to work around template bugs with certain C++
+  // compilers.
+#endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
   int remove (void);
   // Releases resources allocated by ACE_Malloc. 
@@ -320,7 +295,6 @@ private:
 
   LOCK lock_;
   // Local that ensures mutual exclusion.
-
 };
 
 template <ACE_MEM_POOL_1, class LOCK>

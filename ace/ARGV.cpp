@@ -100,7 +100,7 @@ ACE_ARGV::ACE_ARGV (char buf[],
           for (cp = arg; 
 	       *buf != '\0' && *buf != quote; 
 	       buf++, cp++)
-            if (cp - arg < sizeof arg)
+            if (unsigned (cp - arg) < sizeof arg)
               *cp = *buf;
 	  
           *cp = '\0';
@@ -112,7 +112,7 @@ ACE_ARGV::ACE_ARGV (char buf[],
           for (cp = arg; 
 	       *buf && !isspace (*buf); 
 	       buf++, cp++)
-            if (cp - arg < sizeof arg)
+            if (unsigned (cp - arg) < sizeof arg)
               *cp = *buf;
           *cp = '\0';
         }

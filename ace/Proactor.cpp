@@ -30,10 +30,10 @@ public:
   ~ACE_Overlapped_IO (void);
   // Death.
 
-  int dispatch (u_long bytes_transfered);
+  int dispatch (u_long bytes_transferred);
   // Callback the appropriate handle_* method on handler_.
 
-  int initiate (u_long &bytes_transfered);
+  int initiate (u_long &bytes_transferred);
   // Call ReadFile or Writefile.
 
   operator ACE_OVERLAPPED * (void);
@@ -97,25 +97,25 @@ ACE_Overlapped_IO::~ACE_Overlapped_IO (void)
 }
 
 int
-ACE_Overlapped_IO::dispatch (u_long bytes_transfered)
+ACE_Overlapped_IO::dispatch (u_long bytes_transferred)
 {
   if (this->file_ != 0)
     // Move the file pointer forward.
-    file_->lseek (bytes_transfered, SEEK_CUR);
+    file_->lseek (bytes_transferred, SEEK_CUR);
 
   if (this->mask_ == ACE_Event_Handler::WRITE_MASK)
     {
       // Update the message length to reflect what was sent.
-      this->message_->rd_ptr (bytes_transfered);
+      this->message_->rd_ptr (bytes_transferred);
       return handler_->handle_output_complete (this->message_,
-					       bytes_transfered);
+					       bytes_transferred);
     }
   else // this->mask_ == ACE_Event_Handler::READ_MASK
     {
       // Update the message length to reflect what was received.
-      this->message_->wr_ptr (bytes_transfered);
+      this->message_->wr_ptr (bytes_transferred);
       return this->handler_->handle_input_complete (this->message_, 
-						    bytes_transfered);
+						    bytes_transferred);
     }
 }
 
@@ -123,7 +123,7 @@ ACE_Overlapped_IO::dispatch (u_long bytes_transfered)
 // replace will generic ACE_OS calls.
 
 int
-ACE_Overlapped_IO::initiate (u_long &bytes_transfered)
+ACE_Overlapped_IO::initiate (u_long &bytes_transferred)
 {
 #if defined (ACE_WIN32)
   if (this->mask_ == ACE_Event_Handler::WRITE_MASK)
@@ -132,7 +132,7 @@ ACE_Overlapped_IO::initiate (u_long &bytes_transfered)
       return ::WriteFile (this->handler_->get_handle (),
 			  this->message_->rd_ptr (),
 			  this->message_->length (),
-			  &bytes_transfered,
+			  &bytes_transferred,
 			  this);
     }
   else
@@ -141,10 +141,11 @@ ACE_Overlapped_IO::initiate (u_long &bytes_transfered)
       return ::ReadFile (this->handler_->get_handle (),
 			 this->message_->wr_ptr (),
 			 this->message_->size (),
-			 &bytes_transfered,
+			 &bytes_transferred,
 			 this);
     }
 #else
+  bytes_transferred = bytes_transferred;
   ACE_NOTSUP_RETURN (-1);
 #endif
 }
@@ -177,7 +178,7 @@ ACE_Proactor::close (void)
 }
 
 int
-ACE_Proactor::handle_signal (int index, siginfo_t *, ucontext_t *)
+ACE_Proactor::handle_signal (int, siginfo_t *, ucontext_t *)
 {
   ACE_TRACE ("ACE_Proactor::handle_signal");
 
@@ -224,7 +225,7 @@ ACE_Proactor::handle_events (ACE_Time_Value *how_long)
   how_long = timer_queue_.calculate_timeout (how_long);
 
   ACE_Overlapped_IO *overlapped = 0;
-  u_long bytes_transfered = 0;
+  u_long bytes_transferred = 0;
 
 #if defined (ACE_WIN32)
   int error = 0;
@@ -235,7 +236,7 @@ ACE_Proactor::handle_events (ACE_Time_Value *how_long)
   BOOL result;
 
   result = ::GetQueuedCompletionStatus (this->completion_port_,
-					&bytes_transfered,
+					&bytes_transferred,
 					(u_long *) &io_handle,
 					(ACE_OVERLAPPED **) &overlapped,
   					how_long == 0 ? INFINITE : how_long->msec ());
@@ -288,7 +289,7 @@ ACE_Proactor::handle_events (ACE_Time_Value *how_long)
   // when operations fail, but they still need to be dispatched.
   // Should we propogate this to the handler somehow?  Maybe an extra
   // failed/succeeded flag in the dispatch call?
-  int dispatch_result = this->dispatch (overlapped, bytes_transfered);
+  int dispatch_result = this->dispatch (overlapped, bytes_transferred);
 
   // Compute the time while the Proactor is processing.
   ACE_Time_Value elapsed_time = ACE_OS::gettimeofday () - prev_time;
@@ -313,11 +314,11 @@ ACE_Proactor::handle_events (ACE_Time_Value *how_long)
 // Returns 0 or 1 on success, -1 on failure.
 int
 ACE_Proactor::dispatch (ACE_Overlapped_IO *overlapped, 
-			u_long bytes_transfered)
+			u_long bytes_transferred)
 {
   // Call back the Event_Handler and do what it wants based on the
   // return value.
-  int dispatch_result = overlapped->dispatch (bytes_transfered);
+  int dispatch_result = overlapped->dispatch (bytes_transferred);
 
   switch (dispatch_result)
     {
@@ -368,7 +369,7 @@ int
 ACE_Proactor::initiate (ACE_Overlapped_IO *overlapped)
 {
 #if defined (ACE_WIN32)
-  u_long bytes_transfered = 0;
+  u_long bytes_transferred = 0;
 
   ACE_HANDLE io_handle = overlapped->handler_->get_handle ();
   ACE_HANDLE cp;
@@ -394,7 +395,7 @@ ACE_Proactor::initiate (ACE_Overlapped_IO *overlapped)
 
   // Initiate a WriteFile/ReadFile.  If it succeeds, dispatch the
   // handler.
-  int initiate_result = overlapped->initiate (bytes_transfered);
+  int initiate_result = overlapped->initiate (bytes_transferred);
 
   if (initiate_result)
     // Return 1; the OVERLAPPED will still get queued.
@@ -408,7 +409,7 @@ ACE_Proactor::initiate (ACE_Overlapped_IO *overlapped)
     case ERROR_NETNAME_DELETED:
       // The OVERLAPPED will *not* get queued for this case.  Thus, we
       // have to dispatch immediately. 
-      return this->dispatch (overlapped, bytes_transfered);
+      return this->dispatch (overlapped, bytes_transferred);
  
     case ERROR_IO_PENDING:
       // The IO will complete proactively.
@@ -419,6 +420,7 @@ ACE_Proactor::initiate (ACE_Overlapped_IO *overlapped)
       return -1;
     }
 #else
+  overlapped = overlapped;
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }     
@@ -501,6 +503,13 @@ ACE_Overlapped_File::open (const char *file_name,
       return 0;
     }
 #else
+  file_name = file_name;
+  access = access;
+  share = share;
+  security = security;
+  creation = creation;
+  flags = flags;
+  template_file = template_file;
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }

@@ -43,12 +43,9 @@ class ACE_Export ACE_Sbrk_Memory_Pool
 public:
   typedef ACE_Sbrk_Memory_Pool_Options OPTIONS;
 
-  ACE_Sbrk_Memory_Pool (const char *pool_name = 0);
-  // Initialization constructor.
-
-  ACE_Sbrk_Memory_Pool (const OPTIONS &options,
-			const char *pool_name = 0);
-  // Initialize the pool via the options.
+  ACE_Sbrk_Memory_Pool (const char *pool_name = 0, 
+			const OPTIONS *options = 0);
+  // Initialize the pool.
 
   // = Implementor operations.
   virtual void *init_acquire (size_t nbytes, 
@@ -96,6 +93,7 @@ protected:
 #endif /* !ACE_LACKS_SBRK */
 
 #if !defined (ACE_LACKS_SYSV_SHMEM)
+
 class ACE_Export ACE_Shared_Memory_Pool_Options
   // = TITLE
   //     Helper class for constructor options.
@@ -114,12 +112,9 @@ class ACE_Export ACE_Shared_Memory_Pool : public ACE_Event_Handler
 public:
   typedef ACE_Shared_Memory_Pool_Options OPTIONS;
 
-  ACE_Shared_Memory_Pool (const char *pool_name = ACE_ITOA (ACE_DEFAULT_SHM_KEY));
-  // Initialization constructor.
-
-  ACE_Shared_Memory_Pool (const OPTIONS &options,
-			  const char *pool_name = ACE_ITOA (ACE_DEFAULT_SHM_KEY));
-  // Initialize the pool via the options.
+  ACE_Shared_Memory_Pool (const char *pool_name = ACE_ITOA (ACE_DEFAULT_SHM_KEY),
+			  const OPTIONS *options = 0);
+  // Initialize the pool.
 
   virtual void *init_acquire (size_t nbytes, 
 			      size_t &rounded_bytes, 
@@ -209,12 +204,9 @@ class ACE_Export ACE_Local_Memory_Pool
 public:
   typedef ACE_Local_Memory_Pool_Options OPTIONS;
 
-  ACE_Local_Memory_Pool (const char *pool_name = 0);
-  // Initialization constructor.
-
-  ACE_Local_Memory_Pool (const OPTIONS &options,
-			 const char *pool_name = 0);
-  // Initialize the pool via the options.
+  ACE_Local_Memory_Pool (const char *pool_name = 0,
+			 const OPTIONS *options = 0);
+  // Initialize the pool.
 
   virtual void *init_acquire (size_t nbytes, 
 			      size_t &rounded_bytes, 
@@ -269,14 +261,14 @@ class ACE_Export ACE_MMAP_Memory_Pool_Options
   //     compilers.
 {
 public:
-  ACE_MMAP_Memory_Pool_Options (char *base_addr = ACE_DEFAULT_BASE_ADDR,
+  ACE_MMAP_Memory_Pool_Options (const char *base_addr = ACE_DEFAULT_BASE_ADDR,
 				int use_fixed_addr = 1,
 				int write_each_page = 1)
     : base_addr_ (base_addr),
       use_fixed_addr_ (use_fixed_addr),
       write_each_page_ (write_each_page) {}
 
-  char *base_addr_;
+  const char *base_addr_;
   int use_fixed_addr_;
   int write_each_page_;
 };
@@ -290,12 +282,10 @@ public:
   typedef ACE_MMAP_Memory_Pool_Options OPTIONS;
 
   // = Initialization and termination methods.
-  ACE_MMAP_Memory_Pool (const char *pool_name = 0);
-  // Default constructor.
 
-  ACE_MMAP_Memory_Pool (const OPTIONS &options,
-			const char *pool_name = 0);
-  // Initialize the pool via the options.
+  ACE_MMAP_Memory_Pool (const char *pool_name = 0,
+			const OPTIONS *options = 0);
+  // Initialize the pool.
 
   virtual void *init_acquire (size_t nbytes, 
 			      size_t &rounded_bytes, 
@@ -375,7 +365,7 @@ protected:
   int flags_;
   // Flags passed into <ACE_OS::mmap>.
   
-  const int write_each_page_;
+  int write_each_page_;
   // Should we write a byte to each page to forceably allocate memory
   // for this backing store?
 
@@ -397,12 +387,10 @@ class ACE_Export ACE_Lite_MMAP_Memory_Pool : public ACE_MMAP_Memory_Pool
 {
 public:
   // = Initialization and termination methods.
-  ACE_Lite_MMAP_Memory_Pool (const char *pool_name = 0);
-  // Default constructor.
 
-  ACE_Lite_MMAP_Memory_Pool (const OPTIONS &options,
-			     const char *pool_name = 0);
-  // Initialize the pool via the options.
+  ACE_Lite_MMAP_Memory_Pool (const char *pool_name = 0,
+			     const OPTIONS *options = 0);
+  // Initialize the pool.
 
   int sync (ssize_t len = -1, int flags = MS_SYNC);
   // Overwrite the default sync behavior with no-op
@@ -416,7 +404,3 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_MEMORY_POOL_H */
-
-
-
-

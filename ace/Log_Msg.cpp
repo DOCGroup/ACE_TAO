@@ -63,7 +63,6 @@ ACE_Log_Msg::instance (void)
   // TSS Singleton implementation.
 
   static int once_ = 0;
-  static int count_ = 0;
 
   if (once_ == 0)
     {
@@ -891,3 +890,6 @@ ACE_Log_Msg::getpid (void) const
   return ACE_Log_Msg::pid_;
 }
 
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Guard<ACE_Recursive_Thread_Mutex>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

@@ -19,7 +19,8 @@ main (int argc, char *argv[])
   ACE_Time_Value timeout (argc > 2 
 			  ? ACE_OS::atoi (argv[2]) 
 			  : ACE_DEFAULT_TIMEOUT);
-
+  int sleep_time = argc > 3 ? ACE_OS::atoi (argv[3]) : 0;
+    
   ACE_SOCK_Acceptor peer_acceptor;
 
   // Create a server address.
@@ -54,7 +55,7 @@ main (int argc, char *argv[])
 
       int result = ACE_OS::select (int (peer_acceptor.get_handle ()) + 1,
 				   handle_set,
-				   0, 0, &timeout);
+				   0, 0, timeout);
       if (result == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "select"), -1);
       else if (result == 0)
@@ -83,20 +84,24 @@ main (int argc, char *argv[])
 		  // Wait to read until there's something from the client.
 		  if (ACE_OS::select (int (new_stream.get_handle ()) + 1,
 				      handle_set,
-				      0, 0, 0) == -1)
+				      0, 0, timeout) == -1)
 		    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "select"), -1);
 	      
 		  // Keep reading until the client shuts down.
 		  for (;;)
 		    {
-		      // Sleep for some amount of time in order
-		      // to test client flow control.
-		      ACE_OS::sleep (SOME_RANDOM_TIME_SET_BY_COMMAND_LINE);
+		      // Sleep for some amount of time in order to
+		      // test client flow control.
+		      ACE_OS::sleep (sleep_time);
 
-		      r_bytes = new_stream.recv (buf, sizeof buf);
+		      r_bytes = new_stream.recv (buf, sizeof buf, 0, &timeout);
 
 		      if (r_bytes <= 0)
-			break;
+			{
+			  if (errno == ETIME)
+			    ACE_ERROR ((LM_ERROR, "%p\n", "ACE::recv"));
+			  break;
+			}
 		      else if (ACE::write_n (ACE_STDOUT, buf, r_bytes) != r_bytes)
 			ACE_ERROR ((LM_ERROR, "%p\n", "ACE::send_n"));
 		    }
@@ -113,7 +118,7 @@ main (int argc, char *argv[])
 		    }
 		  else if (r_bytes == -1)
 		    {
-		      if (errno == EWOULDBLOCK)
+		      if (errno == EWOULDBLOCK || errno == ETIME)
 			ACE_DEBUG ((LM_DEBUG, 
 				    "no input available, going back to reading\n"));
 		      else

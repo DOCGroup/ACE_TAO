@@ -914,10 +914,10 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
 // affect existing threads.
   pthread_init ();
 #endif 	//  ACE_HAS_FSU_PTHREADS
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setspecific (key, data), _result), 
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setspecific (key, data), ace_result_), 
 		     int, -1);
 #elif defined (ACE_HAS_STHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setspecific (key, data), _result), int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setspecific (key, data), ace_result_), int, -1);
 #elif defined (ACE_HAS_WTHREADS)
   ::TlsSetValue (key, data);
   ACE_TSS_Cleanup::instance ()->key_used (key);
@@ -947,7 +947,7 @@ ACE_OS::thr_keyfree (ACE_thread_key_t key)
   // Extract out the thread-specific table instance and and free up
   // the key and destructor.
   ACE_TSS_Cleanup::instance ()->remove (key);
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::TlsFree (key), _result), int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::TlsFree (key), ace_result_), int, -1);
 #elif defined (VXWORKS)
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STHREADS */
@@ -962,20 +962,21 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
 		       void *inst)
 {
 // ACE_TRACE ("ACE_OS::thr_keycreate");
+  inst = inst;
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
 #if defined (ACE_HAS_SETKIND_NP)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_keycreate (key, dest), 
-                                       _result), 
+                                       ace_result_), 
                      int, -1);
 #else /* ACE_HAS_SETKIND_NP */
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_key_create (key, dest), 
-                                       _result), 
+                                       ace_result_), 
                      int, -1);
 #endif /* ACE_HAS_SETKIND_NP */
 #elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_keycreate (key, dest), 
-				       _result), 
+				       ace_result_), 
 		     int, -1);
 #elif defined (ACE_HAS_WTHREADS)
   *key = ::TlsAlloc ();
@@ -1002,6 +1003,7 @@ ACE_OS::thr_key_used (ACE_thread_key_t key)
 #if defined (ACE_WIN32)
   return ACE_TSS_Cleanup::instance ()->key_used (key);
 #else
+  key = key;
   ACE_NOTSUP_RETURN (-1);  
 #endif /* ACE_WIN32 */
 }
@@ -1012,6 +1014,7 @@ ACE_OS::thr_key_detach (void *inst)
 #if defined (ACE_WIN32)
   return ACE_TSS_Cleanup::instance()->detach (inst);
 #else
+  inst = inst;
   ACE_NOTSUP_RETURN (-1);  
 #endif /* ACE_WIN32 */
 }
@@ -1199,6 +1202,9 @@ ACE_OS::socket_init (int version_high, int version_low)
 
       ACE_OS::socket_initialized_ = 1;
     }
+#else
+  version_high = version_high;
+  version_low = version_low;
 #endif /* ACE_WIN32 */
   return 0;
 }

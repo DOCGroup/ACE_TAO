@@ -173,7 +173,7 @@ struct ip_mreq
 #define ACE_HAS_SYS_SIGLIST
 #endif	// m88k
 
-/* Turn off the following four defines if you want to disable threading. */
+/* Turn off the following five defines if you want to disable threading. */
 // Compile using multi-thread libraries.
 #define ACE_MT_SAFE
 

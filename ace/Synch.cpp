@@ -430,10 +430,10 @@ ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (const ACE_Recursive_Thre
 
 ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (LPCTSTR name,
 							void *arg)
-  : nesting_level_ (0), 
-    owner_id_ (ACE_OS::NULL_thread),
-    nesting_mutex_ (name, arg),
-    lock_available_ (nesting_mutex_, name, arg)
+  : nesting_mutex_ (name, arg),
+    lock_available_ (nesting_mutex_, name, arg),
+    nesting_level_ (0), 
+    owner_id_ (ACE_OS::NULL_thread)
 {
 #if defined (ACE_HAS_FSU_PTHREADS)
 //	Initialize FSU pthreads package.

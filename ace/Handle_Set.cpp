@@ -24,11 +24,11 @@ ACE_Handle_Set::dump (void) const
   ACE_DEBUG ((LM_DEBUG, "size_ = %d", this->size_));  
   ACE_DEBUG ((LM_DEBUG, "\nmax_handle_ = %d", this->max_handle_));  
 
-#if defined(ACE_WIN32)
+#if defined (ACE_WIN32)
   for (size_t i = 0; i < this->mask_.fd_count + 1; i++) 
     ACE_DEBUG ((LM_DEBUG, " %x ", this->mask_.fd_array[i]));
 #else /* !ACE_WIN32 */
-  for (size_t i = 0; i < this->max_handle_ + 1; i++) 
+  for (ACE_HANDLE i = 0; i < this->max_handle_ + 1; i++) 
     if (this->is_set (i))
       ACE_DEBUG ((LM_DEBUG, " %d ", i));
 #endif /* ACE_WIN32 */

@@ -50,6 +50,7 @@
 // #define ACE_HAS_ORBIX
 // #define ACE_HAS_MT_ORBIX
 
+#define ACE_HAS_TEMPLATE_TYPEDEFS
 #define ACE_LACKS_SBRK
 #define ACE_LACKS_UTSNAME_T
 #define ACE_LACKS_SEMBUF_T
@@ -126,14 +127,15 @@
 
 // Platform supports Windows32 threads.
 #define ACE_HAS_WTHREADS
+
+// Compiler/platform has thread-specific storage
+#define ACE_HAS_THREAD_SPECIFIC_STORAGE
+
 #define ACE_WIN32
 #define ACE_HAS_TEMPLATE_INSTANTIATION
 
 //#define ACE_HAS_ALLOC_HOOKS
 #define ACE_TEMPLATES_REQUIRE_SOURCE
-
-// Compiler/platform has thread-specific storage
-#define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
 // Platform supports ACE_TLI timod STREAMS module.
 //define ACE_HAS_TIMOD_H

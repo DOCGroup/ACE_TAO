@@ -57,7 +57,7 @@ ACE_Name_Space_Map<ALLOCATOR>::close (ALLOCATOR* allocator)
 template <class ALLOCATOR> int 
 ACE_Name_Space_Map<ALLOCATOR>::bind (const ACE_NS_String &ext_id,
 				     const ACE_NS_Internal &int_id,
-				     ALLOCATOR* allocator)
+				     ALLOCATOR *allocator)
 {
   ACE_TRACE ("ACE_Name_Space_Map::bind");
   int result = 0;
@@ -78,7 +78,7 @@ ACE_Name_Space_Map<ALLOCATOR>::bind (const ACE_NS_String &ext_id,
 template <class ALLOCATOR> int 
 ACE_Name_Space_Map<ALLOCATOR>::unbind (const ACE_NS_String &ext_id, 
 				       ACE_NS_Internal &int_id,
-				       ALLOCATOR* allocator)
+				       ALLOCATOR *allocator)
 {
   ACE_TRACE ("ACE_Name_Space_Map::unbind");
   int result = 0;
@@ -100,7 +100,7 @@ ACE_Name_Space_Map<ALLOCATOR>::rebind (const ACE_NS_String &ext_id,
 				       const ACE_NS_Internal &int_id,
 				       ACE_NS_String &old_ext_id, 
 				       ACE_NS_Internal &old_int_id,
-				       ALLOCATOR* allocator)
+				       ALLOCATOR *allocator)
 {
   ACE_TRACE ("ACE_Name_Space_Map::rebind");
   int result = 0;
@@ -120,7 +120,7 @@ ACE_Name_Space_Map<ALLOCATOR>::rebind (const ACE_NS_String &ext_id,
 template <class ALLOCATOR> int 
 ACE_Name_Space_Map<ALLOCATOR>::find (const ACE_NS_String &ext_id,
 				     ACE_NS_Internal &int_id,
-				     ALLOCATOR* allocator)
+				     ALLOCATOR *allocator)
 {
   ACE_TRACE ("ACE_Name_Space_Map::find");
   int result = 0;
@@ -255,8 +255,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::rebind (const ACE_WString &name,
 
 template <ACE_MEM_POOL_1, class LOCK> int 
 ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::resolve (const ACE_WString &name,
-					       ACE_WString &value, 
-					       char *&type)
+						     ACE_WString &value, 
+						     char *&type)
 {
   ACE_TRACE ("ACE_Local_Name_Space::resolve");
   ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, this->lock_, -1);
@@ -264,7 +264,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::resolve (const ACE_WString &name,
   ACE_NS_String ns_name (name);
   ACE_NS_Internal ns_internal;
   ACE_NS_String nbc_string; // Note the classy variable name! :)
-  int result = -1;
+
   if (this->name_space_map_->find (ns_name, ns_internal, this->allocator_) != 0)
     return -1;
   else
@@ -282,10 +282,10 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::resolve (const ACE_WString &name,
       // Makes a copy here. Caller needs to call delete to free up memory
       char *new_type;
       ACE_NEW_RETURN (new_type, char [len + 1], -1);
+
       ACE_OS::strncpy (new_type, temp, len);
       new_type[len] = '\0';  // Null terminate the string
       type = new_type;
-
       return 0;
     }
 }
@@ -352,7 +352,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::create_manager (void)
 	      this->context_file_));
 
   ACE_MEM_POOL_OPTIONS options (this->name_options_->base_address ());
-  ACE_NEW_RETURN (this->allocator_, ALLOCATOR (options, this->context_file_), -1);  
+
+  // Create the allocator with the appropriate options.
+  ACE_NEW_RETURN (this->allocator_, ALLOCATOR (this->context_file_, 0, &options), -1);
 
   if (ACE_LOG_MSG->errnum ())
     ACE_ERROR_RETURN ((LM_ERROR, "Allocator::Allocator\n"), -1);    
@@ -613,8 +615,6 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_type_entries (ACE_BINDING_SET &
   compiled_regexp = pattern_rep;
 #endif /* ACE_HAS_REGEX */
 
-  int result = 1;
-
   for (map_entry = 0;
        map_iterator.next (map_entry) != 0;
        map_iterator.advance ())
@@ -644,7 +644,6 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_type_entries (ACE_BINDING_SET &
   delete [] pattern_rep;  // delete pattern_rep; 
   return 0;
 }
-
 
 template <ACE_MEM_POOL_1, class LOCK> void
 ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::dump (void) const

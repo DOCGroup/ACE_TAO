@@ -56,9 +56,9 @@ ACE_SV_Shared_Memory::ACE_SV_Shared_Memory (key_t external_id,
 // The "do nothing" constructor.
 
 ACE_SV_Shared_Memory::ACE_SV_Shared_Memory (void)
-  : segment_ptr_ (0), 
-    internal_id_ (0), 
-    size_ (0)
+  : internal_id_ (0), 
+    size_ (0),
+    segment_ptr_ (0)
 {
   ACE_TRACE ("ACE_SV_Shared_Memory::ACE_SV_Shared_Memory");
 }

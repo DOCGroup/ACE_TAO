@@ -41,7 +41,7 @@ public:
   // = Initialization and termination.
 
   ACE_Token (const char *name = 0, void * = 0);
-  ~ACE_Token (void);
+  virtual ~ACE_Token (void);
 
   // = Synchronization operations.
 

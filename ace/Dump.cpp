@@ -130,3 +130,6 @@ ACE_ODB::remove_object (const void *this_ptr)
 
 ACE_ODB *ACE_ODB::instance_ = 0;
 
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Guard<ACE_Thread_Mutex>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

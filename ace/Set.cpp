@@ -100,8 +100,6 @@ ACE_Fixed_Set<T, SIZE>::remove (const T &item)
     {
       if (this->search_structure_[i].item_ == item)
 	{
-	  size_t index = i;
-
 	  // Mark this entry as being free.
 	  this->search_structure_[i].is_free_ = 1;
 	  
@@ -268,8 +266,6 @@ ACE_Bounded_Set<T>::remove (const T &item)
     {
       if (this->search_structure_[i].item_ == item)
 	{
-	  size_t index = i;
-
 	  // Mark this entry as being free.
 	  this->search_structure_[i].is_free_ = 1;
 	  

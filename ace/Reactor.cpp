@@ -94,13 +94,13 @@ ACE_Handler_Repository::open (size_t size)
 // Initialize a repository of the appropriate <size>.
 
 ACE_Handler_Repository::ACE_Handler_Repository (void)
-  : event_handlers_ (0),
-    max_size_ (0),
+  : max_size_ (0),    
 #if defined (ACE_WIN32)
-    cur_size_ (0)
+    cur_size_ (0),
 #else
-    max_handlep1_ (ACE_INVALID_HANDLE)
+    max_handlep1_ (ACE_INVALID_HANDLE),
 #endif /* ACE_WIN32 */
+  event_handlers_ (0)
 {
   ACE_TRACE ("ACE_Handler_Repository::ACE_Handler_Repository");
 }
@@ -886,13 +886,13 @@ ACE_Reactor::open (size_t size,
 }
 
 ACE_Reactor::ACE_Reactor (ACE_Sig_Handler *sh)
-  : timer_skew_ (0, ACE_TIMER_SKEW), 
+  : timer_queue_ (0),
+    requeue_position_ (-1), // Requeue at end of waiters by default.
     initialized_ (0),
-    timer_queue_ (0),
-    requeue_position_ (-1) // Requeue at end of waiters by default.
 #if defined (ACE_MT_SAFE)
-    , token_ (*this)
+    token_ (*this),
 #endif /* ACE_MT_SAFE */
+    timer_skew_ (0, ACE_TIMER_SKEW)
 {
   ACE_TRACE ("ACE_Reactor::ACE_Reactor");
   if (this->open (ACE_Reactor::DEFAULT_SIZE, 0, sh))
@@ -902,13 +902,13 @@ ACE_Reactor::ACE_Reactor (ACE_Sig_Handler *sh)
 // Initialize the new ACE_Reactor.
 
 ACE_Reactor::ACE_Reactor (size_t size, int rs, ACE_Sig_Handler *sh)
-  : timer_skew_ (0, ACE_TIMER_SKEW),
+  : timer_queue_ (0),
+    requeue_position_ (-1), // Requeue at end of waiters by default.
     initialized_ (0),
-    timer_queue_ (0),
-    requeue_position_ (-1) // Requeue at end of waiters by default.
 #if defined (ACE_MT_SAFE)
-    , token_ (*this)
+    token_ (*this),
 #endif /* ACE_MT_SAFE */
+    timer_skew_ (0, ACE_TIMER_SKEW)
 {
   ACE_TRACE ("ACE_Reactor::ACE_Reactor");
   if (this->open (size, rs, sh) == -1)
@@ -1612,3 +1612,8 @@ ACE_Reactor::check_handles (void)
 
   return result;
 }
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Guard<ACE_Token>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+

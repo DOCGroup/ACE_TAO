@@ -103,7 +103,7 @@
 // Compiler/platform supports sys_siglist array.
 #define ACE_HAS_SYS_SIGLIST
 
-/* Turn off the following four defines if you want to disable threading. */
+/* Turn off the following three defines if you want to disable threading. */
 // Compile using multi-thread libraries.
 #define ACE_MT_SAFE
 
