@@ -27,12 +27,10 @@
  * One of the synchronization protocols used in the event services
  * uses the following protocol:
  * <UL>
- * <LI> To acquire the lock the @param busy method of the object is
- *      invoked.
- * <LI> To release the lock the @param idle method of the object is
- *      invoked.
+ * <LI> To acquire the lock the @c busy method of the object is invoked.
+ * <LI> To release the lock the @c idle method of the object is invoked.
  * <LI> Any changes performed while the lock is held are delayed until
- *      all the locks are released, i.e. the last call to @param idle
+ *      all the locks are released, i.e. the last call to @c idle
  *      executes the changes.
  * </UL>
  */

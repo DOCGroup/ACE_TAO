@@ -77,7 +77,7 @@ public:
   // making such calls, but may be overridden when it appears
   // appropriate.
 
-  /// determine if we are of the type specified by the "logical_type_id"
+  /// Determine if we are of the type specified by the "logical_type_id"
   virtual CORBA::Boolean _is_a (const char *logical_type_id
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
@@ -241,7 +241,6 @@ public:
 
   /// Get the proxy broker.
   virtual TAO_Object_Proxy_Broker *_proxy_broker (void);
-  //@}
 
 protected:
 
@@ -321,7 +320,7 @@ public:
   static CORBA::Object_ptr tao_duplicate (CORBA::Object_ptr);
   static void tao_release (CORBA::Object_ptr);
   static CORBA::Object_ptr tao_nil (void);
-  static CORBA::Object_ptr tao_narrow (CORBA::Object * 
+  static CORBA::Object_ptr tao_narrow (CORBA::Object *
                                        ACE_ENV_ARG_DECL_NOT_USED);
   static CORBA::Object * tao_upcast (void *);
 
