@@ -181,7 +181,9 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
 				  stack, stack_size);
   if (result != 0)
     {
-      errno = result;
+      // _Don't_ clobber errno here!  result is either 0 or -1, and
+      // ACE_OS::thr_create () already set errno!    D. Levine 28 Mar 1997
+      // errno = result;
       return -1;
     }
   else
