@@ -40,7 +40,7 @@
 #  threads          Build with thread support.
 #  xt_reactor       Build the XtReactor.
 #  fl_reactor       Build the FlReactor.
-#  tk_reactor       Build the TkReactor.    
+#  tk_reactor       Build the TkReactor.
 #
 #  Usually, users do not need to be concerned with make targets.
 #  Just enter "make" on the command line to build.  A few notable
@@ -60,7 +60,11 @@
 #  ACE_HAS_GNUG_PRE_2_8 CXX includes "g++", and the g++ version is
 #                       prior to 2.8.0.  This is automatically determined
 #                       below, but can be overridden in the user's
-#                       platform_macros.GNU or environment.
+#                       platform_macros.GNU or environment.  Three values
+#                       are supported:
+#                         1 for g++ < 2.8.0,
+#                         0 for g++ >= 2.8.0 or egcs,
+#                         undefined for non-g++ compilers.
 #  ARFLAGS      Flags for the archive utility (ar)
 #  CC           C compiler command
 #  CXX          C++ compiler command
@@ -195,18 +199,16 @@ ifeq ($(findstring g++,$(CXX)),g++)
         $(shell \
           if $(CXX) --version | egrep '^(cygnus-)?2\.[0-7]' > /dev/null; then \
           echo 1; else echo 0; fi)
-    else
+    else  # ! g++
     ifeq ($(CXX),eg++)
       # Assume that eg++ is egcs.
       ACE_HAS_GNUG_PRE_2_8 := 0
     else  # ! plain g++ or eg++
       # CXX is something like g++386.  Assume, for now, that it's an old g++.
       ACE_HAS_GNUG_PRE_2_8 := 1
-    endif # eg++
-    endif # ! plain g++ or eg++
+    endif # ! plain g++ or eg++eg++
+    endif # ! g++
   endif # ! ACE_HAS_GNUG_PRE_2_8
-else
-  ACE_HAS_GNUG_PRE_2_8 =
 endif # g++
 
 #----------------------------------------------------------------------------
@@ -299,18 +301,17 @@ endif # ace_with_x11
 
 ifdef exceptions
   CPPFLAGS += -DACE_HAS_EXCEPTIONS
-  ifeq ($(findstring g++,$(CXX)),g++)
-    ifeq ($(ACE_HAS_GNUG_PRE_2_8),1)
-      #### Enable exception handling with g++ < 2.8.0.  Not recommended,
-      #### but provided here for completeness.
-      CCFLAGS += -fhandle-exceptions
-    else
-      #### Disable this warning on g++ >= 2.8.0 if exceptions are
-      #### enabled, it gets confused and reports too many bogus
-      #### warnings.
-      CFLAGS += -Wno-uninitialized
-    endif # ACE_HAS_GNUG_PRE_2_8
-  endif # g++
+  ifeq ($(ACE_HAS_GNUG_PRE_2_8),1)
+    #### Enable exception handling with g++ < 2.8.0.  Not recommended,
+    #### but provided here for completeness.
+    CCFLAGS += -fhandle-exceptions
+  else  # ! ACE_HAS_GNUG_PRE_2_8
+  ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
+    #### Disable this warning on g++ >= 2.8.0 if exceptions are enabled,
+    #### it gets confused and reports too many bogus warnings.
+    CFLAGS += -Wno-uninitialized
+  endif # g++ > 2.8.0
+  endif # ! ACE_HAS_GNUG_PRE_2_8
 else  # ! exceptions
   ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
     #### Disable the default exception handling of g++ >= 2.8.0.
