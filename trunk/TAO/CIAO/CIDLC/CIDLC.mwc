@@ -1,0 +1,5 @@
+// $Id:
+workspace(CIDLC) {
+  requries += cidl
+  ./CIDLC/CIDLC.mpc
+}
