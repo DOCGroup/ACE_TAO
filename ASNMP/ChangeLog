@@ -1,3 +1,10 @@
+Wed Jul 15 20:34:55 CDT 1998
+   * general fixes for SNMPv1 trap generation code reported by
+     Hien Nguyen <hnguyen@adcapex.com> and Jeff Hall <jeff@liffe.com> 
+     Added Hien's fixes, plus fixed -c option
+     in examples/trap to properly set community string.
+   * release 2.0
+
 Fri Jan 30 15:29:42 CST 1998
     * fix vb.cpp to handle Gauge/uInt the same way. While retrieving
       ifTable found the bug.
