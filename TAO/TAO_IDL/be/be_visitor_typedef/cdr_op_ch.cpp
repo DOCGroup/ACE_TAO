@@ -47,7 +47,7 @@ be_visitor_typedef_cdr_op_ch::visit_typedef (be_typedef *node)
   if (node->cli_hdr_cdr_op_gen () || node->imported ())
     return 0;
 
-  TAO_OutStream *os = tao_cg->client_header ();
+  TAO_OutStream *os = this->ctx_->stream ();
 
   // generate the CDR << and >> operator declarations
   os->indent ();

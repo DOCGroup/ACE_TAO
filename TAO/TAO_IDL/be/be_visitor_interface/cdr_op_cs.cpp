@@ -48,11 +48,11 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
   if (node->cli_stub_cdr_op_gen () || node->imported ())
     return 0;
 
-  TAO_OutStream *os = tao_cg->client_stubs ();
+  TAO_OutStream *os = this->ctx_->stream ();
 
   //  set the sub state as generating code for the output operator
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
-  *os << "inline CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
+  *os << "ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
       << "const " << node->name () << "_ptr _tao_objref)" << be_nl
       << "{" << be_idt_nl;
   // hand over the encoding to the TAO's internal engine
@@ -80,7 +80,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
 
   // set the substate as generating code for the input operator
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
-  *os << "inline CORBA::Boolean operator>> (TAO_InputCDR &strm, "
+  *os << "ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, "
       << node->name () << "_ptr &_tao_objref)" << be_nl
       << "{" << be_idt_nl;
   // hand over to the TAO's internal marshaling engine

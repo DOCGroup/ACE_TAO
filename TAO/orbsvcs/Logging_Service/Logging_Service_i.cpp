@@ -115,7 +115,7 @@ Logger_Server::init_naming_service (CORBA::Environment& env)
   this->my_name_server_->bind (factory_name,
 			       factory.in (),
 			       env);
-  TAO_CHECK_ENV_RETURN (env,-1);
+  TAO_CHECK_ENV_RETURN (env, -1);
   
   return 0;
 }

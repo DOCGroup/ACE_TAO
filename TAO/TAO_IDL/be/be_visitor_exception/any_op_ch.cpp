@@ -47,7 +47,7 @@ be_visitor_exception_any_op_ch::visit_exception (be_exception *node)
   if (node->cli_hdr_any_op_gen () || node->imported ())
     return 0;
 
-  TAO_OutStream *os = tao_cg->client_header ();
+  TAO_OutStream *os = this->ctx_->stream ();
 
   // generate the Any <<= and >>= operator declarations
   os->indent ();
