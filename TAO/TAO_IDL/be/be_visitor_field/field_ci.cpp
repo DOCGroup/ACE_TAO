@@ -80,6 +80,50 @@ be_visitor_field_ci::visit_field (be_field *node)
 int
 be_visitor_field_ci::visit_array (be_array *node)
 {
+  TAO_OutStream *os; // output stream
+  be_type *bt;
+
+  os = this->ctx_->stream ();
+  // set the right type;
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
+  // if not a typedef and we are defined in the use scope, we must be defined
+
+  if (!this->ctx_->alias () // not a typedef
+      && node->is_child (this->ctx_->scope ()))
+    {
+      // this is the case for anonymous arrays.
+
+      // instantiate a visitor context with a copy of our context. This info
+      // will be modified based on what type of node we are visiting
+      be_visitor_context ctx (*this->ctx_);
+      ctx.node (node); // set the node to be the node being visited. The scope
+                       // is still the same
+
+      // first generate the struct declaration
+      ctx.state (TAO_CodeGen::TAO_ARRAY_CI);
+      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_field_ci::"
+                             "visit_array - "
+                             "Bad visitor\n"
+                             ), -1);
+        }
+      if (node->accept (visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_field_ci::"
+                             "visit_array - "
+                             "codegen failed\n"
+                             ), -1);
+        }
+      delete visitor;
+    }
   return 0;
 }
 
@@ -87,6 +131,7 @@ be_visitor_field_ci::visit_array (be_array *node)
 int
 be_visitor_field_ci::visit_sequence (be_sequence *node)
 {
+  // anonymous sequence
   return 0;
 }
 
