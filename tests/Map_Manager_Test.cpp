@@ -78,6 +78,7 @@ test_hash_map_manager (size_t table_size, size_t iterations)
       }
 
     ACE_DEBUG ((LM_DEBUG, "\n"));
+    ACE_ASSERT (i == iterations);
   }
 
   {
@@ -93,8 +94,9 @@ test_hash_map_manager (size_t table_size, size_t iterations)
                   i,
                   entry->ext_id_,
                   entry->int_id_));
-    
+
     ACE_DEBUG ((LM_DEBUG, "\n"));
+    ACE_ASSERT (i == iterations);
   }
 
   {
@@ -113,6 +115,7 @@ test_hash_map_manager (size_t table_size, size_t iterations)
       }
 
     ACE_DEBUG ((LM_DEBUG, "\n"));
+    ACE_ASSERT (i == -1);
   }
 
   {
@@ -128,6 +131,7 @@ test_hash_map_manager (size_t table_size, size_t iterations)
                   entry->ext_id_,
                   entry->int_id_));
     ACE_DEBUG ((LM_DEBUG, "\n"));
+    ACE_ASSERT (i == -1);
   }
 
   {
@@ -145,6 +149,7 @@ test_hash_map_manager (size_t table_size, size_t iterations)
                     entry.int_id_));
       }
     ACE_DEBUG ((LM_DEBUG, "\n"));
+    ACE_ASSERT (i == iterations);
   }
   {
     HASH_MAP_MANAGER::ITERATOR iterator (map);
@@ -159,6 +164,7 @@ test_hash_map_manager (size_t table_size, size_t iterations)
                   entry->ext_id_,
                   entry->int_id_));
     ACE_DEBUG ((LM_DEBUG, "\n"));
+    ACE_ASSERT (i == iterations);
   }
 
   {
@@ -177,6 +183,7 @@ test_hash_map_manager (size_t table_size, size_t iterations)
                     entry.int_id_));
       }
     ACE_DEBUG ((LM_DEBUG, "\n"));
+    ACE_ASSERT (i == -1);
   }
   {
     HASH_MAP_MANAGER::REVERSE_ITERATOR iterator (map);
@@ -191,6 +198,7 @@ test_hash_map_manager (size_t table_size, size_t iterations)
                   entry->ext_id_,
                   entry->int_id_));
     ACE_DEBUG ((LM_DEBUG, "\n"));
+    ACE_ASSERT (i == -1);
   }
 
   for (i = 0; i < iterations; i++)
@@ -229,6 +237,7 @@ test_map_manager (size_t table_size, size_t iterations)
                     entry.int_id_));
       }
     ACE_DEBUG ((LM_DEBUG, "\n"));
+    ACE_ASSERT (i == iterations);
   }
   {
     ITERATOR iterator (map);
@@ -242,6 +251,7 @@ test_map_manager (size_t table_size, size_t iterations)
                   entry->ext_id_,
                   entry->int_id_));
     ACE_DEBUG ((LM_DEBUG, "\n"));
+    ACE_ASSERT (i == iterations);
   }
 
   {
@@ -255,6 +265,7 @@ test_map_manager (size_t table_size, size_t iterations)
         ACE_DEBUG ((LM_DEBUG, "%u ", entry.int_id_));
       }
     ACE_DEBUG ((LM_DEBUG, "\n"));
+    ACE_ASSERT (i == -1);
   }
   {
     REVERSE_ITERATOR iterator (map);
@@ -269,6 +280,7 @@ test_map_manager (size_t table_size, size_t iterations)
                   entry->ext_id_,
                   entry->int_id_));
     ACE_DEBUG ((LM_DEBUG, "\n"));
+    ACE_ASSERT (i == -1);
   }
   {
     MAP_MANAGER::ENTRY entry;
@@ -281,6 +293,7 @@ test_map_manager (size_t table_size, size_t iterations)
         ACE_DEBUG ((LM_DEBUG, "%u ", entry.int_id_));
       }
     ACE_DEBUG ((LM_DEBUG, "\n"));
+    ACE_ASSERT (i == iterations);
   }
   {
     MAP_MANAGER::ITERATOR iterator (map);
@@ -295,6 +308,7 @@ test_map_manager (size_t table_size, size_t iterations)
                   entry->ext_id_,
                   entry->int_id_));
     ACE_DEBUG ((LM_DEBUG, "\n"));
+    ACE_ASSERT (i == iterations);
   }
   {
     ENTRY entry;
@@ -308,6 +322,7 @@ test_map_manager (size_t table_size, size_t iterations)
         ACE_DEBUG ((LM_DEBUG, "%u ", entry.int_id_));
       }
     ACE_DEBUG ((LM_DEBUG, "\n"));
+    ACE_ASSERT (i == -1);
   }
 
   {
@@ -323,6 +338,7 @@ test_map_manager (size_t table_size, size_t iterations)
                   entry->ext_id_,
                   entry->int_id_));
     ACE_DEBUG ((LM_DEBUG, "\n"));
+    ACE_ASSERT (i == -1);
   }
 
   for (i = 0; i < iterations; i++)
@@ -375,6 +391,7 @@ int
 main (int argc, char *argv[])
 {
   ACE_START_TEST ("Map_Manager_Test");
+  ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
 
   size_t table_size = ACE_MAX_ITERATIONS / 2;
   size_t iterations = ACE_MAX_ITERATIONS;
@@ -397,6 +414,7 @@ main (int argc, char *argv[])
             iterations,
             "Map_Manager");
 
+  ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE_LITE);
   ACE_END_TEST;
   return 0;
 }
