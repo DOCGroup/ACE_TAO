@@ -238,9 +238,8 @@ namespace ACE_OS {
 #endif /* ACE_WIN32 */
   FILE *fopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode);
 
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-# if defined (ACE_WIN32)
-  // = Default Win32 Security Attributes definition.
+#if defined (ACE_WIN32)
+  /// Default Win32 Security Attributes definition.
   ACE_NAMESPACE_INLINE_FUNCTION
   LPSECURITY_ATTRIBUTES default_win32_security_attributes (LPSECURITY_ATTRIBUTES);
 
@@ -271,8 +270,7 @@ namespace ACE_OS {
 
   extern ACE_Export HINSTANCE win32_resource_module_;
 
-# endif /* ACE_WIN32 */
-#endif
+#endif /* ACE_WIN32 */
 
   extern ACE_Export
   int fprintf (FILE *fp, const char *format, ...);
