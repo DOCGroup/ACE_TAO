@@ -1,7 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
-// ============================================================================
+//
+// ========================================================================
 //
 // = LIBRARY
 //    ace
@@ -14,7 +15,7 @@
 //    Carlos O'Ryan <coryan@ece.uciedu>
 //    Ossama Othman <ossama@ece.uci.du>
 //
-// ============================================================================
+// ========================================================================
 
 #if defined (ACE_HAS_SSL)
 
@@ -41,8 +42,7 @@ ACE_mutex_t * ACE_SSL_Context::lock_ = 0;
 //    date and time, in combination with some other strings, may
 //    suffice.
 //      -Ossama
-static const char rnd_seed[] = "string to make the random number
- generator think it has entropy";
+static const char rnd_seed[] = "string to make the random number generator think it has entropy";
 
 int ACE_SSL_Context::library_init_count_ = 0;
 
