@@ -419,8 +419,10 @@ public:
   // 0 if unsuccessful, else returns pointer to beginning of the
   // "time" portion of <day_and_time>.
 
-  static int daemonize (const char pathname[] = "/");
-  // Become a daemon process.
+  static int daemonize (const char pathname[] = "/",
+                        int close_all_handles = ACE_DEFAULT_CLOSE_ALL_HANDLES);
+  // Become a daemon process.  If <close_all_handles> is non-zero then
+  // all open file handles are closed.
 
   // = Methods for searching and opening shared libraries.
 

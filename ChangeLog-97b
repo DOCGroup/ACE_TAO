@@ -1,5 +1,13 @@
 Tue Nov  4 18:03:51 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* ace/config-sco*.h: Added #define ACE_DEFAULT_CLOSE_ALL_FILES 0
+ 	  to the SCO Unix config files.
+
+	* ace/ACE.cpp: Added a new macro called
+ 	  ACE_DEFAULT_CLOSE_ALL_FILES to workaround a bug with SCO Unix.
+  	  Thanks to Arturo Montes <mitosys@colomsat.net.co> for reporting
+ 	  this.
+	
 	* The ACE developer's drinking song:
  
           100 little bugs in the code,
