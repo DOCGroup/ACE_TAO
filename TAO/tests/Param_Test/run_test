@@ -1,4 +1,3 @@
-# $Id$ 
 #!/bin/sh
 
 PORT=20001
@@ -13,6 +12,7 @@ start_server()
 trap "start_server" 17
 trap "rm -f $IORFILE" 0
 start_server
+trap "kill `ps | grep server | awk '{print $1;}'`" 0
 
 TYPES="short ubstring fixed_struct strseq var_struct nested_struct struct_seq objref"
 for type in $TYPES
@@ -22,4 +22,3 @@ do
   ./client -f $IORFILE  -i $INVOCATION -t $type 2>&1 | sed -e "s/^/CLIENT($type): /"
   echo "END   Testing type $type"
 done 
-kill `ps | grep server | awk '{print $1;}'`
