@@ -17,6 +17,7 @@ project(DsEventLogAdmin) : orbsvcslib, core, dslogadmin, event {
 
   Header_Files {
     DsEventLogAdminC.h
+    Log/eventlog_export.h
   }
 
   Inline_Files {
@@ -46,6 +47,7 @@ project(DsEventLogAdmin_Skel) : orbsvcslib, core, dseventlogadmin, dslogadmin_sk
   Header_Files {
     DsEventLogAdminS.h
     DsEventLogAdminS_T.h
+    Log/eventlog_skel_export.h
   }
 
   Inline_Files {

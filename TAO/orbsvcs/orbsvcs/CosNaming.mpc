@@ -14,6 +14,7 @@ project(CosNaming) : orbsvcslib, core {
   Source_Files {
     CosNamingC.cpp
     Naming/Naming_Client.cpp
+    Naming/naming_export.h
   }
 
   Header_Files {
@@ -49,6 +50,7 @@ project(CosNaming_Skel) : orbsvcslib, core, naming, portableserver {
   Header_Files {
     CosNamingS.h
     CosNamingS_T.h
+    Naming/naming_skel_export.h
   }
 
   Inline_Files {
@@ -89,7 +91,6 @@ project(CosNaming_Serv) : orbsvcslib, core, naming_skel, messaging, svc_utils, i
   }
  
   Header_Files {
-    Naming/naming_export.h
     Naming/Naming_Server.h
   }
 

@@ -17,6 +17,7 @@ project(DsNotifyLogAdmin) : orbsvcslib, core, dslogadmin, dseventlogadmin, event
 
   Header_Files {
     DsNotifyLogAdminC.h
+    Log/notifylog_export.h
   }
 
   Inline_Files {
@@ -47,6 +48,7 @@ project(DsNotifyLogAdmin_Skel) : orbsvcslib, core, dsnotifylogadmin, dseventloga
   Header_Files {
     DsNotifyLogAdminS.h
     DsNotifyLogAdminS_T.h
+    Log/notifylog_skel_export.h
   }
 
   Inline_Files {

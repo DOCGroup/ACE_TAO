@@ -1,3 +1,16 @@
+Fri Oct 15 01:46:54 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/CosEvent.mpc:
+	* orbsvcs/orbsvcs/CosNaming.mpc:
+	* orbsvcs/orbsvcs/CosNotification.mpc:
+	* orbsvcs/orbsvcs/CosTrading.mpc:
+	* orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+	* orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+
+	  Added "*_export.h" to Header_Files for client stub libraries and
+	  "*_skel_export.h" to Header_Files for server skeleton libraries.
+
 Tue Sep 28 14:13:01 2004  Yan Dai   <dai_y@ociweb.com>
 
         * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.h:
