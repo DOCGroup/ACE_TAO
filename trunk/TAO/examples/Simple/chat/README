@@ -1,4 +1,4 @@
-$Id:
+$Id$
 
 This is a simple chat application that uses the TAO CORBA ORB.
 It consists of a client and server programs.
@@ -35,3 +35,32 @@ The nickname specified by the user is displayed by the chat server to all the cl
 To quit the chat, type "quit".
 
 if the [-f <ior_input_file>] option is not specified on the command line then the client will attempt to read the IOR of the server CORBA object from the default file - "chat.ior".
+
+VxWorks
+-------
+On VxWorks, it's easiest to run the client without any command
+line options.  That way, its stdin can be captured:
+
+    -> ld < server
+    value = 400826292 = 0x17e41fb4
+    -> spa main
+    value = 0 = 0x0
+    Running chat server...
+    -> ld < client
+    value = 399329360 = 0x17cd4850
+    -> main
+
+    using defaults. nickname = noname, filename = chat.ior
+
+    ============= Simple Chat =================
+    ========== type 'quit' to exit  ===========
+    : **** noname has joined the chat ****
+
+    abc
+    : [noname] abc
+
+    def
+    : [noname] def
+
+    quit
+    value = 0 = 0x0
