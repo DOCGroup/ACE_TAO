@@ -1,3 +1,9 @@
+Tue Sep 14 07:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_static_order.lst:
+          Added TAO/orbsvcs/orbsvcs/CosNaming_Skel to the list of projects
+          to build first.
+
 Mon Sep 13 19:09:23 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
@@ -8,7 +14,7 @@ Mon Sep 13 19:09:23 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Mon Sep 13 20:33:25 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-  	* ace/Select_Reactor_Base.cpp: Changed the 
+  	* ace/Select_Reactor_Base.cpp: Changed the
 	  ACE_Select_Reactor_Handler_Repository::open() method so that it
  	  uses the generalized ACE::set_handle_limit() method to not lower
  	  the handles, which caused problems for applications that want to
@@ -17,9 +23,9 @@ Mon Sep 13 20:33:25 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
  	  gmail at com> for suggesting this.
 
 	* ace/ACE.cpp,
-	  ace/ACE.h: Generalized ACE::set_handle_limit() so 
+	  ace/ACE.h: Generalized ACE::set_handle_limit() so
 	  it can be told not to lower the handle limit.
-  
+
 Mon Sep 13 18:15:44 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ACE_wrappers/m4/platform.m4:
@@ -51,7 +57,7 @@ Mon Sep 13 15:52:04 2004  Dale Wilson  <wilson_d@ociweb.com>
             the last thread stops using it, or
             the ACE_TSS<X> (if any) is deleted
           which ever comes *last*.
-  
+
 Mon Sep 13 14:56:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * ace/RB_Tree.h (class ACE_RB_Tree):
