@@ -18,27 +18,28 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 TAO_IDLFLAGS = -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h
 
 IDL_FILES = \
+	CosConcurrencyControlC \
+	CosConcurrencyControlS \
 	CosNamingC \
 	CosNamingS \
 	CosLifeCycleC \
 	CosLifeCycleS \
-	LifeCycleServiceC \
-	LifeCycleServiceS \
-	CosConcurrencyControlC\
-	CosConcurrencyControlS\
+	CosPropertyServiceS \
+	CosPropertyServiceC
 	CosTimeBaseC \
 	CosTimeBaseS \
+	LoggerC \
+	LoggerS \
 	RtecEventCommC \
 	RtecEventCommS \
 	RtecSchedulerC \
 	RtecSchedulerS \
 	RtecEventChannelAdminC \
-	RtecEventChannelAdminS \
-	CosPropertyServiceS \
-	CosPropertyServiceC \
-	LoggerC \
-	LoggerS 
-	
+	RtecEventChannelAdminS
+
+# @@ have these been removed?
+# LifeCycleServiceC \
+# LifeCycleServiceS \
 
 # Compile using av=1 to compile the AVStreams stuff.
 ifdef av
