@@ -2,6 +2,8 @@
 
 #include "ttcp_decl.h"
 
+ACE_RCSID(Thruput_test, utils, "$Id$")
+
 int SetSocketBufferSize(int size, unsigned short isTrans)
 {
    // go thru open file descriptors and check if its is a socket and

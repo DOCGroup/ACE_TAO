@@ -3,6 +3,8 @@
 #include "ttcp_i.h"
 #include <iostream.h>
 
+ACE_RCSID(Thruput_test, ttcp_i, "$Id$")
+
 /* the ttcp_i class implementation */
 ttcp_sequence_i::ttcp_sequence_i(const char *obj_name)
   :_skel_ttcp_sequence(obj_name)

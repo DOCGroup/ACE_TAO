@@ -8,6 +8,8 @@
 #include "corba/optable.h"  // for registering our methods
 #include "corba/corbacom.h"
 
+ACE_RCSID(Thruput_test, ttcpS, "$Id$")
+
 TAO_Dynamic_Hash_OpTable tao_ttcp_sequence_optable(9); // 8 + 1 operations on our
 						       // interface 
 // operation database

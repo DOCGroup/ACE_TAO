@@ -27,6 +27,7 @@
 
 #include	<corba/debug.h>
 
+ACE_RCSID(test, test1_svr, "$Id$")
 
 
 #if !defined (_WIN32)
