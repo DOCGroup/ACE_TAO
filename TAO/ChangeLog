@@ -1,3 +1,10 @@
+Sun Apr 20 07:50:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Bug_1020_Regression/Bug_1020_Regression.dsw:
+	* tests/Bug_1020_Regression/client.dsp:
+	* tests/Bug_1020_Regression/server.dsp: Removed them from the
+	  repo. They dont compile with VC6.0 and spoils our daily builds. 
+
 Fri Apr 18 18:13:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/y.tab.cpp:
