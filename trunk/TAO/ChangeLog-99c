@@ -13,10 +13,11 @@ Wed Sep  8 14:00:00 1999  Luther Baker  <ljb1@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp: (ORB_init) changed to allow correct parsing.
 	  Problem: comparing and matching longer arguments with shorter
-	  flags. I moved the else if { } blocks for (-ORBDebug and
-	  -ORBCOllocation) as both these flags were too early in the
-	  parsing loop and were eating their longer counterparts
-	  (ie: -ORBDebugLevel) was never reached.
+ 	  flags. I moved the else if { } blocks for (-ORBDebug and
+ 	  -ORBCOllocation) as both these flags were too early in the
+ 	  parsing loop and were eating their longer counterparts (ie:
+ 	  -ORBDebugLevel) was never reached.  Thanks to Michael Kircher
+ 	  for reporting this problem.
 
 Wed Sep  8 13:54:15 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
