@@ -1,3 +1,17 @@
+Sat Jan  2 23:48:44 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+        * docs/ACE-tutorials.html
+        * docs/tutorials/guide-tutorials.html
+        * docs/tutorials/new-tutorials.html
+        * docs/tutorials/online-tutorials.html
+        Converted some of the absolute URLs to relative.  I only have the
+        docs/tutorials tree here at home so I couldn't do any more than
+        these.
+
+        * docs/tutorials/021/*
+        New tutorial on ACE_Malloc<>.  I haven't begun the documentation
+        yet but wanted to get the code commited so it doesn't get lost.
+
 Sat Jan 02 08:34:27 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/ASX/Event_Server/Event_Server/event_server.cpp
