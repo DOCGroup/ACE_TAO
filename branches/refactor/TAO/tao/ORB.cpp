@@ -2099,3 +2099,64 @@ CORBA::ORB::lookup_value_factory (const char *repository_id
       return 0; // %! raise exception !
     }
 }
+
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+  template class TAO_Pseudo_Var_T<CORBA::Request>;
+  template class TAO_Pseudo_Out_T<CORBA::Request, CORBA::Request_var>;
+  template class 
+    TAO_Unbounded_Pseudo_Sequence<
+        CORBA::Request, 
+        CORBA::Request_var
+      >;
+  template class 
+    TAO_VarSeq_Var_T<
+        CORBA::ORB::RequestSeq, 
+        TAO_Pseudo_Object_Manager<
+            CORBA::Request, 
+            CORBA::Request_var
+          >
+      >;
+  template class 
+    TAO_Seq_Out_T<
+        CORBA::ORB::RequestSeq, 
+        CORBA::ORB::RequestSeq_var, 
+        TAO_Pseudo_Object_Manager<
+            CORBA::Request,
+            CORBA::Request_var
+          >
+      >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate TAO_Pseudo_Var_T<CORBA::Request>
+# pragma instantiate TAO_Pseudo_Out_T<CORBA::Request, CORBA::Request_var>
+# pragma instantiate \
+    TAO_Unbounded_Pseudo_Sequence< \
+        CORBA::Request, \
+        CORBA::Request_var \
+      >
+# pragma instantiate \
+    TAO_VarSeq_Var_T< \
+        CORBA::ORB::RequestSeq, \
+        TAO_Pseudo_Object_Manager< \
+            CORBA::Request, \
+            CORBA::Request_var \
+          > \
+      >
+# pragma instantiate \
+    TAO_Seq_Out_T< \
+        CORBA::ORB::RequestSeq, \
+        CORBA::ORB::RequestSeq_var, \ 
+        TAO_Pseudo_Object_Manager< \
+            CORBA::Request, \
+            CORBA::Request_var \
+          > \
+      >
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+

@@ -70,9 +70,13 @@ namespace CORBA
   class ORB_ObjectIdList_var;
   class ORB_ObjectIdList_out;
 
-  class ORB_RequestSeq;
-  class ORB_RequestSeq_var;
-  class ORB_RequestSeq_out;
+  class ORB;
+  typedef TAO_Pseudo_Var_T<ORB> ORB_var;
+  typedef TAO_Pseudo_Out_T<ORB, ORB_var> ORB_out;
+
+  class Request;
+  typedef TAO_Pseudo_Var_T<Request> Request_var;
+  typedef TAO_Pseudo_Out_T<Request, Request_var> Request_out;
 
   /**
    * @class ORB
@@ -170,11 +174,35 @@ namespace CORBA
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
     // Typedefs for CORBA::ORB::RequestSeq, which is an argument of
-    // send_multiple_requests_*().  See Request.{h,i,cpp} for
-    // definitions.
-    typedef CORBA::ORB_RequestSeq RequestSeq;
-    typedef CORBA::ORB_RequestSeq_var RequestSeq_var;
-    typedef CORBA::ORB_RequestSeq_out RequestSeq_out;
+    // send_multiple_requests_*().
+
+    typedef 
+      TAO_Unbounded_Pseudo_Sequence<
+          CORBA::Request, 
+          CORBA::Request_var
+        > 
+      RequestSeq;
+
+    typedef 
+      TAO_VarSeq_Var_T<
+          RequestSeq, 
+          TAO_Pseudo_Object_Manager<
+              CORBA::Request, 
+              CORBA::Request_var
+            >
+        > 
+      RequestSeq_var;
+
+    typedef 
+      TAO_Seq_Out_T<
+          RequestSeq, 
+          RequestSeq_var, 
+          TAO_Pseudo_Object_Manager<
+              CORBA::Request,
+              CORBA::Request_var
+            >
+        >
+      RequestSeq_out;
 
     void create_list (CORBA::Long count,
                       CORBA::NVList_ptr &new_list
@@ -529,11 +557,13 @@ namespace CORBA
 
     /// Resolve the Policy Manager for this ORB.
     CORBA::Object_ptr resolve_policy_manager (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+        ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+      );
 
     /// Resolve the Policy Current for this thread.
     CORBA::Object_ptr resolve_policy_current (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+        ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+      );
 
   private:
 
@@ -588,62 +618,6 @@ namespace CORBA
     /// Timeout value
     ACE_Time_Value *timeout_;
 
-  };
-
-  /**
-   * @class ORB_var
-   *
-   * @brief CORBA::ORB_var implementation.
-   *
-   * CORBA::ORB_var implementation.
-   */
-  class TAO_Export ORB_var
-  {
-  public:
-    ORB_var (void); // default constructor
-    ORB_var (CORBA::ORB_ptr);
-    ORB_var (const ORB_var &); // copy constructor
-    ~ORB_var (void); // destructor
-
-    ORB_var &operator= (CORBA::ORB_ptr);
-    ORB_var &operator= (const ORB_var &);
-    CORBA::ORB_ptr operator-> (void) const;
-
-    /// in, inout, out, _retn
-    operator const CORBA::ORB_ptr &() const;
-    operator CORBA::ORB_ptr &();
-    CORBA::ORB_ptr in (void) const;
-    CORBA::ORB_ptr &inout (void);
-    CORBA::ORB_ptr &out (void);
-    CORBA::ORB_ptr _retn (void);
-    CORBA::ORB_ptr ptr (void) const;
-
-  private:
-    CORBA::ORB_ptr ptr_;
-  };
-
-  /**
-   * @class ORB_out
-   *
-   * @brief CORBA::ORB_out implementation.
-   *
-   * CORBA::ORB_out implementation.
-   */
-  class TAO_Export ORB_out
-  {
-  public:
-    ORB_out (CORBA::ORB_ptr &);
-    ORB_out (CORBA::ORB_var &);
-    ORB_out (const ORB_out &);
-    ORB_out &operator= (ORB_out &);
-    ORB_out &operator= (const CORBA::ORB_var &);
-    ORB_out &operator= (CORBA::ORB_ptr);
-    operator CORBA::ORB_ptr &();
-    CORBA::ORB_ptr &ptr (void);
-    CORBA::ORB_ptr operator-> (void);
-
-  private:
-    CORBA::ORB_ptr &ptr_;
   };
 }  // End namespace CORBA
 

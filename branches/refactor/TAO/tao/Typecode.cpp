@@ -3712,6 +3712,9 @@ template class ACE_Hash_Map_Iterator_Ex<const char *,
                                         ACE_Equal_To<const char *>, 
                                         ACE_Null_Mutex>;
  
+template class TAO_Pseudo_Var_T<CORBA::TypeCode>;
+template class TAO_Pseudo_Out_T<CORBA::TypeCode, CORBA::TypeCode_var>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate TAO_Pseudo_Object_Manager<CORBA::TypeCode, CORBA::TypeCode_var>
@@ -3726,4 +3729,7 @@ template class ACE_Hash_Map_Iterator_Ex<const char *,
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<const char *, ACE_Unbounded_Queue<CORBA::Long> *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<const char *, ACE_Unbounded_Queue<CORBA::Long> *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
  
+#pragma instantiate TAO_Pseudo_Var_T<CORBA::TypeCode>
+#pragma instantiate TAO_Pseudo_Out_T<CORBA::TypeCode, CORBA::TypeCode_var>
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

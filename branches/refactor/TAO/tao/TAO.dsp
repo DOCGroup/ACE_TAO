@@ -1647,6 +1647,10 @@ SOURCE=.\Protocols_Hooks.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Pseudo_Value_VarOut_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Pseudo_VarOut_T.h
 # End Source File
 # Begin Source File
@@ -2459,6 +2463,10 @@ SOURCE=.\typecode.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Value_VarOut_T.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\ValueBase.i
 # End Source File
 # Begin Source File
@@ -2503,6 +2511,11 @@ SOURCE=.\Codeset_Translator_Factory_T.cpp
 # Begin Source File
 
 SOURCE=.\Objref_VarOut_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Pseudo_Value_VarOut_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File

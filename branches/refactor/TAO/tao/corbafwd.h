@@ -209,8 +209,6 @@ namespace CORBA
 
   class Request;
   typedef Request * Request_ptr;
-  class Request_var;
-  class Request_out;
 
   class NamedValue;
   typedef NamedValue * NamedValue_ptr;
@@ -220,13 +218,9 @@ namespace CORBA
 
   class Context;
   typedef Context * Context_ptr;
-  class Context_var;
-  class Context_out;
 
   class ContextList;
   typedef ContextList *ContextList_ptr;
-  class ContextList_var;
-  class ContextList_out;
 
   class Object;
   typedef Object *Object_ptr;
@@ -239,14 +233,11 @@ namespace CORBA
 
   class ORB;
   typedef ORB *ORB_ptr;
-  class ORB_var;
-  class ORB_out;
 
   class ServerRequest;
   typedef ServerRequest *ServerRequest_ptr;
 
   class ExceptionList;
-  class ExceptionList_var;
   typedef ExceptionList *ExceptionList_ptr;
 
   class ImplementationDef;
@@ -367,10 +358,10 @@ namespace CORBA
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (TypeCode_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ORB_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Principal_ptr);
-  extern TAO_Export Boolean is_nil (Request_ptr);
-  extern TAO_Export Boolean is_nil (ServerRequest_ptr req);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (NamedValue_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (NVList_ptr);
+  extern TAO_Export Boolean is_nil (Request_ptr);
+  extern TAO_Export Boolean is_nil (ServerRequest_ptr);
   extern TAO_Export Boolean is_nil (Context_ptr);
   //@}
 
@@ -386,10 +377,10 @@ namespace CORBA
   TAO_NAMESPACE_INLINE_FUNCTION void release (Principal_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (TypeCode_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (ORB_ptr);
-  extern TAO_Export void release (Request_ptr);
-  extern TAO_Export void release (ServerRequest_ptr req);
   TAO_NAMESPACE_INLINE_FUNCTION void release (NamedValue_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (NVList_ptr);
+  extern TAO_Export void release (Request_ptr);
+  extern TAO_Export void release (ServerRequest_ptr);
   extern TAO_Export void release (Context_ptr);
   //@}
 
