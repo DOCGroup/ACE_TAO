@@ -257,12 +257,11 @@ TAO_Naming_Context::to_string (const CosNaming::Name &n
 
 void
 TAO_Naming_Context::
-to_name_helper (char *dest, const char*& src)
+to_name_helper (char *dest, const char*& src, Hint hint)
 {
   for (; *src != '\0'; ++src, ++dest)
     {
-
-      if (*src == '.' || *src == '/')
+      if ((hint == HINT_ID && *src == '.') || *src == '/')
         {
           *dest = '\0';
           return;
@@ -351,13 +350,13 @@ TAO_Naming_Context::to_name (const char *sn
       char *kind = CORBA::string_alloc (len);
 
       // Assign to the id.
-      this->to_name_helper (id, k);
+      this->to_name_helper (id, k, HINT_ID);
 
       if (*k == '.')
         {
           k++;
           // Assign to kind
-          this->to_name_helper (kind, k);
+          this->to_name_helper (kind, k, HINT_KIND);
         }
       else
         {
