@@ -862,7 +862,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-  void dump (void) const;
+  virtual void dump (void) const;
   // Dump the state of an object.
 
 protected:
