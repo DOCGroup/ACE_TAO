@@ -1,5 +1,8 @@
 Mon Jul 24 15:57:24 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
+	* pace/posix/string.inl
+	  Casted away const returns.
+
 	* pace/posix/signal.h
 	  Moved pace_sig_pf back inside the extern "C" {}
 

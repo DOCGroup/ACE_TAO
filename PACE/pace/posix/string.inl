@@ -21,7 +21,7 @@ PACE_INLINE
 void *
 pace_memchr (const void *s, int c, pace_size_t n)
 {
-  return memchr (s, c, n);
+  return (void*) memchr (s, c, n);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -85,7 +85,7 @@ PACE_INLINE
 char *
 pace_strchr (const char * s, int c)
 {
-  return strchr (s, c);
+  return (char*) strchr (s, c);
 }
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
@@ -94,7 +94,7 @@ PACE_INLINE
 char *
 pace_strrchr (const char * s, int c)
 {
-  return strrchr (s, c);
+  return (char*) strrchr (s, c);
 }
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
@@ -166,7 +166,7 @@ PACE_BROKEN_INLINE
 char *
 pace_strpbrk (const char * s1, const char * s2)
 {
-  return strpbrk (s1, s2);
+  return (char*) strpbrk (s1, s2);
 }
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
@@ -175,7 +175,7 @@ PACE_INLINE
 char *
 pace_strstr (const char * s1, const char * s2)
 {
-  return strstr (s1, s2);
+  return (char*) strstr (s1, s2);
 }
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
