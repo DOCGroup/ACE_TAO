@@ -26,9 +26,6 @@ ACE_RCSID(UPIPE_SAP, ex2, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
-// Global thread manager.
-static ACE_Thread_Manager thr_mgr;
-
 // Data for testsuite.
 static int size = 0;
 static int iterations = 0;
@@ -113,9 +110,9 @@ consumer (void *)
               "(%t) consumer spawning the supplier thread\n"));
 
   // Spawn the supplier thread.
-  if (thr_mgr.spawn (ACE_THR_FUNC (supplier),
-                     (void *) 0,
-		     THR_NEW_LWP | THR_DETACHED) == -1)
+  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (supplier),
+                                              (void *) 0,
+                                              THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "spawn"),
@@ -159,15 +156,15 @@ main (int argc, char *argv[])
   iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : 16;
 
   // Spawn the two threads.
-  if (thr_mgr.spawn (ACE_THR_FUNC (consumer),
-                     (void *) 0,
-		     THR_NEW_LWP | THR_DETACHED) == -1)
+  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (consumer),
+                                              (void *) 0,
+                                              THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "spawn"),
                       1);
   // Wait for producer and consumer threads to exit.
-  thr_mgr.wait ();
+  ACE_Thread_Manager::instance ()->wait ();
   return 0;
 }
 #else
