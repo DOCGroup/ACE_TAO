@@ -18,4 +18,5 @@ main (int argc, char **argv)
     return 1;
 
   return logger_client.run ();
+
 }

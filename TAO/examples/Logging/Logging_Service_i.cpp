@@ -43,7 +43,7 @@ Logger_Server::parse_args (void)
 int
 Logger_Server::init (int argc,
 		     char *argv[],
-		     CORBA::Environment &env)
+		     CORBA::Environment &ACE_TRY_ENV)
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -53,14 +53,17 @@ Logger_Server::init (int argc,
   if (this->orb_manager_.init_child_poa (argc,
 					 argv,
 					 "child_poa",
-					 env) == -1)
+					 ACE_TRY_ENV) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "%p\n",
 		       "init_child_poa"),
 		      -1);
   
-  TAO_CHECK_ENV_RETURN (env,-1);
-  
+  ACE_CHECK_RETURN (-1);
+
+  this->orb_manager_.activate_poa_manager (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
   // Parse the command line arguments.
   if (this->parse_args () != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -72,14 +75,14 @@ Logger_Server::init (int argc,
   CORBA::String_var str =
     this->orb_manager_.activate_under_child_poa ("logger_factory",
 						 &this->factory_impl_,
-						 env);
+						 ACE_TRY_ENV);
     if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
 		"The IOR is: <%s>\n",
 		str.in ()));
 
     // Initialize the naming service
-  if (this->init_naming_service (env) != 0)
+  if (this->init_naming_service (ACE_TRY_ENV) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "%p\n",
 		       "init_naming_service"),
@@ -93,7 +96,7 @@ Logger_Server::init (int argc,
 // and logger_factory object.
 
 int
-Logger_Server::init_naming_service (CORBA::Environment& env)
+Logger_Server::init_naming_service (CORBA::Environment& ACE_TRY_ENV)
 {
   // Get pointers to the ORB and child POA
   CORBA::ORB_var orb = this->orb_manager_.orb ();
@@ -105,8 +108,8 @@ Logger_Server::init_naming_service (CORBA::Environment& env)
     return -1;
 
   // Create an instance of the Logger_Factory
-  Logger_Factory_var factory = this->factory_impl_._this (env);
-  TAO_CHECK_ENV_RETURN (env, -1);
+  Logger_Factory_var factory = this->factory_impl_._this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   //Register the logger_factory
   CosNaming::Name factory_name (1);
@@ -114,16 +117,16 @@ Logger_Server::init_naming_service (CORBA::Environment& env)
   factory_name[0].id = CORBA::string_dup ("Logger_Factory");
   this->my_name_server_->bind (factory_name,
 			       factory.in (),
-			       env);
-  TAO_CHECK_ENV_RETURN (env, -1);
+			       ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
   
   return 0;
 }
 
 int
-Logger_Server::run (CORBA::Environment& env)
+Logger_Server::run (CORBA::Environment &ACE_TRY_ENV)
 {
-  if (this->orb_manager_.run (env) == -1)
+  if (this->orb_manager_.run (ACE_TRY_ENV) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Logger_Server::run"),
                       -1);

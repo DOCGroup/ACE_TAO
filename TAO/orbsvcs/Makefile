@@ -16,7 +16,6 @@ DIRS  =	orbsvcs \
 	Concurrency_Service \
 	LifeCycle_Service \
 	Trading_Service \
-	Logging_Service \
 	Time_Service \
 	ImplRepo_Service \
 	CosEvent_Service \
