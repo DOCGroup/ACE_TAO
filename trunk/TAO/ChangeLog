@@ -1,3 +1,11 @@
+Mon May  5 10:54:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/Makefile.BE:
+        * TAO_IDL/Makefile.EXE:
+        * TAO_IDL/Makefile.FE:
+
+          Updated dependencies.
+
 Mon May  5 08:52:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.h: #included
