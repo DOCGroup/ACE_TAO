@@ -80,7 +80,7 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
 {
   if (!node->imported () && !node->is_local ())
     {
-      AST_Module *module = 
+      AST_Module *module =
         AST_Module::narrow_from_scope (node->defined_in ());
 
       if (!module)
@@ -251,7 +251,7 @@ be_visitor_ami_pre_proc::visit_attribute (be_attribute *node)
   // Assign it to the attribute as set_operation strategy.
   if (set_operation_strategy)
     {
-      be_operation_strategy *bos = 
+      be_operation_strategy *bos =
         node->set_set_strategy (set_operation_strategy);
       delete bos;
       bos = 0;
@@ -272,7 +272,7 @@ be_visitor_ami_pre_proc::visit_attribute (be_attribute *node)
 
   if (get_operation_strategy)
     {
-      be_operation_strategy *bos = 
+      be_operation_strategy *bos =
         node->set_get_strategy (get_operation_strategy);
       delete bos;
       bos = 0;
@@ -349,7 +349,7 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
                        node->name ()->last_component ()->get_string(),
                        "ExceptionHolder");
 
-  UTL_ScopedName *excep_holder_name = 
+  UTL_ScopedName *excep_holder_name =
     ACE_static_cast (UTL_ScopedName *, node->name ()->copy ());
   excep_holder_name->last_component ()->replace_string (
                                             excep_holder_local_name.rep ()
@@ -360,7 +360,7 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
                   AST_Interface_ptr[1],
                   0);
 
-  p_intf[0] = ACE_static_cast (AST_Interface *, 
+  p_intf[0] = ACE_static_cast (AST_Interface *,
                                inherit_vt);
 
   be_valuetype *excep_holder = 0;
@@ -498,7 +498,7 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
                        node->name ()->last_component ()->get_string(),
                        "Handler");
 
-  UTL_ScopedName *reply_handler_name = 
+  UTL_ScopedName *reply_handler_name =
     ACE_static_cast (UTL_ScopedName *, node->name ()->copy ());
   reply_handler_name->last_component ()->replace_string (
                                              reply_handler_local_name.rep ()
@@ -509,7 +509,7 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
                   AST_Interface_ptr[1],
                   0);
 
-  p_intf[0] = ACE_static_cast (AST_Interface *, 
+  p_intf[0] = ACE_static_cast (AST_Interface *,
                                inherit_intf);
 
   be_interface *reply_handler = 0;
@@ -753,8 +753,8 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
                 );
   ACE_CString new_op_name = ACE_CString ("sendc_") + original_op_name;
 
-  UTL_ScopedName *op_name = 
-    ACE_static_cast (UTL_ScopedName *, 
+  UTL_ScopedName *op_name =
+    ACE_static_cast (UTL_ScopedName *,
                      node->name ()->copy ());
   op_name->last_component ()->replace_string (new_op_name.rep ());
 
@@ -773,7 +773,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
   if (for_arguments)
     {
       // Create the field type
-      be_decl *parent = 
+      be_decl *parent =
         be_scope::narrow_from_scope (node->defined_in ())->decl ();
 
       // Add the pre- and suffix
@@ -783,7 +783,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
                            parent->name ()->last_component ()->get_string (),
                            "Handler");
 
-      UTL_ScopedName *field_name = 
+      UTL_ScopedName *field_name =
         ACE_static_cast (UTL_ScopedName *, parent->name ()->copy ());
       field_name->last_component ()->replace_string (excep_holder_name.rep ());
 
@@ -905,8 +905,8 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
                   node->name ()->last_component ()->get_string ()
                 );
 
-  UTL_ScopedName *op_name = 
-    ACE_static_cast (UTL_ScopedName *, 
+  UTL_ScopedName *op_name =
+    ACE_static_cast (UTL_ScopedName *,
                      reply_handler->name ()-> copy ());
 
   ACE_NEW_RETURN (id,
@@ -1081,7 +1081,7 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
                 );
   ACE_CString new_op_name = original_op_name + ACE_CString ("_excep");
 
-  UTL_ScopedName *op_name = 
+  UTL_ScopedName *op_name =
     ACE_static_cast (UTL_ScopedName *, reply_handler->name ()->copy ());
 
   ACE_NEW_RETURN (id,
@@ -1141,8 +1141,8 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
       }
 
       AST_Decl **elements;
-      ACE_NEW_RETURN (elements, 
-                      AST_Decl *[number_of_elements], 
+      ACE_NEW_RETURN (elements,
+                      AST_Decl *[number_of_elements],
                       -1);
 
       {
@@ -1171,7 +1171,7 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
               elements = 0;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_scope::visit_scope - "
-                                 "bad node in this scope\n"), 
+                                 "bad node in this scope\n"),
                                 -1);
 
             }
@@ -1195,7 +1195,7 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
               elements = 0;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_scope::visit_scope - "
-                                 "codegen for scope failed\n"), 
+                                 "codegen for scope failed\n"),
                                 -1);
             }
         } // end of while loop

@@ -75,8 +75,11 @@ be_visitor_amh_rh_interface_sh::visit_interface (be_interface *node)
   *os << be_uidt_nl << "{" << be_nl
       << "public:" << be_idt_nl
       << rh_skel_class_name.c_str () << " (TAO_ServerRequest &sr);" << be_nl
-      << "virtual ~" << rh_skel_class_name.c_str () << " (void);"
+      << "virtual ~" << rh_skel_class_name.c_str () << " (void);\n"
       << be_nl;
+
+  *os << "// TAO_IDL - Generated from "
+      << __FILE__ << ":" << __LINE__ << be_nl;
 
   // Generate code for elements in the scope (e.g., operations).
   if (this->visit_scope (node) ==  -1)
