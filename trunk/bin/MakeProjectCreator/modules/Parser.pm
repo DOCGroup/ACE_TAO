@@ -31,7 +31,7 @@ sub cd {
   my($self)   = shift;
   my($dir)    = shift;
   my($status) = chdir($dir);
-  if ($status) {
+  if ($status && $dir ne '.') {
     if ($dir =~ /^\// || $dir =~ /^[A-Za-z]:/) {
       $cwd = $dir;
     }

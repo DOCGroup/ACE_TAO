@@ -1,3 +1,11 @@
+Thu Dec 12 06:18:02 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Parser.pm:
+
+          Fixed a bug with setting and retrieving the current working
+          directory.  Thanks to Steve Huston <shuston@riverace.com> for
+          reporting this.
+
 Thu Dec 12 00:01:37 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* netsvcs/clients/Naming/Client/Makefile: Fixed a small problem in
