@@ -114,31 +114,6 @@ CORBA::AbstractBase::_duplicate (CORBA::AbstractBase_ptr obj)
   return obj;
 }
 
-CORBA::AbstractBase_ptr
-CORBA::AbstractBase::_unchecked_narrow (CORBA::AbstractBase_ptr obj
-                                        ACE_ENV_ARG_DECL_NOT_USED)
-{
-  CORBA::Object_var tmp_obj = 0;
-
-  if (obj->concrete_stubobj_ != 0)
-    {
-      TAO_ORB_Core *orb_core =
-        obj->concrete_stubobj_->orb_core ();
-
-      (void) obj->concrete_stubobj_->_incr_refcnt ();
-
-      tmp_obj =
-        orb_core->create_object (obj->concrete_stubobj_);
-    }
-
-  CORBA::AbstractBase_ptr ret =
-    CORBA::AbstractBase::_duplicate (obj);
-
-  obj->equivalent_obj_ = tmp_obj._retn ();
-
-  return ret;
-}
-
 // These are non-pure virtual no-ops so we can instantiate the
 // class in the CDR extraction operator. The actual management
 // of the refcount will always be done in the derived class.

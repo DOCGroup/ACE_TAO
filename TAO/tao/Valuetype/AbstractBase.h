@@ -76,10 +76,6 @@ namespace CORBA
 
     static CORBA::AbstractBase_ptr _narrow (CORBA::AbstractBase_ptr obj
                                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-    static CORBA::AbstractBase_ptr _unchecked_narrow (
-      CORBA::AbstractBase_ptr obj
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
 
     static CORBA::AbstractBase_ptr _duplicate (CORBA::AbstractBase_ptr obj);
     static CORBA::AbstractBase_ptr _nil (void);
@@ -97,7 +93,6 @@ namespace CORBA
 
     /// TAO specific operation
     virtual const char* _tao_obv_repository_id (void) const;
-    virtual void *_tao_obv_narrow (ptrdiff_t type_id);
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &strm);
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &strm);
 
