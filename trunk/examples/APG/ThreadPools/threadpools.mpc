@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(Futures) : aceexe {
   exename = Futures
   Source_Files {

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(Netlocal) : aceexe {
   exename = Netlocal
   Source_Files {

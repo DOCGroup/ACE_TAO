@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Hash Map) : aceexe {
   exename = Hash_Map
   Source_Files {
