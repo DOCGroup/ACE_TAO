@@ -25,9 +25,10 @@ Task_State::Task_State (int argc, char **argv)
     ior_file_ (0),
     granularity_ (1),
     use_utilization_test_ (0),
-    high_priority_loop_count_ (0)
+    high_priority_loop_count_ (0),
+    use_multiple_priority_ (0)
 {
-  ACE_Get_Opt opts (argc, argv, "usn:t:d:rxof:g:1c");
+  ACE_Get_Opt opts (argc, argv, "musn:t:d:rxof:g:1c");
   int c;
   int datatype;
 
@@ -37,6 +38,9 @@ Task_State::Task_State (int argc, char **argv)
       granularity_ = ACE_OS::atoi (opts.optarg);
       if (granularity_ < 1)
         granularity_ = 1;
+      break;
+    case 'm':
+      use_multiple_priority_ = 1;
       break;
     case 'c':
       context_switch_test_ = 1;
@@ -106,7 +110,7 @@ Task_State::Task_State (int argc, char **argv)
     }
 
   if (thread_per_rate_ == 1)
-    thread_count_ = 5;
+    thread_count_ = 4;
 
   // allocate the array of character pointers.
   ACE_NEW (iors_,
@@ -153,7 +157,7 @@ Task_State::Task_State (int argc, char **argv)
   else
     {
       ACE_NEW (barrier_,
-	       ACE_Barrier (thread_count_ - 1));
+	       ACE_Barrier (thread_count_));
     }
 
   ACE_NEW (semaphore_,

@@ -27,7 +27,8 @@ static int base_port = ACE_DEFAULT_SERVER_PORT;
 static int num_of_objs = 2;
 static u_int use_name_service = 1;
 static u_int thread_per_rate = 0;
- 
+static u_int use_multiple_priority = 0; 
+
 Cubit_Task::Cubit_Task (void)
 {
   // No-op.
@@ -329,12 +330,6 @@ Cubit_Task::create_servants ()
                             " (%t) Cubit object bound to the name \"%s\".\n",
                             buffer));
             }
-
-#if 0  /* The IOR gets printout out later, so we don't need this. */
-          ACE_DEBUG ((LM_DEBUG,
-                      " (%t) Object <%s> created\n",
-                      this->servants_iors_[i]));
-#endif /* 0 */
         }
       delete [] buffer;
     }
@@ -355,7 +350,7 @@ Cubit_Task::create_servants ()
 static int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, "sh:p:t:f:r");
+  ACE_Get_Opt opts (argc, argv, "sh:p:t:f:rm");
   int c;
 
   if (ACE_OS::hostname (hostname, BUFSIZ) != 0)
@@ -367,6 +362,9 @@ parse_args (int argc, char *argv[])
   while ((c = opts ()) != -1)
     switch (c)
       {
+      case 'm':
+	use_multiple_priority = 1;
+	break;
       case 'r':
 	thread_per_rate = 1;
 	break;
@@ -402,7 +400,7 @@ parse_args (int argc, char *argv[])
       }
 
   if (thread_per_rate == 1)
-    num_of_objs = 5;
+    num_of_objs = 4;
 
   // Indicates successful parsing of command line
   return 0;
@@ -530,13 +528,47 @@ start_servants (ACE_Barrier &start_barrier)
                   Cubit_Task *[num_of_objs],
                   -1);
 
+  u_int number_of_low_priority_servants = 0;
+  u_int number_of_priorities = 0;
+  u_int grain = 0;
+  u_int counter = 0;
+
+  number_of_low_priority_servants = num_of_objs - 1;
+
   // Drop the priority
-  if (thread_per_rate == 1)
+  if (thread_per_rate == 1 || use_multiple_priority == 1)
     {
-      for (i = 0; i < (num_of_objs - 1); i++)
+      ACE_Sched_Priority_Iterator priority_iterator (ACE_SCHED_FIFO,
+	                                             ACE_SCOPE_THREAD);
+
+      number_of_priorities = 0;
+
+      while (priority_iterator.more ())
+	{
+	  number_of_priorities ++;
+	  priority_iterator.next ();
+	}
+  
+      // 1 priority is exclusive for the high priority client.
+      number_of_priorities --;
+
+      // Drop the priority, so that the priority of clients will increase
+      // with increasing client number.
+      for (i = 0; i < number_of_low_priority_servants + 1; i++)
 	priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
 							priority,
 							ACE_SCOPE_THREAD);
+
+      // granularity of the assignment of the priorities.  Some OSs have 
+      // fewer levels of priorities than we have threads in our test, so 
+      // with this mechanism we assign priorities to groups of threads when 
+      // there are more threads than priorities.
+      grain = number_of_low_priority_servants / number_of_priorities;
+      counter = 0;
+
+      if (grain <= 0) 
+	grain = 1;
+  
     }
   else
     {
@@ -546,13 +578,13 @@ start_servants (ACE_Barrier &start_barrier)
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "Creating %d servants with priority %d\n",
-              num_of_objs - 1,
+              "Creating %d servants starting at priority %d\n",
+              number_of_low_priority_servants,
               priority));
 
   // Create the low priority servants.
 
-  for (i = num_of_objs - 2; i >= 0; i--)
+  for (i = number_of_low_priority_servants; i > 0; i--)
     {
       char *args;
 
@@ -566,15 +598,15 @@ start_servants (ACE_Barrier &start_barrier)
 		       "-ORBobjrefstyle URL "
 		       "-ORBsndsock 32768 "
 		       "-ORBrcvsock 32768 ",
-                       base_port + 1 + i,
+                       base_port + i,
                        hostname);
 
-      ACE_NEW_RETURN (low_priority_task [i],
-                      Cubit_Task (args, "internet", 1, &start_barrier, i+1),
+      ACE_NEW_RETURN (low_priority_task [i - 1],
+                      Cubit_Task (args, "internet", 1, &start_barrier, i),
                       -1);
 
       // Make the low priority task an active object.
-      if (low_priority_task [i]->activate (THR_BOUND | ACE_SCHED_FIFO,
+      if (low_priority_task [i - 1]->activate (THR_BOUND | ACE_SCHED_FIFO,
                                            1,
                                            0,
                                            priority) == -1)
@@ -585,16 +617,25 @@ start_servants (ACE_Barrier &start_barrier)
 
       ACE_DEBUG ((LM_DEBUG,
 		  "Created servant %d with priority %d\n",
-		  i+1,
+		  i,
 		  priority));
 
-      // use different priorities on thread per rate.
-      if (thread_per_rate == 1)
-	priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-						    priority,
-						    ACE_SCOPE_THREAD);
-
-    }
+      // use different priorities on thread per rate or multiple priority.
+      if (use_multiple_priority == 1 || thread_per_rate == 1)
+        {    
+          counter = (counter + 1) % grain;
+          if ( (counter == 0) && 
+               //Just so when we distribute the priorities among the threads, we make sure we don't go overboard.
+               ((number_of_priorities * grain) > (number_of_low_priority_servants - (i - 1))) )
+              {
+          	      // Get the next higher priority.
+          	      priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+          						     priority,
+          						     ACE_SCOPE_THREAD);
+              }
+          
+        }          
+    } /* end of for() */
 
   start_barrier.wait ();
 
@@ -651,7 +692,7 @@ main (int argc, char *argv[])
           ACE_SCHED_FIFO,
 #if defined (__Lynx__)
           30,
-#elsif defined (VXWORKS) /* ! __Lynx__ */
+#elif defined (VXWORKS) /* ! __Lynx__ */
 	  6,
 #else
 	  ACE_THR_PRI_FIFO_DEF,

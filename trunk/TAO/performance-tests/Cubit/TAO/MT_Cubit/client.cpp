@@ -260,13 +260,70 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
                 "%p; priority is %d\n",
                 "activate failed",
                 priority));
-    
-  u_int number_of_low_priority_client = ts.thread_count_ - 1;
 
-  // Drop the priority
-  priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
-    priority,
-    ACE_SCOPE_THREAD);
+  u_int number_of_low_priority_client = 0;
+  u_int number_of_priorities = 0;
+  u_int grain = 0;
+  u_int counter = 0;
+
+  number_of_low_priority_client = ts.thread_count_ - 1;
+
+  if (ts.use_multiple_priority_ == 1)
+    {    
+      ACE_Sched_Priority_Iterator priority_iterator (ACE_SCHED_FIFO,
+						     ACE_SCOPE_THREAD);
+
+      number_of_priorities = 0;
+      while (priority_iterator.more ())
+	{
+	  number_of_priorities ++;
+	  priority_iterator.next ();
+	}
+  
+      // 1 priority is exclusive for the high priority client.
+      number_of_priorities --;
+
+      // if utilization thread is present, reduce in 1 the available priorities.
+      if (ts.use_utilization_test_ == 1)
+	{
+	  number_of_priorities --;
+	}
+
+      // Drop the priority, so that the priority of clients will increase
+      // with increasing client number.
+      for (j = 0; j < number_of_low_priority_client + 1; j++)
+	priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+							priority,
+							ACE_SCOPE_THREAD);
+
+      // if the lowest priority of the "low priority clients" is the minimum, 
+      // and we are running the utilization thread, increment the priority, 
+      // since we don't want the utlization thread and a "low priority thread" 
+      // to have the same priority.
+      if ( priority == ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
+						       ACE_SCOPE_THREAD) &&
+	   ts.use_utilization_test_ == 1)
+	priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+                                                    priority,
+                                                    ACE_SCOPE_THREAD);
+	
+      // granularity of the assignment of the priorities.  Some OSs have 
+      // fewer levels of priorities than we have threads in our test, so 
+      // with this mechanism we assign priorities to groups of threads when 
+      // there are more threads than priorities.
+      grain = number_of_low_priority_client / number_of_priorities;
+      counter = 0;
+
+      if (grain <= 0) 
+	grain = 1;
+    }
+  else
+    {
+      // Drop the priority one level
+      priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+						      priority,
+						      ACE_SCOPE_THREAD);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "Creating %d clients at priority %d\n",
@@ -315,7 +372,22 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
 	            "%p; priority is %d\n",
 	            "activate failed",
 	            priority));
-    }
+
+      if (ts.use_multiple_priority_ == 1)
+        {    
+          counter = (counter + 1) % grain;
+          if ( (counter == 0) && 
+               //Just so when we distribute the priorities among the threads, we make sure we don't go overboard.
+               ((number_of_priorities * grain) > (number_of_low_priority_client - (i - 1))) )
+              {
+          	      // Get the next higher priority.
+          	      priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+          						     priority,
+          						     ACE_SCOPE_THREAD);
+              }
+          
+        }          
+    } /* end of for () */
 
   if (ts.use_utilization_test_ == 1)
     // activate the utilization thread only if specified.  See
