@@ -1583,10 +1583,10 @@ ACE_DynScheduler::check_dependency_cycles (void)
   status_t return_status = SUCCEEDED;
 
   // sort the pointers to entries in order of descending finish time
-  ::qsort ((void *) ordered_task_entries_,
-           tasks (),
-           sizeof (Task_Entry *),
-           compare_entry_finish_times);
+  ACE_OS::qsort ((void *) ordered_task_entries_,
+                 tasks (),
+                 sizeof (Task_Entry *),
+                 compare_entry_finish_times);
 
   // set all the dfs_status indicators to NOT_VISITED
   u_int i;
