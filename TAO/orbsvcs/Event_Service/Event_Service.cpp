@@ -62,17 +62,17 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
       if (this->parse_args (command.get_argc(), command.get_TCHAR_argv()) == -1)
         return 1;
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var root_poa_object =
         this->orb_->resolve_initial_references("RootPOA"
                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      if (CORBA::is_nil (poa_object.in ()))
+      if (CORBA::is_nil (root_poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
+                           " (%P|%t) Unable to initialize the root POA.\n"),
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (root_poa_object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
@@ -101,14 +101,13 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
       schedule_name.length (1);
       schedule_name[0].id = CORBA::string_dup ("ScheduleService");
 
-
-      //the old EC always needs a scheduler. If none is
-      //specified, we default to a local scheduler
+      // The old EC always needs a scheduler. If none is
+      // specified, we default to a local scheduler
       if (this->scheduler_type_ == SCHED_LOCAL ||
-          (this->scheduler_type_ == SCHED_NONE && 
+          (this->scheduler_type_ == SCHED_NONE &&
            this->event_service_type_ != ES_NEW))
         {
-          //Create a local scheduler instance
+          // Create a local scheduler instance
           ACE_NEW_RETURN (this->sched_impl_,
                           ACE_Config_Scheduler,
                           1);
@@ -123,11 +122,11 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
         }
       else if (this->scheduler_type_ == SCHED_GLOBAL)
         {
-          //Get reference to a scheduler from naming service
+          // Get reference to a scheduler from naming service
           CORBA::Object_var tmp =
             naming_context->resolve (schedule_name ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          
+
           scheduler = RtecScheduler::Scheduler::_narrow (tmp.in ()
                                                          ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -190,21 +189,74 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
           break;
         }
 
-      // Notice that we activate *this* object with the POA, but we
-      // forward all the requests to the underlying EC
-      // implementation.
-      RtecEventChannelAdmin::EventChannel_var ec =
-        this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      RtecEventChannelAdmin::EventChannel_var ec;
+
+      // If the servant name is empty, activate the servant under the default
+      // POA, else create a new child POA with persistent policies
+      if (ACE_OS::strcmp(this->servant_name_.c_str(), "") == 0)
+        {
+          // Notice that we activate *this* object with the POA, but we
+          // forward all the requests to the underlying EC
+          // implementation.
+          ec = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      else
+        {
+          // Create persistent POA
+          CORBA::PolicyList policies (2);
+          policies.length (2);
+
+          policies[0] =
+            root_poa->create_id_assignment_policy (PortableServer::USER_ID
+                                                    ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          policies[1] =
+            root_poa->create_lifespan_policy (PortableServer::PERSISTENT
+                                               ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          ACE_CString persistent_poa_name = "persistentPOA";
+          PortableServer::POA_var persistent_poa =
+            root_poa->create_POA (persistent_poa_name.c_str (),
+                                  poa_manager.in (),
+                                  policies
+                                  ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          if (CORBA::is_nil (persistent_poa.in ()))
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               " (%P|%t) Unable to initialize the persistent POA.\n"),
+                              1);
+
+          PortableServer::ObjectId_var ec_object_id =
+            PortableServer::string_to_ObjectId(servant_name_.c_str());
+
+          persistent_poa->activate_object_with_id(ec_object_id.in(),
+                                                  this
+                                                  ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          CORBA::Object_var ec_obj =
+            persistent_poa->id_to_reference(ec_object_id.in()
+                                            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          ec =
+            RtecEventChannelAdmin::EventChannel::_narrow(ec_obj.in()
+                                                         ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
 
       CORBA::String_var str =
-        this->orb_->object_to_string (ec.in () ACE_ENV_ARG_PARAMETER);
+         this->orb_->object_to_string (ec.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (ACE_OS::strcmp(this->ior_file_name_.c_str(), "") != 0)
         {
-          FILE *output_file= 
-            ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(this->ior_file_name_.c_str()), 
+          FILE *output_file=
+            ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(this->ior_file_name_.c_str()),
                            ACE_LIB_TEXT("w"));
           if (output_file == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -217,8 +269,8 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
 
       if (ACE_OS::strcmp(this->pid_file_name_.c_str(), "") != 0)
         {
-          FILE *pidf = 
-            ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(this->pid_file_name_.c_str()), 
+          FILE *pidf =
+            ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(this->pid_file_name_.c_str()),
                            ACE_LIB_TEXT("w"));
           if (pidf != 0)
             {
@@ -270,7 +322,7 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
   // default values...
   this->service_name_ = "EventService";
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("n:o:p:s:t:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("n:o:p:s:t:q:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -287,6 +339,10 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
 
         case 'p':
           this->pid_file_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          break;
+
+        case 'q':
+          this->servant_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
           break;
 
         case 's':
@@ -348,6 +404,7 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
                       ACE_LIB_TEXT("-p pid_file_name ")
                       ACE_LIB_TEXT("-s <global|local|none> ")
                       ACE_LIB_TEXT("-t <new|old_reactive|old_mt> ")
+                      ACE_LIB_TEXT("-q servant_name for persistent IOR ")
                       ACE_LIB_TEXT("\n"),
                       argv[0]));
           return -1;
