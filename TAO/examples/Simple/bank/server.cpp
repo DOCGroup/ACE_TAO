@@ -12,7 +12,7 @@ main (int argc, char *argv[])
   Server_i server;
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n\tBank server\n\n"));
+              "[SERVER] Process/Thread Id : (%P/%t) Bank server\n"));
 
   TAO_TRY
     {
