@@ -40,7 +40,7 @@ main (int argc, char **argv)
 
   //apply _narrow on the object of type CORBA::Object,
   // to make it a POA class Object
-  PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in(), env);
+  PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in (), env);
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::_narrow");
@@ -57,9 +57,9 @@ main (int argc, char **argv)
 
   cout << "The RootPOA is : " << poa_name.in () << endl;
 
-  //destroy the POA object. Also destroys the child POAs if any.
+  //destroy the POA object,also destroys the child POAs if any.
  root_poa->destroy (CORBA::B_TRUE,
-                     CORBA::B_TRUE,
+                    CORBA::B_TRUE,
                      env);
   if (env.exception () != 0)
     {
