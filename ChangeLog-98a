@@ -3,58 +3,65 @@ Tue Apr 14 07:19:25 1998  David L. Levine  <levine@cs.wustl.edu>
         * bin/make_release (create_kit): ACE+TAO instead of ACE_TAO.
           Thanks to Doug for reporting this.
 
+        * ace/OS.h (ACE_Thread_Adapter): added friend class declaration
+          to avoid g++ warning:  only defines a private destructor and
+          has no friends.
+
+        * ace/OS.cpp (ACE_Thread_Adapter::invoke): only declare local
+          thr_desc if ACE_HAS_WIN32 and ACE_HAS_MFC.
+
 Tue Apr 14 00:46:05 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.40 released.
 
 Mon Apr 13 19:19:13 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS: Made the destructor of ACE_Thread_Adapter private to
- 	  keep people like Russ from abusing this class... ;-)
+        * ace/OS: Made the destructor of ACE_Thread_Adapter private to
+          keep people like Russ from abusing this class... ;-)
 
-	* ace/OS.cpp (invoke): We were incorrectly deleting this and then
- 	  using one of its fields!  Thanks to the ever-vigilant Russ
- 	  Noseworthy <rnosewor@objectsciences.com> for reporting this.
+        * ace/OS.cpp (invoke): We were incorrectly deleting this and then
+          using one of its fields!  Thanks to the ever-vigilant Russ
+          Noseworthy <rnosewor@objectsciences.com> for reporting this.
 
-	* ace/Log_Record.cpp (print): Added VERBOSE_LITE support to the
- 	  code so we don't spew out quite so much information.
+        * ace/Log_Record.cpp (print): Added VERBOSE_LITE support to the
+          code so we don't spew out quite so much information.
 
-	* ace/Log_Msg.cpp (log): Replaced all calls to
- 	  ACE_Log_Record::print() so that they pass the
- 	  ACE_Log_Msg::flags_ parameter.
+        * ace/Log_Msg.cpp (log): Replaced all calls to
+          ACE_Log_Record::print() so that they pass the
+          ACE_Log_Msg::flags_ parameter.
 
-	* ace/Log_Record.h: Changed the 'int verbose' parameter to 'u_long
- 	  verbose_flag' parameter so that we can pass in the
- 	  ACE_Log_Msg::flags_ and check to see what they are enabled with!
+        * ace/Log_Record.h: Changed the 'int verbose' parameter to 'u_long
+          verbose_flag' parameter so that we can pass in the
+          ACE_Log_Msg::flags_ and check to see what they are enabled with!
 
-	* tests/test_config.h: Changed VERBOSE to VERBOSE_LITE so we don't
- 	  have quite so much junk printed out for the tests!
+        * tests/test_config.h: Changed VERBOSE to VERBOSE_LITE so we don't
+          have quite so much junk printed out for the tests!
 
-	* ace/Log_{Priority,Record}: Added a new flag called VERBOSE_LITE
- 	  that isn't quite as verbose as VERBOSE (it only prints things
- 	  that can change between calls to the ACE_Log_Msg::log() method).
-  	  In addition, also changed the ACE_Log_Record::print() method so
- 	  it prints the string format for the ACE_Log_Priority types.
-  	  This is a lot more legible than printing the numbers.
+        * ace/Log_{Priority,Record}: Added a new flag called VERBOSE_LITE
+          that isn't quite as verbose as VERBOSE (it only prints things
+          that can change between calls to the ACE_Log_Msg::log() method).
+          In addition, also changed the ACE_Log_Record::print() method so
+          it prints the string format for the ACE_Log_Priority types.
+          This is a lot more legible than printing the numbers.
 
-	* ace: Removed all uses of ACE_HAS_WILDCARD_BIND.  This is now the
- 	  default behavior.  If there's some weird platform that DOESN'T
- 	  have this behavior, we'll deal with that by setting the
- 	  ACE_LACKS_WILDCARD_BIND flag.
+        * ace: Removed all uses of ACE_HAS_WILDCARD_BIND.  This is now the
+          default behavior.  If there's some weird platform that DOESN'T
+          have this behavior, we'll deal with that by setting the
+          ACE_LACKS_WILDCARD_BIND flag.
 
-	* ace/OS.cpp (invoke): Removed the (void *) cast on delete this.
-  	  It wasn't necessary.  Thanks to Steve Huston and David Levine
- 	  for reporting this.
+        * ace/OS.cpp (invoke): Removed the (void *) cast on delete this.
+          It wasn't necessary.  Thanks to Steve Huston and David Levine
+          for reporting this.
 
 Mon Apr 13 19:12:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/DEV_Connector.i (ACE_DEV_Connector):
-	* ace/Asynch_IO.cpp (accept,addresses): UNICODE changes.
+        * ace/DEV_Connector.i (ACE_DEV_Connector):
+        * ace/Asynch_IO.cpp (accept,addresses): UNICODE changes.
 
 Mon Apr 13 18:05:26 1998  Steve Huston  <shuston@riverace.com>
 
-	* tests/Thread_Manager_Test.cpp: Disabled the suspend/resume action
-	  for Pthreads platforms.
+        * tests/Thread_Manager_Test.cpp: Disabled the suspend/resume action
+          for Pthreads platforms.
 
 Mon Apr 13 10:18:59 1998  David L. Levine  <levine@cs.wustl.edu>
 
