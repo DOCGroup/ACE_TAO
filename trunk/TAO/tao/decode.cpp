@@ -172,8 +172,17 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
           end = temp.rd_ptr ();
 
           ACE_Message_Block* cdr;
-          ACE_NEW_RETURN (cdr, ACE_Message_Block (end - begin),
+
+          // We need to allocate more memory than in the original
+          // stream, first to guarantee that the buffer is aligned in
+          // memory and next because the realignment may introduce
+          // extra padding. 2*MAX_ALIGNMENT should be enough.
+          ACE_NEW_RETURN (cdr,
+                          ACE_Message_Block (end - begin
+                                             + 2*CDR::MAX_ALIGNMENT),
                           CORBA::TypeCode::TRAVERSE_STOP);
+          // Align the buffer before creating the CDR stream.
+          CDR::mb_align (cdr);
           TAO_OutputCDR out (cdr);
 
           retval = out.append (elem_tc.in (), stream, env);

@@ -1,5 +1,10 @@
 Tue Nov 17 11:28:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* tao/decode.cpp: 
+	  Fixed problems with Any demarshaling, the buffer allocated could
+	  be misaligned and sometimes too small. Thanks to Arturo Montes
+	  <mitosys@colomsat.com.co> for pointing this out.
+
 	* orbsvcs/orbsvcs/Event/Dispatching_Modules.i: 
 	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp: 
 	  When dispatching events the push() method may raise an
