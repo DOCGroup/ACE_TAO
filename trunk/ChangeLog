@@ -1,3 +1,10 @@
+Wed Oct 27 13:05:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * include/makeinclude/rules.local.GNU:
+        * include/makeinclude/rules.lib.GNU:
+
+          Added changes to support VxWorks DIAB build on Windows.
+
 Wed Oct 27 07:54:11 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/HTBP/HTBP_Addr.h:
