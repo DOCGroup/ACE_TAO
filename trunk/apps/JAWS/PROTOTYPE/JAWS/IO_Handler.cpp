@@ -221,28 +221,36 @@ void
 JAWS_Asynch_Handler::open (ACE_HANDLE h,
                            ACE_Message_Block &mb)
 {
+  JAWS_TRACE ("JAWS_Asynch_Handler::open");
+
   // This currently does nothing, but just in case.
   ACE_Service_Handler::open (h, mb);
 
   // ioh_ set from the ACT hopefully
   //this->dispatch_handler ();
 
+  this->handler ()->mb_->rd_ptr (this->handler ()->mb_->wr_ptr ());
   this->handler ()->mb_->crunch ();
-  if (mb.rd_ptr ()[0] != '\0')
-    this->handler ()->mb_->copy (mb.rd_ptr (), mb.length ());
+
+  // Assume at this point there is no data.
+  //if (mb.rd_ptr ()[0] != '\0')
+  //  this->handler ()->mb_->copy (mb.rd_ptr (), mb.length ());
   ACE_Message_Block &mb2 = *(this->handler ()->mb_);
   ACE_Asynch_Accept::Result fake_result
     (*this, JAWS_IO_Asynch_Acceptor_Singleton::instance ()->get_handle (),
      h, mb2, JAWS_Data_Block::JAWS_DATA_BLOCK_SIZE,
      this->ioh_, ACE_INVALID_HANDLE);
-  
+
   this->handler ()->handler_ = this;
-  this->handle_accept (fake_result);
+
+  fake_result.complete (0, 1, 0);
 }
 
 void
 JAWS_Asynch_Handler::act (const void *act_ref)
 {
+  JAWS_TRACE ("JAWS_Asynch_Handler::act");
+
   // Set the ioh from the act
   this->ioh_ = (JAWS_IO_Handler *) act_ref;
 }
@@ -361,10 +369,14 @@ JAWS_Asynch_Handler::handle_transmit_file (const
 void
 JAWS_Asynch_Handler::handle_accept (const ACE_Asynch_Accept::Result &result)
 {
+  JAWS_TRACE ("JAWS_Asynch_Handler::handle_accept");
   this->dispatch_handler ();
 
   if (result.success ())
-    this->handler ()->accept_complete (result.accept_handle ());
+    {
+      JAWS_TRACE ("JAWS_Asynch_Handler::handle_accept, success");
+      this->handler ()->accept_complete (result.accept_handle ());
+    }
   else
     this->handler ()->accept_error ();
 
