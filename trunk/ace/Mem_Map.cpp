@@ -61,12 +61,18 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   this->base_addr_ = addr;
   this->handle_ = handle;
 
-  // @@ Alberto, can you please check this method?  It's changed a lot
-  // since your patches and I'm not sure if it runs on Chorus now.
-  long result = ACE_OS::filesize (this->handle_);
+#if defined (CHORUS)
+  // Chorus does not support filesize on a shared memory handle.  We
+  // assume that <length_> = 0 when <ACE_Mem_Map> is initially
+  // constructed (i.e., before <map_it> is called with a valid
+  // <len_request>).
+  long result = this->length_;
 
   if (result == -1)
     return -1;
+#else
+  long result = ACE_OS::filesize (this->handle_);
+#endif /* CHORUS */
 
   // At this point we know <result> is not negative...
   size_t current_file_length = ACE_static_cast (size_t, result);
