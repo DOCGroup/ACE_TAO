@@ -1,3 +1,9 @@
+Mon Jul 17 12:41:25 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
+
+	* ace/Log_Msg.cpp (LOCAL_EXTERN_PREFIX):
+
+	Changed #define LOCALEXTERN_PREFIX to #define LOCAL_EXTERN_PREFIX
+
 Mon Jul 17 05:38:15 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Process_Manager.cpp (open): Zapped a stray register_handler()
@@ -53,6 +59,7 @@ Sun Jul 16 08:49:44 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	  
 	  to be consistent with the terminology in the POSA2 book.
 
+>>>>>>> 4.811
 Fri Jul 14 19:31:39 2000  Eric Ding  <qnd1@cs.wustl.edu>
 
         * ace/config-linux.h
