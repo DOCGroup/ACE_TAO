@@ -1792,10 +1792,7 @@ TAO_PropertyNamesIterator::next_one (CORBA::String_out property_name,
       return CORBA::B_TRUE;
     }
   else
-    {
-      property_name = 0;
-      return CORBA::B_FALSE;
-    }
+    return CORBA::B_FALSE;
 }
 
 CORBA::Boolean
