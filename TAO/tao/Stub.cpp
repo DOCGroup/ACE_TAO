@@ -537,12 +537,12 @@ STUB_Object::do_static_call (CORBA::Environment &TAO_IN_ENV,
 		  // reset profiles list and start all over again
 		  reset_profiles ();
                   TAO_IN_ENV.clear ();
-                  TAO_GOTO (roundtrip_continue_label);
+                  TAO_GOTO (oneway_continue_label);
                 }
               else if (next_profile () != 0)
 		{
                   TAO_IN_ENV.clear ();
-  		  TAO_GOTO (roundtrip_continue_label);
+  		  TAO_GOTO (oneway_continue_label);
 		}
 	
               // @@ Should re reset the profile list here?
