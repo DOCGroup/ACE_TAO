@@ -1,6 +1,3 @@
-// -*- MPC -*-
-// $Id$
-
 workspace {
   misc_ipc.mpc
 }

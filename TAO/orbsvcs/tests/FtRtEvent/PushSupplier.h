@@ -12,8 +12,8 @@
 #ifndef PUSHSUPPLIER_H
 #define PUSHSUPPLIER_H
 
-#include "orbsvcs/orbsvcs/RtecEventCommS.h"
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/RtecEventCommS.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
 #include "ace/Event_Handler.h"
 #include "ace/Task.h"
 #include "ace/Reactor.h"

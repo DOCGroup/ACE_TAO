@@ -54,9 +54,7 @@ be_argument::be_argument (AST_Argument::Direction d,
 {
   AST_Decl *dcl = ScopeAsDecl (this->defined_in ());
 
-  // If there have been previous errors, dcl may be 0,
-  // and we don't want to crash, so we check for non-zero.
-  if (dcl != 0 && !dcl->is_local ())
+  if (!dcl->is_local ())
     {
       be_type *bt = be_type::narrow_from_decl (ft);
       bt->seen_in_operation (I_TRUE);

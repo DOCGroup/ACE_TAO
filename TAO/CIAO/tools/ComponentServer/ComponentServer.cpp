@@ -7,9 +7,9 @@
  *
  */
 
-#include "ciao/ComponentServer_Impl.h"
-#include "ciao/CIAO_ServersC.h"
-#include "ciao/Server_init.h"
+#include "ComponentServer_Impl.h"
+#include "CIAO_ServersC.h"
+#include "Server_init.h"
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
 

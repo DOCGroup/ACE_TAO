@@ -822,10 +822,6 @@ SOURCE=.\PICurrent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\PICurrent_Copy_Callback.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\PICurrent_ORBInitializer.cpp
 # End Source File
 # Begin Source File
@@ -1139,22 +1135,6 @@ SOURCE=.\UB_String_Arguments.cpp
 # Begin Source File
 
 SOURCE=.\UB_String_SArguments.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ULongSeqA.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ULongSeqC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\UShortSeqA.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\UShortSeqC.cpp
 # End Source File
 # Begin Source File
 
@@ -1967,10 +1947,6 @@ SOURCE=.\PICurrent.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\PICurrent_Copy_Callback.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\PICurrent_ORBInitializer.h
 # End Source File
 # Begin Source File
@@ -2320,22 +2296,6 @@ SOURCE=.\UB_String_SArgument_T.h
 # Begin Source File
 
 SOURCE=.\UB_String_SArguments.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ULongSeqC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ULongSeqS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\UShortSeqC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\UShortSeqS.h
 # End Source File
 # Begin Source File
 
@@ -3068,22 +3028,6 @@ SOURCE=.\UB_String_Argument_T.inl
 # Begin Source File
 
 SOURCE=.\UB_String_SArgument_T.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\ULongSeqC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ULongSeqS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\UShortSeqC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\UShortSeqS.i
 # End Source File
 # Begin Source File
 

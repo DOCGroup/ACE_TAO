@@ -82,7 +82,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 
   ACE_Time_Value timeout (1);
   result = ::SetTimer (NULL,                         // handle of window for timer messages
-                       0,                            // timer identifier
+                       NULL,                         // timer identifier
                        timeout.msec (),              // time-out value
                        (TIMERPROC) &timer_callback   // address of timer procedure
                        );

@@ -14,9 +14,7 @@
 #include "PriorityBand_Setup.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_PERF_RTEC, 
-           PriorityBand_Setup, 
-           "$Id$")
+ACE_RCSID(TAO_PERF_RTEC, PriorityBand_Setup, "$Id$")
 
 PriorityBand_Setup::PriorityBand_Setup (CORBA::ORB_ptr orb,
                                         const RTCORBA_Setup &rtcorba_setup

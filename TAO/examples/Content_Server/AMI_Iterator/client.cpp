@@ -4,13 +4,11 @@
 // Ossama Othman <ossama@uci.edu>
 
 #include "ace/Process_Manager.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 #include "Web_ServerC.h"
 #include "Iterator_Handler.h"
 
-ACE_RCSID (AMI_Iterator, 
-           client, 
-           "$Id$")
+ACE_RCSID (AMI_Iterator, client, "$Id$")
 
 // Obtain reference to Iterator_Factory
 Web_Server::Iterator_Factory_ptr

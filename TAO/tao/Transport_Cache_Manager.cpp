@@ -475,10 +475,10 @@ TAO_Transport_Cache_Manager::purge (void)
                   {
                     ACE_DEBUG ((LM_INFO,
                                 ACE_TEXT ("TAO (%P|%t) - ")
-                                ACE_TEXT ("Unable to push transport %u ")
+                                ACE_TEXT ("Unable to push transport %lu ")
                                 ACE_TEXT ("on the to-be-closed stack, so ")
                                 ACE_TEXT ("it will leak\n"),
-                                transport->id ()));
+                                transport));
                   }
 
                 if (TAO_debug_level > 0)

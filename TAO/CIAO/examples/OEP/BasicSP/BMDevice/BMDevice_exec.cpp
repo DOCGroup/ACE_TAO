@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ciao/CIAO_common.h"
+#include "CIAO_common.h"
 #include "BMDevice_exec.h"
 
 #define DISPLACEMENT 256
@@ -18,7 +18,7 @@ MyImpl::BMDevice_exec_i::~BMDevice_exec_i ()
 }
 
 BasicSP::CCM_ReadData_ptr
-MyImpl::BMDevice_exec_i::get_data_read (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::BMDevice_exec_i::get_data_read (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return BasicSP::CCM_ReadData::_duplicate (this);
@@ -47,7 +47,7 @@ MyImpl::BMDevice_exec_i::data_read (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 char *
-MyImpl::BMDevice_exec_i::get_data (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::BMDevice_exec_i::get_data (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->data_read (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -74,7 +74,7 @@ MyImpl::BMDevice_exec_i::set_session_context (Components::SessionContext_ptr ctx
 }
 
 void
-MyImpl::BMDevice_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::BMDevice_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -82,11 +82,7 @@ MyImpl::BMDevice_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
   char *argv[1] = { "BMDevice_exec"};
 
   int argc = sizeof(argv)/sizeof(argv[0]);
-  CORBA::ORB_var orb = CORBA::ORB_init(argc, 
-		                       argv,
-				       ""
-				       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv ACE_ENV_ARG_PARAMETER);
 
   CIAO_REGISTER_VALUE_FACTORY (orb.in(), BasicSP::TimeOut_init,
                                BasicSP::TimeOut);
@@ -127,12 +123,7 @@ MyImpl::BMDeviceHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  Components::EnterpriseComponent_ptr tmp= 0;
-  ACE_NEW_THROW_EX (tmp,
-                    MyImpl::BMDevice_exec_i,
-		    CORBA::NO_MEMORY ());
-
-  return tmp;
+  return new MyImpl::BMDevice_exec_i;
 }
 
 

@@ -11,7 +11,7 @@
 
 
 #include "ace/streams.h"
-#include "orbsvcs/orbsvcs/CosConcurrencyControlC.h"
+#include "orbsvcs/CosConcurrencyControlC.h"
 #include "tao/debug.h"
 #include "Concurrency_Utils.h"
 

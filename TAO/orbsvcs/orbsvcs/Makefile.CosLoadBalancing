@@ -201,6 +201,12 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -216,12 +222,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -404,10 +404,6 @@ endif
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/GIOPC.h \
   $(TAO_ROOT)/tao/GIOPC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
-  $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
   PortableGroup_Simple_DSC.h \
   FaultTolerance/fault_tol_export.h \
   PortableGroup_Simple_DSC.i \
@@ -444,18 +440,6 @@ endif
   $(TAO_ROOT)/tao/GIOPS_T.i \
   $(TAO_ROOT)/tao/GIOPS_T.cpp \
   $(TAO_ROOT)/tao/GIOPS.i \
-  $(TAO_ROOT)/tao/OctetSeqS.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.i \
-  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
-  $(TAO_ROOT)/tao/OctetSeqS.i \
-  $(TAO_ROOT)/tao/StringSeqS.h \
-  $(TAO_ROOT)/tao/PolicyS.h \
-  $(TAO_ROOT)/tao/ServicesS.h \
-  $(TAO_ROOT)/tao/ServicesS_T.h \
-  $(TAO_ROOT)/tao/ServicesS_T.i \
-  $(TAO_ROOT)/tao/ServicesS_T.cpp \
-  $(TAO_ROOT)/tao/ServicesS.i \
   PortableGroup_Simple_DSS.h \
   $(TAO_ROOT)/tao/PortableServer/PolicyS.h \
   $(TAO_ROOT)/tao/PortableServer/PolicyS_T.h \
@@ -582,6 +566,12 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -597,12 +587,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -743,20 +727,6 @@ endif
   $(TAO_ROOT)/tao/GIOPS_T.i \
   $(TAO_ROOT)/tao/GIOPS_T.cpp \
   $(TAO_ROOT)/tao/GIOPS.i \
-  $(TAO_ROOT)/tao/OctetSeqS.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.i \
-  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
-  $(TAO_ROOT)/tao/OctetSeqS.i \
-  $(TAO_ROOT)/tao/StringSeqS.h \
-  $(TAO_ROOT)/tao/PolicyS.h \
-  $(TAO_ROOT)/tao/ServicesS.h \
-  $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
-  $(TAO_ROOT)/tao/ServicesS_T.h \
-  $(TAO_ROOT)/tao/ServicesS_T.i \
-  $(TAO_ROOT)/tao/ServicesS_T.cpp \
-  $(TAO_ROOT)/tao/ServicesS.i \
   PortableGroup_Simple_DSS.h \
   PortableGroup_Simple_DSC.h \
   FaultTolerance/fault_tol_export.h \
@@ -838,8 +808,6 @@ endif
   $(TAO_ROOT)/tao/Messaging/MessagingS.i \
   PortableGroupC.h \
   PortableGroup/portablegroup_export.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   PortableGroupC.i \
   PortableGroupS_T.h \
   PortableGroupS_T.i \
@@ -949,6 +917,12 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -964,12 +938,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1152,10 +1120,6 @@ endif
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/GIOPC.h \
   $(TAO_ROOT)/tao/GIOPC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
-  $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
   PortableGroup_Simple_DSC.h \
   FaultTolerance/fault_tol_export.h \
   PortableGroup_Simple_DSC.i \
@@ -1259,6 +1223,12 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1274,12 +1244,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1462,10 +1426,6 @@ endif
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/GIOPC.h \
   $(TAO_ROOT)/tao/GIOPC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
-  $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
   PortableGroup_Simple_DSC.h \
   FaultTolerance/fault_tol_export.h \
   PortableGroup_Simple_DSC.i \
@@ -1575,6 +1535,12 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1590,12 +1556,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1736,20 +1696,6 @@ endif
   $(TAO_ROOT)/tao/GIOPS_T.i \
   $(TAO_ROOT)/tao/GIOPS_T.cpp \
   $(TAO_ROOT)/tao/GIOPS.i \
-  $(TAO_ROOT)/tao/OctetSeqS.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.i \
-  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
-  $(TAO_ROOT)/tao/OctetSeqS.i \
-  $(TAO_ROOT)/tao/StringSeqS.h \
-  $(TAO_ROOT)/tao/PolicyS.h \
-  $(TAO_ROOT)/tao/ServicesS.h \
-  $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
-  $(TAO_ROOT)/tao/ServicesS_T.h \
-  $(TAO_ROOT)/tao/ServicesS_T.i \
-  $(TAO_ROOT)/tao/ServicesS_T.cpp \
-  $(TAO_ROOT)/tao/ServicesS.i \
   PortableGroup_Simple_DSS.h \
   PortableGroup_Simple_DSC.h \
   FaultTolerance/fault_tol_export.h \
@@ -1831,8 +1777,6 @@ endif
   $(TAO_ROOT)/tao/Messaging/MessagingS.i \
   PortableGroupC.h \
   PortableGroup/portablegroup_export.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   PortableGroupC.i \
   PortableGroupS_T.h \
   PortableGroupS_T.i \
@@ -1942,6 +1886,12 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1957,12 +1907,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -2145,10 +2089,6 @@ endif
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/GIOPC.h \
   $(TAO_ROOT)/tao/GIOPC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
-  $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
   PortableGroup_Simple_DSC.h \
   FaultTolerance/fault_tol_export.h \
   PortableGroup_Simple_DSC.i \
@@ -2258,6 +2198,12 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -2273,12 +2219,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -2419,20 +2359,6 @@ endif
   $(TAO_ROOT)/tao/GIOPS_T.i \
   $(TAO_ROOT)/tao/GIOPS_T.cpp \
   $(TAO_ROOT)/tao/GIOPS.i \
-  $(TAO_ROOT)/tao/OctetSeqS.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.i \
-  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
-  $(TAO_ROOT)/tao/OctetSeqS.i \
-  $(TAO_ROOT)/tao/StringSeqS.h \
-  $(TAO_ROOT)/tao/PolicyS.h \
-  $(TAO_ROOT)/tao/ServicesS.h \
-  $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
-  $(TAO_ROOT)/tao/ServicesS_T.h \
-  $(TAO_ROOT)/tao/ServicesS_T.i \
-  $(TAO_ROOT)/tao/ServicesS_T.cpp \
-  $(TAO_ROOT)/tao/ServicesS.i \
   PortableGroup_Simple_DSS.h \
   PortableGroup_Simple_DSC.h \
   FaultTolerance/fault_tol_export.h \
@@ -2514,8 +2440,6 @@ endif
   $(TAO_ROOT)/tao/Messaging/MessagingS.i \
   PortableGroupC.h \
   PortableGroup/portablegroup_export.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   PortableGroupC.i \
   PortableGroupS_T.h \
   PortableGroupS_T.i \
@@ -2674,6 +2598,12 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -2689,12 +2619,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -2877,10 +2801,6 @@ endif
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/GIOPC.h \
   $(TAO_ROOT)/tao/GIOPC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
-  $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
   PortableGroup_Simple_DSC.h \
   FaultTolerance/fault_tol_export.h \
   PortableGroup_Simple_DSC.i \
@@ -2987,6 +2907,12 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -3002,12 +2928,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -3190,10 +3110,6 @@ endif
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/GIOPC.h \
   $(TAO_ROOT)/tao/GIOPC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
-  $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
   PortableGroup_Simple_DSC.h \
   FaultTolerance/fault_tol_export.h \
   PortableGroup_Simple_DSC.i \
@@ -3294,6 +3210,12 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -3309,12 +3231,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -3462,20 +3378,6 @@ endif
   $(TAO_ROOT)/tao/GIOPS_T.i \
   $(TAO_ROOT)/tao/GIOPS_T.cpp \
   $(TAO_ROOT)/tao/GIOPS.i \
-  $(TAO_ROOT)/tao/OctetSeqS.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.i \
-  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
-  $(TAO_ROOT)/tao/OctetSeqS.i \
-  $(TAO_ROOT)/tao/StringSeqS.h \
-  $(TAO_ROOT)/tao/PolicyS.h \
-  $(TAO_ROOT)/tao/ServicesS.h \
-  $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
-  $(TAO_ROOT)/tao/ServicesS_T.h \
-  $(TAO_ROOT)/tao/ServicesS_T.i \
-  $(TAO_ROOT)/tao/ServicesS_T.cpp \
-  $(TAO_ROOT)/tao/ServicesS.i \
   PortableGroup_Simple_DSS.h \
   PortableGroup_Simple_DSC.h \
   FaultTolerance/fault_tol_export.h \
@@ -3557,8 +3459,6 @@ endif
   $(TAO_ROOT)/tao/Messaging/MessagingS.i \
   PortableGroupC.h \
   PortableGroup/portablegroup_export.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   PortableGroupC.i \
   PortableGroupS_T.h \
   PortableGroupS_T.i \
@@ -3704,6 +3604,12 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -3719,12 +3625,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -3907,10 +3807,6 @@ endif
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/GIOPC.h \
   $(TAO_ROOT)/tao/GIOPC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
-  $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
   PortableGroup_Simple_DSC.h \
   FaultTolerance/fault_tol_export.h \
   PortableGroup_Simple_DSC.i \
@@ -4018,6 +3914,12 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -4033,12 +3935,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -4221,10 +4117,6 @@ endif
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/GIOPC.h \
   $(TAO_ROOT)/tao/GIOPC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
-  $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
   PortableGroup_Simple_DSC.h \
   FaultTolerance/fault_tol_export.h \
   PortableGroup_Simple_DSC.i \
@@ -4262,18 +4154,6 @@ endif
   $(TAO_ROOT)/tao/GIOPS_T.i \
   $(TAO_ROOT)/tao/GIOPS_T.cpp \
   $(TAO_ROOT)/tao/GIOPS.i \
-  $(TAO_ROOT)/tao/OctetSeqS.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.i \
-  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
-  $(TAO_ROOT)/tao/OctetSeqS.i \
-  $(TAO_ROOT)/tao/StringSeqS.h \
-  $(TAO_ROOT)/tao/PolicyS.h \
-  $(TAO_ROOT)/tao/ServicesS.h \
-  $(TAO_ROOT)/tao/ServicesS_T.h \
-  $(TAO_ROOT)/tao/ServicesS_T.i \
-  $(TAO_ROOT)/tao/ServicesS_T.cpp \
-  $(TAO_ROOT)/tao/ServicesS.i \
   PortableGroup_Simple_DSS.h \
   $(TAO_ROOT)/tao/PortableServer/PolicyS.h \
   $(TAO_ROOT)/tao/PortableServer/PolicyS_T.h \
@@ -4426,6 +4306,12 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -4441,12 +4327,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -4587,20 +4467,6 @@ endif
   $(TAO_ROOT)/tao/GIOPS_T.i \
   $(TAO_ROOT)/tao/GIOPS_T.cpp \
   $(TAO_ROOT)/tao/GIOPS.i \
-  $(TAO_ROOT)/tao/OctetSeqS.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.i \
-  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
-  $(TAO_ROOT)/tao/OctetSeqS.i \
-  $(TAO_ROOT)/tao/StringSeqS.h \
-  $(TAO_ROOT)/tao/PolicyS.h \
-  $(TAO_ROOT)/tao/ServicesS.h \
-  $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
-  $(TAO_ROOT)/tao/ServicesS_T.h \
-  $(TAO_ROOT)/tao/ServicesS_T.i \
-  $(TAO_ROOT)/tao/ServicesS_T.cpp \
-  $(TAO_ROOT)/tao/ServicesS.i \
   PortableGroup_Simple_DSS.h \
   PortableGroup_Simple_DSC.h \
   FaultTolerance/fault_tol_export.h \
@@ -4682,8 +4548,6 @@ endif
   $(TAO_ROOT)/tao/Messaging/MessagingS.i \
   PortableGroupC.h \
   PortableGroup/portablegroup_export.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   PortableGroupC.i \
   PortableGroupS_T.h \
   PortableGroupS_T.i \
@@ -4798,6 +4662,12 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -4813,12 +4683,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -5000,10 +4864,6 @@ endif
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/GIOPC.h \
   $(TAO_ROOT)/tao/GIOPC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
-  $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
   PortableGroup_Simple_DSC.h \
   FaultTolerance/fault_tol_export.h \
   PortableGroup_Simple_DSC.i \
@@ -5035,18 +4895,6 @@ endif
   $(TAO_ROOT)/tao/GIOPS_T.i \
   $(TAO_ROOT)/tao/GIOPS_T.cpp \
   $(TAO_ROOT)/tao/GIOPS.i \
-  $(TAO_ROOT)/tao/OctetSeqS.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.i \
-  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
-  $(TAO_ROOT)/tao/OctetSeqS.i \
-  $(TAO_ROOT)/tao/StringSeqS.h \
-  $(TAO_ROOT)/tao/PolicyS.h \
-  $(TAO_ROOT)/tao/ServicesS.h \
-  $(TAO_ROOT)/tao/ServicesS_T.h \
-  $(TAO_ROOT)/tao/ServicesS_T.i \
-  $(TAO_ROOT)/tao/ServicesS_T.cpp \
-  $(TAO_ROOT)/tao/ServicesS.i \
   PortableGroup_Simple_DSS.h \
   $(TAO_ROOT)/tao/PortableServer/PolicyS.h \
   $(TAO_ROOT)/tao/PortableServer/PolicyS_T.h \
@@ -5170,6 +5018,12 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -5185,12 +5039,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -5511,6 +5359,12 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -5522,12 +5376,6 @@ endif
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -5707,6 +5555,12 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -5723,12 +5577,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
@@ -5926,8 +5774,6 @@ endif
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/GIOPC.h \
   $(TAO_ROOT)/tao/GIOPC.i \
-  $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
   PortableGroup_Simple_DSC.h \
   FaultTolerance/fault_tol_export.h \
   PortableGroup_Simple_DSC.i \
@@ -5937,8 +5783,8 @@ endif
 .obj/LB_ServerRequestInterceptor.o .obj/LB_ServerRequestInterceptor.so .shobj/LB_ServerRequestInterceptor.o .shobj/LB_ServerRequestInterceptor.so:  \
  LoadBalancing/LB_ServerRequestInterceptor.cpp \
   LoadBalancing/LB_ServerRequestInterceptor.h \
-  $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -5946,7 +5792,6 @@ endif
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/ACE_export.h \
-  LoadBalancing/LoadBalancing_export.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
@@ -6023,6 +5868,12 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -6039,12 +5890,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
@@ -6206,20 +6051,6 @@ endif
   $(TAO_ROOT)/tao/GIOPS_T.i \
   $(TAO_ROOT)/tao/GIOPS_T.cpp \
   $(TAO_ROOT)/tao/GIOPS.i \
-  $(TAO_ROOT)/tao/OctetSeqS.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.i \
-  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
-  $(TAO_ROOT)/tao/OctetSeqS.i \
-  $(TAO_ROOT)/tao/StringSeqS.h \
-  $(TAO_ROOT)/tao/PolicyS.h \
-  $(TAO_ROOT)/tao/ServicesS.h \
-  $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
-  $(TAO_ROOT)/tao/ServicesS_T.h \
-  $(TAO_ROOT)/tao/ServicesS_T.i \
-  $(TAO_ROOT)/tao/ServicesS_T.cpp \
-  $(TAO_ROOT)/tao/ServicesS.i \
   PortableGroup_Simple_DSS.h \
   PortableGroup_Simple_DSC.h \
   FaultTolerance/fault_tol_export.h \
@@ -6305,6 +6136,7 @@ endif
   PortableGroupS_T.cpp \
   PortableGroupS.i \
   CosLoadBalancingC.h \
+  LoadBalancing/LoadBalancing_export.h \
   CosLoadBalancingC.i \
   CosLoadBalancingS_T.h \
   CosLoadBalancingS_T.i \
@@ -6408,6 +6240,12 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -6423,12 +6261,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -6611,10 +6443,6 @@ endif
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/GIOPC.h \
   $(TAO_ROOT)/tao/GIOPC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
-  $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
   PortableGroup_Simple_DSC.h \
   FaultTolerance/fault_tol_export.h \
   PortableGroup_Simple_DSC.i \
@@ -6626,6 +6454,8 @@ endif
   $(TAO_ROOT)/tao/IORInterceptor/iorinterceptor_export.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/ObjRefTemplate/ObjectReferenceTemplateC.h \
@@ -6668,18 +6498,6 @@ endif
   $(TAO_ROOT)/tao/GIOPS_T.i \
   $(TAO_ROOT)/tao/GIOPS_T.cpp \
   $(TAO_ROOT)/tao/GIOPS.i \
-  $(TAO_ROOT)/tao/OctetSeqS.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.i \
-  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
-  $(TAO_ROOT)/tao/OctetSeqS.i \
-  $(TAO_ROOT)/tao/StringSeqS.h \
-  $(TAO_ROOT)/tao/PolicyS.h \
-  $(TAO_ROOT)/tao/ServicesS.h \
-  $(TAO_ROOT)/tao/ServicesS_T.h \
-  $(TAO_ROOT)/tao/ServicesS_T.i \
-  $(TAO_ROOT)/tao/ServicesS_T.cpp \
-  $(TAO_ROOT)/tao/ServicesS.i \
   PortableGroup_Simple_DSS.h \
   $(TAO_ROOT)/tao/PortableServer/PolicyS.h \
   $(TAO_ROOT)/tao/PortableServer/PolicyS_T.h \
@@ -6802,6 +6620,12 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -6817,12 +6641,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -7017,8 +6835,6 @@ endif
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/GIOPC.h \
   $(TAO_ROOT)/tao/GIOPC.i \
-  $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
   PortableGroup_Simple_DSC.h \
   FaultTolerance/fault_tol_export.h \
   PortableGroup_Simple_DSC.i \
@@ -7131,6 +6947,12 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -7146,12 +6968,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -7292,20 +7108,6 @@ endif
   $(TAO_ROOT)/tao/GIOPS_T.i \
   $(TAO_ROOT)/tao/GIOPS_T.cpp \
   $(TAO_ROOT)/tao/GIOPS.i \
-  $(TAO_ROOT)/tao/OctetSeqS.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.i \
-  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
-  $(TAO_ROOT)/tao/OctetSeqS.i \
-  $(TAO_ROOT)/tao/StringSeqS.h \
-  $(TAO_ROOT)/tao/PolicyS.h \
-  $(TAO_ROOT)/tao/ServicesS.h \
-  $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
-  $(TAO_ROOT)/tao/ServicesS_T.h \
-  $(TAO_ROOT)/tao/ServicesS_T.i \
-  $(TAO_ROOT)/tao/ServicesS_T.cpp \
-  $(TAO_ROOT)/tao/ServicesS.i \
   PortableGroup_Simple_DSS.h \
   PortableGroup_Simple_DSC.h \
   FaultTolerance/fault_tol_export.h \
@@ -7387,8 +7189,6 @@ endif
   $(TAO_ROOT)/tao/Messaging/MessagingS.i \
   PortableGroupC.h \
   PortableGroup/portablegroup_export.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   PortableGroupC.i \
   PortableGroupS_T.h \
   PortableGroupS_T.i \
@@ -7406,6 +7206,8 @@ endif
   $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   LoadBalancing/LB_IORInterceptor.h \
@@ -7517,6 +7319,12 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -7532,12 +7340,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -7755,20 +7557,6 @@ endif
   $(TAO_ROOT)/tao/GIOPS_T.i \
   $(TAO_ROOT)/tao/GIOPS_T.cpp \
   $(TAO_ROOT)/tao/GIOPS.i \
-  $(TAO_ROOT)/tao/OctetSeqS.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.i \
-  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
-  $(TAO_ROOT)/tao/OctetSeqS.i \
-  $(TAO_ROOT)/tao/StringSeqS.h \
-  $(TAO_ROOT)/tao/PolicyS.h \
-  $(TAO_ROOT)/tao/ServicesS.h \
-  $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
-  $(TAO_ROOT)/tao/ServicesS_T.h \
-  $(TAO_ROOT)/tao/ServicesS_T.i \
-  $(TAO_ROOT)/tao/ServicesS_T.cpp \
-  $(TAO_ROOT)/tao/ServicesS.i \
   PortableGroup_Simple_DSS.h \
   PortableGroup_Simple_DSC.h \
   FaultTolerance/fault_tol_export.h \
@@ -7913,6 +7701,12 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -7928,12 +7722,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -8074,20 +7862,6 @@ endif
   $(TAO_ROOT)/tao/GIOPS_T.i \
   $(TAO_ROOT)/tao/GIOPS_T.cpp \
   $(TAO_ROOT)/tao/GIOPS.i \
-  $(TAO_ROOT)/tao/OctetSeqS.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.i \
-  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
-  $(TAO_ROOT)/tao/OctetSeqS.i \
-  $(TAO_ROOT)/tao/StringSeqS.h \
-  $(TAO_ROOT)/tao/PolicyS.h \
-  $(TAO_ROOT)/tao/ServicesS.h \
-  $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
-  $(TAO_ROOT)/tao/ServicesS_T.h \
-  $(TAO_ROOT)/tao/ServicesS_T.i \
-  $(TAO_ROOT)/tao/ServicesS_T.cpp \
-  $(TAO_ROOT)/tao/ServicesS.i \
   PortableGroup_Simple_DSS.h \
   PortableGroup_Simple_DSC.h \
   FaultTolerance/fault_tol_export.h \
@@ -8169,14 +7943,13 @@ endif
   $(TAO_ROOT)/tao/Messaging/MessagingS.i \
   PortableGroupC.h \
   PortableGroup/portablegroup_export.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   PortableGroupC.i \
   PortableGroupS_T.h \
   PortableGroupS_T.i \
   PortableGroupS_T.cpp \
   PortableGroupS.i \
   CosLoadBalancingC.h \
+  LoadBalancing/LoadBalancing_export.h \
   CosLoadBalancingC.i \
   CosLoadBalancingS_T.h \
   CosLoadBalancingS_T.i \
@@ -8280,6 +8053,12 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -8295,12 +8074,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -8460,8 +8233,8 @@ endif
   $(TAO_ROOT)/tao/Messaging/TAO_ExtC.h \
   $(TAO_ROOT)/tao/Messaging/TAO_ExtC.i \
   $(TAO_ROOT)/tao/TAOC.h \
-  $(TAO_ROOT)/tao/TAOC.i PortableGroupC.h \
-  PortableGroup/portablegroup_export.h CosNamingC.h \
+  $(TAO_ROOT)/tao/TAOC.i \
+  PortableGroupC.h PortableGroup/portablegroup_export.h CosNamingC.h \
   Naming/naming_export.h CosNamingC.i \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOP_CodecC.h \
@@ -8480,10 +8253,6 @@ endif
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/GIOPC.h \
   $(TAO_ROOT)/tao/GIOPC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
-  $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
   PortableGroup_Simple_DSC.h FaultTolerance/fault_tol_export.h \
   PortableGroup_Simple_DSC.i PortableGroupC.i CosLoadBalancingC.i \
   $(TAO_ROOT)/tao/Exception_Data.h \
@@ -8491,13 +8260,6 @@ endif
   $(TAO_ROOT)/tao/Invocation_Utils.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.inl \
   $(TAO_ROOT)/tao/Messaging/Asynch_Invocation_Adapter.h \
-  $(TAO_ROOT)/tao/Auto_Functor.h \
-  $(TAO_ROOT)/tao/Auto_Functor.inl \
-  $(TAO_ROOT)/tao/Auto_Functor.cpp \
-  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher_Base.h \
-  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
-  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
-  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher_Base.i \
   $(TAO_ROOT)/tao/Messaging/Asynch_Invocation_Adapter.inl \
   $(TAO_ROOT)/tao/Object_T.h \
   $(TAO_ROOT)/tao/Object_T.cpp \
@@ -8535,8 +8297,8 @@ endif
   $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp
 
 .obj/CosLoadBalancingS.o .obj/CosLoadBalancingS.so .shobj/CosLoadBalancingS.o .shobj/CosLoadBalancingS.so: CosLoadBalancingS.cpp CosLoadBalancingS.h \
-  $(ACE_ROOT)/ace/pre.h PortableGroupS.h \
-  CosNamingS.h CosNamingC.h \
+  $(ACE_ROOT)/ace/pre.h \
+  PortableGroupS.h CosNamingS.h CosNamingC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -8628,6 +8390,12 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -8643,12 +8411,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -8785,20 +8547,6 @@ endif
   $(TAO_ROOT)/tao/GIOPS_T.i \
   $(TAO_ROOT)/tao/GIOPS_T.cpp \
   $(TAO_ROOT)/tao/GIOPS.i \
-  $(TAO_ROOT)/tao/OctetSeqS.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.i \
-  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
-  $(TAO_ROOT)/tao/OctetSeqS.i \
-  $(TAO_ROOT)/tao/StringSeqS.h \
-  $(TAO_ROOT)/tao/PolicyS.h \
-  $(TAO_ROOT)/tao/ServicesS.h \
-  $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
-  $(TAO_ROOT)/tao/ServicesS_T.h \
-  $(TAO_ROOT)/tao/ServicesS_T.i \
-  $(TAO_ROOT)/tao/ServicesS_T.cpp \
-  $(TAO_ROOT)/tao/ServicesS.i \
   PortableGroup_Simple_DSS.h PortableGroup_Simple_DSC.h \
   FaultTolerance/fault_tol_export.h PortableGroup_Simple_DSC.i \
   $(TAO_ROOT)/tao/PortableServer/PolicyS.h \
@@ -8874,11 +8622,9 @@ endif
   $(TAO_ROOT)/tao/Messaging/MessagingS_T.i \
   $(TAO_ROOT)/tao/Messaging/MessagingS_T.cpp \
   $(TAO_ROOT)/tao/Messaging/MessagingS.i \
-  PortableGroupC.h PortableGroup/portablegroup_export.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
-  PortableGroupC.i PortableGroupS_T.h PortableGroupS_T.i \
-  PortableGroupS_T.cpp PortableGroupS.i CosLoadBalancingC.h \
+  PortableGroupC.h PortableGroup/portablegroup_export.h PortableGroupC.i \
+  PortableGroupS_T.h PortableGroupS_T.i PortableGroupS_T.cpp \
+  PortableGroupS.i CosLoadBalancingC.h \
   LoadBalancing/LoadBalancing_export.h CosLoadBalancingC.i \
   CosLoadBalancingS_T.h CosLoadBalancingS_T.i CosLoadBalancingS_T.cpp \
   CosLoadBalancingS.i \
@@ -8988,6 +8734,8 @@ endif
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/PICurrent.inl \
@@ -9179,6 +8927,12 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -9194,12 +8948,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -9375,13 +9123,6 @@ endif
   $(TAO_ROOT)/tao/Invocation_Adapter.h \
   $(TAO_ROOT)/tao/Invocation_Utils.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.inl \
-  $(TAO_ROOT)/tao/Auto_Functor.h \
-  $(TAO_ROOT)/tao/Auto_Functor.inl \
-  $(TAO_ROOT)/tao/Auto_Functor.cpp \
-  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher_Base.h \
-  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
-  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
-  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher_Base.i \
   $(TAO_ROOT)/tao/Messaging/Asynch_Invocation_Adapter.inl \
   $(TAO_ROOT)/tao/Object_T.h \
   $(TAO_ROOT)/tao/Object_T.cpp \

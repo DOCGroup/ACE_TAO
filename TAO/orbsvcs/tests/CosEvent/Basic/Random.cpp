@@ -1,14 +1,12 @@
 // $Id$
 
 #include "Random.h"
-#include "orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h"
-#include "orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h"
+#include "orbsvcs/CosEvent/CEC_EventChannel.h"
+#include "orbsvcs/CosEvent/CEC_Default_Factory.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID (CEC_Tests, 
-           Random, 
-           "$Id$")
+ACE_RCSID(CEC_Tests, Random, "$Id$")
 
 int
 main (int argc, char* argv[])

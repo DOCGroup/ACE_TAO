@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
+ *  @author Ossama Othman <ossama@uci.edu>
  */
 // ===================================================================
 
@@ -46,195 +46,256 @@
 
 /// Forward declarations.
 class TAO_ORB_Core;
+class TAO_PICurrent_Impl;
 class TAO_ServerRequest;
 
-namespace TAO
+/**
+ * @class TAO_PICurrent
+ *
+ * @brief Implementation of the PortableInterceptor::Current
+ * interface.
+ *
+ * PortableInterceptor::Current is useful for passing data between
+ * request interceptors, in addition to passing data from an
+ * interceptor to the calling thread.
+ */
+class TAO_Export TAO_PICurrent
+  : public virtual PortableInterceptor::Current,
+    public virtual TAO_Local_RefCounted_Object
 {
-  class PICurrent_Copy_Callback;
-  class PICurrent_Impl;
+public:
+
+  /// Constructor.
+  TAO_PICurrent (void);
 
   /**
-   * @class PICurrent
+   * @name PortableInterceptor::Current Methods
    *
-   * @brief Implementation of the PortableInterceptor::Current
+   * These are methods exposed by the PortableInterceptor::Current
    * interface.
-   *
-   * PortableInterceptor::Current is useful for passing data between
-   * request interceptors, in addition to passing data from an
-   * interceptor to the calling thread.
    */
-  class TAO_Export PICurrent
-    : public virtual PortableInterceptor::Current,
-      public virtual TAO_Local_RefCounted_Object
-  {
-  public:
+  //@{
+  /// Retrieve information stored in the slot table at the given
+  /// SlotId.
+  virtual CORBA::Any * get_slot (PortableInterceptor::SlotId id
+                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::InvalidSlot));
 
-    /// Constructor.
-    PICurrent (TAO_ORB_Core * orb_core);
+  /// Set information in the slot table at the given SlotId.
+  virtual void set_slot (PortableInterceptor::SlotId id,
+                         const CORBA::Any & data
+                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::InvalidSlot));
+  //@}
 
-    /**
-     * @name PortableInterceptor::Current Methods
-     *
-     * These are methods exposed by the PortableInterceptor::Current
-     * interface.
-     */
-    //@{
-    /// Retrieve information stored in the slot table at the given
-    /// SlotId.
-    virtual CORBA::Any * get_slot (PortableInterceptor::SlotId id
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::InvalidSlot));
+  /// Number of slots allocated in the slot table.
+  PortableInterceptor::SlotId slot_count (void) const;
 
-    /// Set information in the slot table at the given SlotId.
-    virtual void set_slot (PortableInterceptor::SlotId id,
-                           const CORBA::Any & data
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::InvalidSlot));
-    //@}
+  /// Retrieve the PICurrent implementation from TSS, i.e. the thread
+  /// scope current (TSC).
+  TAO_PICurrent_Impl * tsc (void);
 
-    /// Number of slots allocated in the slot table.
-    PortableInterceptor::SlotId slot_count (void) const;
+  /// Verify the validity of the given SlotId.
+  void check_validity (const PortableInterceptor::SlotId &id
+                       ACE_ENV_ARG_DECL);
 
-    /// Retrieve the PICurrent implementation from TSS, i.e. the thread
-    /// scope current (TSC).
-    PICurrent_Impl * tsc (void);
+  /// Initialize the PICurrent object.
+  void initialize (TAO_ORB_Core * orb_core,
+                   PortableInterceptor::SlotId sc);
 
-    /// Verify the validity of the given SlotId.
-    void check_validity (const PortableInterceptor::SlotId &id
-                         ACE_ENV_ARG_DECL);
+protected:
 
-    /// Initialize the PICurrent object.
-    void initialize (PortableInterceptor::SlotId sc);
-
-  protected:
-
-    /// Destructor
-    /**
-     * Protected destructor to enforce the fact this class is reference
-     * counted, and should not be destroyed using delete() by anything
-     * other than the reference counting mechanism.
-     */
-    ~PICurrent (void);
-
-  private:
-
-    /// Prevent copying through the copy constructor and the assignment
-    /// operator.
-    //@{
-    PICurrent (const PICurrent &);
-    void operator= (const PICurrent &);
-    //@}
-
-  private:
-
-    /// Pointer to the orb core.
-    TAO_ORB_Core * orb_core_;
-
-    /// The number of allocated slots.
-    PortableInterceptor::SlotId slot_count_;
-
-  };
-
-  // ------------------------------------------------------------------
-
+  /// Destructor
   /**
-   * @class PICurrent_Impl
-   *
-   * @brief Implementation of the PortableInterceptor::Current
-   *        interface.
-   *
-   * This class implements both the "request scope current" and the
-   * "thread scope current" objects as required by Portable
-   * Interceptors.
+   * Protected destructor to enforce the fact this class is reference
+   * counted, and should not be destroyed using delete() by anything
+   * other than the reference counting mechanism.
    */
-  class TAO_Export PICurrent_Impl
-  {
-  public:
+  ~TAO_PICurrent (void);
 
-    /// Typedef for the underyling "slot table."
-    typedef ACE_Array_Base<CORBA::Any> Table;
+private:
 
-    /// Constructor.
-    PICurrent_Impl (void);
+  /// Prevent copying through the copy constructor and the assignment
+  /// operator.
+  //@{
+  ACE_UNIMPLEMENTED_FUNC (TAO_PICurrent (const TAO_PICurrent &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_PICurrent &))
+  //@}
 
-    /// Destructor.
-    ~PICurrent_Impl (void);
+private:
 
-    /// Retrieve information stored in the slot table at the given
-    /// SlotId.
-    CORBA::Any * get_slot (PortableInterceptor::SlotId id
-                           ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::InvalidSlot));
+  /// Pointer to the orb core.
+  TAO_ORB_Core *orb_core_;
 
-    /// Set information in the slot table at the given SlotId.
-    void set_slot (PortableInterceptor::SlotId id,
-                   const CORBA::Any & data
-                   ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::InvalidSlot));
+  /// The number of allocated slots.
+  PortableInterceptor::SlotId slot_count_;
 
-    /// Set the PICurrent copy callback object responsible for deep
-    /// copying the source PICurrent's slot table.
-    void copy_callback (PICurrent_Copy_Callback * cb);
+};
 
-    /// Set the PICurrent destruction callback object that will be
-    /// notified of this object's destruction.
-    void destruction_callback (PICurrent_Impl * p);
+// ------------------------------------------------------------------
 
-    void execute_destruction_callback (Table * old_lc_slot_table);
+/**
+ * @class TAO_PICurrent_Impl
+ *
+ * @brief Implementation of the PortableInterceptor::Current
+ *        interface.
+ *
+ * This class implements both the "request scope current" and the
+ * "thread scope current" objects as required by Portable
+ * Interceptors.
+ */
+class TAO_Export TAO_PICurrent_Impl
+{
+public:
 
-    /// Return a reference to the underlying slot table.
-    Table & slot_table (void);
+  /// Typedef for the underyling "slot table."
+  /**
+   * @note The slot table is implemented as an array of pointers to
+   *       void to simply avoid increasing the footprint of the ORB.
+   *       A template instance of ACE_Array_Base&lt;void*&gt; is
+   *       already used by TAO_ORB_Core_TSS_Resources.  Thus, no
+   *       increase in footprint will occur due to this template
+   *       instance.
+   */
+  typedef ACE_Array_Base<CORBA::Any> Table;
 
-    /// Return a reference to the slot table currently associated
-    /// with this PICurrent_Impl object.
-    /**
-     * @return Logically copied slot table if available, otherwise
-     *         underlying slot table.
-     */
-    Table & current_slot_table (void);
+  /// Constructor
+  TAO_PICurrent_Impl (void);
 
-    /// Logically (shallow) copy the given slot table.
-    void lc_slot_table (PICurrent_Impl * p);
+  /// Destructor
+  ~TAO_PICurrent_Impl (void);
 
-    /// Return pointer to the logically copied slot table.
-    /**
-     * @return Zero if no logically copied slot table.  Non-zero
-     *         otherwise.
-     */
-    Table * lc_slot_table (void) const;
+  /// Retrieve information stored in the slot table at the given
+  /// SlotId.
+  CORBA::Any * get_slot (PortableInterceptor::SlotId id
+                         ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::InvalidSlot));
 
-  private:
+  /// Set information in the slot table at the given SlotId.
+  void set_slot (PortableInterceptor::SlotId id,
+                 const CORBA::Any & data
+                 ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::InvalidSlot));
 
-    /// Prevent copying through the copy constructor and the assignment
-    //operator.
-    //@{
-    PICurrent_Impl (const PICurrent_Impl &);
-    void operator= (const PICurrent_Impl &);
-    //@}
 
-  private:
+  /// Get the PICurrent peer associated with this PICurrent
+  /// implementation.
+  TAO_PICurrent_Impl *pi_peer (void);
 
-    /// Array of CORBA::Anys that is the underlying "slot table."
-    Table slot_table_;
+  /// Set the PICurrent peer associated with this PICurrent
+  /// implementation.
+  void pi_peer (TAO_PICurrent_Impl *peer);
 
-    /// Table that was logically copied from a PICurrent in another
-    /// scope, i.e. either the request scope or the thread scope.
-    Table * lc_slot_table_;
+  /// Return a reference to the underlying slot table.
+  Table &slot_table (void);
 
-    /// Callback object responsible for performing deep copies of a
-    /// PICurrent's slot table.
-    PICurrent_Copy_Callback * copy_callback_;
+  /// Mark the slot table as being clean or dirty.  The slot table is
+  /// dirty if it has been modified since the last time it was
+  /// copied.
+  void dirty (CORBA::Boolean dirty);
 
-    /// PICurrent_Impl object that will be notified of this object's
-    /// destruction.
-    PICurrent_Impl * destruction_callback_;
+  /// Flag that specifies if the underlying slot table has been
+  /// modified since last copy.
+  CORBA::Boolean dirty (void) const;
 
-  };
-}
+  /// Copy the contents of the given PICurrent.
+  void copy (TAO_PICurrent_Impl &rhs, CORBA::Boolean deep_copy);
+
+private:
+
+  /// Prevent copying through the copy constructor and the assignment
+  //operator.
+  //@{
+  ACE_UNIMPLEMENTED_FUNC (
+    TAO_PICurrent_Impl (const TAO_PICurrent_Impl &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_PICurrent_Impl &))
+  //@}
+
+private:
+
+  /// The PICurrent implementation with which this implementation's
+  /// slot table interacts.
+  TAO_PICurrent_Impl *pi_peer_;
+
+  /// Array of CORBA::Anys that is the underlying "slot table."
+  Table slot_table_;
+
+  /// Table that was logically copied from a PICurrent in another
+  /// scope, i.e. either the request scope or the thread scope.
+  Table *lc_slot_table_;
+
+  /// Flag that specifies if the underlying slot table has been
+  /// modified since last copy.
+  /**
+   * @note This flag is only used when copying between a request scope
+   *       current and a thread scope current.
+   */
+  CORBA::Boolean dirty_;
+};
+
+// ------------------------------------------------------------------
+
+/**
+ * @class TAO_PICurrent_Guard
+ *
+ * @brief Class used to make copying between request scope current and
+ *        thread scope current exception-safe.
+ *
+ * Since copies between the request scope current and thread scope
+ * current must also occur if an exception is thrown, e.g. made
+ * available to the send_exception() interception points, the "guard"
+ * idiom is used to make this action exception-safe.
+ *
+ * @note This Guard class is only used on the server side.
+ */
+class TAO_Export TAO_PICurrent_Guard
+{
+public:
+
+  /// Constructor
+  /**
+   * This constructor sets up this guard to copy the data held in a
+   * given PICurrent when transitioning from that PICurrent's scope to
+   * another scope (e.g. request scope to thread scope transition
+   * immediately following receive_request_service_contexts() on
+   * server side).
+   */
+  TAO_PICurrent_Guard (TAO_ServerRequest &server_request,
+                       CORBA::Boolean tsc_to_rsc);
+
+  /// Destructor
+  /**
+   * The destructor copies (a logical copy whenever possible) data
+   * held in a given PICurrent when transitioning from one PICurrent
+   * scope to another immediately before any ending interception
+   * points are invoked, and after the sending and intermediate (if
+   * any) interception points are invoked.
+   */
+  ~TAO_PICurrent_Guard (void);
+
+private:
+
+  /// The PICurrent implementation whose slot table will copied.
+  TAO_PICurrent_Impl *src_;
+
+  /// The PICurrent implementation whose slot table will filled with
+  /// the contents of another PICurrent's slot table.
+  TAO_PICurrent_Impl *dest_;
+
+  /// Flag that indicates if the TSC is to be copied to the RSC.
+  /**
+   * If false, then the RSC must be deep copied upon leaving the
+   * request scope and entering the thread scope.  This is necessary
+   * since the RSC slot table is no longer available upon leaving the
+   * thread scope, meaning that a logical copy is not enough.
+   */
+  CORBA::Boolean tsc_to_rsc_;
+
+};
 
 
 #if defined (__ACE_INLINE__)

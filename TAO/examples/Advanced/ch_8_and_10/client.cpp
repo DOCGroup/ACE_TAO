@@ -23,8 +23,8 @@
 using namespace std;
 
 // Show the details for a thermometer or thermostat.
-static std::ostream &
-operator<<(std::ostream & os, CCS::Thermometer_ptr t)
+static ostream &
+operator<<(ostream & os, CCS::Thermometer_ptr t)
 {
     // Check for nil.
     if (CORBA::is_nil(t)) {
@@ -42,7 +42,6 @@ operator<<(std::ostream & os, CCS::Thermometer_ptr t)
     CCS::LocType_var location = t->location();
     os << "\tAsset number: " << t->asset_num() << endl;
     os << "\tModel       : " << model.in() << endl;
-
     os << "\tLocation    : " << location.in() << endl;
     os << "\tTemperature : " << t->temperature() << endl;
 
@@ -56,8 +55,8 @@ operator<<(std::ostream & os, CCS::Thermometer_ptr t)
 
 // Show the information in a BtData struct.
 
-static std::ostream &
-operator<<(std::ostream & os, const CCS::Thermostat::BtData & btd)
+static ostream &
+operator<<(ostream & os, const CCS::Thermostat::BtData & btd)
 {
     os << "CCS::Thermostat::BtData details:" << endl;
     os << "\trequested    : " << btd.requested << endl;
@@ -72,8 +71,8 @@ operator<<(std::ostream & os, const CCS::Thermostat::BtData & btd)
 // Loop over the sequence of records in an EChange exception and
 // show the details of each record.
 
-static std::ostream &
-operator<<(std::ostream & os, const CCS::Controller::EChange & ec)
+static ostream &
+operator<<(ostream & os, const CCS::Controller::EChange & ec)
 {
     for (CORBA::ULong i = 0; i < ec.errors.length(); i++) {
         os << "Change failed:" << endl;
@@ -90,8 +89,8 @@ operator<<(std::ostream & os, const CCS::Controller::EChange & ec)
 
  #if 0   // This inserter may or may not be needed for your ORB.
 
-static std::ostream &
-operator<<(std::ostream & os, const CORBA::Exception & e)
+static ostream &
+operator<<(ostream & os, const CORBA::Exception & e)
 {
     CORBA::Any tmp;
     tmp <<= e;
@@ -119,16 +118,16 @@ set_temp(CCS::Thermostat_ptr tmstat, CCS::TempType new_temp)
 
     CCS::AssetType anum = tmstat->asset_num();
     try {
-		std::cout << "Setting thermostat " << anum
-			<< " to " << new_temp << " degrees." << std::endl;
+        cout << "Setting thermostat " << anum
+             << " to " << new_temp << " degrees." << endl;
         CCS::TempType old_nominal = tmstat->set_nominal(new_temp);
-		std::cout << "Old nominal temperature was: "
-			<< old_nominal << std::endl;
-		std::cout << "New nominal temperature is: "
-			<< tmstat->get_nominal() << std::endl;
+        cout << "Old nominal temperature was: "
+             << old_nominal << endl;
+        cout << "New nominal temperature is: "
+             << tmstat->get_nominal() << endl;
     } catch (const CCS::Thermostat::BadTemp & bt) {
-		std::cerr << "Setting of nominal temperature failed." << std::endl;
-		std::cerr << bt.details << std::endl;             // Overloaded <<
+        cerr << "Setting of nominal temperature failed." << endl;
+        cerr << bt.details << endl;             // Overloaded <<
     }
 }
 
@@ -143,7 +142,7 @@ main(int argc, char * argv[])
 
         // Check arguments
         if (argc != 2) {
-			std::cerr << "Usage: client IOR_string" << std::endl;
+            cerr << "Usage: client IOR_string" << endl;
             throw 0;
         }
 
@@ -151,7 +150,7 @@ main(int argc, char * argv[])
         // and convert to object.
         CORBA::Object_var obj = orb->string_to_object(argv[1]);
         if (CORBA::is_nil(obj.in())) {
-			std::cerr << "Nil controller reference" << std::endl;
+            cerr << "Nil controller reference" << endl;
             throw 0;
         }
 
@@ -160,13 +159,12 @@ main(int argc, char * argv[])
         try {
             ctrl = CCS::Controller::_narrow(obj.in());
         } catch (const CORBA::SystemException & se) {
-			std::cerr << "Cannot narrow controller reference: "
-                 //<< se 
-                 << std::endl;
+            cerr << "Cannot narrow controller reference: "
+                 << se << endl;
             throw 0;
         }
         if (CORBA::is_nil(ctrl.in())) {
-			std::cerr << "Wrong type for controller ref." << std::endl;
+            cerr << "Wrong type for controller ref." << endl;
             throw 0;
         }
 
@@ -175,10 +173,10 @@ main(int argc, char * argv[])
 
         // Show number of devices.
         CORBA::ULong len = list->length();
-		std::cout << "Controller has " << len << " device";
+        cout << "Controller has " << len << " device";
         if (len != 1)
-			std::cout << "s";
-		std::cout << "." << std::endl;
+            cout << "s";
+        cout << "." << endl;
 
         // If there are no devices at all, we are finished.
         if (len == 0)
@@ -186,18 +184,18 @@ main(int argc, char * argv[])
 
         // Show details for each device.
         for (CORBA::ULong i = 0; i < list->length(); i++)
-			std::cout << list[i].in();
-		std::cout << std::endl;
+            cout << list[i].in();
+        cout << endl;
 
         // Change the location of first device in the list
         CCS::AssetType anum = list[(CORBA::ULong) 0]->asset_num();
-		std::cout << "Changing location of device "
-			<< anum << "." << std::endl;
+        cout << "Changing location of device "
+             << anum << "." << endl;
         list[(CORBA::ULong) 0]->location("Earth");
         // Check that the location was updated
-		std::cout << "New details for device "
-			<< anum << " are:" << std::endl;
-		std::cout << list[(CORBA::ULong) 0] << std::endl;
+        cout << "New details for device "
+             << anum << " are:" << endl;
+        cout << list[(CORBA::ULong) 0] << endl;
 
         // Find first thermostat in list.
         CCS::Thermostat_var tmstat;
@@ -209,12 +207,12 @@ main(int argc, char * argv[])
 
         // Check that we found a thermostat on the list.
         if (CORBA::is_nil(tmstat.in())) {
-			std::cout << "No thermostat devices in list." << std::endl;
+            cout << "No thermostat devices in list." << endl;
         } else {
             // Set temperature of thermostat to
             // 50 degrees (should work).
             set_temp(tmstat.inout(), 50);
-			std::cout << std::endl;
+            cout << endl;
 
             // Set temperature of thermostat to
             // -10 degrees (should fail).
@@ -224,7 +222,7 @@ main(int argc, char * argv[])
         // Look for device in Rooms Earth and HAL. This must
         // locate at least one device because we earlier changed
         // the location of the first device to Room Earth.
-		std::cout << "Looking for devices in Earth and HAL." << std::endl;
+        cout << "Looking for devices in Earth and HAL." << endl;
         CCS::Controller::SearchSeq ss;
         ss.length(2);
         ss[0].key.loc(CORBA::string_dup("Earth"));
@@ -233,13 +231,13 @@ main(int argc, char * argv[])
 
         // Show the devices found in that room.
         for (CORBA::ULong k = 0; k < ss.length(); k++)
-			std::cout << ss[k].device.in();      // Overloaded <<
-		std::cout << std::endl;
+            cout << ss[k].device.in();      // Overloaded <<
+        cout << endl;
 
         // Increase the temperature of all thermostats
         // by 40 degrees. First, make a new list (tss)
         // containing only thermostats.
-		std::cout << "Increasing thermostats by 40 degrees." << std::endl;
+        cout << "Increasing thermostats by 40 degrees." << endl;
         CCS::Controller::ThermostatSeq tss;
         for (CORBA::ULong l = 0; l < list->length(); l++) {
             tmstat = CCS::Thermostat::_narrow(list[l]);
@@ -254,12 +252,10 @@ main(int argc, char * argv[])
         try {
             ctrl->change(tss, 40);
         } catch (const CCS::Controller::EChange & ec) {
-			std::cerr << ec;                     // Overloaded <<
+            cerr << ec;                     // Overloaded <<
         }
     } catch (const CORBA::Exception & e) {
-		std::cerr << "Uncaught CORBA exception: " 
-             //<< e 
-             << std::endl;
+        cerr << "Uncaught CORBA exception: " << e << endl;
         return 1;
     } catch (...) {
         return 1;

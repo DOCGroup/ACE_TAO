@@ -2,7 +2,7 @@
 // $Id$
 //
 
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 
 #include "ace/Log_Msg.h"
 

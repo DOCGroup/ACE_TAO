@@ -2,16 +2,16 @@
 
 #include "ECT_Throughput.h"
 
-#include "orbsvcs/orbsvcs/Event_Utilities.h"
-#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/orbsvcs/Scheduler_Factory.h"
-#include "orbsvcs/orbsvcs/Time_Utilities.h"
-#include "orbsvcs/orbsvcs/Sched/Config_Scheduler.h"
-#include "orbsvcs/orbsvcs/Runtime_Scheduler.h"
-#include "orbsvcs/orbsvcs/Event/Event_Channel.h"
-#include "orbsvcs/orbsvcs/Event/Module_Factory.h"
-#include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/orbsvcs/Event/EC_Default_Factory.h"
+#include "orbsvcs/Event_Utilities.h"
+#include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/Time_Utilities.h"
+#include "orbsvcs/Sched/Config_Scheduler.h"
+#include "orbsvcs/Runtime_Scheduler.h"
+#include "orbsvcs/Event/Event_Channel.h"
+#include "orbsvcs/Event/Module_Factory.h"
+#include "orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/Event/EC_Default_Factory.h"
 
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
@@ -23,9 +23,7 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_errno.h"
 
-ACE_RCSID (EC_Throughput, 
-           ECT_Throughput, 
-           "$Id$")
+ACE_RCSID(EC_Throughput, ECT_Throughput, "$Id$")
 
 int
 main (int argc, char *argv [])

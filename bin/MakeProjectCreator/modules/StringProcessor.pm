@@ -16,6 +16,14 @@ use strict;
 # Subroutine Section
 # ************************************************************
 
+sub new {
+  my($class)  = shift;
+  my($self)   = bless {
+                      }, $class;
+  return $self;
+}
+
+
 sub extractType {
   my($self) = shift;
   my($name) = shift;
@@ -30,26 +38,22 @@ sub extractType {
 
 
 sub process_special {
-  my($self) = shift;
-  my($line) = shift;
+  my($self)   = shift;
+  my($line)   = shift;
+  my($length) = length($line);
 
-  ## Replace all escaped double quotes and escaped backslashes
-  ## with special characters
-  my($escaped) = ($line =~ s/\\\\/\01/g);
-  $escaped |= ($line =~ s/\\"/\02/g);
-
-  ## Un-escape all other characters
-  $line =~ s/\\(.)/$1/g;
-
-  ## Remove any non-escaped double quotes
-  $line =~ s/"//g;
-                  
-  ## Put the escaped double quotes and backslashes back in
-  if ($escaped) {
-    $line =~ s/\02/"/g;
-    $line =~ s/\01/\\/g;
+  for(my $i = 0; $i < $length; $i++) {
+    my($ch) = substr($line, $i, 1);
+    if ($ch eq "\\" && $i + 1 < $length) {
+      substr($line, $i, 1) = '';
+      $length--;
+    }
+    elsif ($ch eq '"') {
+      substr($line, $i, 1) = '';
+      $length--;
+      $i--;
+    }
   }
-
   return $line;
 }
 

@@ -13,10 +13,10 @@
 #include "FT_ReplicaFactory_i.h"
 #include "FT_TestReplica_i.h"
 #include <ace/Get_Opt.h>
-#include <orbsvcs/orbsvcs/CosNamingC.h>
-#include <orbsvcs/orbsvcs/PortableGroupC.h>
+#include <orbsvcs/CosNamingC.h>
+#include <orbsvcs/PortableGroupC.h>
 #include <tao/PortableServer/ORB_Manager.h>
-#include <orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.h>
+#include <orbsvcs/PortableGroup/PG_Property_Set.h>
 
 // Use this macro at the beginning of CORBA methods
 // to aid in debugging.

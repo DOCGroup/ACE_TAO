@@ -61,7 +61,6 @@ ACE_RCSID(tests, Gauge_Test, "$Id$")
  */
 static void TestGuage()
 {
-#if !defined (ACE_WIN32)
    long l = LONG_MAX, nl = LONG_MIN;  // limits.h
    unsigned long ul = ULONG_MAX, def = 0;
    int i = INT_MAX, ni = INT_MIN;
@@ -114,7 +113,6 @@ static void TestGuage()
   ACE_ASSERT(g1 == us);
   g1 = si; // unsigned short
   ACE_ASSERT(g1 == si);
-#endif /*ACE_WIN32*/
 }
 
 int

@@ -71,7 +71,7 @@ public:
     : Logging_Event_Handler_Ex (r) {}
 
 protected:
-  int handle_input (ACE_HANDLE) {
+  int handle_input (ACE_HANDLE h) {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, monitor, lock_, -1);
     return logging_handler_.log_record ();
   }

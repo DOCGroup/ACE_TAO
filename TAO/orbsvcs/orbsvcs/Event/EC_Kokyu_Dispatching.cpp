@@ -5,8 +5,8 @@
 #include "EC_ProxySupplier.h"
 #include "EC_QOS_Info.h"
 
-#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/orbsvcs/RtecSchedulerC.h"
+#include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/RtecSchedulerC.h"
 #include "tao/ORB_Constants.h"
 
 #include "ace/Sched_Params.h"
@@ -18,9 +18,7 @@
 #include "EC_Kokyu_Dispatching.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Event, 
-           EC_Kokyu_Dispatching, 
-           "$Id$")
+ACE_RCSID(Event, EC_Kokyu_Dispatching, "$Id$")
 
 TAO_EC_Kokyu_Dispatching::TAO_EC_Kokyu_Dispatching (TAO_EC_Event_Channel_Base *ec, int sched_policy, int sched_scope)
   :allocator_ (0),

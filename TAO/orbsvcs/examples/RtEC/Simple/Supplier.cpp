@@ -1,14 +1,12 @@
 // $Id$
 
 #include "Supplier.h"
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/CosNamingC.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (EC_Examples, 
-           Supplier, 
-           "$Id$")
+ACE_RCSID(EC_Examples, Supplier, "$Id$")
 
 int
 main (int argc, char* argv[])

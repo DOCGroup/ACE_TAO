@@ -60,18 +60,6 @@ TAO_Notify_Properties::asynch_updates (CORBA::Boolean asynch_updates)
   this->asynch_updates_ = asynch_updates;
 }
 
-ACE_INLINE CORBA::Boolean
-TAO_Notify_Properties::updates (void)
-{
-  return this->updates_;
-}
-
-ACE_INLINE void
-TAO_Notify_Properties::updates (CORBA::Boolean updates)
-{
-  this->updates_ = updates;
-}
-
 ACE_INLINE const CosNotification::QoSProperties&
 TAO_Notify_Properties::default_event_channel_qos_properties (void)
 {

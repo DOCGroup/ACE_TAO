@@ -12,9 +12,7 @@
 #include "ORB_Holder.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_PERF_RTEC, 
-           ORB_Holder, 
-           "$Id$")
+ACE_RCSID(TAO_PERF_RTEC, ORB_Holder, "$Id$")
 
 ORB_Holder::ORB_Holder (int &argc, char *argv[],
                         const char *orb_id

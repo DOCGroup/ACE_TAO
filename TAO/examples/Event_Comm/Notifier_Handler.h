@@ -24,8 +24,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/Naming/Naming_Utils.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/CosNamingC.h"
 
 class Notifier_Handler
 {

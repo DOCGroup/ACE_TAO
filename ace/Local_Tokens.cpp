@@ -165,8 +165,8 @@ ACE_TSS_TPQ_Entry::dump (void) const
   ACE_TRACE ("ACE_TSS_TPQ_Entry::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 #if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
-  ACE_DEBUG ((LM_DEBUG,  (char *) "ACE_TSS_TPQ_Entry::dump:\n"
-                        " client_id_ = %s\n",
+  ACE_DEBUG ((LM_DEBUG,  (char *) "ACE_TSS_TPQ_Entry::dump:\n",
+                        (char *) " client_id_ = %s\n",
                         (char *) client_id_ == 0 ? (char *) "0" : (char *) client_id_));
 #else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_TSS_TPQ_Entry::dump:\n")
@@ -1343,7 +1343,7 @@ ACE_Token_Proxy::handle_options (ACE_Synch_Options &options,
         }
 
       if (this->debug_)
-        ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%t) unblocking %s.\n"),
+        ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%t) unblocking.\n"),
                     this->client_id ()));
       cv.mutex ().release ();
       return 0;       // operation succeeded
@@ -1436,8 +1436,8 @@ ACE_Token_Name::dump (void) const
   ACE_TRACE ("ACE_Token_Name::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 #if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
-  ACE_DEBUG ((LM_DEBUG,  (char *) "ACE_Token_Name::dump:\n"
-                        " token_name_ = %s\n",
+  ACE_DEBUG ((LM_DEBUG,  (char *) "ACE_Token_Name::dump:\n",
+                        (char *) " token_name_ = %s\n",
               (char *) token_name_ == 0 ? (char *) "no name" : (char *) token_name_));
 #else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_Token_Name::dump:\n")

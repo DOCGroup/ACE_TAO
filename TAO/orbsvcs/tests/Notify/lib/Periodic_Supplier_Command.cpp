@@ -2,9 +2,7 @@
 
 #include "Periodic_Supplier_Command.h"
 
-ACE_RCSID (lib, 
-           TAO_Periodic_Supplier_Command, 
-           "$Id$")
+ACE_RCSID(lib, TAO_Periodic_Supplier_Command, "$Id$")
 
 #include "LookupManager.h"
 #include "Name.h"
@@ -12,7 +10,7 @@ ACE_RCSID (lib,
 #include "Direct_Supplier.h"
 #include "Activation_Manager.h"
 #include "Options_Parser.h"
-#include "orbsvcs/orbsvcs/NotifyExtC.h"
+#include "orbsvcs/NotifyExtC.h"
 
 TAO_Notify_Tests_Periodic_Supplier_Command::TAO_Notify_Tests_Periodic_Supplier_Command (void)
 {

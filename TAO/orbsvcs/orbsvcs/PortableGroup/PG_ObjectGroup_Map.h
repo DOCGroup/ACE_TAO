@@ -24,13 +24,13 @@
 
 #include "PG_MemberInfo.h"
 
-#include "orbsvcs/orbsvcs/PortableGroupC.h"
+#include "orbsvcs/PortableGroupC.h"
 
 #include "tao/PortableServer/Key_Adapters.h"
 #include "tao/PortableServer/PortableServerC.h"
 
 #include "ace/Hash_Map_Manager_T.h"
-#include "ace/Null_Mutex.h"
+
 
 /**
  * @class TAO_PG_ObjectGroup_Map_Entry

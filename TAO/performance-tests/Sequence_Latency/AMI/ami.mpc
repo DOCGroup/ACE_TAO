@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(* sequence server): taoexe, messaging, strategies {
+project(* sequence server): messaging, strategies {
   idlflags -= -Sc
   idlflags += -GC
   requires += ami
@@ -10,10 +10,10 @@ project(* sequence server): taoexe, messaging, strategies {
     Roundtrip.cpp
     Server_Task.cpp
     server.cpp
-  }
+  }  
 }
-
-project(* sequence client): taoexe, messaging, strategies {
+ 
+project(* sequence client): messaging, strategies {
   exename   = client
   idlflags -= -Sc
   idlflags += -GC
@@ -22,6 +22,6 @@ project(* sequence client): taoexe, messaging, strategies {
   Source_Files {
     Roundtrip_Handler.cpp
     client.cpp
-  }
+  }  
 }
 

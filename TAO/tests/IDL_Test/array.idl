@@ -52,32 +52,3 @@ interface tdef
     }; 
 };
 
-// To test that all the octet arrays build and link as
-// unique types.
-module ABCModule
-{
-  struct RmtPhysicalInfo
-  {
-    octet rmtNodeId[22];
-    octet rmtDetails[22];
-  };
-  
-  struct bbbBubBubBubBaby
-  {
-    octet rmtNodeId[22];
-    octet rmtDetails[22];
-  };
-};
-
-typedef octet oa1[22];
-typedef octet oa2[22];
-
-// This should generate unique _var and _forany types, but
-// also generate TAO_String_Manager as the element type for both.
-module string_array
-{
-  typedef string ArrayOfString[15];
-  typedef string MyString;
-  typedef MyString ArrayOfMyString[15];
-};
-

@@ -11,7 +11,7 @@ ACE_RCSID(Synch_Benchmarks, Adaptive_Lock_Performance_Test_Base, "$Id$")
 class ACE_Svc_Export Adaptive_Lock_Performance_Test_Base : public Benchmark_Performance
 {
 public:
-  virtual int init (int, ACE_TCHAR *[]) = 0;
+  virtual int init (int, char *[]) = 0;
   virtual int fini (void);
   virtual int svc (void);
 

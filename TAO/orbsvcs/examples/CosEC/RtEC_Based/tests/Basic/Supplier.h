@@ -17,10 +17,10 @@
 #ifndef COSECSUPPLIER_H_
 #define COSECSUPPLIER_H_
 
-#include "orbsvcs/orbsvcs/CosEventCommC.h"
-#include "orbsvcs/orbsvcs/CosEventChannelAdminC.h"
-#include "orbsvcs/orbsvcs/CosEventCommS.h"
-#include "orbsvcs/orbsvcs/CosEventChannelAdminS.h"
+#include "orbsvcs/CosEventCommC.h"
+#include "orbsvcs/CosEventChannelAdminC.h"
+#include "orbsvcs/CosEventCommS.h"
+#include "orbsvcs/CosEventChannelAdminS.h"
 
 class Supplier : public POA_CosEventComm::PushSupplier
 {

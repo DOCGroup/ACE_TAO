@@ -33,8 +33,8 @@
 #include "ace/SString.h"
 #include "ace/Unbounded_Set.h"
 
-#include "orbsvcs/orbsvcs/RtecSchedulerC.h"
-#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/RtecSchedulerC.h"
+#include "orbsvcs/Event_Service_Constants.h"
 #include "sched_export.h"
 
 class TAO_RTSched_Export ACE_Scheduler

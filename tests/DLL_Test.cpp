@@ -150,7 +150,7 @@ int dynamic_cast_test (ACE_DLL &dll)
               &child,  dynamic_cast<Child*>( parent )));
 
   if (pfnAcquire( &child ) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("dynamic_cast failed.\n")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("dyanmic_cast failed.\n")), -1);
 #else
   ACE_UNUSED_ARG (dll);
 #endif /* !ACE_LACKS_RTTI */

@@ -21,6 +21,23 @@ use vars qw(@ISA);
 # Subroutine Section
 # ************************************************************
 
+sub translate_value {
+  my($self) = shift;
+  my($key)  = shift;
+  my($val)  = shift;
+
+  if ($key eq 'after' && $val ne '') {
+    my($arr) = $self->create_array($val);
+    $val = '';
+    foreach my $entry (@$arr) {
+      $val .= '"' . $self->project_file_name($entry) . '" ';
+    }
+    $val =~ s/\s+$//;
+  }
+  return $val;
+}
+
+
 sub convert_slashes {
   #my($self) = shift;
   return 0;
@@ -38,6 +55,12 @@ sub file_sorter {
 sub crlf {
   my($self) = shift;
   return $self->windows_crlf();
+}
+
+
+sub separate_static_project {
+  #my($self) = shift;
+  return 1;
 }
 
 

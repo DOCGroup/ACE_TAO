@@ -1,26 +1,3 @@
-\
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // $Id$
 
 // ============================================================================
@@ -36,7 +13,7 @@
 #ifndef TAO_COSEVENTCHANNELFACTORY_IDL
 #define TAO_COSEVENTCHANNELFACTORY_IDL
 
-#include "orbsvcs/orbsvcs/CosEventChannelAdmin.idl"
+#include "orbsvcs/CosEventChannelAdmin.idl"
 
 module CosEventChannelFactory
 {

@@ -18,7 +18,7 @@
 #ifndef TAO_COMMON_H
 #define TAO_COMMON_H
 
-#include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
+#include "orbsvcs/CosNotifyChannelAdminS.h"
 
 const char*
 Any_String (const CORBA::Any& any);

@@ -20,8 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include <orbsvcs/orbsvcs/FT_ReplicationManagerC.h>
-#include <orbsvcs/orbsvcs/PortableGroupC.h>
+#include <orbsvcs/FT_ReplicationManagerC.h>
+#include <orbsvcs/PortableGroupC.h>
 #include <ace/SString.h>
 #include <ace/Vector_T.h>
 

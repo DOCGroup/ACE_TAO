@@ -16,7 +16,7 @@
 #define TAO_EC_UDP_ADMIN_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/RtecUDPAdminS.h"
+#include "orbsvcs/RtecUDPAdminS.h"
 #include /**/ "event_export.h"
 
 /**

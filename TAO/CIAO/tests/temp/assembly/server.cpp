@@ -1,9 +1,8 @@
 // $Id$
 
-#include "tools/Assembly_Deployer/Assembly_Impl.h"
-#include "ciao/Server_init.h"
+#include "Assembly_Impl.h"
+#include "Server_init.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_stdio.h"
 #include "controlS.h"
 
 class control_impl

@@ -1,11 +1,9 @@
 // $Id$
 
 #include "EC_Gateway_Sched.h"
-#include "orbsvcs/orbsvcs/Time_Utilities.h"
+#include "orbsvcs/Time_Utilities.h"
 
-ACE_RCSID (Event, 
-           EC_Gateway_sched, 
-           "$Id$")
+ACE_RCSID(Event, EC_Gateway_sched, "$Id$")
 
 TAO_EC_Gateway_Sched::TAO_EC_Gateway_Sched (void)
   :  TAO_EC_Gateway_IIOP ()

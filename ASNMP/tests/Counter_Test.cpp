@@ -67,7 +67,6 @@ ACE_RCSID(tests, Counter_Test, "$Id$")
 
 static void  TestCounter()
 {
-#if !defined (ACE_WIN32)
    long l = LONG_MAX, nl = LONG_MIN;  // limits.h
    unsigned long ul = ULONG_MAX, def = 0;
    int i = INT_MAX, ni = INT_MIN;
@@ -120,7 +119,7 @@ static void  TestCounter()
   ACE_ASSERT(c1 == us);
   c1 = si; // unsigned short
   ACE_ASSERT(c1 == si);
-#endif /*ACE_WIN32*/
+
 }
 
 

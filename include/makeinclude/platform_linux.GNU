@@ -26,7 +26,7 @@ PLATFORM_XT_LIBS=-lXt
 PLATFORM_XT_LDFLAGS=
 
 PLATFORM_FL_CPPFLAGS=
-PLATFORM_FL_LIBS=-lfltk -lfltk_forms -lfltk_gl
+PLATFORM_FL_LIBS=-lfltk
 PLATFORM_FL_LDFLAGS=
 
 PLATFORM_X11_CPPFLAGS=-I/usr/X11R6/include
@@ -72,10 +72,7 @@ else
   CXX = g++
 endif
 
-# fix this
-pipes ?= 1
-
-CFLAGS  += -W -Wall -Wpointer-arith
+CFLAGS  += -W -Wall -Wpointer-arith -pipe
 ifeq ($(threads),1)
     CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
 endif # threads
@@ -100,7 +97,7 @@ PLATFORM_QT_CPPFLAGS=-I$(QTDIR)/include
 PLATFORM_QT_LIBS=-lqt
 PLATFORM_QT_LDFLAGS=-L$(QTDIR)/lib
 
-OCFLAGS ?= -O3
+OCFLAGS += -O3
 PIC     = -fPIC
 AR      = ar
 ARFLAGS = rsuv
@@ -130,16 +127,16 @@ endif
 sctp ?=
 # support for OpenSS7 SCTP
 ifeq ($(sctp),openss7)
-  PLATFORM_SCTP_CPPFLAGS+= -DACE_HAS_OPENSS7_SCTP
-  PLATFORM_SCTP_LDFLAGS?=
-  PLATFORM_SCTP_LIBS?=
+  PLATFORM_SCTP_CPPFLAGS= -DACE_HAS_OPENSS7_SCTP
+  PLATFORM_SCTP_LDFLAGS=
+  PLATFORM_SCTP_LIBS= 
 endif
 
 # support for LKSCTP (Linux Kernel 2.5)
 ifeq ($(sctp),lksctp)
-  PLATFORM_SCTP_CPPFLAGS+= -DACE_HAS_LKSCTP
-  PLATFORM_SCTP_LDFLAGS?= -L/usr/local/lib
-  PLATFORM_SCTP_LIBS?= -lsctp
+  PLATFORM_SCTP_CPPFLAGS= -DACE_HAS_LKSCTP
+  PLATFORM_SCTP_LDFLAGS=
+  PLATFORM_SCTP_LIBS= /usr/local/lib/libsctp.a
 endif
 
 #### GNU gas has a string limit of 4096 characters.  On Alphas,

@@ -1,18 +1,18 @@
 // -*- MPC -*-
 // $Id$
 
+conditional_include "idl_compiler_win32"
 conditional_include "common"
 
 type_description      = Application
-platforms             = "WCE ARM" "WCE x86" "WCE emulator"
+platform_longs        = "WCE ARM" "WCE x86" "WCE emulator"
 default_configuration = Debug
-default_platform      = "WCE ARM"
+default_platform_long = "WCE ARM"
 configurations        = Release Debug
 type_is_binary        = 1
 common_defines        = UNICODE _UNICODE
 pdb                   = 1
 stack                 =
-use_modifier          =
 
 WCE x86 {
   type_code   = 0x8301

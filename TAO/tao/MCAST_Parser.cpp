@@ -137,7 +137,7 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("acceptor.open () || ")
-                  ACE_TEXT ("acceptor.get_local_addr () failed\n")));
+                  ACE_TEXT ("acceptor.get_local_addr () failed")));
       result = -1;
     }
   else
@@ -236,8 +236,9 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
             {
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("\n%N; Sent multicast.")
+                            ACE_TEXT ("\n%s; Sent multicast.")
                             ACE_TEXT ("# of bytes sent is %d.\n"),
+                            __FILE__,
                             result));
               // Wait for response until timeout.
               ACE_Time_Value tv (
@@ -304,8 +305,9 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
                                         ACE_TEXT ("error reading ior")));
                           else if (TAO_debug_level > 0)
                             ACE_DEBUG ((LM_DEBUG,
-                                        ACE_TEXT ("%N: service resolved to IOR <%s>\n"),
-                                        ACE_TEXT_CHAR_TO_TCHAR (buf)));
+                                        ACE_TEXT ("%s: service resolved to IOR <%s>\n"),
+                                        __FILE__,
+                                        buf));
                         }
                     }
                 }
@@ -315,7 +317,7 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
           {
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT("\nmulticast discovery of %s failed.\n"),
-                        ACE_TEXT_CHAR_TO_TCHAR (service_name)));
+                        service_name));
 
             if (ACE_OS::strcasecmp (service_name,
                                     "NameService") == 0)

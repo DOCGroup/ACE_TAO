@@ -643,10 +643,7 @@ TAO_IDL_Inheritance_Hierarchy_Worker::~TAO_IDL_Inheritance_Hierarchy_Worker (
 {
 }
 
-// =================================================================
-
-class TAO_IDL_Gen_OpTable_Worker 
-  : public TAO_IDL_Inheritance_Hierarchy_Worker
+class TAO_IDL_Gen_OpTable_Worker : public TAO_IDL_Inheritance_Hierarchy_Worker
 {
 public:
   TAO_IDL_Gen_OpTable_Worker (const char *skeleton_name);
@@ -659,9 +656,8 @@ private:
   const char *skeleton_name_;
 };
 
-TAO_IDL_Gen_OpTable_Worker::TAO_IDL_Gen_OpTable_Worker (
-    const char *skeleton_name
-  )
+TAO_IDL_Gen_OpTable_Worker::
+TAO_IDL_Gen_OpTable_Worker (const char *skeleton_name)
   : skeleton_name_ (skeleton_name)
 {
 }
@@ -678,81 +674,6 @@ TAO_IDL_Gen_OpTable_Worker::emit (be_interface *derived_interface,
                                   this->skeleton_name_,
                                   os);
 }
-
-// =================================================================
-
-class Pure_Virtual_Regenerator 
-  : public TAO_IDL_Inheritance_Hierarchy_Worker
-{
-public:
-  Pure_Virtual_Regenerator (be_visitor *visitor);
-
-  virtual int emit (be_interface *derived_interface,
-                    TAO_OutStream *os,
-                    be_interface *base_interface);
-
-private:
-  be_visitor *visitor_;
-};
-
-Pure_Virtual_Regenerator::Pure_Virtual_Regenerator (
-    be_visitor *visitor
-  )
-  : visitor_ (visitor)
-{
-}
-
-// We don't use the output stream in the signature but instead
-// pass the visitor member (which is always be_visitor_operation_ch)
-// to each iterator item, and (almost, see below) everything else
-// is automatic.
-int
-Pure_Virtual_Regenerator::emit (be_interface *derived_interface,
-                                TAO_OutStream *,
-                                be_interface *base_interface)
-{
-  if (derived_interface == base_interface)
-    {
-      return 0;
-    }
-   
-  // A parent that's local will already have its operations declared
-  // as pure virtual. 
-  if (base_interface->is_local ())
-    {
-      return 0;
-    }
-
-  be_decl *d = 0;
-
-  for (UTL_ScopeActiveIterator si (base_interface, UTL_Scope::IK_decls);
-        !si.is_done ();
-        si.next ())
-    {
-      d = be_decl::narrow_from_decl (si.item ());
-
-      if (d->node_type () == AST_Decl::NT_op)
-        {
-          // Hack to force the generation of the pure virtual ' = 0'
-          // at the end of the operation declaration.
-          d->set_local (I_TRUE);
-        
-          if (d->accept (this->visitor_) == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                "(%N:%l) Pure_Virtual_Regenerator::emit - "
-                                "visit base interface operation failed\n"),
-                                -1);
-            }
-            
-          d->set_local (I_FALSE);
-        }
-    }
-    
-  return 0;
-}
-
-// =================================================================
 
 int
 be_interface::gen_operation_table (const char *flat_name,
@@ -986,37 +907,6 @@ be_interface::gen_operation_table (const char *flat_name,
                         -1);
   }
 
-  return 0;
-}
-
-int
-be_interface::convert_parent_ops (be_visitor *visitor)
-{
-  // Make sure the queues are empty.
-  this->insert_queue.reset ();
-  this->del_queue.reset ();
-
-  // Insert ourselves in the queue.
-  if (insert_queue.enqueue_tail (this) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                          "(%N:%l) be_interface::convert_parent_ops - "
-                          "error generating entries\n"),
-                        -1);
-    }
-
-  // Traverse the graph.
-  Pure_Virtual_Regenerator worker (visitor);
-
-  if (this->traverse_inheritance_graph (worker, 0) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                          "(%N:%l) be_interface::"
-                          "convert_parent_ops - "
-                          "codegen for base class operations failed\n"),
-                        -1);
-    }
-    
   return 0;
 }
 

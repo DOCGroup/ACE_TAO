@@ -180,22 +180,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << node->name () << "::" << node->flat_name ()
           << "_setup_collocation (int collocated)" << be_nl
           << "{" << be_idt_nl
-          << "if (collocated";
-       
-       // Right now (29-01-04) we don't support collocation for
-       // abstract interfaces, and the 'collocated' arg will always
-       // be 0. However, just to be safe, we add a
-       // check for non-zero collocation factory function pointer
-       // (which at present is also 0 for abstract interfaces),
-       // in case the logic is changed in the future.
-       if (node->is_abstract ())
-        {   
-          *os << " && " << node->flat_client_enclosing_scope () 
-              << node->base_proxy_broker_name () 
-              << "_Factory_function_pointer";
-        }
-          
-      *os << ")" << be_idt_nl
+          << "if (collocated)" << be_idt_nl
           << "{" << be_idt_nl
           << "this->the" << node->base_proxy_broker_name ()
           << "_ =" << be_idt_nl

@@ -6,7 +6,7 @@
 #include "TestS.h"
 #include "Roundtrip.h"
 
-Server_Task::Server_Task (const char* ior_file,
+Server_Task::Server_Task (char* ior_file,
                           CORBA::ORB_ptr sorb,
                           ACE_Null_Condition &cond,
                           ACE_Thread_Manager *thr_mgr)

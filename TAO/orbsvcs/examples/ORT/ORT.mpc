@@ -41,6 +41,8 @@ project(*Client) : orbsvcsexe, event {
     client.cpp
     sum_serverC.cpp
   }
+  idl_files {
+  }
 }
 
 

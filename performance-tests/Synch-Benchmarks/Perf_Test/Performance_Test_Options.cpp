@@ -42,7 +42,7 @@ Performance_Test_Options::Performance_Test_Options (void)
                  : thr_wc_size (10000),
                    _service_entry (0),
                    _mapped_file (0),
-                   _pipe_addr (ACE_const_cast (ACE_TCHAR *, ACE_DEFAULT_RENDEZVOUS)),
+                   _pipe_addr (ACE_const_cast (char *, ACE_DEFAULT_RENDEZVOUS)),
                    _sleep_time (100),
                    _n_lwps (0),
                    _thr_count (4),
@@ -72,16 +72,16 @@ Performance_Test_Options::Performance_Test_Options (void)
 }
 
 void
-Performance_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
+Performance_Test_Options::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("a:A:bBc:C:dDe:F:g:H:i:L:l:M:m:n:Np:P:s:S:t:T:uvX:Z:"), 0);
+  ACE_Get_Opt get_opt (argc, argv, "a:A:bBc:C:dDe:F:g:H:i:L:l:M:m:n:Np:P:s:S:t:T:uvX:Z:", 0);
   int c;
 
   while ((c = get_opt ()) != -1)
     switch (c)
       {
       case 'a':                 // Not used. (do_ack ???)
-        this->_ack = ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT("ON")) == 0;
+        this->_ack = ACE_OS::strcasecmp (get_opt.opt_arg (), "ON") == 0;
         break;
       case 'A':                 // Not used. (set rendezvous point.)
         this->pipe_addr (get_opt.opt_arg ());
@@ -103,7 +103,7 @@ Performance_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
           break;
         }
       case 'C':                 // Not used.  (Toggle calculate checksum.)
-        this->_checksum = ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT("ON")) == 0;
+        this->_checksum = ACE_OS::strcasecmp (get_opt.opt_arg (), "ON") == 0;
         break;
       case 'd':                 // Not used.  (Enable debugging.)
         this->_debugging = 1;
@@ -112,13 +112,13 @@ Performance_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->t_flags (THR_DETACHED);
         break;
       case 'e':                 // Perform eager exit (without cleaning up.)
-        this->_eager_exit = ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT("ON")) == 0;
+        this->_eager_exit = ACE_OS::strcasecmp (get_opt.opt_arg (), "ON") == 0;
         break;
       case 'F':                 // Not used.
-        this->_free_memory = ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT("ON")) == 0;
+        this->_free_memory = ACE_OS::strcasecmp (get_opt.opt_arg (), "ON") == 0;
         break;
       case 'g':                 // Not used.  (generate data ??)
-        this->_generate = ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT("ON")) == 0;
+        this->_generate = ACE_OS::strcasecmp (get_opt.opt_arg (), "ON") == 0;
         break;
       case 'H':                 // Not used.  (set high water mark)
         this->high_water_mark (ACE_OS::atoi (get_opt.opt_arg ()));
@@ -145,7 +145,7 @@ Performance_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->n_lwps (ACE_OS::atoi (get_opt.opt_arg ()));
         break;
       case 'p':                 // Toggle whether summary is printed.
-        this->_print_summary = ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT("ON")) == 0;
+        this->_print_summary = ACE_OS::strcasecmp (get_opt.opt_arg (), "ON") == 0;
         break;
       case 'P':                 // Not used.
         this->consecutive_ports (ACE_OS::atoi (get_opt.opt_arg ()));
@@ -158,9 +158,9 @@ Performance_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 'T':                 // Enable/disable tracing.
 #if defined (ACE_HAS_TRACE)
-        if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT("ON")) == 0)
+        if (ACE_OS::strcasecmp (get_opt.opt_arg (), "ON") == 0)
           ACE_Trace::start_tracing ();
-        else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT("OFF")) == 0)
+        else if (ACE_OS::strcasecmp (get_opt.opt_arg (), "OFF") == 0)
           ACE_Trace::stop_tracing ();
 #endif /* ACE_HAS_TRACE */
         break;
@@ -174,10 +174,10 @@ Performance_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->_verbosity = 1;
         break;
       case 'X':                 // Not used.  (Use xdr conversion.)
-        this->_xdr = ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT("ON")) == 0;
+        this->_xdr = ACE_OS::strcasecmp (get_opt.opt_arg (), "ON") == 0;
         break;
       case 'Z':                 // Not used.  (Do zero copy.)
-        this->_zero_copy = ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT("ON")) == 0;
+        this->_zero_copy = ACE_OS::strcasecmp (get_opt.opt_arg (), "ON") == 0;
         break;
       default:
         ACE_DEBUG ((LM_INFO,

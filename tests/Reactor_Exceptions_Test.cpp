@@ -17,11 +17,11 @@
 //
 // ============================================================================
 
-#include "test_config.h"
 #include "ace/Reactor.h"
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
 #include "ace/Thread_Manager.h"
+#include "test_config.h"
 
 ACE_RCSID(tests, Reactor_Exceptions_Test, "$Id$")
 

@@ -1,12 +1,13 @@
-#include "orbsvcs/orbsvcs/Log/LogNotification.h"
+#include "orbsvcs/Log/LogNotification.h"
 
-#include "orbsvcs/orbsvcs/Time_Utilities.h"
+#include "orbsvcs/Time_Utilities.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_sys_time.h"
 
 ACE_RCSID (Log,
            LogNotification,
            "$Id$")
+
 
 TAO_LogNotification::TAO_LogNotification (void)
 {

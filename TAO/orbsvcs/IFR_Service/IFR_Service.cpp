@@ -6,7 +6,7 @@
 #include "orbsvcs/orbsvcs/IFRService/Options.h"
 #include "orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.h"
 #include "orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h"
-#include "orbsvcs/orbsvcs/IOR_Multicast.h"
+#include "orbsvcs/IOR_Multicast.h"
 #include "tao/IORTable/IORTable.h"
 #include "tao/ORB_Core.h"
 #include "ace/Auto_Ptr.h"

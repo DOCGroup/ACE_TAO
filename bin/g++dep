@@ -19,9 +19,6 @@ STOPNOW=0
 while [ $STOPNOW -eq 0 ]
 do
 case $1 in
-  # -e for compatibility with depgen.pl
-  -e) shift; shift ;;
-
   # -f allows you to select a makefile name
   -f) MAKE=$2
       shift; shift ;;
@@ -83,7 +80,7 @@ cat << _EOF_ >> $TMP
 
 _EOF_
 
-g++ -MM -MG -DACE_LACKS_PRAGMA_ONCE $* | \
+g++ -MM -DACE_LACKS_PRAGMA_ONCE $* | \
   sed -e "s; \./; ;g" $SED $REL | \
   awk '{ if ($1 != prev) \
          { if (rec != "") print rec; rec = $0; prev = $1; } \
@@ -101,11 +98,7 @@ then
   cat $TMP | \
   sed \
       -e "s/${ACE_PLATFORM_CONFIG}/\$(ACE_PLATFORM_CONFIG)/g" \
-      -e 's/config-all/configx-all/' \
-      -e 's/config-lite/configx-lite/' \
-      -e '/config-.*\.h/d' \
-      -e 's/configx-all/config-all/' \
-      -e 's/configx-lite/config-lite/' \
+      -e '/config[-][^a][^l][^l]*\.h/d' \
       -e "s; /[-a-zA-Z0-9_./+]*\.h;;g" \
       -e 's/\\[ \t][ \t]*\\/\\/g' \
       -f $SCRIPT > $TMP2

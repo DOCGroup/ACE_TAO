@@ -4,8 +4,8 @@
 #include "CEC_Dispatching.h"
 #include "CEC_EventChannel.h"
 #include "CEC_ConsumerControl.h"
-#include "orbsvcs/orbsvcs/ESF/ESF_RefCount_Guard.h"
-#include "orbsvcs/orbsvcs/ESF/ESF_Proxy_RefCount_Guard.h"
+#include "orbsvcs/ESF/ESF_RefCount_Guard.h"
+#include "orbsvcs/ESF/ESF_Proxy_RefCount_Guard.h"
 #include "tao/debug.h"
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 #include "CEC_TypedEvent.h"

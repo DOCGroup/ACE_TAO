@@ -148,7 +148,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     ACE_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - IIOP_Connector::make_connection, "
                 "to <%s:%d>\n",
-                ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host()), iiop_endpoint->port()));
+                iiop_endpoint->host(), iiop_endpoint->port()));
 
   // Get the right synch options
   ACE_Synch_Options synch_options;
@@ -274,8 +274,8 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
           ACE_DEBUG ((LM_ERROR,
                       "TAO (%P|%t) - IIOP_Connector::make_connection, "
                       "connection to <%s:%d> failed (%p)\n",
-                      ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host ()), iiop_endpoint->port (),
-                      ACE_LIB_TEXT("errno")));
+                      iiop_endpoint->host (), iiop_endpoint->port (),
+                      "errno"));
         }
 
       return 0;
@@ -287,7 +287,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     ACE_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - IIOP_Connector::make_connection, "
                 "new connection to <%s:%d> on Transport[%d]\n",
-                ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host ()), iiop_endpoint->port (),
+                iiop_endpoint->host (), iiop_endpoint->port (),
                 svc_handler->peer ().get_handle ()));
 
   TAO_Transport *transport =

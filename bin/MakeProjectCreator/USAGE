@@ -12,15 +12,14 @@ projects for each one found.
 Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse]
               [-ti <dll | lib | dll_exe | lib_exe>:<file>] [-hierarchy]
               [-template <file>] [-relative NAME=VAR] [-base <project>]
-              [-noreldefs] [-notoplevel] [-static] [-genins]
+              [-noreldefs] [-notoplevel] [-static]
               [-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-feature_file <file name>] [-make_coexistence]
               [-exclude <directories>] [-name_modifier <pattern>]
               [-apply_project]
-              [-type <automake | bmake | borland | cbx em3 | ghs |
-                      gnuace | html | make | nmake | va4 | vc6 |
-                      vc7 | vc71>]
+              [-type <automake | borland | em3 | ghs | gnuace | make |
+                      nmake | va4 | vc6 | vc7 | vc71>]
               [files]
 
        -base           Add <project> as a base project to each generated
@@ -30,7 +29,6 @@ Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse]
        -feature_file   Specifies the feature file to read before processing.
                        The default feature file is default.features under the
                        config directory.
-       -genins         Generate .ins files for use with prj_install.pl.
        -global         Specifies the global input file.  Values stored
                        within this file are applied to all projects.
        -hierarchy      Generate a workspace in a hierarchical fashion.
@@ -92,16 +90,10 @@ a separate project file for dynamic libraries and static libraries.
 The -exclude option is used to exclude directories when searching for input
 files.  NOTE: This option has no effect when used with mpc.pl.
 
-The -genins option will cause MPC to generate an "install" file after
-processing each project that can be used in conjunction with the
-prj_install.pl script to install different parts of the project (such as
-header files) into an alternate location.
-
 The -hierarchy option is used to force the generation of a hierarchical
 workspace at each directory level in between the toplevel directory and the
-location of the mpc file that is being processed.  This is the default for
-"make" based workspace creators.  NOTE: This option only has an effect when
-passed to mwc.pl.
+location of the mpc file that is being processed.  NOTE: This option only
+has an effect when passed to mwc.pl.
 
 The -template option is used to override the default template name.  This
 file should have a .mpd extension and sit in one of the include search
@@ -117,17 +109,6 @@ with the -static option and once without.  Additionally, the vc6, em3, vc7,
 vc71 and va4 project names will no longer automatically have _Static
 appended to the project name when generating static projects.  This can
 still be achieved by using the -name_modifier option.
-
-When generating static projects, inter-project dependencies will not be
-generated for libraries within vc6, em3, vc7 or vc71 workspaces.  The reason
-is due to the fact that each static library that depended upon another would
-be combined at the library creation stage, resulting in extremely large
-libraries.
-
-This behavior can be modified by setting the
-MPC_DEPENDENCY_COMBINED_STATIC_LIBRARY environment variable.  It will force
-MPC to generate inter-project dependencies for libraries within a single
-workspace.
 
 The -name_modifier option can be used to modify the generated workspace or
 project name.  The parameter to the -name_modifier option is a pattern where
@@ -178,15 +159,14 @@ project in the directory from which the script was started.
 Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse]
               [-ti <dll | lib | dll_exe | lib_exe>:<file>] [-hierarchy]
               [-template <file>] [-relative NAME=VAR] [-base <project>]
-              [-noreldefs] [-notoplevel] [-static] [-genins]
+              [-noreldefs] [-notoplevel] [-static]
               [-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-feature_file <file name>] [-make_coexistence]
               [-exclude <directories>] [-name_modifier <pattern>]
               [-apply_project]
-              [-type <automake | bmake | borland | cbx | em3 | ghs |
-                      gnuace | html | make | nmake | va4 | vc6 |
-                      vc7 | vc71>]
+              [-type <automake | borland | em3 | ghs | gnuace | make |
+                      nmake | va4 | vc6 | vc7 | vc71>]
               [files]
 
        -base           Add <project> as a base project to each generated
@@ -196,7 +176,6 @@ Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse]
        -feature_file   Specifies the feature file to read before processing.
                        The default feature file is default.features under the
                        config directory.
-       -genins         Generate .ins files for use with prj_install.pl.
        -global         Specifies the global input file.  Values stored
                        within this file are applied to all projects.
        -hierarchy      Generate a workspace in a hierarchical fashion.

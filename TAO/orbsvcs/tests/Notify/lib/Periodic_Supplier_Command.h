@@ -20,7 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SString.h"
-#include "orbsvcs/orbsvcs/CosNotifyChannelAdminC.h"
+#include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "Command.h"
 
 class TAO_Notify_Tests_Periodic_Supplier;

@@ -258,11 +258,11 @@ private:
 };
 
 Peer_Handler::Peer_Handler (int argc, ACE_TCHAR *argv[])
-  : strategy_ (ACE_Reactor::instance (),
+  : host_ (0),
+    port_ (ACE_DEFAULT_SERVER_PORT),
+    strategy_ (ACE_Reactor::instance (),
                this,
                ACE_Event_Handler::WRITE_MASK),
-    host_ (0),
-    port_ (ACE_DEFAULT_SERVER_PORT),
     mb_ (BUFSIZ)
 {
   // This code sets up the message to notify us when a new message is

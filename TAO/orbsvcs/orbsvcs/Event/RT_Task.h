@@ -26,7 +26,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/RtecSchedulerC.h"
+#include "orbsvcs/RtecSchedulerC.h"
 #include "old_event_export.h"
 
 /**
@@ -57,8 +57,7 @@ protected:
                        int grp_id = -1,
                        void *stack = 0,
                        size_t stack_size = 0,
-                       ACE_Task_Base *task = 0,
-                       bool inherit_priority = false);
+                       ACE_Task_Base *task = 0);
 
   int flags_;
 };

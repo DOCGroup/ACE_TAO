@@ -203,9 +203,11 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) %N:%l, connection to ")
-                      ACE_TEXT ("<%s:%u> failed (%p)\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (shmiop_endpoint->host ()),
+                      ACE_TEXT ("(%P|%t) %s:%u, connection to ")
+                      ACE_TEXT ("<%s:%p> failed (%p)\n"),
+                      __FILE__,
+                      __LINE__,
+                      shmiop_endpoint->host (),
                       shmiop_endpoint->port (),
                       ACE_TEXT ("errno")));
         }
@@ -219,8 +221,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     ACE_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - SHMIOP_Connector::make_connection, "
                 "new connection to <%s:%d> on Transport[%d]\n",
-                ACE_TEXT_CHAR_TO_TCHAR (shmiop_endpoint->host ()),
-                shmiop_endpoint->port (),
+                shmiop_endpoint->host (), shmiop_endpoint->port (),
                 svc_handler->peer ().get_handle ()));
 
   TAO_Transport *transport =

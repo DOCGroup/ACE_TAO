@@ -17,16 +17,14 @@
 // ============================================================================
 
 #include "test_objectS.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
-#include "orbsvcs/orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/Naming/Naming_Utils.h"
 #include "tao/PortableServer/ORB_Manager.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (Simple_Naming, 
-           client, 
-           "$Id$")
+ACE_RCSID(Simple_Naming, client, "$Id$")
 
 #if defined (_MSC_VER)
 # pragma warning (disable : 4250)

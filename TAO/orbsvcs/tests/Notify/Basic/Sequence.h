@@ -19,7 +19,7 @@
 #include "Notify_Test_Client.h"
 #include "Notify_SequencePushConsumer.h"
 #include "Notify_SequencePushSupplier.h"
-#include "orbsvcs/orbsvcs/TimeBaseC.h"
+#include "orbsvcs/TimeBaseC.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)

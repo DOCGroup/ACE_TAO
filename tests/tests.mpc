@@ -1055,8 +1055,7 @@ project(Reactor Registration Test) : acetest {
 }
 
 project(UUIDTest) : acetest {
-  exename   = UUIDTest
-  requires += ace_uuid
+  exename = UUIDTest
   Source_Files {
     UUIDTest.cpp
   }

@@ -3,6 +3,7 @@
 
 project(*Consumer) : event, orbsvcsexe, portableserver {
   requires += ec_typed_events
+  idlflags +=  -I$(TAO_ROOT)/orbsvcs
   source_files {
     Consumer.cpp
     Country_i.cpp

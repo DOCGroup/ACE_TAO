@@ -1,8 +1,8 @@
 // $Id$
 
-#include "ciao/CCM_DeploymentC.h"
+#include "CCM_DeploymentC.h"
 #include "Assembly_ServiceC.h"
-#include "ciao/Client_init.h"
+#include "Client_init.h"
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
 

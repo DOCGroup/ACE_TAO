@@ -18,7 +18,7 @@
 
 #include "ace/Singleton.h"
 #include "ace/Sched_Params.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "activity_export.h"

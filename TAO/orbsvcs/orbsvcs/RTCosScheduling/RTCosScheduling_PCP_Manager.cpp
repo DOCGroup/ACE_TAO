@@ -23,8 +23,50 @@
 
 namespace TAO {
 
+struct
+CosSchedulingLockNode *CosSchedulingLockNode::next()
+{
+  /// INT_MAX is a special value indicating the end of a list
+  if (this->next_offset_ == INT_MAX)
+    {
+      return 0;
+    }
+  else
+    {
+      return ACE_reinterpret_cast(CosSchedulingLockNode *,
+               (ACE_reinterpret_cast(int, this) + this->next_offset_)
+             );
+    }
+}
+
+void
+CosSchedulingLockNode::next(struct CosSchedulingLockNode *next_lock)
+{
+  /// INT_MAX is a special value indicating the end of a list
+  if (next_lock == 0)
+    {
+      this->next_offset_ = INT_MAX;
+    }
+  else
+    {
+      this->next_offset_ =
+        (ACE_reinterpret_cast(int, next_lock) -
+         ACE_reinterpret_cast(int, this));
+    }
+}
+
+const CosSchedulingLockNode& CosSchedulingLockNode::operator=(const CosSchedulingLockNode& L)
+{
+  this->threadID_           = L.threadID_;
+  this->priority_ceiling_   = L.priority_ceiling_;
+  this->priority_           = L.priority_;
+  this->elevated_priority_  = L.elevated_priority_;
+
+  return *this;
+}
+
 CosSchedulingLockList::CosSchedulingLockList(CosSchedulingLockNode *lock_array,
-  const int size,
+  int size,
   ACE_SYNCH_MUTEX *mutex)
 {
   ACE_TRY_NEW_ENV
@@ -65,18 +107,14 @@ CosSchedulingLockList::CosSchedulingLockList(CosSchedulingLockNode *lock_array,
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG((LM_ERROR,
-                 "Error in %s: Line %d - Could not generate a Locklist in shared memory\n",
-                 __FILE__,
-                 __LINE__));
       ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION,
-                          "Exception: CosSchedulingLockList()");
+                         "Error in generating Locklist on ServerScheduler\n");
     }
   ACE_ENDTRY;
 }
 
 void
-CosSchedulingLockList::destroy(const int size)
+CosSchedulingLockList::destroy(int size)
 {
   for (int i = 3; i < size; ++i)
     {
@@ -232,17 +270,17 @@ CosSchedulingLockList::remove_deferred_lock(CosSchedulingLockNode& L)
   /// take pending lock off the head of the list
   /// (highest priority request) and add to the free list
   L = *(this->pending_->next());
-  CosSchedulingLockNode * fn = this->pending_->next();
-  this->pending_->next(this->pending_->next()->next());
-  fn->next(this->free_->next());
-  this->free_->next(fn);
-
+  L.next(this->pending_->next()->next());
+  this->pending_->next()->next(free_->next());
+  this->free_->next(this->pending_->next());
+  this->pending_->next(L.next());
+  L.next(0);
   return 1;
 }
 
 PCP_Manager::PCP_Manager(CosSchedulingLockList *locks,
   ACE_SYNCH_MUTEX *mutex,
-  const RTCORBA::Current_var current)
+  RTCORBA::Current_var current)
 : locks_(locks),
   mutex_(mutex),
   current_(current)
@@ -252,7 +290,7 @@ PCP_Manager::PCP_Manager(CosSchedulingLockList *locks,
 }
 
 void
-PCP_Manager::lock(const int priority_ceiling, const int priority)
+PCP_Manager::lock(int priority_ceiling, int priority)
 {
   ACE_TRY_NEW_ENV
     {
@@ -337,12 +375,8 @@ PCP_Manager::lock(const int priority_ceiling, const int priority)
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG((LM_ERROR,
-                 "Error in %s: Line %d - Could lock resource\n"
-                 __FILE__,
-                 __LINE__));
       ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION,
-                          "Exception: PCP_Manager::lock");
+                          "Error in locking the node for ServerScheduler\n");
     }
   ACE_ENDTRY;
 }
@@ -381,18 +415,14 @@ void PCP_Manager::release_lock()
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG((LM_ERROR,
-                 "Error in %s: Line %d - Could not release lock\n"
-                 __FILE__,
-                 __LINE__));
       ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION,
-                          "Exception: PCP_Manager::release_lock");
+                         "Error in unlocking the node for ServerScheduler\n");
     }
   ACE_ENDTRY;
 }
 
 
-PCP_Manager_Factory::PCP_Manager_Factory(const char *shared_file)
+PCP_Manager_Factory::PCP_Manager_Factory(char *shared_file)
 {
   ACE_TRY_NEW_ENV
     {
@@ -401,19 +431,14 @@ PCP_Manager_Factory::PCP_Manager_Factory(const char *shared_file)
 
       /// Get the temporary directory
       if (ACE::get_temp_dir (temp_file,
-                             MAXPATHLEN - ACE_OS_String::strlen(shared_file))
+                             MAXPATHLEN - ACE_OS::strlen(shared_file))
           == -1)
-        {
-          ACE_DEBUG((LM_ERROR,
-                     "Error in %s: Line %d - Shared File Name too long\n"
-                     __FILE__,
-                     __LINE__));
-          ACE_OS::exit(1);
-        }
+        ACE_ERROR ((LM_ERROR,
+                    "Temporary path too long\n"));
       ACE_TRY_CHECK;
 
       /// Add the filename to the end
-      ACE_OS_String::strcat (temp_file, shared_file);
+      ACE_OS::strcat (temp_file, shared_file);
 
       /// Store in the global variable.
       this->shm_key_ = temp_file;
@@ -435,11 +460,8 @@ PCP_Manager_Factory::PCP_Manager_Factory(const char *shared_file)
         ACE_TRY_CHECK;
 
 #else /* !ACE_LACKS_MMAP */
-        ACE_DEBUG((LM_ERROR,
-                   "Error in %s: Line %d - ACE_LACKS_MMAP - cannot create shared memory\n"
-                   __FILE__,
-                   __LINE__));
-        ACE_OS::exit();
+      ACE_ERROR ((LM_INFO,
+                  "mmap is not supported on this platform\n"));
 #endif /* !ACE_LACKS_MMAP */
 
       /// determine space requirements for the lock list
@@ -455,11 +477,8 @@ PCP_Manager_Factory::PCP_Manager_Factory(const char *shared_file)
       if (result == -1)
         {
           ACE_ERROR((LM_ERROR,
-                   "Error in %s: Line %d - Error in creating the shared "
-                   " memory segment to hold Lock information, "
-                   "aborting ServerScheduler.\n"
-                   __FILE__,
-                   __LINE__));
+                     "Error in creating the shared memory segment to hold "
+                     "Lock information, aborting ServerScheduler.\n"));
           ACE_OS::exit(1);
         }
 
@@ -468,16 +487,19 @@ PCP_Manager_Factory::PCP_Manager_Factory(const char *shared_file)
       /// Make the shared memory a place for a lock list
       this->lock_array_ = ACE_static_cast(CosSchedulingLockNode *,
                                           this->mem_.malloc(CosSchedulingLockList_space));
+      if (this->lock_array_ == 0)
+        {
+          ACE_ERROR((LM_ERROR,
+                     "Error in creating Lock Array, locking impossible.\n"));
+        }
+      ACE_TRY_CHECK;
+
       /// get the pointer to the list of locks and
       /// construct a lock list manager object
       if (this->lock_array_ == 0)
         {
           ACE_ERROR((LM_ERROR,
-                   "Error in %s: Line %d - Error in creating "
-                   "array to hold lock information "
-                   "ServerScheduler not created\n "
-                   __FILE__,
-                   __LINE__));
+                     "No Pointer for LockArray, aborting\n"));
           ACE_OS::exit(1);
         }
       else
@@ -494,13 +516,8 @@ PCP_Manager_Factory::PCP_Manager_Factory(const char *shared_file)
     }
   ACE_CATCHANY
     {
-      ACE_ERROR((LM_ERROR,
-                 "Error in %s: Line %d - Error in creating "
-                 "PCP_Manager_Factory to create new PCP_Managers\n"
-                 __FILE__,
-                 __LINE__));
       ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION,
-                         "PCP_Manager_Factory::PCP_Manager_Factory\n");
+                         "Error in Setting lock factory for ServerScheduler\n");
     }
   ACE_ENDTRY;
 }

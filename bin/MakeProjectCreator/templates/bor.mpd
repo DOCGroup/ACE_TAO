@@ -10,6 +10,10 @@ NAME = <%if(sharedname)%><%sharedname%><%else%><%staticname%><%endif%>
 <%endif%>
 
 NO_FULL_PATH=1
+<%if(idl_files)%>
+
+TAO_IDL = <%idl_compiler%>
+<%endif%>
 <%if(exename || sharedname || staticname)%>
 <%if(source_files)%>
 
@@ -27,19 +31,22 @@ LFLAGS = \
 	-j"<%libpath%>\$(CONFIG_SUBDIR)" <%fornotlast(" \\")%>
 <%endfor%>
 <%endif%>
-<%if(libs || lit_libs || pure_libs)%>
+<%if(libs || lit_libs || defaultlibs)%>
 
 LIBFILES = \
-<%foreach(pure_libs)%>
-	<%pure_lib%> \
-<%endfor%>
 <%foreach(lit_libs)%>
 	<%lit_lib%>.lib \
 <%endfor%>
-<%foreach(libs)%>
-	<%lib%>$(LIB_DECORATOR).lib \
+<%foreach(libs defaultlibs)%>
+	<%lib%>$(LIB_DECORATOR).lib<%fornotlast(" \\")%>
 <%endfor%>
-	$(DUMMY_VALUE_NOT_ENDING_IN_BACKSLASH)
+<%endif%>
+<%if(idl_files)%>
+
+IDLFILES = \
+<%foreach(idl_files)%>
+        <%idl_file%><%fornotlast(" \\")%>
+<%endfor%>
 <%endif%>
 <%if(resource_files)%>
 
@@ -49,7 +56,7 @@ RESOURCE =<%foreach(resource_files)%> $(OBJDIR)\<%noextension(resource_file)%>.r
 !ifdef STATIC
 <%if(staticflags)%>
 LIB_FLAGS = \
-<%foreach(staticflags)%>
+<%foreach(staticflags)%> 
         -D<%staticflag%><%fornotlast(" \\")%>
 <%endfor%>
 <%endif%>
@@ -80,7 +87,7 @@ CFLAGS = \
 	$(DLL_FLAGS)
 <%if(pch_header)%>
 
-# Borland precompiled headers choke on several tao header files.
+# Borland precompiled headers choke on several tao header files. 
 # For example, any place that uses ACE_LIB_TEXT().
 #PCH_HEADER=<%pch_header%>
 <%endif%>
@@ -90,6 +97,85 @@ CDIR   = <%cppdir%>
 <%if(header_files || template_files || inline_files || idl_files)%>
 
 INCDIR_NAME = <%relwd%>
+<%endif%>
+<%if(idl_files)%>
+
+all: idl_src_files
+
+<%endif%>
+
+#
+# Override defaults in outputdir.bor
+#
+<%marker(macros)%>
+STATIC_DIR=.
+DEBUG_DIR=.
+PASCAL_DIR=.
+UNICODE_DIR=.
+
+INSTALL_DLLDIR=$(INSTALL_DIR)\lib
+INCLUDES_INSTALL=1
+<%if(exename)%>
+
+<%if(install)%>
+# We use BINDIR for install instead of BASE_BINDIR, because
+# this is the location for all scripts too. 
+BINDIR = <%install%>
+<%else%>
+BASE_BINDIR = .
+<%endif%>
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+<%else%>
+<%if(dllout)%>
+BINDIR = <%dllout%>
+<%else%>
+<%if(libout)%>
+BINDIR = <%libout%>
+<%endif%>
+<%endif%>
+
+!include <$(ACE_ROOT)\include\makeinclude\build_library.bor>
+<%endif%>
+<%if(header_files || template_files || inline_files || idl_files)%>
+
+includes_install: $(INCLUDES)
+<%foreach(header_files template_files inline_files idl_files)%>	
+	-@if not exist $(INSTALL_DIR)\include\$(INCDIR_NAME)\<%dirname(header_file)%> mkdir $(INSTALL_DIR)\include\$(INCDIR_NAME)\<%dirname(header_file)%>
+	-&copy /Y <%header_file%> $(INSTALL_DIR)\include\$(INCDIR_NAME)\<%header_file%> 1> NUL
+<%endfor%>
+<%else%>
+
+includes_install:
+	@echo Nothing to install.
+<%endif%>
+<%if(idl_files)%>
+
+#
+# IDL Build rules
+#
+idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
+
+<%foreach(idl_files)%>
+<%if(flag_overrides(idl_file, idlgendir))%>
+<%flag_overrides(idl_file, idlgendir)%>\<%basenoextension(idl_file)%>S.cpp <%flag_overrides(idl_file, idlgendir)%>\<%basenoextension(idl_file)%>C.cpp: <%idl_file%>
+	$(TAO_IDL) -o <%flag_overrides(idl_file, idlgendir)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags%><%endif%> $**
+<%else%>
+<%if(idlgendir)%>
+<%idlgendir%>\<%basenoextension(idl_file)%>S.cpp <%idlgendir%>\<%basenoextension(idl_file)%>C.cpp: <%idl_file%>
+	$(TAO_IDL) -o <%idlgendir%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags%><%endif%> $**
+<%else%>
+# IDL File Directory: <%dirname(idl_file)%>
+<%if(dirname_found)%>
+<%dirname(idl_file)%>\<%basenoextension(idl_file)%>S.cpp <%dirname(idl_file)%>\<%basenoextension(idl_file)%>C.cpp: <%idl_file%>
+	$(TAO_IDL) -o <%dirname(idl_file)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags%><%endif%> $**
+<%else%>
+<%basenoextension(idl_file)%>S.cpp <%basenoextension(idl_file)%>C.cpp: <%idl_file%>
+	$(TAO_IDL) <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags%><%endif%> $**
+<%endif%>
+<%endif%>
+<%endif%>
+<%endfor%>
 <%endif%>
 <%foreach(custom_types)%>
 
@@ -115,55 +201,7 @@ customclean_<%custom_type%>_<%forcount(custom_type->input_files)%>:
 
 clean: customclean_<%custom_type%>_<%forcount(custom_type->input_files)%>
 
-realclean: customclean_<%custom_type%>_<%forcount(custom_type->input_files)%>
-
 <%endif%>
 <%endfor%>
 <%endfor%>
-
-#
-# Override defaults in outputdir.bor
-#
-<%marker(macros)%>
-STATIC_DIR=.
-DEBUG_DIR=.
-PASCAL_DIR=.
-UNICODE_DIR=.
-
-INSTALL_DLLDIR=$(INSTALL_DIR)\lib
-INCLUDES_INSTALL=1
-<%if(exename)%>
-
-<%if(install)%>
-# We use BINDIR for install instead of BASE_BINDIR, because
-# this is the location for all scripts too.
-BINDIR = <%install%>
-<%else%>
-BASE_BINDIR = .
-<%endif%>
-
-!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
-<%else%>
-<%if(dllout)%>
-BINDIR = <%dllout%>
-<%else%>
-<%if(libout)%>
-BINDIR = <%libout%>
-<%endif%>
-<%endif%>
-
-!include <$(ACE_ROOT)\include\makeinclude\build_library.bor>
-<%endif%>
-<%if(header_files || template_files || inline_files || idl_files)%>
-
-includes_install: $(INCLUDES)
-<%foreach(header_files template_files inline_files idl_files)%>
-	-@if not exist $(INSTALL_DIR)\include\$(INCDIR_NAME)\<%dirname(header_file)%> mkdir $(INSTALL_DIR)\include\$(INCDIR_NAME)\<%dirname(header_file)%>
-	-&copy /Y <%header_file%> $(INSTALL_DIR)\include\$(INCDIR_NAME)\<%header_file%> 1> NUL
-<%endfor%>
-<%else%>
-
-includes_install:
-	@echo Nothing to install.
-<%endif%>
 <%marker(bottom)%>

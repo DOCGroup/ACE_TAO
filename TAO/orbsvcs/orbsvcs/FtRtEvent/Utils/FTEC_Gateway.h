@@ -13,8 +13,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/FtRtecEventChannelAdminC.h"
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminS.h"
+#include "orbsvcs/FtRtecEventChannelAdminC.h"
+#include "orbsvcs/RtecEventChannelAdminS.h"
 
 namespace TAO_FTRTEC
 {
@@ -60,10 +60,6 @@ namespace TAO_FTRTEC
                             CORBA::SystemException,
                             RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
                             RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER));
-
-      void push(RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy_consumer,
-                const RtecEventComm::EventSet & data
-                ACE_ENV_ARG_DECL);
   private:
       struct FTEC_Gateway_Impl  *impl_;
   };

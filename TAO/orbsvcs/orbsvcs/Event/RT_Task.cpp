@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/Sched_Params.h"
-#include "orbsvcs/orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/Scheduler_Factory.h"
 #include "RT_Task.h"
 #include "Debug_Macros.h"
 #include "Event_Channel.h"
@@ -15,9 +15,7 @@
 #include "tao/Timeprobe.h"
 #include "ace/OS_NS_errno.h"
 
-ACE_RCSID (Event, 
-           RT_Task, 
-           "$Id$")
+ACE_RCSID(Event, RT_Task, "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -517,11 +515,9 @@ ACE_RT_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                                 int grp_id,
                                 void *stack,
                                 size_t stack_size,
-                                ACE_Task_Base *task,
-                                bool inherit_priority)
+                                ACE_Task_Base *task)
 {
   flags |= flags_;
   return ACE_Thread_Manager::spawn_i (func, args, flags, t_id, t_handle,
-                                      priority, grp_id, stack, stack_size, task,
-                                      inherit_priority);
+                                      priority, grp_id, stack, stack_size, task);
 }

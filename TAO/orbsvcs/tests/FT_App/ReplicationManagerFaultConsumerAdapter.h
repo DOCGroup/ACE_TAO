@@ -10,8 +10,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include <orbsvcs/FT_ReplicationManager/FT_FaultConsumer.h>
-#include <orbsvcs/orbsvcs/FT_NotifierC.h>
-#include <orbsvcs/orbsvcs/FT_FaultDetectorFactoryC.h>
+#include <orbsvcs/FT_NotifierC.h>
+#include <orbsvcs/FT_FaultDetectorFactoryC.h>
 #include <ace/Vector_T.h>
 
 /////////////////////

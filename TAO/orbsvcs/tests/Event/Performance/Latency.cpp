@@ -1,7 +1,7 @@
 // $Id$
 
 #include "Latency.h"
-#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Event_Service_Constants.h"
 
 #include "tao/Messaging/Messaging.h"
 #include "tao/Strategies/advanced_resource.h"

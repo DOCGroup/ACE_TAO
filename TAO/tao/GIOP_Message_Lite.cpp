@@ -666,7 +666,7 @@ TAO_GIOP_Message_Lite::generate_exception_reply (
       // Close the handle.
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t|%N|%l) cannot marshal exception, ")
-                  ACE_TEXT ("generate_exception_reply ()\n")));
+                  ACE_TEXT ("generate_exception_reply ()")));
       return -1;
     }
   ACE_ENDTRY;
@@ -1079,7 +1079,7 @@ TAO_GIOP_Message_Lite::parse_reply (TAO_InputCDR &cdr,
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t|%N|%l) : ")
                       ACE_TEXT ("TAO_GIOP_Message_Lite::parse_reply, ")
-                      ACE_TEXT ("extracting request id\n")));
+                      ACE_TEXT ("extracting request id")));
         }
 
       return -1;
@@ -1469,7 +1469,7 @@ TAO_GIOP_Message_Lite::send_reply_exception (
 
       // Close the handle.
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t|%N|%l) cannot marshal exception on transport %u: %p\n"),
+                  ACE_TEXT ("(%P|%t|%N|%l) cannot marshal exception on transport %lu: %p\n"),
                   transport->id (),
                   ACE_TEXT ("send_reply_exception ()")));
       return -1;
@@ -1553,7 +1553,7 @@ TAO_GIOP_Message_Lite::send_error (TAO_Transport *transport)
         {
           ACE_DEBUG ((
               LM_DEBUG,
-              ACE_TEXT ("TAO (%N|%l|%P|%t) error sending error to transport %u, errno = %d\n"),
+              ACE_TEXT ("TAO (%N|%l|%P|%t) error sending error to transport %lu, errno = %d\n"),
               transport->id (), errno
             ));
         }
@@ -1612,10 +1612,10 @@ TAO_GIOP_Message_Lite::dump_msg (const char *label,
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P | %t):%s GIOP lite msg, ")
                   ACE_TEXT ("%d data bytes, %s endian, <%s = %d> \n"),
-                  ACE_TEXT_CHAR_TO_TCHAR(label),
+                  label,
                   len - TAO_GIOP_LITE_HEADER_LEN,
-                  (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_LIB_TEXT("my") : ACE_LIB_TEXT("other"),
-                  ACE_TEXT_CHAR_TO_TCHAR (message_name),
+                  (byte_order == TAO_ENCAP_BYTE_ORDER) ? "my" : "other",
+                  message_name,
                   *id));
 
       if (TAO_debug_level >= 10)

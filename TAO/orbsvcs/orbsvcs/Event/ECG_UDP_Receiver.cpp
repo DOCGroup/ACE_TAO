@@ -1,16 +1,14 @@
 // $Id$
 
-#include "orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.h"
-#include "orbsvcs/orbsvcs/Event_Utilities.h"
+#include "orbsvcs/Event/ECG_UDP_Receiver.h"
+#include "orbsvcs/Event_Utilities.h"
 #include "ace/SString.h"
 
 #if !defined(__ACE_INLINE__)
 #include "ECG_UDP_Receiver.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Event,
-           ECG_UDP_Receiver,
-           "$Id$")
+ACE_RCSID(Event, ECG_UDP_Receiver, "$Id$")
 
 
 // ****************************************************************
@@ -248,10 +246,7 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
 // ****************************************************************
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template void activate<TAO_Objref_Var_T<RtecEventComm::PushSupplier> >(TAO_Objref_Var_T<RtecEventComm::PushSupplier>&, PortableServer::POA*, TAO_ServantBase*, TAO_EC_Object_Deactivator& ACE_ENV_ARG_DECL);
-
+template void activate<>(TAO_Objref_Var_T<RtecEventComm::PushSupplier, RtecEventComm::tao_PushSupplier_life>&, PortableServer::POA*, TAO_ServantBase*, TAO_EC_Object_Deactivator& ACE_ENV_ARG_DECL);
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate void activate<TAO_Objref_Var_T<RtecEventComm::PushSupplier> >(TAO_Objref_Var_T<RtecEventComm::PushSupplier>&, PortableServer::POA*, TAO_ServantBase*, TAO_EC_Object_Deactivator& ACE_ENV_ARG_DECL)
-
+#pragma instantiate void activate<>(TAO_Objref_Var_T<RtecEventComm::PushSupplier, RtecEventComm::tao_PushSupplier_life>&, PortableServer::POA*, TAO_ServantBase*, TAO_EC_Object_Deactivator& ACE_ENV_ARG_DECL)
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -32,7 +32,6 @@
 //
 //==========================================================================
 
-#include "test_config.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
@@ -49,6 +48,7 @@
 
 #include "ace/Auto_Ptr.cpp"
 #include "ace/Get_Opt.h"
+#include "test_config.h"
 #include "ace/OS_NS_time.h"
 
 ACE_RCSID(tests, Logging_Strategy_Test, "$Id$")

@@ -100,7 +100,7 @@ int TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
         else
         {
           ACE_ERROR ((LM_ERROR,
-            "%T %s (%P|%t) Registration failed: %m\n", name_
+            "%T %s (%P|%t) Registration failed: %p\n", name_
             ));
           result = -1;
         }

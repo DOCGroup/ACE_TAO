@@ -24,7 +24,7 @@
 
 #include "PG_Default_Property_Validator.h"
 #include "portablegroup_export.h"
-#include "orbsvcs/orbsvcs/PortableGroupS.h"
+#include "orbsvcs/PortableGroupS.h"
 
 #include "ace/Functor.h"
 #include "ace/Hash_Map_Manager_T.h"

@@ -55,7 +55,7 @@ public:
   AC_Input_Handler (AC_Output_Handler *handler = 0)
     : output_handler_ (handler) {}
   virtual int open (void *); // Initialization hook method.
-  virtual int close (u_long = 0); // Shutdown hook method.
+  virtual int close (u_int = 0); // Shutdown hook method.
 
 protected:
   // Reactor hook methods.
@@ -121,7 +121,7 @@ public:
 protected:
   // Connection establishment and authentication hook method.
   virtual int connect_svc_handler
-    (AC_Output_Handler *&svc_handler,
+    (AC_Output_Handler *svc_handler,
      const ACE_SOCK_Connector::PEER_ADDR &remote_addr,
      ACE_Time_Value *timeout,
      const ACE_SOCK_Connector::PEER_ADDR &local_addr,
@@ -281,7 +281,7 @@ int AC_Input_Handler::open (void *) {
   return 0;
 }
 
-int AC_Input_Handler::close (u_long) {
+int AC_Input_Handler::close (u_int) {
   ACE_Message_Block *shutdown_message = 0;
   ACE_NEW_RETURN
     (shutdown_message,
@@ -355,7 +355,7 @@ int AC_CLD_Connector::open (ACE_Reactor *r, int flags) {
 }
 
 int AC_CLD_Connector::connect_svc_handler
-    (AC_Output_Handler *&svc_handler,
+    (AC_Output_Handler *svc_handler,
      const ACE_SOCK_Connector::PEER_ADDR &remote_addr,
      ACE_Time_Value *timeout,
      const ACE_SOCK_Connector::PEER_ADDR &local_addr,

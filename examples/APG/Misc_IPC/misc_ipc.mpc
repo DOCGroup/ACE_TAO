@@ -1,6 +1,3 @@
-// -*- MPC -*-
-// $Id$
-
 project(UDP Broadcast) : aceexe {
   exename = UDP_Broadcast
   Source_Files {

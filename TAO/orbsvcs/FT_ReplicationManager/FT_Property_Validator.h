@@ -15,8 +15,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/PortableGroup/PG_Default_Property_Validator.h"
-#include "orbsvcs/orbsvcs/PortableGroupC.h"
+#include "orbsvcs/PortableGroup/PG_Default_Property_Validator.h"
+#include "orbsvcs/PortableGroupC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

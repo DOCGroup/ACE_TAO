@@ -37,18 +37,13 @@ int
 be_visitor_operation_ih::visit_operation (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  this->ctx_->node (node);
-  
-  *os << be_nl << be_nl;
+  this->ctx_->node (node); // save the node
 
-  if (be_global->gen_impl_debug_info ())
-    {
-      *os << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-    }
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
 
   // every operation is declared virtual in the client code
-  *os << "virtual" << be_nl;
+  *os << be_nl << be_nl << "virtual ";
 
   // STEP I: generate the return type
   be_type *bt = be_type::narrow_from_decl (node->return_type ());
@@ -92,6 +87,8 @@ be_visitor_operation_ih::visit_operation (be_operation *node)
                          "codegen for argument list failed\n"),
                         -1);
     }
+
+  *os << be_uidt;
 
   return 0;
 }

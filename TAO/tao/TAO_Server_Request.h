@@ -31,7 +31,6 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "PICurrent.h"
-#include "PICurrent_Copy_Callback.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 class TAO_Pluggable_Messaging;
@@ -227,13 +226,10 @@ public:
    *       code  must be able to modify this value and use that value
    *       at a later time without being forced to use TSS.
    */
-  size_t & interceptor_count (void);
+  size_t &interceptor_count (void);
 
   /// Return a reference to the "request scope" PICurrent object.
-  TAO::PICurrent_Impl & rs_pi_current (void);
-
-  /// Return a reference to the PICurrent copy callback object.
-  TAO::PICurrent_Copy_Callback & pi_current_copy_callback (void);
+  TAO_PICurrent_Impl &rs_pi_current (void);
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 private:
@@ -312,11 +308,7 @@ private:
 
   /// The "Request Scope Current" (RSC) object, as required by
   /// Portable Interceptors.
-  TAO::PICurrent_Impl rs_pi_current_;
-
-  /// PICurrent callback object responsible for copying slot table
-  /// between PICurrents in different scopes (i.e. thread or request).
-  TAO::PICurrent_Copy_Callback pi_current_copy_callback_;
+  TAO_PICurrent_Impl rs_pi_current_;
 
   /// Used by the FTORB
   CORBA::OctetSeq_var result_seq_;

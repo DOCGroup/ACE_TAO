@@ -16,13 +16,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/CosLoadBalancingS.h"
+#include "orbsvcs/CosLoadBalancingS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/PortableGroupC.h"
+#include "orbsvcs/PortableGroupC.h"
 
 
 class TAO_LoadBalancing_Export TAO_LB_LoadAlert

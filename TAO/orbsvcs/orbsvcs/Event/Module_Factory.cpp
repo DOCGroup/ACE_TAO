@@ -1,15 +1,13 @@
 // $Id$
 
-#include "orbsvcs/orbsvcs/Event/Dispatching_Modules.h"
-#include "orbsvcs/orbsvcs/Event/Timer_Module.h"
-#include "orbsvcs/orbsvcs/Event/Event_Channel.h"
-#include "orbsvcs/orbsvcs/Event/Module_Factory.h"
+#include "orbsvcs/Event/Dispatching_Modules.h"
+#include "orbsvcs/Event/Timer_Module.h"
+#include "orbsvcs/Event/Event_Channel.h"
+#include "orbsvcs/Event/Module_Factory.h"
 
 #include "tao/ORB_Core.h"
 
-ACE_RCSID (Event, 
-           Module_Factory, 
-           "$Id$")
+ACE_RCSID(Event, Module_Factory, "$Id$")
 
 TAO_Module_Factory::~TAO_Module_Factory (void)
 {

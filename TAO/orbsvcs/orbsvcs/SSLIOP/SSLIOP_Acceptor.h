@@ -31,7 +31,7 @@
 #include "SSLIOP_Accept_Strategy.h"
 
 
-#include "orbsvcs/orbsvcs/SSLIOPC.h"
+#include "orbsvcs/SSLIOPC.h"
 
 
 

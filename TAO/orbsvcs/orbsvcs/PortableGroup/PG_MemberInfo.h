@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/PortableGroupC.h"
+#include "orbsvcs/PortableGroupC.h"
 #include "ace/Unbounded_Set.h"
 
 /**

@@ -6,7 +6,7 @@ project (asnmp_example_next) : aceexe {
   libs  += asnmp
   includes += $(ACE_ROOT)/ASNMP
   source_files {
-    next.cpp
+    next
   }
 }
 

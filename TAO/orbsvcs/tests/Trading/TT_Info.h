@@ -6,9 +6,9 @@
 #include "TTestS.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Read_Buffer.h"
-#include "orbsvcs/orbsvcs/CosTradingC.h"
-#include "orbsvcs/orbsvcs/CosTradingReposC.h"
-#include "orbsvcs/orbsvcs/CosTradingDynamicC.h"
+#include "orbsvcs/CosTradingC.h"
+#include "orbsvcs/CosTradingReposC.h"
+#include "orbsvcs/CosTradingDynamicC.h"
 #include "ttest_export.h"
 
 class TAO_TTest_Export TT_Info
@@ -44,7 +44,7 @@ public:
     // the exported object.
   };
 
-  class TAO_TTest_Export Printer :
+  class Printer :
     public POA_TAO_Trader_Test::Printer
   {
   public:
@@ -57,7 +57,7 @@ public:
     // the exported object.
   };
 
-  class TAO_TTest_Export Plotter :
+  class Plotter :
     public POA_TAO_Trader_Test::Plotter
   {
   public:
@@ -69,7 +69,7 @@ public:
     // the exported object.
   };
 
-  class TAO_TTest_Export File_System :
+  class File_System :
     public POA_TAO_Trader_Test::File_System
   {
   public:
@@ -81,7 +81,7 @@ public:
     // the exported object.
   };
 
-  class TAO_TTest_Export PostScript_Printer :
+  class PostScript_Printer :
     public POA_TAO_Trader_Test::PostScript_Printer
   {
   public:

@@ -19,8 +19,8 @@
 #ifndef SUPPLIER_I_H
 #define SUPPLIER_I_H
 
-#include "orbsvcs/orbsvcs/Naming/Naming_Utils.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/CosNamingC.h"
 #include "ace/Reactor.h"
 #include "ace/Read_Buffer.h"
 #include "ace/OS.h"

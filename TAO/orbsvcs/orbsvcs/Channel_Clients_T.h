@@ -25,7 +25,7 @@
 #define ACE_CHANNEL_CLIENTS_T_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/RtecEventCommS.h"
+#include "orbsvcs/RtecEventCommS.h"
 
 // @@ TODO: Add throw specs to this classes.
 
@@ -83,11 +83,11 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/orbsvcs/Channel_Clients_T.i"
+#include "orbsvcs/Channel_Clients_T.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/orbsvcs/Channel_Clients_T.cpp"
+#include "orbsvcs/Channel_Clients_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -13,7 +13,7 @@
 #include "PG_Group_Factory.h"
 #include "PG_Property_Utils.h"
 #include "PG_conf.h"
-#include "orbsvcs/orbsvcs/PortableGroupC.h"
+#include "orbsvcs/PortableGroupC.h"
 #include "PG_Object_Group.h"
 #include <orbsvcs/orbsvcs/PortableGroup/PG_Utils.h>
 

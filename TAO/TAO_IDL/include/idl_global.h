@@ -436,12 +436,6 @@ public:
   // files. By default, IDL compiler looks for TEMP env variable and
   // if it is not set,  "/tmp/" is assigned.
 
-  virtual void tao_root (const char *s);
-  // Set the path of TAO_ROOT.
-
-  virtual const char *tao_root (void) const;
-  // Get the path for TAO_ROOT.
-
   virtual void gperf_path (const char *s);
   // Set the path for the perfect hashing program (GPERF).
 
@@ -567,9 +561,6 @@ private:
 
   UTL_String                *pd_idl_src_file;       // IDL source file.
 
-  char *tao_root_;
-  // Needed if orb.idl is included.
-  
   char *gperf_path_;
   // Path for the perfect hash generator(gperf) program. Default
   // is $ACE_ROOT/bin/gperf.

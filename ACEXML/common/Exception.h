@@ -45,6 +45,12 @@ class ACEXML_Export ACEXML_Exception
 {
 public:
 
+  /// Copy constructor.
+  ACEXML_Exception (const ACEXML_Exception &src);
+
+  /// Assignment operator.
+  ACEXML_Exception& operator= (const ACEXML_Exception& src);
+
   /// Destructor.
   virtual ~ACEXML_Exception (void);
 
@@ -61,7 +67,7 @@ public:
   virtual ACEXML_Exception *duplicate (void) const = 0;
 
   /// Check whether this is an exception of type specified by <name>.
-  virtual int is_a (const ACEXML_Char *name);
+  virtual int is_a (const ACEXML_Char *name) = 0;
 
   /// Print out exception using ACE_DEBUG.
   virtual void print (void) = 0;

@@ -1,6 +1,5 @@
 // $Id$
 
-#include "tao/debug.h"
 #include "Event_Manager.h"
 
 template <class EVENT, class PROXY, class EVENT_PARAM, class PROXY_PARAM> ACE_INLINE int

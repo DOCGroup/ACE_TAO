@@ -5,7 +5,7 @@
 #ifndef _SECURITY_REPLACEABLE_IDL_
 #define _SECURITY_REPLACEABLE_IDL_
 
-#include <orbsvcs/orbsvcs/SecurityLevel2.idl>
+#include <SecurityLevel2.idl>
 #include <tao/IOP.pidl>
 
 #pragma prefix "omg.org"

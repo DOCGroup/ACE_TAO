@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/CosLoadBalancingC.h"
+#include "orbsvcs/CosLoadBalancingC.h"
 #include "tao/LocalObject.h"
 #include "tao/IORInterceptor/IORInterceptorC.h"
 

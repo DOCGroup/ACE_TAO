@@ -4,16 +4,14 @@
 #include "EC_Timeout_Generator.h"
 #include "EC_Event_Channel_Base.h"
 #include "EC_ProxySupplier.h"
-#include "orbsvcs/orbsvcs/Time_Utilities.h"
-#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Time_Utilities.h"
+#include "orbsvcs/Event_Service_Constants.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_Timeout_Filter.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Event, 
-           EC_Timeout_Filter, 
-           "$Id$")
+ACE_RCSID(Event, EC_Timeout_Filter, "$Id$")
 
 TAO_EC_Timeout_Filter::TAO_EC_Timeout_Filter (
       TAO_EC_Event_Channel_Base *event_channel,

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ciao/CCM_Deployment.idl"
+#include "CCM_Deployment.idl"
 
 module CIAO
 {

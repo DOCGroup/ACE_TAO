@@ -71,7 +71,8 @@ endif
 
 
 .obj/BiDirGIOP.o .obj/BiDirGIOP.so .shobj/BiDirGIOP.o .shobj/BiDirGIOP.so: BiDirGIOP.cpp BiDirGIOP.h \
-  $(ACE_ROOT)/ace/pre.h bidirgiop_export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  bidirgiop_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -245,7 +246,8 @@ endif
   $(ACE_ROOT)/ace/Timer_Queuefwd.h \
   $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
   $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h BiDirPolicyC.h \
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
+  BiDirPolicyC.h \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -308,8 +310,8 @@ endif
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/CurrentC.i \
-  $(TAO_ROOT)/tao/PolicyC.i BiDirPolicyC.i \
-  BiDir_ORBInitializer.h \
+  $(TAO_ROOT)/tao/PolicyC.i \
+  BiDirPolicyC.i BiDir_ORBInitializer.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
   $(TAO_ROOT)/tao/StringSeqC.h \
@@ -420,7 +422,8 @@ endif
   $(TAO_ROOT)/tao/ORB_Core.i
 
 .obj/BiDirPolicyC.o .obj/BiDirPolicyC.so .shobj/BiDirPolicyC.o .shobj/BiDirPolicyC.so: BiDirPolicyC.cpp BiDirGIOP.h \
-  $(ACE_ROOT)/ace/pre.h bidirgiop_export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  bidirgiop_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -594,7 +597,8 @@ endif
   $(ACE_ROOT)/ace/Timer_Queuefwd.h \
   $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
   $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h BiDirPolicyC.h \
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
+  BiDirPolicyC.h \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -657,10 +661,12 @@ endif
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/CurrentC.i \
-  $(TAO_ROOT)/tao/PolicyC.i BiDirPolicyC.i
+  $(TAO_ROOT)/tao/PolicyC.i \
+  BiDirPolicyC.i
 
 .obj/BiDir_ORBInitializer.o .obj/BiDir_ORBInitializer.so .shobj/BiDir_ORBInitializer.o .shobj/BiDir_ORBInitializer.so: BiDir_ORBInitializer.cpp BiDir_ORBInitializer.h \
-  $(ACE_ROOT)/ace/pre.h bidirgiop_export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  bidirgiop_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -745,6 +751,12 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -761,12 +773,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
@@ -925,12 +931,13 @@ endif
   $(ACE_ROOT)/ace/Timer_Queuefwd.h \
   $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
   $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h BiDirPolicyC.h \
-  BiDirPolicyC.i \
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
+  BiDirPolicyC.h BiDirPolicyC.i \
   $(TAO_ROOT)/tao/ORB_Constants.h
 
 .obj/BiDir_PolicyFactory.o .obj/BiDir_PolicyFactory.so .shobj/BiDir_PolicyFactory.o .shobj/BiDir_PolicyFactory.so: BiDir_PolicyFactory.cpp BiDir_PolicyFactory.h \
-  $(ACE_ROOT)/ace/pre.h bidirgiop_export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  bidirgiop_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -1015,6 +1022,12 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -1031,12 +1044,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
@@ -1158,7 +1165,8 @@ endif
   $(TAO_ROOT)/tao/IOP_CodecC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/LocalObject.h \
-  $(TAO_ROOT)/tao/LocalObject.i BiDirGIOP.h \
+  $(TAO_ROOT)/tao/LocalObject.i \
+  BiDirGIOP.h \
   $(TAO_ROOT)/tao/BiDir_Adapter.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
@@ -1194,12 +1202,13 @@ endif
   $(ACE_ROOT)/ace/Timer_Queuefwd.h \
   $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
   $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h BiDirPolicyC.h \
-  BiDirPolicyC.i BiDir_Policy_i.h BiDir_Policy_i.inl \
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
+  BiDirPolicyC.h BiDirPolicyC.i BiDir_Policy_i.h BiDir_Policy_i.inl \
   $(TAO_ROOT)/tao/ORB_Constants.h
 
 .obj/BiDir_Policy_i.o .obj/BiDir_Policy_i.so .shobj/BiDir_Policy_i.o .shobj/BiDir_Policy_i.so: BiDir_Policy_i.cpp BiDir_Policy_i.h \
-  $(ACE_ROOT)/ace/pre.h bidirgiop_export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  bidirgiop_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -1207,7 +1216,8 @@ endif
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h BiDirGIOP.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  BiDirGIOP.h \
   $(TAO_ROOT)/tao/BiDir_Adapter.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
@@ -1373,7 +1383,8 @@ endif
   $(ACE_ROOT)/ace/Timer_Queuefwd.h \
   $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
   $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h BiDirPolicyC.h \
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
+  BiDirPolicyC.h \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1436,10 +1447,12 @@ endif
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/CurrentC.i \
-  $(TAO_ROOT)/tao/PolicyC.i BiDirPolicyC.i \
+  $(TAO_ROOT)/tao/PolicyC.i \
+  BiDirPolicyC.i \
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
-  BiDir_Policy_i.inl $(TAO_ROOT)/tao/Stub.h \
+  BiDir_Policy_i.inl \
+  $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/OBV_Constants.h \
@@ -1455,8 +1468,10 @@ endif
   $(TAO_ROOT)/tao/ORB_Constants.h
 
 .obj/BiDirPolicy_Validator.o .obj/BiDirPolicy_Validator.so .shobj/BiDirPolicy_Validator.o .shobj/BiDirPolicy_Validator.so: BiDirPolicy_Validator.cpp \
-  BiDirPolicy_Validator.h $(ACE_ROOT)/ace/pre.h \
-  bidirgiop_export.h $(ACE_ROOT)/ace/config-all.h \
+  BiDirPolicy_Validator.h \
+  $(ACE_ROOT)/ace/pre.h \
+  bidirgiop_export.h \
+  $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -1489,8 +1504,9 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Default_Constants.h \
-  $(ACE_ROOT)/ace/CDR_Base.inl BiDir_Policy_i.h \
-  BiDirGIOP.h $(TAO_ROOT)/tao/BiDir_Adapter.h \
+  $(ACE_ROOT)/ace/CDR_Base.inl \
+  BiDir_Policy_i.h BiDirGIOP.h \
+  $(TAO_ROOT)/tao/BiDir_Adapter.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
@@ -1630,7 +1646,8 @@ endif
   $(ACE_ROOT)/ace/Timer_Queuefwd.h \
   $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
   $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h BiDirPolicyC.h \
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
+  BiDirPolicyC.h \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1693,7 +1710,8 @@ endif
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/CurrentC.i \
-  $(TAO_ROOT)/tao/PolicyC.i BiDirPolicyC.i \
+  $(TAO_ROOT)/tao/PolicyC.i \
+  BiDirPolicyC.i \
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
   BiDir_Policy_i.inl \

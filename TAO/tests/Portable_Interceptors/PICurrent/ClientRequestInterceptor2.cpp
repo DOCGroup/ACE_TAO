@@ -36,7 +36,7 @@ ClientRequestInterceptor2::send_request (
       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
-{
+{  
   CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -62,14 +62,13 @@ ClientRequestInterceptor2::send_request (
       if (!(data.in () >>= number))
         {
           ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) ERROR: Unable to extract data from "
-                      "CORBA::Any retrieved from RSC.\n"));
+                      "(%P|%t) ERROR: Unable to extract data from Any.\n"));
 
           ACE_TRY_THROW (CORBA::INTERNAL ());
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Extracted <%d> from RSC slot %u\n",
+                  "(%P|%t) Extracted <%d> from slot %u\n",
                   number,
                   this->slot_id_));
     }

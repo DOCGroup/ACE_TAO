@@ -5,9 +5,7 @@
 #include "Session.h"
 #include "Servant_var.h"
 
-ACE_RCSID (TAO_RTEC_Perf_RTCORBA_Callback, 
-           Session_Factory, 
-           "$Id$")
+ACE_RCSID(TAO_RTEC_Perf_RTCORBA_Callback, Session_Factory, "$Id$")
 
 Session_Factory::Session_Factory (CORBA::ORB_ptr orb,
                                   PortableServer::POA_ptr poa)

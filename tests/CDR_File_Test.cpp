@@ -18,11 +18,11 @@
 //
 // ============================================================================
 
-#include "test_config.h"
 #include "ace/CDR_Stream.h"
 #include "ace/FILE_Connector.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Get_Opt.h"
+#include "test_config.h"
 #include "ace/ACE.h"
 
 // FUZZ: disable check_for_streams_include

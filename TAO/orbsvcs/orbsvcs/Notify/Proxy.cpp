@@ -53,11 +53,6 @@ TAO_Notify_Proxy::subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types AC
 void
 TAO_Notify_Proxy::types_changed (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed ACE_ENV_ARG_DECL)
 {
-  // return if the updates for this proxy are turned off or
-  // if all the updates in the channel are switched off.
-  if (this->updates_off_ == 1 || TAO_Notify_PROPERTIES::instance()->updates () == 0)
-    return;
-
   TAO_Notify_Method_Request_Updates_No_Copy request (added, removed, this);
 
   if (TAO_Notify_PROPERTIES::instance()->asynch_updates () == 1) // if we should send the updates synchronously.

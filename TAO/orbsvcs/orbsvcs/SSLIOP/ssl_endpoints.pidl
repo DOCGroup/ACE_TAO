@@ -35,7 +35,7 @@
 #ifndef _SSL_ENDPOINTS_IDL_
 #define _SSL_ENDPOINTS_IDL_
 
-#include "orbsvcs/orbsvcs/SSLIOP.idl"
+#include "orbsvcs/SSLIOP.idl"
 
 // Stores information for a collection of SSLIOP endpoints.
 typedef sequence <SSLIOP::SSL> TAO_SSLEndpointSequence;

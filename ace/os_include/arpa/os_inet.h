@@ -70,10 +70,6 @@ extern "C"
    unsigned long  inet_network (const char *);
 #endif /* ! (ACE_VXWORKS) && ACE_VXWORKS <= 0x540 */
 
-#if defined (__Lynx__)
-  int inet_aton (const char *, struct in_addr *);
-#endif /* __Lynx__ */
-
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

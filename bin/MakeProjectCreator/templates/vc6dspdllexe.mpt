@@ -1,6 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
+conditional_include "idl_compiler_win32"
 conditional_include "common"
 
 type_description = "Console Application"
@@ -10,7 +11,6 @@ type_is_binary   = 1
 common_defines   = WIN32 _CONSOLE
 subsystem        = console
 pdb              = 1
-use_modifier     =
 
 Release {
   use_debug_libraries   = 0

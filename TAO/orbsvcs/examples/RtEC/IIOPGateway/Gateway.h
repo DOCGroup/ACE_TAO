@@ -11,7 +11,7 @@
 #ifndef GATEWAY_H
 #define GATEWAY_H
 
-#include "orbsvcs/orbsvcs/RtecEventCommS.h"
+#include "orbsvcs/RtecEventCommS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

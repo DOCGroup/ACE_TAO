@@ -2,13 +2,11 @@
 // $Id$
 
 project(*Starter): namingexe, rtscheduling_server {
-  idlflags += -o ..
-
   IDL_Files {
     ../Synch.idl
   }
   Source_Files {
-    ../Starter.cpp
+    ../Starter.cpp  
     ../Synch_i.cpp
     ../SynchC.cpp
     ../SynchS.cpp
@@ -18,23 +16,21 @@ project(*Starter): namingexe, rtscheduling_server {
 }
 
 project(*test) : namingexe, rtscheduling_server {
-  idlflags += -o ..
-
   IDL_Files {
     ../Synch.idl
     ../Job.idl
   }
   Source_Files {
-    test.cpp
-    FP_DT_Creator.cpp
-    FP_Task.cpp
-    FP_Scheduler.cpp
-    ../FP_SchedulingC.cpp
-    ../Thread_Task.cpp
-    ../DT_Creator.cpp
-    ../Job_i.cpp
-    ../POA_Holder.cpp
-    ../Task_Stats.cpp
+    test.cpp 
+    FP_DT_Creator.cpp 
+    FP_Task.cpp 
+    FP_Scheduler.cpp 
+    ../FP_SchedulingC.cpp 
+    ../Thread_Task.cpp 
+    ../DT_Creator.cpp 
+    ../Job_i.cpp 
+    ../POA_Holder.cpp 
+    ../Task_Stats.cpp 
     ../Synch_i.cpp
     ../SynchC.cpp
     ../SynchS.cpp

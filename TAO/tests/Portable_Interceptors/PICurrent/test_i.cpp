@@ -35,7 +35,7 @@ test_i::invoke_me (ACE_ENV_SINGLE_ARG_DECL)
   //
   // 1.    ServerRequestInterceptor::receive_request_service_contexts()
   //   a.       ServerRequestInfo::set_slot()
-  //   b.       RSC->TSC shallow copy
+  //   b.       RSC->TSC shallow copy 
   // 2.    servant implementation invokes method on another server
   //   a.       TSC->RSC shallow copy
   //   b.       ClientRequestInterceptor::send_request()
@@ -45,6 +45,14 @@ test_i::invoke_me (ACE_ENV_SINGLE_ARG_DECL)
   // occur.
   PICurrentTest::test_var my_ref =
     this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Note that the invocation must occur through the object
+  // reference to force the client request interceptor
+  // (ClientRequestInterceptor2) to be invoked.  This assumes that
+  // DIRECT collocation (and possibly THRU_POA collocation) is
+  // disabled.
+  my_ref->invoke_you (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // ----------------------------------------------------
@@ -95,16 +103,6 @@ test_i::invoke_me (ACE_ENV_SINGLE_ARG_DECL)
 
       ACE_THROW (CORBA::INTERNAL ());
     }
-  // ----------------------------------------------------
-
-  // Note that the invocation must occur through the object
-  // reference to force the client request interceptor
-  // (ClientRequestInterceptor2) to be invoked.  This assumes that
-  // DIRECT collocation (and possibly THRU_POA collocation) is
-  // disabled.
-  my_ref->invoke_you (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
   // ----------------------------------------------------
 
   // Insert some data into the TSC PICurrent object.

@@ -13,8 +13,7 @@
 #ifndef TAO_PORTABLEGROUP_UTILS_H
 #define TAO_PORTABLEGROUP_UTILS_H
 #include /**/ "ace/pre.h"
-
-#include "orbsvcs/orbsvcs/PortableGroupC.h"
+#include "orbsvcs/PortableGroupC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

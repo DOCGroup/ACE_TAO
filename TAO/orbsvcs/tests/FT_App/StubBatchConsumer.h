@@ -10,8 +10,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include <orbsvcs/orbsvcs/CosNotifyChannelAdminS.h>
-#include <orbsvcs/orbsvcs/FT_NotifierC.h>
+#include <orbsvcs/CosNotifyChannelAdminS.h>
+#include <orbsvcs/FT_NotifierC.h>
 
 //////////////////////
 // Forward references

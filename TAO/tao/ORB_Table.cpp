@@ -15,11 +15,8 @@ ACE_RCSID (tao,
 // ****************************************************************
 
 TAO_ORB_Table::TAO_ORB_Table (void)
-  : first_orb_not_default_ (0),
-    table_ (TAO_DEFAULT_ORB_TABLE_SIZE),
-    first_orb_ (0),
-    orbs_( 0 ),
-    num_orbs_( 0 )
+  : table_ (TAO_DEFAULT_ORB_TABLE_SIZE),
+    first_orb_ (0)
 {
 }
 
@@ -51,13 +48,6 @@ TAO_ORB_Table::end (void)
   return this->table_.end ();
 }
 
-TAO_ORB_Core* const *
-TAO_ORB_Table::get_orbs( size_t& num_orbs )
-{
-  num_orbs = this->num_orbs_;
-  return this->orbs_;
-}
-
 int
 TAO_ORB_Table::bind (const char *orb_id,
                      TAO_ORB_Core *orb_core)
@@ -79,18 +69,8 @@ TAO_ORB_Table::bind (const char *orb_id,
       // reference count on it.
       (void) orb_core->_incr_refcnt ();
 
-      // This is not the first ORB .. but if the current default 
-      // ORB decided not to be the default and there is more than 
-      // one orb then set this orb to be the default ORB.
-      if ((this->first_orb_ != 0)
-          && (this->first_orb_not_default_))
-        {
-          this->first_orb_ = orb_core;
-          this->first_orb_not_default_ = 0;
-        }
-
-      // Set the "first_orb_" member for the first given ORB Core
-      // that was successfully added to the ORB table.
+      // Only set the "first_orb_" member if the given ORB Core was
+      // successfully added to the ORB table.
       if (this->first_orb_ == 0)
         {
           this->first_orb_ = orb_core;
@@ -150,46 +130,6 @@ TAO_ORB_Table::unbind (const char *orb_id)
     }
 
   return result;
-}
-
-void
-TAO_ORB_Table::set_default (const char *orb_id)
-{
-  this->table_.find (orb_id, this->first_orb_);
-}
-
-void
-TAO_ORB_Table::not_default (const char *orb_id)
-{
-  // @@  This method now works for restricted cases. Should work on
-  // generalizing it. It works if the first ORB that is registered
-  // decides to not want be the default ORB. Should generalize it to
-  // handle all cases.
-
-  //check if there is a default ORB already and if
-  // it is *not* the same as the orb_id thats passed in.. we dont have
-  // to do anything.
-  if (this->first_orb_ != 0)
-    {
-      if (ACE_OS::strcmp (this->first_orb_->orbid (), orb_id) != 0)
-        {
-          // There is another default ORB. No need to change anything
-          return;
-        }
-      else
-        {
-          // The ORB with orbid 'orb_id' is the default now. We need
-          // to change it.
-          this->first_orb_not_default_ = 1;
-        }
-    }
-}
-
-/// Accessor to the underlying table_ 
-ACE_Hash_Map_Manager_Ex<const char *,TAO_ORB_Core *,ACE_Hash<const char *>,ACE_Equal_To<const char *>,ACE_Null_Mutex> *
-TAO_ORB_Table::table (void)
-{
-  return &this->table_;
 }
 
 TAO_ORB_Table *

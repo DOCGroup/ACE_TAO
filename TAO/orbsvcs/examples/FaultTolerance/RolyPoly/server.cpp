@@ -3,7 +3,6 @@
 // cvs-id    : $Id$
 
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_stdio.h"
 
 #include "RolyPoly_i.h"
 #include "CrashPoint.h"

@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
+#include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "../ProxyConsumer_T.h"
 
 #if defined(_MSC_VER)
@@ -36,7 +36,7 @@
  * @brief
  *
  */
-class TAO_Notify_Export TAO_Notify_ProxyPushConsumer
+class TAO_Notify_Export TAO_Notify_ProxyPushConsumer 
   : public virtual TAO_Notify_ProxyConsumer_T <
                        POA_CosNotifyChannelAdmin::ProxyPushConsumer
                      >
@@ -51,6 +51,9 @@ public:
 
   /// Release
   virtual void release (void);
+
+  /// Destroy this object.
+  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL);
 
 protected:
   ///= CosNotifyChannelAdmin::ProxyPushConsumer methods

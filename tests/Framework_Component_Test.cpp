@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include "tests/test_config.h"
 #include "ace/Service_Config.h"
 #include "ace/ARGV.h"
+#include "tests/test_config.h"
 #include "ace/DLL_Manager.h"
 
 ACE_RCSID(tests, Framework_Component_Test, "$Id$")

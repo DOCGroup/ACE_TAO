@@ -155,11 +155,11 @@ worker (void *)
       ACE_Time_Value wait (0,
                            iterations * 1000 * 100);  // Wait 'iter' msec
       ACE_Time_Value tv = ACE_OS::gettimeofday () + wait;
-      if (s.acquire (tv) == -1)
-      {
-          // verify that we have ETIME
-          ACE_ASSERT(ACE_OS::last_error() == ETIME);
-          ++timeouts;
+
+      if (s.acquire (tv))
+        ++timeouts;
+      else
+        {
           ACE_Time_Value diff = ACE_OS::gettimeofday ();
           diff = diff - tv;       // tv should have been reset to time acquired
           if (diff.msec () > ACE_ALLOWED_SLACK)

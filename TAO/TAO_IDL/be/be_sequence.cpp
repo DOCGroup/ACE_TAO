@@ -322,49 +322,45 @@ be_sequence::managed_type (void)
       // Determine if we need a managed type and which one.
       switch (prim_type->node_type ())
         {
-          case AST_Decl::NT_interface:
-          case AST_Decl::NT_interface_fwd:
-          case AST_Decl::NT_component:
-          case AST_Decl::NT_component_fwd:
-            this->mt_ = be_sequence::MNG_OBJREF;
-            break;
-          case AST_Decl::NT_valuetype:
-          case AST_Decl::NT_valuetype_fwd:
-          case AST_Decl::NT_eventtype:
-          case AST_Decl::NT_eventtype_fwd:
-            this->mt_ = be_sequence::MNG_VALUE;
-            break;
-          case AST_Decl::NT_string:
-            this->mt_ = be_sequence::MNG_STRING;
-            break;
-          case AST_Decl::NT_wstring:
-            this->mt_ = be_sequence::MNG_WSTRING;
-            break;
-          case AST_Decl::NT_pre_defined:
-            {
-              be_predefined_type *bpd =
-                be_predefined_type::narrow_from_decl (prim_type);
-              AST_PredefinedType::PredefinedType pt = bpd->pt ();
+        case AST_Decl::NT_interface:
+        case AST_Decl::NT_interface_fwd:
+          this->mt_ = be_sequence::MNG_OBJREF;
+          break;
+        case AST_Decl::NT_valuetype:
+        case AST_Decl::NT_valuetype_fwd:
+          this->mt_ = be_sequence::MNG_VALUE;
+          break;
+        case AST_Decl::NT_string:
+          this->mt_ = be_sequence::MNG_STRING;
+          break;
+        case AST_Decl::NT_wstring:
+          this->mt_ = be_sequence::MNG_WSTRING;
+          break;
+        case AST_Decl::NT_pre_defined:
+          {
+            be_predefined_type *bpd =
+              be_predefined_type::narrow_from_decl (prim_type);
+            AST_PredefinedType::PredefinedType pt = bpd->pt ();
 
-              switch (pt)
-                {
-                  case AST_PredefinedType::PT_pseudo:
-                    this->mt_ = be_sequence::MNG_PSEUDO;
-                    break;
-                  case AST_PredefinedType::PT_object:
-                    this->mt_ = be_sequence::MNG_PSEUDO;
-                    break;
-                  case AST_PredefinedType::PT_value:
-                    this->mt_ = be_sequence::MNG_VALUE;
-                    break;
-                  default:
-                    this->mt_ = be_sequence::MNG_NONE;
-                    break;
-                }
-            }
-            break;
-          default:
-            this->mt_ = be_sequence::MNG_NONE;
+            switch (pt)
+              {
+                case AST_PredefinedType::PT_pseudo:
+                  this->mt_ = be_sequence::MNG_PSEUDO;
+                  break;
+                case AST_PredefinedType::PT_object:
+                  this->mt_ = be_sequence::MNG_PSEUDO;
+                  break;
+                case AST_PredefinedType::PT_value:
+                  this->mt_ = be_sequence::MNG_VALUE;
+                  break;
+                default:
+                  this->mt_ = be_sequence::MNG_NONE;
+                  break;
+              }
+          }
+          break;
+        default:
+          this->mt_ = be_sequence::MNG_NONE;
         }
     }
 

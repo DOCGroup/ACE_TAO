@@ -20,16 +20,16 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.h"
+#include "orbsvcs/CosEvent/CEC_ConsumerAdmin.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h"
-#include "orbsvcs/orbsvcs/DsEventLogAdminS.h"
-#include "orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h"
-#include "orbsvcs/orbsvcs/CosEventCommS.h"
+#include "orbsvcs/CosEvent/CEC_EventChannel.h"
+#include "orbsvcs/DsEventLogAdminS.h"
+#include "orbsvcs/CosEvent/CEC_Default_Factory.h"
+#include "orbsvcs/CosEventCommS.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)

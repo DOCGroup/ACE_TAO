@@ -19,7 +19,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/High_Res_Timer.h"
-#include "orbsvcs/orbsvcs/Channel_Clients_T.h"
+#include "orbsvcs/Channel_Clients_T.h"
 #include "ECT_Driver.h"
 #include "ECT_Supplier.h"
 

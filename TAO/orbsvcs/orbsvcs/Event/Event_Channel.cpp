@@ -2,15 +2,15 @@
 
 #include "ace/Service_Config.h"
 #include "ace/Auto_Ptr.h"
-#include "orbsvcs/orbsvcs/Scheduler_Factory.h"
-#include "orbsvcs/orbsvcs/Event_Utilities.h"
+#include "orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/Event_Utilities.h"
 
-#include "orbsvcs/orbsvcs/Event/Dispatching_Modules.h"
-#include "orbsvcs/orbsvcs/Event/Memory_Pools.h"
-#include "orbsvcs/orbsvcs/Event/EC_Gateway.h"
-#include "orbsvcs/orbsvcs/Event/Module_Factory.h"
-#include "orbsvcs/orbsvcs/Event/Event_Manip.h"
-#include "orbsvcs/orbsvcs/Event/Event_Channel.h"
+#include "orbsvcs/Event/Dispatching_Modules.h"
+#include "orbsvcs/Event/Memory_Pools.h"
+#include "orbsvcs/Event/EC_Gateway.h"
+#include "orbsvcs/Event/Module_Factory.h"
+#include "orbsvcs/Event/Event_Manip.h"
+#include "orbsvcs/Event/Event_Channel.h"
 
 #if !defined (__ACE_INLINE__)
 #include "Event_Channel.i"

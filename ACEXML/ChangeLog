@@ -1,34 +1,3 @@
-Sat Feb 21 23:51:25 2004  .  <.@isis.vanderbilt.edu>
-
-        * common/Exception.h:
-        * common/Exception.cpp:
-        * common/SAXExceptions.h:
-        * common/SAXExceptions.cpp:
-
-          Fixed a few bugs in the way the exceptions were set-up in the
-          case when exceptions=0. Provided implementations for operator
-          assignment and duplicate(). This should fix problems with
-          throwing and catching exceptions when exceptions=0.
-
-Sat Jan 31 20:06:57 2004  Krishnakumar B  <kitty@cse.wustl.edu>
-
-        * parser/parser/Parser.cpp (parse_PE_reference): Added ACE_TEXT
-          to satisfy WCHAR windows builds. Thanks to Johnny for reporting
-          these errors.
-
-Fri Jan 30 16:04:43 2004  Krishnakumar B  <kitty@cse.wustl.edu>
-
-        * parser/parser/Parser.cpp: Rewrote a simple string manipulation
-          involving ACE_String_Base<char>::operator +() to use const char*
-          instead of char, so that we don't need an explicit template
-          instantiation for it.
-
-        * examples/SAXPrint/main.cpp: Added missing explicit template
-          instantiations for ACE_Auto_Basic_Ptr.
-
-          Thanks to Olli Savia <ops@iki.fi> for reporting problems with
-          explicit template instantiation on LynxOS.
-
 Thu Jan  8 18:40:34 2004  Krishnakumar B  <kitty@nospam.invalid.domain>
 
 

@@ -660,6 +660,11 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
   // Grab the event associated with the Proactor
   HANDLE handle = this->get_handle ();
 
+  // If Proactor event is valid, signal it
+  if (handle != ACE_INVALID_HANDLE &&
+      handle != 0)
+    ACE_OS::event_signal (&handle);
+
   // pass
   //   bytes_transferred
   //   completion_key
@@ -700,11 +705,6 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
         }
       return -1;
     }
-
-  // If Proactor event is valid, signal it
-  if (handle != ACE_INVALID_HANDLE 
-      && handle != 0)
-    ACE_OS::event_signal (&handle);
 
   return 0;
 }

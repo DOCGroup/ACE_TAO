@@ -13,8 +13,8 @@
 #ifndef EC_RANDOM_H
 #define EC_RANDOM_H
 
-#include "orbsvcs/orbsvcs/RtecEventCommS.h"
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminS.h"
+#include "orbsvcs/RtecEventCommS.h"
+#include "orbsvcs/RtecEventChannelAdminS.h"
 #include "ace/Task.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

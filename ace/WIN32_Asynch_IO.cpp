@@ -2745,17 +2745,18 @@ ACE_WIN32_Asynch_Connect::handle_output (ACE_HANDLE fd)
                       (char*) & sockerror,
                       & lsockerror);
 
-  // This previously just did a "return -1" and let handle_close() clean
-  // things up. However, this entire object may be gone as a result of
-  // the application's completion handler, so don't count on 'this' being
-  // legitimate on return from post_result().
-  // remove_io_handler() contains flag DONT_CALL
-  this->win32_proactor_->get_asynch_pseudo_task().remove_io_handler (fd);
-
   result->set_bytes_transferred (0);
   result->set_error (sockerror);
   this->post_result (result, this->flg_open_);
-  return 0;
+
+  //ACE_Asynch_Pseudo_Task & task =
+  //       this->win32_proactor_->get_asynch_pseudo_task();
+
+  // remove_io_handler() contains flag DONT_CALL
+  //task.remove_io_handler ( fd );
+
+  //return 0;
+  return -1;
 }
 
 

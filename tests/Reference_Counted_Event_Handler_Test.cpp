@@ -34,7 +34,6 @@ static int test_tp_reactor = 1;
 static int test_wfmo_reactor = 1;
 static int test_io = 1;
 static int test_timers = 1;
-static int test_find = 1;
 static int test_simple_event_handler = 1;
 static int test_reference_counted_event_handler_1 = 1;
 static int test_reference_counted_event_handler_2 = 1;
@@ -278,52 +277,6 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
   int events = 0;
   int result = 0;
 
-  if (test_find)
-    {
-      Reference_Counted_Event_Handler *handler =
-        new Reference_Counted_Event_Handler (events);
-
-      ACE_Event_Handler_var safe_handler (handler);
-
-      result =
-        reactor->register_handler (handler->pipe_.read_handle (),
-                                   handler,
-                                   ACE_Event_Handler::READ_MASK);
-      ACE_ASSERT (result == 0);
-
-      {
-        ACE_Event_Handler *result_handler = 0;
-
-        result =
-          reactor->handler (handler->pipe_.read_handle (),
-                            ACE_Event_Handler::READ_MASK,
-                            &result_handler);
-        ACE_Event_Handler_var safe_result_handler (result_handler);
-
-        ACE_ASSERT (result == 0);
-        ACE_ASSERT (result_handler == handler);
-      }
-
-      {
-        ACE_Event_Handler *result_handler = 0;
-
-        result =
-          reactor->handler (handler->pipe_.read_handle (),
-                            ACE_Event_Handler::WRITE_MASK,
-                            &result_handler);
-        ACE_Event_Handler_var safe_result_handler (result_handler);
-
-        ACE_ASSERT (result == -1);
-      }
-
-      {
-        ACE_Event_Handler_var result_handler =
-          reactor->find_handler (handler->pipe_.read_handle ());
-
-        ACE_ASSERT (result_handler.handler () == handler);
-      }
-    }
-
   if (test_io)
     {
       Reference_Counted_Event_Handler *handler =
@@ -440,6 +393,10 @@ public:
   int handle_close (ACE_HANDLE,
                     ACE_Reactor_Mask);
 
+  ACE_Event_Handler::Reference_Count add_reference (void);
+
+  ACE_Event_Handler::Reference_Count remove_reference (void);
+
   ACE_Pipe pipe_;
 
   int &events_;
@@ -551,61 +508,27 @@ Simple_Event_Handler::handle_close (ACE_HANDLE handle,
   return 0;
 }
 
+ACE_Event_Handler::Reference_Count
+Simple_Event_Handler::add_reference (void)
+{
+  // This should not get called.
+  ACE_ASSERT (0);
+  return 0;
+}
+
+ACE_Event_Handler::Reference_Count
+Simple_Event_Handler::remove_reference (void)
+{
+  // This should not get called.
+  ACE_ASSERT (0);
+  return 0;
+}
+
 void
 simple_event_handler (ACE_Reactor *reactor)
 {
   int events = 0;
   int result = 0;
-
-  if (test_find)
-    {
-      Simple_Event_Handler handler (events,
-                                    0);
-
-      result =
-        reactor->register_handler (handler.pipe_.read_handle (),
-                                   &handler,
-                                   ACE_Event_Handler::READ_MASK);
-      ACE_ASSERT (result == 0);
-
-      {
-        ACE_Event_Handler *result_handler = 0;
-
-        result =
-          reactor->handler (handler.pipe_.read_handle (),
-                            ACE_Event_Handler::READ_MASK,
-                            &result_handler);
-        ACE_Event_Handler_var safe_result_handler (result_handler);
-
-        ACE_ASSERT (result == 0);
-        ACE_ASSERT (result_handler == &handler);
-      }
-
-      {
-        ACE_Event_Handler *result_handler = 0;
-
-        result =
-          reactor->handler (handler.pipe_.read_handle (),
-                            ACE_Event_Handler::WRITE_MASK,
-                            &result_handler);
-        ACE_Event_Handler_var safe_result_handler (result_handler);
-
-        ACE_ASSERT (result == -1);
-      }
-
-      {
-        ACE_Event_Handler_var result_handler =
-          reactor->find_handler (handler.pipe_.read_handle ());
-
-        ACE_ASSERT (result_handler.handler () == &handler);
-      }
-
-      result =
-        reactor->remove_handler (handler.pipe_.read_handle (),
-                                 ACE_Event_Handler::ALL_EVENTS_MASK | ACE_Event_Handler::DONT_CALL);
-
-      ACE_ASSERT (result == 0);
-    }
 
   if (test_io)
     {
@@ -878,7 +801,7 @@ test<REACTOR_IMPLEMENTATION>::test (void)
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("a:b:c:f:g:h:i:k:l:m:z:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("a:b:c:f:g:h:i:k:l:z:"));
 
   int cc;
   while ((cc = get_opt ()) != -1)
@@ -912,9 +835,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
         case 'l':
           test_timers = ACE_OS::atoi (get_opt.opt_arg ());
           break;
-        case 'm':
-          test_find = ACE_OS::atoi (get_opt.opt_arg ());
-          break;
         case 'z':
           debug = ACE_OS::atoi (get_opt.opt_arg ());
           break;
@@ -932,7 +852,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
                       ACE_TEXT ("\t[-i test closed in upcall event handler] (defaults to %d)\n")
                       ACE_TEXT ("\t[-k test io] (defaults to %d)\n")
                       ACE_TEXT ("\t[-l test timers] (defaults to %d)\n")
-                      ACE_TEXT ("\t[-m test find] (defaults to %d)\n")
                       ACE_TEXT ("\t[-z debug] (defaults to %d)\n")
                       ACE_TEXT ("\n"),
                       argv[0],
@@ -945,7 +864,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
                       test_closed_in_upcall_event_handler,
                       test_io,
                       test_timers,
-                      test_find,
                       debug));
           return -1;
         }

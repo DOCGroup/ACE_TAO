@@ -253,7 +253,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
       // This is bad mojo, i.e. an internal TAO error.
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) - ")
-                         ACE_TEXT ("SCIOP_Acceptor::open, ")
+                         ACE_TEXT ("SCIOP_Acceptor::open, "),
                          ACE_TEXT ("hostname already set\n\n")),
                         -1);
     }
@@ -493,7 +493,7 @@ TAO_SCIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
       // This is bad mojo, i.e. an internal TAO error.
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) ")
-                         ACE_TEXT ("SCIOP_Acceptor::open_default - ")
+                         ACE_TEXT ("SCIOP_Acceptor::open_default - "),
                          ACE_TEXT ("hostname already set\n\n")),
                         -1);
     }
@@ -1029,7 +1029,8 @@ TAO_SCIOP_Acceptor::parse_options (const char *str)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) Invalid SCIOP endpoint format: ")
-                                 ACE_TEXT ("endpoint priorities no longer supported. \n")),
+                                 ACE_TEXT ("endpoint priorities no longer supported. \n"),
+                                 value.c_str ()),
                                 -1);
             }
           else if (name == "portspan")

@@ -37,7 +37,6 @@ AC_DEFUN([ACE_CHECK_TLS],
  dnl library.
  ace_save_LIBS="$LIBS"
  ace_save_CPPFLAGS="$CPPFLAGS"
- ace_save_LDFLAGS="$LDFLAGS"
 
  dnl ---------------------------------------------------------
 
@@ -99,7 +98,6 @@ SSL_shutdown (ssl);
  ace_TLS_LIBS="-lssl -lcrypto"
 
  LIBS="$ace_TLS_LIBS $LIBS"
- LDFLAGS="$ACE_TLS_LDFLAGS $LDFLAGS"
 
  AC_CACHE_CHECK([for OpenSSL libraries],
  [ac_cv_openssl_libs],
@@ -145,5 +143,5 @@ SSL_shutdown (ssl);
  dnl Restore the original library list and preprocessor flags.
  LIBS="$ace_save_LIBS"
  CPPFLAGS="$ace_save_CPPFLAGS"
- LDFLAGS="$ace_save_LDFLAGS"
+
 ])

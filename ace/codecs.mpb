@@ -2,6 +2,8 @@
 // $Id$
 
 feature(ace_codecs) {
+  macros += ACE_HAS_ACE_CODECS
+
   Source_Files(ACE_COMPONENTS) {
     Codecs {
       Codecs.cpp

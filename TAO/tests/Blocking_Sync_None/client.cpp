@@ -98,8 +98,8 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       const int payload_length = 65536;
-      const unsigned int sleep_milliseconds = 20;
-      const unsigned int sleep_microseconds = sleep_milliseconds * 1000;
+      const int sleep_milliseconds = 20;
+      const int sleep_microseconds = sleep_milliseconds * 1000;
 
       Test::Payload payload(payload_length);
       payload.length (payload_length);

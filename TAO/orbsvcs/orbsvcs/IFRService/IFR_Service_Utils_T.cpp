@@ -5,8 +5,6 @@
 
 #include "IFR_Service_Utils_T.h"
 #include "IFR_Service_Utils.h"
-#include "Repository_i.h"
-
 
 ACE_RCSID (IFRService,
            IFR_Service_Utils_T,

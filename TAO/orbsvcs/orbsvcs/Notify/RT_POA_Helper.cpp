@@ -3,7 +3,7 @@
 #include "RT_POA_Helper.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/debug.h"
-#include "orbsvcs/orbsvcs/NotifyExtC.h"
+#include "orbsvcs/NotifyExtC.h"
 #include "RT_Properties.h"
 #include "ace/SString.h"
 
@@ -11,9 +11,7 @@
 #include "RT_POA_Helper.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (RT_Notify, 
-           TAO_Notify_RT_POA_Helper, 
-           "$Id$")
+ACE_RCSID(RT_Notify, TAO_Notify_RT_POA_Helper, "$Id$")
 
 TAO_Notify_RT_POA_Helper::~TAO_Notify_RT_POA_Helper ()
 {

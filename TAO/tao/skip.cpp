@@ -191,7 +191,7 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr,
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO_Marshal_TypeCode::skip: ")
-                        ACE_TEXT ("Bad kind_ value in CDR stream\n")));
+                        ACE_TEXT ("Bad kind_ value in CDR stream")));
           ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                             TAO::TRAVERSE_STOP);
         }
@@ -611,7 +611,7 @@ TAO_Marshal_String::skip (CORBA::TypeCode_ptr,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO_Marshal_TypeCode::skip detected error\n")));
+                    ACE_TEXT ("TAO_Marshal_TypeCode::skip detected error")));
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                         CORBA::COMPLETED_MAYBE),
                         TAO::TRAVERSE_STOP);

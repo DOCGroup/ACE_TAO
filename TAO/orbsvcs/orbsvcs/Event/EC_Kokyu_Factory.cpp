@@ -5,7 +5,7 @@
 #include "EC_Kokyu_Scheduling.h"
 #include "EC_Kokyu_Filter_Builder.h"
 #include "EC_Event_Channel_Base.h"
-#include "orbsvcs/orbsvcs/RtecSchedulerC.h"
+#include "orbsvcs/RtecSchedulerC.h"
 
 #include "ace/Arg_Shifter.h"
 #include "ace/Sched_Params.h"
@@ -15,9 +15,7 @@
 #include "EC_Kokyu_Factory.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Event, 
-           EC_Kokyu_Factory, 
-           "$Id$")
+ACE_RCSID(Event, EC_Kokyu_Factory, "$Id$")
 
 TAO_EC_Kokyu_Factory::~TAO_EC_Kokyu_Factory (void)
 {

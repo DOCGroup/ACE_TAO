@@ -27,10 +27,6 @@ TAO::Less_Than_ObjectKey::operator () (const TAO::ObjectKey &lhs,
         {
           return 1;
         }
-      else if (lhs[i] > rhs[i])
-	{
-	  return 0;
-	}
     }
 
   return 0;

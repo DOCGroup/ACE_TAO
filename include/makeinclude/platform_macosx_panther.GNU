@@ -16,18 +16,16 @@ ifeq (,$(versioned_so))
 endif
 with_ld = macosx
 
-pipes ?= 1
-
 CC              = gcc
 CXX             = g++
-CFLAGS          += -Wall -Wpointer-arith -Wno-long-double  
+CFLAGS          += -Wall -Wpointer-arith -Wno-long-double -pipe  
 
 DCFLAGS         += -g
 DLD             = libtool
 LD              = $(CXX)
 LIBS            += -lcc_dynamic -lstdc++ -lSystem
 
-OCFLAGS         += -O3 -mcpu=G3 -mtune=G4
+OCFLAGS         += -O3
 RANLIB          = ranlib
 SOEXT		= dylib
 SOFLAGS += -dynamic

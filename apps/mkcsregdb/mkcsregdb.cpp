@@ -255,7 +255,7 @@ csdb_generator::write_entry ()
            entry_.loc_name_,
            entry_.codeset_id_,
            entry_.num_sets_);
-  for (ACE_CDR::UShort j = 0; j < entry_.num_sets_; j++)
+  for (unsigned j = 0; j < entry_.num_sets_; j++)
     if (j+1 < entry_.num_sets_)
       fprintf (outf_,"0x%04x,",entry_.char_sets_[j]);
     else

@@ -8,7 +8,7 @@
 //
 // ============================================================================
 
-#include "orbsvcs/orbsvcs/Event/Event_Manip.h"
+#include "orbsvcs/Event/Event_Manip.h"
 
 #if !defined (__ACE_INLINE__)
 #include "Event_Manip.i"

@@ -17,9 +17,8 @@
 #include "FT_ReplicaFactory_i.h"
 #include <tao/PortableServer/ORB_Manager.h>
 #include <tao/ORB_Constants.h>
+#include <iostream>
 #include "FT_TestReplicaC.h"
-// FUZZ: disable check_for_streams_include
-#include "ace/streams.h"
 
 //////////////////
 // TestReplica_i
@@ -128,18 +127,18 @@ FT_TestReplica_i::FT_TestReplica_i (FT_ReplicaFactory_i * factory, const char * 
   , poa_ (0)
   , object_id_ (0)
 {
-//  cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << " Construct" << endl;
+//  std::cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << " Construct" << std::endl;
 }
 
 FT_TestReplica_i::~FT_TestReplica_i ()
 {
-//  cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << " Destruct" << endl;
+//  std::cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << " Destruct" << std::endl;
 }
 
 
 void FT_TestReplica_i::suicide(const char * note)
 {
-  cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << " Simulate FAULT_CODE fault: " << note << endl;
+  std::cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << " Simulate FAULT_CODE fault: " << note << std::endl;
 
   // Tell the poa we aren't accepting future calls
   this->poa_->deactivate_object (this->object_id_.in ());
@@ -393,8 +392,8 @@ void FT_TestReplica_i::die (FT_TEST::TestReplica::Bane  when
       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  cout << name_.c_str() << '@' << this->factory_->location()
-    << '#' << this->factory_id_ << " Received death threat: " << when << endl;
+  std::cout << name_.c_str() << '@' << this->factory_->location()
+    << '#' << this->factory_id_ << " Received death threat: " << when << std::endl;
 
   this->death_pending_ = when;
   KEVORKIAN(RIGHT_NOW, die)
@@ -403,8 +402,8 @@ void FT_TestReplica_i::die (FT_TEST::TestReplica::Bane  when
 void FT_TestReplica_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  cout << name_.c_str() << '@' << this->factory_->location()
-    << '#' << this->factory_id_ << " Shut down requested" << endl;
+  std::cout << name_.c_str() << '@' << this->factory_->location()
+    << '#' << this->factory_id_ << " Shut down requested" << std::endl;
   this->death_pending_ = FT_TEST::TestReplica::CLEAN_EXIT;
 }
 
@@ -454,8 +453,8 @@ void FT_TestReplica_i::store(long counter)
     ACE_OS::fclose(f);
     if (this->verbose_)
     {
-      cout << name_.c_str() << '@' << this->factory_->location()
-        << '#' << this->factory_id_ << ": " << counter << endl;
+      std::cout << name_.c_str() << '@' << this->factory_->location()
+        << '#' << this->factory_id_ << ": " << counter << std::endl;
     }
     delete[] buffer;
     buffer = 0;

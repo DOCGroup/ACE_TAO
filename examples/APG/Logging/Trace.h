@@ -8,7 +8,7 @@
 // Listing 1 code/ch03
 class Trace
 {
-public:
+public:  
   Trace (const ACE_TCHAR *prefix,
 	 const ACE_TCHAR *name,
 	 int line,
@@ -79,7 +79,7 @@ private:
 
 #if (ACE_NTRACE == 1)
 #    define TRACE(X)
-#    define TRACE_RETURN(V)     return V;
+#    define TRACE_RETURN(V)
 #    define TRACE_RETURN_VOID()
 #else
 #    define TRACE(X)                           \

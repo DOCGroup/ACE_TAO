@@ -95,6 +95,8 @@
 # endif
 #endif
 
+#define ACE_DLL_PREFIX ACE_LIB_TEXT ("lib")
+
 #define ACE_ENDTHREADEX(STATUS)  ::_endthreadex ((DWORD) (STATUS))
 
 #include /**/ "ace/post.h"

@@ -227,9 +227,6 @@ be_generator::create_interface_fwd (UTL_ScopedName *n,
                                     idl_bool local,
                                     idl_bool abstract)
 {
-  AST_Decl *d = 
-    idl_global->scopes ().top_non_null ()->lookup_by_name (n, I_TRUE);
-    
   AST_Interface *dummy = this->create_interface (n,
                                                  0,
                                                  -1,
@@ -242,12 +239,7 @@ be_generator::create_interface_fwd (UTL_ScopedName *n,
   ACE_NEW_RETURN (retval,
                   be_interface_fwd (dummy,
                                     n),
-                  0);
-                  
-  if (d != 0)
-    {
-      retval->prefix (ACE_const_cast (char *, ScopeAsDecl (d->defined_in ())->prefix ()));
-    }
+                   0);
 
   return retval;
 }

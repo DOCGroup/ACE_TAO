@@ -89,16 +89,16 @@ LINK32=link.exe
 # PROP Default_Filter ".cpp"
 # Begin Source File
 
-SOURCE=.\analyzer.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\da_testsC.cpp
 # ADD CPP /GR
 # End Source File
 # Begin Source File
 
 SOURCE=.\data.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\analyzer.cpp
 # End Source File
 # Begin Source File
 
@@ -138,15 +138,15 @@ SOURCE=.\test_wrapper.cpp
 # PROP Default_Filter ".h"
 # Begin Source File
 
-SOURCE=.\analyzer.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\da_testsC.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\data.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\analyzer.h
 # End Source File
 # Begin Source File
 
@@ -197,7 +197,7 @@ InputPath=.\da_tests.idl
 InputName=da_tests
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -I..\..  -Ge 1 $(InputName).idl
+	..\..\..\bin\Release\tao_idl -I..\..\tao -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -236,7 +236,7 @@ InputPath=.\da_tests.idl
 InputName=da_tests
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I..\..  -Ge 1 $(InputName).idl
+	..\..\..\bin\tao_idl -I..\..\tao -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

@@ -23,7 +23,7 @@
 
 #include "portablegroup_export.h"
 
-#include "orbsvcs/orbsvcs/PortableGroupC.h"
+#include "orbsvcs/PortableGroupC.h"
 
 // Forward references
 class PortableGroup_Request_Dispatcher;

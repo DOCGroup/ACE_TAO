@@ -543,7 +543,7 @@ TAO_ORB_Core::resolve_rt_current (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-ACE_INLINE TAO::PICurrent *
+ACE_INLINE TAO_PICurrent *
 TAO_ORB_Core::pi_current (void)
 {
   // A pointer/reference to PICurrent is cached in the ORB Core since
@@ -554,7 +554,7 @@ TAO_ORB_Core::pi_current (void)
 }
 
 ACE_INLINE void
-TAO_ORB_Core::pi_current (TAO::PICurrent *current)
+TAO_ORB_Core::pi_current (TAO_PICurrent *current)
 {
   // Not duplicated since the ORB Core's "object_ref_table" already
   // contains a duplicate of the PICurrent object.

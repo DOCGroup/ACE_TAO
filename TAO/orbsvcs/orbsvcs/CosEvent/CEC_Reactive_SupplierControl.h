@@ -25,7 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/ESF/ESF_Worker.h"
+#include "orbsvcs/ESF/ESF_Worker.h"
 
 #include "tao/ORB.h"
 

@@ -63,7 +63,7 @@ namespace ACE_OS {
              ACE_stat *);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int lstat (const ACE_TCHAR *,
+  int lstat (const char *,
              ACE_stat *);
 
   ACE_NAMESPACE_INLINE_FUNCTION

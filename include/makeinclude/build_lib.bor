@@ -44,13 +44,7 @@ all: $(TARGET)
 $(TARGET): $(OBJFILES)
 	@$(MAKE_BINDIR)
 	-@del $(TARGET) 2>NUL
-	$(AR) -M < @&&!
-VERBOSE
-CREATE $@
-ADDMOD $(OBJFILES:\=/)
-SAVE
-END
-!
+	$(AR) $(LIB_LFLAGS) $(TARGET) $(OBJFILES)
 !endif
 !else
 !ifdef TARGET

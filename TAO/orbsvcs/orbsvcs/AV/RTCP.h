@@ -51,11 +51,11 @@
 // FUZZ: disable check_for_math_include
 #include "ace/OS.h"
 #include "ace/Hash_Map_Manager.h"
-#include "orbsvcs/orbsvcs/AV/AVStreams_i.h"
-#include "orbsvcs/orbsvcs/AV/UDP.h"
+#include "orbsvcs/AV/AVStreams_i.h"
+#include "orbsvcs/AV/UDP.h"
 #include <math.h>
 #include <stdlib.h>
-#include "orbsvcs/orbsvcs/AV/RTP.h"
+#include "orbsvcs/AV/RTP.h"
 
 #include "RTCP_Channel.h"
 

@@ -13,22 +13,19 @@ ACE_RCSID (tao,
 
 #include "ORB_Core.h"
 #include "TAO_Server_Request.h"
-#include "PICurrent_Copy_Callback.h"
 
-
-TAO::PICurrent::PICurrent (TAO_ORB_Core * orb_core)
-  : orb_core_ (orb_core),
+TAO_PICurrent::TAO_PICurrent (void)
+  : orb_core_ (0),
     slot_count_ (0)
 {
-  // ACE_ASSERT (orb_core != 0);
 }
 
-TAO::PICurrent::~PICurrent (void)
+TAO_PICurrent::~TAO_PICurrent (void)
 {
 }
 
 CORBA::Any *
-TAO::PICurrent::get_slot (PortableInterceptor::SlotId id
+TAO_PICurrent::get_slot (PortableInterceptor::SlotId id
                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::InvalidSlot))
@@ -36,7 +33,7 @@ TAO::PICurrent::get_slot (PortableInterceptor::SlotId id
   this->check_validity (id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  PICurrent_Impl * impl = this->tsc ();
+  TAO_PICurrent_Impl *impl = this->tsc ();
 
   if (impl == 0)
     {
@@ -49,7 +46,7 @@ TAO::PICurrent::get_slot (PortableInterceptor::SlotId id
 }
 
 void
-TAO::PICurrent::set_slot (PortableInterceptor::SlotId id,
+TAO_PICurrent::set_slot (PortableInterceptor::SlotId id,
                          const CORBA::Any & data
                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -58,7 +55,7 @@ TAO::PICurrent::set_slot (PortableInterceptor::SlotId id,
   this->check_validity (id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  PICurrent_Impl * impl = this->tsc ();
+  TAO_PICurrent_Impl *impl = this->tsc ();
 
   if (impl == 0)
     {
@@ -66,14 +63,28 @@ TAO::PICurrent::set_slot (PortableInterceptor::SlotId id,
                                        CORBA::COMPLETED_NO));
     }
 
+  // -------------------------------------------
+  // CLIENT SIDE STUFF
+  // -------------------------------------------
+  // If the TSC was logically copied to the RSC, then deep copy the
+  // contents of the TSC to the RSC before modifying the RSC.  The RSC
+  // should not be altered by modifications to the TSC.
+  TAO_PICurrent_Impl *rsc = impl->pi_peer ();
+
+  if (rsc != 0)
+    {
+      rsc->copy (*impl, 1);  // Deep copy
+    }
+  // -------------------------------------------
+
   impl->set_slot (id, data ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
-TAO::PICurrent_Impl *
-TAO::PICurrent::tsc (void)
+TAO_PICurrent_Impl *
+TAO_PICurrent::tsc (void)
 {
-  TAO_ORB_Core_TSS_Resources * tss =
+  TAO_ORB_Core_TSS_Resources *tss =
     this->orb_core_->get_tss_resources ();
 
   return &tss->pi_current_;
@@ -81,51 +92,40 @@ TAO::PICurrent::tsc (void)
 
 // ------------------------------------------------------------------
 
-TAO::PICurrent_Impl::PICurrent_Impl (void)
-  : slot_table_ (),
+TAO_PICurrent_Impl::TAO_PICurrent_Impl (void)
+  : pi_peer_ (0),
+    slot_table_ (),
     lc_slot_table_ (0),
-    copy_callback_ (0),
-    destruction_callback_ (0)
+    dirty_ (0)
 {
 }
 
-TAO::PICurrent_Impl::~PICurrent_Impl (void)
+TAO_PICurrent_Impl::~TAO_PICurrent_Impl (void)
 {
-  // Break any existing ties with PICurrent to which our table was
-  // logically copied since our table no longer exists once this
-  // destructor completes.
-  if (this->destruction_callback_ != 0)
-    this->destruction_callback_->execute_destruction_callback (0);
+  // Make sure the peer TAO_PICurrent_Impl object no longer considers
+  // this TAO_PICurrent_Impl its peer since this object will no longer
+  // exist once this destructor completes execution.
+  if (this->pi_peer_ != 0 && this->pi_peer_->pi_peer () == this)
+    {
+      this->pi_peer_->pi_peer (0);
+    }
 }
-
 
 CORBA::Any *
-TAO::PICurrent_Impl::get_slot (PortableInterceptor::SlotId id
-                               ACE_ENV_ARG_DECL)
+TAO_PICurrent_Impl::get_slot (PortableInterceptor::SlotId id
+                              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::InvalidSlot))
 {
   // No need to check validity of SlotId.  It is validated before this
   // method is invoked.
 
-  PICurrent_Impl::Table & table = this->current_slot_table ();
-
-  ACE_ASSERT (this->lc_slot_table_ != &this->slot_table_);
+  TAO_PICurrent_Impl::Table &table =
+    this->lc_slot_table_ == 0 ? this->slot_table_ : *this->lc_slot_table_;
 
   CORBA::Any * any = 0;
 
-  if (id < table.size ())
-    {
-      ACE_NEW_THROW_EX (any,
-                        CORBA::Any (table[id]), // Make a copy.
-                        CORBA::NO_MEMORY (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
-                            ENOMEM),
-                          CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (any);
-    }
-  else
+  if (id >= table.size ())
     {
       // In accordance with the Portable Interceptor specification,
       // return an Any with a TCKind of tk_null.  A default
@@ -137,28 +137,61 @@ TAO::PICurrent_Impl::get_slot (PortableInterceptor::SlotId id
                             TAO_DEFAULT_MINOR_CODE,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (any);
+      ACE_CHECK_RETURN (0);
+
+      return any;
     }
+
+  ACE_NEW_THROW_EX (any,
+                    CORBA::Any (table[id]), // Make a copy.
+                    CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (0);
 
   return any;
 }
 
 void
-TAO::PICurrent_Impl::set_slot (PortableInterceptor::SlotId id,
-                               const CORBA::Any & data
-                               ACE_ENV_ARG_DECL)
+TAO_PICurrent_Impl::set_slot (PortableInterceptor::SlotId id,
+                              const CORBA::Any & data
+                              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::InvalidSlot))
 {
   // No need to check validity of SlotId.  It is validated before this
   // method is invoked.
 
-  // Perform deep copy of the logically copied slot table, if
-  // necessary, before modifying our own slot table.
-  if (this->copy_callback_ != 0
-      && this->copy_callback_->execute () != 0)
+  // Copy the contents of the logically copied slot table before
+  // modifying our own slot table.
+  if (this->lc_slot_table_ != 0)
     {
-      ACE_THROW (CORBA::INTERNAL ());
+      // Deep copy
+
+      const Table &table = *this->lc_slot_table_;
+      size_t new_size = table.size ();
+
+      if (this->slot_table_.size (id >= new_size ? id + 1 : new_size) != 0)
+        {
+          ACE_THROW (CORBA::INTERNAL ());
+        }
+
+      // Note that the number of elements to copy is bounded by the
+      // size of the source array, not the destination array.
+      for (size_t i = 0; i < new_size; ++i)
+        {
+          if (i == id)
+            {
+              continue;  // Avoid copying data twice.
+            }
+
+          this->slot_table_[i] = table[i];
+        }
+
+      // Break all ties with the logically copied slot table.
+      this->lc_slot_table_ = 0;
     }
 
   // If the slot table array isn't large enough, then increase its
@@ -171,13 +204,110 @@ TAO::PICurrent_Impl::set_slot (PortableInterceptor::SlotId id,
     }
 
   this->slot_table_[id] = CORBA::Any (data);
+
+  // Mark the table as being modified.
+  this->dirty_ = 1;
 }
 
 void
-TAO::PICurrent_Impl::execute_destruction_callback (
-  TAO::PICurrent_Impl::Table * old_lc_slot_table)
+TAO_PICurrent_Impl::copy (TAO_PICurrent_Impl &rhs, CORBA::Boolean deep_copy)
 {
-  this->lc_slot_table_ = old_lc_slot_table;
+  if (!rhs.dirty ())
+    {
+      return;  // Nothing to copy
+    }
+
+  if (deep_copy)
+    {
+      const Table &t = rhs.slot_table ();
+      size_t new_size = t.size ();
+      this->slot_table_.size (new_size);
+
+      for (size_t i = 0; i < new_size; ++i)
+        {
+          this->slot_table_[i] = t[i];  // Deep copy
+        }
+
+      rhs.dirty (0);
+
+      // Break all ties with the PICurrent peer.
+      rhs.pi_peer (0);
+      this->lc_slot_table_ = 0;
+    }
+  else
+    {
+      this->lc_slot_table_ = &rhs.slot_table ();  // Shallow copy
+      this->pi_peer_ = &rhs;
+      this->dirty_ = 1;
+    }
+}
+
+// ------------------------------------------------------------------
+
+TAO_PICurrent_Guard::TAO_PICurrent_Guard (TAO_ServerRequest &server_request,
+                                          CORBA::Boolean tsc_to_rsc)
+  : src_ (0),
+    dest_ (0),
+    tsc_to_rsc_ (tsc_to_rsc)
+{
+  // This constructor is used on the server side.
+
+  // Retrieve the thread scope current (no TSS access incurred yet).
+  TAO_PICurrent *pi_current = server_request.orb_core ()->pi_current ();
+
+  // If the slot count is zero, then there is nothing to copy.
+  // Prevent any copying (and hence TSS accesses) from occurring.
+  if (pi_current != 0 && pi_current->slot_count () != 0)
+    {
+      // Retrieve the request scope current.
+      TAO_PICurrent_Impl *rsc = &server_request.rs_pi_current ();
+
+      // Retrieve the thread scope current.
+      TAO_PICurrent_Impl *tsc = pi_current->tsc ();
+
+      if (tsc_to_rsc)
+        {
+          // TSC to RSC copy.
+          // Occurs after receive_request() interception point and
+          // upcall.
+          this->src_  = tsc;
+          this->dest_ = rsc;
+        }
+      else
+        {
+          // RSC to TSC copy.
+          // Occurs after receive_request_service_contexts()
+          // interception point.
+          this->src_  = rsc;
+          this->dest_ = tsc;
+        }
+    }
+}
+
+TAO_PICurrent_Guard::~TAO_PICurrent_Guard (void)
+{
+  if (this->src_ != 0 && this->dest_ != 0)
+    {
+      // This copy better be exception-safe!
+      this->dest_->copy (*this->src_, 0);    // Logical copy
+
+      // PICurrent will potentially have to call back on the request
+      // scope current so that it can deep copy the contents of the
+      // thread scope current if the contents of the thread scope
+      // current are about to be modified.  It is necessary to do this
+      // deep copy once in order to completely isolate the request
+      // scope current from the thread scope current.  This is only
+      // necessary, if the thread scope current is modified after its
+      // contents have been *logically* copied to the request scope
+      // current.
+      //
+      // source:      TSC
+      // destination: RSC
+      if (this->tsc_to_rsc_)
+        {
+          this->src_->pi_peer (this->dest_);
+        }
+    }
 }
 
 

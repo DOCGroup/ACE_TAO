@@ -22,8 +22,6 @@
 #include "be_component.h"
 #include "be_eventtype.h"
 #include "be_eventtype_fwd.h"
-#include "be_operation.h"
-#include "be_argument.h"
 #include "be_array.h"
 #include "be_enum.h"
 #include "be_predefined_type.h"
@@ -253,118 +251,6 @@ be_visitor_arg_traits::visit_eventtype_fwd (be_eventtype_fwd *node)
 }
 
 int
-be_visitor_arg_traits::visit_operation (be_operation *node)
-{
-  if (this->generated (node) || node->is_local ())
-    {
-      return 0;
-    }
-    
-  AST_Type *rt = node->return_type ();
-  AST_Decl::NodeType nt = rt->node_type ();
-  
-  // If our return type is an unaliased bounded (w)string, we create
-  // an empty struct using the operation's flat name for the type,
-  // and use this type as the Arg_Traits<> template parameter. All
-  // this is necessary because there could be any number of such
-  // return types, all identical, in the same interface, valuetype,
-  // translation unit, or build, and we need a unique type for the
-  // Arg_Traits<> template parameter.
-  if (nt == AST_Decl::NT_string || nt == AST_Decl::NT_wstring)
-    {
-      AST_String *str = AST_String::narrow_from_decl (rt);
-      unsigned long bound = str->max_size ()->ev ()->u.ulval;
-      
-      if (bound > 0)
-        {
-          TAO_OutStream *os = this->ctx_->stream ();
-          idl_bool wide = (str->width () != 1);
-
-          *os << be_nl << be_nl
-              << "struct " << node->flat_name () << " {};"
-              << be_nl << be_nl
-              << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
-              << "class " << be_global->stub_export_macro () << " "
-              << this->S_ << "Arg_Traits<" << node->flat_name ()
-              << ">" << be_idt_nl
-              << ": public" << be_idt << be_idt_nl
-              << "BD_" << (wide ? "W" : "")
-              << "String_" << this->S_ << "Arg_Traits<" << bound << ">"
-              << be_uidt << be_uidt << be_uidt_nl
-              << "{" << be_nl
-              << "};";
-        }
-    }
-
-  // This will catch (in visit_argument() below) any parameters that
-  // are unaliased, bounded (w)strings.
-  if (this->visit_scope (node) != 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_arg_traits::"
-                         "visit_operation - visit scope failed\n"),
-                        -1);
-    }
-
-  this->generated (node, I_TRUE);
-  return 0;
-}
-
-int
-be_visitor_arg_traits::visit_argument (be_argument *node)
-{
-  if (this->ctx_->alias () != 0 || this->generated (node))
-    {
-      return 0;
-    }
-
-  AST_Type *bt = node->field_type ();
-  AST_Decl::NodeType nt = bt->node_type ();
-  
-  // We are interested here only in unaliased, bounded
-  // (w)strings.
-  
-  if (nt != AST_Decl::NT_string && nt != AST_Decl::NT_wstring)
-    {
-      return 0;
-    }
-    
-  be_string *st = be_string::narrow_from_decl (bt);
-  unsigned long bound = st->max_size ()->ev ()->u.ulval;
-  
-  if (bound == 0)
-    {
-      return 0;
-    }
-  
-  TAO_OutStream *os = this->ctx_->stream ();
-  idl_bool wide = (st->width () != 1);
-
-  // It is legal IDL to declare a bounded (w)string as an operation
-  // parameter type. There could be any number of identical
-  // declarations in the same build, translation unit, or even in
-  // the same operation, so we use the argument's flat name to
-  // declare an empty struct, and use that struct as the template
-  // parameter for Arg_Traits<>.
-  *os << be_nl << be_nl
-      << "struct " << node->flat_name () << " {};"
-      << be_nl << be_nl
-      << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
-      << "class " << be_global->stub_export_macro () << " "
-      << this->S_ << "Arg_Traits<" << node->flat_name ()
-      << ">" << be_idt_nl
-      << ": public" << be_idt << be_idt_nl
-      << "BD_" << (wide ? "W" : "")
-      << "String_" << this->S_ << "Arg_Traits<" << bound << ">"
-      << be_uidt << be_uidt << be_uidt_nl
-      << "{" << be_nl
-      << "};";
-      
-  this->generated (node, I_TRUE);
-  return 0;
-}
-
-int
 be_visitor_arg_traits::visit_sequence (be_sequence *node)
 {
   if (this->generated (node) || !node->seen_in_operation ())
@@ -411,12 +297,12 @@ be_visitor_arg_traits::visit_string (be_string *node)
     }
 
   unsigned long bound = node->max_size ()->ev ()->u.ulval;
-  be_type *alias = this->ctx_->alias ();
-  
+  be_typedef *alias = this->ctx_->alias ();
+
   // Unbounded (w)string args are handled as a predefined type.
   // Bounded (w)strings must come in as a typedef - they can't
   // be used directly as arguments or return types.
-  if (bound == 0)
+  if (bound == 0 || alias == 0)
     {
       return 0;
     }
@@ -430,34 +316,13 @@ be_visitor_arg_traits::visit_string (be_string *node)
   // A workaround 'dummy' type, since bounded (w)strings are all
   // generated as typedefs of (w)char *.
   *os << be_nl << be_nl
-      << "struct ";
-      
-  if (alias == 0)
-    {
-      *os << node->flat_name ();
-    }
-  else
-    {    
-      *os << alias->local_name () << "_" << bound;
-    }
-    
-  *os << " {};";
-    
+      << "struct " << alias->local_name () << "_" << bound << " {};";
+
   *os << be_nl << be_nl
       << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
       << "class " << be_global->stub_export_macro () << " "
-      << this->S_ << "Arg_Traits<";
-      
-  if (alias == 0)
-    {
-      *os << node->flat_name ();
-    }
-  else
-    {    
-      *os << alias->local_name () << "_" << bound;
-    }
-      
-  *os << ">" << be_idt_nl
+      << this->S_ << "Arg_Traits<"
+      << alias->local_name () << "_" << bound << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl
       << "BD_" << (wide ? "W" : "")
       << "String_" << this->S_ << "Arg_Traits<" << bound << ">"

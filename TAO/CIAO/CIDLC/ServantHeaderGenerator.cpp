@@ -220,82 +220,12 @@ namespace
     traverse (SemanticGraph::Type& t)
     {
       ScopedName scoped (t.scoped_name ());
-      os << Name (scoped.begin () + 1, scoped.end ());
+      Name stripped (scoped.begin () + 1, scoped.end ());
+      os << stripped;
     }
 
   private:
     std::ostream& os;
-  };
-
-  // Generates operations associated with attributes.
-  // @@@ (JP) Need to support exceptions.
-  struct AttributeEmitter : Traversal::ReadWriteAttribute,
-                            EmitterBase
-  {
-    AttributeEmitter (Context& c)
-      : EmitterBase (c),
-        write_type_name_emitter_ (c.os ()),
-        read_type_name_emitter_ (c.os ())
-    {
-      write_belongs_.node_traverser (write_type_name_emitter_);
-      read_belongs_.node_traverser (read_type_name_emitter_);
-    }
-
-    virtual void traverse (SemanticGraph::ReadWriteAttribute& a)
-    {
-      os << "virtual ";
-
-      Traversal::ReadWriteAttribute::belongs (a, read_belongs_);
-
-      os << endl
-         << a.name () << " (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
-
-      os << "virtual void" << endl
-         << a.name () << " (" << endl;
-
-      Traversal::ReadWriteAttribute::belongs (a, write_belongs_);
-
-      os << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
-    }
-
-  private:
-    INArgTypeNameEmitter write_type_name_emitter_;
-    ReturnTypeNameEmitter read_type_name_emitter_;
-    Traversal::Belongs write_belongs_;
-    Traversal::Belongs read_belongs_;
-  };
-
-  // Generates operations associated with readonly attributes.
-  // @@@ (JP) Need to support exceptions.
-  struct ReadOnlyAttributeEmitter : Traversal::ReadAttribute,
-                                    EmitterBase
-  {
-    ReadOnlyAttributeEmitter (Context& c)
-      : EmitterBase (c),
-        read_type_name_emitter_ (c.os ())
-    {
-      read_belongs_.node_traverser (read_type_name_emitter_);
-    }
-
-    virtual void traverse (SemanticGraph::ReadAttribute& a)
-    {
-      os << "virtual ";
-
-      Traversal::ReadAttribute::belongs (a, read_belongs_);
-
-      os << endl
-         << a.name () << " (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
-    }
-
-  private:
-    ReturnTypeNameEmitter read_type_name_emitter_;
-    Traversal::Belongs read_belongs_;
   };
 
   struct FacetEmitter : Traversal::ProviderData,
@@ -364,11 +294,6 @@ namespace
         Traversal::Inherits inherits;
         interface_emitter.edge_traverser (defines);
         interface_emitter.edge_traverser (inherits);
-
-        AttributeEmitter attribute_emitter (ctx);
-        ReadOnlyAttributeEmitter read_only_attribute_emitter (ctx);
-        defines.node_traverser (attribute_emitter);
-        defines.node_traverser (read_only_attribute_emitter);
 
         OperationEmitter operation_emitter (ctx);
         defines.node_traverser (operation_emitter);
@@ -440,6 +365,77 @@ namespace
     Traversal::Belongs simple_belongs_;
     Traversal::Belongs stripped_belongs_;
     Traversal::Belongs enclosing_belongs_;
+  };
+
+  // Generates operations associated with attributes.
+  // @@@ (JP) Need to support exceptions.
+  struct AttributeEmitter : Traversal::ReadWriteAttribute,
+                            EmitterBase
+  {
+    AttributeEmitter (Context& c)
+      : EmitterBase (c),
+        write_type_name_emitter_ (c.os ()),
+        read_type_name_emitter_ (c.os ())
+    {
+      write_belongs_.node_traverser (write_type_name_emitter_);
+      read_belongs_.node_traverser (read_type_name_emitter_);
+    }
+
+    virtual void traverse (SemanticGraph::ReadWriteAttribute& a)
+    {
+      os << "virtual ";
+
+      Traversal::ReadWriteAttribute::belongs (a, read_belongs_);
+
+      os << endl
+         << a.name () << " (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
+
+      os << "virtual void" << endl
+         << a.name () << " (" << endl;
+
+      Traversal::ReadWriteAttribute::belongs (a, write_belongs_);
+
+      os << endl
+         << STRS[ENV_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
+    }
+
+  private:
+    INArgTypeNameEmitter write_type_name_emitter_;
+    ReturnTypeNameEmitter read_type_name_emitter_;
+    Traversal::Belongs write_belongs_;
+    Traversal::Belongs read_belongs_;
+  };
+
+  // Generates operations associated with readonly attributes.
+  // @@@ (JP) Need to support exceptions.
+  struct ReadOnlyAttributeEmitter : Traversal::ReadAttribute,
+                                    EmitterBase
+  {
+    ReadOnlyAttributeEmitter (Context& c)
+      : EmitterBase (c),
+        read_type_name_emitter_ (c.os ())
+    {
+      read_belongs_.node_traverser (read_type_name_emitter_);
+    }
+
+    virtual void traverse (SemanticGraph::ReadAttribute& a)
+    {
+      os << "virtual ";
+
+      Traversal::ReadAttribute::belongs (a, read_belongs_);
+
+      os << endl
+         << a.name () << " (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
+    }
+
+  private:
+    ReturnTypeNameEmitter read_type_name_emitter_;
+    Traversal::Belongs read_belongs_;
   };
 
   struct ContextEmitter : Traversal::Component, EmitterBase
@@ -711,7 +707,7 @@ namespace
 
       os << "virtual ::Components::CCMHome_ptr" << endl
           << "get_CCM_home (" << endl
-          << STRS[ENV_SNGL_HDR_NOTUSED] << ")" << endl
+          << STRS[ENV_SNGL_HDR] << ")" << endl
           << STRS[EXCP_SNGL] << ";" << endl ;
 
       os << "virtual CORBA::Boolean" << endl
@@ -764,15 +760,6 @@ namespace
 
         names (t, defines);
       }
-      
-      os << "// CIAO-specific." << endl << endl
-         << "::CIAO::Session_Container *" << endl
-         << "_ciao_the_Container (void) const;" << endl;
-         
-      os << "static " << t.name () << "_Context *" << endl
-         << "_narrow (" << endl
-         << "::Components::SessionContext_ptr p" << endl
-         << STRS[ENV_HDR] << ");" << endl;
 
       os << "protected:" << endl
          << "// Methods that manage this component's connections"
@@ -1141,11 +1128,6 @@ namespace
         interface_emitter.edge_traverser (defines);
         interface_emitter.edge_traverser (inherits);
 
-        AttributeEmitter attribute_emitter (ctx);
-        ReadOnlyAttributeEmitter read_only_attribute_emitter (ctx);
-        defines.node_traverser (attribute_emitter);
-        defines.node_traverser (read_only_attribute_emitter);
-
         OperationEmitter operation_emitter (ctx);
         defines.node_traverser (operation_emitter);
         inherits.node_traverser (interface_emitter);
@@ -1396,14 +1378,14 @@ namespace
 
       os << "virtual void" << endl
           << "configuration_complete (" << endl
-          << STRS[ENV_SNGL_HDR_NOTUSED] << ")" << endl
+          << STRS[ENV_SNGL_HDR] << ")" << endl
           << STRS[EXCP_START] << endl
           << STRS[EXCP_SYS] << "," << endl
           << STRS[EXCP_ICF] << "));" << endl << endl;
 
       os << "virtual void" << endl
           << "remove (" << endl
-          << STRS[ENV_SNGL_HDR_NOTUSED] << ")" << endl
+          << STRS[ENV_SNGL_HDR] << ")" << endl
           << STRS[EXCP_START] << endl
           << STRS[EXCP_SYS] << "," << endl
           << STRS[EXCP_RF] << "));" << endl << endl;
@@ -1453,7 +1435,7 @@ namespace
     }
 
     virtual void
-    post (Type& t)
+    post (Type&)
     {
       // Component servant class closer.
       os << "};" << endl;
@@ -1526,7 +1508,7 @@ namespace
       }
 
       virtual void
-      returns (SemanticGraph::HomeFactory& hf)
+      returns (SemanticGraph::HomeFactory&)
       {
         ReturnTypeNameEmitter manages_emitter (os);
         Traversal::Manages manages_;
@@ -1739,11 +1721,6 @@ namespace
         interface_emitter.edge_traverser (defines);
         interface_emitter.edge_traverser (inherits);
 
-        AttributeEmitter attribute_emitter (ctx);
-        ReadOnlyAttributeEmitter read_only_attribute_emitter (ctx);
-        defines.node_traverser (attribute_emitter);
-        defines.node_traverser (read_only_attribute_emitter);
-
         OperationEmitter operation_emitter (ctx);
         defines.node_traverser (operation_emitter);
         inherits.node_traverser (interface_emitter);
@@ -1830,7 +1807,7 @@ namespace
       }
 
       os << "_ptr comp" << endl
-         << STRS[ENV_HDR] << ")" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
          << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "protected:" << endl;
@@ -1870,31 +1847,10 @@ namespace
          << STRS[ENV_HDR] << ");" << endl;
     }
 
-    virtual void post (Type& t)
+    virtual void post (Type&)
     {
       // Namespace closer.
       os << "}" << endl;
-    }
-  };
-
-
-  struct CompositionEmitter : Traversal::Composition, EmitterBase
-  {
-    CompositionEmitter (Context& c)
-      : EmitterBase (c)
-    {
-    }
-
-    virtual void
-    pre (Type& t)
-    {
-      os << "namespace " << t.name () << "{";
-    }
-
-    virtual void
-    post (Type& t)
-    {
-      os << "}";
     }
   };
 }
@@ -1910,9 +1866,9 @@ ServantHeaderEmitter::ServantHeaderEmitter (std::ostream& os_,
 {}
 
 void
-ServantHeaderEmitter::pre (TranslationUnit& u)
+ServantHeaderEmitter::pre (TranslationUnit&)
 {
-  os << COPYRIGHT;
+  os << COPYRIGHT << endl << endl;
 
   string file_name ("");
 
@@ -1993,8 +1949,6 @@ ServantHeaderEmitter::generate (TranslationUnit& u)
 {
   pre (u);
 
-  Context c (os, export_macro_);
-
   Traversal::TranslationUnit unit;
 
   // Layer 1
@@ -2026,7 +1980,7 @@ ServantHeaderEmitter::generate (TranslationUnit& u)
 
   //--
   Traversal::Module module;
-  CompositionEmitter composition (c);
+  Traversal::Composition composition;
   defines.node_traverser (module);
   defines.node_traverser (composition);
 
@@ -2034,8 +1988,6 @@ ServantHeaderEmitter::generate (TranslationUnit& u)
   //
   Traversal::Defines composition_defines;
   composition.edge_traverser (composition_defines);
-  
-  module.edge_traverser (defines);
 
   //--
   Traversal::ComponentExecutor component_executor;
@@ -2050,6 +2002,7 @@ ServantHeaderEmitter::generate (TranslationUnit& u)
   home_executor.edge_traverser (implements);
 
   //--
+  Context c (os, export_macro_);
   ContextEmitter context_emitter (c);
   ServantEmitter servant_emitter (c);
   HomeEmitter home_emitter (c);
@@ -2063,7 +2016,7 @@ ServantHeaderEmitter::generate (TranslationUnit& u)
 }
 
 void
-ServantHeaderEmitter::post (TranslationUnit& u)
+ServantHeaderEmitter::post (TranslationUnit&)
 {
   if (file_.empty ()) return;
 

@@ -2,8 +2,8 @@
 
 #include "common.h"
 
-#include "orbsvcs/orbsvcs/CosNotifyCommC.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNotifyCommC.h"
+#include "orbsvcs/CosNamingC.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 

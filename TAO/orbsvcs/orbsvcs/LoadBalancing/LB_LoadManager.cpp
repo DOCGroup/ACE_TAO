@@ -6,8 +6,8 @@
 #include "LB_LeastLoaded.h"
 #include "LB_conf.h"
 
-#include "orbsvcs/orbsvcs/PortableGroup/PG_Property_Utils.h"
-#include "orbsvcs/orbsvcs/PortableGroup/PG_conf.h"
+#include "orbsvcs/PortableGroup/PG_Property_Utils.h"
+#include "orbsvcs/PortableGroup/PG_conf.h"
 
 #include "tao/Messaging/Messaging.h"
 #include "tao/debug.h"

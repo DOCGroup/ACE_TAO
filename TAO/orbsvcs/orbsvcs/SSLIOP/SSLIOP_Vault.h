@@ -16,13 +16,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/SecurityReplaceableC.h"
+#include "orbsvcs/SecurityReplaceableC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/SSLIOPC.h"
+#include "orbsvcs/SSLIOPC.h"
 #include "tao/LocalObject.h"
 
 #include <openssl/opensslconf.h>

@@ -11,15 +11,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/RtecSchedulerS.h"
-#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/RtecSchedulerS.h"
+#include "orbsvcs/Event_Service_Constants.h"
 
 #include "sched_export.h"
 
 #if defined (TAO_USES_STRATEGY_SCHEDULER)
-#include "orbsvcs/orbsvcs/Sched/Strategy_Scheduler.h"
+#include "orbsvcs/Sched/Strategy_Scheduler.h"
 #else
-#include "orbsvcs/orbsvcs/Sched/Scheduler_Generic.h"
+#include "orbsvcs/Sched/Scheduler_Generic.h"
 #endif /* defined (TAO_USES_STRATEGY_SCHEDULER) */
 
 class TAO_RTSched_Export ACE_Config_Scheduler

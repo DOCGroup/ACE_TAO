@@ -20,7 +20,7 @@ noinst_PROGRAMS = \
 
 main_SOURCES = main.cpp
 main_LDADD = \
-      libDump_Restore.a \
+      $(top_builddir)/netsvcs/clients/Naming/Dump_Restore/libDump_Restore.a \
       $(top_builddir)/ace/libACE.la
 
 ## ACE currently doesn't build this so we don't build it with automake either.

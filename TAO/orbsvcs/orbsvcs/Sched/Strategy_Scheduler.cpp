@@ -23,9 +23,7 @@
 #include "Strategy_Scheduler.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Sched, 
-           Strategy_Scheduler, 
-           "$Id$")
+ACE_RCSID(Sched, Strategy_Scheduler, "$Id$")
 
 //////////////////////////////////////////////
 // Helper function type definition for sort //

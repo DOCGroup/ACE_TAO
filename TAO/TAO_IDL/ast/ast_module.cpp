@@ -703,9 +703,15 @@ AST_Module::fe_add_interface_fwd (AST_InterfaceFwd *i)
                                       d);
           return 0;
         }
-        
-      // No need to call referenced() for forward declared interafces,
-      // they can be redeclared after referencing.
+
+      if (this->referenced (d, i->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      i,
+                                      this,
+                                      d);
+          return 0;
+        }
 
       if (i->has_ancestor (d))
         {

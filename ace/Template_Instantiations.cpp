@@ -350,7 +350,5 @@ template class ACE_Timer_Queue_T<ACE_Event_Handler*, ACE_Timer_Hash_Upcall<ACE_E
 
 template class ACE_Timer_Queue_Iterator_T<ACE_Event_Handler*, ACE_Timer_Hash_Upcall<ACE_Event_Handler*, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>, ACE_Null_Mutex>;
 
-#elif defined (__HP_aCC)
-// Make aC++ stop complaining about an empty translation unit
-static int shut_up_aCC = 0;
+
 #endif /* defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_FILE) */

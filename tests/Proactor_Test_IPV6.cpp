@@ -27,15 +27,15 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Object_Manager.h"
 #include "ace/Get_Opt.h"
+//#include "ace/streams.h"
 
 #include "ace/Proactor.h"
 #include "ace/Asynch_Acceptor.h"
 #include "ace/Asynch_Connector.h"
 #include "ace/Task.h"
 #include "ace/Thread_Semaphore.h"
-#include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_signal.h"
-#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_errno.h"
 #include "ace/os_include/netinet/os_tcp.h"
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
@@ -49,9 +49,6 @@
 #  include "ace/SUN_Proactor.h"
 
 #endif /* defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) */
-
-#include "Proactor_Test.h"
-
 
 // Proactor Type (UNIX only, Win32 ignored)
 typedef enum { DEFAULT = 0, AIOCB, SIG, SUN, CB } ProactorType;
@@ -238,7 +235,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
       break;
 #  endif /* sun */
 
-#  if !defined(__Lynx__)
+#  if defined (__sgi)
     case CB:
       ACE_NEW_RETURN (proactor_impl,
                       ACE_POSIX_CB_Proactor (max_op),
@@ -246,7 +243,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) Create Proactor Type = CB\n")));
       break;
-#  endif /* __Lynx__ */
+#  endif
 
     default:
       ACE_DEBUG ((LM_DEBUG,
@@ -343,6 +340,66 @@ MyTask::svc (void)
   return 0;
 }
 
+// *************************************************************
+//   Receiver and Acceptor
+// *************************************************************
+// forward declaration
+class Acceptor;
+
+class Receiver : public ACE_Service_Handler
+{
+  friend class Acceptor;
+public:
+  Receiver  (Acceptor *acceptor = 0, int index = -1);
+  ~Receiver (void);
+
+  size_t get_total_snd (void) { return this->total_snd_; }
+  size_t get_total_rcv (void) { return this->total_rcv_; }
+  long get_total_w   (void) { return this->total_w_; }
+  long get_total_r   (void) { return this->total_r_; }
+
+  // This is called to pass the new connection's addresses.
+  virtual void addresses (const ACE_INET_Addr& peer,
+                          const ACE_INET_Addr& local);
+
+  /// This is called after the new connection has been accepted.
+  virtual void open (ACE_HANDLE handle,
+                     ACE_Message_Block &message_block);
+
+protected:
+  /**
+   * @name AIO callback handling
+   *
+   * These methods are called by the framework
+   */
+  /// This is called when asynchronous <read> operation from the
+  /// socket completes.
+  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
+
+  /// This is called when an asynchronous <write> to the socket
+  /// completes.
+  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
+
+private:
+  int initiate_read_stream (void);
+  int initiate_write_stream (ACE_Message_Block &mb, size_t nbytes);
+  void cancel ();
+
+  Acceptor *acceptor_;
+  int index_;
+
+  ACE_Asynch_Read_Stream rs_;
+  ACE_Asynch_Write_Stream ws_;
+  ACE_HANDLE handle_;
+  ACE_SYNCH_MUTEX lock_;
+
+  long io_count_;            // Number of currently outstanding I/O requests
+  int flg_cancel_;
+  size_t total_snd_;         // Number of bytes successfully sent
+  size_t total_rcv_;         // Number of bytes successfully received
+  long total_w_;             // Number of write operations
+  long total_r_;             // Number of read operations
+};
 
 class Acceptor : public ACE_Asynch_Acceptor<Receiver>
 {
@@ -881,8 +938,61 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
 }
 
 // *******************************************
-//  Connector
+//   Sender
 // *******************************************
+
+class Connector;
+
+class Sender : public ACE_Service_Handler
+{
+  friend class Connector;
+public:
+
+  /// This is called after the new connection has been established.
+  virtual void open (ACE_HANDLE handle,
+                     ACE_Message_Block &message_block);
+
+  Sender  (Connector *connector = 0, int index = -1);
+  ~Sender (void);
+
+  size_t get_total_snd (void) { return this->total_snd_; }
+  size_t get_total_rcv (void) { return this->total_rcv_; }
+  long get_total_w   (void) { return this->total_w_; }
+  long get_total_r   (void) { return this->total_r_; }
+
+  // This is called to pass the new connection's addresses.
+  virtual void addresses (const ACE_INET_Addr& peer,
+                          const ACE_INET_Addr& local);
+
+  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
+  // This is called when asynchronous reads from the socket complete
+
+  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
+  // This is called when asynchronous writes from the socket complete
+
+private:
+  int initiate_read_stream (void);
+  int initiate_write_stream (void);
+  void cancel (void);
+  void close (void);
+
+  int  index_;
+  Connector * connector_;
+
+  ACE_Asynch_Read_Stream rs_;
+  ACE_Asynch_Write_Stream ws_;
+  ACE_HANDLE handle_;
+
+  ACE_SYNCH_MUTEX lock_;
+
+  long io_count_;
+  int stop_writing_;           // Writes are shut down; just read.
+  int flg_cancel_;
+  size_t total_snd_;
+  size_t total_rcv_;
+  long total_w_;
+  long total_r_;
+};
 
 class Connector : public ACE_Asynch_Connector<Sender>
 {
@@ -1158,34 +1268,33 @@ Sender::close ()
 void
 Sender::addresses (const ACE_INET_Addr& peer, const ACE_INET_Addr& local)
 {
-  char my_name[256];
-  char peer_name[256];
-  ACE_TCHAR local_str[256];
+  ACE_TCHAR str[256];
+  ACE_TCHAR str2[256];
   ACE_INET_Addr addr ((u_short) 0, host);
 
   // This checks to make sure the peer address given to us matches what
   // we expect it to be.
-  if (0 != peer.get_host_addr (peer_name, sizeof (peer_name)))
+  // This check will fail when Asynch_Connector::parse_addresses does 
+  // not handle IPv6 addresses
+  if (0 != peer.get_host_addr (str, sizeof (str) / sizeof (ACE_TCHAR))) 
     {
-      if (0 != addr.get_host_addr (my_name, sizeof (my_name)))
+      if (0 != addr.get_host_addr (str2, sizeof (str2) / sizeof (ACE_TCHAR))) 
         {
-          if (0 != ACE_OS::strncmp (peer_name, my_name, sizeof (my_name)))
+          if (0 != strncmp (str, str2, sizeof (str) / sizeof (ACE_TCHAR)))
             {
-              ACE_ERROR
-                ((LM_ERROR,
-                  ACE_TEXT ("(%t) Sender %d peer address (%C) does not ")
-                  ACE_TEXT ("match host address (%C)\n"),
-                  this->index_,
-                  peer_name, my_name));
+              ACE_ERROR ((LM_ERROR, 
+                          ACE_TEXT ("(%t) Sender %d peer address (%s) does not "
+                                    "match host address (%s)\n"),
+                          this->index_,
+                          str, str2));
               return;
             }
          }
        else
          {
-           ACE_ERROR
-             ((LM_ERROR,
-               ACE_TEXT ("(%t) Sender %d unable to convert host addr\n"),
-               this->index_));
+           ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%t) Sender %d unable to convert host addr\n"),
+                      this->index_));
            return;
         }
      }
@@ -1197,13 +1306,12 @@ Sender::addresses (const ACE_INET_Addr& peer, const ACE_INET_Addr& local)
       return;
     }
 
-  if (0 == local.addr_to_string (local_str,
-                                 sizeof (local_str) / sizeof (ACE_TCHAR)))
+  if (0 == local.addr_to_string (str, sizeof (str) / sizeof (ACE_TCHAR)))
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) Sender %d connected on %s\n"),
                   this->index_,
-                  local_str));
+                  str));
     }
   else
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) Receiver %d %p\n"),
@@ -1750,11 +1858,11 @@ set_proactor_type (const ACE_TCHAR *ptype)
       proactor_type = SUN;
       return 1;
 #endif /* sun */
-#if !defined (__Lynx__)
+#if defined (__sgi)
      case 'C':
        proactor_type = CB;
        return 1;
-#endif /* __Lynx__ */
+#endif /* __sgi */
     default:
       break;
     }
@@ -1846,7 +1954,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ACE_TEXT ("Proactor_Test_IPV6"));
+  ACE_START_TEST (ACE_TEXT ("Proactor_Test_IPv6"));
 
   if (::parse_args (argc, argv) == -1)
     return -1;
@@ -1995,7 +2103,7 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Threads or Asynchronous IO is unsupported.\n")
-              ACE_TEXT ("Proactor_Test_IPV6 will not be run.")));
+              ACE_TEXT ("Proactor_Test_IPv6 will not be run.")));
 
   ACE_END_TEST;
 

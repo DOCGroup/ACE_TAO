@@ -4,13 +4,13 @@
 #include "ace/Get_Opt.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "orbsvcs/orbsvcs/CosNamingC.h"
-#include "orbsvcs/orbsvcs/Naming/Naming_Utils.h"
-#include "orbsvcs/orbsvcs/AV/AVStreams_i.h"
-#include "orbsvcs/orbsvcs/AV/Endpoint_Strategy.h"
-#include "orbsvcs/orbsvcs/AV/Transport.h"
-#include "orbsvcs/orbsvcs/AV/sfp.h"
-#include "orbsvcs/orbsvcs/AV/MCast.h"
-#include "orbsvcs/orbsvcs/AV/Policy.h"
+#include "orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/AV/AVStreams_i.h"
+#include "orbsvcs/AV/Endpoint_Strategy.h"
+#include "orbsvcs/AV/Transport.h"
+#include "orbsvcs/AV/sfp.h"
+#include "orbsvcs/AV/MCast.h"
+#include "orbsvcs/AV/Policy.h"
 
 class FTP_Server_StreamEndPoint
   :public TAO_Server_StreamEndPoint

@@ -35,17 +35,14 @@ sub fill_value {
 
   if ($name eq 'cppdir') {
     my(%dirnames) = ();
-    foreach my $file ($self->get_component_list('source_files', 1)) {
+    foreach my $file ($self->get_component_list('source_files')) {
       my($dirname) = dirname($file);
       if ($dirname eq '') {
         $dirname = '.';
       }
-      elsif ($self->convert_slashes()) {
-        $dirname = $self->slash_to_backslash($dirname);
-      }
       $dirnames{$dirname} = 1;
     }
-    $value = join(';', keys %dirnames);
+    $value = join(';', sort keys %dirnames);
   }
 
   return $value;

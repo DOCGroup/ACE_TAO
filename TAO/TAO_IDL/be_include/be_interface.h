@@ -303,10 +303,6 @@ public:
                            const char *full_skeleton_name,
                            TAO_OutStream *os);
   // generate the operation table entries.
-  
-  int convert_parent_ops (be_visitor *visitor);
-  // If we are local, regenerate non-local base class operations as
-  // pure virtual.
 
   static void gen_collocated_skel_body (be_interface *derived,
                                         be_interface *ancestor,

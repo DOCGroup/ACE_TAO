@@ -15,13 +15,14 @@
 //
 // ============================================================================
 
-#include "tests/test_config.h"
+
 #include "ace/Token.h"
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"
 #include "ace/Auto_IncDec_T.h"
 #include "ace/Vector_T.h"
 #include "ace/Stats.h"
+#include "tests/test_config.h"
 #include "ace/ACE.h"
 #include "ace/Barrier.h"
 

@@ -2,7 +2,7 @@
 // before editing the file please consider generating it again
 // $Id$
 
-#include "orbsvcs/orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/Scheduler_Factory.h"
 
 static ACE_Scheduler_Factory::POD_RT_Info runtime_infos_3[] = {
   { "Reactor_Task-25000.us",          1,          0,          0,          0,     250000, (RtecScheduler::Criticality_t) 4, (RtecScheduler::Importance_t) 0,          0,          1,         59,       1022,          0, (RtecScheduler::Info_Type_t) 0 , (RtecScheduler::RT_Info_Enabled_Type_t) RtecScheduler::RT_INFO_ENABLED },

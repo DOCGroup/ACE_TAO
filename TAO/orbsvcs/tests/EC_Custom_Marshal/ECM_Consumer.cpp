@@ -3,10 +3,10 @@
 #include "ECM_Consumer.h"
 #include "ECM_Data.h"
 
-#include "orbsvcs/orbsvcs/Event_Utilities.h"
-#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/orbsvcs/Time_Utilities.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/Event_Utilities.h"
+#include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Time_Utilities.h"
+#include "orbsvcs/CosNamingC.h"
 
 #include "tao/Timeprobe.h"
 #include "tao/ORB_Core.h"
@@ -16,9 +16,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 
-ACE_RCSID (EC_Custom_Marshal, 
-           ECM_Consumer, 
-           "$Id$")
+ACE_RCSID(EC_Custom_Marshal, ECM_Consumer, "$Id$")
 
 int
 main (int argc, char *argv [])

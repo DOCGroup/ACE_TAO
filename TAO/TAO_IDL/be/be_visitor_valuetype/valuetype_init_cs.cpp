@@ -98,7 +98,7 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
       << "const char* " << be_nl
       << fname << "::tao_repository_id (void)" << be_nl
       << "{" << be_idt_nl
-      <<   "return ::" << node->full_name ()
+      <<   "return " << node->full_name ()
       <<                "::_tao_obv_static_repository_id ();"
       << be_uidt_nl << "}";
 

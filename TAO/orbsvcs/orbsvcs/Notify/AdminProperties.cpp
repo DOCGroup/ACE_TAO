@@ -6,11 +6,9 @@
 #include "AdminProperties.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Notify, 
-           TAO_Notify_AdminProperties, 
-           "$Id$")
+ACE_RCSID (Notify, TAO_Notify_AdminProperties, "$Id$")
 
-#include "orbsvcs/orbsvcs/CosNotificationC.h"
+#include "orbsvcs/CosNotificationC.h"
 
 TAO_Notify_AdminProperties::TAO_Notify_AdminProperties (void)
   : max_global_queue_length_ (CosNotification::MaxQueueLength, 0)

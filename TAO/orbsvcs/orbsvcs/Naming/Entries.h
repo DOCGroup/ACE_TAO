@@ -23,7 +23,7 @@
 
 #include "ace/SString.h"
 
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 #include "naming_export.h"
 
 /**

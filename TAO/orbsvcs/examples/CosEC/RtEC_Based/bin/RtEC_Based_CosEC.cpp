@@ -1,7 +1,7 @@
 // $Id$
 
 #include "RtEC_Based_CosEC.h"
-#include "orbsvcs/orbsvcs/Event/EC_Default_Factory.h"
+#include "orbsvcs/Event/EC_Default_Factory.h"
 #include "ace/Get_Opt.h"
 
 RtEC_Based_CosEC::RtEC_Based_CosEC (void)

@@ -2,9 +2,9 @@
 
 #include "ECT_Consumer.h"
 
-#include "orbsvcs/orbsvcs/Event_Utilities.h"
-#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/orbsvcs/Time_Utilities.h"
+#include "orbsvcs/Event_Utilities.h"
+#include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Time_Utilities.h"
 
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
@@ -13,9 +13,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Sched_Params.h"
 
-ACE_RCSID (EC_Throughput, 
-           ECT_Consumer, 
-           "$Id$")
+ACE_RCSID(EC_Throughput, ECT_Consumer, "$Id$")
 
 Test_Consumer::Test_Consumer (ECT_Driver *driver,
                               void *cookie,

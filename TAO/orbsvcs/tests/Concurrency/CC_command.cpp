@@ -20,12 +20,10 @@
 #include "CC_naming_service.h"
 #include "ace/ACE.h"
 #include "ace/Process.h"
-#include "orbsvcs/orbsvcs/CosConcurrencyControlC.h"
+#include "orbsvcs/CosConcurrencyControlC.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (Concurrency, 
-           CC_command, 
-           "$Id$")
+ACE_RCSID(Concurrency, CC_command, "$Id$")
 
 CC_Command::~CC_Command(void)
 {

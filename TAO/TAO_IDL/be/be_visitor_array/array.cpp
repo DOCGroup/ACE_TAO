@@ -213,29 +213,11 @@ be_visitor_array::visit_union (be_union *node)
 int
 be_visitor_array::visit_typedef (be_typedef *node)
 {
+  int result = this->visit_node (node);
   TAO_OutStream *os = this->ctx_->stream ();
   AST_Type *pbt = node->primitive_base_type ();
   AST_Decl::NodeType nt = pbt->node_type ();
   AST_PredefinedType::PredefinedType pt = AST_PredefinedType:: PT_void;
-  int result = 0;
-  
-  // We check for these first, because in these cases, we replace the
-  // entire slice type with one of the strings below, instead of using
-  // the node's type name, possibly suffixed with '_var'.
-  if (nt == AST_Decl::NT_string)
-    {
-      *os << "TAO_String_Manager";
-      
-      return 0;
-    }
-  else if (nt == AST_Decl::NT_wstring)
-    {
-      *os << "TAO_WString_Manager";
-      
-      return 0;
-    }
-
-  result = this->visit_node (node);
 
   if (nt == AST_Decl::NT_pre_defined)
     {

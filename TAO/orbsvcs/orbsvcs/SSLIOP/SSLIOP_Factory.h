@@ -25,7 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/SecurityC.h"
+#include "orbsvcs/SecurityC.h"
 
 #include "tao/Protocol_Factory.h"
 

@@ -633,8 +633,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                                  pos - current_arg);
           ACE_CString IOR (ACE_TEXT_ALWAYS_CHAR(pos + 1));
           if (this->init_ref_map_.bind (object_id, IOR) != 0)
-            {              
-              ACE_ERROR ((LM_ERROR,
+            {              ACE_ERROR ((LM_ERROR,
                           ACE_LIB_TEXT ("Cannot store ORBInitRef ")
                           ACE_LIB_TEXT ("argument '%s'\n"),
                           current_arg));
@@ -710,7 +709,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                               CORBA::COMPLETED_NO));
           ACE_CHECK_RETURN (-1);
 
-          output_stream->open (ACE_TEXT_ALWAYS_CHAR (file_name), ios::out | ios::app);
+          output_stream->open (file_name, ios::out | ios::app);
 
           if (!output_stream->bad ())
             {
@@ -1151,7 +1150,7 @@ TAO_ORB_Core::fini (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_LIB_TEXT ("Destroying ORB <%s>\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (this->orbid_)));
+                  this->orbid_));
     }
 
   // Finalize lane resources.
@@ -1823,9 +1822,9 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
 {
   if (TAO_debug_level >= 3)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("TAO (%P|%t) - ORB_Core::run, ")
-                ACE_LIB_TEXT ("start [%s]\n"),
-                perform_work?ACE_LIB_TEXT("perform_work"):ACE_LIB_TEXT("run")));
+                "TAO (%P|%t) - ORB_Core::run, "
+                "start [%s]\n",
+                perform_work?"perform_work":"run"));
 
   // Fetch the Reactor
   ACE_Reactor *r = this->reactor ();
@@ -1876,15 +1875,15 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
 
       if (TAO_debug_level >= 3)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("TAO (%P|%t) - ORB_Core::run, ")
-                    ACE_LIB_TEXT ( "calling handle_events()\n")));
+                    ACE_LIB_TEXT ("TAO (%P|%t) - ORB_Core::run, "
+                                  "calling handle_events()\n")));
 
       result = r->handle_events (tv);
 
       if (TAO_debug_level >= 3)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("TAO (%P|%t) - ORB_Core::run, ")
-                    ACE_LIB_TEXT ("handle_events() returns %d\n"),
+                    ACE_LIB_TEXT ("TAO (%P|%t) - ORB_Core::run, "
+                                  "handle_events() returns %d\n"),
                     result));
 
       if (result == -1)
@@ -2096,7 +2095,7 @@ TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
       if (TAO_debug_level > 3)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_LIB_TEXT ("(%P|%t) Exception in TAO_ORB_Core")
+                      ACE_LIB_TEXT ("(%P|%t) Exception in TAO_ORB_Core"),
                       ACE_LIB_TEXT ("::destroy_interceptors () \n")));
         }
     }
@@ -2656,6 +2655,7 @@ TAO_ORB_Core::connection_timeout (TAO_Stub *stub,
     }
 
   (*connection_timeout_hook) (this, stub, has_timeout, time_value);
+  has_timeout = true;
 }
 
 void
@@ -2933,20 +2933,6 @@ TAO_ORB_Core::InitRefMap *
 TAO_ORB_Core::init_ref_map ()
 {
   return &this->init_ref_map_;
-}
-
-void
-TAO_ORB_Core::set_default (const char *orb_id)
-{
-  TAO_ORB_Table *table = TAO_ORB_Table::instance ();
-  table->set_default (orb_id);
-}
-
-void
-TAO_ORB_Core::not_default (const char *orb_id)
-{
-  TAO_ORB_Table *table = TAO_ORB_Table::instance ();
-  table->not_default (orb_id);
 }
 
 /// Return the valuetype adapter

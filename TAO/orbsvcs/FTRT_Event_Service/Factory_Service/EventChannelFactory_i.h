@@ -13,7 +13,7 @@
 #ifndef EVENTCHANNELFACTORY_I_H
 #define EVENTCHANNELFACTORY_I_H
 
-#include "orbsvcs/orbsvcs/FT_CORBAS.h"
+#include "orbsvcs/FT_CORBAS.h"
 #include "ace/Synch.h"
 #include "ace/Hash_Map_Manager_T.h"
 

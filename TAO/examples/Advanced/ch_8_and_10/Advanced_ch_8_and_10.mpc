@@ -2,14 +2,14 @@
 // $Id$
 
 project(*client) : taoexe, portableserver {
-  requires += exceptions dummy_label
+  requires += exceptions
   source_files {
     client.cpp
   }
 }
 
 project(*server) : taoexe, portableserver {
-  requires += exceptions dummy_label
+  requires += exceptions
   source_files {
     server.cpp
     icp.cpp

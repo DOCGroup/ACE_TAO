@@ -20,7 +20,7 @@
 
 #include "../Event.h"
 #include "../EventType.h"
-#include "orbsvcs/orbsvcs/CosNotificationC.h"
+#include "orbsvcs/CosNotificationC.h"
 
 /**
  * @class TAO_Notify_StructuredEvent_No_Copy

@@ -3,14 +3,12 @@
 #ifndef ACE_CHANNEL_CLIENTS_T_C
 #define ACE_CHANNEL_CLIENTS_T_C
 
-#include "orbsvcs/orbsvcs/Channel_Clients_T.h"
+#include "orbsvcs/Channel_Clients_T.h"
 
-ACE_RCSID (orbsvcs, 
-           Channel_Clients_T, 
-           "$Id$")
+ACE_RCSID(orbsvcs, Channel_Clients_T, "$Id$")
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/orbsvcs/Channel_Clients_T.i"
+#include "orbsvcs/Channel_Clients_T.i"
 #endif /* __ACE_INLINE__ */
 
 template<class TARGET> void

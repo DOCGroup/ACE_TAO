@@ -42,7 +42,7 @@ TAO_Connection_Handler::~TAO_Connection_Handler (void)
     {
       ACE_ERROR ((LM_ERROR,
                   "TAO (%P|%t) - Connection_Handler::~Connection_Handler,"
-                  "release_os_resources() failed %m\n"));
+                  "release_os_resources() failed %p\n"));
     }
 
   // @@ TODO Use auto_ptr<>
@@ -117,6 +117,7 @@ TAO_Connection_Handler::svc_i (void)
   // occured.
   // - Or if during processing a return value of -1 is received.
   while (!this->orb_core_->has_shutdown ()
+         && this->transport ()
          && result >= 0)
     {
       // Let the transport know that it is used
@@ -136,11 +137,6 @@ TAO_Connection_Handler::svc_i (void)
           // of errno in case it is not reset when the recv() call
           // fails if the socket has been closed.
           errno = 0;
-        }
-      else if (result == -1)
-        {
-          // Something went wrong with the socket. Just quit
-          return result;
         }
 
       current_timeout = timeout;

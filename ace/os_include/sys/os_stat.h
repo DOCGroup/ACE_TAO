@@ -73,11 +73,6 @@ extern "C"
 #    define S_IFDIR 0040000
 #    define S_IFREG 0100000
 #  endif /* ACE_HAS_WINCE */
-
-#if !defined (S_IFLNK)
-#define S_IFLNK 0200000
-#endif /* S_IFLNK */
-
 #endif /* ACE_LACKS_MODE_MASKS */
 
 #if defined (ACE_HAS_WINCE)

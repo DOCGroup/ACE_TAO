@@ -33,6 +33,18 @@ TAO_Notify_ProxyPushConsumer::release (void)
   //@@ inform factory
 }
 
+void
+TAO_Notify_ProxyPushConsumer::destroy (ACE_ENV_SINGLE_ARG_DECL)
+{
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "In TAO_Notify_ProxyPushConsumer::destroy \n"));
+
+  if (this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
+    return;
+
+  ACE_CHECK;
+}
+
 CosNotifyChannelAdmin::ProxyType
 TAO_Notify_ProxyPushConsumer::MyType (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((

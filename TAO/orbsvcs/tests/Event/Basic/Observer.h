@@ -14,7 +14,7 @@
 #define EC_OBSERVER_H
 
 #include "Driver.h"
-#include "orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.h"
+#include "orbsvcs/Event/EC_Gateway_IIOP.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

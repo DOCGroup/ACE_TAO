@@ -49,7 +49,7 @@
 #include "tao/PortableInterceptor.h"
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/RequestInfo_Util.h"
-#include "tao/PortableServer/PICurrent_Guard.h"
+#include "tao/PICurrent.h"
 #include "tao/PortableServer/ServerRequestInfo.h"
 #include "tao/PortableServer/ServerInterceptorAdapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
@@ -994,8 +994,8 @@ void POA_CORBA::Policy::_get_policy_type_skel (
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            1  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
 
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -1125,8 +1125,8 @@ void POA_CORBA::Policy::copy_skel (
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            1  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
 
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -1258,8 +1258,8 @@ void POA_CORBA::Policy::destroy_skel (
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            1  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
 
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;

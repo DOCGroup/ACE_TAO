@@ -33,7 +33,7 @@ Fragmentation   :	Fragment messages in smaller chunks
 Reassembly	:	and ensure that the IOVMAX limit is not
 		:	reached
 ----------------------------------------------------------------
-Transport	:	Encapsulate the specific transport media
+Tranport	:	Encapsulate the specific transport media
 		:	such as TCP/IP, ATM, or shared memory
 		:	Demuxes incoming data to the right chain
 		:	Change control messages and data messages

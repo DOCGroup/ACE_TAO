@@ -5,7 +5,6 @@
 
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SOCK_SEQPACK_Connector.i"

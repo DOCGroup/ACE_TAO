@@ -15,13 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/CosEventChannelAdminS.h"
+#include "orbsvcs/CosEventChannelAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h"
+#include "orbsvcs/ESF/ESF_Proxy_Admin.h"
 
 #include "CEC_ProxyPushSupplier.h"
 #include "CEC_ProxyPullSupplier.h"

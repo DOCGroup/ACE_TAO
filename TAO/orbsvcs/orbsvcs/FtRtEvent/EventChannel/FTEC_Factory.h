@@ -12,7 +12,7 @@
 #ifndef FTEC_FACTORY_H
 #define FTEC_FACTORY_H
 
-#include "orbsvcs/orbsvcs/Event/EC_Default_Factory.h"
+#include "orbsvcs/Event/EC_Default_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

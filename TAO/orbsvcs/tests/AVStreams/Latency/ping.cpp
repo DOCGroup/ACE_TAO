@@ -1,16 +1,14 @@
 // $Id$
 
 #include "ping.h"
-#include "orbsvcs/orbsvcs/AV/Protocol_Factory.h"
+#include "orbsvcs/AV/Protocol_Factory.h"
 #include "tao/ORB.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
 
-ACE_RCSID (Latency, 
-           ping, 
-           "$Id$")
+ACE_RCSID(Latency, ping, "$Id$")
 
 const char *ior_output_file = "ping.ior";
 const char *protocol = "RTP/UDP";

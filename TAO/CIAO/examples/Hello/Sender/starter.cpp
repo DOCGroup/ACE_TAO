@@ -49,12 +49,7 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       // Initialize orb
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, 
-		                            argv,
-					    ""
-					    ACE_ENV_ARG_PARAMETER);
-
-      ACE_TRY_CHECK;
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv ACE_ENV_ARG_PARAMETER);
 
       if (parse_args (argc, argv) != 0)
         return -1;
@@ -66,15 +61,14 @@ main (int argc, char *argv[])
 
       Hello::Sender_var sender
         = Hello::Sender::_narrow (obj.in ()
-			          ACE_ENV_ARG_PARAMETER);
+				    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (sender.in ()))
         ACE_ERROR_RETURN ((LM_ERROR, "Unable to acquire Sender's objref\n"), -1);
 
       sender->local_message (message);
-
-      sender->start (ACE_ENV_SINGLE_ARG_PARAMETER);
+      sender->start (ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);

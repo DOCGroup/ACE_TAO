@@ -33,13 +33,13 @@ Benchmark_Performance::done (sig_atomic_t d)
 }
 
 int
-Benchmark_Performance::init (int, ACE_TCHAR **)
+Benchmark_Performance::init (int, char **)
 {
   return 1;
 }
 
 int
-Benchmark_Performance::info (ACE_TCHAR **, size_t) const
+Benchmark_Performance::info (char **, size_t) const
 {
   return -1;
 }

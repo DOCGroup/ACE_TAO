@@ -1,17 +1,15 @@
 // $Id$
 
 #include "Supplier.h"
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/orbsvcs/Event_Utilities.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Event_Utilities.h"
+#include "orbsvcs/CosNamingC.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (EC_Examples, 
-           Supplier, 
-           "$Id$")
+ACE_RCSID(EC_Examples, Supplier, "$Id$")
 
 const RtecEventComm::EventSourceID MY_SOURCE_ID  = ACE_ES_EVENT_SOURCE_ANY + 1;
 const RtecEventComm::EventType     MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;

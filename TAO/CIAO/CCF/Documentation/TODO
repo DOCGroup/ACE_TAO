@@ -10,9 +10,6 @@ Legend:
 
 ------------------------------------------------------------------------
 
-@@ In operation comma member function is used both for parameters and 
-   exceptions. As a result one can get unexpected extra commas.
-
 @@ Make CCF buildable with MPC.
 
 @@ Write proper build instructions.
@@ -83,7 +80,7 @@ Legend:
 
 ---
 
-%% Inherited name lookup
+@@ Inherited name lookup
 
 %% Revisit LEM for interconnected rules.
 

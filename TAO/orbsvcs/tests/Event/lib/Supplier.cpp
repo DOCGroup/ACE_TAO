@@ -1,15 +1,13 @@
 // $Id$
 
 #include "Supplier.h"
-#include "orbsvcs/orbsvcs/Time_Utilities.h"
-#include "orbsvcs/orbsvcs/Event_Utilities.h"
+#include "orbsvcs/Time_Utilities.h"
+#include "orbsvcs/Event_Utilities.h"
 
 #include "tao/debug.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (EC_Tests, 
-           EC_Supplier, 
-           "$Id$")
+ACE_RCSID(EC_Tests, EC_Supplier, "$Id$")
 
 EC_Supplier::EC_Supplier (EC_Driver *driver,
                           void* cookie)

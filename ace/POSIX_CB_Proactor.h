@@ -19,17 +19,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_AIO_CALLS) && !defined(__Lynx__)
+#if defined (ACE_HAS_AIO_CALLS) && !defined(__sun) && !defined(__Lynx__)
 
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Semaphore.h"
 #include "ace/Null_Semaphore.h"
 
 #include "ace/POSIX_Proactor.h"
-
-#if defined(AIX) || defined(sun)
-typedef union sigval sigval_t;
-#endif
 
 /**
  * @class ACE_POSIX_CB_Proactor
@@ -50,11 +46,9 @@ public:
   /// be started at the same time.
   ACE_POSIX_CB_Proactor (size_t max_aio_operations = ACE_AIO_DEFAULT_SIZE);
 
-  // This only public so the "extern C" completion function can see it
-  // when needed.
-  static void aio_completion_func (sigval_t cb_data);
-
 protected:
+
+  static void aio_completion_func (sigval_t cb_data);
 
   /**
    * Dispatch a single set of events.  If <wait_time> elapses before
@@ -96,5 +90,5 @@ protected:
 #include "ace/POSIX_CB_Proactor.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* ACE_HAS_AIO_CALLS && !__Lynx__ */
+#endif /* ACE_HAS_AIO_CALLS && !__sun && !__Lynx__ */
 #endif /* ACE_POSIX_CB_PROACTOR_H*/

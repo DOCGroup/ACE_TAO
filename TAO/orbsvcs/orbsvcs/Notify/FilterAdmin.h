@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/CosNotifyFilterS.h"
+#include "orbsvcs/CosNotifyFilterS.h"
 
 #include "ace/Hash_Map_Manager.h"
 

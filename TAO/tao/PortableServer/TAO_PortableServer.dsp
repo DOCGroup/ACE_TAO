@@ -244,10 +244,6 @@ SOURCE=.\ORB_Manager.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\PICurrent_Guard.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\POA.cpp
 # End Source File
 # Begin Source File
@@ -404,10 +400,6 @@ SOURCE=.\Operation_Table.h
 # Begin Source File
 
 SOURCE=.\ORB_Manager.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\PICurrent_Guard.h
 # End Source File
 # Begin Source File
 

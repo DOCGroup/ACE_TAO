@@ -13,9 +13,7 @@
 #include "Client_Pair.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_PERF_RTEC, 
-           Client_Pair, 
-           "$Id$")
+ACE_RCSID(TAO_PERF_RTEC, Client_Pair, "$Id$")
 
 void
 Client_Pair::init (CORBA::Long experiment_id,

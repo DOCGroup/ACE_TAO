@@ -54,7 +54,6 @@ write_to_pipe (ACE_Pipe &pipe)
                               data,
                               len);
   ACE_ASSERT ((size_t)result == len);
-  ACE_UNUSED_ARG (result);
 }
 
 // Simple handler class
@@ -79,7 +78,6 @@ public:
   int handle_close (ACE_HANDLE handle,
                     ACE_Reactor_Mask close_mask)
   {
-    ACE_UNUSED_ARG (handle);
     ACE_DEBUG ((LM_DEBUG,
                 "Handler::handle_close called with mask = %d\n",
                 close_mask));
@@ -88,7 +86,6 @@ public:
 
   int handle_input (ACE_HANDLE handle)
   {
-    ACE_UNUSED_ARG (handle);
     ACE_DEBUG ((LM_DEBUG, "Handler::handle_input\n"));
 
     // Remove for reading
@@ -97,7 +94,6 @@ public:
 
   int handle_output (ACE_HANDLE handle)
   {
-    ACE_UNUSED_ARG (handle);
     ACE_DEBUG ((LM_DEBUG, "Handler::handle_output\n"));
 
     // Optionally cancel reads
@@ -106,7 +102,6 @@ public:
         int result = this->reactor ()->cancel_wakeup (this,
                                                       ACE_Event_Handler::READ_MASK);
         ACE_ASSERT (result != -1);
-        ACE_UNUSED_ARG (result);
       }
 
     // Write to the pipe; this causes handle_input to get called.
@@ -143,7 +138,6 @@ public:
   int handle_close (ACE_HANDLE handle,
                     ACE_Reactor_Mask close_mask)
   {
-    ACE_UNUSED_ARG (handle);
     ACE_DEBUG ((LM_DEBUG,
                 "Different_Handler::handle_close called with mask = %d\n",
                 close_mask));
@@ -152,21 +146,18 @@ public:
 
   int handle_input (ACE_HANDLE handle)
   {
-    ACE_UNUSED_ARG (handle);
     ACE_DEBUG ((LM_DEBUG, "Different_Handler::handle_input\n"));
 
     // Remove for reading
     int result = this->reactor ()->remove_handler (this,
                                                    ACE_Event_Handler::READ_MASK);
     ACE_ASSERT (result == 0);
-    ACE_UNUSED_ARG (result);
 
     return 0;
   }
 
   int handle_output (ACE_HANDLE handle)
   {
-    ACE_UNUSED_ARG (handle);
     ACE_DEBUG ((LM_DEBUG, "Different_Handler::handle_output\n"));
 
     // Add for reading
@@ -181,7 +172,6 @@ public:
 
     ACE_ASSERT (old_masks ==
                 ACE_static_cast (ACE_Reactor_Mask, result));
-    ACE_UNUSED_ARG (old_masks);
 
     // Get new masks
     result = this->reactor ()->mask_ops (this,
@@ -196,7 +186,6 @@ public:
 
     ACE_ASSERT (current_masks ==
                 ACE_static_cast (ACE_Reactor_Mask, result));
-    ACE_UNUSED_ARG (current_masks);
 
     // Remove for writing
     ACE_Reactor_Mask mask = ACE_Event_Handler::WRITE_MASK | ACE_Event_Handler::DONT_CALL;

@@ -37,23 +37,22 @@ class ACE_Lock;
  * @class ACE_Message_Block
  *
  * @brief Stores messages for use throughout ACE (particularly
- * in an ACE_Message_Queue).
+ * <ACE_Message_Queue>).
  *
- * An ACE_Message_Block is modeled after the message data
+ * An <ACE_Message_Block> is modeled after the message data
  * structures used in System V STREAMS.  Its purpose is to
- * enable efficient manipulation of arbitrarily large messages
+ * enable efficient manipulation of arbitrarily-large messages
  * without incurring much memory copying overhead.  Here are the
- * main characteristics of an ACE_Message_Block:
- * - Contains a pointer to a reference-counted
- *   ACE_Data_Block, which in turn points to the actual data
- *   buffer.  This allows very flexible and efficient sharing of
- *   data by multiple ACE_Message_Block objects.
- * - One or more ACE_Message_Blocks can be linked to form a
+ * main characteristics of an <ACE_Message_Block>:
+ * 1. Contains a pointer to a reference-counted
+ *    <ACE_Data_Block>, which in turn points to the actual data
+ *    buffer.  This allows very flexible and efficient sharing of
+ *    data by multiple <ACE_Message_Block>s.
+ * 2. One or more <ACE_Message_Blocks> can be linked to form a
  *    ``fragment chain.''
- * - ACE_Message_Blocks can be linked together in a doubly linked fashion
- *   to form a queue of messages (this is how ACE_Message_Queue works).
- *
- * @see C++NPv1, section 4.2; APG, section 12.3.2.
+ * 3. <ACE_Message_Blocks> can be linked together by <prev_> and
+ *    <next_> pointers to form a queue of messages (e.g., this is how
+ *    <ACE_Message_Queue> works).
  */
 class ACE_Export ACE_Message_Block
 {
@@ -131,8 +130,8 @@ public:
   ACE_Message_Block (ACE_Allocator *message_block_allocator = 0);
 
   /**
-   * Create an ACE_Message_Block that owns the specified ACE_Data_Block
-   * without copying it. If the @a flags is set to @c DONT_DELETE we
+   * Create an <ACE_Message_Block> that owns the <ACE_Data_Block>
+   * without copying it. If the <flags> is set to DONT_DELETE we
    * don't delete the ACE_Data_Block. It is left to the client's
    * responsibility to take care of the memory allocated for the
    * data_block
@@ -142,37 +141,36 @@ public:
                      ACE_Allocator *message_block_allocator = 0);
 
   /**
-   * Create an ACE_Message_Block that refers to @a data without
-   * copying it. The @a data memory will not be freed when this block is
-   * destroyed; memory management of @a data is left to the caller.
-   * Note that the @c size of the new ACE_Message_Block will be @a size, but
-   * the @c length will be 0 until the write pointer is changed.
+   * Create a Message Block that assumes ownership of <data> without
+   * copying it (i.e., we don't delete it since we don't malloc it!).
+   * Note that the <size> of the <Message_Block> will be <size>, but
+   * the <length> will be 0 until <wr_ptr> is set.
    */
   ACE_Message_Block (const char *data,
                      size_t size = 0,
                      unsigned long priority = ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY);
 
   /**
-   * Create an initialized message of type @a type containing @a size
-   * bytes.  The @a cont argument initializes the continuation field in
-   * the ACE_Message_Block.  If @a data == 0 then this block allocates and
-   * owns the block's memory, using @a allocator to get the data if it's
-   * non-0.  If @a data != 0 then this block refers to that memory until
-   * this this block ceases to exist; this object will not free @a data on
-   * destruction.  If @a locking_strategy is non-0 then this is used
-   * to protect regions of code that access shared state (e.g.,
-   * reference counting) from  race conditions.  Note that the @c size
-   * of the ACE_Message_Block will be @a size, but the @c length will be 0
-   * until the write pointer is set. The @a data_block_allocator is used to
-   * allocate the data blocks while the @a allocator_strategy is used
+   * Create an initialized message of type <type> containing <size>
+   * bytes.  The <cont> argument initializes the continuation field in
+   * the <Message_Block>.  If <data> == 0 then we create and own the
+   * <data>, using <allocator> to get the data if it's non-0.  If
+   * <data> != 0 we assume that we have ownership of the <data> till
+   * this object ceases to exist  (and don't delete it during
+   * destruction).  If  <locking_strategy> is non-0 then this is used
+   * to protect regions  of code that access shared state (e.g.,
+   * reference counting) from  race conditions.  Note that the <size>
+   * of the <Message_Block> will be <size>, but the <length> will be 0
+   * until <wr_ptr> is set. The <data_block_allocator> is use to
+   * allocate the data  blocks while the <allocator_strategy> is used
    * to allocate the buffers contained by those. The
-   * @a message_block_allocator is used to allocate new ACE_Message_Block
-   * objects when the duplicate() method is called. If a
-   * @a message_block_allocator is given, this ACE_Message_Block and
-   * future ACE_Message_Block objects created by duplicate() will be
-   * freed using this allocator when they are released.
-   * @note If you use this allocator, the ACE_Message_Block you created
-   * should have been created using this allocator because it will be
+   * <message_block_allocator> is used to allocate new <Message_Block>
+   * objects when a duplicate method  is called.  If a
+   * <message_block_allocator> is given, this <Message_Block> and
+   * future <Message_Block> objects created by duplicate will be
+   * free'ed into this allocator when they are  released.  Note: if
+   * you use this  allocator, the <Message_Block> you created should
+   * have been created using this allocator because it will be
    * released to the same allocator.
    */
   ACE_Message_Block (size_t size,

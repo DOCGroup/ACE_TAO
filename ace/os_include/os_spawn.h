@@ -25,7 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/os_signal.h"
-#include "ace/os_include/sys/os_types.h"
+#include "ace/os_include/os_sys/types.h"
 #include "ace/os_include/os_sched.h"
 
 #if !defined (ACE_LACKS_SPAWN_H)

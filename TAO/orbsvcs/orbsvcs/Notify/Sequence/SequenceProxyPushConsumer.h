@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
+#include "orbsvcs/CosNotifyChannelAdminS.h"
 
 #include "../ProxyConsumer_T.h"
 
@@ -37,7 +37,7 @@
  * @brief
  *
  */
-class TAO_Notify_Export TAO_Notify_SequenceProxyPushConsumer
+class TAO_Notify_Export TAO_Notify_SequenceProxyPushConsumer 
   : public virtual TAO_Notify_ProxyConsumer_T <POA_CosNotifyChannelAdmin::SequenceProxyPushConsumer>
 {
   friend class TAO_Notify_Builder;
@@ -50,6 +50,9 @@ public:
 
   /// TAO_Notify_Destroy_Callback methods
   virtual void release (void);
+
+  /// Destroy this object.
+  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL);
 
 protected:
   ///= Data Members

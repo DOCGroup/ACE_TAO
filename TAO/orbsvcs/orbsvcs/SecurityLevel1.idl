@@ -6,7 +6,7 @@
 #ifndef _SECURITY_LEVEL_1_IDL_
 #define _SECURITY_LEVEL_1_IDL_
 
-#include <orbsvcs/orbsvcs/Security.idl>
+#include <Security.idl>
 
 #pragma prefix "omg.org"
 

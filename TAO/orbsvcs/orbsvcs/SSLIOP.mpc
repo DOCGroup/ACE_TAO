@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(SSLIOP) : orbsvcslib, core, security, ssl {
+project(SSLIOP) : orbsvcslib, core, security, portableserver, ssl {
   requires    += interceptors
   sharedname   = TAO_SSLIOP
   idlflags    += -Wb,export_macro=TAO_SSLIOP_Export -Wb,export_include=SSLIOP/SSLIOP_Export.h

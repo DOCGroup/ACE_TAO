@@ -45,7 +45,7 @@
 #include "tao/Sequence_T.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
-#include "orbsvcs/orbsvcs/SSLIOPC.h"
+#include "orbsvcs/SSLIOPC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

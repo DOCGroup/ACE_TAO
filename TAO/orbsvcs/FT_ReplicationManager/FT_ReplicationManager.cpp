@@ -21,13 +21,13 @@
 #include <tao/IORTable/IORTable.h>
 #include <tao/debug.h>
 #include <tao/ORB_Constants.h>
-#include <orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h>
-#include <orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.h>
-#include <orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.h>
-#include <orbsvcs/orbsvcs/PortableGroup/PG_Property_Utils.h>
-#include <orbsvcs/orbsvcs/PortableGroup/PG_conf.h>
+#include <orbsvcs/PortableGroup/PG_Object_Group.h>
+#include <orbsvcs/PortableGroup/PG_Property_Set.h>
+#include <orbsvcs/PortableGroup/PG_Properties_Encoder.h>
+#include <orbsvcs/PortableGroup/PG_Property_Utils.h>
+#include <orbsvcs/PortableGroup/PG_conf.h>
 
-#include <orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h>
+#include <orbsvcs/FaultTolerance/FT_IOGR_Property.h>
 #include <orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.h>
 
 ACE_RCSID (FT_ReplicationManager,

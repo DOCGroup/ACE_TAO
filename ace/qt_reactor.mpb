@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-feature(qt): ace_qt, qt_moc {
+feature(qt) {
   MOC_Files {
     QtReactor.h
   }

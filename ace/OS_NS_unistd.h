@@ -74,9 +74,6 @@ namespace ACE_OS {
 #endif /* ACE_LACKS_CHDIR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int rmdir (const ACE_TCHAR * path);
-
-  ACE_NAMESPACE_INLINE_FUNCTION
   int close (ACE_HANDLE handle);
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -126,7 +123,11 @@ namespace ACE_OS {
 
   //@}
 
+#if !defined (ACE_WIN32)
   ACE_NAMESPACE_INLINE_FUNCTION
+#else
+  extern ACE_Export
+#endif /* ACE_WIN32 */
   int fsync (ACE_HANDLE handle);
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -274,9 +275,6 @@ namespace ACE_OS {
                       int &argc,
                       ACE_TCHAR **&argv,
                       int substitute_env_args = 1);
-
-  ACE_NAMESPACE_INLINE_FUNCTION
-  void swab (const void *src, void *dest, ssize_t n);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   long sysconf (int);

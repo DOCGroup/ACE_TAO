@@ -1,10 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Main): taoserver, messaging {
+project(*Main): taoserver {
   exename = main
-  
-  idlflags += -GC -GH -Gd
 
   Source_Files {
     anonymousC.cpp
@@ -31,18 +29,8 @@ project(*Main): taoserver, messaging {
     interfaceS.cpp
     keywordsC.cpp
     keywordsS.cpp
-    nested_scopeC.cpp
-    nested_scopeS.cpp
-    paramsC.cpp
-    paramsS.cpp
     pragmaC.cpp
     pragmaS.cpp
-    reopened_modulesC.cpp
-    reopened_modulesS.cpp
-    reopen_include1C.cpp
-    reopen_include1S.cpp
-    reopen_include2C.cpp
-    reopen_include2S.cpp
     sequenceC.cpp
     sequenceS.cpp
     typedefC.cpp
@@ -51,6 +39,7 @@ project(*Main): taoserver, messaging {
     unionS.cpp
     repo_id_modC.cpp
     repo_id_modS.cpp
+    namespace_check.cpp
     main.cpp
   }
 }

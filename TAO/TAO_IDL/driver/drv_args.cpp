@@ -1307,10 +1307,6 @@ DRV_parse_args (long ac, char **av)
                         {
                           be_global->gen_assign_op (1);
                         }
-                      else if (av[k][j + 3] == 'd')
-                        {
-                          be_global->gen_impl_debug_info (1);
-                        }
                       else if (isalpha (av[k][j + 3] ))
                         {
                           ACE_ERROR ((

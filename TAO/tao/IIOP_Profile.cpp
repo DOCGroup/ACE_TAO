@@ -92,7 +92,7 @@ TAO_IIOP_Profile::decode_profile (TAO_InputCDR& cdr)
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) IIOP_Profile::decode - ")
-                    ACE_TEXT ("error while decoding host/port\n")));
+                    ACE_TEXT ("error while decoding host/port")));
       return -1;
     }
 
@@ -366,7 +366,7 @@ TAO_IIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) TAO - IIOP_Profile::create_profile_body "
+                  "(%P|%t) TAO - IIOP_Profile::create_profile_body ",
                   "no object key marshalled \n"));
     }
 

@@ -5,11 +5,11 @@
 #include "Admin.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Notify,
-           TAO_Notify_Admin,
+ACE_RCSID (Notify, 
+           TAO_Notify_Admin, 
            "$Id$")
 
-#include "orbsvcs/orbsvcs/CosNotifyChannelAdminC.h"
+#include "orbsvcs/CosNotifyChannelAdminC.h"
 
 #include "Container_T.h"
 #include "Proxy.h"
@@ -63,12 +63,8 @@ TAO_Notify_Admin::subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types AC
                       CORBA::INTERNAL ());
   ACE_CHECK;
 
-  // Adopt the Admin's subscription.
-  TAO_Notify_EventTypeSeq added (this->subscribed_types_), removed;
-
-  added.init (subscribed_types, removed);
-
-  subscribed_types = added;
+  // copy
+  subscribed_types = this->subscribed_types_;
 }
 
 int

@@ -7,8 +7,7 @@
 NAME = receiver
 
 OBJFILES = \
-        $(OBJDIR)\receiver.obj \
-        $(OBJDIR)\Receiver_Stats.obj 
+        $(OBJDIR)\receiver.obj
 
 CFLAGS = \
 	$(ACE_CFLAGS) \

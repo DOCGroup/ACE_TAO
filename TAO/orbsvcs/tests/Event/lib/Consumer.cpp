@@ -1,14 +1,12 @@
 // $Id$
 
 #include "Consumer.h"
-#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/orbsvcs/Time_Utilities.h"
+#include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Time_Utilities.h"
 
 #include "tao/debug.h"
 
-ACE_RCSID (EC_Tests, 
-           EC_Consumer, 
-           "$Id$")
+ACE_RCSID(EC_Tests, EC_Consumer, "$Id$")
 
 EC_Consumer::EC_Consumer (EC_Driver *driver,
                           void *cookie)

@@ -923,7 +923,16 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::find_handler_i
     this->handler_rep_.find (handle);
 
   if (event_handler)
-    event_handler->add_reference ();
+    {
+      int requires_reference_counting =
+        event_handler->reference_counting_policy ().value () ==
+        ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
+
+      if (requires_reference_counting)
+        {
+          event_handler->add_reference ();
+        }
+    }
 
   return event_handler;
 }
@@ -959,7 +968,15 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler_i
   if (eh != 0)
     {
       *eh = event_handler;
-      event_handler->add_reference ();
+
+      int requires_reference_counting =
+        event_handler->reference_counting_policy ().value () ==
+        ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
+
+      if (requires_reference_counting)
+        {
+          event_handler->add_reference ();
+        }
     }
 
   return 0;
@@ -1460,7 +1477,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
   ACE_TRACE ("ACE_Select_Reactor_T::check_handles");
 
 #if defined (ACE_WIN32) || defined (__MVS__) || defined (ACE_PSOS) || defined (VXWORKS)
-  ACE_Time_Value time_poll = ACE_Time_Value::zero_time_value();
+  ACE_Time_Value time_poll = ACE_Time_Value::zero;
   ACE_Handle_Set rd_mask;
 #endif /* ACE_WIN32 || MVS || ACE_PSOS || VXWORKS */
 

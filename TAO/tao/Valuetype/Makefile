@@ -69,9 +69,9 @@ endif
 
 
 .obj/ValueBase.o .obj/ValueBase.so .shobj/ValueBase.o .shobj/ValueBase.so: ValueBase.cpp ValueBase.h \
-  $(ACE_ROOT)/ace/pre.h valuetype_export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  valuetype_export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -104,8 +104,8 @@ endif
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Lock.h \
-  $(ACE_ROOT)/ace/Lock.inl Value_VarOut_T.h \
-  Value_VarOut_T.inl Value_VarOut_T.cpp \
+  $(ACE_ROOT)/ace/Lock.inl \
+  Value_VarOut_T.h Value_VarOut_T.inl Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/CORBA_methods.h \
   $(TAO_ROOT)/tao/TAO_Export.h \
   $(TAO_ROOT)/tao/Basic_Types.h \
@@ -194,8 +194,8 @@ endif
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
   $(ACE_ROOT)/ace/OS_NS_pwd.inl \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
-  $(ACE_ROOT)/ace/Null_Mutex.h ValueBase.inl \
-  ValueFactory.h ValueFactory.inl \
+  $(ACE_ROOT)/ace/Null_Mutex.h \
+  ValueBase.inl ValueFactory.h ValueFactory.inl \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/Exception.i \
@@ -224,14 +224,14 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Policy_ForwardC.h \
@@ -410,10 +410,10 @@ endif
   $(TAO_ROOT)/tao/debug.h
 
 .obj/Valuetype_Adapter_Impl.o .obj/Valuetype_Adapter_Impl.so .shobj/Valuetype_Adapter_Impl.o .shobj/Valuetype_Adapter_Impl.so: Valuetype_Adapter_Impl.cpp \
-  Valuetype_Adapter_Impl.h $(ACE_ROOT)/ace/pre.h \
+  Valuetype_Adapter_Impl.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -581,7 +581,8 @@ endif
   $(TAO_ROOT)/tao/TAO_Export.h \
   $(TAO_ROOT)/tao/Basic_Types.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
-  $(ACE_ROOT)/ace/CDR_Base.inl AbstractBase.h \
+  $(ACE_ROOT)/ace/CDR_Base.inl \
+  AbstractBase.h \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.h \
   $(TAO_ROOT)/tao/CORBA_methods.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -617,7 +618,8 @@ endif
   $(TAO_ROOT)/tao/default_environment.h \
   $(TAO_ROOT)/tao/Environment.i \
   AbstractBase.inl ValueBase.h Value_VarOut_T.h Value_VarOut_T.inl \
-  Value_VarOut_T.cpp $(ACE_ROOT)/ace/Null_Mutex.h \
+  Value_VarOut_T.cpp \
+  $(ACE_ROOT)/ace/Null_Mutex.h \
   ValueBase.inl ValueFactory_Map.h \
   $(TAO_ROOT)/tao/TAO_Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
@@ -799,9 +801,9 @@ endif
 
 .obj/AbstractBase_Invocation_Adapter.o .obj/AbstractBase_Invocation_Adapter.so .shobj/AbstractBase_Invocation_Adapter.o .shobj/AbstractBase_Invocation_Adapter.so: AbstractBase_Invocation_Adapter.cpp \
   AbstractBase_Invocation_Adapter.h \
-  $(ACE_ROOT)/ace/pre.h valuetype_export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  valuetype_export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -903,9 +905,9 @@ endif
   AbstractBase.inl
 
 .obj/AbstractBase.o .obj/AbstractBase.so .shobj/AbstractBase.o .shobj/AbstractBase.so: AbstractBase.cpp AbstractBase.h \
-  $(ACE_ROOT)/ace/pre.h valuetype_export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  valuetype_export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -1036,8 +1038,8 @@ endif
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
   $(ACE_ROOT)/ace/OS_NS_pwd.inl \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
-  $(ACE_ROOT)/ace/Null_Mutex.h ValueBase.inl \
-  ValueFactory.h ValueFactory.inl \
+  $(ACE_ROOT)/ace/Null_Mutex.h \
+  ValueBase.inl ValueFactory.h ValueFactory.inl \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
@@ -1060,14 +1062,14 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Policy_ForwardC.h \
@@ -1263,17 +1265,17 @@ endif
   $(TAO_ROOT)/tao/debug.h
 
 .obj/ValueFactory.o .obj/ValueFactory.so .shobj/ValueFactory.o .shobj/ValueFactory.so: ValueFactory.cpp ValueFactory.h \
-  $(ACE_ROOT)/ace/pre.h valuetype_export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  valuetype_export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h Value_VarOut_T.h \
-  Value_VarOut_T.inl Value_VarOut_T.cpp \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  Value_VarOut_T.h Value_VarOut_T.inl Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/CORBA_methods.h \
   $(TAO_ROOT)/tao/TAO_Export.h \
   $(TAO_ROOT)/tao/Basic_Types.h \
@@ -1361,7 +1363,8 @@ endif
   $(ACE_ROOT)/ace/OS_NS_pwd.inl \
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
-  $(ACE_ROOT)/ace/Null_Mutex.h ValueFactory.inl \
+  $(ACE_ROOT)/ace/Null_Mutex.h \
+  ValueFactory.inl \
   $(ACE_ROOT)/ace/Guard_T.h \
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
@@ -1376,7 +1379,6 @@ endif
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/Lock.h \
   $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -1570,14 +1572,14 @@ endif
   $(TAO_ROOT)/tao/CORBA_methods.h \
   $(TAO_ROOT)/tao/Basic_Types.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
-  $(ACE_ROOT)/ace/CDR_Base.inl ValueFactory.inl \
+  $(ACE_ROOT)/ace/CDR_Base.inl \
+  ValueFactory.inl \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl
 
 .obj/Seq_Tmplinst.o .obj/Seq_Tmplinst.so .shobj/Seq_Tmplinst.o .shobj/Seq_Tmplinst.so: Seq_Tmplinst.cpp \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/pre.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \

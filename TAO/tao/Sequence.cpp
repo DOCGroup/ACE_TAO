@@ -56,7 +56,7 @@ check_bounds(
       ACE_ERROR((LM_ERROR,
                     "Access error in TAO_Sequence file=%s, line=%u, "
                     "idx=%u, max=%u\n",
-                 ACE_TEXT_CHAR_TO_TCHAR (filename), lineno, tao_idx, tao_max));
+                    filename, lineno, tao_idx, tao_max));
   }
 }
 

@@ -2,8 +2,8 @@
 // $Id$
 
 #include "CosEvent_Utilities.h"
-#include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/Event_Service_Constants.h"
 #include "EventChannel_i.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"

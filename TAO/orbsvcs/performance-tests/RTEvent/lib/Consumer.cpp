@@ -8,12 +8,10 @@
 
 #include "Consumer.h"
 #include "Implicit_Deactivator.h"
-#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Event_Service_Constants.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (TAO_PERF_RTEC, 
-           Consumer, 
-           "$Id$")
+ACE_RCSID(TAO_PERF_RTEC, Consumer, "$Id$")
 
 Consumer::Consumer (CORBA::Long experiment_id,
                     CORBA::Long event_type,

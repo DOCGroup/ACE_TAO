@@ -2,7 +2,7 @@
 #ifndef STARTER_H
 #define STARTER_H
 
-#include "orbsvcs/orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/Naming/Naming_Utils.h"
 #include "SynchC.h"
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager.h"

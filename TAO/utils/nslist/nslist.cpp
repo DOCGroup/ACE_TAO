@@ -15,7 +15,7 @@
 
 
 #include "ace/SString.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 #include "tao/Endpoint.h"
 #include "tao/Profile.h"
 #include "tao/Stub.h"

@@ -1,6 +1,3 @@
-// -*- MPC -*-
-// $Id$
-
 project(*HA Status) : acelib {
   sharedname   = HA_Status
   dynamicflags = HASTATUS_BUILD_DLL

@@ -20,7 +20,7 @@ int run_buffer_size_test = 0;
 
 const int PAYLOAD_LENGTH = 1024;
 const int BUFFERED_MESSAGES_COUNT = 50;
-const unsigned int TIMEOUT_MILLISECONDS = 50;
+const int TIMEOUT_MILLISECONDS = 50;
 const int BUFFER_SIZE = 64 * PAYLOAD_LENGTH;
 
 /// Check that no more than 10% of the messages are not sent.

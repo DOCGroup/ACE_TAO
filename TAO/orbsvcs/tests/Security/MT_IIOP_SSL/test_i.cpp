@@ -5,15 +5,13 @@
 #include "tao/ORB_Core.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Transport_Cache_Manager.h"
-#include "orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Transport.h"
 
 #if !defined(__ACE_INLINE__)
 #include "test_i.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (MT_Server, 
-           test_i, 
-           "$Id$")
+ACE_RCSID(MT_Server, test_i, "$Id$")
 
 void
 Simple_Server_i::ping (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)

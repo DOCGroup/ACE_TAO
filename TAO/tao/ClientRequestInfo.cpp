@@ -275,11 +275,6 @@ TAO_ClientRequestInfo::get_reply_service_context (
                                                  ACE_ENV_ARG_PARAMETER);
 }
 
-TAO_GIOP_Invocation *
-TAO_ClientRequestInfo::invocation (void)
-{
-  return this->invocation_;
-}
 
 // -------------------------------------------------------------------
 

@@ -12,9 +12,7 @@
 #include "ORB_Task_Activator.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_PERF_RTEC, 
-           ORB_Task_Activator, 
-           "$Id$")
+ACE_RCSID(TAO_PERF_RTEC, ORB_Task_Activator, "$Id$")
 
 ORB_Task_Activator::~ORB_Task_Activator (void)
 {

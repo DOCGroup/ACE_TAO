@@ -27,7 +27,6 @@ use vars qw(@ISA);
 my($index)    = 0;
 my(@progress) = ('|', '/', '-', '\\');
 my($cmdenv)   = 'MPC_COMMANDLINE';
-my($minperl)  = 5.006;
 
 # ************************************************************
 # Subroutine Section
@@ -63,47 +62,23 @@ sub parse_line {
   my($ih)          = shift;
   my($line)        = shift;
   my($status)      = 1;
-  my($errorString) = undef;
+  my($errorString) = '';
 
   if ($line eq '') {
   }
-  elsif ($line =~ /^([\w\*]+)(\s*,\s*(.*))?$/) {
+  elsif ($line =~ /^(\w+)(\s*,\s*(.*))?$/) {
     my($name)  = $1;
     my($value) = $3;
     if (defined $value) {
       $value =~ s/^\s+//;
       $value =~ s/\s+$//;
     }
-    if ($name =~ /\*/) {
-      $name =~ s/\*/.*/g;
-      foreach my $key (keys %ENV) {
-        if ($key =~ /^$name$/ && !exists $self->{'reldefs'}->{$key}) {
-          ## Put this value at the front since it doesn't need
-          ## to be built up from anything else.  It is a stand-alone
-          ## relative definition.
-          $self->{'reldefs'}->{$key} = undef;
-          unshift(@{$self->{'relorder'}}, $key);
-        }
-      }
-    }
-    else {
-      $self->{'reldefs'}->{$name} = $value;
-      if (defined $value) {
-        ## This relative definition may need to be built up from an
-        ## existing value, so it needs to be put at the end.
-        push(@{$self->{'relorder'}}, $name);
-      }
-      else {
-        ## Put this value at the front since it doesn't need
-        ## to be built up from anything else.  It is a stand-alone
-        ## relative definition.
-        unshift(@{$self->{'relorder'}}, $name);
-      }
-    }
+    $self->{'reldefs'}->{$name} = $value;
+    push(@{$self->{'relorder'}}, $name);
   }
   else {
     $status = 0;
-    $errorString = "Unrecognized line: $line";
+    $errorString = "ERROR: Unrecognized line: $line";
   }
 
   return $status, $errorString;
@@ -116,14 +91,14 @@ sub optionError {
   my($base) = $self->{'name'};
 
   if (defined $line) {
-    $self->error($line);
+    print STDERR "ERROR: $line\n";
   }
   my($spaces) = (' ' x (length($base) + 8));
   print STDERR "$base v" . Version::get() . "\n" .
                "Usage: $base [-global <file>] [-include <directory>] [-recurse]]\n" .
                $spaces . "[-ti <dll | lib | dll_exe | lib_exe>:<file>] [-hierarchy]\n" .
                $spaces . "[-template <file>] [-relative NAME=VAR] [-base <project>]\n" .
-               $spaces . "[-noreldefs] [-notoplevel] [-static] [-genins]\n" .
+               $spaces . "[-noreldefs] [-notoplevel] [-static]\n" .
                $spaces . "[-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]\n" .
                $spaces . "[-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]\n" .
                $spaces . "[-feature_file <file name>] [-make_coexistence]\n" .
@@ -137,7 +112,7 @@ sub optionError {
     if ($i != $#keys) {
       print STDERR ' | ';
     }
-    if ($i != $#keys && (($i + 1) % 6) == 0) {
+    if ((($i + 1) % 6) == 0) {
       print STDERR "\n$spaces        ";
     }
   }
@@ -153,7 +128,6 @@ sub optionError {
 "       -feature_file   Specifies the feature file to read before processing.\n" .
 "                       The default feature file is default.features under the\n" .
 "                       config directory.\n" .
-"       -genins         Generate .ins files for use with prj_install.pl.\n" .
 "       -global         Specifies the global input file.  Values stored\n" .
 "                       within this file are applied to all projects.\n" .
 "       -hierarchy      Generate a workspace in a hierarchical fashion.\n" .
@@ -202,9 +176,9 @@ sub optionError {
 
 
 sub run {
-  my($self)   = shift;
-  my(@args)   = @_;
-  my($status) = 0;
+  my($self)       = shift;
+  my(@args)       = @_;
+  my($status)     = 0;
 
   ## Dynamically load in each perl module and set up
   ## the type tags and project creators
@@ -226,17 +200,7 @@ sub run {
                                 1,
                                 @args);
   if (!defined $options) {
-    ## If options are not defined, that means that calling options
-    ## took care of whatever functionality that was required and
-    ## we can now return with a good status.
     return $status;
-  }
-
-  ## Warn about the minimum version of perl that is required
-  if ($] < $minperl) {
-    $self->warning("Perl version $minperl is required. " .
-                   "Execution will continue, however you may see " .
-                   "unexpected results.");
   }
 
   ## Set up a hash that we can use to keep track of what
@@ -273,8 +237,8 @@ sub run {
       ## If no files were found above, then we issue a warning
       ## that we are going to use the default input
       if (!defined $options->{'input'}->[0]) {
-        $self->information('No files were found using the -recurse option. ' .
-                           'Using the default input.');
+        print "WARNING: No files were found using the -recurse option.\n" .
+              "         Using the default input.\n";
       }
     }
   }
@@ -313,7 +277,7 @@ sub run {
     if (-r $rel) {
       my($srel, $errorString) = $self->read_file($rel);
       if (!$srel) {
-        $self->error("$errorString\nin $rel");
+        print STDERR "$errorString\nin $rel\n";
         return $status;
       }
     }
@@ -368,35 +332,34 @@ sub run {
       }
       my($file) = $cfile;
       my($creator) = $name->new($options->{'global'},
-                                $options->{'include'},
-                                $options->{'template'},
-                                $options->{'ti'},
-                                $options->{'dynamic'},
-                                $options->{'static'},
-                                $options->{'relative'},
-                                $options->{'addtemp'},
-                                $options->{'addproj'},
-                                (-t 1 ? \&progress : undef),
-                                $options->{'toplevel'},
-                                $options->{'baseprojs'},
-                                $global_feature_file,
-                                $options->{'feature_file'},
-                                $options->{'hierarchy'},
-                                $options->{'exclude'},
-                                $options->{'coexistence'},
-                                $options->{'name_modifier'},
-                                $options->{'apply_project'},
-                                $options->{'genins'});
+                                  $options->{'include'},
+                                  $options->{'template'},
+                                  $options->{'ti'},
+                                  $options->{'dynamic'},
+                                  $options->{'static'},
+                                  $options->{'relative'},
+                                  $options->{'addtemp'},
+                                  $options->{'addproj'},
+                                  (-t 1 ? \&progress : undef),
+                                  $options->{'toplevel'},
+                                  $options->{'baseprojs'},
+                                  $global_feature_file,
+                                  $options->{'feature_file'},
+                                  $options->{'hierarchy'},
+                                  $options->{'exclude'},
+                                  $options->{'coexistence'},
+                                  $options->{'name_modifier'},
+                                  $options->{'apply_project'});
       if ($base ne $file) {
         my($dir) = ($base eq '' ? $file : dirname($file));
         if (!$creator->cd($dir)) {
-          $self->error("Unable to change to directory: $dir");
+          print STDERR "ERROR: Unable to change to directory: $dir\n";
           $status++;
           last;
         }
         $file = $base;
       }
-      print 'Generating ' . $self->extractType($name) . ' output using ';
+      print 'Generating output using ';
       if ($file eq '') {
         print 'default input';
       }
@@ -408,8 +371,8 @@ sub run {
       }
       print "\n" . 'Start Time: ' . scalar(localtime(time())) . "\n";
       if (!$creator->generate($file)) {
-        $self->error("Unable to process: " .
-                     ($file eq '' ? 'default input' : $file));
+        print STDERR "ERROR: Unable to process: " .
+                     ($file eq '' ? 'default input' : $file) . "\n";
         $status++;
         last;
       }

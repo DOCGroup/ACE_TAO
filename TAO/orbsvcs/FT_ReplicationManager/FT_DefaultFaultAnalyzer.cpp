@@ -12,10 +12,10 @@
 //=============================================================================
 
 #include "FT_DefaultFaultAnalyzer.h"
-#include "orbsvcs/orbsvcs/CosNotifyCommC.h"
-#include "orbsvcs/orbsvcs/FT_NotifierC.h"
-#include "orbsvcs/orbsvcs/FT_FaultDetectorFactoryC.h"
-#include "orbsvcs/orbsvcs/FT_ReplicationManagerC.h"
+#include "orbsvcs/CosNotifyCommC.h"
+#include "orbsvcs/FT_NotifierC.h"
+#include "orbsvcs/FT_FaultDetectorFactoryC.h"
+#include "orbsvcs/FT_ReplicationManagerC.h"
 #include "orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.h"
 #include <tao/debug.h>
 

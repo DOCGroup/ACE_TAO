@@ -1,7 +1,7 @@
 // $Id$
 
 #include "EC_Kokyu_Filter.h"
-#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Event_Service_Constants.h"
 #include "EC_Kokyu_Filter_Builder.h"
 #include "EC_Type_Filter.h"
 #include "EC_Conjunction_Filter.h"
@@ -14,9 +14,7 @@
 #include "EC_Kokyu_Filter_Builder.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Event, 
-           EC_Kokyu_Filter_Builder, 
-           "$Id$")
+ACE_RCSID(Event, EC_Kokyu_Filter_Builder, "$Id$")
 
 const char* designator (long dsgn)
 {

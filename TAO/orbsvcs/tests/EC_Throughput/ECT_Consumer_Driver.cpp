@@ -2,10 +2,10 @@
 
 #include "ECT_Consumer_Driver.h"
 
-#include "orbsvcs/orbsvcs/CosNamingC.h"
-#include "orbsvcs/orbsvcs/Event_Utilities.h"
-#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/orbsvcs/Time_Utilities.h"
+#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/Event_Utilities.h"
+#include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Time_Utilities.h"
 
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
@@ -16,9 +16,7 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (EC_Throughput, 
-           ECT_Consumer_Driver, 
-           "$Id$")
+ACE_RCSID(EC_Throughput, ECT_Consumer_Driver, "$Id$")
 
 int
 main (int argc, char *argv [])

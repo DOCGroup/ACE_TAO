@@ -1,11 +1,5 @@
 // "$Id$"
 
-#include "ace/Dynamic_Service.h"
-#include "ace/Arg_Shifter.h"
-#include "ace/Reactor.h"
-#include "ace/Argv_Type_Converter.h"
-#include "ace/OS_NS_strings.h"
-
 #include "ORB.h"
 
 ACE_RCSID (tao,
@@ -36,6 +30,12 @@ ACE_RCSID (tao,
 #if TAO_HAS_INTERCEPTORS == 1
 # include "PICurrent_ORBInitializer.h"  /* @@ This should go away! */
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
+#include "ace/Dynamic_Service.h"
+#include "ace/Arg_Shifter.h"
+#include "ace/Reactor.h"
+#include "ace/Argv_Type_Converter.h"
+#include "ace/OS_NS_strings.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ORB.i"
@@ -340,9 +340,9 @@ CORBA::ORB::create_operation_list (CORBA::OperationDef_ptr opDef,
       ACE_THROW (CORBA::INTF_REPOS ());
     }
 
-  adapter->create_operation_list (this,
-                                  opDef,
-                                  result
+  adapter->create_operation_list (this, 
+                                  opDef, 
+                                  result 
                                   ACE_ENV_ARG_PARAMETER);
 }
 
@@ -1339,9 +1339,10 @@ CORBA::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
       || sizeof (void *) != ACE_SIZEOF_VOID_P)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%N; ERROR: unexpected basic type size; "
+                  "%s; ERROR: unexpected basic type size; "
                   "s:%d l:%d ll:%d f:%d d:%d ld:%d wc:%d v:%d\n"
                   "please reconfigure TAO\n",
+                  __FILE__,
                   sizeof (CORBA::Short),
                   sizeof (CORBA::Long),
                   sizeof (CORBA::LongLong),
@@ -1660,7 +1661,8 @@ CORBA::ORB_init (int &argc,
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
 #if TAO_HAS_INTERCEPTORS == 1
-  oc->pi_current ()->initialize (orb_init_info_temp->slot_count ());
+  oc->pi_current ()->initialize (oc,
+                                 orb_init_info_temp->slot_count ());
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
   // Invalidate the ORBInitInfo instance to prevent future

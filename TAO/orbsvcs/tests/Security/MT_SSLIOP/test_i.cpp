@@ -7,9 +7,7 @@
 #include "test_i.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (MT_Server, 
-           test_i, 
-           "$Id$")
+ACE_RCSID(MT_Server, test_i, "$Id$")
 
 CORBA::Long
 Simple_Server_i::test_method (CORBA::Long x ACE_ENV_ARG_DECL_NOT_USED)

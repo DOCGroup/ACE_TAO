@@ -371,7 +371,7 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr,
 
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("NVList::_tao_encode - parameter <%s>\n"),
-                          ACE_TEXT_CHAR_TO_TCHAR (arg)));
+                          arg));
             }
           CORBA::TypeCode_ptr tc = nv->value ()->_tao_get_typecode ();
           (void) TAO_Marshal_Object::perform_append (tc,
@@ -442,7 +442,7 @@ CORBA::NVList::_tao_decode (TAO_InputCDR &incoming,
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) : NVList::_tao_decode - %s\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (nv->name ()? nv->name () : "(no name given)" )));
+                      nv->name ()? nv->name () : "(no name given)" ));
         }
 
       CORBA::Any_ptr any = nv->value ();

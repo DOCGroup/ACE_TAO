@@ -82,7 +82,7 @@ namespace TAO
 
     //@{
     /**
-     * Accessors and mutators for this class. The following methods
+     * Accessors and muttators for this class. The following methods
      * are used by the clients of this class to access.
      */
 

@@ -70,7 +70,6 @@ endif
   $(ACE_ROOT)/ace/pre.h \
   RMCast_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -102,7 +101,6 @@ endif
   $(ACE_ROOT)/ace/pre.h \
   RMCast_Retransmission.h RMCast_Module.h RMCast.h RMCast_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -262,7 +260,6 @@ endif
   $(ACE_ROOT)/ace/pre.h \
   RMCast_Module.h RMCast.h RMCast_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -294,7 +291,6 @@ endif
   $(ACE_ROOT)/ace/pre.h \
   RMCast_Module.h RMCast.h RMCast_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -342,7 +338,6 @@ endif
   $(ACE_ROOT)/ace/pre.h \
   RMCast_Module.h RMCast.h RMCast_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -521,7 +516,6 @@ endif
   $(ACE_ROOT)/ace/pre.h \
   RMCast_Module.h RMCast.h RMCast_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -640,10 +634,9 @@ endif
   $(ACE_ROOT)/ace/Guard_T.cpp
 
 .obj/RMCast_Module.o .obj/RMCast_Module.so .shobj/RMCast_Module.o .shobj/RMCast_Module.so: RMCast_Module.cpp RMCast_Module.h \
-  $(ACE_ROOT)/ace/pre.h RMCast.h \
-  RMCast_Export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  RMCast.h RMCast_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -673,10 +666,9 @@ endif
 
 .obj/RMCast_Module_Factory.o .obj/RMCast_Module_Factory.so .shobj/RMCast_Module_Factory.o .shobj/RMCast_Module_Factory.so: RMCast_Module_Factory.cpp \
   RMCast_Module_Factory.h \
-  $(ACE_ROOT)/ace/pre.h RMCast.h \
-  RMCast_Export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  RMCast.h RMCast_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -709,7 +701,6 @@ endif
   $(ACE_ROOT)/ace/pre.h \
   RMCast_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -928,7 +919,6 @@ endif
   $(ACE_ROOT)/ace/pre.h \
   RMCast_Module.h RMCast.h RMCast_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -960,7 +950,6 @@ endif
   $(ACE_ROOT)/ace/pre.h \
   RMCast_Module.h RMCast.h RMCast_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -1191,7 +1180,6 @@ endif
   $(ACE_ROOT)/ace/pre.h \
   RMCast_Module.h RMCast.h RMCast_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -1235,7 +1223,6 @@ endif
   $(ACE_ROOT)/ace/pre.h \
   RMCast_Module_Factory.h RMCast.h RMCast_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -1392,7 +1379,6 @@ endif
   $(ACE_ROOT)/ace/pre.h \
   RMCast_Module.h RMCast.h RMCast_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -1548,7 +1534,6 @@ endif
   $(ACE_ROOT)/ace/pre.h \
   RMCast_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -1708,10 +1693,9 @@ endif
   RMCast_Retransmission.i
 
 .obj/RMCast_Resend_Worker.o .obj/RMCast_Resend_Worker.so .shobj/RMCast_Resend_Worker.o .shobj/RMCast_Resend_Worker.so: RMCast_Resend_Worker.cpp RMCast_Resend_Worker.h \
-  $(ACE_ROOT)/ace/pre.h RMCast.h \
-  RMCast_Export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  RMCast.h RMCast_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -1821,7 +1805,6 @@ endif
   $(ACE_ROOT)/ace/pre.h \
   RMCast_Module.h RMCast.h RMCast_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -1983,7 +1966,6 @@ endif
   $(ACE_ROOT)/ace/pre.h \
   RMCast_Module.h RMCast.h RMCast_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -2087,7 +2069,6 @@ endif
   $(ACE_ROOT)/ace/pre.h \
   RMCast_Module_Factory.h RMCast.h RMCast_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -2120,7 +2101,6 @@ endif
   $(ACE_ROOT)/ace/pre.h \
   RMCast_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -2284,7 +2264,6 @@ endif
   $(ACE_ROOT)/ace/pre.h \
   RMCast_Proxy.h RMCast_Module.h RMCast.h RMCast_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -2326,10 +2305,10 @@ endif
   $(ACE_ROOT)/ace/os_include/os_wchar.h \
   $(ACE_ROOT)/ace/os_include/os_string.h \
   $(ACE_ROOT)/ace/os_include/os_ctype.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_arpa_inet.h \
   $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
@@ -2444,7 +2423,6 @@ endif
   RMCast_Singleton_Factory.h RMCast_Module_Factory.h RMCast.h \
   RMCast_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
@@ -2618,7 +2596,6 @@ endif
   RMCast_Singleton_Factory.h RMCast_Module_Factory.h RMCast.h \
   RMCast_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
-  $(ACE_ROOT)/ace/config-lite.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \

@@ -41,9 +41,6 @@ my(%allprojects) = ();
 ## Global previous workspace names
 my(%previous_workspace_name) = ();
 
-## Constant aggregated workspace type name
-my($aggregated) = 'aggregated_workspace';
-
 # ************************************************************
 # Subroutine Section
 # ************************************************************
@@ -69,16 +66,16 @@ sub new {
   my($makeco)    = shift;
   my($nmod)      = shift;
   my($applypj)   = shift;
-  my($genins)    = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, $dynamic, $static,
                                 $relative, $addtemp, $addproj,
                                 $progress, $toplevel, $baseprojs,
                                 $feature, $hierarchy, $nmod, $applypj,
                                 'workspace');
+  my($typecheck) = $self->{'type_check'};
 
   $self->{'workspace_name'}      = undef;
-  $self->{$self->{'type_check'}} = 0;
+  $self->{$typecheck}            = 0;
   $self->{'projects'}            = [];
   $self->{'project_info'}        = {};
   $self->{'reading_parent'}      = [];
@@ -91,9 +88,6 @@ sub new {
   $self->{'global_feature_file'} = $gfeature;
   $self->{'coexistence'}         = $makeco;
   $self->{'project_file_list'}   = {};
-  $self->{'ordering_cache'}      = {};
-  $self->{'handled_scopes'}      = {};
-  $self->{'generate_ins'}        = $genins;
 
   if (defined $$exclude[0]) {
     my($type) = $self->{'wctype'};
@@ -125,14 +119,18 @@ sub parse_line {
   my($self)   = shift;
   my($ih)     = shift;
   my($line)   = shift;
-  my($status, $error, @values) = $self->parse_known($line);
+  my($status,
+     $errorString,
+     @values) = $self->parse_known($line);
 
   ## Was the line recognized?
   if ($status && defined $values[0]) {
     if ($values[0] eq $self->{'grammar_type'}) {
-      my($name) = $values[1];
+      my($name)      = $values[1];
+      my($typecheck) = $self->{'type_check'};
       if (defined $name && $name eq '}') {
-        if (!defined $self->{'reading_parent'}->[0]) {
+        my($rp) = $self->{'reading_parent'};
+        if (!defined $$rp[0]) {
           ## Fill in all the default values
           $self->generate_defaults();
 
@@ -140,11 +138,12 @@ sub parse_line {
           ## Generate the project files
           my($gstat, $creator) = $self->generate_project_files();
           if ($gstat) {
-            ($status, $error) = $self->write_workspace($creator, 1);
+            ($status, $errorString) = $self->write_workspace($creator, 1);
             $self->{'assign'} = {};
           }
           else {
-            $error = 'Unable to generate all of the project files';
+            $errorString = 'ERROR: Unable to ' .
+                           'generate all of the project files';
             $status = 0;
           }
 
@@ -154,13 +153,14 @@ sub parse_line {
           $self->{'project_info'}   = {};
           $self->{'project_files'}  = [];
         }
-        $self->{$self->{'type_check'}} = 0;
+        $self->{$typecheck} = 0;
       }
       else {
-        ## Workspace Beginning
+        ## Project Beginning
         ## Deal with the inheritance hiearchy first
-        if (defined $values[2]) {
-          foreach my $parent (@{$values[2]}) {
+        my($parents) = $values[2];
+        if (defined $parents) {
+          foreach my $parent (@$parents) {
             ## Read in the parent onto ourself
             my($file) = $self->search_include_path("$parent.$wsbase");
             if (!defined $file) {
@@ -168,17 +168,18 @@ sub parse_line {
             }
 
             if (defined $file) {
-              push(@{$self->{'reading_parent'}}, 1);
+              my($rp) = $self->{'reading_parent'};
+              push(@$rp, 1);
               $status = $self->parse_file($file);
-              pop(@{$self->{'reading_parent'}});
+              pop(@$rp);
 
               if (!$status) {
-                $error = "Invalid parent: $parent";
+                $errorString = "ERROR: Invalid parent: $parent";
               }
             }
             else {
               $status = 0;
-              $error = "Unable to locate parent: $parent";
+              $errorString = "ERROR: Unable to locate parent: $parent";
             }
           }
         }
@@ -187,8 +188,8 @@ sub parse_line {
         if (defined $name) {
           if ($name =~ /[\/\\]/) {
             $status = 0;
-            $error = 'Workspaces can not have a slash ' .
-                     'or a back slash in the name';
+            $errorString = 'ERROR: Workspaces can not have a slash ' .
+                           'or a back slash in the name';
           }
           else {
             $name =~ s/^\(\s*//;
@@ -201,7 +202,7 @@ sub parse_line {
             $self->{'workspace_name'} = $name;
           }
         }
-        $self->{$self->{'type_check'}} = 1;
+        $self->{$typecheck} = 1;
       }
     }
     elsif ($values[0] eq 'assignment') {
@@ -209,7 +210,7 @@ sub parse_line {
         $self->process_assignment($values[1], $values[2]);
       }
       else {
-        $error = "Invalid assignment name: $values[1]";
+        $errorString = "ERROR: Invalid assignment name: $values[1]";
         $status = 0;
       }
     }
@@ -218,7 +219,7 @@ sub parse_line {
         $self->process_assignment_add($values[1], $values[2]);
       }
       else {
-        $error = "Invalid addition name: $values[1]";
+        $errorString = "ERROR: Invalid addition name: $values[1]";
         $status = 0;
       }
     }
@@ -227,101 +228,33 @@ sub parse_line {
         $self->process_assignment_sub($values[1], $values[2]);
       }
       else {
-        $error = "Invalid subtraction name: $values[1]";
+        $errorString = "ERROR: Invalid subtraction name: $values[1]";
         $status = 0;
       }
     }
     elsif ($values[0] eq 'component') {
       if ($values[1] eq 'exclude') {
-        ($status, $error) = $self->parse_exclude($ih, $values[2]);
+        ($status, $errorString) = $self->parse_exclude($ih,
+                                                       $values[2]);
       }
       else {
-        ($status, $error) = $self->parse_scope($ih,
-                                               $values[1],
-                                               $values[2],
-                                               \%validNames);
+        ($status, $errorString) = $self->parse_scope($ih,
+                                                     $values[1],
+                                                     $values[2],
+                                                     \%validNames);
       }
     }
     else {
-      $error = "Unrecognized line: $line";
+      $errorString = "ERROR: Unrecognized line: $line";
       $status = 0;
     }
   }
   elsif ($status == -1) {
-    if ($line =~ /\.$wsext$/) {
-      ($status, $error) = $self->aggregated_workspace($line);
-    }
-    else {
-      push(@{$self->{'project_files'}}, $line);
-      $status = 1;
-    }
+    push(@{$self->{'project_files'}}, $line);
+    $status = 1;
   }
 
-  return $status, $error;
-}
-
-
-sub aggregated_workspace {
-  my($self) = shift;
-  my($file) = shift;
-  my($fh)   = new FileHandle();
-
-  if (open($fh, $file)) {
-    my($oline) = $self->get_line_number();
-    my($tc)    = $self->{$self->{'type_check'}};
-    my($ag)    = $self->{'handled_scopes'}->{$aggregated};
-    my($psbd)  = $self->{'scoped_basedir'};
-    my($status, $error, @values) = (0, 'No recognizable lines');
-
-    $self->{'handled_scopes'}->{$aggregated} = undef;
-    $self->set_line_number(0);
-    $self->{$self->{'type_check'}} = 0;
-    $self->{'scoped_basedir'} = dirname($file);
-
-    while(<$fh>) {
-      my($line) = $self->preprocess_line($fh, $_);
-      ($status, $error, @values) = $self->parse_known($line);
-
-      ## Was the line recognized?
-      if ($status) {
-        if (defined $values[0]) {
-          if ($values[0] eq $self->{'grammar_type'}) {
-            if (defined $values[2]) {
-              my($name) = basename($file);
-              $name =~ s/\.[^\.]+$//;
-              $status = 0;
-              $error  = 'Aggregated workspace (' . $name .
-                        ') can not inherit from another workspace';
-            }
-            else {
-              ($status, $error) = $self->parse_scope($fh,
-                                                     '',
-                                                     $aggregated,
-                                                     \%validNames);
-            }
-          }
-          else {
-            $status = 0;
-            $error = 'Unable to aggregate ' . $file;
-          }
-          last;
-        }
-      }
-      else {
-        last;
-      }
-    }
-    close($fh);
-
-    $self->{'scoped_basedir'} = $psbd;
-    $self->{'handled_scopes'}->{$aggregated} = $ag;
-    $self->{$self->{'type_check'}} = $tc;
-    $self->set_line_number($oline);
-
-    return $status, $error;
-  }
-
-  return 0, 'Unable to open ' . $file;
+  return $status, $errorString;
 }
 
 
@@ -330,7 +263,7 @@ sub parse_exclude {
   my($fh)          = shift;
   my($typestr)     = shift;
   my($status)      = 0;
-  my($errorString) = 'Unable to process exclude';
+  my($errorString) = 'ERROR: Unable to process exclude';
 
   if ($typestr eq $self->get_default_component_name()) {
     $typestr = $self->{'wctype'};
@@ -340,13 +273,13 @@ sub parse_exclude {
   my(@exclude) = ();
 
   while(<$fh>) {
-    my($line) = $self->preprocess_line($fh, $_);
+    my($line) = $self->strip_line($_);
 
     if ($line eq '') {
     }
     elsif ($line =~ /^}/) {
       $status = 1;
-      $errorString = undef;
+      $errorString = '';
       last;
     }
     else {
@@ -379,116 +312,27 @@ sub excluded {
 }
 
 
-sub handle_scoped_end {
-  my($self)   = shift;
-  my($type)   = shift;
-  my($flags)  = shift;
-  my($status) = 1;
-  my($error)  = undef;
-
-  if ($type eq $aggregated &&
-      !defined $self->{'handled_scopes'}->{$type}) {
-    ## Replace instances of $PWD with the current directory plus the
-    ## scoped_basedir.  We have to do it now otherwise, $PWD will be the
-    ## wrong directory if it's done later.
-    if (defined $$flags{'cmdline'}) {
-      my($dir) = $self->getcwd() . '/' . $self->{'scoped_basedir'};
-      $$flags{'cmdline'} =~ s/\$PWD(\W)/$dir$1/g;
-      $$flags{'cmdline'} =~ s/\$PWD$/$dir/;
-    }
-
-    ## Go back to the previous directory and add the directory contents
-    ($status, $error) = $self->handle_scoped_unknown($type, $flags, '.');
-  }
-
-  $self->{'handled_scopes'}->{$type} = undef;
-  return $status, $error;
-}
-
-
 sub handle_scoped_unknown {
-  my($self)   = shift;
-  my($type)   = shift;
-  my($flags)  = shift;
-  my($line)   = shift;
-  my($status) = 1;
-  my($error)  = undef;
-  my($dupchk) = undef;
-
-  if ($type eq $aggregated) {
-    $line = $self->{'scoped_basedir'} . ($line ne '.' ? "/$line" : '');
-    my(%dup) = ();
-    @dup{@{$self->{'project_files'}}} = ();
-    $dupchk = \%dup;
-  }
+  my($self)  = shift;
+  my($fh)    = shift;
+  my($type)  = shift;
+  my($flags) = shift;
+  my($line)  = shift;
 
   if (-d $line) {
     my(@files) = ();
     $self->search_for_files([ $line ], \@files, $$flags{'implicit'});
-
-    ## If we are generating implicit projects within a scope, then
-    ## we need to remove directories and the parent directories for which
-    ## there is an mpc file.  Otherwise, the projects will be added
-    ## twice.
-    if ($$flags{'implicit'}) {
-      my(%remove) = ();
-      foreach my $file (@files) {
-        if ($file =~ /\.mpc$/) {
-          my($exc) = $file;
-          do {
-            $exc = dirname($exc);
-            $remove{$exc} = 1;
-          } while($exc ne '.' && $exc !~ /[a-z]:[\/\\]/i);
-        }
-      }
-
-      my(@acceptable) = ();
-      foreach my $file (@files) {
-        if (!defined $remove{$file}) {
-          push(@acceptable, $file);
-        }
-      }
-      @files = @acceptable;
-    }
-
-    if (defined $dupchk) {
-      foreach my $file (@files) {
-        if (exists $$dupchk{$file}) {
-          $self->warning("Duplicate mpc file ($file) added by an " .
-                         'aggregate workspace.  It will be ignored.');
-        }
-        else {
-          $self->{'scoped_assign'}->{$file} = $flags;
-          push(@{$self->{'project_files'}}, $file);
-        }
-      }
-    }
-    else {
-      foreach my $file (@files) {
-        $self->{'scoped_assign'}->{$file} = $flags;
-        push(@{$self->{'project_files'}}, $file);
-      }
+    foreach my $file (@files) {
+      $self->{'scoped_assign'}->{$file} = $flags;
+      push(@{$self->{'project_files'}}, $file);
     }
   }
   else {
-    if ($line =~ /\.$wsext$/) {
-      ## An aggregated workspace within an aggregated workspace.
-      ($status, $error) = $self->aggregated_workspace($line);
-    }
-    else {
-      if (defined $dupchk && exists $$dupchk{$line}) {
-        $self->warning("Duplicate mpc file ($line) added by an " .
-                       'aggregate workspace.  It will be ignored.');
-      }
-      else {
-        $self->{'scoped_assign'}->{$line} = $flags;
-        push(@{$self->{'project_files'}}, $line);
-      }
-    }
+    $self->{'scoped_assign'}->{$line} = $flags;
+    push(@{$self->{'project_files'}}, $line);
   }
-  $self->{'handled_scopes'}->{$type} = 1;
 
-  return $status, $error;
+  return 1, '';
 }
 
 
@@ -596,7 +440,7 @@ sub generate_default_components {
 
 sub get_default_workspace_name {
   my($self) = shift;
-  my($name) = $self->{'current_input'};
+  my($name) = $self->get_current_input();
 
   if ($name eq '') {
     $name = $self->base_directory();
@@ -643,16 +487,10 @@ sub write_workspace {
   my($creator)   = shift;
   my($addfile)   = shift;
   my($status)    = 1;
-  my($error)     = undef;
+  my($error)     = '';
   my($duplicates) = 0;
 
   if ($self->get_toplevel()) {
-    my($progress) = $self->get_progress_callback();
-
-    if (defined $progress) {
-      &$progress();
-    }
-
     if ($addfile) {
       ## To be consistent across multiple project types, we disallow
       ## duplicate project names for all types, not just VC6.
@@ -662,7 +500,7 @@ sub write_workspace {
         my($name) = lc($self->{'project_info'}->{$project}->[0]);
         if (defined $names{$name}) {
           ++$duplicates;
-          $self->error("Duplicate case-insensitive project '$name'.");
+          print "WARNING: Duplicate case-insensitive project '$name'.\n";
         }
         else {
           $names{$name} = 1;
@@ -677,14 +515,13 @@ sub write_workspace {
 
     my($abort_creation) = 0;
     if ($duplicates > 0) {
+      print "ERROR: Duplicate project names are " .
+            "not allowed within a workspace.\n";
       $abort_creation = 1;
-      $error = "Duplicate case-insensitive project names are " .
-               "not allowed within a workspace.";
-      $status = 0;
     }
     else {
       if (!defined $self->{'projects'}->[0]) {
-        $self->information('No projects were created.');
+        print "WARNING: No projects were created.\n";
         $abort_creation = 1;
       }
     }
@@ -718,7 +555,7 @@ sub write_workspace {
           }
         }
         else {
-          $error = "Unable to open $tmp for output.";
+          $error = "ERROR: Unable to open $tmp for output.";
           $status = 0;
         }
 
@@ -731,7 +568,7 @@ sub write_workspace {
               }
             }
             else {
-              $error = 'Unable to open ' . $self->getcwd() .
+              $error = 'ERROR: Unable to open ' . $self->getcwd() .
                        "/$name for output";
               $status = 0;
             }
@@ -757,12 +594,14 @@ sub write_workspace {
           }
         }
         else {
-          $error = "Unable to open $name for output.";
+          $error = "ERROR: Unable to open $name for output.";
           $status = 0;
         }
       }
     }
-
+    else {
+      print "         Workspace $name has not been created.\n";
+    }
     if (!$addfile) {
       $self->{'per_project_workspace_name'} = undef;
     }
@@ -819,7 +658,6 @@ sub generate_hierarchy {
   my($cwd)       = $self->getcwd();
 
   ## Make a copy of these.  We will be modifying them.
-  ## It is necessary to sort the project to get the correct ordering.
   my(@projects)  = sort @{$origproj};
   my(%projinfo)  = %{$originfo};
 
@@ -840,9 +678,15 @@ sub generate_hierarchy {
       $self->{'project_info'}   = \%sinfo;
       $self->{'workspace_name'} = $self->base_directory();
 
+      ## Add implict project dependencies based on source files
+      ## that have been used by multiple projects
+      if ($self->generate_implicit_project_dependencies()) {
+        $self->add_implicit_project_dependencies($creator, $self->getcwd());
+      }
+
       my($status, $error) = $self->write_workspace($creator);
       if (!$status) {
-        $self->error($error);
+        print STDERR "$error\n";
       }
       $self->cd($cwd);
 
@@ -865,9 +709,15 @@ sub generate_hierarchy {
     $self->{'project_info'}   = \%sinfo;
     $self->{'workspace_name'} = $self->base_directory();
 
+    ## Add implict project dependencies based on source files
+    ## that have been used by multiple projects
+    if ($self->generate_implicit_project_dependencies()) {
+      $self->add_implicit_project_dependencies($creator, $self->getcwd());
+    }
+
     my($status, $error) = $self->write_workspace($creator);
     if (!$status) {
-      $self->error($error);
+      print STDERR "$error\n";
     }
     $self->cd($cwd);
   }
@@ -971,6 +821,38 @@ sub generate_project_files {
           $gen = $creator->get_files_written();
           $gpi = $creator->get_project_info();
 
+          ## If we need to generate a workspace file per project
+          ## then we generate a temporary project info and projects
+          ## array and call write_project().
+          if ($dir ne '.' && defined $$gen[0] &&
+              $self->workspace_per_project() && !$self->get_hierarchy()) {
+            my(%perpi)       = ();
+            my(@perprojects) = ();
+            $self->save_project_info($gen, $gpi, '.', \@perprojects, \%perpi);
+
+            ## Set our per project information
+            $self->{'projects'}     = \@perprojects;
+            $self->{'project_info'} = \%perpi;
+
+            ## Add implict project dependencies based on source files
+            ## that have been used by multiple projects
+            if ($genimpdep) {
+              $self->add_implicit_project_dependencies($creator,
+                                                       $self->getcwd());
+            }
+
+            ## Write our per project workspace
+            my($error) = '';
+            ($status, $error) = $self->write_workspace($creator);
+            if (!$status) {
+              print STDERR "$error\n";
+            }
+
+            ## Reset our project information to empty
+            $self->{'projects'}     = [];
+            $self->{'project_info'} = {};
+          }
+
           if ($self->{'cacheok'}) {
             $allprojects{$prkey} = $gen;
             $allprinfo{$prkey}   = $gpi;
@@ -1001,52 +883,26 @@ sub generate_project_files {
     }
   }
 
-  ## Add implict project dependencies based on source files
-  ## that have been used by multiple projects.  If we do it here
-  ## before we call generate_hierarchy(), we don't have to call it
-  ## in generate_hierarchy() for each workspace.
-  $self->{'projects'}     = \@projects;
-  $self->{'project_info'} = \%pi;
-  if ($status && $genimpdep) {
-    $self->add_implicit_project_dependencies($creator, $cwd);
-  }
-
-  ## If we are generating the hierarchical workspaces, then do so
-  if ($self->get_hierarchy() || $self->workspace_per_project()) {
+  if ($self->get_hierarchy()) {
     my($orig) = $self->{'workspace_name'};
     $self->generate_hierarchy($creator, \@projects, \%pi);
     $self->{'workspace_name'} = $orig;
   }
 
-  ## Reset the projects and project_info
   $self->{'projects'}     = \@projects;
   $self->{'project_info'} = \%pi;
+
+  ## Add implict project dependencies based on source files
+  ## that have been used by multiple projects
+  if ($status && $genimpdep) {
+    $self->add_implicit_project_dependencies($creator, $cwd);
+  }
 
   return $status, $creator;
 }
 
 
 sub array_contains {
-  my($self)   = shift;
-  my($left)   = shift;
-  my($right)  = shift;
-  my(%check)  = ();
-
-  ## Initialize the hash keys with the left side array
-  @check{@$left} = ();
-
-  ## Check each element on the right against the left.
-  foreach my $r (@$right) {
-    if (exists $check{$r}) {
-      return 1;
-    }
-  }
-
-  return 0;
-}
-
-
-sub non_intersection {
   my($self)   = shift;
   my($left)   = shift;
   my($right)  = shift;
@@ -1063,35 +919,11 @@ sub non_intersection {
     if (exists $check{$r}) {
       $status = 1;
     }
-    else {
+    elsif (defined $over) {
       push(@$over, $r);
     }
   }
   return $status;
-}
-
-
-sub indirect_depdency {
-  my($self)   = shift;
-  my($dir)    = shift;
-  my($ccheck) = shift;
-  my($cfile)  = shift;
-
-  if ($self->{'project_info'}->{$ccheck}->[1] =~ /$cfile/) {
-    return 1;
-  }
-  else {
-    my($deps) = $self->create_array(
-                         $self->{'project_info'}->{$ccheck}->[1]);
-    foreach my $dep (@$deps) {
-      if (defined $self->{'project_info'}->{"$dir$dep"} &&
-          $self->indirect_depdency($dir, "$dir$dep", $cfile)) {
-        return 1;
-      }
-    }
-  }
-
-  return 0;
 }
 
 
@@ -1114,21 +946,16 @@ sub add_implicit_project_dependencies {
   my(@pflkeys) = keys %{$self->{'project_file_list'}};
   foreach my $key (@pflkeys) {
     foreach my $ikey (@pflkeys) {
-      ## Not the same project and
-      ## The same directory and
-      ## We've not already added a dependency to this project
       if ($key ne $ikey &&
           ($self->{'project_file_list'}->{$key}->[1] eq
            $self->{'project_file_list'}->{$ikey}->[1]) &&
           (!defined $bidir{$ikey} ||
            !$self->array_contains($bidir{$ikey}, [$key]))) {
         my(@over) = ();
-        if ($self->non_intersection(
+        if ($self->array_contains(
                       $self->{'project_file_list'}->{$key}->[2],
                       $self->{'project_file_list'}->{$ikey}->[2],
                       \@over)) {
-          ## The project contains shared source files, so we need to
-          ## look into adding an implicit inter-project dependency.
           $save{$ikey} = $self->{'project_file_list'}->{$ikey}->[2];
           $self->{'project_file_list'}->{$ikey}->[2] = \@over;
           if (defined $bidir{$key}) {
@@ -1145,23 +972,23 @@ sub add_implicit_project_dependencies {
           ## Remove our starting directory from the projects directory
           ## to get the right part of the directory to prepend.
           $dir =~ s/^$cwd[\/\\]*//;
+          if ($dir ne '') {
+            $file = "$dir/$file";
+          }
 
-          ## Turn the append value into a key for 'project_info' and
-          ## prepend the directory to the file.
+          ## Turn the append value into a key for 'project_info'
           my($ccheck) = $append;
           $ccheck =~ s/"//g;
           if ($dir ne '') {
-            $dir .= '/';
-            $ccheck = "$dir$ccheck";
-            $file = "$dir$file";
+            $ccheck = "$dir/$ccheck";
           }
 
           ## If the append value key contains a reference to the project
           ## that we were going to append the dependency value, then
           ## ignore the generated dependency.  It is redundant and
           ## quite possibly wrong.
-          if (!defined $self->{'project_info'}->{$ccheck} ||
-              !$self->indirect_depdency($dir, $ccheck, $cfile)) {
+          if (defined $self->{'project_info'}->{$ccheck} &&
+              $self->{'project_info'}->{$ccheck}->[1] !~ /$cfile/) {
             ## Append the dependency
             $self->{'project_info'}->{$file}->[1] .= " $append";
           }
@@ -1190,168 +1017,34 @@ sub get_project_info {
 }
 
 
-sub get_first_level_directory {
-  my($self) = shift;
-  my($file) = shift;
-  my($dir)  = undef;
-  if (($file =~ tr/\///) > 0) {
-    $dir = $file;
-    $dir =~ s/^([^\/]+\/).*/$1/;
-    $dir =~ s/\/+$//;
-  }
-  else {
-    $dir = '.';
-  }
-  return $dir;
-}
+sub generate_circular_tree {
+  my($self)     = shift;
+  my($circular) = shift;
+  my($prepend)  = shift;
+  my($into)     = shift;
+  my($current)  = shift;
+  my($aref)     = $self->{'project_info'}->{$current};
 
+  if (defined $aref) {
+    my($name, $deps) = @$aref;
 
-sub sort_within_group {
-  my($self)    = shift;
-  my($list)    = shift;
-  my($pjs)     = shift;
-  my($start)   = shift;
-  my($end)     = shift;
-  my($deps)    = undef;
-  my($ccount)  = 0;
-  my($cmax)    = ($end - $start) + 1;
-
-  ## If we go more than twice the number of elements in this group
-  ## factorial, then there is a circular dependency.
-  my($f) = $cmax - 1;
-  while($f > 1) {
-    $cmax *= $f--;
-  }
-  $cmax = ($cmax * 2) + 1;
-
-  ## Put the projects in the order specified
-  ## by the project dpendencies.
-  for(my $i = $start; $i <= $end; ++$i) {
-    ## Detect circular dependencies
-    if ($ccount > $cmax) {
-      $self->warning('Circular dependency detected while processing the ' .
-                     ($self->{'current_input'} eq '' ?
-                       'default' : $self->{'current_input'}) . ' workspace');
-      return;
-    }
-
-    $deps = $self->get_validated_ordering($$list[$i]);
-    if ($deps ne '') {
-      my($baseproj) = basename($$list[$i]);
+    if (defined $deps && $deps ne '') {
       my($darr) = $self->create_array($deps);
 
-      my($moved) = 0;
+      if (!defined $$circular{$into}) {
+        $$circular{$into} = {};
+      }
+
       foreach my $dep (@$darr) {
-        if ($baseproj ne $dep) {
-          ## See if the dependency is listed after this project
-          for(my $j = $i + 1; $j <= $end; ++$j) {
-            if (basename($$list[$j]) eq $dep) {
-              ## If so, move it in front of the current project.
-              ## The original code, which had splices, didn't always
-              ## work correctly (especially on AIX for some reason).
-              my($save) = $$list[$j];
-              for(my $k = $j; $k > $i; --$k) {
-                $$list[$k] = $$list[$k - 1];
-              }
-              $$list[$i] = $save;
-
-              ## Mark that an entry has been moved
-              $moved = 1;
-              $j--;
-            }
-          }
-        }
-      }
-      if ($moved) {
-        $i--;
-      }
-    }
-    ++$ccount;
-  }
-}
-
-
-sub sort_by_groups {
-  my($self)    = shift;
-  my($list)    = shift;
-  my($grindex) = shift;
-  my(@groups)  = @$grindex;
-  my($ccount)  = 0;
-  my($cmax)    = $#groups;
-
-  ## If we go more than twice $#groups factorial, then there is
-  ## a circular dependency.
-  my($f) = $cmax - 1;
-  while($f > 1) {
-    $cmax *= $f--;
-  }
-  $cmax = ($cmax * 2) + 1;
-
-  for(my $gi = 0; $gi <= $#groups; ++$gi) {
-    ## Detect circular dependencies
-    if ($ccount > $cmax) {
-      $self->warning('Circular dependency detected while processing the ' .
-                     ($self->{'current_input'} eq '' ?
-                       'default' : $self->{'current_input'}) . ' workspace');
-      return;
-    }
-
-    ## Build up the group dependencies
-    my(%gdeps) = ();
-    for(my $i = $groups[$gi]->[0]; $i <= $groups[$gi]->[1]; ++$i) {
-      my($deps) = $self->get_validated_ordering($$list[$i]);
-      if ($deps ne '') {
-        my($darr) = $self->create_array($deps);
-        foreach my $dep (@$darr) {
-          $gdeps{$dep} = 1;
+        my($base) = basename($dep);
+        my($full) = (defined $$prepend{$base} ?
+                       "$$prepend{$base}/" : '') . $base;
+        if (!defined $$circular{$into}->{$full}) {
+          $$circular{$into}->{$full} = 1;
+          $self->generate_circular_tree($circular, $prepend, $into, $full);
         }
       }
     }
-
-    ## Search the rest of the groups for any of the group dependencies
-    my($moved) = 0;
-    for(my $gj = $gi + 1; $gj <= $#groups; ++$gj) {
-      for(my $i = $groups[$gj]->[0]; $i <= $groups[$gj]->[1]; ++$i) {
-        if (defined $gdeps{basename($$list[$i])}) {
-          ## Move this group ($gj) in front of the current group ($gi)
-          my(@save) = ();
-          for(my $j = $groups[$gi]->[1] + 1; $j <= $groups[$gj]->[1]; ++$j) {
-            push(@save, $$list[$j]);
-          }
-          my($offset) = $groups[$gj]->[1] - $groups[$gi]->[1];
-          for(my $j = $groups[$gi]->[1]; $j >= $groups[$gi]->[0]; --$j) {
-            $$list[$j + $offset] = $$list[$j];
-          }
-          for(my $j = 0; $j <= $#save; ++$j) {
-            $$list[$groups[$gi]->[0] + $j] = $save[$j];
-          }
-
-          ## Update the group indices
-          my($shiftamt) = ($groups[$gi]->[1] - $groups[$gi]->[0]) + 1;
-          for(my $j = $gi + 1; $j <= $gj; ++$j) {
-            $groups[$j]->[0] -= $shiftamt;
-            $groups[$j]->[1] -= $shiftamt;
-          }
-          my(@grsave) = @{$groups[$gi]};
-          $grsave[0] += $offset;
-          $grsave[1] += $offset;
-          for(my $j = $gi; $j < $gj; ++$j) {
-            $groups[$j] = $groups[$j + 1];
-          }
-          $groups[$gj] = \@grsave;
-
-          ## Signify that we have moved a group
-          $moved = 1;
-          last;
-        }
-      }
-      if ($moved) {
-        ## Start over from the first group
-        $gi = -1;
-        last;
-      }
-    }
-    ++$ccount;
   }
 }
 
@@ -1360,40 +1053,79 @@ sub sort_dependencies {
   my($self)     = shift;
   my($projects) = shift;
   my($pjs)      = shift;
-  my(@list)     = sort @$projects;
+  my($prepref)  = shift;
+  my(@list)     = @$projects;
+  my(%prepend)  = ();
 
-  ## Put the projects in the order specified
-  ## by the project dpendencies.  We only need to do
-  ## this if there is more than one element in the array.
-  if ($#list > 0) {
-    ## First determine the individual groups
-    my(@grindex)  = ();
-    my($previous) = [0, undef];
-    for(my $li = 0; $li <= $#list; ++$li) {
-      my($dir) = $self->get_first_level_directory($list[$li]);
-      if (!defined $previous->[1]) {
-        $previous = [$li, $dir];
-      }
-      elsif ($previous->[1] ne $dir) {
-        push(@grindex, [$previous->[0], $li - 1]);
-        $previous = [$li, $dir];
-      }
-    }
-     push(@grindex, [$previous->[0], $#list]);
-
-    ## Next, sort the individual groups
-    foreach my $gr (@grindex) {
-      if ($$gr[0] != $$gr[1]) {
-        $self->sort_within_group(\@list, $pjs, @$gr);
-      }
-    }
-
-    ## Now sort the groups as single entities
-    if ($#grindex > 0) {
-      $self->sort_by_groups(\@list, \@grindex);
+  foreach my $project (@list) {
+    my($dname) = dirname($project);
+    if ($dname ne '.') {
+      $prepend{basename($project)} = $dname;
     }
   }
 
+  if (defined $prepref) {
+    %$prepref = %prepend;
+  }
+
+  ## This will help us catch circular dependencies
+  my(%circular) = ();
+
+  ## Put the projects in the order specified
+  ## by the project dpendencies.
+  for(my $i = 0; $i <= $#list; ++$i) {
+    my($project) = $list[$i];
+    my($name) = $$pjs{$project}->[0];
+    my($deps) = $self->get_validated_ordering($project);
+
+    if ($deps ne '') {
+      my($darr) = $self->create_array($deps);
+
+      ## Set up the circular entry
+      $self->generate_circular_tree(\%circular, \%prepend, $project, $project);
+
+      my($moved) = 0;
+      foreach my $dep (@$darr) {
+        my($base) = basename($dep);
+        my($full) = (defined $prepend{$base} ?
+                       "$prepend{$base}/" : '') . $base;
+        if ($project ne $full) {
+          ## See if the dependency is listed after this project
+          for(my $j = $i + 1; $j <= $#list; ++$j) {
+            if ($list[$j] eq $full) {
+              if (defined $circular{$full} &&
+                  defined $circular{$full}->{$list[$j]}) {
+                ## Don't warn about circular dependencies if we are
+                ## generating implicit project dependencies.  The
+                ## dependencies in question may have been generated and
+                ## that's not the users fault.
+                if (!$self->generate_implicit_project_dependencies()) {
+                  print 'WARNING: Circular dependency between ' .
+                        "$list[$j] and $project\n";
+                }
+              }
+              else {
+                ## If so, move it in front of the current project.
+                ## The original code, which had splices, didn't always
+                ## work correctly (especially on AIX for some reason).
+                for(my $k = $j; $k > $i; --$k) {
+                  $list[$k] = $list[$k - 1];
+                }
+                $list[$i] = $full;
+
+                ## Mark that an entry has been moved
+                $moved = 1;
+                $j--;
+              }
+            }
+          }
+        }
+      }
+      if ($moved) {
+        $i--;
+      }
+    }
+  }
   return @list;
 }
 
@@ -1403,7 +1135,8 @@ sub number_target_deps {
   my($projects) = shift;
   my($pjs)      = shift;
   my($targets)  = shift;
-  my(@list)     = $self->sort_dependencies($projects, $pjs);
+  my(%prepend)  = ();
+  my(@list)     = $self->sort_dependencies($projects, $pjs, \%prepend);
 
   ## This block of code must be done after the list of dependencies
   ## has been sorted in order to get the correct project numbers.
@@ -1421,8 +1154,11 @@ sub number_target_deps {
         ## found, we put the target number in a hash map (to avoid
         ## duplicates).
         foreach my $dep (@$darr) {
+          my($base) = basename($dep);
+          my($full) = (defined $prepend{$base} ?
+                         "$prepend{$base}/" : '') . $base;
           for(my $j = 0; $j < $i; ++$j) {
-            if (basename($list[$j]) eq $dep) {
+            if ($list[$j] eq $full) {
               $targetnumbers{$j} = 1;
             }
           }
@@ -1445,7 +1181,7 @@ sub number_target_deps {
 sub optionError {
   my($self) = shift;
   my($str)  = shift;
-  $self->warning("$self->{'current_input'}: $str.");
+  print 'WARNING: ' . $self->get_current_input() . ": $str\n";
 }
 
 
@@ -1505,9 +1241,6 @@ sub process_cmdline {
       }
       if (defined $options->{'coexistence'}) {
         $self->optionError('-make_coexistence is ignored');
-      }
-      if (defined $options->{'genins'}) {
-        $self->optionError('-genins is ignored');
       }
       if (defined $options->{'input'}->[0]) {
         $self->optionError('Command line files ' .
@@ -1577,8 +1310,7 @@ sub project_creator {
                    $self->{'exclude'}->{$self->{'wctype'}},
                    $self->make_coexistence(),
                    $parameters{'name_modifier'},
-                   $parameters{'apply_project'},
-                   $self->{'generate_ins'});
+                   $parameters{'apply_project'});
 }
 
 
@@ -1649,54 +1381,49 @@ sub generate_recursive_input_list {
 
 sub verify_build_ordering {
   my($self) = shift;
+
   foreach my $project (@{$self->{'projects'}}) {
-    $self->get_validated_ordering($project);
+    $self->get_validated_ordering($project, 1);
   }
 }
 
 
 sub get_validated_ordering {
-  my($self)    = shift;
-  my($project) = shift;
-  my($deps)    = undef;
+  my($self)     = shift;
+  my($project)  = shift;
+  my($warn)     = shift;
+  my($pjs)      = $self->{'project_info'};
+  my($name)     = undef;
+  my($deps)     = '';
 
-  if (defined $self->{'ordering_cache'}->{$project}) {
-    $deps = $self->{'ordering_cache'}->{$project};
-  }
-  else {
-    $deps = '';
-    if (defined $self->{'project_info'}->{$project}) {
-      my($name) = undef;
-      ($name, $deps) = @{$self->{'project_info'}->{$project}};
-      if (defined $deps && $deps ne '') {
-        my($darr) = $self->create_array($deps);
-        foreach my $dep (@$darr) {
-          my($found) = 0;
-          ## Avoid circular dependencies
-          if ($dep ne $name && $dep ne basename($project)) {
-            foreach my $p (@{$self->{'projects'}}) {
-              if ($dep eq $self->{'project_info'}->{$p}->[0] ||
-                  $dep eq basename($p)) {
-                $found = 1;
-                last;
-              }
+  if (defined $$pjs{$project}) {
+    ($name, $deps) = @{$$pjs{$project}};
+    if (defined $deps && $deps ne '') {
+      my($darr)     = $self->create_array($deps);
+      my($projects) = $self->{'projects'};
+      foreach my $dep (@$darr) {
+        my($found) = 0;
+        ## Avoid circular dependencies
+        if ($dep ne $name && $dep ne basename($project)) {
+          foreach my $p (@$projects) {
+            if ($dep eq $$pjs{$p}->[0] || $dep eq basename($p)) {
+              $found = 1;
+              last;
             }
-            if (!$found) {
-              if (defined $ENV{MPC_VERBOSE_ORDERING}) {
-                $self->warning("'$name' references '$dep' which has " .
-                               "not been processed.");
-              }
-              my($reg) = $self->escape_regex_special($dep);
-              $deps =~ s/\s*"$reg"\s*/ /g;
+          }
+          if (!$found) {
+            if ($warn && defined $ENV{MPC_VERBOSE_ORDERING}) {
+              print "WARNING: '$name' references '$dep' which has " .
+                    "not been processed\n";
             }
+            $deps =~ s/\s*"$dep"\s*/ /g;
           }
         }
       }
-
-      $deps =~ s/^\s+//;
-      $deps =~ s/\s+$//;
-      $self->{'ordering_cache'}->{$project} = $deps;
     }
+
+    $deps =~ s/^\s+//;
+    $deps =~ s/\s+$//;
   }
 
   return $deps;

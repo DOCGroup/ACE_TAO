@@ -328,7 +328,6 @@ namespace CCF
       KeywordParser RAISES;
       KeywordParser READONLY;
       KeywordParser SEQUENCE;
-      KeywordParser STRING;
       KeywordParser STRUCT;
       KeywordParser SUPPORTS;
       KeywordParser SWITCH;
@@ -338,7 +337,6 @@ namespace CCF
       KeywordParser TYPEPREFIX;
       KeywordParser UNION;
       KeywordParser VALUETYPE;
-      KeywordParser WSTRING;
 
       // Punctuation parsers (alphabetic group order).
       //
@@ -674,12 +672,6 @@ namespace CCF
       OneArgAction<IdentifierPtr, SemanticAction::Typedef>
       act_typedef_begin_seq;
 
-      NoArgAction<SemanticAction::Typedef>
-      act_typedef_begin_bounded_string;
-
-      NoArgAction<SemanticAction::Typedef>
-      act_typedef_begin_bounded_wstring;
-      
       OneArgAction<SimpleIdentifierPtr, SemanticAction::Typedef>
       act_typedef_declarator;
 

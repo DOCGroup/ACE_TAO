@@ -2,9 +2,8 @@
 
 Telecom Log Service (TLS) Client example
 ----------------------------------------
-
-This is a simple example example to show how to create a basic log and
-write events to the Log.
+This is a simple example example to show how to create a basic log and write events
+to the Log.
 
 To run this example:
 1) You need a running Naming Service, $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service

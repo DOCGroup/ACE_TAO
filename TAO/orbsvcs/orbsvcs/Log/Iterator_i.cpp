@@ -1,12 +1,13 @@
 #include "Iterator_i.h"
 
-#include "orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.h"
-#include "orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h"
-#include "orbsvcs/orbsvcs/DsLogAdminC.h"
+#include "orbsvcs/Log/Log_Constraint_Interpreter.h"
+#include "orbsvcs/Log/Log_Constraint_Visitors.h"
+#include "orbsvcs/DsLogAdminC.h"
 
 ACE_RCSID (Log,
            Iterator_i,
            "$Id$")
+
 
 TAO_Iterator_i::TAO_Iterator_i (TAO_LogRecordStore::LOG_RECORD_STORE &store,
                                 CORBA::ULong start,

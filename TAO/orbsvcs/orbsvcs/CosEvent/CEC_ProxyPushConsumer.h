@@ -15,14 +15,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/CosEventChannelAdminS.h"
+#include "orbsvcs/CosEventChannelAdminS.h"
 #include "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/ESF/ESF_Worker.h"
+#include "orbsvcs/ESF/ESF_Worker.h"
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_Dispatching;

@@ -18,18 +18,18 @@
 //
 // ============================================================================
 
-#include <iostream>
-#include <fstream>
-#include <strstream>
 #include "server.h"
-#include <ace/Synch_T.h>
 #include <algorithm>
 #include "icp.h"
+#include <ace/Synch_T.h>
+#include <strstream>
+#include <iostream>
+#include <fstream>
 
 using namespace std;
 
 const char* Controller_oid = "Controller";
-const unsigned int           DeviceLocator_impl::MAX_EQ_SIZE = 100;
+
 //----------------------------------------------------------------
 
 // Generic ostream inserter for exceptions. Inserts the exception
@@ -346,9 +346,9 @@ Controller_impl (PortableServer::POA_ptr poa, const char * asset_file)
 throw (int) : m_poa (PortableServer::POA::_duplicate (poa)),
              m_asset_file (asset_file)
 {
-    std::ifstream afile (m_asset_file.in (), std::ios::in|std::ios::out);//, 0666);
+    fstream afile (m_asset_file.in (), ios::in|ios::out, 0666);
     if (!afile) {
-        std::cerr << "Cannot open " << m_asset_file.in () << std::endl;
+        cerr << "Cannot open " << m_asset_file.in () << endl;
         throw 0;
     }
     CCS::AssetType anum;
@@ -368,16 +368,16 @@ Controller_impl::
 {
     // Write out the current set of asset numbers
     // and clean up all servant instances.
-    std::ofstream afile (m_asset_file.in ());
+    ofstream afile (m_asset_file.in ());
     if (!afile) {
-        std::cerr << "Cannot open " << m_asset_file.in () << std::endl;
+        cerr << "Cannot open " << m_asset_file.in () << endl;
         assert (0);
     }
     AssetSet::iterator i;
     for (i = m_assets.begin (); i != m_assets.end (); i++) {
-        afile << *i << std::endl;
+        afile << *i << endl;
         if (!afile) {
-            std::cerr << "Cannot update " << m_asset_file.in () << std::endl;
+            cerr << "Cannot update " << m_asset_file.in () << endl;
             assert (0);
         }
     }
@@ -741,7 +741,7 @@ main (int argc, char **argv)
 
         // Write a reference for the controller to stdout.
         CORBA::String_var str = orb->object_to_string (obj.in ());
-        std::cout << str.in () << std::endl << std::endl;
+        cout << str.in () << endl << endl;
 
         // Instantiate the servant locator for devices.
         PortableServer::ServantManager_var locator =
@@ -757,9 +757,7 @@ main (int argc, char **argv)
         orb->run ();
     }
     catch (const CORBA::Exception & e) {
-        std::cerr << "Uncaught CORBA exception: " 
-                  //<< e 
-                  << std::endl;
+        cerr << "Uncaught CORBA exception: " << e << endl;
         return 1;
     }
     catch (...) {

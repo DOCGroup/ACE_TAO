@@ -77,12 +77,6 @@ extern "C"
   extern int _Prand_r (unsigned int *seedptr);
 #endif /* DIGITAL_UNIX */
 
-#if defined (__Lynx__)
-  int putenv (char *);
-  char *mktemp (char *);
-  int mkstemp(char *);
-#endif /* __Lynx__ */
-
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

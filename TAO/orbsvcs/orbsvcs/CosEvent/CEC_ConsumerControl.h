@@ -22,7 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include "orbsvcs/orbsvcs/CosEvent/event_export.h"
+#include "orbsvcs/CosEvent/event_export.h"
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_ProxyPushSupplier;

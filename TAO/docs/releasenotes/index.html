@@ -16,57 +16,42 @@ Release Information for The ACE ORB (TAO)</h3></center>
 This document contains information on the following topics related to the
 <a href="../../VERSION">current
 release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
-
 <table BORDER=0 CELLSPACING=0 CELLPADDING=10 >
 <tr>
 <td VALIGN=TOP>
-<b>ACE Related</b>
-<br>
 <ul>
 <li>
-<a href="#ace">ORB-related ACE Changes</a></li>
-</ul>
-</td>
-<td VALIGN=TOP>
-
-<b>Misc Entries</b>
-<br>
-<ul>
+<a href="#ace">ACE Wrappers</a></li>
 
 <li>
-<a href="#CORBA-conformance">CORBA Standards Conformance</a></li>
-
-
-<li>
-<a href="#dove">The DOVE Demo</a></li>
+<a href="#idl">IDL Compiler</a></li>
 
 <li>
-<a href="TODO.html">TODO list</a></li>
-</ul>
-</td>
+<a href="orbcore.html">ORB Core</a></li>
 
-</table>
-
-<table BORDER=0 CELLSPACING=0 CELLPADDING=10 >
-<tr>
-<td VALIGN=TOP>
-<b>ORB Related</b>
-<br>
-<ul>
 <li>
-<a href="amh.html">Asynchronous Method Handling (AMH)</a></li>
+<a href="#pp">Pluggable Protocols</a></li>
+
+<li>
+<a href="../rtcorba/">Real-Time CORBA</a></li>
+
+<li>
+<a href="#poa">Portable Object Adapter (POA)</a></li>
+
+<li>
+<a href="../poa_migration.html">POA Migration Notes</a></li>
 
 <li>
 <a href="#ami">Asynchronous Method Invocation (AMI)</a></li>
 
 <li>
-<a href="../dynany/index.html">Dynamic Any</a></li>
+<a href="amh.html">Asynchronous Method Handling (AMH)</a></li>
 
 <li>
-<a href="#leader">Global Resources and Leader-Follower Model</a></li>
+<a href="#interceptor">Portable Interceptors</a></li>
 
 <li>
-<a href="#idl">IDL Compiler</a></li>
+<a href="../Smart_Proxies.html">Smart Proxies</a></li>
 
 <li>
 <a href="../implrepo/index.html">Implementation Repository</a></li>
@@ -75,136 +60,116 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <a href="../interfacerepo/index.html">Interface Repository</a></li>
 
 <li>
-<a href="#localobject">Local Interfaces</a></li>
-
-<li>
-<a href="#locate">Locate requests</a></li>
-<li>
-<a href="#forwarding">Location Forwarding</a></li>
-
-
-
-<li>
-<a href="#miop">Multicast InterORB Protocol (MIOP)</a></li>
-
-<li>
-<a href="orbcore.html">ORB Core</a></li>
+<a href="../dynany/index.html">Dynamic Any</a></li>
 
 <li>
 <a href="OBV.html">Object-by-Value</a></li>
 
 <li>
-<a href="../poa_migration.html">POA Migration Notes</a></li>
-
-
-<li>
-<a href="#pp">Pluggable Protocols</a></li>
-
-<li>
-<a href="#interceptor">Portable Interceptors</a></li>
-
-<li>
-<a href="#poa">Portable Object Adapter (POA)</a></li>
-
-
-<li>
-<a href="../rtcorba/">Real-Time CORBA</a></li>
-
-<li>
-<a href="#sciop">SCIOP Support in TAO</a></li>
-
-<li>
-<a href="../Smart_Proxies.html">Smart Proxies</a></li>
-</ul>
-<td VALIGN=TOP>
-<b>CORBA Services Related</b>
-<br>
-<ul>
-<li>
-<a href="#av">Audio/Video Streaming Service</a></li>
-<li>
-<a href="#cservices">Concurrency Service</a></li>
-<li> Event Service
-<ul>
-<li>
-<a href="#ec">CORBA Event Service</a></li>
-<li>
-<a href="ftrt_ec.html">Fault_Tolerant/Real_Time Event Service</a></li>
-<li>
-<a href="ec.html">Real-time Event Service</a></li>
-</ul>
-
-<li>
-<a href="#fault_tolerance">Fault Tolerant Services&nbsp;</a></li>
-
-<li>
-<a href="#loadbalancer">Load Balancer Service</a></li>
-
-
-<a href="#nservices">Naming Service&nbsp;</a></li>
-<li>
-Notification Service
-<ul>
-<li>
-<a href="#notify">Notification Service</a></li>
-<li>
-<a href="#rt_notify">Real-Time Notification Service</a></li>
-</ul>
-<li>
 <a href="PSS.html">Persistent State Service</a></li>
+</ul>
+</td>
+
+<td VALIGN=TOP>
+<ul>
+<li>
+<a href="#nservices">Naming Service&nbsp;</a></li>
+
+<li>
+<a href="#tservices">Trading Service</a></li>
+
 <li>
 <a href="#pservices">Property Service</a></li>
-<li>Scheduling Service
-<ul>
+
 <li>
-<a href="#scheduling">Kokyu Scheduling Service</a></li>
+<a href="#cservices">Concurrency Service</a></li>
+
 <li>
-<a href="rtc10_sched.html">RTCORBA 1.0 Scheduling Service</a></li>
-</ul>
+<a href="#av">Audio/Video Streaming Service</a></li>
+
+<li>
+<a href="#ts">Time Service</a></li>
+
+<li>
+<a href="#ec">Event Service</a></li>
+
+<li>
+<a href="#log">Telecom Log Service</a></li>
+
+<li>
+<a href="#notify">Notification Service</a></li>
+
+<li>
+<a href="#rt_notify">Real-Time Notification Service</a></li>
 
 <li>
 <a href="#security">Security Service</a></li>
 
 <li>
-<a href="#log">Telecom Log Service</a></li>
+<a href="#miop">Multicast InterORB Protocol (MIOP)</a></li>
+
 <li>
-<a href="#ts">Time Service</a></li>
+<a href="#loadbalancer">Load Balancer</a></li>
+
 <li>
-<a href="#tservices">Trading Service</a></li>
+<a href="ec.html">TAO's Real-time Event Service</a></li>
 
+<li>
+<a href="ftrt_ec.html">TAO's Fault Tolerant Event Service</a></li>
 
+<li>
+<a href="#scheduling">TAO's Scheduling Service</a></li>
 
+<li>
+<a href="rtc10_sched.html">RTCORBA 1.0 Scheduling Service</a></li>
+
+<li>
+<a href="#logging">TAO's Logging Service</a></li>
 </ul>
 </td>
 
 <td VALIGN=TOP>
 <ul>
-<b>CCM Related</b>
-<br><BR>
 <li>
 <a href="../../CIAO/docs/index.html">CORBA Component Model (CIAO)</a></li>
+
 <li>
 <a href="../../CIAO/CIDLC/README.html">Component Implementation
 Definition Language Compiler (CIDLC)</a></li>
-<li>
-<a href="../../CIAO/docs/static_ciao_contents.html">Static Configuration
-    Support for Real-Time Platforms</a></li>
-</ul>
-</td>
 
-<td VALIGN=TOP>
+<li>
+<a href="#CORBA-conformance">CORBA Standards Conformance</a></li>
+
+<li>
+<a href="#fault_tolerance">TAO's support for FT services&nbsp;</a></li>
+
+<li>
+<a href="#apps">Regression Tests</a></li>
+
+<li>
+<a href="#ace">ORB-related ACE Changes</a></li>
+
+<li>
+<a href="#dove">The DOVE Demo</a></li>
+
+<li>
+<a href="#forwarding">Location Forwarding</a></li>
+
+<li>
+<a href="#leader">Global Resources and Leader-Follower Model</a></li>
+
+<li>
+<a href="#locate">Locate requests</a></li>
+
+<li>
+<a href="#localobject">Local Interfaces</a></li>
+
+<li>
+<a href="TODO.html">Our TODO list</a></li>
+</ul>
 </td>
 </tr>
 </table>
-
-
-<table BORDER=0 CELLSPACING=0 CELLPADDING=10 >
-<tr>
-
-
-</table>
-
-
 A complete list of all modifications to TAO is available in the <a href="../../ChangeLog">ChangeLog</a>.
 <p>
 <hr>
@@ -220,6 +185,8 @@ on the handler. The Reactor also increments this reference count when making
 upcalls on the handler. The reference count is decremented when an upcall
 completes or when the handler is removed from the Reactor.</li>
 
+<br>&nbsp;
+<p>&nbsp;
 <p>This mechanism is similar to what happens between POAs and Servants
 and it allows for the safe deletion of handlers. This mechanism is particularly
 need for multi-threaded applications that can have multiple threads executing
@@ -390,7 +357,7 @@ Include files are handled properly. So are the definitions used inside
 the include files that are used in the currently parsed files.</li>
 
 <li>
-Generates C++ stubs and skeletons that use TAO's
+Generates C++ stubs and skeletons that use TAO's 
 <a href="http://www.cs.wustl.edu/~schmidt/HICSS-97.ps.gz">
 interpretive IIOP protocol engine</a>.</li>
 
@@ -604,7 +571,7 @@ is complete, with the exception of support for the 'import' keyword.</li>
 
 <li>
 Generated code for constants defined in a module is now inlined
-(value is assigned in the header file) by default, enabling such
+(value is assigned in the header file) by default, enabling such 
 constants to be referenced by name as array bounds, etc. either in
 subsequent generated code or in application code. However, this inlining causes
 a problem with some compilers when using pre-compiled headers, so the
@@ -631,6 +598,8 @@ the MSVC project. For the Release version, the Optimizations box in the
 C/C++ tab has 'Maximize Speed' selected. This setting turned out to cause
 a problem when</li>
 
+<br>&nbsp;
+<p>&nbsp;
 <p>const char *foo = ......
 <p>occurs in the source code. The variable foo is sometimes not allocated
 or assigned properly, and if foo is part of generated code, it will then
@@ -654,28 +623,53 @@ work is now ongoing to extend TAO's OBV implementation until it includes
 the complete CORBA value type specification. Some of the items yet to be
 implemented include:</li>
 
+<br>&nbsp;
+<p>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
 <ul>
 <li>
 Boxed value types</li>
 
+<br>&nbsp;
+<p>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
 <li>
 Custom marshaling</li>
 
+<br>&nbsp;
+<p>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
 <li>
 Truncation</li>
 
+<br>&nbsp;
+<p>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
 <li>
 Marshaling of complex state (graphs with cycles)</li>
 
-</ul>
+<br>&nbsp;
+<p>&nbsp;
+<br>&nbsp;
+<br>&nbsp;</ul>
 For a complete description of value type semantics, see chapter 5 in the
 CORBA specification.
+<br>&nbsp;
+<br>&nbsp;
 <li>
 The generated sequence classes should not be generated per sequence, but
 per type and parent scope. Which means, that the overhead of having the
 source code generated serveral times should be reduced. To do this, an
 extra pass over the internal representation of the IDL file has to be done.</li>
 
+<br>&nbsp;
+<p>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
 <li>
 Updated and portable support for wide characters and wide strings. The
 original implementation supports Unicode only. At the time, the CORBA specification
@@ -693,7 +687,10 @@ CDR transfer syntax, see section 15.3 in the CORBA specification. and for
 information about the marshaling of IDL character types specifically, see
 section 15.3.1.6.</li>
 
-</ul>
+<br>&nbsp;
+<p>&nbsp;
+<br>&nbsp;
+<br>&nbsp;</ul>
 
 <p><br><!--#include virtual="orbcore.html" -->
 <hr>
@@ -729,6 +726,8 @@ instance, there is now the concept of communication layers: Objects (e.g.,
 references, method invocations, etc.), ORB Messaging, Transport, and Network.
 The Object layer is just the usual stubs and skeletons.</li>
 
+<br>&nbsp;
+<p>&nbsp;
 <p>The common interfaces have been defined in the new abstract classes
 that form the core of TAO's pluggable protocol framework, e.g.,
 <tt>TAO_Connector</tt>,
@@ -746,6 +745,10 @@ This is important since there may be several different ways to access an
 object. Each profile for an object may encode information pertaining to
 QoS, network and transport protocols, addresses or routes.</li>
 
+<br>&nbsp;
+<p>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
 <li>
 <b>Example Transport protocols</b> - Aside from IIOP, five additional transport
 protocols are distributed with TAO:</li>
@@ -825,6 +828,8 @@ and is meant to be a drop-in replacement for the IIOP pluggable protocol.
 TAO's SSLIOP pluggable protocol implementation supports both the standard
 IIOP transport protocol and the secure IIOP over SSL transport protocol.</li>
 
+<br>&nbsp;
+<p>&nbsp;
 <p>No changes were made to the core TAO sources to provide to this SSL
 support, nor does TAO contain any security related hooks. TAO's SSLIOP
 implementation is completely self-contained. This ensures that the core
@@ -908,7 +913,9 @@ the null terminator, but Posix.1g only requires that local IPC rendezvous
 point arrays contain a maximum of <b>at least</b> 100 characters, including
 the null terminator.</li>
 
-<P>If an endpoint is longer than what the platform supports then
+<br>&nbsp;
+<p>&nbsp;
+<p>&nbsp;If an endpoint is longer than what the platform supports then
 it will be truncated so that it fits, and a warning will be issued.
 <li>
 Avoid using <i>relative</i> paths in your UIOP endpoints. If possible,
@@ -921,6 +928,8 @@ able to communicate with the server since its point of communication, the
 rendezvous point, was not found. On the other hand, if an absolute path
 was used, the client would know exactly where to find the rendezvous point.</li>
 
+<br>&nbsp;
+<p>&nbsp;
 <p>It is up to the user to make sure that a given UIOP endpoint is accessible
 by both the server and the client.
 <li>
@@ -934,7 +943,10 @@ strings, i.e. <tt>/tmp/foo</tt> and <tt>foo</tt> are not the same, lexicographic
 On the other hand, if both the endpoint and the preconnect are the same
 string then a preconnection will be established and used successfully.</li>
 
-</blockquote>
+<br>&nbsp;
+<p>&nbsp;
+<br>&nbsp;
+<br>&nbsp;</blockquote>
 The <tt><a href="../ORBEndpoint.html">-ORBEndpoint</a></tt> option uses
 a syntax similar to that of the URL style object reference shown above.
 The only difference is that the object key delimiter and the object key
@@ -949,6 +961,8 @@ for endpoints created on a host with multiple network interfaces. It should
 no longer be necessary to manually specify an endpoint for each network
 interface.</li>
 
+<br>&nbsp;
+<p>&nbsp;
 <p>This means that server IORs will contain profiles for all of the default
 endpoints created on each network interface the server is listening on,
 if no explicit endpoints were specified.</ul>
@@ -962,7 +976,10 @@ Critical Work:
 <li>
 None.</li>
 
-</ul>
+<br>&nbsp;
+<p>&nbsp;
+<br>&nbsp;
+<br>&nbsp;</ul>
 Future Work:
 <ul>
 <li>
@@ -988,6 +1005,8 @@ TAO supports the POA spec. This section will carry updates as available.</li>
 Known issues:
 <br>Future work:
 <br>Recently completed work:
+<br>&nbsp;
+<br>&nbsp;
 <ul>
 <li>
 ORB::shutdown now properly deactives all the POA Managers.</li>
@@ -1035,12 +1054,16 @@ method call from the client to the server; (b) it is varible in size, and
 therefore, does not lend itself to smart and effective parsing; (c) the
 searching based on the complete POA name is very ineffient.</li>
 
+<br>&nbsp;
+<p>&nbsp;
 <p>The new solution is to use an active demux table, and flatten the POA
 hierarchy. This will help in the searching since active demuxing is fast
 and predictable. This will also help in the parsing since the demux key
 will be fixed size.
 <p>Note that for persistent ids, we have to pass the complete POA name
 in addition to the demux key in order to handle POA creation on demand.
+<br>&nbsp;
+<br>&nbsp;
 <li>
 There were some POA objects in a typical server that are not freed up properly,
 resulting in a memory leak. This has now been fixed.</li>
@@ -1067,11 +1090,15 @@ We have decided not to support active demuxing for method name lookup.
 The benefit of this optimization was questionable since the current perfect
 hashing scheme provide very good and predictable behavior.</li>
 
+<br>&nbsp;
+<p>&nbsp;
 <p>Also, note that this optimization will require many changes. We would
 have to use the help of the IDL compiler to modify the object key that
 is passed for every method call differently. Note that this scheme doesn't
 work in the case of multiple inheritance or when the client stubs are not
 TAO.
+<br>&nbsp;
+<br>&nbsp;
 <li>
 Improved the parsing of object keys belonging to the RootPOA. Since this
 is the default POA and is commonly used, we have given it a reserved byte
@@ -1107,7 +1134,10 @@ and expecting the reference counting behavior provided by the POA. Note
 that the old scheme of direct call through to the servant is also still
 available.</li>
 
-</ul>
+<br>&nbsp;
+<p>&nbsp;
+<br>&nbsp;
+<br>&nbsp;</ul>
 
 <hr>
 <br><!--#include virtual="OBV.html" -->
@@ -1223,6 +1253,8 @@ that meets the Linked Trader conformance criteria --- it implements the
 <tt>Link</tt> interfaces, but not
 the <tt>Proxy</tt> interface. Notably, the TAO trader supports the following
 features:
+<br>&nbsp;
+<br>&nbsp;
 <ul>
 <li>
 Multithreaded operation;</li>
@@ -1283,6 +1315,8 @@ Point of contact: <a href="mailto:tworm@cs.wustl.edu">Torben Worm</a>
 <p>Current status (as of May 3rd): The <a href="http://www.omg.org/technology/documents/formal/concurrency_service.htm">Concurrency
 Service</a> provides a mechanism that allows clients to acquire and release
 various types of locks in a distributed system.
+<br>&nbsp;
+<br>&nbsp;
 <ul>
 <li>
 A simple version of the Concurrency Service has been implemented, i.e.
@@ -1647,6 +1681,8 @@ with the standard policy manipulation CORBA features (e.g. <tt>PolicyManager</tt
 meaning that this policy can be set on a per-ORB, per-thread or per-object
 basis.</li>
 
+<br>&nbsp;
+<p>&nbsp;
 <p>This policy makes it possible to, for example, make both secure and
 insecure invocations within the same client process.
 <li>
@@ -1661,6 +1697,8 @@ in conjunction with the standard policy manipulation CORBA features (e.g.
 <tt>PolicyCurrent</tt>), meaning that this policy can be set on a per-ORB,
 per-thread or per-object basis.</li>
 
+<br>&nbsp;
+<p>&nbsp;
 <p>This policy makes it possible to, for example, make authenticated and
 non-authenticated invocations within the same client process.
 <li>
@@ -1811,6 +1849,23 @@ Add increased functionality. Requests and suggestions are welcome.</li>
 
 <hr>
 <h3>
+<a NAME="logging"></a>TAO's Logging Service</h3>
+Point of contact: <a href="mailto:krish@cs.wustl.edu">Krishnakumar Elakkara
+Pathayapura</a>
+<p>Current status (Jan 23 2000):
+<ul>
+<li>
+The basic logging service has been implemented. It can log basic messages
+from multiple clients. The log scheduling is currently being tested.</li>
+</ul>
+Future work:
+<ul>
+<li>
+Add persistence and then to add event notification</li>
+</ul>
+
+<hr>
+<h3>
 <a NAME="fault_tolerance"></a>TAO's support for FT services</h3>
 Point of contact: <a href="mailto:bala@dre.vanderbilt.edu">Balachandran
 Natarajan</a>
@@ -1822,11 +1877,6 @@ FT chapter of the
 <a href="http://www.omg.org/cgi-bin/doc?formal/02-06-01">CORBA
 3.0 specification</a>. Specifically TAO implements the sections 23.2.2,
 23.2.3, 23.2.6 thru 23.2.8 of the document.
-
-<p>
-Basic support for <a href="ftcorba_services.html">FT CORBA services</a> has been added.
-</p>
-
 <h4>
 Future Work:</h4>
 
@@ -1967,8 +2017,6 @@ Implement a Multicast Gateway (MG).</li>
 <hr>
 <h3>
 <a NAME="apps"></a>Test &amp; Performance Tests</h3>
-[Note: This section is not uptodate. Use with caution. February 2004.]
-<br>
 Point of contact: <a href="mailto:naga@cs.wustl.edu">Nagarajan Surendran</a>
 <p>Current Status:
 <p>The TAO IDL_Cubit test application makes use of the Naming Service and
@@ -2220,26 +2268,6 @@ For more information on using the local interfaces, please refers to Section
 and our short <a href="../LocalObject.html">guideline</a> on implementing
 local objects.
 <br>
-
-
-<hr>
-<h3>
-<a NAME="sciop"></a>SCIOP Support in TAO</h3>
-Point of contact: <a href="mailto:gthaker@atl.lmco.com">Gautam H. Thaker</a>, Lockheed Martin Advanced Technology Labs, Cherry Hill, NJ.
-
-
-<p>TAO has support for OMG's GIOP SCTP Protocol mapping <a
-href=http://www.omg.org/cgi-bin/doc?ptc/2003-08-20>spec</a>, except
-that SCIOP protocol properties are not yet supported. Extensive
-information about SCTP and how it may be used from both ACE and TAO is
-available in several README files in $ACE_ROOT/performance-tests/SCTP/
-directory. ACE+TAO's SCTP support can be used either with Linux's
-OpenSS7 SCTP implementation or with Linux's LKSCTP SCTP
-implementation.  <p> A paper describing the ACE+TAO SCTP
-implementation and measured results are available <a
-href=http://www.atl.external.lmco.com/projects/QoS/documents/DOA2003_97_Thaker.pdf>
-online</a>.<P>
-
 <hr>
 <h3>
 <a NAME="CORBA-conformance"></a>CORBA Standards Conformance</h3>

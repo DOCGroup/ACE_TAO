@@ -5,8 +5,8 @@
 #----------------------------------------------------------------------------
 
 MAKEFILE = Makefile
-LIB_UNCHECKED      = libTMCast.a
-SHLIB_UNCHECKED    = libTMCast.$(SOEXT)
+LIB      = libTMCast.a
+SHLIB    = libTMCast.$(SOEXT)
 
 FILES= Group Protocol
 
@@ -22,14 +22,6 @@ LSRC  = $(addsuffix .cpp,$(FILES))
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
-
-ifeq ($(exceptions),1)
-  ifeq ($(threads),1)
-    LIB=$(LIB_UNCHECKED)
-    SHLIB=$(SHLIB_UNCHECKED)
-  endif # rt_corba
-endif # minimum_corba
-
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

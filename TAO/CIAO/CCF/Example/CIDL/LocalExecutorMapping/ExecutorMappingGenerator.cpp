@@ -686,7 +686,10 @@ namespace
     virtual void
     inherits_none (Type&)
     {
-      os << " : ::Components::CCMContext";
+      //@@ This should be ::Components::CCMContext when we start using
+      //   proper mapping.
+      //
+      os << " : ::Components::SessionContext";
     }
 
     virtual void
@@ -1300,13 +1303,11 @@ namespace
   };
 
 
-  struct ComponentContextEmitter : Traversal::ComponentExecutor, Emitter
+  struct ComponentExecutorEmitter : Traversal::ComponentExecutor, Emitter
   {
-    ComponentContextEmitter (Context& c, ostream& os)
-        : Emitter (c, os),
-          name_emitter_ (c, os, "CCM_", "_Context")
+    ComponentExecutorEmitter (Context& c, ostream& os)
+        : Emitter (c, os)
     {
-      implements_traverser_.node_traverser (name_emitter_);
     }
 
     virtual void
@@ -1320,62 +1321,29 @@ namespace
     {
       //@@ need to check if spec prescribes this name.
       //
-      os << i.name () << "_Context";
+      os << i.name () << "Context";
     }
 
     virtual void
-    implements (Type& i)
+    manages (Type& i)
     {
-      os << " : ";
+      /*
+        os << "local interface " << name.simple () << "Context : "
+         << name.scope () << "::CCM_" << name.simple () << "_Context, ";
 
-      Traversal::ComponentExecutor::implements (i, implements_traverser_);
-
-      os << ", "
-         << "::Components::SessionContext";
-    }
-
-    virtual void
-    post (Type&)
-    {
-      os << "{};";
-    }
-
-  private:
-    NameMangler name_emitter_;
-    Traversal::Implements implements_traverser_;
-  };
-
-
-  struct ComponentExecutorEmitter : Traversal::ComponentExecutor, Emitter
-  {
-    ComponentExecutorEmitter (Context& c, ostream& os)
-        : Emitter (c, os),
-          name_emitter_ (c, os, "CCM_")
-    {
-      implements_traverser_.node_traverser (name_emitter_);
-    }
-
-    virtual void
-    pre (Type&)
-    {
-      os << "local interface ";
-    }
-
-    virtual void
-    name (Type& i)
-    {
-      os << i.name ();
-    }
-
-    virtual void
-    implements (Type& i)
-    {
-      os << " : ";
-
-      Traversal::ComponentExecutor::implements (i, implements_traverser_);
-
-      os << ", "
-         << "::Components::SessionComponent";
+      switch (category)
+      {
+      case SyntaxTree::Composition::Category::ENTITY:
+        {
+          os << "::Components::EntityContext";
+          break;
+        }
+      default:
+        {
+          os << "::Components::SessionContext";
+          break;
+        }
+      */
     }
 
     virtual void
@@ -1383,52 +1351,8 @@ namespace
     {
       os << "{};";
     }
-
-  private:
-    NameMangler name_emitter_;
-    Traversal::Implements implements_traverser_;
   };
 
-
-  struct HomeExecutorEmitter : Traversal::HomeExecutor, Emitter
-  {
-    HomeExecutorEmitter (Context& c, ostream& os)
-        : Emitter (c, os),
-          name_emitter_ (c, os, "CCM_")
-    {
-      implements_traverser_.node_traverser (name_emitter_);
-    }
-
-    virtual void
-    pre (Type&)
-    {
-      os << "local interface ";
-    }
-
-    virtual void
-    name (Type& i)
-    {
-      os << i.name ();
-    }
-
-    virtual void
-    implements (Type& i)
-    {
-      os << " : ";
-
-      Traversal::HomeExecutor::implements (i, implements_traverser_);
-    }
-
-    virtual void
-    post (Type&)
-    {
-      os << "{};";
-    }
-
-  private:
-    NameMangler name_emitter_;
-    Traversal::Implements implements_traverser_;
-  };
 
   //
   //
@@ -1810,19 +1734,14 @@ generate (CommandLine const& cl,
 
     //--
     TypeNameEmitter type (ctx, os);
-
-    ComponentContextEmitter session_component_context (ctx, os);
-    ComponentExecutorEmitter session_component_executor (ctx, os);
-    HomeExecutorEmitter session_home_executor (ctx, os);
+    ComponentExecutorEmitter component_executor (ctx, os);
 
     ContextPortEmitter port_context (ctx, os);
     ExplicitPortEmitter port_explicit (ctx, os);
 
     supports.node_traverser (type);
 
-    composition_defines.node_traverser (session_component_context);
-    composition_defines.node_traverser (session_component_executor);
-    composition_defines.node_traverser (session_home_executor);
+    composition_defines.node_traverser (component_executor);
 
     component_context_defines.node_traverser (port_context);
 

@@ -7,8 +7,7 @@
 #include <ace/OS_NS_stdio.h>
 #include <tao/PortableServer/ORB_Manager.h>
 #include <orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.h>
-// FUZZ: disable check_for_streams_include
-#include "ace/streams.h"
+#include <iostream>
 
 StubFaultNotifier::StubFaultNotifier ()
   : ior_output_file_(0)
@@ -196,7 +195,7 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   this->factory_ = ::FT::FaultDetectorFactory::_narrow(obj.in ());
   if (CORBA::is_nil(this->factory_.in ()))
   {
-    cerr << "Can't resolve Detector Factory IOR " << this->detector_ior_ << endl;
+    std::cerr << "Can't resolve Detector Factory IOR " << this->detector_ior_ << std::endl;
     result = -1;
   }
   if (result == 0)
@@ -211,7 +210,7 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
       FT::PullMonitorable_var replica = FT::PullMonitorable::_narrow(obj.in ());
       if (CORBA::is_nil(replica.in ()))
       {
-        cerr << "Can't resolve Replica IOR " << iorName << endl;
+        std::cerr << "Can't resolve Replica IOR " << iorName << std::endl;
         result = -1;
       }
       else

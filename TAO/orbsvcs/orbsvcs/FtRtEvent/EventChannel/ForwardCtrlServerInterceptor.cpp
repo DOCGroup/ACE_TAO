@@ -5,13 +5,11 @@
 #include "GroupInfoPublisher.h"
 #include "IOGR_Maker.h"
 #include "../Utils/resolve_init.h"
-#include "../Utils/Safe_InputCDR.h"
-#include "../Utils/Log.h"
 
 #include "tao/Object_KeyC.h"
 #include "tao/ORB_Constants.h"
 
-#include "orbsvcs/orbsvcs/FTRTC.h"
+#include "orbsvcs/FTRTC.h"
 
 ACE_RCSID (EventChannel,
            ForwardCtrlServerInterceptor,
@@ -137,7 +135,7 @@ void ForwardCtrlServerInterceptor::receive_request_service_contexts (
 FT::ObjectGroupRefVersion get_ft_group_version(IOP::ServiceContext_var service_context
                                                ACE_ENV_ARG_DECL)
 {
-  Safe_InputCDR cdr (ACE_reinterpret_cast (const char*,
+  TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
                                             service_context->context_data.get_buffer ()
                                             ),
                       service_context->context_data.length ());
@@ -165,7 +163,7 @@ void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerReques
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   IOP::ServiceContext_var service_context;
-  FT::ObjectGroupRefVersion version=0;
+  FT::ObjectGroupRefVersion version;
 
   ACE_TRY_EX(block1)
   {
@@ -192,8 +190,8 @@ void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerReques
   // pass a new IOGR if the client use an outdated version
 
   IOGR_Maker* maker = IOGR_Maker::instance();
-  TAO_FTRTEC::Log(3, "Current GROUP Version = %d, received version = %d\n",
-    maker->get_ref_version(), version);
+  ACE_DEBUG((LM_DEBUG, "Current GROUP Version = %d, received version = %d\n",
+    maker->get_ref_version(), version));
 
   if (version < maker->get_ref_version()) {
     ACE_DEBUG((LM_DEBUG, "Outdated IOGR version, passing new IOGR\n"));

@@ -2,12 +2,10 @@
 
 #include "Options_Parser.h"
 
-ACE_RCSID (lib, 
-           TAO_Options_Parser, 
-           "$Id$")
+ACE_RCSID(lib, TAO_Options_Parser, "$Id$")
 
 #include "tao/debug.h"
-#include "orbsvcs/orbsvcs/NotifyExtC.h"
+#include "orbsvcs/NotifyExtC.h"
 
 TAO_Notify_Tests_Options_Parser::TAO_Notify_Tests_Options_Parser (void)
 {

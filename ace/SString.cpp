@@ -18,7 +18,7 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (ace,
-           SString,
+           SString, 
            "SString.cpp,v 4.61 2001/03/04 00:55:30 brunsch Exp")
 
 
@@ -323,7 +323,7 @@ ACE_SString::substring (size_t offset,
     return nill;
 
   // get all remaining bytes
-  if (length == -1 || count > (this->len_ - offset))
+  if (length == -1)
     count = len_ - offset;
 
   return ACE_SString (&rep_[offset], count, this->allocator_);

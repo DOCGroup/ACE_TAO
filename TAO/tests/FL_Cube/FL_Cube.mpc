@@ -10,6 +10,5 @@ project(*client) : taoexe, portableserver, strategies {
 project(*server) : taoexe, portableserver, strategies {
   source_files {
     server.cpp
-    test_i.cpp
   }
 }

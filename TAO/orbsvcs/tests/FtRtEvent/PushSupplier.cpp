@@ -1,17 +1,18 @@
 // $Id$
 
-#include "orbsvcs/orbsvcs/CosNamingC.h"
-#include "orbsvcs/orbsvcs/Event_Utilities.h"
+#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/Event_Utilities.h"
 #include "PushSupplier.h"
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "tao/MProfile.h"
 #include "tao/Stub.h"
-#include "orbsvcs/orbsvcs/FtRtEvent/Utils/resolve_init.h"
+#include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
 
 ACE_RCSID (FtRtEvent,
            PushSupplier,
            "$Id$")
+
 
 int
 PushSupplier_impl::ReactorTask::svc (void)

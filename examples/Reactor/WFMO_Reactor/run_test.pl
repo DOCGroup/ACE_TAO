@@ -46,23 +46,16 @@ for $test (@tests)
     print STDOUT "\n________________________________________\n\n";
     
     $test_process = new PerlACE::Process ($test);
-
-    if (! -x $test_process->Executable ()) {
-        print STDERR "Error: " . $test_process->Executable () .
-                     " does not exist or is not runnable\n";
-    }
-    else
-    {
-       $test_process->Spawn ();
-       $test_result = $test_process->WaitKill ($test_timeout);
+    $test_process->Spawn ();
+    $test_result = $test_process->WaitKill ($test_timeout);
         
-       if ($test_result != 0) 
-       {
-           print STDERR "\n________________________________________\n";
-           print STDERR "\nERROR: \"$test\" returned $test_result";
-           print STDERR "\n________________________________________\n";
-       }
+    if ($test_result != 0) 
+    {
+        print STDERR "\n________________________________________\n";
+        print STDERR "\nERROR: \"$test\" returned $test_result";
+        print STDERR "\n________________________________________\n";
     }
+
     print STDOUT "\n________________________________________\n";
     print STDOUT "\n\"$test\" completed";
     print STDOUT "\n________________________________________\n";

@@ -21,7 +21,7 @@
 
 #include "CEC_ConsumerControl.h"
 
-#include "orbsvcs/orbsvcs/ESF/ESF_Worker.h"
+#include "orbsvcs/ESF/ESF_Worker.h"
 
 #include "tao/ORB.h"
 

@@ -213,25 +213,6 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR* filename,
           }
           else if (pathlen > 0)
               return 0;
-
-          // In case not found we should try again with the ACE_DLL_PREFIX
-          // prefixed
-          ACE_OS::strcpy (searchfilename, ACE_DLL_PREFIX);
-          ACE_OS::strcat (searchfilename, tempcopy);
-          pathlen = ACE_TEXT_SearchPath (0,
-                                         searchfilename,
-                                         dll_suffix,
-                                         ACE_static_cast (DWORD,
-                                                          maxpathnamelen),
-                                         pathname,
-                                         &file_component);
-          if (pathlen >= maxpathnamelen)
-          {
-              errno = ENOMEM;
-              return -1;
-          }
-          else if (pathlen > 0)
-              return 0;
 #else
           ACE_TCHAR *ld_path =
 #if defined ACE_DEFAULT_LD_SEARCH_PATH

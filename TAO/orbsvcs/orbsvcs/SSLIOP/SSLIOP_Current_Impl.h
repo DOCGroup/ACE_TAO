@@ -23,8 +23,8 @@
 
 #include <openssl/ssl.h>
 
-#include "orbsvcs/orbsvcs/SSLIOPC.h"
-#include "orbsvcs/orbsvcs/Security/Security_Current_Impl.h"
+#include "orbsvcs/SSLIOPC.h"
+#include "orbsvcs/Security/Security_Current_Impl.h"
 #include "tao/ORB_Core.h"
 
 /**

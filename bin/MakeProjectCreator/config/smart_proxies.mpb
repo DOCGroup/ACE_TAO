@@ -1,8 +1,9 @@
 // -*- MPC -*-
 // $Id$
 
-project : taolib_with_idl {
+project : taolib {
   after    += SmartProxies
   libs     += TAO_SmartProxies
+  requires += smart_proxies
   idlflags += -Gsp
 }

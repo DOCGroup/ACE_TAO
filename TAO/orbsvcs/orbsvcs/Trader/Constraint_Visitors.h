@@ -15,8 +15,8 @@
 #define TAO_CONSTRAINT_VISITOR_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/Trader/Interpreter_Utils.h"
-#include "orbsvcs/orbsvcs/Trader/trading_export.h"
+#include "orbsvcs/Trader/Interpreter_Utils.h"
+#include "orbsvcs/Trader/trading_export.h"
 #include "ace/Containers.h"
 
 class TAO_DynSequence_i;

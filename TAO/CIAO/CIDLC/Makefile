@@ -8,7 +8,6 @@ include ../CCF/Config.rules
 BIN     = cidlc
 
 FILES   = ExecutorMappingGenerator \
-          Literals                 \
           DescriptorGenerator      \
           SizeTypeCalculator       \
           ServantGenerator         \

@@ -2,7 +2,6 @@
 
 #if TAO_HAS_SCIOP == 1
 
-#include "ace/OS_NS_string.h"
 #include "tao/debug.h"
 #include "ace/Synch_T.h"
 #include "tao/ORB_Constants.h"

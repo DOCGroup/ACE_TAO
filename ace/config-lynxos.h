@@ -14,8 +14,6 @@
 #define ACE_CONFIG_H
 #include /**/ "ace/pre.h"
 
-#include <unistd.h> /* Get _POSIX_VERSION macro */
-
 #if ! defined (__ACE_INLINE__)
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
@@ -46,13 +44,19 @@
 # define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 0
 #endif /* __LYNXOS_SDK_VERSION */
 
-#if _POSIX_VERSION >= 199506L
-  // LynxOS 3.1.0 or greater need ipc_1c.h to be included before net/if.h
+#if !defined ( __LYNXOS_SDK_VERSION )
+  // LynxOS 3.1.0 and later need ipc_1c.h to be included before net/if.h
   // to avoid macro conflict.
 # define ACE_NEEDS_IPC_1C_H
-#endif /* _POSIX_VERSION */
+#endif /* __LYNXOS_SDK_VERSION */
 
 #if defined (__x86__)
+  // PowerPC libraries don't seem to have alloca (), so only use with x86.
+// Although ACE does have alloca() on this compiler/platform combination, it is
+// disabled by default since it can be dangerous.  Uncomment the following line
+// if you ACE to use it.
+//# define ACE_HAS_ALLOCA
+# define ACE_HAS_ALLOCA_H
 # define ACE_HAS_PENTIUM
 #elif defined (__powerpc__)
   // It looks like the default stack size is 15000.
@@ -64,8 +68,6 @@
 
 #define ACE_DEFAULT_BASE_ADDR ((char *) 0)
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
-#define ACE_HAS_ALLOCA
-#define ACE_HAS_ALLOCA_H
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 #define ACE_HAS_BROKEN_READV
 #define ACE_HAS_BROKEN_SETRLIMIT
@@ -97,26 +99,31 @@
 #define ACE_HAS_STRERROR
 #define ACE_HAS_SYSV_IPC
 #define ACE_HAS_SYS_SIGLIST
-#define ACE_HAS_TERM_IOCTLS
-#define ACE_HAS_TYPENAME_KEYWORD
 #define ACE_HAS_TIMEZONE_GETTIMEOFDAY
 #define ACE_LACKS_CONST_TIMESPEC_PTR
+#define ACE_LACKS_GETHOSTENT
+#define ACE_LACKS_GETOPT_PROTO
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_SETPGID
 #define ACE_LACKS_SETREGID
 #define ACE_LACKS_SETREUID
 #define ACE_LACKS_MADVISE
+#define ACE_LACKS_MKTEMP
 #define ACE_LACKS_RWLOCK_T
 #define ACE_LACKS_SIGINFO_H
 #define ACE_LACKS_SI_ADDR
+#define ACE_LACKS_STRCASECMP
 #define ACE_LACKS_TIMESPEC_T
 #define ACE_LACKS_UCONTEXT_H
+#define ACE_LACKS_MKSTEMP
+#define ACE_LACKS_INET_ATON
 #define ACE_LACKS_DLFCN_H
 #define ACE_LACKS_SYS_SELECT_H
 #define ACE_LACKS_WCHAR_H
 #define ACE_LACKS_REGEX_H
 #define ACE_LACKS_TCP_NODELAY
 #define ACE_MALLOC_ALIGN 8
+#define ACE_HAS_TYPENAME_KEYWORD
 // Don't use MAP_FIXED, at least for now.
 #define ACE_MAP_FIXED 0
 // LynxOS, through 3.0.0, does not support MAP_PRIVATE, so map it to
@@ -134,9 +141,14 @@
 #if ACE_MT_SAFE == 1
   // Platform supports threads.
 # define ACE_HAS_PTHREADS
+# include <unistd.h>
 # if _POSIX_VERSION >= 199506L
-    /* LynxOS 3.1.0 or greater */
+    // LynxOS 3.1.0 or greater
 #   define ACE_HAS_PTHREADS_STD
+    // Though there's a pthread_sigmask man page, there isn't a
+    // declaration in a system header file.
+#   include <signal.h>
+    extern "C" int pthread_sigmask (int, const sigset_t *, sigset_t *);
 # else  /* LynxOS < 3.1.0 */
 #   define ACE_HAS_PTHREADS_DRAFT4
 #   define ACE_HAS_STDARG_THR_DEST
@@ -176,15 +188,6 @@
 // get this macro off of ACE.
 #define ACE_HAS_USING_KEYWORD
 
-#if __GNUC__ == 2  &&  __GNUC_MINOR__ == 9
-   // config-g++-common.h defines these incorrectly for LynxOS 3.x
-   // with G++ version 2.9-gnupro-98r2
-#  define ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-#  define ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION
-#  define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
-#  define ACE_HAS_TEMPLATE_SPECIALIZATION
-#endif /* __GNUC__ == 2  &&  __GNUC_MINOR__ == 9 */
-
 // By default, don't include RCS Id strings in object code.
 #if !defined (ACE_USE_RCSID)
 # define ACE_USE_RCSID 0
@@ -193,19 +196,31 @@
 // System include files are not in sys/, this gets rid of warning.
 #define __NO_INCLUDE_WARN__
 
-// socket.h from LynxOS 4.0.x defines SOCK_MAXADDRLEN.  Versions
-// of socket.h found on earlier releases of LynxOS do not define it.
-#include <socket.h>
-#if _POSIX_VERSION >= 199506L && defined (SOCK_MAXADDRLEN)
+extern "C"
+{
+  int getopt (int, char *const *, const char *);
+  int putenv (const char *);
+}
+
+#if _POSIX_VERSION >= 199009L
+// The following are patches for LynxOS 4.0.0, which we'll add as soon
+// as we know the right incantations to avoid breaking earlier
+// versions of LynxOS!
 
 // "changes signedness" error (OS.i and many other files)
-# define ACE_HAS_SOCKLEN_T
+#define ACE_HAS_SOCKLEN_T
 
 // LSOCK.cpp uses a macro from param.h, not included
-# define ALIGNBYTES (sizeof(int) - 1)
-# define ALIGN(p) (((unsigned)p + ALIGNBYTES) & ~ALIGNBYTES)
+#define ALIGNBYTES (sizeof(int) - 1)
+#define ALIGN(p) (((unsigned)p + ALIGNBYTES) & ~ALIGNBYTES)
 
-#endif /* _POSIX_VERSION && SOCK_MAXADDRLEN */
+// Linking problems with alloca
+#undef ACE_HAS_ALLOCA
+#undef ACE_HAS_ALLOCA_H
+
+// Requested for example: $ACE_ROOT/examples/IPC_SAP/DEV_SAP 
+#define ACE_HAS_TERM_IOCTLS
+#endif /* _POSIX_VERSION */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

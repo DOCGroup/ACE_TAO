@@ -3,7 +3,7 @@
 #include "Connection_Handler.h"
 #include "debug.h"
 #include "Transport.h"
-#include "ORB_Core.h"
+
 #include "ace/Flag_Manip.h"
 
 ACE_RCSID (tao,
@@ -11,17 +11,14 @@ ACE_RCSID (tao,
            "$Id$")
 
 TAO_Thread_Per_Connection_Handler::TAO_Thread_Per_Connection_Handler (
-    TAO_Connection_Handler *ch,
-    TAO_ORB_Core *oc)
-  : TAO_TPC_BASE (oc->thr_mgr ())
-  , ch_ (ch)
+    TAO_Connection_Handler *ch)
+  : ch_ (ch)
 {
   this->ch_->transport ()->add_reference ();
 }
 
 TAO_Thread_Per_Connection_Handler::~TAO_Thread_Per_Connection_Handler (void)
 {
-  this->ch_->close_connection ();
   this->ch_->transport ()->remove_reference ();
 }
 
@@ -35,8 +32,7 @@ TAO_Thread_Per_Connection_Handler::activate (long flags,
                                              ACE_hthread_t thread_handles[],
                                              void *stack[],
                                              size_t stack_size[],
-                                             ACE_thread_t  thread_names[],
-                                             bool)
+                                             ACE_thread_t  thread_names[])
 {
   if (TAO_debug_level)
     {
@@ -44,7 +40,8 @@ TAO_Thread_Per_Connection_Handler::activate (long flags,
                    ACE_LIB_TEXT ("TAO (%P|%t) - IIOP_Connection_Handler::")
                    ACE_LIB_TEXT ("activate %d threads, flags = %d\n"),
                    n_threads,
-                   flags));
+                   flags,
+                   THR_BOUND));
     }
 
   return TAO_TPC_BASE::activate (flags,
@@ -56,8 +53,7 @@ TAO_Thread_Per_Connection_Handler::activate (long flags,
                                  thread_handles,
                                  stack,
                                  stack_size,
-                                 thread_names,
-                                 true);
+                                 thread_names);
 }
 
 int

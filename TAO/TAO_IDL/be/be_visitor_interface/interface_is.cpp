@@ -48,11 +48,8 @@ be_visitor_interface_is::visit_interface (be_interface *node)
 
   // Generate the skeleton class name.
 
-  if (be_global->gen_impl_debug_info ())
-    {
-      *os << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-    }
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// Implementation skeleton constructor" << be_nl;
 

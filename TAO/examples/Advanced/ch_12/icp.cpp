@@ -121,12 +121,7 @@ static
 short
 vary_temp (short temp)
 {
-  #if defined (__BORLANDC__) || defined (_MSC_VER)
-    long r = rand() % 50;
-  #else
-    long r = lrand48() % 50;
-  #endif
-
+  long r = lrand48 () % 50;
   long delta;
   if  (r < 5)
     delta = 3;
@@ -136,16 +131,9 @@ vary_temp (short temp)
     delta = 1;
   else
     delta = 0;
-
-  #if defined (__BORLANDC__) || defined (_MSC_VER)
-    if (rand() % 2)
-  #else
-    if (lrand48() % 2)
-  #endif
-
+  if  (lrand48 () % 2)
     delta = -delta;
   return temp + delta;
-
 }
 
 // Function object. Locates a thermostat that is in the same room as
@@ -184,31 +172,18 @@ actual_temp (const StateMap::iterator & pos)
 {
   long sum = 0;
   long count = 0;
-  StateMap::iterator where = std::find_if (dstate.begin (), dstate.end (),
+  StateMap::iterator where = find_if (dstate.begin (), dstate.end (),
                                       ThermostatInSameRoom (pos));
   while  (where != dstate.end ()) 
     {
       count++;
       sum += where->second.nominal_temp;
-      where = std::find_if (++where, dstate.end (),
+      where = find_if (++where, dstate.end (),
                        ThermostatInSameRoom (pos));
     }
 
   return vary_temp (count == 0 ? DFLT_TEMP : sum / count);
 }
-
-//---------------------------------------------------------------
-
-
-#if (_MSC_VER >= 1200) && (_MSC_VER < 1300)
-namespace std
-{
-    size_t min (const size_t len1, const size_t len2)
-    {
-      return ( len1 < len2 ? len1:len2 );
-    }
-}
-#endif/*_MSC_VER*/
 
 // ICP_get () returns an attribute value of the device with the given
 // id. The attribute is named by the attr parameter. The value is
@@ -256,20 +231,20 @@ ICP_get (unsigned long id,
       if  (pos->second.type != thermostat)
         return -1;                      // Must be thermostat
       memcpy (value, &pos->second.nominal_temp,
-              std::min (len, sizeof (pos->second.nominal_temp)));
+              min (len, sizeof (pos->second.nominal_temp)));
     } 
   else if  (strcmp (attr, "temperature") == 0) 
     {
       short temp = actual_temp (pos);
-      memcpy (value, &temp, std::min (len, sizeof (temp)));
+      memcpy (value, &temp, min (len, sizeof (temp)));
     }
   else if  (strcmp (attr, "MIN_TEMP") == 0) 
     {
-      memcpy (value, &MIN_TEMP, std::min (len, sizeof (MIN_TEMP)));
+      memcpy (value, &MIN_TEMP, min (len, sizeof (MIN_TEMP)));
     } 
   else if  (strcmp (attr, "MAX_TEMP") == 0) 
     {
-      memcpy (value, &MAX_TEMP, std::min (len, sizeof (MAX_TEMP)));
+      memcpy (value, &MAX_TEMP, min (len, sizeof (MAX_TEMP)));
     }
   else 
     {
@@ -335,10 +310,10 @@ ICP_Persist (const char *file)
   : m_filename (file)
 {
   // Open input file, creating it if necessary.
-  std::ifstream db (m_filename.c_str (), std::ios::in|std::ios::out);//, 0666);
+  fstream db (m_filename.c_str (), ios::in|ios::out, 0666);
   if  (!db) 
     {
-      std::cerr << "Error opening " << m_filename << std::endl;
+      cerr << "Error opening " << m_filename << endl;
       exit (1);
     }
 
@@ -375,12 +350,12 @@ ICP_Persist (const char *file)
 ICP_Persist::
 ~ICP_Persist ()
 {
-  std::cout<<"~ICP_Persist"<<std::endl;///////////////////////
+  cout<<"~ICP_Persist"<<endl;///////////////////////
   // Open input file, truncating it.
   ofstream db (m_filename.c_str ());
   if  (!db) 
     {
-      std::cerr << "Error opening " << m_filename << std::endl;
+      cerr << "Error opening " << m_filename << endl;
       exit (1);
     }
 
@@ -388,22 +363,22 @@ ICP_Persist::
   StateMap::iterator i;
   for  (i = dstate.begin (); i != dstate.end (); i++) 
     {
-      db << i->first << std::endl;
-      db <<  (unsigned long) (i->second.type) << std::endl;
-      db << i->second.location << std::endl;
+      db << i->first << endl;
+      db <<  (unsigned long) (i->second.type) << endl;
+      db << i->second.location << endl;
       if  (i->second.type == thermostat)
-        db << i->second.nominal_temp << std::endl;
+        db << i->second.nominal_temp << endl;
     }
   if  (!db) 
     {
-      std::cerr << "Error writing " << m_filename << std::endl;
+      cerr << "Error writing " << m_filename << endl;
       exit (1);
     }
 
   db.close ();
   if  (!db) 
     {
-      std::cerr << "Error closing " << m_filename << std::endl;
+      cerr << "Error closing " << m_filename << endl;
       exit (1);
     }
 }

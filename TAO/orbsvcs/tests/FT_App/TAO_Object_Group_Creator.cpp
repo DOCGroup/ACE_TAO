@@ -14,9 +14,11 @@
 
 #include "TAO_Object_Group_Creator.h"
 #include <ace/OS_NS_stdio.h>
-#include <orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.h>
-#include <orbsvcs/orbsvcs/FT_FaultDetectorFactoryC.h>
-#include <orbsvcs/orbsvcs/PortableGroup/PG_Operators.h>
+#include <iostream>
+#include <fstream>
+#include <orbsvcs/PortableGroup/PG_Properties_Encoder.h>
+#include <orbsvcs/FT_FaultDetectorFactoryC.h>
+#include <orbsvcs/PortableGroup/PG_Operators.h>
 
 #include <ace/Get_Opt.h>
 

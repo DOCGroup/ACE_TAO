@@ -1,7 +1,7 @@
 // $Id$
 
 #include "Notify_Structured_Push_Consumer.h"
-#include "orbsvcs/orbsvcs/TimeBaseC.h"
+#include "orbsvcs/TimeBaseC.h"
 #include "common.h"
 #include "tao/debug.h"
 

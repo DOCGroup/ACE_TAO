@@ -62,10 +62,9 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
     dsi_nvlist_align_ (0),
     argument_flag_ (1)
 #if TAO_HAS_INTERCEPTORS == 1
-    , interceptor_count_ (0)
-    , rs_pi_current_ ()
-    , pi_current_copy_callback_ ()
-    , result_seq_ (0)
+  , interceptor_count_ (0)
+  , rs_pi_current_ ()
+  , result_seq_ (0)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVER_REQUEST_START);

@@ -5,13 +5,34 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 
-const ACEXML_Char *ACEXML_SAXException::exception_name_ = ACE_TEXT ("ACEXML_SAXException");
+static const ACEXML_Char ACEXML_SAXException_name[] = {
+  'A', 'C', 'E', 'X', 'M', 'L', '_',
+  'S', 'A', 'X',
+  'E', 'x', 'c', 'e', 'p', 't', 'i', 'o', 'n', 0};
+const ACEXML_Char *ACEXML_SAXException::exception_name_ = ACEXML_SAXException_name;
 
-const ACEXML_Char *ACEXML_SAXNotSupportedException::exception_name_ = ACE_TEXT ("ACEXML_SAXNotSupportedException");
+static const ACEXML_Char ACEXML_SAXNotSupportedException_name[] = {
+  'A', 'C', 'E', 'X', 'M', 'L', '_',
+  'S', 'A', 'X',
+  'N', 'o', 't',
+  'S', 'u', 'p', 'p', 'o', 'r', 't', 'e', 'd',
+  'E', 'x', 'c', 'e', 'p', 't', 'i', 'o', 'n', 0};
+const ACEXML_Char *ACEXML_SAXNotSupportedException::exception_name_ = ACEXML_SAXNotSupportedException_name;
 
-const ACEXML_Char *ACEXML_SAXNotRecognizedException::exception_name_ = ACE_TEXT ("ACEXML_SAXNotRecognizedException");
+static const ACEXML_Char ACEXML_SAXNotRecognizedException_name[] = {
+  'A', 'C', 'E', 'X', 'M', 'L', '_',
+  'S', 'A', 'X',
+  'N', 'o', 't',
+  'R', 'e', 'c', 'o', 'g', 'n', 'i', 'z', 'e', 'd',
+  'E', 'x', 'c', 'e', 'p', 't', 'i', 'o', 'n', 0};
+const ACEXML_Char *ACEXML_SAXNotRecognizedException::exception_name_ = ACEXML_SAXNotRecognizedException_name;
 
-const ACEXML_Char *ACEXML_SAXParseException::exception_name_ = ACE_TEXT ("ACEXML_SAXParseException");
+static const ACEXML_Char ACEXML_SAXParseException_name[] = {
+  'A', 'C', 'E', 'X', 'M', 'L', '_',
+  'S', 'A', 'X',
+  'P', 'a', 'r', 's', 'e',
+  'E', 'x', 'c', 'e', 'p', 't', 'i', 'o', 'n', 0};
+const ACEXML_Char *ACEXML_SAXParseException::exception_name_ = ACEXML_SAXParseException_name;
 
 #if !defined (__ACEXML_INLINE__)
 # include "ACEXML/common/SAXExceptions.i"
@@ -72,8 +93,14 @@ ACEXML_SAXException::duplicate (void) const
 int
 ACEXML_SAXException::is_a (const ACEXML_Char *name)
 {
-  return ACE_OS::strcmp (ACEXML_SAXException::exception_name_, name) == 0
-    || this->ACEXML_Exception::is_a (name);
+  if (name == ACEXML_SAXException::exception_name_
+      || ACE_OS::strcmp (ACEXML_Exception::exception_name_,
+                         name) == 0)
+    return 1;
+  else
+    return this->ACEXML_Exception::is_a (name);
+
+  ACE_NOTREACHED (return 0;)
 }
 
 void
@@ -91,22 +118,6 @@ ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException (void)
 ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException (const ACEXML_SAXNotSupportedException &ex)
   : ACEXML_SAXException (ex)
 {
-}
-
-ACEXML_SAXNotSupportedException&
-ACEXML_SAXNotSupportedException::operator= (const
-                                            ACEXML_SAXNotSupportedException &ex)
-{
-  this->ACEXML_SAXException::operator= (ex);
-  return *this;
-}
-
-ACEXML_SAXNotSupportedException*
-ACEXML_SAXNotSupportedException::_downcast (ACEXML_Exception* ex)
-{
-  if (ex->is_a (ACE_TEXT ("ACEXML_SAXNotSupportedException")))
-    return ACE_dynamic_cast (ACEXML_SAXNotSupportedException*, ex);
-  return 0;
 }
 
 ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException (const ACEXML_Char* msg)
@@ -131,9 +142,14 @@ ACEXML_SAXNotSupportedException::duplicate (void) const
 int
 ACEXML_SAXNotSupportedException::is_a (const ACEXML_Char *name)
 {
-  return ACE_OS::strcmp (ACEXML_SAXNotSupportedException::exception_name_,
-                         name) == 0
-    || this->ACEXML_SAXException::is_a (name);
+  if (name == ACEXML_SAXNotSupportedException::exception_name_
+      || ACE_OS::strcmp (ACEXML_Exception::exception_name_,
+                         name) == 0)
+    return 1;
+  else
+    return this->ACEXML_SAXException::is_a (name);
+
+  ACE_NOTREACHED (return 0;)
 }
 
 void
@@ -158,21 +174,6 @@ ACEXML_SAXNotRecognizedException::ACEXML_SAXNotRecognizedException (const ACEXML
 {
 }
 
-ACEXML_SAXNotRecognizedException&
-ACEXML_SAXNotRecognizedException::operator= (const ACEXML_SAXNotRecognizedException &ex)
-{
-  this->ACEXML_SAXException::operator= (ex);
-  return *this;
-}
-
-ACEXML_SAXNotRecognizedException*
-ACEXML_SAXNotRecognizedException::_downcast (ACEXML_Exception* ex)
-{
-  if (ex->is_a (ACE_TEXT ("ACEXML_SAXNotRecognizedException")))
-    return ACE_dynamic_cast (ACEXML_SAXNotRecognizedException*, ex);
-  return 0;
-}
-
 ACEXML_SAXNotRecognizedException::~ACEXML_SAXNotRecognizedException (void)
 {
   delete[] this->message_;
@@ -189,9 +190,14 @@ ACEXML_SAXNotRecognizedException::duplicate (void) const
 int
 ACEXML_SAXNotRecognizedException::is_a (const ACEXML_Char *name)
 {
-  return ACE_OS::strcmp (ACEXML_SAXNotRecognizedException::exception_name_,
-                         name) == 0
-    || this->ACEXML_SAXException::is_a (name);
+  if (name == ACEXML_SAXNotRecognizedException::exception_name_
+      || ACE_OS::strcmp (ACEXML_Exception::exception_name_,
+                         name) == 0)
+    return 1;
+  else
+    return this->ACEXML_SAXException::is_a (name);
+
+  ACE_NOTREACHED (return 0;)
 }
 
 void
@@ -216,21 +222,6 @@ ACEXML_SAXParseException::ACEXML_SAXParseException (const ACEXML_SAXParseExcepti
 {
 }
 
-ACEXML_SAXParseException&
-ACEXML_SAXParseException::operator= (const ACEXML_SAXParseException &ex)
-{
-  this->ACEXML_SAXException::operator= (ex);
-  return *this;
-}
-
-ACEXML_SAXParseException*
-ACEXML_SAXParseException::_downcast (ACEXML_Exception* ex)
-{
-  if (ex->is_a (ACE_TEXT ("ACEXML_SAXParseException")))
-    return ACE_dynamic_cast (ACEXML_SAXParseException*, ex);
-  return 0;
-}
-
 ACEXML_SAXParseException::~ACEXML_SAXParseException (void)
 {
 }
@@ -246,9 +237,14 @@ ACEXML_SAXParseException::duplicate (void) const
 int
 ACEXML_SAXParseException::is_a (const ACEXML_Char *name)
 {
-  return ACE_OS::strcmp (ACEXML_SAXParseException::exception_name_,
-                         name) == 0
-    || this->ACEXML_SAXException::is_a (name);
+  if (name == ACEXML_SAXParseException::exception_name_
+      || ACE_OS::strcmp (ACEXML_Exception::exception_name_,
+                         name) == 0)
+    return 1;
+  else
+    return this->ACEXML_SAXException::is_a (name);
+
+  ACE_NOTREACHED (return 0;)
 }
 
 void

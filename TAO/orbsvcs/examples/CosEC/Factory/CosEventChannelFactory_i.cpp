@@ -2,7 +2,7 @@
 // $Id$
 
 #include "CosEventChannelFactory_i.h"
-#include "orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h"
+#include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/Auto_Ptr.h"
 

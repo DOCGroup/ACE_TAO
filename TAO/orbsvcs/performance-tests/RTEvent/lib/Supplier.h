@@ -10,8 +10,8 @@
 #define TAO_PERF_RTEC_SUPPLIER_H
 
 #include "rtec_perf_export.h"
-#include "orbsvcs/orbsvcs/RtecEventCommS.h"
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/RtecEventCommS.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

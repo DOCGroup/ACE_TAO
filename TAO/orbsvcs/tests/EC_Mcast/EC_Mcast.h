@@ -53,15 +53,15 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/High_Res_Timer.h"
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/orbsvcs/RtecEventCommS.h"
-#include "orbsvcs/orbsvcs/Channel_Clients_T.h"
-#include "orbsvcs/orbsvcs/Event/ECG_UDP_Sender.h"
-#include "orbsvcs/orbsvcs/Event/EC_UDP_Admin.h"
-#include "orbsvcs/orbsvcs/Event/ECG_Mcast_EH.h"
-#include "orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
-#include "orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.h"
-#include "orbsvcs/orbsvcs/Event/ECG_UDP_Sender.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/RtecEventCommS.h"
+#include "orbsvcs/Channel_Clients_T.h"
+#include "orbsvcs/Event/ECG_UDP_Sender.h"
+#include "orbsvcs/Event/EC_UDP_Admin.h"
+#include "orbsvcs/Event/ECG_Mcast_EH.h"
+#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
+#include "orbsvcs/Event/ECG_UDP_Receiver.h"
+#include "orbsvcs/Event/ECG_UDP_Sender.h"
 
 class ECM_Driver;
 

@@ -24,7 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ciao/CCM_DeploymentS.h"
+#include "CCM_DeploymentS.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "../XML_Helpers/Assembly_Spec.h"
 #include "Deployment_Configuration.h"

@@ -1,9 +1,8 @@
 // $Id$
 
-#include "orbsvcs/orbsvcs/FT_ReplicationManagerC.h"
+#include "orbsvcs/FT_ReplicationManagerC.h"
 #include <ace/Get_Opt.h>
-// FUZZ: disable check_for_streams_include
-#include "ace/streams.h"
+#include <iostream>
 
 // A simple class for building a client that "controls' the
 // Replication Manager (right now it just shuts it down).
@@ -134,13 +133,13 @@ int TAO_FT_ReplicationManagerController::parse_args (int & argc, char * argv[])
       }
 
       default:
-        cerr << argv[0] << ": Unknown argument -" << (char) c << endl;
-        this->usage(cerr);
+        std::cerr << argv[0] << ": Unknown argument -" << (char) c << std::endl;
+        this->usage(std::cerr);
         result = -1;
         break;
 
       case '?':
-        this->usage(cerr);
+        this->usage(std::cerr);
         result = -1;
     }
   }
@@ -153,7 +152,7 @@ void TAO_FT_ReplicationManagerController::usage (ostream & out) const
   out << "usage"
       << " -k <replication manager ior file>"
       << " -x (shutdown the Replication Manager)"
-      << endl;
+      << std::endl;
 }
 
 int TAO_FT_ReplicationManagerController::run ()

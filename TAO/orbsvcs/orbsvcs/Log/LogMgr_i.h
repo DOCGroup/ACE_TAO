@@ -18,13 +18,13 @@
 #define TAO_TLS_LOGMGR_I_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/DsLogAdminS.h"
+#include "orbsvcs/DsLogAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/Log/Log_i.h"
+#include "orbsvcs/Log/Log_i.h"
 
 #include "log_export.h"
 

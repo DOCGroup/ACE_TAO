@@ -45,6 +45,7 @@ DAMAGES.
 #include "test_config.h"
 
 ACE_RCSID(tests, Varbind_Test, "$Id$")
+
 /*
   Vb( void);
   Vb( const Oid &oid);
@@ -84,8 +85,6 @@ ACE_RCSID(tests, Varbind_Test, "$Id$")
 
 static void VbTest()
 {
-#if !defined (ACE_WIN32)
-
   Vb v1;
   ACE_ASSERT(v1.valid() == 0);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) VarBinad:v1(\"/\") [%s]\n",
@@ -183,7 +182,6 @@ static void VbTest()
   ACE_ASSERT(o1 == o2);
   v11.get_value(s2);
   ACE_ASSERT(s1 == s2);
-#endif /*if ACE_WIN32*/
 }
 
 int
@@ -194,4 +192,3 @@ main (int, char *[])
   ACE_END_TEST;
   return 0;
 }
-

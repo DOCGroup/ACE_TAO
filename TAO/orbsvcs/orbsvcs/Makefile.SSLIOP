@@ -93,7 +93,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
 
 .obj/IIOP_SSL_Acceptor.o .obj/IIOP_SSL_Acceptor.so .shobj/IIOP_SSL_Acceptor.o .shobj/IIOP_SSL_Acceptor.so: SSLIOP/IIOP_SSL_Acceptor.cpp \
   SSLIOP/IIOP_SSL_Acceptor.h \
-  $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  SSLIOP/SSLIOP_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -187,6 +188,12 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -202,12 +209,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -319,12 +320,10 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/IOPC.i \
   SecurityC.h \
   Security/security_export.h \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
   SecurityC.i \
   SSLIOPC.i \
   $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
@@ -497,6 +496,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
@@ -588,8 +589,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
-  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
-  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Acceptor.cpp \
   $(ACE_ROOT)/ace/Handle_Set.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
@@ -614,7 +613,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
 
 .obj/IIOP_SSL_Connection_Handler.o .obj/IIOP_SSL_Connection_Handler.so .shobj/IIOP_SSL_Connection_Handler.o .shobj/IIOP_SSL_Connection_Handler.so: SSLIOP/IIOP_SSL_Connection_Handler.cpp \
   SSLIOP/IIOP_SSL_Connection_Handler.h \
-  $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  SSLIOP/SSLIOP_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -707,6 +707,12 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -722,12 +728,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -839,12 +839,10 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/IOPC.i \
   SecurityC.h \
   Security/security_export.h \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
   SecurityC.i \
   SSLIOPC.i \
   $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
@@ -1017,6 +1015,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
@@ -1104,7 +1104,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
 
 .obj/IIOP_SSL_Transport.o .obj/IIOP_SSL_Transport.so .shobj/IIOP_SSL_Transport.o .shobj/IIOP_SSL_Transport.so: SSLIOP/IIOP_SSL_Transport.cpp \
   SSLIOP/IIOP_SSL_Transport.h \
-  $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  SSLIOP/SSLIOP_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -1198,6 +1199,12 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1213,12 +1220,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1330,12 +1331,10 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/IOPC.i \
   SecurityC.h \
   Security/security_export.h \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
   SecurityC.i \
   SSLIOPC.i \
   Security/Security_Current_Impl.h \
@@ -1408,6 +1407,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
@@ -1544,7 +1545,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
 
 .obj/IIOP_SSL_Connector.o .obj/IIOP_SSL_Connector.so .shobj/IIOP_SSL_Connector.o .shobj/IIOP_SSL_Connector.so: SSLIOP/IIOP_SSL_Connector.cpp \
   SSLIOP/IIOP_SSL_Connector.h \
-  $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  SSLIOP/SSLIOP_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -1638,6 +1640,12 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1653,12 +1661,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1770,12 +1772,10 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/IOPC.i \
   SecurityC.h \
   Security/security_export.h \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
   SecurityC.i \
   SSLIOPC.i \
   $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
@@ -1948,6 +1948,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
@@ -2041,8 +2043,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
-  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
-  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Handle_Set.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
   $(ACE_ROOT)/ace/Handle_Set.i \
@@ -2067,7 +2067,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
 
 .obj/SSLIOP_Credentials.o .obj/SSLIOP_Credentials.so .shobj/SSLIOP_Credentials.o .shobj/SSLIOP_Credentials.so: SSLIOP/SSLIOP_Credentials.cpp \
   SSLIOP/SSLIOP_Credentials.h \
-  $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  SSLIOP/SSLIOP_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -2194,6 +2195,12 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -2205,12 +2212,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -2251,12 +2252,10 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   Security/security_export.h \
   SecurityLevel1C.h \
   SecurityC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
   SecurityC.i \
   SecurityLevel1C.i \
   SecurityLevel2C.i \
@@ -2265,7 +2264,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
 
 .obj/SSLIOP_ReceivedCredentials.o .obj/SSLIOP_ReceivedCredentials.so .shobj/SSLIOP_ReceivedCredentials.o .shobj/SSLIOP_ReceivedCredentials.so: SSLIOP/SSLIOP_ReceivedCredentials.cpp \
   SSLIOP/SSLIOP_ReceivedCredentials.h \
-  $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  SSLIOP/SSLIOP_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -2392,6 +2392,12 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -2403,12 +2409,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -2449,12 +2449,10 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   Security/security_export.h \
   SecurityLevel1C.h \
   SecurityC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
   SecurityC.i \
   SecurityLevel1C.i \
   SecurityLevel2C.i \
@@ -2463,7 +2461,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
 
 .obj/SSLIOP_TargetCredentials.o .obj/SSLIOP_TargetCredentials.so .shobj/SSLIOP_TargetCredentials.o .shobj/SSLIOP_TargetCredentials.so: SSLIOP/SSLIOP_TargetCredentials.cpp \
   SSLIOP/SSLIOP_TargetCredentials.h \
-  $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  SSLIOP/SSLIOP_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -2590,6 +2589,12 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -2601,12 +2606,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -2647,12 +2646,10 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   Security/security_export.h \
   SecurityLevel1C.h \
   SecurityC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
   SecurityC.i \
   SecurityLevel1C.i \
   SecurityLevel2C.i \
@@ -2753,6 +2750,12 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -2768,12 +2771,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -2840,12 +2837,10 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   SecurityLevel2C.h \
   SecurityLevel1C.h \
   SecurityC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
   SecurityC.i \
   SecurityLevel1C.i \
   SecurityLevel2C.i \
@@ -2968,7 +2963,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/SSL/SSL_Context.inl
 
 .obj/SSLIOP_Current.o .obj/SSLIOP_Current.so .shobj/SSLIOP_Current.o .shobj/SSLIOP_Current.so: SSLIOP/SSLIOP_Current.cpp SSLIOP/SSLIOP_Current.h \
-  $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  SSLIOP/SSLIOP_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -3062,6 +3058,12 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -3077,12 +3079,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -3194,12 +3190,10 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/IOPC.i \
   SecurityC.h \
   Security/security_export.h \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
   SecurityC.i \
   SSLIOPC.i \
   Security/Security_Current_Impl.h \
@@ -3272,6 +3266,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
@@ -3419,6 +3415,12 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -3434,12 +3436,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -3551,12 +3547,10 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/IOPC.i \
   SecurityC.h \
   Security/security_export.h \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
   SecurityC.i \
   SSLIOPC.i \
   Security/Security_Current_Impl.h \
@@ -3629,6 +3623,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
@@ -3694,7 +3690,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
 .obj/SSLIOP_Invocation_Interceptor.o .obj/SSLIOP_Invocation_Interceptor.so .shobj/SSLIOP_Invocation_Interceptor.o .shobj/SSLIOP_Invocation_Interceptor.so:  \
  SSLIOP/SSLIOP_Invocation_Interceptor.cpp \
   SSLIOP/SSLIOP_Invocation_Interceptor.h \
-  $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  SSLIOP/SSLIOP_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -3787,6 +3784,12 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -3802,12 +3805,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -3919,16 +3916,16 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/IOPC.i \
   SecurityC.h \
   Security/security_export.h \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
   SecurityC.i \
   SSLIOPC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
@@ -3939,7 +3936,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
 
 .obj/SSLIOP_ORBInitializer.o .obj/SSLIOP_ORBInitializer.so .shobj/SSLIOP_ORBInitializer.o .shobj/SSLIOP_ORBInitializer.so: SSLIOP/SSLIOP_ORBInitializer.cpp \
   SSLIOP/SSLIOP_ORBInitializer.h \
-  $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  SSLIOP/SSLIOP_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -4032,6 +4030,12 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -4047,12 +4051,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -4116,15 +4114,15 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
   Security/security_export.h \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
   SecurityC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
@@ -4305,7 +4303,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/ORBInitInfo.inl
 
 .obj/SSLIOP_Factory.o .obj/SSLIOP_Factory.so .shobj/SSLIOP_Factory.o .shobj/SSLIOP_Factory.so: SSLIOP/SSLIOP_Factory.cpp SSLIOP/SSLIOP_Factory.h \
-  $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  SSLIOP/SSLIOP_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -4398,6 +4397,12 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -4413,12 +4418,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -4482,12 +4481,10 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
   Security/security_export.h \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
   SecurityC.i \
   $(TAO_ROOT)/tao/Protocol_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
@@ -4711,6 +4708,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
@@ -4802,8 +4801,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
-  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
-  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Acceptor.cpp \
   $(ACE_ROOT)/ace/Handle_Set.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
@@ -4891,10 +4888,10 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/os_include/os_wchar.h \
   $(ACE_ROOT)/ace/os_include/os_string.h \
   $(ACE_ROOT)/ace/os_include/os_ctype.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_arpa_inet.h \
   $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
@@ -4996,6 +4993,12 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -5006,12 +5009,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -5085,12 +5082,10 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/IOPC.i \
   SecurityC.h \
   Security/security_export.h \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
   SecurityC.i \
   SSLIOPC.i \
   SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_X509.h SSLIOP/SSLIOP_X509.inl \
@@ -5119,7 +5114,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   SSLIOP/SSLIOP_Profile.i SSLIOP/ssl_endpoints.h
 
 .obj/SSLIOP_Endpoint.o .obj/SSLIOP_Endpoint.so .shobj/SSLIOP_Endpoint.o .shobj/SSLIOP_Endpoint.so: SSLIOP/SSLIOP_Endpoint.cpp SSLIOP/SSLIOP_Endpoint.h \
-  $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  SSLIOP/SSLIOP_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -5161,10 +5157,10 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/os_include/os_wchar.h \
   $(ACE_ROOT)/ace/os_include/os_string.h \
   $(ACE_ROOT)/ace/os_include/os_ctype.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_arpa_inet.h \
   $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
@@ -5266,6 +5262,12 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -5276,12 +5278,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -5355,12 +5351,10 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/IOPC.i \
   SecurityC.h \
   Security/security_export.h \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
   SecurityC.i \
   SSLIOPC.i \
   SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_X509.h SSLIOP/SSLIOP_X509.inl \
@@ -5595,6 +5589,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
@@ -5605,7 +5601,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   SSLIOP/SSLIOP_Connection_Handler.i
 
 .obj/SSLIOP_Transport.o .obj/SSLIOP_Transport.so .shobj/SSLIOP_Transport.o .shobj/SSLIOP_Transport.so: SSLIOP/SSLIOP_Transport.cpp SSLIOP/SSLIOP_Transport.h \
-  $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  SSLIOP/SSLIOP_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -5789,6 +5786,12 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -5799,12 +5802,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -6025,12 +6022,10 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   SSLIOP/SSLIOP_Export.h \
   SecurityC.h \
   Security/security_export.h \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
   SecurityC.i \
   SSLIOPC.i \
   Security/Security_Current_Impl.h \
@@ -6072,6 +6067,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
@@ -6119,8 +6116,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
-  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
-  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Acceptor.cpp \
   $(ACE_ROOT)/ace/Handle_Set.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
@@ -6431,6 +6426,12 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -6440,12 +6441,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -6491,12 +6486,10 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/IOPC.i \
   SecurityC.h \
   Security/security_export.h \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
   SecurityC.i \
   SSLIOPC.i \
   $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
@@ -6631,6 +6624,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
@@ -6681,8 +6676,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
-  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
-  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Handle_Set.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
   $(ACE_ROOT)/ace/Handle_Set.i \
@@ -7155,12 +7148,10 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   SSLIOP/SSLIOP_Export.h \
   SecurityC.h \
   Security/security_export.h \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
   SecurityC.i \
   SSLIOPC.i \
   Security/Security_Current_Impl.h \
@@ -7202,6 +7193,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
@@ -7225,8 +7218,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
-  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
-  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(TAO_ROOT)/tao/Acceptor_Impl.i \
   $(TAO_ROOT)/tao/Acceptor_Impl.cpp \
   $(TAO_ROOT)/tao/Thread_Per_Connection_Handler.h \
@@ -7335,6 +7326,12 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -7350,12 +7347,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -7467,12 +7458,10 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/IOPC.i \
   SecurityC.h \
   Security/security_export.h \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
   SecurityC.i \
   SSLIOPC.i \
   $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
@@ -7645,6 +7634,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
@@ -7736,8 +7727,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Types.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
-  $(ACE_ROOT)/ace/OS_NS_dlfcn.h \
-  $(ACE_ROOT)/ace/OS_NS_dlfcn.inl \
   $(ACE_ROOT)/ace/Acceptor.cpp \
   $(ACE_ROOT)/ace/Handle_Set.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
@@ -8206,12 +8195,10 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   SSLIOP/SSLIOP_Export.h \
   SecurityC.h \
   Security/security_export.h \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
   SecurityC.i \
   SSLIOPC.i \
   Security/Security_Current_Impl.h \
@@ -8253,6 +8240,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
@@ -8710,12 +8699,10 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   SSLIOP/SSLIOP_Export.h \
   SecurityC.h \
   Security/security_export.h \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
   SecurityC.i \
   SSLIOPC.i \
   Security/Security_Current_Impl.h \
@@ -8757,6 +8744,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
@@ -8888,6 +8877,12 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -8903,12 +8898,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -9021,17 +9010,14 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/IOPC.i \
   SecurityC.h \
   Security/security_export.h \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
   SecurityC.i \
   SSLIOPC.i \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Impl.h \
-  $(ACE_ROOT)/ace/Null_Mutex.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
@@ -9133,6 +9119,12 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -9148,12 +9140,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -9262,15 +9248,14 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/IOP_CodecC.i \
-  $(TAO_ROOT)/tao/IOPC.i SecurityC.h \
-  Security/security_export.h \
+  $(TAO_ROOT)/tao/IOPC.i \
+  SecurityC.h Security/security_export.h \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/tao/TimeBaseC.h \
   $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
-  $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i SecurityC.i \
-  SSLIOPC.i $(TAO_ROOT)/tao/ORB_Core.h \
+  SecurityC.i SSLIOPC.i \
+  $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Resource_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
@@ -9335,6 +9320,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
@@ -9484,6 +9471,12 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -9500,12 +9493,6 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -9636,7 +9623,21 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/IOPS_T.h \
   $(TAO_ROOT)/tao/IOPS_T.i \
   $(TAO_ROOT)/tao/IOPS_T.cpp \
-  $(TAO_ROOT)/tao/IOPS.i SecurityS.h \
+  $(TAO_ROOT)/tao/IOPS.i \
+  SecurityS.h \
+  $(TAO_ROOT)/tao/ServicesS.h \
+  $(TAO_ROOT)/tao/OctetSeqS.h \
+  $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.h \
+  $(TAO_ROOT)/tao/OctetSeqS_T.i \
+  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqS.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/ServicesS_T.h \
+  $(TAO_ROOT)/tao/ServicesS_T.i \
+  $(TAO_ROOT)/tao/ServicesS_T.cpp \
+  $(TAO_ROOT)/tao/ServicesS.i \
   $(TAO_ROOT)/tao/TimeBaseS.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
   $(TAO_ROOT)/tao/TimeBaseC.i \
@@ -9644,25 +9645,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(TAO_ROOT)/tao/TimeBaseS_T.i \
   $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
   $(TAO_ROOT)/tao/TimeBaseS.i \
-  $(TAO_ROOT)/tao/OctetSeqS.h \
-  $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.h \
-  $(TAO_ROOT)/tao/OctetSeqS_T.i \
-  $(TAO_ROOT)/tao/OctetSeqS_T.cpp \
-  $(TAO_ROOT)/tao/OctetSeqS.i \
-  $(TAO_ROOT)/tao/StringSeqS.h \
-  $(TAO_ROOT)/tao/PolicyS.h \
-  $(TAO_ROOT)/tao/ServicesS.h \
-  $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
-  $(TAO_ROOT)/tao/ServicesS_T.h \
-  $(TAO_ROOT)/tao/ServicesS_T.i \
-  $(TAO_ROOT)/tao/ServicesS_T.cpp \
-  $(TAO_ROOT)/tao/ServicesS.i SecurityC.h \
-  Security/security_export.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i SecurityC.i \
-  SecurityS_T.h SecurityS_T.i SecurityS_T.cpp SecurityS.i SSLIOPC.h \
+  SecurityC.h Security/security_export.h SecurityC.i SecurityS_T.h \
+  SecurityS_T.i SecurityS_T.cpp SecurityS.i SSLIOPC.h \
   SSLIOP/SSLIOP_Export.h SSLIOPC.i SSLIOPS_T.h SSLIOPS_T.i SSLIOPS_T.cpp \
   SSLIOPS.i \
   $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
@@ -9802,6 +9786,8 @@ ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lc
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \

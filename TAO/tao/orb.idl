@@ -7,11 +7,11 @@
 #ifndef TAO_ORB_IDL
 #define TAO_ORB_IDL
 
-#include <tao/OctetSeq.pidl>
-#include <tao/StringSeq.pidl>
+#include <OctetSeq.pidl>
+#include <StringSeq.pidl>
 
-#include <tao/Policy.pidl>
-#include <tao/Services.pidl>
+#include <Policy.pidl>
+#include <Services.pidl>
 
 #pragma prefix "omg.org"
 

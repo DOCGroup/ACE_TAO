@@ -1,15 +1,17 @@
+
+
 Architecture
 
 TMCast (stands for Transaction MultiCast) is an implementation of a
 transactional multicast protocol. In essence, the idea is to represent
-each message delivery to members of a multicast group as a transaction
-- an atomic, consistent and isolated action. A multicast transaction
-can be viewed as an atomic transition of the group members to a new
-state.  If we define [Mo] as a set of operational (non-faulty) members
-of the group, [Mf] as a set of faulty members of the group, [Ma] as a
-set of members that view transition [Tn] as aborted and [Mc] as a set
-of members that view transition [Tn] as committed, then this atomic
-transition [Tn] should satisfy one of the following equations:
+each message delivery to members of a multicast group as a transaction - 
+an atomic, consistent and isolated action. A multicast transaction can
+be viewed as an atomic transition of the group members to a new state. 
+If we define [Mo] as a set of operational (non-faulty) members of the 
+group, [Mf] as a set of faulty members of the group, [Ma] as a set of 
+members that view transition [Tn] as aborted and [Mc] as a set of members 
+that view transition [Tn] as committed, then this atomic transition [Tn]
+should satisfy one of the following equations:
 
 Mo(Tn-1) = Ma(T) U Mf(T)
 Mo(Tn-1) = Mc(T) U Mf(T)
@@ -18,20 +20,21 @@ Or, in other words, after transaction T has been committed (aborted),
 all operational (before transaction T) members are either in the
 committed (aborted) or failed state.
 
-Thus, for each member of the group, outcome of the transaction can be
-commit, abort or a member failure. It is important for a member to
-exhibit a failfast (error latency is less than transaction cycle)
-behavior. Or, in other words, if a member transitioned into a wrong
+Thus, for each member of the group, outcome of the transaction can
+be commit, abort or a member failure. It is important for a member
+to exhibit a failfast (error latency is less than transaction cycle) 
+behavior. Or, in other words, if a member transitioned into a wrong 
 state, it is guaranteed to fail instead of delivering a wrong result.
 
-In order to achieve such an error detection in a decentralized
-environment, certain limitations were imposed. One of the most
-user-visible limitation is the fact that the lifetime of the group
-with only one member is very short. This is because there is not way
+In order to achieve such an error detection in a decentralized 
+environment, certain limitations were imposed. One of the most 
+user-visible limitation is the fact that the lifetime of the group 
+with only one member is very short. This is because there is not way 
 for a member to distinguish "no members yet" case from "my link to the
-group is down". In such a situation, the member assumes the latter
-case.  There is also a military saying that puts it quite nicely: two
-is one, one is nothing.
+group is down". In such a situation, the member assumes the latter case. 
+There is also a military saying that puts it quite nicely: two is one, 
+one is nothing.
+
 
 State of Implementation
 

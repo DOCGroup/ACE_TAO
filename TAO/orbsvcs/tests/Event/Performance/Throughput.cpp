@@ -3,12 +3,10 @@
 #include "Throughput.h"
 #include "Consumer.h"
 #include "Supplier.h"
-#include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/Event/EC_Event_Channel.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (EC_Tests_Performance, 
-           Throughput, 
-           "$Id$")
+ACE_RCSID(EC_Tests_Performance, Throughput, "$Id$")
 
 int
 main (int argc, char *argv [])

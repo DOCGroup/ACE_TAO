@@ -36,7 +36,7 @@ ACE_Dirent::ACE_Dirent (const ACE_TCHAR *dirname)
   if (this->open (dirname) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"), 
-                ACE_LIB_TEXT ("ACE_Dirent::ACE_Dirent")));
+                ACE_LIB_TEXT ("Dirent::Dirent")));
 }
 
 ACE_INLINE 

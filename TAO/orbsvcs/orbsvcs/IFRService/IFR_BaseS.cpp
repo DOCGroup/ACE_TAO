@@ -52,7 +52,7 @@
 #include "tao/PortableInterceptor.h"
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/RequestInfo_Util.h"
-#include "tao/PortableServer/PICurrent_Guard.h"
+#include "tao/PICurrent.h"
 #include "tao/PortableServer/ServerRequestInfo.h"
 #include "tao/PortableServer/ServerInterceptorAdapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
@@ -1293,8 +1293,8 @@ void POA_CORBA::IRObject::_get_def_kind_skel (
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -1421,8 +1421,8 @@ void POA_CORBA::IRObject::destroy_skel (
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -3966,8 +3966,8 @@ void POA_CORBA::Contained::_get_id_skel (
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -4107,8 +4107,8 @@ POA_CORBA::Contained *_tao_impl =
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -4223,8 +4223,8 @@ void POA_CORBA::Contained::_get_name_skel (
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -4364,8 +4364,8 @@ POA_CORBA::Contained *_tao_impl =
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -4480,8 +4480,8 @@ void POA_CORBA::Contained::_get_version_skel (
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -4621,8 +4621,8 @@ POA_CORBA::Contained *_tao_impl =
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -4737,8 +4737,8 @@ void POA_CORBA::Contained::_get_defined_in_skel (
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -4865,8 +4865,8 @@ void POA_CORBA::Contained::_get_absolute_name_skel (
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -4993,8 +4993,8 @@ void POA_CORBA::Contained::_get_containing_repository_skel (
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -5121,8 +5121,8 @@ void POA_CORBA::Contained::describe_skel (
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -5270,8 +5270,8 @@ POA_CORBA::Contained *_tao_impl =
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -9796,8 +9796,8 @@ POA_CORBA::Container *_tao_impl =
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -9941,8 +9941,8 @@ POA_CORBA::Container *_tao_impl =
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -10096,8 +10096,8 @@ POA_CORBA::Container *_tao_impl =
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -10251,8 +10251,8 @@ POA_CORBA::Container *_tao_impl =
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -10404,8 +10404,8 @@ POA_CORBA::Container *_tao_impl =
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -10565,8 +10565,8 @@ POA_CORBA::Container *_tao_impl =
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -10726,8 +10726,8 @@ POA_CORBA::Container *_tao_impl =
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -10889,8 +10889,8 @@ POA_CORBA::Container *_tao_impl =
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -11050,8 +11050,8 @@ POA_CORBA::Container *_tao_impl =
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -11209,8 +11209,8 @@ POA_CORBA::Container *_tao_impl =
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -11368,8 +11368,8 @@ POA_CORBA::Container *_tao_impl =
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -11551,8 +11551,8 @@ POA_CORBA::Container *_tao_impl =
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -11722,8 +11722,8 @@ POA_CORBA::Container *_tao_impl =
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -11881,8 +11881,8 @@ POA_CORBA::Container *_tao_impl =
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -12036,8 +12036,8 @@ POA_CORBA::Container *_tao_impl =
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -12193,8 +12193,8 @@ POA_CORBA::Container *_tao_impl =
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -12352,8 +12352,8 @@ POA_CORBA::Container *_tao_impl =
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -12535,8 +12535,8 @@ POA_CORBA::Container *_tao_impl =
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -13391,8 +13391,8 @@ void POA_CORBA::IDLType::_get_type_skel (
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                            true  /* Copy TSC to RSC */);
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
         
         _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;

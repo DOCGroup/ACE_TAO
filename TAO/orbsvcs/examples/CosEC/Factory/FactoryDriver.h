@@ -22,7 +22,7 @@
 #define TAO_FACTORYDRIVER_H
 
 #include "CosEventChannelFactory_i.h"
-#include "orbsvcs/orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/Naming/Naming_Utils.h"
 
 // @@ Pradeep: I know this is just an example, but could you talk to
 //    Vishal about making this a service that could be bootstraped

@@ -16,11 +16,12 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/CosLoadBalancingS.h"
+#include "orbsvcs/CosLoadBalancingS.h"
 
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
+
 
 class ServerRequestInterceptor;
 

@@ -267,7 +267,7 @@ ACE_CLASSIX_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
 	// probably best just to return -1.
 	ACE_DEBUG((LM_DEBUG, 
 		   "ACE_CLASSIX_Select_Reactor_Notify:: "
-		   "read returned %d not expected by the reactor\n", n1));
+		   "read not expected by the reactor\n", n1));
 	return -1;
     }
 

@@ -5,9 +5,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "test_i.h"
 
-ACE_RCSID (Send_File, 
-           server, 
-           "$Id$")
+ACE_RCSID(Send_File, server, "$Id$")
 
 const char *ior_output_file = 0;
 

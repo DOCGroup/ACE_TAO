@@ -12,7 +12,6 @@ package Preprocessor;
 
 use strict;
 use FileHandle;
-use File::Basename;
 
 # ************************************************************
 # Subroutine Section
@@ -22,14 +21,33 @@ sub new {
   my($class)   = shift;
   my($macros)  = shift;
   my($ipaths)  = shift;
-  my($exclude) = shift;
   return bless {'macros'  => $macros,
                 'ipaths'  => $ipaths,
-                'exclude' => $exclude,
                 'files'   => {},
                 'ifound'  => {},
                 'recurse' => 0,
                }, $class;
+}
+
+
+sub locateFile {
+  my($self) = shift;
+  my($file) = shift;
+
+  if (exists $self->{'ifound'}->{$file}) {
+    return $self->{'ifound'}->{$file};
+  }
+  else {
+    foreach my $dir ('.', @{$self->{'ipaths'}}) {
+      if (-r "$dir/$file") {
+        $self->{'ifound'}->{$file} = "$dir/$file";
+        return $self->{'ifound'}->{$file};
+      }
+    }
+  }
+
+  $self->{'ifound'}->{$file} = undef;
+  return undef;
 }
 
 
@@ -45,7 +63,6 @@ sub process {
     my(@zero)    = ();
     my($files)   = $self->{'files'};
     my($recurse) = ++$self->{'recurse'};
-    my($dir)     = dirname($file);
 
     $$files{$file} = [];
     while(<$fh>) {
@@ -76,31 +93,7 @@ sub process {
         }
         elsif (!defined $zero[0] &&
                /#\s*include\s+[<"]([^">]+)[">]/o) {
-          ## Locate the include file
-          my($inc) = undef;
-          if (exists $self->{'ifound'}->{$1}) {
-            $inc = $self->{'ifound'}->{$1};
-          }
-          else {
-            foreach my $dirp (@{$self->{'ipaths'}}) {
-              if (-r "$dirp/$1") {
-                $inc = "$dirp/$1";
-                last;
-              }
-            }
-
-            if (!defined $inc) {
-              ## If the file we're currently looking at contains a
-              ## directory name then, we need to look for include
-              ## files in that directory.
-              if (-r "$dir/$1") {
-                $inc = "$dir/$1";
-              }
-            }
-            $self->{'ifound'}->{$1} = $inc;
-          }
-
-          ## If we've found the include file, then process it too.
+          my($inc) = $self->locateFile($1);
           if (defined $inc) {
             $inc =~ s/\\/\//go;
             if (!$noinline ||
@@ -108,9 +101,7 @@ sub process {
               push(@{$$files{$file}}, $inc);
               if (!defined $$files{$inc}) {
                 ## Process this file, but do not return the include files
-                if (!defined $self->{'exclude'}->{basename($inc)}) {
-                  $self->process($inc, $noinline, 1);
-                }
+                $self->process($inc, $noinline, 1);
               }
             }
           }

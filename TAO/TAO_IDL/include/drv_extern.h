@@ -78,6 +78,5 @@ extern void DRV_store_env_include_paths (void);
 extern void DRV_cpp_init (void);
 extern void DRV_cpp_putarg (const char *str);
 extern void DRV_cpp_new_location (const char *new_loc);
-extern void DRV_get_orb_idl_includes (void);
 
 #endif           // _DRV_EXTERN_DRV_EXTERN_HH

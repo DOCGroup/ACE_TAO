@@ -4,6 +4,7 @@ ACE_RCSID (LoadBalancing,
            ServerRequestInterceptor,
            "$Id$")
 
+
 ServerRequestInterceptor::ServerRequestInterceptor (void)
   : request_count_ (0)
 {
@@ -29,7 +30,7 @@ ServerRequestInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 ServerRequestInterceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr /* ri */
-    ACE_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -65,7 +66,7 @@ ServerRequestInterceptor::send_exception (
 void
 ServerRequestInterceptor::send_other (
     PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {

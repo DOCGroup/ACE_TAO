@@ -14,8 +14,8 @@
 #include "EC_ConsumerControl.h"
 #include "EC_SupplierControl.h"
 #include "EC_Event_Channel_Base.h" // @@ MSVC 6 bug
-#include "orbsvcs/orbsvcs/ESF/ESF_Proxy_List.h"
-#include "orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.h"
+#include "orbsvcs/ESF/ESF_Proxy_List.h"
+#include "orbsvcs/ESF/ESF_Immediate_Changes.h"
 
 #include "tao/ORB_Core.h"
 

@@ -11,10 +11,10 @@ ACE_RCSID (TAO_SSLIOP,
 
 #include "SSLIOP_Current.h"
 #include "SSLIOP_Invocation_Interceptor.h"
-#include "orbsvcs/orbsvcs/SSLIOPC.h"
+#include "orbsvcs/SSLIOPC.h"
 
-#include "orbsvcs/orbsvcs/Security/Security_Current.h"
-#include "orbsvcs/orbsvcs/Security/PrincipalAuthenticator.h"
+#include "orbsvcs/Security/Security_Current.h"
+#include "orbsvcs/Security/PrincipalAuthenticator.h"
 
 #include "tao/Exception.h"
 #include "tao/ORBInitInfo.h"

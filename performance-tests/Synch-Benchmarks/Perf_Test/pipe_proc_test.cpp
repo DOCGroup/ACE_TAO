@@ -11,7 +11,7 @@ ACE_RCSID(Synch_Benchmarks, pipe_proc_test, "$Id$")
 class ACE_Svc_Export Pipe_Proc_Test : public Benchmark_Performance
 {
 public:
-  int init (int, ACE_TCHAR **);
+  int init (int, char **);
   virtual int svc (void);
 
 private:
@@ -21,17 +21,17 @@ private:
 };
 
 int
-Pipe_Proc_Test::init (int, ACE_TCHAR **)
+Pipe_Proc_Test::init (int, char **)
 {
   synch_count = 1;
 
   if (ACE_OS::pipe (this->pipe_handles) == -1)
-    ACE_OS::perror (ACE_TEXT("pipe")), ACE_OS::exit (1);
+    ACE_OS::perror ("pipe"), ACE_OS::exit (1);
 
   switch (ACE_OS::fork ())
     {
     case -1:
-      ACE_OS::perror (ACE_TEXT("fork")), ACE_OS::exit (1);
+      ACE_OS::perror ("fork"), ACE_OS::exit (1);
     case 0:
       this->reader (pipe_handles[0]);
       /* NOTREACHED */
@@ -70,7 +70,7 @@ Pipe_Proc_Test::svc (void)
     if (ACE_OS::write (handle, from, length) == length)
       performance_test_options.thr_work_count[ni]++;
     else
-      ACE_OS::perror (ACE_TEXT("write"));
+      ACE_OS::perror ("write");
 
   ACE_OS::close (this->pipe_handles[0]);
   ACE_OS::close (this->pipe_handles[1]);

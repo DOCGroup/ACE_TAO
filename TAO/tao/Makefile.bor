@@ -181,7 +181,6 @@ OBJFILES = \
    $(OBJDIR)\ParameterMode.obj \
 	$(OBJDIR)\Parser_Registry.obj \
 	$(OBJDIR)\PICurrent.obj \
-	$(OBJDIR)\PICurrent_Copy_Callback.obj \
 	$(OBJDIR)\PICurrent_ORBInitializer.obj \
 	$(OBJDIR)\PI_ForwardC.obj \
 	$(OBJDIR)\Pluggable_Messaging.obj \
@@ -224,10 +223,6 @@ OBJFILES = \
 	$(OBJDIR)\Special_Basic_Arguments.obj \
 	$(OBJDIR)\StringSeqC.obj \
 	$(OBJDIR)\StringSeqA.obj \
-	$(OBJDIR)\ULongSeqC.obj \
-	$(OBJDIR)\ULongSeqA.obj \
-	$(OBJDIR)\UShortSeqC.obj \
-	$(OBJDIR)\UShortSeqA.obj \
 	$(OBJDIR)\Stub.obj \
 	$(OBJDIR)\Stub_Factory.obj \
 	$(OBJDIR)\Sync_Strategies.obj \

@@ -19,7 +19,24 @@ use File::Basename;
 my($basePath) = getExecutePath($0) . '/MakeProjectCreator';
 unshift(@INC, $basePath . '/modules');
 
-require MWC;
+require Driver;
+
+# ************************************************************
+# Data Section
+# ************************************************************
+
+my(@creators) = ('GNUACEWorkspaceCreator',
+                 'NMakeWorkspaceCreator',
+                 'VC6WorkspaceCreator',
+                 'VC7WorkspaceCreator',
+                 'VC71WorkspaceCreator',
+                 'BorlandWorkspaceCreator',
+                 'GHSWorkspaceCreator',
+                 'EM3WorkspaceCreator',
+                 'VA4WorkspaceCreator',
+                 'MakeWorkspaceCreator',
+                 'AutomakeWorkspaceCreator',
+                );
 
 # ************************************************************
 # Subroutine Section
@@ -75,8 +92,8 @@ sub getExecutePath {
 
 
 # ************************************************************
-# Main Section
+# Subroutine Section
 # ************************************************************
 
-my($driver) = new MWC();
-exit($driver->execute($basePath, basename($0), \@ARGV));
+my($driver) = new Driver($basePath, basename($0), @creators);
+exit($driver->run(@ARGV));

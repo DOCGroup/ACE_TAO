@@ -514,20 +514,14 @@ TAO_PG_ObjectGroupManager::get_object_group_ref_from_id (
                       this->lock_,
                       PortableGroup::ObjectGroup::_nil ());
 
-    if (this->object_group_map_.find (ACE_U64_TO_U32 (group_id), 
-                                      group_entry) 
-         != 0)
-      {
-        ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (),
-                          PortableGroup::ObjectGroup::_nil ());
-      }
+    if (this->object_group_map_.find (group_id, group_entry) != 0)
+      ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (),
+                        PortableGroup::ObjectGroup::_nil ());
   }
 
   if (group_entry == 0)
-    {
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        PortableGroup::ObjectGroup::_nil ());
-    }
+    ACE_THROW_RETURN (CORBA::INTERNAL (),
+                      PortableGroup::ObjectGroup::_nil ());
 
   return
     PortableGroup::ObjectGroup::_duplicate (group_entry->object_group.in ());

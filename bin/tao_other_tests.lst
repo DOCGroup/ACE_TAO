@@ -51,16 +51,12 @@ TAO/examples/Load_Balancing/run_test.pl: !MINIMUM !SUNCC5_1
 TAO/examples/PluggableUDP/tests/Basic/run_test.pl: !STATIC !ST
 TAO/examples/PluggableUDP/tests/SimplePerformance/run_test.pl
 TAO/examples/AMH/Sink_Server/run_test.pl: !MINIMUM
-TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl -p TCP,UDP,RTP_UDP: !MINIMUM
-TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl -p SCTP_SEQ: !MINIMUM SCTP
-TAO/orbsvcs/tests/AVStreams/Full_Profile/run_test.pl: !MINIMUM
+TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl: !MINIMUM
+#TAO/orbsvcs/tests/AVStreams/Full_Profile/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/AVStreams/Multicast/run_test.pl: !MINIMUM
 #TAO/orbsvcs/tests/AVStreams/Multicast_Full_Profile/run_test.pl: !MINIMUM
 #TAO/orbsvcs/tests/AVStreams/Latency/run_test.pl: !MINIMUM
-TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl -p TCP,UDP,RTP_UDP: !MINIMUM
-TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl -p SCTP_SEQ: !MINIMUM SCTP
-TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/run_test.pl -p TCP,UDP,RTP_UDP: !MINIMUM
-TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/run_test.pl -p SCTP_SEQ: !MINIMUM SCTP
+TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/AVStreams/Simple_Three_Stage/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/AVStreams/Component_Switching/run_test.pl: !MINIMUM 

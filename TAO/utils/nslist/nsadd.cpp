@@ -17,7 +17,7 @@
 //
 // ================================================================
 
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 

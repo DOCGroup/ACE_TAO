@@ -7,7 +7,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_strings.h"
-#include "ace/OS_NS_errno.h"
 
 #include "tao/Strategies/advanced_resource.h"
 
@@ -75,7 +74,7 @@ CORBA::Object_ptr
 join_object_group (CORBA::ORB_ptr orb,
                    CosLoadBalancing::LoadManager_ptr lm,
                    const PortableGroup::Location & location
-                   ACE_ENV_ARG_DECL)
+                   ACE_ENV_ARG_PARAMETER)
 {
   CORBA::Object_var ns_object =
     orb->resolve_initial_references ("NameService"

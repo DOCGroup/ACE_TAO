@@ -127,7 +127,6 @@ noinst_PROGRAMS = \
   Basic_Types_Test \
   Bound_Ptr_Test \
   Buffer_Stream_Test \
-  Bug_1576_Regression_Test \
   Cache_Map_Manager_Test \
   Cached_Accept_Conn_Test \
   Cached_Allocator_Test \
@@ -271,8 +270,6 @@ Basic_Types_Test_SOURCES = Basic_Types_Test.cpp
 Bound_Ptr_Test_SOURCES = Bound_Ptr_Test.cpp Bound_Ptr_Test.h
 
 Buffer_Stream_Test_SOURCES = Buffer_Stream_Test.cpp
-
-Bug_1576_Regression_Test_SOURCES = Bug_1576_Regression_Test.cpp
 
 CDR_Array_Test_SOURCES = CDR_Array_Test.cpp
 

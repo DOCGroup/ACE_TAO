@@ -1,10 +1,12 @@
 // -*- MPC -*-
 // $Id$
 
-project(RTOLDEvent) : orbsvcslib, core, rtevent, rtsched {
+project(RTOLDEvent) : orbsvcslib, core, rtevent, rtsched, naming, svc_utils, portableserver {
   sharedname   = TAO_RTOLDEvent
   dynamicflags = TAO_RTOLDEVENT_BUILD_DLL
   tagchecks   += RTOLDEvent
+  // Add this include path for precompiled headers
+  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
 
   IDL_Files {
   }

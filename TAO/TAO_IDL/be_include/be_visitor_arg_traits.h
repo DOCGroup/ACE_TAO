@@ -48,10 +48,6 @@ public:
   virtual int visit_eventtype (be_eventtype *node);
 
   virtual int visit_eventtype_fwd (be_eventtype_fwd *node);
-  
-  virtual int visit_operation (be_operation *node);
-  
-  virtual int visit_argument (be_argument *node);
 
   virtual int visit_sequence (be_sequence *node);
 

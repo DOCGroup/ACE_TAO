@@ -3,8 +3,6 @@
 
 // Malloc_T.i
 
-#include "ace/OS_NS_string.h"
-
 template <class T> ACE_INLINE T *
 ACE_Cached_Mem_Pool_Node<T>::addr (void)
 {

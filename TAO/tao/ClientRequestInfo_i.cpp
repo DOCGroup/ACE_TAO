@@ -19,26 +19,24 @@ ACE_RCSID (TAO,
 
 TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (TAO::Invocation_Base *inv)
   : invocation_ (inv),
-    // abstract_target_ (0),
+    abstract_target_ (0),
     caught_exception_ (0),
     reply_status_ (-1),
-    rs_pi_current_ (),
-    copy_callback_ ()
+    rs_pi_current_ ()
 {
   this->setup_picurrent ();
 }
 
 TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (
     TAO::Invocation_Base *inv,
-    CORBA::AbstractBase_ptr /* abstract_target */,
+    CORBA::AbstractBase_ptr abstract_target,
     CORBA::Boolean
   )
   : invocation_ (inv),
-    // abstract_target_ (abstract_target), // No need to duplicate.
+    abstract_target_ (abstract_target), // No need to duplicate.
     caught_exception_ (0),
     reply_status_ (-1),
-    rs_pi_current_ (),
-    copy_callback_ ()
+    rs_pi_current_ ()
 {
   this->setup_picurrent ();
 }
@@ -51,7 +49,7 @@ void
 TAO_ClientRequestInfo_i::setup_picurrent (void)
 {
   // Retrieve the thread scope current (no TSS access incurred yet).
-  TAO::PICurrent *pi_current =
+  TAO_PICurrent *pi_current =
     this->invocation_->orb_core ()->pi_current ();
 
   // If the slot count is zero, then there is nothing to copy.
@@ -59,10 +57,14 @@ TAO_ClientRequestInfo_i::setup_picurrent (void)
   if (pi_current != 0 && pi_current->slot_count () != 0)
     {
       // Retrieve the thread scope current.
-      TAO::PICurrent_Impl *tsc = pi_current->tsc ();
+      TAO_PICurrent_Impl *tsc = pi_current->tsc ();
 
-      // Logically copy the TSC's slot table to the RSC.
-      this->rs_pi_current_.lc_slot_table (tsc);
+      // Copy the TSC to the RSC.
+      // this->rs_pi_current_.copy (*tsc, 0);  // Shallow copy
+      this->rs_pi_current_.copy (*tsc, 1);  // Deep copy since some
+                                            // users report problems
+                                            // they can't reproduce
+                                            // steadily.
 
       // PICurrent will potentially have to call back on the request
       // scope current so that it can deep copy the contents of the
@@ -73,8 +75,12 @@ TAO_ClientRequestInfo_i::setup_picurrent (void)
       // necessary, if the thread scope current is modified after its
       // contents have been *logically* copied to the request scope
       // current.
-      this->copy_callback_.src_and_dst (tsc, &this->rs_pi_current_);
-      tsc->copy_callback (&this->copy_callback_);
+      //
+      // Only set the TSC's peer if a copy was actually performed.
+      if (this->rs_pi_current_.dirty ())
+        {
+          tsc->pi_peer (&this->rs_pi_current_);
+        }
     }
 }
 

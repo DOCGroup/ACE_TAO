@@ -16,9 +16,9 @@
 #ifndef TAO_PONG_H
 #define TAO_PONG_H
 
-#include "orbsvcs/orbsvcs/AV/AVStreams_i.h"
-#include "orbsvcs/orbsvcs/AV/Policy.h"
-#include "orbsvcs/orbsvcs/AV/Flows_T.h"
+#include "orbsvcs/AV/AVStreams_i.h"
+#include "orbsvcs/AV/Policy.h"
+#include "orbsvcs/AV/Flows_T.h"
 
 class Pong_Recv_Callback : public TAO_AV_Callback
 {

@@ -564,8 +564,8 @@ TAO_Advanced_Resource_Factory::init_protocol_factories (void)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_LIB_TEXT("TAO (%P|%t) Unable to load ")
-                             ACE_LIB_TEXT("protocol <%s>, %m\n"),
-                             ACE_TEXT_CHAR_TO_TCHAR(name.c_str ())),
+                             ACE_LIB_TEXT("protocol <%s>, %p\n"),
+                             ACE_TEXT_CHAR_TO_TCHAR(name.c_str ()), ""),
                             -1);
         }
 

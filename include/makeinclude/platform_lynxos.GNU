@@ -97,13 +97,16 @@ else
   ACE_HAS_GNUG_PRE_2_8 = 0
 endif # VERSION
 
-pipes ?= 1
-
 CC              = gcc
 CXX             = g++
-CFLAGS          += -mthreads -Wpointer-arith -Wall
+CFLAGS          += -mthreads -pipe -ansi -Wpointer-arith
 #### -Winline complains a lot with -O2.
 #### CFLAGS          += -Winline
+#### LynxOS 3.0.0's g++ has a lot of warnings about non-virtual base class
+#### destructors with -Wall.
+ifeq (2.5.0,$(VERSION))
+  CFLAGS += -Wall
+endif # VERSION
 
 DCFLAGS         += -g
 PIC             = -fPIC
@@ -114,7 +117,7 @@ OCFLAGS         += -O2
 AR              = ar
 ARFLAGS         = ruv
 RANLIB          = @true
-SOFLAGS         += $(CPPFLAGS) -shared
+SOFLAGS        += $(CPPFLAGS) -shared
 SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
                   $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
 PRELIB          = @true

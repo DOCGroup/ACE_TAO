@@ -12,11 +12,11 @@ ACE_RCSID(Synch_Benchmarks, adaptive_recursive_lock_test, "$Id$")
 class ACE_Svc_Export Adaptive_Recursive_Lock_Test : public Adaptive_Lock_Performance_Test_Base
 {
 public:
-  virtual int init (int, ACE_TCHAR *[]);
+  virtual int init (int, char *[]);
 };
 
 int
-Adaptive_Recursive_Lock_Test::init (int, ACE_TCHAR *[])
+Adaptive_Recursive_Lock_Test::init (int, char *[])
 {
   ACE_Lock *lock;
   ACE_NEW_RETURN (lock,

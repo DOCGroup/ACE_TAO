@@ -16,7 +16,7 @@
 #define TAO_SLEVEL1_TEST_I_H
 
 #include "SLevel1_TestS.h"
-#include "orbsvcs/orbsvcs/SecurityLevel1C.h"
+#include "orbsvcs/SecurityLevel1C.h"
 #include "openssl/x509.h"
 
 class SLevel1_Server_i : public POA_SLevel1_Server

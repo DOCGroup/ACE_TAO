@@ -1,10 +1,11 @@
 // -*- MPC -*-
 // $Id$
 
-project(RTSchedEvent) : orbsvcslib, core, rtevent, rtsched {
+project(RTSchedEvent) : orbsvcslib, core, rtevent, rtsched, naming, svc_utils, portableserver {
   sharedname   = TAO_RTSchedEvent
   dynamicflags = TAO_RTSCHEDEVENT_BUILD_DLL
   tagchecks   += RTSchedEvent
+  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
 
   IDL_Files {
   }

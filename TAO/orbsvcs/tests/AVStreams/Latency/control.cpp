@@ -1,16 +1,14 @@
 // $Id$
 
-#include "orbsvcs/orbsvcs/AV/AVStreams_i.h"
-#include "orbsvcs/orbsvcs/AV/FlowSpec_Entry.h"
+#include "orbsvcs/AV/AVStreams_i.h"
+#include "orbsvcs/AV/FlowSpec_Entry.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/INET_Addr.h"
 
-ACE_RCSID (Latency, 
-           ping, 
-           "$Id$")
+ACE_RCSID(Latency, ping, "$Id$")
 
 const char *ping_ior = CORBA::string_dup ("file://ping.ior");
 const char *pong_ior = CORBA::string_dup ("file://pong.ior");

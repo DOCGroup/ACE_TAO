@@ -258,6 +258,13 @@ TAO_EC_Ping_Supplier::work (TAO_EC_ProxyPushConsumer *consumer
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class TAO_Object_Manager<CORBA::Policy, TAO_Objref_Var_T<CORBA::Policy, CORBA::tao_Policy_life>, CORBA::tao_Policy_life>;
+template class TAO_Objref_Var_T<CORBA::PolicyCurrent, CORBA::tao_PolicyCurrent_life>;
+template class TAO_Objref_Var_T<CORBA::Policy, CORBA::tao_Policy_life>;
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate TAO_Object_Manager<CORBA::Policy, TAO_Objref_Var_T<CORBA::Policy, CORBA::tao_Policy_life>, CORBA::tao_Policy_life>
+#pragma instantiate TAO_Objref_Var_T<CORBA::PolicyCurrent, CORBA::tao_PolicyCurrent_life>
+#pragma instantiate TAO_Objref_Var_T<CORBA::Policy, CORBA::tao_Policy_life>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

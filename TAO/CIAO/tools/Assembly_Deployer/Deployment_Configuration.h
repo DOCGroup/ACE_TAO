@@ -24,7 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ciao/CCM_DeploymentC.h"
+#include "CCM_DeploymentC.h"
 
 namespace CIAO
 {

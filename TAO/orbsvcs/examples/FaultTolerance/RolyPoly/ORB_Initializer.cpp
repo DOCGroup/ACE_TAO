@@ -27,27 +27,21 @@ ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr info
 
   // Register replica controller as server request interceptor.
   //
-  TAO_ORBInitInfo* tao_info = dynamic_cast<TAO_ORBInitInfo*> (info);
+  TAO_ORBInitInfo* tao_info (dynamic_cast<TAO_ORBInitInfo*> (info));
 
   CORBA::ORB_var orb (tao_info->orb_core ()->orb ());
 
   PortableInterceptor::ServerRequestInterceptor_var interceptor;
 
-  {
-    PortableInterceptor::ServerRequestInterceptor *tmp_interceptor = 0;
-
-    ACE_NEW_THROW_EX (tmp_interceptor,
-                      ReplicaController (orb.in ()),
-                      CORBA::NO_MEMORY (
-                        CORBA::SystemException::_tao_minor_code (
-                          TAO_DEFAULT_MINOR_CODE,
-                          ENOMEM),
+  ACE_NEW_THROW_EX (interceptor,
+                    ReplicaController (orb.in ()),
+                    CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
                       CORBA::COMPLETED_NO));
 
-    ACE_CHECK;
-
-    interceptor = tmp_interceptor;
-  }
+  ACE_CHECK;
 
   info->add_server_request_interceptor (interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);

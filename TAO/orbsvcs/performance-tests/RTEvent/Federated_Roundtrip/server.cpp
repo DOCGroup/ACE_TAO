@@ -14,9 +14,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID (TAO_PERF_RTEC_Federated_Roundtrip, 
-           server, 
-           "$Id$")
+ACE_RCSID(TAO_PERF_RTEC_Federated_Roundtrip, server, "$Id$")
 
 const char *ior_output_file = "test.ior";
 int iterations = 10000;

@@ -1,10 +1,12 @@
-#include "orbsvcs/orbsvcs/Log/BasicLog_i.h"
+#include "orbsvcs/Log/BasicLog_i.h"
 
-#include "orbsvcs/orbsvcs/Log/LogMgr_i.h"
+#include "orbsvcs/Log/LogMgr_i.h"
+
 
 ACE_RCSID (Log,
            BasicLog_i,
            "$Id$")
+
 
 TAO_BasicLog_i::TAO_BasicLog_i (TAO_LogMgr_i &logmgr_i,
                                 DsLogAdmin::LogMgr_ptr factory,

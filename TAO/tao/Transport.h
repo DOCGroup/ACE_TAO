@@ -669,12 +669,6 @@ public:
   int handle_timeout (const ACE_Time_Value &current_time,
                       const void* act);
 
-  /// Accessor to recv_buffer_size_
-  size_t recv_buffer_size (void);
-
-  /// Accessor to sent_byte_count_
-  size_t sent_byte_count (void);
-
   /// CodeSet Negotiation - Get the char codeset translator factory
   ///
   TAO_Codeset_Translator_Factory *char_translator (void) const;
@@ -898,12 +892,6 @@ protected:
 
   /// Used by the LRU, LFU and FIFO Connection Purging Strategies.
   unsigned long purging_order_;
-
-  /// Size of the buffer received.
-  size_t recv_buffer_size_;
-
-  /// Number of bytes sent.
-  size_t sent_byte_count_;
 
 private:
 

@@ -18,10 +18,10 @@
 //
 // ============================================================================
 
-#include "orbsvcs/orbsvcs/Naming/Naming_Utils.h"
-#include "orbsvcs/orbsvcs/AV/AVStreams_i.h"
-#include "orbsvcs/orbsvcs/AV/Endpoint_Strategy.h"
-#include "orbsvcs/orbsvcs/AV/Protocol_Factory.h"
+#include "orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/AV/AVStreams_i.h"
+#include "orbsvcs/AV/Endpoint_Strategy.h"
+#include "orbsvcs/AV/Protocol_Factory.h"
 
 class Sender_StreamEndPoint : public TAO_Client_StreamEndPoint
 {
@@ -129,7 +129,4 @@ private:
 
   int num_local_sec_addrs_;
   int num_peer_sec_addrs_;
-
-  long max_frame_count_;
-
 };

@@ -5,12 +5,10 @@
 #include "Offer_Importer.h"
 #include "Service_Type_Exporter.h"
 #include "ace/Auto_Ptr.h"
-#include "orbsvcs/orbsvcs/Trader/Trader.h"
-#include "orbsvcs/orbsvcs/Trader/Service_Type_Repository.h"
+#include "orbsvcs/Trader/Trader.h"
+#include "orbsvcs/Trader/Service_Type_Repository.h"
 
-ACE_RCSID (Trading, 
-           export_test, 
-           "$Id$")
+ACE_RCSID(Trading, export_test, "$Id$")
 
 int
 main (int argc, char** argv)

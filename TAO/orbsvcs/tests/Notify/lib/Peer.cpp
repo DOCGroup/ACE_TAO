@@ -6,15 +6,13 @@
 #include "Peer.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (lib, 
-           TAO_Peer, 
-           "$Id$")
+ACE_RCSID(lib, TAO_Peer, "$Id$")
 
 #include "ace/Arg_Shifter.h"
 #include "Name.h"
 #include "LookupManager.h"
 #include "Options_Parser.h"
-#include "orbsvcs/orbsvcs/NotifyExtC.h"
+#include "orbsvcs/NotifyExtC.h"
 
 TAO_Notify_Tests_Peer::TAO_Notify_Tests_Peer (void)
   : poa_name_ (TAO_Notify_Tests_Name::root_poa)

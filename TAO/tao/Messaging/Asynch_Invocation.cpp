@@ -28,7 +28,7 @@ namespace TAO
                                resolver,
                                detail,
                                response_expected)
-      , safe_rd_ (rd)
+      , rd_ (rd)
   {
   }
 
@@ -44,23 +44,29 @@ namespace TAO
     Invocation_Status s = TAO_INVOKE_FAILURE;
 
 #if TAO_HAS_INTERCEPTORS == 1
+    // This auto_ptr is required when interceptors are called. If any
+    // of the interceptors throws an exception or returns with an
+    // error we need to delete the reply handler.
+    TAO::Utils::Auto_Functor <TAO_Asynch_Reply_Dispatcher_Base,
+      TAO::ARDB_Refcount_Functor> safe_rd (this->rd_);
+
     s =
       this->send_request_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
+    if (s != TAO_INVOKE_FAILURE)
+      safe_rd.release ();
+
     if (s != TAO_INVOKE_SUCCESS)
       return s;
 #endif /*TAO_HAS_INTERCEPTORS */
+
     // Register a reply dispatcher for this invocation. Use the
     // preallocated reply dispatcher.
     TAO_Bind_Dispatcher_Guard dispatch_guard (
         this->details_.request_id (),
-        this->safe_rd_.get (),
+        this->rd_,
         this->resolver_.transport ()->tms ());
-
-    // Now that we have bound the reply dispatcher to the map, just
-    // loose ownership of the reply dispatcher.
-    this->safe_rd_.release ();
 
     if (dispatch_guard.status () != 0)
       {

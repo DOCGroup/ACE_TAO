@@ -15,13 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/Property/property_export.h"
+#include "orbsvcs/Property/property_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/CosPropertyServiceS.h"
+#include "orbsvcs/CosPropertyServiceS.h"
 
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
@@ -337,14 +337,10 @@ protected:
   // Tells  whether this property is allowed in this property set or
   // no.
 
-private:
   void operator= (const TAO_PropertySet &);
-  // Made private because not usable
+  // hack to avoid strange undefined symbol errors for operator= for PropertyTypes.
 
-  TAO_PropertySet (const TAO_PropertySet &);
-  // Not possible to copy
-
-// XXX:This public: is a hack to keep the compiler complain about access violation.
+  // XXX:This public: is a hack to keep the compiler complain about access violation.
 public:
   COSPROPERTY_HASH_MAP hash_table_;
   // This Hash_Table manages storage for our properties.

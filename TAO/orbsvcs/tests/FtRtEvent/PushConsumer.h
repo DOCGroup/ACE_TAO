@@ -12,7 +12,7 @@
 #ifndef PUSHCONSUMERIMPL_H
 #define PUSHCONSUMERIMPL_H
 
-#include "orbsvcs/orbsvcs/RtecEventCommS.h"
+#include "orbsvcs/RtecEventCommS.h"
 
 class PushConsumer_impl :
 public virtual POA_RtecEventComm::PushConsumer

@@ -540,8 +540,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                              int grp_id,
                              void *stack,
                              size_t stack_size,
-                             ACE_Task_Base *task,
-                             bool inherit_priority)
+                             ACE_Task_Base *task)
 {
   // First, threads created by Thread Manager should not be daemon threads.
   // Using assertion is probably a bit too strong.  However, it helps
@@ -612,37 +611,6 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   // removing this Thread Descriptor before it gets put into our
   // thread table.
 
-  if (inherit_priority)
-    {
-      int tmp_priority;
-      int sched_policy = ACE_SCHED_OTHER;
-
-      // Get the system policy and priority
-      ACE_hthread_t thr_handle;
-      ACE_Thread::self (thr_handle);
-      if (ACE_Thread::getprio (
-                             thr_handle,
-                             tmp_priority,
-                             sched_policy) == -1)
-        {
-          priority = ACE_DEFAULT_THREAD_PRIORITY;
-        }
-      else
-        {
-          priority = tmp_priority;
-        }
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) xxx \n"));
-      if (sched_policy ==  ACE_SCHED_FIFO)
-        ACE_SET_BITS (flags, THR_SCHED_FIFO);
-      else if (sched_policy == ACE_SCHED_RR)
-        ACE_SET_BITS (flags, THR_SCHED_FIFO);
-      else
-        ACE_SET_BITS (flags, THR_SCHED_DEFAULT);
-
-    }
-
   int result = ACE_Thread::spawn (func,
                                   args,
                                   flags,
@@ -707,8 +675,7 @@ ACE_Thread_Manager::spawn (ACE_THR_FUNC func,
                            long priority,
                            int grp_id,
                            void *stack,
-                           size_t stack_size,
-                           bool inherit_priority)
+                           size_t stack_size)
 {
   ACE_TRACE ("ACE_Thread_Manager::spawn");
 
@@ -717,17 +684,8 @@ ACE_Thread_Manager::spawn (ACE_THR_FUNC func,
   if (grp_id == -1)
     grp_id = this->grp_id_++; // Increment the group id.
 
-  if (this->spawn_i (func,
-                     args,
-                     flags,
-                     t_id,
-                     t_handle,
-                     priority,
-                     grp_id,
-                     stack,
-                     stack_size,
-                     0,
-                     inherit_priority) == -1)
+  if (this->spawn_i (func, args, flags, t_id, t_handle,
+                     priority, grp_id, stack, stack_size) == -1)
     return -1;
 
   return grp_id;
@@ -745,8 +703,7 @@ ACE_Thread_Manager::spawn_n (size_t n,
                              ACE_Task_Base *task,
                              ACE_hthread_t thread_handles[],
                              void *stack[],
-                             size_t stack_size[],
-                             bool inherit_priority)
+                             size_t stack_size[])
 {
   ACE_TRACE ("ACE_Thread_Manager::spawn_n");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
@@ -767,8 +724,7 @@ ACE_Thread_Manager::spawn_n (size_t n,
                          grp_id,
                          stack == 0 ? 0 : stack[i],
                          stack_size == 0 ? 0 : stack_size[i],
-                         task,
-                         inherit_priority) == -1)
+                         task) == -1)
         return -1;
     }
 
@@ -788,8 +744,7 @@ ACE_Thread_Manager::spawn_n (ACE_thread_t thread_ids[],
                              void *stack[],
                              size_t stack_size[],
                              ACE_hthread_t thread_handles[],
-                             ACE_Task_Base *task,
-                             bool inherit_priority)
+                             ACE_Task_Base *task)
 {
   ACE_TRACE ("ACE_Thread_Manager::spawn_n");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
@@ -810,8 +765,7 @@ ACE_Thread_Manager::spawn_n (ACE_thread_t thread_ids[],
                          grp_id,
                          stack == 0 ? 0 : stack[i],
                          stack_size == 0 ? 0 : stack_size[i],
-                         task,
-                         inherit_priority) == -1)
+                         task) == -1)
         return -1;
     }
 
@@ -1217,15 +1171,6 @@ ACE_Thread_Manager::check_state (ACE_UINT32 state,
     return ACE_BIT_ENABLED (thr_state, state);
 
   return ACE_BIT_DISABLED (thr_state, state);
-}
-
-// Test if a single thread has terminated.
-
-int
-ACE_Thread_Manager::testterminate (ACE_thread_t t_id)
-{
-  ACE_TRACE ("ACE_Thread_Manager::testterminate");
-  return this->check_state (ACE_THR_TERMINATED, t_id);
 }
 
 // Test if a single thread is suspended.

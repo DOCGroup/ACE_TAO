@@ -1,6 +1,6 @@
 #include "Signal_Handler.h"
 
-#include "orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.h"
+#include "orbsvcs/LoadBalancing/LB_LoadManager.h"
 
 #include "tao/ORB_Core.h"
 

@@ -312,7 +312,16 @@ ACE_Select_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
 
   // If new entry, call add_reference() if needed.
   if (!existing_handle)
-    event_handler->add_reference ();
+    {
+      int requires_reference_counting =
+        event_handler->reference_counting_policy ().value () ==
+        ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
+
+      if (requires_reference_counting)
+        {
+          event_handler->add_reference ();
+        }
+    }
 
   return 0;
 }
@@ -605,8 +614,16 @@ ACE_Select_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
                              ACE_LIB_TEXT ("enqueue_head")),
                             -1);
 
-        ACE_Event_Handler *event_handler = temp->eh_;
-        event_handler->remove_reference ();
+          ACE_Event_Handler *event_handler = temp->eh_;
+
+          int requires_reference_counting =
+            event_handler->reference_counting_policy ().value () ==
+            ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
+
+          if (requires_reference_counting)
+            {
+              event_handler->remove_reference ();
+            }
 
         ++number_purged;
       }
@@ -768,10 +785,20 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *event_handler,
   if (this->select_reactor_ == 0)
     return 0;
 
-  ACE_Event_Handler_var safe_handler (event_handler);
+  ACE_Event_Handler_var safe_handler;
 
   if (event_handler)
-    event_handler->add_reference ();
+    {
+      int requires_reference_counting =
+        event_handler->reference_counting_policy ().value () ==
+        ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
+
+      if (requires_reference_counting)
+        {
+          event_handler->add_reference ();
+          safe_handler = event_handler;
+        }
+    }
 
   ACE_Notification_Buffer buffer (event_handler, mask);
 
@@ -820,7 +847,7 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *event_handler,
     if (notify_queue_.enqueue_tail (temp) == -1)
       return -1;
 
-    if (!notification_required)
+    if(!notification_required)
       {
         // No failures.
         safe_handler.release ();

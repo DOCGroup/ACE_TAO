@@ -19,9 +19,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/Channel_Clients_T.h"
-#include "orbsvcs/orbsvcs/RtecSchedulerC.h"
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/Channel_Clients_T.h"
+#include "orbsvcs/RtecSchedulerC.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
 #include "ace/Task.h"
 #include "ace/OS_NS_time.h"
 

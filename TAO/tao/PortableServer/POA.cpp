@@ -3612,7 +3612,7 @@ TAO_POA::key_to_object (const TAO::ObjectKey &key,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "IMR IOR = \n%s\n",
-                    ACE_TEXT_CHAR_TO_TCHAR (imr_str.in ())));
+                    imr_str.in ()));
 
       // Search for "corbaloc:" alone, without the protocol.  This code
       // should be protocol neutral.
@@ -3645,7 +3645,7 @@ TAO_POA::key_to_object (const TAO::ObjectKey &key,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "ImR-ified IOR = \n%s\n",
-                    ACE_TEXT_CHAR_TO_TCHAR (ior.c_str ())));
+                    ior.c_str ()));
 
       obj =
         this->orb_core_.orb ()->string_to_object (ior.c_str ()
@@ -3799,7 +3799,7 @@ TAO_POA::establish_components (ACE_ENV_SINGLE_ARG_DECL)
                   ACE_DEBUG ((LM_WARNING,
                               "(%P|%t) Exception thrown while processing "
                               "IORInterceptor \"%s\">\n",
-                              ACE_TEXT_CHAR_TO_TCHAR (name.in ())));
+                              name.in ()));
                 }
 
               ACE_PRINT_TAO_EXCEPTION (ACE_ANY_EXCEPTION,
@@ -4091,7 +4091,7 @@ TAO_POA::imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL)
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "Informing IMR that we are running at: %s\n",
-                ACE_TEXT_CHAR_TO_TCHAR (partial_ior.c_str())));
+                partial_ior.c_str()));
 
   char host_name[MAXHOSTNAMELEN + 1];
   ACE_OS::hostname (host_name, MAXHOSTNAMELEN);

@@ -86,34 +86,38 @@ sub new {
 }
 
 
-sub preprocess_line {
-  my($self) = shift;
-  my($fh)   = shift;
-  my($line) = shift;
+sub collect_line {
+  my($self)        = shift;
+  my($fh)          = shift;
+  my($lref)        = shift;
+  my($line)        = shift;
+  my($status)      = 1;
+  my($errorString) = '';
 
-  $line = $self->strip_line($line);
-  while ($line =~ /\\$/) {
-    $line =~ s/\s*\\$/ /;
-    my($next) = $fh->getline();
-    if (defined $next) {
-      $line .= $self->strip_line($next);
-    }
+  $$lref .= $self->strip_line($line);
+
+  if ($$lref =~ /\\$/) {
+    $$lref =~ s/\\$/ /;
   }
-  return $line;
+  else {
+    ($status, $errorString) = $self->parse_line($fh, $$lref);
+    $$lref = '';
+  }
+
+  return $status, $errorString;
 }
 
 
 sub generate_default_input {
-  my($self)  = shift;
-  my($status,
-     $error) = $self->parse_line(undef, "$self->{'grammar_type'} {");
+  my($self)   = shift;
+  my($status) = 0;
+  my($error)  = '';
 
-  if ($status) {
-    ($status, $error) = $self->parse_line(undef, '}');
-  }
+  ($status, $error) = $self->parse_line(undef, "$self->{'grammar_type'} {");
+  ($status, $error) = $self->parse_line(undef, '}');
 
   if (!$status) {
-    $self->error($error);
+    print STDERR "$error\n";
   }
 
   return $status;
@@ -129,15 +133,17 @@ sub parse_file {
   my($status, $errorString) = $self->read_file($input);
 
   if (!$status) {
-    $self->error($errorString,
-                 "$input: line " . $self->get_line_number() . ':');
+    print STDERR $self->getcwd() .
+                 "/$input: line " . $self->get_line_number() .
+                 ":\n$errorString\n";
   }
   elsif ($status && $self->{$self->{'type_check'}}) {
     ## If we are at the end of the file and the type we are looking at
     ## is still defined, then we have an error
-    $self->error("Did not " .
-                 "find the end of the $self->{'grammar_type'}",
-                 "$input: line " . $self->get_line_number() . ':');
+    print STDERR $self->getcwd() .
+                 "/$input: line " . $self->get_line_number() .
+                 ":\nERROR: Did not " .
+                 "find the end of the $self->{'grammar_type'}\n";
     $status = 0;
   }
   $self->set_line_number($oline);
@@ -214,7 +220,7 @@ sub parse_known {
   my($self)        = shift;
   my($line)        = shift;
   my($status)      = 1;
-  my($errorString) = undef;
+  my($errorString) = '';
   my($type)        = $self->{'grammar_type'};
   my(@values)      = ();
 
@@ -231,7 +237,7 @@ sub parse_known {
     my($name)    = $1;
     my($parents) = $2;
     if ($self->{$self->{'type_check'}}) {
-      $errorString = "Did not find the end of the $type";
+      $errorString = "ERROR: Did not find the end of the $type";
       $status = 0;
     }
     else {
@@ -248,7 +254,7 @@ sub parse_known {
         if (!defined $parents[0]) {
           ## The : was used, but no parents followed.  This
           ## is an error.
-          $errorString = 'No parents listed';
+          $errorString = 'ERROR: No parents listed';
           $status = 0;
         }
         $parents = \@parents;
@@ -261,38 +267,18 @@ sub parse_known {
       push(@values, $type, $line);
     }
     else {
-      $errorString = "Did not find the beginning of the $type";
+      $errorString = "ERROR: Did not find the beginning of the $type";
       $status = 0;
     }
   }
-  elsif ($line =~ /^(feature)\s*\(([^\)]+)\)\s*(:.*)?\s*{$/) {
-    my($type)    = $1;
-    my($name)    = $2;
-    my($parents) = $3;
-    my(@names)   = split(/\s*,\s*/, $name);
-
-    if (defined $parents) {
-      my(@parents) = ();
-      $parents =~ s/^://;
-      foreach my $parent (split(',', $parents)) {
-        $parent =~ s/^\s+//;
-        $parent =~ s/\s+$//;
-        if ($parent ne '') {
-          push(@parents, $parent);
-        }
-      }
-      if (!defined $parents[0]) {
-        ## The : was used, but no parents followed.  This
-        ## is an error.
-        $errorString = 'No parents listed';
-        $status = 0;
-      }
-      $parents = \@parents;
-    }
-    push(@values, $type, \@names, $parents);
+  elsif ($line =~ /^(feature)\s*\(([^\)]+)\)\s*{$/) {
+    my($type)  = $1;
+    my($name)  = $2;
+    my(@names) = split(/\s*,\s*/, $name);
+    push(@values, $type, \@names);
   }
   elsif (!$self->{$self->{'type_check'}}) {
-    $errorString = "No $type was defined";
+    $errorString = "ERROR: No $type was defined";
     $status = 0;
   }
   elsif ($self->parse_assignment($line, \@values)) {
@@ -312,7 +298,7 @@ sub parse_known {
     push(@values, 'component', $comp, $name);
   }
   else {
-    $errorString = "Unrecognized line: $line";
+    $errorString = "ERROR: Unrecognized line: $line";
     $status = -1;
   }
 
@@ -328,19 +314,21 @@ sub parse_scope {
   my($validNames)  = shift;
   my($flags)       = shift;
   my($status)      = 0;
-  my($errorString) = "Unable to process $name";
+  my($errorString) = "ERROR: Unable to process $name";
 
   if (!defined $flags) {
     $flags = {};
   }
 
   while(<$fh>) {
-    my($line) = $self->preprocess_line($fh, $_);
+    my($line) = $self->strip_line($_);
 
     if ($line eq '') {
     }
     elsif ($line =~ /^}/) {
-      ($status, $errorString) = $self->handle_scoped_end($type, $flags);
+      $status = 1;
+      $errorString = '';
+      $self->handle_scoped_end($type, $flags);
       last;
     }
     else {
@@ -359,12 +347,13 @@ sub parse_scope {
         }
         else {
           $status = 0;
-          $errorString = "Invalid assignment name: $values[1]";
+          $errorString = "ERROR: Invalid assignment name: $values[1]";
           last;
         }
       }
       else {
-        ($status, $errorString) = $self->handle_scoped_unknown($type,
+        ($status, $errorString) = $self->handle_scoped_unknown($fh,
+                                                               $type,
                                                                $flags,
                                                                $line);
         if (!$status) {
@@ -392,8 +381,8 @@ sub generate_default_file_list {
 
   if (opendir($dh, $dir)) {
     my($need_dir) = ($dir ne '.');
-    my($skip)     = 0;
     foreach my $file (grep(!/^\.\.?$/, readdir($dh))) {
+      my($skip) = 0;
       ## Prefix each file name with the directory only if it's not '.'
       my($full) = ($need_dir ? "$dir/" : '') . $file;
 
@@ -406,10 +395,7 @@ sub generate_default_file_list {
         }
       }
 
-      if ($skip) {
-        $skip = 0;
-      }
-      else {
+      if (!$skip) {
         push(@files, $full);
       }
     }
@@ -457,14 +443,13 @@ sub add_file_written {
 
   foreach my $written (@{$self->{'files_written'}}) {
     if ($written eq $file) {
-      $self->warning("$file has been overwritten by a " .
-                     "$self->{'grammar_type'} with a duplicate name.");
+      print "WARNING: $file has been overwritten by a " .
+            "$self->{'grammar_type'} with a duplicate name.\n";
       last;
     }
     elsif (lc($written) eq lc($file)) {
-      $self->warning("$file has been overwritten by a " .
-                     "$self->{'grammar_type'} with different casing: " .
-                     "$written.");
+      print "WARNING: $file has been overwritten by a " .
+            "$self->{'grammar_type'} with different casing: $written.\n";
       last;
     }
   }
@@ -527,23 +512,6 @@ sub modify_assignment_value {
 }
 
 
-sub get_assignment_hash {
-  ## NOTE: If anything in this block changes, then you must make the
-  ## same change in process_assignment.
-  my($self)   = shift;
-  my($tag)    = ($self->{'reading_global'} ? 'global_assign' : 'assign');
-  my($assign) = $self->{$tag};
-
-  ## If we haven't yet defined the hash table in this project
-  if (!defined $assign) {
-    $assign = {};
-    $self->{$tag} = $assign;
-  }
-
-  return $assign;
-}
-
-
 sub process_assignment {
   my($self)   = shift;
   my($name)   = shift;
@@ -553,8 +521,6 @@ sub process_assignment {
 
   ## If no hash table was passed in
   if (!defined $assign) {
-    ## NOTE: If anything in this block changes, then you must make the
-    ## same change in get_assignment_hash.
     my($tag) = ($self->{'reading_global'} ? 'global_assign' : 'assign');
     $assign  = $self->{$tag};
 
@@ -742,6 +708,12 @@ sub get_relative {
 }
 
 
+sub get_current_input {
+  my($self) = shift;
+  return $self->{'current_input'};
+}
+
+
 sub get_progress_callback {
   my($self) = shift;
   return $self->{'progress'};
@@ -858,16 +830,16 @@ sub handle_scoped_end {
   #my($self)  = shift;
   #my($type)  = shift;
   #my($flags) = shift;
-  return 1, undef;
 }
 
 
 sub handle_scoped_unknown {
   my($self)  = shift;
+  my($fh)    = shift;
   my($type)  = shift;
   my($flags) = shift;
   my($line)  = shift;
-  return 0, "Unrecognized line: $line";
+  return 0, "ERROR: Unrecognized line: $line";
 }
 
 
@@ -877,11 +849,9 @@ sub process_duplicate_modification {
   #my($assign) = shift;
 }
 
-
 sub generate_recursive_input_list {
-  #my($self)    = shift;
-  #my($dir)     = shift;
-  #my($exclude) = shift;
+  #my($self) = shift;
+  #my($dir)  = shift;
   return ();
 }
 

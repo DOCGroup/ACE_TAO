@@ -1,6 +1,6 @@
 // $Id$
 
-#include "orbsvcs/orbsvcs/AV/default_resource.h"
+#include "orbsvcs/AV/default_resource.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"

@@ -2,6 +2,8 @@
 // $Id$
 
 feature(ace_other) {
+  macros += ACE_HAS_ACE_OTHER
+
   Source_Files(ACE_COMPONENTS) {
     Other {
       Local_Name_Space.cpp

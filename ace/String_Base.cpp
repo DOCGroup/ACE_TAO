@@ -184,9 +184,8 @@ ACE_String_Base<CHAR>::resize (size_t len, CHAR c)
         this->allocator_->free (this->rep_);
 
       this->rep_ = (CHAR *)
-      this->allocator_->malloc ((len + 1) * sizeof (CHAR));
+        this->allocator_->malloc ((len + 1) * sizeof (CHAR));
       this->buf_len_ = len + 1;
-      this->release_ = 1;
     }
 
   this->len_ = 0;

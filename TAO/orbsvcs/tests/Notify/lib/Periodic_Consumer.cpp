@@ -5,16 +5,14 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/High_Res_Timer.h"
 #include "tao/debug.h"
-#include "orbsvcs/orbsvcs/Time_Utilities.h"
+#include "orbsvcs/Time_Utilities.h"
 #include "StructuredEvent.h"
 #include "Task_Stats.h"
 #include "Task_Callback.h"
 #include "LookupManager.h"
 #include "Priority_Mapping.h"
 
-ACE_RCSID (RT_Notify, 
-           TAO_Notify_Tests_Periodic_Consumer, 
-           "$Id$")
+ACE_RCSID(RT_Notify, TAO_Notify_Tests_Periodic_Consumer, "$Id$")
 
 int WARMUP_COUNT = 10;
 

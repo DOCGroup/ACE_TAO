@@ -72,7 +72,7 @@ be_visitor_amh_rh_interface_sh::visit_interface (be_interface *node)
   *os << "class " << be_global->skel_export_macro ()
       << " " << rh_skel_class_name.c_str () << be_idt_nl
       << ": public " << inherit_tao_parent.c_str () << "," << be_idt_nl
-      << "public ::" << inherit_client_parent.c_str () << be_uidt << be_uidt;
+      << "public " << inherit_client_parent.c_str () << be_uidt << be_uidt;
 
   *os << be_nl 
       << "{" << be_nl

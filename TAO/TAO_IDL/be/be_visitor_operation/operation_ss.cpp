@@ -194,7 +194,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
 
   // Fish out the interceptors.
-  *os << be_nl
+  *os << be_nl 
       << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
 
   // Cast the Servant_Upcall pointer.
@@ -275,9 +275,9 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   // (RSC) upon leaving this scope, i.e. just after the upcall
   // completes.  A "guard" is used to make the copy also occur if an
   // exception is thrown.
-  *os << "TAO::PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),"
+  *os << "TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),"
       << be_nl
-      << "                                    true  /* Copy TSC to RSC */);"
+      << "                                   1  /* Copy TSC to RSC */);"
       << be_nl << be_nl;
 
   // Invoke the receive_request() interception point.
@@ -323,7 +323,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
 
   // End the upcall.
-  *os << be_uidt_nl << ");"
+  *os << be_uidt_nl << ");" 
       << be_uidt << be_uidt_nl;
 
   if (!be_global->exception_support ())
@@ -515,7 +515,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                         -1);
     }
 
-  *os << be_nl << be_nl
+  *os << be_nl << be_nl 
       << "// In case _tao_servant_upcall is not used in this function"
       << be_nl
       << "ACE_UNUSED_ARG (_tao_servant_upcall);" << be_uidt_nl
@@ -747,3 +747,4 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
 
   return 0;
 }
+

@@ -27,7 +27,7 @@ sub completion_command {
   my($name)  = shift;
   my($types) = shift;
   my($str)   = "complete $name " .
-               "'c/-/(genins global include type template relative " .
+               "'c/-/(global include type template relative " .
                "ti static noreldefs notoplevel feature_file " .
                "value_template value_project make_coexistence " .
                "hierarchy exclude name_modifier apply_project)/' " .
@@ -73,7 +73,6 @@ sub options {
   my($recurse)    = ($defaults ? 0 : undef);
   my($makeco)     = ($defaults ? 0 : undef);
   my($applypj)    = ($defaults ? 0 : undef);
-  my($genins)     = ($defaults ? 0 : undef);
 
   ## Process the command line arguments
   for(my $i = 0; $i <= $#args; $i++) {
@@ -135,9 +134,6 @@ sub options {
       if (!defined $feature_f) {
         $self->optionError('-feature_file requires a file name argument');
       }
-    }
-    elsif ($arg eq '-genins') {
-      $genins = 1;
     }
     elsif ($arg eq '-global') {
       $i++;
@@ -320,7 +316,6 @@ sub options {
                   'exclude'       => \@exclude,
                   'name_modifier' => $nmodifier,
                   'apply_project' => $applypj,
-                  'genins'        => $genins,
                  );
 
   return \%options;

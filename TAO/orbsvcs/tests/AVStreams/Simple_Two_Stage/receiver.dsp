@@ -102,17 +102,5 @@ SOURCE=.\receiver.cpp
 SOURCE=.\receiver.h
 # End Source File
 # End Group
-# Begin Source File
-
-SOURCE=.\Receiver_Stats.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Receiver_Stats.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Receiver_Stats.inl
-# End Source File
 # End Target
 # End Project

@@ -13,9 +13,9 @@
 #ifndef TAO_FTRT_GROUPMANAGER_IDL
 #define TAO_FTRT_GROUPMANAGER_IDL
 
-#include "orbsvcs/orbsvcs/RtecEventChannelAdmin.idl"
+#include "orbsvcs/RtecEventChannelAdmin.idl"
 #include "orb.idl"
-#include "orbsvcs/orbsvcs/CosNaming.idl"
+#include "orbsvcs/CosNaming.idl"
 #include "FTRT.idl"
 
 module FTRT

@@ -12,7 +12,7 @@ ACE_RCSID (Notify,
 
 #include "ace/Message_Queue.h"
 
-#include "orbsvcs/orbsvcs/CosNotificationC.h"
+#include "orbsvcs/CosNotificationC.h"
 
 #include "Method_Request.h"
 #include "Notify_Extensions.h"

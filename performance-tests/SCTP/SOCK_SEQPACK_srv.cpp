@@ -14,7 +14,6 @@
 #include "ace/os_include/arpa/os_inet.h"
 #include "ace/OS_NS_sys_select.h"
 #include "ace/OS_NS_string.h"
-#include "ace/OS_NS_arpa_inet.h"
 
 // make sure that the code compiles cleanly even if SCTP is not
 // available. If SCTP is not installed, program will exit early in
@@ -267,28 +266,86 @@ int main(int argc, char **argv){
   // the port we asked for. Apparently some operating systems will
   // automatically select new ports if the specified port is currently
   // used.
-  if (acceptor_socket.get_local_addr(serverAddr) == -1)
+  else if (acceptor_socket.get_local_addr(serverAddr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "get_local_addr"),
                       1);
 
-    sockaddr_in *addresses = new sockaddr_in[ 1 + serverAddr.get_num_secondary_addresses() ];
-    serverAddr.get_addresses( addresses, 1 + serverAddr.get_num_secondary_addresses() ) ;
+  if (optsMgr.num_secondary_accept_addrs) {
+
+    const size_t printbuf_size = 1024;
+    char printbuf[printbuf_size];
+
+    int   printbuf_remaining_size = printbuf_size;
+    char* printbuf_ptr            = printbuf;
+
+    size_t substring_length = 0;
+
+    // Put primary address into the buffer
+    serverAddr.get_host_addr(printbuf_ptr, printbuf_remaining_size);
+    substring_length         = ACE_OS::strlen(printbuf_ptr);
+    printbuf_ptr             = &printbuf_ptr[substring_length];
+    printbuf_remaining_size -= substring_length;
+
+    // Get secondary addresses
+    ACE_INET_Addr* secondaries = 0;
+    if (optsMgr.num_secondary_accept_addrs) {
+      ACE_NEW_NORETURN(secondaries,
+                       ACE_INET_Addr[optsMgr.num_secondary_accept_addrs]);
+
+      if (!secondaries) {
+        ACE_ERROR_RETURN((LM_ERROR,
+                          "%p\n",
+                          "new"),
+                         1);
+      }
+
+      serverAddr.get_secondary_addresses(secondaries,
+                                          optsMgr.num_secondary_accept_addrs);
+    }
+
+    // Put all but the last secondary address into the buffer
+    int top = optsMgr.num_secondary_accept_addrs - 1;
+    for (int i = 0; i < top; ++i) {
+
+      ACE_OS::strncpy(printbuf_ptr, ", ", printbuf_remaining_size);
+      printbuf_ptr             = &printbuf_ptr[2];
+      printbuf_remaining_size -= 2;
+
+      secondaries[i].get_host_addr(printbuf_ptr, printbuf_remaining_size);
+      substring_length         = ACE_OS::strlen(printbuf_ptr);
+      printbuf_ptr             = &printbuf_ptr[substring_length];
+      printbuf_remaining_size -= substring_length;
+    }
+
+    // Put the last secondary address into the buffer
+    if (top >= 0) {
+
+      ACE_OS::strncpy(printbuf_ptr, " and ", printbuf_remaining_size);
+      printbuf_ptr             = &printbuf_ptr[5];
+      printbuf_remaining_size -= 5;
+
+      secondaries[top].get_host_addr(printbuf_ptr, printbuf_remaining_size);
+    }
+
     ACE_DEBUG((LM_DEBUG,
-               "(%P|%t) Accepting connections, using %s on port %u "
-               "on interfaces %s",
-               (optsMgr.test_transport_protocol == IPPROTO_SCTP) ? "IPPROTO_SCTP" : "IPPROTO_TCP", 
-               serverAddr.get_port_number(), 
-               ACE_OS::inet_ntoa( addresses[0].sin_addr)  ));
+               "(%P|%t) Accepting connections on port %u "
+               "on interfaces %s "
+               "using %s\n",
+               serverAddr.get_port_number(),
+               printbuf,
+               (optsMgr.test_transport_protocol == IPPROTO_SCTP) ? "IPPROTO_SCTP" : "IPPROTO_TCP"));
 
-   unsigned int i;
-   for(i=1; i < serverAddr.get_num_secondary_addresses() ; ++i ) {
-     ACE_DEBUG((LM_DEBUG, " and %s", ACE_OS::inet_ntoa( addresses[i].sin_addr) ));
-   }
-   ACE_DEBUG((LM_DEBUG, "\n" ));
+  } else {
 
-   delete[] addresses;
+    ACE_DEBUG((LM_DEBUG,
+               "(%P|%t) Accepting connections on port %u on interface %s using %s\n",
+               serverAddr.get_port_number(),
+               (optsMgr.server_accept_addr == INADDR_ANY) ? "INADDR_ANY" : serverAddr.get_host_addr(),
+               (optsMgr.test_transport_protocol == IPPROTO_SCTP) ? "IPPROTO_SCTP" : "IPPROTO_TCP"));
+
+  }
 
   // this is the stream object that will associated with a completed
   // connection (aka the data mode socket). It will be set when accept

@@ -52,6 +52,7 @@ CCFLAGS         += $(CFLAGS) -fno-implicit-templates    \
                    -fconserve-space                     \
                    -fcheck-new                          \
                    -nostdinc                            \
+                   -pipe                                \
                    -fno-rtti                            \
                    -fwritable-strings                   \
                    -fsigned-char                        \
@@ -59,8 +60,6 @@ CCFLAGS         += $(CFLAGS) -fno-implicit-templates    \
                    -D_POSIX_THREADS                     \
                    -D_POSIX_THREAD_SAFE_FUNCTIONS	\
                    "-DNO_FPU_SUPPORT"
-
-pipes ?= 1
 
 ifeq ($(CPU),powerpc)
 CCFLAGS         += -mstrict-align                       \

@@ -41,12 +41,12 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
 {
   ACE_Log_Msg::instance ()->acquire ();
 
-#define DUMP_IOV_PREFIX  ACE_LIB_TEXT("Transport[") ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT("]::%s")
+#define DUMP_IOV_PREFIX  "Transport[" ACE_SIZE_T_FORMAT_SPECIFIER "]::%s"
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("TAO (%P|%t) - ")
-              DUMP_IOV_PREFIX ACE_LIB_TEXT (", ")
-              ACE_LIB_TEXT ("sending %d buffers\n"),
-              id, ACE_TEXT_CHAR_TO_TCHAR (location), iovcnt));
+              "TAO (%P|%t) - "
+              DUMP_IOV_PREFIX ", "
+              "sending %d buffers\n",
+              id, location, iovcnt));
 
   for (int i = 0; i != iovcnt && 0 < current_transfer; ++i)
     {
@@ -59,10 +59,10 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("TAO (%P|%t) - ")
-                  DUMP_IOV_PREFIX ACE_LIB_TEXT (", ")
-                  ACE_LIB_TEXT ("buffer %d/%d has %d bytes\n"),
-                  id, ACE_TEXT_CHAR_TO_TCHAR(location),
+                  "TAO (%P|%t) - "
+                  DUMP_IOV_PREFIX ", "
+                  "buffer %d/%d has %d bytes\n",
+                  id, location,
                   i, iovcnt,
                   iov_len));
 
@@ -72,9 +72,9 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
         {
           ACE_TCHAR header[1024];
           ACE_OS::sprintf (header,
-                           ACE_LIB_TEXT("TAO - ") DUMP_IOV_PREFIX ACE_LIB_TEXT(" (")
-                           ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT("/")
-                           ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT(")\n"),
+                           "TAO - " DUMP_IOV_PREFIX " ("
+                           ACE_SIZE_T_FORMAT_SPECIFIER "/"
+                           ACE_SIZE_T_FORMAT_SPECIFIER ")\n",
                            id, location, offset, iov_len);
 
           len = iov_len - offset;
@@ -93,10 +93,10 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("TAO (%P|%t) - ")
-              DUMP_IOV_PREFIX ACE_LIB_TEXT (", ")
-              ACE_LIB_TEXT ("end of data\n"),
-              id, ACE_TEXT_CHAR_TO_TCHAR(location)));
+              "TAO (%P|%t) - "
+              DUMP_IOV_PREFIX ", "
+              "end of data\n",
+              id, location));
 
   ACE_Log_Msg::instance ()->release ();
 }
@@ -116,8 +116,6 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , handler_lock_ (orb_core->resource_factory ()->create_cached_connection_lock ())
   , id_ ((size_t) this)
   , purging_order_ (0)
-  , recv_buffer_size_ (0)
-  , sent_byte_count_ (0)
   , char_translator_ (0)
   , wchar_translator_ (0)
   , tcs_set_ (0)
@@ -493,8 +491,8 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
         {
           ACE_ERROR ((LM_ERROR,
                       "TAO (%P|%t) - Transport[%d]::send_synchronous_message_i, "
-                      "error while flushing message %m\n",
-                      this->id ()));
+                      "error while flushing message %p\n",
+                      this->id (), ""));
         }
 
       return -1;
@@ -714,7 +712,7 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[])
         {
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - Transport[%d]::drain_queue_helper, "
-                      "send() returns 0\n",
+                      "send() returns 0",
                       this->id ()));
         }
       return -1;
@@ -726,10 +724,10 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[])
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - Transport[%d]::drain_queue_helper, "
                       "error during %p\n",
-                      this->id (), ACE_LIB_TEXT ("send()")));
+                      this->id (), "send()"));
         }
 
-      if (errno == EWOULDBLOCK || errno == EAGAIN)
+      if (errno == EWOULDBLOCK)
         {
           return 0;
         }
@@ -740,9 +738,6 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[])
   // ... start over, how do we guarantee progress?  Because if
   // no bytes are sent send() can only return 0 or -1
   ACE_ASSERT (byte_count != 0);
-
-  // Total no. of bytes sent for a send call
-  this->sent_byte_count_ += byte_count;
 
   if (TAO_debug_level > 4)
     {
@@ -766,10 +761,6 @@ TAO_Transport::drain_queue_i (void)
 
   // We loop over all the elements in the queue ...
   TAO_Queued_Message *i = this->head_;
-
-  // reset the value so that the counting is done for each new send
-  // call.
-  this->sent_byte_count_ = 0;
 
   while (i != 0)
     {
@@ -934,7 +925,7 @@ TAO_Transport::report_invalid_event_handler (const char *caller)
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Transport[%d]::report_invalid_event_handler"
                   "(%s) no longer associated with handler [tag=%d]\n",
-                  this->id (), ACE_TEXT_CHAR_TO_TCHAR (caller), this->tag_));
+                  this->id (), caller, this->tag_));
     }
 }
 
@@ -1042,8 +1033,8 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
                   ACE_DEBUG ((LM_DEBUG,
                               "TAO (%P|%t) - Transport[%d]::send_message_i, "
                               "fatal error in "
-                              "send_message_block_chain_i %m\n",
-                              this->id ()));
+                              "send_message_block_chain_i %p\n",
+                              this->id (), ""));
                 }
               return -1;
             }
@@ -1205,13 +1196,6 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
       recv_size =
         this->messaging_object ()->header_length ();
     }
-
-  // Saving the size of the received buffer in case any one needs to
-  // get the size of the message thats received in the
-  // context. Obviously the value will be changed for each recv call
-  // and the user is supposed to invoke the accessor only in the
-  // invocation context to get meaningful information.
-  this->recv_buffer_size_ = recv_size;
 
   // Read the message into the  message block that we have created on
   // the stack.
@@ -1785,8 +1769,8 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - Transport[%d]::process_parsed_messages, "
-                    "received CloseConnection message %m\n",
-                    this->id()));
+                    "received CloseConnection message %p\n",
+                    this->id(), ""));
 
       // Return a "-1" so that the next stage can take care of
       // closing connection and the necessary memory management.
@@ -1821,8 +1805,8 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
                         "TAO (%P|%t) - Transport[%d]::process_parsed_messages, "
-                        "error in process_reply_message %m\n",
-                        this->id ()));
+                        "error in process_reply_message %p\n",
+                        this->id (), ""));
 
           return -1;
         }
@@ -2009,18 +1993,6 @@ TAO_Transport_Cache_Manager &
 TAO_Transport::transport_cache_manager (void)
 {
   return this->orb_core_->lane_resources ().transport_cache ();
-}
-
-size_t
-TAO_Transport::recv_buffer_size (void)
-{
-  return this->recv_buffer_size_;
-}
-
-size_t
-TAO_Transport::sent_byte_count (void)
-{
-  return this->sent_byte_count_;
 }
 
 void

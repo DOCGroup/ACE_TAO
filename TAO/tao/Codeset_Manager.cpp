@@ -327,8 +327,8 @@ TAO_Codeset_Manager::add_char_translator (const char *name)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_LIB_TEXT ("(%P|%t) Unable to add Codeset ")
-                         ACE_LIB_TEXT ("factories for %s: %m\n"),
-                         ACE_TEXT_CHAR_TO_TCHAR (name)), 
+                         ACE_LIB_TEXT ("factories for %s: %p\n"),
+                         name), 
                         -1);
     }
 
@@ -345,8 +345,8 @@ TAO_Codeset_Manager::add_wchar_translator (const char *name)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_LIB_TEXT ("(%P|%t) Unable to add Codeset ")
-                         ACE_LIB_TEXT ("factories for %s: %m\n"),
-                         ACE_TEXT_CHAR_TO_TCHAR (name)),
+                         ACE_LIB_TEXT ("factories for %s: %p\n"),
+                         name),
                         -1);
     }
 
@@ -403,8 +403,8 @@ TAO_Codeset_Manager::init_codeset_factories_i (
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_LIB_TEXT ("TAO (%P|%t) Unable to load ")
-                      ACE_LIB_TEXT ("CodeSet <%s>, %m\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR(name)));
+                      ACE_LIB_TEXT ("CodeSet <%s>, %p\n"),
+                      ACE_TEXT_CHAR_TO_TCHAR(name), ""));
           continue;
         }
 
@@ -485,7 +485,7 @@ TAO_Codeset_Item::TAO_Codeset_Item (const char *name)
 
 TAO_Codeset_Item::~TAO_Codeset_Item (void)
 {
-  ACE_OS::free (this->name_);
+  delete [] this->name_;
 }
 
 const char *

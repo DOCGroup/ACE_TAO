@@ -6,7 +6,7 @@
 #include "EC_ProxyConsumer.h"
 #include "EC_ConsumerAdmin.h"
 #include "EC_SupplierAdmin.h"
-#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Event_Service_Constants.h"
 #include "ace/Auto_Ptr.h"
 
 #if ! defined (__ACE_INLINE__)

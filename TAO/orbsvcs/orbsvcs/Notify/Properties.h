@@ -24,7 +24,7 @@
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
 
-#include "orbsvcs/orbsvcs/CosNotificationC.h"
+#include "orbsvcs/CosNotificationC.h"
 
 class TAO_Notify_Factory;
 class TAO_Notify_Builder;
@@ -61,10 +61,6 @@ public:
 
   CORBA::Boolean asynch_updates (void);
   void asynch_updates (CORBA::Boolean asynch_updates);
-
-  // Turn on/off update messages.
-  CORBA::Boolean updates (void);
-  void updates (CORBA::Boolean updates);
 
   // The QoS Property that must be applied to each newly created Event Channel
   const CosNotification::QoSProperties& default_event_channel_qos_properties (void);
@@ -111,9 +107,6 @@ protected:
 
   /// True if send asynch updates.
   CORBA::Boolean asynch_updates_;
-
-  /// True if updates are enabled (default).
-  CORBA::Boolean updates_;
 
   /// The Update period for updates.
   ACE_Time_Value update_period_;

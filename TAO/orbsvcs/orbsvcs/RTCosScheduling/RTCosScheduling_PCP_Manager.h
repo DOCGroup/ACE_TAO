@@ -108,7 +108,7 @@ struct CosSchedulingLockNode
    * Translates the pointer into an offset and
    * stores it in the structure
    */
-  void next(const struct CosSchedulingLockNode *Next);
+  void next(struct CosSchedulingLockNode *Next);
 
   /**
    * Copies the relevant fields while preserving those which should not be
@@ -130,9 +130,7 @@ class CosSchedulingLockList
    * @param size The size of the lock list
    * @param mutex the mutex that guards the CosSchedulingLockList
    */
-  CosSchedulingLockList(CosSchedulingLockNode *lock_array,
-                        const int size,
-                        ACE_SYNCH_MUTEX *mutex);
+  CosSchedulingLockList(CosSchedulingLockNode *lock_array, int size, ACE_SYNCH_MUTEX *mutex);
 
   /**
    * Calls ACE_Thread::remove() on all conditions in the list;
@@ -141,7 +139,7 @@ class CosSchedulingLockList
    *
    * @param size the number of locks to destroy, starting at head
    */
-  void destroy(const int size);
+  void destroy(int size);
 
   /**
    * Adds L to the granted list, if space is available
@@ -231,7 +229,7 @@ public:
    */
   PCP_Manager(CosSchedulingLockList *locks,
               ACE_SYNCH_MUTEX *mutex,
-              const RTCORBA::Current_var current);
+              RTCORBA::Current_var current);
 
   /**
    * Acquires a lock on a shared resource using the
@@ -240,7 +238,7 @@ public:
    * @param PriorityCeiling The priority ceiling of the lock
    * @param priority The priority to lock at.
    */
-  void lock(const int PriorityCeiling, const int Priority);
+  void lock(int PriorityCeiling, int Priority);
 
   /**
    * Releases a lock previously granted with lock()
@@ -277,7 +275,7 @@ public:
    * pointers to the granted and pending lock lists as well as
    * the mutex and condition variable.
    */
-  PCP_Manager_Factory(const char *shared_file);
+  PCP_Manager_Factory(char *shared_file);
 
   ~PCP_Manager_Factory();
 

@@ -4,9 +4,14 @@
 #define SMART_PROXY_IMPL_H
 
 #include "DiamondC.h"
-#include "stub_export.h"
 
-class MY_Stub_Export Smart_Diamond_Top_Factory : public virtual Diamond::TAO_Diamond_Top_Default_Proxy_Factory
+#if !defined (ACE_BUILD_SVC_DLL)
+#define ACE_BUILD_SVC_DLL
+#endif /*ACE_BUILD_SVC_DLL*/
+
+#include "ace/svc_export.h"
+
+class ACE_Svc_Export Smart_Diamond_Top_Factory : public virtual Diamond::TAO_Diamond_Top_Default_Proxy_Factory
 {
  public:
 
@@ -19,7 +24,7 @@ class MY_Stub_Export Smart_Diamond_Top_Factory : public virtual Diamond::TAO_Dia
 };
 
 
-class MY_Stub_Export Smart_Diamond_Top_Proxy : public virtual Diamond::TAO_Diamond_Top_Smart_Proxy_Base
+class ACE_Svc_Export Smart_Diamond_Top_Proxy : public virtual Diamond::TAO_Diamond_Top_Smart_Proxy_Base
 {
  public:
 

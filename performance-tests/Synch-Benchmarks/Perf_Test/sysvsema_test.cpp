@@ -12,7 +12,7 @@ ACE_RCSID(Synch_Benchmarks, sysvsema_test, "$Id$")
 class ACE_Svc_Export SYSVSema_Test : public Benchmark_Performance
 {
 public:
-  virtual int init (int, ACE_TCHAR *[]);
+  virtual int init (int, char *[]);
   virtual int fini (void);
   virtual int svc (void);
 
@@ -24,7 +24,7 @@ private:
 ACE_SV_Semaphore_Simple *SYSVSema_Test::sema = 0;
 
 int
-SYSVSema_Test::init (int, ACE_TCHAR *[])
+SYSVSema_Test::init (int, char *[])
 {
 #if defined (ACE_HAS_SYSV_IPC)
   ACE_NEW_RETURN (SYSVSema_Test::sema, ACE_SV_Semaphore_Simple ((key_t) 1234), -1);

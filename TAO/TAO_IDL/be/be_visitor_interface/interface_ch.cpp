@@ -191,18 +191,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
                          "codegen for scope failed\n"),
                         -1);
     }
-    
-  if (node->is_local ())
-    {
-      if (node->convert_parent_ops (this) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                            "(%N:%l) be_visitor_interface_ch::"
-                            "visit_interface - "
-                            "converting parent ops failed\n"),
-                            -1);
-        }
-    }
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;

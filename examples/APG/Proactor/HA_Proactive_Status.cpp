@@ -7,7 +7,6 @@
 
 #include "HA_Proactive_Status.h"
 #include "ace/Log_Msg.h"
-#include "ace/Message_Block.h"
 #include "ace/Proactor.h"
 #include "ace/os_include/arpa/os_inet.h"
 
@@ -163,7 +162,7 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("This example requires asynchronous I/O support.\n")));
+              "This example does not work on this platform.\n"));
   return 1;
 }
 

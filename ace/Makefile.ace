@@ -453,6 +453,10 @@ endif # ! FOR_TAO
 ####
 #### ACE_COMPONENTS support.
 ####
+ifneq (,$(findstring OS,$(ACE_COMPONENTS)))
+  FILES += $(OS_FILES)
+endif # OS
+
 ifneq (,$(findstring Utils,$(ACE_COMPONENTS)))
   FILES += $(UTILS_FILES)
 endif # Utils
@@ -490,10 +494,6 @@ ifneq (,$(findstring Svcconf,$(ACE_COMPONENTS)))
 else # ! Svcconf
   CCFLAGS += -DACE_LACKS_ACE_SVCCONF
 endif # ! Svcconf
-
-ifneq (,$(findstring OS,$(ACE_COMPONENTS)))
-  FILES += $(OS_FILES)
-endif # OS
 
 ifneq (,$(findstring Streams,$(ACE_COMPONENTS)))
   FILES += $(STREAMS_FILES)
@@ -696,11 +696,2321 @@ endif # GHS
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
+.obj/ARGV.o .obj/ARGV.so .shobj/ARGV.o .shobj/ARGV.so: ARGV.cpp \
+  ARGV.h \
+  pre.h \
+  ACE_export.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  Unbounded_Queue.h \
+  Node.h \
+  config-all.h \
+  OS_main.h \
+  Node.cpp \
+  os_include/os_stddef.h \
+  Unbounded_Queue.inl \
+  Unbounded_Queue.cpp \
+  Malloc_Base.h \
+  os_include/sys/os_types.h \
+  os_include/sys/os_mman.h \
+  Log_Msg.h \
+  Global_Macros.h \
+  OS_Errno.h \
+  os_include/os_errno.h \
+  OS_Errno.inl \
+  Default_Constants.h \
+  Log_Priority.h \
+  os_include/os_limits.h \
+  os_include/os_unistd.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  OS_Log_Msg_Attributes.h \
+  iosfwd.h \
+  OS_Log_Msg_Attributes.inl \
+  ARGV.i \
+  OS_NS_unistd.h \
+  Time_Value.h \
+  os_include/sys/os_time.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
+  OS_NS_unistd.inl \
+  OS_NS_sys_utsname.h \
+  os_include/sys/os_utsname.h \
+  OS_NS_sys_utsname.inl \
+  OS_NS_string.h \
+  Basic_Types.h \
+  os_include/os_float.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  Basic_Types.i \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl \
+  OS_NS_errno.h \
+  OS_NS_errno.inl \
+  OS_NS_macros.h \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
+  OS_Memory.h \
+  OS_NS_stdlib.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  os_include/os_search.h \
+  OS_Memory.inl
+
+.obj/Argv_Type_Converter.o .obj/Argv_Type_Converter.so .shobj/Argv_Type_Converter.o .shobj/Argv_Type_Converter.so: Argv_Type_Converter.cpp \
+  Argv_Type_Converter.h \
+  pre.h \
+  ACE_export.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_Memory.h \
+  OS_Errno.h \
+  os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
+  OS_Errno.inl \
+  os_include/os_stddef.h \
+  OS_NS_stdlib.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/sys/os_types.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  os_include/sys/os_time.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  OS_NS_string.h \
+  Basic_Types.h \
+  os_include/os_limits.h \
+  os_include/os_unistd.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  os_include/os_float.h \
+  Basic_Types.i \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl \
+  Global_Macros.h \
+  os_include/os_search.h \
+  OS_Memory.inl \
+  Argv_Type_Converter.inl
+
+.obj/Basic_Types.o .obj/Basic_Types.so .shobj/Basic_Types.o .shobj/Basic_Types.so: Basic_Types.cpp \
+  Basic_Types.h \
+  config-all.h \
+  pre.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/os_limits.h \
+  os_include/os_unistd.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  os_include/os_float.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  os_include/sys/os_time.h \
+  Basic_Types.i \
+  Template_Instantiations.cpp
+
+.obj/Time_Value.o .obj/Time_Value.so .shobj/Time_Value.o .shobj/Time_Value.so: Time_Value.cpp \
+  Time_Value.h \
+  pre.h \
+  ACE_export.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  os_include/sys/os_time.h \
+  config-all.h \
+  OS_main.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
+  os_include/os_errno.h \
+  Basic_Types.h \
+  os_include/os_limits.h \
+  os_include/os_unistd.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  os_include/os_float.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  Basic_Types.i
+
+.obj/Cleanup.o .obj/Cleanup.so .shobj/Cleanup.o .shobj/Cleanup.so: Cleanup.cpp \
+  Cleanup.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  Cleanup.inl \
+  OS_Memory.h \
+  OS_Errno.h \
+  os_include/os_errno.h \
+  OS_Errno.inl \
+  os_include/os_stddef.h \
+  OS_NS_stdlib.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/sys/os_types.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  os_include/sys/os_time.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Object_Manager_Base.inl \
+  OS_NS_string.h \
+  Basic_Types.h \
+  os_include/os_limits.h \
+  os_include/os_unistd.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  os_include/os_float.h \
+  Basic_Types.i \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl \
+  Global_Macros.h \
+  os_include/os_search.h \
+  OS_Memory.inl
+
+.obj/Object_Manager_Base.o .obj/Object_Manager_Base.so .shobj/Object_Manager_Base.o .shobj/Object_Manager_Base.so: Object_Manager_Base.cpp \
+  Object_Manager_Base.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  Cleanup.h \
+  Cleanup.inl \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  Object_Manager_Base.inl \
+  OS_Memory.h \
+  OS_Errno.h \
+  os_include/os_errno.h \
+  OS_Errno.inl \
+  OS_NS_stdlib.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/sys/os_resource.h \
+  os_include/sys/os_time.h \
+  OS_NS_stdlib.inl \
+  OS_NS_string.h \
+  Basic_Types.h \
+  os_include/os_limits.h \
+  os_include/os_unistd.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  os_include/os_float.h \
+  Basic_Types.i \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl \
+  Global_Macros.h \
+  os_include/os_search.h \
+  OS_Memory.inl \
+  OS_NS_Thread.h \
+  Default_Constants.h \
+  os_include/os_pthread.h \
+  Base_Thread_Adapter.h \
+  OS_Log_Msg_Attributes.h \
+  iosfwd.h \
+  OS_Log_Msg_Attributes.inl \
+  Base_Thread_Adapter.inl \
+  os_include/sys/os_sem.h \
+  os_include/sys/os_ipc.h \
+  os_include/os_semaphore.h \
+  OS_NS_signal.h \
+  OS_NS_signal.inl \
+  OS_NS_macros.h \
+  OS_NS_errno.h \
+  OS_NS_errno.inl \
+  OS_NS_Thread.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
+  OS_NS_unistd.h \
+  OS_NS_unistd.inl \
+  OS_NS_sys_utsname.h \
+  os_include/sys/os_utsname.h \
+  OS_NS_sys_utsname.inl \
+  OS_NS_stdio.h \
+  OS_NS_stdio.inl \
+  OS_NS_pwd.h \
+  os_include/os_pwd.h \
+  OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
+  OS_NS_sys_socket.h \
+  os_include/sys/os_socket.h \
+  os_include/sys/os_uio.h \
+  os_include/net/os_if.h \
+  OS_NS_stropts.h \
+  os_include/os_stropts.h \
+  OS_NS_stropts.inl \
+  OS_QoS.h \
+  OS_NS_sys_socket.inl \
+  OS_NS_sys_uio.h \
+  OS_NS_sys_uio.inl
+
+.obj/OS_main.o .obj/OS_main.so .shobj/OS_main.o .shobj/OS_main.so: OS_main.cpp \
+  OS_main.h \
+  ACE_export.h \
+  pre.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl
+
+.obj/OS_NS_arpa_inet.o .obj/OS_NS_arpa_inet.so .shobj/OS_NS_arpa_inet.o .shobj/OS_NS_arpa_inet.so: OS_NS_arpa_inet.cpp \
+  OS_NS_arpa_inet.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/arpa/os_inet.h \
+  os_include/netinet/os_in.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  os_include/sys/os_socket.h \
+  os_include/sys/os_uio.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  os_include/os_limits.h \
+  os_include/os_unistd.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  OS_NS_arpa_inet.inl \
+  OS_NS_string.h \
+  Basic_Types.h \
+  os_include/os_float.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  os_include/sys/os_time.h \
+  Basic_Types.i \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl \
+  OS_NS_errno.h \
+  os_include/os_errno.h \
+  OS_NS_errno.inl \
+  OS_NS_stdio.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_stdio.inl \
+  OS_NS_unistd.h \
+  Time_Value.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
+  OS_NS_unistd.inl \
+  OS_NS_sys_utsname.h \
+  os_include/sys/os_utsname.h \
+  OS_NS_sys_utsname.inl \
+  OS_NS_macros.h \
+  OS_NS_fcntl.h \
+  Global_Macros.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_NS_fcntl.inl \
+  Default_Constants.h \
+  OS_Memory.h \
+  OS_NS_stdlib.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  os_include/os_search.h \
+  OS_Memory.inl \
+  OS_NS_pwd.h \
+  os_include/os_pwd.h \
+  OS_NS_pwd.inl
+
+.obj/OS_NS_ctype.o .obj/OS_NS_ctype.so .shobj/OS_NS_ctype.o .shobj/OS_NS_ctype.so: OS_NS_ctype.cpp \
+  OS_NS_ctype.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  OS_NS_ctype.inl \
+  os_include/os_ctype.h
+
+.obj/OS_NS_dirent.o .obj/OS_NS_dirent.so .shobj/OS_NS_dirent.o .shobj/OS_NS_dirent.so: OS_NS_dirent.cpp \
+  OS_NS_dirent.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/os_dirent.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  os_include/os_limits.h \
+  os_include/os_unistd.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  OS_NS_dirent.inl \
+  OS_Memory.h \
+  OS_Errno.h \
+  os_include/os_errno.h \
+  OS_Errno.inl \
+  OS_NS_stdlib.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  os_include/sys/os_time.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  OS_NS_string.h \
+  Basic_Types.h \
+  os_include/os_float.h \
+  Basic_Types.i \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl \
+  Global_Macros.h \
+  os_include/os_search.h \
+  OS_Memory.inl \
+  OS_NS_errno.h \
+  OS_NS_errno.inl \
+  Log_Msg.h \
+  Default_Constants.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
+  iosfwd.h \
+  OS_Log_Msg_Attributes.inl
+
+.obj/OS_NS_dlfcn.o .obj/OS_NS_dlfcn.so .shobj/OS_NS_dlfcn.o .shobj/OS_NS_dlfcn.so: OS_NS_dlfcn.cpp \
+  OS_NS_dlfcn.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/os_dlfcn.h \
+  OS_NS_dlfcn.inl \
+  OS_NS_macros.h \
+  OS_NS_errno.h \
+  os_include/os_errno.h \
+  OS_NS_errno.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  Global_Macros.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_NS_fcntl.inl \
+  OS_NS_unistd.h \
+  os_include/os_unistd.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  Time_Value.h \
+  os_include/sys/os_time.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  OS_NS_unistd.inl \
+  OS_NS_sys_utsname.h \
+  os_include/sys/os_utsname.h \
+  OS_NS_sys_utsname.inl \
+  OS_NS_string.h \
+  Basic_Types.h \
+  os_include/os_limits.h \
+  os_include/os_float.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  Basic_Types.i \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl \
+  Default_Constants.h \
+  OS_Memory.h \
+  OS_NS_stdlib.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  os_include/os_search.h \
+  OS_Memory.inl
+
+.obj/OS_NS_errno.o .obj/OS_NS_errno.so .shobj/OS_NS_errno.o .shobj/OS_NS_errno.so: OS_NS_errno.cpp \
+  OS_NS_errno.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/os_errno.h \
+  OS_NS_errno.inl
+
+.obj/OS_NS_fcntl.o .obj/OS_NS_fcntl.so .shobj/OS_NS_fcntl.o .shobj/OS_NS_fcntl.so: OS_NS_fcntl.cpp \
+  OS_NS_fcntl.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  Global_Macros.h \
+  OS_Errno.h \
+  os_include/os_errno.h \
+  OS_Errno.inl \
+  OS_NS_fcntl.inl \
+  OS_NS_errno.h \
+  OS_NS_errno.inl \
+  OS_NS_stdio.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  OS_NS_stdio.inl \
+  OS_NS_unistd.h \
+  os_include/os_unistd.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  Time_Value.h \
+  os_include/sys/os_time.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
+  OS_NS_unistd.inl \
+  OS_NS_sys_utsname.h \
+  os_include/sys/os_utsname.h \
+  OS_NS_sys_utsname.inl \
+  OS_NS_string.h \
+  Basic_Types.h \
+  os_include/os_limits.h \
+  os_include/os_float.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  Basic_Types.i \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl \
+  OS_NS_macros.h \
+  Default_Constants.h \
+  OS_Memory.h \
+  OS_NS_stdlib.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  os_include/os_search.h \
+  OS_Memory.inl \
+  OS_NS_pwd.h \
+  os_include/os_pwd.h \
+  OS_NS_pwd.inl \
+  OS_NS_Thread.h \
+  os_include/os_pthread.h \
+  Base_Thread_Adapter.h \
+  OS_Log_Msg_Attributes.h \
+  iosfwd.h \
+  OS_Log_Msg_Attributes.inl \
+  Base_Thread_Adapter.inl \
+  os_include/sys/os_sem.h \
+  os_include/sys/os_ipc.h \
+  os_include/os_semaphore.h \
+  OS_NS_signal.h \
+  OS_NS_signal.inl \
+  OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  os_include/sys/os_mman.h
+
+.obj/OS_NS_math.o .obj/OS_NS_math.so .shobj/OS_NS_math.o .shobj/OS_NS_math.so: OS_NS_math.cpp \
+  OS_NS_math.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  OS_NS_math.inl
+
+.obj/OS_NS_netdb.o .obj/OS_NS_netdb.so .shobj/OS_NS_netdb.o .shobj/OS_NS_netdb.so: OS_NS_netdb.cpp \
+  OS_NS_netdb.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/os_netdb.h \
+  os_include/netinet/os_in.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  os_include/sys/os_socket.h \
+  os_include/sys/os_uio.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  os_include/os_limits.h \
+  os_include/os_unistd.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  OS_NS_netdb.inl \
+  OS_NS_macros.h \
+  OS_NS_string.h \
+  Basic_Types.h \
+  os_include/os_float.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  os_include/sys/os_time.h \
+  Basic_Types.i \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl \
+  OS_NS_errno.h \
+  os_include/os_errno.h \
+  OS_NS_errno.inl \
+  os_include/net/os_if.h \
+  OS_NS_unistd.h \
+  Time_Value.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
+  OS_NS_unistd.inl \
+  OS_NS_sys_utsname.h \
+  os_include/sys/os_utsname.h \
+  OS_NS_sys_utsname.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  Global_Macros.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_NS_fcntl.inl \
+  Default_Constants.h \
+  OS_Memory.h \
+  OS_NS_stdlib.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  os_include/os_search.h \
+  OS_Memory.inl \
+  OS_NS_stropts.h \
+  os_include/os_stropts.h \
+  OS_NS_stropts.inl \
+  OS_QoS.h \
+  OS_NS_sys_socket.h \
+  OS_NS_sys_socket.inl \
+  OS_NS_sys_uio.h \
+  OS_NS_sys_uio.inl \
+  OS_NS_stdio.h \
+  OS_NS_stdio.inl \
+  OS_NS_pwd.h \
+  os_include/os_pwd.h \
+  OS_NS_pwd.inl
+
+.obj/OS_NS_poll.o .obj/OS_NS_poll.so .shobj/OS_NS_poll.o .shobj/OS_NS_poll.so: OS_NS_poll.cpp \
+  OS_NS_poll.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/os_poll.h \
+  OS_NS_poll.inl \
+  Time_Value.h \
+  os_include/sys/os_time.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
+  os_include/os_errno.h \
+  OS_NS_errno.h \
+  OS_NS_errno.inl
+
+.obj/OS_NS_pwd.o .obj/OS_NS_pwd.so .shobj/OS_NS_pwd.o .shobj/OS_NS_pwd.so: OS_NS_pwd.cpp \
+  OS_NS_pwd.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/os_pwd.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  OS_NS_pwd.inl \
+  OS_NS_errno.h \
+  os_include/os_errno.h \
+  OS_NS_errno.inl
+
+.obj/OS_NS_regex.o .obj/OS_NS_regex.so .shobj/OS_NS_regex.o .shobj/OS_NS_regex.so: OS_NS_regex.cpp \
+  OS_NS_regex.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  OS_NS_regex.inl \
+  OS_NS_errno.h \
+  os_include/os_errno.h \
+  OS_NS_errno.inl \
+  os_include/os_regex.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h
+
+.obj/OS_NS_signal.o .obj/OS_NS_signal.so .shobj/OS_NS_signal.o .shobj/OS_NS_signal.so: OS_NS_signal.cpp \
+  OS_NS_signal.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/os_signal.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  OS_NS_signal.inl \
+  OS_NS_macros.h \
+  OS_NS_errno.h \
+  os_include/os_errno.h \
+  OS_NS_errno.inl
+
+.obj/OS_NS_stdio.o .obj/OS_NS_stdio.so .shobj/OS_NS_stdio.o .shobj/OS_NS_stdio.so: OS_NS_stdio.cpp \
+  OS_NS_stdio.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  os_include/os_stddef.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  os_include/sys/os_types.h \
+  OS_NS_stdio.inl \
+  OS_NS_unistd.h \
+  os_include/os_unistd.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  Time_Value.h \
+  os_include/sys/os_time.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
+  os_include/os_errno.h \
+  OS_NS_unistd.inl \
+  OS_NS_sys_utsname.h \
+  os_include/sys/os_utsname.h \
+  OS_NS_sys_utsname.inl \
+  OS_NS_string.h \
+  Basic_Types.h \
+  os_include/os_limits.h \
+  os_include/os_float.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  Basic_Types.i \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl \
+  OS_NS_errno.h \
+  OS_NS_errno.inl \
+  OS_NS_macros.h \
+  OS_NS_fcntl.h \
+  Global_Macros.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_NS_fcntl.inl \
+  Default_Constants.h \
+  OS_Memory.h \
+  OS_NS_stdlib.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  os_include/os_search.h \
+  OS_Memory.inl \
+  OS_NS_pwd.h \
+  os_include/os_pwd.h \
+  OS_NS_pwd.inl
+
+.obj/OS_NS_stdlib.o .obj/OS_NS_stdlib.so .shobj/OS_NS_stdlib.o .shobj/OS_NS_stdlib.so: OS_NS_stdlib.cpp \
+  OS_NS_stdlib.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/os_stdlib.h \
+  os_include/os_stddef.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/sys/os_types.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  os_include/sys/os_time.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  OS_NS_string.h \
+  Basic_Types.h \
+  os_include/os_limits.h \
+  os_include/os_unistd.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  os_include/os_float.h \
+  Basic_Types.i \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl \
+  Global_Macros.h \
+  OS_Errno.h \
+  os_include/os_errno.h \
+  OS_Errno.inl \
+  os_include/os_search.h \
+  OS_Memory.h \
+  OS_Memory.inl
+
+.obj/OS_NS_string.o .obj/OS_NS_string.so .shobj/OS_NS_string.o .shobj/OS_NS_string.so: OS_NS_string.cpp \
+  OS_NS_string.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  Basic_Types.h \
+  os_include/os_limits.h \
+  os_include/os_unistd.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  os_include/os_float.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  os_include/sys/os_time.h \
+  Basic_Types.i \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl \
+  OS_NS_stdlib.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  Global_Macros.h \
+  OS_Errno.h \
+  os_include/os_errno.h \
+  OS_Errno.inl \
+  os_include/os_search.h
+
+.obj/OS_NS_strings.o .obj/OS_NS_strings.so .shobj/OS_NS_strings.o .shobj/OS_NS_strings.so: OS_NS_strings.cpp \
+  OS_NS_strings.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/os_strings.h \
+  os_include/os_stddef.h \
+  OS_NS_strings.inl
+
+.obj/OS_NS_stropts.o .obj/OS_NS_stropts.so .shobj/OS_NS_stropts.o .shobj/OS_NS_stropts.so: OS_NS_stropts.cpp \
+  OS_NS_stropts.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/os_stropts.h \
+  os_include/os_unistd.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  OS_NS_stropts.inl \
+  os_include/os_errno.h \
+  OS_NS_unistd.h \
+  Time_Value.h \
+  os_include/sys/os_time.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
+  OS_NS_unistd.inl \
+  OS_NS_sys_utsname.h \
+  os_include/sys/os_utsname.h \
+  OS_NS_sys_utsname.inl \
+  OS_NS_string.h \
+  Basic_Types.h \
+  os_include/os_limits.h \
+  os_include/os_float.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  Basic_Types.i \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl \
+  OS_NS_errno.h \
+  OS_NS_errno.inl \
+  OS_NS_macros.h \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  Global_Macros.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_NS_fcntl.inl \
+  Default_Constants.h \
+  OS_Memory.h \
+  OS_NS_stdlib.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  os_include/os_search.h \
+  OS_Memory.inl \
+  OS_QoS.h \
+  os_include/sys/os_uio.h
+
+.obj/OS_NS_sys_mman.o .obj/OS_NS_sys_mman.so .shobj/OS_NS_sys_mman.o .shobj/OS_NS_sys_mman.so: OS_NS_sys_mman.cpp \
+  OS_NS_sys_mman.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  Global_Macros.h \
+  OS_Errno.h \
+  os_include/os_errno.h \
+  OS_Errno.inl \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
+  OS_NS_errno.h \
+  OS_NS_errno.inl \
+  OS_NS_unistd.h \
+  os_include/os_unistd.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  Time_Value.h \
+  os_include/sys/os_time.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  OS_NS_unistd.inl \
+  OS_NS_sys_utsname.h \
+  os_include/sys/os_utsname.h \
+  OS_NS_sys_utsname.inl \
+  OS_NS_string.h \
+  Basic_Types.h \
+  os_include/os_limits.h \
+  os_include/os_float.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  Basic_Types.i \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl \
+  OS_NS_macros.h \
+  Default_Constants.h \
+  OS_Memory.h \
+  OS_NS_stdlib.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  os_include/os_search.h \
+  OS_Memory.inl \
+  OS_NS_stdio.h \
+  OS_NS_stdio.inl \
+  OS_NS_pwd.h \
+  os_include/os_pwd.h \
+  OS_NS_pwd.inl \
+  os_include/sys/os_mman.h
+
+.obj/OS_NS_sys_msg.o .obj/OS_NS_sys_msg.so .shobj/OS_NS_sys_msg.o .shobj/OS_NS_sys_msg.so: OS_NS_sys_msg.cpp \
+  OS_NS_sys_msg.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/sys/os_msg.h \
+  os_include/sys/os_ipc.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  OS_NS_sys_msg.inl \
+  OS_NS_errno.h \
+  os_include/os_errno.h \
+  OS_NS_errno.inl
+
+.obj/OS_NS_sys_resource.o .obj/OS_NS_sys_resource.so .shobj/OS_NS_sys_resource.o .shobj/OS_NS_sys_resource.so: OS_NS_sys_resource.cpp \
+  OS_NS_sys_resource.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/sys/os_resource.h \
+  os_include/sys/os_time.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  OS_NS_sys_resource.inl \
+  OS_NS_errno.h \
+  os_include/os_errno.h \
+  OS_NS_errno.inl \
+  OS_NS_macros.h
+
+.obj/OS_NS_sys_select.o .obj/OS_NS_sys_select.so .shobj/OS_NS_sys_select.o .shobj/OS_NS_sys_select.so: OS_NS_sys_select.cpp \
+  OS_NS_sys_select.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/sys/os_select.h \
+  os_include/sys/os_time.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  OS_NS_sys_select.inl \
+  os_include/os_errno.h \
+  Time_Value.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
+  OS_NS_macros.h
+
+.obj/OS_NS_sys_shm.o .obj/OS_NS_sys_shm.so .shobj/OS_NS_sys_shm.o .shobj/OS_NS_sys_shm.so: OS_NS_sys_shm.cpp \
+  OS_NS_sys_shm.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/sys/os_shm.h \
+  os_include/sys/os_ipc.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  OS_NS_sys_shm.inl \
+  OS_NS_errno.h \
+  os_include/os_errno.h \
+  OS_NS_errno.inl
+
+.obj/OS_NS_sys_socket.o .obj/OS_NS_sys_socket.so .shobj/OS_NS_sys_socket.o .shobj/OS_NS_sys_socket.so: OS_NS_sys_socket.cpp \
+  OS_NS_sys_socket.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/sys/os_socket.h \
+  os_include/sys/os_uio.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  os_include/os_limits.h \
+  os_include/os_unistd.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  os_include/net/os_if.h \
+  OS_NS_stropts.h \
+  os_include/os_stropts.h \
+  OS_NS_stropts.inl \
+  os_include/os_errno.h \
+  OS_NS_unistd.h \
+  Time_Value.h \
+  os_include/sys/os_time.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
+  OS_NS_unistd.inl \
+  OS_NS_sys_utsname.h \
+  os_include/sys/os_utsname.h \
+  OS_NS_sys_utsname.inl \
+  OS_NS_string.h \
+  Basic_Types.h \
+  os_include/os_float.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  Basic_Types.i \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl \
+  OS_NS_errno.h \
+  OS_NS_errno.inl \
+  OS_NS_macros.h \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  Global_Macros.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_NS_fcntl.inl \
+  Default_Constants.h \
+  OS_Memory.h \
+  OS_NS_stdlib.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  os_include/os_search.h \
+  OS_Memory.inl \
+  OS_QoS.h \
+  OS_NS_sys_socket.inl \
+  OS_NS_sys_uio.h \
+  OS_NS_sys_uio.inl \
+  OS_NS_stdio.h \
+  OS_NS_stdio.inl \
+  OS_NS_pwd.h \
+  os_include/os_pwd.h \
+  OS_NS_pwd.inl
+
+.obj/OS_NS_sys_stat.o .obj/OS_NS_sys_stat.so .shobj/OS_NS_sys_stat.o .shobj/OS_NS_sys_stat.so: OS_NS_sys_stat.cpp \
+  OS_NS_sys_stat.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/sys/os_stat.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  Default_Constants.h \
+  OS_NS_sys_stat.inl \
+  OS_NS_unistd.h \
+  os_include/os_unistd.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  Time_Value.h \
+  os_include/sys/os_time.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
+  os_include/os_errno.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  OS_NS_unistd.inl \
+  OS_NS_sys_utsname.h \
+  os_include/sys/os_utsname.h \
+  OS_NS_sys_utsname.inl \
+  OS_NS_string.h \
+  Basic_Types.h \
+  os_include/os_limits.h \
+  os_include/os_float.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  Basic_Types.i \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl \
+  OS_NS_errno.h \
+  OS_NS_errno.inl \
+  OS_NS_macros.h \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  Global_Macros.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_NS_fcntl.inl \
+  OS_Memory.h \
+  OS_NS_stdlib.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  os_include/os_search.h \
+  OS_Memory.inl
+
+.obj/OS_NS_sys_time.o .obj/OS_NS_sys_time.so .shobj/OS_NS_sys_time.o .shobj/OS_NS_sys_time.so: OS_NS_sys_time.cpp \
+  OS_NS_sys_time.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  Time_Value.h \
+  os_include/sys/os_time.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  Time_Value.inl \
+  OS_NS_sys_time.inl \
+  os_include/os_errno.h
+
+.obj/OS_NS_sys_uio.o .obj/OS_NS_sys_uio.so .shobj/OS_NS_sys_uio.o .shobj/OS_NS_sys_uio.so: OS_NS_sys_uio.cpp \
+  OS_NS_sys_uio.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/sys/os_uio.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  os_include/os_limits.h \
+  os_include/os_unistd.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  OS_NS_sys_uio.inl \
+  os_include/os_errno.h \
+  OS_Memory.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_NS_stdlib.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  os_include/sys/os_time.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  OS_NS_string.h \
+  Basic_Types.h \
+  os_include/os_float.h \
+  Basic_Types.i \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl \
+  Global_Macros.h \
+  os_include/os_search.h \
+  OS_Memory.inl \
+  OS_NS_unistd.h \
+  Time_Value.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
+  OS_NS_unistd.inl \
+  OS_NS_sys_utsname.h \
+  os_include/sys/os_utsname.h \
+  OS_NS_sys_utsname.inl \
+  OS_NS_errno.h \
+  OS_NS_errno.inl \
+  OS_NS_macros.h \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
+  Default_Constants.h
+
+.obj/OS_NS_sys_utsname.o .obj/OS_NS_sys_utsname.so .shobj/OS_NS_sys_utsname.o .shobj/OS_NS_sys_utsname.so: OS_NS_sys_utsname.cpp \
+  OS_NS_sys_utsname.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/sys/os_utsname.h \
+  OS_NS_sys_utsname.inl \
+  os_include/os_errno.h \
+  OS_NS_string.h \
+  Basic_Types.h \
+  os_include/os_limits.h \
+  os_include/os_unistd.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  os_include/os_float.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  os_include/sys/os_time.h \
+  Basic_Types.i \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl \
+  OS_NS_stdio.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_stdio.inl \
+  OS_NS_unistd.h \
+  Time_Value.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
+  OS_NS_unistd.inl \
+  OS_NS_errno.h \
+  OS_NS_errno.inl \
+  OS_NS_macros.h \
+  OS_NS_fcntl.h \
+  Global_Macros.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_NS_fcntl.inl \
+  Default_Constants.h \
+  OS_Memory.h \
+  OS_NS_stdlib.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  os_include/os_search.h \
+  OS_Memory.inl \
+  OS_NS_pwd.h \
+  os_include/os_pwd.h \
+  OS_NS_pwd.inl
+
+.obj/OS_NS_sys_wait.o .obj/OS_NS_sys_wait.so .shobj/OS_NS_sys_wait.o .shobj/OS_NS_sys_wait.so: OS_NS_sys_wait.cpp \
+  OS_NS_sys_wait.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  os_include/sys/os_time.h \
+  OS_NS_sys_wait.inl \
+  OS_NS_errno.h \
+  os_include/os_errno.h \
+  OS_NS_errno.inl \
+  Global_Macros.h \
+  OS_Errno.h \
+  OS_Errno.inl
+
+.obj/OS_NS_Thread.o .obj/OS_NS_Thread.so .shobj/OS_NS_Thread.o .shobj/OS_NS_Thread.so: OS_NS_Thread.cpp \
+  OS_NS_Thread.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  Global_Macros.h \
+  OS_Errno.h \
+  os_include/os_errno.h \
+  OS_Errno.inl \
+  Basic_Types.h \
+  os_include/os_limits.h \
+  os_include/os_unistd.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  os_include/os_float.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  os_include/sys/os_time.h \
+  Basic_Types.i \
+  Default_Constants.h \
+  os_include/os_pthread.h \
+  Base_Thread_Adapter.h \
+  OS_Log_Msg_Attributes.h \
+  iosfwd.h \
+  OS_Log_Msg_Attributes.inl \
+  Base_Thread_Adapter.inl \
+  os_include/sys/os_sem.h \
+  os_include/sys/os_ipc.h \
+  os_include/os_semaphore.h \
+  OS_Memory.h \
+  OS_NS_stdlib.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  OS_NS_string.h \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl \
+  os_include/os_search.h \
+  OS_Memory.inl \
+  OS_NS_signal.h \
+  OS_NS_signal.inl \
+  OS_NS_macros.h \
+  OS_NS_errno.h \
+  OS_NS_errno.inl \
+  OS_NS_Thread.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
+  OS_NS_unistd.h \
+  OS_NS_unistd.inl \
+  OS_NS_sys_utsname.h \
+  os_include/sys/os_utsname.h \
+  OS_NS_sys_utsname.inl \
+  OS_NS_stdio.h \
+  OS_NS_stdio.inl \
+  OS_NS_pwd.h \
+  os_include/os_pwd.h \
+  OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
+  Sched_Params.h \
+  Sched_Params.i \
+  OS_Thread_Adapter.h \
+  OS_Thread_Adapter.inl \
+  Min_Max.h \
+  OS_NS_ctype.h \
+  OS_NS_ctype.inl
+
+.obj/OS_NS_time.o .obj/OS_NS_time.so .shobj/OS_NS_time.o .shobj/OS_NS_time.so: OS_NS_time.cpp \
+  OS_NS_time.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  Basic_Types.h \
+  os_include/os_limits.h \
+  os_include/os_unistd.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  os_include/os_float.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  os_include/sys/os_time.h \
+  Basic_Types.i \
+  OS_NS_time.inl \
+  OS_NS_string.h \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl \
+  OS_NS_errno.h \
+  os_include/os_errno.h \
+  OS_NS_errno.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
+  OS_NS_unistd.h \
+  OS_NS_unistd.inl \
+  OS_NS_sys_utsname.h \
+  os_include/sys/os_utsname.h \
+  OS_NS_sys_utsname.inl \
+  OS_NS_macros.h \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  Global_Macros.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_NS_fcntl.inl \
+  Default_Constants.h \
+  OS_Memory.h \
+  OS_NS_stdlib.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  os_include/os_search.h \
+  OS_Memory.inl \
+  OS_NS_Thread.h \
+  os_include/os_pthread.h \
+  Base_Thread_Adapter.h \
+  OS_Log_Msg_Attributes.h \
+  iosfwd.h \
+  OS_Log_Msg_Attributes.inl \
+  Base_Thread_Adapter.inl \
+  os_include/sys/os_sem.h \
+  os_include/sys/os_ipc.h \
+  os_include/os_semaphore.h \
+  OS_NS_signal.h \
+  OS_NS_signal.inl \
+  OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_stdio.h \
+  OS_NS_stdio.inl \
+  OS_NS_pwd.h \
+  os_include/os_pwd.h \
+  OS_NS_pwd.inl \
+  os_include/sys/os_mman.h
+
+.obj/OS_NS_unistd.o .obj/OS_NS_unistd.so .shobj/OS_NS_unistd.o .shobj/OS_NS_unistd.so: OS_NS_unistd.cpp \
+  OS_NS_unistd.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/os_unistd.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  Time_Value.h \
+  os_include/sys/os_time.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
+  os_include/os_errno.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  OS_NS_unistd.inl \
+  OS_NS_sys_utsname.h \
+  os_include/sys/os_utsname.h \
+  OS_NS_sys_utsname.inl \
+  OS_NS_string.h \
+  Basic_Types.h \
+  os_include/os_limits.h \
+  os_include/os_float.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  Basic_Types.i \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl \
+  OS_NS_errno.h \
+  OS_NS_errno.inl \
+  OS_NS_macros.h \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  Global_Macros.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_NS_fcntl.inl \
+  Default_Constants.h \
+  OS_Memory.h \
+  OS_NS_stdlib.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  os_include/os_search.h \
+  OS_Memory.inl \
+  Base_Thread_Adapter.h \
+  OS_Log_Msg_Attributes.h \
+  iosfwd.h \
+  OS_Log_Msg_Attributes.inl \
+  Base_Thread_Adapter.inl \
+  OS_NS_ctype.h \
+  OS_NS_ctype.inl \
+  OS_NS_Thread.h \
+  os_include/os_pthread.h \
+  os_include/sys/os_sem.h \
+  os_include/sys/os_ipc.h \
+  os_include/os_semaphore.h \
+  OS_NS_signal.h \
+  OS_NS_signal.inl \
+  OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_stdio.h \
+  OS_NS_stdio.inl \
+  OS_NS_pwd.h \
+  os_include/os_pwd.h \
+  OS_NS_pwd.inl \
+  os_include/sys/os_mman.h
+
+.obj/OS_NS_wchar.o .obj/OS_NS_wchar.so .shobj/OS_NS_wchar.o .shobj/OS_NS_wchar.so: OS_NS_wchar.cpp \
+  OS_NS_wchar.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/os_wchar.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  os_include/os_stddef.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/sys/os_types.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  os_include/sys/os_time.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  Basic_Types.h \
+  os_include/os_limits.h \
+  os_include/os_unistd.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  os_include/os_float.h \
+  Basic_Types.i \
+  OS_NS_wchar.inl
+
+.obj/OS_QoS.o .obj/OS_QoS.so .shobj/OS_QoS.o .shobj/OS_QoS.so: OS_QoS.cpp \
+  OS_QoS.h \
+  pre.h \
+  ACE_export.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  os_include/sys/os_uio.h \
+  config-all.h \
+  OS_main.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  os_include/os_limits.h \
+  os_include/os_unistd.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  OS_NS_stropts.h \
+  os_include/os_stropts.h \
+  OS_NS_stropts.inl \
+  os_include/os_errno.h \
+  OS_NS_unistd.h \
+  Time_Value.h \
+  os_include/sys/os_time.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
+  OS_NS_unistd.inl \
+  OS_NS_sys_utsname.h \
+  os_include/sys/os_utsname.h \
+  OS_NS_sys_utsname.inl \
+  OS_NS_string.h \
+  Basic_Types.h \
+  os_include/os_float.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  Basic_Types.i \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl \
+  OS_NS_errno.h \
+  OS_NS_errno.inl \
+  OS_NS_macros.h \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  Global_Macros.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_NS_fcntl.inl \
+  Default_Constants.h \
+  OS_Memory.h \
+  OS_NS_stdlib.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  os_include/os_search.h \
+  OS_Memory.inl
+
+.obj/OS_TLI.o .obj/OS_TLI.so .shobj/OS_TLI.o .shobj/OS_TLI.so: OS_TLI.cpp \
+  OS_TLI.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  OS_Errno.h \
+  os_include/os_errno.h \
+  OS_Errno.inl \
+  OS_TLI.inl \
+  OS_NS_errno.h \
+  OS_NS_errno.inl
+
+.obj/OS_Errno.o .obj/OS_Errno.so .shobj/OS_Errno.o .shobj/OS_Errno.so: OS_Errno.cpp \
+  OS_Errno.h \
+  pre.h \
+  ACE_export.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
+  OS_Errno.inl
+
+.obj/Base_Thread_Adapter.o .obj/Base_Thread_Adapter.so .shobj/Base_Thread_Adapter.o .shobj/Base_Thread_Adapter.so: Base_Thread_Adapter.cpp \
+  Base_Thread_Adapter.h \
+  pre.h \
+  OS_Log_Msg_Attributes.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  os_include/os_stddef.h \
+  iosfwd.h \
+  OS_Log_Msg_Attributes.inl \
+  Base_Thread_Adapter.inl
+
+.obj/OS_Thread_Adapter.o .obj/OS_Thread_Adapter.so .shobj/OS_Thread_Adapter.o .shobj/OS_Thread_Adapter.so: OS_Thread_Adapter.cpp \
+  OS_Thread_Adapter.h \
+  pre.h \
+  Base_Thread_Adapter.h \
+  OS_Log_Msg_Attributes.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  os_include/os_stddef.h \
+  iosfwd.h \
+  OS_Log_Msg_Attributes.inl \
+  Base_Thread_Adapter.inl \
+  OS_Thread_Adapter.inl \
+  Thread_Hook.h \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  os_include/sys/os_types.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  Object_Manager_Base.inl \
+  Global_Macros.h \
+  OS_Errno.h \
+  os_include/os_errno.h \
+  OS_Errno.inl \
+  OS_NS_Thread.h \
+  Basic_Types.h \
+  os_include/os_limits.h \
+  os_include/os_unistd.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  os_include/os_float.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/sys/os_resource.h \
+  os_include/sys/os_time.h \
+  Basic_Types.i \
+  Default_Constants.h \
+  os_include/os_pthread.h \
+  os_include/sys/os_sem.h \
+  os_include/sys/os_ipc.h \
+  os_include/os_semaphore.h \
+  OS_Memory.h \
+  OS_NS_stdlib.h \
+  OS_NS_stdlib.inl \
+  OS_NS_string.h \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl \
+  os_include/os_search.h \
+  OS_Memory.inl \
+  OS_NS_signal.h \
+  OS_NS_signal.inl \
+  OS_NS_macros.h \
+  OS_NS_errno.h \
+  OS_NS_errno.inl \
+  OS_NS_Thread.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
+  OS_NS_unistd.h \
+  OS_NS_unistd.inl \
+  OS_NS_sys_utsname.h \
+  os_include/sys/os_utsname.h \
+  OS_NS_sys_utsname.inl \
+  OS_NS_stdio.h \
+  OS_NS_stdio.inl \
+  OS_NS_pwd.h \
+  os_include/os_pwd.h \
+  OS_NS_pwd.inl \
+  os_include/sys/os_mman.h
+
+.obj/OS_Log_Msg_Attributes.o .obj/OS_Log_Msg_Attributes.so .shobj/OS_Log_Msg_Attributes.o .shobj/OS_Log_Msg_Attributes.so: OS_Log_Msg_Attributes.cpp \
+  OS_Log_Msg_Attributes.h \
+  config-all.h \
+  pre.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  os_include/os_stddef.h \
+  iosfwd.h \
+  OS_Log_Msg_Attributes.inl
+
+.obj/Thread_Hook.o .obj/Thread_Hook.so .shobj/Thread_Hook.o .shobj/Thread_Hook.so: Thread_Hook.cpp \
+  Thread_Hook.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_main.h \
+  ACE_export.h \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  Object_Manager_Base.inl
+
+.obj/Sched_Params.o .obj/Sched_Params.so .shobj/Sched_Params.o .shobj/Sched_Params.so: Sched_Params.cpp \
+  Sched_Params.h \
+  pre.h \
+  ACE_export.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  Time_Value.h \
+  os_include/sys/os_time.h \
+  config-all.h \
+  OS_main.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
+  os_include/os_errno.h \
+  OS_NS_Thread.h \
+  Global_Macros.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  Basic_Types.h \
+  os_include/os_limits.h \
+  os_include/os_unistd.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  os_include/os_float.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  Basic_Types.i \
+  Default_Constants.h \
+  os_include/os_pthread.h \
+  Base_Thread_Adapter.h \
+  OS_Log_Msg_Attributes.h \
+  iosfwd.h \
+  OS_Log_Msg_Attributes.inl \
+  Base_Thread_Adapter.inl \
+  os_include/sys/os_sem.h \
+  os_include/sys/os_ipc.h \
+  os_include/os_semaphore.h \
+  OS_Memory.h \
+  OS_NS_stdlib.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  OS_NS_string.h \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl \
+  os_include/os_search.h \
+  OS_Memory.inl \
+  OS_NS_signal.h \
+  OS_NS_signal.inl \
+  OS_NS_macros.h \
+  OS_NS_errno.h \
+  OS_NS_errno.inl \
+  OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
+  OS_NS_unistd.h \
+  OS_NS_unistd.inl \
+  OS_NS_sys_utsname.h \
+  os_include/sys/os_utsname.h \
+  OS_NS_sys_utsname.inl \
+  OS_NS_stdio.h \
+  OS_NS_stdio.inl \
+  OS_NS_pwd.h \
+  os_include/os_pwd.h \
+  OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
+  Sched_Params.i
+
+.obj/Handle_Set.o .obj/Handle_Set.so .shobj/Handle_Set.o .shobj/Handle_Set.so: Handle_Set.cpp \
+  Handle_Set.h \
+  pre.h \
+  ACE_export.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  os_include/sys/os_select.h \
+  config-all.h \
+  OS_main.h \
+  os_include/sys/os_time.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/os_limits.h \
+  os_include/os_unistd.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  Handle_Set.i \
+  Log_Msg.h \
+  Global_Macros.h \
+  OS_Errno.h \
+  os_include/os_errno.h \
+  OS_Errno.inl \
+  Default_Constants.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
+  iosfwd.h \
+  OS_Log_Msg_Attributes.inl \
+  os_include/os_string.h \
+  os_include/os_strings.h \
+  OS_NS_string.h \
+  Basic_Types.h \
+  os_include/os_float.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/sys/os_resource.h \
+  Basic_Types.i \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl
+
+.obj/Copy_Disabled.o .obj/Copy_Disabled.so .shobj/Copy_Disabled.o .shobj/Copy_Disabled.so: Copy_Disabled.cpp \
+  Copy_Disabled.h \
+  pre.h \
+  ACE_export.h \
+  config.h \
+  $(ACE_PLATFORM_CONFIG) \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl
+
 .obj/ACE.o .obj/ACE.so .shobj/ACE.o .shobj/ACE.so: ACE.cpp \
   ACE.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -852,7 +3162,6 @@ endif # GHS
   Active_Map_Manager.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -885,13 +3194,13 @@ endif # GHS
   os_include/os_wchar.h \
   os_include/os_string.h \
   os_include/os_ctype.h \
-  os_include/os_errno.h \
   OS_NS_wchar.inl \
   Active_Map_Manager_T.h \
   Map_Manager.h \
   Log_Msg.h \
   Global_Macros.h \
   OS_Errno.h \
+  os_include/os_errno.h \
   OS_Errno.inl \
   Default_Constants.h \
   Log_Priority.h \
@@ -961,7 +3270,6 @@ endif # GHS
   Arg_Shifter.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -993,12 +3301,12 @@ endif # GHS
   os_include/os_wchar.h \
   os_include/os_string.h \
   os_include/os_ctype.h \
-  os_include/os_errno.h \
   OS_NS_wchar.inl \
   OS_NS_strings.h \
   os_include/os_strings.h \
   OS_NS_strings.inl \
   OS_Errno.h \
+  os_include/os_errno.h \
   OS_Errno.inl \
   OS_Memory.h \
   OS_NS_stdlib.h \
@@ -1015,7 +3323,6 @@ endif # GHS
   Capabilities.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -1177,7 +3484,6 @@ endif # GHS
   Containers.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -1254,7 +3560,6 @@ endif # GHS
   SStringfwd.h \
   Basic_Types.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -1419,8 +3724,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -1441,7 +3744,6 @@ endif # GHS
   SStringfwd.h \
   Basic_Types.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -1606,8 +3908,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -1625,7 +3925,6 @@ endif # GHS
   Date_Time.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -1696,7 +3995,6 @@ endif # GHS
   Dirent.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -1757,7 +4055,6 @@ endif # GHS
   Dirent_Selector.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -1812,7 +4109,6 @@ endif # GHS
   Dynamic.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -1963,7 +4259,6 @@ endif # GHS
 .obj/Flag_Manip.o .obj/Flag_Manip.so .shobj/Flag_Manip.o .shobj/Flag_Manip.so: Flag_Manip.cpp Flag_Manip.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -1989,7 +4284,6 @@ endif # GHS
   Framework_Component.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -2134,7 +4428,6 @@ endif # GHS
   pre.h \
   Functor.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -2252,7 +4545,6 @@ endif # GHS
   SStringfwd.h \
   Basic_Types.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -2394,7 +4686,6 @@ endif # GHS
   Hash_Map_Manager.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -2528,7 +4819,6 @@ endif # GHS
   pre.h \
   Recyclable.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -2540,7 +4830,6 @@ endif # GHS
   Hashable.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -2553,7 +4842,6 @@ endif # GHS
   pre.h \
   Event_Handler.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -2663,7 +4951,6 @@ endif # GHS
   Recyclable.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -2675,7 +4962,6 @@ endif # GHS
   Refcountable.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -2687,7 +4973,6 @@ endif # GHS
   Handle_Ops.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -2718,7 +5003,6 @@ endif # GHS
   Init_ACE.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -2816,7 +5100,6 @@ endif # GHS
   Lib_Find.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -2895,7 +5178,6 @@ endif # GHS
   Message_Block.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -3003,7 +5285,6 @@ endif # GHS
   Method_Request.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -3020,7 +5301,6 @@ endif # GHS
   Object_Manager.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -3262,8 +5542,6 @@ endif # GHS
   Memory_Pool.h \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -3277,7 +5555,6 @@ endif # GHS
   Registry.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -3290,7 +5567,6 @@ endif # GHS
   String_Base_Const.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -3321,7 +5597,6 @@ endif # GHS
   Malloc.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -3465,8 +5740,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -3494,7 +5767,6 @@ endif # GHS
   Stats.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -3586,7 +5858,6 @@ endif # GHS
   CDR_Base.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -3635,7 +5906,6 @@ endif # GHS
   Sample_History.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -3696,7 +5966,6 @@ endif # GHS
   pre.h \
   Mem_Map.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -3768,8 +6037,6 @@ endif # GHS
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   Hash_Map_Manager_T.h \
   Functor.h \
   Functor.i \
@@ -3840,6 +6107,8 @@ endif # GHS
   SString.i \
   Null_Mutex.h \
   Synch_Traits.h \
+  OS_NS_sys_stat.h \
+  OS_NS_sys_stat.inl \
   Object_Manager.h \
   Recursive_Thread_Mutex.h \
   Recursive_Thread_Mutex.inl \
@@ -3855,7 +6124,6 @@ endif # GHS
   Dump.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -3966,7 +6234,6 @@ endif # GHS
 .obj/Log_Msg.o .obj/Log_Msg.so .shobj/Log_Msg.o .shobj/Log_Msg.so: Log_Msg.cpp \
   config-all.h \
   pre.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -4168,7 +6435,6 @@ endif # GHS
   Log_Msg_Callback.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -4179,7 +6445,6 @@ endif # GHS
   Log_Msg_Backend.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -4191,7 +6456,6 @@ endif # GHS
   pre.h \
   Log_Msg_Backend.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -4323,7 +6587,6 @@ endif # GHS
 .obj/Log_Msg_NT_Event_Log.o .obj/Log_Msg_NT_Event_Log.so .shobj/Log_Msg_NT_Event_Log.o .shobj/Log_Msg_NT_Event_Log.so: Log_Msg_NT_Event_Log.cpp \
   config-all.h \
   pre.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -4335,7 +6598,6 @@ endif # GHS
 .obj/Log_Msg_UNIX_Syslog.o .obj/Log_Msg_UNIX_Syslog.so .shobj/Log_Msg_UNIX_Syslog.o .shobj/Log_Msg_UNIX_Syslog.so: Log_Msg_UNIX_Syslog.cpp \
   config-all.h \
   pre.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -4458,7 +6720,6 @@ endif # GHS
   pre.h \
   post.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   ace_wchar.h \
@@ -4578,7 +6839,6 @@ endif # GHS
   pre.h \
   Shared_Object.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -4743,7 +7003,6 @@ endif # GHS
   Trace.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -4781,7 +7040,6 @@ endif # GHS
   Activation_Queue.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -4909,7 +7167,6 @@ endif # GHS
   Atomic_Op.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -5015,7 +7272,6 @@ endif # GHS
   Process.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -5178,7 +7434,6 @@ endif # GHS
   pre.h \
   Event_Handler.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -5347,7 +7602,6 @@ endif # GHS
   TSS_Adapter.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -5359,7 +7613,6 @@ endif # GHS
   Auto_Event.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -5451,7 +7704,6 @@ endif # GHS
   Manual_Event.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -5543,7 +7795,6 @@ endif # GHS
   Barrier.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -5646,7 +7897,6 @@ endif # GHS
   Condition_Thread_Mutex.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -5740,7 +7990,6 @@ endif # GHS
   Condition_Recursive_Thread_Mutex.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -5832,7 +8081,6 @@ endif # GHS
   Event.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -5924,7 +8172,6 @@ endif # GHS
   Lock.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -5936,7 +8183,6 @@ endif # GHS
   Mutex.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -6028,7 +8274,6 @@ endif # GHS
   RW_Mutex.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -6120,7 +8365,6 @@ endif # GHS
   RW_Thread_Mutex.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -6217,7 +8461,6 @@ endif # GHS
   Recursive_Thread_Mutex.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -6309,7 +8552,6 @@ endif # GHS
   Semaphore.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -6425,7 +8667,6 @@ endif # GHS
   Thread_Mutex.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -6561,8 +8802,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -6586,7 +8825,6 @@ endif # GHS
   Thread_Semaphore.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -6702,7 +8940,6 @@ endif # GHS
   Synch_Options.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -6727,7 +8964,6 @@ endif # GHS
   Process_Semaphore.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -6847,7 +9083,6 @@ endif # GHS
   Process_Mutex.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -6989,8 +9224,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   Unbounded_Set.h \
   Node.h \
   Node.cpp \
@@ -7011,7 +9244,6 @@ endif # GHS
   pre.h \
   File_Lock.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -7150,8 +9382,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -7175,7 +9405,6 @@ endif # GHS
   File_Lock.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -7254,7 +9483,6 @@ endif # GHS
   Thread.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -7347,7 +9575,6 @@ endif # GHS
   pre.h \
   Lock.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -7527,7 +9754,6 @@ endif # GHS
   Thread_Adapter.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -7704,7 +9930,6 @@ endif # GHS
   Thread_Exit.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -7879,7 +10104,6 @@ endif # GHS
 .obj/Thread_Control.o .obj/Thread_Control.so .shobj/Thread_Control.o .shobj/Thread_Control.so: Thread_Control.cpp \
   config-all.h \
   pre.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -8056,7 +10280,6 @@ endif # GHS
   Thread.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -8166,7 +10389,6 @@ endif # GHS
   Event_Handler.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -8359,7 +10581,6 @@ endif # GHS
   FlReactor.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -8372,7 +10593,6 @@ endif # GHS
   Msg_WFMO_Reactor.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -8386,7 +10606,6 @@ endif # GHS
   POSIX_Proactor.h \
   config-all.h \
   pre.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -8654,7 +10873,6 @@ endif # GHS
   POSIX_CB_Proactor.h \
   config-all.h \
   pre.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -8929,7 +11147,6 @@ endif # GHS
   WIN32_Proactor.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -8944,7 +11161,6 @@ endif # GHS
   Unbounded_Queue.h \
   Node.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -9146,7 +11362,6 @@ endif # GHS
   Proactor.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -9441,7 +11656,6 @@ endif # GHS
   Timer_Queuefwd.h \
   Synch_Traits.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -9652,7 +11866,6 @@ endif # GHS
   Timer_Queuefwd.h \
   Synch_Traits.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -9835,7 +12048,6 @@ endif # GHS
   Timer_Queuefwd.h \
   Synch_Traits.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -10024,7 +12236,6 @@ endif # GHS
   SUN_Proactor.h \
   config-all.h \
   pre.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -10040,7 +12251,6 @@ endif # GHS
   Timer_Queuefwd.h \
   Synch_Traits.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -10156,7 +12366,6 @@ endif # GHS
   Timer_Queuefwd.h \
   Synch_Traits.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -10339,7 +12548,6 @@ endif # GHS
   TkReactor.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -10352,7 +12560,6 @@ endif # GHS
   WFMO_Reactor.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -10365,7 +12572,6 @@ endif # GHS
   XtReactor.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -10383,7 +12589,6 @@ endif # GHS
   Timer_Queuefwd.h \
   Synch_Traits.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -10564,7 +12769,6 @@ endif # GHS
   Asynch_IO.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -10780,7 +12984,6 @@ endif # GHS
   Asynch_IO_Impl.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -10808,7 +13011,6 @@ endif # GHS
   Asynch_Pseudo_Task.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -11064,7 +13266,6 @@ endif # GHS
   POSIX_Asynch_IO.h \
   config-all.h \
   pre.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -11348,7 +13549,6 @@ endif # GHS
   WIN32_Asynch_IO.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -11361,7 +13561,6 @@ endif # GHS
   Addr.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -11396,7 +13595,6 @@ endif # GHS
   pre.h \
   Sock_Connect.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -11435,10 +13633,10 @@ endif # GHS
   os_include/os_wchar.h \
   os_include/os_string.h \
   os_include/os_ctype.h \
-  os_include/os_errno.h \
   OS_NS_wchar.inl \
   Global_Macros.h \
   OS_Errno.h \
+  os_include/os_errno.h \
   OS_Errno.inl \
   OS_NS_arpa_inet.h \
   os_include/arpa/os_inet.h \
@@ -11498,7 +13696,6 @@ endif # GHS
   INET_Addr.h \
   Sock_Connect.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -11537,10 +13734,10 @@ endif # GHS
   os_include/os_wchar.h \
   os_include/os_string.h \
   os_include/os_ctype.h \
-  os_include/os_errno.h \
   OS_NS_wchar.inl \
   Global_Macros.h \
   OS_Errno.h \
+  os_include/os_errno.h \
   OS_Errno.inl \
   OS_NS_arpa_inet.h \
   os_include/arpa/os_inet.h \
@@ -11606,7 +13803,6 @@ endif # GHS
   pre.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -11686,7 +13882,6 @@ endif # GHS
   LSOCK.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -11784,7 +13979,6 @@ endif # GHS
   LSOCK_Acceptor.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -11923,7 +14117,6 @@ endif # GHS
   LSOCK_CODgram.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -12056,7 +14249,6 @@ endif # GHS
   LSOCK_Connector.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -12196,7 +14388,6 @@ endif # GHS
   LSOCK_Dgram.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -12306,7 +14497,6 @@ endif # GHS
   LSOCK_Stream.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -12442,7 +14632,6 @@ endif # GHS
   SOCK.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -12541,7 +14730,6 @@ endif # GHS
   SOCK_IO.h \
   SOCK.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -12671,7 +14859,6 @@ endif # GHS
   SOCK_IO.h \
   SOCK.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -12798,7 +14985,6 @@ endif # GHS
   Sock_Connect.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -12838,10 +15024,10 @@ endif # GHS
   os_include/os_wchar.h \
   os_include/os_string.h \
   os_include/os_ctype.h \
-  os_include/os_errno.h \
   OS_NS_wchar.inl \
   Global_Macros.h \
   OS_Errno.h \
+  os_include/os_errno.h \
   OS_Errno.inl \
   OS_NS_arpa_inet.h \
   os_include/arpa/os_inet.h \
@@ -12941,7 +15127,6 @@ endif # GHS
   SOCK_IO.h \
   SOCK.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -13070,7 +15255,6 @@ endif # GHS
   pre.h \
   SOCK.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -13204,7 +15388,6 @@ endif # GHS
   INET_Addr.h \
   Sock_Connect.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -13243,10 +15426,10 @@ endif # GHS
   os_include/os_wchar.h \
   os_include/os_string.h \
   os_include/os_ctype.h \
-  os_include/os_errno.h \
   OS_NS_wchar.inl \
   Global_Macros.h \
   OS_Errno.h \
+  os_include/os_errno.h \
   OS_Errno.inl \
   OS_NS_arpa_inet.h \
   os_include/arpa/os_inet.h \
@@ -13336,7 +15519,6 @@ endif # GHS
   SOCK_Dgram.h \
   SOCK.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -13443,7 +15625,6 @@ endif # GHS
   pre.h \
   SOCK.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -13570,7 +15751,6 @@ endif # GHS
   SOCK_SEQPACK_Acceptor.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -13726,7 +15906,6 @@ endif # GHS
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ACE_export.h \
-  config-lite.h \
   ace_wchar.h \
   ace_wchar.inl \
   SOCK_IO.h \
@@ -13877,7 +16056,6 @@ endif # GHS
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ACE_export.h \
-  config-lite.h \
   ace_wchar.h \
   ace_wchar.inl \
   SOCK_SEQPACK_Association.h \
@@ -14026,7 +16204,6 @@ endif # GHS
   SOCK_IO.h \
   SOCK.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -14151,7 +16328,6 @@ endif # GHS
   ATM_Addr.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -14164,7 +16340,6 @@ endif # GHS
   ATM_Acceptor.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -14177,7 +16352,6 @@ endif # GHS
   ATM_Connector.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -14190,7 +16364,6 @@ endif # GHS
   ATM_Params.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -14203,7 +16376,6 @@ endif # GHS
   ATM_QoS.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -14216,7 +16388,6 @@ endif # GHS
   ATM_Stream.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -14229,7 +16400,6 @@ endif # GHS
   XTI_ATM_Mcast.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -14244,7 +16414,6 @@ endif # GHS
   IO_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -14327,7 +16496,6 @@ endif # GHS
   pre.h \
   Addr.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -14362,10 +16530,10 @@ endif # GHS
   os_include/os_wchar.h \
   os_include/os_string.h \
   os_include/os_ctype.h \
-  os_include/os_errno.h \
   OS_NS_wchar.inl \
   Global_Macros.h \
   OS_Errno.h \
+  os_include/os_errno.h \
   OS_Errno.inl \
   os_include/sys/os_socket.h \
   os_include/sys/os_uio.h \
@@ -14384,7 +16552,6 @@ endif # GHS
   IO_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -14510,7 +16677,6 @@ endif # GHS
   IO_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -14632,7 +16798,6 @@ endif # GHS
   FIFO.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -14718,7 +16883,6 @@ endif # GHS
   pre.h \
   FIFO.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -14839,7 +17003,6 @@ endif # GHS
   FIFO_Recv.h \
   FIFO.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -14961,7 +17124,6 @@ endif # GHS
   pre.h \
   FIFO.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -15082,7 +17244,6 @@ endif # GHS
   FIFO_Send.h \
   FIFO.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -15203,7 +17364,6 @@ endif # GHS
   pre.h \
   Addr.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -15335,7 +17495,6 @@ endif # GHS
   IO_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -15472,7 +17631,6 @@ endif # GHS
   IO_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -15610,7 +17768,6 @@ endif # GHS
   IO_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -15747,7 +17904,6 @@ endif # GHS
   pre.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -15827,7 +17983,6 @@ endif # GHS
   IOStream.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -15841,7 +17996,6 @@ endif # GHS
   Pipe.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -15977,7 +18131,6 @@ endif # GHS
   Recursive_Thread_Mutex.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -16113,7 +18266,6 @@ endif # GHS
   SPIPE_Addr.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -16244,7 +18396,6 @@ endif # GHS
   IPC_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -16379,7 +18530,6 @@ endif # GHS
   IPC_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -16519,7 +18669,6 @@ endif # GHS
   IPC_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -16657,7 +18806,6 @@ endif # GHS
   IPC_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -16789,7 +18937,6 @@ endif # GHS
   SV_Message.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -16807,7 +18954,6 @@ endif # GHS
   SV_Message_Queue.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -16849,7 +18995,6 @@ endif # GHS
   pre.h \
   SV_Semaphore_Simple.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -16942,7 +19087,6 @@ endif # GHS
   SV_Semaphore_Simple.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -17058,7 +19202,6 @@ endif # GHS
   SV_Shared_Memory.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -17099,7 +19242,6 @@ endif # GHS
   IPC_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -17200,7 +19342,6 @@ endif # GHS
   IPC_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -17329,7 +19470,6 @@ endif # GHS
   IPC_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -17430,7 +19570,6 @@ endif # GHS
   IPC_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -17556,7 +19695,6 @@ endif # GHS
   IO_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -17680,7 +19818,6 @@ endif # GHS
   UNIX_Addr.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -17801,7 +19938,6 @@ endif # GHS
   UPIPE_Stream.h \
   Stream.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -18048,7 +20184,6 @@ endif # GHS
   UPIPE_Stream.h \
   Stream.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -18293,7 +20428,6 @@ endif # GHS
   pre.h \
   Stream.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -18538,7 +20672,6 @@ endif # GHS
   SOCK_IO.h \
   SOCK.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -18700,8 +20833,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -18760,7 +20891,6 @@ endif # GHS
   MEM_Addr.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -18801,10 +20931,10 @@ endif # GHS
   os_include/os_wchar.h \
   os_include/os_string.h \
   os_include/os_ctype.h \
-  os_include/os_errno.h \
   OS_NS_wchar.inl \
   Global_Macros.h \
   OS_Errno.h \
+  os_include/os_errno.h \
   OS_Errno.inl \
   OS_NS_arpa_inet.h \
   os_include/arpa/os_inet.h \
@@ -18856,7 +20986,6 @@ endif # GHS
   SOCK_IO.h \
   SOCK.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -19018,8 +21147,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -19079,7 +21206,6 @@ endif # GHS
   pre.h \
   SOCK.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -19231,8 +21357,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -19292,7 +21416,6 @@ endif # GHS
   pre.h \
   PI_Malloc.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -19437,8 +21560,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -19487,7 +21608,6 @@ endif # GHS
   MEM_IO.h \
   SOCK.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -19639,8 +21759,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -19701,7 +21819,6 @@ endif # GHS
   Basic_Stats.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -19743,7 +21860,6 @@ endif # GHS
   High_Res_Timer.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -19777,9 +21893,9 @@ endif # GHS
   os_include/os_wchar.h \
   os_include/os_string.h \
   os_include/os_ctype.h \
-  os_include/os_errno.h \
   OS_NS_wchar.inl \
   OS_NS_errno.h \
+  os_include/os_errno.h \
   OS_NS_errno.inl \
   Time_Value.h \
   Time_Value.inl \
@@ -19864,7 +21980,6 @@ endif # GHS
   Profile_Timer.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -19899,9 +22014,9 @@ endif # GHS
   os_include/os_wchar.h \
   os_include/os_string.h \
   os_include/os_ctype.h \
-  os_include/os_errno.h \
   OS_NS_wchar.inl \
   OS_NS_errno.h \
+  os_include/os_errno.h \
   OS_NS_errno.inl \
   Time_Value.h \
   Time_Value.inl \
@@ -19944,7 +22059,6 @@ endif # GHS
   System_Time.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -20078,8 +22192,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -20110,7 +22222,6 @@ endif # GHS
   pre.h \
   Time_Value.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -20230,13 +22341,11 @@ endif # GHS
   Auto_Ptr.cpp \
   SString.i \
   Log_Msg.h \
-  Log_Priority.h \
-  os_include/arpa/os_inet.h
+  Log_Priority.h
 
 .obj/Timeprobe.o .obj/Timeprobe.so .shobj/Timeprobe.o .shobj/Timeprobe.so: Timeprobe.cpp \
   config-all.h \
   pre.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -20252,7 +22361,6 @@ endif # GHS
   Timer_Queue_T.h \
   Free_List.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -20388,7 +22496,6 @@ endif # GHS
   Timer_Queue_T.h \
   Free_List.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -20516,7 +22623,6 @@ endif # GHS
   Timer_Queue_T.h \
   Free_List.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -20635,7 +22741,6 @@ endif # GHS
   Containers.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -20776,7 +22881,6 @@ endif # GHS
   Timer_Queue_T.h \
   Free_List.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -20895,7 +22999,6 @@ endif # GHS
   DLL.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -21020,7 +23123,6 @@ endif # GHS
   DLL_Manager.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -21174,7 +23276,6 @@ endif # GHS
   Dynamic_Service_Base.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -21347,7 +23448,6 @@ endif # GHS
   Parse_Node.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -21589,7 +23689,6 @@ endif # GHS
   Service_Config.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -21765,8 +23864,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -21858,7 +23955,6 @@ endif # GHS
   SOCK_IO.h \
   SOCK.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -22058,7 +24154,6 @@ endif # GHS
   pre.h \
   Shared_Object.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -22199,7 +24294,6 @@ endif # GHS
   Service_Repository.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -22353,7 +24447,6 @@ endif # GHS
   Service_Object.h \
   Shared_Object.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -22578,7 +24671,6 @@ endif # GHS
   Obchunk.h \
   Malloc.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -22722,8 +24814,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -22841,7 +24931,6 @@ endif # GHS
   Shared_Object.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -22861,7 +24950,6 @@ endif # GHS
   XML_Svc_Conf.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -22872,7 +24960,6 @@ endif # GHS
   Object_Manager.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -23030,8 +25117,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -23082,7 +25167,6 @@ endif # GHS
   Obchunk.h \
   Malloc.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -23226,8 +25310,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -23349,7 +25431,6 @@ endif # GHS
   Svc_Conf_Lexer_Guard.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -23498,8 +25579,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -23541,2389 +25620,10 @@ endif # GHS
   os_include/os_dlfcn.h \
   Parse_Node.i
 
-.obj/ARGV.o .obj/ARGV.so .shobj/ARGV.o .shobj/ARGV.so: ARGV.cpp \
-  ARGV.h \
-  pre.h \
-  ACE_export.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  Unbounded_Queue.h \
-  Node.h \
-  config-all.h \
-  OS_main.h \
-  Node.cpp \
-  os_include/os_stddef.h \
-  Unbounded_Queue.inl \
-  Unbounded_Queue.cpp \
-  Malloc_Base.h \
-  os_include/sys/os_types.h \
-  os_include/sys/os_mman.h \
-  Log_Msg.h \
-  Global_Macros.h \
-  OS_Errno.h \
-  os_include/os_errno.h \
-  OS_Errno.inl \
-  Default_Constants.h \
-  Log_Priority.h \
-  os_include/os_limits.h \
-  os_include/os_unistd.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  OS_Log_Msg_Attributes.h \
-  iosfwd.h \
-  OS_Log_Msg_Attributes.inl \
-  ARGV.i \
-  OS_NS_unistd.h \
-  Time_Value.h \
-  os_include/sys/os_time.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
-  OS_NS_unistd.inl \
-  OS_NS_sys_utsname.h \
-  os_include/sys/os_utsname.h \
-  OS_NS_sys_utsname.inl \
-  OS_NS_string.h \
-  Basic_Types.h \
-  os_include/os_float.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  Basic_Types.i \
-  OS_NS_string.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  OS_NS_wchar.inl \
-  OS_NS_errno.h \
-  OS_NS_errno.inl \
-  OS_NS_macros.h \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
-  OS_Memory.h \
-  OS_NS_stdlib.h \
-  OS_NS_stdlib.inl \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  Object_Manager_Base.inl \
-  os_include/os_search.h \
-  OS_Memory.inl
-
-.obj/Argv_Type_Converter.o .obj/Argv_Type_Converter.so .shobj/Argv_Type_Converter.o .shobj/Argv_Type_Converter.so: Argv_Type_Converter.cpp \
-  Argv_Type_Converter.h \
-  pre.h \
-  ACE_export.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_Memory.h \
-  OS_Errno.h \
-  os_include/os_errno.h \
-  config-all.h \
-  OS_main.h \
-  OS_Errno.inl \
-  os_include/os_stddef.h \
-  OS_NS_stdlib.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/sys/os_types.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  os_include/sys/os_time.h \
-  OS_NS_stdlib.inl \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  Object_Manager_Base.inl \
-  OS_NS_string.h \
-  Basic_Types.h \
-  os_include/os_limits.h \
-  os_include/os_unistd.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  os_include/os_float.h \
-  Basic_Types.i \
-  OS_NS_string.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  OS_NS_wchar.inl \
-  Global_Macros.h \
-  os_include/os_search.h \
-  OS_Memory.inl \
-  Argv_Type_Converter.inl
-
-.obj/Basic_Types.o .obj/Basic_Types.so .shobj/Basic_Types.o .shobj/Basic_Types.so: Basic_Types.cpp \
-  Basic_Types.h \
-  config-all.h \
-  pre.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/os_limits.h \
-  os_include/os_unistd.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  os_include/os_float.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  os_include/sys/os_time.h \
-  Basic_Types.i \
-  Template_Instantiations.cpp
-
-.obj/Time_Value.o .obj/Time_Value.so .shobj/Time_Value.o .shobj/Time_Value.so: Time_Value.cpp \
-  Time_Value.h \
-  pre.h \
-  ACE_export.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  os_include/sys/os_time.h \
-  config-all.h \
-  OS_main.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
-  os_include/os_errno.h \
-  Basic_Types.h \
-  os_include/os_limits.h \
-  os_include/os_unistd.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  os_include/os_float.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  Basic_Types.i
-
-.obj/Cleanup.o .obj/Cleanup.so .shobj/Cleanup.o .shobj/Cleanup.so: Cleanup.cpp \
-  Cleanup.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  Cleanup.inl \
-  OS_Memory.h \
-  OS_Errno.h \
-  os_include/os_errno.h \
-  OS_Errno.inl \
-  os_include/os_stddef.h \
-  OS_NS_stdlib.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/sys/os_types.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  os_include/sys/os_time.h \
-  OS_NS_stdlib.inl \
-  Object_Manager_Base.h \
-  Object_Manager_Base.inl \
-  OS_NS_string.h \
-  Basic_Types.h \
-  os_include/os_limits.h \
-  os_include/os_unistd.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  os_include/os_float.h \
-  Basic_Types.i \
-  OS_NS_string.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  OS_NS_wchar.inl \
-  Global_Macros.h \
-  os_include/os_search.h \
-  OS_Memory.inl
-
-.obj/Object_Manager_Base.o .obj/Object_Manager_Base.so .shobj/Object_Manager_Base.o .shobj/Object_Manager_Base.so: Object_Manager_Base.cpp \
-  Object_Manager_Base.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  Cleanup.h \
-  Cleanup.inl \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  Object_Manager_Base.inl \
-  OS_Memory.h \
-  OS_Errno.h \
-  os_include/os_errno.h \
-  OS_Errno.inl \
-  OS_NS_stdlib.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/sys/os_resource.h \
-  os_include/sys/os_time.h \
-  OS_NS_stdlib.inl \
-  OS_NS_string.h \
-  Basic_Types.h \
-  os_include/os_limits.h \
-  os_include/os_unistd.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  os_include/os_float.h \
-  Basic_Types.i \
-  OS_NS_string.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  OS_NS_wchar.inl \
-  Global_Macros.h \
-  os_include/os_search.h \
-  OS_Memory.inl \
-  OS_NS_Thread.h \
-  Default_Constants.h \
-  os_include/os_pthread.h \
-  Base_Thread_Adapter.h \
-  OS_Log_Msg_Attributes.h \
-  iosfwd.h \
-  OS_Log_Msg_Attributes.inl \
-  Base_Thread_Adapter.inl \
-  os_include/sys/os_sem.h \
-  os_include/sys/os_ipc.h \
-  os_include/os_semaphore.h \
-  OS_NS_signal.h \
-  OS_NS_signal.inl \
-  OS_NS_macros.h \
-  OS_NS_errno.h \
-  OS_NS_errno.inl \
-  OS_NS_Thread.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
-  OS_NS_unistd.h \
-  OS_NS_unistd.inl \
-  OS_NS_sys_utsname.h \
-  os_include/sys/os_utsname.h \
-  OS_NS_sys_utsname.inl \
-  OS_NS_stdio.h \
-  OS_NS_stdio.inl \
-  OS_NS_pwd.h \
-  os_include/os_pwd.h \
-  OS_NS_pwd.inl \
-  os_include/sys/os_mman.h \
-  OS_NS_sys_socket.h \
-  os_include/sys/os_socket.h \
-  os_include/sys/os_uio.h \
-  os_include/net/os_if.h \
-  OS_NS_stropts.h \
-  os_include/os_stropts.h \
-  OS_NS_stropts.inl \
-  OS_QoS.h \
-  OS_NS_sys_socket.inl \
-  OS_NS_sys_uio.h \
-  OS_NS_sys_uio.inl
-
-.obj/OS_main.o .obj/OS_main.so .shobj/OS_main.o .shobj/OS_main.so: OS_main.cpp \
-  OS_main.h \
-  ACE_export.h \
-  config-lite.h \
-  pre.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl
-
-.obj/OS_NS_arpa_inet.o .obj/OS_NS_arpa_inet.so .shobj/OS_NS_arpa_inet.o .shobj/OS_NS_arpa_inet.so: OS_NS_arpa_inet.cpp \
-  OS_NS_arpa_inet.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/arpa/os_inet.h \
-  os_include/netinet/os_in.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  os_include/sys/os_socket.h \
-  os_include/sys/os_uio.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  os_include/os_limits.h \
-  os_include/os_unistd.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  OS_NS_arpa_inet.inl \
-  OS_NS_string.h \
-  Basic_Types.h \
-  os_include/os_float.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  os_include/sys/os_time.h \
-  Basic_Types.i \
-  OS_NS_string.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  os_include/os_errno.h \
-  OS_NS_wchar.inl \
-  OS_NS_errno.h \
-  OS_NS_errno.inl \
-  OS_NS_stdio.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_stdio.inl \
-  OS_NS_unistd.h \
-  Time_Value.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
-  OS_NS_unistd.inl \
-  OS_NS_sys_utsname.h \
-  os_include/sys/os_utsname.h \
-  OS_NS_sys_utsname.inl \
-  OS_NS_macros.h \
-  OS_NS_fcntl.h \
-  Global_Macros.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_NS_fcntl.inl \
-  Default_Constants.h \
-  OS_Memory.h \
-  OS_NS_stdlib.h \
-  OS_NS_stdlib.inl \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  Object_Manager_Base.inl \
-  os_include/os_search.h \
-  OS_Memory.inl \
-  OS_NS_pwd.h \
-  os_include/os_pwd.h \
-  OS_NS_pwd.inl
-
-.obj/OS_NS_ctype.o .obj/OS_NS_ctype.so .shobj/OS_NS_ctype.o .shobj/OS_NS_ctype.so: OS_NS_ctype.cpp \
-  OS_NS_ctype.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  OS_NS_ctype.inl \
-  os_include/os_ctype.h
-
-.obj/OS_NS_dirent.o .obj/OS_NS_dirent.so .shobj/OS_NS_dirent.o .shobj/OS_NS_dirent.so: OS_NS_dirent.cpp \
-  OS_NS_dirent.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/os_dirent.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  os_include/os_limits.h \
-  os_include/os_unistd.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  OS_NS_dirent.inl \
-  OS_Memory.h \
-  OS_Errno.h \
-  os_include/os_errno.h \
-  OS_Errno.inl \
-  OS_NS_stdlib.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  os_include/sys/os_time.h \
-  OS_NS_stdlib.inl \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  Object_Manager_Base.inl \
-  OS_NS_string.h \
-  Basic_Types.h \
-  os_include/os_float.h \
-  Basic_Types.i \
-  OS_NS_string.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  OS_NS_wchar.inl \
-  Global_Macros.h \
-  os_include/os_search.h \
-  OS_Memory.inl \
-  OS_NS_errno.h \
-  OS_NS_errno.inl \
-  Log_Msg.h \
-  Default_Constants.h \
-  Log_Priority.h \
-  OS_Log_Msg_Attributes.h \
-  iosfwd.h \
-  OS_Log_Msg_Attributes.inl
-
-.obj/OS_NS_dlfcn.o .obj/OS_NS_dlfcn.so .shobj/OS_NS_dlfcn.o .shobj/OS_NS_dlfcn.so: OS_NS_dlfcn.cpp \
-  OS_NS_dlfcn.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/os_dlfcn.h \
-  OS_NS_dlfcn.inl \
-  OS_NS_macros.h \
-  OS_NS_errno.h \
-  os_include/os_errno.h \
-  OS_NS_errno.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  Global_Macros.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_NS_fcntl.inl \
-  OS_NS_unistd.h \
-  os_include/os_unistd.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  Time_Value.h \
-  os_include/sys/os_time.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  OS_NS_unistd.inl \
-  OS_NS_sys_utsname.h \
-  os_include/sys/os_utsname.h \
-  OS_NS_sys_utsname.inl \
-  OS_NS_string.h \
-  Basic_Types.h \
-  os_include/os_limits.h \
-  os_include/os_float.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  Basic_Types.i \
-  OS_NS_string.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  OS_NS_wchar.inl \
-  Default_Constants.h \
-  OS_Memory.h \
-  OS_NS_stdlib.h \
-  OS_NS_stdlib.inl \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  Object_Manager_Base.inl \
-  os_include/os_search.h \
-  OS_Memory.inl
-
-.obj/OS_NS_errno.o .obj/OS_NS_errno.so .shobj/OS_NS_errno.o .shobj/OS_NS_errno.so: OS_NS_errno.cpp \
-  OS_NS_errno.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/os_errno.h \
-  OS_NS_errno.inl
-
-.obj/OS_NS_fcntl.o .obj/OS_NS_fcntl.so .shobj/OS_NS_fcntl.o .shobj/OS_NS_fcntl.so: OS_NS_fcntl.cpp \
-  OS_NS_fcntl.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  Global_Macros.h \
-  OS_Errno.h \
-  os_include/os_errno.h \
-  OS_Errno.inl \
-  OS_NS_fcntl.inl \
-  OS_NS_errno.h \
-  OS_NS_errno.inl \
-  OS_NS_stdio.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  OS_NS_stdio.inl \
-  OS_NS_unistd.h \
-  os_include/os_unistd.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  Time_Value.h \
-  os_include/sys/os_time.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
-  OS_NS_unistd.inl \
-  OS_NS_sys_utsname.h \
-  os_include/sys/os_utsname.h \
-  OS_NS_sys_utsname.inl \
-  OS_NS_string.h \
-  Basic_Types.h \
-  os_include/os_limits.h \
-  os_include/os_float.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  Basic_Types.i \
-  OS_NS_string.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  OS_NS_wchar.inl \
-  OS_NS_macros.h \
-  Default_Constants.h \
-  OS_Memory.h \
-  OS_NS_stdlib.h \
-  OS_NS_stdlib.inl \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  Object_Manager_Base.inl \
-  os_include/os_search.h \
-  OS_Memory.inl \
-  OS_NS_pwd.h \
-  os_include/os_pwd.h \
-  OS_NS_pwd.inl \
-  OS_NS_Thread.h \
-  os_include/os_pthread.h \
-  Base_Thread_Adapter.h \
-  OS_Log_Msg_Attributes.h \
-  iosfwd.h \
-  OS_Log_Msg_Attributes.inl \
-  Base_Thread_Adapter.inl \
-  os_include/sys/os_sem.h \
-  os_include/sys/os_ipc.h \
-  os_include/os_semaphore.h \
-  OS_NS_signal.h \
-  OS_NS_signal.inl \
-  OS_NS_Thread.inl \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
-  os_include/sys/os_mman.h
-
-.obj/OS_NS_math.o .obj/OS_NS_math.so .shobj/OS_NS_math.o .shobj/OS_NS_math.so: OS_NS_math.cpp \
-  OS_NS_math.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  OS_NS_math.inl
-
-.obj/OS_NS_netdb.o .obj/OS_NS_netdb.so .shobj/OS_NS_netdb.o .shobj/OS_NS_netdb.so: OS_NS_netdb.cpp \
-  OS_NS_netdb.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/os_netdb.h \
-  os_include/netinet/os_in.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  os_include/sys/os_socket.h \
-  os_include/sys/os_uio.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  os_include/os_limits.h \
-  os_include/os_unistd.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  OS_NS_netdb.inl \
-  OS_NS_macros.h \
-  OS_NS_string.h \
-  Basic_Types.h \
-  os_include/os_float.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  os_include/sys/os_time.h \
-  Basic_Types.i \
-  OS_NS_string.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  os_include/os_errno.h \
-  OS_NS_wchar.inl \
-  OS_NS_errno.h \
-  OS_NS_errno.inl \
-  os_include/net/os_if.h \
-  OS_NS_unistd.h \
-  Time_Value.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
-  OS_NS_unistd.inl \
-  OS_NS_sys_utsname.h \
-  os_include/sys/os_utsname.h \
-  OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  Global_Macros.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_NS_fcntl.inl \
-  Default_Constants.h \
-  OS_Memory.h \
-  OS_NS_stdlib.h \
-  OS_NS_stdlib.inl \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  Object_Manager_Base.inl \
-  os_include/os_search.h \
-  OS_Memory.inl \
-  OS_NS_stropts.h \
-  os_include/os_stropts.h \
-  OS_NS_stropts.inl \
-  OS_QoS.h \
-  OS_NS_sys_socket.h \
-  OS_NS_sys_socket.inl \
-  OS_NS_sys_uio.h \
-  OS_NS_sys_uio.inl \
-  OS_NS_stdio.h \
-  OS_NS_stdio.inl \
-  OS_NS_pwd.h \
-  os_include/os_pwd.h \
-  OS_NS_pwd.inl
-
-.obj/OS_NS_poll.o .obj/OS_NS_poll.so .shobj/OS_NS_poll.o .shobj/OS_NS_poll.so: OS_NS_poll.cpp \
-  OS_NS_poll.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/os_poll.h \
-  OS_NS_poll.inl \
-  Time_Value.h \
-  os_include/sys/os_time.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
-  os_include/os_errno.h \
-  OS_NS_errno.h \
-  OS_NS_errno.inl
-
-.obj/OS_NS_pwd.o .obj/OS_NS_pwd.so .shobj/OS_NS_pwd.o .shobj/OS_NS_pwd.so: OS_NS_pwd.cpp \
-  OS_NS_pwd.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/os_pwd.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  OS_NS_pwd.inl \
-  OS_NS_errno.h \
-  os_include/os_errno.h \
-  OS_NS_errno.inl
-
-.obj/OS_NS_regex.o .obj/OS_NS_regex.so .shobj/OS_NS_regex.o .shobj/OS_NS_regex.so: OS_NS_regex.cpp \
-  OS_NS_regex.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  OS_NS_regex.inl \
-  OS_NS_errno.h \
-  os_include/os_errno.h \
-  OS_NS_errno.inl \
-  os_include/os_regex.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h
-
-.obj/OS_NS_signal.o .obj/OS_NS_signal.so .shobj/OS_NS_signal.o .shobj/OS_NS_signal.so: OS_NS_signal.cpp \
-  OS_NS_signal.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/os_signal.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  OS_NS_signal.inl \
-  OS_NS_macros.h \
-  OS_NS_errno.h \
-  os_include/os_errno.h \
-  OS_NS_errno.inl
-
-.obj/OS_NS_stdio.o .obj/OS_NS_stdio.so .shobj/OS_NS_stdio.o .shobj/OS_NS_stdio.so: OS_NS_stdio.cpp \
-  OS_NS_stdio.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  os_include/os_stddef.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  os_include/sys/os_types.h \
-  OS_NS_stdio.inl \
-  OS_NS_unistd.h \
-  os_include/os_unistd.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  Time_Value.h \
-  os_include/sys/os_time.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
-  os_include/os_errno.h \
-  OS_NS_unistd.inl \
-  OS_NS_sys_utsname.h \
-  os_include/sys/os_utsname.h \
-  OS_NS_sys_utsname.inl \
-  OS_NS_string.h \
-  Basic_Types.h \
-  os_include/os_limits.h \
-  os_include/os_float.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  Basic_Types.i \
-  OS_NS_string.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  OS_NS_wchar.inl \
-  OS_NS_errno.h \
-  OS_NS_errno.inl \
-  OS_NS_macros.h \
-  OS_NS_fcntl.h \
-  Global_Macros.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_NS_fcntl.inl \
-  Default_Constants.h \
-  OS_Memory.h \
-  OS_NS_stdlib.h \
-  OS_NS_stdlib.inl \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  Object_Manager_Base.inl \
-  os_include/os_search.h \
-  OS_Memory.inl \
-  OS_NS_pwd.h \
-  os_include/os_pwd.h \
-  OS_NS_pwd.inl
-
-.obj/OS_NS_stdlib.o .obj/OS_NS_stdlib.so .shobj/OS_NS_stdlib.o .shobj/OS_NS_stdlib.so: OS_NS_stdlib.cpp \
-  OS_NS_stdlib.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/os_stdlib.h \
-  os_include/os_stddef.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/sys/os_types.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  os_include/sys/os_time.h \
-  OS_NS_stdlib.inl \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  Object_Manager_Base.inl \
-  OS_NS_string.h \
-  Basic_Types.h \
-  os_include/os_limits.h \
-  os_include/os_unistd.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  os_include/os_float.h \
-  Basic_Types.i \
-  OS_NS_string.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  os_include/os_errno.h \
-  OS_NS_wchar.inl \
-  Global_Macros.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  os_include/os_search.h \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_NS_unistd.h \
-  Time_Value.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
-  OS_NS_unistd.inl \
-  OS_NS_sys_utsname.h \
-  os_include/sys/os_utsname.h \
-  OS_NS_sys_utsname.inl \
-  OS_NS_errno.h \
-  OS_NS_errno.inl \
-  OS_NS_macros.h \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
-  Default_Constants.h
-
-.obj/OS_NS_string.o .obj/OS_NS_string.so .shobj/OS_NS_string.o .shobj/OS_NS_string.so: OS_NS_string.cpp \
-  OS_NS_string.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  Basic_Types.h \
-  os_include/os_limits.h \
-  os_include/os_unistd.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  os_include/os_float.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  os_include/sys/os_time.h \
-  Basic_Types.i \
-  OS_NS_string.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  os_include/os_errno.h \
-  OS_NS_wchar.inl \
-  OS_NS_stdlib.h \
-  OS_NS_stdlib.inl \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  Object_Manager_Base.inl \
-  Global_Macros.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  os_include/os_search.h
-
-.obj/OS_NS_strings.o .obj/OS_NS_strings.so .shobj/OS_NS_strings.o .shobj/OS_NS_strings.so: OS_NS_strings.cpp \
-  OS_NS_strings.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/os_strings.h \
-  os_include/os_stddef.h \
-  OS_NS_strings.inl
-
-.obj/OS_NS_stropts.o .obj/OS_NS_stropts.so .shobj/OS_NS_stropts.o .shobj/OS_NS_stropts.so: OS_NS_stropts.cpp \
-  OS_NS_stropts.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/os_stropts.h \
-  os_include/os_unistd.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  OS_NS_stropts.inl \
-  os_include/os_errno.h \
-  OS_NS_unistd.h \
-  Time_Value.h \
-  os_include/sys/os_time.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
-  OS_NS_unistd.inl \
-  OS_NS_sys_utsname.h \
-  os_include/sys/os_utsname.h \
-  OS_NS_sys_utsname.inl \
-  OS_NS_string.h \
-  Basic_Types.h \
-  os_include/os_limits.h \
-  os_include/os_float.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  Basic_Types.i \
-  OS_NS_string.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  OS_NS_wchar.inl \
-  OS_NS_errno.h \
-  OS_NS_errno.inl \
-  OS_NS_macros.h \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  Global_Macros.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_NS_fcntl.inl \
-  Default_Constants.h \
-  OS_Memory.h \
-  OS_NS_stdlib.h \
-  OS_NS_stdlib.inl \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  Object_Manager_Base.inl \
-  os_include/os_search.h \
-  OS_Memory.inl \
-  OS_QoS.h \
-  os_include/sys/os_uio.h
-
-.obj/OS_NS_sys_mman.o .obj/OS_NS_sys_mman.so .shobj/OS_NS_sys_mman.o .shobj/OS_NS_sys_mman.so: OS_NS_sys_mman.cpp \
-  OS_NS_sys_mman.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  Global_Macros.h \
-  OS_Errno.h \
-  os_include/os_errno.h \
-  OS_Errno.inl \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  OS_NS_sys_mman.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
-  OS_NS_errno.h \
-  OS_NS_errno.inl \
-  OS_NS_unistd.h \
-  os_include/os_unistd.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  Time_Value.h \
-  os_include/sys/os_time.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  OS_NS_unistd.inl \
-  OS_NS_sys_utsname.h \
-  os_include/sys/os_utsname.h \
-  OS_NS_sys_utsname.inl \
-  OS_NS_string.h \
-  Basic_Types.h \
-  os_include/os_limits.h \
-  os_include/os_float.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  Basic_Types.i \
-  OS_NS_string.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  OS_NS_wchar.inl \
-  OS_NS_macros.h \
-  Default_Constants.h \
-  OS_Memory.h \
-  OS_NS_stdlib.h \
-  OS_NS_stdlib.inl \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  Object_Manager_Base.inl \
-  os_include/os_search.h \
-  OS_Memory.inl \
-  OS_NS_stdio.h \
-  OS_NS_stdio.inl \
-  OS_NS_pwd.h \
-  os_include/os_pwd.h \
-  OS_NS_pwd.inl \
-  os_include/sys/os_mman.h
-
-.obj/OS_NS_sys_msg.o .obj/OS_NS_sys_msg.so .shobj/OS_NS_sys_msg.o .shobj/OS_NS_sys_msg.so: OS_NS_sys_msg.cpp \
-  OS_NS_sys_msg.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/sys/os_msg.h \
-  os_include/sys/os_ipc.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  OS_NS_sys_msg.inl \
-  OS_NS_errno.h \
-  os_include/os_errno.h \
-  OS_NS_errno.inl
-
-.obj/OS_NS_sys_resource.o .obj/OS_NS_sys_resource.so .shobj/OS_NS_sys_resource.o .shobj/OS_NS_sys_resource.so: OS_NS_sys_resource.cpp \
-  OS_NS_sys_resource.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/sys/os_resource.h \
-  os_include/sys/os_time.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  OS_NS_sys_resource.inl \
-  OS_NS_errno.h \
-  os_include/os_errno.h \
-  OS_NS_errno.inl \
-  OS_NS_macros.h
-
-.obj/OS_NS_sys_select.o .obj/OS_NS_sys_select.so .shobj/OS_NS_sys_select.o .shobj/OS_NS_sys_select.so: OS_NS_sys_select.cpp \
-  OS_NS_sys_select.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/sys/os_select.h \
-  os_include/sys/os_time.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  OS_NS_sys_select.inl \
-  os_include/os_errno.h \
-  Time_Value.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
-  OS_NS_macros.h
-
-.obj/OS_NS_sys_shm.o .obj/OS_NS_sys_shm.so .shobj/OS_NS_sys_shm.o .shobj/OS_NS_sys_shm.so: OS_NS_sys_shm.cpp \
-  OS_NS_sys_shm.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/sys/os_shm.h \
-  os_include/sys/os_ipc.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  OS_NS_sys_shm.inl \
-  OS_NS_errno.h \
-  os_include/os_errno.h \
-  OS_NS_errno.inl
-
-.obj/OS_NS_sys_socket.o .obj/OS_NS_sys_socket.so .shobj/OS_NS_sys_socket.o .shobj/OS_NS_sys_socket.so: OS_NS_sys_socket.cpp \
-  OS_NS_sys_socket.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/sys/os_socket.h \
-  os_include/sys/os_uio.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  os_include/os_limits.h \
-  os_include/os_unistd.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  os_include/net/os_if.h \
-  OS_NS_stropts.h \
-  os_include/os_stropts.h \
-  OS_NS_stropts.inl \
-  os_include/os_errno.h \
-  OS_NS_unistd.h \
-  Time_Value.h \
-  os_include/sys/os_time.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
-  OS_NS_unistd.inl \
-  OS_NS_sys_utsname.h \
-  os_include/sys/os_utsname.h \
-  OS_NS_sys_utsname.inl \
-  OS_NS_string.h \
-  Basic_Types.h \
-  os_include/os_float.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  Basic_Types.i \
-  OS_NS_string.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  OS_NS_wchar.inl \
-  OS_NS_errno.h \
-  OS_NS_errno.inl \
-  OS_NS_macros.h \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  Global_Macros.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_NS_fcntl.inl \
-  Default_Constants.h \
-  OS_Memory.h \
-  OS_NS_stdlib.h \
-  OS_NS_stdlib.inl \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  Object_Manager_Base.inl \
-  os_include/os_search.h \
-  OS_Memory.inl \
-  OS_QoS.h \
-  OS_NS_sys_socket.inl \
-  OS_NS_sys_uio.h \
-  OS_NS_sys_uio.inl \
-  OS_NS_stdio.h \
-  OS_NS_stdio.inl \
-  OS_NS_pwd.h \
-  os_include/os_pwd.h \
-  OS_NS_pwd.inl
-
-.obj/OS_NS_sys_stat.o .obj/OS_NS_sys_stat.so .shobj/OS_NS_sys_stat.o .shobj/OS_NS_sys_stat.so: OS_NS_sys_stat.cpp \
-  OS_NS_sys_stat.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/sys/os_stat.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  Default_Constants.h \
-  OS_NS_sys_stat.inl \
-  OS_NS_unistd.h \
-  os_include/os_unistd.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  Time_Value.h \
-  os_include/sys/os_time.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
-  os_include/os_errno.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  OS_NS_unistd.inl \
-  OS_NS_sys_utsname.h \
-  os_include/sys/os_utsname.h \
-  OS_NS_sys_utsname.inl \
-  OS_NS_string.h \
-  Basic_Types.h \
-  os_include/os_limits.h \
-  os_include/os_float.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  Basic_Types.i \
-  OS_NS_string.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  OS_NS_wchar.inl \
-  OS_NS_errno.h \
-  OS_NS_errno.inl \
-  OS_NS_macros.h \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  Global_Macros.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_NS_fcntl.inl \
-  OS_Memory.h \
-  OS_NS_stdlib.h \
-  OS_NS_stdlib.inl \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  Object_Manager_Base.inl \
-  os_include/os_search.h \
-  OS_Memory.inl
-
-.obj/OS_NS_sys_time.o .obj/OS_NS_sys_time.so .shobj/OS_NS_sys_time.o .shobj/OS_NS_sys_time.so: OS_NS_sys_time.cpp \
-  OS_NS_sys_time.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  Time_Value.h \
-  os_include/sys/os_time.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  Time_Value.inl \
-  OS_NS_sys_time.inl \
-  os_include/os_errno.h
-
-.obj/OS_NS_sys_uio.o .obj/OS_NS_sys_uio.so .shobj/OS_NS_sys_uio.o .shobj/OS_NS_sys_uio.so: OS_NS_sys_uio.cpp \
-  OS_NS_sys_uio.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/sys/os_uio.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  os_include/os_limits.h \
-  os_include/os_unistd.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  OS_NS_sys_uio.inl \
-  os_include/os_errno.h \
-  OS_Memory.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_NS_stdlib.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  os_include/sys/os_time.h \
-  OS_NS_stdlib.inl \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  Object_Manager_Base.inl \
-  OS_NS_string.h \
-  Basic_Types.h \
-  os_include/os_float.h \
-  Basic_Types.i \
-  OS_NS_string.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  OS_NS_wchar.inl \
-  Global_Macros.h \
-  os_include/os_search.h \
-  OS_Memory.inl \
-  OS_NS_unistd.h \
-  Time_Value.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
-  OS_NS_unistd.inl \
-  OS_NS_sys_utsname.h \
-  os_include/sys/os_utsname.h \
-  OS_NS_sys_utsname.inl \
-  OS_NS_errno.h \
-  OS_NS_errno.inl \
-  OS_NS_macros.h \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
-  Default_Constants.h
-
-.obj/OS_NS_sys_utsname.o .obj/OS_NS_sys_utsname.so .shobj/OS_NS_sys_utsname.o .shobj/OS_NS_sys_utsname.so: OS_NS_sys_utsname.cpp \
-  OS_NS_sys_utsname.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/sys/os_utsname.h \
-  OS_NS_sys_utsname.inl \
-  os_include/os_errno.h \
-  OS_NS_string.h \
-  Basic_Types.h \
-  os_include/os_limits.h \
-  os_include/os_unistd.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  os_include/os_float.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  os_include/sys/os_time.h \
-  Basic_Types.i \
-  OS_NS_string.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  OS_NS_wchar.inl \
-  OS_NS_stdio.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_stdio.inl \
-  OS_NS_unistd.h \
-  Time_Value.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
-  OS_NS_unistd.inl \
-  OS_NS_errno.h \
-  OS_NS_errno.inl \
-  OS_NS_macros.h \
-  OS_NS_fcntl.h \
-  Global_Macros.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_NS_fcntl.inl \
-  Default_Constants.h \
-  OS_Memory.h \
-  OS_NS_stdlib.h \
-  OS_NS_stdlib.inl \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  Object_Manager_Base.inl \
-  os_include/os_search.h \
-  OS_Memory.inl \
-  OS_NS_pwd.h \
-  os_include/os_pwd.h \
-  OS_NS_pwd.inl
-
-.obj/OS_NS_sys_wait.o .obj/OS_NS_sys_wait.so .shobj/OS_NS_sys_wait.o .shobj/OS_NS_sys_wait.so: OS_NS_sys_wait.cpp \
-  OS_NS_sys_wait.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  os_include/sys/os_time.h \
-  OS_NS_sys_wait.inl \
-  OS_NS_errno.h \
-  os_include/os_errno.h \
-  OS_NS_errno.inl \
-  Global_Macros.h \
-  OS_Errno.h \
-  OS_Errno.inl
-
-.obj/OS_NS_Thread.o .obj/OS_NS_Thread.so .shobj/OS_NS_Thread.o .shobj/OS_NS_Thread.so: OS_NS_Thread.cpp \
-  OS_NS_Thread.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  Global_Macros.h \
-  OS_Errno.h \
-  os_include/os_errno.h \
-  OS_Errno.inl \
-  Basic_Types.h \
-  os_include/os_limits.h \
-  os_include/os_unistd.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  os_include/os_float.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  os_include/sys/os_time.h \
-  Basic_Types.i \
-  Default_Constants.h \
-  os_include/os_pthread.h \
-  Base_Thread_Adapter.h \
-  OS_Log_Msg_Attributes.h \
-  iosfwd.h \
-  OS_Log_Msg_Attributes.inl \
-  Base_Thread_Adapter.inl \
-  os_include/sys/os_sem.h \
-  os_include/sys/os_ipc.h \
-  os_include/os_semaphore.h \
-  OS_Memory.h \
-  OS_NS_stdlib.h \
-  OS_NS_stdlib.inl \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  Object_Manager_Base.inl \
-  OS_NS_string.h \
-  OS_NS_string.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  OS_NS_wchar.inl \
-  os_include/os_search.h \
-  OS_Memory.inl \
-  OS_NS_signal.h \
-  OS_NS_signal.inl \
-  OS_NS_macros.h \
-  OS_NS_errno.h \
-  OS_NS_errno.inl \
-  OS_NS_Thread.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
-  OS_NS_unistd.h \
-  OS_NS_unistd.inl \
-  OS_NS_sys_utsname.h \
-  os_include/sys/os_utsname.h \
-  OS_NS_sys_utsname.inl \
-  OS_NS_stdio.h \
-  OS_NS_stdio.inl \
-  OS_NS_pwd.h \
-  os_include/os_pwd.h \
-  OS_NS_pwd.inl \
-  os_include/sys/os_mman.h \
-  Sched_Params.h \
-  Sched_Params.i \
-  OS_Thread_Adapter.h \
-  OS_Thread_Adapter.inl \
-  Min_Max.h \
-  OS_NS_ctype.h \
-  OS_NS_ctype.inl
-
-.obj/OS_NS_time.o .obj/OS_NS_time.so .shobj/OS_NS_time.o .shobj/OS_NS_time.so: OS_NS_time.cpp \
-  OS_NS_time.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  Basic_Types.h \
-  os_include/os_limits.h \
-  os_include/os_unistd.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  os_include/os_float.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  os_include/sys/os_time.h \
-  Basic_Types.i \
-  OS_NS_time.inl \
-  OS_NS_string.h \
-  OS_NS_string.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  os_include/os_errno.h \
-  OS_NS_wchar.inl \
-  OS_NS_errno.h \
-  OS_NS_errno.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
-  OS_NS_unistd.h \
-  OS_NS_unistd.inl \
-  OS_NS_sys_utsname.h \
-  os_include/sys/os_utsname.h \
-  OS_NS_sys_utsname.inl \
-  OS_NS_macros.h \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  Global_Macros.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_NS_fcntl.inl \
-  Default_Constants.h \
-  OS_Memory.h \
-  OS_NS_stdlib.h \
-  OS_NS_stdlib.inl \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  Object_Manager_Base.inl \
-  os_include/os_search.h \
-  OS_Memory.inl \
-  OS_NS_Thread.h \
-  os_include/os_pthread.h \
-  Base_Thread_Adapter.h \
-  OS_Log_Msg_Attributes.h \
-  iosfwd.h \
-  OS_Log_Msg_Attributes.inl \
-  Base_Thread_Adapter.inl \
-  os_include/sys/os_sem.h \
-  os_include/sys/os_ipc.h \
-  os_include/os_semaphore.h \
-  OS_NS_signal.h \
-  OS_NS_signal.inl \
-  OS_NS_Thread.inl \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
-  OS_NS_stdio.h \
-  OS_NS_stdio.inl \
-  OS_NS_pwd.h \
-  os_include/os_pwd.h \
-  OS_NS_pwd.inl \
-  os_include/sys/os_mman.h
-
-.obj/OS_NS_unistd.o .obj/OS_NS_unistd.so .shobj/OS_NS_unistd.o .shobj/OS_NS_unistd.so: OS_NS_unistd.cpp \
-  OS_NS_unistd.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/os_unistd.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  Time_Value.h \
-  os_include/sys/os_time.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
-  os_include/os_errno.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  OS_NS_unistd.inl \
-  OS_NS_sys_utsname.h \
-  os_include/sys/os_utsname.h \
-  OS_NS_sys_utsname.inl \
-  OS_NS_string.h \
-  Basic_Types.h \
-  os_include/os_limits.h \
-  os_include/os_float.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  Basic_Types.i \
-  OS_NS_string.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  OS_NS_wchar.inl \
-  OS_NS_errno.h \
-  OS_NS_errno.inl \
-  OS_NS_macros.h \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  Global_Macros.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_NS_fcntl.inl \
-  Default_Constants.h \
-  OS_Memory.h \
-  OS_NS_stdlib.h \
-  OS_NS_stdlib.inl \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  Object_Manager_Base.inl \
-  os_include/os_search.h \
-  OS_Memory.inl \
-  Base_Thread_Adapter.h \
-  OS_Log_Msg_Attributes.h \
-  iosfwd.h \
-  OS_Log_Msg_Attributes.inl \
-  Base_Thread_Adapter.inl \
-  OS_NS_ctype.h \
-  OS_NS_ctype.inl \
-  OS_NS_Thread.h \
-  os_include/os_pthread.h \
-  os_include/sys/os_sem.h \
-  os_include/sys/os_ipc.h \
-  os_include/os_semaphore.h \
-  OS_NS_signal.h \
-  OS_NS_signal.inl \
-  OS_NS_Thread.inl \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
-  OS_NS_stdio.h \
-  OS_NS_stdio.inl \
-  OS_NS_pwd.h \
-  os_include/os_pwd.h \
-  OS_NS_pwd.inl \
-  os_include/sys/os_mman.h
-
-.obj/OS_NS_wchar.o .obj/OS_NS_wchar.so .shobj/OS_NS_wchar.o .shobj/OS_NS_wchar.so: OS_NS_wchar.cpp \
-  OS_NS_wchar.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/os_wchar.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  os_include/os_stddef.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/sys/os_types.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  os_include/sys/os_time.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  Basic_Types.h \
-  os_include/os_limits.h \
-  os_include/os_unistd.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  os_include/os_float.h \
-  Basic_Types.i \
-  os_include/os_errno.h \
-  OS_NS_wchar.inl
-
-.obj/OS_QoS.o .obj/OS_QoS.so .shobj/OS_QoS.o .shobj/OS_QoS.so: OS_QoS.cpp \
-  OS_QoS.h \
-  pre.h \
-  ACE_export.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  os_include/sys/os_uio.h \
-  config-all.h \
-  OS_main.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  os_include/os_limits.h \
-  os_include/os_unistd.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  OS_NS_stropts.h \
-  os_include/os_stropts.h \
-  OS_NS_stropts.inl \
-  os_include/os_errno.h \
-  OS_NS_unistd.h \
-  Time_Value.h \
-  os_include/sys/os_time.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
-  OS_NS_unistd.inl \
-  OS_NS_sys_utsname.h \
-  os_include/sys/os_utsname.h \
-  OS_NS_sys_utsname.inl \
-  OS_NS_string.h \
-  Basic_Types.h \
-  os_include/os_float.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  Basic_Types.i \
-  OS_NS_string.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  OS_NS_wchar.inl \
-  OS_NS_errno.h \
-  OS_NS_errno.inl \
-  OS_NS_macros.h \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  Global_Macros.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_NS_fcntl.inl \
-  Default_Constants.h \
-  OS_Memory.h \
-  OS_NS_stdlib.h \
-  OS_NS_stdlib.inl \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  Object_Manager_Base.inl \
-  os_include/os_search.h \
-  OS_Memory.inl
-
-.obj/OS_TLI.o .obj/OS_TLI.so .shobj/OS_TLI.o .shobj/OS_TLI.so: OS_TLI.cpp \
-  OS_TLI.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  OS_Errno.h \
-  os_include/os_errno.h \
-  OS_Errno.inl \
-  OS_TLI.inl \
-  OS_NS_errno.h \
-  OS_NS_errno.inl
-
-.obj/OS_Errno.o .obj/OS_Errno.so .shobj/OS_Errno.o .shobj/OS_Errno.so: OS_Errno.cpp \
-  OS_Errno.h \
-  pre.h \
-  ACE_export.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  os_include/os_errno.h \
-  config-all.h \
-  OS_main.h \
-  OS_Errno.inl
-
-.obj/Base_Thread_Adapter.o .obj/Base_Thread_Adapter.so .shobj/Base_Thread_Adapter.o .shobj/Base_Thread_Adapter.so: Base_Thread_Adapter.cpp \
-  Base_Thread_Adapter.h \
-  pre.h \
-  OS_Log_Msg_Attributes.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  os_include/os_stddef.h \
-  iosfwd.h \
-  OS_Log_Msg_Attributes.inl \
-  Base_Thread_Adapter.inl
-
-.obj/OS_Thread_Adapter.o .obj/OS_Thread_Adapter.so .shobj/OS_Thread_Adapter.o .shobj/OS_Thread_Adapter.so: OS_Thread_Adapter.cpp \
-  OS_Thread_Adapter.h \
-  pre.h \
-  Base_Thread_Adapter.h \
-  OS_Log_Msg_Attributes.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  os_include/os_stddef.h \
-  iosfwd.h \
-  OS_Log_Msg_Attributes.inl \
-  Base_Thread_Adapter.inl \
-  OS_Thread_Adapter.inl \
-  Thread_Hook.h \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  os_include/sys/os_types.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  Object_Manager_Base.inl \
-  Global_Macros.h \
-  OS_Errno.h \
-  os_include/os_errno.h \
-  OS_Errno.inl \
-  OS_NS_Thread.h \
-  Basic_Types.h \
-  os_include/os_limits.h \
-  os_include/os_unistd.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  os_include/os_float.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/sys/os_resource.h \
-  os_include/sys/os_time.h \
-  Basic_Types.i \
-  Default_Constants.h \
-  os_include/os_pthread.h \
-  os_include/sys/os_sem.h \
-  os_include/sys/os_ipc.h \
-  os_include/os_semaphore.h \
-  OS_Memory.h \
-  OS_NS_stdlib.h \
-  OS_NS_stdlib.inl \
-  OS_NS_string.h \
-  OS_NS_string.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  OS_NS_wchar.inl \
-  os_include/os_search.h \
-  OS_Memory.inl \
-  OS_NS_signal.h \
-  OS_NS_signal.inl \
-  OS_NS_macros.h \
-  OS_NS_errno.h \
-  OS_NS_errno.inl \
-  OS_NS_Thread.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
-  OS_NS_unistd.h \
-  OS_NS_unistd.inl \
-  OS_NS_sys_utsname.h \
-  os_include/sys/os_utsname.h \
-  OS_NS_sys_utsname.inl \
-  OS_NS_stdio.h \
-  OS_NS_stdio.inl \
-  OS_NS_pwd.h \
-  os_include/os_pwd.h \
-  OS_NS_pwd.inl \
-  os_include/sys/os_mman.h
-
-.obj/OS_Log_Msg_Attributes.o .obj/OS_Log_Msg_Attributes.so .shobj/OS_Log_Msg_Attributes.o .shobj/OS_Log_Msg_Attributes.so: OS_Log_Msg_Attributes.cpp \
-  OS_Log_Msg_Attributes.h \
-  config-all.h \
-  pre.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  os_include/os_stddef.h \
-  iosfwd.h \
-  OS_Log_Msg_Attributes.inl
-
-.obj/Thread_Hook.o .obj/Thread_Hook.so .shobj/Thread_Hook.o .shobj/Thread_Hook.so: Thread_Hook.cpp \
-  Thread_Hook.h \
-  pre.h \
-  config-all.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h \
-  ACE_export.h \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  Object_Manager_Base.inl
-
-.obj/Sched_Params.o .obj/Sched_Params.so .shobj/Sched_Params.o .shobj/Sched_Params.so: Sched_Params.cpp \
-  Sched_Params.h \
-  pre.h \
-  ACE_export.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  Time_Value.h \
-  os_include/sys/os_time.h \
-  config-all.h \
-  OS_main.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
-  os_include/os_errno.h \
-  OS_NS_Thread.h \
-  Global_Macros.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  Basic_Types.h \
-  os_include/os_limits.h \
-  os_include/os_unistd.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  os_include/os_float.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  Basic_Types.i \
-  Default_Constants.h \
-  os_include/os_pthread.h \
-  Base_Thread_Adapter.h \
-  OS_Log_Msg_Attributes.h \
-  iosfwd.h \
-  OS_Log_Msg_Attributes.inl \
-  Base_Thread_Adapter.inl \
-  os_include/sys/os_sem.h \
-  os_include/sys/os_ipc.h \
-  os_include/os_semaphore.h \
-  OS_Memory.h \
-  OS_NS_stdlib.h \
-  OS_NS_stdlib.inl \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  Object_Manager_Base.inl \
-  OS_NS_string.h \
-  OS_NS_string.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  OS_NS_wchar.inl \
-  os_include/os_search.h \
-  OS_Memory.inl \
-  OS_NS_signal.h \
-  OS_NS_signal.inl \
-  OS_NS_macros.h \
-  OS_NS_errno.h \
-  OS_NS_errno.inl \
-  OS_NS_Thread.inl \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
-  OS_NS_unistd.h \
-  OS_NS_unistd.inl \
-  OS_NS_sys_utsname.h \
-  os_include/sys/os_utsname.h \
-  OS_NS_sys_utsname.inl \
-  OS_NS_stdio.h \
-  OS_NS_stdio.inl \
-  OS_NS_pwd.h \
-  os_include/os_pwd.h \
-  OS_NS_pwd.inl \
-  os_include/sys/os_mman.h \
-  Sched_Params.i
-
-.obj/Handle_Set.o .obj/Handle_Set.so .shobj/Handle_Set.o .shobj/Handle_Set.so: Handle_Set.cpp \
-  Handle_Set.h \
-  pre.h \
-  ACE_export.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  os_include/sys/os_select.h \
-  config-all.h \
-  OS_main.h \
-  os_include/sys/os_time.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/os_limits.h \
-  os_include/os_unistd.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  Handle_Set.i \
-  Log_Msg.h \
-  Global_Macros.h \
-  OS_Errno.h \
-  os_include/os_errno.h \
-  OS_Errno.inl \
-  Default_Constants.h \
-  Log_Priority.h \
-  OS_Log_Msg_Attributes.h \
-  iosfwd.h \
-  OS_Log_Msg_Attributes.inl \
-  os_include/os_string.h \
-  os_include/os_strings.h \
-  OS_NS_string.h \
-  Basic_Types.h \
-  os_include/os_float.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/sys/os_resource.h \
-  Basic_Types.i \
-  OS_NS_string.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_ctype.h \
-  OS_NS_wchar.inl
-
-.obj/Copy_Disabled.o .obj/Copy_Disabled.so .shobj/Copy_Disabled.o .shobj/Copy_Disabled.so: Copy_Disabled.cpp \
-  Copy_Disabled.h \
-  pre.h \
-  ACE_export.h \
-  config-lite.h \
-  config.h \
-  $(ACE_PLATFORM_CONFIG) \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl
-
 .obj/CDR_Base.o .obj/CDR_Base.so .shobj/CDR_Base.o .shobj/CDR_Base.so: CDR_Base.cpp \
   CDR_Base.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -25988,7 +25688,6 @@ endif # GHS
   pre.h \
   CDR_Base.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -26120,7 +25819,6 @@ endif # GHS
   Codeset_IBM1047.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -26136,7 +25834,6 @@ endif # GHS
   SStringfwd.h \
   Basic_Types.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -26264,7 +25961,6 @@ endif # GHS
   SStringfwd.h \
   Basic_Types.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -26390,7 +26086,6 @@ endif # GHS
   pre.h \
   Message_Block.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -26514,7 +26209,6 @@ endif # GHS
   Notification_Strategy.h \
   Event_Handler.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -26632,7 +26326,6 @@ endif # GHS
   Service_Object.h \
   Shared_Object.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -26847,7 +26540,6 @@ endif # GHS
   Map_Manager.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -27002,7 +26694,6 @@ endif # GHS
   Malloc.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -27146,8 +26837,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -27171,7 +26860,6 @@ endif # GHS
   PI_Malloc.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -27316,8 +27004,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -27363,7 +27049,6 @@ endif # GHS
   Malloc_Allocator.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -27473,7 +27158,6 @@ endif # GHS
   Malloc.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -27617,8 +27301,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -27635,7 +27317,6 @@ endif # GHS
   Mem_Map.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -27720,7 +27401,6 @@ endif # GHS
   pre.h \
   ACE.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -27852,8 +27532,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -27868,6 +27546,8 @@ endif # GHS
   Auto_Ptr.h \
   Auto_Ptr.i \
   Auto_Ptr.cpp \
+  OS_NS_sys_stat.h \
+  OS_NS_sys_stat.inl \
   OS_NS_sys_shm.h \
   os_include/sys/os_shm.h \
   OS_NS_sys_shm.inl \
@@ -27904,7 +27584,6 @@ endif # GHS
   pre.h \
   Malloc.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -28048,8 +27727,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -28069,7 +27746,6 @@ endif # GHS
   Obchunk.h \
   Malloc.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -28213,8 +27889,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -28233,7 +27907,6 @@ endif # GHS
   Read_Buffer.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -28397,7 +28070,6 @@ endif # GHS
   Shared_Memory.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -28410,7 +28082,6 @@ endif # GHS
   pre.h \
   Shared_Memory.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -28483,8 +28154,6 @@ endif # GHS
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   Shared_Memory_MM.i
 
 .obj/Shared_Memory_SV.o .obj/Shared_Memory_SV.so .shobj/Shared_Memory_SV.o .shobj/Shared_Memory_SV.so: Shared_Memory_SV.cpp \
@@ -28492,7 +28161,6 @@ endif # GHS
   pre.h \
   Shared_Memory.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -28523,7 +28191,6 @@ endif # GHS
   pre.h \
   Basic_Types.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -28581,7 +28248,6 @@ endif # GHS
   Local_Tokens.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -28597,7 +28263,6 @@ endif # GHS
   INET_Addr.h \
   Sock_Connect.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -28636,10 +28301,10 @@ endif # GHS
   os_include/os_wchar.h \
   os_include/os_string.h \
   os_include/os_ctype.h \
-  os_include/os_errno.h \
   OS_NS_wchar.inl \
   Global_Macros.h \
   OS_Errno.h \
+  os_include/os_errno.h \
   OS_Errno.inl \
   OS_NS_arpa_inet.h \
   os_include/arpa/os_inet.h \
@@ -28769,7 +28434,6 @@ endif # GHS
   pre.h \
   Map_Manager.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -28910,7 +28574,6 @@ endif # GHS
   Token_Invariants.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -29024,7 +28687,6 @@ endif # GHS
   Token_Manager.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -29140,7 +28802,6 @@ endif # GHS
   pre.h \
   Local_Tokens.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -29163,7 +28824,6 @@ endif # GHS
   ACE.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -29312,8 +28972,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -29366,7 +29024,6 @@ endif # GHS
   INET_Addr.h \
   Sock_Connect.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -29405,10 +29062,10 @@ endif # GHS
   os_include/os_wchar.h \
   os_include/os_string.h \
   os_include/os_ctype.h \
-  os_include/os_errno.h \
   OS_NS_wchar.inl \
   Global_Macros.h \
   OS_Errno.h \
+  os_include/os_errno.h \
   OS_Errno.inl \
   OS_NS_arpa_inet.h \
   os_include/arpa/os_inet.h \
@@ -29548,7 +29205,6 @@ endif # GHS
   pre.h \
   Basic_Types.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -29603,7 +29259,6 @@ endif # GHS
   Name_Space.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -29737,7 +29392,6 @@ endif # GHS
   SStringfwd.h \
   Basic_Types.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -29943,8 +29597,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_stat.h \
-  OS_NS_sys_stat.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -29980,7 +29632,6 @@ endif # GHS
   Registry_Name_Space.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -29993,7 +29644,6 @@ endif # GHS
   Remote_Name_Space.h \
   pre.h \
   ACE_export.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -30177,7 +29827,6 @@ endif # GHS
 .obj/NT_Service.o .obj/NT_Service.so .shobj/NT_Service.o .shobj/NT_Service.so: NT_Service.cpp \
   config-all.h \
   pre.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
@@ -30190,7 +29839,6 @@ endif # GHS
   UUID.h \
   pre.h \
   config-all.h \
-  config-lite.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project: orbsvcsexe, notification, naming {
+project: orbsvcsexe, notify, naming {
   after    += NotifyTests_Lib
   libs     += NotifyTests
   includes += $(TAO_ROOT)/orbsvcs/tests/Notify/lib

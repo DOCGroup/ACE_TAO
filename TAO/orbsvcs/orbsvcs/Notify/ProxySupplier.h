@@ -22,7 +22,7 @@
 #include "Event.h"
 #include "Proxy.h"
 #include "Refcountable_Guard_T.h"
-#include "orbsvcs/orbsvcs/CosEventChannelAdminC.h"
+#include "orbsvcs/CosEventChannelAdminC.h"
 
 class TAO_Notify_Consumer;
 class TAO_Notify_ConsumerAdmin;

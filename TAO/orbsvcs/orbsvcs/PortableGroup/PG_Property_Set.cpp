@@ -11,6 +11,8 @@
  *  Note: this started as a simple helper class to make decoding sets of properties
  *  easier, but expanded to provide more general support for managing sets of properties.
  *
+ *  A more appropriate name would be PG_Properties_Set.  Maybe this can be changed someday.
+ *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================
@@ -352,20 +354,20 @@ int TAO_PG::test_encode_decode ()
     const PortableGroup::Value *,
     ACE_SYNCH_NULL_MUTEX>;
 
-   template class ACE_Hash_Map_Iterator<
+    typedef class ACE_Hash_Map_Iterator<
       ACE_CString,
       const PortableGroup::Value *,
       ACE_SYNCH_NULL_MUTEX>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-# pragma instantiate ACE_Hash_Map_Manager<  \
-    ACE_CString,                            \
-    const PortableGroup::Value *,           \
+# pragma instantiate ACE_Hash_Map_Manager<
+    ACE_CString,
+    const PortableGroup::Value *,
     ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator<  \
-      ACE_CString,                          \
-      const PortableGroup::Value *,         \
+#pragma instantiate ACE_Hash_Map_Iterator<
+      ACE_CString,
+      const PortableGroup::Value *,
       ACE_SYNCH_NULL_MUTEX>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

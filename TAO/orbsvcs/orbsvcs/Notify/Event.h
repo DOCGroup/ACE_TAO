@@ -23,9 +23,9 @@
 #include "ace/Copy_Disabled.h"
 #include "ace/Refcounted_Auto_Ptr.h"
 
-#include "orbsvcs/orbsvcs/Event_ForwarderS.h"
-#include "orbsvcs/orbsvcs/CosNotifyFilterC.h"
-#include "orbsvcs/orbsvcs/CosNotificationC.h"
+#include "orbsvcs/Event_ForwarderS.h"
+#include "orbsvcs/CosNotifyFilterC.h"
+#include "orbsvcs/CosNotificationC.h"
 
 #include "Property.h"
 #include "Property_T.h"

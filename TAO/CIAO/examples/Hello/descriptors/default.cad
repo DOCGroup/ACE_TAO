@@ -1,6 +1,5 @@
 <?xml version="1.0"?> <!-- -*- SGML -*-  -->
 
-<!-- $Id$: -->
 <!-- This file must be pre-processed for final location based on $CIAO_ROOT -->
 <!DOCTYPE componentassembly SYSTEM "../../../docs/XML/componentassembly.dtd">
 
@@ -24,6 +23,7 @@
         <componentfileref idref="com-Sender"/>
         <componentinstantiation id="a_Sender">
          <registercomponent>
+            <!-- writeiortofile is a non-standard CIAO extension.  -->
             <writeiortofile name="sender.ior"/>
           </registercomponent>
         </componentinstantiation>
@@ -33,8 +33,7 @@
         <componentfileref idref="com-Receiver"/>
         <componentinstantiation id="a_Receiver"/>
       </homeplacement>
-
-</partitioning>
+  </partitioning>
 
   <connections>
 

@@ -160,7 +160,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                             -1);
             if (pset->insert (item) == -1)
               ACE_ERROR ((LM_ERROR,
-                          ACE_LIB_TEXT ("(%P|%t) Unable to add protocol factories for %s: %m\n"),
+                          ACE_LIB_TEXT ("(%P|%t) Unable to add protocol factories for %s: %p\n"),
                           argv[curarg]));
           }
       }
@@ -171,7 +171,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
     {
         curarg++;
         CONV_FRAME::CodeSetId ncs;
-        if (ACE_Codeset_Registry::locale_to_registry (ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
+        if (ACE_Codeset_Registry::locale_to_registry (argv[curarg],
                                                       ncs) == 0)
           {
             char **endPtr =0;
@@ -197,7 +197,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
       {
         curarg++;
         CONV_FRAME::CodeSetId ncs;
-        if (ACE_Codeset_Registry::locale_to_registry( ACE_TEXT_ALWAYS_CHAR (argv[curarg]),
+        if (ACE_Codeset_Registry::locale_to_registry( argv[curarg],
                                                       ncs) == 0)
           {
             char **endPtr = 0;
@@ -227,7 +227,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
           {
             TAO_Codeset_Manager *csm = this->get_codeset_manager();
             if (csm)
-              if (csm->add_char_translator(ACE_TEXT_ALWAYS_CHAR (argv[curarg])) == -1)
+              if (csm->add_char_translator(argv[curarg]) == -1)
                 return -1;
           }
       }
@@ -241,7 +241,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
           {
             TAO_Codeset_Manager *csm = this->get_codeset_manager();
             if (csm)
-              if (csm->add_wchar_translator(ACE_TEXT_ALWAYS_CHAR(argv[curarg])) == -1)
+              if (csm->add_wchar_translator(argv[curarg]) == -1)
                 return -1;
           }
       }
@@ -460,7 +460,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
             this->max_muxed_connections_ =
               ACE_OS::atoi (argv[curarg]);
         else
-          this->report_option_value_error (ACE_LIB_TEXT("-ORBMuxedConnectionMax"),
+          this->report_option_value_error ("-ORBMuxedConnectionMax",
                                            argv[curarg]);
       }
     else if (ACE_OS::strncmp (argv[curarg],

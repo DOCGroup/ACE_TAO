@@ -4,15 +4,13 @@
 #include "CEC_ProxyPushConsumer.h"
 #include "CEC_ProxyPullConsumer.h"
 #include "CEC_EventChannel.h"
-#include "orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.h"
+#include "orbsvcs/ESF/ESF_Shutdown_Proxy.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "CEC_SupplierAdmin.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (CosEvent, 
-           CEC_SupplierAdmin, 
-           "$Id$")
+ACE_RCSID(CosEvent, CEC_SupplierAdmin, "$Id$")
 
 TAO_CEC_SupplierAdmin::TAO_CEC_SupplierAdmin (TAO_CEC_EventChannel *ec)
   :  event_channel_ (ec),

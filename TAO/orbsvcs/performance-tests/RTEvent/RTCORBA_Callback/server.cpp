@@ -17,9 +17,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID (TAO_PERF_RTEC_RTCORBA_Baseline, 
-           server, 
-           "$Id$")
+ACE_RCSID(TAO_PERF_RTEC_RTCORBA_Baseline, server, "$Id$")
 
 const char *ior_output_file = "test.ior";
 int use_rt_corba = 0;
