@@ -1,3 +1,9 @@
+Fri Jun 30 03:21:58 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+        * ace/OS.{h,i}:
+        * ace/OS_Dirent.{h,inl}:
+          Added more pace calls. OS.i is now mostly complete.
+
 Thu Jun 29 18:44:07 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
         * ace/OS.{i,cpp,inl}:
