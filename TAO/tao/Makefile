@@ -162,39 +162,6 @@ ORB_CORE_FILES = \
 
 DYNAMIC_ANY_FILES =
 
-ifndef corba_messaging
-  corba_messaging = 1
-endif # corba_messaging
-
-ifndef rt_corba
-  rt_corba = 1
-endif # rt_corba
-
-# TAOC and TAOS should be moved outside the corba_messaging scope once
-# more classes have been added to the TAO module.
-ifeq ($(corba_messaging),1)
-ORB_CORE_FILES += \
-  MessagingC \
-  MessagingS \
-  Policy_Manager \
-  Messaging_Policy_i \
-  TAOC \
-  TAOS \
-  Client_Priority_Policy \
-  Buffering_Constraint_Policy
-
-endif # corba_messaging
-
-ifeq ($(rt_corba),1)
-ORB_CORE_FILES += \
-  rtcorbafwd \
-  Priority_Mapping \
-  Linear_Priority_Mapping \
-  Direct_Priority_Mapping \
-  RT_Current \
-  Pool_Per_Endpoint
-endif # corba_messaging
-
 ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
 endif
@@ -208,6 +175,7 @@ ACE_SHLIBS = -lACE
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
 
 ifndef minimum_corba
 
@@ -235,6 +203,31 @@ INTERFACE_REPO_FILES += \
   InterfaceC
 
 endif # minimum_corba
+
+# TAOC and TAOS should be moved outside the corba_messaging scope once
+# more classes have been added to the TAO module.
+ifeq ($(corba_messaging),1)
+ORB_CORE_FILES += \
+  MessagingC \
+  MessagingS \
+  Policy_Manager \
+  Messaging_Policy_i \
+  TAOC \
+  TAOS \
+  Client_Priority_Policy \
+  Buffering_Constraint_Policy
+
+endif # corba_messaging
+
+ifeq ($(rt_corba),1)
+ORB_CORE_FILES += \
+  rtcorbafwd \
+  Priority_Mapping \
+  Linear_Priority_Mapping \
+  Direct_Priority_Mapping \
+  RT_Current \
+  Pool_Per_Endpoint
+endif # corba_messaging
 
 ####
 #### Build customization.
@@ -298,7 +291,6 @@ LSRC    = $(addsuffix .cpp,$(FILES))
 BUILD   += TAO_COMPONENTS
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
-include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU

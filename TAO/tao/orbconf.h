@@ -415,7 +415,9 @@ and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
 #endif /* TAO_HAS_REMOTE_POLICIES */
 
 // CORBA Messaging
-#define TAO_HAS_CORBA_MESSAGING
+#if !defined (TAO_HAS_CORBA_MESSAGING)
+# define TAO_HAS_CORBA_MESSAGING
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
 // Define the policy types as literals, so they can be used in switch
 // statements
