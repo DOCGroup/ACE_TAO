@@ -1,3 +1,10 @@
+Thu Jan  8 18:28:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/APG/Streams/CommandStream.h:
+
+	  Fixed a warning with g+++ builds that were caused by wrong
+	  initialization order of members.
+
 Thu Jan  8 18:15:21 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/APG/Timers/Alarm.cpp:
