@@ -1552,7 +1552,7 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
   CORBA::TypeCode_var tc = component->type (ACE_TRY_ENV);
   ACE_CHECK;
 
-  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (tc,
+  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (tc.in (),
                                                  ACE_TRY_ENV);
   ACE_CHECK;
 
