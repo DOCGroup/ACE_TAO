@@ -26,7 +26,6 @@ use vars qw(@ISA);
 my(@targets)  = ('all', 'debug', 'profile', 'optimize',
                  'install', 'deinstall', 'clean', 'realclean',
                  'clobber', 'depend', 'rcs_info', 'idl_stubs',
-                 'reverseclean',
                 );
 
 # ************************************************************
@@ -151,6 +150,7 @@ sub write_comps {
               "\t\@\$(MAKE) -f $base " . ($dir ne '.' ? "-C $dir " : '') .
               "realclean$crlf$crlf";
   }
+  print $fh "reverseclean: realclean" . $crlf;
 }
 
 1;
