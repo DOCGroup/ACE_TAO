@@ -1,3 +1,10 @@
+Thu May 17 08:56:59 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/RT_Protocols_Hooks.cpp: Moved explicit template instantiation
+	  code inside the proper guard. This should fix the some
+	  compilation errors that were occuring when TAO_HAS_RT_CORBA was
+	  not set. 
+
 Thu May 17 08:53:33 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * docs/Options.html:
@@ -172,6 +179,7 @@ Wed May 16 20:59:15 2001  Ossama Othman  <ossama@uci.edu>
 	  by the allocation rather than the one that was set indirectly.
 	  It wasn't obvious what was happening otherwise.
 
+>>>>>>> 1.3550
 Wed May 16 20:58:51 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/util/utl_scope.cpp:
