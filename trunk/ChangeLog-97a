@@ -1,3 +1,10 @@
+Thu Mar 13 00:12:15 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* ace/Local_Name_Space_T.cpp: Added code to the list methods such
+ 	  that structured exceptions are handled correctly.  Thanks to
+ 	  Karlheinz Dorn (karlheinz.dorn@med.siemens.de) for reporting
+ 	  this.
+
 Wed Mar 12 21:31:51 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* examples/Reactor/Ntalker/ntalker.cpp: Made changes to the

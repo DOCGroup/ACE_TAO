@@ -150,38 +150,51 @@ public:
   
   virtual int list_names (ACE_WSTRING_SET &set, 
 			  const ACE_WString &pattern);
+  virtual int list_names_i (ACE_WSTRING_SET &set, 
+			  const ACE_WString &pattern);
   // Get a set of names matching a specified pattern (wchars). Matching
   // means the names must begin with the pattern string.
 
   virtual int list_values (ACE_WSTRING_SET &set, 
 			   const ACE_WString &pattern);
+  virtual int list_values_i (ACE_WSTRING_SET &set, 
+			     const ACE_WString &pattern);
   // Get a set of values matching a specified pattern (wchars). Matching
   // means the values must begin with the pattern string.
 
   virtual int list_types (ACE_WSTRING_SET &set, 
 			  const ACE_WString &pattern);
+  virtual int list_types_i (ACE_WSTRING_SET &set, 
+			    const ACE_WString &pattern);
   // Get a set of types matching a specified pattern (wchars). Matching
   // means the types must begin with the pattern string.
 
   virtual int list_name_entries (ACE_BINDING_SET &set, 
 				 const ACE_WString &pattern);
+  virtual int list_name_entries_i (ACE_BINDING_SET &set, 
+				   const ACE_WString &pattern);
   // Get a set of names matching a specified pattern (wchars). Matching
   // means the names must begin with the pattern string. Returns the
   // complete binding associated each pattern match.
 
   virtual int list_value_entries (ACE_BINDING_SET &set, 
 				  const ACE_WString &pattern);
+  virtual int list_value_entries_i (ACE_BINDING_SET &set, 
+				    const ACE_WString &pattern);
   // Get a set of values matching a specified pattern (wchars). Matching
   // means the values must begin with the pattern string. Returns the
   // complete binding associated each pattern match.
 
   virtual int list_type_entries (ACE_BINDING_SET &set, 
 				 const ACE_WString &pattern);
+  virtual int list_type_entries_i (ACE_BINDING_SET &set, 
+				   const ACE_WString &pattern);
   // Get a set of types matching a specified pattern (wchars). Matching
   // means the types must begin with the pattern string. Returns the
   // complete binding associated each pattern match.
 
   virtual void dump (void) const;
+  virtual void dump_i (void) const;
   // Dump the state of the object
 
 private:
