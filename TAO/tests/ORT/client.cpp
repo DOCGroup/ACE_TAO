@@ -63,6 +63,9 @@ main (int argc, char *argv[])
                             1);
         }
 
+      // @@ Priyanka, can't you just do the following:
+      //      CORBA::Boolean result = server->request...
+      //    No need initialize twice.
       CORBA::Boolean result = 1;
 
       result = server->request_server (TAO_ENV_SINGLE_ARG_DECL);

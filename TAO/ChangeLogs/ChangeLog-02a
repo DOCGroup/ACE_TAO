@@ -1,3 +1,11 @@
+Sun Jan 27 00:52:49 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/ORT/ORT_test_IORInterceptor.cpp:
+	* tests/ORT/client.cpp:
+	* tests/ORT/server.cpp:
+
+	  Minor code review.  Nothing major.  Just style issues.
+
 Sat Jan 26 23:09:56 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB.h:

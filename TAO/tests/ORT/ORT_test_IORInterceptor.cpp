@@ -60,6 +60,8 @@ ORT_test_IORInterceptor::adapter_manager_state_changed (
 {
   ACE_DEBUG ((LM_DEBUG,
               "The adapter_manager state has changed. \n"));
+
+  // @@ Priyanka, why do you need the below "return" statement?
   return;
 }
 
@@ -69,5 +71,6 @@ ORT_test_IORInterceptor:: adapter_state_changed (
     PortableInterceptor::AdapterState)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // @@ Priyanka, why do you need the below "return" statement?
   return;
 }
