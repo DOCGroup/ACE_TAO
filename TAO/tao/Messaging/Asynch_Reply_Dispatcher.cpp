@@ -50,6 +50,16 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
   ACE_Data_Block *db =
     this->reply_cdr_.clone_from (params.input_cdr_);
 
+  if (db == 0)
+    {
+      if (TAO_debug_level > 2)
+        ACE_ERROR ((
+          LM_ERROR,
+          "TAO (%P|%t) - Asynch_Reply_Dispatcher::dispatch_reply ",
+          "clone_from failed \n"));
+      return -1;
+    }
+
   // See whether we need to delete the data block by checking the
   // flags. We cannot be happy that we initally allocated the
   // datablocks of the stack. If this method is called twice, as is in
@@ -179,9 +189,10 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
     {
       // Generate a fake exception....
       CORBA::TIMEOUT timeout_failure (
-        CORBA::SystemException::_tao_minor_code (TAO_TIMEOUT_SEND_MINOR_CODE,
-                                                 errno),
-         CORBA::COMPLETED_NO);
+        CORBA::SystemException::_tao_minor_code (
+            TAO_TIMEOUT_RECV_MINOR_CODE,
+            errno),
+         CORBA::COMPLETED_MAYBE);
 
       TAO_OutputCDR out_cdr;
 
