@@ -1,7 +1,7 @@
-CAOCHost corbaloc:iiop:CAOC.bbn-uav-ciao-ec.pces.emulab.net:20000/ServerActivator
-EngagementBattleHost  corbaloc:iiop:EngagementBattle.bbn-uav-ciao-ec.pces.emulab.net:20000/ServerActivator
-SatelliteHost corbaloc:iiop:Satellite.bbn-uav-ciao-ec.pces.emulab.net:20000/ServerActivator
-UAVGSHost  corbaloc:iiop:UAVGS.bbn-uav-ciao-ec.pces.emulab.net:20000/ServerActivator
-UAVHost corbaloc:iiop:UAVHost.bbn-uav-ciao-ec.pces.emulab.net:20000/ServerActivator
-UCAVGSHost  corbaloc:iiop:UCAVGS.bbn-uav-ciao-ec.pces.emulab.net:20000/ServerActivator
-UCAVHost corbaloc:iiop:UCAVHost.bbn-uav-ciao-ec.pces.emulab.net:20000/ServerActivator
+CAOCHost corbaloc:iiop:pc119.emulab.net:20000/ServerActivator
+EngagementBattleHost  corbaloc:iiop:pc112.emulab.net:20000/ServerActivator
+SatelliteHost corbaloc:iiop:pc157.emulab.net:20000/ServerActivator
+UAVGSHost  corbaloc:iiop:pc144.emulab.net:20000/ServerActivator
+UAVHost corbaloc:iiop:pc96.emulab.net:20000/ServerActivator
+UCAVGSHost  corbaloc:iiop:pc168.emulab.net:20000/ServerActivator
+UCAVHost corbaloc:iiop:pc107.emulab.net:20000/ServerActivator
