@@ -1,13 +1,13 @@
 // $Id$
 
-#include "Consumer_Input_Handler.h"
+#include "Consumer_Handler.h"
 
 // This function runs the Callback Quoter Consumer application.
 
 int
 main (int argc, char **argv)
 {
-  Consumer_Input_Handler consumer;
+  Consumer_Handler consumer;
 
   ACE_DEBUG ((LM_DEBUG,
               "\n\t***Consumer***\n\n"));
