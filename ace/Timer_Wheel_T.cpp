@@ -62,8 +62,8 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR>::ACE_Timer_Wheel_T (size_t wheelsize,
     current_pos_ ((ACE_OS::gettimeofday ().usec () / resolution) % wheel_size_),
     current_time_ (ACE_OS::gettimeofday ()),
     size_ (0),
-    freelist_ (NULL),
-    iterator_ (*this)
+    iterator_ (*this),
+    freelist_ (NULL)
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::ACE_Timer_Wheel_T");
   size_t i;
