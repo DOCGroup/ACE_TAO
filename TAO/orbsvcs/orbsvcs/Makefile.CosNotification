@@ -12,10 +12,9 @@ LIBNAME  = libTAO_CosNotification
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
-VPATH=.:Notify:Trader
+VPATH=.:Notify:ETCL
 
-ACE_SHLIBS = -lTAO_Svc_Utils -lTAO_DynamicAny -lTAO -lACE
-ACE_SHLIBS = -lTAO_Svc_Utils -lTAO_DynamicAny -lTAO_PortableServer -lTAO -lACE
+ACE_SHLIBS = -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -lTAO_PortableServer -lTAO -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -120,9 +119,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #       Local targets (and local hacks)
 #----------------------------------------------------------------------------
 
-LDFLAGS += -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/orbsvcs
+LDFLAGS += -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/orbsvcs \
+        -L$(TAO_ROOT)/orbsvcs/orbsvcs/ETCL
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
-	-I$(TAO_ROOT)/orbsvcs/orbsvcs/ESF
+	-I$(TAO_ROOT)/orbsvcs/orbsvcs/ESF -I$(TAO_ROOT)/orbsvcs/orbsvcs/ETCL
 
 .PRECIOUS: $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext))))
 

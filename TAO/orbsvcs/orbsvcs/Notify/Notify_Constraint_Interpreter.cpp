@@ -5,7 +5,7 @@
 
 ACE_RCSID(Notify, Notify_Constraint_Interpreter, "$Id$")
 
-TAO_Notify_Constraint_Interpreter::TAO_Notify_Constraint_Interpreter(void)
+TAO_Notify_Constraint_Interpreter::TAO_Notify_Constraint_Interpreter (void)
 {
 }
 
@@ -14,29 +14,36 @@ TAO_Notify_Constraint_Interpreter::~TAO_Notify_Constraint_Interpreter (void)
 }
 
 void
-TAO_Notify_Constraint_Interpreter::build_tree (const char* constraints
-                                            TAO_ENV_ARG_DECL)
+TAO_Notify_Constraint_Interpreter::build_tree (
+    const char *constraints
+    TAO_ENV_ARG_PARAMETER
+  )
   ACE_THROW_SPEC ((CosNotifyFilter::InvalidConstraint,
                    CORBA::NO_MEMORY))
 {
-  if (TAO_Interpreter::is_empty_string (constraints))
+  if (TAO_ETCL_Interpreter::is_empty_string (constraints))
     {
-      // root is deleted in the TAO_Interpreter's destructor.
+      // Root is deleted in the TAO_Interpreter's destructor.
       ACE_NEW_THROW_EX (this->root_,
-                        TAO_Literal_Constraint ((CORBA::Boolean) 1),
+                        TAO_ETCL_Literal_Constraint ((CORBA::Boolean) 1),
                         CORBA::NO_MEMORY ());
       ACE_CHECK;
     }
   else
     {
-      // @@ Pradeep: Where is root_ set???
-      if (TAO_Interpreter::build_tree (constraints) != 0)
+      // root_ is set in this base class call.
+      if (TAO_ETCL_Interpreter::build_tree (constraints) != 0)
           ACE_THROW (CosNotifyFilter::InvalidConstraint ());
     }
 }
 
 CORBA::Boolean
-TAO_Notify_Constraint_Interpreter::evaluate (TAO_Constraint_Evaluator& evaluator)
+TAO_Notify_Constraint_Interpreter::evaluate (
+    TAO_Notify_Constraint_Visitor &evaluator
+  )
 {
-  return evaluator.evaluate_constraint (this->root_);
+  CORBA::Boolean retval =
+    evaluator.evaluate_constraint (this->root_);
+
+  return retval;
 }
