@@ -64,7 +64,7 @@ be_visitor_interface_base_proxy_impl_ch::visit_interface (be_interface *node)
 
 
   // Destructor Declaration.
-  *os << "virtual ~" << node->base_proxy_impl_name () << " (void);"
+  *os << "virtual ~" << node->base_proxy_impl_name () << " (void) { }"
       << be_nl  << be_nl;
 
 
