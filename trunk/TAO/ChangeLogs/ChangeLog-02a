@@ -68,7 +68,6 @@ Tue Jan  2 16:25:22 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * orbsvcs/tests/InterfaceRepo/Application_Test/client.cpp:
         * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
         * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.h:
-        * orbsvcs/tests/InterfaceRepo/Application_Test/main.cpp:
         * orbsvcs/tests/InterfaceRepo/Application_Test/run_test.pl:
         * orbsvcs/tests/InterfaceRepo/Application_Test/server.cpp:
         * orbsvcs/tests/InterfaceRepo/Application_Test/test.idl:
