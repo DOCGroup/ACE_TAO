@@ -1,3 +1,10 @@
+Wed Oct 20 10:05:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* tests/AMI/simple_client.cpp,
+	  tests/AMI/client.cpp:
+	  Fixed missing ACE_THROW_SPEC declarations, thanks to 
+	  Thomas Groth <groth.th@stn-atlas.de> for reporting this.
+
 Wed Oct 20 09:21:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/corbafwd.h:
