@@ -7506,9 +7506,7 @@ ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
   prio = param.sched_priority;
   return result;
 #elif defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_STHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getprio (thr_id, &prio), ace_result_), int, -1);
-# elif (defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_SETSCHED))
+# if (defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_SETSCHED))
 
 #   if defined (ACE_HAS_PTHREADS_DRAFT4)
   int result;
@@ -7541,6 +7539,8 @@ ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
   prio = param.sched_priority;
   return result;
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 */
+# elif defined (ACE_HAS_STHREADS)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getprio (thr_id, &prio), ace_result_), int, -1);
 # elif defined (ACE_HAS_WTHREADS)
   prio = ::GetThreadPriority (thr_id);
   if (prio == THREAD_PRIORITY_ERROR_RETURN)
@@ -8373,11 +8373,7 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
                                        (thr_id, policy, &param),
                                        ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_STHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setprio (thr_id, prio),
-                                       ace_result_),
-                     int, -1);
-# elif (defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_SETSCHED))
+# if (defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_SETSCHED))
 
 #   if defined (ACE_HAS_PTHREADS_DRAFT4)
   int result;
@@ -8405,6 +8401,10 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
                                        result),
                      int, -1);
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 */
+# elif defined (ACE_HAS_STHREADS)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setprio (thr_id, prio),
+                                       ace_result_),
+                     int, -1);
 # elif defined (ACE_HAS_WTHREADS)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetThreadPriority (thr_id, prio),
                                           ace_result_),

@@ -1,3 +1,28 @@
+Mon Jul 09 14:39:50 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/OS.i (thr_getprio and thr_setprio): Changed these two
+	  function such that if we are on Solaris and we have pthreads
+	  enabled, we should use the pthread calls rather than the native
+	  Solaris calls.  The reasons for choosing the pthread calls is
+	  due to following problems with the native calls:
+
+	  - thr_getprio() is evil because on Solaris 5.8, a thread with
+	  priority -20 (SCHED_OTHER) is reported to have priority 80.
+
+	  - thr_setprio() is evil because it cannot set the negative
+	  priorities on Solaris 5.8.
+
+	  - Also, thr_setprio() cannot change the priority of a thread
+	  with negative priority to a positive priority on Solaris 5.8
+	  (even though there is no error reported and thr_getprio() shows
+	  that the change happeded but pthread_getschedparam() shows that
+	  no change happened).
+
+	  - In addition, suppose a thread of policy SCHED_RR or SCHED_FIFO
+	  uses thr_setprio() to reset its priority, the priority will be
+	  reset but the scheduling policy will be dropped to SCHED_OTHER.
+	  This happens with both Solaris 5.7 and Solaris 5.8.
+
 Mon Jul  9 13:33:43 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * include/makeinclude/wrapper_macros.GNU: 
