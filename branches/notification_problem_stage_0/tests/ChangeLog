@@ -1,0 +1,12 @@
+Mon Aug 05 22:41:43 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Select_Reactor_Notify_Stress_Test.cpp: A stress test for
+	  the notify () mechanism in the select reactor. The motivation
+	  for this test is [BUGID 1268]. This test needs to work fine if
+	  the bug is fixed.
+
+	* tests/Select_Reactor_Notify_Stress_Test.dsp: Project file for
+	  the above test.
+
+	* tests/tests.dsw: Added the new project file to the workspace. 
+
