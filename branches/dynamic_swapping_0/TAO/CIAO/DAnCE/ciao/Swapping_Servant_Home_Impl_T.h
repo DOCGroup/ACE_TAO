@@ -13,12 +13,12 @@
 //=============================================================================
 
 
-#ifndef CIAO_SWAPPING_SERVANT_IMPL_T_H
-#define CIAO_SWAPPING_SERVANT_IMPL_T_H
+#ifndef CIAO_SWAPPING_SERVANT_HOME_IMPL_T_H
+#define CIAO_SWAPPING_SERVANT_HOME_IMPL_T_H
 
 #include /**/ "ace/pre.h"
 
-#include "Swapping_Servant_Impl_Base.h"
+#include "Swapping_Servant_Home_Impl_Base.h"
 #include "Dynamic_Component_Activator.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -30,7 +30,6 @@
 
 namespace CIAO
 {
-  // @@  Jai, should it be a swapping servant or a Dynamic_Servant?
   class Swapping_Container;
 
   /**
@@ -41,9 +40,6 @@ namespace CIAO
    * This class implements operations
    * common to all generated home servants.
    */
-
-  // @@ Jai, is there any reason why you cannot share code between
-  // Servant_Impl_T  and here?
   template <typename BASE_SKEL,
             typename EXEC,
             typename EXEC_VAR,
@@ -52,16 +48,16 @@ namespace CIAO
             typename COMP_EXEC,
             typename COMP_EXEC_VAR,
             typename COMP_SVNT>
-  class Swapping_Servant_Impl
+  class Swapping_Servant_Home_Impl
     : public virtual BASE_SKEL,
       public virtual Swapping_Servant_Home_Impl_Base,
       public virtual PortableServer::RefCountServantBase
   {
   public:
-    Swapping_Servant_Impl (EXEC * exe,
+    Swapping_Servant_Home_Impl (EXEC * exe,
                        Swapping_Container * c);
 
-    virtual ~Swapping_Servant_Impl (void);
+    virtual ~Swapping_Servant_Home_Impl (void);
 
     // Operations for CCMHome interface.
 
@@ -113,13 +109,13 @@ namespace CIAO
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Swapping_Servant_Impl_T.cpp"
+#include "Swapping_Servant_Home_Impl_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Swapping_Servant_Impl_T.cpp")
+#pragma implementation ("Swapping_Servant_Home_Impl_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 
-#endif /* CIAO_SWAPPING_SERVANT_IMPL_T_H */
+#endif /* CIAO_SWAPPING_SERVANT_HOME_IMPL_T_H */

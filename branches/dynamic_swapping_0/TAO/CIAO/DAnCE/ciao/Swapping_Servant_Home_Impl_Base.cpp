@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Swapping_Servant_Impl_Base.h"
+#include "Swapping_Servant_Home_Impl_Base.h"
 
 namespace CIAO
 {
