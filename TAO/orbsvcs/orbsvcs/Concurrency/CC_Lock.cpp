@@ -32,6 +32,7 @@ CC_Lock::~CC_Lock()
 
 void CC_Lock::lock(CORBA::Environment &_env)
 {
+  ACE_DEBUG((LM_DEBUG, "CC_Lock::lock\n"));
   lock_held_++;
   int success = semaphore_.acquire();
   if(success==-1) {
@@ -41,8 +42,11 @@ void CC_Lock::lock(CORBA::Environment &_env)
 
 CORBA::Boolean CC_Lock::try_lock(CORBA::Environment &_env)
 {
+  ACE_DEBUG((LM_DEBUG, "CC_Lock::try_lock. "));
   lock_held_++;
+  ACE_DEBUG((LM_DEBUG, "lock_held_: %i, ", lock_held_));
   int success = semaphore_.tryacquire();
+  ACE_DEBUG((LM_DEBUG, "success: %i\n", success));
   if(success==-1) {
     if(errno==EBUSY) {
       lock_held_--;
@@ -51,13 +55,14 @@ CORBA::Boolean CC_Lock::try_lock(CORBA::Environment &_env)
     else
       TAO_THROW_RETURN(CORBA::INTERNAL(CORBA::COMPLETED_NO), CORBA::B_FALSE);
   }
-  else {
-    this->lock(_env);
-  }
+  //  else {
+  //    this->lock(_env);
+  //  }
 }
 
 void CC_Lock::unlock(CORBA::Environment &_env)
 {
+  ACE_DEBUG((LM_DEBUG, "CC_Lock::unlock\n"));
   if(lock_held_==0)
     TAO_THROW(CosConcurrencyControl::LockNotHeld);
   int success = semaphore_.release();
@@ -70,6 +75,7 @@ void CC_Lock::unlock(CORBA::Environment &_env)
 void CC_Lock::change_mode(CosConcurrencyControl::lock_mode new_mode,
                           CORBA::Environment &_env)
 {
+  ACE_DEBUG((LM_DEBUG, "CC_Lock::change_mode\n"));
   // @@TAO Hmmm, we cannot really do anything at present since there is
   // only one lock per lock set and that lock is essentially a write lock
   if(lock_held_==0)
