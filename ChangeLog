@@ -1,3 +1,10 @@
+Thu May 27 12:10:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/Service_Configurator/IPC-tests/server/Svc_Cfg_IPC_Server.mpc:
+	  Changed exe's "after" clause to reflect renamed library project name.
+	  Also see:
+	  Thu May 7 02:00:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
+
 Thu May 27 18:22:22 2004  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:
