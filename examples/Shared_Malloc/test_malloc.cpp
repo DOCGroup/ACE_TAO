@@ -116,13 +116,14 @@ spawn (void)
           ACE_OS::sprintf (msg_size,
                            "%d",
                            Options::instance ()->max_msg_size ());
-          char* cp = 0;
+          const char *cp = 0;
+
           if (Options::instance ()->debug ())
             cp = "-d";
           else
             cp = "";
 
-          char *argv[] =
+          const char *argv[] =
           {
             (char *) Options::instance ()->slave_name (),
             "-p",

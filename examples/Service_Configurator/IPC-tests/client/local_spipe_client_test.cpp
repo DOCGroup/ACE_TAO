@@ -16,16 +16,18 @@ static char *program_name;
 // debug state on or off
 static int debug = 0;
 
-char *rendezvous_spipe = "/tmp/foo_spipe";
+static const char *rendezvous_spipe = "/tmp/foo_spipe";
 
-/* Name of file to send. */
-static char  *file_name = "./local_data";
+// Name of file to send.
+static const char *file_name = "./local_data";
 
 static void 
 print_usage_and_die (void)
 {
-  ACE_ERROR ((LM_ERROR, "usage: %s [-d] [-r rendezvous_spipe]\n%a", 
-	      program_name, -1));
+  ACE_ERROR ((LM_ERROR,
+              "usage: %s [-d] [-r rendezvous_spipe]\n%a", 
+	      program_name,
+              -1));
 }
 
 static void
@@ -48,7 +50,8 @@ parse_arguments (int argc, char *argv[])
       break;
   }
   if (debug)
-    ACE_DEBUG ((LM_DEBUG, "rendezvous_spipe = %s\n", 
+    ACE_DEBUG ((LM_DEBUG,
+                "rendezvous_spipe = %s\n", 
 		rendezvous_spipe));
 }
 
@@ -60,23 +63,32 @@ main(int argc, char *argv[])
   ACE_SPIPE_Stream spipe;
   ACE_SPIPE_Connector con;
 
-  if (con.connect (spipe, ACE_SPIPE_Addr (rendezvous_spipe)) == -1)
+  if (con.connect (spipe,
+                   ACE_SPIPE_Addr (rendezvous_spipe)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
 		       "Cannot open %s for requesting a new communication channel"
-		       " in local_spipe_client_test.\n", rendezvous_spipe), -1);
+		       " in local_spipe_client_test.\n",
+                       rendezvous_spipe),
+                      -1);
 
   ACE_Mem_Map mmap (file_name);
   void *cp;
 
   if (mmap (cp) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "mmap"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "mmap"),
+                      -1);
       
-  /* Next, send the file's contents. */
+  // Next, send the file's contents.
 
   ACE_Str_Buf msg (cp, int (mmap.size ()));
 
   if (spipe.send ((ACE_Str_Buf *) 0, &msg) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "send"),
+                      -1);
   return 0;
 }
 #else
@@ -84,6 +96,8 @@ main(int argc, char *argv[])
 int 
 main (int, char *[])
 {
-  ACE_ERROR_RETURN ((LM_ERROR, "This feature is not supported\n"), -1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "This feature is not supported\n"),
+                    -1);
 }
 #endif /* ACE_HAS_STREAM_PIPES */

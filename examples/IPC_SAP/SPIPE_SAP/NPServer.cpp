@@ -19,9 +19,7 @@ main (int /* argc */, char * /* argv */ [])
   char buf[BUFSIZ];
   int  n;
   const char *pipe_name = "acepipe";
-
-  char *rendezvous;
-  rendezvous = MAKE_PIPE_NAME (pipe_name);
+  const char *rendezvous = MAKE_PIPE_NAME (pipe_name);
 
   // Initialize named pipe listener.
 

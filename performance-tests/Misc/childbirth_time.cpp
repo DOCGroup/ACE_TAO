@@ -339,7 +339,7 @@ main (int argc, char* argv[])
   int c;
   size_t iteration = 10;
   Profiler profiler = 0;
-  char *profile_name = 0 ;
+  const char *profile_name = 0 ;
 
   while ((c=get_opt ()) != -1)
     {

@@ -14,13 +14,14 @@ ACE_RCSID(client, local_dgram_client_test, "$Id$")
 static char *program_name;
 
 // Name of rendezvous point.
-static char *rendezvous_codgram = "/tmp/foo_codgram";
-static char *rendezvous_dgram = "/tmp/foo_dgram";
+static const char *rendezvous_codgram = "/tmp/foo_codgram";
+static const char *rendezvous_dgram = "/tmp/foo_dgram";
 
 // Name of file to send.
-static char *file_name = "local_data";
+static const char *file_name = "local_data";
 
-static void print_usage_and_die (void)
+static void 
+print_usage_and_die (void)
 {
   ACE_ERROR ((LM_ERROR, 
               "usage: %s [-r rendezvous_dgram] [-c rendezvous_codgram] [-f file]\n%a",
