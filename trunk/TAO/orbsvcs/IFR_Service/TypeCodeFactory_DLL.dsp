@@ -100,7 +100,7 @@ SOURCE=.\TypeCodeFactory_i.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\TypeCodeFactory_skel.cpp
+SOURCE=.\TypeCodeFactoryC.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -117,6 +117,18 @@ SOURCE=.\TCF_Loader.h
 # Begin Source File
 
 SOURCE=.\TypeCodeFactory_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\TypeCodeFactoryC.h
+# End Source File
+# End Group
+# Begin Group "Inline Files"
+
+# PROP Default_Filter ".inl"
+# Begin Source File
+
+SOURCE=.\TypeCodeFactoryC.inl
 # End Source File
 # End Group
 # End Target

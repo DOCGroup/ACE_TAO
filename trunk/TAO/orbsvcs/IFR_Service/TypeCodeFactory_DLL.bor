@@ -5,7 +5,7 @@
 NAME = TypeCodeFactory_DLL
 
 OBJFILES = \
-	$(OBJDIR)\TypeCodeFactory_skel.obj \
+	$(OBJDIR)\TypeCodeFactoryC.obj \
 	$(OBJDIR)\TypeCodeFactory_i.obj \
 	$(OBJDIR)\TCF_Loader.obj
 
