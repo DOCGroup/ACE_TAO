@@ -86,7 +86,7 @@ FILES	 = ACE \
 	   SPIPE_Connector \
 	   SPIPE_Stream \
 	   SString \
-	   Scheduling_Params \
+	   Sched_Params \
 	   Service_Config \
 	   Service_Manager \
 	   Service_Object \
@@ -112,7 +112,6 @@ FILES	 = ACE \
 	   TLI_Stream \
 	   Thread \
 	   Thread_Manager \
-	   Thread_Priority \
 	   Time_Request_Reply \
 	   Timer_Heap \
 	   Timer_List \
@@ -1386,8 +1385,7 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
- $(WRAPPER_ROOT)/ace/Scheduling_Params.h \
- $(WRAPPER_ROOT)/ace/Thread_Priority.h \
+ $(WRAPPER_ROOT)/ace/Sched_Params.h \
  $(WRAPPER_ROOT)/ace/OS.i
 .obj/Parse_Node.o .shobj/Parse_Node.so: Parse_Node.cpp \
  $(WRAPPER_ROOT)/ace/Service_Config.h \
@@ -2149,7 +2147,7 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/SString.h \
  $(WRAPPER_ROOT)/ace/SString.i
-.obj/Scheduling_Params.o .shobj/Scheduling_Params.so: Scheduling_Params.cpp \
+.obj/Sched_Params.o .shobj/Sched_Params.so: Sched_Params.cpp \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
@@ -2160,9 +2158,8 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/Scheduling_Params.h \
- $(WRAPPER_ROOT)/ace/Thread_Priority.h \
- $(WRAPPER_ROOT)/ace/Scheduling_Params.i
+ $(WRAPPER_ROOT)/ace/Sched_Params.h \
+ $(WRAPPER_ROOT)/ace/Sched_Params.i
 .obj/Service_Config.o .shobj/Service_Config.so: Service_Config.cpp \
  $(WRAPPER_ROOT)/ace/Svc_Conf.h \
  $(WRAPPER_ROOT)/ace/Obstack.h \
@@ -2845,19 +2842,6 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/Synch_T.h \
  $(WRAPPER_ROOT)/ace/Event_Handler.h \
  $(WRAPPER_ROOT)/ace/Thread_Manager.i
-.obj/Thread_Priority.o .shobj/Thread_Priority.so: Thread_Priority.cpp \
- $(WRAPPER_ROOT)/ace/Thread_Priority.h \
- $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/config.h \
- $(WRAPPER_ROOT)/ace/stdcpp.h \
- $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
- $(WRAPPER_ROOT)/ace/ACE.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/Log_Record.i \
- $(WRAPPER_ROOT)/ace/Thread_Priority.i
 .obj/Time_Request_Reply.o .shobj/Time_Request_Reply.so: Time_Request_Reply.cpp \
  $(WRAPPER_ROOT)/ace/Time_Request_Reply.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
