@@ -1,12 +1,16 @@
 Sun Dec 22 21:23:57 1996  David L. Levine  <levine@cs.wustl.edu>
 
-	* ace/Acceptor.cpp:  replaced two statements that looked like this:
+	* ace/Acceptor.cpp: replaced two statements that looked like this:
 	  "ptr && ptr->foo ()"  with "if (ptr) ptr-> foo()" to prevent
 	  compiler warnings about computed values that aren't used
 
-	* netsvcs/clients/Tokens/manual/manual.cpp:  added explicit "int"
+	* netsvcs/clients/Tokens/manual/manual.cpp: added explicit "int"
 	  return type to declaration of handle_exception (ACE_HANDLE) so
 	  that compilers don't complain about no type
+
+	* ASX/Event_Server/Event_Server/Options.cpp,
+	  ASX/UPIPE_Event_Server/Options.cpp: rearranged initializers
+	  in Options ctor to match declaration order
 
 Sun Dec 22 21:16:23 1996  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
