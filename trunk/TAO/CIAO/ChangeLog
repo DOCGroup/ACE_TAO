@@ -1,3 +1,14 @@
+Thu May 13 14:27:14 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/CompPortDesc_Handler.cpp:
+        * DnC/Config_Handlers/Config_Handlers.mpc:
+
+          Changed the library name from Config_Handers
+          to Config_Handlers in the .mpc file.
+
+          Included scop resolution operators for all
+          class member function definitions in the .cpp file.
+
 Thu May 13 13:10:35 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/Domain_Handler.cpp:
