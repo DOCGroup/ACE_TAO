@@ -173,6 +173,8 @@ sub is_error ()
     }
 
     # AIX linking errors from ld
+    # But don't report the extra "check the map" message
+    return 0 if (/^ld: 0711\-345/);
     return 1 if (/^ld: \d+\-\d+/);
 
     # Look for linking errors too

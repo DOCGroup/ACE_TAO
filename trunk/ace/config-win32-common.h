@@ -418,7 +418,7 @@ typedef unsigned long long ACE_UINT64;
 #  define STRICT 1
 # endif /* ACE_HAS_STRICT */
 
-# if !defined (WIN32_LEAN_AND_MEAN)
+# if !defined (WIN32_LEAN_AND_MEAN) && !defined (ACE_NO_WIN32_LEAN_AND_MEAN)
 #  define WIN32_LEAN_AND_MEAN
 # endif /* WIN32_LEAN_AND_MEAN */
 

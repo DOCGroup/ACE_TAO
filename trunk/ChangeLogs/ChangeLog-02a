@@ -1,3 +1,18 @@
+Tue May 15 18:00:49 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-win32-common.h: Added support for a new config macro,
+          ACE_NO_WIN32_LEAN_AND_MEAN. If this is set, WIN32_LEAN_AND_MEAN
+          will not be defined before including windows.h. This is needed
+          when code makes use of non-lean things like COM, which get
+          included only when WIN32_LEAN_AND_MEAN is not defined.
+
+        * ace/README: Added description of ACE_NO_WIN32_LEAN_AND_MEAN.
+
+        * bin/make_pretty.pl (is_error): Don't report AIX's ld message to
+          please check the -bloadmap as an error. It gets generated when
+          there are multiple defines, which we filter out, so we don't
+          want to see this follow-up message either.
+
 Tue May 15 10:14:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/OS.i (mmap): Added an extra check for an empty

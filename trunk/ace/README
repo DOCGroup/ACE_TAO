@@ -937,6 +937,12 @@ ACE_NEEDS_SCHED_H                       Platform needs to #include
                                         to get thread scheduling
                                         defs.
 
+ACE_NO_WIN32_LEAN_AND_MEAN              If this is set, then ACE does not
+                                        define WIN32_LEAN_AND_MEAN before
+                                        including <windows.h>. Needed for
+                                        code that uses non-lean Win32
+                                        facilities such as COM.
+
 ACE_ONLY_LATEST_AND_GREATEST            A macro that indicates that the "latest and greatest"
                                         features of ACE/TAO should be turned on.  It has been
                                         replaced by ACE_LEGACY_MODE, which has the opposite
