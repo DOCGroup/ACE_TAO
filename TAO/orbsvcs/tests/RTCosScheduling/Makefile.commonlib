@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------
 #       GNU Makefile
 #
-# @file Makefile.RTCosScheduling_Client
+# @file Makefile.commonlib
 #
 # $Id$
 #
@@ -9,9 +9,10 @@
 # this file will be lost the next time it is generated.
 #
 #----------------------------------------------------------------------------
-MAKEFILE        = Makefile.RTCosScheduling_Client
-DEPENDENCY_FILE = .depend.Makefile.RTCosScheduling_Client
-BIN_UNCHECKED   = client
+MAKEFILE        = Makefile.commonlib
+DEPENDENCY_FILE = .depend.Makefile.commonlib
+LIB             = libtestSched_Common.a
+SHLIB           = libtestSched_Common.$(SOEXT)
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
@@ -26,13 +27,12 @@ IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext
 
 FILES = \
   testSchedC \
-  testSchedS \
-  client
+  testSchedS
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
-LDLIBS = -lTAO_RTCosScheduling -lTAO_RTPortableServer -lTAO_RTCORBA -lTAO_PortableServer -lTAO_IORInterceptor -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO -lACE
+ACE_SHLIBS = -lTAO_RTCosScheduling -lTAO_RTPortableServer -lTAO_RTCORBA -lTAO_PortableServer -lTAO_IORInterceptor -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO -lACE
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 ## We don't need the ACELIB setting from wrapper_macros.GNU
 ACELIB =
@@ -42,7 +42,7 @@ include $(TAO_ROOT)/rules.tao.GNU
 # best to have a template directory per project.
 # The compiler/linker isn't too smart about instantiating templates...
 ifdef TEMPINCDIR
-TEMPINCDIR := $(TEMPINCDIR)/RTCosScheduling_Client
+TEMPINCDIR := $(TEMPINCDIR)/commonlib
 
 all: $(TEMPINCDIR)
 
@@ -52,31 +52,94 @@ $(TEMPINCDIR):
 endif
 
 CURRENT_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq ($(interceptors),1)
 ifeq ($(rt_corba),1)
-BIN    = $(BIN_UNCHECKED)
+ifeq (RTCosScheduling, $(findstring RTCosScheduling, $(CURRENT_COMPONENTS)))
 else
+  LIB   =
+  SHLIB =
+  all: comp_warning
+endif
+else
+  LIB   =
+  SHLIB =
+  all: require_warning
+endif
+else
+  LIB   =
+  SHLIB =
   all: require_warning
 endif
 
-OBJS   = $(addsuffix .o, $(notdir $(FILES)))
-SRC    = $(addsuffix .cpp, $(FILES))
+ifeq (,$(TAO_ORBSVCS))
+ifeq ($(interceptors),1)
+ifeq ($(rt_corba),1)
+else
+  LIB   =
+  SHLIB =
+  all: require_warning
+endif
+else
+  LIB   =
+  SHLIB =
+  all: require_warning
+endif
+else
+ifeq ($(interceptors),1)
+ifeq ($(rt_corba),1)
+  ifeq (testSched_Common, $(findstring testSched_Common, $(TAO_ORBSVCS)))
+  ifeq (RTCosScheduling, $(findstring RTCosScheduling, $(TAO_ORBSVCS)))
+  else
+    LIB   =
+    SHLIB =
+  endif
+  else
+    LIB   =
+    SHLIB =
+  endif
+else
+  LIB   =
+  SHLIB =
+  all: require_warning
+endif
+else
+  LIB   =
+  SHLIB =
+  all: require_warning
+endif
+endif
 
-ifneq ($(BIN),)
+LSRC   = $(addsuffix .cpp, $(FILES))
+
+ifneq ($(SHLIB),)
 all: idl_stubs
 
 # This rule forces make to run the idl_stubs
 # target before building any of the source files.
-testSchedC.cpp testSchedS.cpp client.cpp: idl_stubs
+testSchedC.cpp testSchedS.cpp: idl_stubs
 endif
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 
+INSTALL_CHECK = ../../../../lib
+ifeq ($(INSTALL_CHECK),.)
+  INSLIB = $(PWD)
+else
+  INSLIB  = $(INSTALL_CHECK)
+endif
+
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
 CPPFLAGS     += -I../../../orbsvcs -I../../.. -I../../../tao -I../../../..
+ifeq ($(shared_libs),1)
+  ifneq ($(SHLIB),)
+    CPPFLAGS += -DTESTSCHED_BUILD_DLL
+  endif
+endif
 ifeq ($(static_libs),1)
   ifneq ($(LIB),)
     CPPFLAGS += -DTAO_AS_STATIC_LIBS -DTAO_AS_STATIC_LIBS -DACE_AS_STATIC_LIBS
@@ -86,13 +149,17 @@ endif
 
 LDFLAGS      += -L../../../../lib
 
-TAO_IDLFLAGS += -Ge 1 -Sc -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Gv
+TAO_IDLFLAGS += -Wb,export_macro=testSched_Export  -Wb,export_include=testSched_export.h -I../../.. -I../../../orbsvcs -Ge 1 -Sc -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Gv
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
+comp_warning:
+	@echo This project will not be built due to one of the following missing components:
+	@echo RTCosScheduling
+
 require_warning:
 	@echo This project will not be built due to one of the following missing features:
-	@echo rt_corba
+	@echo interceptors rt_corba
 
 ../../../../lib:
 	-@mkdir -p "../../../../lib"
@@ -106,14 +173,6 @@ idl_stubs: $(ADDITIONAL_IDL_TARGETS)
 endif
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
-
-ifndef kylix
-$(BIN): $(addprefix $(VDIR), $(OBJS))
-	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)
-else
-$(BIN): $(addprefix $(VDIR), $(OBJS))
-	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $(VLDLIBS) $(BORINITEXEOBJ) $(POSTLINK) $^, $@,,
-endif
 
 realclean: clean 
 	-$(RM) $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
