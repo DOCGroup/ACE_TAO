@@ -1,3 +1,20 @@
+Wed Mar  2 21:44:22 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* protocols/ace/RMCast/Socket.cpp:
+	* protocols/ace/RMCast/Socket.h: Moved implementation to
+	Socket_Impl. Made Socket delegate all functionality to
+	Socket_Impl. This way I can use all kinds of obfuscated
+	names in Socket_Impl (in order to fight compiler warnings)
+	without affecting end user.
+
+	* protocols/ace/RMCast/Stack.h: Removed export macro from
+	all types declared there.
+
+	* examples/RMCast/Send_Msg/Receiver.cpp:
+	* examples/RMCast/Send_Msg/Sender.cpp: Updated to use
+	ACE_INET_Addr instead of ACE_RMCast::Address (which was
+	just a typedef of ACE_INET_Addr).
+
 Wed Mar  2 09:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:

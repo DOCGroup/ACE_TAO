@@ -7,30 +7,23 @@
 #ifndef ACE_RMCAST_SOCKET_H
 #define ACE_RMCAST_SOCKET_H
 
-#include "ace/Unbounded_Queue.h"
-#include "ace/Thread_Mutex.h"
-#include "ace/Condition_T.h"
-
-#include "Stack.h"
-#include "Protocol.h"
-#include "Bits.h"
-
-#include "Link.h"
-#include "Simulator.h"
-#include "Retransmit.h"
-#include "Acknowledge.h"
+#include "ace/Auto_Ptr.h"
+#include "ace/INET_Addr.h"
 
 #include "RMCast_Export.h"
 
 
 namespace ACE_RMCast
 {
-  class ACE_RMCast_Export Socket : protected Element
+  class Socket_Impl;
+
+  class ACE_RMCast_Export Socket
   {
   public:
+    virtual
     ~Socket ();
 
-    Socket (Address const& a, bool loop = true);
+    Socket (ACE_INET_Addr const& a, bool loop = true);
 
   public:
     virtual void
@@ -40,23 +33,7 @@ namespace ACE_RMCast
     recv (void* buf, size_t s);
 
   private:
-    virtual void
-    recv (Message_ptr m);
-
-  private:
-    bool loop_;
-
-    u64 sn_; //@@ lock?
-
-    Mutex mutex_;
-    Condition cond_;
-
-    ACE_Unbounded_Queue<Message_ptr> queue_;
-
-    ACE_Auto_Ptr<Acknowledge> acknowledge_;
-    ACE_Auto_Ptr<Retransmit> retransmit_;
-    ACE_Auto_Ptr<Simulator> simulator_;
-    ACE_Auto_Ptr<Link> link_;
+    ACE_Auto_Ptr<Socket_Impl> impl_;
   };
 }
 
