@@ -192,7 +192,7 @@ CORBA_Policy_ptr CORBA_Policy::_narrow (
 
 CORBA_Policy_ptr CORBA_Policy::_unchecked_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &env
+    CORBA::Environment &
   )
 {
   if (CORBA::is_nil (obj))
@@ -446,7 +446,7 @@ CORBA::PolicyManager_ptr CORBA_PolicyManager::_narrow (
 
 CORBA_PolicyManager_ptr CORBA_PolicyManager::_unchecked_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &env
+    CORBA::Environment &
   )
 {
   if (CORBA::is_nil (obj))
@@ -529,7 +529,7 @@ CORBA_PolicyCurrent_ptr CORBA_PolicyCurrent::_narrow (
 
 CORBA_PolicyCurrent_ptr CORBA_PolicyCurrent::_unchecked_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &env
+    CORBA::Environment &
   )
 {
   if (CORBA::is_nil (obj))

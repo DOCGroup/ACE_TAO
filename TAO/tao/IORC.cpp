@@ -34,7 +34,7 @@ TAO_IOP::TAO_IOR_Manipulation_ptr TAO_IOP::TAO_IOR_Manipulation::_narrow (
 
 TAO_IOP::TAO_IOR_Manipulation_ptr TAO_IOP::TAO_IOR_Manipulation::_unchecked_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Environment &
   )
 {
   if (CORBA::is_nil (obj))
@@ -1233,4 +1233,3 @@ CORBA::Boolean operator>> (
   }
   return 0; // error
 }
-
