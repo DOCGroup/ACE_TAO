@@ -1,3 +1,8 @@
+1998-06-11  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
+
+	* ace/Proactor.h (ACE_Proactor): Put insert_aiocb_list () under
+	ACE_HAS_AIO_CALLS so that it doesnt break in NT.
+
 Thu Jun 11 1998 Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 	* ace/OS.h: Added typedef's, #define's  and #include's under the
