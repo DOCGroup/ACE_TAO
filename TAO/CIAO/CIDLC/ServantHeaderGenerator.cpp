@@ -1175,12 +1175,12 @@ namespace
       }
 
       virtual void
-      traverse (SemanticGraph::SingleUser& u)
+      traverse (SemanticGraph::SingleUser&)
       {
       }
 
       virtual void
-      traverse (SemanticGraph::MultiUser& u)
+      traverse (SemanticGraph::MultiUser&)
       {
       }
 
@@ -1194,12 +1194,12 @@ namespace
       }
 
       virtual void
-      traverse (SemanticGraph::Emitter& e)
+      traverse (SemanticGraph::Emitter&)
       {
       }
 
       virtual void
-      traverse (SemanticGraph::Publisher& p)
+      traverse (SemanticGraph::Publisher&)
       {
       }
 
@@ -1998,7 +1998,7 @@ namespace
          << STRS[ENV_HDR] << ");" << endl;
     }
 
-    virtual void post (Type& t)
+    virtual void post (Type&)
     {
       // Namespace closer.
       os << "}";

@@ -1,3 +1,22 @@
+Thu Sep 30 14:49:23 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ExecImplHeaderGenerator.cpp:
+        * CIDLC/ExecImplSourceGenerator.cpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        
+          Removed identifiers of unused args.
+          
+        * CIDLC/RepositoryIdGenerator.cpp:
+        
+          Extended generator to compute repo ids for
+          homes and components.
+          
+        * CIDLC/DescriptorGenerator.cpp:
+        
+          Changed code to use the context value set by the expanded
+          repo id generator and removed code to compute repo id
+          in this generator.
+
 Thu Sep 30 11:03:20 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ExecImplGenerator.cpp:
