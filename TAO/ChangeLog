@@ -1,3 +1,10 @@
+Mon Feb 16 14:31:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CodeSets/libs/UCS4_UTF16/Makefile:
+          Added missing compiler flags for shared build to fix
+          compile problems in Cygwin build. Thanks to FCG Zuo Yi
+          <Yi.Zuo@alcatel-sbell.com.cn> for reporting this.
+
 Mon Feb 16 09:36:08 2004  David Smith  <dts@prismtechnologies.com>
 
         * tao/Exception.cpp:
