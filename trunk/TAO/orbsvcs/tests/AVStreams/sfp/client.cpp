@@ -4,12 +4,13 @@
 #include "ace/Event_Handler.h"
 
 char *data = "Hello how are you";
+int fragment = 0;
 
 class frame_handler: public ACE_Event_Handler
 {
   public:
 
-  frame_handler (ACE_Reactor* reactor,SFP *sfp)
+  frame_handler (ACE_Reactor* reactor,TAO_SFP *sfp)
     :sfp_ (sfp)
     {
       reactor->schedule_timer (this,
@@ -22,38 +23,38 @@ class frame_handler: public ACE_Event_Handler
                       const void *arg = 0)
     {
        ACE_DEBUG ((LM_DEBUG,"frame_handler:handle_timeout\n"));
-       ACE_Message_Block mb (data,
-                              ACE_OS::strlen (data),
-                              -1);
-       mb.wr_ptr (ACE_OS::strlen (data));
-       int result = this->sfp_->send_simple_frame (&mb);
-       if (result != -1)
-         ACE_DEBUG ((LM_DEBUG,"simple_frame sent\n"));
+       if (fragment)
+         {
+           size_t mb_len = SFP_MAX_PACKET_SIZE*2;
+           ACE_Message_Block mb (mb_len);
+           int i =0;
+           char c = 'a';
+           for (char *ptr = mb.rd_ptr ();i<2;i++,c++,ptr+=SFP_MAX_PACKET_SIZE)
+             ACE_OS::memset (ptr,c,SFP_MAX_PACKET_SIZE);
+           
+           mb.wr_ptr (mb_len);
+           int result = this->sfp_->send_frame (&mb);
+           if (result != -1)
+             ACE_DEBUG ((LM_DEBUG,"simple_frame sent\n"));
+           else
+             ACE_DEBUG ((LM_DEBUG,"simple_frame send failed\n"));
+         }
        else
-         ACE_DEBUG ((LM_DEBUG,"simple_frame send failed\n"));
+         {
+           ACE_Message_Block mb (data,
+                                 ACE_OS::strlen (data));
+           mb.wr_ptr (ACE_OS::strlen (data));
+           int result = this->sfp_->send_frame (&mb);
+           if (result != -1)
+             ACE_DEBUG ((LM_DEBUG,"simple_frame sent\n"));
+           else
+             ACE_DEBUG ((LM_DEBUG,"simple_frame send failed\n"));
+         }
        return 0;
-//        ACE_DEBUG ((LM_DEBUG,"frame_handler:handle_timeout\n"));
-//        char *buf;
-//        ACE_NEW_RETURN (buf,
-//                        char [4*ACE_MAX_DGRAM_SIZE],
-//                        -1);
-//        ACE_Message_Block mb (buf,
-//                              4*ACE_MAX_DGRAM_SIZE);
-//        //       mb.wr_ptr (ACE_OS::strlen (data));
-//        mb.wr_ptr (4*ACE_MAX_DGRAM_SIZE);
-//        //       int result = this->sfp_->send_simple_frame (&mb);
-//        int result = this->sfp_->send_frame (&mb);
-//        if (result != -1)
-//          ACE_DEBUG ((LM_DEBUG,"simple_frame sent\n"));
-//        else
-//          ACE_DEBUG ((LM_DEBUG,"simple_frame send failed\n"));
-//        return 0;
-
     }
 
-  private:
-  
-  SFP *sfp_;
+private:
+  TAO_SFP *sfp_;
 };
 
 int
@@ -63,9 +64,13 @@ main (int argc, char **argv)
   
   orb_manager.init (argc,argv);
 
+  if (argc > 1)
+    if (ACE_OS::strcmp (argv[1],"-f") == 0)
+      fragment = 1;
+    
   ACE_Time_Value timeout1 (5),timeout2 (50);
 
-  SFP sfp (orb_manager.orb (),
+  TAO_SFP sfp (orb_manager.orb (),
            TAO_ORB_Core_instance ()->reactor (),
            timeout1,
            timeout2,
