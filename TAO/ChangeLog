@@ -1,3 +1,14 @@
+Tue Aug  6 12:08:00 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp (init):
+
+	  Force the Singleton instance to be initialized/instantiated.
+	  Some SSLIOP option combinations will result in the Singleton
+	  instance never being initialized.  In that case, problems may
+	  occur later on due to lack of initialization of the underlying
+	  SSL library (e.g. OpenSSL), which occurs when an ACE_SSL_Context
+	  is instantiated.  The code is cleaner this way anyway.
+
 Mon Aug  5 17:14:45 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.cpp (make_X509):
