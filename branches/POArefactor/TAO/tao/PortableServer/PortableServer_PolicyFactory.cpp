@@ -23,10 +23,8 @@ TAO_PortableServer_PolicyFactory::create_policy (
       ACE_Dynamic_Service<TAO::Loadable_Thread_Policy>::instance (
              "Loadable_Thread_Policy");
 
-    return policy->create(value);
-
-//    return TAO_Thread_Policy::create (value
-//                                      ACE_ENV_ARG_PARAMETER);
+    return policy->create(value
+                          ACE_ENV_ARG_PARAMETER);
   }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
