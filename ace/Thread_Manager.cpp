@@ -1375,7 +1375,20 @@ ACE_Thread_Manager::join (ACE_thread_t tid, ACE_THR_FUNC_RETURN *status)
       if (ACE_OS::thr_equal (biter.next ()->thr_id_, tid))
         {
           ACE_Thread_Descriptor_Base *tdb = biter.advance_and_remove (0);
-          if (ACE_Thread::join (tdb->thr_handle_) == -1)
+# if defined (_AIX)
+  // The AIX xlC compiler does not match the proper function here - it
+  // confuses ACE_Thread::join(ACE_thread_t, ACE_thread_t *, void **=0) and
+  // ACE_Thread::join(ACE_hthread_t, void **=0).  At least at 3.1.4.7 and .8.
+  // The 2nd arg is ignored for pthreads anyway.
+
+  // And, g++ on AIX needs the three-arg thr_join, also, to pick up the
+  // proper version from the AIX libraries.
+          if (ACE_Thread::join (tdb->thr_handle_,
+                                &tdb->thr_handle_,
+                                status) == -1)
+# else  /* ! _AIX */
+          if (ACE_Thread::join (tdb->thr_handle_, status) == -1)
+# endif /* ! _AIX */
             return -1;
 
 # if defined (ACE_HAS_PTHREADS_DRAFT4)  &&  defined (ACE_LACKS_SETDETACH)
