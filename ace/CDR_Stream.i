@@ -751,13 +751,6 @@ ACE_InputCDR::skip_char (void)
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_InputCDR::skip_wchar (void)
-{
-  ACE_CDR::WChar x;
-  return this->read_2 (ACE_reinterpret_cast (ACE_CDR::UShort*,&x));
-}
-
-ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::skip_octet (void)
 {
   ACE_CDR::Octet x;

@@ -733,6 +733,25 @@ ACE_InputCDR::ACE_InputCDR (const ACE_OutputCDR& rhs,
     this->start_.copy (i->rd_ptr (), i->length ());
 }
 
+ACE_INLINE ACE_CDR::Boolean
+ACE_InputCDR::skip_wchar (void)
+{
+  if (ACE_static_cast (ACE_CDR::Short, major_version_) == 1
+          && ACE_static_cast (ACE_CDR::Short, minor_version_) == 2)
+  {
+    ACE_CDR::Octet len;
+    if (this->read_1 (&len))
+      return this->skip_bytes (ACE_static_cast (size_t, len));
+  }
+  else
+  {
+    ACE_CDR::WChar x;
+      return this->read_2 (ACE_reinterpret_cast (ACE_CDR::UShort*,&x));
+  }
+
+  return 0;
+}
+
 ACE_CDR::Boolean
 ACE_InputCDR::read_wchar (ACE_CDR::WChar& x)
 {
