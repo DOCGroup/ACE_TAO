@@ -149,6 +149,9 @@ public:
   // Reschedule an "interval" <ACE_Timer_Node>.  This should be private 
   // but for now it needs to be public for <ACE_Timer_Hash_T>
 
+  virtual ACE_Timer_Node_T<TYPE> *get_first (void);
+  // Reads the earliest node from the queue and returns it.
+
 protected:
 /*  virtual ACE_Timer_Node_T<TYPE> *alloc_node (void);
   // Factory method that allocates a new node (uses operator new).

@@ -638,5 +638,12 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::remove_first (void)
   return this->remove (0);
 }
 
-#endif /* ACE_TIMER_HEAP_T_C */
+template <class TYPE, class FUNCTOR, class LOCK> ACE_Timer_Node_T <TYPE> *
+ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>::get_first (void)
+{
+  ACE_TRACE ("ACE_Timer_Heap_T::remove_first");
 
+  return this->cur_size_ == 0  ?  0  :  this->heap_[0];
+}
+
+#endif /* ACE_TIMER_HEAP_T_C */
