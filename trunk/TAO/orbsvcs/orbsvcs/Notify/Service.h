@@ -26,7 +26,7 @@
 /**
  * @class TAO_NS_Service
  *
- * @brief Abstract ACE_Service_Object interface that is a 
+ * @brief Abstract ACE_Service_Object interface that is a
  * factory for creating a Notify EventChannelFactory.
  *        Note that a Service creates only 1 Factory object.
  *
@@ -34,8 +34,7 @@
 class TAO_Notify_Export TAO_NS_Service : public ACE_Service_Object
 {
 public:
-
-  /// Call the base class init
+  /// Define Service_Object method otherwise SunCC compiler complains.
   virtual int init (int argc, char *argv[]) = 0;
 
   /// Init the service.
@@ -46,6 +45,8 @@ public:
       PortableServer::POA_ptr default_POA ACE_ENV_ARG_DECL
     ) = 0;
 };
+
+#define TAO_NS_COS_NOTIFICATION_SERVICE_NAME "TAO_NS_CosNotification_Service"
 
 #include "ace/post.h"
 #endif /* TAO_NS_SERVICE_H */

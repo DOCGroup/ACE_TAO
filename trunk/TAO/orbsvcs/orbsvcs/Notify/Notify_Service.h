@@ -74,6 +74,24 @@ protected:
   TAO_NS_Builder* builder_;
 };
 
+/*********************************************************************************************************************/
+
+/**
+ * @class TAO_NS_CosNotification_Service_Initializer
+ *
+ * @brief Helper to load the Cos Notification service into the service conf. for static links.
+ *
+ */
+class TAO_Notify_Export TAO_NS_Cos_Notification_Service_Initializer
+{
+public:
+  /// Constuctor
+  TAO_NS_Cos_Notification_Service_Initializer (void);
+};
+
+static TAO_NS_Cos_Notification_Service_Initializer TAO_NS_Cos_Notification_Service_initializer;
+
+ACE_STATIC_SVC_DECLARE (TAO_NS_Notify_Service)
 ACE_FACTORY_DECLARE (TAO_Notify, TAO_NS_Notify_Service)
 
 #if defined (__ACE_INLINE__)
