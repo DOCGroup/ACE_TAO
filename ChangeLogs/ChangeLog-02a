@@ -1,3 +1,21 @@
+Sat Jun 09 10:07:06 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_SOCK_Stream.i (recv_i):
+
+	  Moved call to SSL_peek() within the do/while(SSL_pending())
+	  loop.  A full record must be read before returning to an event
+	  loop (e.g. in a Reactor).
+
+	  If a SSL_ERROR_SYSCALL error occurs, only interpret it as an
+	  error if an EOF did not occur.  Thanks to Boris Temkin
+	  <borist@allcharge.com> for providing an example that
+	  demonstrated the problem.
+
+	  (send_i):
+
+	  Shutdown the SSL session if an SSL_ERROR_ZERO_RETURN error
+	  occurs.
+
 Sat Jun  9 07:16:12 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/QoS/QoS_Session_Impl.cpp:
