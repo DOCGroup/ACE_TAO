@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:566
+// be\be_codegen.cpp:542
 
 #ifndef _TAO_IDL_ORIG_DOMAINS_T_H_
 #define _TAO_IDL_ORIG_DOMAINS_T_H_
@@ -34,9 +34,7 @@
 #include /**/ "ace/pre.h"
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -92,7 +90,7 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::Policy_ptr get_domain_policy (
-        CORBA::PolicyType policy_type
+        ::CORBA::PolicyType policy_type
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -183,8 +181,8 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
     
     void make_domain_manager (
-        CORBA::InterfaceDef_ptr object_type,
-        CORBA::Boolean constr_policy
+        ::CORBA::InterfaceDef_ptr object_type,
+        ::CORBA::Boolean constr_policy
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -204,10 +202,10 @@ namespace POA_CORBA
 #endif /* ACE_HAS_USING_KEYWORD */
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:1111
+// be\be_codegen.cpp:1091
 
 #if defined (__ACE_INLINE__)
-#include "DomainS_T.i"
+#include "DomainS_T.inl"
 #endif /* defined INLINE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
@@ -218,9 +216,10 @@ namespace POA_CORBA
 #pragma implementation ("DomainS_T.cpp")
 #endif /* defined REQUIRED PRAGMA */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* ifndef */
+
