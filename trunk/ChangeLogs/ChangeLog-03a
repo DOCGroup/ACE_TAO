@@ -1,5 +1,12 @@
 Mon Jan 17 00:53:37 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS.h: Added a cast to (long) for ACE_THR_PRI_FIFO_MIN,
+ 	  ACE_THR_PRI_FIFO_MAX ACE_THR_PRI_RR_MIN, ACE_THR_PRI_RR_MAX,
+ 	  ACE_THR_PRI_OTHER_MIN, ACE_THR_PRI_OTHER_MAX since these are all
+ 	  used as priority values, which is defined as a long.  This
+ 	  should solve a problem with the ACE_MAX()/ACE_MIN() templates on
+ 	  Linux with G++.  Thanks to Bala for reporting this problem.
+
 	* netsvcs/lib/Logging_Strategy: Added a new '-w' option that
  	  instructs the logging strategy to "wipeout", rather than append
  	  to, an existing logfile.  Thanks to David X. Callaway
