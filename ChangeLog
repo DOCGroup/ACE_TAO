@@ -1,3 +1,10 @@
+Thu Oct 16 08:37:54 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * apps/gperf/tests/tests.mpc:
+
+          Fixed a bug with dependencies and parallelism between building the
+          test and running the test.
+
 Wed Oct 15 13:40:02 2003  Huang-Ming Huang <hh1@cse.wustl.edu>
 
         * bin/MakeProjectCreator/config/ftrtevent.mpb
@@ -12,9 +19,9 @@ Wed Oct 15 18:28:02 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Wed Oct 15 12:10:39 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ACE-INSTALL.html: Updated the documentation to make it
-	  clear that setenv is a TCSH/CSHism.  Thanks to David McKen
- 	  <cic_3_b@yahoo.com> for reporting this.
+        * ACE-INSTALL.html: Updated the documentation to make it
+          clear that setenv is a TCSH/CSHism.  Thanks to David McKen
+          <cic_3_b@yahoo.com> for reporting this.
 
 Wed Oct 15 13:22:32 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -43,10 +50,10 @@ Wed Oct 15 10:40:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Oct 14 21:54:07 2003  Nanbor Wang  <nanbor@.cs.wustl.edu>
 
-	* Makefile (CIAO_CORE_DIRS): Added Kokyu to the list of base
-	  library for CIAO.  Although CIAO doesn't depend on Kokyu, it is
-	  needed to allow the compilation in orbsvcs/orbsvcs/ to run to
-	  completion.
+        * Makefile (CIAO_CORE_DIRS): Added Kokyu to the list of base
+          library for CIAO.  Although CIAO doesn't depend on Kokyu, it is
+          needed to allow the compilation in orbsvcs/orbsvcs/ to run to
+          completion.
 
 Tue Oct 14 23:21:00 UTC 2003  Don Hinton <dhinton@dresystems.com>
 
@@ -61,45 +68,45 @@ Tue Oct 14 23:21:00 UTC 2003  Don Hinton <dhinton@dresystems.com>
 
 Tue Oct 14 17:13:46 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Process.h: Put the ACE_Process copy constructor and
-	  assignment operator in the private part of the class to disallow
- 	  copying.  Thanks to Adam Fanello <yahoo@fanello.net> for
- 	  reporting this.
+        * ace/Process.h: Put the ACE_Process copy constructor and
+          assignment operator in the private part of the class to disallow
+          copying.  Thanks to Adam Fanello <yahoo@fanello.net> for
+          reporting this.
 
-	* ace/OS.cpp: Added patches to support PHARLAP.  Thanks
-	  to Ira Burton <imburton@micron.com> for supplying these.
+        * ace/OS.cpp: Added patches to support PHARLAP.  Thanks
+          to Ira Burton <imburton@micron.com> for supplying these.
 
 Tue Oct 14 13:54:19 2003  Steve Huston  <shuston@riverace.com>
-	Picked up from ACE 5.3:
-	Wed Jun 11 17:18:39 2003  Steve Huston  <shuston@riverace.com>
+        Picked up from ACE 5.3:
+        Wed Jun 11 17:18:39 2003  Steve Huston  <shuston@riverace.com>
 
-	* include/makeinclude/wrapper_macros.GNU: Make SOVERSION
-	  user-settable if versioned_so is enabled. Thanks to Craig L.
-	  Ching <cching@mqsoftware.com> for this idea.
-	  Also moved the versioned_so and SOVERSION setup to after
-	  platform_macros.GNU is included so that users can set this stuff
-	  up in their platform_macros.GNU file. The ACE_MAJOR_VERSION,
-	  etc. variables are still set up before platform_macros.GNU, though,
-	  in case platform_macros.GNU wants to use them.
+        * include/makeinclude/wrapper_macros.GNU: Make SOVERSION
+          user-settable if versioned_so is enabled. Thanks to Craig L.
+          Ching <cching@mqsoftware.com> for this idea.
+          Also moved the versioned_so and SOVERSION setup to after
+          platform_macros.GNU is included so that users can set this stuff
+          up in their platform_macros.GNU file. The ACE_MAJOR_VERSION,
+          etc. variables are still set up before platform_macros.GNU, though,
+          in case platform_macros.GNU wants to use them.
 
 Tue Oct 14 10:45:32 2003  Nanbor Wang  <nanbor@.cs.wustl.edu>
 
-	* Makefile: Added a new CIAO_Core target for building all CIAO
-	  core libraries and tools, including everything they need.
-	  Thanks to Gautam for suggesting this.
+        * Makefile: Added a new CIAO_Core target for building all CIAO
+          core libraries and tools, including everything they need.
+          Thanks to Gautam for suggesting this.
 
 Tue Oct 14 03:43:47 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/DSRT_Direct_Dispatcher_Impl_T.cpp: Added this->
-	  qualification to instance variables in base class to fix
-	  compile warnings in HPUX build.
+        * Kokyu/DSRT_Direct_Dispatcher_Impl_T.cpp: Added this->
+          qualification to instance variables in base class to fix
+          compile warnings in HPUX build.
 
-	* Kokyu/Default_Dispatcher_Impl.cpp:
-	* Kokyu/DSRT_CV_Dispatcher_Impl_T.cpp:
-	* Kokyu/Dispatcher_Task.cpp:
-	* Kokyu/Dispatcher_Task.h:
-	* Kokyu/Kokyu.h:
-	* Kokyu/Kokyu_defs.i: Removed/added comments
+        * Kokyu/Default_Dispatcher_Impl.cpp:
+        * Kokyu/DSRT_CV_Dispatcher_Impl_T.cpp:
+        * Kokyu/Dispatcher_Task.cpp:
+        * Kokyu/Dispatcher_Task.h:
+        * Kokyu/Kokyu.h:
+        * Kokyu/Kokyu_defs.i: Removed/added comments
 
 Tue Oct 14 05:50:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -108,24 +115,24 @@ Tue Oct 14 05:50:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Oct 13 17:52:31 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Reactor_Notification_Queue_Test.cpp: Fixed a warning in
-	  g++ builds.
+        * tests/Reactor_Notification_Queue_Test.cpp: Fixed a warning in
+          g++ builds.
 
 Tue Oct 14 05:27:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Reactor_Notification_Queue_Test.dsp: Added this time for
-	  real.
+        * tests/Reactor_Notification_Queue_Test.dsp: Added this time for
+          real.
 
 Mon Oct 13 15:25:41 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* bin/MakeProjectCreator/config/kokyu_dsrt_schedulers.mpb:
-	  Added include path to the Kokyu_dsrt_schedulers directory.
+        * bin/MakeProjectCreator/config/kokyu_dsrt_schedulers.mpb:
+          Added include path to the Kokyu_dsrt_schedulers directory.
 
 Mon Oct 13 08:51:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/ace_wchar.inl: Reverted the change to BUG 1605 that was
-	  applied. The MSDN documentation doesn't suggest a 1 instead of a
-	  -1. Reopening BUG 1605.
+        * ace/ace_wchar.inl: Reverted the change to BUG 1605 that was
+          applied. The MSDN documentation doesn't suggest a 1 instead of a
+          -1. Reopening BUG 1605.
 
 Mon Oct 13 12:39:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -154,46 +161,46 @@ Mon Oct 13 06:34:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Oct 12 21:07:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Makefile.tests:
-	* tests/Tests.bor:
-	* tests/run_test.lst:
-	* tests/tests.mpc: Regular exercise for building and running the
-	  test on all the platforms.
+        * tests/Makefile.tests:
+        * tests/Tests.bor:
+        * tests/run_test.lst:
+        * tests/tests.mpc: Regular exercise for building and running the
+          test on all the platforms.
 
 Sun Oct 12 19:03:31 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/Dispatcher_Task.cpp: Changed the Null lock in the
-	  allocator to Mutex lock.
+        * Kokyu/Dispatcher_Task.cpp: Changed the Null lock in the
+          allocator to Mutex lock.
 
 Sun Oct 12 17:20:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Select_Reactor_Base.cpp: Fix for [BUG 1268]. Please refer to
-	  bugzilla database at
+        * ace/Select_Reactor_Base.cpp: Fix for [BUG 1268]. Please refer to
+          bugzilla database at
 
-  	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1268
+          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1268
 
-	  for more details on the source of the problem and the solution
-	  for the same. Thanks to Carlos O'Ryan for providing patches.
+          for more details on the source of the problem and the solution
+          for the same. Thanks to Carlos O'Ryan for providing patches.
 
-	* tests/Reactor_Notification_Queue_Test.cpp:
-	* tests/Reactor_Notification_Queue_Test.dsp:
-	* tests/tests.dsw: New test that stresses the feature of sending
-	  notify messages to the reactor. Thanks to Carlos O'Ryan for
-	  providing the test.
+        * tests/Reactor_Notification_Queue_Test.cpp:
+        * tests/Reactor_Notification_Queue_Test.dsp:
+        * tests/tests.dsw: New test that stresses the feature of sending
+          notify messages to the reactor. Thanks to Carlos O'Ryan for
+          providing the test.
 
 Sun Oct 12 14:08:38 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* bin/MakeProjectCreator/config/kokyu_dsrt_schedulers.mpb:
-	* bin/MakeProjectCreator/config/kokyu_dsrt_scheduler_client.mpb:
-	* bin/MakeProjectCreator/config/kokyu_dsrt_scheduler_server.mpb:
-	  Added MPC base project files for Kokyu DSRT schedulers.
+        * bin/MakeProjectCreator/config/kokyu_dsrt_schedulers.mpb:
+        * bin/MakeProjectCreator/config/kokyu_dsrt_scheduler_client.mpb:
+        * bin/MakeProjectCreator/config/kokyu_dsrt_scheduler_server.mpb:
+          Added MPC base project files for Kokyu DSRT schedulers.
 
 Sun Oct 12 11:48:02 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/Kokyu.html:
-	* Kokyu/kokyu1.jpg:
-	* Kokyu/kokyu2.jpg:
-	* Kokyu/KokyuEC.jpg: Added some initial documentation on Kokyu.
+        * Kokyu/Kokyu.html:
+        * Kokyu/kokyu1.jpg:
+        * Kokyu/kokyu2.jpg:
+        * Kokyu/KokyuEC.jpg: Added some initial documentation on Kokyu.
 
 Sun Oct 12 17:34:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -206,70 +213,70 @@ Sun Oct 12 17:34:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Oct 12 08:42:32 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/tests/DSRT_MIF/MIF.cpp:
-	* Kokyu/tests/DSRT_MIF/Makefile:
-	* Kokyu/tests/FIFO/test.cpp:
-	* Kokyu/tests/FIFO/README:
-	* Kokyu/tests/EDF/README:
-	* Kokyu/tests/EDF/test.cpp: Added more output info
-	  statements. Added README for the examples.
+        * Kokyu/tests/DSRT_MIF/MIF.cpp:
+        * Kokyu/tests/DSRT_MIF/Makefile:
+        * Kokyu/tests/FIFO/test.cpp:
+        * Kokyu/tests/FIFO/README:
+        * Kokyu/tests/EDF/README:
+        * Kokyu/tests/EDF/test.cpp: Added more output info
+          statements. Added README for the examples.
 
 Sat Oct 11 23:48:21 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* bin/tao_other_tests.lst:
+        * bin/tao_other_tests.lst:
 
-	  Enabled TAO load balancer infrastructure controlled membership
-	  and CPU load monitor tests.
+          Enabled TAO load balancer infrastructure controlled membership
+          and CPU load monitor tests.
 
 Sat Oct 11 21:51:52 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/Kokyu_defs.{h,i,cpp}:
-	* Kokyu/Default_Dispatcher_Impl.cpp: Fixed some minor bugs related
-	  to setting the dispatcher with the correct sched policy.
+        * Kokyu/Kokyu_defs.{h,i,cpp}:
+        * Kokyu/Default_Dispatcher_Impl.cpp: Fixed some minor bugs related
+          to setting the dispatcher with the correct sched policy.
 
-	* Kokyu/tests/FIFO/test.cpp: Added some output print statements to
-	  print error messages on dispatcher failure.
+        * Kokyu/tests/FIFO/test.cpp: Added some output print statements to
+          print error messages on dispatcher failure.
 
 Sat Oct 11 17:39:09 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/Dispatcher_Task.i:
-	* Kokyu/Dispatcher_Task.h:
-	* Kokyu/DSRT_Direct_Dispatcher_Impl_T.cpp:
-	* Kokyu/DSRT_CV_Dispatcher_Impl_T.cpp:
+        * Kokyu/Dispatcher_Task.i:
+        * Kokyu/Dispatcher_Task.h:
+        * Kokyu/DSRT_Direct_Dispatcher_Impl_T.cpp:
+        * Kokyu/DSRT_CV_Dispatcher_Impl_T.cpp:
 
-	  Add this-> qualification when referencing instance variables in
-	  base class to get rid of compiler warnings in HPUX build.
+          Add this-> qualification when referencing instance variables in
+          base class to get rid of compiler warnings in HPUX build.
 
-	* ace/ace_wchar.inl: Fix for BUG 1605. Thanks to Dmitry
-	  Botcharnikov <dimab@garant.ru> and Stephan Bettermann
-	  <sbetterm@erggroup.com> for reporting the problem and suggesting
-	  a solution.  Please see
+        * ace/ace_wchar.inl: Fix for BUG 1605. Thanks to Dmitry
+          Botcharnikov <dimab@garant.ru> and Stephan Bettermann
+          <sbetterm@erggroup.com> for reporting the problem and suggesting
+          a solution.  Please see
 
-	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1605
+          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1605
 
-	  for a description of the problem.
+          for a description of the problem.
 
 Sat Oct 11 11:01:05 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/Koku_defs.h:
-	  Added export qualification for some classes to get rid of link
-	  errors in MSVC builds.
+        * Kokyu/Koku_defs.h:
+          Added export qualification for some classes to get rid of link
+          errors in MSVC builds.
 
 Fri Oct 10 22:56:35 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/Kokyu_defs.{h,i,cpp}:
-	* Kokyu/Dispatcher_Task.{i,h,cpp}:
-	* Kokyu/Dispatcher_Impl.h:
-	* Kokyu/Default_Dispatcher_Impl.cpp:
+        * Kokyu/Kokyu_defs.{h,i,cpp}:
+        * Kokyu/Dispatcher_Task.{i,h,cpp}:
+        * Kokyu/Dispatcher_Impl.h:
+        * Kokyu/Default_Dispatcher_Impl.cpp:
 
-	  Added allocator, sched scope, sched policy, reordering queue
-	  attributes to the Dispatcher_Attributes class. This will make
-	  the dispatcher more configurable.
+          Added allocator, sched scope, sched policy, reordering queue
+          attributes to the Dispatcher_Attributes class. This will make
+          the dispatcher more configurable.
 
-	* Kokyu/tests/FIFO/test.cpp:
-	* Kokyu/tests/EDF/test.cpp:
+        * Kokyu/tests/FIFO/test.cpp:
+        * Kokyu/tests/EDF/test.cpp:
 
-	  Added command line options to specify the sched policy.
+          Added command line options to specify the sched policy.
 
 Fri Oct 10 19:52:26 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -302,10 +309,10 @@ Fri Oct 10 08:14:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 Thu Oct 09 12:43:51 2003  Irfan Pyarali  <irfan@oomworks.com>
 
         * bin/MakeProjectCreator/config/rtscheduling.mpb (after): The
-	  after directive should have the name of the project and not the
-	  name of the directory.  This should solve the problem of
-	  RTScheduling tests making before the RTScheduler library has
-	  been built.
+          after directive should have the name of the project and not the
+          name of the directory.  This should solve the problem of
+          RTScheduling tests making before the RTScheduler library has
+          been built.
 
 Wed Oct 08 21:43:30 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
