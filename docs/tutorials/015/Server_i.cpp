@@ -42,13 +42,16 @@ int Server::run(void)
 {
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting up server daemon\n"));
 
-    ACE_Time_Value timeout(2);
-
         // Here's the basic event loop.  I have a 2-second timeout on
         // the handle_events() so that we don't have to wait too long
         // when we set the finished_ flag.
     while (!finished_)
     {
+         // Some (all?) platforms return the "remaining time" in the
+         // timeout parameter.  If we don't reset it each time, we
+         // will end up with a 100% CPU spin loop!
+        ACE_Time_Value timeout(2);
+
         ACE_Reactor::instance()->handle_events (&timeout);
     }
 
