@@ -186,7 +186,10 @@
 #define ACE_LACKS_STRRECVFD
 
 //#define ACE_LACKS_MSYNC
-#define ACE_HAS_PROC_FS
+
+// A conflict appears when including both <ucontext.h> and
+// <sys/procfs.h> with recent glibc headers.
+//#define ACE_HAS_PROC_FS
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC
