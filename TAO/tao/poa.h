@@ -23,7 +23,9 @@
 
 class TAO_GIOP_RequestHeader;
 
-// @@ Why does this inherit from IUnknown?
+// @@ Why does this inherit from IUnknown?  This inherits from
+// IUnknown because it's foolish.  There's no good reason to get rid
+// of it, though, until we remove this useless COM stuff.
 class TAO_Export CORBA_POA : public IUnknown
   // = TITLE
   //    The <{TAO}> Basic Object Adapter.
@@ -87,6 +89,7 @@ public:
 					  CORBA::Environment &env);
   // @@ Please add a comment.  BTW, weren't we planning to rename this
   // typedef?
+  // @@ (ANDY) Do you remember the context of this?
 
   /* virtual */
   void register_dir (dsi_handler handler,
@@ -171,21 +174,6 @@ public:
   // reference.  It's the main way servers distinguish two object
   // references from each other.
     
-#if 0
-  /* virtual */
-  void clean_shutdown (CORBA::Environment &env);
-  // NON-STANDARD CALL.  OA user asks for a clean shutdown of the OA
-  // after currently active calls complete.  OA "requester" (calls
-  // <get_request>) asks if we're shutting down, and if so closes down
-  // transport cleanly.
-  // @@ This used to be virtual...does it really need to be any more?
-
-  /* virtual */
-  CORBA::Boolean shutting_down (void);
-  // NON-STANDARD CALL.  Returns <TRUE> if we're in the process of
-  // shutting down.
-#endif /* 0 */
-
   void dispatch (CORBA::OctetSeq &key, 
 		 CORBA::ServerRequest &req, 
 		 void *context, 
@@ -212,12 +200,10 @@ public:
   ULONG __stdcall Release (void);
   HRESULT __stdcall QueryInterface (REFIID riid, void** ppv);
 
-protected:
-  // @@ Do we really need protected anymore?
+private:
   TAO_Object_Table *objtable_;
   // Table of objects registered with this Object Adapter.
 
-private:
   CORBA::Boolean do_exit_;	
   // Flag set by <clean_shutdown ()>.
 

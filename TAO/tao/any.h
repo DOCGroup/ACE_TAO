@@ -299,7 +299,7 @@ private:
 
 class TAO_Export CORBA_Any_out
   // = TITLE
-  //   @@ Please document me.
+  //   @@ (ANDY) Please document me.
 {
 public:
   // = operations.

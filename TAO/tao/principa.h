@@ -55,6 +55,11 @@ private:
 
 #if defined (__GNUG__)
   // @@ Fix this to use the ACE "NAMESPACE" macro?
+  //
+  // No, the intent of that macro is to state that there's no way to
+  // instantiate that type.  However, we can definitely instantiate
+  // one of these, but only friends can.
+  //
   // G++ (even 2.6.3) stupidly thinks instances can't be
   // created.  This de-warns.
   friend class everyone_needs_a_friend;

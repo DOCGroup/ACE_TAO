@@ -64,4 +64,26 @@ TAO_OA_Parameters::userdef_lookup_strategy (void)
   return ot_;
 }
 
+ACE_INLINE int
+TAO_ORB_Parameters::sock_rcvbuf_size (void)
+{
+  return sock_rcvbuf_size_;
+}
 
+ACE_INLINE void
+TAO_ORB_Parameters::sock_rcvbuf_size (int s)
+{
+  sock_rcvbuf_size_ = s <= ACE_DEFAULT_MAX_SOCKET_BUFSIZ ? s : ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
+}
+
+ACE_INLINE int
+TAO_ORB_Parameters::sock_sndbuf_size (void)
+{
+  return sock_sndbuf_size_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::sock_sndbuf_size (int s)
+{
+  sock_sndbuf_size_ = s <= ACE_DEFAULT_MAX_SOCKET_BUFSIZ ? s : ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
+}

@@ -73,7 +73,7 @@ public:
 
 class TAO_Export IIOP_ServerRequest : public CORBA_ServerRequest
   // = TITLE
-  // @@ Please comment me.
+  //    Class representing an IIOP ServerRequest object.
 {
 public:
   // Constructor, destructor
@@ -111,27 +111,29 @@ public:
 				    void **ppv);
 
   // private:
-  // @@ Please comment me.
-  CORBA::String opname_;
-  CDR *incoming_;
-  CORBA::NVList_ptr params_;
-  CORBA::Any_ptr retval_;
-  CORBA::Any_ptr exception_;
-  CORBA::ExceptionType ex_type_;
+  CORBA::String opname_;        // Operation name.
+  CDR *incoming_;               // Incoming stream.
+  CORBA::NVList_ptr params_;    // Incoming parameters.
+  CORBA::Any_ptr retval_;       // Return value.
+  CORBA::Any_ptr exception_;    // Any exception which might be raised.
+  CORBA::ExceptionType ex_type_; // The type of <exception_>.
 
   void release (void) { refcount_--; }
   // Just drop the refcount, don't destroy the object; most of these
   // are stack-allocated.
 
 private:
-  // @@ Please comment all the following.
   ACE_SYNCH_MUTEX lock_;
+  // Lock protecting each instance.
 
   u_int refcount_;
+  // Number of things hold references to here.
 
   CORBA::ORB_ptr orb_;
+  // The ORB with which this server request is associated.
 
   CORBA::POA_ptr poa_;
+  // The object adapter with whicih this server request is associated.
 };
 
 #endif /* TAO_SVRRQST_H */
