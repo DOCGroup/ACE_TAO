@@ -1,14 +1,22 @@
-// @(#)cubit_i.cpp 05/14/97
-// Copyright 1994-1995 by Sun Microsystems Inc.
-// All Rights Reserved
+// $Id$
+
+// ============================================================================
 //
-// TEST:	hand-written Cubit Implementation
+// = LIBRARY
+//    TAO/tests/IDL_Cubit
+// 
+// = FILENAME
+//    cubit_i.cpp
 //
-// Modified version of Cubit Example written by Sun Microsystems Inc.
-// Modified by: Brian Mendel
+// = AUTHOR
+//    Andy Gokhale, Sumedh Mungee and Sergio Flores-Gaitan
+// 
+// ============================================================================
 
 #include "tao/corba.h"
 #include "cubit_i.h"
+
+// Constructor
 
 Cubit_Factory_i::Cubit_Factory_i (const char *key, int numobjs)
   : POA_Cubit_Factory (key)
@@ -35,6 +43,8 @@ Cubit_Factory_i::Cubit_Factory_i (const char *key, int numobjs)
     }
 }
 
+// Destructor
+
 Cubit_Factory_i::~Cubit_Factory_i (void)
 {
   delete [] this->my_cubit_;
@@ -59,14 +69,20 @@ Cubit_Factory_i::make_cubit (const char *key, CORBA::Environment &env)
   return Cubit::_nil ();
 }
 
+// Constructor
+
 Cubit_i::Cubit_i (const char *obj_name)
   : POA_Cubit (obj_name)
 {
 }
 
+// Destructor
+
 Cubit_i::~Cubit_i (void)
 {
 }
+
+// Cube an octet
 
 CORBA::Octet
 Cubit_i::cube_octet (CORBA::Octet o,
@@ -76,6 +92,8 @@ Cubit_i::cube_octet (CORBA::Octet o,
   return o * o * o;
 }
 
+// Cube a short.
+
 CORBA::Short
 Cubit_i::cube_short (CORBA::Short s,
                      CORBA::Environment &env)
@@ -84,6 +102,8 @@ Cubit_i::cube_short (CORBA::Short s,
   return s * s * s;
 }
 
+// Cube a long
+
 CORBA::Long
 Cubit_i::cube_long (CORBA::Long l,
                     CORBA::Environment &env)
@@ -91,6 +111,8 @@ Cubit_i::cube_long (CORBA::Long l,
   ACE_UNUSED_ARG (env);
   return l * l * l;
 }
+
+// Cube a struct
 
 Cubit::Many
 Cubit_i::cube_struct (const Cubit::Many &values,
@@ -105,6 +127,8 @@ Cubit_i::cube_struct (const Cubit::Many &values,
 
   return temp;
 }
+
+// Cube a union
 
 Cubit::oneof
 Cubit_i::cube_union (const Cubit::oneof &values,
@@ -135,6 +159,8 @@ Cubit_i::cube_union (const Cubit::oneof &values,
     }
   return temp;
 }
+
+// Shutdown.
 
 void Cubit_i::please_exit (CORBA::Environment &env)
 {

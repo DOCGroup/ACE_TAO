@@ -41,21 +41,35 @@ public:
   // Execute client example code.
 
   int init (int argc, char **argv);
+  // Initialize the client communication endpoint with server.
 
 private:
   int func (u_int i);
+  // simple function that returns the substraction of 117 from the parameter.
 
   int parse_args (void);
+  // Parses the arguments passed on the command line.
 
   void cube_union_stub (void);
+  // Exercise the union.  Cube a union.
   
   void cube_union_dii (void);
+  // Exercise the union using dii.
 
   void cube_struct (int i);
+  // calculate the cube from a struct.
+
   void cube_long (int i);
+  // calculate the cube from a long
+
   void cube_octet (int i);
+  // Cube an octet
+
   void cube_short (int i);
+  // Cube a short.
+
   void cube_struct_dii (void);
+  // Cube the numbers in a struct
 
   int argc_;
   // # of arguments on the command line.

@@ -1,3 +1,9 @@
+Thu Oct 30 02:20:21 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
+
+	* tests/IDL_Cubit: 
+	Added more comments and changed the header to be ACE'ified.  
+	Make output more consistent.
+
 Thu Oct 30 02:12:27 1997 Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
 
 	* tests/{TAO, Cubit}: Changed the directory heirarchy to the
