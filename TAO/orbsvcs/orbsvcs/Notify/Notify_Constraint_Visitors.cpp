@@ -55,9 +55,7 @@ TAO_Notify_Constraint_Visitor::TAO_Notify_Constraint_Visitor (void)
 }
 
 int
-TAO_Notify_Constraint_Visitor::bind_structured_event (
-    const CosNotification::StructuredEvent &s_event
-  )
+TAO_Notify_Constraint_Visitor::bind_structured_event (const CosNotification::StructuredEvent &s_event)
 {
   // The two sequences contained in a structured event are
   // copied into hash tables so iteration is done only once.
@@ -71,15 +69,13 @@ TAO_Notify_Constraint_Visitor::bind_structured_event (
 
       int status =
         this->filterable_data_.bind (
-            name_str,
-            ACE_const_cast (CORBA::Any *,
-                            &s_event.filterable_data[index].value)
-          );
+                                     name_str,
+                                     ACE_const_cast (CORBA::Any *,
+                                                     &s_event.filterable_data[index].value)
+                                     );
 
       if (status != 0)
-        {
-          return -1;
-        }
+        return -1;
     }
 
   length = s_event.header.variable_header.length ();
@@ -90,15 +86,13 @@ TAO_Notify_Constraint_Visitor::bind_structured_event (
 
       int status =
         this->variable_header_.bind (
-            name_str,
-            ACE_const_cast (CORBA::Any *,
-                            &s_event.header.variable_header[index].value)
-          );
+                                     name_str,
+                                     ACE_const_cast (CORBA::Any *,
+                                                     &s_event.header.variable_header[index].value)
+                                     );
 
       if (status != 0)
-        {
-          return -1;
-        }
+        return -1;
     }
 
   this->domain_name_ =
@@ -213,7 +207,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
           CORBA::TypeCode_var tc = this->current_value_->type ();
 
           switch (disc_val.expr_type ())
-          {
+            {
             case TAO_ETCL_INTEGER:
             case TAO_ETCL_SIGNED:
             case TAO_ETCL_UNSIGNED:
@@ -228,7 +222,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
                 ACE_TRY_CHECK;
 
                 switch (disc_kind)
-                {
+                  {
                   case CORBA::tk_boolean:
                     disc_any <<= CORBA::Any::from_boolean ((CORBA::Boolean) disc_val);
                     break;
@@ -252,10 +246,10 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
                       TAO::Unknown_IDL_Type *unk = 0;
                       ACE_NEW_RETURN (unk,
                                       TAO::Unknown_IDL_Type (
-                                          disc_tc.in (),
-                                          cdr.begin (),
-                                          TAO_ENCAP_BYTE_ORDER
-                                        ),
+                                                             disc_tc.in (),
+                                                             cdr.begin (),
+                                                             TAO_ENCAP_BYTE_ORDER
+                                                             ),
                                       -1);
 
                       disc_any.replace (unk);
@@ -271,7 +265,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
                   case CORBA::tk_wchar:
                   default:
                     return -1;
-                }
+                  }
 
                 DynamicAny::DynAny_var dyn_any =
                   TAO_DynAnyFactory::make_dyn_any (disc_any
@@ -306,16 +300,14 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
                     ACE_TRY_CHECK;
 
                     if (ACE_OS::strcmp (name, member_name) == 0)
-                      {
-                        break;
-                      }
+                      break;
                   }
 
                 // If there's no match, member_label will throw
                 // CORBA::TypeCode::Bounds and the catch block will
                 // return -1;
                 this->current_value_ = tc->member_label (i
-                                                          ACE_ENV_ARG_PARAMETER);
+                                                         ACE_ENV_ARG_PARAMETER);
                 ACE_TRY_CHECK;
 
                 break;
@@ -324,7 +316,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
             // shouldn't have any other type.
             default:
               return -1;
-          }
+            }
 
           TAO_ETCL_Constraint *nested = union_pos->component ();
 
@@ -339,14 +331,10 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
               return 0;
             }
           else
-            {
-              return nested->accept (this);
-            }
+            return nested->accept (this);
         }
       else
-        {
-          return -1;
-        }
+        return -1;
     }
   ACE_CATCHANY
     {
@@ -390,9 +378,7 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
             ACE_TRY_CHECK;
 
             if (success == 0)
-              {
-                return -1;
-              }
+              return -1;
 
             member =
               dyn_enum.current_component (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -412,18 +398,17 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
             ACE_TRY_CHECK;
 
             if (success == 0)
-              {
-                return -1;
-              }
+              return -1;
 
             member = dyn_struct.current_component (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
             break;
           }
-        // @@@ (JP) I think enums and structs are the only two cases handled
-        // by Component_Pos, since arrays and sequences are handled by
-        // Component_Array, and unions are handled by Union_Pos.
+        // @@@ (JP) I think enums and structs are the only two cases
+        // handled by Component_Pos, since arrays and sequences are
+        // handled by Component_Array, and unions are handled by
+        // Union_Pos.
         default:
           return -1;
       }
@@ -469,21 +454,15 @@ TAO_Notify_Constraint_Visitor::visit_component_assoc (
     case FILTERABLE_DATA:
       if (this->filterable_data_.find (name, any) != 0
           || any == 0)
-        {
-          return -1;
-        }
-
+        return -1;
       break;
     case VARIABLE_HEADER:
       if (this->variable_header_.find (name, any) != 0
           || any == 0)
-        {
-          return -1;
-        }
-
+        return -1;
       break;
-    // Only the sequence members of CosNotification::StructuredEvent can be
-    // treated as associative arrays.
+    // Only the sequence members of CosNotification::StructuredEvent
+    // can be treated as associative arrays.
     default:
       return -1;
   }
@@ -517,15 +496,14 @@ TAO_Notify_Constraint_Visitor::visit_component_assoc (
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_component_array (
-    TAO_ETCL_Component_Array *array
-  )
+TAO_Notify_Constraint_Visitor::visit_component_array (TAO_ETCL_Component_Array *array)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // If we are here (from visit_component) the Any containing the
-      // component as found in filterable_data_ will be in current_value_.
+      // component as found in filterable_data_ will be in
+      // current_value_.
       CORBA::TypeCode_var tc = this->current_value_->type ();
       CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ()
                                                        ACE_ENV_ARG_PARAMETER);
@@ -549,9 +527,7 @@ TAO_Notify_Constraint_Visitor::visit_component_array (
             ACE_TRY_CHECK;
 
             if (success == 0)
-              {
-                return -1;
-              }
+              return -1;
 
             member = dyn_array.current_component (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
@@ -570,9 +546,7 @@ TAO_Notify_Constraint_Visitor::visit_component_array (
             ACE_TRY_CHECK;
 
             if (success == 0)
-              {
-                return -1;
-              }
+              return -1;
 
             member =
               dyn_sequence.current_component (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -619,16 +593,39 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
   ACE_TRY
     {
       CORBA::TypeCode_var tc = this->current_value_->type ();
+      tc = TAO_DynAnyFactory::strip_alias (tc.in () ACE_ENV_ARG_PARAMETER);
 
       switch (special->type ())
-      {
+        {
         case TAO_ETCL_LENGTH:
           {
-            // If the TCKind is not a sequence or an array, the
-            // call to length() will raise an exception, and the
-            // catch block will return -1;
-            CORBA::ULong length = tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+	    CORBA::ULong length;
+
+	    switch (tc->kind ())
+              {
+	      case CORBA::tk_sequence:
+		{
+		  TAO_DynSequence_i dyn_seq;
+		  dyn_seq.init (current_value_.in()
+		                ACE_ENV_ARG_PARAMETER);
+		  ACE_TRY_CHECK;
+
+		  DynamicAny::AnySeq_var any_seq =
+		    dyn_seq.get_elements (ACE_ENV_SINGLE_ARG_PARAMETER);
+		  ACE_TRY_CHECK;
+
+		  length = any_seq->length ();
+		}
+              break;
+	      case CORBA::tk_array:
+		{
+		  length = tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
+		  ACE_TRY_CHECK;
+		}
+              break;
+	      default:
+		return -1;
+              }
 
             TAO_ETCL_Literal_Constraint lit (length);
             this->queue_.enqueue_head (lit);
@@ -636,9 +633,8 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
           }
         case TAO_ETCL_DISCRIMINANT:
           {
-            // If the TCKind is not a union, the
-            // call to init() will raise an exception, and the
-            // catch block will return -1;
+            // If the TCKind is not a union, the call to init() will
+            // raise an exception, and the catch block will return -1;
             TAO_DynUnion_i dyn_union;
             dyn_union.init (this->current_value_.in ()
                             ACE_ENV_ARG_PARAMETER);
@@ -675,7 +671,7 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
           }
         default:
           return -1;
-      }
+        }
     }
   ACE_CATCHANY
     {
@@ -699,19 +695,16 @@ TAO_Notify_Constraint_Visitor::visit_component (
   CORBA::Any *any_ptr = 0;
 
   if (this->implicit_ids_.find (component_name, this->implicit_id_) != 0)
-    {
-      this->implicit_id_ = TAO_Notify_Constraint_Visitor::EMPTY;
-    }
+    this->implicit_id_ = TAO_Notify_Constraint_Visitor::EMPTY;
 
-  // If this component has no sub-component, only an identifier,
-  // then we just visit the identifier, which puts a literal on
-  // the queue to be handled upon returning from this method call.
-  // If there is a sub-component, we store the literal's value
-  // in our member _var for possible examination at a more
-  // nested level, and visit the sub-component. If the identifier
-  // matches one of the nested field names in
-  // CosNotification::StructuredEvent, we just visit the nested
-  // component, if any.
+  // If this component has no sub-component, only an identifier, then
+  // we just visit the identifier, which puts a literal on the queue
+  // to be handled upon returning from this method call.  If there is
+  // a sub-component, we store the literal's value in our member _var
+  // for possible examination at a more nested level, and visit the
+  // sub-component. If the identifier matches one of the nested field
+  // names in CosNotification::StructuredEvent, we just visit the
+  // nested component, if any.
   if (this->implicit_id_ == TAO_Notify_Constraint_Visitor::EMPTY)
     {
       if (nested == 0)
@@ -730,9 +723,7 @@ TAO_Notify_Constraint_Visitor::visit_component (
           int result = identifier->accept (this);
 
           if (result != 0)
-            {
-              return result;
-            }
+            return result;
 
           TAO_ETCL_Literal_Constraint id;
           this->queue_.dequeue_head (id);
@@ -744,13 +735,11 @@ TAO_Notify_Constraint_Visitor::visit_component (
     }
 
   if (nested != 0)
-    {
-      return nested->accept (this);
-    }
+    return nested->accept (this);
   else
     {
       switch (this->implicit_id_)
-      {
+        {
         case TYPE_NAME:
           {
             TAO_ETCL_Literal_Constraint tn (this->type_name_.in ());
@@ -780,7 +769,7 @@ TAO_Notify_Constraint_Visitor::visit_component (
         // should have a nested component. otherwise, it's an error.
         default:
           return -1;
-      }
+        }
     }
 }
 
@@ -806,22 +795,18 @@ TAO_Notify_Constraint_Visitor::visit_default (TAO_ETCL_Default *def)
   TAO_ETCL_Constraint *comp = def->component ();
 
   if (comp == 0)
-    {
-      return -1;
-    }
+    return -1;
 
   if (comp->accept (this) != 0)
-    {
-      return -1;
-    }
+    return -1;
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       CORBA::TypeCode_var tc = this->current_value_->type ();
 
-      // If the current member is not a union, this call will
-      // throw BadKind and the catch block will return -1.
+      // If the current member is not a union, this call will throw
+      // BadKind and the catch block will return -1.
       CORBA::Long default_index = tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -860,15 +845,13 @@ TAO_Notify_Constraint_Visitor::visit_exist (TAO_ETCL_Exist *exist)
       CORBA::Boolean result = 0;
 
       // For the two cases below, we don't want the item at the top of
-      // the queue, because it's the result of a hash table lookup. For
-      // an existence test, we want the key value, which is stored in
-      // the current_value_ member.
+      // the queue, because it's the result of a hash table
+      // lookup. For an existence test, we want the key value, which
+      // is stored in the current_value_ member.
       if (this->implicit_id_ == FILTERABLE_DATA
           || this->implicit_id_ == VARIABLE_HEADER)
         {
-          TAO_ETCL_Literal_Constraint current (
-                                          &this->current_value_.inout ()
-                                        );
+          TAO_ETCL_Literal_Constraint current (&this->current_value_.inout ());
           value = CORBA::string_dup ((const char *) current);
         }
 
@@ -1008,23 +991,17 @@ TAO_Notify_Constraint_Visitor::visit_or (
             }
         }
       else
-        {
-          return_value = 0;
-        }
+        return_value = 0;
     }
 
   if (return_value == 0)
-    {
-      this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
-    }
+    this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
 
   return return_value;
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_and (
-    TAO_ETCL_Binary_Expr *binary
-  )
+TAO_Notify_Constraint_Visitor::visit_and (TAO_ETCL_Binary_Expr *binary)
 {
   int return_value = -1;
   CORBA::Boolean result = 0;
@@ -1050,24 +1027,18 @@ TAO_Notify_Constraint_Visitor::visit_and (
             }
         }
       else
-        {
-          return_value = 0;
-        }
+        return_value = 0;
     }
 
   if (return_value == 0)
-    {
-      this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
-    }
+    this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
 
   return return_value;
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_binary_op (
-    TAO_ETCL_Binary_Expr *binary,
-    int op_type
-  )
+TAO_Notify_Constraint_Visitor::visit_binary_op (TAO_ETCL_Binary_Expr *binary,
+                                                int op_type)
 {
   int return_value = -1;
   TAO_ETCL_Constraint *lhs = binary->lhs ();
@@ -1135,9 +1106,7 @@ TAO_Notify_Constraint_Visitor::visit_binary_op (
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_twiddle (
-    TAO_ETCL_Binary_Expr *binary
-  )
+TAO_Notify_Constraint_Visitor::visit_twiddle (TAO_ETCL_Binary_Expr *binary)
 {
   int return_value = -1;
   TAO_ETCL_Constraint *lhs = binary->lhs ();
@@ -1165,15 +1134,12 @@ TAO_Notify_Constraint_Visitor::visit_twiddle (
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_in (
-    TAO_ETCL_Binary_Expr *binary
-  )
+TAO_Notify_Constraint_Visitor::visit_in (TAO_ETCL_Binary_Expr *binary)
 {
   int return_value = -1;
   TAO_ETCL_Constraint *lhs = binary->lhs ();
 
   // Determine if the left operand is contained in the right.
-
   if (lhs->accept (this) == 0)
     {
       TAO_ETCL_Literal_Constraint left;
@@ -1208,7 +1174,7 @@ TAO_Notify_Constraint_Visitor::visit_in (
               CORBA::Boolean result = 0;
 
               switch (kind)
-              {
+                {
                 case CORBA::tk_sequence:
                   result = this->sequence_does_contain (component,
                                                         left);
@@ -1231,7 +1197,7 @@ TAO_Notify_Constraint_Visitor::visit_in (
                   break;
                 default:
                   return return_value;
-              }
+                }
 
               this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
               return_value = 0;
@@ -1243,9 +1209,7 @@ TAO_Notify_Constraint_Visitor::visit_in (
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_preference (
-    TAO_ETCL_Preference *
-  )
+TAO_Notify_Constraint_Visitor::visit_preference (TAO_ETCL_Preference *)
 {
   // According to OMG 00-06-20 section 2.4.1, the Notification Service
   // does not use the preference operators. The method must be here
@@ -1255,17 +1219,19 @@ TAO_Notify_Constraint_Visitor::visit_preference (
 }
 
 CORBA::Boolean
-TAO_Notify_Constraint_Visitor::sequence_does_contain (
-    const CORBA::Any *any,
-    TAO_ETCL_Literal_Constraint &item
-  )
+TAO_Notify_Constraint_Visitor::sequence_does_contain (const CORBA::Any *any,
+                                                      TAO_ETCL_Literal_Constraint &item)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       CORBA::TypeCode_var type = any->type ();
-      CORBA::TCKind kind = TAO_DynAnyFactory::unalias (type.in ()
-                                                       ACE_ENV_ARG_PARAMETER);
+      CORBA::TypeCode_var base_type = 
+	TAO_DynAnyFactory::strip_alias (type.in () ACE_ENV_ARG_PARAMETER);
+      CORBA::TypeCode_var content_type = 
+	base_type->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::TCKind kind = 
+	TAO_DynAnyFactory::unalias (content_type.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // The literal and the array elements must be
@@ -1274,9 +1240,7 @@ TAO_Notify_Constraint_Visitor::sequence_does_contain (
                                                       kind);
 
       if (match == 0)
-        {
-          return 0;
-        }
+        return 0;
 
       TAO_DynSequence_i dyn_seq;
       dyn_seq.init (*any
@@ -1294,9 +1258,7 @@ TAO_Notify_Constraint_Visitor::sequence_does_contain (
           TAO_ETCL_Literal_Constraint element (&any_seq[i]);
 
           if (item == element)
-            {
-              return 1;
-            }
+            return 1;
         }
     }
   ACE_CATCHANY
@@ -1309,10 +1271,8 @@ TAO_Notify_Constraint_Visitor::sequence_does_contain (
 }
 
 CORBA::Boolean
-TAO_Notify_Constraint_Visitor::array_does_contain (
-    const CORBA::Any *any,
-    TAO_ETCL_Literal_Constraint &item
-  )
+TAO_Notify_Constraint_Visitor::array_does_contain (const CORBA::Any *any,
+                                                   TAO_ETCL_Literal_Constraint &item)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -1328,9 +1288,7 @@ TAO_Notify_Constraint_Visitor::array_does_contain (
                                                       kind);
 
       if (match == 0)
-        {
-          return 0;
-        }
+        return 0;
 
       TAO_DynArray_i dyn_array;
       dyn_array.init (*any
@@ -1348,9 +1306,7 @@ TAO_Notify_Constraint_Visitor::array_does_contain (
           TAO_ETCL_Literal_Constraint element (&any_seq[i]);
 
           if (item == element)
-            {
-              return 1;
-            }
+            return 1;
         }
     }
   ACE_CATCHANY
@@ -1363,10 +1319,8 @@ TAO_Notify_Constraint_Visitor::array_does_contain (
 }
 
 CORBA::Boolean
-TAO_Notify_Constraint_Visitor::struct_does_contain (
-    const CORBA::Any *any,
-    TAO_ETCL_Literal_Constraint &item
-  )
+TAO_Notify_Constraint_Visitor::struct_does_contain (const CORBA::Any *any,
+                                                    TAO_ETCL_Literal_Constraint &item)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -1397,16 +1351,12 @@ TAO_Notify_Constraint_Visitor::struct_does_contain (
                                                           kind);
 
           if (match == 0)
-            {
-              continue;
-            }
+            continue;
 
           TAO_ETCL_Literal_Constraint element (&members[i].value);
 
           if (item == element)
-            {
-              return 1;
-            }
+            return 1;
         }
     }
   ACE_CATCHANY
@@ -1419,10 +1369,8 @@ TAO_Notify_Constraint_Visitor::struct_does_contain (
 }
 
 CORBA::Boolean
-TAO_Notify_Constraint_Visitor::union_does_contain (
-    const CORBA::Any *any,
-    TAO_ETCL_Literal_Constraint &item
-  )
+TAO_Notify_Constraint_Visitor::union_does_contain (const CORBA::Any *any,
+                                                   TAO_ETCL_Literal_Constraint &item)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -1450,9 +1398,7 @@ TAO_Notify_Constraint_Visitor::union_does_contain (
                                                       kind);
 
       if (match == 0)
-        {
-          return 0;
-        }
+        return 0;
 
       TAO_ETCL_Literal_Constraint element (&member.inout ());
 
@@ -1479,8 +1425,7 @@ TAO_Notify_Constraint_Visitor::any_does_contain (
 
   TAO_ETCL_Literal_Constraint element (ACE_const_cast (CORBA::Any *,
                                                        result));
-
-  return (item == element);
+  return item == element;
 }
 
 CORBA::Boolean
@@ -1491,38 +1436,34 @@ TAO_Notify_Constraint_Visitor::simple_type_match (int expr_type,
   {
     case TAO_ETCL_STRING:
       if (tc_kind != CORBA::tk_string)
-        {
-          return 0;
-        }
+        return 0;
+      break;
     case TAO_ETCL_DOUBLE:
       if (tc_kind != CORBA::tk_double
           && tc_kind != CORBA::tk_float)
-        {
-          return 0;
-        }
+        return 0;
+      break;
     case TAO_ETCL_INTEGER:
     case TAO_ETCL_SIGNED:
       if (tc_kind != CORBA::tk_short
           && tc_kind != CORBA::tk_long
           && tc_kind != CORBA::tk_longlong)
-        {
-          return 0;
-        }
+        return 0;
+      break;
     case TAO_ETCL_UNSIGNED:
       if (tc_kind != CORBA::tk_ushort
           && tc_kind != CORBA::tk_ulong
           && tc_kind != CORBA::tk_ulonglong)
-        {
-          return 0;
-        }
+        return 0;
+      break;
     case TAO_ETCL_BOOLEAN:
       if (tc_kind != CORBA::tk_boolean)
-        {
-          return 0;
-        }
+        return 0;
+      break;
     default:
       return 0;
   }
+  return 1;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
