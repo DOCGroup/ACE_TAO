@@ -75,8 +75,8 @@ public:
     /// set various stream head options
     MB_SETOPTS  = 0x08,
 
-    // = Control messag
-    /// acknowledge ioctles (high priority; go to head of queue)
+    // = Control messages
+    /// acknowledge ioctl (high priority; go to head of queue)
     MB_IOCACK   = 0x81,
     /// negative ioctl acknowledge
     MB_IOCNAK   = 0x82,
@@ -308,7 +308,6 @@ public:
   /// Return a "shallow" copy that increments our reference count by 1.
   ACE_Message_Block *duplicate (void) const;
 
-
   /**
    * Return a "shallow" copy that increments our reference count by 1.
    * This is similar to CORBA's <_duplicate> method, which is useful
@@ -316,7 +315,6 @@ public:
    * before calling <_duplicate> on them.
    */
   static ACE_Message_Block *duplicate (const ACE_Message_Block *mb);
-
 
   /**
    * Decrease the shared ACE_Data_Block's reference count by 1.  If the
@@ -351,7 +349,6 @@ public:
    * pointers before calling <release> on them.  Returns <mb>.
    */
   static ACE_Message_Block *release (ACE_Message_Block *mb);
-
 
   // = Operations on Message data
 
