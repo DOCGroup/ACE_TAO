@@ -37,6 +37,56 @@
 	has two fields a Object_ptr and a T_ptr....
       </LI>
 
+      <LI>Add compiled marshalling
+	<BR>[STATUS] Andy is working on this.
+      </LI>
+
+      <LI>Normalize the compiled marshalling interface: the IDL
+	compiler is going to generate a different interface than the
+	code I showed in the EC_Custom_Marshal example; we need to
+	make all the code consistent so users have easy access to it.
+      </LI>
+      
+      <LI>Add the _raise() method to the exceptions...
+      </LI>
+
+      <LI>Support C++ exceptions in the IDL compiler.
+	This entails several subtasks:
+	<UL>
+	  <LI>Support the alternative mapping with an environment
+	    variable, but with a default value (that <B>must</B> be
+	    obtained from TSS).
+	  </LI>
+	  <LI>Support the standard mapping, without the environment
+	    variable.
+	  </LI>
+	  <LI>On the server side: catch any exceptions thrown by the
+	    user or the system, and then transform that into the
+	    proper <CODE>Reply</CODE> to the client side
+	  </LI>
+	  <LI>On the client side: when receiving an exception from the
+	    server we need to create the object with the right dynamic
+	    type. It is doable because the IDL compiler can give us a
+	    list of the possible exceptions that we will receive,
+	    it could augment this list with factory methods for the
+	    exception objects.  If the received exception is not on
+	    the list we just throw a CORBA::UNKNOWN_EXCEPTION
+	    exception.
+	  </LI>
+	  <LI><P>I haven't looked into how would we support exceptions
+	      with DII/DSI, the <CODE>ExceptionList</CODE> that is
+	      received passed in the <CODE>Request</CODE> only contains
+	      the <CODE>TypeCode</CODE> for each exception. Somehow the
+	      ORB needs to map this into methods to create the Exception
+	      objects with the right dynamic type.
+	      </P>
+	    <P>One possible solution is to register this methods with
+	      the ORB when the stub is created, this will avoid the
+	      use of statics that cause us so much pain</P>
+	  </LI>
+	</UL>
+      </LI>
+
       <LI>Use active demuxing in the POA
       </LI>
 
@@ -56,10 +106,6 @@
 	contains).
       </LI>
 
-      <LI>Add compiled marshalling
-	<BR>[STATUS] Andy is working on this.
-      </LI>
-      
       <LI>The data blocks and their buffers could be allocated in a
 	single operation, using the beginning of a buffer to contain
 	the data block and the rest of it to contain the actual buffer
@@ -102,13 +148,6 @@
 	"generate relative include paths".
       </LI>
 
-      <LI>The IDL compiler should generate the files locally (maybe
-	with an option).
-      </LI>
-
-      <LI>Add options to the IDL compiler to set the suffixes.
-      </LI>
-
       <LI>The IDL compiler should generate the code locally (not in
 	the directory where the .idl resides) or at least give an
 	option to do so
@@ -122,10 +161,10 @@
 	connector.
       </LI>
 
-      <LI>Support for fixed in the IDL compiler
+      <LI>Support for the fixed data type in the IDL compiler
       </LI>
 
-      <LI>CDR stream support for wchar is flaky.
+      <LI>CDR stream support for wchar is flaky or at least untested.
       </LI>
 
       <LI>Add a corbafwd.h header file to eliminate the deep (and
@@ -152,9 +191,6 @@
 	ACE_DEBUG output destination in all TAO applications
       </LI>
       
-      <LI>Add the _raise() method to the exceptions...
-      </LI>
-
       <LI>Add support for multiple Profiles in the ORB (completing the
 	IIOP 1.0 support)
       </LI>
@@ -291,7 +327,7 @@
       <LI>Currently the IDL compiler creates an operation table that
 	includes all the base classes operations; this permits the
 	generation of efficient code that does not rely in
-	dynamic_cast or the _downcast() method for Servanst (which
+	dynamic_cast or the _downcast() method for Servants (which
 	compare strings, hence it is slow).
 	It could be interesting to implement the alternative approach
 	were the class only looks its own operations and then tries
@@ -319,6 +355,20 @@
 
       <LI>Resolve the Typecode::equal dilemma: is it structural or
 	type equivalence? Or a mixin?
+	<BR>[STATUS] The correct interpretation seems to be:
+	<UL>
+	  <LI>If the interface repository ID is not present and/or the
+	    optional field name is not present then TypeCode::equal
+	    should just test for structural equivalence.
+	  </LI>
+	  <LI>If the interface repository ID is present then type
+	    structural equivalence is not enough
+	  </LI>
+	  <LI>The spec (2.2 or 2.3?) will add a
+	    <CODE>equivalent</CODE> method to check for structural
+	    equivalence modulo aliases
+	  </LI>
+	</UL>
       </LI>
 
       <LI>Automate EC multicast group usage. This probably requires
@@ -340,6 +390,7 @@
       </LI>
 
       <LI>We must support DynAny.
+	<BR>[STATUS] Jeff is working on this.
       </LI>
 
       <LI>We must support a IFR.
@@ -382,6 +433,10 @@
     </CENTER>
 
     <UL>
+      <LI>Add options to the IDL compiler to set the suffixes.
+	<BR>[DONE] Alex finished this.
+      </LI>
+
       <LI>Support for 64bit longs in the IDL compiler
 	<BR>[DONE] They were supported already, but we had to test
 	them, I added a test to Param_Test.
