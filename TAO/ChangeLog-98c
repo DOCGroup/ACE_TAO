@@ -1,5 +1,8 @@
 Thu Apr  9 21:57:52 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tao/POAS.cpp: Fixed up the POA to use the new
+ 	  ACE_Static_Allocator_Base stuff.
+
 	* tao/Operation_Table: Added an additional parameter to the
  	  TAO_Dynamic_Hash_OpTable constructor so that we can pass in the
  	  ACE_Static_Allocator_Base.  Also, changed the code to use the
