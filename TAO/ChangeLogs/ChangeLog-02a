@@ -1,3 +1,10 @@
+Thu May  2 07:56:24 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Queued_Message_Test/Queued_Message_Test.cpp:
+
+          Include ace/Log_Msg.h to get the definition of the ACE_ERROR and
+          related macros.
+
 Thu May  2 01:44:35 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Connection_Handler.cpp (decr_pending_upcalls): Uninlined a
