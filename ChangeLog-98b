@@ -15,7 +15,7 @@ Thu Aug  6 17:44:50 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 Thu Aug  6 20:41:44 1998  James C Hu  <jxh@cs.wustl.edu>
 
 	* ace/Filecache.cpp: Avoided a deadlock detected by Tom Dobridge
-	  (thanks!).
+          <dobridge@persimmon.com> (thanks!).
 
 Thu Aug 06 14:59:22 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
