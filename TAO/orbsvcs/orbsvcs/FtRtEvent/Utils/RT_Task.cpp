@@ -72,6 +72,8 @@ int RT_Task::activate(ACE_Task_Base* task)
                         -1));
         }
     }
-#endif
   return 0;
+#else
+  return task->activate();
+#endif
 }
