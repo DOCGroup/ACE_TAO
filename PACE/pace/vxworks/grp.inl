@@ -18,6 +18,8 @@ PACE_INLINE
 pace_group *
 pace_getgrgid (pace_gid_t gid)
 {
+  PACE_TRACE("pace_getgrgid");
+
   /* getgrgid() is not supported:  just one user anyways */
   PACE_UNUSED_ARG (gid);
   return 0;
@@ -33,6 +35,8 @@ pace_getgrgid_r (pace_gid_t gid,
                  size_t bufsize,
                  pace_group ** result)
 {
+  PACE_TRACE("pace_getgrgid_r");
+
   /* getgrgid_r() is not supported:  just one user anyways */
   PACE_UNUSED_ARG (gid);
   PACE_UNUSED_ARG (grp);
@@ -48,6 +52,8 @@ PACE_INLINE
 pace_group *
 pace_getgrnam (const char * name)
 {
+  PACE_TRACE("pace_getgrnam");
+
   /* getgrnam() is not supported:  just one user anyways */
   PACE_UNUSED_ARG (name);
   return 0;
@@ -63,6 +69,8 @@ pace_getgrnam_r (const char * name,
                  size_t bufsize,
                  pace_group ** result)
 {
+  PACE_TRACE("pace_getgrnam_r");
+
   /* getgrnam_r() is not supported:  just one user anyways */
   PACE_UNUSED_ARG (name);
   PACE_UNUSED_ARG (grp);

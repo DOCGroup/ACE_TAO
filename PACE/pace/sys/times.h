@@ -31,7 +31,7 @@ extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
 #if (PACE_HAS_POSIX_MP_UOF)
-  PACE_INLINE pace_clock_t pace_times (pace_tms * buffer);
+  PACE_Export PACE_INLINE pace_clock_t pace_times (pace_tms * buffer);
 #endif /* PACE_HAS_POSIX_MP_UOF */
 
 #if defined (PACE_HAS_INLINE)

@@ -11,10 +11,13 @@ CFLAGS += -DPACE_HAS_ALL_POSIX_FUNCS
 #       Local macros
 #----------------------------------------------------------------------------
 
+# Ensure that POSIX_SP_Test is the last test built. For some platforms,
+# it doesn't build (which is actually the test). This is currently the
+# only file like this (i.e., which may not compile).
 BIN =   Stdio_Test \
 	Pthreads_Test \
 	mqueue_test \
-        Posix_SP_Test \
+        Posix_SP_Test
 
 #### If the PACE library wasn't built with all components, don't
 #### try to build certain tests.

@@ -8,6 +8,10 @@
 #include "pace/signal.h"
 #include "pace/string.h"
 
+#if defined (PACE_VXWORKS) && PACE_VXWORKS != 0
+#include "vxworks_stub.c"
+#endif /* VXWORKS */
+
 /* Most of this code is borowed from Konstantin Knizhnik <http://www.ispras.ru/~knizhnik/posix1b/> */
 
 pace_mqd_t mqdes;

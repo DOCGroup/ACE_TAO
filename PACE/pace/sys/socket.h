@@ -36,9 +36,9 @@ extern "C" {
    (IEEE Std P1003.1g, D6.6, March 1997 Edition)
 */
 #if (PACE_HAS_POSIX_SOCK_UOF)
-    PACE_INLINE int pace_accept (int s,
-                                 pace_sockaddr * socketaddress,
-                                 pace_socklen_t * addresslen);
+    PACE_Export PACE_INLINE int pace_accept (int s,
+                                             pace_sockaddr * socketaddress,
+                                             pace_socklen_t * addresslen);
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
 /**
@@ -47,9 +47,9 @@ extern "C" {
    (IEEE Std P1003.1g, D6.6, March 1997 Edition)
 */
 #if (PACE_HAS_POSIX_SOCK_UOF)
-    PACE_INLINE int pace_bind (int s,
-                               const pace_sockaddr * socketaddress,
-                               pace_socklen_t addresslen);
+    PACE_Export PACE_INLINE int pace_bind (int s,
+                                           const pace_sockaddr * socketaddress,
+                                           pace_socklen_t addresslen);
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
 /**
@@ -58,9 +58,9 @@ extern "C" {
    (IEEE Std P1003.1g, D6.6, March 1997 Edition)
 */
 #if (PACE_HAS_POSIX_SOCK_UOF)
-    PACE_INLINE int pace_connect (int s,
-                                  const pace_sockaddr * socketaddress,
-                                  pace_socklen_t addresslen);
+    PACE_Export PACE_INLINE int pace_connect (int s,
+                                              const pace_sockaddr * socketaddress,
+                                              pace_socklen_t addresslen);
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
 /**
@@ -69,9 +69,9 @@ extern "C" {
    (IEEE Std P1003.1g, D6.6, March 1997 Edition)
 */
 #if (PACE_HAS_POSIX_SOCK_UOF)
-    PACE_INLINE int pace_getpeername (int s,
-                                      pace_sockaddr * socketaddress,
-                                      pace_socklen_t * addresslen);
+    PACE_Export PACE_INLINE int pace_getpeername (int s,
+                                                  pace_sockaddr * socketaddress,
+                                                  pace_socklen_t * addresslen);
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
 /**
@@ -80,9 +80,9 @@ extern "C" {
    (IEEE Std P1003.1g, D6.6, March 1997 Edition)
 */
 #if (PACE_HAS_POSIX_SOCK_UOF)
-    PACE_INLINE int pace_getsockname (int s,
-                                      pace_sockaddr * socketaddress,
-                                      pace_socklen_t * addresslen);
+    PACE_Export PACE_INLINE int pace_getsockname (int s,
+                                                  pace_sockaddr * socketaddress,
+                                                  pace_socklen_t * addresslen);
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
 /**
@@ -91,11 +91,11 @@ extern "C" {
    (IEEE Std P1003.1g, D6.6, March 1997 Edition)
 */
 #if (PACE_HAS_POSIX_SOCK_UOF)
-    PACE_INLINE int pace_getsockopt (int s,
-                                     int level,
-                                     int optname,
-                                     void * optval,
-                                     pace_socklen_t optlen);
+    PACE_Export PACE_INLINE int pace_getsockopt (int s,
+                                                 int level,
+                                                 int optname,
+                                                 void * optval,
+                                                 pace_socklen_t optlen);
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
 /**
@@ -104,10 +104,10 @@ extern "C" {
    (IEEE Std P1003.1g, D6.6, March 1997 Edition)
 */
 #if (PACE_HAS_POSIX_SOCK_UOF)
-    PACE_INLINE int pace_setsockopt (int s,
-                                     int level,
-                                     int optname,
-                                     const * optval);
+    PACE_Export PACE_INLINE int pace_setsockopt (int s,
+                                                 int level,
+                                                 int optname,
+                                                 const * optval);
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
 /**
@@ -116,7 +116,7 @@ extern "C" {
    (IEEE Std P1003.1g, D6.6, March 1997 Edition)
 */
 #if (PACE_HAS_POSIX_SOCK_UOF)
-    PACE_INLINE int pace_isfdtype (int fildes, int fdtype);
+    PACE_Export PACE_INLINE int pace_isfdtype (int fildes, int fdtype);
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
 /**
@@ -125,7 +125,7 @@ extern "C" {
    (IEEE Std P1003.1g, D6.6, March 1997 Edition)
 */
 #if (PACE_HAS_POSIX_SOCK_UOF)
-    PACE_INLINE int pace_listen (int s, int backlog);
+    PACE_Export PACE_INLINE int pace_listen (int s, int backlog);
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
 /**
@@ -134,10 +134,10 @@ extern "C" {
    (IEEE Std P1003.1g, D6.6, March 1997 Edition)
 */
 #if (PACE_HAS_POSIX_SOCK_UOF)
-    PACE_INLINE pace_ssize_t pace_recv (int s,
-                                        void * buf,
-                                        pace_size_t len,
-                                        int flags);
+    PACE_Export PACE_INLINE pace_ssize_t pace_recv (int s,
+                                                    void * buf,
+                                                    pace_size_t len,
+                                                    int flags);
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
 /**
@@ -146,12 +146,12 @@ extern "C" {
    (IEEE Std P1003.1g, D6.6, March 1997 Edition)
 */
 #if (PACE_HAS_POSIX_SOCK_UOF)
-    PACE_INLINE pace_ssize_t pace_recvfrom (int s,
-                                            void * buf,
-                                            pace_size_t len,
-                                            int flags,
-                                            pace_sockaddr * from,
-                                            pace_socklen_t * fromlen);
+    PACE_Export PACE_INLINE pace_ssize_t pace_recvfrom (int s,
+                                                        void * buf,
+                                                        pace_size_t len,
+                                                        int flags,
+                                                        pace_sockaddr * from,
+                                                        pace_socklen_t * fromlen);
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
 /**
@@ -160,9 +160,9 @@ extern "C" {
    (IEEE Std P1003.1g, D6.6, March 1997 Edition)
 */
 #if (PACE_HAS_POSIX_SOCK_UOF)
-    PACE_INLINE pace_ssize_t pace_rcvmsg (int s,
-                                          pace_msghdr * msg,
-                                          int flags);
+    PACE_Export PACE_INLINE pace_ssize_t pace_rcvmsg (int s,
+                                                      pace_msghdr * msg,
+                                                      int flags);
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
 /**
@@ -171,10 +171,10 @@ extern "C" {
    (IEEE Std P1003.1g, D6.6, March 1997 Edition)
 */
 #if (PACE_HAS_POSIX_SOCK_UOF)
-    PACE_INLINE pace_ssize_t pace_send (int s,
-                                        const void * buf,
-                                        pace_size_t len,
-                                        int flags);
+    PACE_Export PACE_INLINE pace_ssize_t pace_send (int s,
+                                                    const void * buf,
+                                                    pace_size_t len,
+                                                    int flags);
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
 /**
@@ -183,12 +183,12 @@ extern "C" {
    (IEEE Std P1003.1g, D6.6, March 1997 Edition)
 */
 #if (PACE_HAS_POSIX_SOCK_UOF)
-    PACE_INLINE pace_ssize_t pace_sendto (int s,
-                                          const void * buf,
-                                          pace_size_t len,
-                                          int flags,
-                                          const pace_sockaddr * to,
-                                          pace_socklen_t * tolen);
+    PACE_Export PACE_INLINE pace_ssize_t pace_sendto (int s,
+                                                      const void * buf,
+                                                      pace_size_t len,
+                                                      int flags,
+                                                      const pace_sockaddr * to,
+                                                      pace_socklen_t * tolen);
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
 /**
@@ -197,9 +197,9 @@ extern "C" {
    (IEEE Std P1003.1g, D6.6, March 1997 Edition)
 */
 #if (PACE_HAS_POSIX_SOCK_UOF)
-    PACE_INLINE pace_ssize_t pace_sendmsg (int s,
-                                           const pace_msghdr * msg,
-                                           int flags);
+    PACE_Export PACE_INLINE pace_ssize_t pace_sendmsg (int s,
+                                                       const pace_msghdr * msg,
+                                                       int flags);
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
 /**
@@ -208,7 +208,7 @@ extern "C" {
    (IEEE Std P1003.1g, D6.6, March 1997 Edition)
 */
 #if (PACE_HAS_POSIX_SOCK_UOF)
-    PACE_INLINE int pace_shutdown (int s, int how);
+    PACE_Export PACE_INLINE int pace_shutdown (int s, int how);
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
 /**
@@ -217,7 +217,9 @@ extern "C" {
    (IEEE Std P1003.1g, D6.6, March 1997 Edition)
 */
 #if (PACE_HAS_POSIX_SOCK_UOF)
-    PACE_INLINE int pace_socket (int protofamily, int type, int protocol);
+    PACE_Export PACE_INLINE int pace_socket (int protofamily,
+                                             int type,
+                                             int protocol);
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
     
 /**
@@ -226,10 +228,10 @@ extern "C" {
    (IEEE Std P1003.1g, D6.6, March 1997 Edition)
 */
 #if (PACE_HAS_POSIX_SOCK_UOF)
-    PACE_INLINE int pace_socketpair (int protofamily,
-                                     int type,
-                                     int protocol,
-                                     int sv[2]);
+    PACE_Export PACE_INLINE int pace_socketpair (int protofamily,
+                                                 int type,
+                                                 int protocol,
+                                                 int sv[2]);
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
     
 #if defined (PACE_HAS_INLINE)

@@ -35,35 +35,43 @@ extern "C" {
   pace_memchr function, C std ref. 7.21.5.1
   */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE void * pace_memchr(const void *s, int c, pace_size_t n);
+  PACE_Export PACE_INLINE void * pace_memchr(const void *s,
+                                             int c,
+                                             pace_size_t n);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
   pace_memcmp function, C std ref. 7.21.4.1
   */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_memcmp(const void *s1, const void *s2, pace_size_t n);
+  PACE_Export PACE_INLINE int pace_memcmp(const void *s1,
+                                          const void *s2,
+                                          pace_size_t n);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
   pace_memcpy function, C std ref. 7.21.2.1
   */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE void *pace_memcpy(void * s1, const void * s2, pace_size_t n);
+  PACE_Export PACE_INLINE void *pace_memcpy(void * s1,
+                                            const void * s2,
+                                            pace_size_t n);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
   pace_memmove function, C std ref.7.21.2.2
   */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE void *pace_memmove(void *s1, const void *s2, pace_size_t n);
+  PACE_Export PACE_INLINE void *pace_memmove(void *s1,
+                                             const void *s2,
+                                             pace_size_t n);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
   pace_memset function, C std ref. 7.21.6.1
   */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE void *pace_memset(void *s, int c, pace_size_t n);
+  PACE_Export PACE_INLINE void *pace_memset(void *s, int c, pace_size_t n);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -72,7 +80,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE char * pace_strcat (char * s1, const char * s2);
+  PACE_Export PACE_INLINE char * pace_strcat (char * s1, const char * s2);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -81,7 +89,9 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE char * pace_strncat (char * s1, const char * s2, size_t n);
+  PACE_Export PACE_INLINE char * pace_strncat (char * s1,
+                                               const char * s2,
+                                               size_t n);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -90,7 +100,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE char * pace_strchr (const char * s, int c);
+  PACE_Export PACE_INLINE char * pace_strchr (const char * s, int c);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -99,7 +109,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE char * pace_strrchr (const char * s, int c);
+  PACE_Export PACE_INLINE char * pace_strrchr (const char * s, int c);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -108,7 +118,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE int pace_strcmp (const char * s1, const char * s2);
+  PACE_Export PACE_INLINE int pace_strcmp (const char * s1, const char * s2);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -117,7 +127,9 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE int pace_strncmp (const char * s1, const char * s2, size_t n);
+  PACE_Export PACE_INLINE int pace_strncmp (const char * s1,
+                                            const char * s2,
+                                            size_t n);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -126,7 +138,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE char * pace_strcpy (char * s1, const char * s2);
+  PACE_Export PACE_INLINE char * pace_strcpy (char * s1, const char * s2);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -135,7 +147,9 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE char * pace_strncpy (char * s1, const char * s2, size_t n);
+  PACE_Export PACE_INLINE char * pace_strncpy (char * s1,
+                                               const char * s2,
+                                               size_t n);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -144,7 +158,8 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE size_t pace_strcspn (const char * s1, const char * s2);
+  PACE_Export PACE_INLINE size_t pace_strcspn (const char * s1,
+                                               const char * s2);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -153,7 +168,8 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE size_t pace_strspn (const char * s1, const char * s2);
+  PACE_Export PACE_INLINE size_t pace_strspn (const char * s1,
+                                              const char * s2);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -162,7 +178,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE size_t pace_strlen (const char * s);
+  PACE_Export PACE_INLINE size_t pace_strlen (const char * s);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -171,7 +187,8 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE char * pace_strpbrk (const char * s1, const char * s2);
+  PACE_Export PACE_INLINE char * pace_strpbrk (const char * s1,
+                                               const char * s2);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -180,7 +197,8 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE char * pace_strstr (const char * s1, const char * s2);
+  PACE_Export PACE_INLINE char * pace_strstr (const char * s1,
+                                              const char * s2);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -189,7 +207,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE char * pace_strtok (char * s1, const char * s2);
+  PACE_Export PACE_INLINE char * pace_strtok (char * s1, const char * s2);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -198,9 +216,9 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.3.3.
      */
 #if (PACE_HAS_POSIX_CLSR_UOF)
-  PACE_INLINE char * pace_strtok_r (char * s,
-                                    const char * sep,
-                                    char ** lasts);
+  PACE_Export PACE_INLINE char * pace_strtok_r (char * s,
+                                                const char * sep,
+                                                char ** lasts);
 #endif /* PACE_HAS_POSIX_CLSR_UOF */
   /* Requires PACE_HAS_REENTRANT. */
 

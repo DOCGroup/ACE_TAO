@@ -1,3 +1,132 @@
+Wed Aug 22 09:04:28 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+	* Makefile: 
+	  Took away restriction for VxWorks since we now support
+	  that OS.
+
+	* include/makeinclude/rules.common.GNU: 
+	  Added check for pace_tracing set to 1 and included the
+	  appropriate -DPACE_TRACING if set.
+
+	* pace/Makefile: 
+	  Changed absolute path of $(ACE_ROOT)/PACE to $(PACE_ROOT)
+	  to include rules.common.GNU and defined PACE_ROOT to be
+	  $(ACE_ROOT)/PACE if not already defined. This is needed
+	  for the DII COE work since there the PACE files are not
+	  necessarily underneath the ACE files.
+
+	* pace/aio.h: 
+	* pace/ctype.h: 
+	* pace/dirent.h: 
+	* pace/fcntl.h: 
+	* pace/grp.h: 
+	* pace/locale.h: 
+	* pace/math.h: 
+	* pace/mqueue.h: 
+	* pace/pthread.h: 
+	* pace/pwd.h: 
+	* pace/sched.h: 
+	* pace/semaphore.h: 
+	* pace/setjmp.h: 
+	* pace/signal.h: 
+	* pace/stdio.h: 
+	* pace/stdlib.h: 
+	* pace/string.h: 
+	* pace/termios.h: 
+	* pace/time.h: 
+	* pace/unistd.h: 
+	* pace/utime.h: 
+	* pace/sys/mman.h: 
+	* pace/sys/socket.h: 
+	* pace/sys/stat.h: 
+	* pace/sys/times.h: 
+	* pace/sys/utsname.h: 
+	* pace/sys/wait.h: 
+	  Added PACE_Export to all function declarations -
+	  for Windows DLL builds.
+
+	* pace/config/config.h: 
+	  Added PACE_Export #define to go away for non-Windows
+	  platforms and to be appropriate for a DLL - using dllexport
+	  - or for an application or DLL that including these functions
+	  - using dllimport.
+
+	* pace/config/constants.h: 
+	  Moved PACE_TRACE define to utility.h.
+
+	* pace/config/features.h: 
+	  Removed extraneous lines at end of file.
+
+	* pace/config/utility.h: 
+	  Moved PACE_TRACE define from constants.h to here -
+	  and made it to be turned on or off by setting pace_tracing
+	  to 1.
+
+	* pace/vxworks/pthread.c: 
+	  Added PACE_TRACE tracing and renamed pace_pthread*
+	  functions to pthread* functions. This will allow
+	  the compiler to flag us - with an error - when these
+	  functions are implemented and we can then remove
+	  our emulation code.
+
+	* pace/vxworks/pthread.h: 
+	  Added declarations for all the POSIX Pthread
+	  functions that VxWorks doesn't support - and
+	  which we emulate in pthread.c.
+
+	* pace/vxworks/pthread.inl: 
+	  Added PACE_TRACE tracing and added calls to POSIX
+	  routines which get emulated in pthread.c.
+
+	* pace/vxworks/aio.inl: 
+	* pace/vxworks/ctype.inl: 
+	* pace/vxworks/dirent.inl: 
+	* pace/vxworks/fcntl.inl: 
+	* pace/vxworks/grp.inl: 
+	* pace/vxworks/locale.inl: 
+	* pace/vxworks/math.inl: 
+	* pace/vxworks/mman.inl: 
+	* pace/vxworks/mqueue.inl: 
+	* pace/vxworks/pwd.inl: 
+	* pace/vxworks/sched.inl: 
+	* pace/vxworks/semaphore.inl: 
+	* pace/vxworks/setjmp.inl: 
+	* pace/vxworks/signal.inl: 
+	* pace/vxworks/socket.inl: 
+	* pace/vxworks/stat.inl: 
+	* pace/vxworks/stdio.inl: 
+	* pace/vxworks/stdlib.inl: 
+	* pace/vxworks/string.inl: 
+	* pace/vxworks/termios.inl: 
+	* pace/vxworks/time.inl: 
+	* pace/vxworks/times.inl: 
+	* pace/vxworks/unistd.inl: 
+	* pace/vxworks/utime.inl: 
+	* pace/vxworks/wait.inl: 
+	  Added PACE_TRACE tracing.
+
+	* pace/vxworks/utsname.inl: 
+	  Added PACE_TRACE tracing and added OS version for
+	  release name.
+
+	* tests/Makefile: 
+	  Cleaned up a dangling continuation line and added comment
+	  about building Posix_SP_Test last since it may not even
+	  compile ( which is actually the tests).
+
+	* tests/Posix_SP_Test.c: 
+	* tests/Pthreads_Test.c: 
+	* tests/mqueue_test.c: 
+	  Included vxworks_stub.c file to build for VxWorks.
+
+	* tests/Stdio_Test.c: 
+	  Included vxworks_stub.c file to build for VxWorks and
+	  unlinked temporary file when done.
+
+	* tests/vxworks_stub.c: 
+	  Added this file to encapsulate the machinations needed
+	  to get the tests to build for VxWorks.
+
 Fri Jul 20 15:53:56 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * pace/win32/string.c (strtok_r):

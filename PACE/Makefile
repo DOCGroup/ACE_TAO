@@ -32,18 +32,12 @@ DIRS  =	pace \
 
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
-ifdef VXWORKS
+ifdef CHORUS
 DIRS  =
   all clean realclean:
-	@echo PACE won\'t run or build for VxWorks.
-else
-  ifdef CHORUS
-  DIRS  =
-    all clean realclean:
 	@echo PACE won\'t run or build for Chorus.
-  else
+else
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
-  endif # CHORUS
 endif # VXWORKS

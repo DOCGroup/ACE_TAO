@@ -59,6 +59,9 @@ pthread_q_entry *
 pacevx_pthread_queue_get_entry()
 {
   int i;
+
+  PACE_TRACE("pacevx_pthread_queue_get_entry");
+
   for (i = 0; i<PTHEAD_QUEUE_MAX_LEN; i++)
     {
       if (pthread_queue[i].status == FALSE)
@@ -77,6 +80,8 @@ pacevx_pthread_queue_get_entry()
 void
 pacevx_pthread_destructor_key(pace_pthread_key_t key, void * arg)
 {
+  PACE_TRACE("pacevx_pthread_destructor_key");
+
   if (pacevx_pthread_key_validate(key))
     {
       if (keyList[key].destructor != NULL)
@@ -100,6 +105,8 @@ pacevx_pthread_destructor_thread(pace_pthread_t pthread)
 {
   int i;
  
+  PACE_TRACE("pacevx_pthread_destructor_thread");
+
   for (i = 0; i < PTHREAD_KEYS_MAX; i ++)
     {
       if (pthread->keyvaluelist[i] != NULL)
@@ -118,13 +125,15 @@ pacevx_pthread_proc_exit(pace_pthread_t pthread, void *value_ptr)
   int key;
   int needgive = 0;
 
+  PACE_TRACE("pacevx_pthread_proc_exit");
+
   pacevx_pthread_cleanup_popall(pthread);
 
   /* thread storage data cleanup is automatically*/
   pacevx_pthread_destructor_thread(pthread);
 
   /* joinable or detached */
-  if(pthread->detachflag == PTHREAD_CREATE_DETACHED)
+  if (pthread->detachflag == PTHREAD_CREATE_DETACHED)
     {
       free(pthread);
     }
@@ -135,7 +144,7 @@ pacevx_pthread_proc_exit(pace_pthread_t pthread, void *value_ptr)
       /* pass the value */
       pthread->joinvalue = value_ptr;
 
-      switch(pthread->joinstate)
+      switch (pthread->joinstate)
         {
         case JOIN_PENDING:
           pthread->joinstate = JOIN_TERMINATED;
@@ -149,7 +158,7 @@ pacevx_pthread_proc_exit(pace_pthread_t pthread, void *value_ptr)
       intUnlock(key);
 
       /* unblock the calling thread */
-      if(needgive)
+      if (needgive)
         semGive(((pace_pthread_t)(pthread->jointhread))->joinSem);
     }
 }
@@ -161,6 +170,8 @@ pacevx_pthread_verify(pace_pthread_t pthread)
 {
   int key;
   pthread_q_entry * entry;
+
+  PACE_TRACE("pacevx_pthread_verify");
 
   key = intLock();
 
@@ -199,6 +210,8 @@ pacevx_pthread_run_cleanup (WIND_TCB *pTcb)
 {
   pace_pthread_t pthread;
 
+  PACE_TRACE("pacevx_pthread_run_cleanup");
+
   /* free thread tcb only*/
   if (pTcb->_USER_SPARE4 != 0)
     {
@@ -218,6 +231,8 @@ pacevx_pthread_queue_add(pace_pthread_t pthread)
 {
   int key;
   pthread_q_entry * entry;
+
+  PACE_TRACE("pacevx_pthread_queue_add");
 
   key = intLock();
 
@@ -256,6 +271,8 @@ pacevx_pthread_queue_remove(pace_pthread_t pthread)
   int key;
   pthread_q_entry * entry1;
   pthread_q_entry * entry2;
+
+  PACE_TRACE("pacevx_pthread_queue_remove");
 
   key = intLock();
 
@@ -325,6 +342,8 @@ pacevx_pthread_cleanup_popall(pace_pthread_t thread)
   int count;
   int i;
 
+  PACE_TRACE("pacevx_pthread_cleanup_popall");
+
   count = thread->rtnCount - 1;
   for (i = count; i > 0 ; i--)
     {
@@ -342,6 +361,8 @@ int
 pacevx_pthread_key_validate(pace_pthread_key_t key)
 {
   int intkey;
+
+  PACE_TRACE("pacevx_pthread_key_validate");
 
   intkey = intLock();
 
@@ -366,13 +387,15 @@ pacevx_pthread_key_validate(pace_pthread_key_t key)
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int
-pace_pthread_cond_timedwait (pace_pthread_cond_t * cond,
-                             pace_pthread_mutex_t * mutex,
-                             const pace_timespec * abstime)
+pthread_cond_timedwait (pace_pthread_cond_t * cond,
+                        pace_pthread_mutex_t * mutex,
+                        const pace_timespec * abstime)
 {
   STATUS status;
   int timeval = 0;
   int errornumber, returnval = 0;
+
+  PACE_TRACE("pthread_cond_timedwait");
 
   if (pace_pthread_mutex_unlock(mutex) != OK) return ERROR;
 
@@ -399,12 +422,14 @@ pace_pthread_cond_timedwait (pace_pthread_cond_t * cond,
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int
-pace_pthread_cond_wait (pace_pthread_cond_t * cond,
-                        pace_pthread_mutex_t * mutex)
+pthread_cond_wait (pace_pthread_cond_t * cond,
+                   pace_pthread_mutex_t * mutex)
 {
   STATUS status;
   int errornumber;
   int returnval = 0;
+
+  PACE_TRACE("pthread_cond_wait");
 
   if (pace_pthread_mutex_unlock(mutex) != OK)
     return ERROR;
@@ -429,11 +454,13 @@ pace_pthread_cond_wait (pace_pthread_cond_t * cond,
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 # if defined (PACE_HAS_CPLUSPLUS)
 int
-pace_pthread_create (pace_pthread_t * thread,
-                     const pace_pthread_attr_t * attr,
-                     pace_create_pf start_routine,
-                     void * arg)
+pthread_create (pace_pthread_t * thread,
+                const pace_pthread_attr_t * attr,
+                pace_create_pf start_routine,
+                void * arg)
 {
+  PACE_TRACE("pthread_create");
+
   pace_pthread_attr_t pattr;
   char * pname;
   int taskid;
@@ -457,6 +484,7 @@ pace_pthread_create (pace_pthread_t * thread,
                      (SCHED_FIFO_HIGH_PRI - pattr->schedule.sched_priority), 
                      VX_FP_TASK, pattr->stacksize, (FUNCPTR)start_routine, 
                      (int)arg, 0,0,0,0,0,0,0,0,0);
+
   if (taskid == ERROR)
      return ERROR;
 
@@ -504,10 +532,10 @@ pace_pthread_create (pace_pthread_t * thread,
 }
 # else /* ! PACE_HAS_CPLUSPLUS */
 int
-pace_pthread_create (pace_pthread_t * thread,
-                     const pace_pthread_attr_t * attr,
-                     void * (*start_routine) (void*),
-                     void * arg)
+pthread_create (pace_pthread_t * thread,
+                const pace_pthread_attr_t * attr,
+                void * (*start_routine) (void*),
+                void * arg)
 {
   pace_pthread_attr_t pattr;
   char * pname;
@@ -515,13 +543,15 @@ pace_pthread_create (pace_pthread_t * thread,
   pace_pthread_t pthread;
   WIND_TCB * pTcb;
 
+  PACE_TRACE("pthread_create");
+
   if (attr == 0) 
     pattr = pthread_attr_default;
   else
     if (*attr == 0)
-       pattr = pthread_attr_default;
+      pattr = pthread_attr_default;
     else
-       pattr = *attr;
+      pattr = *attr;
 
   if (pattr->name[0] != '\0')   /* name is provided */
     pname = pattr->name;
@@ -532,6 +562,7 @@ pace_pthread_create (pace_pthread_t * thread,
                      (SCHED_FIFO_HIGH_PRI - pattr->schedule.sched_priority), 
                      VX_FP_TASK, pattr->stacksize, (FUNCPTR)start_routine, 
                      (int)arg, 0,0,0,0,0,0,0,0,0);
+
   if (taskid == ERROR)
      return ERROR;
 
@@ -582,11 +613,13 @@ pace_pthread_create (pace_pthread_t * thread,
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int
-pace_pthread_detach (pace_pthread_t thread)
+pthread_detach (pace_pthread_t thread)
 {
   int key;
   int needfree;
   needfree = 0;
+
+  PACE_TRACE("pthread_detach");
 
   if (!pacevx_pthread_verify(thread))
     return EINVAL;
@@ -624,7 +657,7 @@ pace_pthread_detach (pace_pthread_t thread)
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int
-pace_pthread_join (pace_pthread_t thread, void ** value_ptr)
+pthread_join (pace_pthread_t thread, void ** value_ptr)
 {
   /*
    * The pthread_join() function suspends execution of the calling
@@ -637,6 +670,8 @@ pace_pthread_join (pace_pthread_t thread, void ** value_ptr)
   pace_pthread_t pthread;
   int needfree;
   int key;
+
+  PACE_TRACE("pthread_join");
 
   if (!pacevx_pthread_verify(thread))
     return ERROR;
@@ -689,9 +724,11 @@ pace_pthread_join (pace_pthread_t thread, void ** value_ptr)
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 # if defined (PACE_HAS_CPLUSPLUS)
 int
-pace_pthread_key_create (pace_pthread_key_t * key,
-                         pace_keycreate_pf destructor)
+pthread_key_create (pace_pthread_key_t * key,
+                    pace_keycreate_pf destructor)
 {
+  PACE_TRACE("pthread_key_create");
+
   /*
    * Create a thread-specific data key. Also initialize the 
    * data structure if it is called first time.
@@ -732,8 +769,8 @@ pace_pthread_key_create (pace_pthread_key_t * key,
 }
 #else /* ! PACE_HAS_CPLUSPLUS */
 int
-pace_pthread_key_create (pace_pthread_key_t * key,
-                         void (*destructor)(void*))
+pthread_key_create (pace_pthread_key_t * key,
+                    void (*destructor)(void*))
 {
   /*
    * Create a thread-specific data key. Also initialize the 
@@ -741,6 +778,8 @@ pace_pthread_key_create (pace_pthread_key_t * key,
    */
   int i;
   int intkey;
+
+  PACE_TRACE("pthread_key_create");
 
   /* do the initialization if it is the first time */
   if (initialized == 0)
@@ -778,9 +817,11 @@ pace_pthread_key_create (pace_pthread_key_t * key,
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int
-pace_pthread_key_delete (pace_pthread_key_t key)
+pthread_key_delete (pace_pthread_key_t key)
 {
   int intkey;
+
+  PACE_TRACE("pthread_key_delete");
 
   if ((key < 0) || (key >= PTHREAD_KEYS_MAX))
     return ERROR;
@@ -799,9 +840,11 @@ pace_pthread_key_delete (pace_pthread_key_t key)
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 # if defined (PACE_HAS_CPLUSPLUS)
 int
-pace_pthread_once (pace_pthread_once_t * once_control,
-                   pace_once_pf void_routine)
+pthread_once (pace_pthread_once_t * once_control,
+              pace_once_pf void_routine)
 {
+  PACE_TRACE("pthread_once");
+
   /*
    * Once function allows the function to be executed exact only once
    * Subsequent calls of pthread_once() with the same once_control will 
@@ -838,8 +881,8 @@ pace_pthread_once (pace_pthread_once_t * once_control,
 }
 # else /* ! PACE_HAS_CPLUSPLUS */
 int
-pace_pthread_once (pace_pthread_once_t * once_control,
-                   void (*void_routine) (void))
+pthread_once (pace_pthread_once_t * once_control,
+              void (*void_routine) (void))
 {
   /*
    * Once function allows the function to be executed exact only once
@@ -849,6 +892,8 @@ pace_pthread_once (pace_pthread_once_t * once_control,
   int i;
   int key;
   pace_pthread_t pthread;
+
+  PACE_TRACE("pthread_once");
 
   if ((pthread = pace_pthread_self()) == NULL)
     return ERROR;
@@ -881,8 +926,10 @@ pace_pthread_once (pace_pthread_once_t * once_control,
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int
-pace_pthread_attr_init (pace_pthread_attr_t * attr)
+pthread_attr_init (pace_pthread_attr_t * attr)
 {
+  PACE_TRACE("pthread_attr_init");
+
   /*
    * Attempt to allocate memory for the attributes object.
    */
@@ -906,9 +953,11 @@ pace_pthread_attr_init (pace_pthread_attr_t * attr)
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int
-pace_pthread_attr_setdetachstate (pace_pthread_attr_t * attr,
-                                  int detachstate)
+pthread_attr_setdetachstate (pace_pthread_attr_t * attr,
+                             int detachstate)
 {
+  PACE_TRACE("pthread_attr_setdetachstate");
+
   if ((detachstate != PTHREAD_CREATE_DETACHED) ||
       (detachstate != PTHREAD_CREATE_JOINABLE))
     {
@@ -924,9 +973,11 @@ pace_pthread_attr_setdetachstate (pace_pthread_attr_t * attr,
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int
-pace_pthread_attr_setschedparam (pace_pthread_attr_t * attr,
-                                 const pace_sched_param * param)
+pthread_attr_setschedparam (pace_pthread_attr_t * attr,
+                            const pace_sched_param * param)
 {
+  PACE_TRACE("pthread_attr_setschedparam");
+
   /* range check */
   if (param->sched_priority > SCHED_RR_HIGH_PRI ||
       param->sched_priority < SCHED_RR_LOW_PRI )
@@ -941,8 +992,10 @@ pace_pthread_attr_setschedparam (pace_pthread_attr_t * attr,
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int
-pace_pthread_cancel (pace_pthread_t thread)
+pthread_cancel (pace_pthread_t thread)
 {
+  PACE_TRACE("pthread_cancel");
+
   /*
    * In VxWorks, to cancel a thread is to delete a task. 
    */
@@ -961,10 +1014,12 @@ pace_pthread_cancel (pace_pthread_t thread)
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int
-pace_pthread_getschedparam (pace_pthread_t thread,
-                            int * policy,
-                            pace_sched_param * param)
+pthread_getschedparam (pace_pthread_t thread,
+                       int * policy,
+                       pace_sched_param * param)
 {
+  PACE_TRACE("pthread_getschedparam");
+
   if (thread == 0)
     return ERROR;
 
@@ -983,9 +1038,11 @@ pace_pthread_getschedparam (pace_pthread_t thread,
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 void *
-pace_pthread_getspecific (pace_pthread_key_t key)
+pthread_getspecific (pace_pthread_key_t key)
 {
   pace_pthread_t pthread;
+
+  PACE_TRACE("pthread_getspecific");
 
   if (!pacevx_pthread_key_validate(key))
     return NULL;
@@ -1001,8 +1058,8 @@ pace_pthread_getspecific (pace_pthread_key_t key)
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int
-pace_pthread_mutex_init (pace_pthread_mutex_t * mutex,
-                         const pace_pthread_mutexattr_t * attr)
+pthread_mutex_init (pace_pthread_mutex_t * mutex,
+                    const pace_pthread_mutexattr_t * attr)
 {
   /*
    * Initialises the mutex referenced by mutex with attributes 
@@ -1014,6 +1071,8 @@ pace_pthread_mutex_init (pace_pthread_mutex_t * mutex,
    * ACE works) plus this is supposedly the default for VxWorks.
    */
   int options = SEM_Q_FIFO;
+
+  PACE_TRACE("pthread_mutex_init");
 
   if (attr != NULL)
     {
@@ -1056,10 +1115,12 @@ pace_pthread_mutex_init (pace_pthread_mutex_t * mutex,
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int
-pace_pthread_mutex_lock (pace_pthread_mutex_t * mutex)
+pthread_mutex_lock (pace_pthread_mutex_t * mutex)
 {
   STATUS status;
   int errornumber;
+
+  PACE_TRACE("pthread_mutex_lock");
 
   status = semTake(*mutex, WAIT_FOREVER);
   if (status == OK) 
@@ -1077,10 +1138,12 @@ pace_pthread_mutex_lock (pace_pthread_mutex_t * mutex)
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int
-pace_pthread_mutex_trylock (pace_pthread_mutex_t * mutex)
+pthread_mutex_trylock (pace_pthread_mutex_t * mutex)
 {
   STATUS status;
   int errornumber;
+
+  PACE_TRACE("pthread_mutex_trylock");
 
   status = semTake(*mutex, NO_WAIT);
   if (status == OK) 
@@ -1100,10 +1163,12 @@ pace_pthread_mutex_trylock (pace_pthread_mutex_t * mutex)
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int
-pace_pthread_mutex_unlock (pace_pthread_mutex_t * mutex)
+pthread_mutex_unlock (pace_pthread_mutex_t * mutex)
 {
   STATUS status;
   int errornumber;
+
+  PACE_TRACE("pthread_mutex_unlock");
 
   status = semGive(*mutex);
   if (status == OK) 
@@ -1121,9 +1186,11 @@ pace_pthread_mutex_unlock (pace_pthread_mutex_t * mutex)
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int
-pace_pthread_mutexattr_setprotocol (pace_pthread_mutexattr_t * attr,
-                                    int protocol)
+pthread_mutexattr_setprotocol (pace_pthread_mutexattr_t * attr,
+                               int protocol)
 {
+  PACE_TRACE("pthread_mutexattr_setprotocol");
+
 /* 
  * Does not support PTHREAD_PRIO_PROTECT for VxWorks
  */
@@ -1140,13 +1207,16 @@ pace_pthread_mutexattr_setprotocol (pace_pthread_mutexattr_t * attr,
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int
-pace_pthread_mutexattr_init (pace_pthread_mutexattr_t * attr)
+pthread_mutexattr_init (pace_pthread_mutexattr_t * attr)
 {
   /*
    * Initializes a mutex attributes object attr with the 
    * default value for all of the attributes
    */
   pace_pthread_mutexattr_t pattr;
+
+  PACE_TRACE("pthread_mutexattr_init");
+
   pattr = (pace_pthread_mutexattr_t) malloc(sizeof(struct _PTHREAD_MUX_ATTR));
   if (pattr == NULL)
     return ERROR;
@@ -1168,9 +1238,11 @@ pace_pthread_mutexattr_init (pace_pthread_mutexattr_t * attr)
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int
-pace_pthread_mutexattr_setpshared (pace_pthread_mutexattr_t * attr,
-                                   int pshared)
+pthread_mutexattr_setpshared (pace_pthread_mutexattr_t * attr,
+                              int pshared)
 {
+  PACE_TRACE("pthread_mutexattr_setpshared");
+
   /*
    * Only supports PTHREAD_PROCESS_SHARED
    */
@@ -1185,10 +1257,12 @@ pace_pthread_mutexattr_setpshared (pace_pthread_mutexattr_t * attr,
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int
-pace_pthread_setcancelstate (int state, int * oldstate)
+pthread_setcancelstate (int state, int * oldstate)
 {
   int key;
   pace_pthread_t pthread;
+
+  PACE_TRACE("pthread_setcancelstate");
 
   if ((state != PTHREAD_CANCEL_ENABLE) &&
       (state != PTHREAD_CANCEL_DISABLE))
@@ -1210,12 +1284,14 @@ pace_pthread_setcancelstate (int state, int * oldstate)
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int
-pace_pthread_setcanceltype (int type, int * oldtype)
+pthread_setcanceltype (int type, int * oldtype)
 {
   /* 
    * Only asychronouse type is supported 
    */
   pace_pthread_t pthread;
+
+  PACE_TRACE("pthread_setcanceltype");
 
   if (type != PTHREAD_CANCEL_ASYNCHRONOUS)
     return ERROR;
@@ -1231,14 +1307,16 @@ pace_pthread_setcanceltype (int type, int * oldtype)
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int
-pace_pthread_setschedparam (pace_pthread_t thread,
-                            int policy,
-                            const pace_sched_param * param)
+pthread_setschedparam (pace_pthread_t thread,
+                       int policy,
+                       const pace_sched_param * param)
 {
   /* 
    * Only priority can be changed.
    */
   struct sched_param sparam;
+
+  PACE_TRACE("pthread_setschedparam");
 
   if (thread == 0)
     return ERROR;
@@ -1255,9 +1333,11 @@ pace_pthread_setschedparam (pace_pthread_t thread,
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int
-pace_pthread_setspecific (pace_pthread_key_t key, const void * value)
+pthread_setspecific (pace_pthread_key_t key, const void * value)
 {
   pace_pthread_t pthread;
+
+  PACE_TRACE("pthread_setspecific");
 
   if (!pacevx_pthread_key_validate(key))
     return ERROR;
@@ -1274,9 +1354,12 @@ pace_pthread_setspecific (pace_pthread_key_t key, const void * value)
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int
-pace_pthread_sigmask (int how, const sigset_t * set,
-                      sigset_t * oset)
+pthread_sigmask (int how,
+                 const sigset_t * set,
+                 sigset_t * oset)
 {
+  PACE_TRACE("pthread_sigmask");
+
   switch (how)
     {
     case SIG_BLOCK:

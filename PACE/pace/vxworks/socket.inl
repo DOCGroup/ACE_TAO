@@ -23,7 +23,9 @@ pace_accept (int s,
              pace_sockaddr * socketaddress,
              pace_socklen_t * addresslen)
 {
-    accept (s, socketaddress, addresslen);
+  PACE_TRACE("pace_accept");
+
+  accept (s, socketaddress, addresslen);
 }
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
@@ -34,7 +36,9 @@ pace_bind (int s,
            const pace_sockaddr * socketaddress,
            pace_socklen_t addresslen)
 {
-    bind (s, socketaddress, addresslen);
+  PACE_TRACE("pace_bind");
+
+  bind (s, socketaddress, addresslen);
 }
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
@@ -45,7 +49,9 @@ pace_connect (int s,
               const pace_sockaddr * socketaddress,
               pace_socklen_t addresslen)
 {
-    connect (s, socketaddress, addresslen);
+  PACE_TRACE("pace_connect");
+
+  connect (s, socketaddress, addresslen);
 }
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
@@ -56,7 +62,9 @@ pace_getpeername (int s,
                   pace_sockaddr * socketaddress,
                   pace_socklen_t * addresslen)
 {
-    getpeername (s, socketaddress, addresslen);
+  PACE_TRACE("pace_getpeername");
+
+  getpeername (s, socketaddress, addresslen);
 }
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
@@ -67,7 +75,9 @@ pace_getsockname (int s,
                   pace_sockaddr * socketaddress,
                   pace_socklen_t * addresslen)
 {
-    getsockname (s, socketaddress, addresslen);
+  PACE_TRACE("pace_getsockname");
+
+  getsockname (s, socketaddress, addresslen);
 }
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
@@ -80,7 +90,9 @@ pace_getsockopt (int s,
                  void * optval,
                  pace_socklen_t optlen)
 {
-    getsockopt (s, level, optname, optval, optlen);
+  PACE_TRACE("pace_getsockopt");
+
+  getsockopt (s, level, optname, optval, optlen);
 }
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
@@ -92,7 +104,9 @@ pace_setsockopt (int s,
                  int optname,
                  const * optval)
 {
-    setsockopt (s, level, optname, optval);
+  PACE_TRACE("pace_setsockopt");
+
+  setsockopt (s, level, optname, optval);
 }
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
@@ -104,7 +118,9 @@ pace_setsockopt (int s,
                  int optname,
                  const * optval)
 {
-    setsockopt (s, level, optname, optval);
+  PACE_TRACE("pace_setsockopt");
+
+  setsockopt (s, level, optname, optval);
 }
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
@@ -113,7 +129,9 @@ PACE_INLINE
 int
 pace_isfdtype (int fildes, int fdtype)
 {
-    isfdtype (fildes, fdtype);
+  PACE_TRACE("pace_isfdtype");
+
+  isfdtype (fildes, fdtype);
 }
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
@@ -122,7 +140,9 @@ PACE_INLINE
 int
 pace_listen (int s, int backlog)
 {
-    listen (s, backlog);
+  PACE_TRACE("pace_listen");
+
+  listen (s, backlog);
 }
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
@@ -134,7 +154,9 @@ pace_recv (int s,
            pace_size_t len,
            int flags)
 {
-    recv (s, buf, len, flags);
+  PACE_TRACE("pace_recv");
+
+  recv (s, buf, len, flags);
 }
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
@@ -148,7 +170,9 @@ pace_recvfrom (int s,
                pace_sockaddr * from,
                pace_socklen_t * fromlen)
 {
-    recvfrom (s, buf, len, flags, from, fromlen);
+  PACE_TRACE("pace_recvfrom");
+
+  recvfrom (s, buf, len, flags, from, fromlen);
 }
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
@@ -159,7 +183,9 @@ pace_rcvmsg (int s,
              pace_msghdr * msg,
              int flags)
 {
-    rcvmsg (s, msg, flags);
+  PACE_TRACE("pace_rcvmsg");
+
+  rcvmsg (s, msg, flags);
 }
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
@@ -171,7 +197,9 @@ pace_send (int s,
            pace_size_t len,
            int flags)
 {
-    send (s, buf, len, flags);
+  PACE_TRACE("pace_send");
+
+  send (s, buf, len, flags);
 }
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
@@ -185,7 +213,9 @@ pace_sendto (int s,
              const pace_sockaddr * to,
              pace_socklen_t * tolen)
 {
-    sendto (s, buf, len, flags, to, tolen);
+  PACE_TRACE("pace_sendto");
+
+  sendto (s, buf, len, flags, to, tolen);
 }
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
@@ -196,7 +226,9 @@ pace_sendmsg (int s,
               const pace_msghdr * msg,
               int flags)
 {
-    sendmsg (s, msg, flags);
+  PACE_TRACE("pace_sendmsg");
+
+  sendmsg (s, msg, flags);
 }
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
@@ -205,7 +237,9 @@ PACE_INLINE
 int
 pace_shutdown (int s, int how)
 {
-    shutdown (s, how);
+  PACE_TRACE("pace_shutdown");
+
+  shutdown (s, how);
 }
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
@@ -214,7 +248,9 @@ PACE_INLINE
 int
 pace_socket (int protofamily, int type, int protocol)
 {
-    socket (protofamily, type, protocol);
+  PACE_TRACE("pace_socket");
+
+  socket (protofamily, type, protocol);
 }
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
@@ -226,7 +262,9 @@ pace_socketpair (int protofamily,
                  int protocol,
                  int sv[2])
 {
-    socketpair (protofamily, type, protocol, sy);
+  PACE_TRACE("pace_socketpair");
+
+  socketpair (protofamily, type, protocol, sy);
 }
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 

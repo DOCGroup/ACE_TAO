@@ -20,6 +20,10 @@
  * error control
  * ---------------------------------------------------------------------- */
 
+#if defined (PACE_TRACING) && PACE_TRACING == 1
+# include <stdio.h>
+#endif
+
 #include "pace/errno.h"
 
 # define PACE_ERRNO_NO_SUPPORT_RETURN(FAILVALUE) \
@@ -99,5 +103,16 @@ return ( (errno = ENOTSUP), FAILVALUE)
   return (TYPE) X;
 
 #endif /* PACE_WIN32 */
+
+/* ----------------------------------------------------------------------
+ * debug tracing
+ * ---------------------------------------------------------------------- */
+
+#if defined (PACE_TRACING) && PACE_TRACING == 1
+# define PACE_TRACE(MODULE) \
+fprintf(stderr, "PACE_TRACE %s, %d, %s\n", (MODULE), __LINE__, __FILE__)
+#else
+# define PACE_TRACE(MODULE)
+#endif /* TRACING */
 
 #endif /* PACE_CONFIG_UTILITY_H */

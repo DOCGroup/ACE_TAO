@@ -19,6 +19,8 @@ int
 pace_utime (const char * path,
             const pace_utimbuf * times)
 {
+  PACE_TRACE("pace_utime");
+
   return utime (PACE_NONCONST_ARG_CAST (char *) path,
                 PACE_NONCONST_ARG_CAST (pace_utimbuf *) times);
 }

@@ -35,7 +35,7 @@ extern "C" {
     C std 7.20.4.1
     */
 #if (PACE_HAS_POSIX_SIG_UOF)
-  PACE_INLINE void pace_abort (void);
+  PACE_Export PACE_INLINE void pace_abort (void);
 #endif /* PACE_HAS_POSIX_SIG_UOF */
 
   /**
@@ -44,14 +44,14 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE int pace_abs (int val);
+  PACE_Export PACE_INLINE int pace_abs (int val);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
     C std ref. 7.20.4.2
     */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_atexit (void (*func)(void));
+  PACE_Export PACE_INLINE int pace_atexit (void (*func)(void));
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -60,7 +60,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE double pace_atof (const char * str);
+  PACE_Export PACE_INLINE double pace_atof (const char * str);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -69,7 +69,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE int pace_atoi (const char * str);
+  PACE_Export PACE_INLINE int pace_atoi (const char * str);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -78,7 +78,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE long pace_atol (const char * str);
+  PACE_Export PACE_INLINE long pace_atol (const char * str);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -87,16 +87,18 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE void * pace_bsearch (const void *key, const void *base,
-                                   size_t nel, size_t size,
-                                   int (*compar)(const void *,const void *));
+  PACE_Export PACE_INLINE void * pace_bsearch (const void *key,
+                                               const void *base,
+                                               size_t nel, size_t size,
+                                               int (*compar)(const void *,
+                                                             const void *));
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
     C std ref. 7.20.6.2
     */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE pace_div_t pace_div (int numer, int denom);
+  PACE_Export PACE_INLINE pace_div_t pace_div (int numer, int denom);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -105,7 +107,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_MP_UOF)
-  PACE_INLINE void pace_exit (int status);
+  PACE_Export PACE_INLINE void pace_exit (int status);
 #endif /* PACE_HAS_POSIX_MP_UOF */
 
   /**
@@ -114,46 +116,47 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.6.1.
      */
 #if (PACE_HAS_POSIX_MP_UOF)
-  PACE_INLINE char * pace_getenv (const char * name);
+  PACE_Export PACE_INLINE char * pace_getenv (const char * name);
 #endif /* PACE_HAS_POSIX_MP_UOF */
 
   /**
     C std ref. 7.20.6.1
     */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE long int pace_labs (long int j);
+  PACE_Export PACE_INLINE long int pace_labs (long int j);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
     C std ref. 7.20.6.2
     */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE pace_ldiv_t pace_ldiv (long int numer, long int denom);
+  PACE_Export PACE_INLINE pace_ldiv_t pace_ldiv (long int numer,
+                                                 long int denom);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
     C std ref. 7.20.7.1
     */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_mblen (const char* s, pace_size_t n);
+  PACE_Export PACE_INLINE int pace_mblen (const char* s, pace_size_t n);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
     C std ref. 7.20.8.1
     */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE pace_size_t pace_mbstowcs (pace_wchar_t* pwcs,
-                                         const char* s,
-                                         pace_size_t n);
+  PACE_Export PACE_INLINE pace_size_t pace_mbstowcs (pace_wchar_t* pwcs,
+                                                     const char* s,
+                                                     pace_size_t n);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
     C std ref. 7.20.7.2
     */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_mbtowc (pace_wchar_t* pwc,
-                               const char* s,
-                               pace_size_t n);
+  PACE_Export PACE_INLINE int pace_mbtowc (pace_wchar_t* pwc,
+                                           const char* s,
+                                           pace_size_t n);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -162,8 +165,11 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE void pace_qsort (void * base, size_t nel, size_t width,
-                               int (*compar)(const void *, const void *));
+  PACE_Export PACE_INLINE void pace_qsort (void * base,
+                                           size_t nel,
+                                           size_t width,
+                                           int (*compar)(const void *,
+                                                         const void *));
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -172,7 +178,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE int pace_rand ();
+  PACE_Export PACE_INLINE int pace_rand ();
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -181,7 +187,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE void pace_srand (unsigned int seed);
+  PACE_Export PACE_INLINE void pace_srand (unsigned int seed);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -190,7 +196,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.3.8.
      */
 #if (PACE_HAS_POSIX_CLSR_UOF)
-  PACE_INLINE int pace_rand_r (unsigned int * seed);
+  PACE_Export PACE_INLINE int pace_rand_r (unsigned int * seed);
 #endif /* PACE_HAS_POSIX_CLSR_UOF */
   /* Requires PACE_HAS_REENTRANT. */
 
@@ -198,49 +204,49 @@ extern "C" {
     C std ref. 7.20.1.3
     */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE double pace_strtod (const char* nptr,
-                                  char** endptr);
+  PACE_Export PACE_INLINE double pace_strtod (const char* nptr,
+                                              char** endptr);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
     C std ref. 7.20.1.4
     */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_strtol (const char* nptr,
-                               char** endptr,
-                               int base);
+  PACE_Export PACE_INLINE int pace_strtol (const char* nptr,
+                                           char** endptr,
+                                           int base);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
     C std ref. 7.20.7.2
     */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE unsigned long int pace_strtoul (const char* nptr,
-                                              char** endptr,
-                                              int base);
+  PACE_Export PACE_INLINE unsigned long int pace_strtoul (const char* nptr,
+                                                          char** endptr,
+                                                          int base);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
     C std ref. 7.20.4.5
     */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_system (const char* string);
+  PACE_Export PACE_INLINE int pace_system (const char* string);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
     C std ref. 7.20.8.2
     */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE pace_size_t pace_wcstombs (char* s,
-                                         const pace_wchar_t* pwcs,
-                                         pace_size_t n);
+  PACE_Export PACE_INLINE pace_size_t pace_wcstombs (char* s,
+                                                     const pace_wchar_t* pwcs,
+                                                     pace_size_t n);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
     C std ref. 7.20.7.3
     */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_wctomb (char* s, pace_wchar_t wchar);
+  PACE_Export PACE_INLINE int pace_wctomb (char* s, pace_wchar_t wchar);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
 
@@ -252,7 +258,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE void * pace_malloc (size_t size);
+  PACE_Export PACE_INLINE void * pace_malloc (size_t size);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -261,7 +267,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE void * pace_calloc (size_t nelem, size_t elsize);
+  PACE_Export PACE_INLINE void * pace_calloc (size_t nelem, size_t elsize);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -270,7 +276,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE void pace_free (void * ptr);
+  PACE_Export PACE_INLINE void pace_free (void * ptr);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -279,7 +285,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE void * pace_realloc (void * ptr, size_t size);
+  PACE_Export PACE_INLINE void * pace_realloc (void * ptr, size_t size);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
 #if defined (PACE_HAS_INLINE)

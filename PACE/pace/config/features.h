@@ -47,12 +47,3 @@
 #endif /* WIN32 */
 
 #endif /* PACE_CONFIG_FEATURES_H */
-
-
-
-
-
-
-
-
-

@@ -91,6 +91,65 @@ extern "C" {
   void pacevx_pthread_destructor_thread(pace_pthread_t pthread);
   int pacevx_pthread_key_validate(pace_pthread_key_t key);
   void pacevx_pthread_destructor_key(pace_pthread_key_t key, void * arg);
+
+  int pthread_cond_timedwait (pace_pthread_cond_t * cond,
+                              pace_pthread_mutex_t * mutex,
+                              const pace_timespec * abstime);
+  int pthread_cond_wait (pace_pthread_cond_t * cond,
+                         pace_pthread_mutex_t * mutex);
+# if defined (PACE_HAS_CPLUSPLUS)
+  int pthread_create (pace_pthread_t * thread,
+                      const pace_pthread_attr_t * attr,
+                      pace_create_pf start_routine,
+                      void * arg);
+  int pthread_key_create (pace_pthread_key_t * key,
+                          pace_keycreate_pf destructor);
+  int pthread_once (pace_pthread_once_t * once_control,
+                    pace_once_pf void_routine);
+# else /* ! PACE_HAS_CPLUSPLUS */
+  int pthread_create (pace_pthread_t * thread,
+                      const pace_pthread_attr_t * attr,
+                      void * (*start_routine) (void*),
+                      void * arg);
+  int pthread_key_create (pace_pthread_key_t * key,
+                          void (*destructor)(void*));
+  int pthread_once (pace_pthread_once_t * once_control,
+                    void (*void_routine) (void));
+# endif /*! PACE_HAS_CPLUSPLUS */
+  int pthread_detach (pace_pthread_t thread);
+  int pthread_join (pace_pthread_t thread, void ** value_ptr);
+  int pthread_key_delete (pace_pthread_key_t key);
+  int pthread_attr_init (pace_pthread_attr_t * attr);
+  int pthread_attr_setdetachstate (pace_pthread_attr_t * attr,
+                                   int detachstate);
+  int pthread_attr_setschedparam (pace_pthread_attr_t * attr,
+                                  const pace_sched_param * param);
+  int pthread_cancel (pace_pthread_t thread);
+  int pthread_getschedparam (pace_pthread_t thread,
+                             int * policy,
+                             pace_sched_param * param);
+  void * pthread_getspecific (pace_pthread_key_t key);
+  int pthread_mutex_init (pace_pthread_mutex_t * mutex,
+                          const pace_pthread_mutexattr_t * attr);
+  int pthread_mutex_lock (pace_pthread_mutex_t * mutex);
+  int pthread_mutex_trylock (pace_pthread_mutex_t * mutex);
+  int pthread_mutex_unlock (pace_pthread_mutex_t * mutex);
+  int pthread_mutexattr_setprotocol (pace_pthread_mutexattr_t * attr,
+                                     int protocol);
+  int pthread_mutexattr_init (pace_pthread_mutexattr_t * attr);
+  int pthread_mutexattr_setpshared (pace_pthread_mutexattr_t * attr,
+                                    int pshared);
+  int pthread_setcancelstate (int state, int * oldstate);
+  int pthread_setcanceltype (int type, int * oldtype);
+  int pthread_setschedparam (pace_pthread_t thread,
+                             int policy,
+                             const pace_sched_param * param);
+  int pthread_setspecific (pace_pthread_key_t key,
+                           const void * value);
+  int pthread_sigmask (int how,
+                       const sigset_t * set,
+                       sigset_t * oset);
+
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
 #if defined (PACE_HAS_CPLUSPLUS)

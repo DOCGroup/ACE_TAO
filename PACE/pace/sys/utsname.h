@@ -31,7 +31,7 @@ extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
 #if (PACE_HAS_POSIX_SP_UOF)
-  PACE_INLINE int pace_uname (pace_utsname * name);
+  PACE_Export PACE_INLINE int pace_uname (pace_utsname * name);
 #endif /* PACE_HAS_POSIX_SP_UOF */
 
 #if defined (PACE_HAS_INLINE)

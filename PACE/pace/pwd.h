@@ -36,7 +36,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 9.2.2.
    */
 #if (PACE_HAS_POSIX_SD_UOF)
-  PACE_INLINE pace_passwd * pace_getpwuid (pace_uid_t uid);
+  PACE_Export PACE_INLINE pace_passwd * pace_getpwuid (pace_uid_t uid);
 #endif /* PACE_HAS_POSIX_SD_UOF */
 
   /**
@@ -45,11 +45,11 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 9.2.2.
    */
 #if (PACE_HAS_POSIX_SDR_UOF)
-  PACE_INLINE int pace_getpwuid_r (pace_uid_t uid,
-                                   pace_passwd * pwd,
-                                   char * buffer,
-                                   pace_size_t bufsize,
-                                   pace_passwd ** result);
+  PACE_Export PACE_INLINE int pace_getpwuid_r (pace_uid_t uid,
+                                               pace_passwd * pwd,
+                                               char * buffer,
+                                               pace_size_t bufsize,
+                                               pace_passwd ** result);
 #endif /* PACE_HAS_POSIX_SDR_UOF */
   /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
@@ -59,7 +59,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 9.2.2.
    */
 #if (PACE_HAS_POSIX_SD_UOF)
-  PACE_INLINE pace_passwd * pace_getpwnam (const char * name);
+  PACE_Export PACE_INLINE pace_passwd * pace_getpwnam (const char * name);
 #endif /* PACE_HAS_POSIX_SD_UOF */
 
   /**
@@ -68,11 +68,11 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 9.2.2.
    */
 #if (PACE_HAS_POSIX_SDR_UOF)
-  PACE_INLINE int pace_getpwnam_r (const char * name,
-                                   pace_passwd * pwd,
-                                   char * buffer,
-                                   pace_size_t bufsize,
-                                   pace_passwd ** result);
+  PACE_Export PACE_INLINE int pace_getpwnam_r (const char * name,
+                                               pace_passwd * pwd,
+                                               char * buffer,
+                                               pace_size_t bufsize,
+                                               pace_passwd ** result);
 #endif /* PACE_HAS_POSIX_SDR_UOF */
   /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 

@@ -35,7 +35,7 @@ extern "C" {
      current locality.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE pace_lconv* pace_localeconv (void);
+  PACE_Export PACE_INLINE pace_lconv* pace_localeconv (void);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -44,7 +44,8 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.2.
    */
 #if (PACE_HAS_POSIX_MP_UOF)
-  PACE_INLINE char * pace_setlocale (int category, const char * locale);
+  PACE_Export PACE_INLINE char * pace_setlocale (int category,
+                                                 const char * locale);
 #endif /* PACE_HAS_POSIX_MP_UOF */
 
 #if defined (PACE_HAS_INLINE)

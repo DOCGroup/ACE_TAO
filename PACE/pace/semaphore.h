@@ -36,7 +36,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 11.2.4.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_sem_close (pace_sem_t * sem);
+  PACE_Export PACE_INLINE int pace_sem_close (pace_sem_t * sem);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -45,7 +45,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 11.2.2.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_sem_destroy (pace_sem_t * sem);
+  PACE_Export PACE_INLINE int pace_sem_destroy (pace_sem_t * sem);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -54,7 +54,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 11.2.8.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_sem_getvalue (pace_sem_t * sem, int * sval);
+  PACE_Export PACE_INLINE int pace_sem_getvalue (pace_sem_t * sem, int * sval);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -63,7 +63,9 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 11.2.1.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_sem_init (pace_sem_t * sem, int pshared, unsigned int value);
+  PACE_Export PACE_INLINE int pace_sem_init (pace_sem_t * sem,
+                                             int pshared,
+                                             unsigned int value);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -81,7 +83,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 11.2.7.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_sem_post (pace_sem_t * sem);
+  PACE_Export PACE_INLINE int pace_sem_post (pace_sem_t * sem);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -90,7 +92,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 11.2.6.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_sem_trywait (pace_sem_t * sem);
+  PACE_Export PACE_INLINE int pace_sem_trywait (pace_sem_t * sem);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -99,7 +101,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 11.2.5.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_sem_unlink (const char * name);
+  PACE_Export PACE_INLINE int pace_sem_unlink (const char * name);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -108,7 +110,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 11.2.6.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_sem_wait (pace_sem_t * sem);
+  PACE_Export PACE_INLINE int pace_sem_wait (pace_sem_t * sem);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
 #if defined (PACE_HAS_INLINE)
