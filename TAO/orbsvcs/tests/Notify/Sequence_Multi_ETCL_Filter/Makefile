@@ -27,7 +27,7 @@ SRC = $(IDL_SRC) common.cpp \
       Sequence_Consumer.cpp Notify_Sequence_Push_Consumer.cpp
 
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -I../lib
-LDLIBS = -lNotifyTests -lTAO_ETCL -lTAO_ETCL -lTAO_CosNotification -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
+LDLIBS = -lNotifyTests -lTAO_CosNotification -lTAO_ETCL -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
 
 
 TAO_IDLFLAGS += -Ge 1

@@ -1,3 +1,25 @@
+Mon Jan 21 10:42:41 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/Notify_Service/Makefile:
+        * orbsvcs/examples/Notify/Filter/Makefile:
+        * orbsvcs/examples/Notify/Subscribe/Makefile:
+        * orbsvcs/tests/Notify/Basic/Makefile:
+        * orbsvcs/tests/Notify/Blocking/Makefile:
+        * orbsvcs/tests/Notify/Discarding/Makefile:
+        * orbsvcs/tests/Notify/MT_Dispatching/Makefile:
+        * orbsvcs/tests/Notify/Ordering/Makefile:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile:
+        * orbsvcs/tests/Notify/Structured_Filter/Makefile:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile:
+        * orbsvcs/tests/Notify/lib/Makefile:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Makefile:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Makefile:
+
+          Reverse the order of the CosNotification and ETCL libs in order to
+          link properly with static libraries.
+
 Mon Jan 21 10:30:38 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/Notify_Service/Notify_Service.dsp:
