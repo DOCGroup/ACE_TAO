@@ -610,7 +610,7 @@ Client_i::start_servant (void)
         0,
         this->high_priority_) == -1)
      ACE_ERROR ((LM_ERROR,
-                 "(%P|%t) %p\n"
+                 "(%P|%t) %p\n",
                  "\thigh_priority_task->activate failed"));
 
    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ready_mon, GLOBALS::instance ()->ready_mtx_,-1));
