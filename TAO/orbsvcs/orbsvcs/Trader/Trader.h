@@ -43,6 +43,7 @@
 #include "orbsvcs/orbsvcs_export.h"
 
 #if defined(_MSC_VER)
+#pragma warning(push)
 #pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
@@ -477,5 +478,9 @@ operator< (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
 
 int operator== (const CosTrading::Admin::OctetSeq& left,
                 const CosTrading::Admin::OctetSeq& right);
+
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
 #endif /* TAO_TRADER_BASE_H */

@@ -1,5 +1,75 @@
-Tue Nov 09 10:25:41 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Tue Nov  9 14:34:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+       * TAO_IDL/be_include/be.h
+         orbsvcs/orbsvcs/Log/BasicLog_i.h
+	 orbsvcs/orbsvcs/Log/Iterator_i.h
+	 orbsvcs/orbsvcs/Event/Event_Channel.h
+	 orbsvcs/orbsvcs/Trader/Trader.h
+	 orbsvcs/orbsvcs/Trader/Constraint_Nodes.h
+	 orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.h
+	 orbsvcs/orbsvcs/CosEvent/EventChannel_i.h
+	 orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.h
+	 orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.h
+	 orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.h
+	 orbsvcs/orbsvcs/CosEvent_Utilities.h
+	 orbsvcs/CosEvent_Service/CosEvent_Service.h
+	 tao/IOPC.h
+	 tao/CurrentC.h
+	 tao/DomainC.h
+	 tao/DomainS_T.h
+	 tao/DynAnyC.h
+	 tao/InterceptorC.h
+	 tao/InconsistentTypeCodeC.h
+	 tao/MessagingC.h
+	 tao/MessagingS.h
+	 tao/MessagingS_T.h
+	 tao/Messaging_Policy_i.h
+	 tao/POAC.h
+	 tao/ObjectIDList.h
+	 tao/POAS.h
+	 tao/POA_CORBA.h
+	 tao/PollableC.h
+	 tao/PollableS.h
+	 tao/PollableS_T.h
+	 tao/Services.h
+	 tao/IOPS.h
+	 tao/IORC.h
+	 tao/TimeBaseC.h
+	 tao/TimeBaseS_T.h
+	 tao/IORS.h
+	 tao/WrongTransactionC.h
+	 tao/corbafwd.h
+	 tao/CONV_FRAMEC.h
+	 tao/CONV_FRAMES.h
+	 tao/CONV_FRAMES_T.h
+	 tao/IOPS_T.h
+	 tao/InterfaceC.h
+	 tao/BoundsC.h
+	 tao/InterceptorS.h
+	 tao/TAOC.h
+	 tao/Client_Priority_Policy.h
+	 tao/TAOS.h
+	 tao/TAOS_T.h
+	 tao/Buffering_Constraint_Policy.h
+	 examples/OBV/Typed_Events/Event_Types_impl.h: Added
+	 
+	 #if defined(_MSC_VER)
+	 #pragma warning(push)
+	 #pragma warning(disable:4250)
+	 #endif /* _MSC_VER */
+  
+	 // ...
+  
+         #if defined(_MSC_VER)  
+	 #pragma warning(pop)
+	 #endif /* _MSC_VER */
+  
+         to these above files to that things will work better with MSVC++.
+	 Thanks to David Hauck <davidh@realtimeint.com> for
+	 suggesting this.
+
+Tue Nov 09 10:25:41 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+    
 	* tao/GIOP_Server_Request.h: Added #include "tao/ORB.h".  I use ORB
 	  function in the .i file.  Thanks to David for noticing this.
 

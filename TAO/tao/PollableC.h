@@ -38,6 +38,7 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_Export
 #if defined(_MSC_VER)
+#pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -434,7 +435,7 @@ CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, CORBA_PollableSet::Unknown
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)
-#pragma warning(default:4250)
+#pragma warning(pop)
 #endif /* _MSC_VER */
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_AMI_POLLER */

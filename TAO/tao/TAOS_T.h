@@ -11,6 +11,7 @@
 #define _TAO_IDL__PROJECT_DOC_MARINA_ACE_WRAPPERS_TAO_TAO_TAOS_T_H_
 
 #if defined(_MSC_VER)
+#pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -30,7 +31,7 @@
 #endif /* defined REQUIRED PRAGMA */
 
 #if defined(_MSC_VER)
-#pragma warning(default:4250)
+#pragma warning(pop)
 #endif /* _MSC_VER */
 
 #endif /* ifndef */
