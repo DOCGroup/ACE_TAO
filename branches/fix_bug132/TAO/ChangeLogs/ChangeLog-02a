@@ -1,3 +1,12 @@
+Mon Mar  5 11:32:14 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/Transport.cpp:
+	* tao/IIOP_Transport.cpp:
+	  Add debugging messages
+
+        * tests/LongWrites/Makefile:
+	  Updates dependencies and object files for the client.
+
 Fri Mar 02 15:29:17 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.h:

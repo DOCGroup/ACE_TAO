@@ -12,6 +12,7 @@
 #include "Sync_Strategies.h"
 #include "Queued_Message.h"
 #include "Flushing_Strategy.h"
+#include "debug.h"
 
 #include "ace/Message_Block.h"
 
@@ -68,6 +69,10 @@ TAO_Transport::~TAO_Transport (void)
 int
 TAO_Transport::handle_output ()
 {
+  if (TAO_debug_level > 4)
+    {
+      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - handle_output\n"));
+    }
   // The reactor is asking us to send more data, first check if
   // there is a current message that needs more sending:
   int result = this->send_current_message ();

@@ -317,7 +317,12 @@ TAO_IIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
 int
 TAO_IIOP_Transport::schedule_output (void)
 {
-  ACE_Reactor *r = this->orb_core_->reactor ();
+  if (TAO_debug_level > 4)
+    {
+      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - schedule_output\n"));
+    }
+  ACE_Reactor *r =
+    this->connection_handler_->reactor ();
   return r->schedule_wakeup (this->connection_handler_,
                              ACE_Event_Handler::WRITE_MASK);
 }
@@ -325,7 +330,12 @@ TAO_IIOP_Transport::schedule_output (void)
 int
 TAO_IIOP_Transport::cancel_output (void)
 {
-  ACE_Reactor *r = this->orb_core_->reactor ();
+  if (TAO_debug_level > 4)
+    {
+      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - cancel_output\n"));
+    }
+  ACE_Reactor *r =
+    this->connection_handler_->reactor ();
   return r->cancel_wakeup (this->connection_handler_,
                            ACE_Event_Handler::WRITE_MASK);
 }
