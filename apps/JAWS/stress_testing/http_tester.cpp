@@ -57,7 +57,7 @@ static void *client_thread(void *data) {
   ACE_Profile_Timer::ACE_Elapsed_Time et;
   throughput_timer.stop();
   throughput_timer.elapsed_time(et);
-  throughput = (8 * total_read/et.real_time) / pow(10,6) ;
+  throughput = (8 * total_read/et.real_time) / (1000 * 1000); //pow(10,6) ;
   cp->stats->log(cp->id, throughput, latency);
   webserver.close();
   return NULL;
@@ -74,7 +74,7 @@ int driver(char *id, int total_num, float requests_sec, char *url1, float p1, ch
   
   int missed_deadlines = 0;
   // sleep_time is in microseconds, and requests_sec is per second, hence the pow(10,6)
-  float sleep_time = (1/requests_sec) * pow(10,6); 
+  float sleep_time = (1/requests_sec) * (1000 * 1000); // pow(10,6); 
   float delta = 0;
   srand(time(NULL));
   for(int i = 0; i < total_num; i++) { // i is used as a id for threads
@@ -104,7 +104,7 @@ int driver(char *id, int total_num, float requests_sec, char *url1, float p1, ch
     timer.stop();
     ACE_Profile_Timer::ACE_Elapsed_Time et;
     timer.elapsed_time(et);
-    delta = ( (0.4 * fabs(et.real_time * pow(10,6))) + (0.6 * delta) );
+    delta = ( (0.4 * fabs(et.real_time * (1000 * 1000))) + (0.6 * delta) ); // pow(10,6)
   }
   
   // Join the other threads..
