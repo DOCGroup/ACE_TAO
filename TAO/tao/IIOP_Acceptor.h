@@ -82,6 +82,10 @@ public:
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO_ObjectKey &key);
 
+  /// Set the host name for the given addr.
+  int hostname (TAO_ORB_Core *orb_core,
+                ACE_INET_Addr &addr,
+                char *&host);
 protected:
 
   /**
@@ -90,11 +94,6 @@ protected:
    * instead.
    */
   virtual int open_i (const ACE_INET_Addr &addr);
-
-  /// Set the host name for the given addr.
-  int hostname (TAO_ORB_Core *orb_core,
-                ACE_INET_Addr &addr,
-                char *&host);
 
   /**
    * Probe the system for available network interfaces, and initialize

@@ -57,6 +57,10 @@ public:
   /// sense for the  strategy.
   virtual int register_handler (void) = 0;
 
+  /// Returns a value to indicate whether the transport needs to set
+  /// the socket on which it is waiting to non-blocking mode or not.
+  virtual int non_blocking (void) = 0;
+
   /**
    * Return the TSS leader follower condition variable used in the
    * Wait Strategy. Muxed Leader Follower implementation returns a

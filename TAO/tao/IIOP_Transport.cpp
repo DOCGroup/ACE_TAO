@@ -553,6 +553,21 @@ TAO_IIOP_Transport::get_listen_point (
     }
 
 
+  // Note: Looks like there is no point in sending the list of
+  // endpoints on interfaces on which this connection has not
+  // been established. If this is wrong, please correct me.
+  char *local_interface = 0;
+
+  // Get the hostname for the local address
+  if (iiop_acceptor->hostname (this->orb_core_,
+                               local_addr,
+                               local_interface) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Could not resolve local host")
+                         ACE_TEXT (" name \n")),
+                        -1);
+    }
 
   for (size_t index = 0;
        index <= count;
@@ -560,21 +575,13 @@ TAO_IIOP_Transport::get_listen_point (
     {
       // Get the listen point on that acceptor if it has the same
       // interface on which this connection is established
+      char *acceptor_interface = 0;
 
-      // Note: Looks like there is no point in sending the list of
-      // endpoints on interfaces on which this connection has not
-      // been established. If this is wrong, please correct me.
-      char local_interface[MAXHOSTNAMELEN];
-      char acceptor_interface[MAXHOSTNAMELEN];
-
-      if (endpoint_addr[index].get_host_name (acceptor_interface,
-                                              MAXHOSTNAMELEN) ==
-          -1)
-        continue;
-
-      if (local_addr.get_host_name (local_interface,
-                                    MAXHOSTNAMELEN) == -1)
-        continue;
+      if (iiop_acceptor->hostname (this->orb_core_,
+                                   ACE_const_cast (ACE_INET_Addr,
+                                                   endpoint_addr[index]),
+                                   acceptor_interface) == -1)
+          continue;
 
       // @@ This is very bad for performance, but it is a one time
       // affair
@@ -596,7 +603,11 @@ TAO_IIOP_Transport::get_listen_point (
           // Add the new length to the list
           listen_point_list[len] = point;
         }
+
+      // @@ This is bad....
+      CORBA::string_free (acceptor_interface);
     }
 
+  CORBA::string_free (local_interface);
   return 1;
 }

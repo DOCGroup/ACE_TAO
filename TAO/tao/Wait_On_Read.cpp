@@ -39,3 +39,9 @@ TAO_Wait_On_Read::register_handler (void)
 {
   return 0;
 }
+
+int
+TAO_Wait_On_Read::non_blocking (void)
+{
+  return 0;
+}

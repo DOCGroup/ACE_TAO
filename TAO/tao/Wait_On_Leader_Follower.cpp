@@ -24,6 +24,12 @@ TAO_Wait_On_Leader_Follower::register_handler (void)
 }
 
 int
+TAO_Wait_On_Leader_Follower::non_blocking (void)
+{
+  return 1;
+}
+
+int
 TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
                                               int two_way)
 {

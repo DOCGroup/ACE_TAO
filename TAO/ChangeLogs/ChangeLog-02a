@@ -1,3 +1,34 @@
+Sat Jan 13 10:36:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Acceptor.h (TAO_IIOP_Acceptor): Made hostname ()
+	  public.
+
+	* tao/IIOP_Transport.cpp: Used TAO_IIOP_Acceptor::hostname () to
+	  get the hostnames in get_listen_point () method. Thanks to
+	  Ossama <ossama@uci.edu> for pointing this out.
+
+	* tao/Wait_Strategy.h: Added a pure virtual method non_blocking
+	  (). This method will return a true or a false value. This value
+	  will be used by the connection handlers to set the socket to
+	  non_blocking mode. The strategy Wait_On_Read will need the
+	  socket on which it is waiting for a reply to be in blocking
+	  mode.
+
+	* tao/Wait_On_Leader_Follower.h:
+	* tao/Wait_On_Leader_Follower.cpp:
+	* tao/Wait_On_Reactor.h:
+	* tao/Wait_On_Reactor.cpp:
+	* tao/Wait_On_Read.h:
+	* tao/Wait_On_Read.cpp: Implementation for non_blocking ().
+
+	* tao/IIOP_Connection_Handler.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Set the
+	  socket to non_blocking mode based on the return value from the
+	  non_blocking () call from the wait strategy in the corresponding
+	  transports.
+
 Fri Jan 12 14:52:41 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp (preinvoke):
@@ -35,7 +66,7 @@ Fri Jan 12 07:49:43 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
 Thu Jan 11 20:50:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Connection_Handler.cpp: 
+	* tao/IIOP_Connection_Handler.cpp:
 	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
 	* tao/Strategies/UIOP_Connection_Handler.cpp:
 	* tao/Pluggable.i:
@@ -43,7 +74,7 @@ Thu Jan 11 20:50:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  the place when the sockets were put in non-blocking
 	  mode. Setting the socket to non-blocking mode at connection
 	  initialisation results in poor performance when a RW strategy is
-	  used in the client side. 
+	  used in the client side.
 
 Thu Jan 11 15:30:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -79,8 +110,8 @@ Thu Jan 11 14:02:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  reading GIOP messages. The message is first read into a buffer
 	  and then apropriate checking is performed. Then the message is
 	  put into a CDR steam and sent to the higher layers of the ORB
-	  for processing. 
-	
+	  for processing.
+
         * tao/GIOP_Message_Handler.cpp
         * tao/GIOP_Message_Handler.h:
 	* tao/GIOP_Message_Handler.inl: A new class. This class basically
@@ -88,47 +119,47 @@ Thu Jan 11 14:02:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  in to a buffer (2) checks whether the message is a GIOP message
 	  (3) calculates the size of the payload and figures if any part
 	  of the message has been left unread (4) some memory and buffer
-	  management for the incoming messages. 
-	
+	  management for the incoming messages.
+
 	* tao/GIOP_Message_Base.h:
 	* tao/GIOP_Message_Base.cpp: Moved some portion of the GIOP header
 	  checking routines like parse_header () to GIOP_Message_handler
 	  class. This class now sends requests to the higher layers by
 	  creating a CDR stream on the stack from the buffer in the
-	  GIOP_Message_Handler class. 
+	  GIOP_Message_Handler class.
 
 	* tao/GIOP_Message_State.i:
 	* tao/GIOP_Message_State.h:
 	* tao/GIOP_Message_State.cpp: Removed the Input CDR from this
 	  class. Changed the way fragments are managed.
 
-	* tao/GIOP_Message_Lite.cpp: 
+	* tao/GIOP_Message_Lite.cpp:
 	* tao/GIOP_Message_Lite.h: This still uses a CDR stream to read
 	  the incoming messages. So moved the CDR stream that is used to
 	  read the incoming messages from the GIOP message state in to
-	  this class. 
-	  
-	* tao/IIOP_Connection_Handler.cpp: Made the socket non-blocking. 
+	  this class.
+
+	* tao/IIOP_Connection_Handler.cpp: Made the socket non-blocking.
 
 	* tao/IIOP_Transport.cpp: The call process_message () now checks
 	  if more messages are available in the buffer for processing. The
 	  call read_process_message () calls process_message () in a loop
 	  to process all the messages, if the read has read more than one
 	  message in to the buffer .
-	
+
 	* tao/GIOP_Message_Generator_Parser_Impl.h: Made check_revision ()
 	  a static method.
 
-	
+
 	* tao/Pluggable.h:
 	* tao/Pluggable.i: Added a new call read () that does a
 	  non-blocking read on the socket.
-	
+
 	* tao/Pluggable_Messaging.cpp:
 	* tao/Pluggable_Messaging.h: Added a call more_messages () to
-	  check whether any messages need to be processed. 
-	
-	* tao/TAO.dsp: 
+	  check whether any messages need to be processed.
+
+	* tao/TAO.dsp:
 	* tao/TAO_Static.dsp: Added the new files.
 	* tao/Makefile: Added new files and updated dependencies.
 
@@ -136,10 +167,10 @@ Thu Jan 11 14:02:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Strategies/SHMIOP_Transport.cpp:
 	* tao/Strategies/UIOP_Connection_Handler.cpp:
 	* tao/Strategies/UIOP_Transport.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: 
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Replicated
 	  changes made to IIOP.
-	
+
 	* tao/IORManipulation/Makefile:
 	* tao/IORTable/Makefile:
 	* tao/PortableServer/Makefile:
