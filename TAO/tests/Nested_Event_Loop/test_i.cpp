@@ -48,13 +48,27 @@ server_i::run_no_ops (client_ptr remote_partner,
 {
   while (iterations != 0)
     {
-      CORBA::ULong act_for_iterations =
-        ACE_reinterpret_cast (CORBA::ULong, &iterations);
+      CORBA::ULong *pointer_to_iterations = &iterations;
+      size_t sizeof_pointer_to_iterations = sizeof (pointer_to_iterations);
+
+      act act_for_iterations (sizeof_pointer_to_iterations);
+      act_for_iterations.length (sizeof_pointer_to_iterations);
+
+      ACE_OS::memcpy (act_for_iterations.get_buffer (),
+                      &pointer_to_iterations,
+                      sizeof_pointer_to_iterations);
 
       CORBA::ULong got_reply = 0;
 
-      CORBA::ULong act_for_flag =
-        ACE_reinterpret_cast (CORBA::ULong, &got_reply);
+      CORBA::ULong *pointer_to_flag = &got_reply;
+      size_t sizeof_pointer_to_flag = sizeof (pointer_to_flag);
+
+      act act_for_flag (sizeof_pointer_to_flag);
+      act_for_flag.length (sizeof_pointer_to_flag);
+
+      ACE_OS::memcpy (act_for_flag.get_buffer (),
+                      &pointer_to_flag,
+                      sizeof_pointer_to_flag);
 
       remote_partner->oneway_no_op (act_for_iterations,
                                     act_for_flag,
@@ -71,24 +85,30 @@ server_i::run_no_ops (client_ptr remote_partner,
 
 void
 server_i::no_op (client_ptr remote_partner,
-                 CORBA::ULong act_for_iterations,
-                 CORBA::ULong act_for_flag,
+                 const act &act_for_iterations,
+                 const act &act_for_flag,
                  CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::ULong *iterations =
-    ACE_reinterpret_cast (CORBA::ULong *, act_for_iterations);
+  CORBA::ULong *pointer_to_iterations = 0;
 
-  CORBA::ULong *flag =
-    ACE_reinterpret_cast (CORBA::ULong *, act_for_flag);
+  ACE_OS::memcpy (&pointer_to_iterations,
+                  act_for_iterations.get_buffer (),
+                  act_for_iterations.length ());
+
+  CORBA::ULong *pointer_to_flag = 0;
+
+  ACE_OS::memcpy (&pointer_to_flag,
+                  act_for_flag.get_buffer (),
+                  act_for_flag.length ());
 
   ACE_DEBUG ((LM_DEBUG,
               "server_i::no_op: iterations = %d\n",
-              *iterations));
+              *pointer_to_iterations));
 
-  --(*iterations);
+  --(*pointer_to_iterations);
 
-  *flag = 1;
+  *pointer_to_flag = 1;
 
   remote_partner->twoway_no_op (ACE_TRY_ENV);
   ACE_CHECK;
@@ -141,8 +161,8 @@ client_i::loop (CORBA::ULong event_loop_depth,
 }
 
 void
-client_i::oneway_no_op (CORBA::ULong act_for_iterations,
-                        CORBA::ULong act_for_flag,
+client_i::oneway_no_op (const act &act_for_iterations,
+                        const act &act_for_flag,
                         CORBA::Environment &)
   ACE_THROW_SPEC (())
 {
