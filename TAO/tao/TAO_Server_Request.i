@@ -26,9 +26,14 @@ TAO_ServerRequest::operation (void) const
 }
 
 ACE_INLINE void
-TAO_ServerRequest::operation (ACE_CString &operation)
+TAO_ServerRequest::operation (const char *operation,
+                              size_t length,
+                              int release)
 {
-  this->operation_ = operation;
+  if (length == 0)
+    this->operation_.set (operation, release);
+  else
+    this->operation_.set (operation, length, release);
 }
 
 ACE_INLINE unsigned int

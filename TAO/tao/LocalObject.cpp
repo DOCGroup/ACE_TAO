@@ -2,18 +2,19 @@
 // $Id$
 //
 
-#include "tao/LocalObject.h"
-#include "tao/Stub.h"
-#include "tao/IFR_Client_Adapter.h"
+#include "LocalObject.h"
+#include "Stub.h"
+#include "IFR_Client_Adapter.h"
 
-#include "ace/Auto_Ptr.h"
 #include "ace/Dynamic_Service.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/LocalObject.i"
+# include "LocalObject.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, LocalObject, "$Id$")
+ACE_RCSID (tao,
+           LocalObject,
+           "$Id$")
 
 CORBA_LocalObject::~CORBA_LocalObject (void)
 {
@@ -35,11 +36,17 @@ CORBA_LocalObject::_remove_ref (void)
 // create hash tables.
 
 CORBA::ULong
-CORBA_LocalObject::_hash (CORBA::ULong /* maximum */,
-                           CORBA_Environment &ACE_TRY_ENV)
+CORBA_LocalObject::_hash (CORBA::ULong maximum,
+                          CORBA_Environment & /* ACE_TRY_ENV */)
 {
-  // @@ We need a different hash function here.
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  // Note that we reinterpret_cast to an "unsigned long" instead of
+  // CORBA::ULong since we need to first cast to an integer large
+  // enough to hold an address to avoid compile-time warnings on some
+  // 64-bit platforms.
+
+  CORBA::ULong hash = ACE_reinterpret_cast (unsigned long, this);
+
+  return hash % maximum;
 }
 
 // Compare two object references to see if they point to the same
@@ -50,8 +57,8 @@ CORBA_LocalObject::_hash (CORBA::ULong /* maximum */,
 
 CORBA::Boolean
 CORBA_LocalObject::_is_equivalent (CORBA_Object_ptr other_obj,
-                                    CORBA_Environment &)
-    ACE_THROW_SPEC (())
+                                   CORBA_Environment &)
+  ACE_THROW_SPEC (())
 {
   return (other_obj == this) ? 1 : 0;
 }
@@ -61,7 +68,9 @@ CORBA_LocalObject::_is_equivalent (CORBA_Object_ptr other_obj,
 TAO_ObjectKey *
 CORBA_LocalObject::_key (CORBA_Environment &ACE_TRY_ENV)
 {
-  ACE_ERROR((LM_ERROR, ACE_TEXT ("(%P|%t) Cannot get _key froma LocalObject!!!\n")));
+  ACE_ERROR((LM_ERROR,
+             ACE_TEXT ("(%P|%t) Cannot get _key froma LocalObject!!!\n")));
+
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
