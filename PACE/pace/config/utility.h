@@ -71,6 +71,25 @@ return ( (errno = ENOTSUP), FAILVALUE)
 # define PACE_DLL_SUFFIX ".dll"
 # define PACE_DLL_PREFIX ""
 
+# define PACE_ADAPT_RETVAL(OP,RESULT) \
+  ((RESULT = (OP)) != 0 ? (errno = RESULT, -1) : 0)
+
+# define PACE_WIN32CALL_RETURN(X,TYPE,FAILVALUE) \
+  do { \
+    TYPE pace_result_; \
+    pace_result_ = (TYPE) X; \
+    if (pace_result_ == FAILVALUE) \
+    { \
+      errno = GetLastError (); \
+    } \
+    return pace_result_; \
+  } while (0)
+
+# define PACE_OSCALL_RETURN(X,TYPE,FAILVALUE) \
+  do { \
+    return (TYPE) X; \
+  } while (0)
+
 #endif /* PACE_WIN32 */
 
 #endif /* PACE_CONFIG_UTILITY_H */
