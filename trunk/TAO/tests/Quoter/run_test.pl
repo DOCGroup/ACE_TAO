@@ -7,7 +7,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # are needed.
 
 unshift @INC, '../../../bin';
-
 require Process;
 
 $nsiorfile = "theior";
