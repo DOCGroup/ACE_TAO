@@ -14,7 +14,6 @@
 
 #if (defined(_POSIX_C_SOURCE) && _POSIX_C_SOURCE >= 199506L) || \
     defined (__EXTENSIONS__)
-# undef  ACE_HAS_ONEARG_SIGWAIT
 # define ACE_HAS_PTHREADS_STD
 # define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 // Hack 'cuz -DPOSIX_SOURCE=199506L and -DEXTENSIONS hides this.
