@@ -39,7 +39,9 @@ TAO_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation
     invocation->endpoint_selection_state_;
 
   state.priority_model_policy_ =
-    invocation->stub_->exposed_priority_model ();
+    invocation->stub_->exposed_priority_model (ACE_TRY_ENV);
+  ACE_CHECK;
+
   state.private_connection_ =
     invocation->stub_->private_connection ();
 

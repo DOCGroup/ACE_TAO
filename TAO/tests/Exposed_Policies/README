@@ -22,7 +22,7 @@ File: POA.cfg
         Priority 10
 
         Priority_Bands 5
-        Priority_Range 3 5 
+        Priority_Range 3 5
         Priority_Range 7 11
         Priority_Range 5 9
         Priority_Range 1 5
@@ -33,7 +33,7 @@ The tag used to decribe the information have the following meaning:
 
     - IOR_Source: Defines the name of the file that has to be used to
                   store the IOR of the object created.
-    
+
     - Priority: Defines a CORBA::Priority value.
 
     - Priority_Bands: Defines the number of priority bands.
@@ -64,9 +64,8 @@ embedded in the IOR is correct.
 
 USAGE:
 
-   server -POAConfigFile <config_file_name>
-          -ObjectConfigFile <config_file_name>
- 
+   server -ORBSvcConf server.conf -ORBendpoint iiop://<hostaddr>:0/priority=<priority> -ORBendpoint iiop://<hostaddr>:0/priority=<priority> -POAConfigFile <config_file_name> -ObjectConfigFile <config_file_name>
+
    client -POAConfigFile <config_file_name>
           -ObjectConfigFile <config_file_name>
 
@@ -74,9 +73,7 @@ USAGE:
 EXAMPLE:
 
       $ server -POAConfigFile POA.cfg -ObjectConfigFile Object.cfg
-      
-      $ client -POAConfigFile POA.cfg -ObjectConfigFile Object.cfg  
 
       $ client -POAConfigFile POA.cfg -ObjectConfigFile Object.cfg
 
-
+      $ client -POAConfigFile POA.cfg -ObjectConfigFile Object.cfg

@@ -1672,7 +1672,8 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
         {
           // Get the ith profile
           profile = mp.get_profile (i);
-          profile->policies (policy_list);
+          profile->policies (policy_list, ACE_TRY_ENV);
+		  ACE_CHECK;
         }
     }
 
