@@ -330,7 +330,7 @@ class TAO_Pseudo_Object_Manager
   //
   // = DESCRIPTION
   //
-  friend class TAO_Unbounded_Pseudo_Object_Sequence<T,T_var>;
+  friend class TAO_Unbounded_Pseudo_Sequence<T,T_var>;
 public:
   // @@ Use partial template specialization here to give access only
   // to the right kind of sequence.
