@@ -1,8 +1,25 @@
 // $Id$
 
-#include "ace/Configuration.h"
+//============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Config_Test.cpp
+//
+// = DESCRIPTION
+//      This is a test that makes sure various classes in
+//      <ACE_Configuration> work correctly.  
+//
+// = AUTHOR
+//    Michael Searles <msearles@base16.com> and Chris Hafey <chafey@stentor.com>
+//
+//============================================================================
 
-int
+#include "Config_Test.h"
+
+static int
 test (ACE_Configuration *config)
 {
   ACE_Configuration_Section_Key root =
@@ -203,8 +220,7 @@ test (ACE_Configuration *config)
   return 0;
 }
 
-
-int
+static int
 test_io (ACE_Configuration *config)
 {
   // Populate with some data
@@ -264,8 +280,8 @@ test_io (ACE_Configuration *config)
   return 0;
 }
 
-int
-main (int, char *[])
+static int
+run_tests (void)
 {
 #if defined (ACE_WIN32)
   // test win32 registry implementation.
@@ -332,3 +348,157 @@ main (int, char *[])
 
   return 0;
 }
+
+void
+Config_Test::read_config (void)
+{
+  if (m_ConfigurationHeap.open () == 0)
+    {
+      if (m_ConfigurationHeap.import_config_as_strings ("test.ini") == 0)
+        {
+          ACE_Configuration_Section_Key root = m_ConfigurationHeap.root_section ();
+          // Process [network] section
+          ACE_Configuration_Section_Key NetworkSection;
+          if (m_ConfigurationHeap.open_section (root, "network", 1,
+                                                NetworkSection) == 0)
+            {
+              get_section_integer (NetworkSection,
+                                   "TimeToLive",
+                                   &m_nTimeToLive,
+                                   1,
+                                   20);
+              get_section_boolean (NetworkSection,
+                                   "Delay",
+                                   &m_bDelay);
+              get_section_string (NetworkSection,
+                                  "DestIPAddress",
+                                  m_pszDestIPAddress,
+                                  TEST_MAX_STRING);
+              get_section_integer (NetworkSection,
+                                   "DestPort",
+                                   &m_nDestPort,
+                                   0,
+                                   65535);
+              get_section_integer (NetworkSection,
+                                   "ReconnectInterval",
+                                   &m_nReconnectInterval,
+                                   0,
+                                   65535);
+            }
+
+          // Process [logger] section
+          ACE_Configuration_Section_Key LoggerSection;
+
+          if (m_ConfigurationHeap.open_section (root,
+                                                "logger", 1,
+                                                LoggerSection) == 0)
+            {
+              get_section_string (LoggerSection, 
+                                  "Heading",
+                                  m_pszHeading,
+                                  TEST_MAX_STRING);
+              get_section_integer (LoggerSection,
+                                   "TraceLevel",
+                                   &m_nTraceLevel,
+                                   1,
+                                   20);
+              get_section_string (LoggerSection,
+                                  "Justification",
+                                  m_pszJustification,
+                                  TEST_MAX_STRING);
+              get_section_string (LoggerSection,
+                                  "LogFilePath",
+                                  m_pszLogFilePath,
+                                  TEST_MAX_STRING);
+              get_section_string (LoggerSection,
+                                  "TransactionFilePath",
+                                  m_pszTransactionFilePath,
+                                  TEST_MAX_STRING);
+            }
+        }
+    }
+}
+
+void
+Config_Test::get_section_string (ACE_Configuration_Section_Key& SectionKey,
+                                 const ACE_TCHAR* pszName,
+                                 ACE_TCHAR* pszVariable,
+                                 int nMaxLength)
+{
+  ACE_TString StringValue;
+
+  if (m_ConfigurationHeap.get_string_value (SectionKey, pszName, StringValue) == 0)
+    {
+      ACE_OS::strncpy (pszVariable, StringValue.c_str (), nMaxLength);
+      ACE_OS::printf ("%s = %s\n", pszName, pszVariable);
+    }
+}
+
+void
+Config_Test::get_section_integer (ACE_Configuration_Section_Key& SectionKey,
+                                  const ACE_TCHAR* pszName,
+                                  int* nVariable,
+                                  int nMinValue,
+                                  int nMaxValue)
+{
+  ACE_TString StringValue;
+  ACE_TCHAR pszString[30];
+  ACE_OS::strcpy(pszString, "0");
+  int IntegerValue = 0;
+
+  if (m_ConfigurationHeap.get_string_value (SectionKey, pszName, StringValue) == 0)
+    {
+      ACE_OS::strncpy (pszString, StringValue.c_str (), 30);
+      ACE_OS::printf ("%s = %s\n", pszName, pszString);
+    }
+
+  // convert to integer
+  IntegerValue = ACE_OS::atoi (pszString);
+
+  IntegerValue = (IntegerValue < nMinValue) ? nMinValue : IntegerValue;
+  IntegerValue = (IntegerValue > nMaxValue) ? nMaxValue : IntegerValue;
+
+  *nVariable = IntegerValue;
+}
+
+void
+Config_Test::get_section_boolean (ACE_Configuration_Section_Key& SectionKey,
+                                  const ACE_TCHAR* pszName,
+                                  bool* pVariable)
+{
+  ACE_TString StringValue;
+  char pszString[10];
+  ACE_OS::strcpy (pszString, "0");
+
+  if (m_ConfigurationHeap.get_string_value (SectionKey, pszName, StringValue) == 0)
+    {
+      ACE_OS::strncpy(pszString, StringValue.c_str(), 10);
+      ACE_TCHAR* pSrc = pszString;
+      while (*pSrc != '\0')
+        {
+          // Convert to uppercase
+          if (islower(*pSrc))
+            *pSrc = *pSrc - ' ';
+          pSrc++;
+        }
+
+      ACE_OS::printf ("%s = %s\n", pszName, pszString);
+
+      if (ACE_OS::strcmp (pszString, "TRUE") == 0)
+        *pVariable = true;
+      else if (ACE_OS::strcmp (pszString, "FALSE") == 0)
+        *pVariable = false;
+    }
+}
+
+int
+main (int, ACE_TCHAR *[])
+{
+  Config_Test manager;
+  manager.read_config ();
+
+  run_tests ();
+
+  return 0;
+}
+
