@@ -35,7 +35,7 @@ WCE ARM {
 
 Static Release {
   use_debug_libraries   = 0
-  compile_flags         = /W3 /O2 /Zi /Ob2
+  compile_flags         = /W3 /O2 /Zi
   defines               = NDEBUG
   compile_flags_removed = /YX
   output_dir            = Static_Release
@@ -56,7 +56,7 @@ Static Debug {
 
 MFC Release {
   use_debug_libraries   = 0
-  compile_flags         = /W3 /O2 /Zi /Ob2
+  compile_flags         = /W3 /O2 /Zi
   defines               = NDEBUG
   compile_flags_removed = /YX
   output_dir            = MFC_Release
