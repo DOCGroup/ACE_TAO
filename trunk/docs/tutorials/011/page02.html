@@ -60,11 +60,15 @@ int run_test (int iterations, int threads)
     message->wr_ptr(1);          // Move beyond the NULL
 
     /*
-      To copy arbitrary data into a message block, we use the copy() method.
-      Since it wants a 'const char*', we have to cast our Data pointer.
-    */
+       To copy arbitrary data into a message block, we use the copy() method.
+       Since it wants a 'const char*', we have to cast our Data
+       pointer. 
+
+       Note that copy() will advance the wr_ptr() for us.  This means
+       we don't have to do it ourselves!  If you do advance it, it
+       will be way beyond what you want.
+     */
     message->copy ((const char *) &data, sizeof (data));
-    message->wr_ptr (sizeof (data));
 
     if (task.putq (message) == -1)
     {
