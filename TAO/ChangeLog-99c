@@ -1,5 +1,33 @@
-Tue May 25 17:38:03 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+Thu May 27 17:53:39 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
+	  Fixed the problem with making Nested Upcalls. Got the
+	  /test/NestedUpcall/Reactor test to work with <Wait_On_Reactor>
+	  strategy. 
+
+	  * tao/Connect.cpp
+	  * tao/GIOP.cpp   
+	  * tao/IIOP_Transport.cpp
+	  * tao/IIOP_Transport.h
+	  * tao/Invocation.cpp
+	  * tao/Pluggable.cpp
+	  * tao/Pluggable.h
+	  * tao/Reply_Dispatcher.cpp
+	  * tao/Request_Mux_Strategy.cpp
+	  * tao/default_client.cpp
+	  * tao/Wait_Strategy.cpp:	 	
+
+
+Tue May 25 17:38:03 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+	 Took over another strategy (MT) from the connection handlers on
+	to the Wait Strategies. Got tht MT-Client test to work with the
+	new architecture.
+ 
+	* tao/Connect.cpp
+	* tao/Connect.h
+	Removed MT connection handler.
+
+			
+		
 	* tests/MT_Client/simple-client.cpp: Simple version of
 	client.cpp.
 	* tests/MT_Client/MT-client.cpp: MT version of the above. But no
