@@ -111,7 +111,7 @@ DRV_version()
 ** 8. Invoke BE.
 */
 void
-DRV_drive(char *s)
+DRV_drive(const char *s)
 {
   // set the name of the IDL file we are parsing. This is useful to
   // the backend when it generates C++ headers and files
