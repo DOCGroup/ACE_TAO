@@ -10,6 +10,11 @@ Wed Sep 23 10:02:20 1998  David L. Levine  <levine@cs.wustl.edu>
         * utils/IOR-parser/ior-handler.cpp (findIfVisiIor,interpretIor):
           removed unused locals "nullOctet".
 
+        * orbsvcs/tests/Sched/Makefile: removed Quantify relics.
+
+        * orbsvcs/tests/Sched/DynSched_Test.cpp: replaced quantify with
+          ACE_HAS_QUANTIFY.
+
 Wed Sep 23 02:39:29 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.14 released.
