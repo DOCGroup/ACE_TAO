@@ -316,18 +316,22 @@ Streams = \
 
 Memory = \
   Based_Pointer_Repository.cpp \
+  Local_Memory_Pool.cpp \
+  MMAP_Memory_Pool.cpp \
   Malloc.cpp \
   Malloc_Allocator.cpp \
   Malloc_Instantiations.cpp \
   Mem_Map.cpp \
-  Memory_Pool.cpp \
   Obchunk.cpp \
   Obstack.cpp \
+  Pagefile_Memory_Pool.cpp \
   PI_Malloc.cpp \
   Read_Buffer.cpp \
+  Sbrk_Memory_Pool.cpp \
   Shared_Memory.cpp \
   Shared_Memory_MM.cpp \
-  Shared_Memory_SV.cpp
+  Shared_Memory_SV.cpp \
+  Shared_Memory_Pool.cpp
 
 Timer = \
   Basic_Stats.cpp \
@@ -510,6 +514,7 @@ nobase_include_HEADERS = \
   LSOCK_Dgram.h \
   LSOCK_Stream.h \
   Lib_Find.h \
+  Local_Memory_Pool.h \
   Local_Name_Space.h \
   Local_Name_Space_T.h \
   Local_Tokens.h \
@@ -530,6 +535,7 @@ nobase_include_HEADERS = \
   MEM_IO.h \
   MEM_SAP.h \
   MEM_Stream.h \
+  MMAP_Memory_Pool.h \
   Malloc.h \
   Malloc_Allocator.h \
   Malloc_Base.h \
@@ -615,6 +621,7 @@ nobase_include_HEADERS = \
   POSIX_Asynch_IO.h \
   POSIX_CB_Proactor.h \
   POSIX_Proactor.h \
+  Pagefile_Memory_Pool.h \
   Pair.h \
   Pair_T.h \
   Parse_Node.h \
@@ -673,6 +680,7 @@ nobase_include_HEADERS = \
   SV_Semaphore_Simple.h \
   SV_Shared_Memory.h \
   Sample_History.h \
+  Sbrk_Memory_Pool.h \
   Sched_Params.h \
   Select_Reactor.h \
   Select_Reactor_Base.h \
@@ -687,6 +695,7 @@ nobase_include_HEADERS = \
   Shared_Memory.h \
   Shared_Memory_MM.h \
   Shared_Memory_SV.h \
+  Shared_Memory_Pool.h \
   Shared_Object.h \
   Signal.h \
   Singleton.h \
@@ -984,7 +993,6 @@ nobase_include_HEADERS = \
   Map_Manager.inl \
   Map_T.inl \
   Mem_Map.inl \
-  Memory_Pool.inl \
   Message_Block.inl \
   Message_Block_T.inl \
   Message_Queue.inl \
@@ -1039,6 +1047,7 @@ nobase_include_HEADERS = \
   PI_Malloc.inl \
   POSIX_CB_Proactor.inl \
   POSIX_Proactor.inl \
+  Pagefile_Memory_Pool.inl \
   Pair_T.inl \
   Parse_Node.inl \
   Ping_Socket.inl \

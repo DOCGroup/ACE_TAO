@@ -1,3 +1,43 @@
+Mon Oct 11 10:14:36 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp:
+	* tests/SV_Shared_Memory_Test.cpp:
+
+	  Changed to #include ace/SV_Sempahore_Complex.h, which had been
+	  implicitly included via Memory_Pool.h, even though it was not
+	  needed by the interface or implementation.
+
+	* ace/Makefile.am:
+	* ace/ace.mpc:
+
+	  Updated.
+
+	* ace/Local_Memory_Pool.cpp:
+	* ace/Local_Memory_Pool.h:
+	* ace/MMAP_Memory_Pool.cpp:
+	* ace/MMAP_Memory_Pool.h:
+	* ace/Pagefile_Memory_Pool.cpp:
+	* ace/Pagefile_Memory_Pool.h:
+	* ace/Pagefile_Memory_Pool.inl:
+	* ace/Sbrk_Memory_Pool.cpp:
+	* ace/Sbrk_Memory_Pool.h:
+	* ace/Shared_Memory_Pool.cpp:
+	* ace/Shared_Memory_Pool.h:
+
+	  New files.
+
+	* ace/Memory_Pool.cpp:
+	* ace/Memory_Pool.inl:
+	* ace/Memory_Pool.h:
+
+	  Split apart Memory_Pool.{cpp,h,inl} into a separate set of files
+	  for each class and "outlining" inlined virtual functions.  Since
+	  the implementations are related by interface, not inheritance;
+	  locating them all in the same file typically results in static
+	  footprint bloat.
+
+	  Removed Memory_Pool.{cpp,inl}.
+
 Mon Oct 10 12:48:03 2004  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-hpux-11.00.h:

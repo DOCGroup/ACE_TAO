@@ -2,6 +2,7 @@
 
 #include "ace/SV_Shared_Memory.h"
 #include "ace/SV_Semaphore_Simple.h"
+#include "ace/SV_Semaphore_Complex.h"
 #include "ace/Malloc.h"
 #include "ace/OS_NS_unistd.h"
 
