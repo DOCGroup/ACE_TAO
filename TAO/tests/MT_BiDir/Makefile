@@ -46,9 +46,7 @@ include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 
 ifeq ($(minimum_corba),0)
-
 BIN=$(BIN_UNCHECKED)
-
 endif # endif
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
