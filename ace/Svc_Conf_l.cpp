@@ -514,17 +514,18 @@ char *ace_yytext;
 #include "ace/Svc_Conf.h"
 #include "ace/Svc_Conf_Tokens.h"
 
-ACE_RCSID(ace, Svc_Conf_l, "$Id$")
+ACE_RCSID (ace,
+	   Svc_Conf_l,
+	   "$Id$")
 
 // Keeps track of the current line for debugging output.
 int ace_yylineno = 1;
 
-// Keeps track of the number of errors encountered so far.
-int ace_yyerrno = 0;
+// Array that implements the underlying lexer buffer stack.
+ACE_YY_BUFFER_STATE ace_yybuffer_stack[ACE_SERVICE_DIRECTIVE_STACK_DEPTH];
 
-// Used to parse service configurator directives from a string rather
-// than from a svc.conf file.
-const ACE_TCHAR *ace_yydirective = 0;
+// Array index of the buffer currently in use.
+int ace_yy_stack_index = 0;
 
 #define token(x)  x
 #define PARAMETERS 1
@@ -684,7 +685,7 @@ ACE_YY_DECL
 	register char *ace_yy_cp = 0, *ace_yy_bp = 0;
 	register int ace_yy_act;
 
-#line 39 "Svc_Conf.l"
+#line 40 "Svc_Conf.l"
 
 
 
@@ -775,97 +776,97 @@ case 1:
 ace_yy_c_buf_p = ace_yy_cp -= 1;
 ACE_YY_DO_BEFORE_ACTION; /* set up ace_yytext again */
 ACE_YY_RULE_SETUP
-#line 41 "Svc_Conf.l"
+#line 42 "Svc_Conf.l"
 ; /* EMPTY */
 	ACE_YY_BREAK
 case 2:
 ACE_YY_RULE_SETUP
-#line 42 "Svc_Conf.l"
+#line 43 "Svc_Conf.l"
 { return token (ACE_DYNAMIC); }
         //	ACE_YY_BREAK
 case 3:
 ACE_YY_RULE_SETUP
-#line 43 "Svc_Conf.l"
+#line 44 "Svc_Conf.l"
 { return token (ACE_STATIC); }
 //	ACE_YY_BREAK
 case 4:
 ACE_YY_RULE_SETUP
-#line 44 "Svc_Conf.l"
+#line 45 "Svc_Conf.l"
 { return token (ACE_SUSPEND); }
 //	ACE_YY_BREAK
 case 5:
 ACE_YY_RULE_SETUP
-#line 45 "Svc_Conf.l"
+#line 46 "Svc_Conf.l"
 { return token (ACE_RESUME); }
 //	ACE_YY_BREAK
 case 6:
 ACE_YY_RULE_SETUP
-#line 46 "Svc_Conf.l"
+#line 47 "Svc_Conf.l"
 { return token (ACE_REMOVE); }
 //	ACE_YY_BREAK
 case 7:
 ACE_YY_RULE_SETUP
-#line 47 "Svc_Conf.l"
+#line 48 "Svc_Conf.l"
 { return token (ACE_USTREAM); }
 //	ACE_YY_BREAK
 case 8:
 ACE_YY_RULE_SETUP
-#line 48 "Svc_Conf.l"
+#line 49 "Svc_Conf.l"
 { return token (ACE_MODULE_T); }
 //	ACE_YY_BREAK
 case 9:
 ACE_YY_RULE_SETUP
-#line 49 "Svc_Conf.l"
+#line 50 "Svc_Conf.l"
 { return token (ACE_SVC_OBJ_T); }
 //	ACE_YY_BREAK
 case 10:
 ACE_YY_RULE_SETUP
-#line 50 "Svc_Conf.l"
+#line 51 "Svc_Conf.l"
 { return token (ACE_STREAM_T); }
 //	ACE_YY_BREAK
 case 11:
 ACE_YY_RULE_SETUP
-#line 51 "Svc_Conf.l"
+#line 52 "Svc_Conf.l"
 { return token (ACE_ACTIVE); }
 //	ACE_YY_BREAK
 case 12:
 ACE_YY_RULE_SETUP
-#line 52 "Svc_Conf.l"
+#line 53 "Svc_Conf.l"
 { return token (ACE_INACTIVE); }
 //	ACE_YY_BREAK
 case 13:
 ACE_YY_RULE_SETUP
-#line 53 "Svc_Conf.l"
+#line 54 "Svc_Conf.l"
 { return token (ACE_COLON); }
 //	ACE_YY_BREAK
 case 14:
 ACE_YY_RULE_SETUP
-#line 54 "Svc_Conf.l"
+#line 55 "Svc_Conf.l"
 { return token (ACE_STAR); }
 //	ACE_YY_BREAK
 case 15:
 ACE_YY_RULE_SETUP
-#line 55 "Svc_Conf.l"
+#line 56 "Svc_Conf.l"
 { return token (ACE_LPAREN); }
 //	ACE_YY_BREAK
 case 16:
 ACE_YY_RULE_SETUP
-#line 56 "Svc_Conf.l"
+#line 57 "Svc_Conf.l"
 { return token (ACE_RPAREN); }
 //	ACE_YY_BREAK
 case 17:
 ACE_YY_RULE_SETUP
-#line 57 "Svc_Conf.l"
+#line 58 "Svc_Conf.l"
 { return token (ACE_LBRACE); }
 //	ACE_YY_BREAK
 case 18:
 ACE_YY_RULE_SETUP
-#line 58 "Svc_Conf.l"
+#line 59 "Svc_Conf.l"
 { return token (ACE_RBRACE); }
 //	ACE_YY_BREAK
 case 19:
 ACE_YY_RULE_SETUP
-#line 59 "Svc_Conf.l"
+#line 60 "Svc_Conf.l"
 { // Check for first type of string, i.e.,
                         // "double quotes" delimited.  
                         char *s = strrchr (ace_yytext, '"');
@@ -879,38 +880,38 @@ ACE_YY_RULE_SETUP
                         // single quotes.
                         *s = '\0';
 			ace_yyleng -= 1;
-                        ace_yylval.ident_ = ace_obstack->copy (ace_yytext + 1, ace_yyleng);
+                        ace_yylval->ident_ = ace_obstack->copy (ace_yytext + 1, ace_yyleng);
 			return token (ACE_STRING); }
 //	ACE_YY_BREAK
 case 20:
 ACE_YY_RULE_SETUP
-#line 74 "Svc_Conf.l"
+#line 75 "Svc_Conf.l"
 {
-		        ace_yylval.ident_ = ace_obstack->copy (ace_yytext, ace_yyleng);
+		        ace_yylval->ident_ = ace_obstack->copy (ace_yytext, ace_yyleng);
 			return token (ACE_IDENT);
 		      }
 //	ACE_YY_BREAK
 case 21:
 ACE_YY_RULE_SETUP
-#line 78 "Svc_Conf.l"
+#line 79 "Svc_Conf.l"
 {
-		        ace_yylval.ident_ = ace_obstack->copy (ace_yytext, ace_yyleng);
+		        ace_yylval->ident_ = ace_obstack->copy (ace_yytext, ace_yyleng);
 			return token (ACE_PATHNAME);
 		      }
 //	ACE_YY_BREAK
 case 22:
 ACE_YY_RULE_SETUP
-#line 82 "Svc_Conf.l"
+#line 83 "Svc_Conf.l"
 ; /* EMPTY */
 	ACE_YY_BREAK
 case 23:
 ACE_YY_RULE_SETUP
-#line 83 "Svc_Conf.l"
+#line 84 "Svc_Conf.l"
 { ace_yylineno++; }
 	ACE_YY_BREAK
 case 24:
 ACE_YY_RULE_SETUP
-#line 84 "Svc_Conf.l"
+#line 85 "Svc_Conf.l"
 { ACE_ERROR ((LM_ERROR,
                                 ACE_LIB_TEXT ("unknown character = (%d"), 
                                           *ace_yytext));
@@ -922,12 +923,12 @@ ACE_YY_RULE_SETUP
 case ACE_YY_STATE_EOF(INITIAL):
 case ACE_YY_STATE_EOF(PARAMETERS):
 case ACE_YY_STATE_EOF(NORMAL):
-#line 91 "Svc_Conf.l"
-{ ACE_YY_NEW_FILE; ace_yyterminate(); }
+#line 92 "Svc_Conf.l"
+{ /* ACE_YY_NEW_FILE; */ ace_yyterminate(); }
 //	ACE_YY_BREAK
 case 25:
 ACE_YY_RULE_SETUP
-#line 92 "Svc_Conf.l"
+#line 93 "Svc_Conf.l"
 ACE_SVC_CONF_ECHO;
 	ACE_YY_BREAK
 
@@ -1815,7 +1816,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 92 "Svc_Conf.l"
+#line 93 "Svc_Conf.l"
 
 int
 ace_yywrap (void)
@@ -1824,18 +1825,66 @@ ace_yywrap (void)
   ace_yytext[0] = '#';
   ace_yyleng = 0;
 
-  // This needs to be freed to prevent a memory leak.
-  ace_yy_delete_parse_buffer ();
-
   return 1;
 }
 
 void
-ace_yy_delete_parse_buffer (void)
+ace_yy_push_buffer (FILE *file)
 {
-  if (ace_yy_current_buffer != 0) 
+  // External synchronization is required.
+
+  if (ace_yy_stack_index >= ACE_SERVICE_DIRECTIVE_STACK_DEPTH)
     {
-      ace_yy_delete_buffer (ace_yy_current_buffer);
-      ace_yy_current_buffer = 0;
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) Service Configurator directive nesting "
+                  "is too deep.\n"
+                  "(%P|%t) Consider increasing value of "
+                  "ACE_SERVICE_DIRECTIVE_STACK_DEPTH.\n"));
+
+      // Not much we can do, so resort to flushing the current buffer
+      // and switch to the supplied stream.
+      ace_yyrestart (file);
+    }
+  else
+    {
+      ace_yybuffer_stack[ace_yy_stack_index++] = ACE_YY_CURRENT_BUFFER;
+      ace_yy_switch_to_buffer (ace_yy_create_buffer (file, ACE_YY_BUF_SIZE));
+    }
+}
+
+void
+ace_yy_push_buffer (const char *directive)
+{
+  // External synchronization is required.
+
+  if (ace_yy_stack_index >= ACE_SERVICE_DIRECTIVE_STACK_DEPTH)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) Service Configurator directive nesting "
+                  "is too deep.\n"
+                  "(%P|%t) Consider increasing value of "
+                  "ACE_SERVICE_DIRECTIVE_STACK_DEPTH.\n"));
+
+      // Not much we can do.
+    }
+  else
+    {
+      ace_yybuffer_stack[ace_yy_stack_index++] = ACE_YY_CURRENT_BUFFER;
+
+      // ace_yy_scan_string() already switches the buffer so setting
+      // ACE_YY_CURRENT_BUFFER here is a bit redundant.  No biggy.
+      ACE_YY_CURRENT_BUFFER = ace_yy_scan_string (directive);
+    }
+}
+
+void
+ace_yy_pop_buffer (void)
+{
+  // External synchronization is required.
+
+  if (--ace_yy_stack_index >= 0)
+    {
+      ace_yy_delete_buffer (ACE_YY_CURRENT_BUFFER);
+      ace_yy_switch_to_buffer (ace_yybuffer_stack[ace_yy_stack_index]);
     }
 }

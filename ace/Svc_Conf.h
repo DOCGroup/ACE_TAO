@@ -13,6 +13,7 @@
 
 #ifndef ACE_SVC_CONF_H
 #define ACE_SVC_CONF_H
+
 #include "ace/pre.h"
 
 // Globally visible macros, type decls, and extern var decls for
@@ -27,17 +28,50 @@
 #include "ace/Service_Config.h"
 #include "ace/Parse_Node.h"
 
+// The following yylex() declarations require support for reentrant
+// parser generation (e.g. from GNU Bison).
 #if defined (DEBUGGING)
 #if defined (ACE_YY_DECL)
 #undef ACE_YY_DECL
 #endif /* ACE_YY_DECL */
-#define ACE_YY_DECL extern "C" char *ace_yylex (void)
+#define ACE_YY_DECL extern "C" char *ace_yylex (ACE_YYSTYPE *ace_yylval)
 #else
-#define ACE_YY_DECL extern "C" int ace_yylex (void)
+#define ACE_YY_DECL extern "C" int ace_yylex (ACE_YYSTYPE *ace_yylval)
 #endif /* DEBUGGING */
+
+// The following definition for the ACE_YYSTYPE must occur before
+// ACE_YY_DECL is declared since ACE_YY_DECL expands to function
+// prototypes that use ACE_YYSTYPE.
+typedef union
+{
+  int type_;
+  ACE_Location_Node *location_node_;
+  ACE_Parse_Node *parse_node_;
+  ACE_Static_Node *static_node_;
+  ACE_Service_Type *svc_record_;
+  ACE_TCHAR *ident_;
+} ACE_YYSTYPE;
+
+/// Maximum depth allowed when processing nested Service Configurator
+/// directives.
+#ifndef ACE_SERVICE_DIRECTIVE_STACK_DEPTH
+const int ACE_SERVICE_DIRECTIVE_STACK_DEPTH = 8;
+#endif  /* ACE_SERVICE_DIRECTIVE_STACK_DEPTH */
 
 void ace_yyrestart (FILE *);
 // Restart input file parsing
+
+/// Create and push a new lexer buffer on to the buffer stack for use
+/// when scanning the given file.
+void ace_yy_push_buffer (FILE *file);
+
+/// Create and push a new lexer buffer on to the buffer stack for use
+/// when scanning the given directive.
+void ace_yy_push_buffer (const char *directive);
+
+/// Pop the current lexer buffer off of the buffer stack and
+/// deallocate it.
+void ace_yy_pop_buffer (void);
 
 void ace_yy_delete_parse_buffer (void);
 // Delete the lexer's parse buffer
@@ -50,25 +84,6 @@ ACE_YY_DECL;
 
 extern FILE *ace_yyin;
 // Name of input stream
-// note: if using wide charcaters (unicode) for interactive or string
-// based input it may be worth checking this all works fine getc is
-// not portable in wide char versions, needs more work
-#define ACE_YY_INPUT(buf,result,max_size) \
-  if (ace_yydirective != 0) \
-  { \
-    int c = *ace_yydirective++; \
-    result = c == '\0' ? 0 : 1; \
-    buf[0] = (ACE_TCHAR) c; \
-  } \
-  else if ( ace_yy_current_buffer->ace_yy_is_interactive ) \
-  { \
-    int c = getc( ace_yyin ); \
-    result = c == EOF ? 0 : 1; \
-    buf[0] = (ACE_TCHAR) c; \
-  } \
-  else if ( ((result = fread( buf, sizeof (ACE_TCHAR), max_size, ace_yyin )) == 0) \
-    && ferror( ace_yyin ) ) \
-    ACE_YY_FATAL_ERROR( ACE_LIB_TEXT ("input in flex scanner failed") );
 
 void ace_yyerror (const ACE_TCHAR *);
 // Error handling routine required by YACC or BISON
@@ -93,20 +108,13 @@ extern ACE_Obstack_T<ACE_TCHAR> *ace_obstack;
 // Efficient memory allocation technique
 
 extern ACE_Service_Type_Impl *
-    ace_create_service_type (const ACE_TCHAR *, int,
-                             void *, unsigned int,
-                             ACE_Service_Object_Exterminator = 0);
+ace_create_service_type (const ACE_TCHAR *,
+                         int,
+                         void *,
+                         unsigned int,
+                         ACE_Service_Object_Exterminator = 0);
 // Factory that creates a new ACE_Service_Type_Impl.
 
-typedef union
-{
-  int type_;
-  ACE_Location_Node *location_node_;
-  ACE_Parse_Node *parse_node_;
-  ACE_Static_Node *static_node_;
-  ACE_Service_Type *svc_record_;
-  ACE_TCHAR *ident_;
-} ACE_YYSTYPE;
-extern ACE_YYSTYPE ace_yylval;
 #include "ace/post.h"
+
 #endif /* ACE_SVC_CONF_H */

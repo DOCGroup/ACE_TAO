@@ -373,7 +373,8 @@ group SVCCONF_FILES =
   "Service_Templates.cpp",
   "Shared_Object.cpp",
   "Svc_Conf_l.cpp",
-  "Svc_Conf_y.cpp"
+  "Svc_Conf_y.cpp",
+  "Svc_Conf_Lexer_Guard.cpp"
 
 group SVCCONF_INCLUDES =
   "DLL.h",

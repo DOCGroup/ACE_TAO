@@ -1,11 +1,14 @@
 %{
 // $Id$
+
 #include "ace/ARGV.h"
 #include "ace/Svc_Conf.h"
 #include "ace/Module.h"
 #include "ace/Stream.h"
 
-ACE_RCSID(ace, Svc_Conf_y, "$Id$")
+ACE_RCSID (ace,
+           Svc_Conf_y,
+           "$Id$")
 
 // Prototypes.
 static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,
@@ -21,7 +24,11 @@ static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,
 // Efficient memory allocation technique.
 ACE_Obstack *ace_obstack;
 
+// Keeps track of the number of errors encountered so far.
+int yyerrno = 0;
+
 %}
+
 %token ACE_DYNAMIC ACE_STATIC ACE_SUSPEND ACE_RESUME ACE_REMOVE ACE_USTREAM
 %token ACE_MODULE_T ACE_STREAM_T ACE_SVC_OBJ_T ACE_ACTIVE ACE_INACTIVE
 %token ACE_PATHNAME ACE_IDENT ACE_STRING
@@ -36,6 +43,9 @@ ACE_Obstack *ace_obstack;
 %type <static_node_> stream_ops
 %type <svc_record_> svc_location
 %type <location_node_> svc_initializer
+
+// Generate a pure (reentrant) parser -- GNU Bison only
+%pure_parser
 
 %%
 

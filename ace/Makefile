@@ -181,7 +181,8 @@ SVCCONF_FILES = \
   Service_Templates \
   Shared_Object \
   Svc_Conf_l \
-  Svc_Conf_y
+  Svc_Conf_y \
+  Svc_Conf_Lexer_Guard
 STREAMS_FILES = \
   CDR_Base \
   CDR_Stream \
@@ -526,27 +527,24 @@ all.nested: all.local
 	echo >> $@ "// EOF";
 
 Svc_Conf_y.cpp: Svc_Conf.y
-	if [ -f /home/cs/faculty/schmidt/bin/SunOS5/yacc ]; then \
-          /home/cs/faculty/schmidt/bin/SunOS5/yacc -d Svc_Conf.y; \
+	if [ -f /pkg/gnu/bin/bison ]; then \
+          /pkg/gnu/bin/bison -d Svc_Conf.y; \
           sed -e "s/char \*getenv/char *ace_foo/g" \
               -e "s/= getenv/= ACE_OS::getenv/g" \
-              -e "s/yyerrlab://g" \
-              -e "s/yynewerror://g" \
               -e "s/yy/ace_yy/g" \
               -e "s/YY/ACE_YY/g" \
-              -e "s/y\.tab\.c/Svc_Conf_y.cpp/g" < y.tab.c > /tmp/$@; \
+              -e "s/Svc_Conf\.tab\.c/Svc_Conf_y.cpp/g" < Svc_Conf.tab.c > /tmp/$@; \
           cp /tmp/$@ $@; \
-	  patch < ../etc/Svc_Conf_y.cpp.diff; \
 	  echo '// $$'\I\d'$$' > Svc_Conf_Tokens.h; \
-	  cat y.tab.h >> Svc_Conf_Tokens.h; \
-          $(RM) -f /tmp/$@ y.tab.c y.tab.h Svc_Conf_y.cpp.orig; \
+	  cat Svc_Conf.tab.h >> Svc_Conf_Tokens.h; \
+          $(RM) -f /tmp/$@ Svc_Conf.tab.c Svc_Conf.tab.h Svc_Conf_y.cpp.orig; \
         else \
           touch $@; \
         fi
 
 Svc_Conf_l.cpp: Svc_Conf.l
-	if [ -f /home/cs/faculty/schmidt/bin/SunOS5/flex ]; then \
-          /home/cs/faculty/schmidt/bin/SunOS5/flex -t -I Svc_Conf.l > $@; \
+	if [ -f /pkg/gnu/bin/flex ]; then \
+          /pkg/gnu/bin/flex -t -I Svc_Conf.l > $@; \
           sed -e "s/unistd/stdio/g" \
               -e "s/yy/ace_yy/g" \
               -e "s/YY/ACE_YY/g" \
@@ -557,7 +555,7 @@ Svc_Conf_l.cpp: Svc_Conf.l
               -e "s/realloc( ptr, size );/realloc( ACE_MALLOC_T (ptr), size );/g" \
               -e "s@#include <stdio\.h>@#include \"ace/OS.h\"@" \
               -e "s@#include <@#include /**/ <@" \
-              -e "s@ECHO@ACE_SVC_CONF_ECHO@" < $@ >> /tmp/$@; \
+              -e "s@ECHO@ACE_SVC_CONF_ECHO@" < $@ > /tmp/$@; \
           cp /tmp/$@ $@; \
           patch < ../etc/Svc_Conf_l.cpp.diff; \
           $(RM) -f /tmp/$@ Svc_Conf_l.cpp.orig; \
