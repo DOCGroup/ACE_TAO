@@ -49,39 +49,39 @@ Protocol_Record::Protocol_Record (const char *kn1, Protocol_Record *next)
   this->next_ = next;
 }
 
-char *
+const char *
 Protocol_Record::get_login (void) 
 { 
   return this->key_name1_;
 }
 
-char *
+const char *
 Protocol_Record::set_login (const char *str)
 { 
   this->key_name1_ = str;
   return str;
 }
 
-char *
+const char *
 Protocol_Record::get_real (void) 
 { 
   return this->key_name2_;
 }
 
-char *
+const char *
 Protocol_Record::get_host (void)
 {
   return this->key_name1_;
 }
 
-char *
+const char *
 Protocol_Record::set_host (const char *str)
 { 
   this->key_name1_ = str;
   return str;
 }
 
-char *
+const char *
 Protocol_Record::set_real (const char *str)
 {
   this->key_name2_ = str;

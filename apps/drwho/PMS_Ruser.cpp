@@ -85,7 +85,8 @@ PMS_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
   else
     {
       passwd *pwent = getpwnam (np->get_login_name ());
-      char *cp = ACE_OS::strchr (np->set_real_name (pwent == 0 
+      char *cp = 
+        (char *) ACE_OS::strchr (np->set_real_name (pwent == 0 
                                                     ? np->get_login_name () 
                                                     : ACE::strnew (pwent->pw_gecos)),
                                  ',');

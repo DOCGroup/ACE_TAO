@@ -122,7 +122,7 @@ PM_Client::handle_protocol_entries (const char *cp,
   
   this->insert_protocol_info (protocol_record);
   
-  return ACE::strend (cp);
+  return (char *) ACE::strend (cp);
 }
 
 PM_Client::PM_Client (void)

@@ -77,11 +77,11 @@ PMS_All::insert_protocol_info (Protocol_Record &protocol_record)
 {
   Protocol_Record *frp = PM_Server::insert_protocol_info (protocol_record);
   passwd *pwent = getpwnam (frp->get_login ());
-  char *cp = ACE_OS::strchr (frp->set_real 
-                             (pwent == 0 
-                              ? frp->get_login () :
-                              ACE::strnew (pwent->pw_gecos)),
-                             ',');
+  char *cp = (char *) ACE_OS::strchr (frp->set_real 
+                                      (pwent == 0 
+                                       ? frp->get_login () :
+                                       ACE::strnew (pwent->pw_gecos)),
+                                      ',');
   if (cp != 0)
     *cp = '\0';
 
