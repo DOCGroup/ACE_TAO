@@ -28,6 +28,16 @@ class ACE_Export ACE_Allocator
 public:
   // = Memory Management
   
+  static ACE_Allocator *instance (void);
+  // Get pointer to a default <ACE_Allocator>.
+
+  static ACE_Allocator *instance (ACE_Allocator *);
+  // Set pointer to a process-wide <ACE_Allocator> and return existing
+  // pointer.
+
+  static void close_singleton (void);
+  // Delete the dynamically allocated Singleton
+
   virtual ~ACE_Allocator (void);
   // Virtual destructor
 
@@ -107,6 +117,13 @@ public:
 
   virtual void dump (void) const = 0;
   // Dump the state of the object.
+private:
+
+  static ACE_Allocator *allocator_;
+  // Pointer to a process-wide <ACE_Allocator> instance.
+
+  static int delete_allocator_;
+  // Must delete the <allocator_> if non-0.
 };
 
 #if defined (ACE_MALLOC_STATS)

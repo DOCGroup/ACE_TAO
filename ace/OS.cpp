@@ -16,10 +16,10 @@
 #include "ace/OS.i"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
-#include "ace/Synch.h"
+#include "ace/Synch_T.h"
 #include "ace/Containers.h"
 
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 
 // This is lock defines a monitor that is shared by all threads
 // calling certain ACE_OS methods.
@@ -1031,7 +1031,7 @@ ACE_TSS_Cleanup::exit (void *status)
     }
   }
 
-#if defined (ACE_HAS_MFC)	
+#if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
   // allow CWinThread-destructor to be invoked from AfxEndThread
   // _endthreadex will be called from AfxEndThread so don't exit the
   // thread now if we are running an MFC thread.
@@ -1712,7 +1712,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   ACE_UNUSED_ARG (stack);
   ACE_Thread_Adapter *thread_args;
   ACE_NEW_RETURN (thread_args, ACE_Thread_Adapter (func, args), -1);
-#    if defined (ACE_HAS_MFC)
+#    if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
   if (ACE_BIT_ENABLED (flags, THR_USE_AFX))
     {
       CWinThread *cwin_thread = 

@@ -23,6 +23,7 @@
 
 // Forward declaration.
 class ACE_Data_Block;
+class ACE_Lock;
 
 class ACE_Export ACE_Message_Block
   // = TITLE

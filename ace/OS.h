@@ -410,7 +410,7 @@ typedef int key_t;
 // use these macros so that we don't end up with ACE software
 // hard-coded to Microsoft proprietary extensions to C++.
 
-#if defined (ACE_HAS_DLL)
+#if defined (ACE_HAS_DLL) && (ACE_HAS_DLL == 1)
 #if defined (ACE_BUILD_DLL)
 #if !defined (_MSC_VER) /* Mark classes as exported, Borland. */
 #define ACE_Export _export
@@ -429,7 +429,7 @@ typedef int key_t;
 #define ACE_Export 
 #endif /* ACE_HAS_DLL */
 
-#if defined (ACE_HAS_SVC_DLL)
+#if defined (ACE_HAS_SVC_DLL) && (ACE_HAS_SVC_DLL == 1)
 #if defined (ACE_BUILD_SVC_DLL)
 #if !defined (_MSC_VER) /* Mark classes as exported, Borland. */
 #define ACE_Svc_Export _export
@@ -957,7 +957,7 @@ typedef struct rlimit ACE_SETRLIMIT_TYPE;
 typedef const struct rlimit ACE_SETRLIMIT_TYPE;
 #endif /* ACE_HAS_BROKEN_SETRLIMIT */
 
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #define ACE_MT(X) X
 #if !defined (_REENTRANT)
 #define _REENTRANT
@@ -1464,7 +1464,7 @@ protected:
   // number of readers holding the lock.
 };
 #elif !defined (ACE_HAS_STHREADS)
-#include <synch.h>
+#include /**/ <synch.h>
 typedef rwlock_t ACE_rwlock_t;
 #endif /* ACE_LACKS_RWLOCK_T */
 
@@ -1678,7 +1678,7 @@ struct utsname
 // HANDLES in Windows. So for example, STRICT prevents you from
 // mistakenly passing an HPEN to a routine expecting an HBITMAP.
 // Note that we only use this if we 
-#if defined (ACE_HAS_STRICT)
+#if defined (ACE_HAS_STRICT) && (ACE_HAS_STRICT != 0)
 #if !defined (STRICT)	/* may already be defined */
 #define STRICT
 #endif /* !STRICT */
@@ -1802,7 +1802,7 @@ PAGE_GUARD
 PAGE_NOACCESS
 PAGE_NOCACHE  */
 
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 #include "ace/ws2tcpip.h"
 #endif /* ACE_HAS_WINSOCK2 */
 
@@ -3526,7 +3526,7 @@ private:
   ACE_OS (void);
   // Ensure we can't define an instance of this class.
 
-#if defined (ACE_MT_SAFE) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
   static int netdb_acquire (void);
   static int netdb_release (void);
 #endif /* defined (ACE_MT_SAFE) && ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */

@@ -10,6 +10,7 @@
 #include "ace/Proactor.h"
 #include "ace/Message_Block.h"
 #include "ace/Service_Config.h"
+#include "ace/Inet_Addr.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Asynch_IO.i"
@@ -118,7 +119,7 @@ ACE_Asynch_Operation::open (ACE_Handler &handler,
       // <handler->proactor> is zero
       this->proactor_ = this->handler_->proactor ();
       if (this->proactor_ == 0)
-	this->proactor_ = ACE_Service_Config::proactor ();
+	this->proactor_ = ACE_Proactor::instance();
     }
 
   // Register with the <proactor>
@@ -505,7 +506,7 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
 			   ACE_HANDLE accept_handle,
 			   const void *act)
 {
-#if defined (ACE_HAS_WINSOCK2) || (_WIN32_WINNT >= 0x0400)
+#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) || (_WIN32_WINNT >= 0x0400)
   // Sanity check: make sure that enough space has been allocated by the caller. 
   size_t address_size = sizeof (sockaddr_in) + sizeof (sockaddr);
   size_t space_in_use = message_block.wr_ptr () - message_block.base ();
@@ -658,7 +659,7 @@ ACE_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
 					 u_long flags,
 					 const void *act)
 {
-#if defined (ACE_HAS_WINSOCK2) || (_WIN32_WINNT >= 0x0400)
+#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) || (_WIN32_WINNT >= 0x0400)
   Result *result = 0;
   ACE_NEW_RETURN (result, 
 		  Result (*this->handler_,

@@ -3,7 +3,7 @@
 
 // CORBA_Handler.i
 
-#if defined (ACE_HAS_ORBIX)
+#if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 // = Set/get the number of iterations per processNextEvent() call.
 
 /* static */ 
@@ -38,7 +38,7 @@ ACE_CORBA_Handler::reactor (void)
   return this->reactor_;
 }
 
-#if defined (ACE_HAS_MT_ORBIX)
+#if defined (ACE_HAS_MT_ORBIX) && (ACE_HAS_MT_ORBIX != 0)
 ACE_INLINE void
 ACE_MT_CORBA_Handler::thr_mgr (ACE_Thread_Manager *tm) 
 {

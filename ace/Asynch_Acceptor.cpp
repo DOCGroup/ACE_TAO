@@ -115,7 +115,7 @@ ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read)
 template <class HANDLER> void 
 ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &result)
 {  
-#if defined (ACE_HAS_WINSOCK2) || (_WIN32_WINNT >= 0x0400)
+#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) || (_WIN32_WINNT >= 0x0400)
   // If the asynchronous accept succeeds
   if (result.success ())
     {
@@ -179,7 +179,7 @@ ACE_Asynch_Acceptor<HANDLER>::parse_address (ACE_Message_Block &message_block,
 					     ACE_INET_Addr &remote_address,
 					     ACE_INET_Addr &local_address)
 {
-#if defined (ACE_HAS_WINSOCK2) || (_WIN32_WINNT >= 0x0400)
+#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) || (_WIN32_WINNT >= 0x0400)
   sockaddr *local_addr = 0;
   sockaddr *remote_addr = 0;
   int local_size = 0;
