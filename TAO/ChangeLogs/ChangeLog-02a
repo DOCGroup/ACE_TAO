@@ -1,3 +1,13 @@
+Mon Jun 25 12:05:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Incoming_Message_Queue.h:
+	* tao/Incoming_Message_Queue.cpp:
+	* tao/Incoming_Message_Queue.inl:
+	* tao/LIST_OF_TODO:
+	* tao/GIOP_Message_State.inl: Removed the following from the main
+	  trunk. They were supposed to be in my branch. Not sure how they
+	  got popped into the main trunk.
+
 Mon Jun 25 11:12:51 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/fe/idl.yy:
