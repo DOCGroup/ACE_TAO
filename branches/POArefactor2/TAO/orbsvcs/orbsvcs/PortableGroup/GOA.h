@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Regular_POA.h"
 #include "orbsvcs/PortableGroupC.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -45,7 +45,7 @@ class TAO_PortableGroup_Acceptor_Registry;
  */
 class TAO_PortableGroup_Export TAO_GOA :
     public virtual PortableGroup::GOA,
-    public virtual TAO_POA
+    public virtual TAO_Regular_POA
 {
 public:
   // Methods added by the
@@ -265,7 +265,7 @@ public:
   TAO_GOA (const String &name,
            TAO_POA_Manager &poa_manager,
            const TAO_POA_Policy_Set &policies,
-           TAO_POA *parent,
+           TAO_Root_POA *parent,
            ACE_Lock &lock,
            TAO_SYNCH_MUTEX &thread_lock,
            TAO_ORB_Core &orb_core,
@@ -280,7 +280,7 @@ public:
 protected:
 
   /// Template method for creating new POA's of this type.
-  virtual TAO_POA *new_POA (const String &name,
+  virtual TAO_Root_POA *new_POA (const String &name,
                             TAO_POA_Manager &poa_manager,
                             const TAO_POA_Policy_Set &policies,
                             TAO_POA *parent,
@@ -323,4 +323,4 @@ protected:
 
 #include /**/ "ace/post.h"
 
-#endif /* TAO_POA_H */
+#endif /* TAO_GOA_H */
