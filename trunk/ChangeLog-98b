@@ -1,3 +1,24 @@
+Tue Oct 20 14:31:37 EDT 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+        * docs/tutorials/001/Makefile
+        * docs/tutorials/002/Makefile
+        * docs/tutorials/003/Makefile
+        * docs/tutorials/005/Makefile
+        * docs/tutorials/006/Makefile
+        * docs/tutorials/007/Makefile
+        * docs/tutorials/008/Makefile
+        * docs/tutorials/009/Makefile
+        * docs/tutorials/010/Makefile
+        * docs/tutorials/011/Makefile
+        * docs/tutorials/012/Makefile
+        * docs/tutorials/013/Makefile
+        * docs/tutorials/012a/Makefile
+        * docs/tutorials/Makefile
+
+	Updated these makefiles to remove rules.lib.GNU
+	Added the "top-level" makefile to allow building
+	of all tutorials in one step.
+
 Tue Oct 20 12:54:39 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.5.61 released.
