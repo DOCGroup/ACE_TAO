@@ -1,20 +1,30 @@
+Tue Jun 17 18:31:31 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	From Terry Lacy <terry.lacy@thomson.net>
+	* orbsvcs/orbsvcs/PortableGroup/PG_Null_Property_Validator.h
+	  (validate_criteria):
+
+	  Added missing "ACE_ENV_ARG_DECL" emulated exception macro
+	  argument.  [Bug 1539]
+
 Tue Jun 17 17:09:46 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * TAO_IDL/be_include/be_visitor_valuetype/valuetype.h:
         * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
 
           Amended valuetype factory mapping to take into account the
-					presence of supported interfaces by adding a new method to
-					check for this condition.
-          Added inheritance of DefaultValueRefCountBase mix-in class
-					to valuetypes that support abstract interfaces.
+	  presence of supported interfaces by adding a new method to
+	  check for this condition.
+
+          Added inheritance of DefaultValueRefCountBase mix-in class to
+	  valuetypes that support abstract interfaces.
 
         * TAO_IDL/be/be_visitor_valuetype/valuetype_sh.cpp:
         * TAO_IDL/be/be_visitor_valuetype/valuetype_ss.cpp:
 
           Added inheritance of the valuetype base class and eliminated
-					declarations of _this() and _interface_repository_id() in the
-					skeleton class for valuetypes that support concrete interfaces.
+	  declarations of _this() and _interface_repository_id() in the
+	  skeleton class for valuetypes that support concrete interfaces.
 
 Tue Jun 17 09:59:56 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -232,6 +242,7 @@ Fri Jun 13 13:11:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * Makefile: Removed creation of a README for orbsvcs during the
           release since we have an html file in docs.
 
+>>>>>>> 1.1915
 Thu Jun 12 15:34:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * tao/Typecode.cpp: In lieu of the following "Thu Jun 12 15:20:37
