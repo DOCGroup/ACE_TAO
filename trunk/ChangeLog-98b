@@ -1,3 +1,8 @@
+Wed Nov 11 23:11:15 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * bin/ACEutils.pm: Updated to include $EXEPREFIX, which is used
+          in front of executables in the run_test.pl's.
+
 Wed Nov 11 01:08:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACE-INSTALL.html: Added a link to Ossama's ACE Configuration
