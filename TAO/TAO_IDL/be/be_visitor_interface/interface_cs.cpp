@@ -777,10 +777,6 @@ be_visitor_interface_cs::gen_concrete_unchecked_narrow (be_interface *node,
       << "::_nil ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
 
-
-
-
-
   if (! node->is_local ())
     {
       // Declare the default proxy.
@@ -801,9 +797,8 @@ be_visitor_interface_cs::gen_concrete_unchecked_narrow (be_interface *node,
           << "obj->steal_ior ()," << be_nl
           << "obj->orb_core ()" << be_uidt_nl << ")," << be_uidt_nl
           << bt->nested_type_name (this->ctx_->scope ())
-          << "::_nil ()" << be_uidt_nl << ");" << be_nl
-          << "return default_proxy;" << be_nl
-          << be_uidt << be_uidt_nl
+          << "::_nil ()" << be_uidt_nl << ");" << be_uidt_nl << be_nl
+          << "return default_proxy;" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
 
       // Remote _unchecked_narrow implementation.
