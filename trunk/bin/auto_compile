@@ -546,8 +546,8 @@ if ($post_realclean) {
 
 print LOG "#################### Config\n";
 
-chdir($MODULE)
-    || mydie "cannot chdir to $MODULE";
+chdir($CHECKOUT . "/" . $MODULE)
+  || mydie "Cannot chdir to $CHECKOUT/$MODULE";
 
 open (CHLOG, "ChangeLog")
   ||  mydie "cannot open Changelog";
