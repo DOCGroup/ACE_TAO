@@ -1,5 +1,9 @@
 Tue Feb 24 07:14:16 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Asynch_Acceptor.cpp (handle_accept): Update the
+ 	  event_handler's proactor pointer once it is accepted.  Thanks to
+ 	  Jason Katz <Jason@email.rts-inc.com> for reporting this.
+
 	* apps/Gateway/Gateway/Event.h (class Subscription): Moved the
  	  htonl of total_consumers_ to *after* the loop that uses it!
   	  Thanks to Jorn Jensen <jornj@funcom.com> for reporting this.
