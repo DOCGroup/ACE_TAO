@@ -101,10 +101,10 @@ Wed Sep  8 17:09:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Tue Sep 07 18:23:02 2004  Jules White  <jules@dre.vanderbilt.edu>
 				
-       * DAnCE/Config_Handlers/MDD_Handler.h
-       * DAnCE/Config_Handlers/MDD_Handler.cpp
-       * DAnCE/Config_Handlers/Req_Handler.h
-       * DAnCE/Config_Handlers/Req_Handler.cpp
+  * DAnCE/Config_Handlers/MDD_Handler.h
+  * DAnCE/Config_Handlers/MDD_Handler.cpp
+  * DAnCE/Config_Handlers/Req_Handler.h
+  * DAnCE/Config_Handlers/Req_Handler.cpp
 				
 	 Created classes to handled mapping values from XSC
 	 MonolithicDeploymentDescription and Requirement to the
@@ -112,20 +112,20 @@ Tue Sep 07 18:23:02 2004  Jules White  <jules@dre.vanderbilt.edu>
 				
 Thu Sep 02 15:01:21 2004  Jules White  <jules@dre.vanderbilt.edu>
                                                                                 
-        * DAnCE/Config_Handlers/ANY_Handler.h:
-        * DAnCE/Config_Handlers/ANY_Handler.cpp:
-        * DAnCE/Config_Handlers/CID_Handler.h:
-        * DAnCE/Config_Handlers/CID_Handler.cpp:
-        * DAnCE/Config_Handlers/ComponentPropertyDescription_Handler.h:
-        * DAnCE/Config_Handlers/ComponentPropertyDescription_Handler.cpp:
-        * DAnCE/Config_Handlers/CPD_Handler.h:
-        * DAnCE/Config_Handlers/CPD_Handler.cpp:
-        * DAnCE/Config_Handlers/DataType_Handler.h:
-        * DAnCE/Config_Handlers/DataType_Handler.cpp:
-        * DAnCE/Config_Handlers/Prop_Handler.h:
-        * DAnCE/Config_Handlers/Prop_Handler.cpp:
+  * DAnCE/Config_Handlers/ANY_Handler.h:
+  * DAnCE/Config_Handlers/ANY_Handler.cpp:
+  * DAnCE/Config_Handlers/CID_Handler.h:
+  * DAnCE/Config_Handlers/CID_Handler.cpp:
+  * DAnCE/Config_Handlers/ComponentPropertyDescription_Handler.h:
+  * DAnCE/Config_Handlers/ComponentPropertyDescription_Handler.cpp:
+  * DAnCE/Config_Handlers/CPD_Handler.h:
+  * DAnCE/Config_Handlers/CPD_Handler.cpp:
+  * DAnCE/Config_Handlers/DataType_Handler.h:
+  * DAnCE/Config_Handlers/DataType_Handler.cpp:
+  * DAnCE/Config_Handlers/Prop_Handler.h:
+  * DAnCE/Config_Handlers/Prop_Handler.cpp:
         
-          Created classes to copy the values from XSC objects
-          into their corresponding IDL types.
+   Created classes to copy the values from XSC objects
+   into their corresponding IDL types.
                                                                                 
 
