@@ -1,3 +1,24 @@
+Sat May  6 17:49:01 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Log_Msg.h:
+        * ace/Log_Msg.cpp:
+
+          Changed the signature of log_priority_enabled to have both the
+          char * and wchar_t * versions when using ACE_USES_WCHAR.  The 
+          reason why this has to be done is because of ACE_HEX_DUMP.
+
+          ACE_HEX_DUMP calls both log_priority_enabled and log_hexdump,
+          and it doesn't make sense to change the signature of log_hexdump.
+          If it were to take in a wchar_t buffer, it should print the 
+          entire wchar_t.  But if we have a buffer that is a char *, then
+          it doesn't make sense to convert it to a wchar_t * buffer, since
+          it adds all those extra bytes that would show up with hexdump.
+
+          And now that we have 3 versions of this method which do the same
+          things, I changed the ones that is used by the macros to call
+          the one that just takes in the priority.  An extra function call,
+          but if that is a problem, then they can be inlined.
+
 Sat May  6 19:33:49 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* include/makeinclude/platform_freebsd.GNU: Removed definition
