@@ -222,8 +222,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/ReactorEx.h \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h
 .obj/context_switch_time.o .shobj/context_switch_time.so: context_switch_time.cpp \
- $(WRAPPER_ROOT)/ace/Scheduling_Params.h \
- $(WRAPPER_ROOT)/ace/Thread_Priority.h \
+ $(WRAPPER_ROOT)/ace/Sched_Params.h \
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \

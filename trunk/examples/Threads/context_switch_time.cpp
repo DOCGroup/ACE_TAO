@@ -64,7 +64,7 @@ static const char usage [] = "[-? |\n"
                              "       [-n to spawn a new LWP with each thread\n"
                              "[<iterations>]]";
 
-#include "ace/Scheduling_Params.h"
+#include "ace/Sched_Params.h"
 #include "ace/ACE.h"
 #include "ace/Task.h"
 #include "ace/Synch.h"
@@ -656,10 +656,9 @@ main (int argc, char *argv [])
 
   if (get_options (argc, argv)) ACE_OS::exit (-1);
 
-  if (ACE_OS::set_sched_params (
-        ACE_Scheduling_Params (
-          ACE_Thread_Priority(ACE_Thread_Priority::ACE_REALTIME_PRIORITY_CLASS,
-                              ACE_Thread_Priority::ACE_PRIORITY_4))) != 0)
+  if (ACE_OS::sched_params (
+        ACE_Sched_Params (ACE_SCHED_FIFO,
+                          ACE_Sched_Params::priority_min (ACE_SCHED_FIFO))) != 0)
     {
       if (ACE_OS::last_error () == EPERM)
         {
