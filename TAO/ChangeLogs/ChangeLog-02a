@@ -1,3 +1,14 @@
+Sat Feb 24 11:13:02 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Makefile:
+	* tests/Collocation/README:
+	* tests/Collocation/Makefile:
+	* tests/Collocation/Makefile.impl:
+	* tests/Collocation/Makefile.test:
+	* tests/Collocation/Makefile.stub: Added the missing UNIX
+	  Makefiles for collocation test.  Thanks to Steve Hespelt
+	  <shespelt@bear.com> for reporting this.
+
 Fri Feb 23 19:48:08 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * TAO version 1.1.13 released.
@@ -9,12 +20,12 @@ Thu Feb 22 03:07:46 2001  Krishnakumar B  <kitty@ace.cs.wustl.edu>
 	* tao/Version.h:
 
 	Revert of the changes done by the release script.
-	
+
 Wed Feb 21 20:32:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/run_test.pl:
 
-          Updated to use PerlACE::Run_Test.  Also fixed the timeout 
+          Updated to use PerlACE::Run_Test.  Also fixed the timeout
           problem we've been seeing on Win2000_DLL_Debug nightly build.
 
 Wed Feb 21 20:17:22 2001  Carlos O'Ryan  <coryan@uci.edu>
