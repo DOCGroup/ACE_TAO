@@ -78,7 +78,7 @@ ACE_Synch_Options::timeout (void) const
 }
 
 void
-ACE_Synch_Options::timeout (ACE_Time_Value &tv)
+ACE_Synch_Options::timeout (const ACE_Time_Value &tv)
 {
   ACE_TRACE ("ACE_Synch_Options::timeout");
   this->timeout_ = tv;
