@@ -1,17 +1,6 @@
 // This may not look like C++, but it's really -*- C++ -*-
 // $Id$
 
-ACE_INLINE
-CORBA_AbstractBase::~CORBA_AbstractBase (void)
-{
-  if (this->concrete_stubobj_ != 0)
-    {
-      (void) this->concrete_stubobj_->_decr_refcnt ();
-    }
-
-  delete this->refcount_lock_;
-}
-
 ACE_INLINE 
 CORBA::AbstractBase_ptr
 CORBA_AbstractBase::_nil (void)

@@ -94,6 +94,16 @@ CORBA_AbstractBase::CORBA_AbstractBase (TAO_Stub * protocol_proxy,
     }
 }
 
+CORBA_AbstractBase::~CORBA_AbstractBase (void)
+{
+  if (this->concrete_stubobj_ != 0)
+    {
+      (void) this->concrete_stubobj_->_decr_refcnt ();
+    }
+
+  delete this->refcount_lock_;
+}
+
 void *
 CORBA_AbstractBase::_tao_QueryInterface (ptr_arith_t type)
 {
