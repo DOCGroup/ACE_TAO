@@ -35,8 +35,7 @@ TAO_Thread_Per_Connection_Handler::activate (long flags,
                                              ACE_hthread_t thread_handles[],
                                              void *stack[],
                                              size_t stack_size[],
-                                             ACE_thread_t  thread_names[],
-                                             bool)
+                                             ACE_thread_t  thread_names[])
 {
   if (TAO_debug_level)
     {
@@ -56,8 +55,7 @@ TAO_Thread_Per_Connection_Handler::activate (long flags,
                                  thread_handles,
                                  stack,
                                  stack_size,
-                                 thread_names,
-                                 true);
+                                 thread_names);
 }
 
 int

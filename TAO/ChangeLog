@@ -1,3 +1,19 @@
+Thu Mar 18 22:52:49 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Thread_Per_Connection_Handler.cpp:
+	* tao/Thread_Per_Connection_Handler.h:
+
+	  Reverted the change "Fri Mar  5 23:31:34 2004  Balachandran
+	  Natarajan  <bala@dre.vanderbilt.edu>".  
+	
+ 	* orbsvcs/LoadBalancer/Signal_Handler.cpp:
+	* orbsvcs/LoadBalancer/Signal_Handler.h:
+	* orbsvcs/orbsvcs/Event/RT_Task.cpp:
+	* orbsvcs/orbsvcs/Event/RT_Task.h:
+
+	  Reverted the change "Wed Mar 10 19:41:01 2004  Balachandran
+	  Natarajan  <bala@dre.vanderbilt.edu>" 
+
 Thu Mar 18 12:57:35 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * toa/FloatSeqS.h:
