@@ -24,7 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corbafwd.h"
+#include "TAO_Export.h"
 
 class ACE_Lock;
 class TAO_Transport_Mux_Strategy;

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "nestea_server_i.h"
+#include "tao/IORTable/IORTable.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 
@@ -179,11 +180,6 @@ Nestea_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Register our poa_name with INS also, so we can get simplified
-      // requests.
-      this->orb_->_tao_add_to_IOR_table (poa_name, server_obj.in ());
-
-
       // Create an IOR from the server object.
       CORBA::String_var server_str =
         this->orb_->object_to_string (server_obj.in (),
@@ -192,6 +188,24 @@ Nestea_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "The IOR is: <%s>\n", server_str.in ()));
+
+      CORBA::Object_var table_object =
+        this->orb_->resolve_initial_references ("IORTable",
+                                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      IORTable::Table_var adapter =
+        IORTable::Table::_narrow (table_object.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      if (CORBA::is_nil (adapter.in ()))
+        {
+          ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
+        }
+      else
+        {
+          adapter->bind (poa_name, server_str.in (), ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
 
       if (this->ior_output_file_)
         {

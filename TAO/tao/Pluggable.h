@@ -27,11 +27,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Message_Queue.h"
 #include "tao/Sequence.h"
 #include "tao/Typecode.h"
 #include "tao/IOPC.h"
-
+#include "ace/Message_Queue.h"
 
 // Forward declarations.
 class ACE_Addr;

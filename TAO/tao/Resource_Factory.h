@@ -25,10 +25,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Hash_Map_Manager.h"
+#include "tao/TAO_Export.h"
 #include "tao/Pluggable.h"
 #include "tao/Protocol_Factory.h"
-#include "tao/corbafwd.h"
 #include "tao/orbconf.h"
 #include "ace/Containers_T.h"
 

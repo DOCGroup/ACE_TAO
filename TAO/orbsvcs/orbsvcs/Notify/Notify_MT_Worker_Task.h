@@ -69,7 +69,7 @@ public:
   TAO_Notify_Buffering_Strategy* buffering_strategy_;
   // The buffering strategy to use.
 
-  TAO_Notify_Property_Long* const queue_length_;
+  TAO_Notify_Property_Long* queue_length_;
   // We need to decrement the event_count_ everytime we dequeue a command
   // object.
 };

@@ -54,7 +54,7 @@ public:
   // Return the reply CDR.
 
   int &reply_received (void);
-  // A flag to check if the reply 
+  // A flag to check if the reply
 
   virtual int dispatch_reply (CORBA::ULong reply_status,
                               const TAO_GIOP_Version& version,

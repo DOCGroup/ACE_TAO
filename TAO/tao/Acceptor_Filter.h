@@ -19,13 +19,13 @@
 #define TAO_ACCEPTOR_FILTER_H
 #include "ace/pre.h"
 
-#include "tao/MProfile.h"
 #include "tao/corbafwd.h"
-#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+class TAO_MProfile;
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)

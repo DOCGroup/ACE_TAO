@@ -22,8 +22,7 @@ int
 TAO_Notify_MT_Worker_Task::init_task (TAO_Notify_AdminProperties* const admin_properties)
 {
   // Store the admin properties...
-  const_cast<TAO_Notify_Property_Long*> (this->queue_length_) =
-    admin_properties->queue_length ();
+  this->queue_length_ = admin_properties->queue_length ();
 
   // Make us an Active Object.
   if (this->activate (THR_NEW_LWP) == -1)

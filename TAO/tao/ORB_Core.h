@@ -33,6 +33,7 @@
 #include "tao/Adapter.h"
 
 #include "ace/Map_Manager.h"
+#include "ace/Hash_Map_Manager.h"
 
 // Forward declarations
 class TAO_Acceptor;
@@ -159,7 +160,6 @@ public:
   TAO_ORB_Parameters *orb_params (void);
   // Accessor for the ORB parameters.
 
-  // @@ PPOA: TAO_POA_Current &poa_current (void) const;
   // @@ In the future this hook should change, instead of hardcoding
   //    the object we should add a "Resolver" to the ORB, so the
   //    "POACurrent" object returns a per-ORB object.
@@ -190,27 +190,11 @@ public:
   // = Get the ACE_Thread_Manager
   ACE_Thread_Manager *thr_mgr (void);
 
-#if 0 // PPOA
-  // = Get the rootPOA
-  TAO_POA *root_poa (CORBA::Environment &ACE_TRY_ENV =
-                           TAO_default_environment (),
-                     const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
-                     TAO_POA_Manager *poa_manager = 0,
-                     const TAO_POA_Policies *policies = 0);
-
-  PortableServer::POA_ptr root_poa_reference (
-      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment (),
-      const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
-      TAO_POA_Manager *poa_manager = 0,
-      const TAO_POA_Policies *policies = 0);
-#else
   CORBA::Object_ptr root_poa (CORBA::Environment &ACE_TRY_ENV);
   // Return the RootPOA, or try to load it if not initialized already.
 
-  TAO_Adapter_Registry *adapter_registry (void); // PPOA
+  TAO_Adapter_Registry *adapter_registry (void);
   // Get the adapter registry
-
-#endif /* 0 PPOA */
 
   // = Collocation strategies.
   enum
@@ -266,10 +250,6 @@ public:
 
   CORBA::ULong get_collocation_strategy (void) const;
 
-  // @@ PPOA: Should go away!  But leave it here to remove the other
-  // bugs first!
-  // @@ TAO_Object_Adapter *object_adapter (void);
-  // Get <Object Adapter>.
   TAO_Adapter *poa_adapter (void);
   // Get the adapter named "RootPOA" and cache the result, this is an
   // optimization for the POA.
@@ -498,15 +478,25 @@ public:
   void implrepo_service (const CORBA::Object_ptr ir);
   // Set/Get the IOR of the Implementation Repository service.
 
-  CORBA::Object_ptr typecode_factory (void);
-  void typecode_factory (const CORBA::Object_ptr tf);
-  // Get/Set the IOR of the TypeCodeFactory DLL.
+  CORBA::Object_ptr resolve_typecodefactory (CORBA::Environment &ACE_TRY_ENV);
+  // Resolve the TypeCodeFactory DLL.
 
   CORBA::Object_ptr resolve_dynanyfactory (CORBA::Environment &ACE_TRY_ENV);
   // Resolve the Dynamic Any Factory
 
-  CORBA_Object_ptr resolve_ior_manipulation (CORBA::Environment&);
+  CORBA::Object_ptr resolve_ior_manipulation (CORBA::Environment&);
   // Resolve the IOR Manipulation reference for this ORB.
+
+  CORBA::Object_ptr resolve_ior_table (CORBA::Environment&);
+  // Resolve the IOR Table reference for this ORB.
+
+  CORBA::Object_ptr resolve_rir (const char *name,
+                                 CORBA::Environment &);
+  // Resolve an initial reference via the -ORBInitRef and
+  // -ORBDefaultInitRef options
+
+  CORBA_ORB_ObjectIdList_ptr list_initial_references (CORBA::Environment &);
+  // List all the service known by the ORB
 
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
@@ -531,21 +521,6 @@ protected:
   int fini (void);
   // Final termination hook, typically called by CORBA::ORB's DTOR.
 
-#if 0
-  void create_and_set_root_poa (const char *adapter_name,
-                                TAO_POA_Manager *poa_manager,
-                                const TAO_POA_Policies *policies,
-                                CORBA::Environment &ACE_TRY_ENV);
-  // Initialize the root POA.
-
-  void destroy_root_poa (CORBA::Boolean wait_for_completion,
-                         CORBA::Environment &ACE_TRY_ENV);
-  // Destroy the RootPOA (if one exists).
-
-  TAO_Object_Adapter *object_adapter_i (void);
-  // Get <Object Adapter>, assume the lock is held...
-#endif /* PPOA */
-
   ACE_Allocator *input_cdr_dblock_allocator_i (TAO_ORB_Core_TSS_Resources *);
   ACE_Allocator *input_cdr_buffer_allocator_i (TAO_ORB_Core_TSS_Resources *);
   // Implement the input_cdr_*_allocator() routines using pre-fetched
@@ -559,12 +534,19 @@ protected:
   int set_default_policies (void);
   // Set ORB-level policy defaults for this ORB.
 
+  void resolve_typecodefactory_i (CORBA::Environment &ACE_TRY_ENV);
+  // Obtain and cache the dynamic any factory object reference
+
   void resolve_dynanyfactory_i (CORBA::Environment &ACE_TRY_ENV);
   // Obtain and cache the dynamic any factory object reference
 
   void resolve_iormanipulation_i (CORBA::Environment &ACE_TRY_ENV);
   // Obtain and cache the IORManipulation factory object reference
 private:
+
+  void resolve_ior_table_i (CORBA::Environment &ACE_TRY_ENV);
+  // Obtain and cache the dynamic any factory object reference
+
   // The ORB Core should not be copied
   ACE_UNIMPLEMENTED_FUNC (TAO_ORB_Core(const TAO_ORB_Core&))
   ACE_UNIMPLEMENTED_FUNC (void operator=(const TAO_ORB_Core&))
@@ -608,6 +590,9 @@ protected:
   CORBA::Object_ptr ior_manip_factory_;
   // The cached object reference for the IORManipulataion.
 
+  CORBA::Object_ptr ior_table_;
+  // The cached object reference for the IORTable
+
   CORBA::ORB_var orb_;
   // @@ Should we keep a single ORB pointer? This is good because
   //    multiple calls to ORB_init() with the same ORBid can use the
@@ -615,13 +600,15 @@ protected:
   // Pointer to the ORB.
 
   CORBA::Object_var root_poa_;
-  // PPOA: TAO_POA *root_poa_;
   // Pointer to the root POA.  It will eventually be the pointer
   // returned by calls to <CORBA::ORB::resolve_initial_references
   // ("RootPOA")>.
 
   TAO_ORB_Parameters orb_params_;
   // Parameters used by the ORB.
+
+  typedef ACE_Hash_Map_Manager<ACE_CString,ACE_CString,ACE_Null_Mutex> InitRefMap;
+  InitRefMap init_ref_map_;
 
   char *orbid_;
   // The ORBid for this ORB.
@@ -677,7 +664,6 @@ protected:
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-  // PPOA: TAO_POA_Current *poa_current_;
   CORBA::Object_var poa_current_;
   // POA current.
   //
@@ -685,10 +671,7 @@ protected:
   // dependencies.
   //
 
-  // PPOA: TAO_Object_Adapter *object_adapter_;
-  // Object Adapter.
-
-  TAO_Adapter_Registry adapter_registry_; // PPOA
+  TAO_Adapter_Registry adapter_registry_;
   // The list of Adapters used in this ORB
 
   TAO_Adapter *poa_adapter_;
@@ -832,7 +815,6 @@ private:
 
 public:
 
-  // PPOA: TAO_POA_Current_Impl *poa_current_impl_;
   void *poa_current_impl_;
   // Points to structure containing state for the current upcall
   // context in this thread.  Note that it does not come from the

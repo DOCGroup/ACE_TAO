@@ -64,4 +64,3 @@ TAO_GIOP_Locate_Request_Invocation::inp_stream (void)
 {
   return this->rd_.reply_cdr ();
 }
-

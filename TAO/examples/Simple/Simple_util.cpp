@@ -2,7 +2,9 @@
 
 #ifndef SIMPLE_UTIL_C
 #define SIMPLE_UTIL_C
-# include "Simple_util.h"
+
+#include "Simple_util.h"
+#include "tao/IORTable/IORTable.h"
 
 // Constructor.
 
@@ -77,23 +79,26 @@ Server<Servant>::test_for_ins (CORBA::String_var ior)
 {
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
-  CORBA::Object_ptr object =
-    orb->string_to_object (ior.in ());
-
-  // Add a KEY:IOR mapping to the ORB table.
-  ACE_CString ins (this->ins_);
-
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
 		"Adding (KEY:IOR) %s:%s\n",
-		ins.c_str (),
+		this->ins_,
 		ior.in ()));
 
-  if (orb->_tao_add_to_IOR_table (ins,
-                                  object) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-		       "Simple_Util : Unable to add IOR to table\n"),
-		      -1);
+  
+  CORBA::Object_var table_object =
+    orb->resolve_initial_references ("IORTable");
+
+  IORTable::Table_var adapter =
+    IORTable::Table::_narrow (table_object.in ());
+  if (CORBA::is_nil (adapter.in ()))
+    {
+      ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
+    }
+  else
+    {
+      adapter->bind (this->ins_, ior.in ());
+    }
 
   return 0;
 }
@@ -230,10 +235,14 @@ Server<Servant>::register_name (void)
 
       // Test for INS.
       if (this->ins_)
-	if (this->test_for_ins (orb->object_to_string (object.in ())) != 0)
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "test_for_ins (): failed\n"),
-			    -1);
+        {
+          CORBA::String_var ior =
+            orb->object_to_string (object.in ());
+          if (this->test_for_ins (ior.in ()) != 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "test_for_ins (): failed\n"),
+                              -1);
+        }
     }
   ACE_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
     {

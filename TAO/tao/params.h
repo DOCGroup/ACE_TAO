@@ -20,7 +20,6 @@
 #include "ace/pre.h"
 
 #include "tao/corbafwd.h"
-#include "tao/IOR_LookupTable.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,7 +29,6 @@
 
 class TAO_Active_Object_Map_Impl;
 class TAO_Reverse_Active_Object_Map_Impl;
-class TAO_IOR_LookupTable;
 
 // This is a quick hack to avoid having to unravel the intricacies of
 // the all the hairy order interdepencies that currently exist in TAO.
@@ -81,16 +79,16 @@ public:
   void add_endpoint (ACE_CString &endpoint);
   // Specifies the endpoints on which this server is willing to
   // listen for requests.
-  
+
   CORBA::UShort service_port (MCAST_SERVICEID service_id) const;
   void service_port (MCAST_SERVICEID service_id, CORBA::UShort port);
   // Set/Get the port of services locatable through multicast.
-  
+
   const char *mcast_discovery_endpoint (void) const;
   void mcast_discovery_endpoint (const ACE_CString &mde);
-  // Set/Get address:port for Multicast Discovery Protocol for 
+  // Set/Get address:port for Multicast Discovery Protocol for
   // the Naming Service.
-  
+
   int sock_rcvbuf_size (void) const;
   void sock_rcvbuf_size (int);
   // Set/Get the size to be used for a socket's receive buffer.
@@ -120,14 +118,6 @@ public:
   void use_dotted_decimal_addresses (int);
   // The ORB will use the dotted decimal notation for addresses. By
   // default we use the full ascii names.
-
-  TAO_IOR_LookupTable * ior_lookup_table (void);
-  // The table used by the ORB for looking up the ObjectID:IOR mappings
-  // specified on the commandline through the -ORBInitRef and
-  // -ORBDefaultInitRef parameters.
-
-  int add_to_ior_table (ACE_CString init_ref);
-  // Add the init_ref (objectID->IOR) to the Lookup Table
 
   char *default_init_ref (void) const;
   void default_init_ref (const ACE_CString &default_init_ref);
@@ -170,16 +160,11 @@ private:
   // Port numbers of the configured services.
 
   ACE_CString mcast_discovery_endpoint_;
-  // address:port for Multicast Discovery Protocol for the Naming 
+  // address:port for Multicast Discovery Protocol for the Naming
   // Service.
 
   ACE_CString init_ref_;
   // Initial Reference supplied as <ObjectID>:<IOR>
-
-  TAO_IOR_LookupTable ior_lookup_table_;
-  // Table that has the mapping <ObjectID>:<IOR>
-  // The IOR could be in any of the following formats :
-  // IOR: ...  / iiop: ...  / iioploc: ... / iiopname: ...
 
   ACE_CString default_init_ref_;
   // List of comma separated prefixes from ORBDefaultInitRef.

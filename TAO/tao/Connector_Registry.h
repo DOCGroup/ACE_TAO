@@ -28,10 +28,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/corbafwd.h"
-#include "tao/Typecode.h"
 #include "tao/params.h"
-
-#include "ace/Containers_T.h"
 
 // Forward declarations.
 class ACE_Addr;
@@ -41,7 +38,6 @@ class TAO_ORB_Core;
 class TAO_Stub;
 class TAO_MProfile;
 class TAO_Resource_Factory;
-
 
 typedef TAO_Connector** TAO_ConnectorSetIterator;
 

@@ -726,8 +726,10 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class TAO_Object_Manager<CORBA_Object,CORBA_Object_var>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
+#pragma instantiate TAO_Object_Manager<CORBA_Object,CORBA_Object_var>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
