@@ -1,3 +1,11 @@
+Thu Jul 24 14:00:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/DEV_IO.h (recv_n): 
+	* ace/DEV_IO.i: The semantics of recv_n () is now changed to have
+	  a timeout and a byte transferred variable. The interface now has
+	  the semantics asscoiated with ACE_OS::recv_n () and ACE::recv_n
+	  () calls. Thanks to Tom Phan <tom.phan@telhub.com>.
+
 Thu Jul 24 15:01:59 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * include/makeinclude/platform_g++_common.GNU:
