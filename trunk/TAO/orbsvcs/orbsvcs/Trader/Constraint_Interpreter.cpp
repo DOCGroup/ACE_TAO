@@ -181,18 +181,18 @@ TAO_Preference_Interpreter::~TAO_Preference_Interpreter()
 
 void 
 TAO_Preference_Interpreter::
-order_offer (CosTrading::OfferId offer_id,
-	     CosTrading::Offer* offer)
+order_offer (CosTrading::Offer* offer,
+             CosTrading::OfferId offer_id)
 {
   TAO_Constraint_Evaluator evaluator(offer);
-  this->order_offer (offer_id, offer, evaluator);
+  this->order_offer (evaluator, offer, offer_id);
 }
 
 void 
 TAO_Preference_Interpreter::
-order_offer (CosTrading::OfferId offer_id,
-	     CosTrading::Offer* offer,
-	     TAO_Constraint_Evaluator& evaluator)
+order_offer (TAO_Constraint_Evaluator& evaluator,
+             CosTrading::Offer* offer,
+             CosTrading::OfferId offer_id)
 {
   if (this->root_ != 0)
     {
@@ -208,7 +208,9 @@ order_offer (CosTrading::OfferId offer_id,
 	  // correct place in the queue.
 	  TAO_Expression_Type expr_type = this->root_->expr_type ();
 
-	  if (expr_type == TAO_FIRST)
+	  if (expr_type == TAO_FIRST ||
+              (expr_type == TAO_WITH &&
+               ! ACE_static_cast (CORBA::Boolean, pref_info.value_)))
 	    this->offers_.enqueue_tail (pref_info);
 	  else
 	    this->offers_.enqueue_head (pref_info);
@@ -235,6 +237,7 @@ order_offer (CosTrading::OfferId offer_id,
 		      (expr_type == TAO_MAX &&
 		       pref_info.value_ < current_offer->value_)))
 		    {
+                      // Swap the out of order pair
 		      this->offers_.set (*current_offer, i - 1);
 		      this->offers_.set (pref_info, i);
 		    }
@@ -255,8 +258,8 @@ order_offer (CosTrading::OfferId offer_id,
 
 int
 TAO_Preference_Interpreter::
-remove_offer (CosTrading::OfferId& offer_id,
-	      CosTrading::Offer*& offer)
+remove_offer (CosTrading::Offer*& offer,
+              CosTrading::OfferId& offer_id)
 {
   int return_value = -1;
   Preference_Info pref_info;
@@ -272,8 +275,17 @@ remove_offer (CosTrading::OfferId& offer_id,
   return return_value;
 }
 
+int
+TAO_Preference_Interpreter::
+remove_offer (CosTrading::Offer*& offer)
+{
+  CosTrading::OfferId offer_id = 0;
+  return this->remove_offer (offer, offer_id);
+}
+
+
 int 
-TAO_Preference_Interpreter::num_offers(void)
+TAO_Preference_Interpreter::num_offers (void)
 {
   return this->offers_.size();
 }

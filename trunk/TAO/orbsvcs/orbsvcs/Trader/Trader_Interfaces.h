@@ -149,43 +149,10 @@ private:
 
   typedef TRADER::Offer_Database Offer_Database;
  
-  struct Offer_Info
-  {
-    CosTrading::OfferId offer_id_;
-    CosTrading::Offer* offer_ptr_;
-  };
-  
-  typedef ACE_Unbounded_Queue<Offer_Info> Offer_Queue;
-  
-  TAO_Offer_Iterator*
-    create_offer_iterator (const char *type,
-			   const TAO_Property_Filter& filter);
+  TAO_Offer_Iterator* create_offer_iterator (const TAO_Property_Filter&);
   // Factory method for creating an appropriate Offer Iterator based
   // on the presence of the Register Interface. 
   
-  void perform_lookup (const char* type,
-		       const char* constraint,
-		       const char* preferences,
-		       Offer_Database& offer_database,
-		       CosTradingRepos::ServiceTypeRepository_ptr rep,
-		       TAO_Policies& policies,
-		       Offer_Queue& ordered_offers,
-                       CosTrading::PolicyNameSeq_out returned_limits_applied,
-		       CORBA::Environment& env)
-    TAO_THROW_SPEC ((CosTrading::IllegalConstraint,
-		    CosTrading::Lookup::IllegalPreference,
-		    CosTrading::Lookup::PolicyTypeMismatch,
-		    CosTrading::Lookup::InvalidPolicyValue,
-		    CosTrading::IllegalServiceType,
-		    CosTrading::UnknownServiceType));
-  // This method has three phases. The first phase passes the
-  // offer_map through the constraint interpreter, winnowing away
-  // those offers that don't match the validated constraint. The
-  // second phase orders the offers using the specified
-  // preferences. The last phase places the ordered offers into a list 
-  // for returning. At each phase, the cardinality policies specified
-  // in the policies structure determine the number of offers
-  // submitted to each phase. 
 
   void lookup_all_subtypes (const char* type,
 			    CosTradingRepos::ServiceTypeRepository::IncarnationNumber& inc_num,
@@ -206,12 +173,13 @@ private:
   // according to the preferences submitted.
     
   int fill_receptacles (const char* type,
-			 Offer_Queue& ordered_offers,
-			 CORBA::ULong how_many,
-			 const CosTrading::Lookup::SpecifiedProps& desired_props,			 
-			 CosTrading::OfferSeq*& offers,
-			 CosTrading::OfferIterator_ptr& offer_itr,
-			 CORBA::Environment& env)
+                        CORBA::ULong how_many,
+                        const CosTrading::Lookup::SpecifiedProps& desired_props,
+                        TAO_Policies& policies,
+                        TAO_Preference_Interpreter& pref_inter,
+                        CosTrading::OfferSeq& offers,
+                        CosTrading::OfferIterator_ptr& offer_itr,
+                        CORBA::Environment& env)
     TAO_THROW_SPEC ((CosTrading::IllegalPropertyName,
 		    CosTrading::DuplicatePropertyName));
   // This method takes the list of ordered offers and places a number
@@ -259,14 +227,15 @@ private:
   void federated_query (const CosTrading::LinkNameSeq& links,
                         const TAO_Policies& policies,
                         const CosTrading::Admin::OctetSeq& request_id,
+                        TAO_Preference_Interpreter& pref_inter,
 			const char *type,
 			const char *constr,
 			const char *pref,
 			const CosTrading::Lookup::SpecifiedProps& desired_props,
 			CORBA::ULong how_many,
-			CosTrading::OfferSeq_out offers,
-			CosTrading::OfferIterator_out offer_itr,
-			CosTrading::PolicyNameSeq_out limits_applied,
+			CosTrading::OfferSeq& offers,
+			CosTrading::OfferIterator_ptr& offer_itr,
+			CosTrading::PolicyNameSeq& limits_applied,
 			CORBA::Environment& env)
     TAO_THROW_SPEC ((CORBA::SystemException,
 		     CosTrading::IllegalServiceType,
@@ -283,7 +252,11 @@ private:
   // results of the federated queries into a single set of results
   // suitable for returning to the user.  
 
-    // = Disallow these operations.
+  void order_merged_sequence (TAO_Preference_Interpreter& pref_inter,
+                              CosTrading::OfferSeq& offers);
+  // Merge the results from a federated query into the collected results.
+  
+  // = Disallow these operations.
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Lookup<TRADER,TRADER_LOCK_TYPE> &))
   ACE_UNIMPLEMENTED_FUNC (TAO_Lookup (const TAO_Lookup<TRADER, TRADER_LOCK_TYPE> &))
   

@@ -62,14 +62,7 @@ query (const char *type,
 		   CosTrading::DuplicatePropertyName,
 		   CosTrading::DuplicatePolicyName))
 {
-  // Initializing out parameters
-  returned_offers = new CosTrading::OfferSeq;
-  returned_offer_iterator = CosTrading::OfferIterator::_nil ();
-  returned_limits_applied = new CosTrading::PolicyNameSeq;
-  
-  // Get service type map
-  Offer_Database& offer_database = this->trader_.offer_database ();
-
+  // Instantiate a class to help interpret query policies. 
   TAO_Policies policies (this->trader_, in_policies, env);
   TAO_CHECK_ENV_RETURN_VOID (env);
 
@@ -97,7 +90,7 @@ query (const char *type,
   if (link_if != CosTrading::Link::_nil () && trader_name != 0)
     {
       CosTrading::PolicySeq policies_to_forward;
-      policies.copy_to_forward (policies_to_forward, trader_name);      
+      policies.copy_to_forward (policies_to_forward, trader_name);
       this->forward_query (*trader_name,
 			   type,
 			   constraint,
@@ -113,119 +106,33 @@ query (const char *type,
       return;
     }
   
-  // If the type is invalid or unknown, let us know now.
+  // Retrieve the type description struct from the Service Type Repos.
   const TAO_Support_Attributes_Impl& support_attrs =
-    this->trader_.support_attributes ();  
+    this->trader_.support_attributes ();
   CosTrading::TypeRepository_ptr type_repos =
     support_attrs.type_repos ();
   CosTradingRepos::ServiceTypeRepository_ptr rep = 
     CosTradingRepos::ServiceTypeRepository::_narrow (type_repos, env);
   TAO_CHECK_ENV_RETURN_VOID (env);
-  
-  // If type is not found, there is nothing to consider - return.
-  // Else we found the service type....proceed with lookup.
-  // We will store the matched offers in here.
-  Offer_Queue ordered_offers;
+  CosTradingRepos::ServiceTypeRepository::TypeStruct_var
+    type_struct (rep->fully_describe_type (type, env));
+  TAO_CHECK_ENV_RETURN_VOID (env);
+
+  ACE_NEW (returned_offers, CosTrading::OfferSeq);
+
+  // Obtain a reference to the offer database. 
+  Offer_Database& offer_database = this->trader_.offer_database ();  
   
   // Perform the lookup, placing the ordered results in ordered_offers.
-  this->perform_lookup (type,
-			constraint,
-			preferences,
-			offer_database,
-			rep,
-			policies,
-			ordered_offers,
-			returned_limits_applied,
-			env);      
-  TAO_CHECK_ENV_RETURN_VOID (env);
-  
-  // Fill the return sequence and iterator with the bountiful results.
-  CORBA::ULong offers_returned = 
-    this->fill_receptacles (type,
-			    ordered_offers,
-			    how_many,			  
-			    desired_props,
-			    returned_offers,
-			    returned_offer_iterator,
-			    env);
-  TAO_CHECK_ENV_RETURN_VOID (env);
-
-  // The following steps are only appropriate for a linked trader.
-  if (link_if != CosTrading::Link::_nil ())
-    {
-      // Determine if we should perform a federated query, and if so
-      // construct a sequence of links to follow.
-      CosTrading::LinkNameSeq* links = 0;
-      CORBA::Boolean should_follow =
-        this->retrieve_links (policies,
-                              offers_returned,
-                              CosTrading::LinkNameSeq_out (links),
-                              env);
-      TAO_CHECK_ENV_RETURN_VOID (env);
-      
-      if (should_follow && links != 0)
-        {
-          // Perform the sequence of fedrated queries.
-          CosTrading::LinkNameSeq_var links_to_follow (links);
-
-          if (request_id == 0)
-            {
-              CosTrading::Admin_ptr admin_if =
-                this->trader_.trading_components ().admin_if ();
-              request_id = admin_if->request_id_stem (env);
-
-              ACE_GUARD (TRADER_LOCK_TYPE, trader_mon, this->lock_);
-              this->request_ids_.insert (*request_id);
-              TAO_CHECK_ENV_RETURN_VOID (env);
-            }
-          
-          this->federated_query (*links,
-                                 policies,
-                                 *request_id,                                 
-                                 type,
-                                 constraint,
-                                 preferences,
-                                 desired_props,
-                                 how_many,
-                                 returned_offers,
-                                 returned_offer_iterator,
-                                 returned_limits_applied,
-                                 env);
-          TAO_CHECK_ENV_RETURN_VOID (env);
-        }
-    }
-}
-
-template <class TRADER, class TRADER_LOCK_TYPE> void
-TAO_Lookup<TRADER,TRADER_LOCK_TYPE>::
-perform_lookup (const char* type,
-		const char* constraint,
-		const char* preferences,
-		Offer_Database& offer_database,
-		CosTradingRepos::ServiceTypeRepository_ptr rep,		
-		TAO_Policies& policies,
-		Offer_Queue& ordered_offers,
-                CosTrading::PolicyNameSeq_out returned_limits_applied,
-		CORBA::Environment& env)
-  TAO_THROW_SPEC ((CosTrading::IllegalConstraint,
-		   CosTrading::Lookup::IllegalPreference,
-		   CosTrading::Lookup::PolicyTypeMismatch,
-		   CosTrading::Lookup::InvalidPolicyValue,
-		   CosTrading::IllegalServiceType,
-		   CosTrading::UnknownServiceType))
-{    
   // TAO_Offer_Filter -- ensures that we don't consider offers with
   // modifiable or dynamic properties if the Trader doesn't support
-  // them, or the importer has turned them off using policies.
+  // them, or the importer has turned them off using policies. 
   // TAO_Constraint_Validator -- validates the constraint with the
   // property types in the supplied type.
   // TAO_Constraint_Interpreter -- parses the constraint string, and
   // determines whether an offer meets those constraints.
   // TAO_Preference_Interpreter -- parses the preference string and
-  // orders offers according to those constraints.
-  CosTradingRepos::ServiceTypeRepository::TypeStruct_var
-    type_struct (rep->fully_describe_type (type, env));
-  TAO_CHECK_ENV_RETURN_VOID (env);
+  // orders offers according to those constraints.  
   TAO_Offer_Filter offer_filter (type_struct.ptr (), policies, env);
   TAO_CHECK_ENV_RETURN_VOID (env);
   TAO_Constraint_Validator validator (type_struct.ptr ());
@@ -233,24 +140,22 @@ perform_lookup (const char* type,
   TAO_CHECK_ENV_RETURN_VOID (env);
   TAO_Preference_Interpreter pref_inter (validator, preferences, env);
   TAO_CHECK_ENV_RETURN_VOID (env);
-  CORBA::ULong return_card = policies.return_card (env);
-  TAO_CHECK_ENV_RETURN_VOID (env);
-  
+
   // Try to find the map of offers of desired service type.
   this->lookup_one_type (type,
-			 offer_database,
+                         offer_database,
 			 constr_inter,
 			 pref_inter,
 			 offer_filter);
 
-  // If the importer hasn't demanded an exact match search, we search
-  // all the subtypes of the supplied type. NOTE: Only the properties
-  // belonging to the provided type are considered on
-  // subtypes. Additional properties on the subtype are generally
-  // ignored. This is as it should be, consistent with the notions of
-  // type inheritence.
   if (! policies.exact_type_match (env))
     {
+      // If the importer hasn't demanded an exact match search, we search
+      // all the subtypes of the supplied type. NOTE: Only the properties
+      // belonging to the provided type are considered on
+      // subtypes. Additional properties on the subtype are generally
+      // ignored. This is as it should be, consistent with the notions of
+      // type inheritence.      
       TAO_CHECK_ENV_RETURN_VOID (env);
       this->lookup_all_subtypes (type,
 				 type_struct->incarnation,
@@ -262,29 +167,65 @@ perform_lookup (const char* type,
     }
   TAO_CHECK_ENV_RETURN_VOID (env);
 
-  // Pull the matched offers out of the pref_inter in order, and stick 
-  // them in a queue. The offers in the queue will be emptied into
-  // the return sequence and iterator for later purusal by the
-  // importer. Only prepare for the importer no more offers than the
-  // return cardinality default or policy allows.
-  CORBA::ULong num_offers = pref_inter.num_offers ();
-  for (CORBA::ULong i = 0; i < num_offers && i < return_card; i++)
-    {
-      CosTrading::Offer* offer;
-      CosTrading::OfferId offer_id;
-      if (pref_inter.remove_offer (offer_id, offer) == 0)
-	{
-	  Offer_Info offer_info;
-	  offer_info.offer_id_ = offer_id;
-	  offer_info.offer_ptr_ = offer;
-	  ordered_offers.enqueue_tail (offer_info);
-	}
-      else
-	break;
-    }
-
   // Take note of the limits applied in this query.
   returned_limits_applied = offer_filter.limits_applied ();
+  
+  // Fill the return sequence and iterator with the bountiful results.
+  CORBA::ULong offers_returned = 
+    this->fill_receptacles (type,
+			    how_many,
+                            desired_props,
+                            policies,
+                            pref_inter,
+			    *returned_offers.ptr (),
+			    returned_offer_iterator,
+			    env);
+  TAO_CHECK_ENV_RETURN_VOID (env);
+
+  // The following steps are only appropriate for a linked trader.
+  if (link_if != CosTrading::Link::_nil ())
+    {
+      // Determine if we should perform a federated query, and if so
+      // construct a sequence of links to follow.
+      CosTrading::LinkNameSeq_var links;
+      CORBA::Boolean should_follow =
+        this->retrieve_links (policies,
+                              offers_returned,
+                              CosTrading::LinkNameSeq_out (links.out ()),
+                              env);
+      TAO_CHECK_ENV_RETURN_VOID (env);
+      
+      if (should_follow && links->length () != 0)
+        {
+          // Perform the sequence of fedrated queries.
+          if (request_id == 0)
+            {
+              CosTrading::Admin_ptr admin_if =
+                this->trader_.trading_components ().admin_if ();
+              request_id = admin_if->request_id_stem (env);
+              TAO_CHECK_ENV_RETURN_VOID (env);
+              
+              ACE_GUARD (TRADER_LOCK_TYPE, trader_mon, this->lock_);
+              this->request_ids_.insert (*request_id);
+              TAO_CHECK_ENV_RETURN_VOID (env);
+            }
+          
+          this->federated_query (links.in (),
+                                 policies,
+                                 *request_id,
+                                 pref_inter,
+                                 type,
+                                 constraint,
+                                 preferences,
+                                 desired_props,
+                                 how_many,
+                                 *returned_offers.ptr (),
+                                 returned_offer_iterator.ptr (),
+                                 *returned_limits_applied.ptr (),
+                                 env);
+          TAO_CHECK_ENV_RETURN_VOID (env);
+        }
+    }
 }
 
 template <class TRADER, class TRADER_LOCK_TYPE> void
@@ -317,7 +258,7 @@ lookup_one_type (const char* type,
 	  // Shove the offer and its id into the preference
 	  // ordering object, pref_inter.
 	  CosTrading::OfferId offer_id = offer_iter.get_id ();
-	  pref_inter.order_offer (offer_id, offer, evaluator);
+	  pref_inter.order_offer (evaluator, offer, offer_id);
 	  offer_filter.matched_offer ();
 	}
       
@@ -413,10 +354,11 @@ lookup_all_subtypes (const char* type,
 template <class TRADER, class TRADER_LOCK_TYPE> int
 TAO_Lookup<TRADER,TRADER_LOCK_TYPE>::
 fill_receptacles (const char* type,
-		  Offer_Queue& ordered_offers,
-		  CORBA::ULong how_many,		  
-		  const CosTrading::Lookup::SpecifiedProps& desired_props,
-		  CosTrading::OfferSeq*& offers,
+		  CORBA::ULong how_many,
+                  const CosTrading::Lookup::SpecifiedProps& desired_props,
+                  TAO_Policies& policies,
+                  TAO_Preference_Interpreter& pref_inter,
+		  CosTrading::OfferSeq& offers,
 		  CosTrading::OfferIterator_ptr& offer_itr,
 		  CORBA::Environment& env)
   TAO_THROW_SPEC ((CosTrading::IllegalPropertyName,
@@ -433,64 +375,84 @@ fill_receptacles (const char* type,
   // "offer_itr" will be nil.
   // END SPEC
   
-  // Ordered offers iterator.
-  Offer_Queue::ITERATOR ordered_offers_iterator (ordered_offers);
   TAO_Property_Filter prop_filter (desired_props, env);
   TAO_CHECK_ENV_RETURN (env, 0);
-  
+
   // RETURNING: Calculate how many offers go into the sequence
   //  Calculate how many go into the iterator
+
+  CORBA::ULong return_card = policies.return_card (env);
+  TAO_CHECK_ENV_RETURN (env, 0);
+  
   CORBA::ULong i = 0;
-  CORBA::ULong size = ordered_offers.size ();
+  CORBA::ULong size = pref_inter.num_offers ();
   CORBA::ULong offers_in_sequence = (how_many < size) ? how_many : size;
   CORBA::ULong offers_in_iterator = size - offers_in_sequence;
-  CORBA::ULong total_offers = offers_in_sequence + offers_in_iterator;
+
+  // Ensure the total number of offers returned doesn't exceed return_card. 
+  offers_in_sequence =
+    (offers_in_sequence > return_card) ? return_card : offers_in_sequence;
+
+  return_card -= offers_in_sequence;
   
-  offers->length (offers_in_sequence);
+  offers_in_iterator =
+    (offers_in_iterator > return_card) ? return_card : offers_in_iterator;
+
+  CORBA::ULong total_offers = offers_in_sequence + offers_in_iterator; 
+  offers.length (offers_in_sequence);
   
   // Add to the sequence, filtering out the undesired properties.
-  for (i = 0;
-       i < offers_in_sequence;
-       ordered_offers_iterator.advance (), i++)
+  for (i = 0; i < offers_in_sequence; i++)
     {
-      Offer_Info* offer_info_ptr = 0;
-      ordered_offers_iterator.next (offer_info_ptr);
-      CosTrading::Offer& source = *offer_info_ptr->offer_ptr_;
-      CosTrading::Offer& destination = (*offers)[i];
+      CosTrading::Offer* offer = 0;
+      CosTrading::OfferId offer_id = 0;
+      
+      pref_inter.remove_offer (offer, offer_id);
+      CosTrading::Offer& source = *offer;
+      CosTrading::Offer& destination = offers[i];
       prop_filter.filter_offer (source, destination);
 
-      CORBA::string_free (offer_info_ptr->offer_id_);
+      CORBA::string_free (offer_id);
     }
     
-  // Any remaining offers go into iterator
+  // Any remaining offers under the return_card go into iterator
   if (offers_in_iterator > 0)
     {
       // Create an iterator implementation 
-      TAO_Offer_Iterator *oi =
-	this->create_offer_iterator (type, prop_filter);
+      TAO_Offer_Iterator *oi = this->create_offer_iterator (prop_filter);
       offer_itr = oi->_this (env);
+
       TAO_CHECK_ENV_RETURN (env,total_offers - offers_in_iterator);
       
       // Add to the iterator
-      for (i = 0;
-	   i < offers_in_iterator;
-	   ordered_offers_iterator.advance (), i++)
+      for (i = 0; i < offers_in_iterator; i++)
 	{
-	  Offer_Info* offer_info_ptr = 0;
-	  ordered_offers_iterator.next (offer_info_ptr);      
-	  oi->add_offer (offer_info_ptr->offer_id_,
-			 offer_info_ptr->offer_ptr_);
+          CosTrading::Offer* offer = 0;
+          CosTrading::OfferId offer_id = 0;
+          
+          pref_inter.remove_offer (offer, offer_id);
+	  oi->add_offer (offer_id, offer);
 	}
     }
 
+  // Clear the preference intrerpreter of superfluous items.
+  int num_offers = pref_inter.num_offers ();
+  for (i = 0; i < num_offers; i++)
+    {
+      CosTrading::Offer* offer = 0;
+      CosTrading::OfferId offer_id = 0;
+      
+      pref_inter.remove_offer (offer, offer_id);
+      CORBA::string_free (offer_id);
+    }
+  
   return total_offers;
 }
 
 template <class TRADER, class TRADER_LOCK_TYPE>
 TAO_Offer_Iterator *
 TAO_Lookup<TRADER,TRADER_LOCK_TYPE>::
-create_offer_iterator (const char *type,
-		       const TAO_Property_Filter& pfilter)
+create_offer_iterator (const TAO_Property_Filter& pfilter)
 {
   // This is the factory method that creates the appropriate type of
   // offer iterator. If there's no Register interface, then we can
@@ -519,10 +481,11 @@ create_offer_iterator (const char *type,
 }
 
 template <class TRADER, class TRADER_LOCK_TYPE> CORBA::Boolean
-TAO_Lookup<TRADER,TRADER_LOCK_TYPE>::retrieve_links (TAO_Policies& policies,
-				    CORBA::ULong offers_returned,
-				    CosTrading::LinkNameSeq_out links,
-				    CORBA::Environment& _env)
+TAO_Lookup<TRADER,TRADER_LOCK_TYPE>::
+retrieve_links (TAO_Policies& policies,
+                CORBA::ULong offers_returned,
+                CosTrading::LinkNameSeq_out links,
+                CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException, 
 		   CosTrading::Lookup::PolicyTypeMismatch))
 {
@@ -546,12 +509,13 @@ TAO_Lookup<TRADER,TRADER_LOCK_TYPE>::retrieve_links (TAO_Policies& policies,
         this->trader_.trading_components ().link_if ();
 
       links = link_if->list_links (_env);
-      TAO_CHECK_ENV_RETURN (_env, should_follow);
+      TAO_CHECK_ENV_RETURN (_env, CORBA::B_FALSE);      
       
       // Determine which of the links registered with the Link
       // interface are suitable to follow.
       CORBA::ULong i = 0, j = 0,
-        length = links->length ();      
+        length = links->length ();
+
       for (i = 0; i < length; i++)
         {
           // Grab the link information.
@@ -589,14 +553,15 @@ TAO_Lookup<TRADER,TRADER_LOCK_TYPE>::
 federated_query (const CosTrading::LinkNameSeq& links,
                  const TAO_Policies& policies,
                  const CosTrading::Admin::OctetSeq& request_id,
+                 TAO_Preference_Interpreter& pref_inter,
 		 const char *type,
 		 const char *constr,
 		 const char *pref,
 		 const CosTrading::Lookup::SpecifiedProps& desired_props,
 		 CORBA::ULong how_many,
-		 CosTrading::OfferSeq_out offers,
-		 CosTrading::OfferIterator_out offer_iter,
-		 CosTrading::PolicyNameSeq_out limits,
+		 CosTrading::OfferSeq& offers,
+		 CosTrading::OfferIterator_ptr& offer_iter,
+		 CosTrading::PolicyNameSeq& limits,
 		 CORBA::Environment& _env) 
   TAO_THROW_SPEC ((CORBA::SystemException,
 		   CosTrading::IllegalServiceType,
@@ -611,12 +576,10 @@ federated_query (const CosTrading::LinkNameSeq& links,
 		   CosTrading::DuplicatePolicyName))
 {
   // The general idea here is this: We've assembled a number of links
-  // to follow, and we'll query each of them in turn. When we've
-  // assembled <return_card> number of offers, we've hit the ceiling
-  // and we back out. On each query we adjust the policies for the new 
-  // trader by reducing the return_card, hop_count, etc..., and merge
-  // the results from the new query with the results from the previous 
-  // queries.
+  // to follow, and we'll query each of them in turn. On each query we
+  // adjust the policies for the new trader by reducing the hop_count,
+  // changing the link_follow_rule etc..., and merge the results from
+  // the new query with the results from the previous queries.
   
   // We'll need the link and admin interfaces for this part of the
   // federated query. It's ok to get the admin interface without
@@ -674,31 +637,39 @@ federated_query (const CosTrading::LinkNameSeq& links,
                                 pref,
                                 policies_to_pass,
                                 desired_props,
-                                how_many - offers->length (),
+                                how_many - offers.length (),
                                 CosTrading::OfferSeq_out (out_offers),
                                 CosTrading::OfferIterator_out (out_offer_iter),
                                 CosTrading::PolicyNameSeq_out (out_limits),
                                 TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 
+          int j = 0;
           CosTrading::OfferSeq_var out_offers_var (out_offers);
           CosTrading::PolicyNameSeq_var out_limits_var (out_limits);
-          
-	  // Merge the results.
-          int j = 0;
-          CORBA::ULong offset = offers->length ();
-	  offers->length (out_offers->length () + offset);
-	  offer_iter_collection->add_offer_iterator (out_offer_iter);
-	  for (j = out_offers->length () - 1; j >= 0; j--)
-	    offers[j + offset] = out_offers_var[j];
-          
-	  // Concatenate the limits applied.
-	  offset = limits->length ();
-	  limits->length (out_limits->length () + offset);
 
-          for (j = out_limits->length () - 1; j >= 0; j--)
-            limits[j + offset] = out_limits_var[j];
-	}
+          // Add another iterator to the collection.
+          if (out_offer_iter != CosTrading::OfferIterator::_nil ())
+            offer_iter_collection->add_offer_iterator (out_offer_iter);
+          
+          // Concatenate the limits applied.
+          CORBA::ULong source_length = out_limits->length (),
+            target_length = limits.length (),
+            total_length = source_length + target_length;
+
+          limits.length (total_length);          
+          for (j = 0; j < source_length; j++)
+            limits[j + target_length] = out_limits_var[j];
+
+          // Concatenate the sequence offers.
+          source_length = out_offers->length ();
+          target_length = offers.length ();
+          total_length = source_length + target_length;
+
+          offers.length (total_length);          
+          for (j = 0; j < source_length; j++)
+            offers[j + target_length] = out_offers_var[j];
+        }
       TAO_CATCHANY
 	{
           TAO_TRY_ENV.print_exception ("TAO_Lookup::federated_query");
@@ -706,8 +677,41 @@ federated_query (const CosTrading::LinkNameSeq& links,
       TAO_ENDTRY;
     }
 
+  // Sort the sequence in preference order.
+  this->order_merged_sequence (pref_inter, offers);
+  
   // Return the collection of offer iterators.
   offer_iter = offer_iter_collection->_this (_env);
+}
+
+template <class TRADER, class TRADER_LOCK_TYPE> void
+TAO_Lookup<TRADER,TRADER_LOCK_TYPE>::
+order_merged_sequence (TAO_Preference_Interpreter& pref_inter,
+                       CosTrading::OfferSeq& offers)
+{
+  int j = 0;
+  CORBA::ULong length = offers.length ();
+
+  // Grab ownership of the offers already in the target sequence.
+  CosTrading::Offer* target_buf = offers.get_buffer (CORBA::B_TRUE);
+
+  // Order the sequence.
+  for (j = 0; j < length; j++)
+    pref_inter.order_offer (&target_buf[j]);
+
+  // Reallocate the sequence.
+  offers.length (length);
+
+  // Copy in the ordered offers.
+  for (j = 0; j < length; j++)
+    {
+      CosTrading::Offer* offer = 0;
+      pref_inter.remove_offer (offer);
+      offers[j] = *offer;
+    }
+
+  // Release the orphaned memory.
+  CosTrading::OfferSeq::freebuf (target_buf);
 }
 
 template <class TRADER, class TRADER_LOCK_TYPE> void

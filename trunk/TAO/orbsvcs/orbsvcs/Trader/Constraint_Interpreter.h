@@ -132,21 +132,23 @@ public:
   ~TAO_Preference_Interpreter(void);
   // Destructor
 
-  void order_offer (CosTrading::OfferId offer_id,
-		    CosTrading::Offer* offer);
+  void order_offer (CosTrading::Offer* offer,
+                    CosTrading::OfferId offer_id = 0);
   
-  void order_offer (CosTrading::OfferId offer_id,
-		    CosTrading::Offer* offer,
-		    TAO_Constraint_Evaluator& evaluator);
+  void order_offer (TAO_Constraint_Evaluator& evaluator,
+                    CosTrading::Offer* offer,
+                    CosTrading::OfferId offer_id = 0);
   // Evaluate the offer, and order it internally based on the results
   // of the evaluation.
 
-  int remove_offer (CosTrading::OfferId& offer_id,
-		    CosTrading::Offer*& offer);
+  int remove_offer (CosTrading::Offer*& offer,
+                    CosTrading::OfferId& offer_id);
+  
+  int remove_offer (CosTrading::Offer*& offer);
   // Remove the next offer. The offer returned will be the next in the 
-  // ordering determined by the preference string. 
-
-  int num_offers(void);
+  // ordering determined by the preference string.
+  
+  int num_offers (void);
   // Return the number of offers remaining in the ordering.
 
 private:
