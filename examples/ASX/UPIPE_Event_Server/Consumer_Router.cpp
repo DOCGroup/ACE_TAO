@@ -44,7 +44,10 @@ Consumer_Router::open (void *)
     return -1;
 
   // Make this an active object.
-//  return this->activate (options.t_flags ());
+  //   return this->activate (options.t_flags ());
+
+  // Until that's done, return 1 to indicate that the object wasn't activated.
+  return 1;
 }
 
 int
