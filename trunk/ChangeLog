@@ -1,3 +1,13 @@
+Fri Oct 13 22:34:59 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst:
+
+	  Added new TAO/tests/RTCORBA/Client_Protocol test to the list.
+	  Removed TAO/tests/Endpoint_Per_Priority because
+	  TAO::Client_Priority_Policy is now disabled in builds by
+	  default. Enabled TAO/tests/RTCORBA/Server_Protocol for linux
+	  builds (it was disabled for some reason).
+
 Fri Oct 13 19:12:31 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/Malloc_T.h: Added #include "ace/Malloc.h" because the definition
@@ -28,7 +38,7 @@ Fri Oct 13 13:57:40 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 	* ace/Process_Manager.h :
 	* ace/Process_Manager.cpp :
 
-	* ace/Service_Config.h : 
+	* ace/Service_Config.h :
 	* ace/Service_Config.cpp:
 
           Removed dependency of Service_Config on Process_Manager by
@@ -36,7 +46,7 @@ Fri Oct 13 13:57:40 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  Object_Manager when it is instantiated. This way we need not call
           ACE_Process_Manager::close_singleton () in Service_Config
 	  implementation.
-	
+
 Mon Oct  9 10:34:18 2000  Ossama Othman  <ossama@uci.edu>
 
 	* configure.in:
@@ -46,13 +56,13 @@ Mon Oct  9 10:34:18 2000  Ossama Othman  <ossama@uci.edu>
 
 Fri Oct 13 11:41:29 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* ace/Makefile.bor (OBJFILES): 
-	* ace/Makefile.am (libACE_Utils_la_SOURCES): 
+	* ace/Makefile.bor (OBJFILES):
+	* ace/Makefile.am (libACE_Utils_la_SOURCES):
 	  Updated to include the new files.
 
 	* examples/Shared_Malloc/test_position_independent_malloc.cpp:
 	  Included a header file.
-	  
+
 Fri Oct 13 11:43:56 2000  David L. Levine <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: updated supported platforms list.
