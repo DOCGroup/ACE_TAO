@@ -10,6 +10,11 @@ PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.3
 
 - (Steve) Wide-char functionality on POSIX (Linux, etc.)
 
+- (OCI) TSS memory leak fixes (Bug 1542)
+
+  ACE - Initially Fri Aug 13 15:26:40 2004  Dale Wilson  <wilson_d@ociweb.com>
+        with many others following on.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.1 and ACE-5.4.2
 ====================================================
 

@@ -20,15 +20,24 @@ PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
 
 - (OCI) Naming Service implementation fixes
 
+  Wed Aug 25 16:03:29 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+
 - (OCI) Wait on LF No Upcalls wait strategy
+
+  Thu Aug 19 16:49:24 2004  Chris Cleeland  <cleeland_c@ociweb.com>
 
 - (OCI) Parse-magic-bytes re-integration
 
-- (OCI) TSS memory leak fixes (Bug 1542)
+  Chris/Bala--need to coordinate.  Hopefully week of 8/30?
 
 - (OCI) [hopeful] Notification Service EventReliability and ConnectionReliability QoS
 
+  Dale Wilson, Ongoing.
+
 - (OCI) better compatibility with JDK orb
+
+  Dale Wilson will do this week of 8/30.
+
 
 USER VISIBLE CHANGES THAT WILL BE VISIBLE BETWEEN TAO-1.4.1 and TAO-1.4.2
 ====================================================
