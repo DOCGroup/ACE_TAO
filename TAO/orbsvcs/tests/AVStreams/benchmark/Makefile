@@ -112,6 +112,18 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
@@ -183,15 +195,7 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.i \
  $(ACE_ROOT)/ace/Svc_Handler.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -314,6 +318,12 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/MessagingS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
@@ -327,6 +337,13 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
+ $(TAO_ROOT)/tao/TAOS.h \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/TAOS_T.h \
+ $(TAO_ROOT)/tao/TAOS_T.i \
+ $(TAO_ROOT)/tao/TAOS_T.cpp \
+ $(TAO_ROOT)/tao/TAOS.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
@@ -339,6 +356,7 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
+ $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
@@ -375,6 +393,21 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/ATM_Addr.i \
  $(ACE_ROOT)/ace/Process.h \
  $(ACE_ROOT)/ace/Process.i \
+ $(ACE_ROOT)/ace/SOCK_CODgram.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
+ $(ACE_ROOT)/ace/SOCK_CODgram.i \
+ $(ACE_ROOT)/ace/Connector.h \
+ $(ACE_ROOT)/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.cpp \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Stream.h \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
@@ -400,43 +433,19 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Trader.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/AV/sfp.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/sfpC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/sfpC.i \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/SOCK_IO.h \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Time_Value.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.cpp \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Context.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
@@ -486,6 +495,18 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -561,15 +582,7 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.i \
  $(ACE_ROOT)/ace/Svc_Handler.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -718,6 +731,12 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/MessagingS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
@@ -731,6 +750,13 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
+ $(TAO_ROOT)/tao/TAOS.h \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/TAOS_T.h \
+ $(TAO_ROOT)/tao/TAOS_T.i \
+ $(TAO_ROOT)/tao/TAOS_T.cpp \
+ $(TAO_ROOT)/tao/TAOS.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
@@ -743,6 +769,7 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
+ $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
@@ -768,7 +795,7 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Context.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
@@ -779,6 +806,13 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/ATM_Addr.i \
  $(ACE_ROOT)/ace/Process.h \
  $(ACE_ROOT)/ace/Process.i \
+ $(ACE_ROOT)/ace/Connector.h \
+ $(ACE_ROOT)/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.cpp \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(TAO_ROOT)/tao/TAO.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
@@ -795,7 +829,6 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
- $(TAO_ROOT)/tao/TAO.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
@@ -805,39 +838,20 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Trader.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/AV/sfp.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/sfpC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/sfpC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.cpp \
  client.h \
  $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ARGV.i \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
  child.h \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h
 .obj/child.o .obj/child.so .shobj/child.o .shobj/child.so: child.cpp child.h \
@@ -884,6 +898,18 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -959,15 +985,7 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.i \
  $(ACE_ROOT)/ace/Svc_Handler.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -1116,6 +1134,12 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/MessagingS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
@@ -1129,6 +1153,13 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
+ $(TAO_ROOT)/tao/TAOS.h \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/TAOS_T.h \
+ $(TAO_ROOT)/tao/TAOS_T.i \
+ $(TAO_ROOT)/tao/TAOS_T.cpp \
+ $(TAO_ROOT)/tao/TAOS.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
@@ -1141,6 +1172,7 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
+ $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
@@ -1166,7 +1198,7 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Context.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
@@ -1177,6 +1209,13 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/ATM_Addr.i \
  $(ACE_ROOT)/ace/Process.h \
  $(ACE_ROOT)/ace/Process.i \
+ $(ACE_ROOT)/ace/Connector.h \
+ $(ACE_ROOT)/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.cpp \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(TAO_ROOT)/tao/TAO.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
@@ -1193,7 +1232,6 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
- $(TAO_ROOT)/tao/TAO.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
@@ -1203,33 +1241,14 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Trader.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/AV/sfp.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/sfpC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/sfpC.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.cpp \
  client.h \
  $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ARGV.i \
@@ -1279,6 +1298,18 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -1354,15 +1385,7 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.i \
  $(ACE_ROOT)/ace/Svc_Handler.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
@@ -1511,6 +1534,12 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/MessagingS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
@@ -1524,6 +1553,13 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
+ $(TAO_ROOT)/tao/TAOS.h \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/TAOS_T.h \
+ $(TAO_ROOT)/tao/TAOS_T.i \
+ $(TAO_ROOT)/tao/TAOS_T.cpp \
+ $(TAO_ROOT)/tao/TAOS.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
@@ -1536,6 +1572,7 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
+ $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
@@ -1561,7 +1598,7 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Context.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
@@ -1572,6 +1609,13 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/ATM_Addr.i \
  $(ACE_ROOT)/ace/Process.h \
  $(ACE_ROOT)/ace/Process.i \
+ $(ACE_ROOT)/ace/Connector.h \
+ $(ACE_ROOT)/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.cpp \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(TAO_ROOT)/tao/TAO.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
@@ -1588,7 +1632,6 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
- $(TAO_ROOT)/tao/TAO.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
@@ -1598,33 +1641,14 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Trader.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingReposS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/AV/sfp.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/sfpC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/sfpC.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.cpp \
  client.h \
  $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ARGV.i \
