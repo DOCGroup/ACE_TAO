@@ -1,3 +1,8 @@
+Sat Jul 17 11:17:18 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+  
+	* tao/CDR_Stream.cpp
+	* tao/CDR_Stream.h : Integrated Carlos's memory leak fixes from the main branch. 
+
 Sat Jul 10 08:01:36 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: THANKS instead of README.
