@@ -228,7 +228,8 @@ ifdef purify
   #### -best-effort is undocumented but supported, and seems
   #### to help avoid occasional link failure.
   #### SIGINT is used by the ACE Thread_Manager_Test.
-  PRELINK += purify -best-effort -cache-dir=/tmp/purifycache -chain-length=20 \
+  PRELINK += purify -best-effort -chain-length=20 \
+             -cache-dir=/tmp/purifycache-$(LOGNAME)-$(CXX) \
              -fds-inuse-at-exit=no -ignore-signals=SIGINT -inuse-at-exit \
              -max_threads=100
 endif # purify
@@ -241,7 +242,8 @@ ifdef quantify
   #### You might want to adjust the Quantify options below.
   #### -best-effort is undocumented but supported, and seems
   #### to help avoid occasional link failure.
-  PRELINK += quantify -best-effort -cache-dir=/tmp/purifycache -max_threads=100
+  PRELINK += quantify -best-effort -max_threads=100 \
+             -cache-dir=/tmp/purifycache-$(LOGNAME)-$(CXX)
 endif # quantify
 
 
