@@ -1,3 +1,15 @@
+Tue Jul 13 18:41:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+	  Modified CDR extraction operator to handle the rather unique
+	  case where a union member is a sequence typedef included from
+	  another file. The union's extraction operator creates a
+	  temporary, which means the visitor needs type info from the
+	  sequence node, which it now gets from the alias node in its 
+	  context, if necessary. Thanks to 
+	  Dwayne Burns <dburns@isrglobal.com> for sending in the
+	  example.
+
 Tue Jul 13 17:38:20 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp: replaced new
