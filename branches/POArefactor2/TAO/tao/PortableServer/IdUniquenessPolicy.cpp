@@ -41,32 +41,32 @@ namespace TAO
         case ::PortableServer::UNIQUE_ID :
           {
             this->value_ =
-              ACE_Dynamic_Service<IdUniquenessPolicyValue>::instance ("Unique_IdUniqueness_Policy");
+              ACE_Dynamic_Service<IdUniquenessPolicyValue>::instance ("IdUniquenessPolicyValueUnique");
 
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ACE_TEXT("dynamic Unique_IdUniqueness_Policy Service_Object *")
-                  ACE_TEXT("TAO_PortableServer:_make_Unique_IdUniqueness_Policy()"));
+                  ACE_TEXT("dynamic IdUniquenessPolicyValueUnique Service_Object *")
+                  ACE_TEXT("TAO_PortableServer:_make_IdUniquenessPolicyValueUnique()"));
 
                 this->value_ =
-                  ACE_Dynamic_Service<IdUniquenessPolicyValue>::instance ("Unique_IdUniqueness_Policy");
+                  ACE_Dynamic_Service<IdUniquenessPolicyValue>::instance ("IdUniquenessPolicyValueUnique");
               }
             break;
           }
         case ::PortableServer::MULTIPLE_ID :
           {
             this->value_ =
-              ACE_Dynamic_Service<IdUniquenessPolicyValue>::instance ("Multiple_IdUniqueness_Policy");
+              ACE_Dynamic_Service<IdUniquenessPolicyValue>::instance ("IdUniquenessPolicyValueMultiple");
 
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ACE_TEXT("dynamic Multiple_IdUniqueness_Policy Service_Object *")
-                  ACE_TEXT("TAO_PortableServer:_make_Multiple_IdUniqueness_Policy()"));
+                  ACE_TEXT("dynamic IdUniquenessPolicyValueMultiple Service_Object *")
+                  ACE_TEXT("TAO_PortableServer:_make_IdUniquenessPolicyValueMultiple()"));
 
                 this->value_ =
-                  ACE_Dynamic_Service<IdUniquenessPolicyValue>::instance ("Multiple_IdUniqueness_Policy");
+                  ACE_Dynamic_Service<IdUniquenessPolicyValue>::instance ("IdUniquenessPolicyValueMultiple");
               }
 
             break;

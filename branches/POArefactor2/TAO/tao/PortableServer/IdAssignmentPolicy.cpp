@@ -57,16 +57,16 @@ namespace TAO
         case ::PortableServer::SYSTEM_ID :
           {
             this->value_ =
-              ACE_Dynamic_Service<IdAssignmentPolicyValue>::instance ("System_IdAssignment_Policy");
+              ACE_Dynamic_Service<IdAssignmentPolicyValue>::instance ("IdAssignmentPolicyValueSystem");
 
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ACE_TEXT("dynamic System_IdAssignment_Policy Service_Object *")
-                  ACE_TEXT("TAO_PortableServer:_make_System_IdAssignment_Policy()"));
+                  ACE_TEXT("dynamic IdAssignmentPolicyValueSystem Service_Object *")
+                  ACE_TEXT("TAO_PortableServer:_make_IdAssignmentPolicyValueSystem()"));
 
                 this->value_ =
-                  ACE_Dynamic_Service<IdAssignmentPolicyValue>::instance ("System_IdAssignment_Policy");
+                  ACE_Dynamic_Service<IdAssignmentPolicyValue>::instance ("IdAssignmentPolicyValueSystem");
               }
 
             break;

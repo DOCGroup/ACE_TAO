@@ -41,32 +41,32 @@ namespace TAO
         case ::PortableServer::TRANSIENT :
           {
             this->value_ =
-              ACE_Dynamic_Service<LifespanPolicyValue>::instance ("Transient_Lifespan_Policy");
+              ACE_Dynamic_Service<LifespanPolicyValue>::instance ("LifespanPolicyValueTransient");
 
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ACE_TEXT("dynamic Transient_Lifespan_Policy Service_Object *")
-                  ACE_TEXT("TAO_PortableServer:_make_Transient_Lifespan_Policy()"));
+                  ACE_TEXT("dynamic LifespanPolicyValueTransient Service_Object *")
+                  ACE_TEXT("TAO_PortableServer:_make_LifespanPolicyValueTransient()"));
 
                 this->value_ =
-                  ACE_Dynamic_Service<LifespanPolicyValue>::instance ("Transient_Lifespan_Policy");
+                  ACE_Dynamic_Service<LifespanPolicyValue>::instance ("LifespanPolicyValueTransient");
               }
             break;
           }
         case ::PortableServer::PERSISTENT :
           {
             this->value_ =
-              ACE_Dynamic_Service<LifespanPolicyValue>::instance ("Persistent_Lifespan_Policy");
+              ACE_Dynamic_Service<LifespanPolicyValue>::instance ("LifespanPolicyValuePersistent");
 
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ACE_TEXT("dynamic Persistent_Lifespan_Policy Service_Object *")
-                  ACE_TEXT("TAO_PortableServer:_make_Persistent_Lifespan_Policy()"));
+                  ACE_TEXT("dynamic LifespanPolicyValuePersistent Service_Object *")
+                  ACE_TEXT("TAO_PortableServer:_make_LifespanPolicyValuePersistent()"));
 
                 this->value_ =
-                  ACE_Dynamic_Service<LifespanPolicyValue>::instance ("Persistent_Lifespan_Policy");
+                  ACE_Dynamic_Service<LifespanPolicyValue>::instance ("LifespanPolicyValuePersistent");
               }
 
             break;

@@ -1,3 +1,14 @@
+Tue Nov 30 15:43:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.cpp (create_POA_i(:
+          Fixed possible leak of POAManager when create_POA_i fails.
+
+        * tao/PortableServer/*.{h,cpp}:
+          Updated all classnames for policy values so that things are
+          consistent. Made the strategy implementations that don't contain
+          data loadable with svc.conf in such a way that we only have one
+          instance for all POA's.
+
 Mon Nov 29 18:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/PortableServer.cpp:

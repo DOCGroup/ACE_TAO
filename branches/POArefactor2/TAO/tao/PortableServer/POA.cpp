@@ -411,8 +411,7 @@ TAO_POA::create_POA_i (const char *adapter_name,
   // created and associated with the new POA. Otherwise, the specified
   // POAManager object is associated with the new POA. The POAManager
   // object can be obtained using the attribute name the_POAManager.
-
-  TAO_POA_Manager *tao_poa_manager = 0;
+  TAO_POA_Manager* tao_poa_manager = 0;
   if (CORBA::is_nil (poa_manager))
     {
       ACE_NEW_THROW_EX (tao_poa_manager,
@@ -425,11 +424,18 @@ TAO_POA::create_POA_i (const char *adapter_name,
       tao_poa_manager = dynamic_cast <TAO_POA_Manager *>(poa_manager);
     }
 
+  PortableServer::POAManager_var safe_poa_manager = tao_poa_manager;
+
   TAO_POA *poa = this->create_POA_i (adapter_name,
                                      *tao_poa_manager,
                                      tao_policies
                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+
+  // Release the POA_Manager_var since we got here without error.  The
+  // TAO_POA object takes ownership of the POA_Manager object
+  // (actually it shares the ownership with its peers).
+  (void) safe_poa_manager._retn ();
 
   return PortableServer::POA::_duplicate (poa);
 }
