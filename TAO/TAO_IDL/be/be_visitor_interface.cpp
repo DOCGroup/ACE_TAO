@@ -1016,6 +1016,9 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "*_tao_elem = " << node->name () << "::_narrow (_tao_obj, _tao_env);"
       << be_nl
       << "CORBA::release (_tao_obj);" << be_nl
+      << "((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), "
+      << "_tao_elem, 1, _tao_env);"
+      << be_nl
       << "if (_tao_env.exception ()) return 0; // narrow failed" << be_uidt_nl
       << "}" << be_nl
       << "return 1;" << be_uidt_nl
@@ -1759,7 +1762,7 @@ int be_visitor_interface_collocated_ss::visit_interface (be_interface *node)
 
   if (node->defined_in ())
     {
-      be_decl* scope = 
+      be_decl* scope =
 	be_scope::narrow_from_scope (node->defined_in())->decl ();
 
       *os << ": ACE_NESTED_CLASS ("
@@ -1784,7 +1787,7 @@ int be_visitor_interface_collocated_ss::visit_interface (be_interface *node)
             be_interface::narrow_from_decl (node->inherits()[i]);
 	  if (parent->defined_in ())
 	    {
-	      be_decl* scope = 
+	      be_decl* scope =
 		be_scope::narrow_from_scope (parent->defined_in())->decl ();
 
 	      *os << "  ACE_NESTED_CLASS ("
