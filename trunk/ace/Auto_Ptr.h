@@ -22,20 +22,20 @@
 #include "ace/ACE.h"
 
 template <class X>
-class auto_ptr 
+class auto_basic_ptr 
   // = TITLE
   //     Implements the draft C++ standard auto_ptr abstraction.
+  //     This class allows one to work on non-object (basic) types
 {
 public:
   // = Initialization and termination methods
-  auto_ptr (X *p = 0);
-  auto_ptr (auto_ptr<X> &ap);
-  ~auto_ptr (void);
-  void operator= (auto_ptr<X> &rhs);
+  auto_basic_ptr (X *p = 0);
+  auto_basic_ptr (auto_basic_ptr<X> &ap);
+  ~auto_basic_ptr (void);
+  void operator= (auto_basic_ptr<X> &rhs);
 
   // = Accessor methods.
   X &operator *() const;
-  X *operator-> () const;
   X *get (void) const;
   X *release (void);
   X *reset (X *p);
@@ -52,22 +52,35 @@ private:
   X *p_;
 };
 
+template <class X>
+class auto_ptr : public auto_basic_ptr <X>
+  // = TITLE
+  //     Implements the draft C++ standard auto_ptr abstraction.
+{
+public:
+  // = Initialization and termination methods
+  auto_ptr (X *p = 0);
+
+  X *operator-> () const;  
+};
+
+
 template<class X>
-class auto_array_ptr 
+class auto_basic_array_ptr 
   // = TITLE
   //     Implements an extension to the draft C++ standard auto_ptr
-  //     abstraction.
+  //     abstraction.  This class allows one to work on non-object
+  //     (basic) types
 {
 public:
   // = Initialization and termination methods.
-  auto_array_ptr (X *p = 0);
-  auto_array_ptr (auto_array_ptr<X> &ap);
-  ~auto_array_ptr (void);
-  void operator= (auto_array_ptr<X> &rhs);
+  auto_basic_array_ptr (X *p = 0);
+  auto_basic_array_ptr (auto_basic_array_ptr<X> &ap);
+  ~auto_basic_array_ptr (void);
+  void operator= (auto_basic_array_ptr<X> &rhs);
 
   // = Accessor methods.
   X &operator* ();
-  X *operator-> ();
   X &operator[] (int i);
   X operator[] (int i) const;
   X *get (void) const;
@@ -84,6 +97,19 @@ public:
 
 private:
   X *p_;
+};
+
+template<class X>
+class auto_array_ptr : public auto_basic_array_ptr 
+  // = TITLE
+  //     Implements an extension to the draft C++ standard auto_ptr
+  //     abstraction.
+{
+public:
+  // = Initialization and termination methods.
+  auto_array_ptr (X *p = 0);
+
+  X *operator-> ();
 };
 
 #if defined (__ACE_INLINE__)

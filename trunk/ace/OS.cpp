@@ -1988,17 +1988,15 @@ ACE_OS::fork_exec (char *argv[])
 #if defined (ACE_WIN32)
   ACE_ARGV argv_buf (argv);
 
-  LPTSTR buf = (LPTSTR) ACE_WIDE_STRING (argv_buf.buf ());  
-
-  if (buf != 0)
+  if (argv_buf.buf () != 0)
     {
       PROCESS_INFORMATION process_info;
       STARTUPINFO startup_info;
       ACE_OS::memset ((void *) &startup_info, 0, sizeof startup_info);
       startup_info.cb = sizeof startup_info;
-
+      
       if (::CreateProcess (NULL,
-			   buf,
+			   (LPTSTR) ACE_WIDE_STRING (argv_buf.buf ()),
 			   NULL, // No process attributes.
 			   NULL,  // No thread attributes.
 			   TRUE, // Allow handle inheritance.

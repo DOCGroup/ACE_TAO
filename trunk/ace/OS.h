@@ -3513,12 +3513,30 @@ private:
 // These need to come here to avoid problems with circular dependencies.
 #include "ace/Log_Msg.h"
 
+
+// The following are some insane macros that are useful in cases when
+// one has to have a string in a certain format.  Both of these macros
+// allow the user to create a temporary copy. If the user needs to
+// keep this temporary string around, they must do some sort of strdup
+// on the temporary string.
+//
+// The ACE_WIDE_STRING macro allows the user to create a temporary
+// representation of an ASCII string as a WIDE string.
+//
+// The ACE_MULTIBYTE_STRING macro allows the user to create a
+// temporary representation of a WIDE string as an ASCII string. Note
+// that some data may be lost in this conversion.
+
 #if defined (UNICODE)
+#include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
-#define ACE_WIDE_STRING(ASCII) \
-ACE_WString (ASCII).fast_rep ()
+#define ACE_WIDE_STRING(ASCII_STRING) \
+ACE_WString (ASCII_STRING).fast_rep ()
+#define ACE_MULTIBYTE_STRING(WIDE_STRING) \
+auto_basic_array_ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
 #else
-#define ACE_WIDE_STRING(ASCII) ASCII
+#define ACE_WIDE_STRING(ASCII_STRING) ASCII_STRING
+#define ACE_MULTIBYTE_STRING(WIDE_STRING) WIDE_STRING
 #endif /* UNICODE */
 
 #endif  /* ACE_OS_H */

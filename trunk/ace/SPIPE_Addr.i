@@ -7,10 +7,21 @@
 
 // Transform the current address into string format. 
 
+#if defined (UNICODE)
 ACE_INLINE int
-ACE_SPIPE_Addr::addr_to_string (LPTSTR s, size_t len) const
+ACE_SPIPE_Addr::addr_to_string (wchar_t *s, size_t len) const
 {
   ACE_OS::strncpy (s, this->SPIPE_addr_.rendezvous_, len);
+  return 0;
+}
+#endif /* UNICODE */
+
+ACE_INLINE int
+ACE_SPIPE_Addr::addr_to_string (char *s, size_t len) const
+{
+  ACE_OS::strncpy (s, 
+		   ACE_MULTIBYTE_STRING (this->SPIPE_addr_.rendezvous_), 
+		   len);
   return 0;
 }
 
