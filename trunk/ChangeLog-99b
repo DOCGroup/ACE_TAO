@@ -3,6 +3,8 @@ Tue Apr 06 15:14:29 1999  David L. Levine  <levine@cs.wustl.edu>
         * ace/Basic_Types.h:  added ACE_UINT64_LITERAL for platforms
           with ACE_LACKS_U_LONGLONG_T.
 
+        * tests/Basic_Types_Test.cpp:  added test of ACE_UINT64_LITERAL.
+
 Tue Apr 06 14:54:56 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/Message_Queue_Test.cpp (performance_test):
