@@ -28,3 +28,18 @@ these benefits:
 * PACE (on most platforms) does not require the use of multiple
   inheritance, static objects, exception handling, or other C++
   language constructs that impair code size and/or run-time performance.
+
+
+PACE also insulates applications from the personalities of operating
+systems.  For example:
+
+* SunOS 5.7's intro (3) man page states that _POSIX_PTHREAD_SEMANTICS
+  and _REENTRANT flags are automatically turned on by defining
+  _POSIX_C_SOURCE flag with a value greater than or equal to 199506L.
+  However, that doesn't appear to happen, so PACE does it.
+
+* On LynxOS 3.1.0 and Compaq Tru64, several POSIX functions prototypes
+  are missing const qualifiers.  PACE provides the proper function
+  prototypes (and its implementation casts as necessary for
+  compatibility).
+
