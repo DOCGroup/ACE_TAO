@@ -1,13 +1,21 @@
+Tue Jan 15 14:02:04 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup.bor:
+	* orbsvcs/orbsvcs/PortableGroup.rc:
+          Added resource files for the PortableGroup library.  Thanks
+	  to Johnny Willemsen <johnny_willemsen@planet.nl> for pointing
+	  this out.
+
 Tue Jan 15 11:50:37 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* utils/nslist/nsdel: There were 2 problems with nsdel:
 	  1. difficult to remove subcontexts
 	  2. not possible to remove contexts where the name.kind is not null
- 
+
           We've now fixe this problem so it's possible to do the following:
 	  usage example nsdel --name com/sun/server/app1.service
 	  usage example nsdel --name com/sun/server.context
-  
+
 	  Thanks to Paul Caffrey <pcaffrey@iel.ie> for contributing this.
 
 Tue Jan 15 11:43:48 2002  Jeff Parsons <parsons@cs.wustl.edu>
@@ -23,17 +31,17 @@ Tue Jan 15 11:43:48 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
 Tue Jan 15 09:08:17 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.cpp: 
-	* tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.h: 
+	* tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.cpp:
+	* tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.h:
 	  Added new methods to class FOO_IORInterceptor to go along with
 	  the added methods in PortableInterceptor::IORInterceptor. Missed
 	  committing in the first round.
-	
+
 Tue Jan 15 08:55:52 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/ORB_Core.cpp (create_stub_object): 
+	* tao/ORB_Core.cpp (create_stub_object):
           Fixed usage of TAO_ENV_ARG_DECL
-	
+
 Tue Jan 15 09:16:22 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile:
@@ -42,7 +50,7 @@ Tue Jan 15 09:16:22 2002  Jeff Parsons <parsons@cs.wustl.edu>
           is added.
 
         * orbsvcs/orbsvcs/ETCL/ETCL_Static.dsp:
-          
+
           Fixed path errors.
 
         * orbsvcs/tests/Notify/lib/Notify_Test_Client.cpp:
