@@ -38,8 +38,8 @@
 class ACE_Export ACE_Thread_Semaphore : public ACE_Semaphore
 {
 public:
-  /// Initialize the semaphore, with an initial value of <count>,
-  /// maximum value of <max>, and unlocked by default.
+  /// Initialize the semaphore, with an initial value of @a count,
+  /// maximum value of @a max, and unlocked by default.
   ACE_Thread_Semaphore (unsigned int count = 1, // By default make this unlocked.
                         const ACE_TCHAR *name = 0,
                         void * = 0,

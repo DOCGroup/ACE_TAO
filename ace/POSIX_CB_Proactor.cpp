@@ -15,7 +15,7 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_POSIX_CB_Proactor::ACE_POSIX_CB_Proactor (size_t max_aio_operations)
-  : ACE_POSIX_AIOCB_Proactor (max_aio_operations, 
+  : ACE_POSIX_AIOCB_Proactor (max_aio_operations,
                               ACE_POSIX_Proactor::PROACTOR_CB),
     sema_ ((unsigned int) 0)
 {
@@ -100,7 +100,7 @@ ACE_POSIX_CB_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
 }
 
 int
-ACE_POSIX_CB_Proactor::handle_events_i (unsigned long milli_seconds)
+ACE_POSIX_CB_Proactor::handle_events_i (u_long milli_seconds)
 {
 
   int result_wait=0;

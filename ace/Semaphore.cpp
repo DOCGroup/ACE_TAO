@@ -25,7 +25,7 @@ ACE_Semaphore::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-ACE_Semaphore::ACE_Semaphore (u_int count,
+ACE_Semaphore::ACE_Semaphore (unsigned int count,
                               int type,
                               const ACE_TCHAR *name,
                               void *arg,
@@ -36,10 +36,10 @@ ACE_Semaphore::ACE_Semaphore (u_int count,
 #if defined(ACE_LACKS_UNNAMED_SEMAPHORE)
 // if the user does not provide a name, we generate a unique name here
   ACE_TCHAR iname[ACE_UNIQUE_NAME_LEN];
-  if (name == 0) 
+  if (name == 0)
     ACE::unique_name (this, iname, ACE_UNIQUE_NAME_LEN);
   if (ACE_OS::sema_init (&this->semaphore_, count, type,
-                         name ? name : iname, 
+                         name ? name : iname,
                          arg, max) != 0)
 #else
   if (ACE_OS::sema_init (&this->semaphore_, count, type,

@@ -32,7 +32,7 @@ ACE_Thread_Semaphore::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Thread_Semaphore::ACE_Thread_Semaphore (u_int count,
+ACE_Thread_Semaphore::ACE_Thread_Semaphore (unsigned int count,
                                             const ACE_TCHAR *name,
                                             void *arg,
                                             int max)
