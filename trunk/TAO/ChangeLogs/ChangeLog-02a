@@ -1,11 +1,19 @@
+Thu May 25 22:00:04 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/SHMIOP_Connect.cpp (svc):
+	* tao/IIOP_Connect.cpp (svc):
+	* tao/UIOP_Connect.cpp (svc):
+
+	  Reset errno to make sure we don't trip over an old value of
+	  errno in case it is not reset when the recv() call fails if the
+	  socket has been closed.  Thanks to Tommy Andreasen
+	  <tommy.andreasen@radiometer.dk> for reporting this bug and
+	  providing a solution.
+
 Thu May 25 21:41:30 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/examples/Notify/Subscribe/Subscribe.cpp:
 	  Fixed "A new-line character appears inside a string literal" error.
-
-Thu May 25 21:41:30 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
-
-	*
 
 Thu May 25 19:35:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -499,8 +507,14 @@ Mon May 15 22:05:49 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
           <matthew@ooc.com> for pointing out the error.
 
 Mon May 15 20:03:11 2000  Pradeep Gore  <pradeep@cumbia.cs.wustl.edu>
+
         * orbsvcs/orbsvcs/Notify/Notify_Filter_i.h:
           Put in the fix for "inheritance via dominance error"
+
+Mon May 15 18:19:53 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Leader_Followers/client.cpp (class Client_Task): Added a
+	  small pause to avoid overrunning the server.
 
 Mon May 15 15:40:46 2000  Ossama Othman  <ossama@uci.edu>
 
