@@ -71,8 +71,9 @@ main (int, char *argv[])
   // we are finished.
   ACE_DEBUG ((LM_DEBUG, "starting event loop that runs until you've typed ^C a total of 10 times or ^\\ once.\n"));
 
-  while (my_config.reactor_event_loop_done () == 0)
-    my_config.run_reactor_event_loop ();
+  int result = my_config.run_reactor_event_loop ();
+
+  ACE_DEBUG ((LM_DEBUG, "result = %d\n", result));
 
   return 0;
 }

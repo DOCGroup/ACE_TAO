@@ -713,19 +713,11 @@ ACE_Reactor_Notify::handle_input (ACE_HANDLE handle)
   // this->reactor_.token_.current_owner () == ACE_Thread::self ();
   this->reactor_->renew ();
 
-  if (n == -1)
+  if (n == -1 && errno != EWOULDBLOCK)
     {
-      if (errno != EWOULDBLOCK)
-	{
-	  // If we're returning -1 here something is seriously wrong!
-	  ACE_ASSERT (!"something's totally wrong!\n");
-	  return -1;
-	}
-      else
-	{
-	  ACE_DEBUG ((LM_DEBUG, "(%t) ++++ WOULD BLOCK +++++\n"));
-	  return number_dispatched;
-	}
+      // If we're returning -1 here something is seriously wrong!
+      ACE_ASSERT (!"something's totally wrong!\n");
+      return -1;
     }
   else
     return number_dispatched;
@@ -1419,15 +1411,15 @@ ACE_Reactor::dispatch_notification_handlers (int &number_of_active_handles,
 }
 
 int
-ACE_Reactor::dispatch_output_handlers (int &number_of_active_handles,
-				       ACE_Reactor_Handle_Set &dispatch_set)
+ACE_Reactor::dispatch_io_handlers (int &number_of_active_handles,
+				   ACE_Reactor_Handle_Set &dispatch_set)
 {
-  ACE_HANDLE handle;
-
   int number_dispatched = 0;
 
   if (number_of_active_handles > 0)
     {
+      ACE_HANDLE handle;
+
       // Handle output events (this code needs to come first
       // to handle the obscure case of piggy-backed data
       // coming along with the final handshake message of a
@@ -1435,7 +1427,8 @@ ACE_Reactor::dispatch_output_handlers (int &number_of_active_handles,
 
       for (ACE_Handle_Set_Iterator handle_iter_wr (dispatch_set.wr_mask_);
 	   (handle = handle_iter_wr ()) != ACE_INVALID_HANDLE 
-	     && number_dispatched < number_of_active_handles;
+	     && number_dispatched < number_of_active_handles
+	     && this->state_changed_ == 0;
 	   ++handle_iter_wr)
 	{
 	  number_dispatched++;
@@ -1447,24 +1440,24 @@ ACE_Reactor::dispatch_output_handlers (int &number_of_active_handles,
 	}
     }
 
-  number_of_active_handles -= number_dispatched;
-  return this->state_changed_ ? -1 : number_dispatched;
-}
+  if (number_dispatched > 0)
+    {
+      number_of_active_handles -= number_dispatched;
+      if (this->state_changed_)
+	return -1;
+    }
 
-int
-ACE_Reactor::dispatch_exception_handlers (int &number_of_active_handles,
-					  ACE_Reactor_Handle_Set &dispatch_set)
-{
-  ACE_HANDLE handle;
-
-  int number_dispatched = 0;
+  number_dispatched = 0;
 
   if (number_of_active_handles > 0)
     {
+      ACE_HANDLE handle;
+
       // Handle "exceptional" events.
       for (ACE_Handle_Set_Iterator handle_iter_ex (dispatch_set.ex_mask_);
 	   (handle = handle_iter_ex ()) != ACE_INVALID_HANDLE 
-	     && number_dispatched < number_of_active_handles;
+	     && number_dispatched < number_of_active_handles
+	     && this->state_changed_ == 0;
 	   ++handle_iter_ex)
 	{
 	  this->notify_handle (handle,
@@ -1475,35 +1468,42 @@ ACE_Reactor::dispatch_exception_handlers (int &number_of_active_handles,
 	  number_dispatched++;
 	}
     }
+  if (number_dispatched > 0)
+    {
+      number_of_active_handles -= number_dispatched;
+      if (this->state_changed_)
+	return -1;
+    }
 
-  number_of_active_handles -= number_dispatched;
-  return this->state_changed_ ? -1 : number_dispatched;
-}
-
-int
-ACE_Reactor::dispatch_input_handlers (int &number_of_active_handles,
-				      ACE_Reactor_Handle_Set &dispatch_set)
-{
-  ACE_HANDLE handle;
-
-  int number_dispatched = 0;
+  number_dispatched = 0;
 
   if (number_of_active_handles > 0)
     {
+      ACE_HANDLE handle;
+
       // Handle input, passive connection, and shutdown events.
       for (ACE_Handle_Set_Iterator handle_iter_rd (dispatch_set.rd_mask_);
 	   (handle = handle_iter_rd ()) != ACE_INVALID_HANDLE 
-	     && number_dispatched < number_of_active_handles;
+	     && number_dispatched < number_of_active_handles
+	     && this->state_changed_ == 0;
 	   ++handle_iter_rd)
-	this->notify_handle (handle,
-			     ACE_Event_Handler::READ_MASK,
-			     this->ready_set_.rd_mask_, 
-			     this->handler_rep_.find (handle),
-			     &ACE_Event_Handler::handle_input); 
+	{
+	  this->notify_handle (handle,
+			       ACE_Event_Handler::READ_MASK,
+			       this->ready_set_.rd_mask_, 
+			       this->handler_rep_.find (handle),
+			       &ACE_Event_Handler::handle_input); 
+	  number_dispatched++;
+	}
+    }
+  if (number_dispatched > 0)
+    {
+      number_of_active_handles -= number_dispatched;
+      if (this->state_changed_)
+	return -1;
     }
 
-  number_of_active_handles -= number_dispatched;
-  return this->state_changed_ ? -1 : number_dispatched;
+  return number_dispatched;
 }
 
 int
@@ -1512,96 +1512,63 @@ ACE_Reactor::dispatch (int number_of_active_handles,
 {
   ACE_TRACE ("ACE_Reactor::dispatch");
 
-  int number_of_handlers_dispatched = 0;
+  // The following do/while loop keeps dispatching as long as there
+  // are still active handles.  Note that the only way we should ever
+  // iterate more than once through this loop is if signals occur
+  // while we're dispatching other handlers.
 
-  // Keep dispatching while there are still active handles left.  Note
-  // that the only way we should ever iterate more than once through
-  // this loop is if signals occur while we're dispatching other
-  // handlers.  
-  // 
-  // Note that we keep track of changes to our state.  If any of the
-  // dispatch_*() methods below return -1 it means that the
-  // <wait_set_> state has changed as the result of an
-  // <ACE_Event_Handler> being dispatched.  This means that we need to
-  // bail out and rerun the select() loop since our existing notion of
-  // handles in <dispatch_set> may no longer be correct.
-  //
-  // In the beginning, our state starts out unchanged.  After every
-  // iteration (i.e., due to signals), our state again starts out
-  // unchanged.
-
-  for (this->state_changed_ = 0; 
-       number_of_active_handles > 0;
-       this->state_changed_ = 0) 
+  do
     {
+      // Note that we keep track of changes to our state.  If any of
+      // the dispatch_*() methods below return -1 it means that the
+      // <wait_set_> state has changed as the result of an
+      // <ACE_Event_Handler> being dispatched.  This means that we
+      // need to bail out and rerun the select() loop since our
+      // existing notion of handles in <dispatch_set> may no longer be
+      // correct.
+      //
+      // In the beginning, our state starts out unchanged.  After
+      // every iteration (i.e., due to signals), our state starts out
+      // unchanged again.
+
+      this->state_changed_ = 0;
+
       // Perform the Template Method for dispatching all the handlers.
-      // We use a loop here just to simplify the "breaking out" if we
-      // need to stop early.
 
-      do
+      // Handle timers first since they may have higher latency
+      // constraints.
+
+      if (this->dispatch_timer_handlers () == -1)
+	// State has changed or timer queue has failed, exit inner
+	// loop.
+	; 
+      else if (number_of_active_handles <= 0)
+	// Bail out since we got here since select() was interrupted.
 	{
-	  int result;
-
-	  // Handle timers first since they may have higher latency
-	  // constraints.
-
-	  result = this->dispatch_timer_handlers ();
-	  if (result == -1)
-	    break; // State has changed, exit inner loop.
+	  if (ACE_Sig_Handler::sig_pending () != 0)
+	    {
+	      ACE_Sig_Handler::sig_pending (0);
+	      
+	      number_of_active_handles = this->any_ready (dispatch_set);
+	    }
 	  else
-	    number_of_handlers_dispatched += result;
-
-	  result = this->dispatch_notification_handlers (number_of_active_handles,
-							 dispatch_set);
-	  if (result == -1)
-	    break; // State has changed, exit inner loop.
-	  else
-	    number_of_handlers_dispatched += result;
-
-	  result = this->dispatch_output_handlers (number_of_active_handles,
-						   dispatch_set);
-
-	  if (result <= 0)
-	    // State has changed or there are no more handles to
-	    // dispatch, exit inner loop.
-	    break; 
-	  else
-	    number_of_handlers_dispatched += result;
-
-	  result = this->dispatch_input_handlers (number_of_active_handles,
-						  dispatch_set);
-
-	  if (result <= 0)
-	    // State has changed or there are no more handles to
-	    // dispatch, exit inner loop.
-	    break; 
-	  else
-	    number_of_handlers_dispatched += result;
-
-	  result = this->dispatch_exception_handlers (number_of_active_handles,
-						      dispatch_set);
-
-	  if (result <= 0)
-	    // State has changed or there are no more handles to
-	    // dispatch, exit inner loop.
-	    break;
-	  else
-	    number_of_handlers_dispatched += result;
+	    return number_of_active_handles;
 	}
-      while (0);
+      else if (this->dispatch_notification_handlers 
+	       (number_of_active_handles, dispatch_set) == -1)
+	; // State has changed, exit inner loop.
+      else if (this->dispatch_io_handlers 
+	       (number_of_active_handles, dispatch_set) == -1)
+	// State has changed exit inner loop.
+	; 
 
       // If any HANDLES are activated as a result of signals they
       // should be dispatched since they may be time critical...
 
-      if (ACE_Sig_Handler::sig_pending () != 0)
-	{
-	  ACE_Sig_Handler::sig_pending (0);
-          
-	  number_of_active_handles = this->any_ready (dispatch_set);
-	}
     }
+  while (number_of_active_handles > 0);
 
-  return number_of_handlers_dispatched;
+  return 1;
 }
 
 int

@@ -667,23 +667,11 @@ protected:
   // the <wait_set_> has changed, else returns number of handlers
   // notified.
 
-  virtual int dispatch_output_handlers (int &number_of_active_handles,
-					ACE_Reactor_Handle_Set &dispatch_set);
-  // Dispatch any output handlers.  Returns -1 if the state of the
-  // <wait_set_> has changed, else returns number of handlers
-  // dispatched.
-
-  virtual int dispatch_exception_handlers (int &number_of_active_handles,
-					   ACE_Reactor_Handle_Set &dispatch_set);
-  // Dispatch any exception handlers.  Returns -1 if the state of the
-  // <wait_set_> has changed, else returns number of handlers
-  // dispatched.
-
-  virtual int dispatch_input_handlers (int &number_of_active_handles,
-				       ACE_Reactor_Handle_Set &dispatch_set);
-  // Dispatch any input handlers.  Returns -1 if the state of the
-  // <wait_set_> has changed, else returns number of handlers
-  // dispatched.
+  virtual int dispatch_io_handlers (int &number_of_active_handles,
+				    ACE_Reactor_Handle_Set &dispatch_set);
+  // Dispatch all the input/output/except handlers that are enabled in
+  // the <dispatch_set>.  Returns -1 if the state of the <wait_set_>
+  // has changed, else returns number of handlers dispatched.
 
   virtual void notify_handle (ACE_HANDLE handle,
 			      ACE_Reactor_Mask mask, 

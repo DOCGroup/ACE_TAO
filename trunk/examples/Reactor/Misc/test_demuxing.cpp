@@ -14,6 +14,9 @@
 // Used to shut down the event loop.
 static sig_atomic_t done = 0;
 
+// Default is to have a 2 second timeout.
+static int timeout = 2;
+
 // This class illustrates how to handle signal-driven I/O using the
 // ACE_Reactor framework.  Note that signals may be caught and
 // processed without requiring the use of global signal handler
@@ -152,9 +155,10 @@ STDIN_Handler::STDIN_Handler (void)
 				   ACE_Service_Config::thr_mgr ()) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_stdin_handler"));
 
-  // Register the STDIN_Handler to be dispatched once every two seconds.
+  // Register the STDIN_Handler to be dispatched once every <timeout>
+  // seconds.
   else if (ACE_Service_Config::reactor ()->schedule_timer
-	   (this, 0, ACE_Time_Value (2), ACE_Time_Value (2)) == -1)
+	   (this, 0, ACE_Time_Value (timeout), ACE_Time_Value (timeout)) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n%a", "schedule_timer", 1));
 }
 
@@ -281,6 +285,13 @@ main (int argc, char *argv[])
 {
   ACE_Service_Config daemon (argv [0]);
 
+  // Optionally start the alarm.
+  if (argc > 1)
+    {
+      ACE_OS::alarm (4);
+      timeout = ACE_OS::atoi (argv[1]);
+    }
+
   // Signal handler.
   Sig_Handler sh;
 
@@ -289,10 +300,6 @@ main (int argc, char *argv[])
 
   // Define a message handler.
   Message_Handler mh;
-
-  // Optionally start the alarm.
-  if (argc > 1)
-    ACE_OS::alarm (4);
 
   // Loop handling signals and I/O events until SIGQUIT occurs.
 
