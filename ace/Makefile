@@ -23,7 +23,8 @@ OS_FILES = \
   OS_Log_Msg_Attributes \
   Thread_Hook \
   Sched_Params \
-  Handle_Set
+  Handle_Set \
+  Copy_Disabled
 UTILS_FILES = \
   ACE \
   Active_Map_Manager \

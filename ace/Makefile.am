@@ -166,6 +166,7 @@ libACE_Utils_la_SOURCES = \
   Configuration.cpp \
   Configuration_Import_Export.cpp \
   Containers.cpp \
+  Copy_Disabled.cpp \
   Dirent.cpp \
   Dirent_Selector.cpp \
   Dynamic.cpp \
@@ -555,6 +556,7 @@ HEADER_FILES = \
   Connector.h \
   Containers.h \
   Containers_T.h \
+  Copy_Disabled.h \
   DEV.h \
   DEV_Addr.h \
   DEV_Connector.h \
