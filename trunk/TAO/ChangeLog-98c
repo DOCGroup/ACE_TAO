@@ -1,7 +1,3 @@
-Sun Jul 06 02:31:30 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
-
-	* TAO version 0.0.5, released Sun Jul 06 02:31:30 1997.
-
 Sun Jul  6 00:10:28 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tao: Fixed all the code so that we put ACE_MT around all the

@@ -207,16 +207,18 @@ CORBA_TypeCode::child_free (void)
     {
     case tk_struct:
     case tk_except:
-      // free up members
+      {
+	// free up members
 
-      for (int i = 0; 
-	   i < _private_state->tc_member_count_;
-	   i++)
-	// @@ This might be a memory leak if tc_member_type_list_[i]
-	// points to an *array*.  If it does, the fix is to add []...
-	delete _private_state->tc_member_type_list_[i];
+	for (int i = 0; 
+	     i < _private_state->tc_member_count_;
+	     i++)
+	  // @@ This might be a memory leak if tc_member_type_list_[i]
+	  // points to an *array*.  If it does, the fix is to add []...
+	  delete _private_state->tc_member_type_list_[i];
 
-      break;
+	break;
+      }
     case tk_sequence:
     case tk_array:
     case tk_alias:
