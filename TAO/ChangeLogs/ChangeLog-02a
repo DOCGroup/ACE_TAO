@@ -1,16 +1,22 @@
+Thu May 11 12:27:35 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * docs/tutorials/Quoter/Simple/Persistent/index.html:
+        * docs/tutorials/Quoter/Simple/Persistent/server.cpp:
+          Made a code review for the tutorials.
+
 Thu May 11 09:29:58 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* examples/Simulator/Event_Supplier/Makefile:
-	  It should compile against the RTOLDEvent library.
+        * examples/Simulator/Event_Supplier/Makefile:
+          It should compile against the RTOLDEvent library.
 
-	* orbsvcs/tests/Event_Latency/Makefile:
-	  Add missing library.
+        * orbsvcs/tests/Event_Latency/Makefile:
+          Add missing library.
 
 Thu May 11 08:44:50 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.dsp:
-	  In the release build I mistakenly was trying to use the debug
-	  version of the TAO_RTOLDEvent library.
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.dsp:
+          In the release build I mistakenly was trying to use the debug
+          version of the TAO_RTOLDEvent library.
 
 Thu May 11 08:35:16 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -29,15 +35,15 @@ Thu May 11 09:36:27 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 Thu May 11 09:00:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * tests/AMI/ami_test_i.cpp, tests/AMI/ami_test_i.h: Added the user
-	  exception DidTheRightThing to the throw spec of the servant
-	  implementation. This fixed bug 521.  The problem was that the
-	  servant implementation did not enumerate the exception in the
-	  throw spec. The server raised the system exception instead of
-	  the given user exception, which lead at the client to the
-	  conclusion that it demarshalled the exception wrongly.  The
-	  compilers should have complained about throwing an user
-	  exception when only system exceptions were allowed in the throw
-	  spec.
+          exception DidTheRightThing to the throw spec of the servant
+          implementation. This fixed bug 521.  The problem was that the
+          servant implementation did not enumerate the exception in the
+          throw spec. The server raised the system exception instead of
+          the given user exception, which lead at the client to the
+          conclusion that it demarshalled the exception wrongly.  The
+          compilers should have complained about throwing an user
+          exception when only system exceptions were allowed in the throw
+          spec.
 
 Thu May 11 02:28:24 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
