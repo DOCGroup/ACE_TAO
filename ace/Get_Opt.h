@@ -106,12 +106,12 @@ public:
    *                      long option, that is, as if "program --foo" had
    *                      been passed.
    *
-   * @param skip_argv0    Optional (default 1). The specified number of
+   * @param skip_args     Optional (default 1). The specified number of
    *                      initial elements in @a argv are skipped before
    *                      parsing begins. Thus, the default prevents
    *                      @a argv[0] (usually the command name) from being
-   *                      parsed. This value of @a argc includes all skipped
-   *                      elements of @a argv specified by this parameter.
+   *                      parsed. @a argc includes all @a argv elements,
+   *                      including any skipped elements.
    * @param report_errors Optional, if non-zero then parsing errors cause
    *                      an error message to be displayed from the
    *                      @c operator() method before it returns. The
@@ -154,7 +154,7 @@ public:
   ACE_Get_Opt (int argc,
                ACE_TCHAR **argv,
                const ACE_TCHAR *optstring,
-               int skip_argv0 = 1,
+               int skip_args = 1,
                int report_errors = 0,
                int ordering = PERMUTE_ARGS,
                int long_only = 0);
