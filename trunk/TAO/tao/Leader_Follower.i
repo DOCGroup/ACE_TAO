@@ -10,7 +10,9 @@ TAO_Leader_Follower::TAO_Leader_Follower (TAO_ORB_Core* orb_core)
     leaders_ (0),
     clients_ (0),
     reactor_ (0),
-    client_thread_is_leader_ (0)
+    client_thread_is_leader_ (0),
+    server_threads_waiting_ (0),
+    server_threads_condition_ (lock_)
 {
 }
 
@@ -137,11 +139,18 @@ TAO_Leader_Follower::follower_available (void) const
 ACE_INLINE int
 TAO_Leader_Follower::elect_new_leader (void)
 {
-  if (this->leaders_ == 0 && this->follower_available ())
+  if (this->leaders_ == 0)
     {
-      ACE_SYNCH_CONDITION* condition_ptr = this->get_next_follower ();
-      if (condition_ptr == 0 || condition_ptr->signal () == -1)
-        return -1;
+      if (this->server_threads_waiting_)
+        {
+          return this->server_threads_condition_.broadcast ();
+        }
+      else if (this->follower_available ())
+        {
+          ACE_SYNCH_CONDITION* condition_ptr = this->get_next_follower ();
+          if (condition_ptr == 0 || condition_ptr->signal () == -1)
+            return -1;
+        }
     }
   return 0;
 }
@@ -202,18 +211,17 @@ TAO_LF_Leader_Thread_Helper::~TAO_LF_Leader_Thread_Helper (void)
   this->leader_follower_.reset_leader_thread ();
 }
 
-ACE_INLINE
-TAO_LF_Server_Thread_Helper::TAO_LF_Server_Thread_Helper (TAO_Leader_Follower &leader_follower)
-  : leader_follower_ (leader_follower),
-    auto_reset_ (0)
+ACE_INLINE int
+TAO_LF_Server_Thread_Helper::reset_server_thread (void)
 {
-}
+  // Reset has been called explicitly, no need to auto reset.
+  this->auto_reset_ = 0;
 
-ACE_INLINE
-TAO_LF_Server_Thread_Helper::~TAO_LF_Server_Thread_Helper (void)
-{
-  if (this->auto_reset_)
-    this->reset_server_thread ();
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->leader_follower_.lock (), -1);
+
+  this->leader_follower_.reset_server_thread ();
+
+  return this->leader_follower_.elect_new_leader ();
 }
 
 ACE_INLINE int
@@ -231,15 +239,16 @@ TAO_LF_Server_Thread_Helper::set_server_thread (ACE_Time_Value *max_wait_time)
   return result;
 }
 
-ACE_INLINE int
-TAO_LF_Server_Thread_Helper::reset_server_thread (void)
+ACE_INLINE
+TAO_LF_Server_Thread_Helper::TAO_LF_Server_Thread_Helper (TAO_Leader_Follower &leader_follower)
+  : leader_follower_ (leader_follower),
+    auto_reset_ (0)
 {
-  // Reset has been called explicitly, no need to auto reset.
-  this->auto_reset_ = 0;
+}
 
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->leader_follower_.lock (), -1);
-
-  this->leader_follower_.reset_server_thread ();
-
-  return this->leader_follower_.elect_new_leader ();
+ACE_INLINE
+TAO_LF_Server_Thread_Helper::~TAO_LF_Server_Thread_Helper (void)
+{
+  if (this->auto_reset_)
+    this->reset_server_thread ();
 }

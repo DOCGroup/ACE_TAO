@@ -221,6 +221,7 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
 #endif /* DEBUGGING */
               // We come here if a timeout occurs or some serious
               // ACE_Condition object error.
+              this->waiters_--;
               queue->remove_entry (&my_entry);
               return -1;
             }
@@ -366,6 +367,7 @@ ACE_Token::renew (int requeue_position, ACE_Time_Value *timeout)
 #endif /* DEBUGGING */
           // We come here if a timeout occurs or
           // some serious ACE_Condition object error.
+          this->waiters_--;
           old_q->remove_entry (&my_entry);
           return -1;
         }

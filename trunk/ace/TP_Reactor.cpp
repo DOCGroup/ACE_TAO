@@ -123,13 +123,32 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
   // Try to grab the lock.  If someone if already there, don't wake
   // them up, just queue up in the thread pool.
   int result = 0;
-  ACE_MT (result = this->token_.acquire_read (&ACE_TP_Reactor::no_op_sleep_hook));
+
+  if (max_wait_time)
+    {
+      ACE_Time_Value tv = ACE_OS::gettimeofday ();
+      tv += *max_wait_time;
+
+      ACE_MT (result = this->token_.acquire_read (&ACE_TP_Reactor::no_op_sleep_hook,
+                                                  0,
+                                                  &tv));
+    }
+  else
+    {
+      ACE_MT (result = this->token_.acquire_read (&ACE_TP_Reactor::no_op_sleep_hook));
+    }
+
+  // Update the countdown to reflect time waiting for the token.
+  countdown.update ();
+
   switch (result)
     {
     case 2:
       ACE_MT (this->token_.release ());
       return 0;
     case -1:
+      if (errno == ETIME)
+        return 0;
       return -1;
     }
 
