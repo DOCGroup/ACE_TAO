@@ -2,5 +2,6 @@
 
 workspace {
   Deployment.mpc
-  ./Config_Handlers
+  Config_Handlers
 }
+
