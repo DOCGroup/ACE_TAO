@@ -8,7 +8,7 @@ Tue Sep  3 15:40:39 2002  Ossama Othman  <ossama@uci.edu>
 
 	  Likewise.
 
-	* (ACE_TMAIN):
+	  (ACE_TMAIN):
 
 	  Fixed "deprecated conversion from string constant to char *"
 	  warning.
