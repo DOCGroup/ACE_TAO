@@ -3,6 +3,8 @@
 #include "Cubit_Client.h"
 #include "Cubit_Server.h"
 
+#include "tao/Strategies/advanced_resource.h"
+
 #include "ace/Synch.h"
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"

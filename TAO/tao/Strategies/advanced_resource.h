@@ -88,6 +88,11 @@ protected:
   virtual ACE_Reactor_Impl *allocate_reactor_impl (void) const;
   // Obtain the reactor implementation
 
+  void report_option_value_error (const char* option_name,
+                                  const char* option_value);
+
+  void report_unsupported_error (const char* option_name);
+
   TAO_ProtocolFactorySet protocol_factories_;
   // list of loaded protocol factories.
 

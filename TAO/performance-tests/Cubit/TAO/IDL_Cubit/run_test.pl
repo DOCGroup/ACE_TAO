@@ -50,10 +50,10 @@ for ($i = 0; $i <= $#ARGV; $i++) {
         $clflags .= " -n $ARGV[$i + 1] ";
         $i++;
     }
-    elsif ($ARGV[$i] eq " -orblite ") {
+    elsif ($ARGV[$i] eq "-orblite") {
         $giopliteflag = 1;
     }
-    elsif ($ARGV[$i] eq " -verbose ") {
+    elsif ($ARGV[$i] eq "-verbose") {
         $quietflag = "";
     }
     else {
@@ -111,7 +111,7 @@ $CL->Arguments ($clflags . $clnsflags . $quietflag . " -x ");
 if ($giopliteflag) {
     print STDERR "\nRunning IDL_Cubit with the a lite ORB protocol.\n\n";
     $SV->Arguments ($SV->Arguments () . " -ORBSvcConf $iiop_lite_conf ");
-    $CL->Arguments ($CL->Arugments () . " -ORBSvcConf $iiop_lite_conf ");
+    $CL->Arguments ($CL->Arguments () . " -ORBSvcConf $iiop_lite_conf ");
 }
 
 run_test_helper ();
@@ -126,7 +126,7 @@ if ($OSNAME ne "MSWin32") {
     if ($giopliteflag) {
         print STDERR "\nRunning IDL_Cubit with the a UIOP lite ORB protocol.\n\n";
         $SV->Arguments ($SV->Arguments () . " -ORBSvcConf $uiop_lite_conf ");
-        $CL->Arguments ($CL->Arugments () . " -ORBSvcConf $uiop_lite_conf ");
+        $CL->Arguments ($CL->Arguments () . " -ORBSvcConf $uiop_lite_conf ");
     }
 
     run_test_helper ();

@@ -7,6 +7,8 @@
 // -- App. Specific Include --
 #include "Policy_Verifier.h"
 
+#include "tao/Strategies/advanced_resource.h"
+
 ACE_RCSID(tao, client, "$Id$")
 
 int

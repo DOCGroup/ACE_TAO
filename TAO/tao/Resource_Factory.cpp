@@ -181,7 +181,7 @@ TAO_Resource_Factory::create_cached_connection_lock (void)
 }
 
 int
-TAO_Resource_Factory:: load_default_protocols (void)
+TAO_Resource_Factory::load_default_protocols (void)
 {
   return 0;
 }
