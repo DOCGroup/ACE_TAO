@@ -392,7 +392,8 @@ CORBA_ORB::resolve_name_service (void)
       if (port == 0)
         {
           // Look for the port among our environment variables.
-          const char *port_number = ACE_OS::getenv ("NameServicePort");
+          const char *port_number =
+            ACE_OS::getenv ("NameServicePort");
 
           if (port_number != 0)
             port = ACE_OS::atoi (port_number);
