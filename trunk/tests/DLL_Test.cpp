@@ -64,9 +64,9 @@ Hello *get_hello (void)
 {
   Hello *hello;
 
-  // *done* 
-  //@@ Kirthika, please check the return types carefully here...
-  ACE_NEW_RETURN (hello, Hello (), NULL);
+  ACE_NEW_RETURN (hello,
+                  Hello,
+                  NULL);
 
   return hello;
 }
@@ -78,25 +78,20 @@ main (void)
 { 
   ACE_START_TEST ("DLL_Test");
 
-  // *done ACE_OBJ_SUFFIX*
-  // @@ Kirthika, it turns out that with Windows NT you can't pass a 0
-  // in and have it default to the symbols in the executable.
-  // Therefore, you'll have to use something like ".obj/DLL_Test.o" on
-  // UNIX and whatever the equivalent is on WinNT (I'm not sure what
-  // it'll be, so please make sure that you check with Nanbor to find
-  // out).
   ACE_DLL ace_dll_obj;
 
-  if (0 != ace_dll_obj.open (ACE_OS::strcat(".obj/DLL_Test",
-                                            ACE_OBJ_SUFFIX)))
+  // @@ Kirthika, the following code is incorrect since you're
+  // trying to do a strcat() on a string literal...  Make
+  // sure you ALWAYS run Purify on your code to find errors
+  // list this.
+  if (0 != ace_dll_obj.open (ACE_OS::strcat (".obj/DLL_Test",
+                                             ACE_OBJ_SUFFIX)))
     ACE_ERROR_RETURN ((LM_ERROR,
+                       // @@ Kirthika, ALWAYS leave a
+                       // space before the '('...  Make sure to 
+                       // fix this elsewhere, as well.
                        ace_dll_obj.error()),
                        -1);
-  //*done* 
-  // @@ Kirthika, I recommend that you don't use the constructor to
-  // open the DLL_Test file, but rather use the "open()" method since
-  // that way you can test the return value and print an error if it
-  // doesn't work.
 
   TC f = (TC) ace_dll_obj.symbol ("get_hello");
 
@@ -104,9 +99,6 @@ main (void)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ace_dll_obj.error()),
                       -1);
-  // *done*
-  // @@ Kirthika, please make sure to test whether <f> is a NULL
-  // pointer or a valid pointer before trying to call it.
 
   ACE_DEBUG ((LM_DEBUG,
               "callling get_hello\n"));
@@ -121,16 +113,9 @@ main (void)
   return 0;
 }
 
-// *done*
-//@@ Kirthika, please add the proper explicit template instantiation
-// format for GCC and other broken C++ compilers.
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class auto_ptr <Hello>;
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
 #pragma instantiate auto_ptr <Hello>
-
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
