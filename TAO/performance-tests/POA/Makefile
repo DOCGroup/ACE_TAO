@@ -11,7 +11,9 @@
 #----------------------------------------------------------------------------
 
 DIRS  = Object_Creation_And_Registration \
-	Demux
+	Demux \
+	Create_Reference \
+	Implicit_Activation
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

@@ -1,3 +1,38 @@
+Wed May  9 14:40:51 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * performance-tests/POA/Makefile:
+        * performance-tests/POA/Makefile.bor:
+        * performance-tests/POA/README:
+        * performance-tests/POA/Create_Reference/README:
+        * performance-tests/POA/Create_Reference/run_test.pl:
+        * performance-tests/POA/Create_Reference/Makefile:
+        * performance-tests/POA/Create_Reference/Makefile.bor:
+        * performance-tests/POA/Create_Reference/create_reference.bor:
+        * performance-tests/POA/Create_Reference/create_reference.cpp:
+          New test to measure the time required to create an object
+          reference via create_reference_with_id().
+
+        * performance-tests/POA/Makefile:
+        * performance-tests/POA/Makefile.bor:
+        * performance-tests/POA/README:
+        * performance-tests/POA/Implicit_Activation/README:
+        * performance-tests/POA/Implicit_Activation/run_test.pl:
+        * performance-tests/POA/Implicit_Activation/Makefile:
+        * performance-tests/POA/Implicit_Activation/Makefile.bor:
+        * performance-tests/POA/Implicit_Activation/client.bor:
+        * performance-tests/POA/Implicit_Activation/server.bor:
+        * performance-tests/POA/Implicit_Activation/collocated.bor:
+        * performance-tests/POA/Implicit_Activation/Test.idl:
+        * performance-tests/POA/Implicit_Activation/Factory.h:
+        * performance-tests/POA/Implicit_Activation/Factory.cpp:
+        * performance-tests/POA/Implicit_Activation/Simple.h:
+        * performance-tests/POA/Implicit_Activation/Simple.cpp:
+        * performance-tests/POA/Implicit_Activation/client.cpp:
+        * performance-tests/POA/Implicit_Activation/collocated.cpp:
+        * performance-tests/POA/Implicit_Activation/server.cpp:
+          Add new performance test for _this() and the corresponding
+          deactivations
+
 Wed May 09 16:38:41 2001  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tests/DSI_Gateway/client.cpp:
@@ -12,17 +47,17 @@ Wed May 09 16:19:55 2001  Jeff Parsons  <parsons@cs.wustl.edu>
           Changed an ACE_static_cast of const char* to
           CORBA::Octet* to an ACE_reinterpret_cast to
           const CORBA::Octet*.
-          
+
 Wed May  9 14:01:51 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Connection_Handler.cpp (add_transport_to_cache):
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Fixes for
-	  bug #901. When creating a endpoint that is being cached, use the
-	  value from ORB_Core params for the dotted decimal addresses
-	  instead of sending in a value of zero. Thanks to Darren Griffith
-	  <darren.griffith@esecurityinc.com> for reporting the problem and
-	  the fix. 
+        * tao/IIOP_Connection_Handler.cpp (add_transport_to_cache):
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Fixes for
+          bug #901. When creating a endpoint that is being cached, use the
+          value from ORB_Core params for the dotted decimal addresses
+          instead of sending in a value of zero. Thanks to Darren Griffith
+          <darren.griffith@esecurityinc.com> for reporting the problem and
+          the fix.
 
 Wed May 09 14:07:56 2001  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -91,10 +126,10 @@ Wed May 09 13:55:56 2001  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Wed May  9 11:56:55 2001  Ossama Othman  <ossama@uci.edu>
 
-	* docs/interceptors.html (HREF):
+        * docs/interceptors.html (HREF):
 
-	  Updated link to Portable Interceptors spec to point to the
-	  latest revision (ptc/2001-03-04).
+          Updated link to Portable Interceptors spec to point to the
+          latest revision (ptc/2001-03-04).
 
 Wed May 09 10:04:24 2001  Balachandran  <bala@cs.wustl.edu>
 
@@ -367,16 +402,16 @@ Sat May  5 16:24:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Sat May  5 15:23:56 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* orbsvcs/orbsvcs/Sched/Config_Scheduler.h: Added
-  
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.h: Added
+
           #if ! defined (TAO_MIN_CRITICAL_PRIORITY)
-	  #define TAO_MIN_CRITICAL_PRIORITY 0
-	  #endif /* ! defined (TAO_MIN_CRITICAL_PRIORITY) */  
-  
+          #define TAO_MIN_CRITICAL_PRIORITY 0
+          #endif /* ! defined (TAO_MIN_CRITICAL_PRIORITY) */
+
           to fix a compile problem with TAO_USES_RMS_SCHEDULING is
- 	  defined.  Thanks to Alexandre Cervieri
- 	  <alexandre.cervieri@terra.com.br> for reporting this.
-  
+          defined.  Thanks to Alexandre Cervieri
+          <alexandre.cervieri@terra.com.br> for reporting this.
+
 Sat May  5 13:27:36 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
         * orbsvcs/tests/AVStreams/Component_Switching/Makefile:
