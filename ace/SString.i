@@ -9,11 +9,13 @@ ACE_INLINE
 ACE_CString::ACE_CString (ACE_Allocator *alloc)
   : allocator_ (alloc ? alloc : ACE_Allocator::instance ()),
     len_ (0),
+    buf_len_ (0),
     rep_ (0),
     release_ (0)
 {
   ACE_TRACE ("ACE_CString::ACE_CString");
 
+  //@@ Is this needed here?
   this->set (0, 0, 0);
 }
 
@@ -25,6 +27,7 @@ ACE_CString::ACE_CString (const char *s,
                           int release)
   : allocator_ (alloc ? alloc : ACE_Allocator::instance ()),
     len_ (0),
+    buf_len_ (0),
     rep_ (0),
     release_ (0)
 {
@@ -44,6 +47,7 @@ ACE_CString::ACE_CString (char c,
                           ACE_Allocator *alloc)
   : allocator_ (alloc ? alloc : ACE_Allocator::instance ()),
     len_ (0),
+    buf_len_ (0),
     rep_ (0),
     release_ (0)
 {
@@ -61,6 +65,7 @@ ACE_CString::ACE_CString (const char *s,
                           int release)
   : allocator_ (alloc ? alloc : ACE_Allocator::instance ()),
     len_ (0),
+    buf_len_ (0),
     rep_ (0),
     release_ (0)
 {
@@ -75,6 +80,7 @@ ACE_INLINE
 ACE_CString::ACE_CString (const ACE_CString &s)
   : allocator_ (s.allocator_ ? s.allocator_ : ACE_Allocator::instance ()),
     len_ (0),
+    buf_len_ (0),
     rep_ (0),
     release_ (0)
 {
@@ -231,6 +237,8 @@ ACE_INLINE int
 ACE_CString::compare (const ACE_CString &s) const
 {
   ACE_TRACE ("ACE_CString::compare");
+
+  // @@Is this correct? (i.e. for the case when they are of unequal length)
   return ACE_OS::strncmp (this->rep_, s.rep_, this->len_);
 }
 
@@ -537,7 +545,7 @@ ACE_INLINE int
 ACE_WString::operator < (const ACE_WString &s) const
 {
   ACE_TRACE ("ACE_WString::operator <");
-  return (this->len_ < s.len_) 
+  return (this->len_ < s.len_)
           ? (ACE_OS::memcmp ((const void *) this->rep_,
                              (const void *) s.rep_,
                              this->len_ * sizeof (ACE_USHORT16)) <= 0)
@@ -552,7 +560,7 @@ ACE_INLINE int
 ACE_WString::operator > (const ACE_WString &s) const
 {
   ACE_TRACE ("ACE_WString::operator >");
-  return (this->len_ <= s.len_) 
+  return (this->len_ <= s.len_)
           ? (ACE_OS::memcmp ((const void *) this->rep_,
                              (const void *) s.rep_,
                              this->len_ * sizeof (ACE_USHORT16)) > 0)

@@ -33,9 +33,7 @@ class ACE_Export ACE_CString
   //
   // = DESCRIPTION
   //   This is a place holder until all compilers implement the
-  //   ANSI/ISO C++ standard String class.  Note that we need to use
-  //   this class since the ACE ACE_Map_Manager requires an object
-  //   that supports the operator == and operator !=.  This class uses
+  //   ANSI/ISO C++ standard String class.  This class uses
   //   an ACE_Allocator to allocate memory.  The user can make this a
   //   persistant class by providing an ACE_Allocator with a
   //   persistable memory pool.  NOTE: if an instance of this class is
@@ -170,7 +168,11 @@ private:
   // Pointer to a memory allocator.
 
   size_t len_;
-  // Length of the ACE_CString (not counting the trailing '\0').
+  // Length of the ACE_CString data (not counting the trailing '\0').
+
+  size_t buf_len_;
+  // Length of the ACE_CString data buffer.  Keeping track of the
+  // length allows to avoid unnecessary dynamic allocations.
 
   char *rep_;
   // Pointer to data.
