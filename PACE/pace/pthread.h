@@ -36,9 +36,9 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 3.1.3.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_atfork (void  (*prepare) (),
-                                       void (*parent) (),
-                                       void (*child) ());
+  PACE_INLINE int pace_pthread_atfork (void  (*prepare) (void),
+                                       void (*parent) (void),
+                                       void (*child) (void));
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -580,8 +580,12 @@ extern "C" {
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
   PACE_INLINE int pace_pthread_once (pace_pthread_once_t * once_control,
+<<<<<<< pthread.h
+                                     void (*void_routine) (void));
+=======
                                      void (*void_routine) ());
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+>>>>>>> 1.9
 
 # define PACE_PTHREAD_ONCE_INIT PTHREAD_ONCE_INIT
 
