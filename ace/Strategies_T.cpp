@@ -1,4 +1,3 @@
-// Strategies_T.cpp
 // $Id$
 
 #if !defined (ACE_STRATEGIES_T_C)
@@ -46,7 +45,7 @@ ACE_Singleton_Strategy<SVC_HANDLER>::dump (void) const
 
 template <class SVC_HANDLER> int
 ACE_Singleton_Strategy<SVC_HANDLER>::open (SVC_HANDLER *sh,
-					   ACE_Thread_Manager *)
+                                           ACE_Thread_Manager *)
 {
   ACE_TRACE ("ACE_Singleton_Strategy<SVC_HANDLER>::open");
 
@@ -59,7 +58,7 @@ ACE_Singleton_Strategy<SVC_HANDLER>::open (SVC_HANDLER *sh,
 
 template <class SVC_HANDLER>
 ACE_Singleton_Strategy<SVC_HANDLER>::ACE_Singleton_Strategy (SVC_HANDLER *sh,
-							     ACE_Thread_Manager *tm)
+                                                             ACE_Thread_Manager *tm)
   : svc_handler_ (0)
 {
   ACE_TRACE ("ACE_Singleton_Strategy<SVC_HANDLER>::ACE_Singleton_Strategy");
@@ -137,10 +136,10 @@ ACE_DLL_Strategy<SVC_HANDLER>::dump (void) const
 
 template <class SVC_HANDLER> int
 ACE_DLL_Strategy<SVC_HANDLER>::open (const char dll_name[],
-				     const char factory_function[],
-				     const char svc_name[],
-				     ACE_Service_Repository *svc_rep,
-				     ACE_Thread_Manager *thr_mgr)
+                                     const char factory_function[],
+                                     const char svc_name[],
+                                     ACE_Service_Repository *svc_rep,
+                                     ACE_Thread_Manager *thr_mgr)
 {
   ACE_TRACE ("ACE_DLL_Strategy<SVC_HANDLER>::open");
   this->inherited::open (thr_mgr);
@@ -153,16 +152,16 @@ ACE_DLL_Strategy<SVC_HANDLER>::open (const char dll_name[],
 
 template <class SVC_HANDLER>
 ACE_DLL_Strategy<SVC_HANDLER>::ACE_DLL_Strategy (const char dll_name[],
-						 const char factory_function[],
-						 const char svc_name[],
-						 ACE_Service_Repository *svc_rep,
-						 ACE_Thread_Manager *thr_mgr)
+                                                 const char factory_function[],
+                                                 const char svc_name[],
+                                                 ACE_Service_Repository *svc_rep,
+                                                 ACE_Thread_Manager *thr_mgr)
 {
   ACE_TRACE ("ACE_DLL_Strategy<SVC_HANDLER>::ACE_DLL_Strategy");
   if (this->open (dll_name,
-		  factory_function,
-		  svc_name,
-		  svc_rep, thr_mgr) == -1)
+                  factory_function,
+                  svc_name,
+                  svc_rep, thr_mgr) == -1)
     ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("open")));
 }
 
@@ -185,7 +184,7 @@ ACE_DLL_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
   // Extract the factory function.
   SVC_HANDLER *(*factory)(void) =
     (SVC_HANDLER *(*)(void)) ACE_OS::dlsym (handle,
-					    this->factory_function_);
+                                            this->factory_function_);
 
   // Call the factory function to obtain the new SVC_Handler (should
   // use RTTI here when it becomes available...)
@@ -199,26 +198,26 @@ ACE_DLL_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
       // insert into this->svc_rep_;
 
       ACE_Service_Type_Impl *stp =
-	new ACE_Service_Object_Type (svc_handler, this->svc_name_);
+        new ACE_Service_Object_Type (svc_handler, this->svc_name_);
 
       if (stp == 0)
-	{
-	  errno = ENOMEM;
-	  return -1;
-	}
+        {
+          errno = ENOMEM;
+          return -1;
+        }
 
       ACE_Service_Type *srp =
-	new ACE_Service_Type (this->svc_name_, stp, handle, 1);
+        new ACE_Service_Type (this->svc_name_, stp, handle, 1);
 
       if (srp == 0)
-	{
-	  delete stp;
-	  errno = ENOMEM;
-	  return -1;
-	}
+        {
+          delete stp;
+          errno = ENOMEM;
+          return -1;
+        }
 
       if (this->svc_rep_->insert (srp) == -1)
-	return -1;
+        return -1;
       // @@ Somehow, we need to deal with this->thr_mgr_...
     }
 
@@ -240,7 +239,7 @@ ACE_Concurrency_Strategy<SVC_HANDLER>::dump (void) const
 
 template <class SVC_HANDLER> int
 ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handler,
-							     void *arg)
+                                                             void *arg)
 {
   ACE_TRACE ("ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler");
 
@@ -289,8 +288,8 @@ ACE_Reactive_Strategy<SVC_HANDLER>::dump (void) const
 
 template <class SVC_HANDLER> int
 ACE_Reactive_Strategy<SVC_HANDLER>::open (ACE_Reactor *reactor,
-					  ACE_Reactor_Mask mask,
-					  int flags)
+                                          ACE_Reactor_Mask mask,
+                                          int flags)
 {
   ACE_TRACE ("ACE_Reactive_Strategy<SVC_HANDLER>::open");
   this->reactor_ = reactor;
@@ -306,14 +305,14 @@ ACE_Reactive_Strategy<SVC_HANDLER>::open (ACE_Reactor *reactor,
 
 template <class SVC_HANDLER>
 ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy (ACE_Reactor *reactor,
-							   ACE_Reactor_Mask mask,
-							   int flags)
+                                                           ACE_Reactor_Mask mask,
+                                                           int flags)
 {
   ACE_TRACE ("ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy");
 
   if (this->open (reactor, mask, flags) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n",
-		"ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy"));
+                "ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy"));
 }
 
 template <class SVC_HANDLER>
@@ -333,7 +332,7 @@ ACE_Reactive_Strategy<SVC_HANDLER>::~ACE_Reactive_Strategy (void)
 
 template <class SVC_HANDLER> int
 ACE_Reactive_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handler,
-							  void *arg)
+                                                          void *arg)
 {
   ACE_TRACE ("ACE_Reactive_Strategy<SVC_HANDLER>::activate_svc_handler");
 
@@ -379,8 +378,8 @@ ACE_Thread_Strategy<SVC_HANDLER>::dump (void) const
 
 template <class SVC_HANDLER> int
 ACE_Thread_Strategy<SVC_HANDLER>::open (ACE_Thread_Manager *thr_mgr,
-					long thr_flags,
-					size_t n_threads,
+                                        long thr_flags,
+                                        size_t n_threads,
                                         int flags)
 {
   ACE_TRACE ("ACE_Thread_Strategy<SVC_HANDLER>::open");
@@ -392,22 +391,22 @@ ACE_Thread_Strategy<SVC_HANDLER>::open (ACE_Thread_Manager *thr_mgr,
   // Must have a thread manager!
   if (this->thr_mgr_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "error: must have a non-NULL thread manager\n"), -1);
+                       "error: must have a non-NULL thread manager\n"), -1);
   else
     return 0;
 }
 
 template <class SVC_HANDLER>
 ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy (ACE_Thread_Manager *thr_mgr,
-						       long thr_flags,
-						       size_t n_threads,
+                                                       long thr_flags,
+                                                       size_t n_threads,
                                                        int flags)
 {
   ACE_TRACE ("ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy");
 
   if (this->open (thr_mgr, thr_flags, n_threads, flags) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n",
-		"ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy"));
+                "ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy"));
 }
 
 template <class SVC_HANDLER>
@@ -428,7 +427,7 @@ ACE_Thread_Strategy<SVC_HANDLER>::~ACE_Thread_Strategy (void)
 
 template <class SVC_HANDLER> int
 ACE_Thread_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handler,
-							void *arg)
+                                                        void *arg)
 {
   ACE_TRACE ("ACE_Thread_Strategy<SVC_HANDLER>::activate_svc_handler");
   // Call up to our parent to do the SVC_HANDLER initialization.
@@ -545,12 +544,12 @@ ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect_svc_handler
   ACE_TRACE ("ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect_svc_handler");
 
   return this->connector_.connect (sh->peer (),
-				   remote_addr,
-				   timeout,
-				   local_addr,
-				   reuse_addr,
-				   flags,
-				   perms);
+                                   remote_addr,
+                                   timeout,
+                                   local_addr,
+                                   reuse_addr,
+                                   flags,
+                                   perms);
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> ACE_PEER_CONNECTOR &
@@ -583,8 +582,8 @@ ACE_Process_Strategy<SVC_HANDLER>::dump (void) const
 
 template <class SVC_HANDLER> int
 ACE_Process_Strategy<SVC_HANDLER>::open (size_t n_processes,
-					 ACE_Event_Handler *acceptor,
-					 ACE_Reactor *reactor,
+                                         ACE_Event_Handler *acceptor,
+                                         ACE_Reactor *reactor,
                                          int flags)
 {
   ACE_TRACE ("ACE_Process_Strategy<SVC_HANDLER>::open");
@@ -598,8 +597,8 @@ ACE_Process_Strategy<SVC_HANDLER>::open (size_t n_processes,
 
 template <class SVC_HANDLER>
 ACE_Process_Strategy<SVC_HANDLER>::ACE_Process_Strategy (size_t n_processes,
-							 ACE_Event_Handler *acceptor,
-							 ACE_Reactor *reactor,
+                                                         ACE_Event_Handler *acceptor,
+                                                         ACE_Reactor *reactor,
                                                          int flags)
 {
   ACE_TRACE ("ACE_Process_Strategy<SVC_HANDLER>::ACE_Process_Strategy");
@@ -614,7 +613,7 @@ ACE_Process_Strategy<SVC_HANDLER>::~ACE_Process_Strategy (void)
 
 template <class SVC_HANDLER> int
 ACE_Process_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handler,
-							 void *arg)
+                                                         void *arg)
 {
   ACE_TRACE ("ACE_Process_Strategy<SVC_HANDLER>::activate_svc_handler");
 
@@ -628,9 +627,9 @@ ACE_Process_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handle
       // Close down the SOCK_Acceptor's handle since we don't need to
       // keep it open.
       if (this->acceptor_ != 0)
-	// Ignore the return value here...
-	(void) this->reactor_->remove_handler (this->acceptor_,
-					       ACE_Event_Handler::ACCEPT_MASK);
+        // Ignore the return value here...
+        (void) this->reactor_->remove_handler (this->acceptor_,
+                                               ACE_Event_Handler::ACCEPT_MASK);
 
       // Call up to our ancestor in the inheritance to do the
       // SVC_HANDLER initialization.
@@ -658,10 +657,10 @@ ACE_Scheduling_Strategy<SVC_HANDLER>::ACE_Scheduling_Strategy (SVC_HANDLER *sche
       ACE_NEW (this->scheduler_, SVC_HANDLER);
 
       if (this->scheduler_->thr_mgr () == 0)
-	this->scheduler_->thr_mgr (ACE_Thread_Manager::instance ());
+        this->scheduler_->thr_mgr (ACE_Thread_Manager::instance ());
 
       if (this->scheduler_->reactor () == 0)
-	this->scheduler_->reactor (ACE_Reactor::instance ());
+        this->scheduler_->reactor (ACE_Reactor::instance ());
 
       this->delete_scheduler_ = 1;
     }
@@ -763,8 +762,8 @@ ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::dump (void) const
 
 template <class T>
 ACE_Recyclable<T>::ACE_Recyclable (void)
-  : t_ (T ()),
-    recyclable_ (0)
+  : recyclable_ (0),
+    t_ (T ())
 {
 }
 
