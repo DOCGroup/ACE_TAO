@@ -1266,7 +1266,8 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd)
       // closing connection and the necessary memory management.
       return -1;
     }
-  else if (t == TAO_PLUGGABLE_MESSAGE_REQUEST)
+  else if (t == TAO_PLUGGABLE_MESSAGE_REQUEST ||
+           t == TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST)
     {
       if (this->messaging_object ()->process_request_message (
             this,
@@ -1280,7 +1281,8 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd)
           return -1;
         }
     }
-  else if (t == TAO_PLUGGABLE_MESSAGE_REPLY)
+  else if (t == TAO_PLUGGABLE_MESSAGE_REPLY ||
+           t == TAO_PLUGGABLE_MESSAGE_LOCATEREPLY)
     {
       // @@todo: Maybe the input_cdr can be constructed from the
       // message_block
