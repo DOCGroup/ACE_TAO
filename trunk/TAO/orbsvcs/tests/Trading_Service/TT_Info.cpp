@@ -32,8 +32,7 @@ TT_Info::REMOTE_IO_PROPERTY_MODES[] =
 {
   CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY_READONLY,
   CosTradingRepos::ServiceTypeRepository::PROP_NORMAL,
-  CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY,
-  CosTradingRepos::ServiceTypeRepository::PROP_NORMAL,
+  CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY
 };
 
 const char* TT_Info::PLOTTER_NAME = "Plotter";
