@@ -249,10 +249,12 @@ create_reactor (void)
   ACE_Reactor_Impl *impl = 0;
 
   if (opt_wfmo_reactor)
+    {
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
       ACE_NEW (impl,
                ACE_WFMO_Reactor);
 #endif /* ACE_WIN32 */
+    }
   else if (opt_select_reactor)
     ACE_NEW (impl,
              ACE_Select_Reactor);
