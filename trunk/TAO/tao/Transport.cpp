@@ -2339,6 +2339,21 @@ TAO_Transport::assign_translators (TAO_InputCDR *inp, TAO_OutputCDR *outp)
     }
 }
 
+void
+TAO_Transport::clear_translators (TAO_InputCDR *inp, TAO_OutputCDR *outp)
+{
+  if (inp)
+    {
+      inp->char_translator (0);
+      inp->wchar_translator (0);
+    }
+  if (outp)
+    {
+      outp->char_translator (0);
+      outp->wchar_translator (0);
+    }
+}
+
 ACE_Event_Handler::Reference_Count
 TAO_Transport::add_reference (void)
 {
