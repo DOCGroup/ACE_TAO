@@ -19,7 +19,8 @@ static int
 do_child (ACE_FIFO_Recv &fifo_reader)
 {
   // Set child's stdin to read from the fifo.
-  if (ACE_OS::close (0) == -1 || ACE_OS::dup (fifo_reader.get_handle ()) == -1)
+  if (ACE_OS::close (ACE_STDIN) == -1 
+      || ACE_OS::dup (fifo_reader.get_handle ()) == -1)
     return -1;
 
   char *argv[2];
@@ -35,7 +36,6 @@ static int
 do_parent (const char fifo_name[],
 	   char input_filename[])
 {
-  int inputfd;
   ACE_FIFO_Send fifo_sender (fifo_name, O_WRONLY | O_CREAT);
   int len;
   char buf[BUFSIZ];
@@ -43,7 +43,9 @@ do_parent (const char fifo_name[],
   if (fifo_sender.get_handle () == ACE_INVALID_HANDLE)
     return -1;
 
-  if ((inputfd = ACE_OS::open (input_filename, O_RDONLY)) == -1)
+  ACE_HANDLE inputfd = ACE_OS::open (input_filename, O_RDONLY);
+
+  if (inputfd == ACE_INVALID_HANDLE)
     return -1;
 
   // Read from input file and write into input end of the fifo.
@@ -73,9 +75,9 @@ main (int argc, char *argv[])
   if (fifo_reader.get_handle () == ACE_INVALID_HANDLE)
     return -1;
 
-  pid_t child_pid;
+  pid_t child_pid = ACE_OS::fork ()
 
-  switch (child_pid = ACE_OS::fork ())
+  switch (child_pid)
     {
     case -1:
       ACE_ERROR ((LM_ERROR, "%n: %p\n%a", "fork", 1));
