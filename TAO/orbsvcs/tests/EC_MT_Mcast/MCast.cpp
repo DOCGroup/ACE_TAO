@@ -28,6 +28,7 @@ static const int data_items = 60000;
 void *
 run_orb_within_thread (void *)
 {
+  ACE_DECLARE_NEW_CORBA_ENV;
   while (! terminate_threads)
     {
       CORBA::Boolean there_is_work =
