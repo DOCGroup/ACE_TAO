@@ -41,13 +41,13 @@ typedef std::string ACE_IOStream_String;
 typedef String ACE_IOStream_String;
 #endif /* ACE_WIN32 */
 
-#if defined (DIGITAL_UNIX) && defined (DEC_CXX)
+#if defined (DEC_CXX)
 # if __DECCXX_VER < 50700000
 #   include /**/ <stl_macros>
 # else
 #   include /**/ <stdcomp>
 # endif /* __DECCXX_VER < 50700000 */
-#endif /* DIGITAL_UNIX && DEC_CXX */
+#endif /* DEC_CXX */
 
 
 class ACE_Quoted_String : public ACE_IOStream_String
@@ -290,14 +290,14 @@ protected:
         : cur_mode_ == put_mode_ ? pbase_saved_
         : 0;
     }
-  char *ebuf (void) const 
-    { 
+  char *ebuf (void) const
+    {
       return cur_mode_ == 0 ? 0 : base() + streambuf_size_;
     }
 
-  int blen (void) const 
-    { 
-      return streambuf_size_; 
+  int blen (void) const
+    {
+      return streambuf_size_;
     }
 
   void setb (char* b, char* eb, int a=0)
@@ -305,9 +305,9 @@ protected:
       setbuf (b, (eb - b));
     }
 
-  int out_waiting (void) 
+  int out_waiting (void)
     {
-      return pptr () - pbase (); 
+      return pptr () - pbase ();
     }
 #endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 };
