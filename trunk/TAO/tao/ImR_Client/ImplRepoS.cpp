@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:609
+// be\be_codegen.cpp:617
 
 #ifndef _TAO_IDL_ORIG_IMPLREPOS_CPP_
 #define _TAO_IDL_ORIG_IMPLREPOS_CPP_
@@ -35,7 +35,7 @@
 
 #include "ImplRepoS.h"
 #include "tao/PortableServer/Operation_Table_Perfect_Hash.h"
-#include "tao/PortableServer/ForwardRequestC.h"
+#include "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h"
 #include "tao/PortableServer/Upcall_Command.h"
 #include "tao/PortableServer/Upcall_Wrapper.h"
 #include "tao/PortableServer/Basic_SArguments.h"
@@ -436,43 +436,16 @@ POA_ImplementationRepository::_TAO_ServerInformationIterator_Strategized_Proxy_B
   )
   ACE_THROW_SPEC ((CORBA::Exception))
 {
-  TAO_Abstract_ServantBase * const servant = obj->_servant ();
-  
-  TAO_Collocated_Skeleton collocated_skel;
-  int const status = servant->_find (op,
-                                     collocated_skel,
-                                     strategy,
-                                     op_len);
-  
-  if (status == -1)
-    {
-      ACE_THROW (CORBA::BAD_OPERATION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO));
-    }
-  
-  ACE_TRY
-    {
-      collocated_skel (servant,
-                       args,
-                       num_args
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-  ACE_CATCH (PortableServer::ForwardRequest, forward_request)
-    {
-      forward_obj =
-        CORBA::Object::_duplicate (forward_request.forward_reference.in ());
-      return;
-    }
-#else
-  ACE_CATCHANY
-    {
-      ACE_UNUSED_ARG (forward_obj);
-      ACE_RE_THROW;
-    }
-#endif /* TAO_HAS_MINIMUM_CORBA */
-  ACE_ENDTRY;
-  ACE_CHECK;
+  TAO::Direct_Collocation_Upcall_Wrapper collocation_upcall_wrapper;
+  collocation_upcall_wrapper.upcall (
+    obj, 
+    forward_obj, 
+    args, 
+    num_args, 
+    op, 
+    op_len, 
+    strategy 
+    ACE_ENV_ARG_PARAMETER);
 }
 
 //
@@ -1346,43 +1319,16 @@ POA_ImplementationRepository::_TAO_Administration_Strategized_Proxy_Broker::disp
   )
   ACE_THROW_SPEC ((CORBA::Exception))
 {
-  TAO_Abstract_ServantBase * const servant = obj->_servant ();
-  
-  TAO_Collocated_Skeleton collocated_skel;
-  int const status = servant->_find (op,
-                                     collocated_skel,
-                                     strategy,
-                                     op_len);
-  
-  if (status == -1)
-    {
-      ACE_THROW (CORBA::BAD_OPERATION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO));
-    }
-  
-  ACE_TRY
-    {
-      collocated_skel (servant,
-                       args,
-                       num_args
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-  ACE_CATCH (PortableServer::ForwardRequest, forward_request)
-    {
-      forward_obj =
-        CORBA::Object::_duplicate (forward_request.forward_reference.in ());
-      return;
-    }
-#else
-  ACE_CATCHANY
-    {
-      ACE_UNUSED_ARG (forward_obj);
-      ACE_RE_THROW;
-    }
-#endif /* TAO_HAS_MINIMUM_CORBA */
-  ACE_ENDTRY;
-  ACE_CHECK;
+  TAO::Direct_Collocation_Upcall_Wrapper collocation_upcall_wrapper;
+  collocation_upcall_wrapper.upcall (
+    obj, 
+    forward_obj, 
+    args, 
+    num_args, 
+    op, 
+    op_len, 
+    strategy 
+    ACE_ENV_ARG_PARAMETER);
 }
 
 //
@@ -3011,7 +2957,7 @@ POA_ImplementationRepository::Administration::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1575
+// be\be_visitor_root/root.cpp:1582
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:390
+// be\be_codegen.cpp:398
 
 #ifndef _TAO_IDL_ORIG_SERVEROBJECTS_H_
 #define _TAO_IDL_ORIG_SERVEROBJECTS_H_
@@ -263,7 +263,7 @@ namespace POA_ImplementationRepository
 } // module ImplementationRepository
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:997
+// be\be_codegen.cpp:1005
 
 
 #if defined (__ACE_INLINE__)
