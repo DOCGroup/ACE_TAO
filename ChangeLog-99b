@@ -1,3 +1,8 @@
+Wed Jun 16 00:48:12 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACE-INSTALL.html: Updated FreeBSD and Win32 static library
+	  instructions.
+
 Tue Jun 15 23:15:30 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
 	* ace/Thread_Manager.cpp: Removed explicit template instantiation
