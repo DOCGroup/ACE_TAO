@@ -1,3 +1,10 @@
+Tue Jan 12 00:18:15 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Event_Handler.h: Moved the priority_ and reactor_ data
+ 	  members into the private section of the class since these can
+ 	  always be accessed via their accessor methods.  Thanks to Mike
+ 	  Goldman <whig@by.net> for reporting this.
+
 Mon Jan 11 15:30:26 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Process.{h,i} (get_process_attributes,get_thread_attributes):
