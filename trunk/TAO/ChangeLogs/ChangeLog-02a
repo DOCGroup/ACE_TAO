@@ -1,3 +1,8 @@
+Thu Jan 17 18:59:14 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/PortableServer/IORInfo.cpp : 
+	  Fixes for the KCC statement-not-reachable warnings.
+
 Thu Jan 17 18:40:49 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/TAO_Internal.cpp: 
