@@ -1,3 +1,9 @@
+Thu Jul 21 14:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.h:
+          Removed the transport_cache accessor method, it was just declared
+          and not implemented, the ORB_Core know nothing about this
+
 Thu Jul 21 13:35:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport_Connector.cpp:

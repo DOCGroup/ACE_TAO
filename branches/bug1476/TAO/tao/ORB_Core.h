@@ -55,7 +55,6 @@ class TAO_Connector_Registry;
 class TAO_Resource_Factory;
 class TAO_Client_Strategy_Factory;
 class TAO_Server_Strategy_Factory;
-class TAO_Transport_Cache_Manager;
 
 class TAO_TSS_Resources;
 class TAO_Leader_Follower;
@@ -938,9 +937,6 @@ public:
 
   /// Return the valuetype adapter
   TAO_Valuetype_Adapter *& valuetype_adapter (void);
-
-  /// Return the underlying transport cache
-  TAO_Transport_Cache_Manager *transport_cache (void);
 
   /// Set and Get methods to indicate whether a BiDir IIOP policy has
   /// been set in the POA.
