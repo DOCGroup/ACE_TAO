@@ -1,3 +1,19 @@
+Sun May 14 12:43:35 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        (On behalf of Christopher Kohlhoff <chris@kohlhoff.com>)
+
+        * tao/Makefile.bor:
+          
+          Updated to reflect latest files. Thanks to Mogens Hansen
+          <mogens_h@dk-online.dk>.
+
+        * orbsvcs/orbsvcs/CosEvent.bor:
+        * orbsvcs/orbsvcs/DsLogAdmin.bor:
+        * orbsvcs/orbsvcs/RTEvent.bor:
+        * orbsvcs/orbsvcs/RTSched.bor:
+        
+          Added TAO_Svc_Utils library for linking.
+
 Sat May 13 23:27:31 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * examples/AMI/FL_Callback/AMI_Peer.dsp:

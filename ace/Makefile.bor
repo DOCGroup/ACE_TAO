@@ -129,6 +129,7 @@ OBJFILES = \
 	$(OBJDIR)\SOCK_Dgram.obj \
 	$(OBJDIR)\SOCK_Dgram_Bcast.obj \
 	$(OBJDIR)\SOCK_Dgram_Mcast.obj \
+	$(OBJDIR)\SOCK_Dgram_Mcast_QoS.obj \
 	$(OBJDIR)\SOCK_IO.obj \
 	$(OBJDIR)\SOCK_Stream.obj \
 	$(OBJDIR)\SPIPE.obj \
@@ -187,7 +188,7 @@ OBJFILES = \
 
 RESOURCE = $(OBJDIR)\ace.res
 
-CFLAGS = $(ACE_CFLAGS)
+CFLAGS = $(ACE_CFLAGS) -DACE_BUILD_DLL
 
 CPPDIR = .
 

@@ -1,3 +1,18 @@
+Sun May 14 12:43:35 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        (On behalf of Christopher Kohlhoff <chris@kohlhoff.com>)
+
+        * ace/Makefile.bor:
+        * include/makeinclude/ace_flags.bor:
+
+          Added new file, moved ACE_BUILD_DLL macro into ACE library's
+          makefile. Thanks also to Mogens Hansen <mogens_h@dk-online.dk>.
+
+        * include/makeinclude/recurse.bor:
+
+          Arguments like -i should now be propogated with makefile 
+          recursion
+
 Sun May 14 12:19:41 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/msvc_auto_compile.pl:
