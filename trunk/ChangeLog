@@ -2,7 +2,9 @@ Tue Jun  4 06:46:27 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* examples/C++NPv2/AC_Client_Logging_Daemon.cpp: Added the
 	  "1" parameter to the call to deactivate() method to simply
-	  "pulse" the queue.
+	  "pulse" the queue.  Also, changed the AC_Output_Handler::open()
+	  method to check if thr_count() == 0 when determining if to
+	  activate the service handler.	  
 
 	* ace/Message_Queue_T.h: Added new pulse parameter to
 	  ACE_Message_Queue::deactivate() so that callers can decide
