@@ -361,6 +361,9 @@ endif
 
 INSTALL_CHECK = <%if(dllout)%><%dllout%><%else%><%libout%><%endif%>
 ifeq ($(INSTALL_CHECK),.)
+  ifeq ($(PWD),)
+    PWD=$(shell pwd)
+  endif
   INSLIB = $(PWD)
 else
   INSLIB  = $(INSTALL_CHECK)
