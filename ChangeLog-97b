@@ -8,6 +8,12 @@ Tue Sep 23 10:13:57 1997  David L. Levine  <levine@cs.wustl.edu>
 	  Thanks to Vladimir Schipunov <vlad@staff.prodigy.com> for
 	  reporting this.
  	
+	* ace/config-aix-4.1.x.h: added ACE_HAS_PTHREAD_T and
+	  ACE_HAS_BROKEN_EXPLICIT_TEMPLATE_DESTRUCTOR #defines.
+	  Thanks to Vladimir Schipunov <vlad@staff.prodigy.com> for
+	  reporting the build problem on AIX 4.1, and to
+	  Torbjorn Lindgren <tl@funcom.no> for providing these fixes.
+
 	* ace/Token_Manager.{h,cpp},Object_Manager.{h,cpp}:
 	  preallocate ACE_Token_Manager creation lock.
 
