@@ -1,3 +1,12 @@
+Fri Nov 14 03:47:33 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/examples/RtEC/Kokyu/Makefile:
+          Only define BIN target and build if RTKokyuEvent and CosNaming
+          have been built.
+
+        * orbsvcs/orbsvcs/Makefile.RTKokyuEvent:
+          Added -*- Makefile -*- to top of file to highlight syntax.
+
 Fri Nov 14 02:51:44 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * examples/Logging/Logger_i.cpp:
