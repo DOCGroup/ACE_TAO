@@ -32,6 +32,12 @@ namespace CIAO
     return this->home_servant_poa_.in ();
   }
 
+  PortableServer::POA_ptr
+  Swapping_Container::the_facet_cons_POA (void) const
+  {
+    return this->facet_cons_poa_.in ();
+  }
+
   CORBA::Object_ptr
   Swapping_Container::get_home_objref (PortableServer::Servant p
                                        ACE_ENV_ARG_DECL)
@@ -39,6 +45,16 @@ namespace CIAO
   {
     return this->the_home_servant_POA ()->servant_to_reference (p
        ACE_ENV_ARG_PARAMETER);
+  }
+
+  void
+  Swapping_Container::deactivate_facet (PortableServer::ObjectId &oid
+                                        ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    this->the_facet_cons_POA ()->deactivate_object (oid
+       ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
   }
 
   int

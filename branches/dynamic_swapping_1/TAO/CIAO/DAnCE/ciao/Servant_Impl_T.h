@@ -95,6 +95,10 @@ namespace CIAO
     is_activated (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    void
+    activate_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
   protected: 
 
     CORBA::Boolean activated_;  

@@ -37,8 +37,10 @@ module Hello
   local interface CCM_Sender_Context : ::Components::SessionContext
   {
     void push_click_out (in ::Hello::TimeOut e);
-    ::Components::ConsumerDescriptions get_registered_consumer
+    ::Components::ConsumerDescriptions get_registered_consumers
       (in ::Components::FeatureName publisher_name);
+    void deactivate_facet (in ::Components::FeatureName name);
+    void update_port_activator (in ::Components::FeatureName name);
   };
 
   local interface CCM_SenderHomeImplicit
