@@ -1,0 +1,5 @@
+Sat May 17 17:18:38 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* First pass at providing a backend to the SunSoft's CORBA IDL
+	compiler front end.
+

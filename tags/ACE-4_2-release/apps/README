@@ -1,0 +1,17 @@
+The subdirectories in this directory provide a number of complete
+applications that utilize the ACE features.
+
+	. Gateway -- Implements a connection-oriented application-level
+	  gateway that uses source-based and destination-based routing
+	  of messages between peers connected via TCP/IP networks.
+	
+	. JAWS -- This is a high-performance HTTP Web server written
+	  with ACE.  It illustrates a number of sophisticated ACE
+	  concurrency and event demultiplexing strategies.
+
+	. Orbix-Examples -- Implements several applications that
+	  integrate ACE and Orbix (which is IONA's implementation of
+	  CORBA).  By default, these aren't compiled since most
+	  platforms don't have Orbix.
+
+	. gperf -- The GNU perfect hash function generator.

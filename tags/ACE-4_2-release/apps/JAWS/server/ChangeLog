@@ -1,0 +1,21 @@
+Tue May 20 22:49:24 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+
+	* JAWS_File.{h,cpp}: New class created to replace the old kludgy
+ 	  VFS thingy.  This new cached virtual filesystem is way cool: a
+ 	  file which is being retrieved can be simultaneously replaced
+ 	  without causing either reader or writer to wait.  Reference
+ 	  counts are maintained now, which was missing in VFS.  Also,
+ 	  there is no longer a dependency on the JXH_List template now,
+ 	  which is a plus.
+  	
+	* IO.cpp: Changes to adapt to the new virtual filesystem.  The
+	  changes all involved simplifications to the programming
+	  interface.
+
+	* HTTP_Handler.cpp: Changes required to deal with the more
+	  generic error responses returned from the JAWS_File/JAWS_IO
+	  interface.  This generality will make it easier to adapt
+	  JAWS_File and JAWS_IO into ACE.
+
+	* test_JAWS_File.cpp: A test program written to see if the new
+	  virtual filesystem works the way I expect it to.

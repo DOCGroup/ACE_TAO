@@ -1,0 +1,23 @@
+This application illustrates an application-level Gateway which routes
+messages between Consumer and Suppliers in a distributed environment.
+
+The default configuration is single-threaded, i.e., all
+Supplier_Proxys and Consumer_Proxys are multiplexed via the ACE
+Reactor within a single thread of control.  To obtain a version that
+multi-threads both Consumer_Proxys and Supplier_Proxys simply set
+the following flag in the Makefile:
+
+DEFFLAGS += -DUSE_OUTPUT_MT -DUSE_INPUT_MT
+
+To get a version that uses single-threading for all Supplier_Proxys,
+but a separate thread per-Consumer_Proxy set the following flag in
+the Makefile:
+
+DEFFLAGS += -DUSE_OUTPUT_MT 
+
+If you examine the source code, you'll see that very few changes are
+required in the source code to switch between single-threading and
+multi-threading.  The ACE Task class is primarily responsible for
+enabling the flexible modification of concurrency strategies with only
+minor changes required to the source code, design, and system
+architecture.
