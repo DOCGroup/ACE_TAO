@@ -1,3 +1,18 @@
+Tue Feb 24 17:34:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Synch-Benchmarks/Perf_Test/Adaptive_Lock_Performance_Test_Base.h:
+        * performance-tests/Synch-Benchmarks/Perf_Test/adaptive_mutex_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/adaptive_recursive_lock_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/adaptive_sema_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Benchmark_Performance.{h,cpp}:
+        * performance-tests/Synch-Benchmarks/Perf_Test/guard_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test.{h,cpp}:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test_Options.{h,cpp,i}:
+        * performance-tests/Synch-Benchmarks/Perf_Test/pipe_proc_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/pipe_thr_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/sysvsema_test.cpp:
+          Fixed compile problems in wchar builds
+
 Tue Feb 24 07:49:17 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
