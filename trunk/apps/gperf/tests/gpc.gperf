@@ -9,7 +9,7 @@
  *
  */
 %}
-struct resword { char *name; short token; short iclass;};
+struct resword { const char *name; short token; short iclass;};
 %%
 And,  AND,  PASCAL_ISO
 Array,  ARRAY,  PASCAL_ISO

@@ -56,7 +56,7 @@ hash (str, len)
   return hval;
 }
 
-char *
+const char *
 in_word_set (str, len)
      char *str;
      unsigned int len;
@@ -173,7 +173,7 @@ in_word_set (str, len)
 
       if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)
         {
-          char *s = wordlist[key];
+          const char *s = wordlist[key];
 
           if (len == lengthtable[key]
               && *str == *s && !strcmp (str + 1, s + 1))
