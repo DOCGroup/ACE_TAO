@@ -46,7 +46,7 @@ Test_DynStruct::run_test (void)
 
   DynAnyTests::test_struct ts;
   ts.c = data.m_char2;
-  ts.ll = data.m_longlong2;
+  ts.l = data.m_long2;
   ts.es.f = data.m_float2;
   ts.es.s = data.m_short2;
 
@@ -67,7 +67,7 @@ Test_DynStruct::run_test (void)
       fa1->insert_char (data.m_char1,
                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      fa1->insert_longlong (data.m_longlong1,
+      fa1->insert_long (data.m_long1,
         ACE_TRY_ENV);
       ACE_TRY_CHECK;
       fa1->current_component (ACE_TRY_ENV)->insert_float (data.m_float1,
@@ -84,14 +84,15 @@ Test_DynStruct::run_test (void)
       ACE_TRY_CHECK;
       if (c != data.m_char1)
         ++this->error_count_;
-      CORBA::LongLong ll = fa1->get_longlong (ACE_TRY_ENV);
+      CORBA::Long l = fa1->get_long (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (ll != data.m_longlong1)
+      if (l != data.m_long1)
         ++this->error_count_;
       fa1->current_component(ACE_TRY_ENV)->seek (1,
                                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::Short s = fa1->current_component (ACE_TRY_ENV)->get_short (ACE_TRY_ENV);
+      CORBA::Short s = 
+        fa1->current_component (ACE_TRY_ENV)->get_short (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       if (s != data.m_short1)
         ++this->error_count_;
@@ -107,7 +108,7 @@ Test_DynStruct::run_test (void)
                                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
       ts.c = data.m_char1;
-      ts.ll = data.m_longlong1;
+      ts.l = data.m_long1;
       ts.es.f = data.m_float1;
       ts.es.s = data.m_short1;
       CORBA_Any in_any2;

@@ -15,7 +15,7 @@ module DynAnyTests
   struct test_struct 
   {
     char c;
-    long long ll;
+    long l;
     enclosed_struct es;
   };
 
