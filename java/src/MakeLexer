@@ -1,4 +1,0 @@
-# What to do to make the Lexer
-java JLex.Main Yylex.lex
-rm Yylex.java
-mv Yylex.lex.java Yylex.java
