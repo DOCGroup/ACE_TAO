@@ -1,3 +1,8 @@
+Sun Mar 14 12:18:16 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/WFMO_Reactor/Window_Messages.cpp:
+          Fixed warning in MinGW build.
+
 Sun Mar 14 12:16:53 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/WFMO_Reactor/Talker.cpp:
