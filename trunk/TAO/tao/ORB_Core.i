@@ -49,6 +49,11 @@ TAO_ORB_Core::object_ref_table (void)
   return this->object_ref_table_;
 }
 
+ACE_INLINE TAO_Flushing_Strategy *
+TAO_ORB_Core::flushing_strategy (void)
+{
+  return this->flushing_strategy_;
+}
 
 ACE_INLINE CORBA::Boolean
 TAO_ORB_Core::service_profile_selection (TAO_MProfile &mprofile,

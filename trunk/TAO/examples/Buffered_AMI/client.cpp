@@ -61,13 +61,42 @@ public:
         received_all_replies = 1;
     }
 
-  void method_excep (AMI_testExceptionHolder *,
+  void method_excep (AMI_testExceptionHolder *holder,
                      CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
-    {
-      ACE_PRINT_EXCEPTION ((*ACE_TRY_ENV.exception ()),
-                           "AMI exception caught:");
-    }
+  {
+    ACE_TRY
+      {
+        holder->raise_method (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+      }
+    ACE_CATCH(CORBA::SystemException, ex)
+      {
+        ACE_PRINT_EXCEPTION (ex, "Reply_Handler::method_excep: ");
+      }
+    ACE_ENDTRY;
+  }
+
+  void shutdown (CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+  }
+
+  void shutdown_excep (AMI_testExceptionHolder *holder,
+                       CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    ACE_TRY
+      {
+        holder->raise_shutdown (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+      }
+    ACE_CATCH(CORBA::SystemException, ex)
+      {
+        ACE_PRINT_EXCEPTION (ex, "Reply_Handler::shutdown_excep: ");
+      }
+    ACE_ENDTRY;
+  }
 };
 
 static int

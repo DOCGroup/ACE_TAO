@@ -8,10 +8,30 @@ how to run the following tests:
 
           This is a simple test for AMI callback model.
 
+        . AMI_Buffering
+        
+          Test the buffering constraint policy when applied to AMI
+	  requests.
+
         . AMI_Timeouts
         
           This is a simple test for AMI callback model in combination with
           timeouts (relative roundtrip timeout policy).
+
+	. Big_Oneways
+
+	  Stress test non-blocking I/O features in the ORB.
+
+	. Big_Twoways
+
+	  More stress testing for the non-blocking I/O features in the
+	  ORB, this time also test receiving big blocks of data.
+
+	. Big_Requests_Muxing
+
+	  More stress testing for the non-blocking I/O features in the
+	  ORB, this time we send reliable and unreliable oneways
+	  through the same connection.
 
         . Bidirectional
 

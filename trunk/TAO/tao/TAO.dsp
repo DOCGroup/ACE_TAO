@@ -187,6 +187,10 @@ SOURCE=.\Asynch_Invocation.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Asynch_Queued_Message.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Asynch_Reply_Dispatcher.cpp
 # End Source File
 # Begin Source File
@@ -204,6 +208,10 @@ SOURCE=.\BiDir_Adapter.cpp
 # Begin Source File
 
 SOURCE=.\Bind_Dispatcher_Guard.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Block_Flushing_Strategy.cpp
 # End Source File
 # Begin Source File
 
@@ -360,6 +368,10 @@ SOURCE=.\Fault_Tolerance_Service.cpp
 # Begin Source File
 
 SOURCE=.\FILE_Parser.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Flushing_Strategy.cpp
 # End Source File
 # Begin Source File
 
@@ -659,6 +671,14 @@ SOURCE=.\Protocols_Hooks.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Queued_Message.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Reactive_Flushing_Strategy.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Reactor_Registry.cpp
 # End Source File
 # Begin Source File
@@ -700,10 +720,6 @@ SOURCE=.\RT_Mutex.cpp
 # Begin Source File
 
 SOURCE=.\RT_ORB.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Thread_Pool.cpp
 # End Source File
 # Begin Source File
 
@@ -775,6 +791,10 @@ SOURCE=.\Sync_Strategies.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Synch_Queued_Message.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Synch_Reply_Dispatcher.cpp
 # End Source File
 # Begin Source File
@@ -807,6 +827,10 @@ SOURCE=.\target_specification.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Thread_Pool.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\TimeBaseC.cpp
 # End Source File
 # Begin Source File
@@ -828,6 +852,10 @@ SOURCE=.\Transport_Descriptor_Interface.cpp
 # Begin Source File
 
 SOURCE=.\Transport_Mux_Strategy.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport_Timer.cpp
 # End Source File
 # Begin Source File
 
@@ -907,6 +935,10 @@ SOURCE=.\Asynch_Invocation.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Asynch_Queued_Message.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Asynch_Reply_Dispatcher.h
 # End Source File
 # Begin Source File
@@ -919,7 +951,15 @@ SOURCE=.\Base_Transport_Property.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\BiDir_Adapter.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Bind_Dispatcher_Guard.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Block_Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
@@ -1088,6 +1128,10 @@ SOURCE=.\Fault_Tolerance_Service.h
 # Begin Source File
 
 SOURCE=.\FILE_Parser.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
@@ -1427,6 +1471,18 @@ SOURCE=.\Protocols_Hooks.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Queued_Message.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Queued_Message.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Reactive_Flushing_Strategy.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Reactor_Registry.h
 # End Source File
 # Begin Source File
@@ -1468,10 +1524,6 @@ SOURCE=.\RT_Mutex.h
 # Begin Source File
 
 SOURCE=.\RT_ORB.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Thread_Pool.h
 # End Source File
 # Begin Source File
 
@@ -1555,6 +1607,10 @@ SOURCE=.\Sync_Strategies.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Synch_Queued_Message.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Synch_Reply_Dispatcher.h
 # End Source File
 # Begin Source File
@@ -1603,6 +1659,10 @@ SOURCE=.\target_specification.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Thread_Pool.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\TimeBaseC.h
 # End Source File
 # Begin Source File
@@ -1636,6 +1696,10 @@ SOURCE=.\Transport_Descriptor_Interface.h
 # Begin Source File
 
 SOURCE=.\Transport_Mux_Strategy.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport_Timer.h
 # End Source File
 # Begin Source File
 
@@ -2120,10 +2184,6 @@ SOURCE=.\RT_Mutex.i
 # Begin Source File
 
 SOURCE=.\RT_ORB.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Thread_Pool.i
 # End Source File
 # Begin Source File
 

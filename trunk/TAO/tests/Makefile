@@ -65,7 +65,12 @@ DIRS  = CDR \
 	Crash_On_Write \
 	Reliable_Oneways \
 	Blocking_Sync_None \
-	Oneway_Buffering
+	Oneway_Buffering \
+	Queued_Message_Test \
+	Big_Oneways \
+	Big_Twoways \
+	Big_Request_Muxing \
+	AMI_Buffering
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
