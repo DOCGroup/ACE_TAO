@@ -1,3 +1,20 @@
+Tue Oct  5 09:46:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Adapter_Activator.h:
+          Removed comment of Bala
+
+        * tao/PortableServer/POAManager.h:
+          Reduced needed includes
+
+        * tao/PortableServer/Adapter_Activator.cpp:
+        * tao/PortableServer/Adapter_Activator.h:
+        * tao/PortableServer/Default_Servant_Dispatcher.h:
+        * tao/PortableServer/IdAssignmentPolicyFactory.cpp:
+        * tao/PortableServer/IdAssignmentPolicyValue.h:
+        * tao/PortableServer/PolicyFactory.cpp:
+        * tao/PortableServer/PolicyFactory.h:
+          Bala has added some remarks to these files
+
 Thu Sep 30 13:50:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA_Cached_Policies.h:
