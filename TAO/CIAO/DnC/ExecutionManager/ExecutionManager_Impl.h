@@ -53,15 +53,7 @@ namespace CIAO
       ExecutionManager_Impl (CORBA::ORB_ptr orb,
                              PortableServer::POA_ptr poa,
                              const char * init_file
-                             ACE_ENV_ARG_DECL);
-
-      // @@ (OO) Since this class is reference counted, please make this
-      //         destructor protected to enforce proper memory managment
-      //         through the reference counting mechanism (i.e. to
-      //         disallow calling operator delete() on an instance of
-      //         this class.
-      /// Destructor.
-      ~ExecutionManager_Impl ();
+                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
       /// Generate an ApplicationManager factory.
       virtual Deployment::DomainApplicationManager_ptr
@@ -110,6 +102,9 @@ namespace CIAO
       Table;
       typedef Table::iterator Iterator;
       */
+
+      /// Destructor.
+      ~ExecutionManager_Impl ();
 
       /// Cached ORB pointer
       CORBA::ORB_var orb_;

@@ -9,32 +9,22 @@ CIAO::ExecutionManager_Impl::ExecutionManager_Impl (CORBA::ORB_ptr orb,
                                                     ACE_ENV_ARG_DECL)
   : orb_ (CORBA::ORB::_duplicate  (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
-    init_file_ (init_file)
-  // @@ (OO) To be safe you should initialize dam_servant_ to zero to
-  //         make it easier to spot memory access errors at run-time.
+    init_file_ (init_file),
+    dam_servant_ (0)
 {
 }
 
 CIAO::ExecutionManager_Impl::~ExecutionManager_Impl ()
 {
-  // @@ (OO) What does this comment apply to?
-  // Delete the Map for maintaining
-
-  // @@ (OO) Production code should not display debugging output
-  //         unless requested by the user.  You should probably make
-  //         the following output dependent on CIAO's debugging flag.
-  ACE_DEBUG ((LM_DEBUG, "Exec Dtor\n"));
+  if (CIAO::debug_level () > 1)
+    ACE_DEBUG ((LM_DEBUG, "ExecutionManager Dtor\n"));
 }
-
-// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
-//         versions of emulated exception parameters.  Please remove
-//         the "_WITH_DEFAULTS"
 
 Deployment::DomainApplicationManager_ptr
 CIAO::ExecutionManager_Impl::
 preparePlan (const Deployment::DeploymentPlan &plan,
              CORBA::Boolean
-             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::ResourceNotAvailable,
                    Deployment::PlanError,
@@ -53,10 +43,9 @@ preparePlan (const Deployment::DeploymentPlan &plan,
                      plan,
                      this->init_file_.c_str ()),
                     CORBA::NO_MEMORY ());
-  // @@ (OO) You're missing an
-  //           ACE_CHECK_RETURN (Deployment::DomainApplicationManager::_nil())
-  //         here.  Emulated exceptions won't function correctly
-  //         without it.
+
+  ACE_CHECK_RETURN (Deployment::DomainApplicationManager::_nil());
+
 
   // @@ (OO) If this method is ever called twice in a row, you're
   //         going to leak the previous instance since you don't
@@ -84,38 +73,26 @@ preparePlan (const Deployment::DeploymentPlan &plan,
     = this->poa_->activate_object (this->dam_servant_
                                    ACE_ENV_ARG_PARAMETER);
 
-  // @@ (OO) Even though the return value of zero works,
-  //         Deployment::DomainApplicationManager::_nil () should
-  //         technically be returned instead since "_ptr" need not be
-  //         C++ pointer typedefs.  They could conceivably be classes,
-  //         for example.
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (Deployment::DomainApplicationManager::_nil ());
 
   // Get the reference of the object.
   CORBA::Object_var objref
     = this->poa_->id_to_reference (oid.in ()
                                    ACE_ENV_ARG_PARAMETER);
-  // @@ (OO) Same here.  Deployment::DomainApplicationManager::_nil ()
-  //         instead of zero.
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (Deployment::DomainApplicationManager::_nil ());
 
   this->dam_ =
     Deployment::DomainApplicationManager::_narrow (objref.in ()
                                                    ACE_ENV_ARG_PARAMETER);
-  // @@ (OO) Same here.  Deployment::DomainApplicationManager::_nil ()
-  //         instead of zero.
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (Deployment::DomainApplicationManager::_nil ());
 
   // Return the ApplicationManager instance
   return Deployment::DomainApplicationManager::_duplicate (this->dam_.in ());
 }
 
 
-// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
-//         versions of emulated exception parameters.  Please remove
-//         the "_WITH_DEFAULTS"
 Deployment::DomainApplicationManagers *
-CIAO::ExecutionManager_Impl::getManagers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO::ExecutionManager_Impl::getManagers (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ (OO) Since you're not doing anything with the allocated
@@ -123,33 +100,18 @@ CIAO::ExecutionManager_Impl::getManagers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   //         return the pointer.
 
   // Initialize the list of DomainApplication Managers
-  Deployment::DomainApplicationManagers_var list = 0;
-  ACE_NEW_THROW_EX (list,
+  Deployment::DomainApplicationManagers_var list;
+  /*ACE_NEW_THROW_EX (list,
                     Deployment::DomainApplicationManagers,
                     CORBA::NO_MEMORY());
-  // @@ (OO) You're missing an ACE_CHECK_RETURN (0) here.  Emulated
-  //         exceptions won't function correctly without it.
-
-  // @@ (OO) Should remove the above allocation and instead throw a
-  //         CORBA::NO_IMPLEMENT() instead?
-  //
-  //         Production code should not display debugging output
-  //         unless requested by the user.  You should probably make
-  //         the following output dependent on CIAO's debugging flag.
-  ACE_DEBUG ((LM_DEBUG, "Not Implemented!\n"));
-
-  // @@ (OO) This is redundant.  A default constructed sequence
-  //         already has a length of zero.  Please remove this.
-  list->length (0);
+  ACE_CHECK_RETURN (0)
+  */
   return list._retn ();
 }
 
-// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
-//         versions of emulated exception parameters.  Please remove
-//         the "_WITH_DEFAULTS"
 void
 CIAO::ExecutionManager_Impl::destroyManager (Deployment::DomainApplicationManager_ptr manager
-                                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StopError))
 {
@@ -190,11 +152,8 @@ CIAO::ExecutionManager_Impl::destroyManager (Deployment::DomainApplicationManage
   ACE_ENDTRY;
 }
 
-// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
-//         versions of emulated exception parameters.  Please remove
-//         the "_WITH_DEFAULTS"
 void
-CIAO::ExecutionManager_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO::ExecutionManager_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ (OO) You're using the wrong emulated exception macro below.

@@ -13,7 +13,7 @@ namespace CIAO
     // @@ (OO) Since leng is a constant, please declare it as such,
     //         i.e. "const CORBA::ULong len = ...", to improve "const
     //         correctness".
-    CORBA::ULong len = plan.instance.length ();
+    const CORBA::ULong len = plan.instance.length ();
     info.length (len);
 
     for (CORBA::ULong i = 0; i < len; ++i)
@@ -27,10 +27,7 @@ namespace CIAO
         const Deployment::MonolithicDeploymentDescription & impl =
           plan.implementation[inst.implementationRef];
 
-        // @@ (OO) Since artifact_num is a constant, please declare it
-        //         as such, i.e. "const CORBA::ULong length = ...", to
-        //         improve "const correctness".
-        CORBA::ULong artifact_num = impl.artifactRef.length ();
+        const CORBA::ULong artifact_num = impl.artifactRef.length ();
 
         // Copy Component instance related Properties if there is any.
         if (inst.configProperty.length () > 0)
@@ -62,14 +59,10 @@ namespace CIAO
                 // @@ Note: I ignore all the other locations except the first one.
                 info[i].servant_dll = CORBA::string_dup (arti.location[0].in ());
 
-                // @@ (OO) The "continue loop" condition portion of
-                //         the for statement is executed during each
-                //         loop iteration.  To improve performance
-                //         execute it only once outside the for-loop.
-
-                // Get the entry point.
+		// Get the entry point.
+		const CORBA::ULong prop_length = arti.execParameter.length ();
                 for (CORBA::ULong prop_num = 0;
-                     prop_num < arti.execParameter.length ();
+                     prop_num < prop_length;
                      ++prop_num)
                   {
                     ACE_CString name (arti.execParameter[prop_num].name.in ());
@@ -100,14 +93,10 @@ namespace CIAO
                 // @@ Note: I ignore all the other locations except the first one.
                 info[i].executor_dll = CORBA::string_dup (arti.location[0].in ());
 
-                // @@ (OO) The "continue loop" condition portion of
-                //         the for statement is executed during each
-                //         loop iteration.  To improve performance
-                //         execute it only once outside the for-loop.
-
                 // Get the entry point.
+		const CORBA::ULong prop_length = arti.execParameter.length ();
                 for (CORBA::ULong prop_num = 0;
-                     prop_num < arti.execParameter.length ();
+                     prop_num < prop_length;
                      ++prop_num)
                   {
                     ACE_CString name (arti.execParameter[prop_num].name.in ());
