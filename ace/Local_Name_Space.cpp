@@ -116,7 +116,7 @@ ACE_NS_String::ACE_NS_String (ACE_USHORT16 *dst,
 size_t
 ACE_NS_String::hash (void) const
 {
-  return ACE::hash_pjw (ACE_reinterpret_cast (char *, this->rep_),
+  return ACE::hash_pjw (ACE_reinterpret_cast (char * const, this->rep_),
                         this->len_ * sizeof (ACE_USHORT16));
 }
 
