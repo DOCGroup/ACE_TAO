@@ -1,4 +1,21 @@
-Wed Apr  9 20:25:36 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Wed Apr  9 21:11:38 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* examples/Connection/non_blocking/CPP-connector.h: Added a
+ 	  do-nothing default constructor to keep ACE_Connector happy.
+
+	* examples/Connection/misc/test_upipe.cpp: Added a do-nothing
+ 	  default constructor to keep ACE_Connector happy.
+
+	* examples/Connection/blocking/SPIPE-connector.h: Added a
+ 	  do-nothing default constructor to keep ACE_Connector happy.
+
+	* apps/Gateway/Gateway/Proxy_Handler: Added a do-nothing default
+ 	  constructor to keep ACE_Connector happy.
+
+	* netsvcs/lib: Added some default arguments to
+ 	  TS_Clerk_Handler.cpp and Client_Logger_Handler.cpp to keep the
+ 	  compiler from complaining about the new ACE_Connector features.
+  	  Thanks to David Levine for reporting this.
 
 	* ace/Timer_Heap.cpp (reheap_down): Fixed a *very* subtle bug in
  	  reheap_down() where parent was starting off at 0 whereas it

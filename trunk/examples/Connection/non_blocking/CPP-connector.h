@@ -11,7 +11,7 @@ template <ACE_PEER_STREAM_1>
 class Peer_Handler : public ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH>
 {
 public:
-  Peer_Handler (ACE_Reactor *r);
+  Peer_Handler (ACE_Reactor *r = 0);
 
   virtual int open (void * = 0);
   // Activate the handler when connection is established.

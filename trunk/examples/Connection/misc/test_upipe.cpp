@@ -24,6 +24,7 @@ class Server_Service : public SVC_HANDLER
 {
 public:
   Server_Service (ACE_Thread_Manager * = 0) {}
+
   virtual int open (void *)
     {
       ACE_TRACE ("Server_Service::open");
@@ -93,7 +94,7 @@ class Client_Service : public SVC_HANDLER
   //     stdin and forward the data to its server.
 {
 public:
-  Client_Service (ACE_Thread_Manager *thr_mgr)
+  Client_Service (ACE_Thread_Manager *thr_mgr = 0)
     : SVC_HANDLER (thr_mgr)
     {
       ACE_TRACE ("Client_Service::Client_Service");
