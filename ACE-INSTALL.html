@@ -880,7 +880,7 @@ need to do:<P>
       contains the compiler and Makefile directives that are
       platform/compiler-specific<P>
 
-  <LI>Note that since ACE builds shared libraries, you'll need to set
+  <LI>Note that because ACE builds shared libraries, you'll need to set
       LD_LIBRARY_PATH to whereever you put the binary version of the
       ACE library.  For example, you probably want to do something
       like the following<P>
@@ -1175,13 +1175,13 @@ are several ways to do this; please see the
 platform file for detailed information.<P>
 
 The VxWorks platform_vxworks*.GNU files are set up so that shared
-libraries are not built on VxWorks.  Only static libraries,
-with .a extension, are built.  Therefore, it's not necessary
-to set the LD_LIBRARY_PATH environment variable on your host
-system when building for VxWorks targets.  Please note, however,
-if you use TAO on VxWorks that you will need to set your LD_LIBRARY_PATH
-to find the TAO IDL compiler libraries (installed in the ace directory)
-on the host.<P>
+libraries are not built on VxWorks, by default.  Only static
+libraries, with .a extension, are built.  Therefore, it's not
+necessary to set the LD_LIBRARY_PATH environment variable on your host
+system when building for VxWorks targets.  Please note, however, if
+you use TAO on VxWorks that you will need to set your LD_LIBRARY_PATH
+to find the TAO IDL compiler libraries (installed in the ace
+directory) on the host.<P>
 
 With g++, $ACE_ROOT/bin/ace_ld is used to munch object files and
 libraries to set up calls to static constructors and destructors.
@@ -1274,6 +1274,13 @@ the should load against the symbols from the ACE library from the
 first executable that was loaded.<p>
 
 <h5><a name="VxWorks/SharedLibs">Building Shared Libraries for VxWorks</a>.</h5>
+
+<strong>NOTE</strong>: The ACE support for shared libraries is
+under development.  If you use any writeable global (static)
+data in a shared library, it probably won't work for you.  A
+fix is under development, and should be ready shortly after
+the release of ACE 5.0.<p>
+
 ACE now supports shared libraries for VxWorks, but only with the
 g++ compiler.  To build shared libraries instead of the default
 static libraries, added <code>shared_libs_only=1</code> to either
