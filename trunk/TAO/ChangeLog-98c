@@ -1,3 +1,57 @@
+Sat Dec 06 15:42:25 1997    <nw1@DINGO>
+
+	* tests/Cubit/TAO/IDL_Cubit/{server,client}.dsp: Updated link time
+	  library names.
+	  
+	* tao/any.cpp: 
+	* tao/any.h: 
+	* tao/corba.h: 
+	* tao/corbacom.h:
+	* tao/decode.cpp: 
+	* tao/encode.cpp: 
+	* tao/except.cpp: 
+	* tao/except.h: 
+	* tao/giop.cpp: 
+	* tao/iiopobj.cpp: 
+	* tao/iiopobj.h: 
+	* tao/iioporb.cpp: 
+	* tao/iioporb.h: 
+	* tao/nvlist.cpp: 
+	* tao/nvlist.h: 
+	* tao/object.cpp: 
+	* tao/object.h: 
+	* tao/object.i: 
+	* tao/orbobj.cpp: 
+	* tao/orbobj.h: 
+	* tao/orbobj.i: 
+	* tao/poa.cpp: 
+	* tao/poa.h: 
+	* tao/principa.cpp: 
+	* tao/principa.h: 	
+	* tao/request.cpp: 
+	* tao/request.h: 
+	* tao/stub.h: 
+	* tao/svrrqst.cpp: 
+	* tao/svrrqst.h: 
+	* tao/typecode.cpp: 
+	* tao/typecode.h: 
+	* tao/compat/initguid.h: 
+	* tao/compat/objbase.h: Removed dependencies on Microsoft's DCOM
+	  files.  Below is a list of names that got changed.  
+
+	    HRESULT -> TAO_HRESULT
+	    IID -> TAO_IID
+	    IUnknown -> TAO_IUnknown
+	    IID_IUnknown -> IID_TAO_IUnknown
+	    SCODE -> TAO_SCODE
+	    NOERROR -> TAO_NOERROR
+	    E_NOINTERFACE -> TAO_E_NOINTERFACE
+	    VARTYPE -> TAO_VARTYPE
+	    VARENUM -> TAO_VARENUM
+	    CY -> TAO_CY
+	    VARIANT -> TAO_VARIANT
+	    DATE -> TAO_DATE
+
 Fri Dec  5 11:42:25 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/iiopobj.cpp (set): Changed the IIOP::Profile::set() methods
