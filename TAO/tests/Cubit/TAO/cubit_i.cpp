@@ -56,7 +56,7 @@ Cubit_i::Cubit_cube_struct (Cubit_Many        &values,
 }
 
 Cubit_oneof *
-Cubit_i::Cubit_cube_union (Cubit_oneof       &values,
+Cubit_i::Cubit_cube_union (Cubit_oneof &values,
                            CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
@@ -64,18 +64,25 @@ Cubit_i::Cubit_cube_union (Cubit_oneof       &values,
     {
     case e_0th:
       values.o = (CORBA::Octet) (values.o * values.o * values.o);
+      ACE_DEBUG ((LM_DEBUG, "e_0th = %d\n", values.o));
       break;
     case e_1st:
       values.s = (CORBA::Short) (values.s * values.s * values.s);
+      ACE_DEBUG ((LM_DEBUG, "e_1st = %d\n", values.s));
       break;
     case e_2nd:
       values.l = values.l * values.l * values.l;
+      ACE_DEBUG ((LM_DEBUG, "e_2nd = %d\n", values.l));
       break;
     case e_3rd:
     default:
       values.cm.o = (CORBA::Octet) (values.cm.o * values.cm.o * values.cm.o);
       values.cm.s = (CORBA::Short) (values.cm.s * values.cm.s * values.cm.s);
       values.cm.l = values.cm.l * values.cm.l * values.cm.l;
+      ACE_DEBUG ((LM_DEBUG, "e_3rd = %d, %d, %d\n", 
+		  values.cm.o,
+		  values.cm.s,
+		  values.cm.l));
     }
   return &values;
 }
