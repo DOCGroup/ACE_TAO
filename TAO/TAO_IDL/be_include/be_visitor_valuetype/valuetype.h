@@ -102,13 +102,16 @@ public:
   // generate the _init implementation
 
 protected:
-  static idl_bool obv_need_ref_counter (be_valuetype* node);
+  static idl_bool obv_need_ref_counter (be_valuetype *node);
   // check is VT needs a RefCounter mix-in in OBV_ class
   // suppose that we are deciding for this node
 
-  static idl_bool obv_have_ref_counter (be_valuetype* node);
+  static idl_bool obv_have_ref_counter (be_valuetype *node);
   // recurse down the inheritance tree to see
   // if node or one of its OBV_ base class already has RefCounter
+
+  idl_bool is_amh_exception_holder (be_valuetype *node);
+  // Predicate common to _ch and _cs visitors.
 };
 
 #endif /*  _BE_VALUETYPE_VALUETYPE_H_ */

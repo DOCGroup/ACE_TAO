@@ -1522,19 +1522,17 @@ be_interface::gen_perfect_hash_class_definition (const char *flat_name)
   // Outstream.
   TAO_OutStream *os = this->strategy_->get_out_stream ();
 
-  *os << "class " << "TAO_" << flat_name << "_Perfect_Hash_OpTable"
-      << " : public TAO_Perfect_Hash_OpTable"
-      << be_nl
-      << "{"
-      << be_nl
-      << "private:"
-      << be_nl
-      << "  unsigned int hash (const char *str, unsigned int len);"
-      << be_nl
-      << "public:"
-      << be_nl
-      << " const TAO_operation_db_entry * lookup (const char *str, unsigned int len);"
-      << be_nl
+  *os << "class " << "TAO_" << flat_name << "_Perfect_Hash_OpTable" 
+      << be_idt_nl
+      << ": public TAO_Perfect_Hash_OpTable" << be_uidt_nl
+      << "{" << be_nl
+      << "private:" << be_idt_nl
+      << "unsigned int hash (const char *str, unsigned int len);" 
+      << be_uidt_nl << be_nl
+      << "public:" << be_idt_nl
+      << "const TAO_operation_db_entry * lookup "
+      << "(const char *str, unsigned int len);"
+      << be_uidt_nl
       << "};\n\n";
 }
 
@@ -1547,14 +1545,12 @@ be_interface::gen_binary_search_class_definition (const char *flat_name)
   TAO_OutStream *os = this->strategy_->get_out_stream ();
 
   *os << "class " << "TAO_" << flat_name << "_Binary_Search_OpTable"
-      << " : public TAO_Binary_Search_OpTable"
-      << be_nl
-      << "{"
-      << be_nl
-      << "public:"
-      << be_nl
-      << " const TAO_operation_db_entry * lookup (const char *str);"
-      << be_nl
+      << be_idt_nl
+      << ": public TAO_Binary_Search_OpTable" << be_uidt_nl
+      << "{" << be_nl
+      << "public:" << be_idt_nl
+      << "const TAO_operation_db_entry * lookup (const char *str);"
+      << be_uidt_nl
       << "};\n\n";
 }
 
@@ -1567,14 +1563,12 @@ be_interface::gen_linear_search_class_definition (const char *flat_name)
   TAO_OutStream *ss = this->strategy_->get_out_stream ();
 
   *ss << "class " << "TAO_" << flat_name << "_Linear_Search_OpTable"
-      << " : public TAO_Linear_Search_OpTable"
-      << be_nl
-      << "{"
-      << be_nl
-      << "public:"
-      << be_nl
-      << " const TAO_operation_db_entry * lookup (const char *str);"
-      << be_nl
+      << be_idt_nl
+      << ": public TAO_Linear_Search_OpTable" << be_nl
+      << "{" << be_nl
+      << "public:" << be_idt_nl
+      << "const TAO_operation_db_entry * lookup (const char *str);"
+      << be_uidt_nl
       << "};\n\n";
 }
 
@@ -1764,10 +1758,10 @@ be_interface::gen_perfect_hash_instance (const char *flat_name)
   // Outstream.
   TAO_OutStream *os = this->strategy_->get_out_stream ();
 
-  *os << "static TAO_" << flat_name << "_Perfect_Hash_OpTable"
+  *os << be_nl
+      << "static TAO_" << flat_name << "_Perfect_Hash_OpTable"
       << " "
-      << "tao_" << flat_name << "_optable"
-      << ";\n" << be_nl;
+      << "tao_" << flat_name << "_optable;";
 }
 
 // Create an instance of the binary search optable.
@@ -1777,10 +1771,10 @@ be_interface::gen_binary_search_instance (const char *flat_name)
   // Outstream.
   TAO_OutStream *os = this->strategy_->get_out_stream ();
 
-  *os << "static TAO_" << flat_name << "_Binary_Search_OpTable"
+  *os << be_nl
+      << "static TAO_" << flat_name << "_Binary_Search_OpTable"
       << " "
-      << "tao_" << flat_name << "_optable"
-      << ";\n" << be_nl;
+      << "tao_" << flat_name << "_optable;";
 }
 
 
@@ -1791,10 +1785,10 @@ be_interface::gen_linear_search_instance (const char *flat_name)
   // Outstream.
   TAO_OutStream *os = this->strategy_->get_out_stream ();
 
-  *os << "static TAO_" << flat_name << "_Linear_Search_OpTable"
+  *os << be_nl
+      << "static TAO_" << flat_name << "_Linear_Search_OpTable"
       << " "
-      << "tao_" << flat_name << "_optable"
-      << ";\n" << be_nl;
+      << "tao_" << flat_name << "_optable;";
 }
 
 int

@@ -81,12 +81,22 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
       << be_nl
       << "if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())"
       << be_idt_nl
-      << "ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);"
-      << be_uidt_nl
+      << "{" << be_idt_nl
+      << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+      << "tmp," << be_nl
+      << "CORBA::Object (stub, 1, this)," << be_nl
+      << "0" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
+      << "}" << be_uidt_nl
       << "else"
       << be_idt_nl
-      << "ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);"
-      << be_uidt_nl << be_nl
+      << "{" << be_idt_nl
+      << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+      << "tmp," << be_nl
+      << "CORBA::Object (stub, 0, this)," << be_nl
+      << "0" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
       << "CORBA::Object_var obj = tmp;" << be_nl << be_nl;
 
   *os << "typedef ::" << node->name () << " STUB_SCOPED_NAME;" << be_nl

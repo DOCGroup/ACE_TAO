@@ -645,7 +645,7 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
   *this->server_skeletons_ << "#include \""
                            << be_global->be_get_server_inline_fname (1)
                            << "\"\n";
-  *this->server_skeletons_ << "#endif /* !defined INLINE */\n\n";
+  *this->server_skeletons_ << "#endif /* !defined INLINE */7";
 
   return 0;
 }
