@@ -23,6 +23,7 @@
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Containers_T.h"
+#include "ace/Auto_Ptr.h"
 #include "ACEXML/parser/parser/Entity_Manager.h"
 
 /**

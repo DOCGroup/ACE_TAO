@@ -171,9 +171,9 @@ endif # PACE_ROOT
 # minor and beta) to run, but applications with dependencies on libraries
 # with different minor or major or beta versions to fail.
 #
-ACE_MAJOR_VERSION := $(shell echo `perl -ne  'if (/ACE version/) { s/[^0-9]+(\d+)+\.(\d+)+\.(\d+)+.+/\1/ ; print }' ${ACE_ROOT}/VERSION`)
-ACE_MINOR_VERSION := $(shell echo `perl -ne  'if (/ACE version/) { s/[^0-9]+(\d+)+\.(\d+)+\.(\d+)+.+/\2/ ; print }' ${ACE_ROOT}/VERSION`)
-ACE_BETA_VERSION := $(shell echo `perl -ne  'if (/ACE version/) { s/[^0-9]+(\d+)+\.(\d+)+\.(\d+)+.+/\3/ ; print }' ${ACE_ROOT}/VERSION`)
+ACE_MAJOR_VERSION := $(shell echo `perl -ne  'if (/ACE_VERSION/) { s/[^0-9]+(\d+)+\.(\d+)+\.(\d+)+.+/\1/ ; print }' ${ACE_ROOT}/ace/Version.h`)
+ACE_MINOR_VERSION := $(shell echo `perl -ne  'if (/ACE_VERSION/) { s/[^0-9]+(\d+)+\.(\d+)+\.(\d+)+.+/\2/ ; print }' ${ACE_ROOT}/ace/Version.h`)
+ACE_BETA_VERSION := $(shell echo `perl -ne  'if (/ACE_VERSION/) { s/[^0-9]+(\d+)+\.(\d+)+\.(\d+)+.+/\3/ ; print }' ${ACE_ROOT}/ace/Version.h`)
 
 # Version number of the libraries
 #

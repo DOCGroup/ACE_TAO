@@ -1,3 +1,20 @@
+Mon Jun 24 17:55:58 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * include/makeinclude/wrapper_macros.GNU (ACE_BETA_VERSION):
+
+          Grab the version information from Version.h rather than VERSION
+          as VERSION is not likely to installed when doing a make install.
+          Thanks to Bala for the suggestion.
+
+        * ACEXML/parser/parser/Parser.cpp:
+        * ACEXML/parser/parser/Parser.h:
+
+          Get the prefix right in case of a default namespace being
+          present. Previously we were using a URI a get to the prefix,
+          which doesn't work when the URI is the same as URI for another
+          namespace prefix.
+
+
 Mon Jun 24 19:54:34 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* ace/config-g++-common.h: Define ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION
