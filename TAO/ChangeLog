@@ -1,3 +1,13 @@
+Fri Feb 18 14:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/Default_Servant/Default_Servant.cpp:
+        * tests/POA/MT_Servant_Locator/MT_Servant_Locator.cpp:
+          Fixed problem with emulated exceptions
+
+        * orbsvcs/Trading_Service/Trading_Service.mpc:
+          Changed location of utils, hopefully that fixes the static gnu
+          builds
+
 Fri Feb 18 13:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/GIOP_Fragments/PMB_With_Fragments/server.cpp:
