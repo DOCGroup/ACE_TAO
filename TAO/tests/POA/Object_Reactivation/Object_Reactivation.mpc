@@ -1,3 +1,0 @@
-project(Object Reactivation): server {
-  exename = Object_Reactivation
-}
