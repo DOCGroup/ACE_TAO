@@ -48,6 +48,9 @@ Sun Feb 01 12:09:11 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-sunos5.5-g++.h,config-lynxos.h,config-vxworks5.x.h:
           migrated to config-g++-common.h.
 
+        * tests/run_tests.vxworks: disabled Message_Queue_Test because
+          it sometimes page faults or hangs the target.
+
 Fri Jan 30 15:35:30 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
 	* ace/Containers.{cpp,h,i} : added class templates
