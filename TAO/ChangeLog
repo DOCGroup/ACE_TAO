@@ -1,3 +1,9 @@
+Fri Dec  3 18:32:19 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+
+	  Update to account for recent ObjRefTemplate changes.
+
 Sat Dec  4 00:17:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IIOP_Endpoint.cpp:
