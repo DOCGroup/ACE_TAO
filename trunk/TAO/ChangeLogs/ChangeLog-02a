@@ -962,22 +962,6 @@ Mon Apr 30 11:23:45 2001  Ossama Othman  <ossama@uci.edu>
           the new TAO_Cache_IntId::relinquish_transport() method.  This
           change removes two locks from the critical path.  [Bug 878]
 
-        * tao/Cache_Entries.h (relinquish_transport):
-        * tao/Cache_Entries.inl (relinquish_transport):
-
-          New method that causes the given TAO_Cache_IntId to relinquish
-          ownership of the TAO_Transport associated with it.  This method
-          exists to get around some inflexibility in the
-          Transport_Cache_Manager interface.  It should be removed once
-          the interface is improved.
-
-        * tao/Transport_Cache_Manager.cpp (find_transport):
-
-          Do not duplicate the TAO_Transport object after it is found.
-          It is already duplicated during the find process.  Instead call
-          the new TAO_Cache_IntId::relinquish_transport() method.  This
-          change removes two locks from the critical path.  [Bug 878]
-
         * tao/IIOP_Endpoint.cpp (hash):
 
           Improved the speed of this hash operation by basing the hash on
