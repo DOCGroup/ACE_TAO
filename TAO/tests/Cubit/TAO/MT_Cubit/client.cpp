@@ -16,14 +16,28 @@
 #include "client.h"
 #include "ace/Sched_Params.h"
 
-#if defined (ACE_QUANTIFY)
+#if defined (NO_ACE_QUANTIFY)
 #include "quantify.h"
-#endif /* ACE_QUANTIFY */
+#endif /* NO_ACE_QUANTIFY */
+
+#if defined (VXWORKS)
+#include "kernelLib.h"
+#endif /* VXWORKS */
 
 double csw = 0.0;
   
 #if defined (VXWORKS) 
 u_int ctx = 0;
+u_int ct = 0;
+
+typedef struct {
+  char name[15];
+  WIND_TCB *tcb;
+  INSTR *   pc;
+} task_info;
+
+#define SWITCHES 25000
+task_info tInfo[SWITCHES];
 
 extern "C"
 int
@@ -33,6 +47,14 @@ switchHook ( WIND_TCB *pOldTcb,    /* pointer to old task's WIND_TCB */
   // We create the client threads with names starting with "@".  
   if ( pNewTcb->name[0] == '@')
     ctx++;
+
+  if (ct < SWITCHES)
+    {
+      strncpy (tInfo[ct].name, pNewTcb->name, 14);
+      tInfo[ct].tcb = pNewTcb;
+      tInfo[ct].pc  = pNewTcb->regs.pc;
+      ct++;
+    }
 
   return 0;
 }	     
@@ -55,6 +77,33 @@ initialize (void)
   ACE::set_handle_limit ();
 
   return 0;
+}
+
+void
+output_taskinfo (void)
+{
+  FILE *file_handle = 0;
+  char buffer[BUFSIZ];
+  
+  if ((file_handle = ACE_OS::fopen ("taskinfo.txt", "w")) == 0)
+    perror ("open");
+  
+  ACE_OS::fprintf(stderr,
+                  "--->Output file for taskinfo data is \"%s\"\n",
+                  latency_file);
+
+  // This loop visits each client.  thread_count_ is the number of clients.
+  for (u_int j = 0; j < SWITCHES; j ++)
+    {
+      ACE_OS::fprintf(file_handle,
+		      "\tname= %s\ttcb= %p\tpc= %p\n",
+		      tInfo[j].name,
+		      tInfo[j].tcb,
+		      tInfo[j].pc);
+      buffer[0]=0;
+    }
+  
+  ACE_OS::fclose (file_handle);
 }
 
 void
@@ -244,8 +293,9 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
 #endif /* VXWORKS */
       
       ACE_DEBUG ((LM_DEBUG,
-		  "Creating client with thread ID %d\n",
-		  i));
+		  "Creating client with thread ID %d and priority %d\n",
+		  i,
+	          priority));
 
       // The first thread starts at the lowest priority of all the low
       // priority clients.
@@ -268,7 +318,6 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
 	            "%p; priority is %d\n",
 	            "activate failed",
 	            priority));
-
     }
 
   if (ts.use_utilization_test_ == 1)
@@ -298,10 +347,10 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
   // any further.
   ts.barrier_->wait ();
 
-#if defined (ACE_QUANTIFY)
+#if defined (NO_ACE_QUANTIFY)
   quantify_stop_recording_data();
   quantify_clear_data ();
-#endif /* ACE_QUANTIFY */
+#endif /* NO_ACE_QUANTIFY */
 
 #if (defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)) && !defined (ACE_WIN32)
   ACE_Profile_Timer timer_for_context_switch;
@@ -330,9 +379,9 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
   // Wait for all the client threads to exit (except the utilization thread).
   thread_manager.wait ();
 
-#if defined (ACE_QUANTIFY)
+#if defined (NO_ACE_QUANTIFY)
   quantify_stop_recording_data();
-#endif /* ACE_QUANTIFY */
+#endif /* NO_ACE_QUANTIFY */
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) >>>>>>> ending test on %D\n"));
 
@@ -416,7 +465,7 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
               context_switch,
               csw/1000,
               csw * context_switch/1000 ));
-  output_latency (ts);
+//  output_latency (ts);
 #endif /* !VXWORKS && !CHORUS */
 
   // This loop visits each client.  thread_count_ is the number of clients.
@@ -438,7 +487,7 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
   ACE_DEBUG ((LM_DEBUG, 
 	      "\t%% Low Priority CPU utilization: %d %%\n"
 	      "\t%% High Priority CPU utilization: %d %%\n"
-	      "\t%% IDLE time: %d %%\n",
+	      "\t%% Idle time: %d %%\n",
 	      (int) (total_latency_low * 100 / total_latency + 0.5),
 	      (int) (total_latency_high * 100 / total_latency + 0.5),
 	      (int) (total_util_task_duration * 100 / total_latency + 0.5) ));
@@ -470,7 +519,7 @@ do_thread_per_rate_test (ACE_Thread_Manager &thread_manager,
                          Task_State &ts)
 {
   // First activate the high priority client.
-    Client CB_40Hz_client (thread_manager, &ts, CB_40HZ_CONSUMER);
+//    Client CB_40Hz_client (thread_manager, &ts, CB_40HZ_CONSUMER);
     Client CB_20Hz_client (thread_manager, &ts, CB_20HZ_CONSUMER);
     Client CB_10Hz_client (thread_manager, &ts, CB_10HZ_CONSUMER);
     Client CB_5Hz_client (thread_manager, &ts, CB_5HZ_CONSUMER);
@@ -487,13 +536,13 @@ do_thread_per_rate_test (ACE_Thread_Manager &thread_manager,
   priority = ACE_THR_PRI_FIFO_DEF + 25;
 #endif /* ! ACE_WIN32 */
 
-     ACE_DEBUG ((LM_DEBUG,
-                 "Creating 40 Hz client with priority %d\n",
-                 priority));
-     if (CB_40Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 1, priority) == -1)
-       ACE_ERROR ((LM_ERROR,
-                   "%p\n",
-                   "activate failed"));
+//      ACE_DEBUG ((LM_DEBUG,
+//                  "Creating 40 Hz client with priority %d\n",
+//                  priority));
+//      if (CB_40Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 1, priority) == -1)
+//        ACE_ERROR ((LM_ERROR,
+//                    "%p\n",
+//                    "activate failed"));
 
     priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
                                                     priority,
@@ -558,12 +607,12 @@ do_thread_per_rate_test (ACE_Thread_Manager &thread_manager,
 #else
     ACE_DEBUG ((LM_DEBUG,
                 "Test done.\n"
-                "40Hz client latency : %f msec\n"
+    //                "40Hz client latency : %f msec\n"
                 "20Hz client latency : %f msec\n"
                 "10Hz client latency : %f msec\n"
                 "5Hz client latency : %f msec\n"
                 "1Hz client latency : %f msec\n",
-	        CB_40Hz_client.get_latency (0),
+		//        CB_40Hz_client.get_latency (0),
                 CB_20Hz_client.get_latency (1),
                 CB_10Hz_client.get_latency (2),
                 CB_5Hz_client.get_latency (3),
@@ -605,8 +654,10 @@ main (int argc, char *argv[])
           ACE_SCHED_FIFO,
 #if defined (__Lynx__)
           30,
-#else  /* ! __Lynx__ */
-	  ACE_THR_PRI_FIFO_DEF,// ACE_Sched_Params::priority_min (ACE_SCHED_FIFO),
+#elif defined (VXWORKS) /* ! __Lynx__ */
+	  6,
+#else
+	  ACE_THR_PRI_FIFO_DEF,
 #endif /* ! __Lynx__ */
           ACE_SCOPE_PROCESS)) != 0)
     {

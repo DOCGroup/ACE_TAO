@@ -16,9 +16,9 @@
 #include "server.h"
 #include "ace/Sched_Params.h"
 
-#if defined (ACE_QUANTIFY)
+#if defined (NO_ACE_QUANTIFY)
 #include "quantify.h"
-#endif /* ACE_QUANTIFY */
+#endif /* NO_ACE_QUANTIFY */
 
 // Global options used to configure various parameters.
 static char hostname[BUFSIZ];
@@ -510,7 +510,7 @@ start_servants (ACE_Barrier &start_barrier)
 #endif /* VXWORKS */
 
   ACE_DEBUG ((LM_DEBUG,
-              "Creating servant with high priority %d\n",
+              "Creating servant 0 with high priority %d\n",
               priority));
 
   // Make the high priority task an active object.
@@ -531,9 +531,19 @@ start_servants (ACE_Barrier &start_barrier)
                   -1);
 
   // Drop the priority
-  priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
-                                                    priority,
-                                                    ACE_SCOPE_THREAD);
+  if (thread_per_rate == 1)
+    {
+      for (i = 0; i < (num_of_objs - 1); i++)
+	priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+							priority,
+							ACE_SCOPE_THREAD);
+    }
+  else
+    {
+      priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+						      priority,
+						      ACE_SCOPE_THREAD);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "Creating %d servants with priority %d\n",
@@ -573,15 +583,16 @@ start_servants (ACE_Barrier &start_barrier)
                       "low_priority_task[i]->activate"));
         }
 
+      ACE_DEBUG ((LM_DEBUG,
+		  "Created servant %d with priority %d\n",
+		  i+1,
+		  priority));
+
       // use different priorities on thread per rate.
       if (thread_per_rate == 1)
-	priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
-							priority,
-							ACE_SCOPE_THREAD);
-
-      ACE_DEBUG ((LM_DEBUG,
-		  "Created servant %d\n",
-		  i));
+	priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+						    priority,
+						    ACE_SCOPE_THREAD);
 
     }
 
@@ -640,8 +651,10 @@ main (int argc, char *argv[])
           ACE_SCHED_FIFO,
 #if defined (__Lynx__)
           30,
-#else  /* ! __Lynx__ */
-          ACE_THR_PRI_FIFO_DEF, //ACE_Sched_Params::priority_min (ACE_SCHED_FIFO),
+#elsif defined (VXWORKS) /* ! __Lynx__ */
+	  6,
+#else
+	  ACE_THR_PRI_FIFO_DEF,
 #endif /* ! __Lynx__ */
           ACE_SCOPE_PROCESS)) != 0)
     {
@@ -662,6 +675,12 @@ main (int argc, char *argv[])
   // the servants.
   ACE_Barrier start_barrier (num_of_objs + 1);
 
+#if defined (NO_ACE_QUANTIFY)
+  quantify_stop_recording_data();
+  quantify_clear_data ();
+  quantify_start_recording_data();
+#endif /* NO_ACE_QUANTIFY */
+
   if (start_servants (start_barrier) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error creating the servants\n"),
@@ -670,18 +689,12 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG,
               "Wait for all the threads to exit\n"));
 
-#if defined (ACE_QUANTIFY)
-  quantify_stop_recording_data();
-  quantify_clear_data ();
-  quantify_start_recording_data();
-#endif /* ACE_QUANTIFY */
-
   // Wait for all the threads to exit.
   ACE_Thread_Manager::instance ()->wait ();
 
-#if defined (ACE_QUANTIFY)
+#if defined (NO_ACE_QUANTIFY)
   quantify_stop_recording_data();
-#endif /* ACE_QUANTIFY */
+#endif /* NO_ACE_QUANTIFY */
 
 #else
   ACE_DEBUG ((LM_DEBUG,
