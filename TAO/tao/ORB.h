@@ -503,9 +503,9 @@ public:
                                                CORBA_Environment &TAO_IN_ENV =
                                                TAO_default_environment ());
   // This method acts as a mini-bootstrapping Naming Service, which is
-  // provided by the ORB for certain well-known object references.
-  // TAO supports the "NameService", "TradingService", "RootPOA", and
-  // "POACurrent" via this method.  The <timeout> value bounds the
+  // provided by the ORB for certain well-known object references.  TAO 
+  // supports the "NameService", "TradingService", "RootPOA", "ImplRepo", 
+  // and "POACurrent" via this method.  The <timeout> value bounds the
   // amount of time the ORB blocks waiting to resolve the service.
   // This is most useful for bootstrapping remote services, such as
   // the "NameService" or "TradingService", that are commonly resolved
@@ -651,6 +651,10 @@ private:
                                             CORBA::Environment& ACE_TRY_ENV);
   // Resolve the trading object reference.
 
+  CORBA_Object_ptr resolve_implrepo_service (ACE_Time_Value *timeout,
+                                             CORBA::Environment& ACE_TRY_ENV);
+  // Resolve the Implementation Repository object reference.
+
   int multicast_query (char *buf,
                        const char *service_name,
                        u_short port,
@@ -663,7 +667,7 @@ private:
                                          u_short port,
                                          ACE_Time_Value *timeout,
                                          CORBA::Environment& ACE_TRY_ENV);
-  // Resolve the refernce of a service of type <name>.
+  // Resolve the reference of a service of type <name>.
 
   CORBA::Object_ptr file_string_to_object (const char* filename,
                                            CORBA::Environment& env);
@@ -711,6 +715,10 @@ private:
   CORBA_Object_ptr trading_service_;
   // If this is non-_nil(), then this is the object reference to our
   // configured Trading.
+
+  CORBA_Object_ptr implrepo_service_;
+  // If this is non-_nil(), then this is the object reference to our
+  // configured Implementation Repository.
 
   static int orb_init_count_;
   // Count of the number of times that <ORB_init> has been called.
