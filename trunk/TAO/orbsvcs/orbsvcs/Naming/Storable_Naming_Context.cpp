@@ -1,25 +1,24 @@
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    cos
-//
-// = FILENAME
-//   Storable_Naming_Context.cpp
-//
-// = AUTHOR
-//    Bruce Trask <trask_b@ociweb.com>
-//    Chanaka Liyanaarachchi <chanaka@ociweb.com>
-//
-// ============================================================================
-
-#include "ace/Auto_Ptr.h"
 #include "Storable_Naming_Context.h"
 #include "Bindings_Iterator_T.h"
 
+// The following #pragma is needed to disable a warning that occurs
+// in MSVC 6 due to the overly long debugging symbols generated for
+// the ACE_Auto_Basic_Ptr<ACE_Hash_Map_Iterator_Ex<TAO_...> > template
+// instance used by some of the methods in this file.
+#ifdef _MSC_VER
+#  pragma warning(disable: 4786)  /* identifier was truncated to '255'
+                                     characters in the browser
+                                     information */
+#endif  /* _MSC_VER */
+
+#include "ace/Auto_Ptr.h"
+
+
 CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::root_context_;
 
-ACE_RCSID(Naming, Storable_Naming_Context, "Storable_Naming_Context.cpp,v 1.16 1999/12/16 23:40:07 othman Exp")
+ACE_RCSID (Naming,
+           Storable_Naming_Context,
+           "$Id$")
 
 int
 TAO_Storable_Bindings_Map::unbind (const char *id,
