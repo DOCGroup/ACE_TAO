@@ -149,7 +149,7 @@ ACE_Process::wait (int *status)
   // Don't try to get the process exit status if wait failed so we can
   // keep the original error code intact.
   if ((retv = ::WaitForSingleObject (process_info_.hProcess, INFINITE))
-      != WAIT_FAILED)
+      != WAIT_FAILED && status != 0)
     // The error status of GetExitCodeProcess is nontheless not tested.
     // (Don't know how to return the value.)
     ::GetExitCodeProcess (process_info_.hProcess, (LPDWORD) status);
