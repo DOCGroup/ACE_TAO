@@ -39,7 +39,7 @@
                                 AssemblerListingLocation="<%intermediate_dir%>"
                                 ObjectFile="<%intermediate_dir%>"
 <%if(pdb)%>
-                                ProgramDatabaseFile="<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%><%endif%><%if(exename)%><%if(install)%><%install%><%else%><%output_dir%><%endif%>\<%exename%><%endif%><%if(type_is_static)%><%output_dir%>\<%sharedname%><%lib_modifier%><%endif%>.pdb"
+                                ProgramDatabaseFile="<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%><%endif%><%if(exename)%><%if(install)%><%install%><%else%><%output_dir%><%endif%>\<%exename%><%endif%><%if(type_is_static)%><%output_dir%>\<%staticdname%><%lib_modifier%><%endif%>.pdb"
 <%endif%>
                                 WarningLevel="<%warning_level("3")%>"
                                 SuppressStartupBanner="TRUE"
@@ -48,6 +48,9 @@
                        <Tool
                                 Name="VCLinkerTool"
                                 AdditionalOptions="/MACHINE:<%machine("I386")%>"
+<%if(type_is_binary)%>
+                                AdditionalDependencies="<%foreach(libs defaultlibs)%><%lib%><%lib_modifier%>.lib<%fornotlast(" ")%><%endfor%>" 
+<%endif%>
                                 OutputFile="<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(exename)%><%if(install)%><%install%>\<%endif%><%exename%>.exe<%endif%><%if(type_is_static)%><%libout%>\<%staticname%><%lib_modifier%>.lib<%endif%>"
                                 Version="<%version("1.0")%>"
                                 LinkIncremental="<%incremental("0")%>"

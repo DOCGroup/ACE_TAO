@@ -6,6 +6,7 @@ ssl_libs           = libeay32 ssleay32
 
 Release {
   type_is_dynamic  = 1
+  type_is_binary   = 1
   defines          = NDEBUG
   output_dir       = Release
   intermediate_dir = Release
@@ -14,6 +15,7 @@ Release {
 
 Debug {
   type_is_dynamic  = 1
+  type_is_binary   = 1
   optimization     = 0
   debug            = 1
   defines          = _DEBUG
