@@ -177,16 +177,10 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
   *os << "}" << be_nl
       << "ACE_CATCHANY" << be_nl
       << "{" << be_idt_nl
-      << "return 0;" << be_uidt_nl
       << "}" << be_nl
-      << "ACE_ENDTRY;";
-
-  if (!node->is_local ())
-    {
-      *os << be_nl << be_nl << "return 0;";
-    }
-
-  *os << be_uidt_nl << "}\n\n";
+      << "ACE_ENDTRY;"
+      << be_nl << be_nl << "return 0;"
+      << be_uidt_nl << "}\n\n";
 
   node->cli_stub_any_op_gen (1);
   return 0;
