@@ -1,3 +1,43 @@
+Sat Mar 10 15:30:05 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/README:
+        * tests/Muxing/README:
+        * tests/Muxing/Makefile:
+        * tests/Muxing/Muxing.dsw:
+        * tests/Muxing/Test.idl:
+        * tests/Muxing/run_test.pl:
+        * tests/Muxing/Client_Task.h:
+        * tests/Muxing/Client_Task.cpp:
+        * tests/Muxing/Receiver.h:
+        * tests/Muxing/Receiver.cpp:
+        * tests/Muxing/Server_Task.h:
+        * tests/Muxing/Server_Task.cpp:
+        * tests/Muxing/client.cpp:
+        * tests/Muxing/client.dsp:
+        * tests/Muxing/server.cpp:
+        * tests/Muxing/server.dsp:
+        * tests/Muxing/svc.conf:
+          New one-button test for connection muxing.  More than a
+          regression test this is just a simpler way to test the same
+          thing.
+
+        * tests/README:
+        * tests/Server_Leaks/README:
+        * tests/Server_Leaks/Makefile:
+        * tests/Server_Leaks/Server_Leaks.dsw:
+        * tests/Server_Leaks/Test.idl:
+        * tests/Server_Leaks/run_test.pl:
+        * tests/Server_Leaks/Ping_Service.h:
+        * tests/Server_Leaks/Ping_Service.cpp:
+        * tests/Server_Leaks/client.cpp:
+        * tests/Server_Leaks/client.dsp:
+        * tests/Server_Leaks/server.cpp:
+        * tests/Server_Leaks/server.dsp:
+          Another regression test for resource leaks on the server-side.
+
+        * tests/LongWrites/client.dsp:
+          Was trying to compile files not present on the main trunk.
+
 Sat Mar 10 11:46:28 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/RtEC/MCast/Makefile:
