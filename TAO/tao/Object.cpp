@@ -450,7 +450,7 @@ CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
 #else
   ACE_UNUSED_ARG (_tao_retval);
   ACE_THROW_RETURN (CORBA::INTF_REPOS (), _tao_retval);
-#endif
+#endif  /* TAO_HAS_INTERFACE_REPOSITORY */
 }
 
 CORBA::ImplementationDef_ptr
