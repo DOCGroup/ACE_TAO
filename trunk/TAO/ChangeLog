@@ -1,3 +1,11 @@
+Tue Dec 10 18:17:12 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/IIOP_Transport.cpp (send_message): Formatted the debug
+	  statement to print out %m instead of %p. The TAO_Transport
+	  object under some circumstances return -1 with errno set to
+	  ENOENT. %m would then be a bit more softer than %p which leads
+	  to crashes.
+
 Tue Dec 10 16:15:09 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* Makefile: Added a target 'reverseclean' to be used in our daily
