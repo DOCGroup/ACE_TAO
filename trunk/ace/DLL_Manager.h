@@ -16,7 +16,6 @@
 #include "ace/pre.h"
 
 #include "ace/OS.h"
-#include "ace/Singleton.h"
 #include "ace/Synch_T.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
@@ -130,29 +129,55 @@ private:
 
 };
 
+class ACE_Framework_Repository;
 
 /**
- * @class ACE_DLL_Manager_Ex
+ * @class ACE_DLL_Manager
  *
- * @brief This class serves as a factory and repository for 
- * instances of ACE_DLL_Handle.  It is implemented and typedef'd 
- * as a singleton, ACE_DLL_Manager, and is thus always available
- * via it's instance() method.
+ * @brief This class is a singleton and serves as a factory and 
+ * repository for instances of ACE_DLL_Handle.  
+ *
+ * This class is a singleton whose lifetime is managed by the 
+ * ACE_Framework_Repository.  Although it is normally meant to be
+ * used directly only by ACE_DLL, applications can call the unload_policy()
+ * methods in order get/set the the dll unload policy.  Unload policies include
+ * per_process/per-dll and eager/lazy.  Dlls can export set their own policy
+ * by using the ACE_DLL_UNLOAD_POLICY macro found in config-all.h.  If a dll
+ * choses to set an unload policy, it will be used when the per-dll policy
+ * (the default) is in effect.  If the per-dll policy is in effect and a dll
+ * has not chosen to set a policy, the current per-process policy will be 
+ * used.  
+ *
+ * The following policy macros are provided in config-all.h:
+ *
+ *  ACE_DLL_UNLOAD_POLICY_PER_PROCESS - Per-process policy that unloads dlls 
+ *  eagerly.
+ * 
+ *  ACE_DLL_UNLOAD_POLICY_PER_DLL - Apply policy on a per-dll basis.  If the 
+ *  dll doesn't use one of the macros below, the current per-process policy 
+ *  will be used.
+ *
+ *  ACE_DLL_UNLOAD_POLICY_LAZY - Don't unload dll when refcount reaches 
+ *  zero, i.e., wait for either an explicit unload request or program exit.
+ *
+ *  ACE_DLL_UNLOAD_POLICY_DEFAULT - Default policy allows dlls to control 
+ *  their own destinies, but will unload those that don't make a choice eagerly.
  *
  */
-class ACE_Export ACE_DLL_Manager_Ex
+class ACE_Export ACE_DLL_Manager
 {
 public:
+  // This if to silence the compiler warnings, even though ACE_Framework_Repository 
+  // always uses the instance method.
+  friend ACE_Framework_Repository;
+
   enum
   {
     DEFAULT_SIZE = ACE_DEFAULT_DLL_MANAGER_SIZE
   };
 
-  /// Default constructor.
-  ACE_DLL_Manager_Ex (int size = ACE_DLL_Manager_Ex::DEFAULT_SIZE);
-
-  /// Destructor.
-  ~ACE_DLL_Manager_Ex (void);
+  /// Return a unique instance
+  static ACE_DLL_Manager *instance (int size = ACE_DLL_Manager::DEFAULT_SIZE);
 
   /// Factory for ACE_DLL_Handle objects.  If one already exits, 
   /// its refcount is incremented.
@@ -185,6 +210,14 @@ protected:
   int unload_dll (ACE_DLL_Handle *dll_handle, int force_unload = 0);
 
 private:
+  /// Default constructor.
+  ACE_DLL_Manager (int size = ACE_DLL_Manager::DEFAULT_SIZE);
+
+  /// Destructor.
+  ~ACE_DLL_Manager (void);
+
+  /// Close the singleton instance.
+  static void close_singleton (void);
 
   /// Vector containing all loaded handle objects.
   ACE_DLL_Handle **handle_vector_;
@@ -198,19 +231,18 @@ private:
   /// Unload strategy.
   u_long unload_policy_;
 
+ /// Pointer to a process-wide <ACE_DLL_Manager>.
+  static ACE_DLL_Manager *instance_;
+
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   /// Synchronization variable for the MT_SAFE Repository
   ACE_Thread_Mutex lock_;
 #endif /* ACE_MT_SAFE */
 
  // = Disallow copying and assignment since we don't handle these.
-  ACE_UNIMPLEMENTED_FUNC (ACE_DLL_Manager_Ex (const ACE_DLL_Manager_Ex &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_DLL_Manager_Ex &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_DLL_Manager (const ACE_DLL_Manager &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_DLL_Manager &))
 };
-
-/// Global singleton.
-typedef ACE_Unmanaged_Singleton < ACE_DLL_Manager_Ex,
-                                  ACE_SYNCH_MUTEX > ACE_DLL_Manager;
 
 #include "ace/post.h"
 #endif /* ACE_DLL_MANAGER_H */
