@@ -4,7 +4,7 @@
 
 # TARGTYPE "Win32 (x86) Application" 0x0101
 
-CFG=ConfigurationViewer - Win32 Debug
+CFG=ConfigurationViewer - Win32 wxWindows Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=ConfigurationViewer - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "ConfigurationViewer.mak" CFG="ConfigurationViewer - Win32 Debug"
+!MESSAGE NMAKE /f "ConfigurationViewer.mak" CFG="ConfigurationViewer - Win32 wxWindows Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "ConfigurationViewer - Win32 Release" (based on "Win32 (x86) Application")
-!MESSAGE "ConfigurationViewer - Win32 Debug" (based on "Win32 (x86) Application")
+!MESSAGE "ConfigurationViewer - Win32 wxWindows Release" (based on "Win32 (x86) Application")
+!MESSAGE "ConfigurationViewer - Win32 wxWindows Debug" (based on "Win32 (x86) Application")
 !MESSAGE 
 
 # Begin Project
@@ -29,7 +29,7 @@ CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "ConfigurationViewer - Win32 Release"
+!IF  "$(CFG)" == "ConfigurationViewer - Win32 wxWindows Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -56,7 +56,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /machine:I386
 # ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib wx.lib jpeg.lib ace.lib /nologo /subsystem:windows /machine:I386 /nodefaultlib:"libc.lib" /nodefaultlib:"libci.lib" /nodefaultlib:"msvcrtd.lib" /libpath:"../../src/Release" /libpath:"../../src/jpeg/Release" /libpath:"../../lib"
 
-!ELSEIF  "$(CFG)" == "ConfigurationViewer - Win32 Debug"
+!ELSEIF  "$(CFG)" == "ConfigurationViewer - Win32 wxWindows Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -86,8 +86,8 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "ConfigurationViewer - Win32 Release"
-# Name "ConfigurationViewer - Win32 Debug"
+# Name "ConfigurationViewer - Win32 wxWindows Release"
+# Name "ConfigurationViewer - Win32 wxWindows Debug"
 # Begin Group "Source"
 
 # PROP Default_Filter "*.cpp"
@@ -107,9 +107,9 @@ SOURCE=.\MainFrame.cpp
 
 SOURCE=.\stdafx.cpp
 
-!IF  "$(CFG)" == "ConfigurationViewer - Win32 Release"
+!IF  "$(CFG)" == "ConfigurationViewer - Win32 wxWindows Release"
 
-!ELSEIF  "$(CFG)" == "ConfigurationViewer - Win32 Debug"
+!ELSEIF  "$(CFG)" == "ConfigurationViewer - Win32 wxWindows Debug"
 
 # ADD CPP /Yc"stdafx.h"
 
@@ -233,9 +233,9 @@ SOURCE=.\wx\msw\watch1.cur
 
 SOURCE=.\ConfigurationViewer.rc
 
-!IF  "$(CFG)" == "ConfigurationViewer - Win32 Release"
+!IF  "$(CFG)" == "ConfigurationViewer - Win32 wxWindows Release"
 
-!ELSEIF  "$(CFG)" == "ConfigurationViewer - Win32 Debug"
+!ELSEIF  "$(CFG)" == "ConfigurationViewer - Win32 wxWindows Debug"
 
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409

@@ -1,3 +1,13 @@
+Wed May 31 10:31:18 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * examples/ConfigViewer/ConfigurationViewer.dsp:
+
+          Changed the configuration type to "Win32 wxWindows Debug"
+          instead of "Win32 Debug" (and the same for Release).  
+          This will prevent this project from being picked up by
+          the msvc_auto_compile.pl, since we do not have wxWindows
+          installed with the auto builds.
+
 Wed May 31 10:13:10 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * examples/Export/export_dll.dsp:
