@@ -100,8 +100,34 @@ enum ACE_Recyclable_State
 // Get OS.h to compile on some of the platforms without DIR info yet.
 # if !defined (ACE_HAS_DIRENT)
 typedef int DIR;
-struct dirent {};
+struct dirent {
+};
 # endif /* ACE_HAS_DIRENT */
+
+#if defined (ACE_WIN32)
+struct dirent {
+  unsigned short d_ino;
+  unsigned short d_off;
+  unsigned short d_reclen;
+  const char *d_name;
+};
+struct DIR {
+  char *directory_name_;
+  // The name of the directory we are looking into
+
+  HANDLE current_handle_;
+  // Remember the handle between calls.
+
+  dirent dirent_;
+  // The struct for the results
+
+  WIN32_FIND_DATA fdata_;
+  // The struct for intermediate results.
+
+  int started_reading_;
+  // A flag to remember if we started reading already.
+};
+#endif /* defined (WIN_32) */
 
 # if defined (ACE_PSOS_TM)
 typedef long long longlong_t;
