@@ -24,7 +24,7 @@ main (int argc, char *argv[])
       // Resolve HomeFinder interface
 
       CORBA::Object_var obj
-        = orb->string_to_object ("file://ECHome.ior" ACE_ENV_ARG_PARAMETER);
+        = orb->string_to_object ("file://ec.ior" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       BasicSP::ECHome_var home
@@ -36,11 +36,22 @@ main (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR, "Unable to acquire ECHome objref\n"), -1);
 
       BasicSP::EC_var pulser
-        = home->new_EC (8
-                        ACE_ENV_ARG_PARAMETER);
+        = home->create (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // Place to plug in the rate
+      pulser->hertz (5
+                     ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      pulser->start (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_OS::sleep (45);
+
+      pulser->stop (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       home->remove_component (pulser.in ()
                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

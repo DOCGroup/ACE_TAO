@@ -131,6 +131,11 @@ namespace CIAO_GLUE_BasicSP
     ~EC_Servant (void);
 
     // Operations from supported interfaces and inherited components
+    virtual void start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual void stop (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual CORBA::Long hertz (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
@@ -381,11 +386,6 @@ extern "C" EC_SVNT_Export ::PortableServer::Servant
 createECHome_Servant (::Components::HomeExecutorBase_ptr p,
                            CIAO::Session_Container *c
                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
-#if defined (__ACE_INLINE__)
-# include "EC_svnt.inl"
-#endif /* __ACE_INLINE__ */
-
 
 #include "ace/post.h"
 #endif /* CIAO_GLUE_SESSION_EC_SVNT_H */
