@@ -21,7 +21,7 @@ static CORBA::Boolean filter = 0;
 static CORBA::Short num_events = 0;
 static CORBA::Short num_consumers = 0;
 
-#define GRAMMAR "ETCL"
+#define GRAMMAR "EXTENDED_TCL"
 
 // ******************************************************************
 // Subroutine Section
