@@ -1,3 +1,12 @@
+Mon Aug  4 13:56:31 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Synch_T.h:
+          Added #include Synch.h to insure backward compatibility on
+          non-threaded builds.
+
+        * ace/Strategies_T.cpp:
+          Added #include ACE.h needed when not inlining.
+
 Mon Aug  4 13:08:29 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS.h:

@@ -21,14 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Lock.h"
-#include "ace/Thread_Mutex.h"
-#include "ace/Thread_Semaphore.h"
-#include "ace/Recursive_Thread_Mutex.h"
-#include "ace/RW_Thread_Mutex.h"
-#include "ace/Null_Mutex.h"
-#include "ace/Null_Condition.h"
-#include "ace/Null_Semaphore.h"
+#include "ace/Synch.h"
 
 #include "ace/Lock_Adapter_T.h"
 #include "ace/Reverse_Lock_T.h"
