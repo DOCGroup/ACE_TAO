@@ -32,7 +32,7 @@ int main (int argc, char *argv[])
   // In order to construct connections options the file handle is
   // needed.  Therefore, we need to open the TLI_Stream before we
   // construct the options.
-  if (cli_stream.open (ACE_TLI_TCP_DEVICE, O_RDWR, 0) == -1)
+  if (cli_stream.open (ACE_XTI_ATM_DEVICE, O_RDWR, 0) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "open failed"),
@@ -55,16 +55,15 @@ int main (int argc, char *argv[])
   optbuf.buf = options;
 
   // Not sure why but reuse_addr set to true/1 causes problems for
-  // FORE/XTI/ATM - this is now handled in
-  // ACE_TLI_Connector::connect()
+  // FORE/XTI/ATM - this is now handled in ACE_TLI_Connector::connect()
   if (con.connect (cli_stream,
                    remote_addr, 
-                   (ACE_Time_Value *) &ACE_Time_Value::zero, 
+                   (ACE_Time_Value *) &ACE_Time_Value::zero,
                    local_addr,
                    1,
                    O_RDWR,
                    0,
-                   ACE_TLI_TCP_DEVICE,
+                   ACE_XTI_ATM_DEVICE,
                    0,
                    1,
                    0,
