@@ -1,3 +1,18 @@
+Sun Mar 04 20:15:33 2001  Ossama Othman  <ossama@uci.edu>
+
+	* examples/Content_Server/SMI_Iterator/client.cpp (retrieve_data):
+	* examples/Content_Server/AMI_Iterator/Iterator_Handler.cpp
+	  (initialize_content_iterator):
+	* examples/Content_Server/AMI_Observer/Callback_i.cpp
+	  (Callback_i):
+
+	  Windows doesn't like the POSIX.1 mode constants I was using in
+	  these files.  Use the ACE_DEFAULT_FILE_PERMS macro instead to
+	  work-around Windows-specific stuff like this.
+
+	  Fixed error messages so that they properly display filename with
+	  which the error was associated.
+
 Sun Mar  4 21:39:03 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tao/corbafwd.h:
