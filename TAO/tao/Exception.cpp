@@ -362,8 +362,7 @@ void
 TAO_Exceptions::init (CORBA::Environment &env)
 {
   // Initialize the list of system exceptions, used when unmarshaling.
-  ACE_NEW (TAO_Exceptions::system_exceptions,
-           CORBA::ExceptionList);
+  ACE_NEW (TAO_Exceptions::system_exceptions, CORBA::ExceptionList);
 
 #define TAO_SYSTEM_EXCEPTION(name) \
   if (env.exception () == 0) \
@@ -394,6 +393,12 @@ void
 TAO_Exceptions::fini (void)
 {
   delete TAO_Exceptions::system_exceptions;
+#define TAO_SYSTEM_EXCEPTION(name) \
+  CORBA::release (CORBA::_tc_ ## name); \
+  CORBA::_tc_ ## name = 0;
+  STANDARD_EXCEPTION_LIST
+#undef TAO_SYSTEM_EXCEPTION
+
 }
 
 #define TAO_SYSTEM_EXCEPTION(name) \
@@ -496,6 +501,19 @@ CORBA_ExceptionList::CORBA_ExceptionList (CORBA::ULong len,
 {
   for (CORBA::ULong i=0; i < len; i++)
     this->add (tc_list [i]);
+}
+
+CORBA_ExceptionList::~CORBA_ExceptionList (void)
+{
+#if 1
+  for (CORBA::ULong i = 0; i < this->count (); ++i)
+    {
+      CORBA::TypeCode_ptr *tc;
+      if (this->tc_list_.get (tc, i) == -1)
+	return;
+      CORBA::release (*tc);
+    }
+#endif
 }
 
 void
