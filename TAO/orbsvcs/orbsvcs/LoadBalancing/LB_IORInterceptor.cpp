@@ -1,5 +1,6 @@
 #include "LB_IORInterceptor.h"
-
+#include "LB_ObjectReferenceFactory.h"
+#include "LB_LoadAlert.h"
 
 ACE_RCSID (LoadBalancing,
            LB_IORInterceptor,
@@ -11,12 +12,14 @@ TAO_LB_IORInterceptor::TAO_LB_IORInterceptor (
   const CORBA::StringSeq & repository_ids,
   const char * location,
   CosLoadBalancing::LoadManager_ptr lm,
-  const char * orb_id)
+  const char * orb_id,
+  TAO_LB_LoadAlert & load_alert)
   : object_groups_ (object_groups),
     repository_ids_ (repository_ids),
     location_ (location),
     lm_ (CosLoadBalancing::LoadManager::_duplicate (lm)),
-    orb_id_ (CORBA::string_dup (orb_id))
+    orb_id_ (CORBA::string_dup (orb_id)),
+    load_alert_ (load_alert)
 {
 }
 
@@ -80,7 +83,7 @@ TAO_LB_IORInterceptor::components_established (
                     TAO_LB_ObjectReferenceFactory (old_orf.in (),
                                                    this->object_groups_,
                                                    this->repository_ids_,
-                                                   location,
+                                                   this->location_.in (),
                                                    orb.in (),
                                                    this->lm_.in (),
                                                    la.in ()),

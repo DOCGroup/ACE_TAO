@@ -1,3 +1,60 @@
+Mon Aug 12 08:31:03 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlert.h (TAO_LB_LoadAlert):
+
+	  This servant is no longer reference counted.
+
+	  (~TAO_LB_LoadAlert):
+
+	  Commented out protected destructor.  A protected destructor is
+	  no longer needed since reference counting is no a no-op.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlert.cpp (~TAO_LB_LoadAlert):
+
+	  Likewise.
+
+	* orbsvcs/orbsvsc/LoadBalancing/LB_LoadManager.h (init):
+	* orbsvcs/orbsvsc/LoadBalancing/LB_LoadManager.cpp (init):
+
+	  This method now accepts a pseudo-reference to the ORB.  The
+	  LoadManager must register itself with the ORB's
+	  resolve_initial_references() mechanism.
+
+	* orbsvsc/orbsvcs/LoadBalancing/LB_Component.cpp:
+	* orbsvsc/orbsvcs/LoadBalancing/LB_Component.h:
+	* orbsvsc/orbsvcs/LoadBalancing/LB_IORInterceptor.cpp:
+	* orbsvsc/orbsvcs/LoadBalancing/LB_IORInterceptor.h:
+	* orbsvsc/orbsvcs/LoadBalancing/LB_ORBInitializer.cpp:
+	* orbsvsc/orbsvcs/LoadBalancing/LB_ORBInitializer.h:
+	* orbsvsc/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp:
+	* orbsvsc/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.h:
+
+	  Fixed all syntax errors and warnings.
+
+	* orbsvcs/LoadBalancer/LoadManager.cpp (ACE_TMAIN):
+
+	  Updated init() call to pass in the ORB pseudo-reference.
+
+	* orbsvcs/orbsvcs/Makefile.CosLoadBalancing (IDL_FILES, CPP_SRCS):
+
+	  Added new files IDL and C++ sources files to the appropriate
+	  "make" variables.
+
+	* orbsvcs/orbsvcs/Makefile.LoadBalancing:
+	* orbsvcs/orbsvcs/LoadBalancing.bor:
+
+	  Removed these Makefiles.  They were for the old Load Balancer
+	  prototype.
+
+	* orbsvcs/orbsvcs/CosLoadBalancing.bor:
+
+	  New Load Balancer's Borland Makefile.
+
+	* orbsvcs/orbsvcs/Makefile.bor (MAKEFILES):
+
+	  Replaced "LoadBalancing.bor" with "CosLoadBalancing.bor", the
+	  new Load Balancer's Borland Makefile.
+
 Mon Aug 12 10:18:49 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* PROBLEM-REPORT-FORM: Fixed a typo where "ASCII text" was spelled

@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableInterceptorC.h"
+#include "orbsvcs/CosLoadBalancingC.h"
 #include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)
@@ -28,6 +28,11 @@
 #endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+
+/// Forward declarations.
+class TAO_LB_LoadAlert;
+
 
 /**
  * @class TAO_LB_IORInterceptor
@@ -53,7 +58,8 @@ public:
                          const CORBA::StringSeq & repository_ids,
                          const char * location,
                          CosLoadBalancing::LoadManager_ptr lm,
-                         const char * orb_id);
+                         const char * orb_id,
+                         TAO_LB_LoadAlert & load_alert);
 
   /**
    * @name Methods Required by the IOR Interceptor Interface
@@ -117,6 +123,9 @@ private:
 
   /// ORBid of the ORB this IORInterceptor is registered with.
   CORBA::String_var orb_id_;
+
+  /// Reference to the LoadAlert servant.
+  TAO_LB_LoadAlert & load_alert_;
 
 };
 

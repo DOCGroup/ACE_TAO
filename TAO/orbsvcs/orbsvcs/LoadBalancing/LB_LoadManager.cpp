@@ -901,12 +901,12 @@ TAO_LB_LoadManager::next_member (const PortableServer::ObjectId & oid
 }
 
 void
-TAO_LB_LoadManager::init (
-  ACE_Reactor * reactor,
-  PortableServer::POA_ptr root_poa
-  ACE_ENV_ARG_DECL)
+TAO_LB_LoadManager::init (ACE_Reactor * reactor,
+                          CORBA::ORB_ptr orb,
+                          PortableServer::POA_ptr root_poa
+                          ACE_ENV_ARG_DECL)
 {
-  ACE_ASSERT (reactor != 0);
+  ACE_ASSERT (!CORBA::is_nil (orb));
   ACE_ASSERT (!CORBA::is_nil (root_poa));
 
   ACE_GUARD (TAO_SYNCH_MUTEX,
@@ -1012,6 +1012,11 @@ TAO_LB_LoadManager::init (
   if (CORBA::is_nil (this->lm_ref_.in ()))
     {
       this->lm_ref_ = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+
+      orb->register_initial_reference ("LoadManager",
+                                       this->lm_ref_.in ()
+                                       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
