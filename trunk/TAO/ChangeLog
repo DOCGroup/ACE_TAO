@@ -56,6 +56,12 @@ Fri Oct 10 11:51:42 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 	  Added TAO_Messaging library to the release configuration to
 	  clear build MSVC release build errors.
 	
+Fri Oct 10 09:06:15 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* orbsvcs/tests/Concurrency/CC_client.cpp (run_extended_tests): Replaced
+	  a NULL with a 0 so that the code compiles on LynxOS.  Thanks to
+ 	  Olli Savia <ops@iki.fi> for reporting this.
+
 Fri Oct 10 10:46:51 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/Event_Service/Event_Service.h: 
