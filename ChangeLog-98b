@@ -15,22 +15,7 @@ Mon Jul 20 11:06:44 1998  Arturo Montes  <mitosys@colomsat.net.co>
 
 Sun Jul 19 22:21:17 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * apps/gperf/src/new.cpp (new): wrapped assignment with
-          parens where used as a conditional.
-
-        * apps/gperf/src/Iterator.cpp (Iterator),
-          List_Node.cpp (List_Node), Hash_Table.cpp (Hash_Table):
-          reordered initializers to match declaration order.
-
-        * apps/gperf/src/Hash_Table.cpp (~Hash_Table),
-        * apps/gperf/src/Bool_Array.cpp (init): cast sizeof
-          to int to avoid compiler (g++/Linux alpha) warning about
-          mismatch with %d format specifier.
-
         * ace/OS.h: added ACE_THROW_SPEC definition.
-
-        * apps/gperf/src/new.cpp (new): use ACE_THROW_SPEC instead of
-          _RWSTD_THROW_SPEC.
 
 Sun Jul 19 00:48:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
