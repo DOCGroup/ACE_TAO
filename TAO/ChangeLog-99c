@@ -1,3 +1,11 @@
+Tue Sep  7 19:15:24 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/RTCP.cpp (fmod): 
+	* orbsvcs/orbsvcs/AV/RTCP.h: 
+	Added the fmod(x,y) function to calculate the floating point
+	remainder of x/y. Thanks to David Levine for suggesting this.
+	
+
 Tue Sep  7 16:38:59 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Typecode.cpp: Fixed a bug that was a result of the

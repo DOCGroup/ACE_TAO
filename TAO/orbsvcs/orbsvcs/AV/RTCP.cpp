@@ -442,7 +442,7 @@ TAO_AV_RTCP::send_report (int bye,
   if (rint < RTCP_MIN_RPT_TIME * 1000.)
     rint = RTCP_MIN_RPT_TIME * 1000.;
   state->rint_ = rint;
-  callback->schedule (int (fmod (double (ACE_OS::rand ()), rint) + rint * .5 + .5));
+  callback->schedule (int (TAO_AV_RTCP::fmod (double (ACE_OS::rand ()), rint) + rint * .5 + .5));
 
   source_manager->CheckActiveSources (rint);
 }
@@ -560,6 +560,17 @@ TAO_AV_RTCP::alloc_srcid (ACE_UINT32 addr)
   srcid += (ACE_UINT32)ACE_OS::getpid();
   srcid += addr;
   return (srcid);
+}
+
+
+double
+TAO_AV_RTCP::fmod (double dividend, double divisor)
+{
+  //Method to calculate the fmod (x,y)
+  int quotient = dividend / divisor;
+  double product = quotient * divisor;
+  double remainder = dividend - product;
+  return remainder;
 }
 
 
