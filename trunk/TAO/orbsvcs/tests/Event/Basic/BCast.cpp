@@ -70,7 +70,7 @@ EC_BCast::execute_test (CORBA::Environment& ACE_TRY_ENV)
   TAO_ECG_UDP_Sender sender;
   TAO_ECG_UDP_Out_Endpoint endpoint;
 
-  ACE_INET_Addr udp_addr (this->bcast_port_, "255.255.255.255");
+  ACE_INET_Addr udp_addr (this->bcast_port_, "128.252.165.255");
 
   Simple_Address_Server address_server_impl (udp_addr);
   RtecUDPAdmin::AddrServer_var address_server =
@@ -111,7 +111,11 @@ EC_BCast::execute_test (CORBA::Environment& ACE_TRY_ENV)
   ACE_CHECK;
 
   udp_eh.reactor (this->orb_->orb_core ()->reactor ());
-  udp_eh.open (udp_addr);
+  ACE_INET_Addr local_addr (this->bcast_port_);
+  if (udp_eh.open (local_addr) == -1)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Cannot open EH %p\n"));
+    }
 
   RtecEventChannelAdmin::SupplierQOS pub;
   this->build_supplier_qos (0, pub, shutdown_event_type, ACE_TRY_ENV);
@@ -129,13 +133,18 @@ EC_BCast::execute_test (CORBA::Environment& ACE_TRY_ENV)
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "BCast (%P|%t) suppliers are active\n"));
 
-  ACE_Time_Value tv (100, 0);
+  ACE_Time_Value tv (30, 0);
   this->orb_->run (tv);
 
   // Wait for the supplier threads...
   if (ACE_Thread_Manager::instance ()->wait () == -1)
     {
       ACE_ERROR ((LM_ERROR, "BCast (%P|%t) Thread_Manager wait failed\n"));
+    }
+
+  if (udp_eh.close () == -1)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Cannot close EH %p\n"));
     }
 
   if (this->verbose ())
