@@ -38,10 +38,10 @@ namespace CIAO
   /**
    * @class DomainApplicationManager_Impl
    *
-   * @brief A servant for the Deployment::DomainApplicationManager interface.
-   * The DomainApplicationManager is responsible for deploying an application
-   * on the domain level, i.e. across nodes. It specializes the ApplicationManager
-   * abstract interface.
+   * @brief A servant for the Deployment::DomainApplicationManager
+   * interface.  The DomainApplicationManager is responsible for
+   * deploying an application on the domain level, i.e. across
+   * nodes. It specializes the ApplicationManager abstract interface.
    */
   //class CIAO_DOMAINAPPLICATIONMANAGER_Export DomainApplicationManager_Impl
   class DomainApplicationManager_Impl
@@ -50,9 +50,10 @@ namespace CIAO
   {
   public:
     /// Define the type which contains a list of DnC artifacts.
-    /// @@ Assumption: Each NodeApplicationManager create only one NodeApplication
-    /// when the startLaunch() operation is invoked, which means all the nodes
-    /// on that child plan are collocated in the same process.
+    /// @@ Assumption: Each NodeApplicationManager create only one
+    /// NodeApplication when the startLaunch() operation is invoked,
+    /// which means all the nodes on that child plan are collocated in
+    /// the same process.
     typedef struct _chained_artifacts
     {
       ::Deployment::NodeManager_var node_manager_;
@@ -132,10 +133,10 @@ namespace CIAO
                        ::Deployment::InvalidProperty));
 
     /**
-     * The second step in launching an application in the domain-level.
-     * If the start parameter is true, the application is started as well.
-     * Raises the StartError exception if launching or starting the application
-     * fails.
+     * The second step in launching an application in the
+     * domain-level.  If the start parameter is true, the application
+     * is started as well.  Raises the StartError exception if
+     * launching or starting the application fails.
      */
     virtual void finishLaunch (::CORBA::Boolean start
                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -143,8 +144,8 @@ namespace CIAO
                        ::Deployment::StartError));
 
     /**
-     * Starts the application. Raises the StartError exception if starting the
-     * application fails.
+     * Starts the application. Raises the StartError exception if
+     * starting the application fails.
      */
     virtual void start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
@@ -250,9 +251,9 @@ namespace CIAO
     /// Maintain a list of NodeApplicationManager references, each of which
     /// is returned by calling the preparePlan() method on the
     /// corresponding NodeManager object.
-   // Object_Set<Deployment::NodeApplicationManager,
-   //            Deployment::NodeApplicationManager_var>
-   //   node_application_manager_set_;
+    // Object_Set<Deployment::NodeApplicationManager,
+    //            Deployment::NodeApplicationManager_var>
+    //   node_application_manager_set_;
 
     /// Maintain a list of NodeApplication references paired with the
     /// Deployment::Connections_var type variable.
@@ -261,6 +262,10 @@ namespace CIAO
     //ACE_Vector<Node_Application_Para> node_application_vec_;
   };
 }
+
+#if defined (__ACE_INLINE__)
+# include "DomainApplicationManager_Impl.inl"
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* CIAO_DOMAINAPPLICATIONMANAGER_IMPL_H */
