@@ -47,8 +47,8 @@ public:
   // the var defn for that name. Otherwise, do it for the interface you
   // are visiting (this).
 
-  virtual int gen_var_impl (char *interface_local_name,
-                            char *interface_full_name);
+  virtual int gen_var_impl (char *interface_local_name = 0,
+                            char *interface_full_name = 0);
   // Generate the implementation for the _var class.
   // If any one of the argument is 0, then use the name in <this>,
   // otherwise use the name given. Just making the class more useful. 
