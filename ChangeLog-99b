@@ -1,4 +1,13 @@
-Wed Feb 17 15:23:18 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Wed Feb 17 16:40:56 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h (ACE_NEW_THROW_EX): A new ACE_NEW_THROW macro which
+	  makes ACE_NEW_THROW_EX behave like a exception-throwing
+	  function.  I.e., you need to follow ACE_NEW_THOW_EX with
+	  appropriate ACE_CHECK* macros.  The use of ACE_NEW_THROW,
+	  ACE_NEW_THROW_RETURN, ACE_NEW_TRY_THROW are deprecated.
+
+	* docs/exceptions.html: Added documentation for
+	  ACE_DECLARE_NEW_CORBA_ENV.
 
 	* ace/config-WinCE.h: Automatically define ACE_HAS_WINCE if it is
 	  not already defined.
