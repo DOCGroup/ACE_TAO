@@ -1,3 +1,9 @@
+Wed Sep  8 12:51:53 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h:
+
+	  Added #include "event_serv_export.h".
+
 Wed Sep  8 12:15:18 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 	
 	* orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.h:
