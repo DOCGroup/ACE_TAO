@@ -155,7 +155,6 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
   else if ((result = this->rec_read (term, search, replace)) == 0)
     return 0;
 
-
   // Copy buf into the appropriate location starting from end of
   // buffer.  Peter says this is confusing and that we should use
   // memcpy() ;-)
