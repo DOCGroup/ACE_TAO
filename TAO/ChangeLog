@@ -1,3 +1,10 @@
+Thu Feb  3 19:14:17 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+
+	  Reverted this patch "Thu Jan 27 20:01:21 2005  Balachandran
+	  Natarajan  <bala@dre.vanderbilt.edu>"
+
 Wed Feb  2 22:17:49 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_arg_traits.cpp:
