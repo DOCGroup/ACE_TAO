@@ -1,8 +1,14 @@
+Wed Jan 22 14:56:22 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Invocation.cpp (invoke_i): Unbind the dispatcher instead of
+	  setting the state in the Bind_Dispatcher_Guard. Improves code
+	  readability. 
+
 Wed Jan 22 11:08:57 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * tao/Messaging/Messaging_Policy_i.cpp (hook): Fixed debug message
-        so that it actually printed out milliseconds rather than the
-        microsecond component expressed as milliseconds.
+          so that it actually printed out milliseconds rather than the
+	  microsecond component expressed as milliseconds.
 
 Wed Jan 22 17:03:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
