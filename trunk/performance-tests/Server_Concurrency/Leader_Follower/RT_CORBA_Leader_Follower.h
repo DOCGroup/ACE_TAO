@@ -105,4 +105,5 @@ private:
 
 #endif /*ACE_HAS_THREADS*/
 
+#include "ace/post.h"
 #endif /*PERF_TEST_RT_CORBA_LEADER_FOLLOWER*/
