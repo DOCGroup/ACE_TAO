@@ -11,9 +11,17 @@
 ACE_RCSID(tao, params, "$Id$")
 
 TAO_ORB_Parameters::TAO_ORB_Parameters (void)
-  : name_service_port_ (0),
+  : preconnects_list_ (),
+    preconnect_insertion_strategy_ (this->preconnects_list_),
+    endpoints_list_ (),
+    endpoint_insertion_strategy_ (this->endpoints_list_),
+    name_service_ior_ (),
+    name_service_port_ (0),
+    trading_service_ior_ (),
     trading_service_port_ (0),
+    implrepo_service_ior_ (),
     implrepo_service_port_ (0),
+    init_ref_ (),
     ior_lookup_table_ (0),
     sock_rcvbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ),
     sock_sndbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ),
@@ -28,11 +36,13 @@ TAO_ORB_Parameters::~TAO_ORB_Parameters (void)
 {
   // Delete the table.
   delete this->ior_lookup_table_;
+  this->ior_lookup_table_ = 0;
 }
 
 int
 TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
-                                     TAO_EndpointSet &endpoints_list)
+                                     TAO_Base_Endpoint_Insertion_Strategy &
+                                       endpoints_list)
 {
   // Parse the string into seperate endpoints, where `endpoints' is of
   // the form:
@@ -52,8 +62,9 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
       endpoints[length - 1] == endpoints_delimiter)
     {
       return -1;
-      // Failure: endpoints string has an empty endpoint at the beginning
-      //          or the end of the string (e.g. ";uiop://foo;iiop://1.3@bar")
+      // Failure: endpoints string has an empty endpoint at the
+      // beginning or the end of the string
+      // (e.g. ";uiop://foo;iiop://1.3@bar")
     }
 
   if (length > 0)
@@ -111,8 +122,28 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
   return status;
 }
 
+// Don't bother inlining since the most used methods are virtual.
 
-/* Note ACE_Node<ACE_CString>, ACE_Unbounded_Set<ACE_CString> and
- * ACE_Unbounded_Set_Iterator<ACE_CString> * are instantiated in
- * Service_Config.cpp so we do not explicitly instantiate here.
- */
+TAO_Preconnect_Insertion_Strategy::
+   TAO_Preconnect_Insertion_Strategy (TAO_PreconnectSet &preconnects)
+     : preconnects_ (preconnects)
+{
+}
+
+int
+TAO_Preconnect_Insertion_Strategy::insert (const ACE_CString &preconnect)
+{
+  return this->preconnects_.enqueue_tail (preconnect);
+}
+
+TAO_Endpoint_Insertion_Strategy::
+  TAO_Endpoint_Insertion_Strategy (TAO_EndpointSet &endpoints)
+    : endpoints_ (endpoints)
+{
+}
+
+int
+TAO_Endpoint_Insertion_Strategy::insert (const ACE_CString &endpoint)
+{
+  return this->endpoints_.insert (endpoint);
+}
