@@ -1,7 +1,12 @@
+Sat Dec 20 13:32:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/*.bor:
+	  Added missing Id tag to several Borland makefiles to fix fuzz errors
+
 Fri Dec 19 23:05:27 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
-	  
+
 	  Cosmetic change - removed an extra newline.
 
 	* TAO_IDL/be/be_visitor_traits.cpp:
@@ -19,7 +24,7 @@ Fri Dec 19 10:27:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/Scheduling_Service/Makefile:
 	* orbsvcs/Naming_Service/Makefile:
 
-	  Moved the checks for the status of the conditional variables in 
+	  Moved the checks for the status of the conditional variables in
 	  rules.tao.GNU, after the inclusion of rules.tao.GNU. Thanks to
 	  Thomas Lockhart for reporting this problem.
 
