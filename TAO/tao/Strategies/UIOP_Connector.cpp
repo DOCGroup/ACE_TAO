@@ -194,6 +194,7 @@ TAO_UIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
   long refcount = svc_handler->decr_refcount ();
 
   ACE_ASSERT (refcount >= 0);
+  ACE_UNUSED_ARG (refcount);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
