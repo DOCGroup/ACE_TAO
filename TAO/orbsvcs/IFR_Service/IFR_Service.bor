@@ -5,6 +5,7 @@
 NAME = IFR_Service
 
 OBJFILES = \
+	$(OBJDIR)\AbstractInterfaceDef_i.obj \
 	$(OBJDIR)\AliasDef_i.obj \
 	$(OBJDIR)\ArrayDef_i.obj \
 	$(OBJDIR)\AttributeDef_i.obj \
@@ -31,6 +32,7 @@ OBJFILES = \
 	$(OBJDIR)\IFR_Service.obj \
 	$(OBJDIR)\InterfaceDef_i.obj \
 	$(OBJDIR)\IRObject_i.obj \
+	$(OBJDIR)\LocalInterfaceDef_i.obj \
 	$(OBJDIR)\ModuleDef_i.obj \
 	$(OBJDIR)\NativeDef_i.obj \
 	$(OBJDIR)\OperationDef_i.obj \

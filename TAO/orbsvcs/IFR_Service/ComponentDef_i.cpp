@@ -123,7 +123,7 @@ IR::ComponentDef_ptr
 TAO_ComponentDef_i::base_component (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (CORBA_ComponentDef::_nil ());
+  TAO_IFR_READ_GUARD_RETURN (IR::ComponentDef::_nil ());
 
   return this->base_component_i (ACE_TRY_ENV);
 }
@@ -239,7 +239,7 @@ TAO_ComponentDef_i::create_provides (
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_WRITE_GUARD_RETURN (CORBA_ProvidesDef::_nil ());
+  TAO_IFR_WRITE_GUARD_RETURN (IR::ProvidesDef::_nil ());
 
   return this->create_provides_i (id,
                                   name,
@@ -271,7 +271,7 @@ TAO_ComponentDef_i::create_uses (const char *id,
                                  CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_WRITE_GUARD_RETURN (CORBA_UsesDef::_nil ());
+  TAO_IFR_WRITE_GUARD_RETURN (IR::UsesDef::_nil ());
 
   return this->create_uses_i (id,
                               name,
@@ -302,7 +302,7 @@ TAO_ComponentDef_i::create_emits (const char *id,
                                   CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_WRITE_GUARD_RETURN (CORBA_EmitsDef::_nil ());
+  TAO_IFR_WRITE_GUARD_RETURN (IR::EmitsDef::_nil ());
 
   return this->create_emits_i (id,
                                name,
@@ -331,7 +331,7 @@ TAO_ComponentDef_i::create_publishes (const char *id,
                                       CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_WRITE_GUARD_RETURN (CORBA_PublishesDef::_nil ());
+  TAO_IFR_WRITE_GUARD_RETURN (IR::PublishesDef::_nil ());
 
   return this->create_publishes_i (id,
                                    name,
@@ -360,7 +360,7 @@ TAO_ComponentDef_i::create_consumes (const char *id,
                                      CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_WRITE_GUARD_RETURN (CORBA_ConsumesDef::_nil ());
+  TAO_IFR_WRITE_GUARD_RETURN (IR::ConsumesDef::_nil ());
 
   return this->create_consumes_i (id,
                                   name,

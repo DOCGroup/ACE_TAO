@@ -653,9 +653,9 @@ TAO_InterfaceDef_i::create_attribute_i (
                                              "mode",
                                              mode);
 
-  CORBA::ULong i = 0;
-
 #if 0 // CCM specific.
+
+  CORBA::ULong i = 0;
 
   CORBA::ULong length = get_exceptions.length ();
 

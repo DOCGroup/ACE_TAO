@@ -83,7 +83,7 @@ CORBA_ValueDef_ptr
 TAO_PrimaryKeyDef_i::primary_key (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (IR_ValueDef::_nil ());
+  TAO_IFR_READ_GUARD_RETURN (CORBA_ValueDef::_nil ());
 
   return this->primary_key_i (ACE_TRY_ENV);
 }

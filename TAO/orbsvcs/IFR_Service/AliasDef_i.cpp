@@ -114,7 +114,7 @@ TAO_AliasDef_i::original_type_def_i (CORBA::Environment &ACE_TRY_ENV)
     this->repo_->servant_factory ()->create_objref (def_kind,
                                                     original_type.c_str (),
                                                     ACE_TRY_ENV);
-  ACE_CHECK_RETURN (IR_IDLType::_nil ());
+  ACE_CHECK_RETURN (CORBA_IDLType::_nil ());
 
   return CORBA_IDLType::_narrow (obj.in (),
                                  ACE_TRY_ENV);
