@@ -1,3 +1,15 @@
+Thu Feb 28 11:55:39 2002  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
+
+        * orbsvcs/examples/CosEC/Factory/Makefile:
+        * orbsvcs/examples/Security/Send_File/Makefile:
+        * tests/IDL_Test/Makefile:
+        * tests/DLL_ORB/Makefile:
+        * orbsvcs/tests/Security/Big_Request/Makefile:
+        * orbsvcs/tests/Security/Callback/Makefile:
+        * orbsvcs/tests/Security/Secure_Invocation/Makefile:
+        * orbsvcs/tests/Security/SecurityLevel1/Makefile:
+	  updated the Makefile dependencies.
+
 Thu Feb 28 15:12:35 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/RTEvent/lib/TAO_RTEC_Perf.dsp:
