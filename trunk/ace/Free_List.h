@@ -13,7 +13,7 @@
 // 
 // ============================================================================
 
-#if !defined(ACE_FREE_LIST_H)
+#if !defined (ACE_FREE_LIST_H)
 #define ACE_FREE_LIST_H
 
 #include "ace/OS.h"
