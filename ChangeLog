@@ -1,3 +1,9 @@
+Thu Aug  7 13:08:28 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Unbounded_Set_Ex.cpp:
+          Added #include of os_errno.h to pick up ENOMEM on older versions
+          of gcc and needed due to recent subsetting.
+
 Thu Aug  7 07:35:56 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
