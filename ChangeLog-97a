@@ -1,3 +1,10 @@
+Thu May 29 06:07:18 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i (thr_join): Revised some code in the #ifdef'd out
+ 	  version of ACE_OS::thr_join() so that it will compile correctly.
+  	  Note that this code isn't currently used, but someday it will
+ 	  be.  Thanks to Hamutal Yanay for reporting this.
+
 Wed May 28 16:37:57 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.{h,i} (ACE_Time_Value): added default constructor,
