@@ -99,11 +99,11 @@ Quoter_Server::init_naming_service (CORBA::Environment& env)
 {
   TAO_TRY
   {
-    CORBA::ORB_var orb_var = TAO_ORB_Core_instance()->orb();
+    CORBA::ORB_ptr orb_ptr = TAO_ORB_Core_instance()->orb();
     TAO_CHECK_ENV;
 
     CORBA::Object_var naming_obj = 
-      orb_var->resolve_initial_references ("NameService");
+      orb_ptr->resolve_initial_references ("NameService");
     if (CORBA::is_nil (naming_obj.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
 			   " (%P|%t) Unable to resolve the Name Service.\n"),

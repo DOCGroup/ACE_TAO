@@ -188,14 +188,14 @@ main (int argc, char *argv [])
     {
       // Initialize ORB.
 
-      CORBA::ORB_var orb_var = CORBA::ORB_init (argc,
+      CORBA::ORB_ptr orb_ptr = CORBA::ORB_init (argc,
                                                 argv,
                                                 "internet",
                                                 TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       // Connect to the RootPOA.
-      CORBA::Object_var poa_object = orb_var->resolve_initial_references("RootPOA");
+      CORBA::Object_var poa_object = orb_ptr->resolve_initial_references("RootPOA");
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
@@ -229,7 +229,7 @@ main (int argc, char *argv [])
       TAO_CHECK_ENV;
 
       // Run the ORB.
-      if (orb_var->run () == -1)
+      if (orb_ptr->run () == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "CORBA::ORB::run"),

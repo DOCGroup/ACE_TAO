@@ -34,6 +34,7 @@ Stock::Quoter_ptr
 Quoter_Factory_Impl::create_quoter (const char *name,  
                                     CORBA::Environment &env)
 {
+  ACE_DEBUG ((LM_DEBUG, "Quoter Created\n"));
   ACE_UNUSED_ARG (name);
   return my_quoter_._this (env);
 }
