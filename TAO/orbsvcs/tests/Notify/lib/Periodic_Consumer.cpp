@@ -15,7 +15,7 @@
 ACE_RCSID(RT_Notify, TAO_NS_Periodic_Consumer, "$id$")
 
 TAO_NS_Periodic_Consumer::TAO_NS_Periodic_Consumer (void)
-  :count_ (0), max_count_ (-1), client_ (0), check_priority_ (0)
+  :count_ (-1), max_count_ (-1), client_ (0), check_priority_ (0)
 {
 }
 
@@ -124,40 +124,47 @@ TAO_NS_Periodic_Consumer::push_structured_event (const CosNotification::Structur
                       CORBA::INTERNAL ());
   ACE_CHECK;
 
+  if (this->count_ == -1)
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "(%P, %t)Consumer %s received inital (-1)th event \n", this->name_.c_str ()));
+
+      const CosNotification::PropertySeq& prop_seq = notification.header.variable_header;
+
+      for (CORBA::ULong i = 0; i < prop_seq.length (); ++i)
+        {
+          if (ACE_OS::strcmp (prop_seq[i].name.in (), "BaseTime") == 0)
+            {
+              TimeBase::TimeT base_time;
+              ACE_hrtime_t base_time_hrtime;
+
+              prop_seq[i].value >>= base_time;
+
+              ORBSVCS_Time::TimeT_to_hrtime (base_time_hrtime, base_time);
+              stats_.base_time (base_time_hrtime);
+            } // if max_count has not been already specified, get it from the supplier.
+          else if (this->max_count_ == -1 && ACE_OS::strcmp (prop_seq[i].name.in (), "MaxCount") == 0)
+            {
+              prop_seq[i].value >>= this->max_count_;
+
+              if (TAO_debug_level > 0)
+                ACE_DEBUG ((LM_DEBUG, "(%P, %t) Setting Maxcount = %d\n", this->max_count_));
+            }
+        }
+
+      this->stats_.init (this->max_count_);
+
+      this->count_ = 0;
+
+      return;
+    }
+
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG, "(%P, %t)Consumer %s received %d event type (%s,%s) \n", this->name_.c_str (), this->count_,
                   notification.header.fixed_header.event_type.domain_name.in(),
                   notification.header.fixed_header.event_type.type_name.in()));
     }
-
-  if (this->count_ == 0)
-  {
-    const CosNotification::PropertySeq& prop_seq = notification.header.variable_header;
-
-    for (CORBA::ULong i = 0; i < prop_seq.length (); ++i)
-    {
-      if (ACE_OS::strcmp (prop_seq[i].name.in (), "BaseTime") == 0)
-        {
-          TimeBase::TimeT base_time;
-          ACE_hrtime_t base_time_hrtime;
-
-          prop_seq[i].value >>= base_time;
-
-          ORBSVCS_Time::TimeT_to_hrtime (base_time_hrtime, base_time);
-          stats_.base_time (base_time_hrtime);
-        } // if max_count has not been already specified, get it from the supplier.
-      else if (this->max_count_ == -1 && ACE_OS::strcmp (prop_seq[i].name.in (), "MaxCount") == 0)
-        {
-          prop_seq[i].value >>= this->max_count_;
-
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "(%P, %t) Setting Maxcount = %d\n", this->max_count_));
-        }
-    }
-
-    this->stats_.init (this->max_count_);
-  }
 
   if (this->check_priority_)
     {

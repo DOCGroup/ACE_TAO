@@ -73,6 +73,7 @@ TAO_NS_Periodic_Supplier::init_state (ACE_Arg_Shifter& arg_shifter)
       else if ((current_arg = arg_shifter.get_the_parameter ("-EventType")))
         {
           this->event_.type ("*", current_arg) ;
+          zeroth_event.type ("*", current_arg) ;
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp ("-FilterLongData") == 0) // -FilterLongData name value
@@ -206,6 +207,9 @@ TAO_NS_Periodic_Supplier::svc (void)
 
   ACE_hrtime_t before, after;
 
+  // This event is special. its not counted to make the performance stats.
+  //TAO_NS_StructuredEvent zeroth_event;
+
   // populate event.
   // send the base time and max count.
   TimeBase::TimeT base_time;
@@ -214,10 +218,34 @@ TAO_NS_Periodic_Supplier::svc (void)
 
   CORBA::Any buffer;
   buffer <<= base_time;
-  this->event_.opt_header ("BaseTime", buffer);
+  zeroth_event.opt_header ("BaseTime", buffer);
 
   buffer <<= this->iter_;
-  this->event_.opt_header ("MaxCount", buffer);
+  zeroth_event.opt_header ("MaxCount", buffer);
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "(%P, %t) Supplier (%s) sending event 0th event\n"));
+
+      this->send_event (zeroth_event.event () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CORBA::UserException, ue)
+    {
+      ACE_PRINT_EXCEPTION (ue,
+                           "Periodic supplier: error sending event. ");
+      break;
+    }
+  ACE_CATCH (CORBA::SystemException, se)
+    {
+      ACE_PRINT_EXCEPTION (se,
+                           "Periodic supplier: error sending event. ");
+      break;
+    }
+  ACE_ENDTRY;
 
   for (int i = 0; i < iter_ ; ++i)
     {
@@ -231,7 +259,7 @@ TAO_NS_Periodic_Supplier::svc (void)
 
       this->event_.payload (buffer);
 
-      ACE_TRY_NEW_ENV
+      ACE_TRY
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG, "(%P, %t) Supplier (%s) sending event #%d\n",
