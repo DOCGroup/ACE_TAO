@@ -33,7 +33,7 @@ CFLAGS			+= -ieee
 DCFLAGS			+= -g
 OCFLAGS			+= -O
 
-MATHLIB         = -lm
+#MATHLIB         = -lm
 PIC             =
 ARFLAGS         = -c
 RANLIB          = @true
@@ -46,8 +46,14 @@ CXX             = cxx
 LD              = $(CXX)
 DLD             = $(CXX)
 SOVERSION       =
-SOEXT			= exe
-EXEEXT			= .exe
-INSLIB			= $(ACE_ROOT)/lib
+SOEXT		= exe
+EXEEXT		= .exe
+INSLIB		= $(ACE_ROOT)/lib
 REALCLEAN_FILES += $(CLEANUP_VSHLIB_NO_VER:%.exe=%_symvec.opt) $(CLEANUP_VSHLIB_NO_VER:%.exe=%.DSF) \
 	$(CLEANUP_BIN:%=%.DSF)
+
+ifneq ($(MAKEFILE),$(DEPENDENCY_FILE))
+VMS_DUMMY_ := $(shell touch $(DEPENDENCY_FILE))
+VMS_DUMMY_ := $(VMS_DUMMY_)
+endif
+
