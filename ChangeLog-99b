@@ -1,3 +1,8 @@
+Fri Aug 06 11:19:34 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-win32-common.h: Added ACE_LACKS_STRPTIME.  Thanks to
+	  Andy for pointing this out.
+
 Fri Aug 06 11:13:27 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/streams.h,OS.h,Log_Msg.h: with ACE_LACKS_IOSTREAM_TOTALLY,
