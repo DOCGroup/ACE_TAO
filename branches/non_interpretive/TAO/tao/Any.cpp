@@ -937,6 +937,7 @@ CORBA_Any::operator<<= (from_string s)
         {
           // Bounded string.
           _oc_string [1] = s.bound_;
+          // @@ It seems like this could be leaked!
           ACE_NEW (tc,
                    CORBA::TypeCode (CORBA::tk_string,
                                     sizeof _oc_string,
@@ -949,18 +950,15 @@ CORBA_Any::operator<<= (from_string s)
           tc = CORBA::_tc_string; // unbounded.
         }
 
-      char **tmp;
+      char *tmp;
       // Non-copying.
       if (s.nocopy_)
         {
-          ACE_NEW (tmp,
-                   char* (s.val_));
+          tmp = s.val_;
         }
-      // Copying.
       else
         {
-          ACE_NEW (tmp,
-                   char* (CORBA::string_dup (s.val_)));
+          tmp = CORBA::string_dup (s.val_);
         }
 
       this->_tao_replace (tc,
@@ -968,6 +966,7 @@ CORBA_Any::operator<<= (from_string s)
                           stream.begin (),
                           1,
                           tmp,
+                          CORBA::Any::_tao_any_string_destructor,
                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
@@ -1004,6 +1003,7 @@ CORBA_Any::operator<<= (from_wstring ws)
         {
           // Bounded string.
           _oc_wstring [1] = ws.bound_;
+          // @@ TODO It seems like this is leaked!
           ACE_NEW (tc,
                    CORBA::TypeCode (CORBA::tk_wstring,
                                     sizeof _oc_wstring,
@@ -1016,18 +1016,15 @@ CORBA_Any::operator<<= (from_wstring ws)
           tc = CORBA::_tc_wstring; // unbounded.
         }
 
-      CORBA::WChar **tmp;
+      CORBA::WChar *tmp;
       // Non-copying.
       if (ws.nocopy_)
         {
-          ACE_NEW (tmp,
-                   CORBA::WChar* (ws.val_));
+          tmp = ws.val_;
         }
-      // Copying.
       else
         {
-          ACE_NEW (tmp,
-                   CORBA::WChar* (CORBA::wstring_dup (ws.val_)));
+          tmp = CORBA::wstring_dup (ws.val_);
         }
 
       this->_tao_replace (tc,
@@ -1035,6 +1032,7 @@ CORBA_Any::operator<<= (from_wstring ws)
                           stream.begin (),
                           1,
                           tmp,
+                          CORBA::Any::_tao_any_wstring_destructor,
                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
@@ -1397,8 +1395,8 @@ CORBA_Any::operator>>= (const CORBA::Any *&a) const
   return 0;
 }
 
-static void
-_tao_any_string_destructor (void *x)
+void
+CORBA_Any::_tao_any_string_destructor (void *x)
 {
   char *tmp = ACE_static_cast (char*,x);
   CORBA::string_free (tmp);
@@ -1437,7 +1435,7 @@ CORBA_Any::operator>>= (const char *&s) const
                      this)->_tao_replace (CORBA::_tc_string,
                                           1,
                                           tmp.inout (),
-                                          _tao_any_string_destructor,
+                                          CORBA::Any::_tao_any_string_destructor,
                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -1454,8 +1452,8 @@ CORBA_Any::operator>>= (const char *&s) const
   return 0;
 }
 
-static void
-_tao_any_wstring_destructor (void *x)
+void
+CORBA::Any::_tao_any_wstring_destructor (void *x)
 {
   CORBA::WChar *tmp = ACE_static_cast (CORBA::WChar*,x);
   CORBA::wstring_free (tmp);
@@ -1494,7 +1492,7 @@ CORBA_Any::operator>>= (const CORBA::WChar *&s) const
                      this)->_tao_replace (CORBA::_tc_wstring,
                                           1,
                                           tmp.inout (),
-                                          _tao_any_wstring_destructor,
+                                          CORBA::Any::_tao_any_wstring_destructor,
                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -1511,8 +1509,8 @@ CORBA_Any::operator>>= (const CORBA::WChar *&s) const
   return 0;
 }
 
-static void
-_tao_any_tc_destructor (void *x)
+void
+CORBA::Any::_tao_any_tc_destructor (void *x)
 {
   CORBA::TypeCode_ptr tmp = ACE_static_cast (CORBA::TypeCode_ptr,x);
   CORBA::release (tmp);
@@ -1550,7 +1548,7 @@ CORBA_Any::operator>>= (CORBA::TypeCode_ptr &tc) const
                      this)->_tao_replace (CORBA::_tc_TypeCode,
                                           1,
                                           tmp.in (),
-                                          _tao_any_tc_destructor,
+                                          CORBA::Any::_tao_any_tc_destructor,
                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -1732,7 +1730,7 @@ CORBA_Any::operator>>= (to_string s) const
                      this)->_tao_replace (CORBA::_tc_string,
                                           1,
                                           ACE_static_cast(char*,tmp),
-                                          _tao_any_string_destructor,
+                                          CORBA::Any::_tao_any_string_destructor,
                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -1796,7 +1794,7 @@ CORBA_Any::operator>>= (to_wstring ws) const
                      this)->_tao_replace (CORBA::_tc_string,
                                           1,
                                           ACE_static_cast(CORBA::WChar*,tmp),
-                                          _tao_any_wstring_destructor,
+                                          CORBA::Any::_tao_any_wstring_destructor,
                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
 

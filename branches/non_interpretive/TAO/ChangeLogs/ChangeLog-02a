@@ -1,3 +1,22 @@
+Fri Mar 10 09:49:40 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/Any.h:
+	* tao/Any.cpp:
+	  More memory management fixes for the >>= and <<= operators.
+	  Moved some static _tao_any_destructor functions to the Any
+	  class, it is easier to maintain it that way.
+
+	* tao/Object.h:
+	* tao/Object.cpp:
+	  Add the _tao_any_destructor helper function.
+
+	* tao/DomainC.h:
+	* tao/DomainC.cpp:
+	  Changed to use the new _tao_any_destructors in the right places.
+
+	* tao/DynAny_i.cpp:
+	  It is better just to return 0 than to cast away const.
+
 Fri Mar 10 11:28:15 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/TAO.dsp:
