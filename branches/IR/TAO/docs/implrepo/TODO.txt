@@ -2,3 +2,15 @@
  is thrown if it fails.
 
 -Implement Multicast code in ImplRepo_Service
+
+-Use ACE_Arg_Shifter in TAO_ir
+
+-Check for persistent IORs before creating them
+
+-purify
+
+-search for @@
+
+-more documents
+
+-return Cannot_Activate from activate_server () if the server is already running
