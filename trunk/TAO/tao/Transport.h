@@ -630,10 +630,10 @@ public:
    * @param max_wait_time The maximum time that the operation can
    *             block, used in the implementation of timeouts.
    */
-  int send_message_shared (TAO_Stub *stub,
-                           int message_semantics,
-                           const ACE_Message_Block *message_block,
-                           ACE_Time_Value *max_wait_time);
+  virtual int send_message_shared (TAO_Stub *stub,
+					               int message_semantics,
+							       const ACE_Message_Block *message_block,
+								   ACE_Time_Value *max_wait_time);
 
 
 protected:
@@ -704,6 +704,19 @@ protected:
 
   /// Make a queued data from the <incoming> message block
   TAO_Queued_Data *make_queued_data (ACE_Message_Block &incoming);
+
+    /// Implement send_message_shared() assuming the handler_lock_ is
+  /// held.
+  int send_message_shared_i (TAO_Stub *stub,
+                             int message_semantics,
+                             const ACE_Message_Block *message_block,
+                             ACE_Time_Value *max_wait_time);
+
+  /// Check if the underlying event handler is still valid.
+  /**
+   * @return Returns -1 if not, 0 if it is.
+   */
+  int check_event_handler_i (const char *caller);
 
 public:
 
@@ -832,12 +845,7 @@ private:
   /// not pending
   void reset_flush_timer (void);
 
-  /// Check if the underlying event handler is still valid.
-  /**
-   * @return Returns -1 if not, 0 if it is.
-   */
-  int check_event_handler_i (const char *caller);
-
+  
   /// Print out error messages if the event handler is not valid
   void report_invalid_event_handler (const char *caller);
 
@@ -861,13 +869,6 @@ private:
   /// connection is closed.
   void send_connection_closed_notifications (void);
 
-  /// Implement send_message_shared() assuming the handler_lock_ is
-  /// held.
-  int send_message_shared_i (TAO_Stub *stub,
-                             int message_semantics,
-                             const ACE_Message_Block *message_block,
-                             ACE_Time_Value *max_wait_time);
-
   /// Implement close_connection() assuming the handler_lock_ is held.
   void close_connection_i (void);
 
@@ -889,6 +890,7 @@ private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Transport&))
 
 protected:
+
   /// IOP protocol tag.
   CORBA::ULong tag_;
 

@@ -224,15 +224,6 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
                                   int message_semantics,
                                   ACE_Time_Value *max_wait_time)
 {
-
-  if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-		"TAO_IIOP_Transport::send_message\n enable_network_priority = %d\n",
-		this->connection_handler_->enable_network_priority ()));
-
-  this->connection_handler_->set_dscp_codepoint ();
-
-
   // Format the message in the stream first
   if (this->messaging_object_->format_message (stream) != 0)
     return -1;
@@ -257,49 +248,38 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
   return 1;
 }
 
-/*
-int
-TAO_IIOP_Transport::send_reply (TAO_OutputCDR &stream,
-				TAO_Adapter *poa)
+int 
+TAO_IIOP_Transport::send_message_shared (TAO_Stub *stub,
+						                 int message_semantics,
+								         const ACE_Message_Block *message_block,
+										 ACE_Time_Value *max_wait_time)
 {
+  int r;
+  {
+    ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
 
-  TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    if (this->check_event_handler_i ("Transport::send_message_shared") == -1)
+      return -1;
 
+	if (TAO_debug_level)
+		ACE_DEBUG ((LM_DEBUG,
+					"TAO_IIOP_Transport::send_message\n enable_network_priority = %d\n",
+					this->connection_handler_->enable_network_priority ()));
 
-  if (tph != 0)
-    {
-      int send_buffer_size;
-      int recv_buffer_size;
-      int no_delay;
-      int enable_network_priority;
+	if (this->connection_handler_ != 0)
+		this->connection_handler_->set_dscp_codepoint ();
 
-      const char protocol [] = "iiop";
-      const char *protocol_type = protocol;
+    r = this->send_message_shared_i (stub, message_semantics,
+                                     message_block, max_wait_time);
+  }
 
-      int result =
-	tph->get_effective_server_protocol_properties (poa,
-						       send_buffer_size,
-						       recv_buffer_size,
-						       no_delay,
-						       enable_network_priority,
-						       protocol_type);
-      if (result != 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "Error in getting the effective protocol properties\n"),
-			  -1);
+  if (r == -1)
+  {
+    this->close_connection ();
+  }
 
-      this->connection_handler_->update_protocol_properties (send_buffer_size,
-							     recv_buffer_size,
-							     no_delay,
-							     enable_network_priority);
-    }
-
-  int result = this->send_message (stream);
-  return result;
+  return r;
 }
-
-  */
 
 int
 TAO_IIOP_Transport::generate_request_header (TAO_Operation_Details &opdetails,
@@ -477,3 +457,4 @@ TAO_IIOP_Transport::invalidate_event_handler_i (void)
   this->connection_handler_ = 0;
   return eh;
 }
+
