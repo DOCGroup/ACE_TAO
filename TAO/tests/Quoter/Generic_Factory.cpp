@@ -107,7 +107,7 @@ Quoter_Generic_Factory_Server::init (int argc,
         CosNaming::NamingContext::_narrow (namingObj_var.in (),
                                            TAO_TRY_ENV);
 
-      if (CORBA::is_nil (namingContext_var.ptr ())) 
+      if (CORBA::is_nil (namingContext_var.in ())) 
         ACE_ERROR ((LM_ERROR,
                    " (%P|%t) Unable get the Naming Service.\n"));
 

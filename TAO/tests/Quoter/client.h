@@ -81,7 +81,7 @@ private:
   CORBA::Environment env_;
   // Environment variable.
 
-  Stock::Quoter_ptr quoter_;
+  Stock::Quoter_var quoter_var_;
   // Quoter obj ref.
 
   CORBA::ORB_var orb_;
