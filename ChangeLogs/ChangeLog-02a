@@ -1,3 +1,17 @@
+Thu May 10 08:13:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tests/Makefile.bor
+        * tests/Misc/Makefile.bor
+        * tests/Naming/Makefile.bor
+        * tests/Reactor/Makefile.bor
+        * tests/Reactor/Dgram/Makefile.bor
+        * tests/Reactor/Ntalker/Makefile.bor
+        * tests/Registry/Makefile.bor
+        * tests/Synch/Makefile.bor
+
+        Added or updated the above BCB makefiles so that the tests are
+        build with BCB
+
 Wed May  9 23:19:30 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 	* ace/CDR_Streams.h:
 	* ace/CDR_Streams.cpp:
@@ -12,31 +26,31 @@ Wed May  9 23:19:30 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
 Wed May  9 16:06:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/TTY_IO.cpp (control): 
+	* ace/TTY_IO.cpp (control):
 	* ace/OS.h: Corrected this change "Wed May  9 14:03:01 2001
 	  Douglas C. Schmidt". The problem was with the definition of the
 	  macro ACE_VTIME. Looks more like a cut and paste error.
 
 Wed May  9 16:00:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/OS.h: 
+	* ace/OS.h:
 	* ace/TTY_IO.cpp: Reverted this change "Wed May  9 14:03:01 2001
-	  Douglas C. Schmidt". 
+	  Douglas C. Schmidt".
 
 Wed May  9 14:03:01 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/TTY_IO.cpp (control): Use the new ACE_VMIN and ACE_VTIME
 	  macros.  Thanks to Hans Utz <hans.utz@informatik.uni-ulm.de> for
- 	  suggesting this.	
+ 	  suggesting this.
 
-	* ace/OS.h: Added support for the new ACE_VMIN and ACE_VTIME 
+	* ace/OS.h: Added support for the new ACE_VMIN and ACE_VTIME
 	  macros.  Thanks to Hans Utz <hans.utz@informatik.uni-ulm.de>
 	  for suggesting this.
 
 Wed May  9 14:25:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* THANKS: Added Darren Griffith <darren.griffith@esecurityinc.com>
-	  to the hall of fame.  
+	  to the hall of fame.
 
 Wed May  9 11:40:06 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -55,7 +69,7 @@ Wed May 09 10:02:10 2001  Balachandran  <bala@cs.wustl.edu>
 Mon May  7 07:14:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * bin/auto_run_tests.lst: Commented out OctetSeq test from running
-          in static configurations. 
+          in static configurations.
 
 Mon May  7 06:40:44 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
@@ -72,7 +86,7 @@ Sat May  5 08:51:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * bin/nightlybuilds/builds.lst: Just commented the HP_UX
           builds. OCI seems to be having problems with their HP
-          machine. We will get it online once the builds start running. 
+          machine. We will get it online once the builds start running.
 
 Sat May  5 08:01:30 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
@@ -92,7 +106,7 @@ Fri May  4 06:28:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
         * ace/OS.h: Changed the typedefs of uid_t, gid_t, and mode_t to
           match those in standard POSIX.  Thanks to Gonzalo Diethelm
           <Gonzalo.Diethelm@sonda.com> for reporting this.
-  
+
 Fri May  4 06:28:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
         * ace/ace_wchar.h: Add a new macro (ACE_USES_L_PREFIX) that allows
@@ -115,7 +129,7 @@ Fri May  4 06:28:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 >>>>>>> 4.1974
 
         * examples/Misc/test_XtReactor2.cpp (main): Fixed a stray ')'.
-          Thanks to Johnny Willemsen for reporting the problem.  
+          Thanks to Johnny Willemsen for reporting the problem.
 
 Thu May  3 17:33:45 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
@@ -124,7 +138,7 @@ Thu May  3 17:33:45 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 Thu May  3 17:43:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-        * ace/Acceptor.cpp (ACE_Acceptor): Fixed a warning in g++ builds. 
+        * ace/Acceptor.cpp (ACE_Acceptor): Fixed a warning in g++ builds.
 
 Thu May  3 16:00:15 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
