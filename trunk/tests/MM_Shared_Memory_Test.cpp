@@ -59,8 +59,14 @@ server (void *)
   ACE_Shared_Memory_MM shm_server (shm_key, SHMSZ);
 
   char *shm = (char *) shm_server.malloc ();
-  char *s = shm;
 
+  if (! shm)
+  {
+   ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n%a"), ASYS_TEXT ("ACE_Shared_Memory_MM::malloc () failed in server")));
+   exit (-1);
+  }
+
+  char *s = shm;
   for (char *c = ACE_ALPHABET; *c != '\0'; c++)
     *s++ = *c;
 
