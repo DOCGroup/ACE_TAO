@@ -1,3 +1,14 @@
+Mon Dec 02 18:59:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/DLL.h:
+        * ace/Dirent.h:
+        * ace/Future_Set.h:
+        * ace/UPIPE_Connector.h:
+        * ace/UPIPE_Acceptor.h:
+        * ace/UNIX_Addr.h:
+        * ace/Configuration_Import_Export.h:
+          Improved doxygen documentation.
+
 Mon Dec 02 18:47:32 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * THANKS: Added Tim Smith <timsmith_s@hotmail.com>
