@@ -528,7 +528,7 @@ ACE_OutputCDR::write_wchar_array_i (const ACE_CDR::WChar *x,
             sb[i] = ACE_static_cast (ACE_CDR::UShort, x[i]);
 #else
               if (!this->do_byte_swap_)
-              sb[i] = ACE_static_cast (ACE_CDR::UShort, x[i]);;
+              sb[i] = ACE_static_cast (ACE_CDR::UShort, x[i]);
             else
               {
                 ACE_CDR::UShort sx = ACE_static_cast (ACE_CDR::UShort, x[i]);
