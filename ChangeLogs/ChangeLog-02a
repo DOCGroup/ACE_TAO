@@ -1,3 +1,27 @@
+Tue Jan 29 19:36:24 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/make_release: The whole release process has been moved to
+	  Linux box. This is because the sun machines at WashU were having
+	  problems and they are not dependable. The following are the list
+	  of changes made 
+
+	  - All the path related stuff have been changed ie. instead of
+	    using /pkg/gnu tools, we use native tools on Linux now.
+	
+	  - The gnu suffixes to many of the tools have been removed. 
+
+	  - Most of the path to the tools have been hardcoded in the PATH
+	    environment variabe. 
+	  
+	  - Tools that were missing have been loaded on 3 main Linux boxes
+	    at WashU including Graphviz and doxygen.
+	  
+	  - A beta cannot be cut from a sun box. 
+	  
+	  - The script will recommend cutting a beta from deuce.doc. 
+
+	  The script has been tested with a dummy release.
+
 Tue Jan 29 16:01:54 2002  Ossama Othman  <ossama@uci.edu>
 
 	* bin/fuzz.pl (check_for_missing_rir_env):

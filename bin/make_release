@@ -38,53 +38,63 @@ my $long_usage="   -? option prints this message\n" .
 $ENV{'SIGNATURE'} ||
   die "$0: must set your SIGNATURE environment variable\n";
 
-my $perl_path = '/pkg/gnu/bin/perl';
+my $which_host = $ENV{'OSTYPE'};
+
+my $release_host = substr ($which_host, 0, 5);
+
+## We are not going to use any Sun boxes for the release anymore.. 
+
+if (! ($release_host eq 'linux')){
+    die "$0: You are on the wrong OS, please move to linux box\n";
+}
+
+my  $perl_path = '/usr/bin/perl';
+
 &can_run($perl_path.' -V') ||
   die "$0: perl path is incorrect, please fix the script\n";
 
-my $dot_path = '/project/doc/pkg/gv1.5/bin';
+my $dot_path = '/project/deuce/gv1.5/bin';
+
 &can_run($dot_path.'/dot -V') ||
   die "$0: dot path is incorrect, please fix the script\n";
 
-my $doxy_path = '/project/doc/pkg/doxygen-1.2.3/bin';
-my $doxy_version = '1.2.3';
+my  $doxy_path = '/project/deuce/doxygen/bin';
+
+my $doxy_version = '1.2.13.1';
+
 &can_run($doxy_path.'/doxygen --version | grep '.$doxy_version.' >/dev/null') ||
   die "$0: doxygen path or version incorrect, please fix the script\n";
+
 $ENV{'PATH'} = $ENV{'PATH'}.':'.$doxy_path;
 
 my $hostname;
 chomp ($hostname = $ENV{'HOSTNAME'}  ||  `uname -n`);
-unless ("$hostname" eq 'ace') {
+unless ("$hostname" eq 'deuce.doc.wustl.edu') {
   #### For efficiency sake . . .
-  die "$0: must run on host ace\n";
+  die "$0: must run on host deuce.doc\n";
 }
 
 
 $ENV{'CVSROOT'} ||
   die "$0: must set your CVSROOT environment variable\n";
 
-if (! "$ENV{'ACE_ROOT'}") {
-  chop ($ENV{'ACE_ROOT'} = `/pkg/gnu/bin/pwd`);
-}
-
+$ENV{'ACE_ROOT'} ||
+  die "$0: must set your CVSROOT environment variable\n";
 
 ########
 ######## Configuration parameters.
 ########
-my $gnu;
-if (-d '/pkg/gnu/bin') {
-  $gnu = '/pkg/gnu/bin/';
-  #### Insert it at head of PATH, so that cvs diff uses GNU diff.
-  $ENV{'PATH'} = "/pkg/gnu/bin:" . $ENV{'PATH'};
-} else {
-  #### The default utilities had better be GNU.
-  $gnu = '';
-}
+my $gnu = '/bin';
 
-#### Unconditionally insert this at the head of the path.  We're
-#### running on ace, so if it hadn't been automounted, -d might fail
-#### to find the directory.
-my $gnu2 = '/project/danzon/pkg/gnu/bin';
+####### Add the path to /bin unconditionally..
+
+$ENV{'PATH'} = "$gnu" . ':' . $ENV{'PATH'};
+
+### Any tools in /usr/local/bin can also be added. We dont need that
+### for deuce.doc 
+my $gnu2 = '/usr/bin';
+
+####### Add the path to /usr/bin unconditionally..
 $ENV{'PATH'} = "$gnu2" . ':' . $ENV{'PATH'};
 
 my $export_dir = '/project/deuce/ftp/pub/ACE+TAO-distribution';
@@ -191,19 +201,20 @@ if ($kit eq 'ace') {
   #### Creating combined ACE+TAO kit.  Don't use $KIT.
 };
 
-my $chmod = '/bin/chmod';
-my $chgrp = "${gnu}chgrp";
-my $cpio = "${gnu}cpio";
-my $cvs = "${gnu}cvs";
-my $date = "${gnu}date";
-my $egrep = "${gnu}egrep";
-my $find = "${gnu}find";
-my $gzip = "${gnu}gzip";
-my $bzip2 = "${gnu}bzip2";
-my $make = "${gnu}make -s";
-my $mv = '/bin/mv -f';
-my $rm = "${gnu}rm -f";
-my $md5sum = "${gnu2}/md5sum";
+my $chmod = 'chmod';
+# All of them had gnu suffixes. Removed them..
+my $chgrp = 'chgrp';
+my $cpio = 'cpio';
+my $cvs = 'cvs';
+my $date = 'date';
+my $egrep = 'egrep';
+my $find = 'find';
+my $gzip = 'gzip';
+my $bzip2 = 'bzip2';
+my $make = 'make -s';
+my $mv = 'mv -f';
+my $rm = 'rm -f';
+my $md5sum = 'md5sum';
 chop (my $now = `$date +"%a %b %d %T %Y"`);
 
 unless ("$controlled_files") {
@@ -283,8 +294,10 @@ if ($update_versions  &&  "$kit" ne 'ace+tao') {
     if ($generate_man_pages) {
       &ex ("cd ACE_wrappers && bin/generate_doxygen.pl -is_release -exclude_tao -perl_path $perl_path -dot_path $dot_path")
 	&& die "$0: failed to generate ACE man pages in $stage_dir\n";
-      &ex ("cd ACE_wrappers/man && catman -w -M .")
-	&& die "$0: failed to generate man page index in $stage_dir\n";
+
+##      DONT generate the windex database on Linux. Things get screwed. 
+##      &ex ("cd ACE_wrappers/man && catman -w -M .")
+##	&& die "$0: failed to generate man page index in $stage_dir\n";
     }
     &ex ("cd ACE_wrappers  &&  $make ACE-INSTALL")  &&
       die "$0: failed make ACE-INSTALL in $stage_dir/ACE_wrappers\n";
