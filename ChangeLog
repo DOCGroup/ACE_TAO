@@ -1,3 +1,13 @@
+Fri Mar 16 15:07:23 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_Context.h (set_mode):
+
+	  Changed the default mode from SSLv3 to SSLv23, i.e. support
+	  SSLv2 and SSLv3 by default.  This fixes interoperability
+	  with applications that use Sun's JSSE, which only supports
+	  SSLv2.  Thanks to Max Khon <fjoe@newst.net> for providing the
+	  patch.
+
 Thu Mar 15 17:47:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Log_Msg_Test.cpp: Changed a ERROR message as a DEBUG

@@ -86,7 +86,7 @@ private:
  */
 class ACE_SSL_Export ACE_SSL_Context
 {
-  friend void ACE_SSL_locking_callback (int, int, const char *, int); 
+  friend void ACE_SSL_locking_callback (int, int, const char *, int);
 
 public:
 
@@ -124,7 +124,7 @@ public:
    * If the mode is not set, then the class automatically initializes
    * itself to the default mode.
    */
-  int set_mode (int mode = ACE_SSL_Context::SSLv3);
+  int set_mode (int mode = ACE_SSL_Context::SSLv23);
 
   int get_mode (void) const;
 
