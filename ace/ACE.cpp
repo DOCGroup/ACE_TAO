@@ -1032,11 +1032,8 @@ ACE::dirname (const char *pathname, char delim)
 
   if (temp == 0)
     {
-      if (ACE_OS::strcmp (pathname, ".") == 0
-          || ACE_OS::strcmp (pathname, "..") == 0)
-        return_dirname[0] = '.';
-      else
-        return_dirname[0] = delim;
+      return_dirname[0] = '.';
+      return_dirname[1] = '\0';
 
       return return_dirname;
     }
