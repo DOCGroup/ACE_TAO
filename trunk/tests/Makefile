@@ -118,6 +118,7 @@ BIN =   ACE_Test \
         TSS_Test \
 	Vector_Test \
         UPIPE_SAP_Test \
+        Unbounded_Set_Test \
         Upgradable_RW_Test
 
 BIN2 =  Naming_Test \
