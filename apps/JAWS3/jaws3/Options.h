@@ -4,7 +4,6 @@
 #ifndef JAWS_OPTIONS_H
 #define JAWS_OPTIONS_H
 
-#include "ace/OS.h"
 #include "ace/Singleton.h"
 #include "ace/Synch.h"
 

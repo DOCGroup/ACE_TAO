@@ -4,9 +4,10 @@
 #ifndef JAWS_ASYNCH_IO_H
 #define JAWS_ASYNCH_IO_H
 
-#include "ace/OS.h"
 #include "ace/Asynch_IO.h"
+#include "ace/Message_Block.h"
 #include "ace/Singleton.h"
+#include "ace/Time_Value.h"
 
 #include "jaws3/Export.h"
 #include "jaws3/IO.h"

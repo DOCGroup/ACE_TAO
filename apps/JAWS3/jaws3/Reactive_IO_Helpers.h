@@ -4,9 +4,10 @@
 #ifndef JAWS_REACTIVE_IO_HELPERS_H
 #define JAWS_REACTIVE_IO_HELPERS_H
 
-#include "ace/OS.h"
+#include "ace/Event_Handler.h"
 #include "ace/Message_Block.h"
 #include "ace/Singleton.h"
+#include "ace/Time_Value.h"
 
 #include "jaws3/Export.h"
 #include "jaws3/IO.h"
