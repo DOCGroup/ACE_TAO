@@ -34,7 +34,9 @@
 // On Win9X, a shared address SHOULD be between the 2nd and 3rd Gb.
 // Note this will not work for NT: The addresses above 2Gb are
 // reserved for the system, so this one will fail.
-# define ACE_DEFAULT_BASE_ADDR ((char*) ((2048UL+512UL)*1024UL*1024UL))
+# if !defined (ACE_DEFAULT_BASE_ADDR)
+#   define ACE_DEFAULT_BASE_ADDR ((char*) ((2048UL+512UL)*1024UL*1024UL))
+# endif
 #endif
 
 // Define ACE_HAS_MFC to 1, if you want ACE to use CWinThread. This should

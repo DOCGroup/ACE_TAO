@@ -155,26 +155,30 @@ test (ACE_Configuration *config,
   if (index != 3 || !found[0] || !found[1] || !found[2])
     return -15;
 
-  // Add some subsections.
-  ACE_Configuration_Section_Key test2;
-  ACE_Configuration_Section_Key test3;
-  ACE_Configuration_Section_Key test4;
+  {
+    // Add some subsections. This part is a separate scope to be sure
+    // the test2, test3, test4 keys are closed before further
+    // manipulating/deleting the sections further down in the test.
+    ACE_Configuration_Section_Key test2;
+    ACE_Configuration_Section_Key test3;
+    ACE_Configuration_Section_Key test4;
 
-  if (config->open_section (testsection,
-                            ACE_TEXT ("test2"),
-                            1,
-                            test2))
-    return -16;
-  else if (config->open_section (testsection,
-                                 ACE_TEXT ("test3"),
-                                 1,
-                                 test3))
-    return -17;
-  else if (config->open_section (testsection,
-                                 ACE_TEXT ("test4"),
-                                 1,
-                                 test4))
-    return -18;
+    if (config->open_section (testsection,
+                              ACE_TEXT ("test2"),
+                              1,
+                              test2))
+      return -16;
+    else if (config->open_section (testsection,
+                                   ACE_TEXT ("test3"),
+                                   1,
+                                   test3))
+      return -17;
+    else if (config->open_section (testsection,
+                                   ACE_TEXT ("test4"),
+                                   1,
+                                   test4))
+      return -18;
+  }
 
   // Test enumerate sections.
   index = 0;
@@ -217,7 +221,10 @@ test (ACE_Configuration *config,
   if (config->remove_section (testsection,
                               ACE_TEXT ("test2"),
                               0))
-    return -20;
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p (%d)\n"),
+                       ACE_TEXT ("remove_section test2"),
+                       ACE_OS::last_error ()),
+                      -20);
 
   // Try to remove it again
   if (!config->remove_section (testsection,
@@ -234,17 +241,21 @@ test (ACE_Configuration *config)
   const ACE_Configuration_Section_Key& root =
     config->root_section ();
 
-  ACE_Configuration_Section_Key testsection;
+  {
+    // Scope this so the testsection key is closed before trying to
+    // remove the "test" section.
+    ACE_Configuration_Section_Key testsection;
 
-  if (config->open_section (root,
-                            ACE_TEXT ("test"),
-                            1,
-                            testsection))
-    return -2;
+    if (config->open_section (root,
+                              ACE_TEXT ("test"),
+                              1,
+                              testsection))
+      return -2;
 
-  int ret_val = test (config, testsection);
-  if (ret_val)
-    return ret_val;
+    int ret_val = test (config, testsection);
+    if (ret_val)
+      return ret_val;
+  }
 
   // Try to remove the testsection root, it should fail since it still
   // has subkeys
@@ -253,14 +264,17 @@ test (ACE_Configuration *config)
                                0))
     return -22;
 
-  // Test find section
-  ACE_Configuration_Section_Key result;
+  {
+    // Test find section, and be sure the key is closed before testing the
+    // remove, below.
+    ACE_Configuration_Section_Key result;
 
-  if (config->open_section (root,
-                            ACE_TEXT ("test"),
-                            0,
-                            result))
-    return -23;
+    if (config->open_section (root,
+                              ACE_TEXT ("test"),
+                              0,
+                              result))
+      return -23;
+  }
 
   // Now test the recursive remove.
   if (config->remove_section (root,
@@ -269,10 +283,11 @@ test (ACE_Configuration *config)
     return -24;
 
   // Make sure its not there
+  ACE_Configuration_Section_Key testsectiongone;
   if (!config->open_section (root,
                              ACE_TEXT ("test"),
                              0,
-                             testsection))
+                             testsectiongone))
     return -25;
 
   return 0;

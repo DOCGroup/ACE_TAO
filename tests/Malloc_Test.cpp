@@ -97,7 +97,14 @@ myallocator (const void *base_addr = 0)
   if (static_allocator.get () == 0)
     {
 
+#if defined (ACE_HAS_WINCE)
+      // WinCE cannot do fixed base, ever.
+      ACE_MMAP_Memory_Pool_Options options
+        (0,
+         ACE_MMAP_Memory_Pool_Options::NEVER_FIXED);
+#else
       ACE_MMAP_Memory_Pool_Options options (base_addr);
+#endif /* ACE_HAS_WINCE */
 
 #if !defined (ACE_TEST_REMAP_ON_FAULT)
       options.minimum_bytes_ = 512 * 1024;
@@ -116,7 +123,14 @@ init_test (const void *base_addr = 0)
 {
   // Cleanup the MMAP file so we won't trip over the leftover mmap
   // file from the previous crash.
+#if defined (ACE_HAS_WINCE)
+  // WinCE cannot do fixed base, ever.
+  ACE_MMAP_Memory_Pool_Options options
+    (0,
+     ACE_MMAP_Memory_Pool_Options::NEVER_FIXED);
+#else
   ACE_MMAP_Memory_Pool_Options options (base_addr);
+#endif /* ACE_HAS_WINCE */
   ACE_MMAP_Memory_Pool mmap (MMAP_FILENAME, &options);
 
   size_t rbyte = 0;

@@ -1158,6 +1158,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                 case 'p':             // <errno> string, ala perror()
                   {
                     errno = ACE::map_errno (this->errnum ());
+#if !defined (ACE_HAS_WINCE)     /* CE doesn't do strerror() */
                     if (errno >= 0 && errno < sys_nerr)
                       {
                         ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s: %s"));
@@ -1171,6 +1172,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                              ACE_TEXT_CHAR_TO_TCHAR (ACE_OS_String::strerror (errno)));
                       }
                     else
+#endif /* !ACE_HAS_WINCE */
                       {
 #if defined (ACE_WIN32)
                         ACE_TCHAR *lpMsgBuf = 0;
