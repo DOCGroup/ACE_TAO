@@ -22,7 +22,7 @@
 class ACE_Export ACE_EH_Dispatch_Info
 {
   // = TITLE
-  //     
+  //
   //     This structure contains information of the activated event
   //     handler.
 public:
@@ -49,18 +49,18 @@ public:
 class ACE_Export ACE_TP_Reactor : public ACE_Select_Reactor
 {
   // = TITLE
-  //     
+  //
   //     Specialization of Select Reactor to support thread-pool based
   //     event dispatching.
   //
   // = DESCRIPTION
-  // 
+  //
   //     One of the short comings of the Select_Reactor in ACE is that
   //     it did not support a thread pool based event dispatching
   //     model, similar to the one in WFMO_Reactor.  In
   //     Select_Reactor, only thread can be blocked in handle_events()
   //     at any given time.
-  //     
+  //
   //     A new Reactor has been added to ACE that removes this
   //     short-coming.  TP_Reactor is a specialization of Select
   //     Reactor to support thread-pool based event dispatching. This
@@ -71,11 +71,11 @@ class ACE_Export ACE_TP_Reactor : public ACE_Select_Reactor
   //     thread can start waiting in the event loop) and then
   //     dispatching the event handler outside the context of the
   //     Reactor lock.
-  //     
+  //
   //     This Reactor is best suited for situations when the callbacks
   //     to event handlers can take arbitrarily long and/or a number
   //     of threads are available to run the event loops.
-  //     
+  //
   //     Note that callback code in Event Handlers
   //     (e.g. Event_Handler::handle_input) does not have to be
   //     modified or made thread-safe for this Reactor.  This is
@@ -116,6 +116,8 @@ public:
   // dispatched, 0 if the <max_wait_time> elapsed without dispatching
   // any handlers, or -1 if something goes wrong.
 
+  virtual int handle_events (ACE_Time_Value &max_wait_time);
+
   static void no_op_sleep_hook (void *);
   // Called from handle events
 
@@ -136,13 +138,20 @@ protected:
   // event handler is stored away, so that the event handler can be
   // dispatch later.
 
+  virtual void notify_handle (ACE_HANDLE handle,
+                              ACE_Reactor_Mask mask,
+                              ACE_Handle_Set &,
+                              ACE_Event_Handler *eh,
+                              ACE_EH_PTMF callback);
+  // This method shouldn't get called.
+
   virtual int notify_handle (ACE_EH_Dispatch_Info &dispatch_info);
   // Notify the appropriate <callback> in the context of the <eh>
   // associated with <handle> that a particular event has occurred.
 
   ACE_EH_Dispatch_Info dispatch_info_;
   // Dispatch information of the activated event handler
-  
+
 private:
   ACE_TP_Reactor (const ACE_TP_Reactor &);
   ACE_TP_Reactor &operator = (const ACE_TP_Reactor &);
