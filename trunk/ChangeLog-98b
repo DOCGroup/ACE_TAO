@@ -1,3 +1,9 @@
+Thu Oct 08 15:11:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACE-INSTALL.html: Updated document about spawning new thread
+	  when ACE_HAS_MFC is defined.  CWinBeginThread is not used
+	  automatically.  Users have to explicitly ask for this.
+
 Thu Oct  8 12:11:08 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
         * examples/IPC_SAP/SOCK_SAP/run_test:
