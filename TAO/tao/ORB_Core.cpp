@@ -48,6 +48,9 @@ TAO_ORB_Core::TAO_ORB_Core (void)
     server_factory_ (0),
     server_factory_from_service_config_ (CORBA::B_FALSE),
     opt_for_collocation_ (CORBA::B_TRUE),
+#if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
+    arl_same_port_connect_ (CORBA::B_FALSE),
+#endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */    
     preconnections_ (0)
 {
 }
@@ -354,6 +357,18 @@ TAO_ORB_Core::init (int& argc, char** argv)
                arg_shifter.consume_arg ();
              }
          }
+#if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
+      else if (ACE_OS::strcmp (current_arg, "-ORBarlsameportconnect") == 0)
+        {
+          arg_shifter.consume_arg ();
+          if (arg_shifter.is_parameter_next ())
+            {
+              if (ACE_OS::strcasecmp (arg_shifter.get_current (), "yes") == 0)
+                this->arl_same_port_connect_ = CORBA::B_TRUE;
+              arg_shifter.consume_arg ();
+            }
+        }
+#endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
      else
        arg_shifter.ignore_arg ();
    }
@@ -797,6 +812,15 @@ TAO_ORB_Core::root_poa (TAO_POA *np)
   this->root_poa_ = np;
   return old_poa;
 }
+
+
+#if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
+CORBA::Boolean
+TAO_ORB_Core::arl_same_port_connect (void)
+{
+  return this->arl_same_port_connect_;
+}
+#endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
 
 int
 TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core *p)
