@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project {
   exename   = FaCENOACE
   requires += wince
