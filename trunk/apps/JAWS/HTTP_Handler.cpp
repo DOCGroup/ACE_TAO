@@ -256,9 +256,7 @@ HTTP_Handler::sockgets(char *buf, int n)
 
 // ---------------------------------------- //
 
-
 // This is necessary for gcc to work with templates
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Acceptor<HTTP_Handler, ACE_SOCK_ACCEPTOR>;
-template class Sock_Acceptor_Adapter<HTTP_Handler>;
+template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

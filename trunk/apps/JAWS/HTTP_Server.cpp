@@ -130,3 +130,9 @@ ACE_STATIC_SVC_DEFINE (HTTP_Server, "HTTP_Server", ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (HTTP_Server),
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ, 0)
+
+// This is necessary for gcc to work with templates
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class LOCK_SOCK_Acceptor<ACE_Thread_Mutex>;
+template class ACE_Oneshot_Acceptor<HTTP_Handler, ONESHOT_SOCK_ACCEPTOR>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

@@ -48,17 +48,22 @@ main (int argc, char *argv[])
   if (peer_acceptor.open (addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
   else if (REACTOR::instance ()->register_handler 
-	   (&peer_acceptor, ACE_Event_Handler::ACCEPT_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "registering service with ACE_Reactor\n"), -1);
+	   (&peer_acceptor, 
+	    ACE_Event_Handler::ACCEPT_MASK) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+		       "registering service with ACE_Reactor\n"), 
+		       -1);
 
   // Run forever, performing logging service.
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting up server logging daemon\n"));
+  ACE_DEBUG ((LM_DEBUG, 
+	      "(%P|%t) starting up server logging daemon\n"));
 
   while (!finished)
      REACTOR::instance ()->handle_events ();
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) shutting down server logging daemon\n"));
+  ACE_DEBUG ((LM_DEBUG, 
+	      "(%P|%t) shutting down server logging daemon\n"));
 
   return 0;
 }

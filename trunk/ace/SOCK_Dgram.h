@@ -31,28 +31,28 @@ public:
   // Default constructor.
 
   ACE_SOCK_Dgram (const ACE_Addr &local, 
-		  int protocol_family = PF_INET, 
-		  int protocol = 0,
-		  int reuse_addr = 0);
+                  int protocol_family = PF_INET, 
+                  int protocol = 0,
+                  int reuse_addr = 0);
   // Initiate a socket dgram.
 
   int open (const ACE_Addr &local, 
-	    int protocol_family = PF_INET, 
-	    int protocol = 0,
-	    int reuse_addr = 0);
+            int protocol_family = PF_INET, 
+            int protocol = 0,
+            int reuse_addr = 0);
   // Initiate a socket dgram.
 
   // = Data transfer routines.
   ssize_t send (const void *buf, 
-		size_t n, 
-		const ACE_Addr &addr, 
-		int flags = 0) const;
+                size_t n, 
+                const ACE_Addr &addr, 
+                int flags = 0) const;
   // Send an <n> byte <buf> to the datagram socket (uses sendto(3)).
 
   ssize_t recv (void *buf, 
-		size_t n, 
-		ACE_Addr &addr, 
-		int flags = 0) const;
+                size_t n, 
+                ACE_Addr &addr, 
+                int flags = 0) const;
   // Receive an <n> byte <buf> from the datagram socket (uses
   // recvfrom(3)).
 
@@ -63,21 +63,19 @@ public:
   // returns the number of bytes read.  The caller is responsible for
   // deleting the member in the <iov_base> field of <io_vec>.
 
-#if defined (ACE_HAS_MSG)
   ssize_t send (const iovec iov[], 
-		size_t n, 
-		const ACE_Addr &addr, 
-		int flags = 0) const;
+                size_t n, 
+                const ACE_Addr &addr, 
+                int flags = 0) const;
   // Send an <iovec> of size <n> to the datagram socket (uses
   // sendmsg(3)).
 
   ssize_t recv (iovec iov[], 
-		size_t n, 
-		ACE_Addr &addr, 
-		int flags = 0) const;    
+                size_t n, 
+                ACE_Addr &addr, 
+                int flags = 0) const;    
   // Recv an <iovec> of size <n> to the datagram socket (uses
   // recvmsg(3)).
-#endif /* ACE_HAS_MSG */
 
   void dump (void) const;
   // Dump the state of an object.
@@ -87,7 +85,7 @@ public:
 
 protected:  
   int shared_open (const ACE_Addr &local, 
-		   int protocol_family);
+                   int protocol_family);
   // Open is shared by this and by <LSOCK_Dgram>.
 
 private:

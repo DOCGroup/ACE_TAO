@@ -1,3 +1,30 @@
+Sat Mar 22 12:06:22 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/OS.cpp: Added new thread-safe implementations of writev()
+ 	  and readv() for platforms that lack these functions.
+
+	* ace/SOCK_Dgram.cpp: Added new implementations of
+ 	  ACE_SOCK_Dgram::{send,recv} that define methods for
+ 	  send(iovec[], ...)  and recv(iovec[], ...) for systems that
+ 	  don't have sendmsg() and recvmsg().  Thanks to Alan Cabrera
+ 	  <Alan_Cabrera@fp.cibc.com> for these fixes.
+
+	* apps/jaws/HTTP_Handler.cpp: Removed some problematic template
+ 	  specializations that were left over from an earlier version of
+ 	  JAWS.  Thanks to Adam Porter <aporter@cs.umd.edu> for reporting
+ 	  this.
+
+	* examples/Logger/Acceptor-server/server_loggerd.cpp: Revised the
+ 	  code to use the new ACE_Svc_Handler logic that checks to ensure
+ 	  that we don't recurse infinitely in handle_close().
+	  Thanks to Jean-Marc Strauss <strauss@club-internet.fr> for
+	  reporting this problem.
+
+	* examples/Logger/simple-server/Logging_Handler.cpp
+ 	  (handle_close): Added a check to make sure we don't end up
+ 	  recursively calling handle_close().  This will prevent
+	  a segfault.
+
 Sat Mar 22 07:30:49 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/High_Res_Timer.*: Changed scale factor to convert

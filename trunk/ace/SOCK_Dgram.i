@@ -11,7 +11,7 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (void)
   ACE_TRACE ("ACE_SOCK_Dgram::ACE_SOCK_Dgram");
 }
 
-// Send an N byte datagram to ADDR (connectionless version).
+// <sendto> an N byte datagram to <addr> (connectionless version).
 
 inline ssize_t
 ACE_SOCK_Dgram::send (const void *buf, 
@@ -21,12 +21,13 @@ ACE_SOCK_Dgram::send (const void *buf,
 {
   ACE_TRACE ("ACE_SOCK_Dgram::send");
   sockaddr *saddr = (sockaddr *) addr.get_addr ();
-  size_t   len	  = addr.get_size ();
-  return ACE_OS::sendto (this->get_handle (), (const char *) buf, n, flags, 
-		   (struct sockaddr *) saddr, len);
+  size_t len = addr.get_size ();
+  return ACE_OS::sendto (this->get_handle (), 
+			 (const char *) buf, n, flags, 
+			 (struct sockaddr *) saddr, len);
 }
 
-// Recv an n byte datagram to ADDR (connectionless version).
+// <recvfrom> an n byte datagram (connectionless version).
 
 inline ssize_t
 ACE_SOCK_Dgram::recv (void *buf, 
@@ -35,11 +36,12 @@ ACE_SOCK_Dgram::recv (void *buf,
 		      int flags) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram::recv");
-  sockaddr *saddr   = (sockaddr *) addr.get_addr ();
-  int	   addr_len = addr.get_size ();
+  sockaddr *saddr = (sockaddr *) addr.get_addr ();
+  int addr_len = addr.get_size ();
 
-  ssize_t status = ACE_OS::recvfrom (this->get_handle (), (char *) buf, n, flags, 
-			       (sockaddr *) saddr, &addr_len);
+  ssize_t status = ACE_OS::recvfrom (this->get_handle (), 
+				     (char *) buf, n, flags, 
+				     (sockaddr *) saddr, &addr_len);
   addr.set_size (addr_len);
   return status;
 }

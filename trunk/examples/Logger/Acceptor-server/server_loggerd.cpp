@@ -85,12 +85,8 @@ public:
   // = Initialization and termination methods.
   Logging_Handler (void);
 
-  virtual void destroy (void);
-  // Ensure dynamic allocation.
-
   // = Hooks for opening and closing handlers.
   virtual int open (void *);
-  virtual int close (u_long);
 
 protected:
   // = Demultiplexing hooks.
@@ -111,13 +107,6 @@ typedef ACE_Acceptor <Logging_Handler, ACE_SOCK_ACCEPTOR>
 
 Logging_Handler::Logging_Handler (void)
 {
-}
-
-void
-Logging_Handler::destroy (void)
-{
-  REACTOR::instance ()->cancel_timer (this);
-  this->peer ().close ();
 }
 
 int
@@ -216,16 +205,6 @@ Logging_Handler::open (void *)
 		    "(%P|%t) connected with %s\n", this->peer_name_));
       return 0;
     }
-}
-
-// Perform termination activities when deregistered from the
-// ACE_Reactor.
-
-int
-Logging_Handler::close (u_long)
-{
-  this->destroy ();
-  return 0;
 }
 
 int
