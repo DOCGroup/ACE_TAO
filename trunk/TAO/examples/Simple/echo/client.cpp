@@ -13,7 +13,9 @@ main (int argc, char **argv)
   ACE_DEBUG ((LM_DEBUG,
               "\nEcho client\n\n"));
 
-  if (client.run (argc, argv) == -1)
+  if (client.run ("Echo",
+                  argc, 
+                  argv) == -1)
     return -1; 
   else
     return 0;

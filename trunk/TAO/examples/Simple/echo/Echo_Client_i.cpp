@@ -19,11 +19,12 @@ Echo_Client_i::~Echo_Client_i (void)
 }
 
 int
-Echo_Client_i::run (int argc,
+Echo_Client_i::run (char *name,
+                    int argc,
                     char *argv[])
 {
   // Initialize the client.
-  if (client.init (argc, argv) == -1)
+  if (client.init (name,argc, argv) == -1)
     return -1;
 
   ACE_TRY_NEW_ENV 
