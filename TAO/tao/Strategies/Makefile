@@ -368,12 +368,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/debug.h \
- $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
@@ -414,6 +408,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -593,12 +589,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  strategies_export.h DIOP_Endpoint.i DIOP_Profile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/debug.h \
- $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -680,6 +670,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -694,6 +686,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/iiop_endpoints.h \
  $(TAO_ROOT)/tao/iiop_endpoints.i
 
@@ -979,12 +972,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/debug.h \
- $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
@@ -1026,6 +1013,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -1061,17 +1050,13 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Transport_Mux_Strategy.h \
  $(TAO_ROOT)/tao/Sync_Strategies.h \
  $(TAO_ROOT)/tao/TAOC.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
- $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
- $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
- $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/Sync_Strategies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Resume_Handle.h \
  $(TAO_ROOT)/tao/Resume_Handle.inl \
  $(TAO_ROOT)/tao/GIOP_Message_Base.h \
@@ -1382,11 +1367,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
@@ -1425,6 +1405,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -1449,11 +1431,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/LF_Event.h \
  $(TAO_ROOT)/tao/LF_Event.inl \
  $(TAO_ROOT)/tao/TAOC.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
- $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
- $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
- $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/operation_details.h \
  $(TAO_ROOT)/tao/Service_Context.h \
@@ -1752,12 +1729,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/debug.h \
- $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
@@ -1799,6 +1770,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -1822,7 +1795,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Object_KeyC.i \
  DIOP_Endpoint.h DIOP_Endpoint.i DIOP_Profile.i \
  $(TAO_ROOT)/tao/MProfile.h \
- $(TAO_ROOT)/tao/MProfile.i
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/debug.h
 
 .obj/DIOP_Connection_Handler.o .obj/DIOP_Connection_Handler.so .shobj/DIOP_Connection_Handler.o .shobj/DIOP_Connection_Handler.so: DIOP_Connection_Handler.cpp \
  DIOP_Connection_Handler.h \
@@ -2106,11 +2080,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
@@ -2154,38 +2123,11 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
- $(TAO_ROOT)/tao/Messaging/Messaging_Policy_i.h \
- $(TAO_ROOT)/tao/Messaging/MessagingC.h \
- $(TAO_ROOT)/tao/corba.h \
- $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- $(TAO_ROOT)/tao/Principal.h \
- $(TAO_ROOT)/tao/Principal.i \
- $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
- $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/WrongTransactionC.i \
- $(TAO_ROOT)/tao/Object_KeyC.h \
- $(TAO_ROOT)/tao/Object_KeyC.i \
- $(TAO_ROOT)/tao/ObjectIDList.h \
- $(TAO_ROOT)/tao/ObjectIDList.i \
- $(TAO_ROOT)/tao/Messaging/messaging_export.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
- $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
- $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Messaging/MessagingC.i \
- $(TAO_ROOT)/tao/Messaging/Messaging_Policy_i.i \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Thread_Lane_Resources.h \
  $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
@@ -2766,12 +2708,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/debug.h \
- $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
@@ -2812,6 +2748,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -3128,12 +3066,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/debug.h \
- $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
@@ -3174,6 +3106,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -3497,12 +3431,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/debug.h \
- $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
@@ -3546,10 +3474,13 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
- uiop_endpoints.h uiop_endpoints.i
+ $(TAO_ROOT)/tao/debug.h uiop_endpoints.h \
+ uiop_endpoints.i
 
 .obj/UIOP_Transport.o .obj/UIOP_Transport.so .shobj/UIOP_Transport.o .shobj/UIOP_Transport.so: UIOP_Transport.cpp UIOP_Transport.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -3845,16 +3776,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Transport_Mux_Strategy.h \
  $(TAO_ROOT)/tao/Sync_Strategies.h \
  $(TAO_ROOT)/tao/TAOC.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
- $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
- $(TAO_ROOT)/tao/TAO_Singleton.h \
- $(TAO_ROOT)/tao/TAO_Singleton.inl \
- $(TAO_ROOT)/tao/TAO_Singleton.cpp \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
- $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/Sync_Strategies.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -3870,16 +3791,15 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/debug.h \
- $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
@@ -3912,10 +3832,13 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/GIOP_Message_Base.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging.i \
@@ -4251,11 +4174,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
@@ -4292,6 +4210,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -4308,11 +4228,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/LF_Event.h \
  $(TAO_ROOT)/tao/LF_Event.inl \
  $(TAO_ROOT)/tao/TAOC.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
- $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
- $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
- $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/operation_details.h \
  $(TAO_ROOT)/tao/Service_Context.h \
@@ -4617,12 +4532,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/debug.h \
- $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
@@ -4664,6 +4573,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -4686,7 +4597,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Object_KeyC.i \
  UIOP_Endpoint.h UIOP_Endpoint.i UIOP_Profile.i \
  $(TAO_ROOT)/tao/MProfile.h \
- $(TAO_ROOT)/tao/MProfile.i
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/debug.h
 
 .obj/UIOP_Connection_Handler.o .obj/UIOP_Connection_Handler.so .shobj/UIOP_Connection_Handler.o .shobj/UIOP_Connection_Handler.so: UIOP_Connection_Handler.cpp \
  UIOP_Connection_Handler.h \
@@ -4975,11 +4887,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
@@ -5023,41 +4930,14 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Messaging/Messaging_Policy_i.h \
- $(TAO_ROOT)/tao/Messaging/MessagingC.h \
- $(TAO_ROOT)/tao/corba.h \
- $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- $(TAO_ROOT)/tao/Principal.h \
- $(TAO_ROOT)/tao/Principal.i \
- $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
- $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/WrongTransactionC.i \
- $(TAO_ROOT)/tao/Object_KeyC.h \
- $(TAO_ROOT)/tao/Object_KeyC.i \
- $(TAO_ROOT)/tao/ObjectIDList.h \
- $(TAO_ROOT)/tao/ObjectIDList.i \
- $(TAO_ROOT)/tao/Messaging/messaging_export.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
- $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
- $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Messaging/MessagingC.i \
- $(TAO_ROOT)/tao/Messaging/Messaging_Policy_i.i \
  $(TAO_ROOT)/tao/Base_Transport_Property.h \
  $(TAO_ROOT)/tao/Base_Transport_Property.inl \
  $(TAO_ROOT)/tao/GIOP_Message_Lite.h \
@@ -5641,12 +5521,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/debug.h \
- $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
@@ -5687,6 +5561,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -5891,12 +5767,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  SHMIOP_Profile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/debug.h \
- $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -5978,6 +5848,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -5992,6 +5864,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/iiop_endpoints.h \
  $(TAO_ROOT)/tao/iiop_endpoints.i
 
@@ -6297,16 +6170,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Transport_Mux_Strategy.h \
  $(TAO_ROOT)/tao/Sync_Strategies.h \
  $(TAO_ROOT)/tao/TAOC.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
- $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
- $(TAO_ROOT)/tao/TAO_Singleton.h \
- $(TAO_ROOT)/tao/TAO_Singleton.inl \
- $(TAO_ROOT)/tao/TAO_Singleton.cpp \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
- $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/Sync_Strategies.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -6316,16 +6179,15 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/debug.h \
- $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
@@ -6358,10 +6220,13 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Resume_Handle.h \
  $(TAO_ROOT)/tao/Resume_Handle.inl \
  $(TAO_ROOT)/tao/GIOP_Message_Base.h \
@@ -6708,11 +6573,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Base_Transport_Property.inl \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
@@ -6749,6 +6609,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -6764,11 +6626,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/LF_Event.h \
  $(TAO_ROOT)/tao/LF_Event.inl \
  $(TAO_ROOT)/tao/TAOC.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
- $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
- $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
- $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/operation_details.h \
  $(TAO_ROOT)/tao/Service_Context.h \
@@ -7073,12 +6930,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/debug.h \
- $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
@@ -7120,6 +6971,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -7155,7 +7008,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Object_KeyC.i \
  SHMIOP_Endpoint.h SHMIOP_Endpoint.i SHMIOP_Profile.i \
  $(TAO_ROOT)/tao/MProfile.h \
- $(TAO_ROOT)/tao/MProfile.i
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/debug.h
 
 .obj/SHMIOP_Connection_Handler.o .obj/SHMIOP_Connection_Handler.so .shobj/SHMIOP_Connection_Handler.o .shobj/SHMIOP_Connection_Handler.so: SHMIOP_Connection_Handler.cpp \
  SHMIOP_Connection_Handler.h \
@@ -7446,11 +7300,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
@@ -7494,38 +7343,11 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
- $(TAO_ROOT)/tao/Messaging/Messaging_Policy_i.h \
- $(TAO_ROOT)/tao/Messaging/MessagingC.h \
- $(TAO_ROOT)/tao/corba.h \
- $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- $(TAO_ROOT)/tao/Principal.h \
- $(TAO_ROOT)/tao/Principal.i \
- $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
- $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/WrongTransactionC.i \
- $(TAO_ROOT)/tao/Object_KeyC.h \
- $(TAO_ROOT)/tao/Object_KeyC.i \
- $(TAO_ROOT)/tao/ObjectIDList.h \
- $(TAO_ROOT)/tao/ObjectIDList.i \
- $(TAO_ROOT)/tao/Messaging/messaging_export.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
- $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
- $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Messaging/MessagingC.i \
- $(TAO_ROOT)/tao/Messaging/Messaging_Policy_i.i \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Base_Transport_Property.h \
  $(TAO_ROOT)/tao/Base_Transport_Property.inl \
@@ -8132,12 +7954,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i \
- $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/debug.h \
- $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
@@ -8193,6 +8009,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -8216,6 +8034,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/LF_Strategy.h \
  $(TAO_ROOT)/tao/LF_Strategy.inl \
  LF_Strategy_Null.inl \
+ $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/LRU_Connection_Purging_Strategy.h \
  $(TAO_ROOT)/tao/LF_Strategy_Complete.h \
  $(TAO_ROOT)/tao/LF_Strategy_Complete.inl \

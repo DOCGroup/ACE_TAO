@@ -12,7 +12,6 @@
 #include "tao/CDR.h"
 #include "tao/Timeprobe.h"
 #include "tao/Server_Strategy_Factory.h"
-#include "tao/Messaging/Messaging_Policy_i.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/GIOP_Message_Lite.h"
 #include "tao/Transport_Cache_Manager.h"
