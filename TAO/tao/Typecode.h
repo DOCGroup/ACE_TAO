@@ -246,6 +246,10 @@ namespace CORBA
     CORBA::TypeCode_ptr content_type (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
+    /// These just throw CORBA::NO_IMPLEMENT.
+    CORBA::UShort fixed_digits (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
+    CORBA::Short fixed_scale (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
+
     /// Returns the visibility (public/private) of the member at index
     /// 'slot'.  Raises (BadKind, Bounds). Useful for tk_value only.
     CORBA::Visibility member_visibility (CORBA::ULong slot

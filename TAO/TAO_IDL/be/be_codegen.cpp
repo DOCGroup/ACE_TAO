@@ -861,8 +861,18 @@ TAO_CodeGen::start_anyop_header (const char *fname)
     {
       *this->anyop_header_ << "#include /**/ \""
                            << be_global->pre_include ()
-                           << "\"";
+                           << "\"" << be_nl;
     }
+
+  this->gen_standard_include (this->anyop_header_,
+                              "tao/orbconf.h");
+
+  // Generate the TAO_EXPORT_MACRO macro.
+  *this->anyop_header_ << "\n\n#if defined (TAO_EXPORT_MACRO)\n";
+  *this->anyop_header_ << "#undef TAO_EXPORT_MACRO\n";
+  *this->anyop_header_ << "#endif\n";
+  *this->anyop_header_ << "#define TAO_EXPORT_MACRO "
+                       << be_global->stub_export_macro ();
 
   return 0;
 }
