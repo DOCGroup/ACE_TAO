@@ -1716,6 +1716,7 @@ extern "C"
 void
 ACE_TSS_Emulation_cleanup (void *ptr)
 {
+   ACE_UNUSED_ARG (ptr);
    // Really this must be used for ACE_TSS_Emulation code to make the TSS
    // cleanup
 }
