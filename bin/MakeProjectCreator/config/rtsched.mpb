@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : naming {
+project : naming, svc_utils {
   after     += RTSched
   libs      += TAO_RTSched
   tagchecks += Sched
