@@ -1,3 +1,9 @@
+Thu Jun 19 11:54:29 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+
+          Fixed more argument related bugs.
+
 Thu Jun 19 16:58:00 UTC 2003 Stephen Torri <storri@cse.wustl.edu>
 
         * orbsvcs/tests/Metrics/Makefile:
@@ -43,50 +49,50 @@ Thu Jun 19 16:58:00 UTC 2003 Stephen Torri <storri@cse.wustl.edu>
         * orbsvcs/orbsvcs/Makefile:
 
           Adding new TAO Metrics ORB service.
-	  - TAO_Metrics_Frame_Manager_Data is a class makes use of 
-	    the <ACE_Time_Value> class to store period and 
-	    endpoint data for a given time frame. This is used
-	    by the TAO_Metrics_Frame_Manager to make use of the 
-	    <ACE_Metrics_Cache> class to implement a cache for local use.
+          - TAO_Metrics_Frame_Manager_Data is a class makes use of
+            the <ACE_Time_Value> class to store period and
+            endpoint data for a given time frame. This is used
+            by the TAO_Metrics_Frame_Manager to make use of the
+            <ACE_Metrics_Cache> class to implement a cache for local use.
 
-	  - TAO_Metrics_Timeprobe is a class that makes use of the 
-	    <ACE_Metrics_Timeprobe> class to implement a timeprobe for 
-	    use in a local metrics cache.
+          - TAO_Metrics_Timeprobe is a class that makes use of the
+            <ACE_Metrics_Timeprobe> class to implement a timeprobe for
+            use in a local metrics cache.
 
-   	  - TAO_Metrics_LocalCache is a class that makes use of the 
-	    <ACE_Metrics_Cache> class to implement a cache for local use
-	    for storing metrics data.
+          - TAO_Metrics_LocalCache is a class that makes use of the
+            <ACE_Metrics_Cache> class to implement a cache for local use
+            for storing metrics data.
 
-	  - TAO_Metrics_ReportingCache is a class that use of the 
-	    <TAO_Metrics_LocalCache> as its a cache for local use, 
-	    and adds reporting to the logger <TAO_Metrics_Logger>.
+          - TAO_Metrics_ReportingCache is a class that use of the
+            <TAO_Metrics_LocalCache> as its a cache for local use,
+            and adds reporting to the logger <TAO_Metrics_Logger>.
 
-	  - TAO_Metrics_Logger is a class that allows a client to
-	    log monitored QoS. Clients will pass their information
-	    to the TAO_Metrics_Logger in a series of TAO_Metrics_Logger_Data
-	    elements.
+          - TAO_Metrics_Logger is a class that allows a client to
+            log monitored QoS. Clients will pass their information
+            to the TAO_Metrics_Logger in a series of TAO_Metrics_Logger_Data
+            elements.
 
-	  - TAO_Metrics_UpcallMonitor is a class that allows clients to 
-	    monitor QoS, collected by the rest of the metrics framework.
+          - TAO_Metrics_UpcallMonitor is a class that allows clients to
+            monitor QoS, collected by the rest of the metrics framework.
 
-	  - TAO_Metrics_ReportingUpcallMonitor is a class implemenets
-	    a reporting extension for a Metrics QoS Monitor.
+          - TAO_Metrics_ReportingUpcallMonitor is a class implemenets
+            a reporting extension for a Metrics QoS Monitor.
 
-	  - TAO_Utils is a collection of metrics utility functions.
+          - TAO_Utils is a collection of metrics utility functions.
 
 
         * tao/RTCORBA/Multi_Priority_Mapping.cpp:
         * tao/RTCORBA/Multi_Priority_Mapping.h:
         * tao/RTCORBA/Multi_Priority_Mapping.i:
 
-	- TAO_Multi_Priority_Mapping is an implementation of 
-	  Priority_Mapping interface for communication between 
-	  different platforms. This implementation uses a custom
-	  mapping between the range of priorities for a given 
-	  scheduling class (ACE_SCHED_OTHER, ACE_SCHED_FIFO, 
-	  ACE_SCHED_RR) and the valid range of CORBA priorities 
-	  (0...32767)
-	
+        - TAO_Multi_Priority_Mapping is an implementation of
+          Priority_Mapping interface for communication between
+          different platforms. This implementation uses a custom
+          mapping between the range of priorities for a given
+          scheduling class (ACE_SCHED_OTHER, ACE_SCHED_FIFO,
+          ACE_SCHED_RR) and the valid range of CORBA priorities
+          (0...32767)
+
 Thu Jun 19 16:01:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/index.html:
@@ -112,7 +118,7 @@ Thu Jun 19 14:56:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jun 19 09:55:55 2003  Gan Deng <gan.deng@vanderbilt.edu>
 
-	* performance-tests/Sequence_Latency/AMI/*:
+        * performance-tests/Sequence_Latency/AMI/*:
 
           New test for the sequence of different data types. This
           is based on performance-tests/Latency/AMI/*, but uses
@@ -139,18 +145,18 @@ Thu Jun 19 06:12:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Jun 18 23:29:20 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/orbsvcs/CosNotification.dsp:
-	* orbsvcs/orbsvcs/CosNotification_Static.dsp:
-	* orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsp:
-	* orbsvcs/tests/Notify/lib/TAO_NotifyTests_Static.dsp:
-	* orbsvcs/orbsvcs/CosNotification.bor:
+        * orbsvcs/orbsvcs/CosNotification.dsp:
+        * orbsvcs/orbsvcs/CosNotification_Static.dsp:
+        * orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsp:
+        * orbsvcs/tests/Notify/lib/TAO_NotifyTests_Static.dsp:
+        * orbsvcs/orbsvcs/CosNotification.bor:
 
-	  Updated
+          Updated
 
 Wed Jun 18 22:27:49 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/orbsvcs/Notify_Service/Notify_Service.cpp:
-	  Activate worker thread at lowest avialable priority.
+        * orbsvcs/orbsvcs/Notify_Service/Notify_Service.cpp:
+          Activate worker thread at lowest avialable priority.
 
         * orbsvcs/orbsvcs/Notify/AdminProperties.cpp:
 
@@ -160,7 +166,7 @@ Wed Jun 18 22:27:49 2003  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/Consumer.cpp:
         * orbsvcs/orbsvcs/Notify/Consumer.inl:
 
-	  Inlined <push> method
+          Inlined <push> method
 
         * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp:
         * orbsvcs/orbsvcs/Notify/Properties.cpp:
@@ -249,7 +255,7 @@ Wed Jun 18 22:27:49 2003  Pradeep Gore  <pradeep@oomworks.com>
 
         * orbsvcs/orbsvcs/Notify/Peer.cpp:
 
-	  Using Proxy_Guard instead of Refcountable_Guard
+          Using Proxy_Guard instead of Refcountable_Guard
 
         * orbsvcs/orbsvcs/Notify/Property_T.h:
         * orbsvcs/orbsvcs/Notify/Property_T.cpp:
@@ -258,13 +264,13 @@ Wed Jun 18 22:27:49 2003  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/Property_Boolean.cpp:
         * orbsvcs/orbsvcs/Notify/Property_Boolean.inl:
 
-	  Changed type of property name from CString to char*.
+          Changed type of property name from CString to char*.
 
         * orbsvcs/orbsvcs/Notify/Proxy.h:
         * orbsvcs/orbsvcs/Notify/Proxy.cpp:
         * orbsvcs/orbsvcs/Notify/Proxy.inl:
 
-	  Changed <check_filter> to TAO_NS_Event* instead of
+          Changed <check_filter> to TAO_NS_Event* instead of
           TAO_NS_Event_var.
           Moved the method to the .inl file.
 
@@ -272,7 +278,7 @@ Wed Jun 18 22:27:49 2003  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
         * orbsvcs/orbsvcs/Notify/ProxyConsumer.inl:
 
-	  Removed <push> method from this class.
+          Removed <push> method from this class.
           Defined the TAO_NS_ProxyConsumer_Guard class.
 
         * orbsvcs/orbsvcs/Notify/ProxySupplier.h:
@@ -282,32 +288,32 @@ Wed Jun 18 22:27:49 2003  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/ProxySupplier_T.cpp:
         * orbsvcs/orbsvcs/Notify/ProxySupplier_T.inl:
 
-	  Modifed <push> method to include ACE_ENV parameter.
+          Modifed <push> method to include ACE_ENV parameter.
           Defined the TAO_NS_ProxySupplier_Guard class.
 
         * orbsvcs/orbsvcs/Notify/QoSProperties.cpp:
 
-	  Access property using <value> method.
+          Access property using <value> method.
 
         * orbsvcs/orbsvcs/Notify/RT_POA_Helper.cpp:
 
-	  Use the priority model passed in the Pool/Lane parameter.
+          Use the priority model passed in the Pool/Lane parameter.
 
         * orbsvcs/orbsvcs/Notify/Reactive_Task.h:
         * orbsvcs/orbsvcs/Notify/Reactive_Task.cpp:
 
-	  Modifed the <execute> method to include ACE_ENV parameter.
+          Modifed the <execute> method to include ACE_ENV parameter.
 
         * orbsvcs/orbsvcs/Notify/Refcountable_Guard_T.h:
         * orbsvcs/orbsvcs/Notify/Refcountable_Guard_T.cpp:
         * orbsvcs/orbsvcs/Notify/Refcountable_Guard_T.inl:
 
-	  A helper class that increments the reference count in the
+          A helper class that increments the reference count in the
           constructor. The count is decremented in the destructor.
 
         * orbsvcs/orbsvcs/Notify/Worker_Task.h:
 
-	  Modifed the <execute> method to include ACE_ENV parameter.
+          Modifed the <execute> method to include ACE_ENV parameter.
 
         * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.h:
         * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.cpp:
@@ -338,31 +344,31 @@ Wed Jun 18 22:27:49 2003  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/StructuredPushConsumer.cpp:
         * orbsvcs/orbsvcs/Notify/StructuredPushConsumer.h:
 
-	  The signature of <push_i> is changed to accept TAO_NS_Event*.
+          The signature of <push_i> is changed to accept TAO_NS_Event*.
 
         * orbsvcs/orbsvcs/Notify/Any/AnyEvent.h:
         * orbsvcs/orbsvcs/Notify/Any/AnyEvent.cpp:
 
-	  Implements the <TAO_NS_AnyEvent> and <TAO_NS_AnyEvent_No_Copy>
+          Implements the <TAO_NS_AnyEvent> and <TAO_NS_AnyEvent_No_Copy>
           classes.
 
         * orbsvcs/orbsvcs/Notify/ProxyPushConsumer.cpp:
 
-	  Optimized <push> avoids unnecessary copies.
+          Optimized <push> avoids unnecessary copies.
 
         * orbsvcs/orbsvcs/Notify/PushConsumer.cpp:
         * orbsvcs/orbsvcs/Notify/PushConsumer.h:
 
-	  signature of <push_i> is changed to accept TAO_NS_Event*.
+          signature of <push_i> is changed to accept TAO_NS_Event*.
 
         * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.cpp:
 
-	  Optimized <push> avoids unnecessary copies.
+          Optimized <push> avoids unnecessary copies.
 
         * orbsvcs/orbsvcs/Notify/SequencePushConsumer.cpp:
         * orbsvcs/orbsvcs/Notify/SequencePushConsumer.h:
 
-	  signature of <push_i> is changed to accept TAO_NS_Event*.
+          signature of <push_i> is changed to accept TAO_NS_Event*.
 
         * orbsvcs/tests/Notify/lib/Peer.h:
         * orbsvcs/tests/Notify/lib/Peer_T.h:
@@ -447,7 +453,7 @@ Wed Jun 18 22:27:49 2003  Pradeep Gore  <pradeep@oomworks.com>
 
         * orbsvcs/tests/Notify/lib/Driver.cpp:
           The thread that executes command objects is initialized to
-	  lowest available priority.
+          lowest available priority.
 
         * orbsvcs/tests/Notify/lib/EventChannel.h:
         * orbsvcs/tests/Notify/lib/EventChannel.cpp:
@@ -546,138 +552,138 @@ Wed Jun 18 22:27:49 2003  Pradeep Gore  <pradeep@oomworks.com>
 
           Updated.
 
-	* orbsvcs/tests/Notify/Lanes/supplier.conf:
-	* orbsvcs/tests/Notify/Lanes/consumer.conf:
+        * orbsvcs/tests/Notify/Lanes/supplier.conf:
+        * orbsvcs/tests/Notify/Lanes/consumer.conf:
 
-	  Corrected the Lane info set in the filter.
+          Corrected the Lane info set in the filter.
 
-	* orbsvcs/orbsvcs/Notify/POA_Helper.cpp:
-	* orbsvcs/orbsvcs/Notify/POA_Helper.h:
-	* orbsvcs/orbsvcs/Notify/RT_POA_Helper.h:
+        * orbsvcs/orbsvcs/Notify/POA_Helper.cpp:
+        * orbsvcs/orbsvcs/Notify/POA_Helper.h:
+        * orbsvcs/orbsvcs/Notify/RT_POA_Helper.h:
 
-	  Added method <get_unique_id> to generate unique POA names.
+          Added method <get_unique_id> to generate unique POA names.
 
-	* orbsvcs/tests/Notify/performance-tests/scripts/README:
-	* orbsvcs/tests/Notify/performance-tests/scripts/run_all.pl:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/cos_notify.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/high_path.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/Paths_10/other_paths.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/Paths_1/other_paths.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/Paths_5/other_paths.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/Paths_20/other_paths.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/rt_notify.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/run_all.pl:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/run_high_path.pl:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/run_notify.pl:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/run_other_paths.pl:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/run_test.pl:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/README:
+        * orbsvcs/tests/Notify/performance-tests/scripts/README:
+        * orbsvcs/tests/Notify/performance-tests/scripts/run_all.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/cos_notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/high_path.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/Paths_10/other_paths.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/Paths_1/other_paths.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/Paths_5/other_paths.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/Paths_20/other_paths.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/rt_notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/run_all.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/run_high_path.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/run_notify.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/run_other_paths.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/README:
 
-	  Test to measure the throughput of the high priority task with
-	  increasing number of paths.
+          Test to measure the throughput of the high priority task with
+          increasing number of paths.
 
-	* orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_0/supplier.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_10/supplier.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_15/supplier.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_20/supplier.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_25/supplier.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_30/supplier.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_35/supplier.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_40/supplier.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_45/supplier.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_5/supplier.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_50/supplier.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/consumer.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/cos_notify.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/rt_notify.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/run_all.pl:
-	* orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/run_test.pl:
-	* orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/README:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_0/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_10/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_15/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_20/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_25/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_30/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_35/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_40/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_45/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_5/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/Load_50/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/consumer.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/cos_notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/rt_notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/run_all.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/README:
 
-	  Test to measure the Throughput of a High, Medium and Low priority
-	  task with increasing load.
+          Test to measure the Throughput of a High, Medium and Low priority
+          task with increasing load.
 
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops/consumer.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops/run_test.pl:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops/consumer.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops/supplier.conf:
 
-	  This test measures throughput for a 2-way between a
-	  StructuredSupplier and StructuredConsumer.
+          This test measures throughput for a 2-way between a
+          StructuredSupplier and StructuredConsumer.
 
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops_RTCORBA/consumer.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops_RTCORBA/relay.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops_RTCORBA/run_test.pl:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops_RTCORBA/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops_RTCORBA/consumer.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops_RTCORBA/relay.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops_RTCORBA/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops_RTCORBA/supplier.conf:
 
-	  This test measures throughput for a 2-way between a
-	  StructuredSupplier and StructuredConsumer where the consumer is
-	  activated in an RT-POA with the CLIENT-PROPAGATED priority model.
+          This test measures throughput for a 2-way between a
+          StructuredSupplier and StructuredConsumer where the consumer is
+          activated in an RT-POA with the CLIENT-PROPAGATED priority model.
 
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops/consumer.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops/relay.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops/run_test.pl:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops/consumer.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops/relay.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops/supplier.conf:
 
-	  In this test, the supplier sends events to a "relay" consumer that forwards it
-	  to the final consumer.
+          In this test, the supplier sends events to a "relay" consumer that forwards it
+          to the final consumer.
 
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops_RTCORBA/consumer.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops_RTCORBA/relay.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops_RTCORBA/run_test.pl:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops_RTCORBA/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops_RTCORBA/consumer.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops_RTCORBA/relay.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops_RTCORBA/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops_RTCORBA/supplier.conf:
 
-	  The consumers are activated in an RT-POA.
+          The consumers are activated in an RT-POA.
 
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated/colocated.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated/colocated.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated/run_test.pl:
 
-	  Tests the throughput obtained when the supplier, CosNotification
-	  and consumer are colocated in the same process space.
+          Tests the throughput obtained when the supplier, CosNotification
+          and consumer are colocated in the same process space.
 
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/colocated.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/colocated.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/run_test.pl:
 
-	  Tests the throughput obtained when the supplier, RT-Notification
-	  and consumer are colocated in the same process space.
+          Tests the throughput obtained when the supplier, RT-Notification
+          and consumer are colocated in the same process space.
 
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/README:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/run_all.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/README:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/run_all.pl:
 
-	  Readme and run script for the Max_Throughput set of experiments.
+          Readme and run script for the Max_Throughput set of experiments.
 
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify/consumer.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify/notify.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify/supplier.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify/consumer.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify/notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify/run_test.pl:
 
-	  Max possible throughput measurement for CosNotification.
+          Max possible throughput measurement for CosNotification.
 
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify_RTCORBA/consumer.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify_RTCORBA/notify.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify_RTCORBA/run_test.pl:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify_RTCORBA/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify_RTCORBA/consumer.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify_RTCORBA/notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify_RTCORBA/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify_RTCORBA/supplier.conf:
 
-	  Max possible throughput measurement for RT-Notification.
+          Max possible throughput measurement for RT-Notification.
 
-	* orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/README:
-	* orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/consumer.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/cos_notify.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/rt_notify.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/run_all.pl:
-	* orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/run_test.pl:
-	* orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_0/supplier.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_5/supplier.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_10/supplier.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_15/supplier.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_20/supplier.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_25/supplier.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_30/supplier.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_35/supplier.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_40/supplier.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_45/supplier.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_50/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/README:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/consumer.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/cos_notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/rt_notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/run_all.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_0/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_5/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_10/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_15/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_20/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_25/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_30/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_35/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_40/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_45/supplier.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/Load_50/supplier.conf:
 
-	  The test measures the throughput with increasing load.
+          The test measures the throughput with increasing load.
 
 
 Wed Jun 18 19:33:24 2003  Gan Deng <gan.deng@vanderbilt.edu>
@@ -693,7 +699,7 @@ Wed Jun 18 19:25:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
 
-	  Added .in() to a _var argument in a function call.
+          Added .in() to a _var argument in a function call.
 
 Wed Jun 18 19:03:53 2003  Gan Deng <gan.deng@vanderbilt.edu>
 
@@ -724,9 +730,9 @@ Wed Jun 18 18:15:33 2003  Gan Deng <gan.deng@vanderbilt.edu>
 
 Wed Jun 18 17:47:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/RTEvent.dsp:
-	* orbsvcs/orbsvcs/RTEvent_Static.dsp: Added the new files for the
-	  daily builds.
+        * orbsvcs/orbsvcs/RTEvent.dsp:
+        * orbsvcs/orbsvcs/RTEvent_Static.dsp: Added the new files for the
+          daily builds.
 
 Wed Jun 18 17:19:47 2003  George Edwards <g.edwards@vanderbilt.edu>
 
@@ -748,44 +754,44 @@ Wed Jun 18 17:06:40 2003  Gan Deng <gan.deng@vanderbilt.edu>
 
 Wed Jun 18 17:10:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Makefile.RTEvent:
-	* orbsvcs/orbsvcs/RTEvent.bor: Added CRC.cpp for compilation in
-	  various builds.
+        * orbsvcs/orbsvcs/Makefile.RTEvent:
+        * orbsvcs/orbsvcs/RTEvent.bor: Added CRC.cpp for compilation in
+          various builds.
 
 
 Wed Jun 18 16:54:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Event/CRC.h:
-	* orbsvcs/orbsvcs/Event/CRC.cpp: New file for CRC calculation.
+        * orbsvcs/orbsvcs/Event/CRC.h:
+        * orbsvcs/orbsvcs/Event/CRC.cpp: New file for CRC calculation.
 
-	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
-	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.h:
-	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.i:
-	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp:
-	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.h:
-	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.i:
-	* orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
-	* orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.h:
-	* orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.i:
-	* orbsvcs/orbsvcs/Event/ECG_UDP_Sender.h:
-	* orbsvcs/orbsvcs/Event/ECG_UDP_Sender.inl: This set of checkins
-	  adds a capability to  perform CRC checksum calculations. This is
-	  what it does
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.h:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.i:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.h:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.i:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.h:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.i:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.h:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.inl: This set of checkins
+          adds a capability to  perform CRC checksum calculations. This is
+          what it does
 
-	  - The sender calculates the CRC checksum and sends it as part of
-	    the header. The field in the header which is padded, is used
-	    for CRC checksums.
+          - The sender calculates the CRC checksum and sends it as part of
+            the header. The field in the header which is padded, is used
+            for CRC checksums.
 
-	  - The receiver after receiving the message calculates the CRC
-	    checksum (ofocurse without the checksum value) and compares
-	    with the one received.
+          - The receiver after receiving the message calculates the CRC
+            checksum (ofocurse without the checksum value) and compares
+            with the one received.
 
-	 Ofcourse, all of the above ar optional, and can be chosen when
-	 the receiver is created by the create () call.
+         Ofcourse, all of the above ar optional, and can be chosen when
+         the receiver is created by the create () call.
 
-	 Thanks to Keith Snively <ksnively@d-a-s.com> and J. Russell
+         Thanks to Keith Snively <ksnively@d-a-s.com> and J. Russell
          Noseworthy <j.russell.noseworthy@objectsciences.com> for
-	 providing these patches.
+         providing these patches.
 
 
 Wed Jun 18 16:39:51 2003  George Edwards <g.edwards@vanderbilt.edu>
@@ -796,15 +802,15 @@ Wed Jun 18 16:39:51 2003  George Edwards <g.edwards@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp
 
           Added mapping of operations of abstract interfaces inherited by
-	  concrete interfaces supported by valuetypes to pure virtual
-	  methods in the valuetype.
+          concrete interfaces supported by valuetypes to pure virtual
+          methods in the valuetype.
 
 Wed Jun 18 16:18:19 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* performance-tests/Sequence_Latency/Thread_Pool/*: New test for
-	  the sequence of different data types. This is based on
-	  performance-tests/Latency/Thread_Pool, but uses different data
-	  types.
+        * performance-tests/Sequence_Latency/Thread_Pool/*: New test for
+          the sequence of different data types. This is based on
+          performance-tests/Latency/Thread_Pool, but uses different data
+          types.
 
 Wed Jun 18 14:01:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -813,22 +819,22 @@ Wed Jun 18 14:01:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/Pseudo_VarOut_T.h:
         * tao/Pseudo_VarOut_T.inl:
 
-	  Changed signature of the const cast operator from T const *& to
-	  T * const &, which eliminates warnings on Irix. Thanks to
-	  Michael Rice <MichaelARice@knology.net> for coming up with this
-	  Irix-compatible suggestion.
+          Changed signature of the const cast operator from T const *& to
+          T * const &, which eliminates warnings on Irix. Thanks to
+          Michael Rice <MichaelARice@knology.net> for coming up with this
+          Irix-compatible suggestion.
 
         * tao/Seq_Var_T.h:
 
-	  Cosmetic changes.
+          Cosmetic changes.
 
 Wed Jun 18 13:08:07 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ss.cpp (visit_interface):
-	* TAO_IDL/be/be_interface.cpp (copy_ctor_helper);
+        * TAO_IDL/be/be_interface.cpp (copy_ctor_helper);
 
-	  Changed the order of base class constructor calls in code
-	  generation for the interface copy constructor.
+          Changed the order of base class constructor calls in code
+          generation for the interface copy constructor.
 
 Wed Jun 18 12:50:15 2003  George Edwards <g.edwards@vanderbilt.edu>
 
@@ -847,9 +853,9 @@ Wed Jun 18 12:47:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/PortableServer/ImplRepoS.cpp:
         * tao/PortableServer/PolicyS.cpp:
 
-	  Added call to TAO_Abstract_ServantBase in the copy constructor
-	  and/or fixed the order of base class constructor calls in the
-	  copy constructor.
+          Added call to TAO_Abstract_ServantBase in the copy constructor
+          and/or fixed the order of base class constructor calls in the
+          copy constructor.
 
 Wed Jun 18 12:13:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -860,7 +866,7 @@ Wed Jun 18 12:13:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Fixed mistakes in constructor reordering from
 
-	  Tue Jun 17 09:56:38 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+          Tue Jun 17 09:56:38 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Jun 18 13:53:22 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1252,12 +1258,12 @@ Wed Jun 18 06:39:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Jun 17 18:31:31 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	From Terry Lacy <terry.lacy@thomson.net>
-	* orbsvcs/orbsvcs/PortableGroup/PG_Null_Property_Validator.h
-	  (validate_criteria):
+        From Terry Lacy <terry.lacy@thomson.net>
+        * orbsvcs/orbsvcs/PortableGroup/PG_Null_Property_Validator.h
+          (validate_criteria):
 
-	  Added missing "ACE_ENV_ARG_DECL" emulated exception macro
-	  argument.  [Bug 1539]
+          Added missing "ACE_ENV_ARG_DECL" emulated exception macro
+          argument.  [Bug 1539]
 
 Tue Jun 17 17:09:46 2003  George Edwards <g.edwards@vanderbilt.edu>
 
@@ -1265,18 +1271,18 @@ Tue Jun 17 17:09:46 2003  George Edwards <g.edwards@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
 
           Amended valuetype factory mapping to take into account the
-	  presence of supported interfaces by adding a new method to
-	  check for this condition.
+          presence of supported interfaces by adding a new method to
+          check for this condition.
 
           Added inheritance of DefaultValueRefCountBase mix-in class to
-	  valuetypes that support abstract interfaces.
+          valuetypes that support abstract interfaces.
 
         * TAO_IDL/be/be_visitor_valuetype/valuetype_sh.cpp:
         * TAO_IDL/be/be_visitor_valuetype/valuetype_ss.cpp:
 
           Added inheritance of the valuetype base class and eliminated
-	  declarations of _this() and _interface_repository_id() in the
-	  skeleton class for valuetypes that support concrete interfaces.
+          declarations of _this() and _interface_repository_id() in the
+          skeleton class for valuetypes that support concrete interfaces.
 
 Tue Jun 17 09:59:56 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -1381,25 +1387,25 @@ Tue Jun 17 09:56:38 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/IFR_Client/IFR_ComponentsC.h:
         * tao/IFR_Client/IFR_ComponentsC.i:
 
-	  Various changes:
+          Various changes:
 
-	  - Added support for exceptions in valuetype factories.
+          - Added support for exceptions in valuetype factories.
 
-	  - Changed the order of constructor calls in IDL compiler
-	    source files, to eliminate warnings from gcc 3.3.
+          - Changed the order of constructor calls in IDL compiler
+            source files, to eliminate warnings from gcc 3.3.
 
-	  - Fixed bug in code generation for impl classes. Thanks to
+          - Fixed bug in code generation for impl classes. Thanks to
             Victor N. <dreamland_skib2@mailru.com> for reporting the
             bug.
 
-	  - Fixed bug in code generation for typedef'd string
-	    constant when it appears inside an interface or
-	    valuetype. Thanks to Francesco Baldi <Francesco.Baldi@hit.it>
+          - Fixed bug in code generation for typedef'd string
+            constant when it appears inside an interface or
+            valuetype. Thanks to Francesco Baldi <Francesco.Baldi@hit.it>
             for reporting the bug.
 
-	  - Fixed bug in typecode generation for recursive types
-	    using a typdef'd sequence and forward struct/union
-	    declaration. Thanks to Thomas Wiegert <wiegert@schlund.de>
+          - Fixed bug in typecode generation for recursive types
+            using a typdef'd sequence and forward struct/union
+            declaration. Thanks to Thomas Wiegert <wiegert@schlund.de>
             for reporting the bug.
 
           - Fixed bug in code generation for sequences of managed
@@ -1407,15 +1413,15 @@ Tue Jun 17 09:56:38 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
             module than the sequence. Thanks to Huang-Ming Huang
             <hh1@cse.wustl.edu> for reporting the bug.
 
-	  - Added infrastructure to store and pass a default
-	    value of 0 for the 'custom' flag applied to
-	    valuetypes, even though we don't support it yet.
+          - Added infrastructure to store and pass a default
+            value of 0 for the 'custom' flag applied to
+            valuetypes, even though we don't support it yet.
 
         * tests/OBV/Factory/FactoryC_impl.cpp:
         * tests/OBV/Factory/FactoryC_impl.h:
 
-	   Added throw spec to test code, now that factoy
-	   operations for valuetypes support exceptions.
+           Added throw spec to test code, now that factoy
+           operations for valuetypes support exceptions.
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
         * orbsvcs/IFR_Service/ifr_adding_visitor.h:
@@ -1434,8 +1440,8 @@ Tue Jun 17 09:56:38 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.i
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
 
-	  Added more support for IDL3 extensions in the IFR and
-	  IFR loader. None of this is tested yet.
+          Added more support for IDL3 extensions in the IFR and
+          IFR loader. None of this is tested yet.
 
         * tao/Array_VarOut_T.h:
         * tao/Array_VarOut_T.inl:
@@ -1448,9 +1454,9 @@ Tue Jun 17 09:56:38 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/TAO.dsp:
         * tao/VarOut_T.inl:
 
-	  Changed the position of 'const' qualifiers, which causes
-	  no change in semantics, but makes it easier for MSVC to
-	  deal with. The workaround on MSVC was causing problems
+          Changed the position of 'const' qualifiers, which causes
+          no change in semantics, but makes it easier for MSVC to
+          deal with. The workaround on MSVC was causing problems
           with irix, as reported by Michael Rice <MichaelARice@knology.net>.
 
 Tue Jun 17 09:20:18 2003  Chad Elliott  <elliott_c@ociweb.com>

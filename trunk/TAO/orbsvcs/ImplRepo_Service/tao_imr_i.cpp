@@ -306,7 +306,7 @@ int
 TAO_IMR_Op_Activate::parse (int argc, ACE_TCHAR **argv)
 {
   // Check for enough arguments (we need at least one for the server name)
-  if (argc < 1)
+  if (argc < 2)
     {
       this->print_usage ();
       return -1;
@@ -315,7 +315,7 @@ TAO_IMR_Op_Activate::parse (int argc, ACE_TCHAR **argv)
   // Skip both the program name and the "activate" command
   ACE_Get_Opt get_opts (argc, argv, "l:h");
 
-  this->server_name_ = argv[0];
+  this->server_name_ = argv[1];
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -354,7 +354,7 @@ int
 TAO_IMR_Op_Add::parse (int argc, ACE_TCHAR **argv)
 {
   // Check for enough arguments (we need at least one for the server name)
-  if (argc < 1)
+  if (argc < 2)
     {
       this->print_usage ();
       return -1;
@@ -363,7 +363,7 @@ TAO_IMR_Op_Add::parse (int argc, ACE_TCHAR **argv)
  // Skip both the program name and the "add" command
   ACE_Get_Opt get_opts (argc, argv, "hc:w:a:e:l:");
 
-  this->server_name_ = argv[0];
+  this->server_name_ = argv[1];
   if (ACE_OS_String::strlen(this->server_name_.c_str()) < 1)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -417,7 +417,7 @@ int
 TAO_IMR_Op_Autostart::parse (int argc, ACE_TCHAR **argv)
 {
   // Skip the "autostart" command
-  ACE_Get_Opt get_opts (argc, argv, "h", 0);
+  ACE_Get_Opt get_opts (argc, argv, "h");
 
   int c;
 
@@ -438,7 +438,7 @@ int
 TAO_IMR_Op_IOR::parse (int argc, ACE_TCHAR **argv)
 {
   // Check for enough arguments (we need at least one for the server name)
-  if (argc < 1)
+  if (argc < 2)
   {
     this->print_usage ();
     return -1;
@@ -447,7 +447,7 @@ TAO_IMR_Op_IOR::parse (int argc, ACE_TCHAR **argv)
   // Skip both the program name and the "ior" command
   ACE_Get_Opt get_opts (argc, argv, "hf:");
 
-  this->server_name_ = argv[0];
+  this->server_name_ = argv[1];
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -471,10 +471,10 @@ TAO_IMR_Op_List::parse (int argc, ACE_TCHAR **argv)
 {
   int server_flag = 0;
 
-  if (argc > 0 && argv[0][0] != '-')
+  if (argc > 1 && argv[1][0] != '-')
     {
-      this->server_name_ = argv[0];
-      server_flag = 1;
+      this->server_name_ = argv[1];
+      server_flag = 2;
     }
 
   // Skip both the program name and the "list" command
@@ -502,7 +502,7 @@ int
 TAO_IMR_Op_Remove::parse (int argc, ACE_TCHAR **argv)
 {
   // Check for enough arguments (we need at least one for the server name)
-  if (argc < 1)
+  if (argc < 2)
     {
       this->print_usage ();
       return -1;
@@ -511,7 +511,7 @@ TAO_IMR_Op_Remove::parse (int argc, ACE_TCHAR **argv)
   // Skip both the program name and the "remove" command
   ACE_Get_Opt get_opts (argc, argv, "l:h");
 
-  this->server_name_ = argv[0];
+  this->server_name_ = argv[1];
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -534,7 +534,7 @@ int
 TAO_IMR_Op_Shutdown::parse (int argc, ACE_TCHAR **argv)
 {
   // Check for enough arguments (we need at least one for the server name)
-  if (argc < 1)
+  if (argc < 2)
     {
       this->print_usage ();
       return -1;
@@ -543,7 +543,7 @@ TAO_IMR_Op_Shutdown::parse (int argc, ACE_TCHAR **argv)
   // Skip both the program name and the "shutdown" command
   ACE_Get_Opt get_opts (argc, argv, "l:h");
 
-  this->server_name_ = argv[0];
+  this->server_name_ = argv[1];
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -582,7 +582,7 @@ int
 TAO_IMR_Op_Update::parse (int argc, ACE_TCHAR **argv)
 {
   // Check for enough arguments (we need at least one for the server name)
-  if (argc < 1)
+  if (argc < 2)
     {
       this->print_usage ();
       return -1;
@@ -591,7 +591,7 @@ TAO_IMR_Op_Update::parse (int argc, ACE_TCHAR **argv)
   // Skip both the program name and the "update" command
   ACE_Get_Opt get_opts (argc, argv, "hc:w:a:e:l:");
 
-  this->server_name_ = argv[0];
+  this->server_name_ = argv[1];
   int c;
 
   while ((c = get_opts ()) != -1)
