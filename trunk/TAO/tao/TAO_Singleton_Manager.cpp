@@ -20,11 +20,6 @@
 # else
 #  if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
 #   include /**/ <exception>
-#   if !defined (_MSC_VER) \
-     && defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) \
-     &&         (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
-using std::set_unexpected;
-#   endif /* !_MSC_VER */
 #  else
 #   include /**/ <exception.h>
 #  endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
@@ -257,7 +252,12 @@ TAO_Singleton_Manager::fini (void)
   // Restore the old unexpected exception handler since TAO will no
   // longer be handling exceptions.  Allow the application to once
   // again handle unexpected exceptions.
+# if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) \
+     && (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
+  (void) std::set_unexpected (this->old_unexpected_);
+# else
   (void) set_unexpected (this->old_unexpected_);
+# endif  /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 #endif /* ACE_HAS_EXCEPTIONS */
 
   // Indicate that this TAO_Singleton_Manager instance has been shut down.
@@ -306,7 +306,12 @@ TAO_Singleton_Manager::_set_unexpected (TAO_unexpected_handler u)
   // transforms all unexpected exceptions to CORBA::UNKNOWN, which of
   // course requires the TypeCode constants and system exceptions to
   // have been initialized.
+# if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) \
+     && (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
+  this->old_unexpected_ = std::set_unexpected (u);
+# else
   this->old_unexpected_ = set_unexpected (u);
+# endif  /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 }
 #endif /* ACE_HAS_EXCEPTIONS */
 
