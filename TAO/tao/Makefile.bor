@@ -94,6 +94,8 @@ OBJFILES = \
 	$(OBJDIR)\GIOP_Utils.obj \
 	$(OBJDIR)\IFR_Client_Adapter.obj \
 	$(OBJDIR)\IIOPC.obj \
+        $(OBJDIR)\IOP_CodecC.obj \
+        $(OBJDIR)\IOP_IORC.obj \
 	$(OBJDIR)\IIOP_Acceptor.obj \
 	$(OBJDIR)\IIOP_Connection_Handler.obj \
 	$(OBJDIR)\IIOP_Connector.obj \
