@@ -2956,7 +2956,10 @@ typedef int sig_atomic_t;
 typedef int ssize_t;
 # endif /* ACE_HAS_SSIZE_T */
 
-# if defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES)
+# if defined (ACE_HAS_PACE)
+typedef pace_sig_pf ACE_SignalHandler;
+typedef pace_sig_pf ACE_SignalHandlerV;
+# elif defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES)
 // Prototypes for both signal() and struct sigaction are consistent..
 #   if defined (ACE_HAS_SIG_C_FUNC)
 extern "C" {
@@ -3004,7 +3007,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 typedef void (*ACE_SignalHandler)(int);
 #   endif /* SIG_PF */
 typedef void (*ACE_SignalHandlerV)(...);
-# endif /* ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES */
+# endif /* ACE_HAS_PACE */
 
 # if defined (BUFSIZ)
 #   define ACE_STREAMBUF_SIZE BUFSIZ
@@ -3998,6 +4001,11 @@ struct sigaction
 #     define SIG_DFL ((__sighandler_t) 0)
 #   endif
 # endif /* SIG_DFL */
+
+# if defined (ACE_HAS_PACE) && PACE_LYNXOS
+#   undef SIG_IGN
+#   define SIG_IGN ((pace_sig_pf) 1)
+# endif /* (ACE_HAS_PACE) && PACE_LYNXOS */
 
 # if !defined (SIG_IGN)
 #   if defined (ACE_PSOS_DIAB_MIPS) || defined (ACE_PSOS_DIAB_PPC)
