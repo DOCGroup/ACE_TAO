@@ -1,6 +1,15 @@
---- y.tab.cpp	Tue Jul 27 14:28:00 1999
-+++ y.tab.cpp.new	Tue Jul 27 14:23:47 1999
-@@ -1101,7 +1101,7 @@
+--- y.tab.cpp	Tue Oct 12 13:56:12 1999
++++ y.tab.cpp.new	Tue Oct 12 13:53:25 1999
+@@ -918,7 +918,7 @@
+ #ifdef TAO_YYMAXDEPTH
+ #define TAO_YYSTACKSIZE TAO_YYMAXDEPTH
+ #else
+-#define TAO_YYSTACKSIZE 300
++#define TAO_YYSTACKSIZE 10000
+ #endif
+ #endif
+ int tao_yydebug;
+@@ -1113,7 +1113,7 @@
      extern char *ace_foo();
  #endif
  
@@ -9,7 +18,7 @@
      {
          tao_yyn = *tao_yys;
          if (tao_yyn >= '0' && tao_yyn <= '9')
-@@ -1118,7 +1118,7 @@
+@@ -1130,7 +1130,7 @@
      *tao_yyssp = tao_yystate = 0;
  
  tao_yyloop:
@@ -18,7 +27,12 @@
      if (tao_yychar < 0)
      {
          if ((tao_yychar = tao_yylex()) < 0) tao_yychar = 0;
-@@ -1172,7 +1172,6 @@
+@@ -1180,11 +1180,10 @@
+     goto tao_yynewerror;
+ #endif
+ 
+-    tao_yyerror("syntax error");
++//    tao_yyerror("syntax error");
  #ifdef lint
      goto tao_yyerrlab;
  #endif
