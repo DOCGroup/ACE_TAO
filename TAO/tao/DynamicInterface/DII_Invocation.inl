@@ -31,8 +31,7 @@ TAO_GIOP_DII_Deferred_Invocation::TAO_GIOP_DII_Deferred_Invocation (
   )
   : TAO_GIOP_Asynch_Invocation (stub,
                                 req->operation (),
-                                ACE_static_cast (CORBA::ULong,
-                                   ACE_OS::strlen (req->operation ())),
+                                static_cast<CORBA::ULong> (ACE_OS::strlen (req->operation ())),
                                 argument_flag,
                                 orb_core,
                                 byte_order)

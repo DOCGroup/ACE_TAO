@@ -83,7 +83,9 @@ namespace CORBA
                               ACE_ENV_ARG_DECL);
 
     /// Narrow to an UnknowUserException.
-    static UnknownUserException *_downcast (CORBA::Exception *ex);
+    static UnknownUserException * _downcast (CORBA::Exception *ex);
+    static UnknownUserException const * _downcast (
+      CORBA::Exception const * ex);
 
     // = TAO specific extension.
 
