@@ -6591,7 +6591,7 @@ ACE_OS::t_getname (ACE_HANDLE handle,
   ACE_UNUSED_ARG (type);
 
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_STREAM_PIPES */
+#endif /* ACE_HAS_SVR4_TLI */
 }
 
 ACE_INLINE int
