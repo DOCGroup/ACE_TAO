@@ -1,3 +1,9 @@
+Thu Feb 07 22:52:07 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/PortableServer/PolicyS.h:
+	  Fixed export macros, I still need to re-generate the patch
+	  files.
+
 Thu Feb 07 17:17:01 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/TAO.dsp:
