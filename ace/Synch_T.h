@@ -638,15 +638,18 @@ class ACE_MT_SYNCH
 {
 public:
   typedef ACE_Thread_Mutex MUTEX;
+  typedef ACE_Recursive_Thread_Mutex RECURSIVE_MUTEX;
   typedef ACE_RW_Thread_Mutex RW_MUTEX;
   typedef ACE_Condition_Thread_Mutex CONDITION;
 };
 #define ACE_SYNCH_MUTEX ACE_MT_SYNCH::MUTEX
+#define ACE_SYNCH_RECURSIVE_MUTEX ACE_MT_SYNCH::RECURSIVE_MUTEX
 #define ACE_SYNCH_RW_MUTEX ACE_MT_SYNCH::RW_MUTEX
 #define ACE_SYNCH_CONDITION ACE_MT_SYNCH::CONDITION
 #else /* Necessary to support broken cfront-based C++ compilers... */
 #define ACE_MT_SYNCH ACE_Thread_Mutex, ACE_Condition_Thread_Mutex
 #define ACE_SYNCH_MUTEX ACE_Thread_Mutex
+#define ACE_SYNCH_RECURSIVE_MUTEX ACE_Recursive_Thread_Mutex
 #define ACE_SYNCH_RW_MUTEX ACE_RW_Thread_Mutex
 #define ACE_SYNCH_CONDITION ACE_Thread_Condition
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
@@ -655,6 +658,7 @@ public:
 #else
 #define ACE_SYNCH ACE_NULL_SYNCH
 #define ACE_SYNCH_MUTEX ACE_Null_Mutex
+#define ACE_SYNCH_RECURSIVE_MUTEX ACE_Null_Mutex
 #define ACE_SYNCH_RW_MUTEX ACE_Null_Mutex
 #define ACE_SYNCH_CONDITION ACE_Null_Condition
 #endif /* ACE_HAS_THREADS */

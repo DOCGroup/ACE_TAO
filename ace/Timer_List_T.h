@@ -20,11 +20,11 @@
 #include "ace/Timer_Queue.h"
 
 // Forward declaration.
-template <class TYPE, class FUNCTOR>
+template <class TYPE, class FUNCTOR, class LOCK>
 class ACE_Timer_List_T;
 
-template <class TYPE, class FUNCTOR>
-class ACE_Timer_List_Iterator_T : public ACE_Timer_Queue_Iterator_T <TYPE, FUNCTOR>
+template <class TYPE, class FUNCTOR, class LOCK>
+class ACE_Timer_List_Iterator_T : public ACE_Timer_Queue_Iterator_T <TYPE, FUNCTOR, LOCK>
   // = TITLE
   //     Iterates over an <ACE_Timer_Queue>.
   //
@@ -33,10 +33,10 @@ class ACE_Timer_List_Iterator_T : public ACE_Timer_Queue_Iterator_T <TYPE, FUNCT
   //     the head of the timer queue up by one every time.
 {
 public:
-  ACE_Timer_List_Iterator_T (ACE_Timer_List_T<TYPE, FUNCTOR> &);
+  ACE_Timer_List_Iterator_T (ACE_Timer_List_T<TYPE, FUNCTOR, LOCK> &);
   // Constructor.
 
-  virtual int next (ACE_Timer_Node_T<TYPE, FUNCTOR> *&timer_node, 
+  virtual int next (ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *&timer_node, 
                     const ACE_Time_Value &cur_time);
   // Pass back the next <timer_node> that hasn't been seen yet, if its
   // <time_value_> <= <cur_time>.  In addition, moves the timer queue
@@ -44,12 +44,12 @@ public:
   // seen, else 1.
 
 protected:
-  ACE_Timer_List_T<TYPE, FUNCTOR> &timer_list_;
+  ACE_Timer_List_T<TYPE, FUNCTOR, LOCK> &timer_list_;
   // Pointer to the <ACE_Timer_List> that we are iterating over.
 };
 
-template <class TYPE, class FUNCTOR>
-class ACE_Timer_List_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR>
+template <class TYPE, class FUNCTOR, class LOCK>
+class ACE_Timer_List_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>
   // = TITLE 
   //      Provides a simple implementation of timers.
   //
@@ -69,13 +69,13 @@ class ACE_Timer_List_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR>
   //      <ACE_Timer_List>.
 {
 public: 
-  typedef ACE_Timer_List_Iterator_T<TYPE, FUNCTOR> LIST_ITERATOR;
+  typedef ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, LOCK> LIST_ITERATOR;
   // Type of iterator
 
-  friend class ACE_Timer_List_Iterator_T<TYPE, FUNCTOR>;
+  friend class ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, LOCK>;
   // Iterator is a friend
 
-  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR> INHERITED;
+  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK> INHERITED;
   // Type inherited from 
 
   // = Initialization and termination methods.
@@ -131,10 +131,10 @@ public:
   // Dump the state of an object.
 
 protected:
-  virtual ACE_Timer_Node_T<TYPE, FUNCTOR> *alloc_node (void);
+  virtual ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *alloc_node (void);
   // Factory method that allocates a new node (uses operator new).
 
-  virtual void free_node (ACE_Timer_Node_T<TYPE, FUNCTOR> *);
+  virtual void free_node (ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *);
   // Factory method that frees a previously allocated node (uses
   // operator delete).
 
@@ -145,13 +145,13 @@ private:
   // timer id returned from this method will never == -1 to avoid
   // conflicts with other failure return values.
 
-  virtual void reschedule (ACE_Timer_Node_T<TYPE, FUNCTOR> *);
+  virtual void reschedule (ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *);
   // Reschedule an "interval" <ACE_Timer_Node>.
 
-  virtual ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR> &iter (void);
+  virtual ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, LOCK> &iter (void);
   // Returns a pointer to this <ACE_Timer_Queue>'s iterator.
 
-  ACE_Timer_Node_T<TYPE, FUNCTOR> *head_; 
+  ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *head_; 
   // Pointer to linked list of <ACE_Timer_Handles>.
 
   LIST_ITERATOR iterator_;
@@ -163,8 +163,8 @@ private:
   // method.
 
   // = Don't allow these operations for now.
-  ACE_Timer_List_T (const ACE_Timer_List_T<TYPE, FUNCTOR> &);
-  void operator= (const ACE_Timer_List_T<TYPE, FUNCTOR> &);
+  ACE_Timer_List_T (const ACE_Timer_List_T<TYPE, FUNCTOR, LOCK> &);
+  void operator= (const ACE_Timer_List_T<TYPE, FUNCTOR, LOCK> &);
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
