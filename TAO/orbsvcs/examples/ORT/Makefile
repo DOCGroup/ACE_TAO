@@ -69,15 +69,16 @@ include $(TAO_ROOT)/taoconfig.mk
 #----------------------------------------------------------------------------
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), Gateway$(ext) sum_server$(ext))
+.NOTPARALLEL:
 
-gateway_server: $(addprefix $(VDIR),$(GATEWAY_SERVER_OBJS))
-		$(LINK.cc) $(LDFLAGS) -o $@ $^ -lTAO_IFR_Client -lTAO_DynamicInterface $(TAO_SRVR_LIBS) $(POSTLINK)
+client: $(addprefix $(VDIR),$(CLIENT_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_CLNT_LIBS) $(POSTLINK)
 
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ -lTAO_IFR_Client -lTAO_DynamicInterface $(TAO_SRVR_LIBS) $(POSTLINK)
 
-client: $(addprefix $(VDIR),$(CLIENT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_CLNT_LIBS) $(POSTLINK)
+gateway_server: $(addprefix $(VDIR),$(GATEWAY_SERVER_OBJS))
+		$(LINK.cc) $(LDFLAGS) -o $@ $^ -lTAO_IFR_Client -lTAO_DynamicInterface $(TAO_SRVR_LIBS) $(POSTLINK)
 
 realclean: clean
 	-$(RM) $(foreach ext, $(IDL_EXT), Gateway$(ext) ObjectReferenceFactory$(ext) sum_server$(ext))
@@ -86,7 +87,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp sum_serverC.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp sum_serverC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
@@ -343,7 +344,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Containers_T.cpp \
   $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/gateway_server.o .obj/gateway_server.o .obj/gateway_server.o .obj/gateway_server.o: gateway_server.cpp Object_Factory_i.h GatewayS.h \
+.obj/gateway_server.o .obj/gateway_server.so .shobj/gateway_server.o .shobj/gateway_server.so: gateway_server.cpp Object_Factory_i.h GatewayS.h \
   GatewayC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -628,7 +629,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Containers_T.cpp \
   $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp sum_server_i.h sum_serverS.h sum_serverC.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp sum_server_i.h sum_serverS.h sum_serverC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
@@ -911,7 +912,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Containers_T.cpp \
   $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/Gateway_i.o .obj/Gateway_i.o .obj/Gateway_i.o .obj/Gateway_i.o: Gateway_i.cpp Gateway_i.h \
+.obj/Gateway_i.o .obj/Gateway_i.so .shobj/Gateway_i.o .shobj/Gateway_i.so: Gateway_i.cpp Gateway_i.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/CurrentC.h \
@@ -1206,7 +1207,7 @@ realclean: clean
   $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.i \
   $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i
 
-.obj/Object_Factory_i.o .obj/Object_Factory_i.o .obj/Object_Factory_i.o .obj/Object_Factory_i.o: Object_Factory_i.cpp Object_Factory_i.h GatewayS.h \
+.obj/Object_Factory_i.o .obj/Object_Factory_i.so .shobj/Object_Factory_i.o .shobj/Object_Factory_i.so: Object_Factory_i.cpp Object_Factory_i.h GatewayS.h \
   GatewayC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -1535,7 +1536,7 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Default_ORTC.i \
   $(TAO_ROOT)/tao/PortableServer/ObjectReferenceTemplate.inl
 
-.obj/sum_server_i.o .obj/sum_server_i.o .obj/sum_server_i.o .obj/sum_server_i.o: sum_server_i.cpp sum_server_i.h sum_serverS.h \
+.obj/sum_server_i.o .obj/sum_server_i.so .shobj/sum_server_i.o .shobj/sum_server_i.so: sum_server_i.cpp sum_server_i.h sum_serverS.h \
   sum_serverC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -1808,7 +1809,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Service_Object.i \
   $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h
 
-.obj/Server_IORInterceptor_ORBInitializer.o .obj/Server_IORInterceptor_ORBInitializer.o .obj/Server_IORInterceptor_ORBInitializer.o .obj/Server_IORInterceptor_ORBInitializer.o:  \
+.obj/Server_IORInterceptor_ORBInitializer.o .obj/Server_IORInterceptor_ORBInitializer.so .shobj/Server_IORInterceptor_ORBInitializer.o .shobj/Server_IORInterceptor_ORBInitializer.so:  \
  Server_IORInterceptor_ORBInitializer.cpp \
   Server_IORInterceptor_ORBInitializer.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -2075,7 +2076,7 @@ realclean: clean
   $(TAO_ROOT)/tao/IORInterceptor/iorinterceptor_export.h \
   $(TAO_ROOT)/tao/IORInterceptor/IORInterceptorC.i
 
-.obj/Server_IORInterceptor.o .obj/Server_IORInterceptor.o .obj/Server_IORInterceptor.o .obj/Server_IORInterceptor.o: Server_IORInterceptor.cpp \
+.obj/Server_IORInterceptor.o .obj/Server_IORInterceptor.so .shobj/Server_IORInterceptor.o .shobj/Server_IORInterceptor.so: Server_IORInterceptor.cpp \
   Server_IORInterceptor.h GatewayC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -2351,7 +2352,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Service_Object.i \
   ObjectReferenceFactoryC.i
 
-.obj/GatewayC.o .obj/GatewayC.o .obj/GatewayC.o .obj/GatewayC.o: GatewayC.cpp GatewayC.h \
+.obj/GatewayC.o .obj/GatewayC.so .shobj/GatewayC.o .shobj/GatewayC.so: GatewayC.cpp GatewayC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
@@ -2643,6 +2644,10 @@ realclean: clean
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
@@ -2712,7 +2717,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
-.obj/GatewayS.o .obj/GatewayS.o .obj/GatewayS.o .obj/GatewayS.o: GatewayS.cpp GatewayS.h GatewayC.h \
+.obj/GatewayS.o .obj/GatewayS.so .shobj/GatewayS.o .shobj/GatewayS.so: GatewayS.cpp GatewayS.h GatewayC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
@@ -3055,6 +3060,10 @@ realclean: clean
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -3081,6 +3090,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Tagged_Components.i \
   $(TAO_ROOT)/tao/GIOP_Message_Version.h \
   $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+  $(TAO_ROOT)/tao/Refcounted_ObjectKey.h \
+  $(TAO_ROOT)/tao/Refcounted_ObjectKey.inl \
   $(TAO_ROOT)/tao/Profile.i \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
@@ -3100,7 +3111,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Dynamic_Service.i \
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/ObjectReferenceFactoryC.o .obj/ObjectReferenceFactoryC.o .obj/ObjectReferenceFactoryC.o .obj/ObjectReferenceFactoryC.o: ObjectReferenceFactoryC.cpp \
+.obj/ObjectReferenceFactoryC.o .obj/ObjectReferenceFactoryC.so .shobj/ObjectReferenceFactoryC.o .shobj/ObjectReferenceFactoryC.so: ObjectReferenceFactoryC.cpp \
   ObjectReferenceFactoryC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -3411,6 +3422,10 @@ realclean: clean
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
@@ -3480,7 +3495,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
-.obj/sum_serverC.o .obj/sum_serverC.o .obj/sum_serverC.o .obj/sum_serverC.o: sum_serverC.cpp sum_serverC.h \
+.obj/sum_serverC.o .obj/sum_serverC.so .shobj/sum_serverC.o .shobj/sum_serverC.so: sum_serverC.cpp sum_serverC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
@@ -3772,6 +3787,10 @@ realclean: clean
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
@@ -3841,7 +3860,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
-.obj/sum_serverS.o .obj/sum_serverS.o .obj/sum_serverS.o .obj/sum_serverS.o: sum_serverS.cpp sum_serverS.h sum_serverC.h \
+.obj/sum_serverS.o .obj/sum_serverS.so .shobj/sum_serverS.o .shobj/sum_serverS.so: sum_serverS.cpp sum_serverS.h sum_serverC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
@@ -4184,6 +4203,10 @@ realclean: clean
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -4210,6 +4233,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Tagged_Components.i \
   $(TAO_ROOT)/tao/GIOP_Message_Version.h \
   $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+  $(TAO_ROOT)/tao/Refcounted_ObjectKey.h \
+  $(TAO_ROOT)/tao/Refcounted_ObjectKey.inl \
   $(TAO_ROOT)/tao/Profile.i \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
