@@ -1,3 +1,14 @@
+Wed Jan  3 12:56:13 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Timer_Wheel_T.cpp:
+        * ace/Timer_Wheel_T.h:
+
+          Doug noticed some redundant code in expire while making his
+          change on the 21st.  I checked and he was right, it looks like
+          I was moving around the loop termination conditionals and left 
+          some around.  Removed them and also added some better comments
+          and made it more doxygen complient.
+
 Wed Jan  3 12:06:20 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/Refcounted_Auto_Ptr_Test.dsw:
