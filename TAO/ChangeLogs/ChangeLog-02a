@@ -1,3 +1,67 @@
+Thu Oct 12 13:16:05 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+        * tao/IIOP_Profile.cpp
+	* tao/IIOP_Profile.h
+	* tao/Profile.cpp
+	* tao/Profile.h
+	* tao/SHMIOP_Profile.cpp
+	* tao/SHMIOP_Profile.h
+	* tao/UIOP_Profile.cpp
+	* tao/UIOP_Profile.h:
+	 
+	  Added <endpoint_count> method.
+	
+        * tao/orbconf.h:
+         
+	  Disabled TAO_HAS_CLIENT_PRIORITY_POLICY by default.  This policy
+	  is deprecated.  New RTCORBA policies should be used instead.
+	  Users can still use Client_Priority_Policy by explicitly
+	  enabling it in orbconf.h, but enabling it disables the use of
+	  RTCORBA policies.
+	
+	* tao/TAOC.i:
+
+	  Moved streaming operators for Client_Prioririty_Policy inside
+	  the #ifdef protections.  They were outside causing the compilation
+	  to fail if the policy was disabled.
+
+	* tao/ORB_Core.cpp
+	* tao/ORB_Core.h
+	* tao/ORB_Core.i:
+	
+	  Added TAO_Endpoint_Selector_Factory and TAO_*_Selector data
+	  members to the ORB Core class.  
+	
+	* tao/Stub.cpp (client_protocol):
+
+	  When figuring out effective ClientProtocolPolicy for the object,
+	  ORB default value should not be used - it creates conflict in
+	  case the policy is also set for the object on the server side.
+	
+	* tao/Invocation.h
+	* tao/Invocation.cpp
+	* tao/Invocation_Endpoint_Selectors.h:
+
+	  The logic for selection/reselection of a profile/endpoint used
+	  for an Invocation has been strategized.
+	  TAO_Invocation_Endpoint_Selector represents the interface for
+	  the strategy.  Added five concrete strategies: for the default
+	  case and for various combinations of RTCORBA policies.
+	  TAO_Endpoint_Selector_Factory is used to obtain the appropriate
+	  strategy for each invocation.  Note, that all selector
+	  strategies are stateless, and, therefore, can be used 
+	  concurrently by multiple threads.  This makes it possible to use
+	  a preallocated set of selectors from the ORB_Core for all
+	  Invocations rather than dynamically allocating a new selector
+	  for each Invocation.
+	
+	* tao/TAO.dsp
+	* tao/TAO_Static.dsp
+	* tao/Makefile.bor
+	* tao/Makefile:
+
+	  Updated.
+
 Thu Oct 12 12:17:44 2000  Angelo  <corsaro@cs.wustl.edu>
 
         * TAO version 1.1.10 released.
