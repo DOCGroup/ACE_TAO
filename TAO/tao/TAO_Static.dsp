@@ -867,6 +867,10 @@ SOURCE=.\Client_Priority_Policy.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\ClientRequestInfo.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connection_Cache_Manager.i
 # End Source File
 # Begin Source File
