@@ -1,3 +1,10 @@
+Fri Oct 22 07:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/IDL3_to_IDL2/TAO_IDL3_TO_IDL2_BE_Export.h:
+          Used ACE_AS_STATIC_LIBS to check whether we need to build a DLL
+          or not, TAO_AS_STATIC_LIBS was used, but this project isn't
+          dependent on TAO, just on ACE
+
 Thu Oct 21 18:37:12 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
         * DAnCE/Config_Handlers/Config_Handlers.mpc
