@@ -121,7 +121,7 @@ Options::hostname (void)
   return this->hostname_;
 }
 
-CORBA::ULong
+CORBA::UShort
 Options::portnum (void)
 {
   return this->portnum_;
