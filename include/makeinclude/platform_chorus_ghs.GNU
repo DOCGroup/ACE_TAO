@@ -32,24 +32,33 @@ optimize = 1
 shared_libs =
 static_libs = 1
 
-CC      = $(GHS_DIR)/ccch68
+CC      = $(GHS_DIR)/cxch68
 
 CXX     = $(CC)
+
 CFLAGS  = -groot= -alttools=$(GHS_DIR) -68040 -X445 -fprecise -D__cpluplus=1 \
           -I$(MVME_INCL)/posix \
           -I$(MVME_INCL)/stdc \
           -I$(MVME_INCL)/chorus \
           -I$(MVME_INCL)/CC
 CCFLAGS += $(CFLAGS) --no_rtti --multibyte_chars --wchar_t_keyword -tnone
+
+# CFLAGS  = -groot=$(MVME_DIR) -alttools=$(GHS_DIR) -68040 -X445 -fprecise \
+#           -D__cpluplus=1 -eel -stdl
+
+# CFLAGS  = -groot=$(GHS_DIR) -alttools=$(GHS_DIR) -stdl -eel -v
+# CCFLAGS = -groot=$(MVME_DIR) --using_std --stdl -classix -supervisor
+
 DCFLAGS += -g
 DLD     = $(CXX)
 LD      = $(CXX)
 LDFLAGS = --no_auto_instantiation \
           -u __main -u __premain -u _abort -r \
-          -L$(MVME_LIB)/classix -L$(MVME_LIB)/CC \
-          -L$(COOL_DIR)/lib -lOrb  \
+          $(MVME_DIR)/lib/CC/ioassign.o \
+          $(COOL_DIR)/lib/libOrb.a  \
+          $(MVME_DIR)/lib/CC/libC.a \
           $(GHS_DIR)/ch68/libedg.a \
-          $(MVME_DIR)/lib/classix/libcx.s.a $(MVME_DIR)/lib/CC/libC.a
+          $(MVME_DIR)/lib/classix/libcx.s.a
 
 OFLAGS  += -O -OM -OL
 AR      = $(GHS_DIR)/gnuch68/bin/ar
@@ -62,6 +71,5 @@ POSTLINK = ; $(CC) -groot= -alttools=$(GHS_DIR) -68040 -O -nostartfiles \
            $(MVME_DIR)/lib/crt/crth.s.o $(MVME_DIR)/lib/crt/crt0.o \
            $(MVME_DIR)/lib/crt/crti.o $@ \
            $(MVME_DIR)/lib/crt/crtn.o \
-           -locatedprogram -r -L$(COOL_DIR)/lib -lOrb; \
+           -locatedprogram -r; \
            mv -f $@.final $@
-
