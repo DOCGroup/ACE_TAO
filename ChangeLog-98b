@@ -1,5 +1,9 @@
 Mon Oct 12 14:39:15 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* examples/ASX/CCM_App/CCM_App.cpp: We need to make sure and use
+	  the ACE_SVC_FACTORY_* macros so that the gobbler will be set
+	  correctly.  Purify rules!
+
 	* ace/Makefile: Make sure to add the // $ Id: $ CVS string when
  	  recreating Svc_Conf_Tokens.h.
 
@@ -7,10 +11,6 @@ Mon Oct 12 14:39:15 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  gobbler function to 0.  At least this way we'll get crashes
  	  rather than bizarre errors if users don't use the ACE_*FACTORY*
  	  macros.
-
-	* ace/Parse_Node.cpp (ACE_Dynamic_Node): Make sure to delete the
- 	  ACE_Service_Type pointer so that all the memory will be
- 	  deallocated.  Thanks to Purify for reporting this...
 
 Mon Oct 12 15:59:00 1998  David L. Levine  <levine@cs.wustl.edu>
 
