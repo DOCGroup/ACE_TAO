@@ -634,7 +634,7 @@ ECB_SupplierID_Test::run (CORBA::ORB_ptr orb,
 int
 ECB_SupplierID_Test::dump_results (void)
 {
-  static int expected_count[PHASE_END]={
+  static CORBA::ULong expected_count[PHASE_END]={
     4 * ECB_SupplierID_Test::EVENTS_SENT,
     2 * ECB_SupplierID_Test::EVENTS_SENT,
     4 * ECB_SupplierID_Test::EVENTS_SENT,
@@ -827,7 +827,7 @@ ECB_Correlation_Test::run (CORBA::ORB_ptr orb,
     ORBSVCS_Time::hrtime_to_TimeT (e.header.creation_time, t);
     e.header.ec_recv_time = ORBSVCS_Time::zero;
     e.header.ec_send_time = ORBSVCS_Time::zero;
-    
+
     e.data.x = 0;
     e.data.y = 0;
   }
@@ -858,7 +858,7 @@ ECB_Correlation_Test::run (CORBA::ORB_ptr orb,
     ORBSVCS_Time::hrtime_to_TimeT (e.header.creation_time, t);
     e.header.ec_recv_time = ORBSVCS_Time::zero;
     e.header.ec_send_time = ORBSVCS_Time::zero;
-    
+
     e.data.x = 0;
     e.data.y = 0;
   }
@@ -1045,7 +1045,7 @@ ECB_Correlation_Test::run (CORBA::ORB_ptr orb,
 int
 ECB_Correlation_Test::dump_results (void)
 {
-  static int expected_count[PHASE_END]={
+  static CORBA::ULong expected_count[PHASE_END]={
     1 * ECB_Correlation_Test::EVENTS_SENT,
     2 * ECB_Correlation_Test::EVENTS_SENT,
     2 * ECB_Correlation_Test::EVENTS_SENT,
