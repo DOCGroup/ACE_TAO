@@ -61,4 +61,3 @@ CORBA::Policy::Policy (
 }
 
 #endif /* end #if !defined */
-
