@@ -1,3 +1,8 @@
+Wed Nov 26 15:20:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* TAOACE.dsw:
+	  Messaging needs PortableServer so added dependency
+
 Wed Nov 26 14:32:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* docs/tutorials/Quoter/Simple/Client/Quoter_Simple_Client.mpc:
