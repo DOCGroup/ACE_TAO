@@ -1,3 +1,14 @@
+Fri Jun 28 11:46:26 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+
+          Changed the regular expressions parsing all # directives
+          to allow the line to begin with whitespace, as per
+          CORBA 2.x section 3.2. Thanks to Heather Drury
+          <drury_h@ociweb.com> and Steve Totten <totten_s@ociweb.com>
+          for pointing this out.
+
 Fri Jun 28 09:03:22 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_component.cpp:
