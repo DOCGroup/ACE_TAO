@@ -53,16 +53,39 @@ int main(int argc, char *argv[])
       printf("Error: Address %s failed get_host_addr() check\n",ipv4_addresses[i]);
       printf("%s != %s\n",addr.get_host_addr(),ipv4_addresses[i]);
     }
-    addr.set(0,0);
-    if(addr.get_ip_address() != 0) {
-      printf("Error: failed to set address to 0\n");
+
+    // Clear out the address by setting it to 1 and check
+    addr.set((u_short)0,(ACE_UINT32)1,1);
+    if(addr.get_ip_address() != 1) {
+      printf("Error: failed to set address to 1\n");
     }
-    addr.set(80,addr32);
+
+    // Now set the address using a 32 bit number and check that we get
+    // the right string out of get_host_addr().
+    addr.set(80,addr32,0); // addr32 is already in network byte order
     if(0 != ACE_OS::strcmp(addr.get_host_addr(),ipv4_addresses[i])) {
       printf("Error: Address %s failed second get_host_addr() check\n",ipv4_addresses[i]);
       printf("%s != %s\n",addr.get_host_addr(),ipv4_addresses[i]);
     }
   }
+
+#if defined (ACE_HAS_IPV6)
+  char *ipv6_addresses[] = {
+    "1080::8:800:200c:417a", // unicast address
+    "ff01::101",       // multicast address
+    "::1",                        // loopback address
+    "::",            // unspecified addresses
+    0
+  };
+  for(int i=0; ipv6_addresses[i] != 0; i++) {
+    ACE_INET_Addr addr(80,ipv6_addresses[i]);
+
+    if(0 != ACE_OS::strcmp(addr.get_host_addr(),ipv6_addresses[i])) {
+      printf("IPv6 get_host_addr failed: %s != %s\n",addr.get_host_addr(),ipv6_addresses[i]);
+    }
+  }
+
+#endif
 
   return 0;
 }
