@@ -12,7 +12,7 @@ project(Kokyu_DSRT_Schedulers) : orbsvcslib, kokyu, rtscheduling, rtcorba {
         utils.cpp
         Kokyu_qosC.cpp
 	EDF_SchedulingC.cpp
-	kokyu_dsui_vars.cpp
+	kokyu_dsrt_dsui_vars.cpp
   }
   
   Header_Files {

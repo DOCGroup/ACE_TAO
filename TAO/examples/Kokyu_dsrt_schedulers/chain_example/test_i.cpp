@@ -5,6 +5,7 @@
 #include "ace/Task.h"
 #include "ace/ACE.h"
 #include "tao/debug.h"
+#include "EDF_Scheduler.h"
 
 #if defined (ACE_HAS_DSUI)
 #include <ace/Counter.h>
@@ -23,7 +24,14 @@ void
 Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  DSUI_EVENT_LOG (TEST_ONE_FAM, START_SERVICE, 0, 0, 0);
+  CORBA::Policy_ptr sched_policy =
+    this->current_->scheduling_parameter(ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  EDF_Scheduling::SchedulingParameterPolicy_var sched_param_policy =
+  EDF_Scheduling::SchedulingParameterPolicy::_narrow (sched_policy);
+
+  EDF_Scheduling::SchedulingParameter_var sched_param = sched_param_policy->value ();
+
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
   int prio;
@@ -33,6 +41,14 @@ Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
     memcpy (&guid,
             this->current_->id (ACE_ENV_SINGLE_ARG_PARAMETER)->get_buffer (),
             sizeof (this->current_->id (ACE_ENV_SINGLE_ARG_PARAMETER)->length ()));
+
+  Object_ID oid;
+  oid.id=sched_param->id;
+  oid.pid=sched_param->pid;
+  oid.tid=sched_param->tid;
+  oid.task_id=sched_param->task_id;
+  oid.guid=guid;
+  DSUI_EVENT_LOG (TEST_ONE_FAM, START_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 
   ACE_High_Res_Timer timer;
   ACE_Time_Value elapsed_time;
@@ -127,10 +143,10 @@ Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
 	      "Request processing in thread %t done, "
 	      "prio = %d, load = %d, elapsed time = %umsec\n", 
 	      prio, exec_duration, elapsed_time.msec () ));
-  DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, 0, 0);  
+  DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&oid);  
   this->server_->test_method2(exec_duration);
-      DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, 0, 0); 
-  DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, 0, 0, 0);
+  DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, sizeof(Object_ID), (char*)&oid); 
+  DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 }
 
 void
