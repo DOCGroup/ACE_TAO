@@ -1,3 +1,10 @@
+Mon Aug 27 09:39:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Timer_Queue_T.i (get_dispatch_info): 
+	* ace/Timer_Queue_T.h: Fixed the compile problem in VXWORKS
+	  builds. How could I forget that there are a few compilers which
+	  cannot grok traits?
+
 Mon Aug 27 09:39:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * examples/Makefile.bor:
