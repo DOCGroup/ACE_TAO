@@ -1,3 +1,11 @@
+Wed Mar  2 09:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Updated the build instructors for the tests with Borland, the
+          protocols directory must also be build before the tests. Thanks
+          to Aapo Mäkinen <aapo dot makinen at firstbeattechnologies dot com>
+          for reporting this.
+
 Tue Mar  1 12:39:11 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* apps/JAWS3/jaws3/Protocol_Handler.h: Added
