@@ -122,9 +122,10 @@ CORBA_ORB::CORBA_ORB (void)
     trading_service_ (CORBA_Object::_nil ())
 {
   leader_follower_info_.leaders_ = 0;
-  leader_follower_info_.leader_thread_ID_ = ACE_OS::NULL_thread;
-  this->cond_become_leader_ = 
-      new ACE_SYNCH_CONDITION (leader_follower_info_.leader_follower_lock_);
+  leader_follower_info_.leader_thread_ID_ =
+    ACE_OS::NULL_thread;
+  ACE_NEW (this->cond_become_leader_,
+           ACE_SYNCH_CONDITION (leader_follower_info_.leader_follower_lock_));
 }
 
 CORBA_ORB::~CORBA_ORB (void)
