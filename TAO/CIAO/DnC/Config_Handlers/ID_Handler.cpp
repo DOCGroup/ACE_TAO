@@ -9,13 +9,13 @@
 
 using CIAO::Config_Handler::Utils;
 
-::Deployment::ImplementationDependency *
+Deployment::ImplementationDependency *
 CIAO::Config_Handler::ID_Handler::process_ImplementationDependency (DOMNodeIterator * iter)
 {
-  ::Deployment::ImplementationDependency_var ret_struct = 0;
-  ACE_NEW_RETURN (ret_struct,
-                  ::Deployment::ImplementationDependency (),
-                  NULL);
+  Deployment::ImplementationDependency_var ret_struct = 0;
+  ACE_NEW_THROW_EX (ret_struct,
+                    Deployment::ImplementationDependency,
+                    CORBA::NO_MEMORY ());
 
   //Check if the Schema IDs for both the elements match
   DOMNode * node = iter->nextNode ();

@@ -14,9 +14,9 @@ using CIAO::Config_Handler::SP_Handler;
 Deployment::RequirementSatisfier *
 CIAO::Config_Handler::RS_Handler::process_RequirementSatisfier (DOMNodeIterator * iter)
 {
-  ::Deployment::RequirementSatisfier_var ret_struct = 0;
+  Deployment::RequirementSatisfier_var ret_struct = 0;
   ACE_NEW_THROW_EX (ret_struct,
-                    ::Deployment::RequirementSatisfier,
+                    Deployment::RequirementSatisfier,
                     CORBA::NO_MEMORY ());
 
   //Check if the Schema IDs for both the elements match
@@ -61,7 +61,7 @@ CIAO::Config_Handler::RS_Handler::process_RequirementSatisfier (DOMNodeIterator 
   // Process <property> tags
   Deployment::SatisfierProperties_var property_seq = 0;
   ACE_NEW_THROW_EX (property_seq,
-                    Deployment::SatisfierProperties (),
+                    Deployment::SatisfierProperties,
                     CORBA::NO_MEMORY ());
 
   property_seq->length (0);
