@@ -172,6 +172,10 @@ SOURCE=.\Default_Acceptor_Filter.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Default_ORTC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Default_Policy_Validator.cpp
 # End Source File
 # Begin Source File
@@ -305,6 +309,10 @@ SOURCE=.\Collocated_Object.h
 # Begin Source File
 
 SOURCE=.\Default_Acceptor_Filter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Default_ORTC.h
 # End Source File
 # Begin Source File
 
@@ -449,6 +457,10 @@ SOURCE=.\Active_Object_Map.i
 # Begin Source File
 
 SOURCE=.\Collocated_Object.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Default_ORTC.i
 # End Source File
 # Begin Source File
 
