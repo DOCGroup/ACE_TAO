@@ -7,7 +7,7 @@
 //    cos
 // 
 // = FILENAME
-//   NS_CosNaming.h
+//   Entries.h
 //
 // = AUTHOR
 //    Marina Spivak <marina@cs.wustl.edu>
@@ -24,27 +24,27 @@
 #include "tao/corba.h"
 #include "orbsvcs/CosNamingC.h"
 
-class TAO_ORBSVCS_Export NS_IntId 
+class TAO_ORBSVCS_Export TAO_IntId 
 {
   // = TITLE
   //     Stores information a context keeps for each bound name
   //     (object reference and the type of binding).
 public:
   // = Initialization and termination methods.
-  NS_IntId (void);
+  TAO_IntId (void);
   // Constructor.
 
-  NS_IntId (CORBA::Object_ptr obj,
+  TAO_IntId (CORBA::Object_ptr obj,
 	    CosNaming::BindingType type /* = CosNaming::nobject */);
   // Constructor.
   
-  NS_IntId (const NS_IntId & rhs);
+  TAO_IntId (const TAO_IntId & rhs);
   // Copy constructor.
 
-  ~NS_IntId (void);
+  ~TAO_IntId (void);
   // Destructor.
 
-  void operator= (const NS_IntId & rhs);
+  void operator= (const TAO_IntId & rhs);
   // Assignment operator (does copy memory).
 
   CORBA::Object_ptr ref_;   
@@ -55,33 +55,33 @@ public:
   // participate in name resolution when compound names are used.
 };
 
-class TAO_ORBSVCS_Export NS_ExtId 
+class TAO_ORBSVCS_Export TAO_ExtId 
 {
   // = TITLE
   //    Stores the name to which an object is bound.
 public:
   // = Initialization and termination methods.
 
-  NS_ExtId (void);
+  TAO_ExtId (void);
   // Constructor.
 
-  NS_ExtId (const char *id, 
+  TAO_ExtId (const char *id, 
 	    const char *kind);
   // Constructor.
   
-  NS_ExtId (const NS_ExtId & rhs);
+  TAO_ExtId (const TAO_ExtId & rhs);
   // Copy constructor.
 
-  ~NS_ExtId (void);
+  ~TAO_ExtId (void);
   // Destructor. 
 
-  void operator= (const NS_ExtId & rhs);
+  void operator= (const TAO_ExtId & rhs);
   // Assignment operator (does copy memory).
 
-  int operator== (const NS_ExtId &rhs) const;
+  int operator== (const TAO_ExtId &rhs) const;
   // Equality comparison operator (must match both id_ and kind_).
 
-  int operator!= (const NS_ExtId &rhs) const;
+  int operator!= (const TAO_ExtId &rhs) const;
   // Inequality comparison operator.
 
   u_long hash (void) const;
