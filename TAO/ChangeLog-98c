@@ -1,3 +1,8 @@
+Wed Dec 03 09:40:36 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Makefile: added TAO_PLATFORM_SVC_CONF_FILE_NOTSUP to
+          CPPFLAGS on CHORUS.  Thanks to Wei Chiang for this change.
+
 Tue Dec  2 15:47:09 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_interface.h: Added some helper methods to generate
