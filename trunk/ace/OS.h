@@ -688,7 +688,7 @@ typedef u_int ACE_thread_key_t;
 
 
 #   elif defined (VXWORKS)
-#     include /**/ <sysLib.h>  this is for board specific routines (not used by ACE)
+#     include /**/ <sysLib.h> // for sysClkRateGet()
 #     include /**/ <taskLib.h>
 #     include /**/ <taskHookLib.h>
 
