@@ -1,3 +1,11 @@
+Thu Mar 18 12:32:02 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* orbsvcs/tests/Property/client.cpp
+	  (test_delete_property, test_get_property_value): 
+	  Fixed warnings about unused arguments.  Fixed conversion from
+	  `CORBA_Object_var' to non-scalar type `CORBA_Any::to_object'
+	  problem.  Thanks to Jeff for helping me out on this.
+
 Thu Mar 18 01:54:09 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POAC.h: Fixed all the _out copy constructors to prevent
