@@ -10,9 +10,6 @@
 #----------------------------------------------------------------------------
 
 LDLIBS     = -lTAO_AV -lTAO_CosProperty -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
-ifeq ($(rapi),1)
-  LDLIBS += -lACE_QoS
-endif # rapi
 
 SENDER_OBJS = Connection_Manager.o \
 	      sender.o
@@ -44,6 +41,11 @@ endif # AV
 #	Include macros and targets
 #----------------------------------------------------------------------------
 
+ifeq ($(ACE_HAS_GNUG_PRE_2_8),1)
+  # This example does not compile with g++ 2.7.2.3
+all clean realclean:
+	@echo orbsvcs/examples/RtEC/Schedule is not built with older versions of g++
+else # ! ACE_HAS_GNUG_PRE_2_8
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
@@ -51,6 +53,11 @@ include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 #include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+endif # ! ACE_HAS_GNUG_PRE_2_8	
+
+ifeq ($(rapi),1)
+  LDLIBS += -lACE_QoS
+endif # rapi
 
 #DCFLAGS = -g
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
