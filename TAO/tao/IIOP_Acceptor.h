@@ -56,6 +56,9 @@ public:
   // create profile object for this Acceptor using the SAP
   // (service access point, Host and Port) and object_key.
 
+  // = See TAO_Acceptor
+  virtual int is_collocated (const TAO_Profile*);
+
   ACE_Event_Handler *acceptor (void);
   // Return the underlying acceptor object, ACE_Acceptor
 

@@ -1436,17 +1436,6 @@ template class ACE_Map_Iterator<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Reverse_Iterator<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Entry<int, TAO_SVC_TUPLE*>;
 
-template class ACE_Hash_Map_Manager<ACE_INET_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock>;
-template class ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, TAO_Collocation_Table_Lock>;
-template class ACE_Hash_Map_Entry<ACE_INET_Addr, TAO_Object_Adapter *>;
-template class ACE_Hash<ACE_INET_Addr>;
-template class ACE_Equal_To<ACE_INET_Addr>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_INET_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, TAO_Collocation_Table_Lock>;
-template class ACE_Hash_Map_Iterator<ACE_INET_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_INET_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, TAO_Collocation_Table_Lock>;
-template class ACE_Hash_Map_Reverse_Iterator<ACE_INET_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_INET_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, TAO_Collocation_Table_Lock>;
-
 template class ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *>;
 template class ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>;
 template class ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>;
@@ -1478,17 +1467,6 @@ template class ACE_Unbounded_Set_Iterator<ACE_INET_Addr>;
 #pragma instantiate ACE_Map_Iterator<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Reverse_Iterator<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Entry<int, TAO_SVC_TUPLE*>
-
-#pragma instantiate ACE_Hash_Map_Manager<ACE_INET_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_INET_Addr, TAO_Object_Adapter *>
-#pragma instantiate ACE_Hash<ACE_INET_Addr>
-#pragma instantiate ACE_Equal_To<ACE_INET_Addr>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_INET_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_INET_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_INET_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_INET_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_INET_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, TAO_Collocation_Table_Lock>;
 
 #pragma instantiate ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *>
 #pragma instantiate ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>

@@ -24,7 +24,7 @@ TAO_Connector_Registry::get_connector (CORBA::ULong tag)
                 this->connectors_.end ();
   TAO_ConnectorSetItor connector =
                 this->connectors_.begin ();
-  
+
   for (;
        connector != end ;
        connector++)
@@ -54,7 +54,7 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
       if (connector)
         {
           connectors_.insert (connector);
-          connector->open (orb_core->resource_factory (), 
+          connector->open (orb_core->resource_factory (),
                            orb_core->reactor ());
         }
       else
@@ -66,12 +66,12 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
 int
 TAO_Connector_Registry::close_all (void)
 {
-  
+
   TAO_ConnectorSetItor end =
                 this->connectors_.end ();
   TAO_ConnectorSetItor connector =
                 this->connectors_.begin ();
-  
+
   for (;
        connector != end ;
        connector++)
@@ -93,7 +93,7 @@ TAO_Connector_Registry::preconnect (const char *the_preconnections)
                 this->connectors_.end ();
   TAO_ConnectorSetItor connector =
                 this->connectors_.begin ();
-  
+
   for (;
        connector != end ;
        connector++)
@@ -134,7 +134,7 @@ TAO_Connector_Registry::make_mprofile (const char *ior,
 
   TAO_ConnectorSetItor first_connector = this->connectors_.begin ();
   TAO_ConnectorSetItor last_connector = this->connectors_.end ();
-  
+
   for (TAO_ConnectorSetItor connector = first_connector;
        connector != last_connector;
        ++connector)

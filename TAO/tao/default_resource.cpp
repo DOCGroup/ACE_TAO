@@ -19,7 +19,6 @@ ACE_RCSID(tao, default_resource, "$Id$")
 TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   : resource_source_ (TAO_GLOBAL),
     poa_source_ (TAO_GLOBAL),
-    collocation_table_source_ (TAO_GLOBAL),
     reactor_type_ (TAO_REACTOR_SELECT_MT),
     cdr_allocator_source_ (TAO_GLOBAL)
 {
@@ -148,19 +147,6 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
           }
       }
 
-    else if (ACE_OS::strcmp (argv[curarg], "-ORBcoltable") == 0)
-      {
-        curarg++;
-        if (curarg < argc)
-          {
-            char *name = argv[curarg];
-
-            if (ACE_OS::strcasecmp (name, "global") == 0)
-              collocation_table_source_ = TAO_GLOBAL;
-            else if (ACE_OS::strcasecmp (name, "orb") == 0)
-              collocation_table_source_ = TAO_TSS;
-          }
-      }
     else if (ACE_OS::strcmp (argv[curarg], "-ORBinputcdrallocator") == 0)
       {
         curarg++;
@@ -547,12 +533,6 @@ TAO_Default_Resource_Factory::create_input_cdr_data_block (size_t size)
   return 0;
 }
 
-TAO_GLOBAL_Collocation_Table *
-TAO_Default_Resource_Factory::get_global_collocation_table (void)
-{
-  return (collocation_table_source_ == TAO_GLOBAL ? GLOBAL_Collocation_Table::instance () : 0);
-}
-
 // ****************************************************************
 
 TAO_Allocated_Resources::TAO_Allocated_Resources (void)
@@ -600,34 +580,6 @@ TAO_Allocated_Resources::~TAO_Allocated_Resources (void)
 }
 
 // ****************************************************************
-
-TAO_Default_Reactor::TAO_Default_Reactor (int nolock)
-  : ACE_Reactor ((nolock ?
-                  (ACE_Reactor_Impl*) new TAO_NULL_LOCK_REACTOR :
-                  (ACE_Reactor_Impl*) new TAO_REACTOR),
-                 1)
-{
-}
-
-TAO_Default_Reactor::~TAO_Default_Reactor (void)
-{
-}
-
-// ****************************************************************
-
-TAO_Collocation_Table_Lock::TAO_Collocation_Table_Lock (void)
-{
-  this->lock_ = TAO_ORB_Core_instance ()->server_factory ()->create_collocation_table_lock ();
-  // We don't need to worry about the race condition here because this
-  // is called from within the ctor of Hash_Map_Manager which is
-  // placed inside a ACE_Singleton.
-}
-
-TAO_Collocation_Table_Lock::~TAO_Collocation_Table_Lock (void)
-{
-  delete this->lock_;
-  this->lock_ = 0;
-}
 
 // ****************************************************************
 

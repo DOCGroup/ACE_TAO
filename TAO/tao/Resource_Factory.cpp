@@ -23,7 +23,7 @@ TAO_Protocol_Item::factory (void)
   return this->factory_;
 }
 
-void 
+void
 TAO_Protocol_Item::factory (TAO_Protocol_Factory *factory)
 {
   this->factory_ = factory;
@@ -92,12 +92,6 @@ TAO_Resource_Factory::object_adapter (void)
   return 0;
 }
 
-TAO_GLOBAL_Collocation_Table *
-TAO_Resource_Factory::get_global_collocation_table (void)
-{
-  return 0;
-}
-
 ACE_Allocator *
 TAO_Resource_Factory::input_cdr_dblock_allocator (void)
 {
@@ -134,7 +128,7 @@ TAO_Resource_Factory::get_protocol_factories (void)
   return 0;
 }
 
-int 
+int
 TAO_Resource_Factory::init_protocol_factories (void)
 {
   return -1;

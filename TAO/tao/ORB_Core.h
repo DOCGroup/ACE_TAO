@@ -26,7 +26,7 @@
 #include "tao/POAC.h"
 
 // @@ Fred&Ossama: In this file you only use pointers
-//    TAO_Connector_Registry and Acceptor_Registry, you should forward 
+//    TAO_Connector_Registry and Acceptor_Registry, you should forward
 //    declare the classes, and not include the complete header file.
 #include "tao/Connector_Registry.h"
 #include "tao/Acceptor_Registry.h"
@@ -64,13 +64,13 @@ class TAO_Export TAO_ORB_Core
   //
   friend class CORBA_ORB;
   friend CORBA::ORB_ptr CORBA::ORB_init (int &,
-                                         char * const*,
+                                         char *argv[],
                                          const char *,
                                          CORBA_Environment &);
 
 public:
   // = Initialization and termination methods.
-  TAO_ORB_Core (void);
+  TAO_ORB_Core (const char* id);
   // Constructor.
 
   ~TAO_ORB_Core (void);
@@ -120,6 +120,13 @@ public:
                                               TAO_POA_Manager *poa_manager = 0,
                                               const TAO_POA_Policies *policies = 0);
 
+  // = Set/get the collocation flags
+  void optimize_collocation_objects (CORBA::Boolean opt);
+  CORBA::Boolean optimize_collocation_objects (void) const;
+
+  void use_global_collocation (CORBA::Boolean opt);
+  CORBA::Boolean use_global_collocation (void) const;
+
   TAO_Object_Adapter *object_adapter (void);
   // Get <Object Adapter>.
 
@@ -144,16 +151,7 @@ public:
   TAO_Server_Strategy_Factory *server_factory (void);
   // Returns pointer to the server factory.
 
-  CORBA::Boolean using_collocation (void);
-  // Check if we are optimizing collocation objects.
-
-  CORBA::Boolean using_collocation (CORBA::Boolean);
-  // Set if we want to use optimized collocation objects.
-
-  int add_to_collocation_table (void);
-  // Added this ORB into collocation table.
-
-  TAO_Object_Adapter *get_collocated_object_adapter (const ACE_INET_Addr &addr);
+  int is_collocated (const TAO_MProfile& mprofile);
   // See if we have a collocated address, if yes, return the POA
   // associated with the address.
 
@@ -324,6 +322,9 @@ protected:
   // The address of the endpoint on which we're listening for
   // connections and requests.
 
+  char* orbid_;
+  // The ORBid for this ORB.
+
   TAO_Resource_Factory *resource_factory_;
   // Handle to the factory for resource information..
 
@@ -354,6 +355,10 @@ protected:
   CORBA::Boolean opt_for_collocation_;
   // TRUE if we want to take advantage of collocation optimization in
   // this ORB.
+
+  CORBA::Boolean use_global_collocation_;
+  // TRUE if we want to consider all ORBs in this address space
+  // collocated.
 
   char *preconnections_;
   // A string of comma-separated <{host}>:<{port}> pairs used to
@@ -424,6 +429,50 @@ public:
   // This is is just a place holder, in the future the connection
   // cache will be separated from the connectors and it will be a
   // (potentially) TSS object.
+};
+
+// ****************************************************************
+
+class TAO_Export TAO_ORB_Table
+{
+  // = TITLE
+  //   Keep a table with all the ORBs in the system.
+  //
+  // = DESCRIPTION
+  //   CORBA::ORB_init() is supposed to return the same ORB if the
+  //   user specifies the same ORBid, either in the ORB_init()
+  //   parameter or in the -ORBid option.
+  //   This class is used to implement that feature.
+  //   It is also useful when trying to determine if an object
+  //   reference is collocated or not.
+  //
+public:
+  ~TAO_ORB_Table (void);
+  // destructor
+
+  // @@ Ossama, we may use a Hash_Map_Manager and use "const char*"
+  //    instead of ACE_CString to speed things up.
+  typedef ACE_Map_Manager<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex> Table;
+  typedef Table::iterator Iterator;
+
+  Iterator begin (void);
+  Iterator end (void);
+  int bind (const char* orb_id, TAO_ORB_Core* orb_core);
+  TAO_ORB_Core* find (const char* orb_id);
+  int unbind (const char* orb_id);
+  // The canonical ACE_Map methods.
+
+  static TAO_ORB_Table* instance (void);
+  // Return a unique instance
+
+protected:
+  friend class ACE_Singleton<TAO_ORB_Table,ACE_SYNCH_MUTEX>;
+  TAO_ORB_Table (void);
+  // Constructor
+
+private:
+  Table table_;
+  // The implementation.
 };
 
 // ****************************************************************

@@ -72,7 +72,7 @@ public:
   TAO_IIOP_Profile (const char *host,
                     CORBA::UShort port,
                     const TAO_ObjectKey &object_key,
-		    const ACE_INET_Addr &addr);
+                    const ACE_INET_Addr &addr);
   //  Profile constructor, this is the most efficient since it
   // doesn't require any address resolution processing.
 
@@ -133,7 +133,7 @@ public:
   TAO_ObjectKey &object_key (TAO_ObjectKey& objkey);
   // @@ deprecated. set the Object Key.
 
-  TAO_ObjectKey *_key (CORBA::Environment &env);
+  TAO_ObjectKey *_key (CORBA::Environment &env) const;
   //  Return a pointer to the Object Key.
 
   CORBA::Boolean is_equivalent (TAO_Profile *other_profile,

@@ -159,7 +159,6 @@ public:
   virtual TAO_NULL_ACTIVATION_STRATEGY *get_null_activation_strategy (void);
   virtual TAO_POA *get_root_poa (void);
   virtual TAO_Object_Adapter *object_adapter (void);
-  virtual TAO_GLOBAL_Collocation_Table *get_global_collocation_table (void);
   virtual ACE_Allocator* input_cdr_dblock_allocator (void);
   virtual ACE_Allocator* input_cdr_buffer_allocator (void);
   virtual ACE_Allocator* output_cdr_dblock_allocator (void);
@@ -184,11 +183,6 @@ protected:
   // thread-specific.  If not set specifically, this takes on the
   // value of <resource_source_>.
 
-  int collocation_table_source_;
-  // Flag indicating whether the collocation table should be global
-  // thread-specific.  It defaults to TAO_GLOBAL if not set
-  // specifically.
-
   int reactor_type_;
   // Flag indicating which kind of reactor we should use.
 
@@ -207,9 +201,6 @@ protected:
           GLOBAL_ALLOCATED;
   typedef ACE_TSS_Singleton<TAO_Allocated_Resources, ACE_SYNCH_MUTEX>
           TSS_ALLOCATED;
-
-  typedef ACE_Singleton<TAO_GLOBAL_Collocation_Table, ACE_SYNCH_MUTEX>
-          GLOBAL_Collocation_Table;
 };
 
 #if defined (__ACE_INLINE__)

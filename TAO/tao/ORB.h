@@ -629,7 +629,7 @@ public:
 
   void _optimize_collocation_objects (CORBA::Boolean opt);
   // Set collocation optimization status.
-  CORBA::Boolean _optimize_collocation_objects (void);
+  CORBA::Boolean _optimize_collocation_objects (void) const;
   // Get collocation optimization status.
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
@@ -749,9 +749,6 @@ private:
   // Table of ObjectID->IOR mappings.
 
   CORBA::Boolean use_omg_ior_format_;
-  // Decides whether to use the URL notation or to use IOR notation.
-
-  CORBA::Boolean optimize_collocation_objects_;
   // Decides whether to use the URL notation or to use IOR notation.
 
   // = NON-PROVIDED METHODS

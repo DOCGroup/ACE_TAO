@@ -39,6 +39,32 @@ TAO_Acceptor_Registry::get_acceptor (CORBA::ULong tag)
 }
 
 int
+TAO_Acceptor_Registry::is_collocated (const TAO_MProfile &mprofile)
+{
+  // @@ Fred&Osssama: we should optimize this: we loop over the
+  //    profiles here and in the ORB::is_collocated() method, maybe we
+  //    should return the index of the profile that matched?
+  //    What happens if the address matches but the object key does
+  //    not? Should we keep on searching in the ORB loop?
+
+  TAO_AcceptorSetItor end = this->acceptors_.end ();
+
+  for (TAO_AcceptorSetItor i = this->acceptors_.begin (); i != end; ++i)
+    {
+      for (TAO_PHandle j = 0;
+           j != mprofile.profile_count ();
+           ++j)
+        {
+          const TAO_Profile* profile = mprofile.get_profile (j);
+          if ((*i)->tag () == profile->tag ()
+              && (*i)->is_collocated (profile))
+            return 1;
+        }
+    }
+  return 0;
+}
+
+int
 TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
 {
   // @@ Fred&Ossama: This is not the problem you have to solve right
@@ -102,7 +128,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
             {
               if ((*factory)->factory ()->match_prefix (prefix))
                 {
-                  if ((acceptor = (*factory)->factory ()->make_acceptor (prefix)))
+                  if ((acceptor = (*factory)->factory ()->make_acceptor ()))
                     {
                       // add acceptor to list.
                       this->acceptors_.insert (acceptor);

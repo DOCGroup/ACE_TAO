@@ -329,18 +329,6 @@ CORBA_ORB::_use_omg_ior_format (void)
   return this->use_omg_ior_format_;
 }
 
-ACE_INLINE void
-CORBA_ORB::_optimize_collocation_objects (CORBA::Boolean opt)
-{
-  this->optimize_collocation_objects_ = opt;
-}
-
-ACE_INLINE CORBA::Boolean
-CORBA_ORB::_optimize_collocation_objects (void)
-{
-  return this->optimize_collocation_objects_;
-}
-
 // *************************************************************
 // Inline operations for class CORBA_ORB_var
 // *************************************************************

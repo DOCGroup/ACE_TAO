@@ -14,6 +14,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/Arg_Shifter.h"
 
 #include "tao/Object.h"
 #include "tao/Typecode.h"
@@ -122,8 +123,7 @@ CORBA_ORB::CORBA_ORB (TAO_ORB_Core* orb_core)
 # ifdef TAO_HAS_VALUETYPE
     valuetype_factory_map_ (0),
 # endif /* TAO_HAS_VALUETYPE */
-    use_omg_ior_format_ (1),
-    optimize_collocation_objects_ (1)
+    use_omg_ior_format_ (1)
 {
   leader_follower_info_.leaders_ = 0;
   leader_follower_info_.leader_thread_ID_ =
@@ -191,9 +191,6 @@ CORBA_ORB::open (void)
     return 1;
 
   this->open_called_ = 1;
-
-  TAO_Server_Strategy_Factory *f =
-    this->orb_core_->server_factory ();
 
   TAO_Acceptor_Registry *ar = this->orb_core_->acceptor_registry ();
   // get a reference to the acceptor_registry!
@@ -959,7 +956,7 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
   // size_t pfile_count =
   //     this->orb_core_->acceptor_registry ()->count_profiles ();
   // TAO_MProfile mp (pfile_count);
-  // this->orb_core_->acceptor_registry ()->fill_mprofile (key); 
+  // this->orb_core_->acceptor_registry ()->fill_mprofile (key);
   //
   //    What do you think?
 
@@ -1271,7 +1268,7 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
 
 CORBA::ORB_ptr
 CORBA::ORB_init (int &argc,
-                 char *const *argv,
+                 char *argv[],
                  const char * orb_name)
 {
   return CORBA::ORB_init (argc, argv, orb_name,
@@ -1280,8 +1277,8 @@ CORBA::ORB_init (int &argc,
 
 CORBA::ORB_ptr
 CORBA::ORB_init (int &argc,
-                 char *const *argv,
-                 const char * /* orb_name */,
+                 char *argv[],
+                 const char * orbid,
                  CORBA::Environment &ACE_TRY_ENV)
 {
   // Using ACE_Static_Object_Lock::instance() precludes <ORB_init>
@@ -1289,16 +1286,56 @@ CORBA::ORB_init (int &argc,
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
                             *ACE_Static_Object_Lock::instance (), 0));
 
+
+  if (orbid == 0 || ACE_OS::strcmp (orbid, "") == 0)
+    {
+      orbid = "";
+      ACE_Arg_Shifter arg_shifter (argc, argv);
+      while (arg_shifter.is_anything_left ())
+        {
+          char *current_arg = arg_shifter.get_current ();
+
+          const char orbid_opt[] = "-ORBid";
+          const int orbid_len = sizeof (orbid_opt) - 1;
+          if (ACE_OS::strcmp (current_arg, orbid_opt) == 0)
+            {
+              arg_shifter.consume_arg ();
+              if (arg_shifter.is_parameter_next ())
+                {
+                  orbid = arg_shifter.get_current ();
+                  arg_shifter.consume_arg ();
+                }
+            }
+          else if (ACE_OS::strncmp (current_arg, orbid_opt,
+                                    orbid_len) == 0)
+            {
+              arg_shifter.consume_arg ();
+              // The rest of the argument is the ORB id...
+              orbid = orbid_opt + orbid_len;
+              // but we should skip an optional space...
+              if (orbid[0] == ' ')
+                orbid++;
+            }
+          else
+            arg_shifter.ignore_arg ();
+        }
+    }
+
   // Get ORB Core
+  TAO_ORB_Core *oc =
+    TAO_ORB_Table::instance ()->find (orbid);
+
+  // The ORB was initialized already, just return that one!
+  if (oc != 0)
+    return oc->orb ();
+
   // @@ As part of the ORB re-architecture this will the point where
   //    we locate the right ORB (from a table) and use that one
   //    instead of just creating a new one every time.
-  TAO_ORB_Core *oc;
-
-  ACE_NEW_RETURN (oc, TAO_ORB_Core, CORBA::ORB::_nil ());
+  ACE_NEW_RETURN (oc, TAO_ORB_Core (orbid), CORBA::ORB::_nil ());
 
   // Initialize the ORB Core instance.
-  int result = oc->init (argc, (char **) argv);
+  int result = oc->init (argc, argv);
 
   // Check for errors and return 0 if error.
   if (result == -1)
@@ -1315,6 +1352,11 @@ CORBA::ORB_init (int &argc,
   // parameters.
   if (CORBA::instance_ == 0)
     CORBA::instance_ = oc->orb ();
+
+  // Before returning remember to store the ORB into the table...
+  if (TAO_ORB_Table::instance ()->bind (orbid, oc) != 0)
+    ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
+                                       CORBA::COMPLETED_NO), 0);
 
   return oc->orb ();
 }
@@ -1420,8 +1462,8 @@ CORBA_ORB::string_to_object (const char *str,
     obj = this->ior_string_to_object (str + sizeof ior_prefix - 1,
                                       ACE_TRY_ENV);
   else
-    { 
-      // @@ Fred&Ossama: Is there anyway to initialize the mprofile in 
+    {
+      // @@ Fred&Ossama: Is there anyway to initialize the mprofile in
       //    such a way that it does not allocate memory?
       //    The connector registry could count how many profiles are
       //    there (if any) and then allocate all the memory in one
@@ -1553,53 +1595,124 @@ CORBA_ORB::file_string_to_object (const char* filename,
 
 // ****************************************************************
 
+void
+CORBA_ORB::_optimize_collocation_objects (CORBA::Boolean opt)
+{
+  this->orb_core_->optimize_collocation_objects (opt);
+}
+
+CORBA::Boolean
+CORBA_ORB::_optimize_collocation_objects (void) const
+{
+  return this->orb_core_->optimize_collocation_objects ();
+}
+
 TAO_ServantBase *
 CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
 {
   // ACE_DEBUG ((LM_DEBUG, "CORBA_ORB: get_collocated_servant\n"));
 
-  if (this->optimize_collocation_objects_ && sobj != 0)
+  if (sobj == 0 || !this->_optimize_collocation_objects ())
+    return 0;
+
+  // @@EXC@@ We should receive the <env> from the command line.
+  // @@ Fred: why do we need an environment for the
+  //    Profile::_key() method?
+
+  CORBA::Environment ACE_TRY_ENV;
+
+  if (this->orb_core_->use_global_collocation ())
     {
-      TAO_Profile *pfile = sobj->profile_in_use ();
+      // @@ Ossama: maybe we need another lock for the table, to
+      //    reduce contention on the Static_Object_Lock below, if so
+      //    then we need to use that lock in the ORB_init() function.
 
-      // Make sure users passed in a valid TAO_Stub otherwise, we
-      // don't know what to do next.
-      if (pfile == 0)
+      ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
+                                *ACE_Static_Object_Lock::instance (), 0));
+
+      TAO_ORB_Table* table = TAO_ORB_Table::instance ();
+      TAO_ORB_Table::Iterator end =
+        table->end ();
+      for (TAO_ORB_Table::Iterator i = table->begin ();
+           i != end;
+           ++i)
         {
-          // @@ Fred, can you please either keep these debugging
-          // statements in or remove them, but please don't leave the
-          // #if 0's around!
-#if 0
-          ACE_ERROR ((LM_ERROR,
-                      "%p: Passing IIOP ORB and non-IIOP object\n",
-                      "_get_collocated_object"));
-#endif
-          // Something must be wrong!
-          return 0;
+          // @@ Fred&Ossama: how do we handle forwarding in this case?
+          //    What happens if we are forwarded back to this ORB, or if a
+          //    local stub is (or should) be forwarded to a remote one?
+
+          const TAO_MProfile& mprofile = sobj->get_base_profiles ();
+          if ((*i).int_id_->is_collocated (mprofile) == 0)
+            continue;
+
+          TAO_Object_Adapter *oa = (*i).int_id_->object_adapter ();
+
+          for (TAO_PHandle j = 0;
+               j != mprofile.profile_count ();
+               ++j)
+            {
+              const TAO_Profile* profile = mprofile.get_profile (j);
+              TAO_ObjectKey_var objkey = profile->_key (ACE_TRY_ENV);
+              ACE_CHECK_RETURN (0);
+
+              ACE_TRY
+                {
+                  PortableServer::Servant servant =
+                    oa->find_servant (objkey.in (), ACE_TRY_ENV);
+                  ACE_TRY_CHECK;
+
+                  return servant;
+                }
+              ACE_CATCHANY
+                {
+                  // Ignore the exception and continue with the
+                  // next one.
+                }
+              ACE_ENDTRY;
+            }
         }
-#if 0
-      ACE_DEBUG ((LM_DEBUG,
-                  "CORBA_ORB: checking collocation for <%s>\n",
-                  pfile->addr_to_string ()));
-#endif
+    }
+  else
+    {
+      // @@ Fred&Ossama: how do we handle forwarding in this case?
+      //    What happens if we are forwarded back to this ORB, or if a
+      //    local stub is (or should) be forwarded to a remote one?
 
-      // @@EXC@@ We should receive the <env> from the command line.
-      // @@ Fred: why do we need an environment for the
-      // Profile::_key() method?
+      const TAO_MProfile& mprofile = sobj->get_base_profiles ();
+      if (!this->orb_core_->is_collocated (mprofile))
+        return 0;
 
-      CORBA::Environment env;
-      TAO_ObjectKey_var objkey = pfile->_key (env);
+      // @@ Ossama: there is repeated code here, could you please
+      // move it to a routine....
 
-      if (env.exception ())
+      TAO_Object_Adapter *oa = this->orb_core_->object_adapter ();
+
+      for (TAO_PHandle j = 0;
+           j != mprofile.profile_count ();
+           ++j)
         {
-#if 0
-          ACE_DEBUG ((LM_DEBUG,
-                      "CORBA_ORB: cannot find key for <%s>\n",
-                      pfile->addr_to_string ()));
-#endif
-          return 0;
-        }
+          const TAO_Profile* profile = mprofile.get_profile (j);
+          TAO_ObjectKey_var objkey = profile->_key (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
 
+          ACE_TRY_EX(LOCAL_ORB)
+            {
+              PortableServer::Servant servant =
+                oa->find_servant (objkey.in (), ACE_TRY_ENV);
+              ACE_TRY_CHECK_EX(LOCAL_ORB);
+
+              return servant;
+            }
+          ACE_CATCHANY
+            {
+              // Ignore the exception and continue with the
+              // next one.
+            }
+          ACE_ENDTRY;
+        }
+    }
+
+#if 0
       // Check if the object requested is a collocated object.
       // @@ FRED - can we make this more generic!!
       // @@ Fred: this is a question that the Acceptor registry must
@@ -1660,6 +1773,7 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
 #if 0
   ACE_DEBUG ((LM_DEBUG,
               "CORBA_ORB: collocation failed for \n"));
+#endif
 #endif
 
   return 0;
@@ -1726,7 +1840,7 @@ CORBA::instance (void)
       if (CORBA::instance_ == 0)
         {
           int argc = 0;
-          char *const *argv = 0;
+          char **argv = 0;
 
           // Note that CORBA::ORB_init() will also acquire the static
           // lock, but that's ok since it's a recursive lock.

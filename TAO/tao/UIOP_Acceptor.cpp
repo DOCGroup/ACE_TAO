@@ -44,6 +44,23 @@ TAO_UIOP_Acceptor::create_profile (TAO_ObjectKey &)
   return 0;
 }
 
+int
+TAO_UIOP_Acceptor::is_collocated (const TAO_Profile* pfile)
+{
+  const TAO_UIOP_Profile *profile =
+    ACE_dynamic_cast(const TAO_UIOP_Profile*, pfile);
+
+  // @@ We should probably cache this value, but then again some
+  //    acceptors have multiple addresses.
+  // @@ Fred: any ideas on how to optimize that?
+  ACE_UNIX_Addr address;
+  if (this->base_acceptor_.acceptor ().get_local_addr (address) == -1)
+    return 0;
+
+  // @@ Osssama: can you verify that this operator does the right thing?
+  return profile->object_addr () == address;
+}
+
 ACE_Event_Handler *
 TAO_UIOP_Acceptor::acceptor (void)
 {
@@ -79,7 +96,7 @@ TAO_UIOP_Acceptor::open (TAO_ORB_Core *orb_core,
         // orb_core->orb_params ()->addr (new_address);
         // The above call is broken since orb_params still wants a
         // an ACE_INET_Addr.  We need to give it an ACE_UNIX_Addr.
-        
+
         // uiop_acceptor->acceptor ().enable (ACE_CLOEXEC);
         // this is done in the connection handlers open method.
 
