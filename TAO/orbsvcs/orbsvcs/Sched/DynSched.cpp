@@ -1923,6 +1923,13 @@ ACE_DynScheduler::output_dispatch_priorities (const char *filename)
     status = output_dispatch_priorities (file);
     fclose (file);
   }
+  else
+  {
+    ACE_ERROR ((LM_ERROR,
+                "ACE_DynScheduler::output_dispatch_priorities: "
+                  "Could not open schedule file (\"%s\")",
+                filename));
+  }
 
   return status;
 }
@@ -1936,7 +1943,9 @@ ACE_DynScheduler::output_dispatch_priorities (FILE *file)
   u_long i = 0;
   for (i = 0; i < dispatch_entry_count_; ++i)
   {
-    dispatch_count += frame_size_ / ordered_dispatch_entries_[i]->task_entry ().effective_period ();
+    dispatch_count +=
+     frame_size_
+     / ordered_dispatch_entries_[i]->task_entry ().effective_period ();
   }
 
   if (ACE_OS::fprintf (
@@ -1970,19 +1979,26 @@ ACE_DynScheduler::output_dispatch_priorities (FILE *file)
       int(minimum_critical_priority ())) < 0)
 
   {
-    return UNABLE_TO_WRITE_SCHEDULE_FILE;
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "ACE_DynScheduler::output_dispatch_priorities: "
+                       "Could not write to schedule file\n"),
+                      UNABLE_TO_WRITE_SCHEDULE_FILE);
   }
 
   for (i = 0; i < dispatch_entry_count_; ++i)
   {
     if (ACE_OS::fprintf (file, "%-11s  %8lu  %8u  %11u  %11u\n",
-              ordered_dispatch_entries_[i]->task_entry ().rt_info ()->entry_point.in (),
-              ordered_dispatch_entries_[i]->dispatch_id (),
-              ordered_dispatch_entries_[i]->priority (),
-              ordered_dispatch_entries_[i]->dynamic_subpriority (),
-              ordered_dispatch_entries_[i]->static_subpriority ()) < 0)
+        ordered_dispatch_entries_[i]->task_entry ().rt_info ()->
+          entry_point.in (),
+        ordered_dispatch_entries_[i]->dispatch_id (),
+        ordered_dispatch_entries_[i]->priority (),
+        ordered_dispatch_entries_[i]->dynamic_subpriority (),
+        ordered_dispatch_entries_[i]->static_subpriority ()) < 0)
     {
-      return UNABLE_TO_WRITE_SCHEDULE_FILE;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ACE_DynScheduler::output_dispatch_priorities: "
+                         "Could not write to schedule file\n"),
+                        UNABLE_TO_WRITE_SCHEDULE_FILE);
     }
   }
 
@@ -2002,6 +2018,13 @@ ACE_DynScheduler::output_dispatch_timeline (const char *filename)
     status = output_dispatch_timeline (file);
     fclose (file);
   }
+  else
+  {
+    ACE_ERROR ((LM_ERROR,
+                "ACE_DynScheduler::output_dispatch_timeline: "
+                "Could not open schedule file (\"%s\")",
+                filename));
+  }
 
   return status;
 }
@@ -2015,7 +2038,10 @@ ACE_DynScheduler::output_dispatch_timeline (FILE *file)
             "operation             ID   (nsec)    (nsec)    (nsec)      (nsec)  time (nsec)      (nsec)        (nsec)\n"
             "---------    -----------  -------  --------     -----      ------  -----------      -------       ------\n") < 0)
   {
-    return UNABLE_TO_WRITE_SCHEDULE_FILE;
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "ACE_DynScheduler::output_dispatch_timeline: "
+                       "Could not write to schedule file"),
+                      UNABLE_TO_WRITE_SCHEDULE_FILE);
   }
 
   // iterate through timeline, picking out entries whose prev_ pointer
@@ -2027,7 +2053,10 @@ ACE_DynScheduler::output_dispatch_timeline (FILE *file)
     TimeLine_Entry_Link *link;
     if ((iter.next (link) == 0) || (! link))
     {
-      return ST_BAD_INTERNAL_POINTER;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ACE_DynScheduler::output_dispatch_timeline: "
+                         "Bad internal pointer\n"),
+                        ST_BAD_INTERNAL_POINTER);
     }
 
     // for each timeline entry that starts a dispatch
@@ -2064,7 +2093,10 @@ ACE_DynScheduler::output_dispatch_timeline (FILE *file)
                               last_entry->stop ())) < 0)
 
         {
-          return UNABLE_TO_WRITE_SCHEDULE_FILE;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "ACE_DynScheduler::output_dispatch_timeline: "
+                             "Unable to write to schedule file\n"),
+                            UNABLE_TO_WRITE_SCHEDULE_FILE);
         }
       }
       else
@@ -2086,7 +2118,10 @@ ACE_DynScheduler::output_dispatch_timeline (FILE *file)
                               last_entry->stop ())) < 0)
 
         {
-          return UNABLE_TO_WRITE_SCHEDULE_FILE;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "ACE_DynScheduler::output_dispatch_timeline: "
+                             "Unable to write to schedule file\n"),
+                            UNABLE_TO_WRITE_SCHEDULE_FILE);
         }
       }
     }
@@ -2108,6 +2143,13 @@ ACE_DynScheduler::output_preemption_timeline (const char *filename)
     status = output_preemption_timeline (file);
     fclose (file);
   }
+  else
+  {
+    ACE_ERROR ((LM_ERROR,
+                "ACE_DynScheduler::output_preemption_timeline: "
+                "Cannot open timeline file (\"%s\")\n",
+                filename));
+  }
 
   return status;
 }
@@ -2121,7 +2163,10 @@ ACE_DynScheduler::output_preemption_timeline (FILE *file)
         "operation           ID    (nsec)    (nsec)\n"
         "---------  -----------    ------    ------\n") < 0)
   {
-    return UNABLE_TO_WRITE_SCHEDULE_FILE;
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "ACE_DynScheduler::output_preemption_timeline: "
+                       "Cannot write to timeline file\n"),
+                      UNABLE_TO_WRITE_SCHEDULE_FILE);
   }
 
   ACE_Ordered_MultiSet_Iterator <TimeLine_Entry_Link> iter (*timeline_);
@@ -2131,7 +2176,10 @@ ACE_DynScheduler::output_preemption_timeline (FILE *file)
   {
     if ((iter.next (link) == 0) || (! link))
     {
-      return ST_BAD_INTERNAL_POINTER;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ACE_DynScheduler::output_preemption_timeline: "
+                         "Bad internal pointer\n"),
+                         ST_BAD_INTERNAL_POINTER);
     }
 
     if (link->entry ().dispatch_entry ().original_dispatch ())
@@ -2145,7 +2193,10 @@ ACE_DynScheduler::output_preemption_timeline (FILE *file)
             ACE_U64_TO_U32 (link->entry ().start ()),
             ACE_U64_TO_U32 (link->entry ().stop ())) < 0)
       {
-        return UNABLE_TO_WRITE_SCHEDULE_FILE;
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "ACE_DynScheduler::output_preemption_timeline: "
+                           "Cannot write to timeline file\n"),
+                          UNABLE_TO_WRITE_SCHEDULE_FILE);
       }
     }
     else
@@ -2158,7 +2209,10 @@ ACE_DynScheduler::output_preemption_timeline (FILE *file)
             ACE_U64_TO_U32 (link->entry ().start ()),
             ACE_U64_TO_U32 (link->entry ().stop ())) < 0)
       {
-        return UNABLE_TO_WRITE_SCHEDULE_FILE;
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "ACE_DynScheduler::output_preemption_timeline: "
+                           "Cannot write to timeline file\n"),
+                          UNABLE_TO_WRITE_SCHEDULE_FILE);
       }
     }
   }
@@ -2298,6 +2352,9 @@ ACE_DynScheduler::output_timeline (const char *filename, const char *heading)
   if ((! up_to_date_) || (! timeline_))
   {
     status = NOT_SCHEDULED;
+    ACE_ERROR ((LM_ERROR,
+                "ACE_DynScheduler::output_timeline: "
+                "Schedule not generated"));
   }
 
   if (status == SUCCEEDED)
@@ -2307,6 +2364,9 @@ ACE_DynScheduler::output_timeline (const char *filename, const char *heading)
     if (! file)
     {
       status = UNABLE_TO_OPEN_SCHEDULE_FILE;
+      ACE_ERROR ((LM_ERROR,
+                  "ACE_DynScheduler::output_timeline: "
+                  "Could not open schedule file"));
     }
   }
 
@@ -2315,6 +2375,9 @@ ACE_DynScheduler::output_timeline (const char *filename, const char *heading)
     if (ACE_OS::fprintf (file, "%s\n\n", heading) < 0)
     {
       status = UNABLE_TO_WRITE_SCHEDULE_FILE;
+      ACE_ERROR ((LM_ERROR,
+                  "ACE_DynScheduler::output_timeline: "
+                  "Could not write to schedule file"));
     }
   }
 
