@@ -1,3 +1,17 @@
+Wed Sep 19 12:00:04 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Added BCB5 to some places as supported/used compiler
+
+        * ace/Future.h:
+        * ace/Test_and_Set.h:
+          Removed the ACE_EXPORT from the templates ACE_Future_Holder and
+          ACE_Test_and_Set
+
+        * ace/Service_Config.{h,cpp}:
+          Changed the type of the members be_a_daemon_ and no_static_svcs_
+          from char to int
+
 Tue Sep 18 13:57:36 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * */Makefile:

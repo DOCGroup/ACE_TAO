@@ -18,14 +18,14 @@ CFLAGS = \
         $(TAO_CFLAGS) \
         $(TAO_PORTABLESERVER_CFLAGS) \
         $(TAO_NAMING_CFLAGS) \
-        $(TAO_SVCUTILS_CFLAGS)
+        $(TAO_SVC_UTILS_CFLAGS)
 
 LIBFILES = \
 	$(ACE_LIB) \
 	$(TAO_LIB) \
         $(TAO_PORTABLESERVER_LIB) \
         $(TAO_NAMING_LIB) \
-        $(TAO_SVCUTILS_LIB)
+        $(TAO_SVC_UTILS_LIB)
 
 IDLFILES = \
         $(IDLDIR)\corbaname.idl

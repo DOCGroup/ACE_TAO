@@ -483,10 +483,10 @@ private:
 
   // = Set by command-line options.
   /// Shall we become a daemon process?
-  static char be_a_daemon_;
+  static int be_a_daemon_;
 
   /// Should we avoid loading the static services?
-  static char no_static_svcs_;
+  static int no_static_svcs_;
 
   /// Number of the signal used to trigger reconfiguration.
   static int signum_;

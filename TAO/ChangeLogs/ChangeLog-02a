@@ -1,3 +1,18 @@
+Wed Sep 19 12:06:04 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * examples/Simple/time-date/time-date.bor:
+        * orbsvcs/tests/Concurrency/CC_client.bor:
+        * orbsvcs/tests/Time/client.bor:
+        * orbsvcs/tests/ior_corbaname/client.bor:
+        * orbsvcs/tests/ior_corbaname/server.bor:
+          Corrected the SVCUTILS to SVC_UTILS
+
+        * orbsvcs/tests/IOR_MCast
+          Added BCB makefiles
+
+        * orbsvcs/tests/Makefile.bor
+          Added IOR_MCast and missing LoadBalancing
+
 Wed Sep 19 02:58:46 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile.av (.obj/Transport.o): Fixed minor
@@ -17,7 +32,7 @@ Tue Sep 18 15:55:18 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/TAO_Tests.dsw: Added Cache_Growth_Test and
 	  Exposed_Policies.
-	
+
 	* tests/Cache_Growth_Test/Hello.cpp (get_string): transport_cache
 	  is now in the lane resources.
 

@@ -34,7 +34,7 @@
  *     value 0 or 1.
  */
 template <class ACE_LOCK, class TYPE>
-class ACE_Export ACE_Test_and_Set : public ACE_Event_Handler
+class ACE_Test_and_Set : public ACE_Event_Handler
 {
 public:
   ACE_Test_and_Set (TYPE initial_value = 0);
