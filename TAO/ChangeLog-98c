@@ -1,5 +1,13 @@
 Fri Jul 17 17:42:27 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.h: Started adding the new
+ 	  TAO_Naming_Client class, which will simplify the initialization
+ 	  and access to a NamingContext.
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Changed the
+ 	  capitalization of GetNamingContext() to get_naming_context(),
+ 	  which is consistent w/TAO programming style.
+
 	* tao/skip.cpp: Replaced uses of old-style C casts with a
  	  static_cast.
 
