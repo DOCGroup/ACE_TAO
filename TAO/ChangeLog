@@ -1,3 +1,21 @@
+Thu Oct 31 22:33:04 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* TAOACE.dsw: Added ProtableServer library as a dependency for
+	  Messaging library. 
+
+	* tests/MProfile_Connection_Timeout/client.bor:
+	* tests/MProfile_Connection_Timeout/server.bor:
+	* tests/MProfile_Connection_Timeout/Makefile.bor: Added the
+	  borland Makefiles.
+
+	* tests/MProfile_Connection_Timeout/client.dsp:
+	* tests/MProfile_Connection_Timeout/server.dsp:
+	* tests/MProfile_Connection_Timeout/MProfile_Connection_Timeout.dsw:
+          Workspace and project files for Win32 builds
+
+	* tests/MProfile_Connection_Timeout/MProfile_Connection_Timeout.mpc:
+	  MakefileProject creator.
+	  
 Thu Oct 31 17:56:55 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/MProfile_Connection_Timeout/client.cpp (run_test):
