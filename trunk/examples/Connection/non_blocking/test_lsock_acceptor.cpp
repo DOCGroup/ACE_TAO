@@ -28,6 +28,6 @@ main (int argc, char *argv[])
 template class ACE_Concurrency_Strategy<SVC_HANDLER>;
 template class ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_LSOCK_ACCEPTOR>;
 template class ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>;
-template class IPC_Server<SVC_HANDLER, ACE_SOCK_LACCEPTOR>;
+template class IPC_Server<SVC_HANDLER, ACE_LSOCK_ACCEPTOR>;
 template class Svc_Handler<ACE_LSOCK_STREAM>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
