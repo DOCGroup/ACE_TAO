@@ -14,9 +14,10 @@ TAO_Object_Field_T<T>::TAO_Object_Field_T (T* object)
 {
 }
 
-template<class T> ACE_INLINE 
+template<class T> ACE_INLINE
 TAO_Object_Field_T<T>::TAO_Object_Field_T (const TAO_Object_Field_T<T>& rhs)
-  :  ptr_ (T::_duplicate (rhs.ptr_))
+  :  TAO_Object_Field (rhs), // keep HP/aCC happy
+     ptr_ (T::_duplicate (rhs.ptr_))
 {
 }
 
@@ -97,4 +98,3 @@ TAO_Object_Field_T<T>::_retn (void)
   this->ptr_ = 0;
   return val;
 }
-
