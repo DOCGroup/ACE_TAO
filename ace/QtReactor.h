@@ -36,7 +36,7 @@
  *
  * @brief An object-oriented event demultiplexor and event handler
  * dispatcher that uses the Qt Library. This class declaration
- * also uses the extnsion facilities  provided by the Qt. So,
+ * also uses the extension facilities  provided by the Qt. So,
  * readers  of the class declaration should not be upset with
  * the appearence of the Keywords like Q_OBJECT, private slots
  * etc. They are specific to Qt which uses these as a call back
