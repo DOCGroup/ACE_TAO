@@ -1,3 +1,12 @@
+Tue Feb 22 18:13:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_scope.cpp:
+	  In comparing names for name clashes, we now use the local name 
+	  for local declarations, and the top component of the scoped
+	  name for referenced types, as specified in CORBA 2.3.1. Thanks
+	  to Klaus Hofmann <Klaus.Hofmann@astrum.de> for sending in the
+	  IDL file that pointed this out.
+
 Tue Feb 22 13:57:32 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* TAO/tao/Invocation.cpp (start and invoke): Removed extra updates
