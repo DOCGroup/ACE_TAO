@@ -4962,12 +4962,13 @@ inline double ace_difftime(time_t t1, time_t t0)
  *       probably need to move some of it off into some sort of emulation
  *       function.  
  */
-#if !defined (ACE_LACKS_CUSERID) && !defined(ACE_HAS_ALT_CUSERID) && !defined(ACE_WIN32)
+#if !defined (ACE_LACKS_CUSERID) && !defined(ACE_HAS_ALT_CUSERID) \
+    && !defined(ACE_WIN32) && !defined (VXWORKS)
 inline char *ace_cuserid(char *user)
 {
   return cuserid(user);
 }
-#endif /* !ACE_LACKS_CUSERID && !ACE_HAS_ALT_CUSERID */
+#endif /* !ACE_LACKS_CUSERID && !ACE_HAS_ALT_CUSERID && ... */
 
 /**
  * @class ACE_OS

@@ -1,3 +1,10 @@
+Mon Jan  8 10:44:57 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS.h:
+
+          Added some more protection (!VXWORKS) around the cuserid
+          inline statement since VXWORKS doesn't have cuserid.
+
 Mon Jan 08 10:04:55 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Thread_Manager.cpp (terminate): Reordered some statements so
