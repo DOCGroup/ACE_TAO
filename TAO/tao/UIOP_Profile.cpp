@@ -345,15 +345,6 @@ TAO_UIOP_Profile::decode (TAO_InputCDR& cdr)
 {
   CORBA::ULong encap_len = cdr.length ();
 
-  if (TAO_debug_level > 0)
-    {
-      char *buf = (char *) cdr.rd_ptr (); // ptr to first buffer
-      ACE_HEX_DUMP ((LM_DEBUG,
-                     (const char*)buf,
-                     encap_len,
-                     "\n"));
-    }
-
   // Read and verify major, minor versions, ignoring UIOP
   // profiles whose versions we don't understand.
   // FIXME:  Version question again,  what do we do about them for this

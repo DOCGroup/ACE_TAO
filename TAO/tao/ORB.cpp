@@ -51,33 +51,10 @@
 # include "tao/ORB.i"
 #endif /* ! __ACE_INLINE__ */
 
-#include "tao/Timeprobe.h"
-
 ACE_RCSID(tao, ORB, "$Id$")
 
 static const char ior_prefix [] = "IOR:";
 static const char file_prefix[] = "file://";
-
-#if defined (ACE_ENABLE_TIMEPROBES)
-
-static const char *TAO_ORB_Timeprobe_Description[] =
-{
-  "CORBA_ORB::run - start",
-  "CORBA_ORB::run - end",
-};
-
-enum
-{
-  // Timeprobe description table start key
-  TAO_CORBA_ORB_RUN_START = 0,
-  TAO_CORBA_ORB_RUN_END
-};
-
-// Setup Timeprobes
-ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ORB_Timeprobe_Description,
-                                  TAO_CORBA_ORB_RUN_START);
-
-#endif /* ACE_ENABLE_TIMEPROBES */
 
 // = Static initialization.
 
@@ -128,11 +105,6 @@ CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
 # endif /* TAO_HAS_VALUETYPE */
     use_omg_ior_format_ (1)
 {
-  leader_follower_info_.leaders_ = 0;
-  leader_follower_info_.leader_thread_ID_ =
-    ACE_OS::NULL_thread;
-  ACE_NEW (this->cond_become_leader_,
-           ACE_SYNCH_CONDITION (leader_follower_info_.leader_follower_lock_));
 }
 
 CORBA_ORB::~CORBA_ORB (void)
@@ -168,8 +140,6 @@ CORBA_ORB::~CORBA_ORB (void)
   // delete valuetype_factory_map_;
   // not really, its a singleton
 # endif /* TAO_HAS_VALUETYPE */
-
-  delete this->cond_become_leader_;
 }
 
 // Set up listening endpoints.
@@ -375,91 +345,7 @@ int
 CORBA_ORB::run (ACE_Time_Value *tv,
                 int break_on_timeouts)
 {
-  ACE_FUNCTION_TIMEPROBE (TAO_CORBA_ORB_RUN_START);
-
-  {
-    ACE_Guard<ACE_SYNCH_MUTEX> g (this->orb_core_->leader_follower_lock ());
-
-    while (this->orb_core_->leader_available ())
-      {
-        // @@ Why do this on every iteration, shouldn't this be done
-        // just once?
-        if (this->orb_core_->add_follower (this->cond_become_leader_) == -1)
-          ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) ORB::run: Failed to add a follower thread\n"));
-        this->cond_become_leader_->wait ();
-      }
-    this->orb_core_->set_leader_thread ();
-  }
-
-  ACE_Reactor *r = this->orb_core_->reactor ();
-
-  // Set the owning thread of the Reactor to the one which we're
-  // currently in.  This is necessary b/c it's possible that the
-  // application is calling us from a thread other than that in which
-  // the Reactor's CTOR (which sets the owner) was called.
-  r->owner (ACE_Thread::self ());
-
-  // This method should only be called by servers, so now we set up
-  // for listening!
-  if (this->open () == -1)
-    return -1;
-
-#if 0
-  const int max_iterations = 100;
-  int counter = 0;
-#endif /* 0 */
-
-  int result = 1;
-  // 1 to detect that nothing went wrong
-
-  // Loop "forever" handling client requests.
-  while (this->should_shutdown () == 0)
-    {
-#if 0
-      counter++;
-      if (counter == max_iterations)
-        {
-          ACE_TIMEPROBE_PRINT;
-          ACE_TIMEPROBE_RESET;
-          counter = 0;
-        }
-
-      ACE_FUNCTION_TIMEPROBE (TAO_CORBA_ORB_RUN_START);
-#endif /* 0 */
-
-      switch (r->handle_events (tv))
-        {
-        case 0: // Timed out, so we return to caller.
-          if (break_on_timeouts)
-            result = 0;
-          break;
-          /* NOTREACHED */
-        case -1: // Something else has gone wrong, so return to caller.
-          result = -1;
-          break;
-          /* NOTREACHED */
-        default:
-          // Some handlers were dispatched, so keep on processing
-          // requests until we're told to shutdown .
-          break;
-          /* NOTREACHED */
-        }
-      if (result == 0 || result == -1)
-        break;
-    }
-
-  if (result != -1)
-    {
-      if (this->orb_core_->unset_leader_wake_up_follower () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) ORB::run: Failed to add a follower thread\n"),
-                          -1);
-      return 0;
-      // nothing went wrong
-    }
-  else
-    return result;
+  return this->orb_core_->run (tv, break_on_timeouts);
 }
 
 int
@@ -992,14 +878,6 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
     }
 
   return new_obj;
-}
-
-// Get access to the leader_follower_info.
-
-TAO_Leader_Follower_Info &
-CORBA_ORB::leader_follower_info (void)
-{
-  return leader_follower_info_;
 }
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)

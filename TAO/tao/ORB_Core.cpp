@@ -73,7 +73,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char* orbid)
     to_iso8859_ (0),
     from_unicode_ (0),
     to_unicode_ (0),
-    use_tss_resources_ (0)
+    use_tss_resources_ (0),
+    leader_follower_ (this)
 {
   ACE_NEW (this->poa_current_,
            TAO_POA_Current);
@@ -1276,119 +1277,100 @@ TAO_ORB_Core::is_collocated (const TAO_MProfile& mprofile)
   return this->acceptor_registry_->is_collocated (mprofile);
 }
 
-int
-TAO_ORB_Core::leader_available (void)
-  // returns the value of the flag indicating if a leader
-  // is available in the leader-follower model
-{
-  return this->orb ()->leader_follower_info ().leaders_;
-}
+// ****************************************************************
 
 int
-TAO_ORB_Core::I_am_the_leader_thread (void)
-  // returns 1 if we are the leader thread,
-  // else 0
+TAO_ORB_Core::run (ACE_Time_Value *tv, int break_on_timeouts)
 {
-  TAO_Leader_Follower_Info &lf_info = this->orb ()->leader_follower_info ();
-  if (lf_info.leaders_)
-    return ACE_OS::thr_equal (lf_info.leader_thread_ID_,
-                              ACE_Thread::self ());
-  return 0;
-}
+  if (TAO_debug_level >= 3)
+    ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - start of run\n"));
 
-void
-TAO_ORB_Core::set_leader_thread (void)
-  // sets the thread ID of the leader thread in the leader-follower
-  // model
-{
-  TAO_Leader_Follower_Info &lf_info = this->orb ()->leader_follower_info ();
-  ACE_ASSERT ((lf_info.leaders_ >= 1
-               && ACE_OS::thr_equal (lf_info.leader_thread_ID_,
-                                     ACE_Thread::self ()))
-              || lf_info.leaders_ == 0);
-  lf_info.leaders_++;
-  lf_info.leader_thread_ID_ = ACE_Thread::self ();
-}
+  TAO_Leader_Follower &leader_follower = this->leader_follower ();
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
+                      leader_follower.lock (), -1);
 
-int
-TAO_ORB_Core::unset_leader_wake_up_follower (void)
-  // sets the leader_available flag to false and tries to wake up a follower
-{
-  //  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
-  //                    this->leader_follower_lock (), -1);
+    leader_follower.set_server_thread ();
+  }
 
-  this->unset_leader_thread ();
+  ACE_Reactor *r = this->reactor ();
 
-  if (this->follower_available () && !this->leader_available ())
-    // do it only if a follower is available and no leader is available
-    {
-      ACE_SYNCH_CONDITION* condition_ptr = this->get_next_follower ();
-      if (condition_ptr == 0 || condition_ptr->signal () == -1)
-        return -1;
-    }
-  return 0;
-}
+  // @@ Do we really need to do this?
+  // Set the owning thread of the Reactor to the one which we're
+  // currently in.  This is necessary b/c it's possible that the
+  // application is calling us from a thread other than that in which
+  // the Reactor's CTOR (which sets the owner) was called.
+  r->owner (ACE_Thread::self ());
 
-
-void
-TAO_ORB_Core::unset_leader_thread (void)
-  // sets the flag in the leader-follower model to false
-{
-  TAO_Leader_Follower_Info &lf_info = this->orb ()->leader_follower_info ();
-  ACE_ASSERT ((lf_info.leaders_ > 1
-               && ACE_OS::thr_equal (lf_info.leader_thread_ID_,
-                                     ACE_Thread::self ()))
-              || lf_info.leaders_ == 1);
-  lf_info.leaders_--;
-}
-
-
-ACE_SYNCH_MUTEX &
-TAO_ORB_Core::leader_follower_lock (void)
-  // returns the leader-follower lock
-{
-  return this->orb ()->leader_follower_info ().leader_follower_lock_;
-}
-
-int
-TAO_ORB_Core::add_follower (ACE_SYNCH_CONDITION *follower_ptr)
-  // adds the a follower to the set of followers in the leader-
-  // follower model
-  // returns 0 on success, -1 on failure
-{
-  if (this->orb ()->leader_follower_info ().follower_set_.insert (follower_ptr) != 0)
+  // This method should only be called by servers, so now we set up
+  // for listening!
+  if (this->orb ()->open () == -1)
     return -1;
-  return 0;
+
+  int result = 1;
+  // 1 to detect that nothing went wrong
+
+  // Loop "forever" handling client requests.
+  while (this->orb ()->should_shutdown () == 0)
+    {
+      if (TAO_debug_level >= 3)
+        ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - blocking on handle events\n"));
+      switch (r->handle_events (tv))
+        {
+        case 0: // Timed out, so we return to caller.
+          if (break_on_timeouts)
+            result = 0;
+          break;
+          /* NOTREACHED */
+        case -1: // Something else has gone wrong, so return to caller.
+          result = -1;
+          break;
+          /* NOTREACHED */
+        default:
+          // Some handlers were dispatched, so keep on processing
+          // requests until we're told to shutdown .
+          break;
+          /* NOTREACHED */
+        }
+      if (result == 0 || result == -1)
+        break;
+    }
+
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
+                      leader_follower.lock (), -1);
+
+    leader_follower.reset_server_thread ();
+
+    if (leader_follower.elect_new_leader () == -1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "TAO (%P|%t) Failed to wake up "
+                         "a follower thread\n"),
+                        -1);
+  }
+
+  if (TAO_debug_level >= 3)
+    ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - end of run %d\n", result));
+
+  return result;
 }
 
-int
-TAO_ORB_Core::follower_available (void)
-// checks for the availablity of a follower
-  // returns 1 on available, 0 else
-{
-  return !this->orb ()->leader_follower_info ().follower_set_.is_empty ();
-}
-
-int
-TAO_ORB_Core::remove_follower (ACE_SYNCH_CONDITION *follower_ptr)
-  // removes a follower from the leader-follower set
-  // returns 0 on success, -1 on failure
-{
-  return this->orb ()->leader_follower_info ().follower_set_.remove (follower_ptr);
-}
+// ****************************************************************
 
 ACE_SYNCH_CONDITION*
-TAO_ORB_Core::get_next_follower (void)
-  // returns randomly a follower from the leader-follower set
-  // returns follower on success, else 0
+TAO_Leader_Follower::get_next_follower (void)
 {
   ACE_Unbounded_Set_Iterator<ACE_SYNCH_CONDITION *> iterator (
-    this->orb ()->leader_follower_info ().follower_set_);
+    this->follower_set_);
+
   if (iterator.first () == 0)
     // means set is empty
     return 0;
+
   return *iterator;
 }
+
+// ****************************************************************
 
 ACE_Allocator*
 TAO_ORB_Core::input_cdr_dblock_allocator (void)
@@ -1629,7 +1611,8 @@ TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
      output_cdr_msgblock_allocator_ (0),
      input_cdr_dblock_allocator_ (0),
      input_cdr_buffer_allocator_ (0),
-     connection_cache_ (0)
+     connection_cache_ (0),
+     is_server_thread_ (0)
 {
 }
 
@@ -1767,6 +1750,9 @@ TAO_ORB_Core_instance (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class ACE_Reverse_Lock<ACE_SYNCH_MUTEX>;
+template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_MUTEX> >;
+
 template class ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >;
 
 template class ACE_Env_Value<int>;
@@ -1788,6 +1774,9 @@ template class ACE_Map_Iterator<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>;
 template class ACE_Map_Reverse_Iterator<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Reverse_Lock<ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_MUTEX> >
 
 #pragma instantiate ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >
 
