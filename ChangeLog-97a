@@ -1,5 +1,8 @@
 Sun Jun 15 03:44:21 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
 
+	* performance-tests/Synch-Benchmarks/Synch_Tests.{mdp.mak}:
+	  Added project workspace and makefile for NT to this directory.
+	
 	* performance-tests/Synch-Benchmarks/svc.conf: 
 	* performance-tests/Synch-Benchmarks/{Options,Benchmark}.h:
 	* performance-tests/Synch-Benchmarks/*.cpp: Reworked these
