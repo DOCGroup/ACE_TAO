@@ -32,7 +32,6 @@
 #include "ace/pre.h"
 #include "portableserver_export.h"
 
-#include "ace/pre.h"
 #include "tao/ObjRefTemplate/ObjectReferenceTemplateC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
