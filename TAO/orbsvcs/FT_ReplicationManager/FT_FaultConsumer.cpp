@@ -58,6 +58,17 @@ int TAO::FT_FaultConsumer::init (
   FT::ReplicationManager_ptr replication_manager
   ACE_ENV_ARG_DECL)
 {
+
+#if (TAO_DEBUG_LEVEL_NEEDED == 1)
+  if (TAO_debug_level > 1)
+#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
+  {
+    ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT (
+        "Enter TAO::FT_FaultConsumer::init.\n")
+    ));
+  }
+
   ACE_ASSERT (!CORBA::is_nil (poa));
   ACE_ASSERT (!CORBA::is_nil (fault_notifier));
   ACE_ASSERT (!CORBA::is_nil (replication_manager));
@@ -95,6 +106,16 @@ int TAO::FT_FaultConsumer::init (
     this->consumer_ref_.in(), filter ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
+#if (TAO_DEBUG_LEVEL_NEEDED == 1)
+  if (TAO_debug_level > 1)
+#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
+  {
+    ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT (
+        "Leave TAO::FT_FaultConsumer::init.\n")
+    ));
+  }
+
   // Success.
   return 0;
 }
@@ -106,21 +127,54 @@ int TAO::FT_FaultConsumer::init (
 */
 int TAO::FT_FaultConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
+
+#if (TAO_DEBUG_LEVEL_NEEDED == 1)
+  if (TAO_debug_level > 1)
+#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
+  {
+    ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT ("Enter TAO::FT_FaultConsumer::fini.\n")
+    ));
+  }
+
   // Disconnect from the FaultNotifier.
   // Swallow any exception.
   ACE_TRY_NEW_ENV
   {
     if (!CORBA::is_nil (this->fault_notifier_.in()))
     {
+
+#if (TAO_DEBUG_LEVEL_NEEDED == 1)
+      if (TAO_debug_level > 1)
+#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
+      {
+        ACE_DEBUG ((LM_DEBUG,
+          ACE_TEXT (
+            "TAO::FT_FaultConsumer::fini: "
+            "Disconnecting consumer from FaultNotifier.\n")
+        ));
+      }
+
       this->fault_notifier_->disconnect_consumer (
         this->consumer_id_ ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-    }
 
-    // Deactivate ourself from the POA.
-    this->poa_->deactivate_object (
-      this->object_id_.in() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+#if (TAO_DEBUG_LEVEL_NEEDED == 1)
+      if (TAO_debug_level > 1)
+#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
+      {
+        ACE_DEBUG ((LM_DEBUG,
+          ACE_TEXT (
+            "TAO::FT_FaultConsumer::fini: "
+            "Deactivating from POA.\n")
+        ));
+      }
+
+      // Deactivate ourself from the POA.
+      this->poa_->deactivate_object (
+        this->object_id_.in() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
   }
   ACE_CATCHANY
   {
@@ -133,7 +187,27 @@ int TAO::FT_FaultConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
   ACE_ENDTRY;
   ACE_CHECK;
 
+#if (TAO_DEBUG_LEVEL_NEEDED == 1)
+  if (TAO_debug_level > 1)
+#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
+  {
+    ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT (
+        "TAO::FT_FaultConsumer::fini: "
+        "Setting our object reference to nil.\n")
+    ));
+  }
+
   this->consumer_ref_ = CosNotifyComm::StructuredPushConsumer::_nil ();
+
+#if (TAO_DEBUG_LEVEL_NEEDED == 1)
+  if (TAO_debug_level > 1)
+#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
+  {
+    ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT ("Leave TAO::FT_FaultConsumer::fini.\n")
+    ));
+  }
 
   // Success.
   return 0;
