@@ -453,44 +453,116 @@ main (int argc, ASYS_TCHAR *argv[])
   return 0;
 }
 
-#if 0
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Manager_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>;
-template class ACE_Hash_Map_Entry<TYPE, TYPE>;
-template class ACE_Equal_To<TYPE>;
-template class ACE_Map_Manager<TYPE, TYPE, MUTEX>;
-template class ACE_Map_Iterator_Base<TYPE, TYPE, MUTEX>;
-template class ACE_Map_Iterator<TYPE, TYPE, MUTEX>;
-template class ACE_Map_Reverse_Iterator<TYPE, TYPE, MUTEX>;
-template class ACE_Map_Entry<TYPE, TYPE>;
-template class ACE_Active_Map_Manager<TYPE>;
-template class ACE_Map_Manager<ACE_Active_Map_Manager_Key, TYPE, MUTEX>;
-template class ACE_Map_Iterator_Base<ACE_Active_Map_Manager_Key, TYPE, MUTEX>;
-template class ACE_Map_Iterator<ACE_Active_Map_Manager_Key, TYPE, MUTEX>;
-template class ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, TYPE, MUTEX>;
-template class ACE_Map_Entry<ACE_Active_Map_Manager_Key, TYPE>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Manager_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>
-#pragma instantiate ACE_Hash_Map_Entry<TYPE, TYPE>
-#pragma instantiate ACE_Equal_To<TYPE>
-#pragma instantiate ACE_Map_Manager<TYPE, TYPE, MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<TYPE, TYPE, MUTEX>
-#pragma instantiate ACE_Map_Iterator<TYPE, TYPE, MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<TYPE, TYPE, MUTEX>
-#pragma instantiate ACE_Map_Entry<TYPE, TYPE>
-#pragma instantiate ACE_Active_Map_Manager<TYPE>
-#pragma instantiate ACE_Map_Manager<ACE_Active_Map_Manager_Key, TYPE, MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_Active_Map_Manager_Key, TYPE, MUTEX>
-#pragma instantiate ACE_Map_Iterator<ACE_Active_Map_Manager_Key, TYPE, MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, TYPE, MUTEX>
-#pragma instantiate ACE_Map_Entry<ACE_Active_Map_Manager_Key, TYPE>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif
+// Common typedefs.
+typedef ACE_Pair<KEY, VALUE> expanded_value;
+typedef ACE_Reference_Pair<const KEY, VALUE> value_type;
+typedef ACE_Equal_To<KEY> COMPARE_KEYS;
+
+// Key related.
+template class ACE_Array<char>;
+template class ACE_Array_Base<char>;
+
+// Common 
+template class ACE_Reference_Pair<const KEY, VALUE>;
+
+// Map and iterator classes.
+template class ACE_Map<KEY, VALUE>;
+template class ACE_Iterator<value_type>;
+template class ACE_Reverse_Iterator<value_type>;
+
+// Iterator base classes.
+template class ACE_Iterator_Impl<value_type>;
+template class ACE_Reverse_Iterator_Impl<value_type>;
+
+// Active Map Manager related.
+template class ACE_Pair<KEY, VALUE>;
+template class ACE_Active_Map_Manager_Adapter<KEY, VALUE, Key_Adapter>;
+template class ACE_Active_Map_Manager_Iterator_Adapter<value_type, expanded_value>;
+template class ACE_Active_Map_Manager_Reverse_Iterator_Adapter<value_type, expanded_value>;
+template class ACE_Active_Map_Manager<expanded_value>;
+template class ACE_Map_Manager<ACE_Active_Map_Manager_Key, expanded_value, ACE_Null_Mutex>;
+template class ACE_Map_Iterator_Base<ACE_Active_Map_Manager_Key, expanded_value, ACE_Null_Mutex>;
+template class ACE_Map_Iterator<ACE_Active_Map_Manager_Key, expanded_value, ACE_Null_Mutex>;
+template class ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, expanded_value, ACE_Null_Mutex>;
+template class ACE_Map_Entry<ACE_Active_Map_Manager_Key, expanded_value>;                            
+
+// Hash Map Manager related.
+template class ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, Hash_Key, COMPARE_KEYS, Key_Generator>;
+template class ACE_Hash_Map_Manager_Ex_Iterator_Adapter<value_type, KEY, VALUE, Hash_Key, COMPARE_KEYS>;
+template class ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<value_type, KEY, VALUE, Hash_Key, COMPARE_KEYS>;
+template class ACE_Hash_Map_Manager_Ex<KEY, VALUE, Hash_Key, COMPARE_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<KEY, VALUE, Hash_Key, COMPARE_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<KEY, VALUE, Hash_Key, COMPARE_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<KEY, VALUE, Hash_Key, COMPARE_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<KEY, VALUE>;
+template class ACE_Equal_To<KEY>;
+
+// Map Manager related.
+template class ACE_Map_Manager_Iterator_Adapter<value_type, KEY, VALUE>;
+template class ACE_Map_Manager_Reverse_Iterator_Adapter<value_type, KEY, VALUE>;
+template class ACE_Map_Manager_Adapter<KEY, VALUE, Key_Generator>;
+template class ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>;
+template class ACE_Map_Iterator_Base<KEY, VALUE, ACE_Null_Mutex>;
+template class ACE_Map_Iterator<KEY, VALUE, ACE_Null_Mutex>;
+template class ACE_Map_Reverse_Iterator<KEY, VALUE, ACE_Null_Mutex>;
+template class ACE_Map_Entry<KEY, VALUE>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+// Common typedefs.
+typedef ACE_Pair<KEY, VALUE> expanded_value;
+typedef ACE_Reference_Pair<const KEY, VALUE> value_type;
+typedef ACE_Equal_To<KEY> COMPARE_KEYS;
+
+// Key related.
+#pragma instantiate ACE_Array<char>
+#pragma instantiate ACE_Array_Base<char>
+
+// Common 
+#pragma instantiate ACE_Reference_Pair<const KEY, VALUE>
+
+// Map and iterator classes.
+#pragma instantiate ACE_Map<KEY, VALUE>
+#pragma instantiate ACE_Iterator<value_type>
+#pragma instantiate ACE_Reverse_Iterator<value_type>
+
+// Iterator base classes.
+#pragma instantiate ACE_Iterator_Impl<value_type>
+#pragma instantiate ACE_Reverse_Iterator_Impl<value_type>
+
+// Active Map Manager related.
+#pragma instantiate ACE_Pair<KEY, VALUE>
+#pragma instantiate ACE_Active_Map_Manager_Adapter<KEY, VALUE, Key_Adapter>
+#pragma instantiate ACE_Active_Map_Manager_Iterator_Adapter<value_type, expanded_value>
+#pragma instantiate ACE_Active_Map_Manager_Reverse_Iterator_Adapter<value_type, expanded_value>
+#pragma instantiate ACE_Active_Map_Manager<expanded_value>
+#pragma instantiate ACE_Map_Manager<ACE_Active_Map_Manager_Key, expanded_value, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Iterator_Base<ACE_Active_Map_Manager_Key, expanded_value, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Iterator<ACE_Active_Map_Manager_Key, expanded_value, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, expanded_value, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Entry<ACE_Active_Map_Manager_Key, expanded_value>                            
+
+// Hash Map Manager related.
+#pragma instantiate ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, Hash_Key, COMPARE_KEYS, Key_Generator>
+#pragma instantiate ACE_Hash_Map_Manager_Ex_Iterator_Adapter<value_type, KEY, VALUE, Hash_Key, COMPARE_KEYS>
+#pragma instantiate ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<value_type, KEY, VALUE, Hash_Key, COMPARE_KEYS>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<KEY, VALUE, Hash_Key, COMPARE_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<KEY, VALUE, Hash_Key, COMPARE_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<KEY, VALUE, Hash_Key, COMPARE_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<KEY, VALUE, Hash_Key, COMPARE_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<KEY, VALUE>
+#pragma instantiate ACE_Equal_To<KEY>
+
+// Map Manager related.
+#pragma instantiate ACE_Map_Manager_Iterator_Adapter<value_type, KEY, VALUE>
+#pragma instantiate ACE_Map_Manager_Reverse_Iterator_Adapter<value_type, KEY, VALUE>
+#pragma instantiate ACE_Map_Manager_Adapter<KEY, VALUE, Key_Generator>
+#pragma instantiate ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Iterator_Base<KEY, VALUE, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Iterator<KEY, VALUE, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Reverse_Iterator<KEY, VALUE, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Entry<KEY, VALUE>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
