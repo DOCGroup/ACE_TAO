@@ -1,3 +1,29 @@
+Mon Nov 10 04:37:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * bin/fuzz.pl:
+          Added mpb and mpt to the MPC files to check for $Id$.
+
+        * ACEXML/apps/svcconf/svcconf.mpc:
+        * ACEXML/common/common.mpc:
+        * ACEXML/examples/SAXPrint/SAXPrint.mpc:
+        * ACEXML/parser/parser/parser.mpc:
+        * ACEXML/tests/tests.mpc:
+        * Kokyu/Kokyu.mpc:
+        * Kokyu/tests/DSRT_MIF/DSRT_MIF.mpc:
+        * Kokyu/tests/EDF/EDF.mpc:
+        * Kokyu/tests/FIFO/FIFO.mpc:
+        * ace/ace.mwc:
+        * ace/QoS/qos.mpc:
+        * ace/RMCast/rmcast.mpc:
+        * ace/SSL/ssl.mpc:
+        * tests/tests.mpc:
+        * tests/tests.mwc:
+        * tests/RMCast/acetest.mpb:
+        * tests/RMCast/tests.mpc:
+        * tests/SSL/acetest.mpb:
+        * tests/SSL/tests.mpc:
+          Fixed FUZZ errors.
+
 Mon Nov 10 03:56:03 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * examples/NT_Service/main.cpp:

@@ -111,7 +111,7 @@ sub store_file ($)
     elsif ($name =~ /Makefile/i) {
         push @files_makefile, ($name);
     }
-    elsif ($name =~ /\.(mpc|mwc)/i) {
+    elsif ($name =~ /\.(mpc|mwc|mpb|mpt)/i) {
         push @files_mpc, ($name);
     }
 }
