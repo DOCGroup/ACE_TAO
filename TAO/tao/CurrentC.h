@@ -32,6 +32,8 @@
 #endif
 
 #include "tao/Object.h"
+#include "tao/Exception.h"
+#include "tao/Environment.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
