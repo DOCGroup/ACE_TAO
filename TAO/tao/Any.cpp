@@ -848,7 +848,7 @@ CORBA::Any_var &
 CORBA_Any_var::operator= (const CORBA::Any_var& r)
 {
   if (this->ptr_ != 0)
-  delete this->ptr_;
+    delete this->ptr_;
 
   this->ptr_ = new CORBA::Any (*r.ptr_);
   return *this;

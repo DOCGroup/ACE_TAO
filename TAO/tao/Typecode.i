@@ -251,13 +251,6 @@ CORBA_TypeCode_out::operator= (const CORBA_TypeCode_out &p)
 }
 
 ACE_INLINE CORBA_TypeCode_out &
-CORBA_TypeCode_out::operator= (const CORBA_TypeCode_var &p)
-{
-  this->ptr_ = CORBA_TypeCode::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE CORBA_TypeCode_out &
 CORBA_TypeCode_out::operator= (CORBA_TypeCode_ptr p)
 {
   this->ptr_ = p;
