@@ -17,9 +17,9 @@ LDLIBS = -lTAO
 IDLFILES = testC testS
 BIN = client st_client deferred_synch_client server st_server
 
-ifdef AMI
+ifeq ($(ami),1)
 BIN += ami-latency-client ami-throughput-client
-endif # AMI
+endif # ami
 
 SRC = $(addsuffix .cpp, $(BIN) $(IDLFILES) test_i dii_client)
 

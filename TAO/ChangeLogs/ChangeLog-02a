@@ -1,18 +1,51 @@
+Wed Mar 29 12:57:33 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/examples/Notify/Filter/Makefile:
+        * orbsvcs/examples/Notify/Subscribe/Makefile:
+          Updated dependencies.
+
+        * orbsvcs/orbsvcs/Makefile:
+          Re-order some builds.
+
+        * orbsvcs/orbsvcs/Makefile.CosConcurrency:
+        * orbsvcs/orbsvcs/Makefile.CosEvent:
+        * orbsvcs/orbsvcs/Makefile.CosLifeCycle:
+        * orbsvcs/orbsvcs/Makefile.CosNaming:
+        * orbsvcs/orbsvcs/Makefile.CosNotification:
+        * orbsvcs/orbsvcs/Makefile.CosProperty:
+        * orbsvcs/orbsvcs/Makefile.CosTime:
+        * orbsvcs/orbsvcs/Makefile.CosTrading:
+        * orbsvcs/orbsvcs/Makefile.DsLogAdmin:
+        * orbsvcs/orbsvcs/Makefile.RTEvent:
+        * orbsvcs/orbsvcs/Makefile.RTSched:
+        * orbsvcs/orbsvcs/Makefile.Svc_Utils:
+        * orbsvcs/orbsvcs/Makefile.av:
+          Add -L$(TAO_ROOT)/orbsvcs/orbsvcs to the link line.
+
+        * performance-tests/Latency/Makefile:
+          Use the standard ami=1 configuration flag instead of AMI=1
+
+        * performance-tests/Latency/ami-throughput-client.cpp:
+          Don't use work_pending
+
+        * performance-tests/Latency/server.cpp:
+          Improved cleanup code.
+
 Wed Mar 29 14:56:29 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/orbconf.h: Fixed a TAO_HAS_MINIMUM_CORBA check that I missed
-	  last time.
+        * tao/orbconf.h: Fixed a TAO_HAS_MINIMUM_CORBA check that I missed
+          last time.
 
 Tue Mar 28 19:22:33 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* rules.tao.GNU: Updated the definition of TAO_HAS_MINIMUM_CORBA.
+        * rules.tao.GNU: Updated the definition of TAO_HAS_MINIMUM_CORBA.
 
 Tue Mar 28 19:15:25 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/DynAnyC.{h,i,cpp}:
-	  Found a full class definition in the .h file that
-	  had been around since the file's creation -
-	  my fault.
+        * tao/DynAnyC.{h,i,cpp}:
+          Found a full class definition in the .h file that
+          had been around since the file's creation -
+          my fault.
 
 Tue Mar 28 16:53:07 2000  Carlos O'Ryan  <coryan@uci.edu>
 
