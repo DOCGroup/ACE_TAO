@@ -1086,6 +1086,29 @@ Sat Mar 29 16:34:56 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
         * THANKS: Added Bertin Colpron to the hall of fame.
 
+Fri Mar 28 16:04:28 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS.{h,i,cpp} (string_to_argv): Use ACE_LIB_TEXT around characters
+	  to make them compare correctly when ACE_USES_WCHAR. Fixes this
+	  method for use with CE. Obviates the need for ACE_CE_ARGV, which
+	  is now gone. Users of ACE_CE_ARGV should use ACE_ARGV, which does
+	  the same thing as ACE_CE_ARGV.
+	  Also added /**/ to #include <sys/mman.h> to prevent warnings from
+	  Visual C++.
+
+	* ace/config-win32-common.h: Corrected the Winsock 2, WinCE checks to
+	  check for UNDER_CE >= 400, not == 4.
+
+	* ace/Makefile.ace:
+	* docs/ACE-subsets.html: Moved ARGV and Argv_Type_Converter from UTILS
+	  to OS; getting command lines correct is needed for basic OS function.
+
+	* bin/PerlACE/Process_Win32.pm: Move the pocketcontroller-required
+	  sleep from after each test to before it. This accounts for the
+	  need to sleep after copying the initial DLLs and test files down
+	  before beginning the test runs. The copying does a reset, requiring
+	  some delay before attempting the first test.
+
 Fri Mar 28 10:18:48 2003  Steve Huston  <shuston@riverace.com>
 
         * bin/PerlACE/Process_Win32.pm: For WinCE, when generating the

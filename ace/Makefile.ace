@@ -10,6 +10,8 @@ LIB      = $(LIBACE).a
 SHLIB    = $(LIBACE).$(SOEXT)
 
 OS_FILES = \
+  ARGV \
+  Argv_Type_Converter \
   Basic_Types \
   Time_Value \
   OS \
@@ -30,8 +32,6 @@ UTILS_FILES = \
   ACE \
   Active_Map_Manager \
   Arg_Shifter \
-  ARGV \
-  Argv_Type_Converter \
   Capabilities \
   Containers \
   Configuration \
