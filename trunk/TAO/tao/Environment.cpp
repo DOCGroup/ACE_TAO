@@ -30,7 +30,9 @@ CORBA_Environment::CORBA_Environment (TAO_ORB_Core* orb_core)
 {
   orb_core->default_environment (this);
 }
+
 #else
+
 CORBA_Environment::CORBA_Environment (void)
   : exception_ (0),
     previous_ (0)
@@ -48,9 +50,9 @@ CORBA_Environment::CORBA_Environment (const CORBA_Environment& rhs)
 
 CORBA_Environment::CORBA_Environment (TAO_ORB_Core* orb_core)
   : exception_ (0),
-    previous_ (0)
+    previous_ (orb_core->default_environment ())
 {
-  //  orb_core->default_environment (this);
+  orb_core->default_environment (this);
 }
 #endif 
 
