@@ -1,3 +1,8 @@
+Thu Jan 29 15:58:01 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tests/POA/FindPOA/FindPOA.cpp (main): Added missing double-quote
+ 	in ACE_DEBUG().
+	
 Thu Jan 29 15:55:25 1998  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* orbsvcs/tests/Logger/clnt.h: 

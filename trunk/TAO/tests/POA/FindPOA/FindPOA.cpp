@@ -156,7 +156,7 @@ main (int argc, char **argv)
     }
 
 
-  ACE_DEBUG((LM_DEBUG,%s\n%s\n%s\n%s\n",
+  ACE_DEBUG((LM_DEBUG,"%s\n%s\n%s\n%s\n",
 	     root_poa_name.in (),
 	     first_poa_name.in (),
 	     second_poa_name.in (),
