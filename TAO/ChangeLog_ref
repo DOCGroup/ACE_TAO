@@ -1,3 +1,21 @@
+Thu Sep 11 13:43:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/tao.mpc:
+
+          Updated file list.
+
+        * tao/RTScheduling/Current.cpp:
+        * tao/RTScheduling/Current.h:
+        * tao/RTScheduling/RTScheduler_Manager.cpp:
+        * tao/RTScheduling/RTScheduler_Manager.h:
+
+          Updated _narrow() and related changes in hand-written
+          stub code.
+
+        * tao/RTScheduling/TAO_RTScheduler.dsp:
+
+          Turned on RTTI.
+
 Thu Sep 11 10:56:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Collocation_Strategy.h:
