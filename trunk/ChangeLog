@@ -1,3 +1,9 @@
+Sun Jan 30 13:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp:
+          Use ACE_OS::strncpy instead of strncpy directly to fix compile
+          error in Cygwin build
+
 Sun Jan 30 13:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/ASX/CCM_App/CCM_App.cpp:
