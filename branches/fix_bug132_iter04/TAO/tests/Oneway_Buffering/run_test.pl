@@ -11,7 +11,7 @@ use PerlACE::Run_Test;
 $admin_iorfile = PerlACE::LocalFile ("admin.ior");
 $server_iorfile = PerlACE::LocalFile ("server.ior");
 
-foreach $test_type ("-c", "-t", "-b") {
+foreach $test_type ("-c", "-t", "-b", "-r") {
   unlink $admin_iorfile;
   unlink $server_iorfile;
 

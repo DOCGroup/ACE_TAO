@@ -1,3 +1,23 @@
+Fri Apr 20 15:29:13 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Makefile:
+        * tao/Makefile.bor:
+        * tao/Queued_Message.h:
+        * tao/Transport.h:
+        * tao/Transport.inl:
+        * tao/Transport.cpp:
+        * tao/Transport_Timer.h:
+        * tao/Transport_Timer.cpp:
+          Add support for timeout notifications from the Reactor.  This is
+          used to implement the TIMEOUT buffering constraints when the
+          application does not send events continously.
+
+        * tests/Oneway_Buffering/client.cpp:
+        * tests/Oneway_Buffering/run_test.pl:
+        * tests/Oneway_Buffering/run_timeout_reactive.pl:
+          Add new regression test to verify that the TIMEOUT buffering
+          constraints work.
+
 Thu Apr 19 14:17:38 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.h:

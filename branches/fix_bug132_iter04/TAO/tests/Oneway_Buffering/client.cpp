@@ -13,6 +13,7 @@ int iterations = 200;
 
 int run_message_count_test = 0;
 int run_timeout_test = 0;
+int run_timeout_reactive_test = 0;
 int run_buffer_size_test = 0;
 
 const int PAYLOAD_LENGTH = 1024;
@@ -29,7 +30,7 @@ const double GIOP_OVERHEAD = 0.9;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:a:i:ctb");
+  ACE_Get_Opt get_opts (argc, argv, "k:a:i:ctbr");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -59,6 +60,10 @@ parse_args (int argc, char *argv[])
         run_buffer_size_test = 1;
         break;
 
+      case 'r':
+        run_timeout_reactive_test = 1;
+        break;
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -66,7 +71,7 @@ parse_args (int argc, char *argv[])
                            "-k <server_ior> "
                            "-a <admin_ior> "
                            "-i <iterations> "
-                           "<-c|-t|-b> "
+                           "<-c|-t|-b|-r> "
                            "\n",
                            argv [0]),
                           -1);
@@ -85,6 +90,12 @@ run_timeout (CORBA::ORB_ptr orb,
              Test::Oneway_Buffering_ptr oneway_buffering,
              Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin,
              CORBA::Environment &ACE_TRY_ENV);
+
+int
+run_timeout_reactive (CORBA::ORB_ptr orb,
+                      Test::Oneway_Buffering_ptr oneway_buffering,
+                      Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin,
+                      CORBA::Environment &ACE_TRY_ENV);
 
 int
 run_buffer_size (CORBA::ORB_ptr orb,
@@ -157,6 +168,17 @@ main (int argc, char *argv[])
                          oneway_buffering.in (),
                          oneway_buffering_admin.in (),
                          ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      else if (run_timeout_reactive_test)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Running timeout (reactive) flushing test\n"));
+          test_failed =
+            run_timeout_reactive (orb.in (),
+                                  oneway_buffering.in (),
+                                  oneway_buffering_admin.in (),
+                                  ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
       else if (run_buffer_size_test)
@@ -487,6 +509,116 @@ run_timeout (CORBA::ORB_ptr orb,
 
           CORBA::ULong receive_count =
             oneway_buffering_admin->request_count (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (-1);
+
+          ACE_Time_Value elapsed = ACE_OS::gettimeofday () - start;
+          if (receive_count != initial_receive_count)
+            {
+              if (elapsed.msec () < TIMEOUT_MILLISECONDS)
+                {
+                  test_failed = 1;
+                  ACE_ERROR ((LM_ERROR,
+                              "ERROR: Iteration %d flush before "
+                              "timeout expired. "
+                              "Elapsed = %d, Timeout = %d msecs\n",
+                              i,
+                              elapsed.msec (), TIMEOUT_MILLISECONDS));
+                }
+              // terminate the while loop.
+              break;
+            }
+
+          if (elapsed.msec () > 2 * TIMEOUT_MILLISECONDS)
+            {
+              test_failed = 1;
+              ACE_ERROR ((LM_ERROR,
+                          "ERROR: Iteration %d no flush past "
+                          "timeout threshold. "
+                          "Elapsed = %d, Timeout = %d msecs\n",
+                          i,
+                          elapsed.msec (), TIMEOUT_MILLISECONDS));
+              break;
+            }
+        }
+    }
+
+  int progress_test_failed =
+    run_progress_test (oneway_buffering,
+                       flusher.in (),
+                       oneway_buffering_admin,
+                       ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  if (progress_test_failed)
+    test_failed = 1;
+
+
+  return test_failed;
+}
+
+int
+run_timeout_reactive (CORBA::ORB_ptr orb,
+                      Test::Oneway_Buffering_ptr oneway_buffering,
+                      Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin,
+                      CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO::BufferingConstraint buffering_constraint;
+  buffering_constraint.mode = TAO::BUFFER_TIMEOUT;
+  buffering_constraint.message_count = 0;
+  buffering_constraint.message_bytes = 0;
+  buffering_constraint.timeout = TIMEOUT_MILLISECONDS * 10000;
+
+  Test::Oneway_Buffering_var flusher;
+  int test_failed =
+    configure_policies (orb, buffering_constraint,
+                        oneway_buffering, flusher.out (),
+                        ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  if (test_failed != 0)
+    return test_failed;
+
+  Test::Payload payload (PAYLOAD_LENGTH);
+  payload.length (PAYLOAD_LENGTH);
+  for (int j = 0; j != PAYLOAD_LENGTH; ++j)
+    payload[j] = CORBA::Octet(j % 256);
+
+  CORBA::ULong send_count = 0;
+  for (int i = 0; i != iterations; ++i)
+    {
+      // Get back in sync with the server...
+      flusher->flush (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
+      flusher->sync (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
+
+      CORBA::ULong initial_receive_count =
+        oneway_buffering_admin->request_count (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
+
+      if (initial_receive_count != send_count)
+        {
+          test_failed = 1;
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: Iteration %d message lost (%u != %u)\n",
+                      i, initial_receive_count, send_count));
+        }
+
+      ACE_Time_Value start = ACE_OS::gettimeofday ();
+      for (int j = 0; j != 20; ++j)
+        {
+          oneway_buffering->receive_data (payload, ACE_TRY_ENV);
+          ACE_CHECK_RETURN (-1);
+          send_count++;
+        }
+      while (1)
+        {
+          CORBA::ULong receive_count =
+            oneway_buffering_admin->request_count (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (-1);
+
+          ACE_Time_Value sleep (0, 10000);
+          orb->run (sleep, ACE_TRY_ENV);
           ACE_CHECK_RETURN (-1);
 
           ACE_Time_Value elapsed = ACE_OS::gettimeofday () - start;

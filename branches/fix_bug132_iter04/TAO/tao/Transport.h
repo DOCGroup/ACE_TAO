@@ -22,6 +22,7 @@
 #include "Exception.h"
 #include "Transport_Descriptor_Interface.h"
 #include "Transport_Cache_Manager.h"
+#include "Transport_Timer.h"
 #include "ace/Strategies.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -616,6 +617,26 @@ public:
   /// Cancel handle_output() callbacks
   int cancel_output (void);
 
+  /// The timeout callback, invoked when any of the timers related to
+  /// this transport expire.
+  /**
+   * @param current_time The current time as reported from the Reactor
+   * @param act The Asynchronous Completion Token.  Currently it is
+   *            interpreted as follows:
+   * - If the ACT is the address of this->current_deadline_ the
+   *   queueing timeout has expired and the queue should start
+   *   flushing.
+   *
+   * @return Returns 0 if there are no problems, -1 if there is an
+   *         error
+   *
+   * @todo In the future this function could be used to expire
+   *       messages (oneways) that have been sitting for too long on
+   *       the queue. 
+   */
+  int handle_timeout (const ACE_Time_Value &current_time,
+                      const void* act);
+
 private:
   /// Send some of the data in the queue.
   /**
@@ -641,7 +662,7 @@ private:
 
   /// This class needs special access to drain_queue_i() and
   /// queue_is_empty_i()
-  friend class TAO_Block_Flushing_Strategy; 
+  friend class TAO_Block_Flushing_Strategy;
 
   /// A helper routine used in drain_queue_i()
   int drain_queue_helper (int &iovcnt, iovec iov[]);
@@ -665,6 +686,13 @@ private:
   /// the wire
   int send_synchronous_message_i (const ACE_Message_Block *message_block,
                                   ACE_Time_Value *max_wait_time);
+
+  /// Check if the flush timer is still pending
+  int flush_timer_pending (void) const;
+
+  /// The flush timer expired or was explicitly cancelled, mark it as
+  /// not pending
+  void reset_flush_timer (void);
 
   /// Prohibited
   ACE_UNIMPLEMENTED_FUNC (TAO_Transport (const TAO_Transport&))
@@ -719,6 +747,12 @@ protected:
   /// The queue will start draining no later than <queing_deadline_>
   /// *if* the deadline is
   ACE_Time_Value current_deadline_;
+
+  /// The timer ID
+  long flush_timer_id_;
+
+  /// The adapter used to receive timeout callbacks from the Reactor
+  TAO_Transport_Timer transport_timer_;
 
   /// Lock that insures that activities that *might* use handler-related
   /// resources (such as a connection handler) get serialized.
