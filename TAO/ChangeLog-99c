@@ -12,7 +12,7 @@ Thu May 27 09:06:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  a _var. When a TAO server gets a request from an
 	  OmniORB client, the Principal pointer in the header
 	  is non-null, and we were leaking the memory. Thanks
-	  to Rebacca Sanford <Rebecca.A.Sanford@gd-is.com>
+	  to Rebecca Sanford <Rebecca.A.Sanford@gd-is.com>
 	  for pointing this out.
 
 Wed May 26 21:40:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
