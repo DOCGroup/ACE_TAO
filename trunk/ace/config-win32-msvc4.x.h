@@ -112,7 +112,11 @@
 #define ACE_HAS_UNICODE
 //#define ACE_HAS_STANDARD_CPP_LIBRARY
 
+// _M_IX86 is set by Build->Settings->Code Generation->Processor.
+// Choose Pentium if you want _M_IX86 == 500.
+#if _M_IX86 == 500
 #define ACE_HAS_PENTIUM
+#endif /* _M_IX86 == 500 */
 
 // Uncomment these if you want to integrate ACE and Orbix in Win32.
 // #define ACE_HAS_ORBIX
