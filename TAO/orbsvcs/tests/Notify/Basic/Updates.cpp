@@ -1,18 +1,13 @@
 //$Id$
 
+#include "ace/Arg_Shifter.h"
+#include "ace/Get_Opt.h"
 #include "Updates.h"
 
-ACE_RCSID (Notify_Tests, Notify_Test_Updates_Client, "$Id$")
+ACE_RCSID (Notify_Tests, Updates, "$Id$")
 
-#define NOTIFY_UPDATES_TEST_DOMAIN "Test_Domain"
-#define NOTIFY_UPDATES_TEST_TYPE "Test_Type"
-
-  int BUFFER_TEST_COUNT = 5;
-
-int offers_added_, offers_removed_, subscriptions_added_, subscriptions_removed_;
-// Check if these are equal to <BUFFER_TEST_COUNT> at the end of the test.
-
-Update_StructuredPushConsumer::~Update_StructuredPushConsumer ()
+Update_StructuredPushConsumer::Update_StructuredPushConsumer (Updates *test_client)
+  : test_client_ (test_client)
 {
 }
 
@@ -20,7 +15,7 @@ void
 Update_StructuredPushConsumer::offer_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed,
-        CORBA::Environment &/*ACE_TRY_ENV*/
+        CORBA::Environment &ACE_TRY_ENV
       )
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
@@ -28,15 +23,21 @@ Update_StructuredPushConsumer::offer_change (
                    ))
 {
   if (added.length () > 0)
-    ::offers_added_ = added.length ();
+    {
+      test_client_->offers_added_ = added.length ();
+      this->test_client_->end_test (ACE_TRY_ENV);
+    }
 
   if (removed.length () > 0)
-    ::offers_removed_ = removed.length ();
+    {
+      test_client_->offers_removed_ = removed.length ();
+      this->test_client_->end_test (ACE_TRY_ENV);
+    }
 }
 
 /***************************************************************************/
 
-Update_StructuredPushSupplier::Update_StructuredPushSupplier (Notify_Test_Updates_Client* test_client)
+Update_StructuredPushSupplier::Update_StructuredPushSupplier (Updates* test_client)
   :test_client_ (test_client)
 {
 }
@@ -48,7 +49,7 @@ Update_StructuredPushSupplier::~Update_StructuredPushSupplier ()
 void Update_StructuredPushSupplier::subscription_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed,
-        CORBA::Environment &/*ACE_TRY_ENV*/
+        CORBA::Environment &ACE_TRY_ENV
         )
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
@@ -56,28 +57,41 @@ void Update_StructuredPushSupplier::subscription_change (
                    ))
 {
   if (added.length () > 0)
-    ::subscriptions_added_ = added.length ();
+    {
+      test_client_->subscriptions_added_ = added.length ();
+      this->test_client_->end_test (ACE_TRY_ENV);
+    }
 
   if (removed.length () > 0)
-    ::subscriptions_removed_ = removed.length ();
-
-  //  this->test_client_->shutdown (ACE_TRY_ENV);
+    {
+      test_client_->subscriptions_removed_ = removed.length ();
+      this->test_client_->end_test (ACE_TRY_ENV);
+    }
 }
 
 /***************************************************************************/
-Notify_Test_Updates_Client::Notify_Test_Updates_Client (void)
+Updates::Updates (void)
+  : domain_name_ ("Test_Domain"),
+    type_name_ ("Test_Type"),
+    update_count_ (5)
 {
-  count_ = BUFFER_TEST_COUNT;
 }
 
-Notify_Test_Updates_Client::~Notify_Test_Updates_Client ()
+Updates::~Updates ()
 {
 }
 
 void
-Notify_Test_Updates_Client::init_concrete (int /*argc*/, char */*argv*/ [], CORBA::Environment &ACE_TRY_ENV)
+Updates::init (int argc, char* argv [], CORBA::Environment &ACE_TRY_ENV)
 {
+  // init base class
+  Notify_Test_Client::init (argc, argv, ACE_TRY_ENV);
+  ACE_CHECK;
+
   // Create all participents ...
+  this->create_EC (ACE_TRY_ENV);
+  ACE_CHECK;
+
   CosNotifyChannelAdmin::AdminID adminid;
 
   supplier_admin_ =
@@ -92,7 +106,7 @@ Notify_Test_Updates_Client::init_concrete (int /*argc*/, char */*argv*/ [], CORB
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 
-  consumer_ = new Update_StructuredPushConsumer ();
+  consumer_ = new Update_StructuredPushConsumer (this);
   consumer_->init (root_poa_.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -107,24 +121,69 @@ Notify_Test_Updates_Client::init_concrete (int /*argc*/, char */*argv*/ [], CORB
   ACE_CHECK;
 }
 
-void
-Notify_Test_Updates_Client::run_test (CORBA::Environment &ACE_TRY_ENV)
+int
+Updates::parse_args(int argc, char *argv[])
 {
-  int update_count = this->count_;
+    ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  CosNotification::EventTypeSeq added (update_count), removed (update_count);
-  added.length (update_count);
+    char *current_arg = 0;
+    while (arg_shifter.is_anything_left ())
+    {
+      if ((current_arg = arg_shifter.get_the_parameter ("-updates")))
+        {
+          this->update_count_ = ACE_OS::atoi (current_arg);
+          // The number of updates required.
+          arg_shifter.consume_arg ();
+        }
+      else if (arg_shifter.cur_arg_strncasecmp ("-?") == 0)
+        {
+          ACE_DEBUG((LM_DEBUG,
+                     "usage: %s "
+                     "-updates update_count \n",
+                     argv[0], argv[0]));
+
+          arg_shifter.consume_arg ();
+
+          return -1;
+        }
+      else
+        {
+            arg_shifter.ignore_arg ();
+        }
+    }
+    return 0;
+}
+
+void
+Updates::create_EC (CORBA::Environment &ACE_TRY_ENV)
+{
+  CosNotifyChannelAdmin::ChannelID id;
+
+  ec_ = notify_factory_->create_channel (initial_qos_,
+                                         initial_admin_,
+                                         id,
+                                         ACE_TRY_ENV);
+  ACE_CHECK;
+
+  ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
+}
+
+void
+Updates::run_test (CORBA::Environment &ACE_TRY_ENV)
+{
+  CosNotification::EventTypeSeq added (update_count_), removed (update_count_);
+  added.length (update_count_);
   removed.length (0);
 
   char update_test_buf[BUFSIZ];
 
   int i = 0;
-  for (; i < update_count; ++i)
+  for (; i < update_count_; ++i)
     {
-      ACE_OS::sprintf (update_test_buf, "%s_%d", NOTIFY_UPDATES_TEST_DOMAIN, i);
+      ACE_OS::sprintf (update_test_buf, "%s_%d", this->domain_name_, i);
       added[i].domain_name =  CORBA::string_dup (update_test_buf);
 
-      ACE_OS::sprintf (update_test_buf, "%s_%d", NOTIFY_UPDATES_TEST_TYPE, i);
+      ACE_OS::sprintf (update_test_buf, "%s_%d", this->type_name_, i);
       added[i].type_name = CORBA::string_dup (update_test_buf);
     }
 
@@ -139,14 +198,14 @@ Notify_Test_Updates_Client::run_test (CORBA::Environment &ACE_TRY_ENV)
   // test removed
 
   added.length (0);
-  removed.length (update_count);
+  removed.length (update_count_);
 
-  for (i = 0; i < update_count; ++i)
+  for (i = 0; i < update_count_; ++i)
     {
-      ACE_OS::sprintf (update_test_buf, "%s_%d", NOTIFY_UPDATES_TEST_DOMAIN, i);
+      ACE_OS::sprintf (update_test_buf, "%s_%d", this->domain_name_, i);
       removed[i].domain_name =  CORBA::string_dup (update_test_buf);
 
-      ACE_OS::sprintf (update_test_buf, "%s_%d", NOTIFY_UPDATES_TEST_TYPE, i);
+      ACE_OS::sprintf (update_test_buf, "%s_%d", this->type_name_, i);
       removed[i].type_name = CORBA::string_dup (update_test_buf);
     }
 
@@ -158,26 +217,83 @@ Notify_Test_Updates_Client::run_test (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 }
 
-/***************************************************************************/
-int
-main (int argc, char* argv[])
+void
+Updates::end_test (CORBA::Environment &ACE_TRY_ENV)
 {
-  Notify_Test_Updates_Client client;
+  if (++this->result_count_ == 4)
+    {      
+      this->shutdown (ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+}
 
-  int result = Notify_Test_Client::test_main (argc, argv, client);
+int
+Updates::check_results (void)
+{
+  // Destroy the channel
+  ACE_DECLARE_NEW_CORBA_ENV;
+  this->ec_->destroy (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG((LM_DEBUG, "offers_added_ = %d, offers_removed_ = %d, subscriptions_added_= %d, subscriptions_removed_ = %d\n",
              offers_added_, offers_removed_, subscriptions_added_, subscriptions_removed_));
 
-  if (result == 0)
+  if (offers_added_ == update_count_ &&
+      offers_removed_ == update_count_ &&
+      subscriptions_added_ == update_count_ &&
+      subscriptions_removed_ == update_count_)
+    return 0;
+  else
     {
-      if (offers_added_ == BUFFER_TEST_COUNT &&
-          offers_removed_ == BUFFER_TEST_COUNT &&
-          subscriptions_added_ == BUFFER_TEST_COUNT &&
-          subscriptions_removed_ == BUFFER_TEST_COUNT)
-        return 0;
+      ACE_DEBUG ((LM_DEBUG, "Updates test failed!\n"));
+      return 1;
     }
-
-  ACE_DEBUG ((LM_DEBUG, "Updates test failed!\n"));
-  return 1;
 }
+
+/***************************************************************************/
+
+int
+main (int argc, char* argv[])
+{
+  Updates updates;
+
+  if (updates.parse_args (argc, argv) == -1)
+    return 1;
+
+  ACE_TRY_NEW_ENV
+    {
+      updates.init (argc, argv,
+                      ACE_TRY_ENV); //Init the Client
+      ACE_TRY_CHECK;
+
+      updates.run_test (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      updates.ORB_run ();
+    }
+  ACE_CATCH (CORBA::UserException, ue)
+    {
+      ACE_PRINT_EXCEPTION (ue,
+                           "Updates user error: ");
+      return 1;
+    }
+  ACE_CATCH (CORBA::SystemException, se)
+    {
+      ACE_PRINT_EXCEPTION (se,
+                           "Updates system error: ");
+      return 1;
+    }
+  ACE_ENDTRY;
+
+  return updates.check_results ();
+}
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class  ACE_Atomic_Op<ACE_SYNCH_MUTEX, int>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX, int>
+
+#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

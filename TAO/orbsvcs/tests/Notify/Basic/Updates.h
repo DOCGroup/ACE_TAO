@@ -21,13 +21,13 @@
 #include "Notify_StructuredPushConsumer.h"
 #include "Notify_StructuredPushSupplier.h"
 
-class Notify_Test_Updates_Client;
+class Updates;
 
 class Update_StructuredPushConsumer : public TAO_Notify_StructuredPushConsumer
 {
 public:
-  virtual ~Update_StructuredPushConsumer ();
-  // Destructor.
+  Update_StructuredPushConsumer (Updates *test_client);
+  // Contructor.
 
   virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
@@ -39,6 +39,9 @@ public:
         CosNotifyComm::InvalidEventType
       ));
   // Offer change is conveyed here.
+
+protected:
+  Updates * test_client_;
 };
 
 /***************************************************************************/
@@ -46,7 +49,7 @@ public:
 class Update_StructuredPushSupplier : public TAO_Notify_StructuredPushSupplier
 {
 public:
-  Update_StructuredPushSupplier (Notify_Test_Updates_Client* test_client);
+  Update_StructuredPushSupplier (Updates * test_client);
   // Constructor.
 
   virtual ~Update_StructuredPushSupplier ();
@@ -64,27 +67,53 @@ public:
   // Subscription change is conveyed here.
 
 protected:
-  Notify_Test_Updates_Client* test_client_;
+  Updates* test_client_;
 };
 
 /***************************************************************************/
 
-class Notify_Test_Updates_Client : public Notify_Test_Client
+class Updates : public Notify_Test_Client
 {
- public:
+public:
   // Initialization and termination code
-  Notify_Test_Updates_Client (void);
-  virtual ~Notify_Test_Updates_Client ();
+  Updates (void);
+  virtual ~Updates ();
 
-  virtual void init_concrete (int argc, char *argv [], CORBA::Environment &ACE_TRY_ENV);
+  int parse_args(int argc, char *argv[]) ;
+
+  void init (int argc, char *argv [], CORBA::Environment &ACE_TRY_ENV);
   // initialization.
 
-  virtual void run_test (CORBA::Environment &ACE_TRY_ENV);
+  void run_test (CORBA::Environment &ACE_TRY_ENV);
   // Run the test.
 
+  void end_test (CORBA::Environment &ACE_TRY_ENV);
+  // End the test.
+
+  int check_results (void);
+  // check if we got the expected results.
+
 protected:
-  int count_;
+  void create_EC (CORBA::Environment &ACE_TRY_ENV);
+  // Create EC
+
+  ACE_Atomic_Op <ACE_SYNCH_MUTEX, int> result_count_;
+  // we are waiting for 4 events to happen.
+
+  const char* domain_name_;
+  const char* type_name_;
+
+  int update_count_;
   // Number of updates to test.
+
+  int offers_added_, offers_removed_;
+  // Check if these are equal to <update_count_> at the end of the test.
+
+  int subscriptions_added_, subscriptions_removed_;
+  // Check if these are equal to <update_count_> at the end of the test.
+
+  CosNotifyChannelAdmin::EventChannel_var ec_;
+  // The one channel that we create using the factory.
 
   CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin_;
   // The consumer admin used by consumers.
@@ -97,6 +126,10 @@ protected:
 
   TAO_Notify_StructuredPushSupplier* supplier_;
   // Supplier
+
+private:
+  friend Update_StructuredPushSupplier;
+  friend Update_StructuredPushConsumer;
 };
 
 /***************************************************************************/
