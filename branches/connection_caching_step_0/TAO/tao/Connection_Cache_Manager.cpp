@@ -48,8 +48,8 @@ TAO_Connection_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) TAO_Connection_Cache_Manager::bind_i")
-                      ACE_TEXT (" unable to bind in the first attempt")
-                      ACE_TEXT (" so trying with a new index \n")));
+                      ACE_TEXT (" unable to bind in the first attempt \n")
+                      ACE_TEXT (" So trying with a new index \n")));
         }
 
       // There was an entry like this before, so let us do some
@@ -58,7 +58,10 @@ TAO_Connection_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
                                           int_id,
                                           entry);
       if (retval == 0)
-        int_id.handler ()->cache_map_entry (entry);
+        {
+          int_id.handler ()->cache_map_entry (entry);
+          int_id.recycle_state (ACE_RECYCLABLE_BUSY);
+        }
     }
 
   if (TAO_debug_level > 0 && retval != 0)
@@ -243,6 +246,7 @@ TAO_Connection_Cache_Manager::
   // Set the index
   key.index (ctr + 1);
 
+  cout << "The counter is " << ctr + 1 <<endl;
   // Now do a bind again with the new index
   return  this->cache_map_.bind (key,
                                  val,
@@ -265,12 +269,14 @@ TAO_Connection_Cache_Manager::
           // Save that in the handler
           entry->int_id_.handler ()->cache_map_entry (entry);
 
+          cout << "Are we 2 "<<endl;
           // Mark the connection as busy
           entry->int_id_.recycle_state (ACE_RECYCLABLE_BUSY);
           return 0;
         }
       else
         {
+          cout << "Are we 1 "<<endl;
           entry = entry->next_;
         }
     }
