@@ -41,7 +41,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "LIB\Release\RTOLDEvent"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D TAO_RTOLDEVENT_HAS_DLL=0 /D TAO_RTEVENT_HAS_DLL=0 /D "NDEBUG" /D "WIN32" /D "_MBCS" /D "_LIB" /D TAO_HAS_DLL=0 /D ACE_HAS_DLL=0 /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D TAO_RTOLDEVENT_HAS_DLL=0 /D TAO_RTEVENT_HAS_DLL=0 /D "NDEBUG" /D "WIN32" /D "_MBCS" /D "_LIB" /D TAO_HAS_DLL=0 /D ACE_HAS_DLL=0 /D ACE_OS_HAS_DLL=0 /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"

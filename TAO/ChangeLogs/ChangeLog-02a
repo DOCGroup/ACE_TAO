@@ -1,3 +1,30 @@
+Wed Jun 14 19:29:20 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * /TAO_IDL/tao_idl_static.dsp:
+        * /examples/Simple/time/client_static.dsp:
+        * /examples/Simple/time/server_static.dsp:
+        * /orbsvcs/Naming_Service/Naming_Server_static.dsp:
+        * /orbsvcs/orbsvcs/AV_Static.dsp:
+        * /orbsvcs/orbsvcs/CosConcurrency_Static.dsp:
+        * /orbsvcs/orbsvcs/CosEvent_Static.dsp:
+        * /orbsvcs/orbsvcs/CosLifeCycle_Static.dsp:
+        * /orbsvcs/orbsvcs/CosNaming_Static.dsp:
+        * /orbsvcs/orbsvcs/CosNotification_Static.dsp:
+        * /orbsvcs/orbsvcs/CosProperty_Static.dsp:
+        * /orbsvcs/orbsvcs/CosTime_Static.dsp:
+        * /orbsvcs/orbsvcs/CosTrading_Static.dsp:
+        * /orbsvcs/orbsvcs/DsLogAdmin_Static.dsp:
+        * /orbsvcs/orbsvcs/LoadBalancing_Static.dsp:
+        * /orbsvcs/orbsvcs/RTEvent_Static.dsp:
+        * /orbsvcs/orbsvcs/RTOLDEvent_Static.dsp:
+        * /orbsvcs/orbsvcs/RTSchedEvent_Static.dsp:
+        * /orbsvcs/orbsvcs/RTSched_Static.dsp:
+        * /orbsvcs/orbsvcs/Svc_Utils_Static.dsp:
+        * /tao/TAO_Static.dsp:
+
+          Finished up the last bit of changes needed to make both
+          the debug and release clean for static builds on NT.
+
 Wed Jun 14 15:21:48 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile.LoadBalancing:
