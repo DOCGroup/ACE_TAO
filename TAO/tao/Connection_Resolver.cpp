@@ -52,9 +52,13 @@ namespace TAO
 
 
   TAO_Transport *
-  Profile_Connection_Resolver::resolve (TAO_Invocation_Endpoint_Selector *es
-                                        ACE_ENV_ARG_DECL)
+  Profile_Connection_Resolver::resolve (ACE_ENV_SINGLE_ARG_DECL)
   {
+    TAO_Invocation_Endpoint_Selector *es =
+      this->stub_->orb_core ()->endpoint_selector_factory ()->get_selector (
+        ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+
     es->select_endpoint (this
                          ACE_ENV_ARG_DECL);
     ACE_CHECK;

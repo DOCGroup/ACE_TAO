@@ -22,11 +22,22 @@ ACE_RCSID (tao, GIOP_Message_Base, "$Id$")
 
 TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                                               size_t /*input_cdr_size*/)
-  : orb_core_ (orb_core),
-    message_state_ (orb_core,
+  : orb_core_ (orb_core)
+    , message_state_ (orb_core,
                     this)
+    , out_stream_ (this->buffer_,
+                   sizeof this->buffer_, /* ACE_CDR::DEFAULT_BUFSIZE */
+                   byte_order,
+                   orb_core->output_cdr_buffer_allocator (),
+                   orb_core->output_cdr_dblock_allocator (),
+                   orb_core->output_cdr_msgblock_allocator (),
+                   orb_core->orb_params ()->cdr_memcpy_tradeoff (),
+                   TAO_DEF_GIOP_MAJOR,
+                   TAO_DEF_GIOP_MINOR)
 {
-
+#if defined (ACE_HAS_PURIFY)
+  ACE_OS::memset(buffer_, 0, sizeof(buffer_));
+#endif /* ACE_HAS_PURIFY */
 }
 
 
@@ -40,6 +51,9 @@ void
 TAO_GIOP_Message_Base::init (CORBA::Octet major,
                              CORBA::Octet minor)
 {
+  // Set the giop version of the out stream
+  this->out_stream_.set_version (major,
+                                 minor);
 }
 
 

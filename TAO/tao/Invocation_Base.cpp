@@ -46,17 +46,12 @@ namespace TAO
       return stub->orb_core ()->invoke_services ();
     */
 
-    TAO_Invocation_Endpoint_Selector *es =
-      stub->orb_core ()->endpoint_selector_factory ()->get_selector (
-        ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
-
-
     Connection_Resolver resolver (stub);
 
-    TAO_Transport *t = resolver.resolve (es
-                                         ACE_ENV_ARG_PARAMETER);
+    TAO_Transport *t =
+      resolver.resolve (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
+
 
     if (this->type_ == TAO_ONEWAY_INVOCATION)
       {
@@ -65,12 +60,9 @@ namespace TAO
     else if (this->type_ == TAO_TWOWAY_INVOCATION
              && this->mode_ == TAO_SYNCHRONOUS_INVOCATION)
       {
-        Synch_Invocation synch_invocation (stub);
-
-        synch_invocation.connect (endpoint_selector);
-        synch_invocation.invoke ();
+        TAO::Synch_Twoway_Invocation synch;
+        synch.invoke ();
         synch_invocation.wait ();
-
       }
     else if (this->type_ == TAO_TWOWAY_INVOCATION
              && this->mode_ == TAO_ASYNCHRONOUS_INVOCATION)
