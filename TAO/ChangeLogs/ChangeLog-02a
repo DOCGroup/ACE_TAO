@@ -1,3 +1,10 @@
+Wed Dec  6 18:02:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+
+	  Small change to keep the indentation from growing and
+	  growing in long IDL files.
+
 Wed Dec  6 17:06:17 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/rettype.cpp:
