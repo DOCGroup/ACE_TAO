@@ -1,3 +1,28 @@
+Fri Oct 24 18:17:21 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CCF/CCF/IDL2/IDL2.vcproj:
+        
+          Added new front end files to the project.
+          
+        * CCF/CCF/IDL2/SemanticAction.hpp:
+        * CCF/CCF/IDL2/Traversal.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Member.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/TypeId.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Typedef.hpp:
+        * CCF/CCF/IDL2/SyntaxTree/ElementsCtor.cpp:
+        * CCF/CCF/IDL2/SyntaxTree/InterfaceCtor.cpp:
+        * CCF/CCF/IDL2/SyntaxTree/Struct.cpp:
+        * CCF/CCF/IDL2/SyntaxTree/Typedef.hpp:
+        * CCF/CCF/IDL2/SyntaxTree/ValueTypeCtor.cpp:
+        
+          Fixed various minor errors, such as removal of unused argument 
+          identifiers, and addition of 'using std".
+          
+        * CIDLC/TypeNameEmitter.cpp:
+        * CIDLC/TypeNameEmitter.hpp:
+        
+          Added case for sequences, and typedefs of string and wstring.
+
 Fri Oct 24 17:14:51 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/CCF/IDL2/Traversal/Typedef.hpp: New implementation of

@@ -11,6 +11,8 @@
 
 #include <sstream>
 
+using namespace std;
+
 namespace CCF
 {
   namespace IDL2
