@@ -50,6 +50,7 @@ ACE_HAS_AIX_HI_RES_TIMER                Platform has AIX4 ::read_real_time ()
 ACE_HAS_ALLOCA                          Compiler/platform supports alloca()
 ACE_HAS_ALLOCA_H                        Compiler/platform has <alloca.h>
 ACE_HAS_AUTOMATIC_INIT_FINI             Compiler/platform correctly calls init()/fini() for shared libraries
+ACE_HAS_BIG_FD_SET                      Compiler/platform has typedef u_long fdmask (e.g., Linux and SCO).
 ACE_HAS_BROKEN_NAMESPACES               Compiler/platform doesn't support namespaces (or the support is not fully implemented.)
 ACE_HAS_BROKEN_BITSHIFT                 Compiler has integer overflow problem with bit-shift operations.
 ACE_HAS_BROKEN_CONVERSIONS              Compiler can't handle calls like foo->operator T *()
@@ -99,7 +100,6 @@ ACE_HAS_NONSTATIC_OBJECT_MANAGER        Causes the ACE_Object_Manager instance t
 ACE_HAS_THR_KEYDELETE                   Platform supports thr_keydelete (e.g,. UNIXWARE)
 ACE_HAS_THR_MINSTACK                    Platform calls thr_minstack() rather than thr_min_stack() (e.g., Tandem).
 ACE_HAS_LIMITED_RUSAGE_T                The rusage_t structure has only two fields.
-ACE_HAS_LONG_FDMASK                     Compiler/platform has typedef u_long fdmask (e.g., Linux).
 ACE_HAS_LONG_MAP_FAILED                 Platform defines MAP_FAILED as a long constant.
 ACE_HAS_MALLOC_STATS                    Enabled malloc statistics collection.
 ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION     Avoid #including ace/streams.h in OS.h.  Users must include ace/streams.h, <iostream>, or <iostream.h> explicitly in their code.  Some platforms, such as g++/VxWorks, have trouble compiling templates and iostreams header because of static variables in the stream headers.  This flag will also avoid extra compilation and runtime overheads on some platforms.

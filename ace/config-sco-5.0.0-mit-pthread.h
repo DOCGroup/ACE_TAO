@@ -34,7 +34,7 @@
 #endif /* SCO */
 
 #define ACE_LACKS_PWD_FUNCTIONS
-#define ACE_HAS_LONG_FDMASK
+#define ACE_HAS_BIG_FD_SET
 
 //#define ACE_LACKS_SYSCALL
 //#define ACE_LACKS_STRRECVFD

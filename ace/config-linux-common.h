@@ -112,7 +112,7 @@
 #define ACE_HAS_IP_MULTICAST
 #endif /* #if ! defined(ACE_HAS_IP_MULTICAST) */
 
-#define ACE_HAS_LONG_FDMASK
+#define ACE_HAS_BIG_FD_SET
 
 #define ACE_HAS_STRING_CLASS
 
