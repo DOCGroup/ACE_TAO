@@ -1,0 +1,7 @@
+project : taolib {
+  depends   += RTCORBA PortableServer
+  sharedname = TAO_RTPortableServer
+  libs      += TAO_RTCORBA TAO_PortableServer TAO
+  dllflags   = TAO_RTPORTABLESERVER_BUILD_DLL
+  libout     = ..
+}

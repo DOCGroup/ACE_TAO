@@ -1,0 +1,9 @@
+project(client): messaging {
+  exename  = client
+
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+}
+

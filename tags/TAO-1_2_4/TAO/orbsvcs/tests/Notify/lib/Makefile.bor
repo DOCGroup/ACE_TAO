@@ -1,0 +1,42 @@
+#
+# Makefile for building the Notify test library
+#
+
+NAME = TAO_NotifyTests
+
+OBJFILES = \
+        $(OBJDIR)\Notify_PushConsumer.obj \
+        $(OBJDIR)\Notify_PushSupplier.obj \
+        $(OBJDIR)\Notify_SequencePushConsumer.obj \
+        $(OBJDIR)\Notify_SequencePushSupplier.obj \
+        $(OBJDIR)\Notify_StructuredPushConsumer.obj \
+        $(OBJDIR)\Notify_StructuredPushSupplier.obj \
+        $(OBJDIR)\Notify_Test_Client.obj
+
+CFLAGS = \
+        $(ACE_CFLAGS) \
+        $(TAO_CFLAGS) \
+        $(TAO_EVENT_CFLAGS) \
+        $(TAO_NAMING_CFLAGS) \
+        $(TAO_SVC_UTILS_CFLAGS) \
+        $(TAO_IORTABLE_CFLAGS) \
+        $(TAO_PORTABLESERVER_CFLAGS) \
+        $(TAO_NOTIFYTESTS_CFLAGS) \
+        $(TAO_ETCL_CFLAGS) \
+        $(TAO_NOTIFY_CFLAGS) \
+        -DTAO_NOTIFY_TEST_BUILD_DLL
+
+CPPDIR = .
+
+LIBFILES = \
+        $(ACE_LIB) \
+        $(TAO_LIB) \
+        $(TAO_EVENT_LIB) \
+        $(TAO_NAMING_LIB) \
+        $(TAO_SVC_UTILS_LIB) \
+        $(TAO_IORTABLE_LIB) \
+        $(TAO_PORTABLESERVER_LIB) \
+        $(TAO_ETCL_LIB) \
+        $(TAO_NOTIFY_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_library.bor>

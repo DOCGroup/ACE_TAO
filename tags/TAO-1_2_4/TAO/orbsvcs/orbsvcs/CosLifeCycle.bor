@@ -1,0 +1,60 @@
+#
+# Makefile for building the TAO CosLifeCycle library
+#
+
+NAME = TAO_CosLifeCycle
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe \
+	-I..\.. -Ge 1 -Wb,export_macro=TAO_LifeCycle_Export \
+	-Wb,export_include=LifeCycle/lifecycle_export.h -Wb,pre_include=ace/pre.h \
+	-Wb,post_include=ace/post.h
+
+IDLFILES = \
+	$(IDLDIR)\CosLifeCycle.idl \
+	$(IDLDIR)\LifeCycleService.idl
+
+OBJFILES = \
+	$(OBJDIR)\CosLifeCycleC.obj \
+	$(OBJDIR)\CosLifeCycleS.obj \
+	$(OBJDIR)\LifeCycleServiceC.obj \
+	$(OBJDIR)\LifeCycleServiceS.obj
+
+RESOURCE = $(OBJDIR)\CosLifeCycle.res
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLSERVER_CFLAGS) \
+	$(TAO_NAMING_CFLAGS) \
+	$(TAO_LIFECYCLE_CFLAGS) \
+	-DTAO_LIFECYCLE_BUILD_DLL
+
+CPPDIR = .;LifeCycle
+
+IDLDIR = .
+
+INCDIR_NAME = orbsvcs\LifeCycle
+INCLUDES = LifeCycle\*.h
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB) \
+	$(TAO_NAMING_LIB)
+
+all: idl_src_files
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
+
+
+#
+# IDL Build rules
+#
+
+idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
+
+$(IDLDIR)\CosLifeCycleC.cpp $(IDLDIR)\CosLifeCycleS.cpp: $(IDLDIR)\CosLifeCycle.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\LifeCycleServiceC.cpp $(IDLDIR)\LifeCycleServiceS.cpp: $(IDLDIR)\LifeCycleService.idl
+	$(TAO_IDL) $**

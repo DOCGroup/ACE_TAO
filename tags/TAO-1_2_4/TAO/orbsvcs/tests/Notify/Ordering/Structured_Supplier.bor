@@ -1,0 +1,54 @@
+#
+# $Id$
+# Makefile for building the orbsvcs notify ordering structured_supplier test
+#
+
+NAME = Structured_Supplier
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
+
+OBJFILES = \
+        $(OBJDIR)\goC.obj \
+        $(OBJDIR)\goS.obj \
+        $(OBJDIR)\Structured_Supplier.obj \
+        $(OBJDIR)\common.obj
+
+CFLAGS = \
+        $(ACE_CFLAGS) \
+        $(TAO_CFLAGS) \
+        $(TAO_EVENT_CFLAGS) \
+        $(TAO_NAMING_CFLAGS) \
+        $(TAO_SVC_UTILS_CFLAGS) \
+        $(TAO_IORTABLE_CFLAGS) \
+        $(TAO_PORTABLESERVER_CFLAGS) \
+        $(TAO_ETCL_CFLAGS) \
+        $(TAO_NOTIFY_CFLAGS) \
+        $(TAO_NOTIFYTESTS_CFLAGS)
+
+CPPDIR = .
+
+LIBFILES = \
+        $(ACE_LIB) \
+        $(TAO_LIB) \
+        $(TAO_EVENT_LIB) \
+        $(TAO_NAMING_LIB) \
+        $(TAO_SVC_UTILS_LIB) \
+        $(TAO_IORTABLE_LIB) \
+        $(TAO_PORTABLESERVER_LIB) \
+        $(TAO_ETCL_LIB) \
+        $(TAO_NOTIFY_LIB) \
+        $(TAO_NOTIFYTESTS_LIB)
+
+IDLFILES = \
+        $(IDLDIR)\go.idl
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\goS.cpp $(IDLDIR)\goC.cpp: $(IDLDIR)\go.idl
+	$(TAO_IDL) $**

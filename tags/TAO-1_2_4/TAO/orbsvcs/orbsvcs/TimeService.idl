@@ -1,0 +1,179 @@
+// -*- C++ -*-
+// $Id$
+
+#ifndef TAO_TIME_IDL
+#define TAO_TIME_IDL
+
+#include "TimeBase.idl"
+
+#pragma prefix "omg.org"
+
+module CosTime
+{
+  // = TITLE
+  //  CosTime Module
+  //
+  // = DESCRIPTION
+  // This module has all the interfaces, and associated enum
+  // and exception declarations for the time service.
+
+  enum TimeComparison
+  {
+    // = TITLE
+    // TimeComparison defines the possible values that can be
+    // returned as a result of comparing two UTOs.
+
+    TCEqualTo,
+    TCLessThan,
+    TCGreaterThan,
+    TCIndeterminate
+  };
+
+  enum ComparisonType
+  {
+    // = TITLE
+    // ComparisonType defines the possible ways in which the times can
+    // be compared.
+
+    IntervalC,
+    MidC
+  };
+
+  enum OverlapType
+  {
+    // = TITLE
+    // OverlapType specifies the type of overlap between two time
+    // intervals.
+
+    OTContainer,
+    OTContained,
+    OTOverlap,
+    OTNoOverlap
+  };
+
+  exception TimeUnavailable
+    {
+      // = TITLE
+      // TimeUnavailable exception is raised by the Timeservice when
+      // it cannot successfully return time.
+    };
+
+  interface TIO; // forward declaration.
+
+  interface UTO
+    {
+      // = TITLE
+      // The interface UTO is an encapsulation of time.
+      //
+      // = DESCRIPTION
+      //   This interface provides the following
+      //   operations on basic time :
+      //        - Construction of a UTO from piece parts, and extraction of the
+      //          piece parts from a UTO. The piece parts are the readonly
+      //          attributes :
+      //                      time
+      //                      inaccuracy
+      //                      time displacement factor
+      //                      structure with all the above.
+      //
+      //        - Comparison of time.
+      //
+      //        - Conversion from relative to absolute time, and conversion to
+      //          an interval (TIO)
+
+      readonly attribute TimeBase::TimeT time;
+      // absolute tine value.
+
+      readonly attribute TimeBase::InaccuracyT inaccuracy;
+      // inaccuracy in the time.
+
+      readonly attribute TimeBase::TdfT tdf;
+      // the time displacement factor.
+
+      readonly attribute TimeBase::UtcT utc_time;
+      // structure having the absolute time, the inaccuracy and the time
+      // displacement factor.
+
+      UTO absolute_time ();
+      // This returns the absolute time by adding the base time to the
+      // relative time in the object.
+
+      TimeComparison compare_time (in ComparisonType comparison_type,
+                                   in UTO otu);
+      // Compares the time contained in the object with the time in
+      // the supplied uto according to the supplied comparison type.
+
+      TIO time_to_interval (in UTO otu);
+      // Returns a TIO representing the time interval between the time
+      // in the object and the time in the UTO passed as a
+      // parameter. The interval returned is the interval between the
+      // mid-points of the two UTOs. Inaccuracies are ignored.  Note
+      // the result of this operation is meaningless if the base times
+      // of UTOs are different.
+
+      TIO interval ();
+      // Returns a TIO object representing the error interval around
+      // the time value in the UTO.
+    };
+
+  interface TIO
+    {
+      // = TITLE
+      // The TIO represents a time interval.
+      //
+      // = DESCRIPTION
+      // This interface has operations to compare itself with a UTO or
+      // another TIO. It also has an operation to create a UTO from
+      // the value of it's time interval.
+
+      readonly attribute TimeBase::IntervalT time_interval;
+      // Consists of a lower and an upper bound for the time interval.
+
+      CosTime::OverlapType spans (in UTO time,
+                                  out TIO overlap);
+      // This operation compares the time in this interface with the time
+      // in the supplied UTO and returns the overlap type as well as the
+      // interval of overlap in the form of a TIO.
+
+      CosTime::OverlapType overlaps (in TIO interval,
+                                     out TIO overlap);
+      // This operation compares the time in this interface with the time
+      // in the supplied TIO and returns the overlap type as well as the
+      // interval of overlap in the form of a TIO.
+
+      UTO time ();
+      // Converts the time interval in this interface into a UTO object by
+      // taking the midpoint of the interval as the time and the interval
+      // as the error envelope around the time.
+
+    };
+
+  interface TimeService
+    {
+      // = TITLE
+      // The time service manages the UTOs and the TIOs. This is the first
+      // interface seen by the clients requesting time.
+
+      UTO universal_time () raises (TimeUnavailable);
+      // This operation returns the current time and an estimate of
+      // inaccuracy in a UTO.
+
+      UTO secure_universal_time () raises(TimeUnavailable);
+      // This operation returns the current time in a UTO only if the
+      // time can be guaranteed to have been obtained securely.
+
+      UTO new_universal_time (in TimeBase::TimeT time,
+                              in TimeBase::InaccuracyT inaccuracy,
+                              in TimeBase::TdfT tdf);
+      // This creates a new UTO based on the given parameters.
+
+      UTO uto_from_utc (in TimeBase::UtcT utc);
+      // This creates a new UTO given a time in the UtcT form.
+
+      TIO new_interval (in TimeBase::TimeT lower,
+                        in TimeBase::TimeT upper );
+      // This creates a new TIO with the given parameters.
+    };
+};
+
+#endif /* TAO_TIME_IDL */

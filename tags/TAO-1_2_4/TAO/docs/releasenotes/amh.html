@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <title>AMH Status</title>
+    <!-- $Id$ -->
+</head>
+<body bgcolor="#FFFFFF" text="#000000">
+
+<h3>TAO's Asynchronous Method Handling (AMH) Feature</h3>
+    Point of contact: <a href="mailto:coryan@uci.edu">Carlos O'Ryan, </a>
+                      <a href="mailto:mayur@ics.uci.edu">Mayur Deshpande</a>
+    <h4>Last Updated: $Date$</h4>
+
+    <p> The purpose of this document is to provide a guide to using the AMH 
+capability available in TAO.  This capability is not specified by any 
+CORBA specification (as of date). This document lists the motivation for AMH, 
+how to use it and its current implementation status. </p>
+
+<HR SIZE=4 WIDTH="100%">
+
+
+<h3>Context</h3>
+For many types of distributed systems, the CORBA asynchronous method
+invocation 
+<a href="index.html/#ami"> (AMI) </a> 
+mechanism can improve concurrency, scalability, and 
+responsiveness significantly. AMI allows clients to invoke multiple 
+two-way requests without waiting for responses. The time normally
+spent waiting for replies can therefore be used to perform other
+useful work. The TAO asynchronous method handling (AMH) is a 
+mechanism, which extends the concepts of AMI from clients to 
+servers. Servers with AMH capability can return immediately 
+from (potentially) long, blocking requests. This makes the 
+servers capable of higher throughput. For a detailed description 
+for the motivation and potential use-cases of AMH, please refer to 
+<a href="http://www.cs.wustl.edu/~schmidt/PDF/AMH.pdf">AMH-Motivation. </a>
+
+<HR SIZE=4 WIDTH="100%">
+
+
+<h3>Using AMH</h3>
+Servers that want to take advantage of AMH capability must use 
+AMH-servants derived from AMH-skeletons. Invoking the 
+<a href="index.html#idl">IDL-Compiler </a>
+with the "-GH" option causes the IDL-Compiler to generate
+AMH-skeletons for all interfaces in the ".idl" file.  The signatures 
+of the AMH-methods differ from the original interfaces as per the 
+rules described in 
+<a href="http://www.cs.wustl.edu/~schmidt/PDF/DOA-02.pdf"">AMH-In-Detail. </a>
+Servants derived from the AMH-skeletons are registered with the POA in the usual manner 
+and appear to clients as "normal" servants for the corresponding 
+interfaces; Thus even while being transparent to the client, these 
+servants are now capable of handling requests asynchronously.  
+AMH-servants can be registered in any POA and can intermix with 
+"normal" servants in the same POA. The granularity of AMH is at 
+the interface level and not at the method level; Thus for an interface
+compiled with the "-GH" option, all operations in that interface are 
+asynchronous. Currently, AMH doesn't work in conjunction with
+<a href="index.html#interceptor">Interceptors </a> 
+and behaviour is undefined if both are used together.
+
+<HR SIZE=4 WIDTH="100%">
+
+
+<h3>Current Status</h3>
+<b>(As of March 3rd, 2002)</b>
+<br>
+<P>
+<b>Completed:</b>
+<ul>
+<li>Changes to ORB for asynchronous upcalls.</li>
+<li>Generation of AMH-skeletons.</li>
+<li>Generation of AMH ResponseHandlers.</li>
+<li>AMH Exceptions.</li>
+<li>Fix the narrow method bug for AMH skeletons : Fixed
+<li>Sending intelligent exception codes back to client in case 
+something nasty happens in the AMH server.</li>
+<li>Example of using AMH available at ACE_wrappers/TAO/examples/AMH/Sink_Server.</li>
+<li>Test for AMH : ACE_wrappers/TAO/performance-tests/Latency/AMH</li>
+<li>Test for AMH Exceptions : ACE_wrappers/TAO/tests/AMH_Exceptions</li>
+</ul>
+</P>
+
+<HR SIZE=4 WIDTH="100%">
+
+
+<h3>Credits</h3>
+Original idea first proposed by 
+<a href="mailto:coryan@uci.edu">Carlos O'Ryan </a> 
+and changes to ORB for AMH first attempted by 
+<a href="mailto:brucetrask@aol.com">Bruce Trask. </a>  
+First go to get the IDL-Compiler to generate AMH code attempted by 
+<a href="mailto:brunsch@doc.ece.uci.edu"> Darrell Brunsch. </a>  
+ORB changes for AMH as they stand today put in by 
+<a href="mailto:mayur@ics.uci.edu">Mayur Deshpande. </a>  
+Second go at getting IDL-compiler to generate code attempted by Mayur and 
+<a href="mailto:parsons@cs.wustl.edu">Jeff Parsons. </a>  
+Getting the IDL-Compiler beast to generate the right AMH code finally 
+achieved by Carlos.
+
+<HR SIZE=4 WIDTH="100%">
+
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+project: server {
+  depends += IORManpulation
+  libs    += TAO_IORManip
+
+  Source_Files {
+    test_i.cpp
+    server.cpp
+  }
+}
+
+project: client {
+  depends += IORManpulation
+  libs    += TAO_IORManip
+
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+}

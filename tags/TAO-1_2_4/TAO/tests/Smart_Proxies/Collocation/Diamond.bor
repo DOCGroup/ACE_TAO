@@ -1,0 +1,34 @@
+#
+# Makefile for building the Diamond library
+#
+
+NAME = Diamond
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1 -Gsp -Gd \
+	-Wb,skel_export_macro=Diamond_Export -Wb,stub_export_macro=MY_Stub_Export \
+	-Wb,skel_export_include=diamond_export.h -Wb,stub_export_include=stub_export.h
+
+OBJFILES = \
+        $(OBJDIR)\DiamondC.obj \
+	$(OBJDIR)\DiamondS.obj \
+        $(OBJDIR)\DiamondS_T.obj \
+	$(OBJDIR)\Diamond_i.obj
+
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) -DDiamond_HAS_DLL=1 -DDiamond_BUILD_DLL=1 $(TAO_PORTABLESERVER_CFLAGS)
+
+LIBFILES = $(ACE_LIB) $(TAO_LIB) $(BINDIR)\Coll_Test_Stubs$(LIB_DECORATOR).lib $(TAO_PORTABLESERVER_LIB)
+
+CPPDIR = .
+
+IDLDIR = .
+
+IDLFILES = $(IDLDIR)\Diamond.idl
+
+!include <$(ACE_ROOT)\include\makeinclude\build_dll.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\DiamondS.cpp $(IDLDIR)\DiamondC.cpp: $(IDLDIR)\Diamond.idl
+	$(TAO_IDL) $**

@@ -1,0 +1,7 @@
+project : taolib {
+  depends   += IFR_Client PortableServer
+  sharedname = TAO_Domain
+  libs      += TAO_IFR_Client TAO_PortableServer TAO
+  dllflags   = TAO_DOMAIN_BUILD_DLL
+  libout     = ..
+}

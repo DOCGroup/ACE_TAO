@@ -1,0 +1,31 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ * @file LB_ORT.idl
+ *
+ * $Id$
+ */
+//=============================================================================
+
+
+#ifndef TAO_LB_ORT_IDL
+#define TAO_LB_ORT_IDL
+
+#include "tao/ObjectReferenceTemplate.pidl"
+
+#pragma prefix "tao.lb"
+
+
+module TAO_LB
+{
+
+  valuetype ObjectReferenceFactory
+    : PortableInterceptor::ObjectReferenceFactory {};
+
+};
+
+#pragma prefix ""
+
+
+#endif  /* TAO_LB_ORT_IDL */
