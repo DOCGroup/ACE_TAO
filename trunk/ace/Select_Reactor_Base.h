@@ -59,15 +59,20 @@ class ACE_Export ACE_Event_Tuple
   //     An ACE_Event_Handler and its associated ACE_HANDLE.
   //
   // = DESCRIPTION
-  //     One ACE_Event_Handler is registered for one or more
-  //     ACE_HANDLE, in some points this information must be stored
-  //     explicitly. This structure provides a lightweight mechanism
-  //     to do so.
+  //     One <ACE_Event_Handler> is registered for one or more
+  //     <ACE_HANDLE>.  At various points, this information must be
+  //     stored explicitly.  This class provides a lightweight
+  //     mechanism to do so.
 public:
   ACE_Event_Tuple (void);
+  // Default constructor.
+
   ACE_Event_Tuple (ACE_Event_Handler *eh,
                    ACE_HANDLE h);
+  // Constructor.
+
   ~ACE_Event_Tuple (void);
+  // Destructor.
 
   int operator== (const ACE_Event_Tuple &rhs) const;
   // Equality operator.
@@ -76,7 +81,10 @@ public:
   // Inequality operator.
 
   ACE_HANDLE handle_;
-  ACE_Event_Handler* event_handler_;
+  // Handle.
+
+  ACE_Event_Handler *event_handler_;
+  // <ACE_Event_Handler> associated with the <ACE_HANDLE>.
 };
 
 class ACE_Export ACE_Select_Reactor_Notify : public ACE_Reactor_Notify
