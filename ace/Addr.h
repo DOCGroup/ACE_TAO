@@ -62,8 +62,16 @@ public:
   void base_set (int type, int size);
   // Initializes instance variables.
 
+#if defined (ACE_HAS_BROKEN_SAP_ANY)
+  static const ACE_Addr sap_any (void);
+  // Wild-card address.
+
+  // This #define works around broken C++ compilers...
+#define sap_any sap_any()
+#else
   static const ACE_Addr sap_any;
   // Wild-card address.
+#endif /* ACE_HAS_BROKEN_SAP_ANY */
 
   void dump (void) const;
   // Dump the state of an object.

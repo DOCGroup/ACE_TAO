@@ -93,8 +93,9 @@ fail_no_listener_nonblocking (void)
   ACE_ASSERT (status == -1);		
 
   // On some systems, a failed connect to localhost will return
-  // ECONNREFUSED directly, instead of EWOULDBLOCK. That is also fine.
-  if (errno == EWOULDBLOCK || errno == ECONNREFUSED) 
+  // ECONNREFUSED or ENETUNREACH directly, instead of
+  // EWOULDBLOCK. That is also fine.
+  if (errno == EWOULDBLOCK || errno == ECONNREFUSED || errno == ENETUNREACH)
     {
       if (sock.get_handle () != ACE_INVALID_HANDLE)
         status = con.complete (sock);
