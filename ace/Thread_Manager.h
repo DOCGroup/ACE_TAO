@@ -508,11 +508,6 @@ private:
 
   void *status_;
   // Keeps track of the exit status for the thread.
-
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  static ACE_Thread_Mutex ace_thread_lock_;
-  // Lock the creation of the Singleton.
-#endif /* defined (ACE_MT_SAFE) */
 };
 
 class ACE_Export ACE_Thread_Exit
