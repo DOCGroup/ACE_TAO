@@ -17,6 +17,7 @@
 //===========================================================================
 
 #include "tao/PortableServer/PortableServer.h"
+#include "tao/PortableServer/Adapter_Activator.h"
 #include "tao/PortableServer/POA.h"
 
 #include "tao/ORB.h"
