@@ -1,3 +1,0 @@
-project(POA Wait For Completion): server {
-  exename = wait_for_completion
-}
