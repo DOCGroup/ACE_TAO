@@ -369,6 +369,34 @@ Naming Service Specification</A>.
 <P>
 <HR>
 <H3>
+<A NAME="tservices"></A>CORBA Trading Service</H3>
+Point of contact: <A HREF="mailto:sbw1@cs.wustl.edu">Seth Widoff</A>
+<p>
+Development is complete, and testing and debugging have commenced on
+the TAO Trading Service. Currently, it
+meets the Linked Trader conformance requirements, in that it supports
+the Lookup, Register, Admin, and Link interfaces. The Lookup interface supports 
+subtype searching, preference sorting, dynamic property evaluation, federated queries, 
+and concurrent queries as a multi-threaded servant.
+<p>
+The Trading Service uses the Object Space implementation of the Standard 
+Template Library.	
+<p>
+Future Work: <p>
+
+<ul>
+  <li> The Proxy Interface.
+  <li> Persistent storage of service types and offers.
+</ul>
+
+
+<P>For general documentation of the Trading Service, please read <A HREF="http://www.omg.org/corba/sectrans.htm#trader">The
+Trading Service Specification.</A> 
+
+
+<P>
+<HR>
+<H3>
 <A NAME="pservices"></A>CORBA Property Service</H3>
 Point of contact: <A HREF="mailto:alex@cs.wustl.edu">Alexander Babu Arulanthu</A>
 
@@ -399,7 +427,7 @@ Point of contact: <A HREF="mailto:tworm@cs.wustl.edu">Torben Worm</A>
 <P>Future Work:
 
 <UL>
-  <LI>Implementation of the Transaction Service dependant parts
+  <LI>Implementation of the Transaction Service dependent parts
 </UL>
 
 <P>For general documentation of the Concurrency Control Service, please read <A HREF="http://www.omg.org/corba/sectrans.htm#concur">The
