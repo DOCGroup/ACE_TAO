@@ -1,3 +1,9 @@
+Tue Jun 22 20:11:49 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA.cpp (locate_servant_i): If incarnate() returns 0, then
+	  an OBJ_ADAPTER exception should be raised.  Thanks to Matthew
+	  Newhook <matthew@ooc.com> for pointing this out.
+
 Tue Jun 22 20:23:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
