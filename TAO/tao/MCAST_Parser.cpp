@@ -53,7 +53,8 @@ TAO_MCAST_Parser::parse_string (const char *ior,
   CORBA::UShort port = (CORBA::UShort) ACE_OS::atoi (this->mcast_port_.in
                                                      ());
 
-  ACE_Time_Value *timeout = 0;
+  ACE_Time_Value *timeout = orb->get_timeout ();
+
   object = multicast_to_service (service_name_.in (),
                                  port,
                                  this->mcast_address_.in (),

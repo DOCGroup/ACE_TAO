@@ -1,3 +1,53 @@
+Fri Dec 21 12:52:26 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ORB_Core.h (TAO_ORB_Core): 
+	* tao/ORB_Core.cpp (resolve_rir): 
+	  Neednot check the InitRef table since we would have already
+	  checked that in CORBA_ORB::resolve_initial_references.
+
+	  Added a new method to get a pointer to the InitRefMap which is
+	  needed for CORBA_ORB::resolve_initial_references method.
+	
+	* tao/ORB.h : 
+	* tao/ORB.cpp:
+	  Added new method: set_timeout and get_timeout to set and get the
+	  timeout value that is passes to resolve_initial_references
+	  method.
+
+	  Modified the signature of resolve_service. The method
+	  implementation doesnt do anything with the timeout value. So,
+	  the timeout is not an argument anymore.
+
+	  Modified the implementation of resolve_initial_references so
+	  that we can check the values that are passed 	via the ORBInitRef
+	  option first before checking for individual services. But, the
+	  values that are passed via -ORBDefaultInitRef are still checked
+	  after the well-known services and their environment variables
+ 	  are checked due to the fact that we now have a default
+	  DefaultInitRef value which is a multicast address and we want to
+	  check this value the last. So, if an user wants to override the
+	  environment variables using the command line options, he can do
+	  that using ORBInitRef option. Thanks to 
+	  McIntosh, Bruce <Bruce.McIntosh@Australia.Boeing.com> for
+	  reporting the change in the order of checking environment
+	  variables and command line parameters.
+
+	  Provided backward compatibility to set the ports for the
+	  services such as NameServicePort using environment variables.
+	  Thanks to 
+	  David Yongqiang Wang <davidyw@avaya.com> for first pointing this
+	  out.
+
+	  Set the timeout value passed to resolve_initial_refernces using
+	  the new set_timeout method. This value is later needed in
+	  TAO_MCAST_Parser::parse_string method.
+	
+	* tao/MCAST_Parser.cpp :
+	  Get the timeout value using get_timeout method in CORBA::ORB
+	  class.
+	  
+	  Thanks to Keith Snively <ksnively@d-a-s.com> for reporting this.
+
 Fri Dec 21 14:28:49 2001  Steve Huston  <shuston@riverace.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (ssliop_open_i):

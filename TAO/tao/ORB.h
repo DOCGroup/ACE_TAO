@@ -483,6 +483,9 @@ public:
 #endif /* __GNUC__ */
   // Useful for template programming.
 
+  /// Get the Timeout value
+  ACE_Time_Value *get_timeout (void);
+
 protected:
   // We must be created via the <ORB_init> call.
   CORBA_ORB (TAO_ORB_Core *orb_core);
@@ -500,8 +503,7 @@ protected:
 private:
 
   /// Resolve the given service based on the service ID.
-  CORBA_Object_ptr resolve_service (MCAST_SERVICEID service_id,
-                                    ACE_Time_Value *timeout
+  CORBA_Object_ptr resolve_service (MCAST_SERVICEID service_id
                                     TAO_ENV_ARG_DECL);
 
   /// Convert an OMG IOR into an object reference.
@@ -514,6 +516,9 @@ private:
 
   /// Check if ORB has shutdown.  If it has, throw an exception.
   void check_shutdown (TAO_ENV_SINGLE_ARG_DECL);
+
+  /// Set the timeout value
+  void set_timeout (ACE_Time_Value *timeout);
 
 private:
   /// lock required for mutual exclusion between multiple threads.
@@ -541,6 +546,10 @@ private:
   // = NON-PROVIDED METHODS
   CORBA_ORB (const CORBA_ORB &);
   CORBA_ORB &operator= (const CORBA_ORB &);
+  
+  /// Timeout value
+  ACE_Time_Value *timeout_;
+
 };
 
 class TAO_Export CORBA_ORB_var
