@@ -10,9 +10,11 @@
 
 INFO  = README
 
-DIRS  = Synch-Benchmarks \
-	Misc \
+DIRS  = Misc \
 	UDP
+# @@ This directory is currently under restructuring.  It should be
+#    added back to the makefile once this is done.
+# Synch-Benchmarks \
 
 # The following directory isn't compiled by default since haven't
 # finished integrating it into ACE...
