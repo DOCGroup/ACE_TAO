@@ -1140,19 +1140,20 @@ main (int argc, char *argv [])
 {
   ACE_LOG_MSG->open (argv[0] > 0  ?  argv[0]  :  "context_switch_time");
 
-#if defined (ACE_HAS_PENTIUM)  &&  \
-    !defined (ACE_HAS_HI_RES_TIMER)  &&  !defined (ACE_WIN32)
-  // Just to verify that ACE_High_Res_Timer::global_scale_factor ()
-  // correctly determines the clock speed.
-  ACE_DEBUG ((LM_DEBUG, "clock speed: %u MHz\n",
-              ACE_High_Res_Timer::global_scale_factor ()));
-#endif /* ACE_HAS_PENTIUM && ! ACE_HAS_HI_RES_TIMER && ! ACE_WIN32 */
+  if (get_options (argc, argv))
+    ACE_OS::exit (-1);
 
   // Disable LM_DEBUG.
   ACE_Log_Msg::instance ()->priority_mask (ACE_LOG_MSG->priority_mask () ^
                                            LM_DEBUG);
 
-  if (get_options (argc, argv)) ACE_OS::exit (-1);
+#if defined (ACE_HAS_PENTIUM)  &&  \
+    !defined (ACE_HAS_HI_RES_TIMER)  &&  !defined (ACE_WIN32)
+  // Just to verify that ACE_High_Res_Timer::global_scale_factor ()
+  // correctly determines the clock speed.
+  ACE_DEBUG ((LM_INFO, "clock speed: %u MHz\n",
+              ACE_High_Res_Timer::global_scale_factor ()));
+#endif /* ACE_HAS_PENTIUM && ! ACE_HAS_HI_RES_TIMER && ! ACE_WIN32 */
 
   if (ACE_OS::sched_params (
         ACE_Sched_Params (
