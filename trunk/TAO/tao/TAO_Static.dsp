@@ -25,7 +25,6 @@ CFG=TAO Static - Win32 Debug
 # PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath "Desktop"
-# PROP WCE_FormatVersion ""
 CPP=cl.exe
 RSC=rc.exe
 
@@ -405,6 +404,10 @@ SOURCE=.\ValueFactory.cpp
 
 SOURCE=.\ValueFactory_Map.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\WrongTransactionC.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -712,6 +715,10 @@ SOURCE=.\ValueFactory_Map.h
 # Begin Source File
 
 SOURCE=.\varout.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\WrongTransactionC.h
 # End Source File
 # End Group
 # Begin Group "Inline Files"

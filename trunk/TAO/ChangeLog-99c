@@ -35,6 +35,9 @@ Tue May 11 13:45:00 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/WrongTransactionC.{h,cpp}:
 	* tao/corbafwd.h:
 	* tao/Typecode_Constants.cpp:
+	* tao/TAO.dsp:
+	* tao/TAO_Staatic.dsp:
+	* tao/Makefile:
 	  Added WrongTransaction exception. It applies to Requests
 	  so it is not part of minimum CORBA. Also, while the spec
 	  does not say so explicitly, it seems to be thrown only
