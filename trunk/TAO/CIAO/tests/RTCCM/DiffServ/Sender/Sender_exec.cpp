@@ -44,7 +44,7 @@ SenderImpl::SenderExec_i::SenderExec_i (void)
   protocols.length (1);
   protocols[0].protocol_type = 0;
   protocols[0].transport_protocol_properties =
-    RTCORBA::ProtocolProperties::_duplicate (normal_tcp_protocol_properties);
+    RTCORBA::ProtocolProperties::_duplicate (normal_tcp_protocol_properties.in ());
   protocols[0].orb_protocol_properties =
     RTCORBA::ProtocolProperties::_nil ();
 
@@ -53,7 +53,7 @@ SenderImpl::SenderExec_i::SenderExec_i (void)
     rt_orb->create_client_protocol_policy (protocols);
 
   protocols[0].transport_protocol_properties =
-    RTCORBA::ProtocolProperties::_duplicate (diffserv_tcp_protocol_properties);
+    RTCORBA::ProtocolProperties::_duplicate (diffserv_tcp_protocol_properties.in ());
 
   this->diffserv_policy_list_.length (1);
   this->diffserv_policy_list_[0] =
@@ -193,7 +193,7 @@ SenderImpl::SenderExec_i::set_session_context (Components::SessionContext_ptr ct
   this->context_ =
     SenderImpl::SenderExec_Context::_narrow (ctx);
 
-  if (CORBA::is_nil (this->context_))
+  if (CORBA::is_nil (this->context_.in ()))
     throw CORBA::INTERNAL ();
 }
 
