@@ -1,3 +1,13 @@
+Fri Aug 20 09:27:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
+
+        * TAO/tests/ORT/ORT.mpc:
+          TAO/tests/Bug_1670_Regression/Bug_1670_Regression.mpc:
+          TAO/tests/Bug_1568_Regression/Bug_1568_Regression.mpc:
+          TAO/orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/GroupRef_Manipulation.mpc:
+
+          Removed outdated -Gv IDL option according to [Bug 1908].
+
+
 Fri Aug 20 07:47:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
 
         * bin/bin/MakeProjectCreator/templates/gnu.mpd:
