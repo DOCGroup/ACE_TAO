@@ -27,7 +27,7 @@ ACE_SOCK_Dgram_Mcast::send (const void *buf,
 }
 
 ASYS_INLINE ssize_t
-ACE_SOCK_Dgram_Mcast::send (const iovec iov[], 
+ACE_SOCK_Dgram_Mcast::send (const ACE_IO_Vector_Base iov[], 
 			    size_t n, int flags) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::send");

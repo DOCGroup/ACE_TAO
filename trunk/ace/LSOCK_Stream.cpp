@@ -60,7 +60,7 @@ ACE_LSOCK_Stream::dump (void) const
 // handle.
 
 ssize_t
-ACE_LSOCK_Stream::send_msg (const iovec iov[], 
+ACE_LSOCK_Stream::send_msg (const ACE_IO_Vector_Base iov[], 
 			    size_t n, 
 			    ACE_HANDLE handle)
 {
@@ -71,7 +71,7 @@ ACE_LSOCK_Stream::send_msg (const iovec iov[],
   cmsghdr *cmsgptr = (cmsghdr *) cmsgbuf;
 #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
-  send_msg.msg_iov = (iovec *) iov;
+  send_msg.msg_iov = (ACE_IO_Vector_Base *) iov;
   send_msg.msg_iovlen = n;
   send_msg.msg_name = 0;
   send_msg.msg_namelen = 0;
@@ -97,7 +97,7 @@ ACE_LSOCK_Stream::send_msg (const iovec iov[],
 // handle.
 
 ssize_t
-ACE_LSOCK_Stream::recv_msg (iovec iov[], 
+ACE_LSOCK_Stream::recv_msg (ACE_IO_Vector_Base iov[], 
 			    size_t n, 
 			    ACE_HANDLE &handle)
 {
@@ -108,7 +108,7 @@ ACE_LSOCK_Stream::recv_msg (iovec iov[],
   cmsghdr *cmsgptr = (cmsghdr *) cmsgbuf;
 #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
   
-  recv_msg.msg_iov = (iovec *) iov;
+  recv_msg.msg_iov = (ACE_IO_Vector_Base *) iov;
   recv_msg.msg_iovlen = n;
   recv_msg.msg_name = 0;
   recv_msg.msg_namelen = 0;

@@ -377,6 +377,8 @@ ACE_Array_Iterator<T>::done (void) const
   return this->current_ >= array_.size ();
 }
 
+#if !defined (ACE_LACKS_TEMPLATE_AS_TEMPLATE_PARAMETER)
+
 template <class T> ACE_INLINE
 ACE_DLList_Node<T>::ACE_DLList_Node (void)
   : item_ (0),
@@ -386,8 +388,8 @@ ACE_DLList_Node<T>::ACE_DLList_Node (void)
 
 template <class T> ACE_INLINE
 ACE_DLList_Node<T>::ACE_DLList_Node (T *&i,
-                                  ACE_DLList_Node<T> *n,
-                                  ACE_DLList_Node<T> *p)
+				     ACE_DLList_Node<T> *n,
+				     ACE_DLList_Node<T> *p)
   : item_ (i),
     next_ (n),
     prev_ (p)
@@ -397,7 +399,7 @@ ACE_DLList_Node<T>::ACE_DLList_Node (T *&i,
 template <class T> ACE_INLINE
 ACE_DLList_Node<T>::~ACE_DLList_Node (void) 
 {
-};
+}
 
 template <class T> ACE_INLINE void
 ACE_DLList<T>::operator= (ACE_DLList<T> &l) 
@@ -502,3 +504,4 @@ ACE_DLList_Iterator<T>::dump (void) const
   ACE_Double_Linked_List_Iterator< ACE_DLList_Node<T> >::dump (); 
 }
 
+#endif /* ! defined (ACE_LACKS_TEMPLATE_AS_TEMPLATE_PARAMETER) */

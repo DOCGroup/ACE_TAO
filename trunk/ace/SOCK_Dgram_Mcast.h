@@ -61,6 +61,22 @@ public:
   // subscribe uses the default mcast interface.
   // Returns: -1 on error, else 0.
 
+  int unsubscribe (const ACE_INET_Addr &mcast_addr,
+#if defined (ACE_PSOS)
+		   // pSOS supports numbers, not names for network interfaces
+		   long net_if = 0,
+#else
+		   const ASYS_TCHAR *net_if = 0,
+#endif /* defined (ACE_PSOS) */
+		   int protocol_family = PF_INET,
+		   int protocol = 0);
+  // Leave a multicast group.
+  // 
+  // Interface is hardware specific. use netstat -i to find whether
+  // your interface is, say, le0 or something else.  If net_if == 0,
+  // subscribe uses the default mcast interface.
+  // Returns: -1 on error, else 0.
+
   int unsubscribe (void);
   // Unsubscribe from a multicast group.  Returns 0 on success, -1 on
   // failure.
@@ -69,7 +85,9 @@ public:
   ssize_t send (const void *buf, size_t n, int flags = 0) const;
   // Send <n> bytes in <buf>.
 
-  ssize_t send (const iovec iov[], size_t n, int flags = 0) const;
+  ssize_t send (const ACE_IO_Vector_Base iov[],
+		size_t n,
+		int flags = 0) const;
   // Send <n> <iovecs>.
 
   // = Options.
@@ -97,7 +115,7 @@ private:
 		size_t n, 
 		const ACE_Addr &addr, 
 		int flags = 0) const;
-  ssize_t send (const iovec iov[], 
+  ssize_t send (const ACE_IO_Vector_Base iov[], 
 		size_t n, 
 		const ACE_Addr &addr, 
 		int flags = 0) const;
@@ -111,12 +129,24 @@ private:
 			      const ASYS_TCHAR *net_if = ASYS_TEXT ("le0")
 #endif /* defined (ACE_PSOS) */
                              );
+  // Initialize the <multicast_addres_ field>
+
+  int make_multicast_address_i (const ACE_INET_Addr &mcast_addr,
+				ip_mreq& multicast_address,
+#if defined (ACE_PSOS)
+				// pSOS supports numbers, not
+				// names for network interfaces
+				long net_if = 0
+#else
+				const ASYS_TCHAR *net_if = ASYS_TEXT ("le0")
+#endif /* defined (ACE_PSOS) */
+				);
   // Initialize a multicast address.
 
   ACE_INET_Addr mcast_addr_;
   // Multicast group address.
 
-  struct ip_mreq multicast_address_;
+  ip_mreq multicast_address_;
   // IP address.
 }; 
 

@@ -31,7 +31,7 @@ ACE_LSOCK::send_handle (const ACE_HANDLE handle) const
 {
   ACE_TRACE ("ACE_LSOCK::send_handle");
   unsigned char a[2];
-  iovec iov;
+  ACE_IO_Vector_Base iov;
   msghdr send_msg;
 #if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
   char cmsgbuf[ACE_BSD_CONTROL_MSG_LEN];
@@ -72,7 +72,7 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, int *len) const
 {
   ACE_TRACE ("ACE_LSOCK::recv_handle");
   unsigned char a[2];
-  iovec iov;
+  ACE_IO_Vector_Base iov;
   msghdr recv_msg;
 
 #if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)

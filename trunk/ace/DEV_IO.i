@@ -38,17 +38,17 @@ ACE_DEV_IO::recv (void *buf, size_t n) const
 }
 
 ASYS_INLINE ssize_t
-ACE_DEV_IO::send (const iovec iov[], size_t n) const
+ACE_DEV_IO::send (const ACE_IO_Vector_Base iov[], size_t n) const
 {
   ACE_TRACE ("ACE_DEV_IO::send");
-  return ACE_OS::writev (this->get_handle (), (iovec *) iov, n);
+  return ACE_OS::writev (this->get_handle (), iov, n);
 }
 
 ASYS_INLINE ssize_t
-ACE_DEV_IO::recv (iovec iov[], size_t n) const
+ACE_DEV_IO::recv (ACE_IO_Vector_Base iov[], size_t n) const
 {
   ACE_TRACE ("ACE_DEV_IO::recv");
-  return ACE_OS::readv (this->get_handle (), (iovec *) iov, n);
+  return ACE_OS::readv (this->get_handle (), iov, n);
 }
 
 ASYS_INLINE ssize_t
