@@ -1,39 +1,47 @@
 #----------------------------------------------------------------------------
-#	$Id$
+#       $Id$
 #
-#	Makefile for the ACE Adapter Web Server (JAWS) client
+#       Makefile for the ACE Adapter Web Server (JAWS) client
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
-BIN   	= http_client
+BIN2     = http_client
 
 FILES   = http_handler
 
-SRC	= $(addsuffix .cpp,$(FILES))
-OBJ	= $(addsuffix .o,$(FILES))
-
-BUILD 	= $(VBIN)
+SRC     = $(addsuffix .cpp,$(FILES))
+OBJ     = $(addsuffix .o,$(FILES))
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
-include		$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include		$(ACE_ROOT)/include/makeinclude/macros.GNU
-include		$(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include		$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include		$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+#### If the ACE library wasn't built with sufficient components, don't
+#### try to build here.
+ACE_BUILD_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --ace)
+ifeq (Utils,$(findstring Utils,$(ACE_BUILD_COMPONENTS)))
+  ifneq (FOR_TAO,$(ACE_COMPONENTS))
+    BIN = $(BIN2)
+  endif # ! FOR_TAO
+endif # ! Utils
+
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #----------------------------------------------------------------------------
-#	Local targets
+#       Local targets
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Dependencies
+#       Dependencies
 #----------------------------------------------------------------------------
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
