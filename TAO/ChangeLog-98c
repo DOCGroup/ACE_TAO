@@ -1,3 +1,52 @@
+Fri Dec 25 18:26:31 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Object_Table: Renamed all Object_Table classes to
+ 	  Active_Object_Map.  This makes the names consistent with the new
+ 	  POA spec. Also renamed the files.
+
+	  The other major change was to add a reverse lookup table to the
+ 	  active object map.  This new table map servants to object ids.
+  	  This is used to find servants in the active object map when
+ 	  _this() is called.  The previous implementation was a simple,
+ 	  but expensive, linear search.  This made object registration and
+ 	  activation very expensive when there are many objects in the
+ 	  active object map.  Note that this optimization is only relevant
+	  in the UNIQUE_ID POA policy. 
+
+	  Thanks to Jonathan Biggar <jon@floorboard.com> for suggesting
+	  this optimization.
+	
+	* tao/orbconf.h: TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE is
+ 	  deprecated. Please use
+ 	  TAO_DEFAULT_SERVER_ACTIVE_OBJECT_MAP_SIZE.
+
+	* tao/Server_Strategy_Factory, default_server and params: Added
+ 	  the ability to change the default creation policy of reverse
+ 	  active object map.
+
+	* tao/Operation_Table: Removed template specialization and made
+ 	  use of the new ACE_Hash_Map_Manager_Ex.
+
+	* tao/Servant_Base.h (TAO_Servant_Hash): Added a new class so that
+ 	  we can hash servants. 
+
+	* tao/Sequence.h (TAO_Base_Sequence): Removed the hash() method
+ 	  from this class.  It was a non-standard method that is not
+	  required with the new Hash_Map_Manager_Ex design. 
+
+	  Added TAO_ObjectId_Hash that will help us hash object ids.
+
+	* tao/POA: Removed the second POA constructor which took the
+ 	  active object map as a parameter.  Since the user never gets to
+ 	  call this function, this second constructor is extra.  Anyway,
+ 	  if the user does want to specific their own (custom) active
+ 	  object map, they should use the -ORBsystemidpolicydemuxstrategy
+ 	  user or -ORBuseridpolicydemuxstrategy user or
+ 	  -ORBuniqueidpolicyreversedemuxstrategy user policy.
+	  
+	  This change also effected some functions in ORB.cpp,
+ 	  ORB_Core.cpp, and poa_T.cpp.
+
 Fri Dec 25 18:27:21 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_array.cpp
