@@ -359,6 +359,29 @@ CORBA_Any::operator<<= (CORBA::TypeCode_ptr tc)
                  env);
 }
 
+void
+CORBA_Any::operator<<= (const CORBA_Exception &exception)
+{
+  ACE_TRY_NEW_ENV
+    {
+      TAO_OutputCDR stream;
+      stream.encode (exception._type (),
+                     &exception, 0,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      this->_tao_replace (exception._type (),
+                          stream.begin (),
+                          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing...
+    }
+  ACE_ENDTRY;
+}
+
 // Insertion of CORBA object - copying.
 
 void
@@ -846,7 +869,7 @@ CORBA_Any::operator>>= (to_object obj) const
         {
           // CORBA 2.3 has changed the behavior of this operator. Caller
           // is now responsible for release.
-          obj.ref_ = 
+          obj.ref_ =
             CORBA::Object::_duplicate (*(CORBA::Object_ptr *) this->value_);
 
           return 1;
@@ -861,8 +884,8 @@ CORBA_Any::operator>>= (to_object obj) const
                                TAO_ORB_Core_instance ());
 
           CORBA::Boolean flag = (stream.decode (CORBA::_tc_Object,
-                                                &obj.ref_, 
-                                                0, 
+                                                &obj.ref_,
+                                                0,
                                                 env)
                                  == CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1 : 0;
 
@@ -890,7 +913,7 @@ CORBA_Any::operator<<= (const char* s)
 
   this->replace (CORBA::_tc_string,
                  tmp,
-                 1, 
+                 1,
                  env);
 }
 
