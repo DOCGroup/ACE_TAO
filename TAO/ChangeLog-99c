@@ -1,3 +1,10 @@
+Wed Jun 30 14:39:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* examples/Logging/Logging_Test_i.cpp:
+	* examples/Logging/Logging_Service_i.cpp:
+	  Fixed exception handling stuff, thanks to Matt for providing the 
+	  fixes.
+
 Wed Jun 30 14:20:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.{cpp, h},
