@@ -48,7 +48,7 @@ CPP=cl.exe
 # PROP BASE Output_Dir "Release"
 # PROP BASE Intermediate_Dir "Release"
 # PROP BASE Target_Dir ""
-# PROP Use_MFC 2
+# PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "Release"
@@ -192,17 +192,17 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /G5 /MD /W3 /GX /O2 /I "..\STL" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "ACE_NLOGGING" /YX /c
+# ADD CPP /nologo /G5 /MD /W3 /GX /O2 /I "..\STL" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "ACE_NLOGGING" /YX /c
 CPP_PROJ=/nologo /G5 /MD /W3 /GX /O2 /I "..\STL" /D "NDEBUG" /D "WIN32" /D\
- "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "ACE_NLOGGING"\
- /Fp"$(INTDIR)/ace.pch" /YX /Fo"$(INTDIR)/" /c 
+ "_WINDOWS" /D "_MBCS" /D "ACE_NLOGGING" /Fp"$(INTDIR)/ace.pch" /YX\
+ /Fo"$(INTDIR)/" /c 
 CPP_OBJS=.\Release/
 CPP_SBRS=.\.
 # ADD BASE MTL /nologo /D "NDEBUG" /win32
 # ADD MTL /nologo /D "NDEBUG" /win32
 MTL_PROJ=/nologo /D "NDEBUG" /win32 
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
-# ADD RSC /l 0x409 /d "NDEBUG" /d "_AFXDLL"
+# ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -211,8 +211,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 /nologo /subsystem:windows /dll /machine:I386 /out:"ace-r.dll"
-LINK32_FLAGS=/nologo /subsystem:windows /dll /incremental:no\
+# ADD LINK32 advapi32.lib /nologo /subsystem:windows /dll /machine:I386 /out:"ace-r.dll"
+LINK32_FLAGS=advapi32.lib /nologo /subsystem:windows /dll /incremental:no\
  /pdb:"$(OUTDIR)/ace-r.pdb" /machine:I386 /out:"$(OUTDIR)/ace-r.dll"\
  /implib:"$(OUTDIR)/ace-r.lib" 
 LINK32_OBJS= \
@@ -354,7 +354,7 @@ LINK32_OBJS= \
 # PROP BASE Output_Dir "Debug"
 # PROP BASE Intermediate_Dir "Debug"
 # PROP BASE Target_Dir ""
-# PROP Use_MFC 2
+# PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "Debug"
@@ -502,17 +502,17 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /I "..\STL" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /YX /c
-CPP_PROJ=/nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /I "..\STL" /D "_DEBUG" /D\
- "WIN32" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS"\
- /Fp"$(INTDIR)/ace.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+# ADD CPP /nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /Gy /I "..\STL" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /YX /c
+CPP_PROJ=/nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /Gy /I "..\STL" /D "_DEBUG" /D\
+ "WIN32" /D "_WINDOWS" /D "_MBCS" /Fp"$(INTDIR)/ace.pch" /YX /Fo"$(INTDIR)/"\
+ /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE MTL /nologo /D "_DEBUG" /win32
 # ADD MTL /nologo /D "_DEBUG" /win32
 MTL_PROJ=/nologo /D "_DEBUG" /win32 
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG" /d "_AFXDLL"
+# ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -521,8 +521,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386
-# ADD LINK32 /nologo /subsystem:windows /dll /debug /machine:I386
-LINK32_FLAGS=/nologo /subsystem:windows /dll /incremental:yes\
+# ADD LINK32 advapi32.lib /nologo /subsystem:windows /dll /debug /machine:I386
+LINK32_FLAGS=advapi32.lib /nologo /subsystem:windows /dll /incremental:yes\
  /pdb:"$(OUTDIR)/ace.pdb" /debug /machine:I386 /out:"$(OUTDIR)/ace.dll"\
  /implib:"$(OUTDIR)/ace.lib" 
 LINK32_OBJS= \
@@ -664,7 +664,7 @@ LINK32_OBJS= \
 # PROP BASE Output_Dir "ace___Wi"
 # PROP BASE Intermediate_Dir "ace___Wi"
 # PROP BASE Target_Dir ""
-# PROP Use_MFC 2
+# PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "Unicode_Debug"
@@ -812,17 +812,17 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /I "..\STL" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /YX /c
-# ADD CPP /nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /I "..\STL" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "UNICODE" /YX /c
-CPP_PROJ=/nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /I "..\STL" /D "_DEBUG" /D\
- "WIN32" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "UNICODE"\
- /Fp"$(INTDIR)/ace.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+# ADD CPP /nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /Gy /I "..\STL" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "UNICODE" /YX /c
+CPP_PROJ=/nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /Gy /I "..\STL" /D "_DEBUG" /D\
+ "WIN32" /D "_WINDOWS" /D "_MBCS" /D "UNICODE" /Fp"$(INTDIR)/ace.pch" /YX\
+ /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Unicode_Debug/
 CPP_SBRS=.\.
 # ADD BASE MTL /nologo /D "_DEBUG" /win32
 # ADD MTL /nologo /D "_DEBUG" /win32
 MTL_PROJ=/nologo /D "_DEBUG" /win32 
 # ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_AFXDLL"
-# ADD RSC /l 0x409 /d "_DEBUG" /d "_AFXDLL"
+# ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -831,8 +831,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 wsock32.lib /nologo /subsystem:windows /dll /debug /machine:I386
-# ADD LINK32 /nologo /subsystem:windows /dll /debug /machine:I386 /out:"aceu.dll"
-LINK32_FLAGS=/nologo /subsystem:windows /dll /incremental:yes\
+# ADD LINK32 advapi32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"aceu.dll"
+LINK32_FLAGS=advapi32.lib /nologo /subsystem:windows /dll /incremental:yes\
  /pdb:"$(OUTDIR)/aceu.pdb" /debug /machine:I386 /out:"$(OUTDIR)/aceu.dll"\
  /implib:"$(OUTDIR)/aceu.lib" 
 LINK32_OBJS= \
@@ -974,7 +974,7 @@ LINK32_OBJS= \
 # PROP BASE Output_Dir "ace___W0"
 # PROP BASE Intermediate_Dir "ace___W0"
 # PROP BASE Target_Dir ""
-# PROP Use_MFC 2
+# PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "Unicode_Release"
@@ -1118,17 +1118,17 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /G5 /MD /W3 /GX /O2 /I "..\STL" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /YX /c
-# ADD CPP /nologo /G5 /MD /W3 /GX /O2 /I "..\STL" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "UNICODE" /YX /c
+# ADD CPP /nologo /G5 /MD /W3 /GX /O2 /I "..\STL" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "UNICODE" /YX /c
 CPP_PROJ=/nologo /G5 /MD /W3 /GX /O2 /I "..\STL" /D "NDEBUG" /D "WIN32" /D\
- "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "UNICODE"\
- /Fp"$(INTDIR)/ace.pch" /YX /Fo"$(INTDIR)/" /c 
+ "_WINDOWS" /D "_MBCS" /D "UNICODE" /Fp"$(INTDIR)/ace.pch" /YX /Fo"$(INTDIR)/"\
+ /c 
 CPP_OBJS=.\Unicode_Release/
 CPP_SBRS=.\.
 # ADD BASE MTL /nologo /D "NDEBUG" /win32
 # ADD MTL /nologo /D "NDEBUG" /win32
 MTL_PROJ=/nologo /D "NDEBUG" /win32 
 # ADD BASE RSC /l 0x409 /d "NDEBUG" /d "_AFXDLL"
-# ADD RSC /l 0x409 /d "NDEBUG" /d "_AFXDLL"
+# ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -1137,8 +1137,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 wsock32.lib /nologo /subsystem:windows /dll /machine:I386 /out:"ace-r.dll"
-# ADD LINK32 /nologo /subsystem:windows /dll /machine:I386 /out:"aceu-r.dll"
-LINK32_FLAGS=/nologo /subsystem:windows /dll /incremental:no\
+# ADD LINK32 advapi32.lib /nologo /subsystem:windows /dll /machine:I386 /out:"aceu-r.dll"
+LINK32_FLAGS=advapi32.lib /nologo /subsystem:windows /dll /incremental:no\
  /pdb:"$(OUTDIR)/aceu-r.pdb" /machine:I386 /out:"$(OUTDIR)/aceu-r.dll"\
  /implib:"$(OUTDIR)/aceu-r.lib" 
 LINK32_OBJS= \
@@ -1376,7 +1376,6 @@ DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -1412,7 +1411,6 @@ DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -1477,6 +1475,8 @@ DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\.\UPIPE_Stream.h"\
 	{$(INCLUDE)}"\.\UPIPE_Stream.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\UPIPE_Stream.obj" : $(SOURCE) $(DEP_CPP_UPIPE) "$(INTDIR)"
@@ -1670,7 +1670,6 @@ DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -1706,7 +1705,6 @@ DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -1771,6 +1769,8 @@ DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\.\UPIPE_Stream.h"\
 	{$(INCLUDE)}"\.\UPIPE_Stream.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\UPIPE_Stream.obj" : $(SOURCE) $(DEP_CPP_UPIPE) "$(INTDIR)"
@@ -1976,7 +1976,6 @@ DEP_CPP_UPIPE_=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -2012,7 +2011,6 @@ DEP_CPP_UPIPE_=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -2081,6 +2079,8 @@ DEP_CPP_UPIPE_=\
 	{$(INCLUDE)}"\.\UPIPE_Stream.h"\
 	{$(INCLUDE)}"\.\UPIPE_Stream.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\UPIPE_Connector.obj" : $(SOURCE) $(DEP_CPP_UPIPE_) "$(INTDIR)"
@@ -2278,7 +2278,6 @@ DEP_CPP_UPIPE_=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -2314,7 +2313,6 @@ DEP_CPP_UPIPE_=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -2383,6 +2381,8 @@ DEP_CPP_UPIPE_=\
 	{$(INCLUDE)}"\.\UPIPE_Stream.h"\
 	{$(INCLUDE)}"\.\UPIPE_Stream.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\UPIPE_Connector.obj" : $(SOURCE) $(DEP_CPP_UPIPE_) "$(INTDIR)"
@@ -2487,7 +2487,6 @@ DEP_CPP_UPIPE_A=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -2523,7 +2522,6 @@ DEP_CPP_UPIPE_A=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -2593,6 +2591,8 @@ DEP_CPP_UPIPE_A=\
 	{$(INCLUDE)}"\.\UPIPE_Stream.h"\
 	{$(INCLUDE)}"\.\UPIPE_Stream.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\UPIPE_Acceptor.obj" : $(SOURCE) $(DEP_CPP_UPIPE_A) "$(INTDIR)"
@@ -2791,7 +2791,6 @@ DEP_CPP_UPIPE_A=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -2827,7 +2826,6 @@ DEP_CPP_UPIPE_A=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -2897,6 +2895,8 @@ DEP_CPP_UPIPE_A=\
 	{$(INCLUDE)}"\.\UPIPE_Stream.h"\
 	{$(INCLUDE)}"\.\UPIPE_Stream.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\UPIPE_Acceptor.obj" : $(SOURCE) $(DEP_CPP_UPIPE_A) "$(INTDIR)"
@@ -3170,7 +3170,6 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -3203,7 +3202,6 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -3252,6 +3250,8 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\.\Token_Request_Reply.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Token_Request_Reply.obj" : $(SOURCE) $(DEP_CPP_TOKEN) "$(INTDIR)"
@@ -3298,7 +3298,6 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -3331,7 +3330,6 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -3380,6 +3378,8 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\.\Token_Request_Reply.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Token_Request_Reply.obj" : $(SOURCE) $(DEP_CPP_TOKEN) "$(INTDIR)"
@@ -3554,7 +3554,6 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -3587,7 +3586,6 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -3636,6 +3634,8 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\.\Token_Request_Reply.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Token_Request_Reply.obj" : $(SOURCE) $(DEP_CPP_TOKEN) "$(INTDIR)"
@@ -3689,7 +3689,6 @@ DEP_CPP_TOKEN_=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -3722,7 +3721,6 @@ DEP_CPP_TOKEN_=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -3771,6 +3769,8 @@ DEP_CPP_TOKEN_=\
 	{$(INCLUDE)}"\.\Token_Manager.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Token_Manager.obj" : $(SOURCE) $(DEP_CPP_TOKEN_) "$(INTDIR)"
@@ -3817,7 +3817,6 @@ DEP_CPP_TOKEN_=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -3850,7 +3849,6 @@ DEP_CPP_TOKEN_=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -3899,6 +3897,8 @@ DEP_CPP_TOKEN_=\
 	{$(INCLUDE)}"\.\Token_Manager.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Token_Manager.obj" : $(SOURCE) $(DEP_CPP_TOKEN_) "$(INTDIR)"
@@ -4073,7 +4073,6 @@ DEP_CPP_TOKEN_=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -4106,7 +4105,6 @@ DEP_CPP_TOKEN_=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -4155,6 +4153,8 @@ DEP_CPP_TOKEN_=\
 	{$(INCLUDE)}"\.\Token_Manager.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Token_Manager.obj" : $(SOURCE) $(DEP_CPP_TOKEN_) "$(INTDIR)"
@@ -4208,7 +4208,6 @@ DEP_CPP_TOKEN_C=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -4241,7 +4240,6 @@ DEP_CPP_TOKEN_C=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -4290,6 +4288,8 @@ DEP_CPP_TOKEN_C=\
 	{$(INCLUDE)}"\.\Token_Collection.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Token_Collection.obj" : $(SOURCE) $(DEP_CPP_TOKEN_C) "$(INTDIR)"
@@ -4336,7 +4336,6 @@ DEP_CPP_TOKEN_C=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -4369,7 +4368,6 @@ DEP_CPP_TOKEN_C=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -4418,6 +4416,8 @@ DEP_CPP_TOKEN_C=\
 	{$(INCLUDE)}"\.\Token_Collection.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Token_Collection.obj" : $(SOURCE) $(DEP_CPP_TOKEN_C) "$(INTDIR)"
@@ -4592,7 +4592,6 @@ DEP_CPP_TOKEN_C=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -4625,7 +4624,6 @@ DEP_CPP_TOKEN_C=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -4674,6 +4672,8 @@ DEP_CPP_TOKEN_C=\
 	{$(INCLUDE)}"\.\Token_Collection.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Token_Collection.obj" : $(SOURCE) $(DEP_CPP_TOKEN_C) "$(INTDIR)"
@@ -5941,7 +5941,6 @@ DEP_CPP_SYSTE=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -5952,7 +5951,6 @@ DEP_CPP_SYSTE=\
 	{$(INCLUDE)}"\.\Memory_Pool.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
@@ -5971,6 +5969,8 @@ DEP_CPP_SYSTE=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\System_Time.obj" : $(SOURCE) $(DEP_CPP_SYSTE) "$(INTDIR)"
@@ -6000,7 +6000,6 @@ DEP_CPP_SYSTE=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -6011,7 +6010,6 @@ DEP_CPP_SYSTE=\
 	{$(INCLUDE)}"\.\Memory_Pool.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
@@ -6030,6 +6028,8 @@ DEP_CPP_SYSTE=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\System_Time.obj" : $(SOURCE) $(DEP_CPP_SYSTE) "$(INTDIR)"
@@ -6118,7 +6118,6 @@ DEP_CPP_SYSTE=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -6129,7 +6128,6 @@ DEP_CPP_SYSTE=\
 	{$(INCLUDE)}"\.\Memory_Pool.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
@@ -6148,6 +6146,8 @@ DEP_CPP_SYSTE=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\System_Time.obj" : $(SOURCE) $(DEP_CPP_SYSTE) "$(INTDIR)"
@@ -6303,7 +6303,6 @@ DEP_CPP_SYNCH_=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -6314,7 +6313,6 @@ DEP_CPP_SYNCH_=\
 	{$(INCLUDE)}"\.\Memory_Pool.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
@@ -6332,6 +6330,8 @@ DEP_CPP_SYNCH_=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Synch.obj" : $(SOURCE) $(DEP_CPP_SYNCH_) "$(INTDIR)"
@@ -6361,7 +6361,6 @@ DEP_CPP_SYNCH_=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -6372,7 +6371,6 @@ DEP_CPP_SYNCH_=\
 	{$(INCLUDE)}"\.\Memory_Pool.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
@@ -6390,6 +6388,8 @@ DEP_CPP_SYNCH_=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Synch.obj" : $(SOURCE) $(DEP_CPP_SYNCH_) "$(INTDIR)"
@@ -6477,7 +6477,6 @@ DEP_CPP_SYNCH_=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -6488,7 +6487,6 @@ DEP_CPP_SYNCH_=\
 	{$(INCLUDE)}"\.\Memory_Pool.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
@@ -6506,6 +6504,8 @@ DEP_CPP_SYNCH_=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Synch.obj" : $(SOURCE) $(DEP_CPP_SYNCH_) "$(INTDIR)"
@@ -6561,7 +6561,6 @@ DEP_CPP_SVC_C=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -6602,7 +6601,6 @@ DEP_CPP_SVC_C=\
 	{$(INCLUDE)}"\.\Service_Record.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -6659,6 +6657,8 @@ DEP_CPP_SVC_C=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Svc_Conf_y.obj" : $(SOURCE) $(DEP_CPP_SVC_C) "$(INTDIR)"
@@ -6707,7 +6707,6 @@ DEP_CPP_SVC_C=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -6748,7 +6747,6 @@ DEP_CPP_SVC_C=\
 	{$(INCLUDE)}"\.\Service_Record.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -6807,6 +6805,8 @@ DEP_CPP_SVC_C=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Svc_Conf_y.obj" : $(SOURCE) $(DEP_CPP_SVC_C) "$(INTDIR)"
@@ -7003,7 +7003,6 @@ DEP_CPP_SVC_C=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -7044,7 +7043,6 @@ DEP_CPP_SVC_C=\
 	{$(INCLUDE)}"\.\Service_Record.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -7103,6 +7101,8 @@ DEP_CPP_SVC_C=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Svc_Conf_y.obj" : $(SOURCE) $(DEP_CPP_SVC_C) "$(INTDIR)"
@@ -7156,7 +7156,6 @@ DEP_CPP_SVC_CO=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -7194,7 +7193,6 @@ DEP_CPP_SVC_CO=\
 	{$(INCLUDE)}"\.\Service_Record.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -7243,6 +7241,8 @@ DEP_CPP_SVC_CO=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Svc_Conf_l.obj" : $(SOURCE) $(DEP_CPP_SVC_CO) "$(INTDIR)"
@@ -7289,7 +7289,6 @@ DEP_CPP_SVC_CO=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -7330,7 +7329,6 @@ DEP_CPP_SVC_CO=\
 	{$(INCLUDE)}"\.\Service_Record.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -7389,6 +7387,8 @@ DEP_CPP_SVC_CO=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Svc_Conf_l.obj" : $(SOURCE) $(DEP_CPP_SVC_CO) "$(INTDIR)"
@@ -7581,7 +7581,6 @@ DEP_CPP_SVC_CO=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -7622,7 +7621,6 @@ DEP_CPP_SVC_CO=\
 	{$(INCLUDE)}"\.\Service_Record.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -7681,6 +7679,8 @@ DEP_CPP_SVC_CO=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Svc_Conf_l.obj" : $(SOURCE) $(DEP_CPP_SVC_CO) "$(INTDIR)"
@@ -8365,7 +8365,6 @@ DEP_CPP_SSTRI=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -8398,7 +8397,6 @@ DEP_CPP_SSTRI=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -8445,6 +8443,8 @@ DEP_CPP_SSTRI=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\SString.obj" : $(SOURCE) $(DEP_CPP_SSTRI) "$(INTDIR)"
@@ -8491,7 +8491,6 @@ DEP_CPP_SSTRI=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -8524,7 +8523,6 @@ DEP_CPP_SSTRI=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -8571,6 +8569,8 @@ DEP_CPP_SSTRI=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\SString.obj" : $(SOURCE) $(DEP_CPP_SSTRI) "$(INTDIR)"
@@ -8743,7 +8743,6 @@ DEP_CPP_SSTRI=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -8776,7 +8775,6 @@ DEP_CPP_SSTRI=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -8823,6 +8821,8 @@ DEP_CPP_SSTRI=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\SString.obj" : $(SOURCE) $(DEP_CPP_SSTRI) "$(INTDIR)"
@@ -10974,7 +10974,6 @@ DEP_CPP_SIGNA=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -10985,7 +10984,6 @@ DEP_CPP_SIGNA=\
 	{$(INCLUDE)}"\.\Memory_Pool.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
@@ -11003,6 +11001,8 @@ DEP_CPP_SIGNA=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Signal.obj" : $(SOURCE) $(DEP_CPP_SIGNA) "$(INTDIR)"
@@ -11032,7 +11032,6 @@ DEP_CPP_SIGNA=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -11043,7 +11042,6 @@ DEP_CPP_SIGNA=\
 	{$(INCLUDE)}"\.\Memory_Pool.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
@@ -11061,6 +11059,8 @@ DEP_CPP_SIGNA=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Signal.obj" : $(SOURCE) $(DEP_CPP_SIGNA) "$(INTDIR)"
@@ -11148,7 +11148,6 @@ DEP_CPP_SIGNA=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -11159,7 +11158,6 @@ DEP_CPP_SIGNA=\
 	{$(INCLUDE)}"\.\Memory_Pool.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
@@ -11177,6 +11175,8 @@ DEP_CPP_SIGNA=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Signal.obj" : $(SOURCE) $(DEP_CPP_SIGNA) "$(INTDIR)"
@@ -11673,7 +11673,6 @@ DEP_CPP_SERVI=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -11713,7 +11712,6 @@ DEP_CPP_SERVI=\
 	{$(INCLUDE)}"\.\Service_Repository.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -11771,6 +11769,8 @@ DEP_CPP_SERVI=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Service_Repository.obj" : $(SOURCE) $(DEP_CPP_SERVI) "$(INTDIR)"
@@ -11961,7 +11961,6 @@ DEP_CPP_SERVI=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -12001,7 +12000,6 @@ DEP_CPP_SERVI=\
 	{$(INCLUDE)}"\.\Service_Repository.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -12059,6 +12057,8 @@ DEP_CPP_SERVI=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Service_Repository.obj" : $(SOURCE) $(DEP_CPP_SERVI) "$(INTDIR)"
@@ -12112,7 +12112,6 @@ DEP_CPP_SERVIC=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -12150,7 +12149,6 @@ DEP_CPP_SERVIC=\
 	{$(INCLUDE)}"\.\Service_Record.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -12206,6 +12204,8 @@ DEP_CPP_SERVIC=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Service_Record.obj" : $(SOURCE) $(DEP_CPP_SERVIC) "$(INTDIR)"
@@ -12252,7 +12252,6 @@ DEP_CPP_SERVIC=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -12290,7 +12289,6 @@ DEP_CPP_SERVIC=\
 	{$(INCLUDE)}"\.\Service_Record.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -12348,6 +12346,8 @@ DEP_CPP_SERVIC=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Service_Record.obj" : $(SOURCE) $(DEP_CPP_SERVIC) "$(INTDIR)"
@@ -12536,7 +12536,6 @@ DEP_CPP_SERVIC=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -12574,7 +12573,6 @@ DEP_CPP_SERVIC=\
 	{$(INCLUDE)}"\.\Service_Record.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -12632,6 +12630,8 @@ DEP_CPP_SERVIC=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Service_Record.obj" : $(SOURCE) $(DEP_CPP_SERVIC) "$(INTDIR)"
@@ -12826,7 +12826,6 @@ DEP_CPP_SERVICE_=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -12865,7 +12864,6 @@ DEP_CPP_SERVICE_=\
 	{$(INCLUDE)}"\.\Service_Repository.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -12915,6 +12913,8 @@ DEP_CPP_SERVICE_=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Service_Manager.obj" : $(SOURCE) $(DEP_CPP_SERVICE_) "$(INTDIR)"
@@ -12963,7 +12963,6 @@ DEP_CPP_SERVICE_=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -13005,7 +13004,6 @@ DEP_CPP_SERVICE_=\
 	{$(INCLUDE)}"\.\Service_Repository.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -13065,6 +13063,8 @@ DEP_CPP_SERVICE_=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Service_Manager.obj" : $(SOURCE) $(DEP_CPP_SERVICE_) "$(INTDIR)"
@@ -13263,7 +13263,6 @@ DEP_CPP_SERVICE_=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -13305,7 +13304,6 @@ DEP_CPP_SERVICE_=\
 	{$(INCLUDE)}"\.\Service_Repository.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -13365,6 +13363,8 @@ DEP_CPP_SERVICE_=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Service_Manager.obj" : $(SOURCE) $(DEP_CPP_SERVICE_) "$(INTDIR)"
@@ -13418,7 +13418,6 @@ DEP_CPP_SERVICE_M=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -13451,7 +13450,6 @@ DEP_CPP_SERVICE_M=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -13498,6 +13496,8 @@ DEP_CPP_SERVICE_M=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Service_Main.obj" : $(SOURCE) $(DEP_CPP_SERVICE_M) "$(INTDIR)"
@@ -13544,7 +13544,6 @@ DEP_CPP_SERVICE_M=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -13577,7 +13576,6 @@ DEP_CPP_SERVICE_M=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -13624,6 +13622,8 @@ DEP_CPP_SERVICE_M=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Service_Main.obj" : $(SOURCE) $(DEP_CPP_SERVICE_M) "$(INTDIR)"
@@ -13796,7 +13796,6 @@ DEP_CPP_SERVICE_M=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -13829,7 +13828,6 @@ DEP_CPP_SERVICE_M=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -13876,6 +13874,8 @@ DEP_CPP_SERVICE_M=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Service_Main.obj" : $(SOURCE) $(DEP_CPP_SERVICE_M) "$(INTDIR)"
@@ -13933,7 +13933,6 @@ DEP_CPP_SERVICE_C=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -13975,7 +13974,6 @@ DEP_CPP_SERVICE_C=\
 	{$(INCLUDE)}"\.\Service_Repository.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -14026,6 +14024,8 @@ DEP_CPP_SERVICE_C=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Service_Config.obj" : $(SOURCE) $(DEP_CPP_SERVICE_C) "$(INTDIR)"
@@ -14076,7 +14076,6 @@ DEP_CPP_SERVICE_C=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -14121,7 +14120,6 @@ DEP_CPP_SERVICE_C=\
 	{$(INCLUDE)}"\.\Service_Repository.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -14182,6 +14180,8 @@ DEP_CPP_SERVICE_C=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Service_Config.obj" : $(SOURCE) $(DEP_CPP_SERVICE_C) "$(INTDIR)"
@@ -14388,7 +14388,6 @@ DEP_CPP_SERVICE_C=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -14433,7 +14432,6 @@ DEP_CPP_SERVICE_C=\
 	{$(INCLUDE)}"\.\Service_Repository.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -14494,6 +14492,8 @@ DEP_CPP_SERVICE_C=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Service_Config.obj" : $(SOURCE) $(DEP_CPP_SERVICE_C) "$(INTDIR)"
@@ -14547,7 +14547,6 @@ DEP_CPP_REMOT=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -14582,7 +14581,6 @@ DEP_CPP_REMOT=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\Singleton.cpp"\
 	{$(INCLUDE)}"\.\Singleton.h"\
@@ -14636,6 +14634,8 @@ DEP_CPP_REMOT=\
 	{$(INCLUDE)}"\.\Token_Request_Reply.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Remote_Tokens.obj" : $(SOURCE) $(DEP_CPP_REMOT) "$(INTDIR)"
@@ -14682,7 +14682,6 @@ DEP_CPP_REMOT=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -14717,7 +14716,6 @@ DEP_CPP_REMOT=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\Singleton.cpp"\
 	{$(INCLUDE)}"\.\Singleton.h"\
@@ -14771,6 +14769,8 @@ DEP_CPP_REMOT=\
 	{$(INCLUDE)}"\.\Token_Request_Reply.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Remote_Tokens.obj" : $(SOURCE) $(DEP_CPP_REMOT) "$(INTDIR)"
@@ -14952,7 +14952,6 @@ DEP_CPP_REMOT=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -14987,7 +14986,6 @@ DEP_CPP_REMOT=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\Singleton.cpp"\
 	{$(INCLUDE)}"\.\Singleton.h"\
@@ -15041,6 +15039,8 @@ DEP_CPP_REMOT=\
 	{$(INCLUDE)}"\.\Token_Request_Reply.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Remote_Tokens.obj" : $(SOURCE) $(DEP_CPP_REMOT) "$(INTDIR)"
@@ -15094,7 +15094,6 @@ DEP_CPP_REMOTE=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -15131,7 +15130,6 @@ DEP_CPP_REMOTE=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -15180,6 +15178,8 @@ DEP_CPP_REMOTE=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Remote_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REMOTE) "$(INTDIR)"
@@ -15226,7 +15226,6 @@ DEP_CPP_REMOTE=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -15263,7 +15262,6 @@ DEP_CPP_REMOTE=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -15312,6 +15310,8 @@ DEP_CPP_REMOTE=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Remote_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REMOTE) "$(INTDIR)"
@@ -15490,7 +15490,6 @@ DEP_CPP_REMOTE=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -15527,7 +15526,6 @@ DEP_CPP_REMOTE=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -15576,6 +15574,8 @@ DEP_CPP_REMOTE=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Remote_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REMOTE) "$(INTDIR)"
@@ -15629,7 +15629,6 @@ DEP_CPP_READ_=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -15664,7 +15663,6 @@ DEP_CPP_READ_=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -15711,6 +15709,8 @@ DEP_CPP_READ_=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Read_Buffer.obj" : $(SOURCE) $(DEP_CPP_READ_) "$(INTDIR)"
@@ -15757,7 +15757,6 @@ DEP_CPP_READ_=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -15792,7 +15791,6 @@ DEP_CPP_READ_=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -15839,6 +15837,8 @@ DEP_CPP_READ_=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Read_Buffer.obj" : $(SOURCE) $(DEP_CPP_READ_) "$(INTDIR)"
@@ -16013,7 +16013,6 @@ DEP_CPP_READ_=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -16048,7 +16047,6 @@ DEP_CPP_READ_=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -16095,6 +16093,8 @@ DEP_CPP_READ_=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Read_Buffer.obj" : $(SOURCE) $(DEP_CPP_READ_) "$(INTDIR)"
@@ -16148,7 +16148,6 @@ DEP_CPP_REACT=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -16181,7 +16180,6 @@ DEP_CPP_REACT=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -16232,6 +16230,8 @@ DEP_CPP_REACT=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Reactor.obj" : $(SOURCE) $(DEP_CPP_REACT) "$(INTDIR)"
@@ -16278,7 +16278,6 @@ DEP_CPP_REACT=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -16311,7 +16310,6 @@ DEP_CPP_REACT=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -16362,6 +16360,8 @@ DEP_CPP_REACT=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Reactor.obj" : $(SOURCE) $(DEP_CPP_REACT) "$(INTDIR)"
@@ -16538,7 +16538,6 @@ DEP_CPP_REACT=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -16571,7 +16570,6 @@ DEP_CPP_REACT=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -16622,6 +16620,8 @@ DEP_CPP_REACT=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Reactor.obj" : $(SOURCE) $(DEP_CPP_REACT) "$(INTDIR)"
@@ -16639,6 +16639,7 @@ SOURCE=.\Profile_Timer.cpp
 
 DEP_CPP_PROFI=\
 	{$(INCLUDE)}"\.\ACE.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
@@ -16789,7 +16790,6 @@ DEP_CPP_PROCE=\
 	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Process.h"\
 	{$(INCLUDE)}"\.\Process.i"\
 	{$(INCLUDE)}"\.\Process_Manager.h"\
 	{$(INCLUDE)}"\.\Process_Manager.i"\
@@ -16809,6 +16809,7 @@ DEP_CPP_PROCE=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\PROCESS.H"\
 	
 
 "$(INTDIR)\Process_Manager.obj" : $(SOURCE) $(DEP_CPP_PROCE) "$(INTDIR)"
@@ -16834,7 +16835,6 @@ DEP_CPP_PROCE=\
 	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Process.h"\
 	{$(INCLUDE)}"\.\Process.i"\
 	{$(INCLUDE)}"\.\Process_Manager.h"\
 	{$(INCLUDE)}"\.\Process_Manager.i"\
@@ -16854,6 +16854,7 @@ DEP_CPP_PROCE=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\PROCESS.H"\
 	
 
 "$(INTDIR)\Process_Manager.obj" : $(SOURCE) $(DEP_CPP_PROCE) "$(INTDIR)"
@@ -16924,7 +16925,6 @@ DEP_CPP_PROCE=\
 	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Process.h"\
 	{$(INCLUDE)}"\.\Process.i"\
 	{$(INCLUDE)}"\.\Process_Manager.h"\
 	{$(INCLUDE)}"\.\Process_Manager.i"\
@@ -16944,6 +16944,7 @@ DEP_CPP_PROCE=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\PROCESS.H"\
 	
 
 "$(INTDIR)\Process_Manager.obj" : $(SOURCE) $(DEP_CPP_PROCE) "$(INTDIR)"
@@ -17216,7 +17217,6 @@ DEP_CPP_PARSE=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -17258,7 +17258,6 @@ DEP_CPP_PARSE=\
 	{$(INCLUDE)}"\.\Service_Repository.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -17316,6 +17315,8 @@ DEP_CPP_PARSE=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Parse_Node.obj" : $(SOURCE) $(DEP_CPP_PARSE) "$(INTDIR)"
@@ -17508,7 +17509,6 @@ DEP_CPP_PARSE=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -17550,7 +17550,6 @@ DEP_CPP_PARSE=\
 	{$(INCLUDE)}"\.\Service_Repository.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -17608,6 +17607,8 @@ DEP_CPP_PARSE=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Parse_Node.obj" : $(SOURCE) $(DEP_CPP_PARSE) "$(INTDIR)"
@@ -17878,7 +17879,6 @@ DEP_CPP_NAMIN=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -17918,7 +17918,6 @@ DEP_CPP_NAMIN=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -17967,7 +17966,9 @@ DEP_CPP_NAMIN=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
-	{$(INCLUDE)}"\iostream.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
+	{$(INCLUDE)}"\IOSTREAM.H"\
 	
 
 "$(INTDIR)\Naming_Context.obj" : $(SOURCE) $(DEP_CPP_NAMIN) "$(INTDIR)"
@@ -18176,7 +18177,6 @@ DEP_CPP_NAMIN=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -18216,7 +18216,6 @@ DEP_CPP_NAMIN=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -18265,7 +18264,9 @@ DEP_CPP_NAMIN=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
-	{$(INCLUDE)}"\iostream.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
+	{$(INCLUDE)}"\IOSTREAM.H"\
 	
 
 "$(INTDIR)\Naming_Context.obj" : $(SOURCE) $(DEP_CPP_NAMIN) "$(INTDIR)"
@@ -18451,7 +18452,6 @@ DEP_CPP_NAME_=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -18487,7 +18487,6 @@ DEP_CPP_NAME_=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -18536,6 +18535,8 @@ DEP_CPP_NAME_=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Name_Space.obj" : $(SOURCE) $(DEP_CPP_NAME_) "$(INTDIR)"
@@ -18713,7 +18714,6 @@ DEP_CPP_NAME_=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -18749,7 +18749,6 @@ DEP_CPP_NAME_=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -18798,6 +18797,8 @@ DEP_CPP_NAME_=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Name_Space.obj" : $(SOURCE) $(DEP_CPP_NAME_) "$(INTDIR)"
@@ -19037,7 +19038,6 @@ DEP_CPP_NAME_P=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -19072,7 +19072,6 @@ DEP_CPP_NAME_P=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -19121,6 +19120,8 @@ DEP_CPP_NAME_P=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Name_Proxy.obj" : $(SOURCE) $(DEP_CPP_NAME_P) "$(INTDIR)"
@@ -19297,7 +19298,6 @@ DEP_CPP_NAME_P=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -19332,7 +19332,6 @@ DEP_CPP_NAME_P=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -19381,6 +19380,8 @@ DEP_CPP_NAME_P=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Name_Proxy.obj" : $(SOURCE) $(DEP_CPP_NAME_P) "$(INTDIR)"
@@ -19574,7 +19575,6 @@ DEP_CPP_MULTI=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -19612,7 +19612,6 @@ DEP_CPP_MULTI=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -19667,6 +19666,8 @@ DEP_CPP_MULTI=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Multiplexor.obj" : $(SOURCE) $(DEP_CPP_MULTI) "$(INTDIR)"
@@ -19852,7 +19853,6 @@ DEP_CPP_MULTI=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -19890,7 +19890,6 @@ DEP_CPP_MULTI=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -19945,6 +19944,8 @@ DEP_CPP_MULTI=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Multiplexor.obj" : $(SOURCE) $(DEP_CPP_MULTI) "$(INTDIR)"
@@ -20042,7 +20043,6 @@ DEP_CPP_MESSA=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -20055,7 +20055,6 @@ DEP_CPP_MESSA=\
 	{$(INCLUDE)}"\.\Message_Block.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
@@ -20073,6 +20072,8 @@ DEP_CPP_MESSA=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Message_Block.obj" : $(SOURCE) $(DEP_CPP_MESSA) "$(INTDIR)"
@@ -20162,7 +20163,6 @@ DEP_CPP_MESSA=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -20175,7 +20175,6 @@ DEP_CPP_MESSA=\
 	{$(INCLUDE)}"\.\Message_Block.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
@@ -20193,6 +20192,8 @@ DEP_CPP_MESSA=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Message_Block.obj" : $(SOURCE) $(DEP_CPP_MESSA) "$(INTDIR)"
@@ -20288,7 +20289,6 @@ DEP_CPP_MEMOR=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -20299,7 +20299,6 @@ DEP_CPP_MEMOR=\
 	{$(INCLUDE)}"\.\Memory_Pool.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
@@ -20317,6 +20316,8 @@ DEP_CPP_MEMOR=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Memory_Pool.obj" : $(SOURCE) $(DEP_CPP_MEMOR) "$(INTDIR)"
@@ -20404,7 +20405,6 @@ DEP_CPP_MEMOR=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -20415,7 +20415,6 @@ DEP_CPP_MEMOR=\
 	{$(INCLUDE)}"\.\Memory_Pool.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
@@ -20433,6 +20432,8 @@ DEP_CPP_MEMOR=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Memory_Pool.obj" : $(SOURCE) $(DEP_CPP_MEMOR) "$(INTDIR)"
@@ -20583,7 +20584,6 @@ DEP_CPP_MALLO=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -20594,7 +20594,6 @@ DEP_CPP_MALLO=\
 	{$(INCLUDE)}"\.\Memory_Pool.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
@@ -20612,6 +20611,8 @@ DEP_CPP_MALLO=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Malloc.obj" : $(SOURCE) $(DEP_CPP_MALLO) "$(INTDIR)"
@@ -20699,7 +20700,6 @@ DEP_CPP_MALLO=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -20710,7 +20710,6 @@ DEP_CPP_MALLO=\
 	{$(INCLUDE)}"\.\Memory_Pool.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
@@ -20728,6 +20727,8 @@ DEP_CPP_MALLO=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Malloc.obj" : $(SOURCE) $(DEP_CPP_MALLO) "$(INTDIR)"
@@ -21260,7 +21261,6 @@ DEP_CPP_LOG_M=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -21271,7 +21271,6 @@ DEP_CPP_LOG_M=\
 	{$(INCLUDE)}"\.\Memory_Pool.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SPIPE.h"\
 	{$(INCLUDE)}"\.\SPIPE.i"\
@@ -21297,6 +21296,8 @@ DEP_CPP_LOG_M=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Log_Msg.obj" : $(SOURCE) $(DEP_CPP_LOG_M) "$(INTDIR)"
@@ -21352,7 +21353,6 @@ DEP_CPP_LOG_M=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -21363,7 +21363,6 @@ DEP_CPP_LOG_M=\
 	{$(INCLUDE)}"\.\Memory_Pool.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SPIPE.h"\
 	{$(INCLUDE)}"\.\SPIPE.i"\
@@ -21389,6 +21388,8 @@ DEP_CPP_LOG_M=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Log_Msg.obj" : $(SOURCE) $(DEP_CPP_LOG_M) "$(INTDIR)"
@@ -21571,7 +21572,6 @@ DEP_CPP_LOCAL=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -21604,7 +21604,6 @@ DEP_CPP_LOCAL=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -21653,6 +21652,8 @@ DEP_CPP_LOCAL=\
 	{$(INCLUDE)}"\.\Token_Manager.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Local_Tokens.obj" : $(SOURCE) $(DEP_CPP_LOCAL) "$(INTDIR)"
@@ -21827,7 +21828,6 @@ DEP_CPP_LOCAL=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -21860,7 +21860,6 @@ DEP_CPP_LOCAL=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -21909,6 +21908,8 @@ DEP_CPP_LOCAL=\
 	{$(INCLUDE)}"\.\Token_Manager.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Local_Tokens.obj" : $(SOURCE) $(DEP_CPP_LOCAL) "$(INTDIR)"
@@ -22101,7 +22102,6 @@ DEP_CPP_LOCAL_=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -22138,7 +22138,6 @@ DEP_CPP_LOCAL_=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -22187,6 +22186,8 @@ DEP_CPP_LOCAL_=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Local_Name_Space.obj" : $(SOURCE) $(DEP_CPP_LOCAL_) "$(INTDIR)"
@@ -22371,7 +22372,6 @@ DEP_CPP_LOCAL_=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -22408,7 +22408,6 @@ DEP_CPP_LOCAL_=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -22457,6 +22456,8 @@ DEP_CPP_LOCAL_=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Local_Name_Space.obj" : $(SOURCE) $(DEP_CPP_LOCAL_) "$(INTDIR)"
@@ -23404,7 +23405,6 @@ DEP_CPP_EVENT=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -23417,7 +23417,6 @@ DEP_CPP_EVENT=\
 	{$(INCLUDE)}"\.\Message_Block.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
@@ -23435,6 +23434,8 @@ DEP_CPP_EVENT=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Event_Handler.obj" : $(SOURCE) $(DEP_CPP_EVENT) "$(INTDIR)"
@@ -23524,7 +23525,6 @@ DEP_CPP_EVENT=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -23537,7 +23537,6 @@ DEP_CPP_EVENT=\
 	{$(INCLUDE)}"\.\Message_Block.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
@@ -23555,6 +23554,8 @@ DEP_CPP_EVENT=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Event_Handler.obj" : $(SOURCE) $(DEP_CPP_EVENT) "$(INTDIR)"
@@ -24165,7 +24166,6 @@ DEP_CPP_CORBA=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -24198,7 +24198,6 @@ DEP_CPP_CORBA=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -24245,6 +24244,8 @@ DEP_CPP_CORBA=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\CORBA_Handler.obj" : $(SOURCE) $(DEP_CPP_CORBA) "$(INTDIR)"
@@ -24421,7 +24422,6 @@ DEP_CPP_CORBA=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -24454,7 +24454,6 @@ DEP_CPP_CORBA=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -24501,6 +24500,8 @@ DEP_CPP_CORBA=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\CORBA_Handler.obj" : $(SOURCE) $(DEP_CPP_CORBA) "$(INTDIR)"
@@ -24795,7 +24796,6 @@ DEP_CPP_ACE_C=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -24820,7 +24820,6 @@ DEP_CPP_ACE_C=\
 	{$(INCLUDE)}"\.\Pipe.i"\
 	{$(INCLUDE)}"\.\Proactor.h"\
 	{$(INCLUDE)}"\.\Proactor.i"\
-	{$(INCLUDE)}"\.\Process.h"\
 	{$(INCLUDE)}"\.\Process.i"\
 	{$(INCLUDE)}"\.\Reactor.h"\
 	{$(INCLUDE)}"\.\Reactor.i"\
@@ -24832,7 +24831,6 @@ DEP_CPP_ACE_C=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -24879,6 +24877,9 @@ DEP_CPP_ACE_C=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\PROCESS.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\ACE.obj" : $(SOURCE) $(DEP_CPP_ACE_C) "$(INTDIR)"
@@ -25055,7 +25056,6 @@ DEP_CPP_ACE_C=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -25080,7 +25080,6 @@ DEP_CPP_ACE_C=\
 	{$(INCLUDE)}"\.\Pipe.i"\
 	{$(INCLUDE)}"\.\Proactor.h"\
 	{$(INCLUDE)}"\.\Proactor.i"\
-	{$(INCLUDE)}"\.\Process.h"\
 	{$(INCLUDE)}"\.\Process.i"\
 	{$(INCLUDE)}"\.\Reactor.h"\
 	{$(INCLUDE)}"\.\Reactor.i"\
@@ -25092,7 +25091,6 @@ DEP_CPP_ACE_C=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -25139,6 +25137,9 @@ DEP_CPP_ACE_C=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\PROCESS.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\ACE.obj" : $(SOURCE) $(DEP_CPP_ACE_C) "$(INTDIR)"
@@ -25446,7 +25447,6 @@ DEP_CPP_PROAC=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -25482,7 +25482,6 @@ DEP_CPP_PROAC=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -25537,6 +25536,8 @@ DEP_CPP_PROAC=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Proactor.obj" : $(SOURCE) $(DEP_CPP_PROAC) "$(INTDIR)"
@@ -25583,7 +25584,6 @@ DEP_CPP_PROAC=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -25619,7 +25619,6 @@ DEP_CPP_PROAC=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -25674,6 +25673,8 @@ DEP_CPP_PROAC=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Proactor.obj" : $(SOURCE) $(DEP_CPP_PROAC) "$(INTDIR)"
@@ -25720,7 +25721,6 @@ DEP_CPP_PROAC=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -25756,7 +25756,6 @@ DEP_CPP_PROAC=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -25811,6 +25810,8 @@ DEP_CPP_PROAC=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Proactor.obj" : $(SOURCE) $(DEP_CPP_PROAC) "$(INTDIR)"
@@ -25991,7 +25992,6 @@ DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -26024,7 +26024,6 @@ DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -26071,6 +26070,8 @@ DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\ReactorEx.obj" : $(SOURCE) $(DEP_CPP_REACTO) "$(INTDIR)"
@@ -26117,7 +26118,6 @@ DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -26150,7 +26150,6 @@ DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -26197,6 +26196,8 @@ DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\ReactorEx.obj" : $(SOURCE) $(DEP_CPP_REACTO) "$(INTDIR)"
@@ -26243,7 +26244,6 @@ DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -26276,7 +26276,6 @@ DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -26323,6 +26322,8 @@ DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\ReactorEx.obj" : $(SOURCE) $(DEP_CPP_REACTO) "$(INTDIR)"
@@ -26505,7 +26506,6 @@ DEP_CPP_TOKEN_I=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -26538,7 +26538,6 @@ DEP_CPP_TOKEN_I=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -26587,6 +26586,8 @@ DEP_CPP_TOKEN_I=\
 	{$(INCLUDE)}"\.\Token_Invariants.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Token_Invariants.obj" : $(SOURCE) $(DEP_CPP_TOKEN_I) "$(INTDIR)"
@@ -26633,7 +26634,6 @@ DEP_CPP_TOKEN_I=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -26666,7 +26666,6 @@ DEP_CPP_TOKEN_I=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -26715,6 +26714,8 @@ DEP_CPP_TOKEN_I=\
 	{$(INCLUDE)}"\.\Token_Invariants.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Token_Invariants.obj" : $(SOURCE) $(DEP_CPP_TOKEN_I) "$(INTDIR)"
@@ -26761,7 +26762,6 @@ DEP_CPP_TOKEN_I=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -26794,7 +26794,6 @@ DEP_CPP_TOKEN_I=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -26843,6 +26842,8 @@ DEP_CPP_TOKEN_I=\
 	{$(INCLUDE)}"\.\Token_Invariants.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Token_Invariants.obj" : $(SOURCE) $(DEP_CPP_TOKEN_I) "$(INTDIR)"
@@ -26906,13 +26907,13 @@ DEP_CPP_PROCES=\
 	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Process.h"\
 	{$(INCLUDE)}"\.\Process.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\PROCESS.H"\
 	
 
 "$(INTDIR)\Process.obj" : $(SOURCE) $(DEP_CPP_PROCES) "$(INTDIR)"
@@ -26937,13 +26938,13 @@ DEP_CPP_PROCES=\
 	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Process.h"\
 	{$(INCLUDE)}"\.\Process.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\PROCESS.H"\
 	
 
 "$(INTDIR)\Process.obj" : $(SOURCE) $(DEP_CPP_PROCES) "$(INTDIR)"
@@ -26968,13 +26969,13 @@ DEP_CPP_PROCES=\
 	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Process.h"\
 	{$(INCLUDE)}"\.\Process.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\PROCESS.H"\
 	
 
 "$(INTDIR)\Process.obj" : $(SOURCE) $(DEP_CPP_PROCES) "$(INTDIR)"
@@ -27224,7 +27225,6 @@ DEP_CPP_ACTIV=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -27258,7 +27258,6 @@ DEP_CPP_ACTIV=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -27305,6 +27304,8 @@ DEP_CPP_ACTIV=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Activation_Queue.obj" : $(SOURCE) $(DEP_CPP_ACTIV) "$(INTDIR)"
@@ -27352,7 +27353,6 @@ DEP_CPP_ACTIV=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -27386,7 +27386,6 @@ DEP_CPP_ACTIV=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -27433,6 +27432,8 @@ DEP_CPP_ACTIV=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Activation_Queue.obj" : $(SOURCE) $(DEP_CPP_ACTIV) "$(INTDIR)"
@@ -27480,7 +27481,6 @@ DEP_CPP_ACTIV=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -27514,7 +27514,6 @@ DEP_CPP_ACTIV=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -27561,6 +27560,8 @@ DEP_CPP_ACTIV=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Activation_Queue.obj" : $(SOURCE) $(DEP_CPP_ACTIV) "$(INTDIR)"
@@ -27696,7 +27697,7 @@ DEP_CPP_REGIS=\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
-	{$(INCLUDE)}"\iostream.h"\
+	{$(INCLUDE)}"\IOSTREAM.H"\
 	
 
 "$(INTDIR)\Registry.obj" : $(SOURCE) $(DEP_CPP_REGIS) "$(INTDIR)"
@@ -27733,7 +27734,7 @@ DEP_CPP_REGIS=\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
-	{$(INCLUDE)}"\iostream.h"\
+	{$(INCLUDE)}"\IOSTREAM.H"\
 	
 
 "$(INTDIR)\Registry.obj" : $(SOURCE) $(DEP_CPP_REGIS) "$(INTDIR)"
@@ -27770,7 +27771,7 @@ DEP_CPP_REGIS=\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
-	{$(INCLUDE)}"\iostream.h"\
+	{$(INCLUDE)}"\IOSTREAM.H"\
 	
 
 "$(INTDIR)\Registry.obj" : $(SOURCE) $(DEP_CPP_REGIS) "$(INTDIR)"
@@ -27966,7 +27967,6 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -28002,7 +28002,6 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -28057,6 +28056,8 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Task.obj" : $(SOURCE) $(DEP_CPP_TASK_) "$(INTDIR)"
@@ -28105,7 +28106,6 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -28141,7 +28141,6 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -28196,6 +28195,8 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Task.obj" : $(SOURCE) $(DEP_CPP_TASK_) "$(INTDIR)"
@@ -28244,7 +28245,6 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -28280,7 +28280,6 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -28335,6 +28334,8 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Task.obj" : $(SOURCE) $(DEP_CPP_TASK_) "$(INTDIR)"
@@ -28515,7 +28516,6 @@ DEP_CPP_STRAT=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -28548,7 +28548,6 @@ DEP_CPP_STRAT=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -28595,6 +28594,8 @@ DEP_CPP_STRAT=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Strategies.obj" : $(SOURCE) $(DEP_CPP_STRAT) "$(INTDIR)"
@@ -28641,7 +28642,6 @@ DEP_CPP_STRAT=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -28674,7 +28674,6 @@ DEP_CPP_STRAT=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -28721,6 +28720,8 @@ DEP_CPP_STRAT=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Strategies.obj" : $(SOURCE) $(DEP_CPP_STRAT) "$(INTDIR)"
@@ -28767,7 +28768,6 @@ DEP_CPP_STRAT=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -28800,7 +28800,6 @@ DEP_CPP_STRAT=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -28847,6 +28846,8 @@ DEP_CPP_STRAT=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Strategies.obj" : $(SOURCE) $(DEP_CPP_STRAT) "$(INTDIR)"
@@ -29052,7 +29053,6 @@ DEP_CPP_REGIST=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -29091,7 +29091,6 @@ DEP_CPP_REGIST=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -29140,7 +29139,9 @@ DEP_CPP_REGIST=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
-	{$(INCLUDE)}"\iostream.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
+	{$(INCLUDE)}"\IOSTREAM.H"\
 	
 
 "$(INTDIR)\Registry_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REGIST) "$(INTDIR)"
@@ -29195,7 +29196,6 @@ DEP_CPP_REGIST=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -29234,7 +29234,6 @@ DEP_CPP_REGIST=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -29283,7 +29282,9 @@ DEP_CPP_REGIST=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
-	{$(INCLUDE)}"\iostream.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
+	{$(INCLUDE)}"\IOSTREAM.H"\
 	
 
 "$(INTDIR)\Registry_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REGIST) "$(INTDIR)"
@@ -29338,7 +29339,6 @@ DEP_CPP_REGIST=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -29377,7 +29377,6 @@ DEP_CPP_REGIST=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -29426,7 +29425,9 @@ DEP_CPP_REGIST=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
-	{$(INCLUDE)}"\iostream.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
+	{$(INCLUDE)}"\IOSTREAM.H"\
 	
 
 "$(INTDIR)\Registry_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REGIST) "$(INTDIR)"
@@ -29730,7 +29731,6 @@ DEP_CPP_ASYNC=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -29763,7 +29763,6 @@ DEP_CPP_ASYNC=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -29810,6 +29809,8 @@ DEP_CPP_ASYNC=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Asynch_IO.obj" : $(SOURCE) $(DEP_CPP_ASYNC) "$(INTDIR)"
@@ -29856,7 +29857,6 @@ DEP_CPP_ASYNC=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -29889,7 +29889,6 @@ DEP_CPP_ASYNC=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -29936,6 +29935,8 @@ DEP_CPP_ASYNC=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Asynch_IO.obj" : $(SOURCE) $(DEP_CPP_ASYNC) "$(INTDIR)"
@@ -29982,7 +29983,6 @@ DEP_CPP_ASYNC=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -30015,7 +30015,6 @@ DEP_CPP_ASYNC=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -30062,6 +30061,8 @@ DEP_CPP_ASYNC=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Asynch_IO.obj" : $(SOURCE) $(DEP_CPP_ASYNC) "$(INTDIR)"
@@ -30162,7 +30163,6 @@ DEP_CPP_TIMER=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -30173,7 +30173,6 @@ DEP_CPP_TIMER=\
 	{$(INCLUDE)}"\.\Memory_Pool.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
@@ -30196,6 +30195,8 @@ DEP_CPP_TIMER=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Timer_Queue.obj" : $(SOURCE) $(DEP_CPP_TIMER) "$(INTDIR)"
@@ -30225,7 +30226,6 @@ DEP_CPP_TIMER=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -30236,7 +30236,6 @@ DEP_CPP_TIMER=\
 	{$(INCLUDE)}"\.\Memory_Pool.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
@@ -30259,6 +30258,8 @@ DEP_CPP_TIMER=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Timer_Queue.obj" : $(SOURCE) $(DEP_CPP_TIMER) "$(INTDIR)"
@@ -30288,7 +30289,6 @@ DEP_CPP_TIMER=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -30299,7 +30299,6 @@ DEP_CPP_TIMER=\
 	{$(INCLUDE)}"\.\Memory_Pool.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
@@ -30322,6 +30321,8 @@ DEP_CPP_TIMER=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Timer_Queue.obj" : $(SOURCE) $(DEP_CPP_TIMER) "$(INTDIR)"
@@ -30389,7 +30390,6 @@ DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\.\Handle_Set.i"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
-	{$(INCLUDE)}"\.\IOStream.h"\
 	{$(INCLUDE)}"\.\IOStream_T.cpp"\
 	{$(INCLUDE)}"\.\IOStream_T.h"\
 	{$(INCLUDE)}"\.\IOStream_T.i"\
@@ -30404,6 +30404,7 @@ DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\IOSTREAM.H"\
 	
 
 "$(INTDIR)\IOStream.obj" : $(SOURCE) $(DEP_CPP_IOSTR) "$(INTDIR)"
@@ -30426,7 +30427,6 @@ DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\.\Handle_Set.i"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
-	{$(INCLUDE)}"\.\IOStream.h"\
 	{$(INCLUDE)}"\.\IOStream_T.cpp"\
 	{$(INCLUDE)}"\.\IOStream_T.h"\
 	{$(INCLUDE)}"\.\IOStream_T.i"\
@@ -30441,6 +30441,7 @@ DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\IOSTREAM.H"\
 	
 
 "$(INTDIR)\IOStream.obj" : $(SOURCE) $(DEP_CPP_IOSTR) "$(INTDIR)"
@@ -30463,7 +30464,6 @@ DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\.\Handle_Set.i"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
-	{$(INCLUDE)}"\.\IOStream.h"\
 	{$(INCLUDE)}"\.\IOStream_T.cpp"\
 	{$(INCLUDE)}"\.\IOStream_T.h"\
 	{$(INCLUDE)}"\.\IOStream_T.i"\
@@ -30478,6 +30478,7 @@ DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\IOSTREAM.H"\
 	
 
 "$(INTDIR)\IOStream.obj" : $(SOURCE) $(DEP_CPP_IOSTR) "$(INTDIR)"
@@ -30532,7 +30533,6 @@ DEP_CPP_FILEC=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -30565,7 +30565,6 @@ DEP_CPP_FILEC=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -30612,6 +30611,8 @@ DEP_CPP_FILEC=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Filecache.obj" : $(SOURCE) $(DEP_CPP_FILEC) "$(INTDIR)"
@@ -30659,7 +30660,6 @@ DEP_CPP_FILEC=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -30692,7 +30692,6 @@ DEP_CPP_FILEC=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -30739,6 +30738,8 @@ DEP_CPP_FILEC=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Filecache.obj" : $(SOURCE) $(DEP_CPP_FILEC) "$(INTDIR)"
@@ -30786,7 +30787,6 @@ DEP_CPP_FILEC=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -30819,7 +30819,6 @@ DEP_CPP_FILEC=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -30866,6 +30865,8 @@ DEP_CPP_FILEC=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Filecache.obj" : $(SOURCE) $(DEP_CPP_FILEC) "$(INTDIR)"
@@ -30913,7 +30914,6 @@ DEP_CPP_FILEC=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -30946,7 +30946,6 @@ DEP_CPP_FILEC=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -30993,6 +30992,8 @@ DEP_CPP_FILEC=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Filecache.obj" : $(SOURCE) $(DEP_CPP_FILEC) "$(INTDIR)"
@@ -31059,7 +31060,6 @@ DEP_CPP_OBJEC=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -31101,7 +31101,6 @@ DEP_CPP_OBJEC=\
 	{$(INCLUDE)}"\.\Service_Repository.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -31159,6 +31158,8 @@ DEP_CPP_OBJEC=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Object_Manager.obj" : $(SOURCE) $(DEP_CPP_OBJEC) "$(INTDIR)"
@@ -31205,7 +31206,6 @@ DEP_CPP_OBJEC=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -31247,7 +31247,6 @@ DEP_CPP_OBJEC=\
 	{$(INCLUDE)}"\.\Service_Repository.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -31305,6 +31304,8 @@ DEP_CPP_OBJEC=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Object_Manager.obj" : $(SOURCE) $(DEP_CPP_OBJEC) "$(INTDIR)"
@@ -31351,7 +31352,6 @@ DEP_CPP_OBJEC=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -31393,7 +31393,6 @@ DEP_CPP_OBJEC=\
 	{$(INCLUDE)}"\.\Service_Repository.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
@@ -31451,6 +31450,8 @@ DEP_CPP_OBJEC=\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\Object_Manager.obj" : $(SOURCE) $(DEP_CPP_OBJEC) "$(INTDIR)"
@@ -31552,7 +31553,6 @@ DEP_CPP_OS_CP=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -31565,7 +31565,6 @@ DEP_CPP_OS_CP=\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\Sched_Params.h"\
 	{$(INCLUDE)}"\.\Sched_Params.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
@@ -31583,6 +31582,8 @@ DEP_CPP_OS_CP=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\OS.obj" : $(SOURCE) $(DEP_CPP_OS_CP) "$(INTDIR)"
@@ -31614,7 +31615,6 @@ DEP_CPP_OS_CP=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -31627,7 +31627,6 @@ DEP_CPP_OS_CP=\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\Sched_Params.h"\
 	{$(INCLUDE)}"\.\Sched_Params.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
@@ -31645,6 +31644,8 @@ DEP_CPP_OS_CP=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\OS.obj" : $(SOURCE) $(DEP_CPP_OS_CP) "$(INTDIR)"
@@ -31676,7 +31677,6 @@ DEP_CPP_OS_CP=\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Malloc_T.h"\
@@ -31689,7 +31689,6 @@ DEP_CPP_OS_CP=\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\Sched_Params.h"\
 	{$(INCLUDE)}"\.\Sched_Params.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
@@ -31707,6 +31706,8 @@ DEP_CPP_OS_CP=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\e\MALLOC.H"\
+	{$(INCLUDE)}"\e\SIGNAL.H"\
 	
 
 "$(INTDIR)\OS.obj" : $(SOURCE) $(DEP_CPP_OS_CP) "$(INTDIR)"
