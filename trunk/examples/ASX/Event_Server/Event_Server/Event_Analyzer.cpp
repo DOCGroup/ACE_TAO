@@ -6,12 +6,14 @@
 int
 Event_Analyzer::open (void *)
 {
+  // No-op for now...
   return 0;
 }
 
 int
 Event_Analyzer::close (u_long)
 {
+  // No-op for now...
   return 0;
 }
 
@@ -37,24 +39,28 @@ int
 Event_Analyzer::put (ACE_Message_Block *mb, ACE_Time_Value *)
 {
   if (Options::instance ()->debug ())
-    ACE_DEBUG ((LM_DEBUG, "(%t) passing through Event_Analyser::put() (%s)\n",
+    ACE_DEBUG ((LM_DEBUG,
+                "(%t) passing through Event_Analyser::put() (%s)\n",
 		this->is_reader () ? "reader" : "writer"));
 
   if (mb->msg_type () == ACE_Message_Block::MB_IOCTL)
     this->control (mb);
 
+  // Just pass the message along to the next Module in the stream...
   return this->put_next (mb);
 }
 
 int 
 Event_Analyzer::init (int, char *[])
 {
+  // No-op for now.
   return 0;
 }
 
 int 
 Event_Analyzer::fini (void)
 {
+  // No-op for now.
   return 0;
 }
 
