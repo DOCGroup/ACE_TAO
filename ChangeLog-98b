@@ -1,3 +1,8 @@
+Thu Sep 03 15:43:22 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Upgradable_RW_Test.cpp: Fixed this file so that it works
+ 	  with egcs.
+
 Thu Sep  3 14:51:06 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* docs: Moved ACE-{tutorials,guidelines,subsets,porting}.html
