@@ -65,16 +65,22 @@ Tue Oct 21 07:14:24 1997  David L. Levine  <levine@cs.wustl.edu>
 	  sometimes needs to be cast to be used.  Thanks to Brian Mendel
 	  for reporting this.
 
+	* ace/Thread_Manager.cpp (wait): removed thr_yield () hack because
+	  it's not needed with Nanbor's Thread_Manager fix.
+
+	* tests/test_config.h (ACE_END_TEST): removed sleep hack with
+	  threading because it's not needed with Nanbor's Thread_Manager fix.
+
 	* include/makeinclude/platform_vxworks*.GNU: added VXWORKS=1 macro,
 	  for use by individual Makefiles to suppress VxWorks builds.
+
+	* examples/System_V_IPC: suppress VxWorks builds because the builds
+	  fail, and the examples wouldn't run anyways.
 
 	* netsvcs/lib/TS_Server_Handler.cpp: only instantiate
 	  ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> if ! ACE_HAS_TLI
 	  because without TLI, the instantiation is in
 	  Client_Logging_Handler.cpp.
-
-	* examples/System_V_IPC: suppress VxWorks builds because the builds
-	  fail, and the examples wouldn't run anyways.
 
 	* examples/Shared_Malloc/test_persistence.cpp: added #include of
 	  iostream.h with ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION.
