@@ -1,3 +1,18 @@
+Sat Mar 20 14:40:10 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * examples/Quoter/Factor_Finder.dsp:
+        * examples/Quoter/client.dsp:
+        * examples/Quoter/server.dsp:
+
+          Removed the generated headers from the projects.  I don't 
+          think the listing of generated classes in classview is 
+          helpful.
+
+        * examples/Quoter/Quoter_i.h:
+        * examples/Quoter/Quoter_i.cpp:
+
+          Fixed some warnings.
+
 Sat Mar 20 14:28:59 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Makefile: 
