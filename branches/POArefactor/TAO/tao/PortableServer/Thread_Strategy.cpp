@@ -5,7 +5,7 @@
 #include "ThreadPolicy.h"
 
 ACE_RCSID (PortableServer,
-           Thread_Strategy
+           Thread_Strategy,
            "$Id$")
 
 #if (TAO_HAS_MINIMUM_POA == 0)
