@@ -25,14 +25,15 @@ ifeq ($(shell type idl2java),)
 endif
 
 DOVE_BROWSER_JAVA = \
-        NavWeap.java \
         CosNaming.java \
         CosTimeBase.java \
-        RtecEventChannelAdmin.java \
         RtecEventComm.java \
-        RtecScheduler.java
+        RtecScheduler.java \
+        RtecEventChannelAdmin.java \
+        Navigation.java \
+        Weapons.java
 
-DOVE_BROWSER_CLASS = $(patsubst %.java,%.class,$(DOVE_BROWSER_JAVA))
+DOVE_BROWSER_CLASS = Navigation.class
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -40,14 +41,25 @@ DOVE_BROWSER_CLASS = $(patsubst %.java,%.class,$(DOVE_BROWSER_JAVA))
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
-BUILD = $(DOVE_BROWSER_CLASS)
+BUILD = $(DOVE_BROWSER_JAVA) $(DOVE_BROWSER_CLASS)
 
-include $(ACE_ROOT)/include/makeinclude/macros.GNU
-include $(TAO_ROOT)/rules.tao.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
-include $(TAO_ROOT)/taoconfig.mk
+ifeq ($(CROSS-COMPILE),)
+  include $(ACE_ROOT)/include/makeinclude/macros.GNU
+  include $(TAO_ROOT)/rules.tao.GNU
+  include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+  include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+  include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+  include $(TAO_ROOT)/taoconfig.mk
+else
+  all default_embedded:
+	@echo This module is not built on CROSS-COMPILE platforms.
+
+  clean realclean:
+	@echo Nothing to clean on CROSS-COMPILE platforms.
+endif # ! CROSS-COMPILE
+
+#### No need to create object directories.
+OBJDIRS =
 
 #----------------------------------------------------------------------------
 #       Local targets
@@ -63,16 +75,23 @@ include $(TAO_ROOT)/taoconfig.mk
 	@idl2java $<
 
 %.class: %.java
-	@vbjc $<
+	@vbjc *.java
 
 NavWeap.idl: ../NavWeap.idl
 	@cp -p $< .
+
+Navigation.java Weapons.java: NavWeap.idl
+	@idl2java $<
 
 %.idl: $(TAO_ROOT)/orbsvcs/orbsvcs/%.idl
 	@cp -p $< .
 
 realclean: clean
-	-/bin/rm -rf *.idl
+	-/bin/rm -rf $(DOVE_BROWSER_JAVA) \
+         $(patsubst %.java,%.idl,$(DOVE_BROWSER_JAVA)) NavWeap.idl \
+         Navigation.java NavigationH*.java \
+         Weapons.java WeaponsH*.java *.class CosNaming \
+	 RtecEventChannelAdmin RtecEventComm RtecScheduler TimeBase
 
 #----------------------------------------------------------------------------
 #       Dependencies
