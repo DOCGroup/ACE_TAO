@@ -1,3 +1,9 @@
+Sat Jan 24 11:08:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_visitor.h: 
+	  The forward declaration of TAO_OutStream was missing; I guess it
+	  was some slopiness in the merge.
+
 Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* The POA branch is merged back into the main trunk. For the
