@@ -1,3 +1,8 @@
+Tue Apr  5 13:04:54 2005  Ciju John  <john_c@ociweb.com>
+
+        * utils/catior/catior.cpp:
+          Minor correction in main IOR input loop.
+
 Sun Apr  3 18:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_1393_Regression/client.cpp:
