@@ -74,7 +74,7 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
           href_iter->nextNode ();
 
           static_cast< Process_Member_Function<OBJECT, DATA>* > (func)->doc(href_doc);
-          (*func) (iter, data);
+          (*func) (href_iter, data);
         }
     }
 }
