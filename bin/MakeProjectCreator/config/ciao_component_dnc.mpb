@@ -2,6 +2,6 @@
 // $Id$
 
 project : ciao_client_dnc, portableserver {
-  after    += CIAO_Container
-  libs     += CIAO_Container
+  after    += CIAO_DnC_Container
+  libs     += CIAO_DnC_Container
 }
