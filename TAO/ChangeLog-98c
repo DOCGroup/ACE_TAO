@@ -1,3 +1,36 @@
+
+Sat Aug 22 23:11:41 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/Makefile: Removed -P option from the
+	Makefile. Perfect hashing (using GPERF)  is the default OpLookup
+	strategy now. To force dynamic hashing use -H flag of tao_idl.
+
+Sat Aug 22 22:51:44 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	Added the following options :
+	-g : To specify the path for perfect hasing program
+		(GPERF). Default is $ACE_ROOT/bin/gperf. 
+	-H : To force IDL compiler to use dynamic hashed operation lookup
+		strategy. Default is Perfect Hashing strategy NOW.
+	-o : To specify the output directory to IDL compiler as to where
+		all the IDL-compiler-generated files are to be put. By
+		default, all the files are put in the current directory
+		from where <tao_idl> is called.
+	
+	* TAO_IDL/driver/drv_args.cpp: 
+	* TAO_IDL/be/be_codegen.cpp: 	
+		Tries executing GPERF and checks the wait status of the
+	spawned process. If <exec> on GPERF has failed, changing to
+	Dynamic Hashed Operation Lookup strategy.
+	
+	* TAO_IDL/include/idl_global.h: 
+	* TAO_IDL/util/utl_global.cpp:
+ 		Added addition parameter to the helper functions that
+	deals with stubs and skeleton names, to give base name or the full 
+	path, depending on the value of the flag. This helps when we need
+	full names while storing stubs and skeletons, but only the base
+	names when using them with "#include"s.
+
 Sat Aug 22 21:59:54 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/NestedUpcall/MT_Client_Test/Makefile:
