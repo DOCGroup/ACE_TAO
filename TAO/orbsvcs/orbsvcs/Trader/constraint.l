@@ -23,7 +23,7 @@ static TAO_Literal_Constraint* extract_string(const char*);
 #define TAO_YY_LEX_DEBUG
 
 #ifdef TAO_CONSTRAINT_DEBUG
-#define TAO_YY_LEX_DEBUG TAO_OS::fprintf(stderr, "%s\n", yytext)
+#define TAO_YY_LEX_DEBUG ACE_OS::fprintf(stderr, "%s\n", yytext)
 #endif /* TAO_CONSTRAINT_DEBUG */
 
 
@@ -33,7 +33,7 @@ white_space     [ \t]
 letter		[a-zA-Z]
 digit		[0-9]
 alpha_num	({letter}|{digit})
-integer		{digit}+ 
+integer		[-+]?{digit}+ 
 float		({digit}*\.{digit}+)([eE][-+]?{digit}+)? 
 string		'(([^'\\]*)|([^'\\]*\\')|([^'\\]*\\\\))*'
 ident		{letter}({alpha_num}|[_])*
@@ -77,7 +77,8 @@ FALSE		{
 		}
 {integer}	{ 
 		  yylval.constraint_ = 
-		    new TAO_Literal_Constraint((CORBA::Long)atoi(yytext));
+		    new TAO_Literal_Constraint((yytext[0] == '-' ?
+                    (CORBA::Long)atoi(yytext) : (CORBA::ULong)atoi(yytext)));
 		  TAO_YY_LEX_DEBUG; return TAO_NUMBER; 
 		}
 {float}		{ 

@@ -1,3 +1,11 @@
+Mon Aug 20 08:37:00 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Trader/constraint.l:
+        * orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
+
+          Explicitly allow a leading sign on integers as specified by
+          section B.2.5 of the OMG Trading Service specification.
+
 Sun Aug 19 13:41:07 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/DLL_ORB/Test_i.cpp (shutdown):
