@@ -1,3 +1,12 @@
+Tue Oct 12 22:37:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* m4/ace.m4:
+
+	  Changed "--with-uses-wchar" configure script option to
+	  "--enable-uses-char".  The latter is the correct convention for
+	  features.  "--with-*" is by convention only used for requesting
+	  use of other software packages in the package being configured.
+
 Wed Oct 13 06:53:55 2004  Olli Savia  <ops@iki.fi>
 
         * tests/DLL_Test_Impl.cpp:
