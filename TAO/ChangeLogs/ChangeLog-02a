@@ -1,3 +1,11 @@
+Wed Mar 28 20:16:32 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+	  Changed reference to opdetails.service_context () to
+	  opdetails.request_service_context () to be consistent
+	  with the fix for bug #806 which separates the request
+	  and reply service contexts.
+
 Wed Mar 28 17:24:57 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
 
 	* orbsvcs/tests/ImplRepo/NameService/Makefile : Added
