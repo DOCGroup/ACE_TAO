@@ -210,6 +210,16 @@
         </P>
       </LI>
            
+      <LI><P>For various projects, we need to produce a
+          minimal-footprint TAO ORB.  One thing we could probably do
+          very easily would be to provide an #ifdef that will
+          conditionally omit the servant manager, POA manager, and
+          adapter activator features from TAO, along with all the
+          demuxing features that aren't active demuxing or perfect
+          hashing.
+        </P>
+      </LI>
+           
     </OL>
 
     <H4>New features and Bug fixes</H4>
