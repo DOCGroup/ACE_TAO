@@ -54,7 +54,6 @@
 // this is a big number
 #endif /* ACE_DEFAULT_THREAD_MANAGER_HWM */
 
-
 // This is the synchronization mechanism used to prevent a thread
 // descriptor gets removed from the Thread_Manager before it gets
 // stash into it.  If you want to disable this feature (and risk of

@@ -25,7 +25,7 @@ class ACE_Export ACE_Synch_Options
   //     Contains the values of options used to determine the
   //     synchronous and asynchronous behavior.
   //
-  // DESCRIPTION =
+  // = DESCRIPTION 
   //     Values support the following behavior (TV == "timeout" 
   //     and UR == "use ACE_Reactor"):
   //

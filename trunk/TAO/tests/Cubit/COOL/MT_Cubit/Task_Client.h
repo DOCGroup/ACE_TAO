@@ -35,6 +35,7 @@
 //
 // I will integrate this, together with the sqrt() function when
 // the implementation is complete.  --Sergio.
+// @@ Sergio, can you please use the ACE_timer_t here rather than #define'ing double? 
 #if defined (ACE_LACKS_FLOATING_POINT)
 #define double ACE_UINT32
 #define fabs(X) ((X) >= 0 ? (X) : -(X))
