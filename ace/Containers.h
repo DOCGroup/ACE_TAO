@@ -483,7 +483,7 @@ class ACE_Unbounded_Set
   // = DESCRIPTION
   //     This implementation of an unordered set uses a circular
   //     linked list with a dummy node.  This implementation does not
-  //     allow duplicates.
+  //     allow duplicates, but it maintains FIFO ordering of insertions.
 {
 friend class ACE_Unbounded_Set_Iterator<T>;
 public:
