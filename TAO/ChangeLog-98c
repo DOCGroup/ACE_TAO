@@ -1,5 +1,8 @@
-Thu Nov 13 16:08:20 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+Thu Nov 13 16:18:32 1997    <nw1@CHA-CHA>
 
+	* tao/tao.mak:
+	* tao/tao.dsp:  Replaced ACE_BUILD_SVC_DLL with TAO_BUILD_DLL.
+	
 	* tao/corba.h: Added TAO_Export definition.
 
 	* tao/*.h:  Replaced ACE_Svc_Export with TAO_Export.  Added
