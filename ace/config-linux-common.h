@@ -130,7 +130,9 @@
 #elif defined (__DECCXX)
 # define ACE_CONFIG_INCLUDE_CXX_COMMON
 # include "ace/config-cxx-common.h"
-#else  /* ! __GNUG__ && ! __KCC && !__DECCXX */
+#elif defined (__INTEL_COMPILER)
+# include "ace/config-icc-common.h"
+#else  /* ! __GNUG__ && ! __KCC && !__DECCXX && !__INTEL_COMPILER*/
 # error unsupported compiler in ace/config-linux-common.h
 #endif /* ! __GNUG__ && ! __KCC */
 

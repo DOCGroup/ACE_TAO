@@ -1,3 +1,10 @@
+Thu Mar  7 16:10:02 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* include/makeincludes/platform_linux_icc.GNU,
+	* ace/config-icc-common.h,
+	* ace/config-linux-common.h: Added support for the Intel C++ compiler
+	  (icc).  Thanks to Roger Tragins for contributing this.
+
 Thu Mar  7 11:17:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/RMCast/RMCast_Fragment_Test.cpp:
