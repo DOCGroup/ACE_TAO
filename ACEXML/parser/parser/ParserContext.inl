@@ -46,7 +46,7 @@ ACEXML_INLINE ACEXML_InputSource*
 ACEXML_Parser_Context::getInputSource (void)
 {
   return this->instream_;
-};
+}
 
 ACEXML_INLINE ACEXML_LocatorImpl*
 ACEXML_Parser_Context::getLocator (void)
