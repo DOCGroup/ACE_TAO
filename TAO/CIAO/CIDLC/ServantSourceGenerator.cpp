@@ -427,6 +427,8 @@ namespace
     virtual void
     traverse (UnconstrainedInterface& i)
     {
+      if (i.context ().count ("facet_src_gen")) return;
+    
       // Open a namespace.
       os << STRS[GLUE_NS]
          << regex::perl_s (i.scoped_name ().scope_name ().str (),
@@ -434,7 +436,7 @@ namespace
          << "{";
 
       os << i.name () << "_Servant::" << i.name ()
-         << "_Servant (" << endl
+         << "_Servant_T (" << endl
          << i.scoped_name ().scope_name () << "::CCM_" << i.name ()
          << "_ptr executor," << endl
          << "::Components::CCMContext_ptr c)" << endl
@@ -444,8 +446,9 @@ namespace
          << "{"
          << "}" << endl;
 
-      os << i.name () << "_Servant::~" << i.name ()
-         << "_Servant (void)" << endl
+      os << "template <>" << endl
+         << i.name () << "_Servant::~" << i.name ()
+         << "_Servant_T (void)" << endl
          << "{"
          << "}" << endl;
 
@@ -531,6 +534,8 @@ namespace
 
       // Close the CIAO_GLUE namespace.
       os << "}" << endl;
+      
+      i.context ().set ("facet_src_gen", true);
     }
   };
 
@@ -2072,14 +2077,14 @@ namespace
       virtual void
       traverse (SemanticGraph::Provider& p)
       {
-        os << "::CORBA::Object_var tmp =" << endl
+        os << "obj_var =" << endl
            << "  this->provide_" << p.name () << " (" << endl
            << "  " << STRS[ENV_SNGL_ARG] << ");"
            << "ACE_CHECK;" << endl;
            
         os << "this->add_facet (" << endl
            << "\"" << p.name () << "\"," << endl
-           << "tmp.in ());" << endl;
+           << "obj_var.in ());" << endl;
       }
       
       virtual void
@@ -2100,14 +2105,14 @@ namespace
       virtual void
       traverse (SemanticGraph::Consumer& p)
       {
-        os << "::Components::EventConsumerBase_var tmp =" << endl
+        os << "ec_base_var =" << endl
            << "  this->get_consumer_" << p.name () << " (" << endl
            << "  " << STRS[ENV_SNGL_ARG] << ");"
            << "ACE_CHECK;" << endl;
            
         os << "this->add_consumer (" << endl
            << "\"" << p.name () << "\"," << endl
-           << "tmp.in ());" << endl;
+           << "ec_base_var.in ());" << endl;
       }
     };
 
@@ -2981,7 +2986,9 @@ namespace
          << t.name () << "_Servant::populate_port_tables (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{";
+         << "{"
+         << "::CORBA::Object_var obj_var;"
+         << "::Components::EventConsumerBase_var ec_base_var;" << endl;
          
       {
         Traversal::Component component_emitter;
