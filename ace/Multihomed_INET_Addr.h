@@ -143,9 +143,15 @@ public:
   void get_addresses(sockaddr_in *addrs,
                      size_t size) const;
 
-private:
+#if defined (ACE_HAS_IPV6)
 
-  ACE_Array<ACE_INET_Addr> secondaries;
+  /// IPV6 version of the above.
+  void get_addresses(sockaddr_in6 *addrs,
+                     size_t size) const;
+#endif /* ACE_HAS_IPV6 */
+
+private:
+  ACE_Array<ACE_INET_Addr> secondaries_;
 };
 
 #if defined (__ACE_INLINE__)
@@ -154,4 +160,3 @@ private:
 
 #include /**/ "ace/post.h"
 #endif /* ACE_MULTIHOMED_INET_ADDR_H */
-

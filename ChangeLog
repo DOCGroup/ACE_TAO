@@ -1,3 +1,36 @@
+Mon Nov 17 18:55:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Asynch_Connector.cpp:
+	  
+	  Use ACE_reinterpret_cast instead of a C style casts. 
+	
+	* ace/INET_Addr.cpp:
+
+	  Fixes a problem with the ACE_INET_Addr::set () method, where the
+	  type and  size of this object were not being set. This could
+	  cause a problem when  the type of sa is different than the type
+	  of this ACE_INET_Addr. Even  though the inet_addr_ member will
+	  be set correctly, the type and size  will be, making the state
+	  of the ACE_INET_Addr inconsistent.  
+
+	* ace/Multihomed_INET_Addr.cpp:
+	* ace/Multihomed_INET_Addr.h:
+	* ace/Multihomed_INET_Addr.i:
+
+	  Added a get_addresses method () that takes a sockaddr_in6* as
+	  argument, so  that if the  ACE_Multihomed_INET_Addr is storing
+	  only IPv6 addresses, they can all be put into an array of
+	  sockaddr_in6 by this method. Further, changed the variable name
+	  within the class to be secondaries_, ie. with an underscore. 
+
+	* ace/SOCK_Dgram_Mcast.cpp:
+
+	  Added a memset to make_multicast_ifaddr6 to ensure that the
+	  ipv6_mreq is zero'ed out before using it.
+
+
+	  Thanks to Bryan Bruesker for providing the patches. 
+	
 Tue Nov 18 00:35:51 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * include/makeinclude/component_check.GNU:
