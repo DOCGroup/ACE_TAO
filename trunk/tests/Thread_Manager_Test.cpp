@@ -208,7 +208,7 @@ main (int, ASYS_TCHAR *[])
       // so it's allowed to ENOTSUP; anything else is a hard fail.
       ACE_ASSERT (errno == ENOTSUP);
       ACE_DEBUG((LM_DEBUG,
-                 " OK: suspend_grp isn't supported with Pthreads\n"));
+                 ASYS_TEXT (" OK: suspend_grp isn't supported with Pthreads\n")));
     }
 
   // Wait for 1 more second and then resume every thread in the
@@ -220,7 +220,7 @@ main (int, ASYS_TCHAR *[])
   if (thr_mgr->resume_grp (grp_id) == -1)
     {
       ACE_ASSERT (errno == ENOTSUP);
-      ACE_DEBUG((LM_DEBUG, " OK: resume_grp isn't supported with Pthreads\n"));
+      ACE_DEBUG((LM_DEBUG, ASYS_TEXT (" OK: resume_grp isn't supported with Pthreads\n")));
     }
 
   // Wait for 1 more second and then send a SIGINT to every thread in

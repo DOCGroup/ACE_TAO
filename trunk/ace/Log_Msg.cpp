@@ -982,7 +982,9 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
                       ACE_OS::sprintf (bp, "0x%lx", lo);
                   }
 #else  /* ! ACE_LACKS_LONGLONG_T */
-                  ACE_OS::sprintf (bp, ACE_UINT64_FORMAT_SPECIFIER, va_arg (argp, ACE_UINT64));
+                  ACE_OS::sprintf (bp,
+                                   ASYS_TEXT (ACE_UINT64_FORMAT_SPECIFIER),
+                                   va_arg (argp, ACE_UINT64));
 #endif /* ! ACE_LACKS_LONGLONG_T */
                   break;
                 }
@@ -1375,7 +1377,7 @@ ACE_Log_Msg::msg_callback (void) const
   return this->msg_callback_;
 }
 
-void 
+void
 ACE_Log_Msg::msg_callback (ACE_Log_Msg_Callback *c)
 {
   this->msg_callback_ = c;

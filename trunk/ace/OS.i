@@ -1118,7 +1118,12 @@ ACE_OS::_exit (int status)
 ACE_INLINE void
 ACE_OS::abort (void)
 {
+#if !defined (ACE_HAS_WINCE)
   ::abort ();
+#else
+  // @@ CE doesn't support abort?
+  ::exit (1);
+#endif /* ACE_HAS_WINCE */
 }
 
 ACE_INLINE void *
