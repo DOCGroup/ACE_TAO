@@ -1,3 +1,13 @@
+Fri Sep 15 13:11:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_argument/arglist.cpp:
+
+	  In the generated subclass of TAO_ClientRequest_Info,
+	  an enum IN argument was declared const in the constructor
+	  declaration, but not in the constructor definition. Thanks
+	  to Aniruddha Gokhale <gokhale@research.bell-labs.com> for
+	  pointing this out.
+
 Fri Sep 15 11:05:11 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/default_resource.cpp:
