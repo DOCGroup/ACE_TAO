@@ -1,7 +1,14 @@
+Fri Aug 10 10:59:42 2001  Chad Elliott  elliott_c@ociweb.com
+
+        * tests/Native_Exceptions/test_i.cpp:
+        * tests/RTCORBA/Thread_Pool/server.cpp:
+
+          Changes to avoid warnings on HP-UX with aCC.
+
 Fri Aug 10 08:07:57 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Oneways_Invoking_Twoways/Receiver_i.cpp: Added a debugging
-	  statement.  
+	  statement.
 
 Thu Aug  9 16:15:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -21,7 +28,7 @@ Thu Aug  9 11:46:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/CDR.h: Fixed the ambigous constructor problem. The InputCDR
 	  class had two constructors which were  similar if the default
 	  values for the arguments were exercised. Thanks to Torbjorn
-	  Backstrom <torbjorn.k.backstrom@volvo.com>  for reporting this. 
+	  Backstrom <torbjorn.k.backstrom@volvo.com>  for reporting this.
 
 Wed Aug  8 22:53:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
