@@ -3,12 +3,9 @@
 
 project(CosNotification) : orbsvcslib, core, event {
   sharedname   = TAO_CosNotification
+  dynamicflags = TAO_NOTIFY_BUILD_DLL 
 
-  // Warning : The idlflags must match exactly those used in CosEvent, because
-  //           we don't know which project will actually generate the IDL.
-  //           For this reason we also just use the event_export.h and macros for
-  //           both services.
-  idlflags    += -Wb,export_macro=TAO_Event_Export -Wb,export_include=orbsvcs/CosEvent/event_export.h
+  idlflags    += -Wb,export_macro=TAO_Event_Export -Wb,export_include=orbsvcs/Notify/notify_export.h
 
   IDL_Files {
     CosNotification.idl
@@ -52,6 +49,7 @@ project(CosNotification) : orbsvcslib, core, event {
 
 project(CosNotification_Skel) : orbsvcslib, core, notification {
   sharedname   = TAO_CosNotification_Skel
+  dynamicflags = TAO_NOTIFY_BUILD_DLL 
 
   IDL_Files {
   }

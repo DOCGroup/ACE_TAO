@@ -3,6 +3,7 @@
 
 project(CosTrading) : orbsvcslib, core {
   sharedname   = TAO_CosTrading
+  dynamicflags = TAO_TRADING_BUILD_DLL
   idlflags    += -Wb,export_macro=TAO_Trading_Export -Wb,export_include=orbsvcs/Trader/trading_export.h
 
   IDL_Files {
@@ -33,6 +34,7 @@ project(CosTrading) : orbsvcslib, core {
 
 project(CosTrading_Skel) : orbsvcslib, core, trading {
   sharedname   = TAO_CosTrading_Skel
+  dynamicflags = TAO_TRADING_BUILD_DLL
 
   IDL_Files {
   }
