@@ -2,7 +2,9 @@ Tue Dec 16 08:11:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/default_resource.cpp:
 
-	  Instead of using errno, use reactor->initiliazed () instead.
+	  Instead of using errno, use reactor->initiliazed ()
+	  instead. Thanks to John Fletcher <john.fletcher@rd.bbc.co.uk>
+	  and Johnny for motivating this change.
 
 Tue Dec 16 12:08:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
