@@ -115,9 +115,13 @@ protected:
   /// remote *_Addr's which have not been done during IOR decode.
   virtual int set_validate_endpoint (TAO_Endpoint *endpoint) = 0;
 
+  /// Make a connection
   virtual TAO_Transport* make_connection (TAO::Profile_Transport_Resolver *r,
                                           TAO_Transport_Descriptor_Interface &desc,
                                           ACE_Time_Value *timeout) = 0;
+
+  /// Register a transport with the reactor
+  int register_transport (TAO_Transport *transport);
 
   /// Set the ORB Core pointer
   void orb_core (TAO_ORB_Core *orb_core);

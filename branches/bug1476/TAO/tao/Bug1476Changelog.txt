@@ -1,3 +1,15 @@
+Tue Jul 27 08:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport_Connector.{h,cpp}:
+          Factered out the registration of the transport into
+          register_transport()
+
+Tue Jul 27 07:31:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Sync_Invocation.cpp:
+        * tao/Transport.{h,cpp}:
+          Changed queue_message so that transport does the formatting
+
 Tue Jul 27 02:47:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/Synch_Invocation.cpp:

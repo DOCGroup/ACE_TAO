@@ -286,31 +286,8 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
 
   if (base_transport->is_connected ())
     {
-      // We now have a connection
-
-      // @@ TODO: This code can be factored out..
-
-      // If the wait strategy wants us to be registered with the reactor
-      // then we do so. If registeration is required and it succeeds,
-      // #REFCOUNT# becomes two.
-      result =
-        base_transport->wait_strategy ()->register_handler ();
-
-      // Registration failures.
-      if (result != 0)
-        {
-          // Purge from the connection cache.
-          base_transport->purge_entry ();
-
-          // Close the handler.
-          base_transport->connection_handler()->close_connection ();
-
-          if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
-                        "TAO (%P|%t) - TAO_Connector::connect, "
-                        "could not register the connected connection"
-                        " in the reactor, get a new one\n"));
-        }
+      // We now have a connection, register it
+      result = this->register_transport (base_transport);
 
       return 0;
     }
@@ -321,6 +298,33 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
   return base_transport;
 }
 
+int
+TAO_Connector::register_transport(TAO_Transport *transport)
+{
+  // If the wait strategy wants us to be registered with the reactor
+  // then we do so. If registeration is required and it succeeds,
+  // #REFCOUNT# becomes two.
+  int result =
+    transport->wait_strategy ()->register_handler ();
+
+  // Registration failures.
+  if (result != 0)
+    {
+      // Purge from the connection cache.
+      transport->purge_entry ();
+
+      // Close the handler.
+      transport->connection_handler()->close_connection ();
+
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    "TAO (%P|%t) - TAO_Connector::register_transport, "
+                    "could not register the transport "
+                    "in the reactor.\n"));
+    }
+
+  return result;
+}
 
 int
 TAO_Connector::create_connect_strategy (void)
