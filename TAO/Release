@@ -18,6 +18,7 @@ CONTROLLED_FILES = TAO/COPYING* \
 		   TAO/README* \
 		   TAO/TAO-INSTALL.html \
 		   TAO/TAOACE* \
+		   TAO/TAO.mwc \
 		   TAO/TAO_IDL \
 		   TAO/VERSION \
 		   TAO/docs \
