@@ -1,3 +1,8 @@
+Mon Nov 20 15:20:53 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/TAO_Service/TAO_Service.cpp:
+          Fixed warning about unreachable statement
+
 Mon Nov 20 15:04:34 2000  DOC Group CVS Access  <doccvs@ace.cs.wustl.edu>
 
 	* tests/RTCORBA/Server_Declared/server.conf: 
@@ -27,113 +32,113 @@ Mon Nov 20 14:54:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Mon Nov 20 11:49:30 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/EndPoint_Per_Priority/server.conf
-	  Changed back to the original version. It got committed in 
-	  the previous commit unintentionally.
+        * tests/EndPoint_Per_Priority/server.conf
+          Changed back to the original version. It got committed in 
+          the previous commit unintentionally.
 
 Mon Nov 20 11:35:56 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/EndPoint_Per_Priority/server.dsp
-	* tests/EndPoint_Per_Priority/client.dsp
-	  
-	  Updated settings to link TAO_Strategiesd.lib
+        * tests/EndPoint_Per_Priority/server.dsp
+        * tests/EndPoint_Per_Priority/client.dsp
+          
+          Updated settings to link TAO_Strategiesd.lib
 
 Mon Nov 20 06:26:10 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Connector.h: 
-	* tao/IIOP_Connector.cpp:
-	* tao/Strategies/UIOP_Connector.h:
-	* tao/Strategies/UIOP_Connector.cpp:
-	* tao/Strategies/SHMIOP_Connector.h:
-	* tao/Strategies/SHMIOP_Connector.cpp: Changed the
-	  ACE_NOOP_Concurrency strategy to ACE_Concurrency_Strategy. 
+        * tao/IIOP_Connector.h: 
+        * tao/IIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Connector.h:
+        * tao/Strategies/UIOP_Connector.cpp:
+        * tao/Strategies/SHMIOP_Connector.h:
+        * tao/Strategies/SHMIOP_Connector.cpp: Changed the
+          ACE_NOOP_Concurrency strategy to ACE_Concurrency_Strategy. 
 
 Mon Nov 20 05:34:07 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/RTCORBA/Private_Connection/Makefile:
+        * tests/RTCORBA/Private_Connection/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
-	* tests/RTCORBA/Private_Connection/server.cpp (test_method):
+        * tests/RTCORBA/Private_Connection/server.cpp (test_method):
 
-	  Fixed unused arg warning.
+          Fixed unused arg warning.
 
 Mon Nov 20 05:16:40 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/IIOP_Connector.cpp
-	* tao/Exclusive_TMS.cpp
-	* tao/Connection_Cache_Manager.cpp:
+        * tao/IIOP_Connector.cpp
+        * tao/Exclusive_TMS.cpp
+        * tao/Connection_Cache_Manager.cpp:
 
-	  Added more debugging info, bumped up the level on some debugging
-	  messages.
+          Added more debugging info, bumped up the level on some debugging
+          messages.
 
 Mon Nov 20 05:04:01 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/RTCORBA/RTCORBA_tests.dsw
-	* tests/RTCORBA/Makefile.bor
-	* tests/RTCORBA/Makefile
-	* tests/RTCORBA/Private_Connection/Makefile.bor
-	* tests/RTCORBA/Private_Connection/Private_Connection.dsw
-	* tests/RTCORBA/Private_Connection/README
-	* tests/RTCORBA/Private_Connection/client.bor
-	* tests/RTCORBA/Private_Connection/client.cpp
-	* tests/RTCORBA/Private_Connection/client.dsp
-	* tests/RTCORBA/Private_Connection/run_test.pl
-	* tests/RTCORBA/Private_Connection/server.bor
-	* tests/RTCORBA/Private_Connection/server.cpp
-	* tests/RTCORBA/Private_Connection/server.dsp
-	* tests/RTCORBA/Private_Connection/test.idl:
+        * tests/RTCORBA/RTCORBA_tests.dsw
+        * tests/RTCORBA/Makefile.bor
+        * tests/RTCORBA/Makefile
+        * tests/RTCORBA/Private_Connection/Makefile.bor
+        * tests/RTCORBA/Private_Connection/Private_Connection.dsw
+        * tests/RTCORBA/Private_Connection/README
+        * tests/RTCORBA/Private_Connection/client.bor
+        * tests/RTCORBA/Private_Connection/client.cpp
+        * tests/RTCORBA/Private_Connection/client.dsp
+        * tests/RTCORBA/Private_Connection/run_test.pl
+        * tests/RTCORBA/Private_Connection/server.bor
+        * tests/RTCORBA/Private_Connection/server.cpp
+        * tests/RTCORBA/Private_Connection/server.dsp
+        * tests/RTCORBA/Private_Connection/test.idl:
 
-	  Added a test for RTCORBA::PrivateConnectionPolicy.
+          Added a test for RTCORBA::PrivateConnectionPolicy.
 
 Mon Nov 20 01:16:38 2000  Ossama Othman  <ossama@uci.edu>
 
-	* docs/interceptors.html:
+        * docs/interceptors.html:
 
-	  Updated these release notes.
+          Updated these release notes.
 
 Mon Nov 20 00:50:14 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.h:
 
-	  Re-arranged inheritance order to match order in base member
-	  initializer lists.  This corrects several "will be re-ordered to
-	  match inheritance order" warnings.
+          Re-arranged inheritance order to match order in base member
+          initializer lists.  This corrects several "will be re-ordered to
+          match inheritance order" warnings.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp:
 
-	  Fixed unused argument warning in
-	  TAO_SSLIOP_Client_Connection_Handler constructor.
+          Fixed unused argument warning in
+          TAO_SSLIOP_Client_Connection_Handler constructor.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp (post_init):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp (post_init):
 
-	  Corrected "better conversion" warnings related to passing "_var"
-	  variable as a "_ptr" argument by using the "_var::in()"
-	  accessor.
+          Corrected "better conversion" warnings related to passing "_var"
+          variable as a "_ptr" argument by using the "_var::in()"
+          accessor.
 
 Mon Nov 20 00:12:28 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/PortableInterceptor.i
-	  (receive_reply, receive_exception, send_reply, send_exception):
+        * tao/PortableInterceptor.i
+          (receive_reply, receive_exception, send_reply, send_exception):
 
-	  Changed "for" loop logic to count up instead of counting down,
-	  yet still invoke the interceptors in reverse order.  This fixes
-	  some "expression always true" warnings related to the fact that
-	  an unsigned int is always greater than or equal to zero.
+          Changed "for" loop logic to count up instead of counting down,
+          yet still invoke the interceptors in reverse order.  This fixes
+          some "expression always true" warnings related to the fact that
+          an unsigned int is always greater than or equal to zero.
 
 Sun Nov 19 23:46:07 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORBInitInfo.cpp (_tao_QueryInterface):
+        * tao/ORBInitInfo.cpp (_tao_QueryInterface):
 
-	  Removed unneccessary and broken use of ACE_NESTED_CLASS macro.
-	  This fixes a compile error with MSVC.
+          Removed unneccessary and broken use of ACE_NESTED_CLASS macro.
+          This fixes a compile error with MSVC.
 
 Mon Nov 20 01:32:48 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/MessagingC.cpp (_unchecked_narrow):
+        * tao/MessagingC.cpp (_unchecked_narrow):
 
-	  Added guard to check weather TAO is has support for
-	  portable incerceptors.
+          Added guard to check weather TAO is has support for
+          portable incerceptors.
 
 Sun Nov 19 23:29:03 2000  Ossama Othman  <ossama@uci.edu>
 
@@ -143,270 +148,270 @@ Sun Nov 19 23:29:03 2000  Ossama Othman  <ossama@uci.edu>
 
 Mon Nov 20 00:30:50 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/remote_proxy_broker_cs.h:
-	* TAO_IDL/be/be_visitor_interface/remote_proxy_broker_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/remote_proxy_broker_cs.h:
+        * TAO_IDL/be/be_visitor_interface/remote_proxy_broker_cs.cpp:
 
-	  Visitor to generate the remote proxy broker implementation.
+          Visitor to generate the remote proxy broker implementation.
 
-	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.h:
-	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.h:
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.h:
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.h:
 
-	  Visitor to generate the stategized  proxy broker implementation.
+          Visitor to generate the stategized  proxy broker implementation.
 
-	* TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_ss.h:
-	* TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_ss.h:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:
 
-	  Visitor that generated the thru poa proxy implementation.
+          Visitor that generated the thru poa proxy implementation.
 
-	* TAO_IDL/be/be_visitor_interface/direct_proxy_impl_ss.h:
-	* TAO_IDL/be/be_visitor_interface/direct_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_ss.h:
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_ss.cpp:
 
-	  Visitor that generated the direct  proxy implementation.
+          Visitor that generated the direct  proxy implementation.
 
-	* TAO_IDL/be_include/be_visitor_operation/remote_proxy_impl_cs.h:
-	* TAO_IDL/be_include/be_visitor_operation/remote_proxy_impl_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_operation/remote_proxy_impl_cs.h:
+        * TAO_IDL/be_include/be_visitor_operation/remote_proxy_impl_cs.cpp:
 
-	* TAO_IDL/be_include/be_visitor_operation/thru_poa_proxy_impl_ss.h:
-	* TAO_IDL/be_include/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+        * TAO_IDL/be_include/be_visitor_operation/thru_poa_proxy_impl_ss.h:
+        * TAO_IDL/be_include/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
 
-	* TAO_IDL/be_include/be_visitor_operation/direct_proxy_impl_ss.h:
-	* TAO_IDL/be_include/be_visitor_operation/direct_proxy_impl_ss.cpp:
+        * TAO_IDL/be_include/be_visitor_operation/direct_proxy_impl_ss.h:
+        * TAO_IDL/be_include/be_visitor_operation/direct_proxy_impl_ss.cpp:
 
          Visitors that genetate the operation code for different kind
-	 of proxy implementation.
-	 NOTE: This file were not added in the previous commit, because
-	 for some weird reason the CVS did not seem to view this file
-	 as new for the repo.
+         of proxy implementation.
+         NOTE: This file were not added in the previous commit, because
+         for some weird reason the CVS did not seem to view this file
+         as new for the repo.
 
 Mon Nov 20 00:19:13 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_visitor_interface/remote_proxy_impl_cs.h:
-	* TAO_IDL/be/be_visitor_interface/remote_proxy_impl_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_interface/remote_proxy_impl_cs.h:
+        * TAO_IDL/be/be_visitor_interface/remote_proxy_impl_cs.cpp:
 
-	  Visitor that generates the implemetation for the remote
-	  proxy implementation.
+          Visitor that generates the implemetation for the remote
+          proxy implementation.
 
 Sun Nov 19 21:20:58 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORB.cpp (resolve_initial_references):
+        * tao/ORB.cpp (resolve_initial_references):
 
-	  Fixed problem where the object reference found in the object
-	  reference table was not returned to the caller.
+          Fixed problem where the object reference found in the object
+          reference table was not returned to the caller.
 
-	* tao/IIOP_Acceptor.h:
-	* tao/IIOP_Connector.h:
+        * tao/IIOP_Acceptor.h:
+        * tao/IIOP_Connector.h:
 
-	  Made some attributes protected instead of private so that
-	  they're available to derived classes.
+          Made some attributes protected instead of private so that
+          they're available to derived classes.
 
-	* tao/IIOP_Acceptor.cpp (TAO_IIOP_Acceptor):
-	* tao/IIOP_Connector.cpp (TAO_IIOP_Connector):
+        * tao/IIOP_Acceptor.cpp (TAO_IIOP_Acceptor):
+        * tao/IIOP_Connector.cpp (TAO_IIOP_Connector):
 
-	  Reorganized the base member initializer lists to match the order
-	  the class attributes were declared.
+          Reorganized the base member initializer lists to match the order
+          the class attributes were declared.
 
-	* tao/ORBInitInfo.cpp
-	  (_narrow, _unchecked_narrow, _tao_QueryInterface):
-	* tao/ORBInitInfo.h:
+        * tao/ORBInitInfo.cpp
+          (_narrow, _unchecked_narrow, _tao_QueryInterface):
+        * tao/ORBInitInfo.h:
 
-	  Added these TAO_ORBInitInfo-specific downcast methods to make it
-	  easier to downcast from "PortableInterceptor::ORBInitInfo_ptr"
-	  to "TAO_ORBInitInfo *."  This is necessary to get around
-	  conversion problems when RTTI is not supported by the compiler.
+          Added these TAO_ORBInitInfo-specific downcast methods to make it
+          easier to downcast from "PortableInterceptor::ORBInitInfo_ptr"
+          to "TAO_ORBInitInfo *."  This is necessary to get around
+          conversion problems when RTTI is not supported by the compiler.
 
-	  These methods allow applications to get access to the TAO
-	  extension methods by downcasting a
-	  PortableInterceptor::ORBInitInfo_ptr reference.
+          These methods allow applications to get access to the TAO
+          extension methods by downcasting a
+          PortableInterceptor::ORBInitInfo_ptr reference.
 
-	* tao/ORB_Core.h:
-	* tao/ORB_Table.h:
+        * tao/ORB_Core.h:
+        * tao/ORB_Table.h:
 
-	  Fixed some Doxygen comments.
+          Fixed some Doxygen comments.
 
-	* tao/ORB_Core.i (set_tss_resource):
+        * tao/ORB_Core.i (set_tss_resource):
 
-	  Initialize intermediate array elements to zero, since they
-	  haven't been initialized yet.  This ensures that garbage is not
-	  returned when retrieving any of those elements at a later point
-	  in time.
+          Initialize intermediate array elements to zero, since they
+          haven't been initialized yet.  This ensures that garbage is not
+          returned when retrieving any of those elements at a later point
+          in time.
 
-	* tao/PortableInterceptor.h:
+        * tao/PortableInterceptor.h:
 
-	  Added a "stack size" attribute to the client and server side
-	  support classes.  This attribute is used to keep track of how
-	  many interceptors were pushed onto the logical flow stack so
-	  that the stack may be unwound starting at the last successfully
-	  processed interceptor.  This behavior is dictated by the
-	  PortableInterceptor specification "General Flow Rules."
+          Added a "stack size" attribute to the client and server side
+          support classes.  This attribute is used to keep track of how
+          many interceptors were pushed onto the logical flow stack so
+          that the stack may be unwound starting at the last successfully
+          processed interceptor.  This behavior is dictated by the
+          PortableInterceptor specification "General Flow Rules."
 
-	* tao/PortableInterceptor.i:
+        * tao/PortableInterceptor.i:
 
-	  The following changes to the newly added multiple interceptor
-	  support make that support comply with the "General Flow Rules"
-	  dictated by the Portable Interceptor specification/joint
-	  submission.
+          The following changes to the newly added multiple interceptor
+          support make that support comply with the "General Flow Rules"
+          dictated by the Portable Interceptor specification/joint
+          submission.
 
-	  The General Flow Rules basically state that an interceptor is
-	  pushed onto a stack (could be a logical one) if it is
-	  successfully invoked within a "starting" interception point.
-	  Interceptors are then popped off that stack within each "ending"
-	  interception point before they are invoked so that they can only
-	  be invoked by one "ending" interception point.
+          The General Flow Rules basically state that an interceptor is
+          pushed onto a stack (could be a logical one) if it is
+          successfully invoked within a "starting" interception point.
+          Interceptors are then popped off that stack within each "ending"
+          interception point before they are invoked so that they can only
+          be invoked by one "ending" interception point.
 
-	  (send_request, receive_request):
+          (send_request, receive_request):
 
-	  Push each successfully processed interceptor at these
-	  "starting" interception points on to the logical flow stack.
+          Push each successfully processed interceptor at these
+          "starting" interception points on to the logical flow stack.
 
-	  (receive_reply, receive_exception, send_reply, send_exception):
+          (receive_reply, receive_exception, send_reply, send_exception):
 
-	  Invoke the interceptors at these ending interception
-	  points in the opposite order they were pushed onto the flow
-	  stack.  This is the behavior dictated by the PortableInterceptor
-	  specification for "ending" interception points.
+          Invoke the interceptors at these ending interception
+          points in the opposite order they were pushed onto the flow
+          stack.  This is the behavior dictated by the PortableInterceptor
+          specification for "ending" interception points.
 
-	  These methods also pop interceptors off of the flow stack prior
-	  to invoking them.  This is necessary to satisfy the General Flow
-	  Rules, i.e., it is necessary to prevent an interceptor that
-	  has already been invoked within an "ending" interception point
-	  from being invoked in another "ending" interception point.
+          These methods also pop interceptors off of the flow stack prior
+          to invoking them.  This is necessary to satisfy the General Flow
+          Rules, i.e., it is necessary to prevent an interceptor that
+          has already been invoked within an "ending" interception point
+          from being invoked in another "ending" interception point.
 
-	* orbsvcs/orbsvcs/SSLIOP.idl:
+        * orbsvcs/orbsvcs/SSLIOP.idl:
 
-	  Added a "NoContext" exception to the SSLIOP::Current interface.
-	  All SSLIOP::Current operations will throw this exception if the
-	  current execution context is not run through an SSL session.
+          Added a "NoContext" exception to the SSLIOP::Current interface.
+          All SSLIOP::Current operations will throw this exception if the
+          current execution context is not run through an SSL session.
 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.h:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connect.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connect.h:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connect.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connect.h:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h:
 
-	  New modification of the standard IIOP pluggable protocol that is
-	  "SSL aware," i.e., it is aware of the existence of the SSLIOP
-	  pluggable protocol.  The primary difference between this version
-	  and standard one, is that this version's connection handler
-	  invalidates the SSL session state stored in TSS during an IIOP
-	  (i.e. insecure) request/upcall.  Once the request/upcall is
-	  complete, the previous SSL state is restored.  This closes a
-	  potentially large security hole that could occur during a nested
-	  upcall where the SSL state for the current request could
-	  mistakenly be associated with a non-SSL nested upcall.  Thanks
-	  to Carlos for thinking of such an obscure security hole.
+          New modification of the standard IIOP pluggable protocol that is
+          "SSL aware," i.e., it is aware of the existence of the SSLIOP
+          pluggable protocol.  The primary difference between this version
+          and standard one, is that this version's connection handler
+          invalidates the SSL session state stored in TSS during an IIOP
+          (i.e. insecure) request/upcall.  Once the request/upcall is
+          complete, the previous SSL state is restored.  This closes a
+          potentially large security hole that could occur during a nested
+          upcall where the SSL state for the current request could
+          mistakenly be associated with a non-SSL nested upcall.  Thanks
+          to Carlos for thinking of such an obscure security hole.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (close, open,
-	  open_default):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (close, open,
+          open_default):
 
-	  Invoke the new IIOP_SSL_Acceptor versions of these methods when
-	  closing and opening insecure endpoints.
+          Invoke the new IIOP_SSL_Acceptor versions of these methods when
+          closing and opening insecure endpoints.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
 
-	  Derive from the new IIOP_SSL_Acceptor class so that insecure
-	  connections are handled by the SSL aware version of the IIOP
-	  pluggable protocol.
+          Derive from the new IIOP_SSL_Acceptor class so that insecure
+          connections are handled by the SSL aware version of the IIOP
+          pluggable protocol.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp (handle_input_i,
-	  handle_input):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp (handle_input_i,
+          handle_input):
 
-	  Place the current SSL state in TSS when handling a request.
-	  This is necessary for the newly added SSLIOP::Current TAO
-	  extension.
+          Place the current SSL state in TSS when handling a request.
+          This is necessary for the newly added SSLIOP::Current TAO
+          extension.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.h (TAO_SSL_State_Guard):
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.i:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.h (TAO_SSL_State_Guard):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.i:
 
-	  New class that makes TSS SSL state configuration/deconfiguration
-	  exception safe.
+          New class that makes TSS SSL state configuration/deconfiguration
+          exception safe.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (open, connect):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (open, connect):
 
-	  Invoke the new IIOP_SSL_Connector versions of these methods when
-	  opening and connecting to insecure endpoints.
+          Invoke the new IIOP_SSL_Connector versions of these methods when
+          opening and connecting to insecure endpoints.
 
-	  (close):
+          (close):
 
-	  Close the insecure connection.  Previously, this was missing.
+          Close the insecure connection.  Previously, this was missing.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
 
-	  Derive from the new IIOP_SSL_Connector class so that insecure
-	  connections are handled by the SSL aware version of the IIOP
-	  pluggable protocol.
+          Derive from the new IIOP_SSL_Connector class so that insecure
+          connections are handled by the SSL aware version of the IIOP
+          pluggable protocol.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.inl:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.inl:
 
-	  Non-TSS implementation of the newly added SSLIOP::Current TAO
-	  extension.  It is useful for obtaining the peer certificate
-	  chain associated with the current SSL session, for example.
-	  Access to this object is achieved by invoking
-	  ORB::resolve_initial_references("SSLIOPCurrent").
+          Non-TSS implementation of the newly added SSLIOP::Current TAO
+          extension.  It is useful for obtaining the peer certificate
+          chain associated with the current SSL session, for example.
+          Access to this object is achieved by invoking
+          ORB::resolve_initial_references("SSLIOPCurrent").
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.inl:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.inl:
 
-	  TSS implementation of the newly added SSLIOP::Current TAO
-	  extension.
+          TSS implementation of the newly added SSLIOP::Current TAO
+          extension.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp
-	  (register_orb_initializer):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp
+          (register_orb_initializer):
 
-	  Helper method that instantiates and registers the newly added
-	  SSLIOP_ORBInitializer with TAO.
+          Helper method that instantiates and registers the newly added
+          SSLIOP_ORBInitializer with TAO.
 
-	  (init):
+          (init):
 
-	  Invoke the register_orb_initializer() helper method to cause
-	  SSLIOP_ORBInitializer registration.
+          Invoke the register_orb_initializer() helper method to cause
+          SSLIOP_ORBInitializer registration.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h:
 
-	  Added a server request interceptor that enforces secure
-	  invocations.  If the endpoint is configured for secure
-	  invocations alone, then this interceptor will reject the client
-	  request coming in on the insecure port and throw a
-	  CORBA::NO_PERMISSION exception.
+          Added a server request interceptor that enforces secure
+          invocations.  If the endpoint is configured for secure
+          invocations alone, then this interceptor will reject the client
+          request coming in on the insecure port and throw a
+          CORBA::NO_PERMISSION exception.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.h:
 
-	  New ORBInitailizer that creates the SSLIOP::Current object and
-	  registers it with the ORB.  It also creates the SSLIOP secure
-	  invocation server request interceptor, and registers it with the
-	  ORB.
+          New ORBInitailizer that creates the SSLIOP::Current object and
+          registers it with the ORB.  It also creates the SSLIOP secure
+          invocation server request interceptor, and registers it with the
+          ORB.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
 
-	  Cosmetic updates.
+          Cosmetic updates.
 
-	* orbsvcs/orbsvcs/Makefile.SSLIOP:
-	* orbsvcs/orbsvcs/SSLIOP.bor:
-	* orbsvcs/orbsvcs/SSLIOP.dsp:
+        * orbsvcs/orbsvcs/Makefile.SSLIOP:
+        * orbsvcs/orbsvcs/SSLIOP.bor:
+        * orbsvcs/orbsvcs/SSLIOP.dsp:
 
-	  Added the new files to these Makefiles and project files.
+          Added the new files to these Makefiles and project files.
 
-	* tests/Portable_Interceptors/Dynamic/Echo_Client_ORBInitializer.cpp
-	  (post_init):
-	* tests/Portable_Interceptors/Dynamic/Echo_Server_ORBInitializer.cpp
-	  (post_init):
+        * tests/Portable_Interceptors/Dynamic/Echo_Client_ORBInitializer.cpp
+          (post_init):
+        * tests/Portable_Interceptors/Dynamic/Echo_Server_ORBInitializer.cpp
+          (post_init):
 
-	  Removed erroneous call to "._retn()."  Transferring ownership to
-	  the ORB happens automatically when the corresponding "_var" goes
-	  out of scope.
+          Removed erroneous call to "._retn()."  Transferring ownership to
+          the ORB happens automatically when the corresponding "_var" goes
+          out of scope.
 
-	* tests/Portable_Interceptors/Dynamic/interceptors.cpp:
+        * tests/Portable_Interceptors/Dynamic/interceptors.cpp:
 
-	  Corrected debugging message.  The message coming from the server
-	  request interceptor incorrectly mentioned the client request
-	  interceptor.
+          Corrected debugging message.  The message coming from the server
+          request interceptor incorrectly mentioned the client request
+          interceptor.
 
 Sun Nov 19 18:16:41 2000  Carlos O'Ryan  <coryan@uci.edu>
 
