@@ -1,3 +1,14 @@
+Thu May 17 22:29:08 2001  Ossama Othman  <ossama@uci.edu>
+
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Client_Request_Interceptor.cpp:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Server_Request_Interceptor.cpp:
+
+	  Only increment the ending interception point count if the
+	  appropriate test is being run.  For example, don't increment the
+	  ending client side interception point count if the server side
+	  test is running.  This fixes a problem where the test would fail
+	  due to an incorrect interception point count.
+
 Thu May 17 15:48:23 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * docs/tutorials/Quoter/RT_Event_Service/index.html:
