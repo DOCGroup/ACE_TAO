@@ -238,7 +238,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::close (void)
 
       this->cur_bytes_ -= this->head_->total_size ();
 
-      temp = this->head_;
+      ACE_Message_Block *temp = this->head_;
       this->head_ = this->head_->next ();
 
       // Make sure to use <release> rather than <delete> since this is
@@ -847,7 +847,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::remove_messages (ACE_Message_Block *&l
     }
 
   // Decrement message and size counts for removed messages.
-  ACE_Message_Block *temp1, *temp2;
+  ACE_Message_Block *temp1;
 
   for (temp1 = list_head;
        temp1 != 0;
