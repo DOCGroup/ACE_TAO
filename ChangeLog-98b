@@ -1,6 +1,12 @@
+Fri Sep 04 07:26:57 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/rules.bin.GNU,wrapper_macros.GNU:
+          moved VBIN definition from rules.bin.GNU to wrapper_macros.GNU.
+          With this change, individual Makefiles need not define VBIN.
+
 Fri Sep 04 01:01:58 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Timeprobe.h: Disable warning of using Microsoft Extensions.
+        * ace/Timeprobe.h: Disable warning of using Microsoft Extensions.
 
 Fri Sep 04 02:12:03 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -8,9 +14,9 @@ Fri Sep 04 02:12:03 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Fri Sep  4 00:07:18 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp (open): Added
- 	  template instantiations to make GCC happy.  Thanks to David
- 	  Levine for reporting this.
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp (open): Added
+          template instantiations to make GCC happy.  Thanks to David
+          Levine for reporting this.
 
 Thu Sep 03 19:15:52 1998 Fred Kuhns <fredk@arl.wustl.edu>
 
