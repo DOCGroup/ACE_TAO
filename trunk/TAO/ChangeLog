@@ -1,3 +1,16 @@
+Fri Apr 23 15:16:37 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+        
+          In the generated _is_a() method, changed the call to the
+          base class CORBA::Object::_is_a() to use the
+          ACE_NESTED_CLASS macro, similarly to what is done for
+          regular interfaces. We must use the macro because 
+          MSVC 6.0 has scope resolution problems. Thanks to
+          Bayu Hendradjaya <bayu@cs.newcastle.edu.au> for reporting
+          the problem that cropped up in the CIAO Hello example
+          on Borland BCB5.
+
 Fri Apr 23 14:43:40 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.cpp:
