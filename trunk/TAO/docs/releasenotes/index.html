@@ -631,7 +631,7 @@ system.  This specification builds on the CORBA Architecture
 Specification version 2.2 and the CORBA Messaging Specification.
 Primarily, RT-CORBA adds to the Policy framework defined in the
 Messaging specification and adds to GIOP/IIOP version 1.1 to support
-these extensions.
+these extensions. <P>
 
 This effort will implement the RT-CORBA specification and required
 parts of the Messaging specification.  Our implementation of RT-CORBA
@@ -639,7 +639,7 @@ in TAO will occur in stages.  Our initial focus will be the support of
 statically configured, real-time embedded systems where it is possible
 to eliminate many sources of unbounded priority inversion.  This will
 be followed by a more general implementation which supports more
-dynamic environments and scheduling mechanisms.
+dynamic environments and scheduling mechanisms. <P>
 
 Support for statically configured applications requires a framework
 which allows for explicit mappings between CORBA priorities,
@@ -650,7 +650,7 @@ Essentially, applications are able to assign priorities to connections
 between server and client, then using the existing Policy framework
 along with new Policy objects, requests are routed to the appropriate
 connections.  By assigning equivalent thread and object priorities,
-applications are able to ensure end-to-end priority preservation.
+applications are able to ensure end-to-end priority preservation. <P>
 
 As a part of this initial effort we are also adding support for both
 reliable and buffered oneway operations.  Reliable oneway operations
@@ -659,7 +659,7 @@ method for providing different levels of support for reliable message
 delivery. Traditional oneway semantics are unacceptable in many
 environments.  For example, there is no guarantee that a particular
 invocation will actually be delivered.  Additionally, location
-forwarding will not occur with traditional oneway invocations.
+forwarding will not occur with traditional oneway invocations. <P>
 
 <P>
 The Messaging specification has defined four alternative
@@ -670,7 +670,7 @@ Policy from the Messaging Specification is used to specify the level of
 reliability required.  The policy is set on the client side and uses a
 new flags field in the GIOP 1.2 header.  The server checks this flag to
 determine if a reply is required for the oneway invocation.  Four
-different levels synchronization are defined in the RT specification:
+different levels synchronization are defined in the RT specification: 
 
         <p>
         <ul>
@@ -743,7 +743,7 @@ different priorities directly contributes to maintaining end-to-end
 priority in a distributed system.  Please see TAO/tao/TAO.idl for
 ClientPriorityPolicy interface, and TAO/tests/Endpoint_Per_Priority for
 its use.  Current implementation does not work properly in presence of
-location forward messages.
+location forward messages. <P>
 
 </ul>
 Known issues:
