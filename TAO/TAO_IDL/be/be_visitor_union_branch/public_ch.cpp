@@ -117,6 +117,8 @@ be_visitor_union_branch_public_ch::visit_array (be_array *node)
                             -1);
         }
 
+      ctx.state (TAO_CodeGen::TAO_ROOT_CH);
+
       *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
           << "// " << __FILE__ << ":" << __LINE__;
 
@@ -479,7 +481,6 @@ be_visitor_union_branch_public_ch::visit_sequence (be_sequence *node)
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_SEQUENCE_CH);
       be_visitor_sequence_ch visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
@@ -598,7 +599,6 @@ be_visitor_union_branch_public_ch::visit_structure (be_structure *node)
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_STRUCT_CH);
       be_visitor_structure_ch visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
@@ -682,7 +682,6 @@ be_visitor_union_branch_public_ch::visit_union (be_union *node)
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_UNION_CH);
       be_visitor_union_ch visitor (&ctx);
 
       if (node->accept (&visitor) == -1)

@@ -37,7 +37,6 @@ int
 be_visitor_component_ih::visit_component (be_component *node)
 {
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_INTERFACE_IH);
   be_visitor_interface_ih visitor (&ctx);
   return visitor.visit_interface (node);
 }

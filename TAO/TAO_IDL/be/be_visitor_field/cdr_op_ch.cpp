@@ -149,7 +149,6 @@ be_visitor_field_cdr_op_ch::visit_sequence (be_sequence *node)
       ctx.node (node);
 
       // First generate the sequence declaration.
-      ctx.state (TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CH);
       be_visitor_sequence_cdr_op_ch visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
@@ -180,7 +179,6 @@ be_visitor_field_cdr_op_ch::visit_structure (be_structure *node)
                        // is still the same
 
       // first generate the struct declaration
-      ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CH);
       be_visitor_structure_cdr_op_ch visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
@@ -234,7 +232,6 @@ be_visitor_field_cdr_op_ch::visit_union (be_union *node)
       ctx.node (node);
 
       // First generate the enum declaration.
-      ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CH);
       be_visitor_union_cdr_op_ch visitor (&ctx);
 
       if (node->accept (&visitor) == -1)

@@ -90,23 +90,20 @@ be_visitor_union::visit_union_branch (be_union_branch *node)
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_UNION_CDR_OP_CH:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
       {
-        ctx.state (TAO_CodeGen::TAO_UNION_BRANCH_CDR_OP_CH);
         be_visitor_union_branch_cdr_op_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_UNION_CDR_OP_CI:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
       {
-        ctx.state (TAO_CodeGen::TAO_UNION_BRANCH_CDR_OP_CI);
         be_visitor_union_branch_cdr_op_ci visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_UNION_CDR_OP_CS:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
       {
-        ctx.state (TAO_CodeGen::TAO_UNION_BRANCH_CDR_OP_CS);
         be_visitor_union_branch_cdr_op_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;

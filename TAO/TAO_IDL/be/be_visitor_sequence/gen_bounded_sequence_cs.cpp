@@ -42,7 +42,7 @@ be_visitor_sequence_cs::gen_bounded_sequence (be_sequence *node)
     {
       int status =
         this->gen_anonymous_base_type (bt,
-                                       TAO_CodeGen::TAO_SEQUENCE_CS);
+                                       TAO_CodeGen::TAO_ROOT_CS);
 
       if (status == -1)
         {

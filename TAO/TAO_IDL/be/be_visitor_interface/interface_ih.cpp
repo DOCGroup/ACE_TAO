@@ -150,7 +150,6 @@ be_visitor_interface_ih::method_helper (be_interface *derived,
   if (strcmp (derived->flat_name (), node->flat_name ()) != 0)
     {
       be_visitor_context ctx;
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_IH);
       ctx.interface (derived);
       ctx.stream (os);
       be_visitor_interface_ih visitor (&ctx);

@@ -550,7 +550,6 @@ be_visitor_valuetype_field_cdr_ci::visit_sequence (be_sequence *node)
       // Anonymous sequence.
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CI);
       be_visitor_sequence_cdr_op_ci visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
@@ -652,7 +651,6 @@ be_visitor_valuetype_field_cdr_ci::visit_structure (be_structure *node)
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CI);
       be_visitor_structure_cdr_op_ci visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
@@ -733,7 +731,6 @@ be_visitor_valuetype_field_cdr_ci::visit_union (be_union *node)
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CI);
       be_visitor_union_cdr_op_ci visitor (&ctx);
 
       if (node->accept (&visitor) == -1)

@@ -144,14 +144,12 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
           }
         case AST_Decl::NT_struct:
           {
-            ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CI);
             be_visitor_structure_cdr_op_ci sc_visitor (&ctx);
             status = bt->accept (&sc_visitor);
             break;
           }
         case AST_Decl::NT_union:
           {
-            ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CI);
             be_visitor_union_cdr_op_ci uc_visitor (&ctx);
             status = bt->accept (&uc_visitor);
             break;

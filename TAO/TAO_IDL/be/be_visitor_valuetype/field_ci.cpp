@@ -180,7 +180,6 @@ be_visitor_valuetype_field_ci::visit_sequence (be_sequence *node)
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_SEQUENCE_CI);
       be_visitor_sequence_ci visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
@@ -233,7 +232,6 @@ be_visitor_valuetype_field_ci::visit_structure (be_structure *node)
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_STRUCT_CI);
       be_visitor_structure_ci visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
@@ -286,7 +284,6 @@ be_visitor_valuetype_field_ci::visit_union (be_union *node)
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_UNION_CI);
       be_visitor_union_ci visitor (&ctx);
 
       if (node->accept (&visitor) == -1)

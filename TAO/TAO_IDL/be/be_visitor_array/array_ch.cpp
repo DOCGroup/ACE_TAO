@@ -72,7 +72,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
   if (nt == AST_Decl::NT_sequence)
     {
       if (this->gen_anonymous_base_type (bt,
-                                         TAO_CodeGen::TAO_SEQUENCE_CH)
+                                         TAO_CodeGen::TAO_ROOT_CH)
           == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -102,14 +102,12 @@ int be_visitor_array_ch::visit_array (be_array *node)
           }
         case AST_Decl::NT_struct:
           {
-            ctx.state (TAO_CodeGen::TAO_STRUCT_CH);
             be_visitor_structure_ch sc_visitor (&ctx);
             status = bt->accept (&sc_visitor);
             break;
           }
         case AST_Decl::NT_union:
           {
-            ctx.state (TAO_CodeGen::TAO_UNION_CH);
             be_visitor_union_ch uc_visitor (&ctx);
             status = bt->accept (&uc_visitor);
             break;

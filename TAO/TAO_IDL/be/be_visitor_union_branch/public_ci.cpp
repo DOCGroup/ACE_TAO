@@ -881,7 +881,6 @@ be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
       ctx.node (node);
 
       // First generate inline operations for this anonymous sequence type.
-      ctx.state (TAO_CodeGen::TAO_SEQUENCE_CI);
       be_visitor_sequence_ci visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
@@ -1191,7 +1190,6 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
       ctx.node (node);
 
       // First generate the struct declaration
-      ctx.state (TAO_CodeGen::TAO_STRUCT_CI);
       be_visitor_structure_ci visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
@@ -1357,7 +1355,6 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
       ctx.node (node);
 
       // First generate the union declaration.
-      ctx.state (TAO_CodeGen::TAO_UNION_CI);
       be_visitor_union_ci visitor (&ctx);
 
       if (node->accept (&visitor) == -1)

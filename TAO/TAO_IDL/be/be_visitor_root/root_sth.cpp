@@ -169,7 +169,7 @@ be_visitor_root_sth::visit_interface (be_interface *node)
 
   // Generate the TIE class.
 
-  this->ctx_->state (TAO_CodeGen::TAO_INTERFACE_TIE_SH);
+  this->ctx_->state (TAO_CodeGen::TAO_ROOT_TIE_SH);
   this->ctx_->node (node);
 
   be_visitor_interface_tie_sh visitor (this->ctx_);

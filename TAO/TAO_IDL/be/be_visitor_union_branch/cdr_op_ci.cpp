@@ -729,7 +729,6 @@ be_visitor_union_branch_cdr_op_ci::visit_sequence (be_sequence *node)
       // will be modified based on what type of node we are visiting.
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CI);
       be_visitor_sequence_cdr_op_ci visitor (&ctx);
 
       if (visitor.visit_sequence (node) == -1)
@@ -864,7 +863,6 @@ be_visitor_union_branch_cdr_op_ci::visit_structure (be_structure *node)
       // will be modified based on what type of node we are visiting.
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CI);
       be_visitor_structure_cdr_op_ci visitor (&ctx);
 
       if (visitor.visit_structure (node) == -1)
@@ -960,7 +958,6 @@ be_visitor_union_branch_cdr_op_ci::visit_union (be_union *node)
       // will be modified based on what type of node we are visiting
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CI);
       be_visitor_union_cdr_op_ci visitor (&ctx);
 
       if (visitor.visit_union (node) == -1)

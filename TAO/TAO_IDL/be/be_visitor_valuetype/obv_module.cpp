@@ -114,15 +114,8 @@ be_visitor_obv_module::visit_valuetype (be_valuetype *node)
     case TAO_CodeGen::TAO_MODULE_OBV_CS:
       ctx.state (TAO_CodeGen::TAO_VALUETYPE_OBV_CS);
       break;
-  default:
-      {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%N:%l) be_visitor_obv_module::"
-                           "visit_valuetype - "
-                           "Bad context state\n"
-                           ), 
-                          -1);
-      }
+    default:
+      return 0;
     }
 
   if (status == 0)
