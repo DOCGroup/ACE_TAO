@@ -6,10 +6,38 @@
 
 ACE_RCSID(Reliable, server, "$Id$")
 
-const char *ior_output_file = "test.ior";
+// IOR file name
+static const char *ior_output_file = "test.ior";
+
+static int
+parse_args (int argc, char *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, "f:");
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'f:':
+        ior_output_file = get_opts.optarg;
+        break;
+
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "-f <ior file> "
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+
+  // Indicates sucessful parsing of the command line
+  return 0;
+}
 
 int
-main (int argc, char *argv[])
+set_rt_mode (void)
 {
   int policy = ACE_SCHED_FIFO;
   int priority =
@@ -21,18 +49,17 @@ main (int argc, char *argv[])
     ACE_OS::sched_params (ACE_Sched_Params (policy,
                                             priority,
                                             ACE_SCOPE_PROCESS));
-
   if (result != 0)
     {
       if (ACE_OS::last_error () == EPERM)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "server (%P|%t): user is not superuser, "
+                      "client (%P|%t): user is not superuser, "
                       "test runs in time-shared class\n"));
         }
       else
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "server (%P|%t): sched_params failed\n"),
+                           "client (%P|%t): sched_params failed\n"),
                           1);
     }
 
@@ -48,29 +75,43 @@ main (int argc, char *argv[])
 
   // Do a sanity check.
   if (ACE_OS::thr_getprio (self, priority) == 0)
-    ACE_DEBUG ((LM_DEBUG, 
-                "server (%P|%t): thread priority = %d.\n", 
+    ACE_DEBUG ((LM_DEBUG,
+                "client (%P|%t): thread priority = %d.\n",
                 priority));
+
+  return 0;
+}
+
+int
+main (int argc, char *argv[])
+{
+  int result = set_rt_mode ();
+  if (result != 0)
+    return result;
 
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, 
-                         argv, 
-                         "", 
+        CORBA::ORB_init (argc,
+                         argv,
+                         "",
                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+      // Get the command line options.
+      if (parse_args (argc, argv) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "parse_args failed\n"),
+                            1);
+        }
 
-      if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+      CORBA::Object_var poa_object =
+        orb->resolve_initial_references ("RootPOA");
+      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), 
+        PortableServer::POA::_narrow (poa_object.in (),
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -85,34 +126,35 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
-	      orb->object_to_string (server.in (), 
+        orb->object_to_string (server.in (),
                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, 
-                  "Activated as <%s>\n", 
+      ACE_DEBUG ((LM_DEBUG,
+                  "Activated as <%s>\n",
                   ior.in ()));
 
-	    FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
 
-	    if (output_file == 0)
-	      ACE_ERROR_RETURN ((LM_ERROR,
-			                     "Cannot open output file for writing IOR: %s",
-			                     ior_output_file),
-			                    1);
+      if (output_file == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot open output file for writing IOR: %s",
+                           ior_output_file),
+                          1);
 
-	    ACE_OS::fprintf (output_file, 
-                       "%s", 
+      ACE_OS::fprintf (output_file,
+                       "%s",
                        ior.in ());
-	    ACE_OS::fclose (output_file);
+
+      ACE_OS::fclose (output_file);
 
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (orb->run (ACE_TRY_ENV) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, 
-                           "%p\n", 
-                           "orb->run"), 
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "orb->run"),
                           -1);
       ACE_TRY_CHECK;
 
@@ -133,4 +175,3 @@ main (int argc, char *argv[])
 
   return 0;
 }
-

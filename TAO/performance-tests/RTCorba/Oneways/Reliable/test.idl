@@ -10,4 +10,3 @@ interface Test
 
   oneway void shutdown ();
 };
-
