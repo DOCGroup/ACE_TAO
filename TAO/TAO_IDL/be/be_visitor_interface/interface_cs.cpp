@@ -81,23 +81,19 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << be_idt_nl
       << "return " << node->name () << "::_nil ();" << be_uidt_nl;
 
+  *os << "STUB_Object* stub = obj->_stubobj ();" << be_nl
+      << "stub->_incr_refcnt ();" << be_nl;
   *os << "if (!obj->_is_collocated ()" << be_idt << be_idt << be_idt_nl
       << " || !obj->_servant()" << be_nl
       << " || obj->_servant()->_downcast (\""
       << node->repoID () << "\") == 0" << be_uidt_nl
       << ")" << be_uidt << be_uidt_nl
       << "{" << be_idt_nl;
-  *os << "STUB_Object* stub = obj->_stubobj ();" << be_nl
-      << "stub->_incr_refcnt ();" << be_nl;
-  *os << node->name () << "_ptr new_obj = new "
-      << node->name () << "(stub);" << be_nl
-      << "return new_obj;" << be_uidt_nl
-      << "} // end of if" << be_nl;
+  *os << "return new "
+      << node->name () << "(stub);" << be_uidt_nl
+      << "}" << be_nl;
 
-  *os << "STUB_Object *stub = obj->_servant ()->_create_stub (env);" << be_nl
-      << "if (env.exception () != 0)" << be_idt_nl
-      << "return " << node->name () << "::_nil ();" << be_uidt_nl
-      << "void* servant = obj->_servant ()->_downcast (\""
+  *os << "void* servant = obj->_servant ()->_downcast (\""
       << node->repoID () << "\");" << be_nl
       << "return new ";
 
@@ -114,13 +110,11 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "}" << be_nl << be_nl;
 
   // _nil method
-  *os << node->name () << "_ptr " << node->name () << "::_nil (void)" <<
-    be_nl;
-  *os << "{\n";
-  os->incr_indent ();
-  *os << "return (" << node->name () << "_ptr)NULL;\n";
-  os->decr_indent ();
-  *os << "} // end of _nil" << be_nl << be_nl;
+  *os << node->name () << "_ptr "
+      << node->name () << "::_nil (void)" << be_nl
+      << "{" << be_idt_nl
+      << "return (" << node->name () << "_ptr)0;" << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   // generate code for the elements of the interface
   if (this->visit_scope (node) == -1)
