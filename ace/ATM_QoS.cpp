@@ -13,8 +13,8 @@ ACE_RCSID(ace, ATM_QoS, "$Id$")
 
 #if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
 #define BHLI_MAGIC "FORE_ATM"
-// This is line rate in cells/s for an OC-3 MM interface.
-const long ACE_ATM_QoS::LINE_RATE = 353207;
+  // This is line rate in cells/s for an OC-3 MM interface.
+  const long ACE_ATM_QoS::LINE_RATE = 353207;
 const int ACE_ATM_QoS::OPT_FLAGS_CPID = 0x1;
 const int ACE_ATM_QoS::OPT_FLAGS_PMP = 0x2;
 const int ACE_ATM_QoS::DEFAULT_SELECTOR = 0x99;
@@ -27,7 +27,7 @@ const int ACE_ATM_QoS::DEFAULT_SELECTOR = 0x0;
 
 ACE_ALLOC_HOOK_DEFINE(ACE_ATM_QoS)
 
-ACE_ATM_QoS::ACE_ATM_QoS( int rate )
+  ACE_ATM_QoS::ACE_ATM_QoS( int rate )
 {
   ACE_TRACE( "ACE_ATM_QoS::ACE_ATM_QoS" );
 #if defined (ACE_HAS_FORE_ATM_WS2)
@@ -39,107 +39,107 @@ ACE_ATM_QoS::ACE_ATM_QoS( int rate )
   int size;
 
   // Setting up cbr parameters ...
-	ie_aalparams.AALType = AALTYPE_5;
-	ie_aalparams.AALSpecificParameters.AAL5Parameters.ForwardMaxCPCSSDUSize 
+  ie_aalparams.AALType = AALTYPE_5;
+  ie_aalparams.AALSpecificParameters.AAL5Parameters.ForwardMaxCPCSSDUSize 
     = 1516; //8096;
-	ie_aalparams.AALSpecificParameters.AAL5Parameters.BackwardMaxCPCSSDUSize 
+  ie_aalparams.AALSpecificParameters.AAL5Parameters.BackwardMaxCPCSSDUSize 
     = 1516; //8096;
-	ie_aalparams.AALSpecificParameters.AAL5Parameters.Mode = AAL5_MODE_MESSAGE;
-	ie_aalparams.AALSpecificParameters.AAL5Parameters.SSCSType = AAL5_SSCS_NULL;
+  ie_aalparams.AALSpecificParameters.AAL5Parameters.Mode = AAL5_MODE_MESSAGE;
+  ie_aalparams.AALSpecificParameters.AAL5Parameters.SSCSType = AAL5_SSCS_NULL;
 
-	size = sizeof(Q2931_IE_TYPE) + sizeof(ULONG) + sizeof(AAL_PARAMETERS_IE);
+  size = sizeof(Q2931_IE_TYPE) + sizeof(ULONG) + sizeof(AAL_PARAMETERS_IE);
 
-	ie_td.Forward.PeakCellRate_CLP0 = SAP_FIELD_ABSENT;
-	ie_td.Forward.PeakCellRate_CLP01 = rate;
+  ie_td.Forward.PeakCellRate_CLP0 = SAP_FIELD_ABSENT;
+  ie_td.Forward.PeakCellRate_CLP01 = rate;
   ie_td.Forward.SustainableCellRate_CLP0 = SAP_FIELD_ABSENT;
-	ie_td.Forward.SustainableCellRate_CLP01 = SAP_FIELD_ABSENT;
-	ie_td.Forward.MaxBurstSize_CLP0 = SAP_FIELD_ABSENT;
-	ie_td.Forward.MaxBurstSize_CLP01 = SAP_FIELD_ABSENT;
-	ie_td.Forward.Tagging = SAP_FIELD_ABSENT;
+  ie_td.Forward.SustainableCellRate_CLP01 = SAP_FIELD_ABSENT;
+  ie_td.Forward.MaxBurstSize_CLP0 = SAP_FIELD_ABSENT;
+  ie_td.Forward.MaxBurstSize_CLP01 = SAP_FIELD_ABSENT;
+  ie_td.Forward.Tagging = SAP_FIELD_ABSENT;
 
-	ie_td.Backward.PeakCellRate_CLP0 = SAP_FIELD_ABSENT;
-	ie_td.Backward.PeakCellRate_CLP01 = rate;
-	ie_td.Backward.SustainableCellRate_CLP0 = SAP_FIELD_ABSENT;
-	ie_td.Backward.SustainableCellRate_CLP01 = SAP_FIELD_ABSENT;
-	ie_td.Backward.MaxBurstSize_CLP0 = SAP_FIELD_ABSENT;
-	ie_td.Backward.MaxBurstSize_CLP01 = SAP_FIELD_ABSENT;
-	ie_td.Backward.Tagging = SAP_FIELD_ABSENT;
+  ie_td.Backward.PeakCellRate_CLP0 = SAP_FIELD_ABSENT;
+  ie_td.Backward.PeakCellRate_CLP01 = rate;
+  ie_td.Backward.SustainableCellRate_CLP0 = SAP_FIELD_ABSENT;
+  ie_td.Backward.SustainableCellRate_CLP01 = SAP_FIELD_ABSENT;
+  ie_td.Backward.MaxBurstSize_CLP0 = SAP_FIELD_ABSENT;
+  ie_td.Backward.MaxBurstSize_CLP01 = SAP_FIELD_ABSENT;
+  ie_td.Backward.Tagging = SAP_FIELD_ABSENT;
 
-	ie_td.BestEffort = 0; // Note: this must be set to zero for CBR.
+  ie_td.BestEffort = 0; // Note: this must be set to zero for CBR.
 
-	size += sizeof( Q2931_IE_TYPE ) 
-       + sizeof( ULONG ) 
-       + sizeof( ATM_TRAFFIC_DESCRIPTOR_IE );
+  size += sizeof( Q2931_IE_TYPE ) 
+    + sizeof( ULONG ) 
+    + sizeof( ATM_TRAFFIC_DESCRIPTOR_IE );
 
-	ie_bbc.BearerClass = BCOB_X;
-	ie_bbc.TrafficType = TT_CBR;
-	ie_bbc.TimingRequirements = TR_END_TO_END;
-	ie_bbc.ClippingSusceptability = CLIP_NOT;
-	ie_bbc.UserPlaneConnectionConfig = UP_P2P;
+  ie_bbc.BearerClass = BCOB_X;
+  ie_bbc.TrafficType = TT_CBR;
+  ie_bbc.TimingRequirements = TR_END_TO_END;
+  ie_bbc.ClippingSusceptability = CLIP_NOT;
+  ie_bbc.UserPlaneConnectionConfig = UP_P2P;
 
-	size += sizeof( Q2931_IE_TYPE ) 
-       + sizeof( ULONG ) 
-       + sizeof( ATM_BROADBAND_BEARER_CAPABILITY_IE );
+  size += sizeof( Q2931_IE_TYPE ) 
+    + sizeof( ULONG ) 
+    + sizeof( ATM_BROADBAND_BEARER_CAPABILITY_IE );
 
-	ie_qos.QOSClassForward = QOS_CLASS1;
-	ie_qos.QOSClassBackward = QOS_CLASS1; // This may not be really used 
-                                        // since we do only simplex data xfer.
+  ie_qos.QOSClassForward = QOS_CLASS1;
+  ie_qos.QOSClassBackward = QOS_CLASS1; // This may not be really used 
+  // since we do only simplex data xfer.
 
-	size += sizeof(Q2931_IE_TYPE) + sizeof(ULONG) + sizeof(ATM_QOS_CLASS_IE);
+  size += sizeof(Q2931_IE_TYPE) + sizeof(ULONG) + sizeof(ATM_QOS_CLASS_IE);
 
   qos_.ProviderSpecific.buf = (char *) ACE_OS::malloc(size);
-	qos_.ProviderSpecific.len = size;
+  qos_.ProviderSpecific.len = size;
   ACE_OS::memset(qos_.ProviderSpecific.buf, 0, size);
 
-	ie_ptr = (Q2931_IE *) qos_.ProviderSpecific.buf;
-	ie_ptr->IEType = IE_AALParameters;
-	ie_ptr->IELength = sizeof( Q2931_IE_TYPE ) 
-                   + sizeof( ULONG ) 
-                   + sizeof( AAL_PARAMETERS_IE );
+  ie_ptr = (Q2931_IE *) qos_.ProviderSpecific.buf;
+  ie_ptr->IEType = IE_AALParameters;
+  ie_ptr->IELength = sizeof( Q2931_IE_TYPE ) 
+    + sizeof( ULONG ) 
+    + sizeof( AAL_PARAMETERS_IE );
   ACE_OS::memcpy(ie_ptr->IE, &ie_aalparams, sizeof(AAL_PARAMETERS_IE));
 
-	ie_ptr = (Q2931_IE *) ((char *)ie_ptr + ie_ptr->IELength);
-	ie_ptr->IEType = IE_TrafficDescriptor;
-	ie_ptr->IELength = sizeof( Q2931_IE_TYPE ) 
-                   + sizeof( ULONG ) 
-                   + sizeof( ATM_TRAFFIC_DESCRIPTOR_IE );
+  ie_ptr = (Q2931_IE *) ((char *)ie_ptr + ie_ptr->IELength);
+  ie_ptr->IEType = IE_TrafficDescriptor;
+  ie_ptr->IELength = sizeof( Q2931_IE_TYPE ) 
+    + sizeof( ULONG ) 
+    + sizeof( ATM_TRAFFIC_DESCRIPTOR_IE );
   ACE_OS::memcpy(ie_ptr->IE, &ie_td, sizeof(ATM_TRAFFIC_DESCRIPTOR_IE));
 
-	ie_ptr = (Q2931_IE *) ((char *)ie_ptr + ie_ptr->IELength);
-	ie_ptr->IEType = IE_BroadbandBearerCapability;
-	ie_ptr->IELength = sizeof( Q2931_IE_TYPE ) 
-                   + sizeof( ULONG ) 
-                   + sizeof( ATM_BROADBAND_BEARER_CAPABILITY_IE );
+  ie_ptr = (Q2931_IE *) ((char *)ie_ptr + ie_ptr->IELength);
+  ie_ptr->IEType = IE_BroadbandBearerCapability;
+  ie_ptr->IELength = sizeof( Q2931_IE_TYPE ) 
+    + sizeof( ULONG ) 
+    + sizeof( ATM_BROADBAND_BEARER_CAPABILITY_IE );
   ACE_OS::memcpy(ie_ptr->IE, 
                  &ie_bbc, 
                  sizeof(ATM_BROADBAND_BEARER_CAPABILITY_IE));
 
-	ie_ptr = (Q2931_IE *) ((char *)ie_ptr + ie_ptr->IELength);
-	ie_ptr->IEType = IE_QOSClass;
-	ie_ptr->IELength = sizeof( Q2931_IE_TYPE ) 
-                   + sizeof( ULONG ) 
-                   + sizeof( ATM_QOS_CLASS_IE );
+  ie_ptr = (Q2931_IE *) ((char *)ie_ptr + ie_ptr->IELength);
+  ie_ptr->IEType = IE_QOSClass;
+  ie_ptr->IELength = sizeof( Q2931_IE_TYPE ) 
+    + sizeof( ULONG ) 
+    + sizeof( ATM_QOS_CLASS_IE );
   ACE_OS::memcpy(ie_ptr->IE, &ie_qos, sizeof(ATM_QOS_CLASS_IE));
 
-//	qos_.SendingFlowspec.TokenRate = 0xffffffff;
-//	qos_.SendingFlowspec.TokenBucketSize = 0xffffffff;
-//	qos_.SendingFlowspec.PeakBandwidth = 0xffffffff;
-//	qos_.SendingFlowspec.Latency = 0xffffffff;
-//	qos_.SendingFlowspec.DelayVariation = 0xffffffff;
-//	qos_.SendingFlowspec.ServiceType = SERVICETYPE_BESTEFFORT; 
-    // This will most probably be ignored by the service provider.
-//	qos_.SendingFlowspec.MaxSduSize = 0xffffffff;
-//	qos_.SendingFlowspec.MinimumPolicedSize = 0xffffffff;
+  //	qos_.SendingFlowspec.TokenRate = 0xffffffff;
+  //	qos_.SendingFlowspec.TokenBucketSize = 0xffffffff;
+  //	qos_.SendingFlowspec.PeakBandwidth = 0xffffffff;
+  //	qos_.SendingFlowspec.Latency = 0xffffffff;
+  //	qos_.SendingFlowspec.DelayVariation = 0xffffffff;
+  //	qos_.SendingFlowspec.ServiceType = SERVICETYPE_BESTEFFORT; 
+  // This will most probably be ignored by the service provider.
+  //	qos_.SendingFlowspec.MaxSduSize = 0xffffffff;
+  //	qos_.SendingFlowspec.MinimumPolicedSize = 0xffffffff;
 
-//	qos_.ReceivingFlowspec.TokenRate = 0xffffffff;
-//	qos_.ReceivingFlowspec.TokenBucketSize = 0xffffffff;
-//	qos_.ReceivingFlowspec.PeakBandwidth = 0xffffffff;
-//	qos_.ReceivingFlowspec.Latency = 0xffffffff;
-//	qos_.ReceivingFlowspec.DelayVariation = 0xffffffff;
-//	qos_.ReceivingFlowspec.ServiceType = SERVICETYPE_BESTEFFORT; 
-    // This will most probably be ignored by the service provider.
-//	qos_.ReceivingFlowspec.MaxSduSize = 0xffffffff;
-//	qos_.ReceivingFlowspec.MinimumPolicedSize = 0;
+  //	qos_.ReceivingFlowspec.TokenRate = 0xffffffff;
+  //	qos_.ReceivingFlowspec.TokenBucketSize = 0xffffffff;
+  //	qos_.ReceivingFlowspec.PeakBandwidth = 0xffffffff;
+  //	qos_.ReceivingFlowspec.Latency = 0xffffffff;
+  //	qos_.ReceivingFlowspec.DelayVariation = 0xffffffff;
+  //	qos_.ReceivingFlowspec.ServiceType = SERVICETYPE_BESTEFFORT; 
+  // This will most probably be ignored by the service provider.
+  //	qos_.ReceivingFlowspec.MaxSduSize = 0xffffffff;
+  //	qos_.ReceivingFlowspec.MinimumPolicedSize = 0;
 
   ACE_Flow_Spec send_fspec( 0xffffffff,
                             0xffffffff,
@@ -152,19 +152,19 @@ ACE_ATM_QoS::ACE_ATM_QoS( int rate )
                             0xffffffff,
                             15,
                             ACE_DEFAULT_THREAD_PRIORITY ),
-                recv_fspec( 0xffffffff,
-                            0xffffffff,
-                            0xffffffff,
-                            0xffffffff,
-                            0xffffffff,
-                            SERVICETYPE_BESTEFFORT, 
-                            // This will most probably ignored by SP.
-                            0xffffffff,
-                            0,
-                            15,
-                            ACE_DEFAULT_THREAD_PRIORITY );
+    recv_fspec( 0xffffffff,
+                0xffffffff,
+                0xffffffff,
+                0xffffffff,
+                0xffffffff,
+                SERVICETYPE_BESTEFFORT, 
+                // This will most probably ignored by SP.
+                0xffffffff,
+                0,
+                15,
+                ACE_DEFAULT_THREAD_PRIORITY );
 
-	qos_.sending_flowspec( send_fspec );
+  qos_.sending_flowspec( send_fspec );
   qos_.receiving_flowspec( recv_fspec );
 #elif defined (ACE_HAS_FORE_ATM_XTI)
   ACE_UNUSED_ARG (rate);
@@ -178,145 +178,169 @@ ACE_ATM_QoS::set_cbr_rate (int rate)
 {
   ACE_TRACE ("ACE_ATM_QoS::set_cbr_rate");
 #if defined (ACE_HAS_FORE_ATM_WS2)
+  /*
   AAL_PARAMETERS_IE ie_aalparams;
   ATM_TRAFFIC_DESCRIPTOR_IE ie_td;
   ATM_BROADBAND_BEARER_CAPABILITY_IE ie_bbc;
   ATM_QOS_CLASS_IE ie_qos;
   Q2931_IE *ie_ptr;
   int size;
+  */
 
   ACE_OS::printf( "ATM_QoS(set_cbr_rate): set rate to %d c/s\n", rate );
 
   // Setting up cbr parameters ...
-	ie_aalparams.AALType = AALTYPE_5;
-	ie_aalparams.AALSpecificParameters.AAL5Parameters.ForwardMaxCPCSSDUSize 
+  /*
+  FORE has changed this - we no longer specify QoS this way
+  ie_aalparams.AALType = AALTYPE_5;
+  ie_aalparams.AALSpecificParameters.AAL5Parameters.ForwardMaxCPCSSDUSize 
     = 1516; //8096;
-	ie_aalparams.AALSpecificParameters.AAL5Parameters.BackwardMaxCPCSSDUSize 
+  ie_aalparams.AALSpecificParameters.AAL5Parameters.BackwardMaxCPCSSDUSize 
     = 1516; //8096;
-	ie_aalparams.AALSpecificParameters.AAL5Parameters.Mode = AAL5_MODE_MESSAGE;
-	ie_aalparams.AALSpecificParameters.AAL5Parameters.SSCSType = AAL5_SSCS_NULL;
+  ie_aalparams.AALSpecificParameters.AAL5Parameters.Mode = AAL5_MODE_MESSAGE;
+  ie_aalparams.AALSpecificParameters.AAL5Parameters.SSCSType = AAL5_SSCS_NULL;
 
-	size = sizeof(Q2931_IE_TYPE) + sizeof(ULONG) + sizeof(AAL_PARAMETERS_IE);
+  size = sizeof(Q2931_IE_TYPE) + sizeof(ULONG) + sizeof(AAL_PARAMETERS_IE);
 
-	ie_td.Forward.PeakCellRate_CLP0 = SAP_FIELD_ABSENT;
-	ie_td.Forward.PeakCellRate_CLP01 = rate;
+  ie_td.Forward.PeakCellRate_CLP0 = SAP_FIELD_ABSENT;
+  ie_td.Forward.PeakCellRate_CLP01 = rate;
   ie_td.Forward.SustainableCellRate_CLP0 = SAP_FIELD_ABSENT;
-	ie_td.Forward.SustainableCellRate_CLP01 = SAP_FIELD_ABSENT;
-	ie_td.Forward.MaxBurstSize_CLP0 = SAP_FIELD_ABSENT;
-	ie_td.Forward.MaxBurstSize_CLP01 = SAP_FIELD_ABSENT;
-	ie_td.Forward.Tagging = SAP_FIELD_ABSENT;
+  ie_td.Forward.SustainableCellRate_CLP01 = SAP_FIELD_ABSENT;
+  ie_td.Forward.MaxBurstSize_CLP0 = SAP_FIELD_ABSENT;
+  ie_td.Forward.MaxBurstSize_CLP01 = SAP_FIELD_ABSENT;
+  ie_td.Forward.Tagging = SAP_FIELD_ABSENT;
 
-	ie_td.Backward.PeakCellRate_CLP0 = SAP_FIELD_ABSENT;
-	ie_td.Backward.PeakCellRate_CLP01 = rate;
-	ie_td.Backward.SustainableCellRate_CLP0 = SAP_FIELD_ABSENT;
-	ie_td.Backward.SustainableCellRate_CLP01 = SAP_FIELD_ABSENT;
-	ie_td.Backward.MaxBurstSize_CLP0 = SAP_FIELD_ABSENT;
-	ie_td.Backward.MaxBurstSize_CLP01 = SAP_FIELD_ABSENT;
-	ie_td.Backward.Tagging = SAP_FIELD_ABSENT;
+  ie_td.Backward.PeakCellRate_CLP0 = SAP_FIELD_ABSENT;
+  ie_td.Backward.PeakCellRate_CLP01 = rate;
+  ie_td.Backward.SustainableCellRate_CLP0 = SAP_FIELD_ABSENT;
+  ie_td.Backward.SustainableCellRate_CLP01 = SAP_FIELD_ABSENT;
+  ie_td.Backward.MaxBurstSize_CLP0 = SAP_FIELD_ABSENT;
+  ie_td.Backward.MaxBurstSize_CLP01 = SAP_FIELD_ABSENT;
+  ie_td.Backward.Tagging = SAP_FIELD_ABSENT;
 
-	ie_td.BestEffort = 0; // Note: this must be set to zero for CBR.
+  ie_td.BestEffort = 0; // Note: this must be set to zero for CBR.
 
-	size += sizeof( Q2931_IE_TYPE ) 
-       + sizeof( ULONG ) 
-       + sizeof( ATM_TRAFFIC_DESCRIPTOR_IE );
+  size += sizeof( Q2931_IE_TYPE ) +
+          sizeof( ULONG ) +
+          sizeof( ATM_TRAFFIC_DESCRIPTOR_IE );
 
-	ie_bbc.BearerClass = BCOB_X;
-	ie_bbc.TrafficType = TT_CBR;
-	ie_bbc.TimingRequirements = TR_END_TO_END;
-	ie_bbc.ClippingSusceptability = CLIP_NOT;
-	ie_bbc.UserPlaneConnectionConfig = UP_P2P;
+  ie_bbc.BearerClass = BCOB_X;
+  ie_bbc.TrafficType = TT_CBR;
+  ie_bbc.TimingRequirements = TR_END_TO_END;
+  ie_bbc.ClippingSusceptability = CLIP_NOT;
+  ie_bbc.UserPlaneConnectionConfig = UP_P2P;
 
-	size += sizeof(Q2931_IE_TYPE) 
-       + sizeof(ULONG) 
-       + sizeof(ATM_BROADBAND_BEARER_CAPABILITY_IE);
+  size += sizeof(Q2931_IE_TYPE) +
+          sizeof(ULONG) +
+          sizeof(ATM_BROADBAND_BEARER_CAPABILITY_IE);
 
-	ie_qos.QOSClassForward = QOS_CLASS1;
-	ie_qos.QOSClassBackward = QOS_CLASS1; // This may not be really used 
-                                        // since we only simplex data xfer.
+  ie_qos.QOSClassForward = QOS_CLASS1;
+  ie_qos.QOSClassBackward = QOS_CLASS1; // This may not be really used 
+  // since we only simplex data xfer.
 
-	size += sizeof(Q2931_IE_TYPE) + sizeof(ULONG) + sizeof(ATM_QOS_CLASS_IE);
+  size += sizeof(Q2931_IE_TYPE) + sizeof(ULONG) + sizeof(ATM_QOS_CLASS_IE);
 
   qos_.ProviderSpecific.buf = (char *) ACE_OS::malloc(size);
-	qos_.ProviderSpecific.len = size;
+  qos_.ProviderSpecific.len = size;
   ACE_OS::memset(qos_.ProviderSpecific.buf, 0, size);
 
-	ie_ptr = (Q2931_IE *) qos_.ProviderSpecific.buf;
-	ie_ptr->IEType = IE_AALParameters;
-	ie_ptr->IELength 
-    = sizeof( Q2931_IE_TYPE ) 
-    + sizeof( ULONG ) 
-    + sizeof( AAL_PARAMETERS_IE );
+  ie_ptr = (Q2931_IE *) qos_.ProviderSpecific.buf;
+  ie_ptr->IEType = IE_AALParameters;
+  ie_ptr->IELength = sizeof( Q2931_IE_TYPE ) +
+                     sizeof( ULONG ) +
+                     sizeof( AAL_PARAMETERS_IE );
   ACE_OS::memcpy(ie_ptr->IE, &ie_aalparams, sizeof(AAL_PARAMETERS_IE));
 
-	ie_ptr = (Q2931_IE *) ((char *)ie_ptr + ie_ptr->IELength);
-	ie_ptr->IEType = IE_TrafficDescriptor;
-	ie_ptr->IELength 
-    = sizeof( Q2931_IE_TYPE ) 
-    + sizeof( ULONG ) 
-    + sizeof( ATM_TRAFFIC_DESCRIPTOR_IE );
+  ie_ptr = (Q2931_IE *) ((char *)ie_ptr + ie_ptr->IELength);
+  ie_ptr->IEType = IE_TrafficDescriptor;
+  ie_ptr->IELength = sizeof( Q2931_IE_TYPE ) +
+                     sizeof( ULONG ) +
+                     sizeof( ATM_TRAFFIC_DESCRIPTOR_IE );
   ACE_OS::memcpy(ie_ptr->IE, &ie_td, sizeof(ATM_TRAFFIC_DESCRIPTOR_IE));
 
-	ie_ptr = (Q2931_IE *) ((char *)ie_ptr + ie_ptr->IELength);
-	ie_ptr->IEType = IE_BroadbandBearerCapability;
-	ie_ptr->IELength 
-    = sizeof( Q2931_IE_TYPE ) 
-    + sizeof( ULONG ) 
-    + sizeof( ATM_BROADBAND_BEARER_CAPABILITY_IE );
+  ie_ptr = (Q2931_IE *) ((char *)ie_ptr + ie_ptr->IELength);
+  ie_ptr->IEType = IE_BroadbandBearerCapability;
+  ie_ptr->IELength = sizeof( Q2931_IE_TYPE ) +
+                     sizeof( ULONG ) +
+                     sizeof( ATM_BROADBAND_BEARER_CAPABILITY_IE );
   ACE_OS::memcpy( ie_ptr->IE, 
                   &ie_bbc, 
                   sizeof( ATM_BROADBAND_BEARER_CAPABILITY_IE ));
 
-	ie_ptr = (Q2931_IE *) ((char *)ie_ptr + ie_ptr->IELength);
-	ie_ptr->IEType = IE_QOSClass;
-	ie_ptr->IELength 
-    = sizeof(Q2931_IE_TYPE) + sizeof(ULONG) + sizeof(ATM_QOS_CLASS_IE);
+  ie_ptr = (Q2931_IE *) ((char *)ie_ptr + ie_ptr->IELength);
+  ie_ptr->IEType = IE_QOSClass;
+  ie_ptr->IELength = sizeof(Q2931_IE_TYPE) + sizeof(ULONG) +
+                     sizeof(ATM_QOS_CLASS_IE);
   ACE_OS::memcpy(ie_ptr->IE, &ie_qos, sizeof(ATM_QOS_CLASS_IE));
+  */
 
-//	qos_.SendingFlowspec.TokenRate = 0xffffffff;
-//	qos_.SendingFlowspec.TokenBucketSize = 0xffffffff;
-//	qos_.SendingFlowspec.PeakBandwidth = 0xffffffff;
-//	qos_.SendingFlowspec.Latency = 0xffffffff;
-//	qos_.SendingFlowspec.DelayVariation = 0xffffffff;
-//	qos_.SendingFlowspec.ServiceType = SERVICETYPE_BESTEFFORT; 
-    // This will most probably be ignored by the service provider.
-//	qos_.SendingFlowspec.MaxSduSize = 0xffffffff;
-//	qos_.SendingFlowspec.MinimumPolicedSize = 0xffffffff;
+  const int BYTES_PER_ATM_CELL = 53;
+  ACE_OS::memset(&qos_, 0, sizeof(ATM_QoS));
+  // Setting the token rate sets the minimum rate. 3 Mbits/sec seems too high.
+  //  Certainly for Vaudeville audio, we only need about 1000 c/s which is
+  //  424000 bits/sec which is 53000 bytes/sec.
+  //qos_.SendingFlowspec.TokenRate = 3*(1024*128);      // 3Mbits/sec
+  qos_.SendingFlowspec.TokenRate = 53000;               // 1000 cells/sec
+  qos_.SendingFlowspec.TokenBucketSize = 32*1024;       // our block size
+  //ourQos.SendingFlowspec.PeakBandwidth = ourQos.SendingFlowspec.TokenRate;
+  qos_.SendingFlowspec.ServiceType = SERVICETYPE_GUARANTEED;
+  // Peak bandwidth is in bytes/sec. The rate is specified in cells/sec so
+  //  we need to convert from cells/sec to bytes/sec (i.e., multiply by 53).
+  qos_.SendingFlowspec.PeakBandwidth = rate * BYTES_PER_ATM_CELL;
+  qos_.SendingFlowspec.Latency = -1;	// we don't care too much
+  qos_.SendingFlowspec.DelayVariation = -1; // we don't care too much
+  // no provider-specific data allowed on ATM
+  qos_.ProviderSpecific.buf=NULL;
+  qos_.ProviderSpecific.len=0;
+  // unidirectional P2MP; we don't need to setup the Receiving flowspec
 
-//	qos_.ReceivingFlowspec.TokenRate = 0xffffffff;
-//	qos_.ReceivingFlowspec.TokenBucketSize = 0xffffffff;
-//	qos_.ReceivingFlowspec.PeakBandwidth = 0xffffffff;
-//	qos_.ReceivingFlowspec.Latency = 0xffffffff;
-//	qos_.ReceivingFlowspec.DelayVariation = 0xffffffff;
-//	qos_.ReceivingFlowspec.ServiceType = SERVICETYPE_BESTEFFORT; 
-    // This will most probably be ignored by the service provider.
-//	qos_.ReceivingFlowspec.MaxSduSize = 0xffffffff;
-//	qos_.ReceivingFlowspec.MinimumPolicedSize = 0;
+  //qos_.SendingFlowspec.TokenRate = 0xffffffff;
+  //qos_.SendingFlowspec.TokenBucketSize = 0xffffffff;
+  //qos_.SendingFlowspec.PeakBandwidth = 0xffffffff;
+  //qos_.SendingFlowspec.Latency = 0xffffffff;
+  //qos_.SendingFlowspec.DelayVariation = 0xffffffff;
+  //qos_.SendingFlowspec.ServiceType = SERVICETYPE_BESTEFFORT; 
+  // This will most probably be ignored by the service provider.
+  //qos_.SendingFlowspec.MaxSduSize = 0xffffffff;
+  //qos_.SendingFlowspec.MinimumPolicedSize = 0xffffffff;
 
+  //qos_.ReceivingFlowspec.TokenRate = 0xffffffff;
+  //qos_.ReceivingFlowspec.TokenBucketSize = 0xffffffff;
+  //qos_.ReceivingFlowspec.PeakBandwidth = 0xffffffff;
+  //qos_.ReceivingFlowspec.Latency = 0xffffffff;
+  //qos_.ReceivingFlowspec.DelayVariation = 0xffffffff;
+  //qos_.ReceivingFlowspec.ServiceType = SERVICETYPE_BESTEFFORT; 
+  // This will most probably be ignored by the service provider.
+  //qos_.ReceivingFlowspec.MaxSduSize = 0xffffffff;
+  //qos_.ReceivingFlowspec.MinimumPolicedSize = 0;
+
+  /*
   ACE_Flow_Spec send_fspec( 0xffffffff,
                             0xffffffff,
                             0xffffffff,
                             0xffffffff,
                             0xffffffff,
-                            SERVICETYPE_BESTEFFORT, 
+                            SERVICETYPE_BESTEFFORT,
                             // This will most probably ignored by SP.
                             0xffffffff,
                             0xffffffff,
                             15,
                             ACE_DEFAULT_THREAD_PRIORITY ),
-                recv_fspec( 0xffffffff,
-                            0xffffffff,
-                            0xffffffff,
-                            0xffffffff,
-                            0xffffffff,
-                            SERVICETYPE_BESTEFFORT, 
-                            // This will most probably ignored by SP.
-                            0xffffffff,
-                            0,
-                            15,
-                            ACE_DEFAULT_THREAD_PRIORITY );
+  recv_fspec( 0xffffffff,
+              0xffffffff,
+              0xffffffff,
+              0xffffffff,
+              0xffffffff,
+              SERVICETYPE_BESTEFFORT,
+              // This will most probably ignored by SP.
+              0xffffffff,
+              0,
+              15,
+              ACE_DEFAULT_THREAD_PRIORITY );
 
-	qos_.sending_flowspec( send_fspec );
+  qos_.sending_flowspec( send_fspec );
   qos_.receiving_flowspec( recv_fspec );
+  */
 #elif defined (ACE_HAS_FORE_ATM_XTI)
   ACE_UNUSED_ARG (rate);
 #else
@@ -377,12 +401,12 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
       return 0;
     }
 
-   buf = (char *) ACE_OS::malloc (info.options);
+  buf = (char *) ACE_OS::malloc (info.options);
 
-	if (buf == 0)
+  if (buf == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                      ASYS_TEXT ("Unable to allocate %ld bytes for options\n"),
-                      info.options),
+                       ASYS_TEXT ("Unable to allocate %ld bytes for options\n"),
+                       info.options),
                       0);
 
   popt = (struct t_opthdr *) buf;

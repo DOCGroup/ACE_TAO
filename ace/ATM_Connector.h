@@ -109,19 +109,16 @@ public:
   // the connected ACE_SOCK_Stream.  If <remote_sap> is non-NULL then it
   // will contain the address of the connected peer.
 
+  //int add_leaf (ACE_ATM_Stream &current_stream,
+  //              const ACE_Addr &remote_sap,
+  //              ACE_INT32 leaf_id,
+  //              ACE_Time_Value *timeout = 0);
   int add_leaf (ACE_ATM_Stream &current_stream,
                 const ACE_Addr &remote_sap,
-                ACE_INT32 leaf_id,
-                ACE_Time_Value *timeout = 0);
-  // Actively add a leaf to the currently connected stream (i.e.,
-  // multicast). The <remote_sap> is the address of the leaf that we
-  // are trying to add. The <timeout> is the amount of time to wait to
-  // connect. If it's 0 then we block indefinitely.  If *timeout ==
-  // {0, 0} then the connection is done using non-blocking mode.  In
-  // this case, if the connection can't be made immediately the value
-  // of -1 is returned with <errno == EWOULDBLOCK>.  If *timeout >
-  // {0, 0} then this is the amount of time to wait before timing out.
-  // If the time expires before the connection is made <errno == ETIME>.
+                ACE_ATM_QoS &qos);
+  // Actively add a leaf to the root (i.e., point-to-multipoint). The
+  // <remote_sap> is the address of the leaf that we
+  // are trying to add.
 
   int reset_new_handle (ACE_HANDLE handle);
   // Resets any event associations on this handle
