@@ -167,7 +167,7 @@ namespace TAO
                                  TAO::Objref_Traits<CORBA::AbstractBase> >
   {
   };
-};
+}
 
 #if defined (__ACE_INLINE__)
 # include "AbstractBase.inl"

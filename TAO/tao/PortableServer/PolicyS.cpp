@@ -90,7 +90,7 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-};
+}
 
 // TAO_IDL - Generated from
 // C:\work\ACE+TAO\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1426

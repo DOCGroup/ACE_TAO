@@ -2910,7 +2910,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_POA__TRAITS_CH_)
 #define _PORTABLESERVER_POA__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::POA>
   {
@@ -2933,7 +2933,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_THREADPOLICY__TRAITS_CH_)
 #define _PORTABLESERVER_THREADPOLICY__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::ThreadPolicy>
   {
@@ -2956,7 +2956,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_LIFESPANPOLICY__TRAITS_CH_)
 #define _PORTABLESERVER_LIFESPANPOLICY__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::LifespanPolicy>
   {
@@ -2977,7 +2977,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICY__TRAITS_CH_)
 #define _PORTABLESERVER_IDUNIQUENESSPOLICY__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::IdUniquenessPolicy>
   {
@@ -2998,7 +2998,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICY__TRAITS_CH_)
 #define _PORTABLESERVER_IDASSIGNMENTPOLICY__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::IdAssignmentPolicy>
   {
@@ -3021,7 +3021,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY__TRAITS_CH_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::ImplicitActivationPolicy>
   {
@@ -3042,7 +3042,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICY__TRAITS_CH_)
 #define _PORTABLESERVER_SERVANTRETENTIONPOLICY__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::ServantRetentionPolicy>
   {
@@ -3063,7 +3063,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY__TRAITS_CH_)
 #define _PORTABLESERVER_REQUESTPROCESSINGPOLICY__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::RequestProcessingPolicy>
   {
@@ -3086,7 +3086,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_POAMANAGER__TRAITS_CH_)
 #define _PORTABLESERVER_POAMANAGER__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::POAManager>
   {
@@ -3109,7 +3109,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR__TRAITS_CH_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::AdapterActivator>
   {
@@ -3130,7 +3130,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_SERVANTMANAGER__TRAITS_CH_)
 #define _PORTABLESERVER_SERVANTMANAGER__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::ServantManager>
   {
@@ -3151,7 +3151,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_SERVANTACTIVATOR__TRAITS_CH_)
 #define _PORTABLESERVER_SERVANTACTIVATOR__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::ServantActivator>
   {
@@ -3172,7 +3172,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_SERVANTLOCATOR__TRAITS_CH_)
 #define _PORTABLESERVER_SERVANTLOCATOR__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::ServantLocator>
   {
@@ -3195,7 +3195,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_CURRENT__TRAITS_CH_)
 #define _PORTABLESERVER_CURRENT__TRAITS_CH_
- 
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::Current>
   {
@@ -3213,7 +3213,7 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-};
+}
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_ch.cpp:52
