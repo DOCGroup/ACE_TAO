@@ -1,3 +1,25 @@
+Thu Jul 31 12:26:27 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* tests/RTScheduling/RTScheduling_tests.dsw: 
+	* tests/RTScheduling/VoidData/VoidData.dsp: 
+	* tests/RTScheduling/Thread_Cancel/Thread_Cancel.dsp: 
+	* tests/RTScheduling/DT_Spawn/DT_Spawn.dsp: 
+	* tests/RTScheduling/Current/Current.dsp: 
+	* tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor_Server.dsp: 
+	* tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor_Client.dsp: 
+
+	  Added windows project and workspace files to compile
+	  RTScheduling tests on windows.
+	
+	* examples/RTScheduling/rtschedulers.dsw: 	
+	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.dsp: 
+	* examples/RTScheduling/Fixed_Priority_Scheduler/Fixed_Priority_Scheduler.dsp: 
+	* examples/RTScheduling/Starter.dsp: 
+	* examples/RTScheduling/Common_IDL_Gen.dsp: 
+
+	  Added windows project and workspace files to compile
+	  RTScheduling examples on windows.
+
 Wed Jul 30 23:00:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFRService/ComponentContainer_i.cpp:
