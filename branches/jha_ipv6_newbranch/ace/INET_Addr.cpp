@@ -50,6 +50,7 @@ ACE_INET_Addr::protocol_family (void)
 int
 ACE_INET_Addr::address_family (void)
 {
+  ACE_TRACE ("ACE_INET_Addr::address_family");
   if(ACE_INET_Addr::protocol_family() == PF_INET6)
     return AF_INET6;
   else
