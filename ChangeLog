@@ -1,3 +1,12 @@
+Mon Jan  5 12:43:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Name_Proxy.cpp:
+	* ace/Time_Request_Reply.cpp:
+
+	  #included "ace/os_include/arpa/os_inet.h" to fix [BUG
+	  1701]. Thanks to Garey Maxey <gary.maxey@hp.com> for reporting
+	  the problem.
+
 Mon Jan  5 12:30:56 2004  Don Hinton <dhinton@ieee.org>
 
 	* include/makeinclude/rules.lib.GNU:
