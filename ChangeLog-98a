@@ -1,5 +1,11 @@
 Fri Feb 06 15:28:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
+        * ace/config-sunos5.5-sunc++-4.x.h: disable explicit template
+          instantiations with CC 4.2, because it still does implicit
+          instantiation.  We need to figure out how to disable that.
+          Then, we can enable -instances=global to get the real
+          benefits of explicit template instantiation with CC.
+
         * tests/Barrier_Test.cpp: updated a comment re. the VxWorks
           task names test.
 
@@ -9,7 +15,7 @@ Fri Feb 06 10:42:22 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Feb 06 10:30:00 1998  Chris Gill <cdgill@cs.wustl.edu>
 
-        * ace/Containers.cpp: fixed error in 
+        * ace/Containers.cpp: fixed error in
           ACE_Doubly_Linked_List_Iterator<T>::first (void);
 
 Fri Feb 06 08:27:32 1998  Chris Gill <cdgill@cs.wustl.edu>
@@ -19,23 +25,23 @@ Fri Feb 06 08:27:32 1998  Chris Gill <cdgill@cs.wustl.edu>
           in the container and returns 1, or if the container is empty
           positions the iterator at a well defined "null" position for
           that container and returns 0:
-                  
-          template <class T> int 
+
+          template <class T> int
           ACE_Unbounded_Set_Iterator<T>::first (void);
 
-          template <class T> int 
+          template <class T> int
           ACE_Unbounded_Queue_Iterator<T>::first (void);
 
-          template <class T> int 
+          template <class T> int
           ACE_Unbounded_Stack_Iterator<T>::first (void);
 
-          template <class T> int 
+          template <class T> int
           ACE_Bounded_Set_Iterator<T>::first (void);
 
-          template <class T> int 
+          template <class T> int
           ACE_Fixed_Set_Iterator<T>::first (void);
 
-          template <class T> int 
+          template <class T> int
           ACE_Doubly_Linked_List_Iterator<T>::first (void);
 
 Wed Feb 04 22:23:24 1998  David L. Levine  <levine@cs.wustl.edu>
