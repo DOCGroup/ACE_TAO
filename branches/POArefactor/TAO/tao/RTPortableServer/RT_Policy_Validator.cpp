@@ -2,7 +2,7 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/PortableServer/PortableServerC.h"
+#include "tao/PortableServer/LifespanPolicyC.h"
 #include "tao/PortableServer/POA_Cached_Policies.h"
 #include "tao/RTCORBA/RT_Policy_i.h"
 #include "tao/RTCORBA/Thread_Pool.h"
@@ -13,8 +13,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Policy_Set.h"
 #include "tao/Transport_Acceptor.h"
-
-
 
 ACE_RCSID (RTPortableServer,
            RT_Policy_Validator,
