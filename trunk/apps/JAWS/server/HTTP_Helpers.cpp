@@ -12,7 +12,7 @@ HTTP_Status_Code::instance (void)
 {
   if (HTTP_Status_Code::instance_ == 0) 
     {
-      ACE_Guard<ACE_Thread_Mutex> g(lock_);
+      ACE_Guard<ACE_SYNCH_MUTEX> g (lock_);
       
       if (HTTP_Status_Code::instance_ == 0) 
 	{
