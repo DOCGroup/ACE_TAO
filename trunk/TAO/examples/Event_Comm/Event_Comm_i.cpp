@@ -87,9 +87,9 @@ Consumer_Entry::regexp (char *regexp)
 
 Consumer_Entry::Consumer_Entry (Event_Comm::Consumer *consumer,
 				const char *filtering_criteria)
-  : consumer_ (consumer),
-    filtering_criteria_ (0),
-    compiled_regexp_ (0)
+  : filtering_criteria_ (0),
+    compiled_regexp_ (0),
+    consumer_ (consumer)
 {
   char *compile_buffer = 0;
 
@@ -395,3 +395,29 @@ Consumer_i::disconnect (const char *reason,
   // shutdown the orb.
   TAO_ORB_Core_instance ()->orb()->shutdown ();
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Map_Manager<Event_Comm::Consumer *,
+  Consumer_Entry *, ACE_Null_Mutex>;
+template class ACE_Map_Iterator<Event_Comm::Consumer *, Consumer_Entry *,
+  ACE_Null_Mutex>;
+template class ACE_Map_Entry<Event_Comm::Consumer *, Consumer_Entry *>;
+template class ACE_Map_Reverse_Iterator<Event_Comm::Consumer *,
+  Consumer_Entry *, ACE_Null_Mutex>;
+template class ACE_Map_Iterator_Base<Event_Comm::Consumer *,
+  Consumer_Entry *, ACE_Null_Mutex>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate template class ACE_Map_Manager<Event_Comm::Consumer *,
+  Consumer_Entry *, ACE_Null_Mutex>;
+#pragma instantiate template class ACE_Map_Iterator<Event_Comm::Consumer *,
+ Consumer_Entry *, ACE_Null_Mutex>;
+#pragma instantiate template class ACE_Map_Entry<Event_Comm::Consumer *,
+  Consumer_Entry *>;
+#pragma instantiate template class ACE_Map_Reverse_Iterator<Event_Comm::Consumer *,
+  Consumer_Entry *, ACE_Null_Mutex>;
+#pragma instantiate ACE_Map_Iterator_Base<Event_Comm::Consumer *,
+  Consumer_Entry *, ACE_Null_Mutex>;
+
+#endif /* ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA */

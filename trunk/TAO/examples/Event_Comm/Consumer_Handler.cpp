@@ -5,8 +5,8 @@
 ACE_RCSID(Consumer, Consumer_Handler, "$Id$")
 
 Consumer_Handler::Consumer_Handler (void)
-:   notifier_ (0),
-    receiver_ (0)
+: receiver_ (0),
+  notifier_ (0)
 {
   // No-Op.
 }
@@ -70,6 +70,7 @@ Consumer_Handler::init (int argc, char *argv[])
       this->notifier_->subscribe (this->receiver_,
 				  filtering_criteria,
 				  TAO_TRY_ENV);
+      return 0;
     }
   TAO_CATCHANY
    {
@@ -77,6 +78,7 @@ Consumer_Handler::init (int argc, char *argv[])
      return -1;
    }
   TAO_ENDTRY;
+  return 0;
 }
 
 int

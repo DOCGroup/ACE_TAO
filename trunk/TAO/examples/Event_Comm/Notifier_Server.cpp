@@ -1,4 +1,5 @@
 #include "Notifier_Server.h"
+#include "Event_CommC.h"
 
 ACE_RCSID(Echo, Server_i, "$Id$")
 
@@ -65,7 +66,7 @@ Notifier_Server::init_naming_service (CORBA::Environment &TAO_TRY_ENV)
 			  -1);
 
       // Register the object implementation with the POA.
-      Notifier_var notifier_obj =
+      Event_Comm::Notifier_var notifier_obj =
 	this->servant_._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 

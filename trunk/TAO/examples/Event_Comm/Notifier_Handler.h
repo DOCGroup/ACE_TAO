@@ -38,7 +38,7 @@ public:
   // This constructor gets the notifier object from the Naming
   // Service.
 
-  ~Notifier_Handler (void);
+  virtual ~Notifier_Handler (void);
   // Destructor.
 
   int init (int argc, char *argv[]);

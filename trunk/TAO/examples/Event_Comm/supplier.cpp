@@ -91,6 +91,7 @@ Supplier::init (int argc, char *argv[])
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "%p\n",
 		       "register_handler"), -1);
+  return 0;
 }
 
 int

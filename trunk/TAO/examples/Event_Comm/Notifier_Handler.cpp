@@ -79,7 +79,7 @@ Notifier_Handler::init (int argc, char *argv[])
       TAO_CHECK_ENV;
 
 
-      // The CORBA::Object_var object is downcast to Echo_var using
+      // The CORBA::Object_var object is downcast to Notifier_var using
       // the <_narrow> method.
       this->notifier_ =
          Event_Comm::Notifier::_narrow (notifier_obj.in (),
@@ -88,6 +88,7 @@ Notifier_Handler::init (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG,
 		  "Notifier initialized.. \n"));
+      return 0;
 
   }
  TAO_CATCHANY
@@ -96,4 +97,5 @@ Notifier_Handler::init (int argc, char *argv[])
      return -1;
    }
  TAO_ENDTRY;
+ return 0;
 }

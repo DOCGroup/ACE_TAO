@@ -60,6 +60,16 @@ VBIN = $(BIN:%=%$(VAR))
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+ifeq ($(ACE_HAS_GNUG_PRE_2_8),1)
+
+  # Since older g++ cannot handle nested classes properly, this sample
+  # will not build on g++ prior to 2.8.0.
+  all clean realclean:
+	@echo Event_Comm is not built with older versions of g++
+
+else # ! ACE_HAS_GNUG_PRE_2_8
+
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -89,6 +99,8 @@ notifier: $(addprefix $(VDIR),$(NOTIFIER_OBJS))
 
 realclean: clean
 	-/bin/rm -rf Event_CommS.* Event_CommC.* Event_CommS_T.*
+
+endif # ! ACE_HAS_GNUG_PRE_2_8
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
