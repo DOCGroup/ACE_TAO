@@ -1,3 +1,16 @@
+Fri Aug  6 15:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Connector:
+        * tao/SCIOP_Connection:
+        * tao/UIOP_Connector:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+          As last step in the make_connection register the transport with the
+          reactor when the transport is connected. When it is not connected it
+          will or happen in the Transport_Connector when there the connection
+          is established or in the Transport::post_open when the transport is
+          connected and we have outgoing data.
+
 Fri Aug  6 15:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Connector.cpp (make_connection):
