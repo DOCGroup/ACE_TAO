@@ -1,8 +1,9 @@
-# $Id$
-# -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
+
+# $Id$
+# -*- perl -*-
 
 unshift @INC, '../../../bin';
 require ACEutils;
@@ -25,15 +26,15 @@ foreach $i (@ARGV) {
 
 $iorfile = "server.ior";
 $SV = Process::Create ($EXEPREFIX."server$Process::EXE_EXT ",
-		       " -ORBsvcconf server.conf  -ORBdebuglevel $debug_level"
-		       . " -o $iorfile");
+                       " -ORBsvcconf server.conf  -ORBdebuglevel $debug_level"
+                       . " -o $iorfile");
 
 ACE::waitforfile ($iorfile);
 
 $status  = system ($EXEPREFIX."$client_process$Process::EXE_EXT "
-		   . " -ORBsvcconf $client_conf -ORBdebuglevel $debug_level"
-		   . " -k file://$iorfile "
-		   . " -n $threads -i 1000");
+                   . " -ORBsvcconf $client_conf -ORBdebuglevel $debug_level"
+                   . " -k file://$iorfile "
+                   . " -n $threads -i 1000");
 
 $SV->Kill (); $SV->Wait ();
 
