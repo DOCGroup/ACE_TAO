@@ -30,7 +30,7 @@ my $dot_path = '/usr/bin';
 
 my  $doxy_path = '/usr/bin';
 
-my $doxy_version = '1.3.9.1';
+my $doxy_version = '1.4.1';
 
 &can_run($doxy_path.'/doxygen --version | grep '.$doxy_version.' >/dev/null') ||
   die "$0: doxygen path or version incorrect, please fix the script\n";
@@ -90,7 +90,7 @@ my $build_command =
     "zip ACE-html.zip -q9@ &&" .
     "$scp ACE-html.tar.gz ACE-html.tar.bz2 ACE-html.zip $dest;";
 
-&ex ($build_command) 
+&ex ($build_command)
     && die "$0: failed to move ACE man pages to $dest\n";
 
 exit $status;
