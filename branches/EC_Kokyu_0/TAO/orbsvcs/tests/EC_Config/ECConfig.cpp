@@ -20,6 +20,8 @@ namespace TestConfig {
 template <class SCHED_STRAT>
 ECConfig<SCHED_STRAT>::ECConfig (void)
   : Test_Config (),
+    ec_impl(0),
+    sched_impl(0),
     configured (0) //false
 {
 }
@@ -55,6 +57,7 @@ template <class SCHED_STRAT> int
 ECConfig<SCHED_STRAT>::configure (TCFG_SET_WPTR testconfigs)
 {
   if (configured) {
+    ACE_DEBUG((LM_DEBUG,ACE_TEXT("Resetting EC\n")));
     this->reset(); //delete memory used by previous configuration
   }
 
@@ -62,6 +65,8 @@ ECConfig<SCHED_STRAT>::configure (TCFG_SET_WPTR testconfigs)
   ACE_TRY
     {
       this->initEC();
+
+      ACE_DEBUG((LM_DEBUG,ACE_TEXT("EC Initialized\n")));
 
       ////////////////// EC ready; do config ////////////////////
       size_t tsize = testconfigs->size();
@@ -293,7 +298,7 @@ ECConfig<SCHED_STRAT>::initEC()
 {
   TAO_EC_Kokyu_Factory::init_svcs ();
 
-  ACE_DEBUG ((LM_DEBUG, "Initializing event channel\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Initializing event channel\n")));
   ACE_TRY
     {
       // ORB initialization boiler plate...
@@ -302,6 +307,8 @@ ECConfig<SCHED_STRAT>::initEC()
       this->orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      ACE_DEBUG((LM_DEBUG,ACE_TEXT("Resolving initial references\n")));
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
@@ -316,6 +323,8 @@ ECConfig<SCHED_STRAT>::initEC()
       ACE_TRY_CHECK;
       // DO these need to remain in scope beyond this function?
 
+      ACE_DEBUG((LM_DEBUG,ACE_TEXT("Creating sched service\n")));
+
       // Create a scheduling service
       ACE_NEW_RETURN (this->sched_impl,SCHED_STRAT,1);
 
@@ -328,6 +337,8 @@ ECConfig<SCHED_STRAT>::initEC()
       attributes.scheduler = scheduler.in (); // no need to dup
 
       ACE_NEW_RETURN (this->ec_impl,TAO_EC_Event_Channel (attributes),1);
+
+      ACE_DEBUG((LM_DEBUG,ACE_TEXT("Created ec_impl\n")));
 
       this->event_channel =
         this->ec_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
