@@ -164,11 +164,11 @@ interop_WChar_Passer_i::wunion_to_server (const interop::wunion & test,
 {
   switch (test._d()) {
   case interop::is_wchar :
-    return this->wchar_to_server (test.u_char(),key);
+    return this->wchar_to_server (test.u_char(),key  ACE_ENV_ARG_PARAMETER);
   case interop::is_wstring :
-    return this->wstring_to_server (test.u_string(),key);
+    return this->wstring_to_server (test.u_string(),key  ACE_ENV_ARG_PARAMETER);
   case interop::is_warray :
-    return this->warray_to_server (test.u_array(),key);
+    return this->warray_to_server (test.u_array(),key ACE_ENV_ARG_PARAMETER);
   default:
     /*return 0*/;
   }
@@ -210,15 +210,15 @@ interop_WChar_Passer_i::any_to_server (const CORBA::Any &test,
 
   if (test >>= CORBA::Any::to_wchar(wc))
     {
-      return this->wchar_to_server(wc,key);
+      return this->wchar_to_server(wc,key ACE_ENV_ARG_PARAMETER);
     }
   else if (test >>= ws)
     {
-      return this->wstring_to_server (ws,key);
+      return this->wstring_to_server (ws,key ACE_ENV_ARG_PARAMETER);
     }
   else if (test >>= forany)
     {
-      return this->warray_to_server (forany.in(),key);
+      return this->warray_to_server (forany.in(),key ACE_ENV_ARG_PARAMETER);
     }
   return 0;
 }
