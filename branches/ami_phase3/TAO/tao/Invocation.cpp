@@ -10,11 +10,6 @@
 #include "tao/Pluggable.h"
 #include "tao/Connector_Registry.h"
 
-#include "tao/Wait_Strategy.h"
-// @@ This file is here so that we can call sending request method on
-//    the wait strategy. It is a hack and this should go
-//    away. (Alex). 
-
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation.i"
 #endif /* ! __ACE_INLINE__ */

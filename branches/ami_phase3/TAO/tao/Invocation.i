@@ -24,7 +24,8 @@ TAO_GIOP_Twoway_Invocation::
 TAO_GIOP_Twoway_Invocation (TAO_Stub *stub,
                             const char *operation,
                             TAO_ORB_Core *orb_core)
-  : TAO_GIOP_Invocation (stub, operation, orb_core)
+  : TAO_GIOP_Invocation (stub, operation, orb_core),
+    rd_ (orb_core)
 {
 }
 
@@ -66,7 +67,8 @@ ACE_INLINE
 TAO_GIOP_Locate_Request_Invocation::
 TAO_GIOP_Locate_Request_Invocation (TAO_Stub *stub,
                                     TAO_ORB_Core *orb_core)
-  : TAO_GIOP_Invocation (stub, 0, orb_core)
+  : TAO_GIOP_Invocation (stub, 0, orb_core),
+    rd_ (orb_core)
 {
 }
 
