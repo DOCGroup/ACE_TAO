@@ -1,3 +1,15 @@
+1999-09-10  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	  Added two send () functions using overlapped I/O to the
+	  ACE_SOCK_Dgram_Mcast class. These simply call the parent
+	  class functions with the same signature. The recv () functions
+	  need not be added as there is currently no recv () function
+	  within SOCK_Dgram_Mcast class to hide any parent class recv ()
+	  functions. Altered files :
+    	
+	* ace/SOCK_Dgram_Mcast.i: 
+	* ace/SOCK_Dgram_Mcast.h:
+	
 Fri Sep 10 12:24:17 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* THANKS:
