@@ -1,3 +1,11 @@
+Fri Nov 20 17:46:40 1998 Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/Typecode.h:
+	* tao/Typecode.i:
+	* tao/Typecode.cpp:
+	  Added locks for changes in the Typecode private state. We use
+	  the Double Checked Lock pattern to minimize the run-time cost.
+
 Fri Nov 20 07:08:28 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Event/Timer_Module.cpp (cancel_timer): changed
