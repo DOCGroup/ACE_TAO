@@ -1,3 +1,7 @@
+Thu May 14 14:46:02 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/OS.h: Moved the definition of ACE_Export before it is used.
+
 Thu May 14 13:22:46 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/Message_Block.h: 

@@ -349,6 +349,81 @@
 # define ACE_DB(X) X
 #endif /* ACE_NDEBUG */
 
+// Nasty macro stuff to account for Microsoft Win32 DLL nonsense.  We
+// use these macros so that we don't end up with ACE software
+// hard-coded to Microsoft proprietary extensions to C++.
+
+// First, we define how to properly export/import objects.
+#if defined (ACE_WIN32)         // Only Win32 needs special treatment.
+# if !defined (_MSC_VER) /* Mark classes as exported, Borland. */
+#   define ACE_Proper_Export_Flag _export
+#   define ACE_Proper_Import_Flag _import
+//   @@ Don't know how to handle this when using Borland's compilers.
+#   define ACE_EXPORT_SINGLETON_DECLARATION(T)
+#   define ACE_IMPORT_SINGLETON_DECLARATION(T)
+#   define ACE_PROPER_SINGLETON_INSTANTIATION(T)
+# else /* Microsoft: */
+#   define ACE_Proper_Export_Flag __declspec (dllexport)
+#   define ACE_Proper_Import_Flag __declspec (dllimport)
+#   define ACE_EXPORT_SINGLETON_DECLARATION(T)  template class __declspec (dllexport) T
+#   define ACE_IMPORT_SINGLETON_DECLARATION(T)  extern template class T
+#   define ACE_PROPER_SINGLETON_INSTANTIATION(T) template class T
+# endif /* !_MSC_VER */
+#else  /* ! ACE_WIN32 */
+# define ACE_Proper_Export_Flag
+# define ACE_Proper_Import_Flag
+# define ACE_EXPORT_SINGLETON_DECLARATION(T)
+# define ACE_IMPORT_SINGLETON_DECLARATION(T)
+# define ACE_PROPER_SINGLETON_INSTANTIATION(T)
+#endif /* ACE_WIN32 */
+
+// Here are definition for ACE library.
+#if defined (ACE_HAS_DLL) && (ACE_HAS_DLL == 1)
+# if defined (ACE_BUILD_DLL)
+#   define ACE_Export ACE_Proper_Export_Flag
+#   define ACE_SINGLETON_DECLARATION(T) ACE_EXPORT_SINGLETON_DECLARATION (T)
+#   define ACE_SINGLETON_INSTANTIATION(T) ACE_PROPER_SINGLETON_INSTANTIATION (T)
+# else
+#   define ACE_Export ACE_Proper_Import_Flag
+#   define ACE_SINGLETON_DECLARATION(T) ACE_IMPORT_SINGLETON_DECLARATION (T)
+#   define ACE_SINGLETON_INSTANTIATION(T)
+# endif /* ACE_BUILD_DLL */
+#else /* ! ACE_HAS_DLL */
+# define ACE_Export
+# define ACE_SINGLETON_DECLARATION(T)
+# define ACE_SINGLETON_INSTANTIATION(T)
+#endif /* ACE_HAS_DLL */
+
+// Here are definition for ACE_Svc library.
+#if defined (ACE_HAS_SVC_DLL) && (ACE_HAS_SVC_DLL == 1)
+# if defined (ACE_BUILD_SVC_DLL)
+#   define ACE_Svc_Export ACE_Proper_Export_Flag
+#   define ACE_SVC_SINGLETON_DECLARATION(T) ACE_EXPORT_SINGLETON_DECLARATION (T)
+#   define ACE_SVC_SINGLETON_INSTANTIATION(T) ACE_PROPER_SINGLETON_INSTANTIATION (T)
+# else
+#   define ACE_Svc_Export ACE_Proper_Import_Flag
+#   define ACE_SVC_SINGLETON_DECLARATION(T) ACE_IMPORT_SINGLETON_DECLARATION (T)
+#   define ACE_SVC_SINGLETON_INSTANTIATION(T)
+# endif /* ACE_BUILD_SVC_DLL */
+#else /* ACE_HAS_SVC_DLL */
+# define ACE_Svc_Export
+# define ACE_SVC_SINGLETON_DECLARATION(T)
+# define ACE_SVC_SINGLETON_INSTANTIATION(T)
+#endif /* ACE_HAS_SVC_DLL */
+
+// This is a whim of mine -- that instead of annotating a class with
+// ACE_Export in its declaration, we make the declaration near the TOP
+// of the file with ACE_DECLARE_EXPORT.
+#define ACE_DECLARE_EXPORT(TS,ID) TS ACE_Export ID
+// TS = type specifier (e.g., class, struct, int, etc.)
+// ID = identifier
+// So, how do you use it?  Most of the time, just use ...
+// ACE_DECLARE_EXPORT(class, someobject);
+// If there are global functions to be exported, then use ...
+// ACE_DECLARE_EXPORT(void, globalfunction) (int, ...);
+// Someday, when template libraries are supported, we made need ...
+// ACE_DECLARE_EXPORT(template class, sometemplate) <class TYPE, class LOCK>;
+
 // ACE_NO_HEAP_CHECK macro can be used to suppress false report of
 // memory leaks. It turns off the built-in heap checking until the
 // block is left. The old state will then be restored Only used for
@@ -840,81 +915,6 @@ private:
 #if !defined (ACE_TIMER_SKEW)
 # define ACE_TIMER_SKEW 0
 #endif /* ACE_TIMER_SKEW */
-
-// Nasty macro stuff to account for Microsoft Win32 DLL nonsense.  We
-// use these macros so that we don't end up with ACE software
-// hard-coded to Microsoft proprietary extensions to C++.
-
-// First, we define how to properly export/import objects.
-#if defined (ACE_WIN32)         // Only Win32 needs special treatment.
-# if !defined (_MSC_VER) /* Mark classes as exported, Borland. */
-#   define ACE_Proper_Export_Flag _export
-#   define ACE_Proper_Import_Flag _import
-//   @@ Don't know how to handle this when using Borland's compilers.
-#   define ACE_EXPORT_SINGLETON_DECLARATION(T)
-#   define ACE_IMPORT_SINGLETON_DECLARATION(T)
-#   define ACE_PROPER_SINGLETON_INSTANTIATION(T)
-# else /* Microsoft: */
-#   define ACE_Proper_Export_Flag __declspec (dllexport)
-#   define ACE_Proper_Import_Flag __declspec (dllimport)
-#   define ACE_EXPORT_SINGLETON_DECLARATION(T)  template class __declspec (dllexport) T
-#   define ACE_IMPORT_SINGLETON_DECLARATION(T)  extern template class T
-#   define ACE_PROPER_SINGLETON_INSTANTIATION(T) template class T
-# endif /* !_MSC_VER */
-#else  /* ! ACE_WIN32 */
-# define ACE_Proper_Export_Flag
-# define ACE_Proper_Import_Flag
-# define ACE_EXPORT_SINGLETON_DECLARATION(T)
-# define ACE_IMPORT_SINGLETON_DECLARATION(T)
-# define ACE_PROPER_SINGLETON_INSTANTIATION(T)
-#endif /* ACE_WIN32 */
-
-// Here are definition for ACE library.
-#if defined (ACE_HAS_DLL) && (ACE_HAS_DLL == 1)
-# if defined (ACE_BUILD_DLL)
-#   define ACE_Export ACE_Proper_Export_Flag
-#   define ACE_SINGLETON_DECLARATION(T) ACE_EXPORT_SINGLETON_DECLARATION (T)
-#   define ACE_SINGLETON_INSTANTIATION(T) ACE_PROPER_SINGLETON_INSTANTIATION (T)
-# else
-#   define ACE_Export ACE_Proper_Import_Flag
-#   define ACE_SINGLETON_DECLARATION(T) ACE_IMPORT_SINGLETON_DECLARATION (T)
-#   define ACE_SINGLETON_INSTANTIATION(T)
-# endif /* ACE_BUILD_DLL */
-#else /* ! ACE_HAS_DLL */
-# define ACE_Export
-# define ACE_SINGLETON_DECLARATION(T)
-# define ACE_SINGLETON_INSTANTIATION(T)
-#endif /* ACE_HAS_DLL */
-
-// Here are definition for ACE_Svc library.
-#if defined (ACE_HAS_SVC_DLL) && (ACE_HAS_SVC_DLL == 1)
-# if defined (ACE_BUILD_SVC_DLL)
-#   define ACE_Svc_Export ACE_Proper_Export_Flag
-#   define ACE_SVC_SINGLETON_DECLARATION(T) ACE_EXPORT_SINGLETON_DECLARATION (T)
-#   define ACE_SVC_SINGLETON_INSTANTIATION(T) ACE_PROPER_SINGLETON_INSTANTIATION (T)
-# else
-#   define ACE_Svc_Export ACE_Proper_Import_Flag
-#   define ACE_SVC_SINGLETON_DECLARATION(T) ACE_IMPORT_SINGLETON_DECLARATION (T)
-#   define ACE_SVC_SINGLETON_INSTANTIATION(T)
-# endif /* ACE_BUILD_SVC_DLL */
-#else /* ACE_HAS_SVC_DLL */
-# define ACE_Svc_Export
-# define ACE_SVC_SINGLETON_DECLARATION(T)
-# define ACE_SVC_SINGLETON_INSTANTIATION(T)
-#endif /* ACE_HAS_SVC_DLL */
-
-// This is a whim of mine -- that instead of annotating a class with
-// ACE_Export in its declaration, we make the declaration near the TOP
-// of the file with ACE_DECLARE_EXPORT.
-#define ACE_DECLARE_EXPORT(TS,ID) TS ACE_Export ID
-// TS = type specifier (e.g., class, struct, int, etc.)
-// ID = identifier
-// So, how do you use it?  Most of the time, just use ...
-// ACE_DECLARE_EXPORT(class, someobject);
-// If there are global functions to be exported, then use ...
-// ACE_DECLARE_EXPORT(void, globalfunction) (int, ...);
-// Someday, when template libraries are supported, we made need ...
-// ACE_DECLARE_EXPORT(template class, sometemplate) <class TYPE, class LOCK>;
 
 // This needs to go here *first* to avoid problems with AIX.
 // Just to be safe we'll do it with pthreads, too -- jwr
