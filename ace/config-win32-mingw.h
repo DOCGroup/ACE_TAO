@@ -43,6 +43,7 @@
 #  define ACE_HAS_SSIZE_T
 #endif
 
+#define ACE_LACKS_SYS_SHM_H
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_NATIVE_STRPTIME
 #define ACE_HAS_STRERROR
