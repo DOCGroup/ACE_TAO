@@ -25,8 +25,9 @@
 #include "ace/Log_Msg.h"
 #include "tao/TAO.h"
 #include "orbsvcs/CosNamingC.h"
-#include "Cubit_Client.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
+#include "Cubit_Client.h"
+#include "Cubit_i.h"
 
 class Cubit_Server
 {
