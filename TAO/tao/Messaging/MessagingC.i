@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from 
-// be/be_visitor_valuetype/valuetype_ci.cpp:56
+// be\be_visitor_valuetype/valuetype_ci.cpp:56
 
 ACE_INLINE
 Messaging::ExceptionHolder::ExceptionHolder (void)
@@ -44,7 +44,7 @@ Messaging::ExceptionHolder::_tao_obv_static_repository_id ()
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:70
+// be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_MESSAGING_REPLYHANDLER___CI_)
 #define _MESSAGING_REPLYHANDLER___CI_
@@ -78,36 +78,4 @@ Messaging::ReplyHandler::ReplyHandler (
 }
 
 #endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// be/be_valuetype.cpp:463
-
-#if defined (__ACE_INLINE__)
-
-namespace CORBA
-{
-  TAO_NAMESPACE_STORAGE_CLASS void add_ref (Messaging::ExceptionHolder *);
-  TAO_NAMESPACE_STORAGE_CLASS void remove_ref (Messaging::ExceptionHolder *);
-}
-
-#endif /*__ACE_INLINE__*/
-
-// TAO_IDL - Generated from
-// be/be_visitor_valuetype/cdr_op_ci.cpp:60
-
-TAO_Messaging_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::ExceptionHolder *);
-TAO_Messaging_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::ExceptionHolder *&);
-
-// TAO_IDL - Generated from
-// be/be_visitor_interface/cdr_op_ci.cpp:72
-
-TAO_Messaging_Export CORBA::Boolean operator<< (
-    TAO_OutputCDR &,
-    const Messaging::ReplyHandler_ptr
-  );
-
-TAO_Messaging_Export CORBA::Boolean operator>> (
-    TAO_InputCDR &,
-    Messaging::ReplyHandler_ptr &
-  );
 
