@@ -14,10 +14,10 @@ ACE_Parsed_Info::ACE_Parsed_Info ()
 ACE_INLINE
 ACE_Parsed_Info::~ACE_Parsed_Info ()
 {
-  delete this->name_;
-  delete this->path_;
-  delete this->init_func_;
-  delete this->init_params_;
+  delete[] this->name_;
+  delete[] this->path_;
+  delete[] this->init_func_;
+  delete[] this->init_params_;
 }
 
 ACE_INLINE int
@@ -121,13 +121,13 @@ ACE_Parsed_Info::init_params (void)
 ACE_INLINE void
 ACE_Parsed_Info::reset (void)
 {
-  delete this->name_;
+  delete[] this->name_;
   this->name_ = 0;
   this->service_type_ = -1;
-  delete this->path_;
+  delete[] this->path_;
   this->path_ = 0;
-  delete this->init_func_;
+  delete[] this->init_func_;
   this->init_func_ = 0;
-  delete this->init_params_;
+  delete[] this->init_params_;
   this->init_params_ = 0;
 }

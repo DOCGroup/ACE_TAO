@@ -1,3 +1,16 @@
+Fri Jul 12 20:28:52 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/common/URL_Addr.cpp (string_to_addr):
+
+          Fixed confusion in handling normal and wchar strings. It should
+          compile now without problems.
+
+        * ACEXML/apps/svcconf/Svcconf_Handler.cpp:
+        * ACEXML/apps/svcconf/Svcconf_Handler.i:
+
+          Fixed memory leaks, some typos and used the locator to print
+          out error messages.
+
 Fri Jul 12 17:55:08 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* ace/String_Base.i:

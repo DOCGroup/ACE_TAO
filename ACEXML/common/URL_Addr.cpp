@@ -83,14 +83,14 @@ ACEXML_URL_Addr::string_to_addr (const char *s)
   if (s == 0)
     return -1;
 
-  const ACEXML_Char* http = ACE_TEXT("http://");
+  const char* http = "http://";
   int http_len = ACE_OS::strlen (http);
 
   // Check validity of URL
   if (ACE_OS::strncmp (http, s, http_len) != 0)
     ACE_ERROR_RETURN ((LM_ERROR, "Invalid URL %s\n", s), -1);
 
-  const ACEXML_Char* url = 0;
+  const char* url = 0;
   // Get the host name
   for (url = s + http_len; *url != '\0' && *url != ':' && *url != '/'; ++url)
     ;
@@ -98,11 +98,11 @@ ACEXML_URL_Addr::string_to_addr (const char *s)
   int host_len = url - s;
   host_len -= http_len;
 
-  ACEXML_Char* host_name = 0;
-  ACE_NEW_RETURN (host_name, ACEXML_Char[host_len + 1], -1);
+  char* host_name = 0;
+  ACE_NEW_RETURN (host_name, char[host_len + 1], -1);
   ACE_OS::strncpy (host_name, s + http_len, host_len);
   host_name[host_len] = '\0';
-  ACE_Auto_Basic_Array_Ptr<ACEXML_Char> cleanup_host_name (host_name);
+  ACE_Auto_Basic_Array_Ptr<char> cleanup_host_name (host_name);
 
   // Get the port number (if any)
   unsigned short port = ACE_DEFAULT_HTTP_PORT;
@@ -116,14 +116,14 @@ ACEXML_URL_Addr::string_to_addr (const char *s)
     return -1;
 
   // Get the path name
-  const ACEXML_Char* path_name = 0;
+  const char* path_name = 0;
   if (*url == '\0')
-    path_name = ACE_TEXT("/");
+    path_name = "/";
   else
     path_name = url;
 
   ACE_ALLOCATOR_RETURN (this->path_name_,
-                        ACE_OS::strdup (path_name),
+                        ACE_TEXT_CHAR_TO_TCHAR (ACE_OS::strdup (path_name)),
                         -1);
   return result;
 }

@@ -79,7 +79,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
 
       if (func == 0)
         {
-          xmlenv.exception (new ACEXML_SAXException ("Cannot locator init function\n"));
+          xmlenv.exception (new ACEXML_SAXException ("Cannot locate init function\n"));
           return;
         }
       symbol = (*func)(&gobbler); // target object created in the loaded DLL.
@@ -159,7 +159,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
                                                   active_info->init_params ()) == -1)
                 {
                   xmlenv.exception (new ACEXML_SAXException
-                                    ("Fail to initialize dynamic service\n"));
+                                    ("Failed to initialize dynamic service\n"));
                   return;
                 }
             }
@@ -303,7 +303,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
           (this->stream_info_.name (),
            (const ACE_Service_Type **) &this->stream_svc_type_) == -1)
         {
-          xmlenv.exception (new ACEXML_SAXException ("Can not find stream\n"));
+          xmlenv.exception (new ACEXML_SAXException ("Cannot find stream\n"));
           return;
         }
       this->stream_ =   this->stream_svc_type_ == 0
@@ -481,27 +481,36 @@ ACEXML_Svcconf_Handler::resolveEntity (const ACEXML_Char *,
    * Receive notification of a recoverable error.
    */
 void
-ACEXML_Svcconf_Handler::error (ACEXML_SAXParseException &,
+ACEXML_Svcconf_Handler::error (ACEXML_SAXParseException& ex,
                                ACEXML_Env &)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  // No-op.
+  ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ", this->getSystemId(),
+              this->locator_->getLineNumber(),
+              this->locator_->getColumnNumber()));
+  ex.print();
 }
 
 void
-ACEXML_Svcconf_Handler::fatalError (ACEXML_SAXParseException &,
+ACEXML_Svcconf_Handler::fatalError (ACEXML_SAXParseException& ex,
                                     ACEXML_Env &)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  // No-op.
+  ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ", this->getSystemId(),
+              this->locator_->getLineNumber(),
+              this->locator_->getColumnNumber()));
+  ex.print();
 }
 
 void
-ACEXML_Svcconf_Handler::warning (ACEXML_SAXParseException &,
+ACEXML_Svcconf_Handler::warning (ACEXML_SAXParseException& ex,
                                  ACEXML_Env &)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  // No-op.
+  ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ", this->getSystemId(),
+              this->locator_->getLineNumber(),
+              this->locator_->getColumnNumber()));
+  ex.print();
 }
 
 int
