@@ -368,7 +368,7 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
 
       // CHAR describing byte order, starting the encapsulation
 
-      stream->put_char (MY_BYTE_SEX);
+      stream->put_char (TAO_ENCAP_BYTE_ORDER);
 
       // IIOP::Version, two characters (version 1.0) padding
       stream->put_char (profile->iiop_version.major);
@@ -1328,4 +1328,3 @@ TAO_Marshal_WString::encode (CORBA::TypeCode_ptr tc,
       return CORBA::TypeCode::TRAVERSE_CONTINUE;
     }
 }
-

@@ -187,7 +187,7 @@ make_standard_typecode (CORBA::TypeCode_ptr tcp,
 
   static const unsigned long oc_completion_status [] =
   {
-    1,		// byte order flag, tricky
+    TAO_ENCAP_BYTE_ORDER,		// byte order flag, tricky
     0, 0,		// type ID omitted
     3,		// three members
     0, 0,		// ... whose names are all omitted
@@ -221,7 +221,7 @@ make_standard_typecode (CORBA::TypeCode_ptr tcp,
  (void) ACE_OS::sprintf (full_id, "IDL:omg.org/CORBA/%s:1.0", name);
   assert (strlen (full_id) <= sizeof full_id);
 
-  if (stream.put_byte (MY_BYTE_SEX) != CORBA::B_TRUE
+  if (stream.put_byte (TAO_ENCAP_BYTE_ORDER) != CORBA::B_TRUE
       || stream.encode (CORBA::_tc_string,
 		       &strptr, 0,
 		       env) != CORBA::TypeCode::TRAVERSE_CONTINUE

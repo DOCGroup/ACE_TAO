@@ -34,15 +34,15 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
       u_char *bytes;
       // @@ Is BUFSIZ the right size here?
       u_char buf [BUFSIZ];
-      CDR cdr (buf, sizeof buf, MY_BYTE_SEX);
+      CDR cdr (buf, sizeof buf, TAO_ENCAP_BYTE_ORDER);
 
       bytes = buf;
       (void) ACE_OS::memset (bytes, 0, BUFSIZ);	// support limited oref ACE_OS::strcmp
 
       // Marshal the objref into an encapsulation bytestream.
-      (void) cdr.put_char (MY_BYTE_SEX);
+      (void) cdr.put_char (TAO_ENCAP_BYTE_ORDER);
       if (cdr.encode (CORBA::_tc_Object,
-			&obj, 0, 
+			&obj, 0,
 			env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
         return 0;
 
@@ -85,7 +85,7 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
 
       IIOP_Object *obj2;
 
-      if (obj->QueryInterface (IID_IIOP_Object, 
+      if (obj->QueryInterface (IID_IIOP_Object,
 			       (void **) &obj2) != NOERROR)
         {
           env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
@@ -153,7 +153,7 @@ ior_string_to_object (CORBA::String str,
 
   char *tmp = (char *) str;
   size_t len = 0;
-    
+
   while (tmp [0] && tmp [1])
     {
       u_char byte;
@@ -168,7 +168,7 @@ ior_string_to_object (CORBA::String str,
       tmp += 2;
     }
 
-  if (tmp [0] && !isspace (tmp [0])) 
+  if (tmp [0] && !isspace (tmp [0]))
     {
       delete [] buffer;
       env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
@@ -180,10 +180,10 @@ ior_string_to_object (CORBA::String str,
 
   CDR stream;
   CORBA::Object_ptr objref;
-    
+
   stream.setup_encapsulation (buffer, len);
-  if (stream.decode (CORBA::_tc_Object, 
-		    &objref, 0, 
+  if (stream.decode (CORBA::_tc_Object,
+		    &objref, 0,
 		    env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
     objref = 0;
 
@@ -202,12 +202,14 @@ iiop_string_to_object (CORBA::String string,
 
   if (!string || !*string)
     return 0;
-	
+
   // type ID not encoded in this string ... makes narrowing rather
   // expensive, though it does ensure that type-safe narrowing code
   // gets thoroughly excercised/debugged!
+  // Without a typeID, the _narrow will be required to make an expensive remote
+  // "is_a" call.
 
-  IIOP_Object *data = new IIOP_Object (0);	// null type ID
+  IIOP_Object *data = new IIOP_Object (NULL);	// null type ID
 
   // Remove the "N.N//" prefix, and verify the version's one
   // that we accept
@@ -237,7 +239,6 @@ iiop_string_to_object (CORBA::String string,
   // Pull off the "hostname:port/" part of the objref
 
   char *cp = ACE_OS::strchr (string, ':');
-
   if (cp == 0)
     {
       env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
@@ -246,9 +247,8 @@ iiop_string_to_object (CORBA::String string,
     }
 
   data->profile.host = CORBA::string_alloc (1 + cp - string);
-
-  for (cp = data->profile.host; 
-       *string != ':'; 
+  for (cp = data->profile.host;
+       *string != ':';
        *cp++ = *string++)
     continue;
 
@@ -276,15 +276,15 @@ iiop_string_to_object (CORBA::String string,
 
   // Strip out whitespace and adjust length accordingly.
 
-  for (cp = (char *) data->profile.object_key.buffer; 
-       *cp; 
+  for (cp = (char *) data->profile.object_key.buffer;
+       *cp;
        cp++)
     {
       if (!isprint (*cp))
         {
           *cp = '\0';
           break;
-	}
+        }
     }
 
   string = (char *) data->profile.object_key.buffer;
@@ -293,7 +293,8 @@ iiop_string_to_object (CORBA::String string,
 
   // Strip out hex escapes and adjust the key's length appropriately.
 
-  while ((cp = ACE_OS::strchr ((char *)data->profile.object_key.buffer, '\\')) != 0)
+  while ((cp = ACE_OS::strchr ((char *)data->profile.object_key.buffer, '\\'))
+         != 0)
     {
       *cp = (CORBA::Char) (ACE::hex2byte ((char) cp [1]) << 4);
       *cp |= (CORBA::Char) ACE::hex2byte ((char) cp [2]);
@@ -322,7 +323,7 @@ IIOP_ORB::string_to_object (const CORBA::String str,
   env.clear ();
 
   CORBA::Object_ptr obj = 0;
-  
+
   // Use the prefix code to choose which destringify algorithm to use.
   if (ACE_OS::strncmp ((char *)str, iiop_prefix, sizeof iiop_prefix - 1) == 0)
     obj = iiop_string_to_object (str + sizeof iiop_prefix - 1, env);
