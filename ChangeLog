@@ -1,3 +1,10 @@
+Fri May 23 09:38:55 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/DependencyGenerator/DependencyGenerator.pm:
+
+          Use case insensitve exclusion and remove double slashes and back
+          slashes.
+
 Fri May 23 09:18:32 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/nmake.mpd:

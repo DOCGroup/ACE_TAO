@@ -55,7 +55,7 @@ sub process {
   my($skip) = 0;
   foreach my $file (keys %split) {
     foreach my $exc (@$exclude) {
-      if ($file =~ /^$exc/) {
+      if ($file =~ /^$exc/i) {
         $skip = 1;
         last;
       }
@@ -70,6 +70,8 @@ sub process {
           last;
         }
       }
+      $file =~ s/\\\\/\\/g;
+      $file =~ s/\/\//\\/g;
       push(@files, $file);
     }
   }
