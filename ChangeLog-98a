@@ -6,6 +6,12 @@ Fri Jan 02 07:06:44 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * apps/Gateway/Gateway/Options.h: added missing , in enum definition.
 
+        * apps/Gateway/Gateway/Options.cpp (Options ctor): reordered
+          initializers to match declaration order.
+
+        * apps/Gateway/Gateway/Config_Files.cpp (read_entry): fixed syntax
+          error, missing "if" after "else".  Added #include of Options.h.
+
         * ace/OS.i (rw_trywrlock_upgrade): added ACE_UNUSED_ARG (rw) with
           STHREADS.
 
