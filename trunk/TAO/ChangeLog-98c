@@ -12,6 +12,10 @@ Mon Feb 23 22:40:22 1998  David L. Levine  <levine@cs.wustl.edu>
           the core dump problem with tao_idl on egcs/Solaris.  Thanks to
           Håkan Källberg <hk@simulina.se> for reporting this.
 
+        * TAO/tests/Thruput/TAO/utils.cpp (prep_timer): cast LONG_MAX
+          to ACE_INT32 to avoid overflow problems if the result is an
+          int type, and long is bigger than int.
+
 Mon Feb 23 22:13:14 1998  David L. Levine  <levine@cs.wustl.edu>
 
 	* TAO version 0.1.5, released Mon Feb 23 22:13:14 1998.
