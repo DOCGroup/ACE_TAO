@@ -1,7 +1,12 @@
+Wed Apr 14 00:24:42 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Object_Adapter.cpp: Added missing template instantiations.
+	  Thanks to Robert V. Head <rhead@virtc.com> for reporting them.
+
 Tue Apr 13 17:02:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Stub.cpp:
-	  auto_ptr<> requires an explicit constructor, thanks to David and 
+	  auto_ptr<> requires an explicit constructor, thanks to David and
 	  the green hills compiler for detecting this.
 
 Tue Apr 13 13:59:32 1999  Jeff Parsons  <parsons@cs.wustl.edu>
@@ -9,11 +14,11 @@ Tue Apr 13 13:59:32 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO/performance-tests/Cubit/TAO/IDL_Cubit/server.cpp:
 	* TAO/performance-tests/Cubit/TAO/IDL_Cubit/client.cpp:
           Added inlcudes and macros to send output to a file, as
-	  the tests in ACE_wrappers/tests do. The macros are 
+	  the tests in ACE_wrappers/tests do. The macros are
 	  commented out, so the cubit tests will work exactly
 	  the same as before unless client.cpp and server.cpp are
 	  built with those macros uncommented. Especially useful
-	  for dealing with timeprobes, where there might be 
+	  for dealing with timeprobes, where there might be
 	  hundreds of entries in the output
 
 Tue Apr 13 12:35:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
@@ -30,7 +35,7 @@ Tue Apr 13 12:35:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  request and to implement the leader-follower model.
 
 	* tao/ORB_Core.cpp:
-	  Changed bunch of calls to TAO_ORB_Core_instance() in an ORB_Core 
+	  Changed bunch of calls to TAO_ORB_Core_instance() in an ORB_Core
 	  method, using <this> is enough in that case.
 
 	* tests/MT_Client/client.cpp:
@@ -40,14 +45,14 @@ Tue Apr 13 12:35:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tests/MT_Client/client.tss.conf:
 	* tests/MT_Client/client.global.conf:
 	* tests/MT_Client/run_test.pl:
-	  Added configuration files for the client, it can use TSS storage 
-	  now. Also added some (optional) debugging information to monitor 
+	  Added configuration files for the client, it can use TSS storage
+	  now. Also added some (optional) debugging information to monitor
 	  the client progress.
 	  The script supports this new features too.
 	  Simplified the server configuration file.
 
-	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf: 
-	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf.static: 
+	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf:
+	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf.static:
 	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
 	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf.dynamic:
 	  We can use TSS allocators in this examples.
