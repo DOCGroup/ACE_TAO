@@ -30,12 +30,24 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
                            int flags) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::send");
+
+  if (this->ssl_ == 0
+      || !SSL_is_init_finished (this->ssl_))
+    {
+      ACE_DEBUG ((LM_DEBUG, "ACE_SSL_SOCK_Stream::send - init\n"));
+      return -1;
+    }
+
   // No send flags are supported in SSL.
-  if (flags) ACE_NOTSUP_RETURN (-1);
-  else
-    return ((this->ssl_ && SSL_is_init_finished (this->ssl_)) ?
-            ::SSL_write (this->ssl_,
-                         ACE_static_cast (const char*, buf), n) : -1);
+  if (flags != 0)
+    ACE_NOTSUP_RETURN (-1);
+
+  int r =
+    ::SSL_write (this->ssl_, ACE_static_cast (const char*, buf), n);
+
+  ACE_DEBUG ((LM_DEBUG, "ACE_SSL_SOCK_Stream::send - %d/%d\n",
+              r, n));
+  return r;
 }
 
 ASYS_INLINE ssize_t
@@ -45,16 +57,25 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv");
 
+  if (this->ssl_ == 0
+      || !SSL_is_init_finished (this->ssl_))
+    {
+      ACE_DEBUG ((LM_DEBUG, "ACE_SSL_SOCK_Stream::recv - init\n"));
+      return -1;
+    }
+
   if (flags)
     {
-      if ((flags | MSG_PEEK) == MSG_PEEK)
+      if (ACE_BIT_ENABLED (flags, MSG_PEEK))
         return ::SSL_peek (this->ssl_, ACE_static_cast (char*, buf), n);
-      else
-        ACE_NOTSUP_RETURN (-1);
+      ACE_NOTSUP_RETURN (-1);
     }
-  return ((this->ssl_ && SSL_is_init_finished (this->ssl_)) ?
-	  ::SSL_read (this->ssl_, ACE_static_cast (char *, buf), n) :
-	  -1);
+  int r =
+    ::SSL_read (this->ssl_, ACE_static_cast (char *, buf), n);
+
+  ACE_DEBUG ((LM_DEBUG, "ACE_SSL_SOCK_Stream::recv - %d/%d\n",
+              r, n));
+  return r;
 }
 
 ASYS_INLINE ssize_t
@@ -62,9 +83,18 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
                            size_t n) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::send");
-  return ((this->ssl_ && SSL_is_init_finished (this->ssl_)) ?
-	  ::SSL_write (this->ssl_, ACE_static_cast (const char *, buf), n) :
-	  -1);
+
+  if (this->ssl_ == 0
+      || !SSL_is_init_finished (this->ssl_))
+    {
+      ACE_DEBUG ((LM_DEBUG, "ACE_SSL_SOCK_Stream::send - init\n"));
+      return -1;
+    }
+
+  int r = ::SSL_write (this->ssl_, ACE_static_cast (const char *, buf), n);
+  ACE_DEBUG ((LM_DEBUG, "ACE_SSL_SOCK_Stream::send - %d/%d\n",
+              r, n));
+  return r;
 }
 
 ASYS_INLINE ssize_t
@@ -72,9 +102,17 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
                            size_t n) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv");
-  return ((this->ssl_ && SSL_is_init_finished (this->ssl_)) ?
-	  ::SSL_read (this->ssl_, ACE_static_cast (char*, buf), n) :
-	  -1);
+  if (this->ssl_ == 0
+      || !SSL_is_init_finished (this->ssl_))
+    {
+      ACE_DEBUG ((LM_DEBUG, "ACE_SSL_SOCK_Stream::recv - init\n"));
+      return -1;
+    }
+
+  int r = ::SSL_read (this->ssl_, ACE_static_cast (char*, buf), n);
+  ACE_DEBUG ((LM_DEBUG, "ACE_SSL_SOCK_Stream::recv - %d/%d\n",
+              r, n));
+  return r;
 }
 
 ASYS_INLINE ssize_t

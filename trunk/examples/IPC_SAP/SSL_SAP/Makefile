@@ -11,8 +11,10 @@
 INFO  = README
 
 BIN   = SSL-client \
+	SSL-client-simple \
 	SSL-server \
 	SSL-server-fancy \
+	SSL-server-simple \
 	SSL-server-poll
 
 LSRC   = $(addsuffix .cpp,$(BIN))
