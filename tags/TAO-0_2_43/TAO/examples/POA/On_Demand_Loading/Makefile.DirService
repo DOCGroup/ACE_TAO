@@ -1,0 +1,55 @@
+#----------------------------------------------------------------------------
+#	$Id$
+#
+#	Makefile for the Today library in the DLL example
+#----------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+#	Local macros
+#----------------------------------------------------------------------------
+
+
+
+SHLIB	= libDirService.$(SOEXT) 
+	 
+
+FILES 	= Dir_ServiceC Dir_ServiceS Dir_Service_i 
+OBJ = $(addsuffix .o,$(FILES))
+
+CPPFLAGS += -I$(TAO_ROOT) 
+LDLIBS     =   -lACE  -lTAO
+LDFLAGS += -L$(TAO_ROOT)/tao -L$(ACE_ROOT)/ace
+
+LSRC	= $(addsuffix .cpp,$(FILES))
+
+VLDLIBS = $(LDLIBS:%=%$(VAR))
+
+
+#----------------------------------------------------------------------------
+#	Include macros and targets
+#----------------------------------------------------------------------------
+include		$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include		$(ACE_ROOT)/include/makeinclude/macros.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
+
+ifndef TAO_ROOT
+TAO_ROOT = $(ACE_ROOT)/TAO
+endif
+
+
+#----------------------------------------------------------------------------
+#	Local targets
+#----------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+#	Dependencies
+#----------------------------------------------------------------------------
+# DO NOT DELETE THIS LINE -- g++dep uses it.
+# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+
+
+

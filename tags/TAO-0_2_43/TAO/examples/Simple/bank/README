@@ -1,0 +1,87 @@
+$Id$
+
+This is a simple CORBA example that has a module Bank with two
+interfaces Account and AccountManager.
+
+The Account interface has operations for balance, deposit and withdraw. It has a readonly attribute for the Account Holder's name. It also has a user defined exception which is raised for withdrawing more moneythen the current balance.
+
+The AccountManager interface has methods to create and close Accounts.
+It also has a method to shutdown the server.
+
+run_test.pl : This is a perl script to run the server and client as :
+------------
+	      server
+	      client  -x -b 100 -y Vishal -z Kachroo
+
+	      There are other command line options available for the server and client which are explained as below.
+
+server:
+-------
+
+server [-d] [-o IOR_file_name]
+
+Options:
+-------
+-d    Debug flag (It is additive more -d flags will give debugging).
+
+When the server is started, you should see as the first line of output
+something that looks like
+	iiop:1.0//danzon.cs.wustl.edu:10015/P35ad159600081a38/child_poa/server
+	(-ORBobjrefstyle url)
+or
+	IOR:000000000000001649444c3a43756269745...
+	(-ORBobjrefstyle ior)
+
+Using -d turns on debugging messages.  This option is additive, i.e.,
+the more -d options provided, the more debugging you can get.  At the
+moment, only 2 levels of debugging are implemented, and more than 2 -d
+options are ignored.
+
+-o    This option creates an ior file for the server with the name ior_filename.
+
+The file can be used by clients who wish to access the server directly using this ior file. This
+obviates the need for the client to use the naming service for getting the server ior. The client can
+use the -f option to specify the file which contains the ior of the server (the same file that was
+written by the server using the -o option).
+
+
+client:
+-------
+
+client [-d] [-x] [-n iterations] [-b initial_balance] [-o Name_of_account_holder]
+       [-f IOR_file_name ] [-k IOR]
+
+Options:
+-------
+-d    Debug flag
+
+-x    Tells the server to shutdown at the end of the test.
+
+-n    no. of iterations
+
+-b    initial balance
+
+-o    Name of the Account Holder
+
+-k    Read IOR from the command line. If this option is specified the client does not use
+      the Naming Service for locating the server. It just uses the ior file supplied with
+      this option.
+
+-f    Read IOR from the specified file. If this option is specified the client does not use
+      the Naming Service for locating the server. It just uses the ior file supplied with
+      this option.
+
+The client executes the following tests :
+
+1. Creating accounts with the same name to make sure the Account is
+   created only once and he gets back the same object reference each
+   time. This is confirmed by the server printing the message for
+   Creation of an account only once.
+
+2. Creating accounts with different name to make sure a different
+   Account is created and a different IOR returned each time.
+
+3. Creating an Account with some initial balance and then withdrawing
+   more than the current balance. The server throws an exception which is
+   passed to the client and the client displays the reason for the
+   exception.
