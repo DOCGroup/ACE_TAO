@@ -1,5 +1,37 @@
 Sun Jan 10 22:43:06 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* Active_Object_Map.h:
+	* Active_Object_Map.i:
+	* Any.h:
+	* Any.i:
+	* CDR.h:
+	* CDR.i:
+	* Connect.cpp:
+	* Connect.h:
+	* DynAnyC.h:
+	* DynAny_i.h:
+	* DynArray_i.h:
+	* DynEnum_i.h:
+	* DynSequence_i.h:
+	* DynStruct_i.h:
+	* DynUnion_i.h:
+	* Environment.h:
+	* Exception.cpp:
+	* IIOP_Object.h:
+	* Invocation.cpp:
+	* Invocation.i:
+	* Marshal.i:
+	* ORB.h:
+	* ORB_Core.h:
+	* ORB_Core.i:
+	* Object.i:
+	* POA_CORBA.h:
+	* Server_Request.h:
+	* Stub.h:
+	* TAO.h: Standardized the name of CORBA_Environment argument in
+	  functions.  This is an effort trying to simplify the use of TAO
+	  try macros.
+
 	* tao/try_macros.h: Removed TAO_THROW_ENV_RETURN_VOID.  It's
 	  identical to TAO_THROW_ENV.
 	  Changed to use TAO_CHECK_ENV_RETURN and
