@@ -44,6 +44,14 @@ ACE_Trace::dump (void) const
 {
 }
 
+// Determine whether or not tracing is enabled
+
+int
+ACE_Trace::is_tracing(void)
+{
+  return ACE_Trace::enable_tracing_;
+}
+
 // Enable the tracing facility.
 
 void 
