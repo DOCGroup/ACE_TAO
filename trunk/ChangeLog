@@ -1,3 +1,9 @@
+Sun May 25 09:27:43 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Malloc_T.i (free): Added a check for a NULL ptr to prevent
+	  system crashes.  Thanks to Leonid Kvetnyi <leonidk@nice.com> for
+ 	  reporting this.
+
 Sun May 25 10:06:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h:
