@@ -7,6 +7,7 @@
 #include "tao/PortableServer/ImR_LocatorS.h"
 
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Null_Mutex.h"
 
 class ACE_Reactor;
 

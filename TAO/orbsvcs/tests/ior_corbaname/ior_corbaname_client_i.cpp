@@ -22,6 +22,7 @@
 #include "ior_corbaname_client_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
+#include "ace/SString.h"
 
 // Constructor
 IOR_corbaname_Client_i::IOR_corbaname_Client_i (void)

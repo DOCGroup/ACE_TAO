@@ -16,6 +16,7 @@
 #include "ORB_Objects.h"
 #include "ace/Task.h"
 #include "tao/corba.h"
+#include "ace/SString.h"
 
 class TAO_Notify_Lanes_Supplier;
 
