@@ -1,3 +1,9 @@
+Wed Nov 19 09:53:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/config-win32-msvc-7.h:
+
+	  MSVC 7 supports templates class specialization.
+
 Tue Nov 18 22:31:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/naming.mpb:
