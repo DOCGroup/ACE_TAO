@@ -26,13 +26,14 @@ class ACE_Task_Base;
 class ACE_Thread_Manager;
 
 class ACE_Export ACE_Thread_Descriptor
-  // = Title
-  //    Information for controlling threads that run under the control
-  //    of the <Thread_Manager>.
 {
-friend class ACE_Thread_Manager;
-friend class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
-friend class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
+  // = TITLE
+  //   Information for controlling threads that run under the control
+  //   of the <Thread_Manager>.
+
+  friend class ACE_Thread_Manager;
+  friend class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
+  friend class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
 public:
   // = Initialization method.
   ACE_Thread_Descriptor (void);
@@ -108,13 +109,13 @@ private:
   // close down the handle).
 
   ACE_Task_Base *task_;
-  // Pointer to an <ACE_Task_Base> or NULL if there's no <ACE_Task_Base>;
+  // Pointer to an <ACE_Task_Base> or NULL if there's no
+  // <ACE_Task_Base>;
 
   ACE_Thread_Descriptor *next_;
   ACE_Thread_Descriptor *prev_;
   // We need these pointers to maintain the double-linked list in a
   // thread managers.
-
 };
 
 // Forward declaration.
