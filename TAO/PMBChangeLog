@@ -1,3 +1,13 @@
+Thu Mar  6 15:27:14 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* tao/Incoming_Message_Queue.cpp: Removed Shattering Encapsulation
+	hack around ace/Message_Block.h inclusion to make this link
+	properly on VC6.
+
+	* tao/GIOP_Message_State.cpp: Moved initialization of
+	TAO_Debug_Msg_Emitter_Guard::MAGIC_LENGTH outside the class
+	declaration.
+
 Wed Mar  5 13:08:37 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* tao/GIOP_Message_Generator_Parser_Impl.inl (check_revision):

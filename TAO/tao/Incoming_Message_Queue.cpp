@@ -1,17 +1,8 @@
-// We're doing this because we need to extend ACE_Message_Block, but
-// that interface is currently "frozen".  Therefore, I'm using static
-// functions in this compilation unit that I would normally add as part
-// of the interface.
-#define private public
-#define protected public
-#include "ace/Message_Block.h"
-#undef private
-#undef public
-
 #include "Incoming_Message_Queue.h"
 #include "ORB_Core.h"
 #include "debug.h"
 #include "ace/Malloc_T.h"
+#include "ace/Message_Block.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Incoming_Message_Queue.inl"
