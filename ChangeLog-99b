@@ -1,3 +1,9 @@
+Thu Apr 22 10:28:39 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-minimal.h: removed suppression of ACE_TSS_EMULATION
+          and enable of ACE_USE_THREAD_MANAGER_ADAPTER.  They're no
+          longer necessary with the clean OS.cpp.
+
 Thu Apr 22 08:52:48 1999  Steve Huston  <shuston@riverace.com>
 
         * tests/New_Fail_Test.cpp: Fixed to compile clean without exceptions.
