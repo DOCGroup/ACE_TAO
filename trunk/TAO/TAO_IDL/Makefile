@@ -8,6 +8,10 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif # ! TAO_ROOT
+
 BIN   	= tao_idl
 LDLIBS = -lACE
 BUILD 	= $(BIN)
@@ -145,6 +149,7 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
 ifeq ($(CROSS-COMPILE),)
   include $(ACE_ROOT)/include/makeinclude/macros.GNU
+  include $(TAO_ROOT)/rules.tao.GNU
   include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
   include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
   include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
@@ -166,7 +171,7 @@ else  # ! CROSS-COMPILE
   IDL_CFE_VERSION	= \"1.3.0\"
 
   ifeq ($(findstring g++,$(CXX)),g++)
-    CCFLAGS += -Wno-switch -Wno-unused
+    CCFLAGS += -Wno-switch
   else
   ifeq ($(findstring cxx,$(CXX)),cxx)
     # 111: statement is unreachable
