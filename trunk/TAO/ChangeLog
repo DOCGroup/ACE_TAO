@@ -1,3 +1,14 @@
+Mon Dec 13 18:08:21 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_sequence.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_sequence/cdr_op_cs.h:
+        
+          Added some missing virtual visit_* methods for sequences
+          of eventtypes, components and homes. Thanks to Gary Duzan
+          <gduzan@bbn.com> for reporting the marhshaling exception
+          with sequences of eventtypes.
+
 Mon Dec 13 18:12:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Release:
