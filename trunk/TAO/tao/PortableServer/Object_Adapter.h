@@ -34,6 +34,8 @@
 #include "tao/LocalObject.h"
 
 #include "ace/Service_Config.h"
+#include "ace/Reverse_Lock_T.h"
+#include "ace/Condition_Thread_Mutex.h"
 
 // Policy Validators
 #include "Default_Policy_Validator.h"

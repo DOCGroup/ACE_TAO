@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -12,6 +12,7 @@
 
 #ifndef TAO_PROFILE_H
 #define TAO_PROFILE_H
+
 #include /**/ "ace/pre.h"
 
 #include "tao/Tagged_Components.h"
@@ -21,9 +22,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/GIOP_Message_Version.h"
-#include "ace/Synch.h"
 #include "tao/Refcounted_ObjectKey.h"
 
+class ACE_Lock;
 class TAO_MProfile;
 class TAO_Stub;
 class TAO_Endpoint;
@@ -392,4 +393,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif  /* TAO_PROFILE_H */

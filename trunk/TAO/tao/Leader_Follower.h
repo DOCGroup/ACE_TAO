@@ -20,6 +20,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/New_Leader_Generator.h"
 #include "ace/Intrusive_List.h"
+#include "ace/Reverse_Lock_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

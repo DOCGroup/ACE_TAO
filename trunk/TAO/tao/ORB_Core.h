@@ -40,6 +40,7 @@
 
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Thread_Manager.h"
+#include "ace/Lock_Adapter_T.h"
 
 // Forward declarations
 class TAO_Acceptor;

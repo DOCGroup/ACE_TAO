@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch.h"
+#include "ace/Thread_Mutex.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Functor.h"
 #include "ace/CORBA_macros.h"

@@ -1,3 +1,34 @@
+Sun Aug 17 13:28:40 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Condition.h:
+	* tao/Endpoint.h:
+	* tao/Fault_Tolerance_Service.cpp:
+	* tao/Fault_Tolerance_Service.h:
+	* tao/IIOP_Transport.h:
+	* tao/LF_Follower.h:
+	* tao/Leader_Follower.h:
+	* tao/LocalObject.h:
+	* tao/MProfile.h:
+	* tao/NVList.h:
+	* tao/ORB.h:
+	* tao/ORB_Core.h:
+	* tao/ORB_Table.h:
+	* tao/Object.h:
+	* tao/Object_Ref_Table.h:
+	* tao/Principal.h:
+	* tao/Profile.h:
+	* tao/TAO_Singleton.h:
+	* tao/Thread_Lane_Resources.h:
+	* tao/Transport_Cache_Manager.h:
+	* tao/IORTable/IOR_Table_Impl.cpp:
+	* tao/IORTable/IOR_Table_Impl.h:
+	* tao/PortableServer/Object_Adapter.h:
+	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.h:
+
+	  Reduced inter-header dependencies by including the appropriate
+	  "ace/Synch{_T}.h" subsets (e.g. "ace/Thread_Mutex.h") instead of
+	  "ace/Synch{_T}.h" in all cases.
+
 2003-08-17  Jaiganesh Balasubramanian  <jai@tango.dre.vanderbilt.edu>
 
 	* tests/ICMG_Any_Bug/Test.idl:
@@ -28,7 +59,6 @@
 	  for the problem. Please refer to the changelog entry
 	  dated:
 	  Fri Jul 11 18:41:41 2003 Jeff Parsons.
-	
 
 Sun Aug 17 12:19:08 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -20,8 +20,10 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define  ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Hash_Map_Manager_T.h"
-#include "ace/Synch_T.h"
+#include "ace/Thread_Mutex.h"
+#include "ace/Null_Mutex.h"
 
 class ACE_Handle_Set;
 class TAO_Connection_Handler;
