@@ -208,7 +208,7 @@ public:
   virtual RTCORBA::PriorityBands * priority_bands (CORBA::Environment
                                                    &ACE_TRY_ENV =
                                                    TAO_default_environment ())
-  ACE_THROW_SPEC (());
+  ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::PolicyType policy_type (CORBA::Environment
                                          &ACE_TRY_ENV =
@@ -273,7 +273,7 @@ public:
   virtual RTCORBA::ProtocolList * protocols (CORBA::Environment
                                              &ACE_TRY_ENV =
                                              TAO_default_environment ())
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::PolicyType policy_type (CORBA::Environment
                                          &ACE_TRY_ENV =
@@ -285,7 +285,7 @@ public:
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
                                          TAO_default_environment ());
 
-  
+
   // @@ Angelo, the ServerProtocolPolicy is not client-exposed, the
   // ClientProtocolPolicy is.
 
@@ -322,7 +322,7 @@ public:
   virtual RTCORBA::ProtocolList * protocols (CORBA::Environment
                                              &ACE_TRY_ENV =
                                              TAO_default_environment ())
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::PolicyType policy_type (CORBA::Environment
                                          &ACE_TRY_ENV =
@@ -335,13 +335,13 @@ public:
                                          TAO_default_environment ());
 
   // CDR Encoder/Decoder.
-  
+
   virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
   // This method writes a CDR representation of the current object.
-  
+
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
   // This method reads the object state from a CDR representation.
-  
+
 protected:
 
   friend class TAO_Policy_Factory;
@@ -494,7 +494,3 @@ protected:
 
 #include "ace/post.h"
 #endif /* TAO_RT_POLICY_I_H */
-
-
-
-

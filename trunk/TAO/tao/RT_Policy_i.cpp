@@ -217,7 +217,7 @@ TAO_PriorityBandedConnectionPolicy::~TAO_PriorityBandedConnectionPolicy (void)
 
 RTCORBA::PriorityBands *
 TAO_PriorityBandedConnectionPolicy::priority_bands (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RTCORBA::PriorityBands *tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -390,12 +390,12 @@ TAO_TCP_Properties::_tao_encode (TAO_OutputCDR & out_cdr)
 
   // @@ Angelo, a more consize and idiomatic way to write what you
   // have above is the following:
-  
+
   // @@ Marina your code is more concise, but you go on reading
   // even after an error occur, and this is not a good habit.
   // My code is more verbose but it was meant to be that way,
   // i believe that as soon as something goes wrong you should
-  // stop doing anything. 
+  // stop doing anything.
   /*
   return
     ((out_cdr << send_buffer_size_)
@@ -451,7 +451,7 @@ TAO_ServerProtocolPolicy::~TAO_ServerProtocolPolicy (void)
 
 RTCORBA::ProtocolList *
 TAO_ServerProtocolPolicy::protocols (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RTCORBA::ProtocolList *tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -512,7 +512,7 @@ TAO_ClientProtocolPolicy::~TAO_ClientProtocolPolicy ()
 
 RTCORBA::ProtocolList *
 TAO_ClientProtocolPolicy::protocols (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RTCORBA::ProtocolList *tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -600,11 +600,11 @@ TAO_ClientProtocolPolicy::_tao_encode (TAO_OutputCDR &out_cdr)
        i++)
     {
       is_write_ok = out_cdr << protocols_[i].protocol_type;
-      
+
       if (is_write_ok)
         is_write_ok =
           protocols_[i].orb_protocol_properties->_tao_encode (out_cdr);
-      
+
       if (is_write_ok)
         is_write_ok =
           protocols_[i].transport_protocol_properties->_tao_encode (out_cdr);
@@ -643,12 +643,12 @@ TAO_ClientProtocolPolicy::_tao_decode (TAO_InputCDR &in_cdr)
       IOP::ProfileId id;
       is_read_ok = in_cdr >> id;
 
-      protocol_properties = 
+      protocol_properties =
         TAO_Protocol_Properties_Factory::create_orb_protocol_property (id);
 
       protocols_[i].transport_protocol_properties =
         TAO_Protocol_Properties_Factory::create_orb_protocol_property (id);
-      
+
       if (is_read_ok && protocol_properties != 0 )
         {
           // @@ Angelo, shouldn't you be checking that the pointer is
@@ -658,23 +658,23 @@ TAO_ClientProtocolPolicy::_tao_decode (TAO_InputCDR &in_cdr)
           // detecting a failure.
 
           // @Marina  The factory arlready handle the memory allocation
-          // problems. 
+          // problems.
           // But also if I am right we could receive ORB specific protocol
           // Properties that we need to skip.
-          
+
           protocols_[i].orb_protocol_properties = protocol_properties;
-          
+
           if (is_read_ok && (protocols_[i].orb_protocol_properties.ptr () == 0))
             is_read_ok =
               protocols_[i].orb_protocol_properties->_tao_decode (in_cdr);
-          
+
           if (is_read_ok
               && (protocols_[i].transport_protocol_properties.ptr () == 0))
             is_read_ok =
               protocols_[i].transport_protocol_properties->_tao_decode (in_cdr);
         }
     }
-  
+
   return is_read_ok;
 }
 
