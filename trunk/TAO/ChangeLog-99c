@@ -23,8 +23,8 @@ Wed Sep  1 09:52:18 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
 	  Changes to enable code generation for nested IDL sequences. Any
  	  number of levels of nesting will work. Thanks to Lars Immisch
- 	  <lars@ibp.de> (forwarded email had no last name) for sending in
- 	  the example that got the ball rolling.
+ 	  <lars@ibp.de> for sending in the example that got the ball
+ 	  rolling.
 
 Wed Sep  1 07:09:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
