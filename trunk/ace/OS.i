@@ -9074,11 +9074,9 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   // Get the correct OS type.
 #if defined (ACE_HAS_WINCE)
   const wchar_t *symbolname = sname;
-#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-  char *symbolname = ACE_TEXT_ALWAYS_CHAR (sname);
 #elif defined (ACE_HAS_CHARPTR_DL)
   char *symbolname = ACE_const_cast (char *, sname);
-#else
+#elif !defined (ACE_WIN32) && !defined (ACE_USES_WCHAR)
   const char *symbolname = sname;
 #endif /* ACE_HAS_CHARPTR_DL */
 
@@ -9101,6 +9099,10 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 #   else
   ACE_OSCALL_RETURN (::dlsym (handle, symbolname), void *, 0);
 #   endif /* ACE_LACKS_POSIX_PROTOTYPES */
+
+# elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+
+  ACE_WIN32CALL_RETURN (::GetProcAddress (handle, ACE_TEXT_ALWAYS_CHAR (sname)), void *, 0);
 
 # elif defined (ACE_WIN32)
 
