@@ -3,7 +3,7 @@
 #ifndef DISTRIBUTABLE_THREAD_H
 #define DISTRIBUTABLE_THREAD_H
 
-#include "tao/RTScheduling/RTSchedulerC.h"
+#include "tao/RTScheduling/RTScheduler.h"
 
 class TAO_RTScheduler_Export TAO_DistributableThread
 : public RTScheduling::DistributableThread
