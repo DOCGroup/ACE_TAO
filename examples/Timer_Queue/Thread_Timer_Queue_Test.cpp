@@ -158,6 +158,11 @@ Input_Task::shutdown_timer (void *argument)
   // Macro to avoid "warning: unused parameter" type warning.
   ACE_UNUSED_ARG (argument);
 
+#if !defined (ACE_LACKS_PTHREAD_CANCEL)
+  // Cancel the thread timer queue task.	
+  this->queue_->thr_mgr ()->cancel_task (this->queue_);
+#endif
+  
   // -1 indicates we are shutting down the application.
   return -1;
 }
