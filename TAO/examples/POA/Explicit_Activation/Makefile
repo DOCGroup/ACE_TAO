@@ -8,7 +8,7 @@ LSRC = 	$(addsuffix .cpp,$(BIN))
 
 CPPFLAGS += -I$(TAO_ROOT) -I../Generic_Servant
 
-LDLIBS     =   -lserver -lTAO
+LDLIBS     =   -lMyFoo -lTAO
 LDFLAGS += -L$(TAO_ROOT)/tao -L../Generic_Servant
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
@@ -57,6 +57,9 @@ endif
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  ../Generic_Servant/MyFooServant.h ../Generic_Servant/FooS.h \
  ../Generic_Servant/FooC.h \
@@ -104,7 +107,6 @@ endif
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -122,8 +124,6 @@ endif
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -206,10 +206,10 @@ endif
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Union.h \
- $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
