@@ -660,6 +660,9 @@ AV_Server::resolve_trader (CORBA::Environment& TAO_IN_ENV)
       offset += this->mach_props_.define_properties (this->prop_seq_, offset);
       this->video_rep_.define_properties (this->prop_seq_, offset);
     }
+  ACE_DEBUG ((LM_DEBUG,"Trader IOR: %s\n",
+              this->orb_manager_.orb ()->object_to_string (this->trader_.in (),_env)));
+              
 }
 
 AV_Server::~AV_Server (void)
