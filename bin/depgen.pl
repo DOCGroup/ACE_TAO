@@ -26,7 +26,7 @@ require DependencyEditor;
 # Data Section
 # ************************************************************
 
-my($version)  = '0.7';
+my($version)  = '0.8';
 my($os)       = ($^O eq 'MSWin32' || $^O eq 'cygwin' ? 'Windows' : 'UNIX');
 my(%types)    = ('gnu'   => 1,
                  'nmake' => 1,
@@ -40,13 +40,12 @@ my(%defaults) = ('UNIX'    => ['gnu'],
 # ************************************************************
 
 sub which {
-  my($prog)   = shift;
-  my($exec)   = $prog;
-  my($part)   = '';
-  my($envSep) = ($^O eq 'MSWin32' ? ';' : ':');
+  my($prog) = shift;
+  my($exec) = $prog;
 
   if (defined $ENV{'PATH'}) {
-    foreach $part (split(/$envSep/, $ENV{'PATH'})) {
+    my($envSep) = ($^O eq 'MSWin32' ? ';' : ':');
+    foreach my $part (split(/$envSep/, $ENV{'PATH'})) {
       $part .= "/$prog";
       if ( -x $part ) {
         $exec = $part;
@@ -225,6 +224,5 @@ if (!defined $files[0]) {
 }
 
 my($editor) = new DependencyEditor();
-my($status) = $editor->process($output, $type, $noinline,
-                               \%macros, \@ipaths, \%replace, \@files);
-exit($status);
+exit($editor->process($output, $type, $noinline,
+                      \%macros, \@ipaths, \%replace, \@files));

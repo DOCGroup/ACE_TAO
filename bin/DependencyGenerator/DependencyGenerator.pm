@@ -37,6 +37,12 @@ sub new {
   $self->{'cwd'} = Cwd::getcwd() . '/';
   $self->{'cwd'} =~ s/([\+\-\\\$\[\]\(\)\.])/\\$1/g;
 
+  ## Sort the replace keys to get the longest key first.  This way
+  ## when we are replacing portions of the file path, we replace the
+  ## most we can.
+  my(@repkeys) = sort { length($b) <=> length($a) } keys %$replace;
+  $self->{'repkeys'} = \@repkeys;
+
   return $self;
 }
 
@@ -46,7 +52,6 @@ sub process {
   my($file)    = shift;
   my($objects) = shift;
   my($replace) = $self->{'replace'};
-  my(@repkeys) = keys %$replace;
   my($cwd)     = $self->{'cwd'};
   my($files)   = $self->{'pre'}->process($file, $self->{'noinline'});
 
@@ -55,16 +60,12 @@ sub process {
     ## If we can remove the current working directory fromm the file
     ## then we do not need to check the repkeys array and that cuts
     ## the processing time for the ace directory almost in half.
-    if ($finc =~ /^$cwd/) {
-      ## Remove the current working directory from the front of the
-      ## file.  This will help reduce the size of the dependency file.
-      $finc =~ s/^$cwd//;
+    if ($finc =~ s/^$cwd//o) {
     }
     else {
       ## Modify those that have elements for replacement
-      foreach my $rep (@repkeys) {
-        if ($finc =~ /^$rep/) {
-          $finc =~ s/^$rep/$$replace{$rep}/;
+      foreach my $rep (@{$self->{'repkeys'}}) {
+        if ($finc =~ s/^$rep/$$replace{$rep}/) {
           last;
         }
       }
