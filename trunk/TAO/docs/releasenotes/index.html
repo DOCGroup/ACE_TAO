@@ -81,6 +81,29 @@ Point of contact: <A HREF="mailto:gokhale@cs.wustl.edu">Aniruddha Gokhale</A>
 
 <P>Current status: (As of July 31st, 1998.)
 <UL>
+      <LI>Added partial native C++ exception support:
+	<UL>
+	  <LI>The ORB can be configured to catch native C++ exceptions
+	    thrown on the server side and transmit them to the client
+	    side.
+	    On the client side exceptions received from the wire are
+	    thrown using native C++ exceptions also.
+	  </LI>
+	  <LI>To facilitate portability between the standard and
+	    alternative C++ mapping the
+	    <CODE>CORBA::Environment</CODE> has a default value.
+	    The IDL compiler generates code using that default value
+	    and the TAO library methods also have the default.
+	  </LI>
+	  <LI>Some macros are provided to facilitate portability
+	    between platforms with and without macros.
+	  </LI>
+	</UL>
+	There is still some work to do, mainly provide complete
+	support for the standard mapping, i.e. remove the
+	<CODE>CORBA::Environment</CODE> argument completely.
+      </LI>
+
       <LI>Verified support for the "long long" and "unsigned long long"
 	datatypes. On platforms that do not support 64 bit longs we
 	provided <EM>partial</EM> emulation through ACE_U_LongLong.
@@ -162,10 +185,6 @@ for return values that are variable sized IDL types. Unions improved.</LI>
 Support for sequences of strings and object references added. However,
 it is not tested yet so there may be some bugs. We should have these fixed
 in a day or so.</LI>
-
-<LI>
-Support for handling exceptions added. TAO does not use direct C++ exceptions.
-Instead it uses the CORBA::Environment based approach.</LI>
 
 <LI>
 Sequences as out parameters have been tested in the IDL_Cubit example.
