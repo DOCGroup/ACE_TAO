@@ -25,7 +25,10 @@
 #include "ace/Reactor.h"
 #include "ace/Synch_Options.h"
 #include "ace/Thread_Manager.h"
-
+#include "ace/Connection_Recycling_Strategy.h"
+#include "ace/Refcountable.h"
+#include "ace/Hashable.h"
+#include "ace/Recyclable.h"
 
 // Needed for broken linkers that can't grok long symbols.
 #define ACE_Refcounted_Hash_Recyclable ARHR
