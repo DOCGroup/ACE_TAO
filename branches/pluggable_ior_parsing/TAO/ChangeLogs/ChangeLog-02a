@@ -1,3 +1,54 @@
+Tue Jul 11 14:16:17 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/ior_corbaloc/corbaloc.idl: 
+
+	* tests/ior_corbaloc/status_i.h: 
+	* tests/ior_corbaloc/status_i.cpp: 
+	* tests/ior_corbaloc/ior_corbaloc_client_i.cpp: 
+	  Changed the test so that the server returns a boolean on
+ 	  receiving a request from the client.
+
+	* tests/ior_corbaname/README:
+	* tests/ior_corbaname/corbaname.idl: 
+	* tests/ior_corbaname/Makefile:
+	
+	* tests/ior_corbaname/status_i.h: 
+	* tests/ior_corbaname/status_i.cpp: 
+	* tests/ior_corbaname/server.cpp: 
+	
+	* tests/ior_corbaname/ior_corbaname_client_i.h: 
+	* tests/ior_corbaname/ior_corbaname_client_i.cpp: 
+	* tests/ior_corbaname/client.cpp: 
+	  Added to example to test the corbaname: style URL. When the
+	  server receives a request from the client, returns a  boolean
+	  :true=0 value.
+	
+	* tao/ior_corbaname/CORBANAME_Parser.h: 
+	* tao/ior_corbaname/CORBANAME_Parser.cpp:
+	  Implemented the corbaname: style URL.
+	
+	* tao/ior_corbaloc/CORBALOC_Parser.h
+	* tao/ior_corbaloc/CORBALOC_Parser.cpp: 
+	  Changed the value of a const iiop_prefix from <iiop://> to 
+	  <iiop:>
+	
+Thu Jul  6 18:48:06 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ior_corbaname/Makefile: 
+	* tao/ior_corbaname/ior_corbaname_export.h: 
+
+	* tao/ior_corbaname/CORBANAME_Parser.i: 
+	* tao/ior_corbaname/CORBANAME_Parser.h:
+	* tao/ior_corbaname/CORBANAME_Parser.cpp: 
+	  Implemented part of the corbaname: style IOR parser. Done till
+	  obtaining a reference to the naming context.
+	
+Thu Jul  6 12:38:36 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ior_corbaloc/CORBALOC_Parser.h:
+	* tao/ior_corbaloc/CORBALOC_Parser.cpp: 
+	  Further split the TAO_CORBALOC_Parser::parse_string function.
+		
 Thu Jun 29 18:19:16 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/ior_corbaloc/CORBALOC_Parser.h:

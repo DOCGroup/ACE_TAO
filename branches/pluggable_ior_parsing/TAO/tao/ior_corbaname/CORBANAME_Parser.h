@@ -19,6 +19,7 @@
 
 #include "tao/IOR_Parser.h"
 #include "ior_corbaname_export.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -51,8 +52,11 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
  private:
-  virtual void parse_string_count_helper (const char * &corbaname,
-                                          CORBA::ULong &pos_seperator);
+  virtual CORBA::Object_ptr
+    parse_string_dynamic_request_helper (CosNaming::NamingContextExt_var &naming_context,
+                                         ACE_CString &key_string,
+                                         CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 #if defined (__ACE_INLINE__)
