@@ -90,7 +90,7 @@ TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
 void
 TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
                             TAO_GIOP::Message_Type message_type,
-                  			    CORBA::Environment &env)
+                                            CORBA::Environment &env)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_GIOP_INVOCATION_START_ENTER);
 
@@ -264,7 +264,7 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
   switch (message_type)
     {
     case TAO_GIOP::Request:
-  
+
       this->out_stream_ << svc_ctx;
       this->out_stream_.write_ulong (this->my_request_id_);
       this->out_stream_.write_boolean (is_roundtrip);
@@ -292,7 +292,7 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
 
 TAO_GIOP_ReplyStatusType
 TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
-			     CORBA::Environment &env)
+                             CORBA::Environment &env)
 {
   // Send Request, return on error or if we're done
 
@@ -349,7 +349,7 @@ TAO_GIOP_Invocation::close_connection (void)
     data_->reset_first_locate_request ();
     // resets the flag of the first call locate request to true
   }
-   
+
   this->handler_->close ();
   this->handler_ = 0;
   return TAO_GIOP_LOCATION_FORWARD;
@@ -375,7 +375,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
                          &(object_ptr),
                          0,
                          env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
-    { 
+    {
       dexc (env, "invoke, location forward (decode)");
       TAO_GIOP::send_error (this->handler_);
       return TAO_GIOP_SYSTEM_EXCEPTION;
@@ -386,7 +386,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
 
   IIOP_Object *iiopobj =
     ACE_dynamic_cast (IIOP_Object*, object_ptr->_stubobj ());
-  
+
   if (iiopobj == 0)
     {
       TAO_GIOP::send_error (this->handler_);
@@ -409,7 +409,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
   // note: this has to be and is thread safe
 
   // The object is no longer needed, because we have now the IIOP_Object
-  CORBA::release (object_ptr); 
+  CORBA::release (object_ptr);
 
   env.clear ();
 
@@ -423,9 +423,9 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
 
 TAO_GIOP_ReplyStatusType
 TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
-				    CORBA::Environment &env)
+                                    CORBA::Environment &env)
 {
-  TAO_GIOP_ReplyStatusType retval = 
+  TAO_GIOP_ReplyStatusType retval =
     TAO_GIOP_Invocation::invoke (CORBA::B_TRUE, env);
   if (env.exception () != 0)
     return retval;
@@ -472,7 +472,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
   TAO_ORB_Core_instance ()->reactor ()->resume_handler (this->handler_);
   // suspend was called in TAO_Client_Connection_Handler::handle_input
-  
+
   switch (m)
     {
     case TAO_GIOP::Reply:
@@ -688,10 +688,10 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
 TAO_GIOP_ReplyStatusType
 TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
-				    CORBA::ULong except_count,
-				    CORBA::Environment &env)
+                                    CORBA::ULong except_count,
+                                    CORBA::Environment &env)
 {
-  TAO_GIOP_ReplyStatusType retval = 
+  TAO_GIOP_ReplyStatusType retval =
     TAO_GIOP_Invocation::invoke (CORBA::B_TRUE, env);
   if (env.exception () != 0)
     return retval;
@@ -1008,7 +1008,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &env)
 
   TAO_ORB_Core_instance ()->reactor ()->resume_handler (this->handler_);
   // suspend was called in TAO_Client_Connection_Handler::handle_input
-  
+
   switch (m)
     {
     case TAO_GIOP::CloseConnection:
@@ -1019,7 +1019,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &env)
       // Especially set the new location
 
       CORBA::ULong request_id;
-      CORBA::ULong locate_status;      // TAO_GIOP_LocateStatusType 
+      CORBA::ULong locate_status;      // TAO_GIOP_LocateStatusType
 
       if (!this->inp_stream_.read_ulong (request_id)
           || request_id != this->my_request_id_
@@ -1027,7 +1027,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &env)
       {
         TAO_GIOP::send_error (this->handler_);
         env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t) bad Response header\n"));
 
         return TAO_GIOP_SYSTEM_EXCEPTION;
@@ -1069,7 +1069,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &env)
       return TAO_GIOP_SYSTEM_EXCEPTION;
     }
 
-  return TAO_GIOP_NO_EXCEPTION;
+  ACE_NOTREACHED (return TAO_GIOP_NO_EXCEPTION);
 }
 
 // ****************************************************************
