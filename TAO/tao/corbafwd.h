@@ -804,12 +804,12 @@ TAO_NAMESPACE CORBA
   typedef CORBA_IRObject *IRObject_ptr;
   typedef CORBA_IRObject_out IRObject_out;
   typedef CORBA_IRObject_var IRObject_var;
-  
+
   typedef CORBA_Contained Contained;
   typedef CORBA_Contained *Contained_ptr;
   typedef CORBA_Contained_out Contained_out;
   typedef CORBA_Contained_var Contained_var;
-  
+
   typedef CORBA_Repository Repository;
   typedef CORBA_Repository *Repository_ptr;
   typedef CORBA_Repository_out Repository_out;
@@ -819,7 +819,7 @@ TAO_NAMESPACE CORBA
   typedef CORBA_Container *Container_ptr;
   typedef CORBA_Container_out Container_out;
   typedef CORBA_Container_var Container_var;
-  
+
   typedef CORBA_ModuleDef ModuleDef;
   typedef CORBA_ModuleDef *ModuleDef_ptr;
   typedef CORBA_ModuleDef_out ModuleDef_out;
@@ -829,12 +829,12 @@ TAO_NAMESPACE CORBA
   typedef CORBA_ConstantDef *ConstantDef_ptr;
   typedef CORBA_ConstantDef_out ConstantDef_out;
   typedef CORBA_ConstantDef_var ConstantDef_var;
-  
-  typedef CORBA_IDLType IDLType; 
-  typedef CORBA_IDLType *IDLType_ptr; 
-  typedef CORBA_IDLType_out IDLType_out; 
+
+  typedef CORBA_IDLType IDLType;
+  typedef CORBA_IDLType *IDLType_ptr;
+  typedef CORBA_IDLType_out IDLType_out;
   typedef CORBA_IDLType_var IDLType_var;
- 
+
   typedef CORBA_StructDef StructDef;
   typedef CORBA_StructDef *StructDef_ptr;
   typedef CORBA_StructDef_out StructDef_out;
@@ -929,7 +929,7 @@ TAO_NAMESPACE CORBA
   typedef CORBA_StringDef *StringDef_ptr;
   typedef CORBA_StringDef_out StringDef_out;
   typedef CORBA_StringDef_var StringDef_var;
-  
+
   typedef CORBA_SequenceDef SequenceDef;
   typedef CORBA_SequenceDef *SequenceDef_ptr;
   typedef CORBA_SequenceDef_out SequenceDef_out;
@@ -949,7 +949,7 @@ TAO_NAMESPACE CORBA
   typedef CORBA_FixedDef *FixedDef_ptr;
   typedef CORBA_FixedDef_out FixedDef_out;
   typedef CORBA_FixedDef_var FixedDef_var;
-  
+
   typedef CORBA_ModuleDescription ModuleDescription;
   typedef CORBA_ModuleDescription *ModuleDescription_ptr;
   typedef CORBA_ModuleDescription_out ModuleDescription_out;
@@ -1009,7 +1009,7 @@ TAO_NAMESPACE CORBA
   typedef CORBA_ExcDescriptionSeq *ExcDescriptionSeq_ptr;
   typedef CORBA_ExcDescriptionSeq_out ExcDescriptionSeq_out;
   typedef CORBA_ExcDescriptionSeq_var ExcDescriptionSeq_var;
-  
+
   typedef CORBA_OperationDef OperationDef;
   typedef CORBA_OperationDef *OperationDef_ptr;
   typedef CORBA_OperationDef_out OperationDef_out;
@@ -1054,12 +1054,12 @@ TAO_NAMESPACE CORBA
   typedef CORBA_ValueMemberDef *ValueMemberDef_ptr;
   typedef CORBA_ValueMemberDef_out ValueMemberDef_out;
   typedef CORBA_ValueMemberDef_var ValueMemberDef_var;
-  
+
   typedef CORBA_ValueDescription ValueDescription;
   typedef CORBA_ValueDescription *ValueDescription_ptr;
   typedef CORBA_ValueDescription_out ValueDescription_out;
   typedef CORBA_ValueDescription_var ValueDescription_var;
-  
+
   typedef CORBA_EnumMemberSeq EnumMemberSeq;
   typedef CORBA_EnumMemberSeq *EnumMemberSeq_ptr;
   typedef CORBA_EnumMemberSeq_out EnumMemberSeq_out;
@@ -1257,7 +1257,7 @@ TAO_NAMESPACE CORBA
   typedef CORBA::String_out ORBid_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ORBid;
 
-  
+
 
   typedef CORBA::Short PolicyErrorCode;
   typedef CORBA::Short_out PolicyErrorCode_out;
@@ -1438,9 +1438,9 @@ TAO_NAMESPACE CORBA
   typedef CORBA_String_out ScopedName_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ScopedName;
 
-  
 
-  
+
+
 
   enum DefinitionKind
   {
@@ -1467,9 +1467,9 @@ TAO_NAMESPACE CORBA
     dk_Value,
     dk_ValueBox,
     dk_ValueMember,
-    dk_Native  
+    dk_Native
   };
-  
+
   typedef DefinitionKind &DefinitionKind_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_DefinitionKind;
 
@@ -1479,7 +1479,7 @@ TAO_NAMESPACE CORBA
   typedef CORBA_String_var VersionSpec_var;
   typedef CORBA_String_out VersionSpec_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_VersionSpec;
-  
+
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Container;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Contained;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InterfaceDefSeq;
@@ -1526,13 +1526,13 @@ TAO_NAMESPACE CORBA
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_AttrDescriptionSeq;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InterfaceDef;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InterfaceDescription;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ValueMember;  
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ValueMember;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ValueMemberSeq;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ValueMemberDef;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ValueDef;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ValueDescription; 
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ValueDescription;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ValueBoxDef;
-  
+
   enum PrimitiveKind
   {
     pk_null,
@@ -1555,7 +1555,7 @@ TAO_NAMESPACE CORBA
     pk_ulonglong,
     pk_longdouble,
     pk_wchar,
-    pk_wstring  
+    pk_wstring
   };
    typedef PrimitiveKind &PrimitiveKind_out;
    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PrimitiveKind;
@@ -1563,7 +1563,7 @@ TAO_NAMESPACE CORBA
    enum AttributeMode
   {
     ATTR_NORMAL,
-    ATTR_READONLY  
+    ATTR_READONLY
   };
   typedef AttributeMode &AttributeMode_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_AttributeMode;
@@ -1571,7 +1571,7 @@ TAO_NAMESPACE CORBA
   enum OperationMode
   {
     OP_NORMAL,
-    OP_ONEWAY 
+    OP_ONEWAY
   };
   typedef OperationMode &OperationMode_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_OperationMode;
@@ -1580,7 +1580,7 @@ TAO_NAMESPACE CORBA
   {
     PARAM_IN,
     PARAM_OUT,
-    PARAM_INOUT  
+    PARAM_INOUT
   };
   typedef ParameterMode &ParameterMode_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ParameterMode;
@@ -1597,7 +1597,7 @@ TAO_NAMESPACE CORBA
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short PRIVATE_MEMBER;
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short PUBLIC_MEMBER;
-  
+
   typedef CORBA::Short ValueModifier;
   typedef CORBA::Short_out ValueModifier_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ValueModifier;
