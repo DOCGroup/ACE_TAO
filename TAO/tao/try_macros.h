@@ -40,7 +40,7 @@
 #include "ace/CORBA_macros.h"
 
 // Define a local enviroment variable...
-#define TAO_IN_ENV  _env
+#define TAO_IN_ENV  ACE_TRY_ENV
 #define TAO_TRY_ENV _tao_try_environment
 
 // These macros can be used to write "portable" code between platforms
