@@ -3,6 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "test_i.h"
 #include "interceptors.h"
+#include "Echo_Server_ORBInitializer.h"
 
 ACE_RCSID(Dynamic, server, "$Id$")
 
@@ -38,22 +39,30 @@ main (int argc, char *argv[])
 {
   ACE_TRY_NEW_ENV
     {
+#if TAO_HAS_INTERCEPTORS == 1
+      PortableInterceptor::ORBInitializer_ptr temp_initializer =
+        PortableInterceptor::ORBInitializer::_nil ();
+
+      ACE_NEW_RETURN (temp_initializer,
+                      Echo_Server_ORBInitializer,
+                      -1);  // No exceptions yet!
+      PortableInterceptor::ORBInitializer_var orb_initializer =
+        temp_initializer;
+
+      PortableInterceptor::register_orb_initializer (orb_initializer.in (),
+                                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      /// Transfer ownership to the ORB.
+      (void) orb_initializer._retn ();
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
+
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-#if (TAO_HAS_INTERCEPTORS == 1)
-      PortableInterceptor::ServerRequestInterceptor_ptr interceptor = 0;
-
-      // Installing the Echo interceptor
-      ACE_NEW_RETURN (interceptor,
-                      Echo_Server_Request_Interceptor (orb.in ()),
-                      -1);
-      orb->_register_server_interceptor (interceptor);
-#endif /* (TAO_HAS_INTERCEPTORS == 1) */
-
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
@@ -119,7 +128,7 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+                           "Caught exception:");
       return 1;
     }
   ACE_ENDTRY;
