@@ -224,6 +224,9 @@ public:
                           TAO_AV_frame_info *frame_info = 0);
   // send a frame in iovecs.
 
+  virtual int send_frame (const char*buf,
+                          size_t len);
+
   virtual int destroy (void);
   // end the stream.
 };

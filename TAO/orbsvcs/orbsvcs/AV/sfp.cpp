@@ -1030,6 +1030,14 @@ TAO_SFP_Object::send_frame (const iovec * /*iov*/,
   ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_SFP_Object::send_frame"),-1);
 }
 
+int
+TAO_SFP_Object::send_frame (const char*buf,
+                               size_t len)
+{
+  return 0;
+}
+
+
 ACE_Message_Block*
 TAO_SFP_Object::get_fragment (ACE_Message_Block *&mb,
                               size_t initial_len,
