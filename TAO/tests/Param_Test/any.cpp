@@ -77,6 +77,8 @@ Test_Any::init_parameters (Param_Test_ptr objref,
       this->cobj_ = objref->make_coffee (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      this->reset_parameters ();
+      return 0;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
@@ -87,9 +89,6 @@ Test_Any::init_parameters (Param_Test_ptr objref,
     }
   ACE_ENDTRY;
   ACE_NOTREACHED (return -1;)
-
-  this->reset_parameters ();
-  return 0;
 }
 
 int

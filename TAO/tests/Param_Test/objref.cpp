@@ -93,6 +93,21 @@ Test_ObjRef::init_parameters (Param_Test_ptr objref,
       ACE_OS::strcpy (msg_str, "set coffee attribute");
       this->in_->description (desc, ACE_TRY_ENV); // set the attribute for the in object
       ACE_TRY_CHECK;
+
+      this->inout_ = Coffee::_nil ();
+      this->out_ = Coffee::_nil ();
+      this->ret_ = Coffee::_nil ();
+
+      // DII
+      *this->in_courier = ACE_dynamic_cast (CORBA::Object_ptr,
+                                            this->in_.in ());
+      *this->inout_courier = ACE_dynamic_cast (CORBA::Object_ptr,
+                                               this->inout_.in ());
+      *this->out_courier = ACE_dynamic_cast (CORBA::Object_ptr,
+                                             this->out_.in ());
+      *this->ret_courier = ACE_dynamic_cast (CORBA::Object_ptr,
+                                             this->ret_.in ());
+      return 0;
     }
   ACE_CATCHANY
     {
@@ -101,21 +116,6 @@ Test_ObjRef::init_parameters (Param_Test_ptr objref,
     }
   ACE_ENDTRY;
   ACE_NOTREACHED (return -1;)
-
-  this->inout_ = Coffee::_nil ();
-  this->out_ = Coffee::_nil ();
-  this->ret_ = Coffee::_nil ();
-
-  // DII
-  *this->in_courier = ACE_dynamic_cast (CORBA::Object_ptr,
-                                        this->in_.in ());
-  *this->inout_courier = ACE_dynamic_cast (CORBA::Object_ptr,
-                                           this->inout_.in ());
-  *this->out_courier = ACE_dynamic_cast (CORBA::Object_ptr,
-                                         this->out_.in ());
-  *this->ret_courier = ACE_dynamic_cast (CORBA::Object_ptr,
-                                         this->ret_.in ());
-  return 0;
 }
 
 int
@@ -313,14 +313,19 @@ Test_ObjRef::check_validity (CORBA::Request_ptr /*req*/)
 
   ACE_TRY
     {
-      this->inout_ = Coffee::_narrow (*this->inout_courier, ACE_TRY_ENV);
+      this->inout_ = Coffee::_narrow (*this->inout_courier, 
+                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      this->out_ = Coffee::_narrow (*this->out_courier, ACE_TRY_ENV);
+      this->out_ = Coffee::_narrow (*this->out_courier, 
+                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      this->ret_ = Coffee::_narrow (*this->ret_courier, ACE_TRY_ENV);
+      this->ret_ = Coffee::_narrow (*this->ret_courier, 
+                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      return this->check_validity ();
     }
   ACE_CATCHANY
     {
@@ -329,8 +334,6 @@ Test_ObjRef::check_validity (CORBA::Request_ptr /*req*/)
     }
   ACE_ENDTRY;
   ACE_NOTREACHED (return 0);
-
-  return this->check_validity ();
 }
 
 void

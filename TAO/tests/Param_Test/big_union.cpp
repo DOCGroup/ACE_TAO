@@ -60,6 +60,9 @@ Test_Big_Union::init_parameters (Param_Test_ptr objref,
       // get access to a Coffee Object
       this->cobj_ = objref->make_coffee (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      this->reset_parameters ();
+      return 0;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
@@ -74,9 +77,6 @@ Test_Big_Union::init_parameters (Param_Test_ptr objref,
     }
   ACE_ENDTRY;
   ACE_NOTREACHED (return -1;)
-
-  this->reset_parameters ();
-  return 0;
 }
 
 int
@@ -242,7 +242,7 @@ Test_Big_Union::add_args (CORBA::NVList_ptr param_list,
                             0);
 
       CORBA::Any out_arg (Param_Test::_tc_Big_Union,
-                          &this->out_,
+                          &this->out_.inout (),
                           0);
 
       // add parameters
@@ -270,7 +270,7 @@ Test_Big_Union::add_args (CORBA::NVList_ptr param_list,
       ACE_TRY_CHECK;
 
       item->value ()->replace (Param_Test::_tc_Big_Union,
-                               &this->ret_,
+                               &this->ret_.inout (),
                                0,
                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
