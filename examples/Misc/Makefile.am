@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
+## ./bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake ACE.mwc
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -107,34 +107,6 @@ test_trace_SOURCES = \
   test_dump.h
 
 test_trace_LDADD = \
- $(top_builddir)/ace/libACE.la
-
-## Makefile.Misc_Test_XtReactor1.am 
-noinst_PROGRAMS += test_XtReactor1
-
-test_XtReactor1_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR)
-
-test_XtReactor1_SOURCES = \
-  test_XtReactor1.cpp \
-  test_dump.h
-
-test_XtReactor1_LDADD = \
- $(top_builddir)/ace/libACE.la
-
-## Makefile.Misc_Test_XtReactor2.am 
-noinst_PROGRAMS += test_XtReactor2
-
-test_XtReactor2_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR)
-
-test_XtReactor2_SOURCES = \
-  test_XtReactor2.cpp \
-  test_dump.h
-
-test_XtReactor2_LDADD = \
  $(top_builddir)/ace/libACE.la
 
 ## Clean up template repositories, etc.

@@ -6,10 +6,10 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
+## ./bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake ACE.mwc
 
 includedir = @includedir@/ace
-pkgconfigdatadir = ${prefix}/lib/pkgconfig
+pkgconfigdatadir = @libdir@/prefix
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -21,60 +21,149 @@ SUBDIRS = \
         SSL \
         TMCast
 
-## Makefile.ACE.am
-Other = \
+CLEANFILES =
+BUILT_SOURCES =
+pkgconfigdata_DATA =
+lib_LTLIBRARIES =
+## Makefile.ACE.am 
+
+lib_LTLIBRARIES += libACE.la
+
+libACE_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -DACE_HAS_ACE_TOKEN \
+  -DACE_HAS_ACE_SVCCONF \
+  -DACE_BUILD_DLL
+
+libACE_la_SOURCES = \
+  ACE.cpp \
+  ACE_crc32.cpp \
+  ACE_crc_ccitt.cpp \
+  ARGV.cpp \
+  ATM_Acceptor.cpp \
+  ATM_Addr.cpp \
+  ATM_Connector.cpp \
+  ATM_Params.cpp \
+  ATM_QoS.cpp \
+  ATM_Stream.cpp \
+  Activation_Queue.cpp \
+  Active_Map_Manager.cpp \
+  Addr.cpp \
+  Arg_Shifter.cpp \
+  Argv_Type_Converter.cpp \
+  Asynch_IO.cpp \
+  Asynch_IO_Impl.cpp \
+  Asynch_Pseudo_Task.cpp \
+  Atomic_Op.cpp \
+  Auto_Event.cpp \
+  Barrier.cpp \
+  Base_Thread_Adapter.cpp \
+  Based_Pointer_Repository.cpp \
+  Basic_Stats.cpp \
+  Basic_Types.cpp \
+  CDR_Base.cpp \
+  CDR_Stream.cpp \
+  Capabilities.cpp \
+  Cleanup.cpp \
+  Codecs.cpp \
+  Codeset_IBM1047.cpp \
+  Codeset_Registry.cpp \
+  Codeset_Registry_db.cpp \
+  Condition_Recursive_Thread_Mutex.cpp \
+  Condition_Thread_Mutex.cpp \
+  Configuration.cpp \
+  Configuration_Import_Export.cpp \
+  Connection_Recycling_Strategy.cpp \
+  Container_Instantiations.cpp \
+  Containers.cpp \
+  Copy_Disabled.cpp \
+  DEV.cpp \
+  DEV_Addr.cpp \
+  DEV_Connector.cpp \
+  DEV_IO.cpp \
+  DLL.cpp \
+  DLL_Manager.cpp \
+  Date_Time.cpp \
+  Dev_Poll_Reactor.cpp \
+  Dirent.cpp \
+  Dirent_Selector.cpp \
+  Dump.cpp \
+  Dynamic.cpp \
+  Dynamic_Service_Base.cpp \
+  Event.cpp \
+  Event_Handler.cpp \
+  FIFO.cpp \
+  FIFO_Recv.cpp \
+  FIFO_Recv_Msg.cpp \
+  FIFO_Send.cpp \
+  FIFO_Send_Msg.cpp \
+  FILE.cpp \
+  FILE_Addr.cpp \
+  FILE_Connector.cpp \
+  FILE_IO.cpp \
+  File_Lock.cpp \
+  Filecache.cpp \
+  Flag_Manip.cpp \
+  Framework_Component.cpp \
+  Functor.cpp \
+  Functor_String.cpp \
+  Get_Opt.cpp \
+  Handle_Ops.cpp \
+  Handle_Set.cpp \
+  Hash_Map_Manager.cpp \
+  Hashable.cpp \
+  High_Res_Timer.cpp \
+  ICMP_Socket.cpp \
+  INET_Addr.cpp \
+  IOStream.cpp \
+  IO_SAP.cpp \
+  IPC_SAP.cpp \
+  Init_ACE.cpp \
+  LSOCK.cpp \
+  LSOCK_Acceptor.cpp \
+  LSOCK_CODgram.cpp \
+  LSOCK_Connector.cpp \
+  LSOCK_Dgram.cpp \
+  LSOCK_Stream.cpp \
+  Lib_Find.cpp \
+  Local_Memory_Pool.cpp \
   Local_Name_Space.cpp \
+  Local_Tokens.cpp \
+  Lock.cpp \
+  Log_Msg.cpp \
+  Log_Msg_Backend.cpp \
+  Log_Msg_Callback.cpp \
+  Log_Msg_IPC.cpp \
+  Log_Msg_NT_Event_Log.cpp \
+  Log_Msg_UNIX_Syslog.cpp \
+  Log_Record.cpp \
+  Logging_Strategy.cpp \
+  MEM_Acceptor.cpp \
+  MEM_Addr.cpp \
+  MEM_Connector.cpp \
+  MEM_IO.cpp \
+  MEM_SAP.cpp \
+  MEM_Stream.cpp \
+  MMAP_Memory_Pool.cpp \
+  Malloc.cpp \
+  Malloc_Allocator.cpp \
+  Malloc_Instantiations.cpp \
+  Manual_Event.cpp \
+  Mem_Map.cpp \
+  Message_Block.cpp \
+  Message_Queue.cpp \
+  Method_Request.cpp \
+  Metrics_Cache.cpp \
+  Msg_WFMO_Reactor.cpp \
+  Multihomed_INET_Addr.cpp \
+  Mutex.cpp \
   NT_Service.cpp \
   Name_Proxy.cpp \
   Name_Request_Reply.cpp \
   Name_Space.cpp \
   Naming_Context.cpp \
-  Registry_Name_Space.cpp \
-  Remote_Name_Space.cpp
-
-Codecs = \
-  Codecs.cpp
-
-Token = \
-  Local_Tokens.cpp \
-  Remote_Tokens.cpp \
-  Token_Collection.cpp \
-  Token_Invariants.cpp \
-  Token_Manager.cpp \
-  Token_Request_Reply.cpp
-
-Svcconf = \
-  DLL.cpp \
-  DLL_Manager.cpp \
-  Dynamic_Service_Base.cpp \
-  Parse_Node.cpp \
-  Service_Config.cpp \
-  Service_Manager.cpp \
-  Service_Object.cpp \
-  Service_Repository.cpp \
-  Service_Templates.cpp \
-  Service_Types.cpp \
-  Shared_Object.cpp \
-  Svc_Conf_Lexer_Guard.cpp \
-  Svc_Conf_l.cpp \
-  Svc_Conf_y.cpp \
-  XML_Svc_Conf.cpp
-
-UUID = \
-  UUID.cpp
-
-Filecache = \
-  Filecache.cpp
-
-ACE_OS = \
-  ARGV.cpp \
-  Argv_Type_Converter.cpp \
-  Base_Thread_Adapter.cpp \
-  Basic_Types.cpp \
-  Cleanup.cpp \
-  Copy_Disabled.cpp \
-  Date_Time.cpp \
-  Handle_Set.cpp \
+  Notification_Strategy.cpp \
   OS_Errno.cpp \
   OS_Log_Msg_Attributes.cpp \
   OS_NS_Thread.cpp \
@@ -113,133 +202,38 @@ ACE_OS = \
   OS_TLI.cpp \
   OS_Thread_Adapter.cpp \
   OS_main.cpp \
-  Object_Manager_Base.cpp \
-  Sched_Params.cpp \
-  Thread_Hook.cpp \
-  Time_Value.cpp \
-  gethrtime.cpp
-
-Utils = \
-  ACE.cpp \
-  ACE_crc32.cpp \
-  ACE_crc_ccitt.cpp \
-  Active_Map_Manager.cpp \
-  Arg_Shifter.cpp \
-  Capabilities.cpp \
-  Configuration.cpp \
-  Configuration_Import_Export.cpp \
-  Connection_Recycling_Strategy.cpp \
-  Container_Instantiations.cpp \
-  Containers.cpp \
-  Dirent.cpp \
-  Dirent_Selector.cpp \
-  Dynamic.cpp \
-  Flag_Manip.cpp \
-  Framework_Component.cpp \
-  Functor.cpp \
-  Functor_String.cpp \
-  Get_Opt.cpp \
-  Handle_Ops.cpp \
-  Hash_Map_Manager.cpp \
-  Hashable.cpp \
-  Init_ACE.cpp \
-  Lib_Find.cpp \
-  Message_Block.cpp \
-  Method_Request.cpp \
-  Notification_Strategy.cpp \
+  Obchunk.cpp \
   Object_Manager.cpp \
-  Recyclable.cpp \
-  Refcountable.cpp \
-  Registry.cpp \
-  SString.cpp \
-  Sample_History.cpp \
-  Stats.cpp \
-  String_Base_Const.cpp
-
-Logging = \
-  Dump.cpp \
-  Log_Msg.cpp \
-  Log_Msg_Backend.cpp \
-  Log_Msg_Callback.cpp \
-  Log_Msg_IPC.cpp \
-  Log_Msg_NT_Event_Log.cpp \
-  Log_Msg_UNIX_Syslog.cpp \
-  Log_Record.cpp \
-  Logging_Strategy.cpp \
-  Trace.cpp
-
-Threads = \
-  Activation_Queue.cpp \
-  Atomic_Op.cpp \
-  Auto_Event.cpp \
-  Barrier.cpp \
-  Condition_Recursive_Thread_Mutex.cpp \
-  Condition_Thread_Mutex.cpp \
-  Event.cpp \
-  File_Lock.cpp \
-  Lock.cpp \
-  Manual_Event.cpp \
-  Mutex.cpp \
+  Object_Manager_Base.cpp \
+  Obstack.cpp \
+  PI_Malloc.cpp \
+  POSIX_Asynch_IO.cpp \
+  POSIX_CB_Proactor.cpp \
+  POSIX_Proactor.cpp \
+  Pagefile_Memory_Pool.cpp \
+  Parse_Node.cpp \
+  Ping_Socket.cpp \
+  Pipe.cpp \
+  Priority_Reactor.cpp \
+  Proactor.cpp \
   Process.cpp \
   Process_Manager.cpp \
   Process_Mutex.cpp \
   Process_Semaphore.cpp \
+  Profile_Timer.cpp \
   RW_Mutex.cpp \
   RW_Process_Mutex.cpp \
   RW_Thread_Mutex.cpp \
-  Recursive_Thread_Mutex.cpp \
-  Semaphore.cpp \
-  Synch_Options.cpp \
-  TSS_Adapter.cpp \
-  Thread.cpp \
-  Thread_Adapter.cpp \
-  Thread_Control.cpp \
-  Thread_Exit.cpp \
-  Thread_Manager.cpp \
-  Thread_Mutex.cpp \
-  Thread_Semaphore.cpp \
-  Token.cpp
-
-Demux = \
-  Dev_Poll_Reactor.cpp \
-  Event_Handler.cpp \
-  FlReactor.cpp \
-  Msg_WFMO_Reactor.cpp \
-  POSIX_CB_Proactor.cpp \
-  POSIX_Proactor.cpp \
-  Priority_Reactor.cpp \
-  Proactor.cpp \
-  QtReactor.cpp \
   Reactor.cpp \
-  SUN_Proactor.cpp \
-  Select_Reactor.cpp \
-  Select_Reactor_Base.cpp \
-  TP_Reactor.cpp \
-  TkReactor.cpp \
-  WFMO_Reactor.cpp \
-  WIN32_Proactor.cpp \
-  XtReactor.cpp
-
-Connection = \
-  Asynch_IO.cpp \
-  Asynch_IO_Impl.cpp \
-  Asynch_Pseudo_Task.cpp \
-  POSIX_Asynch_IO.cpp \
-  WIN32_Asynch_IO.cpp
-
-Sockets = \
-  Addr.cpp \
-  ICMP_Socket.cpp \
-  INET_Addr.cpp \
-  IPC_SAP.cpp \
-  LSOCK.cpp \
-  LSOCK_Acceptor.cpp \
-  LSOCK_CODgram.cpp \
-  LSOCK_Connector.cpp \
-  LSOCK_Dgram.cpp \
-  LSOCK_Stream.cpp \
-  Multihomed_INET_Addr.cpp \
-  Ping_Socket.cpp \
+  Reactor_Notification_Strategy.cpp \
+  Read_Buffer.cpp \
+  Recursive_Thread_Mutex.cpp \
+  Recyclable.cpp \
+  Refcountable.cpp \
+  Registry.cpp \
+  Registry_Name_Space.cpp \
+  Remote_Name_Space.cpp \
+  Remote_Tokens.cpp \
   SOCK.cpp \
   SOCK_Acceptor.cpp \
   SOCK_CODgram.cpp \
@@ -252,275 +246,356 @@ Sockets = \
   SOCK_SEQPACK_Association.cpp \
   SOCK_SEQPACK_Connector.cpp \
   SOCK_Stream.cpp \
-  Sock_Connect.cpp
-
-IPC = \
-  ATM_Acceptor.cpp \
-  ATM_Addr.cpp \
-  ATM_Connector.cpp \
-  ATM_Params.cpp \
-  ATM_QoS.cpp \
-  ATM_Stream.cpp \
-  DEV.cpp \
-  DEV_Addr.cpp \
-  DEV_Connector.cpp \
-  DEV_IO.cpp \
-  FIFO.cpp \
-  FIFO_Recv.cpp \
-  FIFO_Recv_Msg.cpp \
-  FIFO_Send.cpp \
-  FIFO_Send_Msg.cpp \
-  FILE.cpp \
-  FILE_Addr.cpp \
-  FILE_Connector.cpp \
-  FILE_IO.cpp \
-  IOStream.cpp \
-  IO_SAP.cpp \
-  MEM_Acceptor.cpp \
-  MEM_Addr.cpp \
-  MEM_Connector.cpp \
-  MEM_IO.cpp \
-  MEM_SAP.cpp \
-  MEM_Stream.cpp \
-  Pipe.cpp \
   SPIPE.cpp \
   SPIPE_Acceptor.cpp \
   SPIPE_Addr.cpp \
   SPIPE_Connector.cpp \
   SPIPE_Stream.cpp \
+  SString.cpp \
+  SUN_Proactor.cpp \
   SV_Message.cpp \
   SV_Message_Queue.cpp \
   SV_Semaphore_Complex.cpp \
   SV_Semaphore_Simple.cpp \
   SV_Shared_Memory.cpp \
+  Sample_History.cpp \
+  Sbrk_Memory_Pool.cpp \
+  Sched_Params.cpp \
+  Select_Reactor.cpp \
+  Select_Reactor_Base.cpp \
+  Semaphore.cpp \
+  Service_Config.cpp \
+  Service_Manager.cpp \
+  Service_Object.cpp \
+  Service_Repository.cpp \
+  Service_Templates.cpp \
+  Service_Types.cpp \
+  Shared_Memory.cpp \
+  Shared_Memory_MM.cpp \
+  Shared_Memory_Pool.cpp \
+  Shared_Memory_SV.cpp \
+  Shared_Object.cpp \
   Signal.cpp \
+  Sock_Connect.cpp \
+  Stats.cpp \
+  String_Base_Const.cpp \
+  Svc_Conf_Lexer_Guard.cpp \
+  Svc_Conf_l.cpp \
+  Svc_Conf_y.cpp \
+  Synch_Options.cpp \
+  System_Time.cpp \
   TLI.cpp \
   TLI_Acceptor.cpp \
   TLI_Connector.cpp \
   TLI_Stream.cpp \
+  TP_Reactor.cpp \
+  TSS_Adapter.cpp \
   TTY_IO.cpp \
-  UNIX_Addr.cpp \
-  UPIPE_Acceptor.cpp \
-  UPIPE_Connector.cpp \
-  UPIPE_Stream.cpp \
-  XTI_ATM_Mcast.cpp
-
-Streams = \
-  CDR_Base.cpp \
-  CDR_Stream.cpp \
-  Codeset_IBM1047.cpp \
-  Codeset_Registry.cpp \
-  Codeset_Registry_db.cpp \
-  Message_Queue.cpp \
-  Reactor_Notification_Strategy.cpp \
-  Task.cpp
-
-Memory = \
-  Based_Pointer_Repository.cpp \
-  Local_Memory_Pool.cpp \
-  MMAP_Memory_Pool.cpp \
-  Malloc.cpp \
-  Malloc_Allocator.cpp \
-  Malloc_Instantiations.cpp \
-  Mem_Map.cpp \
-  Obchunk.cpp \
-  Obstack.cpp \
-  PI_Malloc.cpp \
-  Pagefile_Memory_Pool.cpp \
-  Read_Buffer.cpp \
-  Sbrk_Memory_Pool.cpp \
-  Shared_Memory.cpp \
-  Shared_Memory_MM.cpp \
-  Shared_Memory_Pool.cpp \
-  Shared_Memory_SV.cpp
-
-Timer = \
-  Basic_Stats.cpp \
-  High_Res_Timer.cpp \
-  Profile_Timer.cpp \
-  System_Time.cpp \
+  Task.cpp \
+  Thread.cpp \
+  Thread_Adapter.cpp \
+  Thread_Control.cpp \
+  Thread_Exit.cpp \
+  Thread_Hook.cpp \
+  Thread_Manager.cpp \
+  Thread_Mutex.cpp \
+  Thread_Semaphore.cpp \
   Time_Request_Reply.cpp \
+  Time_Value.cpp \
   Timeprobe.cpp \
   Timer_Hash.cpp \
   Timer_Heap.cpp \
   Timer_List.cpp \
   Timer_Queue.cpp \
-  Timer_Wheel.cpp
-
-Metrics = \
-  Metrics_Cache.cpp
-
-lib_LTLIBRARIES = libACE.la
-
-libACE_la_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -DACE_HAS_ACE_TOKEN \
-  -DACE_HAS_ACE_SVCCONF \
-  -DACE_BUILD_DLL
-
-libACE_la_SOURCES = \
-  $(Other) \
-  $(Codecs) \
-  $(Token) \
-  $(Svcconf) \
-  $(UUID) \
-  $(Filecache) \
-  $(ACE_OS) \
-  $(Utils) \
-  $(Logging) \
-  $(Threads) \
-  $(Demux) \
-  $(Connection) \
-  $(Sockets) \
-  $(IPC) \
-  $(Streams) \
-  $(Memory) \
-  $(Timer) \
-  $(Metrics)
+  Timer_Wheel.cpp \
+  Token.cpp \
+  Token_Collection.cpp \
+  Token_Invariants.cpp \
+  Token_Manager.cpp \
+  Token_Request_Reply.cpp \
+  Trace.cpp \
+  UNIX_Addr.cpp \
+  UPIPE_Acceptor.cpp \
+  UPIPE_Connector.cpp \
+  UPIPE_Stream.cpp \
+  UUID.cpp \
+  WFMO_Reactor.cpp \
+  WIN32_Asynch_IO.cpp \
+  WIN32_Proactor.cpp \
+  XML_Svc_Conf.cpp \
+  XTI_ATM_Mcast.cpp \
+  gethrtime.cpp
 
 libACE_la_LDFLAGS = \
- -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@ 
 
 nobase_include_HEADERS = \
   ACE.h \
+  ACE.inl \
   ACE_export.h \
   ARGV.h \
+  ARGV.inl \
   ATM_Acceptor.h \
+  ATM_Acceptor.inl \
   ATM_Addr.h \
+  ATM_Addr.inl \
   ATM_Connector.h \
+  ATM_Connector.inl \
   ATM_Params.h \
+  ATM_Params.inl \
   ATM_QoS.h \
+  ATM_QoS.inl \
   ATM_Stream.h \
+  ATM_Stream.inl \
+  Acceptor.cpp \
   Acceptor.h \
   Activation_Queue.h \
+  Activation_Queue.inl \
   Active_Map_Manager.h \
+  Active_Map_Manager.inl \
+  Active_Map_Manager_T.cpp \
   Active_Map_Manager_T.h \
+  Active_Map_Manager_T.inl \
   Addr.h \
+  Addr.inl \
   Arg_Shifter.h \
   Argv_Type_Converter.h \
+  Argv_Type_Converter.inl \
   Array.h \
+  Array_Base.cpp \
   Array_Base.h \
+  Array_Base.inl \
+  Asynch_Acceptor.cpp \
   Asynch_Acceptor.h \
+  Asynch_Connector.cpp \
   Asynch_Connector.h \
   Asynch_IO.h \
   Asynch_IO_Impl.h \
+  Asynch_IO_Impl.inl \
   Asynch_Pseudo_Task.h \
   Atomic_Op.h \
+  Atomic_Op.inl \
+  Atomic_Op_T.cpp \
   Atomic_Op_T.h \
+  Atomic_Op_T.inl \
   Auto_Event.h \
+  Auto_Event.inl \
+  Auto_Functor.cpp \
   Auto_Functor.h \
+  Auto_Functor.inl \
+  Auto_IncDec_T.cpp \
   Auto_IncDec_T.h \
+  Auto_IncDec_T.inl \
+  Auto_Ptr.cpp \
   Auto_Ptr.h \
+  Auto_Ptr.inl \
   Barrier.h \
+  Barrier.inl \
   Base_Thread_Adapter.h \
+  Base_Thread_Adapter.inl \
   Based_Pointer_Repository.h \
+  Based_Pointer_T.cpp \
   Based_Pointer_T.h \
+  Based_Pointer_T.inl \
   Basic_Stats.h \
+  Basic_Stats.inl \
   Basic_Types.h \
+  Basic_Types.inl \
   Bound_Ptr.h \
+  Bound_Ptr.inl \
   CDR_Base.h \
+  CDR_Base.inl \
   CDR_Stream.h \
+  CDR_Stream.inl \
   CORBA_macros.h \
+  Cache_Map_Manager_T.cpp \
   Cache_Map_Manager_T.h \
+  Cache_Map_Manager_T.inl \
+  Cached_Connect_Strategy_T.cpp \
   Cached_Connect_Strategy_T.h \
+  Caching_Strategies_T.cpp \
   Caching_Strategies_T.h \
+  Caching_Strategies_T.inl \
+  Caching_Utility_T.cpp \
   Caching_Utility_T.h \
   Capabilities.h \
+  Capabilities.inl \
   Cleanup.h \
+  Cleanup.inl \
+  Cleanup_Strategies_T.cpp \
   Cleanup_Strategies_T.h \
   Codecs.h \
   Codeset_IBM1047.h \
   Codeset_Registry.h \
+  Codeset_Registry.inl \
   Condition_Recursive_Thread_Mutex.h \
+  Condition_T.cpp \
   Condition_T.h \
+  Condition_T.inl \
   Condition_Thread_Mutex.h \
+  Condition_Thread_Mutex.inl \
   Configuration.h \
   Configuration_Import_Export.h \
   Connection_Recycling_Strategy.h \
+  Connector.cpp \
   Connector.h \
   Containers.h \
+  Containers.inl \
+  Containers_T.cpp \
   Containers_T.h \
+  Containers_T.inl \
   Copy_Disabled.h \
   DEV.h \
+  DEV.inl \
   DEV_Addr.h \
+  DEV_Addr.inl \
   DEV_Connector.h \
+  DEV_Connector.inl \
   DEV_IO.h \
+  DEV_IO.inl \
   DLL.h \
   DLL_Manager.h \
   Date_Time.h \
+  Date_Time.inl \
   Default_Constants.h \
   Dev_Poll_Reactor.h \
+  Dev_Poll_Reactor.inl \
   Dirent.h \
+  Dirent.inl \
   Dirent_Selector.h \
+  Dirent_Selector.inl \
   Dump.h \
+  Dump_T.cpp \
   Dump_T.h \
   Dynamic.h \
+  Dynamic.inl \
+  Dynamic_Service.cpp \
   Dynamic_Service.h \
+  Dynamic_Service.inl \
   Dynamic_Service_Base.h \
+  Env_Value_T.cpp \
   Env_Value_T.h \
+  Env_Value_T.inl \
   Event.h \
+  Event.inl \
   Event_Handler.h \
+  Event_Handler.inl \
+  Event_Handler_T.cpp \
   Event_Handler_T.h \
+  Event_Handler_T.inl \
   Exception_Macros.h \
   FIFO.h \
+  FIFO.inl \
   FIFO_Recv.h \
+  FIFO_Recv.inl \
   FIFO_Recv_Msg.h \
+  FIFO_Recv_Msg.inl \
   FIFO_Send.h \
+  FIFO_Send.inl \
   FIFO_Send_Msg.h \
+  FIFO_Send_Msg.inl \
   FILE.h \
+  FILE.inl \
   FILE_Addr.h \
+  FILE_Addr.inl \
   FILE_Connector.h \
+  FILE_Connector.inl \
   FILE_IO.h \
+  FILE_IO.inl \
   File_Lock.h \
+  File_Lock.inl \
   Filecache.h \
-  FlReactor.h \
   Flag_Manip.h \
+  Flag_Manip.inl \
   Framework_Component.h \
+  Framework_Component.inl \
+  Framework_Component_T.cpp \
   Framework_Component_T.h \
+  Free_List.cpp \
   Free_List.h \
+  Free_List.inl \
   Functor.h \
+  Functor.inl \
   Functor_String.h \
+  Functor_String.inl \
+  Functor_T.cpp \
   Functor_T.h \
+  Functor_T.inl \
+  Future.cpp \
   Future.h \
+  Future_Set.cpp \
   Future_Set.h \
   Get_Opt.h \
+  Get_Opt.inl \
   Global_Macros.h \
+  Guard_T.cpp \
   Guard_T.h \
+  Guard_T.inl \
   Handle_Gobbler.h \
+  Handle_Gobbler.inl \
   Handle_Ops.h \
   Handle_Set.h \
+  Handle_Set.inl \
+  Hash_Cache_Map_Manager_T.cpp \
   Hash_Cache_Map_Manager_T.h \
+  Hash_Cache_Map_Manager_T.inl \
   Hash_Map_Manager.h \
+  Hash_Map_Manager_T.cpp \
   Hash_Map_Manager_T.h \
+  Hash_Map_Manager_T.inl \
+  Hash_Map_With_Allocator_T.cpp \
   Hash_Map_With_Allocator_T.h \
+  Hash_Map_With_Allocator_T.inl \
   Hashable.h \
+  Hashable.inl \
   High_Res_Timer.h \
+  High_Res_Timer.inl \
   ICMP_Socket.h \
+  ICMP_Socket.inl \
   INET_Addr.h \
+  INET_Addr.inl \
   IOStream.h \
+  IOStream_T.cpp \
   IOStream_T.h \
+  IOStream_T.inl \
   IO_Cntl_Msg.h \
   IO_SAP.h \
+  IO_SAP.inl \
   IPC_SAP.h \
+  IPC_SAP.inl \
   If_Then_Else.h \
   Init_ACE.h \
+  Intrusive_List.cpp \
   Intrusive_List.h \
+  Intrusive_List.inl \
+  Intrusive_List_Node.cpp \
   Intrusive_List_Node.h \
+  Intrusive_List_Node.inl \
+  LOCK_SOCK_Acceptor.cpp \
   LOCK_SOCK_Acceptor.h \
   LSOCK.h \
+  LSOCK.inl \
   LSOCK_Acceptor.h \
   LSOCK_CODgram.h \
+  LSOCK_CODgram.inl \
   LSOCK_Connector.h \
+  LSOCK_Connector.inl \
   LSOCK_Dgram.h \
+  LSOCK_Dgram.inl \
   LSOCK_Stream.h \
+  LSOCK_Stream.inl \
   Lib_Find.h \
   Local_Memory_Pool.h \
   Local_Name_Space.h \
+  Local_Name_Space_T.cpp \
   Local_Name_Space_T.h \
   Local_Tokens.h \
+  Local_Tokens.inl \
   Lock.h \
+  Lock.inl \
+  Lock_Adapter_T.cpp \
   Lock_Adapter_T.h \
+  Lock_Adapter_T.inl \
   Log_Msg.h \
   Log_Msg_Backend.h \
   Log_Msg_Callback.h \
@@ -529,258 +604,466 @@ nobase_include_HEADERS = \
   Log_Msg_UNIX_Syslog.h \
   Log_Priority.h \
   Log_Record.h \
+  Log_Record.inl \
   Logging_Strategy.h \
   MEM_Acceptor.h \
+  MEM_Acceptor.inl \
   MEM_Addr.h \
+  MEM_Addr.inl \
   MEM_Connector.h \
+  MEM_Connector.inl \
   MEM_IO.h \
+  MEM_IO.inl \
   MEM_SAP.h \
+  MEM_SAP.inl \
   MEM_Stream.h \
+  MEM_Stream.inl \
   MMAP_Memory_Pool.h \
   Malloc.h \
+  Malloc.inl \
   Malloc_Allocator.h \
+  Malloc_Allocator.inl \
   Malloc_Base.h \
+  Malloc_T.cpp \
   Malloc_T.h \
+  Malloc_T.inl \
+  Managed_Object.cpp \
   Managed_Object.h \
+  Managed_Object.inl \
   Manual_Event.h \
+  Manual_Event.inl \
+  Map_Manager.cpp \
   Map_Manager.h \
+  Map_Manager.inl \
+  Map_T.cpp \
   Map_T.h \
+  Map_T.inl \
   Mem_Map.h \
+  Mem_Map.inl \
   Memory_Pool.h \
   Message_Block.h \
+  Message_Block.inl \
+  Message_Block_T.cpp \
   Message_Block_T.h \
+  Message_Block_T.inl \
   Message_Queue.h \
+  Message_Queue.inl \
+  Message_Queue_T.cpp \
   Message_Queue_T.h \
+  Message_Queue_T.inl \
   Method_Object.h \
   Method_Request.h \
   Metrics_Cache.h \
+  Metrics_Cache_T.cpp \
   Min_Max.h \
+  Module.cpp \
   Module.h \
+  Module.inl \
   Msg_WFMO_Reactor.h \
+  Msg_WFMO_Reactor.inl \
   Multihomed_INET_Addr.h \
+  Multihomed_INET_Addr.inl \
   Mutex.h \
+  Mutex.inl \
   NT_Service.h \
+  NT_Service.inl \
   Name_Proxy.h \
   Name_Request_Reply.h \
   Name_Space.h \
   Naming_Context.h \
+  Node.cpp \
   Node.h \
   Notification_Strategy.h \
+  Notification_Strategy.inl \
   Null_Barrier.h \
   Null_Condition.h \
   Null_Mutex.h \
   Null_Semaphore.h \
   OS.h \
+  OS.inl \
   OS_Dirent.h \
   OS_Errno.h \
+  OS_Errno.inl \
   OS_Log_Msg_Attributes.h \
+  OS_Log_Msg_Attributes.inl \
   OS_Memory.h \
+  OS_Memory.inl \
   OS_NS_Thread.h \
+  OS_NS_Thread.inl \
   OS_NS_arpa_inet.h \
+  OS_NS_arpa_inet.inl \
   OS_NS_ctype.h \
+  OS_NS_ctype.inl \
   OS_NS_dirent.h \
+  OS_NS_dirent.inl \
   OS_NS_dlfcn.h \
+  OS_NS_dlfcn.inl \
   OS_NS_errno.h \
+  OS_NS_errno.inl \
   OS_NS_fcntl.h \
+  OS_NS_fcntl.inl \
   OS_NS_macros.h \
   OS_NS_math.h \
+  OS_NS_math.inl \
   OS_NS_netdb.h \
+  OS_NS_netdb.inl \
   OS_NS_poll.h \
+  OS_NS_poll.inl \
   OS_NS_pwd.h \
+  OS_NS_pwd.inl \
   OS_NS_regex.h \
+  OS_NS_regex.inl \
   OS_NS_signal.h \
+  OS_NS_signal.inl \
   OS_NS_stdio.h \
+  OS_NS_stdio.inl \
   OS_NS_stdlib.h \
+  OS_NS_stdlib.inl \
   OS_NS_string.h \
+  OS_NS_string.inl \
   OS_NS_strings.h \
+  OS_NS_strings.inl \
   OS_NS_stropts.h \
+  OS_NS_stropts.inl \
   OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_sys_msg.h \
+  OS_NS_sys_msg.inl \
   OS_NS_sys_resource.h \
+  OS_NS_sys_resource.inl \
   OS_NS_sys_select.h \
+  OS_NS_sys_select.inl \
   OS_NS_sys_shm.h \
+  OS_NS_sys_shm.inl \
   OS_NS_sys_socket.h \
+  OS_NS_sys_socket.inl \
   OS_NS_sys_stat.h \
+  OS_NS_sys_stat.inl \
   OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
   OS_NS_sys_uio.h \
+  OS_NS_sys_uio.inl \
   OS_NS_sys_utsname.h \
+  OS_NS_sys_utsname.inl \
   OS_NS_sys_wait.h \
+  OS_NS_sys_wait.inl \
   OS_NS_time.h \
+  OS_NS_time.inl \
   OS_NS_unistd.h \
+  OS_NS_unistd.inl \
   OS_NS_wchar.h \
+  OS_NS_wchar.inl \
   OS_QoS.h \
   OS_String.h \
+  OS_String.inl \
   OS_TLI.h \
+  OS_TLI.inl \
   OS_Thread_Adapter.h \
   OS_main.h \
   Obchunk.h \
+  Obchunk.inl \
   Object_Manager.h \
+  Object_Manager.inl \
   Object_Manager_Base.h \
   Obstack.h \
+  Obstack_T.cpp \
   Obstack_T.h \
+  Obstack_T.inl \
   PI_Malloc.h \
+  PI_Malloc.inl \
   POSIX_Asynch_IO.h \
   POSIX_CB_Proactor.h \
+  POSIX_CB_Proactor.inl \
   POSIX_Proactor.h \
+  POSIX_Proactor.inl \
   Pagefile_Memory_Pool.h \
+  Pagefile_Memory_Pool.inl \
   Pair.h \
+  Pair_T.cpp \
   Pair_T.h \
+  Pair_T.inl \
   Parse_Node.h \
+  Parse_Node.inl \
   Ping_Socket.h \
+  Ping_Socket.inl \
   Pipe.h \
+  Pipe.inl \
   Priority_Reactor.h \
   Proactor.h \
+  Proactor.inl \
   Proactor_Impl.h \
   Process.h \
+  Process.inl \
   Process_Manager.h \
+  Process_Manager.inl \
   Process_Mutex.h \
+  Process_Mutex.inl \
   Process_Semaphore.h \
+  Process_Semaphore.inl \
   Profile_Timer.h \
-  QtReactor.h \
+  Profile_Timer.inl \
+  RB_Tree.cpp \
   RB_Tree.h \
+  RB_Tree.inl \
   RW_Mutex.h \
+  RW_Mutex.inl \
   RW_Process_Mutex.h \
+  RW_Process_Mutex.inl \
   RW_Thread_Mutex.h \
+  RW_Thread_Mutex.inl \
   Reactor.h \
+  Reactor.inl \
   Reactor_Impl.h \
   Reactor_Notification_Strategy.h \
+  Reactor_Notification_Strategy.inl \
   Reactor_Timer_Interface.h \
   Read_Buffer.h \
+  Read_Buffer.inl \
   Recursive_Thread_Mutex.h \
+  Recursive_Thread_Mutex.inl \
   Recyclable.h \
+  Recyclable.inl \
   Refcountable.h \
+  Refcountable.inl \
   Refcounted_Auto_Ptr.h \
+  Refcounted_Auto_Ptr.inl \
   Registry.h \
   Registry_Name_Space.h \
   Remote_Name_Space.h \
   Remote_Tokens.h \
+  Remote_Tokens.inl \
+  Reverse_Lock_T.cpp \
   Reverse_Lock_T.h \
+  Reverse_Lock_T.inl \
   SOCK.h \
+  SOCK.inl \
   SOCK_Acceptor.h \
+  SOCK_Acceptor.inl \
   SOCK_CODgram.h \
+  SOCK_CODgram.inl \
   SOCK_Connector.h \
+  SOCK_Connector.inl \
   SOCK_Dgram.h \
+  SOCK_Dgram.inl \
   SOCK_Dgram_Bcast.h \
+  SOCK_Dgram_Bcast.inl \
   SOCK_Dgram_Mcast.h \
+  SOCK_Dgram_Mcast.inl \
   SOCK_IO.h \
+  SOCK_IO.inl \
   SOCK_SEQPACK_Acceptor.h \
+  SOCK_SEQPACK_Acceptor.inl \
   SOCK_SEQPACK_Association.h \
+  SOCK_SEQPACK_Association.inl \
   SOCK_SEQPACK_Connector.h \
+  SOCK_SEQPACK_Connector.inl \
   SOCK_Stream.h \
+  SOCK_Stream.inl \
   SPIPE.h \
+  SPIPE.inl \
   SPIPE_Acceptor.h \
   SPIPE_Addr.h \
+  SPIPE_Addr.inl \
   SPIPE_Connector.h \
+  SPIPE_Connector.inl \
   SPIPE_Stream.h \
+  SPIPE_Stream.inl \
   SString.h \
+  SString.inl \
   SStringfwd.h \
   SUN_Proactor.h \
+  SUN_Proactor.inl \
   SV_Message.h \
+  SV_Message.inl \
   SV_Message_Queue.h \
+  SV_Message_Queue.inl \
   SV_Semaphore_Complex.h \
+  SV_Semaphore_Complex.inl \
   SV_Semaphore_Simple.h \
+  SV_Semaphore_Simple.inl \
   SV_Shared_Memory.h \
+  SV_Shared_Memory.inl \
   Sample_History.h \
+  Sample_History.inl \
   Sbrk_Memory_Pool.h \
   Sched_Params.h \
+  Sched_Params.inl \
   Select_Reactor.h \
   Select_Reactor_Base.h \
+  Select_Reactor_Base.inl \
+  Select_Reactor_T.cpp \
   Select_Reactor_T.h \
+  Select_Reactor_T.inl \
   Semaphore.h \
+  Semaphore.inl \
   Service_Config.h \
+  Service_Config.inl \
   Service_Manager.h \
+  Service_Manager.inl \
   Service_Object.h \
+  Service_Object.inl \
   Service_Repository.h \
+  Service_Repository.inl \
   Service_Templates.h \
   Service_Types.h \
+  Service_Types.inl \
   Shared_Memory.h \
   Shared_Memory_MM.h \
+  Shared_Memory_MM.inl \
   Shared_Memory_Pool.h \
   Shared_Memory_SV.h \
+  Shared_Memory_SV.inl \
   Shared_Object.h \
+  Shared_Object.inl \
   Signal.h \
+  Signal.inl \
+  Singleton.cpp \
   Singleton.h \
+  Singleton.inl \
   Sock_Connect.h \
   Static_Object_Lock.h \
   Stats.h \
+  Stats.inl \
   Strategies.h \
+  Strategies_T.cpp \
   Strategies_T.h \
+  Strategies_T.inl \
+  Stream.cpp \
   Stream.h \
+  Stream.inl \
+  Stream_Modules.cpp \
   Stream_Modules.h \
+  String_Base.cpp \
   String_Base.h \
+  String_Base.inl \
   String_Base_Const.h \
   Svc_Conf.h \
   Svc_Conf_Lexer_Guard.h \
   Svc_Conf_Tokens.h \
+  Svc_Handler.cpp \
   Svc_Handler.h \
   Swap.h \
+  Swap.inl \
   Synch.h \
   Synch_Options.h \
+  Synch_Options.inl \
+  Synch_T.cpp \
   Synch_T.h \
   Synch_Traits.h \
   System_Time.h \
   TLI.h \
+  TLI.inl \
   TLI_Acceptor.h \
   TLI_Connector.h \
+  TLI_Connector.inl \
   TLI_Stream.h \
+  TLI_Stream.inl \
   TP_Reactor.h \
+  TP_Reactor.inl \
   TSS_Adapter.h \
+  TSS_Adapter.inl \
+  TSS_T.cpp \
   TSS_T.h \
+  TSS_T.inl \
   TTY_IO.h \
   Task.h \
+  Task.inl \
+  Task_Ex_T.cpp \
   Task_Ex_T.h \
+  Task_Ex_T.inl \
+  Task_T.cpp \
   Task_T.h \
+  Task_T.inl \
+  Template_Instantiations.cpp \
+  Test_and_Set.cpp \
   Test_and_Set.h \
   Thread.h \
+  Thread.inl \
   Thread_Adapter.h \
+  Thread_Adapter.inl \
   Thread_Control.h \
+  Thread_Control.inl \
   Thread_Exit.h \
   Thread_Hook.h \
   Thread_Manager.h \
+  Thread_Manager.inl \
   Thread_Mutex.h \
+  Thread_Mutex.inl \
   Thread_Semaphore.h \
+  Thread_Semaphore.inl \
   Time_Request_Reply.h \
   Time_Value.h \
+  Time_Value.inl \
   Timeprobe.h \
+  Timeprobe.inl \
+  Timeprobe_T.cpp \
   Timeprobe_T.h \
   Timer_Hash.h \
+  Timer_Hash_T.cpp \
   Timer_Hash_T.h \
   Timer_Heap.h \
+  Timer_Heap_T.cpp \
   Timer_Heap_T.h \
   Timer_List.h \
+  Timer_List_T.cpp \
   Timer_List_T.h \
   Timer_Queue.h \
+  Timer_Queue_Adapters.cpp \
   Timer_Queue_Adapters.h \
+  Timer_Queue_Adapters.inl \
+  Timer_Queue_T.cpp \
   Timer_Queue_T.h \
+  Timer_Queue_T.inl \
   Timer_Queuefwd.h \
   Timer_Wheel.h \
+  Timer_Wheel_T.cpp \
   Timer_Wheel_T.h \
-  TkReactor.h \
   Token.h \
+  Token.inl \
   Token_Collection.h \
+  Token_Collection.inl \
   Token_Invariants.h \
   Token_Manager.h \
+  Token_Manager.inl \
   Token_Request_Reply.h \
+  Token_Request_Reply.inl \
   Trace.h \
+  Typed_SV_Message.cpp \
   Typed_SV_Message.h \
+  Typed_SV_Message.inl \
+  Typed_SV_Message_Queue.cpp \
   Typed_SV_Message_Queue.h \
+  Typed_SV_Message_Queue.inl \
   UNIX_Addr.h \
+  UNIX_Addr.inl \
   UPIPE_Acceptor.h \
+  UPIPE_Acceptor.inl \
   UPIPE_Addr.h \
   UPIPE_Connector.h \
+  UPIPE_Connector.inl \
   UPIPE_Stream.h \
+  UPIPE_Stream.inl \
   UUID.h \
+  UUID.inl \
+  Unbounded_Queue.cpp \
   Unbounded_Queue.h \
+  Unbounded_Queue.inl \
+  Unbounded_Set.cpp \
   Unbounded_Set.h \
+  Unbounded_Set.inl \
+  Vector_T.cpp \
   Vector_T.h \
+  Vector_T.inl \
   Version.h \
   WFMO_Reactor.h \
+  WFMO_Reactor.inl \
   WIN32_Asynch_IO.h \
   WIN32_Proactor.h \
   XML_Svc_Conf.h \
   XTI_ATM_Mcast.h \
-  XtReactor.h \
+  XTI_ATM_Mcast.inl \
   ace_wchar.h \
+  ace_wchar.inl \
   config-WinCE.h \
   config-all.h \
   config-borland-common.h \
@@ -885,355 +1168,175 @@ nobase_include_HEADERS = \
   post.h \
   pre.h \
   streams.h \
-  svc_export.h \
-  ACE.inl \
-  ARGV.inl \
-  ATM_Acceptor.inl \
-  ATM_Addr.inl \
-  ATM_Connector.inl \
-  ATM_Params.inl \
-  ATM_QoS.inl \
-  ATM_Stream.inl \
-  Activation_Queue.inl \
-  Active_Map_Manager.inl \
-  Active_Map_Manager_T.inl \
-  Addr.inl \
-  Argv_Type_Converter.inl \
-  Array_Base.inl \
-  Asynch_IO_Impl.inl \
-  Atomic_Op.inl \
-  Atomic_Op_T.inl \
-  Auto_Event.inl \
-  Auto_Functor.inl \
-  Auto_IncDec_T.inl \
-  Auto_Ptr.inl \
-  Barrier.inl \
-  Base_Thread_Adapter.inl \
-  Based_Pointer_T.inl \
-  Basic_Stats.inl \
-  Basic_Types.inl \
-  Bound_Ptr.inl \
-  CDR_Base.inl \
-  CDR_Stream.inl \
-  Cache_Map_Manager_T.inl \
-  Caching_Strategies_T.inl \
-  Capabilities.inl \
-  Cleanup.inl \
-  Codeset_Registry.inl \
-  Condition_T.inl \
-  Condition_Thread_Mutex.inl \
-  Containers.inl \
-  Containers_T.inl \
-  DEV.inl \
-  DEV_Addr.inl \
-  DEV_Connector.inl \
-  DEV_IO.inl \
-  Date_Time.inl \
-  Dev_Poll_Reactor.inl \
-  Dirent.inl \
-  Dirent_Selector.inl \
-  Dynamic.inl \
-  Dynamic_Service.inl \
-  Env_Value_T.inl \
-  Event.inl \
-  Event_Handler.inl \
-  Event_Handler_T.inl \
-  FIFO.inl \
-  FIFO_Recv.inl \
-  FIFO_Recv_Msg.inl \
-  FIFO_Send.inl \
-  FIFO_Send_Msg.inl \
-  FILE.inl \
-  FILE_Addr.inl \
-  FILE_Connector.inl \
-  FILE_IO.inl \
-  File_Lock.inl \
-  Flag_Manip.inl \
-  Framework_Component.inl \
-  Free_List.inl \
-  Functor.inl \
-  Functor_String.inl \
-  Functor_T.inl \
-  Get_Opt.inl \
-  Guard_T.inl \
-  Handle_Gobbler.inl \
-  Handle_Set.inl \
-  Hash_Cache_Map_Manager_T.inl \
-  Hash_Map_Manager_T.inl \
-  Hash_Map_With_Allocator_T.inl \
-  Hashable.inl \
-  High_Res_Timer.inl \
-  ICMP_Socket.inl \
-  INET_Addr.inl \
-  IOStream_T.inl \
-  IO_SAP.inl \
-  IPC_SAP.inl \
-  Intrusive_List.inl \
-  Intrusive_List_Node.inl \
-  LSOCK.inl \
-  LSOCK_CODgram.inl \
-  LSOCK_Connector.inl \
-  LSOCK_Dgram.inl \
-  LSOCK_Stream.inl \
-  Local_Tokens.inl \
-  Lock.inl \
-  Lock_Adapter_T.inl \
-  Log_Record.inl \
-  MEM_Acceptor.inl \
-  MEM_Addr.inl \
-  MEM_Connector.inl \
-  MEM_IO.inl \
-  MEM_SAP.inl \
-  MEM_Stream.inl \
-  Malloc.inl \
-  Malloc_Allocator.inl \
-  Malloc_T.inl \
-  Managed_Object.inl \
-  Manual_Event.inl \
-  Map_Manager.inl \
-  Map_T.inl \
-  Mem_Map.inl \
-  Message_Block.inl \
-  Message_Block_T.inl \
-  Message_Queue.inl \
-  Message_Queue_T.inl \
-  Module.inl \
-  Msg_WFMO_Reactor.inl \
-  Multihomed_INET_Addr.inl \
-  Mutex.inl \
-  NT_Service.inl \
-  Notification_Strategy.inl \
-  OS.inl \
-  OS_Errno.inl \
-  OS_Log_Msg_Attributes.inl \
-  OS_Memory.inl \
-  OS_NS_Thread.inl \
-  OS_NS_arpa_inet.inl \
-  OS_NS_ctype.inl \
-  OS_NS_dirent.inl \
-  OS_NS_dlfcn.inl \
-  OS_NS_errno.inl \
-  OS_NS_fcntl.inl \
-  OS_NS_math.inl \
-  OS_NS_netdb.inl \
-  OS_NS_poll.inl \
-  OS_NS_pwd.inl \
-  OS_NS_regex.inl \
-  OS_NS_signal.inl \
-  OS_NS_stdio.inl \
-  OS_NS_stdlib.inl \
-  OS_NS_string.inl \
-  OS_NS_strings.inl \
-  OS_NS_stropts.inl \
-  OS_NS_sys_mman.inl \
-  OS_NS_sys_msg.inl \
-  OS_NS_sys_resource.inl \
-  OS_NS_sys_select.inl \
-  OS_NS_sys_shm.inl \
-  OS_NS_sys_socket.inl \
-  OS_NS_sys_stat.inl \
-  OS_NS_sys_time.inl \
-  OS_NS_sys_uio.inl \
-  OS_NS_sys_utsname.inl \
-  OS_NS_sys_wait.inl \
-  OS_NS_time.inl \
-  OS_NS_unistd.inl \
-  OS_NS_wchar.inl \
-  OS_String.inl \
-  OS_TLI.inl \
-  Obchunk.inl \
-  Object_Manager.inl \
-  Obstack_T.inl \
-  PI_Malloc.inl \
-  POSIX_CB_Proactor.inl \
-  POSIX_Proactor.inl \
-  Pagefile_Memory_Pool.inl \
-  Pair_T.inl \
-  Parse_Node.inl \
-  Ping_Socket.inl \
-  Pipe.inl \
-  Proactor.inl \
-  Process.inl \
-  Process_Manager.inl \
-  Process_Mutex.inl \
-  Process_Semaphore.inl \
-  Profile_Timer.inl \
-  RB_Tree.inl \
-  RW_Mutex.inl \
-  RW_Process_Mutex.inl \
-  RW_Thread_Mutex.inl \
-  Reactor.inl \
-  Reactor_Notification_Strategy.inl \
-  Read_Buffer.inl \
-  Recursive_Thread_Mutex.inl \
-  Recyclable.inl \
-  Refcountable.inl \
-  Refcounted_Auto_Ptr.inl \
-  Remote_Tokens.inl \
-  Reverse_Lock_T.inl \
-  SOCK.inl \
-  SOCK_Acceptor.inl \
-  SOCK_CODgram.inl \
-  SOCK_Connector.inl \
-  SOCK_Dgram.inl \
-  SOCK_Dgram_Bcast.inl \
-  SOCK_Dgram_Mcast.inl \
-  SOCK_IO.inl \
-  SOCK_SEQPACK_Acceptor.inl \
-  SOCK_SEQPACK_Association.inl \
-  SOCK_SEQPACK_Connector.inl \
-  SOCK_Stream.inl \
-  SPIPE.inl \
-  SPIPE_Addr.inl \
-  SPIPE_Connector.inl \
-  SPIPE_Stream.inl \
-  SString.inl \
-  SUN_Proactor.inl \
-  SV_Message.inl \
-  SV_Message_Queue.inl \
-  SV_Semaphore_Complex.inl \
-  SV_Semaphore_Simple.inl \
-  SV_Shared_Memory.inl \
-  Sample_History.inl \
-  Sched_Params.inl \
-  Select_Reactor_Base.inl \
-  Select_Reactor_T.inl \
-  Semaphore.inl \
-  Service_Config.inl \
-  Service_Manager.inl \
-  Service_Object.inl \
-  Service_Repository.inl \
-  Service_Types.inl \
-  Shared_Memory_MM.inl \
-  Shared_Memory_SV.inl \
-  Shared_Object.inl \
-  Signal.inl \
-  Singleton.inl \
-  Stats.inl \
-  Strategies_T.inl \
-  Stream.inl \
-  String_Base.inl \
-  Swap.inl \
-  Synch_Options.inl \
-  TLI.inl \
-  TLI_Connector.inl \
-  TLI_Stream.inl \
-  TP_Reactor.inl \
-  TSS_Adapter.inl \
-  TSS_T.inl \
-  Task.inl \
-  Task_Ex_T.inl \
-  Task_T.inl \
-  Thread.inl \
-  Thread_Adapter.inl \
-  Thread_Control.inl \
-  Thread_Manager.inl \
-  Thread_Mutex.inl \
-  Thread_Semaphore.inl \
-  Time_Value.inl \
-  Timeprobe.inl \
-  Timer_Queue_Adapters.inl \
-  Timer_Queue_T.inl \
-  Token.inl \
-  Token_Collection.inl \
-  Token_Manager.inl \
-  Token_Request_Reply.inl \
-  Typed_SV_Message.inl \
-  Typed_SV_Message_Queue.inl \
-  UNIX_Addr.inl \
-  UPIPE_Acceptor.inl \
-  UPIPE_Connector.inl \
-  UPIPE_Stream.inl \
-  UUID.inl \
-  Unbounded_Queue.inl \
-  Unbounded_Set.inl \
-  Vector_T.inl \
-  WFMO_Reactor.inl \
-  XTI_ATM_Mcast.inl \
-  ace_wchar.inl \
-  Acceptor.cpp \
-  Active_Map_Manager_T.cpp \
-  Array_Base.cpp \
-  Asynch_Acceptor.cpp \
-  Asynch_Connector.cpp \
-  Atomic_Op_T.cpp \
-  Auto_Functor.cpp \
-  Auto_IncDec_T.cpp \
-  Auto_Ptr.cpp \
-  Based_Pointer_T.cpp \
-  Cache_Map_Manager_T.cpp \
-  Cached_Connect_Strategy_T.cpp \
-  Caching_Strategies_T.cpp \
-  Caching_Utility_T.cpp \
-  Cleanup_Strategies_T.cpp \
-  Condition_T.cpp \
-  Connector.cpp \
-  Containers_T.cpp \
-  Dump_T.cpp \
-  Dynamic_Service.cpp \
-  Env_Value_T.cpp \
-  Event_Handler_T.cpp \
-  Framework_Component_T.cpp \
-  Free_List.cpp \
-  Functor_T.cpp \
-  Future.cpp \
-  Future_Set.cpp \
-  Guard_T.cpp \
-  Hash_Cache_Map_Manager_T.cpp \
-  Hash_Map_Manager_T.cpp \
-  Hash_Map_With_Allocator_T.cpp \
-  IOStream_T.cpp \
-  Intrusive_List.cpp \
-  Intrusive_List_Node.cpp \
-  LOCK_SOCK_Acceptor.cpp \
-  Local_Name_Space_T.cpp \
-  Lock_Adapter_T.cpp \
-  Malloc_T.cpp \
-  Managed_Object.cpp \
-  Map_Manager.cpp \
-  Map_T.cpp \
-  Message_Block_T.cpp \
-  Message_Queue_T.cpp \
-  Metrics_Cache_T.cpp \
-  Module.cpp \
-  Node.cpp \
-  Obstack_T.cpp \
-  Pair_T.cpp \
-  RB_Tree.cpp \
-  Reverse_Lock_T.cpp \
-  Select_Reactor_T.cpp \
-  Singleton.cpp \
-  Strategies_T.cpp \
-  Stream.cpp \
-  Stream_Modules.cpp \
-  String_Base.cpp \
-  Svc_Handler.cpp \
-  Synch_T.cpp \
-  TSS_T.cpp \
-  Task_Ex_T.cpp \
-  Task_T.cpp \
-  Template_Instantiations.cpp \
-  Test_and_Set.cpp \
-  Timeprobe_T.cpp \
-  Timer_Hash_T.cpp \
-  Timer_Heap_T.cpp \
-  Timer_List_T.cpp \
-  Timer_Queue_Adapters.cpp \
-  Timer_Queue_T.cpp \
-  Timer_Wheel_T.cpp \
-  Typed_SV_Message.cpp \
-  Typed_SV_Message_Queue.cpp \
-  Unbounded_Queue.cpp \
-  Unbounded_Set.cpp \
-  Vector_T.cpp
+  svc_export.h
 
-pkgconfigdata_DATA = ACE.pc
+pkgconfigdata_DATA += ACE.pc
 
-ACE.pc: ${top_builddir}/config.status ACE.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/ACE.pc.in
+ACE.pc: ${top_srcdir}/config.status ${srcdir}/ACE.pc.in
+        ${top_srcdir}/config.status --file $@:${srcdir}/ACE.pc.in
 
 EXTRA_DIST = \
+  ACE.pc.in \
   ace.rc
+
+
+## Makefile.ACE_FlReactor.am 
+
+if BUILD_FL
+if BUILD_GL
+if BUILD_X11
+
+lib_LTLIBRARIES += libACE_FlReactor.la
+
+libACE_FlReactor_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -DACE_FLREACTOR_BUILD_DLL
+
+libACE_FlReactor_la_SOURCES = \
+  FlReactor.cpp
+
+libACE_FlReactor_la_LDFLAGS = \
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@ 
+
+libACE_FlReactor_la_LIBADD = \
+ libACE.la
+
+nobase_include_HEADERS += \
+  ACE_FlReactor_export.h \
+  FlReactor.h
+
+pkgconfigdata_DATA += ACE_FlReactor.pc
+
+ACE_FlReactor.pc: ${top_srcdir}/config.status ${srcdir}/ACE_FlReactor.pc.in
+        ${top_srcdir}/config.status --file $@:${srcdir}/ACE_FlReactor.pc.in
+
+endif BUILD_X11
+endif BUILD_GL
+endif BUILD_FL
+
+EXTRA_DIST += \
+  ACE_FlReactor.pc.in
+
+
+## Makefile.ACE_QtReactor.am 
+
+if BUILD_QT
+
+BUILT_SOURCES += \
+  QtReactor_moc.cpp
+
+CLEANFILES += \
+  QtReactor_moc.cpp
+
+QtReactor_moc.cpp: $(srcdir)/QtReactor.h
+	$(QTDIR)/bin/moc  $(srcdir)/QtReactor.h -o QtReactor_moc.cpp
+
+lib_LTLIBRARIES += libACE_QtReactor.la
+
+libACE_QtReactor_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(QTDIR)/include \
+  -DQT_THREAD_SUPPORT \
+  -DACE_QTREACTOR_BUILD_DLL
+
+libACE_QtReactor_la_SOURCES = \
+  QtReactor.cpp \
+  QtReactor_moc.cpp
+
+libACE_QtReactor_la_LDFLAGS = \
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@ 
+
+libACE_QtReactor_la_LIBADD = \
+ libACE.la -lqt-mt
+
+nobase_include_HEADERS += \
+  ACE_QtReactor_export.h \
+  QtReactor.h
+
+pkgconfigdata_DATA += ACE_QtReactor.pc
+
+ACE_QtReactor.pc: ${top_srcdir}/config.status ${srcdir}/ACE_QtReactor.pc.in
+        ${top_srcdir}/config.status --file $@:${srcdir}/ACE_QtReactor.pc.in
+
+endif BUILD_QT
+
+EXTRA_DIST += \
+  ACE_QtReactor.pc.in
+
+
+## Makefile.ACE_TkReactor.am 
+
+if BUILD_TK
+
+lib_LTLIBRARIES += libACE_TkReactor.la
+
+libACE_TkReactor_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -DACE_TKREACTOR_BUILD_DLL
+
+libACE_TkReactor_la_SOURCES = \
+  TkReactor.cpp
+
+libACE_TkReactor_la_LDFLAGS = \
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@ 
+
+libACE_TkReactor_la_LIBADD = \
+ libACE.la
+
+nobase_include_HEADERS += \
+  ACE_TkReactor_export.h \
+  TkReactor.h
+
+pkgconfigdata_DATA += ACE_TkReactor.pc
+
+ACE_TkReactor.pc: ${top_srcdir}/config.status ${srcdir}/ACE_TkReactor.pc.in
+        ${top_srcdir}/config.status --file $@:${srcdir}/ACE_TkReactor.pc.in
+
+endif BUILD_TK
+
+EXTRA_DIST += \
+  ACE_TkReactor.pc.in
+
+
+## Makefile.ACE_XtReactor.am 
+
+if BUILD_X11
+if BUILD_XT
+
+lib_LTLIBRARIES += libACE_XtReactor.la
+
+libACE_XtReactor_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -DACE_XTREACTOR_BUILD_DLL
+
+libACE_XtReactor_la_SOURCES = \
+  XtReactor.cpp
+
+libACE_XtReactor_la_LDFLAGS = \
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@ 
+
+libACE_XtReactor_la_LIBADD = \
+ libACE.la
+
+nobase_include_HEADERS += \
+  ACE_XtReactor_export.h \
+  XtReactor.h
+
+pkgconfigdata_DATA += ACE_XtReactor.pc
+
+ACE_XtReactor.pc: ${top_srcdir}/config.status ${srcdir}/ACE_XtReactor.pc.in
+        ${top_srcdir}/config.status --file $@:${srcdir}/ACE_XtReactor.pc.in
+
+endif BUILD_XT
+endif BUILD_X11
+
+EXTRA_DIST += \
+  ACE_XtReactor.pc.in
+
 
 ## Clean up template repositories, etc.
 clean-local:
