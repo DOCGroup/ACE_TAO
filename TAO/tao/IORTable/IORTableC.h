@@ -378,6 +378,16 @@ namespace IORTable
 // Traits specializations.
 namespace TAO
 {
+  // Hand crafted.
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_IORTable_Export Objref_Traits<IORTable::Table>
+  {
+    static IORTable::Table_ptr tao_duplicate (IORTable::Table_ptr);
+    static void tao_release (IORTable::Table_ptr);
+    static IORTable::Table_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (IORTable::Table_ptr p,
+                                       TAO_OutputCDR & cdr);
+  };
 };
 
 // TAO_IDL - Generated from

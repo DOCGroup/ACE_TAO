@@ -1,16 +1,13 @@
 #include "ClientRequestInfo_i.h"
 
-#if TAO_HAS_INTERCEPTORS == 1
+#if (TAO_HAS_INTERCEPTORS == 1)
 
 #include "Invocation_Base.h"
 #include "Stub.h"
 #include "ORB_Core.h"
 #include "Profile.h"
-#include "Tagged_Components.h"
-#include "Valuetype_Adapter.h"
 #include "debug.h"
 #include "Service_Context.h"
-#include "ace/Dynamic_Service.h"
 
 # if !defined (__ACE_INLINE__)
 #   include "ClientRequestInfo_i.inl"
@@ -19,8 +16,6 @@
 ACE_RCSID (TAO,
            ClientRequestInfo_i,
            "$Id$")
-
-
 
   TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (TAO::Invocation_Base *inv)
   : invocation_ (inv),
@@ -35,7 +30,8 @@ ACE_RCSID (TAO,
 TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (
     TAO::Invocation_Base *inv,
     CORBA::AbstractBase_ptr abstract_target,
-    CORBA::Boolean )
+    CORBA::Boolean
+  )
   : invocation_ (inv),
     abstract_target_ (abstract_target), // No need to duplicate.
     caught_exception_ (0),

@@ -263,7 +263,7 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
 
   // This will include the bound if there is one, and should also
   // prevent duplication, even if there have been further typdefs.
-  os->gen_ifdef_macro (node->gen_name (), "arg_traits");
+  os->gen_ifdef_macro (node->flat_name (), "arg_traits");
 
   *os << be_nl << be_nl
       << "ACE_TEMPLATE_SPECIALIZATION" << be_nl

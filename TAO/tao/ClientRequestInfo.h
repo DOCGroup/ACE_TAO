@@ -18,7 +18,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
+#include "tao/LocalObject.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -34,7 +34,6 @@
 #endif /* _MSC_VER */
 
 #include "tao/PortableInterceptorC.h"
-#include "tao/LocalObject.h"
 
 class TAO_ClientRequestInfo_i;
 

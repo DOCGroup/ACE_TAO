@@ -55,7 +55,8 @@ namespace TAO
 
     ClientRequestInterceptor_Adapter (
         TAO_ClientRequestInterceptor_List::TYPE & interceptors,
-        Invocation_Base *invocation);
+        Invocation_Base *invocation
+      );
 
     ~ClientRequestInterceptor_Adapter (void);
 

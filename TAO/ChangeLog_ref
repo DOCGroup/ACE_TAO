@@ -1,3 +1,46 @@
+Thu Sep 18 12:13:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_arg_traits.cpp (visit_sequence):
+
+          Changed the generated #ifdef guard to use the flat name of
+          the sequence class, which is always unique.
+
+        * orbsvcs/orbsvcs/AV.dsp:
+        * orbsvcs/orbsvcs/CosNaming.dsp:
+        * orbsvcs/orbsvcs/CosProperty.dsp:
+        * orbsvcs/orbsvcs/CosTrading.dsp:
+        * orbsvcs/orbsvcs/Svc_Utils.dsp:
+        * tao/IORTable/TAO_IORTable.dsp:
+
+          Turned on RTTI.
+
+        * orbsvcs/orbsvcs/AV/sfp.h:
+
+          Removed unused #define.
+
+        * orbsvcs/orbsvcs/Naming/naming_export.h:
+
+          Added export declaration of TAO::Objref_Traits<> specialization for
+          CosNaming::NamingContext, so it can be seen by other libraries that
+          use it.
+
+        * tao/ClientRequestInfo.h:
+        * tao/ClientRequestInfo_i.cpp:
+        * tao/ClientRequestInfo_i.h:
+        * tao/ClientRequestInterceptor_Adapter.h:
+
+          Cleaned up file #includes.
+
+        * tao/Object.h:
+
+          Cosmetic changes.
+
+        * tao/IORTable/IORTableC.h:
+        * tao/PortableServer/PortableServerC.h:
+
+          Added export declaration of TAO::Objref_Traits<> specialization for
+          PortableServer::POAManager and IORTable::Table.
+
 Thu Sep 18 09:56:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Abstract_Servant_Base.cpp:

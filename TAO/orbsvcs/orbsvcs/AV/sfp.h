@@ -31,7 +31,6 @@
 #define TAO_SFP_WRITEV_MAX 128
 
 #define TAO_SFP_MAX_PACKET_SIZE ACE_MAX_DGRAM_SIZE
-//#define TAO_SFP_MAX_PACKET_SIZE 132
 
 /**
  * @class TAO_SFP_Fragment_Node
