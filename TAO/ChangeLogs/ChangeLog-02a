@@ -1,3 +1,9 @@
+Fri Feb  1 06:44:51 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* tao/ORB_Core.h (TAO_ORB_Core): Changed the comment to refer to
+	  RTCORBA::Current rather than RTCORBA::RTCurrent.  Thanks to
+ 	  Juliana Diniz <jrbd@cin.ufpe.br> for reporting this.
+
 Thu Jan 31 13:17:24 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO/tao/PortableServer/AMH_Response_Handler.h:
