@@ -31,7 +31,7 @@ TAO::CSS_RequestInterceptor::send_request (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  
+
   CSI::SASContextBody sas_context;
 
   const CORBA::Boolean context_created =
@@ -104,7 +104,7 @@ TAO::CSS_RequestInterceptor::receive_reply (
         default:
           // No other message types should be sent by a target
           // security service in a normal reply.
-              
+
           // @@ What do we do in this case?
           break;
         }
