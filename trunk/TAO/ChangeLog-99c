@@ -1,29 +1,37 @@
+Tue Apr 27 23:32:52 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/TAO.cpp (deactivate_under_child_poa and deactivate): Added
+	  new methods to deactivate the servant.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp
+	  (~Cubit_Server): Deactivate servant before deleting it.
+
 Tue Apr 27 23:01:30 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-        Added the directory $TAO_ROOT/performance-tests/POA/Demux and the 
+        Added the directory $TAO_ROOT/performance-tests/POA/Demux and the
 	following files for the POA Demux tests.
-	
+
 	* Makefile
 	* README
 	* client.cpp : client for the tests.
 	* demux_stats.cpp : To calculate statistics out of the timeprobe
 	  data generated.
 	* demux_test.idl : IDL used for the test.
-	* demux_test_client.cpp : Makes calls on the remote objects 
+	* demux_test_client.cpp : Makes calls on the remote objects
 	  parameterized by the no. of POAs, servants and operations.
 	* demux_test_client.h:
 	* demux_test_client.i: Helper class for the client.
 	* demux_test_i.cpp : Servant Implementation.
 	* demux_test_i.h:
 	* demux_test_macros.h: Some #defines for the test.
-	* demux_test_server.cpp: Server for the test. Parameterized by the 
+	* demux_test_server.cpp: Server for the test. Parameterized by the
 	  POA ID policy, lifespan policy, no. of servants, operations.
 	* demux_test_server.h
 	* names_file: Names used by the servants.
 	* poa_names_100.dat: Names used by the POAs.
 	* server.cpp : server main program.
 	* write_names.cpp : generates the names_file.
-	
+
 Tue Apr 27 22:35:10 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Object_Adapter.cpp: Fixed template instantiations and
