@@ -71,7 +71,7 @@ ACE_TP_Token_Guard::~ACE_TP_Token_Guard (void)
 ACE_INLINE void
 ACE_TP_Token_Guard::release_token (void)
 {
-  if (this->owner_ == 1)
+  if (this->owner_)
     {
       ACE_MT (this->token_.release ());
 
@@ -90,7 +90,6 @@ ACE_TP_Token_Guard::is_owner (void)
 /************************************************************************/
 // Methods for ACE_TP_Reactor
 /************************************************************************/
-
 ACE_INLINE void
 ACE_TP_Reactor::no_op_sleep_hook (void *)
 {
