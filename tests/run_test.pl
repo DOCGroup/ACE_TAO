@@ -198,7 +198,7 @@ sub run_vxworks_command ($)
               "  shParse \"ld 1,0,\\\"\$fname\\\"\"\n" .
               "  set procId [shParse { taskSpawn 0,100,0x0008,64000,ace_main }]\n" .
               "  while { [shParse \"taskIdFigure \$procId\"] != -1 } {\n" .
-              "    shParse { taskDelay (sysClkRateGet ()) }\n" .
+              "    shParse { taskDelay (13 * sysClkRateGet ()) }\n" .
               "  }\n" .
               "  shParse \"unld \\\"\$fname\\\"\"\n" .
               "}\n" .
@@ -234,13 +234,16 @@ sub run_vxworks_command ($)
 
     ### Check for problems
 
-    if ($status == -1) {
-        print STDERR "Error: $program FAILED (time out)\n";
-        $P->Kill ();
-        $P->TimedWait (1);
+    if ($status == -1 || $config_list->check_config ('VX_TGT_REBOOT')) {
+        if ($status == -1) {
+            print STDERR "Error: $program FAILED (time out)\n";
+            $P->Kill ();
+            $P->TimedWait (1);
+		}
         ## reboot VxWorks kernel to cleanup leftover module
         $P = new PerlACE::Process ($WINDSH, "-e \"shParse {reboot}; shParse{exit}\" " . $ENV{"ACE_RUN_VX_TGTSVR"});
         $P->SpawnWaitKill (60);
+		sleep(90);
 		$set_vx_defgw = 1;
     }
 
@@ -557,9 +560,9 @@ if (defined $opt_v && defined $opt_o) {
   print $oh "?\n" .
             "proc aceRunTest {fname} {\n" .
             "  shParse \"ld 1,0,\\\"\$fname\\\"\"\n" .
-            "  set procId [shParse { taskSpawn 0,100,0,50000,ace_main }]\n" .
+            "  set procId [shParse { taskSpawn 0,100,0x0008,64000,ace_main }]\n" .
             "  while { [shParse \"taskIdFigure \$procId\"] != -1 } {\n" .
-            "    shParse { taskDelay (sysClkRateGet ()) }\n" .
+            "    shParse { taskDelay (13 * sysClkRateGet ()) }\n" .
             "  }\n" .
             "  shParse \"unld \\\"\$fname\\\"\"\n" .
             "}\n" .
