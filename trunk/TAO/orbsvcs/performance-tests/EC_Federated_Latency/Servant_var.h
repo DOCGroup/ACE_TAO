@@ -34,17 +34,17 @@ public:
   //@{
   /** @name Smart pointer operations
    */
-  SERVANT * const operator->() const;
-  SERVANT *operator->();
+  const SERVANT * operator->() const;
+  SERVANT * operator->();
 
   operator SERVANT *();
-  operator SERVANT * const() const;
+  operator const SERVANT * () const;
   //@}
 
   //@{
   /** @name Canonical CORBA T_var methods
    */
-  SERVANT *in ();
+  SERVANT *in () const;
   SERVANT *&out ();
   SERVANT *&inout ();
   //@}

@@ -1,3 +1,9 @@
+Wed Aug 29 13:13:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/performance-tests/EC_Federated_Latency/Servant_var.h:
+	* orbsvcs/performance-tests/EC_Federated_Latency/Servant_var.inl:
+	  Fixed warnings in TRU 64 builds.
+ 
 Wed Aug 29 06:21:25 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tao/ORB.h (CORBA_ORB): Improved the documentation for
