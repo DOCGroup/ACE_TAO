@@ -19,6 +19,11 @@
 #define TAO_TRADER_C
 
 #include "Trader_T.h"
+
+#if defined(_MSC_VER)
+#pragma warning (disable:4250)
+#endif /* _MSC_VER */
+
 #include "Lookup.h"
 #include "Register.h"
 #include "Link.h"

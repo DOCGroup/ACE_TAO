@@ -19,6 +19,10 @@
 
 #include "orbsvcs/CosTradingS.h"
 
+#if defined(_MSC_VER)
+#pragma warning (disable:4250)
+#endif /* _MSC_VER */
+
 class TAO_Offer_Iterator_Collection : public POA_CosTrading::OfferIterator
 // = TITLE
 //   A collection of offer iterator to query in turn.

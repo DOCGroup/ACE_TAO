@@ -17,8 +17,11 @@
 #ifndef TAO_OFFER_ID_ITERATOR_H
 #define TAO_OFFER_ID_ITERATOR_H
 
-#include "ace/Containers.h"
 #include "orbsvcs/CosTradingS.h"
+
+#if defined(_MSC_VER)
+#pragma warning (disable:4250)
+#endif /* _MSC_VER */
 
 class TAO_Offer_Id_Iterator : public POA_CosTrading::OfferIdIterator
 // = TITLE

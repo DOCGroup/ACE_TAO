@@ -23,6 +23,10 @@
 #include "orbsvcs/CosTradingC.h"
 #include "orbsvcs/SequencesC.h"
 
+#if defined(_MSC_VER)
+#pragma warning (disable:4250)
+#endif /* _MSC_VER */
+
 typedef unsigned short TAO_Expression_Type;
 
 class TAO_Constraint

@@ -17,7 +17,6 @@
 #ifndef TAO_POLICY_MANAGER_H
 #define TAO_POLICY_MANAGER_H
 
-#include "orbsvcs/CosTradingC.h"
 #include "Policies.h"
 
 class TAO_Policy_Manager

@@ -21,8 +21,6 @@
 #include "Constraint_Visitor.h"
 #include "Constraint_Nodes.h"
 
-#include "orbsvcs/SequencesC.h"
-
 class TAO_Constraint_Evaluator : public TAO_Constraint_Visitor
 //
 // = TITLE
