@@ -1127,7 +1127,24 @@ typedef ACE_mutex_t ACE_thread_mutex_t;
 // For mutex implementation using mutual-exclusion semaphores (which
 // can be taken recursively).
 #  include /**/ <semLib.h>    
+
+#  include /**/ <hostLib.h>
+#  include /**/ <ioLib.h>
+#  include /**/ <selectLib.h>
+#  include /**/ <sigLib.h>
+#  include /**/ <sockLib.h>
 #  include /**/ <taskLib.h>
+#  include /**/ <taskHookLib.h>
+
+extern "C" 
+struct sockaddr_un {
+  short sun_family;    // AF_UNIX.
+  char  sun_path[108]; // path name.
+};
+
+#define MAXPATHLEN  1024
+#define MAXNAMLEN   255
+#define NSIG _NSIGS
 
 // task options:  the other options are either obsolete, internal, or for
 // Fortran or Ada support
@@ -1847,9 +1864,7 @@ typedef cx_fd_mask fd_mask;
 #define howmany(x, y)   (((x)+((y)-1))/(y))
 #endif /* howmany */
 typedef void (*__sighandler_t)(int); // keep Signal compilation happy
-#elif defined (VXWORKS)
-#include /**/ <sys/times.h>
-#else
+#elif ! defined (VXWORKS)
 #include /**/ <sys/uio.h>
 #include /**/ <sys/ipc.h>
 #include /**/ <sys/shm.h>
@@ -1859,7 +1874,7 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 #include /**/ <sys/resource.h>
 #include /**/ <sys/wait.h>
 #include /**/ <pwd.h>
-#endif /* VXWORKS */
+#endif /* ! VXWORKS */
 #include /**/ <sys/ioctl.h>
 #include /**/ <dirent.h>
 #include /**/ <unistd.h>
@@ -2055,25 +2070,6 @@ typedef short ACE_pri_t;
 #endif /* ACE_HAS_HI_RES_TIMER */
 
 #endif /* ACE_WIN32 */
-
-#if defined (VXWORKS)
-
-#include /**/ <hostLib.h>
-#include /**/ <ioLib.h>
-#include /**/ <selectLib.h>
-#include /**/ <sigLib.h>
-#include /**/ <sockLib.h>
-
-extern "C" 
-struct sockaddr_un {
-  short sun_family;    // AF_UNIX.
-  char  sun_path[108]; // path name.
-};
-
-#define MAXPATHLEN  1024
-#define MAXNAMLEN   255
-#define NSIG _NSIGS
-#endif /* VXWORKS */
 
 #if !defined(RTLD_LAZY)
 #define RTLD_LAZY 1
