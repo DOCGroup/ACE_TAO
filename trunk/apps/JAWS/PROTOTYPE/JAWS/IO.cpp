@@ -227,62 +227,15 @@ JAWS_Asynch_IO::~JAWS_Asynch_IO (void)
 }
 
 void
-JAWS_Asynch_IO::read (ACE_Message_Block& mb,
-                      int size)
+JAWS_Asynch_IO::read (JAWS_IO_Handler *ioh,
+                      ACE_Message_Block* mb,
+                      unsigned int size)
 {
   ACE_Asynch_Read_Stream ar;
 
-  if (ar.open (*this, this->handle_) == -1
+  if (ar.open (*(ioh->handler ()), ioh->handle ()) == -1
       || ar.read (mb, size) == -1)
-    this->handler_->read_error ();
-}
-
-// This method will be called when an asynchronous read completes on a
-// stream.
-
-void
-JAWS_Asynch_IO::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
-{
-  // This callback is for this->receive_file()
-  if (result.act () != 0)
-    {
-      int code = 0;
-      if (result.success () && result.bytes_transferred () != 0)
-        {
-          if (result.message_block ().length () == result.message_block ().size ())
-            code = ACE_Filecache_Handle::SUCCESS;
-          else
-            {
-              ACE_Asynch_Read_Stream ar;
-              if (ar.open (*this, this->handle_) == -1
-                  || ar.read (result.message_block (),
-                              result.message_block ().size () - result.message_block ().length (),
-                              result.act ()) == -1)
-                code = -1;
-              else
-                return;
-            }
-        }
-      else
-        code = -1;
-
-      if (code == ACE_Filecache_Handle::SUCCESS)
-        this->handler_->receive_file_complete ();
-      else
-        this->handler_->receive_file_error (code);
-
-      delete &result.message_block ();
-      delete (ACE_Filecache_Handle *) result.act ();
-    }
-  else
-    {
-      // This callback is for this->read()
-      if (result.success ()
-          && result.bytes_transferred () != 0)
-        this->handler_->read_complete (result.message_block ());
-      else
-        this->handler_->read_error ();
-    }
+    ioh->read_error ();
 }
 
 void
@@ -375,20 +328,6 @@ JAWS_Asynch_IO::transmit_file (const char *filename,
     }
 }
 
-
-// This method will be called when an asynchronous transmit file completes.
-void
-JAWS_Asynch_IO::handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result)
-{
-  if (result.success ())
-    this->handler_->transmit_file_complete ();
-  else
-    this->handler_->transmit_file_error (-1);
-
-  delete result.header_and_trailer ();
-  delete (ACE_Filecache_Handle *) result.act ();
-}
-
 void
 JAWS_Asynch_IO::send_confirmation_message (const char *buffer,
                                            int length)
@@ -428,17 +367,6 @@ JAWS_Asynch_IO::send_message (const char *buffer,
       else
         this->handler_->error_message_complete ();
     }
-}
-
-void
-JAWS_Asynch_IO::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
-{
-  result.message_block ().release ();
-
-  if (result.act () == (void *) CONFORMATION)
-    this->handler_->confirmation_message_complete ();
-  else
-    this->handler_->error_message_complete ();
 }
 
 #endif /* ACE_WIN32 */
