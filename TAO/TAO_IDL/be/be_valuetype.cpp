@@ -276,6 +276,7 @@ be_valuetype::gen_var_impl (char *,
   // TAO extension - it appears that there are problems with at least g++
   // which reclaims amguity between T(T*) and T(const T_var &)
   cs->indent ();
+  *cs << "ACE_INLINE" << be_nl;
   *cs << fname << "::" << lname << " (const "
       << this->local_name () << "* p)" << be_nl;
   *cs << "  : ptr_ (ACE_const_cast(" 
@@ -287,6 +288,7 @@ be_valuetype::gen_var_impl (char *,
   // constructor because this inline function is used elsewhere. Hence to make
   // inlining of this function possible, we must define it before its use.
   cs->indent ();
+  *cs << "ACE_INLINE" << be_nl;
   *cs << this->name () << "* " << be_nl;
   *cs << fname << "::ptr (void) const" << be_nl;
   *cs << "{\n";
@@ -297,6 +299,7 @@ be_valuetype::gen_var_impl (char *,
 
   // Copy constructor.
   cs->indent ();
+  *cs << "ACE_INLINE" << be_nl;
   *cs << fname << "::" << lname << " (const " << lname <<
     " &p) // copy constructor" << be_nl;
   *cs << "{" << be_idt_nl
@@ -306,6 +309,7 @@ be_valuetype::gen_var_impl (char *,
 
   // Destructor.
   cs->indent ();
+  *cs << "ACE_INLINE" << be_nl;
   *cs << fname << "::~" << lname << " (void) // destructor" << be_nl;
   *cs << "{\n";
   cs->incr_indent ();
@@ -315,6 +319,7 @@ be_valuetype::gen_var_impl (char *,
 
   // Assignment operator.
   cs->indent ();
+  *cs << "ACE_INLINE" << be_nl;
   *cs << fname << " &" << be_nl;
   *cs << fname << "::operator= (" << this->local_name () 
       << "* p)" << be_nl;
@@ -328,6 +333,7 @@ be_valuetype::gen_var_impl (char *,
 
   // Assignment operator from _var.
   cs->indent ();
+  *cs << "ACE_INLINE" << be_nl;
   *cs << fname << " &" << be_nl;
   *cs << fname << "::operator= (const " << lname 
       << " &p)" << be_nl;
@@ -348,6 +354,7 @@ be_valuetype::gen_var_impl (char *,
 
   // Other extra methods - cast operator ().
   cs->indent ();
+  *cs << "ACE_INLINE" << be_nl;
   *cs << fname << "::operator const " << this->name ()
       << "* () const // cast" << be_nl;
   *cs << "{\n";
@@ -367,6 +374,7 @@ be_valuetype::gen_var_impl (char *,
 
   // operator->
   cs->indent ();
+  *cs << "ACE_INLINE" << be_nl;
   *cs << this->name () << "* " << be_nl;
   *cs << fname << "::operator-> (void) const" << be_nl;
   *cs << "{\n";
@@ -377,6 +385,7 @@ be_valuetype::gen_var_impl (char *,
 
   // in, inout, out, and _retn.
   cs->indent ();
+  *cs << "ACE_INLINE" << be_nl;
   *cs << this->name () << "*" << be_nl;
   *cs << fname << "::in (void) const" << be_nl;
   *cs << "{\n";
@@ -386,6 +395,7 @@ be_valuetype::gen_var_impl (char *,
   *cs << "}\n\n";
 
   cs->indent ();
+  *cs << "ACE_INLINE" << be_nl;
   *cs << this->name () << "* &" << be_nl;
   *cs << fname << "::inout (void)" << be_nl;
   *cs << "{\n";
@@ -395,6 +405,7 @@ be_valuetype::gen_var_impl (char *,
   *cs << "}\n\n";
 
   cs->indent ();
+  *cs << "ACE_INLINE" << be_nl;
   *cs << this->name () << "* &" << be_nl;
   *cs << fname << "::out (void)" << be_nl;
   *cs << "{\n";
@@ -406,6 +417,7 @@ be_valuetype::gen_var_impl (char *,
   *cs << "}\n\n";
 
   cs->indent ();
+  *cs << "ACE_INLINE" << be_nl;
   *cs << this->name () << "* " << be_nl;
   *cs << fname << "::_retn (void)" << be_nl;
   *cs << "{\n";
@@ -527,6 +539,7 @@ be_valuetype::gen_out_impl (char *,
 
   // Constructor from a pointer.
   cs->indent ();
+  *cs << "ACE_INLINE" << be_nl;
   *cs << fname << "::" << lname << " (" << this->local_name ()
       << "* &p)" << be_nl;
   *cs << "  : ptr_ (p)" << be_nl;
@@ -538,6 +551,7 @@ be_valuetype::gen_out_impl (char *,
 
   // Constructor from _var &.
   cs->indent ();
+  *cs << "ACE_INLINE" << be_nl;
   *cs << fname << "::" << lname << " (" << this->local_name () 
       << "_var &p) // constructor from _var" << be_nl;
   *cs << "  : ptr_ (p.out ())" << be_nl;
@@ -550,6 +564,7 @@ be_valuetype::gen_out_impl (char *,
 
   // Copy constructor.
   cs->indent ();
+  *cs << "ACE_INLINE" << be_nl;
   *cs << fname << "::" << lname << " (const " << lname 
       << " &p) // copy constructor" << be_nl;
   *cs << "  : ptr_ (ACE_const_cast (" << lname << "&,p).ptr_)" << be_nl;
@@ -557,6 +572,7 @@ be_valuetype::gen_out_impl (char *,
 
   // Assignment operator from _out &.
   cs->indent ();
+  *cs << "ACE_INLINE" << be_nl;
   *cs << fname << " &" << be_nl;
   *cs << fname << "::operator= (const " << lname <<
     " &p)" << be_nl;
@@ -569,6 +585,7 @@ be_valuetype::gen_out_impl (char *,
 
   // Assignment operator from _var.
   cs->indent ();
+  *cs << "ACE_INLINE" << be_nl;
   *cs << fname << " &" << be_nl;
   *cs << fname << "::operator= (const " << this->local_name () 
       << "_var &p)" << be_nl;
@@ -583,6 +600,7 @@ be_valuetype::gen_out_impl (char *,
 
   // Assignment operator from *.
   cs->indent ();
+  *cs << "ACE_INLINE" << be_nl;
   *cs << fname << " &" << be_nl;
   *cs << fname << "::operator= (" << this->local_name () 
       << "* p)" << be_nl;
@@ -595,6 +613,7 @@ be_valuetype::gen_out_impl (char *,
 
   // Other extra methods - cast operator ().
   cs->indent ();
+  *cs << "ACE_INLINE" << be_nl;
   *cs << fname << "::operator " << this->name () 
       << "* &() // cast" << be_nl;
   *cs << "{\n";
@@ -605,6 +624,7 @@ be_valuetype::gen_out_impl (char *,
 
   // ptr function.
   cs->indent ();
+  *cs << "ACE_INLINE" << be_nl;
   *cs << this->name () << "* &" << be_nl;
   *cs << fname << "::ptr (void) // ptr" << be_nl;
   *cs << "{\n";
@@ -615,6 +635,7 @@ be_valuetype::gen_out_impl (char *,
 
   // operator->
   cs->indent ();
+  *cs << "ACE_INLINE" << be_nl;
   *cs << this->name () << "* " << be_nl;
   *cs << fname << "::operator-> (void)" << be_nl;
   *cs << "{\n";
