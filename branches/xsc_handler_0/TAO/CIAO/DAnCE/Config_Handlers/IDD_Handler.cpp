@@ -1,77 +1,148 @@
-
 // $Id$
 
-
 #include "IDD_Handler.h"
+#include "Prop_Handler.h"
+#include "ANY_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "ciao/Deployment_DataC.h"
-#include "MDD_Handler.h"
-#include "Property_Handler.h"
-#include "IRDD_Handler.h"
-
-
 
 namespace CIAO
 {
   namespace Config_Handlers
   {
-
-    IDD_Handler::IDD_Handler (void)
+    bool
+    IDD_Handler::instance_deployment_descrs (
+        const DeploymentPlan &src,
+        Deployment::InstanceDeploymentDescriptions& dest)
     {
-    }
+      InstanceDeploymentDescription::instance_const_iterator idd_e =
+        src.end_instance ();
 
-    IDD_Handler::~IDD_Handler (void)
-    {
-    }
+      for (InstanceDeploymentDescription::instance_const_iterator idd_b =
+             src.begin_instance ();
+           idd_b != idd_e;
+           ++idd_b)
+        {
+          CORBA::ULong len =
+            dest.length ();
+          dest.length (len + 1);
 
+          bool retval =
+            IDD_Handler::instance_deployment_descr ((*idd_b),
+                                                    dest[len]);
+
+          if (!retval)
+            return false;
+        }
+
+      return true;
+    }
 
     void
-    IDD_Handler::instance_deployment_descr (
-                    const InstanceDeploymentDescription& desc,
-                    Deployment::InstanceDeploymentDescription& toconfig)
+    IDD_Handler::get_InstanceDeploymentDescription (
+        const InstanceDeploymentDescription& src,
+        Deployment::InstanceDeploymentDescription& dest)
     {
+      dest.name =
+        src.name ().c_str ();
+      dest.node =
+        src.node ().c_str ();
 
+      // We know there should be only one element
+      dest.source.length (1);
+      dest.source [0] =
+        src.source ().c_str ();
 
-      
-      toconfig.name=
-           CORBA::string_dup (desc.name ().c_str ());
-      
-      toconfig.node=
-           CORBA::string_dup (desc.node ().c_str ());
-      
-      CORBA::ULong source_length = toconfig.source.length ();
-         toconfig.source.length (source_length + 1);
-         toconfig.source[source_length - 1]=
-           CORBA::string_dup (desc.source ().c_str ());
-      
-      Singleton_IDREF_Map::instance ()->find_ref (
-        toconfig.implementation,
-        desc.implementation);
-      
-      CORBA::ULong configProperty_length = toconfig.configProperty.length ();
-     
-      toconfig.configProperty.length (configProperty_length + 1);
-      Property_Handler::property (
-        desc.configProperty (),
-        toconfig.configProperty[configProperty_length - 1]);
-      
-      CORBA::ULong deployedProperty_length = toconfig.deployedProperty.length ();
-     
-      toconfig.deployedProperty.length (deployedProperty_length + 1);
-      IRDD_Handler::instance_resource_deployment_descr (
-        desc.deployedProperty (),
-        toconfig.deployedProperty[deployedProperty_length - 1]);
-      
-      CORBA::ULong deployedSharedProperty_length = toconfig.deployedSharedProperty.length ();
-     
-      toconfig.deployedSharedProperty.length (deployedSharedProperty_length + 1);
-      IRDD_Handler::instance_resource_deployment_descr (
-        desc.deployedSharedProperty (),
-        toconfig.deployedSharedProperty[deployedSharedProperty_length - 1]);
+      // @@ MAJO:This is where the MDD should be? Need to look into
+      // this later.
+      dest.implementationRef = 0;
 
-      
+      InstanceDeploymentDescription::configProperty_iterator pend =
+        src.end_configProperty ();
+
+      for (ComponentInterfaceDescription::configProperty_iterator pstart =
+             src.begin_configProperty ();
+           pstart != pend;
+           ++pstart)
+        {
+          // Need to improve this. This is clearly O(n^2).
+          CORBA::ULong len =
+            dest.configProperty.length ();
+
+          dest.configProperty.length (len + 1);
+
+          Property_Handler::get_property (*pstart,
+                                          dest.configProperty[len]);
+        }
+
+#if 0
+     // @@ MAJO: Need to handle this in the next round
+      if (desc.deployedResource_p ())
+        {
+          CORBA::ULong length = toconfig.deployedResource.length ();
+          toconfig.deployedResource.length (length + 1);
+
+          this->get_InstanceResourceDeploymentDescription
+            (toconfig.deployedResource[length - 1],
+             desc.deployedResource ());
+        }
+
+      if (desc.deployedSharedResource_p ())
+        {
+          CORBA::ULong length = toconfig.deployedSharedResource.length ();
+          toconfig.deployedSharedResource.length (length + 1);
+
+          this->get_InstanceResourceDeploymentDescription
+            (toconfig.deployedResource[length],
+             desc.deployedResource ());
+        }
+#endif /*if 0*/
+      return true;
+      // Done!
     }
 
-  }
+#if 0
+    void
+    IDD_Handler::get_InstanceResourceDeploymentDescription (
+            Deployment::InstanceResourceDeploymentDescription &toconfig,
+            InstanceResourceDeploymentDescription &desc)
+    {
+      // resourceUsage is an enumerated type
+      switch (desc.resourceUsage ().integral ())
+        {
+        case ResourceUsageKind::None_l:
+          toconfig.resourceUsage = Deployment::None;
+          break;
 
+        case ResourceUsageKind::InstanceUsesResource_l:
+          toconfig.resourceUsage = Deployment::InstanceUsesResource;
+          break;
+
+        case ResourceUsageKind::ResourceUsesInstance_l:
+          toconfig.resourceUsage = Deployment::ResourceUsesInstance;
+          break;
+
+        case ResourceUsageKind::PortUsesResource_l:
+          toconfig.resourceUsage = Deployment::PortUsesResource;
+          break;
+
+        case ResourceUsageKind::ResourceUsesPort_l:
+          toconfig.resourceUsage = Deployment::ResourceUsesPort;
+          break;
+        }
+
+      // requirementName and resourceName are strings
+      toconfig.requirementName =
+        CORBA::string_dup (desc.requirementName ().c_str ());
+      toconfig.resourceName =
+        CORBA::string_dup (desc.resourceName ().c_str ());
+
+      ANY_Handler::get_Any (toconfig.resourceValue,
+                            desc.resourceValue ());
+
+      // Done!
+    }
+#endif /*if 0*/
+
+  }
 }

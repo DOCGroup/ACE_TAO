@@ -8,34 +8,46 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-
-    PSPE_Handler::PSPE_Handler (void)
+    bool
+    PSPE_Handler::sub_component_port_endpoints (
+        const PlanConnectionDescription &src,
+        ::Deployment::PlanSubcomponentPortEndpoints &dest)
     {
-    }
-
-    PSPE_Handler::~PSPE_Handler (void)
-    {
-    }
- 
-    ///This method takes a <Deployment::PlanSubcomponentPortEndpoint>
-    ///and maps the values from the passed in XSC 
-    ///PlanSubcomponentPortEndpoint to its members.
-    void PSPE_Handler::get_PlanSubcomponentPortEndpoint (
-                Deployment::PlanSubcomponentPortEndpoint& toconfig,
-                PlanSubcomponentPortEndpoint& desc)
-    {
-      toconfig.portName = CORBA::string_dup (desc.portName ().c_str ());
-      
-      if (desc.provider_p ())
+      PlanConnectionDescription::internalEndpoint_const_iterator iei_e =
+        src.end_internalEndpoint ();
+      for (PlanConnectionDescription::internalEndpoint_const_iterator iei_b =
+             src.begin_internalEndpoint ();
+           iei_b != iei_e;
+           ++iei_b)
         {
-          toconfig.provider = !(desc.provider ().empty ());
+          CORBA::ULong len =
+            dest.length ();
+
+          dest.length (len + 1);
+
+          (void) PSPE_Handler::sub_component_port_endpoint (
+              (*iei_b),
+              dest[len]);
+        }
+      return true;
+    }
+
+    void
+    PSPE_Handler::sub_component_port_endpoint (
+        const PlanSubcomponentPortEndpoint &src,
+        ::Deployment::PlanSubcomponentPortEndpoint &dest)
+    {
+      dest.portName =
+        src.portName ().c_str ();
+
+      if (src.provider_p ())
+        {
+          dest.provider = !(src.provider ().empty ());
         }
       else
         {
-          toconfig.provider = 0; 
-        }  
-      
+          dest.provider = 0;
+        }
     }
-    
   }
 }

@@ -23,9 +23,9 @@ namespace CIAO
 
 
     void
-    ID_Handler::implementation_dependency (
-                    const ImplementationDependency& desc,
-                    Deployment::ImplementationDependency& toconfig)
+    ID_Handler::get_ImplementationDependency (
+                    Deployment::ImplementationDependency& toconfig, 
+                    ImplementationDependency& desc)
     {
 
 

@@ -8,24 +8,37 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
+    bool
+    ERE_Handler::external_ref_endpoints (
+        const PlanConnectionDescription &src,
+        Deployment::ExternalReferenceEndpoints &dest)
+    {
+      PlanConnectionDescription::externalReference_const_iterator erep_e =
+        src.end_externalReference ();
 
-    ERE_Handler::ERE_Handler (void)
-    {
+     for (PlanConnectionDescription::externalReference_const_iterator erep_b =
+            src.begin_externalReference ();
+          erep_b != erep_e;
+          ++erep_b)
+       {
+         CORBA::ULong len =
+           dest.length ();
+         dest.length (len + 1);
+
+         ERE_Handler::external_ref_endpoint ((*erep_b),
+                                             dest[0]);
+       }
+
+     return true;
     }
 
-    ERE_Handler::~ERE_Handler (void)
+    void
+    ERE_Handler::external_ref_endpoint (
+        const ExternalReferenceEndpoint &src,
+        Deployment::ExternalReferenceEndpoint &dest)
     {
+      dest.location =
+        src.location ().c_str ();
     }
- 
-    ///This method takes a <Deployment::ExternalReferenceEndpoint>
-    ///and maps the values from the passed in XSC 
-    ///ExternalReferenceEndpoint to its members.
-    void ERE_Handler::get_ExternalReferenceEndpoint (
-                Deployment::ExternalReferenceEndpoint& toconfig,
-                ExternalReferenceEndpoint& desc)
-    {
-      toconfig.location = CORBA::string_dup (desc.location ().c_str ());
-    }
-    
   }
 }

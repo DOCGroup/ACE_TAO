@@ -1,5 +1,5 @@
 
-      //==============================================================
+//==============================================================
 /**
  *  @file  ID_Handler.h
  *
@@ -13,7 +13,7 @@
 #define CIAO_CONFIG_HANDLERS_ID_Handler_H
 #include /**/ "ace/pre.h"
 
-#include "Config_Handlers/Config_Handlers_Export.h"
+#include "Config_Handlers_export.h"
 #include "ace/config-lite.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -47,22 +47,21 @@ namespace CIAO
     * corresponding CORBA IDL Any type.
     *
     */
-    
+
     class Config_Handlers_Export ID_Handler {
-     
+
       public:
 
         ID_Handler (void);
         virtual ~ID_Handler (void);
 
-        static void implementation_dependency (
-             const ImplementationDependency& desc,
-             Deployment::ImplementationDependency& toconfig);
+        void get_ImplementationDependency (
+             Deployment::ImplementationDependency& toconfig,
+             ImplementationDependency& desc);
 
     };
   }
 }
 
-#include /**/ "ace/post.h" 
+#include /**/ "ace/post.h"
 #endif /* CIAO_CONFIG_HANDLERS_ID_Handler_H */
-

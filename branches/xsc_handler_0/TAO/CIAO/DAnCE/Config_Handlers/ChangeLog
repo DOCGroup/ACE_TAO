@@ -1,24 +1,65 @@
+Sun Oct  3 03:38:28 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/Config_Handlers/ADD_Handler.cpp:
+	* DAnCE/Config_Handlers/ADD_Handler.h:
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.cpp:
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp:
+	* DAnCE/Config_Handlers/CCD_Handler.cpp:
+	* DAnCE/Config_Handlers/CCD_Handler.h:
+	* DAnCE/Config_Handlers/CEPE_Handler.cpp:
+	* DAnCE/Config_Handlers/CEPE_Handler.h:
+	* DAnCE/Config_Handlers/CPD_Handler.cpp:
+	* DAnCE/Config_Handlers/CPD_Handler.h:
+	* DAnCE/Config_Handlers/Config_Handlers.mpc:
+	* DAnCE/Config_Handlers/DP_Handler.cpp:
+	* DAnCE/Config_Handlers/ERE_Handler.cpp:
+	* DAnCE/Config_Handlers/ERE_Handler.h:
+	* DAnCE/Config_Handlers/IDD_Handler.cpp:
+	* DAnCE/Config_Handlers/IDD_Handler.h:
+	* DAnCE/Config_Handlers/ID_Handler.cpp:
+	* DAnCE/Config_Handlers/ID_Handler.h:
+	* DAnCE/Config_Handlers/MDD_Handler.cpp:
+	* DAnCE/Config_Handlers/MDD_Handler.h:
+	* DAnCE/Config_Handlers/PSPE_Handler.cpp:
+	* DAnCE/Config_Handlers/PSPE_Handler.h:
+	* DAnCE/Config_Handlers/Property_Handler.cpp:
+	* DAnCE/Config_Handlers/Property_Handler.h:
+	* DAnCE/Config_Handlers/RDD_Handler.cpp:
+	* DAnCE/Config_Handlers/RDD_Handler.h:
+	* DAnCE/Config_Handlers/Req_Handler.cpp:
+	* DAnCE/Config_Handlers/Req_Handler.h:
+	* DAnCE/Config_Handlers/ccd.cpp:
+	* DAnCE/Config_Handlers/ccd.hpp:
+	* DAnCE/Config_Handlers/cdp.cpp:
+	* DAnCE/Config_Handlers/cdp.hpp:
+
+	  Made the following changes
+
+	  (1) Formatting
+	  (2) Improved const correctness and
+	  (3) Made progress on reading the deployment plan.
+
 Wed Sep 29 15:17:23 2004  Jules White  <jules@dre.vanderbilt.edu>
-                                                                                
-  * DAnCE/Config_Handlers/CCD_Handler.cpp:
-  * DAnCE/Config_Handlers/CCD_Handler.h:
-  * DAnCE/Config_Handlers/ADD_Handler.cpp:
-  * DAnCE/Config_Handlers/ADD_Handler.h:
-  * DAnCE/Config_Handlers/IDD_Handler.cpp:
-  * DAnCE/Config_Handlers/IDD_Handler.h:
-  * DAnCE/Config_Handlers/IRDD_Handler.cpp:
-  * DAnCE/Config_Handlers/IRDD_Handler.h:
-  * DAnCE/Config_Handlers/RDD_Handler.cpp:
-  * DAnCE/Config_Handlers/RDD_Handler.h:
-  * DAnCE/Config_Handlers/MDD_Handler.cpp:
-  * DAnCE/Config_Handlers/MDD_Handler.h:
-  * DAnCE/Config_Handlers/Property_Handler.cpp:
-  * DAnCE/Config_Handlers/Property_Handler.h:
-  * DAnCE/Config_Handlers/Req_Handler.cpp:
-  * DAnCE/Config_Handlers/Req_Handler.h:
+
+	* DAnCE/Config_Handlers/CCD_Handler.cpp:
+	* DAnCE/Config_Handlers/CCD_Handler.h:
+	* DAnCE/Config_Handlers/ADD_Handler.cpp:
+	* DAnCE/Config_Handlers/ADD_Handler.h:
+	* DAnCE/Config_Handlers/IDD_Handler.cpp:
+	* DAnCE/Config_Handlers/IDD_Handler.h:
+	* DAnCE/Config_Handlers/IRDD_Handler.cpp:
+	* DAnCE/Config_Handlers/IRDD_Handler.h:
+	* DAnCE/Config_Handlers/RDD_Handler.cpp:
+	* DAnCE/Config_Handlers/RDD_Handler.h:
+	* DAnCE/Config_Handlers/MDD_Handler.cpp:
+	* DAnCE/Config_Handlers/MDD_Handler.h:
+	* DAnCE/Config_Handlers/Property_Handler.cpp:
+	* DAnCE/Config_Handlers/Property_Handler.h:
+	* DAnCE/Config_Handlers/Req_Handler.cpp:
+	* DAnCE/Config_Handlers/Req_Handler.h:	
   
-    Re-generated the handlers to improve loop efficiency, account
-    for schema changes, and use the new IDREF handling.
+          Re-generated the handlers to improve loop efficiency, account
+	  for schema changes, and use the new IDREF handling.
     
 Tue Sep 28 15:26:41 2004  Jules White  <jules@dre.vanderbilt.edu>
                                                                                 

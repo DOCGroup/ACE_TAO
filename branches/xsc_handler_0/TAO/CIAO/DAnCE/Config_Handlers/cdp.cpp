@@ -6,7 +6,7 @@ namespace CIAO
   namespace Config_Handlers
   {
     // DeploymentPlan
-    // 
+    //
 
     DeploymentPlan::
     DeploymentPlan (::CIAO::Config_Handlers::ComponentInterfaceDescription const& realizes__,
@@ -127,7 +127,7 @@ namespace CIAO
 
 
     // DeploymentPlan
-    // 
+    //
     bool DeploymentPlan::
     label_p () const
     {
@@ -162,7 +162,7 @@ namespace CIAO
     }
 
     // DeploymentPlan
-    // 
+    //
     bool DeploymentPlan::
     UUID_p () const
     {
@@ -197,7 +197,7 @@ namespace CIAO
     }
 
     // DeploymentPlan
-    // 
+    //
     ::CIAO::Config_Handlers::ComponentInterfaceDescription const& DeploymentPlan::
     realizes () const
     {
@@ -217,7 +217,7 @@ namespace CIAO
     }
 
     // DeploymentPlan
-    // 
+    //
     ::CIAO::Config_Handlers::MonolithicDeploymentDescription const& DeploymentPlan::
     implementation () const
     {
@@ -237,7 +237,7 @@ namespace CIAO
     }
 
     // DeploymentPlan
-    // 
+    //
     DeploymentPlan::instance_iterator DeploymentPlan::
     begin_instance ()
     {
@@ -288,7 +288,7 @@ namespace CIAO
     }
 
     // DeploymentPlan
-    // 
+    //
     DeploymentPlan::connection_iterator DeploymentPlan::
     begin_connection ()
     {
@@ -339,7 +339,7 @@ namespace CIAO
     }
 
     // DeploymentPlan
-    // 
+    //
     DeploymentPlan::dependsOn_iterator DeploymentPlan::
     begin_dependsOn ()
     {
@@ -390,7 +390,7 @@ namespace CIAO
     }
 
     // DeploymentPlan
-    // 
+    //
     DeploymentPlan::artifact_iterator DeploymentPlan::
     begin_artifact ()
     {
@@ -441,7 +441,7 @@ namespace CIAO
     }
 
     // DeploymentPlan
-    // 
+    //
     DeploymentPlan::infoProperty_iterator DeploymentPlan::
     begin_infoProperty ()
     {
@@ -566,7 +566,7 @@ namespace CIAO
           add_infoProperty (t);
         }
 
-        else 
+        else
         {
         }
       }
@@ -580,4 +580,3 @@ namespace CIAO
   {
   }
 }
-
