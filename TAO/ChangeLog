@@ -1,3 +1,10 @@
+Sun Mar  2 09:23:18 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tests/DynAny_Test/test_dynstruct.cpp (run_test):
+	* tests/DynAny_Test/test_dynunion.cpp (run_test):
+
+	  "CORBA_" -> "CORBA::".
+
 Sat Mar  1 13:47:14 CST 2003 Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/Builder.cpp:
