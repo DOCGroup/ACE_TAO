@@ -1,3 +1,8 @@
+Sun Jan 20 09:44:12 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup.dsp:
+	  Added TAO_CosNaming.lib to link list for Win32 Release.
+
 Sat Jan 19 18:23:54 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.h: Fixed some more
@@ -5,20 +10,20 @@ Sat Jan 19 18:23:54 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Sat Jan 19 23:57:13 GMT 2002  Boris Kolpackov  <bosk@ipmce.ru>
 
-        * tests/OBV/Any/Makefile: 
-          Regenerated dependencies.  
+        * tests/OBV/Any/Makefile:
+          Regenerated dependencies.
 
 Sat Jan 19 23:30:42 GMT 2002  Boris Kolpackov  <bosk@ipmce.ru>
 
-        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp: 
-          Fixed some bugs in generated any extraction operator.  
-	
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+          Fixed some bugs in generated any extraction operator.
+
 Sat Jan 19 14:15:37 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.h: Not sure why this
 	  was lying in workspace for a long time. Fixed a compile error
 	  with g++. Exceptions were not specified in the signature and
-	  hence the error. 
+	  hence the error.
 
 Sat Jan 19 10:58:53 2002  Ossama Othman  <ossama@uci.edu>
 
