@@ -35,7 +35,7 @@ ConsumerAdmin_i::obtain_push_supplier (CORBA::Environment &TAO_TRY_ENV)
 
   ACE_NEW_RETURN (pps,
                   ProxyPushSupplier_i (this->qos_,
-                                       rtecproxypushsupplier),
+                                       rtecproxypushsupplier.in ()),
                   CosEventChannelAdmin::ProxyPushSupplier::_nil ());
 
   return pps->_this (TAO_TRY_ENV);
