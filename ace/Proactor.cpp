@@ -88,8 +88,7 @@ int
 ACE_Proactor_Timer_Handler::svc (void)
 {
 #if defined (ACE_HAS_AIO_CALLS)
-  // @@ Alex, can you please document why this is a "no-op" for the
-  // AIO calls?
+  // @@ To be implemented.
   return 0;
 #else /* ACE_HAS_AIO_CALLS */
   u_long time;
@@ -214,42 +213,71 @@ ACE_Proactor_Handle_Timeout_Upcall::proactor (ACE_Proactor &proactor)
 
 ACE_Proactor::ACE_Proactor (size_t number_of_threads,
 			    Timer_Queue *tq,
-			    int used_with_reactor_event_loop)
+			    int used_with_reactor_event_loop,
+                            POSIX_COMPLETION_STRATEGY completion_strategy)
   :
 #if defined (ACE_HAS_AIO_CALLS)
-#if defined (_POSIX_RTSIG_MAX)
-  aiocb_list_max_size_ (_POSIX_RTSIG_MAX),
-#else /* _POSIX_RTSIG_MAX */
-  // @@ Alex, please fix this to NOT use magic numbers...
-  aiocb_list_max_size_ (8),
-#endif /* AIO_LISTIO_MAX */
+  aiocb_list_max_size_ (ACE_RTSIG_MAX),
   aiocb_list_cur_size_ (0),
 #else /* ACE_HAS_AIO_CALLS */
-  // This *MUST* be 0, *NOT* ACE_INVALID_HANDLE!!!!
-   completion_port_ (0),
+  completion_port_ (0),
+  // This *MUST* be 0, *NOT* ACE_INVALID_HANDLE !!!
+  number_of_threads_ (number_of_threads),
 #endif /* ACE_HAS_AIO_CALLS */
-   number_of_threads_ (number_of_threads),
-   timer_queue_ (0),
-   delete_timer_queue_ (0),
-   timer_handler_ (0),
-   used_with_reactor_event_loop_ (used_with_reactor_event_loop)
+  timer_queue_ (0),
+  delete_timer_queue_ (0),
+  timer_handler_ (0),
+  used_with_reactor_event_loop_ (used_with_reactor_event_loop),
+  posix_completion_strategy_ (completion_strategy)
 {
 #if defined (ACE_HAS_AIO_CALLS)
   // Initialize the array.
-
   for (size_t ai = 0;
        ai < this->aiocb_list_max_size_;
        ai++)
     aiocb_list_[ai] = 0;
-
+  
+  ACE_UNUSED_ARG (number_of_threads);
   ACE_UNUSED_ARG (tq);
+  
+  // Mask the RT_compeltion signals if we are using the RT_SIGNALS
+  // STRATEGY for completion querying.
+  if (completion_strategy == RT_SIGNALS)
+    {
+      // Make the sigset_t consisting of the completion signals.
+      if (sigemptyset (&this->RT_completion_signals_) < 0)
+        ACE_ERROR ((LM_ERROR,
+                    "Error:%p:Couldnt init the RT completion signal set\n"));
 
-  ACE_DEBUG ((LM_DEBUG,
-              "aiocb_list: Maxsize = %d, Cursize = %d\n",
-              aiocb_list_max_size_,
-              aiocb_list_cur_size_));
+      if (sigaddset (&this->RT_completion_signals_,
+                     ACE_SIG_AIO) < 0)
+        ACE_ERROR ((LM_ERROR,
+                    "Error:%p:Couldnt init the RT completion signal set\n"));
+      
+      // Mask them.
+      if (sigprocmask (SIG_BLOCK, &RT_completion_signals_, 0) < 0)
+        ACE_ERROR ((LM_ERROR,
+                    "Error:%p:Couldnt maks the RT completion signals\n"));
+      
+      // Setting up the handler(!) for these signals.
+      struct sigaction reaction;
+      sigemptyset (&reaction.sa_mask);   // Nothing else to mask.
+      reaction.sa_flags = SA_SIGINFO;    // Realtime flag.
+#if defined (SA_SIGACTION)
+      // Lynx says, it is better to set this bit to be portable.
+      reaction.sa_flags &= SA_SIGACTION;
+#endif /* SA_SIGACTION */      
+      reaction.sa_sigaction = 0;         // No handler.
+      int sigaction_return = sigaction (ACE_SIG_AIO,
+                                        &reaction,
+                                        0);
+      if (sigaction_return == -1)
+        ACE_ERROR ((LM_ERROR,
+                    "Error:%p:Proactorc ouldnt do sigaction for the RT SIGNAL"));
+    }
+  
 #else /* ACE_HAS_AIO_CALLS */
-  // create the completion port
+  // Create the completion port.
   this->completion_port_ = ::CreateIoCompletionPort (INVALID_HANDLE_VALUE,
 						     this->completion_port_,
 						     0,
@@ -399,11 +427,6 @@ ACE_Proactor::~ACE_Proactor (void)
 int
 ACE_Proactor::close (void)
 {
-#if defined (ACE_HAS_AIO_CALLS)
-  // @@ Alex, shouldn't we be handling the cleanup of the timer queue
-  // stuff for the POSIX version of the Proactor, as well?!
-  return 0;
-#else /* ACE_HAS_AIO_CALLS */
   // Take care of the timer handler
   if (this->timer_handler_)
     {
@@ -418,7 +441,7 @@ ACE_Proactor::close (void)
       this->timer_queue_ = 0;
       this->delete_timer_queue_ = 0;
     }
-
+#if !defined  (ACE_HAS_AIO_CALLS)
   // Close the completion port
   if (this->completion_port_ != 0)
     {
@@ -426,9 +449,8 @@ ACE_Proactor::close (void)
       this->completion_port_ = 0;
       return result;
     }
-  else
-    return 0;
-#endif /* ACE_HAS_AIO_CALLS */
+#endif /* NOT ACE_HAS_AIO_CALLS */
+  return 0;
 }
 
 int
@@ -564,19 +586,27 @@ ACE_Proactor::handle_close (ACE_HANDLE handle,
   return this->close ();
 }
 
-// @@ get_handle () implementation.
+// @@ get_handle () implementation. (Alex)
 ACE_HANDLE
 ACE_Proactor::get_handle (void) const
 {
 #if defined (ACE_HAS_AIO_CALLS)
   return ACE_INVALID_HANDLE;
-#else /* ACE_HAS_AIO_CALLS */
+#else /* Not ACE_HAS_AIO_CALLS */
   if (this->used_with_reactor_event_loop_)
     return this->event_.handle ();
   else
     return 0;
 #endif /* ACE_HAS_AIO_CALLS */
 }
+
+#if defined (ACE_HAS_AIO_CALLS)
+ACE_Proactor::POSIX_COMPLETION_STRATEGY
+ACE_Proactor::posix_completion_strategy (void)
+{
+  return posix_completion_strategy_;
+}
+#endif /* ACE_HAS_AIO_CALLS */
 
 int
 ACE_Proactor::handle_events (ACE_Time_Value &wait_time)
@@ -596,89 +626,193 @@ int
 ACE_Proactor::handle_events (unsigned long milli_seconds)
 {
 #if defined (ACE_HAS_AIO_CALLS)
-  // Is there any entries in the list.
-  if (this->aiocb_list_cur_size_ == 0)
-    // No aio is pending.
-    return 0;
-
-  // Wait for asynch operation to complete.
-  timespec timeout;
-  timeout.tv_sec = milli_seconds;
-  timeout.tv_nsec = 0;
-
-  // @@ Alex, I think we want to revise this implementation so that it
-  // DOESN'T need to use aio_suspend, which is going to be
-  // non-scalable since we need to search the aiocb_list...  Instead,
-  // we need to use the sigtimedwait(3R) in conjunction with the POSIX
-  // real-time signal mechanism, which should be much more scalable.
-  // Let's talk about how to make this work.
-  if (aio_suspend (this->aiocb_list_,
-                   this->aiocb_list_max_size_,
-                   &timeout) == -1)
-    // If failure is coz of timeout, then return *0* but set errno
-    // appropriately. This is what the WinNT proactor does.
-    if (errno ==  EAGAIN)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%p):aio_suspend"),
-                        0);
-    else
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%p):aio_suspend"),
-                        -1);
-  // Check which aio has finished.
-  size_t ai;
-  ssize_t nbytes = 0;
-  for (ai = 0; ai < this->aiocb_list_max_size_; ai++)
+  if (posix_completion_strategy () == ACE_Proactor::RT_SIGNALS)
     {
-      if (aiocb_list_ [ai] == 0)
-        continue;
-      // Analyze error and return values.
-      if (aio_error (aiocb_list_[ai]) != EINPROGRESS)
-        {
-          nbytes = aio_return (aiocb_list_[ai]);
+      // Using RT Signals. 
+      
+      // Wait for <milli_seconds> amount of time.
+      // @@ Assigning <milli_seconds> to tv_sec.
+      timespec timeout;
+      timeout.tv_sec = milli_seconds;
+      timeout.tv_nsec = 0;
+      
+      // To get back the signal info.
+      siginfo_t sig_info;
+      
+      // Await the RT completion signal.
+      int sig_return = sigtimedwait (&this->RT_completion_signals_,
+                                     &sig_info,
+                                     &timeout);
+      
+      // Error case.
+      // If failure is coz of timeout, then return *0* but set
+      // errno appropriately. This is what the WinNT proactor
+      // does.
+      if (sig_return == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Error:%p:Error waiting for RT completion signals\n"),
+                          0);
+      
+      // RT completion signals returned.
+      if (sig_return != ACE_SIG_AIO)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Unexpected signal (%d) has been received while waiting for RT Completion Signals\n",
+                           sig_return),
+                          -1);
+      
+      // @@ Debugging.
+      ACE_DEBUG ((LM_DEBUG,
+                  "Sig number found in the sig_info block : %d\n",
+                  sig_info.si_signo));
+      
+      // Is the signo returned consistent?
+      if (sig_info.si_signo != sig_return)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Inconsistent signal number (%d) in the signal info block\n",
+                           sig_info.si_signo),
+                          -1);
+      
+      // @@ Debugging.
+      ACE_DEBUG ((LM_DEBUG,
+                  "Signal code for this signal delivery : %d\n",
+                  sig_info.si_code));
+      
+      // Is the signal code an aio completion one?
+      if ((sig_info.si_code != SI_ASYNCIO) &&
+          (sig_info.si_code != SI_QUEUE))
+        ACE_ERROR_RETURN ((LM_DEBUG,
+                           "Unexpected signal code (%d) returned on completion querying\n",
+                           sig_info.si_code),
+                          0);
 
-          if (nbytes == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "(%p):AIO failed"),
-                              -1);
-          else
+      // Retrive the result pointer.
+      ACE_Asynch_Result *asynch_result =
+        (ACE_Asynch_Result *) sig_info.si_value.sival_ptr;
+      
+      // Retrieve the aiocb from Result ptr.
+      // @@ Some checking should be done to make sure this pointer
+      // is valid. Otherwise <aio_error> will bomb.
+      aiocb* aiocb_ptr =
+        (aiocb *)asynch_result->aiocb_ptr ();
+      
+      // Analyze error and return values. Return values are
+      // actually <errno>'s associated with the <aio_> call
+      // corresponding to aiocb_ptr.
+      int error_code = aio_error (aiocb_ptr);
+      if (error_code == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p:Invalid control block was sent to <aio_error> for compleion querying\n"),
+                          -1);
+
+      if (error_code != 0)
+        // Error occurred in the <aio_>call. Return the errno
+        // corresponding to that <aio_> call.
+        ACE_ERROR_RETURN ((LM_ERROR, 
+                           "%p:An AIO call has failed\n"),
+                          error_code);
+      
+      // No error occured in the AIO operation.
+      int nbytes = aio_return (aiocb_ptr);
+      if (nbytes == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p:Invalid control block was send to <aio_return>\n"),
+                          -1);
+          
+      // <nbytes> have been successfully transmitted.
+      size_t bytes_transferred = nbytes;
+          
+      // @@ Completion key for the the handle. Not implemented for
+      // Unix yet.
+      void *completion_key = 0;
+          
+          // Call the application code.
+      this->application_specific_code (asynch_result,
+                                       bytes_transferred,
+                                       1,  // Result : True.
+                                       completion_key,
+                                       0); // Error.
+    }
+  else 
+    {
+      // Is there any entries in the list.
+      if (this->aiocb_list_cur_size_ == 0)
+        // No aio is pending.
+        return 0;
+
+      // Wait for asynch operation to complete.
+      timespec timeout;
+      timeout.tv_sec = milli_seconds;
+      timeout.tv_nsec = 0;
+ 
+      if (aio_suspend (this->aiocb_list_,
+                       this->aiocb_list_max_size_,
+                       &timeout) == -1)
+        // If failure is coz of timeout, then return *0* but set errno
+        // appropriately. This is what the WinNT proactor does.
+        if (errno ==  EAGAIN)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%p):aio_suspend"),
+                            0);
+        else
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%p):aio_suspend"),
+                            -1);
+      // Check which aio has finished.
+      size_t ai;
+      ssize_t nbytes = 0;
+      for (ai = 0; ai < this->aiocb_list_max_size_; ai++)
+        {
+          if (aiocb_list_ [ai] == 0)
+            continue;
+          // Analyze error and return values.
+          if (aio_error (aiocb_list_[ai]) != EINPROGRESS)
             {
-              ACE_DEBUG ((LM_DEBUG,
-                          "An aio has finished\n"));
-              // This AIO is done.
-              break;
+              nbytes = aio_return (aiocb_list_[ai]);
+
+              if (nbytes == -1)
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "(%p):AIO failed"),
+                                  -1);
+              else
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "An aio has finished\n"));
+                  // This AIO is done.
+                  break;
+                }
             }
         }
+
+      if (ai == this->aiocb_list_max_size_)
+        // Nothing completed.
+        return 0;
+
+      // Get the values for the completed aio.
+
+          // Bytes transfered is what the aio_return gives back.
+      size_t bytes_transferred = nbytes;
+
+      // @@
+      void *completion_key = 0;
+
+      // Retrive the result pointer.
+      ACE_Asynch_Result *asynch_result = (ACE_Asynch_Result *)
+        aiocb_list_[ai]->aio_sigevent.sigev_value.sival_ptr;
+
+          // Invalidate entry in the aiocb list.
+      delete this->aiocb_list_[ai];
+      this->aiocb_list_[ai] = 0;
+      this->aiocb_list_cur_size_--;
+
+      // Call the application code.
+      // @@ Pass <errno> instead of 0. Check out on LynxOS. It is set
+      // to 77 somewhere. 
+      this->application_specific_code (asynch_result,
+                                       bytes_transferred,
+                                       1,
+                                       completion_key,
+                                       0);
     }
-
-  if (ai == this->aiocb_list_max_size_)
-    // Nothing completed.
-    return 0;
-
-  // Get the values for the completed aio.
-
-  // Bytes transfered is what the aio_return gives back.
-  size_t bytes_transferred = nbytes;
-
-  // @@
-  void *completion_key = 0;
-
-  // Retrive the result pointer.
-  ACE_Asynch_Result *asynch_result = (ACE_Asynch_Result *)
-    aiocb_list_[ai]->aio_sigevent.sigev_value.sival_ptr;
-
-  // Invalidate entry in the aiocb list.
-  delete this->aiocb_list_[ai];
-  this->aiocb_list_[ai] = 0;
-  this->aiocb_list_cur_size_--;
-
-  // Call the application code.
-  this->application_specific_code (asynch_result,
-                                   bytes_transferred,
-                                   1,
-                                   completion_key,
-                                   0);
-
   return 0;
 #else /* ACE_HAS_AIO_CALLS */
   ACE_OVERLAPPED *overlapped = 0;
@@ -789,6 +923,7 @@ ACE_Proactor::close_dispatch_threads (int)
   return 0;
 }
 
+#if !defined (ACE_HAS_AIO_CALLS)
 size_t
 ACE_Proactor::number_of_threads (void) const
 {
@@ -800,6 +935,7 @@ ACE_Proactor::number_of_threads (size_t threads)
 {
   this->number_of_threads_ = threads;
 }
+#endif /* ACE_HAS_AIO_CALLS */
 
 ACE_Proactor::Timer_Queue *
 ACE_Proactor::timer_queue (void) const

@@ -36,10 +36,15 @@ ACE_Asynch_Result::ACE_Asynch_Result (ACE_Handler &handler,
   this->Offset = offset;
   this->OffsetHigh = offset_high;
   this->hEvent = event;
+
+#if defined (ACE_HAS_AIO_CALLS)
+  ACE_NEW (this->aiocb_ptr_, aiocb);
+#endif /* ACE_HAS_AIO_CALLS */
 }
 
 ACE_Asynch_Result::~ACE_Asynch_Result (void)
 {
+  delete this->aiocb_ptr_;
 }
 
 u_long
@@ -90,6 +95,14 @@ ACE_Asynch_Result::event (void) const
   return this->hEvent;
 }
 
+#if defined (ACE_HAS_AIO_CALLS)
+aiocb *
+ACE_Asynch_Result::aiocb_ptr (void)
+{
+  return aiocb_ptr_;
+}
+#endif /* ACE_HAS_AIO_CALLS */
+
 ACE_Asynch_Operation::ACE_Asynch_Operation (void)
   : handler_ (0),
     handle_ (ACE_INVALID_HANDLE)
@@ -127,7 +140,6 @@ ACE_Asynch_Operation::open (ACE_Handler &handler,
   // @@ But something has to be done to associate completion key with
   // the handle provided. How about a HashTable of size "the number of
   // file descriptors that are possible in the system".
-  // @@
   ACE_UNUSED_ARG (completion_key);
   return 0;
 #else /* ACE_HAS_AIO_CALLS */
@@ -141,7 +153,7 @@ int
 ACE_Asynch_Operation::cancel (void)
 {
 #if defined (ACE_HAS_AIO_CALLS)
-  // @@ aio_cancel will come here soon.
+  // @@ <aio_cancel> will come here soon.
   return 0;
 #else /* ACE_HAS_AIO_CALLS */
   // All I/O operations that are canceled will complete with the error
@@ -162,7 +174,6 @@ ACE_Asynch_Operation::cancel (void)
 int
 ACE_Asynch_Operation::register_aio_with_proactor (aiocb *aiocb_ptr)
 {
-  ACE_DEBUG ((LM_DEBUG, "register_aio_with_proactor\n"));
   if (aiocb_ptr == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -177,14 +188,14 @@ ACE_Asynch_Operation::register_aio_with_proactor (aiocb *aiocb_ptr)
       else
         return 0;
     }
-
+  
   // Non-zero ptr. Find a free slot and store.
 
   // Make sure again.
   if (this->proactor_->aiocb_list_cur_size_ >=
       this->proactor_->aiocb_list_max_size_)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Asynch_Operation: No space to store the <aio> info.\n"),
+                       "Error:Asynch_Operation: No space to store the <aio> info.\n"),
                       -1);
 
   // Slot(s) available. Find a free one.
@@ -194,11 +205,11 @@ ACE_Asynch_Operation::register_aio_with_proactor (aiocb *aiocb_ptr)
        ai++)
     if (this->proactor_->aiocb_list_[ai] == 0)
       break;
-
-  // Check again.
+  
+  // Sanity check.
   if (ai == this->proactor_->aiocb_list_max_size_)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Asynch_Operation: No space to store the <aio> info.\n"),
+                       "Error:Asynch_Operation: No space to store the <aio> info.\n"),
                       -1);
 
   // Store the pointers.
@@ -208,6 +219,11 @@ ACE_Asynch_Operation::register_aio_with_proactor (aiocb *aiocb_ptr)
 }
 #endif /* ACE_HAS_AIO_CALLS */
 
+ACE_Proactor *
+ACE_Asynch_Operation::proactor (void)
+{
+  return this->proactor_;
+}
 
 // ************************************************************
 
@@ -220,7 +236,7 @@ ACE_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
                               u_long bytes_to_read,
                               const void *act)
 {
-  // Create the Asynch_Result
+  // Create the Asynch_Result.
   Result *result = 0;
   ACE_NEW_RETURN (result,
 		  Result (*this->handler_,
@@ -241,72 +257,94 @@ int
 ACE_Asynch_Read_Stream::shared_read (ACE_Asynch_Read_Stream::Result *result)
 {
 #if defined (ACE_HAS_AIO_CALLS)
-  // Make a new AIOCB and issue aio_read, if queueing is possible
-  // store this with the Proactor, so that that can be used for
-  // <aio_return> and <aio_error>.
-
-  // Allocate aiocb block.
-  aiocb *aiocb_ptr = 0;
-  ACE_NEW_RETURN (aiocb_ptr,
-                  aiocb,
-                  -1);
-
-  // Make sure there is space in the aiocb list.
-  if (this->register_aio_with_proactor (0) == -1)
+  // Act according to the completion strategy that is set in the 
+  // proactor.
+  
+  // Using RT Signals to notify the completion.
+  if (this->proactor ()->posix_completion_strategy () ==
+      ACE_Proactor::RT_SIGNALS)
     {
-      // No space.
-      ACE_ERROR ((LM_ERROR,
-                  "(%p %t) Asynch_Read_Stream: No space to queue aio_read\n"));
+      // Setup AIOCB.
+      // @@ Priority always 0?
+      result->aiocb_ptr ()->aio_fildes = result->handle ();
+      result->aiocb_ptr ()->aio_offset = result->Offset;
+      result->aiocb_ptr ()->aio_buf = result->message_block ().wr_ptr ();
+      result->aiocb_ptr ()->aio_nbytes = result->bytes_to_read ();
+      result->aiocb_ptr ()->aio_reqprio = 0;
+      result->aiocb_ptr ()->aio_sigevent.sigev_notify = SIGEV_SIGNAL;
+      result->aiocb_ptr ()->aio_sigevent.sigev_signo = ACE_SIG_AIO;
+      result->aiocb_ptr ()->aio_sigevent.sigev_value.sival_ptr =
+        (void *) result;
 
-      // Clean up the memory allocated.
-      delete aiocb_ptr;
-
-      // @@ Set errno to EAGAIN so that applications will know this as
-      // a queueing failure and try again this aio_read it they want.
-      errno = EAGAIN;
-
-      return -1;
+      // Fire off the aio write.
+      if (aio_read (result->aiocb_ptr ()) == -1)
+        // Queueing failed.
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Erro:%p:Asynch_Read_Stream: aio_read queueing failed\n"),
+                          -1);
     }
-
-  // Setup AIOCB.
-  // @@ Priority always 0?
-  // @@ Signal no, always?
-  aiocb_ptr->aio_fildes = result->handle ();
-  aiocb_ptr->aio_offset = result->Offset;
-  aiocb_ptr->aio_buf = result->message_block ().wr_ptr ();
-  aiocb_ptr->aio_nbytes = result->bytes_to_read ();
-  aiocb_ptr->aio_reqprio = 0;
-  aiocb_ptr->aio_sigevent.sigev_notify = SIGEV_NONE;
-  //this->this->aiocb_.aio_sigevent.sigev_signo = SIGRTMAX;
-  aiocb_ptr->aio_sigevent.sigev_value.sival_ptr =
-    (void *) result;
-
-  // Fire off the aio write.
-  if (aio_read (aiocb_ptr) == -1)
+  else
     {
-      // Queueing failed.
-      ACE_ERROR ((LM_ERROR,
-                  "(%p %t) Asynch_Read_Stream: aio_read queueing failed\n"));
+      // AIO_CONTROL_BLOCKS strategy.
+      
+      // Make a new AIOCB and issue aio_read, if queueing is possible
+      // store this with the Proactor, so that that can be used for
+      // <aio_return> and <aio_error>.
+      
+      // Allocate aiocb block.
+      aiocb *aiocb_ptr = 0;
+      ACE_NEW_RETURN (aiocb_ptr,
+                      aiocb,
+                      -1);
 
-      // Clean up the memory allocated.
-      delete aiocb_ptr;
+      // Make sure there is space in the aiocb list.
+      if (this->register_aio_with_proactor (0) == -1)
+        {
+          // Clean up the memory allocated.
+          delete aiocb_ptr;
+          
+          // @@ Set errno to EAGAIN so that applications will know this as
+          // a queueing failure and try again this aio_read it they want.
+          errno = EAGAIN;
+          
+          return -1;
+        }
 
-      return -1;
+      // Setup AIOCB.
+      // @@ Priority always 0?
+      // @@ Signal no, always?
+      aiocb_ptr->aio_fildes = result->handle ();
+      aiocb_ptr->aio_offset = result->Offset;
+      aiocb_ptr->aio_buf = result->message_block ().wr_ptr ();
+      aiocb_ptr->aio_nbytes = result->bytes_to_read ();
+      aiocb_ptr->aio_reqprio = 0;
+      aiocb_ptr->aio_sigevent.sigev_notify = SIGEV_NONE;
+      //this->this->aiocb_.aio_sigevent.sigev_signo = SIGRTMAX;
+      aiocb_ptr->aio_sigevent.sigev_value.sival_ptr =
+        (void *) result;
+
+      // Fire off the aio write.
+      if (aio_read (aiocb_ptr) == -1)
+        {
+          // Queueing failed.
+          ACE_ERROR ((LM_ERROR,
+                      "Error:%p:Asynch_Read_Stream: aio_read queueing failed\n"));
+
+          // Clean up the memory allocated.
+          delete aiocb_ptr;
+
+          return -1;
+        }
+
+      // Success. Store the aiocb_ptr with Proactor.
+      if (this->register_aio_with_proactor (aiocb_ptr) == -1)
+        {
+          // Clean up the memory allocated.
+          delete aiocb_ptr;
+
+          return -1;
+        }
     }
-
-  // Success. Store the aiocb_ptr with Proactor.
-  if (this->register_aio_with_proactor (aiocb_ptr) == -1)
-    {
-      // Couldnt store the aiocb.
-      ACE_ERROR ((LM_ERROR,
-                  "(%p %t) Asynch_Read_Stream:Fatal error\n"));
-
-      // Clean up the memory allocated.
-      delete aiocb_ptr;
-
-      return -1;
-    }
-
   // Aio successfully issued and ptr stored.
   return 0;
 
@@ -427,75 +465,96 @@ int
 ACE_Asynch_Write_Stream::shared_write (ACE_Asynch_Write_Stream::Result *result)
 {
 #if defined (ACE_HAS_AIO_CALLS)
-  // Make a new AIOCB and issue aio_write, if queueing is possible
-  // store this with the Proactor, so that that can be used for
-  // <aio_return> and <aio_error>.
-
-  // Allocate aiocb block.
-  aiocb *aiocb_ptr = 0;
-  ACE_NEW_RETURN  (aiocb_ptr,
-                   aiocb,
-                   -1);
-
-  // Make sure there is space in the aiocb list.
-  if (this->register_aio_with_proactor (0) == -1)
+  // Act according to the completion strategy that is set in the 
+  // proactor.
+  if (this->proactor ()->posix_completion_strategy () == 
+      ACE_Proactor::RT_SIGNALS)
     {
-      // No space.
-      ACE_ERROR ((LM_ERROR,
-                  "(%p %t) Asynch_Write_Stream: No space to queue aio_read\n"));
-
-      // Clean up the memory allocated.
-      delete aiocb_ptr;
-
-      // @@ Set errno to EAGAIN so that applications will know this as
-      // a queueing failure and try again this aio_read it they want.
-      errno = EAGAIN;
-
-      return -1;
+      // Setup AIOCB.
+      // @@ Priority always 0?
+      result->aiocb_ptr ()->aio_fildes = result->handle ();
+      result->aiocb_ptr ()->aio_offset = result->Offset;
+      result->aiocb_ptr ()->aio_buf = result->message_block ().rd_ptr ();
+      result->aiocb_ptr ()->aio_nbytes = result->bytes_to_write ();
+      result->aiocb_ptr ()->aio_reqprio = 0;
+      result->aiocb_ptr ()->aio_sigevent.sigev_notify = SIGEV_SIGNAL;
+      result->aiocb_ptr ()->aio_sigevent.sigev_signo = ACE_SIG_AIO;
+      result->aiocb_ptr ()->aio_sigevent.sigev_value.sival_ptr =
+        (void *) result;
+      
+      // Fire off the aio write.
+      if (aio_write (result->aiocb_ptr ()) == -1)
+        // Queueing failed.
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p:Asynch_Write_Stream: aio_write queueing failed\n"),
+                          -1);
     }
-
-  // Setup AIOCB.
-  // @@ Priority always 0?
-  // @@ Signal no, always?
-  aiocb_ptr->aio_fildes = result->handle ();
-  aiocb_ptr->aio_offset = result->Offset;
-  aiocb_ptr->aio_buf = result->message_block ().rd_ptr ();
-  aiocb_ptr->aio_nbytes = result->bytes_to_write ();
-  aiocb_ptr->aio_reqprio = 0;
-  aiocb_ptr->aio_sigevent.sigev_notify = SIGEV_NONE;
-  //this->this->aiocb_.aio_sigevent.sigev_signo = SIGRTMAX;
-  aiocb_ptr->aio_sigevent.sigev_value.sival_ptr =
-    (void *) result;
-
-  // Fire off the aio write.
-  if (aio_write (aiocb_ptr) == -1)
+  else 
     {
-      // Queueing failed.
-      ACE_ERROR ((LM_ERROR,
-                  "(%p %t) Asynch_Write_Stream: aio_write queueing failed\n"));
+      // AIO_CONTROL_BLOCKS strategy.
+      
+      // Make a new AIOCB and issue aio_write, if queueing is possible
+      // store this with the Proactor, so that that can be used for
+      // <aio_return> and <aio_error>.
+      
+      // Allocate aiocb block.
+      aiocb *aiocb_ptr = 0;
+      ACE_NEW_RETURN  (aiocb_ptr,
+                       aiocb,
+                       -1);
 
-      // Clean up the memory allocated.
-      delete aiocb_ptr;
+      // Make sure there is space in the aiocb list.
+      if (this->register_aio_with_proactor (0) == -1)
+        {
+          // Clean up the memory allocated.
+          delete aiocb_ptr;
 
-      return -1;
+          // @@ Set errno to EAGAIN so that applications will know this as
+          // a queueing failure and try again this aio_read it they want.
+          errno = EAGAIN;
+
+          return -1;
+        }
+
+      // Setup AIOCB.
+      // @@ Priority always 0?
+      // @@ Signal no, always?
+      aiocb_ptr->aio_fildes = result->handle ();
+      aiocb_ptr->aio_offset = result->Offset;
+      aiocb_ptr->aio_buf = result->message_block ().rd_ptr ();
+      aiocb_ptr->aio_nbytes = result->bytes_to_write ();
+      aiocb_ptr->aio_reqprio = 0;
+      aiocb_ptr->aio_sigevent.sigev_notify = SIGEV_NONE;
+      //this->this->aiocb_.aio_sigevent.sigev_signo = SIGRTMAX;
+      aiocb_ptr->aio_sigevent.sigev_value.sival_ptr =
+        (void *) result;
+
+      // Fire off the aio write.
+      if (aio_write (aiocb_ptr) == -1)
+        {
+          // Queueing failed.
+          ACE_ERROR ((LM_ERROR,
+                      "Error:%p:Asynch_Write_Stream: aio_write queueing failed\n"));
+
+          // Clean up the memory allocated.
+          delete aiocb_ptr;
+          
+          return -1;
+        }
+      
+      // Success. Store the aiocb_ptr with Proactor.
+      if (this->register_aio_with_proactor (aiocb_ptr) == -1)
+        {
+          // Clean up the memory allocated.
+          delete aiocb_ptr;
+          
+          return -1;
+        }
     }
-
-  // Success. Store the aiocb_ptr with Proactor.
-  if (this->register_aio_with_proactor (aiocb_ptr) == -1)
-    {
-      // Couldnt store the aiocb.
-      ACE_ERROR ((LM_ERROR,
-                  "(%p %t) Asynch_Write_Stream: Fatal error\n"));
-
-      // Clean up the memory allocated.
-      delete aiocb_ptr;
-
-      return -1;
-    }
-
-  // Aio successfully issued and ptr stored.
+  
+  // Aio successfully issued.
   return 0;
-
+  
 #else /* ACE_HAS_AIO_CALLS */
   u_long bytes_written;
 
@@ -628,8 +687,6 @@ ACE_Asynch_Read_File::Result::complete (u_long bytes_transferred,
                                         const void *completion_key,
                                         u_long error)
 {
-  ACE_DEBUG ((LM_DEBUG, "ACE_Asynch_Read_File::Result::complete\n"));
-
   // Copy the data which was returned by GetQueuedCompletionStatus.
   this->bytes_transferred_ = bytes_transferred;
   this->success_ = success;
@@ -722,7 +779,8 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
   return 0;
 #else /* ACE_HAS_AIO_CALLS */
 #if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
-  // Sanity check: make sure that enough space has been allocated by the caller.
+  // Sanity check: make sure that enough space has been allocated by
+  // the caller. 
   size_t address_size = sizeof (sockaddr_in) + sizeof (sockaddr);
   size_t space_in_use = message_block.wr_ptr () - message_block.base ();
   size_t total_size = message_block.size ();
@@ -883,7 +941,7 @@ ACE_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
 
   if (file_size == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%p) Asynch_Transmit_File:Couldnt know the file size\n"),
+                       "%p:Asynch_Transmit_File:Couldnt know the file size\n"),
                       -1);
 
   if (bytes_to_write == 0)
@@ -891,7 +949,7 @@ ACE_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
 
   if (offset > (size_t) file_size)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%p %t)Asynch_Transmit_File:File size is less than offset\n"),
+                       "Asynch_Transmit_File:File size is less than offset\n"),
                       -1);
 
   if (offset != 0)
@@ -921,16 +979,18 @@ ACE_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
   ACE_Asynch_Transmit_Handler *transmit_handler = 0;
 
   ACE_NEW_RETURN (transmit_handler,
-                  ::ACE_Asynch_Transmit_Handler (result),
+                  ::ACE_Asynch_Transmit_Handler (result,
+                                                 this->proactor_), 
                   -1);
 
   ssize_t return_val = transmit_handler->transmit ();
-
+  
   if (return_val == -1)
-    // This deletes the result in it.
+    // This deletes the <result> in it too.
     delete transmit_handler;
-
-  return return_val;
+  
+  return 0;
+    
 #elif (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
   Result *result = 0;
   ACE_NEW_RETURN (result,
@@ -1191,40 +1251,23 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::transmit_buffers (void)
 
 #if defined (ACE_HAS_AIO_CALLS)
 // Constructor.
-ACE_Asynch_Transmit_Handler::ACE_Asynch_Transmit_Handler (ACE_Asynch_Transmit_File::Result *result)
+ACE_Asynch_Transmit_Handler::ACE_Asynch_Transmit_Handler (ACE_Asynch_Transmit_File::Result *result,
+                                                          ACE_Proactor *proactor)
   : result_ (result),
+    proactor_ (proactor),
     mb_ (0),
-    header_act_ (0),
-    data_act_ (0),
-    trailer_act_ (0),
+    header_act_ (this->HEADER_ACT),
+    data_act_ (this->DATA_ACT),
+    trailer_act_ (this->TRAILER_ACT),
     file_offset_ (result->offset ()),
     file_size_ (0),
-    bytes_transferred_ (0)
+    bytes_transferred_ (0),
+    transmit_file_done_ (0)
 {
   // Allocate memory for the message block.
   ACE_NEW (this->mb_,
            ACE_Message_Block (this->result_->bytes_per_send ()
                               + 1));
-
-  // @@ Alex, must we (1) use dynamic memory for this and (2) allocate
-  // 3 separate chunks of memory?  This seems costly.  Is there any
-  // way to optimize it, e.g., by combining multiple
-  // operations/buffers into fewer ones?
-
-  // Memory for the ACTs.
-  ACE_NEW (this->header_act_,
-           ACT);
-
-  ACE_NEW (this->data_act_,
-           ACT);
-
-  ACE_NEW (this->trailer_act_,
-           ACT);
-
-  *this->header_act_ = this->HEADER_ACT;
-  *this->data_act_ = this->DATA_ACT;
-  *this->trailer_act_ = this->TRAILER_ACT;
-
   // Init the file size.
   file_size_ = ACE_OS::filesize (this->result_->file ());
 }
@@ -1234,9 +1277,6 @@ ACE_Asynch_Transmit_Handler::~ACE_Asynch_Transmit_Handler (void)
 {
   delete result_;
   delete mb_;
-  delete this->header_act_;
-  delete this->data_act_;
-  delete this->trailer_act_;
 }
 
 // Do the transmission.
@@ -1245,14 +1285,11 @@ ACE_Asynch_Transmit_Handler::~ACE_Asynch_Transmit_Handler (void)
 int
 ACE_Asynch_Transmit_Handler::transmit (void)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "Asynch_Transmit_Handler::transmit\n"));
-
   // Open Asynch_Read_File.
   if (this->rf_.open (*this,
                       this->result_->file ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%p %t):ACE_Asynch_Transmit_Handler:read_file open failed\n"),
+                       "ACE_Asynch_Transmit_Handler:read_file open failed\n"),
                       -1);
 
   // Open Asynch_Write_Stream.
@@ -1261,22 +1298,33 @@ ACE_Asynch_Transmit_Handler::transmit (void)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_Asynch_Transmit_Handler:write_stream open failed\n"),
                       -1);
-
+  
   // Transmit the header.
   if (this->ws_.write (*this->result_->header_and_trailer ()->header (),
                        this->result_->header_and_trailer ()->header_bytes (),
-                       (void *) this->header_act_) == -1)
+                       (void *) &this->header_act_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%p %t):Asynch_Transmit_Handler:transmitting header:write_stream failed\n"),
+                       "Asynch_Transmit_Handler:transmitting header:write_stream failed\n"),
                       -1);
-  return 0;
+  
+  // @@ We need to finish the transmitting, before returning to the
+  // user code. Otherwise <transmit> may not be atmoic. User's other
+  // <read> or <write> on the same socket might damage the order of
+  // the current file transmission. 
+  int error = 0;
+  while (!error && !this->transmit_file_done_)
+    error = this->proactor_->handle_events ();
+  
+  if (!error && this->transmit_file_done_)
+    // No error, transmission done. 
+    return 0;
+  else 
+    return -1;
 }
 
 void
 ACE_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
 {
-  ACE_DEBUG ((LM_DEBUG, "Asynch_Transmit_Handler:handle_write_stream called\n"));
-
   // Update bytes transferred so far.
   this->bytes_transferred_ += result.bytes_transferred ();
 
@@ -1285,13 +1333,13 @@ ACE_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_Stream:
     {
       ACE_ERROR ((LM_ERROR,
                   "Asynch_Transmit_File failed.\n"));
-
+      
       ACE_SEH_TRY
         {
           this->result_->complete (this->bytes_transferred_,
                                    0,      // Failure.
                                    0,      // @@ Completion key.
-                                   errno); // Error no.
+                                   0);     // @@ Error no.
         }
       ACE_SEH_FINALLY
         {
@@ -1299,23 +1347,24 @@ ACE_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_Stream:
           delete this;
         }
     }
-
+  
   // Write stream successful.
-
+  
   // Partial write to socket.
   int unsent_data = result.bytes_to_write () - result.bytes_transferred ();
   if (unsent_data != 0)
     {
-      // Reset pointers
+      // Reset pointers.
       result.message_block ().rd_ptr (result.bytes_transferred ());
-
+      
       // Duplicate the message block and retry remaining data
       if (this->ws_.write (*result.message_block ().duplicate (),
                            unsent_data,
                            result.act ()) == -1)
         {
+          // @@ Handle this error.
           ACE_ERROR ((LM_ERROR,
-                      "(%p %t):Asynch_Transmit_Handler:write_stream failed\n"));
+                      "Asynch_Transmit_Handler:write_stream failed\n"));
           return;
         }
 
@@ -1337,32 +1386,33 @@ ACE_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_Stream:
     case TRAILER_ACT:
       // If it is the "trailer" that is just sent, then transmit file
       // is complete.
-
       ACE_SEH_TRY
         {
           this->result_->complete (this->bytes_transferred_,
                                    1,      // @@ Success.
                                    0,      // @@ Completion key.
-                                   errno); // @@ Errno.
+                                   0);     // @@ Errno.
         }
       ACE_SEH_FINALLY
         {
+          transmit_file_done_ = 1;
           delete this;
         }
       break;
-
+      
     case HEADER_ACT:
     case DATA_ACT:
       // If header/data was sent, initiate the file data transmission.
-
       if (this->initiate_read_file () == -1)
+        // @@ Handle this error.
         ACE_ERROR ((LM_ERROR,
-                    "(%p %t):Asynch_Transmit_Handler:read_file couldnt be initiated\n"));
+                    "Error:Asynch_Transmit_Handler:read_file couldnt be initiated\n"));
       break;
-
+      
     default:
+      // @@ Handle this error.
       ACE_ERROR ((LM_ERROR,
-                  "(%p %t):ACE_Asynch_Transmit_File::Aux:handle_write_stream::Unexpected act\n"));
+                  "Error:ACE_Asynch_Transmit_Handler::handle_write_stream::Unexpected act\n"));
     }
 }
 
@@ -1372,8 +1422,7 @@ ACE_Asynch_Transmit_Handler::handle_read_file (const ACE_Asynch_Read_File::Resul
   // Failure.
   if (result.success () == 0)
     {
-      ACE_ERROR ((LM_ERROR,
-                  "(%p %t):Asynch_Transmit_Handler : read from the file failed\n"));
+      // 
       ACE_SEH_TRY
         {
           this->result_->complete (this->bytes_transferred_,
@@ -1391,15 +1440,16 @@ ACE_Asynch_Transmit_Handler::handle_read_file (const ACE_Asynch_Read_File::Resul
   // Read successful.
   if (result.bytes_transferred () == 0)
     return;
-
+  
   // Increment offset and write data to network.
   this->file_offset_ += result.bytes_transferred ();
   if (this->ws_.write (result.message_block (),
                        result.bytes_transferred (),
-                       (void *) this->data_act_) == -1)
+                       (void *)&this->data_act_) == -1)
     {
+      // @@ Handle this error.
       ACE_ERROR ((LM_ERROR,
-                  "(%p %t):ACE_Asynch_Transmit_File : write to the stream failed\n"));
+                  "Error:ACE_Asynch_Transmit_File : write to the stream failed\n"));
       return;
     }
 }
@@ -1411,14 +1461,11 @@ ACE_Asynch_Transmit_Handler::initiate_read_file (void)
   if (this->file_offset_ >= this->file_size_)
     {
       // File is sent. Send the trailer.
-      ACE_DEBUG ((LM_DEBUG,
-                  "Trailer %s\n",
-                  this->result_->header_and_trailer ()->trailer ()->rd_ptr ()));
       if (this->ws_.write (*this->result_->header_and_trailer ()->trailer (),
                            this->result_->header_and_trailer ()->trailer_bytes (),
-                           (void *)this->trailer_act_) == -1)
+                           (void *)&this->trailer_act_) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%p %t):Asynch_Transmit_Handler:write_stream writing trailer failed\n"),
+                           "Error:Asynch_Transmit_Handler:write_stream writing trailer failed\n"),
                           -1);
       return 0;
     }
@@ -1429,7 +1476,7 @@ ACE_Asynch_Transmit_Handler::initiate_read_file (void)
                           this->mb_->size () - 1,
                           this->file_offset_) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%p %t) Asynch_Transmit_Handler::read from file failed\n"),
+                           "Error:Asynch_Transmit_Handler::read from file failed\n"),
                           -1);
       return 0;
     }
