@@ -609,6 +609,18 @@ public:
   // <WaitForMultipleObjects> for the <bAlertable> option.
 
 
+  // = Event handling control.
+
+  virtual int deactivated (void);
+  // Return the status of Reactor.  If this function returns 0, the reactor is
+  // actively handling events.  If it returns non-zero, <handling_events> and
+  // <handle_alertable_events> return -1 immediately.
+
+  virtual void deactivate (int do_stop);
+  // Control whether the Reactor will handle any more incoming events or not.
+  // If <do_stop> == 1, the Reactor will be disabled.  By default, a reactor
+  // is in active state and can be deactivated/reactived as wish.
+
   // = Register and remove Handlers.
 
   virtual int register_handler (ACE_Event_Handler *event_handler,
@@ -1071,6 +1083,10 @@ protected:
 
   int open_for_business_;
   // This flag is used to keep track of whether we are already closed.
+
+  sig_atomic_t deactivated_;
+  // This flag is used to keep track of whether we are actively handling
+  // events or not.
 
 private:
   ACE_WFMO_Reactor (const ACE_WFMO_Reactor &);

@@ -476,7 +476,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
    int disable_notify_pipe,
    ACE_Reactor_Notify *notify)
     : token_ (*this),
-      lock_adapter_ (token_)
+      lock_adapter_ (token_),
+      deactivated_ (0)
+
 {
   ACE_TRACE ("ACE_Select_Reactor_T::ACE_Select_Reactor_T");
 
@@ -1166,7 +1168,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_events
   ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1);
 
   if (ACE_OS::thr_equal (ACE_Thread::self (),
-                         this->owner_) == 0)
+                         this->owner_) == 0 || this->deactivated_)
     return -1;
 
   // Update the countdown to reflect time waiting for the mutex.

@@ -979,7 +979,8 @@ ACE_WFMO_Reactor::ACE_WFMO_Reactor (ACE_Sig_Handler *sh,
     active_threads_ (0),
     owner_ (ACE_Thread::self ()),
     change_state_thread_ (0),
-    open_for_business_ (0)
+    open_for_business_ (0),
+    deactivated_ (0)
 {
   if (this->open (ACE_WFMO_Reactor::DEFAULT_SIZE, 0, sh, tq) == -1)
     ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("WFMO_Reactor")));
@@ -1399,7 +1400,7 @@ ACE_WFMO_Reactor::event_handling (ACE_Time_Value *max_wait_time,
   ACE_TRACE ("ACE_WFMO_Reactor::event_handling");
 
   // Make sure we are not closed
-  if (!this->open_for_business_)
+  if (!this->open_for_business_ || this->deactivated_)
     return -1;
 
   // Stash the current time -- the destructor of this object will
