@@ -1,3 +1,8 @@
+Fri Nov 15 13:22:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/Proactor_Test.cpp: On Win32, check for canceled I/O using
+          ERROR_OPERATION_ABORTED instead of ECANCELED.
+
 Fri Nov 15 16:51:11 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* ace/POSIX_CB_Proactor.h:
