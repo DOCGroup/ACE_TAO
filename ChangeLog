@@ -1,3 +1,7 @@
+Mon Apr 17 20:10:18 2000  Vishal  <vishal@cs.wustl.edu>
+
+        * ACE version 5.1.1 released.
+
 Mon Apr 17 16:33:17 2000  Ossama Othman  <ossama@uci.edu>
 
 	* acconfig.h (ACE_LACKS_ACE_OTHER, ACE_LACKS_ACE_SVCCONF,
