@@ -1,3 +1,25 @@
+Mon Aug  2 09:06:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/os_include/os_signal.h: Removed the #include os_time.h - it's
+	  not needed for anything in this header, and for some reason, it
+	  introduces a type oddity on HP-UX - aC++ gets the idea there's a
+	  tentative struct sigaction and doesn't match the real one, causing
+	  compile errors in ACE_OS::sigaction().
+
+	* ace/Signal.{h inl}: Removed the hack typedef ACE_SIGACTION that
+	  was allegedly put in for an HP-UX C++ bug. It's not needed and is
+	  causing further problems. #include "ace/os_include/os_signal.h"
+	  to get the needed signal-related types.
+
+	* apps/JAWS3/jaws3/Event_Result.h: Changed #include "ace/OS.h" to
+	  "ace/OS_NS_errno.h". Removing the "big hammer" OS.h stuff. This
+	  fixes a compile error in OS_TLI.inl on HP-UX w/ aC++. Why? I
+	  have no idea... there's something odd still about orders of
+	  includes and/or preprocessor defs or something. This odd compile
+	  error creeps up every once in a while and is always related to
+	  fudging something somewhere (see fix above for signal...) but
+	  this one doesn't have an apparant cause.
+
 Sun Aug  1 08:15:23 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
