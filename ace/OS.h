@@ -4928,8 +4928,10 @@ public:
   static int strncasecmp (const wchar_t *s,
                           const wchar_t *t,
                           size_t len);
-  static wchar_t *strpbrk (const wchar_t *s1,
+  static wchar_t *strpbrk (wchar_t *s1,
                            const wchar_t *s2);
+  static const wchar_t *strpbrk (const wchar_t *s1,
+                                 const wchar_t *s2);
   static wchar_t *strncpy (wchar_t *s,
                            const wchar_t *t,
                            size_t len);
