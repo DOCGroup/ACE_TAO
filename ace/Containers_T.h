@@ -737,6 +737,19 @@ class ACE_Double_Linked_List
   //     circular linked list with a dummy node.  It is pretty much
   //     like the <ACE_Unbounded_Queue> except that it allows removing
   //     of a specific element from a specific location.
+  //
+  //     Notice that this class is an implementation of a very simply
+  //     data structure.is *NOT* a container class.  You can use the
+  //     class to implement other contains classes but it is *NOT* a
+  //     general purpose container class.
+  //
+  //     The parameter class *MUST* has members T* prev and T* next
+  //     and users of this class are responsible to follow the general
+  //     rules of using double-linked lists to maintaining the list
+  //     integrities.
+  //
+  //     If you need a double linked container class, check out the
+  //     DLList class in this file.
 public:
   friend class ACE_Double_Linked_List_Iterator_Base<T>;
   friend class ACE_Double_Linked_List_Iterator<T>;
