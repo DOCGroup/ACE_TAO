@@ -122,6 +122,7 @@ public:
       ACE_TRY
         {
           excep_holder->raise_foo (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
