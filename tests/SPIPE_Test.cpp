@@ -168,7 +168,7 @@ server (void *)
 
   // Verify that we can read the stream of individual bytes all at
   // once.
-  if (new_stream.recv (buf, sizeof(buf)) != ACE_OS::strlen (ACE_ALPHABET))
+  if (new_stream.recv (buf, sizeof(buf)) != (ssize_t) ACE_OS::strlen (ACE_ALPHABET))
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("recv"), 1));
   else
     ACE_ASSERT(memcmp(ACE_ALPHABET, buf, ACE_OS::strlen (ACE_ALPHABET)) == 0);

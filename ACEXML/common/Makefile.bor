@@ -10,6 +10,7 @@ OBJFILES = \
         $(OBJDIR)\DTD_Manager.obj \
         $(OBJDIR)\Element_Def_Builder.obj \
         $(OBJDIR)\Env.obj \
+        $(OBJDIR)\Encoding.obj \
         $(OBJDIR)\Exception.obj \
         $(OBJDIR)\FileCharStream.obj \
         $(OBJDIR)\InputSource.obj \
