@@ -202,12 +202,12 @@ void TAO_ServantBase::synchronous_upcall_dispatch(CORBA::ServerRequest &req,
   const char *opname = req.operation();
 
   // It seems that I might have missed s/g here.  What if
-  // it is a one way that is SYNC_WITH_SERVER.  
+  // it is a one way that is SYNC_WITH_SERVER.
   // Add the following line to handle this reply send as well.
-  
+
   // Handle the one ways that are SYNC_WITH_SERVER
   if (req.sync_with_server ())
-  { 
+  {
      req.send_no_exception_reply ();
   }
 
@@ -223,14 +223,20 @@ void TAO_ServantBase::synchronous_upcall_dispatch(CORBA::ServerRequest &req,
     // invoke the right operation on the skeleton class (<derived_this>).
     // and marshal any results
     skel (req, derived_this, context, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
 
     // It is our job to send the already marshaled reply, but only
     // send if it is expected and it has not already been sent
-    if ((!req.sync_with_server() && req.response_expected()))
+
+    // We send the reply only if it is NOT a SYNC_WITH_SERVER, a
+    // response is expected and if the reply is not deferred.
+    if ((!req.sync_with_server () &&
+         req.response_expected () &&
+         !req.deferred_reply ()))
     {
       req.tao_send_reply();
-	  ACE_TRY_CHECK;
     }
+
   }
   ACE_CATCH(CORBA::Exception,ex)
   {
@@ -239,6 +245,9 @@ void TAO_ServantBase::synchronous_upcall_dispatch(CORBA::ServerRequest &req,
     req.tao_send_reply_exception(ex);
   }
   ACE_ENDTRY;
+  ACE_CHECK;
+
+  return;
 }
 
 
@@ -465,7 +474,7 @@ TAO_DynamicImplementation::_dispatch (CORBA::ServerRequest &request,
      if ((!request.sync_with_server() && request.response_expected()))
      {
        request.tao_send_reply();
-	   ACE_TRY_CHECK;
+           ACE_TRY_CHECK;
      }
    }
    ACE_CATCH(CORBA::Exception,ex)

@@ -52,13 +52,13 @@ TAO_GIOP_ServerRequest::
                             TAO_InputCDR &input,
                             TAO_OutputCDR &output,
                             TAO_Transport *transport,
-                            TAO_ORB_Core *orb_core,
-                            const TAO_GIOP_Version & /*version*/)
+                            TAO_ORB_Core *orb_core)
       :mesg_base_ (mesg_base),
        incoming_ (&input),
        outgoing_ (&output),
        transport_(transport),
        response_expected_ (0),
+       deferred_reply_ (0),
        sync_with_server_ (0),
        lazy_evaluation_ (0),
 
@@ -72,7 +72,6 @@ TAO_GIOP_ServerRequest::
        exception_ (0),
        exception_type_ (TAO_GIOP_NO_EXCEPTION),
        orb_core_ (orb_core),
-       //       version_ (version),
        service_info_ (),
        request_id_ (0),
        profile_ (orb_core),
@@ -86,14 +85,14 @@ TAO_GIOP_ServerRequest::
 
 TAO_GIOP_ServerRequest::
     TAO_GIOP_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
-                            CORBA::ULong &request_id,
-                            CORBA::Boolean &response_expected,
+                            CORBA::ULong request_id,
+                            CORBA::Boolean response_expected,
+                            CORBA::Boolean deferred_reply,
                             TAO_ObjectKey &object_key,
                             const ACE_CString &operation,
                             TAO_OutputCDR &output,
                             TAO_Transport *transport,
                             TAO_ORB_Core *orb_core,
-                            const TAO_GIOP_Version & /*version*/,
                             int &parse_error)
       : mesg_base_ (mesg_base),
         operation_ (operation),
@@ -101,6 +100,7 @@ TAO_GIOP_ServerRequest::
         outgoing_ (&output),
         transport_ (transport),
         response_expected_ (response_expected),
+        deferred_reply_ (deferred_reply),
         sync_with_server_ (0),
         lazy_evaluation_ (0),
 
@@ -114,7 +114,6 @@ TAO_GIOP_ServerRequest::
         exception_ (0),
         exception_type_ (TAO_GIOP_NO_EXCEPTION),
         orb_core_ (orb_core),
-        //version_ (version),
         service_info_ (),
         request_id_ (request_id),
         profile_ (orb_core),
