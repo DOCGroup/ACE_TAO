@@ -71,7 +71,7 @@ typedef ACE_Hash_Map_Iterator_Ex<TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KE
 typedef ACE_Hash_Map_Reverse_Iterator_Ex<TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX>
         CACHE_REV_ITER_IMPL;
 typedef int ATTR;
-typedef ACE_Null_Caching_Strategy_Utility <TYPE, TYPE, CACHE_MAP_IMPL, CACHE_ITER_IMPL, ATTR>
+typedef ACE_Null_Caching_Utility <TYPE, TYPE, CACHE_MAP_IMPL, CACHE_ITER_IMPL, ATTR>
         NULL_UTILITY;
 typedef ACE_Null_Caching_Strategy<TYPE, TYPE, CACHE_MAP_IMPL, ATTR, NULL_UTILITY>
         NULL_CACHING_STRATEGY;
@@ -925,13 +925,14 @@ main (int argc, ASYS_TCHAR *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Pair<TYPE, ATTR>;
+template class ACE_Equal_To<TYPE>;
+template class ACE_Pair<TYPE, ATTR >;
+template class ACE_Reference_Pair<TYPE, TYPE>;
 template class ACE_Hash_Map_Manager_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>;
 template class ACE_Hash_Map_Iterator_Base_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>;
 template class ACE_Hash_Map_Iterator_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>;
 template class ACE_Hash_Map_Entry<TYPE, TYPE>;
-template class ACE_Equal_To<TYPE>;
 template class ACE_Map_Manager<TYPE, TYPE, MUTEX>;
 template class ACE_Map_Iterator_Base<TYPE, TYPE, MUTEX>;
 template class ACE_Map_Iterator<TYPE, TYPE, MUTEX>;
@@ -943,27 +944,26 @@ template class ACE_Map_Iterator_Base<ACE_Active_Map_Manager_Key, TYPE, MUTEX>;
 template class ACE_Map_Iterator<ACE_Active_Map_Manager_Key, TYPE, MUTEX>;
 template class ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, TYPE, MUTEX>;
 template class ACE_Map_Entry<ACE_Active_Map_Manager_Key, TYPE>;
-template class ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >;
-template class ACE_Hash_Map_Iterator_Base_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >;
-template class ACE_Hash_Map_Iterator_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >;
-template class ACE_Hash_Map_Reverse_Iterator_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >;
+template class ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX>;
+template class ACE_Hash_Map_Iterator_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX>;
 template class ACE_Hash_Map_Entry<TYPE, ACE_Pair<TYPE, ATTR> >;
-template class ACE_Caching_Strategy_Utility <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ATTR>;
-template class ACE_Null_Caching_Strategy_Utility <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ACE_Hash_Map_Iterator_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >,ATTR>;
-template class ACE_Null_Caching_Strategy <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ATTR, ACE_Null_Caching_Strategy_Utility <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ACE_Hash_Map_Iterator_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >,ATTR>  >;
-template class ACE_Hash_Cache_Map_Manager <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, ACE_Null_Caching_Strategy <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ATTR,  ACE_Null_Caching_Strategy_Utility <TYPE, TYPE,ACE_Hash_Map_Manager_Ex<TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ACE_Hash_Map_Iterator_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >,ATTR>  >, ATTR  > ;
-template class ACE_Cache_Map_Manager <TYPE, TYPE, ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ACE_Hash_Map_Iterator_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ACE_Hash_Map_Reverse_Iterator_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ACE_Null_Caching_Strategy <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ATTR,  ACE_Null_Caching_Strategy_Utility <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ACE_Hash_Map_Iterator_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ATTR>  >, ATTR> ;
-template class ACE_Cache_Map_Iterator <TYPE, TYPE, ACE_Hash_Map_Iterator_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >,  ACE_Null_Caching_Strategy <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ATTR,  ACE_Null_Caching_Strategy_Utility <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ACE_Hash_Map_Iterator_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ATTR>  >, ATTR> ;
-template class ACE_Reference_Pair<size_t, size_t>;
-template class ACE_Cache_Map_Reverse_Iterator<size_t,size_t,ACE_Hash_Map_Reverse_Iterator_Ex<size_t,ACE_Pair<size_t,int>,ACE_Hash<size_t>,ACE_Equal_To<size_t>,ACE_Null_Mutex>,ACE_Null_Caching_Strategy<size_t,size_t,ACE_Hash_Map_Manager_Ex<size_t,ACE_Pair<size_t,int>,ACE_Hash<size_t>,ACE_Equal_To<size_t>,ACE_Null_Mutex>,int,ACE_Null_Caching_Strategy_Utility<size_t,size_t,ACE_Hash_Map_Manager_Ex<size_t,ACE_Pair<size_t,int>,ACE_Hash<size_t>,ACE_Equal_To<size_t>,ACE_Null_Mutex>, ACE_Hash_Map_Iterator_Ex <size_t, ACE_Pair<size_t, int>, ACE_Hash<size_t>,ACE_Equal_To<size_t>, ACE_Null_Mutex >,int> >,int>;
+template class ACE_Null_Caching_Utility <TYPE, TYPE, CACHE_MAP_IMPL, CACHE_ITER_IMPL, ATTR>;
+template class ACE_Null_Caching_Strategy <TYPE, TYPE, CACHE_MAP_IMPL, ATTR, NULL_UTILITY>;
+template class ACE_Hash_Cache_Map_Manager <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, NULL_CACHING_STRATEGY, ATTR> ;
+template class ACE_Cache_Map_Manager <TYPE, TYPE, CACHE_MAP_IMPL, CACHE_ITER_IMPL, CACHE_REV_ITER_IMPL, NULL_CACHING_STRATEGY, ATTR> ;
+template class ACE_Cache_Map_Iterator <TYPE, TYPE, CACHE_ITER_IMPL, NULL_CACHING_STRATEGY, ATTR> ;
+template class ACE_Cache_Map_Reverse_Iterator<TYPE,TYPE, CACHE_REV_ITER_IMPL, NULL_CACHING_STRATEGY, ATTR>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Equal_To<TYPE>
 #pragma instantiate ACE_Pair<TYPE, ATTR >
+#pragma instantiate ACE_Reference_Pair<TYPE, TYPE>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>
 #pragma instantiate ACE_Hash_Map_Entry<TYPE, TYPE>
-#pragma instantiate ACE_Equal_To<TYPE>
 #pragma instantiate ACE_Map_Manager<TYPE, TYPE, MUTEX>
 #pragma instantiate ACE_Map_Iterator_Base<TYPE, TYPE, MUTEX>
 #pragma instantiate ACE_Map_Iterator<TYPE, TYPE, MUTEX>
@@ -975,18 +975,15 @@ template class ACE_Cache_Map_Reverse_Iterator<size_t,size_t,ACE_Hash_Map_Reverse
 #pragma instantiate ACE_Map_Iterator<ACE_Active_Map_Manager_Key, TYPE, MUTEX>
 #pragma instantiate ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, TYPE, MUTEX>
 #pragma instantiate ACE_Map_Entry<ACE_Active_Map_Manager_Key, TYPE>
-#pragma instantiate ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >
-#pragma instantiate ACE_Hash_Map_Iterator_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >
+#pragma instantiate ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX>
 #pragma instantiate ACE_Hash_Map_Entry<TYPE, ACE_Pair<TYPE, ATTR> >
-#pragma instantiate ACE_Caching_Strategy_Utility <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ATTR>
-#pragma instantiate ACE_Null_Caching_Strategy_Utility <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ACE_Hash_Map_Iterator_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >,ATTR>
-#pragma instantiate ACE_Null_Caching_Strategy <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ATTR, ACE_Null_Caching_Strategy_Utility <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ACE_Hash_Map_Iterator_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >,ATTR>  >
-#pragma instantiate ACE_Hash_Cache_Map_Manager <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, ACE_Null_Caching_Strategy <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ATTR,  ACE_Null_Caching_Strategy_Utility <TYPE, TYPE,ACE_Hash_Map_Manager_Ex<TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ACE_Hash_Map_Iterator_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >,ATTR>  >, ATTR  > 
-#pragma instantiate ACE_Cache_Map_Manager <TYPE, TYPE, ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ACE_Hash_Map_Iterator_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ACE_Hash_Map_Reverse_Iterator_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ACE_Null_Caching_Strategy <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ATTR,  ACE_Null_Caching_Strategy_Utility <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ACE_Hash_Map_Iterator_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ATTR>  >, ATTR> 
-#pragma instantiate ACE_Cache_Map_Iterator <TYPE, TYPE, ACE_Hash_Map_Iterator_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >,  ACE_Null_Caching_Strategy <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ATTR,  ACE_Null_Caching_Strategy_Utility <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ACE_Hash_Map_Iterator_Ex <TYPE, ACE_Pair<TYPE, ATTR>, HASH_KEY, COMPARE_KEYS, MUTEX >, ATTR>  >, ATTR> 
-#pragma instantiate ACE_Reference_Pair<size_t, size_t>
-#pragma instantiate ACE_Cache_Map_Reverse_Iterator<size_t,size_t,ACE_Hash_Map_Reverse_Iterator_Ex<size_t,ACE_Pair<size_t,int>,ACE_Hash<size_t>,ACE_Equal_To<size_t>,ACE_Null_Mutex>,ACE_Null_Caching_Strategy<size_t,size_t,ACE_Hash_Map_Manager_Ex<size_t,ACE_Pair<size_t,int>,ACE_Hash<size_t>,ACE_Equal_To<size_t>,ACE_Null_Mutex>,int,ACE_Null_Caching_Strategy_Utility<size_t,size_t,ACE_Hash_Map_Manager_Ex<size_t,ACE_Pair<size_t,int>,ACE_Hash<size_t>,ACE_Equal_To<size_t>,ACE_Null_Mutex>, ACE_Hash_Map_Iterator_Ex <size_t, ACE_Pair<size_t, int>, ACE_Hash<size_t>,ACE_Equal_To<size_t>, ACE_Null_Mutex >,int> >,int>
-
+#pragma instantiate ACE_Null_Caching_Utility <TYPE, TYPE, CACHE_MAP_IMPL, CACHE_ITER_IMPL, ATTR>
+#pragma instantiate ACE_Null_Caching_Strategy <TYPE, TYPE, CACHE_MAP_IMPL, ATTR, NULL_UTILITY>
+#pragma instantiate ACE_Hash_Cache_Map_Manager <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, NULL_CACHING_STRATEGY, ATTR> 
+#pragma instantiate ACE_Cache_Map_Manager <TYPE, TYPE, CACHE_MAP_IMPL, CACHE_ITER_IMPL, CACHE_REV_ITER_IMPL, NULL_CACHING_STRATEGY, ATTR> 
+#pragma instantiate ACE_Cache_Map_Iterator <TYPE, TYPE, CACHE_ITER_IMPL, NULL_CACHING_STRATEGY, ATTR> 
+#pragma instantiate ACE_Cache_Map_Reverse_Iterator<TYPE,TYPE, CACHE_REV_ITER_IMPL, NULL_CACHING_STRATEGY, ATTR>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
