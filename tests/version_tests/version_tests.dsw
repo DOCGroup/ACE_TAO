@@ -63,6 +63,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "DLList_Test"=.\DLList_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Dynamic_Priority_Test"=.\Dynamic_Priority_Test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -124,6 +136,18 @@ Package=<4>
 ###############################################################################
 
 Project: "Hash_Map_Manager_Test"=.\Hash_Map_Manager_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "High_Res_Timer_Test"=.\High_Res_Timer_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
