@@ -128,8 +128,10 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     default_endpoint_selector_ (0),
 #if (TAO_HAS_RT_CORBA == 1)
     priority_endpoint_selector_ (0),
+    bands_endpoint_selector_ (0),
     protocol_endpoint_selector_ (0),
     priority_protocol_selector_ (0),
+    bands_protocol_selector_ (0),
     client_priority_policy_selector_ (0),
     rt_orb_ (0),
     rt_current_ (0),
@@ -186,11 +188,17 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   ACE_NEW (this->priority_endpoint_selector_,
            TAO_Priority_Endpoint_Selector);
 
+  ACE_NEW (this->bands_endpoint_selector_,
+           TAO_Bands_Endpoint_Selector);
+
   ACE_NEW (this->protocol_endpoint_selector_,
            TAO_Protocol_Endpoint_Selector);
 
   ACE_NEW (this->priority_protocol_selector_,
            TAO_Priority_Protocol_Selector);
+
+  ACE_NEW (this->bands_protocol_selector_,
+           TAO_Bands_Protocol_Selector);
 
   ACE_NEW (this->client_priority_policy_selector_,
            TAO_Client_Priority_Policy_Selector);
@@ -243,8 +251,10 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 #if (TAO_HAS_RT_CORBA == 1)
 
   delete this->priority_endpoint_selector_;
+  delete this->bands_endpoint_selector_;
   delete this->protocol_endpoint_selector_;
   delete this->priority_protocol_selector_;
+  delete this->bands_protocol_selector_;
   delete this->client_priority_policy_selector_;
   delete this->rt_orb_;
   delete this->rt_current_;

@@ -75,8 +75,10 @@ class TAO_Export TAO_GIOP_Invocation
   friend class TAO_Endpoint_Selector_Factory;
   friend class TAO_Default_Endpoint_Selector;
   friend class TAO_Priority_Endpoint_Selector;
+  friend class TAO_Bands_Endpoint_Selector;
   friend class TAO_Protocol_Endpoint_Selector;
   friend class TAO_Priority_Protocol_Selector;
+  friend class TAO_Bands_Protocol_Selector;
   friend class TAO_Client_Priority_Policy_Selector;
 
 public:

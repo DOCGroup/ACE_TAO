@@ -30,6 +30,7 @@ TAO_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation
                                       ACE_TRY_ENV);
   ACE_CHECK;
 
+  // CASE 1: TAO::Client_Priority_Policy is enabled.
   if (invocation->endpoint_selector_ != 0)
     return;
 
@@ -37,13 +38,15 @@ TAO_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation
   this->init_state (invocation, ACE_TRY_ENV);
   ACE_CHECK;
 
+  //
   // Look at RTCORBA policies to decide on appropriate selector.
+  //
 
   TAO_PriorityModelPolicy *priority_policy =
     invocation->endpoint_selection_state_.priority_model_policy_;
 
+  // CASE 2: No PriorityModelPolicy set.
   if (priority_policy == 0)
-    // Priority model not set.
     {
      // Bands without priority model do not make sense.
       if (invocation->endpoint_selection_state_.bands_policy_
@@ -64,7 +67,6 @@ TAO_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation
 
   if (priority_policy->get_priority_model ()
       == RTCORBA::CLIENT_PROPAGATED)
-    // CLIENT_PROPAGATED priority model.
     {
       // Get client priority.
       if (invocation->orb_core_->get_thread_priority
@@ -72,6 +74,57 @@ TAO_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation
           == -1)
         ACE_THROW (CORBA::DATA_CONVERSION (1,
                                            CORBA::COMPLETED_NO));
+    }
+
+  // CASE 3: PriorityBandedConnection Policy is set.
+  if (invocation->endpoint_selection_state_.bands_policy_
+      != 0)
+    {
+      // Figure out target priority.
+      CORBA::Short p;
+      if (priority_policy->get_priority_model ()
+          == RTCORBA::CLIENT_PROPAGATED)
+        p = invocation->endpoint_selection_state_.client_priority_;
+      else
+        p = priority_policy->server_priority ();
+
+      // Find the band with the range covering our target priority.
+      RTCORBA::PriorityBands &bands = 
+      invocation->endpoint_selection_state_.bands_policy_->priority_bands_rep ();
+      
+      int in_range = 0;
+      for (CORBA::ULong i = 0; i < bands.length (); ++i)
+        if (bands[i].low <= p && bands[i].high >= p)
+          {
+            invocation->endpoint_selection_state_.min_priority_ =
+              bands[i].low;
+            invocation->endpoint_selection_state_.max_priority_ = 
+              bands[i].high;
+
+            in_range = 1;
+            break;
+          }
+     
+      // If priority doesn't fall into any of the bands
+      if (!in_range)
+        ACE_THROW (CORBA::INV_POLICY ());
+
+      // Matching band found.  Instantiate appropriate selector.
+      if (invocation->endpoint_selection_state_.client_protocol_policy_
+          == 0)
+        invocation->endpoint_selector_ =
+          invocation->orb_core_->bands_endpoint_selector ();
+      else
+          invocation->endpoint_selector_ =
+            invocation->orb_core_->bands_protocol_selector ();
+
+      return;
+    }
+
+  // CASE 4: CLIENT_PROPAGATED priority model, no bands.
+  if (priority_policy->get_priority_model ()
+      == RTCORBA::CLIENT_PROPAGATED)
+    {
       if (invocation->endpoint_selection_state_.client_protocol_policy_
           == 0)
         invocation->endpoint_selector_ =
@@ -82,7 +135,7 @@ TAO_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation
     }
   else
     {
-      // SERVER_DECLARED priority model.
+      // CASE 5: SERVER_DECLARED priority model, no bands.
       if (invocation->endpoint_selection_state_.client_protocol_policy_
           == 0)
         invocation->endpoint_selector_ =
@@ -90,22 +143,6 @@ TAO_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation
       else
         invocation->endpoint_selector_ =
           invocation->orb_core_->protocol_endpoint_selector ();
-    }
-
-  // Check that we are in range with Priority Bands.
-  if (invocation->endpoint_selection_state_.bands_policy_)
-    {
-      CORBA::Short p;
-
-      if (priority_policy->get_priority_model ()
-          == RTCORBA::CLIENT_PROPAGATED)
-        p = invocation->endpoint_selection_state_.client_priority_;
-      else
-        p = priority_policy->server_priority ();
-
-      if (!this->is_in_bands_range (
-              invocation->endpoint_selection_state_.bands_policy_, p))
-        ACE_THROW (CORBA::INV_POLICY ());
     }
 
 #else /* TAO_HAS_RT_CORBA == 1 */
@@ -210,30 +247,6 @@ init_state (TAO_GIOP_Invocation *invocation,
     invocation->stub_->effective_priority_banded_connection (ACE_TRY_ENV);
   ACE_CHECK;
 }
-
-
-int
-TAO_Endpoint_Selector_Factory::is_in_bands_range
-                  (TAO_PriorityBandedConnectionPolicy *bands_policy,
-                   CORBA::Short priority)
-{
-  int in_range = 0;
-  RTCORBA::PriorityBands &bands = bands_policy->priority_bands_rep ();
-
-  if (bands.length () == 0)
-    return 1;
-
-  for (CORBA::ULong i = 0; i < bands.length (); ++i)
-    if (bands[i].low <= priority
-        && bands[i].high >= priority)
-      {
-        in_range = 1;
-        break;
-      }
-
-  return in_range;
-}
-
 
 // ****************************************************************
 
@@ -419,6 +432,69 @@ TAO_Priority_Endpoint_Selector::is_multihomed (TAO_Endpoint *endpoint)
         return 0;
     }
   return 1;
+}
+
+// ****************************************************************
+
+TAO_Bands_Endpoint_Selector::~TAO_Bands_Endpoint_Selector (void)
+{
+}
+
+void
+TAO_Bands_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation
+                                              *invocation,
+                                              CORBA::Environment &ACE_TRY_ENV)
+{
+  // Obtain profile.
+  invocation->profile_ = invocation->stub_->profile_in_use ();
+
+  // Select an endpoint from the profile.
+
+  if (invocation->profile_->endpoint_count () == 0)
+    {
+    // Unknown protocol - move onto the next profile.
+      this->next (invocation, ACE_TRY_ENV);
+      ACE_CHECK;
+      this->select_endpoint (invocation, ACE_TRY_ENV);
+    }
+
+  else
+    {
+      // Find the endpoint for the band of interest.
+      TAO_Endpoint *endpoint = 0;
+      for (TAO_Endpoint *endp = invocation->profile_->endpoint ();
+           endp != 0;
+           endp = endp->next ())
+        {
+          if (endp->priority () 
+              <= invocation->endpoint_selection_state_.max_priority_
+              && endp->priority () 
+              >= invocation->endpoint_selection_state_.min_priority_)
+            {
+              endpoint = endp;
+              break;
+            }
+        }
+
+      if (endpoint != 0)
+        {
+          // Found an Endpoint with priority in the range of the band.
+          invocation->endpoint_ = endpoint;
+        }
+      else
+        {
+          // The profile didn't contain an endpoint with priority
+          // matching the band.
+          // There are two possibilities:
+          //   a) we are talking to non-TAO server. 
+          //   b) we have misconfiguration - bands were set on the
+          //      client and do not match server configuration.
+          // In both cases throw exception.  (We are throwing
+          // exception for case 'a' because the current implementation of
+          // bands is not interoperable.)
+          ACE_THROW (CORBA::INV_POLICY ());
+        }
+    }
 }
 
 // ****************************************************************
@@ -727,6 +803,54 @@ TAO_Priority_Protocol_Selector::is_multihomed (TAO_Endpoint *endpoint)
         return 0;
     }
   return 1;
+}
+
+// ****************************************************************
+
+TAO_Bands_Protocol_Selector::~TAO_Bands_Protocol_Selector (void)
+{
+}
+
+void
+TAO_Bands_Protocol_Selector::endpoint (TAO_GIOP_Invocation *invocation,
+                                       CORBA::Environment
+                                       &ACE_TRY_ENV)
+{
+  // Find the endpoint for the band of interest.
+  TAO_Endpoint *endpoint = 0;
+  for (TAO_Endpoint *endp = invocation->profile_->endpoint ();
+       endp != 0;
+       endp = endp->next ())
+    {
+      if (endp->priority () 
+          <= invocation->endpoint_selection_state_.max_priority_
+          && endp->priority () 
+          >= invocation->endpoint_selection_state_.min_priority_)
+        {
+          endpoint = endp;
+          break;
+        }
+    }
+  
+  if (endpoint != 0)
+    {
+      // Found an Endpoint with priority in the range of the band.
+      invocation->endpoint_selection_state_.valid_endpoint_found_ = 1;
+      invocation->endpoint_ = endpoint;
+    }
+  else
+    {
+      // The profile didn't contain an endpoint with priority
+      // matching the band.
+      // There are two possibilities:
+      //   a) we are talking to non-TAO server. 
+      //   b) we have misconfiguration - bands were set on the
+      //      client and do not match server configuration.
+      // In both cases throw exception.  (We are throwing
+      // exception for case 'a' because the current implementation of
+      // bands is not interoperable.)
+      ACE_THROW (CORBA::INV_POLICY ());
+    }
 }
 
 #endif /* TAO_HAS_RT_CORBA == 1 */

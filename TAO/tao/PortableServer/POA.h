@@ -306,11 +306,9 @@ protected:
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-  int validate_priority_model (void);
-
   int validate_server_protocol (void);
 
-  int validate_priority_bands (void);
+  void validate_priorities (CORBA::Environment &ACE_TRY_ENV);
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
