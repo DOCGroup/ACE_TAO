@@ -1,3 +1,11 @@
+Tue Jul 28 15:07:32 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* tests/Cubit/Hardpack/IDL_Cubit/cubit.idl: 
+		Added cube_oneway and cube_void operations.
+	* tests/Cubit/Hardpack/IDL_Cubit/cubit_impl.{h,cpp}:
+	* tests/Cubit/Hardpack/IDL_Cubit/client_i.{h,cpp}:
+		Added implementation code for cube_oneway and cube_void.
+
 Tue Jul 28 13:49:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/NestedUpcall/Makefile: 

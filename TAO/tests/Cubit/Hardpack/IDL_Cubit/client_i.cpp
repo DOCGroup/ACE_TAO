@@ -262,6 +262,41 @@ Cubit_Client::cube_short (int i)
   }
 }
 
+void
+Cubit_Client::cube_oneway (int i)
+{
+  try
+    {
+      this->cubit_->cube_oneway ();
+    }
+  catch (...)
+    {
+      cout << "An unknown exception in cube_short\n";
+      this->error_count_++;
+      return;
+    }
+
+  this->call_count_++;
+  return;
+}
+
+void
+Cubit_Client::cube_void (int i)
+{
+  try
+    {
+      this->cubit_->cube_void ();
+    }
+  catch (...)
+    {
+      cout << "An unknown exception in cube_short\n";
+      this->error_count_++;
+      return;
+    }
+  this->call_count_++;
+}
+
+
 // Cube an octet
 
 void
@@ -531,6 +566,26 @@ Cubit_Client::run (int testing_collocation)
   //
   // Show the results one type at a time.
   //
+
+  // ONEWAY
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_oneway (i);
+  timer.stop ();
+  timer.elapsed_time (elapsed_time);
+  this->print_stats ("cube_oneway", elapsed_time);
+
+  // VOID
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_void (i);
+  timer.stop ();
+  timer.elapsed_time (elapsed_time);
+  this->print_stats ("cube_void", elapsed_time);
 
   // SHORT
   this->call_count_ = 0;
