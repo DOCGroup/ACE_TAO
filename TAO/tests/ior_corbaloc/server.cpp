@@ -1,19 +1,15 @@
 // $Id$
 // server.cpp
-//
 
 #include "status_i.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/orbsvcs/CosNamingC.h"
 
-
 int main (int argc, char* argv[])
 {
-
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-
       // First initialize the ORB, that will remove some arguments...
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv,
@@ -21,10 +17,11 @@ int main (int argc, char* argv[])
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if(argc < 2){
-         ACE_DEBUG((LM_DEBUG, "\nUsage:\n  %s [NAME to insert in Naming Service]\n", argv[0]));
-         return -1;
-      }
+      if (argc < 2)
+        {
+          ACE_DEBUG ((LM_DEBUG, "\nUsage:\n  %s [NAME to insert in Naming Service]\n", argv[0]));
+          return -1;
+        }
       // Get a reference to the RootPOA
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
@@ -46,7 +43,7 @@ int main (int argc, char* argv[])
 
       // Create the servant
       corbaloc_Status_i status_i;
-      status_i.set_name(argv[1]);
+      status_i.set_name (argv[1]);
       // Activate it to obtain the reference
       corbaloc::Status_var status =
         status_i._this ();
@@ -59,7 +56,7 @@ int main (int argc, char* argv[])
 
       // Narrow down the reference
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_context_object.in()
+        CosNaming::NamingContext::_narrow (naming_context_object.in ()
                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -82,7 +79,7 @@ int main (int argc, char* argv[])
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, ex) {
-    ACE_PRINT_EXCEPTION(ex, "CORBA exception raised! ");
+    ACE_PRINT_EXCEPTION (ex, "CORBA exception raised! ");
   }
   ACE_CATCHANY {
     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught in server");
