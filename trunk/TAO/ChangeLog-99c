@@ -4,7 +4,8 @@ Sun Jun  6 00:06:26 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Sched/Scheduler.cpp:
 	* orbsvcs/orbsvcs/Sched/DynSched.h:
 	* orbsvcs/orbsvcs/Sched/DynSched.cpp:
-	  Replaced "export" with "export_to_file"
+	  Replaced "export" with "export_to_file", the first one is a
+	  keyword in ANSI/C++
 
 Sat Jun  5 23:06:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
