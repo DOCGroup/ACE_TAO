@@ -1,3 +1,9 @@
+Mon Jul 22 22:30:53 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACEXML/common/XML_Common.dsp: Added the macro definition
+	  ACEXML_HAS_DLL=1 to the release configuration to resolve a
+	  nightly biuld problem.
+
 Mon Jul 22 18:28:48 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Configuration.h: Doxygen fixes.
@@ -51,7 +57,7 @@ Mon Jul 22 13:25:29 2002  Stephen Torri <storri@cs.wustl.edu>
 	* ace/streams.h: Fixed _MSC_VER compiler warning messages stating
 	  concern about using MSC_VER without assurance that the macro
 	  was defined.
-	
+
 Mon Jul 22 12:20:21 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * THANKS: Added Sean Ogle to the hall of fame.
