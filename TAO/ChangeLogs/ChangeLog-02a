@@ -1,9 +1,3 @@
-Thu Apr 11 18:48:48 2002  Jeff Parsons <parsons@cs.wustl.edu>
-
-        * TAO_IDL/driver/drv_preproc.cpp:
-
-          Added #include of ace/Log_Record.h.
-
 Thu Apr 11 22:07:40 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* tao/TAO_IDL/driver/drv_preproc.cpp:  
