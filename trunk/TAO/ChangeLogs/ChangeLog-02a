@@ -1,3 +1,8 @@
+Thu May 10 11:05:25 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * performance-tests/POA/Create_Reference/create_reference.cpp:
+          Removed one policy so it would compile with minimum CORBA.
+
 Thu May 10 09:57:08 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/DSI_Latency/Roundtrip.h:
