@@ -237,6 +237,17 @@ make: *** [libACE.so] Error 8
       install patched versions of the C++ libraries, which correctly
       define this symbol.<p>
 
+      To build ACE on AIX with Visual Age C++, use the
+      $ACE_ROOT/ace/ace-dll.icc (or ace-lib.icc) along with the appropriate
+      version-specific config file (e.g. config-aix-4.3.x.h). All of the
+      version-specific config files set the version number macros and
+      include the general config-aix-4.x.h file which has support for all
+      of the OS versions and compilers supported on AIX. Using the general
+      config file is the recommended practice for egcs, C Set++, and IBM
+      C/C++ compilers. However, the Visual Age C++ compiler does not make
+      use of the platform_macros.GNU file, which is how the OS version
+      information generally gets set.<p>
+
       BTW, here's a technique from Rob Jordan &lt<A
       HREF="mailto:jordan@hursley.ibm.com">jordan@hursley.ibm.com</A>&gt
       that can reduce the size of the ACE libraries by about one
