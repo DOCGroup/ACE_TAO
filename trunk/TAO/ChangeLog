@@ -1,3 +1,27 @@
+Tue Oct  1 23:27:48 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/LoadBalancer/Monitor_Signal_Handler.h:
+	* orbsvcs/LoadBalancer/Monitor_Signal_Handler.cpp:
+
+	  New signal handler designed to ensure proper cleanup of load
+	  monitors registered with the LoadManager in "PULL" style load
+	  monitoring configurations.  Signals are handled synchronously in
+	  the multi-threaded build case through an Active Object, and
+	  asynchronously through the ORB's Reactor in the single-threaded
+	  build case using the same signal handler employed by the
+	  LoadManager binary.
+
+	* orbsvcs/LoadBalancer/LoadMonitor.cpp (main):
+
+	  Instantiate and activate the Monitor_Signal_Handler to allow for
+	  graceful shutdown of the LoadMonitor executable.
+
+	* orbsvcs/LoadBalancer/LoadMonitor.bor (OBJFILES):
+	* orbsvcs/LoadBalancer/Makefile.LoadMonitor (SRC):
+
+	  Added `Monitor_Signal_Handler' and `Signal_Handler' to the list
+	  of source/object files.
+	
 Tue Oct  1 14:53:46 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_Location_Index_Map.cpp:
