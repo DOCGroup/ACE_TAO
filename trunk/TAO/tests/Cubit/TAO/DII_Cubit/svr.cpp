@@ -97,7 +97,7 @@ main (int argc, char *argv[])
 			   i),
 			  2);
 
-      if (TAO_debug_level >= 0)
+      if (TAO_debug_level > 0)
 	{
 	  // Why are we getting the POA_ptr from here when we've
 	  // already got it above?

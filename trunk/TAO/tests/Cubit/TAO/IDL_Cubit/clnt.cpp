@@ -31,8 +31,8 @@ Cubit_Client::Cubit_Client (void)
     exit_later_ (0),
     factory_ (Cubit_Factory::_nil ()),
     objref_ (CORBA::Object::_nil ()),
-    orb_ptr_ (0),
     cubit_ (Cubit::_nil ()),
+    orb_ptr_ (0),
     call_count_ (0),
     error_count_ (0)
 {
