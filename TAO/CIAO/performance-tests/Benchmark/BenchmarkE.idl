@@ -1,8 +1,8 @@
-// $Id$ 
+// $Id$
 
 //=============================================================================
 /**
- * @file BasicSPE.idl
+ * @file BenchmarkE.idl
  *
  * @author Diego, Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
  */
@@ -13,11 +13,11 @@
 
 #include "Benchmark.idl"
 
-module Benchmark 
+module Benchmark
 {
 
   /**
-   * @interface CCM_RoundTrip 
+   * @interface CCM_RoundTrip
    *
    * Executor interface mapping for provides interfaces.
    *
@@ -31,5 +31,3 @@ module Benchmark
 };
 
 #endif /* CIAO_BENCHMARKE_IDL */
-
-
