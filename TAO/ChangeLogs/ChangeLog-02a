@@ -1,3 +1,8 @@
+Mon Mar 27 08:57:42 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Mcast/Makefile: Needed the library
+	  libTAO_Svc_Utils for successful linking.
+
 Sun Mar 26 20:20:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
