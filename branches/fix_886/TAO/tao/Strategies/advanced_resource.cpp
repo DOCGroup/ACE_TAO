@@ -20,7 +20,7 @@
 #include "tao/debug.h"
 #include "tao/Single_Reactor.h"
 #include "tao/LRU_Connection_Purging_Strategy.h"
-#include "tao/Complete_LF_Strategy.h"
+#include "tao/LF_Strategy_Complete.h"
 #include "tao/Leader_Follower.h"
 #include "tao/StringSeqC.h"
 
