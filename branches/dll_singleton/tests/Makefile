@@ -10646,51 +10646,29 @@ realclean: clean
   $(ACE_ROOT)/ace/ARGV.h
 
 .obj/Framework_Component_Test.o .obj/Framework_Component_Test.so .shobj/Framework_Component_Test.o .shobj/Framework_Component_Test.so: Framework_Component_Test.cpp \
-  Framework_Component_DLL.h Framework_Component_DLL_Export.h \
+  $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/Default_Constants.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Basic_Types.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
-  $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch.h \
-  $(ACE_ROOT)/ace/OS.h \
-  $(ACE_ROOT)/ace/OS_Dirent.h \
-  $(ACE_ROOT)/ace/OS_String.h \
-  $(ACE_ROOT)/ace/OS_Memory.h \
-  $(ACE_ROOT)/ace/OS_TLI.h \
-  $(ACE_ROOT)/ace/Time_Value.h \
-  $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/Synch_T.cpp \
-  $(ACE_ROOT)/ace/Thread.h \
-  $(ACE_ROOT)/ace/Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Singleton.h \
-  $(ACE_ROOT)/ace/Singleton.cpp \
-  $(ACE_ROOT)/ace/Singleton.i \
-  $(ACE_ROOT)/ace/Object_Manager.h \
-  $(ACE_ROOT)/ace/Managed_Object.h \
-  $(ACE_ROOT)/ace/Managed_Object.cpp \
-  $(ACE_ROOT)/ace/Managed_Object.i \
-  $(ACE_ROOT)/ace/Framework_Component.h \
-  $(ACE_ROOT)/ace/Framework_Component_T.h \
-  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
-  $(ACE_ROOT)/ace/Framework_Component_T.inl \
-  $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Service_Types.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_TLI.h \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/Min_Max.h \
+  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
   $(ACE_ROOT)/ace/DLL.h \
@@ -10706,6 +10684,16 @@ realclean: clean
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
+  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/Synch_T.i \
   $(ACE_ROOT)/ace/Signal.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
@@ -10748,6 +10736,18 @@ realclean: clean
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
   $(ACE_ROOT)/ace/Timer_Queue_T.i \
   $(ACE_ROOT)/ace/ARGV.h \
-  test_config.h
+  test_config.h \
+  $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/Singleton.cpp \
+  $(ACE_ROOT)/ace/Singleton.i \
+  $(ACE_ROOT)/ace/Object_Manager.h \
+  $(ACE_ROOT)/ace/Managed_Object.h \
+  $(ACE_ROOT)/ace/Managed_Object.cpp \
+  $(ACE_ROOT)/ace/Managed_Object.i \
+  $(ACE_ROOT)/ace/Framework_Component.h \
+  $(ACE_ROOT)/ace/Framework_Component_T.h \
+  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
+  $(ACE_ROOT)/ace/Framework_Component_T.inl \
+  $(ACE_ROOT)/ace/DLL_Manager.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

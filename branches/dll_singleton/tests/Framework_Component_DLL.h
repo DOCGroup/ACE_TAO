@@ -20,8 +20,8 @@
 #ifndef ACE_TESTS_FRAMEWORK_COMPONENT_DLL_H
 #define ACE_TESTS_FRAMEWORK_COMPONENT_DLL_H
 
-// Turn on tracing for this library
-#define FRAMEWORK_COMPONENT_DLL_NTRACE 0
+// Turn off tracing for this library
+#define FRAMEWORK_COMPONENT_DLL_NTRACE 1
 
 #include "Framework_Component_DLL_Export.h"
 #include "ace/Log_Msg.h"
@@ -36,7 +36,9 @@ public:
 
   virtual ~Simple_Service (void);
 
-  virtual const ACE_TCHAR *dll_name (void);
+  //virtual const ACE_TCHAR *dll_name (void);
+
+  virtual const ACE_TCHAR *name (void);
 
 };
 
@@ -54,6 +56,6 @@ public:
 };
 
 typedef ACE_DLL_Singleton_T < FWCT_DLL_Singleton_Adapter_T <Simple_Service>, 
-                     ACE_SYNCH_MUTEX > SS_SINGLETON;
+                              ACE_SYNCH_MUTEX > SS_SINGLETON;
 
 #endif /* ACE_TESTS_FRAMEWORK_COMPONENT_TEST_H */

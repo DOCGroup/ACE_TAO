@@ -86,7 +86,11 @@ public:
   /// Delete the dynamically allocated Singleton
   static void close_singleton (void);
 
+  /// Name of the dll in which the dll lives.
   static const ACE_TCHAR *dll_name (void);
+
+  /// Name of the component--ACE_Reactor in this case.
+  static const ACE_TCHAR *name (void);
 
   // = Singleton reactor event loop management methods.
 

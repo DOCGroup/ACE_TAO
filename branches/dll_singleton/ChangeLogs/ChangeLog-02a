@@ -1,3 +1,71 @@
+Sun May 26 22:18:03 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* tests/Logging_Strategy_Test.cpp:
+
+	  Changed ACE_AS_STATIC_LIBS to ACE_HAS_STATIC_LIBS, and 
+	  added a process_directive call to "remove Logger" in order
+	  make sure all the error messages get written to the log--
+	  this helped debug the ACE_DLL changes below.
+	
+	* tests/Framework_Component_Test.cpp:
+
+	  Broke the test out into its own function so it could be called
+	  with different parameters and test all the combinations of the
+	  PER_PROCESS/DLL and EAGER/LAZY dll unloading strategies.
+	
+	* tests/Framework_Component_DLL.cpp:
+
+	  Removed Simple_Service::dll_name() method and added name()
+	  method.
+	
+	* tests/DLL_Test.{h,cpp]:
+
+	  Added test of set/get_handle() functionality.  And reorganized
+	  the test into handle_test() and basic_test() methods, as well as
+	  adding some ACE_TRACE statements.
+	
+	* ace/Singleton.{h,cpp}:
+
+	  Made ACE_DLL_Singleton_T not inherit from ACE_Singleton and
+	  added all missing methods.  Added ACE_TRACE statements.  
+
+	* ace/Makefile: Updated dependancies.
+
+	* ace/Proactor.{h,cpp}:
+	* ace/Reactor.{h,cpp}:
+
+	  Implemented dll_name() method and added name() method.
+	
+	* ace/Framework_Component_T.cpp:
+
+	  Added name to ACE_Framework_Component ctor call in 
+	  ACE_Framework_Component_T ctor.  Added call to 
+	  Concrete::close_singleton() in dtor for ACE_Framework_Component_T
+	  dtor.
+
+	* ace/Framework_Component.{h,cpp}:
+
+	  Minor reformatting all over.  Added check for null pointer
+	  in register_component(), removed the delete and added an 
+	  error message instead.  Added compact() method to 
+	  remove the holes in the component_vector_ after components
+	  are removed either one by one or in groups when a dll is
+	  unloaded.  Also, changed the close_singleton() calls to delete.
+	  
+	* ace/DLL.{h,cpp}:
+
+	  Moved remaining cleanup code from dtor to close.  Added new
+	  open_i() to do the open work so that by both open() and
+	  set_handle().  Cleaned up close(), and implemented the
+	  set/get_handle() methods--now the new ACE_DLL has the same
+	  interface and semantics of the original.
+
+	* ace/DLL_Manager.{h,cpp}: Really added them this time. ;-)
+	 
+	  Along with a lot of fixes and enhancements, but since the
+	  old version never made it in, it's sorta hard to document
+	  everything. :-(
+
 Thu May 23 17:39:02 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* tests/Framework_Component_Test.cpp:

@@ -356,8 +356,13 @@ ACE_Proactor::close_singleton (void)
 const ACE_TCHAR *
 ACE_Proactor::dll_name (void)
 {
-  // this is just a stub for now...
-  return 0;
+  return ACE_LIB_TEXT ("ACE");
+}
+
+const ACE_TCHAR *
+ACE_Proactor::name (void)
+{
+  return ACE_LIB_TEXT ("ACE_Proactor");
 }
 
 int

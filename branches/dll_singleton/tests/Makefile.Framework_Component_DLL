@@ -11,8 +11,7 @@
 LIB     = libFramework_Component_DLL.a
 SHLIB   = libFramework_Component_DLL.$(SOEXT)
 FILES   = Framework_Component_DLL
-LSRC    = $(addsuffix .cpp,$(FILES))
-
+LSRC    = $(addsuffix .cpp,$(FILES)) 
 LIBS   += $(ACELIB)
 
 BUILD   = $(VLIB) $(VSHLIB)

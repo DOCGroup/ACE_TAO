@@ -9,6 +9,10 @@
 
 ACE_RCSID(ace, DLL, "$Id$")
 
+// Uncomment these lines to turn tracing on for this file.
+//#undef ACE_TRACE
+//#define ACE_TRACE(X) ACE_TRACE_IMPL(X)
+
 // Default constructor. Also, by default, the object will be closed
 // before it is destroyed.
 
@@ -66,10 +70,8 @@ ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
 ACE_DLL::~ACE_DLL (void)
 {
   ACE_TRACE ("ACE_DLL::~ACE_DLL");
-  // CLose the library only if it hasn't been already.
-  this->close ();
 
-  ACE::strdelete (this->dll_name_);
+  this->close ();
 }
 
 // This method opens the library based on the mode specified using the
@@ -89,6 +91,17 @@ ACE_DLL::open (const ACE_TCHAR *dll_filename,
                int close_on_destruction)
 {
   ACE_TRACE ("ACE_DLL::open");
+
+  return open_i (dll_filename, open_mode, close_on_destruction);
+}
+
+int
+ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
+                 int open_mode,
+                 int close_on_destruction,
+                 ACE_SHLIB_HANDLE handle)
+{
+  ACE_TRACE ("ACE_DLL::open");
   
   this->error_ = 0;
 
@@ -101,19 +114,18 @@ ACE_DLL::open (const ACE_TCHAR *dll_filename,
       if (ACE_OS_String::strcmp (this->dll_name_, dll_filename) == 0)
         return 0;
       else
-        {
-          // We already have a dll open, but the caller wants to open another one.
-          // So close the first one and open the second.
-          ACE_DLL_Manager::instance()->close_dll (this->dll_name_);
-        }
+        this->close ();
     }
-  delete this->dll_name_;
-  this->dll_name_ = ACE::strnew (dll_filename);
+  if (!this->dll_name_)
+    {
+      this->dll_name_ = ACE::strnew (dll_filename);
+    }
   this->open_mode_ = open_mode;
   this->close_on_destruction_ = close_on_destruction;
 
   this->dll_handle_ = ACE_DLL_Manager::instance()->open_dll (this->dll_name_, 
-                                                             this->open_mode_);
+                                                             this->open_mode_,
+                                                             handle);
 
   if (!this->dll_handle_)
     this->error_ = 1;
@@ -147,8 +159,15 @@ ACE_DLL::close (void)
   ACE_TRACE ("ACE_DLL::close");
   int retval = 0;
 
-  if ((retval = ACE_DLL_Manager::instance ()->close_dll (this->dll_name_)) != 0)
+  if (this->close_on_destruction_ && this->dll_name_ &&
+      (retval = ACE_DLL_Manager::instance ()->close_dll (this->dll_name_)) != 0)
     this->error_ = 1;
+
+  // Even if close_dll() failed, go ahead and cleanup.
+  this->dll_handle_ = 0;
+  delete this->dll_name_;
+  this->dll_name_ = 0;
+  this->close_on_destruction_ = 0;
 
   return retval;
 }
@@ -165,39 +184,45 @@ ACE_DLL::error (void) const
   return 0; 
 }
 
-
-
-#if 0
 // Return the handle to the user either temporarily or forever, thus
 // orphaning it. If 0 means the user wants the handle forever and if 1
 // means the user temporarily wants to take the handle.
 
 ACE_SHLIB_HANDLE
-ACE_DLL::get_handle (int /*become_owner*/)
+ACE_DLL::get_handle (int become_owner) const
 {
   ACE_TRACE ("ACE_DLL::get_handle");
 
-  // I'm only going to support this if I absolutely have to.
-  // in order to do that, we'd have to call ACE_OS::dlopen again to
-  // up the OS's refcount. :-(
+  ACE_SHLIB_HANDLE handle = ACE_SHLIB_INVALID_HANDLE;
 
-  return ACE_SHLIB_INVALID_HANDLE;
+  if (this->dll_handle_)
+    handle = this->dll_handle_->get_handle (become_owner);
+
+  return handle;  
 }
 
 // Set the handle for the DLL. By default, the object will be closed
 // before it is destroyed.
 
 int
-ACE_DLL::set_handle (ACE_SHLIB_HANDLE /*handle*/,
-                     int /*close_on_destruction*/)
+ACE_DLL::set_handle (ACE_SHLIB_HANDLE handle,
+                     int close_on_destruction)
 {
   ACE_TRACE ("ACE_DLL::set_handle");
 
-  // Hmmm, how to do this...
-  // I don't see a way to get the name of the library associated with
-  // the handle, so either we use a dummy name or we try to compair 
-  // it with other handles to see if you already have it...  :-((
+  // Create a unique name for the dll (if some knows how to get the
+  // real name of the dll, please replace this code).
+  auto_ptr <ACE_TCHAR> tempname (ACE::strnew (ACE_LIB_TEXT ("tmp_XXXXXX")));
 
-  return -1;
+  ACE_HANDLE fd;
+  if ((fd = ACE_OS::mkstemp (tempname.get ())) = 0)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       ACE_LIB_TEXT ("ACE_DLL::set_handle: error calling "
+                                     "ACE_OS::mkstemp %s\n"),
+                       tempname.get ()),
+                      -1);
+  ACE_OS::close (fd);
+
+  return this->open_i (tempname.get (), 1, close_on_destruction, handle);
 }
-#endif /* 0 */
+

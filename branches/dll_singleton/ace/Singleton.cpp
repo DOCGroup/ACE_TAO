@@ -410,6 +410,8 @@ template <class TYPE, class ACE_LOCK>
 ACE_DLL_Singleton_T<TYPE, ACE_LOCK> *&
 ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::instance_i (void)
 {
+  ACE_TRACE ("ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::instance_i");
+
 #if defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   // Pointer to the Singleton instance.  This works around a bug with
   // G++ and it's (mis-)handling of templates and statics...
@@ -475,15 +477,34 @@ ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::instance (void)
 template <class TYPE, class ACE_LOCK> void
 ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::close (void)
 {
+  ACE_TRACE ("ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::close");
+
   ACE_DLL_Singleton_T<TYPE, ACE_LOCK> *&singleton =
     ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::instance_i ();
 
-  if (singleton)
-    {
-      singleton->cleanup ();
-      ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::instance_i () = 0;
-    }
+  delete singleton;
+  singleton = 0;
 }
+
+template <class TYPE, class ACE_LOCK> void
+ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::close_singleton (void)
+{
+  ACE_TRACE ("ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::close_singleton");
+  ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::close ();
+}
+
+template <class TYPE, class ACE_LOCK> const ACE_TCHAR *
+ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::dll_name (void)
+{
+  return this->instance ()->dll_name ();
+}
+ 
+template <class TYPE, class ACE_LOCK> const ACE_TCHAR *
+ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::name (void)
+{
+  return this->instance ()->name ();
+}
+
 
 /**********************************************************************/
 

@@ -262,25 +262,35 @@ protected:
  * *ACE_Singleton*<T, [ACE_LOCK]>, not an ACE_Unmanaged_Singleton.
  */
 template <class TYPE, class ACE_LOCK>
-class ACE_DLL_Singleton_T : public ACE_Singleton <TYPE, ACE_LOCK>
+class ACE_DLL_Singleton_T
 {
 public:
+  //void cleanup (void *param = 0);
+
   /// Global access point to the Singleton.
   static TYPE *instance (void);
 
   /// Explicitly delete the Singleton instance.
   static void close (void);
 
-  static void close_singleton (void) {close ();}
+  static void close_singleton (void);
 
   /// Dump the state of the object.
   static void dump (void);
 
-  const ACE_TCHAR *dll_name (void) {return this->instance ()->dll_name ();}
+  const ACE_TCHAR *dll_name (void);
+ 
+  const ACE_TCHAR *name (void);
 
 protected:
   /// Default constructor.
   ACE_DLL_Singleton_T (void);
+
+  /// Destructor.
+  ~ACE_DLL_Singleton_T (void);
+
+  /// Contained instance.
+  TYPE instance_;
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   /// Pointer to the Singleton instance.
