@@ -1,3 +1,16 @@
+Thu Jun 12 15:45:49 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* IIOP/lib/objtable.cpp: Added explicit template instantiations
+ 	for ACE_Hash_Map_Manager<>.
+
+	* IIOP/lib/giop.*: Finally got rid of all those methods that took
+ 	ACE_HANDLE as the argument.  Now, all those operate on
+ 	ACE_SOCK_Streams.
+
+Thu Jun  5 10:15:21 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* IIOP/lib/giop.cpp: Corrected output format in error message.
+
 Thu Jun  5 10:09:01 1997  Chris Cleeland  <cleeland@merengue.cs.wustl.edu>
 
 	* IIOP/test/svr.cpp: Added a new class to catch SIGINT and

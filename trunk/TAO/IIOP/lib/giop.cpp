@@ -123,17 +123,6 @@ CORBA_Boolean
 GIOP::send_message (CDR &stream,
 		    ACE_SOCK_Stream &peer)
 {
-  ACE_HANDLE h = peer.get_handle ();
-
-  CORBA_Boolean r = send_message (stream, h);
-  peer.set_handle (h);
-  return r;
-}
-
-CORBA_Boolean
-GIOP::send_message (CDR &stream, 
-		    ACE_HANDLE &connection)
-{
   char *buf = (char *) stream.buffer;
   size_t buflen = stream.next - stream.buffer;
   int writelen;
@@ -167,7 +156,7 @@ GIOP::send_message (CDR &stream,
 	  return CORBA_B_FALSE;
 	}
 
-      writelen = ACE::send (connection, (char _FAR *) buf, buflen);
+      writelen = peer.send ((char _FAR *) buf, buflen);
 
 #ifdef	DEBUG
       dmsg_filter (6, "wrote %d bytes to connection %d",
@@ -189,16 +178,14 @@ GIOP::send_message (CDR &stream,
       if (writelen == -1) 
 	{
 	  ACE_DEBUG ((LM_ERROR, "(%P|%t) %p\n", "OutgoingMessage::writebuf()"));
-	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) closing conn %d after fault\n", connection));
-	  ACE_OS::closesocket (connection);
-	  connection = ACE_INVALID_HANDLE;
+	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) closing conn %d after fault\n", peer.get_handle()));
+          peer.close();
 	  return CORBA_B_FALSE;
 	} 
       else if (writelen == 0) 
 	{
-	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) OutgoingMessage::writebuf () ... EOF, closing conn %d\n", connection));
-	  ACE_OS::closesocket (connection);
-	  connection = ACE_INVALID_HANDLE;
+	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) OutgoingMessage::writebuf () ... EOF, closing conn %d\n", peer.get_handle()));
+          peer.close();
 	  return CORBA_B_FALSE;
 	}
       if ((buflen -= writelen) != 0)
@@ -246,15 +233,6 @@ void
 GIOP::close_connection (ACE_SOCK_Stream &peer, 
 			void *unused)
 {
-  ACE_HANDLE h = peer.get_handle ();
-  close_connection (h, unused);
-  peer.set_handle (h);
-}
-
-void
-GIOP::close_connection (ACE_HANDLE &handle, 
-			void *unused)
-{
   // It's important that we use a reliable shutdown after we send
   // this message, so we know it's received.
   //
@@ -262,12 +240,11 @@ GIOP::close_connection (ACE_HANDLE &handle,
   // that this won't block (long) since we never set SO_LINGER
 
   dump_msg ("send", (const u_char *) close_message, TAO_GIOP_HEADER_LEN);
-  (void) ACE::send (handle, close_message, TAO_GIOP_HEADER_LEN);
-  (void) ACE_OS::shutdown (handle, 2);
-  (void) ACE_OS::closesocket (handle);
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) shut down socket %d\n", handle));
-  handle = ACE_INVALID_HANDLE;
+  peer.send (close_message, TAO_GIOP_HEADER_LEN);
+  peer.close();
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) shut down socket %d\n", peer.get_handle()));
 }
+
 
 // Send an "I can't understand you" message -- again, the message is
 // prefabricated for simplicity.  This implies abortive disconnect (at
@@ -287,22 +264,12 @@ error_message [TAO_GIOP_HEADER_LEN] =
 };
 
 static inline void
-send_error (ACE_HANDLE &handle)
-{
-  dump_msg ("send", (const u_char *) error_message, TAO_GIOP_HEADER_LEN);
-  (void) ACE::send (handle, error_message, TAO_GIOP_HEADER_LEN);
-  (void) ACE_OS::shutdown (handle, 2);
-  (void) ACE_OS::closesocket (handle);
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) aborted socket %d\n", handle));
-  handle = ACE_INVALID_HANDLE;
-}
-
-static inline void
 send_error (ACE_SOCK_Stream &peer)
 {
-  ACE_HANDLE h = peer.get_handle ();
-  send_error (h);
-  peer.set_handle (h);
+  dump_msg ("send", (const u_char *) error_message, TAO_GIOP_HEADER_LEN);
+  peer.send (error_message, TAO_GIOP_HEADER_LEN);
+  peer.close();
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) aborted socket %d\n", peer.get_handle()));
 }
 
 // @@ Can't we remove this stuff and replace it with recv_n() on the
@@ -319,7 +286,9 @@ read_buffer (ACE_SOCK_Stream &peer,
 	     size_t len)
 {
   int bytes_read = 0;
-
+#if 1
+  bytes_read = peer.recv_n(buf, len);
+#else
   while (len != 0) 
     {
       int retval;
@@ -336,7 +305,7 @@ read_buffer (ACE_SOCK_Stream &peer,
       buf += retval;
       bytes_read += retval;
     }
-
+#endif
   return bytes_read;
 }
 
@@ -358,16 +327,6 @@ read_buffer (ACE_SOCK_Stream &peer,
 // connection; in some cases, that alone has almost doubled
 // performance.  The two read () calls can be made into one by fancy
 // buffering.  How fast could it be with both optimizations applied?
-
-GIOP::MsgType
-GIOP::read_message (ACE_HANDLE &handle, 
-		    CDR &msg, 
-		    CORBA_Environment &env)
-{
-  ACE_SOCK_Stream s;
-  s.set_handle (handle);
-  return read_message (s, msg, env);
-}
 
 GIOP::MsgType
 GIOP::read_message (ACE_SOCK_Stream &connection,

@@ -164,6 +164,8 @@ TAO_Active_Demux_ObjTable_Entry::~TAO_Active_Demux_ObjTable_Entry (void)
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Hash_Map_Manager<ACE_CString, CORBA_Object_ptr, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Hash_Map_Entry<ACE_CString, CORBA_Object_ptr>;
+template class ACE_Hash_Map_Manager<char const*, CORBA_Object_ptr, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Entry<char const*, CORBA_Object_ptr>;
 template class ACE_Guard<ACE_SYNCH_RW_MUTEX>;
 template class ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>;
 template class ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>;
