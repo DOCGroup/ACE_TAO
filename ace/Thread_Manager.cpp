@@ -6,7 +6,6 @@
 #include "ace/Object_Manager.h"
 #include "ace/Singleton.h"
 #include "ace/Auto_Ptr.h"
-#include "ace/Thread_Exit.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Thread_Manager.i"
@@ -25,6 +24,18 @@ ACE_Thread_Manager *ACE_Thread_Manager::thr_mgr_ = 0;
 // (we can only delete it safely if we created it!)
 int ACE_Thread_Manager::delete_thr_mgr_ = 0;
 #endif /* ! defined (ACE_THREAD_MANAGER_LACKS_STATICS) */
+
+ACE_TSS_TYPE (ACE_Thread_Exit) *ACE_Thread_Manager::thr_exit_ = 0;
+
+int
+ACE_Thread_Manager::set_thr_exit (ACE_TSS_TYPE (ACE_Thread_Exit) *ptr)
+{
+  if (ACE_Thread_Manager::thr_exit_ == 0)
+    ACE_Thread_Manager::thr_exit_ = ptr;
+  else
+    return -1;
+  return 0;
+}
 
 void
 ACE_Thread_Manager::dump (void)
@@ -379,6 +390,8 @@ ACE_Thread_Manager::close_singleton (void)
       ACE_Thread_Manager::thr_mgr_ = 0;
       ACE_Thread_Manager::delete_thr_mgr_ = 0;
     }
+
+  ACE_Thread_Exit::cleanup (ACE_Thread_Manager::thr_exit_);
 }
 #endif /* ! defined (ACE_THREAD_MANAGER_LACKS_STATICS) */
 

@@ -1,3 +1,19 @@
+Tue Oct 29 15:45:06 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Exit.h:
+	* ace/Thread_Exit.cpp:
+	* ace/Thread_Manager.h:
+	* ace/Thread_Manager.cpp: Changed to use ACE_Thread_Manager to
+	  clean up the global TSS ACE_Thread_Exit object instead of
+	  depending on the more general ACE_Object_Manager::at_exit method
+	  so we can better control the order of destruction.  The change
+	  makes sure the global TSS ACE_Thread_Exit object will only get
+	  deleted *after* ACE_Thread_Manager has cleaned up all threads
+	  and destroyed itself.
+
+	  Thanks to Patrick McNerthney <pat@mcnerthney.com> for reporting
+	  the problem.
+
 Tue Oct 29 16:19:54 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* ace/INET_Addr.cpp:
@@ -11,7 +27,7 @@ Tue Oct 29 16:19:54 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 	* tests/INET_Addr_Test.cpp: Add test to verify that address family
 	  is being set.
 	* THANKS: Added Thomas Devanneaux <tdevanne@akamai.com> who provided
-	  these fixes. 
+	  these fixes.
 
 Mon Oct 28 20:46:33 2002  Steve Huston  <shuston@riverace.com>
 
