@@ -1,3 +1,20 @@
+Wed Nov  5 14:53:19 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Multihomed_INET_Addr.{h,cpp}:
+          Removed some "/**/" comments from normal #include statements so
+          these includes can be picked up by doxygen.  This is a doxygen
+          "feature" that excludes includes from documentation that have an
+          unknown charater.
+
+        * ace/Synch.cpp:
+        * ace/Thread_Mutex.cpp:
+        * ace/RW_Thread_Mutex.cpp:
+          Moved the explicite tempate instantiations from Synch.cpp to
+          these files since Synch.cpp is not always compiled.
+
+        * tests/Multihomed_INET_Addr_Test.cpp:
+          Added ACE_OS to a memcmp call to fix a compile error.
+
 Thu Nov  5 14:08:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-mingw.h:
