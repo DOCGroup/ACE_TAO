@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Signal.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #if !defined (ACE_SIGNAL_HANDLER_H)
@@ -27,8 +27,8 @@ class ACE_Export ACE_Sig_Set
 {
   // = TITLE
   //     Provide a C++ wrapper for the C sigset_t interface.
-  // 
-  // = DESCRIPTION 
+  //
+  // = DESCRIPTION
   //     Handle signals via a more elegant C++ interface (e.g.,
   //     doesn't require the use of global variables or global
   //     functions in an application).
@@ -171,7 +171,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  ACE_Sig_Set omask_; 
+  ACE_Sig_Set omask_;
   // Original signal mask.
 };
 
@@ -191,9 +191,9 @@ class ACE_Export ACE_Sig_Handler
   //    <ACE_Event_Handler> is invoked automatically.
 public:
   // = Registration and removal methods.
-  virtual int register_handler (int signum, 
-                                ACE_Event_Handler *new_sh, 
-                                ACE_Sig_Action *new_disp = 0, 
+  virtual int register_handler (int signum,
+                                ACE_Event_Handler *new_sh,
+                                ACE_Sig_Action *new_disp = 0,
                                 ACE_Event_Handler **old_sh = 0,
                                 ACE_Sig_Action *old_disp = 0);
   // Add a new <ACE_Event_Handler> and a new sigaction associated with
@@ -201,7 +201,7 @@ public:
   // sigaction if pointers are non-zero.  Returns -1 on failure and >=
   // 0 on success.
 
-  virtual int remove_handler (int signum, 
+  virtual int remove_handler (int signum,
                               ACE_Sig_Action *new_disp = 0,
                               ACE_Sig_Action *old_disp = 0,
                               int sigkey = -1);
@@ -214,16 +214,16 @@ public:
 
   // Set/get signal status.
   static int sig_pending (void);
-  // True if there is a pending signal. 
+  // True if there is a pending signal.
 
   static void sig_pending (int);
-  // Reset the value of <sig_pending_> so that no signal is pending. 
+  // Reset the value of <sig_pending_> so that no signal is pending.
 
   // = Set/get the handler associated with a particular signal.
 
   virtual ACE_Event_Handler *handler (int signum);
-  // Return the list of <ACE_Sig_Handlers> associated with <signum>. 
-  
+  // Return the list of <ACE_Sig_Handlers> associated with <signum>.
+
   virtual ACE_Event_Handler *handler (int signum, ACE_Event_Handler *);
   // Set a new <ACE_Event_Handler> that is associated with <signum>.
   // Return the existing handler.
@@ -239,17 +239,17 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-protected: 
-  // = These methods and data members are shared by derived classes. 
+protected:
+  // = These methods and data members are shared by derived classes.
 
   static int in_range (int signum);
-  // Check whether the SIGNUM is within the legal range of signals. 
+  // Check whether the SIGNUM is within the legal range of signals.
 
   static sig_atomic_t sig_pending_;
-  // Keeps track of whether a signal is pending. 
-  
+  // Keeps track of whether a signal is pending.
+
 private:
-  static ACE_Event_Handler *signal_handlers_[NSIG];
+  static ACE_Event_Handler *signal_handlers_[ACE_NSIG];
   // Array used to store one user-defined Event_Handler for every
   // signal.
 };
@@ -263,7 +263,7 @@ public:
   ACE_Sig_Adapter (ACE_Sig_Action &, int sigkey);
   ACE_Sig_Adapter (ACE_Event_Handler *, int sigkey);
   ACE_Sig_Adapter (ACE_Sig_Handler_Ex, int sigkey = 0);
-  
+
   int sigkey (void);
   // Returns this signal key that's used to remove this from the
   // <ACE_Reactor>'s internal table.
@@ -275,7 +275,7 @@ private:
   int sigkey_;
   // Key for this signal handler (used to remove it).
 
-  enum 
+  enum
   {
     ACE_HANDLER, // We're just wrapping an ACE_Event_Handler.
     SIG_ACTION,  // An ACE_Sig_Action.
@@ -312,14 +312,14 @@ class ACE_Export ACE_Sig_Handlers : public ACE_Sig_Handler
   //    automatically.
 public:
   // = Registration and removal methods.
-  virtual int register_handler (int signum, 
-                                ACE_Event_Handler *new_sh, 
-                                ACE_Sig_Action *new_disp = 0, 
+  virtual int register_handler (int signum,
+                                ACE_Event_Handler *new_sh,
+                                ACE_Sig_Action *new_disp = 0,
                                 ACE_Event_Handler **old_sh = 0,
                                 ACE_Sig_Action *old_disp = 0);
   // Add a new ACE_Event_Handler and a new sigaction associated with
   // <signum>.  Passes back the existing ACE_Event_Handler and its
-  // sigaction if pointers are non-zero.  Returns -1 on failure and 
+  // sigaction if pointers are non-zero.  Returns -1 on failure and
   // a <sigkey> that is >= 0 on success.
 
   virtual int remove_handler (int signum,
@@ -336,7 +336,7 @@ public:
   virtual ACE_Event_Handler *handler (int signum);
   // Return the head of the list of ACE_Sig_Handlers associated
   // with SIGNUM.
-  
+
   virtual ACE_Event_Handler *handler (int signum, ACE_Event_Handler *);
   // Set a new ACE_Event_Handler that is associated with SIGNUM at the
   // head of the list of signals.  Return the existing handler that
@@ -361,7 +361,7 @@ private:
 
   static int third_party_sig_handler_;
   // If this is > 0 then a 3rd party library has registered a
-  // handler...  
+  // handler...
 };
 #endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
 

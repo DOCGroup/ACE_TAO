@@ -1128,8 +1128,8 @@ ACE_Select_Reactor::register_handler (const ACE_Sig_Set &sigset,
 
   int result = 0;
 
-#if (NSIG > 0)
-  for (int s = 1; s < NSIG; s++)
+#if (ACE_NSIG > 0)
+  for (int s = 1; s < ACE_NSIG; s++)
     if (sigset.is_member (s)
         && this->signal_handler_->register_handler (s, new_sh,
                                                     new_disp) == -1)
@@ -1138,7 +1138,7 @@ ACE_Select_Reactor::register_handler (const ACE_Sig_Set &sigset,
   ACE_UNUSED_ARG (sigset);
   ACE_UNUSED_ARG (new_sh);
   ACE_UNUSED_ARG (new_disp);
-#endif /* NSIG */
+#endif /* ACE_NSIG */
   return result;
 }
 
@@ -1148,14 +1148,14 @@ ACE_Select_Reactor::remove_handler (const ACE_Sig_Set &sigset)
   ACE_TRACE ("ACE_Select_Reactor::remove_handler");
   int result = 0;
 
-#if (NSIG > 0)
-  for (int s = 1; s < NSIG; s++)
+#if (ACE_NSIG > 0)
+  for (int s = 1; s < ACE_NSIG; s++)
     if (sigset.is_member (s)
         && this->signal_handler_->remove_handler (s) == -1)
       result = -1;
 #else
   ACE_UNUSED_ARG (sigset);
-#endif /* NSIG */
+#endif /* ACE_NSIG */
 
   return result;
 }
@@ -1528,27 +1528,27 @@ ACE_Select_Reactor::dispatch_notification_handlers (int &number_of_active_handle
 
 int
 ACE_Select_Reactor::dispatch_io_set (int number_of_active_handles,
-				     int& number_dispatched,
-				     int mask,
-				     ACE_Handle_Set& dispatch_mask,
-				     ACE_Handle_Set& ready_mask,
-				     ACE_EH_PTMF callback)
+                                     int& number_dispatched,
+                                     int mask,
+                                     ACE_Handle_Set& dispatch_mask,
+                                     ACE_Handle_Set& ready_mask,
+                                     ACE_EH_PTMF callback)
 {
   ACE_HANDLE handle;
 
   ACE_Handle_Set_Iterator handle_iter (dispatch_mask);
 
   while ((handle = handle_iter ()) != ACE_INVALID_HANDLE
-	 && number_dispatched < number_of_active_handles
-	 && this->state_changed_ == 0)
+         && number_dispatched < number_of_active_handles
+         && this->state_changed_ == 0)
     {
       // ACE_DEBUG ((LM_DEBUG, "ACE_Select_Reactor::dispatching\n"));
       number_dispatched++;
       this->notify_handle (handle,
-			   mask,
-			   ready_mask,
-			   this->handler_rep_.find (handle),
-			   callback);
+                           mask,
+                           ready_mask,
+                           this->handler_rep_.find (handle),
+                           callback);
     }
 
   if (number_dispatched > 0 && this->state_changed_)
@@ -1571,11 +1571,11 @@ ACE_Select_Reactor::dispatch_io_handlers (int &number_of_active_handles,
 
   // ACE_DEBUG ((LM_DEBUG, "ACE_Select_Reactor::dispatch - WRITE\n"));
   if (this->dispatch_io_set (number_of_active_handles,
-			     number_dispatched,
-			     ACE_Event_Handler::WRITE_MASK,
-			     dispatch_set.wr_mask_,
-			     this->ready_set_.wr_mask_,
-			     &ACE_Event_Handler::handle_output) == -1)
+                             number_dispatched,
+                             ACE_Event_Handler::WRITE_MASK,
+                             dispatch_set.wr_mask_,
+                             this->ready_set_.wr_mask_,
+                             &ACE_Event_Handler::handle_output) == -1)
     {
       number_of_active_handles -= number_dispatched;
       return -1;
@@ -1584,11 +1584,11 @@ ACE_Select_Reactor::dispatch_io_handlers (int &number_of_active_handles,
 
   // ACE_DEBUG ((LM_DEBUG, "ACE_Select_Reactor::dispatch - EXCEPT\n"));
   if (this->dispatch_io_set (number_of_active_handles,
-			     number_dispatched,
-			     ACE_Event_Handler::EXCEPT_MASK,
-			     dispatch_set.ex_mask_,
-			     this->ready_set_.ex_mask_,
-			     &ACE_Event_Handler::handle_exception) == -1)
+                             number_dispatched,
+                             ACE_Event_Handler::EXCEPT_MASK,
+                             dispatch_set.ex_mask_,
+                             this->ready_set_.ex_mask_,
+                             &ACE_Event_Handler::handle_exception) == -1)
     {
       number_of_active_handles -= number_dispatched;
       return -1;
@@ -1596,11 +1596,11 @@ ACE_Select_Reactor::dispatch_io_handlers (int &number_of_active_handles,
 
   // ACE_DEBUG ((LM_DEBUG, "ACE_Select_Reactor::dispatch - READ\n"));
   if (this->dispatch_io_set (number_of_active_handles,
-			     number_dispatched,
-			     ACE_Event_Handler::READ_MASK,
-			     dispatch_set.rd_mask_,
-			     this->ready_set_.rd_mask_,
-			     &ACE_Event_Handler::handle_input) == -1)
+                             number_dispatched,
+                             ACE_Event_Handler::READ_MASK,
+                             dispatch_set.rd_mask_,
+                             this->ready_set_.rd_mask_,
+                             &ACE_Event_Handler::handle_input) == -1)
     {
       number_of_active_handles -= number_dispatched;
       return -1;
@@ -1668,12 +1668,12 @@ ACE_Select_Reactor::dispatch (int number_of_active_handles,
       // are trying to update the <Reactor>.
 
       else if (this->dispatch_notification_handlers (number_of_active_handles,
-						     dispatch_set) == -1)
+                                                     dispatch_set) == -1)
         break; // State has changed, exit inner loop.
 
       // Finally, dispatch the I/O handlers.
       else if (this->dispatch_io_handlers (number_of_active_handles,
-					   dispatch_set) == -1)
+                                           dispatch_set) == -1)
         // State has changed, so exit the inner loop.
         break;
     }
