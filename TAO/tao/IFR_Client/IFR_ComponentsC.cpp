@@ -50,7 +50,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -59,7 +59,7 @@ namespace TAO
 #if !defined (_CORBA_INTERFACEDEF__ARG_TRAITS_CS_)
 #define _CORBA_INTERFACEDEF__ARG_TRAITS_CS_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_IFR_Client_Export Arg_Traits<CORBA::InterfaceDef>
     : public
         Object_Arg_Traits_T<
@@ -74,12 +74,12 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:433
+  // be\be_visitor_arg_traits.cpp:480
 
 #if !defined (_CORBA_INTERFACEDEFSEQ__ARG_TRAITS_CS_)
 #define _CORBA_INTERFACEDEFSEQ__ARG_TRAITS_CS_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_IFR_Client_Export Arg_Traits<CORBA::InterfaceDefSeq>
     : public
         Var_Size_Arg_Traits_T<
@@ -95,7 +95,7 @@ namespace TAO
 #if !defined (_CORBA_VALUEDEF__ARG_TRAITS_CS_)
 #define _CORBA_VALUEDEF__ARG_TRAITS_CS_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_IFR_Client_Export Arg_Traits<CORBA::ValueDef>
     : public
         Object_Arg_Traits_T<
@@ -110,12 +110,12 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:433
+  // be\be_visitor_arg_traits.cpp:480
 
 #if !defined (_CORBA_VALUEDEFSEQ__ARG_TRAITS_CS_)
 #define _CORBA_VALUEDEFSEQ__ARG_TRAITS_CS_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_IFR_Client_Export Arg_Traits<CORBA::ValueDefSeq>
     : public
         Var_Size_Arg_Traits_T<
@@ -129,12 +129,12 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:433
+  // be\be_visitor_arg_traits.cpp:480
 
 #if !defined (_CORBA_EXTINITIALIZERSEQ__ARG_TRAITS_CS_)
 #define _CORBA_EXTINITIALIZERSEQ__ARG_TRAITS_CS_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_IFR_Client_Export Arg_Traits<CORBA::ExtInitializerSeq>
     : public
         Var_Size_Arg_Traits_T<
@@ -148,12 +148,12 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:433
+  // be\be_visitor_arg_traits.cpp:480
 
 #if !defined (_CORBA_EXCEPTIONDEFSEQ__ARG_TRAITS_CS_)
 #define _CORBA_EXCEPTIONDEFSEQ__ARG_TRAITS_CS_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_IFR_Client_Export Arg_Traits<CORBA::ExceptionDefSeq>
     : public
         Var_Size_Arg_Traits_T<
@@ -167,12 +167,12 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:433
+  // be\be_visitor_arg_traits.cpp:480
 
 #if !defined (_CORBA_PARDESCRIPTIONSEQ__ARG_TRAITS_CS_)
 #define _CORBA_PARDESCRIPTIONSEQ__ARG_TRAITS_CS_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_IFR_Client_Export Arg_Traits<CORBA::ParDescriptionSeq>
     : public
         Var_Size_Arg_Traits_T<
@@ -188,7 +188,7 @@ namespace TAO
 #if !defined (_CORBA_COMPONENTIR_COMPONENTDEF__ARG_TRAITS_CS_)
 #define _CORBA_COMPONENTIR_COMPONENTDEF__ARG_TRAITS_CS_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_IFR_Client_Export Arg_Traits<CORBA::ComponentIR::ComponentDef>
     : public
         Object_Arg_Traits_T<
@@ -205,7 +205,7 @@ namespace TAO
 #if !defined (_CORBA_COMPONENTIR_HOMEDEF__ARG_TRAITS_CS_)
 #define _CORBA_COMPONENTIR_HOMEDEF__ARG_TRAITS_CS_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_IFR_Client_Export Arg_Traits<CORBA::ComponentIR::HomeDef>
     : public
         Object_Arg_Traits_T<
@@ -222,7 +222,7 @@ namespace TAO
 #if !defined (_CORBA_COMPONENTIR_EVENTDEF__ARG_TRAITS_CS_)
 #define _CORBA_COMPONENTIR_EVENTDEF__ARG_TRAITS_CS_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_IFR_Client_Export Arg_Traits<CORBA::ComponentIR::EventDef>
     : public
         Object_Arg_Traits_T<
@@ -239,7 +239,7 @@ namespace TAO
 #if !defined (_CORBA_COMPONENTIR_PROVIDESDEF__ARG_TRAITS_CS_)
 #define _CORBA_COMPONENTIR_PROVIDESDEF__ARG_TRAITS_CS_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_IFR_Client_Export Arg_Traits<CORBA::ComponentIR::ProvidesDef>
     : public
         Object_Arg_Traits_T<
@@ -256,7 +256,7 @@ namespace TAO
 #if !defined (_CORBA_COMPONENTIR_USESDEF__ARG_TRAITS_CS_)
 #define _CORBA_COMPONENTIR_USESDEF__ARG_TRAITS_CS_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_IFR_Client_Export Arg_Traits<CORBA::ComponentIR::UsesDef>
     : public
         Object_Arg_Traits_T<
@@ -273,7 +273,7 @@ namespace TAO
 #if !defined (_CORBA_COMPONENTIR_EMITSDEF__ARG_TRAITS_CS_)
 #define _CORBA_COMPONENTIR_EMITSDEF__ARG_TRAITS_CS_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_IFR_Client_Export Arg_Traits<CORBA::ComponentIR::EmitsDef>
     : public
         Object_Arg_Traits_T<
@@ -290,7 +290,7 @@ namespace TAO
 #if !defined (_CORBA_COMPONENTIR_PUBLISHESDEF__ARG_TRAITS_CS_)
 #define _CORBA_COMPONENTIR_PUBLISHESDEF__ARG_TRAITS_CS_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_IFR_Client_Export Arg_Traits<CORBA::ComponentIR::PublishesDef>
     : public
         Object_Arg_Traits_T<
@@ -307,7 +307,7 @@ namespace TAO
 #if !defined (_CORBA_COMPONENTIR_CONSUMESDEF__ARG_TRAITS_CS_)
 #define _CORBA_COMPONENTIR_CONSUMESDEF__ARG_TRAITS_CS_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_IFR_Client_Export Arg_Traits<CORBA::ComponentIR::ConsumesDef>
     : public
         Object_Arg_Traits_T<
@@ -324,7 +324,7 @@ namespace TAO
 #if !defined (_CORBA_COMPONENTIR_FACTORYDEF__ARG_TRAITS_CS_)
 #define _CORBA_COMPONENTIR_FACTORYDEF__ARG_TRAITS_CS_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_IFR_Client_Export Arg_Traits<CORBA::ComponentIR::FactoryDef>
     : public
         Object_Arg_Traits_T<
@@ -341,7 +341,7 @@ namespace TAO
 #if !defined (_CORBA_COMPONENTIR_FINDERDEF__ARG_TRAITS_CS_)
 #define _CORBA_COMPONENTIR_FINDERDEF__ARG_TRAITS_CS_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_IFR_Client_Export Arg_Traits<CORBA::ComponentIR::FinderDef>
     : public
         Object_Arg_Traits_T<
@@ -362,7 +362,6 @@ namespace TAO
 
 // Traits specializations for CORBA::ComponentIR::EventDef.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::EventDef_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::EventDef>::duplicate (
     CORBA::ComponentIR::EventDef_ptr p
@@ -371,7 +370,6 @@ TAO::Objref_Traits<CORBA::ComponentIR::EventDef>::duplicate (
   return CORBA::ComponentIR::EventDef::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::ComponentIR::EventDef>::release (
     CORBA::ComponentIR::EventDef_ptr p
@@ -380,14 +378,12 @@ TAO::Objref_Traits<CORBA::ComponentIR::EventDef>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::EventDef_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::EventDef>::nil (void)
 {
   return CORBA::ComponentIR::EventDef::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::ComponentIR::EventDef>::marshal (
     CORBA::ComponentIR::EventDef_ptr p,
@@ -473,6 +469,12 @@ CORBA::ComponentIR::EventDef::_duplicate (EventDef_ptr obj)
   return obj;
 }
 
+void
+CORBA::ComponentIR::EventDef::_tao_release (EventDef_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 CORBA::ComponentIR::EventDef::_is_a (
     const char *value
@@ -514,7 +516,7 @@ CORBA::ComponentIR::EventDef::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
@@ -541,7 +543,6 @@ CORBA::ComponentIR::EventDef::marshal (TAO_OutputCDR &cdr)
 
 // Traits specializations for CORBA::ComponentIR::Container.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::Container_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::Container>::duplicate (
     CORBA::ComponentIR::Container_ptr p
@@ -550,7 +551,6 @@ TAO::Objref_Traits<CORBA::ComponentIR::Container>::duplicate (
   return CORBA::ComponentIR::Container::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::ComponentIR::Container>::release (
     CORBA::ComponentIR::Container_ptr p
@@ -559,14 +559,12 @@ TAO::Objref_Traits<CORBA::ComponentIR::Container>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::Container_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::Container>::nil (void)
 {
   return CORBA::ComponentIR::Container::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::ComponentIR::Container>::marshal (
     CORBA::ComponentIR::Container_ptr p,
@@ -844,6 +842,12 @@ CORBA::ComponentIR::Container::_duplicate (Container_ptr obj)
   return obj;
 }
 
+void
+CORBA::ComponentIR::Container::_tao_release (Container_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 CORBA::ComponentIR::Container::_is_a (
     const char *value
@@ -869,7 +873,7 @@ CORBA::ComponentIR::Container::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
@@ -896,7 +900,6 @@ CORBA::ComponentIR::Container::marshal (TAO_OutputCDR &cdr)
 
 // Traits specializations for CORBA::ComponentIR::ModuleDef.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::ModuleDef_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::ModuleDef>::duplicate (
     CORBA::ComponentIR::ModuleDef_ptr p
@@ -905,7 +908,6 @@ TAO::Objref_Traits<CORBA::ComponentIR::ModuleDef>::duplicate (
   return CORBA::ComponentIR::ModuleDef::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::ComponentIR::ModuleDef>::release (
     CORBA::ComponentIR::ModuleDef_ptr p
@@ -914,14 +916,12 @@ TAO::Objref_Traits<CORBA::ComponentIR::ModuleDef>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::ModuleDef_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::ModuleDef>::nil (void)
 {
   return CORBA::ComponentIR::ModuleDef::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::ComponentIR::ModuleDef>::marshal (
     CORBA::ComponentIR::ModuleDef_ptr p,
@@ -1008,6 +1008,12 @@ CORBA::ComponentIR::ModuleDef::_duplicate (ModuleDef_ptr obj)
   return obj;
 }
 
+void
+CORBA::ComponentIR::ModuleDef::_tao_release (ModuleDef_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 CORBA::ComponentIR::ModuleDef::_is_a (
     const char *value
@@ -1045,7 +1051,7 @@ CORBA::ComponentIR::ModuleDef::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
@@ -1072,7 +1078,6 @@ CORBA::ComponentIR::ModuleDef::marshal (TAO_OutputCDR &cdr)
 
 // Traits specializations for CORBA::ComponentIR::Repository.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::Repository_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::Repository>::duplicate (
     CORBA::ComponentIR::Repository_ptr p
@@ -1081,7 +1086,6 @@ TAO::Objref_Traits<CORBA::ComponentIR::Repository>::duplicate (
   return CORBA::ComponentIR::Repository::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::ComponentIR::Repository>::release (
     CORBA::ComponentIR::Repository_ptr p
@@ -1090,14 +1094,12 @@ TAO::Objref_Traits<CORBA::ComponentIR::Repository>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::Repository_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::Repository>::nil (void)
 {
   return CORBA::ComponentIR::Repository::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::ComponentIR::Repository>::marshal (
     CORBA::ComponentIR::Repository_ptr p,
@@ -1184,6 +1186,12 @@ CORBA::ComponentIR::Repository::_duplicate (Repository_ptr obj)
   return obj;
 }
 
+void
+CORBA::ComponentIR::Repository::_tao_release (Repository_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 CORBA::ComponentIR::Repository::_is_a (
     const char *value
@@ -1217,7 +1225,7 @@ CORBA::ComponentIR::Repository::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
@@ -1244,7 +1252,6 @@ CORBA::ComponentIR::Repository::marshal (TAO_OutputCDR &cdr)
 
 // Traits specializations for CORBA::ComponentIR::ProvidesDef.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::ProvidesDef_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::ProvidesDef>::duplicate (
     CORBA::ComponentIR::ProvidesDef_ptr p
@@ -1253,7 +1260,6 @@ TAO::Objref_Traits<CORBA::ComponentIR::ProvidesDef>::duplicate (
   return CORBA::ComponentIR::ProvidesDef::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::ComponentIR::ProvidesDef>::release (
     CORBA::ComponentIR::ProvidesDef_ptr p
@@ -1262,14 +1268,12 @@ TAO::Objref_Traits<CORBA::ComponentIR::ProvidesDef>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::ProvidesDef_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::ProvidesDef>::nil (void)
 {
   return CORBA::ComponentIR::ProvidesDef::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::ComponentIR::ProvidesDef>::marshal (
     CORBA::ComponentIR::ProvidesDef_ptr p,
@@ -1440,6 +1444,12 @@ CORBA::ComponentIR::ProvidesDef::_duplicate (ProvidesDef_ptr obj)
   return obj;
 }
 
+void
+CORBA::ComponentIR::ProvidesDef::_tao_release (ProvidesDef_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 CORBA::ComponentIR::ProvidesDef::_is_a (
     const char *value
@@ -1465,7 +1475,7 @@ CORBA::ComponentIR::ProvidesDef::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
@@ -1505,7 +1515,6 @@ CORBA::ComponentIR::ProvidesDescription::_tao_any_destructor (
 
 // Traits specializations for CORBA::ComponentIR::UsesDef.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::UsesDef_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::UsesDef>::duplicate (
     CORBA::ComponentIR::UsesDef_ptr p
@@ -1514,7 +1523,6 @@ TAO::Objref_Traits<CORBA::ComponentIR::UsesDef>::duplicate (
   return CORBA::ComponentIR::UsesDef::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::ComponentIR::UsesDef>::release (
     CORBA::ComponentIR::UsesDef_ptr p
@@ -1523,14 +1531,12 @@ TAO::Objref_Traits<CORBA::ComponentIR::UsesDef>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::UsesDef_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::UsesDef>::nil (void)
 {
   return CORBA::ComponentIR::UsesDef::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::ComponentIR::UsesDef>::marshal (
     CORBA::ComponentIR::UsesDef_ptr p,
@@ -1786,6 +1792,12 @@ CORBA::ComponentIR::UsesDef::_duplicate (UsesDef_ptr obj)
   return obj;
 }
 
+void
+CORBA::ComponentIR::UsesDef::_tao_release (UsesDef_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 CORBA::ComponentIR::UsesDef::_is_a (
     const char *value
@@ -1811,7 +1823,7 @@ CORBA::ComponentIR::UsesDef::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
@@ -1851,7 +1863,6 @@ CORBA::ComponentIR::UsesDescription::_tao_any_destructor (
 
 // Traits specializations for CORBA::ComponentIR::EventPortDef.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::EventPortDef_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::EventPortDef>::duplicate (
     CORBA::ComponentIR::EventPortDef_ptr p
@@ -1860,7 +1871,6 @@ TAO::Objref_Traits<CORBA::ComponentIR::EventPortDef>::duplicate (
   return CORBA::ComponentIR::EventPortDef::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::ComponentIR::EventPortDef>::release (
     CORBA::ComponentIR::EventPortDef_ptr p
@@ -1869,14 +1879,12 @@ TAO::Objref_Traits<CORBA::ComponentIR::EventPortDef>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::EventPortDef_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::EventPortDef>::nil (void)
 {
   return CORBA::ComponentIR::EventPortDef::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::ComponentIR::EventPortDef>::marshal (
     CORBA::ComponentIR::EventPortDef_ptr p,
@@ -2092,6 +2100,12 @@ CORBA::ComponentIR::EventPortDef::_duplicate (EventPortDef_ptr obj)
   return obj;
 }
 
+void
+CORBA::ComponentIR::EventPortDef::_tao_release (EventPortDef_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 CORBA::ComponentIR::EventPortDef::_is_a (
     const char *value
@@ -2117,7 +2131,7 @@ CORBA::ComponentIR::EventPortDef::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
@@ -2157,7 +2171,6 @@ CORBA::ComponentIR::EventPortDescription::_tao_any_destructor (
 
 // Traits specializations for CORBA::ComponentIR::EmitsDef.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::EmitsDef_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::EmitsDef>::duplicate (
     CORBA::ComponentIR::EmitsDef_ptr p
@@ -2166,7 +2179,6 @@ TAO::Objref_Traits<CORBA::ComponentIR::EmitsDef>::duplicate (
   return CORBA::ComponentIR::EmitsDef::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::ComponentIR::EmitsDef>::release (
     CORBA::ComponentIR::EmitsDef_ptr p
@@ -2175,14 +2187,12 @@ TAO::Objref_Traits<CORBA::ComponentIR::EmitsDef>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::EmitsDef_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::EmitsDef>::nil (void)
 {
   return CORBA::ComponentIR::EmitsDef::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::ComponentIR::EmitsDef>::marshal (
     CORBA::ComponentIR::EmitsDef_ptr p,
@@ -2268,6 +2278,12 @@ CORBA::ComponentIR::EmitsDef::_duplicate (EmitsDef_ptr obj)
   return obj;
 }
 
+void
+CORBA::ComponentIR::EmitsDef::_tao_release (EmitsDef_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 CORBA::ComponentIR::EmitsDef::_is_a (
     const char *value
@@ -2297,7 +2313,7 @@ CORBA::ComponentIR::EmitsDef::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
@@ -2324,7 +2340,6 @@ CORBA::ComponentIR::EmitsDef::marshal (TAO_OutputCDR &cdr)
 
 // Traits specializations for CORBA::ComponentIR::PublishesDef.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::PublishesDef_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::PublishesDef>::duplicate (
     CORBA::ComponentIR::PublishesDef_ptr p
@@ -2333,7 +2348,6 @@ TAO::Objref_Traits<CORBA::ComponentIR::PublishesDef>::duplicate (
   return CORBA::ComponentIR::PublishesDef::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::ComponentIR::PublishesDef>::release (
     CORBA::ComponentIR::PublishesDef_ptr p
@@ -2342,14 +2356,12 @@ TAO::Objref_Traits<CORBA::ComponentIR::PublishesDef>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::PublishesDef_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::PublishesDef>::nil (void)
 {
   return CORBA::ComponentIR::PublishesDef::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::ComponentIR::PublishesDef>::marshal (
     CORBA::ComponentIR::PublishesDef_ptr p,
@@ -2435,6 +2447,12 @@ CORBA::ComponentIR::PublishesDef::_duplicate (PublishesDef_ptr obj)
   return obj;
 }
 
+void
+CORBA::ComponentIR::PublishesDef::_tao_release (PublishesDef_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 CORBA::ComponentIR::PublishesDef::_is_a (
     const char *value
@@ -2464,7 +2482,7 @@ CORBA::ComponentIR::PublishesDef::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
@@ -2491,7 +2509,6 @@ CORBA::ComponentIR::PublishesDef::marshal (TAO_OutputCDR &cdr)
 
 // Traits specializations for CORBA::ComponentIR::ConsumesDef.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::ConsumesDef_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::ConsumesDef>::duplicate (
     CORBA::ComponentIR::ConsumesDef_ptr p
@@ -2500,7 +2517,6 @@ TAO::Objref_Traits<CORBA::ComponentIR::ConsumesDef>::duplicate (
   return CORBA::ComponentIR::ConsumesDef::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::ComponentIR::ConsumesDef>::release (
     CORBA::ComponentIR::ConsumesDef_ptr p
@@ -2509,14 +2525,12 @@ TAO::Objref_Traits<CORBA::ComponentIR::ConsumesDef>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::ConsumesDef_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::ConsumesDef>::nil (void)
 {
   return CORBA::ComponentIR::ConsumesDef::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::ComponentIR::ConsumesDef>::marshal (
     CORBA::ComponentIR::ConsumesDef_ptr p,
@@ -2602,6 +2616,12 @@ CORBA::ComponentIR::ConsumesDef::_duplicate (ConsumesDef_ptr obj)
   return obj;
 }
 
+void
+CORBA::ComponentIR::ConsumesDef::_tao_release (ConsumesDef_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 CORBA::ComponentIR::ConsumesDef::_is_a (
     const char *value
@@ -2631,7 +2651,7 @@ CORBA::ComponentIR::ConsumesDef::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
@@ -2658,7 +2678,6 @@ CORBA::ComponentIR::ConsumesDef::marshal (TAO_OutputCDR &cdr)
 
 // Traits specializations for CORBA::ComponentIR::ComponentDef.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::ComponentDef_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::ComponentDef>::duplicate (
     CORBA::ComponentIR::ComponentDef_ptr p
@@ -2667,7 +2686,6 @@ TAO::Objref_Traits<CORBA::ComponentIR::ComponentDef>::duplicate (
   return CORBA::ComponentIR::ComponentDef::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::ComponentIR::ComponentDef>::release (
     CORBA::ComponentIR::ComponentDef_ptr p
@@ -2676,14 +2694,12 @@ TAO::Objref_Traits<CORBA::ComponentIR::ComponentDef>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::ComponentDef_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::ComponentDef>::nil (void)
 {
   return CORBA::ComponentIR::ComponentDef::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::ComponentIR::ComponentDef>::marshal (
     CORBA::ComponentIR::ComponentDef_ptr p,
@@ -3212,6 +3228,12 @@ CORBA::ComponentIR::ComponentDef::_duplicate (ComponentDef_ptr obj)
   return obj;
 }
 
+void
+CORBA::ComponentIR::ComponentDef::_tao_release (ComponentDef_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 CORBA::ComponentIR::ComponentDef::_is_a (
     const char *value
@@ -3257,7 +3279,7 @@ CORBA::ComponentIR::ComponentDef::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
@@ -3456,7 +3478,6 @@ CORBA::ComponentIR::ComponentDescription::_tao_any_destructor (
 
 // Traits specializations for CORBA::ComponentIR::FactoryDef.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::FactoryDef_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::FactoryDef>::duplicate (
     CORBA::ComponentIR::FactoryDef_ptr p
@@ -3465,7 +3486,6 @@ TAO::Objref_Traits<CORBA::ComponentIR::FactoryDef>::duplicate (
   return CORBA::ComponentIR::FactoryDef::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::ComponentIR::FactoryDef>::release (
     CORBA::ComponentIR::FactoryDef_ptr p
@@ -3474,14 +3494,12 @@ TAO::Objref_Traits<CORBA::ComponentIR::FactoryDef>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::FactoryDef_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::FactoryDef>::nil (void)
 {
   return CORBA::ComponentIR::FactoryDef::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::ComponentIR::FactoryDef>::marshal (
     CORBA::ComponentIR::FactoryDef_ptr p,
@@ -3567,6 +3585,12 @@ CORBA::ComponentIR::FactoryDef::_duplicate (FactoryDef_ptr obj)
   return obj;
 }
 
+void
+CORBA::ComponentIR::FactoryDef::_tao_release (FactoryDef_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 CORBA::ComponentIR::FactoryDef::_is_a (
     const char *value
@@ -3596,7 +3620,7 @@ CORBA::ComponentIR::FactoryDef::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
@@ -3623,7 +3647,6 @@ CORBA::ComponentIR::FactoryDef::marshal (TAO_OutputCDR &cdr)
 
 // Traits specializations for CORBA::ComponentIR::FinderDef.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::FinderDef_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::FinderDef>::duplicate (
     CORBA::ComponentIR::FinderDef_ptr p
@@ -3632,7 +3655,6 @@ TAO::Objref_Traits<CORBA::ComponentIR::FinderDef>::duplicate (
   return CORBA::ComponentIR::FinderDef::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::ComponentIR::FinderDef>::release (
     CORBA::ComponentIR::FinderDef_ptr p
@@ -3641,14 +3663,12 @@ TAO::Objref_Traits<CORBA::ComponentIR::FinderDef>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::FinderDef_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::FinderDef>::nil (void)
 {
   return CORBA::ComponentIR::FinderDef::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::ComponentIR::FinderDef>::marshal (
     CORBA::ComponentIR::FinderDef_ptr p,
@@ -3734,6 +3754,12 @@ CORBA::ComponentIR::FinderDef::_duplicate (FinderDef_ptr obj)
   return obj;
 }
 
+void
+CORBA::ComponentIR::FinderDef::_tao_release (FinderDef_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 CORBA::ComponentIR::FinderDef::_is_a (
     const char *value
@@ -3763,7 +3789,7 @@ CORBA::ComponentIR::FinderDef::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
@@ -3790,7 +3816,6 @@ CORBA::ComponentIR::FinderDef::marshal (TAO_OutputCDR &cdr)
 
 // Traits specializations for CORBA::ComponentIR::HomeDef.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::HomeDef_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::HomeDef>::duplicate (
     CORBA::ComponentIR::HomeDef_ptr p
@@ -3799,7 +3824,6 @@ TAO::Objref_Traits<CORBA::ComponentIR::HomeDef>::duplicate (
   return CORBA::ComponentIR::HomeDef::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::ComponentIR::HomeDef>::release (
     CORBA::ComponentIR::HomeDef_ptr p
@@ -3808,14 +3832,12 @@ TAO::Objref_Traits<CORBA::ComponentIR::HomeDef>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ComponentIR::HomeDef_ptr
 TAO::Objref_Traits<CORBA::ComponentIR::HomeDef>::nil (void)
 {
   return CORBA::ComponentIR::HomeDef::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::ComponentIR::HomeDef>::marshal (
     CORBA::ComponentIR::HomeDef_ptr p,
@@ -4355,6 +4377,12 @@ CORBA::ComponentIR::HomeDef::_duplicate (HomeDef_ptr obj)
   return obj;
 }
 
+void
+CORBA::ComponentIR::HomeDef::_tao_release (HomeDef_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 CORBA::ComponentIR::HomeDef::_is_a (
     const char *value
@@ -4400,7 +4428,7 @@ CORBA::ComponentIR::HomeDef::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
@@ -5333,7 +5361,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1629
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

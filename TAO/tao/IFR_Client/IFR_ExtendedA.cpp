@@ -63,7 +63,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_FixedDef (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_FixedDef =
+  ::CORBA::TypeCode_ptr const _tc_FixedDef =
     &_tc_TAO_tc_CORBA_FixedDef;
 }
 
@@ -242,7 +242,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ValueMember (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ValueMember =
+  ::CORBA::TypeCode_ptr const _tc_ValueMember =
     &_tc_TAO_tc_CORBA_ValueMember;
 }
 
@@ -446,7 +446,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ValueMemberSeq (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ValueMemberSeq =
+  ::CORBA::TypeCode_ptr const _tc_ValueMemberSeq =
     &_tc_TAO_tc_CORBA_ValueMemberSeq;
 }
 
@@ -484,7 +484,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ValueMemberDef (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ValueMemberDef =
+  ::CORBA::TypeCode_ptr const _tc_ValueMemberDef =
     &_tc_TAO_tc_CORBA_ValueMemberDef;
 }
 
@@ -1861,7 +1861,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ValueDef_FullValueDescription (
     0
   );
 
-::CORBA::TypeCode_ptr CORBA::ValueDef::_tc_FullValueDescription =
+::CORBA::TypeCode_ptr const CORBA::ValueDef::_tc_FullValueDescription =
   &_tc_TAO_tc_CORBA_ValueDef_FullValueDescription;
 
 // TAO_IDL - Generated from
@@ -1895,7 +1895,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ValueDef (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ValueDef =
+  ::CORBA::TypeCode_ptr const _tc_ValueDef =
     &_tc_TAO_tc_CORBA_ValueDef;
 }
 
@@ -2179,7 +2179,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ValueDescription (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ValueDescription =
+  ::CORBA::TypeCode_ptr const _tc_ValueDescription =
     &_tc_TAO_tc_CORBA_ValueDescription;
 }
 
@@ -4024,7 +4024,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ExtValueDef_ExtFullValueDescription (
     0
   );
 
-::CORBA::TypeCode_ptr CORBA::ExtValueDef::_tc_ExtFullValueDescription =
+::CORBA::TypeCode_ptr const CORBA::ExtValueDef::_tc_ExtFullValueDescription =
   &_tc_TAO_tc_CORBA_ExtValueDef_ExtFullValueDescription;
 
 // TAO_IDL - Generated from
@@ -4059,7 +4059,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ExtValueDef (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ExtValueDef =
+  ::CORBA::TypeCode_ptr const _tc_ExtValueDef =
     &_tc_TAO_tc_CORBA_ExtValueDef;
 }
 
@@ -4095,7 +4095,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ValueBoxDef (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ValueBoxDef =
+  ::CORBA::TypeCode_ptr const _tc_ValueBoxDef =
     &_tc_TAO_tc_CORBA_ValueBoxDef;
 }
 

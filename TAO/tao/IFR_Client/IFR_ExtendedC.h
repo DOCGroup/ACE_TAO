@@ -28,8 +28,8 @@
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:153
 
-#ifndef _TAO_IDL_IFR_EXTENDEDC_H_
-#define _TAO_IDL_IFR_EXTENDEDC_H_
+#ifndef _TAO_IDL_ORIG_IFR_EXTENDEDC_H_
+#define _TAO_IDL_ORIG_IFR_EXTENDEDC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -53,6 +53,8 @@
 #include "tao/VarOut_T.h"
 
 #include "tao/IFR_Client/IFR_BasicC.h"
+#include "tao/VisibilityC.h"
+#include "tao/ValueModifierC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -132,6 +134,8 @@ namespace CORBA
     // The static operations.
     static FixedDef_ptr _duplicate (FixedDef_ptr obj);
     
+    static void _tao_release (FixedDef_ptr obj);
+    
     static FixedDef_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -192,7 +196,7 @@ namespace CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -240,7 +244,7 @@ namespace CORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_FixedDef;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_FixedDef;
   
   // TAO_IDL - Generated from
   // be\be_type.cpp:258
@@ -280,7 +284,7 @@ namespace CORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ValueMember;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ValueMember;
   
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
@@ -333,7 +337,7 @@ namespace CORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ValueMemberSeq;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ValueMemberSeq;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -374,6 +378,8 @@ namespace CORBA
     
     // The static operations.
     static ValueMemberDef_ptr _duplicate (ValueMemberDef_ptr obj);
+    
+    static void _tao_release (ValueMemberDef_ptr obj);
     
     static ValueMemberDef_ptr _narrow (
         CORBA::Object_ptr obj
@@ -445,7 +451,7 @@ namespace CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -493,7 +499,7 @@ namespace CORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ValueMemberDef;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ValueMemberDef;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -536,6 +542,8 @@ namespace CORBA
     
     // The static operations.
     static ValueDef_ptr _duplicate (ValueDef_ptr obj);
+    
+    static void _tao_release (ValueDef_ptr obj);
     
     static ValueDef_ptr _narrow (
         CORBA::Object_ptr obj
@@ -758,7 +766,7 @@ namespace CORBA
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
     
-    static ::CORBA::TypeCode_ptr _tc_FullValueDescription;
+    static ::CORBA::TypeCode_ptr const _tc_FullValueDescription;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -819,7 +827,7 @@ namespace CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -867,7 +875,7 @@ namespace CORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ValueDef;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ValueDef;
   
   // TAO_IDL - Generated from
   // be\be_type.cpp:258
@@ -910,7 +918,7 @@ namespace CORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ValueDescription;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ValueDescription;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -951,6 +959,8 @@ namespace CORBA
     
     // The static operations.
     static ExtValueDef_ptr _duplicate (ExtValueDef_ptr obj);
+    
+    static void _tao_release (ExtValueDef_ptr obj);
     
     static ExtValueDef_ptr _narrow (
         CORBA::Object_ptr obj
@@ -1036,7 +1046,7 @@ namespace CORBA
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
     
-    static ::CORBA::TypeCode_ptr _tc_ExtFullValueDescription;
+    static ::CORBA::TypeCode_ptr const _tc_ExtFullValueDescription;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1066,7 +1076,7 @@ namespace CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -1114,7 +1124,7 @@ namespace CORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ExtValueDef;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ExtValueDef;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -1156,6 +1166,8 @@ namespace CORBA
     // The static operations.
     static ValueBoxDef_ptr _duplicate (ValueBoxDef_ptr obj);
     
+    static void _tao_release (ValueBoxDef_ptr obj);
+    
     static ValueBoxDef_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1195,7 +1207,7 @@ namespace CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -1243,7 +1255,7 @@ namespace CORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ValueBoxDef;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ValueBoxDef;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -1253,7 +1265,7 @@ namespace CORBA
 // Proxy Broker Factory function pointer declarations.
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:120
+// be\be_visitor_root/root.cpp:230
 
 extern TAO_IFR_Client_Export
 TAO::Collocation_Proxy_Broker *
@@ -1295,7 +1307,7 @@ namespace TAO
 #if !defined (_CORBA_VALUEDEF__TRAITS_CH_)
 #define _CORBA_VALUEDEF__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ValueDef>
   {
     static ::CORBA::ValueDef_ptr duplicate (
@@ -1316,7 +1328,7 @@ namespace TAO
 #if !defined (_CORBA_VALUEBOXDEF__TRAITS_CH_)
 #define _CORBA_VALUEBOXDEF__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ValueBoxDef>
   {
     static ::CORBA::ValueBoxDef_ptr duplicate (
@@ -1337,7 +1349,7 @@ namespace TAO
 #if !defined (_CORBA_EXTVALUEDEF__TRAITS_CH_)
 #define _CORBA_EXTVALUEDEF__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ExtValueDef>
   {
     static ::CORBA::ExtValueDef_ptr duplicate (
@@ -1358,7 +1370,7 @@ namespace TAO
 #if !defined (_CORBA_FIXEDDEF__TRAITS_CH_)
 #define _CORBA_FIXEDDEF__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::FixedDef>
   {
     static ::CORBA::FixedDef_ptr duplicate (
@@ -1379,7 +1391,7 @@ namespace TAO
 #if !defined (_CORBA_VALUEMEMBERDEF__TRAITS_CH_)
 #define _CORBA_VALUEMEMBERDEF__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ValueMemberDef>
   {
     static ::CORBA::ValueMemberDef_ptr duplicate (
