@@ -902,7 +902,7 @@ case ACE_YY_STATE_EOF(INITIAL):
 case ACE_YY_STATE_EOF(PARAMETERS):
 case ACE_YY_STATE_EOF(NORMAL):
 { ace_yyterminate(); }
-//	ACE_YY_BREAK  // commented out by hand due to the 'unreachable code' warning
+//	ACE_YY_BREAK
 case 26:
 ACE_YY_RULE_SETUP
 ACE_SVC_CONF_ECHO;
