@@ -1019,6 +1019,12 @@ extern "C" pthread_t pthread_self (void);
              (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)
 using std::time_t;
 using std::tm;
+# if defined (ACE_WIN32)
+using std::_timezone;
+# else
+using std::timezone;
+# endif
+using std::difftime;
 # endif /* ACE_USES_STD_NAMESPACE_FOR_STDC_LIB */
 
 # if !defined (ACE_HAS_POSIX_TIME) && !defined (ACE_PSOS)
