@@ -1,3 +1,8 @@
+Wed Oct 27 12:00:25 2004  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/HTIOP.mpc:
+          Fixed the dynamic flags for win32 builds
+
 Wed Oct 27 11:59:43 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/EC_Throughput/run_test.pl:
