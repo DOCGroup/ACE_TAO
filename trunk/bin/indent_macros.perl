@@ -24,7 +24,7 @@ sub get_indent
 }
 
 while (<>) {
-    if (/[ \t]*\#[ \t]*((if|el|en|).*)/)
+    if (/^[ \t]*\#[ \t]*((if|el|en|).*)/)
     {
         $cont = $1;
         $temp = $2;
