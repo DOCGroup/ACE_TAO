@@ -44,7 +44,9 @@ ACE_Asynch_Result::ACE_Asynch_Result (ACE_Handler &handler,
 
 ACE_Asynch_Result::~ACE_Asynch_Result (void)
 {
+#if defined (ACE_HAS_AIO_CALLS)
   delete this->aiocb_ptr_;
+#endif /* ACE_HAS_AIO_CALLS */
 }
 
 u_long

@@ -1,3 +1,9 @@
+Wed Jul 22 19:18:03 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp (inherit_from_parent_thread): Added the
+ 	  inheritance of the Acceptor, Reactor, and the Connector to the
+ 	  newly created thread.
+
 Wed Jul 22 17:33:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/compat/initguid.h: 
