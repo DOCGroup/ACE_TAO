@@ -24,8 +24,4 @@ extern "C" {
 }
 #endif /* PACE_HAS_CPLUSPLUS */
 
-#if defined (PACE_HAS_INLINE)
-# include "pace/win32/ctype.inl"
-#endif /* PACE_HAS_INLINE */
-
 #endif /* PACE_CTYPE_H_WIN32 */
