@@ -1,7 +1,28 @@
+Sun Jun 20 14:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/FILE.{h,cpp}:
+          Removed deprecated position() set method, use seek()
+          Removed deprecated position() get method, use tell()
+
+        * ace/Timer_Queue_Adapters.{h,inl}:
+          Removed the deprecated timer_queue() method that returns a
+          reference
+
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.cpp:
+        * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.cpp:
+          Don't use the deprecated timer_queue() that returns a
+          reference
+
+        * examples/APG/Signals/SigInfo.cpp:
+          Use ACE_OS::strerror instead of strerror directly.
+
+        * examples/IPC_SAP/FILE_SAP/client.cpp:
+          Don't use the ACE_FILE deprecated methods
+
 Sun Jun 20 00:25:17 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/OS_NS_time.inl:
-	Instructions in powerpc inline assembly code introduced in: 
+	Instructions in powerpc inline assembly code introduced in:
 	Fri Jun 18 12:42:52 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 	need to be separated by newlines, not semicolons, which may be
 	interpreted as comment characters.
@@ -27,7 +48,7 @@ Sat Jun 19 07:11:48 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 	* ace/config-rtems.h:
 	* ace/config-tandem.h:
 	* ace/config-vxworks5.x.h:
-	  Changed ACE_LACKS_SYSV_MSG_H to ACE_LACKS_SYS_MSG_H.  Both 
+	  Changed ACE_LACKS_SYSV_MSG_H to ACE_LACKS_SYS_MSG_H.  Both
 	  were used in various places throughout ACE.
 
 Sat Jun 19 11:23:28 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
