@@ -23,7 +23,7 @@
 
 template <class ACE_LOCK, class ALLOCATOR>
 class ACE_Metrics_Timeprobe :
-  public ACE_Timeprobe<ACE_LOCK>
+  public ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>
   {
   // = TITLE
   //   This class implements a timeprobe for use in a Metrics framework.
@@ -94,7 +94,7 @@ private:
   ACE_Metrics_Timeprobe (const ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR> &);
   void operator =(const ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR> &);
 };
- 
+
 
 template <class ACE_LOCK, class ALLOCATOR>
 class ACE_Metrics_Cache
@@ -114,7 +114,7 @@ public:
                      u_long number_of_probes
                        = METRICS_DEFAULT_TIMEPROBE_COUNT,
                      ALLOCATOR * allocatorPtr = 0);
-  // Default constructor. 
+  // Default constructor.
 
   ~ACE_Metrics_Cache ();
   // Destructor.
@@ -199,7 +199,7 @@ protected:
   // Indicator of whether metrics is enabled.
 
 private:
- 
+
   ALLOCATOR* allocator_;
   // Allocation strategy object.
 
