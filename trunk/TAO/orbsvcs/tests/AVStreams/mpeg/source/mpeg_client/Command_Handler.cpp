@@ -936,21 +936,21 @@ Command_Handler::play (int auto_exp,
       if (shared->VStimeAdvance < shared->usecPerFrame)
         shared->VStimeAdvance = shared->usecPerFrame;
   
-      para->VStimeAdvance = htonl (shared->VStimeAdvance);
-      para->sn = htonl (shared->cmdsn);
-      para->nextFrame = htonl (shared->nextFrame);
-      para->usecPerFrame = htonl (shared->usecPerFrame);
-      para->framesPerSecond = htonl (shared->framesPerSecond);
-      para->collectStat = htonl (shared->collectStat);
+      para->VStimeAdvance = shared->VStimeAdvance;
+      para->sn = shared->cmdsn;
+      para->nextFrame = shared->nextFrame;
+      para->usecPerFrame = shared->usecPerFrame;
+      para->framesPerSecond = shared->framesPerSecond;
+      para->collectStat = shared->collectStat;
       frate = shared->config.frameRateLimit;
       if (frate <= 0.0) {
         frate = 1.0;
       }
       shared->frameRateLimit = frate;
       para->frameRateLimit1000 =
-        htonl ( (long) (shared->frameRateLimit * 1000.0));
+         (long) (shared->frameRateLimit * 1000.0);
       compute_sendPattern ();
-      para->sendPatternGops = htonl (shared->sendPatternGops);
+      para->sendPatternGops = shared->sendPatternGops;
       //      memcpy (para->sendPattern, shared->sendPattern, PATTERN_SIZE);
       
       // Sequence of chars
@@ -1134,10 +1134,10 @@ CORBA::Boolean
 Command_Handler::speed (void)
                         
 {
-  /*
-  ::speed ();
-  return 0;
-  */
+  
+  //  ::speed ();
+  //  return 0;
+  
   unsigned char tmp;
   CmdRead((char *)&shared->speedPosition, 4);
   set_speed();
@@ -1299,7 +1299,8 @@ Command_Handler::stop_playing (void)
 
 // Client_Sig_Handler methods
 // handles the timeout SIGALRM signal
-Client_Sig_Handler::Client_Sig_Handler ()
+Client_Sig_Handler::Client_Sig_Handler (Command_Handler *command_handler)
+  : command_handler_ (command_handler)
 {
 }
 
@@ -1405,7 +1406,7 @@ Client_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
     case SIGINT:
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) received signal %S\n", signum));
       ACE_Reactor::instance ()->end_event_loop ();
-      ::on_exit_routine ();
+      this->command_handler_->close ();
       return 0;
     default: 
       ACE_DEBUG ((LM_DEBUG, 

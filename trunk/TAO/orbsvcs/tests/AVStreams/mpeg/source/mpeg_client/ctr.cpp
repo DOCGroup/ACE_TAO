@@ -2754,6 +2754,10 @@ static void compute_sendPattern(void)
  
 static void on_exit_routine(void)
 {
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) %s:%d\n",
+              __FILE__,
+              __LINE__));
   unsigned char tmp = CmdCLOSE;
  
   if (getpid() != CTRpid) return;
@@ -2927,9 +2931,15 @@ int CTRmain(void)
                   Command_Handler (cmdSocket),
                   -1);
  
-  command_handler->init ();
+  if (command_handler->init () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) command_handler: init returned -1"),
+                      -1);
   // initialize the command handler , ORB
-  command_handler->resolve_server_reference ();
+  if (command_handler->resolve_server_reference () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) command_handler: resolve_server_reference returned -1"),
+                       -1);
   // Resolve the video control object reference.
  
   // .. and register it with the reactor.
@@ -2942,14 +2952,14 @@ int CTRmain(void)
   // and now instantiate the sig_handler
   Client_Sig_Handler *client_sig_handler;
   ACE_NEW_RETURN (client_sig_handler,
-                  Client_Sig_Handler (),
+                  Client_Sig_Handler (command_handler),
                   -1);
  
   // .. and ask it to register itself with the reactor
   if (client_sig_handler->register_handler () < 0)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%P|%t) register_handler for sig_handler failed\n"),
-                        -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) register_handler for sig_handler failed\n"),
+                      -1);
   
   // and run the event loop
   ACE_Reactor::instance ()->run_event_loop ();
@@ -2960,148 +2970,5 @@ int CTRmain(void)
               "run_event_loop"));
   
   return 0;
-  
-  for (;;)
-  {
-    unsigned char cmd;
-    int val;
-    val = CmdReadNW((char*)&cmd, 1);
-    TimerProcessing();
-    if (val == -1)
-      continue;
-    
-    usr1_flag = 0;
-    /*
-    fprintf(stderr, "CTR: cmd received - %d\n", cmd);
-    */
-    switch (cmd)
-    {
-    case CmdINIT:
-      init();
-      
-      /* following for automatic expriment plan when invoked by Developer */
-      if (getuid() == DEVELOPER_UID && videoSocket >= 0) {
-        fp = fopen(EXP_PLAN_FILE, "r");
-        if (fp != NULL) {
-          static char expCmd[6] = {CmdPOSITIONrelease, 0, 0, 0, 0, CmdPLAY};
-          fprintf(stderr,
-              "Warning: Auto-exp plan is to be conducted as instructed by file %s\n",
-                  EXP_PLAN_FILE);
-          cmdBuffer = expCmd;
-          cmdBytes = 6;
-          cmdAcks = 2;
-        }
-      }
-      else fp = NULL;
-      
-      break;
-    case CmdSTOP:
-      stop();
-      break;
-    case CmdFF:
-      ff();
-      break;
-    case CmdFB:
-      fb();
-      break;
-    case CmdSTEP:
-      step();
-      break;
-    case CmdPLAY:
- 
-      /* following is for automatic experiment plan */
-      if (fp != NULL) {
-        char buf[64];
-        while (fgets(buf, 64, fp) != NULL) {
-          if (!strncmp("Delay", buf, 5)) {
-            int val;
-            sscanf(strchr(buf, ' '), "%d", &val);
-            if (val < 0) val = 1;
-            else if (val > 60) val = 60;
-            fprintf(stderr, "Auto-exp: Delay for %d seconds\n", val);
-            usleep(val * 1000000);
-          }
-          else if (!strncmp("Experiment", buf, 5)) {
-            fprintf(stderr, "Auto-exp: to perform an experiment\n");
-            while (fgets(buf, 64, fp) != NULL && buf[0] > ' ') {
-              if (!strncmp("playSpeed", buf, 5)) {
-                double fps;
-                sscanf(strchr(buf, ' '), "%lf", &fps);
-                /* following code is copied from definition of set_speed(void) */
-                shared->framesPerSecond = (int)fps;
-                shared->usecPerFrame = (int) (1000000.0/fps);
-                if (audioSocket >= 0)
-                {
-                  double sps = shared->audioPara.samplesPerSecond *
-                              fps / shared->pictureRate;
-                  shared->samplesPerSecond = (int)sps;
-                  shared->usecPerSample = (int)(1000000.0/sps);
-                }
-              }
-              else if (!strncmp("frameRateLimit", buf, 5)) {
-                sscanf(strchr(buf, ' '), "%f", &shared->config.frameRateLimit);
-              }
-              else if (!strncmp("maxSPframes", buf, 5)) {
-                sscanf(strchr(buf, ' '), "%d", &shared->config.maxSPframes);
-              }
-              else if (!strncmp("filterPara", buf, 5)) {
-                sscanf(strchr(buf, ' '), "%d", &shared->config.filterPara);
-              }
-              else if (!strncmp("collectStat", buf, 5)) {
-                sscanf(strchr(buf, ' '), "%d", &shared->config.collectStat);
-              }
-              else if (!strncmp("qosEffective", buf, 5)) {
-                sscanf(strchr(buf, ' '), "%d", &shared->config.qosEffective);
-              }
-              else if (!strncmp("syncEffective", buf, 5)) {
-                sscanf(strchr(buf, ' '), "%d", &shared->config.syncEffective);
-              }
-            }
-            usleep(500000);
-            shared->loopBack = 1;
-            break;
-          }
-          else if (!strncmp("EndExperiment", buf, 5)) {
-            fprintf(stderr, "Auto-exp ends.\n");
-            usleep(2000000);
-            fclose(fp);
-            exit(0);
-          }
-        }
-      }
- 
-      play(fp != NULL);
-      break;
-    case CmdPOSITION:
-      position();
-      break;
-    case CmdPOSITIONrelease:
-      position_release();
-      break;
-    case CmdVOLUME:
-      volume();
-      break;
-    case CmdBALANCE:
-      balance();
-      break;
-    case CmdSPEED:
-      speed();
-      break;
-    case CmdLOOPenable:
-    {
-      shared->loopBack = 1;
-      break;
-    }
-    case CmdLOOPdisable:
-    {
-      shared->loopBack = 0;
-      break;
-    }
-    default:
-      fprintf(stderr, "CTR: unexpected command from UI: cmd = %d.\n", cmd);
-      exit(1);
-      break;
-    }
-  }
 }
 
