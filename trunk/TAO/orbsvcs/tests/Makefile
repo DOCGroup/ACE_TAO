@@ -22,11 +22,18 @@ DIRS = \
 
 ifeq ($(corba_messaging),1)
 DIRS += \
-  EC_Multiple \
   EC_Throughput \
   EC_Mcast \
   EC_MT_Mcast \
   EC_Custom_Marshal
+
+  ifdef TAO_ORBSVCS
+    ifneq (,$(findstring RTOLDEvent,$(TAO_ORBSVCS)))
+      DIRS +=   EC_Multiple
+    endif
+  else
+      DIRS +=   EC_Multiple
+  endif
 endif # corba_messaging
 
 DIRS += \
