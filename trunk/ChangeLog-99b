@@ -11,6 +11,9 @@ Wed Apr 07 09:37:34 1999  David L. Levine  <levine@cs.wustl.edu>
           1016 when optimization is enabled.  That gets rid of the
           "D:incint" warning about bzero in sys/select.h.
 
+        * docs/ACE-guidelines.html: always use $(RM) instead of rm or
+          rm -f in Makefiles.
+
 Wed Apr 07 02:42:50 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.6.35 released.
