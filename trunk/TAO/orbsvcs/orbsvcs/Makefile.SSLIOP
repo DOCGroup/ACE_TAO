@@ -14,7 +14,7 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 
 MAKEFILE = Makefile.SSLIOP
-LIBNAME  = libTAO_SSL
+LIBNAME  = libTAO_SSLIOP
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 

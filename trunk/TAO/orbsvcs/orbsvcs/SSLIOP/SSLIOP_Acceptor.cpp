@@ -1,6 +1,10 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+#include "ace/config-all.h"
+
+#if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
+
 #include "SSLIOP_Acceptor.h"
 #include "SSLIOP_Profile.h"
 #include "tao/MProfile.h"
@@ -12,7 +16,7 @@
 #include "SSLIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, SSLIOP_Acceptor, "$Id$")
+ACE_RCSID(TAO_SSLIOP, SSLIOP_Acceptor, "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -438,3 +442,5 @@ TAO_SSLIOP_Acceptor::parse_options (const char *str)
     }
   return 0;
 }
+
+#endif  /* ACE_HAS_SSL */

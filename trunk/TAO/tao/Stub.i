@@ -231,7 +231,7 @@ TAO_Stub::base_profiles (void) const
 }
 
 ACE_INLINE TAO_MProfile&
-TAO_Stub::base_profiles (void) 
+TAO_Stub::base_profiles (void)
 {
   return this->base_profiles_;
 }
