@@ -123,13 +123,13 @@ Tue Aug  3 14:25:44 2004  Will Otte <wotte@dre.vanderbilt.edu>
 	* IDL3/ImpliedIDL/Components:
 
 	  Various tests of compilation for IDL3 constructs.
-	
+
 Tue Aug  3 18:36:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/schema/README.html:	
+	* docs/schema/README.html:
 
-	  File explaining what these new descriptors mean. 
-	
+	  File explaining what these new descriptors mean.
+
  	* docs/schema/Basic_Deployment_Data.xsd:
 	* docs/schema/Deployment.xsd:
 	* docs/schema/Modified_Deployment.xsd:
@@ -147,20 +147,19 @@ Tue Aug  3 18:36:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Sets of schemata that will be used in DAnCE. The meaning of
 	  these different schemata have been documented in the
-	  README.html. 
+	  README.html.
 
 Sun Aug  1 09:30:37 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ChangeLogs:
 
 	  Created a new directory and moved a bunch of ChangeLog entries
-	  there. 
+	  there.
 
-Sat Jul 31 11:15:15 2004  Ossama  <ossama@dre.vanderbilt.edu>
+Sat Jul 31 11:15:15 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
         * CIAO version 0.4.2 released.
 
 Local Variables:
 add-log-time-format: current-time-string
 End:
-	
