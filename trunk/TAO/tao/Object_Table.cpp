@@ -313,7 +313,7 @@ TAO_Active_Demux_ObjTable::create_object_id (PortableServer::Servant servant,
 
   ACE_NEW_RETURN (id,
                   PortableServer::ObjectId (TAO_POA::MAX_SPACE_REQUIRED_FOR_TWO_CORBA_ULONG_TO_HEX),
-                  -1);
+                  0);
 
   id->length (TAO_POA::MAX_SPACE_REQUIRED_FOR_TWO_CORBA_ULONG_TO_HEX);
 
