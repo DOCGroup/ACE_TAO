@@ -1,57 +1,62 @@
+Fri Jan 21 21:19:26 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Makefile:
+          Updated dependencies again, i forget LifeCycle last time.
+
 Fri Jan 21 16:46:36 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/orbsvcs/Event_Utilities.cpp:
-	* orbsvcs/orbsvcs/Event_Utilities.h:
-	* orbsvcs/orbsvcs/Event_Utilities.i:
+        * orbsvcs/orbsvcs/Event_Utilities.cpp:
+        * orbsvcs/orbsvcs/Event_Utilities.h:
+        * orbsvcs/orbsvcs/Event_Utilities.i:
           The QoS factories now take an (optional) initializer function
-	  from the user to help with customized Event Channels that
-	  transmit a union as part of the EventPayload.
+          from the user to help with customized Event Channels that
+          transmit a union as part of the EventPayload.
 
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
-	  Fixed some very obscure concurrency problems while disconnecting
-	  suppliers: if a supplier and a consumer where disconnecting at
-	  the same time there was a very small window for a crash.  The
-	  race condition has been eliminated.
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+          Fixed some very obscure concurrency problems while disconnecting
+          suppliers: if a supplier and a consumer where disconnecting at
+          the same time there was a very small window for a crash.  The
+          race condition has been eliminated.
 
-	* orbsvcs/tests/Event/Event.dsw:
-	* orbsvcs/tests/Event/Basic/Basic.dsw:
-	* orbsvcs/tests/Event/Basic/MT_Disconnect.cpp:
-	* orbsvcs/tests/Event/Basic/MT_Disconnect.dsp:
-	* orbsvcs/tests/Event/Basic/MT_Disconnect.h:
-	* orbsvcs/tests/Event/Basic/Makefile:
-	* orbsvcs/tests/Event/Basic/mt_disconnect.conf:
-	* orbsvcs/tests/Event/Basic/run_test.pl:
-	  New test that performs concurrent supplier and consumer
-	  connect/disconnect calls.
+        * orbsvcs/tests/Event/Event.dsw:
+        * orbsvcs/tests/Event/Basic/Basic.dsw:
+        * orbsvcs/tests/Event/Basic/MT_Disconnect.cpp:
+        * orbsvcs/tests/Event/Basic/MT_Disconnect.dsp:
+        * orbsvcs/tests/Event/Basic/MT_Disconnect.h:
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/Event/Basic/mt_disconnect.conf:
+        * orbsvcs/tests/Event/Basic/run_test.pl:
+          New test that performs concurrent supplier and consumer
+          connect/disconnect calls.
 
-	* orbsvcs/orbsvcs/Makefile:
-	* orbsvcs/orbsvcs/Event/EC_Supplier_Filter.h:
-	* orbsvcs/orbsvcs/Event/EC_Supplier_Filter.i:
-	* orbsvcs/orbsvcs/Event/EC_Supplier_Filter.cpp:
-	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.h:
-	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.i:
-	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.cpp:
-	  Renamed the EC_SupplierFiltering class to EC_Supplier_Filter, it
-	  is more consitent that way (next step: rename EC_Filter to
-	  EC_Consumer_Filter)
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter.i:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_SupplierFiltering.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierFiltering.i:
+        * orbsvcs/orbsvcs/Event/EC_SupplierFiltering.cpp:
+          Renamed the EC_SupplierFiltering class to EC_Supplier_Filter, it
+          is more consitent that way (next step: rename EC_Filter to
+          EC_Consumer_Filter)
 
-	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h:
-	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Supplier_Filter_Builder.h:
-	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.h:
-	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp:
-	  Propagate the EC_SupplierFiltering name change.
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp:
+          Propagate the EC_SupplierFiltering name change.
 
-	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
-	  The ORB initialized was not the default ORB used by the resource
-	  factory for the event service.
+        * orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+          The ORB initialized was not the default ORB used by the resource
+          factory for the event service.
 
 Fri Jan 21 08:39:10 2000  Carlos O'Ryan  <coryan@uci.edu>
 
