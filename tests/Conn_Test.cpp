@@ -69,12 +69,19 @@ Svc_Handler::in_use (int use)
 int
 Svc_Handler::open (void *)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) opening Svc_Handler %d with handle\n",
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) opening Svc_Handler %d with handle %d\n",
 	      this, this->peer ().get_handle ()));
   // Enable non-blocking I/O.
   if (this->peer ().enable (ACE_NONBLOCK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "enable"), -1);
 
+  return 0;
+}
+
+int
+Svc_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
+{
+  // We cannot call destroy: we are beign cached...
   return 0;
 }
 
