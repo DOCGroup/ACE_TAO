@@ -1535,7 +1535,6 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
   oid	    objid[MAX_NAME_LEN], *op;
   u_char  *origdata = data;
   int      origlength = length;
-  u_char  *save_data;
 
   // authenticates message and returns length if valid 
   data = cmu_snmp::auth_parse(data, 
@@ -1558,8 +1557,6 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
   }
 
   spp_version = (snmp_version) version;
-
-  save_data = data;
 
   data = asn1::parse_header(data, 
 			  &length, 
@@ -1695,9 +1692,9 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
     case SMI_IPADDRESS:
     case SMI_OPAQUE:
     case SMI_NSAP:
-      ACE_NEW_RETURN(vp->val.string, u_char[(unsigned)vp->val_len], -1);
-      asn1::parse_string(var_val, &len, &vp->type, 
-                         vp->val.string, &vp->val_len);
+      ACE_NEW_RETURN(vp->val.string, u_char[(unsigned)vp->val_len + 1], -1);
+      asn1::parse_string(var_val, &len, &vp->type, vp->val.string, 
+                         &vp->val_len);
       break;
 
     case ASN_OBJECT_ID:
