@@ -3,30 +3,16 @@
 
 project (FtRtEvent) : orbsvcslib, core, ftorbutils, rtevent, naming {
 
-  Define_Custom(AMI_IDL) {
-    automatic = 0;
-    libpath = $(ACE_ROOT)/lib
-    command =  $(ACE_ROOT)/bin/tao_idl
-    commandflags += -GC -Sc  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
-    inputext = .idl
-    header_outputext = C.h,S.h
-    source_outputext = C.cpp,S.cpp
-  }
-
   sharedname = TAO_FtRtEvent
   idlflags   += -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=FtRtEvent/Utils/ftrtevent_export.h
   dynamicflags = TAO_FTRTEVENT_BUILD_DLL
   tagchecks   = FtRtEvent
   includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
 
-  AMI_IDL_Files {
-    commandflags += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=FtRtEvent/Utils/ftrtevent_export.h
+  IDL_Files {
+    idlflags += -GC
     FTRT.idl
     FtRtecEventComm.idl
-  }
-
-  verbatim(gnuace,bottom) {
-    idl_stubs : FTRTC.h FtRtecEventCommC.h
   }
 
   IDL_Files  {
