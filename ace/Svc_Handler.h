@@ -99,9 +99,10 @@ public:
 
   virtual void destroy (void);
   // Call this instead of <delete> to free up dynamically allocated
-  // <Svc_Handler>.  This method knows whether or not the object was
-  // allocated dynamically, and can act accordingly (i.e., deleting it
-  // if it was allocated dynamically, otherwise ignoring it).
+  // <Svc_Handlers> (otherwise you will get memory leaks).  This
+  // method knows whether or not the object was allocated dynamically,
+  // and can act accordingly (i.e., deleting it if it was allocated
+  // dynamically, otherwise ignoring it).
 
   void *operator new (size_t n);
   // Overloaded new operator.  This is used to unobtrusively detect
@@ -114,7 +115,8 @@ public:
 
   void operator delete (void *);
   // This really should be private so that users are forced to call
-  // destroy().
+  // destroy().  Unfortunately, the C++ standard doesn't allow there
+  // to be a public new and a private delete.
 
 private:  
   void shutdown (void);
