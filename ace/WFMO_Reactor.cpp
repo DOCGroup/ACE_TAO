@@ -1836,12 +1836,39 @@ ACE_WFMO_Reactor::complex_dispatch_handler (int slot,
   ACE_WFMO_Reactor_Handler_Repository::Current_Info &current_info =
     this->handler_rep_.current_info ()[slot];
 
-  // Upcall
-  ACE_Reactor_Mask problems = this->upcall (current_info.event_handler_,
-                                            current_info.io_handle_,
-                                            event_handle,
-                                            current_info.network_events_);
-  if (problems != ACE_Event_Handler::NULL_MASK)
+  WSANETWORKEVENTS events;
+  ACE_Reactor_Mask problems = ACE_Event_Handler::NULL_MASK;
+  if (::WSAEnumNetworkEvents ((SOCKET) current_info.io_handle_,
+                              event_handle,
+                              &events) == SOCKET_ERROR)
+    problems = ACE_Event_Handler::ALL_EVENTS_MASK;
+  else
+    {
+      // Prepare for upcalls. Clear the bits from <events> representing
+      // events the handler is not interested in. If there are any left,
+      // do the upcall(s). upcall will replace events.lNetworkEvents
+      // with bits representing any functions that requested a repeat
+      // callback before checking handles again. In this case, continue
+      // to call back unless the handler is unregistered as a result of
+      // one of the upcalls. The way this is written, the upcalls will
+      // keep being done even if one or more upcalls reported problems.
+      // In practice this may turn out not so good, but let's see. If any
+      // problems, please notify Steve Huston <shuston@riverace.com>
+      // before or after you change this code.
+      events.lNetworkEvents &= current_info.network_events_;
+      while (events.lNetworkEvents != 0)
+        {
+          // Upcall
+          problems |= this->upcall (current_info.event_handler_,
+                                    current_info.io_handle_,
+                                    events);
+          if (this->handler_rep_.scheduled_for_deletion (slot))
+            break;
+        }
+    }
+
+  if (problems != ACE_Event_Handler::NULL_MASK
+      && !this->handler_rep_.scheduled_for_deletion (slot)  )
     this->handler_rep_.unbind (event_handle, problems);
 
   return 0;
@@ -1850,69 +1877,129 @@ ACE_WFMO_Reactor::complex_dispatch_handler (int slot,
 ACE_Reactor_Mask
 ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
                           ACE_HANDLE io_handle,
-                          ACE_HANDLE event_handle,
-                          long interested_events)
+                          WSANETWORKEVENTS &events)
 {
   // This method figures out what exactly has happened to the socket
   // and then calls appropriate methods.
   ACE_Reactor_Mask problems = ACE_Event_Handler::NULL_MASK;
-  WSANETWORKEVENTS events;
 
-  if (::WSAEnumNetworkEvents ((SOCKET) io_handle,
-                              event_handle,
-                              &events) == SOCKET_ERROR)
-    // Remove all masks
-    return ACE_Event_Handler::ALL_EVENTS_MASK;
-  else
+  // Go through the events and do the indicated upcalls. If the handler
+  // doesn't want to be called back, clear the bit for that event.
+  // At the end, set the bits back to <events> to request a repeat call.
+
+  long actual_events = events.lNetworkEvents;
+  int action;
+
+  if (actual_events & FD_READ)
     {
-      long actual_events = events.lNetworkEvents;
-
-      if ((interested_events & actual_events & FD_READ)
-          && event_handler->handle_input (io_handle) == -1)
-        ACE_SET_BITS (problems, ACE_Event_Handler::READ_MASK);
-
-      if ((interested_events & actual_events & FD_CLOSE)
-          && !ACE_BIT_ENABLED (problems, ACE_Event_Handler::READ_MASK)
-          && event_handler->handle_input (io_handle) == -1)
-        ACE_SET_BITS (problems, ACE_Event_Handler::READ_MASK);
-
-      if ((interested_events & actual_events & FD_ACCEPT)
-          && event_handler->handle_input (io_handle) == -1)
-        ACE_SET_BITS (problems, ACE_Event_Handler::ACCEPT_MASK);
-
-      if ((interested_events & actual_events & FD_WRITE)
-          && event_handler->handle_output (io_handle) == -1)
-        ACE_SET_BITS (problems, ACE_Event_Handler::WRITE_MASK);
-
-      if (interested_events & actual_events & FD_CONNECT)
+      action = event_handler->handle_input (io_handle);
+      if (action <= 0)
         {
-          if (events.iErrorCode[FD_CONNECT_BIT] == 0)
+          ACE_CLR_BITS (actual_events, FD_READ);
+          if (action == -1)
+            ACE_SET_BITS (problems, ACE_Event_Handler::READ_MASK);
+        }
+    }
+
+  if ((actual_events & FD_CLOSE)
+      && !ACE_BIT_ENABLED (problems, ACE_Event_Handler::READ_MASK))
+    {
+      action = event_handler->handle_input (io_handle);
+      if (action <= 0)
+        {
+          ACE_CLR_BITS (actual_events, FD_CLOSE);
+          if (action == -1)
+            ACE_SET_BITS (problems, ACE_Event_Handler::READ_MASK);
+        }
+    }
+
+  if (actual_events & FD_ACCEPT)
+    {
+      action = event_handler->handle_input (io_handle);
+      if (action <= 0)
+        {
+          ACE_CLR_BITS (actual_events, FD_ACCEPT);
+          if (action == -1)
+            ACE_SET_BITS (problems, ACE_Event_Handler::ACCEPT_MASK);
+        }
+    }
+
+  if (actual_events & FD_WRITE)
+    {
+      action = event_handler->handle_output (io_handle);
+      if (action <= 0)
+        {
+          ACE_CLR_BITS (actual_events, FD_WRITE);
+          if (action == -1)
+            ACE_SET_BITS (problems, ACE_Event_Handler::WRITE_MASK);
+        }
+    }
+
+  if (actual_events & FD_CONNECT)
+    {
+      if (events.iErrorCode[FD_CONNECT_BIT] == 0)
+        {
+          // Successful connect
+          action = event_handler->handle_output (io_handle);
+          if (action <= 0)
             {
-              // Successful connect
-              if (event_handler->handle_output (io_handle) == -1)
+              ACE_CLR_BITS (actual_events, FD_CONNECT);
+              if (action == -1)
                 ACE_SET_BITS (problems,
                               ACE_Event_Handler::CONNECT_MASK);
             }
-          // Unsuccessful connect
-          else if (event_handler->handle_input (io_handle) == -1)
-            ACE_SET_BITS (problems, ACE_Event_Handler::CONNECT_MASK);
         }
-
-      if ((interested_events & actual_events & FD_OOB)
-          && event_handler->handle_exception (io_handle) == -1)
-        ACE_SET_BITS (problems, ACE_Event_Handler::EXCEPT_MASK);
-
-      if ((interested_events & actual_events & FD_QOS)
-          && event_handler->handle_qos (io_handle) == -1)
-        ACE_SET_BITS (problems, ACE_Event_Handler::QOS_MASK);
-
-      if ((interested_events & actual_events & FD_GROUP_QOS)
-          && event_handler->handle_group_qos (io_handle) == -1)
-        ACE_SET_BITS (problems, ACE_Event_Handler::GROUP_QOS_MASK);
+      // Unsuccessful connect
+      else
+        {
+          action = event_handler->handle_input (io_handle);
+          if (action <= 0)
+            {
+              ACE_CLR_BITS (actual_events, FD_CONNECT);
+              if (action == -1)
+                ACE_SET_BITS (problems,
+                              ACE_Event_Handler::CONNECT_MASK);
+            }
+        }
     }
 
+  if (actual_events & FD_OOB)
+    {
+      action = event_handler->handle_exception (io_handle);
+      if (action <= 0)
+        {
+          ACE_CLR_BITS (actual_events, FD_OOB);
+          if (action == -1)
+            ACE_SET_BITS (problems, ACE_Event_Handler::EXCEPT_MASK);
+        }
+    }
+
+  if (actual_events & FD_QOS)
+    {
+      action = event_handler->handle_qos (io_handle);
+      if (action <= 0)
+        {
+          ACE_CLR_BITS (actual_events, FD_QOS);
+          if (action == -1)
+            ACE_SET_BITS (problems, ACE_Event_Handler::QOS_MASK);
+        }
+    }
+
+  if (actual_events & FD_GROUP_QOS)
+    {
+      action = event_handler->handle_group_qos (io_handle);
+      if (action <= 0)
+        {
+          ACE_CLR_BITS (actual_events, FD_GROUP_QOS);
+          if (action == -1)
+            ACE_SET_BITS (problems, ACE_Event_Handler::GROUP_QOS_MASK);
+        }
+    }
+
+  events.lNetworkEvents = actual_events;
   return problems;
 }
+
 
 int
 ACE_WFMO_Reactor::update_state (void)
