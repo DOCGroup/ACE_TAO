@@ -18,6 +18,9 @@ Thu Nov 19 15:12:06 1998  David L. Levine  <levine@cs.wustl.edu>
           main thread to determine when all the clients have finished,
           because it calls wait () on the client Thread_Manager.
 
+          (get_cubit): removed a couple of printouts that notified
+          of string_to_object () and _narrow () success.
+
         * performance-tests/Cubit/TAO/MT_Cubit/summarize:
           added support for output in either usec or msec.
 
