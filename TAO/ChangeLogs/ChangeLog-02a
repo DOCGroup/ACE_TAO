@@ -1,3 +1,50 @@
+Tue Jul 11 11:51:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_module.cpp:
+	* TAO_IDL/include/ast_module.h:
+
+	  Added new member to store all declarations from previous
+	  openings of the module, as well as searching and administrating
+	  functions.
+
+	* TAO_IDL/be/be_generator.cpp:
+
+	  Calls the administrating function at create time, and adds the
+	  declarations from all previous openings.
+
+	* TAO_IDL/util/utl_scope.cpp:
+
+	  If all else fails, the local scope lookup function now checks if
+	  the scope is a module. If so, it calls the module's searching
+	  function to see if the identifier can be found in a previous
+ 	  opening's declaration.
+
+	  The above fix was prompted by an IDL example sent in by
+	  Richard Reitmeyer <richard@hades.verecomm.com> and my
+	  frustration with trying to handle all use cases of reopened
+	  modules by using existing IDL compiler data structures.
+
+	* tests/IDL_Test/reopened_modules.idl:
+
+	  Added two new examples that now work with the above fix.
+
+	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp:
+
+	  Added #if defined (_FOO__CI_) guards to the object constructor
+	  from stub, since it is generated at the forward declaration and 
+	  at the definition.
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+	  In _unchecked_narrow(), when the proxy is created with 
+	  ACE_NEW_RETURN, changed the proxy constructor to use the
+	  fully scoped class name. In certain cases of reopened modules,
+	  some compilers were having problems with the name that the
+	  nested_type_name() function decided to put there. Strangely,
+	  there was no problem with the similarly generated <foo>::_nil()
+	  return value immediately following, so it was left alone.
+
 Mon Jul 10 21:11:19 2000  Marina Spivak <marina@cs.wustl.edu>
 
         * TAO version 1.1.5 released.
