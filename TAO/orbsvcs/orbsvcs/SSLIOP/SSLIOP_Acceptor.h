@@ -86,10 +86,6 @@ public:
   /// endpoints set up by this acceptor.
   const SSLIOP::SSL &ssl_component (void) const;
 
-  /// Retrieve the CSIv2 CSIIOP::TLS_SEC_TRANS component associated with
-  /// the endpoints set up by this acceptor.
-  const SSLIOP::SSL &ssl_component (void) const;
-
 private:
 
   /// Implement the common part of the open*() methods.
