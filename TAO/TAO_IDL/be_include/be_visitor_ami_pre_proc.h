@@ -70,6 +70,17 @@ public:
 
   virtual int visit_root (be_root *node);
   // visit a root
+
+private:
+  int create_sendc_method (be_operation *node);
+  // create a method with "sendc_" prepended
+
+  int create_excep_method (be_operation *node);
+  // create a method with "_excep" appended
+
+  int visit_scope (be_scope *node);
+  // specialized visit_scope 
+
 };
 
 #endif // TAO_BE_VISITOR_AMI_PRE_PROC_H
