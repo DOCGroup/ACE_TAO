@@ -1,3 +1,15 @@
+Wed Apr 21 19:11:00 1999 Chris Gill  <cdgill@cs.wustl.edu>
+
+        * examples/Simulator/DOVEBrowser/NS_Resolve.java:
+          New NS resolution method based on CORBA standard approach.
+          Many thanks to Margaret Reitz <margaret@veritas.com> and
+          Hans Ridder <ridder@veritas.com> for contributing these changes.
+
+        * examples/Simulator/NavWeap.idl
+          examples/Simulator/Event_Supplier/{DualEC_Sup, Event_Sup, 
+	                                     Logging_Sup}.dsp:
+	  Changes to use the new CORBA standard TimeBase.idl
+
 Wed Apr 21 14:45:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
