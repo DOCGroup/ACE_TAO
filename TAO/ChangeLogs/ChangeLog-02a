@@ -1,3 +1,12 @@
+Wed Aug 15 11:25:15 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/DynamicAny/DynCommon.cpp (insert_reference):
+
+          Added a check for a nil object reference before attempting
+          to access its repo id and calling _is_a(). Thanks to
+          Philippe Merle <Philippe.Merle@lifl.fr> for pointing out
+          this bug.
+
 Tue Aug 14 15:16:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/SmartProxies/SmartProxies.dsp (CFG): Fixed a problem with
