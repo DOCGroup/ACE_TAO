@@ -84,6 +84,8 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
           << "{" << be_nl
           << "public:" << be_idt_nl << be_nl
           << "friend class ACE_Singleton<TAO_" << node->flat_name ()
+          << "_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;" << be_nl
+          << "friend class TAO_Singleton<TAO_" << node->flat_name ()
           << "_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;" << be_nl << be_nl
           << "int register_proxy_factory (" << be_idt << be_idt_nl
           << "TAO_" << node->flat_name () << "_Default_Proxy_Factory *df,"<< be_nl
@@ -117,7 +119,7 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
           << "};\n\n";
 
       os->indent ();
-      *os << "typedef ACE_Singleton<TAO_"<<node->flat_name ()
+      *os << "typedef TAO_Singleton<TAO_"<<node->flat_name ()
           << "_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_"
           << node->flat_name ()<< "_PROXY_FACTORY_ADAPTER;"<<be_nl << be_nl;
 

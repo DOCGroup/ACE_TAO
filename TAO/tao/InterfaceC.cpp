@@ -542,9 +542,9 @@ void TAO_CORBA_IRObject_Smart_Proxy_Base::destroy  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_CORBA_IRObject_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_CORBA_IRObject_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_CORBA_IRObject_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_CORBA_IRObject_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_CORBA_IRObject[] =
@@ -2248,9 +2248,9 @@ void TAO_IR_Contained_Smart_Proxy_Base::move  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_Contained_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_Contained_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_Contained_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_Contained_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_Contained[] =
@@ -7495,9 +7495,9 @@ IR_NativeDef_ptr TAO_IR_Container_Smart_Proxy_Base::create_native  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_Container_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_Container_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_Container_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_Container_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_Container[] =
@@ -7809,9 +7809,9 @@ CORBA::TypeCode_ptr TAO_IR_IDLType_Smart_Proxy_Base::type  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_IDLType_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_IDLType_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_IDLType_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_IDLType_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_IDLType[] =
@@ -9159,9 +9159,9 @@ IR_FixedDef_ptr TAO_IR_Repository_Smart_Proxy_Base::create_fixed  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_Repository_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_Repository_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_Repository_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_Repository_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_Repository[] =
@@ -9660,9 +9660,9 @@ IR_HomeDef_ptr TAO_IR_ComponentRepository_Smart_Proxy_Base::create_home  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_ComponentRepository_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_ComponentRepository_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_ComponentRepository_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_ComponentRepository_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_ComponentRepository[] =
@@ -9845,9 +9845,9 @@ TAO_IR_ModuleDef_Smart_Proxy_Base::_stubobj (void) const
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_ModuleDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_ModuleDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_ModuleDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_ModuleDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_ModuleDef[] =
@@ -10759,9 +10759,9 @@ void TAO_IR_ConstantDef_Smart_Proxy_Base::value  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_ConstantDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_ConstantDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_ConstantDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_ConstantDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_ConstantDef[] =
@@ -11022,9 +11022,9 @@ TAO_IR_TypedefDef_Smart_Proxy_Base::_stubobj (void) const
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_TypedefDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_TypedefDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_TypedefDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_TypedefDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_TypedefDef[] =
@@ -11548,9 +11548,9 @@ void TAO_IR_StructDef_Smart_Proxy_Base::members  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_StructDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_StructDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_StructDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_StructDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_StructDef[] =
@@ -12393,9 +12393,9 @@ void TAO_IR_UnionDef_Smart_Proxy_Base::members  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_UnionDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_UnionDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_UnionDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_UnionDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_UnionDef[] =
@@ -12843,9 +12843,9 @@ void TAO_IR_EnumDef_Smart_Proxy_Base::members  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_EnumDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_EnumDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_EnumDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_EnumDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_EnumDef[] =
@@ -13292,9 +13292,9 @@ void TAO_IR_AliasDef_Smart_Proxy_Base::original_type_def  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_AliasDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_AliasDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_AliasDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_AliasDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_AliasDef[] =
@@ -13478,9 +13478,9 @@ TAO_IR_NativeDef_Smart_Proxy_Base::_stubobj (void) const
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_NativeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_NativeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_NativeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_NativeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_NativeDef[] =
@@ -13792,9 +13792,9 @@ IR::PrimitiveKind TAO_IR_PrimitiveDef_Smart_Proxy_Base::kind  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_PrimitiveDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_PrimitiveDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_PrimitiveDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_PrimitiveDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_PrimitiveDef[] =
@@ -14238,9 +14238,9 @@ void TAO_IR_StringDef_Smart_Proxy_Base::bound  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_StringDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_StringDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_StringDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_StringDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_StringDef[] =
@@ -14684,9 +14684,9 @@ void TAO_IR_WstringDef_Smart_Proxy_Base::bound  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_WstringDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_WstringDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_WstringDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_WstringDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_WstringDef[] =
@@ -15392,9 +15392,9 @@ void TAO_IR_FixedDef_Smart_Proxy_Base::scale  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_FixedDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_FixedDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_FixedDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_FixedDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_FixedDef[] =
@@ -16232,9 +16232,9 @@ void TAO_IR_SequenceDef_Smart_Proxy_Base::element_type_def  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_SequenceDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_SequenceDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_SequenceDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_SequenceDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_SequenceDef[] =
@@ -17072,9 +17072,9 @@ void TAO_IR_ArrayDef_Smart_Proxy_Base::element_type_def  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_ArrayDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_ArrayDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_ArrayDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_ArrayDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_ArrayDef[] =
@@ -17652,9 +17652,9 @@ void TAO_IR_ExceptionDef_Smart_Proxy_Base::members  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_ExceptionDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_ExceptionDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_ExceptionDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_ExceptionDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_ExceptionDef[] =
@@ -18909,9 +18909,9 @@ void TAO_IR_AttributeDef_Smart_Proxy_Base::mode  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_AttributeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_AttributeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_AttributeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_AttributeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_AttributeDef[] =
@@ -21125,9 +21125,9 @@ void TAO_IR_OperationDef_Smart_Proxy_Base::exceptions  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_OperationDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_OperationDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_OperationDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_OperationDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_OperationDef[] =
@@ -23583,9 +23583,9 @@ IR_OperationDef_ptr TAO_IR_InterfaceDef_Smart_Proxy_Base::create_operation  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_InterfaceDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_InterfaceDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_InterfaceDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_InterfaceDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_InterfaceDef[] =
@@ -25300,9 +25300,9 @@ void TAO_IR_ValueMemberDef_Smart_Proxy_Base::access  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_ValueMemberDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_ValueMemberDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_ValueMemberDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_ValueMemberDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_ValueMemberDef[] =
@@ -27954,9 +27954,9 @@ IR_OperationDef_ptr TAO_IR_ValueDef_Smart_Proxy_Base::create_operation  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_ValueDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_ValueDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_ValueDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_ValueDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_ValueDef[] =
@@ -29211,9 +29211,9 @@ void TAO_IR_ValueBoxDef_Smart_Proxy_Base::original_type_def  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_ValueBoxDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_ValueBoxDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_ValueBoxDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_ValueBoxDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_ValueBoxDef[] =
@@ -29526,9 +29526,9 @@ IR_InterfaceDef_ptr TAO_IR_ProvidesDef_Smart_Proxy_Base::interface_type  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_ProvidesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_ProvidesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_ProvidesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_ProvidesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_ProvidesDef[] =
@@ -30050,9 +30050,9 @@ CORBA::Boolean TAO_IR_UsesDef_Smart_Proxy_Base::is_multiple  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_UsesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_UsesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_UsesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_UsesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_UsesDef[] =
@@ -30949,9 +30949,9 @@ IR_ValueDef_ptr TAO_IR_EventDef_Smart_Proxy_Base::event  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_EventDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_EventDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_EventDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_EventDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_EventDef[] =
@@ -31213,9 +31213,9 @@ TAO_IR_EmitsDef_Smart_Proxy_Base::_stubobj (void) const
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_EmitsDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_EmitsDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_EmitsDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_EmitsDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_EmitsDef[] =
@@ -31398,9 +31398,9 @@ TAO_IR_PublishesDef_Smart_Proxy_Base::_stubobj (void) const
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_PublishesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_PublishesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_PublishesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_PublishesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_PublishesDef[] =
@@ -31583,9 +31583,9 @@ TAO_IR_ConsumesDef_Smart_Proxy_Base::_stubobj (void) const
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_ConsumesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_ConsumesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_ConsumesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_ConsumesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_ConsumesDef[] =
@@ -33719,9 +33719,9 @@ IR_ConsumesDef_ptr TAO_IR_ComponentDef_Smart_Proxy_Base::create_consumes  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_ComponentDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_ComponentDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_ComponentDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_ComponentDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_ComponentDef[] =
@@ -34617,9 +34617,9 @@ IR_ValueDef_ptr TAO_IR_PrimaryKeyDef_Smart_Proxy_Base::primary_key  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_PrimaryKeyDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_PrimaryKeyDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_PrimaryKeyDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_PrimaryKeyDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_PrimaryKeyDef[] =
@@ -34881,9 +34881,9 @@ TAO_IR_FactoryDef_Smart_Proxy_Base::_stubobj (void) const
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_FactoryDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_FactoryDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_FactoryDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_FactoryDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_FactoryDef[] =
@@ -35066,9 +35066,9 @@ TAO_IR_FinderDef_Smart_Proxy_Base::_stubobj (void) const
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_FinderDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_FinderDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_FinderDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_FinderDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_FinderDef[] =
@@ -36504,9 +36504,9 @@ IR_FinderDef_ptr TAO_IR_HomeDef_Smart_Proxy_Base::create_finder  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_IR_HomeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_IR_HomeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_IR_HomeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_IR_HomeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_HomeDef[] =
@@ -39941,9 +39941,9 @@ CORBA::TypeCode_ptr TAO_CORBA_TypeCodeFactory_Smart_Proxy_Base::create_home_tc  
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<TAO_CORBA_TypeCodeFactory_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<TAO_CORBA_TypeCodeFactory_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_CORBA_TypeCodeFactory_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_CORBA_TypeCodeFactory_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_CORBA_TypeCodeFactory[] =
