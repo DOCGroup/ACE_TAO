@@ -3,8 +3,8 @@
 // NOTE: this is for *users* of CosNotification_serv.  Use
 // Notification_serv.mpb to build CosNotification_serv.
 
-project : orbsvcslib, notification, event {
-  after     += CosNotification_serv
+project : orbsvcslib, notification, event_serv {
+  after     += CosNotification_Serv
   libs      += TAO_CosNotification_Serv
   libs      += TAO_CosNotification_Skel
 }
