@@ -3,15 +3,11 @@
 #include "Adapter.h"
 #include "SystemException.h"
 #include "debug.h"
+#include "Adapter_Registry.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
-
-
-#if !defined (__ACE_INLINE__)
-# include "Adapter.i"
-#endif /* __ACE_INLINE__ */
 
 ACE_RCSID (tao,
            Adapter,

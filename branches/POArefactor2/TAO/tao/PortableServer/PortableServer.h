@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-
 //=============================================================================
 /**
  *  @file PortableServer.h
@@ -45,6 +44,22 @@ TAO_Requires_POA_Initializer = TAO_POA_Initializer::init ();
 
 #define TAO_PORTABLESERVER_SAFE_INCLUDE
 #include "PortableServerC.h"
+#include "AdapterActivatorC.h"
+#include "IdAssignmentPolicyC.h"
+#include "IdUniquenessPolicyC.h"
+#include "ImplicitActivationPolicyC.h"
+#include "ImplRepoC.h"
+#include "ImR_LocatorC.h"
+#include "LifespanPolicyC.h"
+#include "POAManagerC.h"
+#include "PS_CurrentC.h"
+#include "PS_ForwardC.h"
+#include "RequestProcessingPolicyC.h"
+#include "ServantActivatorC.h"
+#include "ServantLocatorC.h"
+#include "ServantManagerC.h"
+#include "ServantRetentionPolicyC.h"
+#include "ThreadPolicyC.h"
 #undef TAO_PORTABLESERVER_SAFE_INCLUDE
 
 #include /**/ "ace/post.h"

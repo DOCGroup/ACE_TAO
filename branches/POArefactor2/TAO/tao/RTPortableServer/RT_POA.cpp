@@ -118,7 +118,7 @@ TAO_RT_POA::parse_rt_policies (TAO_POA_Policy_Set &policies
         ACE_CHECK;
 
         this->cached_policies ().priority_model (
-          TAO_POA_Cached_Policies::PriorityModel (rt_priority_model));
+          TAO::Portable_Server::Cached_Policies::PriorityModel (rt_priority_model));
 
         RTCORBA::Priority priority =
           priority_model->server_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -229,7 +229,7 @@ TAO_RT_POA::validate_policies (ACE_ENV_SINGLE_ARG_DECL)
   // SERVER_DECLARED option for the PriorityModelPolicy then the ORB
   // shall raise a WrongPolicy user exception.
   if (this->cached_policies_.priority_model () !=
-      TAO_POA_Cached_Policies::SERVER_DECLARED)
+      TAO::Portable_Server::Cached_Policies::SERVER_DECLARED)
     {
       ACE_THROW (PortableServer::POA::WrongPolicy ());
     }
@@ -293,7 +293,7 @@ TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
   // the acceptors in the only thread lane that matches the priority
   // of the object.
   if (this->cached_policies_.priority_model () ==
-      TAO_POA_Cached_Policies::SERVER_DECLARED)
+      TAO::Portable_Server::Cached_Policies::SERVER_DECLARED)
     {
       TAO_Thread_Lane **lanes =
         this->thread_pool_->lanes ();
@@ -488,7 +488,7 @@ TAO_RT_POA::client_exposed_policies (CORBA::Short object_priority
 
   if (poa_priority != TAO_INVALID_PRIORITY)
     {
-      TAO_POA_Cached_Policies::PriorityModel priority_model =
+      TAO::Portable_Server::Cached_Policies::PriorityModel priority_model =
         this->cached_policies_.priority_model ();
 
       // If the priority model is client propagated, let the client
@@ -496,7 +496,7 @@ TAO_RT_POA::client_exposed_policies (CORBA::Short object_priority
       // the priority model is server declared, tell the client the
       // servant's priority.
       CORBA::Short priority;
-      if (priority_model == TAO_POA_Cached_Policies::CLIENT_PROPAGATED)
+      if (priority_model == TAO::Portable_Server::Cached_Policies::CLIENT_PROPAGATED)
         priority = poa_priority;
       else
         priority = object_priority;
@@ -932,11 +932,5 @@ TAO_RT_POA::id (ACE_ENV_SINGLE_ARG_DECL)
 {
   return this->TAO_POA::id (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

@@ -8,7 +8,6 @@
  *
  *   POAManager
  *
- *
  *  @author  Irfan Pyarali
  */
 //=============================================================================
@@ -17,7 +16,7 @@
 #define TAO_POAMANAGER_H
 #include /**/ "ace/pre.h"
 
-#include "PortableServerC.h"
+#include "POAManagerC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,9 +26,10 @@
 
 // Local Object
 #include "tao/LocalObject.h"
-
-#include "tao/PortableInterceptorC.h"
+#include "tao/PI_ForwardC.h"
 #include "ace/Unbounded_Set.h"
+
+#include "POAManagerC.h"
 
 // Forward decl.
 class TAO_POA;
@@ -38,9 +38,7 @@ class TAO_Object_Adapter;
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -150,7 +148,7 @@ protected:
 
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "PortableServerC.h"
+#include "PS_ForwardC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -81,7 +81,7 @@ public:
    * type to the most derived type, demarshall all the parameters from
    * the request and finally invokes the operation, storing the
    * results and out parameters (if any) or the exceptions thrown into
-   * <request>.
+   * @a request.
    */
   virtual void _dispatch (TAO_ServerRequest &request,
                           void *servant_upcall

@@ -16,7 +16,7 @@
 
 #include "ace/SString.h"
 #include "portableserver_export.h"
-#include "Object_Adapter.h"
+#include "Servant_Upcall.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -48,19 +48,19 @@ public:
       //TAO_Service_Context &request_service_context,
       //TAO_Service_Context &reply_service_context,
 			TAO_ServerRequest &req,
-      TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
+      TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
       ACE_ENV_ARG_DECL
     ) = 0;
 
   /// Pre_invoke collocated request.
   virtual void pre_invoke_collocated_request (TAO_POA &poa,
                                               CORBA::Short servant_priority,
-                                              TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
+                                              TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
                                               ACE_ENV_ARG_DECL) = 0;
 
   /// Post_invoke request.
   virtual void post_invoke (TAO_POA &poa,
-                            TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &pre_invoke_state) = 0;
+                            TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state) = 0;
 
   /// Factory method for creating new POA's.
   virtual TAO_POA *create_POA (const ACE_CString &name,

@@ -3,7 +3,9 @@
 #include "Default_Acceptor_Filter.h"
 #include "tao/Transport_Acceptor.h"
 
-ACE_RCSID(tao, Default_Acceptor_Filter, "$Id$")
+ACE_RCSID(PortableServer,
+          Default_Acceptor_Filter,
+          "$Id$")
 
 TAO_Default_Acceptor_Filter::TAO_Default_Acceptor_Filter (void)
 {

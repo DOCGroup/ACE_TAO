@@ -30,7 +30,6 @@ class TAO_PortableServer_Export TAO_PortableServer_PolicyFactory
     public virtual TAO_Local_RefCounted_Object
 {
 public:
-
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                    const CORBA::Any & value
                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)

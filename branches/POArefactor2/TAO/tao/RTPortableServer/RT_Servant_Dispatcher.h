@@ -47,18 +47,18 @@ public:
   void pre_invoke_remote_request (TAO_POA &poa,
                                   CORBA::Short servant_priority,
                                   TAO_ServerRequest &req,
-								  TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
+                                  TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
                                   ACE_ENV_ARG_DECL);
 
   /// Pre_invoke collocated request.
   void pre_invoke_collocated_request (TAO_POA &poa,
                                       CORBA::Short servant_priority,
-                                      TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
+                                      TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
                                       ACE_ENV_ARG_DECL);
 
   /// Post_invoke request.
   void post_invoke (TAO_POA &poa,
-                    TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &pre_invoke_state);
+                    TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state);
 
   /// Factory method for creating new POA's.
   TAO_POA *create_POA (const ACE_CString &name,

@@ -21,6 +21,7 @@
 #include "Any_Unknown_IDL_Type.h"
 #include "ORB_Constants.h"
 #include "SystemException.h"
+#include "orb_typesC.h"
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
     || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)

@@ -3,7 +3,9 @@
 #include "Default_Servant_Dispatcher.h"
 #include "POA.h"
 
-ACE_RCSID(tao, Default_Acceptor_Filter, "$Id$")
+ACE_RCSID(PortableServer,
+          Default_Servant_Dispatcher,
+          "$Id$")
 
 TAO_Default_Servant_Dispatcher::~TAO_Default_Servant_Dispatcher (void)
 {
@@ -20,7 +22,7 @@ TAO_Default_Servant_Dispatcher::create_POA (const ACE_CString &name,
                                             TAO_Object_Adapter *object_adapter
                                             ACE_ENV_ARG_DECL)
 {
-  TAO_POA *poa;
+  TAO_POA *poa = 0;
 
   ACE_NEW_THROW_EX (poa,
                     TAO_POA (name,

@@ -4,6 +4,7 @@
 
 // Exception macros
 #include "poa_macros.h"
+#include "POA_Guard.h"
 #include "tao/Environment.h"
 
 ACE_INLINE CORBA::Boolean
@@ -153,7 +154,7 @@ TAO_POA::destroy (CORBA::Boolean etherealize_objects,
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_Guard poa_guard (*this ACE_ENV_ARG_PARAMETER, 0);
+  TAO::Portable_Server::POA_Guard poa_guard (*this ACE_ENV_ARG_PARAMETER, 0);
   ACE_CHECK;
   ACE_UNUSED_ARG (poa_guard);
 
@@ -709,11 +710,15 @@ TAO_POA::orb_core (void) const
   return this->orb_core_;
 }
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 ACE_INLINE PortableServer::ThreadPolicyValue
 TAO_POA::thread_policy (void) const
 {
   return this->cached_policies_.thread ();
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 ACE_INLINE PortableInterceptor::AdapterState
 TAO_POA::get_adapter_state (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -721,10 +726,16 @@ TAO_POA::get_adapter_state (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return this->adapter_state_;
 }
 
-ACE_INLINE TAO_POA_Cached_Policies &
+ACE_INLINE TAO::Portable_Server::Cached_Policies &
 TAO_POA::cached_policies (void)
 {
   return this->cached_policies_;
+}
+
+TAO::Portable_Server::Active_Policy_Strategies &
+TAO_POA::active_policy_strategies (void)
+{
+  return this->active_policy_strategies_;
 }
 
 ACE_INLINE void *
@@ -732,3 +743,4 @@ TAO_POA::thread_pool (void) const
 {
   return 0;
 }
+

@@ -33,6 +33,7 @@
 
 #include <tao/Policy.pidl>
 #include <tao/Services.pidl>
+#include <tao/orb_types.pidl>
 
 #pragma prefix "omg.org"
 
@@ -80,11 +81,6 @@ module CORBA
     tk_home
   };
 
-  typedef string  ORBid;
-  typedef unsigned long Flags;
-  typedef string Identifier;
-  typedef string RepositoryId;
-
   struct NamedValue
   {
     Identifier name;
@@ -117,7 +113,6 @@ module CORBA
   const Visibility PRIVATE_MEMBER = 0;
   const Visibility PUBLIC_MEMBER = 1;
 
-  typedef string ObjectId;
   typedef sequence <ObjectId> ObjectIdList;
 };
 

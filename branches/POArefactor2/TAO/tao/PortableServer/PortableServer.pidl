@@ -41,12 +41,13 @@
  *   done
  */
 
-#ifndef _PORTABLESERVER_IDL_
-#define _PORTABLESERVER_IDL_
+#ifndef _PORTABLE_SERVER_IDL_
+#define _PORTABLE_SERVER_IDL_
 
-#include <orb.idl>
-#include <Current.pidl>
+#include <orb_types.pidl>
+#include <Policy_Forward.pidl>
 #include <OctetSeq.pidl>
+#include <tao/PortableServer/PS_Forward.pidl>
 
 #pragma prefix "omg.org"
 
@@ -54,25 +55,9 @@ module PortableServer
 {
 # pragma version PortableServer 2.3
 
-  local interface POA;      // forward declaration
   typedef sequence<POA> POAList;
-  native Servant;
-  typedef CORBA::OctetSeq ObjectId;
 
-  exception ForwardRequest
-  {
-    Object forward_reference;
-  };
-
-  // @@ Frank - MIOP specific types
-
-  exception NotAGroupObject {};
-  typedef sequence <ObjectId> IDs;
-
-  // @@ Frank - End MIOP
-
-  // Policy interfaces.
-
+  // Policy IDs
   const CORBA::PolicyType THREAD_POLICY_ID                = 16;
   const CORBA::PolicyType LIFESPAN_POLICY_ID              = 17;
   const CORBA::PolicyType ID_UNIQUENESS_POLICY_ID         = 18;
@@ -87,10 +72,7 @@ module PortableServer
     SINGLE_THREAD_MODEL
   };
 
-  local interface ThreadPolicy : CORBA::Policy
-  {
-    readonly attribute ThreadPolicyValue value;
-  };
+  local interface ThreadPolicy;
 
   enum LifespanPolicyValue
   {
@@ -98,10 +80,7 @@ module PortableServer
     PERSISTENT
   };
 
-  local interface LifespanPolicy : CORBA::Policy
-  {
-    readonly attribute LifespanPolicyValue value;
-  };
+  local interface LifespanPolicy;
 
   enum IdUniquenessPolicyValue
   {
@@ -109,10 +88,7 @@ module PortableServer
     MULTIPLE_ID
   };
 
-  local interface IdUniquenessPolicy : CORBA::Policy
-  {
-    readonly attribute IdUniquenessPolicyValue value;
-  };
+  local interface IdUniquenessPolicy;
 
   enum IdAssignmentPolicyValue
   {
@@ -120,10 +96,7 @@ module PortableServer
     SYSTEM_ID
   };
 
-  local interface IdAssignmentPolicy : CORBA::Policy
-  {
-    readonly attribute IdAssignmentPolicyValue value;
-  };
+  local interface IdAssignmentPolicy;
 
   enum ImplicitActivationPolicyValue
   {
@@ -131,10 +104,7 @@ module PortableServer
     NO_IMPLICIT_ACTIVATION
   };
 
-  local interface ImplicitActivationPolicy : CORBA::Policy
-  {
-    readonly attribute ImplicitActivationPolicyValue value;
-  };
+  local interface ImplicitActivationPolicy;
 
   enum ServantRetentionPolicyValue
   {
@@ -142,10 +112,7 @@ module PortableServer
     NON_RETAIN
   };
 
-  local interface ServantRetentionPolicy : CORBA::Policy
-  {
-    readonly attribute ServantRetentionPolicyValue value;
-  };
+  local interface ServantRetentionPolicy;
 
   enum RequestProcessingPolicyValue
   {
@@ -154,85 +121,16 @@ module PortableServer
     USE_SERVANT_MANAGER
   };
 
-  local interface RequestProcessingPolicy : CORBA::Policy
-  {
-    readonly attribute RequestProcessingPolicyValue value;
-  };
+  local interface RequestProcessingPolicy;
 
-  // POAManager interface
-  local interface POAManager
-  {
-    exception AdapterInactive {};
+  // Forward declaration
+  local interface POAManager;
 
-    enum State
-    {
-      HOLDING,
-      ACTIVE,
-      DISCARDING,
-      INACTIVE
-    };
+  // Forward declaration AdapterActivator interface.
+  local interface AdapterActivator;
 
-    void activate ()
-      raises(AdapterInactive);
-
-    void hold_requests (in boolean wait_for_completion)
-      raises(AdapterInactive);
-
-    void discard_requests (in boolean wait_for_completion)
-      raises(AdapterInactive);
-
-    void deactivate (in boolean etherealize_objects,
-                     in boolean wait_for_completion)
-      raises(AdapterInactive);
-
-    State get_state ();
-  };
-
-  // AdapterActivator interface.
-  local interface AdapterActivator
-  {
-#   pragma version AdapterActivator 2.3
-
-    boolean unknown_adapter (in POA parent,
-                             in string name);
-  };
-
-  // ServantManager interface.
-  local interface ServantManager {};
-
-  local interface ServantActivator : ServantManager
-  {
-#   pragma version ServantActivator 2.3
-
-    Servant incarnate (in ObjectId oid,
-                       in POA adapter)
-      raises (ForwardRequest);
-
-    void etherealize (in ObjectId oid,
-                      in POA adapter,
-                      in Servant serv,
-                      in boolean cleanup_in_progress,
-                      in boolean remaining_activations);
-  };
-
-  local interface ServantLocator : ServantManager
-  {
-#   pragma version ServantLocator 2.3
-
-    native Cookie;
-
-    Servant preinvoke (in ObjectId oid,
-                       in POA adapter,
-                       in CORBA::Identifier operation,
-                       out Cookie the_cookie)
-      raises (ForwardRequest);
-
-    void postinvoke (in ObjectId oid,
-                     in POA adapter,
-                     in CORBA::Identifier operation,
-                     in Cookie  the_cookie,
-                     in Servant the_servant);
-  };
+  // Forward declaration servantManager interface.
+  local interface ServantManager;
 
   local interface POA
   {
@@ -365,39 +263,7 @@ module PortableServer
               WrongPolicy);
 
     readonly attribute CORBA::OctetSeq id;
-
-    // @@ Frank - MIOP specific methods
-
-    ObjectId create_id_for_reference(in Object the_ref)
-      raises (NotAGroupObject);
-
-    IDs reference_to_ids(in Object the_ref)
-      raises (NotAGroupObject);
-
-    void associate_reference_with_id (in Object ref,
-                                      in ObjectId oid)
-      raises (NotAGroupObject);
-
-    void disassociate_reference_with_id (in Object ref,
-                                         in ObjectId oid)
-      raises (NotAGroupObject);
-
-    // @@ Frank - End MIOP
-  };
-
-  // Current interface.
-  local interface Current : CORBA::Current
-  {
-#   pragma version Current 2.3
-
-    exception NoContext {};
-
-    POA get_POA ()
-      raises (NoContext);
-
-    ObjectId get_object_id ()
-      raises (NoContext);
   };
 };
 
-#endif // _PORTABLESERVER_IDL_
+#endif // _PORTABLE_SERVER_IDL_

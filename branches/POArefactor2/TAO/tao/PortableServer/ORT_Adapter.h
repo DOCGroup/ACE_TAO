@@ -85,15 +85,17 @@ namespace TAO
     virtual PortableInterceptor::ObjectReferenceFactory *
       get_obj_ref_factory (void) = 0;
 
-    // @@ Johnny, we won't be needing the exception specification
-    //    below for long.  Once bug 1852 is fixed, we can the
-    //    exception specification and the "tao/SystemException.h"
-    //    include above.
     /**
      * @name PortableInterceptor::ObjectReferenceFactory Methods
      *
      * Methods required by the
      * PortableInterceptor::ObjectReferenceFactory ValueType.
+     *
+     * @todo
+     * @@ Johnny, we won't be needing the exception specification
+     * below for long.  Once bug 1852 is fixed, we can the
+     * exception specification and the "tao/SystemException.h"
+     * include above.
      */
     //@{
     virtual CORBA::Object_ptr make_object (
@@ -103,7 +105,7 @@ namespace TAO
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-  //@}
+    //@}
   };
 
  typedef

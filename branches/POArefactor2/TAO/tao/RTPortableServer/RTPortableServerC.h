@@ -26,20 +26,23 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:171
+// be\be_codegen.cpp:153
 
 #ifndef _TAO_IDL_ORIG_RTPORTABLESERVERC_H_
 #define _TAO_IDL_ORIG_RTPORTABLESERVERC_H_
 
 #include /**/ "ace/pre.h"
 
-#include "tao/ORB.h"
+
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "rtportableserver_export.h"
+#include "tao/ORB.h"
+#include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
 #include "tao/Objref_VarOut_T.h"
@@ -88,7 +91,7 @@ namespace RTPortableServer
 {
 
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:601
 
 #if !defined (_RTPORTABLESERVER_POA__VAR_OUT_CH_)
 #define _RTPORTABLESERVER_POA__VAR_OUT_CH_
@@ -117,7 +120,7 @@ namespace RTPortableServer
 #define _RTPORTABLESERVER_POA_CH_
 
   class TAO_RTPortableServer_Export POA
-    : public virtual PortableServer::POA
+    : public virtual ::PortableServer::POA
   {
   public:
     typedef POA_ptr _ptr_type;
@@ -148,56 +151,56 @@ namespace RTPortableServer
 
     virtual CORBA::Object_ptr create_reference_with_priority (
         const char * intf,
-        RTCORBA::Priority priority
+        ::RTCORBA::Priority priority
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , PortableServer::POA::WrongPolicy
+        CORBA::SystemException,
+        ::PortableServer::POA::WrongPolicy
       )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::Object_ptr create_reference_with_id_and_priority (
-        const PortableServer::ObjectId & oid,
+        const ::PortableServer::ObjectId & oid,
         const char * intf,
-        RTCORBA::Priority priority
+        ::RTCORBA::Priority priority
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , PortableServer::POA::WrongPolicy
+        CORBA::SystemException,
+        ::PortableServer::POA::WrongPolicy
       )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual ::PortableServer::ObjectId * activate_object_with_priority (
-        PortableServer::Servant p_servant,
-        RTCORBA::Priority priority
+        ::PortableServer::Servant p_servant,
+        ::RTCORBA::Priority priority
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , PortableServer::POA::ServantAlreadyActive
-        , PortableServer::POA::WrongPolicy
+        CORBA::SystemException,
+        ::PortableServer::POA::ServantAlreadyActive,
+        ::PortableServer::POA::WrongPolicy
       )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual void activate_object_with_id_and_priority (
-        const PortableServer::ObjectId & oid,
-        PortableServer::Servant p_servant,
-        RTCORBA::Priority priority
+        const ::PortableServer::ObjectId & oid,
+        ::PortableServer::Servant p_servant,
+        ::RTCORBA::Priority priority
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , PortableServer::POA::ServantAlreadyActive
-        , PortableServer::POA::ObjectAlreadyActive
-        , PortableServer::POA::WrongPolicy
+        CORBA::SystemException,
+        ::PortableServer::POA::ServantAlreadyActive,
+        ::PortableServer::POA::ObjectAlreadyActive,
+        ::PortableServer::POA::WrongPolicy
       )) = 0;
 
     // TAO_IDL - Generated from
@@ -247,17 +250,17 @@ namespace TAO
 #define _RTPORTABLESERVER_POA__TRAITS_CH_
 
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_RTPortableServer_Export Objref_Traits<RTPortableServer::POA>
+  struct TAO_RTPortableServer_Export Objref_Traits< ::RTPortableServer::POA>
   {
-    static RTPortableServer::POA_ptr duplicate (
-        RTPortableServer::POA_ptr
+    static ::RTPortableServer::POA_ptr duplicate (
+        ::RTPortableServer::POA_ptr
       );
     static void release (
-        RTPortableServer::POA_ptr
+        ::RTPortableServer::POA_ptr
       );
-    static RTPortableServer::POA_ptr nil (void);
+    static ::RTPortableServer::POA_ptr nil (void);
     static CORBA::Boolean marshal (
-        RTPortableServer::POA_ptr p,
+        ::RTPortableServer::POA_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -273,10 +276,10 @@ TAO_RTPortableServer_Export void operator<<= (CORBA::Any &, RTPortableServer::PO
 TAO_RTPortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, RTPortableServer::POA_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:978
+// be\be_codegen.cpp:964
 
 #if defined (__ACE_INLINE__)
-#include "RTPortableServerC.i"
+#include "RTPortableServerC.inl"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
@@ -290,3 +293,5 @@ TAO_RTPortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, RTPo
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
+
+

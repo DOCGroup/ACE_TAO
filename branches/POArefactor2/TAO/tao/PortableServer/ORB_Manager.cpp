@@ -11,13 +11,16 @@
 // ============================================================================
 
 #include "ORB_Manager.h"
+#include "POAManagerC.h"
+#include "IdAssignmentPolicyC.h"
+#include "LifespanPolicyC.h"
 
 #include "tao/Environment.h"
 #include "tao/ORBInitializer_Registry.h"
 
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (tao,
+ACE_RCSID (PortableServer,
            ORB_Manager,
            "$Id$")
 

@@ -21,7 +21,6 @@ ACE_RCSID (tao,
 TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
   : orb_core_ (orb_core)
   , transport_ (0)
-  , tss_resources_ (orb_core->get_tss_resources ())
 {
   // @@todo: We need to have a distinct option/ method in the resource
   // factory for this and TAO_Transport.
@@ -93,9 +92,6 @@ int
 TAO_Connection_Handler::svc_i (void)
 {
   int result = 0;
-
-  // Inheriting the ORB_Core tss stuff from the parent thread.
-  this->orb_core_->inherit_from_parent_thread (this->tss_resources_);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,

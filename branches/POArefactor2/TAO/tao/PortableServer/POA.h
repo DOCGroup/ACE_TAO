@@ -34,6 +34,7 @@
 
 // Cached POA Policies
 #include "POA_Cached_Policies.h"
+#include "Active_Policy_Strategies.h"
 
 // Object_Key
 #include "tao/Object_KeyC.h"
@@ -56,14 +57,15 @@
 // OctetSeq
 #include "tao/OctetSeqC.h"
 
+#include "ServantActivatorC.h"
+#include "AdapterActivatorC.h"
+
 #include "ORT_Adapter.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -145,6 +147,11 @@ namespace TAO
 {
   class ORT_Adapter;
   class ORT_Adapter_Factory;
+
+  namespace Portable_Server
+  {
+    class Servant_Retention_Strategy;
+  }
 }
 
 /**
@@ -161,21 +168,15 @@ class TAO_PortableServer_Export TAO_POA
 public:
 
   friend class TAO_Object_Adapter;
-  friend class TAO_Object_Adapter::Servant_Upcall;
-  friend class TAO_Object_Adapter::Non_Servant_Upcall;
-  friend class TAO_POA_Current_Impl;
+  friend class TAO::Portable_Server::Servant_Retention_Strategy;
+  friend class TAO::Portable_Server::Servant_Upcall;
+  friend class TAO::Portable_Server::Non_Servant_Upcall;
+  friend class TAO::Portable_Server::POA_Current_Impl;
   friend class TAO_POA_Manager;
   friend class TAO_RT_Collocation_Resolver;
   friend class TAO_IORInfo;
 
   typedef ACE_CString String;
-
-  /**
-   * This method is used to downcast safely an instance of
-   * PortableServer::POA to an instance of TAO_POA when RTTI is not
-   * enabled.
-   */
-  virtual TAO_POA* _tao_poa_downcast (void);
 
   PortableServer::POA_ptr create_POA (
       const char *adapter_name,
@@ -395,56 +396,14 @@ public:
   CORBA::OctetSeq *id (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-  // Methods added by the
-  /// @name MIOP specification methods
-  //@{
-  virtual PortableServer::ObjectId * create_id_for_reference (
-      CORBA::Object_ptr the_ref
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      PortableServer::NotAGroupObject
-    ));
-
-
-  virtual PortableServer::IDs * reference_to_ids (
-      CORBA::Object_ptr the_ref
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      PortableServer::NotAGroupObject
-    ));
-
-  virtual void associate_reference_with_id (
-      CORBA::Object_ptr ref,
-      const PortableServer::ObjectId & oid
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      PortableServer::NotAGroupObject
-    ));
-
-  virtual void disassociate_reference_with_id (
-      CORBA::Object_ptr ref,
-      const PortableServer::ObjectId & oid
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      PortableServer::NotAGroupObject
-    ));
-  //@}
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
   /// Accessor for POA policies.
   TAO_POA_Policy_Set &policies (void);
 
   /// Accessor for cached POA policies.
-  TAO_POA_Cached_Policies &cached_policies (void);
+  TAO::Portable_Server::Cached_Policies &cached_policies (void);
+
+  /// Accessor for active policy strategies.
+  TAO::Portable_Server::Active_Policy_Strategies &active_policy_strategies (void);
 
   /// This method gives the policies that are exposed to the client.
   /// These policies are shipped within the IOR.
@@ -523,8 +482,12 @@ public:
                          ACE_ENV_ARG_DECL);
 
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
   /// Accessor for the current thread policy of this POA.
   PortableServer::ThreadPolicyValue thread_policy (void) const;
+
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
   /// Accessor methods to POA state.
   /**
@@ -876,8 +839,8 @@ protected:
   PortableServer::Servant locate_servant_i (
       const char *operation,
       const PortableServer::ObjectId &id,
-      TAO_Object_Adapter::Servant_Upcall &servant_upcall,
-      TAO_POA_Current_Impl &poa_current_impl,
+      TAO::Portable_Server::Servant_Upcall &servant_upcall,
+      TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
       int &wait_occurred_restart_call
       ACE_ENV_ARG_DECL
     );
@@ -967,7 +930,9 @@ protected:
   /// Adapter can be accepting, rejecting etc.
   PortableInterceptor::AdapterState adapter_state_;
 
-  TAO_POA_Cached_Policies cached_policies_;
+  TAO::Portable_Server::Cached_Policies cached_policies_;
+
+  TAO::Portable_Server::Active_Policy_Strategies active_policy_strategies_;
 
   int delete_active_object_map_;
 
@@ -1053,47 +1018,6 @@ protected:
   Key_To_Object_Params key_to_object_params_;
 };
 
-
-/**
- * @class TAO_POA_Guard
- *
- * @brief TAO_POA_Guard
- *
- * TAO_POA_Guard
- */
-class TAO_PortableServer_Export TAO_POA_Guard
-{
-public:
-  TAO_POA_Guard (TAO_POA &poa
-                 ACE_ENV_ARG_DECL,
-                 int check_for_destruction = 1);
-
-private:
-  ACE_Guard<ACE_Lock> guard_;
-};
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-class TAO_PortableServer_Export TAO_Adapter_Activator
-  : public PortableServer::AdapterActivator
-{
-public:
-
-  TAO_Adapter_Activator (PortableServer::POAManager_ptr poa_manager);
-
-  CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,
-                                  const char *name
-                                  ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-protected:
-
-  /// POA Manager
-  PortableServer::POAManager_var poa_manager_;
-};
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
 /**
  * @class TAO_POA_Static_Resources
  *
@@ -1144,7 +1068,7 @@ private:
 
 // ****************************************************************
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

@@ -25,7 +25,6 @@
 #include "tao/Basic_Types.h"
 
 class TAO_ORB_Core;
-class TAO_ORB_Core_TSS_Resources;
 class TAO_Transport;
 class ACE_SOCK;
 class ACE_Lock;
@@ -110,9 +109,6 @@ protected:
   /// Return our TAO_ORB_Core pointer
   TAO_ORB_Core *orb_core (void);
 
-  /// Return our TSS Resources pointer
-  TAO_ORB_Core_TSS_Resources* tss_resources (void);
-
   /// Set options on the socket
   int set_socket_option (ACE_SOCK &sock,
                          int snd_size,
@@ -169,9 +165,6 @@ private:
 
   /// Transport object reference
   TAO_Transport* transport_;
-
-  /// Cached tss resources of the ORB that activated this object.
-  TAO_ORB_Core_TSS_Resources *tss_resources_;
 
   /// Internal state lock, needs to be separate from the reference
   /// count / pending upcalls lock because they interleave.
