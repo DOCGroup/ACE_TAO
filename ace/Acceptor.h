@@ -131,14 +131,14 @@ protected:
   // activates SVC_HANDLERs.
 
   // = Dynamic linking hooks.
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ASYS_TCHAR *argv[]);
   // Default version does no work and returns -1.  Must be overloaded
   // by application developer to do anything meaningful.
 
   virtual int fini (void);
   // Calls <handle_close>.
 
-  virtual int info (char **buf, size_t) const;
+  virtual int info (ASYS_TCHAR **buf, size_t) const;
   // Default version returns address info in <buf>.
 
   // = Service management hooks.
@@ -176,8 +176,8 @@ class ACE_Strategy_Acceptor : public ACE_Acceptor <SVC_HANDLER, ACE_PEER_ACCEPTO
   //     particular concurrency mechanism.
 public:
   // = Initialization and termination methods.
-  ACE_Strategy_Acceptor (const char service_name[] = 0,
-			 const char service_description[] = 0);
+  ACE_Strategy_Acceptor (const ASYS_TCHAR service_name[] = 0,
+			 const ASYS_TCHAR service_description[] = 0);
   // Default constructor.
 
   ACE_Strategy_Acceptor (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
@@ -186,8 +186,8 @@ public:
 			 ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> * = 0,
 			 ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
 			 ACE_Scheduling_Strategy<SVC_HANDLER> * = 0,
-			 const char service_name[] = 0,
-			 const char service_description[] = 0);
+			 const ASYS_TCHAR service_name[] = 0,
+			 const ASYS_TCHAR service_description[] = 0);
   // Initialize the appropriate strategies for creation, passive
   // connection acceptance, and concurrency, and then register <this>
   // with the Reactor and listen for connection requests at the
@@ -199,8 +199,8 @@ public:
 	    ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> * = 0,
 	    ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
 	    ACE_Scheduling_Strategy<SVC_HANDLER> * = 0,
-	    const char service_name[] = 0,
-	    const char service_description[] = 0);
+	    const ASYS_TCHAR *service_name = 0,
+	    const ASYS_TCHAR *service_description = 0);
   // Initialize the appropriate strategies for creation, passive
   // connection acceptance, and concurrency, and then register <this>
   // with the Reactor and listen for connection requests at the
@@ -238,7 +238,7 @@ protected:
   virtual int fini (void);
   // Calls <handle_close> when dynamically unlinked.
 
-  virtual int info (char **buf, size_t) const;
+  virtual int info (ASYS_TCHAR **buf, size_t) const;
   // Default version returns address info in <buf>.
 
   // = The following three methods define the <Acceptor>'s strategies
@@ -320,10 +320,10 @@ protected:
 
   // = Service information objects.
 
-  char *service_name_;
+  ASYS_TCHAR *service_name_;
   // Name of the service.
 
-  char *service_description_;
+  ASYS_TCHAR *service_description_;
   // Description of the service.
 
   u_short service_port_;
@@ -435,7 +435,7 @@ protected:
   // Called when an acceptor times out...
 
   // = Dynamic linking hooks.
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ASYS_TCHAR *argv[]);
   // Default version does no work and returns -1.  Must be overloaded
   // by application developer to do anything meaningful.
 
@@ -443,7 +443,7 @@ protected:
   // Default version does no work and returns -1.  Must be overloaded
   // by application developer to do anything meaningful.
 
-  virtual int info (char **, size_t) const;
+  virtual int info (ASYS_TCHAR **, size_t) const;
   // Default version returns address info in <buf>.
 
   // = Service management hooks.

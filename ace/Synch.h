@@ -46,6 +46,8 @@ class ACE_Export ACE_Lock
   //     calls and (2) objects with virtual functions can't be placed
   //     into shared memory.
 public:
+  ACE_Lock (void);
+  // CE needs a default ctor here.
 
   virtual ~ACE_Lock (void);
   // Noop virtual destructor
