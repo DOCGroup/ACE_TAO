@@ -73,6 +73,9 @@ ACE_Handle_Set::ACE_Handle_Set (const ACE_FD_SET_TYPE &fd_mask)
 		  sizeof this->mask_);  
 #if !defined (ACE_WIN32)
   this->sync (ACE_Handle_Set::MAXSIZE);
+#if defined (ACE_HAS_BIG_FD_SET)
+  this->min_handle_ = 0;
+#endif /* ACE_HAS_BIG_FD_SET */
 #endif /* !ACE_WIN32 */
 }
 
@@ -80,7 +83,7 @@ ACE_Handle_Set::ACE_Handle_Set (const ACE_FD_SET_TYPE &fd_mask)
 // speed up the count.
 
 int
-ACE_Handle_Set::count_bits (u_long n) const
+ACE_Handle_Set::count_bits (u_long n)
 {
 
  ACE_TRACE ("ACE_Handle_Set::count_bits");
@@ -104,6 +107,41 @@ ACE_Handle_Set::count_bits (u_long n) const
 #endif /* ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT */
 }
 
+#if defined (ACE_HAS_BIG_FD_SET)
+// Find the bit position counting from right to left worst case
+// (1<<31) is 8.
+
+int 
+ACE_Handle_Set::bitpos (u_long bit)
+{
+  register int l = 0;
+  register u_long n = bit - 1;
+
+  // This is a fast count method when have the most significative bit.
+
+  while (n >> 8) 
+    {
+      n >>= 8;
+      l += 8;
+    }
+
+  // Is greater than 15?
+  if (n & 16) 
+    {
+      n >>= 4;
+      l += 4;
+    }
+
+  // Count number remaining bits.
+  while (n != 0) 
+    {
+      n &= n - 1;
+      l++;
+    }
+  return l;
+}
+#endif /* ACE_HAS_BIG_FD_SET */
+
 // Synchronize the underlying FD_SET with the MAX_FD and the SIZE.
 
 void
@@ -116,7 +154,7 @@ ACE_Handle_Set::sync (ACE_HANDLE max)
   for (int i = (max - 1) / ACE_Handle_Set::WORDSIZE; 
        i >= 0; 
        i--)
-    this->size_ += count_bits (this->mask_.fds_bits[i]);
+    this->size_ += ACE_Handle_Set::count_bits (this->mask_.fds_bits[i]);
 
   this->set_max (max);
 #else
@@ -142,12 +180,17 @@ ACE_Handle_Set::set_max (ACE_HANDLE current_max)
 	   i--)
 	continue;
 
+#if 1 /* !defined(ACE_HAS_BIG_FD_SET) */
       this->max_handle_ = i * ACE_Handle_Set::WORDSIZE;
-
       for (fd_mask val = this->mask_.fds_bits[i]; 
 	   (val & ~1) != 0; // This obscure code is needed since "bit 0" is in location 1...
 	   val = (val >> 1) & ACE_MSB_MASK)
 	this->max_handle_++;
+#else
+      register u_long val = this->mask_.fds_bits[i];
+      this->max_handle_ = i * ACE_Handle_Set::WORDSIZE
+	+ ACE_Handle_Set::bitpos(val & ~(val - 1));
+#endif /* 1 */
     }
 
   // Do some sanity checking...
@@ -166,7 +209,12 @@ ACE_Handle_Set_Iterator::dump (void) const
   ACE_TRACE ("ACE_Handle_Set_Iterator::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+#if defined(ACE_WIN32) || !defined(ACE_HAS_BIG_FD_SET)
   ACE_DEBUG ((LM_DEBUG, "\nhandle_index_ = %d", this->handle_index_));
+#elif defined(ACE_HAS_BIG_FD_SET)
+  ACE_DEBUG ((LM_DEBUG, "\nword_max_ = %d", this->word_max_));
+  ACE_DEBUG ((LM_DEBUG, "\nword_val_ = %d", this->word_val_));
+#endif
   ACE_DEBUG ((LM_DEBUG, "\nword_num_ = %d", this->word_num_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -182,7 +230,7 @@ ACE_Handle_Set_Iterator::operator () (void)
   else 
     return ACE_INVALID_HANDLE;
 
-#else /* !ACE_WIN32 */
+#elif !defined (ACE_HAS_BIG_FD_SET) /* !ACE_WIN32 */
   // No sense searching further than the max_handle_ + 1;
   ACE_HANDLE maxhandlep1 = this->handles_.max_handle_ + 1;
 
@@ -241,6 +289,63 @@ ACE_Handle_Set_Iterator::operator () (void)
 
       return result;
     }
+#else /* !ACE_HAS_BIG_FD_SET */
+   // Find the first word in fds_bits with bit on
+   register u_long lsb = this->word_val_;
+
+   if (lsb == 0)
+     {
+       do
+	 {
+	   // We have exceeded the word count in Handle_Set?
+	   if (++this->word_num_ >= this->word_max_)
+	     return ACE_INVALID_HANDLE;
+
+	   lsb = this->handles_.mask_.fds_bits[this->word_num_];
+	 }
+       while (lsb == 0);
+
+       // Set index to word boundary.
+       this->handle_index_ = this->word_num_ * ACE_Handle_Set::WORDSIZE;
+
+       // Put new word_val.
+       this->word_val_ = lsb;
+
+       // Find the least significative bit.
+       lsb &= ~(lsb - 1);
+
+       // Remove least significative bit.
+       this->word_val_ ^= lsb;
+
+       // Save to calculate bit distance.
+       this->oldlsb_ = lsb;
+
+       // Move index to least significative bit.
+       while (lsb >>= 1)
+	 this->handle_index_++;
+     }
+    else 
+      {
+	// Find the least significative bit.
+	lsb &= ~(lsb - 1);
+
+	// Remove least significative bit.
+	this->word_val_ ^= lsb;
+
+	register u_long n = lsb - this->oldlsb_;
+
+	// Move index to bit distance between new lsb and old lsb.
+	do
+	  {
+	    this->handle_index_++;
+	    n &= n >> 1;
+	  }
+	while (n != 0);
+
+	this->oldlsb_ = lsb;
+      }
+
+   return this->handle_index_;
 #endif /* ACE_WIN32 */
 }
 
@@ -254,11 +359,17 @@ ACE_Handle_Set_Iterator::operator++ (void)
 
 ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs)
   : handles_ (hs), 
+#if !defined (ACE_HAS_BIG_FD_SET) || defined (ACE_WIN32)
     handle_index_ (0),
     word_num_ (-1)
+#elif defined (ACE_HAS_BIG_FD_SET)
+    oldlsb_ (0),
+    word_max_ (hs.max_handle_ == ACE_INVALID_HANDLE 
+	       ? 0 : ((hs.max_handle_ / ACE_Handle_Set::WORDSIZE) + 1))
+#endif /* ACE_HAS_BIG_FD_SET */
 {
   ACE_TRACE ("ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator");
-#if !defined(ACE_WIN32)
+#if !defined(ACE_WIN32) && !defined(ACE_HAS_BIG_FD_SET)
   // No sense searching further than the max_handle_ + 1;
   ACE_HANDLE maxhandlep1 = this->handles_.max_handle_ + 1;
 
@@ -268,9 +379,10 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs)
 	 && this->handles_.mask_.fds_bits[++this->word_num_] == 0)
     this->handle_index_ += ACE_Handle_Set::WORDSIZE;
 
-  // If the bit index becomes >= the maxhandlep1 that means there weren't
-  // any bits set.  Therefore, we'll just store the maxhandlep1, which will
-  // cause <operator()> to return <ACE_INVALID_HANDLE> immediately.
+  // If the bit index becomes >= the maxhandlep1 that means there
+  // weren't any bits set.  Therefore, we'll just store the
+  // maxhandlep1, which will cause <operator()> to return
+  // <ACE_INVALID_HANDLE> immediately.
   if (this->handle_index_ >= maxhandlep1)
     this->handle_index_ = maxhandlep1;
   else
@@ -282,5 +394,16 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs)
 	   && this->handle_index_ < maxhandlep1;
 	 this->handle_index_++)
       this->word_val_ = (this->word_val_ >> 1) & ACE_MSB_MASK;
-#endif /* !ACE_WIN32 */
+#elif !defined(ACE_WIN32) && defined(ACE_HAS_BIG_FD_SET)
+    if (this->word_max_==0) 
+      {
+	this->word_num_ = -1;
+	this->word_val_ = 0;
+      }
+    else
+      {
+	this->word_num_ = this->handles_.min_handle_ / ACE_Handle_Set::WORDSIZE - 1;
+	this->word_val_ = 0;
+      }
+#endif /* !ACE_WIN32 && !ACE_HAS_BIG_FD_SET */
 }

@@ -46,14 +46,10 @@ sig_handler (void *)
 	    {
 	      pid_t pid = proc_mgr.reap ();
 	      
-	      switch (pid)
-		{
-		case -1:
-		  ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "reap"), 0);
-		  /* NOTREACHED */
-		default:
-		  ACE_DEBUG ((LM_DEBUG, "(%P|%t) reaped pid %d\n", pid));
-		}
+	      if (pid == -1) // No more children to reap.
+		break;
+
+	      ACE_DEBUG ((LM_DEBUG, "(%P|%t) reaped pid %d\n", pid));
 	    }
 	  
 	  /* NOTREACHED */
