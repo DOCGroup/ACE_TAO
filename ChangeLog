@@ -1,6 +1,7 @@
 Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
+	
 	* */.cvsignore:
-	To make cvs silent.
+	  To make cvs silent.
 
 	* tests/tests.mpc:
 	* tests/XtReactor_Test.cpp:
@@ -62,21 +63,23 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
 	* ace/ACE_QtReactor_export.h:
 	* ace/ACE_FlReactor_export.h:
 	* ACE-INSTALL.html:
-	Changes related with separation of GUI reactors.
-	The additional information is avalaible in ChangeLog at REACTOR_SEPARATION branch.
+	  Changes related with separation of GUI reactors.
+	  The additional information is avalaible in ChangeLog at 
+          REACTOR_SEPARATION branch.
 
 Sat Jan 22 21:18:58 2005  Kobi Cohen-Arazi  <kobi.cohenarazi@gmail.com>
 
-
-	* ace/Logging_Strategy.cpp (handle_timeout): Fixed when defined ACE_LACKS_IOSTREAM_TOTALLY.
-        Use ftell instead of fseek in order to get the current file length.
-        Thanks to Kim ByeongSu <kcando at kcando dot org> for pointing it out.
+	* ace/Logging_Strategy.cpp (handle_timeout): Fixed when defined
+	  ACE_LACKS_IOSTREAM_TOTALLY. Use ftell instead of fseek in order
+	  to get the current file length. Thanks to Kim ByeongSu <kcando
+	  at kcando dot org> for pointing it out. 
 
 Sat Jan 22 21:13:11 2005  Kobi Cohen-Arazi  <kobi.cohenarazi@gmail.com>
 
-	* tests/Test_Output.cpp(close): Fixed when ACE_LACKS_IOSTREAM_TOTALLY - fflush and fclose
-        should be called only when output_file_ is valid, and it points to the same current
-        ACE_LOG_MSG->msg_ostream ().
+	* tests/Test_Output.cpp(close): Fixed when
+	  ACE_LACKS_IOSTREAM_TOTALLY - fflush and fclose should be called
+	  only when output_file_ is valid, and it points to the same
+	  current ACE_LOG_MSG->msg_ostream ().
 
 Fri Jan 21 19:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
