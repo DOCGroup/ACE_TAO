@@ -13,6 +13,10 @@
 #include "ace/Synch.i"
 #endif /* __ACE_INLINE__ */
 
+#if defined (ACE_MT_SAFE) && defined (ACE_HAS_THREADS)
+ACE_Thread_Mutex *ACE_Static_Object_Lock::mutex_ = 0;
+#endif
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Null_Mutex)
 ACE_ALLOC_HOOK_DEFINE(ACE_File_Lock)
 ACE_ALLOC_HOOK_DEFINE(ACE_RW_Process_Mutex)
@@ -903,6 +907,40 @@ ACE_RW_Thread_Mutex::dump (void) const
 {
 // ACE_TRACE ("ACE_RW_Thread_Mutex::dump");
   ACE_RW_Mutex::dump ();
+}
+
+////////////////////////////////////////////////////////////////
+#include "ace/Malloc.h"
+
+#if defined (ACE_HAS_SIG_C_FUNC)
+extern "C" static void 
+ace_static_object_lock_atexit (void)
+{
+  ACE_Static_Object_Lock::atexit ();
+}
+#endif /* ACE_HAS_SIG_C_FUNC */
+
+void
+ACE_Static_Object_Lock::atexit (void)
+{
+  ACE_Allocator::close_singleton ();
+  delete ACE_Static_Object_Lock::mutex_;
+}
+
+ACE_Thread_Mutex *
+ACE_Static_Object_Lock::get_lock (void)
+{
+  // We assume things before main are single threaded.
+  if (ACE_Static_Object_Lock::mutex_ == 0)
+    {
+      ACE_NEW_RETURN (ACE_Static_Object_Lock::mutex_, ACE_Thread_Mutex, 0);
+#if defined (ACE_HAS_SIG_C_FUNC)
+      ::atexit (ace_static_object_lock_atexit);
+#else
+      ::atexit (ACE_Static_Object_Lock::atexit);
+#endif
+    }
+  return ACE_Static_Object_Lock::mutex_;
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
