@@ -1,3 +1,14 @@
+Wed Dec  2 21:56:56 1998  Shawn Michael Atkins  <sma1@lambada.cs.wustl.edu>
+
+	* performance-tests/Thruput/TAO/ttcp_decl.h: commented out
+	RtiPackets since I haven't gotten that working yet: Was preventing
+	compilation for anyone but me (the variable isn't defined but in
+	my workspace at the moment).
+
+	* performance-tests/Thruput/TAO/utils.cpp: fixed minor errors that
+	were preventing compilation on linux.
+	
+
 Wed Dec 02 18:33:08 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Exception (completed): The name of the function (both
