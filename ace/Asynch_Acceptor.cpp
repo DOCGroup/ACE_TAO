@@ -218,15 +218,14 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
 #endif /* ACE_HAS_AIO_CALLS */
 
   // Parse address.
-  ACE_INET_Addr local_address, remote_address;
+  ACE_INET_Addr local_address;
+  ACE_INET_Addr remote_address;
   if (!error &&
-      this->validate_new_connection_ || this->pass_addresses_)
-    {
-      // Parse the addresses.
-      this->parse_address (result,
-                           remote_address,
-                           local_address);
-    }
+      (this->validate_new_connection_ || this->pass_addresses_))
+    // Parse the addresses.
+    this->parse_address (result,
+                         remote_address,
+                         local_address);
 
   // Validate remote address
   if (!error &&
