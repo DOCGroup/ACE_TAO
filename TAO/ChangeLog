@@ -1,10 +1,87 @@
+Fri Oct 25 21:48:30 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/POA.cpp (adapter_name_i):
+
+	  Fixed problem where the RootPOA's adapter name was not included
+	  in the returned adapter name sequence.  CORBA 3.0 requires it to
+	  be included.
+
+	  Fixed incorrect nil POA reference check.  Use
+	  "CORBA::is_nil(poa)" instead of
+	  "poa == PortableServer::POA::_nil()".
+
+	  Slightly optimized and cleaned up this method.
+
+	* tests/ORT/ObjectReferenceFactory.idl:
+	* tests/ORT/ObjectReferenceFactory.h:
+	* tests/ORT/ObjectReferenceFactory.cpp:
+
+	  New PortableInterceptor::ObjectReferenceFactory implementation
+	  designed to excerise the
+	  PortableInterceptor::IORInfo::current_factory() attributed, the
+	  POA's ObjectReferenceFactory support.
+
+	* tests/ORT/ServerORBInitializer.h:
+	* tests/ORT/ServerORBInitializer.cpp:
+
+	  New server side ORBInitializer that registers the new server
+	  request interceptor and the existing IOR interceptor.
+
+	* tests/ORT/ServerRequestInterceptor.h:
+	* tests/ORT/ServerRequestInterceptor.cpp:
+
+	  New server request interceptor thats tests some of the
+	  ORT-specific methods in the ServerRequestInfo object passed to
+	  the server request interception points.
+
+	* tests/ORT/ORT_test_IORInterceptor.cpp (components_established):
+
+	  Swap out the current ObjectReferenceFactory with the customized
+	  ObjectReferenceFactory implemented by this test.  The goal is
+	  test the PortableInterceptor::IORInfo::current_factory attribute
+	  internals, in addition to the POA's
+	  PortableInterceptor::ObjectReferenceFactory support.
+
+	* tests/ORT/server.cpp (main):
+
+	  Use a child POA when activating the servant and obtaining an
+	  object reference for it.  This forces a POA hierarchy to be
+	  reflected in the AdapterName sequence returned from
+	  PortableInterceptor::ServerRequestInfo::adapter_name() instead
+	  of a single (root) POA.
+
+	  Removed TAO-specific calls on the TAO_ORB_Core.  The
+	  equivalent portable calls in the
+	  PortableInterceptor::ServerRequestInfo object will be invoked
+	  via the new ServerRequestInterceptor instead.
+
+	* tests/ORT/ORT_test_IORInterceptor_ORBInitializer.h:
+	* tests/ORT/ORT_test_IORInterceptor_ORBInitializer.cpp:
+
+	  Removed this ORBInitializer in favor of the new one described
+	  above.
+
+	* tests/ORT/ORT_test_IORInterceptor.h:
+	* tests/ORT/ORT_test.idl:
+	* tests/ORT/ORT_test_i.h:
+	* tests/ORT/ORT_test_i.cpp:
+
+	  Cosmetic updates.
+
+	* tests/ORT/Makefile:
+	* tests/ORT/server.bor:
+	* tests/ORT/server.dsp:
+
+	  Added new files and removed deprecated ones.
+
 Fri Oct 25 09:56:51 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * tao/ValueBase.h:
         * tao/ValueBase.i:
         * TAO_IDL/be/be_valuetype.cpp:
 
-          Restored the const cast to pointer operator for valuetype _var classes.
+          Restored the const cast to pointer operator for valuetype _var
+	  classes.
 
 Fri Oct 25 09:49:31 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
@@ -16,7 +93,7 @@ Fri Oct 25 09:49:31 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 Thu Oct 24 19:48:21 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* Re-did this after the great reversion "Wed Oct 23 16:32:36 2002
-	  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>" 
+	  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>"
 
 Thu Oct 24 19:44:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -24,7 +101,6 @@ Thu Oct 24 19:44:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* orbsvcs/orbsvcs/DsNotifyLogAdmin.dsp: Fixed Release
 	  configurations.  Include paths, library paths, and library lists
 	  have been added.
-
 
 Thu Oct 24 19:32:08 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -38,11 +114,10 @@ Thu Oct 24 19:32:08 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	Wed Oct 23 22:48:09 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 	Wed Oct 23 16:32:36 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 	Wed Oct 23 13:38:59 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
-	Wed Oct 23 10:26:59 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>. 
+	Wed Oct 23 10:26:59 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>.
 	  Basically the changes made were not right. Hence the need for
-	  reversion to yesterday mornings status. 
-	 
-	
+	  reversion to yesterday mornings status.
+
 Thu Oct 24 10:59:20 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * examples/Load_Balancing/Identity_Server.cpp:
@@ -89,7 +164,7 @@ Thu Oct 24 000:33:17 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.h:
 	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/LB_server.cpp:
 
-	  Replaced char * arguments with corresponding typedefs in cases where 
+	  Replaced char * arguments with corresponding typedefs in cases where
 	  the IDL compiler now generates the typedef name.
 
 Wed Oct 23 23:51:51 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
