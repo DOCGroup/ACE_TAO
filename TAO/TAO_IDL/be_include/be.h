@@ -98,4 +98,5 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include	"be_string.h"		// class BE_String
 #include	"be_typedef.h"	        // class BE_Typedef 
 
+#include        "be_helper.h"           // helper functions
 #endif           // _BE_BE_HH
