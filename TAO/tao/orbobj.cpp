@@ -180,8 +180,8 @@ CORBA::ORB_init (int &argc,
 {
   // Using ACE_Static_Object_Lock::instance() precludes ORB_init from being called
   // within a static object CTOR.
-  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, guard,
-                    *ACE_Static_Object_Lock::instance (), 0);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, guard,
+                    *ACE_Static_Object_Lock::instance (), 0));
 
   env.clear ();
 
