@@ -69,19 +69,18 @@ public:
   int acquire (void (*sleep_hook)(void *),
                void *arg = 0,
                ACE_Time_Value *timeout = 0);
-  // Acquire the token, sleeping until it is obtained or until
-  // <timeout> expires.  If some other thread currently holds the
-  // token then <sleep_hook> is called before our thread goes to
-  // sleep.  This <sleep_hook> can be used by the requesting thread to
-  // unblock a token-holder that is sleeping, e.g., by means of
-  // writing to a pipe (the ACE ACE_Reactor uses this functionality).
-  // Return values:
-  // 0 if acquires without calling <sleep_hook>
-  // 1 if <sleep_hook> is called.
-  // 2 if the token is signaled.
-  // -1 if failure or timeout occurs (if timeout occurs errno == ETIME)
-  // If <timeout> == <&ACE_Time_Value::zero> then acquire has polling
-  // semantics (and does *not* call <sleep_hook>).
+  // Acquire the token, sleeping until it is obtained or until the
+  // expiration of <timeout>, which is treated as "absolute" time.  If
+  // some other thread currently holds the token then <sleep_hook> is
+  // called before our thread goes to sleep.  This <sleep_hook> can be
+  // used by the requesting thread to unblock a token-holder that is
+  // sleeping, e.g., by means of writing to a pipe (the ACE
+  // ACE_Reactor uses this functionality).  Return values: 0 if
+  // acquires without calling <sleep_hook> 1 if <sleep_hook> is
+  // called.  2 if the token is signaled.  -1 if failure or timeout
+  // occurs (if timeout occurs errno == ETIME) If <timeout> ==
+  // <&ACE_Time_Value::zero> then acquire has polling semantics (and
+  // does *not* call <sleep_hook>).
 
   int acquire (ACE_Time_Value *timeout = 0);
   // This behaves just like the previous <acquire> method, except
@@ -93,7 +92,8 @@ public:
   // the appropriate behavior before <acquire> goes to sleep.
   // By default, this is a no-op...
 
-  int renew (int requeue_position = 0, ACE_Time_Value *timeout = 0);
+  int renew (int requeue_position = 0,
+             ACE_Time_Value *timeout = 0);
   // An optimized method that efficiently reacquires the token if no
   // other threads are waiting.  This is useful for situations where
   // you don't want to degrad the quality of service if there are
