@@ -104,7 +104,11 @@ if test -d m4; then
   fi
 
   # Provide some "useful" information.
-  echo Bootstrapping...
+  if test $bootstrap_release = yes; then
+    echo Bootstrapping release...
+  else
+    echo Bootstrapping workspace...
+  fi
 
   # Update the NEWS file
   # For now just copy the contents of the `VERSION' file to make automake
@@ -160,7 +164,7 @@ if test -d m4; then
     if test $bootstrap_release = yes; then
       echo 'Inserting ACE man page lists into appropriate Makefile.am files.'
       ACE_MAN_PAGES=`(cd man/man3 && echo *.3)`
-      ACE_HTML_MAN_PAGES=`echo $ACE_MAN_PAGES | sed -e 's/.3$/.html/g'`
+      ACE_HTML_MAN_PAGES=`echo $ACE_MAN_PAGES | sed -e 's/.3 /.html /g' -e 's/.3$/.html/g'`
     else
       ACE_MAN_PAGES=
       ACE_HTML_MAN_PAGES=
