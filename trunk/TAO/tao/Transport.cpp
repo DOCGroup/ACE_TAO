@@ -729,7 +729,7 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[])
                       this->id (), ACE_LIB_TEXT ("send()")));
         }
 
-      if (errno == EWOULDBLOCK)
+      if (errno == EWOULDBLOCK || errno == EAGAIN)
         {
           return 0;
         }
