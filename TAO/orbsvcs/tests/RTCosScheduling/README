@@ -16,7 +16,9 @@ The server is started with the appropriate object instantiated that
 will be used by the clients, and the server has created a local
 ServerScheduler object, which sets the RT policies necessary for
 the scheduling service to execute (set through the
-ServerScheduler->create_POA(...) method.). The Client creates a local
+ServerScheduler->create_POA(...) method.). Threads on the server run at
+RTCORBA::maxPriority so the server can immediately intercept incoming requests
+for proper scheduling.  The Client creates a local
 ClientScheduler object, which read the configuration file and stores
 the activity/priority relationships for the given node.  Clients make
 a schedule_activity("activity_name") call to the ClientScheduler
@@ -29,24 +31,17 @@ ServerScheduler receive_request() interceptor intercepts the method
 call and locks the thread while there are higher priority tasks executing
 on the server.  The ServerScheduler then sets the server thread to
 run using MPCP while the task executes.  A ServerScheduler send_reply
-interceptor lowers the server thread priority when execution is complete.
+interceptor raises the thread priority back to RTCORBA::maxPriority so it can
+intercept the next incoming request.
 
 
-To compile (on unix):
+To compile (on Unix):
 ----------
 Ensure that RTCosScheduling is compiled.  There should be a
 libTAO_RTCosScheduling.so file in $ACE_ROOT/TAO/orbsvcs/orbsvcs.
 
-If it is not there, run
-tao_idl -I $TAO_ROOT/ RTCosScheduling.pidl
-in $ACE_ROOT/TAO/orbsvcs/orbsvcs/RTCoscScheduler/
-When this is done, some versions of TAO will erroneously include the line:
-#include "tao/PortableServer/PortableServerS.h"
-in RTCosSchedulingS.h.  Comment this line out.
-
-Now from the $ACE_ROOT/TAO/orbsvcs/orbsvcs/ directory, run
+If it is not there, from the $ACE_ROOT/TAO/orbsvcs/orbsvcs/ directory, run
 make -f Makefile.RTCosScheduling
-
 
 To compile the test, just run make in the test directory
 
@@ -55,7 +50,7 @@ To run (on Unix):
 -------
 Run the test as root since this test sets the priorities on
 both the client and server.
-Make sure that your LD_LIBRARY_PATH and TAO_ROOT are set apprioriately:
+Make sure that your LD_LIBRARY_PATH and TAO_ROOT are set appropriately:
 
 # ./run_test.pl
 
@@ -65,9 +60,9 @@ Options:
 Client:
 -B int    # amount of work performed before the CORBA call is made
 -R int    # amount of work performed on server during the CORBA call
--A int    # amount of work performed after the corba call
+-A int    # amount of work performed after the CORBA call
 -N char*  # name of the node
--X 0|1    # Flag to use yealtime (Y=1)
+-X 0|1    # Flag to use realtime (Y=1)
 -C char*  # intermediate client output file
             #  (used by the run_test validator)
 -S char*  # intermediate server output file
@@ -91,7 +86,7 @@ Test1  ensures that the scheduling service works as expected.
 Three clients are started with the following parameters:
 
 Client      priority      release time      remote execution time
-Client1     Low           0                 30
+Client1     Low           0                 10
 Client2     Medium        0                 3
 Client3     High          2                 3
 
@@ -136,7 +131,7 @@ each client starts up.  This occurs before schedule activity is called, and is
 in place to allow each client to start up in the event that the default
 priority for new processes is higher than the the priorities set in the config
 file.  If the default priority was higher and the clients did not sleep, each
-would not let the sucessive one start at the appropriate time.
+would not let the successive one start at the appropriate time.
 
 Please note that in designing a test that since this runs on a single node, there
 is no noticeable network delay.  There will be a greater network delay on a truly
@@ -147,16 +142,15 @@ the test should work.
 
 Tests 2,3,4 do not execute with both ClientScheduler and a ServerScheduler
 so there is no way to validate that execution is appropriate.  In test 2,
-visual inspection of the output shows that tasks are scheduled on the client
-appropriately.  Similarly, test 3 uses MPCP on the server, but is using the
-default priority that the client ran at rather than a priority set on the
-client by a schedule_activity() call.
-
+visual inspection of the output shows that tasks are not scheduled on the client
+appropriately. Test 3 does not use server side scheduling, so server execution
+runs at RTCORBA::minPriority. Note that the server prints a debug message to inform
+the user that it did not use RT MPCP scheduling.
 
 
 Exception Tests
 ---------------
-Tests 5,6,7,8 ensure that the 1.0 scheduling service handles excpetions
+Tests 5,6,7,8 ensure that the 1.0 scheduling service handles exceptions
 and other errors.
 These test determine that the proper exceptions are thrown when the
 scheduling service receives improper parameters from either the Client
@@ -166,107 +160,111 @@ or the server.
 
 Expected Output
 ---------------
+
 ==== Running RTCORBA 1.0 Scheduling Service test
 ==== Note that the first column is the time, it will be different for you
 
-TIME                    OBJECT  LOCATION        ACTIVITY
+TIME			OBJECT	LOCATION	ACTIVITY
 
 ==== Test1 - YES client side scheduling, YES server side scheduling
- 14:05:38.691428        Client1 Client  Beginning Activity with priority 668
- 14:05:38.692174        Client1 Client  Calling method1 at priority 668
- 14:05:38.702362        Client1 Server  Beginning work on the server
- 14:05:39.695854        Client2 Client  Beginning Activity with priority 2674
- 14:05:39.965150        Client3 Client  Beginning Activity with priority 4681
- 14:05:40.233140        Client3 Client  Calling method1 at priority 4681
- 14:05:40.235364        Client2 Client  Calling method1 at priority 2674
- 14:05:44.700578        Client1 Server  Method1 finished work on the server
- 14:05:44.701183        Client3 Server  Beginning work on the server
- 14:05:45.103074        Client3 Server  Method1 finished work on the server
- 14:05:45.103365        Client2 Server  Beginning work on the server
- 14:05:45.503888        Client2 Server  Method1 finished work on the server
- 14:05:45.504470        Client3 Client  Done with method1 with priority 4681
- 14:05:45.504529        Client3 Client  Done with test at priority 4681
- 14:05:45.508665        Client2 Client  Done with method1 with priority 2674
- 14:05:45.508786        Client2 Client  Done with test at priority 2674
- 14:05:45.512861        Client1 Client  Done with method1 with priority 668
- 14:05:45.512929        Client1 Client  Done with test at priority 668
+ 13:32:35.775474	Client1	Beginning activity at priority 334
+ 13:32:35.775767	Client1	Calling method1 at priority 334
+ 13:32:35.785983	Client1	Beginning work on the server
+ 13:32:36.781443	Client2	Beginning activity at priority 5349
+ 13:32:36.781736	Client2	Calling method1 at priority 5349
+ 13:32:37.052432	Client3	Beginning activity at priority 10699
+ 13:32:37.319242	Client3	Calling method1 at priority 10699
+ 13:32:42.120180	Client1	Finished work on the server
+ 13:32:42.120688	Client3	Beginning work on the server
+ 13:32:42.520590	Client3	Finished work on the server
+ 13:32:42.520708	Client2	Beginning work on the server
+ 13:32:42.920614	Client2	Finished work on the server
+ 13:32:42.921104	Client3	Done with method1 at priority 10699
+ 13:32:43.321033	Client3	Done with test at priority 10699
+ 13:32:43.323357	Client2	Done with method1 at priority 5349
+ 13:32:43.723272	Client2	Done with test at priority 5349
+ 13:32:43.725464	Client1	Done with method1 at priority 334
+ 13:32:44.125410	Client1	Done with test at priority 334
 The scheduling service worked as expected
 
 ==== Test2 - NO client side scheduling, YES server side scheduling
- 14:05:47.708843        Client1 Client  Beginning Activity
- 14:05:47.709428        Client1 Client  Calling method1
- 14:05:47.718302        Client1 Server  Beginning work on the server
- 14:05:48.710637        Client2 Client  Beginning Activity
- 14:05:48.710847        Client2 Client  Calling method1
- 14:05:48.714555        Client3 Client  Beginning Activity
- 14:05:48.984240        Client3 Client  Calling method1
- 14:05:48.986737        Client2 Server  Beginning work on the server
- 14:05:48.992367        Client3 Server  Beginning work on the server
- 14:05:49.754084        Client2 Server  Method1 finished work on the server
- 14:05:49.754667        Client2 Client  Done with method1
- 14:05:50.182869        Client3 Server  Method1 finished work on the server
- 14:05:50.183503        Client3 Client  Done with method1
- 14:05:54.586684        Client1 Server  Method1 finished work on the server
- 14:05:54.587270        Client1 Client  Done with method1
+ 13:32:47.306196	Client1	Client	Beginning Activity
+ 13:32:47.306383	Client1	Client	Calling method1
+ 13:32:47.313107	Client1	Beginning work on the server
+ 13:32:48.306283	Client2	Client	Beginning Activity
+ 13:32:48.306468	Client2	Client	Calling method1
+ 13:32:48.313031	Client3	Client	Beginning Activity
+ 13:32:48.314012	Client2	Beginning work on the server
+ 13:32:48.951789	Client3	Client	Calling method1
+ 13:32:48.958000	Client3	Beginning work on the server
+ 13:32:49.331351	Client2	Finished work on the server
+ 13:32:49.331830	Client2	Client	Done with method1
+ 13:32:49.786784	Client3	Finished work on the server
+ 13:32:49.787294	Client3	Client	Done with method1
+ 13:32:53.647493	Client1	Finished work on the server
+ 13:32:53.648023	Client1	Client	Done with method1
 
 ==== Test3 - YES client side scheduling, NO server side scheduling
- 14:05:59.734408        Client1 Client  Beginning Activity with priority 668
- 14:05:59.735149        Client1 Client  Calling method1 at priority 668
- 14:05:59.748380        Client1 Server  Beginning work on the server
- 14:06:00.738820        Client2 Client  Beginning Activity with priority 2674
- 14:06:01.008121        Client3 Client  Beginning Activity with priority 4681
- 14:06:01.276250        Client3 Client  Calling method1 at priority 4681
- 14:06:01.278463        Client2 Client  Calling method1 at priority 2674
- 14:06:01.284581        Client3 Server  Beginning work on the server
- 14:06:01.685291        Client3 Server  Method1 finished work on the server
- 14:06:01.686140        Client3 Client  Done with method1 with priority 4681
- 14:06:01.686199        Client3 Client  Done with test at priority 4681
- 14:06:01.692324        Client2 Server  Beginning work on the server
- 14:06:02.092657        Client2 Server  Method1 finished work on the server
- 14:06:02.093181        Client2 Client  Done with method1 with priority 2674
- 14:06:02.093237        Client2 Client  Done with test at priority 2674
- 14:06:06.102033        Client1 Server  Method1 finished work on the server
- 14:06:06.102576        Client1 Client  Done with method1 with priority 668
- 14:06:06.102631        Client1 Client  Done with test at priority 668
+ 13:32:59.233825	Client1	Beginning activity at priority 334
+ 13:32:59.234116	Client1	Calling method1 at priority 334
+Object not found in config file, RT ServerScheduler not used!
+ 13:32:59.271519	Client1	Beginning work on the server
+ 13:33:00.240454	Client2	Beginning activity at priority 5349
+ 13:33:00.240748	Client2	Calling method1 at priority 5349
+ 13:33:00.511453	Client3	Beginning activity at priority 10699
+ 13:33:00.778302	Client3	Calling method1 at priority 10699
+Object not found in config file, RT ServerScheduler not used!
+ 13:33:00.785727	Client2	Beginning work on the server
+Object not found in config file, RT ServerScheduler not used!
+ 13:33:00.788335	Client3	Beginning work on the server
+ 13:33:01.188213	Client3	Finished work on the server
+ 13:33:01.188896	Client3	Done with method1 at priority 10699
+ 13:33:01.588847	Client3	Done with test at priority 10699
+ 13:33:01.988080	Client2	Finished work on the server
+ 13:33:01.988614	Client2	Done with method1 at priority 5349
+ 13:33:02.388587	Client2	Done with test at priority 5349
+ 13:33:05.606466	Client1	Finished work on the server
+ 13:33:05.606997	Client1	Done with method1 at priority 334
+ 13:33:06.006881	Client1	Done with test at priority 334
 
 ==== Test4 - NO client side scheduling, NO server side scheduling
- 14:06:08.750219        Client1 Client  Beginning Activity
- 14:06:08.750789        Client1 Client  Calling method1
- 14:06:08.760283        Client1 Server  Beginning work on the server
- 14:06:09.751665        Client2 Client  Beginning Activity
- 14:06:09.751877        Client2 Client  Calling method1
- 14:06:09.755382        Client3 Client  Beginning Activity
- 14:06:10.025305        Client3 Client  Calling method1
- 14:06:10.027841        Client2 Server  Beginning work on the server
- 14:06:10.101792        Client3 Server  Beginning work on the server
- 14:06:10.736601        Client2 Server  Method1 finished work on the server
- 14:06:10.737125        Client2 Client  Done with method1
- 14:06:11.238066        Client3 Server  Method1 finished work on the server
- 14:06:11.238607        Client3 Client  Done with method1
- 14:06:15.644066        Client1 Server  Method1 finished work on the server
- 14:06:15.644596        Client1 Client  Done with method1
+ 13:33:09.188034	Client1	Client	Beginning Activity
+ 13:33:09.188223	Client1	Client	Calling method1
+ 13:33:09.195621	Client1	Beginning work on the server
+ 13:33:10.189090	Client2	Client	Beginning Activity
+ 13:33:10.189276	Client2	Client	Calling method1
+ 13:33:10.192857	Client3	Client	Beginning Activity
+ 13:33:10.459655	Client3	Client	Calling method1
+ 13:33:10.465746	Client2	Beginning work on the server
+ 13:33:10.865946	Client2	Finished work on the server
+ 13:33:10.866442	Client2	Client	Done with method1
+ 13:33:11.268218	Client3	Beginning work on the server
+ 13:33:11.668138	Client3	Finished work on the server
+ 13:33:11.668611	Client3	Client	Done with method1
+ 13:33:15.530260	Client1	Finished work on the server
+ 13:33:15.530785	Client1	Client	Done with method1
 
 ==== Testing exceptions
 
 ==== Test5 - Testing ClientScheduler exception for invalid activity name
-(11071|16386) EXCEPTION, Invalid activity name
+Should receive an RTCosScheduling::UnknownName exception
+(13374|16386) EXCEPTION, Invalid activity name
 
 user exception, ID 'IDL:RTCosScheduling/UnknownName:1.0'
 
 ==== Test6 - Testing client exception when invalid config file specified
+Program should abort because no valid file was given
 Could not find the config file INVALID_FILE.cfg, aborting
+Invalid Filename given, aborting!
 
 ==== Test7 - Testing server exception when invalid Object Name specified
 ==== (Object name not in config file)
-(11075|16384) EXCEPTION, Unknown object passed to schedule_object
+Should receive an RTCosScheduling::UnknownName exception
+(13378|16384) EXCEPTION, Unknown object passed to schedule_object
 
 user exception, ID 'IDL:RTCosScheduling/UnknownName:1.0'
 
 ==== Test8 - Testing server exception when invalid config file specified
+Server Should abort because an invalid config filename was given
 Could not find the config file INVALID_FILE.cfg, aborting
 ERROR: server returned 1
-
-
-
-
-

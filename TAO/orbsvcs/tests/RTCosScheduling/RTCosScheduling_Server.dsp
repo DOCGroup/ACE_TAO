@@ -36,13 +36,13 @@ RSC=rc.exe
 # PROP Output_Dir "Release"
 # PROP Intermediate_Dir "Release\RTCosScheduling_Server"
 # PROP Target_Dir ""
-# ADD CPP /nologo /O2 /W3 /GX /MD /GR /I "$(TAO_ROOT)" /I "$(TAO_ROOT)\tao" /I "..\..\..\.." /D NDEBUG /D WIN32 /D _CONSOLE /FD /c
+# ADD CPP /nologo /O2 /W3 /GX /MD /GR /I "../../../" /I "../../../tao" /I "..\..\..\.." /I "..\..\..\orbsvcs" /D NDEBUG /D WIN32 /D _CONSOLE /FD /c
 # SUBTRACT CPP /YX
-# ADD RSC /l 0x409 /d NDEBUG /i "$(TAO_ROOT)" /i "$(TAO_ROOT)\tao" /i "..\..\..\.."
+# ADD RSC /l 0x409 /d NDEBUG /i "../../../" /i "../../../tao" /i "..\..\..\.."
 BSC32=bscmake.exe
 # ADD BSC32 /nologo 
 LINK32=link.exe
-# ADD LINK32 advapi32.lib user32.lib /INCREMENTAL:NO TAO_RTCosScheduling.lib TAO_RTPortableServer.lib TAO_RTCORBA.lib TAO_PortableServer.lib TAO_IORInterceptor.lib TAO_Valuetype.lib TAO_ObjRefTemplate.lib TAO.lib ACE.lib /libpath:"..\..\..\..\lib" /nologo /version:1.3.4 /subsystem:console /pdb:"Release\server.pdb"  /machine:I386 /out:"Release\server.exe"
+# ADD LINK32 advapi32.lib user32.lib /INCREMENTAL:NO TAO_RTCosScheduling.lib TAO_RTPortableServer.lib TAO_RTCORBA.lib TAO_PortableServer.lib TAO_IORInterceptor.lib TAO_Valuetype.lib TAO_ObjRefTemplate.lib TAO.lib ACE.lib /libpath:"..\..\..\..\lib" /libpath:"..\..\..\tao\RTPortableServer" /libpath:"..\..\..\tao\RTCORBA" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao\IORInterceptor" /libpath:"..\..\..\tao\ValueType" /libpath:"..\..\..\tao\ObjRefTemplate" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\orbsvcs" /nologo /version:1.3.4 /subsystem:console /pdb:"Release\server.pdb"  /machine:I386 /out:"Release\server.exe"
 
 !ELSEIF  "$(CFG)" == "RTCosScheduling_Server - Win32 Debug"
 
@@ -51,13 +51,13 @@ LINK32=link.exe
 # PROP Output_Dir "."
 # PROP Intermediate_Dir "Debug\RTCosScheduling_Server"
 # PROP Target_Dir ""
-# ADD CPP /nologo /Ob0 /W3 /Gm /GX /Zi /MDd /GR /Gy /I "$(TAO_ROOT)" /I "$(TAO_ROOT)\tao" /I "..\..\..\.." /D _DEBUG /D WIN32 /D _CONSOLE /FD /c
+# ADD CPP /nologo /Ob0 /W3 /Gm /GX /Zi /MDd /GR /Gy /I "../../../" /I "../../../tao" /I "..\..\..\orbsvcs" /I "..\..\..\.." /D _DEBUG /D WIN32 /D _CONSOLE /FD /c
 # SUBTRACT CPP /YX
-# ADD RSC /l 0x409 /d _DEBUG /i "$(TAO_ROOT)" /i "$(TAO_ROOT)\tao" /i "..\..\..\.."
+# ADD RSC /l 0x409 /d _DEBUG /i "../../../" /i "../../../tao" /i "..\..\..\.."
 BSC32=bscmake.exe
 # ADD BSC32 /nologo 
 LINK32=link.exe
-# ADD LINK32 advapi32.lib user32.lib /INCREMENTAL:NO TAO_RTCosSchedulingd.lib TAO_RTPortableServerd.lib TAO_RTCORBAd.lib TAO_PortableServerd.lib TAO_IORInterceptord.lib TAO_Valuetyped.lib TAO_ObjRefTemplated.lib TAOd.lib ACEd.lib /libpath:"..\..\..\..\lib" /nologo /version:1.3.4 /subsystem:console /pdb:".\server.pdb" /debug /machine:I386 /out:".\server.exe"
+# ADD LINK32 advapi32.lib user32.lib TAO_RTCosSchedulingd.lib TAO_RTPortableServerd.lib TAO_RTCORBAd.lib TAO_PortableServerd.lib TAO_IORInterceptord.lib TAO_Valuetyped.lib TAO_ObjRefTemplated.lib TAOd.lib ACEd.lib /nologo /subsystem:console /debug /machine:I386 /out:".\server.exe" /libpath:"..\..\..\lib" /libpath:"..\..\..\tao\RTPortableServer" /libpath:"..\..\..\tao\RTCORBA" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao\IORInterceptor" /libpath:"..\..\..\tao\ValueType" /libpath:"..\..\..\tao\ObjRefTemplate" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\orbsvcs" /version:1.3.4
 
 !ENDIF
 
