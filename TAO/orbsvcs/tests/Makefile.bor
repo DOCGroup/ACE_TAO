@@ -4,7 +4,6 @@
 #
 
 DIRS = \
-        FaultTolerance \
-        Simple_Naming
+        FaultTolerance
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
