@@ -125,7 +125,6 @@ ACE_SOCK::open (int type,
                 u_long flags)
 {
   ACE_TRACE ("ACE_SOCK::open");
-  int one = 1;
 
   this->set_handle (ACE_OS::socket (protocol_family,
                                     type,
