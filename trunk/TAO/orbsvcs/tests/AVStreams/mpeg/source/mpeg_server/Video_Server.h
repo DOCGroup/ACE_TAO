@@ -3,22 +3,22 @@
 
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
  * P.O.Box 91000-1000, Portland, OR 97291, USA;
- * 
- * Permission to use, copy, modify, distribute, and sell this software and its 
- * documentation for any purpose is hereby granted without fee, provided that 
- * the above copyright notice appear in all copies and that both that 
- * copyright notice and this permission notice appear in supporting 
- * documentation, and that the name of O.G.I. not be used in advertising or 
- * publicity pertaining to distribution of the software without specific, 
- * written prior permission.  O.G.I. makes no representations about the 
- * suitability of this software for any purpose.  It is provided "as is" 
+ *
+ * Permission to use, copy, modify, distribute, and sell this software and its
+ * documentation for any purpose is hereby granted without fee, provided that
+ * the above copyright notice appear in all copies and that both that
+ * copyright notice and this permission notice appear in supporting
+ * documentation, and that the name of O.G.I. not be used in advertising or
+ * publicity pertaining to distribution of the software without specific,
+ * written prior permission.  O.G.I. makes no representations about the
+ * suitability of this software for any purpose.  It is provided "as is"
  * without express or implied warranty.
- * 
- * O.G.I. DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING 
- * ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL 
- * O.G.I. BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY 
- * DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN 
- * AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF 
+ *
+ * O.G.I. DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
+ * ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL
+ * O.G.I. BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY
+ * DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN
+ * AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
  * Author: Shanwei Cen
@@ -26,16 +26,21 @@
  *         email: scen@cse.ogi.edu
  */
 
-#if !defined (MPEG_VIDEO_SERVER_H)
+#ifndef MPEG_VIDEO_SERVER_H
 #define MPEG_VIDEO_SERVER_H
 
 #include "ace/Reactor.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Event_Handler.h"
 
 #include "tao/TAO.h"
 #include "include/common.h"
 #include "mpeg_shared/fileio.h"
-#include "mpeg_shared/com.h"   
+#include "mpeg_shared/com.h"
 #include "mpeg_shared/routine.h"
 #include "mpeg_shared/sendpt.h"
 #include "mpeg_shared/Video_ControlS.h"
@@ -47,7 +52,7 @@
 
 class Video_Control_i;
 
-class Video_Sig_Handler 
+class Video_Sig_Handler
   : public virtual ACE_Event_Handler
 {
   // = TITLE
@@ -69,7 +74,7 @@ public:
   // this will register this sig_handler
   // with the reactor for SIGALRM
 
-  virtual int shutdown (ACE_HANDLE, 
+  virtual int shutdown (ACE_HANDLE,
                         ACE_Reactor_Mask);
 
   virtual int handle_input (ACE_HANDLE);
@@ -109,7 +114,7 @@ public:
 
 private:
   Video_Control_i *vci_;
-  
+
 };
 
 // The stream endpoint
@@ -126,22 +131,22 @@ public:
   virtual int handle_stop (const AVStreams::flowSpec &the_spec,
                             CORBA::Environment &env) ;
   // Application needs to define this
-  
-  virtual int handle_start (const AVStreams::flowSpec &the_spec,  
+
+  virtual int handle_start (const AVStreams::flowSpec &the_spec,
                              CORBA::Environment &env) ;
   // Application needs to define this
 
-  
-  virtual int handle_destroy (const AVStreams::flowSpec &the_spec,  
+
+  virtual int handle_destroy (const AVStreams::flowSpec &the_spec,
                                CORBA::Environment &env) ;
   // Application needs to define this
 
-  virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec,  
+  virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec,
                                                       CORBA::Environment &env) ;
 
 private:
   ACE_SOCK_CODgram dgram_;
-  
+
 };
 
 #endif /* MPEG_VIDEO_SERVER_H */

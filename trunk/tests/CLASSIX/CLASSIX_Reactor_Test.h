@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    Reactor_Test.h
 //
@@ -13,16 +13,21 @@
 //      This file contains class definitions needed for template
 //      instantiation in the Reactor_Test.cpp file.
 //      Based on $ACE_ROOT/tests/MT_Reactor_Timer_Test.h
-//      
+//
 // = AUTHOR
 //    Wei Chiang
-// 
+//
 // ============================================================================
 
-#if !defined (__CLASSIX_REACTOR_TEST_H)
+#ifndef __CLASSIX_REACTOR_TEST_H
 #define __CLASSIX_REACTOR_TEST_H
 
 #include "ace/Reactor.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Task.h"
 
 class Time_Handler : public ACE_Task<ACE_SYNCH>
@@ -39,7 +44,7 @@ public:
                               const void *arg);
 
 private:
-  enum 
+  enum
   {
     TIMER_SLOTS = 10
   };

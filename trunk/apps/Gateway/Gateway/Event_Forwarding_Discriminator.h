@@ -5,19 +5,24 @@
 //
 // = LIBRARY
 //    gateway
-// 
+//
 // = FILENAME
 //    Event_Forwarding_Discriminator.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
-#if !defined (_CONSUMER_MAP_H)
+#ifndef _CONSUMER_MAP_H
 #define _CONSUMER_MAP_H
 
 #include "ace/Map_Manager.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Synch.h"
 #include "Event.h"
 #include "Consumer_Dispatch_Set.h"

@@ -5,24 +5,25 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    DEV_IO.h
 //
 // = AUTHOR
 //    Gerhard Lenzer and Douglas C. Schmidt
-// 
+//
 // ============================================================================
 
-#ifndef ACE_DEV_IO_H 
+#ifndef ACE_DEV_IO_H
 #define ACE_DEV_IO_H
 
 #include "ace/DEV.h"
-#include "ace/DEV_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/DEV_Addr.h"
 
 class ACE_Export ACE_DEV_IO : public ACE_DEV
 {
@@ -41,33 +42,33 @@ public:
   ssize_t recv (void *buf, size_t n) const;
   // Recv upto <n> bytes in <buf>.
 
-  ssize_t send_n (const void *buf, size_t n) const; 
-  // Send n bytes, keep trying until n are sent. 
+  ssize_t send_n (const void *buf, size_t n) const;
+  // Send n bytes, keep trying until n are sent.
 
-  ssize_t recv_n (void *buf, size_t n) const;	      
-  // Recv n bytes, keep trying until n are received. 
+  ssize_t recv_n (void *buf, size_t n) const;
+  // Recv n bytes, keep trying until n are received.
 
 #if defined (ACE_HAS_STREAM_PIPES)
-  ssize_t recv (ACE_Str_Buf *cntl, 
-		ACE_Str_Buf *data, 
-		int *band, 
-		int *flags) const;
+  ssize_t recv (ACE_Str_Buf *cntl,
+                ACE_Str_Buf *data,
+                int *band,
+                int *flags) const;
   // Recv bytes via STREAM pipes using "band" mode.
 
-  ssize_t send (const ACE_Str_Buf *cntl, 
-		const ACE_Str_Buf *data, 
-		int band, 
-		int flags) const;
+  ssize_t send (const ACE_Str_Buf *cntl,
+                const ACE_Str_Buf *data,
+                int band,
+                int flags) const;
   // Send bytes via STREAM pipes using "band" mode.
 
-  ssize_t recv (ACE_Str_Buf *cntl, 
-		ACE_Str_Buf *data, 
-		int *flags) const;
+  ssize_t recv (ACE_Str_Buf *cntl,
+                ACE_Str_Buf *data,
+                int *flags) const;
   // Recv <cntl> and <data> via STREAM pipes.
 
-  ssize_t send (const ACE_Str_Buf *cntl, 
-		const ACE_Str_Buf *data, 
-		int flags = 0) const;
+  ssize_t send (const ACE_Str_Buf *cntl,
+                const ACE_Str_Buf *data,
+                int flags = 0) const;
   // Send <cntl> and <data> via STREAM pipes.
 #endif /* ACE_HAS_STREAM_PIPES */
 

@@ -75,23 +75,27 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "ace/ACE.h"             // Most important ACE include file
 #include        "ace/streams.h"         // iostreams
 
-#include	"intlmacros.h"		// Define macros for intl'ion
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include	<stdlib.h>		// POSIX standard defns
-#include	<ctype.h>		// External functions
+#include        "intlmacros.h"          // Define macros for intl'ion
 
-#include	<sys/types.h>		// POSIX standard types
+#include        <stdlib.h>              // POSIX standard defns
+#include        <ctype.h>               // External functions
 
-#include	"idl_narrow.h"		// IDL Narrowing mechanism
+#include        <sys/types.h>           // POSIX standard types
 
-#include	"idl_defines.h"	// Constants for IDL compiler
-#include	"idl_fwd.h"		// Forward decls of classes
+#include        "idl_narrow.h"          // IDL Narrowing mechanism
 
-#include	"idl_bool.h"		// Defines boolean for IDL
+#include        "idl_defines.h" // Constants for IDL compiler
+#include        "idl_fwd.h"             // Forward decls of classes
 
-#include	"utl_string.h"		// Defines utility string class
-#include	"utl_identifier.h"	// Defines utility identifier class
-#include	"ast.h"		// AST classes
-#include	"util.h"		// Utility classes
+#include        "idl_bool.h"            // Defines boolean for IDL
+
+#include        "utl_string.h"          // Defines utility string class
+#include        "utl_identifier.h"      // Defines utility identifier class
+#include        "ast.h"         // AST classes
+#include        "util.h"                // Utility classes
 
 #endif           // _IDL_IDL_HH

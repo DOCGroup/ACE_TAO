@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    ORB Services
-// 
+//
 // = FILENAME
 //    Memory_Pools
 //
@@ -18,6 +18,11 @@
 #define ACE_MEMORY_POOLS_H
 
 #include "ace/Synch.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "Event_Channel.h"
 #include "Dispatching_Modules.h"
 
@@ -31,10 +36,10 @@
   typedef ACE_Thread_Mutex ACE_MEMORY_POOL_MUTEX;
 #endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION || !ACE_HAS_THREADS */
 
-typedef char 
+typedef char
         ACE_ES_Dispatch_Request_Chunk[sizeof (ACE_ES_Dispatch_Request)];
 
-typedef ACE_Cached_Allocator<ACE_ES_Dispatch_Request_Chunk, ACE_MEMORY_POOL_MUTEX> 
+typedef ACE_Cached_Allocator<ACE_ES_Dispatch_Request_Chunk, ACE_MEMORY_POOL_MUTEX>
         _ACE_Dispatch_Request_Allocator;
 
 class TAO_ORBSVCS_Export ACE_ES_Dispatch_Request_Allocator : public _ACE_Dispatch_Request_Allocator

@@ -42,8 +42,8 @@ public:
   // This closes down the Task and all service threads.
 
   virtual int put(ACE_Message_Block *message,
-		  ACE_Time_Value *timeout);
-  // This is the interface that ACE_Stream uses to 
+                  ACE_Time_Value *timeout);
+  // This is the interface that ACE_Stream uses to
   // communicate with our Task.
 
   virtual int svc(void);

@@ -6,27 +6,28 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Free_List.h
 //
 // = AUTHOR
 //    Darrell Brunsch (brunsch@cs.wustl.edu)
-// 
+//
 // ============================================================================
 
 #ifndef ACE_FREE_LIST_H
 #define ACE_FREE_LIST_H
 
 #include "ace/OS.h"
-#include "ace/Synch_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Synch_T.h"
+
 template <class T>
-class ACE_Free_List  
+class ACE_Free_List
 {
   // = TITLE
   //      Implements a free list.
@@ -40,11 +41,11 @@ public:
   virtual void add (T *element) = 0;
   // Inserts an element onto the free list (if it isn't past the high
   // water mark).
-  
+
   virtual T *remove (void) = 0;
   // Takes a element off the freelist and returns it.  It creates
   // <inc> new elements if the size is at or below the low water mark.
-  
+
   virtual size_t size (void) = 0;
   // Returns the current size of the free list.
 
@@ -53,7 +54,7 @@ public:
 };
 
 template <class T, class ACE_LOCK>
-class ACE_Locked_Free_List : public ACE_Free_List<T> 
+class ACE_Locked_Free_List : public ACE_Free_List<T>
 {
   // = TITLE
   //      Implements a free list.
@@ -65,9 +66,9 @@ class ACE_Locked_Free_List : public ACE_Free_List<T>
 public:
   // = Initialization and termination.
   ACE_Locked_Free_List (int mode = ACE_FREE_LIST_WITH_POOL,
-			size_t prealloc = ACE_DEFAULT_FREE_LIST_PREALLOC, 
-                        size_t lwm = ACE_DEFAULT_FREE_LIST_LWM, 
-                        size_t hwm = ACE_DEFAULT_FREE_LIST_HWM, 
+                        size_t prealloc = ACE_DEFAULT_FREE_LIST_PREALLOC,
+                        size_t lwm = ACE_DEFAULT_FREE_LIST_LWM,
+                        size_t hwm = ACE_DEFAULT_FREE_LIST_HWM,
                         size_t inc = ACE_DEFAULT_FREE_LIST_INC);
   // Constructor takes a <mode> (i.e., ACE_FREE_LIST_WITH_POOL or
   // ACE_PURE_FREE_LIST), a count of the number of nodes to
@@ -82,11 +83,11 @@ public:
   virtual void add (T *element);
   // Inserts an element onto the free list (if it isn't past the high
   // water mark).
-  
+
   virtual T *remove (void);
   // Takes a element off the freelist and returns it.  It creates
   // <inc> new elements if the size is at or below the low water mark.
-  
+
   virtual size_t size (void);
   // Returns the current size of the free list.
 
@@ -119,7 +120,7 @@ protected:
   size_t size_;
   // Keeps track of the size of the list.
 
-  ACE_LOCK mutex_; 
+  ACE_LOCK mutex_;
   // Synchronization variable for <ACE_Timer_Queue>.
 
 private:

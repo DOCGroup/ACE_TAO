@@ -1,13 +1,18 @@
 /* -*- c++ -*- */
 // $Id$
 
-#if !defined (JAWS_IO_ACCEPTOR_H)
+#ifndef JAWS_IO_ACCEPTOR_H
 #define JAWS_IO_ACCEPTOR_H
 
 // Use the Adapter pattern to encapsulate either a LOCK_SOCK_Acceptor or
 // an ACE_Asynch_Acceptor
 
 #include "ace/Asynch_Acceptor.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/LOCK_SOCK_Acceptor.h"
 #include "ace/Singleton.h"
 

@@ -4,13 +4,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    LOCK_SOCK_Acceptor.h
 //
 // = AUTHOR
 //    James Hu and Irfan Pyarali
-// 
+//
 // ============================================================================
 
 #ifndef ACE_LOCK_SOCK_ACCEPTOR_H
@@ -19,7 +19,7 @@
 #include "ace/SOCK_Acceptor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 template <class ACE_LOCK>
@@ -27,7 +27,7 @@ class ACE_LOCK_SOCK_Acceptor : public ACE_SOCK_Acceptor
 {
   // = TITLE
   //     Specialize <ACE_SOCK_Acceptor> to lock around <accept>;
-  // 
+  //
   // = DESCRIPTION
   //     This class is necessary since some OS platforms (e.g.,
   //     Solaris 2.5) do not allow multiple threads/processes to

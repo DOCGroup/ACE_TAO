@@ -5,26 +5,27 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Activation_Queue.h
 //
 // = AUTHOR
 //    Andres Kruse <Andres.Kruse@cern.ch> and Douglas C. Schmidt
-//    <schmidt@cs.wustl.edu> 
-// 
+//    <schmidt@cs.wustl.edu>
+//
 // ============================================================================
 
 #ifndef ACE_ACTIVATION_QUEUE_H
 #define ACE_ACTIVATION_QUEUE_H
 
 #include "ace/Synch_T.h"
-#include "ace/Message_Queue.h"
-#include "ace/Method_Request.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Message_Queue.h"
+#include "ace/Method_Request.h"
 
 class ACE_Export ACE_Activation_Queue
 {
@@ -56,8 +57,8 @@ public:
   ACE_Method_Request *dequeue (ACE_Time_Value *tv = 0);
   // Dequeue the next available <Method_Request>.
 
-  int enqueue (ACE_Method_Request *new_method_request, 
-	       ACE_Time_Value *tv = 0);
+  int enqueue (ACE_Method_Request *new_method_request,
+               ACE_Time_Value *tv = 0);
   // Enqueue the <Method_Request> in priority order.  The priority is
   // determined by the <priority> method of the <new_message_request>.
 
@@ -70,7 +71,7 @@ public:
 protected:
   ACE_Message_Queue<ACE_SYNCH> *queue_;
   // Stores the <Method_Requests>.
-  
+
   int delete_queue_;
   // Keeps track of whether we need to delete the queue.
 };

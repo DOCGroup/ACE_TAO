@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_BE_VISITOR_TYPECODE_H)
+#ifndef TAO_BE_VISITOR_TYPECODE_H
 #define TAO_BE_VISITOR_TYPECODE_H
 
 #include "be_visitor_decl.h"

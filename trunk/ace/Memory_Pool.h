@@ -5,29 +5,30 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //     ACE_Memory_Pool.h
 //
 // = AUTHOR
 //    Doug Schmidt and Prashant Jain
-// 
+//
 // ============================================================================
 
 #ifndef ACE_MEMORY_POOL_H
 #define ACE_MEMORY_POOL_H
 
 #include "ace/ACE.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Event_Handler.h"
 #include "ace/Signal.h"
 #include "ace/Mem_Map.h"
 #if !defined (ACE_WIN32)
 #include "ace/SV_Semaphore_Complex.h"
 #endif /* !ACE_WIN32 */
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (ACE_LACKS_SBRK)
 class ACE_Export ACE_Sbrk_Memory_Pool_Options
@@ -36,7 +37,7 @@ class ACE_Export ACE_Sbrk_Memory_Pool_Options
   //     Helper class for constructor options.
   //
   // = DESCRIPTION
-  //     This should be a nested class, but that breaks too many 
+  //     This should be a nested class, but that breaks too many
   //     compilers.
 };
 
@@ -47,20 +48,20 @@ class ACE_Export ACE_Sbrk_Memory_Pool
 public:
   typedef ACE_Sbrk_Memory_Pool_Options OPTIONS;
 
-  ACE_Sbrk_Memory_Pool (LPCTSTR backing_store_name = 0, 
-			const OPTIONS *options = 0);
+  ACE_Sbrk_Memory_Pool (LPCTSTR backing_store_name = 0,
+                        const OPTIONS *options = 0);
   // Initialize the pool.
-  
+
   virtual ~ACE_Sbrk_Memory_Pool (void);
 
   // = Implementor operations.
-  virtual void *init_acquire (size_t nbytes, 
-			      size_t &rounded_bytes, 
-			      int &first_time);
-  // Ask system for initial chunk of local memory. 
+  virtual void *init_acquire (size_t nbytes,
+                              size_t &rounded_bytes,
+                              int &first_time);
+  // Ask system for initial chunk of local memory.
 
-  virtual void *acquire (size_t nbytes, 
-			 size_t &rounded_bytes);
+  virtual void *acquire (size_t nbytes,
+                         size_t &rounded_bytes);
   // Acquire at least NBYTES from the memory pool.  ROUNDED_BYTES is
   // the actual number of bytes allocated.
 
@@ -106,14 +107,14 @@ class ACE_Export ACE_Shared_Memory_Pool_Options
   //     Helper class for constructor options.
   //
   // = DESCRIPTION
-  //     This should be a nested class, but that breaks too many 
+  //     This should be a nested class, but that breaks too many
   //     compilers.
 public:
   // = Initialization method.
   ACE_Shared_Memory_Pool_Options (char *base_addr = ACE_DEFAULT_BASE_ADDR,
-				  size_t max_segments = ACE_DEFAULT_MAX_SEGMENTS,
-				  size_t file_perms = ACE_DEFAULT_FILE_PERMS,
-				  off_t minimum_bytes = 0);
+                                  size_t max_segments = ACE_DEFAULT_MAX_SEGMENTS,
+                                  size_t file_perms = ACE_DEFAULT_FILE_PERMS,
+                                  off_t minimum_bytes = 0);
 
   char *base_addr_;
   // Base address of the memory-mapped backing store.
@@ -138,18 +139,18 @@ public:
   typedef ACE_Shared_Memory_Pool_Options OPTIONS;
 
   ACE_Shared_Memory_Pool (LPCTSTR backing_store_name = 0,
-			  const OPTIONS *options = 0);
+                          const OPTIONS *options = 0);
   // Initialize the pool.
 
   virtual ~ACE_Shared_Memory_Pool (void);
 
-  virtual void *init_acquire (size_t nbytes, 
-			      size_t &rounded_bytes, 
-			      int &first_time);
+  virtual void *init_acquire (size_t nbytes,
+                              size_t &rounded_bytes,
+                              int &first_time);
   // Ask system for initial chunk of local memory.
 
-  virtual void *acquire (size_t nbytes, 
-			 size_t &rounded_bytes);
+  virtual void *acquire (size_t nbytes,
+                         size_t &rounded_bytes);
   // Acquire at least NBYTES from the memory pool.  ROUNDED_BYTES is
   // the actual number of bytes allocated.  Also acquires an internal
   // semaphore that ensures proper serialization of Memory_Pool
@@ -185,14 +186,14 @@ protected:
   // Implement the algorithm for rounding up the request to an
   // appropriate chunksize.
 
-  virtual int commit_backing_store_name (size_t rounded_bytes, 
-				    off_t &offset);
+  virtual int commit_backing_store_name (size_t rounded_bytes,
+                                    off_t &offset);
   // Commits a new shared memory segment if necessary after an
   // acquire() or a signal.  <offset> is set to the new offset into
   // the backing store.
 
   // = Keeps track of all the segments being used.
-  struct SHM_TABLE 
+  struct SHM_TABLE
   {
     key_t key_;
     // Shared memory segment key.
@@ -223,11 +224,11 @@ protected:
   // Base shared memory key for the segment.
 
   virtual int find_seg (const void *const searchPtr,
-                        off_t &offset, 
+                        off_t &offset,
                         size_t &counter);
   // find the segment that contains the searchPtr
 
-  virtual int in_use (off_t &offset, 
+  virtual int in_use (off_t &offset,
                       size_t &counter);
   // Determine how much memory is currently in use.
 
@@ -246,7 +247,7 @@ class ACE_Export ACE_Local_Memory_Pool_Options
   //     Helper class for constructor options.
   //
   // = DESCRIPTION
-  //     This should be a nested class, but that breaks too many 
+  //     This should be a nested class, but that breaks too many
   //     compilers.
 };
 
@@ -260,23 +261,23 @@ public:
   typedef ACE_Local_Memory_Pool_Options OPTIONS;
 
   ACE_Local_Memory_Pool (LPCTSTR backing_store_name = 0,
-			 const OPTIONS *options = 0);
+                         const OPTIONS *options = 0);
   // Initialize the pool.
-  
-  virtual ~ACE_Local_Memory_Pool (void);
-  
-  virtual void *init_acquire (size_t nbytes, 
-			      size_t &rounded_bytes, 
-			      int &first_time);
-  // Ask system for initial chunk of local memory. 
 
-  virtual void *acquire (size_t nbytes, 
-			 size_t &rounded_bytes);
+  virtual ~ACE_Local_Memory_Pool (void);
+
+  virtual void *init_acquire (size_t nbytes,
+                              size_t &rounded_bytes,
+                              int &first_time);
+  // Ask system for initial chunk of local memory.
+
+  virtual void *acquire (size_t nbytes,
+                         size_t &rounded_bytes);
   // Acquire at least NBYTES from the memory pool.  ROUNDED_BYTES is
   // the actual number of bytes allocated.
 
   virtual int release (void);
-  // Instruct the memory pool to release all of its resources. 
+  // Instruct the memory pool to release all of its resources.
 
   virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
   // Sync <len> bytes of the memory region to the backing store
@@ -318,16 +319,16 @@ class ACE_Export ACE_MMAP_Memory_Pool_Options
   //     Helper class for constructor options.
   //
   // = DESCRIPTION
-  //     This should be a nested class, but that breaks too many 
+  //     This should be a nested class, but that breaks too many
   //     compilers.
 public:
   // = Initialization method.
   ACE_MMAP_Memory_Pool_Options (void *base_addr = ACE_DEFAULT_BASE_ADDR,
-				int use_fixed_addr = 1,
-				int write_each_page = 1,
-				off_t minimum_bytes = 0,
-				u_int flags = 0,
-				int guess_on_fault = 1,
+                                int use_fixed_addr = 1,
+                                int write_each_page = 1,
+                                off_t minimum_bytes = 0,
+                                u_int flags = 0,
+                                int guess_on_fault = 1,
                                 LPSECURITY_ATTRIBUTES sa = 0);
 
   void *base_addr_;
@@ -366,25 +367,25 @@ public:
   // = Initialization and termination methods.
 
   ACE_MMAP_Memory_Pool (LPCTSTR backing_store_name = 0,
-			const OPTIONS *options = 0);
+                        const OPTIONS *options = 0);
   // Initialize the pool.
 
   virtual ~ACE_MMAP_Memory_Pool (void);
 
-  virtual void *init_acquire (size_t nbytes, 
-			      size_t &rounded_bytes, 
-			      int &first_time);
-  // Ask system for initial chunk of shared memory. 
+  virtual void *init_acquire (size_t nbytes,
+                              size_t &rounded_bytes,
+                              int &first_time);
+  // Ask system for initial chunk of shared memory.
 
-  virtual void *acquire (size_t nbytes, 
-			 size_t &rounded_bytes);
+  virtual void *acquire (size_t nbytes,
+                         size_t &rounded_bytes);
   // Acquire at least <nbytes> from the memory pool.  <rounded_bytes>
   // is the actual number of bytes allocated.  Also acquires an
   // internal semaphore that ensures proper serialization of
   // <ACE_MMAP_Memory_Pool> initialization across processes.
 
   virtual int release (void);
-  // Instruct the memory pool to release all of its resources. 
+  // Instruct the memory pool to release all of its resources.
 
   virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
   // Sync the memory region to the backing store starting at
@@ -448,7 +449,7 @@ protected:
 
   int flags_;
   // Flags passed into <ACE_OS::mmap>.
-  
+
   int write_each_page_;
   // Should we write a byte to each page to forceably allocate memory
   // for this backing store?
@@ -471,11 +472,11 @@ protected:
 class ACE_Export ACE_Lite_MMAP_Memory_Pool : public ACE_MMAP_Memory_Pool
 {
   // = TITLE
-  //     Make a ``lighter-weight'' memory pool based <ACE_Mem_Map>.  
-  // 
+  //     Make a ``lighter-weight'' memory pool based <ACE_Mem_Map>.
+  //
   // = DESCRIPTION
   //     This implementation allows memory to be shared between
-  //     processes.  However, unlike the <ACE_MMAP_Memory_Pool> 
+  //     processes.  However, unlike the <ACE_MMAP_Memory_Pool>
   //     the sync() methods are no-ops, which means that we don't pay
   //     for the price of flushing the memory to the backing store on
   //     every update.  Naturally, this trades off increased
@@ -484,11 +485,11 @@ public:
   // = Initialization and termination methods.
 
   ACE_Lite_MMAP_Memory_Pool (LPCTSTR backing_store_name = 0,
-			     const OPTIONS *options = 0);
+                             const OPTIONS *options = 0);
   // Initialize the pool.
-  
+
   virtual ~ACE_Lite_MMAP_Memory_Pool (void);
-  
+
   virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
   // Overwrite the default sync behavior with no-op
 

@@ -54,6 +54,11 @@
 #define TAO_EC_GATEWAY_UDP_H
 
 #include "ace/SOCK_CODgram.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/RtecUDPAdminS.h"
@@ -83,8 +88,8 @@ public:
   void init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
              RtecScheduler::Scheduler_ptr lcl_sched,
              const char* lcl_name,
-	     RtecUDPAdmin::AddrServer_ptr addr_server,
-	     ACE_SOCK_Dgram* dgram,
+             RtecUDPAdmin::AddrServer_ptr addr_server,
+             ACE_SOCK_Dgram* dgram,
              CORBA::Environment &_env);
   // To do its job this class requires to know the local EC it will
   // connect to; it also requires to build an RT_Info for the local
@@ -149,7 +154,7 @@ public:
              RtecScheduler::Scheduler_ptr lcl_sched,
              const char* lcl_name,
              const ACE_INET_Addr& ignore_from,
-	     RtecUDPAdmin::AddrServer_ptr addr_server,
+             RtecUDPAdmin::AddrServer_ptr addr_server,
              CORBA::Environment &_env);
   // To do its job this class requires to know the local EC it will
   // connect to; it also requires to build an RT_Info for the local
@@ -175,10 +180,10 @@ public:
   // The PushSupplier method.
   virtual void disconnect_push_supplier (CORBA::Environment &);
 
-  
+
   void get_addr (const RtecEventComm::EventHeader& header,
-		 RtecUDPAdmin::UDP_Addr_out addr,
-		 CORBA::Environment& env);
+                 RtecUDPAdmin::UDP_Addr_out addr,
+                 CORBA::Environment& env);
   // Call the RtecUDPAdmin::AddrServer
 
 private:
@@ -243,7 +248,7 @@ public:
   TAO_ECG_Mcast_EH (TAO_ECG_UDP_Receiver *recv);
 
   int open (RtecEventChannelAdmin::EventChannel_ptr ec,
-	    CORBA::Environment& _env);
+            CORBA::Environment& _env);
   // Register for changes in the EC subscription list.
   // When the subscription list becomes non-empty we join the proper
   // multicast groups (using the receiver to translate between event
@@ -260,9 +265,9 @@ public:
   // Reactor callbacks
 
   void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub,
-			CORBA::Environment& _env);
+                        CORBA::Environment& _env);
   void update_supplier (const RtecEventChannelAdmin::SupplierQOS& pub,
-			CORBA::Environment& _env);
+                        CORBA::Environment& _env);
   // The Observer methods
 
   class Observer : public POA_RtecEventChannelAdmin::Observer
@@ -282,9 +287,9 @@ public:
 
     // The Observer methods
     virtual void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub,
-				  CORBA::Environment& _env);
+                                  CORBA::Environment& _env);
     virtual void update_supplier (const RtecEventChannelAdmin::SupplierQOS& pub,
-				  CORBA::Environment& _env);
+                                  CORBA::Environment& _env);
 
   private:
     TAO_ECG_Mcast_EH* eh_;

@@ -1,10 +1,15 @@
 /* -*- C++ -*- */
 // $Id$
 
-#if !defined (CPP_CONNECTOR_H)
+#ifndef CPP_CONNECTOR_H
 #define CPP_CONNECTOR_H
 
 #include "ace/Service_Config.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Connector.h"
 
 template <ACE_PEER_STREAM_1>
@@ -12,7 +17,7 @@ class Peer_Handler : public ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH>
 {
   // = TITLE
   //   Handles communication with the server.
-  // 
+  //
   // = DESCRIPTION
   //   This class uses a very clever state machine pattern to keep
   //   track of how it interacts with the user and the server.
@@ -62,12 +67,12 @@ public:
 
   virtual int svc (void);
   // Run the svc.
-  
+
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
   // Report connection errors.
 
 private:
-  typedef ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2> 
+  typedef ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>
           inherited;
 
   ACE_Synch_Options options_;

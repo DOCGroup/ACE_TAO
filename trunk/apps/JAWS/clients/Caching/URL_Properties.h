@@ -15,10 +15,15 @@
 //
 // ============================================================================
 
-#if !defined (ACE_URL_PROPERTIES_H)
+#ifndef ACE_URL_PROPERTIES_H
 #define ACE_URL_PROPERTIES_H
 
 #include "ace/SString.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Containers.h"
 
 class ACE_SVC_Export ACE_WString_Helper
@@ -56,17 +61,17 @@ class ACE_SVC_Export ACE_URL_Property
 {
 public:
   ACE_URL_Property (const char *name = 0,
-		    const char *value=0);
+                    const char *value=0);
   // Create a new property.
 
   ACE_URL_Property (const ACE_USHORT16 *name,
-		    const ACE_USHORT16 *value);
+                    const ACE_USHORT16 *value);
   // Create a new property using wchar strings.  This is mostly used
   // to support DBCS or UNICODE.
 
   ACE_URL_Property (const ACE_URL_Property &p);
   // Copy constructor.
-  
+
   ~ACE_URL_Property (void);
   // Destructor.
 
@@ -91,7 +96,7 @@ public:
   ACE_WString &value_rep (void);
   const ACE_WString &value (void) const;
 
-  // = Set property value. 
+  // = Set property value.
   void value (const ACE_USHORT16 *v);
   void value (const char *v);
 
@@ -104,15 +109,15 @@ public:
 
   size_t decode (void *buf);
   // Decodes buf and modifies this object, you should
-  // probably create this with default ctor.  
+  // probably create this with default ctor.
 
   void dump (void) const;
   // Dump out this object for debug.
-  
+
 protected:
   ACE_WString name_;
   // Property name pointer.
-  
+
   ACE_WString value_;
   // Property value.
 } ;
@@ -159,7 +164,7 @@ public:
 
   ACE_URL_Property_Seq &url_properties (void);
   // Get properties of this offer.
-  
+
   void url_properties (const ACE_URL_Property_Seq &prop);
   // Set properties of this offer.  This operation virtually get a
   // copy of the passed in prop.

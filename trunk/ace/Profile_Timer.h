@@ -18,12 +18,13 @@
 #define ACE_PROFILE_TIMER_H
 
 #include "ace/ACE.h"
-#include "ace/Time_Value.h"
-#include "ace/High_Res_Timer.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Time_Value.h"
+#include "ace/High_Res_Timer.h"
 
 class ACE_Export ACE_Profile_Timer
 {
@@ -36,13 +37,13 @@ public:
   {
     // = TITLE
     //    Keeps track of the various user, system, and elapsed (real)
-    //    times.  
-    // 
+    //    times.
+    //
     // = DESCRIPTION
     //   If <ACE_HAS_FLOATING_POINT> is enabled these values are in
     //   microseconds, otherwise, they are in seconds.
   public:
-    ACE_timer_t real_time;    
+    ACE_timer_t real_time;
     ACE_timer_t user_time;
     ACE_timer_t system_time;
   };

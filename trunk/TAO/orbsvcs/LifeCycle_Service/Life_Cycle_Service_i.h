@@ -17,7 +17,7 @@
 #include "Factory_Trader.h"
 #include "Criteria_Evaluator.h"
 
-#if !defined (LIFE_CYCLE_SERVICE_IMPL_H)
+#ifndef LIFE_CYCLE_SERVICE_IMPL_H
 #define LIFE_CYCLE_SERVICE_IMPL_H
 
 class Life_Cycle_Service_i : public POA_LifeCycleService::Life_Cycle_Service
@@ -34,7 +34,7 @@ public:
   // Returns true if the Generic Factory is able to forward a request
   // for creating an object described by the <factory_key>.
 
-  CORBA::Object_ptr create_object (const CosLifeCycle::Key &factory_key, 
+  CORBA::Object_ptr create_object (const CosLifeCycle::Key &factory_key,
                                    const CosLifeCycle::Criteria &the_criteria,
                                    CORBA::Environment &_env_there);
   // Returns an object reference to a newly created object, though the
@@ -42,14 +42,14 @@ public:
   // request to a more concrete Factory.
 
   void register_factory (const char * name,
-			 const char * location,
-			 const char * description,
-			 CORBA::Object_ptr object,
-			 CORBA::Environment &_env_there);
+                         const char * location,
+                         const char * description,
+                         CORBA::Object_ptr object,
+                         CORBA::Environment &_env_there);
   // Registers a factory with specified properties
 
 private:
-  Factory_Trader *factory_trader_ptr_;  
+  Factory_Trader *factory_trader_ptr_;
 };
 
 #endif /* LIFE_CYCLE_SERVICE_IMPL_H */

@@ -1,13 +1,13 @@
 // $Id
 
 // ===================================================================
-// 
+//
 // = FILENAME
 //    Remora_Import.h
 //
 // = AUTHOR
 //    Seth Widoff
-// 
+//
 // ===================================================================
 
 #ifndef REMORA_IMPORT_H
@@ -25,14 +25,14 @@ class Remora_Import
 public:
 
   Remora_Import(const char * label = NO_NAME, int value = 0,
-		int min_value = 0, int max_value = MAX_VALUE);
+                int min_value = 0, int max_value = MAX_VALUE);
 
   Remora_Import(const Remora_Import& import);
 
   ~Remora_Import();
 
   CORBA::Long get(void);
-  
+
   operator CORBA::Long();
 
   friend int operator==( Remora_Import& me,  int new_value);
@@ -40,13 +40,13 @@ public:
 
   friend int operator!=( Remora_Import& me,  int new_value);
   friend int operator!=( Remora_Import& me,  Remora_Import& export);
-  
+
   friend int operator<=( Remora_Import& me,  int new_value);
   friend int operator<=( Remora_Import& me,  Remora_Import& export);
-  
+
   friend int operator>=( Remora_Import& me,  int new_value);
   friend int operator>=( Remora_Import& me,  Remora_Import& export);
-  
+
   friend int operator<( Remora_Import& me,  int new_value);
   friend int operator<( Remora_Import& me,  Remora_Import& export);
 
@@ -62,7 +62,7 @@ private:
   remora::Control control_;
 
   remora::Remora_Controls_Agent_ptr remora_agent_;
-  
+
 };
 
 #include "Remora_Import.i"

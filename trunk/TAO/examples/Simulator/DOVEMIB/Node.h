@@ -7,10 +7,10 @@
 //    Node.h
 //
 // = AUTHOR
-//    Michael Kircher 
+//    Michael Kircher
 //
 // = DESCRIPTION
-//    This file descibes the various node types for analysing 
+//    This file descibes the various node types for analysing
 //    an CORBA::Any. It is no memory allocated, that means
 //    The values are not really contained by the nodes, but the
 //    nodes refer to the values via pointers.
@@ -19,15 +19,20 @@
 
 #include "tao/corba.h"
 #include "ace/Containers.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "NodeVisitor.h"
 
-#if !defined (NODE_H)
+#ifndef NODE_H
 #define NODE_H
 
 
 // base class for nodes
 class Node {
-public: 
+public:
   virtual ~Node () {}
   virtual void Accept (NodeVisitor *NodeVisitor) = 0;
   virtual unsigned int getRecursionLevel () = 0;
@@ -41,8 +46,8 @@ protected:
 // Node to store information about a Struct
 class StructNode : public Node {
 public:
-  StructNode (const char *Name_ptr, 
-	      unsigned int recursion_level);
+  StructNode (const char *Name_ptr,
+              unsigned int recursion_level);
   ~StructNode ();
 
   // accpet a visitor
@@ -56,15 +61,15 @@ public:
 
   // get the number of children
   unsigned int getChildNumber ();
-  
+
   // get the name of the struct
-  const char *getName ();  
+  const char *getName ();
 
   // get recursion level
   unsigned int getRecursionLevel ();
-    
 
-private: 
+
+private:
   ACE_Unbounded_Queue<Node *> *queue_ptr_;
   ACE_Unbounded_Queue_Iterator<Node *> *queue_iterator_ptr_;
   unsigned int queue_position_;
@@ -76,9 +81,9 @@ private:
 // Node to store information about a Double
 class DoubleNode : public Node {
 public:
-  DoubleNode (CORBA::Double *Double_ptr, 
-	      const char *Name_ptr,
-	      unsigned int recursion_level);
+  DoubleNode (CORBA::Double *Double_ptr,
+              const char *Name_ptr,
+              unsigned int recursion_level);
   ~DoubleNode () {}
 
   // accpet a visitor
@@ -92,9 +97,9 @@ public:
 
   // get recursion level
   unsigned int getRecursionLevel ();
-  
+
 private:
-  CORBA::Double *Double_ptr_; 
+  CORBA::Double *Double_ptr_;
   const char *Name_ptr_;
   unsigned int recursion_level_;
 };
@@ -103,9 +108,9 @@ private:
 // Node to store information about a Long
 class LongNode : public Node {
 public:
-  LongNode (CORBA::Long *Long_ptr, 
-	    const char *Name_ptr,
-	    unsigned int recursion_level);
+  LongNode (CORBA::Long *Long_ptr,
+            const char *Name_ptr,
+            unsigned int recursion_level);
   ~LongNode () {}
 
   // accpet a visitor
@@ -121,7 +126,7 @@ public:
   unsigned int getRecursionLevel ();
 
 private:
-  CORBA::Long *Long_ptr_; 
+  CORBA::Long *Long_ptr_;
   const char *Name_ptr_;
   unsigned int recursion_level_;
 };
@@ -130,11 +135,11 @@ private:
 // Node to store information about a ULong
 class ULongNode : public Node {
 public:
-  ULongNode (CORBA::ULong *Long_ptr, 
-	     const char *Name_ptr,
-	     unsigned int recursion_level);
-  ~ULongNode () {} 
-  
+  ULongNode (CORBA::ULong *Long_ptr,
+             const char *Name_ptr,
+             unsigned int recursion_level);
+  ~ULongNode () {}
+
   // accpet a visitor
   void Accept (NodeVisitor *nodeVisitor);
 
@@ -157,11 +162,11 @@ private:
 // Node to store information about a String
 class StringNode : public Node {
 public:
-  StringNode (CORBA::String_var String_var, 
-	      const char *Name_ptr,
-	      unsigned int recursion_level);
+  StringNode (CORBA::String_var String_var,
+              const char *Name_ptr,
+              unsigned int recursion_level);
   ~StringNode () {}
-  
+
   // accpet a visitor
   void Accept (NodeVisitor *nodeVisitor);
 

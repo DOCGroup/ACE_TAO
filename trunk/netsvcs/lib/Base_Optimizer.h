@@ -14,10 +14,14 @@
 //
 // ============================================================================
 
-#if !defined (BASE_OPTIMIZER_H)
+#ifndef BASE_OPTIMIZER_H
 #define BASE_OPTIMIZER_H
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 template<class Base, class Member>
 struct Base_Optimizer : public Base

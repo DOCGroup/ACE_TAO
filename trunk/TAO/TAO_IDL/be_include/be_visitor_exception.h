@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_BE_VISITOR_EXCEPTION_H)
+#ifndef TAO_BE_VISITOR_EXCEPTION_H
 #define TAO_BE_VISITOR_EXCEPTION_H
 
 #include "be_visitor.h"

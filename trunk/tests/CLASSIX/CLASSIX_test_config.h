@@ -11,12 +11,17 @@
 //
 // ============================================================================
 
-#if !defined (ACE_TEST_CONFIG_H)
+#ifndef ACE_TEST_CONFIG_H
 #define ACE_TEST_CONFIG_H
 
 // This first #undef protects against command-line definitions.
 #undef ACE_NDEBUG
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/streams.h"
 
 // The second #undef protects against being reset in a config.h file.

@@ -20,7 +20,7 @@
 //
 // ============================================================================
 
-#if !defined (BE_CONSTANT_H)
+#ifndef BE_CONSTANT_H
 #define BE_CONSTANT_H
 
 /*

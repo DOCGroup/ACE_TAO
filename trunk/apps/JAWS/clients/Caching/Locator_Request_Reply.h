@@ -15,7 +15,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_LOCATOR_REQUEST_REPLY_H)
+#ifndef ACE_LOCATOR_REQUEST_REPLY_H
 #define ACE_LOCATOR_REQUEST_REPLY_H
 
 #include "URL_Properties.h"
@@ -26,8 +26,8 @@ class ACE_SVC_Export ACE_URL_Locator_Request
   //
   // = DESCRIPTION
   //     This class defines a URL request data.  It is used
-  //     to transform requests to an object so that we can 
-  //     ship them across network.  
+  //     to transform requests to an object so that we can
+  //     ship them across network.
 {
 public:
   ACE_URL_Locator_Request (void);
@@ -37,8 +37,8 @@ public:
   // Default dtor.
 
   int url_query (const int how,
-		 const ACE_URL_Property_Seq &pseq,
-		 const int how_many);
+                 const ACE_URL_Property_Seq &pseq,
+                 const int how_many);
   // Query the locator for HTTP with designate properties (none, some,
   // or all).  The locator being queried will return a sequence of
   // offers with <how_many> offers in it.  This interface allocates
@@ -54,15 +54,15 @@ public:
   // Query a specific offer.
 
   int modify_offer (const ACE_WString &offer_id,
-		    const char *url = 0,
-		    const ACE_URL_Property_Seq &del = 0,
-		    const ACE_URL_Property_Seq &modify = 0);
+                    const char *url = 0,
+                    const ACE_URL_Property_Seq &del = 0,
+                    const ACE_URL_Property_Seq &modify = 0);
   // Modify a previously registered offer.
 
   int modify_offer (const ACE_WString &offer_id,
-		    const ACE_WString *url = 0,
-		    const ACE_URL_Property_Seq &del = 0,
-		    const ACE_URL_Property_Seq &modify = 0);
+                    const ACE_WString *url = 0,
+                    const ACE_URL_Property_Seq &del = 0,
+                    const ACE_URL_Property_Seq &modify = 0);
   // Modify a previously registered offer.
 
   size_t encode (void);
@@ -101,7 +101,7 @@ protected:
     VALID_OFFER = 0X4
   };
   // These constants used to indicate which pointers are valid.
-  
+
   u_int code_;
   // Request type code.
 
@@ -128,9 +128,9 @@ protected:
 
   ACE_WString url_;
   // URL of this offer.
-  
+
   char *buffer_;
-  // Buffer to store encoded data. 
+  // Buffer to store encoded data.
 };
 
 class ACE_SVC_Export ACE_URL_Locator_Reply
@@ -139,8 +139,8 @@ class ACE_SVC_Export ACE_URL_Locator_Reply
   //
   // = DESCRIPTION
   //     This class defines a URL reply data.  It is used
-  //     to transform reply messages to an object so that we can 
-  //     ship them across network.  
+  //     to transform reply messages to an object so that we can
+  //     ship them across network.
 {
 public:
   ACE_URL_Locator_Reply (void);
@@ -153,11 +153,11 @@ public:
   // Setup a reply message for EXPORT, WITHDRAW, or MODIFY operations.
 
   int query_reply (int result, size_t num,
-		   const ACE_URL_Offer_Seq &offers);
+                   const ACE_URL_Offer_Seq &offers);
   // Setup a reply for QUERY operation.
 
   int describe_reply (int result,
-		      const ACE_URL_Offer &offer);
+                      const ACE_URL_Offer &offer);
   // Construct a reply for DESCRIBE operation.
 
   size_t encode (void);
@@ -191,7 +191,7 @@ protected:
     VALID_OFFERS = 0x2
   };
   // Valid pointer masks.
-  
+
   u_int code_;
   // Holds the original op code.
 

@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -71,11 +71,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //
 // Global variables and functions for IDL compiler
 
-#include	"fe_extern.h"		// External API of FE
-#include	"be_extern.h"		// External API of BE
-#include	"drv_extern.h"		// External API of DRV
-#include	"ast_extern.h"		// External API of AST
-#include	"nr_extern.h"		// External API of NR
-#include	"global_extern.h"	// Global data
+#include        "fe_extern.h"           // External API of FE
+#include        "be_extern.h"           // External API of BE
+#include        "drv_extern.h"          // External API of DRV
+#include        "ast_extern.h"          // External API of AST
+#include        "nr_extern.h"           // External API of NR
+#include        "global_extern.h"       // Global data
 
 #endif           // _IDL_EXTERN_IDL_EXTERN_HH

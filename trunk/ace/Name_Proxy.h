@@ -22,15 +22,16 @@
 #define ACE_NAME_PROXY_H
 
 #include "ace/INET_Addr.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Service_Config.h"
 #include "ace/Synch_Options.h"
 #include "ace/Name_Request_Reply.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_Name_Proxy : public ACE_Event_Handler
 {
@@ -47,12 +48,12 @@ public:
 
   // = Establish a binding with the ACE_Name Server.
   ACE_Name_Proxy (const ACE_INET_Addr &remote_addr, // Address of ACE_Name Server.
-		  ACE_Synch_Options& options =
-		  ACE_Synch_Options::defaults);
+                  ACE_Synch_Options& options =
+                  ACE_Synch_Options::defaults);
 
   int open (const ACE_INET_Addr &remote_addr,  // Address of ACE_Name Server.
-	    ACE_Synch_Options& options =
-	    ACE_Synch_Options::defaults);
+            ACE_Synch_Options& options =
+            ACE_Synch_Options::defaults);
 
   int request_reply (ACE_Name_Request &request);
   // Perform the request and wait for the reply.

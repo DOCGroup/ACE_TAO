@@ -41,7 +41,7 @@ public:
   // return a NUL object
 
   static CORBA_Object_ptr _narrow (CORBA_Object_ptr obj,
-				   CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                                   CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // no-op it is just here to simplify some templates.
 
   // These calls correspond to over-the-wire operations, or at least
@@ -132,7 +132,7 @@ public:
   // get the underlying stub object
 
   virtual void _use_locate_requests (CORBA::Boolean use_it);
-  // the the object to use a locate request for the first call to 
+  // the the object to use a locate request for the first call to
   // the object
 
 protected:
@@ -228,7 +228,7 @@ public:
   // destructor
 
   virtual void _downcast (CORBA_Object* base_ptr,
-			  CORBA_Environment &_env = CORBA_Environment::default_environment ()) = 0;
+                          CORBA_Environment &_env = CORBA_Environment::default_environment ()) = 0;
   virtual CORBA_Object* _upcast (void) = 0;
   virtual void _release (void) = 0;
 };

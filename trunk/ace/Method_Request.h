@@ -5,14 +5,14 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Method_Request.h
 //
 // = AUTHOR
 //    Andres Kruse <Andres.Kruse@cern.ch> and Douglas C. Schmidt
-//    <schmidt@cs.wustl.edu> 
-// 
+//    <schmidt@cs.wustl.edu>
+//
 // ============================================================================
 
 #ifndef ACE_METHOD_REQUEST_H
@@ -21,10 +21,10 @@
 #include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class ACE_Export ACE_Method_Request 
+class ACE_Export ACE_Method_Request
 {
   // = TITLE
   //     Reifies a method into a request.  Subclasses provide

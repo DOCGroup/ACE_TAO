@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_BE_VISITOR_STRUCTURE_H)
+#ifndef TAO_BE_VISITOR_STRUCTURE_H
 #define TAO_BE_VISITOR_STRUCTURE_H
 
 #include "be_visitor.h"

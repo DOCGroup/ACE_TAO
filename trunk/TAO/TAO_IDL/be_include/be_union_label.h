@@ -1,12 +1,12 @@
 // $Id$
 
-#if !defined(BE_UNION_LABEL_H)
+#ifndef BE_UNION_LABEL_H
 #define BE_UNION_LABEL_H
 
 /*
  * BE_UnionLabel
  */
-class	be_union_label : public virtual AST_UnionLabel {
+class   be_union_label : public virtual AST_UnionLabel {
 public:
   // Operations
   be_union_label();

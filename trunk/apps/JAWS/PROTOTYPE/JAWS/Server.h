@@ -1,7 +1,7 @@
 /* -*- c++ -*- */
 // $Id$
 
-#if !defined (JAWS_SERVER_H)
+#ifndef JAWS_SERVER_H
 #define JAWS_SERVER_H
 
 #include "JAWS/Export.h"

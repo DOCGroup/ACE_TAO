@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    Trading
-// 
+//
 // = FILENAME
 //    Locking.h
 //
@@ -13,7 +13,7 @@
 //    Marina Spivak <marina@cs.wustl.edu>
 //    Seth Widoff <sbw1@cs.wustl.edu>
 //    Irfan Pyarali <irfan@cs.wustl.edu>
-//   
+//
 // ==========================================================================
 #ifndef TAO_LOCKING_H
 #define TAO_LOCKING_H

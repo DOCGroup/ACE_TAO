@@ -1,10 +1,15 @@
 /* -*- C++ -*- */
 // $Id$
 
-#if !defined (_HANDLE_THR_STREAM_H)
+#ifndef _HANDLE_THR_STREAM_H
 #define _HANDLE_THR_STREAM_H
 
 #include "ace/Acceptor.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Service_Types.h"
 
 #if defined (ACE_HAS_THREADS)
@@ -13,7 +18,7 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 class Handle_Thr_Acceptor : public ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
   // = TITLE
   //   This factory creates new <SVC_HANDLERS> and runs them with the
-  //   configured <ACE_Thread_Strategy>.  
+  //   configured <ACE_Thread_Strategy>.
 {
 public:
   // = Initialization and termination.
@@ -64,7 +69,7 @@ extern ACE_Service_Object_Type rts;
 #define ACE_INLINE inline
 #include "Handle_Thr_Stream.i"
 #else
-#define ACE_INLINE 
+#define ACE_INLINE
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

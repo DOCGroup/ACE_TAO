@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_COMM_MANAGER_H)
+#ifndef _COMM_MANAGER_H
 #define _COMM_MANAGER_H
 
 #include "global.h"

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 1994, 1995.  Netscape Communications Corporation.  All
  * rights reserved.
- * 
+ *
  * Use of this software is governed by the terms of the license agreement for
  * the Netscape Communications or Netscape Comemrce Server between the
  * parties.
@@ -13,7 +13,7 @@
 
 /*
  * file.h: system specific functions for reading/writing files
- * 
+ *
  * Rob McCool
  */
 
@@ -86,7 +86,7 @@ typedef int SYS_FILE;
 
 /*
  * system_fread reads sz bytes from fd into to buf, return number of bytes
- * read, or IO_EOF if EOF, or IO_ERROR if error. 
+ * read, or IO_EOF if EOF, or IO_ERROR if error.
  */
 
 #if defined(FILE_STDIO)

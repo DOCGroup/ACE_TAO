@@ -15,9 +15,13 @@
 // ========================================================================
 
 #ifndef TAO_DYNSTRUCT_I_H
-#define	TAO_DYNSTRUCT_I_H
+#define TAO_DYNSTRUCT_I_H
 
 #include "ace/Containers.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_Export TAO_DynStruct_i : public POA_CORBA::DynStruct
 {
@@ -79,7 +83,7 @@ public:
   CORBA::Boolean next (CORBA::Environment &);
   // Returns next component
 
-  CORBA::Boolean seek (CORBA::Long index, 
+  CORBA::Boolean seek (CORBA::Long index,
                        CORBA::Environment &);
   // Jump to component at <index>
 

@@ -16,7 +16,7 @@
 //
 // ============================================================================
 
-#if !defined (PARAM_TEST_ULONGLONG_H)
+#ifndef PARAM_TEST_ULONGLONG_H
 #define PARAM_TEST_ULONGLONG_H
 
 #include "param_testCli.h"

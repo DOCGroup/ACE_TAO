@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#if !defined (LOGGING_SUP_H)
+#ifndef LOGGING_SUP_H
 #define LOGGING_SUP_H
 
 //#include <ctype.h>

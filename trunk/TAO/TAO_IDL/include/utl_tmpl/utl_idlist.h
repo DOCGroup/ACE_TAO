@@ -42,8 +42,8 @@
  *INDIRECT AND CONSEQUENTIAL DAMAGES, EVEN IF SUN HAS BEEN ADVISED OF THE
  *POSSIBILITY OF SUCH DAMAGES.
  *
- *SunSoft, Inc.  
- *2550 Garcia Avenue 
+ *SunSoft, Inc.
+ *2550 Garcia Avenue
  *Mountain View, California  94043
  *
  *
@@ -52,8 +52,8 @@
  *======================================================================
  */
 
-#ifndef	_UTL_IDLIST_UTL_IDLIST_HH
-#define	_UTL_IDLIST_UTL_IDLIST_HH
+#ifndef _UTL_IDLIST_UTL_IDLIST_HH
+#define _UTL_IDLIST_UTL_IDLIST_HH
 
 // utl_idlist.hh
 //
@@ -65,13 +65,18 @@
 ** USE: Included from util.hh
 */
 
-#include	"ace/stdcpp.h"
-#include	"idl_fwd.h"
-#include	"utl_list.h"
-#include	"utl_identifier.h"
-#include	"utl_string.h"
+#include        "ace/stdcpp.h"
 
-class	UTL_IdList : public UTL_List<UTL_IdList, Identifier>
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include        "idl_fwd.h"
+#include        "utl_list.h"
+#include        "utl_identifier.h"
+#include        "utl_string.h"
+
+class   UTL_IdList : public UTL_List<UTL_IdList, Identifier>
 {
   public:
     // Constructor(s)
@@ -79,22 +84,22 @@ class	UTL_IdList : public UTL_List<UTL_IdList, Identifier>
     virtual ~UTL_IdList() {}
 
     // AST Dumping
-    virtual void	dump(ostream &o);
+    virtual void        dump(ostream &o);
 
     // Other operations
 
     // Get last element in this list
-    Identifier		*last_component();
+    Identifier          *last_component();
 };
 
 // Active iterator for UTL_IdList
 
-class	UTL_IdListActiveIterator :
-	public UTL_ListActiveIterator<UTL_IdList, Identifier>
+class   UTL_IdListActiveIterator :
+        public UTL_ListActiveIterator<UTL_IdList, Identifier>
 {
   public:
     // Constructor(s)
     UTL_IdListActiveIterator(UTL_IdList *s);
 };
 
-#endif		// _UTL_IDLIST_UTL_IDLIST_HH
+#endif          // _UTL_IDLIST_UTL_IDLIST_HH

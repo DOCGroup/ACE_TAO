@@ -14,10 +14,15 @@
 // ============================================================================
 
 #include "ace/Get_Opt.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/TAO.h"
 #include "Generic_Factory_i.h"
 
-#if !defined (GENERIC_FACTORY_H)
+#ifndef GENERIC_FACTORY_H
 #define GENERIC_FACTORY_H
 
 class Quoter_Generic_Factory_Server
@@ -49,7 +54,7 @@ private:
 
   Quoter_Generic_Factory_i *quoter_Generic_Factory_i_ptr_;
   // Instance of the Quoter Generic Factory.
-  
+
   CosNaming::NamingContext_var quoterNamingContext_var_;
   // Reference to the Quoter naming context.
 

@@ -20,7 +20,7 @@
 //
 // ============================================================================
 
-#if !defined (_CONCURRENCY_SERVER_H)
+#ifndef _CONCURRENCY_SERVER_H
 #define _CONCURRENCY_SERVER_H
 
 #include "tao/corba.h"
@@ -42,7 +42,7 @@ public:
   //Default constructor.
 
   TAO_Concurrency_Server (CORBA::ORB_var &orb,
-			  PortableServer::POA_var &poa);
+                          PortableServer::POA_var &poa);
   // Takes the POA under which to register the Concurrency Service
   // implementation object.
 

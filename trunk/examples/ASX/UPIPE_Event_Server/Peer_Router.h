@@ -4,10 +4,15 @@
 // The interface between one or more peers and a stream.  A peer
 // typically runs remotely on another machine.
 
-#if !defined (_PEER_ROUTER_H)
+#ifndef _PEER_ROUTER_H
 #define _PEER_ROUTER_H
 
 #include "ace/Acceptor.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Svc_Handler.h"
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/UPIPE_Addr.h"
@@ -20,7 +25,7 @@
 template <class PEER_HANDLER, class KEY>
 class Peer_Router;
 
-template <class PEER_HANDLER, class KEY> 
+template <class PEER_HANDLER, class KEY>
 class Acceptor_Factory : public ACE_Acceptor<PEER_HANDLER, ACE_UPIPE_ACCEPTOR>
 {
 public:
@@ -47,11 +52,11 @@ public:
   virtual int handle_input (ACE_HANDLE);
   // Receive input from the peer..
 
-  virtual int put (ACE_Message_Block *, ACE_Time_Value *tv = 0);  
-  // Send output to a peer. 
+  virtual int put (ACE_Message_Block *, ACE_Time_Value *tv = 0);
+  // Send output to a peer.
 
 protected:
-  ROUTER *router_task_;  
+  ROUTER *router_task_;
   // Pointer to write task..
 
 private:
@@ -85,7 +90,7 @@ public:
 
 protected:
 // Handle control messages arriving from adjacent Modules.
-  virtual int control (ACE_Message_Block *); 
+  virtual int control (ACE_Message_Block *);
 
   // Map used to keep track of active peers.
   ACE_Map_Manager <PEER_KEY, PEER_HANDLER *, ACE_RW_Mutex> peer_map_;
@@ -106,7 +111,7 @@ private:
 #if defined (__ACE_INLINE__)
 #define ACE_INLINE inline
 #else
-#define ACE_INLINE 
+#define ACE_INLINE
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

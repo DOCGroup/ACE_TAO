@@ -18,7 +18,7 @@
 //
 // ============================================================================
 
-#if !defined (SERVER_I_H)
+#ifndef SERVER_I_H
 #define SERVER_I_H
 
 #include "Echo_i.h"

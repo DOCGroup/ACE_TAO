@@ -8,10 +8,15 @@
 //
 // ============================================================================
 
-#if !defined (ECM_SUPPLIER_H)
+#ifndef ECM_SUPPLIER_H
 #define ECM_SUPPLIER_H
 
 #include "ace/Task.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "orbsvcs/Channel_Clients_T.h"
 
 class ECMS_Driver;
@@ -32,11 +37,11 @@ public:
   // Run the test, just forwards to the driver
 
   void connect (const char* name,
-		int event_a,
-		int event_b,
-		int event_period,
-		RtecEventChannelAdmin::EventChannel_ptr ec,
-		CORBA::Environment& _env);
+                int event_a,
+                int event_b,
+                int event_period,
+                RtecEventChannelAdmin::EventChannel_ptr ec,
+                CORBA::Environment& _env);
   // This method connects the supplier to the EC.
 
   void disconnect (CORBA::Environment &_env);
@@ -48,7 +53,7 @@ public:
   RtecEventComm::EventSourceID supplier_id (void) const;
   // The supplier ID.
 
-  RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy (void); 
+  RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy (void);
   // We talk to the EC (as a supplier) using this proxy, no duplicates
   // are done here...
 
@@ -62,7 +67,7 @@ private:
   RtecEventComm::EventSourceID supplier_id_;
   // We generate an id based on the name....
 
-  RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_; 
+  RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_;
   // We talk to the EC (as a supplier) using this proxy.
 
   ACE_PushSupplier_Adapter<Test_Supplier> supplier_;
@@ -89,13 +94,13 @@ public:
   // Execute the test.
 
   int supplier_task (Test_Supplier *supplier,
-		     void *supplier_cookie);
+                     void *supplier_cookie);
   // This method is run by the supplier task.
 
   void push_supplier (void* supplier_cookie,
-		      RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
-		      const RtecEventComm::EventSet &events,
-		      CORBA::Environment &);
+                      RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
+                      const RtecEventComm::EventSet &events,
+                      CORBA::Environment &);
   // Callback method for suppliers, we push for them to their
   // consumers and take statistics on the way.
   // It is possible that we ignore the <consumer> parameter when
@@ -106,7 +111,7 @@ private:
   // parse the command line args
 
   void connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
-			  CORBA::Environment &_env);
+                          CORBA::Environment &_env);
   void disconnect_suppliers (CORBA::Environment &_env);
   // Connect the suppliers.
 

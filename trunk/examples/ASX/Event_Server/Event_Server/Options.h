@@ -1,10 +1,15 @@
 /* -*- C++ -*- */
 // $Id$
 
-#if !defined (OPTIONS_H)
+#ifndef OPTIONS_H
 #define OPTIONS_H
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Profile_Timer.h"
 
 class Options
@@ -72,46 +77,46 @@ private:
   Options (void);
   ~Options (void);
 
-  ACE_Profile_Timer itimer_;	        
+  ACE_Profile_Timer itimer_;
   // Time the process.
 
-  size_t thr_count_;		
+  size_t thr_count_;
   // Number of threads to spawn.
 
-  long t_flags_;		
+  long t_flags_;
   // Flags to <thr_create>.
 
-  size_t high_water_mark_;	
+  size_t high_water_mark_;
   // ACE_Task high water mark.
 
-  size_t low_water_mark_;        
+  size_t low_water_mark_;
   // ACE_Task low water mark.
 
-  size_t message_size_;		
+  size_t message_size_;
   // Size of a message.
 
-  size_t initial_queue_length_;	
+  size_t initial_queue_length_;
   // Initial number of items in the queue.
 
-  size_t iterations_;		
+  size_t iterations_;
   // Number of iterations to run the test program.
 
-  int debugging_;		
+  int debugging_;
   // Extra debugging info.
 
-  int verbosity_;		
+  int verbosity_;
   // Extra verbose messages.
 
-  u_short consumer_port_;	
+  u_short consumer_port_;
   // Port that the Consumer_Router is using.
 
-  u_short supplier_port_;	
+  u_short supplier_port_;
   // Port that the Supplier_Router is using.
 
   static Options *instance_;
   // Static Singleton.
 
-  friend class ACE_Shutup_GPlusPlus; 
+  friend class ACE_Shutup_GPlusPlus;
   // Turn off g++ warning...
 };
 

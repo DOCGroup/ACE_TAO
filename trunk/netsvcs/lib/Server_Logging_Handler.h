@@ -5,16 +5,16 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
-//    Server_Logging_Handler.h 
+//    Server_Logging_Handler.h
 //
 // = AUTHOR
 //    Doug Schmidt and Per Andersson
-// 
+//
 // ============================================================================
 
-#if !defined (ACE_SERVER_LOGGING_HANDLER_H)
+#ifndef ACE_SERVER_LOGGING_HANDLER_H
 #define ACE_SERVER_LOGGING_HANDLER_H
 
 #include "Log_Message_Receiver.h"
@@ -35,21 +35,21 @@ typedef ACE_Server_Logging_Handler<Synch_Static_Receiver> Synch_Logging_Handler_
 typedef ACE_Thr_Server_Logging_Handler<Synch_Static_Receiver> Synch_Thr_Logging_Handler_Static_Receiver;
 
 // NULL synched logging acceptor
-typedef ACE_Server_Logging_Acceptor_T<Null_Synch_Logging_Handler_Static_Receiver, 
-                                      Null_Synch_Static_Receiver, 
-                                      ACE_Schedule_All_Reactive_Strategy<Null_Synch_Logging_Handler_Static_Receiver> > 
-                  Null_Synch_Logging_Handler_Static_Receiver_Acceptor;                  
+typedef ACE_Server_Logging_Acceptor_T<Null_Synch_Logging_Handler_Static_Receiver,
+                                      Null_Synch_Static_Receiver,
+                                      ACE_Schedule_All_Reactive_Strategy<Null_Synch_Logging_Handler_Static_Receiver> >
+                  Null_Synch_Logging_Handler_Static_Receiver_Acceptor;
 
 // NULL synched logging acceptors
-typedef ACE_Server_Logging_Acceptor_T<Synch_Logging_Handler_Static_Receiver, 
-                                      Synch_Static_Receiver, 
-                                      ACE_Schedule_All_Reactive_Strategy<Synch_Logging_Handler_Static_Receiver> > 
-                  Synch_Logging_Handler_Static_Receiver_Acceptor;                  
+typedef ACE_Server_Logging_Acceptor_T<Synch_Logging_Handler_Static_Receiver,
+                                      Synch_Static_Receiver,
+                                      ACE_Schedule_All_Reactive_Strategy<Synch_Logging_Handler_Static_Receiver> >
+                  Synch_Logging_Handler_Static_Receiver_Acceptor;
 
-typedef ACE_Server_Logging_Acceptor_T<Synch_Thr_Logging_Handler_Static_Receiver, 
-                                      Synch_Static_Receiver, 
-                                      ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logging_Handler_Static_Receiver> > 
-                  Synch_Thr_Logging_Handler_Static_Receiver_Acceptor;                  
+typedef ACE_Server_Logging_Acceptor_T<Synch_Thr_Logging_Handler_Static_Receiver,
+                                      Synch_Static_Receiver,
+                                      ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logging_Handler_Static_Receiver> >
+                  Synch_Thr_Logging_Handler_Static_Receiver_Acceptor;
 
 // typedefs for Logging Handlers & acceptors using a instance
 // based log message receivers.
@@ -60,17 +60,17 @@ typedef Log_Message_Receiver<ACE_LOGGER_SYNCH> Synch_Receiver;
 // synched logging handlers
 typedef ACE_Server_Logging_Handler<Synch_Receiver> Synch_Logging_Handler_Receiver;
 typedef ACE_Thr_Server_Logging_Handler<Synch_Receiver> Synch_Thr_Logging_Handler_Receiver;
-                                 
-// synched logging acceptors
-typedef ACE_Server_Logging_Acceptor_T<Synch_Logging_Handler_Receiver, 
-                                      Synch_Receiver, 
-                                      ACE_Schedule_All_Reactive_Strategy<Synch_Logging_Handler_Receiver> > 
-                  Synch_Logging_Handler_Receiver_Acceptor;                  
 
-typedef ACE_Server_Logging_Acceptor_T<Synch_Thr_Logging_Handler_Receiver, 
+// synched logging acceptors
+typedef ACE_Server_Logging_Acceptor_T<Synch_Logging_Handler_Receiver,
                                       Synch_Receiver,
-                                      ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logging_Handler_Receiver> > 
-                  Synch_Thr_Logging_Handler_Receiver_Acceptor;                  
+                                      ACE_Schedule_All_Reactive_Strategy<Synch_Logging_Handler_Receiver> >
+                  Synch_Logging_Handler_Receiver_Acceptor;
+
+typedef ACE_Server_Logging_Acceptor_T<Synch_Thr_Logging_Handler_Receiver,
+                                      Synch_Receiver,
+                                      ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logging_Handler_Receiver> >
+                  Synch_Thr_Logging_Handler_Receiver_Acceptor;
 
 
 // Define external acceptors

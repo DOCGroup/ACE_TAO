@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-#if !defined (ACE_PERFORMANCE_TEST_H)
+#ifndef ACE_PERFORMANCE_TEST_H
 #define ACE_PERFORMANCE_TEST_H
 
 #include "../Benchmark_Base.h"

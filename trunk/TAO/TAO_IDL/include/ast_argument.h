@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -73,14 +73,14 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 /*
 ** DEPENDENCIES: ast_field.hh, utl_scoped_name.hh, ast_type.hh
-**		 utl_strlist.hh, ast_decl.hh
+**               utl_strlist.hh, ast_decl.hh
 **
 ** USE: Included from ast.hh
 */
 
-#include	"idl_fwd.h"
-#include	"idl_narrow.h"
-#include	"ast_field.h"
+#include        "idl_fwd.h"
+#include        "idl_narrow.h"
+#include        "ast_field.h"
 
 
 class AST_Argument : public virtual AST_Field
@@ -94,7 +94,7 @@ public:
   // Constructor(s)
   AST_Argument();
   AST_Argument(Direction direction, AST_Type *ft, UTL_ScopedName *n,
-	       UTL_StrList *p);
+               UTL_StrList *p);
   virtual ~AST_Argument() {}
 
   // Data Accessors
@@ -105,11 +105,11 @@ public:
   DEF_NARROW_FROM_DECL(AST_Argument);
 
   // AST Dumping
-  virtual void		dump(ostream &o);
+  virtual void          dump(ostream &o);
 
 private:
   // Data
-  const Direction	pd_direction;	// Argument direction
+  const Direction       pd_direction;   // Argument direction
 };
 
 #endif           // _AST_ARGUMENT_AST_ARGUMENT_HH

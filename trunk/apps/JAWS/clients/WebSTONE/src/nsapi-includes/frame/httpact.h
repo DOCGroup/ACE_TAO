@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 1994, 1995.  Netscape Communications Corporation.  All
  * rights reserved.
- * 
+ *
  * Use of this software is governed by the terms of the license agreement for
  * the Netscape Communications or Netscape Comemrce Server between the
  * parties.
@@ -13,7 +13,7 @@
 
 /*
  * httpact.h: Defines the API characteristics for HTTP servers
- * 
+ *
  * Rob McCool
  */
 
@@ -44,7 +44,7 @@
 /*
  * directive_name2num will return the position of the abbreviated directive
  * dir in the directive table.
- * 
+ *
  * If dir does not exist in the table, it will return -1.
  */
 
@@ -113,6 +113,6 @@ struct hostent *servact_gethostbyname(char *host, Session *sn, Request *rq);
 int servact_connect(char *host, int port, Session *sn, Request *rq);
 
 
-#endif	/* ! MCC_PROXY */
+#endif  /* ! MCC_PROXY */
 
 #endif

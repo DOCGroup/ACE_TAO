@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -76,70 +76,70 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 */
 
 // An expression (and maybe its value, if computed)
-class	AST_Expression {
+class   AST_Expression {
 public:
   // Enum to define all the different operators to combine expressions
   enum ExprComb {
-      EC_add		// '+'
-    , EC_minus		// '-'
-    , EC_mul		// '*'
-    , EC_div		// '/'
-    , EC_mod		// '%'
-    , EC_or		// '|'
-    , EC_xor		// '^'
-    , EC_and		// '&'
-    , EC_left		// '<<'
-    , EC_right		// '>>'
-    , EC_u_plus		// unary '+'
-    , EC_u_minus	// unary '-'
-    , EC_bit_neg	// '~'
-    , EC_none		// No operator (missing)
-    , EC_symbol		// a symbol (function or constant name)
+      EC_add            // '+'
+    , EC_minus          // '-'
+    , EC_mul            // '*'
+    , EC_div            // '/'
+    , EC_mod            // '%'
+    , EC_or             // '|'
+    , EC_xor            // '^'
+    , EC_and            // '&'
+    , EC_left           // '<<'
+    , EC_right          // '>>'
+    , EC_u_plus         // unary '+'
+    , EC_u_minus        // unary '-'
+    , EC_bit_neg        // '~'
+    , EC_none           // No operator (missing)
+    , EC_symbol         // a symbol (function or constant name)
   };
-  
+
   // Enum to define the different kinds of evaluation possible
   // Extend this for more kinds of evaluation as required
   enum EvalKind {
-      EK_const			// Must evaluate to constant
-    , EK_positive_int		// Must evaluate to positive integer
+      EK_const                  // Must evaluate to constant
+    , EK_positive_int           // Must evaluate to positive integer
   };
 
   // Enum to define expression type
   enum ExprType {
-      EV_short			// Expression value is short
-    , EV_ushort			// Expression value is unsigned short
-    , EV_long			// Expression value is long
-    , EV_ulong			// Expression value is unsigned long
-    , EV_longlong		// Expression value is long long
-    , EV_ulonglong		// Expression value is unsigned long long
-    , EV_float			// Expression value is 32-bit float
-    , EV_double			// Expression value is 64-bit float
-    , EV_longdouble		// Expression value is 128-bit float
-    , EV_char			// Expression value is char
-    , EV_wchar			// Expression value is wide char	
-    , EV_octet			// Expression value is unsigned char
-    , EV_bool			// Expression value is boolean
-    , EV_string			// Expression value is char *
-    , EV_wstring		// Expression value is wchar_t *
-    , EV_any			// Expression value is any of above
-    , EV_void			// Expression value is void (absent)
-    , EV_none			// Expression value is missing
+      EV_short                  // Expression value is short
+    , EV_ushort                 // Expression value is unsigned short
+    , EV_long                   // Expression value is long
+    , EV_ulong                  // Expression value is unsigned long
+    , EV_longlong               // Expression value is long long
+    , EV_ulonglong              // Expression value is unsigned long long
+    , EV_float                  // Expression value is 32-bit float
+    , EV_double                 // Expression value is 64-bit float
+    , EV_longdouble             // Expression value is 128-bit float
+    , EV_char                   // Expression value is char
+    , EV_wchar                  // Expression value is wide char
+    , EV_octet                  // Expression value is unsigned char
+    , EV_bool                   // Expression value is boolean
+    , EV_string                 // Expression value is char *
+    , EV_wstring                // Expression value is wchar_t *
+    , EV_any                    // Expression value is any of above
+    , EV_void                   // Expression value is void (absent)
+    , EV_none                   // Expression value is missing
   };
 
   // Structure to descrive value of constant expression and its type
   struct AST_ExprValue {
     union {
-      short		sval;	// Contains short expression value
-      unsigned short	usval;	// Contains unsigned short expr value
-      long		lval;	// Contains long expression value
-      unsigned long	ulval;	// Contains unsigned long expr value
-      unsigned long	bval;	// Contains boolean expression value
-      float		fval;	// Contains 32-bit float expr value
-      double		dval;	// Contains 64-bit float expr value
-      char		cval;	// Contains char expression value
-      unsigned char	oval;	// Contains unsigned char expr value
-      String	        *strval; // Contains String * expr value
-      unsigned long	eval;	// Contains enumeration value
+      short             sval;   // Contains short expression value
+      unsigned short    usval;  // Contains unsigned short expr value
+      long              lval;   // Contains long expression value
+      unsigned long     ulval;  // Contains unsigned long expr value
+      unsigned long     bval;   // Contains boolean expression value
+      float             fval;   // Contains 32-bit float expr value
+      double            dval;   // Contains 64-bit float expr value
+      char              cval;   // Contains char expression value
+      unsigned char     oval;   // Contains unsigned char expr value
+      String            *strval; // Contains String * expr value
+      unsigned long     eval;   // Contains enumeration value
     } u;
     ExprType et;
   };
@@ -151,17 +151,17 @@ public:
 
   AST_Expression(ExprComb c, AST_Expression *v1, AST_Expression *v2);
 
-  AST_Expression(short		s);
-  AST_Expression(unsigned short	us);
-  AST_Expression(long		l);
-  AST_Expression(long		l, ExprType t);
-  AST_Expression(unsigned long	ul);
-  AST_Expression(float		f);
-  AST_Expression(double		d);
-  AST_Expression(char		c);
-  AST_Expression(unsigned char	uc);
-  AST_Expression(String		*s);
-  AST_Expression(UTL_ScopedName	*n);
+  AST_Expression(short          s);
+  AST_Expression(unsigned short us);
+  AST_Expression(long           l);
+  AST_Expression(long           l, ExprType t);
+  AST_Expression(unsigned long  ul);
+  AST_Expression(float          f);
+  AST_Expression(double         d);
+  AST_Expression(char           c);
+  AST_Expression(unsigned char  uc);
+  AST_Expression(String         *s);
+  AST_Expression(UTL_ScopedName *n);
   virtual ~AST_Expression () {}
 
   // Data Accessors
@@ -173,7 +173,7 @@ public:
   void set_file_name(String *f);
   ExprComb ec();
   void set_ec(ExprComb new_ec);
-  AST_ExprValue	*ev();
+  AST_ExprValue *ev();
   void set_ev(AST_ExprValue *new_ev);
   AST_Expression *v1();
   void set_v1(AST_Expression *e);
@@ -183,44 +183,44 @@ public:
   void set_n(UTL_ScopedName *new_n);
 
   // AST Dumping
-  virtual void			dump(ostream &o);
+  virtual void                  dump(ostream &o);
 
   // Other operations
 
   // Evaluation and value coercion
-  virtual AST_ExprValue		*eval(EvalKind ek);
-  virtual AST_ExprValue		*coerce(ExprType t);
+  virtual AST_ExprValue         *eval(EvalKind ek);
+  virtual AST_ExprValue         *coerce(ExprType t);
 
   // Evaluate then store value inside this AST_Expression
-  virtual void			evaluate(EvalKind ek);
+  virtual void                  evaluate(EvalKind ek);
 
   // Compare to AST_Expressions
-  virtual long			operator==(AST_Expression *vc);
-  virtual long			compare(AST_Expression *vc);
+  virtual long                  operator==(AST_Expression *vc);
+  virtual long                  compare(AST_Expression *vc);
 
 protected:
   // Evaluate different sets of operators
-  virtual AST_ExprValue	*eval_bin_op(EvalKind ek);
-  virtual AST_ExprValue	*eval_bit_op(EvalKind ek);
-  virtual AST_ExprValue	*eval_un_op(EvalKind ek);
-  virtual AST_ExprValue	*eval_symbol(EvalKind ek);
+  virtual AST_ExprValue *eval_bin_op(EvalKind ek);
+  virtual AST_ExprValue *eval_bit_op(EvalKind ek);
+  virtual AST_ExprValue *eval_un_op(EvalKind ek);
+  virtual AST_ExprValue *eval_symbol(EvalKind ek);
 
 private:
   // Data
-  UTL_Scope			*pd_defined_in;	// Scope
-  long				pd_line;	// Line defined in
-  String			*pd_file_name;	// What file defined in
+  UTL_Scope                     *pd_defined_in; // Scope
+  long                          pd_line;        // Line defined in
+  String                        *pd_file_name;  // What file defined in
 
-  ExprComb			pd_ec;		// What combinator
-  AST_ExprValue			*pd_ev;		// computed value
-  AST_Expression		*pd_v1;		// 1st sub-expression
-  AST_Expression		*pd_v2;		// 2nd sub-expression
-  UTL_ScopedName		*pd_n;		// symbolic name (if any)
+  ExprComb                      pd_ec;          // What combinator
+  AST_ExprValue                 *pd_ev;         // computed value
+  AST_Expression                *pd_v1;         // 1st sub-expression
+  AST_Expression                *pd_v2;         // 2nd sub-expression
+  UTL_ScopedName                *pd_n;          // symbolic name (if any)
 
   // Operations
 
   // Fill out the lineno, filename and definition scope details
-  void				fill_definition_details();
+  void                          fill_definition_details();
 
   // Internal evaluation
   virtual AST_ExprValue *eval_internal(EvalKind ek);

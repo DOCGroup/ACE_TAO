@@ -15,10 +15,15 @@
 //
 // ============================================================================
 
-#if !defined (JAWS_IO_HANDLER_H)
+#ifndef JAWS_IO_HANDLER_H
 #define JAWS_IO_HANDLER_H
 
 #include "ace/Asynch_IO.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Singleton.h"
 
 #include "JAWS/Export.h"

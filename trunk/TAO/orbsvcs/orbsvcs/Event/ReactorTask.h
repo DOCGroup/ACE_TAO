@@ -13,6 +13,11 @@
 
 // Added these.
 #include "ace/Timer_Heap.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Timer_List.h"
 
 #include "Local_ESTypes.h"
@@ -61,7 +66,7 @@ private:
   ACE_Timer_List timer_queue_;
   // The timer storage mechanism used by reactor_.
 
-#if !defined (ACE_OLD_STYLE_REACTOR)
+#ifndef ACE_OLD_STYLE_REACTOR
   ACE_ES_Fast_Reactor fast_reactor_;
   // The timer dispatch mechanism.
 #endif /* ! ACE_OLD_STYLE_REACTOR */

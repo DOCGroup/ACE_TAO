@@ -20,6 +20,11 @@
 #define ACE_PROACTOR_H
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Asynch_IO.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Event_Handler.h"
@@ -30,10 +35,6 @@
 #include "ace/Timer_Wheel.h"
 #include "ace/Free_List.h"
 #include "ace/Pipe.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
     (defined (ACE_HAS_AIO_CALLS))
@@ -70,13 +71,13 @@ public:
   // Constructor.
 
   int timeout (TIMER_QUEUE &timer_queue,
-	       ACE_Handler *handler,
-	       const void *arg,
-	       const ACE_Time_Value &cur_time);
+               ACE_Handler *handler,
+               const void *arg,
+               const ACE_Time_Value &cur_time);
   // This method is called when the timer expires.
 
   int cancellation (TIMER_QUEUE &timer_queue,
-		    ACE_Handler *handler);
+                    ACE_Handler *handler);
   // This method is called when the timer is canceled.
 
   int deletion (TIMER_QUEUE &timer_queue,
@@ -90,7 +91,7 @@ protected:
   // Set the proactor. This will fail, if one is already set!
 
   ACE_Proactor *proactor_;
-  // Handle to the proactor. This is needed for the completion port. 
+  // Handle to the proactor. This is needed for the completion port.
 };
 
 class ACE_Export ACE_Proactor : public ACE_Event_Handler
@@ -115,20 +116,20 @@ public:
   // <register_aio_with_proactor> call is used by
   // <ACE_Asynch_Operation> to store some information with the
   // Proactor after an <aio_> call is issued, so that the Proactor can
-  // retrive this information to do <aio_return> and <aio_error>. 
+  // retrive this information to do <aio_return> and <aio_error>.
 
 #if defined (ACE_HAS_AIO_CALLS)
   friend class ACE_Asynch_Accept_Handler;
   // For POSIX4 implementation, this class takes care of doing the
   // Asynch_Accept.
-  
+
   friend class ACE_AIO_Accept_Handler;
   // We need also this class with the Proactor to take care of
   // Asynch_Accept when we use AIO_CONTROL_BLOCKS.
 #endif /* ACE_HAS_AIO_CALLS */
 
   // = Here are the typedefs that the <ACE_Proactor> uses.
-  
+
   // @@ Can these typedefs be capitalized?
   typedef ACE_Timer_Queue_T<ACE_Handler *,
                             ACE_Proactor_Handle_Timeout_Upcall,
@@ -166,10 +167,10 @@ public:
   enum POSIX_COMPLETION_STRATEGY
   {
     // Use the real time signals and do <sigtimedwait> on the
-    // signals. 
+    // signals.
     RT_SIGNALS,
     // Store the <aio> control blocks with the <Proactor> and do
-    // <aio_suspend> on them, 
+    // <aio_suspend> on them,
     AIO_CONTROL_BLOCKS
   };
   // For Posix4-Compliat-Unix systems how the completion of the
@@ -217,14 +218,14 @@ public:
   // Close the IO completion port.
 
   virtual int register_handle (ACE_HANDLE handle,
-			       const void *completion_key);
+                               const void *completion_key);
   // This method adds the <handle> to the I/O completion port. This
   // function is a no-op function for Unix systems.
 
   // = Timer management.
   virtual long schedule_timer (ACE_Handler &handler,
-			       const void *act,
-			       const ACE_Time_Value &time);
+                               const void *act,
+                               const ACE_Time_Value &time);
   // Schedule a <handler> that will expire after <time>.  If it
   // expires then <act> is passed in as the value to the <handler>'s
   // <handle_timeout> callback method.  This method returns a
@@ -236,27 +237,27 @@ public:
   // failure (which is guaranteed never to be a valid <timer_id>.
 
   virtual long schedule_repeating_timer (ACE_Handler &handler,
-					 const void *act,
-					 const ACE_Time_Value &interval);
+                                         const void *act,
+                                         const ACE_Time_Value &interval);
 
   // Same as above except <interval> it is used to reschedule the
   // <handler> automatically.
 
   virtual long schedule_timer (ACE_Handler &handler,
-			       const void *act,
-			       const ACE_Time_Value &time,
-			       const ACE_Time_Value &interval);
+                               const void *act,
+                               const ACE_Time_Value &time,
+                               const ACE_Time_Value &interval);
   // This combines the above two methods into one. Mostly for backward
   // compatibility.
 
   virtual int cancel_timer (ACE_Handler &handler,
-			    int dont_call_handle_close = 1);
+                            int dont_call_handle_close = 1);
   // Cancel all timers associated with this <handler>.  Returns number
   // of timers cancelled.
 
   virtual int cancel_timer (long timer_id,
-			    const void **act = 0,
-			    int dont_call_handle_close = 1);
+                            const void **act = 0,
+                            int dont_call_handle_close = 1);
   // Cancel the single <ACE_Handler> that matches the <timer_id> value
   // (which was returned from the <schedule> method).  If <act> is
   // non-NULL then it will be set to point to the ``magic cookie''
@@ -291,7 +292,7 @@ public:
 
   size_t number_of_threads (void) const;
   void number_of_threads (size_t threads);
-  // Number of thread used as a parameter to CreatIoCompletionPort. 
+  // Number of thread used as a parameter to CreatIoCompletionPort.
 
   Timer_Queue *timer_queue (void) const;
   void timer_queue (Timer_Queue *);
@@ -308,11 +309,11 @@ public:
 
   POSIX_COMPLETION_STRATEGY posix_completion_strategy (void);
   // Return the completion strategy used.
-  
+
   int notify_asynch_accept (ACE_Asynch_Accept::Result* result);
   // Asynch_Accept calls this function to notify an accept to the
-  // Proactor. 
-#endif /* ACE_HAS_AIO_CALLS */  
+  // Proactor.
+#endif /* ACE_HAS_AIO_CALLS */
 
 protected:
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
@@ -320,14 +321,14 @@ protected:
   // when a Win32 object becomes signaled).
 
   virtual int handle_close (ACE_HANDLE handle,
-			    ACE_Reactor_Mask close_mask);
+                            ACE_Reactor_Mask close_mask);
   // Called when object is removed from the ACE_Reactor.
 
   void application_specific_code (ACE_Asynch_Result *asynch_result,
-				  u_long bytes_transferred,
-				  int success,
-				  const void *completion_key,
-				  u_long error);
+                                  u_long bytes_transferred,
+                                  int success,
+                                  const void *completion_key,
+                                  u_long error);
   // Protect against structured exceptions caused by user code when
   // dispatching handles.
 
@@ -351,15 +352,15 @@ protected:
       // Access needed to: convert Asynch_Timer into an OVERLAPPED
 
       Asynch_Timer (ACE_Handler &handler,
-		    const void *act,
-		    const ACE_Time_Value &tv,
-		    ACE_HANDLE event = ACE_INVALID_HANDLE);
+                    const void *act,
+                    const ACE_Time_Value &tv,
+                    ACE_HANDLE event = ACE_INVALID_HANDLE);
 
     protected:
       virtual void complete (u_long bytes_transferred,
-			     int success,
-			     const void *completion_key,
-			     u_long error = 0);
+                             int success,
+                             const void *completion_key,
+                             u_long error = 0);
       // This method calls the <handler>'s handle_timeout method
 
       ACE_Time_Value time_;
@@ -370,7 +371,7 @@ protected:
   POSIX_COMPLETION_STRATEGY posix_completion_strategy_;
   // Flag that indicates how the completion status is got from the OS
   // on the POSIX4-Compliant-Unix systems.
-  
+
   sigset_t RT_completion_signals_;
   // These signals are used for completion notification by the
   // Proactor.
@@ -380,30 +381,30 @@ protected:
   // user has specified someother signals in any of the
   // read/write/transmit operations, some other signals might also
   // have got masked.
-  
+
   ACE_AIO_Accept_Handler* aio_accept_handler_;
   // This class takes care of doing <accept> when we use
   // AIO_CONTROL_BLOCKS strategy.
-  
+
   aiocb *aiocb_list_ [ACE_RTSIG_MAX];
   // Use an array to keep track of all the aio's issued
-  // currently. We'll limit the array size to Maximum RT signals that 
+  // currently. We'll limit the array size to Maximum RT signals that
   // can be queued in a process.  This is the upper limit how many aio
   // operations can be pending at a time.
-  
+
   size_t aiocb_list_max_size_;
   // To maintain the maximum size of the array (list).
-  
+
   size_t aiocb_list_cur_size_;
   // To maintain the current size of the array (list).
 #elif defined (ACE_WIN32)
   ACE_HANDLE completion_port_;
   // Handle for the completion port. Unix doesnt have completion
   // ports.
- 
+
   size_t number_of_threads_;
   // This number is passed to the <CreatIOCompletionPort> system
-  // call. 
+  // call.
 #endif /* ACE_HAS_AIO_CALLS */
 
   Timer_Queue *timer_queue_;
@@ -447,7 +448,7 @@ class ACE_Export ACE_Proactor
 public:
   class Timer_Queue {};
   ACE_Proactor (size_t /* number_of_threads */ = 0,
-		Timer_Queue * /* tq */ = 0) {}
+                Timer_Queue * /* tq */ = 0) {}
   virtual int handle_events (void) { return -1; }
   virtual int handle_events (ACE_Time_Value &) { return -1; }
 

@@ -19,7 +19,7 @@ public:
 
      // Give it someone to talk to...
     Recv( ACE_SOCK_Stream & _peer );
-    
+
     ~Recv(void);
 
      // Trigger a read from the socket
@@ -32,7 +32,7 @@ public:
         {
             return this->error_;
         }
-    
+
 protected:
 
     ACE_SOCK_Stream & peer(void)

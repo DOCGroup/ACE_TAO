@@ -3,10 +3,15 @@
 
 // Handles UNIX datagram messages from local host.
 
-#if !defined (_HANDLE_L_DGRAM_H)
+#ifndef _HANDLE_L_DGRAM_H
 #define _HANDLE_L_DGRAM_H
 
 #include "ace/Service_Config.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Service_Types.h"
 #include "ace/LSOCK_Dgram.h"
 #include "ace/UNIX_Addr.h"
@@ -37,7 +42,7 @@ extern ACE_Service_Object_Type ld;
 #define ACE_INLINE inline
 #include "Handle_L_Dgram.i"
 #else
-#define ACE_INLINE 
+#define ACE_INLINE
 #endif /* __ACE_INLINE__ */
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 #endif /* _HANDLE_L_DGRAM_H */

@@ -14,7 +14,7 @@
 //   Well known Oids defined in RFC 1215
 //
 // = AUTHOR
-//    Peter E Mellquist 
+//    Peter E Mellquist
 //
 // ============================================================================
 /*===================================================================
@@ -36,50 +36,50 @@
 
 // SMI trap oid def
 class snmpTrapsOid: public Oid {
-   public: 
+   public:
    snmpTrapsOid (void):Oid("1.3.6.1.6.3.1.1.5"){};
-}; 
+};
 
 // SMI Enterprose Oid
 class snmpTrapEnterpriseOid: public Oid {
-   public: 
+   public:
    snmpTrapEnterpriseOid(void):Oid("1.3.6.1.6.3.1.1.4.3.0"){};
-}; 
+};
 
 // SMI Cold Start Oid
 class coldStartOid: public snmpTrapsOid {
-   public: 
+   public:
    coldStartOid( void){*this+=".1";};
 };
 
 // SMI WarmStart Oid
 class warmStartOid: public snmpTrapsOid {
-   public: 
+   public:
    warmStartOid( void){*this+=".2";};
 };
 
 // SMI LinkDown Oid
 class linkDownOid: public snmpTrapsOid {
-   public: 
+   public:
    linkDownOid( void){*this+=".3";};
-}; 
+};
 
 
 // SMI LinkUp Oid
 class linkUpOid: public snmpTrapsOid {
-   public: 
+   public:
    linkUpOid( void){*this+=".4";};
 };
 
 // SMI Authentication Failure Oid
 class authenticationFailureOid: public snmpTrapsOid {
-   public: 
+   public:
    authenticationFailureOid( void){*this+=".5";};
-}; 
+};
 
 // SMI egpneighborloss Oid
 class egpNeighborLossOid: public snmpTrapsOid {
-   public: 
+   public:
    egpNeighborLossOid( void){*this+=".6";};
 };
 

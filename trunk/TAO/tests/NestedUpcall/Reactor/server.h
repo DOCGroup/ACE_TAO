@@ -18,10 +18,15 @@
 //
 // ============================================================================
 
-#if !defined (_NUC_SERVER_H)
+#ifndef _NUC_SERVER_H
 #define _NUC_SERVER_H
 
 #include "ace/Get_Opt.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Log_Msg.h"
 #include "tao/TAO.h"
 #include "orbsvcs/CosNamingC.h"

@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    orbsvcs
-// 
+//
 // = FILENAME
 //    Trader_Utils.h
 //
@@ -25,7 +25,7 @@
 //   TAO_Property_Filter
 //   TAO_Property_Evaluator
 //   TAO_Property_Evaluator_By_Name
-// 
+//
 // ========================================================================
 
 #ifndef TAO_TRADER_UTILS_H
@@ -46,25 +46,25 @@ class TAO_ORBSVCS_Export TAO_Property_Evaluator
 //   for a static property, TAO_Property_Evaluator provides methods
 //   that will unify the two approaches under a single
 //   interface. Since dynamic properties aren't necessarily supported
-//   by a trader, this class accounts for that contingency. The use of 
+//   by a trader, this class accounts for that contingency. The use of
 //   indexed lookups allows them to occur in constant time on the
 //   CORBA sequences, but requires that the client know the layout of
-//   properties ahead of time. 
+//   properties ahead of time.
 {
 public:
-  
+
   TAO_Property_Evaluator(const CosTrading::PropertySeq& properties,
-			 CORBA::Boolean supports_dp = 1);
-  
+                         CORBA::Boolean supports_dp = 1);
+
   TAO_Property_Evaluator(CosTrading::Offer& offer,
-			 CORBA::Boolean supports_dp = 1);
+                         CORBA::Boolean supports_dp = 1);
   // Construct an instance of TAO_Property_Evaluator that operates on
   // an <offer> where the support for dynamic properties is dictated
   // by <supports_dynamic_properties>.
 
   virtual ~TAO_Property_Evaluator (void);
   // Clean up dynamic properties.
-  
+
   int is_dynamic_property(int index);
   // Returns 1 if the property at index <index> is dynamic. Returns a
   // 0 when the index is out of bounds.
@@ -73,28 +73,28 @@ public:
     TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
 
   // Returns value of the property whose index is <index>. If the
-  // property at that index is dynamic and the trader supports dynamic 
+  // property at that index is dynamic and the trader supports dynamic
   // properties, then the property_value method will obtain the value
   // of the dynamic property using the evalDP method on the
   // CosTradingDynamic::DynamicPropEval interface, passing on a
   // CosTradingDynamic::DPEvalFailure exception on failure. If the
   // property index is undefined, the method returns a null pointer.
-  
+
   CORBA::TypeCode_ptr property_type (int index);
   // Returns the type of the property whose index is <index>. If the
   // property is dynamic and the trader supports dynamic properties,
   // then the method returns the <returned_type> field of the
   // CosTradingDynamic::DynamicProp struct associated with the
-  // property name. If the index is out of bounds, the method returns 
+  // property name. If the index is out of bounds, the method returns
   // a null pointer (that is, 0).
-  
- protected:  
-  
+
+ protected:
+
   typedef CosTradingDynamic::DynamicProp DP_Struct;
   typedef CosTradingDynamic::DynamicPropEval DP_Eval;
-  
+
   const CosTrading::PropertySeq& props_;
-  // The offer from which the TAO_Property_Evaluator extracts property 
+  // The offer from which the TAO_Property_Evaluator extracts property
   // information.
 
   int supports_dp_;
@@ -105,7 +105,7 @@ public:
   // retrieved from dynamic properties and free them upon deletion. If
   // we didn't do this, then the property_value method would leak or
   // cause seg faults, since the client wouldn't be able to tell
-  // whether or not the return value should be freed.  
+  // whether or not the return value should be freed.
 
  private:
 
@@ -117,7 +117,7 @@ public:
   // TAO_Property_Evaluator_By_Name
   // *************************************************************
 
-class TAO_ORBSVCS_Export TAO_Property_Evaluator_By_Name : 
+class TAO_ORBSVCS_Export TAO_Property_Evaluator_By_Name :
   public TAO_Property_Evaluator
 //
 // = TITLE
@@ -133,13 +133,13 @@ class TAO_ORBSVCS_Export TAO_Property_Evaluator_By_Name :
 public:
 
   TAO_Property_Evaluator_By_Name (const CosTrading::PropertySeq& properties,
-				  CORBA::Environment& _env,
-				  CORBA::Boolean supports_dp = 1)
+                                  CORBA::Environment& _env,
+                                  CORBA::Boolean supports_dp = 1)
     TAO_THROW_SPEC ((CosTrading::DuplicatePropertyName,
-		     CosTrading::IllegalPropertyName));
-  
+                     CosTrading::IllegalPropertyName));
+
   TAO_Property_Evaluator_By_Name(CosTrading::Offer& offer,
-				 CORBA::Boolean supports_dp = 1);
+                                 CORBA::Boolean supports_dp = 1);
   // Construct an instance of TAO_Property_Evaluator that operates on
   // an <offer> where the support for dynamic properties is dictated
   // by <supports_dynamic_properties>.
@@ -150,28 +150,28 @@ public:
   // will throw a Property_Undefined exception with impunity.
 
   CORBA::Any* property_value(const char* property_name,
-			     CORBA::Environment& _env)
+                             CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
 
   // This method is identical to its counterpart in
-  // TAO_Property_Evaluator, except property_value first discovers the 
+  // TAO_Property_Evaluator, except property_value first discovers the
   // index through a string matching lookup.
-  
+
   CORBA::TypeCode_ptr property_type(const char* property_name);
   // This method is identical to its counterpart in
   // TAO_Property_Evaluator, exception property_type first discovers
   // the index through a string matching lookup.
 
   const CosTrading::Property* get_property (const char* property_name);
-  
+
 private:
 
   TAO_Property_Evaluator_By_Name (const TAO_Property_Evaluator_By_Name&);
   TAO_Property_Evaluator_By_Name& operator= (const TAO_Property_Evaluator_By_Name&);
-  
+
   TAO_Lookup_Table table_;
   // The instance of the above mapping for the offer provided in the
-  // constructor. 
+  // constructor.
 };
 
   // *************************************************************
@@ -187,23 +187,23 @@ class TAO_ORBSVCS_Export TAO_Dynamic_Property :
 public:
 
   TAO_Dynamic_Property (void) {}
-  
+
   TAO_Dynamic_Property (const TAO_Dynamic_Property& dp) {}
-  
+
   virtual ~TAO_Dynamic_Property (void);
-  
+
   virtual CORBA::Any* evalDP(const char* name,
-			     CORBA::TypeCode_ptr returned_type,
-			     const CORBA::Any& extra_info,
-			     CORBA::Environment& _env) 
+                             CORBA::TypeCode_ptr returned_type,
+                             const CORBA::Any& extra_info,
+                             CORBA::Environment& _env)
     TAO_THROW_SPEC ((CORBA::SystemException,
-		     CosTradingDynamic::DPEvalFailure)) = 0;
+                     CosTradingDynamic::DPEvalFailure)) = 0;
   // Dynamic property evaluation call-back method.
-  
+
   CosTradingDynamic::DynamicProp*
-    construct_dynamic_prop (const char* name,			    
-			    CORBA::TypeCode_ptr returned_type,
-			    const CORBA::Any& extra_info);
+    construct_dynamic_prop (const char* name,
+                            CORBA::TypeCode_ptr returned_type,
+                            const CORBA::Any& extra_info);
   // Method to construct a dynamic property structure suitable for
   // exporting in a CosTrading::PropertyStruct to the Trading Service.
 };
@@ -218,11 +218,11 @@ class TAO_Policies
 // = TITLE
 // This class ensures that policies submitted to Lookup make sense,
 // have the correct value types, and don't exceed the maximums set
-// through the Admin Interface. 
+// through the Admin Interface.
 //
 // = DESCRIPTION
 // TAO_Policies does an admirable job of reconciling differences
-// between the default parameter settings of the Trader and the import 
+// between the default parameter settings of the Trader and the import
 // and other policies set by the client. Unbeknownst to its client
 // TAO_Policies hides this arbitration, and records whether the user
 // policy was chosen, or the default. This information gets returned
@@ -249,15 +249,15 @@ public:
   // This enum represents the relative order that properties are
   // passed from one trader to another. Hence, as recommended by the
   // spec, the starting_trader policies will be the first element in
-  // the polcy sequence if it's set for a query. 
-  
+  // the polcy sequence if it's set for a query.
+
   static const char * POLICY_NAMES[];
-  
+
   TAO_Policies (TAO_Trader_Base& trader,
-		const CosTrading::PolicySeq& policies,
-		CORBA::Environment& _env)
+                const CosTrading::PolicySeq& policies,
+                CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTrading::Lookup::IllegalPolicyName,
-		     CosTrading::DuplicatePolicyName));
+                     CosTrading::DuplicatePolicyName));
 
   // BEGIN SPEC
   // The "policies" parameter allows the importer to specify how the
@@ -278,11 +278,11 @@ public:
   // starting_trader policy value is malformed), then an
   // InvalidPolicyValue exception is raised. ° If the same policy name
   // is included two or more times in this parameter, then the
-  // DuplicatePolicyName exception is raised. 
+  // DuplicatePolicyName exception is raised.
   // END SPEC
 
   ~TAO_Policies (void);
-  
+
   CORBA::ULong search_card (CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
@@ -294,7 +294,7 @@ public:
   // trader. If this policy is not specified, then the value of the
   // trader's def_search_card attribute is used.
   // END SPEC
-  
+
   CORBA::ULong match_card (CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
@@ -306,7 +306,7 @@ public:
   // not specified, then the value of the trader's def_match_card
   // attribute is used.
   // END SPEC
-  
+
   CORBA::ULong return_card (CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
@@ -316,11 +316,11 @@ public:
   // query. The lesser of this value and the trader's max_return_card
   // attribute is used by the trader. If this policy is not specified,
   // then the value of the trader's def_return_card attribute is
-  // used. 
+  // used.
   // END SPEC
-  
+
   // = Offer consideration policies
-  
+
   CORBA::Boolean use_modifiable_properties (CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
@@ -333,7 +333,7 @@ public:
   // will not. If this policy is not specified, such offers will be
   // included.
   // END SPEC
-  
+
   CORBA::Boolean use_dynamic_properties (CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
@@ -346,7 +346,7 @@ public:
   // will not. If this policy is not specified, such offers will be
   // included.
   // END SPEC
-  
+
   CORBA::Boolean use_proxy_offers (CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
@@ -358,7 +358,7 @@ public:
   // will be included; if FALSE, they will not. If this policy is not
   // specified, such offers will be included.
   // END SPEC
-  
+
   CORBA::Boolean exact_type_match (CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
@@ -368,12 +368,12 @@ public:
   // type; if not (and by default), then any offer of a type
   // conformant to the importer's service type is considered.
   // END SPEC
-  
+
   // = Federated trader policies (not implemented yet)
-  
+
   CosTrading::TraderName* starting_trader (CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
-		    CosTrading::Lookup::InvalidPolicyValue));
+                    CosTrading::Lookup::InvalidPolicyValue));
   // BEGIN SPEC
   // The "starting_trader" policy facilitates the distribution of the
   // trading service itself. It allows an importer to scope a search
@@ -397,25 +397,25 @@ public:
   // BEGIN SPEC
   //The "link_follow_rule" policy indicates how the client wishes
   //links to be followed in the resolution of its query. See the
-  //discussion in "Link Follow Behavior" on page 16-16 for details. 
+  //discussion in "Link Follow Behavior" on page 16-16 for details.
   // END SPEC
 
-  
+
   CosTrading::FollowOption link_follow_rule (const CosTrading::Link::LinkInfo& link_info,
-					     CORBA::Environment& _env) const
+                                             CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
-		     CosTrading::Lookup::InvalidPolicyValue,
+                     CosTrading::Lookup::InvalidPolicyValue,
                      CosTrading::Link::IllegalLinkName,
                      CosTrading::Link::UnknownLinkName));
   // Determine the link follow policy for a given <link_name>.
-  // This method returns the link_follow_rule for a link whose name is 
+  // This method returns the link_follow_rule for a link whose name is
   // <link_name> using the following formula:
   // if the importer specified a link_follow_rule policy
   //      min(trader.max_follow_policy, link.limiting_follow_rule,
   //          query.link_follow_rule)
   // else min(trader.max_follow_policy, link.limiting_follow_rule,
-  //          trader.def_follow_policy) 
-      
+  //          trader.def_follow_policy)
+
   CORBA::ULong hop_count (CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
@@ -428,18 +428,18 @@ public:
   // the trader's def_hop_count attribute if it is not. If the
   // resulting value is zero, then no federated queries are
   // permitted. If it is greater than zero, then it must be
-  // decremented before passing on to a federated trader. 
+  // decremented before passing on to a federated trader.
   // END SPEC
 
   CosTrading::Admin::OctetSeq* request_id (CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
   // Return the request_id passed to the query method across a link to
-  // another trader. 
+  // another trader.
 
   void copy_to_pass (CosTrading::PolicySeq& policy_seq,
                      const CosTrading::Admin::OctetSeq& request_id) const;
   // Policies to forward to the next trader in a federated query.
-  
+
   void copy_to_forward (CosTrading::PolicySeq& policy_seq,
                         const CosTrading::TraderName& name) const;
   // Policies to forward to the next trader in a directed query.
@@ -450,29 +450,29 @@ public:
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
                      CosTrading::Lookup::InvalidPolicyValue));
   // Determine the link follow policy to pass down the link with <link_name>.
-  // This method returns the link_follow_rule for a link whose name is 
+  // This method returns the link_follow_rule for a link whose name is
   // <link_name> using the following formula:
   // If the importer specified a link_follow_rule, policy
   //      pass on min(query.link_follow_rule, link.limiting_follow_rule,
   //                  trader.max_follow_policy)
   // else pass on min(link.def_pass_on_follow_rule,
   //                  trader.max_follow_policy)
-  
-private:  
-  
+
+private:
+
   CORBA::ULong ulong_prop (POLICY_TYPE pol,
-			   CORBA::Environment& _env) const
+                           CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
   // Reconclile a ULong property with its default.
-  
+
   CORBA::Boolean boolean_prop (POLICY_TYPE pol,
-			       CORBA::Environment& _env) const
+                               CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
   // Reconcile a Boolean property with its debault.
 
   TAO_Policies (const TAO_Policies&);
   TAO_Policies& operator= (const TAO_Policies&);
-  
+
   CosTrading::Policy* policies_[TAO_NUM_POLICIES];
   // The policies indexable from the enumerated type.
 
@@ -488,7 +488,7 @@ class TAO_ORBSVCS_Export TAO_Policy_Manager
 // = TITLE
 //
 // This class is a utility for clients using the CosTrading::Lookup
-// interface that helps them build a policy sequence without violating 
+// interface that helps them build a policy sequence without violating
 // syntax rules and having to mess with typecodes.
 {
 public:
@@ -496,25 +496,25 @@ public:
   TAO_Policy_Manager (int num_policies = 0);
 
   // = Routines to set policies.
-  
+
   void search_card (CORBA::ULong scard);
   // Set the maximum number of offers searched for the query.
-  
+
   void match_card (CORBA::ULong mcard);
   // Set the maximum number of offers searched for the query.
-    
+
   void return_card (CORBA::ULong rcard);
-  // Set the maximum number of offers rerturned for the query. 
+  // Set the maximum number of offers rerturned for the query.
 
   // A note about cardinalities: The spec implies that these
   // cardinalities apply to the global office space, that is, all
   // offers on all linked traders. However, there's no mechanism for
   // one trader to return to the calling trader the number of offers
   // searched or matched. Thus, these cardinalities are applied on a
-  // per-trader basis. 
-  
+  // per-trader basis.
+
   void use_modifiable_properties (CORBA::Boolean mod_props);
-  // Consider offers with modifiable properties. 
+  // Consider offers with modifiable properties.
 
   void use_dynamic_properties (CORBA::Boolean dyn_props);
   // Consider offers with dynamic properties.
@@ -525,7 +525,7 @@ public:
   void starting_trader (const CosTrading::TraderName& name); // Copy
   void starting_trader (CosTrading::TraderName* name); // Own
   // Designate a trader at which to begin the query.
-  
+
   void link_follow_rule (CosTrading::FollowOption follow_option);
   // Specify under what conditions a federated query is appropriate.
 
@@ -534,7 +534,7 @@ public:
 
   void request_id (const CosTrading::Admin::OctetSeq& request_id);
   // Set the identifier for this query (clients shouldn't use this).
-  
+
   void exact_type_match (CORBA::Boolean exact_type);
   // Search only the designated type --- not it's subtypes.
 
@@ -544,19 +544,19 @@ public:
   const CosTrading::PolicySeq& policy_seq (void) const;
   // Return a PolicySeq suitable for passing to the query method of
   // the Lookup interface.
-  
+
 private:
 
   TAO_Policy_Manager (const TAO_Policy_Manager&);
   TAO_Policy_Manager& operator= (const TAO_Policy_Manager&);
-  
+
   CosTrading::Policy& fetch_next_policy (TAO_Policies::POLICY_TYPE pol_type);
   // Method to prepare the next slot in the policies_ sequence for
   // policy insertion.
-  
+
   int poltable_[TAO_Policies::REQUEST_ID + 1];
   // Table mapping policy enum value to the index in the policies sequence.
-  
+
   CosTrading::PolicySeq policies_;
   // The sequence being prepared for submittal to the query method.
 
@@ -572,34 +572,34 @@ private:
 class TAO_Offer_Modifier
 // = TITLE
 //   This class deletes, modifies, and adds properties to a given
-//   offer according to the rules of the modify method on the Register 
+//   offer according to the rules of the modify method on the Register
 //   interface.
 {
 public:
 
   TAO_Offer_Modifier (const char* type,
-		      const CosTradingRepos::ServiceTypeRepository::TypeStruct& type_struct,
-		      CosTrading::Offer* offer);
+                      const CosTradingRepos::ServiceTypeRepository::TypeStruct& type_struct,
+                      CosTrading::Offer* offer);
   // Modify an <offer> of type <type>, whose properties are described
   // by <type_struct>
 
   ~TAO_Offer_Modifier (void);
 
   void delete_properties (const CosTrading::PropertyNameSeq& deletes,
-			  CORBA::Environment& _env)
-    TAO_THROW_SPEC ((CosTrading::Register::UnknownPropertyName, 
-		    CosTrading::Register::MandatoryProperty,
-		    CosTrading::IllegalPropertyName,
-		    CosTrading::DuplicatePropertyName));
+                          CORBA::Environment& _env)
+    TAO_THROW_SPEC ((CosTrading::Register::UnknownPropertyName,
+                    CosTrading::Register::MandatoryProperty,
+                    CosTrading::IllegalPropertyName,
+                    CosTrading::DuplicatePropertyName));
   // Delete the properties whose names were given to the
   // constructor. Ensure we don't delete mandatory properties.
 
   void merge_properties (CosTrading::PropertySeq& modifies,
-			 CORBA::Environment& _env)
-    TAO_THROW_SPEC ((CosTrading::IllegalPropertyName,                     
+                         CORBA::Environment& _env)
+    TAO_THROW_SPEC ((CosTrading::IllegalPropertyName,
                      CosTrading::DuplicatePropertyName,
                      CosTrading::PropertyTypeMismatch,
-                     CosTrading::ReadonlyDynamicProperty, 
+                     CosTrading::ReadonlyDynamicProperty,
                      CosTrading::Register::ReadonlyProperty));
   // Copy to the destination the union of the source and destination
   // properties. In the case of duplicate properties, update the
@@ -612,7 +612,7 @@ public:
 private:
 
   TAO_Offer_Modifier (const TAO_Offer_Modifier&);
-  TAO_Offer_Modifier& operator= (const TAO_Offer_Modifier&);  
+  TAO_Offer_Modifier& operator= (const TAO_Offer_Modifier&);
 
   typedef ACE_Hash_Map_Manager
     <
@@ -623,21 +623,21 @@ private:
     Property_Table;
 
   const char* type_;
-  // The type of the offer.  
-  
+  // The type of the offer.
+
   Property_Table props_;
   // The map of properties in the offer.
 
   TAO_Typecode_Table prop_types_;
   // Table of property types.
-  
+
   TAO_String_Set readonly_, mandatory_;
   // The set of readonly and mandatory property names in the offer's
   // type.
 
   CosTrading::PropertySeq merge_props_;
   // Sequence of properties to merge with the original.
-  
+
   CosTrading::Offer* offer_;
   // A reference to the offer undergoing change.
 };
@@ -651,7 +651,7 @@ class TAO_Offer_Filter
 //    The purpose of this class is to ensure that offers that
 //    shouldn't be considered by the TAO_Constraint_Interpreter
 //    aren't.
-// 
+//
 // = DESCRIPTION
 //    There two classes of reasons why an offer for a correct
 //    type shouldn't be considered: 1) The default parameters of the
@@ -660,39 +660,39 @@ class TAO_Offer_Filter
 //    readonly) or dynamic properties. 2) We've exceeded the
 //    default or provided cardinality constraints. TAO_Offer_Filter
 //    ensures that violation of policies doesn't occur. It's the
-//    enforcer. 
+//    enforcer.
 {
 public:
-  
+
   TAO_Offer_Filter (TAO_Policies& policies,
-		    CORBA::Environment& _env);
+                    CORBA::Environment& _env);
   // Glean from the TypeStruct and Policy setting the appropriate way
   // to screen unsuitable offers from consideration.
 
   void configure_type (CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct);
   // Set the offer filter to screen for offers containing properties
   // that aren't marked as readonly in this TypeStruct.
-  
+
   CORBA::Boolean ok_to_consider (CosTrading::Offer* offer);
   // Determine whether the poicies contained in the given policy
-  // object allow the Lookup interface to consider the offer. That is, 
+  // object allow the Lookup interface to consider the offer. That is,
   // if use_modifiable_properties is false, and the offer contains
   // modifiable properties as designated in the type struct, return
-  // false. If use_dynamic_properties is false, and the offer contains 
-  // dynamic properties, then return false. If the lookup interface is 
-  // safe in considering this offer, return true and subtract from the 
+  // false. If use_dynamic_properties is false, and the offer contains
+  // dynamic properties, then return false. If the lookup interface is
+  // safe in considering this offer, return true and subtract from the
   // search card value. When the search card value falls to zero,
   // ok_to_consider always returns false.
-  
+
   CORBA::Boolean ok_to_consider_more (void);
   // It's ok to consider more offers when lookup hasn't exceeded the
   // cardinality values for searching and matching offers.
 
   void matched_offer (void);
-  // Signal that the Lookup method has matched an offer; decrement the 
+  // Signal that the Lookup method has matched an offer; decrement the
   // match_card.
 
-  // = Return the limits applied.  
+  // = Return the limits applied.
   CosTrading::PolicyNameSeq* limits_applied (void);
   // BEGIN SPEC
   // If any cardinality or other limits were applied by one or more
@@ -701,27 +701,27 @@ public:
   // which limited the query. The sequence of names returned in
   // "limits_applied" from any federated or proxy queries must be
   // concatenated onto the names of limits applied locally and
-  // returned. 
+  // returned.
   // END SPEC
 
   CORBA::ULong search_card_remaining (void) const;
   CORBA::ULong match_card_remaining (void) const;
   // Accessors to retrieve the adjusted cardinalities.
-  
+
 private:
 
   TAO_Offer_Filter (const TAO_Offer_Filter&);
   TAO_Offer_Filter& operator= (const TAO_Offer_Filter&);
-  
+
   TAO_String_Set not_mod_props_;
   // The set of the name of modifiable properties.
 
   TAO_String_Set limits_;
   // Cardinality and property limitations applied.
-  
+
   CORBA::ULong search_card_, match_card_, return_card_;
   // Keep track of the cardinalities.
-  
+
   CORBA::Boolean dp_;
   CORBA::Boolean mod_;
   // Keep track of property limitations: modifiable or dynamic ones
@@ -737,7 +737,7 @@ class TAO_Property_Filter
 //
 //   The Ace_Property_Filter copies those properties specified in a
 //   CosTrading::Lookup::SpecifiedProps from a source
-//   CosTrading::Offer to a destination CosTrading::Offer. 
+//   CosTrading::Offer to a destination CosTrading::Offer.
 {
 public:
 
@@ -745,25 +745,25 @@ public:
 
   TAO_Property_Filter (void) : policy_ (CosTrading::Lookup::all) {}
   // An accomplice to g++'s insane lust for copy constructors.
-  
+
   TAO_Property_Filter (const SPECIFIED_PROPS& desired_props,
-		       CORBA::Environment& env)
+                       CORBA::Environment& env)
     TAO_THROW_SPEC ((CosTrading::IllegalPropertyName,
-		     CosTrading::DuplicatePropertyName));
+                     CosTrading::DuplicatePropertyName));
   // Verify that the specified properties are correct.
 
   TAO_Property_Filter (const TAO_Property_Filter& prop_filter);
   TAO_Property_Filter& operator= (const TAO_Property_Filter& prop_filter);
-  
+
   void filter_offer (CosTrading::Offer* source,
                      CosTrading::Offer& destination);
   // Copy the desired properties from the source offer to the
   // destination offer.
-  
+
 private:
 
   typedef ACE_Unbounded_Queue< CosTrading::Property* > Prop_Queue;
-  
+
   TAO_String_Set props_;
   CosTrading::Lookup::HowManyProps policy_;
 };

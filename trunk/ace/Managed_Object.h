@@ -18,11 +18,12 @@
 #define ACE_MANAGED_OBJECT_H
 
 #include "ace/OS.h"
-#include "ace/Object_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Object_Manager.h"
 
 template <class TYPE>
 class ACE_Cleanup_Adapter : public ACE_Cleanup

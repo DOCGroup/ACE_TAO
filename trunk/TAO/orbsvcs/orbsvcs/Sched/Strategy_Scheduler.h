@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#if ! defined (STRATEGY_SCHEDULER_H)
+#ifndef STRATEGY_SCHEDULER_H
 #define STRATEGY_SCHEDULER_H
 
 #include "DynSched.h"
@@ -77,7 +77,7 @@ private:
 };
 
 
-
+
 ////////////////////////////////////////
 // Factory for strategized schedulers //
 ////////////////////////////////////////
@@ -150,7 +150,7 @@ public:
     //   and then on the dependency topological sort finishing time (ascending).
 
 
-  virtual ACE_DynScheduler::Dispatching_Type 
+  virtual ACE_DynScheduler::Dispatching_Type
     dispatch_type (const Dispatch_Entry &entry) = 0;
   // provide the dispatching queue type for the given dispatch entry
 
@@ -172,7 +172,7 @@ protected:
 };
 
 
-
+
 class TAO_ORBSVCS_Export ACE_MUF_Scheduler_Strategy : public ACE_Scheduler_Strategy
   // = TITLE
   //    ACE_MUF_Scheduler_Strategy
@@ -206,7 +206,7 @@ public:
   virtual ACE_DynScheduler::Preemption_Priority minimum_critical_priority ();
     // = determine the minimum critical priority number
 
-  virtual ACE_DynScheduler::Dispatching_Type 
+  virtual ACE_DynScheduler::Dispatching_Type
     dispatch_type (const Dispatch_Entry &entry);
   // provide the dispatching queue type for the given dispatch entry
 
@@ -269,7 +269,7 @@ public:
   virtual ACE_DynScheduler::Preemption_Priority minimum_critical_priority ();
     // = determine the minimum critical priority number
 
-  virtual ACE_DynScheduler::Dispatching_Type 
+  virtual ACE_DynScheduler::Dispatching_Type
     dispatch_type (const Dispatch_Entry &entry);
   // provide the dispatching queue type for the given dispatch entry
 
@@ -299,7 +299,7 @@ private:
 
 
 
-
+
 class TAO_ORBSVCS_Export ACE_MLF_Scheduler_Strategy : public ACE_Scheduler_Strategy
   // = TITLE
   //    ACE_MLF_Scheduler_Strategy
@@ -327,7 +327,7 @@ public:
                      u_int count);
     // = sort the dispatch entry link pointer array in ascending laxity order
 
-  virtual ACE_DynScheduler::Dispatching_Type 
+  virtual ACE_DynScheduler::Dispatching_Type
     dispatch_type (const Dispatch_Entry &entry);
   // provide the dispatching queue type for the given dispatch entry
 
@@ -386,7 +386,7 @@ public:
                      u_int count);
     // = sort the dispatch entry link pointer array in ascending deadline (period) order
 
-  virtual ACE_DynScheduler::Dispatching_Type 
+  virtual ACE_DynScheduler::Dispatching_Type
     dispatch_type (const Dispatch_Entry &entry);
   // provide the dispatching queue type for the given dispatch entry
 
@@ -418,7 +418,7 @@ private:
 
 };
 
-
+
 class TAO_ORBSVCS_Export ACE_RMS_Dyn_Scheduler_Strategy : public ACE_Scheduler_Strategy
   // = TITLE
   //    ACE_RMS_Dyn_Scheduler_Strategy
@@ -451,7 +451,7 @@ public:
     virtual ACE_DynScheduler::Preemption_Priority minimum_critical_priority ();
   // = determine the minimum critical priority number
 
-  virtual ACE_DynScheduler::Dispatching_Type 
+  virtual ACE_DynScheduler::Dispatching_Type
     dispatch_type (const Dispatch_Entry &entry);
   // provide the dispatching queue type for the given dispatch entry
 

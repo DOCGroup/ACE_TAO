@@ -5,30 +5,31 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    SOCK_Stream.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_SOCK_STREAM_H
 #define ACE_SOCK_STREAM_H
 
 #include "ace/SOCK_IO.h"
-#include "ace/INET_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/INET_Addr.h"
 
 class ACE_Export ACE_SOCK_Stream : public ACE_SOCK_IO
 {
   // = TITLE
   //     Defines the methods in the <ACE_SOCK_Stream> abstraction.
-  //     
+  //
   // = DESCRIPTION
   //     This adds additional wrapper methods atop the <ACE_SOCK_IO>
   //     class.
@@ -40,29 +41,29 @@ public:
   //= The following two methods use write and read system calls.
   ssize_t send_n (const void *buf, int n) const;
   // Send n bytes, keep trying until n are sent.
-  ssize_t recv_n (void *buf, int n) const;	      
+  ssize_t recv_n (void *buf, int n) const;
   // Recv n bytes, keep trying until n are received.
 
   // = The following two methods use the send and recv system calls.
   ssize_t send_n (const void *buf, int n, int flags) const;
   // Send n bytes, keep trying until n are sent.
-  ssize_t recv_n (void *buf, int n, int flags) const;	      
+  ssize_t recv_n (void *buf, int n, int flags) const;
   // Recv n bytes, keep trying until n are received.
 
-  ssize_t send_n (const void *buf, 
-		  size_t len, 
-		  int flags,
-		  const ACE_Time_Value *timeout);
+  ssize_t send_n (const void *buf,
+                  size_t len,
+                  int flags,
+                  const ACE_Time_Value *timeout);
   // Try to send exactly <len> bytes into <buf> from <handle> (uses
   // the <send> call).  If <send> blocks for longer than <timeout> the
   // number of bytes actually sent is returned with <errno == ETIME>.
   // If a timeout does not occur, <send_n> return <len> (i.e., the
   // number of bytes requested to be sent).
 
-  ssize_t recv_n (void *buf, 
-		  size_t len, 
-		  int flags, 
-		  const ACE_Time_Value *timeout);
+  ssize_t recv_n (void *buf,
+                  size_t len,
+                  int flags,
+                  const ACE_Time_Value *timeout);
   // Try to recv exactly <len> bytes into <buf> from <handle> (uses
   // the <ACE::recv_n> call).  The <ACE_Time_Value> indicates how long
   // to blocking trying to receive.  If <timeout> == 0, the caller

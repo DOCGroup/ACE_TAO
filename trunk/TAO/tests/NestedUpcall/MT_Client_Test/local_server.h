@@ -10,7 +10,7 @@
 //    local_server.h
 //
 // = DESCRIPTION
-//     This class implements a simple server for the 
+//     This class implements a simple server for the
 //     Nested Upcalls - MT Client test
 //
 // = AUTHORS
@@ -18,10 +18,15 @@
 //
 // ============================================================================
 
-#if !defined (MT_CLIENT_TEST_MT_SERVER_H)
+#ifndef MT_CLIENT_TEST_MT_SERVER_H
 #define MT_CLIENT_TEST_MT_SERVER_H
 
 #include "ace/Get_Opt.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Log_Msg.h"
 #include "tao/TAO.h"
 #include "MT_Object_i.h"
@@ -70,7 +75,7 @@ private:
   // The ORB manager
 
   MT_Object_i mT_Object_i_;
-  // Implementation object 
+  // Implementation object
 
   MT_Object_var mT_Object_var_;
   // reference for the distant MT Object
@@ -95,7 +100,7 @@ class MT_Server_Task : public ACE_Task<ACE_SYNCH>
   //    No big purpose, just wrapping
 public:
   MT_Server_Task (ACE_Thread_Manager* thr_mgr_ptr,
-                  int argc, 
+                  int argc,
                   char **argv,
                   TAO_ORB_Manager* orb_manager_ptr);
 

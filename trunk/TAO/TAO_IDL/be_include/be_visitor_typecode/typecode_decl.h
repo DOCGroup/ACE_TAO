@@ -20,7 +20,7 @@
 //
 // ============================================================================
 
-#if !defined (_BE_VISITOR_TYPECODE_TYPECODE_DECL_H_)
+#ifndef _BE_VISITOR_TYPECODE_TYPECODE_DECL_H_
 #define _BE_VISITOR_TYPECODE_TYPECODE_DECL_H_
 
 class be_visitor_typecode_decl : public be_visitor_decl

@@ -11,10 +11,10 @@
 //    transaction_result.h
 //
 // = DESCRIPTION
-//  An object respresenting a request/reply operation between mgr/agent  
+//  An object respresenting a request/reply operation between mgr/agent
 //
 // = AUTHOR
-//    Michael R. MacFaden 
+//    Michael R. MacFaden
 //
 // ============================================================================
 

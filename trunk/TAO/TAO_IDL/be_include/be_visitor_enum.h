@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_BE_VISITOR_ENUM_H)
+#ifndef TAO_BE_VISITOR_ENUM_H
 #define TAO_BE_VISITOR_ENUM_H
 
 #include "be_visitor.h"

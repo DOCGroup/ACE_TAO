@@ -4,20 +4,25 @@
 //
 // = BINARY
 //    trader
-//  
-// = FILENAME 
+//
+// = FILENAME
 //    Trading_Service.h
-// 
-// = AUTHOR 
-//    Seth Widoff <sbw1@cs.wustl.edu> 
-//   
-// ======================================================================= 
+//
+// = AUTHOR
+//    Seth Widoff <sbw1@cs.wustl.edu>
+//
+// =======================================================================
 
-#if !defined (_TRADING_SERVICE_H)
+#ifndef _TRADING_SERVICE_H
 #define _TRADING_SERVICE_H
 
 #include "tao/TAO.h"
 #include "ace/Auto_Ptr.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "orbsvcs/IOR_Multicast.h"
 #include "orbsvcs/Trader/Trader.h"
 #include "orbsvcs/Trader/Service_Type_Repository.h"
@@ -47,26 +52,26 @@ public:
 
   Trading_Service (void);
   // Default constructor.
-  
+
   ~Trading_Service (void);
   // Destructor
 
   int init (int argc, char* argv[]);
   // Initialize the Trading Service with arguments.
-  
+
   int run (void);
   // Run the Trading Service.
 
   int shutdown (void);
-  
+
 private:
 
   int init_multicast_server (void);
-  // Enable the Trading Service to answer multicast requests for its IOR. 
+  // Enable the Trading Service to answer multicast requests for its IOR.
 
   int bootstrap_to_federation (void);
   // Bootstrap to another trader, and attach to its trader network.
-  
+
   int parse_args (int& argc, char *argv[]);
   // parses the arguments.
 
@@ -81,16 +86,16 @@ private:
 
   CORBA::String_var name_;
   // Name of this trading service: "hostname:pid".
-  
+
   CORBA::String_var ior_;
-  // IOR of the trader kept around for handiness purposes. 
-  
+  // IOR of the trader kept around for handiness purposes.
+
   CORBA::Boolean federate_;
   // Flag indicating whether this trader should join the federation.
 
   CORBA::Boolean bootstrapper_;
-  // Flag inidicating whether we're the trader others are bootstrapping to. 
-  
+  // Flag inidicating whether we're the trader others are bootstrapping to.
+
   TAO_IOR_Multicast ior_multicast_;
   // Event handler that responds to resolve_initial_references requests.
 };

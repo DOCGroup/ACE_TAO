@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -67,8 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _DRV_LINK_DRV_LINK_HH
 #define _DRV_LINK_DRV_LINK_HH
 
-// drv_link.hh - Define data and functions which are used to 
-//		 link in the back end functions
+// drv_link.hh - Define data and functions which are used to
+//               link in the back end functions
 
 /*
  * Front end interface
@@ -87,16 +87,16 @@ typedef UTL_Error * (* DRV_PF_FE_new_UTL_Error)();
 typedef UTL_Indenter * (* DRV_PF_FE_new_UTL_Indenter)();
 typedef UTL_String * (* DRV_PF_FE_new_UTL_String)(char *);
 
-extern DRV_PF_FE_init_stage1	DRV_FE_init_stage1;
-extern DRV_PF_FE_init_stage2	DRV_FE_init_stage2;
-extern DRV_PF_FE_yyparse	DRV_FE_yyparse;
-extern DRV_PF_FE_set_yyin	DRV_FE_set_yyin;
+extern DRV_PF_FE_init_stage1    DRV_FE_init_stage1;
+extern DRV_PF_FE_init_stage2    DRV_FE_init_stage2;
+extern DRV_PF_FE_yyparse        DRV_FE_yyparse;
+extern DRV_PF_FE_set_yyin       DRV_FE_set_yyin;
 
-extern DRV_PF_FE_new_UTL_Error	DRV_FE_new_UTL_Error;
+extern DRV_PF_FE_new_UTL_Error  DRV_FE_new_UTL_Error;
 extern DRV_PF_FE_new_UTL_Indenter DRV_FE_new_UTL_Indenter;
-extern DRV_PF_FE_new_UTL_String	DRV_FE_new_UTL_String;
+extern DRV_PF_FE_new_UTL_String DRV_FE_new_UTL_String;
 
-/* 
+/*
  * Back end interface
  */
 
@@ -107,11 +107,11 @@ typedef void (* DRV_PF_BE_abort)();
 typedef void (* DRV_PF_BE_prep_arg)(char *, idl_bool);
 typedef void (* DRV_PF_BE_version)();
 
-extern DRV_PF_BE_init		DRV_BE_init;
-extern DRV_PF_BE_produce 	DRV_BE_produce;
-extern DRV_PF_BE_abort   	DRV_BE_abort;
-extern DRV_PF_BE_prep_arg	DRV_BE_prep_arg;
-extern DRV_PF_BE_version	DRV_BE_version;
+extern DRV_PF_BE_init           DRV_BE_init;
+extern DRV_PF_BE_produce        DRV_BE_produce;
+extern DRV_PF_BE_abort          DRV_BE_abort;
+extern DRV_PF_BE_prep_arg       DRV_BE_prep_arg;
+extern DRV_PF_BE_version        DRV_BE_version;
 
 // Functions
 
@@ -121,4 +121,4 @@ extern void DRV_FE_close();
 extern void DRV_BE_open();
 extern void DRV_BE_close();
 
-#endif	// _DRV_LINK_DRV_LINK_HH
+#endif  // _DRV_LINK_DRV_LINK_HH

@@ -20,13 +20,13 @@
 #include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-template <class T> 
+template <class T>
 class ACE_Double_Linked_List;
 
-template <class T> 
+template <class T>
 class ACE_Double_Linked_List_Iterator;
 
 class ACE_Export ACE_DLList_Node

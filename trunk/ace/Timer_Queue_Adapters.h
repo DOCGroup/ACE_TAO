@@ -18,11 +18,12 @@
 # define ACE_TIMER_QUEUE_ADAPTERS_H
 
 # include "ace/Task.h"
-# include "ace/Signal.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+# include "ace/Signal.h"
 
 template <class TQ>
 class ACE_Export ACE_Async_Timer_Queue_Adapter : public ACE_Event_Handler
@@ -152,11 +153,11 @@ public:
 
 # if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
 
-  int enqueue_command (ACE_Command_Base *command_, 
+  int enqueue_command (ACE_Command_Base *command_,
                        COMMAND_ENQUEUE_POSITION pos = TAIL);
   // Enqueues a command object for execution just before waiting on the next
   // timer event. This allows deferred execution of commands that cannot
-  // be performed in the timer event handler context, such as registering 
+  // be performed in the timer event handler context, such as registering
   // or cancelling timers on platforms where the timer queue mutex is not
   // recursive.
 
@@ -167,7 +168,7 @@ private:
 # if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
 
   int dispatch_commands (void);
-  // Dispatches all command objects enqueued in the most 
+  // Dispatches all command objects enqueued in the most
   // recent event handler context.
 
   ACE_Unbounded_Queue<ACE_Command_Base *> command_queue_;

@@ -12,10 +12,15 @@
 //
 // ============================================================================
 
-#if !defined (ACE_TEST_CONFIG_H)
+#ifndef ACE_TEST_CONFIG_H
 #define ACE_TEST_CONFIG_H
 
 #include "ace/inc_user_config.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #if defined (ACE_NLOGGING)
 // ACE_NLOGGING must not be set if the tests are to produce any output.
 #undef ACE_NLOGGING

@@ -5,12 +5,17 @@
 #define WORK_H
 
 #include "ace/Log_Msg.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Synch.h"
 #include "mld.h"
 
 /*
    Our specilized message queue and thread pool will know how to do "work" on
-   our Unit_Of_Work baseclass. 
+   our Unit_Of_Work baseclass.
  */
 class Unit_Of_Work
 {
@@ -42,7 +47,7 @@ protected:
 
 /*
    A fairly trivial work derivative that implements an equally trivial state
-   machine in process() 
+   machine in process()
  */
 class Work : public Unit_Of_Work
 {

@@ -3,15 +3,15 @@
 
 // ========================================================================
 //
-// = LIBRARY 
+// = LIBRARY
 //     ace
-//  
-// = FILENAME 
+//
+// = FILENAME
 //     Arg_Shifter.h
-// 
-// = AUTHOR 
-//     Seth Widoff 
-// 
+//
+// = AUTHOR
+//     Seth Widoff
+//
 // ========================================================================
 
 #ifndef ACE_ARG_SHIFTER_H
@@ -44,10 +44,10 @@ public:
   // indices to the end of the vector, forbidding iteration. Following
   // iteration over argv, the argc value will contain the number of
   // unconsumed arguments.
-  
+
   ~ACE_Arg_Shifter (void);
   // Destructor.
-  
+
   char *get_current (void) const;
   // Get the current head of the vector.
 
@@ -65,24 +65,24 @@ public:
   int is_option_next (void) const;
   // Returns 1 if there's a next item in the vector and it begins with
   // '-'.
-  
+
   int is_parameter_next (void) const;
   // Returns 1 if there's a next item in the vector and it doesn't
   // begin with '-'.
-  
+
   int num_ignored_args (void) const;
   // Returns the number of irrelevant args seen.
-  
+
 private:
   int &argc_;
   // The size of the argument vector.
 
   int total_size_;
   // The size of argv_.
-  
+
   char **temp_;
   // The temporary array over which we traverse.
-  
+
   char **argv_;
   // The array in which the arguments are reordered.
 
@@ -92,10 +92,10 @@ private:
   int back_;
   // The index of <argv_> in which we'll stick the next unknown
   // argument.
-  
+
   int front_;
   // The index of <argv_> in which we'll stick the next known
-  // argument. 
+  // argument.
 };
 
 #endif /* ACE_ARG_SHIFTER_H */

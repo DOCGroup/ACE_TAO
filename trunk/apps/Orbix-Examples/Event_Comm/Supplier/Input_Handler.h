@@ -5,22 +5,26 @@
 //
 // = LIBRARY
 //    EventComm
-// 
+//
 // = FILENAME
 //    Input_Handler.h
 //
-// = DESCRIPTION 
+// = DESCRIPTION
 //    Handle input from the keyboard.
 //
 // = AUTHOR
 //    Douglas C. Schmidt (schmidt@cs.wustl.edu)
-// 
+//
 // ============================================================================
 
-#if !defined (_INPUT_HANDLER_H)
+#ifndef _INPUT_HANDLER_H
 #define _INPUT_HANDLER_H
 
 #include "ace/Service_Config.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 
@@ -33,7 +37,7 @@ class Input_Handler : public ACE_Service_Object
   //   Handles input events generated from a keyboard.
   //
   // = DESCRIPTION
-  //   The events are currently framed and forwarded to 
+  //   The events are currently framed and forwarded to
   //   all Consumers.  In the future, we will need to
   //   be more selective and only send to those Consumers
   //   whose filtering criteria matches!
@@ -46,14 +50,14 @@ public:
   // Frame input events and notify <Consumers>.
 
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-			    ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
+                            ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
   // Close down the handler.
 
 protected:
   virtual ACE_HANDLE get_handle (void) const;
 
   ACE_HANDLE handle_;
-  // ACE_HANDLE where the input comes from. 
+  // ACE_HANDLE where the input comes from.
 
   Notifier_Handler *notifier_;
   // Pointer to a <Notifier_Handler> that's used to inform Consumers

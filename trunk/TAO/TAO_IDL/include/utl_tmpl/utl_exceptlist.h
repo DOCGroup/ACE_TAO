@@ -42,8 +42,8 @@
  *INDIRECT AND CONSEQUENTIAL DAMAGES, EVEN IF SUN HAS BEEN ADVISED OF THE
  *POSSIBILITY OF SUCH DAMAGES.
  *
- *SunSoft, Inc.  
- *2550 Garcia Avenue 
+ *SunSoft, Inc.
+ *2550 Garcia Avenue
  *Mountain View, California  94043
  *
  *
@@ -65,25 +65,30 @@
 ** USE: Included from util.hh
 */
 
-#include	"ace/stdcpp.h"
-#include	"idl_fwd.h"
-#include	"utl_list.h"
-#include	"utl_strlist.h"
-#include	"utl_idlist.h"
-#include	"utl_scoped_name.h"
-#include	"utl_identifier.h"
-#include	"utl_string.h"
-#include	"ast_expression.h"
-#include	"idl_bool.h"
-#include	"utl_scope.h"
-#include	"ast_decl.h"
-#include	"ast_type.h"
-#include	"ast_concrete_type.h"
-#include	"ast_structure.h"
-#include	"ast_exception.h"
+#include        "ace/stdcpp.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include        "idl_fwd.h"
+#include        "utl_list.h"
+#include        "utl_strlist.h"
+#include        "utl_idlist.h"
+#include        "utl_scoped_name.h"
+#include        "utl_identifier.h"
+#include        "utl_string.h"
+#include        "ast_expression.h"
+#include        "idl_bool.h"
+#include        "utl_scope.h"
+#include        "ast_decl.h"
+#include        "ast_type.h"
+#include        "ast_concrete_type.h"
+#include        "ast_structure.h"
+#include        "ast_exception.h"
 
 
-class	UTL_ExceptList : public UTL_List<UTL_ExceptList, AST_Exception>
+class   UTL_ExceptList : public UTL_List<UTL_ExceptList, AST_Exception>
 {
 public:
   // Operations
@@ -94,7 +99,7 @@ public:
 };
 
 // Active iterator for UTL_ExceptList
-class	UTL_ExceptlistActiveIterator :
+class   UTL_ExceptlistActiveIterator :
     public UTL_ListActiveIterator<UTL_ExceptList, AST_Exception>
 {
 public:

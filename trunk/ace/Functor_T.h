@@ -30,7 +30,7 @@
 #include "ace/Functor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 template <class RECEIVER, class ACTION>
@@ -48,7 +48,7 @@ class ACE_Command_Callback : public ACE_Command_Base
 public:
 
   ACE_Command_Callback (RECEIVER &recvr, ACTION action);
-  // Constructor: sets the <receiver_> of the Command to recvr, and the 
+  // Constructor: sets the <receiver_> of the Command to recvr, and the
   // <action_> of the Command to <action>.
 
   virtual ~ACE_Command_Callback (void) {}

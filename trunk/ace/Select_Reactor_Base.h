@@ -18,16 +18,17 @@
 #define ACE_SELECT_REACTOR_BASE_H
 
 #include "ace/Signal.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Timer_Queue.h"
 #include "ace/Event_Handler.h"
 #include "ace/Handle_Set.h"
 #include "ace/Token.h"
 #include "ace/Pipe.h"
 #include "ace/Reactor_Impl.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Add useful typedefs to simplify the following code.
 typedef void (ACE_Handle_Set::*ACE_FDS_PTMF) (ACE_HANDLE);

@@ -22,12 +22,17 @@
 // @@ Add the guard against multiple inclusions.
 
 #include "ace/Get_Opt.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/corba.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/LoggerC.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 
-class Logger_Client 
+class Logger_Client
 {
   // = TITLE
   //    Defines a class that encapsulates behaviour of the Logger
@@ -50,14 +55,14 @@ public:
 
   int init (int argc, char **argv);
   // Initialize the client communication endpoint with server.
-  
+
   int run (void);
   // Execute client example code.
-  
+
 private:
   int parse_args (void);
   // Parses the arguments passed on the command line.
-  
+
   void init_record (Logger::Log_Record &newrec,
                     Logger::Log_Priority lp,
                     const char *msg);
@@ -65,20 +70,20 @@ private:
 
   int init_naming_service (CORBA::Environment &env);
   // Initialises the name server and resolves the logger_factory
-  
+
   int init_loggers (CORBA::Environment &env);
   // Instantiates the 2 logger member variables
-  
+
   void show_record (Logger::Log_Record &newrec);
   // Shows contents of the record (for debugging purposes).
-  
+
   TAO_Naming_Client my_name_client_;
   // An instance of the name client used for resolving the factory
   // objects.
 
   CORBA::ORB_var orb_;
   // Keep a pointer to the ORB for easy access
-  
+
   int argc_;
   // # of arguments on the command line.
 
@@ -87,7 +92,7 @@ private:
 
   Logger_Factory_var factory_;
   // A pointer to the Logger_Factory; used in init_loggers
-  
+
   Logger_var logger_1_;
   // Logger obj ref.
 

@@ -6,13 +6,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    SV_Shared_Memory.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_SV_SHARED_MEMORY_H
@@ -21,7 +21,7 @@
 #include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_SV_Shared_Memory
@@ -29,38 +29,38 @@ class ACE_Export ACE_SV_Shared_Memory
   // = TITLE
   //     This is a wrapper for System V shared memory.
 public:
-  enum 
+  enum
   {
-    ACE_CREATE = IPC_CREAT, 
+    ACE_CREATE = IPC_CREAT,
     ACE_OPEN   = 0
   };
 
   // = Initialization and termination methods.
   ACE_SV_Shared_Memory (void);
-  ACE_SV_Shared_Memory (key_t external_id, 
-			size_t size, 
-			int create,
-			int perms = ACE_DEFAULT_FILE_PERMS, 
-			void *virtual_addr = 0, 
-			int flags = 0);
+  ACE_SV_Shared_Memory (key_t external_id,
+                        size_t size,
+                        int create,
+                        int perms = ACE_DEFAULT_FILE_PERMS,
+                        void *virtual_addr = 0,
+                        int flags = 0);
 
   ACE_SV_Shared_Memory (ACE_HANDLE internal_id,
-			int flags = 0);
+                        int flags = 0);
 
-  int  open (key_t external_id, 
-	     size_t size,
-	     int create = ACE_SV_Shared_Memory::ACE_OPEN,
-	     int perms = ACE_DEFAULT_FILE_PERMS);
+  int  open (key_t external_id,
+             size_t size,
+             int create = ACE_SV_Shared_Memory::ACE_OPEN,
+             int perms = ACE_DEFAULT_FILE_PERMS);
 
-  int  open_and_attach (key_t external_id, 
-			size_t size, 
-			int create = ACE_SV_Shared_Memory::ACE_OPEN,
-			int perms = ACE_DEFAULT_FILE_PERMS, 
-			void *virtual_addr = 0, 
-			int flags = 0);
+  int  open_and_attach (key_t external_id,
+                        size_t size,
+                        int create = ACE_SV_Shared_Memory::ACE_OPEN,
+                        int perms = ACE_DEFAULT_FILE_PERMS,
+                        void *virtual_addr = 0,
+                        int flags = 0);
 
-  int  attach (void *virtual_addr = 0, 
-	       int flags =0);
+  int  attach (void *virtual_addr = 0,
+               int flags =0);
   // Attach this shared memory segment.
 
   int  detach (void);
@@ -88,7 +88,7 @@ public:
 protected:
   enum
   {
-    ALIGN_WORDB = 8   // Most restrictive alignment. 
+    ALIGN_WORDB = 8   // Most restrictive alignment.
   };
 
   ACE_HANDLE internal_id_;
@@ -96,7 +96,7 @@ protected:
 
   int size_;
   // Size of the mapped segment.
-  
+
   void *segment_ptr_;
   // Pointer to the beginning of the segment.
 

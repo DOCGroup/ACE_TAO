@@ -3,11 +3,11 @@
 
 
 // ttcp_i.h
-// 
+//
 // This header file provides facility to use it either as a BOA approach or as
 // a TIE approach.
 //
-#if !defined (TTCP_I_H)
+#ifndef TTCP_I_H
 #define TTCP_I_H
 
 #include "ttcp.h"
@@ -24,35 +24,35 @@
 
 
 #if defined(USE_TIE)
-class ttcp_sequence_i 
-#else	// use BOA 
-class ttcp_sequence_i 
-  	: public virtual ttcp_sequenceBOAImpl
+class ttcp_sequence_i
+#else   // use BOA
+class ttcp_sequence_i
+        : public virtual ttcp_sequenceBOAImpl
 #endif
 {
 public:
   ttcp_sequence_i();
 
-  virtual void sendShortSeq (const ttcp_sequence::ShortSeq& ttcp_seq, 
-	CORBA::Environment &IT_env=CORBA::default_environment);
-  virtual void sendLongSeq (const ttcp_sequence::LongSeq& ttcp_seq, 
-	CORBA::Environment &IT_env=CORBA::default_environment);
-  virtual void sendDoubleSeq (const ttcp_sequence::DoubleSeq& ttcp_seq, 
-	CORBA::Environment &IT_env=CORBA::default_environment);
-  virtual void sendCharSeq (const ttcp_sequence::CharSeq& ttcp_seq, 
-	CORBA::Environment &IT_env=CORBA::default_environment);
-  virtual void sendStructSeq (const ttcp_sequence::StructSeq& ttcp_seq, 
-	CORBA::Environment &IT_env=CORBA::default_environment);
-  virtual void sendOctetSeq (const ttcp_sequence::OctetSeq& ttcp_seq, 
-	CORBA::Environment &IT_env=CORBA::default_environment);
-  virtual void sendCompositeSeq (const ttcp_sequence::CompositeSeq& ttcp_seq, 
-	CORBA::Environment &IT_env=CORBA::default_environment);
+  virtual void sendShortSeq (const ttcp_sequence::ShortSeq& ttcp_seq,
+        CORBA::Environment &IT_env=CORBA::default_environment);
+  virtual void sendLongSeq (const ttcp_sequence::LongSeq& ttcp_seq,
+        CORBA::Environment &IT_env=CORBA::default_environment);
+  virtual void sendDoubleSeq (const ttcp_sequence::DoubleSeq& ttcp_seq,
+        CORBA::Environment &IT_env=CORBA::default_environment);
+  virtual void sendCharSeq (const ttcp_sequence::CharSeq& ttcp_seq,
+        CORBA::Environment &IT_env=CORBA::default_environment);
+  virtual void sendStructSeq (const ttcp_sequence::StructSeq& ttcp_seq,
+        CORBA::Environment &IT_env=CORBA::default_environment);
+  virtual void sendOctetSeq (const ttcp_sequence::OctetSeq& ttcp_seq,
+        CORBA::Environment &IT_env=CORBA::default_environment);
+  virtual void sendCompositeSeq (const ttcp_sequence::CompositeSeq& ttcp_seq,
+        CORBA::Environment &IT_env=CORBA::default_environment);
 
   /* Routines to calculate the time required to transfer */
   virtual void start_timer (CORBA::Environment &IT_env=
-	CORBA::default_environment);
+        CORBA::default_environment);
   virtual void stop_timer (CORBA::Environment &IT_env=
-	CORBA::default_environment);
+        CORBA::default_environment);
 private:
   unsigned long nbytes_;
 };

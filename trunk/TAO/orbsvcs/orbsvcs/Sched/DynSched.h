@@ -17,10 +17,15 @@
 //
 // ============================================================================
 
-#if ! defined (DYNSCHED_H)
+#ifndef DYNSCHED_H
 #define DYNSCHED_H
 
 #include "ace/ACE.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Map_Manager.h"
 #include "ace/Message_Block.h"
 #include "ace/Synch.h"
@@ -96,7 +101,7 @@ public:
   };
 
 
-
+
   /////////////////////////////
   // public member functions //
   /////////////////////////////
@@ -169,7 +174,7 @@ public:
   // Obtains an RT_Info based on its "handle".
 
   status_t lookup_config_info (Preemption_Priority priority,
-				               Config_Info* &config_info);
+                                               Config_Info* &config_info);
   // Obtains a Config_Info based on its priority.
 
   status_t schedule (void);
@@ -189,7 +194,7 @@ public:
   // subpriorities of the Task that was assigned handle.  "preemption_prio"
   // is a platform-independent priority queue number, ranging from a
   // highest priority value of 0 to the lowest priority value, which is
-  // returned by "minimum_priority_queue ()".  Returns 0 on success, 
+  // returned by "minimum_priority_queue ()".  Returns 0 on success,
   // or -1 if an invalid handle was supplied.
 
   // = Access the platform-independent priority value of the lowest-priority

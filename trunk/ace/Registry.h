@@ -20,7 +20,7 @@
 #include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_WIN32)
@@ -171,7 +171,7 @@ public:
     // Friend factory
 
     enum { MAX_OBJECT_NAME_SIZE = BUFSIZ,
-	   MAX_CONTEXT_NAME_SIZE = MAXPATHLEN + 1 };
+           MAX_CONTEXT_NAME_SIZE = MAXPATHLEN + 1 };
     // Max sizes of names
     // (Not too sure about this value)
 
@@ -188,45 +188,45 @@ public:
     // The following interfaces are for objects
 
     int bind_new (const Name &name,
-		  const Object &object);
+                  const Object &object);
     // Insert <object> with <name> into <this> context
     // This will fail if <name> already exists
     // (Name version)
 
     int bind_new (const Istring &name,
-		  const Object &object);
+                  const Object &object);
     // Insert <object> with <name> into <this> context
     // This will fail if <name> already exists
     // (String version)
 
     int bind (const Name &name,
-	      const Object &object);
+              const Object &object);
     // Insert or update <object> with <name> into <this> context
     // This will not fail if <name> already exists
     // (Name version)
 
     int bind (const Istring &name,
-	      const Object &object);
+              const Object &object);
     // Insert or update <object> with <name> into <this> context
     // This will not fail if <name> already exists
     // (String version)
 
     int rebind (const Name &name,
-		const Object &object);
+                const Object &object);
     // Update <object> with <name> in <this> context
     // (Name version)
 
     int rebind (const Istring &name,
-		const Object &object);
+                const Object &object);
     // Update <object> with <name> in <this> context
 
     int resolve (const Name &name,
-		 Object &object);
+                 Object &object);
     // Find <object> with <name> in <this> context
     // (Name version)
 
     int resolve (const Istring &name,
-		 Object &object);
+                 Object &object);
     // Find <object> with <name> in <this> context
 
     int unbind (const Name &name);
@@ -243,57 +243,57 @@ public:
     // Create new <naming_context>
 
     int bind_new_context (const Name &name,
-			  Naming_Context &naming_context,
-			  u_long persistence = REG_OPTION_NON_VOLATILE,
-			  u_long security_access = KEY_ALL_ACCESS,
-			  LPSECURITY_ATTRIBUTES security_attributes = 0);
+                          Naming_Context &naming_context,
+                          u_long persistence = REG_OPTION_NON_VOLATILE,
+                          u_long security_access = KEY_ALL_ACCESS,
+                          LPSECURITY_ATTRIBUTES security_attributes = 0);
     // Insert <naming_context> with <name> relative to <this> context
     // This will fail if <name> already exists
     // (Name version)
 
     int bind_new_context (const Istring &name,
-			  Naming_Context &naming_context,
-			  u_long persistence = REG_OPTION_NON_VOLATILE,
-			  u_long security_access = KEY_ALL_ACCESS,
-			  LPSECURITY_ATTRIBUTES security_attributes = 0);
+                          Naming_Context &naming_context,
+                          u_long persistence = REG_OPTION_NON_VOLATILE,
+                          u_long security_access = KEY_ALL_ACCESS,
+                          LPSECURITY_ATTRIBUTES security_attributes = 0);
     // Insert <naming_context> with <name> relative to <this> context
     // This will fail if <name> already exists
 
     int bind_context (const Name &name,
-		      /* const */ Naming_Context &naming_context,
-		      u_long persistence = REG_OPTION_NON_VOLATILE,
-		      u_long security_access = KEY_ALL_ACCESS,
-		      LPSECURITY_ATTRIBUTES security_attributes = 0);
+                      /* const */ Naming_Context &naming_context,
+                      u_long persistence = REG_OPTION_NON_VOLATILE,
+                      u_long security_access = KEY_ALL_ACCESS,
+                      LPSECURITY_ATTRIBUTES security_attributes = 0);
     // Insert or update <naming_context> with <name> relative to <this> context
     // This will not fail if <name> already exists
     // (Name version)
 
     int bind_context (const Istring &name,
-		      /* const */ Naming_Context &naming_context,
-		      u_long persistence = REG_OPTION_NON_VOLATILE,
-		      u_long security_access = KEY_ALL_ACCESS,
-		      LPSECURITY_ATTRIBUTES security_attributes = 0);
+                      /* const */ Naming_Context &naming_context,
+                      u_long persistence = REG_OPTION_NON_VOLATILE,
+                      u_long security_access = KEY_ALL_ACCESS,
+                      LPSECURITY_ATTRIBUTES security_attributes = 0);
     // Insert or update <naming_context> with <name> relative to <this> context
     // This will not fail if <name> already exists
 
     int rebind_context (const Name &name,
-			/* const */ Naming_Context &naming_context);
+                        /* const */ Naming_Context &naming_context);
     // Rename <naming_context> to <name>
     // (Name version)
 
     int rebind_context (const Istring &name,
-			/* const */ Naming_Context &naming_context);
+                        /* const */ Naming_Context &naming_context);
     // Rename <naming_context> to <name>
 
     int resolve_context (const Name &name,
-			 Naming_Context &naming_context,
-			 u_long security_access = KEY_ALL_ACCESS);
+                         Naming_Context &naming_context,
+                         u_long security_access = KEY_ALL_ACCESS);
     // Find <naming_context> with <name> in <this> context
     // (Name version)
 
     int resolve_context (const Istring &name,
-			 Naming_Context &naming_context,
-			 u_long security_access = KEY_ALL_ACCESS);
+                         Naming_Context &naming_context,
+                         u_long security_access = KEY_ALL_ACCESS);
     // Find <naming_context> with <name> in <this> context
 
     int unbind_context (const Name &name);
@@ -307,8 +307,8 @@ public:
     // Same as unbind_context() with <this> as naming_context
 
     int list (u_long how_many,
-	      Binding_List &list,
-	      Binding_Iterator &iterator);
+              Binding_List &list,
+              Binding_Iterator &iterator);
     // listing function: iterator creator
     // This is useful when there are many objects and contexts
     // in <this> context and you only want to look at a few entries
@@ -398,7 +398,7 @@ public:
     // Next entry
 
     int next_n (u_long how_many,
-		Binding_List &list);
+                Binding_List &list);
     // Next <how_many> entries
 
     int destroy (void);
@@ -426,51 +426,51 @@ public:
       // Base class for state
       {
       public:
-	Iteration_State (Binding_Iterator &iterator);
+        Iteration_State (Binding_Iterator &iterator);
 
-	virtual int next_n (u_long how_many,
-			    Binding_List &list) = 0;
-	// Next <how_many> entries
+        virtual int next_n (u_long how_many,
+                            Binding_List &list) = 0;
+        // Next <how_many> entries
 
-	void reset ();
-	// Reset state
+        void reset ();
+        // Reset state
 
       protected:
-	Binding_Iterator *parent_;
-	// Pointer to parent iterator
+        Binding_Iterator *parent_;
+        // Pointer to parent iterator
 
-	u_long index_;
+        u_long index_;
       };
 
   private:
     class ACE_Export Object_Iteration : public Iteration_State
       {
       public:
-	Object_Iteration (Binding_Iterator &iterator);
+        Object_Iteration (Binding_Iterator &iterator);
 
-	int next_n (u_long how_many,
-		    Binding_List &list);
-	// Next <how_many> entries
+        int next_n (u_long how_many,
+                    Binding_List &list);
+        // Next <how_many> entries
       };
 
     class ACE_Export Context_Iteration : public Iteration_State
       {
       public:
-	Context_Iteration (Binding_Iterator &iterator);
+        Context_Iteration (Binding_Iterator &iterator);
 
-	int next_n (u_long how_many,
-		    Binding_List &list);
-	// Next <how_many> entries
+        int next_n (u_long how_many,
+                    Binding_List &list);
+        // Next <how_many> entries
       };
 
     class ACE_Export Iteration_Complete : public Iteration_State
       {
       public:
-	Iteration_Complete (Binding_Iterator &iterator);
+        Iteration_Complete (Binding_Iterator &iterator);
 
-	int next_n (u_long how_many,
-		    Binding_List &list);
-	// Next <how_many> entries
+        int next_n (u_long how_many,
+                    Binding_List &list);
+        // Next <how_many> entries
       };
 
     friend class Iteration_State;
@@ -504,8 +504,8 @@ class ACE_Export ACE_Predefined_Naming_Contexts
   //     predefined registries.
 public:
   static int connect (ACE_Registry::Naming_Context &naming_context,
-		      HKEY predefined = HKEY_LOCAL_MACHINE,
-		      LPCTSTR machine_name = 0);
+                      HKEY predefined = HKEY_LOCAL_MACHINE,
+                      LPCTSTR machine_name = 0);
   // Factory method for connecting to predefined registries.  This
   // method works for both remote and local machines.  However, for
   // remote machines, HKEY_CLASSES_ROOT and HKEY_CURRENT_USER types

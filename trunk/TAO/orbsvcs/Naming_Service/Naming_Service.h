@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_NAMING_SERVICE_H)
+#ifndef TAO_NAMING_SERVICE_H
 #define TAO_NAMING_SERVICE_H
 
 #include "tao/TAO.h"

@@ -26,10 +26,15 @@
 //
 // ============================================================================
 
-#if !defined (_BPR_DRIVERS_H_)
+#ifndef _BPR_DRIVERS_H_
 #define _BPR_DRIVERS_H_
 
 #include "ace/Functor.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Task.h"
 #include "ace/Synch.h"
 

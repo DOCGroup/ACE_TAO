@@ -22,12 +22,12 @@
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/CosNamingC.h"
 
-class Naming_Test 
+class Naming_Test
 {
   // = TITLE
   //    This is an abstract class which is subclassed
   //    to create different Naming Service tests.
-  //  
+  //
   // = DESCRIPTION
   //    This is a basic example of the "Strategy" pattern.  This class
   //    provides a common interface for different tests (or
@@ -53,7 +53,7 @@ public:
   // Execute the simple test code.
 };
 
-class Tree_Test : public Naming_Test 
+class Tree_Test : public Naming_Test
 {
   // = TITLE
   //    This class implements a test of all Naming Service functions
@@ -61,13 +61,13 @@ class Tree_Test : public Naming_Test
   //
   // = DESCRIPTION
   //    Bind_context() under the root context with the name level1.
-  //    Create_new_context(), bind() foo object into it, and 
+  //    Create_new_context(), bind() foo object into it, and
   //    bind the context into root/level1 under the name level2.
   //    Resolve (root/level1/level2/foo).
   //    Unbind (root/level1/level2/foo).
   //    Bind (root/level1/level2/foo, obj)
   //    Create_new_context()
-  //    and invoke rebind_context() to substitute it for the current 
+  //    and invoke rebind_context() to substitute it for the current
   //    level2 context.
   //    Bind (root/level1/level2/foo, obj)
   //    Resolve (root/level1/level2/foo).
@@ -78,7 +78,7 @@ public:
   // Execute the tree test code.
 };
 
-class Iterator_Test : public Naming_Test 
+class Iterator_Test : public Naming_Test
 {
   // = TITLE
   //    This class implements a test of Naming Service functions
@@ -94,16 +94,16 @@ public:
   virtual int execute (TAO_Naming_Client &root_context);
   // Execute the iterator test code.
 };
- 
-class Exceptions_Test : public Naming_Test 
+
+class Exceptions_Test : public Naming_Test
 {
   // = TITLE
   //    This class implements a test of exceptions in the Naming Service.
   //
   // = DESCRIPTION
   //    Makes sure that Naming Service throws exceptions as expected, and
-  //    data inside exceptions is set correctly.  The test creates a tree of 
-  //    of Naming Contexts: root context -> level1 -> level2.  It then binds() an 
+  //    data inside exceptions is set correctly.  The test creates a tree of
+  //    of Naming Contexts: root context -> level1 -> level2.  It then binds() an
   //    object with the name foo to each of Naming Contexts in the tree.
   //    Invoke resolve() with a Name of length 0 - make sure we get InvalidName exception.
   //    Invoke bind( foo, obj) on root context - make sure we get AlreadyBound exception.
@@ -136,7 +136,7 @@ private:
                         CORBA::Environment &_env);
 };
 
-class Destroy_Test : public Naming_Test 
+class Destroy_Test : public Naming_Test
 {
   // = TITLE
   //    This class implements a test of destroy() function
@@ -149,7 +149,7 @@ class Destroy_Test : public Naming_Test
   //    Unbind the object and call destroy on the context.
   //    Attempt to call destroy on the object again - OBJECT_NOT_EXIST
   //    exception should be raised.
-  //    
+  //
 public:
   virtual int execute (TAO_Naming_Client &root_context);
   // Execute the destroy test code.
@@ -157,12 +157,12 @@ public:
 private:
   // = The following functions isolate specific tests.
   void not_empty_test (CosNaming::NamingContext_var &ref,
-		       CORBA::Environment &_env);
+                       CORBA::Environment &_env);
   void not_exist_test (CosNaming::NamingContext_var &ref,
-		       CORBA::Environment &_env);
+                       CORBA::Environment &_env);
 };
 
-class CosNaming_Client 
+class CosNaming_Client
 {
   // = TITLE,
   //    Defines a class that encapsulates behaviour of the CosNaming
@@ -190,7 +190,7 @@ public:
   // Initialize the client communication endpoint with server.
 
   // = Symbolic ids.
-  enum 
+  enum
   {
     OBJ1_ID = 5,
     OBJ2_ID = 6

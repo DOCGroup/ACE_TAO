@@ -18,10 +18,15 @@
 //
 // ============================================================================
 
-#if !defined (QUOTER_SERVER_H)
+#ifndef QUOTER_SERVER_H
 #define QUOTER_SERVER_H
 
 #include "ace/Get_Opt.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Log_Msg.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
@@ -29,7 +34,7 @@
 #include "Quoter_i.h"
 #include "QuoterC.h"
 
-class Quoter_Server 
+class Quoter_Server
 {
   // =TITLE
   //   Defines a Quoter Server class that implements the functionality
@@ -51,7 +56,7 @@ public:
   // Initialize the Quoter_Server state - parsing arguments and ...
 
   int run (CORBA::Environment& env);
-  // Run the orb 
+  // Run the orb
 
 private:
   int parse_args (void);

@@ -2,7 +2,7 @@
 
 // ========================================================================
 //
-// = FILE  
+// = FILE
 //     Simple_Dyanmic.h
 //
 // = DESCRIPTION
@@ -11,7 +11,7 @@
 // = AUTHOR
 //     Seth Widoff <sbw1@cs.wustl.edu>
 //
-// ======================================================================= 
+// =======================================================================
 
 #ifndef TAO_SIMPLE_DYNAMIC_H
 #define TAO_SIMPLE_DYNAMIC_H
@@ -21,14 +21,14 @@
 template<class T>
 class TAO_Simple_Dynamic_Property : public TAO_Dynamic_Property
 {
-public: 
+public:
 
   TAO_Simple_Dynamic_Property (const T& dp);
-  
+
   virtual CORBA::Any* evalDP (const char* name,
                               CORBA::TypeCode_ptr returned_type,
-                              const CORBA::Any& extra_info,	      
-			      CORBA::Environment& _env)
+                              const CORBA::Any& extra_info,
+                              CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
 
 private:

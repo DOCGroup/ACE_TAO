@@ -9,7 +9,7 @@
 // = DESCRIPTION
 //    As a trading service dynamic property, retrieves machine
 //    statistics from the rstatd using Sun RPC.
-// 
+//
 // = AUTHORS
 //    Seth Widoff <sbw1@cs.wustl.edu>
 //
@@ -31,7 +31,7 @@ class TAO_Machine_Properties :
 {
 public:
 
-  enum PROP_TYPES 
+  enum PROP_TYPES
   {
     CPU,
     DISK,
@@ -47,11 +47,11 @@ public:
 
   static const int NUM_PROPERTIES;
   static const char* PROP_NAMES[];
-  
+
   TAO_Machine_Properties (void);
-  
-  TAO_Machine_Properties (const ACE_Time_Value& timeout);   
-  
+
+  TAO_Machine_Properties (const ACE_Time_Value& timeout);
+
   virtual CORBA::Any* evalDP (const char* name,
                               CORBA::TypeCode_ptr returned_type,
                               const CORBA::Any& extra_info,
@@ -66,11 +66,11 @@ public:
   virtual int define_properties
     (CosTradingRepos::ServiceTypeRepository::PropStructSeq& prop_seq,
      CORBA::ULong offset = 0) const;
-  
+
 private:
 
   void init (void);
-  
+
   int retrieve_stats (void);
 
   void compute_cpu (CORBA::Any& value, int elapsed_time);
@@ -83,15 +83,15 @@ private:
   void compute_collisions (CORBA::Any& value, int elapsed_time);
   void compute_interrupts (CORBA::Any& value, int elapsed_time);
   void compute_load (CORBA::Any& value, int elapsed_time);
-  
-  const ACE_Time_Value timeout_;  
+
+  const ACE_Time_Value timeout_;
   ACE_Time_Value timestamp_;
   ACE_Time_Value sample_time_;
-  
+
   statstime stats_;
   statstime old_stats_;
   CLIENT* rstat_client_;
-  
+
 };
 
 #endif /* TAO_MACHINE_PROPERTIES */

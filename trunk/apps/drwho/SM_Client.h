@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_SM_CLIENT_H)
+#ifndef _SM_CLIENT_H
 #define _SM_CLIENT_H
 
 #include "PM_Client.h"

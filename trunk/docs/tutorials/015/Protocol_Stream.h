@@ -5,6 +5,11 @@
 #define PROTOCOL_STREAM_H
 
 #include "ace/SOCK_Stream.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Stream.h"
 
 // Shorthand for the stream.
@@ -46,18 +51,18 @@ public:
              _timeout = 0 );
 
         // Tell the Recv task to read some data and send it upstream.
-        // The data will pass through the protocol tasks and be queued 
+        // The data will pass through the protocol tasks and be queued
         // into the stream head reader task's message queue.  If
         // you've installed a _reader in open() then that task's
         // recv() method will see the message and may consume it
         // instead of passing it to the stream head for queueing.
     int get(void);
-    
+
     ACE_SOCK_Stream & peer(void)
         {
             return this->peer_;
         }
-    
+
 private:
         // Our peer connection
     ACE_SOCK_Stream peer_;

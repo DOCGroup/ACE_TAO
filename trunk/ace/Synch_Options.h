@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
-//   ACE_Synch_Options.h 
+//   ACE_Synch_Options.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_SYNCH_OPTIONS_H
@@ -20,7 +20,7 @@
 #include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_Synch_Options
@@ -29,34 +29,34 @@ class ACE_Export ACE_Synch_Options
   //     Contains the values of options used to determine the
   //     synchronous and asynchronous behavior.
   //
-  // = DESCRIPTION 
-  //     Values support the following behavior (TV == "timeout" 
+  // = DESCRIPTION
+  //     Values support the following behavior (TV == "timeout"
   //     and UR == "use ACE_Reactor"):
   //
   // = BEGIN<CODE>
-  //          Parameters      | Description                   
-  //                          |                             
-  //          TV   |  UR      |                             
+  //          Parameters      | Description
+  //                          |
+  //          TV   |  UR      |
   //          -----|----------|-------------------------------
-  //               |	      |
+  //               |          |
   //          NULL | yes      | infinite timeout (using ACE_Reactor)
   //               |          |
-  //          time | yes      | try asynch transaction for    
+  //          time | yes      | try asynch transaction for
   //               |          | the specified time (using ACE_Reactor)
   //               |          |
-  //          0,0  | yes      | poll; try, if EWOULDBLOCK,    
+  //          0,0  | yes      | poll; try, if EWOULDBLOCK,
   //               |          |       then return immediately
   //               |          |       (using ACE_Reactor)
   //               |          |
   //          NULL | no       | block forever (don't use ACE_Reactor)
-  //               |          |                               
-  //          time | no       | do a blocking transaction     
+  //               |          |
+  //          time | no       | do a blocking transaction
   //               |          | for the specified time
-  //               |          | (don't use ACE_Reactor)                 
-  //               |          |                               
+  //               |          | (don't use ACE_Reactor)
+  //               |          |
   //          0,0  | no       | poll; but do not initiate a
   //               |          | nonblocking transaction
-  //               |          | (don't use ACE_Reactor)    
+  //               |          | (don't use ACE_Reactor)
   // = END<CODE>
 public:
   // = Options flags for controlling synchronization.  Note that these
@@ -72,16 +72,16 @@ public:
 
   // = Initialization methods.
   ACE_Synch_Options (u_long options = 0,
-		     const ACE_Time_Value &timeout = ACE_Time_Value::zero,
-		     const void *arg = 0);
+                     const ACE_Time_Value &timeout = ACE_Time_Value::zero,
+                     const void *arg = 0);
   // Initialize the Synch_Options based on parameters.
 
   ~ACE_Synch_Options (void);
   // Default dtor.
 
   void set (u_long options = 0,
-	    const ACE_Time_Value &timeout = ACE_Time_Value::zero,
-	    const void *arg = 0);
+            const ACE_Time_Value &timeout = ACE_Time_Value::zero,
+            const void *arg = 0);
   // Initialize the Synch_Options based on parameters.
 
   int operator[] (u_long option) const;

@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_PMC_FLO_H)
+#ifndef _PMC_FLO_H
 #define _PMC_FLO_H
 
 #include "PM_Client.h"
@@ -22,7 +22,7 @@
 class PMC_Flo : public PM_Client
 {
   // = TITLE
-  //   Provides the client's lookup table abstraction for `flo' users... 
+  //   Provides the client's lookup table abstraction for `flo' users...
 
 public:
   PMC_Flo (void);

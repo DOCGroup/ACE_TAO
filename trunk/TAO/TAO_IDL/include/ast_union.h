@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -79,12 +79,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 /*
 ** DEPENDENCIES: ast_concrete_type.hh, utl_scope.hh, ast_union_branch.hh,
-**		 ast_union_label.hh, utl_scoped_name.hh, utl_strlist.hh
+**               ast_union_label.hh, utl_scoped_name.hh, utl_strlist.hh
 **
 ** USE: Included from ast.hh
 */
 
-class	AST_Union : public virtual AST_Structure
+class   AST_Union : public virtual AST_Structure
 {
 public:
   // Operations
@@ -104,39 +104,39 @@ public:
   DEF_NARROW_FROM_SCOPE(AST_Union);
 
   // AST Dumping
-  virtual void			dump(ostream &);
+  virtual void                  dump(ostream &);
 
 private:
   // Data
-  AST_ConcreteType		*pd_disc_type;	// Discriminator type
-  AST_Expression::ExprType	pd_udisc_type;	// Its expression type
+  AST_ConcreteType              *pd_disc_type;  // Discriminator type
+  AST_Expression::ExprType      pd_udisc_type;  // Its expression type
   /* Convention: udisc_type == EV_any denotes an enum value */
 
   // Operations
 
   // Look up a branch by node pointer
-  AST_UnionBranch		*lookup_branch(AST_UnionBranch *branch);
+  AST_UnionBranch               *lookup_branch(AST_UnionBranch *branch);
 
   // Look up the branch with the "default" label
-  AST_UnionBranch		*lookup_default();
+  AST_UnionBranch               *lookup_default();
 
   // Look up a branch given a branch with a label. This is used to
   // check for duplicate labels
-  AST_UnionBranch		*lookup_label(AST_UnionBranch *b);
+  AST_UnionBranch               *lookup_label(AST_UnionBranch *b);
 
   // Look up a union branch given an enumerator. This is used to
   // check for duplicate enum labels
-  AST_UnionBranch		*lookup_enum(AST_UnionBranch *b);
+  AST_UnionBranch               *lookup_enum(AST_UnionBranch *b);
 
 private:
   friend int tao_yyparse();
   // Scope Management Protocol
 
-  virtual AST_Union		*fe_add_union(AST_Union			*u);
-  virtual AST_UnionBranch	*fe_add_union_branch(AST_UnionBranch	*b);
-  virtual AST_Structure		*fe_add_structure(AST_Structure		*s);
-  virtual AST_Enum		*fe_add_enum(AST_Enum			*e);
-  virtual AST_EnumVal		*fe_add_enum_val(AST_EnumVal		*v);
+  virtual AST_Union             *fe_add_union(AST_Union                 *u);
+  virtual AST_UnionBranch       *fe_add_union_branch(AST_UnionBranch    *b);
+  virtual AST_Structure         *fe_add_structure(AST_Structure         *s);
+  virtual AST_Enum              *fe_add_enum(AST_Enum                   *e);
+  virtual AST_EnumVal           *fe_add_enum_val(AST_EnumVal            *v);
 
 };
 

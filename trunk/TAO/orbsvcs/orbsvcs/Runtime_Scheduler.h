@@ -19,8 +19,8 @@ class TAO_ORBSVCS_Export ACE_Runtime_Scheduler : public POA_RtecScheduler::Sched
   //
 public:
   ACE_Runtime_Scheduler (int config_count,
-			 ACE_Scheduler_Factory::POD_Config_Info config_info[],
-			 int entry_count,
+                         ACE_Scheduler_Factory::POD_Config_Info config_info[],
+                         int entry_count,
                          ACE_Scheduler_Factory::POD_RT_Info rt_info[]);
 
   // Initialize the data from the POD_RT_Info array.
@@ -41,7 +41,7 @@ public:
   virtual void set (RtecScheduler::handle_t handle,
                     RtecScheduler::Criticality criticality,
                     RtecScheduler::Time time,
-		    RtecScheduler::Time typical_time,
+                    RtecScheduler::Time typical_time,
                     RtecScheduler::Time cached_time,
                     RtecScheduler::Period period,
                     RtecScheduler::Importance importance,
@@ -80,7 +80,7 @@ public:
   virtual void compute_scheduling (CORBA::Long minimum_priority,
                                    CORBA::Long maximum_priority,
                                    RtecScheduler::RT_Info_Set_out infos,
-				   RtecScheduler::Config_Info_Set_out configs,
+                                   RtecScheduler::Config_Info_Set_out configs,
                                    CORBA::Environment &_env)
     TAO_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
@@ -89,8 +89,8 @@ public:
 
   virtual void dispatch_configuration (RtecScheduler::Preemption_Priority p_priority,
                                        RtecScheduler::OS_Priority& priority,
-				       RtecScheduler::Dispatching_Type & d_type,
-				       CORBA::Environment &_env)
+                                       RtecScheduler::Dispatching_Type & d_type,
+                                       CORBA::Environment &_env)
     TAO_THROW_SPEC ((CORBA::SystemException,
                     RtecScheduler::NOT_SCHEDULED,
                     RtecScheduler::UNKNOWN_PRIORITY_LEVEL));

@@ -5,24 +5,25 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Module.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_MODULE_H
 #define ACE_MODULE_H
 
 #include "ace/ACE.h"
-#include "ace/Task_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Task_T.h"
 
 class ACE_Export ACE_Module_Base
 {
@@ -45,7 +46,7 @@ public:
     M_DELETE_WRITER = 2,
     // Indicates that close() should delete the reader Task.
 
-    M_DELETE = 3 
+    M_DELETE = 3
     // Indicates that close() deletes the Tasks.  Don't change this
     // value without updating the same enum in class ACE_Stream...
     // The <M_DELETE_READER> and <M_DELETE_WRITER> flags may be or'ed
@@ -58,7 +59,7 @@ class ACE_Module : public ACE_Module_Base
 {
   // = TITLE
   //     An abstraction for managing a bi-directional flow of messages.
-  // 
+  //
   // = DESCRIPTION
   //     This is based on the Module concept in System V Streams,
   //     which contains a pair of Tasks, one for handling upstream
@@ -72,22 +73,22 @@ public:
   ACE_Module (void);
   // Create an empty Module.
 
-  ~ACE_Module (void);		
+  ~ACE_Module (void);
   // Shutdown the Module.
 
-  ACE_Module (const ASYS_TCHAR *module_name, 
-	      ACE_Task<ACE_SYNCH_USE> *writer = 0, 
-	      ACE_Task<ACE_SYNCH_USE> *reader = 0, 
-	      void *args = 0,
-	      int flags = M_DELETE);
+  ACE_Module (const ASYS_TCHAR *module_name,
+              ACE_Task<ACE_SYNCH_USE> *writer = 0,
+              ACE_Task<ACE_SYNCH_USE> *reader = 0,
+              void *args = 0,
+              int flags = M_DELETE);
   // Create an initialized module with <module_name> as its identity
   // and <reader> and <writer> as its tasks.
 
-  int open (const ASYS_TCHAR *module_name, 
-	    ACE_Task<ACE_SYNCH_USE> *writer = 0, 
-	    ACE_Task<ACE_SYNCH_USE> *reader = 0, 
-	    void *a = 0,
-	    int flags = M_DELETE);
+  int open (const ASYS_TCHAR *module_name,
+            ACE_Task<ACE_SYNCH_USE> *writer = 0,
+            ACE_Task<ACE_SYNCH_USE> *reader = 0,
+            void *a = 0,
+            int flags = M_DELETE);
   // Create an initialized module with <module_name> as its identity
   // and <reader> and <writer> as its tasks.  Previously register
   // reader or writers or closed down and deleted according to the
@@ -100,8 +101,8 @@ public:
   // <flags> values in calls to c'tor(), open(), reader() and
   // writer().  A previous value M_DELETE[_XXX] can not be overridden.
   // Should not be called from within ACE_Task::module_closed().
-  
-  // = ACE_Task manipulation routines 
+
+  // = ACE_Task manipulation routines
   ACE_Task<ACE_SYNCH_USE> *writer (void);
   // Get the writer task.
 
@@ -122,16 +123,16 @@ public:
   // also be deleted, depending on the old flags_ value.  Should not
   // be called from within ACE_Task::module_closed()
 
-  ACE_Task<ACE_SYNCH_USE> *sibling (ACE_Task<ACE_SYNCH_USE> *orig); 
+  ACE_Task<ACE_SYNCH_USE> *sibling (ACE_Task<ACE_SYNCH_USE> *orig);
   // Set and get pointer to sibling <ACE_Task> in an <ACE_Module>
 
-  // = Identify the module 
+  // = Identify the module
   const ASYS_TCHAR *name (void) const;
   // Get the module name.
   void name (const ASYS_TCHAR *);
   // Set the module name.
 
-  // = Argument to the Tasks. 
+  // = Argument to the Tasks.
   void *arg (void) const;
   // Get the argument passed to the tasks.
 
@@ -139,7 +140,7 @@ public:
   // Set the argument passed to the tasks.
 
   void link (ACE_Module<ACE_SYNCH_USE> *m);
-  // Link to other modules in the ustream stack 
+  // Link to other modules in the ustream stack
 
   ACE_Module<ACE_SYNCH_USE> *next (void);
   // Get the next pointer to the module above in the stream.
@@ -158,7 +159,7 @@ private:
   // Implements the close operation for either the reader or the
   // writer task (depending on <which>).
 
-  ACE_Task<ACE_SYNCH_USE> *q_pair_[2];   
+  ACE_Task<ACE_SYNCH_USE> *q_pair_[2];
   // Pair of Tasks that form the "read-side" and "write-side" of the
   // ACE_Module partitioning.
 

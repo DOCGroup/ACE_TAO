@@ -3,10 +3,15 @@
 // $Id$
 //
 
-#if !defined(TAO_EC_TIMER_MODULE_H)
+#ifndef TAO_EC_TIMER_MODULE_H
 #define TAO_EC_TIMER_MODULE_H
 
 #include "ace/ACE.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/orbsvcs/Event/RT_Task.h"
 
@@ -53,8 +58,8 @@ public:
   // Add a timer at the given priority.
 
   virtual int register_handler (RtecScheduler::Preemption_Priority priority,
-				ACE_Event_Handler* eh,
-				ACE_HANDLE handle) = 0;
+                                ACE_Event_Handler* eh,
+                                ACE_HANDLE handle) = 0;
   // Register a handler?????
 
   virtual ACE_Reactor* reactor (RtecScheduler::Preemption_Priority priority) = 0;
@@ -95,8 +100,8 @@ public:
                             int id,
                             const void*& act);
   virtual int register_handler (RtecScheduler::Preemption_Priority priority,
-				ACE_Event_Handler* eh,
-				ACE_HANDLE handle);
+                                ACE_Event_Handler* eh,
+                                ACE_HANDLE handle);
   virtual ACE_Reactor* reactor (RtecScheduler::Preemption_Priority priority);
 
 private:
@@ -149,14 +154,14 @@ public:
                             int id,
                             const void*& act);
   virtual int register_handler (RtecScheduler::Preemption_Priority priority,
-				ACE_Event_Handler* eh,
-				ACE_HANDLE handle);
+                                ACE_Event_Handler* eh,
+                                ACE_HANDLE handle);
   virtual ACE_Reactor* reactor (RtecScheduler::Preemption_Priority priority);
-  
+
 private:
   int shutdown_;
   // The reactors are shutdown, do not attempt to restart them.
-  
+
   ReactorTask *reactorTasks[ACE_Scheduler_MAX_PRIORITIES];
   // The set of ReactorTasks
 

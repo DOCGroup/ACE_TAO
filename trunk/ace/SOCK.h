@@ -5,25 +5,26 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    SOCK.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 //============================================================================
 
 #ifndef ACE_SOCK_H
 #define ACE_SOCK_H
 
 #include "ace/ACE.h"
-#include "ace/Addr.h"
-#include "ace/IPC_SAP.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Addr.h"
+#include "ace/IPC_SAP.h"
 
 class ACE_Export ACE_SOCK : public ACE_IPC_SAP
 {
@@ -31,7 +32,7 @@ class ACE_Export ACE_SOCK : public ACE_IPC_SAP
   //     An abstract class which forms the basis for more specific
   //     classes (such as ACE_SOCK_Acceptor and ACE_SOCK_Connector).
   //     Do not instantiate this class.
-  //  
+  //
   // = DESCRIPTION
   //    This class provides functions that are common to all of the
   //    SOCK-type classes. ACE_SOCK provides the ability to get and
@@ -41,15 +42,15 @@ public:
   ~ACE_SOCK (void);
   // Default ctor/dtor.
 
-  int set_option (int level, 
-                  int option, 
-                  void *optval, 
+  int set_option (int level,
+                  int option,
+                  void *optval,
                   int optlen) const;
   // Wrapper around the setsockopt() system call.
 
-  int get_option (int level, 
-                  int option, 
-                  void *optval, 
+  int get_option (int level,
+                  int option,
+                  void *optval,
                   int *optlen) const;
   // Wrapper around the getsockopt() system call.
 
@@ -70,17 +71,17 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-  int open (int type, 
-            int protocol_family, 
+  int open (int type,
+            int protocol_family,
             int protocol,
             int reuse_addr);
   // Wrapper around the <socket> system call.
 
 protected:
   ACE_SOCK (int type,
-	    int protocol_family, 
+            int protocol_family,
             int protocol = 0,
-	    int reuse_addr = 0);
+            int reuse_addr = 0);
   // Constructor with arguments to call the <socket> system call.
 
   ACE_SOCK (void);

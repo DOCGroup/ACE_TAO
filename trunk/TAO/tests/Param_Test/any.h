@@ -16,7 +16,7 @@
 //
 // ============================================================================
 
-#if !defined (PARAM_TEST_ANY_H)
+#ifndef PARAM_TEST_ANY_H
 #define PARAM_TEST_ANY_H
 
 #include "param_testCli.h"

@@ -18,7 +18,7 @@ public:
         // Again we have the option of multiple threads and again I
         // regret tempting folks to use it.
     Crypt( int _thr_count = 0 );
-    
+
     ~Crypt(void);
 
 protected:

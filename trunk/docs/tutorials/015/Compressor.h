@@ -12,18 +12,18 @@
 class Compressor : public Protocol_Task
 {
 public:
-    
+
     typedef Protocol_Task inherited;
 
         // I've given you the option of creating this task derivative
-        // with a number of threads.  In retro-spect that really isn't 
+        // with a number of threads.  In retro-spect that really isn't
         // a good idea.  Most client/server systems rely on requests
-        // and responses happening in a predicatable order.  Introduce 
+        // and responses happening in a predicatable order.  Introduce
         // a thread pool and message queue and that ordering goes
         // right out the window.  In other words:  Don't ever use the
         // constructor parameter!
     Compressor( int _thr_count = 0 );
-    
+
     ~Compressor(void);
 
 protected:

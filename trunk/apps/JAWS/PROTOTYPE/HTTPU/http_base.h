@@ -1,9 +1,13 @@
 // $Id$
 
-#if !defined (HTTPU_HTTP_BASE_H)
+#ifndef HTTPU_HTTP_BASE_H
 #define HTTPU_HTTP_BASE_H
 
 #include "ace/Message_Block.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "JAWS/Parse_Headers.h"
 #include "HTTPU/http_export.h"

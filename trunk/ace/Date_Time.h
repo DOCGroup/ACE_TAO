@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    ACE_Date_Time.h
 //
@@ -20,7 +20,7 @@
 #include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_Date_Time
@@ -30,12 +30,12 @@ class ACE_Export ACE_Date_Time
 public:
   // constructor with init values, no check for validy
   ACE_Date_Time (long day = 0,
-		 long month = 0,
-		 long year = 0,
-		 long hour = 0,
-		 long minute = 0,
-		 long second = 0,
-		 long microsec = 0);
+                 long month = 0,
+                 long year = 0,
+                 long hour = 0,
+                 long minute = 0,
+                 long second = 0,
+                 long microsec = 0);
   // Set/get portions of ACE_Date_Time, no check for validity.
 
   long day (void);

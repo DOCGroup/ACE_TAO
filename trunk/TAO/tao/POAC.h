@@ -915,7 +915,7 @@ public:
   //
   // **************************************************
 
-  enum SynchronizationPolicyValue 
+  enum SynchronizationPolicyValue
   {
     DEFAULT_LOCK,
     NULL_LOCK,

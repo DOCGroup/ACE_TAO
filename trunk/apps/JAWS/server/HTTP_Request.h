@@ -6,27 +6,32 @@
 //
 // = LIBRARY
 //   jaws
-// 
+//
 // = FILENAME
 //    HTTP_Request.h
 //
 // = AUTHOR
 //    James Hu
-// 
+//
 // ============================================================================
 
-#if !defined (HTTP_REQUEST_H)
+#ifndef HTTP_REQUEST_H
 #define HTTP_REQUEST_H
 
 class ACE_Message_Block;
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "Parse_Headers.h"
 
-class HTTP_Request 
+class HTTP_Request
   // = TITLE
   //     This parses the client request of an HTTP transaction.
-  // 
+  //
   // = DESCRIPTION
 {
 public:
@@ -44,7 +49,7 @@ public:
   // form: METHOD URI VERSION.
 
   int init (char *const buffer,
-	    int buflen);
+            int buflen);
   // Initialize the request object.  This will parse the buffer and
   // prepare for the accessors.
 

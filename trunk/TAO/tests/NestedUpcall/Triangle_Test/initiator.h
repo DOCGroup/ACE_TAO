@@ -10,7 +10,7 @@
 //    initiator.h
 //
 // = DESCRIPTION
-//      This class implements a simple server for the 
+//      This class implements a simple server for the
 //      Nested Upcalls - Triangle test
 //
 // = AUTHORS
@@ -18,10 +18,15 @@
 //
 // ============================================================================
 
-#if !defined (_TRIANGLE_TEST_INITITATOR_SERVER_H)
+#ifndef _TRIANGLE_TEST_INITITATOR_SERVER_H
 #define _TRIANGLE_TEST_INITITATOR_SERVER_H
 
 #include "ace/Get_Opt.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Log_Msg.h"
 #include "tao/TAO.h"
 #include "Initiator_i.h"

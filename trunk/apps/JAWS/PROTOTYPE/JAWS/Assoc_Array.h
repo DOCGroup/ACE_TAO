@@ -1,7 +1,7 @@
 /* -*- c++ -*- */
 // $Id$
 
-#if !defined (JAWS_ASSOC_ARRAY_H)
+#ifndef JAWS_ASSOC_ARRAY_H
 #define JAWS_ASSOC_ARRAY_H
 
 template <class KEY, class DATA> class JAWS_Assoc_Array_Iterator;

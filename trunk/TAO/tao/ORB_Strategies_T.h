@@ -19,6 +19,10 @@
 
 #include "ace/Strategies_T.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 template <class SH>
 class TAO_Reactive_Strategy : public ACE_Reactive_Strategy<SH>
 {

@@ -268,7 +268,7 @@ public:
   // in CPU time; it allocates no new memory.
 
   static void make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
-					  CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                                          CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Make the TypeCode for the CORBA::UnknownUserException standard
   // exception.
 
@@ -280,7 +280,7 @@ public:
   // Runtime finalization of all standard exception typecodes.
 
   static CORBA_Exception *create_system_exception (const char* id,
-						   CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                                                   CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Create a CORBA::SystemException given the interface repository
   // ID.
 

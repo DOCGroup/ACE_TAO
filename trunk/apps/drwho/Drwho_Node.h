@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_DRWHO_NODE_H)
+#ifndef _DRWHO_NODE_H
 #define _DRWHO_NODE_H
 
 #include "global.h"
@@ -48,5 +48,5 @@ public:
   int inactive_count_;
   Drwho_Node *next_;
 };
-  
+
 #endif /* _DRWHO_NODE_H */

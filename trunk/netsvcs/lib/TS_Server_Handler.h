@@ -5,19 +5,24 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
-//    TS_Server_Handler.h 
+//    TS_Server_Handler.h
 //
 // = AUTHOR
-//    Prashant Jain 
-// 
+//    Prashant Jain
+//
 // ============================================================================
 
-#if !defined (ACE_TS_SERVER_HANDLER_H)
+#ifndef ACE_TS_SERVER_HANDLER_H
 #define ACE_TS_SERVER_HANDLER_H
 
 #include "ace/Acceptor.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Time_Request_Reply.h"
 
@@ -53,11 +58,11 @@ protected:
 
   virtual int recv_request (void);
   // Receive, frame, and decode the client's request.
-  
+
   virtual int dispatch (void);
   // Dispatch the appropriate operation to handle the client's
   // request.
-  
+
   virtual int send_request (ACE_Time_Request &);
   // Special kind of reply
 

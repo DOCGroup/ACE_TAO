@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_OPTIONS_H)
+#ifndef _OPTIONS_H
 #define _OPTIONS_H
 
 #include "global.h"
@@ -38,16 +38,16 @@ public:
 
   // Different types of messages.
   enum Protocol_Types
-  { 
-    PROTO_USR     = 1, // Only return info on one user. 
-    PROTO_ALL     = 2, // Return info on all users logged in around the system. 
-    PROTO_FLO     = 3, // Return info on friends logged in. 
-    PROTO_RUSER   = 4, // Return info in ruser format! 
-    PROTO_RWHO    = 5, // Return info in rwho format. 
-    PROTO_WHO     = 6, // Return info in who format. 
-    PROTO_RUPTIME = 7  // Return info in ruptime format. 
+  {
+    PROTO_USR     = 1, // Only return info on one user.
+    PROTO_ALL     = 2, // Return info on all users logged in around the system.
+    PROTO_FLO     = 3, // Return info on friends logged in.
+    PROTO_RUSER   = 4, // Return info in ruser format!
+    PROTO_RWHO    = 5, // Return info in rwho format.
+    PROTO_WHO     = 6, // Return info in who format.
+    PROTO_RUPTIME = 7  // Return info in ruptime format.
   };
-  
+
   static void set_options (int argc, char *argv[]);
   static void set_opt (Option_Types opt);
   static int get_opt (Option_Types opt);

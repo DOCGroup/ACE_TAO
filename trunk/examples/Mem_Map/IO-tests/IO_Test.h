@@ -5,6 +5,10 @@
 
 #include "ace/Profile_Timer.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 /* Base class for all the File I/O tests. */
 
 class IO_Test
@@ -21,8 +25,8 @@ public:
 
 protected:
   // Name of the test
-  const char *name_; 
-  
+  const char *name_;
+
   // Reference to a timer
   ACE_Profile_Timer &tm_;
 };

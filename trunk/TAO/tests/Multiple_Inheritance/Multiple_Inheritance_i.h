@@ -5,8 +5,8 @@
 ACE_RCSID(Multiple_Inheritance, Multiple_Inheritance_i, "$Id$")
 
 class Multiple_Inheritance_i : public POA_D
-{       
-public:         
+{
+public:
   virtual CORBA::String method1 (CORBA::Environment &)
     {
       return CORBA::string_dup ("method1");

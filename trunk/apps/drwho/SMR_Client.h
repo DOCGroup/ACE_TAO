@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_SMR_CLIENT_H)
+#ifndef _SMR_CLIENT_H
 #define _SMR_CLIENT_H
 
 #include "SM_Client.h"

@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    MT_Reactor_Timer_Test.h
 //
@@ -15,13 +15,18 @@
 //
 // = AUTHOR
 //    Steve Huston
-// 
+//
 // ============================================================================
 
-#if !defined (__MT_REACTOR_TIMER_TEST_H)
+#ifndef __MT_REACTOR_TIMER_TEST_H
 #define __MT_REACTOR_TIMER_TEST_H
 
 #include "ace/Reactor.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Task.h"
 #include "ace/Pipe.h"
 
@@ -29,7 +34,7 @@ class Time_Handler : public ACE_Task<ACE_SYNCH>
 {
   // = TITLE
   //   Test out the multi-threading features of the Reactor's timer
-  //   mechanism. 
+  //   mechanism.
 public:
   Time_Handler (void);
 
@@ -42,7 +47,7 @@ public:
                               const void *arg);
 
 private:
-  enum 
+  enum
   {
     TIMER_SLOTS = 10
   };

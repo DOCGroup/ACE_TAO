@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 1994, 1995.  Netscape Communications Corporation.  All
  * rights reserved.
- * 
+ *
  * Use of this software is governed by the terms of the license agreement for
  * the Netscape Communications or Netscape Comemrce Server between the
  * parties.
@@ -13,7 +13,7 @@
 
 /*
  * req.h: Request-specific data structures and functions
- * 
+ *
  * Rob McCool
  */
 
@@ -37,7 +37,7 @@
 #define REQ_HASHSIZE 10
 #define REQ_MAX_LINE 4096
 
-    
+
 /*
  * The REQ_ return codes. These codes are used to determine what the server
  * should do after a particular module completes its task.
@@ -108,7 +108,7 @@ void request_free(Request *req);
 
 /*
  * Restarts a request for a given URI internally. If rq is non-NULL, the
- * function will keep the old request's headers and protocol, but with a new 
+ * function will keep the old request's headers and protocol, but with a new
  * URI and method of GET. If the previous method was HEAD, this is preserved.
  * Any other method becomes GET. You may assume that if you give it a request
  * structure that it will use the same structure.
@@ -122,7 +122,7 @@ Request *request_restart_internal(char *uri, Request *rq);
 
 /*
  * request_translate_uri performs virtual to physical mapping on the given
- * uri and returns either a path string or NULL depending on whether it was 
+ * uri and returns either a path string or NULL depending on whether it was
  * successful or not.
  */
 
@@ -130,8 +130,8 @@ char *request_translate_uri(char *uri, Session *sn);
 
 
 /*
- * request_header finds the named header depending on the requesting 
- * protocol. If possible, it will not load headers until the first is 
+ * request_header finds the named header depending on the requesting
+ * protocol. If possible, it will not load headers until the first is
  * requested. You have to watch out because this can return REQ_ABORTED.
  */
 
@@ -146,9 +146,9 @@ int request_loadheaders(Session *sn, Request *rq);
 
 /*
  * request_stat_path tries to stat path. If path is NULL, it will look in
- * the vars pblock for "path". If the stat is successful, it returns the stat 
- * structure. If not, returns NULL and leaves a message in rq->staterr. If a 
- * previous call to this function was successful, and path is the same, the 
+ * the vars pblock for "path". If the stat is successful, it returns the stat
+ * structure. If not, returns NULL and leaves a message in rq->staterr. If a
+ * previous call to this function was successful, and path is the same, the
  * function will simply return the previously found value.
  *
  * User functions should not free this structure.
@@ -178,7 +178,7 @@ int request_fileinfo(Session *sn, Request *rq);
 
 
 /*
- * request_handle_processed takes a Request structure with its reqpb 
+ * request_handle_processed takes a Request structure with its reqpb
  * block filled in and handles the request.
  */
 
@@ -200,7 +200,7 @@ int request_service(Session *sn, Request *rq);
 void request_handle(Session *sn);
 
 /*
- * Moved here due to problems with interdependency. See object.h for 
+ * Moved here due to problems with interdependency. See object.h for
  * description.
  */
 

@@ -5,24 +5,25 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
-//    SOCK_Connector.h 
+//    SOCK_Connector.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_SOCK_CONNECTOR_H
 #define ACE_SOCK_CONNECTOR_H
 
 #include "ace/SOCK_Stream.h"
-#include "ace/Time_Value.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Time_Value.h"
 
 class ACE_Export ACE_SOCK_Connector
 {
@@ -37,15 +38,15 @@ public:
   ACE_SOCK_Connector (void);
   // Default constructor.
 
-  ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream, 
-		      const ACE_Addr &remote_sap,
-		      ACE_Time_Value *timeout = 0,
-		      const ACE_Addr &local_sap = ACE_Addr::sap_any,
-		      int reuse_addr = 0,
-		      int flags = 0,
-		      int perms = 0,
-		      int protocol_family = PF_INET, 
-		      int protocol = 0);
+  ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
+                      const ACE_Addr &remote_sap,
+                      ACE_Time_Value *timeout = 0,
+                      const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                      int reuse_addr = 0,
+                      int flags = 0,
+                      int perms = 0,
+                      int protocol_family = PF_INET,
+                      int protocol = 0);
   // Actively connect and produce a <new_stream> if things go well.
   // The <remote_sap> is the address that we are trying to connect
   // with.  The <timeout> is the amount of time to wait to connect.
@@ -63,15 +64,15 @@ public:
   ~ACE_SOCK_Connector (void);
   // Default dtor.
 
-  int connect (ACE_SOCK_Stream &new_stream, 
-	       const ACE_Addr &remote_sap,
-	       ACE_Time_Value *timeout = 0,
-	       const ACE_Addr &local_sap = ACE_Addr::sap_any,
-	       int reuse_addr = 0,
- 	       int flags = 0,
-	       int perms = 0,
-	       int protocol_family = PF_INET, 
-	       int protocol = 0); 
+  int connect (ACE_SOCK_Stream &new_stream,
+               const ACE_Addr &remote_sap,
+               ACE_Time_Value *timeout = 0,
+               const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               int reuse_addr = 0,
+               int flags = 0,
+               int perms = 0,
+               int protocol_family = PF_INET,
+               int protocol = 0);
   // Actively connect and produce a <new_stream> if things go well.
   // The <remote_sap> is the address that we are trying to connect
   // with.  The <timeout> is the amount of time to wait to connect.
@@ -87,9 +88,9 @@ public:
   // <local_addr> is reused, even if it hasn't been cleanedup yet.
 
   // = Completion routine.
-  int complete (ACE_SOCK_Stream &new_stream, 
-		ACE_Addr *remote_sap = 0,
-		ACE_Time_Value *timeout = 0);
+  int complete (ACE_SOCK_Stream &new_stream,
+                ACE_Addr *remote_sap = 0,
+                ACE_Time_Value *timeout = 0);
   // Try to complete a non-blocking connection.
   // If connection completion is successful then <new_stream> contains
   // the connected ACE_SOCK_Stream.  If <remote_sap> is non-NULL then it

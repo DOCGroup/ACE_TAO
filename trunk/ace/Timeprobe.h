@@ -7,7 +7,7 @@
 #include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_ENABLE_TIMEPROBES)
@@ -19,7 +19,7 @@
 #if defined (ACE_COMPILE_TIMEPROBES)
 
 class ACE_Export ACE_Event_Descriptions
-{  
+{
   // = TITLE
   // Event Descriptions.
 public:
@@ -82,7 +82,7 @@ typedef ACE_SYNCH_MUTEX ACE_TIMEPROBE_MUTEX;
 typedef ACE_SYNCH_NULL_MUTEX ACE_TIMEPROBE_MUTEX;
 #  endif /* ACE_MT_TIMEPROBES */
 
-typedef ACE_Timeprobe<ACE_TIMEPROBE_MUTEX> 
+typedef ACE_Timeprobe<ACE_TIMEPROBE_MUTEX>
         ACE_TIMEPROBE_WITH_LOCKING;
 
 // If ACE_TSS_TIMEPROBES is defined, store the ACE_Timeprobe singleton
@@ -91,26 +91,26 @@ typedef ACE_Timeprobe<ACE_TIMEPROBE_MUTEX>
 // other.
 #  if defined (ACE_TSS_TIMEPROBES)
 #define ACE_TIMEPROBE_SINGLETON_DEFINE \
-        ACE_TSS_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_NULL_MUTEX>; 
+        ACE_TSS_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_NULL_MUTEX>;
 typedef ACE_TSS_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_NULL_MUTEX>
         ACE_TIMEPROBE_SINGLETON;
 #  else /* ACE_TSS_TIMEPROBES */
 #define ACE_TIMEPROBE_SINGLETON_DEFINE \
         ACE_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_MUTEX>;
-typedef ACE_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_MUTEX> 
+typedef ACE_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_MUTEX>
         ACE_TIMEPROBE_SINGLETON;
 #  endif /* ACE_TSS_TIMEPROBES */
 
 #if defined (_MSC_VER)
 // Disable warning of using Microsoft Extension.
-#pragma warning(disable:4231) 
+#pragma warning(disable:4231)
 #endif /* _MSC_VER */
 
 ACE_SINGLETON_DECLARATION (ACE_TIMEPROBE_SINGLETON_DEFINE);
 
 #if defined (_MSC_VER)
 // Default back the warning of using Microsoft Extension.
-#pragma warning(default:4231) 
+#pragma warning(default:4231)
 #endif /* _MSC_VER */
 
 #endif /* ACE_COMPILE_TIMEPROBES */
@@ -133,7 +133,7 @@ ACE_SINGLETON_DECLARATION (ACE_TIMEPROBE_SINGLETON_DEFINE);
 #  define ACE_TIMEPROBE(id)
 #  define ACE_TIMEPROBE_PRINT
 #  define ACE_TIMEPROBE_PRINT_ABSOLUTE
-#  define ACE_TIMEPROBE_EVENT_DESCRIPTIONS(descriptions, minimum_id) 
+#  define ACE_TIMEPROBE_EVENT_DESCRIPTIONS(descriptions, minimum_id)
 #  define ACE_FUNCTION_TIMEPROBE(X)
 
 #endif /* ACE_ENABLE_TIMEPROBES && ACE_COMPILE_TIMEPROBES */

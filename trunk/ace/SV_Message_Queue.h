@@ -5,47 +5,48 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    SV_Message_Queue.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_MESSAGE_QUEUE_H
 #define ACE_MESSAGE_QUEUE_H
 
 #include "ace/ACE.h"
-#include "ace/SV_Message.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/SV_Message.h"
 
 class ACE_Export ACE_SV_Message_Queue
 {
   // = TITLE
   //     Defines the header file for the C++ wrapper for System V IPC
-  //     message queues.  
-public: 
+  //     message queues.
+public:
   // = Useful symbolic constants.
-  enum 
+  enum
   {
-    ACE_CREATE = IPC_CREAT, 
-    ACE_OPEN   = 0, 
+    ACE_CREATE = IPC_CREAT,
+    ACE_OPEN   = 0,
     ACE_NOWAIT = IPC_NOWAIT
   };
 
   // = Initialization and termination methods.
   ACE_SV_Message_Queue (void);
-  ACE_SV_Message_Queue (key_t external_id, 
-			int create = ACE_SV_Message_Queue::ACE_OPEN,
-			int perms = ACE_DEFAULT_FILE_PERMS);
-  int open (key_t external_id, 
-	    int create = ACE_SV_Message_Queue::ACE_OPEN,
-	    int perms = ACE_DEFAULT_FILE_PERMS);
+  ACE_SV_Message_Queue (key_t external_id,
+                        int create = ACE_SV_Message_Queue::ACE_OPEN,
+                        int perms = ACE_DEFAULT_FILE_PERMS);
+  int open (key_t external_id,
+            int create = ACE_SV_Message_Queue::ACE_OPEN,
+            int perms = ACE_DEFAULT_FILE_PERMS);
    // Open a message queue using the <external_id>.
 
   ~ACE_SV_Message_Queue (void);
@@ -59,14 +60,14 @@ public:
 
 
   // = Message transfer methods.
-  int recv (ACE_SV_Message &mb, 
-	    int length, 
-	    long mtype = 0, 
-	    int mflags = 0);
+  int recv (ACE_SV_Message &mb,
+            int length,
+            long mtype = 0,
+            int mflags = 0);
 
-  int send (const ACE_SV_Message &mb, 
-	    int length, 
-	    int mflags = 0);
+  int send (const ACE_SV_Message &mb,
+            int length,
+            int mflags = 0);
 
   int control (int option, void *arg = 0);
   // Access the underlying control operations.

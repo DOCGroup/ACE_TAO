@@ -18,11 +18,12 @@
 #define ACE_MAP_MANAGER_H
 
 #include "ace/OS.h"
-#include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Synch.h"
 
 // Forward declaration.
 class ACE_Allocator;
@@ -106,11 +107,11 @@ public:
   // Initialize a <Map_Manager> with the <ACE_DEFAULT_MAP_SIZE>.
 
   ACE_Map_Manager (size_t size,
-		   ACE_Allocator *alloc = 0);
+                   ACE_Allocator *alloc = 0);
   // Initialize a <Map_Manager> with <size> entries.
 
   int open (size_t length = ACE_DEFAULT_MAP_SIZE,
-	    ACE_Allocator *alloc = 0);
+            ACE_Allocator *alloc = 0);
   // Initialize a <Map_Manager> with size <length>.
 
   int close (void);
@@ -122,7 +123,7 @@ public:
   // resources.
 
   int trybind (const EXT_ID &ext_id,
-	       INT_ID &int_id);
+               INT_ID &int_id);
   // Associate <ext_id> with <int_id> if and only if <ext_id> is not
   // in the map.  If <ext_id> is already in the map then the <int_id>
   // parameter is overwritten with the existing value in the map
@@ -131,16 +132,16 @@ public:
   // failures occur.
 
   int bind (const EXT_ID &ext_id,
-	    const INT_ID &int_id);
+            const INT_ID &int_id);
   // Associate <ext_id> with <int_id>.  If <ext_id> is already in the
   // map then the <Map_Entry> is not changed.  Returns 0 if a new
   // entry is bound successfully, returns 1 if an attempt is made to
   // bind an existing entry, and returns -1 if failures occur.
 
   int rebind (const EXT_ID &ext_id,
-	      const INT_ID &int_id,
-	      EXT_ID &old_ext_id,
-	      INT_ID &old_int_id);
+              const INT_ID &int_id,
+              EXT_ID &old_ext_id,
+              INT_ID &old_int_id);
   // Associate <ext_id> with <int_id>.  If <ext_id> is not in the
   // map then behaves just like <bind>.  Otherwise, store the old
   // values of <ext_id> and <int_id> into the "out" parameters and
@@ -217,7 +218,7 @@ protected:
   // called with locks held.
 
   int rebind_i (const EXT_ID &ext_id, const INT_ID &int_id,
-		EXT_ID &old_ext_id, INT_ID &old_int_id);
+                EXT_ID &old_ext_id, INT_ID &old_int_id);
   // Performs a rebinding of <ext_it> to <int_id>.  Must be called
   // with locks held.
 
@@ -294,7 +295,7 @@ class ACE_Map_Iterator_Base
   //
   // = DESCRIPTION
   //     This class factors out common code from its templatized
-  //     subclasses.  
+  //     subclasses.
 public:
   // = Initialization method.
   ACE_Map_Iterator_Base (ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm,

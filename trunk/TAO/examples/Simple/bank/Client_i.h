@@ -55,22 +55,22 @@ private:
   // Checks the various operations of the account.
 
   void deposit (Bank::Account_ptr server,
-		CORBA::Float deposit_amount,
-		CORBA::Environment &env);
+                CORBA::Float deposit_amount,
+                CORBA::Environment &env);
   // Deposit in the account.
 
   void withdraw (Bank::Account_ptr server,
-		 CORBA::Float withdrawl_amount);
+                 CORBA::Float withdrawl_amount);
   // Withdraw from the account.
 
   Bank::Account_ptr open (const char *name,
-			  CORBA::Float initial_balance,
-			  CORBA::Environment &env);
+                          CORBA::Float initial_balance,
+                          CORBA::Environment &env);
   // Open a new account with the given name and initial balance.
 
 
   void close (Bank::Account_ptr account,
-	      CORBA::Environment &env);
+              CORBA::Environment &env);
   // Close a given Account.
 
   void test_for_different_name (CORBA::Environment &env);

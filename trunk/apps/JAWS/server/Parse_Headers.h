@@ -15,10 +15,14 @@
 //
 // ============================================================================
 
-#if !defined (PARSE_HEADERS_H)
+#ifndef PARSE_HEADERS_H
 #define PARSE_HEADERS_H
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class Headers_Map_Item
 {

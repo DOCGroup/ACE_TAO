@@ -2,17 +2,17 @@
 /*
  * Copyright (c) 1992 The Regents of the University of California.
  * All rights reserved.
- * 
+ *
  * Permission to use, copy, modify, and distribute this software and its
  * documentation for any purpose, without fee, and without written agreement is
  * hereby granted, provided that the above copyright notice and the following
  * two paragraphs appear in all copies of this software.
- * 
+ *
  * IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY FOR
  * DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING OUT
  * OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE UNIVERSITY OF
  * CALIFORNIA HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
+ *
  * THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES,
  * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
  * AND FITNESS FOR A PARTICULAR PURPOSE.  THE SOFTWARE PROVIDED HEREUNDER IS
@@ -22,7 +22,7 @@
 
 /* Status codes for bit stream i/o operations. */
 
-#if !defined (AV_UTIL_H)
+#ifndef AV_UTIL_H
 #define AV_UTIL_H
 
 #define NO_VID_STREAM -1
@@ -199,13 +199,13 @@ extern unsigned int *bitBuffer;
 #define get_bitsn(num, result) get_bitsX((num), nBitMask[num], (32-(num)), result)
 
 #ifdef NO_SANITY_CHECKS
-#define show_bits32(result)                              		\
+#define show_bits32(result)                                             \
 {                                                                       \
-  if (bitOffset) {							\
-    result = curBits | (*(bitBuffer+1) >> (32 - bitOffset));		\
+  if (bitOffset) {                                                      \
+    result = curBits | (*(bitBuffer+1) >> (32 - bitOffset));            \
   }                                                                     \
   else {                                                                \
-    result = curBits;							\
+    result = curBits;                                                   \
   }                                                                     \
 }
 
@@ -224,17 +224,17 @@ extern unsigned int *bitBuffer;
 }
 
 #else
-#define show_bits32(result)                               		\
+#define show_bits32(result)                                             \
 {                                                                       \
   /* Check for underflow. */                                            \
   /* if (bufLength < 2) {                                               \
     correct_underflow();                                                \
   }  */                                                                 \
-  if (bitOffset) {							\
-    result = curBits | (*(bitBuffer+1) >> (32 - bitOffset));		\
+  if (bitOffset) {                                                      \
+    result = curBits | (*(bitBuffer+1) >> (32 - bitOffset));            \
   }                                                                     \
   else {                                                                \
-    result = curBits;							\
+    result = curBits;                                                   \
   }                                                                     \
 }
 

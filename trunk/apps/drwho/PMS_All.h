@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_PMS_ALL_H)
+#ifndef _PMS_ALL_H
 #define _PMS_ALL_H
 
 #include "PM_Server.h"

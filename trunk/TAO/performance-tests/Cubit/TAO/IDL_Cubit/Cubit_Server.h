@@ -18,10 +18,15 @@
 //
 // ============================================================================
 
-#if !defined (_CUBIT_SERVER_H)
+#ifndef _CUBIT_SERVER_H
 #define _CUBIT_SERVER_H
 
 #include "ace/Get_Opt.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Log_Msg.h"
 #include "tao/TAO.h"
 #include "Cubit_Client.h"
@@ -47,11 +52,11 @@ public:
 
   int init (int argc,
             char **argv,
-	    CORBA::Environment& env);
+            CORBA::Environment& env);
   // Initialize the Cubit_Server state - parsing arguments and ...
 
   int run (CORBA::Environment& env);
-  // Run the orb 
+  // Run the orb
 
 private:
   int parse_args (void);
@@ -65,7 +70,7 @@ private:
 
   Cubit_Factory_i *factory_impl_;
   // Implementation object of the cubit factory.
-       
+
   int argc_;
   // Number of commandline arguments.
 

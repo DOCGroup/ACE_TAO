@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_BE_STATE_H)
+#ifndef TAO_BE_STATE_H
 #define TAO_BE_STATE_H
 
 class be_state
@@ -273,7 +273,7 @@ public:
 };
 
 typedef ACE_Singleton<be_state_attribute, ACE_SYNCH_RECURSIVE_MUTEX>
-	TAO_BE_STATE_ATTRIBUTE;
+        TAO_BE_STATE_ATTRIBUTE;
 
 class be_state_exception : public be_state
 {
@@ -291,6 +291,6 @@ public:
 };
 
 typedef ACE_Singleton<be_state_exception, ACE_SYNCH_RECURSIVE_MUTEX>
-	TAO_BE_STATE_EXCEPTION;
+        TAO_BE_STATE_EXCEPTION;
 
 #endif /* end of be_state */

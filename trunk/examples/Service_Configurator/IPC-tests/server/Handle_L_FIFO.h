@@ -4,16 +4,21 @@
 /* Handle connections from local UNIX ACE_FIFO */
 /* Read from a well known ACE_FIFO and write to stdout. */
 
-#if !defined (_HANDLE_L_FIFO_H)
+#ifndef _HANDLE_L_FIFO_H
 #define _HANDLE_L_FIFO_H
 
 #include "ace/Service_Config.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Service_Types.h"
 #include "ace/FIFO_Recv_Msg.h"
 
 class Handle_L_FIFO : public ACE_Service_Object, public ACE_FIFO_Recv_Msg
 {
-public:	
+public:
   Handle_L_FIFO (void);
   virtual int init (int argc, char *argv[]);
   virtual int info (char **, size_t) const;
@@ -34,7 +39,7 @@ extern ACE_Service_Object_Type lf;
 #define ACE_INLINE inline
 #include "Handle_L_FIFO.i"
 #else
-#define ACE_INLINE 
+#define ACE_INLINE
 #endif /* __ACE_INLINE__ */
 
 #endif /* _HANDLE_L_FIFO_H */

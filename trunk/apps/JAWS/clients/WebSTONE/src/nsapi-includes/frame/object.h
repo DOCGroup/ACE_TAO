@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 1994, 1995.  Netscape Communications Corporation.  All
  * rights reserved.
- * 
+ *
  * Use of this software is governed by the terms of the license agreement for
  * the Netscape Communications or Netscape Comemrce Server between the
  * parties.
@@ -13,17 +13,17 @@
 
 /*
  * object.h: Handle httpd objects
- * 
+ *
  * Manages information about a document from config. files. Called mainly
  * by objset.c.
- * 
+ *
  * This module does not assume anything about the directives being parsed.
  * That is handled by objset.c.
- * 
+ *
  * This module requires the pblock module from the base library.
- * 
+ *
  * Rob McCool
- * 
+ *
  */
 
 
@@ -53,8 +53,8 @@
 /*
  * Hierarchy of httpd_object
  *
- * An object contains dtables. 
- * 
+ * An object contains dtables.
+ *
  * Each dtable is a table of directives that were entered of a certain type.
  * There is one dtable for each unique type of directive.
  *
@@ -93,7 +93,7 @@ typedef struct {
  *
  * The name pblock array contains the names for this object, such as its
  * virtual location, its physical location, or its identifier.
- * 
+ *
  * tmpl contains any templates allocated to this object.
  */
 
@@ -113,7 +113,7 @@ typedef struct {
 /*
  * directive_name2num will return the position of the abbreviated directive
  * dir in the directive table.
- * 
+ *
  * If dir does not exist in the table, it will return -1.
  */
 
@@ -141,7 +141,7 @@ httpd_object *object_create(int nd, pblock *name);
 void object_free(httpd_object *obj);
 
 /*
- * object_add_directive will add a new directive to the dtable for 
+ * object_add_directive will add a new directive to the dtable for
  * the directive class at position dc.
  */
 
@@ -150,7 +150,7 @@ void object_add_directive(int dc, pblock *p, pblock *c, httpd_object *obj);
 
 /*
  * object_findnext finds the object configured to follow the given object,
- * and stores the variables in rq->vars. It returns REQ_PROCEED if more 
+ * and stores the variables in rq->vars. It returns REQ_PROCEED if more
  * objects should be processed, or REQ_NOACTION if it did not find any
  * further objects to process. If something bad happens, REQ_ABORTED is
  * returned.

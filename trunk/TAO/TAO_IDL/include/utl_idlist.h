@@ -64,8 +64,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#ifndef	_UTL_IDLIST_UTL_IDLIST_HH
-#define	_UTL_IDLIST_UTL_IDLIST_HH
+#ifndef _UTL_IDLIST_UTL_IDLIST_HH
+#define _UTL_IDLIST_UTL_IDLIST_HH
 
 // utl_idlist.hh
 //
@@ -73,15 +73,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
-//	 It relies on a type-unsafe cast from UTL_List to subclasses, which
-//	 will cease to operate correctly if you use either multiple or
-//	 public virtual inheritance.
+//       It relies on a type-unsafe cast from UTL_List to subclasses, which
+//       will cease to operate correctly if you use either multiple or
+//       public virtual inheritance.
 //
-//	 For portability reasons we have decided to provide both this and
-//	 an implementation of the list classes in terms of templates. If
-//	 your compiler supports templates, please use the files in the
-//	 include/utl_tmpl and util/utl_tmpl directories instead of the
-//	 files by the same names in the include and util directories.
+//       For portability reasons we have decided to provide both this and
+//       an implementation of the list classes in terms of templates. If
+//       your compiler supports templates, please use the files in the
+//       include/utl_tmpl and util/utl_tmpl directories instead of the
+//       files by the same names in the include and util directories.
 
 /*
 ** DEPENDENCIES: utl_list.hh, utl_identifier.hh
@@ -89,10 +89,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from util.hh
 */
 
-#include	"idl_fwd.h"
-#include	"utl_list.h"
-#include	"utl_identifier.h"
-#include	"utl_string.h"
+#include        "idl_fwd.h"
+#include        "utl_list.h"
+#include        "utl_identifier.h"
+#include        "utl_string.h"
 
 class UTL_IdList : public UTL_List
 {
@@ -129,8 +129,8 @@ private:
 
 // Active iterator for UTL_IdList
 
-class	UTL_IdListActiveIterator :
-	public UTL_ListActiveIterator
+class   UTL_IdListActiveIterator :
+        public UTL_ListActiveIterator
 {
   // =TITLE
   //  UTL_IdListActiveIterator
@@ -144,4 +144,4 @@ public:
   // retrieves the next item
 };
 
-#endif		// _UTL_IDLIST_UTL_IDLIST_HH
+#endif          // _UTL_IDLIST_UTL_IDLIST_HH

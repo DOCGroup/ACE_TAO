@@ -16,7 +16,7 @@
 #include "QuoterS.h"
 
 
-#if !defined (QUOTER_GENERIC_FACTORY_IMPL_H)
+#ifndef QUOTER_GENERIC_FACTORY_IMPL_H
 #define QUOTER_GENERIC_FACTORY_IMPL_H
 
 class Quoter_Generic_Factory_i : public POA_Stock::Quoter_Generic_Factory
@@ -34,7 +34,7 @@ public:
   // Returns true if the Generic Factory is able to forward a request
   // for creating an object described by the <factory_key>.
 
-  CORBA::Object_ptr create_object (const CosLifeCycle::Key &factory_key, 
+  CORBA::Object_ptr create_object (const CosLifeCycle::Key &factory_key,
                                    const CosLifeCycle::Criteria &the_criteria,
                                    CORBA::Environment &_env_there);
   // Returns an object reference to a newly created object, though the

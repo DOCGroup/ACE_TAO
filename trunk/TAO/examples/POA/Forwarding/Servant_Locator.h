@@ -17,7 +17,7 @@
 //
 //==================================================================================
 
-#if !defined (MYFOOSERVANTLOCATOR_H)
+#ifndef MYFOOSERVANTLOCATOR_H
 #define MYFOOSERVANTLOCATOR_H
 
 #include "tao/corba.h"
@@ -41,7 +41,7 @@ public:
                                              CORBA::Environment &env);
   // This method is invoked by a POA whenever it receives a request
   // for MyFoo object that is not currently active.
-  
+
   virtual void postinvoke (const PortableServer::ObjectId &oid,
                            PortableServer::POA_ptr adapter,
                            const char *operation,
@@ -52,17 +52,17 @@ public:
   // request.
 
   void forward (CORBA::Environment &env);
-  
+
 private:
   CORBA::ORB_var orb_var_;
 
   int counter_;
   // Counter for number of invocations of this.
-  
+
   PortableServer::Servant servant_ptr_;
   // There really exists only one servant, which is returned all the
   // time.
-  
+
   CORBA::Object_var forward_to_var_;
   // location to forward to
 

@@ -18,6 +18,11 @@
 
 #include "test_config.h"
 #include "ace/Synch.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Task.h"
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"

@@ -1,7 +1,7 @@
 /* -*- c++ -*- */
 // $Id$
 
-#if !defined (HTTPU_HTTP_PARSE_H)
+#ifndef HTTPU_HTTP_PARSE_H
 #define HTTPU_HTTP_PARSE_H
 
 #include "HTTPU/http_export.h"

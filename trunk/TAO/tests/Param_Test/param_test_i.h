@@ -13,7 +13,7 @@
 //
 // ============================================================================
 
-#if !defined (PARAM_TEST_I_H)
+#ifndef PARAM_TEST_I_H
 #define PARAM_TEST_I_H
 
 #include "param_testSer.h"
@@ -224,9 +224,9 @@ public:
   // test for arrays of variable types
 
   virtual CORBA::ULong test_exception (CORBA::ULong s1,
-				       CORBA::ULong& s2,
-				       CORBA::ULong_out s3,
-				       CORBA::Environment &env);
+                                       CORBA::ULong& s2,
+                                       CORBA::ULong_out s3,
+                                       CORBA::Environment &env);
 
   void shutdown (CORBA::Environment &env);
 

@@ -5,6 +5,11 @@
 #define HANDLER_H
 
 #include "ace/Svc_Handler.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/SOCK_Stream.h"
 #include "Protocol_Stream.h"
 
@@ -33,7 +38,7 @@ public:
         // differences between destroy() and close() so don't try to
         // use either for all cases.
     int close (u_long);
-    
+
 protected:
 
         // Respond to peer() activity.

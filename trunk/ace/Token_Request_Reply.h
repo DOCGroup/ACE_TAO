@@ -5,29 +5,30 @@
 //
 // = LIBRARY
 //    ACE
-// 
+//
 // = FILENAME
 //    Token_Request_Reply.h
 //
-// = DESCRIPTION 
-//     Define the format used to exchange messages between the 
+// = DESCRIPTION
+//     Define the format used to exchange messages between the
 //     ACE_Token Server and its clients.
 //
 // = AUTHOR
 //    Douglas C. Schmidt (schmidt@cs.wustl.edu)
 //    Tim Harrison (harrison@cs.wustl.edu)
-// 
+//
 // ============================================================================
 
 #ifndef ACE_TOKEN_REQUEST_REPLY_H
 #define ACE_TOKEN_REQUEST_REPLY_H
 
 #include "ace/Local_Tokens.h"
-#include "ace/Time_Value.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Time_Value.h"
 
 class ACE_Export ACE_Token_Request
 {
@@ -35,7 +36,7 @@ class ACE_Export ACE_Token_Request
   //   Message format for delivering requests to the ACE_Token Server.
   //
   // = DESCRIPTION
-  //   This class is implemented to minimize data copying.  
+  //   This class is implemented to minimize data copying.
   //   In particular, all marshaling is done in situ...
 public:
   enum OPERATION
@@ -52,11 +53,11 @@ public:
   // Default constructor.
 
   ACE_Token_Request (int token_type,
-		     int proxy_type,
-		     ACE_UINT32 operation,
-		     const char token_name[],
-		     const char client_id[],
-		     const ACE_Synch_Options &options);
+                     int proxy_type,
+                     ACE_UINT32 operation,
+                     const char token_name[],
+                     const char client_id[],
+                     const ACE_Synch_Options &options);
   // token_type - MUTEX, RWLOCK
   // proxy_type - MUTEX, RLOCK, WLOCK (acquires mean different things)
   // operation - method
@@ -111,7 +112,7 @@ public:
   // Print out the values of the message for debugging purposes.
 
 private:
-  // = The 5 fields in the <Transfer> struct are transmitted to the server.  
+  // = The 5 fields in the <Transfer> struct are transmitted to the server.
   // The remaining 2 fields are not tranferred -- they are used only on
   // the server-side to simplify lookups.
 
@@ -155,7 +156,7 @@ private:
     // The data portion contains the <tokenName_> followed by a ':'
     // followed by the <clientId_>.
   } transfer_;
-    
+
   char *token_name_;
   // Pointer to the beginning of the token name in this->data_.
 
@@ -172,7 +173,7 @@ class ACE_Export ACE_Token_Reply
   //     Message format for delivering replies from the ACE_Token Server.
   //
   // = DESCRIPTION
-  //   This class is implemented to minimize data copying.  
+  //   This class is implemented to minimize data copying.
   //   In particular, all marshaling is done in situ...
 public:
   ACE_Token_Reply (void);

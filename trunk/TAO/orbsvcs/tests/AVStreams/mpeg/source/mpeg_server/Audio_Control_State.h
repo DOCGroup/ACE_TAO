@@ -1,10 +1,15 @@
 /* _*_ C++ _*_ */
 // $Id$
 
-#if !defined (_MPEG_AUDIO_CONTROL_STATE_H)
+#ifndef _MPEG_AUDIO_CONTROL_STATE_H
 #define _MPEG_AUDIO_CONTROL_STATE_H
 
 #include "ace/Singleton.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "mpeg_shared/Audio_ControlS.h"
 #include "Globals.h"
 
@@ -30,7 +35,7 @@ public:
 
   virtual CORBA::Boolean play (const Audio_Control::PLAYPara & para,
                                CORBA::Long_out ats) ;
-  
+
   virtual CORBA::Boolean speed (const Audio_Control::SPEEDPara & para) ;
 
   virtual CORBA::Boolean stop (CORBA::Long cmdsn) ;
@@ -38,13 +43,13 @@ public:
   virtual void close (void) ;
 protected:
   Audio_States state_;
-  // The state 
+  // The state
 
   Audio_Global *audio_global_;
   // Pointer to the global.
   Audio_Control_i *audio_control_i_;
 };
-      
+
 
 class Audio_Control_Waiting_State : public virtual Audio_Control_State
 {
@@ -72,8 +77,8 @@ public:
 };
 
 typedef ACE_Singleton <Audio_Control_Waiting_State, ACE_SYNCH_MUTEX>
-        AUDIO_CONTROL_WAITING_STATE;     
+        AUDIO_CONTROL_WAITING_STATE;
 typedef ACE_Singleton <Audio_Control_Play_State, ACE_SYNCH_MUTEX>
-        AUDIO_CONTROL_PLAY_STATE;        
+        AUDIO_CONTROL_PLAY_STATE;
 
 #endif /*_MPEG_AUDIO_CONTROL_STATE_H */

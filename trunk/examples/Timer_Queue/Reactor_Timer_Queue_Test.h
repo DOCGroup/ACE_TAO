@@ -20,10 +20,15 @@
 //
 // ============================================================================
 
-#if !defined (_REACTOR_TIMER_QUEUE_TEST_H_)
+#ifndef _REACTOR_TIMER_QUEUE_TEST_H_
 #define _REACTOR_TIMER_QUEUE_TEST_H_
 
 #include "ace/Timer_Heap.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "Driver.h"
 
 class Reactor_Timer_Queue_Test_Driver;
@@ -43,7 +48,7 @@ public:
   typedef int (Input_Handler::*ACTION) (void *);
 
   Input_Handler (ACE_Timer_Queue *tq,
-		 Reactor_Timer_Queue_Test_Driver &timer_queue_driver);
+                 Reactor_Timer_Queue_Test_Driver &timer_queue_driver);
   // Sets <done_> flag to 0, <driver_> to <timer_queue_driver> and
   // timer queue <tq_> to <tq>
 

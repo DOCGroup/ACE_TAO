@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-#if !defined (AV_VIDEO_CONTROL_H)
+#ifndef AV_VIDEO_CONTROL_H
 #define AV_VIDEO_CONTROL_H
 
 #include "mpeg_shared/Video_ControlS.h"
@@ -24,13 +24,13 @@ public:
   virtual CORBA::Boolean init_video (const Video_Control::INITvideoPara &para,
                                      Video_Control::INITvideoReply_out reply,
                                      CORBA::Environment &_tao_environment);
-  
+
   virtual CORBA::Boolean stat_stream (CORBA::Char_out ch,
                                       CORBA::Long_out size,
                                       CORBA::Environment &_tao_environment);
 
   virtual void close (CORBA::Environment &_tao_environment);
-  
+
   virtual CORBA::Boolean stat_sent (CORBA::Environment &_tao_environment);
 
   virtual CORBA::Boolean fast_forward (const Video_Control::FFpara &para,
@@ -42,7 +42,7 @@ public:
 
   virtual CORBA::Boolean step (const Video_Control::STEPpara &para,
                                CORBA::Environment &_tao_environment);
-  
+
   virtual CORBA::Boolean play (const Video_Control::PLAYpara &para,
                                CORBA::Long_out vts,
                                CORBA::Environment &_tao_environment);
@@ -58,14 +58,14 @@ public:
 
   virtual CORBA::Boolean set_peer (char * &peer,
                                    CORBA::Environment &_tao_environment);
-  // called by the client to inform us about it's ip and 
+  // called by the client to inform us about it's ip and
   // udp address.
 
   void change_state (Video_Control_State *state);
   // Used to change the state
 
   Video_Control_State *get_state (void);
-  // Accessor for the state_ 
+  // Accessor for the state_
 
   virtual ~Video_Control_i (void);
   // Destructor

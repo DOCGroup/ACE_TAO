@@ -6,13 +6,13 @@
 //
 // = LIBRARY
 //     ACE
-// 
+//
 // = FILENAME
 //     CLASSIX_Reactor.h
 //
 // = AUTHOR(S)
 //     Nokia Telecommunications
-// 
+//
 // ============================================================================
 */
 
@@ -21,13 +21,18 @@
 
 /* ------------------------------------------------------------------------- */
 #include "ace/Timer_Queue.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Select_Reactor.h"
 #include "ace/Message_Block.h"
 #include "ace/CLASSIX/CLASSIX_SAP.h"
 
 class ACE_CLASSIX_Select_Reactor;
 
-class ACE_Export ACE_CLASSIX_Select_Reactor_Notify : 
+class ACE_Export ACE_CLASSIX_Select_Reactor_Notify :
     public ACE_Reactor_Notify
 {
   // = TITLE
@@ -44,20 +49,20 @@ public:
     ~ACE_CLASSIX_Select_Reactor_Notify(void);
 
     virtual int open (ACE_Reactor_Impl *,
-		      ACE_Timer_Queue * = 0,
-		      int  = 0 /* dusable_notify_pip */);
-    // Enables the notification port and register it with the reactor 
+                      ACE_Timer_Queue * = 0,
+                      int  = 0 /* dusable_notify_pip */);
+    // Enables the notification port and register it with the reactor
     virtual int close (void);
     // Disables the notification port
 
     int dispatch_notifications (int &number_of_active_handles,
-				const ACE_Handle_Set &rd_mask);
+                                const ACE_Handle_Set &rd_mask);
     // Handles pending threads (if any) that are waiting to unblock the
     // Select_Reactor.
 
     ssize_t notify (ACE_Event_Handler * = 0,
-		    ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK,
-		    ACE_Time_Value * = 0);
+                    ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK,
+                    ACE_Time_Value * = 0);
     // Called by a thread when it wants to unblock the Select_Reactor.
     // This wakeups the <ACE_Select_Reactor> if currently blocked in
     // select()/poll().  Pass over both the <Event_Handler> *and* the
@@ -94,7 +99,7 @@ private:
     // <disable_notify_pipe>.
     ACE_CLASSIX_Port_Core    notification_port_; // CLASSIX' IPC port
     ACE_CLASSIX_SAP          notification_sap_;
-    // The HANDLE that the Select_Reactor is listening on and 
+    // The HANDLE that the Select_Reactor is listening on and
     // the HANDLE that threads wanting the attention of the
     // Select_Reactor will write t are the same.
     // It can be seen that the notification port is implicitly connected to the
@@ -105,11 +110,11 @@ private:
 class ACE_CLASSIX_Select_Reactor : public ACE_Select_Reactor
     // = TITLE
     //   Implementing a Reactor for monitoring incoming data
-    //   
+    //
     // = DESCRIPTION
     //     This class redefines the wait_for_events() method of
     //     <ACE_Select_Reactor> class.
-    //     
+    //
     //     The wait_for_events() method uses ipcReceive() to monitor
     //     all ENABLED ports for incoming messages.  The ipcReceive() is
     //     set up such that it will find out the size of the message but will
@@ -124,12 +129,12 @@ class ACE_CLASSIX_Select_Reactor : public ACE_Select_Reactor
     //     thread and it shall not hold up this thread in the handle_input()
     //     routine for too long. This will allow the Reactor to respond to
     //     events more quickly.
-    //     
+    //
     //  = NOTE
     //   Since chorus does not allow ipcReceive to monitor a subset of
     //   ENABLED ports.  One cannot have two ACE_CLASSIX_Select_Reactors
     //   in one actor.
-    //   
+    //
 {
   public:
 
@@ -139,7 +144,7 @@ class ACE_CLASSIX_Select_Reactor : public ACE_Select_Reactor
     // handle_input() routine.
     // The handle_input() routine should not hold the reactor for too long.
     virtual int current_info(ACE_HANDLE /* port */,
-			     size_t& /* msg size */);
+                             size_t& /* msg size */);
     // Retruns the current messageage to the caleer if the supplied
     // handle id is the same as the <current_handle_>
     // Returns 0, if <msg size> constains the size of the message
@@ -153,8 +158,8 @@ class ACE_CLASSIX_Select_Reactor : public ACE_Select_Reactor
   // repository of the default size.
 
   ACE_CLASSIX_Select_Reactor (size_t size,
-			      int restart = 0,
-			      ACE_Timer_Queue * = 0);
+                              int restart = 0,
+                              ACE_Timer_Queue * = 0);
   // Initializes <ACE_CLASSIX_Select_Reactor> with the handler repository of
   // size <size>.
 
@@ -163,8 +168,8 @@ class ACE_CLASSIX_Select_Reactor : public ACE_Select_Reactor
                                         ACE_Time_Value *);
   // Wait for events to occur.
 
-  virtual int set_current_info_(ACE_HANDLE /* handle */, 
-				size_t /* size of data */);
+  virtual int set_current_info_(ACE_HANDLE /* handle */,
+                                size_t /* size of data */);
   // record the handler and the size of the message that the handler shall
   // read next.
 

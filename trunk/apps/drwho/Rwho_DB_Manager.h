@@ -14,14 +14,19 @@
 //
 // ============================================================================
 
-#if !defined (_RWHO_DB_MANAGER_H)
+#ifndef _RWHO_DB_MANAGER_H
 #define _RWHO_DB_MANAGER_H
 
 #include <protocols/rwhod.h>
 #include "ace/Dirent.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "Protocol_Record.h"
 
-class RWho_DB_Manager 
+class RWho_DB_Manager
 {
   // = TITLE
   //   This class returns the user/machine pairs one at a time from

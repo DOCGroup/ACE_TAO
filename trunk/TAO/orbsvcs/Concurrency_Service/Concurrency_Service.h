@@ -10,17 +10,22 @@
 //
 // = DESCRIPTION
 //      This class implements a subset of the functionality of the
-//      CORBA Concurrency Service. 
+//      CORBA Concurrency Service.
 //
 // = AUTHORS
 //    Torben Worm <tworm@cs.wustl.edu>
 //
 // ============================================================================
 
-#if !defined (_CONCURRENCY_SERVICE_H)
+#ifndef _CONCURRENCY_SERVICE_H
 #define _CONCURRENCY_SERVICE_H
 
 #include "ace/Get_Opt.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Log_Msg.h"
 #include "tao/TAO.h"
 #include "orbsvcs/Concurrency/Concurrency_Utils.h"
@@ -41,13 +46,13 @@ public:
   // Default Constructor.
 
   Concurrency_Service (int argc,
-		       char **argv,
+                       char **argv,
                        CORBA::Environment &env);
   // Constructor taking the command-line arguments.
 
   ~Concurrency_Service (void);
   // Destructor.
-	
+
   int init (int argc,
             char **argv,
             CORBA::Environment &env);

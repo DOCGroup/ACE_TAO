@@ -18,11 +18,12 @@
 #define ACE_SIGNAL_HANDLER_H
 
 #include "ace/Synch.h"
-#include "ace/Event_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Event_Handler.h"
 
 // This worksaround a horrible bug with HP/UX C++...
 typedef struct sigaction ACE_SIGACTION;

@@ -1,6 +1,6 @@
 // $Id$
 
-#if !defined (GLOBALS_H)
+#ifndef GLOBALS_H
 #define GLOBALS_H
 
 // ============================================================================
@@ -21,6 +21,11 @@
 // ============================================================================
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Get_Opt.h"
 #include "ace/Synch_T.h"
 #include "ace/Sched_Params.h"

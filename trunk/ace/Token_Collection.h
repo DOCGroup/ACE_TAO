@@ -28,12 +28,13 @@
 #define ACE_TOKEN_COLLECTION_H
 
 #include "ace/Map_Manager.h"
-#include "ace/Local_Tokens.h"
-#include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Local_Tokens.h"
+#include "ace/SString.h"
 
 class ACE_Export ACE_Token_Collection : public ACE_Token_Proxy
 {
@@ -58,7 +59,7 @@ class ACE_Export ACE_Token_Collection : public ACE_Token_Proxy
   //   returns zero for now.
 public:
   ACE_Token_Collection (int debug = 0,
-			const char *name = 0);
+                        const char *name = 0);
   // <debug> print out verbose debugging messages. <name> will give a
   // name to the collection.  Collections don't really need names, but
   // are sometimes useful for debugging.
@@ -107,9 +108,9 @@ public:
 //   renew, or release).
 
   virtual int acquire (int notify = 0,
-		       void (*sleep_hook)(void *) = 0,
-		       ACE_Synch_Options &options =
-		       ACE_Synch_Options::defaults);
+                       void (*sleep_hook)(void *) = 0,
+                       ACE_Synch_Options &options =
+                       ACE_Synch_Options::defaults);
   // Acquire "atomically" all resources in the collection.  This is
   // only successfull if all tokens in the collection could be
   // acquired.  options contains the blocking semantics, timeout
@@ -124,10 +125,10 @@ public:
   // hands.
 
   virtual int acquire (const char *token_name,
-		       int notify = 0,
-		       void (*sleep_hook)(void *) = 0,
-		       ACE_Synch_Options &options =
-		       ACE_Synch_Options::defaults);
+                       int notify = 0,
+                       void (*sleep_hook)(void *) = 0,
+                       ACE_Synch_Options &options =
+                       ACE_Synch_Options::defaults);
   // Acquire the token corresponding to <token_name>.  The other
   // parameters are passed to <token>::acquire.
 
@@ -135,12 +136,12 @@ public:
   // Try to acquire all tokens in collection.
 
   virtual int tryacquire (const char *token_name,
-			  void (*sleep_hook)(void *) = 0);
+                          void (*sleep_hook)(void *) = 0);
   // Try to acquire <token_name>.
 
   virtual int renew (int requeue_position = 0,
-		     ACE_Synch_Options &options =
-		     ACE_Synch_Options::defaults);
+                     ACE_Synch_Options &options =
+                     ACE_Synch_Options::defaults);
   // Renews "atomically" all resources in the collection.  This is
   // only successfull if all tokens in the collection could be
   // renewed.  options contains the blocking semantics, timeout
@@ -149,14 +150,14 @@ public:
 
 
   virtual int renew (const char *token_name,
-		     int requeue_position = 0,
-		     ACE_Synch_Options &options =
-		     ACE_Synch_Options::defaults);
+                     int requeue_position = 0,
+                     ACE_Synch_Options &options =
+                     ACE_Synch_Options::defaults);
   // Renew the token corresponding to <token_name>.  The other
   // parameters are passed to <token>::renew.
 
   virtual int release (ACE_Synch_Options &options =
-		       ACE_Synch_Options::defaults);
+                       ACE_Synch_Options::defaults);
   // Releases "atomically" all resources in the collection.  This is
   // only successfull if all tokens in the collection could be
   // released.  options contains the blocking semantics, timeout
@@ -165,8 +166,8 @@ public:
 
 
   virtual int release (const char *token_name,
-		       ACE_Synch_Options &options =
-		       ACE_Synch_Options::defaults);
+                       ACE_Synch_Options &options =
+                       ACE_Synch_Options::defaults);
   // Release the token corresponding to <token_name>.  The other
   // parameters are passed to <token>::release.
 

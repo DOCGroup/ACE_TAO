@@ -21,7 +21,7 @@
 //
 // ============================================================================
 
-#if !defined (_BE_VISITOR_UNION_BRANCH_PUBLIC_ASSIGN_CS_H_)
+#ifndef _BE_VISITOR_UNION_BRANCH_PUBLIC_ASSIGN_CS_H_
 #define _BE_VISITOR_UNION_BRANCH_PUBLIC_ASSIGN_CS_H_
 
 class be_visitor_union_branch_public_assign_cs : public be_visitor_decl

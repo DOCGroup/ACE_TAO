@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_HASH_TABLE_H)
+#ifndef _HASH_TABLE_H
 #define _HASH_TABLE_H
 
 #include "Search_Struct.h"
@@ -32,7 +32,7 @@ public:
   virtual Protocol_Record *get_each_entry (void);
 
 protected:
-  enum 
+  enum
   {
     HASH_TABLE_SIZE = 500
   };

@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_PMC_ALL_H)
+#ifndef _PMC_ALL_H
 #define _PMC_ALL_H
 
 #include "PM_Client.h"
@@ -22,7 +22,7 @@
 class PMC_All : public PM_Client
 {
   // = TITLE
-  //   Provides the client's lookup table abstraction for `all' users... 
+  //   Provides the client's lookup table abstraction for `all' users...
 
 protected:
   virtual Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record);

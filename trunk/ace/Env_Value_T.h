@@ -5,23 +5,23 @@
 //
 // = LIBRARY
 //    ACE
-// 
+//
 // = DESCRIPTION
 //    Template to encapsulate getting a value from an environment variable
 //    and using a supplied default value if not in the environment.
 //
 // = AUTHOR
 //    Chris Cleeland (derived from work by Carlos O'Ryan)
-// 
+//
 // ============================================================================
 
 #ifndef ACE_ENV_VALUE_T_H
 #define ACE_ENV_VALUE_T_H
 
-#include "ace/OS.h"		// Need to get ACE_static_cast definition
+#include "ace/OS.h"             // Need to get ACE_static_cast definition
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 template <class T>
@@ -41,11 +41,11 @@ public:
   // Default constructor which isn't bound to a specific environment
   // variable name or a default value.  Before being useful it must
   // <open()>ed.
-  
+
   ACE_Env_Value (const char *varname,
                  const T &vardefault);
   // Constructor that calls <open>.
-  
+
   ~ACE_Env_Value (void);
   // Destroy the value.
 
@@ -65,7 +65,7 @@ private:
   // Disallow copying and assignment.
 
   void fetch_value (void);
-  
+
   const char *varname_;
   T value_;
 };

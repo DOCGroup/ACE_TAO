@@ -79,14 +79,14 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from ast.hh
 */
 
-#include	"idl_fwd.h"
-#include	"idl_narrow.h"
-#include	"ast_type.h"
-#include	"utl_scope.h"
-#include	"ast_decl.h"
+#include        "idl_fwd.h"
+#include        "idl_narrow.h"
+#include        "ast_type.h"
+#include        "utl_scope.h"
+#include        "ast_decl.h"
 
 
-class	AST_Interface : public virtual AST_Type, public virtual UTL_Scope
+class   AST_Interface : public virtual AST_Type, public virtual UTL_Scope
 {
 public:
   // Operations
@@ -94,13 +94,13 @@ public:
   // Constructor(s)
   AST_Interface();
   AST_Interface(UTL_ScopedName *n,
-		AST_Interface **ih,
-		long nih,
-		UTL_StrList *p);
+                AST_Interface **ih,
+                long nih,
+                UTL_StrList *p);
   virtual ~AST_Interface() {}
 
   // Data Accessors
-  AST_Interface	**inherits();
+  AST_Interface **inherits();
   void set_inherits(AST_Interface **i);
   long n_inherits();
   void set_n_inherits(long i);
@@ -119,27 +119,27 @@ public:
   DEF_NARROW_FROM_SCOPE(AST_Interface);
 
   // AST Dumping
-  virtual void			dump(ostream &o);
+  virtual void                  dump(ostream &o);
 
 private:
   // Data
-  AST_Interface			**pd_inherits;	// Inherited interfaces
-						// This is an array of pointers
-						// to the inherited interfaces
-  long				pd_n_inherits;	// How many of them?
+  AST_Interface                 **pd_inherits;  // Inherited interfaces
+                                                // This is an array of pointers
+                                                // to the inherited interfaces
+  long                          pd_n_inherits;  // How many of them?
 
   // Scope Management Protocol
   friend int tao_yyparse();
 
-  virtual AST_Constant		*fe_add_constant(AST_Constant	*c);
-  virtual AST_Exception		*fe_add_exception(AST_Exception	*e);
-  virtual AST_Attribute		*fe_add_attribute(AST_Attribute	*a);
-  virtual AST_Operation		*fe_add_operation(AST_Operation	*o);
-  virtual AST_Union		*fe_add_union(AST_Union		*u);
-  virtual AST_Structure		*fe_add_structure(AST_Structure	*s);
-  virtual AST_Enum		*fe_add_enum(AST_Enum		*e);
-  virtual AST_EnumVal		*fe_add_enum_val(AST_EnumVal	*v);
-  virtual AST_Typedef		*fe_add_typedef(AST_Typedef	*t);
+  virtual AST_Constant          *fe_add_constant(AST_Constant   *c);
+  virtual AST_Exception         *fe_add_exception(AST_Exception *e);
+  virtual AST_Attribute         *fe_add_attribute(AST_Attribute *a);
+  virtual AST_Operation         *fe_add_operation(AST_Operation *o);
+  virtual AST_Union             *fe_add_union(AST_Union         *u);
+  virtual AST_Structure         *fe_add_structure(AST_Structure *s);
+  virtual AST_Enum              *fe_add_enum(AST_Enum           *e);
+  virtual AST_EnumVal           *fe_add_enum_val(AST_EnumVal    *v);
+  virtual AST_Typedef           *fe_add_typedef(AST_Typedef     *t);
   virtual AST_Native            *fe_add_native (AST_Native      *n);
 
 };

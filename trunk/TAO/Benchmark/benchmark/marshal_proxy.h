@@ -4,16 +4,16 @@
 //
 // = LIBRARY
 //    CORBA Benchmark
-// 
+//
 // = FILENAME
 //    marshal_proxy.h
 //
 // = AUTHOR
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
-#if !defined(_CORBA_MARSHAL_PROXY_H_)
+#ifndef _CORBA_MARSHAL_PROXY_H_
 #define _CORBA_MARSHAL_PROXY_H_
 
 #include "benchmark/marshal_options.h"

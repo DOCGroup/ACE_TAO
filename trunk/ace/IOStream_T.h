@@ -25,7 +25,7 @@
 #include "ace/IOStream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)

@@ -6,11 +6,16 @@
 // running the Naming Service and the server in the same window. [MJB]
 
 
-#if !defined (TAO_AV_BENCH_SERVER_H)
+#ifndef TAO_AV_BENCH_SERVER_H
 #define TAO_AV_BENCH_SERVER_H
 
 
 #include "ace/Get_Opt.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Acceptor.h"
 #include "ace/Svc_Handler.h"
 #include "ace/SOCK_Acceptor.h"
@@ -23,7 +28,7 @@
 #include "client.h"
 #include "child.h"
 
-class AV_Server_Sig_Handler 
+class AV_Server_Sig_Handler
   : public virtual ACE_Event_Handler
 {
 public:
@@ -35,7 +40,7 @@ public:
   // this will register this sig_handler
   // with the reactor for SIGCHLD,SIGTERM,SIGINT
 
-  virtual int shutdown (ACE_HANDLE, 
+  virtual int shutdown (ACE_HANDLE,
                         ACE_Reactor_Mask);
 
   virtual int handle_input (ACE_HANDLE);
@@ -60,13 +65,13 @@ class Server
 public:
   Server (void);
   // Default constructor
-  
+
   int init (int argc,
             char **argv,
             CORBA::Environment& env);
-  
+
   int run (CORBA::Environment& env);
-  
+
   ~Server (void);
 private:
   TAO_ORB_Manager orb_manager_;
@@ -74,7 +79,7 @@ private:
 
   TAO_Naming_Client my_name_client_;
   // The TAO Naming server
-  
+
   //CosNaming::NamingContext_var naming_context_;
   // The root naming context of the naming service
 

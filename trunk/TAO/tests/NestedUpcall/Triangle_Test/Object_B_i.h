@@ -10,7 +10,7 @@
 //    Object_B_i.h
 //
 // = DESCRIPTION
-//    This class implements the Object B of the 
+//    This class implements the Object B of the
 //    Nested Upcalls - Triangle test.
 //
 // = AUTHORS
@@ -18,7 +18,7 @@
 //
 // ============================================================================
 
-#if !defined (OBJECT_B_IMPL_H)
+#ifndef OBJECT_B_IMPL_H
 #  define OBJECT_B_IMPL_H
 
 #include "Triangle_TestS.h"

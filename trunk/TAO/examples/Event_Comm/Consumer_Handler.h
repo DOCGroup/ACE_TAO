@@ -18,7 +18,7 @@
 //
 // ============================================================================
 
-#if !defined (_CONSUMER_HANDLER_H)
+#ifndef _CONSUMER_HANDLER_H
 #define _CONSUMER_HANDLER_H
 
 //#include "ace/CORBA_Handler.h"
@@ -59,7 +59,7 @@ public:
   ACE_Reactor *reactor (void);
 
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-			    ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
+                            ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
   // Close down the handler.
 
 private:

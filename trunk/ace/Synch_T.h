@@ -17,11 +17,12 @@
 #ifndef ACE_SYNCH_T_H
 #define ACE_SYNCH_T_H
 
+#include "ace/Event_Handler.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Event_Handler.h"
 #include "ace/Synch.h"
 
 // Forward decl
@@ -794,7 +795,7 @@ protected:
   ACE_cond_t *process_cond_;
   // This condition resides in shared memory.
 
-  LPCTSTR condname_; 
+  LPCTSTR condname_;
   // Remember the name of the condition if we created it so we can
   // unlink it when we go away (only the actor that initialized the
   // memory can destroy it).

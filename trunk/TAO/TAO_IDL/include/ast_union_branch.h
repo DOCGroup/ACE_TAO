@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -73,12 +73,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 /*
 ** DEPEndencies: ast_field.hh, ast_union_label.hh, ast_type.hh,
-**		 utl_scoped_name.hh, utl_strlist.h, ast_decl.h
+**               utl_scoped_name.hh, utl_strlist.h, ast_decl.h
 **
 ** USE: Included from ast.hh
 */
 
-class	AST_UnionBranch : public virtual AST_Field
+class   AST_UnionBranch : public virtual AST_Field
 {
 public:
   // Operations
@@ -86,9 +86,9 @@ public:
   // Constructor(s)
   AST_UnionBranch();
   AST_UnionBranch(AST_UnionLabel *label,
-		  AST_Type *ft,
-		  UTL_ScopedName *n,
-		  UTL_StrList *p);
+                  AST_Type *ft,
+                  UTL_ScopedName *n,
+                  UTL_StrList *p);
   virtual ~AST_UnionBranch() {}
 
   // Data Accessors
@@ -99,11 +99,11 @@ public:
   DEF_NARROW_FROM_DECL(AST_UnionBranch);
 
   // AST Dumping
-  virtual void			dump(ostream &o);
+  virtual void                  dump(ostream &o);
 
 private:
   // Data
-  AST_UnionLabel		*pd_label;	// Label of this branch
+  AST_UnionLabel                *pd_label;      // Label of this branch
 };
 
 #endif           // _AST_UNION_BRANCH_AST_UNION_BRAN_HH

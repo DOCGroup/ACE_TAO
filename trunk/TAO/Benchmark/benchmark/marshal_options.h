@@ -4,19 +4,24 @@
 //
 // = LIBRARY
 //    CORBA Benchmark/Marshal
-// 
+//
 // = FILENAME
 //    marshal_options.h
 //
 // = AUTHOR
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
-#if !defined (_CORBA_MARSHAL_OPTIONS_H_)
+#ifndef _CORBA_MARSHAL_OPTIONS_H_
 #define _CORBA_MARSHAL_OPTIONS_H_
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/SString.h"
 
 class CORBA_Marshal_Options
@@ -31,7 +36,7 @@ class CORBA_Marshal_Options
   //    a "all-encompassing" class.
 public:
   // The following data types will be tested
-  enum DATATYPE 
+  enum DATATYPE
   {
     NO_DATATYPE,
     SHORT,
@@ -47,16 +52,16 @@ public:
   };
 
   // The following CORBA implementations will be tested
-  enum PROXY_TYPE 
+  enum PROXY_TYPE
   {
     NO_PROXY,
-    TAO, 
-    ORBIX, 
+    TAO,
+    ORBIX,
     VISIBROKER
   };
 
   // Invocation policy
-  enum POLICY 
+  enum POLICY
   {
     NO_POLICY,
     STATIC,  // SII, SSI
@@ -64,7 +69,7 @@ public:
   };
 
   // what role do we play?
-  enum ROLE 
+  enum ROLE
   {
     NO_ROLE,
     SENDER,
@@ -107,7 +112,7 @@ public:
   //= Get/set the port number on which the server listens
   short port (void);
   void port (short);
-  
+
   //= Get/Set the object name (to which to connect to)
   const char *object_name (void);
   void object_name (const char *);
@@ -154,10 +159,10 @@ public:
 private:
   const char *object_name_;
   // name of the object.
-  
+
   const char *service_name_;
   // name of the service.
-  
+
   CORBA_Marshal_Options::DATATYPE data_type_;
   // data type to send/receive
 

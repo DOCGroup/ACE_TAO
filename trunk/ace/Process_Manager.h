@@ -5,24 +5,25 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
-//    Process_Manager.h 
+//    Process_Manager.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_PROCESS_MANAGER_H
 #define ACE_PROCESS_MANAGER_H
 
 #include "ace/Synch.h"
-#include "ace/Process.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Process.h"
 
 class ACE_Export ACE_Process_Descriptor
 {
@@ -37,7 +38,7 @@ private:
 
   pid_t proc_id_;
   // Unique process ID.
-    
+
   gid_t grp_id_;
   // Unique group ID.
 
@@ -51,7 +52,7 @@ class ACE_Export ACE_Process_Manager
   //    Manages a pool of processs.
   //
   // = DESCRIPTION
-  //    This class allows operations on groups of processs atomically. 
+  //    This class allows operations on groups of processs atomically.
 public:
   friend class ACE_Process_Control;
 
@@ -64,10 +65,10 @@ public:
   ACE_Process_Manager (size_t size = ACE_Process_Manager::DEFAULT_SIZE);
   ~ACE_Process_Manager (void);
 
-  int open (size_t size = DEFAULT_SIZE); 
+  int open (size_t size = DEFAULT_SIZE);
   // Initialize the manager with room for SIZE processs.
 
-  int close (void);		
+  int close (void);
   // Release all resources.
 
   pid_t spawn (ACE_Process_Options &options);
@@ -78,11 +79,11 @@ public:
 
   int spawn_n (size_t n, ACE_Process_Options &options);
   // Create N new processs.
-  
+
   // Returns: on success a unique group id that can be used to control
   // all of the processs in the same group.  On failure, returns -1.
 
-  int wait (ACE_Time_Value *timeout = 0);	
+  int wait (ACE_Time_Value *timeout = 0);
   // Block until there are no more processs running or <timeout>
   // expires.  Returns 0 on success and -1 on failure.
 

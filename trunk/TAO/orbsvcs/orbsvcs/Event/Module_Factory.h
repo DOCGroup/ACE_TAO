@@ -50,7 +50,7 @@ class TAO_ORBSVCS_Export TAO_Module_Factory
   //   achieved by constructing modules with different dynamic
   //   types.  This class encapsulates all the strategies creation in
   //   a single point.
-  // 
+  //
 public:
   virtual ~TAO_Module_Factory (void);
 
@@ -93,7 +93,7 @@ class TAO_ORBSVCS_Export TAO_Default_Module_Factory : public TAO_Module_Factory
   //   achieved by constructing modules with different dynamic
   //   types.  This class encapsulates all the strategies creation in
   //   a single point.
-  // 
+  //
 public:
   TAO_Default_Module_Factory (void);
   virtual ~TAO_Default_Module_Factory (void);
@@ -137,7 +137,7 @@ class TAO_ORBSVCS_Export TAO_Reactive_Module_Factory : public TAO_Module_Factory
   //   An Event Channel configured with this factory can exhibit high
   //   priority inversion, but it should provide high-performance due
   //   to the elimination of context switching.
-  // 
+  //
 public:
   TAO_Reactive_Module_Factory (void);
   virtual ~TAO_Reactive_Module_Factory (void);

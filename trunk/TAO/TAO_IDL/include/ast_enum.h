@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -71,12 +71,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 /*
 ** DEPENDENCIES: ast_concrete_type.hh, utl_scope.hh, ast_enum_val.hh,
-**		 utl_scoped_name.hh, utl_strlist.hh, ast_expression.hh,
+**               utl_scoped_name.hh, utl_strlist.hh, ast_expression.hh,
 **
 ** USE: Included from ast.hh
 */
 
-class	AST_Enum : public virtual AST_ConcreteType, public virtual UTL_Scope
+class   AST_Enum : public virtual AST_ConcreteType, public virtual UTL_Scope
 {
 public:
   // Operations
@@ -92,23 +92,23 @@ public:
   DEF_NARROW_FROM_SCOPE(AST_Enum);
 
   // AST Dumping
-  virtual void			dump(ostream &);
+  virtual void                  dump(ostream &);
 
   // Other operations
 
   // Look up an AST_EnumVal by value
-  virtual AST_EnumVal		*lookup_by_value(const AST_Expression *v);
+  virtual AST_EnumVal           *lookup_by_value(const AST_Expression *v);
 
   // Get value to be assigned to next enumerator
-  virtual unsigned long		next_enum_val();
+  virtual unsigned long         next_enum_val();
 
 private:
   // Data
-  unsigned long			pd_enum_counter;	// Value for next
-							// enumerator
+  unsigned long                 pd_enum_counter;        // Value for next
+                                                        // enumerator
   // Scope management
   friend int tao_yyparse();
-  virtual AST_EnumVal		*fe_add_enum_val(AST_EnumVal	*v);
+  virtual AST_EnumVal           *fe_add_enum_val(AST_EnumVal    *v);
 
 };
 

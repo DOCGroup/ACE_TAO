@@ -6,12 +6,12 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    System_Time.h
 //
 // = AUTHOR
-//    Prashant Jain, Tim H. Harrison and Douglas C. Schmidt    
+//    Prashant Jain, Tim H. Harrison and Douglas C. Schmidt
 //
 // ============================================================================
 
@@ -19,12 +19,13 @@
 #define ACE_SYSTEM_TIME_H
 
 #include "ace/OS.h"
-#include "ace/Memory_Pool.h"
-#include "ace/Malloc_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Memory_Pool.h"
+#include "ace/Malloc_T.h"
 
 class ACE_Export ACE_Date_Time
 {

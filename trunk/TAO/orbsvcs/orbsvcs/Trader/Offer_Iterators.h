@@ -91,9 +91,9 @@ public:
 
   TAO_Offer_Iterator (TAO_Offer_Iterator& iter) {}
   // To satisfy g++'s insane lust for copy constructors...
-  
+
   TAO_Offer_Iterator& operator=(const TAO_Offer_Iterator&);
-  
+
   TAO_Property_Filter pfilter_;
   // The filter through which each returned offer must pass. Used to
   // strip offers of undesirable properties.

@@ -73,12 +73,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 /*
 ** DEPENDENCIES: ast_field.hh, ast_type.hh, utl_scoped_name.hh,
-**		 utl_strlist.hh, ast_decl.hh
+**               utl_strlist.hh, ast_decl.hh
 **
 ** USE: Included from ast.h
 */
 
-class	AST_Attribute : public virtual AST_Field
+class   AST_Attribute : public virtual AST_Field
 {
 public:
   // Operations
@@ -86,9 +86,9 @@ public:
   // Constructor(s)
   AST_Attribute();
   AST_Attribute(idl_bool readonly,
-		AST_Type *ft,
-		UTL_ScopedName *n,
-		UTL_StrList *p);
+                AST_Type *ft,
+                UTL_ScopedName *n,
+                UTL_StrList *p);
   virtual ~AST_Attribute() {}
 
   // Data Accessors
@@ -99,11 +99,11 @@ public:
   DEF_NARROW_FROM_DECL(AST_Attribute);
 
   // AST Dumping
-  virtual void			dump(ostream &o);
+  virtual void                  dump(ostream &o);
 
 private:
   // Data
-  const idl_bool		pd_readonly;	// Is attribute read-only?
+  const idl_bool                pd_readonly;    // Is attribute read-only?
 };
 
 #endif           // _AST_ATTRIBUTE_AST_ATTRIBUTE_HH

@@ -18,7 +18,7 @@
 #include "NodeVisitor.h"
 #include "Node.h"
 
-#if !defined (PRINT_VISITOR_H)
+#ifndef PRINT_VISITOR_H
 #define PRINT_VISITOR_H
 
 

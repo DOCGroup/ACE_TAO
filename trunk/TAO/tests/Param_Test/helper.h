@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#if !defined (HELPER_H)
+#ifndef HELPER_H
 #define HELPER_H
 
 #include "param_testCli.h"

@@ -20,7 +20,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_BE_OUTSTRM_H)
+#ifndef TAO_BE_OUTSTRM_H
 #define TAO_BE_OUTSTRM_H
 
 // a dummy structure to inform TAO_OutStream's << operator to  put a newline

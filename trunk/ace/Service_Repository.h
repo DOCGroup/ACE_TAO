@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Service_Repository.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_SERVICE_REPOSITORY_H
@@ -20,7 +20,7 @@
 #include "ace/Service_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_Service_Repository
@@ -41,7 +41,7 @@ class ACE_Export ACE_Service_Repository
 public:
   friend class ACE_Service_Repository_Iterator;
 
-  enum 
+  enum
   {
     DEFAULT_SIZE = 50
   };
@@ -78,14 +78,14 @@ public:
   static void close_singleton (void);
   // Delete the dynamically allocated Singleton.
 
-  // = Search structure operations (all acquire locks as necessary). 
+  // = Search structure operations (all acquire locks as necessary).
 
   int insert (const ACE_Service_Type *);
   // Insert a new service record.
 
-  int find (const ASYS_TCHAR name[], 
-	    const ACE_Service_Type **srp = 0, 
-	    int ignore_suspended = 1);
+  int find (const ASYS_TCHAR name[],
+            const ACE_Service_Type **srp = 0,
+            int ignore_suspended = 1);
   // Locate an entry with <name> in the table.  If <ignore_suspended>
   // is set then only consider services marked as resumed.  If the
   // caller wants the located entry, pass back a pointer to the
@@ -117,8 +117,8 @@ public:
 
 private:
   int find_i (const ASYS_TCHAR service_name[],
-	      const ACE_Service_Type ** = 0, 
-	      int ignore_suspended = 1);
+              const ACE_Service_Type ** = 0,
+              int ignore_suspended = 1);
   // Locates <service_name>.  Must be called without locks being
   // held...
 
@@ -138,8 +138,8 @@ private:
   // Must delete the <svc_rep_> if non-0.
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  ACE_Thread_Mutex lock_; 
-  // Synchronization variable for the MT_SAFE Repository 
+  ACE_Thread_Mutex lock_;
+  // Synchronization variable for the MT_SAFE Repository
 #endif /* ACE_MT_SAFE */
 };
 
@@ -153,8 +153,8 @@ class ACE_Export ACE_Service_Repository_Iterator
   //     since this class is not designed as a "robust" iterator.
 public:
   // = Initialization and termination methods.
-  ACE_Service_Repository_Iterator (ACE_Service_Repository &sr, 
-				   int ignored_suspended = 1);
+  ACE_Service_Repository_Iterator (ACE_Service_Repository &sr,
+                                   int ignored_suspended = 1);
   // Constructor.
 
   ~ACE_Service_Repository_Iterator (void);

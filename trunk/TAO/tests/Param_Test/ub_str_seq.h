@@ -16,7 +16,7 @@
 //
 // ============================================================================
 
-#if !defined (PARAM_TEST_UNBOUNDED_STRING_SEQUENCE_H)
+#ifndef PARAM_TEST_UNBOUNDED_STRING_SEQUENCE_H
 #define PARAM_TEST_UNBOUNDED_STRING_SEQUENCE_H
 
 #include "param_testCli.h"

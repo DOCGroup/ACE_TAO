@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    TAO/tests/Simple/time
-// 
+//
 // = FILENAME
 //    Time_i.h
 //
@@ -14,11 +14,11 @@
 //
 // = AUTHOR
 //    Darrell Brunsch <brunsch@cs.wustl.edu>
-// 
+//
 // ============================================================================
 
-#if !defined (TIME_I_H)
-#define	TIME_I_H
+#ifndef TIME_I_H
+#define TIME_I_H
 
 #include "TimeS.h"
 
@@ -28,9 +28,9 @@ class Time_i: public POA_Time
   //    Time Object Implementation
   //
   // = DESCRIPTION
-  //    Implementation of a simple object that has two methods, one that 
+  //    Implementation of a simple object that has two methods, one that
   //    return the current time/date on the server and the other that
-  //    shuts down the server.  
+  //    shuts down the server.
 public:
   // = Initialization and termination methods.
   Time_i (void);

@@ -18,10 +18,15 @@
 //
 // ============================================================================
 
-#if !defined (SERVER_I_H)
+#ifndef SERVER_I_H
 #define SERVER_I_H
 
 #include "ace/Get_Opt.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Log_Msg.h"
 #include "tao/TAO.h"
 #include "orbsvcs/CosNamingC.h"
@@ -42,8 +47,8 @@ public:
   // Destructor.
 
   int init (int argc,
-	    char *argv[],
-	    CORBA::Environment &env);
+            char *argv[],
+            CORBA::Environment &env);
   // Initialize the Server state - parsing arguments and waiting.
 
   int run (CORBA::Environment &env);

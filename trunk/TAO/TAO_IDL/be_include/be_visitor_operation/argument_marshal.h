@@ -13,21 +13,21 @@
 // = DESCRIPTION
 //    Visitor for generating code for IDL operations. This is a visitor for
 //    passing arguments to the CDR operators in a compiled marshaling
-//    stub/skeleton 
+//    stub/skeleton
 //
 // = AUTHOR
 //    Aniruddha Gokhale
 //
 // ============================================================================
 
-#if !defined (_BE_VISITOR_OPERATION_ARGUMENT_MARSHAL_H_)
+#ifndef _BE_VISITOR_OPERATION_ARGUMENT_MARSHAL_H_
 #define _BE_VISITOR_OPERATION_ARGUMENT_MARSHAL_H_
 
 // ************************************************************
 // generic operation visitor for docall, upcall, pre/post
 // ************************************************************
 
-class be_compiled_visitor_operation_argument_marshal 
+class be_compiled_visitor_operation_argument_marshal
   : public be_visitor_operation_argument
 {
   //
@@ -51,7 +51,7 @@ public:
   virtual int post_process (be_decl *bd);
   // stuff to o/p after each element of the scope is handled
 
-  enum LAST_ARG_PRINTED 
+  enum LAST_ARG_PRINTED
   {
     TAO_ARG_NONE,
     TAO_ARG_IN,

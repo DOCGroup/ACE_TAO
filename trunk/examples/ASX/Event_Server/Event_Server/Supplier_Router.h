@@ -1,10 +1,15 @@
 /* -*- C++ -*- */
 // $Id$
 
-#if !defined (_SUPPLIER_ROUTER_H)
+#ifndef _SUPPLIER_ROUTER_H
 #define _SUPPLIER_ROUTER_H
 
 #include "ace/INET_Addr.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Map_Manager.h"
 #include "ace/Svc_Handler.h"
@@ -14,8 +19,8 @@ class Supplier_Router : public Peer_Router
 {
   // = TITLE
   //     Provides the interface between one or more Suppliers and the
-  //     Event Server ACE_Stream.  
-  //     
+  //     Event Server ACE_Stream.
+  //
   // = DESCRIPTION
   //     This class normally sits on "bottom" of the Stream and sends
   //     all messages coming from Suppliers via its "write" <Task>

@@ -49,7 +49,7 @@ typedef u_long long ptr_arith_t;
 // Since the alignment is a power of two its binary representation is:
 //    alignment      = 0...010...0
 //
-// hence 
+// hence
 //
 //    alignment - 1  = 0...001...1 = T1
 //
@@ -57,7 +57,7 @@ typedef u_long long ptr_arith_t;
 //
 //  ~(alignment - 1) = 1...110...0 = T2
 //
-// Notice that there is a multiple of <alignment> in the range 
+// Notice that there is a multiple of <alignment> in the range
 // [<value>,<value> + T1], also notice that if
 //
 // X = ( <value> + T1 ) & T2
@@ -69,7 +69,7 @@ typedef u_long long ptr_arith_t;
 // because the & operator only changes the last bits, and since X is a
 // multiple of <alignment> (its last bits are zero) we have found the
 // multiple we wanted.
-// 
+//
 
 #define align_binary(ptr, alignment) \
     ((ptr + ((ptr_arith_t)((alignment)-1))) & (~((ptr_arith_t)((alignment)-1))))

@@ -33,13 +33,13 @@ class TAO_Export CORBA_Environment
   // = TITLE
   //   CORBA_Environment
   //
-  // = DESCRIPTION 
+  // = DESCRIPTION
   //
   //   A CORBA_Environment is a way to automagically ensure that
   //   exception data is freed -- the "var" class for Exceptions.  It
   //   adds just a bit of convenience function support, helping
   //   classify exceptions as well as reducing memory leakage.
-  // 
+  //
   //   The thread has a default environment to simplify porting
   //   between platforms that support native C++ exceptions and those
   //   that don't. This is a TSS resource (always), but with a twist:

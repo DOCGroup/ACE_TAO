@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#if !defined (_BINARY_SEARCH_H)
+#ifndef _BINARY_SEARCH_H
 #define _BINARY_SEARCH_H
 
 #include "Search_Struct.h"

@@ -1,7 +1,7 @@
 /* -*- c++ -*- */
 // $Id$
 
-#if !defined (JAWS_POLICY_H)
+#ifndef JAWS_POLICY_H
 #define JAWS_POLICY_H
 
 #include "JAWS/Export.h"

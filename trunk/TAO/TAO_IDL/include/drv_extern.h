@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -71,17 +71,17 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // Functions
 
-extern void		DRV_init ();
-extern void		DRV_parse_args (long, char **);
-extern void		DRV_usage ();
+extern void             DRV_init ();
+extern void             DRV_parse_args (long, char **);
+extern void             DRV_usage ();
 
-extern void	        DRV_pre_proc (char *myfile);
+extern void             DRV_pre_proc (char *myfile);
 
-extern void		DRV_cpp_init ();
-extern void		DRV_cpp_putarg (char *str);
-extern void		DRV_cpp_new_location (char *new_loc);
+extern void             DRV_cpp_init ();
+extern void             DRV_cpp_putarg (char *str);
+extern void             DRV_cpp_new_location (char *new_loc);
 
-extern void		DRV_fork();
+extern void             DRV_fork();
 extern int              DRV_check_gperf ();
 extern void             DRV_check_for_include (const char* buf);
 #endif           // _DRV_EXTERN_DRV_EXTERN_HH

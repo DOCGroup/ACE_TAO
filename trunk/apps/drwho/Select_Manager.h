@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_SELECT_MANAGER_H)
+#ifndef _SELECT_MANAGER_H
 #define _SELECT_MANAGER_H
 
 class Select_Manager

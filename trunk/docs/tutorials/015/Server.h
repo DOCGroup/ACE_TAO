@@ -5,6 +5,11 @@
 #define SERVER_H
 
 #include "ace/Acceptor.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/SOCK_Acceptor.h"
 #include "Handler.h"
 
@@ -36,7 +41,7 @@ public:
     int run(void);
 
 private:
-        // This will accept client connection requests and instantiate 
+        // This will accept client connection requests and instantiate
         // a Handler object for each new connection.
     Acceptor acceptor_;
 

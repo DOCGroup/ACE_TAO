@@ -13,7 +13,7 @@
 //
 //=============================================================================
 
-#if !defined (FOO_I_H)
+#ifndef FOO_I_H
 #define FOO_I_H
 
 #include "FooS.h"
@@ -77,7 +77,7 @@ public:
     PortableServer::POA_var poa_;
     // Default poa associated with this servant
   };
-  
+
   class Inner_i
   {
   public:

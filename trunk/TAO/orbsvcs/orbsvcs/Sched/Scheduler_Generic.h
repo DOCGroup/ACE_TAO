@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#if ! defined (SCHEDULER_INTERNAL_H)
+#ifndef SCHEDULER_INTERNAL_H
 #define SCHEDULER_INTERNAL_H
 
 #include "Scheduler.h"
@@ -50,7 +50,7 @@ public:
   // Obtains an RT_Info based on its "handle".
 
   virtual status_t lookup_config_info (Preemption_Priority priority,
-				       Config_Info* &config_info);
+                                       Config_Info* &config_info);
   // Obtains a Config_Info based on its priority.
 
   // = Computes the schedule.

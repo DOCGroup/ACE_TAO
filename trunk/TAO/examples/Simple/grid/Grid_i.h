@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    TAO/tests/Simple/grid
-// 
+//
 // = FILENAME
 //    Grid_i.h
 //
@@ -13,11 +13,11 @@
 //    This class implements the Grid IDL interface.
 //
 // = AUTHOR
-// 
+//
 // ============================================================================
 
-#if !defined (GRID_I_H)
-#define	GRID_I_H
+#ifndef GRID_I_H
+#define GRID_I_H
 
 #include "GridS.h"
 
@@ -49,22 +49,22 @@ public:
   // Returns the height of the grid
 
   virtual void width (CORBA::Short,
-	              CORBA_Environment &);
+                      CORBA_Environment &);
   // Sets the width of the grid.
 
   virtual void height (CORBA::Short,
                        CORBA_Environment &);
   // Sets the height of the grid.
 
-  virtual void set (CORBA::Short, 
-		    CORBA::Short,
-		    CORBA::Long,
-		    CORBA::Environment &);
+  virtual void set (CORBA::Short,
+                    CORBA::Short,
+                    CORBA::Long,
+                    CORBA::Environment &);
   // Sets the grid value.
 
-  virtual CORBA::Long get (CORBA::Short, 
-	                   CORBA::Short,
-		           CORBA::Environment &);
+  virtual CORBA::Long get (CORBA::Short,
+                           CORBA::Short,
+                           CORBA::Environment &);
   // Gets the grid value.
 
   virtual void destroy (CORBA::Environment &);
@@ -78,14 +78,14 @@ private:
   // Height of the grid.
 
   CORBA::Long **array_;
-  // Pointer to the matrix.  This is organized as an "array of arrays."  
+  // Pointer to the matrix.  This is organized as an "array of arrays."
 };
 
 class Grid_Factory_i : public POA_Grid_Factory
 {
   // =TITLE
   //   Create a <Grid>.
-public: 
+public:
   // = Initialization and termination methods.
   Grid_Factory_i (void);
   // Constructor.
@@ -94,13 +94,13 @@ public:
   // Destructor.
 
   virtual Grid_ptr make_grid (CORBA::Short,
-			      CORBA::Short,
-			      CORBA::Environment &_env);
+                              CORBA::Short,
+                              CORBA::Environment &_env);
   // This function creates and returns a <Grid>.
 
   virtual void shutdown (CORBA::Environment &env);
   // Shutdown the server.
-  
+
   void orb (CORBA::ORB_ptr o);
   // Set the ORB pointer.
 

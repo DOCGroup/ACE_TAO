@@ -17,10 +17,15 @@
 //
 // ============================================================================
 
-#if !defined (MT_CLIENT_H)
+#ifndef MT_CLIENT_H
 #define MT_CLIENT_H
 
 #include "ace/Get_Opt.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Task.h"
 #include "ace/Thread_Manager.h"
 #include "tao/corba.h"
@@ -43,9 +48,9 @@ public:
   int run (void);
   // Execute client example code.
 
-  int init (int argc, 
+  int init (int argc,
             char **argv,
-	    int client_number);
+            int client_number);
   // Initialize the client communication endpoint with server.
 
 private:

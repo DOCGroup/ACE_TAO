@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_BS_CLIENT_H)
+#ifndef _BS_CLIENT_H
 #define _BS_CLIENT_H
 
 #include "Binary_Search.h"
@@ -22,7 +22,7 @@
 class BS_Client : public Binary_Search
 {
   // = TITLE
-  //    Provides the client's binary search lookup table abstraction. 
+  //    Provides the client's binary search lookup table abstraction.
 public:
   // = Initialization.
   BS_Client (void);

@@ -5,29 +5,30 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    FILE_Addr.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_FILE_ADDR_H
 #define ACE_FILE_ADDR_H
 
 #include "ace/Addr.h"
-#include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/ACE.h"
 
 class ACE_Export ACE_FILE_Addr : public ACE_Addr
 {
   // = TITLE
-  //    Defines the FILE address family address format. 
+  //    Defines the FILE address family address format.
 public:
   // = Initialization methods.
   ACE_FILE_Addr (void);
@@ -40,32 +41,32 @@ public:
   // Acts like a copy constructor.
 
   ACE_FILE_Addr (LPCTSTR filename);
-  // Create a ACE_FILE_Addr from a pathname. 
+  // Create a ACE_FILE_Addr from a pathname.
 
   void set (LPCTSTR filename);
-  // Create a ACE_FILE_Addr from a pathname. 
+  // Create a ACE_FILE_Addr from a pathname.
 
   ACE_FILE_Addr &operator= (const ACE_FILE_Addr &);
   // Assignment operator.
 
   virtual void *get_addr (void) const;
-  // Return a pointer to the address. 
+  // Return a pointer to the address.
 
 #if defined (UNICODE)
   virtual int addr_to_string (wchar_t *addr, size_t) const;
-  // Transform the current address into string format. 
+  // Transform the current address into string format.
 #endif /* UNICODE */
 
   virtual int addr_to_string (char *addr, size_t) const;
-  // Transform the current address into string format. 
+  // Transform the current address into string format.
 
   int operator == (const ACE_FILE_Addr &SAP) const;
-  // Compare two addresses for equality. 
+  // Compare two addresses for equality.
 
   int operator != (const ACE_FILE_Addr &SAP) const;
-  // Compare two addresses for inequality. 
+  // Compare two addresses for inequality.
 
-  LPCTSTR get_path_name (void) const; 
+  LPCTSTR get_path_name (void) const;
   // Return the path name used for the rendezvous point.
 
   void dump (void) const;

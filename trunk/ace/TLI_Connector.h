@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    TLI_Connector.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_TLI_CONNECTOR_H
@@ -20,7 +20,7 @@
 #include "ace/TLI_Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_TLI)
@@ -35,18 +35,18 @@ public:
   ACE_TLI_Connector (void);
   // Default constructor.
 
-  ACE_TLI_Connector (ACE_TLI_Stream &new_stream, 
-		     const ACE_Addr &remote_sap, 
-		     ACE_Time_Value *timeout = 0,
-		     const ACE_Addr &local_sap = ACE_Addr::sap_any,
-		     int reuse_addr = 0,
-		     int flags = O_RDWR, 
-		     int perms = 0,
-		     const char device[] = ACE_TLI_TCP_DEVICE, 
-		     struct t_info *info = 0, 
-		     int rw_flag = 1,
-		     struct netbuf *udata = 0,
-		     struct netbuf *opt = 0);
+  ACE_TLI_Connector (ACE_TLI_Stream &new_stream,
+                     const ACE_Addr &remote_sap,
+                     ACE_Time_Value *timeout = 0,
+                     const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                     int reuse_addr = 0,
+                     int flags = O_RDWR,
+                     int perms = 0,
+                     const char device[] = ACE_TLI_TCP_DEVICE,
+                     struct t_info *info = 0,
+                     int rw_flag = 1,
+                     struct netbuf *udata = 0,
+                     struct netbuf *opt = 0);
   // Actively connect and produce a <new_stream> if things go well.
   // The <remote_sap> is the address that we are trying to connect
   // with.  The <timeout> is the amount of time to wait to connect.
@@ -61,18 +61,18 @@ public:
   // the OS do the binding.  If <reuse_addr> == 1 then the
   // <local_addr> is reused, even if it hasn't been cleanedup yet.
 
-  int connect (ACE_TLI_Stream &new_stream, 
-	       const ACE_Addr &remote_sap,  
-	       ACE_Time_Value *timeout = 0,
-	       const ACE_Addr &local_sap = ACE_Addr::sap_any,
-	       int reuse_addr = 0,
-	       int flags = O_RDWR, 
-	       int perms = 0,
-	       const char device[] = ACE_TLI_TCP_DEVICE, 
-	       struct t_info *info = 0, 
-	       int rw_flag = 1,
-	       struct netbuf *udata = 0,
-	       struct netbuf *opt = 0);
+  int connect (ACE_TLI_Stream &new_stream,
+               const ACE_Addr &remote_sap,
+               ACE_Time_Value *timeout = 0,
+               const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               int reuse_addr = 0,
+               int flags = O_RDWR,
+               int perms = 0,
+               const char device[] = ACE_TLI_TCP_DEVICE,
+               struct t_info *info = 0,
+               int rw_flag = 1,
+               struct netbuf *udata = 0,
+               struct netbuf *opt = 0);
   // Actively connect and produce a <new_stream> if things go well.
   // The <remote_sap> is the address that we are trying to connect
   // with.  The <timeout> is the amount of time to wait to connect.
@@ -87,9 +87,9 @@ public:
   // the OS do the binding.  If <reuse_addr> == 1 then the
   // <local_addr> is reused, even if it hasn't been cleanedup yet.
 
-  int complete (ACE_TLI_Stream &new_stream, 
-		ACE_Addr *remote_sap,
-		ACE_Time_Value *tv);
+  int complete (ACE_TLI_Stream &new_stream,
+                ACE_Addr *remote_sap,
+                ACE_Time_Value *tv);
   // Try to complete a non-blocking connection.
   // If connection completion is successful then <new_stream> contains
   // the connected ACE_SOCK_Stream.  If <remote_sap> is non-NULL then it

@@ -4,19 +4,23 @@
 //
 // = LIBRARY
 //    CORBA Benchmark
-// 
+//
 // = FILENAME
 //    marshal_results.h
 //
 // = AUTHOR
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
-#if !defined (_CORBA_MARSHAL_RESULTS_H_)
+#ifndef _CORBA_MARSHAL_RESULTS_H_
 #define _CORBA_MARSHAL_RESULTS_H_
 
 #include "ace/Profile_Timer.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class CORBA_Marshal_Results
 {

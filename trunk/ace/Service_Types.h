@@ -5,24 +5,25 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Service_Types.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_SERVICE_TYPE_H
 #define ACE_SERVICE_TYPE_H
 
 #include "ace/Service_Object.h"
-#include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Synch.h"
 
 class ACE_Export ACE_Service_Type_Impl
 {
@@ -39,9 +40,9 @@ class ACE_Export ACE_Service_Type_Impl
   //     <ACE_Service_Object>, <ACE_Module>, or <ACE_Stream>.
 public:
   // = Initialization and termination methods.
-  ACE_Service_Type_Impl (void *object, 
-			 const ASYS_TCHAR *s_name, 
-			 u_int flags = 0,
+  ACE_Service_Type_Impl (void *object,
+                         const ASYS_TCHAR *s_name,
+                         u_int flags = 0,
                          ACE_Service_Object_Exterminator gobbler = 0);
   virtual ~ACE_Service_Type_Impl (void);
 
@@ -76,7 +77,7 @@ protected:
   // points to an <ACE_Service_Object>, <ACE_Module>, or <ACE_Stream>.
 
   ACE_Service_Object_Exterminator gobbler_;
-  // Destroy function to deallocate obj_.  
+  // Destroy function to deallocate obj_.
 
   u_int flags_;
   // Flags that control serivce behavior (particularly deletion).
@@ -86,12 +87,12 @@ class ACE_Export ACE_Service_Object_Type : public ACE_Service_Type_Impl
 {
   // = TITLE
   //     Define the methods for handling the configuration of
-  //     <ACE_Service_Objects>. 
+  //     <ACE_Service_Objects>.
 public:
   // = Initialization method.
   ACE_Service_Object_Type (void *so,
-			   const ASYS_TCHAR *name, 
-			   u_int flags = 0,
+                           const ASYS_TCHAR *name,
+                           u_int flags = 0,
                            ACE_Service_Object_Exterminator gobbler = 0);
 
   ~ACE_Service_Object_Type (void);
@@ -108,12 +109,12 @@ class ACE_Export ACE_Module_Type : public ACE_Service_Type_Impl
 {
   // = TITLE
   //     Define the methods for handling the configuration of
-  //     <ACE_Modules>. 
+  //     <ACE_Modules>.
 public:
   // = Initialization method.
   ACE_Module_Type (void *m, // Really an <ACE_Module> *.
-		   const ASYS_TCHAR *identifier, 
-		   u_int flags = 0);
+                   const ASYS_TCHAR *identifier,
+                   u_int flags = 0);
 
   ~ACE_Module_Type (void);
 
@@ -135,7 +136,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  ACE_Module_Type *link_; 
+  ACE_Module_Type *link_;
   // Pointer to the next <ACE_Module_Type> in an <ACE_Stream_Type>.
 };
 
@@ -143,12 +144,12 @@ class ACE_Export ACE_Stream_Type : public ACE_Service_Type_Impl
 {
   // = TITLE
   //     Define the methods for handling the configuration of
-  //     <ACE_Streams>. 
+  //     <ACE_Streams>.
 public:
   // = Initialization method.
   ACE_Stream_Type (void *s, // Really an <ACE_Stream> *.
-		   const ASYS_TCHAR *identifier, 
-		   u_int flags = 0);
+                   const ASYS_TCHAR *identifier,
+                   u_int flags = 0);
 
   ~ACE_Stream_Type (void);
 

@@ -6,13 +6,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Typed_SV_Message.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_TYPED_SV_MESSAGE_H
@@ -21,7 +21,7 @@
 #include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 template <class T>
@@ -32,18 +32,18 @@ class ACE_Typed_SV_Message
   //     message queues.
 public:
   // = Initialization and termination methods.
-  ACE_Typed_SV_Message (long type = 0, 
-			int length = sizeof (T), 
-			int max_size = sizeof (T));
-  ACE_Typed_SV_Message (const T &data, 
-			long type = 0, 
-			int length = sizeof (T), 
-			int max_size = sizeof (T));
+  ACE_Typed_SV_Message (long type = 0,
+                        int length = sizeof (T),
+                        int max_size = sizeof (T));
+  ACE_Typed_SV_Message (const T &data,
+                        long type = 0,
+                        int length = sizeof (T),
+                        int max_size = sizeof (T));
   ~ACE_Typed_SV_Message (void);
 
   // = Get/set the type of the message.
   long type (void) const;
-  void type (long type); 
+  void type (long type);
 
   // = Get/set the length of the message.
   int length (void) const;

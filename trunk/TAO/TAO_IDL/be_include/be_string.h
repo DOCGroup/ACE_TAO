@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (BE_STRING_H)
+#ifndef BE_STRING_H
 #define BE_STRING_H
 
 /*

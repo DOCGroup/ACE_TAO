@@ -3,10 +3,15 @@
 
 /* Handle connections from remote INET connections. */
 
-#if !defined (_HANDLE_R_STREAM_H)
+#ifndef _HANDLE_R_STREAM_H
 #define _HANDLE_R_STREAM_H
 
 #include "ace/Service_Config.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Service_Types.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/SOCK_Acceptor.h"
@@ -28,7 +33,7 @@ private:
 
   ACE_SOCK_Stream    new_remote_stream;
   static u_short DEFAULT_PORT;
-  static char	 *login_name;
+  static char    *login_name;
 };
 
 extern ACE_Service_Object_Type rs;
@@ -37,7 +42,7 @@ extern ACE_Service_Object_Type rs;
 #define ACE_INLINE inline
 #include "Handle_R_Stream.i"
 #else
-#define ACE_INLINE 
+#define ACE_INLINE
 #endif /* __ACE_INLINE__ */
 
 #endif /* _HANDLE_R_STREAM_H */

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 1994, 1995.  Netscape Communications Corporation.  All
  * rights reserved.
- * 
+ *
  * Use of this software is governed by the terms of the license agreement for
  * the Netscape Communications or Netscape Comemrce Server between the
  * parties.
@@ -13,11 +13,11 @@
 
 /*
  * objset.h: Handles object sets
- * 
+ *
  * Each object is produced by reading a config file of some form. See the
- * server documentation for descriptions of the directives that are 
+ * server documentation for descriptions of the directives that are
  * recognized, what they do, and how they are parsed.
- * 
+ *
  * This module requires the pblock and buffer modules from the base library.
  *
  * Rob McCool
@@ -42,9 +42,9 @@
 /* ------------------------------ Constants ------------------------------- */
 
 
-/* 
+/*
  * The default number of objects to leave room for in an object set,
- * and the number of new entries by which to increase the size when that 
+ * and the number of new entries by which to increase the size when that
  * room is filled.
  */
 
@@ -53,7 +53,7 @@
 /*
  * When parsing config. files, httpd will put a limit on how long
  * the parameters to a directive can be (in characters).
- * 
+ *
  * Currently set to 10 lines (80 chars/line).
  */
 
@@ -70,7 +70,7 @@
 
 
 /*
- * httpd_objset is a container for a bunch of objects. obj is a 
+ * httpd_objset is a container for a bunch of objects. obj is a
  * NULL-terminated array of objects. pos points to the entry after the last
  * one in the array. You should not mess with pos, but can read it to find
  * the last entry.
@@ -86,8 +86,8 @@ typedef struct {
 
 
 /*
- * objset_scan_buffer will scan through buffer, looking for object 
- * configuration information, and adding them to the object set os if it 
+ * objset_scan_buffer will scan through buffer, looking for object
+ * configuration information, and adding them to the object set os if it
  * finds any. If os is NULL it will allocate a new object set.
  *
  * If any error occurs (syntax error, premature EOF) this function will
@@ -121,7 +121,7 @@ void objset_free_setonly(httpd_objset *os);
 
 /*
  * objset_new_object will add a new object to objset with the specified
- * name. It returns a pointer to the new object (which may be anywhere in 
+ * name. It returns a pointer to the new object (which may be anywhere in
  * the objset).
  */
 
@@ -139,16 +139,16 @@ void objset_add_object(httpd_object *obj, httpd_objset *os);
  * ign is a set of objects to ignore.
  */
 
-httpd_object *objset_findbyname(char *name, httpd_objset *ign, 
+httpd_object *objset_findbyname(char *name, httpd_objset *ign,
                                 httpd_objset *os);
 
 /*
- * objset_findbyppath will find the object in objset having the given 
+ * objset_findbyppath will find the object in objset having the given
  * partial path entry. Returns object if found, NULL otherwise.
  * ign is a set of objects to ignore.
  */
 
-httpd_object *objset_findbyppath(char *ppath, httpd_objset *ign, 
+httpd_object *objset_findbyppath(char *ppath, httpd_objset *ign,
                                  httpd_objset *os);
 
 

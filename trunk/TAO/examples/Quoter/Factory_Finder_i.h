@@ -15,10 +15,10 @@
 
 #include "QuoterS.h"
 
-#if !defined (QUOTER_FACTORY_FINDER_IMPL_H)
+#ifndef QUOTER_FACTORY_FINDER_IMPL_H
 #define QUOTER_FACTORY_FINDER_IMPL_H
 
-class Quoter_Factory_Finder_i : public POA_Stock::Quoter_Factory_Finder 
+class Quoter_Factory_Finder_i : public POA_Stock::Quoter_Factory_Finder
 {
   // = TILE
   //   A CosLifeCycle conforming Factory Finder for the Quoter

@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    performance-tests/Misc
-// 
+//
 // = FILENAME
 //    basic_func.h
 //
@@ -13,10 +13,17 @@
 //
 // = AUTHOR
 //    David Levine
-// 
+//
 // ============================================================================
 
+#ifndef BASIC_FUNC_H
+#define BASIC_FUNC_H
+
 #include "ace/ACE.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 extern int A,B,C,D,E,F;
 
@@ -67,5 +74,4 @@ class Foo_d_v : public Foo_v
     virtual void v_func ();
 };
 
-
-// EOF
+#endif /8 BASIC_FUNC_H */

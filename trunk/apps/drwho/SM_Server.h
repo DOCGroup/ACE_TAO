@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_SM_SERVER_H)
+#ifndef _SM_SERVER_H
 #define _SM_SERVER_H
 
 #include "PM_Server.h"

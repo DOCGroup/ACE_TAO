@@ -5,43 +5,44 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Connector.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_CONNECTOR_H
 #define ACE_CONNECTOR_H
 
 #include "ace/Service_Config.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Service_Object.h"
 #include "ace/Map_Manager.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Strategies.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 template <class SVC_HANDLER>
 class ACE_Svc_Tuple
 {
   // = TITLE
   //    Holds the ACE_Svc_Handler and its argument and
-  //    <ACE_Timer_Handle> until an asynchronous connection completes. 
+  //    <ACE_Timer_Handle> until an asynchronous connection completes.
   //
   // = DESCRIPTION
   //    This is a no-brainer...
 public:
   // = Initialization methods.
-  ACE_Svc_Tuple (SVC_HANDLER *, 
-		 ACE_HANDLE,
-		 const void * = 0, 
-		 long timer_id = -1);
+  ACE_Svc_Tuple (SVC_HANDLER *,
+                 ACE_HANDLE,
+                 const void * = 0,
+                 long timer_id = -1);
 
   // = Get SVC_HANDLER.
   SVC_HANDLER *svc_handler (void);
@@ -114,7 +115,7 @@ public:
 #endif /* ACE_HAS_TYPENAME_KEYWORD */
 
   ACE_Connector (ACE_Reactor *r = ACE_Reactor::instance (),
-		 int flags = 0);
+                 int flags = 0);
   // Initialize a connector.  <flags> indicates how <SVC_HANDLER>'s
   // should be initialized prior to being activated.  Right now, the
   // only flag that is processed is <ACE_NONBLOCK>, which enabled
@@ -122,7 +123,7 @@ public:
 
 
   virtual int open (ACE_Reactor *r = ACE_Reactor::instance (),
-		    int flags = 0);
+                    int flags = 0);
   // Initialize a connector.  <flags> indicates how <SVC_HANDLER>'s
   // should be initialized prior to being activated.  Right now, the
   // only flag that is processed is <ACE_NONBLOCK>, which enabled
@@ -134,13 +135,13 @@ public:
   // = Connection establishment methods.
 
   virtual int connect (SVC_HANDLER *&svc_handler,
-		       const ACE_PEER_CONNECTOR_ADDR &remote_addr,
-		       const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
-		       const ACE_PEER_CONNECTOR_ADDR &local_addr 
-		         = (ACE_PEER_CONNECTOR_ADDR &) ACE_PEER_CONNECTOR_ADDR_ANY,
-		       int reuse_addr = 0,
-		       int flags = O_RDWR,
-		       int perms = 0);
+                       const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                       const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
+                       const ACE_PEER_CONNECTOR_ADDR &local_addr
+                         = (ACE_PEER_CONNECTOR_ADDR &) ACE_PEER_CONNECTOR_ADDR_ANY,
+                       int reuse_addr = 0,
+                       int flags = O_RDWR,
+                       int perms = 0);
   // Initiate connection of <svc_handler> to peer at <remote_addr>
   // using <synch_options>.  If the caller wants to designate the
   // selected <local_addr> they can (and can also insist that the
@@ -150,10 +151,10 @@ public:
   // within connect with certain permissions.
 
   virtual int connect_n (size_t n,
-			 SVC_HANDLER *svc_handlers[],
-			 ACE_PEER_CONNECTOR_ADDR remote_addrs[],
+                         SVC_HANDLER *svc_handlers[],
+                         ACE_PEER_CONNECTOR_ADDR remote_addrs[],
                          ASYS_TCHAR *failed_svc_handlers = 0,
-			 const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults);
+                         const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults);
   // Initiate connection of <n> <svc_handlers> to peers at
   // <remote_addrs> using <synch_options>.  Returns -1 if failure
   // occurs and 0 otherwise.  If <failed_svc_handlers> is non-NULL, a
@@ -198,12 +199,12 @@ protected:
   // else 0.
 
   virtual int connect_svc_handler (SVC_HANDLER *&svc_handler,
-				   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
-				   ACE_Time_Value *timeout,
-				   const ACE_PEER_CONNECTOR_ADDR &local_addr,
-				   int reuse_addr,
-				   int flags,
-				   int perms);
+                                   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                                   ACE_Time_Value *timeout,
+                                   const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                                   int reuse_addr,
+                                   int flags,
+                                   int perms);
   // Bridge method for connecting the <svc_handler> to the
   // <remote_addr>.  The default behavior delegates to the
   // <PEER_CONNECTOR::connect>.
@@ -241,13 +242,13 @@ protected:
 
   // = Demultiplexing hooks.
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-			    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
   // Terminate the Client ACE_Connector by iterating over any
   // unconnected ACE_Svc_Handler's and removing them from the
   // ACE_Reactor.
 
-  virtual int handle_timeout (const ACE_Time_Value &tv, 
-			      const void *arg);
+  virtual int handle_timeout (const ACE_Time_Value &tv,
+                              const void *arg);
   // This method is called if a connection times out before
   // completing.
 
@@ -260,8 +261,8 @@ protected:
   // Default version does no work and returns -1.  Must be overloaded
   // by application developer to do anything meaningful.
 
-  int create_AST (SVC_HANDLER *, 
-		  const ACE_Synch_Options &);
+  int create_AST (SVC_HANDLER *,
+                  const ACE_Synch_Options &);
   // Creates and inserts an ACE_Svc_Tuple into the <handler_map_>.
   // so that we can continue accepting this connection asynchronously.
 
@@ -305,17 +306,17 @@ class ACE_Strategy_Connector : public ACE_Connector <SVC_HANDLER, ACE_PEER_CONNE
   //     particular concurrency mechanism.
 public:
   ACE_Strategy_Connector (ACE_Reactor *r = ACE_Reactor::instance (),
-			  ACE_Creation_Strategy<SVC_HANDLER> * = 0,
-			  ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> * = 0,
-			  ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
-			  int flags = 0);
+                          ACE_Creation_Strategy<SVC_HANDLER> * = 0,
+                          ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> * = 0,
+                          ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
+                          int flags = 0);
   // Initialize a connector.  <flags> indicates how <SVC_HANDLER>'s
   // should be initialized prior to being activated.  Right now, the
   // only flag that is processed is <ACE_NONBLOCK>, which enabled
   // non-blocking I/O on the <SVC_HANDLER> when it is opened.
 
   virtual int open (ACE_Reactor *r,
-		    int flags);
+                    int flags);
   // Initialize a connector.  <flags> indicates how <SVC_HANDLER>'s
   // should be initialized prior to being activated.  Right now, the
   // only flag that is processed is <ACE_NONBLOCK>, which enabled
@@ -323,10 +324,10 @@ public:
   // Default strategies would be created and used.
 
   virtual int open (ACE_Reactor *r = ACE_Reactor::instance (),
-		    ACE_Creation_Strategy<SVC_HANDLER> * = 0,
-		    ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> * = 0,
-		    ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
-		    int flags = 0);
+                    ACE_Creation_Strategy<SVC_HANDLER> * = 0,
+                    ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> * = 0,
+                    ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
+                    int flags = 0);
   // Initialize a connector.  <flags> indicates how <SVC_HANDLER>'s
   // should be initialized prior to being activated.  Right now, the
   // only flag that is processed is <ACE_NONBLOCK>, which enabled
@@ -337,18 +338,18 @@ public:
 
   virtual int close (void);
   // Close down the Connector
-  
+
   // = Define some useful typedefs traits.
-  typedef ACE_Creation_Strategy<SVC_HANDLER> 
+  typedef ACE_Creation_Strategy<SVC_HANDLER>
           CREATION_STRATEGY;
-  typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> 
+  typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>
           CONNECT_STRATEGY;
-  typedef ACE_Concurrency_Strategy<SVC_HANDLER> 
+  typedef ACE_Concurrency_Strategy<SVC_HANDLER>
           CONCURRENCY_STRATEGY;
-  typedef ACE_Connector <SVC_HANDLER, ACE_PEER_CONNECTOR_2> 
+  typedef ACE_Connector <SVC_HANDLER, ACE_PEER_CONNECTOR_2>
           SUPER;
 
-  // = Strategies accessors 
+  // = Strategies accessors
   virtual ACE_Creation_Strategy<SVC_HANDLER> *creation_strategy (void) const;
   virtual ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> *connect_strategy (void) const;
   virtual ACE_Concurrency_Strategy<SVC_HANDLER> *concurrency_strategy (void) const;
@@ -370,12 +371,12 @@ protected:
   // else 0.
 
   virtual int connect_svc_handler (SVC_HANDLER *&sh,
-				   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
-				   ACE_Time_Value *timeout,
-				   const ACE_PEER_CONNECTOR_ADDR &local_addr,
-				   int reuse_addr,
-				   int flags,
-				   int perms);
+                                   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                                   ACE_Time_Value *timeout,
+                                   const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                                   int reuse_addr,
+                                   int flags,
+                                   int perms);
   // Bridge method for connecting the new connection into the
   // <SVC_HANDLER>.  The default behavior delegates to the
   // <PEER_CONNECTOR::connect> in the <Connect_Strategy>.

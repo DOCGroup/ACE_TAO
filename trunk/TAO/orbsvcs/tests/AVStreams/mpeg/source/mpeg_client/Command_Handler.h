@@ -26,6 +26,10 @@
  */
 #include "ace/OS.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 // ============================================================================
 //
 // = LIBRARY
@@ -45,7 +49,7 @@
 // ============================================================================
 
 
-#if !defined (AV_COMMAND_HANDLER_H)
+#ifndef AV_COMMAND_HANDLER_H
 #define AV_COMMAND_HANDLER_H
 
 #include "ace/Reactor.h"
@@ -76,7 +80,7 @@ class Receiver_i
 
   void push_audio_mmdevice (CORBA::Object_ptr mmdevice,
                             const char* audio_file,
-			    CORBA::Environment&);
+                            CORBA::Environment&);
 
  private:
   Command_Handler *command_handler_;
@@ -377,7 +381,7 @@ public:
 
   int operation_tag_;
   // operation tag for release/press for position.
-  
+
   int position_val_;
   // value of the position button.
 
@@ -473,7 +477,7 @@ public:
   int step (void);
 
   int play (int flag,
-	    CORBA::Environment& env);
+            CORBA::Environment& env);
 
   int position_action (int operation_tag);
 
@@ -566,7 +570,7 @@ private:
 
   Receiver_i receiver_;
   // Receive object,called by the  agent to give the mmdevice object
-  // reference. 
+  // reference.
 
   char *data_host_;
   // interface name to bind to for data transfer.

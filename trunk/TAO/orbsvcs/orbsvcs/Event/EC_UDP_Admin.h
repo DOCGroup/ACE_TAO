@@ -14,7 +14,7 @@
 //
 // = DESCRIPTION
 //   Simple implementations of the UDP Administration service.
-//   
+//
 //   connects to a "remote" EC as a consumer, it also connects to the
 //   <local> EC as a supplier of events, this later EC is usually
 //   collocated.
@@ -60,8 +60,8 @@ public:
 
   // = The RtecUDPAdmin::AddrServer methods
   virtual void get_addr (const RtecEventComm::EventHeader& header,
-			 RtecUDPAdmin::UDP_Addr_out addr,
-			 CORBA::Environment& env);
+                         RtecUDPAdmin::UDP_Addr_out addr,
+                         CORBA::Environment& env);
 
 private:
   CORBA::UShort port_;

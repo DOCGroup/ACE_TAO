@@ -15,7 +15,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_NAMING_I_H)
+#ifndef TAO_NAMING_I_H
 #define TAO_NAMING_I_H
 
 #include "orbsvcs/CosNamingS.h"

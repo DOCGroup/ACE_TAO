@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Dump.h
 //
@@ -18,7 +18,7 @@
 // To turn on this feature simply compile with -DACE_NDEBUG
 //
 // There are several interesting aspects to this design:
-// 
+//
 // 1. It uses the External Polymorphism pattern to avoid having to
 //    derive all ACE classes from a common base class that has virtual
 //    methods (this is crucial to avoid unnecessary overhead).  In
@@ -36,16 +36,16 @@
 //    this.  Note, however, that this scheme doesn't generalize to
 //    work with multiple-inheritance or virtual base classes.
 //
-// Future work includes: 
-// 
+// Future work includes:
+//
 // 1. Using a dynamic object table rather than a static table
-// 
-// 2. Adding support to allow particular classes of objects to 
+//
+// 2. Adding support to allow particular classes of objects to
 //    be selectively dumped.
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_DUMP_H
@@ -54,7 +54,7 @@
 #include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_Dumpable
@@ -80,7 +80,7 @@ private:
   // Pointer to the object that is being stored.
 };
 
-class ACE_Export ACE_Dumpable_Ptr 
+class ACE_Export ACE_Dumpable_Ptr
 {
   // = TITLE
   //    A smart pointer stored in the in-memory object database
@@ -121,7 +121,7 @@ public:
 private:
   ACE_ODB (void); // Ensure we have a Singleton...
 
-  struct Tuple 
+  struct Tuple
   {
     const void *this_;
     // Pointer to the object that is registered.
@@ -144,7 +144,7 @@ private:
   Tuple object_table_[ACE_ODB::MAX_TABLE_SIZE];
   // The current implementation is very simple-minded and will be
   // changed to be dynamic.
-  
+
   int current_size_;
   // Current size of <object_table_>.
 };

@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (_BE_VISITOR_ARGUMENT_VARDECL_SS_H_)
+#ifndef _BE_VISITOR_ARGUMENT_VARDECL_SS_H_
 #define _BE_VISITOR_ARGUMENT_VARDECL_SS_H_
 
 // ************************************************************
@@ -89,7 +89,7 @@ class be_compiled_visitor_args_vardecl_ss : public be_visitor_args_vardecl_ss
   //
   // = DESCRIPTION
   //   Visitor for variable declaration for argument for compiled marshaling
-  //   skeletons 
+  //   skeletons
   //
 public:
   be_compiled_visitor_args_vardecl_ss (be_visitor_context *ctx);

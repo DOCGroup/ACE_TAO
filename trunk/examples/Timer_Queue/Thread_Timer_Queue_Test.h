@@ -20,10 +20,15 @@
 //
 // ============================================================================
 
-#if !defined (_THREAD_TIMER_QUEUE_TEST_H_)
+#ifndef _THREAD_TIMER_QUEUE_TEST_H_
 #define _THREAD_TIMER_QUEUE_TEST_H_
 
 #include "ace/Task.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Timer_Heap_T.h"
 #include "ace/Timer_Queue_Adapters.h"
 #include "Driver.h"
@@ -31,14 +36,14 @@
 // These typedefs ensure that we use the minimal amount of locking
 // necessary.
 typedef ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>
-	Upcall;
+        Upcall;
 typedef ACE_Timer_Heap_T<ACE_Event_Handler *,
-			 Upcall,
-			 ACE_Null_Mutex>
-	Timer_Heap;
+                         Upcall,
+                         ACE_Null_Mutex>
+        Timer_Heap;
 typedef ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *,
-				  Upcall,
-				  ACE_Null_Mutex>
+                                  Upcall,
+                                  ACE_Null_Mutex>
         Timer_Heap_Iterator;
 typedef ACE_Thread_Timer_Queue_Adapter<Timer_Heap>
         Thread_Timer_Queue;
@@ -59,7 +64,7 @@ public:
   typedef int (Input_Task::*ACTION) (void *);
 
   Input_Task (Thread_Timer_Queue *queue,
-	      Thread_Timer_Queue_Test_Driver &timer_queue_driver);
+              Thread_Timer_Queue_Test_Driver &timer_queue_driver);
 
   virtual int svc (void);
   // This method runs the event loop in the new thread.
@@ -133,7 +138,7 @@ public:
   // messages.
 
   virtual int handle_timeout (const ACE_Time_Value &current_time,
-			      const void *arg);
+                              const void *arg);
   // Call back hook.
   virtual int cancelled (void);
 

@@ -6,26 +6,27 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    UPIPE_Acceptor.h
 //
 // = AUTHOR
 //    Gerhard Lenzer and Douglas C. Schmidt
-// 
+//
 // ============================================================================
 
-#ifndef ACE_UPIPE_ACCEPTOR_H 
+#ifndef ACE_UPIPE_ACCEPTOR_H
 #define ACE_UPIPE_ACCEPTOR_H
 
 #include "ace/UPIPE_Stream.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Synch.h"
 #include "ace/SPIPE_Acceptor.h"
 #include "ace/Thread_Manager.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_THREADS)
 
@@ -39,12 +40,12 @@ public:
   ACE_UPIPE_Acceptor (void);
   // Default constructor.
 
-  ACE_UPIPE_Acceptor (const ACE_UPIPE_Addr &local_sap, 
-		      int reuse_addr = 0);
+  ACE_UPIPE_Acceptor (const ACE_UPIPE_Addr &local_sap,
+                      int reuse_addr = 0);
   // Initialize passive endpoint.
-  
-  int open (const ACE_UPIPE_Addr &local_sap, 
-	    int reuse_addr = 0);
+
+  int open (const ACE_UPIPE_Addr &local_sap,
+            int reuse_addr = 0);
   // Initialize passive endpoint.
 
   ~ACE_UPIPE_Acceptor (void);
@@ -55,18 +56,18 @@ public:
 
   int remove (void);
   // Close down and release resources and remove the underlying SPIPE
-  // rendezvous point. 
+  // rendezvous point.
 
   // = Passive connection acceptance method.
-  int accept (ACE_UPIPE_Stream &server_stream, 
-	      ACE_UPIPE_Addr *remote_addr = 0,
-	      ACE_Time_Value *timeout = 0, 
-	      int restart = 1,
+  int accept (ACE_UPIPE_Stream &server_stream,
+              ACE_UPIPE_Addr *remote_addr = 0,
+              ACE_Time_Value *timeout = 0,
+              int restart = 1,
               int reset_new_handle = 0);
   // Accept a new data transfer connection.  A <timeout> of 0 means
   // block forever, a <timeout> of {0, 0} means poll.  <restart> == 1
   // means "restart if interrupted."
-  
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -77,7 +78,7 @@ private:
   ACE_Thread_Manager tm;
   // Manage threads.
 
-  ACE_Message_Block mb_;    
+  ACE_Message_Block mb_;
   // To confirm connection establishment.
 };
 

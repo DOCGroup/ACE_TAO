@@ -18,7 +18,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_BE_FACTORY_H)
+#ifndef TAO_BE_FACTORY_H
 #define TAO_BE_FACTORY_H
 
 class TAO_OutStream_Factory

@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    TAO
-// 
+//
 // = FILENAME
 //    singletons.h
 //
@@ -17,7 +17,7 @@
 //
 // = COPYRIGHT
 //    Copyright 1997
-// 
+//
 // ============================================================================
 
 #ifndef TAO_SINGLETONS_H

@@ -16,7 +16,7 @@
 //
 // ============================================================================
 
-#if !defined (PARAM_TEST_BOUNDED_STRUCT_SEQUENCE_H)
+#ifndef PARAM_TEST_BOUNDED_STRUCT_SEQUENCE_H
 #define PARAM_TEST_BOUNDED_STRUCT_SEQUENCE_H
 
 #include "param_testCli.h"

@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#if !defined (ECHO_I_H)
+#ifndef ECHO_I_H
 #define ECHO_I_H
 
 #include "EchoS.h"
@@ -41,7 +41,7 @@ public:
   // Destructor.
 
   virtual char *echo (const char *mesg,
-		      CORBA::Environment &env);
+                      CORBA::Environment &env);
   // Return the mesg string back from the server.
 
  virtual void shutdown (CORBA::Environment &env);

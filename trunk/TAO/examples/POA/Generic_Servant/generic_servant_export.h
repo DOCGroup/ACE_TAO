@@ -4,10 +4,14 @@
 // This file is generated automatically by
 // ${TAO_ROOT}/TAO_IDL/GenExportH.BAT
 // ------------------------------
-#if !defined (GENERIC_SERVANT_EXPORT_H)
+#ifndef GENERIC_SERVANT_EXPORT_H
 #define GENERIC_SERVANT_EXPORT_H
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (GENERIC_SERVANT_HAS_DLL)
 #  if (GENERIC_SERVANT_HAS_DLL == 1)

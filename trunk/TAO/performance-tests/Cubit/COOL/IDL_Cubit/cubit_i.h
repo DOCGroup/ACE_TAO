@@ -4,19 +4,23 @@
 //
 // = LIBRARY
 //    TAO/tests/IDL_Cubit
-// 
+//
 // = FILENAME
 //    cubit_i.h
 //
 // = AUTHOR
 //    Andy Gokhale, Sumedh Mungee and Sergio Flores-Gaitan
-// 
+//
 // ============================================================================
 
-#if !defined (_CUBIT_I_HH)
-#define	_CUBIT_I_HH
+#ifndef _CUBIT_I_HH
+#define _CUBIT_I_HH
 
 #include "ace/ACE.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include <api/api.H>
 #include <api/binding.H>
@@ -35,7 +39,7 @@ class Cubit_i;
 typedef Cubit_i *Cubit_i_ptr;
 typedef Cubit_i_ptr Cubit_i_ref;
 
-class Cubit_i 
+class Cubit_i
   // = TITLE
   //    Illustrates how to integrate a servant with the
   //    generated skeleton.

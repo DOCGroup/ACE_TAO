@@ -5,6 +5,10 @@
 
 #include "ace/Singleton.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "HTTPU/http_export.h"
 
 class HTTP_SCode_Base;

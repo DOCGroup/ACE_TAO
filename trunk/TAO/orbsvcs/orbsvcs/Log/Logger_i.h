@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_ORBSVCS_LOGGER_I_H)
+#ifndef TAO_ORBSVCS_LOGGER_I_H
 #define TAO_ORBSVCS_LOGGER_I_H
 
 #include "orbsvcs/LoggerS.h"

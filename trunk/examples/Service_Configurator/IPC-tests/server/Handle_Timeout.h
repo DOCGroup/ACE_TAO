@@ -3,10 +3,15 @@
 
 /* Handles timeouts. */
 
-#if !defined (_HANDLE_TIMEOUT_H)
+#ifndef _HANDLE_TIMEOUT_H
 #define _HANDLE_TIMEOUT_H
 
 #include "ace/Service_Config.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Service_Types.h"
 
 class Handle_Timeout : public ACE_Service_Object
@@ -30,7 +35,7 @@ extern ACE_Service_Object_Type t1;
 #define ACE_INLINE inline
 #include "Handle_Timeout.i"
 #else
-#define ACE_INLINE 
+#define ACE_INLINE
 #endif /* __ACE_INLINE__ */
 
 #endif /* _HANDLE_TIMEOUT_H */

@@ -8,19 +8,24 @@
    Our client handler must exist somewhere in the ACE_Event_Handler object
    hierarchy.  This is a requirement of the ACE_Reactor because it maintains
    ACE_Event_Handler pointers for each registered event handler.  You could
-   derive our Client_Handler directly from ACE_Event_Handler but you still have 
+   derive our Client_Handler directly from ACE_Event_Handler but you still have
    to have an ACE_SOCK_Stream for the actually connection.  With a direct
    derivative of ACE_Event_Handler, you'll have to contain and maintain an
    ACE_SOCK_Stream instance yourself.  With ACE_Svc_Handler (which is a
    derivative of ACE_Event_Handler) some of those details are handled for you.
-    
+
  */
 
 #include "ace/Svc_Handler.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/SOCK_Stream.h"
 
 /*
-   Another feature of ACE_Svc_Handler is it's ability to present the ACE_Task<> 
+   Another feature of ACE_Svc_Handler is it's ability to present the ACE_Task<>
    interface as well.  That's what the ACE_NULL_SYNCH parameter below is all
    about.  If our Client_Acceptor has chosen thread-per-connection then our
    open() method will activate us into a thread.  At that point, our svc()
@@ -42,27 +47,27 @@ public:
      intuitive (at least to me).  Instead, we provide a new method of
      destruction and we make our destructor protected so that only ourselves,
      our derivatives and our friends can delete us. It's a nice
-     compromise.   
+     compromise.
    */
   void destroy (void);
 
   /*
      Most ACE objects have an open() method.  That's how you make them ready
-     to do work.  ACE_Event_Handler has a virtual open() method which allows us 
+     to do work.  ACE_Event_Handler has a virtual open() method which allows us
      to create this overrride.  ACE_Acceptor<> will invoke this method after
      creating a new Client_Handler when a client connects. Notice that the
      parameter to open() is a void*.  It just so happens that the pointer
-     points to the acceptor which created us.  You would like for the parameter 
+     points to the acceptor which created us.  You would like for the parameter
      to be an ACE_Acceptor<>* but since ACE_Event_Handler is generic, that
      would tie it too closely to the ACE_Acceptor<> set of objects.  In our
-     definition of open() you'll see how we get around that.   
+     definition of open() you'll see how we get around that.
    */
   int open (void *_acceptor);
 
   /*
      When an ACE_Task<> object falls out of the svc() method, the framework
-	 will call the close() method.  That's where we want to cleanup ourselves
-	 if we're running in either thread-per-connection or thread-pool mode.
+         will call the close() method.  That's where we want to cleanup ourselves
+         if we're running in either thread-per-connection or thread-pool mode.
    */
   int close(u_long flags = 0);
 
@@ -73,8 +78,8 @@ public:
      clean itself up. Since an event handler can be registered for more than
      one type of callback, the callback mask is provided to inform
      handle_close() exactly which method failed.  That way, you don't have to
-     maintain state information between your handle_* method calls. The _handle 
-     parameter is explained below...   
+     maintain state information between your handle_* method calls. The _handle
+     parameter is explained below...
    */
   int handle_close (ACE_HANDLE _handle, ACE_Reactor_Mask _mask);
 
@@ -97,7 +102,7 @@ protected:
      maintains it's own peer (ACE_SOCK_Stream) object, this is redundant for
      us.  However, if we had been derived directly from ACE_Event_Handler, we
      may have chosen not to contain the peer.  In that case, the _handleg
-     would be important to us for reading the client's data.   
+     would be important to us for reading the client's data.
    */
   int handle_input (ACE_HANDLE _handle);
 
@@ -112,8 +117,8 @@ protected:
   /*
      We don't really do anything in our destructor but we've declared it to be
      protected to prevent casual deletion of this object.  As I said above, I
-     really would prefer that everyone goes through the destroy() method to get 
-     rid of us.   
+     really would prefer that everyone goes through the destroy() method to get
+     rid of us.
    */
    ~Client_Handler (void);
 };

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 1994, 1995.  Netscape Communications Corporation.  All
  * rights reserved.
- * 
+ *
  * Use of this software is governed by the terms of the license agreement for
  * the Netscape Communications or Netscape Comemrce Server between the
  * parties.
@@ -15,9 +15,9 @@
  * crit.h: Critical section abstraction. Used in threaded servers to protect
  *         areas where two threads can interfere with each other.
  *
- *         Condvars are condition variables that are used for thread-thread 
+ *         Condvars are condition variables that are used for thread-thread
  *         synchronization.
- * 
+ *
  * Rob McCool
  */
 
@@ -33,7 +33,7 @@ typedef void *CRITICAL;
 #endif
 
 /*
- * crit_init creates and returns a new critical section variable. At the 
+ * crit_init creates and returns a new critical section variable. At the
  * time of creation no one has entered it.
  */
 #ifdef USE_NSPR
@@ -79,8 +79,8 @@ typedef void* CONDVAR;
 #endif
 
 /*
- * condvar_init initializes and returns a new condition variable. You 
- * must provide a critical section to be associated with this condition 
+ * condvar_init initializes and returns a new condition variable. You
+ * must provide a critical section to be associated with this condition
  * variable.
  */
 #ifdef USE_NSPR

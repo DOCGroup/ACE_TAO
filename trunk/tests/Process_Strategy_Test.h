@@ -15,10 +15,15 @@
 //
 // ============================================================================
 
-#if !defined (PROCESS_STRATEGY_TEST_H)
+#ifndef PROCESS_STRATEGY_TEST_H
 #define PROCESS_STRATEGY_TEST_H
 
 #include "ace/Event_Handler.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
 

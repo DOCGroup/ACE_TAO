@@ -79,7 +79,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from ast.hh
 */
 
-class	AST_Module : public virtual AST_Decl, public virtual UTL_Scope
+class   AST_Module : public virtual AST_Decl, public virtual UTL_Scope
 {
 public:
   // Operations
@@ -95,7 +95,7 @@ public:
   DEF_NARROW_FROM_SCOPE(AST_Module);
 
   // AST Dumping
-  virtual void			dump(ostream &o);
+  virtual void                  dump(ostream &o);
 
 private:
   friend void fe_populate(AST_Module *m);
@@ -103,17 +103,17 @@ private:
 
   // Scope Management Protocol
 
-  virtual AST_PredefinedType	*fe_add_predefined_type(AST_PredefinedType *t);
-  virtual AST_Module		*fe_add_module(AST_Module		*m);
-  virtual AST_Interface		*fe_add_interface(AST_Interface		*i);
-  virtual AST_InterfaceFwd	*fe_add_interface_fwd(AST_InterfaceFwd	*i);
-  virtual AST_Constant		*fe_add_constant(AST_Constant		*c);
-  virtual AST_Exception		*fe_add_exception(AST_Exception		*e);
-  virtual AST_Union		*fe_add_union(AST_Union			*u);
-  virtual AST_Structure		*fe_add_structure(AST_Structure		*s);
-  virtual AST_Enum		*fe_add_enum(AST_Enum			*e);
-  virtual AST_EnumVal		*fe_add_enum_val(AST_EnumVal		*v);
-  virtual AST_Typedef		*fe_add_typedef(AST_Typedef		*t);
+  virtual AST_PredefinedType    *fe_add_predefined_type(AST_PredefinedType *t);
+  virtual AST_Module            *fe_add_module(AST_Module               *m);
+  virtual AST_Interface         *fe_add_interface(AST_Interface         *i);
+  virtual AST_InterfaceFwd      *fe_add_interface_fwd(AST_InterfaceFwd  *i);
+  virtual AST_Constant          *fe_add_constant(AST_Constant           *c);
+  virtual AST_Exception         *fe_add_exception(AST_Exception         *e);
+  virtual AST_Union             *fe_add_union(AST_Union                 *u);
+  virtual AST_Structure         *fe_add_structure(AST_Structure         *s);
+  virtual AST_Enum              *fe_add_enum(AST_Enum                   *e);
+  virtual AST_EnumVal           *fe_add_enum_val(AST_EnumVal            *v);
+  virtual AST_Typedef           *fe_add_typedef(AST_Typedef             *t);
   virtual AST_Native            *fe_add_native (AST_Native      *n);
 
 };

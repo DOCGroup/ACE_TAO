@@ -15,7 +15,7 @@
 //
 // ============================================================================
 
-#if !defined (JAWS_IO_H)
+#ifndef JAWS_IO_H
 #define JAWS_IO_H
 
 class ACE_Message_Block;
@@ -23,6 +23,11 @@ class JAWS_IO_Handler;
 class JAWS_IO_Acceptor;
 
 #include "ace/ACE.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Asynch_IO.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Singleton.h"

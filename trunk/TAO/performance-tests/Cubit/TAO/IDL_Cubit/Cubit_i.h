@@ -4,17 +4,17 @@
 //
 // = LIBRARY
 //    TAO/tests/IDL_Cubit
-// 
+//
 // = FILENAME
 //    Cubit_Client.h
 //
 // = AUTHOR
 //    Andy Gokhale, Sumedh Mungee and Sergio Flores-Gaitan
-// 
+//
 // ============================================================================
 
-#if !defined (_CUBIT_I_H)
-#define	_CUBIT_I_H
+#ifndef _CUBIT_I_H
+#define _CUBIT_I_H
 
 #include "cubitS.h"
 
@@ -64,23 +64,23 @@ public:
   // Cube a union.
 
   virtual void cube_long_sequence (const Cubit::long_seq &input,
-				   Cubit::long_seq_out output,
-				   CORBA::Environment &env);
+                                   Cubit::long_seq_out output,
+                                   CORBA::Environment &env);
   // Cube a sequence.
 
   virtual void cube_octet_sequence (const Cubit::octet_seq &input,
-				    Cubit::octet_seq_out output,
-				    CORBA::Environment &_env);
+                                    Cubit::octet_seq_out output,
+                                    CORBA::Environment &_env);
   // Cube an octet sequence.
 
   virtual void cube_many_sequence (const Cubit::many_seq & input,
                                    Cubit::many_seq_out output,
                                    CORBA::Environment &_tao_environment);
   // Cube an Many sequence.
-  
+
   virtual void cube_rti_data (const Cubit::RtiPacket &input,
-			      Cubit::RtiPacket_out output,
-			      CORBA::Environment &env);
+                              Cubit::RtiPacket_out output,
+                              CORBA::Environment &env);
   // Cube a sequence.
 
   virtual void shutdown (CORBA::Environment &env);

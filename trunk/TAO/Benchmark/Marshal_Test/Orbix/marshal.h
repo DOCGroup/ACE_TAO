@@ -134,7 +134,7 @@ class _IDL_SEQUENCE_any_var : public CORBA::_var
 class Marshal_dispatch : public virtual CORBA::PPTR {
 public:
 
-      Marshal_dispatch (void *IT_p, CORBA::Object* IT_o, const char *IT_m, 
+      Marshal_dispatch (void *IT_p, CORBA::Object* IT_o, const char *IT_m,
         CORBA::LoaderClass *IT_l, char *IT_i, void* IT_im)
        : PPTR (IT_p,IT_o,IT_m,IT_l,IT_i,IT_im) {}
 
@@ -149,12 +149,12 @@ public:
        : PPTR (IT_OR,IT_p,IT_o) {}
 
 
-   Marshal_dispatch (void *IT_p, CORBA::Object *IT_o, const char *IT_m, 
+   Marshal_dispatch (void *IT_p, CORBA::Object *IT_o, const char *IT_m,
         char *IT_i, CORBA::Object* IT_ob, void* IT_im)
        : PPTR (IT_p,IT_o,IT_m,IT_i,IT_ob,IT_im) {}
 
 
-   virtual unsigned char dispatch (CORBA::Request &IT_r, 
+   virtual unsigned char dispatch (CORBA::Request &IT_r,
         unsigned char IT_isTarget, void* IT_pp=NULL);
 
 
@@ -213,12 +213,12 @@ protected:
     }
 public:
     static Marshal_ptr _duplicate(
-            Marshal_ptr, 
+            Marshal_ptr,
             CORBA::Environment &IT_pEnv=CORBA::IT_chooseDefaultEnv ());
 public:
    static Marshal* _bind (const char* IT_markerServer, const char* host,
-		const CORBA::Context &IT_c, 
-		CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
+                const CORBA::Context &IT_c,
+                CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
    static Marshal* _bind (CORBA::Environment &IT_env);
    static Marshal* _bind (const char* IT_markerServer=NULL, const char* host=NULL,
                  CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
@@ -245,7 +245,7 @@ struct Marshal_Struct {
     void decodeOp (CORBA::Request &IT_r);
     void decodeInOutOp (CORBA::Request &IT_r);
     static void* IT_anySupport (CORBA::Request &IT_r,
-    			void *&, void*, const CORBA::Flags&);
+                        void *&, void*, const CORBA::Flags&);
     static const void *IT_fn;
     Marshal_Struct(const Marshal_Struct &);
     Marshal_Struct();
@@ -361,7 +361,7 @@ struct Marshal_Union {
     void decodeOp (CORBA::Request &IT_r);
     void decodeInOutOp (CORBA::Request &IT_r);
     static void* IT_anySupport (CORBA::Request &IT_r,
-    			void *&, void*, const CORBA::Flags&);
+                        void *&, void*, const CORBA::Flags&);
     static const void *IT_fn;
 
     private:
@@ -704,7 +704,7 @@ struct Marshal_Recursive {
     void decodeOp (CORBA::Request &IT_r);
     void decodeInOutOp (CORBA::Request &IT_r);
     static void* IT_anySupport (CORBA::Request &IT_r,
-    			void *&, void*, const CORBA::Flags&);
+                        void *&, void*, const CORBA::Flags&);
     static const void *IT_fn;
     Marshal_Recursive(const Marshal_Recursive &);
     Marshal_Recursive();
@@ -993,7 +993,7 @@ class Marshal_SeqElem : public CORBA::_SeqElem
     }
 
     operator Marshal_ptr () const {
-        return _ptr ? (Marshal_ptr) (*_ptr) : Marshal_nil(); 
+        return _ptr ? (Marshal_ptr) (*_ptr) : Marshal_nil();
     }
 
     Marshal_ptr operator->() const { return *_ptr;}
@@ -1009,108 +1009,108 @@ class Marshal_SeqElem : public CORBA::_SeqElem
 #define TIE_Marshal(X) Marshal##X
 
 #define DEF_TIE_Marshal(X) \
-	class Marshal##X : public virtual Marshal {		\
-	  X* m_obj;						\
-	public:							\
-								\
-								\
-	   Marshal##X  (X *objp, const char* m="", CORBA::LoaderClass *l=0)\
-		: Marshal(), m_obj(objp) {	\
-		m_pptr = new Marshal_dispatch		\
-			(( Marshal*)this,(CORBA::Object*)this,m,l,Marshal_IR,m_obj);	\
-	   }								\
-	   Marshal##X  (CORBA::Object *IT_p, const char* IT_m="", void *IT_q=0)\
-		: Marshal() {	\
-		m_pptr = new Marshal_dispatch		\
-			(( Marshal*)this,(CORBA::Object*)this,IT_m,Marshal_IR,IT_p,IT_q);	\
-		m_obj = (X*)(m_pptr->getImplObj ());			\
-	   }								\
-								\
-	   virtual ~Marshal##X  () {				\
-		if (_okToDeleteImpl ()) delete m_obj; }					\
-	   virtual void* _deref () {					\
-		return m_obj; }					\
-								\
+        class Marshal##X : public virtual Marshal {             \
+          X* m_obj;                                             \
+        public:                                                 \
+                                                                \
+                                                                \
+           Marshal##X  (X *objp, const char* m="", CORBA::LoaderClass *l=0)\
+                : Marshal(), m_obj(objp) {      \
+                m_pptr = new Marshal_dispatch           \
+                        (( Marshal*)this,(CORBA::Object*)this,m,l,Marshal_IR,m_obj);    \
+           }                                                            \
+           Marshal##X  (CORBA::Object *IT_p, const char* IT_m="", void *IT_q=0)\
+                : Marshal() {   \
+                m_pptr = new Marshal_dispatch           \
+                        (( Marshal*)this,(CORBA::Object*)this,IT_m,Marshal_IR,IT_p,IT_q);       \
+                m_obj = (X*)(m_pptr->getImplObj ());                    \
+           }                                                            \
+                                                                \
+           virtual ~Marshal##X  () {                            \
+                if (_okToDeleteImpl ()) delete m_obj; }                                 \
+           virtual void* _deref () {                                    \
+                return m_obj; }                                 \
+                                                                \
 virtual void test_short (CORBA::Short s1, CORBA::Short& s2, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 m_obj->test_short (  s1, s2,IT_env);\
 }\
-	\
+        \
 virtual void test_long (CORBA::Long l1, CORBA::Long& l2, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 m_obj->test_long (  l1, l2,IT_env);\
 }\
-	\
+        \
 virtual void test_octet (CORBA::Octet o1, CORBA::Octet& o2, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 m_obj->test_octet (  o1, o2,IT_env);\
 }\
-	\
+        \
 virtual void test_char (CORBA::Char c1, CORBA::Char& c2, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 m_obj->test_char (  c1, c2,IT_env);\
 }\
-	\
+        \
 virtual void test_double (CORBA::Double d1, CORBA::Double& d2, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 m_obj->test_double (  d1, d2,IT_env);\
 }\
-	\
+        \
 virtual void test_struct (const Marshal::Marshal_Struct& ms1, Marshal::Marshal_Struct& ms2, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 m_obj->test_struct (  ms1, ms2,IT_env);\
 }\
-	\
+        \
 virtual void test_union (const Marshal::Marshal_Union& u1, Marshal::Marshal_Union& u2, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 m_obj->test_union (  u1, u2,IT_env);\
 }\
-	\
+        \
 virtual void test_any (const CORBA::any& a1, CORBA::any*& a2, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 m_obj->test_any (  a1, a2,IT_env);\
 }\
-	\
+        \
 virtual void test_sequence (const Marshal::AnySeq& as1, Marshal::AnySeq*& as2, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 m_obj->test_sequence (  as1, as2,IT_env);\
 }\
-	\
+        \
 virtual void test_recursive (const Marshal::Marshal_Recursive& mr1, Marshal::Marshal_Recursive*& mr2, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 m_obj->test_recursive (  mr1, mr2,IT_env);\
 }\
-								\
-	};						\
+                                                                \
+        };                                              \
 
 
-#define QUALS_Marshal	\
+#define QUALS_Marshal   \
 virtual void test_short (CORBA::Short s1, CORBA::Short& s2, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 m_obj->test_short (  s1, s2,IT_env);\
 }\
-	\
+        \
 virtual void test_long (CORBA::Long l1, CORBA::Long& l2, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 m_obj->test_long (  l1, l2,IT_env);\
 }\
-	\
+        \
 virtual void test_octet (CORBA::Octet o1, CORBA::Octet& o2, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 m_obj->test_octet (  o1, o2,IT_env);\
 }\
-	\
+        \
 virtual void test_char (CORBA::Char c1, CORBA::Char& c2, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 m_obj->test_char (  c1, c2,IT_env);\
 }\
-	\
+        \
 virtual void test_double (CORBA::Double d1, CORBA::Double& d2, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 m_obj->test_double (  d1, d2,IT_env);\
 }\
-	\
+        \
 virtual void test_struct (const Marshal_Struct& ms1, Marshal_Struct& ms2, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 m_obj->test_struct (  ms1, ms2,IT_env);\
 }\
-	\
+        \
 virtual void test_union (const Marshal_Union& u1, Marshal_Union& u2, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 m_obj->test_union (  u1, u2,IT_env);\
 }\
-	\
+        \
 virtual void test_any (const CORBA::any& a1, CORBA::any*& a2, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 m_obj->test_any (  a1, a2,IT_env);\
 }\
-	\
+        \
 virtual void test_sequence (const AnySeq& as1, AnySeq*& as2, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 m_obj->test_sequence (  as1, as2,IT_env);\
 }\
-	\
+        \
 virtual void test_recursive (const Marshal_Recursive& mr1, Marshal_Recursive*& mr2, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 m_obj->test_recursive (  mr1, mr2,IT_env);\
 }\
@@ -1121,19 +1121,19 @@ m_obj->test_recursive (  mr1, mr2,IT_env);\
 class MarshalProxyFactoryClass : public virtual CORBA::ObjectFactoryClass {
 public:
    MarshalProxyFactoryClass (unsigned char IT_p=0)
-		: CORBA::ProxyFactory (Marshal_IR, IT_p) {}
+                : CORBA::ProxyFactory (Marshal_IR, IT_p) {}
 
     virtual void* New (char *IT_OR, CORBA::Environment&);
 
     virtual void* New (ObjectReference *IT_OR, CORBA::Environment&);
 
-    virtual void* New2 (); 
+    virtual void* New2 ();
 
     virtual CORBA::Object* NewObject (char *IT_OR, CORBA::Environment&);
 
     virtual CORBA::Object* NewObject (ObjectReference *IT_OR, CORBA::Environment&);
 
-    virtual CORBA::Object* New2Object (); 
+    virtual CORBA::Object* New2Object ();
 
     virtual void* IT_castUp (void *IT_p, char* IT_s, CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
 
@@ -1151,7 +1151,7 @@ public:
     MarshalBOAImpl (const char *m="", CORBA::LoaderClass *l=NULL) {
   if (CORBA::PPTR::isOK (m_pptr, Marshal_IR))
     m_pptr = new Marshal_dispatch ( (Marshal*)this,
-   	 (CORBA::Object*)this, m, l, Marshal_IR, this);
+         (CORBA::Object*)this, m, l, Marshal_IR, this);
 }
 
         virtual void test_short (CORBA::Short s1, CORBA::Short& s2, CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ()) throw (CORBA::SystemException) =0;

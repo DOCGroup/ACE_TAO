@@ -5,19 +5,24 @@
 //
 // = LIBRARY
 //   jaws
-// 
+//
 // = FILENAME
 //    HTTP_Server.h
 //
 // = AUTHOR
 //    James Hu
-// 
+//
 // ============================================================================
 
-#if !defined (HTTP_SERVER_H)
+#ifndef HTTP_SERVER_H
 #define HTTP_SERVER_H
 
 #include "ace/Service_Object.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Thread_Manager.h"
 #include "ace/Acceptor.h"
 #include "ace/LOCK_SOCK_Acceptor.h"
@@ -40,7 +45,7 @@ class HTTP_Server : public ACE_Service_Object
   // = TITLE
   //     This server is used to create HTTP Handlers for the Web
   //     server
-  // 
+  //
   // = DESCRIPTION
 {
 public:
@@ -56,10 +61,10 @@ protected:
 
   virtual int asynch_thread_pool (void);
   // Asynch Thread Pool implementation
-  
+
   virtual int synch_thread_pool (void);
   // Synch Thread Pool implementation
-  
+
 private:
   // James, comment these data members.
   void parse_args (int argc, char **argv);
@@ -75,7 +80,7 @@ private:
 class Synch_Thread_Pool_Task : public ACE_Task<ACE_NULL_SYNCH>
   // = TITLE
   //     Used to implement Synch Thread Pool
-  // 
+  //
   // = DESCRIPTION
   //     Describe this and the others below.
 {
@@ -92,7 +97,7 @@ private:
 class Thread_Per_Request_Task : public ACE_Task<ACE_NULL_SYNCH>
   // = TITLE
   //     Used to implement Thread Per Request.
-  // 
+  //
   // = DESCRIPTION
   //     Spawns a new thread for every new incoming connection.  The
   //     handle below is the socket stream of the incoming connection.
@@ -115,7 +120,7 @@ private:
 class Asynch_Thread_Pool_Task : public ACE_Task<ACE_NULL_SYNCH>
   // = TITLE
   //     Used to implement Asynch Thread Pool
-  // 
+  //
   // = DESCRIPTION
   //     The proactor below utilizes WaitForMultipleObjects.
 {

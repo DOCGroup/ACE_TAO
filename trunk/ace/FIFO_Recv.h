@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    FIFO_Recv.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_FIFO_RECV_H
@@ -20,30 +20,30 @@
 #include "ace/FIFO.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_FIFO_Recv : public ACE_FIFO
 {
   // = TITLE
   //    Receiver side of the bytestream C++ wrapper for UNIX
-  //    FIFOs.  
+  //    FIFOs.
 public:
   // = Initialization methods.
   ACE_FIFO_Recv (void);
   // Default constructor.
 
-  ACE_FIFO_Recv (const char *rendezvous, 
-		 int flags = O_CREAT | O_RDONLY, 
-		 int perms = ACE_DEFAULT_FILE_PERMS, 
-		 int persistent = 1,
+  ACE_FIFO_Recv (const char *rendezvous,
+                 int flags = O_CREAT | O_RDONLY,
+                 int perms = ACE_DEFAULT_FILE_PERMS,
+                 int persistent = 1,
                  LPSECURITY_ATTRIBUTES sa = 0);
   // Open up a bytestream named pipe for reading.
 
-  int open (const char *rendezvous, 
-	    int flags = O_CREAT | O_RDONLY, 
-	    int perms = ACE_DEFAULT_FILE_PERMS, 
-	    int persistent = 1,
+  int open (const char *rendezvous,
+            int flags = O_CREAT | O_RDONLY,
+            int perms = ACE_DEFAULT_FILE_PERMS,
+            int persistent = 1,
             LPSECURITY_ATTRIBUTES sa = 0);
   // Open up a bytestream named pipe for reading.
 
@@ -55,7 +55,7 @@ public:
 
   ssize_t recv_n (void *buf, size_t len);
   // Recv <buf> of exactly <len> bytes (block until done).
-  
+
   void dump (void) const;
   // Dump the state of an object.
 

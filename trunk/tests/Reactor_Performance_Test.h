@@ -22,6 +22,11 @@
 #define __REACTOR_PERFORMANCE_TEST_H
 
 #include "ace/SOCK_Stream.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Svc_Handler.h"
 #include "ace/Synch.h"
 

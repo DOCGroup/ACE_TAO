@@ -22,11 +22,12 @@
 #define ACE_NAME_REQUEST_REPLY_H
 
 #include "ace/Time_Value.h"
-#include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/SString.h"
 
 class ACE_Export ACE_Name_Request
 {
@@ -65,13 +66,13 @@ public:
   // Default constructor.
 
   ACE_Name_Request (ACE_INT32 msg_type, // Type of request.
-		    const ACE_USHORT16 name[], //
-		    const size_t name_length,
-		    const ACE_USHORT16 value[],
-		    const size_t value_length,
-		    const char type[],
-		    const size_t type_length,
-		    ACE_Time_Value *timeout = 0); // Max time willing to wait for request.
+                    const ACE_USHORT16 name[], //
+                    const size_t name_length,
+                    const ACE_USHORT16 value[],
+                    const size_t value_length,
+                    const char type[],
+                    const size_t type_length,
+                    ACE_Time_Value *timeout = 0); // Max time willing to wait for request.
   // Create a <ACE_Name_Request> message.
 
   void init (void);

@@ -18,7 +18,7 @@
 // ============================================================================
 
 
-#if !defined (BE_NATIVE_H)
+#ifndef BE_NATIVE_H
 #define BE_NATIVE_H
 
 // Representation of "native" IDL type added by the POA spec

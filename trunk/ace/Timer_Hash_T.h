@@ -5,24 +5,25 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Timer_Hash_T.h
 //
 // = AUTHOR
-//    Darrell Brunsch <brunsch@cs.wustl.edu> 
-// 
+//    Darrell Brunsch <brunsch@cs.wustl.edu>
+//
 // ============================================================================
 
 #ifndef ACE_TIMER_HASH_T_H
 #define ACE_TIMER_HASH_T_H
 
 #include "ace/Timer_Queue_T.h"
-#include "ace/Free_List.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Free_List.h"
 
 // Forward declaration.
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET>
@@ -31,18 +32,18 @@ class ACE_Timer_Hash_T;
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 class ACE_Timer_Hash_Upcall
 {
-  // = TITLE 
+  // = TITLE
   //      Functor for Timer_Hash
   //
   // = DESCRIPTION
-  //      This class calls up to the Timer Hash's functor from the 
+  //      This class calls up to the Timer Hash's functor from the
   //      timer queues in the hash table
 public:
-  typedef ACE_Timer_Queue_T<ACE_Event_Handler *, 
-                            ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>, 
+  typedef ACE_Timer_Queue_T<ACE_Event_Handler *,
+                            ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>,
                             ACE_Null_Mutex>
           TIMER_QUEUE;
-  
+
   ACE_Timer_Hash_Upcall (void);
   // Default constructor (creates an invalid object, but needs to be here
   // so timer queues using this functor can be constructed)
@@ -51,13 +52,13 @@ public:
   // Constructor that specifies a Timer_Hash to call up to
 
   int timeout (TIMER_QUEUE &timer_queue,
-	       ACE_Event_Handler *handler,
-	       const void *arg,
-	       const ACE_Time_Value &cur_time);
+               ACE_Event_Handler *handler,
+               const void *arg,
+               const ACE_Time_Value &cur_time);
   // This method is called when the timer expires
-  
+
   int cancellation (TIMER_QUEUE &timer_queue,
-		    ACE_Event_Handler *handler);
+                    ACE_Event_Handler *handler);
   // This method is called when the timer is canceled
 
   int deletion (TIMER_QUEUE &timer_queue,
@@ -84,7 +85,7 @@ class ACE_Timer_Hash_Iterator_T : public ACE_Timer_Queue_Iterator_T <TYPE, FUNCT
   // = DESCRIPTION
   //     This is a generic iterator that can be used to visit every
   //     node of a timer queue.  Be aware that it doesn't transverse
-  //     in the order of timeout values.  
+  //     in the order of timeout values.
 public:
   ACE_Timer_Hash_Iterator_T (ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> &);
   // Constructor.
@@ -115,16 +116,16 @@ protected:
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET>
 class ACE_Timer_Hash_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>
 {
-  // = TITLE 
+  // = TITLE
   //      Provides a hash table of <BUCKET>s as an implementation for
   //      a timer queue.
   //
   // = DESCRIPTION
-  //      This implementation uses a hash table of BUCKETs.  The hash 
-  //      is based on the time_value of the event.  Unlike other Timer 
-  //      Queues, ACE_Timer_Hash does not expire events in order.  
-public: 
-  typedef ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> 
+  //      This implementation uses a hash table of BUCKETs.  The hash
+  //      is based on the time_value of the event.  Unlike other Timer
+  //      Queues, ACE_Timer_Hash does not expire events in order.
+public:
+  typedef ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>
           HASH_ITERATOR;
   // Type of iterator
 
@@ -132,15 +133,15 @@ public:
   // Iterator is a friend
 
   typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> INHERITED;
-  // Type inherited from 
+  // Type inherited from
 
   // = Initialization and termination methods.
   ACE_Timer_Hash_T (size_t table_size,
                     FUNCTOR *upcall_functor = 0,
                     ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0);
   // Default constructor. <table_size> determines the size of the
-  // hash table.  <upcall_functor> is the instance of the FUNCTOR 
-  // to be used by the buckets. If <upcall_functor> is 0, a default 
+  // hash table.  <upcall_functor> is the instance of the FUNCTOR
+  // to be used by the buckets. If <upcall_functor> is 0, a default
   // FUNCTOR will be created.
 
   ACE_Timer_Hash_T (FUNCTOR *upcall_functor = 0, ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0);
@@ -159,27 +160,27 @@ public:
   virtual const ACE_Time_Value &earliest_time (void) const;
   // Returns the time of the earlier node in the <ACE_Timer_Hash>.
 
-  virtual long schedule (const TYPE &type, 
-			 const void *act, 
-			 const ACE_Time_Value &delay,
-			 const ACE_Time_Value &interval = ACE_Time_Value::zero);
+  virtual long schedule (const TYPE &type,
+                         const void *act,
+                         const ACE_Time_Value &delay,
+                         const ACE_Time_Value &interval = ACE_Time_Value::zero);
   // Schedule <type> that will expire after <delay> amount of time.
   // If it expires then <act> is passed in as the value to the
   // <functor>.  If <interval> is != to <ACE_Time_Value::zero> then it
   // is used to reschedule the <type> automatically.  This method
-  // returns a <timer_id> that is a pointer to a token which stores 
+  // returns a <timer_id> that is a pointer to a token which stores
   // information about the event. This <timer_id> can be used to cancel
   // the timer before it expires.  Returns -1 on failure.
 
   virtual int cancel (const TYPE &type,
-		      int dont_call_handle_close = 1);
+                      int dont_call_handle_close = 1);
   // Cancel all timer associated with <type>.  If <dont_call> is 0
   // then the <functor> will be invoked.  Returns number of timers
   // cancelled.
 
   virtual int cancel (long timer_id,
-		      const void **act = 0,
-		      int dont_call_handle_close = 1);
+                      const void **act = 0,
+                      int dont_call_handle_close = 1);
   // Cancel the single timer that matches the <timer_id> value (which
   // was returned from the <schedule> method).  If act is non-NULL
   // then it will be set to point to the ``magic cookie'' argument
@@ -219,7 +220,7 @@ private:
 
   size_t size_;
   // Keeps track of the size of the queue
-  
+
   BUCKET **table_;
   // Table of BUCKETS
 
@@ -228,7 +229,7 @@ private:
 
   ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK> table_functor_;
   // Functor used for the table's timer queues
-  
+
   size_t earliest_position_;
   // Index to the position with the earliest entry
 

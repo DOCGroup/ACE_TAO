@@ -18,13 +18,14 @@
 #define ACE_MALLOC_T_H
 
 #include "ace/ACE.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Synch.h"
 #include "ace/Malloc.h"
 #include "ace/Free_List.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 template <class T>
 class ACE_Cached_Mem_Pool_Node
@@ -114,8 +115,8 @@ public:
   ACE_Allocator_Adapter (LPCTSTR pool_name = 0);
 
   ACE_Allocator_Adapter (LPCTSTR pool_name,
-			 LPCTSTR lock_name,
-			 MEMORY_POOL_OPTIONS options = 0)
+                         LPCTSTR lock_name,
+                         MEMORY_POOL_OPTIONS options = 0)
       : allocator_ (pool_name, lock_name, options)
     {
       ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter");
@@ -264,8 +265,8 @@ public:
   // name (if necessary).
 
   ACE_Malloc (LPCTSTR pool_name,
-	      LPCTSTR lock_name,
-	      const ACE_MEM_POOL_OPTIONS *options = 0);
+              LPCTSTR lock_name,
+              const ACE_MEM_POOL_OPTIONS *options = 0);
   // Initialize ACE_Malloc.  This constructor passes <pool_name> to
   // initialize the memory pool, and uses <lock_name> to automatically
   // extract out the name used for the underlying lock name (if
@@ -274,8 +275,8 @@ public:
 
 #if !defined (ACE_HAS_TEMPLATE_TYPEDEFS)
   ACE_Malloc (LPCTSTR pool_name,
-	      LPCTSTR lock_name,
-	      const void *options = 0);
+              LPCTSTR lock_name,
+              const void *options = 0);
   // This is necessary to work around template bugs with certain C++
   // compilers.
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */

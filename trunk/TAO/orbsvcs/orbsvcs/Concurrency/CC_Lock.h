@@ -18,10 +18,15 @@
 //
 // ============================================================================
 
-#if !defined (_CC_LOCK_H)
+#ifndef _CC_LOCK_H
 #define _CC_LOCK_H
 
 #include "ace/Synch.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "orbsvcs/CosConcurrencyControlC.h"
 
 #define NUMBER_OF_LOCK_MODES 5

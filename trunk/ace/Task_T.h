@@ -18,12 +18,13 @@
 #define ACE_TASK_T_H
 
 #include "ace/Message_Queue.h"
-#include "ace/Synch_T.h"
-#include "ace/Task.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Synch_T.h"
+#include "ace/Task.h"
 
 // Forward decls...
 template <ACE_SYNCH_DECL> class ACE_Module;
@@ -44,7 +45,7 @@ public:
 
   // = Initialization/termination methods.
   ACE_Task (ACE_Thread_Manager *thr_mgr = 0,
-	    ACE_Message_Queue<ACE_SYNCH_USE> *mq = 0);
+            ACE_Message_Queue<ACE_SYNCH_USE> *mq = 0);
   // Initialize a Task, supplying a thread manager and a message
   // queue.  If the user doesn't supply a ACE_Message_Queue pointer
   // then we'll allocate one dynamically.  Otherwise, we'll use the

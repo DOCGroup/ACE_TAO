@@ -1,13 +1,18 @@
 /* -*- C++ -*- */
 // $Id$
 
-/* Handle connections from local UNIX domain sockets that are sending 
+/* Handle connections from local UNIX domain sockets that are sending
    end-points from a pipe! */
 
-#if !defined (_HANDLE_L_PIPE_H)
+#ifndef _HANDLE_L_PIPE_H
 #define _HANDLE_L_PIPE_H
 
 #include "ace/Service_Config.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Service_Types.h"
 #include "ace/UNIX_Addr.h"
 #include "ace/LSOCK_Acceptor.h"
@@ -37,7 +42,7 @@ extern ACE_Service_Object_Type lp;
 #define ACE_INLINE inline
 #include "Handle_L_Pipe.i"
 #else
-#define ACE_INLINE 
+#define ACE_INLINE
 #endif /* __ACE_INLINE__ */
 
 #endif /* _HANDLE_L_PIPE_H */

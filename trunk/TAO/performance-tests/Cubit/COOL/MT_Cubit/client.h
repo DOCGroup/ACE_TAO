@@ -17,6 +17,11 @@
 #include "cubit.H"
 
 #include "ace/Task.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"

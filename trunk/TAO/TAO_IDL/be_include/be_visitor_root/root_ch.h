@@ -21,7 +21,7 @@
 //
 // ============================================================================
 
-#if !defined (_BE_VISITOR_ROOT_ROOT_CH_H_)
+#ifndef _BE_VISITOR_ROOT_ROOT_CH_H_
 #define _BE_VISITOR_ROOT_ROOT_CH_H_
 
 class be_visitor_root_ch : public be_visitor_root

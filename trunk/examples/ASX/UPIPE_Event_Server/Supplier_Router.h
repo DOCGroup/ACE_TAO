@@ -3,10 +3,15 @@
 
 // The interface between a supplier and an Event Service ACE_Stream.
 
-#if !defined (_SUPPLIER_ROUTER_H)
+#ifndef _SUPPLIER_ROUTER_H
 #define _SUPPLIER_ROUTER_H
 
 #include "ace/UPIPE_Addr.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/Map_Manager.h"
 #include "ace/Svc_Handler.h"
@@ -15,7 +20,7 @@
 #if defined (ACE_HAS_THREADS)
 
 // Forward declaration.
-class Supplier_Handler; 
+class Supplier_Handler;
 
 // Type of search key for SUPPLIER_MAP.
 typedef ACE_HANDLE SUPPLIER_KEY;
@@ -24,7 +29,7 @@ typedef ACE_HANDLE SUPPLIER_KEY;
 
 typedef Peer_Router<Supplier_Handler, SUPPLIER_KEY> SUPPLIER_ROUTER;
 
-class Supplier_Handler 
+class Supplier_Handler
   : public Peer_Handler<SUPPLIER_ROUTER, SUPPLIER_KEY>
 {
 public:

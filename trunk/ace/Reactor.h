@@ -23,6 +23,10 @@ class ACE_Reactor_Impl;
 // programs.
 #include "ace/Handle_Set.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 // Timer Queue is a complicated template class. A simple forward
 // declaration will not work
 #include "ace/Timer_Queue.h"
@@ -34,10 +38,6 @@ class ACE_Reactor_Impl;
 // them.... But Timer_Queue_T.h includes Signal.h, so I don't think
 // forward declaration will be useful here
 #include "ace/Signal.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_Reactor
 {
@@ -74,8 +74,8 @@ public:
   static void close_singleton (void);
   // Delete the dynamically allocated Singleton
 
-  // = Reactor event loop management methods.  
-  
+  // = Reactor event loop management methods.
+
   // Note that these method ONLY work on the "Singleton Reactor,"
   // i.e., the one returned from <ACE_Reactor::instance>.
   static int run_event_loop (void);

@@ -2,7 +2,7 @@
 
 
 #ifdef __STDC__
-# define	P(s) s
+# define        P(s) s
 #else
 # define P(s) ()
 #endif
@@ -91,11 +91,11 @@ void GrayDitherImage P((unsigned char *lum , unsigned char *cr , unsigned char *
 
 /* mono.c */
 void MonoDitherImage(register unsigned char *lum, unsigned char *cr,
-		     unsigned char *cb, unsigned char *out,
-		     int h, int w);
+                     unsigned char *cb, unsigned char *out,
+                     int h, int w);
 void MonoThresholdImage(unsigned char *lum, unsigned char *cr,
-			unsigned char *cb, unsigned char *out,
-			int h, int w);
+                        unsigned char *cb, unsigned char *out,
+                        int h, int w);
 
 /* jrevdct.c */
 void init_pre_idct P((void ));

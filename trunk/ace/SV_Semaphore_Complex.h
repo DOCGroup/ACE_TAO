@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //     ACE_SV_Semaphore_Complex.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_SV_SEMAPHORE_COMPLEX_H
@@ -20,7 +20,7 @@
 #include "ace/SV_Semaphore_Simple.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_SV_Semaphore_Complex : private ACE_SV_Semaphore_Simple
@@ -55,39 +55,39 @@ class ACE_Export ACE_SV_Semaphore_Complex : private ACE_SV_Semaphore_Simple
   //      the array of SV_Semaphores (which may be sized by the user
   //      in the constructor).
 public:
-  enum 
+  enum
   {
-    ACE_CREATE = IPC_CREAT, 
+    ACE_CREATE = IPC_CREAT,
     ACE_OPEN   = 0
   };
 
   // = Initialization and termination methods.
   ACE_SV_Semaphore_Complex (void);
   ACE_SV_Semaphore_Complex (key_t key,
-			    int create = ACE_SV_Semaphore_Complex::ACE_CREATE,
-			    int initial_value = 1, 
-			    u_short nsems = 1, 
-			    int perms = ACE_DEFAULT_FILE_PERMS);
-  ACE_SV_Semaphore_Complex (const char *name, 
-			    int create = ACE_SV_Semaphore_Complex::ACE_CREATE, 
-			    int initial_value = 1, 
-			    u_short nsems = 1, 
-			    int perms = ACE_DEFAULT_FILE_PERMS);
+                            int create = ACE_SV_Semaphore_Complex::ACE_CREATE,
+                            int initial_value = 1,
+                            u_short nsems = 1,
+                            int perms = ACE_DEFAULT_FILE_PERMS);
+  ACE_SV_Semaphore_Complex (const char *name,
+                            int create = ACE_SV_Semaphore_Complex::ACE_CREATE,
+                            int initial_value = 1,
+                            u_short nsems = 1,
+                            int perms = ACE_DEFAULT_FILE_PERMS);
   ~ACE_SV_Semaphore_Complex (void);
 
-  int open (const char *name, 
-	    int flags = ACE_SV_Semaphore_Simple::ACE_CREATE, 
-	    int initial_value = 1, 
-	    u_short nsems = 1, 
-	    int perms = ACE_DEFAULT_FILE_PERMS);
+  int open (const char *name,
+            int flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
+            int initial_value = 1,
+            u_short nsems = 1,
+            int perms = ACE_DEFAULT_FILE_PERMS);
   // Open or create an array of SV_Semaphores.  We return 0 if all is
   // OK, else -1.
 
-  int open (key_t key, 
-	    int flags = ACE_SV_Semaphore_Simple::ACE_CREATE, 
-	    int initial_value = 1, 
-	    u_short nsems = 1, 
-	    int perms = ACE_DEFAULT_FILE_PERMS);
+  int open (key_t key,
+            int flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
+            int initial_value = 1,
+            u_short nsems = 1,
+            int perms = ACE_DEFAULT_FILE_PERMS);
   // Open or create an array of SV_Semaphores.  We return 0 if all is
   // OK, else -1.
 

@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_PMS_RUSER_H)
+#ifndef _PMS_RUSER_H
 #define _PMS_RUSER_H
 
 #include "PM_Server.h"
@@ -22,7 +22,7 @@
 class PMS_Ruser : public PM_Server
 {
   // = TITLE
-  //   Provides the server's lookup table abstraction for `ruser' users... 
+  //   Provides the server's lookup table abstraction for `ruser' users...
 
 public:
   PMS_Ruser (void);

@@ -17,10 +17,15 @@
 //
 // ============================================================================
 
-#if !defined (QUOTER_CLIENT_H)
+#ifndef QUOTER_CLIENT_H
 #define QUOTER_CLIENT_H
 
 #include "ace/Get_Opt.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Task.h"
 #include "ace/Thread_Manager.h"
 #include "tao/corba.h"
@@ -68,7 +73,7 @@ private:
   // Flag to tell server to shutdown.
 
   Stock::Quoter_Factory_Finder_var factory_Finder_var_;
-  // Pointer to a factory finder 
+  // Pointer to a factory finder
 
   Stock::Quoter_Factory_var factory_var_;
   // Pointer to a factory

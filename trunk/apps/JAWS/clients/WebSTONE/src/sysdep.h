@@ -1,14 +1,14 @@
-#ifndef __SYSDEP_H__ 
+#ifndef __SYSDEP_H__
 #define __SYSDEP_H__
 /**************************************************************************
- * $Header$								  *
- * 		 Copyright (C) 1995 Silicon Graphics, Inc.		  *
- *									  *
- *  These coded instructions, statements, and computer programs were	  *
+ * $Header$                                                                *
+ *               Copyright (C) 1995 Silicon Graphics, Inc.                *
+ *                                                                        *
+ *  These coded instructions, statements, and computer programs were      *
  *  developed by SGI for public use.  If any changes are made to this code*
  *  please try to get the changes back to the author.  Feel free to make  *
- *  modifications and changes to the code and release it.		  *
- *									  *
+ *  modifications and changes to the code and release it.                 *
+ *                                                                        *
  **************************************************************************/
 
 /* include config.h, output from autoconf */
@@ -36,87 +36,87 @@
 
 /* encapsulation of minor UNIX/WIN NT differences */
 #ifdef WIN32
-#define NETREAD(sock, buf, len)  	recv(sock, buf, len, 0)
-#define NETWRITE(sock, buf, len) 	send(sock, buf, len, 0)
-#define NETCLOSE(sock)     		closesocket(sock)
-#define	BADSOCKET(sock)			((sock) == INVALID_SOCKET)
-#define	BADSOCKET_ERRNO(sock)		BADSOCKET(sock)
-#define	BADSOCKET_VALUE			INVALID_SOCKET
-#define S_ADDR				S_un.S_addr
+#define NETREAD(sock, buf, len)         recv(sock, buf, len, 0)
+#define NETWRITE(sock, buf, len)        send(sock, buf, len, 0)
+#define NETCLOSE(sock)                  closesocket(sock)
+#define BADSOCKET(sock)                 ((sock) == INVALID_SOCKET)
+#define BADSOCKET_ERRNO(sock)           BADSOCKET(sock)
+#define BADSOCKET_VALUE                 INVALID_SOCKET
+#define S_ADDR                          S_un.S_addr
 
 #ifdef USE_TIMEZONE
 #error  NT gettimeofday() doesn't support USE_TIMEZONE (yet)
 #else
-#define	GETTIMEOFDAY(timeval, tz)	gettimeofday(timeval)
+#define GETTIMEOFDAY(timeval, tz)       gettimeofday(timeval)
 #endif /* USE_TIMEZONE */
 
-typedef unsigned short			NETPORT;
-#define	SRANDOM				srand
+typedef unsigned short                  NETPORT;
+#define SRANDOM                         srand
 #define RANDOM_R                        rand_r
-#define	RANDOM				rand
-#define	THREAD				__declspec ( thread )
-#define	PROGPATH			"c:\\webstone\\webclient"
-#define FILENAME_SIZE			256
-#define HAVE_VPRINTF			1
+#define RANDOM                          rand
+#define THREAD                          __declspec ( thread )
+#define PROGPATH                        "c:\\webstone\\webclient"
+#define FILENAME_SIZE                   256
+#define HAVE_VPRINTF                    1
 
-#define	SIGCHLD				0	/* dummy value */
-#define	SIGALRM				0	/* dummy value */
-typedef int				pid_t;
-typedef	unsigned short			ushort;
-#define MAXPATHLEN			512
+#define SIGCHLD                         0       /* dummy value */
+#define SIGALRM                         0       /* dummy value */
+typedef int                             pid_t;
+typedef unsigned short                  ushort;
+#define MAXPATHLEN                      512
 
 
 
 #else /* not WIN32 */
-#define NETREAD(sock, buf, len)		read(sock, buf, len)
-#define NETWRITE(sock, buf, len)	write(sock, buf, len)
-#define	NETCLOSE(sock)			close(sock)
-#define BADSOCKET(sock)			((sock) < 0)
-#define BADSOCKET_ERRNO(sock)		(BADSOCKET(sock) || errno)
-#define	BADSOCKET_VALUE			(-1)
-#define S_ADDR				s_addr
+#define NETREAD(sock, buf, len)         read(sock, buf, len)
+#define NETWRITE(sock, buf, len)        write(sock, buf, len)
+#define NETCLOSE(sock)                  close(sock)
+#define BADSOCKET(sock)                 ((sock) < 0)
+#define BADSOCKET_ERRNO(sock)           (BADSOCKET(sock) || errno)
+#define BADSOCKET_VALUE                 (-1)
+#define S_ADDR                          s_addr
 
 #ifdef USE_TIMEZONE
-#define	GETTIMEOFDAY(timeval,tz)	gettimeofday(timeval, NULL)
+#define GETTIMEOFDAY(timeval,tz)        gettimeofday(timeval, NULL)
 #else
-#define	GETTIMEOFDAY(timeval,tz)	gettimeofday(timeval, tz)
+#define GETTIMEOFDAY(timeval,tz)        gettimeofday(timeval, tz)
 #endif /* USE_TIMEZONE */
 
-typedef unsigned short			NETPORT;
-#define SRANDOM				srandom
-#define RANDOM				random
-#define	THREAD
-#define PROGPATH			"/tmp/webclient" /* "/usr/local/bin/webclient" */
-#define	FILENAME_SIZE			1024
-#define HAVE_VPRINTF			1
+typedef unsigned short                  NETPORT;
+#define SRANDOM                         srandom
+#define RANDOM                          random
+#define THREAD
+#define PROGPATH                        "/tmp/webclient" /* "/usr/local/bin/webclient" */
+#define FILENAME_SIZE                   1024
+#define HAVE_VPRINTF                    1
 
-typedef int				SOCKET;
-#define min(a,b)			(((a) < (b)) ? a : b)
-#define max(a,b)			(((a) > (b)) ? a : b)
+typedef int                             SOCKET;
+#define min(a,b)                        (((a) < (b)) ? a : b)
+#define max(a,b)                        (((a) > (b)) ? a : b)
 #endif /* WIN32 */
 
 
 /* function prototypes */
 
 #ifdef WIN32
-int	getopt(int argc, char ** argv, char *opts);
-int	getpid(void);
-int	gettimeofday(struct timeval *curTimeP);
-int	random_number(int max);
-SOCKET	rexec(const char **hostname, NETPORT port, char *username, char *password,
-		char *command, SOCKET *sockerr);
-void	sleep(int secs);
+int     getopt(int argc, char ** argv, char *opts);
+int     getpid(void);
+int     gettimeofday(struct timeval *curTimeP);
+int     random_number(int max);
+SOCKET  rexec(const char **hostname, NETPORT port, char *username, char *password,
+                char *command, SOCKET *sockerr);
+void    sleep(int secs);
 
 #else
 #ifdef NO_REXEC
-extern int	rexec(char **, int, char *, char *, char *, int *);
-#endif 
+extern int      rexec(char **, int, char *, char *, char *, int *);
+#endif
 #endif /* WIN32 */
 
 
 #ifndef HAVE_STRERROR
 /* strerror() is not available on SunOS 4.x and others */
-char *strerror(int errnum); 
+char *strerror(int errnum);
 
 #endif
 /* strerror() */

@@ -31,6 +31,11 @@
 #define ACE_EVENT_CHANNEL_H
 
 #include "ace/Containers.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Map_Manager.h"
 
 #include "tao/Timeprobe.h"
@@ -70,7 +75,7 @@ void operator += (TAO_EC_Event_Array &dest,
 // = DESCRIPTION
 //   The Event Channel must compare events (actually event headers)
 //   for equality.
-// 
+//
 ACE_INLINE int operator == (const RtecEventComm::Event &event1,
                             const RtecEventComm::Event &event2);
 
@@ -200,8 +205,8 @@ public:
          SHUTDOWN = CONSUMER | SUPPLIER };
 
   ACE_EventChannel (CORBA::Boolean activate_threads = 1,
-		    u_long type = ACE_DEFAULT_EVENT_CHANNEL_TYPE,
-		    TAO_Module_Factory* factory = 0);
+                    u_long type = ACE_DEFAULT_EVENT_CHANNEL_TYPE,
+                    TAO_Module_Factory* factory = 0);
   // Construction of the given <type>.  Check the **_CHANNEL
   // enumerations defined below.
   // By default we activate the threads on construction, but it is
@@ -272,9 +277,9 @@ public:
 
   virtual RtecEventChannelAdmin::Observer_Handle
     append_observer (RtecEventChannelAdmin::Observer_ptr observer,
-		     CORBA::Environment &env);
+                     CORBA::Environment &env);
   virtual void remove_observer (RtecEventChannelAdmin::Observer_Handle,
-				CORBA::Environment &env);
+                                CORBA::Environment &env);
   // The observer manipulators
 
   // = Timer managment
@@ -288,7 +293,7 @@ public:
 
   int cancel_timer (RtecScheduler::OS_Priority preemption_priority,
                     int id,
-		    ACE_ES_Timer_ACT *&act);
+                    ACE_ES_Timer_ACT *&act);
   // Cancel the timer associated with the priority of
   // <preemption_priority> and <id>.  <act> is filled in with the
   // Timer_ACT used when scheduling the timer.  Returns 0 on success,
@@ -327,10 +332,10 @@ private:
     //   + When was the last update.
     //   + Does it want to receive all changes?
     //
-    
+
     Observer_Entry (void);
     Observer_Entry (RtecEventChannelAdmin::Observer_Handle h,
-		    RtecEventChannelAdmin::Observer_ptr o);
+                    RtecEventChannelAdmin::Observer_ptr o);
 
     RtecEventChannelAdmin::Observer_Handle handle;
     // The handle
@@ -957,7 +962,7 @@ public:
   // Unregister the consumer from the Event Service.
 
   virtual void push (const ACE_ES_Dispatch_Request *request,
-		     CORBA::Environment &);
+                     CORBA::Environment &);
 
   RtecEventChannelAdmin::ConsumerAdmin_ptr get_ref (CORBA::Environment &);
   // Allow transformations to RtecEventChannelAdmin::ConsumerAdmin.
@@ -971,7 +976,7 @@ public:
 
   void fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos);
   // Fill the QoS with the disjuction off all the subscriptions in
-  // this EC. 
+  // this EC.
   // It leaves the gateways out of the list.
 
 private:
@@ -1159,14 +1164,14 @@ private:
   // = Push helper methods.
 
   int push_source (ACE_Push_Supplier_Proxy *source,
-		   const TAO_EC_Event &event,
-		   CORBA::Environment &_env);
+                   const TAO_EC_Event &event,
+                   CORBA::Environment &_env);
   // Push <event> to all consumers subscribed to all events from
   // <source>.  Returns 0 on success, -1 on failure.
 
   int push_source_type (ACE_Push_Supplier_Proxy *source,
                         const TAO_EC_Event &event,
-			CORBA::Environment &_env);
+                        CORBA::Environment &_env);
   // Push <event> to all consumers subscribed to <event>.type_ from
   // <source>.  Returns 0 on success, -1 on failure.
 
@@ -1217,7 +1222,7 @@ public:
 
   virtual void push (ACE_Push_Supplier_Proxy *proxy,
                      RtecEventComm::EventSet &event,
-		     CORBA::Environment &);
+                     CORBA::Environment &);
   // The supplier module acts on behalf of the supplier proxy to
   // forward events through the channel.
 
@@ -1238,7 +1243,7 @@ public:
 
   void fill_qos (RtecEventChannelAdmin::SupplierQOS& s_qos);
   // Fill the QoS with the disjuction off all the publications in
-  // this EC. 
+  // this EC.
   // It leaves the gateways out of the list.
 
 private:

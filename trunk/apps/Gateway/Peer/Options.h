@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (OPTIONS_H)
+#ifndef OPTIONS_H
 #define OPTIONS_H
 
 #include "../Gateway/Event.h"

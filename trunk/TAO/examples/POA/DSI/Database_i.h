@@ -3,7 +3,11 @@
 #include "DatabaseS.h"
 #include "ace/Malloc.h"
 
-class DatabaseImpl 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+class DatabaseImpl
 {
 public:
 
@@ -64,7 +68,7 @@ public:
                                               const char *entry_type,
                                               const Database::NVPairSequence &initial_attributes,
                                               CORBA::Environment &env);
-    
+
     virtual Database::Entry_ptr find_entry (const char *key,
                                             const char *entry_type,
                                             CORBA::Environment &env);
@@ -91,24 +95,24 @@ public:
   class Employee
   {
   public:
-    Employee (const char* name, 
+    Employee (const char* name,
               CORBA::Long id);
 
     ~Employee (void);
-    
+
     const char *name (void) const;
     void name (const char* name);
-    
+
     CORBA::Long id (void) const;
     void id (CORBA::Long id);
-    
+
     void *operator new (size_t);
     void operator delete (void *pointer);
-    
+
   private:
     char *name_;
     // Employee name.
-    
+
     CORBA::Long id_;
     // Employee ID.
   };

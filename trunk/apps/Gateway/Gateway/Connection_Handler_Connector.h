@@ -5,19 +5,24 @@
 //
 // = LIBRARY
 //    gateway
-// 
+//
 // = FILENAME
 //    Connection_Handler_Connector.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
-#if !defined (_IO_HANDLER_CONNECTOR)
+#ifndef _IO_HANDLER_CONNECTOR
 #define _IO_HANDLER_CONNECTOR
 
 #include "ace/Connector.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/SOCK_Connector.h"
 #include "Connection_Handler.h"
 
@@ -31,8 +36,8 @@ public:
   Connection_Handler_Connector (void);
 
   // Initiate (or reinitiate) a connection on the Connection_Handler.
-  int initiate_connection (Connection_Handler *, 
-			   ACE_Synch_Options & = ACE_Synch_Options::synch);
+  int initiate_connection (Connection_Handler *,
+                           ACE_Synch_Options & = ACE_Synch_Options::synch);
 
 };
 

@@ -27,7 +27,7 @@ class DU_Extractor_base
   //    Base class of template class below
   //
 public:
-  virtual 
+  virtual
   CORBA::Boolean check_match (const CORBA_Any& inside_any,
                               const CORBA_Any& outside_any) = 0;
 };
@@ -39,19 +39,19 @@ class DU_Extractor : public DU_Extractor_base
   //    DU_Extractor
   //
   // = DESCRIPTION
-  //    Template class functor to compare Anys in TAO_DynUnion_i 
+  //    Template class functor to compare Anys in TAO_DynUnion_i
   //    constructor with an Any arg and member function from_any().
-  //    Some compilers won't accept these eclarations inside 
+  //    Some compilers won't accept these eclarations inside
   //    TAO_DynUnion_i or even at global scope in the same file.
   //
 public:
   CORBA::Boolean check_match (const CORBA_Any& inside_any,
                               const CORBA_Any& outside_any);
 private:
-  Type arg_index_; 
+  Type arg_index_;
   Type member_index_;
 };
-  
+
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/DynUnion_i_T.cpp"
 // On Win32 platforms, this code will be included as template source

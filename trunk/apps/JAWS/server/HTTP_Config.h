@@ -6,13 +6,13 @@
 //
 // = LIBRARY
 //   jaws
-// 
+//
 // = FILENAME
 //    HTTP_Config.h
 //
 // = AUTHOR
 //    James Hu
-// 
+//
 // ============================================================================
 
 // = Forward declaration.

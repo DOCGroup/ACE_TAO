@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_BE_DECL_H)
+#ifndef TAO_BE_DECL_H
 #define TAO_BE_DECL_H
 
 class be_scope;

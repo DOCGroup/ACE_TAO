@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 1994, 1995.  Netscape Communications Corporation.  All
  * rights reserved.
- * 
+ *
  * Use of this software is governed by the terms of the license agreement for
  * the Netscape Communications or Netscape Comemrce Server between the
  * parties.
@@ -12,9 +12,9 @@
 
 
 /*
- * util.h: A hodge podge of utility functions and standard functions which 
+ * util.h: A hodge podge of utility functions and standard functions which
  *         are unavailable on certain systems
- * 
+ *
  * Rob McCool
  */
 
@@ -33,7 +33,7 @@
 /*
  * getline scans in buf until it finds a LF or CRLF, storing the string in
  * l. It will terminate the string and return:
- * 
+ *
  *  0 when done, with the scanned line (minus CR or LF) in l
  *  1 upon EOF, with the scanned line (minus CR or LF) in l
  * -1 on error with the error description in l (uses lineno for information)
@@ -43,7 +43,7 @@ int util_getline(filebuf *buf, int lineno, int maxlen, char *l);
 
 
 /*
- * can_exec returns 1 if you can execute the file described by finfo, and 
+ * can_exec returns 1 if you can execute the file described by finfo, and
  * 0 if you can't.
  */
 
@@ -58,7 +58,7 @@ int util_can_exec(struct stat *finfo, uid_t uid, gid_t gid);
  * env_create creates a new environment with the given env, with n new
  * entries, and places the current position that you should add your
  * entries with at pos.
- * 
+ *
  * If env is NULL, it will allocate a new one. If not, it will reallocate
  * that one.
  */
@@ -73,7 +73,7 @@ char **util_env_create(char **env, int n, int *pos);
 char *util_env_str(char *name, char *value);
 
 /*
- * env_replace replaces the occurrence of the given variable with the 
+ * env_replace replaces the occurrence of the given variable with the
  * value you give.
  */
 
@@ -110,25 +110,25 @@ int util_chdir2path(char *path);
 
 /*
  * is_mozilla checks if the given user-agent is mozilla, of at least
- * the given major and minor revisions. These are strings to avoid 
+ * the given major and minor revisions. These are strings to avoid
  * ambiguities like 1.56 > 1.5
  */
 
 int util_is_mozilla(char *ua, char *major, char *minor);
 
 /*
- * is_url will return 1 if the given string seems to be a URL, or will 
- * return 0 otherwise. 
- * 
- * Because of stupid news URLs, this will return 1 if the string has 
- * all alphabetic characters up to the first colon and will not check for 
+ * is_url will return 1 if the given string seems to be a URL, or will
+ * return 0 otherwise.
+ *
+ * Because of stupid news URLs, this will return 1 if the string has
+ * all alphabetic characters up to the first colon and will not check for
  * the double slash.
  */
 
 int util_is_url(char *url);
 
 /*
- * util_later_than checks the date in the string ims, and if that date is 
+ * util_later_than checks the date in the string ims, and if that date is
  * later than or equal to the one in the tm struct lms, then it returns 1.
  *
  * Handles RFC 822, 850, and ctime formats.
@@ -144,7 +144,7 @@ int util_uri_is_evil(char *t);
 
 /*
  * util_uri_parse gets rid of /../, /./, and //.
- * 
+ *
  * Assumes that either the string starts with a /, or the string will
  * not .. right off of its beginning.  As such, ../foo.gif will
  * not be changed, although /../foo.gif will become /foo.gif.
@@ -163,7 +163,7 @@ void util_uri_unescape(char *s);
  * If d is NULL, it will allocate and return a properly sized string.
  * Warning: does not check bounds on a given d.
  *
- * util_url_escape does the same thing but does it for a url, i.e. ?:+ is 
+ * util_url_escape does the same thing but does it for a url, i.e. ?:+ is
  * not escaped.
  */
 
@@ -184,9 +184,9 @@ char *util_sh_escape(char *s);
 int util_itoa(int i, char *a);
 
 /*
- * util_vsprintf and util_sprintf are simplified clones of the System V 
+ * util_vsprintf and util_sprintf are simplified clones of the System V
  * vsprintf and sprintf routines.
- * 
+ *
  * Returns the number of characters printed. Only handles %d and %s,
  * does not handle any width or precision.
  */

@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#if ! defined (SCHEDENTRY_H)
+#ifndef SCHEDENTRY_H
 #define SCHEDENTRY_H
 
 #include "orbsvcs/RtecSchedulerC.h"
@@ -243,13 +243,13 @@ private:
   // The set of arrivals in the entry's effective period.
   ACE_Ordered_MultiSet<Dispatch_Entry_Link> dispatches_;
 
-  // Depth-first-search status of the entry. 
+  // Depth-first-search status of the entry.
   DFS_Status dfs_status_;
 
-  // Depth-first-search discovery order of the entry. 
+  // Depth-first-search discovery order of the entry.
   long discovered_;
 
-  // Depth-first-search completion order of the entry. 
+  // Depth-first-search completion order of the entry.
   long finished_;
 
   // Flag identifying threads in the call graph.
@@ -268,7 +268,7 @@ private:
 };
 
 
-// Wrapper for dependencies between RT_Infos 
+// Wrapper for dependencies between RT_Infos
 class TAO_ORBSVCS_Export Task_Entry_Link
 {
 public:

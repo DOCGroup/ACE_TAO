@@ -2,6 +2,11 @@
 // $Id$
 
 #include "ace/Event_Handler.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Reactor.h"
 #include "ace/Naming_Context.h"
 
@@ -10,8 +15,8 @@ class Dump_Restore : public ACE_Event_Handler
 public:
   enum Operation_Type
     {
-      BIND, 
-      UNBIND, 
+      BIND,
+      UNBIND,
       REBIND
     };
   Dump_Restore (int argc, char *argv[]);
@@ -47,9 +52,9 @@ private:
   int populate (Dump_Restore::Operation_Type op);
 
   int doit (Dump_Restore::Operation_Type op,
-	    char *name,
-	    char *value,
-	    char *type = "");
+            char *name,
+            char *value,
+            char *type = "");
   int bind (char* key, char* value, char* type = "");
   int unbind (char* key);
   int rebind (char* key, char* value, char* type = "");

@@ -13,7 +13,7 @@
 //
 // ============================================================================
 
-#if !defined (_NESTEDUPCALLS_I_H)
+#ifndef _NESTEDUPCALLS_I_H
 #define _NESTEDUPCALLS_I_H
 
 //#include "cubitS.h"

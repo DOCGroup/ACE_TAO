@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //     ace
-// 
+//
 // = FILENAME
 //     CLASSIX_Peer_SAP.h
 //
 // = AUTHOR(S)
 //     Nokia Telecommunications
-// 
+//
 // ============================================================================
 
 #ifndef ACE_CLASSIX_PEER_SAP_H
@@ -30,7 +30,7 @@ class ACE_CLASSIX_Peer_SAP
     //   In CLASSIX, a local SAP is always a port, a peer SAP can be
     //   a port or a group of port.  This class is for peer SAP and
     //   <ACE_SAP> is for local SAP.
-    //   
+    //
     // = SEE ALSO
     //   <ACE_SAP>
 {
@@ -40,10 +40,10 @@ class ACE_CLASSIX_Peer_SAP
     // Default constructor.
     // Needs to be initialized by a set() operation.
     ACE_CLASSIX_Peer_SAP(const ACE_CLASSIX_Port_Core&);/* peer port */
-                                                 
+
     ACE_CLASSIX_Peer_SAP(const ACE_CLASSIX_Port&);/* peer port address */
     ACE_CLASSIX_Peer_SAP(const ACE_Addr&);        /* peer port address */
-                                                 
+
     ACE_CLASSIX_Peer_SAP(const KnUniqueId&);      /* peer port address */
     ACE_CLASSIX_Peer_SAP(const KnCap&);           /* peer group address */
     ACE_CLASSIX_Peer_SAP(int /* stamp */);       /* stamp for peer group */
@@ -51,12 +51,12 @@ class ACE_CLASSIX_Peer_SAP
     ~ACE_CLASSIX_Peer_SAP(void);
 
     int set(const ACE_CLASSIX_Port_Core&); /* peer port */
-                                                 
+
     int set(const ACE_Addr&);              /* peer port address */
-                                                 
-    int set(const KnUniqueId&);	           /* peer port address */
-    int set(const KnCap&);	           /* peer group address */
-    int set(int /* stamp */);	/* stamp for the peer group */
+
+    int set(const KnUniqueId&);            /* peer port address */
+    int set(const KnCap&);                 /* peer group address */
+    int set(int /* stamp */);   /* stamp for the peer group */
 
     // = ACCESS
     const ACE_CLASSIX_Addr* get_addr(void) const;
@@ -73,13 +73,13 @@ class ACE_CLASSIX_Peer_SAP
     // = HELPER
     void dump (void) const;
     // Dump the state of an object.
-    
+
     ACE_ALLOC_HOOK_DECLARE;
     // Declare the dynamic allocation hooks.
 
  protected:
 #if 0
-    virtual set_mode_(u_int = K_BROADMODE); /* theMode */ 
+    virtual set_mode_(u_int = K_BROADMODE); /* theMode */
     // Sets the addressing mode with the current setting of coTarget
     virtual set_mode_(u_int, /* mode */ int /* site */);
     // Sets the addressing mode as well as the coTarget
@@ -89,13 +89,18 @@ class ACE_CLASSIX_Peer_SAP
  private:
     // Disable copy constructor
     ACE_CLASSIX_Peer_SAP(ACE_CLASSIX_Peer_SAP const&);
-    ACE_CLASSIX_Peer_SAP const& operator=(ACE_CLASSIX_Peer_SAP const&); 
+    ACE_CLASSIX_Peer_SAP const& operator=(ACE_CLASSIX_Peer_SAP const&);
 };
 
 /* ------------------------------------------------------------------------- */
 
 #if defined (__ACE_INLINE__)
 #include "ace/CLASSIX/CLASSIX_Peer_SAP.i"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_CLASSIX_PEER_SAP_H */

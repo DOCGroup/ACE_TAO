@@ -106,10 +106,10 @@ public:
                                                 size_t &alignment,
                                                 CORBA_Environment &_env = CORBA_Environment::default_environment ());
   static size_t calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
-						  TAO_InputCDR *stream,
-						  CORBA::TCKind kind,
-						  size_t &alignment,
-						  CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                                                  TAO_InputCDR *stream,
+                                                  CORBA::TCKind kind,
+                                                  size_t &alignment,
+                                                  CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // For a given typecode, figure out its size and alignment needs.
   // This version is used mostly when traversing other typecodes, and
   // follows these rules:
@@ -166,8 +166,8 @@ public:
 
 #if defined (TAO_NO_COPY_OCTET_SEQUENCES)
   static size_t calc_seq_attributes (TAO_InputCDR *stream,
-				     size_t &alignment,
-				     CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                                     size_t &alignment,
+                                     CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Calculate size and alignment for a sequence, most of them have
   // the same requirements, but for the sequences of Octets that are
   // optimized to minimize copying.

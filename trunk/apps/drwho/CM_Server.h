@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (_CM_SERVER_H)
+#ifndef _CM_SERVER_H
 #define _CM_SERVER_H
 
 #include "Options.h"

@@ -5,27 +5,28 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    UPIPE_Stream.h
 //
 // = AUTHOR
 //    Gerhard Lenzer and Douglas C. Schmidt
-// 
+//
 // ============================================================================
 
 #ifndef ACE_UPIPE_STREAM_H
 #define ACE_UPIPE_STREAM_H
 
 #include "ace/Stream.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Synch.h"
 #include "ace/SPIPE.h"
 #include "ace/Message_Queue.h"
 #include "ace/UPIPE_Addr.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_THREADS)
 
@@ -53,38 +54,38 @@ public:
   // Return the underlying I/O handle.
 
   // = Send/recv ACE Message_Blocks.
-  int send (ACE_Message_Block *mb_p, 
-	    ACE_Time_Value *timeout  = 0);
+  int send (ACE_Message_Block *mb_p,
+            ACE_Time_Value *timeout  = 0);
   // Send a message through the message queue.  Returns -1 on error,
   // else 0.
 
-  int recv (ACE_Message_Block *&mb_p, 
-	    ACE_Time_Value *timeout  = 0);
+  int recv (ACE_Message_Block *&mb_p,
+            ACE_Time_Value *timeout  = 0);
   // Recv a message from the message queue.  Returns -1 on error, else
   // 0.
 
   // = Send/recv char buffers.
-  int send (const char *buffer, 
-	    size_t n, 
-	    ACE_Time_Value *timeout = 0);
+  int send (const char *buffer,
+            size_t n,
+            ACE_Time_Value *timeout = 0);
   // Send a buffer of <n> bytes through the message queue.  Returns -1
   // on error, else number of bytes sent.
 
-  int recv (char *buffer, 
-	    size_t n, 
-	    ACE_Time_Value *timeout = 0);
+  int recv (char *buffer,
+            size_t n,
+            ACE_Time_Value *timeout = 0);
   // Recv a buffer of upto <n> bytes from the message queue.  Returns
   // -1 on error, else number of bytes read.
 
-  int send_n (const char *buffer, 
-	      size_t n,
-	      ACE_Time_Value *timeout = 0);
+  int send_n (const char *buffer,
+              size_t n,
+              ACE_Time_Value *timeout = 0);
   // Send a buffer of exactly <n> bytes to the message queue.  Returns
   // -1 on error, else number of bytes written (which should == n).
 
-  int recv_n (char *buffer, 
-	      size_t n, 
-	      ACE_Time_Value *timeout = 0);
+  int recv_n (char *buffer,
+              size_t n,
+              ACE_Time_Value *timeout = 0);
   // Recv a buffer of exactly <n> bytes from the message queue.
   // Returns -1 on error, else the number of bytes read.
 
@@ -105,7 +106,7 @@ private:
   // To hold the last ACE_Message_Block read out of the stream. Thus
   // allowing subsequent reads from one ACE_Message_Block
 
-  size_t remaining_;            
+  size_t remaining_;
   // Holds the number of bytes that are still available in mb_last_.
 
   ACE_UPIPE_Addr remote_addr_;
@@ -125,7 +126,7 @@ private:
 #endif /* ACE_MT_SAFE */
 };
 
-#if defined (__ACE_INLINE__) 
+#if defined (__ACE_INLINE__)
 #include "ace/UPIPE_Stream.i"
 #endif /* __ACE_INLINE__ */
 

@@ -4,13 +4,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Asynch_Acceptor.h
 //
 // = AUTHOR
 //    Irfan Pyarali (irfan@cs.wustl.edu)
-// 
+//
 // ============================================================================
 
 #ifndef ACE_ASYNCH_ACCEPTOR_H
@@ -19,7 +19,7 @@
 #include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
@@ -32,7 +32,7 @@ class ACE_Message_Block;
 class ACE_INET_Addr;
 
 template <class HANDLER>
-class ACE_Asynch_Acceptor : public ACE_Handler 
+class ACE_Asynch_Acceptor : public ACE_Handler
 {
   // = TITLE
   //     This class is an example of the Acceptor Pattern.  This class
@@ -41,11 +41,11 @@ class ACE_Asynch_Acceptor : public ACE_Handler
   //
   // = DESCRIPTION
   //     Unlike the <ACE_Acceptor>, however, this class is designed to
-  //     be used asynchronously.  
+  //     be used asynchronously.
 public:
   ACE_Asynch_Acceptor (void);
   // A do nothing constructor.
-  
+
   virtual ~ACE_Asynch_Acceptor (void);
   // Virtual destruction
 
@@ -76,7 +76,7 @@ public:
   // <backlog> number of asynchronous accepts are started.
 
   virtual ACE_HANDLE get_handle (void) const;
-  // Get the underlying handle. 
+  // Get the underlying handle.
 
   virtual void set_handle (ACE_HANDLE handle);
   // Set the underlying listen handle. It is the user's responsibility
@@ -94,15 +94,15 @@ public:
   // operations issued by other threads.
 
   virtual int validate_new_connection (const ACE_INET_Addr &remote_address);
-  // Template method for address validation.  
+  // Template method for address validation.
   //
   // Default implemenation always validates the remote address.
 
   virtual int should_reissue_accept (void);
-  // Template method for deciding whether to reissue accept.  
+  // Template method for deciding whether to reissue accept.
   //
   // Default implemenation always returns this->reissue_accept_.
-  
+
   //
   // These are low level tweaking methods
   //
@@ -116,7 +116,7 @@ public:
   virtual void validate_new_connection (int new_value);
   // Set and get flag that indicates if address validation is
   // required.
-  
+
   virtual int reissue_accept (void) const;
   virtual void reissue_accept (int new_value);
   // Set and get flag that indicates if a new accept should be
@@ -132,25 +132,25 @@ public:
 protected:
 
   virtual void handle_accept (const ACE_Asynch_Accept::Result &result);
-  // This is called when an outstanding accept completes. 
+  // This is called when an outstanding accept completes.
 
   ACE_HANDLE handle (void) const;
   // Return the listen handle.
 
   void parse_address (const ACE_Asynch_Accept::Result &result,
-		      ACE_INET_Addr &remote_address,
-		      ACE_INET_Addr &local_address);
+                      ACE_INET_Addr &remote_address,
+                      ACE_INET_Addr &local_address);
   // This parses the address from read buffer.
 
   virtual HANDLER *make_handler (void);
   // This is the template method used to create new handler.
   // Subclasses must overwrite this method if a new handler creation
   // strategy is required.
-  
+
 private:
   ACE_HANDLE listen_handle_;
   // Handle used to listen for new connections.
-  
+
   ACE_Asynch_Accept asynch_accept_;
   // <Asynch_Accept> used to make life easier :-)
 
@@ -159,7 +159,7 @@ private:
 
   int validate_new_connection_;
   // Flag that indicates if address validation is required.
-  
+
   int reissue_accept_;
   // Flag that indicates if a new accept should be reissued when a
   // accept completes.

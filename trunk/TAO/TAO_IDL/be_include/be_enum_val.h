@@ -20,7 +20,7 @@
 //
 // ============================================================================
 
-#if !defined (BE_ENUM_VAL_H)
+#ifndef BE_ENUM_VAL_H
 #define BE_ENUM_VAL_H
 
 /*

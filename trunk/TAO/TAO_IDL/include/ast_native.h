@@ -1,7 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-#if !defined (_AST_NATIVE_H_)
+#ifndef _AST_NATIVE_H_
 #define _AST_NATIVE_H_
 
 // Representation of "native" IDL type added by the POA spec
@@ -32,7 +32,7 @@ public:
   DEF_NARROW_FROM_DECL(AST_Native);
 
   // AST Dumping
-  virtual void		dump(ostream &o);
+  virtual void          dump(ostream &o);
 };
 
 #endif /* AST_NATIVE_H */

@@ -6,19 +6,23 @@
 //
 // = LIBRARY
 //    CORBA Benchmark
-// 
+//
 // = FILENAME
 //    driver.h
 //
 // = AUTHOR
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
-#if !defined (_CORBA_BENCHMARK_DRIVER_H_)
+#ifndef _CORBA_BENCHMARK_DRIVER_H_
 #define _CORBA_BENCHMARK_DRIVER_H_
 
 #include "ace/Log_Msg.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 template <class PROXY>
 class CORBA_Benchmark_Driver

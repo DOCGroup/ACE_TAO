@@ -5,6 +5,11 @@
 #define cubit_hh
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include <CORBA.h>
 
 
@@ -13,7 +18,7 @@
 class Cubit_dispatch : public virtual CORBA::PPTR {
 public:
 
-      Cubit_dispatch (void *IT_p, CORBA::Object* IT_o, const char *IT_m, 
+      Cubit_dispatch (void *IT_p, CORBA::Object* IT_o, const char *IT_m,
         CORBA::LoaderClass *IT_l, char *IT_i, void* IT_im)
        : PPTR (IT_p,IT_o,IT_m,IT_l,IT_i,IT_im) {}
 
@@ -28,12 +33,12 @@ public:
        : PPTR (IT_OR,IT_p,IT_o) {}
 
 
-   Cubit_dispatch (void *IT_p, CORBA::Object *IT_o, const char *IT_m, 
+   Cubit_dispatch (void *IT_p, CORBA::Object *IT_o, const char *IT_m,
         char *IT_i, CORBA::Object* IT_ob, void* IT_im)
        : PPTR (IT_p,IT_o,IT_m,IT_i,IT_ob,IT_im) {}
 
 
-   virtual unsigned char dispatch (CORBA::Request &IT_r, 
+   virtual unsigned char dispatch (CORBA::Request &IT_r,
         unsigned char IT_isTarget, void* IT_pp=NULL);
 
 
@@ -92,12 +97,12 @@ protected:
     }
 public:
     static Cubit_ptr _duplicate(
-            Cubit_ptr, 
+            Cubit_ptr,
             CORBA::Environment &IT_pEnv=CORBA::IT_chooseDefaultEnv ());
 public:
    static Cubit* _bind (const char* IT_markerServer, const char* host,
-		const CORBA::Context &IT_c, 
-		CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
+                const CORBA::Context &IT_c,
+                CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
    static Cubit* _bind (CORBA::Environment &IT_env);
    static Cubit* _bind (const char* IT_markerServer=NULL, const char* host=NULL,
                  CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
@@ -585,7 +590,7 @@ class Cubit_SeqElem : public CORBA::_SeqElem
     }
 
     operator Cubit_ptr () const {
-        return _ptr ? (Cubit_ptr) (*_ptr) : Cubit_nil(); 
+        return _ptr ? (Cubit_ptr) (*_ptr) : Cubit_nil();
     }
 
     Cubit_ptr operator->() const { return *_ptr;}
@@ -601,76 +606,76 @@ class Cubit_SeqElem : public CORBA::_SeqElem
 #define TIE_Cubit(X) Cubit##X
 
 #define DEF_TIE_Cubit(X) \
-	class Cubit##X : public virtual Cubit {		\
-	  X* m_obj;						\
-	public:							\
-								\
-								\
-	   Cubit##X  (X *objp, const char* m="", CORBA::LoaderClass *l=0)\
-		: Cubit(), m_obj(objp) {	\
-		m_pptr = new Cubit_dispatch		\
-			(( Cubit*)this,(CORBA::Object*)this,m,l,Cubit_IR,m_obj);	\
-	   }								\
-	   Cubit##X  (CORBA::Object *IT_p, const char* IT_m="", void *IT_q=0)\
-		: Cubit() {	\
-		m_pptr = new Cubit_dispatch		\
-			(( Cubit*)this,(CORBA::Object*)this,IT_m,Cubit_IR,IT_p,IT_q);	\
-		m_obj = (X*)(m_pptr->getImplObj ());			\
-	   }								\
-								\
-	   virtual ~Cubit##X  () {				\
-		if (_okToDeleteImpl ()) delete m_obj; }					\
-	   virtual void* _deref () {					\
-		return m_obj; }					\
-								\
+        class Cubit##X : public virtual Cubit {         \
+          X* m_obj;                                             \
+        public:                                                 \
+                                                                \
+                                                                \
+           Cubit##X  (X *objp, const char* m="", CORBA::LoaderClass *l=0)\
+                : Cubit(), m_obj(objp) {        \
+                m_pptr = new Cubit_dispatch             \
+                        (( Cubit*)this,(CORBA::Object*)this,m,l,Cubit_IR,m_obj);        \
+           }                                                            \
+           Cubit##X  (CORBA::Object *IT_p, const char* IT_m="", void *IT_q=0)\
+                : Cubit() {     \
+                m_pptr = new Cubit_dispatch             \
+                        (( Cubit*)this,(CORBA::Object*)this,IT_m,Cubit_IR,IT_p,IT_q);   \
+                m_obj = (X*)(m_pptr->getImplObj ());                    \
+           }                                                            \
+                                                                \
+           virtual ~Cubit##X  () {                              \
+                if (_okToDeleteImpl ()) delete m_obj; }                                 \
+           virtual void* _deref () {                                    \
+                return m_obj; }                                 \
+                                                                \
 virtual CORBA::Octet cube_octet (CORBA::Octet o, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 return m_obj->cube_octet (  o,IT_env);\
 }\
-	\
+        \
 virtual CORBA::Short cube_short (CORBA::Short s, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 return m_obj->cube_short (  s,IT_env);\
 }\
-	\
+        \
 virtual CORBA::Long cube_long (CORBA::Long l, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 return m_obj->cube_long (  l,IT_env);\
 }\
-	\
+        \
 virtual Cubit::Many cube_struct (const Cubit::Many& values, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 return m_obj->cube_struct (  values,IT_env);\
 }\
-	\
+        \
 virtual Cubit::oneof cube_union (const Cubit::oneof& values, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 return m_obj->cube_union (  values,IT_env);\
 }\
-	\
+        \
 virtual void please_exit (CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 m_obj->please_exit (IT_env);\
 }\
-								\
-	};						\
+                                                                \
+        };                                              \
 
 
-#define QUALS_Cubit	\
+#define QUALS_Cubit     \
 virtual CORBA::Octet cube_octet (CORBA::Octet o, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 return m_obj->cube_octet (  o,IT_env);\
 }\
-	\
+        \
 virtual CORBA::Short cube_short (CORBA::Short s, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 return m_obj->cube_short (  s,IT_env);\
 }\
-	\
+        \
 virtual CORBA::Long cube_long (CORBA::Long l, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 return m_obj->cube_long (  l,IT_env);\
 }\
-	\
+        \
 virtual Many cube_struct (const Many& values, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 return m_obj->cube_struct (  values,IT_env);\
 }\
-	\
+        \
 virtual oneof cube_union (const oneof& values, CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 return m_obj->cube_union (  values,IT_env);\
 }\
-	\
+        \
 virtual void please_exit (CORBA::Environment &IT_env) throw (CORBA::SystemException){\
 m_obj->please_exit (IT_env);\
 }\
@@ -681,19 +686,19 @@ m_obj->please_exit (IT_env);\
 class CubitProxyFactoryClass : public virtual CORBA::ObjectFactoryClass {
 public:
    CubitProxyFactoryClass (unsigned char IT_p=0)
-		: CORBA::ProxyFactory (Cubit_IR, IT_p) {}
+                : CORBA::ProxyFactory (Cubit_IR, IT_p) {}
 
     virtual void* New (char *IT_OR, CORBA::Environment&);
 
     virtual void* New (ObjectReference *IT_OR, CORBA::Environment&);
 
-    virtual void* New2 (); 
+    virtual void* New2 ();
 
     virtual CORBA::Object* NewObject (char *IT_OR, CORBA::Environment&);
 
     virtual CORBA::Object* NewObject (ObjectReference *IT_OR, CORBA::Environment&);
 
-    virtual CORBA::Object* New2Object (); 
+    virtual CORBA::Object* New2Object ();
 
     virtual void* IT_castUp (void *IT_p, char* IT_s, CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ());
 
@@ -711,7 +716,7 @@ public:
     CubitBOAImpl (const char *m="", CORBA::LoaderClass *l=NULL) {
   if (CORBA::PPTR::isOK (m_pptr, Cubit_IR))
     m_pptr = new Cubit_dispatch ( (Cubit*)this,
-   	 (CORBA::Object*)this, m, l, Cubit_IR, this);
+         (CORBA::Object*)this, m, l, Cubit_IR, this);
 }
 
         virtual CORBA::Octet cube_octet (CORBA::Octet o, CORBA::Environment &IT_env=CORBA::IT_chooseDefaultEnv ()) throw (CORBA::SystemException) =0;

@@ -5,14 +5,14 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Token.h
 //
 // = AUTHOR
 //    Original author -- Karl-Heinz Dorn (kdorn@erlh.siemens.de)
 //    Ported to ACE by Douglas C. Schmidt (schmidt@cs.wustl.edu)
-// 
+//
 // ============================================================================
 
 #ifndef ACE_TOKEN_H
@@ -21,7 +21,7 @@
 #include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_THREADS)
@@ -37,13 +37,13 @@ class ACE_Export ACE_Token
   //    Class that acquires, renews, and releases a synchronization
   //    token that is serviced in strict FIFO ordering.
   //
-  // = DESCRIPTION 
+  // = DESCRIPTION
   //    This class is a more general-purpose synchronization mechanism
   //    than SunOS 5.x mutexes.  For example, it implements "recursive
   //    mutex" semantics, where a thread that owns the token can
   //    reacquire it without deadlocking.  In addition, threads that are
   //    blocked awaiting the token are serviced in strict FIFO order as
-  //    other threads release the token (Solaris and Pthread mutexes don't 
+  //    other threads release the token (Solaris and Pthread mutexes don't
   //    strictly enforce an acquisition order).
   //    There are two FIFO lists within the class.  Write acquires always
   //    have higher priority over read acquires.  Which means, if you use
@@ -65,15 +65,15 @@ public:
   // = Synchronization operations.
 
   int acquire (void (*sleep_hook)(void *),
-	       void *arg = 0, 
-	       ACE_Time_Value *timeout = 0);
+               void *arg = 0,
+               ACE_Time_Value *timeout = 0);
   // Acquire the token, sleeping until it is obtained or until
   // <timeout> expires.  If some other thread currently holds the
   // token then <sleep_hook> is called before our thread goes to
   // sleep.  This <sleep_hook> can be used by the requesting thread to
   // unblock a token-holder that is sleeping, e.g., by means of
   // writing to a pipe (the ACE ACE_Reactor uses this functionality).
-  // Return values: 
+  // Return values:
   // 0 if acquires without calling <sleep_hook>
   // 1 if <sleep_hook> is called.
   // 2 if the token is signaled.
@@ -85,9 +85,9 @@ public:
   // This behaves just like the previous <acquire> method, except
   // that it invokes the virtual function called <sleep_hook>
   // that can be overridden by a subclass of ACE_Token.
-  
+
   virtual void sleep_hook (void);
-  // This should be overridden by a subclass to define 
+  // This should be overridden by a subclass to define
   // the appropriate behavior before <acquire> goes to sleep.
   // By default, this is a no-op...
 
@@ -106,7 +106,7 @@ public:
   // nesting_level_ > 1.  I'm not sure if this is really the right
   // thing to do (since it makes it possible for shared data to be
   // changed unexpectedly) so use with caution...
-  // This method maintians the original token priority.  
+  // This method maintians the original token priority.
 
   int tryacquire (void);
   // Become interface-compliant with other lock mechanisms (implements
@@ -124,16 +124,16 @@ public:
   // be called acquire_yield.
 
   int acquire_read (void (*sleep_hook)(void *),
-	       void *arg = 0, 
-	       ACE_Time_Value *timeout = 0);
+               void *arg = 0,
+               ACE_Time_Value *timeout = 0);
   // More sophisticate version of acquire_read.
 
   int acquire_write (void);
   // Just calls <acquire>.
 
   int acquire_write (void (*sleep_hook)(void *),
-	       void *arg = 0, 
-	       ACE_Time_Value *timeout = 0);
+               void *arg = 0,
+               ACE_Time_Value *timeout = 0);
   // More sophisticate version of acquire_write.
 
   int tryacquire_read (void);
@@ -171,7 +171,7 @@ public:
   // = The following structure implements a ACE_FIFO of waiter threads
   // that are asleep waiting to obtain the token.
 
-  struct ACE_Token_Queue_Entry 
+  struct ACE_Token_Queue_Entry
   {
     ACE_Token_Queue_Entry (ACE_Thread_Mutex &m, ACE_thread_t t_id);
 
@@ -209,7 +209,7 @@ private:
   struct ACE_Token_Queue
   {
     ACE_Token_Queue (void);
-    
+
     void remove_entry (ACE_Token_Queue_Entry *);
     // Remove a waiter from the queue (used when a timeout occurs).
 
@@ -220,9 +220,9 @@ private:
     // Tail of the list of waiting threads.
   };
 
-  int shared_acquire (void (*sleep_hook_func)(void *), 
-		      void *arg,
-		      ACE_Time_Value *timeout,
+  int shared_acquire (void (*sleep_hook_func)(void *),
+                      void *arg,
+                      ACE_Time_Value *timeout,
                       ACE_Token_Op_Type op_type);
   // Implements the <acquire> and <tryacquire> methods above.
 

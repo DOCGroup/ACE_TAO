@@ -93,7 +93,7 @@ public:
   CORBA::Boolean next (CORBA::Environment &);
   // Returns next component
 
-  CORBA::Boolean seek (CORBA::Long index, 
+  CORBA::Boolean seek (CORBA::Long index,
                        CORBA::Environment &);
   // Jump to component at <index>
 
@@ -184,7 +184,7 @@ private:
   TAO_DynUnion_i (const TAO_DynUnion_i &src);
   TAO_DynUnion_i &operator= (const TAO_DynUnion_i &src);
 
-  // Some specialized instantiations of template class (defined in 
+  // Some specialized instantiations of template class (defined in
   // DynUnion_i_T.h)
 
   class WChar_extractor : public DU_Extractor_base
@@ -193,7 +193,7 @@ private:
     CORBA::Boolean check_match (const CORBA_Any& inside_any,
                                 const CORBA_Any& outside_any);
   private:
-    CORBA::WChar arg_index_; 
+    CORBA::WChar arg_index_;
     CORBA::WChar member_index_;
   };
 
@@ -203,7 +203,7 @@ private:
     CORBA::Boolean check_match (const CORBA_Any& inside_any,
                                 const CORBA_Any& outside_any);
   private:
-    CORBA::ULong arg_index_; 
+    CORBA::ULong arg_index_;
     CORBA::ULong member_index_;
   };
 

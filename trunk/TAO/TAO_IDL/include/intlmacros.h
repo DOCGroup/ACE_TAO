@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -64,18 +64,18 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#ifndef	_IDL_INTLMACROS_HH
+#ifndef _IDL_INTLMACROS_HH
 #define _IDL_INTLMACROS_HH
 
 // intlmacros.hh
 //
 // Define macros which conditionalize string internationalization
 
-#ifndef	DOMF_TEXT_DEVEL_DOMAIN
-#define	DOMF_TEXT_DEVEL_DOMAIN	"SUNW_DOE_DOMF_DEVEL"
-#endif	// DOMF_TEXT_DEVEL_DOMAIN
+#ifndef DOMF_TEXT_DEVEL_DOMAIN
+#define DOMF_TEXT_DEVEL_DOMAIN  "SUNW_DOE_DOMF_DEVEL"
+#endif  // DOMF_TEXT_DEVEL_DOMAIN
 
-#define	GTDEVEL(s)		s
+#define GTDEVEL(s)              s
 
 #if defined(__STDC__)
 #define CONV(p) #p
@@ -84,4 +84,4 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define MKSTR(p) "p"
 #endif
 
-#endif	// _IDL_INTLMACROS_HH
+#endif  // _IDL_INTLMACROS_HH

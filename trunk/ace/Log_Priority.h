@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Log_Priority.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_LOG_PRIORITY_H
@@ -27,38 +27,38 @@ enum ACE_Log_Priority
   //     These values are defined using powers of two so that it's
   //     possible to form a mask to turn them on or off dynamically.
 
-  // = Note, this first argument *must* start at 1! 
+  // = Note, this first argument *must* start at 1!
 
   LM_SHUTDOWN = 01,
   // Shutdown the logger (decimal 1).
 
-  LM_TRACE = 02,    
+  LM_TRACE = 02,
   // Messages indicating function-calling sequence (decimal 2).
 
-  LM_DEBUG = 04,    
+  LM_DEBUG = 04,
   // Messages that contain information normally of use only when
   // debugging a program (decimal 4).
 
-  LM_INFO = 010,	    
+  LM_INFO = 010,
   // Informational messages (decimal 8).
 
-  LM_NOTICE = 020,   
+  LM_NOTICE = 020,
   // Conditions that are not error conditions, but that may require
   // special handling (decimal 16).
 
-  LM_WARNING = 040,  
+  LM_WARNING = 040,
   // Warning messages (decimal 32).
 
-  LM_STARTUP = 0100,  
+  LM_STARTUP = 0100,
   // Initialize the logger (decimal 64).
 
-  LM_ERROR = 0200,    
+  LM_ERROR = 0200,
   // Error messages (decimal 128).
 
-  LM_CRITICAL = 0400,	    
+  LM_CRITICAL = 0400,
   // Critical conditions, such as hard device errors (decimal 256).
 
-  LM_ALERT = 01000,    
+  LM_ALERT = 01000,
   // A condition that should be corrected immediately, such as a
   // corrupted system database (decimal 512).
 

@@ -1,9 +1,14 @@
 // $Id$
 
-#if !defined (HTTPU_PARSE_HTTP_RESPONSE_H)
+#ifndef HTTPU_PARSE_HTTP_RESPONSE_H
 #define HTTPU_PARSE_HTTP_RESPONSE_H
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "HTTPU/http_export.h"
 
 class HTTPU_Export Parse_HTTP_Response

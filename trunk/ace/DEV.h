@@ -5,24 +5,25 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    DEV.h
 //
 // = AUTHOR
 //    Gerhard Lenzer
-// 
+//
 // ============================================================================
 
 #ifndef ACE_DEV_H
 #define ACE_DEV_H
 
 #include "ace/IO_SAP.h"
-#include "ace/DEV_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/DEV_Addr.h"
 
 // The following is necessary since many C++ compilers don't support
 // typedef'd types inside of classes used as formal template
@@ -41,7 +42,7 @@ class ACE_Export ACE_DEV : public ACE_IO_SAP
 {
   // = TITLE
   //     Defines the member functions for the base class of the
-  //     ACE_DEV abstraction. 
+  //     ACE_DEV abstraction.
 public:
   int close (void);
   // Close down the DEVICE
@@ -59,7 +60,7 @@ public:
 
 protected:
   ACE_DEV (void);
-  // Ensure that this class is an abstract base class 
+  // Ensure that this class is an abstract base class
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

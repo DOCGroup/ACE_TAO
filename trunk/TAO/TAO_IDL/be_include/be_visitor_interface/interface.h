@@ -20,7 +20,7 @@
 //
 // ============================================================================
 
-#if !defined (_BE_INTERFACE_INTERFACE_H_)
+#ifndef _BE_INTERFACE_INTERFACE_H_
 #define _BE_INTERFACE_INTERFACE_H_
 
 // = DESCRIPTION

@@ -1,10 +1,14 @@
 /* -*- c++ -*- */
 // $Id$
 
-#if !defined (JAWS_PIPELINE_TASKS_H)
+#ifndef JAWS_PIPELINE_TASKS_H
 #define JAWS_PIPELINE_TASKS_H
 
 #include "ace/Singleton.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "JAWS/Export.h"
 #include "JAWS/Pipeline.h"

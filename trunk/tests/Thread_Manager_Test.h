@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    Thread_Manager_Test.h
 //
@@ -14,7 +14,7 @@
 //
 // = AUTHOR
 //    Prashant Jain and Doug C. Schmidt
-// 
+//
 // ============================================================================
 
 #ifndef __THREAD_MANAGER_TEST_H

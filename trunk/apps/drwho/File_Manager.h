@@ -14,11 +14,16 @@
 //
 // ============================================================================
 
-#if !defined (_FILE_MANAGER_H)
+#ifndef _FILE_MANAGER_H
 #define _FILE_MANAGER_H
 
 #include "global.h"
 #include "ace/Singleton.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Mem_Map.h"
 
 class File_Manager

@@ -2,15 +2,20 @@
 // $Id$
 
 
-#if !defined (_LOGGER_H)
+#ifndef _LOGGER_H
 #define _LOGGER_H
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "logger.hh"
 
 class Logger
   // = TITLE
-  //     Wrapper class that uses CORBA object reference 
+  //     Wrapper class that uses CORBA object reference
   //     as the transport mechanism to simplify implementation.
 {
 public:
@@ -35,7 +40,7 @@ public:
 
   int stop_timer (profile_logger::Elapsed_Time &et);
   // Deactivate the timer and return the elapsed time.
-  
+
 private:
   profile_logger *logref_;
   // CORBA object reference proxy.

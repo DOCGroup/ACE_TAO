@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    FIFO_Send.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_FIFO_SEND_H
@@ -20,27 +20,27 @@
 #include "ace/FIFO.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_FIFO_Send : public ACE_FIFO
 {
   // = TITLE
-  //     Sender side for the bytestream C++ wrapper for UNIX FIFOs 
+  //     Sender side for the bytestream C++ wrapper for UNIX FIFOs
 public:
   // = Initialization methods.
   ACE_FIFO_Send (void);
   // Default constructor.
 
-  ACE_FIFO_Send (const char *rendezvous, 
-		 int flags = O_WRONLY, 
-		 int perms = ACE_DEFAULT_FILE_PERMS,
+  ACE_FIFO_Send (const char *rendezvous,
+                 int flags = O_WRONLY,
+                 int perms = ACE_DEFAULT_FILE_PERMS,
                  LPSECURITY_ATTRIBUTES sa = 0);
   // Open up a bytestream named pipe for writing.
 
-  int open (const char *rendezvous, 
-	    int flags = O_WRONLY, 
-	    int perms = ACE_DEFAULT_FILE_PERMS,
+  int open (const char *rendezvous,
+            int flags = O_WRONLY,
+            int perms = ACE_DEFAULT_FILE_PERMS,
             LPSECURITY_ATTRIBUTES sa = 0);
   // Open up a bytestream named pipe for writing.
 

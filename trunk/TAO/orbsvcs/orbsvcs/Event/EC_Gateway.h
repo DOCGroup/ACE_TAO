@@ -159,10 +159,10 @@ private:
   ACE_PushSupplier_Adapter<TAO_EC_Gateway_IIOP> supplier_;
   // Our supplier personality....
 
-  // We use a different Consumer_Proxy 
+  // We use a different Consumer_Proxy
   typedef ACE_Map_Manager<RtecEventComm::EventSourceID,RtecEventChannelAdmin::ProxyPushConsumer_ptr,ACE_Null_Mutex> Consumer_Map;
   typedef ACE_Map_Iterator<RtecEventComm::EventSourceID,RtecEventChannelAdmin::ProxyPushConsumer_ptr,ACE_Null_Mutex> Consumer_Map_Iterator;
-  
+
   Consumer_Map consumer_proxy_map_;
   RtecEventChannelAdmin::ProxyPushConsumer_var default_consumer_proxy_;
   // We talk to the EC (as a supplier) using either an per-supplier

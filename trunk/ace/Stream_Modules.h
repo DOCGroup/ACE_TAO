@@ -5,20 +5,20 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Stream_Modules.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 // This needs to go outside of the #if !defined() block.  Don't ask...
 #include "ace/Task.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #ifndef ACE_STREAM_MODULES
@@ -31,7 +31,7 @@ class ACE_Stream_Head : public ACE_Task<ACE_SYNCH_USE>
   //    Standard module that acts as the head of a ustream.
 public:
   ACE_Stream_Head (void);
-  // Construction 
+  // Construction
 
   ~ACE_Stream_Head (void);
   // Destruction
@@ -42,7 +42,7 @@ public:
   virtual int put (ACE_Message_Block *msg, ACE_Time_Value * = 0);
   virtual int svc (void);
 
-  // = Dynamic linking hooks 
+  // = Dynamic linking hooks
   virtual int init (int argc, ASYS_TCHAR *argv[]);
   virtual int info (ASYS_TCHAR **info_string, size_t length) const;
   virtual int fini (void);
@@ -66,7 +66,7 @@ class ACE_Stream_Tail : public ACE_Task<ACE_SYNCH_USE>
   //    Standard module that acts as the head of a ustream.
 public:
   ACE_Stream_Tail (void);
-  // Construction 
+  // Construction
 
   ~ACE_Stream_Tail (void);
   // Destruction
@@ -77,7 +77,7 @@ public:
   virtual int put (ACE_Message_Block *msg, ACE_Time_Value * = 0);
   virtual int svc (void);
 
-  // = Dynamic linking hooks 
+  // = Dynamic linking hooks
   virtual int init (int argc, ASYS_TCHAR *argv[]);
   virtual int info (ASYS_TCHAR **info_string, size_t length) const;
   virtual int fini (void);
@@ -102,7 +102,7 @@ class ACE_Thru_Task : public ACE_Task<ACE_SYNCH_USE>
   //    data to its adjacent neighbor.
 public:
   ACE_Thru_Task (void);
-  // Construction 
+  // Construction
 
   ~ACE_Thru_Task (void);
   // Destruction

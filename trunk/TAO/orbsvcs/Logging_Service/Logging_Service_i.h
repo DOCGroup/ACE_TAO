@@ -20,10 +20,15 @@
 //
 // ============================================================================
 
-#if !defined (_LOG_SERVER_H)
+#ifndef _LOG_SERVER_H
 #define _LOG_SERVER_H
 
 #include "ace/Get_Opt.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Log_Msg.h"
 #include "tao/TAO.h"
 #include "orbsvcs/CosNamingC.h"
@@ -51,17 +56,17 @@ public:
 
   int init (int argc,
             char **argv,
-	    CORBA::Environment& env);
+            CORBA::Environment& env);
   // Initialize the Logger_Server state - parsing arguments and ...
 
   int run (CORBA::Environment& env);
-  // Run the ORB. 
+  // Run the ORB.
 
   Logger_ptr make_logger (const char *name,
-			  CORBA::Environment &_env);
+                          CORBA::Environment &_env);
   // This function creates and returns a logger with the given <name>.
   // Currently, <name> is unused.
-  
+
 private:
   int parse_args (void);
   // Parses the commandline arguments.
@@ -79,7 +84,7 @@ private:
 
   Logger_Factory_i factory_impl_;
   // Implementation object of the Logger_Factory.
-       
+
   Logger_Factory_var factory_;
   // Factory_var to register with NamingService.
 
@@ -91,7 +96,7 @@ private:
 
   char* service_name_;
   // The id to give the Logger_Factory instance (defaults to
-  // "LoggingService") 
+  // "LoggingService")
 };
 
 #endif /* _LOG_SERVER_H */

@@ -13,7 +13,7 @@
 //
 // ============================================================================
 
-#if !defined (TASK_CLIENT_H)
+#ifndef TASK_CLIENT_H
 #define TASK_CLIENT_H
 
 #include <corba/cool.H>
@@ -21,6 +21,11 @@
 #include "cubit.H"
 
 #include "ace/Synch.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Task.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
@@ -35,7 +40,7 @@
 //
 // I will integrate this, together with the sqrt() function when
 // the implementation is complete.  --Sergio.
-// @@ Sergio, can you please use the ACE_timer_t here rather than #define'ing double? 
+// @@ Sergio, can you please use the ACE_timer_t here rather than #define'ing double?
 #if defined (ACE_LACKS_FLOATING_POINT)
 #define double ACE_UINT32
 #define fabs(X) ((X) >= 0 ? (X) : -(X))
@@ -46,14 +51,14 @@
 
 // Arbitrary generator used by the client to create the numbers to be
 // cubed.
-inline int 
-func (unsigned i) 
-{ 
-  return i - 117; 
+inline int
+func (unsigned i)
+{
+  return i - 117;
 }
 
-// The various datatypes which the client and the server can exchange. 
-enum Cubit_Datatypes 
+// The various datatypes which the client and the server can exchange.
+enum Cubit_Datatypes
 {
   CB_OCTET,
   CB_SHORT,
@@ -62,9 +67,9 @@ enum Cubit_Datatypes
 };
 
 const int CB_40HZ_CONSUMER = 0;
-const int CB_20HZ_CONSUMER = 1;    
-const int CB_10HZ_CONSUMER = 2;    
-const int CB_5HZ_CONSUMER = 3;    
+const int CB_20HZ_CONSUMER = 1;
+const int CB_10HZ_CONSUMER = 2;
+const int CB_5HZ_CONSUMER = 3;
 const int CB_1HZ_CONSUMER = 4;
 
 const int CB_40HZ_CONSUMER_RATE = 40;
@@ -82,7 +87,7 @@ class Task_State
 
   // = DESCRIPTION
   //     This class maintains state which is common to the potentially
-  //     multiple concurrent clients. 
+  //     multiple concurrent clients.
 {
 public:
   ACE_Barrier *barrier_;
@@ -149,7 +154,7 @@ public:
 
 class Client : public ACE_Task<ACE_MT_SYNCH>
   // = TITLE
-  //     The Cubit client. 
+  //     The Cubit client.
 {
 public:
   Client (Task_State *ts);
@@ -168,15 +173,15 @@ public:
 
 private:
 
-  int run_tests (Cubit_ptr, 
-                 unsigned int, 
-                 unsigned int, 
-                 Cubit_Datatypes, 
+  int run_tests (Cubit_ptr,
+                 unsigned int,
+                 unsigned int,
+                 Cubit_Datatypes,
                  double frequency);
   // makes the calls to the servant
 
-  void put_latency (double *jitter, 
-                    double latency, 
+  void put_latency (double *jitter,
+                    double latency,
                     unsigned int);
   // Records the latencies in the Task_State
 
@@ -185,7 +190,7 @@ private:
 
   Task_State *ts_;
   // pointer to shared state
-  
+
 };
 
 #endif /* !defined (TASK_CLIENT_H) */

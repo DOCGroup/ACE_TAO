@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -73,12 +73,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 /*
 ** DEPENDENCIES: ast_concrete_type.hh, ast_type.hh, ast_decl.hh,
-**		 ast_expression.hh
+**               ast_expression.hh
 **
 ** USE: Included from ast.hh
 */
 
-class	AST_Sequence : public virtual AST_ConcreteType
+class   AST_Sequence : public virtual AST_ConcreteType
 {
 public:
   // Operations
@@ -97,12 +97,12 @@ public:
   DEF_NARROW_FROM_DECL(AST_Sequence);
 
   // AST Dumping
-  virtual void			dump(ostream &o);
+  virtual void                  dump(ostream &o);
 
 private:
   // Data
-  AST_Expression		*pd_max_size;	// Maximum sequence size
-  AST_Type			*pd_base_type;	// Sequence base type
+  AST_Expression                *pd_max_size;   // Maximum sequence size
+  AST_Type                      *pd_base_type;  // Sequence base type
 };
 
 #endif           // _AST_SEQUENCE_AST_SEQUENCE_HH

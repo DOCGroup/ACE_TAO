@@ -14,13 +14,13 @@
 // =========================================================================
 
 #ifndef TAO_DYNANY_I_H
-#define	TAO_DYNANY_I_H
+#define TAO_DYNANY_I_H
 
 #include "tao/corba.h"
 
 class TAO_Export TAO_DynAny_i : public POA_CORBA::DynAny
 {
-  // = TITLE 
+  // = TITLE
   //    TAO_DynAny_i
   //
   // = DESCRIPTION
@@ -29,7 +29,7 @@ class TAO_Export TAO_DynAny_i : public POA_CORBA::DynAny
 public:
   TAO_DynAny_i (CORBA_TypeCode_ptr tc);
   // constructor with TypeCode argument
-  
+
   TAO_DynAny_i (const CORBA_Any& any);
   // constructor with Any argument
 
@@ -64,7 +64,7 @@ public:
   CORBA::Boolean next (CORBA::Environment &);
   // Returns next component, again here there is only one
 
-  CORBA::Boolean seek (CORBA::Long index, 
+  CORBA::Boolean seek (CORBA::Long index,
                        CORBA::Environment &);
   // In this class, returns true only for index of 0
 

@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (BE_ARGUMENT_H)
+#ifndef BE_ARGUMENT_H
 #define BE_ARGUMENT_H
 
 /*

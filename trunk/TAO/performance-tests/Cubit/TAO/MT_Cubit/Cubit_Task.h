@@ -14,10 +14,15 @@
 //
 // ============================================================================
 
-#if !defined (MT_CUBIT_TASK_H)
+#ifndef MT_CUBIT_TASK_H
 #define MT_CUBIT_TASK_H
 
 #include "ace/Task.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/ARGV.h"
 #include "tao/TAO.h"
 #include "cubit_i.h"
@@ -31,8 +36,8 @@ public:
   Cubit_Task (const char *args,
               const char* orbname,
               u_int num_of_objs,
-	      ACE_Thread_Manager *thr_mgr,
-	      u_int task_id);
+              ACE_Thread_Manager *thr_mgr,
+              u_int task_id);
   // Constructor.
 
   virtual int svc (void);

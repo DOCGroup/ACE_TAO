@@ -1,10 +1,15 @@
 /* -*- c++ -*- */
 // $Id$
 
-#if !defined (JAWS_CONCURRENCY_H)
+#ifndef JAWS_CONCURRENCY_H
 #define JAWS_CONCURRENCY_H
 
 #include "ace/Singleton.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Synch.h"
 #include "ace/Task.h"
 

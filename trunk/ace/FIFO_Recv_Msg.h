@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    FIFO_Recv_Msg.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_FIFO_RECV_MSG_H
@@ -20,7 +20,7 @@
 #include "ace/FIFO_Recv.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_FIFO_Recv_Msg : public ACE_FIFO_Recv
@@ -32,17 +32,17 @@ public:
   ACE_FIFO_Recv_Msg (void);
   // Default constructor.
 
-  ACE_FIFO_Recv_Msg (const char *rendezvous, 
-		     int flags = O_CREAT | O_RDONLY, 
-		     int perms = ACE_DEFAULT_FILE_PERMS, 
-		     int persistent = 1,
+  ACE_FIFO_Recv_Msg (const char *rendezvous,
+                     int flags = O_CREAT | O_RDONLY,
+                     int perms = ACE_DEFAULT_FILE_PERMS,
+                     int persistent = 1,
                      LPSECURITY_ATTRIBUTES sa = 0);
   // Open up a record-oriented named pipe for reading.
 
-  int open (const char *rendezvous, 
-	    int flags = O_CREAT | O_RDONLY, 
-	    int perms = ACE_DEFAULT_FILE_PERMS, 
-	    int persistent = 1,
+  int open (const char *rendezvous,
+            int flags = O_CREAT | O_RDONLY,
+            int perms = ACE_DEFAULT_FILE_PERMS,
+            int persistent = 1,
             LPSECURITY_ATTRIBUTES sa = 0);
   // Open up a record-oriented named pipe for reading.
 
@@ -53,15 +53,15 @@ public:
   // Recv <msg> as a buffer.
 
 #if defined (ACE_HAS_STREAM_PIPES)
-  ssize_t recv (ACE_Str_Buf *data, 
-		ACE_Str_Buf *cntl, 
-		int *flags);
+  ssize_t recv (ACE_Str_Buf *data,
+                ACE_Str_Buf *cntl,
+                int *flags);
   // Recv <data> and <cntl> message via Stream pipes.
 
-  ssize_t recv (int *band, 
-		ACE_Str_Buf *data, 
-		ACE_Str_Buf *cntl, 
-		int *flags);
+  ssize_t recv (int *band,
+                ACE_Str_Buf *data,
+                ACE_Str_Buf *cntl,
+                int *flags);
   // Recv <data> and <cntl> message via Stream pipes in "band" mode.
 #endif /* ACE_HAS_STREAM_PIPES */
 

@@ -18,11 +18,12 @@
 #define ACE_HASH_MAP_MANAGER_H
 
 #include "ace/OS.h"
-#include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Synch.h"
 
 class ACE_Allocator;
 
@@ -34,8 +35,8 @@ class ACE_Hash_Map_Entry
 public:
   // = Initialization and termination methods.
   ACE_Hash_Map_Entry (const EXT_ID &ext_id,
-		      const INT_ID &int_id,
-		      ACE_Hash_Map_Entry<EXT_ID, INT_ID> *next = 0,
+                      const INT_ID &int_id,
+                      ACE_Hash_Map_Entry<EXT_ID, INT_ID> *next = 0,
                       ACE_Hash_Map_Entry<EXT_ID, INT_ID> *prev = 0);
   // Constructor.
 
@@ -119,11 +120,11 @@ public:
   // Initialize a <Hash_Map_Manager> with default size.
 
   ACE_Hash_Map_Manager (size_t size,
-			ACE_Allocator *alloc = 0);
+                        ACE_Allocator *alloc = 0);
   // Initialize a <Hash_Map_Manager> with size <length>.
 
   int open (size_t size = ACE_DEFAULT_MAP_SIZE,
-	    ACE_Allocator *alloc = 0);
+            ACE_Allocator *alloc = 0);
   // Initialize a <Hash_Map_Manager> with <size> elements.
 
   int close (void);
@@ -134,7 +135,7 @@ public:
   // Initialize a <Hash_Map_Manager> with size <length>.
 
   int bind (const EXT_ID &item,
-	    const INT_ID &int_id);
+            const INT_ID &int_id);
   // Associate <ext_id> with <int_id>.  If <ext_id> is already in the
   // map then the <ACE_Hash_Map_Entry> is not changed.  Returns 0 if a
   // new entry is bound successfully, returns 1 if an attempt is made
@@ -148,7 +149,7 @@ public:
   // created entry, or the existing one.
 
   int trybind (const EXT_ID &ext_id,
-	       INT_ID &int_id);
+               INT_ID &int_id);
   // Associate <ext_id> with <int_id> if and only if <ext_id> is not
   // in the map.  If <ext_id> is already in the map then the <int_id>
   // parameter is assigned the existing value in the map.  Returns 0
@@ -156,16 +157,16 @@ public:
   // made to bind an existing entry, and returns -1 if failures occur.
 
   int trybind (const EXT_ID &ext_id,
-	       INT_ID &int_id,
+               INT_ID &int_id,
                ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
   // Same as a normal trybind, except the map entry is also passed
   // back to the caller.  The entry in this case will either be the
   // newly created entry, or the existing one.
 
   int rebind (const EXT_ID &ext_id,
-	      const INT_ID &int_id,
-	      EXT_ID &old_ext_id,
-	      INT_ID &old_int_id);
+              const INT_ID &int_id,
+              EXT_ID &old_ext_id,
+              INT_ID &old_int_id);
   // Associate <ext_id> with <int_id>.  If <ext_id> is not in the map
   // then behaves just like <bind>.  Otherwise, store the old values
   // of <ext_id> and <int_id> into the "out" parameters and rebind the
@@ -176,16 +177,16 @@ public:
   // and returns -1 if failures occur.
 
   int rebind (const EXT_ID &ext_id,
-	      const INT_ID &int_id,
-	      EXT_ID &old_ext_id,
-	      INT_ID &old_int_id,
+              const INT_ID &int_id,
+              EXT_ID &old_ext_id,
+              INT_ID &old_int_id,
               ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
   // Same as a normal rebind, except the map entry is also passed back
   // to the caller.  The entry in this case will either be the newly
   // created entry, or the existing one.
 
   int find (const EXT_ID &ext_id,
-	    INT_ID &int_id);
+            INT_ID &int_id);
   // Locate <ext_id> and pass out parameter via <int_id>.  If found,
   // return 0, returns -1 if not found.
 
@@ -193,7 +194,7 @@ public:
   // Returns 0 if the <ext_id> is in the mapping, otherwise -1.
 
   int find (const EXT_ID &ext_id,
-	    ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
+            ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
   // Locate <ext_id> and pass out parameter via <entry>.  If found,
   // return 0, returns -1 if not found.
 
@@ -203,7 +204,7 @@ public:
   // <int_id>s are *not* dynamically allocated...)
 
   int unbind (const EXT_ID &ext_id,
-	      INT_ID &int_id);
+              INT_ID &int_id);
   // Break any association of <ext_id>.  Returns the value of <int_id>
   // in case the caller needs to deallocate memory.
 
@@ -270,7 +271,7 @@ protected:
 
   int rebind_i (const EXT_ID &ext_id,
                 const INT_ID &int_id,
-		EXT_ID &old_ext_id,
+                EXT_ID &old_ext_id,
                 INT_ID &old_int_id);
   // Performs rebind.  Must be called with locks held.
 
@@ -347,11 +348,11 @@ class ACE_Hash_Map_Iterator_Base
   //
   // = DESCRIPTION
   //     This class factors out common code from its templatized
-  //     subclasses.  
+  //     subclasses.
 public:
   // = Initialization method.
   ACE_Hash_Map_Iterator_Base (ACE_Hash_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm,
-			      int head);
+                              int head);
   // Contructor.  If head != 0, the iterator constructed is positioned
   // at the head of the map, it is positioned at the end otherwise.
 
@@ -417,7 +418,7 @@ class ACE_Hash_Map_Iterator : public ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, 
 public:
   // = Initialization method.
   ACE_Hash_Map_Iterator (ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm,
-			 int tail = 0);
+                         int tail = 0);
 
   // = Iteration methods.
 
@@ -462,7 +463,7 @@ class ACE_Hash_Map_Reverse_Iterator : public ACE_Hash_Map_Iterator_Base<EXT_ID, 
 public:
   // = Initialization method.
   ACE_Hash_Map_Reverse_Iterator (ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm,
-				 int head = 0);
+                                 int head = 0);
 
   // = Iteration methods.
 

@@ -1,6 +1,6 @@
 // $Id$
 
-#if !defined (TAO_AV_ENDPOINT_STRATEGY_T_H)
+#ifndef TAO_AV_ENDPOINT_STRATEGY_T_H
 #define TAO_AV_ENDPOINT_STRATEGY_T_H
 
 #include "Endpoint_Strategy.h"
@@ -20,10 +20,10 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy
 
   virtual int activate (void);
   // creates and activates the streamendpoint, vdev, and mediacontrol
-  
+
   virtual int activate_stream_endpoint (CORBA::Environment &env) = 0;
   // activates the stream_endpoint with the POA
-  
+
   virtual int activate_vdev (CORBA::Environment &env);
   // activates the vdev with the POA
 
@@ -70,7 +70,7 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy_A
                         CORBA::Environment &env);
   // Called by the MMDevice, when it needs to create an A type endpoint
 
-  
+
 };
 
 // ----------------------------------------------------------------------
@@ -114,22 +114,22 @@ public:
   int init (int argc, char **argv);
   // Initializes the ORB, creates and activates the
   // T_StreamEndpoint, T_VDev, T_MediaCtrl in the POA
-  
+
   int run (ACE_Time_Value *tv = 0);
   // runs the ORB event loop
 
  protected:
-  int activate_objects (int argc, 
+  int activate_objects (int argc,
                         char **argv,
                         CORBA::Environment &env);
   // Creates the objects and inserts them into the Naming
   // Service, so the parent can pick the IOR's and
   // return them to the client
-  
+
 
   int bind_to_naming_service (CORBA::Environment &env);
   // Binds to the naming service
-  
+
   int register_vdev (CORBA::Environment &env);
   // Registers vdev with the naming service
 
@@ -171,9 +171,9 @@ public:
 
   T_MediaCtrl *media_ctrl_;
   // Media controller
-  
+
   pid_t pid_;
-  // pid of this process 
+  // pid of this process
 
   char host_[MAXHOSTNAMELEN];
   // Name of the host.

@@ -5,15 +5,15 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Future.h
 //
 // = AUTHOR
 //    Andres Kruse <Andres.Kruse@cern.ch>, Douglas C. Schmidt
 //    <schmidt@cs.wustl.edu>, and Per Andersson
-//    <Per.Andersson@hfera.ericsson.se>. 
-// 
+//    <Per.Andersson@hfera.ericsson.se>.
+//
 // ============================================================================
 
 #ifndef ACE_FUTURE_H
@@ -22,7 +22,7 @@
 #include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_THREADS)
@@ -37,42 +37,42 @@ class ACE_Future_Rep
   //     ACE_Future_Rep<T>
   //
   // = DESCRIPTION
-  //     An ACE_Future_Rep<T> object encapsules a pointer to an 
+  //     An ACE_Future_Rep<T> object encapsules a pointer to an
   //     object of class T which is the result of an asynchronous
   //     method invocation. It is pointed to by ACE_Future<T> object[s]
   //     and only accessible through them.
 private:
   friend class ACE_Future<T>;
-  
+
   // Create, attach, detach and assign encapsulates the reference
   // count handling and the object lifetime of ACE_Future_Rep<T>
   // instances.
-  
+
   static ACE_Future_Rep<T> *create (void);
   // Create a ACE_Future_Rep<T> and initialize the reference count
-  
+
   static ACE_Future_Rep<T> *attach (ACE_Future_Rep<T> *&rep);
   // Precondition(rep != 0)
   // Increase the reference count and return argument. Uses
   // the attribute "value_ready_mutex_" to synchronize reference
   // count updating
-  
+
   static void detach (ACE_Future_Rep<T> *&rep);
   // Precondition(rep != 0)
   // Decreases the reference count and and deletes rep if
   // there are no more references to rep.
-  
+
   static void assign (ACE_Future_Rep<T> *&rep,
-		      ACE_Future_Rep<T> *new_rep);
+                      ACE_Future_Rep<T> *new_rep);
   // Precondition(rep != 0 && new_rep != 0)
   // Decreases the rep's reference count and and deletes rep if there
   // are no more references to rep. Then assigns new_rep to rep
-  
+
   int set (const T &r);
   // Set the result value.
 
   int get (T &value,
-	   ACE_Time_Value *tv);
+           ACE_Time_Value *tv);
   // Wait up to <tv> time to get the <value>.
 
   operator T ();
@@ -109,7 +109,7 @@ private:
 };
 
 template <class T>
-class ACE_Future 
+class ACE_Future
 {
   // = TITLE
   //     This class implements a ``single write, multiple read''
@@ -138,7 +138,7 @@ public:
   int cancel (const T &r);
   // Cancel an <ACE_Future> and assign the value <r>.  It is used if a
   // client does not want to wait for <T> to be produced.
-  
+
   int cancel (void);
   // Cancel an <ACE_Future>.  Put the future into its initial
   // state. Returns 0 on succes and -1 on failure. It is now possible
@@ -159,7 +159,7 @@ public:
   // the result to all waiting clients.
 
   int get (T &value,
-	   ACE_Time_Value *tv = 0);
+           ACE_Time_Value *tv = 0);
   // Wait up to <tv> time to get the <value>.
 
   operator T ();

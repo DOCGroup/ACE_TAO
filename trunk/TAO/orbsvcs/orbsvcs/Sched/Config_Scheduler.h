@@ -5,6 +5,10 @@
 
 #include "ace/OS.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "orbsvcs/RtecSchedulerS.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
@@ -44,9 +48,9 @@ public:
 
   virtual void set (RtecScheduler::handle_t handle,
                     RtecScheduler::Criticality criticality,
-		    RtecScheduler::Time time,
-		    RtecScheduler::Time typical_time,
-		    RtecScheduler::Time cached_time,
+                    RtecScheduler::Time time,
+                    RtecScheduler::Time typical_time,
+                    RtecScheduler::Time cached_time,
                     RtecScheduler::Period period,
                     RtecScheduler::Importance importance,
                     RtecScheduler::Quantum quantum,
@@ -84,7 +88,7 @@ public:
   virtual void compute_scheduling (CORBA::Long minimum_priority,
                                    CORBA::Long maximum_priority,
                                    RtecScheduler::RT_Info_Set_out infos,
-				   RtecScheduler::Config_Info_Set_out configs,
+                                   RtecScheduler::Config_Info_Set_out configs,
                                    CORBA::Environment &_env)
     TAO_THROW_SPEC((CORBA::SystemException,
                     RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
@@ -93,8 +97,8 @@ public:
 
   virtual void dispatch_configuration (RtecScheduler::Preemption_Priority p_priority,
                                        RtecScheduler::OS_Priority& priority,
-				       RtecScheduler::Dispatching_Type & d_type,
-				       CORBA::Environment &_env)
+                                       RtecScheduler::Dispatching_Type & d_type,
+                                       CORBA::Environment &_env)
     TAO_THROW_SPEC ((CORBA::SystemException,
                     RtecScheduler::NOT_SCHEDULED,
                     RtecScheduler::UNKNOWN_PRIORITY_LEVEL));
@@ -115,7 +119,7 @@ private:
   // trait for the scheduler implementation base class
   typedef ACE_DynScheduler BaseSchedImplType;
 
-  // traits for the scheduler strategy 
+  // traits for the scheduler strategy
 #if defined (TAO_USES_MUF_SCHEDULING)
 
   typedef ACE_MUF_Scheduler_Strategy Scheduler_Strategy;

@@ -80,11 +80,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from ast.hh
 */
 
-#include	"idl_fwd.h"
-#include	"idl_narrow.h"
-#include	"idl_bool.h"
-#include	"utl_scoped_name.h"
-#include	"utl_string.h"
+#include        "idl_fwd.h"
+#include        "idl_narrow.h"
+#include        "idl_bool.h"
+#include        "utl_scoped_name.h"
+#include        "utl_string.h"
 
 // This class is needed (only for g++) to get around a bug in g++ which
 // causes virtual operations to not be looked up correctly if an operation
@@ -92,38 +92,38 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // the hierarchy rooted in a single class, thereby eliminating the situation
 // that causes the bug to appear
 
-class	COMMON_Base
+class   COMMON_Base
 {
   public:
         // Narrowing
     DEF_NARROW_METHODS0(COMMON_Base);
 };
 
-class	AST_Decl : public virtual COMMON_Base
+class   AST_Decl : public virtual COMMON_Base
 {
 public:
   // Enum defining the different kinds of AST nodes
   enum NodeType {
-        NT_module				// Denotes a module
-      , NT_root					// Denotes the root of AST
-      , NT_interface				// Denotes an interface
-      , NT_interface_fwd			// Fwd declared interface
-      , NT_const				// Denotes a constant
-      , NT_except				// Denotes an exception
-      , NT_attr					// Denotes an attribute
-      , NT_op					// Denotes an operation
-      , NT_argument				// Denotes an op. argument
-      , NT_union				// Denotes a union
-      , NT_union_branch				// Denotes a union branch
-      , NT_struct				// Denotes a structure
-      , NT_field				// Denotes a field in structure
-      , NT_enum					// Denotes an enumeration
-      , NT_enum_val				// Denotes an enum. value
-      , NT_string				// Denotes an IDL string
-      , NT_array				// Denotes an IDL array
-      , NT_sequence				// Denotes an IDL sequence
-      , NT_typedef				// Denotes a typedef
-      , NT_pre_defined				// Denotes a predefined type
+        NT_module                               // Denotes a module
+      , NT_root                                 // Denotes the root of AST
+      , NT_interface                            // Denotes an interface
+      , NT_interface_fwd                        // Fwd declared interface
+      , NT_const                                // Denotes a constant
+      , NT_except                               // Denotes an exception
+      , NT_attr                                 // Denotes an attribute
+      , NT_op                                   // Denotes an operation
+      , NT_argument                             // Denotes an op. argument
+      , NT_union                                // Denotes a union
+      , NT_union_branch                         // Denotes a union branch
+      , NT_struct                               // Denotes a structure
+      , NT_field                                // Denotes a field in structure
+      , NT_enum                                 // Denotes an enumeration
+      , NT_enum_val                             // Denotes an enum. value
+      , NT_string                               // Denotes an IDL string
+      , NT_array                                // Denotes an IDL array
+      , NT_sequence                             // Denotes an IDL sequence
+      , NT_typedef                              // Denotes a typedef
+      , NT_pre_defined                          // Denotes a predefined type
         , NT_native                             // Denotes a native type
                                                 // dependent on the programming
                                                 // language
@@ -161,30 +161,30 @@ public:
   DEF_NARROW_FROM_DECL(AST_Decl);
 
   // AST Dumping
-  virtual void			dump(ostream &o);
+  virtual void                  dump(ostream &o);
 
   // Other operations
 
   // Return TRUE if "this" has "s" as an ancestor
-  idl_bool			has_ancestor(AST_Decl *s);
+  idl_bool                      has_ancestor(AST_Decl *s);
 
 private:
   // Data
-  idl_bool			pd_imported;    // Imported?
-  idl_bool			pd_in_main_file; // Defined in main file?
-  UTL_Scope			*pd_defined_in;	// Scope
-  NodeType			pd_node_type;	// What kind of node
-  long				pd_line;	// Line defined in
-  String			*pd_file_name;	// What file defined in
-  UTL_ScopedName		*pd_name;	// As given
-  Identifier			*pd_local_name;	// Name in scope
-  UTL_StrList			*pd_pragmas;	// Pragmas
-  idl_bool			pd_added;	// already added
+  idl_bool                      pd_imported;    // Imported?
+  idl_bool                      pd_in_main_file; // Defined in main file?
+  UTL_Scope                     *pd_defined_in; // Scope
+  NodeType                      pd_node_type;   // What kind of node
+  long                          pd_line;        // Line defined in
+  String                        *pd_file_name;  // What file defined in
+  UTL_ScopedName                *pd_name;       // As given
+  Identifier                    *pd_local_name; // Name in scope
+  UTL_StrList                   *pd_pragmas;    // Pragmas
+  idl_bool                      pd_added;       // already added
 
   // Operations
 
   // Compute the full name of an AST node
-  void				compute_full_name(UTL_ScopedName *n);
+  void                          compute_full_name(UTL_ScopedName *n);
 };
 
 #endif           // _AST_DECL_AST_DECL_HH

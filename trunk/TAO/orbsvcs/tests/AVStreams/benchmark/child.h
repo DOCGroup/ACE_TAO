@@ -1,9 +1,14 @@
 // $Id$
 
-#if !defined (TAO_AV_BENCH_CHILD_H)
+#ifndef TAO_AV_BENCH_CHILD_H
 #define TAO_AV_BENCH_CHILD_H
 
 #include "ace/Get_Opt.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Acceptor.h"
 #include "ace/Svc_Handler.h"
 #include "ace/SOCK_Acceptor.h"
@@ -39,7 +44,7 @@ private:
   ACE_HANDLE control_handle_;
 };
 
-class Bench_Server_StreamEndPoint 
+class Bench_Server_StreamEndPoint
   :public  TAO_Server_StreamEndPoint
 {
 public:
@@ -54,17 +59,17 @@ public:
   virtual int handle_stop (const AVStreams::flowSpec &the_spec,
                             CORBA::Environment &env) ;
   // Application needs to define this
-  
-  virtual int handle_start (const AVStreams::flowSpec &the_spec,  
+
+  virtual int handle_start (const AVStreams::flowSpec &the_spec,
                              CORBA::Environment &env) ;
   // Application needs to define this
 
-  
-  virtual int handle_destroy (const AVStreams::flowSpec &the_spec,  
+
+  virtual int handle_destroy (const AVStreams::flowSpec &the_spec,
                                CORBA::Environment &env) ;
   // Application needs to define this
 
-  virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec,  
+  virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec,
                                                       CORBA::Environment &env) ;
 private:
   ACE_SOCK_Connector connector_;

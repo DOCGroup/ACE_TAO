@@ -10,10 +10,15 @@
 //
 // ============================================================================
 
-#if !defined (ECT_SUPPLIER_H)
+#ifndef ECT_SUPPLIER_H
 #define ECT_SUPPLIER_H
 
 #include "ace/Task.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/High_Res_Timer.h"
 #include "orbsvcs/Channel_Clients_T.h"
 
@@ -38,11 +43,11 @@ public:
                 int burst_count,
                 int burst_size,
                 int event_size,
-		int burst_pause,
-		int event_a,
-		int event_b,
-		RtecEventChannelAdmin::EventChannel_ptr ec,
-		CORBA::Environment& _env);
+                int burst_pause,
+                int event_a,
+                int event_b,
+                RtecEventChannelAdmin::EventChannel_ptr ec,
+                CORBA::Environment& _env);
   // This method connects the supplier to the EC.
 
   void disconnect (CORBA::Environment &_env);
@@ -54,7 +59,7 @@ public:
   RtecEventComm::EventSourceID supplier_id (void) const;
   // The supplier ID.
 
-  RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy (void); 
+  RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy (void);
   // We talk to the EC (as a supplier) using this proxy, no duplicates
   // are done here...
 
@@ -71,7 +76,7 @@ private:
   RtecEventComm::EventSourceID supplier_id_;
   // We generate an id based on the name....
 
-  RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_; 
+  RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_;
   // We talk to the EC (as a supplier) using this proxy.
 
   ACE_PushSupplier_Adapter<Test_Supplier> supplier_;
@@ -113,7 +118,7 @@ private:
   // parse the command line args
 
   void connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
-			  CORBA::Environment &_env);
+                          CORBA::Environment &_env);
   void disconnect_suppliers (CORBA::Environment &_env);
   // Connect the suppliers.
 
@@ -134,7 +139,7 @@ private:
   // How many bursts we will send from each supplier.
 
   int burst_size_;
-  // The number of events 
+  // The number of events
 
   int event_size_;
   // The size of the payload on each event.

@@ -18,14 +18,15 @@
 #define ACE_REMOTE_NAME_SPACE_H
 
 #include "ace/ACE.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/SString.h"
 #include "ace/Containers.h"
 #include "ace/Name_Proxy.h"
 #include "ace/Name_Space.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 typedef ACE_Unbounded_Set<ACE_WString> ACE_WSTRING_SET;
 

@@ -45,10 +45,15 @@
 //
 // ============================================================================
 
-#if !defined (PEER_H)
+#ifndef PEER_H
 #define PEER_H
 
 #include "ace/Service_Config.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Acceptor.h"
 #include "ace/Connector.h"
 #include "ace/SOCK_Acceptor.h"

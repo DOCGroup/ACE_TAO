@@ -140,27 +140,27 @@ public:
   // For reading from a output CDR stream.
 
   TAO_OutputCDR (size_t size = 0,
-		 int byte_order = TAO_ENCAP_BYTE_ORDER,
-		 TAO_Marshal_Factory *f =
-		     TAO_Marshal::DEFAULT_MARSHAL_FACTORY,
-		 ACE_Allocator* buffer_allocator = 0,
-		 ACE_Allocator* data_block_allocator = 0);
+                 int byte_order = TAO_ENCAP_BYTE_ORDER,
+                 TAO_Marshal_Factory *f =
+                     TAO_Marshal::DEFAULT_MARSHAL_FACTORY,
+                 ACE_Allocator* buffer_allocator = 0,
+                 ACE_Allocator* data_block_allocator = 0);
   // Default constructor, allocates <size> bytes in the internal
   // buffer, if <size> == 0 it allocates the default size.
 
   TAO_OutputCDR (char *data, size_t size,
-		 int byte_order = TAO_ENCAP_BYTE_ORDER,
-		 TAO_Marshal_Factory *f =
-		     TAO_Marshal::DEFAULT_MARSHAL_FACTORY,
-		 ACE_Allocator* buffer_allocator = 0,
-		 ACE_Allocator* data_block_allocator = 0);
+                 int byte_order = TAO_ENCAP_BYTE_ORDER,
+                 TAO_Marshal_Factory *f =
+                     TAO_Marshal::DEFAULT_MARSHAL_FACTORY,
+                 ACE_Allocator* buffer_allocator = 0,
+                 ACE_Allocator* data_block_allocator = 0);
   // Build a CDR stream with an initial buffer, it will *not* remove
   // <data>, since it did not allocated it.
 
   TAO_OutputCDR (ACE_Message_Block *data,
-		 int byte_order = TAO_ENCAP_BYTE_ORDER,
-		 TAO_Marshal_Factory *f =
-		     TAO_Marshal::DEFAULT_MARSHAL_FACTORY);
+                 int byte_order = TAO_ENCAP_BYTE_ORDER,
+                 TAO_Marshal_Factory *f =
+                     TAO_Marshal::DEFAULT_MARSHAL_FACTORY);
   // Build a CDR stream with an initial Message_Block chain, it will *not*
   // remove <data>, since it did not allocate it.
 
@@ -192,31 +192,31 @@ public:
   // Note: the portion written starts at <x> and ends at <x + length>.
   // The length is *NOT* stored into the CDR stream.
   CORBA_Boolean write_boolean_array (const CORBA::Boolean* x,
-				     CORBA::ULong length);
+                                     CORBA::ULong length);
   CORBA_Boolean write_char_array (const CORBA::Char* x,
-				  CORBA::ULong length);
+                                  CORBA::ULong length);
   CORBA_Boolean write_wchar_array (const CORBA::WChar* x,
-				   CORBA::ULong length);
+                                   CORBA::ULong length);
   CORBA_Boolean write_octet_array (const CORBA::Octet* x,
-				   CORBA::ULong length);
+                                   CORBA::ULong length);
   CORBA_Boolean write_short_array (const CORBA::Short* x,
-				   CORBA::ULong length);
+                                   CORBA::ULong length);
   CORBA_Boolean write_ushort_array (const CORBA::UShort* x,
-				    CORBA::ULong length);
+                                    CORBA::ULong length);
   CORBA_Boolean write_long_array (const CORBA::Long* x,
-				  CORBA::ULong length);
+                                  CORBA::ULong length);
   CORBA_Boolean write_ulong_array (const CORBA::ULong* x,
-				   CORBA::ULong length);
+                                   CORBA::ULong length);
   CORBA_Boolean write_longlong_array (const CORBA::LongLong* x,
-				      CORBA::ULong length);
+                                      CORBA::ULong length);
   CORBA_Boolean write_ulonglong_array (const CORBA::ULongLong* x,
-				       CORBA::ULong length);
+                                       CORBA::ULong length);
   CORBA_Boolean write_float_array (const CORBA::Float* x,
-				   CORBA::ULong length);
+                                   CORBA::ULong length);
   CORBA_Boolean write_double_array (const CORBA::Double* x,
-				    CORBA::ULong length);
+                                    CORBA::ULong length);
   CORBA_Boolean write_longdouble_array (const CORBA::LongDouble* x,
-					CORBA::ULong length);
+                                        CORBA::ULong length);
 
   CORBA_Boolean write_octet_array_mb (const ACE_Message_Block* mb);
   // Write an octet array contained inside a MB, this can be optimized
@@ -317,7 +317,7 @@ private:
   // operations using asignment.
 
   CORBA_Boolean write_array (const void* x, size_t size, size_t align,
-			     CORBA::ULong length);
+                             CORBA::ULong length);
   // write an array of <length> elements, each of <size> bytes and
   // the start aligned at a multiple of <align>. The elements are
   // assumed to be packed with the right alignment restrictions.
@@ -384,31 +384,31 @@ public:
   // This class is able to "read" an InputCDR from a socket.
 
   TAO_InputCDR (const char* buf, size_t bufsiz,
-		int byte_order = TAO_ENCAP_BYTE_ORDER,
-		TAO_Marshal_Factory *f =
-		     TAO_Marshal::DEFAULT_MARSHAL_FACTORY);
+                int byte_order = TAO_ENCAP_BYTE_ORDER,
+                TAO_Marshal_Factory *f =
+                     TAO_Marshal::DEFAULT_MARSHAL_FACTORY);
   // Create an input stream from an arbitrary buffer, care must be
   // exercised wrt alignment, because this contructor will *not* work
   // if the buffer is unproperly aligned.
 
   TAO_InputCDR (size_t bufsiz,
-		int byte_order = TAO_ENCAP_BYTE_ORDER,
-		TAO_Marshal_Factory *f =
-		     TAO_Marshal::DEFAULT_MARSHAL_FACTORY);
+                int byte_order = TAO_ENCAP_BYTE_ORDER,
+                TAO_Marshal_Factory *f =
+                     TAO_Marshal::DEFAULT_MARSHAL_FACTORY);
   // Create an empty input stream. The caller is responsible for
   // putting the right data and providing the right alignment.
 
   TAO_InputCDR (ACE_Message_Block *data,
-		int byte_order =
+                int byte_order =
                     TAO_ENCAP_BYTE_ORDER,
-		TAO_Marshal_Factory *f =
+                TAO_Marshal_Factory *f =
                     TAO_Marshal::DEFAULT_MARSHAL_FACTORY);
   // Create an input stream from an ACE_Message_Block
 
   TAO_InputCDR (ACE_Data_Block *data,
-		int byte_order =
+                int byte_order =
                     TAO_ENCAP_BYTE_ORDER,
-		TAO_Marshal_Factory *f =
+                TAO_Marshal_Factory *f =
                     TAO_Marshal::DEFAULT_MARSHAL_FACTORY);
   // Create an input stream from an ACE_Data_Block
 
@@ -419,8 +419,8 @@ public:
   // efficiently.
 
   TAO_InputCDR (const TAO_InputCDR& rhs,
-		size_t size,
-		CORBA::Long offset);
+                size_t size,
+                CORBA::Long offset);
   // When interpreting indirected TypeCodes it is useful to make a
   // "copy" of the stream starting in the new position.
 
@@ -460,31 +460,31 @@ public:
   // elements.
   // They return 0 on failure and 1 on success.
   CORBA_Boolean read_boolean_array (CORBA::Boolean* x,
-				    CORBA::ULong length);
+                                    CORBA::ULong length);
   CORBA_Boolean read_char_array (CORBA::Char* x,
-				 CORBA::ULong length);
+                                 CORBA::ULong length);
   CORBA_Boolean read_wchar_array (CORBA::WChar* x,
-				  CORBA::ULong length);
+                                  CORBA::ULong length);
   CORBA_Boolean read_octet_array (CORBA::Octet* x,
-				  CORBA::ULong length);
+                                  CORBA::ULong length);
   CORBA_Boolean read_short_array (CORBA::Short* x,
-				  CORBA::ULong length);
+                                  CORBA::ULong length);
   CORBA_Boolean read_ushort_array (CORBA::UShort* x,
-				   CORBA::ULong length);
+                                   CORBA::ULong length);
   CORBA_Boolean read_long_array (CORBA::Long* x,
-				 CORBA::ULong length);
+                                 CORBA::ULong length);
   CORBA_Boolean read_ulong_array (CORBA::ULong* x,
-				  CORBA::ULong length);
+                                  CORBA::ULong length);
   CORBA_Boolean read_longlong_array (CORBA::LongLong* x,
-				     CORBA::ULong length);
+                                     CORBA::ULong length);
   CORBA_Boolean read_ulonglong_array (CORBA::ULongLong* x,
-				      CORBA::ULong length);
+                                      CORBA::ULong length);
   CORBA_Boolean read_float_array (CORBA::Float* x,
-				  CORBA::ULong length);
+                                  CORBA::ULong length);
   CORBA_Boolean read_double_array (CORBA::Double* x,
-				   CORBA::ULong length);
+                                   CORBA::ULong length);
   CORBA_Boolean read_longdouble_array (CORBA::LongDouble* x,
-				       CORBA::ULong length);
+                                       CORBA::ULong length);
 
   // = TAO specific methods.
 
@@ -567,7 +567,7 @@ private:
   // operations using asignment.
 
   CORBA_Boolean read_array (void* x, size_t size, size_t align,
-			    CORBA::ULong length);
+                            CORBA::ULong length);
   // read an array of <length> elements, each of <size> bytes and
   // the start aligned at a multiple of <align>. The elements are
   // assumed to be packed with the right alignment restrictions.
@@ -600,27 +600,27 @@ private:
 #else
 // CDR output operators for primitive types
 extern TAO_Export CORBA_Boolean operator<< (TAO_OutputCDR& cdr,
-					    CORBA::Short x);
+                                            CORBA::Short x);
 extern TAO_Export CORBA_Boolean operator<< (TAO_OutputCDR& cdr,
-					    CORBA::UShort x);
+                                            CORBA::UShort x);
 extern TAO_Export CORBA_Boolean operator<< (TAO_OutputCDR& cdr,
-					    CORBA::Long x);
+                                            CORBA::Long x);
 extern TAO_Export CORBA_Boolean operator<< (TAO_OutputCDR& cdr,
-					    CORBA::ULong x);
+                                            CORBA::ULong x);
 extern TAO_Export CORBA_Boolean operator<< (TAO_OutputCDR& cdr,
-					    CORBA::LongLong x);
+                                            CORBA::LongLong x);
 extern TAO_Export CORBA_Boolean operator<< (TAO_OutputCDR& cdr,
-					    CORBA::ULongLong x);
+                                            CORBA::ULongLong x);
 extern TAO_Export CORBA_Boolean operator<< (TAO_OutputCDR& cdr,
-					    CORBA::Float x);
+                                            CORBA::Float x);
 extern TAO_Export CORBA_Boolean operator<< (TAO_OutputCDR& cdr,
-					    CORBA::Double x);
+                                            CORBA::Double x);
 extern TAO_Export CORBA_Boolean operator<< (TAO_OutputCDR& cdr,
-					    const CORBA::Any &x);
+                                            const CORBA::Any &x);
 extern TAO_Export CORBA_Boolean operator<< (TAO_OutputCDR& cdr,
-					    const CORBA::Object *x);
+                                            const CORBA::Object *x);
 extern TAO_Export CORBA_Boolean operator<< (TAO_OutputCDR& cdr,
-					    const CORBA::TypeCode *x);
+                                            const CORBA::TypeCode *x);
 
 // CDR output operator from helper classes
 extern TAO_Export CORBA_Boolean operator << (TAO_OutputCDR& cdr,
@@ -634,31 +634,31 @@ extern TAO_Export CORBA_Boolean operator << (TAO_OutputCDR& cdr,
 extern TAO_Export CORBA_Boolean operator << (TAO_OutputCDR& cdr,
                                              CORBA::Any::from_string x);
 extern TAO_Export CORBA_Boolean operator << (TAO_OutputCDR& cdr,
-					     const char* x);
+                                             const char* x);
 
 // CDR input operators for primitive types
 extern TAO_Export CORBA_Boolean operator>> (TAO_InputCDR& cdr,
-					    CORBA::Short &x);
+                                            CORBA::Short &x);
 extern TAO_Export CORBA_Boolean operator>> (TAO_InputCDR& cdr,
-					    CORBA::UShort &x);
+                                            CORBA::UShort &x);
 extern TAO_Export CORBA_Boolean operator>> (TAO_InputCDR& cdr,
-					    CORBA::Long &x);
+                                            CORBA::Long &x);
 extern TAO_Export CORBA_Boolean operator>> (TAO_InputCDR& cdr,
-					    CORBA::ULong &x);
+                                            CORBA::ULong &x);
 extern TAO_Export CORBA_Boolean operator>> (TAO_InputCDR& cdr,
-					    CORBA::LongLong &x);
+                                            CORBA::LongLong &x);
 extern TAO_Export CORBA_Boolean operator>> (TAO_InputCDR& cdr,
-					    CORBA::ULongLong &x);
+                                            CORBA::ULongLong &x);
 extern TAO_Export CORBA_Boolean operator>> (TAO_InputCDR& cdr,
-					    CORBA::Float &x);
+                                            CORBA::Float &x);
 extern TAO_Export CORBA_Boolean operator>> (TAO_InputCDR& cdr,
-					    CORBA::Double &x);
+                                            CORBA::Double &x);
 extern TAO_Export CORBA_Boolean operator>> (TAO_InputCDR& cdr,
-					    CORBA::Any &x);
+                                            CORBA::Any &x);
 extern TAO_Export CORBA_Boolean operator>> (TAO_InputCDR& cdr,
-					    CORBA::Object *&x);
+                                            CORBA::Object *&x);
 extern TAO_Export CORBA_Boolean operator>> (TAO_InputCDR& cdr,
-					    CORBA::TypeCode *&x);
+                                            CORBA::TypeCode *&x);
 
 // CDR output operator from helper classes
 extern TAO_Export CORBA_Boolean operator >> (TAO_InputCDR& cdr,
@@ -672,7 +672,7 @@ extern TAO_Export CORBA_Boolean operator >> (TAO_InputCDR& cdr,
 extern TAO_Export CORBA_Boolean operator >> (TAO_InputCDR& cdr,
                                              CORBA::Any::to_string x);
 extern TAO_Export CORBA_Boolean operator >> (TAO_InputCDR& cdr,
-					     char*& x);
+                                             char*& x);
 
 #endif /* __ACE_INLINE */
 

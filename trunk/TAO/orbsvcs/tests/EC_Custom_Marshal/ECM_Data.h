@@ -9,10 +9,15 @@
 //
 // ============================================================================
 
-#if !defined (ECM_DATA_H)
+#ifndef ECM_DATA_H
 #define ECM_DATA_H
 
 #include "ace/Map_Manager.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "dataC.h"
 
 struct ECM_Data

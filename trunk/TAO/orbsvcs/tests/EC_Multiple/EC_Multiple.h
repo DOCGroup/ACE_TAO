@@ -12,10 +12,15 @@
 //
 // ============================================================================
 
-#if !defined (EC_MULTIPLE_H)
+#ifndef EC_MULTIPLE_H
 #define EC_MULTIPLE_H
 
 #include "ace/SString.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/High_Res_Timer.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventCommS.h"
@@ -40,23 +45,23 @@ public:
   Test_Supplier (Test_ECG* test, void* cookie);
 
   void open (const char* name,
-	     int event_a, int event_b,
-	     int message_count,
-	     const RtecScheduler::Period& rate,
-	     RtecEventChannelAdmin::EventChannel_ptr ec,
-	     CORBA::Environment& _env);
+             int event_a, int event_b,
+             int message_count,
+             const RtecScheduler::Period& rate,
+             RtecEventChannelAdmin::EventChannel_ptr ec,
+             CORBA::Environment& _env);
   // This method connects the supplier to the EC.
 
   void close (CORBA::Environment &_env);
   // Disconnect from the EC.
 
   void activate (const char* name,
-		 const RtecScheduler::Period& rate,
-		 RtecEventChannelAdmin::EventChannel_ptr ec,
-		 CORBA::Environment& _env);
+                 const RtecScheduler::Period& rate,
+                 RtecEventChannelAdmin::EventChannel_ptr ec,
+                 CORBA::Environment& _env);
 
   void push (const RtecEventComm::EventSet& events,
-	     CORBA::Environment &_env);
+             CORBA::Environment &_env);
   void disconnect_push_consumer (CORBA::Environment &);
   // Implement the callbacks for our consumer personality.
 
@@ -83,14 +88,14 @@ private:
   int message_count_;
   // The number of events sent by this supplier.
 
-  RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_; 
+  RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_;
   // We talk to the EC (as a supplier) using this proxy.
 
   ACE_PushConsumer_Adapter<Test_Supplier> consumer_;
   // We also connect to the EC as a consumer so we can receive the
   // timeout events.
 
-  RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_; 
+  RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
   // We talk to the EC (as a supplier) using this proxy.
 
 };
@@ -111,16 +116,16 @@ public:
   Test_Consumer (Test_ECG* test, void *cookie);
 
   void open (const char* name,
-	     int event_a, int event_b,
-	     RtecEventChannelAdmin::EventChannel_ptr ec,
-	     CORBA::Environment& _env);
+             int event_a, int event_b,
+             RtecEventChannelAdmin::EventChannel_ptr ec,
+             CORBA::Environment& _env);
   // This method connects the consumer to the EC.
 
   void close (CORBA::Environment &_env);
   // Disconnect from the EC.
 
   virtual void push (const RtecEventComm::EventSet& events,
-		     CORBA::Environment &_env);
+                     CORBA::Environment &_env);
   virtual void disconnect_push_consumer (CORBA::Environment &);
   // The skeleton methods.
 
@@ -174,51 +179,51 @@ public:
   // Execute the test.
 
   void push_supplier (void* supplier_cookie,
-		      RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
-		      const RtecEventComm::EventSet &events,
-		      CORBA::Environment &);
+                      RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
+                      const RtecEventComm::EventSet &events,
+                      CORBA::Environment &);
   // Callback method for suppliers, we push for them to their
   // consumers and take statistics on the way.
   // It is possible that we ignore the <consumer> parameter when
   // testing the short-circuit case.
 
   void push_consumer (void* consumer_cookie,
-		      ACE_hrtime_t arrival,
-		      const RtecEventComm::EventSet& events,
-		      CORBA::Environment&);
+                      ACE_hrtime_t arrival,
+                      const RtecEventComm::EventSet& events,
+                      CORBA::Environment&);
   // Callback method for consumers, if any of our consumers has
   // received events it will invoke this method.
 
   void shutdown_supplier (void* supplier_cookie,
-			  RtecEventComm::PushConsumer_ptr consumer,
-			  CORBA::Environment& _env);
+                          RtecEventComm::PushConsumer_ptr consumer,
+                          CORBA::Environment& _env);
   // One of the suppliers has completed its work.
-			  
+
 private:
   RtecEventChannelAdmin::EventChannel_ptr
     get_ec (CosNaming::NamingContext_ptr naming_context,
-	    const char* ec_name,
-	    CORBA::Environment &_env);
+            const char* ec_name,
+            CORBA::Environment &_env);
   // Helper routine to obtain an EC given its name.
 
   void connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
-			  CORBA::Environment &_env);
+                          CORBA::Environment &_env);
   void disconnect_suppliers (CORBA::Environment &_env);
   // Connect the suppliers.
 
   void activate_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
-			   CORBA::Environment &_env);
+                           CORBA::Environment &_env);
   // Activate the suppliers, i.e. they start generating events.
 
   void connect_ecg (RtecEventChannelAdmin::EventChannel_ptr local_ec,
-		    RtecEventChannelAdmin::EventChannel_ptr remote_ec,
-		    RtecScheduler::Scheduler_ptr remote_sch,
-		    CORBA::Environment &_env);
+                    RtecEventChannelAdmin::EventChannel_ptr remote_ec,
+                    RtecScheduler::Scheduler_ptr remote_sch,
+                    CORBA::Environment &_env);
   // Connect the EC gateway, it builds the Subscriptions and the
   // Publications list.
 
   void connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
-			  CORBA::Environment &_env);
+                          CORBA::Environment &_env);
   void disconnect_consumers (CORBA::Environment &_env);
   // Connect and disconnect the consumers.
 
@@ -244,7 +249,7 @@ private:
 
   void shutdown_consumer (int id);
   // One of the consumers has completed its work.
-			  
+
 private:
   char* lcl_name_;
   // The name of the "local" EC.
@@ -316,7 +321,7 @@ private:
 
   int lp_workload_;
   // The number of iterations of ACE::is_prime() to execute in low
-  // priority consumers. 
+  // priority consumers.
 
   int lp_interval_;
   // The low priority events are generated using this interval.

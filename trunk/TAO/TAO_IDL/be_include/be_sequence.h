@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (BE_SEQUENCE_H)
+#ifndef BE_SEQUENCE_H
 #define BE_SEQUENCE_H
 
 /*

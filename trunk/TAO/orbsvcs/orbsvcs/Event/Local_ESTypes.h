@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    ORB Services
-// 
+//
 // = FILENAME
 //    Local_ESTypes.h
 //

@@ -17,10 +17,15 @@
 //
 // ============================================================================
 
-#if !defined (PROPERTY_CLIENT_H)
+#ifndef PROPERTY_CLIENT_H
 #define PROPERTY_CLIENT_H
 
 #include "ace/Synch.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Task.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
@@ -94,7 +99,7 @@ protected:
 
   TAO_Naming_Client my_name_client_;
   // The Naming Client handles Naming Service work
-  
+
   CosPropertyService::PropertySetDef_var propsetdef_;
   // To test propertySetDef interface.
 };

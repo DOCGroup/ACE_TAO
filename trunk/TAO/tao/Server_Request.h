@@ -184,7 +184,7 @@ public:
   // = Initialization and termination methods.
   IIOP_ServerRequest (TAO_InputCDR &input,
                       TAO_OutputCDR &output,
-		      TAO_ORB_Core *orb_core,
+                      TAO_ORB_Core *orb_core,
                       CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Constructor
   IIOP_ServerRequest (CORBA::ULong &request_id,

@@ -17,10 +17,15 @@
 //
 // ============================================================================
 
-#if !defined (ACCOUNTMANAGER_I_H)
-#define	ACCOUNTMANAGER_I_H
+#ifndef ACCOUNTMANAGER_I_H
+#define ACCOUNTMANAGER_I_H
 
 #include "ace/ACE.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/OS.h"
 #include "tao/TAO.h"
 #include "BankS.h"
@@ -44,13 +49,13 @@ public:
   // Destructor.
 
   virtual Bank::Account_ptr open (const char *name,
-				  CORBA::Float initial_balance,
-				  CORBA::Environment &_env);
+                                  CORBA::Float initial_balance,
+                                  CORBA::Environment &_env);
   // Return the Account interface with the given name from the server.
   // Put the initial balance specified in the new account.
 
   virtual void close (Bank::Account_ptr,
-		      CORBA::Environment &env);
+                      CORBA::Environment &env);
   // Close the given account.
 
   virtual void shutdown (CORBA::Environment &env);

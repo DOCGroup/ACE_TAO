@@ -31,33 +31,33 @@ public:
   virtual void stop_timer(CORBA_Environment &) = 0;
 
   // skeletons that do the upcall
-  static void _ttcp_sequence_is_a_skel (CORBA_ServerRequest &req, 
-					CORBA_Object_ptr obj,
-					CORBA_Environment &env);
+  static void _ttcp_sequence_is_a_skel (CORBA_ServerRequest &req,
+                                        CORBA_Object_ptr obj,
+                                        CORBA_Environment &env);
   static void _ttcp_sequence_sendShortSeq_skel (CORBA_ServerRequest &req,
-						CORBA_Object_ptr obj,
-						CORBA_Environment &env);
+                                                CORBA_Object_ptr obj,
+                                                CORBA_Environment &env);
   static void _ttcp_sequence_sendLongSeq_skel  (CORBA_ServerRequest &req,
-						CORBA_Object_ptr obj,
-						CORBA_Environment &env);
+                                                CORBA_Object_ptr obj,
+                                                CORBA_Environment &env);
   static void _ttcp_sequence_sendDoubleSeq_skel (CORBA_ServerRequest &req,
-						 CORBA_Object_ptr obj,
-						 CORBA_Environment &env);
+                                                 CORBA_Object_ptr obj,
+                                                 CORBA_Environment &env);
   static void _ttcp_sequence_sendOctetSeq_skel (CORBA_ServerRequest &req,
-						CORBA_Object_ptr obj,
-						CORBA_Environment &env);
+                                                CORBA_Object_ptr obj,
+                                                CORBA_Environment &env);
   static void _ttcp_sequence_sendCharSeq_skel (CORBA_ServerRequest &req,
-					       CORBA_Object_ptr obj,
-					       CORBA_Environment &env);
+                                               CORBA_Object_ptr obj,
+                                               CORBA_Environment &env);
   static void _ttcp_sequence_sendStructSeq_skel (CORBA_ServerRequest &req,
-						 CORBA_Object_ptr obj,
-						 CORBA_Environment &env);
+                                                 CORBA_Object_ptr obj,
+                                                 CORBA_Environment &env);
   static void _ttcp_sequence_start_timer_skel (CORBA_ServerRequest &req,
-					       CORBA_Object_ptr obj,
-					       CORBA_Environment &env);
+                                               CORBA_Object_ptr obj,
+                                               CORBA_Environment &env);
   static void _ttcp_sequence_stop_timer_skel (CORBA_ServerRequest &req,
-					      CORBA_Object_ptr obj,
-					      CORBA_Environment &env);
+                                              CORBA_Object_ptr obj,
+                                              CORBA_Environment &env);
 protected:
   _skel_ttcp_sequence(const char *obj_name = 0);
   virtual ~_skel_ttcp_sequence() {}

@@ -17,13 +17,18 @@
 //
 // ===========================================================
 
-#if !defined (NOTIFIER_I_H)
+#ifndef NOTIFIER_I_H
 #define NOTIFIER_I_H
 
 #include "NotifierS.h"
 #include "ConsumerC.h"
 #include "tao/TAO.h"
 #include "ace/Containers.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/SString.h"
 
 class Notifier_i : public POA_Notifier
@@ -40,19 +45,19 @@ public:
   // Destructor.
 
   virtual void register_callback (const char *stock_name,
-			          CORBA::Long threshold_value,
-			          Callback_Quoter::Consumer_ptr consumer_handler,
-				  CORBA::Environment &TAO_TRY_ENV);
+                                  CORBA::Long threshold_value,
+                                  Callback_Quoter::Consumer_ptr consumer_handler,
+                                  CORBA::Environment &TAO_TRY_ENV);
   // Register a distributed callback handler that is invoked when the
   // given stock reaches the desired threshold value.
 
   virtual void unregister_callback (Callback_Quoter::Consumer_ptr consumer_handler,
-				    CORBA::Environment &TAO_TRY_ENV);
+                                    CORBA::Environment &TAO_TRY_ENV);
   // Remove the consumer object.
 
   virtual void market_status (const char *stock_name,
-			      CORBA::Long stock_value,
-			      CORBA::Environment &TAO_TRY_ENV);
+                              CORBA::Long stock_value,
+                              CORBA::Environment &TAO_TRY_ENV);
   // Get the market status.
 
   void orb (CORBA::ORB_ptr orb);

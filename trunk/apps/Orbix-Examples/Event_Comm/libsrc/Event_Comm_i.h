@@ -5,20 +5,20 @@
 //
 // = LIBRARY
 //    EventComm
-// 
+//
 // = FILENAME
 //    Event_Comm_i.h
 //
-// = DESCRIPTION 
+// = DESCRIPTION
 //    Class interface for the implementation of the distributed
 //    event notification mechanism.
 //
 // = AUTHOR
 //    Douglas C. Schmidt (schmidt@cs.wustl.edu)
-// 
+//
 // ============================================================================
 
-#if !defined (_EVENT_COMM_I_H)
+#ifndef _EVENT_COMM_I_H
 #define _EVENT_COMM_I_H
 
 #include "Notification_Receiver_i.h"

@@ -41,10 +41,15 @@
 //
 // ============================================================================
 
-#if !defined (EC_MCAST_H)
+#ifndef EC_MCAST_H
 #define EC_MCAST_H
 
 #include "ace/SString.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/High_Res_Timer.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventCommS.h"
@@ -69,11 +74,11 @@ class ECM_Federation
   //
 public:
   ECM_Federation (char* name,
-		  CORBA::UShort mcast_port,
-		  int supplier_types,
-		  char** supplier_names,
-		  int consumer_types,
-		  char** consumer_names);
+                  CORBA::UShort mcast_port,
+                  int supplier_types,
+                  char** supplier_names,
+                  int consumer_types,
+                  char** consumer_names);
   // Constructor, it assumes ownership of the buffers, strings must be
   // allocated using CORBA::string_alloc(), buffers using operator new.
 
@@ -105,9 +110,9 @@ public:
   // The ipaddr (in host byte order) of the event type <i>
 
   void open (ACE_SOCK_Dgram *dgram,
-	     RtecEventChannelAdmin::EventChannel_ptr ec,
-	     RtecScheduler::Scheduler_ptr scheduler,
-	     CORBA::Environment &_env);
+             RtecEventChannelAdmin::EventChannel_ptr ec,
+             RtecScheduler::Scheduler_ptr scheduler,
+             CORBA::Environment &_env);
   // Connect the UDP sender to the EC.
 
   void close (CORBA::Environment &_env);
@@ -159,27 +164,27 @@ public:
   ECM_Supplier (ECM_Local_Federation* federation);
 
   void open (const char* name,
-	     RtecScheduler::Period period,
-	     RtecEventChannelAdmin::EventChannel_ptr event_channel,
-	     RtecScheduler::Scheduler_ptr scheduler,
-	     CORBA::Environment& _env);
+             RtecScheduler::Period period,
+             RtecEventChannelAdmin::EventChannel_ptr event_channel,
+             RtecScheduler::Scheduler_ptr scheduler,
+             CORBA::Environment& _env);
   // This method connects the supplier to the EC.
 
   void close (CORBA::Environment &_env);
   // Disconnect from the EC.
 
   void activate (const char* name,
-		 RtecScheduler::Period period,
-		 RtecEventChannelAdmin::EventChannel_ptr event_channel,
-		 RtecScheduler::Scheduler_ptr scheduler,
-		 CORBA::Environment& _env);
+                 RtecScheduler::Period period,
+                 RtecEventChannelAdmin::EventChannel_ptr event_channel,
+                 RtecScheduler::Scheduler_ptr scheduler,
+                 CORBA::Environment& _env);
   // Connect as a consumer to start receiving events.
 
   RtecEventComm::EventSourceID supplier_id (void) const;
   // The supplier ID.
 
   void push (const RtecEventComm::EventSet& events,
-	     CORBA::Environment &_env);
+             CORBA::Environment &_env);
   void disconnect_push_consumer (CORBA::Environment &);
   // Implement the callbacks for our consumer personality.
 
@@ -193,14 +198,14 @@ private:
   RtecEventComm::EventSourceID supplier_id_;
   // We generate an id based on the name....
 
-  RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_; 
+  RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_;
   // We talk to the EC (as a supplier) using this proxy.
 
   ACE_PushConsumer_Adapter<ECM_Supplier> consumer_;
   // We also connect to the EC as a consumer so we can receive the
   // timeout events.
 
-  RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_; 
+  RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
   // We talk to the EC (as a supplier) using this proxy.
 };
 
@@ -218,24 +223,24 @@ public:
   ECM_Consumer (ECM_Local_Federation* federation);
 
   void open (const char* name,
-	     RtecEventChannelAdmin::EventChannel_ptr event_channel,
-	     RtecScheduler::Scheduler_ptr scheduler,
-	     ACE_RANDR_TYPE &seed,
-	     CORBA::Environment& _env);
+             RtecEventChannelAdmin::EventChannel_ptr event_channel,
+             RtecScheduler::Scheduler_ptr scheduler,
+             ACE_RANDR_TYPE &seed,
+             CORBA::Environment& _env);
   // This method connects the consumer to the EC.
 
   void close (CORBA::Environment &_env);
   // Disconnect from the EC.
 
   void connect (ACE_RANDR_TYPE& seed,
-		CORBA::Environment &_env);
+                CORBA::Environment &_env);
   void disconnect (CORBA::Environment &_env);
   // Disconnect from the supplier, but do not forget about it or close
   // it.
 
   // = The POA_RtecEventComm::PushComsumer methods.
   virtual void push (const RtecEventComm::EventSet& events,
-		     CORBA::Environment &_env);
+                     CORBA::Environment &_env);
   virtual void disconnect_push_consumer (CORBA::Environment &);
 
 private:
@@ -257,45 +262,45 @@ class ECM_Local_Federation
   // = DESCRIPTION
   //   This class is used to represent a federation that is actually
   //   running in this process.
-  // 
+  //
 public:
   ECM_Local_Federation (ECM_Federation *federation,
-			ECM_Driver *driver);
+                        ECM_Driver *driver);
   // Constructor.
   ~ECM_Local_Federation (void);
   // Destructor
 
   void open (int event_count,
-	     RtecScheduler::Period period,
-	     RtecEventChannelAdmin::EventChannel_ptr event_channel,
-	     RtecScheduler::Scheduler_ptr scheduler,
-	     CORBA::Environment& _env);
+             RtecScheduler::Period period,
+             RtecEventChannelAdmin::EventChannel_ptr event_channel,
+             RtecScheduler::Scheduler_ptr scheduler,
+             CORBA::Environment& _env);
   // Connect both the supplier and the consumer.
 
   void close (CORBA::Environment& _env);
   // Disconnect everybody from the EC
 
   void activate (RtecScheduler::Period period,
-		 RtecEventChannelAdmin::EventChannel_ptr event_channel,
-		 RtecScheduler::Scheduler_ptr scheduler,
-		 CORBA::Environment& _env);
+                 RtecEventChannelAdmin::EventChannel_ptr event_channel,
+                 RtecScheduler::Scheduler_ptr scheduler,
+                 CORBA::Environment& _env);
   // Activate the supplier
 
   void supplier_timeout (RtecEventComm::PushConsumer_ptr consumer,
-			 CORBA::Environment& _env);
+                         CORBA::Environment& _env);
   // The supplier is ready to send a new event.
 
   void consumer_push (ACE_hrtime_t arrival,
-		      const RtecEventComm::EventSet& event,
-		      CORBA::Environment& _env);
+                      const RtecEventComm::EventSet& event,
+                      CORBA::Environment& _env);
   // The consumer just received an event.
 
   const ECM_Federation *federation (void) const;
   // The federation description.
 
   void open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
-		      RtecScheduler::Scheduler_ptr scheduler,
-		      CORBA::Environment &_env);
+                      RtecScheduler::Scheduler_ptr scheduler,
+                      CORBA::Environment &_env);
   // Connect the UDP receiver to the EC.
 
   void close_receiver (CORBA::Environment &_env);
@@ -418,20 +423,20 @@ public:
   // Run the test, read all the configuration files, etc.
 
   void federation_has_shutdown (ECM_Local_Federation *federation,
-				CORBA::Environment& _env);
+                                CORBA::Environment& _env);
   // One of the federations has completed its simulation, once all of
   // them finish the test exists.
-			  
+
 
 private:
   void open_federations (RtecEventChannelAdmin::EventChannel_ptr ec,
-			 RtecScheduler::Scheduler_ptr scheduler,
-			 CORBA::Environment &_env);
+                         RtecScheduler::Scheduler_ptr scheduler,
+                         CORBA::Environment &_env);
   // Connect the federations to the EC.
 
   void activate_federations (RtecEventChannelAdmin::EventChannel_ptr ec,
-			     RtecScheduler::Scheduler_ptr scheduler,
-			     CORBA::Environment &_env);
+                             RtecScheduler::Scheduler_ptr scheduler,
+                             CORBA::Environment &_env);
   // Activate all the federations
 
   void close_federations (CORBA::Environment &_env);
@@ -439,13 +444,13 @@ private:
   // the objects, etc.
 
   void open_senders (RtecEventChannelAdmin::EventChannel_ptr ec,
-		     RtecScheduler::Scheduler_ptr scheduler,
-		     CORBA::Environment &_env);
+                     RtecScheduler::Scheduler_ptr scheduler,
+                     CORBA::Environment &_env);
   // Connect all the senders, so we can start multicasting events.
 
   void open_receivers (RtecEventChannelAdmin::EventChannel_ptr ec,
-		       RtecScheduler::Scheduler_ptr scheduler,
-		       CORBA::Environment &_env);
+                       RtecScheduler::Scheduler_ptr scheduler,
+                       CORBA::Environment &_env);
   // Connect all the receivers, thus we accept events arriving through
   // multicast.
 
@@ -465,16 +470,16 @@ private:
   // parse the command line arguments
 
   int parse_name_list (FILE* file, int n, char** names,
-		       const char* error_msg);
+                       const char* error_msg);
   // parse one of the lists of names in the federation definition.
 
   int skip_blanks (FILE* file,
-		   const char* error_msg);
+                   const char* error_msg);
   // skip the blanks in the file.
 
   void dump_results (void);
   // Dump the results to the standard output.
-			  
+
 private:
   int event_period_;
   // The events are generated using this interval.
@@ -501,7 +506,7 @@ private:
   int all_federations_count_;
   // The total number of federations we belong to.
 
-  ECM_Federation* all_federations_[MAX_FEDERATIONS]; 
+  ECM_Federation* all_federations_[MAX_FEDERATIONS];
   // All the federations.
 
   ACE_Atomic_Op<ACE_SYNCH_MUTEX,int> federations_running_;

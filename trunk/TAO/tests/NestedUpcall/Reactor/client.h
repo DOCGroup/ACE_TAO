@@ -18,6 +18,11 @@
 // ============================================================================
 
 #include "ace/Get_Opt.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/corba.h"
 #include "reactor_i.h"
 #include "ace/Auto_Ptr.h"

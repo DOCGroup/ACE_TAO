@@ -4,22 +4,22 @@
 
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
  * P.O.Box 91000-1000, Portland, OR 97291, USA;
- * 
- * Permission to use, copy, modify, distribute, and sell this software and its 
- * documentation for any purpose is hereby granted without fee, provided that 
- * the above copyright notice appear in all copies and that both that 
- * copyright notice and this permission notice appear in supporting 
- * documentation, and that the name of O.G.I. not be used in advertising or 
- * publicity pertaining to distribution of the software without specific, 
- * written prior permission.  O.G.I. makes no representations about the 
- * suitability of this software for any purpose.  It is provided "as is" 
+ *
+ * Permission to use, copy, modify, distribute, and sell this software and its
+ * documentation for any purpose is hereby granted without fee, provided that
+ * the above copyright notice appear in all copies and that both that
+ * copyright notice and this permission notice appear in supporting
+ * documentation, and that the name of O.G.I. not be used in advertising or
+ * publicity pertaining to distribution of the software without specific,
+ * written prior permission.  O.G.I. makes no representations about the
+ * suitability of this software for any purpose.  It is provided "as is"
  * without express or implied warranty.
- * 
- * O.G.I. DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING 
- * ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL 
- * O.G.I. BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY 
- * DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN 
- * AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF 
+ *
+ * O.G.I. DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
+ * ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL
+ * O.G.I. BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY
+ * DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN
+ * AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
  * Author: Shanwei Cen
@@ -27,10 +27,15 @@
  *         email: scen@cse.ogi.edu
  */
 
-#if !defined (MPEG_VIDEO_CONTROL_STATE_H)
+#ifndef MPEG_VIDEO_CONTROL_STATE_H
 #define MPEG_VIDEO_CONTROL_STATE_H
 
 #include "ace/Singleton.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "mpeg_shared/Video_ControlS.h"
 #include "mpeg_server/Video_Control_i.h"
 
@@ -50,7 +55,7 @@ public:
   Video_Control_State (void);
   // constructor
 
-  enum Video_States 
+  enum Video_States
   {
     VIDEO_WAITING,
     VIDEO_PLAY = 1,
@@ -66,12 +71,12 @@ public:
 
   virtual CORBA::Boolean init_video (const Video_Control::INITvideoPara &para,
                                      Video_Control::INITvideoReply_out reply) ;
-  
+
   virtual CORBA::Boolean stat_stream (CORBA::Char_out ch,
                                       CORBA::Long_out size);
 
   virtual void  close (void);
-  
+
   virtual CORBA::Boolean stat_sent (void);
 
   virtual CORBA::Boolean fast_forward (const Video_Control::FFpara &para) ;
@@ -79,7 +84,7 @@ public:
   virtual CORBA::Boolean fast_backward (const Video_Control::FFpara &para) ;
 
   virtual CORBA::Boolean step (const Video_Control::STEPpara &para) ;
-  
+
   virtual CORBA::Boolean play (const Video_Control::PLAYpara &para,
                                CORBA::Long_out vts) ;
 
@@ -88,13 +93,13 @@ public:
   virtual CORBA::Boolean speed (const Video_Control::SPEEDpara &para) ;
 
   virtual CORBA::Boolean stop (CORBA::Long cmdsn) ;
- 
+
 protected:
   Video_States state_;
   // State of this object
 
   Video_Control_i *vci_;
- 
+
 };
 
 class Video_Control_Waiting_State : public virtual Video_Control_State
@@ -105,20 +110,20 @@ class Video_Control_Waiting_State : public virtual Video_Control_State
 public:
   Video_Control_Waiting_State (void);
   // Default constructor, sets the state to WAITING
-  
+
   virtual CORBA::Boolean stat_stream (CORBA::Char_out ch,
                                       CORBA::Long_out size);
-  
+
   virtual void close (void);
-  
+
   virtual CORBA::Boolean stat_sent (void);
-  
+
   virtual CORBA::Boolean fast_forward (const Video_Control::FFpara &para);
-  
+
   virtual CORBA::Boolean fast_backward (const Video_Control::FFpara &para);
 
   virtual CORBA::Boolean step (const Video_Control::STEPpara &para);
-  
+
 
   virtual CORBA::Boolean play (const Video_Control::PLAYpara &para,
                                CORBA::Long_out vts);
@@ -173,9 +178,9 @@ public:
 };
 
 typedef ACE_Singleton <Video_Control_Waiting_State, ACE_SYNCH_MUTEX>
-        VIDEO_CONTROL_WAITING_STATE;     
+        VIDEO_CONTROL_WAITING_STATE;
 typedef ACE_Singleton <Video_Control_Play_State, ACE_SYNCH_MUTEX>
-        VIDEO_CONTROL_PLAY_STATE;        
+        VIDEO_CONTROL_PLAY_STATE;
 typedef ACE_Singleton <Video_Control_Fast_Forward_State, ACE_SYNCH_MUTEX>
         VIDEO_CONTROL_FAST_FORWARD_STATE;
 typedef ACE_Singleton <Video_Control_Fast_Backward_State, ACE_SYNCH_MUTEX>

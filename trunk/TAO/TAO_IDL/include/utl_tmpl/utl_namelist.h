@@ -42,8 +42,8 @@
  *INDIRECT AND CONSEQUENTIAL DAMAGES, EVEN IF SUN HAS BEEN ADVISED OF THE
  *POSSIBILITY OF SUCH DAMAGES.
  *
- *SunSoft, Inc.  
- *2550 Garcia Avenue 
+ *SunSoft, Inc.
+ *2550 Garcia Avenue
  *Mountain View, California  94043
  *
  *
@@ -65,15 +65,20 @@
 ** USE: Included from util.hh
 */
 
-#include	"ace/stdcpp.h"
-#include	"idl_fwd.h"
-#include	"utl_list.h"
-#include	"utl_idlist.h"
-#include	"utl_scoped_name.h"
-#include	"utl_identifier.h"
-#include	"utl_string.h"
+#include        "ace/stdcpp.h"
 
-class	UTL_NameList : public UTL_List<UTL_NameList, UTL_ScopedName>
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include        "idl_fwd.h"
+#include        "utl_list.h"
+#include        "utl_idlist.h"
+#include        "utl_scoped_name.h"
+#include        "utl_identifier.h"
+#include        "utl_string.h"
+
+class   UTL_NameList : public UTL_List<UTL_NameList, UTL_ScopedName>
 {
 public:
   // Operations
@@ -84,7 +89,7 @@ public:
 };
 
 // Active iterator for UTL_NameList
-class	UTL_NamelistActiveIterator :
+class   UTL_NamelistActiveIterator :
     public UTL_ListActiveIterator<UTL_NameList, UTL_ScopedName>
 {
 public:

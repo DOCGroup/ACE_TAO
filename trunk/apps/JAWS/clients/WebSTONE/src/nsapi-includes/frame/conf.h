@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 1994, 1995.  Netscape Communications Corporation.  All
  * rights reserved.
- * 
+ *
  * Use of this software is governed by the terms of the license agreement for
  * the Netscape Communications or Netscape Comemrce Server between the
  * parties.
@@ -13,12 +13,12 @@
 
 /*
  * conf.h: Deals with the server configuration file.
- * 
+ *
  * Object configuration is an entirely different matter. This deals with
  * things like what port the server runs on, how many children it spawns,
  * and other server-related issues. Information related configuration is
  * handled by the object conf.
- * 
+ *
  * Rob McCool
  */
 
@@ -67,7 +67,7 @@
 
 /*
  * These server parameters are made global because they really don't
- * belong anywhere else. 
+ * belong anywhere else.
  */
 
 #if defined(DAEMON_ANY)
@@ -145,7 +145,7 @@ void conf_terminate(void);
 
 
 /*
- * conf_vars2daemon transfers these globals to a daemon structure 
+ * conf_vars2daemon transfers these globals to a daemon structure
  */
 void conf_vars2daemon(daemon_s *d);
 

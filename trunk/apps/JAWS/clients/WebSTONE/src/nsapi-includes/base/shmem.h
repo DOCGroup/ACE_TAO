@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 1994, 1995.  Netscape Communications Corporation.  All
  * rights reserved.
- * 
+ *
  * Use of this software is governed by the terms of the license agreement for
  * the Netscape Communications or Netscape Comemrce Server between the
  * parties.
@@ -13,7 +13,7 @@
 
 /*
  * shmem.h: Portable abstraction for memory shared among a server's workers
- * 
+ *
  * Rob McCool
  */
 
@@ -49,8 +49,8 @@ typedef struct {
 /*
  * shmem_alloc allocates a region of shared memory of the given size, using
  * the given name to avoid conflicts between multiple regions within the
- * program. The region will not be automatically grown if its boundaries 
- * are over-run, use shmem_realloc for that. 
+ * program. The region will not be automatically grown if its boundaries
+ * are over-run, use shmem_realloc for that.
  *
  * If expose is non-zero and the underlying system supports it, the
  * file used to create the shared region will be visible to other processes
@@ -59,7 +59,7 @@ typedef struct {
  * name should be unique to the program which calls this routine, otherwise
  * conflicts will arise.
  *
- * Returns a new shared memory region, with the data element being a 
+ * Returns a new shared memory region, with the data element being a
  * pointer to the shared memory. This function must be called before any
  * daemon workers are spawned, in order for the handle to the shared region
  * to be inherited by the children.

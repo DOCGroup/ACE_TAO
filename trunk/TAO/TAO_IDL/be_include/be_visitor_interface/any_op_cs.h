@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (_BE_INTERFACE_ANY_OP_CS_H_)
+#ifndef _BE_INTERFACE_ANY_OP_CS_H_
 #define _BE_INTERFACE_ANY_OP_CS_H_
 
 class be_visitor_interface_any_op_cs : public be_visitor_interface

@@ -3,17 +3,17 @@
 // ============================================================================
 //
 // = LIBRARY
-// 
+//
 // = FILENAME
 //    any_test_i.h
 //
 // = AUTHOR
 //   Michael Kircher
-// 
+//
 // ============================================================================
 
-#if !defined (_ANY_TEST_I_HH)
-#define	_ANY_TEST_I_HH
+#ifndef _ANY_TEST_I_HH
+#define _ANY_TEST_I_HH
 
 #include "any_testS.h"
 

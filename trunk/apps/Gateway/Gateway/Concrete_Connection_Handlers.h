@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    gateway
-// 
+//
 // = FILENAME
 //    Concrete_Connection_Handlers.h
 //
@@ -14,11 +14,11 @@
 //    appropriate threaded/reactive Consumer/Supplier behavior.
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
-#if !defined (CONCRETE_CONNECTION_HANDLER)
+#ifndef CONCRETE_CONNECTION_HANDLER
 #define CONCRETE_CONNECTION_HANDLER
 
 #include "Connection_Handler.h"
@@ -69,8 +69,8 @@ public:
   // = Initialization method.
   Consumer_Handler (const Connection_Config_Info &);
 
-  virtual int put (ACE_Message_Block *event, 
-		   ACE_Time_Value * = 0);
+  virtual int put (ACE_Message_Block *event,
+                   ACE_Time_Value * = 0);
   // Send an event to a Consumer (may be queued if necessary).
 
 protected:

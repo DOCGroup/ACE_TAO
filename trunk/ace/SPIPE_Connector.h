@@ -6,13 +6,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    SPIPE_Connector.h
 //
 // = AUTHOR
 //    Doug Schmidt and Prashant Jain
-// 
+//
 // ============================================================================
 
 #ifndef ACE_SPIPE_CONNECTOR_H
@@ -21,26 +21,26 @@
 #include "ace/SPIPE_Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_SPIPE_Connector : public ACE_SPIPE
 {
   // = TITLE
   //     Defines an active connection factory for the STREAM pipe
-  //     wrappers. 
+  //     wrappers.
 public:
   // = Initialization method.
   ACE_SPIPE_Connector (void);
   // Default constructor.
 
-  ACE_SPIPE_Connector (ACE_SPIPE_Stream &new_io, 
-		       const ACE_SPIPE_Addr &remote_sap, 
-		       ACE_Time_Value *timeout = 0,
-		       const ACE_Addr &local_sap = ACE_Addr::sap_any,
-		       int reuse_addr = 0,
-		       int flags = O_RDWR,
-		       int perms = 0);
+  ACE_SPIPE_Connector (ACE_SPIPE_Stream &new_io,
+                       const ACE_SPIPE_Addr &remote_sap,
+                       ACE_Time_Value *timeout = 0,
+                       const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                       int reuse_addr = 0,
+                       int flags = O_RDWR,
+                       int perms = 0);
   // Actively connect and produce a <new_stream> if things go well.
   // The <remote_sap> is the address that we are trying to connect
   // with.  The <timeout> is the amount of time to wait to connect.
@@ -57,13 +57,13 @@ public:
   // The <flags> and <perms> arguments are passed down to the open()
   // method.
 
-  int connect (ACE_SPIPE_Stream &new_io, 
-	       const ACE_SPIPE_Addr &remote_sap, 
-	       ACE_Time_Value *timeout = 0,
-	       const ACE_Addr &local_sap = ACE_Addr::sap_any,
-	       int reuse_addr = 0,
-	       int flags = O_RDWR,
-	       int perms = 0);
+  int connect (ACE_SPIPE_Stream &new_io,
+               const ACE_SPIPE_Addr &remote_sap,
+               ACE_Time_Value *timeout = 0,
+               const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               int reuse_addr = 0,
+               int flags = O_RDWR,
+               int perms = 0);
   // Actively connect and produce a <new_stream> if things go well.
   // The <remote_sap> is the address that we are trying to connect
   // with.  The <timeout> is the amount of time to wait to connect.

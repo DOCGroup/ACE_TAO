@@ -16,6 +16,11 @@
 // ============================================================================
 
 #include "ace/Get_Opt.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/corba.h"
 #include "any_testC.h"
 #include "NavWeapC.h"
@@ -42,7 +47,7 @@ private:
 
   Any_Test_ptr any_test_ptr_;
  //  Reverse_ptr reverse_ptr_;
-  
+
   int argc_;
   // # of arguments on the command line.
 

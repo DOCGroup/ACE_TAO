@@ -5,28 +5,33 @@
 //
 // = LIBRARY
 //    EventComm
-// 
+//
 // = FILENAME
 //    Notifier_Receiver_Handler.h
 //
-// = DESCRIPTION 
+// = DESCRIPTION
 //    Subclass of Corba_Handler that sets up the Notification_Receiver handler
 //    for use with the ACE ACE_Reactor.
 //
 // = AUTHOR
 //    Douglas C. Schmidt (schmidt@cs.wustl.edu)
-// 
+//
 // ============================================================================
 
-#if !defined (_NOTIFICATION_RECEIVER_HANDLER_H)
+#ifndef _NOTIFICATION_RECEIVER_HANDLER_H
 #define _NOTIFICATION_RECEIVER_HANDLER_H
 
 #include "ace/CORBA_Handler.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "Event_Comm_i.h"
 
 #if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 
-class Notification_Receiver_Handler 
+class Notification_Receiver_Handler
 {
   // = TITLE
   //    Subclass of Corba_Handler that sets up the Notification
@@ -42,8 +47,8 @@ public:
   Event_Comm::Notification_Receiver *receiver (void);
   Event_Comm::Notifier *notifier (void);
 
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE, 
-			    ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
+  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                            ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
   // Close down the handler.
 
 private:

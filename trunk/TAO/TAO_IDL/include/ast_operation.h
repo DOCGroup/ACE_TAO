@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -71,27 +71,27 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 /*
 ** DEPENDENCIES: ast_decl.hh, utl_scope.hh, ast_type.hh, utl_strlist.hh,
-**		 utl_exceptlist.hh, utl_scoped_name.hh
+**               utl_exceptlist.hh, utl_scoped_name.hh
 **
 ** USE: included from ast.hh
 */
 
-#include	"idl_fwd.h"
-#include	"idl_narrow.h"
-#include	"utl_list.h"
-#include	"ast_decl.h"
-#include	"utl_scope.h"
-#include	"utl_scoped_name.h"
+#include        "idl_fwd.h"
+#include        "idl_narrow.h"
+#include        "utl_list.h"
+#include        "ast_decl.h"
+#include        "utl_scope.h"
+#include        "utl_scoped_name.h"
 
 
-class	AST_Operation : public virtual AST_Decl, public virtual UTL_Scope
+class   AST_Operation : public virtual AST_Decl, public virtual UTL_Scope
 {
 public:
   // Define enum with flags for operation attributes
   enum Flags {
-       OP_noflags		// No flags present
-     , OP_oneway		// Operation is oneway
-     , OP_idempotent		// Operation is idempotent
+       OP_noflags               // No flags present
+     , OP_oneway                // Operation is oneway
+     , OP_idempotent            // Operation is idempotent
   };
 
   // Operations
@@ -99,9 +99,9 @@ public:
   // Constructor(s)
   AST_Operation();
   AST_Operation(AST_Type *return_type,
-		Flags flags,
-		UTL_ScopedName *n,
-		UTL_StrList *p);
+                Flags flags,
+                UTL_ScopedName *n,
+                UTL_StrList *p);
   virtual ~AST_Operation() {}
 
   // Data Accessors
@@ -109,30 +109,30 @@ public:
   Flags flags();
   UTL_StrList *context();
   UTL_ExceptList *exceptions();
-  
+
   // Narrowing
   DEF_NARROW_METHODS2(AST_Operation, AST_Decl, UTL_Scope);
   DEF_NARROW_FROM_DECL(AST_Operation);
   DEF_NARROW_FROM_SCOPE(AST_Operation);
 
   // AST Dumping
-  virtual void			dump(ostream &o);
+  virtual void                  dump(ostream &o);
 
 private:
   // Data
-  AST_Type			*pd_return_type;	// Return type
-  Flags				pd_flags;		// Operation flags
-  UTL_StrList			*pd_context;		// Context
-  UTL_ExceptList		*pd_exceptions;		// Exceptions raised
+  AST_Type                      *pd_return_type;        // Return type
+  Flags                         pd_flags;               // Operation flags
+  UTL_StrList                   *pd_context;            // Context
+  UTL_ExceptList                *pd_exceptions;         // Exceptions raised
 
   // Scope Management Protocol
   friend int tao_yyparse();
 
-  virtual AST_Argument		*fe_add_argument(AST_Argument	*a);
-  virtual UTL_StrList		*fe_add_context(UTL_StrList 	*c);	
-							// Add context
-  virtual UTL_NameList		*fe_add_exceptions(UTL_NameList *e);
-							// exceptions
+  virtual AST_Argument          *fe_add_argument(AST_Argument   *a);
+  virtual UTL_StrList           *fe_add_context(UTL_StrList     *c);
+                                                        // Add context
+  virtual UTL_NameList          *fe_add_exceptions(UTL_NameList *e);
+                                                        // exceptions
 
 };
 

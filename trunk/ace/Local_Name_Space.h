@@ -20,13 +20,14 @@
 #define ACE_LOCAL_NAME_SPACE_H
 
 #include "ace/SString.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Containers.h"
 #include "ace/Malloc_T.h"
 #include "ace/Synch.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_NS_String
 {
@@ -45,8 +46,8 @@ public:
   // Default "no-op" constructor.
 
   ACE_NS_String (ACE_USHORT16 *dst,
-		 const ACE_USHORT16 *src,
-		 size_t len);
+                 const ACE_USHORT16 *src,
+                 size_t len);
   // Initialization method.
 
   ACE_NS_String (const ACE_WString &);

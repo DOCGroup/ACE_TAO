@@ -6,22 +6,27 @@
 //
 // = LIBRARY
 //    apps/JAWS/clients/Caching
-// 
+//
 // = FILENAME
 //    http_handler.h
 //
 // = AUTHOR
 //    James Hu
-// 
+//
 // ============================================================================
 
 #include "ace/Connector.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/SOCK_Connector.h"
 
 class HTTP_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
   // = TITLE
   //     A simple HTTP protocol handler for clients.
-  // 
+  //
   // = DESCRIPTION
   //     Checks to see if the requested file is already cached.  If
   //     so, it says so.  If not, the request is issued to the
@@ -52,7 +57,7 @@ private:
 class HTTP_Connector
   // = TITLE
   //     A simple HTTP connector.
-  // 
+  //
   // = DESCRIPTION
   //     Creates an HTTP Handler based on the URL, and then delegates
   //     to to the SOCK_CONNECTOR.  Adapter pattern.
@@ -63,9 +68,9 @@ public:
 
 private:
   int parseurl (const char *url,
-		char *host,
-		u_short *port,
-		char *path);
+                char *host,
+                u_short *port,
+                char *path);
   // Helper function.
 
 private:

@@ -5,24 +5,25 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    SPIPE_Stream.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #ifndef ACE_SPIPE_STREAM_H
 #define ACE_SPIPE_STREAM_H
 
 #include "ace/SPIPE.h"
-#include "ace/SPIPE_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/SPIPE_Addr.h"
 
 class ACE_Export ACE_SPIPE_Stream : public ACE_SPIPE
 {
@@ -39,20 +40,20 @@ public:
   int get_remote_addr (ACE_SPIPE_Addr &remote_sap) const;
   // Obtain the address of whom we are connected with.
 
-  int send_handle (ACE_HANDLE handle) const;	 
-  // Send an open FD to another process. 
+  int send_handle (ACE_HANDLE handle) const;
+  // Send an open FD to another process.
 
-  int recv_handle (ACE_HANDLE &handle) const;		 
-  // Recv an open FD from another process. 
+  int recv_handle (ACE_HANDLE &handle) const;
+  // Recv an open FD from another process.
 
-  int recv_handle (strrecvfd &recvfd) const; 
-  // Recv an open FD from another process. 
+  int recv_handle (strrecvfd &recvfd) const;
+  // Recv an open FD from another process.
 
-  ssize_t send_n (const void *buf, size_t n) const; 
-  // Send n bytes, keep trying until n are sent. 
+  ssize_t send_n (const void *buf, size_t n) const;
+  // Send n bytes, keep trying until n are sent.
 
-  ssize_t recv_n (void *buf, size_t n) const;	      
-  // Recv n bytes, keep trying until n are received. 
+  ssize_t recv_n (void *buf, size_t n) const;
+  // Recv n bytes, keep trying until n are received.
 
   ssize_t send (const void *buf, size_t n) const;
   // Send bytes via STREAM pipes using "band" mode.
@@ -60,26 +61,26 @@ public:
   ssize_t recv (void *buf, size_t n) const;
   // Recv bytes via STREAM pipes using "band" mode.
 
-  ssize_t send (const ACE_Str_Buf *cntl, 
-		const ACE_Str_Buf *data, 
-		int flags = 0) const;
+  ssize_t send (const ACE_Str_Buf *cntl,
+                const ACE_Str_Buf *data,
+                int flags = 0) const;
   // Send <cntl> and <data> via STREAM pipes.
 
-  ssize_t recv (ACE_Str_Buf *cntl, 
-		ACE_Str_Buf *data, 
-		int *flags) const;
+  ssize_t recv (ACE_Str_Buf *cntl,
+                ACE_Str_Buf *data,
+                int *flags) const;
   // Recv <cntl> and <data> via STREAM pipes.
 
-  ssize_t send (const ACE_Str_Buf *cntl, 
-		const ACE_Str_Buf *data,
-		int band, 
-		int flags) const;
+  ssize_t send (const ACE_Str_Buf *cntl,
+                const ACE_Str_Buf *data,
+                int band,
+                int flags) const;
   // Send bytes via STREAM pipes using "band" mode.
 
-  ssize_t recv (ACE_Str_Buf *cntl, 
-		ACE_Str_Buf *data, 
-		int *band, 
-		int *flags) const;
+  ssize_t recv (ACE_Str_Buf *cntl,
+                ACE_Str_Buf *data,
+                int *band,
+                int *flags) const;
   // Recv bytes via STREAM pipes using "band" mode.
 
   ssize_t send (const iovec iov[], size_t n) const;

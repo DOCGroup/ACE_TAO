@@ -14,10 +14,15 @@
 //
 // ============================================================================
 
-#if !defined (EC_BASIC_H)
+#ifndef EC_BASIC_H
 #define EC_BASIC_H
 
 #include "ace/SString.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/High_Res_Timer.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventCommS.h"
@@ -120,7 +125,7 @@ public:
   virtual void push (const RtecEventComm::EventSet& events,
                      CORBA::Environment &_env);
   virtual void disconnect_push_consumer (CORBA::Environment &);
-  
+
 private:
   ECB_Test* test_;
   // To callback.
@@ -178,7 +183,7 @@ private:
   // To callback.
 
   int supplier_id_;
-  // This is NOT the supplier ID for the EC, just a number for the 
+  // This is NOT the supplier ID for the EC, just a number for the
 
   RtecScheduler::handle_t rt_info_;
   // The handle for our RT_Info description.
@@ -248,7 +253,7 @@ public:
                      CORBA::Environment &_env);
   // The callback from the Consumer....
 
-  
+
 private:
   ECB_Consumer consumer0_;
   ECB_Consumer consumer1_;
@@ -321,7 +326,7 @@ public:
                      const RtecEventComm::EventSet& events,
                      CORBA::Environment &_env);
   // The callback from the Consumer....
-  
+
 private:
   ECB_Consumer consumer_;
   // The consumer...

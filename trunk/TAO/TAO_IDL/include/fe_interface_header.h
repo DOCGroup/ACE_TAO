@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -73,12 +73,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 /*
 ** DEPENDENCIES: utl_scoped_name.hh, ast_interface.hh, utl_scope.hh,
-**		 ast_decl.hh
+**               ast_decl.hh
 **
 ** USE: Included from fe.hh
 */
 
-class	FE_InterfaceHeader
+class   FE_InterfaceHeader
 {
 public:
   // Operations
@@ -94,16 +94,16 @@ public:
 
 private:
   // Data
-  UTL_ScopedName	*pd_interface_name;	// Interface name
-  AST_Interface		**pd_inherits;		// Inherited interfaces
-  long			pd_n_inherits;		// How many
+  UTL_ScopedName        *pd_interface_name;     // Interface name
+  AST_Interface         **pd_inherits;          // Inherited interfaces
+  long                  pd_n_inherits;          // How many
 
   // Operations
 
   // Compile the flattened unique list of interfaces which this
   // interface inherits from
-  void			compile_one_inheritance(AST_Interface *i);
-  void			compile_inheritance(UTL_NameList *l);
+  void                  compile_one_inheritance(AST_Interface *i);
+  void                  compile_inheritance(UTL_NameList *l);
 };
 
 #endif           // _FE_INTERFACE_HEADER_FE_INTERFACE_HH

@@ -90,7 +90,7 @@
 #include "ace/Log_Record.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (__Lynx__)
@@ -151,7 +151,7 @@ public:
   static void enable_debug_messages();
   // Sets the LM_DEBUG flag in the default priority mask used to
   // initialize ACE_Log_Msg instances.
-  
+
   ACE_Log_Msg (void);
   // Initialize logger.
 

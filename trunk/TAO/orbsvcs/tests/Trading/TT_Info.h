@@ -11,9 +11,9 @@ class TT_Info
 public:
 
   static void dump_properties (const CosTrading::PropertySeq& prop_seq,
-			       CORBA::Boolean print_dynamic = 1);
+                               CORBA::Boolean print_dynamic = 1);
   // Dump the contents of this property sequence.
-  
+
   enum INTERFACES
   {
     REMOTE_IO,
@@ -24,20 +24,20 @@ public:
   };
 
   // = Test servants.
-  
+
   class Remote_Output :
     public POA_TAO_Trader_Test::Remote_Output
   {
   public:
-    
+
     Remote_Output (void) {}
-    
+
     virtual void confirm (CORBA::Environment& _env)
       TAO_THROW_SPEC ((CORBA::SystemException)) {}
     // Method to test that the importer received a valid reference to
     // the exported object.
   };
-  
+
   class Printer :
     public POA_TAO_Trader_Test::Printer
   {
@@ -48,33 +48,33 @@ public:
     virtual void confirm (CORBA::Environment& _env)
       TAO_THROW_SPEC ((CORBA::SystemException)) {}
     // Method to test that the importer received a valid reference to
-    // the exported object. 
+    // the exported object.
   };
-  
+
   class Plotter :
     public POA_TAO_Trader_Test::Plotter
   {
   public:
     Plotter (void) {}
-    
+
     virtual void confirm (CORBA::Environment& _env)
       TAO_THROW_SPEC ((CORBA::SystemException)) {}
     // Method to test that the importer received a valid reference to
-    // the exported object. 
+    // the exported object.
   };
-  
+
   class File_System :
     public POA_TAO_Trader_Test::File_System
   {
-  public:  
+  public:
     File_System (void) {}
 
     virtual void confirm (CORBA::Environment& _env)
       TAO_THROW_SPEC ((CORBA::SystemException)) {}
     // Method to test that the importer received a valid reference to
-    // the exported object. 
+    // the exported object.
   };
-  
+
   class PostScript_Printer :
     public POA_TAO_Trader_Test::PostScript_Printer
   {
@@ -84,14 +84,14 @@ public:
     virtual void confirm (CORBA::Environment& _env)
       TAO_THROW_SPEC ((CORBA::SystemException)) {}
     // Method to test that the importer received a valid reference to
-    // the exported object. 
+    // the exported object.
   };
 
 #define NUM_TYPES 5
   static const char* INTERFACE_NAMES[];
-  
+
   // = Remote IO property descriptions
-  
+
   enum REMOTE_IO_PROPERTIES
   {
     NAME,
@@ -104,9 +104,9 @@ public:
 
   static const char* REMOTE_IO_NAME;
   static const char* REMOTE_IO_PROPERTY_NAMES[];
-  
-  // = Plotter property descriptions 
-  
+
+  // = Plotter property descriptions
+
   enum PLOTTER_PROPERTIES
   {
     PLOTTER_NUM_COLORS,
@@ -118,10 +118,10 @@ public:
   };
 
   static const char* PLOTTER_NAME;
-  static const char* PLOTTER_PROPERTY_NAMES[]; 
-  
+  static const char* PLOTTER_PROPERTY_NAMES[];
+
   // = Printer property descriptions
-  
+
   enum PRINTER_PROPERTIES
   {
     PRINTER_COLOR,
@@ -135,9 +135,9 @@ public:
 
   static const char* PRINTER_NAME;
   static const char* PRINTER_PROPERTY_NAMES[];
-  
+
   // = File System Property Descriptions
-  
+
   enum FILESYSTEM_PROPERTIES
   {
     DISK_SIZE,
@@ -148,8 +148,8 @@ public:
   static const char* FILESYSTEM_NAME;
   static const char* FILESYSTEM_PROPERTY_NAMES[];
 
-  // = PostScript Printer property descriptions.  
-  
+  // = PostScript Printer property descriptions.
+
   enum PS_PRINTER_PROPERTIES
   {
     VERSION
@@ -157,7 +157,7 @@ public:
 
   static const char* PS_PRINTER_NAME;
   static const char* PS_PRINTER_PROPERTY_NAMES[];
-  
+
   // = Offer Info
 
 #define NUM_OFFERS 15
@@ -166,9 +166,9 @@ public:
   static const char* MODEL_NUMBERS[];
 
   // = Query info
-  
+
   static const int NUM_QUERIES;
-  static const char* QUERIES[][3];  
+  static const char* QUERIES[][3];
 };
 
 #endif /* TAO_TRADER_TEST_UTILS_H */

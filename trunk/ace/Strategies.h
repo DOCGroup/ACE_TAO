@@ -20,7 +20,7 @@
 #include "ace/Event_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Forward decls.
@@ -37,12 +37,12 @@ class ACE_Export ACE_Notification_Strategy
   //     the Bridge/Strategy patterns.
 public:
   ACE_Notification_Strategy (ACE_Event_Handler *eh,
-			     ACE_Reactor_Mask mask);
+                             ACE_Reactor_Mask mask);
   virtual ~ACE_Notification_Strategy (void);
 
   virtual int notify (void) = 0;
   virtual int notify (ACE_Event_Handler *,
-		      ACE_Reactor_Mask mask) = 0;
+                      ACE_Reactor_Mask mask) = 0;
 
   // Get/Set the event handler
   ACE_Event_Handler *event_handler (void);
@@ -67,8 +67,8 @@ class ACE_Export ACE_Reactor_Notification_Strategy : public ACE_Notification_Str
   //     ACE_Reactor::notify() method.
 public:
   ACE_Reactor_Notification_Strategy (ACE_Reactor *reactor,
-				     ACE_Event_Handler *eh,
-				     ACE_Reactor_Mask mask);
+                                     ACE_Event_Handler *eh,
+                                     ACE_Reactor_Mask mask);
 
   ~ACE_Reactor_Notification_Strategy (void);
   // Default dtor.
@@ -76,7 +76,7 @@ public:
   virtual int notify (void);
 
   virtual int notify (ACE_Event_Handler *,
-		      ACE_Reactor_Mask mask);
+                      ACE_Reactor_Mask mask);
 
   // Get/Set the reactor
   ACE_Reactor *reactor (void);
@@ -114,7 +114,7 @@ protected:
 class ACE_Export ACE_Recyclable
 {
 public:
-  enum State 
+  enum State
   {
     IDLE,
     BUSY,

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 1994, 1995.  Netscape Communications Corporation.  All
  * rights reserved.
- * 
+ *
  * Use of this software is governed by the terms of the license agreement for
  * the Netscape Communications or Netscape Comemrce Server between the
  * parties.
@@ -13,7 +13,7 @@
 
 /*
  * ereport.h: Records transactions, reports errors to administrators, etc.
- * 
+ *
  * Rob McCool
  */
 
@@ -40,13 +40,13 @@
 /* A warning is a minor mishap, such as a 404 being issued. */
 #define LOG_WARN 0
 
-/* 
+/*
  * A misconfig is when there is a syntax error or permission violation in
  * a config. file.
  */
 #define LOG_MISCONFIG 1
 
-/* 
+/*
  * Security warnings are issued when authentication fails, or a host is
  * given a 403 return code.
  */
@@ -54,14 +54,14 @@
 
 /*
  * A failure is when a request could not be fulfilled due to an internal
- * problem, such as a CGI script exiting prematurely, or a filesystem 
+ * problem, such as a CGI script exiting prematurely, or a filesystem
  * permissions problem.
  */
 #define LOG_FAILURE 3
 
 /*
  * A catastrophe is a fatal server error such as running out of
- * memory or processes, or a system call failing, or even a server crash. 
+ * memory or processes, or a system call failing, or even a server crash.
  * The server child cannot recover from a catastrophe.
  */
 #define LOG_CATASTROPHE 4
@@ -88,8 +88,8 @@
 
 
 /*
- * ereport logs an error of the given degree and formats the arguments with 
- * the printf() style fmt. Returns whether the log was successful. Records 
+ * ereport logs an error of the given degree and formats the arguments with
+ * the printf() style fmt. Returns whether the log was successful. Records
  * the current date.
  */
 
@@ -99,7 +99,7 @@ int ereport(int degree, char *fmt, ...);
  * ereport_init initializes the error logging subsystem and opens the static
  * file descriptors. It returns NULL upon success and an error string upon
  * error. If a userpw is given, the logs will be chowned to that user.
- * 
+ *
  * email is the address of a person to mail upon catastrophic error. It
  * can be NULL if no e-mail is desired. ereport_init will not duplicate
  * its own copy of this string; you must make sure it stays around and free

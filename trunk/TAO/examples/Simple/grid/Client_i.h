@@ -18,7 +18,7 @@
 
 # include "GridC.h"
 
-class Client_i 
+class Client_i
 {
   // = TITLE
   //    Simple Client implementation.
@@ -41,9 +41,9 @@ public:
 
   int init (int argc, char *argv[]);
   // Initialize the client communication endpoint with server.
- 
+
   void test_grid (void);
-  // Make the grid. 
+  // Make the grid.
 
 private:
   int read_ior (char *filename);
@@ -81,7 +81,7 @@ private:
 
   CORBA::Short setx_;
   // Cell identifier in which a value meeds to be stored.
- 
+
   CORBA::Short sety_;
   // Cell identifier in which a value meeds to be stored.
 

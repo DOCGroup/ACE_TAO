@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (_BE_VISITOR_ENUM_ANY_OP_CH_H_)
+#ifndef _BE_VISITOR_ENUM_ANY_OP_CH_H_
 #define _BE_VISITOR_ENUM_ANY_OP_CH_H_
 
 class be_visitor_enum_any_op_ch : public be_visitor_scope

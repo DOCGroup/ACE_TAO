@@ -23,7 +23,7 @@
 #include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 template <class TYPE, class ACE_LOCK>
@@ -51,9 +51,9 @@ class ACE_Singleton : public ACE_Cleanup
   //
   //     (a) Make the constructor of <T> private (or protected)
   //     (b) Make Singleton a friend of <T>
-  // 
+  //
   //     Here is an example:
-  // 
+  //
   //     class foo
   //     {
   //       friend class ACE_Singleton<foo, ACE_Null_Mutex>;
