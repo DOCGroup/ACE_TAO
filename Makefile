@@ -92,6 +92,7 @@ CONTROLLED_FILES = \
         Makefile \
         PROBLEM-REPORT-FORM \
         README \
+        THANKS \
         VERSION \
         ace \
         apps \
