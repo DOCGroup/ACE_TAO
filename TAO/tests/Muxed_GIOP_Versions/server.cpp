@@ -1,4 +1,4 @@
-// $Id server.cpp,v 1.7 2002/01/29 20:21:08 okellogg Exp$
+// $Id$
 
 #include "test_i.h"
 #include "ace/Get_Opt.h"
