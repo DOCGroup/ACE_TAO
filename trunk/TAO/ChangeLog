@@ -1,3 +1,9 @@
+Mon Dec 29 09:45:07 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Makefile:
+
+	  Added 1693_Test to the build.
+
 Mon Dec 29 15:10:40 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/orbsvcs/Event_Service_Constants.h:
