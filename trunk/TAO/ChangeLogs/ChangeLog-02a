@@ -1,9 +1,22 @@
-Wed May 10 21:21:15 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
-Wed May 10 20:45:11 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+Wed May 10 23:24:42 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* TAO_IDL/ast/ast_structure.cpp: I forgot to initialized the data
-	  members in the default constructor, which was causing TAO_IDL to
-	  mis-identify some struct's as local.
+        * orbsvcs/Event_Service/Event_Service.dsp:
+        * orbsvcs/tests/EC_Basic/EC_Basic.dsp:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.dsp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.dsp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.dsp:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.dsp:
+          Fixed more project files.
+
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.h:
+          Add missing includes
+
+Wed May 10 21:21:15 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_structure.cpp: I forgot to initialized the data
+          members in the default constructor, which was causing TAO_IDL to
+          mis-identify some struct's as local.
 
 Wed May 10 16:23:37 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -11,37 +24,37 @@ Wed May 10 16:23:37 2000  Carlos O'Ryan  <coryan@uci.edu>
         * orbsvcs/orbsvcs/CosEvent.dsp:
           Still fixing the dependencies in the workspace.
 
-	* orbsvcs/tests/Event/lib/ECTest.dsp:
-	* orbsvcs/tests/Event/Basic/Atomic_Reconnect.dsp:
-	* orbsvcs/tests/Event/Basic/BCast.dsp:
-	* orbsvcs/tests/Event/Basic/Bitmask.dsp:
-	* orbsvcs/tests/Event/Basic/Complex.dsp:
-	* orbsvcs/tests/Event/Basic/Control.dsp:
-	* orbsvcs/tests/Event/Basic/Disconnect.dsp:
-	* orbsvcs/tests/Event/Basic/Gateway.dsp:
-	* orbsvcs/tests/Event/Basic/MT_Disconnect.dsp:
-	* orbsvcs/tests/Event/Basic/Negation.dsp:
-	* orbsvcs/tests/Event/Basic/Observer.dsp:
-	* orbsvcs/tests/Event/Basic/Random.dsp:
-	* orbsvcs/tests/Event/Basic/Reconnect.dsp:
-	* orbsvcs/tests/Event/Basic/Shutdown.dsp:
-	* orbsvcs/tests/Event/Basic/Timeout.dsp:
-	* orbsvcs/tests/Event/Basic/Wildcard.dsp:
-	* orbsvcs/tests/Event/Basic/exhaustive_test.pl:
-	* orbsvcs/tests/Event/Performance/Connect.dsp:
-	* orbsvcs/tests/Event/Performance/Inversion.dsp:
-	* orbsvcs/tests/Event/Performance/Throughput.dsp:
-	  We only need to link the TAO_RTEvent library now.
+        * orbsvcs/tests/Event/lib/ECTest.dsp:
+        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.dsp:
+        * orbsvcs/tests/Event/Basic/BCast.dsp:
+        * orbsvcs/tests/Event/Basic/Bitmask.dsp:
+        * orbsvcs/tests/Event/Basic/Complex.dsp:
+        * orbsvcs/tests/Event/Basic/Control.dsp:
+        * orbsvcs/tests/Event/Basic/Disconnect.dsp:
+        * orbsvcs/tests/Event/Basic/Gateway.dsp:
+        * orbsvcs/tests/Event/Basic/MT_Disconnect.dsp:
+        * orbsvcs/tests/Event/Basic/Negation.dsp:
+        * orbsvcs/tests/Event/Basic/Observer.dsp:
+        * orbsvcs/tests/Event/Basic/Random.dsp:
+        * orbsvcs/tests/Event/Basic/Reconnect.dsp:
+        * orbsvcs/tests/Event/Basic/Shutdown.dsp:
+        * orbsvcs/tests/Event/Basic/Timeout.dsp:
+        * orbsvcs/tests/Event/Basic/Wildcard.dsp:
+        * orbsvcs/tests/Event/Basic/exhaustive_test.pl:
+        * orbsvcs/tests/Event/Performance/Connect.dsp:
+        * orbsvcs/tests/Event/Performance/Inversion.dsp:
+        * orbsvcs/tests/Event/Performance/Throughput.dsp:
+          We only need to link the TAO_RTEvent library now.
 
-	* orbsvcs/tests/Event/Basic/Schedule.dsp:
-	  This project still requires the TAO_RTSched library.
+        * orbsvcs/tests/Event/Basic/Schedule.dsp:
+          This project still requires the TAO_RTSched library.
 
-	* docs/tutorials/Quoter/Simple/Client/index.html:
-	  Improved the explanation as to what the *S_T.cpp are for.  They
-	  shoult not be compiled, but they are needed to compile the
-	  *S.cpp file.
-	  Thanks to William Horn <whorn1984@my-deja.com> for pointing this
-	  out.
+        * docs/tutorials/Quoter/Simple/Client/index.html:
+          Improved the explanation as to what the *S_T.cpp are for.  They
+          shoult not be compiled, but they are needed to compile the
+          *S.cpp file.
+          Thanks to William Horn <whorn1984@my-deja.com> for pointing this
+          out.
 
 Wed May 10 16:17:31 2000  Ossama Othman  <ossama@uci.edu>
 

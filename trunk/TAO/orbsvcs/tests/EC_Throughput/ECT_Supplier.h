@@ -20,6 +20,7 @@
 
 #include "orbsvcs/Channel_Clients_T.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/RtecSchedulerC.h"
 #include "ace/Task.h"
 
 class Test_Supplier : public ACE_Task<ACE_SYNCH>
