@@ -26,7 +26,7 @@ receiver -f <output_filename>
 sender
 ------
 
-sender [-f <filename>] [-p <protocol>] [-r <frame rate>] [-a <address>] [-d]  
+sender [-f <filename>] [-p <protocol>] [-r <frame rate>]  [-v]  [-s <localhost:port>] [-d <remote_host:port>]
 
 
 -f filename --> The file to be streamed to the receiver (defaults to
@@ -38,9 +38,12 @@ sender [-f <filename>] [-p <protocol>] [-r <frame rate>] [-a <address>] [-d]
 -r framerate--> The rate at which tha data frames need to be sent
                 (defaults to 30 frames per second).
 
--a address  --> Destination address.
+-s localhost:port --> The address to be used on the local host.
 
--d          --> Increament the TAO_debug_level for debug messages.
+-d remote_host:port --> The address to be used on the remote host.
+
+
+-v          --> Increament the TAO_debug_level for debug messages.
 
 
 The test must be run with the naming service.  Check the run_test.pl
