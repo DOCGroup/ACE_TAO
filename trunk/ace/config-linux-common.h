@@ -21,9 +21,6 @@
 // It's there on all libc 5 systems I checked
 #include <features.h>
 
-// JAWS uses this, argh!
-#define LINUX
-
 // First the machine specific part
 
 #if defined (i386)
@@ -36,26 +33,45 @@
 #endif /* i386 */
 
 #if defined (__alpha__)
-# define ACE_HAS_64BIT_LONGS
-
 // The following might be necessary on Intel as well as Alpha.
 # define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 
-// The following might only be necessary on Alpha?
+// The following might only be necessary on Alpha?  On second
+// thought, I think that they're necessary with glibc, not Alpha.
 # define ACE_HAS_DLFCN_H_BROKEN_EXTERN_C
 # define ACE_LACKS_RPC_H
 # define ACE_NEEDS_SYSTIME_H
+# define ACE_HAS_VOIDPTR_SOCKOPT
+
+  // To avoid compilation warnings about TCP_NODELAY and TCP_MAXSEG
+  // being redefined, because they're defined in linux/socket.h:
+# define ACE_LACKS_TCP_H
+
+  // This is protected in string.h.
+  extern char *strtok_r __P ((char *__s, __const char *__delim,
+                             char **__save_ptr));
+# include <sys/types.h>
+# if defined (_REENTRANT)
+   // This is protected in unistd.h.
+   extern __pid_t getpgid __P ((__pid_t __pid));
+# endif /* _REENTRANT */
 #endif /* __alpha__ */
 
 // Then glibc/libc5 specific parts
 
 #if defined(__GLIBC__)
-// OS/compiler uses size_t * rather than int * for socket lengths
-#define ACE_HAS_SIZET_SOCKET_LEN
+  // OS/compiler uses size_t * rather than int * for socket lengths
+# define ACE_HAS_SIZET_SOCKET_LEN
+
+# if defined (__alpha__)
+    // This is need on Alphas with glibc.  It that because it has an
+    // older glibc, or do we need this on Intels as well?
+#   define ACE_LACKS_SOME_POSIX_PROTOTYPES
+# endif /* __alpha__ */
 #else
-// Platform lacks POSIX prototypes for certain System V functions
-// like shared memory and message queues.
-#define ACE_LACKS_SOME_POSIX_PROTOTYPES
+  // Platform lacks POSIX prototypes for certain System V functions
+  // like shared memory and message queues.
+# define ACE_LACKS_SOME_POSIX_PROTOTYPES
 #endif /* __GLIBC__ */
 
 
