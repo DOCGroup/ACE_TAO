@@ -9,17 +9,12 @@
 ACE_RCSID(tao, params, "$Id$")
 
 TAO_ORB_Parameters::TAO_ORB_Parameters (void)
-  : addr_ (),
-    host_ (),
-    name_service_ior_ (),
-    name_service_port_ (0),
-    trading_service_ior_ (),
+  : name_service_port_ (0),
     trading_service_port_ (0),
     sock_rcvbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ),
     sock_sndbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ),
     cdr_memcpy_tradeoff_ (TAO_DEFAULT_CDR_MEMCPY_TRADEOFF),
-    use_lite_protocol_ (0),
-    init_ref_ ()
+    use_lite_protocol_ (0)
 {
 }
 
