@@ -41,16 +41,22 @@ ACE_RCSID(Event_Supplier, DualEC_Sup, "$Id$")
 
 static const char usage [] =
 "[[-?]\n"
+"                 -f <name of input data file>\n"
 "                 [-O[RBport] ORB port number]\n"
-"                 [-m <count> of messages to send [100]\n"
-"                 [-f <name of input data file>]\n"
+"                 [-m <count> of messages to send (2000)]\n"
+"                 [-b <count> at which to break navigation event\n"
+"                             stream out onto its own channel (1000)]\n"
+"                 [-n <usec> pause between navigation events (100000)]\n"
+"                 [-w <usec> pause between weapons events (100000)]\n"
 "                 [-d to dump scheduler header files]\n"
-"                 [-s to suppress data updates by EC]]\n"
+"                 [-s to suppress data updates by EC]\n"
 "                 [-r to use runtime schedulers]\n"
-"                 [-p to suppress prioritization of operations]]\n";
+"                 [-p to suppress prioritization of operations]\n";
 
 DualEC_Supplier::DualEC_Supplier (int argc, char** argv)
-: channel_hi_name_ (1),
+: nav_pause_ (0, 100000),
+  weap_pause_ (0, 100000),
+  channel_hi_name_ (1),
   channel_lo_name_ (1),
   sched_hi_name_ (1),
   sched_lo_name_ (1),
@@ -58,11 +64,10 @@ DualEC_Supplier::DualEC_Supplier (int argc, char** argv)
   sched_lo_impl_ (0),
   ec_hi_impl_ (0),
   ec_lo_impl_ (0),
-  weapons_Supplier (&dOVE_Supplier_Hi_),
-  navigation_Supplier (&dOVE_Supplier_Lo_),
   argc_(argc),
   argv_(argv),
-  total_messages_(10),
+  total_messages_ (2000),
+  break_count_(-1),
   input_file_name_(0),
   update_data_ (1),
   dump_schedule_headers_ (0),
@@ -102,36 +107,44 @@ DualEC_Supplier::DualEC_Supplier (int argc, char** argv)
   TAO_ENDTRY;
 
   // Initialize the high priority RT_Info data
-  rt_info_data_hi_.entry_point = "DUALEC_SUP_HI";
-  rt_info_data_hi_.criticality = RtecScheduler::VERY_HIGH_CRITICALITY;
-  rt_info_data_hi_.worst_case_execution_time = ORBSVCS_Time::zero;
-  rt_info_data_hi_.typical_execution_time = ORBSVCS_Time::zero;
-  rt_info_data_hi_.cached_execution_time = ORBSVCS_Time::zero;
-  rt_info_data_hi_.period = 2500000;
-  rt_info_data_hi_.importance = RtecScheduler::VERY_HIGH_IMPORTANCE;
-  rt_info_data_hi_.quantum = ORBSVCS_Time::zero;
-  rt_info_data_hi_.threads = 1;
-  rt_info_data_hi_.info_type = RtecScheduler::OPERATION;
+  rt_info_nav_hi_.entry_point = "DUALEC_NAV_HI";
+  rt_info_nav_hi_.criticality = RtecScheduler::VERY_HIGH_CRITICALITY;
+  rt_info_nav_hi_.worst_case_execution_time = ORBSVCS_Time::zero;
+  rt_info_nav_hi_.typical_execution_time = ORBSVCS_Time::zero;
+  rt_info_nav_hi_.cached_execution_time = ORBSVCS_Time::zero;
+  rt_info_nav_hi_.period = 2500000;
+  rt_info_nav_hi_.importance = RtecScheduler::VERY_HIGH_IMPORTANCE;
+  rt_info_nav_hi_.quantum = ORBSVCS_Time::zero;
+  rt_info_nav_hi_.threads = 1;
+  rt_info_nav_hi_.info_type = RtecScheduler::OPERATION;
+  rt_info_weap_hi_ = rt_info_nav_hi_;
+  rt_info_weap_hi_.entry_point = "DUALEC_WEAP_HI";
+  rt_info_dummy_hi_ = rt_info_nav_hi_;
+  rt_info_dummy_hi_.entry_point = "DUALEC_DUMMY_HI";
 
   // Initialize the low priority RT_Info data
-  rt_info_data_lo_.entry_point = "DUALEC_SUP_LO";
-  rt_info_data_lo_.criticality = RtecScheduler::VERY_LOW_CRITICALITY;
-  rt_info_data_lo_.worst_case_execution_time = ORBSVCS_Time::zero;
-  rt_info_data_lo_.typical_execution_time = ORBSVCS_Time::zero;
-  rt_info_data_lo_.cached_execution_time = ORBSVCS_Time::zero;
-  rt_info_data_lo_.period = 10000000;
-  rt_info_data_lo_.importance = RtecScheduler::VERY_LOW_IMPORTANCE;
-  rt_info_data_lo_.quantum = ORBSVCS_Time::zero;
-  rt_info_data_lo_.threads = 1;
-  rt_info_data_lo_.info_type = RtecScheduler::OPERATION;
+  rt_info_nav_lo_.entry_point = "DUALEC_NAV_LO";
+  rt_info_nav_lo_.criticality = RtecScheduler::VERY_LOW_CRITICALITY;
+  rt_info_nav_lo_.worst_case_execution_time = ORBSVCS_Time::zero;
+  rt_info_nav_lo_.typical_execution_time = ORBSVCS_Time::zero;
+  rt_info_nav_lo_.cached_execution_time = ORBSVCS_Time::zero;
+  rt_info_nav_lo_.period = 10000000;
+  rt_info_nav_lo_.importance = RtecScheduler::VERY_LOW_IMPORTANCE;
+  rt_info_nav_lo_.quantum = ORBSVCS_Time::zero;
+  rt_info_nav_lo_.threads = 1;
+  rt_info_nav_lo_.info_type = RtecScheduler::OPERATION;
+  rt_info_weap_lo_ = rt_info_nav_lo_;
+  rt_info_weap_lo_.entry_point = "DUALEC_WEAP_LO";
+  rt_info_dummy_lo_ = rt_info_nav_lo_;
+  rt_info_dummy_lo_.entry_point = "DUALEC_DUMMY_LO";
 }
 
 DualEC_Supplier::~DualEC_Supplier ()
 {
   TAO_TRY
     {
-      this->dOVE_Supplier_Hi_.disconnect ();
-      this->dOVE_Supplier_Lo_.disconnect ();
+      this->navigation_Supplier_.disconnect ();
+      this->weapons_Supplier_.disconnect ();
 
       // Unbind the schedulers from the NS.
       this->naming_context_->unbind (this->sched_hi_name_, TAO_TRY_ENV);
@@ -218,26 +231,52 @@ DualEC_Supplier::init ()
     }
 
   // Connect suppliers to the respective event channels.
-  ACE_Scheduler_Factory::POD_RT_Info * rt_info_ptr_hi = 
-    (suppress_priority_) ? 0 : &rt_info_data_hi_;
-  if (this->dOVE_Supplier_Hi_.connect ("MIB_unknown", 
-                                       "DUAL_EC_HI",
-                                       "DUAL_SCHED_HI",
-                                       rt_info_ptr_hi) == -1)
+  ACE_Scheduler_Factory::POD_RT_Info * rt_info_nav_hi = 
+    (suppress_priority_) ? 0 : &rt_info_nav_hi_;
+  ACE_Scheduler_Factory::POD_RT_Info * rt_info_weap_hi = 
+    (suppress_priority_) ? 0 : &rt_info_weap_hi_;
+  ACE_Scheduler_Factory::POD_RT_Info * rt_info_nav_lo = 
+    (suppress_priority_) ? 0 : &rt_info_nav_lo_;
+  ACE_Scheduler_Factory::POD_RT_Info * rt_info_weap_lo = 
+    (suppress_priority_) ? 0 : &rt_info_weap_lo_;
+
+  if (this->navigation_Supplier_.connect ("MIB_unknown", 
+                                          "DUAL_EC_HI",
+                                          "DUAL_SCHED_HI",
+                                           rt_info_nav_hi) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Could not connect to DUAL_EC_HI"),
+                         "Could not connect navigation supplier to DUAL_EC_HI"),
                         -1);
     }
-  ACE_Scheduler_Factory::POD_RT_Info * rt_info_ptr_lo = 
-    (suppress_priority_) ? 0 : &rt_info_data_lo_;
-  if (this->dOVE_Supplier_Lo_.connect ("MIB_unknown", 
-                                       "DUAL_EC_LO",
-                                       "DUAL_SCHED_LO",
-                                       rt_info_ptr_lo) == -1)
+ 
+ if (this->navigation_Supplier_.connect ("MIB_unknown", 
+                                          "DUAL_EC_LO",
+                                          "DUAL_SCHED_LO",
+                                           rt_info_nav_lo) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Could not connect to DUAL_EC2"),
+                         "Could not connect navigation supplier to DUAL_EC_LO"),
+                        -1);
+    }
+
+  if (this->weapons_Supplier_.connect ("MIB_unknown", 
+                                       "DUAL_EC_HI",
+                                       "DUAL_SCHED_HI",
+                                       rt_info_weap_hi) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Could not connect weapons supplier to DUAL_EC_HI"),
+                        -1);
+    }
+ 
+ if (this->weapons_Supplier_.connect ("MIB_unknown", 
+                                      "DUAL_EC_LO",
+                                      "DUAL_SCHED_LO",
+                                      rt_info_weap_lo) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Could not connect weapons supplier to DUAL_EC_LO"),
                         -1);
     }
 
@@ -300,7 +339,7 @@ DualEC_Supplier::run_nav_thread (void *arg)
 
       CORBA::Any any;
 
-      unsigned long total_sent = 0;
+      long total_sent = 0;
 
       do
       {
@@ -314,7 +353,18 @@ DualEC_Supplier::run_nav_thread (void *arg)
             // Sleep briefly to avoid too much livelock (a little is good). 
             ACE_OS::sleep (sup->nav_pause_);
 
-            sup->navigation_Supplier->notify (any);
+            // If the break count has been reached, change the
+            // channel that is being used by the NAV supplier
+            if (total_sent == sup->break_count_)
+              {
+               ACE_DEBUG ((LM_DEBUG,
+                           "breaking out nav at event: %d\n",
+                           sup->break_count_));
+
+                sup->navigation_Supplier_.use_next_connection ();
+              }
+
+            sup->navigation_Supplier_.notify (any);
           }
         else
           {
@@ -370,7 +420,7 @@ DualEC_Supplier::run_weap_thread (void *arg)
 
       CORBA::Any any;
 
-      unsigned long total_sent = 0;
+      long total_sent = 0;
 
       do
       {
@@ -384,7 +434,7 @@ DualEC_Supplier::run_weap_thread (void *arg)
             // Sleep briefly to avoid too much livelock (a little is good). 
             ACE_OS::sleep (sup->weap_pause_);
 
-            sup->weapons_Supplier->notify (any);
+            sup->weapons_Supplier_.notify (any);
           }
         else
           {
@@ -465,6 +515,110 @@ DualEC_Supplier::create_schedulers (void)
           naming_context_->bind (this->sched_lo_name_, 
                                  this->sched_lo_.in (), TAO_TRY_ENV);
           TAO_CHECK_ENV;
+
+          // Register high and low priority rt_infos with the 
+          // schedulers to force priority differentiation.
+
+          this->sched_hi_rt_info_hi_ = 
+            this->sched_hi_->
+              create (this->rt_info_dummy_hi_.entry_point, 
+                      TAO_TRY_ENV);
+
+          TAO_CHECK_ENV;
+
+          this->sched_hi_->
+            set (this->sched_hi_rt_info_hi_,
+                 ACE_static_cast (RtecScheduler::Criticality_t,
+	                          this->rt_info_dummy_hi_.criticality),
+                 this->rt_info_dummy_hi_.worst_case_execution_time,
+                 this->rt_info_dummy_hi_.typical_execution_time,
+                 this->rt_info_dummy_hi_.cached_execution_time,
+                 this->rt_info_dummy_hi_.period,
+                 ACE_static_cast (RtecScheduler::Importance_t,
+                                  this->rt_info_dummy_hi_.importance),
+                 this->rt_info_dummy_hi_.quantum,
+                 this->rt_info_dummy_hi_.threads,
+                 ACE_static_cast (RtecScheduler::Info_Type_t,
+                                  this->rt_info_dummy_hi_.info_type),
+                 TAO_TRY_ENV);
+
+          TAO_CHECK_ENV;
+
+          this->sched_hi_rt_info_lo_ = 
+            this->sched_hi_->
+              create (this->rt_info_dummy_lo_.entry_point, 
+                      TAO_TRY_ENV);
+
+          TAO_CHECK_ENV;
+
+          this->sched_hi_->
+            set (this->sched_hi_rt_info_lo_,
+                 ACE_static_cast (RtecScheduler::Criticality_t,
+	                          this->rt_info_dummy_lo_.criticality),
+                 this->rt_info_dummy_lo_.worst_case_execution_time,
+                 this->rt_info_dummy_lo_.typical_execution_time,
+                 this->rt_info_dummy_lo_.cached_execution_time,
+                 this->rt_info_dummy_lo_.period,
+                 ACE_static_cast (RtecScheduler::Importance_t,
+                                  this->rt_info_dummy_lo_.importance),
+                 this->rt_info_dummy_lo_.quantum,
+                 this->rt_info_dummy_lo_.threads,
+                 ACE_static_cast (RtecScheduler::Info_Type_t,
+                                  this->rt_info_dummy_lo_.info_type),
+                 TAO_TRY_ENV);
+
+          TAO_CHECK_ENV;
+
+          this->sched_hi_rt_info_hi_ = 
+            this->sched_lo_->
+              create (this->rt_info_dummy_hi_.entry_point, 
+                      TAO_TRY_ENV);
+
+          TAO_CHECK_ENV;
+
+          this->sched_lo_->
+            set (this->sched_hi_rt_info_hi_,
+                 ACE_static_cast (RtecScheduler::Criticality_t,
+	                          this->rt_info_dummy_hi_.criticality),
+                 this->rt_info_dummy_hi_.worst_case_execution_time,
+                 this->rt_info_dummy_hi_.typical_execution_time,
+                 this->rt_info_dummy_hi_.cached_execution_time,
+                 this->rt_info_dummy_hi_.period,
+                 ACE_static_cast (RtecScheduler::Importance_t,
+                                  this->rt_info_dummy_hi_.importance),
+                 this->rt_info_dummy_hi_.quantum,
+                 this->rt_info_dummy_hi_.threads,
+                 ACE_static_cast (RtecScheduler::Info_Type_t,
+                                  this->rt_info_dummy_hi_.info_type),
+                 TAO_TRY_ENV);
+
+          TAO_CHECK_ENV;
+
+          this->sched_hi_rt_info_lo_ = 
+            this->sched_lo_->
+              create (this->rt_info_dummy_lo_.entry_point, 
+                      TAO_TRY_ENV);
+
+          TAO_CHECK_ENV;
+
+          this->sched_lo_->
+            set (this->sched_hi_rt_info_lo_,
+                 ACE_static_cast (RtecScheduler::Criticality_t,
+	                          this->rt_info_dummy_lo_.criticality),
+                 this->rt_info_dummy_lo_.worst_case_execution_time,
+                 this->rt_info_dummy_lo_.typical_execution_time,
+                 this->rt_info_dummy_lo_.cached_execution_time,
+                 this->rt_info_dummy_lo_.period,
+                 ACE_static_cast (RtecScheduler::Importance_t,
+                                  this->rt_info_dummy_lo_.importance),
+                 this->rt_info_dummy_lo_.quantum,
+                 this->rt_info_dummy_lo_.threads,
+                 ACE_static_cast (RtecScheduler::Info_Type_t,
+                                  this->rt_info_dummy_lo_.info_type),
+                 TAO_TRY_ENV);
+
+          TAO_CHECK_ENV;
+
         }
     }
   TAO_CATCHANY
@@ -631,15 +785,16 @@ DualEC_Supplier::start_generating_events (void)
       // Compute the scheduling information, based on the provided RT_Infos.
       this->compute_schedules ();
 
+
       // Load the scheduling data for the simulation.
       this->load_schedule_data ();
 
-      // Sleep for 15 seconds to give time for registrations.
+      // Sleep for 10 seconds to give time for registrations.
       ACE_DEBUG ((LM_DEBUG,
-		          "DUAL_SCHED_HI, DUAL_SCHED_LO, DUAL_EC_HI and "
+		  "\nDUAL_SCHED_HI, DUAL_SCHED_LO, DUAL_EC_HI and "
                   "DUAL_EC_LO are registered with the Naming Service.\n"
-                  "Sleeping 15 seconds before generating events"));
-      ACE_Time_Value tv (15, 0);
+                  "Sleeping 10 seconds before generating events\n"));
+      ACE_Time_Value tv (10, 0);
       ACE_OS::sleep (tv);
 
       // Spawn thread to run over the navigation data and generate events.
@@ -838,7 +993,7 @@ DualEC_Supplier::load_schedule_data ()
 unsigned int
 DualEC_Supplier::get_options (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "f:m:n:w:dsrp");
+  ACE_Get_Opt get_opt (argc, argv, "f:m:b:n:w:dsrp");
   int opt;
   int temp;
 
@@ -873,6 +1028,22 @@ DualEC_Supplier::get_options (int argc, char *argv [])
           else
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%s: message count must be > 0",
+                               argv[0]),
+                               1);
+          break;
+
+        case 'b':
+          temp = ACE_OS::atoi (get_opt.optarg);
+          if (temp > 0)
+            {
+              this->break_count_ = (u_int) temp;
+               ACE_DEBUG ((LM_DEBUG,
+                           "Break count: %d\n",
+                           this->break_count_));
+            }
+          else
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "%s: break count must be > 0",
                                argv[0]),
                                1);
           break;
@@ -956,6 +1127,26 @@ DualEC_Supplier::get_options (int argc, char *argv [])
 int
 main (int argc, char *argv [])
 {
+  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  int min_priority =
+    ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
+
+  // Set all threads in the process into the RT scheduling class
+  if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
+                                              min_priority,
+                                              ACE_SCOPE_PROCESS)) != 0)
+    {
+      if (ACE_OS::last_error () == EPERM)
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s: user is not superuser, "
+                      "so remain in time-sharing class\n", argv[0]));
+      else
+          ACE_ERROR ((LM_ERROR,
+                      "%s: ACE_OS::sched_params failed\n", argv[0]));
+    }
+
+
+
   TAO_TRY
     {
       // Initialize ORB.

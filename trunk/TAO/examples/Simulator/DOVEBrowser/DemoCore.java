@@ -29,6 +29,7 @@ public class DemoCore extends Frame {
   private GridBagLayout gridbag_;
   private GridBagConstraints constraints_;
   private boolean use_queueing_ = false;
+  private boolean connections_established_ = false;
 
   DemoCore (String nameServiceIOR, 
 	    String nameServicePort,
@@ -61,7 +62,6 @@ public class DemoCore extends Frame {
 
     // List of Visualization Components
     vis_comp_list_ = new java.util.Vector();
-
 
     MenuBar menubar_ = new MenuBar ();
     Menu menu_ = new Menu ("File");
@@ -101,16 +101,51 @@ public class DemoCore extends Frame {
     
     // instantiate the Factory for Visualization Components
     visCompFactory_ = new VisCompFactory ();
-    
-    // in here the factory is needed
-    addConnection ("Weapons");
-    addConnection ("Weapons Latency (100 ns)");
-    addConnection ("Weapons Latency Jitter (100 ns)");
-    addConnection ("Navigation");
-    addConnection ("Navigation Latency (100 ns)");
-    addConnection ("Navigation Latency Jitter (100 ns)");
+
+    // Traverse the args looking for switches that determine connections.
+    int arg_index = 0;
+    while (args.length > arg_index) 
+      {
+        if (args[arg_index].equals ("-dualECdemo") ||
+            args[arg_index].equals ("-dualECdemo1") ||
+            args[arg_index].equals ("-dualECdemo2")) 
+          {
+            // Use monotonic scales in the double precision data windows
+            DoubleVisComp.monotonic_scale (true);
+
+            // Establish connections
+            if (! connections_established_)
+              {
+                connections_established_ = true;
+                addConnection ("Weapons");
+                addConnection ("Weapons Latency (100 ns)");
+                addConnection ("Weapons Latency Jitter (100 ns)");
+                addConnection ("Navigation");
+                addConnection ("Navigation Latency (100 ns)");
+                addConnection ("Navigation Latency Jitter (100 ns)");
+                break;
+              }
+          }
+        // Skip over anything else.
+        else
+          {
+            arg_index ++;
+          }
+      }
+
+   
+    // If connections have not been established, set up defaults
+    if (! connections_established_)
+      {
+        connections_established_ = true;
+        addConnection ("Weapons");
+        addConnection ("Weapons Latency (100 ns)");
+        addConnection ("Navigation");
+        addConnection ("Navigation Latency (100 ns)");
+      }
   }
-  
+
+
   public boolean addConnection (String selected) {	
 		// to not fill too many into it
     if (countVisComp_ < MAX_VIS_COMPS) {

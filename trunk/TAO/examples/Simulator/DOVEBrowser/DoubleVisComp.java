@@ -34,7 +34,9 @@ public class DoubleVisComp extends Canvas implements VisComp
   private int spacing_;
   private float local_max_ = 0;
   private boolean max_increased_ = false;
-  
+  private static boolean monotonic_scale_ = false;
+  private static int global_max_value_ = 0;
+
   public DoubleVisComp()
   {
     super();
@@ -43,7 +45,6 @@ public class DoubleVisComp extends Canvas implements VisComp
     spacing_ = MIN_SPACING;
     title_ = "";
     max_value_ = 1;
-    // max_value_ = max_value;
     old_max_value_ = max_value_;
     
     java.util.Random rand = new java.util.Random (System.currentTimeMillis());
@@ -64,6 +65,21 @@ public class DoubleVisComp extends Canvas implements VisComp
     this.setForeground(Color.white);
   }
 
+  public static synchronized void monotonic_scale (boolean b) {
+    monotonic_scale_ = b;
+  }
+
+  public static synchronized boolean monotonic_scale () {
+    return monotonic_scale_;
+  }
+
+  public static synchronized void raise_global_max_value (int i) {
+    global_max_value_ = global_max_value_ < i ? i : global_max_value_;
+  }
+
+  public static synchronized int global_max_value () {
+    return global_max_value_;
+  }
 
   public void setName (String title) {
       title_ = title;
@@ -108,11 +124,24 @@ public class DoubleVisComp extends Canvas implements VisComp
     if (new_point > local_max_)
       local_max_ = new_point;
     
-    while (local_max_ > max_value_)
-      max_value_ *= 2;
+    if (monotonic_scale_)
+      {
+        while (local_max_ > max_value_)
+          max_value_ *= 2;
+
+        while (global_max_value_ > max_value_)
+          max_value_ *= 2;
+
+        raise_global_max_value (max_value_);
+      }
+    else
+      {
+        while (local_max_ > max_value_)
+          max_value_ *= 2;
     
-    while ((local_max_ < max_value_/2) && (max_value_ > old_max_value_))
-      max_value_ /= 2;
+        while ((local_max_ < max_value_/2) && (max_value_ > old_max_value_))
+          max_value_ /= 2;
+      }
 
     repaint();
   }

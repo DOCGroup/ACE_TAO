@@ -36,7 +36,7 @@ public class MTQueue
 	}
 
       // Wake up any waiting threads
-      notify ();
+      notifyAll ();
     }
 
   // Places a passed Object at the front of the queue.
@@ -59,7 +59,7 @@ public class MTQueue
 	}
 
       // Wake up any waiting threads
-      notify ();
+      notifyAll ();
     }
   
   // Try to remove an object from the head of the queue - nonblocking.
@@ -97,10 +97,15 @@ public class MTQueue
             }
         }
 
-      // Dequeue the object at the head of the queue.
+      // Dequeue the object at the head of the queue.  Make sure
+      // to null out references within dequeued nodes to prevent
+      // out of memory errors.
       if (tail_ == head_)
 	{
 	  return_value = head_.data_;
+          head_.next_ = null;
+          head_.prev_ = null;
+          head_.data_ = null;
 	  tail_ = null;
 	  head_ = null;
 	}
@@ -108,6 +113,9 @@ public class MTQueue
 	{
 	  return_value = head_.data_;
 	  head_ = head_.next_;
+          head_.prev_.next_ = null;
+          head_.prev_.prev_ = null;
+          head_.prev_.data_ = null;
 	  head_.prev_ = null;	  
 	}
 
@@ -150,10 +158,15 @@ public class MTQueue
             }
         }
 
-      // Dequeue the object at the back of the queue.
+      // Dequeue the object at the back of the queue.  Make sure
+      // to null out references within dequeued nodes to prevent
+      // out of memory errors.
       if (tail_ == head_)
 	{
 	  return_value = tail_.data_;
+          tail_.data_ = null;
+          tail_.next_ = null;
+          tail_.prev_ = null;
 	  tail_ = null;
 	  head_ = null;
 	}
@@ -161,6 +174,9 @@ public class MTQueue
 	{	  
 	  return_value = tail_.data_;
 	  tail_ = tail_.prev_;
+          tail_.next_.data_ = null;
+          tail_.next_.next_ = null;
+          tail_.next_.prev_ = null;
 	  tail_.next_ = null;	  
 	}
 

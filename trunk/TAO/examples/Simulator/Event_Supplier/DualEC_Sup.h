@@ -122,7 +122,6 @@ private:
   CosNaming::Name sched_hi_name_;
   CosNaming::Name sched_lo_name_;
 
-
   // Scheduling Service servant implementation pointers.
   POA_RtecScheduler::Scheduler * sched_hi_impl_;
   POA_RtecScheduler::Scheduler * sched_lo_impl_;
@@ -130,6 +129,13 @@ private:
   // Scheduling Service client references.
   RtecScheduler::Scheduler_var sched_hi_;
   RtecScheduler::Scheduler_var sched_lo_;
+
+  // Handles for the dummy rt_infos registered with the 
+  // schedulers in order to force priority differentiation.
+  RtecScheduler::handle_t sched_hi_rt_info_hi_;
+  RtecScheduler::handle_t sched_hi_rt_info_lo_;
+  RtecScheduler::handle_t sched_lo_rt_info_hi_;
+  RtecScheduler::handle_t sched_lo_rt_info_lo_;
 
   // Termination servant implementation and client reference
   Terminator terminator_impl_;
@@ -147,15 +153,16 @@ private:
   RtecEventChannelAdmin::EventChannel_var ec_hi_;
   RtecEventChannelAdmin::EventChannel_var ec_lo_;
 
-  DOVE_Supplier dOVE_Supplier_Hi_;
-  DOVE_Supplier dOVE_Supplier_Lo_;
-
-  DOVE_Supplier * weapons_Supplier;
-  DOVE_Supplier * navigation_Supplier;
+  DOVE_Supplier weapons_Supplier_;
+  DOVE_Supplier navigation_Supplier_;
 
   // Data for registering RT_Infos
-  ACE_Scheduler_Factory::POD_RT_Info rt_info_data_hi_;
-  ACE_Scheduler_Factory::POD_RT_Info rt_info_data_lo_;
+  ACE_Scheduler_Factory::POD_RT_Info rt_info_nav_hi_;
+  ACE_Scheduler_Factory::POD_RT_Info rt_info_nav_lo_;
+  ACE_Scheduler_Factory::POD_RT_Info rt_info_weap_hi_;
+  ACE_Scheduler_Factory::POD_RT_Info rt_info_weap_lo_;
+  ACE_Scheduler_Factory::POD_RT_Info rt_info_dummy_hi_;
+  ACE_Scheduler_Factory::POD_RT_Info rt_info_dummy_lo_;
 
   // References for CORBA RtecScheduler data structures
   RtecScheduler::RT_Info_Set_var infos_hi_;
@@ -171,7 +178,8 @@ private:
 
   int argc_;
   char **argv_;
-  unsigned long total_messages_;
+  long total_messages_;
+  long break_count_;
   char *input_file_name_;
   unsigned long update_data_;
   int dump_schedule_headers_;
@@ -184,5 +192,4 @@ private:
 };
 
 #endif /* DUALEC_SUP_H */
-
 
