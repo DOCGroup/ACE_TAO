@@ -224,7 +224,7 @@ operator>> (TAO_InputCDR&, CORBA_ValueBase *&);
 
 #if defined (__ACE_INLINE__)
 # include "tao/ValueBase.i"
-#endif /* __ACE_INLINE__) */
+#endif /* __ACE_INLINE__*/
 
 #endif /* TAO_HAS_VALUETYPE */
 
