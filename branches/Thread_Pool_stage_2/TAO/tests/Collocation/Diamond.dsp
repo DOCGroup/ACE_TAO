@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="Diamond DLL" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Collocation Diamond DLL" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Dynamic-Link Library" 0x0102
 
-CFG=Diamond DLL - Win32 Debug
+CFG=Collocation Diamond DLL - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=Diamond DLL - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Diamond.mak" CFG="Diamond DLL - Win32 Debug"
+!MESSAGE NMAKE /f "Diamond.mak" CFG="Collocation Diamond DLL - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Diamond DLL - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "Diamond DLL - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "Collocation Diamond DLL - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "Collocation Diamond DLL - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
@@ -29,7 +29,7 @@ CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "Diamond DLL - Win32 Release"
+!IF  "$(CFG)" == "Collocation Diamond DLL - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -54,9 +54,9 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 ace.lib tao.lib TAO_PortableServer.lib coll_test_stubs.lib /nologo /dll /machine:I386 /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\PortableServer"
+# ADD LINK32 ace.lib tao.lib TAO_PortableServer.lib Collocation_Test_Stubs.lib /nologo /dll /machine:I386 /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\PortableServer"
 
-!ELSEIF  "$(CFG)" == "Diamond DLL - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Collocation Diamond DLL - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -81,14 +81,14 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib taod.lib TAO_PortableServerd.lib coll_test_stubsd.lib /nologo /dll /debug /machine:I386 /out:"Diamondd.dll" /pdbtype:sept /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\PortableServer"
+# ADD LINK32 aced.lib taod.lib TAO_PortableServerd.lib Collocation_Test_Stubsd.lib /nologo /dll /debug /machine:I386 /out:"Diamondd.dll" /pdbtype:sept /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\PortableServer"
 
 !ENDIF 
 
 # Begin Target
 
-# Name "Diamond DLL - Win32 Release"
-# Name "Diamond DLL - Win32 Debug"
+# Name "Collocation Diamond DLL - Win32 Release"
+# Name "Collocation Diamond DLL - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
@@ -133,95 +133,6 @@ SOURCE=.\stub_export.h
 
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # End Group
-# Begin Group "IDL Files"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\Diamond.idl
-
-!IF  "$(CFG)" == "Diamond DLL - Win32 Release"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__DIAMO="..\..\..\bin\release\tao_idl.exe"	
-# Begin Custom Build - Invoking tao_idl on $(InputName).idl
-InputPath=.\Diamond.idl
-InputName=Diamond
-
-BuildCmds= \
-	..\..\..\bin\release\tao_idl.exe -Ge 1 -Gd -Wb,skel_export_macro=Diamond_Export -Wb,stub_export_macro=MY_Stub_Export -Wb,skel_export_include=diamond_export.h -Wb,stub_export_include=stub_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "Diamond DLL - Win32 Debug"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__DIAMO="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking tao_idl on $(InputName).idl
-InputPath=.\Diamond.idl
-InputName=Diamond
-
-BuildCmds= \
-	..\..\..\bin\tao_idl.exe -Ge 1 -Gd -Wb,skel_export_macro=Diamond_Export -Wb,stub_export_macro=MY_Stub_Export -Wb,skel_export_include=diamond_export.h -Wb,stub_export_include=stub_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ENDIF 
-
-# End Source File
-# End Group
 # Begin Group "Template Files"
 
 # PROP Default_Filter "_T.cpp"
@@ -229,9 +140,9 @@ BuildCmds= \
 
 SOURCE=.\DiamondS_T.cpp
 
-!IF  "$(CFG)" == "Diamond DLL - Win32 Release"
+!IF  "$(CFG)" == "Collocation Diamond DLL - Win32 Release"
 
-!ELSEIF  "$(CFG)" == "Diamond DLL - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Collocation Diamond DLL - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
 

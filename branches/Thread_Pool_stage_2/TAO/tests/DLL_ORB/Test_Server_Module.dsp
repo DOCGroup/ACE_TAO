@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="Test_Server_Module" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="DLL_ORB Test_Server_Module" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Dynamic-Link Library" 0x0102
 
-CFG=Test_Server_Module - Win32 Debug
+CFG=DLL_ORB Test_Server_Module - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=Test_Server_Module - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Test_Server_Module.mak" CFG="Test_Server_Module - Win32 Debug"
+!MESSAGE NMAKE /f "Test_Server_Module.mak" CFG="DLL_ORB Test_Server_Module - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Test_Server_Module - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "Test_Server_Module - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "DLL_ORB Test_Server_Module - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "DLL_ORB Test_Server_Module - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
@@ -29,7 +29,7 @@ CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "Test_Server_Module - Win32 Release"
+!IF  "$(CFG)" == "DLL_ORB Test_Server_Module - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -56,7 +56,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
 # ADD LINK32 ACE.lib TAO.lib TAO_PortableServer.lib /nologo /dll /pdb:none /machine:I386 /out:"..\..\..\bin\Test_Server_Module.dll" /libpath:"../../../ace" /libpath:"../../tao" /libpath:"../../tao/PortableServer"
 
-!ELSEIF  "$(CFG)" == "Test_Server_Module - Win32 Debug"
+!ELSEIF  "$(CFG)" == "DLL_ORB Test_Server_Module - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -88,8 +88,8 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "Test_Server_Module - Win32 Release"
-# Name "Test_Server_Module - Win32 Debug"
+# Name "DLL_ORB Test_Server_Module - Win32 Release"
+# Name "DLL_ORB Test_Server_Module - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx"
@@ -153,7 +153,7 @@ SOURCE=.\TestS.i
 
 SOURCE=.\Test.idl
 
-!IF  "$(CFG)" == "Test_Server_Module - Win32 Release"
+!IF  "$(CFG)" == "DLL_ORB Test_Server_Module - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
 # Begin Custom Build
@@ -191,7 +191,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "Test_Server_Module - Win32 Debug"
+!ELSEIF  "$(CFG)" == "DLL_ORB Test_Server_Module - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
 # Begin Custom Build

@@ -13,7 +13,7 @@
 //
 //=============================================================================
 
-#include "Coll_Tester.h"
+#include "Collocation_Tester.h"
 
 Collocation_Test::Collocation_Test (void)
 {
