@@ -29,6 +29,7 @@
 #include "ace/Svc_Handler.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/INET_Addr.h"
+#include "ace/SOCK_CODgram.h"
 
 #ifdef NATIVE_ATM
 #include "atmcom.h"
@@ -48,11 +49,24 @@ public:
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
   // Handle data from the client.
 
+  virtual int svc (void *);
+  // Thread method
+
   virtual int close (u_long);
   // Called if ACE_Svc_Handler is closed down unexpectedly.
 
   virtual int handle_timeout (const ACE_Time_Value &, const void *arg);
   // Handles acceptor timeouts.
+private:
+
+  ACE_SOCK_CODgram dgram_;
+  // the UDP data socket
+
+  ACE_INET_Addr server_data_addr_;
+  // Data (UDP) Address of this server.
+  
+  ACE_INET_Addr client_data_addr_;
+  // Data (UDP) Address of the client.
 
 };
 
@@ -83,8 +97,8 @@ private:
   ACE_Acceptor <Mpeg_Svc_Handler, ACE_SOCK_ACCEPTOR> acceptor_;
   // the acceptor
 
-  ACE_INET_Addr server_addr_;
-  // Address of this server.
+  ACE_INET_Addr server_control_addr_;
+  // Control (TCP) Address of this server.
 
   int parse_args (int argcs,
                   char **argv);
@@ -107,7 +121,6 @@ private:
   } * fdTable_;
 
   int size_;
-  int rttag_;         
 };
 
 #endif // _MPEG_SERVER_H
