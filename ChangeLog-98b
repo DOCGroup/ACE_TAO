@@ -1,5 +1,12 @@
 Mon Dec 14 10:49:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* ace/ace_lib.dsp: Removed "__ACE_INLINE__=0" from the default
+	  static release build settings.
+
+	* performance-tests/Misc/basic_perf.dsp:
+	* performance-tests/Misc/context_switch_time.dsp: Added static
+	  build configurations.
+
 	* tests/RB_Tree_Test.dsp: Redid the project file.  A VC 6 only
 	  compiler option somehow got into the file.  Thanks to Ulf
 	  Jaehrig <jaehrig@desys.com> for reporting this.
