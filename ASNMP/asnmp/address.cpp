@@ -490,8 +490,6 @@ int IpAddress::parse_address( const char *inaddr)
   // set and return validity flag
 
   in_addr ipAddr;
-  hostent *lookupResult;
-  char	   *namePtr = NULL;
   char ds[MAXHOSTNAMELEN +1];
 
   // intialize the friendly_name member variable
@@ -534,8 +532,11 @@ int IpAddress::parse_address( const char *inaddr)
 int IpAddress::addr_to_friendly()
 {
   in_addr ipAddr;
-  if ((ipAddr.s_addr = ACE_OS::inet_addr(to_string())) == -1)
+  long result = ACE_OS::inet_addr(to_string());
+  if (result == -1)
     return -1;    // expected a dotted quad!
+
+  ipAddr.s_addr = result;
 
   // set iv_friendly_name_ from ipAddr
  if (resolve_to_hostname(ipAddr, iv_friendly_name_) == 0) {
@@ -683,7 +684,7 @@ int Address_Iter::next(IpAddress& addr)
 
   IpAddress tmp(*entry_++); // return data
   addr = tmp;
-  if (*entry_ = NULL)
+  if (*entry_ == NULL)
     return 1;
   return 0;
 }
@@ -2414,7 +2415,8 @@ DecNetAddress::DecNetAddress( const char *inaddr): Address()
   valid_flag = parse_address( (char *) inaddr);
   DecNetAddress::format_output();
 }
-DecNetAddress::DecNetAddress( const DecNetAddress& decaddr)
+
+DecNetAddress::DecNetAddress( const DecNetAddress&)
 {
 }
 
@@ -2549,7 +2551,7 @@ AppleTalkAddress::AppleTalkAddress( const char *inaddr): Address()
   valid_flag = parse_address( (char *) inaddr);
   AppleTalkAddress::format_output();
 }
-AppleTalkAddress::AppleTalkAddress( const AppleTalkAddress& decaddr)
+AppleTalkAddress::AppleTalkAddress( const AppleTalkAddress&)
 {
 }
 
@@ -2641,8 +2643,8 @@ void AppleTalkAddress::format_output()
 {
   // if valid format else null it
   if ( valid_flag)
-    ACE_OS::sprintf( (char *) output_buffer,"%d.%d.%d",address_buffer[0],
-             address_buffer[1]), address_buffer[3];
+    ACE_OS::sprintf( (char *) output_buffer,"%d.%d.%d", address_buffer[0],
+             address_buffer[1], address_buffer[3]);
   else
     output_buffer[0] = 0;
 }

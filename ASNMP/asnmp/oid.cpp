@@ -62,7 +62,7 @@ Oid::Oid( const char * dotted_oid_string, size_t size)
     return;
   }
 
-  if (size == -1)
+  if (size == (unsigned int)-1)
     size = z;
   if (size > z)
     size = z;
@@ -118,7 +118,7 @@ Oid::Oid(const unsigned long *raw_oid, size_t oid_len)
   if (raw_oid && oid_len > 0) {
     ACE_NEW(smival.value.oid.ptr, SmiUINT32[ oid_len]);
     smival.value.oid.len = oid_len;
-    for (int i=0; i < oid_len; i++)
+    for (size_t i=0; i < oid_len; i++)
       smival.value.oid.ptr[i] = raw_oid[i];
   }
 }
@@ -515,7 +515,7 @@ int Oid::suboid(Oid& new_oid, size_t start, size_t how_many)
   if (how_many == 0)
      return 0;
   else
-  if (how_many == -1)
+  if (how_many == (size_t)-1)
      how_many = length();
   else
   if (how_many > length())

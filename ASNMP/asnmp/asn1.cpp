@@ -1287,7 +1287,6 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
   u_char  *cp;
   struct variable_list *vp;
   int length;
-  long int zero = 0;
   int totallength;
 
   length = *out_length;
@@ -1531,10 +1530,8 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
   int	    len, four;
   u_char community[256];
   int community_length = 256;
-  struct variable_list *vp;
+  struct variable_list *vp = 0;
   oid	    objid[MAX_NAME_LEN], *op;
-  u_char  *origdata = data;
-  int      origlength = length;
 
   // authenticates message and returns length if valid 
   data = cmu_snmp::auth_parse(data, 

@@ -69,7 +69,7 @@ int main( int argc, char *argv[])
   return 1;
 }
 
-getapp::valid() const 
+int getapp::valid() const 
 { 
  return valid_; 
 }

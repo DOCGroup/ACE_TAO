@@ -35,15 +35,15 @@
 #include "asnmp/pdu.h"       // include Pdu class definition
 
 //=====================[ constructor no args ]=========================
-Pdu::Pdu( void): vb_count_(0), pdu_type_(0), validity_(FALSE),
-error_index_(0), request_id_(0), notify_timestamp_(0), error_status_(0),
+Pdu::Pdu( void): vb_count_(0), error_status_(0), error_index_(0), 
+validity_(FALSE), request_id_(0), pdu_type_(0), notify_timestamp_(0), 
 output_(0)
 {
 }
 
 //=====================[ constructor with vbs_ and count ]==============
-Pdu::Pdu( Vb* pvbs, const int pvb_count): vb_count_(0), pdu_type_(0), 
-validity_(FALSE), error_index_(0), request_id_(0), notify_timestamp_(0)
+Pdu::Pdu( Vb* pvbs, const int pvb_count): vb_count_(0), error_index_(0), 
+validity_(FALSE), request_id_(0), pdu_type_(0), notify_timestamp_(0)
 {
    int z;  // looping variable
 
@@ -73,8 +73,9 @@ validity_(FALSE), error_index_(0), request_id_(0), notify_timestamp_(0)
 }
 
 //=====================[ constructor with another Pdu instance ]========
-Pdu::Pdu( const Pdu &pdu): vb_count_(0), pdu_type_(0),
-validity_(FALSE), error_index_(0), request_id_(0), notify_timestamp_(0)
+Pdu::Pdu( const Pdu &pdu): vb_count_(0), 
+error_index_(0), validity_(FALSE), request_id_(0), pdu_type_(0),
+notify_timestamp_(0)
 {
    *this = pdu;
    return;
@@ -152,14 +153,16 @@ char * Pdu::to_string()
   // determine how big a buffer and allocate it
   const int HEADER_STR = 100;
   unsigned size = HEADER_STR; // header takes up this much room
-   for ( int z = 0; z < vb_count_; z++) 
+  int z;
+
+   for ( z = 0; z < vb_count_; z++) 
        size += ACE_OS::strlen(vbs_[z]->to_string());
 
   ACE_NEW_RETURN(output_, char[size], "");
 
   // print pdu header info
   sprintf(output_, "pdu: valid: %d type:%d, req:%d, cnt: %d, err stat: %d \
- err idx: %d\n",     validity_, pdu_type_, request_id_,
+ err idx: %d\n",     validity_, pdu_type_, (int) request_id_,
     vb_count_, error_status_, error_index_ );
 
   // now append vb pairs in this object
@@ -182,7 +185,8 @@ int Pdu::get_vblist( Vb* pvbs, const int pvb_count)
       return FALSE;
 
    // loop through all vbs_ and assign to params
-   for (int z = 0; z < pvb_count; z++)
+   int z;
+   for (z = 0; z < pvb_count; z++)
       pvbs[z] = *vbs_[z];
 
    return TRUE;
@@ -198,7 +202,8 @@ int Pdu::set_vblist( Vb* pvbs, const int pvb_count)
      return FALSE;
 
    // free up current vbs_
-   for ( int  z = 0; z < vb_count_; z++)
+   int z;
+   for ( z = 0; z < vb_count_; z++)
      delete vbs_[z];
    vb_count_ = 0;
 
