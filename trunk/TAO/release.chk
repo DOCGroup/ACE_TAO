@@ -4,10 +4,10 @@
 # the direction to "down".
 
 Legend:
-	Platforms are indicated by position within square brackets, i.e.,
-	[ABCDEF] where
+        Platforms are indicated by position within square brackets, i.e.,
+        [ABCDEF] where
 
-	A = Solaris/CC
+        A = Solaris/CC
         B = NT (MSVC++ 5.0)
         C = Solaris/g++
         D = IRIX
@@ -24,46 +24,46 @@ Legend:
 [11111 ] libTAO and TAO_IDL compile.
 
 [11110 ] IDL_Cubit compiles
-[1x110x] 	svr runs
-[1x111x]	clnt runs
+[11110x] 	svr runs
+[11111x]	clnt runs
 
-[1 11x ] POA/RootPOA compiles
-[1 11x ] 	POA/RootPOA runs
-[1 11x ] POA/FindPOA compiles
-[1 11x ] 	POA/FindPOA runs
-[1 11x ] POA/NewPOA compiles
-[1 11x ] 	POA/NewPOA runs
-[  01  ] POA/Generic_Servant compiles
-[  01  ] 	POA/Generic_Servant runs
-[  01  ] POA/On_Demand_Activation compiles
-[  00  ] 	POA/On_Demand_Activation runs
-[  01  ] POA/Explicit_Activation compiles
-[  00  ] 	POA/Explicit_Activation runs
-[xxxxxx] POA/Default_Servant compiles
+[1111x ] POA/RootPOA compiles
+[1111x ] 	POA/RootPOA runs
+[1111x ] POA/FindPOA compiles
+[1111x ] 	POA/FindPOA runs
+[1111x ] POA/NewPOA compiles
+[1111x ] 	POA/NewPOA runs
+[ 101  ] POA/Generic_Servant compiles
+[ 101  ] 	POA/Generic_Servant runs
+[ 101  ] POA/On_Demand_Activation compiles
+[ 100  ] 	POA/On_Demand_Activation runs
+[ 101  ] POA/Explicit_Activation compiles
+[ 100  ] 	POA/Explicit_Activation runs
+[x1xxxx] POA/Default_Servant compiles
 [xxxxxx] 	POA/Default_Servant runs
 
-[1x11xx] Param_Test compiles
-[xx1xxx] 	SII short
-[xx1xxx] 	SII ubstring
-[xx1xxx] 	SII fixed_struct
-[xxxxxx] 	SII strseq
-[xx0xxx] 	SII var_struct
-[xx0xxx] 	SII nested_struct
-[xx0xxx] 	SII struct_seq
-[xx0xxx] 	SII objref
+[1111xx] Param_Test compiles
+[x01xxx] 	SII short
+[x01xxx] 	SII ubstring
+[x01xxx] 	SII fixed_struct
+[x0xxxx] 	SII strseq
+[x00xxx] 	SII var_struct
+[x00xxx] 	SII nested_struct
+[x00xxx] 	SII struct_seq
+[x00xxx] 	SII objref
 
-[xxxxxx] 	DII short
-[xxxxxx] 	DII ubstring
-[xxxxxx] 	DII fixed_struct
-[xxxxxx] 	DII strseq
-[xxxxxx] 	DII var_struct
-[xxxxxx] 	DII nested_struct
-[xxxxxx] 	DII struct_seq
-[xxxxxx] 	DII objref
+[x0xxxx] 	DII short
+[x0xxxx] 	DII ubstring
+[x0xxxx] 	DII fixed_struct
+[x0xxxx] 	DII strseq
+[x0xxxx] 	DII var_struct
+[x0xxxx] 	DII nested_struct
+[x0xxxx] 	DII struct_seq
+[x0xxxx] 	DII objref
 
 [0x0x0x] Thruput/TAO compiles
 
-[xx11xx] liborbsvcs compiles
+[x 11xx] liborbsvcs compiles
 [1 11x ] Naming_Service compiles
 [1x11xx] Simple_Naming compiles
 [xxx0xx] 	Simple_Naming runs
@@ -72,10 +72,10 @@ Legend:
 [1 011 ] Scheduling_Service compiles
 [1 010 ] Event_Service compiles
 [1 010 ] Dump_Schedule compiles
-[1x111x] Event_Latency compiles
-[xxx0xx] Event_Latency runs
+[1 111x] Event_Latency compiles
+[x x0xx] Event_Latency runs
 
-[000100] MT_Cubit compiles
+[010100] MT_Cubit compiles
 [xxx0xx] 	runs for Octet
 [xxx0xx] 	runs for Short
 [xxx0xx] 	runs for Long
