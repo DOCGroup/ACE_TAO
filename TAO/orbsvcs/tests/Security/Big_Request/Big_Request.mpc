@@ -1,4 +1,5 @@
 project: server {
+  depends  += SSL
   requires += ssl
 
   Source_Files {
@@ -8,6 +9,7 @@ project: server {
 }
 
 project: client {
+  depends  += SSL
   requires += ssl
 
   Source_Files {

@@ -1,3 +1,13 @@
+Thu Jul 25 11:37:21 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/SSLIOP.mpc:
+        * orbsvcs/tests/Security/Big_Request/Big_Request.mpc:
+        * orbsvcs/tests/Security/Callback/Callback.mpc:
+        * orbsvcs/tests/Security/Secure_Invocation/Secure_Invocation.mpc:
+        * orbsvcs/tests/Security/SecurityLevel1/SecurityLevel1.mpc:
+
+          Fixed the case on the dependencies line.
+
 Thu Jul 25 09:25:49 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/examples/Makefile: 
