@@ -1,3 +1,34 @@
+Tue Mar 13 15:08:06 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/README:
+        * tests/Makefile:
+        * tests/Big_Oneways/README:
+        * tests/Big_Oneways/Test.idl:
+        * tests/Big_Oneways/Makefile:
+        * tests/Big_Oneways/Big_Oneways.dsw:
+        * tests/Big_Oneways/server.dsp:
+        * tests/Big_Oneways/client.dsp:
+        * tests/Big_Oneways/run_test.pl:
+        * tests/Big_Oneways/Coordinator.h:
+        * tests/Big_Oneways/Coordinator.cpp:
+        * tests/Big_Oneways/Peer.h:
+        * tests/Big_Oneways/Peer.cpp:
+        * tests/Big_Oneways/Session.h:
+        * tests/Big_Oneways/Session.cpp:
+        * tests/Big_Oneways/Session_Control.h:
+        * tests/Big_Oneways/Session_Control.cpp:
+        * tests/Big_Oneways/Session_Task.h:
+        * tests/Big_Oneways/Session_Task.cpp:
+        * tests/Big_Oneways/client.cpp:
+        * tests/Big_Oneways/server.cpp:
+          Add new stress test for the non-blocking I/O features in the
+          ORB.  This test is more focussed than LongWrites, and its
+          shutdown sequence is better designed (LongWrites tends to crash
+          after running successfully.)
+
+        * tao/GIOP_Message_Handler.cpp:
+          Fixed unsigned/signed warning
+
 Thu Mar  8 19:12:48 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/GIOP_Message_Base.cpp:

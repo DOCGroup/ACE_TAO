@@ -470,7 +470,7 @@ TAO_GIOP_Message_Handler::read_messages (TAO_Transport *transport)
                   n));
 
       size_t len;
-      for (size_t offset = 0; offset < n; offset += len)
+      for (size_t offset = 0; offset < size_t(n); offset += len)
         {
           len = n - offset;
           if (len > 512)

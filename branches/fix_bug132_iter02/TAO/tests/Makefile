@@ -56,7 +56,8 @@ DIRS  = CDR \
 	QtTests \
 	Multiple \
 	LongWrites \
-	Queued_Message_Test
+	Queued_Message_Test \
+	Big_Oneways
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
