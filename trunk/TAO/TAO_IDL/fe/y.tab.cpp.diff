@@ -1,5 +1,5 @@
---- y.tab.cpp	Fri Jun 18 18:28:04 1999
-+++ y.tab.cpp.new	Fri Jun 18 18:20:42 1999
+--- y.tab.cpp	Tue Jul 27 14:28:00 1999
++++ y.tab.cpp.new	Tue Jul 27 14:23:47 1999
 @@ -1101,7 +1101,7 @@
      extern char *ace_foo();
  #endif

@@ -644,6 +644,7 @@ value_forward_decl :
             f->set_abstract_valuetype ();
 	    (void) s->fe_add_interface_fwd(f);
 	  }
+          idl_global->set_pragmas (p);
 	}
       |
         value_decl
@@ -662,6 +663,7 @@ value_forward_decl :
 	    f = idl_global->gen()->create_valuetype_fwd(n, p);
 	    (void) s->fe_add_interface_fwd(f);
 	  }
+          idl_global->set_pragmas (p);
 	}
 	;
 
@@ -843,6 +845,7 @@ forward :
 	    f = idl_global->gen()->create_interface_fwd(n, p);
 	    (void) s->fe_add_interface_fwd(f);
 	  }
+          idl_global->set_pragmas (p);
 	}
 	;
 
@@ -887,6 +890,7 @@ const_dcl :
 	      (void) s->fe_add_constant(c);
 	    }
 	  }
+          idl_global->set_pragmas (p);
 	}
 	;
 
@@ -1122,6 +1126,7 @@ type_dcl
 	     */
 	    (void) s->fe_add_native (node);
 	  }
+          idl_global->set_pragmas (p);
 	}
 	;
 
@@ -1160,6 +1165,7 @@ type_declarator :
 	    }
 	    delete l;
 	  }
+          idl_global->set_pragmas (p);
 	}
 	;
 
@@ -1837,6 +1843,7 @@ enum_type :
         }
 	'}'
 	{
+          UTL_StrList *p = 0;
 	  idl_global->set_parse_state(IDL_GlobalData::PS_EnumQsSeen);
 	  /*
 	   * Done with this enum. Pop its scope from the scopes stack
@@ -1845,8 +1852,10 @@ enum_type :
 	    $$ = NULL;
 	  else {
 	    $$ = AST_Enum::narrow_from_scope(idl_global->scopes()->top_non_null());
+            p = $$->pragmas ();
 	    idl_global->scopes()->pop();
 	  }
+          idl_global->set_pragmas (p);
 	}
 	;
 
@@ -2187,6 +2196,7 @@ attribute:
 	    }
 	    delete l;
 	  }
+          idl_global->set_pragmas (p);
 	}
 	;
 
@@ -2245,7 +2255,11 @@ exception :
 	  /*
 	   * Done with this exception. Pop its scope from the scope stack
 	   */
+          AST_Exception *ex = 
+            AST_Exception::narrow_from_scope (idl_global->scopes ()->top_non_null ());
+          UTL_StrList *p = ex->pragmas ();
 	  idl_global->scopes()->pop();
+          idl_global->set_pragmas (p);
 	}
 	;
 
