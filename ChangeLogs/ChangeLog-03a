@@ -1,40 +1,47 @@
+Sat Sep 16 16:11:39 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/CDR_Array_Test.cpp:
+          Under some circumstances the buffers allocated for marshaling
+          did not have room for the alignment bytes.  The problem was
+          fixed by a small overallocation.
+
 Fri Sep 15 16:04:26 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/Makefile.bor:
-	  Update the Borland Makefile
+        * ace/Makefile.bor:
+          Update the Borland Makefile
 
 Thu Sep 14 11:59:48 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Local_Name_Space_T.cpp (resolve_i, unbind_i):
-	* ace/Local_Tokens.cpp (acquire, tryacquire, renew):
-	* ace/Message_Queue_T.cpp (enqueue_prio, enqueue_head,
-	  enqueue_tail, next): 
-	* ace/Stream.cpp (open):
-	* ace/Task.cpp (suspend, resume, activate):
-	* ace/Token_Invariants.cpp (mutex_acquired, reader_acquired,
-	  writer_acquired):
+        * ace/Local_Name_Space_T.cpp (resolve_i, unbind_i):
+        * ace/Local_Tokens.cpp (acquire, tryacquire, renew):
+        * ace/Message_Queue_T.cpp (enqueue_prio, enqueue_head,
+          enqueue_tail, next):
+        * ace/Stream.cpp (open):
+        * ace/Task.cpp (suspend, resume, activate):
+        * ace/Token_Invariants.cpp (mutex_acquired, reader_acquired,
+          writer_acquired):
 
-	  Fixed g++ "control reaches end of non-void function" warnings.
+          Fixed g++ "control reaches end of non-void function" warnings.
 
-	* bin/bootstrap (ACE_HTML_MAN_PAGES):
+        * bin/bootstrap (ACE_HTML_MAN_PAGES):
 
-	  Fixed sed expression so that all man pages ending with `.3' are
-	  substituted with HTML man pages ending with `.html', not just
-	  the last man page in the list.
+          Fixed sed expression so that all man pages ending with `.3' are
+          substituted with HTML man pages ending with `.html', not just
+          the last man page in the list.
 
 Wed Sep 13 15:21:34 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Synch_T.cpp (ts_init, ts_object):
+        * ace/Synch_T.cpp (ts_init, ts_object):
 
-	  Moved code in terminating else block outside of that block, and
-	  removed unnecessary else clauses.  This fixes "control reaches
-	  end of non-void function" warnings from GNU C++.
+          Moved code in terminating else block outside of that block, and
+          removed unnecessary else clauses.  This fixes "control reaches
+          end of non-void function" warnings from GNU C++.
 
-	* bin/autoconf_compile:
+        * bin/autoconf_compile:
 
-	  Changed mail subject prefix from "[AUTOCONF_COMPILE]" to
-	  "[AUTO_COMPILE]" so that those monitoring the build logs won't
-	  have to setup an additional mail filter.
+          Changed mail subject prefix from "[AUTOCONF_COMPILE]" to
+          "[AUTO_COMPILE]" so that those monitoring the build logs won't
+          have to setup an additional mail filter.
 
 Wed Sep 13 15:05:08 2000  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -58,33 +65,33 @@ Wed Sep 13 15:05:08 2000  Chad Elliott  <elliott_c@ociweb.com>
 
 Wed Sep 13 15:05:42 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* ace/OS.h:
-	 
-	  ACE_HAS_PACE type redefinitions. L:3180.., L:2250
+        * ace/OS.h:
 
-	* ace/OS.i:
+          ACE_HAS_PACE type redefinitions. L:3180.., L:2250
 
-	  ACE over NT implements two different kinds of mutex's.
-	  One is a lighter CRITICAL SECTION which has a distinct
-	  set of associated functions. In ACE_HAS_PACE code, these
-	  functions are calling each other (on POSIX compliant
-	  platforms, these are defined to be the same types) but
-	  NT needs to distinguish the two. This usually means
-	  rearranging the preprocessor code. This is just the beginning.
+        * ace/OS.i:
+
+          ACE over NT implements two different kinds of mutex's.
+          One is a lighter CRITICAL SECTION which has a distinct
+          set of associated functions. In ACE_HAS_PACE code, these
+          functions are calling each other (on POSIX compliant
+          platforms, these are defined to be the same types) but
+          NT needs to distinguish the two. This usually means
+          rearranging the preprocessor code. This is just the beginning.
 
 Wed Sep 13 14:33:25 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Service_Config.h (ACE_Service_Config): Made parse_args()
-	  a public method to work around subtle issues with linking
- 	  services dynamically using TAO.  Thanks to Paul Caffrey
- 	  <pcaffrey@iel.ie> for motivating this and Carlos for suggesting
- 	  the fix.
+        * ace/Service_Config.h (ACE_Service_Config): Made parse_args()
+          a public method to work around subtle issues with linking
+          services dynamically using TAO.  Thanks to Paul Caffrey
+          <pcaffrey@iel.ie> for motivating this and Carlos for suggesting
+          the fix.
 
 Wed Sep 13 14:01:57 2000  Luther J Baker  <luther@maxixe.doc.wustl.edu>
 
-	* ace/OS.i (umask):
+        * ace/OS.i (umask):
 
-	  Missing punctuation.
+          Missing punctuation.
 
 Tue Sep 12 22:00:31 2000  Steve Huston  <shuston@riverace.com>
 
@@ -93,17 +100,17 @@ Tue Sep 12 22:00:31 2000  Steve Huston  <shuston@riverace.com>
 
 Tue Sep 12 15:15:54 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/ACE_export.h (ACE_SINGLETON_DECLARATION): Added the new
-	  SINGLETON_DECLARE macros.
+        * ace/ACE_export.h (ACE_SINGLETON_DECLARATION): Added the new
+          SINGLETON_DECLARE macros.
 
-	* ace/Timeprobe.h: Used the new macro ACE_SINGLETON_DECLARE
-	  instead of ACE_SINGLETON_DECLARATION.  This helps by not
-	  requiring the comma which makes the precompiler think that the
-	  comma is for an extra argument to the macro.  
+        * ace/Timeprobe.h: Used the new macro ACE_SINGLETON_DECLARE
+          instead of ACE_SINGLETON_DECLARATION.  This helps by not
+          requiring the comma which makes the precompiler think that the
+          comma is for an extra argument to the macro.
 
-	  Thanks to Phil Mesnier <mesnier_p@ociweb.com> for reporting this
-	  problem.
-	
+          Thanks to Phil Mesnier <mesnier_p@ociweb.com> for reporting this
+          problem.
+
 Tue Sep 12 11:34:03 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/High_Res_Timer.{h i}: Added a new function, gettimeofday_hr()
@@ -140,31 +147,31 @@ Mon Sep 11 12:57:31 2000  Steve Huston  <shuston@riverace.com>
 
 Mon Sep 11 10:08:38 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Service_Manager.cpp (handle_input): Missing semicolon in a
-	  do-while loop.
+        * ace/Service_Manager.cpp (handle_input): Missing semicolon in a
+          do-while loop.
 
 Mon Sep 11 08:10:21 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Service_Manager.cpp: There was a problem with handle_input()
-	  on Win32 due to the default non-blocking mode of sockets.  In
- 	  particular, if the client was slow/overloaded, the server recv()
- 	  would return with -1 and errno == EWOULDBLOCK.  Thanks to Sandro
- 	  Doro <doro.s@flashnet.it> for this fix.
+        * ace/Service_Manager.cpp: There was a problem with handle_input()
+          on Win32 due to the default non-blocking mode of sockets.  In
+          particular, if the client was slow/overloaded, the server recv()
+          would return with -1 and errno == EWOULDBLOCK.  Thanks to Sandro
+          Doro <doro.s@flashnet.it> for this fix.
 
-	* tests: Added a new Borland-specific makefile for the ACE tests.
-	  Thanks to Johnny Willemsen <Johnny.Willemsen@meco.nl> for
-	  contributing this.
+        * tests: Added a new Borland-specific makefile for the ACE tests.
+          Thanks to Johnny Willemsen <Johnny.Willemsen@meco.nl> for
+          contributing this.
 
 Sun Sep 10 14:58:36 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* netsvcs/clients/Logger/Makefile.bor:
-	  I left out this file when applying Christopher's patch.
+        * netsvcs/clients/Logger/Makefile.bor:
+          I left out this file when applying Christopher's patch.
 
 Sun Sep 10 15:43:23 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Acceptor.h: Made the suspend() and resume() methods
-	  public.  Thanks to Guy Rosen <grosen@bigfoot.com>
-	  for suggesting this.
+        * ace/Acceptor.h: Made the suspend() and resume() methods
+          public.  Thanks to Guy Rosen <grosen@bigfoot.com>
+          for suggesting this.
 
 Fri Sep  8 16:50:52 2000  Carlos O'Ryan  <coryan@ace.cs.wustl.edu>
 

@@ -190,7 +190,7 @@ CDR_Test<T, H>::CDR_Test (int total, int niter, int use_array)
   char* dstbuf;
   {
     const int stotal =
-      total * H::size () + sizeof(ACE_UINT32) + ACE_CDR::MAX_ALIGNMENT;
+      (total + 10) * H::size () + sizeof(ACE_UINT32) + ACE_CDR::MAX_ALIGNMENT;
 
     ACE_NEW(srcbuf, char[stotal]);
     if (srcbuf == 0)
@@ -384,7 +384,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
   }
 
   ACE_DEBUG((LM_DEBUG,
-             ACE_TEXT( "Writting data...\n" )));
+             ACE_TEXT( "Writing data...\n" )));
 
   char* toread = 0;
   {
@@ -394,7 +394,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
     int n;
     for (n = 0; n < niter; n++)
       {
-        int size = H::size () * (dst_offset + total);
+        int size = H::size () * (dst_offset + total) + ACE_CDR::MAX_ALIGNMENT;
         ACE_OutputCDR os (dstbuf, size);
 
         // This is intrusive...
@@ -430,6 +430,11 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
         else
           {
             int i = 0;
+            for (; i < dst_offset; i++)
+              {
+                os << T(0);
+              }
+            i = 0;
 
             Crono crono;
             crono.start();
@@ -439,6 +444,11 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
                 os << idata[i++];
                 os << idata[i++];
                 os << idata[i++];
+                // static char rs[32 + 1];
+                // CDR_Test<T,H>::ttoh (idata[i], rs);
+                // ACE_DEBUG ((LM_DEBUG, "Write idata[%d] = %s\n", i, rs));
+                // os << idata[i];
+                // i++;
               }
             crono.stop ();
             secs = crono.read_seconds ();
@@ -462,7 +472,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
     totalsecs = totalsecs / niter;
 
     ACE_DEBUG((LM_DEBUG,
-               ACE_TEXT ("Writting to stream %d %s values: %f seconds.\n"),
+               ACE_TEXT ("Writing to stream %d %s values: %f seconds.\n"),
                total,
                H::name (),
                totalsecs));
@@ -486,6 +496,8 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
     int n;
     for (n = 0; n < niter; n++)
       {
+        ACE_DEBUG ((LM_DEBUG, "====== Read iteration %d\n", n));
+
         int size = (total + dst_offset) * H::size ();
         ACE_InputCDR is (toread, size, opposite_byte_order);
 
@@ -527,10 +539,20 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
             crono.start ();
             while (i < total)
               {
+#if 0
+                T v;
+                is >> v;
+                static char rs[32 + 1];
+                CDR_Test<T,H>::ttoh (v, rs);
+                ACE_DEBUG ((LM_DEBUG, "Read idata[%d] = %s\n", i, rs));
+                idata[i] = v;
+                i++;
+#else
                 is >> idata[i++];
                 is >> idata[i++];
                 is >> idata[i++];
                 is >> idata[i++];
+#endif /* 0 */
               }
             crono.stop ();
             secs = crono.read_seconds ();
@@ -599,12 +621,13 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
   if (errors != 0)
     {
       ACE_ERROR((LM_ERROR,
-                 ACE_TEXT ("Inconsistencies found, aborting.\n") ));
+                 ACE_TEXT (" assertion failed: Inconsistencies found (%d), "
+                           "aborting.\n"), errors));
       ACE_OS::exit(1);
     }
 
   ACE_DEBUG((LM_DEBUG,
-             ACE_TEXT ("Data OK, Ending %s test.\n"),
+             ACE_TEXT ("Data OK, test %d completed.\n"),
              H::name ()));
 }
 
