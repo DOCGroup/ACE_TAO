@@ -1,3 +1,25 @@
+Mon Nov 22 16:10:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tests/Makefile:
+	* tests/README:
+	  Added entry for Smart_Proxies test in both the files.
+	
+	* tests/Smart_Proxies/Smart_Proxy_Impl.h:
+          Renamed it from Smart_Proxy_impl.h to Smart_Proxy_Impl.h.
+
+	* tests/Smart_Proxies/Smart_Proxy_Impl.cpp:
+	  Replaced the "new" operator with the safer ACE version of
+	  ACE_NEW_RETURN macro.
+
+	* tests/Smart_Proxies/server.cpp:
+	  Took care of some typos in class names.
+
+	* tests/Smart_Proxies/Makefile:
+	  Added dependencies.
+
+	* tests/Smart_Proxies/run_test.pl:
+	  Added perl script to automate executionof the test.
+	  
 Mon Nov 22 14:03:44 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Smart_Proxies: Revised the code to conform to the TAO
