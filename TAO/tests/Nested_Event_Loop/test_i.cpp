@@ -48,9 +48,8 @@ server_i::run_no_ops (client_ptr remote_partner,
 {
   while (iterations != 0)
     {
-      void *temp = &iterations;
       CORBA::ULong act_for_iterations =
-        ACE_reinterpret_cast (CORBA::ULong, tmp);
+        ACE_reinterpret_cast (CORBA::ULong, &iterations);
 
       CORBA::ULong got_reply = 0;
 
