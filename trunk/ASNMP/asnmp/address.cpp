@@ -579,6 +579,8 @@ int IpAddress::resolve_to_hostname(const in_addr& quad_addr, char *hostname)
   struct hostent lookupResult;
   int loc_errno = 0;
   ACE_HOSTENT_DATA buffer;
+  ACE_OS::memset(&lookupResult, 0, sizeof(struct hostent));
+  ACE_OS::memset(&buffer, 0, sizeof(ACE_HOSTENT_DATA));
 
   if (ACE_OS::gethostbyaddr_r((const char *)&quad_addr.s_addr, IPV4LEN, 
                           AF_INET, &lookupResult, buffer, &loc_errno)) {
@@ -594,6 +596,8 @@ int IpAddress::resolve_to_address(const char *hostname, in_addr& quad_addr)
 {
    struct hostent lookupResult;
    ACE_HOSTENT_DATA buffer;
+   ACE_OS::memset(&buffer, 0, sizeof(ACE_HOSTENT_DATA));
+   ACE_OS::memset(&lookupResult, 0, sizeof(struct hostent));
    int loc_errno = 0;
    if (ACE_OS::gethostbyname_r ( hostname, &lookupResult, buffer, &loc_errno)) {
      if (lookupResult.h_length == sizeof(in_addr)) {
