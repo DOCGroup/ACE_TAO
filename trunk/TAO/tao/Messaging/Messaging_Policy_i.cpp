@@ -58,18 +58,32 @@ TAO_RelativeRoundtripTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
                                           bool &has_timeout,
                                           ACE_Time_Value &time_value)
 {
-  CORBA::Policy_var policy =
-    (stub == 0
-     ? orb_core->get_cached_policy_including_current (TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT)
-     : stub->get_cached_policy (TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT));
-
-  if (CORBA::is_nil (policy.in ()))
-    {
-      has_timeout = false;
-      return;
-    }
   ACE_TRY_NEW_ENV
     {
+      CORBA::Policy_var policy = 0;
+
+      if (stub == 0)
+        {
+          policy =
+            orb_core->get_cached_policy_including_current (
+              TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT
+              ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      else
+        {
+          policy =
+            stub->get_cached_policy (TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT
+                                     ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+
+      if (CORBA::is_nil (policy.in ()))
+        {
+          has_timeout = false;
+          return;
+        }
+
       Messaging::RelativeRoundtripTimeoutPolicy_var p =
         Messaging::RelativeRoundtripTimeoutPolicy::_narrow (
           policy.in ()
@@ -217,19 +231,31 @@ TAO_Sync_Scope_Policy::hook (TAO_ORB_Core *orb_core,
                              bool &has_synchronization,
                              Messaging::SyncScope &scope)
 {
-  CORBA::Policy_var policy =
-    (stub == 0
-     ? orb_core->get_cached_policy_including_current (TAO_CACHED_POLICY_SYNC_SCOPE)
-     : stub->get_cached_policy (TAO_CACHED_POLICY_SYNC_SCOPE));
-
-  if (CORBA::is_nil (policy.in ()))
-    {
-      has_synchronization = 0;
-      return;
-    }
-
   ACE_TRY_NEW_ENV
     {
+      CORBA::Policy_var policy = 0;
+
+      if (stub == 0)
+        {
+          policy =
+            orb_core->get_cached_policy_including_current (
+              TAO_CACHED_POLICY_SYNC_SCOPE
+              ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      else
+        {
+          policy =
+            stub->get_cached_policy (TAO_CACHED_POLICY_SYNC_SCOPE
+                                     ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+
+      if (CORBA::is_nil (policy.in ()))
+        {
+          has_synchronization = 0;
+          return;
+        }
       Messaging::SyncScopePolicy_var p =
         Messaging::SyncScopePolicy::_narrow (policy.in ());
       ACE_TRY_CHECK;

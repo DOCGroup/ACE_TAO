@@ -125,10 +125,30 @@ TAO_DIOP_Connection_Handler::open (void*)
   // @@ fix me
   int client = 0;
 
-  if (client)
-    tph->client_protocol_properties_at_orb_level (protocol_properties);  
-  else
-    tph->server_protocol_properties_at_orb_level (protocol_properties);  
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
+    {
+      if (client)
+        {
+          tph->client_protocol_properties_at_orb_level (
+            protocol_properties
+            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      else
+        {
+          tph->server_protocol_properties_at_orb_level (
+            protocol_properties
+            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCHANY
+    {
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   this->udp_socket_.open (this->local_addr_);
 
@@ -260,7 +280,7 @@ TAO_DIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
                                               IP_TOS,
                                               (int *) &tos ,
                                               (int) sizeof (tos));
-      
+
       if (TAO_debug_level)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -270,7 +290,7 @@ TAO_DIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
                       result,
                       result == -1 ? "try running as superuser" : ""));
         }
-      
+
       // On successful setting of TOS field.
       if (result == 0)
         this->dscp_codepoint_ = tos;
