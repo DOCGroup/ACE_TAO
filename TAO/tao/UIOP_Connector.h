@@ -87,7 +87,7 @@ protected:
 
   virtual int check_prefix (const char *endpoint);
 
-  virtual const char object_key_delimiter (void) const;
+  virtual char object_key_delimiter (void) const;
 
   typedef ACE_NOOP_Creation_Strategy<TAO_UIOP_Client_Connection_Handler>
         TAO_NULL_CREATION_STRATEGY;

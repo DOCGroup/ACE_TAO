@@ -260,7 +260,7 @@ TAO_UIOP_Connector::check_prefix (const char *endpoint)
   // DO NOT throw an exception here.
 }
 
-const char
+char
 TAO_UIOP_Connector::object_key_delimiter (void) const
 {
   return TAO_UIOP_Profile::object_key_delimiter;
