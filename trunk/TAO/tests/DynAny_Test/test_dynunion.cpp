@@ -86,7 +86,7 @@ Test_DynUnion::run_test (void)
         this->orb_->create_dyn_union (DynAnyTests::_tc_test_union,
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      ftc1->from_any (*out_any1,
+      ftc1->from_any (out_any1.in (),
                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
       CORBA::TypeCode_var s_out2 = ftc1->get_typecode (ACE_TRY_ENV);
