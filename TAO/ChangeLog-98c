@@ -1,3 +1,15 @@
+Fri Oct 16 01:25:43 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/MT_Cubit/Globals.cpp
+	* performance-tests/Cubit/TAO/MT_Cubit/Makefile
+	* performance-tests/Cubit/TAO/MT_Cubit/README
+	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp
+	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h
+	* performance-tests/Cubit/TAO/MT_Cubit/client.cpp
+	* performance-tests/Cubit/TAO/MT_Cubit/server.cpp
+	* performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp: Fixed a bug
+ 	with the utilization test, updated the README file, and some
+ 	aesthetic changes to the help.
 
 Fri Oct 16 00:45:22 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
