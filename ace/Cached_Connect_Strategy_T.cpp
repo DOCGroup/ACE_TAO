@@ -25,7 +25,7 @@
 
 ACE_RCSID(ace, Cached_Connect_Strategy_T, "$Id$")
 
-template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX>
+  template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX>
 ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::ACE_Cached_Connect_Strategy_Ex
 (CACHING_STRATEGY &caching_s,
  ACE_Creation_Strategy<SVC_HANDLER> *cre_s,
@@ -45,8 +45,9 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX>
 ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::~ACE_Cached_Connect_Strategy_Ex (void)
 {
+#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
   // Close down all cached service handlers.
-  for (CONNECTION_CACHE_ITERATOR iter = this->connection_cache_.begin ();
+  for (CONNECTION_CACHE::ITERATOR iter = this->connection_cache_.begin ();
        iter != this->connection_cache_.end ();
        ++iter)
     {
@@ -56,26 +57,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
           (*iter).second ()->close ();
         }
     }
-}
-
-template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX> int
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::open
-(ACE_Creation_Strategy<SVC_HANDLER> *cre_s,
- ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
- ACE_Recycling_Strategy<SVC_HANDLER> *rec_s)
-{
-  int result = this->CCSBASE::open (cre_s, con_s, rec_s);
-  if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("Base initialisation failed\n")),
-                      -1);
-
-  if (this->caching_strategy ().open (&this->svc_cleanup_strategy_,
-                                      0) == -1)
-    return -1;
-
-  return 0;
+#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX> int
@@ -178,12 +160,12 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 
       // Connect using the svc_handler.
       if (this->cached_connect (sh,
-                         remote_addr,
-                         timeout,
-                         local_addr,
-                         reuse_addr,
-                         flags,
-                         perms) == -1)
+                                remote_addr,
+                                timeout,
+                                local_addr,
+                                reuse_addr,
+                                flags,
+                                perms) == -1)
         {
           return -1;
         }
@@ -218,12 +200,12 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX> int
 ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::cached_connect (SVC_HANDLER *&sh,
-                                                                                                                 const ACE_PEER_CONNECTOR_ADDR &remote_addr,
-                                                                                                                 ACE_Time_Value *timeout,
-                                                                                                                 const ACE_PEER_CONNECTOR_ADDR &local_addr,
-                                                                                                                 int reuse_addr,
-                                                                                                                 int flags,
-                                                                                                                 int perms)
+                                                                                                                        const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                                                                                                                        ACE_Time_Value *timeout,
+                                                                                                                        const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                                                                                                                        int reuse_addr,
+                                                                                                                        int flags,
+                                                                                                                        int perms)
 {
   // Actively establish the connection.  This is a timed blocking
   // connect.
@@ -243,7 +225,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 
       if (errno == EWOULDBLOCK)
         errno = ENOTSUP;
-      else if (errno == EMFILE)
+      else if (errno == EMFILE || errno == ENOBUFS || errno == ENOENT)
         {
           // If the connect failed due to the process running out of
           // file descriptors then, auto_purging of some connections

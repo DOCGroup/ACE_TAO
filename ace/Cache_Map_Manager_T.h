@@ -28,13 +28,25 @@
 // Forward declaration.
 class ACE_Allocator;
 
+#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
+
 template <class KEY, class VALUE, class IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES>
 class ACE_Cache_Map_Iterator;
 
 template <class KEY, class VALUE, class REVERSE_IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES>
 class ACE_Cache_Map_Reverse_Iterator;
 
-template <class KEY, class VALUE, class MAP, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES>
+#define ACE_T1 class KEY, class VALUE, class MAP, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES
+#define ACE_T2 KEY, VALUE, MAP, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES
+
+#else
+
+#define ACE_T1 class KEY, class VALUE, class MAP, class CACHING_STRATEGY, class ATTRIBUTES
+#define ACE_T2 KEY, VALUE, MAP, CACHING_STRATEGY, ATTRIBUTES
+
+#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
+
+template <ACE_T1>
 class ACE_Cache_Map_Manager
 {
   // = TITLE
@@ -58,12 +70,11 @@ public:
   typedef VALUE mapped_type;
   typedef MAP map_type;
   typedef CACHING_STRATEGY caching_strategy_type;
+
+#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
+
   typedef ITERATOR_IMPL ITERATOR_IMPLEMENTATION;
   typedef REVERSE_ITERATOR_IMPL REVERSE_ITERATOR_IMPLEMENTATION;
-  typedef ACE_Pair<VALUE, ATTRIBUTES> CACHE_VALUE;
-  // The actual value mapped to the key in the map. The <attributes>
-  // are used by the strategy and is transparent to the user of this
-  // class.
 
   friend class ACE_Cache_Map_Iterator<KEY, VALUE, ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>;
   friend class ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>;
@@ -79,6 +90,13 @@ public:
           iterator;
   typedef REVERSE_ITERATOR
           reverse_iterator;
+
+#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
+
+  typedef ACE_Pair<VALUE, ATTRIBUTES> CACHE_VALUE;
+  // The actual value mapped to the key in the map. The <attributes>
+  // are used by the strategy and is transparent to the user of this
+  // class.
 
   // = Initialization and termination methods.
 
@@ -168,6 +186,8 @@ public:
   void dump (void) const;
   // Dumps the state of the object.
 
+#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
+
   // = STL styled iterator factory functions.
 
   ITERATOR begin (void);
@@ -177,6 +197,8 @@ public:
   REVERSE_ITERATOR rbegin (void);
   REVERSE_ITERATOR rend (void);
   // Return reverse iterator.
+
+#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
   MAP &map (void);
   // The map managed by the Cache_Map_Manager.
@@ -195,10 +217,12 @@ protected:
 private:
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Cache_Map_Manager<KEY, VALUE, MAP, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Cache_Map_Manager (const ACE_Cache_Map_Manager<KEY, VALUE, MAP, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES> &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Cache_Map_Manager<ACE_T2> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Cache_Map_Manager (const ACE_Cache_Map_Manager<ACE_T2> &))
 
 };
+
+#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
 
 template <class KEY, class VALUE, class IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES>
 class ACE_Cache_Map_Iterator
@@ -346,6 +370,11 @@ protected:
   // The actual iterator which iterates internally on the map
   // belonging to the Cache_Map_Manager.
 };
+
+#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
+
+#undef ACE_T1
+#undef ACE_T2
 
 #if defined (__ACE_INLINE__)
 #include "ace/Cache_Map_Manager_T.i"

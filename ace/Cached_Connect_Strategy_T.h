@@ -57,12 +57,6 @@ public:
   virtual ~ACE_Cached_Connect_Strategy_Ex (void);
   // Destructor
 
-  virtual int open (ACE_Creation_Strategy<SVC_HANDLER> *cre_s,
-                    ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
-                    ACE_Recycling_Strategy<SVC_HANDLER> *rec_s);
-  // This methods allow you to change the strategies used by the
-  // cached connector.
-
   virtual int cached_connect (SVC_HANDLER *&sh,
                               const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                               ACE_Time_Value *timeout,
@@ -84,7 +78,7 @@ public:
   // = Typedefs for managing the map
   typedef ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>
           REFCOUNTED_HASH_RECYCLABLE_ADDRESS;
-  typedef ACE_Hash_Cache_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, CACHING_STRATEGY, ATTRIBUTES>
+  typedef ACE_Hash_Cache_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, CACHING_STRATEGY, ATTRIBUTES>
           CONNECTION_CACHE;
   typedef ACE_TYPENAME CONNECTION_CACHE::CACHE_ENTRY
           CONNECTION_CACHE_ENTRY;
@@ -92,12 +86,10 @@ public:
           KEY;
   typedef ACE_TYPENAME CONNECTION_CACHE::mapped_type
           VALUE;
-  typedef ACE_TYPENAME CONNECTION_CACHE::ITERATOR
-          CONNECTION_CACHE_ITERATOR;
 
   // = Cleanup of the svc_handler.
-  typedef ACE_Svc_Cleanup_Strategy<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, ACE_Pair<SVC_HANDLER *, ATTRIBUTES>,ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, ACE_Pair<SVC_HANDLER *, ATTRIBUTES>, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, MUTEX> >
-          SVC_CLEANUP_STRATEGY;
+  typedef ACE_Recyclable_Handler_Cleanup_Strategy<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, ACE_Pair<SVC_HANDLER *, ATTRIBUTES>,ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, ACE_Pair<SVC_HANDLER *, ATTRIBUTES>, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, MUTEX> >
+          CLEANUP_STRATEGY;
 
   typedef ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>
           CCSBASE;
@@ -153,10 +145,6 @@ protected:
 
   CONNECTION_CACHE connection_cache_;
   // Table that maintains the cache of connected <SVC_HANDLER>s.
-
-  SVC_CLEANUP_STRATEGY svc_cleanup_strategy_;
-  // The strategy which controls the destruction and closing of the
-  // svc_handler.
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

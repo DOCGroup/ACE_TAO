@@ -23,9 +23,7 @@
 #define  ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// Forward declaration
-template <class KEY, class VALUE, class CONTAINER>
-class ACE_Cleanup_Strategy;
+#include "ace/Cleanup_Strategies_T.h"
 
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
 class ACE_Pair_Caching_Utility
@@ -34,34 +32,52 @@ class ACE_Pair_Caching_Utility
   //    Defines a helper class for the Caching Strategies.
   //
   // = DESCRIPTION
-  //    This class defines the methods commonly used by the
-  //    different caching strategies. For instance: clear_cache ()
-  //    method which decides and purges the entry from the container.
-  //    Note: This class helps in the caching_strategies using a
-  //    container containing entries of <KEY, ACE_Pair<VALUE,
-  //    attributes>> kind. The attributes helps in deciding the
-  //    entries to be purged.
+  //    This class defines the methods commonly used by the different
+  //    caching strategies. For instance: clear_cache () method which
+  //    decides and purges the entry from the container.  Note: This
+  //    class helps in the caching_strategies using a container
+  //    containing entries of <KEY, ACE_Pair<VALUE, attributes>>
+  //    kind. The attributes helps in deciding the entries to be
+  //    purged. The Cleanup_Strategy is the callback class to which
+  //    the entries to be cleaned up will be delegated.
 public:
 
+  typedef ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
+
+  ACE_Pair_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = 0,
+                            int delete_cleanup_strategy = 0);
+
+  // Constructor.
+
+  ~ACE_Pair_Caching_Utility (void);
+  // Destructor.
+
   int clear_cache (CONTAINER &container,
-                   ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s,
                    double purge_percent);
+
   // Purge entries from the <container>. The Cleanup_Strategy will do
   // the actual job of cleanup once the entries to be cleaned up are
   // decided.
 
 protected:
 
-  virtual void minimum (CONTAINER &container,
-                        KEY *&key_to_remove,
-                        VALUE *&value_to_remove);
+  void minimum (CONTAINER &container,
+                KEY *&key_to_remove,
+                VALUE *&value_to_remove);
   // Find the entry with minimum caching attributes.
+
+  CLEANUP_STRATEGY *cleanup_strategy_;
+  // The cleanup strategy which can be used to destroy the entries of
+  // the container.
+
+  int delete_cleanup_strategy_;
+  // Whether the cleanup_strategy should be destroyed or not.
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
-class ACE_Recyclable_Handler_Caching_Utility : public ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>
+class ACE_Recyclable_Handler_Caching_Utility
 {
   // = TITLE
   //    Defines a helper class for the Caching Strategies.
@@ -72,13 +88,42 @@ class ACE_Recyclable_Handler_Caching_Utility : public ACE_Pair_Caching_Utility<K
   //    decides and purges the entry from the container.  Note: This
   //    class helps in the caching_strategies using a container
   //    containing entries of <KEY, Svc_Handler> kind. The attributes
-  //    helps in deciding the entries to be purged.
+  //    helps in deciding the entries to be purged. The
+  //    Cleanup_Strategy is the callback class to which the entries to
+  //    be cleaned up will be delegated.
+
+public:
+
+  typedef ACE_Recyclable_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
+  typedef ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY_BASE;
+
+  ACE_Recyclable_Handler_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = 0,
+                                          int delete_cleanup_strategy = 0);
+
+  // Constructor.
+
+  ~ACE_Recyclable_Handler_Caching_Utility (void);
+  // Destructor.
+
+  int clear_cache (CONTAINER &container,
+                   double purge_percent);
+  // Purge entries from the <container>. The Cleanup_Strategy will do
+  // the actual job of cleanup once the entries to be cleaned up are
+  // decided.
+
 protected:
 
-  virtual void minimum (CONTAINER &container,
-                        KEY *&key_to_remove,
-                        VALUE *&value_to_remove);
+  void minimum (CONTAINER &container,
+                KEY *&key_to_remove,
+                VALUE *&value_to_remove);
   // Find the entry with minimum caching attributes.
+
+  CLEANUP_STRATEGY_BASE *cleanup_strategy_;
+  // This is the default Cleanup Strategy for this utility.
+
+  int delete_cleanup_strategy_;
+  // Whether the cleanup_strategy should be destroyed or not.
+
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -90,17 +135,27 @@ class ACE_Handler_Caching_Utility
   //    Defines a helper class for the Caching Strategies.
   //
   // = DESCRIPTION
-  //    This class defines the methods commonly used by the
-  //    different caching strategies. For instance: clear_cache ()
-  //    method which decides and purges the entry from the container.
-  //    Note: This class helps in the caching_strategies using a
-  //    container containing entries of <KEY, HANDLER> kind where the
-  //    HANDLER contains the caching attributes which help in deciding
-  //    the entries to be purged.
+  //    This class defines the methods commonly used by the different
+  //    caching strategies. For instance: clear_cache () method which
+  //    decides and purges the entry from the container.  Note: This
+  //    class helps in the caching_strategies using a container
+  //    containing entries of <KEY, HANDLER> kind where the HANDLER
+  //    contains the caching attributes which help in deciding the
+  //    entries to be purged. The Cleanup_Strategy is the callback
+  //    class to which the entries to be cleaned up will be delegated.
 public:
 
+  typedef ACE_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
+  typedef ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY_BASE;
+
+  ACE_Handler_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = 0,
+                               int delete_cleanup_strategy = 0);
+  // Constructor.
+
+  ~ACE_Handler_Caching_Utility (void);
+  // Destructor.
+
   int clear_cache (CONTAINER &container,
-                   ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s,
                    double purge_percent);
   // Purge entries from the <container>. The Cleanup_Strategy will do
   // the actual job of cleanup once the entries to be cleaned up are
@@ -108,32 +163,51 @@ public:
 
 protected:
 
-  virtual void minimum (CONTAINER &container,
-                        KEY *&key_to_remove,
-                        VALUE *&value_to_remove);
+  void minimum (CONTAINER &container,
+                KEY *&key_to_remove,
+                VALUE *&value_to_remove);
   // Find the entry with minimum caching attributes.  This is handler
   // specific since this utility is to be used very specifically for
   // handler who have caching_attributes for server side acched
   // connection management.
+
+  CLEANUP_STRATEGY_BASE *cleanup_strategy_;
+  // The cleanup strategy which can be used to destroy the entries of
+  // the container.
+
+  int delete_cleanup_strategy_;
+  // Whether the cleanup_strategy should be destroyed or not.
+
 };
 
 ///////////////////////////////////////////////////////////////////////////
 
-template <class KEY, class VALUE, class CONTAINER,  class ITERATOR, class ATTRIBUTES>
+template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
 class ACE_Null_Caching_Utility
 {
   // = TITLE
   //    Defines a dummy helper class for the Caching Strategies.
   //
   // = DESCRIPTION
-  //    This class defines the methods commonly used by the
-  //    different caching strategies. For instance: clear_cache ()
-  //    method which decides and purges the entry from the container.
-  //    Note: This class is be used with the Null_Caching_Strategy.
+  //    This class defines the methods commonly used by the different
+  //    caching strategies. For instance: clear_cache () method which
+  //    decides and purges the entry from the container.  Note: This
+  //    class is be used with the Null_Caching_Strategy. The
+  //    Cleanup_Strategy is the callback class to which the entries to
+  //    be cleaned up will be delegated.
 public:
 
+  typedef ACE_Null_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
+  typedef ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY_BASE;
+
+  ACE_Null_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = 0,
+                            int delete_cleanup_strategy = 0);
+  // Constructor.
+
+  ~ACE_Null_Caching_Utility (void);
+  // Destructor.
+
   int clear_cache (CONTAINER &container,
-                   ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s,
                    double purge_percent);
   // Purge entries from the <container>. The Cleanup_Strategy will do
   // the actual job of cleanup once the entries to be cleaned up are
@@ -141,13 +215,20 @@ public:
 
 protected:
 
-  virtual void minimum (CONTAINER &container,
-                        KEY *&key_to_remove,
-                        VALUE *&value_to_remove);
+  void minimum (CONTAINER &container,
+                KEY *&key_to_remove,
+                VALUE *&value_to_remove);
   // Find the entry with minimum caching attributes.  This is handler
   // specific since this utility is to be used very specifically for
   // handler who have caching_attributes for server side acched
   // connection management.Note: Here it is a no-op.
+
+  CLEANUP_STRATEGY_BASE *cleanup_strategy_;
+  // The cleanup strategy which can be used to destroy the entries of
+  // the container.
+
+  int delete_cleanup_strategy_;
+  // Whether the cleanup_strategy should be destroyed or not.
 };
 
 ///////////////////////////////////////////////////////////////////////////
