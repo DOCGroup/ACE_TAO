@@ -1431,14 +1431,6 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
     ACE_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - start of run\n"));
 
-#if defined (ACE_HAS_RT_CORBA)
-  if (this->bind_endpoints () == -1)
-    return -1;
-
-  if (this->bind_thread () == -1)
-    return -1;
-#endif /* ACE_HAS_RT_CORBA */
-
   TAO_Leader_Follower &leader_follower = this->leader_follower ();
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
