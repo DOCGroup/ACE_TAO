@@ -237,8 +237,8 @@ TAO_FT_ClientRequest_Interceptor::group_version_context (
     }
   ACE_CATCHANY
     {
-      // Not much can be done anyway. Just throw
-      ACE_RE_THROW;
+      // Not much can be done anyway. Just keep quiet
+      // ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -314,7 +314,7 @@ TAO_FT_ClientRequest_Interceptor::request_service_context (
     }
   ACE_CATCHANY
     {
-      ACE_RE_THROW;
+      // ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
