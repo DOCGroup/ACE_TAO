@@ -1,3 +1,10 @@
+Mon May  3 13:15:51 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/mfc/server.mpc:
+        * utils/NamingViewer/NamingViewer.mpc:
+
+          Inhert from ace_mfc instead of mfc.
+
 Sun May  2 17:04:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicInterface/DynamicInterface.mpc:
@@ -13,26 +20,26 @@ Sun May  2 13:44:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat May  1 22:36:22 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* Makefile:
-	* GNUmakefile:
+        * Makefile:
+        * GNUmakefile:
 
-	  Renamed "Makefile" to "GNUmakefile" to make it obvious to
-	  users that GNU Make is required to parse the file.
+          Renamed "Makefile" to "GNUmakefile" to make it obvious to
+          users that GNU Make is required to parse the file.
 
 Sat May  1 22:05:59 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/OBV/Typed_Events/Event_Types_impl.h:
-	* examples/OBV/Typed_Events/Event_Types_impl.cpp
-	  (create_for_unmarshal):
-	* tests/OBV/Factory/FactoryC_impl.h (Value2_init):
-	* tests/OBV/Factory/FactoryC_impl.cpp (create_for_unmarshal):
+        * examples/OBV/Typed_Events/Event_Types_impl.h:
+        * examples/OBV/Typed_Events/Event_Types_impl.cpp
+          (create_for_unmarshal):
+        * tests/OBV/Factory/FactoryC_impl.h (Value2_init):
+        * tests/OBV/Factory/FactoryC_impl.cpp (create_for_unmarshal):
 
-	  Added missing emulated exception macro argument.  Fixes
-	  compile-time errors in emulated exceptions builds.
+          Added missing emulated exception macro argument.  Fixes
+          compile-time errors in emulated exceptions builds.
 
-	* examples/OBV/Simple_util.cpp:
+        * examples/OBV/Simple_util.cpp:
 
-	  Added missing #includes.  Addresses compile-time errors.
+          Added missing #includes.  Addresses compile-time errors.
 
 Fri Apr 30 16:29:39 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
