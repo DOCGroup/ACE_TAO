@@ -6,7 +6,7 @@
  * @brief Pre-compiled IDL source for the CORBA::ORB::ObjectIdList related
  * types.
  *
- * This file is used to generate the code in ObjectIdListC.{h,i,cpp}.
+ * This file is used to generate the code in ObjectIdListC.{h,inl,cpp}.
  *
  *   The steps to regenerate the code are as follows:
  *

@@ -6,7 +6,7 @@
  * @brief Pre-compiled IDL source for the CORBA::Bounds
  * exception.
  *
- * This file is used to generate BoundsC.{h,i,cpp}, using the
+ * This file is used to generate BoundsC.{h,inl,cpp}, using the
  * following command:
  *
  *   tao_idl

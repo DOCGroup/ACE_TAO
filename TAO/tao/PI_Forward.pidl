@@ -8,7 +8,7 @@
  * @brief Pre-compiled IDL source for typedefs in the
  * PortableInterceptor module.
  *
- * This file is used to generate PI_Forward.{h,i,cpp},
+ * This file is used to generate PI_Forward.{h,inl,cpp},
  * using the following command:
 	 *
  *   tao_idl.exe
@@ -21,9 +21,9 @@
  *
  * and then:
  *
- * cp orig/PI_ForwardC.{h,i,cpp} .
+ * cp orig/PI_ForwardC.{h,inl,cpp} .
  *
- * The code left in PI_ForwardC.{h,i,cpp}
+ * The code left in PI_ForwardC.{h,inl,cpp}
  *
  */
 
