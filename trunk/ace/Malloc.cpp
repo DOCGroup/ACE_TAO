@@ -6,6 +6,7 @@
 
 #define ACE_BUILD_DLL
 #include "ace/Malloc.h"
+#include "ace/Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Malloc.i"
