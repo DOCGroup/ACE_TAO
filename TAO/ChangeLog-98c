@@ -1,3 +1,8 @@
+Tue Nov 11 00:00:25 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Cubit/TAO/IDL_Cubit/Makefile: removed MUNCHED because
+          it's no longer needed for g++/VxWorks.
+
 Mon Nov 10 22:02:42 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tao/interp.cpp (declare_entry): Moved TAO_ALIGNMENT_MAGIC_NUMBER
@@ -42,8 +47,8 @@ Sun Nov 09 23:32:58 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sun Nov 09 22:04:12 1997    <irfan@TWOSTEP>
 
-	* tao/orbobj.cpp (ORB_init): 
-	* tao/tao_internals.cpp (close_services): 
+	* tao/orbobj.cpp (ORB_init):
+	* tao/tao_internals.cpp (close_services):
 
 	  Changed ACE_Recursive_Thread_Mutex to ACE_SYNCH_RECURSIVE_MUTEX.
 
@@ -116,7 +121,7 @@ Sun Nov  9 13:03:37 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tao/cdr.cpp (CDR): Moved a bunch of absurdly long inlined methods
 	  from the *.i file into the *.cpp file.
-	  
+
 	* tao/any.cpp (CORBA_Any): refcount_ has previously been
 	  uninitialized.  I gave it a value of 1.
 
