@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-TEST_LIBS = -lTAO_RTScheduler -lTAO_RTCORBA -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable
+TEST_LIBS = -lTAO_RTScheduler -lTAO_RTCORBA -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_Messaging -lTAO_IORTable
 BIN_UNCHECKED = test Starter
 
 IDL_FILES = ../Synch \
