@@ -1,6 +1,6 @@
 Sun Jan 16 18:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.{h,cpp}:
           Don't implement the destructor of ACE_WChar_Codeset_Translator
           in the header file, but in the cpp file. Fixes link errors
           with TAO and Cygwin. Thanks to <mcgahan at sparta dot com>
