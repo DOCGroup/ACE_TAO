@@ -1,3 +1,10 @@
+Sun Sep 27 01:52:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/INET_Addr.cpp: 
+	  The get_host_name() method was returning the first name, and not
+	  looking up in the alias list for the right match with the
+	  address.
+
 Sun Sep 27 00:18:48 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Makefile: Updated dependency.
