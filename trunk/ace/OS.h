@@ -2749,11 +2749,13 @@ public:
 		      struct strbuf *data, int band, int flags); 
   static ssize_t read (ACE_HANDLE handle, void *buf, size_t len); 
   static ssize_t read (ACE_HANDLE handle, void *buf, size_t len, ACE_OVERLAPPED *); 
+  static ssize_t pread (ACE_HANDLE handle, void *buf, size_t nbyte, off_t offset);
   static ssize_t readv (ACE_HANDLE handle, struct iovec *iov, int iovlen); 
   static int recvmsg (ACE_HANDLE handle, struct msghdr *msg, int flags);
   static int sendmsg (ACE_HANDLE handle, ACE_SENDMSG_TYPE *msg, int flags); 
   static ssize_t write (ACE_HANDLE handle, const void *buf, size_t nbyte);
   static ssize_t write (ACE_HANDLE handle, const void *buf, size_t nbyte, ACE_OVERLAPPED *);
+  static ssize_t pwrite (ACE_HANDLE handle, const void *buf, size_t nbyte, off_t offset);
   static int writev (ACE_HANDLE handle, ACE_WRITEV_TYPE *iov, int iovcnt);
 
   // = A set of wrappers for event demultiplexing and IPC.
