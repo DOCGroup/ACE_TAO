@@ -20,10 +20,6 @@
 #ifndef AVSTREAMS_I_H
 #define AVSTREAMS_I_H
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/ATM_Addr.h"
 #include "ace/Containers_T.h"
