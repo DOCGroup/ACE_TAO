@@ -1,3 +1,14 @@
+Fri Apr 18 11:02:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Timer_Queue/TQTD.dsp:
+        * examples/Timer_Queue/Async_Timer_Queue_Test.dsp:
+        * examples/Timer_Queue/Reactor_Timer_Queue_Test.dsp:
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.dsp:
+        * examples/Timer_Queue/Timer_Queue.dsw:
+          Added new TQTD project to build a dll that is used by the other
+          project files. This matches the same structure as the GNU makefile
+          does.
+
 Thu Apr 17 16:48:23 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* acconfig.h:
