@@ -1,3 +1,17 @@
+Fri Jun 27 12:12:09 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+	* orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp:
+
+	  Finally fixed the explicit instantiation for activate<>.  As it
+	  turns out, the problem is that the build on which this was
+	  failing had exceptions turned off, which required the
+	  ACE_ENV_ARG_DECL at the end of the arg list.  Other explicit
+	  instantiation builds didn't trip the problem because they had
+	  exceptions turned on.
+
 Thu Jun 26 17:35:00 2003  Justin Michel  <michel_j@ociweb.com>
 
         * TAOACE.mwc:
