@@ -84,7 +84,9 @@ namespace TAO
           if (TAO_debug_level > 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("TAO (%P|%t) Error in finding index for \n")
+                          ACE_TEXT ("TAO (%P|%t) - ")
+                          ACE_TEXT ("Remote_Invocation::init_target_spec, ")
+                          ACE_TEXT ("Error in finding index for ")
                           ACE_TEXT ("IOP::IOR \n")));
             }
 
@@ -164,8 +166,9 @@ namespace TAO
         if (TAO_debug_level > 2)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) Remote_Invocation::send_message")
-                        ACE_TEXT (" - failure while sending message \n")));
+                        ACE_TEXT ("TAO (%P|%t) - ")
+                        ACE_TEXT ("Remote_Invocation::send_message, ")
+                        ACE_TEXT ("failure while sending message \n")));
           }
 
         // Close the transport and all the associated stuff along with
