@@ -239,9 +239,7 @@ private:
    * socket used to receive multicast to the multicast group (mcast addr
    * + port) to avoid receiving promiscuous traffic, in which case it is
    * not possible to subscribe to more than one mcast address on the same
-   * socket.  For a detailed description of multicast subscription and
-   * promiscuous traffic issues please see
-   * http://nexus.atdesk.com/bugzilla/show_bug.cgi?id=166
+   * socket.
    *
    * Performance.  We use array to store subscriptions (mcast addr / dgram
    * pairs).  If performance is not adequate, we should look into

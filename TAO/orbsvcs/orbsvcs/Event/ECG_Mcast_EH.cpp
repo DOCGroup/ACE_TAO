@@ -274,13 +274,14 @@ template class ACE_Hash<ACE_INET_Addr>;
 template class ACE_Node<ACE_INET_Addr>;
 template class ACE_Equal_To<ACE_INET_Addr>;
 template class ACE_Unbounded_Set<ACE_INET_Addr>;
-template class ACE_Array_Base<ACE_SOCK_Dgram_Mcast *>;
 template class ACE_Unbounded_Set_Iterator<ACE_INET_Addr>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast*, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<ACE_INET_Addr,ACE_SOCK_Dgram_Mcast*,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast*, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator<ACE_INET_Addr,ACE_SOCK_Dgram_Mcast*,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast*, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>;
+template class ACE_Array_Base<ACE_SOCK_Dgram_Mcast *>;
+template class ACE_Array_Base<TAO_ECG_Mcast_EH::Subscription>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -291,12 +292,13 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mc
 #pragma instantiate ACE_Node<ACE_INET_Addr>
 #pragma instantiate ACE_Equal_To<ACE_INET_Addr>
 #pragma instantiate ACE_Unbounded_Set<ACE_INET_Addr>
-#pragma instantiate ACE_Array_Base<ACE_SOCK_Dgram_Mcast *>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_INET_Addr>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator<ACE_INET_Addr,ACE_SOCK_Dgram_Mcast*,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast*, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_INET_Addr,ACE_SOCK_Dgram_Mcast*,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast*, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>
+#pragma instantiate ACE_Array_Base<ACE_SOCK_Dgram_Mcast *>
+#pragma instantiate ACE_Array_Base<TAO_ECG_Mcast_EH::Subscription>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
