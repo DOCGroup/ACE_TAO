@@ -1,3 +1,9 @@
+Fri Jun  9 07:19:10 2000  Toshio Hori <toshi@etl.go.jp>
+
+        * ace/Stream.h (class ACE_Stream): Added an updated version an
+	  insert() and replace() that make it possible to replace the
+ 	  stream head and tail.
+  
 Fri Jun 09 02:34:07 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/OS.i (floor and ceil): Added new methods.
