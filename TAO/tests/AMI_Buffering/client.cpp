@@ -4,6 +4,7 @@
 #include "Client_Task.h"
 #include "tao/Messaging/Messaging.h"
 #include "tao/TAOC.h"
+#include "tao/TAOA.h"
 #include "ace/Get_Opt.h"
 
 ACE_RCSID(AMI_Buffering, client, "$Id$")

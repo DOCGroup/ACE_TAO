@@ -4,6 +4,7 @@
 
 #include "tao/Messaging/Messaging.h"
 #include "tao/TAOC.h"
+#include "tao/TAOA.h"
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 #include "ace/Stats.h"
