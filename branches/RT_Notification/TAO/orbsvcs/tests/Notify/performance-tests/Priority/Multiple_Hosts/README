@@ -1,0 +1,25 @@
+Priority Preservation test on multiple hosts.
+
+There are 4 hosts involved in this test.
+
+Host 1 : Start the run_notify.pl here. It starts up an instance of the
+RT Notification configured with 3 lanes - High, Medium and Low
+priority.
+
+Host 2: Start path_low_prio.pl here. This will start a
+consumer-supplier pair which is configured for a low priority event
+propagation path. 
+
+Host 3: Start path_medium_prio.pl here. This will start a
+consumer-supplier pair which is configured for a medium priority event
+propagation path. 
+
+Host 4: Start path_high_prio.pl here. This will start a
+consumer-supplier pair which is configured for a high priority event
+propagation path. 
+
+Once the path_high_prio.pl is started, it will signal the low path and
+medium priority path tests to execute.
+
+Each test will generate the data files from the results recorded
+during execution. 
