@@ -20,6 +20,8 @@
 #ifndef ACE_CODESET_IMB1047_H
 #define ACE_CODESET_IMB1047_H
 
+#if defined(ACE_MVS)
+
 #include "ace/CDR_Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -39,8 +41,8 @@ class ACE_Export ACE_IBM1047_ISO8859 : public ACE_Char_Codeset_Translator
   // = DESCRIPTION
   //     This class performs the codeset translation:
   //
-  //     Native:	IBM_1047 (i.e. EBCDIC)
-  //     Stream:	ISO-8859 (i.e. Latin/1)
+  //     Native:        IBM_1047 (i.e. EBCDIC)
+  //     Stream:        ISO-8859 (i.e. Latin/1)
   //
 public:
   ACE_IBM1047_ISO8859 (void);
@@ -75,8 +77,8 @@ class ACE_Export ACE_ISO8859_IBM1047 : public ACE_Char_Codeset_Translator
   // = DESCRIPTION
   //     This class performs the codeset translation:
   //
-  //     Native:	ISO-8859 (i.e. Latin/1)
-  //     Stream:	IBM-1047 (i.e. EBCDIC)
+  //     Native:        ISO-8859 (i.e. Latin/1)
+  //     Stream:        IBM-1047 (i.e. EBCDIC)
   //
 public:
   ACE_ISO8859_IBM1047 (void);
@@ -102,5 +104,7 @@ public:
                                              const ACE_CDR::Char *,
                                              ACE_CDR::ULong);
 };
+
+#endif /* ACE_MVS */
 
 #endif /* ACE_CODESET_IMB1047_H */
