@@ -304,7 +304,7 @@ ACE_Message_Queue_NT::open (DWORD max_threads)
   this->max_cthrs_ = max_threads;
   this->completion_port_ = ::CreateIoCompletionPort (ACE_INVALID_HANDLE,
                                                      0,
-                                                     ACE_Message_Queue_Base::WAS_ACTIVE,
+                                                     ACE_Message_Queue_Base::ACTIVATED,
                                                      max_threads);
   return (this->completion_port_ == 0 ? -1 : 0);
 }
