@@ -12,12 +12,12 @@
 
 #ifndef KOKYU_H
 #define KOKYU_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/Copy_Disabled.h"
 
-//#if !defined (ACE_LACKS_PRAGMA_ONCE)
-//# pragma once
-//#endif /* ACE_LACKS_PRAGMA_ONCE */
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "kokyu_export.h"
 #include "Kokyu_defs.h"
@@ -94,7 +94,7 @@ namespace Kokyu
        *
        * @return Auto pointer to the dispatcher.
        */
-      static Dispatcher_Auto_Ptr 
+      static Dispatcher_Auto_Ptr
       create_dispatcher (const Dispatcher_Attributes& attr);
     };
 } //end of namespace
@@ -103,5 +103,5 @@ namespace Kokyu
 #include "Kokyu.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* KOKYU_H */

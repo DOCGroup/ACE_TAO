@@ -10,7 +10,7 @@
 
 #ifndef DSRT_SCHED_QUEUE_T_H
 #define DSRT_SCHED_QUEUE_T_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "DSRT_Dispatch_Item_T.h"
 #include "ace/RB_Tree.h"
@@ -222,5 +222,5 @@ namespace Kokyu
 #pragma implementation ("DSRT_Sched_Queue_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* DSRT_SCHED_QUEUE_T_H */

@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 /**
- *  @file   DSRT_Dispatcher_Impl.h
+ *  @file   DSRT_Dispatcher_Impl_T.h
  *
  *  $Id$
  *
@@ -8,13 +8,14 @@
 
 #ifndef DSRT_DISPATCHER_IMPL_H
 #define DSRT_DISPATCHER_IMPL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
+#include "Kokyu_dsrt.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-//# pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Kokyu_dsrt.h"
+
 
 namespace Kokyu
 {
@@ -91,5 +92,5 @@ namespace Kokyu
 #pragma implementation ("DSRT_Dispatcher_Impl_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* DSRT_DISPATCHER_IMPL_H */

@@ -10,14 +10,15 @@
 
 #ifndef DSRT_DIRECT_DISPATCHER_IMPL_T_H
 #define DSRT_DIRECT_DISPATCHER_IMPL_T_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
+
 #include "ace/Task.h"
-#include "ace/Copy_Disabled.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
+#include "ace/Copy_Disabled.h"
 #include "Kokyu_dsrt.h"
 #include "DSRT_Sched_Queue_T.h"
 #include "DSRT_Dispatcher_Impl_T.h"
@@ -174,5 +175,5 @@ namespace Kokyu
 #pragma implementation ("DSRT_Direct_Dispatcher_Impl_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* DSRT_DIRECT_DISPATCHER_IMPL_T_H */

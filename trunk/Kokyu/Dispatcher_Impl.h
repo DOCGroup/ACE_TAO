@@ -12,13 +12,15 @@
 
 #ifndef DISPATCHER_IMPL_H
 #define DISPATCHER_IMPL_H
-#include "ace/pre.h"
-
-//#if !defined (ACE_LACKS_PRAGMA_ONCE)
-//# pragma once
-//#endif /* ACE_LACKS_PRAGMA_ONCE */
+#include /**/ "ace/pre.h"
 
 #include "Kokyu_defs.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+
 
 namespace Kokyu
 {
@@ -66,5 +68,5 @@ namespace Kokyu
 #include "Dispatcher_Impl.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* DISPATCHER_IMPL_H */
