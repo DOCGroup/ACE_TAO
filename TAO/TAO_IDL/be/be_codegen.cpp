@@ -1481,7 +1481,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
     {
       // Needed for _narrow(), which is now template-based.
       this->gen_standard_include (this->client_stubs_,
-                                  "ace/OS_NS_String.h");
+                                  "ace/OS_NS_string.h");
     }
 
   if (be_global->gen_amh_classes () == I_TRUE)
