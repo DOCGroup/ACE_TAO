@@ -1,3 +1,8 @@
+Thu Nov 28 22:39:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	*
+	  orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp: Fixed warnings in builds where excetions are turned off.
+
 Thu Nov 28 22:30:37 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/OBV/TC_Alignment/client.cpp: Fixed errors and warnings in
