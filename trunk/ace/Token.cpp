@@ -1,4 +1,3 @@
-// Token.cpp
 // $Id$
 
 #define ACE_BUILD_DLL
@@ -24,11 +23,11 @@ ACE_Token::dump (void) const
 {
   ACE_TRACE ("ACE_Token::dump");
 
-  // @@ This should be fixed to use the ACE_DEBUG() statement...
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   ACE_DEBUG ((LM_DEBUG, "\nthread = %d", ACE_Thread::self ()));
-  ACE_DEBUG ((LM_DEBUG, "\nrenew: owner_ %d", int (this->owner_)));
+  // @@ Is there a portable way to do this?
+  // ACE_DEBUG ((LM_DEBUG, "\nowner_ = %l", (long) this->owner_));
   ACE_DEBUG ((LM_DEBUG, "\nowner_ addr = %x", &this->owner_));
   ACE_DEBUG ((LM_DEBUG, "\nwaiters_ = %d", this->waiters_));
   ACE_DEBUG ((LM_DEBUG, "\nin_use_ = %d", this->in_use_));
@@ -37,7 +36,7 @@ ACE_Token::dump (void) const
 }
 
 ACE_Token::ACE_Queue_Entry::ACE_Queue_Entry (ACE_Thread_Mutex &m,
-					     ACE_thread_t t_id)
+                                             ACE_thread_t t_id)
   : next_ (0),
     thread_id_ (t_id),
     cv_ (m),
@@ -96,8 +95,8 @@ ACE_Token::remove_entry (ACE_Token::ACE_Queue_Entry *entry)
 
 int
 ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
-			   void *arg,
-			   ACE_Time_Value *timeout)
+                           void *arg,
+                           ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Token::shared_acquire");
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
@@ -116,79 +115,79 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
   if (this->in_use_) // Someone already holds the token.
     {
       if (ACE_OS::thr_equal (thr_id, this->owner_)) // I own it!
-	{
-	  this->nesting_level_++;
-	  return 0;
-	}
+        {
+          this->nesting_level_++;
+          return 0;
+        }
       // Do a quick check for "polling" behavior.
       else if (timeout != 0 && timeout->sec () == 0 && timeout->usec () == 0)
-	{
-	  errno = ETIME;
-	  return -1;
-	}
+        {
+          errno = ETIME;
+          return -1;
+        }
       else // We've got to sleep until we get the token.
-	{
-	  // Allocate q entry on stack.  This works since we don't
-	  // exit this method's activation record until we've got the
-	  // token.
-	  ACE_Token::ACE_Queue_Entry my_entry (this->lock_, thr_id);
-	  int ret = 0;
+        {
+          // Allocate q entry on stack.  This works since we don't
+          // exit this method's activation record until we've got the
+          // token.
+          ACE_Token::ACE_Queue_Entry my_entry (this->lock_, thr_id);
+          int ret = 0;
 
-	  if (this->head_ == 0) // I'm first and only waiter in line...
-	    {
-	      this->head_ = &my_entry;
-	      this->tail_ = &my_entry;
-	    }
-	  else // I'm queued at the end of the list.
-	    {
-	      this->tail_->next_ = &my_entry;
-	      this->tail_ = &my_entry;
-	    }
+          if (this->head_ == 0) // I'm first and only waiter in line...
+            {
+              this->head_ = &my_entry;
+              this->tail_ = &my_entry;
+            }
+          else // I'm queued at the end of the list.
+            {
+              this->tail_->next_ = &my_entry;
+              this->tail_ = &my_entry;
+            }
 
-	  this->waiters_++;
+          this->waiters_++;
 
-	  // Execute appropriate <sleep_hook> callback.
-	  // (@@ should these methods return a success/failure
-	  // status, and if so, what should we do with it?)
+          // Execute appropriate <sleep_hook> callback.
+          // (@@ should these methods return a success/failure
+          // status, and if so, what should we do with it?)
 
-	  if (sleep_hook_func)
-	    {
-	      (*sleep_hook_func) (arg);
-	      ret++;
-	    }
-	  else // Execute virtual method.
-	    {
-	      this->sleep_hook ();
-	      ret++;
-	    }
+          if (sleep_hook_func)
+            {
+              (*sleep_hook_func) (arg);
+              ret++;
+            }
+          else // Execute virtual method.
+            {
+              this->sleep_hook ();
+              ret++;
+            }
 
-	  // Sleep until we've got the token (ignore signals).
+          // Sleep until we've got the token (ignore signals).
 
-	  while (my_entry.cv_.wait (timeout) == -1)
-	    {
-	      // Note, this should obey whatever thread-specific
-	      // interrupt policy is currently in place...
-	      if (errno == EINTR)
-		continue;
+          while (my_entry.cv_.wait (timeout) == -1)
+            {
+              // Note, this should obey whatever thread-specific
+              // interrupt policy is currently in place...
+              if (errno == EINTR)
+                continue;
 #if defined (DEBUGGING)
-	      cerr << '(' << ACE_Thread::self () << ')'
-		   << " acquire: "
-		   << (errno == ETIME ? "timed out" : "error occurred")
-		   << endl;
+              cerr << '(' << ACE_Thread::self () << ')'
+                   << " acquire: "
+                   << (errno == ETIME ? "timed out" : "error occurred")
+                   << endl;
 #endif /* DEBUGGING */
-	      // We come here if a timeout occurs or some serious
-	      // ACE_Condition object error.
-	      this->remove_entry (&my_entry);
-	      return -1;
-	    }
+              // We come here if a timeout occurs or some serious
+              // ACE_Condition object error.
+              this->remove_entry (&my_entry);
+              return -1;
+            }
 
-	  ACE_ASSERT (my_entry.runable_);
+          ACE_ASSERT (my_entry.runable_);
 #if defined (DEBUGGING)
-	  cerr << '(' << ACE_Thread::self () << ')'
-	       << " acquire (UNBLOCKED)" << endl;
+          cerr << '(' << ACE_Thread::self () << ')'
+               << " acquire (UNBLOCKED)" << endl;
 #endif /* DEBUGGING */
-	  return ret;
-	}
+          return ret;
+        }
     }
   else
     {
@@ -255,56 +254,56 @@ ACE_Token::renew (int requeue_position, ACE_Time_Value *timeout)
       this->head_ = this->head_->next_;
 
       if (this->head_ == 0) // No other threads - just add me
-	{
-	  this->head_ = &my_entry;
-	  this->tail_ = &my_entry;
-	}
+        {
+          this->head_ = &my_entry;
+          this->tail_ = &my_entry;
+        }
       else if (requeue_position == -1) // Insert at the end of the queue.
-	{
-	  this->tail_->next_ = &my_entry;
-	  this->tail_ = &my_entry;
-	}
+        {
+          this->tail_->next_ = &my_entry;
+          this->tail_ = &my_entry;
+        }
       else if (requeue_position == 0) // Insert at head of queue.
-	{
-	  my_entry.next_ = this->head_;
-	  this->head_ = &my_entry;
-	}
+        {
+          my_entry.next_ = this->head_;
+          this->head_ = &my_entry;
+        }
       else // Insert in the middle of the queue somewhere.
-	{
-	  ACE_Token::ACE_Queue_Entry *insert_after = this->head_;
+        {
+          ACE_Token::ACE_Queue_Entry *insert_after = this->head_;
 
-	  // Determine where our thread should go in the queue of
-	  // waiters.
+          // Determine where our thread should go in the queue of
+          // waiters.
 
-	  while (requeue_position-- && insert_after->next_ != 0)
-	    insert_after = insert_after->next_;
+          while (requeue_position-- && insert_after->next_ != 0)
+            insert_after = insert_after->next_;
 
-	  my_entry.next_ = insert_after->next_;
+          my_entry.next_ = insert_after->next_;
 
-	  if (my_entry.next_ == 0)
-	    this->tail_ = &my_entry;
+          if (my_entry.next_ == 0)
+            this->tail_ = &my_entry;
 
-	  insert_after->next_ = &my_entry;
-	}
+          insert_after->next_ = &my_entry;
+        }
 
       // Sleep until we've got the token (ignore signals).
 
       while (my_entry.cv_.wait (timeout) == -1)
-	{
-	  // Note, this should obey whatever thread-specific
-	  // interrupt policy is currently in place...
-	  if (errno == EINTR)
-	    continue;
+        {
+          // Note, this should obey whatever thread-specific
+          // interrupt policy is currently in place...
+          if (errno == EINTR)
+            continue;
 #if defined (DEBUGGING)
-	  cerr << '(' << ACE_Thread::self () << ')'
-	       << " renew: "
-	       << (errno == ETIME ? "timed out" : "error occurred") << endl;
+          cerr << '(' << ACE_Thread::self () << ')'
+               << " renew: "
+               << (errno == ETIME ? "timed out" : "error occurred") << endl;
 #endif /* DEBUGGING */
-	  // We come here if a timeout occurs or
-	  // some serious ACE_Condition object error.
-	  this->remove_entry (&my_entry);
-	  return -1;
-	}
+          // We come here if a timeout occurs or
+          // some serious ACE_Condition object error.
+          this->remove_entry (&my_entry);
+          return -1;
+        }
 
       ACE_ASSERT (my_entry.runable_);
       this->nesting_level_ = save_nesting_level_;
@@ -333,21 +332,21 @@ ACE_Token::release (void)
   else
     {
       if (this->head_ == 0)
-	this->in_use_ = 0; // No more waiters...
+        this->in_use_ = 0; // No more waiters...
       else
-	{
-	  this->owner_ = this->head_->thread_id_;
-	  --this->waiters_;
+        {
+          this->owner_ = this->head_->thread_id_;
+          --this->waiters_;
 
-	  // Wake up waiter and make it runable.
-	  this->head_->cv_.signal ();
-	  this->head_->runable_ = 1;
+          // Wake up waiter and make it runable.
+          this->head_->cv_.signal ();
+          this->head_->runable_ = 1;
 
-	  this->head_ = this->head_->next_;
+          this->head_ = this->head_->next_;
 
-	  if (this->head_ == 0)
-	    this->tail_ = 0;
-	}
+          if (this->head_ == 0)
+            this->tail_ = 0;
+        }
     }
   return 0;
 }
