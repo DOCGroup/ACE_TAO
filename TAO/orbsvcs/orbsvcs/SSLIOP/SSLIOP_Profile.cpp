@@ -23,7 +23,8 @@ TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const ACE_INET_Addr & addr,
                       object_key,
                       version,
                       orb_core),
-  ssl_endpoint_ (ssl_component, 0)
+  ssl_endpoint_ (ssl_component, 0),
+  ssl_only_ (0)
 {
   this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, true);
 }
@@ -41,7 +42,8 @@ TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const char * host,
                       addr,
                       version,
                       orb_core),
-  ssl_endpoint_ (ssl_component, 0)
+  ssl_endpoint_ (ssl_component, 0),
+  ssl_only_ (0)
 {
   this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, true);
 }
@@ -49,14 +51,16 @@ TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const char * host,
 TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core,
                                const ::SSLIOP::SSL * ssl_component)
   : TAO_IIOP_Profile (orb_core),
-    ssl_endpoint_ (ssl_component, 0)
+    ssl_endpoint_ (ssl_component, 0),
+    ssl_only_ (0)
 {
   this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, true);
 }
 
-TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core)
+TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core, int ssl_only)
   : TAO_IIOP_Profile (orb_core),
-    ssl_endpoint_ (0, 0)
+    ssl_endpoint_ (0, 0),
+    ssl_only_ (ssl_only)
 {
   this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, true);
 }
@@ -340,4 +344,14 @@ TAO_SSLIOP_Profile::parse_string (const char * ior
    ACE_CHECK;
 
    this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, true);
+   
+   if( ssl_only_) 
+   {
+      this->ssl_endpoint_.ssl_component_.port = this->endpoint_.port_;
+      
+      // Note that the Security::NoProtection bit is cleared since we
+      // are sure the server supports SSL (we're told so)
+      ACE_CLR_BITS (this->ssl_endpoint_.ssl_component_.target_supports,
+            Security::NoProtection);
+   }
 }

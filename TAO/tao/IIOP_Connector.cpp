@@ -349,7 +349,9 @@ TAO_IIOP_Connector::check_prefix (const char *endpoint)
   static const char *protocol[] = { "iiop", "iioploc" };
 
   const size_t slot = ACE_OS::strchr (endpoint, ':') - endpoint;
-
+  if (slot == 0) // an empty string is valid for corbaloc.
+    return 0;
+                                                                                                                  
   const size_t len0 = ACE_OS::strlen (protocol[0]);
   const size_t len1 = ACE_OS::strlen (protocol[1]);
 
