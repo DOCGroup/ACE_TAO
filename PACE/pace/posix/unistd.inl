@@ -79,7 +79,7 @@ pace_execl (const char* path, const char* arg, ...)
   int result = 0;
   va_list ap;
   va_start (ap, arg);
-  result = pace_execv (path, ap);
+  result = pace_execv (path, (char*const*)ap);
   va_end (ap);
   return result;
 }
@@ -90,7 +90,7 @@ pace_execle (const char* path, const char* arg, ...)
   int result = 0;
   va_list ap;
   va_start (ap, arg);
-  result = pace_execve (path, ap, 0);
+  result = pace_execve (path, (char*const*)ap, 0);
   va_end (ap);
   return result;
 }
@@ -101,7 +101,7 @@ pace_execlp (const char* file, const char* arg,  ...)
   int result = 0;
   va_list ap;
   va_start (ap, arg);
-  result = pace_execvp (file, ap);
+  result = pace_execvp (file, (char*const*)ap);
   va_end (ap);
   return result;
 }
