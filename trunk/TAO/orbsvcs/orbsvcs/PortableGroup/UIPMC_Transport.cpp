@@ -59,6 +59,12 @@ TAO_UIPMC_Transport::event_handler_i (void)
   return this->connection_handler_;
 }
 
+TAO_Connection_Handler *
+TAO_UIPMC_Transport::connection_handler_i (void)
+{
+  return this->connection_handler_;
+}
+
 TAO_Pluggable_Messaging *
 TAO_UIPMC_Transport::messaging_object (void)
 {
