@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -25,9 +24,9 @@ class ACE_Export ACE_Read_Buffer
 {
   // = TITLE
   //     Efficiently reads an artibrarily large buffer from an input
-  //     stream up to an including a termination character.  Also
+  //     stream up to and including a termination character.  Also
   //     performs search/replace on single occurrences a character in
-  //     the buffer using the priniciples of Integrated Layer
+  //     the buffer using the principles of Integrated Layer
   //     Processing.
   //
   // = DESCRIPTION
@@ -46,19 +45,22 @@ public:
   ~ACE_Read_Buffer (void);
   // Closes the FILE *.
 
-  // Returns a dynamically allocated pointer to n bytes of data from
+  // Returns a dynamically allocated pointer to n+1 bytes of data from
   // the input stream up to (and including) the <terminator>.  If
   // <search> is >= 0 then all occurrences of the <search> value are
-  // substituted with the <replace> value.
+  // substituted with the <replace> value.  The last of the n+1 bytes
+  // of data is a 0, so that if data is test, strlen () can be used on
+  // it.
   char *read (int terminator = EOF,
-	      int search = '\n',
-	      int replace = '\0');
+              int search = '\n',
+              int replace = '\0');
 
   size_t replaced (void) const;
   // Returns the number of characters replaced during a <read>.
 
   size_t size (void) const;
-  // Returns the size of the allocated buffer obtained during a <read>.
+  // Returns the size of the allocated buffer obtained during a <read>,
+  // not including the null terminator.
 
   void dump (void) const;
   // Dump the state of the object.
@@ -86,8 +88,10 @@ private:
   // = Disallow copying and assignment...
   void operator= (const ACE_Read_Buffer &);
   ACE_Read_Buffer (const ACE_Read_Buffer &);
-};  
+};
 
-#include "ace/Read_Buffer.i"
+#if defined (__ACE_INLINE__)
+# include "ace/Read_Buffer.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* ACE_READ_BUFFER_H */
