@@ -163,13 +163,13 @@ main (int argc, char ** argv)
   ACE_DEBUG ((LM_DEBUG, "The multicast server setup is done.\n"));
 #endif /* ACE_HAS_IP_MULTICAST */
 
-  // free memory with "free" because we used strdup which uses malloc
-  ACE_OS::free (str);
-
   // Handle requests for this object until we're killed, or one of the
   // methods asks us to exit.
   if (orb_ptr->run () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), -1);
+
+  // free memory with "free" because we used strdup which uses malloc
+  ACE_OS::free (str);
 
   return 0;
 }
