@@ -56,7 +56,7 @@ private:
   TAO_ORB_Manager orb_manager_;
   // The ORB manager.
 
-  Echo_i *servant_;
+  Echo_i servant_;
   // Servant for the Echo interface.
 
   FILE *ior_output_file_;
@@ -71,7 +71,7 @@ private:
   CosNaming::NamingContext_var naming_context_;
   // Naming context for the naming service.
 
-  TAO_Naming_Server naming_srvr_;
+  TAO_Naming_Server naming_server_;
   // An instance of the name server, wherein the naming context
   // containg the factory of objects will be registered.
 
