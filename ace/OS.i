@@ -1087,7 +1087,7 @@ ACE_OS::strdup (const char *s)
 ACE_INLINE int 
 ACE_OS::vsprintf (char *buffer, const char *format, va_list argptr)
 {
-  return ::vsprintf (buffer, format, argptr);
+  return ACE_SPRINTF_ADAPTER (::vsprintf (buffer, format, argptr));
 }
 
 ACE_INLINE size_t 
