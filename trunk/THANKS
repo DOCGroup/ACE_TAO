@@ -1124,10 +1124,10 @@ Edwin McKay <mckayea@betalasermike.com>
 Scott Bolin <scott.bolin@pgs.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
-at Ericsson.  Paul devised the recursive Makefile scheme that
-underlies this distribution and also spent countless hours with me
-discussing object-oriented techniques for developing distributed
-application frameworks.
+at Ericsson in the early 1990's.  Paul devised the recursive Makefile
+scheme that underlies this distribution and also spent countless hours
+with me discussing object-oriented techniques for developing
+distributed application frameworks.
 
 Finally, I'd also like to thank Todd L. Montgomery <tmont@cs.wvu.edu>,
 fellow heavy metal head, for fulfilling his quest to get ACE to
