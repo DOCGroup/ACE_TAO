@@ -1048,6 +1048,10 @@ SOURCE=.\TAO_Singleton_Manager.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\TAOA.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\TAOC.cpp
 # ADD CPP /GR
 # End Source File
@@ -1147,6 +1151,10 @@ SOURCE=.\Wait_On_Read.cpp
 # Begin Source File
 
 SOURCE=.\Wait_Strategy.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\WrongTransactionA.cpp
 # End Source File
 # Begin Source File
 
@@ -2179,6 +2187,10 @@ SOURCE=.\TAO_Singleton_Manager.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\TAOA.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\TAOC.h
 # End Source File
 # Begin Source File
@@ -2320,6 +2332,10 @@ SOURCE=.\Wait_On_Read.h
 # Begin Source File
 
 SOURCE=.\Wait_Strategy.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\WrongTransactionA.h
 # End Source File
 # Begin Source File
 
