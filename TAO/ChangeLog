@@ -1,3 +1,10 @@
+Mon Sep  8 07:06:38 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Oneway_Buffering/Oneway_Buffering.mpc:
+
+          Force the client and admin projects to be built after the server
+          to avoid problems with processing the idl file in parallel.
+
 Sun Sep  7 14:15:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/ORB.cpp:
@@ -8,18 +15,18 @@ Sun Sep  7 13:59:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/tmplinst.cpp:
 
-	  Fixed typo and added #include of OperationDef_i.h.
+          Fixed typo and added #include of OperationDef_i.h.
 
 Sun Sep  7 09:50:38 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/IFRService/tmplinst.cpp:
+        * orbsvcs/orbsvcs/IFRService/tmplinst.cpp:
 
-	  Fixed incorrect preprocessor conditional expression.
+          Fixed incorrect preprocessor conditional expression.
 
 Sat Sep  6 08:08:19 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/GIOPC.h:
-	* tao/target_specification.h:
+        * tao/GIOPC.h:
+        * tao/target_specification.h:
 
           #undef "IOR" (for HPUX) after all headers have been included to
           make sure it isn't indirectly redefined by other headers.
