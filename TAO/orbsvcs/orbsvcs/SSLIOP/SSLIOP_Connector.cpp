@@ -159,15 +159,17 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
   // if no establishment of trust policy was set.  Specifically, if
   // the "trust" pointer below is zero, then the SSLIOP pluggable
   // protocol default value will be used.
-  Security::EstablishTrust *trust = 0;
-  Security::EstablishTrust tmp_trust = { 0 , 0 };
+  Security::EstablishTrust trust = { 0 , 0 };
   if (!CORBA::is_nil (trust_policy.in ()))
     {
-      tmp_trust = trust_policy->trust (TAO_ENV_SINGLE_ARG_PARAMETER);
+      trust = trust_policy->trust (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
-
-      trust = &tmp_trust;
     }
+
+  // Flag that states whether any form of establishment of trust
+  // should occur.
+  CORBA::Boolean establish_trust =
+    trust.trust_in_target || trust.trust_in_client;
 
   // @@ Should this be in a "policy validator?"
   //
@@ -175,7 +177,7 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
   // available in the IOR, meaning that there is no way to establish
   // trust.  Throw an exception.
   if (ssl_endpoint->ssl_component ().port == 0
-      && trust != 0)
+      && establish_trust)
     {
       if (TAO_debug_level > 0)
         {
@@ -235,34 +237,16 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
                         -1);
     }
 
-  if (no_protection || ssl_endpoint->ssl_component ().port == 0)
+  if ((!establish_trust && no_protection)
+      || ssl_endpoint->ssl_component ().port == 0)
     {
-      // If establishment of trust is required, then establish an
-      // SSLIOP connection first.  Certificate verification will occur
-      // during the connection negotiation.  If the SSLIOP connection
-      // is successfully negotiated, then trust is established and
-      // continue on to the unprotected connection.
-      if (ssl_endpoint->ssl_component ().port != 0
-          && trust != 0
-          && trust->trust_in_target)
-        {
-          int result = this->ssliop_connect (ssl_endpoint,
-                                             trust,
-                                             invocation,
-                                             desc
-                                             TAO_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
-
-          if (result != 0)
-            return -1;
-        }
-
       return this->iiop_connect (ssl_endpoint,
                                  invocation
                                  TAO_ENV_ARG_PARAMETER);
     }
 
   return this->ssliop_connect (ssl_endpoint,
+                               no_protection,
                                trust,
                                invocation,
                                desc
@@ -353,7 +337,8 @@ TAO_SSLIOP_Connector::iiop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
 
 int
 TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
-                                      Security::EstablishTrust *trust,
+                                      int no_protection,
+                                      const Security::EstablishTrust &trust,
                                       TAO_GIOP_Invocation *invocation,
                                       TAO_Transport_Descriptor_Interface *desc
                                       TAO_ENV_ARG_DECL)
@@ -435,8 +420,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
       // ACE_Strategy_Connector (the "base_connector_").  This is
       // thread-safe and reentrant, hence no synchronization is
       // necessary.
-      if (trust != 0
-          &&(trust->trust_in_client || trust->trust_in_target)
+      if ((trust.trust_in_client || trust.trust_in_target)
           && this->base_connector_.creation_strategy ()->make_svc_handler (
                svc_handler) == 0)
         {
@@ -448,11 +432,11 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
           //
           // In SSLIOP's case, trust_in_client also implies
           // trust_in_target.
-          if (trust->trust_in_client)
+          if (trust.trust_in_client)
             verify_mode = SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT;
 
           // Require verification of the target's certificate.
-          else if (trust->trust_in_target)
+          else if (trust.trust_in_target)
             verify_mode = SSL_VERIFY_PEER;
 
           // Trust in neither the client nor the target is required.
@@ -462,6 +446,18 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
           ::SSL_set_verify (svc_handler->peer().ssl(),
                             verify_mode,
                             0);
+
+          if (no_protection
+              && ::SSL_set_cipher_list (svc_handler->peer().ssl(),
+                                        "eNULL") == 0)
+            {
+              if (TAO_debug_level > 0)
+                ACE_DEBUG ((LM_ERROR,
+                            ACE_TEXT ("(%P|%t) Unable to set eNULL ")
+                            ACE_TEXT ("SSL cipher.\n")));
+
+              ACE_THROW_RETURN (CORBA::INV_POLICY (), -1);
+            }
         }
 
       // @@ This needs to change in the next round when we implement
@@ -490,7 +486,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) SSLIOP_Connector::connect ")
+                    ACE_TEXT ("(%P|%t) SSLIOP_Connector::connect -  ")
                     ACE_TEXT ("The result is <%d> \n"), result));
 
       if (result == -1)
@@ -501,10 +497,8 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
               ssl_endpoint->addr_to_string (buffer,
                                             sizeof (buffer) - 1);
               ACE_DEBUG ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) %s:%u, connection to ")
+                          ACE_TEXT ("(%P|%t) %N:%l, connection to ")
                           ACE_TEXT ("%s, SSL port %d failed (%p)\n"),
-                          __FILE__,
-                          __LINE__,
                           buffer,
                           remote_address.get_port_number (),
                           ACE_TEXT ("errno")));

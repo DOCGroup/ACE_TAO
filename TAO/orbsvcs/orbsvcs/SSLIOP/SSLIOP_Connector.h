@@ -82,7 +82,8 @@ protected:
 
   /// SSLIOP-specific connection establishment.
   int ssliop_connect (TAO_SSLIOP_Endpoint *ssliop_endpoint,
-                      Security::EstablishTrust *trust,
+                      int no_protection,
+                      const Security::EstablishTrust &trust,
                       TAO_GIOP_Invocation *invocation,
                       TAO_Transport_Descriptor_Interface *desc
                       TAO_ENV_ARG_DECL);
