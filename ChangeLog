@@ -95,6 +95,13 @@ Tue Aug 24 19:32:07 2004  J.T. Conklin  <jtc@acorntoolworks.com>
           Removed extraneous cruft left over from autoheader generated
           file.  Added conditional support for NetBSD/AMD64.
 
+Tue Aug 24 15:03:22 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_NS_Thread.inl (thread_mutex_init): Fixed wchar_t version to
+	  pass a 0 sa value. Corrects the passing of the lock_type value
+	  through to ACE_OS::mutex_init(), restoring behavior of recursive
+	  mutexes.
+
 Tue Aug 24 14:07:22 2004  Steve Huston  <shuston@riverace.com>
 
         Changes to improve the functionality of wide-char operation on
