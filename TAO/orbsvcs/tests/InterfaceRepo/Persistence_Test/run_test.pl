@@ -35,7 +35,7 @@ unlink $backing_file;
 
 print STDERR "\t IFR Persistence Test\n\n";
 
-$IFR = new PerlACE::Process ("../../../IFR_Service/IFR_Service", $persistent);
+$IFR = new PerlACE::Process ("../../../IFR_Service/IFR_Service", " -o $iorfile" . " $persistent");
 $T   = new PerlACE::Process ("Persistence_Test");
 
 $IFR->Spawn ();

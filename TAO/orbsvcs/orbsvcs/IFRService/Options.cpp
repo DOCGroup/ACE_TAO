@@ -12,7 +12,8 @@ Options::Options ()
     persistent_ (0),
     persistent_file_ (ACE_OS::strdup ("ifr_default_backing_store")),
     using_registry_ (0),
-    enable_locking_ (0)
+    enable_locking_ (0),
+    support_multicast_(0)
 {
 }
 
@@ -25,7 +26,7 @@ Options::~Options ()
 int
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:pb:mr");
+  ACE_Get_Opt get_opts (argc, argv, "o:pb:lm:r");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -41,7 +42,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
       case 'b':
         this->persistent_file_ = get_opts.opt_arg ();
         break;
-      case 'm':
+      case 'l':
 #if defined (ACE_HAS_THREADS)
         this->enable_locking_ = 1;
 #endif /* ACE_HAS_THREADS */
@@ -59,13 +60,17 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
           1
         );
 #endif /* ACE_WIN32 */
+      case 'm':
+        this->support_multicast_ = ACE_OS::atoi(get_opts.opt_arg ());
+        break;
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Usage:  %s"
                            " [-o] <ior_output_file>"
                            " [-r]"
-                           " [-m]"
+                           " [-l]"
+                           " [-m] <0|1>"
                            " [-p]"
                            " [-b] <persistence_file>"
                             "\n",
@@ -105,6 +110,12 @@ int
 Options::enable_locking (void) const
 {
   return this->enable_locking_;
+}
+
+int
+Options::support_multicast_discovery (void) const
+{
+  return this->support_multicast_;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

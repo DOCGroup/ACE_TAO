@@ -16,11 +16,11 @@ It is far easier to run the test with the provided Perl script
 run_test.pl, but to do it by hand, first start the IFR with
 (Windows users remember to use backslashes instead):
 
-../../../IFR_Service/IFR_Service -p
+../../../IFR_Service/IFR_Service -p -m 1
 
 Then execute the test code with
 
-Persistence_Test
+Persistence_Test 
 
 This will populate the IFR with a few IFR objects.
 After the test finishes, stop the IFR. Then start it again
