@@ -65,8 +65,8 @@
 #define EXT_START_CODE 0x000001b5
 #define USER_START_CODE 0x000001b2
 
-extern int drift_ppm;
-extern int session_limit, session_num;
+//extern int Mpeg_Global::drift_ppm;
+//extern int Mpeg_Global::session_limit, Mpeg_Global::session_num;
 
 static int live_source = 0;
 static int video_format;
@@ -1196,11 +1196,11 @@ static void INITvideo(void)
 #endif
   if (para.nameLength>0)
     CmdRead(videoFile, para.nameLength);
-  if (session_num > session_limit || para.version != VERSION) {
+  if (Mpeg_Global::session_num > Mpeg_Global::session_limit || para.version != VERSION) {
     char errmsg[128];
     cmd = CmdFAIL;
     CmdWrite((char *)&cmd, 1);
-    if (session_num > session_limit) {
+    if (Mpeg_Global::session_num > Mpeg_Global::session_limit) {
       sprintf(errmsg,
 	      "Too many sessions being serviced, please try again later.\n");
     }
@@ -1434,8 +1434,8 @@ static void timerHandler(int sig)
   int val2, val3;
   int usec = currentUPF + addedUPF;
   
-  if (drift_ppm) {
-    usec -= (int)((double)usec * (double)drift_ppm / 1000000.0);
+  if (Mpeg_Global::drift_ppm) {
+    usec -= (int)((double)usec * (double)Mpeg_Global::drift_ppm / 1000000.0);
   }
   
   if (timerAdjust > 1)
@@ -1559,13 +1559,13 @@ static void TimerSpeed(void)
 {
   struct itimerval val;
   int usec = currentUPF + addedUPF;
-  if (drift_ppm) {
+  if (Mpeg_Global::drift_ppm) {
     /*
-    int drift = (double)usec * (double)drift_ppm / 1000000.0;
-    SFprintf(stderr, "drift_ppm %d, usec %d, drift %d, new usec %d\n",
-	    drift_ppm, usec, drift, usec - drift);
+    int drift = (double)usec * (double)Mpeg_Global::drift_ppm / 1000000.0;
+    SFprintf(stderr, "Mpeg_Global::drift_ppm %d, usec %d, drift %d, new usec %d\n",
+	    Mpeg_Global::drift_ppm, usec, drift, usec - drift);
      */
-    usec -= (int)((double)usec * (double)drift_ppm / 1000000.0);
+    usec -= (int)((double)usec * (double)Mpeg_Global::drift_ppm / 1000000.0);
   }
   if (timerAdjust > 1)
     usec = (int)(((double)usec * (double)(SPEEDUP_INV_SCALE - 1)) /

@@ -32,6 +32,7 @@
 #include <string.h>
 #include <netdb.h>
 #include <ctype.h>
+#include <sys/select.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netinet/tcp.h>
@@ -1207,9 +1208,9 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
 
   if (fd == -1 && fd_unix >= 0 && FD_ISSET(fd_unix, &read_mask)) {
     struct sockaddr_un peeraddr_un;
-    /*
+    
     fprintf(stderr, "Server to accept a UNIX connection.\n");
-    */
+    
     addrlen = sizeof(struct sockaddr_un);
     fd = accept(fd_unix, (struct sockaddr *)&peeraddr_un, &addrlen);
     if (fd == -1) {
@@ -1222,9 +1223,9 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
     *max_pkt_size = 0;
   }
   if (fd == -1 && fd_inet >= 0 && FD_ISSET(fd_inet, &read_mask)) {
-    /*
+    
     fprintf(stderr, "Server to accept a INET connection.\n");
-    */
+    
     addrlen = sizeof(struct sockaddr_in);
     fd = accept(fd_inet, (struct sockaddr *)&peeraddr_in, &addrlen);
     if (fd == -1) {
@@ -1270,12 +1271,12 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
     ComCloseConn(fd);
     return -1;
   }
-  /*
+
   fprintf(stderr, "ComGetConnPair got %s fd = %d with value %d\n",
 	  fdType == CONN_ATM ? "ATM" :
 	  fdType == CONN_INET ? "INET" : "UNIX",
 	  fd, nfds);
-  */
+
   if (nfds >= 0) { /* can be paired and return */
     fdTable[i].state = STATE_DATA;
     for (i = 0; i < size; i ++) {
@@ -1400,10 +1401,10 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
       close(dfd);
       return -1;
     }
-    /*
+
     fprintf(stderr, "ComGetConnPair local UDP socket: addr - %s, port - %u.\n",
             inet_ntoa(in->sin_addr), ntohs(in->sin_port));
-    */
+
     if (time_read_bytes(fd, (char *)&in->sin_port, sizeof(short)) == -1 ||
 	time_read_bytes(fd, (char *)&in->sin_addr.s_addr, sizeof(int)) == -1) {
       fprintf(stderr,
@@ -1459,10 +1460,10 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
 #endif
     *max_pkt_size = - INET_SOCKET_BUFFER_SIZE;  /* UDP sockets on HP and SUN
 						are known to be discard mode */
-    /*
+
     fprintf(stderr, "ComGetConnPair UDP dfd connects to host-%s (port %u)\n",
 	    inet_ntoa(in->sin_addr), ntohs(in->sin_port));
-    */
+
     for (i = 0; i < size; i ++) {
       if (fdTable[i].fd == -1) break;
     }
@@ -1547,9 +1548,9 @@ int ComGetConn(int *max_pkt_size)
 
   if (fd == -1 && fd_unix >= 0 && FD_ISSET(fd_unix, &read_mask)) {
     struct sockaddr_un peeraddr_un;
-    /*
+
     fprintf(stderr, "Server to accept a UNIX connection.\n");
-    */
+
     addrlen = sizeof(struct sockaddr_un);
     fd = accept(fd_unix, (struct sockaddr *)&peeraddr_un, &addrlen);
     if (fd == -1) {
@@ -1563,9 +1564,9 @@ int ComGetConn(int *max_pkt_size)
   }
   if (fd == -1 && fd_inet >= 0 && FD_ISSET(fd_inet, &read_mask)) {
     struct sockaddr_in peeraddr_in;
-    /*
+
     fprintf(stderr, "Server to accept a INET connection.\n");
-    */
+
     addrlen = sizeof(struct sockaddr_in);
     fd = accept(fd_inet, (struct sockaddr *)&peeraddr_in, &addrlen);
     if (fd == -1) {

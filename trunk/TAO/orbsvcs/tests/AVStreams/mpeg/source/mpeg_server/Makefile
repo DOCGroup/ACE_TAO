@@ -11,7 +11,7 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
-FILES= as las lvs vs
+FILES= as las lvs vs Globals
 
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))

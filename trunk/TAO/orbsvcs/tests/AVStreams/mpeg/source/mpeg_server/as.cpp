@@ -46,7 +46,7 @@
 #include "../mpeg_shared/com.h"
 #include "proto.h"
 
-extern int session_limit, session_num;
+//extern int Mpeg_Global::session_limit, Mpeg_Global::session_num;
 
 static bytes_sent = 0;
 static time_t start_time;
@@ -101,11 +101,11 @@ static void INITaudio(void)
 #endif
   if (para.nameLength>0)
     CmdRead(audioFile, para.nameLength);
-  if (session_num > session_limit || para.version != VERSION) {
+  if (Mpeg_Global::session_num > Mpeg_Global::session_limit || para.version != VERSION) {
     char errmsg[128];
     cmd = CmdFAIL;
     CmdWrite((char *)&cmd, 1);
-    if (session_num > session_limit) {
+    if (Mpeg_Global::session_num > Mpeg_Global::session_limit) {
       sprintf(errmsg,
 	      "Too many sessions being serviced, please try again later.\n");
     }

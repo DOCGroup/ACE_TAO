@@ -24,6 +24,8 @@
  *         email: scen@cse.ogi.edu
  */
 
+#include "Globals.h"
+
 /* las.c */
 int InitLiveAudio(int argc, char ** argv); /* -1 -- failed, 0 - succ */
 void LeaveLiveAudio(void);
