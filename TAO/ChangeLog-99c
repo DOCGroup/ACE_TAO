@@ -1,160 +1,164 @@
+Tue Jun 08 16:10:09 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/corbafwd.h: fixed comments that describe the minor code format.
+
 Tue Jun  8 16:06:15 1999  Pradeep Gore  <pradeep@danzon.cs.wustl.edu>
 
-	* examples/Event_Comm/Consumer_Handler.h:
-	* examples/Event_Comm/Notifier_Handler.h:
-	* examples/Simple/chat/Client_i.h:
-	* orbsvcs/CosEvent_Service/CosEvent_Service.h:
-	  Reordered the CORBA::ORB_var declaration in these files so that
-	  the ORB_var is destroyed after all the other "_var" members.
+        * examples/Event_Comm/Consumer_Handler.h:
+        * examples/Event_Comm/Notifier_Handler.h:
+        * examples/Simple/chat/Client_i.h:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.h:
+          Reordered the CORBA::ORB_var declaration in these files so that
+          the ORB_var is destroyed after all the other "_var" members.
 
 Tue Jun 08 15:47:25 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Object.i:
-	* tao/Typecode.i:
-	* tao/ORB.i: Moved is_nil and release around to avoid inline
-	  functions being used before declared inlined warnings.  Thanks
-	  to David for pointing this out.
+        * tao/Object.i:
+        * tao/Typecode.i:
+        * tao/ORB.i: Moved is_nil and release around to avoid inline
+          functions being used before declared inlined warnings.  Thanks
+          to David for pointing this out.
 
 Tue Jun  8 14:43:52 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * Fixed the capitalization of all options in TAO's svc.conf files.
 
-	* tao/ORB_Core.cpp,
-	  tao/default_resource.cpp,
-	  tao/default_server.cpp,
-	  tao/default_client.cpp: Fixed the parsing of options
-	  so that they are case insensitive, e.g., "-ORBsvcconf" is the
-	  same as "-ORBSvcConf".  This allows us to use more intuitive
-	  "intercap" spelling in the documentation without breaking
-	  existing software.
+        * tao/ORB_Core.cpp,
+          tao/default_resource.cpp,
+          tao/default_server.cpp,
+          tao/default_client.cpp: Fixed the parsing of options
+          so that they are case insensitive, e.g., "-ORBsvcconf" is the
+          same as "-ORBSvcConf".  This allows us to use more intuitive
+          "intercap" spelling in the documentation without breaking
+          existing software.
 
-	* tao/ORB_Core.cpp (init): If an non "-ORB" argument is given to
- 	  ORB_init() we now print a warning message (if the
- 	  TAO_debug_level > 0) and "consume" the argument.  This is in
- 	  accordance with the CORBA spec.
+        * tao/ORB_Core.cpp (init): If an non "-ORB" argument is given to
+          ORB_init() we now print a warning message (if the
+          TAO_debug_level > 0) and "consume" the argument.  This is in
+          accordance with the CORBA spec.
 
 Tue Jun  8 15:38:01 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* docs/Options.html:
-	* tao/default_client.cpp (create_transport_mux_strategy): Renamed
-	the ORBtransportmuxstrategy to ORBRequestMuxStrategy.
+        * docs/Options.html:
+        * tao/default_client.cpp (create_transport_mux_strategy): Renamed
+        the ORBtransportmuxstrategy to ORBRequestMuxStrategy.
 
 Tue Jun 08 15:12:05 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/POA/Loader/Servant_Activator.cpp (ServantActivator_i):
-	  Fixed "ANSI C++ forbids casting between pointers to functions
-	  and objects" warning.  Thanks to David for pointing this out.
+        * examples/POA/Loader/Servant_Activator.cpp (ServantActivator_i):
+          Fixed "ANSI C++ forbids casting between pointers to functions
+          and objects" warning.  Thanks to David for pointing this out.
 
 Tue Jun  8 15:15:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/Param_Test/param_test_i.h:
+        * TAO/tests/Param_Test/param_test_i.h:
         * TAO/tests/Param_Test/param_test_i.cpp:
-	* TAO/tests/NestedUpcall/MT_Client_Test/client.h:
-	  Moved class member ORB_var orb_ up the list so
-	  it will get destroyed after other _vars.
+        * TAO/tests/NestedUpcall/MT_Client_Test/client.h:
+          Moved class member ORB_var orb_ up the list so
+          it will get destroyed after other _vars.
 
-	* tao/DynArray_i.h:
-	* tao/DynArray_i.cpp:
-	* tao/DynSequence_i.h:
-	* tao/DynSequence_i.cpp:
-	* tao/DynStruct_i.h:
-	* tao/DynStruct_i.cpp:
-	* tao/DynUnion_i.h:
-	* tao/DynUnion_i.cpp:
-	  Renamed member 'index_' as 'current_index_'
-	  just to be safe.
+        * tao/DynArray_i.h:
+        * tao/DynArray_i.cpp:
+        * tao/DynSequence_i.h:
+        * tao/DynSequence_i.cpp:
+        * tao/DynStruct_i.h:
+        * tao/DynStruct_i.cpp:
+        * tao/DynUnion_i.h:
+        * tao/DynUnion_i.cpp:
+          Renamed member 'index_' as 'current_index_'
+          just to be safe.
 
-	* TAO_IDL/be/be_visitor_root/root.cpp:
-	  Added missing case to function visit_constant().
-	  Thanks to Sridevi Subramanian <subrams@erols.com>
-	  for pointing out this problem.
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+          Added missing case to function visit_constant().
+          Thanks to Sridevi Subramanian <subrams@erols.com>
+          for pointing out this problem.
 
 Tue Jun  8 15:09:35 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/Callback_Quoter/Consumer_i.h (class Consumer):
-	* examples/Callback_Quoter/Consumer_Handler.h (class Consumer_Handler):
-	* examples/Callback_Quoter/Supplier_i.h (class Supplier):
+        * examples/Callback_Quoter/Consumer_i.h (class Consumer):
+        * examples/Callback_Quoter/Consumer_Handler.h (class Consumer_Handler):
+        * examples/Callback_Quoter/Supplier_i.h (class Supplier):
 
-	  Moved the CORBA::ORB_var before the other vars in the member
-	  declaration so that it gets destructed last.
+          Moved the CORBA::ORB_var before the other vars in the member
+          declaration so that it gets destructed last.
 
 Tue Jun  8 15:03:02 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* orbsvcs/tests/Property/client.h:
-	* orbsvcs/tests/Property/client.cpp: Fixed the SunCC5.0 warnings.
+        * orbsvcs/tests/Property/client.h:
+        * orbsvcs/tests/Property/client.cpp: Fixed the SunCC5.0 warnings.
 
 Tue Jun 08 13:36:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Stub.{h,i} (servant_orb): Added data member servant_orb_ and
- 	  its accessor and mutator.  This ORB_var stores the pointer of a
- 	  collocated servant and is used to locate/query the servant/POA.
+        * tao/Stub.{h,i} (servant_orb): Added data member servant_orb_ and
+          its accessor and mutator.  This ORB_var stores the pointer of a
+          collocated servant and is used to locate/query the servant/POA.
 
 Mon Jun 07 15:47:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/Options.html: Documented ORB options -ORBglobalcollocation
-	  and -ORBcollocationStrategy.
+        * docs/Options.html: Documented ORB options -ORBglobalcollocation
+          and -ORBcollocationStrategy.
 
-	* tao/ORB_Core.{h,i,cpp}: Removed accessor/mutator
- 	  using_collocation methods.  They have been replaced by
- 	  optimize_collocation_objects.  Added enum definition for
- 	  collocation_strategy and get_collocation_strategy which is an
- 	  accessor for ORB's collocation strategy.  TAO will support two
- 	  strategies THRU_POA and DIRECT which should be self-explaining.
-  	  The default strategy will be THRU_POA because it is considered
- 	  the safe thing to do.  Veteran users might consider using DIRECT
- 	  collocation strategy if situation allows.  A third strategy
- 	  "ORB_CONTROL" is the default value passed to
- 	  Servant_Base::_create_collocated_objref.  This makes all servant
- 	  to query the ORB to decide which collocation strategy to use.
-  	  But we can also provide per-object collocation strategy in a
- 	  later point of time.
+        * tao/ORB_Core.{h,i,cpp}: Removed accessor/mutator
+          using_collocation methods.  They have been replaced by
+          optimize_collocation_objects.  Added enum definition for
+          collocation_strategy and get_collocation_strategy which is an
+          accessor for ORB's collocation strategy.  TAO will support two
+          strategies THRU_POA and DIRECT which should be self-explaining.
+          The default strategy will be THRU_POA because it is considered
+          the safe thing to do.  Veteran users might consider using DIRECT
+          collocation strategy if situation allows.  A third strategy
+          "ORB_CONTROL" is the default value passed to
+          Servant_Base::_create_collocated_objref.  This makes all servant
+          to query the ORB to decide which collocation strategy to use.
+          But we can also provide per-object collocation strategy in a
+          later point of time.
 
-	  (init): Added a new option -ORBcollocationstrategy which takes
- 	  two possible values "thru_poa" and "direct".  The defualt is, of
- 	  course, "thru_poa".
+          (init): Added a new option -ORBcollocationstrategy which takes
+          two possible values "thru_poa" and "direct".  The defualt is, of
+          course, "thru_poa".
 
-	* tao/Servant_Base.{h,cpp} (_create_collocated_objref): Added a
- 	  factory method to strategize what collocated object
- 	  implementation we want to use and also to decouple the stubs and
- 	  skeletons code.
+        * tao/Servant_Base.{h,cpp} (_create_collocated_objref): Added a
+          factory method to strategize what collocated object
+          implementation we want to use and also to decouple the stubs and
+          skeletons code.
 
-	* tao/Exception.h: Reordered class member functions to put all TAO
- 	  extensions at the end of the public section of each class.
-  	  Added more comments.
+        * tao/Exception.h: Reordered class member functions to put all TAO
+          extensions at the end of the public section of each class.
+          Added more comments.
 
-	* tao/Exception.{h,cpp} (_tao_print_exception): Renamed
- 	  <print_exception> to _tao_print_exception to avoid clashing with
- 	  user defined methods.
-	  (_tao_print_system_exception): Renamed <print_exception_tao_> to
- 	  _tao_print_system_exception to avoid name clashing.
-	  (_tao_minor_code,_tao_errno): Rename <minor_code_tao_> and
- 	  <errno_tao_> to _tao_minor_code and _tao_errno to avoid name
- 	  clashing.
+        * tao/Exception.{h,cpp} (_tao_print_exception): Renamed
+          <print_exception> to _tao_print_exception to avoid clashing with
+          user defined methods.
+          (_tao_print_system_exception): Renamed <print_exception_tao_> to
+          _tao_print_system_exception to avoid name clashing.
+          (_tao_minor_code,_tao_errno): Rename <minor_code_tao_> and
+          <errno_tao_> to _tao_minor_code and _tao_errno to avoid name
+          clashing.
 
-	  Changed several uses of "new" to ACE_NEW_THROW_EX.
+          Changed several uses of "new" to ACE_NEW_THROW_EX.
 
-	* tao/POA.cpp:
-	* tao/Invocation.cpp:
-	* tao/GIOP.cpp: Changed the use of minor_code_tao_ to
-	  _tao_minor_code.
+        * tao/POA.cpp:
+        * tao/Invocation.cpp:
+        * tao/GIOP.cpp: Changed the use of minor_code_tao_ to
+          _tao_minor_code.
 
-	* tao/TAO.{h,cpp}:
-	* tao/GIOP_Server_Request.cpp (marshal): Changed to use ACE_TRY
-	  macros and made sure the code is exception safe.
+        * tao/TAO.{h,cpp}:
+        * tao/GIOP_Server_Request.cpp (marshal): Changed to use ACE_TRY
+          macros and made sure the code is exception safe.
 
-	* tao/orbconf.h (TAO_NAMESPACE_INLINE_FUNCTION): Inline function
- 	  within a namespace must be treated differently.  On most
- 	  platform, using TAO_NAMESPACE_STORAGE_CLASS would work for
- 	  functions within a namespace.  However, since the macro uses
- 	  TAO_Export, which totally confuses MSVC to think that the
- 	  symbols for these functions are to be exported while in fact,
- 	  they are only inline functions and do not need any entry point
- 	  at all.  The newly added macro (TAO_NAMESPACE_INLINE_FUNCTION)
- 	  separates out this situation and simply uses the "inline"
- 	  keyword.
+        * tao/orbconf.h (TAO_NAMESPACE_INLINE_FUNCTION): Inline function
+          within a namespace must be treated differently.  On most
+          platform, using TAO_NAMESPACE_STORAGE_CLASS would work for
+          functions within a namespace.  However, since the macro uses
+          TAO_Export, which totally confuses MSVC to think that the
+          symbols for these functions are to be exported while in fact,
+          they are only inline functions and do not need any entry point
+          at all.  The newly added macro (TAO_NAMESPACE_INLINE_FUNCTION)
+          separates out this situation and simply uses the "inline"
+          keyword.
 
-	* tao/Marshal.h: Added #include "tao/Principal.h" because
- 	  Marshal.i uses inline functions in Principal.i.
+        * tao/Marshal.h: Added #include "tao/Principal.h" because
+          Marshal.i uses inline functions in Principal.i.
 
         * tao/Context.{i,cpp}:
         * tao/Environment.{i,cpp}:
@@ -167,12 +171,12 @@ Mon Jun 07 15:47:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
         * tao/Server_Request.{i,cpp}:
         * tao/Typecode.{i,cpp}:
         * tao/corbafwd.{i,cpp}: Re-inlined string_alloc, string_free,
-	  is_nil and release methods.
+          is_nil and release methods.
 
 Tue Jun 08 14:39:55 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/corbafwd.h,Exception.cpp: added minor code support for
- 	  ENOENT, EBADF, EPERM, and EAFNOSUPPORT errno values.
+          ENOENT, EBADF, EPERM, and EAFNOSUPPORT errno values.
 
 Tue Jun 08 14:15:52 1999  David L. Levine  <levine@cs.wustl.edu>
 
