@@ -1,3 +1,12 @@
+Wed Jan  2 08:19:18 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* tests/README: Clarify that run_test.pl should be used rather
+	  the run_tests.sh.
+  
+	* tests/run_tests.bat: Clarify that run_test.pl should be used
+	  on Win9x.  Thanks to Edward A Thompson <ed4becky_2000@yahoo.com>
+ 	  for prompting this.
+
 Wed Jan  2 07:37:01 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Handle_Set.h: 

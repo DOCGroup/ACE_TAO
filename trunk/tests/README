@@ -4,8 +4,8 @@ This directory contains a battery of tests that exercise many
 capabilities of ACE on the numerous platforms upon which it runs.  In
 addition to providing an automated regression testing facility, these
 tests also illustrate how to program many of the ACE features.  The
-tests can be executed in a single pass via a shell script run_tests.sh
-(on UNIX) or a batch file run_tests.bat (on Win32).
+tests can be executed in a single pass via the perl script
+run_test.pl.
 
 By default, all the output from the tests will be stored in separate
 files in the ./log/ (or .\log\) directory.  However, you can override
@@ -26,7 +26,7 @@ $ACE_ROOT/tests:
 
 4.  Add test to all or most of these:
 
-    run_tests.bat, run_tests.psosim, run_tests.sh, and run_tests.vxworks.
+    run_tests.lst, run_tests.bat, run_tests.psosim, and run_tests.vxworks.
 ________________________________________
 
 
