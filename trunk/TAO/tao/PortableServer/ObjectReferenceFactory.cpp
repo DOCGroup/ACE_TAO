@@ -8,8 +8,6 @@ ACE_RCSID (PortableServer,
            ObjectReferenceFactory,
            "$Id$")
 
-#if (TAO_HAS_INTERCEPTORS == 1)
-
 #include "tao/PortableServer/PortableServerC.h"
 #include "tao/PortableServer/POA.h"
 
@@ -59,5 +57,3 @@ TAO_ObjectReferenceFactory::make_object_invoker (CORBA::ULong identifier)
 {
   this->make_object_invoker_ = identifier;
 }
-
-#endif /* TAO_HAS_INTERCEPTORS == 1 */
