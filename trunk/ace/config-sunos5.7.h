@@ -35,9 +35,22 @@ typedef unsigned long long uint64_t;
 // Solaris 5.7 supports SCHED_FIFO and SCHED_RR, as well as SCHED_OTHER.
 #undef ACE_HAS_ONLY_SCHED_OTHER
 
+// Solaris 2.7 can support Real-Time Signals and POSIX4 AIO operations 
+// are supported. 
+
+#if !defined (ACE_HAS_AIO_CALLS)
+#define ACE_HAS_AIO_CALLS
+#endif /* !ACE_HAS_AIO_CALLS */
+
+#if defined (ACE_POSIX_AIOCB_PROACTOR)
+#undef ACE_POSIX_AIOCB_PROACTOR
+#endif /* ACE_POSIX_AIOCB_PROACTOR */
+
+// This is anyway default.
+#define ACE_POSIX_SIG_PROACTOR
+
 #ifdef ACE_HAS_LIMITED_SELECT
 #undef ACE_HAS_LIMITED_SELECT
 #endif /* ACE_HAS_LIMITED_SELECT */
-
 
 #endif /* ACE_CONFIG_H */
