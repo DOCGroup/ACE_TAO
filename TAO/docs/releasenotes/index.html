@@ -357,17 +357,18 @@ transport protocols are the
 <tt>TAO_Connector_Registry</tt> and
 <tt>TAO_Acceptor_Registry</tt>,
 which are essentially Abstract Factories that produce the right types of
-connector, acceptors, and transports.
+connector, acceptors, and transports. <p>
 <li>
 <b>Multiple Profile</b> - Support for more than one profile per object.
 This is important since there may be several different ways to access an
 object. Each profile for an object may encode information pertaining to
-QoS, network and transport protocols, addresses or routes.<!-- Fred, I don't understand this -- can you please explain what --><!-- multiple profiles are in more detail? --></li>
+QoS, network and transport protocols, addresses or routes.<p>
 
 <li>
 <b>Example Transport protocols</b>- The first planned example aside from
 IIOP will use UNIX domain sockets. Other interesting transport protocols
-would be for ATM, Buses (VME or PCI), shared memory, TP4, GSMP, and UDP/IP.</li>
+would be for ATM, Buses (VME or PCI), shared memory, TP4, GSMP, and
+    UDP/IP.</li> <p>
 
 <li>
 <b>Pluggable ORB protocols</b> - This step will add support for ORB protocols
@@ -390,19 +391,19 @@ the Acceptor registry. What it does do is separate the transport specific
 processing from the rest of the ORB.</li>
 
 <p>
-
+</ul>
 Known Issues:
 
 <ul>
 <li>
 The ORB Core's resource factory needs to be enhanced to support the dynamic
-allocation of resources for different transport protocols.</li>
+allocation of resources for different transport protocols.</li><p>
 </ul>
 Critical Work:
 
 <ul>
 <li>
-Adding support for multiple profiles.</li>
+Adding support for multiple profiles.</li><p>
 
 <p>
 </ul>
@@ -412,13 +413,13 @@ Future Work:
 Immediate plans are to bring my workspace up to date with the repository
 and verify all of TAO's regression tests still work. This will be followed
 by performing a suite of tests to compare performance of with the unmodified
-TAO distribution. Also, we'll extensively retest TAO using purify and quantify.</li>
+TAO distribution. Also, we'll extensively retest TAO using purify and quantify.</li><p>
 
 <li>
 In parallel, we will add support for multiple profiles and an acceptor
 registry class. The acceptor registry will both keep track of all acceptors
 and be responsible for creating a list of profiles for new object references
-(essentially the IOR).</li>
+(essentially the IOR).</li><p>
 
 <li>
 Long term work will include adding support for pluggable ORB protocols,
