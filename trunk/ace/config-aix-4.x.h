@@ -2,8 +2,8 @@
 // $Id$
 
 // The following configuration file is designed to work for OS
-// platforms running AIX 4.x using the IBM C++ compiler (xlC) or
-// g++/egcs.
+// platforms running AIX 4.x using the IBM C++ compiler (xlC),
+// Visual Age C++ or g++/egcs.
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
@@ -26,7 +26,7 @@
 #  define ACE_LACKS_LINEBUFFERED_STREAMBUF
 #  define ACE_LACKS_PRAGMA_ONCE
 
-   // C Set++ 3.1 and IBM C/C++ 3.6
+   // C Set++ 3.1, IBM C/C++ 3.6, and Visual Age C++ 5 batch (__xlC__)
 #  if defined (__xlC__)
 #    if (__xlC__ < 0x0500)
 #      define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
@@ -73,6 +73,13 @@
 #ifndef AIX
 #  define AIX
 #endif /* AIX */
+
+// AIX shared libs look strangely like archive libs until you look inside
+// them.
+#if defined (ACE_DLL_SUFFIX)
+#  undef ACE_DLL_SUFFIX
+#endif
+#define ACE_DLL_SUFFIX ".a"
 
 // Use BSD 4.4 socket definitions for pre-AIX 4.2.  The _BSD setting also
 // controls the data type used for waitpid(), wait(), and wait3().
