@@ -9,7 +9,7 @@
 
 static size_t number_of_messages = 100;
 static size_t message_size = 100;
-static size_t number_of_threads = 2;
+static size_t number_of_threads = 10;
 static size_t burst_size = 10;
 static size_t timeout_between_bursts = 1;
 
@@ -27,7 +27,7 @@ enum DEBUGGING_RANGE
   PRINT_INDIVIDUAL_LATENCY = 2
 };
 
-static DEBUGGING_RANGE debug = DEFAULT;
+static DEBUGGING_RANGE debug = DEBUG_NONE;
 
 typedef ACE_Task<ACE_MT_SYNCH> TASK;
 
@@ -168,7 +168,7 @@ Leader_Follower_Task::svc (void)
 
           this->throughput_stats_.sample ();
 
-          if (debug >= DEFAULT)
+          if (debug >= PRINT_INDIVIDUAL_LATENCY)
             {
 #ifndef ACE_LACKS_LONGLONG_T
               ACE_DEBUG ((LM_DEBUG,
@@ -252,15 +252,6 @@ main (int argc, ACE_TCHAR *argv[])
                   Leader_Follower_Task *[number_of_threads],
                   -1);
 
-  size_t i;
-  for (i = 0; i < number_of_threads; ++i)
-    {
-      ACE_NEW_RETURN (leader_followers[i],
-                      Leader_Follower_Task (mutex,
-                                            condition),
-                      -1);
-    }
-
   ACE_Profile_Timer timer;
   timer.start ();
 
@@ -271,8 +262,14 @@ main (int argc, ACE_TCHAR *argv[])
   long flags = THR_BOUND | THR_SCHED_FIFO;
 
   // Create and activate them.
+  size_t i;
   for (i = 0; i < number_of_threads; ++i)
     {
+      ACE_NEW_RETURN (leader_followers[i],
+                      Leader_Follower_Task (mutex,
+                                            condition),
+                      -1);
+
       // Activate the leader_followers.
       result = leader_followers[i]->activate (flags,
                                               1,
