@@ -750,14 +750,15 @@ ACE_Message_Block::operator= (const ACE_Message_Block &)
 
 ACE_Dynamic_Message_Strategy::ACE_Dynamic_Message_Strategy (u_long static_bit_field_mask,
                                                             u_long static_bit_field_shift,
-                                                            u_long pending_threshold,
                                                             u_long dynamic_priority_max,
                                                             u_long dynamic_priority_offset)
   : static_bit_field_mask_ (static_bit_field_mask)
   , static_bit_field_shift_ (static_bit_field_shift)
-  , pending_threshold_ (pending_threshold)
   , dynamic_priority_max_ (dynamic_priority_max)
   , dynamic_priority_offset_ (dynamic_priority_offset)
+  , max_late_ (0, dynamic_priority_offset - 1)
+  , min_pending_ (0, dynamic_priority_offset)
+  , pending_shift_ (0, dynamic_priority_max)
 {
 }
 // ctor
@@ -767,18 +768,36 @@ ACE_Dynamic_Message_Strategy::~ACE_Dynamic_Message_Strategy ()
 }
 // dtor
 
-
-int 
-ACE_Dynamic_Message_Strategy::drop_message (ACE_Message_Block * &mb) 
+void 
+ACE_Dynamic_Message_Strategy::dump (void) const
 {
-  ACE_UNUSED_ARG (mb);
+  ACE_TRACE ("ACE_Dynamic_Message_Strategy::dump");
 
-  return 0;
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("static_bit_field_mask_ = %lu\n")
+              ASYS_TEXT ("static_bit_field_shift_ = %lu\n")
+              ASYS_TEXT ("dynamic_priority_max_ = %lu\n")
+              ASYS_TEXT ("dynamic_priority_offset_ = %lu\n")
+              ASYS_TEXT ("max_late_ = [%ld sec, %ld usec]\n")
+              ASYS_TEXT ("min_pending_ = [%ld sec, %ld usec]\n")
+              ASYS_TEXT ("pending_shift_ = [%ld sec, %ld usec]\n"),
+              this->static_bit_field_mask_,
+              this->static_bit_field_shift_,
+              this->dynamic_priority_max_,
+              this->dynamic_priority_offset_,
+              this->max_late_.sec (),
+              this->max_late_.usec (),
+              this->min_pending_.sec (),
+              this->min_pending_.usec (),
+              this->pending_shift_.sec (),
+              this->pending_shift_.usec ()));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
-  // cleanup policy for a message that is later than can be represented,
-  // and is being dropped from a dynamic message queue (this is a default
-  // method definition that does nothing, which derived classes may override
-  // to do things like deleting the message block object, etc).
+  // Dump the state of the strategy.
+
 
 
 /////////////////////////////////////////
@@ -787,12 +806,10 @@ ACE_Dynamic_Message_Strategy::drop_message (ACE_Message_Block * &mb)
 
 ACE_Deadline_Message_Strategy:: ACE_Deadline_Message_Strategy (u_long static_bit_field_mask,
                                                                u_long static_bit_field_shift,
-                                                               u_long pending_threshold,
                                                                u_long dynamic_priority_max,
                                                                u_long dynamic_priority_offset)
   : ACE_Dynamic_Message_Strategy (static_bit_field_mask,
                                   static_bit_field_shift,
-                                  pending_threshold,
                                   dynamic_priority_max,
                                   dynamic_priority_offset)
 {
@@ -804,122 +821,23 @@ ACE_Deadline_Message_Strategy::~ACE_Deadline_Message_Strategy ()
 }
 // dtor
 
-int 
-ACE_Deadline_Message_Strategy::update_priority (ACE_Message_Block & mb, 
-                                                 const ACE_Time_Value & tv)
+
+void 
+ACE_Deadline_Message_Strategy::dump (void) const
 {
-  // The general formula for this deadline based dynamic priority
-  // function is to just subtract the current time and the execution 
-  // time from the from the message deadline to get the time to deadline,
-  // then subtract the time to deadline from a constant C that depends on
-  // whether the time to deadline is negative (C is zero) or non-negative 
-  // (C is the maximum allowed priority).  But, to save operations for
-  // performance we use an optimized (albeit confusing: our apologies ;-) 
-  // formula for the dynamic priority calculation.
- 
-  // first, compute the *negative* (additive inverse) of the time to deadline
-  ACE_Time_Value priority (tv);
-  priority -= mb.msg_deadline_time ();
+  ACE_TRACE ("ACE_Deadline_Message_Strategy::dump");
 
-  if (priority >= ACE_Time_Value::zero)
-  {
-    // if negative time to deadline is positive then the message is late:
-    // need to make sure the priority stays below the threshold
-    // between pending and late priority values
-    ACE_Time_Value 
-      max_late (0, dynamic_priority_offset_ - 1);
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-    if (priority > max_late)
-    {
-      // if the message is later than can be represented, its priority is 0.
-      mb.msg_priority (0);
-      return 0;
-    }
-  }
-  else
-  {
-    // if negative time to deadline is negative then the message is pending:
-    // so, we need to shift priority upward by adding the maximum priority 
-    // value and then make sure the value stays above the threshold between
-    // pending and late message priorities.
-    priority += 
-      ACE_Time_Value (0, dynamic_priority_max_);
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("ACE_Dynamic_Message_Strategy base class: \n")));
+  this->ACE_Dynamic_Message_Strategy::dump ();
 
-    ACE_Time_Value 
-      min_pending (0, dynamic_priority_offset_);
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nderived class: ACE_Deadline_Message_Strategy\n")));
 
-    if (priority < min_pending)
-    {
-      priority = min_pending;
-    }
-  }
- 
-  // use (fast) bitwise operators to isolate and replace
-  // the dynamic portion of the message's priority
-  mb.msg_priority((mb.msg_priority() & static_bit_field_mask_) | 
-                  ((priority.usec () + ACE_ONE_SECOND_IN_USECS * priority.sec ()) <<
-                   static_bit_field_shift_));
-
-  return 0;
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
-  // priority evaluation function based on time to deadline
+  // Dump the state of the strategy.
 
-int
-ACE_Deadline_Message_Strategy::is_beyond_late (const ACE_Message_Block & mb, 
-                                               const ACE_Time_Value & tv)
-{
-  // first, compute the *negative* time to deadline
-  ACE_Time_Value priority (tv);
-  priority -= mb.msg_deadline_time ();
-
-  // construct a time value with the maximum late value that
-  // can be represented in the dynamic priority range
-  ACE_Time_Value max_late (0, dynamic_priority_offset_ - 1);
-
-  // if negative time to deadline is greater than the maximum value
-  // that can be represented, it is identified as being beyond late
-  return (priority > max_late) ? 1 : 0;
-}
-  // returns true if the message is later than can can be represented  
-
-/////////////////////////////////////////////////
-// class ACE_Deadline_Cleanup_Message_Strategy //
-/////////////////////////////////////////////////
-
-ACE_Deadline_Cleanup_Message_Strategy:: ACE_Deadline_Cleanup_Message_Strategy (
-   u_long static_bit_field_mask,
-   u_long static_bit_field_shift,
-   u_long pending_threshold,
-   u_long dynamic_priority_max,
-   u_long dynamic_priority_offset)
-
-  : ACE_Deadline_Message_Strategy (static_bit_field_mask,
-                                   static_bit_field_shift,
-                                   pending_threshold,
-                                   dynamic_priority_max,
-                                   dynamic_priority_offset)
-{
-}
-// ctor
-  
-ACE_Deadline_Cleanup_Message_Strategy::~ACE_Deadline_Cleanup_Message_Strategy ()
-{
-}
-// dtor
-
-int 
-ACE_Deadline_Cleanup_Message_Strategy::drop_message (ACE_Message_Block * &mb) 
-{
-  // free the memory
-  delete mb;
-
-  // zero passed pointer to let caller know it's gone
-  mb = 0;
-
-  return 0;
-}
-  // deletion cleanup policy for a message that is later than can be 
-  // represented, and is being dropped from a dynamic message queue
 
 ///////////////////////////////////////
 // class ACE_Laxity_Message_Strategy //
@@ -927,12 +845,10 @@ ACE_Deadline_Cleanup_Message_Strategy::drop_message (ACE_Message_Block * &mb)
 
 ACE_Laxity_Message_Strategy::ACE_Laxity_Message_Strategy (u_long static_bit_field_mask,
                                                           u_long static_bit_field_shift,
-                                                          u_long pending_threshold,
                                                           u_long dynamic_priority_max,
                                                           u_long dynamic_priority_offset)
   : ACE_Dynamic_Message_Strategy (static_bit_field_mask,
                                   static_bit_field_shift,
-                                  pending_threshold,
                                   dynamic_priority_max,
                                   dynamic_priority_offset)
 {
@@ -945,126 +861,21 @@ ACE_Laxity_Message_Strategy::~ACE_Laxity_Message_Strategy ()
 // dtor
 
 
-int 
-ACE_Laxity_Message_Strategy::update_priority (ACE_Message_Block & mb, 
-                                              const ACE_Time_Value & tv)
+void 
+ACE_Laxity_Message_Strategy::dump (void) const
 {
-  // The general formula for this laxity based dynamic priority
-  // function is to just subtract the current time and the execution 
-  // time from the from the message deadline to get the laxity,
-  // then subtract the laxity from a constant C that depends on whether
-  // the laxity is negative (C is zero) or non-negative (C is the maximum
-  // allowed priority).  But, to save operations for performance we use
-  // an optimized (albeit confusing: our apologies ;-) formula
-  // for the dynamic priority calculation.
- 
-  // first, compute the *negative* laxity
-  ACE_Time_Value priority (tv);
-  priority += mb.msg_execution_time ();
-  priority -= mb.msg_deadline_time ();
+  ACE_TRACE ("ACE_Laxity_Message_Strategy::dump");
 
-  if (priority >= ACE_Time_Value::zero)
-  {
-    // if negative laxity is positive then the message is late:
-    // need to make sure the priority stays below the threshold
-    // between pending and late priority values
-    ACE_Time_Value 
-      max_late (0, dynamic_priority_offset_ - 1);
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-    if (priority > max_late)
-    {
-      // if the message is later than can be represented, its priority is 0.
-      mb.msg_priority (0);
-      return 0;
-    }
-  }
-  else
-  {
-    // if negative laxity is negative then the message is pending: so, we
-    // need to shift priority upward by adding the maximum priority value
-    // and then make sure the value stays above the threshold between
-    // pending and late message priorities.
-    priority += 
-      ACE_Time_Value (0, dynamic_priority_max_);
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("ACE_Dynamic_Message_Strategy base class: \n")));
+  this->ACE_Dynamic_Message_Strategy::dump ();
 
-    ACE_Time_Value 
-      min_pending (0, dynamic_priority_offset_);
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nderived class: ACE_Laxity_Message_Strategy\n")));
 
-    if (priority < min_pending)
-    {
-      priority = min_pending;
-    }
-  }
-
-  // use (fast) bitwise operators to isolate and replace
-  // the dynamic portion of the message's priority
-  mb.msg_priority((mb.msg_priority() & static_bit_field_mask_) | 
-                  ((priority.usec () + ACE_ONE_SECOND_IN_USECS * priority.sec ()) << 
-                   static_bit_field_shift_));
-
-  return 0;
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
-  // priority evaluation function based on laxity
-
-int
-ACE_Laxity_Message_Strategy::is_beyond_late (const ACE_Message_Block & mb, 
-                                             const ACE_Time_Value & tv)
-{
-  // first, compute the *negative* laxity
-  ACE_Time_Value priority (tv);
-  priority += mb.msg_execution_time ();
-  priority -= mb.msg_deadline_time ();
-
-  // construct a time value with the maximum late value that
-  // can be represented in the dynamic priority range
-  ACE_Time_Value max_late (0, dynamic_priority_offset_ - 1);
-
-  // if negative laxity is greater than the maximum value that
-  // can be represented, it is identified as being beyond late
-  return (priority > max_late) ? 1 : 0;
-}
-  // returns true if the message is later than can can be represented  
-
-/////////////////////////////////////////////////
-// class ACE_Laxity_Cleanup_Message_Strategy //
-/////////////////////////////////////////////////
-
-ACE_Laxity_Cleanup_Message_Strategy:: ACE_Laxity_Cleanup_Message_Strategy (
-   u_long static_bit_field_mask,
-   u_long static_bit_field_shift,
-   u_long pending_threshold,
-   u_long dynamic_priority_max,
-   u_long dynamic_priority_offset)
-
-  : ACE_Laxity_Message_Strategy (static_bit_field_mask,
-                                 static_bit_field_shift,
-                                 pending_threshold,
-                                 dynamic_priority_max,
-                                 dynamic_priority_offset)
-{
-}
-// ctor
-  
-ACE_Laxity_Cleanup_Message_Strategy::~ACE_Laxity_Cleanup_Message_Strategy ()
-{
-}
-// dtor
-
-int 
-ACE_Laxity_Cleanup_Message_Strategy::drop_message (ACE_Message_Block * &mb) 
-{
-  // free the memory
-  delete mb;
-
-  // zero passed pointer to let caller know it's gone
-  mb = 0;
-
-  return 0;
-}
-  // deletion cleanup policy for a message that is later than can be 
-  // represented, and is being dropped from a dynamic message queue
-
-
+  // Dump the state of the strategy.
 
 
 
