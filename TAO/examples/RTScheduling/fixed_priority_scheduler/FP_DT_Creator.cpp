@@ -29,6 +29,10 @@ FP_DT_Creator::sched_param (int importance)
 void
 FP_DT_Creator::yield (int suspend_time)
 {
+//    ACE_DEBUG ((LM_DEBUG,
+//  	      "%d\n",
+//  	      suspend_time));
+  
   ACE_OS::sleep (suspend_time);
 }
 

@@ -45,18 +45,21 @@ DT_Test::check_supported_priorities (void)
       sched_policy_ = ACE_SCHED_OTHER;
     }
 
-  max_priority_ = ACE_Sched_Params::priority_max (sched_policy_);
-  min_priority_ = ACE_Sched_Params::priority_min (sched_policy_);
-
-  if (max_priority_ == min_priority_)
+  if (thr_sched_policy_ == THR_SCHED_RR || thr_sched_policy_ == THR_SCHED_FIFO)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Not enough priority levels on this platform"
-                  " to run the test, aborting \n"));
-      ACE_OS::exit (2);
+      max_priority_ = ACE_Sched_Params::priority_max (sched_policy_);
+      min_priority_ = ACE_Sched_Params::priority_min (sched_policy_);
+      
+      if (max_priority_ == min_priority_)
+	{
+	  ACE_DEBUG ((LM_DEBUG,
+		      "Not enough priority levels on this platform"
+		      " to run the test, aborting \n"));
+	  ACE_OS::exit (2);
+	}
+      else ACE_DEBUG ((LM_DEBUG, "max_priority = %d, min_priority = %d\n",
+		       max_priority_, min_priority_));
     }
-  else ACE_DEBUG ((LM_DEBUG, "max_priority = %d, min_priority = %d\n",
-		   max_priority_, min_priority_));
 }
 
 int
@@ -94,23 +97,40 @@ DT_Test::init (int argc, char *argv []
     RTScheduling::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
-
+  
   // Set the main thread to max priority...
-  if (ACE_OS::sched_params (ACE_Sched_Params (sched_policy_,
-					      max_priority_,
-					      ACE_SCOPE_PROCESS)) != 0)
-    {
-      if (ACE_OS::last_error () == EPERM)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "(%P|%t): user is not superuser, "
-		      "test runs in time-shared class\n"));
-	}
-      else
-	ACE_ERROR ((LM_ERROR,
-			   "(%P|%t): sched_params failed\n"));
-    }
-
+  //    if (ACE_OS::sched_params (ACE_Sched_Params (sched_policy_,
+  //  					      max_priority_,
+  //     					      ACE_SCOPE_PROCESS)) != 0)
+  //      {
+  //        if (ACE_OS::last_error () == EPERM)
+  //  	{
+  //  	  ACE_DEBUG ((LM_DEBUG,
+  //  		      "(%P|%t): user is not superuser, "
+  //  		      "test runs in time-shared class\n"));
+  //  	}
+  //        else
+  //  	ACE_ERROR ((LM_ERROR,
+  //  		    "(%P|%t): sched_params failed\n"));
+  //      }
+  
+  //   ACE_hthread_t current;
+  //    ACE_Thread::self (current);
+  
+  //    int priority;
+  //    if (ACE_Thread::getprio (current, priority) == -1)
+  //      {
+  //        ACE_DEBUG ((LM_DEBUG,
+  //                    ACE_TEXT ("TAO (%P|%t) - ")
+  //                    ACE_TEXT ("RT_Protocols_Hooks::get_thread_priority: ")
+  //                    ACE_TEXT (" ACE_Thread::get_prio\n")));
+  //        return -1;
+  //      }
+  
+  //    ACE_DEBUG ((LM_DEBUG,
+  //  	      "main thread priority %d\n",
+  //  		  priority));
+  
   
   return 0;
 }
@@ -123,14 +143,9 @@ DT_Test::run (int argc, char* argv []
 	ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  TASK_STATS::instance ()->init (this->dt_creator_->dt_count () * 100);
+  //TASK_STATS::instance ()->init (this->dt_creator_->dt_count () * 100);
   
-  dt_creator_->create_distributable_threads (orb_,
-					     current_
-					     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  
-
+  this->activate_task ();
 
   orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -150,6 +165,67 @@ DT_Test::scheduler (void)
   return this->scheduler_;
 }
 
+int
+DT_Test::activate_task (void)
+{
+  
+  
+  long flags;
+  flags = THR_NEW_LWP | THR_JOINABLE;
+  flags |= 
+    orb_->orb_core ()->orb_params ()->scope_policy () |
+    orb_->orb_core ()->orb_params ()->sched_policy ();
+  
+  if (this->activate (flags,
+		      1,
+		      0,
+		      15) == -1)
+    {
+      if (ACE_OS::last_error () == EPERM)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   ACE_TEXT ("Insufficient privilege to run this test.\n")),
+			  -1);
+    }
+  return 0;
+}
+
+int
+DT_Test::svc (void)
+{
+  ACE_TRY_NEW_ENV
+    {
+      // Set the main thread to max priority...
+      if (ACE_OS::sched_params (ACE_Sched_Params (orb_->orb_core ()->orb_params ()->sched_policy (),
+						  max_priority_,
+						  ACE_SCOPE_PROCESS)) != 0)
+	{
+	  if (ACE_OS::last_error () == EPERM)
+	    {
+	      ACE_DEBUG ((LM_DEBUG,
+			  "(%P|%t): user is not superuser, "
+			  "test runs in time-shared class\n"));
+	    }
+	  else
+	    ACE_ERROR ((LM_ERROR,
+			"(%P|%t): sched_params failed\n"));
+	}
+      
+      dt_creator_->create_distributable_threads (orb_,
+						 current_
+						 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Caught exception:");
+      return -1;
+    }
+  ACE_ENDTRY; 
+
+  return 0;
+}
 
 int
 main (int argc, char* argv [])
@@ -158,9 +234,10 @@ main (int argc, char* argv [])
     {
       ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_FP_DT_Creator);
       
-      DT_TEST::instance ()->run (argc, argv
-								  ACE_ENV_ARG_PARAMETER);
+	  DT_TEST::instance ()->run (argc, argv
+		    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+      
     }
   ACE_CATCHANY
     {
