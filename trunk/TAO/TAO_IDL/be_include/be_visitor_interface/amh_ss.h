@@ -31,6 +31,8 @@ protected:
 
   virtual int generate_amh_classes (be_interface *node);
   virtual int generate_proxy_classes (be_interface *node);
+  virtual int generate_downcast_implementation (be_interface *node,
+                                                TAO_OutStream *os);
   virtual ACE_CString generate_flat_name (be_interface *node);
   virtual ACE_CString generate_local_name (be_interface *node);
   virtual ACE_CString generate_full_skel_name (be_interface *node);
