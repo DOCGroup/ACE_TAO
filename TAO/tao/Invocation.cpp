@@ -1069,19 +1069,17 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
         ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
                                           CORBA::COMPLETED_YES),
                           TAO_INVOKE_EXCEPTION);
-
-        //        return TAO_INVOKE_EXCEPTION;
       }
 
     case TAO_GIOP_SYSTEM_EXCEPTION:
       {
-        // @@ Add the location macros for this exceptions...
+        // @@ Add the location macros for these exceptions...
 
         CORBA::String_var type_id;
 
         if ((rd.reply_cdr () >> type_id.inout ()) == 0)
           {
-            // Could not demarshal the exception id, raise an local
+            // Could not demarshal the exception id, raise a local
             // CORBA::MARSHAL
             ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                               CORBA::COMPLETED_MAYBE),
@@ -1107,7 +1105,9 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
             // @@ We should raise a CORBA::NO_MEMORY, but we ran out
             //    of memory already. We need a pre-allocated, TSS,
             //    CORBA::NO_MEMORY instance
-            ACE_NEW_RETURN (ex, CORBA::UNKNOWN, TAO_INVOKE_EXCEPTION);
+            ACE_NEW_RETURN (ex, 
+                            CORBA::UNKNOWN, 
+                            TAO_INVOKE_EXCEPTION);
           }
 
         ex->minor (minor);
