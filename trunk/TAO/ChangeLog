@@ -1,3 +1,9 @@
+Mon Oct 18 13:45:21 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Wait_Never.cpp:
+
+          Modification to allow Mcast connections to process upcalls.
+
 Mon Oct 18 18:28:23 2004  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/orbsvcs/AV/AV_Core.cpp:
