@@ -404,10 +404,10 @@ Fri Nov  7 06:50:49 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Thu Nov  6 22:32:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	This checkin is about an optimization and not definitely for the
+	This checkin is about an optimization and definitely not for the
 	weak hearted :-)! All this jugglery is for getting rid of one
         allocation along the critical path. Not sure how much would this
-	fetch us, but never the less an useful optimization. 
+	fetch us, but nevertheless an useful optimization. 
 
 	A quick brief. In older versions of TAO, the client thread used to
         create a output CDR on the TSS and use that for marshalling data
