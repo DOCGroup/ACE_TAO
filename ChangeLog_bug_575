@@ -1,3 +1,9 @@
+Thu Jul  5 14:39:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	Merged with the main trunk and moved it to a new branch by name
+	bug_575_stage_2. 
+
+
 Thu Jun 28 15:25:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Reactor.h (ACE_Reactor):
