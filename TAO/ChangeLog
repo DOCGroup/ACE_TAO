@@ -2208,7 +2208,7 @@ Tue Sep 03 18:34:51 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderb
 Tue Sep 03 19:26:44 2002  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tao/ORB.cpp (_create_policy): Added proprietary
-	  extenstion for the creation of policies to the ORB interface.
+	  extension for the creation of policies to the ORB interface.
 	  This function is similar to ORB::create_policy() except that it
 	  creates an empty policy, usually to be filled in later by
 	  demarshaling.
@@ -2322,7 +2322,7 @@ Tue Sep  3 14:40:35 2002  Ossama Othman  <ossama@uci.edu>
 
 	  Removed `#pragma prefix""`.  It is no longer needed.
 
-	  Removed commented out inclusioon of `PortableInterceptor.pidl'
+	  Removed commented out inclusion of `PortableInterceptor.pidl'
 	  file.
 
 Mon Sep  2 18:52:27 2002  Ossama Othman  <ossama@uci.edu>
