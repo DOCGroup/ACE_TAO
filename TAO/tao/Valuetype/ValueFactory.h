@@ -25,8 +25,9 @@
 
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
-
-#include "ace/Synch_T.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
+#include "ace/Null_Mutex.h"
 
 namespace CORBA
 {

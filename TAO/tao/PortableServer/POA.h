@@ -51,7 +51,10 @@
 #include "ace/Array_Base.h"
 
 // Locking
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
+#include "ace/Recursive_Thread_Mutex.h"
+#include "ace/Null_Mutex.h"
 
 // OctetSeq
 #include "tao/OctetSeqC.h"

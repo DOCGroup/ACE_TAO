@@ -1,3 +1,4 @@
+// $Id$
 project : taolib, core {
   sharedname   = TAO_IORManip
   dynamicflags = TAO_IORMANIP_BUILD_DLL

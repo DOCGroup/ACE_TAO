@@ -26,7 +26,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SOCK_Stream.h"
-#include "ace/Synch.h"
 #include "ace/Svc_Handler.h"
 #include "strategies_export.h"
 

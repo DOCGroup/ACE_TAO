@@ -1,3 +1,4 @@
+//$Id$
 project : taolib, core, messaging, portableserver {
   sharedname   = TAO_DynamicInterface
   dynamicflags = TAO_DYNAMICINTERFACE_BUILD_DLL

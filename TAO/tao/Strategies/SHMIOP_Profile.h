@@ -31,8 +31,6 @@
 #include "tao/Profile.h"
 #include "SHMIOP_Endpoint.h"
 
-#include "ace/Synch.h"
-
 
 // TAO SHMIOP_Profile concrete Profile definitions
 /**

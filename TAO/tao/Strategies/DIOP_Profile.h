@@ -30,8 +30,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 #include "DIOP_Endpoint.h"
 
-#include "ace/Synch.h"
-
 
 // TAO DIOP_Profile concrete Profile definitions
 /**

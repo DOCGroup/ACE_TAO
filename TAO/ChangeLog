@@ -1,3 +1,42 @@
+Sun Nov  9 17:57:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Synch_Refcountable.h:
+	* tao/tao.mpc:
+	* tao/BiDir_GIOP/BiDir_GIOP.mpc:
+	* tao/Domain/Domain.mpc:
+	* tao/DynamicAny/DynamicAny.mpc:
+	* tao/DynamicInterface/DynamicInterface.mpc:
+	* tao/IFR_Client/IFR_Client.mpc:
+	* tao/IORInterceptor/IORInterceptor.mpc:
+	* tao/IORManipulation/IORManipulation.mpc:
+	* tao/IORTable/IORTable.mpc:
+	* tao/Messaging/Messaging.mpc:
+	* tao/ObjRefTemplate/ObjRefTemplate.mpc:
+	* tao/PortableServer/AMH_Response_Handler.h:
+	* tao/PortableServer/POA.h:
+	* tao/PortableServer/PortableServer.mpc:
+	* tao/RTCORBA/RTCORBA.mpc:
+	* tao/RTPortableServer/RTPortableServer.mpc:
+	* tao/RTScheduling/RTScheduler.mpc:
+	* tao/SmartProxies/SmartProxies.mpc:
+	* tao/Strategies/DIOP_Profile.h:
+	* tao/Strategies/DIOP_Transport.h:
+	* tao/Strategies/SCIOP_Transport.h:
+	* tao/Strategies/SHMIOP_Profile.h:
+	* tao/Strategies/Strategies.mpc:
+	* tao/Strategies/UIOP_Profile.h:
+	* tao/Strategies/UIOP_Transport.h:
+	* tao/TypeCodeFactory/TypeCodeFactory.mpc:
+	* tao/Valuetype/ValueBase.h:
+	* tao/Valuetype/ValueFactory.cpp:
+	* tao/Valuetype/ValueFactory.h:
+	* tao/Valuetype/Valuetype.mpc:
+	* tests/Bug_1361_Regression/Server_Thread_Pool.h:
+	* tests/OBV/Supports/Supports_Test_impl.cpp:
+	* tests/OBV/Supports/Supports_Test_impl.h:
+	  
+	  Fixed fuzz errors.
+
 Sun Nov  9 22:12:29 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tao/Makefile.dirs:

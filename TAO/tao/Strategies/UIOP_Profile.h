@@ -33,7 +33,6 @@
 #include "UIOP_Endpoint.h"
 
 #include "ace/UNIX_Addr.h"
-#include "ace/Synch.h"
 
 
 /**
