@@ -192,9 +192,12 @@ Test_DynStruct::run_test (void)
                  "testing: get_members/set_members\n"));
 
       DynamicAny::NameValuePairSeq_var nvps = fa1->get_members (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       DynamicAny::DynAny_var sm_base =
-        dynany_factory->create_dyn_any_from_type_code (DynAnyTests::_tc_test_struct,
-                                                       ACE_TRY_ENV);
+        dynany_factory->create_dyn_any_from_type_code (
+            DynAnyTests::_tc_test_struct,
+            ACE_TRY_ENV
+          );
       ACE_TRY_CHECK;
 
       DynamicAny::DynStruct_var sm =
@@ -203,9 +206,11 @@ Test_DynStruct::run_test (void)
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (sm.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "DynStruct::_narrow()[2] returned nil\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "DynStruct::_narrow()[2] returned nil\n"),
+                            -1);
+        }
 
       sm->set_members (nvps.in (),
                        ACE_TRY_ENV);
@@ -213,8 +218,11 @@ Test_DynStruct::run_test (void)
       DynamicAny::NameValuePairSeq_var gm = sm->get_members (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       CORBA::ULong index = 2;
+
       if (ACE_OS::strcmp (gm[index].id, "es"))
-        ++this->error_count_;
+        {
+          ++this->error_count_;
+        }
 
       fa1->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;

@@ -211,6 +211,7 @@ TAO_DynAny_i::equal (
 
   CORBA::Any_var rhs_any =
     rhs->to_any (ACE_TRY_ENV);
+  ACE_TRY_CHECK;
 
   switch (tk)
     {

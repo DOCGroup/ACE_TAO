@@ -711,7 +711,11 @@ Param_Test_i::test_objref (Coffee_ptr o1,
       if (!CORBA::is_nil (o2))
         CORBA::release (o2);
 
-      if (myobj->_is_equivalent (o1, ACE_TRY_ENV))
+      CORBA::Boolean equiv = myobj->_is_equivalent (o1,
+                                                    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (equiv)
         {
           o2 = Coffee::_duplicate (myobj.in ());
           o3 = Coffee::_duplicate (myobj.in ());
@@ -961,6 +965,7 @@ Param_Test_i::test_exception (CORBA::ULong s1,
                      Param_Test::Ooops))
 {
   int d = s1 % 3;
+
   if (d == 0)
     {
       s2 = s1 * 2;
@@ -968,13 +973,16 @@ Param_Test_i::test_exception (CORBA::ULong s1,
       return s1 * 4;
     }
   else if (d == 1)
+    {
       ACE_THROW_RETURN (Param_Test::Ooops (" % 3 == 1", s1), 0);
+    }
 
   // This will avoid the compiler
   // warning that test_exception is throwing an exception
   // not in its THROW_SPEC, but still test TAO's
   // conversion of such an exception to UNKNOWN.
   this->throw_badboy (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
   return 0;
 }

@@ -76,12 +76,9 @@ Test_Bounded_Long_Sequence::dii_req_invoke (CORBA::Request *req,
 }
 
 int
-Test_Bounded_Long_Sequence::init_parameters (Param_Test_ptr objref,
-                                             CORBA::Environment &ACE_TRY_ENV)
+Test_Bounded_Long_Sequence::init_parameters (Param_Test_ptr,
+                                             CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (objref);
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-
   // get some sequence length (32 in this case)
   CORBA::ULong len = this->in_->maximum ();
 
