@@ -610,12 +610,28 @@ sub update_changelog () {
     || return 1;
 
   my $version_h = $kit =~ /^ace/  ?  'ace/Version.h'  :  'tao/Version.h';
-  my $version_mpb = $kit =~ /^ace/  ?  'bin/MakeProjectCreator/config/aceversion.mpb'  :  '../bin/MakeProjectCreator/config/taoversion.mpb';
+  my $version_mpb = $kit =~ /^ace/  ?  'bin/MakeProjectCreator/config/aceversion.mpb'  :  'bin/MakeProjectCreator/config/taoversion.mpb';
 
-  &ex ("$cvs commit -m'$version' " .
-    "VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb &&  " .
-    "chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb; " .
-    "chgrp doc VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb");
+# Incase you are wondering what is all this about. We are trying to
+# commit from ACE_wrappers and hence the mess. Why not commit from TAO
+# and make lives simpler. Sorry it wouldnt work for taoversion.mpb!
+# Using "cvs commit ../file" is not acceptable to CVS and is known bug
+# from 1.10.X versions. Hence this maze of things.
+
+  my $ch_pos = $kit=~ /^tao/ ? 1 : 0;
+
+  if ("$ch_pos") {
+  &ex ("cd ..; $cvs commit -m'$version' " .
+      "TAO/VERSION TAO/PROBLEM-REPORT-FORM TAO/ChangeLog $version_h $version_mpb && " .
+      "chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb; " .
+      "chgrp doc VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb");
+    } else {
+    &ex ("$cvs commit -m'$version' " .
+        "VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb &&" .
+        "chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb; " .
+        "chgrp doc VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb");
+    }  
+
   return 1 if $? >> 8;
 
   0;
@@ -678,8 +694,10 @@ sub generate_makefiles () {
     # At this point, the only mwc/mpc files are in ace and tests. When more
     # are available, this needs to be updated, maybe by cycling through
     # all non-TAO directories looking for mwc (or mpc?) files.
-    &ex ("cd ACE_wrappers/ace;../bin/mwc.pl -type vc7 ace.mwc; ../bin/mwc.pl -type em3 ace.mwc");
-    &ex ("cd ACE_wrappers/tests;../bin/mwc.pl -type vc7 tests.mwc; ../bin/mwc.pl -type em3 tests.mwc");
+    #
+    # Need todo a common chmod on the file lists!
+    &ex ("cd ACE_wrappers/ace;../bin/mwc.pl -type vc7 ace.mwc; ../bin/mwc.pl -type em3 ace.mwc; chmod 0644 *.vcproj *.vcp *.sln *.vcw");
+    &ex ("cd ACE_wrappers/tests;../bin/mwc.pl -type vc7 tests.mwc; ../bin/mwc.pl -type em3 tests.mwc; chmod 0644 *.vcproj *.vcp *.sln *.vcw"");
   }
   if ($kit =~ /^tao/) {
     # A TAO-knowledgable person needs to decide what, if anything, is to be
@@ -710,7 +728,7 @@ sub create_kit () {
   # These files don't get LF->CRLF conversions done when making the zip.
   my $bin_files =
     "\"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.ide|\\.exe\|\\.ico\|\\.gz\|\\.zip\|" .
-    "\\.gif\"";
+    "\\.gif|\\.vcp|\\.vcproj|\\.vcw|\\.sln\"";
 
   my $build_command;
   my $archives;
