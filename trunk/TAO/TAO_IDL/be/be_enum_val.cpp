@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_enum_val.cpp
 //
@@ -12,9 +12,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #include	"idl.h"
@@ -29,18 +29,20 @@ be_enum_val::be_enum_val (unsigned long v, UTL_ScopedName *n, UTL_StrList *p)
   : AST_Constant (AST_Expression::EV_ulong,
                   AST_Decl::NT_enum_val,
                   new AST_Expression(v),
-                  n, 
+                  n,
                   p),
     AST_Decl (AST_Decl::NT_enum_val, n, p)
 {
+#if 0
   // computes the repoID
   compute_repoID ();
 
   // computes the fully scoped name
   compute_fullname ();
 
-  // compute the flattened fully scoped name 
+  // compute the flattened fully scoped name
   compute_flatname ();
+#endif
 }
 
 // ----------------------------------------
@@ -54,8 +56,8 @@ be_enum_val::be_enum_val (unsigned long v, UTL_ScopedName *n, UTL_StrList *p)
 // have to provide them so that whenever be_scope finds an enum_val in a scope
 // that is not an ENUM, it just ignores it.
 
-// Generates the client-side header information for the enum val 
-int 
+// Generates the client-side header information for the enum val
+int
 be_enum_val::gen_client_header (void)
 {
   // nothing to be done
@@ -63,14 +65,14 @@ be_enum_val::gen_client_header (void)
 }
 
 // Generates the client-side stubs for the enum val
-int 
+int
 be_enum_val::gen_client_stubs (void)
 {
   return 0;
 }
 
-// Generates the server-side header information for the enum val 
-int 
+// Generates the server-side header information for the enum val
+int
 be_enum_val::gen_server_header (void)
 {
   // nothing to be done
@@ -78,7 +80,7 @@ be_enum_val::gen_server_header (void)
 }
 
 // Generates the server-side skeletons for the enum val
-int 
+int
 be_enum_val::gen_server_skeletons (void)
 {
   // nothing to be done
@@ -86,7 +88,7 @@ be_enum_val::gen_server_skeletons (void)
 }
 
 // Generates the client-side inline information
-int 
+int
 be_enum_val::gen_client_inline (void)
 {
   // nothing to be done
@@ -94,7 +96,7 @@ be_enum_val::gen_client_inline (void)
 }
 
 // Generates the server-side inline
-int 
+int
 be_enum_val::gen_server_inline (void)
 {
   // nothing to be done
@@ -144,4 +146,3 @@ be_enum_val::tc_encap_len (void)
 // Narrowing
 IMPL_NARROW_METHODS2 (be_enum_val, AST_EnumVal, be_decl)
 IMPL_NARROW_FROM_DECL (be_enum_val)
-

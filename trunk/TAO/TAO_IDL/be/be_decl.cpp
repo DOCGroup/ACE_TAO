@@ -188,6 +188,9 @@ be_decl::compute_fullname (void)
 const char*
 be_decl::fullname (void)
 {
+  if (!this->fullname_)
+    compute_fullname ();
+
   return this->fullname_;
 }
 
@@ -258,6 +261,9 @@ be_decl::compute_flatname (void)
 const char*
 be_decl::flatname (void)
 {
+  if (!this->flatname_)
+    compute_flatname ();
+
   return this->flatname_;
 }
 
@@ -330,6 +336,9 @@ be_decl::compute_repoID (void)
 const char *
 be_decl::repoID (void)
 {
+  if (!this->repoID_)
+    compute_repoID ();
+
   return this->repoID_;
 }
 
@@ -397,6 +406,7 @@ be_decl::gen_var_defn (void)
   switch (this->node_type ())
     {
     case AST_Decl::NT_interface:
+    case AST_Decl::NT_interface_fwd:
       *ch << namebuf << " (" << local_name () << "_ptr);" << nl;
       break;
     case AST_Decl::NT_array:
@@ -415,6 +425,7 @@ be_decl::gen_var_defn (void)
   switch (this->node_type ())
     {
     case AST_Decl::NT_interface:
+    case AST_Decl::NT_interface_fwd:
       *ch << namebuf << " &operator= (" << local_name () << "_ptr);" << nl;
       break;
     case AST_Decl::NT_array:
@@ -431,6 +442,7 @@ be_decl::gen_var_defn (void)
   switch (this->node_type ())
     {
     case AST_Decl::NT_interface:
+    case AST_Decl::NT_interface_fwd:
       *ch << local_name () << "_ptr operator-> (void) const;" << nl;
       break;
     case AST_Decl::NT_array:
@@ -446,6 +458,7 @@ be_decl::gen_var_defn (void)
   switch (this->node_type ())
     {
     case AST_Decl::NT_interface:
+    case AST_Decl::NT_interface_fwd:
       // cast operators
       *ch << "operator const " << local_name () << "_ptr &() const;" << nl;
       *ch << "operator " << local_name () << "_ptr &();" << nl;
@@ -531,6 +544,7 @@ be_decl::gen_var_defn (void)
         }
       break;
     case AST_Decl::NT_interface:
+    case AST_Decl::NT_interface_fwd:
       *ch << local_name () << "_ptr in (void) const;" << nl;
       *ch << local_name () << "_ptr &inout (void);" << nl;
       *ch << local_name () << "_ptr &out (void);" << nl;
@@ -543,6 +557,7 @@ be_decl::gen_var_defn (void)
   switch (this->node_type ())
     {
     case AST_Decl::NT_interface:
+    case AST_Decl::NT_interface_fwd:
       *ch << local_name () << "_ptr ptr (void) const;\n";
       break;
     case AST_Decl::NT_array:
@@ -562,6 +577,7 @@ be_decl::gen_var_defn (void)
   switch (this->node_type ())
     {
     case AST_Decl::NT_interface:
+    case AST_Decl::NT_interface_fwd:
       *ch << local_name () << "_ptr ptr_;\n";
       break;
     case AST_Decl::NT_array:
@@ -615,6 +631,7 @@ be_decl::gen_var_impl (void)
   switch (this->node_type ())
     {
     case AST_Decl::NT_interface:
+    case AST_Decl::NT_interface_fwd:
       // default constr
       *ci << "ACE_INLINE" << nl;
       *ci << fname << "::" << lname <<
@@ -1352,6 +1369,7 @@ be_decl::gen_out_defn (void)
   switch (this->node_type ())
     {
     case AST_Decl::NT_interface:
+    case AST_Decl::NT_interface_fwd:
       *ch << namebuf << " (" << local_name () << "_ptr &);" << nl;
       break;
     case AST_Decl::NT_array:
@@ -1371,6 +1389,7 @@ be_decl::gen_out_defn (void)
   switch (this->node_type ())
     {
     case AST_Decl::NT_interface:
+    case AST_Decl::NT_interface_fwd:
       // only interface allows assignment from var &
       *ch << namebuf << " &operator= (const " << local_name () << "_var &);" << nl;
       *ch << namebuf << " &operator= (" << local_name () << "_ptr);" << nl;
@@ -1415,7 +1434,7 @@ be_decl::gen_out_defn (void)
           // required
           // bt->gen_type ();
           // XXXASG
-	      
+
           *ch << " &operator[] (CORBA::ULong index);" << nl;
         }
     }
@@ -1426,6 +1445,7 @@ be_decl::gen_out_defn (void)
   switch (this->node_type ())
     {
     case AST_Decl::NT_interface:
+    case AST_Decl::NT_interface_fwd:
       *ch << local_name () << "_ptr &ptr_;\n";
       break;
     case AST_Decl::NT_array:
@@ -1480,6 +1500,7 @@ be_decl::gen_out_impl (void)
   switch (this->node_type ())
     {
     case AST_Decl::NT_interface:
+    case AST_Decl::NT_interface_fwd:
       // constr from a _ptr
       ci->indent ();
       *ci << "ACE_INLINE" << nl;

@@ -31,14 +31,6 @@ be_field::be_field (AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p)
   : AST_Field (ft, n, p),
     AST_Decl (AST_Decl::NT_field, n, p)
 {
-  // computes the repoID
-  compute_repoID ();
-
-  // computes the fully scoped name
-  compute_fullname ();
-
-  // compute the flattened fully scoped name
-  compute_flatname ();
 }
 
 // ----------------------------------------

@@ -3,7 +3,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_helper.h
 //
@@ -13,7 +13,7 @@
 //
 // = AUTHOR
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #if !defined (TAO_BE_OUTSTRM_H)
@@ -38,7 +38,7 @@ class TAO_OutStream
   //  classes that understand specific front ends must derive from this
   //  class.
 public:
-  
+
   // Enumerated type to indicate the stream type
   enum STREAM_TYPE
     {
@@ -49,13 +49,13 @@ public:
       TAO_SVR_INL,
       TAO_SVR_IMPL
     };
-  
+
   TAO_OutStream (void);
-  // constructor. 
-  
+  // constructor.
+
   virtual ~TAO_OutStream (void);
   // destructor
-  
+
   int open (const char *fname, TAO_OutStream::STREAM_TYPE st=TAO_OutStream::TAO_CLI_HDR);
   // open the underlying low-level handle for output
 
@@ -67,11 +67,11 @@ public:
 
   int incr_indent (unsigned short flag=1);
   // increment the indentation level and by default actually indent the output
-  // accordingly 
+  // accordingly
 
   int decr_indent (unsigned short flag=1);
   // decrease the indentation level and by default actually indent the output
-  // accordingly 
+  // accordingly
 
   int reset (void);
   // reset indentation level to 0
@@ -84,6 +84,12 @@ public:
 
   int print (const char *format, ...);
   // "printf" style variable argument print
+
+  int gen_ifdef_macro (const char *flatname, const char *suffix=0);
+  // generate a #if !defined, #defined macro
+
+  int gen_endif (void);
+  // generate an endif statement
 
   // =overloaded operators
 

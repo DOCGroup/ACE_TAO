@@ -34,6 +34,7 @@ be_union_branch::be_union_branch (AST_UnionLabel *lab, AST_Type *ft,
     AST_Field (AST_Decl::NT_union_branch, ft, n, p),
     AST_Decl (AST_Decl::NT_union_branch, n, p)
 {
+#if 0
   // computes the repoID
   compute_repoID ();
 
@@ -42,6 +43,7 @@ be_union_branch::be_union_branch (AST_UnionLabel *lab, AST_Type *ft,
 
   // compute the flattened fully scoped name
   compute_flatname ();
+#endif
 }
 
 // ----------------------------------------

@@ -37,6 +37,7 @@ be_union::be_union (AST_ConcreteType *dt, UTL_ScopedName *n, UTL_StrList *p)
     member_count_ (-1),
     default_index_ (-2)
 {
+#if 0
   // computes the repoID
   compute_repoID ();
 
@@ -48,6 +49,7 @@ be_union::be_union (AST_ConcreteType *dt, UTL_ScopedName *n, UTL_StrList *p)
 
   // compute the flattened fully scoped name
   compute_flatname ();
+#endif
 }
 
 // compute total number of members

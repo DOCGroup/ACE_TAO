@@ -41,21 +41,6 @@ be_interface::be_interface (UTL_ScopedName *n, AST_Interface **ih, long nih,
     full_skel_name_ (0)
 {
   this->size_type (be_decl::VARIABLE); // always the case
-
-  // computes the repoID
-  compute_repoID ();
-
-  // computes the fully scoped name
-  compute_fullname ();
-
-  // computes the fully scoped typecode name
-  compute_tc_name ();
-
-  // compute the flattened fully scoped name
-  compute_flatname ();
-
-  // compute the full skel name
-  compute_fullskelname ();
 }
 
 // compute stringified fully scoped skel name
@@ -127,6 +112,9 @@ be_interface::compute_fullskelname (void)
 const char*
 be_interface::full_skel_name (void)
 {
+  if (!this->full_skel_name_)
+    compute_fullskelname ();
+
   return this->full_skel_name_;
 }
 
@@ -142,131 +130,159 @@ int be_interface::gen_client_header (void)
   TAO_NL  nl;        // end line
 
 
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_INTERFACE_CH); // set the current code generation
-                                            // state
-  ch = cg->client_header ();
-  // pass info
-  cg->outstream (ch);
-  cg->node (this);
-
-  // == STEP 1:  generate the class name and class names we inherit ==
-  ch->indent (); // start with whatever indentation level we are at
-
-  // generate the forward declaration
-  *ch << "class " << local_name () << ";" << nl;
-
-  // generate the _ptr declaration
-  *ch << "typedef " << local_name () << " *" << local_name () << "_ptr;" <<
-    nl;
-
-  // now generate the class definition
-  *ch << "class " << local_name ();
-
-  if (n_inherits () > 0)  // this interface inherits from other interfaces
+  if (!this->cli_hdr_gen_) // not already generated
     {
-      *ch << ": ";
-      for (i = 0; i < n_inherits (); i++)
+      // retrieve a singleton instance of the code generator
+      TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+      cg->push (TAO_CodeGen::TAO_INTERFACE_CH); // set the current code
+      // generation  state
+
+      ch = cg->client_header ();
+
+      // pass info
+      cg->outstream (ch);
+      cg->node (this);
+
+      // == STEP 1:  generate the class name and class names we inherit ==
+      ch->indent (); // start with whatever indentation level we are at
+
+      // generate the ifdefined macro for  the _ptr type
+      ch->gen_ifdef_macro (this->flatname (), "_ptr");
+
+      // the following two are required to be under the ifdef macro to avoid
+      // multiple declarations
+
+      // forward declaration
+      *ch << "class " << this->local_name () << ";" << nl;
+      // generate the _ptr declaration
+      *ch << "typedef " << this->local_name () << " *" << this->local_name ()
+          << "_ptr;" << nl;
+
+      ch->gen_endif ();
+
+      ch->gen_ifdef_macro (this->flatname ());
+
+      // now generate the class definition
+      *ch << "class " << this->local_name ();
+
+      if (n_inherits () > 0)  // this interface inherits from other interfaces
         {
-          *ch << "public virtual ";
-          *ch << inherits ()[i]->name ();  // dump the scoped name
-          if (i < n_inherits () - 1) // this is the case of multiple
-            // inheritance
+          *ch << ": ";
+          for (i = 0; i < n_inherits (); i++)
             {
-              *ch << ", ";
-            }
-        }  // end of for loop
-      *ch << nl;
+              *ch << "public virtual ";
+              *ch << inherits ()[i]->name ();  // dump the scoped name
+              if (i < n_inherits () - 1) // this is the case of multiple
+                // inheritance
+                {
+                  *ch << ", ";
+                }
+            }  // end of for loop
+          *ch << nl;
+        }
+      else
+        {
+          // we do not inherit from anybody, hence we do so from the base
+          // CORBA::Object class
+          *ch << ": public virtual CORBA::Object" << nl;
+        }
+
+      // generate the body
+
+      *ch << "{" << nl;
+      *ch << "public:\n";
+      ch->incr_indent ();
+      // generate the static _duplicate, _narrow, and _nil operations
+      *ch << "// the static operations" << nl;
+      *ch << "static " << local_name () << "_ptr " << "_duplicate (" <<
+        local_name () << "_ptr obj);" << nl;
+      *ch << "static " << local_name () << "_ptr " << "_narrow (" <<
+        "CORBA::Object_ptr obj);" << nl;
+      *ch << "static " << local_name () << "_ptr " << "_nil (" <<
+        "void);" << nl;
+
+      // generate a TAO-specific _bind method similar to what Orbix and VisiBroker
+      // have
+      *ch << "static " << this->local_name () << "_ptr _bind (const char *host, "
+          << "CORBA::ULong port, const char *key, CORBA::Environment &env);\n\n";
+
+      // generate code for the interface definition by traversing thru the
+      // elements of its scope. We depend on the front-end to have made sure
+      // that only legal syntactic elements appear in our scope.
+      if (be_scope::gen_client_header () == -1)
+        {
+          ACE_ERROR ((LM_ERROR, "be_interface::gen_client_header\n"));
+          ACE_ERROR ((LM_ERROR, "Scope code generation failure\n"));
+          return -1;
+        }
+
+      // generate the "protected" constructor so that users cannot instantiate
+      // us
+      ch->decr_indent ();
+      *ch << "protected:\n";
+      ch->incr_indent ();
+      *ch << local_name () << " (void); // default constructor" << nl;
+      *ch << local_name () << " (STUB_Object *objref);" << nl;
+      *ch << "virtual ~" << local_name () << " (void);\n";
+      ch->decr_indent ();
+
+      // private copy constructor and assignment operator. These are not
+      // allowed, hence they are private.
+      *ch << "private:\n";
+      ch->incr_indent ();
+      *ch << local_name () << " (const " << local_name () << "&);" << nl;
+      *ch << "void operator= (const " << local_name () << "&);\n";
+      ch->decr_indent ();
+      *ch << "};\n\n";
+      ch->gen_endif ();
+
+      // generate the ifdefined macro for the var type
+      ch->gen_ifdef_macro (this->flatname (), "_var");
+
+      // generate the _var declaration
+      if (this->gen_var_defn () == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "be_interface - error generating _var definition\n"));
+          return -1;
+        }
+      ch->gen_endif ();
+
+      // generate the ifdef macro for the _out class
+      ch->gen_ifdef_macro (this->flatname (), "_out");
+
+      // generate the _out declaration - ORBOS/97-05-15 pg 16-20 spec
+      if (this->gen_out_defn () == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "be_interface - error generating _var definition\n"));
+          return -1;
+        }
+      // generate the endif macro
+      ch->gen_endif ();
+
+
+      // generate the typecode decl. If we are in the outermost scope, our typecode
+      // decl is extern
+      if (this->is_nested ())
+        {
+          // we have a scoped name
+          ch->indent ();
+          *ch << "static CORBA::TypeCode_ptr " << this->tc_name
+            ()->last_component () << ";\n\n";
+        }
+      else
+        {
+          // we are in the ROOT scope
+          ch->indent ();
+          *ch << "extern CORBA::TypeCode_ptr " << this->tc_name
+            ()->last_component () << ";\n\n";
+        }
+
+      cg->pop ();
+      this->cli_hdr_gen_ = I_TRUE;
     }
-  else
-    {
-      // we do not inherit from anybody, hence we do so from the base
-      // CORBA::Object class
-      *ch << ": public virtual CORBA::Object" << nl;
-    }
-
-  // generate the body
-
-  *ch << "{" << nl;
-  *ch << "public:\n";
-  ch->incr_indent ();
-  // generate the static _duplicate, _narrow, and _nil operations
-  *ch << "// the static operations" << nl;
-  *ch << "static " << local_name () << "_ptr " << "_duplicate (" <<
-    local_name () << "_ptr obj);" << nl;
-  *ch << "static " << local_name () << "_ptr " << "_narrow (" <<
-    "CORBA::Object_ptr obj);" << nl;
-  *ch << "static " << local_name () << "_ptr " << "_nil (" <<
-    "void);" << nl;
-
-  // generate a TAO-specific _bind method similar to what Orbix and VisiBroker
-  // have
-  *ch << "static " << this->local_name () << "_ptr _bind (const char *host, "
-      << "CORBA::ULong port, const char *key, CORBA::Environment &env);\n\n";
-
-  // generate code for the interface definition by traversing thru the
-  // elements of its scope. We depend on the front-end to have made sure
-  // that only legal syntactic elements appear in our scope.
-  if (be_scope::gen_client_header () == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "be_interface::gen_client_header\n"));
-      ACE_ERROR ((LM_ERROR, "Scope code generation failure\n"));
-      return -1;
-    }
-
-  // generate the "protected" constructor so that users cannot instantiate
-  // us
-  ch->decr_indent ();
-  *ch << "protected:\n";
-  ch->incr_indent ();
-  *ch << local_name () << " (void); // default constructor" << nl;
-  *ch << local_name () << " (STUB_Object *objref);" << nl;
-  *ch << "virtual ~" << local_name () << " (void);\n";
-  ch->decr_indent ();
-  // private copy constructor and assignment operator. These are not
-  // allowed, hence they are private.
-  *ch << "private:\n";
-  ch->incr_indent ();
-  *ch << local_name () << " (const " << local_name () << "&);" << nl;
-  *ch << "void operator= (const " << local_name () << "&);\n";
-  ch->decr_indent ();
-  *ch << "};\n\n";
-
-  // generate the _var declaration
-  if (this->gen_var_defn () == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "be_interface - error generating _var definition\n"));
-      return -1;
-    }
-
-  // generate the _out declaration - ORBOS/97-05-15 pg 16-20 spec
-  if (this->gen_out_defn () == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "be_interface - error generating _var definition\n"));
-      return -1;
-    }
-
-  // generate the typecode decl. If we are in the outermost scope, our typecode
-  // decl is extern
-  if (this->name ()->length () > 2)
-    {
-      // we have a scoped name
-      ch->indent ();
-      *ch << "static CORBA::TypeCode_ptr " << this->tc_name
-        ()->last_component () << ";\n\n";
-    }
-  else
-    {
-      // we are in the ROOT scope
-      ch->indent ();
-      *ch << "extern CORBA::TypeCode_ptr " << this->tc_name
-        ()->last_component () << ";\n\n";
-    }
-
-  cg->pop ();
   return 0;
 }
 
@@ -712,16 +728,26 @@ be_interface::gen_client_inline (void)
     " (void) // destructor" << nl;
   *ci << "{}\n\n";
 
+  // generate the ifdefined macro for  the _var type
+  ci->gen_ifdef_macro (this->flatname (), "_var");
+
   if (this->gen_var_impl () == -1)
     {
       ACE_ERROR ((LM_ERROR, "be_interface: _var impl code gen failed\n"));
       return -1;
     }
+  ci->gen_endif ();
+
+  // generate the ifdefined macro for  the _out type
+  ci->gen_ifdef_macro (this->flatname (), "_out");
+
   if (this->gen_out_impl () == -1)
     {
       ACE_ERROR ((LM_ERROR, "be_interface: _out impl code gen failed\n"));
       return -1;
     }
+  ci->gen_endif ();
+
   if (be_scope::gen_client_inline () == -1)
     {
       ACE_ERROR ((LM_ERROR, "be_interface: code gen failed for scope\n"));
