@@ -16,6 +16,7 @@
 # configurations.
 
 ACE_Init_Test: MSVC
+Arg_Shifter_Test
 Atomic_Op_Test
 Auto_IncDec_Test
 Barrier_Test
@@ -32,6 +33,7 @@ CDR_Array_Test
 Collection_Test
 Config_Test
 Conn_Test: !chorus
+Date_Time_Test
 Dirent_Test
 DLL_Test: !Unicos !STATIC !KCC_Linux
 DLList_Test
