@@ -1,3 +1,8 @@
+Fri Aug  9 15:28:10 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* tao/RTCORBA/RT_Protocols_Hooks.cpp:
+	  Fixed the Debian NoInline builds.
+
 Fri Aug  9 15:26:30 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_constant.cpp:
