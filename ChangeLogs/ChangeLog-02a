@@ -1,3 +1,9 @@
+Wed Dec 13 18:15:03 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/CDR_Stream.h:
+	  Made some of the adjust() methods public, this is used to
+	  optimize TAO's implementations of CORBA::Any.
+
 Wed Dec 13 12:59:49 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/PerlACE/Process_Unix.pm:
