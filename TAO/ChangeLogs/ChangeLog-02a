@@ -1,3 +1,9 @@
+Sat Apr  6 17:22:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/MT_BiDir/client.bor:
+        * tests/MT_BiDir/server.bor:
+          Corrected makefiles
+
 Sat Apr  6 07:40:13 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/PortableServer/ImplRepoC.h:
@@ -8,7 +14,7 @@ Sat Apr  6 07:40:13 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 Sat Apr  6 09:24:40 UTC 2002  Don Hinton <dhinton@ieee.org>
 
 	* tao/Strategies/advanced_resource.cpp (init): Removed
-	  an unreachable line. Thanks to Priyanka for pointing 
+	  an unreachable line. Thanks to Priyanka for pointing
 	  this out.
 
 Fri Apr  5 23:04:01 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
@@ -30,14 +36,14 @@ Fri Apr  5 19:49:57 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  extract and then perform a sanity check. This sanity check was
 	  too late. Malformed GIOP messages had very big size of sequences
 	  and allocations took time and sometimes crashed the
-	  application. 
+	  application.
 
 	  We extract the length of the sequence and then check to see if
 	  the length of the sequence is greater than the size of the
 	  incoming stream. If it is greater we return an error. Thanks to
 	  Duane Binder <duane.binder@veritas.com> for reporting the
-	  problem. 
-	
+	  problem.
+
 	* tao/DomainC.cpp:
 	* tao/DomainC.h:
 	* tao/DomainC.i:
@@ -100,13 +106,13 @@ Fri Apr  5 12:10:38 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
 	  Added methods to generate Any operators for exception,
 	  struct and union members defined rather than
-	  referenced. Thanks to Christian Veleba 
+	  referenced. Thanks to Christian Veleba
 	  <christian.veleba@porsche.co.at> for reporting the
 	  problem.
 
 Fri Apr  5 15:57:54 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Condition.inl: Fixed a compile error with SunCC. 
+	* tao/Condition.inl: Fixed a compile error with SunCC.
 
 Fri Apr  5 09:22:57 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -115,8 +121,8 @@ Fri Apr  5 09:22:57 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  application to crash when they just linked in the BiDirGIOP
 	  library without setting any policies at the application
 	  level. Thanks to Werner Buchert <w.buchert@medat.de> for
-	  reporting the problem. 
-	  
+	  reporting the problem.
+
 Fri Apr 05 08:24:27 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Transport_Cache_Manager.cpp: Added a missing template
@@ -125,9 +131,9 @@ Fri Apr 05 08:24:27 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Fri Apr 05 08:16:27 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/MT_BiDir/client.dsp (RSC): 
+	* tests/MT_BiDir/client.dsp (RSC):
 	* tests/MT_BiDir/server.dsp: Fixed minor problems with include
-	  path.  This should hopefully fix compile errors on Win32. 
+	  path.  This should hopefully fix compile errors on Win32.
 
 Fri Apr  5 09:32:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
