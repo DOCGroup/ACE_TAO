@@ -19,6 +19,7 @@
 
 #include "global.h"
 #include "ace/Singleton.h"
+#include "ace/Null_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
