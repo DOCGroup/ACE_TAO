@@ -1375,7 +1375,7 @@ ace_thread_adapter (void *args)
 }
 
 ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC f, void *a)
-  : func_(f), 
+  : func_(f),
     arg_(a)
 #if !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)
     ,
@@ -1439,11 +1439,11 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
   int result;
   pthread_attr_t attr;
-#    if defined (ACE_HAS_SETKIND_NP)
+#    if defined (ACE_HAS_DCETHREADS)
   if (::pthread_attr_create (&attr) != 0)
-#    else /* ACE_HAS_SETKIND_NP */
+#    else /* ACE_HAS_DCETHREADS */
   if (::pthread_attr_init (&attr) != 0)
-#    endif /* ACE_HAS_SETKIND_NP */
+#    endif /* ACE_HAS_DCETHREADS */
       return -1;
 #    if !defined (ACE_LACKS_SETSCHED)
   // The PRIORITY stuff used to be here...-cjc
@@ -1476,11 +1476,11 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #    if !defined (ACE_LACKS_THREAD_STACK_SIZE)      // JCEJ 12/17/96
       if (::pthread_attr_setstacksize (&attr, size) != 0)
 	{
-#      if defined (ACE_HAS_SETKIND_NP)
+#      if defined (ACE_HAS_DCETHREADS)
 	  ::pthread_attr_delete (&attr);
-#      else /* ACE_HAS_SETKIND_NP */
+#      else /* ACE_HAS_DCETHREADS */
 	  ::pthread_attr_destroy (&attr);
-#      endif /* ACE_HAS_SETKIND_NP */
+#      endif /* ACE_HAS_DCETHREADS */
 	  return -1;
 	}
 #    else
@@ -1494,11 +1494,11 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     {
       if (::pthread_attr_setstackaddr (&attr, stack) != 0)
 	{
-#      if defined (ACE_HAS_SETKIND_NP)
+#      if defined (ACE_HAS_DCETHREADS)
 	  ::pthread_attr_delete (&attr);
-#      else /* ACE_HAS_SETKIND_NP */
+#      else /* ACE_HAS_DCETHREADS */
 	  ::pthread_attr_destroy (&attr);
-#      endif /* ACE_HAS_SETKIND_NP */
+#      endif /* ACE_HAS_DCETHREADS */
 	  return -1;
 	}
     }
@@ -1519,21 +1519,21 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	  if (ACE_BIT_ENABLED (flags, THR_DETACHED))
 	    dstate = PTHREAD_CREATE_DETACHED;
 
-#      if defined (ACE_HAS_SETKIND_NP)
+#      if defined (ACE_HAS_DCETHREADS)
 	  if (::pthread_attr_setdetach_np (&attr, dstate) != 0)
-#      else /* ACE_HAS_SETKIND_NP */
+#      else /* ACE_HAS_DCETHREADS */
 #        if defined (ACE_HAS_PTHREAD_DSTATE_PTR)
 	  if (::pthread_attr_setdetachstate (&attr, &dstate) != 0)
 #        else
 	  if (::pthread_attr_setdetachstate (&attr, dstate) != 0)
 #        endif /* ACE_HAS_PTHREAD_DSTATE_PTR */
-#      endif /* ACE_HAS_SETKIND_NP */
+#      endif /* ACE_HAS_DCETHREADS */
 		{
-#      if defined (ACE_HAS_SETKIND_NP)
+#      if defined (ACE_HAS_DCETHREADS)
 	    ::pthread_attr_delete (&attr);
-#      else /* ACE_HAS_SETKIND_NP */
+#      else /* ACE_HAS_DCETHREADS */
 	    ::pthread_attr_destroy (&attr);
-#      endif /* ACE_HAS_SETKIND_NP */
+#      endif /* ACE_HAS_DCETHREADS */
 	    return -1;
 	  }
 	}
@@ -1581,20 +1581,20 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #      endif /* ACE_HAS_ONLY_SCHED_OTHER */
 
 #      if !defined (ACE_HAS_FSU_PTHREADS)
-#        if defined (ACE_HAS_SETKIND_NP)
+#        if defined (ACE_HAS_DCETHREADS)
 	  result = ::pthread_attr_setsched (&attr, spolicy);
-#        else /* ACE_HAS_SETKIND_NP */
+#        else /* ACE_HAS_DCETHREADS */
 	  result = ::pthread_attr_setschedpolicy (&attr, spolicy);
-#        endif /* ACE_HAS_SETKIND_NP */
+#        endif /* ACE_HAS_DCETHREADS */
 	  if (result != 0)
 	      {
 		// Preserve the errno value.
 		errno = result;
-#        if defined (ACE_HAS_SETKIND_NP)
+#        if defined (ACE_HAS_DCETHREADS)
 		::pthread_attr_delete (&attr);
-#        else /* ACE_HAS_SETKIND_NP */
+#        else /* ACE_HAS_DCETHREADS */
 		::pthread_attr_destroy (&attr);
-#        endif /* ACE_HAS_SETKIND_NP */
+#        endif /* ACE_HAS_DCETHREADS */
 		return -1;
 	      }
 #      else
@@ -1611,11 +1611,11 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	    }
 	  if (ret != 0)
 	    {
-#        if defined (ACE_HAS_SETKIND_NP)
+#        if defined (ACE_HAS_DCETHREADS)
 	      ::pthread_attr_delete (&attr);
-#        else /* ACE_HAS_SETKIND_NP */
+#        else /* ACE_HAS_DCETHREADS */
 	      ::pthread_attr_destroy (&attr);
-#        endif /* ACE_HAS_SETKIND_NP */
+#        endif /* ACE_HAS_DCETHREADS */
 	      return -1;
 	    }
 #      endif	/*  ACE_HAS_FSU_PTHREADS */
@@ -1645,7 +1645,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	  struct sched_param sparam;
 	  ACE_OS::memset ((void *) &sparam, 0, sizeof sparam);
 
-#      if defined (ACE_HAS_DCETHREADS) && !defined (ACE_HAS_SETKIND_NP)
+#      if defined (ACE_HAS_DCETHREADS) && !defined (ACE_HAS_DCE_DRAFT4_THREADS)
 	  sparam.sched_priority = ACE_MIN (priority, PRIORITY_MAX);
 #      elif defined(ACE_HAS_IRIX62_THREADS)
 	  sparam.sched_priority = ACE_MIN (priority, PTHREAD_MAX_PRIORITY);
@@ -1686,18 +1686,18 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
            if (priority > 0)
 #        endif /* STHREADS */
              {
-#        if defined (ACE_HAS_SETKIND_NP)
+#        if defined (ACE_HAS_DCETHREADS)
                result = ::pthread_attr_setsched (&attr, SCHED_OTHER);
-#        else /* ACE_HAS_SETKIND_NP */
+#        else /* ACE_HAS_DCETHREADS */
                result = ::pthread_attr_setschedparam (&attr, &sparam);
-#        endif /* ACE_HAS_SETKIND_NP */
+#        endif /* ACE_HAS_DCETHREADS */
                if (result != 0)
                  {
-#        if defined (ACE_HAS_SETKIND_NP)
+#        if defined (ACE_HAS_DCETHREADS)
                    ::pthread_attr_delete (&attr);
-#        else /* ACE_HAS_SETKIND_NP */
+#        else /* ACE_HAS_DCETHREADS */
                    ::pthread_attr_destroy (&attr);
-#        endif /* ACE_HAS_SETKIND_NP */
+#        endif /* ACE_HAS_DCETHREADS */
                    errno = result;
                    return -1;
                  }
@@ -1710,20 +1710,20 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       if (ACE_BIT_ENABLED (flags, THR_INHERIT_SCHED)
 	  || ACE_BIT_ENABLED (flags, THR_EXPLICIT_SCHED))
 	{
-#      if defined (ACE_HAS_SETKIND_NP)
+#      if defined (ACE_HAS_DCETHREADS)
 	  int sched = PTHREAD_DEFAULT_SCHED;
-#      else /* ACE_HAS_SETKIND_NP */
+#      else /* ACE_HAS_DCETHREADS */
 	  int sched = PTHREAD_EXPLICIT_SCHED;
-#      endif /* ACE_HAS_SETKIND_NP */
+#      endif /* ACE_HAS_DCETHREADS */
 	  if (ACE_BIT_ENABLED (flags, THR_INHERIT_SCHED))
 	    sched = PTHREAD_INHERIT_SCHED;
 	  if (::pthread_attr_setinheritsched (&attr, sched) != 0)
 	    {
-#      if defined (ACE_HAS_SETKIND_NP)
+#      if defined (ACE_HAS_DCETHREADS)
 	      ::pthread_attr_delete (&attr);
-#      else /* ACE_HAS_SETKIND_NP */
+#      else /* ACE_HAS_DCETHREADS */
 	      ::pthread_attr_destroy (&attr);
-#      endif /* ACE_HAS_SETKIND_NP */
+#      endif /* ACE_HAS_DCETHREADS */
 	      return -1;
 	    }
 	}
@@ -1741,11 +1741,11 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
 	  if (::pthread_attr_setscope (&attr, scope) != 0)
 	    {
-#      if defined (ACE_HAS_SETKIND_NP)
+#      if defined (ACE_HAS_DCETHREADS)
 	      ::pthread_attr_delete (&attr);
-#      else /* ACE_HAS_SETKIND_NP */
+#      else /* ACE_HAS_DCETHREADS */
 	      ::pthread_attr_destroy (&attr);
-#      endif /* ACE_HAS_SETKIND_NP */
+#      endif /* ACE_HAS_DCETHREADS */
 	      return -1;
 	    }
 	}
@@ -1760,14 +1760,21 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	}
     }
 
-#    if defined (ACE_HAS_SETKIND_NP)
+#    if defined (ACE_HAS_DCETHREADS)
+#       if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+  ACE_OSCALL (::pthread_create (thr_id, attr,
+				ACE_THREAD_FUNCTION,
+				ACE_THREAD_ARGUMENT), 
+	      int, -1, result);
+#       else
   ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (thr_id, attr,
 						  ACE_THREAD_FUNCTION,
 						  ACE_THREAD_ARGUMENT), 
 				result),
 	      int, -1, result);
+#       endif /* ACE_HAS_DCE_DRAFT4_THREADS */
   ::pthread_attr_delete (&attr);
-#    else /* !ACE_HAS_SETKIND_NP */
+#    else /* !ACE_HAS_DCETHREADS */
 #      if defined (ACE_HAS_THR_C_FUNC)
   ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (thr_id, &attr,
 						  ACE_THR_C_FUNC (&ACE_THREAD_FUNCTION), 
@@ -1782,7 +1789,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	      int, -1, result);
 #      endif /* ACE_HAS_THR_C_FUNC */
   ::pthread_attr_destroy (&attr);
-#    endif /* ACE_HAS_SETKIND_NP */
+#    endif /* ACE_HAS_DCETHREADS */
 
   // This is a Solaris, POSIX, or DCE implementation of pthreads,
   // where we assume that ACE_thread_t and ACE_hthread_t are the same.
@@ -2109,16 +2116,12 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
 // ACE_TRACE ("ACE_OS::thr_keycreate");
   inst = inst;
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-#if defined (ACE_HAS_SETKIND_NP)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_keycreate (key, dest), 
-                                       ace_result_), 
-                     int, -1);
-#else /* ACE_HAS_SETKIND_NP */
+#if defined (ACE_HAS_DCETHREADS)
+  ACE_OSCALL_RETURN (::pthread_keycreate (key, dest), int, -1);
+#elif defined (ACE_HAS_PTHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_key_create (key, dest), 
                                        ace_result_), 
                      int, -1);
-#endif /* ACE_HAS_SETKIND_NP */
 #elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_keycreate (key, dest), 
 				       ace_result_), 
