@@ -394,7 +394,7 @@ TAO_DynSequence_i::to_any (CORBA::Environment& ACE_TRY_ENV)
 CORBA::TypeCode_ptr
 TAO_DynSequence_i::type (CORBA::Environment &)
 {
-  return this->type_.in ();
+  return CORBA::TypeCode::_duplicate (this->type_.in ());
 }
 
 // If the DynAny has been initialized but this component has not, the
