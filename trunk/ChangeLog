@@ -11,7 +11,7 @@ Thu Aug  7 00:12:50 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           within ACE and highlighted by recent subsetting.
 
         * ace/TSS_T.cpp:
-          Added conditional #include TSS_Adapter.h when ACE_HAS_THR_C_DEST
+          Added conditional #include TSS_Adapter.h when ACE_HAS_THR_C_DEST is
           defined and required by recent subsetting.
 
         * ace/Timer_Queue_T.cpp:
