@@ -3,18 +3,18 @@
 // ============================================================================
 // = LIBRARY
 //    examples
-// 
+//
 // = FILENAME
 //    Driver.cpp
 //
 // = DESCRIPTION
-//    This code builds an abstraction to factor out common code for 
+//    This code builds an abstraction to factor out common code for
 //    the different implementations of the Timer_Queue.
 //
 // = AUTHOR
 //    Douglas Schmidt      <schmidt@cs.wustl.edu> &&
-//    Sergio Flores-Gaitan <sergio@cs.wustl.edu>  
-// 
+//    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+//
 // ============================================================================
 
 #if !defined (_DRIVER_CPP_)
@@ -26,9 +26,9 @@
 // constructor
 
 template <class RECEIVER, class ACTION>
-Command<RECEIVER, ACTION>::Command (RECEIVER &recvr, 
-				    ACTION action)
-  : receiver_ (recvr), 
+Command<RECEIVER, ACTION>::Command (RECEIVER &recvr,
+                                    ACTION action)
+  : receiver_ (recvr),
     action_ (action)
 {
 }
@@ -63,16 +63,16 @@ Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::get_next_request (void)
 
 // Runs the test.
 
-template <class TQ, class RECEIVER, class ACTION> int 
-Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::run_test (void) 
-{     
+template <class TQ, class RECEIVER, class ACTION> int
+Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::run_test (void)
+{
   this->init ();
 
   for (;;)
     if (this->get_next_request () == -1)
       return -1;
 
-  return 0;
+  ACE_NOTREACHED (return 0);
 }
 
 // Reads input from the user from ACE_STDIN into the buffer specified.
@@ -89,7 +89,7 @@ Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::read_input (char *buf, size_t buf
 
 // Parse the input and executes the corresponding operation
 
-template <class TQ, class RECEIVER, class ACTION> int 
+template <class TQ, class RECEIVER, class ACTION> int
 Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::parse_commands (const char *buf)
 {
   int option;
@@ -102,27 +102,27 @@ Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::parse_commands (const char *buf)
     {
     case 1: // Schedule a new timer.
       {
-	u_long useconds;
-	// We just reread the option, this simplies parsing (since
-	// sscanf can do it for us.)
-	if (::sscanf (buf, "%d %lu", &option, &useconds) < 2)
-	  return 0;
+        u_long useconds;
+        // We just reread the option, this simplies parsing (since
+        // sscanf can do it for us.)
+        if (::sscanf (buf, "%d %lu", &option, &useconds) < 2)
+          return 0;
 
-	if (schedule_cmd_->execute ((void *) &useconds) == -1)
-	  ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n", "new timer failed"), -1);
+        if (schedule_cmd_->execute ((void *) &useconds) == -1)
+          ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n", "new timer failed"), -1);
       }
       break; // Cancel an existing timer.
       /* NOTREACHED */
     case 2:
       {
-	u_long id;
-	// We just reread the option, this simplies parsing (since
-	// sscanf can do it for us.)
-	if (::sscanf (buf, "%d %lu", &option, &id) < 2)
-	  return 0;
+        u_long id;
+        // We just reread the option, this simplies parsing (since
+        // sscanf can do it for us.)
+        if (::sscanf (buf, "%d %lu", &option, &id) < 2)
+          return 0;
 
-	if (cancel_cmd_->execute ((void *) &id) == -1)
-	  ACE_DEBUG ((LM_DEBUG, "Timer #%d is not valid\n", id));
+        if (cancel_cmd_->execute ((void *) &id) == -1)
+          ACE_DEBUG ((LM_DEBUG, "Timer #%d is not valid\n", id));
 
       }
       break;
@@ -139,10 +139,10 @@ Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::parse_commands (const char *buf)
     default:
       // Display an error message.
       ACE_ERROR_RETURN ((LM_ERROR, "invalid input %s\n", buf), 0);
-      break;
+      ACE_NOTREACHED (break);
       /* NOTREACHED */
     }
   return 0;
-}  
+}
 
 #endif /* _DRIVER_CPP_ */
