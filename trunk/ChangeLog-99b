@@ -1,3 +1,15 @@
+Wed Nov 17 22:45:01 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.i (ACE_TSS_Emulation::tss_base): on VxWorks,
+          if ACE_VXWORKS_SPARE is 0, allocate a TSS array.  This
+          can happen if the task wasn't spawned through ACE,
+          but then tries to use ACE's TSS emulation.  Thanks
+          to Dave Steele <Dave_Steele@Mitel.com> for the
+          excellent detective work and patch.
+
+        * ace/config-vxworks5.x.h: added ACE_VXWORKS_SPARE,
+          defaulted to spare4.
+
 Wed Nov 17 17:36:25 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/config-hpux-11.x-hpc++.h: Added
@@ -6,120 +18,120 @@ Wed Nov 17 17:36:25 1999  Steve Huston  <shuston@riverace.com>
 
 Wed Nov 17 16:33:40 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/Makefile.am:
+        * ace/Makefile.am:
 
-	  Added Auto_IncDec_T.*, Capabilities.* and Configuration.* to
-	  list of sources.
+          Added Auto_IncDec_T.*, Capabilities.* and Configuration.* to
+          list of sources.
 
-	* tests/Makefile.am:
+        * tests/Makefile.am:
 
-	  Added Auto_IncDec_Test, Capabilities_Test and
-	  Process_Manager_Test to list of tests.
-	
-	* tests/Capabilities_Test.cpp:
+          Added Auto_IncDec_Test, Capabilities_Test and
+          Process_Manager_Test to list of tests.
 
-	  Create the config file within the test itself instead of having
-	  a seperate config file.  This makes the test self-contained, and
-	  also allows the test to be run in a build environment where the
-	  sources are in a different directory from the binaries (e.g. a
-	  "VPATH" build).  This change was motivated by a problem that
-	  occurred in an ACE+autoconf VPATH build.
+        * tests/Capabilities_Test.cpp:
 
-	* tests/Capabilities_Test.cfg:
+          Create the config file within the test itself instead of having
+          a seperate config file.  This makes the test self-contained, and
+          also allows the test to be run in a build environment where the
+          sources are in a different directory from the binaries (e.g. a
+          "VPATH" build).  This change was motivated by a problem that
+          occurred in an ACE+autoconf VPATH build.
 
-	  Removed this file.  It is now created at run-time by the
-	  Capablities_Test itself.
+        * tests/Capabilities_Test.cfg:
+
+          Removed this file.  It is now created at run-time by the
+          Capablities_Test itself.
 
 Wed Nov 17 13:45:25 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* acconfig.h:
-	* configure.in:
-	* ace/OS.h:
-	* ace/OS.i:
+        * acconfig.h:
+        * configure.in:
+        * ace/OS.h:
+        * ace/OS.i:
 
-	  Added support for two additional macros, namely ACE_HAS_LSEEK64
-	  and ACE_LACKS_LLSEEK_PROTOTYPE.  This make it easier to
-	  customize llseek support for a given platform.
+          Added support for two additional macros, namely ACE_HAS_LSEEK64
+          and ACE_LACKS_LLSEEK_PROTOTYPE.  This make it easier to
+          customize llseek support for a given platform.
 
-	* ace/config-linux-common.h:
+        * ace/config-linux-common.h:
 
-	  Define ACE_HAS_LSEEK64 and ACE_LACKS_LSEEK64_PROTOTYPE for glibc
-	  2.1.x, and define ACE_HAS_LLSEEK and ACE_LACKS_LLSEEK_PROTOTYPE
-	  for glibc 2.0.x. [Bug 375]
+          Define ACE_HAS_LSEEK64 and ACE_LACKS_LSEEK64_PROTOTYPE for glibc
+          2.1.x, and define ACE_HAS_LLSEEK and ACE_LACKS_LLSEEK_PROTOTYPE
+          for glibc 2.0.x. [Bug 375]
 
 Wed Nov 17 07:36:04 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests: Removed the Cache_Manager_Test.cpp since Cache_Manager.*
-	  is no longer in ACE.  Thanks to Airat A. Sadreev
- 	  <airat@hq.tatenergo.ru> for reporting this.
+        * tests: Removed the Cache_Manager_Test.cpp since Cache_Manager.*
+          is no longer in ACE.  Thanks to Airat A. Sadreev
+          <airat@hq.tatenergo.ru> for reporting this.
 
-	* netsvcs/lib/Client_Logging_Handler.cpp (fini): Added a void *
-	  cast to the arguments to ACE_OS::free().  Thanks to David Levine
- 	  for reporting this.
+        * netsvcs/lib/Client_Logging_Handler.cpp (fini): Added a void *
+          cast to the arguments to ACE_OS::free().  Thanks to David Levine
+          for reporting this.
 
 Tue Nov 16 07:58:11 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* netsvcs/lib/Client_Logging_Handler.cpp (fini): 
-	  Make sure to dynamically allocate the logger_key_ and
- 	  server_host_ so that we don't end up with weird memory problems.
-  	  Thanks to Dmitry Ergy <dergy@websci.ru> for reporting this.
+        * netsvcs/lib/Client_Logging_Handler.cpp (fini):
+          Make sure to dynamically allocate the logger_key_ and
+          server_host_ so that we don't end up with weird memory problems.
+          Thanks to Dmitry Ergy <dergy@websci.ru> for reporting this.
 
-	* ace/config-irix6.x-common.h: Added
-	  ACE_LACKS_PLACEMENT_OPERATOR_DELETE to keep Irix compilers from
-	  complaining!  Thanks to David for reporting this.
+        * ace/config-irix6.x-common.h: Added
+          ACE_LACKS_PLACEMENT_OPERATOR_DELETE to keep Irix compilers from
+          complaining!  Thanks to David for reporting this.
 
 Mon Nov 15 20:44:04 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.cpp (inherit_log_msg): Added a comment explaining why
-	  we don't inherit the callback when a new thread is created -
- 	  since all hell would break loose otherwise if it came off the
- 	  stack!  Thanks to Sangwoo Jin <swjinjin@sei.co.kr> for
- 	  motivating this clarification.
+        * ace/OS.cpp (inherit_log_msg): Added a comment explaining why
+          we don't inherit the callback when a new thread is created -
+          since all hell would break loose otherwise if it came off the
+          stack!  Thanks to Sangwoo Jin <swjinjin@sei.co.kr> for
+          motivating this clarification.
 
 Mon Nov 15 19:54:36 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace-config.in:
+        * ace-config.in:
 
-	  Added missing "-lACE" to the library list.  Thanks to Benedikt
-	  Eric Heinen <beh@icemark.ch> for pointing this out.
+          Added missing "-lACE" to the library list.  Thanks to Benedikt
+          Eric Heinen <beh@icemark.ch> for pointing this out.
 
 Mon Nov 15 13:28:03 1999  Luther J Baker  <ljb1@cs.wustl.edu>
 
-	* ace/Log_Msg.cpp (priority_mask_):
-	  Added delete_ostream_(0) to ctor.
+        * ace/Log_Msg.cpp (priority_mask_):
+          Added delete_ostream_(0) to ctor.
 
 Mon Nov 15 09:33:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Synch.h (ACE_Mutex): changed protected: to public: in
-	  ACE_Mutex so that certain compilers would be happy.  Thanks to
- 	  Ivan Murphy for reporting this.
+        * ace/Synch.h (ACE_Mutex): changed protected: to public: in
+          ACE_Mutex so that certain compilers would be happy.  Thanks to
+          Ivan Murphy for reporting this.
 
-	* ace/Configuration.h (ACE_Configuration_Section_Key): The
- 	  reserved word "operator" has a typo and is typed as "Operator".
-  	  Thanks to Andy Gokhale for reporting this.
+        * ace/Configuration.h (ACE_Configuration_Section_Key): The
+          reserved word "operator" has a typo and is typed as "Operator".
+          Thanks to Andy Gokhale for reporting this.
 
 Sun Nov 14 20:20:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Configuration.h: Improved the ACE-ification of this file.
+        * ace/Configuration.h: Improved the ACE-ification of this file.
 
 Sun Nov 14 18:13:37 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ACE-configuration.txt:
+        * ACE-configuration.txt:
 
-	  Updated with information about bootstrapping autoconf support in
-	  ACE since it is currently not enabled by default in ACE.
+          Updated with information about bootstrapping autoconf support in
+          ACE since it is currently not enabled by default in ACE.
 
-	* configure.in:
+        * configure.in:
 
-	  User must now specify the "--enable-maintainer-mode" configure
-	  script option in order to be able to use the configure script.
-	  If an attempt is made to run the configure script with this
-	  option, the configure script will immediately exit with a
-	  summary that states that ACE stock build procedure should be
-	  used until autoconf support is fully integrated into ACE.
+          User must now specify the "--enable-maintainer-mode" configure
+          script option in order to be able to use the configure script.
+          If an attempt is made to run the configure script with this
+          option, the configure script will immediately exit with a
+          summary that states that ACE stock build procedure should be
+          used until autoconf support is fully integrated into ACE.
 
-	  Once autoconf support is fully integrated into ACE, this
-	  requirement will be removed.
+          Once autoconf support is fully integrated into ACE, this
+          requirement will be removed.
 
 Sun Nov 14 15:22:29 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -128,9 +140,9 @@ Sun Nov 14 15:22:29 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Sat Nov 13 19:55:17 1999  Luther J Baker  <ljb1@cs.wustl.edu>
 
-	* ace/SString.cpp (next):
-	  Removed a buggy line for Tokenizer.
-	  Thanks to Sangwoo Jin <swjinjin@sei.co.kr> for reporting this.
+        * ace/SString.cpp (next):
+          Removed a buggy line for Tokenizer.
+          Thanks to Sangwoo Jin <swjinjin@sei.co.kr> for reporting this.
 
 Sat Nov 13 18:38:21 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -139,8 +151,8 @@ Sat Nov 13 18:38:21 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Sat Nov 13 11:29:20 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/run_tests.lst: Re-enabled the Process_Manager_Test
-	  to see if it Dave Madden's fixes worked.
+        * tests/run_tests.lst: Re-enabled the Process_Manager_Test
+          to see if it Dave Madden's fixes worked.
 
 Fri Nov 12 21:26:58 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -158,28 +170,28 @@ Fri Nov 12 21:26:58 1999  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Nov 12 00:30:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Connector.cpp (connect_i): Since we should change <sh> only
-	  in the confines on the connector lock, it is not proper to use
-	  the <new_sh> copy of <sh> and assign it to <sh> when the connect
-	  succeeds.  The removal of <new_sh> should not change the
-	  algorithm (famous last words ;) since <sh> not really be
-	  considered in the case of failures.
+        * ace/Connector.cpp (connect_i): Since we should change <sh> only
+          in the confines on the connector lock, it is not proper to use
+          the <new_sh> copy of <sh> and assign it to <sh> when the connect
+          succeeds.  The removal of <new_sh> should not change the
+          algorithm (famous last words ;) since <sh> not really be
+          considered in the case of failures.
 
-	* ace/Strategies_T.cpp (ACE_Cached_Connect_Strategy):
-	* ace/Cached_Connect_Strategy_T.cpp:
+        * ace/Strategies_T.cpp (ACE_Cached_Connect_Strategy):
+        * ace/Cached_Connect_Strategy_T.cpp:
 
-	  If the new connection fails, close out the svc_handler and set
-	  it to zero.
+          If the new connection fails, close out the svc_handler and set
+          it to zero.
 
-	  Also in cleanup_hint_i(), reset the <*act_holder> in the
-	  confines and protection of the lock.
+          Also in cleanup_hint_i(), reset the <*act_holder> in the
+          confines and protection of the lock.
 
-	* ace/Svc_Handler.cpp (cleanup_hint): Expanded the interface to
-	  allow the resetting of the <act_holder> in an atomic manner wrt
-	  the lock of the connector.
+        * ace/Svc_Handler.cpp (cleanup_hint): Expanded the interface to
+          allow the resetting of the <act_holder> in an atomic manner wrt
+          the lock of the connector.
 
-	  The above changes should fix BUG 310. Thanks to Eric Mitchell
-	  <emitchell@altaira.com> for reporting it.
+          The above changes should fix BUG 310. Thanks to Eric Mitchell
+          <emitchell@altaira.com> for reporting it.
 
 Fri Nov 12 12:13:29 1999  Steve Huston  <shuston@riverace.com>
 
@@ -190,14 +202,14 @@ Fri Nov 12 12:13:29 1999  Steve Huston  <shuston@riverace.com>
 
 Fri Nov 12 11:50:19 1999  Nanbor Wang  <nanbor@ace.cs.wustl.edu>
 
-	* ACE-INSTALL.html: Added ACE lib/dll naming rules.
+        * ACE-INSTALL.html: Added ACE lib/dll naming rules.
 
 Fri Nov 12 10:02:10 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/config-win32-common.h,
-  	* ace/config-win32.h: Fixed inconsistent use of <> and
-	  "" for ACE-specific #includes.  Thanks to Dave Delano
- 	  <delanod@agcs.com> for reporting this.
+        * ace/config-win32-common.h,
+        * ace/config-win32.h: Fixed inconsistent use of <> and
+          "" for ACE-specific #includes.  Thanks to Dave Delano
+          <delanod@agcs.com> for reporting this.
 
 Fri Nov 12 08:25:25 1999  David L. Levine  <levine@cs.wustl.edu>
 
