@@ -563,6 +563,7 @@ ACE::strrepl (char *s, char search, char replace)
   return replaced;
 }
 
+#if !defined (ACE_HAS_WINCE)
 char *
 ACE::strenvdup (const char *str)
 {
@@ -570,6 +571,7 @@ ACE::strenvdup (const char *str)
 
   return ACE_OS::strenvdup (str);
 }
+#endif /* ACE_HAS_WINCE */
 
 /*
 

@@ -3495,7 +3495,7 @@ ACE_OS::argv_to_string (ASYS_TCHAR **argv,
     return 0;
 
   int buf_len = 0;
-  
+
   // Determine the length of the buffer.
 
   for (int i = 0; argv[i] != 0; i++)
@@ -3506,7 +3506,7 @@ ACE_OS::argv_to_string (ASYS_TCHAR **argv,
       if (substitute_env_args
 	  && (argv[i][0] == '$'
               && (temp = ACE_OS::getenv (&argv[i][1])) != 0))
-	buf_len += ACE_OS::strlen (temp);	
+	buf_len += ACE_OS::strlen (temp);
       else
 	buf_len += ACE_OS::strlen (argv[i]);
 
@@ -3517,7 +3517,7 @@ ACE_OS::argv_to_string (ASYS_TCHAR **argv,
   // Step through all argv params and copy each one into buf; separate
   // each param with white space.
 
-  ACE_NEW_RETURN (buf, 
+  ACE_NEW_RETURN (buf,
                   ASYS_TCHAR[buf_len + 1],
                   0);
 
@@ -3557,7 +3557,7 @@ ACE_OS::string_to_argv (ASYS_TCHAR *buf,
 {
   // Reset the number of arguments
   argc = 0;
-  
+
   if (buf == 0)
     return -1;
 
@@ -3571,16 +3571,16 @@ ACE_OS::string_to_argv (ASYS_TCHAR *buf,
       // Skip whitespace..
       while (ACE_OS::ace_isspace (*cp))
         cp++;
-     
+
       // Increment count and move to next whitespace..
       if (*cp != '\0')
         argc++;
-     
+
       // Grok quotes....
       if (*cp == '\'' || *cp == '"')
         {
           ASYS_TCHAR quote = *cp;
-	 
+
           // Scan past the string..
           for (cp++; *cp != '\0' && *cp != quote; cp++)
             continue;
@@ -3588,24 +3588,24 @@ ACE_OS::string_to_argv (ASYS_TCHAR *buf,
           // '\0' implies unmatched quote..
           if (*cp == '\0')
             {
-              ACE_ERROR ((LM_ERROR, 
+              ACE_ERROR ((LM_ERROR,
                           ASYS_TEXT ("unmatched %c detected\n"),
                           quote));
               argc--;
               break;
-            } 
-          else 
+            }
+          else
             cp++;
         }
       else // Skip over non-whitespace....
         while (*cp != '\0' && !ACE_OS::ace_isspace (*cp))
           cp++;
     }
- 
+
   // Second pass: copy arguments.
   ASYS_TCHAR arg[ACE_DEFAULT_ARGV_BUFSIZ];
   ASYS_TCHAR *argp = arg;
- 
+
   // Make sure that the buffer we're copying into is always large
   // enough.
   if (cp - buf >= ACE_DEFAULT_ARGV_BUFSIZ)
@@ -3617,7 +3617,7 @@ ACE_OS::string_to_argv (ASYS_TCHAR *buf,
   ACE_NEW_RETURN (argv,
                   ASYS_TCHAR *[argc + 1],
                   -1);
- 
+
   ASYS_TCHAR *ptr = buf;
 
   for (size_t i = 0; i < argc; i++)
@@ -3625,14 +3625,14 @@ ACE_OS::string_to_argv (ASYS_TCHAR *buf,
       // Skip whitespace..
       while (ACE_OS::ace_isspace (*ptr))
         ptr++;
-     
+
       // Copy next argument and move to next whitespace..
       if (*ptr == '\'' || *ptr == '"')
         {
           ASYS_TCHAR quote = *ptr++;
-	 
+
           for (cp = argp;
-               *ptr != '\0' && *ptr != quote; 
+               *ptr != '\0' && *ptr != quote;
                ptr++, cp++)
             {
               // @@ We can probably remove this since we ensure it's
@@ -3640,15 +3640,15 @@ ACE_OS::string_to_argv (ASYS_TCHAR *buf,
               ACE_ASSERT (unsigned (cp - argp) < ACE_DEFAULT_ARGV_BUFSIZ);
               *cp = *ptr;
             }
-	 
+
           *cp = '\0';
           if (*ptr == quote)
             ptr++;
         }
       else
         {
-          for (cp = arg; 
-               *ptr && !ACE_OS::ace_isspace (*ptr); 
+          for (cp = arg;
+               *ptr && !ACE_OS::ace_isspace (*ptr);
                ptr++, cp++)
             {
               // @@ We can probably remove this since we ensure it's
@@ -3659,22 +3659,25 @@ ACE_OS::string_to_argv (ASYS_TCHAR *buf,
 
           *cp = '\0';
         }
-     
+
       // Check for environment variable substitution here.
+#if !defined (ACE_HAS_WINCE)
       if (substitute_env_args)
         ACE_ALLOCATOR_RETURN (argv[i],
                               ACE_OS::strenvdup (arg),
                               -1);
       else
-        ACE_ALLOCATOR_RETURN (argv[i], 
+#endif /* ACE_HAS_WINCE */
+        ACE_ALLOCATOR_RETURN (argv[i],
                               ACE_OS::strdup (arg),
                               -1);
     }
- 
+
   if (argp != arg)
     delete [] argp;
 
   argv[argc] = 0;
+  return 0;
 }
 
 // Create a contiguous command-line argument buffer with each arg
