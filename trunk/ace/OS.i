@@ -4661,7 +4661,7 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
   *sig = ::sigwait (set);
   return *sig;
 #else /* ACE_HAS_ONEARG_SETWAIT */
-#if defined (DIGITAL_UNIX)
+#if defined (DIGITAL_UNIX) && __DECCXX_VER < 60090006
   errno = ::__sigwaitd10 (set, sig);
 #elif defined (__Lynx__)
   // Second arg is a void **, which we don't need (the selected
