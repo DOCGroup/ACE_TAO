@@ -734,7 +734,7 @@ nobase_include_HEADERS += \
   GIOP_Message_State.inl \
   GIOP_Message_Version.inl \
   GIOP_Utils.i \
-  IIOPC.i \
+  IIOPC.inl \
   IIOP_Acceptor.i \
   IIOP_Connection_Handler.i \
   IIOP_Endpoint.i \
