@@ -81,7 +81,7 @@ namespace TAO
         ACE_CATCH (CORBA::INV_POLICY, ex)
           {
             this->list_ =
-              resolver.inconsistent_policies ();
+              resolver.steal_inconsistent_policies ();
             ACE_RE_THROW;
           }
         ACE_CATCHANY
@@ -98,7 +98,7 @@ namespace TAO
   CORBA::PolicyList *
   LocateRequest_Invocation_Adapter::get_inconsistent_policies (void)
   {
-    return this->list_.out ();
+    return this->list_._retn ();
   }
 
   bool

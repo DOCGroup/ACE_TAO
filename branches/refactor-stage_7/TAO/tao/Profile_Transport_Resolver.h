@@ -118,6 +118,7 @@ namespace TAO
 
     CORBA::PolicyList *inconsistent_policies (void) const;
 
+    CORBA::PolicyList *steal_inconsistent_policies (void);
   private:
 
     /// Helper method to access get the connection timeout from the
