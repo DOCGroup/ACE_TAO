@@ -419,7 +419,7 @@ ifeq ($(ssl),0)
 endif # ssl
 
 ifneq ($(ssl),)
-  CPPFLAGS += -DACE_HAS_SSL=1 $(PLATFORM_SSL_CPPFLAGS)
+  CPPFLAGS += $(PLATFORM_SSL_CPPFLAGS)
   LIBS += $(PLATFORM_SSL_LIBS)
   LDFLAGS += $(PLATFORM_SSL_LDFLAGS)
 endif # ssl
