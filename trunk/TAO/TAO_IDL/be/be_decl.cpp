@@ -151,11 +151,12 @@ be_decl::compute_full_name  (const char *prefix,
                              char *&name)
 {
   if (prefix == 0 || suffix == 0)
-    return;
+    {
+      return;
+    }
 
   ACE_CString prefix_str (prefix);
   ACE_CString suffix_str (suffix);
-
   ACE_CString result_str;
 
   // Get parent.
@@ -175,12 +176,14 @@ be_decl::compute_full_name  (const char *prefix,
   else
     {
       // Get scope name.
-      be_decl *parent = be_scope::narrow_from_scope (this->defined_in ())->decl ();
+      be_decl *parent = 
+        be_scope::narrow_from_scope (this->defined_in ())->decl ();
+
       if (parent == 0)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%N:%l) be_decl::"
-                      "compute_flat_name - "
+                      "compute_full_name - "
                       "scope name is nil\n"));
         }
 
@@ -189,7 +192,9 @@ be_decl::compute_full_name  (const char *prefix,
 
       // _
       if (ACE_OS::strcmp (parent->full_name (), "") != 0)
-        result_str += ACE_CString ("::");
+        {
+          result_str += ACE_CString ("::");
+        }
 
       // Prefix.
       result_str += prefix_str;
