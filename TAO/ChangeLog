@@ -1,3 +1,14 @@
+Mon Dec  8 21:13:44 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/performance-tests/LoadBalancing/Roundtrip.cpp:
+
+	  Include "ace/ACE.h" to pull in ACE::is_prime() prototype.
+
+	* orbsvcs/performance-tests/LoadBalancing/server.cpp:
+
+	  Include "ace/OS_NS_strings.h" to pull in ACE_OS::strcasecmp()
+	  prototype.
+
 Mon Dec  8 19:44:04 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * rules.tao.GNU:
@@ -13,7 +24,7 @@ Mon Dec  8 19:33:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  errors properly, more precisely the retsrat errors if they show
 	  up during wait_for_reply (). Thanks to Milan Cvetkovic for
 	  motivating this change.
-	
+
 	* tao/Messaging/Asynch_Invocation.cpp:
 
 	  Cosmetic change.
