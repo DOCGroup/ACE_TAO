@@ -1,0 +1,7 @@
+$Id$
+
+To compile Component_Base.idl, you must first build
+
+TAO/tao
+orbsvcs/security
+tao_ifr
