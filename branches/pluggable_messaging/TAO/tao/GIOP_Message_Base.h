@@ -22,6 +22,7 @@
 
 #include "tao/Pluggable_Messaging.h"
 #include "tao/GIOP_Utils.h"
+#include "tao/debug.h"
 
 
 class TAO_Export TAO_GIOP_Message_Base :
