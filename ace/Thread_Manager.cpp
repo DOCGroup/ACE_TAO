@@ -155,13 +155,14 @@ ACE_Thread_Manager::thr_self (ACE_hthread_t &self)
 
 // Initialize the synchronization variables.
 
-ACE_Thread_Manager::ACE_Thread_Manager (void)
+ACE_Thread_Manager::ACE_Thread_Manager (size_t size)
   : grp_id_ (1)
 #if defined (ACE_HAS_THREADS)
     , zero_cond_ (lock_)
 #endif /* ACE_HAS_THREADS */
 {
   ACE_TRACE ("ACE_Thread_Manager::ACE_Thread_Manager");
+  ACE_UNUSED_ARG (size);
 }
 
 ACE_Thread_Manager *
@@ -214,6 +215,14 @@ ACE_Thread_Manager::close_singleton (void)
       ACE_Thread_Manager::thr_mgr_ = 0;
       ACE_Thread_Manager::delete_thr_mgr_ = 0;
     }
+}
+
+int
+ACE_Thread_Managr::open (size_t size)
+{
+  ACE_TRACE ("ACE_Thread_Manager::open");
+  // Currently a no-op.
+  ACE_UNUSED_ARG (size);
 }
 
 // Close up and release all resources.
