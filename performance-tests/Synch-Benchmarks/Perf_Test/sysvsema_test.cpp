@@ -12,13 +12,34 @@ ACE_RCSID(Synch_Benchmarks, sysvsema_test, "$Id$")
 class ACE_Svc_Export SYSVSema_Test : public Benchmark_Performance
 {
 public:
+  virtual int init (int, char *[]);
+  virtual int fini (void);
   virtual int svc (void);
 
 private:
-  static ACE_SV_Semaphore_Simple sema;
+  static ACE_SV_Semaphore_Simple *sema;
 };
 
-ACE_SV_Semaphore_Simple SYSVSema_Test::sema ((key_t) 1234);
+
+ACE_SV_Semaphore_Simple *SYSVSema_Test::sema = 0;
+
+int
+SYSVSema_Test::init (int, char *[])
+{
+#if defined (ACE_HAS_SYSV_IPC)
+  ACE_NEW_RETURN (SYSVSema_Test::sema, ACE_SV_Semaphore_Simple ((key_t) 1234), -1);
+  return 0;
+#else
+  ACE_ERROR_RETURN ((LM_ERROR, "SysV Semaphore not supported on this platform.\n"), -1);
+#endif /* ACE_HAS_SYSV_IPC */
+}
+
+int
+SYSVSema_Test::fini (void)
+{
+  delete SYSVSema_Test::sema;
+  return 0;
+}
 
 int
 SYSVSema_Test::svc (void)
@@ -28,13 +49,13 @@ SYSVSema_Test::svc (void)
 
   while (!this->done ())
     {
-      sema.acquire ();
+      SYSVSema_Test::sema->acquire ();
       performance_test_options.thr_work_count[ni]++;
       buffer++;
-      sema.release ();
+      SYSVSema_Test::sema->release ();
     }
 
-  sema.remove ();
+  SYSVSema_Test::sema->remove ();
   /* NOTREACHED */
   return 0;
 }
