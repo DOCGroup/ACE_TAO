@@ -1,3 +1,18 @@
+Wed Nov 10 09:46:46 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_union.cpp:
+        * TAO_IDLbe/be_union_branch.cpp:
+        * TAO_IDLbe/be_visitor_union/union_cs.cpp:
+        
+          Changed code generation for a union default constructor to
+          set the discriminator to a legal defaul value if there is
+          one, and to the value of the first case label otherwise
+          (previously the behavior in all cases). This new behavior
+          is not required by the spec, but is more in line with the
+          behavior of IDL compilers from other ORB vendors. Thanks
+          to Rohan Mars <rohan_mars@yahoo.com> for sending in the
+          example IDL file.
+
 Tue Nov  9 15:35:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/GIOP_Utils.h:
