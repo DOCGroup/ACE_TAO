@@ -1418,7 +1418,7 @@ TAO_DynStruct_i::get_longlong (CORBA::Environment &ACE_TRY_ENV)
   if (dp)
     {
       CORBA_TypeCode_var tc = dp->type (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (val);
 
       CORBA::TCKind kind = TAO_DynAny_i::unalias (tc.in (),
                                                   ACE_TRY_ENV);
