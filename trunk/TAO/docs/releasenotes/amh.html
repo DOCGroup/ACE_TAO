@@ -1,310 +1,108 @@
-<html xmlns:v="urn:schemas-microsoft-com:vml"
-xmlns:o="urn:schemas-microsoft-com:office:office"
-xmlns:w="urn:schemas-microsoft-com:office:word"
-xmlns="http://www.w3.org/TR/REC-html40">
-
-</head>
-<body text="#000000" bgcolor="#FFFFFF">
-<!-- $Id$ -->
-<center>
-<hr></center>
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
 <head>
-<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
-<meta name=ProgId content=Word.Document>
-<meta name=Generator content="Microsoft Word 9">
-<meta name=Originator content="Microsoft Word 9">
-<link rel=File-List href="./releasenotes_files/filelist.xml">
-<link rel=Edit-Time-Data href="./releasenotes_files/editdata.mso">
-<!--[if !mso]>
-<style>
-v\:* {behavior:url(#default#VML);}
-o\:* {behavior:url(#default#VML);}
-w\:* {behavior:url(#default#VML);}
-.shape {behavior:url(#default#VML);}
-</style>
-<![endif]-->
-<title>Asynchronous Method Handling (AMH)</title>
-<!--[if gte mso 9]><xml>
- <o:DocumentProperties>
-  <o:Author>mayur</o:Author>
-  <o:LastAuthor>mayur</o:LastAuthor>
-  <o:Revision>12</o:Revision>
-  <o:TotalTime>242</o:TotalTime>
-  <o:Created>2002-02-07T19:45:00Z</o:Created>
-  <o:LastSaved>2002-02-09T08:18:00Z</o:LastSaved>
-  <o:Pages>2</o:Pages>
-  <o:Words>554</o:Words>
-  <o:Characters>3162</o:Characters>
-  <o:Company>UCI</o:Company>
-  <o:Lines>26</o:Lines>
-  <o:Paragraphs>6</o:Paragraphs>
-  <o:CharactersWithSpaces>3883</o:CharactersWithSpaces>
-  <o:Version>9.2720</o:Version>
- </o:DocumentProperties>
-</xml><![endif]-->
-<style>
-<!--
- /* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{mso-style-parent:"";
-	margin:0cm;
-	margin-bottom:.0001pt;
-	mso-pagination:widow-orphan;
-	font-size:12.0pt;
-	font-family:"Times New Roman";
-	mso-fareast-font-family:"Times New Roman";
-	color:windowtext;}
-h2
-	{margin-right:0cm;
-	mso-margin-top-alt:auto;
-	mso-margin-bottom-alt:auto;
-	margin-left:0cm;
-	mso-pagination:widow-orphan;
-	mso-outline-level:2;
-	font-size:18.0pt;
-	font-family:"Times New Roman";
-	color:black;
-	font-weight:bold;}
-h3
-	{margin-right:0cm;
-	mso-margin-top-alt:auto;
-	mso-margin-bottom-alt:auto;
-	margin-left:0cm;
-	mso-pagination:widow-orphan;
-	mso-outline-level:3;
-	font-size:13.5pt;
-	font-family:"Times New Roman";
-	color:black;
-	font-weight:bold;}
-a:link, span.MsoHyperlink
-	{color:#000FFF;
-	text-decoration:underline;
-	text-underline:single;}
-a:visited, span.MsoHyperlinkFollowed
-	{color:purple;
-	text-decoration:underline;
-	text-underline:single;}
-p
-	{margin-right:0cm;
-	mso-margin-top-alt:auto;
-	mso-margin-bottom-alt:auto;
-	margin-left:0cm;
-	mso-pagination:widow-orphan;
-	font-size:12.0pt;
-	font-family:"Times New Roman";
-	mso-fareast-font-family:"Times New Roman";
-	color:black;}
-@page Section1
-	{size:595.3pt 841.9pt;
-	margin:72.0pt 90.0pt 72.0pt 90.0pt;
-	mso-header-margin:35.4pt;
-	mso-footer-margin:35.4pt;
-	mso-paper-source:0;}
-div.Section1
-	{page:Section1;}
- /* List Definitions */
-@list l0
-	{mso-list-id:1427769035;
-	mso-list-type:hybrid;
-	mso-list-template-ids:-1647270668 -1486992222 1873043600 97932028 541882064 -1940195192 -77277390 786178588 -472202856 -1869740456;}
-@list l0:level1
-	{mso-level-number-format:bullet;
-	mso-level-text:\F0B7;
-	mso-level-tab-stop:36.0pt;
-	mso-level-number-position:left;
-	text-indent:-18.0pt;
-	mso-ansi-font-size:10.0pt;
-	font-family:Symbol;}
-@list l1
-	{mso-list-id:1483541511;
-	mso-list-type:hybrid;
-	mso-list-template-ids:-229211262 -16069250 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
-@list l1:level1
-	{mso-level-start-at:0;
-	mso-level-number-format:bullet;
-	mso-level-text:-;
-	mso-level-tab-stop:36.0pt;
-	mso-level-number-position:left;
-	text-indent:-18.0pt;
-	font-family:"Times New Roman";
-	mso-fareast-font-family:"Times New Roman";}
-ol
-	{margin-bottom:0cm;}
-ul
-	{margin-bottom:0cm;}
--->
-</style>
-<!--[if gte mso 9]><xml>
- <o:shapedefaults v:ext="edit" spidmax="1027"/>
-</xml><![endif]--><!--[if gte mso 9]><xml>
- <o:shapelayout v:ext="edit">
-  <o:idmap v:ext="edit" data="1"/>
- </o:shapelayout></xml><![endif]-->
+   <title>AMH Status</title>
+    <!-- $Id$ -->
 </head>
+<body bgcolor="#FFFFFF" text="#000000">
 
-<body lang=EN-GB link="#000fff" vlink=purple style='tab-interval:36.0pt'>
+<h3>TAO's Asynchronous Method Handling (AMH) Feature</h3>
+    Point of contact: <a href="mailto:coryan@uci.edu">Carlos O'Ryan, </a>
+                      <a href="mailto:mayur@ics.uci.edu">Mayur Deshpande</a>
+    <h4>Last Updated: $Date$</h4>
 
-<div class=Section1>
+    <p> The purpose of this document is to provide a guide to using the AMH 
+capability available in TAO.  This capability is not specified by any 
+CORBA specification (as of date). This document lists the motivation for AMH, 
+how to use it and its current implementation status. </p>
 
-<h3><a name="_Context"></a>Asynchronous Method Handling (AMH)</h3>
-
-<p class=MsoNormal>Point of contact: <a href="mailto:coryan@uci.edu">Carlos
-O’Ryan</a>, <a href="mailto:mayur@ics.uci.edu">Mayur Deshpande</a></p>
-
-<p>
-
-<p class=MsoNormal>The purpose of this document is to provide a guide to using
-the AMH capability available in TAO.<span style="mso-spacerun: yes"> 
-</span>This capability is not specified by any CORBA specification (as of
-date). This document lists the motivation for AMH, how to use it and its
-current implementation status. </p>
-
-<p>
+<HR SIZE=4 WIDTH="100%">
 
 
-<div class=MsoNormal align=center style='text-align:center'>
+<h3>Context</h3>
+For many types of distributed systems, the CORBA asynchronous method
+invocation 
+<a href="index.html/#ami"> (AMI) </a> 
+mechanism can improve concurrency, scalability, and 
+responsiveness significantly. AMI allows clients to invoke multiple 
+two-way requests without waiting for responses. The time normally
+spent waiting for replies can therefore be used to perform other
+useful work. The TAO asynchronous method handling (AMH) is a 
+mechanism, which extends the concepts of AMI from clients to 
+servers. Servers with AMH capability can return immediately 
+from (potentially) long, blocking requests. This makes the 
+servers capable of higher throughput. For a detailed description 
+for the motivation and potential use-cases of AMH, please refer to 
+<a href="http://www.cs.wustl.edu/~schmidt/PDF/AMH.pdf">AMH-Motivation. </a>
 
-<hr size=3 width="100%" align=center>
-
-</div>
+<HR SIZE=4 WIDTH="100%">
 
 
-<h3>Table of Contents</h3>
+<h3>Using AMH</h3>
+Servers that want to take advantage of AMH capability must use 
+AMH-servants derived from AMH-skeletons. Invoking the 
+<a href="index.html#idl">IDL-Compiler </a>
+with the "-GH" option causes the IDL-Compiler to generate
+AMH-skeletons for all interfaces in the ".idl" file.  The signatures 
+of the AMH-methods differ from the original interfaces as per the 
+rules described in 
+<a href="http://www.cs.wustl.edu/~schmidt/PDF/AMH2.pdf"">AMH-In-Detail. </a>
+Servants derived from the AMH-skeletons are registered with the POA in the usual manner 
+and appear to clients as "normal" servants for the corresponding 
+interfaces; Thus even while being transparent to the client, these 
+servants are now capable of handling requests asynchronously.  
+AMH-servants can be registered in any POA and can intermix with 
+"normal" servants in the same POA. The granularity of AMH is at 
+the interface level and not at the method level; Thus for an interface
+compiled with the "-GH" option, all operations in that interface are 
+asynchronous. Currently, AMH doesn't work in conjunction with
+<a href="index.html#interceptor">Interceptors </a> 
+and behaviour is undefined if both are used together.
 
-<ul type=disc>
- <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-     mso-list:l0 level1 lfo3;tab-stops:list 36.0pt'><a href="#_Context_1">Context</a></li>
- <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-     mso-list:l0 level1 lfo3;tab-stops:list 36.0pt'><a href="#_Using_AMH">Using
-     AMH</a></li>
- <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-     mso-list:l0 level1 lfo3;tab-stops:list 36.0pt'><a href="#_Current_Status">Current
-     Status</a> </li>
- <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-     mso-list:l0 level1 lfo3;tab-stops:list 36.0pt'><a href="#_Credits">Credits</a></li>
+<HR SIZE=4 WIDTH="100%">
+
+
+<h3>Current Status</h3>
+<b>(As of March 3rd, 2002)</b>
+<br>
+<P>
+<b>Completed:</b>
+<ul>
+<li>Changes to ORB for asynchronous upcalls.</li>
+<li>Generation of AMH-skeletons.</li>
+<li>Generation of AMH ResponseHandlers.</li>
 </ul>
+</P>
+
+<P>
+<b>To be done:</b>
+<ul>
+<li>Exception handling in AMH.</li>
+<li>Fix the narrow method bug for AMH skeletons.
+<li>Sending intelligent exception codes back to client in case 
+something nasty happens in the AMH server.</li>
+</ul>
+</P>
+
+<HR SIZE=4 WIDTH="100%">
 
 
-<div class=MsoNormal align=center style='text-align:center'>
+<h3>Credits</h3>
+Original idea first proposed by 
+<a href="mailto:coryan@uci.edu">Carlos O'Ryan </a> 
+and changes to ORB for AMH first attempted by 
+<a href="mailto:brucetrask@aol.com">Bruce Trask. </a>  
+First go to get the IDL-Compiler to generate AMH code attempted by 
+<a href="mailto:brunsch@doc.ece.uci.edu"> Darrell Brunsch. </a>  
+ORB changes for AMH as they stand today put in by 
+<a href="mailto:mayur@ics.uci.edu">Mayur Deshpande. </a>  
+Second go at getting IDL-compiler to generate code attempted by Mayur and 
+<a href="mailto:parsons@cs.wustl.edu">Jeff Parsons. </a>  
+Getting the IDL-Compiler beast to generate the right AMH code finally 
+achieved by Carlos.
 
-<hr size=3 width="100%" align=center>
+<HR SIZE=4 WIDTH="100%">
 
-</div>
-
-
-<h3><a name="_Context_1"></a>Context</h3>
-
-<p class=MsoNormal style='text-align:justify;tab-stops:18.0pt 350.65pt'><span
-style='mso-bidi-font-size:11.5pt'>For many types of distributed systems, the
-CORBA asynchronous method invocation <a
-href="<A http=./index.html#ami">(AMI)</a>
-mechanism can improve concurrency, scalability, and responsiveness
-significantly. AMI allows clients to invoke multiple two-way requests without
-waiting for responses. The time normally spent waiting for replies can
-therefore be used to perform other useful work. The TAO asynchronous method
-handling (AMH) is a mechanism, which extends the concepts of AMI from clients
-to servers. Servers with AMH capability can return immediately from
-(potentially) long, blocking requests. This makes the servers capable of higher
-throughput. For a detailed description for the motivation and potential
-use-cases of AMH, please refer to <a
-href="http://www.ics.uci.edu/~mayur/papers/AMH.pdf">AMH-In-Detail</a>.<o:p></o:p></span></p>
-
-<p>
-
-
-<div class=MsoNormal align=center style='text-align:center'>
-
-<hr size=3 width="100%" align=center>
-
-</div>
-
-
-<h3><a name="_Using_AMH"></a>Using AMH</h3>
-
-<p class=MsoNormal>Servers that want to take advantage of AMH capability must
-use AMH-servants derived from AMH-skeletons. Invoking the <a
-href="index.html#idl">IDL
-compiler</a> with the ‘-GH’ option causes the IDL-compiler to generate
-AMH-skeletons for all interfaces in the ‘.idl’ file.<span style="mso-spacerun:
-yes">  </span>The signatures of the AMH-methods differ from the original
-interfaces as per the rules described in <span style='mso-bidi-font-size:11.5pt'><a
-href="http://www.ics.uci.edu/~mayur/papers/AMH.pdf">AMH-In-Detail</a></span>.<span
-style="mso-spacerun: yes">  </span>Servants derived from the AMH-skeletons are
-registered with the POA in the usual manner and appear to clients as ‘normal’
-servants for the corresponding interfaces; Thus even while being transparent to
-the client, these servants are now capable of handling requests
-asynchronously.<span style="mso-spacerun: yes">  </span>AMH-servants can be
-registered in any POA and can intermix with ‘normal’ servants in the same POA.
-The granularity of AMH is at the interface level and not at the method level;
-Thus for an interface compiled with the –GH option, all operations in that
-interface are asynchronous. Currently, AMH doesn’t work in conjunction with <a
-href="index.html#interceptor">Interceptors</a>
-and behaviour is undefined if both are used together. </p>
-
-
-<div class=MsoNormal align=center style='text-align:center'>
-
-<hr size=3 width="100%" align=center>
-
-</div>
-
-
-<h3><a name="_Current_Status_(As"></a><a name="_Current_Status"></a>Current
-Status </h3>
-
-<p class=MsoNormal><b><i>(As of February 7<sup>th</sup>, 2002)<o:p></o:p></i></b></p>
-
-<p class=MsoNormal><b><i><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></i></b></p>
-
-<p class=MsoNormal><b><u>Completed:<o:p></o:p></u></b></p>
-
-<p class=MsoNormal>Changes to ORB for asynchronous upcalls.</p>
-
-<p class=MsoNormal>Generation of AMH-skeletons</p>
-
-<p class=MsoNormal>Generation of AMH ResponseHandlers </p>
-
-<p class=MsoNormal>Tests for AMH</p>
-
-<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
-
-<p class=MsoNormal><b><u>To be done:<o:p></o:p></u></b></p>
-
-<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo5;
-tab-stops:list 36.0pt'><![if !supportLists]>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span><![endif]>Exception handling in AMH</p>
-
-<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo5;
-tab-stops:list 36.0pt'><![if !supportLists]>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span><![endif]>Sending intelligent exception codes back to client in case
-something nasty happens in the AMH server.</p>
-
-<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
-
-
-<div class=MsoNormal align=center style='text-align:center'>
-
-<hr size=3 width="100%" align=center>
-
-</div>
-
-
-<h3><a name="_Credits"></a>Credits</h3>
-
-<p class=MsoNormal>Original idea first proposed by <a
-href="mailto:coryan@uci.edu">Carlos O’Ryan</a> and changes to ORB for AMH first
-attempted by <a href="mailto:brucetrask@aol.com">Bruce Trask</a>.<span
-style="mso-spacerun: yes">  </span>First go to get the IDL-compiler to generate
-AMH code attempted by <a href="mailto:brunsch@doc.ece.uci.edu">Darrell Brunsch</a>.
-ORB changes for AMH as they stand today put in by <a
-href="mailto:mayur@ics.uci.edu">Mayur Deshpande</a>. Second go at getting
-IDL-compiler to generate code attempted by Mayur and <a
-href="mailto:parsons@cs.wustl.edu">Jeff Parsons</a>. Getting the IDL-compiler beast
-to generate the right AMH code finally achieved by Carlos. </p>
-
-</div>
 
 </body>
-
 </html>
