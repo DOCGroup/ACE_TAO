@@ -27,6 +27,13 @@ Service::Service (void)
   reactor (ACE_Reactor::instance ());
 }
 
+Service::~Service (void) 
+{ 
+  if (ACE_Reactor::instance ()->cancel_timer(this) == -1) 
+    ACE_ERROR ((LM_ERROR,
+                "Service::~Service failed to cancel_timer.\n")); 
+}
+
 // This method is called when the service gets a control request.  It
 // handles requests for stop and shutdown by calling terminate ().
 // All others get handled by calling up to inherited::handle_control.

@@ -46,6 +46,7 @@ Tao Lu <tao dot lu at vanderbilt dot edu>
 Mike Moran <mm4 at cs dot wustl dot edu>
 Sumedh Mungee <sumedh at cs dot wustl dot edu>
 Balachandran Natarajan <bala at dre dot vanderbilt dot edu>
+Will Otte <wotte at dre dot vanderbilt dot edu>
 Kirthika Parameswaran <kirthika at cs dot wustl dot edu>
 Krishnakumar Pathayapura <krish at cs dot wustl dot edu>
 Carlos O'Ryan <coryan at uci dot edu>
@@ -1911,7 +1912,6 @@ Heiko Nardmann <heiko dot nardmann at secunet dot com>
 J. Abelardo Gutierrez <jabelardo at cantv dot net>
 Roger Sala <Roger dot Sala at gd-ais dot com>
 Raz Ben-Yehuda <raz dot b at corigin dot com>
-Will Otte <wotte at dre dot vanderbilt dot edu>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

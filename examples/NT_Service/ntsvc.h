@@ -31,6 +31,8 @@ class Service : public ACE_NT_Service
 public:
   Service (void);
 
+  ~Service (void);
+
   virtual void handle_control (DWORD control_code);
   // We override <handle_control> because it handles stop requests
   // privately.
