@@ -101,7 +101,7 @@ TAO_DIOP_Connector::close (void)
 int
 TAO_DIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
                              TAO_Transport *&transport,
-                             ACE_Time_Value */*max_wait_time*/,
+                             ACE_Time_Value * /*max_wait_time*/,
                              CORBA::Environment &)
 {
   TAO_Endpoint *endpoint = desc->endpoint ();

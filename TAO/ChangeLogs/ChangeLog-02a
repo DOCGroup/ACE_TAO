@@ -1,3 +1,13 @@
+Mon Mar  5 12:55:06 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
+
+	* examples/PluggableUDP/DIOP/TAO_DIOP_Static.dsp:
+	  Removed bogus files from project file list.
+	
+	* examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
+	* examples/PluggableUDP/DIOP/DIOP_Transport.cpp:
+	  Fixed some comments that were causing warnings with the Windows 
+	  builds.
+		
 Mon Mar  5 12:24:05 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/IDL_Test/main.cpp:

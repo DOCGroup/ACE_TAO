@@ -7,19 +7,19 @@
 CFG=TAO_DIOP_Static - Win32 Static Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "TAO_DIOP_Static.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "TAO_DIOP_Static.mak" CFG="TAO_DIOP_Static - Win32 Static Debug"
-!MESSAGE
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
+!MESSAGE 
 !MESSAGE "TAO_DIOP_Static - Win32 Static Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "TAO_DIOP_Static - Win32 Static Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE
+!MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -40,6 +40,8 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release\DIOP"
 # PROP Target_Dir ""
+LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "../../../tao/" /I "../../../" /I "../../../../" /D "NDEBUG" /D "WIN32" /D "_MBCS" /D "TAO_AS_STATIC_LIBS" /D "ACE_AS_STATIC_LIBS" /D "TAO_STRATEGIES_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
@@ -64,6 +66,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug\DIOP"
 # PROP Target_Dir ""
+LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /GX /Zi /Od /I "../../../tao/" /I "../../../" /I "../../../../" /D "_WINDOWS" /D "_CONSOLE" /D "_DEBUG" /D "WIN32" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -76,7 +80,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo /out:"TAO_DIOPsd.lib"
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
@@ -85,10 +89,6 @@ LIB32=link.exe -lib
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
-# Begin Source File
-
-SOURCE=.\advanced_resource.cpp
-# End Source File
 # Begin Source File
 
 SOURCE=.\DIOP_Acceptor.cpp
@@ -117,15 +117,10 @@ SOURCE=.\DIOP_Profile.cpp
 
 SOURCE=.\DIOP_Transport.cpp
 # End Source File
-
 # End Group
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
-# Begin Source File
-
-SOURCE=.\advanced_resource.h
-# End Source File
 # Begin Source File
 
 SOURCE=.\DIOP_Acceptor.h
@@ -158,10 +153,6 @@ SOURCE=.\DIOP_Transport.h
 # Begin Group "Inline Files"
 
 # PROP Default_Filter ".i"
-# Begin Source File
-
-SOURCE=.\advanced_resource.i
-# End Source File
 # Begin Source File
 
 SOURCE=.\DIOP_Acceptor.i

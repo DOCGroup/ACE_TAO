@@ -91,7 +91,7 @@ TAO_DIOP_Transport::idle (void)
 
 ssize_t
 TAO_DIOP_Transport::send (const ACE_Message_Block *message_block,
-                          const ACE_Time_Value */*max_wait_time*/,
+                          const ACE_Time_Value * /*max_wait_time*/,
                           size_t *bt)
 {
   const ACE_INET_Addr &addr = this->connection_handler_->addr ();
@@ -182,7 +182,7 @@ TAO_DIOP_Transport::send (const ACE_Message_Block *message_block,
 ssize_t
 TAO_DIOP_Transport::recv (char *buf,
                           size_t len,
-                          const ACE_Time_Value */*max_wait_time*/)
+                          const ACE_Time_Value * /*max_wait_time*/)
 {
   ACE_INET_Addr from_addr;
 
