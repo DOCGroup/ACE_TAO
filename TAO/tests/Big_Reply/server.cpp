@@ -41,6 +41,8 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
+  ACE_DEBUG ((LM_DEBUG, "Starting server\n"));
+
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
@@ -113,6 +115,8 @@ main (int argc, char *argv[])
       return 1;
     }
   ACE_ENDTRY;
+
+  ACE_DEBUG ((LM_DEBUG, "Ending server\n"));
 
   return 0;
 }
