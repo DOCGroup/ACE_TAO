@@ -1,43 +1,27 @@
-#ifndef guard_TAO_sequence_traits_hpp
-#define guard_TAO_sequence_traits_hpp
+#ifndef guard_allocation_traits_hpp
+#define guard_allocation_traits_hpp
 /**
  * @file
  *
- * @brief Please see the documentation for generic_sequence.cpp for
- * details.
+ * @brief Details can be found in the documentation for
+ * TAO::details::generic_sequence 
  *
  * $Id$
  *
  * @author Carlos O'Ryan
  */
 
-#include "tao/corbafwd.h"
+#include "tao/Basic_Types.h"
 
 namespace TAO
 {
 namespace details
 {
 
-template<class T>
-struct sequence_traits
+template<typename T, bool dummy>
+struct unbounded_allocation_traits
 {
   typedef T value_type;
-
-  inline static void check_index(
-      CORBA::ULong /* index */,
-      CORBA::ULong /* length */,
-      CORBA::ULong /* maximum */,
-      char const * /* function_name */)
-  {
-    // Applications and tests can specialize this function to define
-    // their own behavior
-  }
-};
-
-template<class T>
-struct unbounded_sequence_traits : public sequence_traits<T>
-{
-  typedef typename sequence_traits<T>::value_type value_type;
 
   inline static CORBA::ULong default_maximum()
   {
@@ -60,10 +44,10 @@ struct unbounded_sequence_traits : public sequence_traits<T>
   }
 };
 
-template<class T, CORBA::ULong MAX>
-struct bounded_sequence_traits : public sequence_traits<T>
+template<typename T, CORBA::ULong MAX, bool dummy>
+struct bounded_allocation_traits
 {
-  typedef typename sequence_traits<T>::value_type value_type;
+  typedef T value_type;
 
   inline static CORBA::ULong default_maximum()
   {
@@ -90,10 +74,9 @@ struct bounded_sequence_traits : public sequence_traits<T>
     return MAX;
   }
   /* static CORBA::ULong const MAXIMUM = MAX; */
-
 };
 
 } // namespace details
-} // namespace CORBA
+} // namespace TAO
 
-#endif // guard_TAO_sequence_traits_hpp
+#endif // guard_allocation_traits_hpp
