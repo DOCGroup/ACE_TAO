@@ -197,7 +197,7 @@ public:
   virtual void obtain_remote_ec (CORBA::Environment& ACE_TRY_ENV);
   // Obtain the EC from the Naming service
 
-  virtual CosNaming::NamingContext_var
+  virtual CosNaming::NamingContext_ptr
        get_naming_context (CORBA::Environment &ACE_TRY_ENV);
 #endif
 
