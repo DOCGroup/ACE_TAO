@@ -141,8 +141,8 @@ are specific to it.
 <TD>It is passed to the preprocessor</TD>
 </TR>
 
-<TR NAME="H perfect">
-<TD><TT>-H perfect</TT></TD>
+<TR NAME="H perfect_hashing">
+<TD><TT>-H perfect_hashing</TT></TD>
 
 <TD>To specify the IDL compiler to generate skelton code that uses perfect
     hashed operation lookup strategy, which is the default strategy. Perfect
@@ -150,11 +150,18 @@ are specific to it.
     </A>program, to generate lookup methods.&nbsp;</TD>
 </TR>
 
-<TR NAME="H dynamic">
-<TD><TT>-H dynamic</TT></TD>
+<TR NAME="H dynamic_hashing">
+<TD><TT>-H dynamic_hashing</TT></TD>
 
 <TD>To specify the IDL compiler to generate skelton code that uses dynamic
     hashed operation lookup strategy.&nbsp;</TD>
+</TR>
+
+<TR NAME="H binary_search">
+<TD><TT>-H binary_search</TT></TD>
+
+<TD>To specify the IDL compiler to generate skelton code that uses
+    binary search based operation lookup strategy.&nbsp;</TD> 
 </TR>
 
 <TR NAME="g">
