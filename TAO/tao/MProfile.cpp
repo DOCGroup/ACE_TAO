@@ -230,7 +230,7 @@ TAO_MProfile::init_policy_list (CORBA::Environment &ACE_TRY_ENV)
   this->is_policy_list_initialized_ = 1;
 }
 
-CORBA::PolicyList*
+CORBA::PolicyList *
 TAO_MProfile::policy_list (CORBA::Environment &ACE_TRY_ENV)
 {
   if (!this->is_policy_list_initialized_)
@@ -243,10 +243,10 @@ TAO_MProfile::policy_list (CORBA::Environment &ACE_TRY_ENV)
       if (this->policy_list_ == 0)
         {
           this->create_policy_list (ACE_TRY_ENV);
-	  ACE_CHECK;
-          
+	  ACE_CHECK_RETURN (0);
+
           this->init_policy_list (ACE_TRY_ENV);
-          ACE_CHECK;
+          ACE_CHECK_RETURN (0);
         }
     }
   CORBA::PolicyList *ret_val = 0;
@@ -255,5 +255,7 @@ TAO_MProfile::policy_list (CORBA::Environment &ACE_TRY_ENV)
                      CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
                                        CORBA::COMPLETED_NO)
                      );
+  ACE_CHECK_RETURN (0);
+
   return ret_val;
 }

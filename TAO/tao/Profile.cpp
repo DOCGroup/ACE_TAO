@@ -37,7 +37,8 @@ TAO_Profile::add_tagged_component (const IOP::TaggedComponent &component,
 }
 
 void
-TAO_Profile::policies (CORBA::PolicyList *policy_list, CORBA::Environment &ACE_TRY_ENV)
+TAO_Profile::policies (CORBA::PolicyList *policy_list,
+                       CORBA::Environment &)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
@@ -82,7 +83,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list, CORBA::Environment &ACE_T
           buf += iterator->length ();
         }
 
-      
+
     }
 
   TAO_OutputCDR out_cdr;
@@ -124,7 +125,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list, CORBA::Environment &ACE_T
 
 
 CORBA::PolicyList&
-TAO_Profile::policies (CORBA::Environment &ACE_TRY_ENV)
+TAO_Profile::policies (CORBA::Environment &)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
