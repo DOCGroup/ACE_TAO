@@ -1,3 +1,11 @@
+Mon Nov 27 17:02:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ACE-INSTALL.html:
+
+          While checking to make sure I did remove all references to
+          .mdp files, I noticed that some of the Win32 instructions
+          could use some updating.  
+
 Mon Nov 27 17:44:52 2000  David L. Levine <levine@cs.wustl.edu>
 
         * tests/run_test.pl: if run_tests.sh doesn't exist, print
@@ -109,11 +117,11 @@ Fri Nov 24 15:43:20 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Fri Nov 24 11:42:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
-        * ACE_INSTALL.html:
+        * ACE-INSTALL.html:
 
           Updated sections about Windows CE and MSVC.  CE stuff
           is documented in CE-status.txt, and removed references to old
-          MSVC 4.2 projects.  Thanks to Johhny Willemsen
+          MSVC 4.2 projects.  Thanks to Johnny Willemsen
           <johnny.willemsen@meco.nl> for pointing this out.
 
 Fri Nov 24 05:48:26 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
