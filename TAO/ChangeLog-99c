@@ -1,3 +1,9 @@
+Wed Dec 29 07:21:51 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO_IDL/fe/lex.yy.cpp,lex.yy.cpp.diff: fixed lex.yy.cpp
+          to avoid compile warnings about unreachable statements.
+          Updated lex.yy.cpp.diff.
+
 Tue Dec 28 20:54:09 1999  Thomas Lockhart  <Thomas.G.Lockhart@jpl.nasa.gov>
 
         * TAO_IDL/driver/drv_preproc.cpp,TAO_IDL/fe/idl.ll,
