@@ -679,18 +679,18 @@ namespace ACE
                                                 void *buf,
                                                 size_t len);
 
-  ssize_t recv_n_i (ACE_HANDLE handle,
-                    void *buf,
-                    size_t len,
-                    int flags,
-                    size_t *bytes_transferred);
+  extern ACE_Export ssize_t recv_n_i (ACE_HANDLE handle,
+                                      void *buf,
+                                      size_t len,
+                                      int flags,
+                                      size_t *bytes_transferred);
 
-  ssize_t recv_n_i (ACE_HANDLE handle,
-                    void *buf,
-                    size_t len,
-                    int flags,
-                    const ACE_Time_Value *timeout,
-                    size_t *bytes_transferred);
+  extern ACE_Export ssize_t recv_n_i (ACE_HANDLE handle,
+                                      void *buf,
+                                      size_t len,
+                                      int flags,
+                                      const ACE_Time_Value *timeout,
+                                      size_t *bytes_transferred);
 
 #if defined (ACE_HAS_TLI)
 
@@ -711,27 +711,27 @@ namespace ACE
 
 #endif /* ACE_HAS_TLI */
 
-  ssize_t recv_n_i (ACE_HANDLE handle,
+  extern ACE_Export ssize_t recv_n_i (ACE_HANDLE handle,
                                       void *buf,
                                       size_t len,
                                       size_t *bytes_transferred);
 
-  ssize_t recv_n_i (ACE_HANDLE handle,
+  extern ACE_Export ssize_t recv_n_i (ACE_HANDLE handle,
                                       void *buf,
                                       size_t len,
                                       const ACE_Time_Value *timeout,
                                       size_t *bytes_transferred);
 
-  ssize_t recvv_n_i (ACE_HANDLE handle,
-                     iovec *iov,
-                     int iovcnt,
-                     size_t *bytes_transferred);
+  extern ACE_Export ssize_t recvv_n_i (ACE_HANDLE handle,
+                                       iovec *iov,
+                                       int iovcnt,
+                                       size_t *bytes_transferred);
 
-  ssize_t recvv_n_i (ACE_HANDLE handle,
-                     iovec *iov,
-                     int iovcnt,
-                     const ACE_Time_Value *timeout,
-                     size_t *bytes_transferred);
+  extern ACE_Export ssize_t recvv_n_i (ACE_HANDLE handle,
+                                       iovec *iov,
+                                       int iovcnt,
+                                       const ACE_Time_Value *timeout,
+                                       size_t *bytes_transferred);
 
   //
   // = Send_n helpers
@@ -741,66 +741,57 @@ namespace ACE
                                                 const void *buf,
                                                 size_t len);
 
-  ssize_t send_n_i (ACE_HANDLE handle,
-                    const void *buf,
-                    size_t len,
-                    int flags,
-                    size_t *bytes_transferred);
+  extern ACE_Export ssize_t send_n_i (ACE_HANDLE handle,
+                                      const void *buf,
+                                      size_t len,
+                                      int flags,
+                                      size_t *bytes_transferred);
 
-  ssize_t send_n_i (ACE_HANDLE handle,
-                    const void *buf,
-                    size_t len,
-                    int flags,
-                    const ACE_Time_Value *timeout,
-                    size_t *bytes_transferred);
+  extern ACE_Export ssize_t send_n_i (ACE_HANDLE handle,
+                                      const void *buf,
+                                      size_t len,
+                                      int flags,
+                                      const ACE_Time_Value *timeout,
+                                      size_t *bytes_transferred);
 
 #if defined (ACE_HAS_TLI)
 
-  ssize_t t_snd_n_i (ACE_HANDLE handle,
-                     const void *buf,
-                     size_t len,
-                     int flags,
-                     size_t *bytes_transferred);
+  extern ACE_Export ssize_t t_snd_n_i (ACE_HANDLE handle,
+                                       const void *buf,
+                                       size_t len,
+                                       int flags,
+                                       size_t *bytes_transferred);
 
-  ssize_t t_snd_n_i (ACE_HANDLE handle,
-                     const void *buf,
-                     size_t len,
-                     int flags,
-                     const ACE_Time_Value *timeout,
-                     size_t *bytes_transferred);
+  extern ACE_Export ssize_t t_snd_n_i (ACE_HANDLE handle,
+                                       const void *buf,
+                                       size_t len,
+                                       int flags,
+                                       const ACE_Time_Value *timeout,
+                                       size_t *bytes_transferred);
 
 #endif /* ACE_HAS_TLI */
 
-  ssize_t send_n_i (ACE_HANDLE handle,
-                    const void *buf,
-                    size_t len,
-                    size_t *bytes_transferred);
+  extern ACE_Export ssize_t send_n_i (ACE_HANDLE handle,
+                                      const void *buf,
+                                      size_t len,
+                                      size_t *bytes_transferred);
 
-  ssize_t send_n_i (ACE_HANDLE handle,
-                    const void *buf,
-                    size_t len,
-                    const ACE_Time_Value *timeout,
-                    size_t *bytes_transferred);
+  extern ACE_Export ssize_t send_n_i (ACE_HANDLE handle,
+                                      const void *buf,
+                                      size_t len,
+                                      const ACE_Time_Value *timeout,
+                                      size_t *bytes_transferred);
 
-  ssize_t sendv_n_i (ACE_HANDLE handle,
-                     const iovec *iov,
-                     int iovcnt,
-                     size_t *bytes_transferred);
+  extern ACE_Export ssize_t sendv_n_i (ACE_HANDLE handle,
+                                       const iovec *iov,
+                                       int iovcnt,
+                                       size_t *bytes_transferred);
 
-  ssize_t sendv_n_i (ACE_HANDLE handle,
-                     const iovec *iov,
-                     int iovcnt,
-                     const ACE_Time_Value *timeout,
-                     size_t *bytes_transferred);
-
-  /// Size of a VM page.
-  extern size_t pagesize_;
-
-  /// Size of allocation granularity.
-  extern size_t allocation_granularity_;
-
-  /// CRC table.
-  extern unsigned long crc_table_[];
+  extern ACE_Export ssize_t sendv_n_i (ACE_HANDLE handle,
+                                       const iovec *iov,
+                                       int iovcnt,
+                                       const ACE_Time_Value *timeout,
+                                       size_t *bytes_transferred);
 
   /// Hex characters.
   extern const ACE_TCHAR hex_chars_[];
