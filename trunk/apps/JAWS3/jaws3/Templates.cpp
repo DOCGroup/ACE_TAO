@@ -60,6 +60,7 @@
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Atomic_Op<ACE_SYNCH_MUTEX, int>;
+template class ACE_Atomic_Op_Ex<ACE_SYNCH_MUTEX, int>;
 template class ACE_Node<void *>;
 template class ACE_Unbounded_Queue<void *>;
 template class ACE_Unbounded_Queue_Iterator<void *>;
@@ -98,4 +99,3 @@ template class JAWS_SYMBOL_TABLE_ITERATOR;
 template class JAWS_SYMBOL_TABLE_REVERSE_ITERATOR;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
