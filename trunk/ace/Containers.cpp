@@ -2127,6 +2127,61 @@ ACE_Ordered_MultiSet_Iterator<T>::next (T *&item) const
   return 0;
 }
 
+ACE_ALLOC_HOOK_DEFINE (ACE_DLList_Node)
+ACE_ALLOC_HOOK_DEFINE (ACE_DLList)
+
+template <class T> T *
+ACE_DLList<T>::insert_tail (T *new_item)
+{
+  ACE_DLList_Node<T> *temp1, *temp2;
+  ACE_NEW_MALLOC_RETURN (
+    temp1,
+    (ACE_DLList_Node<T>*)
+    this->allocator_->malloc (sizeof (ACE_DLList_Node<T>)),
+    ACE_DLList_Node<T> (new_item), 0);
+
+  temp2 = ACE_Double_Linked_List< ACE_DLList_Node<T> >::insert_tail (temp1);
+  return temp2 ? temp2->item_ : 0;
+}
+
+template <class T> T *
+ACE_DLList<T>::insert_head (T *new_item)
+{
+  ACE_DLList_Node<T> *temp1, *temp2;
+  ACE_NEW_MALLOC_RETURN (
+    temp1,
+    (ACE_DLList_Node<T>*)
+    this->allocator_->malloc (sizeof (ACE_DLList_Node<T>)),
+    ACE_DLList_Node<T> (new_item), 0);
+
+  temp2 = ACE_Double_Linked_List< ACE_DLList_Node<T> >::insert_head (temp1);
+  return temp2 ? temp2->item_ : 0;
+}
+
+template <class T> T *
+ACE_DLList<T>::delete_head (void)
+{
+  ACE_DLList_Node<T> *temp1
+    = ACE_Double_Linked_List< ACE_DLList_Node<T> >::delete_head ();
+  T *temp2 = temp1 ? temp1->item_ : 0;
+  ACE_DES_FREE_TEMPLATE (temp1, this->allocator_->free, ACE_DLList_Node, <T>);
+
+  return temp2;
+}
+
+template <class T> T *
+ACE_DLList<T>::delete_tail (void)
+{
+  ACE_DLList_Node<T> *temp1
+    = ACE_Double_Linked_List< ACE_DLList_Node<T> >::delete_tail ();
+  T *temp2 = temp1 ? temp1->item_ : 0;
+  ACE_DES_FREE_TEMPLATE (temp1, this->allocator_->free, ACE_DLList_Node, <T>);
+
+  return temp2;
+}
+
+ACE_ALLOC_HOOK_DEFINE (ACE_DLList_Iterator)
+
 // Dynamically initialize an array.
 
 template <class T>
