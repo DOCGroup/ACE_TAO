@@ -1,37 +1,45 @@
+Wed Apr 15 08:52:52 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Reactor_Exceptions_Test (handle_input): removed
+          ACE_NOTREACHED wrapper around return statement at end.
+          Now that the previous statement is a function call, the
+          compiler (cxx) doesn't detect that the statement can't
+          be reached.
+
 Wed Apr 15 01:03:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.i (ACE_SOCKCALL_RETURN): Added a work-around for a
- 	  Borland 5.02 compiler bug.  The key turns out to be the
- 	  throw-away intermediate assignment statement to correctly keep
- 	  the value of WSAGetLastError().  Thanks to Dave Tallman
- 	  <tallman@acsys.com> for reporting this.
+        * ace/OS.i (ACE_SOCKCALL_RETURN): Added a work-around for a
+          Borland 5.02 compiler bug.  The key turns out to be the
+          throw-away intermediate assignment statement to correctly keep
+          the value of WSAGetLastError().  Thanks to Dave Tallman
+          <tallman@acsys.com> for reporting this.
 
 Tue Apr 14 23:35:19 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Profile_Timer.cpp (elapsed_rusage): The differences of user
-	  time and system time for GETRUSAGE were not calculated.
+        * ace/Profile_Timer.cpp (elapsed_rusage): The differences of user
+          time and system time for GETRUSAGE were not calculated.
 
-	* performance-tests/Synch-Benchmarks/Options.cpp (print_results):
-	  Added dump code for ACE_HAS_GETRUSAGE.
+        * performance-tests/Synch-Benchmarks/Options.cpp (print_results):
+          Added dump code for ACE_HAS_GETRUSAGE.
 
-	* ace/ace_{dll,lib}.dsp: Removed Service_Main.cpp from the
- 	  projects.  We don't really need them in ACE DLL.
+        * ace/ace_{dll,lib}.dsp: Removed Service_Main.cpp from the
+          projects.  We don't really need them in ACE DLL.
 
-	* ace/Service_Main.cpp: Removed the file from CVS.  Lots of
-	  Service_Config examples can be found all round ACE directories
-	  so we really don't need it here anymore.
+        * ace/Service_Main.cpp: Removed the file from CVS.  Lots of
+          Service_Config examples can be found all round ACE directories
+          so we really don't need it here anymore.
 
 Tue Apr 14 20:30:53 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS.i (mutex_init, cond_init): Added sections to properly
-	  handle error conditions on platforms which claim
-	  ACE_HAS_PTHREADS_1003_DOT_1C.
+        * ace/OS.i (mutex_init, cond_init): Added sections to properly
+          handle error conditions on platforms which claim
+          ACE_HAS_PTHREADS_1003_DOT_1C.
 
 Tue Apr 14 16:39:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ACE.cpp (ldfind): Fixed a miscalculated string size.
-	  Thanks to Jason Katz <Jason@rtswireless.com> for reporting the
-	  bug.
+        * ace/ACE.cpp (ldfind): Fixed a miscalculated string size.
+          Thanks to Jason Katz <Jason@rtswireless.com> for reporting the
+          bug.
 
 Tue Apr 14 14:33:33 1998  David L. Levine  <levine@cs.wustl.edu>
 
