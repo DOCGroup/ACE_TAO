@@ -14,11 +14,8 @@ HTTP_Helper::months_[12]=
 
 char const *HTTP_Helper::alphabet_ = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-#if !defined (ACE_HAS_REENTRANT_LIBC)
-#if defined (ACE_HAS_THREADS)  
+char * HTTP_Helper::date_string_ = 0;
 ACE_Thread_Mutex HTTP_Helper::mutex_;
-#endif /* ACE_HAS_THREADS */
-#endif /* NOT ACE_HAS_REENTRANT_LIBC */
 
 ACE_SYNCH_MUTEX HTTP_Status_Code::lock_;
 int HTTP_Status_Code::instance_ = 0;
@@ -108,22 +105,33 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
 }
 
 const char *
-HTTP_Helper::HTTP_date (char * const date_string, int date_length)
+HTTP_Helper::HTTP_date (void)
 {
-  time_t tloc;
-  struct tm tms;
-
-  if (date_string != 0)
+  if (HTTP_Helper::date_string_ == 0)
     {
-      if (ACE_OS::time (&tloc) != (time_t) -1
-          && ACE_OS::gmtime_r (&tloc, &tms) != NULL)
-        ACE_OS::strftime (date_string, date_length,
-                          "%a, %d %b %Y %T GMT", &tms);
-      else 
-	return 0;
+      ACE_Guard<ACE_Thread_Mutex> m (HTTP_Helper::mutex_);
+
+      time_t tloc;
+      struct tm tms;
+
+      if (HTTP_Helper::date_string_ == 0)
+        {
+          // 40 bytes is all I need.
+          HTTP_Helper::date_string_ = new char[40];
+
+          if (ACE_OS::time (&tloc) != (time_t) -1
+              && ACE_OS::gmtime_r (&tloc, &tms) != NULL)
+            ACE_OS::strftime (HTTP_Helper::date_string_, 40,
+                              "%a, %d %b %Y %T GMT", &tms);
+          else
+            {
+              delete [] HTTP_Helper::date_string_;
+              HTTP_Helper::date_string_ = 0;
+            }
+        }
     }
 
-  return date_string;
+  return HTTP_Helper::date_string_;
 }
 
 int

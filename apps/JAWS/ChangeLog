@@ -1,5 +1,10 @@
 Thu Jul 10 01:53:48 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
+	* server/HTTP_Helpers.{h,cpp}: Changed so that creating the date
+	  header is less expensive.
+
+	* server/HTTP_Response.cpp: Changes to match above.
+
 	* clients/Caching/README: Added to the repository.
 
 	* clients/Caching/http_handler.{h,cpp}: Added some comments to the
