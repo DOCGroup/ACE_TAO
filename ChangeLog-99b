@@ -1,3 +1,8 @@
+Wed Aug 18 18:20:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/SOCK_Send_Recv_Test.cpp:
+	  Fixed typo.
+
 Wed Aug 18 17:58:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* THANKS: 

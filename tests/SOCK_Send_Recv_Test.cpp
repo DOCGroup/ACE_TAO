@@ -40,12 +40,12 @@ USELIB("..\ace\aced.lib");
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 // Change to non-zero if test fails
-static int Test_Result = 0;        
+static int Test_Result = 0;
 
 static void *
 client (void *arg)
 {
-  ACE_INET_Addr *remote_addr = ACE_reinterpret_cast (ACE_INET_Addr *, 
+  ACE_INET_Addr *remote_addr = ACE_reinterpret_cast (ACE_INET_Addr *,
                                                      arg);
   ACE_INET_Addr server_addr (remote_addr->get_port_number (),
                              ACE_LOCALHOST);
@@ -123,7 +123,7 @@ client (void *arg)
 
   u_char buffer2[255];
   // Give it a chance to get here
-  ACE_OS::sleep (2);         
+  ACE_OS::sleep (2);
   len = cli_stream.recv (4,
                          buffer2,
                          150,
@@ -132,11 +132,11 @@ client (void *arg)
   ACE_ASSERT (len == 255);
 
   for (i = 0; i < 255; i++)
-    if (buffer2[i] != buffer[i]) 
+    if (buffer2[i] != buffer[i])
       {
         ACE_ERROR ((LM_ERROR,
                     ASYS_TEXT ("(%P|%t) Test 2, rcvd byte %d is %d, not %d\n"),
-                    i, buffer2[i], buff[i]));
+                    i, buffer2[i], buffer[i]));
         Test_Result = 1;
       }
 
@@ -159,7 +159,7 @@ server (void *arg)
                              &cli_addr,
                              &timeout) == -1)
     {
-      ACE_ERROR ((LM_ERROR, 
+      ACE_ERROR ((LM_ERROR,
                   ASYS_TEXT ("(%P|%t) %p\n"),
                   ASYS_TEXT ("accept")));
       Test_Result = 1;
