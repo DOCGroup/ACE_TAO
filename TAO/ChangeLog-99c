@@ -1,3 +1,29 @@
+Sun Nov 28 15:16:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/tutorials/Quoter/AMI/index.html:
+	* docs/tutorials/Quoter/AMI/Makefile:
+	* docs/tutorials/Quoter/AMI/Quoter.idl:
+	* docs/tutorials/Quoter/AMI/svc.conf:
+	* docs/tutorials/Quoter/AMI/Handler_i.h:
+	* docs/tutorials/Quoter/AMI/Handler_i.cpp:
+	* docs/tutorials/Quoter/AMI/Stock_Factory_i.h:
+	* docs/tutorials/Quoter/AMI/Stock_Factory_i.cpp:
+	* docs/tutorials/Quoter/AMI/Stock_i.h:
+	* docs/tutorials/Quoter/AMI/Stock_i.cpp:
+	* docs/tutorials/Quoter/AMI/client.cpp:
+	* docs/tutorials/Quoter/AMI/server.cpp:
+	  New tutorial on how to use AMI with TAO, the server must be
+	  improved since it only has two objects.
+
+	* docs/tutorials/Quoter/index.html:
+	  Added the new AMI tutorial
+
+	* docs/tutorials/Quoter/Simple/Server/index.html:
+	  Fixed typos
+
+	* tests/AMI/Makefile:
+	  The dependencies where not updated correctly. Fixed.
+
 Sun Nov 28 14:20:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* docs/tutorials/Quoter: Changed the backgrounds for the tutorial
