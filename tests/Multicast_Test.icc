@@ -9,7 +9,7 @@ option
     {
 	target type (exe) "Multicast_Test"
 	{
-	   source type (cpp) "Multicast_Test.cpp"
+	   source type (cpp) "Multicast_Test.cpp", "Main.cpp"
 	   if ($__IBMCPP__ >= 500) {
 	     option macros(global) {
 	       source type (hpp) "test_config.h"

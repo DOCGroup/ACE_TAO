@@ -1,3 +1,15 @@
+Mon May 19 04:30:45 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/*.icc:
+          Added Main.cpp to all executable projects.
+
+        * tests/libTest_Output.icc:
+        * tests/tests.icp:
+          Added new file, libTest_Output.icc, and added it to tests.icp.
+
+        * tests/vacpp_setup.icc:
+          Added Test_Output to platformLinkLibs.
+
 Mon May 19 03:12:23 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/Makefile.am:

@@ -7,7 +7,7 @@ option
     link(linkWithMultiThreadLib,yes),
     link(debug)
     {
-	target type (exe) "CDR_Array_Test"
+	target type (exe) "CDR_Array_Test", "Main.cpp"
 	{
 	   source type (cpp) "CDR_Array_Test.cpp"
 	   if ($__IBMCPP__ >= 500) {
