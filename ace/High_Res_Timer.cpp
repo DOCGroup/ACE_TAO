@@ -32,6 +32,18 @@ ACE_High_Res_Timer::reset (void)
   (void) ACE_OS::memset (&this->temp_, 0, sizeof this->temp_);
 }
 
+#if defined (ACE_HAS_POSIX_TIME)
+timespec_t &
+ACE_High_Res_Timer::elapsed_time (void)
+{
+  elapsed_time_.tv_sec = (this->end_ - this->start_) / (1000 * 1000 * 1000);
+  elapsed_time_.tv_nsec = this->end_ - this->start_ -
+                          (elapsed_time_.tv_sec * (1000 * 1000 * 1000));
+
+  return elapsed_time_;
+}
+#endif /* ACE_HAS_POSIX_TIME */
+
 void 
 ACE_High_Res_Timer::print_ave (const char *str, const int count, ACE_HANDLE handle)
 {
