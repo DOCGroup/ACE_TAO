@@ -1,3 +1,9 @@
+Mon Apr 05 12:05:01 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.*,Thread_Manager.{h,cpp}: moved flags members from
+          ACE_Thread_Descriptor to a new ACE_OS_Thread_Descriptor base
+          class, to remove dependency of OS.cpp on Thread_Manager.h.
+
 Sun Apr  4 18:19:05 1999  Ossama Othman  <othman@cs.wustl.edu>
 
         * configure.in:
