@@ -1,4 +1,7 @@
-Sat May 29 17:23:05 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Sat May 29 17:48:24 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Object.cpp (_non_existent): This function is not required
+	  with minimum CORBA.
 
 	* tao/POAC: Forwarding exception is not supported with minimum
 	  CORBA.
