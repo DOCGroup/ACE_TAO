@@ -86,6 +86,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "utl_scoped_name.h"
 #include        "utl_string.h"
 
+// This is for AIX w/IBM C++
+class Identifier;
+
 // This class is needed (only for g++) to get around a bug in g++ which
 // causes virtual operations to not be looked up correctly if an operation
 // is defined in more than one virtual public base class. This class makes
