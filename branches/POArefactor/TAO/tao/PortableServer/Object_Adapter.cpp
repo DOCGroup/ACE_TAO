@@ -238,7 +238,17 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
   TAO::Loadable_Thread_Policy *policy =
     ACE_Dynamic_Service<TAO::Loadable_Thread_Policy>::instance (
            "Loadable_Thread_Policy");
-// handle failures
+
+  if (policy == 0)
+    {
+      ACE_Service_Config::process_directive (
+        TAO::ace_svc_desc_Loadable_Thread_Policy);
+
+      policy =
+        ACE_Dynamic_Service<TAO::Loadable_Thread_Policy>::instance (
+           "Loadable_Thread_Policy");
+    }
+
   if (policy != 0)
     {
       CORBA::Policy_ptr thread_policy = policy->create(PortableServer::ORB_CTRL_MODEL);
