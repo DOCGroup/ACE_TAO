@@ -1,19 +1,34 @@
+Wed Jan 16 20:28:56 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Wait_Never.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Wait_Never.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+	* orbsvcs/orbsvcs/PortableGroup.bor:
+	* orbsvcs/orbsvcs/Makefile.PortableGroup:
+	* orbsvcs/orbsvcs/PortableGroup.dsp:
+	  Added custom wait strategy for UIPMC to prevent any
+	  one from waiting for a response.  Previously, if
+	  someone tried invoking a twoway using MIOP, execution
+	  would hang until a time out.  This way, the user
+	  gets a system exception if they ever try to wait for
+	  a response.
+
 Wed Jan 16 19:18:14 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* performance-tests/AMI_Latency/client.cpp: 
+	* performance-tests/AMI_Latency/client.cpp:
 	  Fixed compile errors.
 
 Wed Jan 16 13:17:04 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* TAO_IDL/be_include/be_visitor_interface/interface.h: 
-	* TAO_IDL/be/be_visitor_interface/interface.cpp: 
-	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp: 
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp: 
+	* TAO_IDL/be_include/be_visitor_interface/interface.h:
+	* TAO_IDL/be/be_visitor_interface/interface.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
 	  Added method to check if a particular node is an 'AMH'
-	  node that was added during pre-processing.  This check is 
-	  used to dynamically create the amh_rh visitors in 
+	  node that was added during pre-processing.  This check is
+	  used to dynamically create the amh_rh visitors in
 	  interface_s{h/s} visitors.
-	
+
 Wed Jan 16 12:57:56 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:

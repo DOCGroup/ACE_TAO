@@ -396,6 +396,10 @@ SOURCE=.\PortableGroup\UIPMC_Transport.cpp
 !ENDIF 
 
 # End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\UIPMC_Wait_Never.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -463,6 +467,10 @@ SOURCE=.\PortableGroup\UIPMC_Profile.h
 # Begin Source File
 
 SOURCE=.\PortableGroup\UIPMC_Transport.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\UIPMC_Wait_Never.h
 # End Source File
 # End Group
 # Begin Group "Inline Files"
