@@ -184,7 +184,7 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
 
 	  // Temporary hack, to see if this works as expected.  Need
 	  // to add code to walk the naming tree from root to the
-	  // context represented by this server
+	  // context represented by this server.
 	  PortableServer::ObjectId_var id =
 	    PortableServer::string_to_ObjectId (this->naming_context_name_);
 
