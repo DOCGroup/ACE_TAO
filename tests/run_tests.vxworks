@@ -97,6 +97,10 @@ ld < Hash_Map_Manager_Test
 write 2, "Hash_Map_Manager_Test ", 22
 ace_main; unld "Hash_Map_Manager_Test"
 
+ld < Hash_Map_Bucket_Iterator_Test
+write 2, "Hash_Map_Bucket_Iterator_Test ", 29
+ace_main; unld "Hash_Map_Bucket_Iterator_Test"
+
 ld < Sigset_Ops_Test
 write 2, "Sigset_Ops_Test ", 16
 ace_main; unld "Sigset_Ops_Test"

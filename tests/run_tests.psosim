@@ -138,6 +138,10 @@ run Reverse_Lock_Test                   # uses ACE_Reverse_Lock
 
 run Map_Manager_Test                    # uses Map Manager and Hash Map Manager + Forward and Reverse Map Iterators.
 
+run Hash_Map_Manager_Test               # uses Hash Map Manager + Forward and Reverse Map Iterators.
+
+run Hash_Map_Bucket_Iterator_Test       # uses Hash Map Bucket iterator.
+
 run Cache_Map_Manager_Test              # uses Cache Map Manager and Hash Cache Map Manager + Forward and Reverse Map Iterators.
 
 run Cached_Conn_Test                    # uses Cached connection management (with OneShot Acceptor).

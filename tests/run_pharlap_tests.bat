@@ -31,6 +31,7 @@ call %0 Env_Value_Test
 call %0 Future_Test
 call %0 Handle_Set_Test
 call %0 Hash_Map_Manager_Test
+call %0 Hash_Map_Bucket_Iterator_Test
 call %0 High_Res_Timer_Test
 call %0 IOStream_Test
 call %0 Map_Manager_Test
