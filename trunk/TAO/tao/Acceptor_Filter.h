@@ -10,6 +10,7 @@
 //    Acceptor_Filter.h
 //
 // = AUTHOR
+//    Marina Spivak (marina@cs.wustl.edu)
 //    Carlos O'Ryan (coryan@uci.edu)
 //
 // ============================================================================
@@ -18,6 +19,7 @@
 #define TAO_ACCEPTOR_FILTER_H
 #include "ace/pre.h"
 
+#include "tao/MProfile.h"
 #include "tao/corbafwd.h"
 #include "ace/Service_Object.h"
 
@@ -36,11 +38,24 @@ class TAO_Acceptor;
 
 class TAO_Export TAO_Acceptor_Filter
 {
+  // = TITLE
+  //   Interface for mprofile creation strategies.
+  //
+  // = DESCRIPTION
+  //   Concrete Acceptor_Filter encapsulates a strategy for populating
+  //   mprofile with profiles: it decides which endpoints are included
+  //   into mprofile and which ones are not.
+  //
 public:
   virtual ~TAO_Acceptor_Filter (void);
 
-  virtual int evaluate (TAO_Acceptor *acceptor) = 0;
-  // Return 0 if <acceptor> should not be included in the profile.
+  virtual int fill_mprofile (const TAO_ObjectKey &object_key,
+                             TAO_MProfile &mprofile,
+                             TAO_Acceptor **acceptors_begin,
+                             TAO_Acceptor **acceptors_end) = 0;
+  // Populate <mprofile> with profiles. Profiles are created for
+  // selected acceptors (endpoints) from the array delimited by
+  // <acceptors_begin> and <acceptors_end>.
 };
 
 #if defined (__ACE_INLINE__)
@@ -52,4 +67,4 @@ public:
 #endif /* _MSC_VER */
 
 #include "ace/post.h"
-#endif /* TAO_OBJECT_ADAPTER_H */
+#endif /* TAO_ACCEPTOR_FILTER_H */
