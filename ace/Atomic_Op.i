@@ -123,6 +123,16 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::value (void) const
   return this->value_;    
 }
 
+template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE &
+ACE_Atomic_Op<ACE_LOCK, TYPE>::value_i (void)
+{
+  // Explicitly return <value_> (by reference).  This gives the user
+  // full, unrestricted access to the underlying value.  This method
+  // will usually be used in conjunction with explicit access to the
+  // lock.  Use with care ;-)
+  return this->value_;    
+}
+
 template <class ACE_LOCK, class TYPE> ACE_INLINE void
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator= (const TYPE &i)
 {
