@@ -1,3 +1,14 @@
+Mon Jan 05 23:41:59 1998    <coryan@MILONGA>
+
+	* tao/objkeyC.cpp: 
+	  The code for memory reallocation was missing, I added it back.
+
+	* tao/iiopobj.cpp: 
+	  Fixed bug in object key generation.
+
+	* tao/poa.cpp: 
+	  More debug messages when an object is missing.
+
 Mon Jan 05 17:46:00 1998    <coryan@MILONGA>
 
 	* tao/connect.cpp: 
