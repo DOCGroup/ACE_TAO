@@ -1,3 +1,11 @@
+Mon Oct 26 19:16:27 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/000/index.html: This index is has a layout
+	similar to Umar's ACE Tutorial document.  As time progresses, we
+	will be merging the examples in his document into the online
+	tutorials.  The current free-form tutorials will not go away but
+	will be supplimented with Umar's more structured approach.
+
 Mon Oct 26 17:37:55 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/OS.h: 
