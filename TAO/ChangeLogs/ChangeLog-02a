@@ -1,3 +1,13 @@
+Wed Sep 20 13:03:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/tao_idl.cpp:
+	* TAO_IDL/driver/drv_args.cpp:
+	* TAO_IDL/driver/drv_init.cpp:
+	* TAO_IDL/driver/drv_preproc.cpp:
+
+	  Replaced some -1s with ACE_INVALID_PID, and some other
+	  magic numbers with named constants.
+
 Wed Sep 20 08:17:13 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Portable_Interceptors/Dynamic/interceptors.cpp
