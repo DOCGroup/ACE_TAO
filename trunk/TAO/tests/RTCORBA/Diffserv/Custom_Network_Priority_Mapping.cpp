@@ -84,25 +84,24 @@ static const char *dscp_char[]=
 };
 */
 
-TAO_Custom_Network_Priority_Mapping::TAO_Custom_Network_Priority_Mapping (void)
+Custom_Network_Priority_Mapping::Custom_Network_Priority_Mapping (void)
   : corba_priority_ (RTCORBA::minPriority)
 {
 }
 
 void
-TAO_Custom_Network_Priority_Mapping::corba_priority (RTCORBA::Priority corba_priority)
+Custom_Network_Priority_Mapping::corba_priority (RTCORBA::Priority corba_priority)
 {
   this->corba_priority_ = corba_priority;
 }
 
 CORBA::Boolean
-TAO_Custom_Network_Priority_Mapping::to_network (
-  RTCORBA::Priority,
-  RTCORBA::NetworkPriority &network_priority)
+Custom_Network_Priority_Mapping::to_network (RTCORBA::Priority,
+                                             RTCORBA::NetworkPriority &network_priority)
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
-                "TAO_Custom_Network_Priority_Mapping::to_network corba_priority %d\n",
+                "Custom_Network_Priority_Mapping::to_network corba_priority %d\n",
                 this->corba_priority_));
 
   const int total_slots = sizeof (dscp) / sizeof (int);
@@ -117,15 +116,15 @@ TAO_Custom_Network_Priority_Mapping::to_network (
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
-                "TAO_Custom_Network_Priority_Mapping::to_network = %x\n",
+                "Custom_Network_Priority_Mapping::to_network = %x\n",
                 network_priority));
 
   return 1;
 }
 
 CORBA::Boolean
-TAO_Custom_Network_Priority_Mapping::to_CORBA (RTCORBA::NetworkPriority,
-                                               RTCORBA::Priority &)
+Custom_Network_Priority_Mapping::to_CORBA (RTCORBA::NetworkPriority,
+                                           RTCORBA::Priority &)
 {
   // This method should not be called.
   ACE_ASSERT (0);
