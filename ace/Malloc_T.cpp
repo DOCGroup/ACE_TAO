@@ -652,11 +652,10 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::unbind (const char *name)
   return this->unbind (name, temp);
 }
 
-
 template <ACE_MEM_POOL_1, class ACE_LOCK> void
-ACE_Malloc_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::dump (void) const
+ACE_Malloc_LIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::dump (void) const
 {
-  ACE_TRACE ("ACE_Malloc_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::dump");
+  ACE_TRACE ("ACE_Malloc_LIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->curr_->dump ();
@@ -667,14 +666,14 @@ ACE_Malloc_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::dump (void) const
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
-ACE_Malloc_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,
+ACE_Malloc_LIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc_LIFO_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,
                                                                     const char *name)
   : malloc_ (malloc),
     curr_ (0),
     guard_ (malloc_.lock_),
     name_ (name != 0 ? ACE_OS::strdup (name) : 0)
 {
-  ACE_TRACE ("ACE_Malloc_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc_Iterator");
+  ACE_TRACE ("ACE_Malloc_LIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc_LIFO_Iterator");
   // Cheap trick to make code simple.
   // @@ Doug, this looks like trouble...
   ACE_Name_Node temp;
@@ -685,16 +684,16 @@ ACE_Malloc_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc_Iterator (ACE_Malloc<A
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
-ACE_Malloc_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::~ACE_Malloc_Iterator (void)
+ACE_Malloc_LIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::~ACE_Malloc_LIFO_Iterator (void)
 {
   ACE_OS::free ((void *) this->name_);
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Malloc_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::next (void *&next_entry,
+ACE_Malloc_LIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::next (void *&next_entry,
                                                      const char *&name)
 {
-  ACE_TRACE ("ACE_Malloc_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::next");
+  ACE_TRACE ("ACE_Malloc_LIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::next");
 
   if (this->curr_ != 0)
     {
@@ -707,9 +706,9 @@ ACE_Malloc_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::next (void *&next_entry,
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Malloc_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::next (void *&next_entry)
+ACE_Malloc_LIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::next (void *&next_entry)
 {
-  ACE_TRACE ("ACE_Malloc_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::next");
+  ACE_TRACE ("ACE_Malloc_LIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::next");
 
   if (this->curr_ != 0)
     {
@@ -721,17 +720,17 @@ ACE_Malloc_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::next (void *&next_entry)
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Malloc_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::done (void) const
+ACE_Malloc_LIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::done (void) const
 {
-  ACE_TRACE ("ACE_Malloc_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::done");
+  ACE_TRACE ("ACE_Malloc_LIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::done");
 
   return this->curr_ == 0;
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Malloc_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::advance (void)
+ACE_Malloc_LIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::advance (void)
 {
-  ACE_TRACE ("ACE_Malloc_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::advance");
+  ACE_TRACE ("ACE_Malloc_LIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::advance");
 
   this->curr_ = this->curr_->next_;
 
@@ -743,6 +742,120 @@ ACE_Malloc_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::advance (void)
                             this->curr_->name ()) != 0)
     this->curr_ = this->curr_->next_;
 
+  return this->curr_ != 0;
+}
+
+template <ACE_MEM_POOL_1, class ACE_LOCK> void
+ACE_Malloc_FIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::dump (void) const
+{
+  ACE_TRACE ("ACE_Malloc_FIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::dump");
+
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  this->curr_->dump ();
+  this->guard_.dump ();
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("name_ = %s"), this->name_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+}
+
+template <ACE_MEM_POOL_1, class ACE_LOCK>
+ACE_Malloc_FIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc_FIFO_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,
+                                                                    const char *name)
+  : malloc_ (malloc),
+    curr_ (0),
+    guard_ (malloc_.lock_),
+    name_ (name != 0 ? ACE_OS::strdup (name) : 0)
+{
+  ACE_TRACE ("ACE_Malloc_FIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc_FIFO_Iterator");
+  // Cheap trick to make code simple.
+  // @@ Doug, this looks like trouble...
+  ACE_Name_Node temp;
+  this->curr_ = &temp;
+  this->curr_->next_ = malloc_.cb_ptr_->name_head_;
+  this->curr_->prev_ = 0;
+
+  // Go to the first element that was inserted.
+  this->start ();
+}
+
+template <ACE_MEM_POOL_1, class ACE_LOCK>
+ACE_Malloc_FIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::~ACE_Malloc_FIFO_Iterator (void)
+{
+  ACE_OS::free ((void *) this->name_);
+}
+
+template <ACE_MEM_POOL_1, class ACE_LOCK> int
+ACE_Malloc_FIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::next (void *&next_entry,
+                                                          const char *&name)
+{
+  ACE_TRACE ("ACE_Malloc_FIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::next");
+
+  if (this->curr_ != 0)
+    {
+      next_entry = (char *) this->curr_->pointer_;
+      name = this->curr_->name ();
+      return 1;
+    }
+  else
+    return 0;
+}
+
+template <ACE_MEM_POOL_1, class ACE_LOCK> int
+ACE_Malloc_FIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::next (void *&next_entry)
+{
+  ACE_TRACE ("ACE_Malloc_FIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::next");
+
+  if (this->curr_ != 0)
+    {
+      next_entry = this->curr_->pointer_;
+      return 1;
+    }
+  else
+    return 0;
+}
+
+template <ACE_MEM_POOL_1, class ACE_LOCK> int
+ACE_Malloc_FIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::done (void) const
+{
+  ACE_TRACE ("ACE_Malloc_FIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::done");
+
+  return this->curr_ == 0;
+}
+
+template <ACE_MEM_POOL_1, class ACE_LOCK> int
+ACE_Malloc_FIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::advance (void)
+{
+  ACE_TRACE ("ACE_Malloc_FIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::advance");
+
+  this->curr_ = this->curr_->prev_;
+
+  if (this->name_ == 0)
+    return this->curr_ != 0;
+
+  while (this->curr_ != 0
+         && ACE_OS::strcmp (this->name_,
+                            this->curr_->name ()) != 0)
+    this->curr_ = this->curr_->prev_;
+
+  return this->curr_ != 0;
+}
+
+template <ACE_MEM_POOL_1, class ACE_LOCK> int
+ACE_Malloc_FIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::start (void)
+{
+  this->curr_ = this->curr_->next_;
+  ACE_Name_Node *prev = 0;
+
+  // Locate the element that was inserted first.
+  // @@ We could optimize this by making the list a circular list or
+  // storing an extra pointer.
+  while (this->curr_ != 0)
+    {
+      prev = this->curr_;
+      this->curr_ = this->curr_->next_;
+    }
+
+  this->curr_ = prev;
   return this->curr_ != 0;
 }
 
