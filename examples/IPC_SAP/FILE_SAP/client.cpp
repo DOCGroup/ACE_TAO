@@ -48,7 +48,7 @@ main (int argc, char *argv[])
                       1);
   else
     ACE_OS::printf ("fileinfo : mode = %o\nno of links = %lu\nsize = %lu\n",
-                    fileinfo.mode_ & 0777,
+                    (u_int) fileinfo.mode_ & 0777,
                     ACE_static_cast(u_long ,fileinfo.nlink_),
                     (u_long) fileinfo.size_);
 
