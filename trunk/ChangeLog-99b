@@ -1,3 +1,10 @@
+Tue Jan 12 08:44:11 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* ace/Acceptor.cpp (handle_close):
+
+	  Since the reactor_ data member is made private, we need to use
+	  its accessor method to retrieve it.
+
 Tue Jan 12 02:12:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h (ACE_DES_NO_FREE,ACE_DES_FREE): These two macros
