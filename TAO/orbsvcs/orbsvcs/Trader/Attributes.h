@@ -31,7 +31,6 @@ public:
   virtual ACE_Lock& lock (void) = 0;  
 };
 
-
 class TAO_ORBSVCS_Export TAO_Support_Attributes_Impl
   // = TITLE
   //     This class stores, allows access to and modification of 
