@@ -86,10 +86,9 @@ ld < Future_Test
 write 2, "Future_Test ", 12
 ace_main; unld "Future_Test"
 
-#### ENOTSUP: fcntl
-#### ld < Reactors_Test
-#### write 2, "Reactors_Test ", 14
-#### ace_main; unld "Reactors_Test"
+ld < Reactors_Test
+write 2, "Reactors_Test ", 14
+ace_main; unld "Reactors_Test"
 
 ld < Reactor_Timer_Test
 write 2, "Reactor_Timer_Test ", 19
