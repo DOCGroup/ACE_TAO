@@ -396,9 +396,13 @@ Point of contact: <a href="mailto: irfan@cs.wustl.edu">Irfan Pyarali</a>
      The TAO-specific information currently consists of location
      (in the TAO source code) and errno indications.  See
      <a href="../tao/corbafwd.h"><code>tao/corbafwd.h</code></a>
-     for values.  These values will be expanded as needed.
-     <code>CORBA_SystemException::print_exception_tao_ ()</code>
-     should be used to print system exceptions.</p>
+     for values.  <code>CORBA_SystemException::print_exception_tao_ ()</code>
+     should be used to print system exceptions.  If a known (expected)
+     errno had been received, then it is printed.  Otherwise, the low
+     7 bits of the errno are printed (in decimal).  The can be a bit
+     tricky to interpret, for example, because it might have been generated
+     on the server.  We only maintain the low 7 bits because of size
+     restrictions on the minor status component.</p>
   </li>
 
   <li><p>The <CODE>CORBA::ORB_init()</CODE> function returns the same

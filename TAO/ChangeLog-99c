@@ -1,25 +1,31 @@
+Thu Jul 08 09:59:47 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/releasenotes/orbcore.html: updated description of
+          errno component of CORBA_SystemException minor code.  We
+          now maintain the low 7 bits of unexpected errnos.
+
 Wed Jul  7 22:05:22 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Xt_Stopwatch/client.cpp: 
-	* tests/Xt_Stopwatch/Client.h
-	* tests/Xt_Stopwatch/Control.cpp
-	* tests/Xt_Stopwatch/Control.h
-	* tests/Xt_Stopwatch/Stopwatch_display.h
-	* tests/Xt_Stopwatch/Stopwatch_display.cpp
-	* tests/Xt_Stopwatch/server.cpp
-	* tests/Xt_Stopwatch/test_i.cpp
-	* tests/Xt_Stopwatch/test_i.h
-	* tests/Xt_Stopwatch/test_i.i
-	* tests/Xt_Stopwatch/timer.cpp
-	* tests/Xt_Stopwatch/timer.h
-	* tests/Xt_Stopwatch/README
-	* tests/Xt_Stopwatch/svc.conf: Added a new example to illustrate
-	  the usage of the XtReactor from TAO. The server creates a small
-	  display dialog and the client displays a dialog with a start and
-	  stop button. On pressing the start button the server dialog box
-	  starts a stopwatch. On the pressing the stop the stopwatch
-	  stops. On repressing the start the stopwatch resets and start
-	  all over again. 
+        * tests/Xt_Stopwatch/client.cpp:
+        * tests/Xt_Stopwatch/Client.h
+        * tests/Xt_Stopwatch/Control.cpp
+        * tests/Xt_Stopwatch/Control.h
+        * tests/Xt_Stopwatch/Stopwatch_display.h
+        * tests/Xt_Stopwatch/Stopwatch_display.cpp
+        * tests/Xt_Stopwatch/server.cpp
+        * tests/Xt_Stopwatch/test_i.cpp
+        * tests/Xt_Stopwatch/test_i.h
+        * tests/Xt_Stopwatch/test_i.i
+        * tests/Xt_Stopwatch/timer.cpp
+        * tests/Xt_Stopwatch/timer.h
+        * tests/Xt_Stopwatch/README
+        * tests/Xt_Stopwatch/svc.conf: Added a new example to illustrate
+          the usage of the XtReactor from TAO. The server creates a small
+          display dialog and the client displays a dialog with a start and
+          stop button. On pressing the start button the server dialog box
+          starts a stopwatch. On the pressing the stop the stopwatch
+          stops. On repressing the start the stopwatch resets and start
+          all over again.
 
 Wed Jul 07 21:28:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -37,30 +43,30 @@ Wed Jul 07 21:28:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
 Wed Jul  7 21:16:24 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/ORB.cpp (multicast_to_service): Revised the code to use
-	  TAO_DEFAULT_IOR_SIZE rather than 2*BUFSIZ since we can
- 	  explicitly control this size, whereas BUFSIZ ranges a lot across
- 	  platforms.
+        * tao/ORB.cpp (multicast_to_service): Revised the code to use
+          TAO_DEFAULT_IOR_SIZE rather than 2*BUFSIZ since we can
+          explicitly control this size, whereas BUFSIZ ranges a lot across
+          platforms.
 
-	* tao/orbconf.h: Added a new macro called TAO_DEFAULT_IOR_SIZE,
-	  which is set to 1024.
+        * tao/orbconf.h: Added a new macro called TAO_DEFAULT_IOR_SIZE,
+          which is set to 1024.
 
 Wed Jul  7 20:36:20 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/ORB.{h,cpp}
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp:
-	  Buffer of size BUFSIZ, which is used to receive the ior from
-	  Naming/Trading service in response to a multicast message, was
-	  allocated off the stack.  On some platforms (notably, NT), BUFSIZ
-	  wasn't big enough to house the ior, so the ior got truncated,
-	  and weird things happenned.  Updated the code, to allocate
-	  buffer space for ior dynamically, if what was allocated off the
-	  stack wasn't enough.  To make this simpler, changed
-	  <handle_input> method in TAO_IOR_Multicast to reply to the
-	  client with iovec, containing the length of the ior, followed by
-	  the ior itself.
+        * tao/ORB.{h,cpp}
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp:
+          Buffer of size BUFSIZ, which is used to receive the ior from
+          Naming/Trading service in response to a multicast message, was
+          allocated off the stack.  On some platforms (notably, NT), BUFSIZ
+          wasn't big enough to house the ior, so the ior got truncated,
+          and weird things happenned.  Updated the code, to allocate
+          buffer space for ior dynamically, if what was allocated off the
+          stack wasn't enough.  To make this simpler, changed
+          <handle_input> method in TAO_IOR_Multicast to reply to the
+          client with iovec, containing the length of the ior, followed by
+          the ior itself.
 
-	  Fixed several memory leaks and other bugs in the surrounding code.
+          Fixed several memory leaks and other bugs in the surrounding code.
 
 Wed Jul 07 19:51:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -72,33 +78,33 @@ Wed Jul 07 19:51:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
 Wed Jul  7 19:24:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* docs/Options.html:
-	* tao/Makefile:
-	* tao/default_resource.h:
-	* tao/default_resource.cpp:
-	* tao/xt_resource.h:
-	* tao/xt_resource.i:
-	* tao/xt_resource.cpp:
-	  Removed the <xt> ReactorType from the default resource factory,
-	  it simply did not work because the context was not properly
-	  initialized.
-	  Added a new Resource_Factory that can create XtReactors, but
-	  only after the context has been properly set.
+        * docs/Options.html:
+        * tao/Makefile:
+        * tao/default_resource.h:
+        * tao/default_resource.cpp:
+        * tao/xt_resource.h:
+        * tao/xt_resource.i:
+        * tao/xt_resource.cpp:
+          Removed the <xt> ReactorType from the default resource factory,
+          it simply did not work because the context was not properly
+          initialized.
+          Added a new Resource_Factory that can create XtReactors, but
+          only after the context has been properly set.
 
-	* tests/FL_Cube/svc.conf:
-	  Fixed the reactor type for this example
+        * tests/FL_Cube/svc.conf:
+          Fixed the reactor type for this example
 
-	* tests/Xt_Stopwatch/client.cpp:
-	* tests/Xt_Stopwatch/server.cpp:
-	* tests/Xt_Stopwatch/svc.conf:
-	  Use the new TAO_XT_Resource_Factory in this example.
+        * tests/Xt_Stopwatch/client.cpp:
+        * tests/Xt_Stopwatch/server.cpp:
+        * tests/Xt_Stopwatch/svc.conf:
+          Use the new TAO_XT_Resource_Factory in this example.
 
 Wed Jul 07 18:26:58 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao: Fixed determination of collocation.  It is not necessary to
-	  have a servant for a object to be collocated.  A servant manager
-	  or a default servant will also do.  Now Nanbor needs to take
-	  advantage of these changes by changing _narrow appropriately.
+        * tao: Fixed determination of collocation.  It is not necessary to
+          have a servant for a object to be collocated.  A servant manager
+          or a default servant will also do.  Now Nanbor needs to take
+          advantage of these changes by changing _narrow appropriately.
 
 Wed Jul 07 16:25:05 1999  David L. Levine  <levine@cs.wustl.edu>
 
