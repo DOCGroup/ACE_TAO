@@ -41,6 +41,10 @@ TAO_Notify_Default_Collection_Factory::fini (void)
 TAO_Notify_EventListener_List*
 TAO_Notify_Default_Collection_Factory::create_event_listener_list (CORBA::Environment &/*ACE_TRY_ENV*/)
 {
+  // @@ Pradeep: the copy_on_write versions are a much better choice
+  // for a default than the immediate changes version.  The latter
+  // fails with any sort of recursive calls.
+
   TAO_Notify_EventListener_List* listener_list =
   new TAO_ESF_Immediate_Changes<TAO_Notify_EventListener,
     TAO_ESF_Proxy_List<TAO_Notify_EventListener>,

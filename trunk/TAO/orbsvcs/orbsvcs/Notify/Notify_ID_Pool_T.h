@@ -68,6 +68,19 @@ public:
   // This is the last id circulating in the list.When there are no more id's
   // in the resuse list, we increment this value to get a new id.
 
+  // @@ Pradeep: do you really need to do this?  I mean, with a long
+  // or so you have 4 billion different IDs, recycling them is the
+  // least of your problems, right?
+  // Even if you need to recycle them, do you *really* need to keep
+  // *both* the active and free collections around?  Isn't it enough
+  // to know which one  is the maximum generated and the list of free
+  // ones?  Anything  else is active, right?
+  // Or if you know the active ones and the maximum given you know
+  // that anything else is free, right?
+  // Also: in most cases the IDs will index some sort of map, right?
+  // You could obtain the active list from the set of keys in the map.
+  // I guess it is a classical tradeoff between CPU and memory, but I
+  // would tend to conserve memory in this case...
   ACE_Unbounded_Set <ID_TYPE> active_list_;
   // List of ids currently in use by clients of this class.
 
