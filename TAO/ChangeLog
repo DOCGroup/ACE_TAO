@@ -1,3 +1,13 @@
+Thu Jan 13 01:07:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/PortableServer/POA.h (objectkey_prefix):
+	* tao/PortableServer/POA.cpp (objectkey_prefix):
+
+	  Changed this static array is to be an array of constant
+	  CORBA::Octets of instead of an array of non-constant
+	  CORBA::Octets.  The former is what was intended.  Also provides
+	  compiler with additional optimization opportunities.
+
 Wed Jan 12 23:01:24 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Portable_Interceptors/PolicyFactory/IORInterceptor.cpp:

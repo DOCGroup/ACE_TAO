@@ -6,7 +6,8 @@
  *
  *  $Id$
  *
- *  Header file for CORBA's ORB type.
+ *  Header file for CORBA Portable Object Adapter (POA) related
+ *  types.
  *
  *  @author  Irfan Pyarali <irfan@cs.wustl.edu>
  */
@@ -490,7 +491,7 @@ public:
     TAO_OBJECTKEY_PREFIX_SIZE = 4
   };
 
-  static CORBA::Octet objectkey_prefix[TAO_OBJECTKEY_PREFIX_SIZE];
+  static CORBA::Octet const objectkey_prefix[TAO_OBJECTKEY_PREFIX_SIZE];
 
   const TAO_Object_Adapter::poa_name &folded_name (void) const;
 
