@@ -1,3 +1,20 @@
+Mon Jun 23 19:04:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Array_VarOut_T.h:
+        * tao/Objref_VarOut_T.h:
+        * tao/Pseudo_VarOut_T.h:
+        * tao/Seq_Var_T.h:
+        * tao/VarOut_T.h:
+	* TAO_IDL/be/be_visitor_interface/iknterface_sh.cpp:
+	  
+	  Added typedefs of the return types of the .in(), .inout(),
+	  .out() and ._retn() operations for _vars. Also added
+	  typedefs of the stub type, stub _ptr type and stub _var type
+	  to the code generation for the corresponding skeleton class
+	  for interfaces. This closes [BUGID:1083]. Thanks to 
+	  Andrew Sutton <ansutton@sep.com>, Holget Krekel <krekel@merlinux.de>
+	  and Jody Hagins <jody@atdesk.com> for their suggestions.
+
 Mon Jun 23 16:53:58 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp: 
@@ -1850,7 +1867,6 @@ Fri Jun 13 13:11:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * Makefile: Removed creation of a README for orbsvcs during the
           release since we have an html file in docs.
 
->>>>>>> 1.1915
 Thu Jun 12 15:34:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * tao/Typecode.cpp: In lieu of the following "Thu Jun 12 15:20:37

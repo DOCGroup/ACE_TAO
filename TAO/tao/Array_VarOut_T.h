@@ -39,12 +39,19 @@ public:
   T_slice const & operator[] (CORBA::ULong index) const;
   operator T_slice * const & () const; 
   
+  typedef const T_slice *   _in_type;
+  typedef       T_slice *   _inout_type;
+  typedef       T_slice *&  _out_type;
+  typedef       T_slice *   _retn_type;
+
   // in, inout, out, _retn 
-  const T_slice * in (void) const;
-  T_slice * inout (void);
-  T_slice *& out (void);
-  T_slice * _retn (void);
-  T_slice * ptr (void) const;
+  _in_type      in (void) const;
+  _inout_type   inout (void);
+  _out_type     out (void);
+  _retn_type    _retn (void);
+
+  // TAO extension.
+  _retn_type    ptr (void) const;
 
 protected:
   T_slice * ptr_;

@@ -155,6 +155,13 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   *os << class_name.c_str () << " (void);" << be_uidt_nl << be_nl
       << "public:" << be_idt_nl;
 
+  // Some useful typedefs.
+  *os << "// Useful for template programming." << be_nl
+      << "typedef " << node->name () << " _stub_type;" << be_nl
+      << "typedef " << node->name () << "_ptr _stub_ptr_type;" << be_nl
+      << "typedef " << node->name () << "_var _stub_var_type;" 
+      << be_nl << be_nl;
+
   // Copy constructor and destructor.
   *os << class_name.c_str () << " (const " 
       << class_name.c_str () << "& rhs);" << be_nl
