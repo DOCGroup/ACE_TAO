@@ -193,6 +193,8 @@ main (int, char *[])
   return 0;
 }
 
+#if defined (__BORLANDC__)
+// Borland C++ doesn't link with these instantiations in the ACE library.
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Stream<ACE_SYNCH>;
 template class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
@@ -202,3 +204,4 @@ template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
 #pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor>
 #pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor*>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* __BORLANDC__ */
