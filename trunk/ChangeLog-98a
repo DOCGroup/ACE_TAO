@@ -65,6 +65,9 @@ Mon Dec 01 07:56:02 1997  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-lynxos.h: added ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS.
           Without it, the Thread_Manager went recursively ballistic.
 
+        * performance-tests/Misc/preempt.cpp (main): fixed printout if
+          ACE_OS::sched_params () call failed.
+
 Sun Nov 30 22:44:50 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.1, released Sun Nov 30 22:44:50 1997.
