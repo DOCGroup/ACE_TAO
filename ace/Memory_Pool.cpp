@@ -681,7 +681,7 @@ ACE_Shared_Memory_Pool::find_seg (const void* const searchPtr,
       // If segment 'counter' starts at a location greater than the
       // place we are searching for. We then decrement the offset to
       // the start of counter-1. (flabar@vais.net)
-      if ((offset + (off_t)(this->base_addr_) ) > (off_t)searchPtr)
+      if (((ptrdiff_t) offset + (ptrdiff_t) (this->base_addr_)) > (ptrdiff_t) searchPtr)
         {
           --counter;
           offset -= buf.shm_segsz;

@@ -1,3 +1,11 @@
+Thu Mar 20 14:00:53 2003  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Memory_Pool.cpp (find_seg):
+
+	  Fixed overflow in pointer arithmetic on platforms where
+	  sizeof(void*) is greater than sizeof(off_t).  This also fixes a
+	  "cast from pointer to integer of different size" warning.
+
 Thu Mar 20 12:56:26 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Recursive_Condition_Bug_Test.cpp:
