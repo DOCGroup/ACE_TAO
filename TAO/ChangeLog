@@ -1,3 +1,12 @@
+Tue Aug 31 10:00:48 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+
+          When an array is not nested inside a class we need to specify the
+          storage type as the TAO_EXPORT_MACRO to get the functions
+          required for copying, freeing, duplicating and allocating exported
+          into the dll for Windows.
+
 Tue Aug 31 14:55:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/GIOP_Message_Base.cpp:
@@ -121,7 +130,7 @@ Mon Aug 30 07:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Aug 27 23:08:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/idl.ll:
 
           Fix for BUG 1683. Jeff prepared this lex file. I just generated
           the code, and applied the patches.
@@ -1473,7 +1482,7 @@ Mon Aug 23 21:40:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Mon Aug 23 20:36:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tao/Transport_Connector.cpp:
+        * tao/Transport_Connector.cpp:
 
           A simple programmatic error while trying to set the type of role
           on the client caused a bunch of tests to fail. Many tests should be
@@ -1531,7 +1540,7 @@ Fri Aug 20 19:15:16 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
           The Connection_Role enum is now in TAO namespace instead of the
           the global namespace.
 
- 	* tao/Acceptor_Impl.cpp:
+        * tao/Acceptor_Impl.cpp:
         * tao/Transport_Connector.cpp:
         * tao/default_client.cpp:
 
@@ -2413,7 +2422,7 @@ Thu Aug 12 09:22:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Aug 11 22:28:47 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/orbsvcs/CSI.idl:
+        * orbsvcs/orbsvcs/CSI.idl:
         * orbsvcs/orbsvcs/CSIIOP.idl:
         * orbsvcs/orbsvcs/SecurityLevel3.idl:
 
@@ -3399,7 +3408,7 @@ Sat Aug  7 23:06:41 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Sat Aug  7 18:08:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* utils/catior/catior.cpp:
+        * utils/catior/catior.cpp:
 
           Removed direct inclusion of <ctype.h>. This file already
           includes ace/os_include/os_ctype.h. If LynxOS has problems, then
@@ -3474,15 +3483,15 @@ Fri Aug  6 08:05:25 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Log/LogMgr_i.cpp (TAO_LogMgr_i): Initialize
           max_id_ to 0.  Thanks to Thomas Girard <thomas.g.girard@free.fr>
- 	  for reporting this.
+          for reporting this.
 
         * orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp (create_with_id):
           Duplidate object references before putting them in the hash map.
-  	  Thanks to Thomas Girard <thomas.g.girard@free.fr> for this fix.
+          Thanks to Thomas Girard <thomas.g.girard@free.fr> for this fix.
 
 Fri Aug  6 12:16:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* utils/nslist/nslist.cpp:
+        * utils/nslist/nslist.cpp:
 
           Fixed a core dump with the Object is _nil (). Thanks to Tufan
           Oruk <toruk at usa dot net> for the patch.
