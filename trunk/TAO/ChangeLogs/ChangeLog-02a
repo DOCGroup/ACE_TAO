@@ -1,3 +1,19 @@
+Tue Apr 18 10:14:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* InterfaceS.h:
+	* InterfaceS.cpp:
+	  Removed from TAO, code moved to the IFR_Service
+	  directory.
+
+	* Makefile:
+	* TAO.dsp:
+	* TAO_static.dsp:
+	* POA_CORBA.h:
+	  'TAO_Export' removed from declaration of IRObject, 
+	  since it is never instantiated inside TAO, and
+	  declared there only because it must be in the
+	  CORBA namespace.
+
 Mon Apr 17 20:12:13 2000  Vishal  <vishal@cs.wustl.edu>
 
         * TAO version 1.1.1 released.
