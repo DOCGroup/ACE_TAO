@@ -1,3 +1,22 @@
+Thu Sep 18 12:24:08 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tests/Semaphore_Test.cpp: Updated the test to use a temporary
+ 	  ACE_Time_Value variable that is passed to
+ 	  ACE_Semaphore::acquire() so that we don't have problems with
+ 	  reference anachronisms...  Thanks to David Levine for reporting
+ 	  this.
+
+	* ace/Log_Msg.cpp: Changed over to using ACE_SPIPEs for the
+ 	  logging mechanism rather than ACE_FIFOs to conform to the
+ 	  changes to Client_Logging_Handler.
+
+	* netsvcs/lib/Client_Logging_Handler.cpp:
+ 	  Completely rewrote the Client Logging Daemon so that it uses
+ 	  ACE_SPIPEs by default, rather than ACE_FIFOs.  This is more
+ 	  portable and makes it easier to write a generic client logging
+ 	  daemon...  If a platform doesn't support ACE_SPIPEs, then we 
+	  revert to using sockets.
+
 Thu Sep 18 09:04:40 1997    <irfan@TWOSTEP>
 
 	* ace/Dynamic: Changed the way ACE_Dynamic worked. Instead of
@@ -12,19 +31,6 @@ Thu Sep 18 09:04:40 1997    <irfan@TWOSTEP>
 Thu Sep 18 01:12:36 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ACE version 4.3.8, released Thu Sep 18 01:12:36 1997.
-
-Thu Sep 18 00:21:33 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* ace/Log_Msg.cpp: Changed over to using ACE_SPIPEs for the
- 	  logging mechanism rather than ACE_FIFOs to conform to the
- 	  changes to Client_Logging_Handler.
-
-	* netsvcs/lib/Client_Logging_Handler.cpp:
- 	  Completely rewrote the Client Logging Daemon so that it uses
- 	  ACE_SPIPEs by default, rather than ACE_FIFOs.  This is more
- 	  portable and makes it easier to write a generic client logging
- 	  daemon...  If a platform doesn't support ACE_SPIPEs, then we 
-	  revert to using sockets.
 
 Wed Sep 17 22:47:20 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 

@@ -186,6 +186,9 @@ public:
   int acquire (ACE_Time_Value &tv);
   // Block the thread until <tv> times out or until the semaphore
   // count becomes greater than 0 (at which point it is decremented).
+  // The value of <tv> is updated upon return, i.e., the caller gets
+  // the amount of time that has elapsed while waiting to acquire the
+  // semaphore.
 
   int tryacquire (void);
   // Conditionally decrement the semaphore if count is greater than 0
