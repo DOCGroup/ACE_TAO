@@ -7,6 +7,11 @@ Tue Feb 22 14:51:32 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  <werzinger.lothar@krones.de> for the example IDL file 
 	  that uncovered this bug.
 
+	* tests/IDL_Test/included.idl:
+	* tests/IDL_Test/including.idl:
+	* tests/IDL_Test/reopened_modules.idl:
+	  Examples added to test the use case above.
+
 Tue Feb 22 13:28:19 2000  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Globals.cpp: 
