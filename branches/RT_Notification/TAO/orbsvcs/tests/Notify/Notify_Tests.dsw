@@ -216,6 +216,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Driver EXE"=.\Driver\Driver.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Filter Structured Consumer"=.\Structured_Filter\Structured_Filter_Consumer.dsp - Package Owner=<4>
 
 Package=<5>
@@ -457,6 +469,30 @@ Package=<4>
 ###############################################################################
 
 Project: "TAO_NotifyTests DLL"=.\lib\TAO_NotifyTests.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TAO_RT_NotifyTests DLL"=.\lib\TAO_RT_NotifyTests.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TAO_RT_NotifyTests_Filter DLL"=.\lib\TAO_RT_NotifyTests_Filter.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

@@ -1,8 +1,8 @@
 project(TAO_NotifyTests): orbsvcslib, notify {
-  depends += CosNotification
+  depends += CosNotification CosEvent
   sharedname += TAO_NotifyTests
 
-  libs += TAO_CosNotification
+  libs += TAO_CosNotification TAO_CosEvent
 
   libpaths += $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL
   libpaths += $(TAO_ROOT)/tao/IORTable

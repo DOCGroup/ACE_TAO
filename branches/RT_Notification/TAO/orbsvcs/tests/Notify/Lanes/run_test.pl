@@ -29,7 +29,7 @@ $Supplier = new PerlACE::Process ("../Driver/Notify_Tests_Driver");
 
 $Supplier_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $supplier_ior -ORBSvcConf $supplier_conf";
 
-$Consumer = new PerlACE::Process ("../Driver/Driver");
+$Consumer = new PerlACE::Process ("../Driver/Notify_Tests_Driver");
 
 $Consumer_Args = "-ORBInitRef NameService=file://$naming_ior -IORinput file://$supplier_ior -ORBSvcConf $consumer_conf";
 

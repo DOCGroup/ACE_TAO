@@ -212,10 +212,6 @@ SOURCE=.\Activation_ManagerS.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Activation_ManagerS_T.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Application_Command.h
 # End Source File
 # Begin Source File
@@ -340,21 +336,12 @@ SOURCE=.\Activation_ManagerS.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Activation_ManagerS_T.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Task_Stats.inl
 # End Source File
 # End Group
 # Begin Group "Template Files"
 
 # PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\Activation_ManagerS_T.cpp
-# PROP Exclude_From_Build 1
-# End Source File
 # Begin Source File
 
 SOURCE=.\Command_Factory_T.cpp
