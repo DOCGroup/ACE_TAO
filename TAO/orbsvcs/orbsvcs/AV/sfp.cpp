@@ -34,6 +34,7 @@ SFP_Encoder::SFP_Encoder ()
 ACE_Message_Block *
 SFP_Encoder::encode_start_message ()
 {
+  this->encoder_->reset ();
   TAO_TRY
     {
       // construct the start message
@@ -79,6 +80,7 @@ SFP_Encoder::encode_start_message ()
 ACE_Message_Block *
 SFP_Encoder::encode_simple_frame (ACE_Message_Block *data)
 {
+  this->encoder_->reset ();
   TAO_TRY
     {
       // construct the frame header
@@ -103,7 +105,7 @@ SFP_Encoder::encode_simple_frame (ACE_Message_Block *data)
           == CORBA_TypeCode::TRAVERSE_CONTINUE)
         {
           ACE_DEBUG ((LM_DEBUG, 
-                      "(%P|%t) encode of simple frame succeeded:"
+                      "(%P|%t) encode of simple frameheader succeeded:"
                       "length == %d\n",
                       encoder_->length ()));
           
@@ -125,6 +127,8 @@ SFP_Encoder::encode_simple_frame (ACE_Message_Block *data)
 
   return mb;
 }
+
+
 
 SFP_Encoder::~SFP_Encoder ()
 {
@@ -163,23 +167,20 @@ SFP_Decoder::SFP_Decoder ()
   
 }
 
+// Attempts to decode the message as an SFP start message
+// returns 0 on success, -1 on failure
 int
 SFP_Decoder::decode_start_message (ACE_Message_Block *message)
 {
+
+  this->decoder_->reset ();
 
   SFP::start_message start;
 
   TAO_TRY
     {
-      //      decoder_->setup_encapsulation (message->rd_ptr (),
-      //                                     message->length ());
-      decoder_->grow (message->length ());
-
-      char *bufptr = decoder_->buffer ();
-
-      ACE_OS::memcpy (bufptr, 
-                      message->rd_ptr (), 
-                      message->length ());
+      this->create_cdr_buffer (message->rd_ptr (),
+                               message->length ());
 
       decoder_->decode (SFP::_tc_start_message,
 			&start,
@@ -204,6 +205,77 @@ SFP_Decoder::decode_start_message (ACE_Message_Block *message)
 
   return 0;
 }
+
+// Attempts to decode the message as an SFP simple frame.
+// On success, message->rd_ptr () points to the data
+// Returns 0 on success, -1 on failure
+int
+SFP_Decoder::decode_simple_frame (ACE_Message_Block *message)
+{
+
+  this->decoder_->reset ();
+
+  if (message->length () < TAO_SFP_FRAME_HEADER_LEN)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) SFP_Decoder::decode_simple_frame: "
+                       "Message too small to be a valid header!"),
+                      -1);
+
+  SFP::frame_header header;
+
+  TAO_TRY
+    {
+      this->create_cdr_buffer (message->rd_ptr (),
+                               TAO_SFP_FRAME_HEADER_LEN);
+
+      decoder_->decode (SFP::_tc_frame_header,
+			&header,
+			0,
+			TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("SFP_Decoder::"
+                                   "decode_frame_header");
+      return -1;
+    }
+  TAO_ENDTRY;
+
+  ACE_DEBUG ((LM_DEBUG, 
+	      "Decoded frame header, "
+	      "magic number == %d "
+              "message length == %d",
+	      header.magic_number,
+	      header.message_size));
+
+  // Make the message read pointer point to the data
+  message->rd_ptr (message->rd_ptr () + 
+                   TAO_SFP_FRAME_HEADER_LEN);
+
+  return 0;
+
+}
+
+// Copies length bytes from the given message into the
+// CDR buffer. Returns 0 on success, -1 on failure
+int
+SFP_Decoder::create_cdr_buffer (char *message,
+                                size_t length)
+{
+  this->decoder_->grow (length);
+  
+  char *bufptr = this->decoder_->buffer ();
+  
+   ACE_OS::memcpy (bufptr, 
+                   message, 
+                   length);
+   
+   return 0;
+}
+  
+
 
 SFP_Decoder::~SFP_Decoder ()
 {
