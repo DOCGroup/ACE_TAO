@@ -60,10 +60,10 @@ extern ACE_Svc_Export CORBA::Char *title;
 
 extern ACE_Svc_Export CORBA::Char stats[128];
 extern ACE_Svc_Export unsigned long srcDataSize;	/* Total amount of source data */
-extern ACE_Svc_Export CORBA::ULong nbytes;		/* bytes on net */
-extern ACE_Svc_Export CORBA::ULong numCalls;		/* # of I/O system calls */
+extern ACE_Svc_Export unsigned long nbytes;		/* bytes on net */
+extern ACE_Svc_Export unsigned long numCalls;		/* # of I/O system calls */
 extern ACE_Svc_Export CORBA::Double cput, realt;		/* user, real time (seconds) */
-extern ACE_Svc_Export CORBA::ULong	dt;
+extern ACE_Svc_Export unsigned long dt;
 
 /* declare struct variables for various message types */
 extern ACE_Svc_Export ttcp_sequence::ShortSeq		*sseq;	
