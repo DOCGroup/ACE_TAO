@@ -1,3 +1,24 @@
+Mon Mar  8 20:49:45 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/params.h: 
+	* tao/ORB_Core.cpp: 
+	* docs/Options.html: 
+	* docs/configurations.html: 
+	* docs/releasenotes/orbcore.html: 
+	  Change the iioplite option to gioplite.
+
+	* tao/IIOP_ORB.h: 
+	* tao/IIOP_ORB.cpp: 
+	  Added support for file://-style IORs; we simply use the
+	  ACE_Read_Buffer class to read the IOR from the file and then
+	  call string_to_object again.
+
+	* tao/GIOP.cpp: 
+	  Fixed debug message.
+
+	* tao/Server_Request.cpp: 
+	  Minor cosmetic fixes.
+
 Mon Mar  8 20:09:07 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/docs/releasenotes/index.html:
@@ -63,7 +84,7 @@ Mon Mar  8 11:08:02 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 Sun Mar  7 19:29:06 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/Options.html (bgcolor): 
-	Updated the doucmentation for the ORB configuration
+	Updated the documentation for the ORB configuration
 
 Sun Mar 07 17:39:22 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -126,21 +147,27 @@ Fri Mar  5 20:50:23 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
         * orbsvcs/Makefile: included the CosEvent_Channel in the list
           of directories to build.
+
         * orbsvcs/CosEvent_Service/CosEvent_Service{.h, .cpp}:
           replaced the TAO_TRY macros with ACE_ macros.
+
         * orbsvcs/tests/CosEC_Basic/{*.h, *.cpp}:
           replaced the TAO_TRY macros with ACE_ macros.
+
         * orbsvcs/tests/CosEC_Basic/CosECConsumer{.h.cpp}:
           added an ORB pointer, which is used to shutdown the ORB
           after a <push> is received by a consumer.
+
         * orbsvcs/tests/CosEC_Basic/CosEC_Basic{.h, .cpp}:
           fixed a bug that caused this test to fail - thanks to
           Jim Crossley <jim@lads.com> for pointing this out.
           The RtEC needs to be constructed with a valid
           TAO_Reactive_Module_Factory. Creating the Rtec on the heap
           with an initialized module factory fixed this.
+
         * orbsvcs/tests/CosEC_Multiple {*.h, *.cpp}
           replaced the TAO_TRY macros with ACE_ macros.
+
         * docs/releasenotes/index.html: updated the CosEC information.
 
 Fri Mar  5 18:11:04 1999  Darrell Brunsch <brunsch@cs.wustl.edu>

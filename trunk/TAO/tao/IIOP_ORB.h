@@ -62,6 +62,12 @@ public:
   // Get collocation optimization status.
 
 private:
+  CORBA::Object_ptr file_string_to_object (const char* filename,
+                                           CORBA::Environment& env);
+  // Read an IOR from a file and then parse it, returning the object
+  // reference.
+
+private:
   CORBA::Boolean use_omg_ior_format_;
   // Decides whether to use the URL notation or to use IOR notation.
 

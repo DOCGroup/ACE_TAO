@@ -10,6 +10,9 @@
 // object references.
 
 #include "tao/IIOP_ORB.h"
+
+#include "ace/Read_Buffer.h"
+
 #include "tao/CDR.h"
 #include "tao/Typecode.h"
 #include "tao/Environment.h"
@@ -27,6 +30,7 @@
 ACE_RCSID(tao, IIOP_ORB, "$Id$")
 
 static const char ior_prefix [] = "IOR:";
+static const char file_prefix[] = "file://";
 
 // Objref stringification.
 
@@ -241,6 +245,11 @@ IIOP_ORB::string_to_object (const char *str,
     obj = iiop_string_to_object (str + iiop_prefix_len, env);
 
   else if (ACE_OS::strncmp (str,
+                            file_prefix,
+                            sizeof file_prefix - 1) == 0)
+    obj = this->file_string_to_object (str + sizeof file_prefix -1, env);
+
+  else if (ACE_OS::strncmp (str,
                             ior_prefix,
                             sizeof ior_prefix - 1) == 0)
     obj = ior_string_to_object (str + sizeof ior_prefix - 1, env);
@@ -337,6 +346,39 @@ IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
 #endif
 
   return 0;
+}
+
+CORBA::Object_ptr
+IIOP_ORB::file_string_to_object (const char* filename,
+                                 CORBA::Environment& ACE_TRY_ENV)
+{
+  ACE_HANDLE handle = ACE_OS::open (filename, O_RDONLY);
+  if (handle == ACE_INVALID_HANDLE)
+    return CORBA::Object::_nil ();
+
+  ACE_Read_Buffer reader (handle);
+
+  char* string = reader.read ();
+  ACE_OS::close (handle);
+  if (string == 0)
+    return CORBA::Object::_nil ();
+
+  CORBA::Object_ptr object = CORBA::Object::_nil ();
+  ACE_TRY
+    {
+      object = this->string_to_object (string, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      reader.alloc ()->free (string);
+    }
+  ACE_CATCHANY
+    {
+      reader.alloc ()->free (string);
+      ACE_RETHROW;
+    }
+  ACE_ENDTRY;
+
+  return object;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

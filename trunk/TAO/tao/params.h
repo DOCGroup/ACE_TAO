@@ -113,8 +113,8 @@ public:
 
   int use_lite_protocol (void) const;
   void use_lite_protocol (int);
-  // The ORB will use a modified version of IIOP that minimizes the
-  // header size. By default we use the standard IIOP protocol.
+  // The ORB will use a modified version of GIOP that minimizes the
+  // header size. By default we use the standard GIOP protocol.
 
   int use_dotted_decimal_addresses (void) const;
   void use_dotted_decimal_addresses (int);

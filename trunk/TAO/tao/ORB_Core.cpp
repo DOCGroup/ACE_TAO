@@ -126,7 +126,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   CORBA::Boolean use_ior = 1;
   int cdr_tradeoff = ACE_DEFAULT_CDR_MEMCPY_TRADEOFF;
 
-  int iiop_lite = 0;
+  int giop_lite = 0;
 
   // The following things should be changed to use the ACE_Env_Value<>
   // template sometime.
@@ -396,10 +396,10 @@ TAO_ORB_Core::init (int &argc, char *argv[])
             }
         }
 #endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
-      else if (ACE_OS::strcmp (current_arg, "-ORBiioplite") == 0)
+      else if (ACE_OS::strcmp (current_arg, "-ORBgioplite") == 0)
         {
           arg_shifter.consume_arg ();
-          iiop_lite = 1;
+          giop_lite = 1;
         }
 
       // A new <ObjectID>:<IOR> mapping has been specified. This will be
@@ -558,7 +558,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   if (cdr_tradeoff >= 0)
     this->orb_params ()->cdr_memcpy_tradeoff (cdr_tradeoff);
 
-  this->orb_params ()->use_lite_protocol (iiop_lite);
+  this->orb_params ()->use_lite_protocol (giop_lite);
 
   this->orb_params ()->use_dotted_decimal_addresses (dotted_decimal_addresses);
 
