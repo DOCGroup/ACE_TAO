@@ -16,8 +16,8 @@
 #include "SHMIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Strategies, 
-           SHMIOP_Acceptor, 
+ACE_RCSID (Strategies,
+           SHMIOP_Acceptor,
            "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -313,8 +313,7 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
     }
 
   this->base_acceptor_.acceptor().mmap_prefix (this->mmap_file_prefix_);
-  this->base_acceptor_.acceptor().malloc_options ().minimum_bytes_
-    = this->mmap_size_;
+  this->base_acceptor_.acceptor().init_buffer_size (this->mmap_size_);
 
   if (orb_core->server_factory ()->activate_server_connections () != 0)
     this->base_acceptor_.acceptor().preferred_strategy (ACE_MEM_IO::MT);
