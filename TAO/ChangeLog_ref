@@ -1,3 +1,11 @@
+Thu Oct 16 09:37:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Messaging/Asynch_Invocation_Adapter.cpp:
+	* tao/Messaging/Asynch_Invocation.cpp: Moved the auto_ptr <> from
+	  the adapter class to the block of code that invokes
+	  interceptors. That is the only point where we need to be careful
+	  of not leaking the memory allocated for the reply_handler. 
+
 Wed Oct 15 17:40:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Collocated_Invocation.h: Changed the inheritance to be

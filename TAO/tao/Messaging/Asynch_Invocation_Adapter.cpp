@@ -97,8 +97,6 @@ namespace TAO
                           TAO_INVOKE_FAILURE);
       }
 
-    auto_ptr<TAO_Asynch_Reply_Dispatcher> safe_rd (this->rd_);
-
     if (this->rd_)
       {
         // Cache the  transport in the reply dispatcher
@@ -123,9 +121,6 @@ namespace TAO
                                 ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
-    if (s != TAO_INVOKE_FAILURE)
-      (void) safe_rd.release ();
-
     if (s == TAO_INVOKE_RESTART &&
         asynch.is_forwarded ())
       {
@@ -141,28 +136,3 @@ namespace TAO
   }
 
 } // End namespace TAO
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class auto_ptr<CORBA::SystemException>;
-template class auto_ptr<CORBA::Exception>;
-#  if defined (ACE_LACKS_AUTO_PTR) \
-      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
-           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-template class ACE_Auto_Basic_Ptr<CORBA::SystemException>;
-template class ACE_Auto_Basic_Ptr<CORBA::Exception>;
-#  endif  /* ACE_LACKS_AUTO_PTR */
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate auto_ptr<CORBA::SystemException>
-#pragma instantiate auto_ptr<CORBA::Exception>
-#  if defined (ACE_LACKS_AUTO_PTR) \
-      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
-           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-#    pragma instantiate ACE_Auto_Basic_Ptr<CORBA::SystemException>
-#    pragma instantiate ACE_Auto_Basic_Ptr<CORBA::Exception>
-#  endif  /* ACE_LACKS_AUTO_PTR */
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
