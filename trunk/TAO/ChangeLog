@@ -1,3 +1,12 @@
+Sat Dec 11 15:10:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnySeq.pidl:
+          Updated regeneration instructions
+
+        * tao/AnySeqA.cpp
+        * tao/AnySeqC.{h,cpp}:
+          Regenerated
+
 Sat Dec 11 14:29:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ObjectIdList.pidl:
