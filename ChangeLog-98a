@@ -1,3 +1,8 @@
+Mon Dec 29 08:59:28 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Basic_Types.h: Linux w/o glibc 2.0 doesn't have u_longlong_t,
+          so use "unsigned long long" for it.
+
 Mon Dec 29 08:35:17 1997  Steve Huston  <shuston@riverace.com>
 
 	* include/makeinclude/platform_hpux_aCC.GNU: Removed the PRELIB
