@@ -1,3 +1,12 @@
+Wed Sep  2 14:28:54 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Sequence.i: 
+	  The replace() method that use a Message_Block was setting the
+	  length of the sequence but not of the message block, this was at
+	  the very least confusing. Thanks to Dave Meyer
+	  <dmeyer@std.saic.com> for reporting this problem and testing the
+	  fix.
+
 Wed Sep  2 11:38:35 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* orbsvcs/tests/Logger/Logging_Test_i.cpp: Now checks for the
