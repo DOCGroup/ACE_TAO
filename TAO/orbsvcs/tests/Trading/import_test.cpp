@@ -5,18 +5,34 @@
 #include "Offer_Importer.h"
 
 int
+is_federated (int argc, char *argv[])
+{
+  int opt;
+  ACE_Get_Opt get_opt (argc, argv, "f");
+
+  CORBA::Boolean return_value = CORBA::B_FALSE;
+  while ((opt = get_opt ()) != EOF)
+    {
+      if (opt == 'f')
+        return_value = CORBA::B_TRUE;
+    }
+
+  return return_value;
+}
+
+int
 main (int argc, char** argv)
 {
   TAO_TRY
     {
       TAO_ORB_Manager orb_manager;
-
       orb_manager.init (argc, argv, TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
       // Initialize ORB.
       CORBA::ORB_var orb = orb_manager.orb ();
-
+      CORBA::Boolean federated = ::is_federated (argc, argv);
+      
       // Bootstrap to the Lookup interface.
       ACE_DEBUG ((LM_ERROR, "Bootstrap to the Lookup interface.\n"));
       CORBA::Object_var trading_obj =
@@ -37,11 +53,14 @@ main (int argc, char** argv)
       ACE_DEBUG ((LM_DEBUG, "Running the Offer Importer tests.\n"));
       TAO_Offer_Importer offer_importer (lookup_if.in ());
       
-      offer_importer.perform_queries (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      //      offer_importer.perform_federated_queries (TAO_TRY_ENV);
+      //      offer_importer.perform_queries (TAO_TRY_ENV);
       //      TAO_CHECK_ENV;
+
+      if (federated)
+        {
+          offer_importer.perform_directed_queries (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+        }
     }
   TAO_CATCHANY
     {
