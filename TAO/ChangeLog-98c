@@ -1,3 +1,8 @@
+Sun Jul 26 16:02:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp: Removed a line in unset_leader_wake_up_follower
+	  which did not belong there any more.
+
 Sun Jul 26 10:11:07 1998  Carlos O'Ryan  <coryan@JIG>
 
 	* orbsvcs/Trading_Service/Trading_Service.cpp: 
