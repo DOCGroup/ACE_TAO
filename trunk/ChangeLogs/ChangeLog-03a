@@ -1,3 +1,18 @@
+Tue Aug 27 18:52:59 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
+
+	* ace/Select_Reactor_T.cpp (wait_for_multiple_events): Normally, 
+	  select() will reset the bits in dispatch_set so that only those
+	  filed descriptors that are ready will have bits set.  However,
+	  when an error occurs, the bit set remains as it was when the
+	  select call was first made.  Thus, we now have a dispatch_set
+	  that has every file descriptor that was originally waited for,
+	  which is not correct.  We must clear all the bit sets because we
+	  have no idea if any of the file descriptors is ready. 
+	  
+	  Thanks to Jody Hagins <jody@atdesk.com> and Carlos O'Ryan
+	  <coryan@atdesk.com> for reporting this problem and proving the
+	  patches. 
+
 Tue Aug 27 15:56:10 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/config-sunos5.8-sunc++-5.4.h:
