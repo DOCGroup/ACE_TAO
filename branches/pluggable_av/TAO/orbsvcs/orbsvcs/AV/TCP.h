@@ -208,6 +208,9 @@ public:
   virtual int destroy (void);
   // end the stream.
 
+private:
+  ACE_Message_Block frame_;
+  // Pre-allocated memory to receive the data...
 };
 
 class TAO_AV_TCP_Flow_Factory : public TAO_AV_Flow_Protocol_Factory

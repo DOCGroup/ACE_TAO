@@ -200,20 +200,15 @@ TAO_AV_TCP_Factory::make_connector (void)
 int
 TAO_AV_TCP_Object::handle_input (void)
 {
-  size_t size = BUFSIZ;
-  ACE_Message_Block *frame = 0;
-  ACE_NEW_RETURN (frame,
-                  ACE_Message_Block (size),
-                  -1);
-  int n = this->transport_->recv (frame->rd_ptr (),
-                                  size);
+  int n = this->transport_->recv (this->frame_.rd_ptr (),
+                                  this->frame_.size ());
   if (n == -1)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_Flow_Handler::handle_input recv failed\n"),-1);
   if (n == 0)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_Flow_Handler::handle_input connection closed\n"),-1);
-  frame->wr_ptr (n);
+  this->frame_.wr_ptr (this->frame_.rd_ptr () + n);
 
-  return this->callback_->receive_frame (frame);
+  return this->callback_->receive_frame (&this->frame_);
 }
 
 int
@@ -226,7 +221,7 @@ TAO_AV_TCP_Object::send_frame (ACE_Message_Block *frame,
   return 0;
 }
 
-int 
+int
 TAO_AV_TCP_Object::send_frame (const iovec *iov,
                                int iovcnt,
                                TAO_AV_frame_info *frame_info)
@@ -238,6 +233,8 @@ TAO_AV_TCP_Object::TAO_AV_TCP_Object (TAO_AV_Callback *callback,
                                       TAO_AV_Transport *transport)
   :TAO_AV_Protocol_Object (callback,transport)
 {
+  // @@ Is this a good size?
+  this->frame_.size (BUFSIZ);
 }
 
 TAO_AV_TCP_Object::~TAO_AV_TCP_Object (void)
@@ -485,7 +482,7 @@ TAO_AV_TCP_Acceptor::make_svc_handler (TAO_AV_TCP_Flow_Handler *&tcp_handler)
 //       this->endpoint_->set_protocol_object (this->flowname_.c_str (),
 //                                             object);
       this->endpoint_->set_handler (this->flowname_.c_str (),tcp_handler);
-      this->entry_->protocol_object (object);      
+      this->entry_->protocol_object (object);
       this->entry_->handler (tcp_handler);
     }
   return 0;
@@ -629,7 +626,7 @@ TAO_AV_TCP_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
 }
 
 int
-TAO_AV_TCP_Flow_Handler::handle_timeout (const ACE_Time_Value &tv, 
+TAO_AV_TCP_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
                                                const void *arg)
 {
   return TAO_AV_Flow_Handler::handle_timeout (tv,arg);

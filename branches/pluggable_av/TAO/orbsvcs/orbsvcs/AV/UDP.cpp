@@ -608,20 +608,15 @@ TAO_AV_UDP_Factory::init (int /* argc */,
 int
 TAO_AV_UDP_Object::handle_input (void)
 {
-  size_t size = 2*this->transport_->mtu ();
-  ACE_Message_Block *frame = 0;
-  ACE_NEW_RETURN (frame,
-                  ACE_Message_Block (size),
-                  -1);
-  int n = this->transport_->recv (frame->rd_ptr (),
-                                  frame->size ());
+  int n = this->transport_->recv (this->frame_.rd_ptr (),
+                                  this->frame_.size ());
   if (n == -1)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_UDP_Flow_Handler::handle_input recv failed\n"),-1);
   if (n == -1)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_UDP_Flow_Handler::handle_input connection closed\n"),-1);
-  frame->wr_ptr (n);
+  this->frame_.wr_ptr (this->frame_.rd_ptr () + n);
 
-  return this->callback_->receive_frame (frame);
+  return this->callback_->receive_frame (&this->frame_);
 }
 
 int
@@ -647,6 +642,7 @@ TAO_AV_UDP_Object::TAO_AV_UDP_Object (TAO_AV_Callback *callback,
                                       TAO_AV_Transport *transport)
   :TAO_AV_Protocol_Object (callback,transport)
 {
+  this->frame_.size (2 * this->transport_->mtu ());
 }
 
 TAO_AV_UDP_Object::~TAO_AV_UDP_Object (void)
