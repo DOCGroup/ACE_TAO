@@ -147,7 +147,8 @@ typedef class CORBA_Exception *CORBA_Exception_ptr;
   TAO_SYSTEM_EXCEPTION(BAD_QOS); \
   TAO_SYSTEM_EXCEPTION(INVALID_ACTIVITY); \
   TAO_SYSTEM_EXCEPTION(ACTIVITY_COMPLETED); \
-  TAO_SYSTEM_EXCEPTION(ACTIVITY_REQUIRED);
+  TAO_SYSTEM_EXCEPTION(ACTIVITY_REQUIRED); \
+  TAO_SYSTEM_EXCEPTION(THREAD_CANCELLED);
 
 #define TAO_SYSTEM_EXCEPTION(name) \
   class CORBA_ ## name
@@ -684,6 +685,7 @@ TAO_NAMESPACE CORBA
 //   typedef TAO_Unbounded_Sequence<Octet> OctetSeq_var;
 //   typedef TAO_Unbounded_Sequence<Octet> OctetSeq_out;
 
+    
   // = various CORBA defined classes.
   typedef CORBA_Any Any;
   typedef CORBA_Any_var Any_var;
