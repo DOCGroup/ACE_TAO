@@ -157,9 +157,15 @@ static void TestIpAddress()
   IpAddress ia5(ga);
   ACE_ASSERT(ia5.is_broadcast());
   IpAddress ia6 = IpAddress("10.0.0.2");
-  ACE_ASSERT(ia6.is_arpanet());
+  ACE_ASSERT(ia6.is_private());
   ACE_ASSERT(!ia6.is_multicast());
   ACE_ASSERT(!ia6.is_loopback());
+
+  IpAddress ia7("172.16.0.1");
+  ACE_ASSERT(ia7.is_private());
+
+  IpAddress ia8("192.168.0.1");
+  ACE_ASSERT(ia8.is_private());
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) IpAddress:ia1(\"\") [%s]\n", 
     ia1.to_string()));
