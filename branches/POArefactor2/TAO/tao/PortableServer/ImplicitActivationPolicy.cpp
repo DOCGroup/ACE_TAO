@@ -1,6 +1,7 @@
 #include "ImplicitActivationPolicy.h"
 #include "ImplicitActivationPolicyValue.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Service_Config.h"
 
 #define TAO_PORTABLESERVER_SAFE_INCLUDE
 #include "PortableServerC.h"
@@ -42,30 +43,32 @@ namespace TAO
         case ::PortableServer::IMPLICIT_ACTIVATION :
           {
             this->value_ =
-              ACE_Dynamic_Service<Implicit_Implicit_Activation_Policy>::instance ("Implicit_Implicit_Activation_Policy");
+              ACE_Dynamic_Service<ImplicitActivationPolicyValue>::instance ("Implicit_Implicit_Activation_Policy");
 
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::Portable_Server::ace_svc_desc_Implicit_Implicit_Activation_Policy);
+                  ACE_TEXT("dynamic Implicit_Implicit_Activation_Policy Service_Object *")
+                  ACE_TEXT("TAO_PortableServer:_make_Implicit_Implicit_Activation_Policy()"));
 
                 this->value_ =
-                  ACE_Dynamic_Service<Implicit_Implicit_Activation_Policy>::instance ("Implicit_Implicit_Activation_Policy");
+                  ACE_Dynamic_Service<ImplicitActivationPolicyValue>::instance ("Implicit_Implicit_Activation_Policy");
               }
             break;
           }
         case ::PortableServer::NO_IMPLICIT_ACTIVATION :
           {
             this->value_ =
-              ACE_Dynamic_Service<No_Implicit_Implicit_Activation_Policy>::instance ("No_Implicit_Implicit_Activation_Policy");
+              ACE_Dynamic_Service<ImplicitActivationPolicyValue>::instance ("No_Implicit_Implicit_Activation_Policy");
 
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::Portable_Server::ace_svc_desc_No_Implicit_Implicit_Activation_Policy);
+                  ACE_TEXT("dynamic No_Implicit_Implicit_Activation_Policy Service_Object *")
+                  ACE_TEXT("TAO_PortableServer:_make_No_Implicit_Implicit_Activation_Policy()"));
 
                 this->value_ =
-                  ACE_Dynamic_Service<No_Implicit_Implicit_Activation_Policy>::instance ("No_Implicit_Implicit_Activation_Policy");
+                  ACE_Dynamic_Service<ImplicitActivationPolicyValue>::instance ("No_Implicit_Implicit_Activation_Policy");
               }
 
             break;
