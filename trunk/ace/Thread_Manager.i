@@ -257,6 +257,30 @@ ACE_Thread_Manager::open (size_t)
   return 0;
 }
 
+#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
+ACE_INLINE int
+ACE_Thread_Manager::at_exit (ACE_At_Thread_Exit* at)
+{
+  return this->thread_desc_self ()->at_exit (at);
+}
+
+ACE_INLINE int
+ACE_Thread_Manager::at_exit (ACE_At_Thread_Exit& at)
+{
+  return this->thread_desc_self ()->at_exit (at);
+}
+#endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
+
+ACE_INLINE int
+ACE_Thread_Manager::at_exit (void *object,
+                             ACE_CLEANUP_FUNC cleanup_hook,
+                             void *param)
+{
+  return this->thread_desc_self ()->at_exit (object,
+                                             cleanup_hook,
+                                             param);
+}
+
 ACE_INLINE void
 ACE_Thread_Manager::wait_on_exit (int do_wait)
 {
