@@ -339,7 +339,8 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_number, inet_address) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
+                ASYS_TEXT ("%p\n",
+                           ASYS_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
 }
 
 // Creates a ACE_INET_Addr from a PORT_NAME and the remote

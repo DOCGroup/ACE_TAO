@@ -104,6 +104,10 @@ public:
   // Returns the underlying PEER_STREAM (used by
   // ACE_Acceptor::accept() and ACE_Connector::connect() factories).
 
+  void *operator new (size_t n);
+  // Overloaded new operator.  This is used to unobtrusively detect
+  // when a Svc_Handler is allocated dynamically.
+
   virtual void destroy (void);
   // Call this instead of <delete> to free up dynamically allocated
   // <Svc_Handlers> (otherwise you will get memory leaks).  This
@@ -111,22 +115,17 @@ public:
   // and can act accordingly (i.e., deleting it if it was allocated
   // dynamically, otherwise ignoring it).
 
-  void *operator new (size_t n);
-  // Overloaded new operator.  This is used to unobtrusively detect
-  // when a Svc_Handler is allocated dynamically.
+  void operator delete (void *);
+  // This really should be private so that users are forced to call
+  // <destroy>.  Unfortunately, the C++ standard doesn't allow there
+  // to be a public new and a private delete.  It is a bad idea to
+  // call this method directly, so use <destroy> instead.
 
   void shutdown (void);
   // Close down the descriptor and unregister from the Reactor
 
   void dump (void) const;
   // Dump the state of an object.
-
-public:
-
-  void operator delete (void *);
-  // This really should be private so that users are forced to call
-  // destroy().  Unfortunately, the C++ standard doesn't allow there
-  // to be a public new and a private delete.
 
 public:
 
