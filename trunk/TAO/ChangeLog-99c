@@ -1,3 +1,15 @@
+Thu Apr 29 12:15:22 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp
+	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
+	Provided a temporary fix for the <destroy> methods, to avoid
+	crashing since the new POA changes.  Appropriate fix will be
+	committed soon together with the restructured version of Naming
+	implementation classes.
+
+	* orbsvcs/tests/Simple_Naming/client.cpp:
+	Updated for servants to deregister from POA before being destroyed.
+
 Thu Apr 29 10:36:59 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Servant_Base.{h,cpp}: Changed the type of ref_count_ to
