@@ -1,8 +1,7 @@
-
 Wed Mar 18 11:00:11 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* ace/Hash_Map_Manager.cpp (map): This method has been added to
-	the ACE_Hash_Map_Iterator_Base class.
+        * ace/Hash_Map_Manager.cpp (map): This method has been added to
+        the ACE_Hash_Map_Iterator_Base class.
 
 Wed Mar 18 09:25:30 1998  Chris Gill  <cdgill@tango.cs.wustl.edu>
 
@@ -23,20 +22,26 @@ Wed Mar 18 09:22:13 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/README: removed ACE_HAS_BOOL.  It was unused.
 
+        * performance-tests/Misc/basic_func.{h,cpp},basic_perf.cpp:
+          With MSVC 5.0, do something in the empty iteration because
+          otherwise it gets completely optimized away.  Thanks to
+          Alexander Ovsiankin <sasha@technologist.com> for providing
+          this fix.
+
 Tue Mar 17 23:53:56 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Threads/task_five.cpp (main): Reformatted Detlef's new
- 	  torture test so that it conforms to ACE programming conventions.
+        * examples/Threads/task_five.cpp (main): Reformatted Detlef's new
+          torture test so that it conforms to ACE programming conventions.
 
 Tue Mar 17 23:22:20 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Reactor.cpp (ACE_Reactor): If
- 	  ACE_USE_MSG_WFMO_REACTOR_FOR_REACTOR_IMPL is defined, use
- 	  ACE_Msg_WFMO_Reactor for ACE_Reactor::instance().
+        * ace/Reactor.cpp (ACE_Reactor): If
+          ACE_USE_MSG_WFMO_REACTOR_FOR_REACTOR_IMPL is defined, use
+          ACE_Msg_WFMO_Reactor for ACE_Reactor::instance().
 
-	* examples/Reactor/ReactorEx/test_window_messages.cpp: Tests
- 	  Msg_WFMO_Reactor's ability to handle regular events and window
- 	  messages.
+        * examples/Reactor/ReactorEx/test_window_messages.cpp: Tests
+          Msg_WFMO_Reactor's ability to handle regular events and window
+          messages.
 
 Tue Mar 17 21:41:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -46,42 +51,42 @@ Tue Mar 17 21:41:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Tue Mar 17 16:02:26 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/WFMO_Reactor: Changes were made to WFMO_Reactor to make it
- 	  easier to extend it to handle window messages:
+        * ace/WFMO_Reactor: Changes were made to WFMO_Reactor to make it
+          easier to extend it to handle window messages:
 
-	  - dispatch_handler() checks if there are window messages that
- 	    need to be dispatched if the <index> matches <max_handlep1>.
-  	    If there are, they are dispatched by calling
- 	    dispatch_window_messages().
+          - dispatch_handler() checks if there are window messages that
+            need to be dispatched if the <index> matches <max_handlep1>.
+            If there are, they are dispatched by calling
+            dispatch_window_messages().
 
-	  - dispatch_window_messages() is a noop for WFMO_Reactor.
+          - dispatch_window_messages() is a noop for WFMO_Reactor.
 
-	  - Checking the return values from Wait*() functions was changed
- 	    as (WAIT_OBJECT_0 + nCount) is now a valid index.
+          - Checking the return values from Wait*() functions was changed
+            as (WAIT_OBJECT_0 + nCount) is now a valid index.
 
-	  - Checking for remaining handles was abstracted into
- 	    poll_remaining_handles().
+          - Checking for remaining handles was abstracted into
+            poll_remaining_handles().
 
-	  - Expiring of timer was abstracted out into expire_timers().
-  	    Only the owner thread expires the timers.
+          - Expiring of timer was abstracted out into expire_timers().
+            Only the owner thread expires the timers.
 
-	  - calculate_timeout() was removed from
- 	    wait_for_multiple_events().
+          - calculate_timeout() was removed from
+            wait_for_multiple_events().
 
-	* ace/Msg_WFMO_Reactor: A new Reactor that specializes the
- 	  WFMO_Reactor.  WFMO_Reactor uses WaitForMultipleObjects while
- 	  Msg_WFMO_Reactor uses MsgWaitForMultipleObjects.  This allows
- 	  the Msg_WFMO_Reactor to react to Windows and COM/DCOM messages
- 	  in addition to the regular WFMO_Reactor events.
+        * ace/Msg_WFMO_Reactor: A new Reactor that specializes the
+          WFMO_Reactor.  WFMO_Reactor uses WaitForMultipleObjects while
+          Msg_WFMO_Reactor uses MsgWaitForMultipleObjects.  This allows
+          the Msg_WFMO_Reactor to react to Windows and COM/DCOM messages
+          in addition to the regular WFMO_Reactor events.
 
-	  Thanks to Beskrovny Evgeny (evgeny_beskrovny@icomverse.com) of
- 	  Comverse Network Systems for contributing this to ACE.
+          Thanks to Beskrovny Evgeny (evgeny_beskrovny@icomverse.com) of
+          Comverse Network Systems for contributing this to ACE.
 
 Tue Mar 17 13:15:11 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Future.cpp: Added missing ACE_MT macros so that we now
- 	  compile correctly if we don't have threads.  Thanks to Laura
- 	  Paterno <lpaterno@d0chb.fnal.gov> for reporting this.
+        * ace/Future.cpp: Added missing ACE_MT macros so that we now
+          compile correctly if we don't have threads.  Thanks to Laura
+          Paterno <lpaterno@d0chb.fnal.gov> for reporting this.
 
 Tue Mar 17 15:13:17 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -96,22 +101,22 @@ Tue Mar 17 15:13:17 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Mar 16 22:18:07 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/IPC_SAP.cpp: Moved return values outside of the #ifdefs to
- 	  quiet warning messages with KAI C++.  Thanks to Laura Paterno
- 	  <lpaterno@d0chb.fnal.gov> for reporting this.
+        * ace/IPC_SAP.cpp: Moved return values outside of the #ifdefs to
+          quiet warning messages with KAI C++.  Thanks to Laura Paterno
+          <lpaterno@d0chb.fnal.gov> for reporting this.
 
 Tue Mar 17 00:04:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Svc_Conf.y:
-	* ace/Svc_Conf_y.cpp: Applied "Regular CE Tricks [TM]".
+        * ace/Svc_Conf.y:
+        * ace/Svc_Conf_y.cpp: Applied "Regular CE Tricks [TM]".
 
 Mon Mar 16 23:34:39 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/README:
-	* ace/config-WinCE.h: Added ACE_LACKS_STRRCHR.
+        * ace/README:
+        * ace/config-WinCE.h: Added ACE_LACKS_STRRCHR.
 
-	* ace/OS.i: Added implementation of ACE_OS::strrchr () when
-	  platforms don't provide one.
+        * ace/OS.i: Added implementation of ACE_OS::strrchr () when
+          platforms don't provide one.
 
 Mon Mar 16 16:08:45 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -127,61 +132,61 @@ Mon Mar 16 16:08:45 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Mar 16 13:04:58 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* ace/OS.h:
-	Extended the ACE_HAS_STL_MAP_CONFLICT to include 'queue' as well
-	as 'map.' 'queue' is defined in sys/stream.h, which is included in
-	OS.h by netinet/in.h and sys/timod.h.
+        * ace/OS.h:
+        Extended the ACE_HAS_STL_MAP_CONFLICT to include 'queue' as well
+        as 'map.' 'queue' is defined in sys/stream.h, which is included in
+        OS.h by netinet/in.h and sys/timod.h.
 
 Mon Mar 16 00:22:40 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* CE-status: Updated CE port status.
+        * CE-status: Updated CE port status.
 
-	* ace/config-WinCE.h: Added macro definitions for EOF and BUFSIZ.
+        * ace/config-WinCE.h: Added macro definitions for EOF and BUFSIZ.
 
-	* ace/OS.{h,i} (ace_isspace): Added both char and wchar version
-	  functions.  Notice that this can't be called isspace because
-	  most compilers implement isspace as a macro.
-	  (dlerror,dlsym): Added wchar version of these functions under CE.
+        * ace/OS.{h,i} (ace_isspace): Added both char and wchar version
+          functions.  Notice that this can't be called isspace because
+          most compilers implement isspace as a macro.
+          (dlerror,dlsym): Added wchar version of these functions under CE.
 
-	* ace/OS.cpp (fork_exec): Modified parameters passed to
-	  CreateProcess under CE.
+        * ace/OS.cpp (fork_exec): Modified parameters passed to
+          CreateProcess under CE.
 
-	* ace/ARGV.{h,i,cpp}: Unicodize this class under CE.  Notice that
-	  under CE, you won't be able to use environment variable
-	  substitution since there's no environment variable at all.
+        * ace/ARGV.{h,i,cpp}: Unicodize this class under CE.  Notice that
+          under CE, you won't be able to use environment variable
+          substitution since there's no environment variable at all.
 
-	* ace/Reactor.cpp: Don't include Service_Config.h and
-	  WFMO_Reactor.h under CE for now. Prevent Reactor from
-	  reconfigure the service configurator.
+        * ace/Reactor.cpp: Don't include Service_Config.h and
+          WFMO_Reactor.h under CE for now. Prevent Reactor from
+          reconfigure the service configurator.
 
-	* ace/Task.cpp: Don't include Service_Config.h under CE for now.
-	  Prevent Task_Base from reconfigure the service configurator.
+        * ace/Task.cpp: Don't include Service_Config.h under CE for now.
+          Prevent Task_Base from reconfigure the service configurator.
 
-	* ace/SString.cpp: Don't include Service_Config.h under CE for
-	  now.
+        * ace/SString.cpp: Don't include Service_Config.h under CE for
+          now.
 
-	* ace/Svc_Conf.h:
-	* ace/Shared_Object.{h,cpp}:
-	* ace/Service_Type.{h,i,cpp}:
-	* ace/Service_Repository.{h,cpp}:
-	* ace/Service_Object.{h,i,cpp}:
-	* ace/Service_Manager.{h,cpp}:
-	* ace/Service_Config.{h,i,cpp}: Unicodize service configurator
-	  related classes.  I still need to find a point which breaks the
-	  usage of char functions that flex and yacc use and wchar
-	  functions that most CE functions use.
+        * ace/Svc_Conf.h:
+        * ace/Shared_Object.{h,cpp}:
+        * ace/Service_Type.{h,i,cpp}:
+        * ace/Service_Repository.{h,cpp}:
+        * ace/Service_Object.{h,i,cpp}:
+        * ace/Service_Manager.{h,cpp}:
+        * ace/Service_Config.{h,i,cpp}: Unicodize service configurator
+          related classes.  I still need to find a point which breaks the
+          usage of char functions that flex and yacc use and wchar
+          functions that most CE functions use.
 
-	* ace/Get_Opt.{h,cpp}:
-	* ace/Local_Token.{h,i,cpp}:
-	* ace/Map_Manager.cpp:
-	* ace/Message_Queue.cpp:
-	* ace/Module.{h,i,cpp}:
-	* ace/Parse_Node.cpp:
-	* ace/Pipe.cpp:
-	* ace/Stream.{h,cpp}:
-	* ace/Stream_Module.{h,cpp}:
-	* ace/Token_Manager.{h,cpp}:
-	* ace/Activation_Queue.cpp: Unicodize classes. Regular CE stuff.
+        * ace/Get_Opt.{h,cpp}:
+        * ace/Local_Token.{h,i,cpp}:
+        * ace/Map_Manager.cpp:
+        * ace/Message_Queue.cpp:
+        * ace/Module.{h,i,cpp}:
+        * ace/Parse_Node.cpp:
+        * ace/Pipe.cpp:
+        * ace/Stream.{h,cpp}:
+        * ace/Stream_Module.{h,cpp}:
+        * ace/Token_Manager.{h,cpp}:
+        * ace/Activation_Queue.cpp: Unicodize classes. Regular CE stuff.
 
 Sat Mar 14 06:43:32 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -245,8 +250,8 @@ Fri Mar 13 17:30:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Fri Mar 13 17:42:17 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/WFMO_Reactor.cpp (handle_signal): If there are still
- 	  notification in the queue, we need to wake up again.
+        * ace/WFMO_Reactor.cpp (handle_signal): If there are still
+          notification in the queue, we need to wake up again.
 
 Fri Mar 13 09:09:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
