@@ -1,7 +1,7 @@
 // $Id$
 
-#include "Common/FileCharStream.h"
-#include "Basic_Parser/Basic_Parser.h"
+#include "common/FileCharStream.h"
+#include "parser/parser/Parser.h"
 #include "Print_Handler.h"
 #include "SAXPrint_Handler.h"
 
@@ -27,7 +27,7 @@ main (int argc, char *argv[])
         return 1;
       }
 
-    ACEXML_Basic_Parser parser;
+    ACEXML_Parser parser;
     ACEXML_Print_Handler handler;
     ACEXML_InputSource input(fstm);
 

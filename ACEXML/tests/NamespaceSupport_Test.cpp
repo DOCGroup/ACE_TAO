@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Common/NamespaceSupport.h"
+#include "common/NamespaceSupport.h"
 
 int main (int, char *[])
 {
@@ -11,8 +11,8 @@ int main (int, char *[])
   xmlns.declarePrefix("dc", "http://www.purl.org/dc#");
   xmlns.declarePrefix("xc", "http://www.purl.org/dc#");
 
-  ACEXML_Char *lName, *uri;
-  ACEXML_Char *n1 = "p";
+  const ACEXML_Char *lName, *uri;
+  const ACEXML_Char *n1 = "p";
 
   cout << "*** Checking processName:" << endl;
   if (xmlns.processName (n1, uri, lName, 0) != 0)

@@ -3,8 +3,8 @@
 #ifndef ACEXML_ENTITY_MANAGER_H
 #define ACEXML_ENTITY_MANAGER_H
 
-#include "Common/XML_Types.h"
-#include "Parser_export.h"
+#include "common/XML_Types.h"
+#include "parser/parser/Parser_export.h"
 #include "ace/Functor.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Containers_T.h"
@@ -54,6 +54,6 @@ private:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "Entity_Manager.i"
+# include "parser/parser/Entity_Manager.i"
 #endif /* __ACEXML_INLINE__ */
 #endif /* ACEXML_ENTITY_MANAGER_H */

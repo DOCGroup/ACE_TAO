@@ -10,12 +10,12 @@
 
 LDLIBS  = -lACEXML
 BIN   	= Transcoder_Test \
-	  NamespaceSupport_test
+	  NamespaceSupport_Test
 
-LSRC   	= $(addsuffix .cpp,$(FILES))
+LSRC   	= $(addsuffix .cpp,$(BIN))
 LOBJ   	= $(LSRC:%.cpp=$(VDIR)%.o)
-SHOBJ	= $(addsuffix .so,$(FILES))
-CCFLAGS += -I ..
+#SHOBJ	= $(addsuffix .so,$(BIN))
+CCFLAGS += -I ../
 
 BUILD 	= $(VBIN)
 
@@ -23,12 +23,12 @@ BUILD 	= $(VBIN)
 #	Include macros and targets
 #----------------------------------------------------------------------------
 
-include		$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include		$(ACE_ROOT)/include/makeinclude/macros.GNU
-include		$(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include		$(ACE_ROOT)/include/makeinclude/rules.nested.GNU
-include		$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #----------------------------------------------------------------------------
 #	Local targets

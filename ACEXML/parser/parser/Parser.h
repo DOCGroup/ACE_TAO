@@ -3,17 +3,17 @@
 #ifndef _ACEXML_BASIC_PARSER_H_
 #define _ACEXML_BASIC_PARSER_H_
 
-#include "Common/XMLReader.h"
-#include "Common/LocatorImpl.h"
-#include "Common/NamespaceSupport.h"
-#include "Common/CharStream.h"
-#include "Parser_export.h"
+#include "common/XMLReader.h"
+#include "common/LocatorImpl.h"
+#include "common/NamespaceSupport.h"
+#include "common/CharStream.h"
+#include "parser/parser/Parser_export.h"
 #include "ace/Obstack.h"
 #include "ace/Functor.h"
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Containers_T.h"
-#include "Entity_Manager.h"
+#include "parser/parser/Entity_Manager.h"
 
 typedef ACE_Hash_Map_Entry<ACEXML_String,
                            ACEXML_String> ACEXML_ENTITY_ENTRY;
@@ -280,6 +280,6 @@ private:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "Parser.i"
+# include "parser/parser/Parser.i"
 #endif /* __ACEXML_INLINE__ */
 #endif /* _ACEXML_BASIC_PARSER_H_ */
