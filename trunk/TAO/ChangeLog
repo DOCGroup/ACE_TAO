@@ -1,3 +1,9 @@
+Wed Aug 27 15:10:28 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/IOR_MCast/server_i.cpp (enable_multicast):
+
+	  Fixed emulated exception macro usage.
+
 Wed Aug 27 14:57:06 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/fe/y.tab.cpp (tao_yydestruct):
