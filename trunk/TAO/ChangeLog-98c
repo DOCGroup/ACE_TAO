@@ -1,10 +1,22 @@
+Tue Apr 14 12:23:04 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp,Strategy_Scheduler.cpp:
+          #include math.h after #including the ACE headers, to avoid a
+          compile warning on ghs/VxWorks.
+
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp (add_dependency): removed
+          a break statement following a return.
+
+        * orbsvcs/orbsvcs/Sched/SchedEntry.h (OS_priority): removed
+          name qualifier (the class name).
+
 Tue Apr 14 10:23:32 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/ORB_Core.h (TAO_ORB_Core): Moved a bunch of "set" methods
- 	  into the public part of the class so that we can set them if
- 	  necessary.  Also changed the "set" methods so they return the
- 	  original pointer, which enables "chaining".  Thanks to Brian
- 	  Mendel for point this out.
+        * tao/ORB_Core.h (TAO_ORB_Core): Moved a bunch of "set" methods
+          into the public part of the class so that we can set them if
+          necessary.  Also changed the "set" methods so they return the
+          original pointer, which enables "chaining".  Thanks to Brian
+          Mendel for point this out.
 
 Tue Apr 14 07:16:21 1998  David L. Levine  <levine@cs.wustl.edu>
 
