@@ -78,6 +78,7 @@
 #include "mpeg_client/dither.h"
 
 #include "mpeg_shared/routine.h"
+#include "mpeg_client/ab.h"
 
 ACE_RCSID(client, vcr, "$Id$")
 
@@ -139,50 +140,54 @@ usage(char *s)	/* program name */
  */
 
 static int on_exit_tag = 1;
+extern AudioBuffer *abuffer;
+extern VideoBuffer *vbuffer;
 
 void set_exit_routine_tag(int tag)
 {
   on_exit_tag = tag;
 }
+
 void on_exit_routine(void)
 {
+  ACE_DEBUG ((LM_DEBUG,"(%P)on_exit_routine"));
   if (!on_exit_tag)
     return;
-  if (mainPid == getpid())
+  if (mainPid ==ACE_OS::getpid ())
   {
     extern void delete_semaphore();
-    ABdeleteSem();
-    VBdeleteSem();
+    abuffer->ABdeleteSem ();
+    vbuffer->VBdeleteSem ();
     VDdeleteSem();
     delete_semaphore();
     if (getuid() != DEVELOPER_UID)
     {
       FILE * fp;
-      char *buf = (char *)malloc(100);
+      char *buf = (char *)ACE_OS::malloc(100);
       char *tbuf;
       if (buf != NULL) {
 	sprintf(buf, "%s%s", LOG_DIR, "vcrSession.log");
 	if ((fp = fopen(buf, "a")) != NULL) {
-	  time_t val = time(NULL);
+	  time_t val =ACE_OS::time (NULL);
 	  get_hostname(buf, 100);
 	  buf[99] = 0;
-	  tbuf = ctime(&start_time);
+	  tbuf = ACE_OS::ctime (&start_time);
 	  tbuf[strlen(tbuf) - 1] = 0;
-	  fprintf(fp, "User %d on %s at %s %dm%ds\n", getuid(), buf,
+	  fprintf(fp, "User %d on %s at %s %dm%ds\n", ACE_OS::getuid (), buf,
 		  tbuf, (val - start_time) / 60, (val - start_time) % 60);
 	}
-	free(buf);
+	ACE_OS::free (buf);
       }
     }
   }
   on_exit_tag = 0;
   cerr << "Main process sending SIGINT\n";
-  kill(0, SIGINT);
+  ACE_OS::kill (0, SIGINT);
 }
 
 static void int_handler(int sig)
 {
-  exit(0);
+  ACE_OS::exit (0);
 }
 
 static void clear_child(int sig)
@@ -190,7 +195,7 @@ static void clear_child(int sig)
   int pid;
   int status;
   
-  while ((pid = waitpid(-1, &status, WNOHANG)) > 0)
+  while ((pid = ACE_OS::waitpid (-1, &status, WNOHANG)) > 0)
   {
     if (status == 0) {
       continue;
@@ -254,113 +259,100 @@ int main(int argc, char ** argv)
   shmemFlag = 0;
 #endif
 
-//   if (getenv("DISPLAY")!= NULL)
-//   {
-//     char * disp = getenv("DISPLAY");
-//     if (strncmp(disp, "anquetil:0", 10) == 0 ||
-// 	strncmp(disp, "helix:0", 7) == 0 ||
-// 	strncmp(disp, "hinault:0", 9) == 0 ||
-// 	strncmp(disp, "lemond:0", 8) == 0 ||
-// 	strncmp(disp, "indurain:0", 10) == 0)
-//       ditherType = ORDERED_DITHER;
-//     else
-//       ditherType = ORDERED_DITHER;
-//   }
-
   while (argc) {
-    if (strcmp(argv[mark], "-rt") == 0) {
+    if (ACE_OS::strcmp (argv[mark], "-rt") == 0) {
       realTimeFlag = 1;
       argc--; mark++;
     }
-    else if (strcmp(argv[mark], "-rt1") == 0) {
+    else if (ACE_OS::strcmp (argv[mark], "-rt1") == 0) {
       realTimeFlag = 2;
       argc--; mark++;
     }
-    else if (strcmp(argv[mark], "-rt2") == 0) {
+    else if (ACE_OS::strcmp (argv[mark], "-rt2") == 0) {
       realTimeFlag = 3;
       argc--; mark++;
     }
-    else if (strcmp(argv[mark], "-shmem") == 0) {
+    else if (ACE_OS::strcmp (argv[mark], "-shmem") == 0) {
       argc--; mark++;
       shmemFlag = 1;
     }
-    else if (strcmp(argv[mark], "-rmsem") == 0) {
+    else if (ACE_OS::strcmp (argv[mark], "-rmsem") == 0) {
       argc--; mark++;
       rmsemFlag = 1;
     }
 #if 0
-    else if (strcmp(argv[mark], "-nop") == 0) {
+    else if (ACE_OS::strcmp (argv[mark], "-nop") == 0) {
       TogglePFlag();
       argc--; mark++;
-    } else if (strcmp(argv[mark], "-nob") == 0) {
+    } else if (ACE_OS::strcmp (argv[mark], "-nob") == 0) {
       ToggleBFlag();
       argc--; mark++;
     }
 #endif
-    else if (strcmp(argv[mark], "-l") == 0) {   /* program list file name */
+    else if (ACE_OS::strcmp (argv[mark], "-l") == 0) {   /* program list file name */
       strcpy(proglistName, argv[++mark]);
       argc -= 2; mark++;
       
-    } else if (strcmp(argv[mark], "-display") == 0) {
+    } else if (ACE_OS::strcmp (argv[mark], "-display") == 0) {
       strcpy(displayName,argv[++mark]);
       argc -= 2; mark++;
-    } else if (strcmp(argv[mark], "-dither") == 0) {
+    } else if (ACE_OS::strcmp (argv[mark], "-dither") == 0) {
       argc--; mark++;
       if (argc < 1) {
 	perror("Must specify dither option after -dither flag");
 	usage(argv[0]);
       }
-      if (strcmp(argv[mark], "hybrid") == 0) {
+      if (ACE_OS::strcmp (argv[mark], "hybrid") == 0) {
 	argc--; mark++;
 	ditherType = HYBRID_DITHER;
-      } else if (strcmp(argv[mark], "hybrid2") == 0) {
+      } else if (ACE_OS::strcmp (argv[mark], "hybrid2") == 0) {
 	argc--; mark++;
 	ditherType = HYBRID2_DITHER;
-      } else if (strcmp(argv[mark], "fs4") == 0) {
+      } else if (ACE_OS::strcmp (argv[mark], "fs4") == 0) {
 	argc--; mark++;
 	ditherType = FS4_DITHER;
-      } else if (strcmp(argv[mark], "fs2") == 0) {
+      } else if (ACE_OS::strcmp (argv[mark], "fs2") == 0) {
 	argc--; mark++;
 	ditherType = FS2_DITHER;
-      } else if (strcmp(argv[mark], "fs2fast") == 0) {
+      } else if (ACE_OS::strcmp (argv[mark], "fs2fast") == 0) {
 	argc--; mark++;
 	ditherType = FS2FAST_DITHER;
-      } else if (strcmp(argv[mark], "hybrid2") == 0) {
+      } else if (ACE_OS::strcmp (argv[mark], "hybrid2") == 0) {
 	argc--; mark++;
 	ditherType = HYBRID2_DITHER;
-      } else if (strcmp(argv[mark], "2x2") == 0) {
+      } else if (ACE_OS::strcmp (argv[mark], "2x2") == 0) {
 	argc--; mark++;
 	ditherType = Twox2_DITHER;
-      } else if (strcmp(argv[mark], "gray") == 0) {
+      } else if (ACE_OS::strcmp (argv[mark], "gray") == 0) {
 	argc--; mark++;
 	ditherType = GRAY_DITHER;
-      } else if (strcmp(argv[mark], "color") == 0) {
+      } else if (ACE_OS::strcmp (argv[mark], "color") == 0) {
 	argc--; mark++;
 	ditherType = FULL_COLOR_DITHER;
       }
       /*
-      else if (strcmp(argv[mark], "none") == 0) {
+      else if (ACE_OS::strcmp (argv[mark], "none") == 0) {
 	argc--; mark++;
 	ditherType = NO_DITHER;
       }
       */
-      else if (strcmp(argv[mark], "ordered") == 0) {
+      else if (ACE_OS::strcmp (argv[mark], "ordered") == 0) {
 	argc--; mark++;
 	ditherType = ORDERED_DITHER;
-      } else if (strcmp(argv[mark], "ordered2") == 0) {
+      } else if (ACE_OS::strcmp (argv[mark], "ordered2") == 0) {
 	argc--; mark++;
 	ditherType = ORDERED2_DITHER;
       }
       /*
-      else if (strcmp(argv[mark], "mbordered") == 0) {
+      else if (ACE_OS::strcmp (argv[mark], "mbordered") == 0) {
 	argc--; mark++;
 	ditherType = MBORDERED_DITHER;
       }
       */
-      else if (strcmp(argv[mark], "mono") == 0) {
+      else if (ACE_OS::strcmp (argv[mark], "mono") == 0) {
 	argc--; mark++;
 	ditherType = MONO_DITHER;
-      } else if (strcmp(argv[mark], "threshold") == 0) {
+      } else if (ACE_OS::strcmp (argv[mark], "threshold") == 0) {
 	argc--; mark++;
 	ditherType = MONO_THRESHOLD;
       } else {
@@ -368,38 +360,38 @@ int main(int argc, char ** argv)
 	usage(argv[0]);
       }
     }
-    else if (strcmp(argv[mark], "-quiet") == 0) {
+    else if (ACE_OS::strcmp (argv[mark], "-quiet") == 0) {
       argc--; mark++;
       quietFlag = 1;
     }
-    else if (strcmp(argv[mark], "-l_range") == 0) {
+    else if (ACE_OS::strcmp (argv[mark], "-l_range") == 0) {
       argc--; mark++;
-      LUM_RANGE = atoi(argv[mark]);
+      LUM_RANGE =ACE_OS::atoi (argv[mark]);
       if (LUM_RANGE < 1) {
 	fprintf(stderr, "Illegal luminance range value: %d\n", LUM_RANGE);
 	exit(1);
       }
       argc--; mark++;
     }
-    else if (strcmp(argv[mark], "-cr_range") == 0) {
+    else if (ACE_OS::strcmp (argv[mark], "-cr_range") == 0) {
       argc--; mark++;
-      CR_RANGE = atoi(argv[mark]);
+      CR_RANGE =ACE_OS::atoi (argv[mark]);
       if (CR_RANGE < 1) {
 	fprintf(stderr, "Illegal cr range value: %d\n", CR_RANGE);
 	exit(1);
       }
       argc--; mark++;
     }
-    else if (strcmp(argv[mark], "-cb_range") == 0) {
+    else if (ACE_OS::strcmp (argv[mark], "-cb_range") == 0) {
       argc--; mark++;
-      CB_RANGE = atoi(argv[mark]);
+      CB_RANGE =ACE_OS::atoi (argv[mark]);
       if (CB_RANGE < 1) {
 	fprintf(stderr, "Illegal cb range value: %d\n", CB_RANGE);
 	exit(1);
       }
       argc--; mark++;
     }
-    else if (strcmp(argv[mark], "-help") == 0) {
+    else if (ACE_OS::strcmp (argv[mark], "-help") == 0) {
       usage(argv[0]);
     }
     else {
@@ -417,21 +409,9 @@ int main(int argc, char ** argv)
   if (ditherType == MBORDERED_DITHER)
   {
     fprintf(stderr, "Sorry, mbordered dithertype no longer supported.\n");
-    exit(1);
+    ACE_OS::exit (1);
   }
-  //  setsignal(SIGCHLD, clear_child);
-  //  setsignal(SIGINT, int_handler);
-  //  setsignal(SIGHUP, int_handler);
-  /*
-  setsignal(SIGKILL, int_handler);
-  setsignal(SIGSEGV, int_handler);
-  */
-  //  setsignal(SIGQUIT, int_handler);
-  //  setsignal(SIGTERM, int_handler);
-  //  setsignal(SIGALRM, SIG_IGN);
   setsignal(SIGPIPE, SIG_IGN);
-
-
   atexit (on_exit_routine);
   
   if (rmsemFlag) {
@@ -450,16 +430,18 @@ int main(int argc, char ** argv)
 	    int id;
 	    sscanf(&buf[1], "%d", &id);
 	    if (buf[0] == 'm') {
-	      shmctl(id, IPC_RMID, NULL);
+	     ACE_OS::shmctl (id, IPC_RMID, NULL);
 	    }
 	    else if (buf[0] == 's') {
-	      semctl(id, 0, IPC_RMID, 0);
+              union semun sem_union;
+              sem_union.val = 0;
+	      ACE_OS::semctl (id, 0, IPC_RMID, sem_union);
 	    }
 	  }
 	  fclose(fp);
-	  unlink(tmpf);
+	  ACE_OS::unlink (tmpf);
 	}
-	free(tmpf);
+	ACE_OS::free (tmpf);
       }
     }
   }
@@ -467,15 +449,15 @@ int main(int argc, char ** argv)
   if (quietFlag) {
     if ((freopen("/dev/null", "w", stdout) == NULL) ||
 	(freopen("/dev/null", "w", stderr) == NULL)) {
-      exit(10);
+      ACE_OS::exit (10);
     }
   }
   
-  start_time = time(NULL);
+  start_time = ACE_OS::time (NULL);
 
-  setsid();  /* break controlling terminal and creat a new session */
+  ACE_OS::setsid ();  /* break controlling terminal and creat a new session */
 
-  mainPid = getpid();
+  mainPid = ACE_OS::getpid ();
 
   CTRmain(orig_argc,orig_argv);
 
