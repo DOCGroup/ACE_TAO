@@ -110,7 +110,7 @@ public:
 protected:
 
   /// Actually parses the header information
-  int parse_message_header_i (char* buf, size_t length);
+  int parse_message_header_i (char* buf);
 
   /// Parses the GIOP FRAGMENT_HEADER  information from the incoming
   /// stream.
