@@ -274,6 +274,12 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
           result = -1;
           errno = ETIME;
         }
+      else if (reply_received == -1)        
+        {
+          // If the time did not expire yet, but we get a failure,
+          // e.g. the connections closed, we should still return an error.
+          result = -1;
+        }
     }
   else
     {
