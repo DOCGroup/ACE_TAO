@@ -112,6 +112,14 @@ if ($server == -1) {
 
 unlink $iorfile;
 
+if ($server != 0) {
+  print STDERR "ERROR: server error status\n";
+}
+
+if ($client != 0) {
+  print STDERR "ERROR: client error status\n";
+}
+
 if ($server != 0 || $client != 0) {
   exit 1;
 }
@@ -163,6 +171,14 @@ if ($OSNAME ne "MSWin32")
   $svflags = $save_svflags;
 
   unlink $iorfile;
+
+  if ($server != 0) {
+    print STDERR "ERROR: server error status\n";
+  }
+
+  if ($client != 0) {
+    print STDERR "ERROR: client error status\n";
+  }
 
   if ($server != 0 || $client != 0) {
     exit 1;
