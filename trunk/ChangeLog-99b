@@ -1,11 +1,10 @@
-Mon Jul  5 12:25:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
-
-	* ace/OS.i (strspn):
-	  This function cannot return -1 to indicate errors, the function
-	  returns an unsigned integral type.
-
 Mon Jul  5 11:59:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Timer_Heap_T.cpp (grow_heap): Removed an extra memory
+	  allocation that snuck in whilst integrating the IBM VisualAge
+ 	  C++ compiler patches.  Thanks to David Levine for reporting
+ 	  this.
+  
 	* ace/Future.h: Tried rearranging the order in which statics
 	  are defined to workaround a bug with Borland's C++ Builder.
 
@@ -15,6 +14,12 @@ Mon Jul  5 11:59:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	* include/makeinclude: Added several new platform configuration
 	  files for Borland C++ Builder.  Thanks to Christopher Kohlhoff
  	  <chris@kohlhoff.com> for these.
+
+Mon Jul  5 12:25:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/OS.i (strspn):
+	  This function cannot return -1 to indicate errors, the function
+	  returns an unsigned integral type.
 
 Mon Jul 05 12:14:56 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
