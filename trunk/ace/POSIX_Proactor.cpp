@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/POSIX_Proactor.h"
 
 #if defined (ACE_HAS_AIO_CALLS)
@@ -48,13 +47,13 @@ ACE_POSIX_Proactor::ACE_POSIX_Proactor (void)
   :  os_id_ (OS_UNDEFINED)
 {
 #if defined(sun)
-   
+
   os_id_ = OS_SUN; // set family
 
   char Buf [32];
 
   ::memset(Buf,0,sizeof(Buf));
-  
+
   ACE_OS::sysinfo (SI_RELEASE , Buf, sizeof(Buf)-1);
 
   if (ACE_OS_String::strcasecmp (Buf , "5.6") == 0)
@@ -70,7 +69,7 @@ ACE_POSIX_Proactor::ACE_POSIX_Proactor (void)
   // do the same
 
 //#else defined (LINUX, __FreeBSD__ ...)
-//setup here os_id_ 
+//setup here os_id_
 #endif
 }
 
@@ -526,7 +525,7 @@ ACE_AIOCB_Notify_Pipe_Manager::ACE_AIOCB_Notify_Pipe_Manager (ACE_POSIX_AIOCB_Pr
 
   // Issue an asynch_read on the read_stream of the notify pipe.
   if (this->read_stream_.read (this->message_block_,
-                               1, // enough to read 1 byte 
+                               1, // enough to read 1 byte
                                0, // ACT
                                0) // Priority
       == -1)
@@ -549,7 +548,7 @@ ACE_AIOCB_Notify_Pipe_Manager::notify ()
                             & char_send ,
                             sizeof (char_send));
 
-  if (ret_val < 0 && errno != EWOULDBLOCK) 
+  if (ret_val < 0 && errno != EWOULDBLOCK)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P %t):%p\n",
                        "ACE_AIOCB_Notify_Pipe_Manager::notify"
@@ -559,7 +558,7 @@ ACE_AIOCB_Notify_Pipe_Manager::notify ()
 }
 
 void
-ACE_AIOCB_Notify_Pipe_Manager::handle_read_stream 
+ACE_AIOCB_Notify_Pipe_Manager::handle_read_stream
   (const ACE_Asynch_Read_Stream::Result & /*result*/)
 {
   // 1. Start new read to avoid pipe overflow
@@ -585,7 +584,7 @@ ACE_AIOCB_Notify_Pipe_Manager::handle_read_stream
   // 2. Do the upcalls
   // this->posix_aiocb_proactor_->process_result_queue ();
 }
-  
+
 // Public constructor for common use.
 ACE_POSIX_AIOCB_Proactor::ACE_POSIX_AIOCB_Proactor (size_t max_aio_operations)
   : aiocb_notify_pipe_manager_ (0),
@@ -712,7 +711,7 @@ void ACE_POSIX_AIOCB_Proactor::check_max_aio_num ()
 
   int max_num_files = ACE::max_handles ();
 
-  if (max_num_files > 0 
+  if (max_num_files > 0
       && aiocb_list_max_size_ > (unsigned long) max_num_files)
     {
       ACE::set_handle_limit (aiocb_list_max_size_);
@@ -720,10 +719,10 @@ void ACE_POSIX_AIOCB_Proactor::check_max_aio_num ()
       max_num_files = ACE::max_handles ();
     }
 
-  if (max_num_files > 0 
+  if (max_num_files > 0
       && aiocb_list_max_size_ > (unsigned long) max_num_files)
     aiocb_list_max_size_ = (unsigned long) max_num_files;
-      
+
   ACE_DEBUG ((LM_DEBUG,
              "(%P | %t) ACE_POSIX_AIOCB_Proactor::Max Number of AIOs=%d\n",
               aiocb_list_max_size_));
@@ -769,7 +768,7 @@ int
 ACE_POSIX_AIOCB_Proactor::notify_completion(int  sig_num)
 {
   ACE_UNUSED_ARG (sig_num);
-  
+
   return this->aiocb_notify_pipe_manager_->notify ();
 }
 
@@ -792,7 +791,7 @@ ACE_POSIX_AIOCB_Proactor::putq_result (ACE_POSIX_Asynch_Result *result)
   if (!result)
     return -1;
 
-  int sig_num = result->signal_number (); 
+  int sig_num = result->signal_number ();
   int ret_val = this->result_queue_.enqueue_tail (result);
 
   if (ret_val == -1)
@@ -816,7 +815,7 @@ ACE_POSIX_Asynch_Result * ACE_POSIX_AIOCB_Proactor::getq_result (void)
     return 0;
 
 //  don;t waste time if queue is empty - it is normal
-//  or check queue size before dequeue_head 
+//  or check queue size before dequeue_head
 //    ACE_ERROR_RETURN ((LM_ERROR,
 //                       "%N:%l:(%P | %t):%p\n",
 //                       "ACE_POSIX_AIOCB_Proactor::getq_result failed"),
@@ -974,11 +973,11 @@ ACE_POSIX_AIOCB_Proactor::handle_events (u_long milli_seconds)
                       "ACE_POSIX_AIOCB_Proactor::handle_events:"
                       "aio_suspend failed\n"));
 
-      // let continue work 
+      // let continue work
       // we should check "post_completed" queue
     }
   else
-    {   
+    {
       size_t index = 0;
       size_t count = aiocb_list_max_size_;  // max number to iterate
       int error_status = 0;
@@ -1033,7 +1032,7 @@ ACE_POSIX_AIOCB_Proactor::find_completed_aio (int &error_status,
   for (; count > 0; index++ , count--)
     {
       if (index >= aiocb_list_max_size_) // like a wheel
-          index = 0; 
+          index = 0;
 
       if (aiocb_list_[index] == 0) // Dont process null blocks.
         continue;
@@ -1096,7 +1095,7 @@ ACE_POSIX_AIOCB_Proactor::find_completed_aio (int &error_status,
 
   num_started_aio_--;  // decrement count active aios
   index++;            // for next iteration
-  count--;             // for next iteration  
+  count--;             // for next iteration
 
   this->start_deferred_aio ();
   //make attempt to start deferred AIO
@@ -1166,7 +1165,7 @@ ACE_POSIX_AIOCB_Proactor::register_and_start_aio (ACE_POSIX_Asynch_Result *resul
 
   if (ret_val < 0)
     return -1;
-   
+
   size_t index = ACE_static_cast (size_t, ret_val);
 
   result_list_[index] = result;   //Store result ptr anyway
@@ -1235,7 +1234,7 @@ ACE_POSIX_AIOCB_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
   //setup OS notification methods for this aio
   result->aio_sigevent.sigev_notify = SIGEV_NONE;
 
-  return ACE_static_cast (int, i); 
+  return ACE_static_cast (int, i);
 }
 
 // start_aio  has new return codes
@@ -1409,7 +1408,7 @@ ACE_POSIX_AIOCB_Proactor::cancel_aio (ACE_HANDLE handle)
           }
       }
 
-  } // release mutex_ 
+  } // release mutex_
 
   if (num_total == 0)
     return 1;  // ALLDONE
@@ -1551,7 +1550,7 @@ ACE_POSIX_SIG_Proactor::notify_completion (int sig_num)
 #if defined (__FreeBSD__)
   value.sigval_int = -1;
 #else
-  value.sival_int = -1; 
+  value.sival_int = -1;
 #endif /* __FreeBSD__ */
 
   // Solaris 8 can "forget" to delivery
@@ -1565,7 +1564,7 @@ ACE_POSIX_SIG_Proactor::notify_completion (int sig_num)
   // Queue the signal.
   if (sigqueue (pid, sig_num, value) == 0)
     return 0;
-  
+
   if (errno != EAGAIN)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:%N:%l:(%P | %t):%p\n",
@@ -1643,10 +1642,10 @@ ACE_POSIX_SIG_Proactor::setup_signal_handler (int signal_number) const
   // signal handler - having a handler and waiting for the signal can
   // produce undefined behavior.
 
-  // But can not use SIG_DFL 
+  // But can not use SIG_DFL
   // With SIG_DFL after delivering the first signal
   // SIG_DFL handler resets  SA_SIGINFO flags
-  // and we will lose all information sig_info 
+  // and we will lose all information sig_info
   // At least all SunOS have such behavior
 
   struct sigaction reaction;
@@ -1693,7 +1692,7 @@ ACE_POSIX_SIG_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
               "internal Proactor error 1\n"),
               -1);
 
-  int retval = ACE_static_cast (int, i); 
+  int retval = ACE_static_cast (int, i);
 
   // setup OS notification methods for this aio
   // store index!!, not pointer in signal info
@@ -1735,7 +1734,7 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
                                      &timeout);
     }
 
-  size_t index = 0;          // start index to scan aiocb list 
+  size_t index = 0;          // start index to scan aiocb list
   size_t count = aiocb_list_max_size_;  // max number to iterate
   int error_status = 0;
   int return_status = 0;
@@ -1764,7 +1763,7 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
                   ));
     }
   else if (sig_info.si_signo != result_sigwait)
-    {  
+    {
       // No errors, RT compleion signal is received.
       // Is the signo returned consistent with the sig info?
       ACE_ERROR ((LM_ERROR,
@@ -1798,8 +1797,8 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
        // than 40000 notifications!  So don't waste time to scan all
        // aiocb list We know exactly what finished in case SI_ASYNCHIO
 
-       // But we can easy have lost SI_QUEUE  
-     
+       // But we can easy have lost SI_QUEUE
+
        if (flg_aio)   // AIO - correct behavior
          count = 1;
        flg_que=1;       // not to miss "post_completed" results
@@ -1808,7 +1807,7 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
      {
        // 1. Solaris 6 always loses any RT signal,
        //    if it has more SIGQUEMAX=32 pending signals
-       //    so we should scan the whole aiocb list 
+       //    so we should scan the whole aiocb list
        // 2. Moreover,it has one more bad habit
        //    to notify aio completion
        //    with  SI_QUEUE code instead of SI_ASYNCIO.
@@ -1826,11 +1825,11 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
        count = aiocb_list_max_size_;
      }
 
-  // At this point we have 
-  // if (flg_aio) 
+  // At this point we have
+  // if (flg_aio)
   //    scan aiocb list starting with "index" slot
-  //    no more "count" times 
-  //    till we have no more AIO completed 
+  //    no more "count" times
+  //    till we have no more AIO completed
   // if (flg_que)
   //    check "post_completed" queue
 
@@ -1863,7 +1862,7 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
 
   // Uncomment this  if you want to test
   // and research the behavior of you system
-  // ACE_DEBUG ((LM_DEBUG, 
+  // ACE_DEBUG ((LM_DEBUG,
   //            "(%t) NumAIO=%d NumQueue=%d\n",
   //             ret_aio, ret_que));
 
@@ -1915,7 +1914,7 @@ ACE_POSIX_Wakeup_Completion::complete (u_long       /* bytes_transferred */,
                                        const void * /* completion_key */,
                                        u_long       /*  error */)
 {
-  
+
   this->handler_.handle_wakeup ();
 }
 
