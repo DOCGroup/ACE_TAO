@@ -166,8 +166,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   size_t rcv_sock_size = 0;
   size_t snd_sock_size = 0;
 
-  char *preconnections = 0;
-
   // Use dotted decimal addresses
   // @@ This option will be treated as a suggestion to each loaded protocol to
   // @@ use a character representation for the numeric address, otherwise
@@ -281,6 +279,13 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           // the server should listen.
           arg_shifter.consume_arg ();
 
+          // Issue a warning since this backward compatibilty support
+          // may be dropped in future releases.
+
+          ACE_DEBUG ((LM_WARNING,
+                      "(%P|%t) The `-ORBhost' option is obsolete.\n"
+                      "In the future, use the `-ORBendpoint' option.\n"));
+
           if (arg_shifter.is_parameter_next())
             {
               host = arg_shifter.get_current ();
@@ -335,6 +340,13 @@ TAO_ORB_Core::init (int &argc, char *argv[])
       else if (ACE_OS::strcmp (current_arg, "-ORBport") == 0)
         {
           // @@ See comment for host option.  fredk
+
+          // Issue a warning since this backward compatibilty support
+          // may be dropped in future releases.
+
+          ACE_DEBUG ((LM_WARNING,
+                      "(%P|%t) The `-ORBport' option is obsolete.\n"
+                      "In the future, use the `-ORBendpoint' option.\n"));
 
           // Specify the port number/name on which we should listen
           arg_shifter.consume_arg ();
@@ -450,31 +462,52 @@ TAO_ORB_Core::init (int &argc, char *argv[])
       else if (ACE_OS::strcmp (current_arg, "-ORBpreconnect") == 0)
         {
           arg_shifter.consume_arg ();
-          // @@ This needs to be updated to deal with multiple protocols!
+
+          // Get a string which describes the connections we want to
+          // cache up-front, thus reducing the latency of the first call.
+          //
           // For example,  specify -ORBpreconnect once for each protocol
           //   -ORBpreconnect iiop://tango:10015,watusi:10016/
           //   -ORBpreconnect busX_iop://board1:0x07450000,board2,0x08450000/
           // Or chain all possible endpoint designations together
-          //   -ORBpreconnect iiop://tango:10015,watusi:10016/,
+          //   -ORBpreconnect iiop://tango:10015,watusi:10016/;
           //              busX_iop://board1:0x07450000,board2,0x08450000/
-          // fredk
           //
-          // Get a string which describes the host/port of connections
-          // we want to cache up-front, thus reducing the latency of
-          // the first call.  It is specified as a comma-separated
-          // list of host:port specifications, and if multiple
-          // connections to the same port are desired, they must be
-          // specified multiple times.  For example, the following
-          // connects to tango:10015 twice, and watusi:10016 once:
-          //
+          // The old style command line was meant for IIOP:
           //    -ORBpreconnect tango:10015,tango:10015,watusi:10016
 
           if (arg_shifter.is_parameter_next ())
             {
-              preconnections = arg_shifter.get_current ();
+              const char *preconnections = arg_shifter.get_current ();
+
               arg_shifter.consume_arg ();
+
+              ACE_CString p;
+
+              if (ACE_OS::strstr ("://", preconnections) == 0)
+                {
+                  // Handle old style preconnects for backward compatibility
+
+                  // Issue a warning since this backward compatibilty support
+                  // may be dropped in future releases.
+
+                  ACE_DEBUG ((LM_WARNING,
+                              "(%P|%t) The `host:port' pair style for "
+                              "`-ORBpreconnect' is obsolete.\n"
+                              "In the future, use the URL style.\n"));
+
+                  p =
+                    ACE_CString ("iiop://") +
+                    ACE_CString (preconnections) +
+                    ACE_CString ("/");
+                }
+              else
+                p = ACE_CString (preconnections);
+
+              this->orb_params ()->endpoints (p);
             }
         }
+
       else if (ACE_OS::strcmp (current_arg, "-ORBcdrtradeoff") == 0)
         {
           arg_shifter.consume_arg ();
@@ -704,8 +737,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
     return -1;
 
   // Have registry parse the preconnects
-  if (preconnections)
-    this->connector_registry ()->preconnect (preconnections);
+  if (this->orb_params ()->endpoints ().is_empty () == 0)
+    this->connector_registry ()->preconnect (this->orb_params ()->endpoints ());
 
   return 0;
 }
