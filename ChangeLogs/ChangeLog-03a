@@ -1,3 +1,19 @@
+Tue Feb 27 11:38:38 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* performance-tests/TCP/tcp_test.cpp (main): Zapped the
+	  non-existent '-f' option.  Thanks to Mike Curtis for reporting
+ 	  this.
+  
+  	* performance-tests/TCP/tcp_test.cpp (main): Check for improper
+	  bufsz.  Thanks to Mike Curtis for reporting this.
+
+  	* performance-tests/TCP/tcp_test.cpp (main): Documented the '-t'
+	  option, which specifies the number of threads.  
+
+	* performance-tests/TCP/README: Fixed a typo.  Thanks to 
+	  Mike Curtis for reporting this.
+
+
 Tue Feb 27 10:51:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Added the AMI tests to the daily
@@ -21,9 +37,9 @@ Mon Feb 27 07:39:16 2001  Chad Elliott  <elliott_c@ociweb.com>
         * ace/config-hpux-11.00.h:
 
           Modification to remove system header macro definition conflicts.
-          This change does not suppress the conflicts, but does an undef
-          of the two conflicting macros before includeing tcp.h.
-          Thanks to Sam Chong for reporting this problem.
+  	  This change does not suppress the conflicts, but does an undef
+ 	  of the two conflicting macros before includeing tcp.h.  Thanks
+ 	  to Sam Chong <sam@i2i-inc.com> for reporting this problem.
 
 Mon Feb 26 19:01:16 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 

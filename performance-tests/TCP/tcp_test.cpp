@@ -82,6 +82,7 @@ usage (void)
               "  [-s]\n"
               "  [-c]\n"
               //              "  [-x max_sample_allowed]\n"
+              "  [-t number of threads]\n"
               "  [-a to use the ACE Select reactor]\n"
               "  [-x to use the ACE TP reactor]\n"
               "  [-w to use the ACE WFMO reactor]\n"
@@ -520,7 +521,7 @@ main (int argc, char *argv[])
     }
 
 
-  ACE_Get_Opt getopt (argc, argv, "hxwf:vb:I:p:sci:m:at:");
+  ACE_Get_Opt getopt (argc, argv, "hxwvb:I:p:sci:m:at:");
 
   while ((c = getopt ()) != -1)
     {
@@ -540,6 +541,11 @@ main (int argc, char *argv[])
           if (bufsz <= 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "\nMessage size must be greater than 0!\n\n"),
+                              1);
+          else if (bufsz > BUFSIZ)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "\nbufsz must be <= %d\n",
+                               BUFSIZ),
                               1);
 
         case 'i':
