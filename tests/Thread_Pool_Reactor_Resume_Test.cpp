@@ -227,10 +227,8 @@ Request_Handler::_decr_ref_count (void)
   --this->ref_count_;
 }
 
-
-
 static int
-reactor_event_hook (void *)
+reactor_event_hook (ACE_Reactor *)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%t) handling events ....\n"));
