@@ -1340,7 +1340,7 @@ ACE_OS::cuserid (wchar_t *user, size_t maxlen)
 
   ACE_NEW_RETURN (char_user, char[maxlen], 0);
 
-  if (ACE_OS::cuserid (char_user, maxlen)) 
+  if (ACE_OS::cuserid (char_user, maxlen))
     {
       ACE_OS::strcpy (user, ACE_Ascii_To_Wide (char_user).wchar_rep ());
       result = user;
@@ -1547,7 +1547,8 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
         result = -1;        // ACE_ADAPT_RETVAL used it for intermediate status
     }
 
-#   if (!defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP) && !defined (_POSIX_THREAD_PROCESS_SHARED)  ||  defined (ACE_LACKS_MUTEXATTR_PSHARED))
+#   if (!defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP) && !defined (_POSIX_THREAD_PROCESS_SHARED)  ||  defined (ACE_LACKS_MUTEXATTR_PSHARED)) \
+       || ((defined (ACE_HAS_PTHREADS_DRAFT7) || defined (ACE_HAS_PTHREADS_STD)) && !defined (_POSIX_THREAD_PROCESS_SHARED))
   ACE_UNUSED_ARG (type);
 #   endif /* ! ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
 
