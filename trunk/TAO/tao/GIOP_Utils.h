@@ -135,10 +135,6 @@ public:
                               char *buf,
                               size_t len,
                               ACE_Time_Value *max_wait_time = 0);
-
-  static TAO_Pluggable_Message_Exception_Type
-  convert_CORBA_to_GIOP_exception (CORBA::exception_type corba_type);
-  // Convert the exception type from CORBA to GIOP
 };
 
 #if defined (__ACE_INLINE__)
