@@ -172,7 +172,9 @@ DRV_cpp_init (void)
         {
           // If no cpp flag was defined by the user, we define some
           // platform specific flags here.
-          char* option = new char[BUFSIZ];
+          char* option = 0;
+
+          ACE_NEW (option, char[BUFSIZ]);
 
 #if defined (TAO_IDL_PREPROCESSOR_ARGS)
           cpp_args = TAO_IDL_PREPROCESSOR_ARGS;
@@ -182,8 +184,15 @@ DRV_cpp_init (void)
           cpp_args = "-E";
 #endif /* TAO_IDL_PREPROCESSOR_ARGS */
 
-          // So we can find the required orb.idl file.
+          // So we can find OMG IDL files, such as `orb.idl'.
           ACE_OS::strcpy (option, "-I");
+
+#if defined (TAO_IDL_INCLUDE_DIR) && TAO_IDL_INCLUDE_DIR != 0
+          // TAO_IDL_INCLUDE_DIR should be in quotes,
+          // e.g. "/usr/local/include/tao"
+
+          ACE_OS::strcat (option, TAO_IDL_INCLUDE_DIR);
+#else
           const char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
           if (TAO_ROOT != 0)
             {
@@ -206,6 +215,7 @@ DRV_cpp_init (void)
                   ACE_OS::strcat (option, ".");
                 }
             }
+#endif  /* TAO_IDL_INCLUDE_DIR */
 
           DRV_cpp_putarg (option);
       }
