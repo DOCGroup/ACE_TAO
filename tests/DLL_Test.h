@@ -47,12 +47,6 @@ public:
 
   virtual ACE_TCHAR *malloc_info (void) = 0;
   //@}
-
-  void destroy (void)
-  {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Hello::destroy() \n")));
-    delete this;
-  }
 };
 
 #endif /* ACE_TESTS_DLL_TEST_H */

@@ -54,6 +54,19 @@ Hello_Impl::malloc_info (void)
   return ACE_OS_String::strdup (ACE_TEXT ("Hello_Impl::new_info() allocated by ACE_OS_Memory::malloc()"));
 }
 
+void *
+Hello_Impl::operator new (size_t bytes)
+{
+  ACE_DEBUG ((LM_INFO, "Hello_Impl::new\n"));
+  return ::new char[bytes];
+}
+void
+Hello_Impl::operator delete (void *ptr)
+{
+  ACE_DEBUG ((LM_INFO, "Hello_Impl::delete\n"));
+  delete [] ((char *) ptr);
+}
+
 extern "C" ACE_Svc_Export Hello *
 get_hello (void)
 {
@@ -62,7 +75,7 @@ get_hello (void)
   ACE_NEW_RETURN (hello,
                   Hello_Impl,
                   NULL);
-                  
+
   return hello;
 }
 
