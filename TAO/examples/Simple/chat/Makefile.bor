@@ -1,6 +1,8 @@
 #
+# $Id$
+#
 # Makefile for building the Chat example
-# 
+#
 
 MAKEFILES = Chat_Client.bor Chat_Server.bor
 
