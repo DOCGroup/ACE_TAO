@@ -97,11 +97,13 @@ typedef union
 
 #ifdef __STDC__
 #include <stdlib.h>
-#include <string.h>
+// #include <string.h>
 #else
 #include <malloc.h>
 #include <memory.h>
 #endif
+
+// #include <values.h>
 
 #ifdef __cplusplus
 
@@ -492,52 +494,52 @@ typedef struct
 
 yytoktype yytoks[] =
 {
-	"IDENTIFIER",	257,
-	"IDL_CONST",	258,
-	"IDL_MODULE",	259,
-	"IDL_INTERFACE",	260,
-	"IDL_TYPEDEF",	261,
-	"IDL_LONG",	262,
-	"IDL_SHORT",	263,
-	"IDL_UNSIGNED",	264,
-	"IDL_DOUBLE",	265,
-	"IDL_FLOAT",	266,
-	"IDL_CHAR",	267,
-	"IDL_WCHAR",	268,
-	"IDL_OCTET",	269,
-	"IDL_BOOLEAN",	270,
-	"IDL_ANY",	271,
-	"IDL_STRUCT",	272,
-	"IDL_UNION",	273,
-	"IDL_SWITCH",	274,
-	"IDL_ENUM",	275,
-	"IDL_SEQUENCE",	276,
-	"IDL_STRING",	277,
-	"IDL_WSTRING",	278,
-	"IDL_EXCEPTION",	279,
-	"IDL_CASE",	280,
-	"IDL_DEFAULT",	281,
-	"IDL_READONLY",	282,
-	"IDL_ATTRIBUTE",	283,
-	"IDL_ONEWAY",	284,
-	"IDL_IDEMPOTENT",	285,
-	"IDL_VOID",	286,
-	"IDL_IN",	287,
-	"IDL_OUT",	288,
-	"IDL_INOUT",	289,
-	"IDL_RAISES",	290,
-	"IDL_CONTEXT",	291,
-	"IDL_NATIVE",	292,
-	"IDL_INTEGER_LITERAL",	293,
-	"IDL_STRING_LITERAL",	294,
-	"IDL_CHARACTER_LITERAL",	295,
-	"IDL_FLOATING_PT_LITERAL",	296,
-	"IDL_TRUETOK",	297,
-	"IDL_FALSETOK",	298,
-	"IDL_SCOPE_DELIMITOR",	299,
-	"IDL_LEFT_SHIFT",	300,
-	"IDL_RIGHT_SHIFT",	301,
-	"-unknown-",	-1	/* ends search */
+	{"IDENTIFIER",	257},
+	{"IDL_CONST",	258},
+	{"IDL_MODULE",	259},
+	{"IDL_INTERFACE",	260},
+	{"IDL_TYPEDEF",	261},
+	{"IDL_LONG",	262},
+	{"IDL_SHORT",	263},
+	{"IDL_UNSIGNED",	264},
+	{"IDL_DOUBLE",	265},
+	{"IDL_FLOAT",	266},
+	{"IDL_CHAR",	267},
+	{"IDL_WCHAR",	268},
+	{"IDL_OCTET",	269},
+	{"IDL_BOOLEAN",	270},
+	{"IDL_ANY",	271},
+	{"IDL_STRUCT",	272},
+	{"IDL_UNION",	273},
+	{"IDL_SWITCH",	274},
+	{"IDL_ENUM",	275},
+	{"IDL_SEQUENCE",	276},
+	{"IDL_STRING",	277},
+	{"IDL_WSTRING",	278},
+	{"IDL_EXCEPTION",	279},
+	{"IDL_CASE",	280},
+	{"IDL_DEFAULT",	281},
+	{"IDL_READONLY",	282},
+	{"IDL_ATTRIBUTE",	283},
+	{"IDL_ONEWAY",	284},
+	{"IDL_IDEMPOTENT",	285},
+	{"IDL_VOID",	286},
+	{"IDL_IN",	287},
+	{"IDL_OUT",	288},
+	{"IDL_INOUT",	289},
+	{"IDL_RAISES",	290},
+	{"IDL_CONTEXT",	291},
+	{"IDL_NATIVE",	292},
+	{"IDL_INTEGER_LITERAL",	293},
+	{"IDL_STRING_LITERAL",	294},
+	{"IDL_CHARACTER_LITERAL",	295},
+	{"IDL_FLOATING_PT_LITERAL",	296},
+	{"IDL_TRUETOK",	297},
+	{"IDL_FALSETOK",	298},
+	{"IDL_SCOPE_DELIMITOR",	299},
+	{"IDL_LEFT_SHIFT",	300},
+	{"IDL_RIGHT_SHIFT",	301},
+	{"-unknown-",	-1}	/* ends search */
 };
 
 char * yyreds[] =
@@ -896,7 +898,7 @@ int yychar;			/* current input token number */
 #define YYLEX()		yycvtok(yylex())
 /*
 ** yycvtok - return a token if i is a wchar_t value that exceeds 255.
-**	If i<255, i itself is the token.  If i>255 but the neither
+**	If i<255, i itself is the token.  If i>255 but the neither 
 **	of the 30th or 31st bit is on, i is already a token.
 */
 #if defined(__STDC__) || defined(__cplusplus)
@@ -917,7 +919,7 @@ int yycvtok(i) int i;
 		while ((last>=first)&&(first>=0)) {/*Binary search loop*/
 			mid = (first+last)/2;
 			j = yymbchars[mid].character;
-			if( j==i ){/*Found*/
+			if( j==i ){/*Found*/ 
 				return yymbchars[mid].tvalue;
 			}else if( j<i ){
 				first = mid + 1;
@@ -1359,7 +1361,7 @@ int yyparse()
 	*/
 	switch( yytmp )
 	{
-
+		
 case 4:
 # line 240 "idl.yy"
 {
@@ -3292,3 +3294,4 @@ case 285:
 	}
 	goto yystack;		/* reset registers in driver code */
 }
+

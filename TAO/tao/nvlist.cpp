@@ -88,7 +88,7 @@ CORBA::release (CORBA::NamedValue_ptr nv)
 CORBA::Boolean
 CORBA::is_nil (CORBA::NamedValue_ptr nv)
 {
-  return (CORBA::Boolean) nv == 0;
+  return (CORBA::Boolean) (nv == 0);
 }
 
 CORBA_NamedValue::~CORBA_NamedValue (void)
@@ -163,7 +163,7 @@ CORBA::release (CORBA::NVList_ptr nvl)
 CORBA::Boolean
 CORBA::is_nil (CORBA::NVList_ptr nvl)
 {
-  return (CORBA::Boolean) nvl == 0;
+  return (CORBA::Boolean) (nvl == 0);
 }
 
 CORBA_NVList::~CORBA_NVList (void)

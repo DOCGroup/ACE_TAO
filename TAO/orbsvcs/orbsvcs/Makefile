@@ -17,14 +17,31 @@ IDL_FILES = \
 	RtecSchedulerC \
 	RtecSchedulerS \
 	RtecEventChannelAdminC \
-	RtecEventChannelAdminS \
+	RtecEventChannelAdminS
+
+# Compile using av=1 to compile the AVStreams stuff.
+ifdef av
+## Add the IDL-compiler generated files
+IDL_FILES += \
+	CosPropertyServiceS \
+	CosPropertyServiceC \
+	AVStreamsS \
+	AVStreamsC
+endif
 
 FILES= $(IDL_FILES) \
 	Event_Utilities \
 	Scheduler_Factory \
 	Runtime_Scheduler \
 	Scheduler_Utilities \
-	TAO_IDL_templates \
+	TAO_IDL_templates
+
+# Compile using av=1 to compile the AVStreams stuff.
+ifdef av
+## Add the implementation files 
+FILES += AVStreams_i CosPropertyService_i
+endif
+
 
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
@@ -51,6 +68,7 @@ ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
+
 LDFLAGS += -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG)#-H
 
@@ -68,6 +86,14 @@ RtecEventCommC.cpp RtecEventCommS.cpp RtecEventCommC.h RtecEventCommS.h: RtecEve
 
 .PRECIOUS: RtecEventChannelAdminC.cpp RtecEventChannelAdminS.cpp RtecEventChannelAdminC.h RtecEventChannelAdminS.h
 RtecEventChannelAdminC.cpp RtecEventChannelAdminS.cpp RtecEventChannelAdminC.h RtecEventChannelAdminS.h: RtecEventChannelAdmin.idl
+	$(TAO_ROOT)/TAO_IDL/tao_idl $^
+
+.PRECIOUS: CosPropertyServiceC.cpp CosPropertyServiceS.cpp CosPropertyServiceC.h CosPropertyServiceS.h
+CosPropertyServiceC.cpp CosPropertyServiceS.cpp CosPropertyServiceC.h CosPropertyServiceS.h: CosPropertyService.idl
+	$(TAO_ROOT)/TAO_IDL/tao_idl $^
+
+.PRECIOUS: AVStreamsC.cpp AVStreamsS.cpp AVStreamsC.h AVStreamsS.h
+AVStreamsC.cpp AVStreamsS.cpp AVStreamsC.h AVStreamsS.h: AVStreams.idl
 	$(TAO_ROOT)/TAO_IDL/tao_idl $^
 
 clean:
