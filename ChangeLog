@@ -1,3 +1,9 @@
+Thu Mar  8 08:38:01 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_run_tests.lst:
+          The Single_Threaded_POA test cannot run with minimum CORBA or
+          (isn't this ironic) on single threaded configurations.
+
 Wed Mar 07 20:25:51 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/nightlybuilds/builds.lst:
