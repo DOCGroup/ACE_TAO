@@ -1,15 +1,20 @@
+Mon Feb 23 11:40:37 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO_IDL/Makefile: added clean and realclean targets for
+          CROSS-COMPILE platforms.
+
 Mon Feb 23 10:58:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.h: 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	* orbsvcs/orbsvcs/Event/Fast_Reactor.h: 
-	* orbsvcs/orbsvcs/Event/GPlot_File.h: 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h: 
-	* orbsvcs/orbsvcs/Property/CosProperty_Hash.h: 
-	* orbsvcs/orbsvcs/Sched/DynSched.h: 
-	* orbsvcs/orbsvcs/Sched/SchedEntry.h: 
-	* orbsvcs/orbsvcs/Sched/Strategy_Scheduler.h: 
+	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h:
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+	* orbsvcs/orbsvcs/Event/Fast_Reactor.h:
+	* orbsvcs/orbsvcs/Event/GPlot_File.h:
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
+	* orbsvcs/orbsvcs/Property/CosProperty_Hash.h:
+	* orbsvcs/orbsvcs/Sched/DynSched.h:
+	* orbsvcs/orbsvcs/Sched/SchedEntry.h:
+	* orbsvcs/orbsvcs/Sched/Strategy_Scheduler.h:
 	* Added more TAO_ORBSVCS_Export macros, this time in files that
 	  are not compiled all the time.
 
