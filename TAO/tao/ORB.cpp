@@ -195,19 +195,11 @@ CORBA_ORB::open (void)
   TAO_Server_Strategy_Factory *f =
     this->orb_core_->server_factory ();
 
-  // @@ For now we simple assume an IIOP handler, in the future
-  // @@ this has to be more general
-  // @@ Fred: right, this is my idea for this stuff:
-  //    Using the Connector Registry try every endpoint listed in the
-  //    orb_params(), for each one create a TAO_Acceptor [check the
-  //    Pluggable.h file for a description on how to do that],
-  //    activate the acceptor with the reactor and insert it in the
-  //    Acceptor Registry.
   TAO_Acceptor_Registry *ar = this->orb_core_->acceptor_registry ();
   // get a reference to the acceptor_registry!
 
-  // Initialize the endpoint ... the registry will use the orb_core_
-  // to obtain a list of endpoints and strategies!
+  // Initialize all the endpoints ... the registry will use the
+  // orb_core_ to obtain a list of endpoints and strategies!
 
   if (ar->open (this->orb_core_) == -1)
     // Need to return an error somehow!!  Maybe set do_exit?
@@ -960,14 +952,24 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
     this->orb_core_->orb_params ();
 
   // @@ Ug, broken.  Again, we need to go to the acceptor registry
-  //  (when we got one) for this!!! [fredk]
+  //    (when we got one) for this!!! [fredk]
+  // @@ Fred&Ossama: You guys have one now ;-)  I still believe that
+  //    the right way to do this is something along these lines:
+  //
+  // size_t pfile_count =
+  //     this->orb_core_->acceptor_registry ()->count_profiles ();
+  // TAO_MProfile mp (pfile_count);
+  // this->orb_core_->acceptor_registry ()->fill_mprofile (key); 
+  //
+  //    What do you think?
+
   TAO_IIOP_Profile *pfile;
   ACE_NEW_THROW_EX (pfile,
                     TAO_IIOP_Profile (orb_params->host (),
                                       orb_params->addr ().get_port_number (),
                                       key,
                                       orb_params->addr ()),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, 
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
                                       CORBA::COMPLETED_MAYBE));
   ACE_CHECK_RETURN (stub);
   // we give up the profile to the mp object.  If the mp object is deleted,
@@ -1418,7 +1420,14 @@ CORBA_ORB::string_to_object (const char *str,
     obj = this->ior_string_to_object (str + sizeof ior_prefix - 1,
                                       ACE_TRY_ENV);
   else
-    {
+    { 
+      // @@ Fred&Ossama: Is there anyway to initialize the mprofile in 
+      //    such a way that it does not allocate memory?
+      //    The connector registry could count how many profiles are
+      //    there (if any) and then allocate all the memory in one
+      //    call, saving precious microseconds in an area of the code
+      //    that is invoked only once ;-)
+
       TAO_MProfile mprofile (1);
       // It is safe to declare this on the stack since the contents of
       // mprofile get copied.
@@ -1841,6 +1850,9 @@ CORBA_ORB::lookup_value_factory (const char *repository_id,
 
 
 // ****************************************************************
+
+// @@ Fred&Ossama: I'm convinced that you ended up moving template
+//    instantiations from here to the Connect.cpp file.
 
 #define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR, TAO_Cached_Connector_Lock>
 #define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>

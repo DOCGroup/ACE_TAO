@@ -1416,6 +1416,11 @@ TAO_MT_Client_Connection_Handler::resume_handler (ACE_Reactor *reactor)
 
 // ****************************************************************
 
+// @@ Fred&Ossama: Could somebody please check up the location of
+//    these template instantiations? For example the Hash_Map from
+//    ACE_INET_Addr to TAO_Object_Adapter does not seems to belong in
+//    this file, maybe in ORB.cpp???
+
 #define TAO_SVC_TUPLE ACE_Svc_Tuple<TAO_Client_Connection_Handler>
 #define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR, TAO_Cached_Connector_Lock>
 #define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>

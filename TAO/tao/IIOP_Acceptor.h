@@ -25,6 +25,8 @@
 #include "tao/Pluggable.h"
 #include "tao/Connect.h"
 
+// @@ Fred&Ossama: Could we make this a typedef inside the
+//    IIOP_Acceptor class?
 typedef ACE_Strategy_Acceptor<TAO_Server_Connection_Handler,
                               TAO_SOCK_ACCEPTOR>
         TAO_IIOP_BASE_ACCEPTOR;
@@ -39,7 +41,7 @@ class TAO_Export TAO_IIOP_Acceptor : public TAO_Acceptor
   //
   // = DESCRIPTION
   //   The IIOP-specific bridge class for the concrete acceptor.
-  //   
+  //
 public:
   // TAO_IIOP_Acceptor (ACE_INET_Addr &addr);
   // Create Acceptor object using addr.

@@ -25,6 +25,17 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (void)
 {
 }
 
+// @@ Fred&Ossama: Maybe not for the current round of changes, but
+//    shouldn't the acceptor know which version to create?
+//    And isn't this the right place to setup the tagged components of 
+//    a v1.[12] profile?
+
+// @@ Fred&Ossama: We need to check this interface: a single
+//    TAO_Acceptor may be bound to multiple addresses (think of a
+//    multihomed machine with an acceptor listening on the wildcard
+//    address), hence the "Right Thing" seems to be that we pass an
+//    MProfile that is filled up by the TAO_Acceptor class.
+
 TAO_Profile *
 TAO_IIOP_Acceptor::create_profile (TAO_ObjectKey &object_key)
 {
@@ -67,8 +78,14 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
       if (base_acceptor_.acceptor ().get_local_addr (new_address) == -1)
         return -1;
 
+      // @@ Fred&Ossama: Does this call make any sense now? There is
+      //    no such thing as the ORB address anymore, right? And if
+      //    this is removed then this whole branch of the if()
+      //    statement is a noop.
+
       // Reset the address
       orb_core->orb_params ()->addr (new_address);
+
       // iiop_acceptor->acceptor ().enable (ACE_CLOEXEC);
       // this is done in the connection handlers open method.
 
@@ -81,5 +98,3 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
       }
   return 0;
 }
-
-
