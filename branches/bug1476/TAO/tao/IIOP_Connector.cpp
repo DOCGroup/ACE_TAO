@@ -205,11 +205,11 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
           ACE_Time_Value zero(ACE_Time_Value::zero);
           result =
             this->active_connect_strategy_->wait (svc_handler,
-                                                    &zero);
+                                                  &zero);
 
 // testing, now it always returns a not connected transport, comment out the
 // wait above
-    //      result = 1;
+//          result = 1;
 
           if (TAO_debug_level > 2)
             {
@@ -218,6 +218,11 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                           "non blocking wait done for handle[%d], result = %d\n",
                           svc_handler->get_handle (), result));
             }
+
+// is this correct, the wait() can return anything, so overrule to 0, so that
+// we don't output incorrect errors?
+          result = 0;
+// check closure??
         }
       else
         {
@@ -242,15 +247,15 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                           "wait done for handle[%d], result = %d\n",
                           svc_handler->get_handle (), result));
             }
-        }
 
-      // There are three possibilities when wait() returns: (a)
-      // connection succeeded; (b) connection failed; (c) wait()
-      // failed because of some other error.  It is easy to deal with
-      // (a) and (b).  (c) is tricky since the connection is still
-      // pending and may get completed by some other thread.  The
-      // following method deals with (c).
-      this->check_connection_closure (svc_handler, result);
+          // There are three possibilities when wait() returns: (a)
+          // connection succeeded; (b) connection failed; (c) wait()
+          // failed because of some other error.  It is easy to deal with
+          // (a) and (b).  (c) is tricky since the connection is still
+          // pending and may get completed by some other thread.  The
+          // following method deals with (c).
+          result = this->check_connection_closure (svc_handler, result);
+        }
     }
 
   // Irrespective of success or failure, remove the extra #REFCOUNT#.
@@ -481,17 +486,19 @@ TAO_IIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
   return iiop_endpoint;
 }
 
-void
+int
 TAO_IIOP_Connector::check_connection_closure (
   TAO_IIOP_Connection_Handler *svc_handler,
-  int& result)
+  int result)
 {
+  int local_result = result;
+
   // Check if the handler has been closed.
   int closed =
     svc_handler->is_closed ();
 
   // In case of failures and close() has not be called.
-  if (result == -1 && !closed)
+  if (local_result == -1 && !closed)
     {
       // First, cancel from connector.
       this->base_connector_.cancel (svc_handler);
@@ -517,7 +524,7 @@ TAO_IIOP_Connector::check_connection_closure (
           if (open)
             {
               // Overwrite <result>.
-              result = 0;
+              local_result = 0;
             }
           else
             {
@@ -529,4 +536,6 @@ TAO_IIOP_Connector::check_connection_closure (
             }
         }
     }
+
+  return local_result;
 }

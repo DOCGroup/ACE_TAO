@@ -1,3 +1,14 @@
+Fri Jul 22 09:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Connector.cpp (make_connection):
+          Call the check_connection_closure only when we want to have a
+          connected transport, for the non-blocking case we have to do
+          something else because the return value of -1 doesn't mean there
+          always the we have a problem just establishing this connection.
+
+        * tao/IIOP_Connector.{h,cpp} (check_connection_closure):
+          Changed method signature to have a return value
+
 Fri Jul 22 09:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport_Connector.cpp (connect):

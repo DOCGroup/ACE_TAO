@@ -100,8 +100,8 @@ protected:
   int init_tcp_properties (void);
 
   /// Check whether the connection is not closed
-  void check_connection_closure (TAO_IIOP_Connection_Handler *svc_handler,
-                                 int& result);
+  int check_connection_closure (TAO_IIOP_Connection_Handler *svc_handler,
+                                 int result);
 
 protected:
 
