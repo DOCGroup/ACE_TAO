@@ -1,7 +1,7 @@
 Wed Oct 28 00:09:52 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* TAO_IDL/be/be_codegen.cpp (end_server_template_header): 
-	* TAO_IDL/include/idl_global.h (class IDL_GlobalData): 
+	* TAO_IDL/be/be_codegen.cpp: 
+	* TAO_IDL/include/idl_global.h:
 	* TAO_IDL/driver/drv_preproc.cpp: 
 	* TAO_IDL/util/utl_global.cpp (validate_included_idl_files): Fixed
 	the problem with generating #include statements for #include'd idl
