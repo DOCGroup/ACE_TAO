@@ -1,3 +1,12 @@
+Wed Oct 29 11:00:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+
+          Added generation of ACE_TEMPLATE_SPECIALIZATION macro 
+          to implementataion of Objref_Traits<> and Value_Traits<> 
+          specializations.
+
 Wed Oct 29 10:50:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/RTCORBA/RT_Transport_Descriptor.cpp: Added a missing
