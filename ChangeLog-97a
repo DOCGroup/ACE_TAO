@@ -1,3 +1,7 @@
+Wed Jul 02 00:16:07 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ACE version 4.2.14, released Wed Jul 02 00:16:07 1997.
+
 Tue Jul  1 22:49:58 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Strategies_T.h: Changed the return value of all the hash()
