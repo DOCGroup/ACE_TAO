@@ -1826,11 +1826,6 @@ ACE_Log_Msg::inherit_hook (ACE_OS_Thread_Descriptor *thr_desc,
       new_log->trace_depth (attributes.trace_depth_);
     }
 
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-  new_log->seh_except_selector (attributes.seh_except_selector_);
-  new_log->seh_except_handler (attributes.seh_except_handler_);
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-
   // @@ Now the TSS Log_Msg has been created, cache my thread
   // descriptor in.
 

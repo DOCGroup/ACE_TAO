@@ -1,3 +1,8 @@
+Fri Dec  1 13:49:36 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Log_Msg.cpp:
+          Fixed problems on non-legacy Win32 builds.
+
 Fri Dec  1 09:46:15 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Log_Msg.h:
