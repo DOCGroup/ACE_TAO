@@ -27156,7 +27156,7 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COSCONC="..\..\TAO_IDL\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler on $(InputPath)
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosConcurrencyControl.idl
 InputName=CosConcurrencyControl
 
@@ -27301,7 +27301,7 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COSLIFE="..\..\TAO_IDL\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler on $(InputPath)
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosLifeCycle.idl
 InputName=CosLifeCycle
 
@@ -27446,7 +27446,7 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COSNAMIN="..\..\TAO_IDL\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler on $(InputPath)
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosNaming.idl
 InputName=CosNaming
 
@@ -27591,7 +27591,7 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COSTIME="..\..\TAO_IDL\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler on $(InputPath)
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosTimeBase.idl
 InputName=CosTimeBase
 
@@ -27736,7 +27736,7 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COSTRAD="..\..\tao_idl\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler on $(InputPath)
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosTrading.idl
 InputName=CosTrading
 
@@ -27899,7 +27899,7 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__LIFECYC="..\..\TAO_IDL\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler on $(InputPath)
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\LifeCycleService.idl
 InputName=LifeCycleService
 
@@ -28044,7 +28044,7 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__LOGGER_="..\..\TAO_IDL\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler on $(InputPath)
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Logger.idl
 InputName=Logger
 
@@ -28189,7 +28189,7 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__RTECEVENT="..\..\TAO_IDL\tao_idl.exe"	"RtecEventComm.idl"	"RtecScheduler.idl"	
-# Begin Custom Build - Invoking TAO_IDL compiler on $(InputPath)
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
 
@@ -28334,7 +28334,7 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__RTECEVENTC="..\..\TAO_IDL\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler on $(InputPath)
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
 
@@ -28479,7 +28479,7 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__RTECSCH="..\..\TAO_IDL\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler on $(InputPath)
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecScheduler.idl
 InputName=RtecScheduler
 
@@ -28584,12 +28584,46 @@ SOURCE=.\RtecUDPAdmin.idl
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL Compiler
+InputPath=.\RtecUDPAdmin.idl
+InputName=RtecUDPAdmin
+
+BuildCmds= \
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
 USERDEP__RTECU="..\..\TAO_IDL\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler on $(InputPath)
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecUDPAdmin.idl
 InputName=RtecUDPAdmin
 
