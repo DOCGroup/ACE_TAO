@@ -1,3 +1,28 @@
+Mon Jun 19 15:56:18 2000  Ossama Othman  <ossama@uci.edu>
+
+	* examples/Content_Server/AMI_Iterator/Content_Iterator_i.cpp:
+	* examples/Content_Server/AMI_Iterator/Content_Iterator_i.h:
+	* examples/Content_Server/AMI_Iterator/Iterator_Factory_i.cpp:
+	* examples/Content_Server/AMI_Iterator/Iterator_Factory_i.h:
+	* examples/Content_Server/AMI_Iterator/Iterator_Handler.cpp:
+	* examples/Content_Server/AMI_Iterator/client.cpp:
+	* examples/Content_Server/AMI_Iterator/server.cpp:
+
+	  Cleaned up trailing whitespace.  Updated server code to match
+	  that in SMI_Iterator example.
+
+	* examples/Content_Server/AMI_Iterator/Web_Server.idl:
+
+	  Cleaned up some trailing whitespace.
+
+	* examples/Content_Server/AMI_Iterator/README:
+
+	  Added instructions that explain how to run the example, and
+	  provided some sample output.
+
+	* examples/Content_Server/AMI_Iterator/Makefile:
+	  Updated dependencies.
+
 Mon Jun 19 15:36:38 2000  Ossama Othman  <ossama@uci.edu>
 
 	* examples/Content_Server/SMI_Iterator/Content_Iterator_i.cpp:
