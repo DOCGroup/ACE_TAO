@@ -667,6 +667,20 @@ TAO_Profile::parse_string (const char *ior
                         ACE_ENV_ARG_PARAMETER);
 }
 
+CORBA::Boolean
+TAO_Profile::is_profile_equivalent_i (const TAO_Profile *other)
+{
+  return this->orb_core_->is_profile_equivalent (this,
+                                                 other);
+}
+
+
+CORBA::ULong
+TAO_Profile::hash_service_i (CORBA::ULong m)
+{
+  return this->orb_core_->hash_service (this, m);
+}
+
 // ****************************************************************
 
 TAO_Unknown_Profile::TAO_Unknown_Profile (CORBA::ULong tag,

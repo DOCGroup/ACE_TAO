@@ -40,92 +40,6 @@ TAO_FT_Service_Callbacks::~TAO_FT_Service_Callbacks (void)
   delete this->profile_lock_;
 }
 
-
-CORBA::Boolean
-TAO_FT_Service_Callbacks::select_profile (TAO_MProfile * /*mpfile*/,
-                                          TAO_Profile *& /*pfile*/)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) This method has been deprecated \n"));
-
-  return 0;
-}
-
-CORBA::Boolean
-TAO_FT_Service_Callbacks::reselect_profile (TAO_Stub * /*stub*/,
-                                            TAO_Profile *& /*pfile*/)
-{
-#if 0
-
-  // @@todo: This needs to go after sometime..
-  // Note: We are grabbing the lock very early. We can still delay
-  // that. I will address this when I get around for the next round of
-  // improvements.
-
-  // Grab the lock
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                            guard,
-                            *this->profile_lock_,
-                            0));
-
-  // This method is essentially called before the Stub Object gives up
-  // on invocation. We should only do this
-  // 1) Check whether the first in the list or the profile_in_use ()
-  // is NOT a primary. If it had been so, we would have parsed the
-  // whole IOR list
-  // 2) Then set the first profile for invocation
-
-  // A secondary was already selected, so dont do that again.
-  if (this->secondary_set_)
-    return 0;
-
-  IOP::TaggedComponent tagged_component;
-  tagged_component.tag = IOP::TAG_FT_PRIMARY;
-
-  TAO_Profile *profile = stub->profile_in_use ();
-
-  // Get the tagged component from the  profile
-  TAO_Tagged_Components &pfile_tagged =
-    profile->tagged_components ();
-
-  // Search for the TaggedComponent that we want
-  if (pfile_tagged.get_component (tagged_component) == 1)
-    {
-      // We just return here as we would have parsed the whole IOR list
-      return 0;
-    }
-
-  // As the first is not a primary, it should be a secondary, we will
-  // set that for invocation.
-  pfile = profile;
-
-  // Set the primary_failed_ flag
-  this->primary_failed_ = 1;
-  this->secondary_set_ = 1;
-
-  return 1;
-
-#endif /*if 0*/
-
-  return 0;
-}
-
-void
-TAO_FT_Service_Callbacks::reset_profile_flags (void)
-{
-#if 0
-  // Grab the lock
-  ACE_MT (ACE_GUARD (ACE_Lock,
-                     guard,
-                     *this->profile_lock_));
-
-  // Reset the flags that we may have
-  this->primary_failed_ = 0;
-  this->secondary_set_ = 0;
-#endif /*if 0*/
-}
-
-
 CORBA::Boolean
 TAO_FT_Service_Callbacks::object_is_nil (CORBA::Object_ptr obj)
 {
@@ -156,217 +70,99 @@ TAO_FT_Service_Callbacks::object_is_nil (CORBA::Object_ptr obj)
 
 }
 
-
-void
-TAO_FT_Service_Callbacks::service_context_list (
-    TAO_Stub *&stub,
-    IOP::ServiceContextList &service_list,
-    CORBA::Boolean restart
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+CORBA::Boolean
+TAO_FT_Service_Callbacks::is_profile_equivalent (const TAO_Profile *this_p,
+                                                 const TAO_Profile *that_p)
 {
+  // At this point we assume that all the checks for other things
+  // within the profiles have been satisfied
+  const TAO_Tagged_Components &this_comp =
+    this_p->tagged_components ();
 
-  // If the restart flag is true, then this call for a
-  // reinvocation. We need not prepare the Service Context List once
-  // again. We can use the already existing one.
-  if (!restart)
+  const TAO_Tagged_Components &that_comp =
+    that_p->tagged_components ();
+
+  IOP::TaggedComponent this_tc, that_tc;
+  this_tc.tag = that_tc.tag = IOP::TAG_FT_GROUP;
+
+  if ((this_comp.get_component (this_tc) == 1) &&
+      (that_comp.get_component (that_tc) == 1))
     {
-      // Pack the group version service context
-      this->group_version_service_context (stub,
-                                           service_list
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      TAO_InputCDR this_cdr (ACE_reinterpret_cast (const char*,
+                                              this_tc.component_data.get_buffer ()),
+                             this_tc.component_data.length ());
 
-      // Pack the request service context
-      this->request_service_context (stub,
-                                     service_list
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      TAO_InputCDR that_cdr (ACE_reinterpret_cast (const char*,
+                                                   that_tc.component_data.get_buffer ()),
+                             that_tc.component_data.length ());
+
+      CORBA::Boolean this_byte_order;
+      CORBA::Boolean that_byte_order;
+
+      if ((this_cdr >> ACE_InputCDR::to_boolean (this_byte_order) == 0) ||
+          (that_cdr >> ACE_InputCDR::to_boolean (that_byte_order) == 0))
+         {
+           // return no equivalent
+           return 0;
+         }
+
+      this_cdr.reset_byte_order (ACE_static_cast (int, this_byte_order));
+      that_cdr.reset_byte_order (ACE_static_cast (int, that_byte_order));
+
+
+      FT::TagFTGroupTaggedComponent this_group_component;
+      FT::TagFTGroupTaggedComponent that_group_component;
+
+      this_cdr >> this_group_component;
+      that_cdr >> that_group_component;
+
+      // check if domain id and group id are the same
+      if ((ACE_OS::strcmp (this_group_component.ft_domain_id,
+                           that_group_component.ft_domain_id) == 0) &&
+          (this_group_component.object_group_id ==
+           that_group_component.object_group_id))
+         {
+           return 1;
+         }
     }
 
-  return;
+  return 0;
 }
 
-void
-TAO_FT_Service_Callbacks::request_service_context (
-    TAO_Stub *&stub,
-    IOP::ServiceContextList &service_list
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+CORBA::ULong
+TAO_FT_Service_Callbacks::hash_ft (TAO_Profile *p,
+                                   CORBA::ULong max)
 {
-  TAO_OutputCDR cdr;
-  if (cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
-       == 0)
-    ACE_THROW (CORBA::MARSHAL ());
+  // At this point we assume that all the checks for other things
+  // within the profiles have been satisfied
+  TAO_Tagged_Components &this_comp =
+    p->tagged_components ();
 
-  // Marshall the data in to the CDR streams
-  if (cdr <<
-      stub->orb_core ()->fault_tolerance_service ().client_id ().c_str ()
-      == 0)
-    ACE_THROW (CORBA::MARSHAL ());
+  IOP::TaggedComponent tc;
+  tc.tag = IOP::TAG_FT_GROUP;
 
-  if (cdr <<
-      stub->orb_core ()->fault_tolerance_service ().retention_id ()
-      == 0)
-    ACE_THROW (CORBA::MARSHAL ());
+  if (this_comp.get_component (tc) == 0)
+    return 0;
 
-
-  // Check whether the FT::RequestDurationPolicy has been set
-  CORBA::Policy_var policy =
-    stub->get_policy (FT::REQUEST_DURATION_POLICY
-                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // @@ There are two possibilities a) Duration policy has not been
-  // set b)Duration policy has been set. Point 'b' will give no
-  // problems. Some issues kick in for point 'a'. The best is to set a
-  // default value. BUT, what is the "right" value? Need to discuss
-  // this with Andy when I get a chance. For the present let us assume
-  // we have 15 seconds. This is purely an assumption..
-
-  TimeBase::TimeT exp_time = 0;
-
-  // if we have a non-null policy set
-  if (!CORBA::is_nil (policy.in ()) &&
-      policy->policy_type () == FT::REQUEST_DURATION_POLICY)
-    {
-      FT::RequestDurationPolicy_var duration_policy =
-        FT::RequestDurationPolicy::_narrow (policy.in ());
-
-      exp_time =
-        duration_policy->request_duration_value (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-    }
-  else
-    {
-      // The assumption that we are making
-      exp_time = 15 * 10000000;
-    }
-
-  // Calculaton of the expiration time
-
-  // @@ Note: This is so poorly defined in the spec. All that the
-  // @@ spec says is that add the RequestDurationPolicy value with
-  // @@ the 'local clock value', whatever the local clock
-  // @@ means. IMHO, we need something like UTC value or a more clear
-  // @@ definition to send across the wire.
-
-  // Grab the localtime on the machine where this is running
-  ACE_Time_Value time_val = ACE_OS::gettimeofday ();
-
-
-  TimeBase::TimeT sec_part  = time_val.sec () * 10000000;
-  TimeBase::TimeT usec_part = time_val.usec ()* 10;
-
-  // Now we have the total time
-  exp_time += sec_part + usec_part;
-
-
-  // Marshall the TimeBase::TimeT in to the CDR stream
-  if (cdr << exp_time == 0)
-    ACE_THROW (CORBA::MARSHAL ());
-
-  // Add the CDR encapsulation in to the ServiceContextList
-  CORBA::ULong l = service_list.length ();
-  service_list.length (l + 1);
-  service_list[l].context_id = IOP::FT_REQUEST;
-
-  // Make a *copy* of the CDR stream...
-  CORBA::ULong length = ACE_static_cast (CORBA::ULong, cdr.total_length ());
-  service_list[l].context_data.length (length);
-  CORBA::Octet *buf = service_list[l].context_data.get_buffer ();
-
-  for (const ACE_Message_Block *i = cdr.begin ();
-       i != 0;
-       i = i->cont ())
-    {
-      ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
-      buf += i->length ();
-    }
-
-  return;
-}
-
-
-void
-TAO_FT_Service_Callbacks::group_version_service_context (
-    TAO_Stub *&stub,
-    IOP::ServiceContextList &service_list
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_OutputCDR cdr;
-  if (cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
-       == 0)
-    ACE_THROW (CORBA::MARSHAL ());
-
-  if (!this->group_component_flag_)
-    this->get_object_group_version (stub->profile_in_use ());
-
-  // Marshall the data in to the CDR streams
-  // Marshall the TimeBase::TimeT in to the CDR stream
-  if (cdr << this->group_component_ == 0)
-    ACE_THROW (CORBA::MARSHAL ());
-
-  // Add the CDR encapsulation in to the ServiceContextList
-  CORBA::ULong l = service_list.length ();
-  service_list.length (l + 1);
-  service_list[l].context_id = IOP::FT_GROUP_VERSION;
-
-  // Make a *copy* of the CDR stream...
-  CORBA::ULong length = ACE_static_cast (CORBA::ULong, cdr.total_length ());
-  service_list[l].context_data.length (length);
-  CORBA::Octet *buf = service_list[l].context_data.get_buffer ();
-
-  for (const ACE_Message_Block *i = cdr.begin ();
-       i != 0;
-       i = i->cont ())
-    {
-      ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
-      buf += i->length ();
-    }
-
-  return;
-}
-
-
-void
-TAO_FT_Service_Callbacks::get_object_group_version (TAO_Profile *profile)
-{
-  // For the group version service context, we need to get the
-  // ObjectGroupRefVersion. So we just look at the profile in
-  // use. Look at the TaggedComponents in the profile in use, look for
-  // the TAG_FT_GROUP and get the properties. This is the general idea.
-
-  // Get the TAO_TaggedComponents from the profile
-  const TAO_Tagged_Components &tagged_components =
-    profile->tagged_components ();
-
-  IOP::TaggedComponent tagged;
-  tagged.tag = IOP::TAG_FT_GROUP;
-
-  // Get the TaggedComponent
-  // If it doesn't exist then just return
-  // It just means that the IOR that we got is not from a FT ORB.
-  if (tagged_components.get_component (tagged) != 1)
-    return;
-
+  // extract the group component
   TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
-                                          tagged.component_data.get_buffer ()
-                                          ),
-                    tagged.component_data.length ());
+                                          tc.component_data.get_buffer ()),
+                    tc.component_data.length ());
+
   CORBA::Boolean byte_order;
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-    return;
+  {
+    return 0;
+  }
+
   cdr.reset_byte_order (ACE_static_cast(int,byte_order));
 
-  // Extract the group component
-  cdr >> this->group_component_;
+  FT::TagFTGroupTaggedComponent group_component;
 
-  // Set the flag
-  this->group_component_flag_ = 1;
+  cdr >> group_component;
+
+  return group_component.object_group_id % max;
 }
-
 
 int
 TAO_FT_Service_Callbacks::raise_comm_failure (
@@ -464,29 +260,4 @@ TAO_FT_Service_Callbacks::restart_policy_check (
 
   // Failure
   return 0;
-}
-
-
-void
-TAO_FT_Service_Callbacks::service_log_msg_rcv (
-    TAO_Message_State_Factory & /*state*/)
-{
-  // Oscar & ANDY to fill up
-  return;
-}
-
-void
-TAO_FT_Service_Callbacks::service_log_msg_pre_upcall (
-    TAO_ServerRequest & /*req*/)
-{
-  // Oscar & ANDY to fill up
-  return;
-}
-
-void
-TAO_FT_Service_Callbacks::service_log_msg_post_upcall (
-    TAO_ServerRequest & /*req*/)
-{
-  // Oscar & ANDY to fill up
-  return;
 }

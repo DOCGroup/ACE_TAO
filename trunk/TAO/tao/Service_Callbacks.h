@@ -65,12 +65,13 @@ public:
   virtual CORBA::Boolean object_is_nil (CORBA::Object_ptr obj);
 
 
-  /// Allow the services to add service specific service context
-  /// information.
-  virtual void service_context_list (TAO_Stub *&stub,
-                                     IOP::ServiceContextList &service_list,
-                                     CORBA::Boolean restart
-                                     ACE_ENV_ARG_DECL);
+  /// Check for equivalency of the two profiles
+  virtual CORBA::Boolean is_profile_equivalent (const TAO_Profile *,
+                                                const TAO_Profile *);
+
+  /// Calculate the hash value..
+  virtual CORBA::ULong hash_ft (TAO_Profile *p,
+                                CORBA::ULong m);
 
   /// Allow the service layer to decide whether the COMM_FAILURE
   /// exception should be thrown or a reinvocation is needed
@@ -83,29 +84,6 @@ public:
   virtual int raise_transient_failure (TAO_GIOP_Invocation *invoke,
                                        TAO_Profile *profile
                                        ACE_ENV_ARG_DECL);
-
-
-  /**
-   * Send the message state to the FT service for logging. This hook
-   * sends the message state after the server receives the
-   * message. The message at this point has been verified that it is a
-   * GIOP message.
-   */
-  virtual void service_log_msg_rcv (TAO_Message_State_Factory &state);
-
-  /**
-   * Send the message state to the FT service for logging. This hook
-   * sends the message state after the POA receives upcall but just
-   * before the call has been dispatched to the servant
-   */
-  virtual void service_log_msg_pre_upcall (TAO_ServerRequest &req);
-
-  /**
-   * Send the message state to the FT service for logging. This hook
-   * sends the message state just before the reply is ready to be
-   * dispatched.
-   */
-  virtual void service_log_msg_post_upcall (TAO_ServerRequest &req);
 };
 
 

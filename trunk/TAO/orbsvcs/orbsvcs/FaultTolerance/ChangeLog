@@ -1,0 +1,46 @@
+Thu Jul 10 11:20:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Makefile.FaulTolerance: Added new files.
+	
+	* orbsvcs/orbsvcs/FT_CORBA_ORB.idl: Make the IDL spec compatible. 
+
+Thu Jul 10 11:09:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+	  Client side interceptor for FaultTolerance. This interceptor is
+	  now used to modify the service context list that is passed to
+	  the server side. The interceptor is setup using the standard
+	  svc.conf mechanism.
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ORBInitializer.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ORBInitializer.h: Register the
+	  server side and client side interceptors through the
+	  initializer. 
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.h: The latest specs
+	  changed the attribute in FTRequestDurationPolicy from
+	  request_duration_policy to
+	  request_duration_policy_value. Changed the accesor to match the
+	  IDL file. 
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h: Removed
+	  all the callback code used for processing service context
+	  information. We now interceptors to do that.
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.i: Removed all the callbacks for logging and
+	  service context for FT.
+
+
+	* tao/Service_Callbacks.h:
+	* tao/Service_Callbacks.cpp: The effect of the above
+	  changes. Remove interfaces that are totally irrelevant.
+
+
+	* tao/PortableServer/ServantBase.cpp: The effect of the above change.
+	
+
