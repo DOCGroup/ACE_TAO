@@ -15,12 +15,13 @@
     <EVENT name="AFTER_SERVER_SHUTDOWN" id="5" />
     <EVENT name="STOP" id="6" />
     <EVENT name="WORKER_ACTIVATED" id="7" />
+    <EVENT name="ACTUAL START" id="8" />
   </FAMILY>
   <FAMILY name="WORKER_GROUP" id="3">
-    <EVENT name="ONEWAY_CALL_DONE" id="0" />
-    <EVENT name="ONEWAY_CALL_STOP" id="1" />
-    <EVENT name="END_SCHED_SEGMENT" id="2" />
-    <EVENT name="BEGIN_SCHED_SEGMENT" id="3" />
+    <EVENT name="ONEWAY_CALL_START" id="0" />
+    <EVENT name="ONEWAY_CALL_DONE" id="1" />
+    <EVENT name="BEGIN_SCHED_SEGMENT" id="2" />
+    <EVENT name="END_SCHED_SEGMENT" id="3" />
     <EVENT name="WORKER_STARTED" id="4" />
   </FAMILY>
 </NAMESPACE>

@@ -150,6 +150,7 @@ int parse_args (int argc, char *argv[]);
 int
 main (int argc, char* argv[])
 {
+  //ACE_LOG_MSG->priority_mask (LM_ERROR | LM_CRITICAL | LM_ALERT | LM_EMERGENCY, ACE_Log_Msg::PROCESS);
   //TAO_EC_Default_Factory::init_svcs ();
 #ifdef ACE_HAS_DSUI
   ds_control ds_cntl("Chain_Test_Consumer_Supplier","consumer_supplier_enabled.dsui");
@@ -194,14 +195,14 @@ main (int argc, char* argv[])
       // ****************************************************************
 
       Consumer_Supplier_EC supplier_ec;
-      if (supplier_ec.init(sched_type.c_str(), poa.in()) == -1)
+      if (supplier_ec.init(sched_type.c_str(), poa.in(), orb->orb_core()->reactor()) == -1)
         {
           ACE_ERROR_RETURN((LM_ERROR, "Unable to initialize Kokyu_EC"), 1);
         }
 
       supplier_ec.init_gateway(orb.in(),
                                poa.in(),
-                               "file://consumer_ec.ior" ACE_ENV_ARG_PARAMETER);
+                               "file:///home/ron/yfzhang/iors/consumer_ec.ior" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       // ****************************************************************
       RtEventChannelAdmin::RtSchedEventChannel_var supplier_ec_ior =
@@ -239,10 +240,15 @@ main (int argc, char* argv[])
       //DSTRM_EVENT(MAIN_GROUP_FAM, START,1,0,NULL);
       ACE_Time_Value now(ACE_OS::gettimeofday());
       ACE_OS::printf("Consumer_Supplier_EC START at %isec %iusec\n",now.sec(),now.usec());
-      DSTRM_EVENT(MAIN_GROUP_FAM, START,0,0,NULL);
+      Object_ID oid;
+      oid.pid = ACE_OS::getpid();
+      oid.tid = ACE_OS::thr_self();
+      DSTRM_EVENT(MAIN_GROUP_FAM, START,0,sizeof(Object_ID), (char*)&oid);
 #endif //ACE_HAS_DSUI
 
       rt.activate(); //need thread creation flags? or priority?
+//      DSTRM_EVENT(MAIN_GROUP_FAM, START,0,sizeof(Object_ID), (char*)&oid);
+
       ACE_Time_Value stop_time(305,0);
       orb->run (stop_time ACE_ENV_ARG_PARAMETER);
       //orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -252,7 +258,7 @@ main (int argc, char* argv[])
       //@BT
       //DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
       ACE_DEBUG((LM_DEBUG,"Consumer_Supplier_EC (%P|%t) STOP at %u\n",ACE_OS::gettimeofday().msec()));
-      DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
+      DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, sizeof(Object_ID), (char*)&oid);
 #endif //ACE_HAS_DSUI
 
       // ****************************************************************
@@ -302,7 +308,7 @@ int parse_args (int argc, char *argv[])
                           -1);
       }
   if (ior_output_file == 0)
-    ior_output_file = ACE_OS::fopen ("consumer_supplier_ec.ior", "w");
+    ior_output_file = ACE_OS::fopen ("/home/ron/yfzhang/iors/consumer_supplier_ec.ior", "w");
   // Indicates sucessful parsing of the command line
   return 0;
 }

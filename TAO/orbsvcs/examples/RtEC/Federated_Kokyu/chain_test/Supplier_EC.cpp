@@ -6,12 +6,14 @@
 #include "ace/Thread.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Select_Reactor_Base.h" //for ACE_Select_Reactor_Impl::DEFAULT_SIZE
+#include <ace/Counter.h>
 
 #include "orbsvcs/Event/EC_Gateway_IIOP_Factory.h"
 #include "orbsvcs/Event/EC_Gateway_Sched.h"
 #include "orbsvcs/Event/EC_Kokyu_Factory.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
+#include "tao/ORB_Core.h"
 
 #include "Kokyu_EC.h"
 #include "Consumer.h"
@@ -111,17 +113,18 @@ public:
       ))
   {
     Supplier *supplier_impl1_1;
-    Timeout_Consumer *timeout_consumer_impl1_1;
     ACE_NEW(supplier_impl1_1,
             Supplier(1));
-    ACE_NEW(timeout_consumer_impl1_1,
-            Timeout_Consumer(supplier_impl1_1));
+
+    Supplier_Timeout_Handler *timeout_handler_impl1_1;
+    ACE_NEW(timeout_handler_impl1_1,
+          Supplier_Timeout_Handler(supplier_impl1_1));
+
     ACE_Time_Value tv(0,200000); //period
     add_supplier_with_timeout(supplier_impl1_1,
                               "supplier1_1",
                               ACE_ES_EVENT_UNDEFINED,
-                              timeout_consumer_impl1_1,
-                              "supplier1_1_timeout_consumer",
+                              timeout_handler_impl1_1,
                               tv,
                               RtecScheduler::VERY_LOW_CRITICALITY,
                               RtecScheduler::VERY_LOW_IMPORTANCE
@@ -164,6 +167,7 @@ int parse_args (int argc, char *argv[]);
 int
 main (int argc, char* argv[])
 {
+  //ACE_LOG_MSG->priority_mask (LM_ERROR | LM_CRITICAL | LM_ALERT | LM_EMERGENCY, ACE_Log_Msg::PROCESS);
   //TAO_EC_Default_Factory::init_svcs ();
   TAO_EC_Kokyu_Factory::init_svcs ();
   TAO_EC_Gateway_IIOP_Factory::init_svcs ();
@@ -204,14 +208,14 @@ main (int argc, char* argv[])
       // ****************************************************************
 
       Supplier_EC supplier_ec;
-      if (supplier_ec.init(sched_type.c_str(), poa.in()) == -1)
+      if (supplier_ec.init(sched_type.c_str(), poa.in(), orb->orb_core()->reactor()) == -1)
         {
           ACE_ERROR_RETURN((LM_ERROR, "Unable to initialize Kokyu_EC"), 1);
         }
 
       supplier_ec.init_gateway(orb.in(),
                                poa.in(),
-                               "file://consumer_supplier_ec.ior" ACE_ENV_ARG_PARAMETER);
+                               "file:///home/ron/yfzhang/iors/consumer_supplier_ec.ior" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
@@ -248,11 +252,16 @@ main (int argc, char* argv[])
       //DSTRM_EVENT(MAIN_GROUP_FAM, START,1,0,NULL);
       ACE_Time_Value now(ACE_OS::gettimeofday());
       ACE_OS::printf("Consumer_Supplier_EC START at %isec %iusec\n",now.sec(),now.usec());
-      DSTRM_EVENT(MAIN_GROUP_FAM, START,0,0,NULL);
+      Object_ID oid;
+      oid.pid = ACE_OS::getpid();
+      oid.tid = ACE_OS::thr_self();
+
+      DSTRM_EVENT(MAIN_GROUP_FAM, START,0,sizeof(Object_ID), (char*)&oid);
 #endif //ACE_HAS_DSUI
 
       rt.activate(); //need thread creation flags? or priority?
-      //ACE_Time_Value stop_time(10,0);
+
+//      DSTRM_EVENT(MAIN_GROUP_FAM, START,0,sizeof(Object_ID), (char*)&oid);
       ACE_Time_Value stop_time(300,0);
       orb->run (stop_time ACE_ENV_ARG_PARAMETER);
       //orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -262,7 +271,8 @@ main (int argc, char* argv[])
       //@BT
       //DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
       ACE_DEBUG((LM_DEBUG,"Supplier_EC (%P|%t) STOP at %u\n",ACE_OS::gettimeofday().msec()));
-      DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
+
+      DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, sizeof(Object_ID), (char*)&oid);
 #endif //ACE_HAS_DSUI
 
       // ****************************************************************

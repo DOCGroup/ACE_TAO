@@ -65,21 +65,35 @@ Kokyu_EC::~Kokyu_EC(void)
     suppliers_[i]->disconnect_push_supplier();
     delete suppliers_[i];
   }
+/*
   for(size_t i=0; i<timeout_consumers_.size(); ++i) {
     timeout_consumers_[i]->disconnect_push_consumer();
     delete timeout_consumers_[i];
   }
+*/
   for(size_t i=0; i<consumers_.size(); ++i) {
     consumers_[i]->disconnect_push_consumer();
     delete consumers_[i];
   }
+
+  if (this->reactor_ != 0)
+    {
+      for(size_t i=0; i<timer_handles_.size(); ++i) {
+        this->reactor_->cancel_timer(timer_handles_[i]);
+      }
+      this->timer_handles_.clear();
+      for(size_t i=0; i<task_triggers_.size(); ++i) {
+        delete this->task_triggers_[i].handler;
+      }
+      this->task_triggers_.clear();
+    }
 
   this->ec_impl_->destroy();
 
 }
 
 int
-Kokyu_EC::init(const char* schedule_discipline, PortableServer::POA_ptr poa)
+Kokyu_EC::init(const char* schedule_discipline, PortableServer::POA_ptr poa, ACE_Reactor * reactor)
 {
   ACE_TRY_NEW_ENV {
 
@@ -99,6 +113,7 @@ Kokyu_EC::init(const char* schedule_discipline, PortableServer::POA_ptr poa)
     ACE_TRY_CHECK;
     supplier_admin_ = ec_impl_->for_suppliers(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
+    this->reactor_ = reactor;
   }
   ACE_CATCHALL {
     return -1;
@@ -252,6 +267,20 @@ Kokyu_EC::start (ACE_ENV_SINGLE_ARG_DECL)
       ec_impl_->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+  for(size_t i=0; i<this->task_triggers_.size(); ++i)
+    {
+      if (this->reactor_ != 0)
+        {
+          long timer_handle = this->reactor_->schedule_timer(this->task_triggers_[i].handler,
+                                                             0, //arg
+                                                             this->task_triggers_[i].phase, //delay
+                                                             this->task_triggers_[i].period //period
+                                                             );
+          this->timer_handles_.push_back(timer_handle);
+          ACE_DEBUG((LM_DEBUG,"Kokyu_EC (%P|%t) scheduled timeout %d with delay %isec %iusec\n",timer_handle,this->task_triggers_[i].phase.sec(),this->task_triggers_[i].phase.usec()));
+        }
+    }
+
       //@BT: EC activated is roughly equivalent to having the DT scheduler ready to run
       //DSTRM_EVENT (MAIN_GROUP_FAM, SCHEDULER_STARTED, 1, 0, NULL);
       ACE_DEBUG((LM_DEBUG,"Kokyu_EC thread %t SCHEDULER_STARTED at %u\n",ACE_OS::gettimeofday().msec()));
@@ -277,8 +306,7 @@ Kokyu_EC::add_supplier_with_timeout(
                                     Supplier * supplier_impl,
                                     const char * supp_entry_point,
                                     RtecEventComm::EventType supp_type,
-                                    Timeout_Consumer * timeout_consumer_impl,
-                                    const char * timeout_entry_point,
+                                    Supplier_Timeout_Handler * timeout_handler_impl,
                                     ACE_Time_Value period,
                                     RtecScheduler::Criticality_t crit,
                                     RtecScheduler::Importance_t imp
@@ -293,11 +321,38 @@ Kokyu_EC::add_supplier_with_timeout(
 {
   add_supplier(supplier_impl,supp_entry_point,supp_type ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  add_timeout_consumer(supplier_impl,timeout_consumer_impl,timeout_entry_point,period,crit,imp ACE_ENV_ARG_PARAMETER);
+//  add_timeout_consumer(supplier_impl,timeout_consumer_impl,timeout_entry_point,period,crit,imp ACE_ENV_ARG_PARAMETER);
+//  ACE_CHECK;
+  RtecScheduler::Time period_timeT;
+  ORBSVCS_Time::Time_Value_to_TimeT (period_timeT,period);
+
+  scheduler_impl_->set (supplier_impl->rt_info(),
+                        crit,
+                        0,
+                        0,
+                        0,
+                        period_timeT,
+                        imp,
+                        0,
+                        0,
+                        RtecScheduler::OPERATION
+                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+
+//  add_supplier(supplier_impl,supp_entry_point,supp_type ACE_ENV_ARG_PARAMETER);
+//  ACE_CHECK;
+
+  //We can't schedule the timer here because we want the phase to be from when the reactor loop starts, not now!
+  ACE_Time_Value phase(0,0);
+  task_trigger_t trigger;
+  trigger.handler = timeout_handler_impl;
+  trigger.period = period;
+  trigger.phase = phase;
+  this->task_triggers_.push_back(trigger);
 }
 
 ///Takes ownership of Timeout_Consumer
+/*
 void
 Kokyu_EC::add_timeout_consumer(
                                Supplier * supplier_impl,
@@ -347,6 +402,7 @@ Kokyu_EC::add_timeout_consumer(
 
   this->timeout_consumers_.push_back(timeout_consumer_impl);
 } //add_supplier_with_timeout()
+*/
 
 ///Takes ownership of Supplier
 void
@@ -516,7 +572,7 @@ Reactor_Task::reactor(void)
 int
 Reactor_Task::svc (void)
 {
-  ACE_DEBUG((LM_DEBUG,"Reactor_Task (%P|%t) svc(): ENTER\n"));
+  ACE_OS::printf("Reactor_Task %d svc(): ENTER\n",ACE_OS::getpid());
 
   if (!this->initialized_)
     {

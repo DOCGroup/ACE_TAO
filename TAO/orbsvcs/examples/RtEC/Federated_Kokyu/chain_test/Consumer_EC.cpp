@@ -168,6 +168,7 @@ int parse_args (int argc, char *argv[]);
 int
 main (int argc, char* argv[])
 {
+   //ACE_LOG_MSG->priority_mask (LM_ERROR | LM_CRITICAL | LM_ALERT | LM_EMERGENCY, ACE_Log_Msg::PROCESS);
   //TAO_EC_Default_Factory::init_svcs ();
 #ifdef ACE_HAS_DSUI
   ds_control ds_cntl("Chain_Test_Consumer","consumer_enabled.dsui");
@@ -207,7 +208,7 @@ main (int argc, char* argv[])
       // ****************************************************************
 
       Consumer_EC consumer_ec;
-      if (consumer_ec.init(sched_type.c_str(), poa.in()) == -1)
+      if (consumer_ec.init(sched_type.c_str(), poa.in(), orb->orb_core()->reactor()) == -1)
         {
           ACE_ERROR_RETURN((LM_ERROR, "Unable to initialize Consumer_EC"), 1);
         }
@@ -254,14 +255,19 @@ main (int argc, char* argv[])
       DSTRM_EVENT (MAIN_GROUP_FAM, WORKER_ACTIVATED, 0, 0, NULL);
 
       //@BT
-      //  ACE_Object_Counter::object_id oid = ACE_OBJECT_COUNTER->increment();
+      // ACE_Object_Counter::object_id oid = ACE_OBJECT_COUNTER->increment();
       //  DSTRM_EVENT(MAIN_GROUP_FAM, START, 1, sizeof(EC_Event_Counter::event_id), (char*)&eid);
       ACE_Time_Value now(ACE_OS::gettimeofday());
       ACE_OS::printf("Consumer_EC START at %isec %iusec\n",now.sec(),now.usec());
-      DSTRM_EVENT(MAIN_GROUP_FAM, START, 0, 0, NULL);
+      Object_ID oid;
+      oid.pid = ACE_OS::getpid();
+      oid.tid = ACE_OS::thr_self();
+      DSTRM_EVENT(MAIN_GROUP_FAM, START, 0, sizeof(Object_ID), (char*)&oid);
 #endif //ACE_HAS_DSUI
 
       rt.activate(); //need thread creation flags? or priority?
+//      DSTRM_EVENT(MAIN_GROUP_FAM, START, 0, sizeof(Object_ID), (char*)&oid);
+
       ACE_Time_Value stop_time(310,0);
       orb->run (stop_time ACE_ENV_ARG_PARAMETER);
       //orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -271,7 +277,7 @@ main (int argc, char* argv[])
       //@BT
       //DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
       ACE_DEBUG((LM_DEBUG,"Consumer_EC (%P|%t) STOP at %u\n",ACE_OS::gettimeofday().msec()));
-      DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
+      DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, sizeof(Object_ID), (char*)&oid);
 #endif //ACE_HAS_DSUI
 
       // ****************************************************************
@@ -322,6 +328,6 @@ while ((c = get_opts ()) != -1)
 }
 // Indicates sucessful parsing of the command line
  if (ior_output_file == 0)
-   ior_output_file = ACE_OS::fopen ("consumer_ec.ior", "w");
+   ior_output_file = ACE_OS::fopen ("/home/ron/yfzhang/iors/consumer_ec.ior", "w");
  return 0;
 }
