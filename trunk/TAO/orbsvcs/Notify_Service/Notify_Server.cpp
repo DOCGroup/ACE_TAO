@@ -31,6 +31,7 @@ main (int argc, char *argv[])
     {
       notify_service.run (TAO_ENV_SINGLE_ARG_PARAMETER);
       notify_service.shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
