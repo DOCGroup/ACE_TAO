@@ -34,6 +34,7 @@ class TAO_Target_Specification;
 class TAO_OutputCDR;
 class TAO_InputCDR;
 class TAO_Pluggable_Reply_Params;
+class TAO_Pluggable_Reply_Params_Base;
 class TAO_GIOP_Locate_Status_Msg;
 class TAO_GIOP_Locate_Request_Header;
 class TAO_Tagged_Profile;
@@ -67,7 +68,7 @@ public:
   /// Write the reply header in to <output>
   virtual int write_reply_header (
       TAO_OutputCDR &output,
-      TAO_Pluggable_Reply_Params &reply,
+      TAO_Pluggable_Reply_Params_Base &reply,
       CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
@@ -106,7 +107,7 @@ protected:
 
   /// Marshall the reply status
   void marshal_reply_status (TAO_OutputCDR &output,
-                             TAO_Pluggable_Reply_Params &reply);
+                             TAO_Pluggable_Reply_Params_Base &reply);
 
   /// Unmarshals the received object key
   CORBA::Boolean unmarshall_object_key (TAO_ObjectKey &object_key,

@@ -27,18 +27,21 @@
 #include "tao/CDR.h"
 
 /**
- * @class TAO_Pluggable_Reply_Params
+ * @class TAO_Pluggable_Reply_Params_Base
  *
- * @brief TAO_Pluggable_Connector_Params
+ * @brief TAO_Pluggable_Acceptor_Params
  *
- * This represents a set of data that would be received by the
- * connector from the acceptor.
+ * This represents a set of data that would be assembled by the
+ * acceptor to pass to the connector. This base class is used by
+ * TAO_ServerRequest. The child class TAO_Pluggable_Reply_Params
+ * is used on the client side, and contains an additional
+ * TAO_InputCDR member, not needed on the server side.
  */
-class TAO_Export TAO_Pluggable_Reply_Params
+class TAO_Export TAO_Pluggable_Reply_Params_Base
 {
 public:
   /// Constructor.
-  TAO_Pluggable_Reply_Params (TAO_ORB_Core *orb_core);
+  TAO_Pluggable_Reply_Params_Base (void);
 
   /// The IOP service context list.
   IOP::ServiceContextList svc_ctx_;
@@ -76,13 +79,29 @@ public:
   /// marshalled in the reply
   CORBA::Boolean argument_flag_;
 
-  /// The stream with the non-demarshalled reply. This stream will be
-  /// passed up to the stubs to demarshall the parameter values.
-  TAO_InputCDR input_cdr_;
-
-private:
+protected:
   /// The service context list that we don't own.
   IOP::ServiceContextList *service_context_;
+};
+
+/**
+ * @class TAO_Pluggable_Reply_Params
+ *
+ * @brief TAO_Pluggable_Connector_Params
+ *
+ * This represents a set of data that would be received by the
+ * connector from the acceptor.
+ */
+class TAO_Export TAO_Pluggable_Reply_Params 
+  : public TAO_Pluggable_Reply_Params_Base
+{
+public:
+  /// Constructor.
+  TAO_Pluggable_Reply_Params (TAO_ORB_Core *orb_core);
+
+  /// The stream with the non-demarshaled reply. This stream will be
+  /// passed up to the stubs to demarshal the parameter values.
+  TAO_InputCDR input_cdr_;
 };
 
 // @@ Bala: this is a GIOPism too, there is no such thing as locate

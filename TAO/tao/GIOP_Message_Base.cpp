@@ -131,8 +131,10 @@ TAO_GIOP_Message_Base::generate_locate_request_header (
 }
 
 int
-TAO_GIOP_Message_Base::generate_reply_header (TAO_OutputCDR &cdr,
-                                              TAO_Pluggable_Reply_Params &params)
+TAO_GIOP_Message_Base::generate_reply_header (
+    TAO_OutputCDR &cdr,
+    TAO_Pluggable_Reply_Params_Base &params
+  )
 {
   // Write the GIOP header first
   if (!this->write_protocol_header (TAO_GIOP_REPLY,
@@ -409,9 +411,11 @@ TAO_GIOP_Message_Base::process_reply_message (
 }
 
 int
-TAO_GIOP_Message_Base::generate_exception_reply (TAO_OutputCDR &cdr,
-                                                 TAO_Pluggable_Reply_Params &params,
-                                                 CORBA::Exception &x)
+TAO_GIOP_Message_Base::generate_exception_reply (
+    TAO_OutputCDR &cdr,
+    TAO_Pluggable_Reply_Params_Base &params,
+    CORBA::Exception &x
+  )
 {
   // A new try/catch block, but if something goes wrong now we have no
   // hope, just abort.
@@ -446,6 +450,7 @@ int
 TAO_GIOP_Message_Base::write_protocol_header (TAO_GIOP_Message_Type t,
                                               TAO_OutputCDR &msg)
 {
+  // Reset the message type
   // Reset the message type
   msg.reset ();
 
@@ -1043,7 +1048,7 @@ TAO_GIOP_Message_Base::send_reply_exception (
                         orb_core->to_iso8859 (),
                         orb_core->to_unicode ());
 
-  TAO_Pluggable_Reply_Params reply_params (orb_core);
+  TAO_Pluggable_Reply_Params_Base reply_params;
   reply_params.request_id_ = request_id;
   reply_params.svc_ctx_.length (0);
 
@@ -1143,7 +1148,7 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
 int
 TAO_GIOP_Message_Base::generate_locate_reply_header (
     TAO_OutputCDR & /*cdr*/,
-    TAO_Pluggable_Reply_Params & /*params*/)
+    TAO_Pluggable_Reply_Params_Base & /*params*/)
 {
   return 0;
 }

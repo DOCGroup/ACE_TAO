@@ -185,7 +185,7 @@ TAO_GIOP_Message_Lite::generate_locate_request_header (
 int
 TAO_GIOP_Message_Lite::generate_reply_header (
     TAO_OutputCDR &cdr,
-    TAO_Pluggable_Reply_Params &params
+    TAO_Pluggable_Reply_Params_Base &params
   )
 {
   // Write the GIOPLite header first
@@ -495,7 +495,7 @@ TAO_GIOP_Message_Lite::process_reply_message (
 int
 TAO_GIOP_Message_Lite::generate_exception_reply (
     TAO_OutputCDR &cdr,
-    TAO_Pluggable_Reply_Params &params,
+    TAO_Pluggable_Reply_Params_Base &params,
     CORBA::Exception &x
   )
 {
@@ -982,7 +982,7 @@ TAO_GIOP_Message_Lite::parse_reply (TAO_InputCDR &cdr,
 int
 TAO_GIOP_Message_Lite::write_reply_header (
     TAO_OutputCDR &output,
-    TAO_Pluggable_Reply_Params &reply,
+    TAO_Pluggable_Reply_Params_Base &reply,
     CORBA::Environment & /* ACE_TRY_ENV */
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -1446,7 +1446,7 @@ TAO_GIOP_Message_Lite::dump_msg (const char *label,
 int
 TAO_GIOP_Message_Lite::generate_locate_reply_header (
     TAO_OutputCDR & /*cdr*/,
-    TAO_Pluggable_Reply_Params & /*params*/)
+    TAO_Pluggable_Reply_Params_Base & /*params*/)
 {
   return 0;
 }
