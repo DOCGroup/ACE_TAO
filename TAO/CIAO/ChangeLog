@@ -1,3 +1,15 @@
+Thu Jul 31 16:50:29 2003 George Edwards <g.edwards@vanderbilt.edu>
+
+        * examples/handcrafted/BasicSP_EC/EC/EC_svnt.h:
+        * examples/handcrafted/BasicSP_EC/EC/EC_svnt.cpp:
+        * examples/handcrafted/BasicSP_EC/BMDevice/BMDevice_svnt.h:
+        * examples/handcrafted/BasicSP_EC/BMDevice/BMDevice_svnt.cpp:
+        * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.h:
+        * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.cpp:
+
+        Made modifications requested. Added @@ Bala comments
+        to indicate changes.
+
 2003-07-31  Diego Sevilla  <dsevilla@ditec.um.es>
 
         * examples/OEP/BasicSP/EC/EC_exec.{cpp,h}: Changed the exception

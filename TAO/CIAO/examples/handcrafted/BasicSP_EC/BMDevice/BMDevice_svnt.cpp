@@ -92,7 +92,50 @@ namespace CIAO_GLUE_BasicSP
   ciao_event_channel_ (RtecEventChannelAdmin::EventChannel::_nil ())
   // END new event code
   {
+	  this->create_event_channel ();
   }
+
+  // START new event code
+  void BMDevice_Context::create_event_channel (void)
+  {
+    // @@ Bala, I've created this new method to decouple event channel
+    // creation from other tasks.
+
+    // @@ Bala, this crashes if I call
+	// CORBA::ORB_var orb = this->orb_core ()->orb ();
+	// I'll keep looking for the problem, but if you have any ideas
+	// tell me.
+	// Get a reference to the ORB.
+    char * argv[1] = { "BMDevice_exec" };
+    int argc = sizeof (argv) / sizeof (argv[0]);
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv ACE_ENV_ARG_PARAMETER);
+		ACE_TRY_CHECK;
+
+    if (CORBA::is_nil (orb.in ()))
+      ACE_ERROR ((LM_ERROR, "Nil ORB\n"));
+
+
+    // Get a reference to the POA
+    CORBA::Object_var poa_object =
+      orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+    PortableServer::POA_var root_poa =
+      PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+    if (CORBA::is_nil (root_poa.in ()))
+      ACE_ERROR ((LM_ERROR, "Nil RootPOA\n"));
+
+    // Get a reference to the event channel
+    if (CORBA::is_nil (this->ciao_event_channel_.in ()))
+      {
+        TAO_EC_Event_Channel_Attributes attributes (root_poa.in (), root_poa.in ());
+        TAO_EC_Event_Channel * ec_servant;
+        ACE_NEW (ec_servant, TAO_EC_Event_Channel (attributes));
+        ec_servant->activate ();
+        this->ciao_event_channel_ = ec_servant->_this ();
+      }
+  }
+  // END new event code
 
   BMDevice_Context::~BMDevice_Context (void)
   {
@@ -213,7 +256,8 @@ namespace CIAO_GLUE_BasicSP
     events[0].header.source = ACE_ES_EVENT_SOURCE_ANY + 2;
     events[0].header.type = ACE_ES_EVENT_UNDEFINED + 2;
     events[0].data.any_value <<= ev;
-    ciao_proxy_data_available_consumer_->push (events);
+    ciao_proxy_data_available_consumer_->push (events ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
     // END new event code
 
     // START old event code
@@ -257,32 +301,15 @@ namespace CIAO_GLUE_BasicSP
     CORBA::ORB_var orb = CORBA::ORB_init (argc, argv ACE_ENV_ARG_PARAMETER);
 		ACE_TRY_CHECK;
 
-    // Get a reference to the POA
-	  CORBA::Object_var poa_object =
-      orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-	  ACE_TRY_CHECK;
-	  PortableServer::POA_var root_poa =
-      PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-	  ACE_TRY_CHECK;
-	  if (CORBA::is_nil (root_poa.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR, "Nil RootPOA\n"), 0);
-
-    // Get a reference to the event channel
-    if (CORBA::is_nil (this->ciao_event_channel_.in ()))
-      {
-        TAO_EC_Event_Channel_Attributes attributes (root_poa.in (), root_poa.in ());
-        TAO_EC_Event_Channel * ec_servant;
-        ACE_NEW_RETURN (ec_servant, TAO_EC_Event_Channel (attributes), 0);
-        ec_servant->activate ();
-        this->ciao_event_channel_ = ec_servant->_this ();
-      }
-
     // Establish supplier's connection to event channel if not done yet
     if (CORBA::is_nil (this->ciao_proxy_data_available_consumer_.in ()))
       {
         RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-          this->ciao_event_channel_->for_suppliers ();
-        this->ciao_proxy_data_available_consumer_ = supplier_admin->obtain_push_consumer ();
+          this->ciao_event_channel_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_CHECK;
+        this->ciao_proxy_data_available_consumer_ =
+          supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_CHECK;
 
         // Create and register supplier servant
         data_available_Supplier_impl * supplier_servant;
@@ -305,12 +332,48 @@ namespace CIAO_GLUE_BasicSP
       ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
     }
 
+    return this->subscribe_data_available_consumer (c);
+    // END new event code
+
+    // START old event code
+    /*
+    if (CORBA::is_nil (c))
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+    }
+
+    ::BasicSP::DataAvailableConsumer_var sub =
+    ::BasicSP::DataAvailableConsumer::_duplicate (c);
+
+    ACE_Active_Map_Manager_Key key;
+    this->ciao_publishes_data_available_map_.bind (sub.in (), key);
+
+    sub._retn ();
+
+    ::Components::Cookie_var retv = new ::CIAO::Map_Key_Cookie (key);
+    return retv._retn ();
+    */
+    // END old event code
+  }
+
+  ::Components::Cookie *
+  BMDevice_Context::subscribe_data_available_consumer (
+  ::BasicSP::DataAvailableConsumer_ptr c)
+  {
+
+    char * argv[1] = { "BMDevice_exec" };
+    int argc = sizeof (argv) / sizeof (argv[0]);
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv ACE_ENV_ARG_PARAMETER);
+		ACE_TRY_CHECK;
+
     ::BasicSP::DataAvailableConsumer_var sub = ::BasicSP::DataAvailableConsumer::_duplicate (c);
 
     RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-      this->ciao_event_channel_->for_consumers ();
+      this->ciao_event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
     RtecEventChannelAdmin::ProxyPushSupplier_var ciao_proxy_data_available_supplier =
-      consumer_admin->obtain_push_supplier ();
+      consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
     
     // Create and register consumer servant
     data_available_Consumer_impl * consumer_servant;
@@ -333,27 +396,8 @@ namespace CIAO_GLUE_BasicSP
 
     ::Components::Cookie_var retv = new ::CIAO::Map_Key_Cookie (key);
     return retv._retn ();
-    // END new event code
 
-    // START old event code
-    /*
-    if (CORBA::is_nil (c))
-    {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
-    }
 
-    ::BasicSP::DataAvailableConsumer_var sub =
-    ::BasicSP::DataAvailableConsumer::_duplicate (c);
-
-    ACE_Active_Map_Manager_Key key;
-    this->ciao_publishes_data_available_map_.bind (sub.in (), key);
-
-    sub._retn ();
-
-    ::Components::Cookie_var retv = new ::CIAO::Map_Key_Cookie (key);
-    return retv._retn ();
-    */
-    // END old event code
   }
 
   ::BasicSP::DataAvailableConsumer_ptr

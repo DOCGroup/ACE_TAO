@@ -21,6 +21,7 @@
 #ifndef CIAO_GLUE_SESSION_EC_SVNT_H
 #define CIAO_GLUE_SESSION_EC_SVNT_H
 #include "ace/pre.h"
+#include "tao/Orb_Core.h"
 
 #include "ECS.h"
 #include "ECEC.h"
@@ -135,11 +136,24 @@ namespace CIAO_GLUE_BasicSP
     ::CORBA::SystemException,
     ::Components::InvalidConnection));
 
+    // START new event code
+    ::Components::Cookie *
+    subscribe_timeout_consumer (
+    ::BasicSP::TimeOutConsumer_ptr c);
+
+    void
+    create_event_channel (void);
+    // END new event code
+
     protected:
-    // @@ George this can be removed, right?
+    // @@ Bala, I've commented this out
+	// START old event code
+	/*
     ACE_Active_Map_Manager<
     ::BasicSP::TimeOutConsumer_var>
     ciao_publishes_timeout_map_;
+	*/
+	// END old event code
 
     // START new event code
     RtecEventChannelAdmin::ProxyPushConsumer_var
