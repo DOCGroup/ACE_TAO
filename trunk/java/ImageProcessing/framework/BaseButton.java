@@ -37,7 +37,7 @@ class URLDialogButton extends BaseButton
   public URLDialogButton (String title, String desc, ImageApp parent)
   {
     super (title, desc, parent);
-    this.openURLFrame_ = new URLFrame ("Open URL", this.parent_);
+    this.openURLFrame_ = new URLFrame ("Open URL", this.parent_, true);
   }
 
   public boolean action (Event e, Object arg)
@@ -53,13 +53,15 @@ class SaveButton extends BaseButton
   public SaveButton (String title, String desc, ImageApp parent)
   {
     super (title, desc, parent);
+    this.openURLFrame_ = new URLFrame ("Save Image", this.parent_, false);
   }
 
   public boolean action (Event e, Object arg)
   {
-    this.parent_.saveFile ();
+    this.openURLFrame_.show ();
     return true;
   }
+  private URLFrame openURLFrame_;
 }
 
 class ReloadButton extends BaseButton
