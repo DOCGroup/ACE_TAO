@@ -1,3 +1,15 @@
+Wed Feb 24 16:56:51 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/017/barrier2.cpp: Added this to show how you can
+	change the thread count while threads are still active.
+
+	* docs/tutorials/017/*.html: Regenerated due to the new file.
+	
+	* docs/tutorials/018/*.html: Added Kirthika's abstract &
+	regenerated.
+	
+	* docs/tutorials/018/token.cpp:  Typo in the comments...
+	
 Wed Feb 24 14:57:10 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h (ASYS_ONLY_WIDE_STRING): New UNICODE macros to convert
