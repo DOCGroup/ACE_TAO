@@ -1,39 +1,44 @@
+Tue Sep 22 07:12:31 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (TAO_NamingContext ctor):
+          reordered initializers to match declaration order.
+
 Tue Sep 22 03:22:56 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.13 released.
 
 Tue Sep 22 02:40:33 1998  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
 
-	* examples/Simple/grid: Printout the process id and thread id
-	  for the client and server.
+        * examples/Simple/grid: Printout the process id and thread id
+          for the client and server.
 
-	* examples/Simple/Makefile (DIRS): Enabled all the "Simple" test
- 	  examples in the Makefile so we can see if they compile on other
- 	  platforms.
+        * examples/Simple/Makefile (DIRS): Enabled all the "Simple" test
+          examples in the Makefile so we can see if they compile on other
+          platforms.
 
-	* TAO_IDL/be/be_interface.cpp (gen_perfect_hash_methods): Added
- 	  the -S1 flag, which generates a switch statement if duplicate
- 	  keys are encountered.  This works around a bug with gperf that
- 	  needs to be fixed soon...
+        * TAO_IDL/be/be_interface.cpp (gen_perfect_hash_methods): Added
+          the -S1 flag, which generates a switch statement if duplicate
+          keys are encountered.  This works around a bug with gperf that
+          needs to be fixed soon...
 
 Mon Sep 22 01:08:51 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* changed examples/Simple/echo/Client_i.cpp 
-		 - the initialization of the naming service just
-	       	needs a single argument now.
-	
-	* changed examples/Simple/echo/Server_i.cpp 
-		- return values from TAO_CHECK_ENV have been removed.
+        * changed examples/Simple/echo/Client_i.cpp
+                 - the initialization of the naming service just
+                needs a single argument now.
 
-	* checked in 
-		examples/Simple/echo/Echo.dsw,
-		examples/Simple/echo/client.dsp,
-		examples/Simple/echo/server.dsp.
-	  
+        * changed examples/Simple/echo/Server_i.cpp
+                - return values from TAO_CHECK_ENV have been removed.
+
+        * checked in
+                examples/Simple/echo/Echo.dsw,
+                examples/Simple/echo/client.dsp,
+                examples/Simple/echo/server.dsp.
+
 Mon Sep 21 22:24:45 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.h (TAO_Naming_Client): Added
- 	  timeout to init().
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.h (TAO_Naming_Client): Added
+          timeout to init().
 
 Mon Sep 21 21:44:39 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -50,7 +55,7 @@ Mon Sep 21 21:44:39 1998  David L. Levine  <levine@cs.wustl.edu>
 Mon Sep 21 21:32:31 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * orbsvcs: Removed the extra args after all the
- 	  TAO_Naming_Client::init() calls.
+          TAO_Naming_Client::init() calls.
 
 Mon Sep 21 18:20:35 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
