@@ -2037,9 +2037,7 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
 
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_mutex_timedlock (m, &ts),
                                        result), int, -1);
-
 #  elif defined (ACE_HAS_WTHREADS)
-
   // Note that we must convert between absolute time (which is passed
   // as a parameter) and relative time (which is what the system call
   // expects).
@@ -2112,11 +2110,11 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
     return 0;
 #  endif /* ACE_HAS_PTHREADS */
 
-#endif /* ACE_HAS_THREADS && ACE_HAS_MUTEX_TIMEOUTS */
-
+#else
   ACE_UNUSED_ARG (m);
   ACE_UNUSED_ARG (timeout);
   ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS && ACE_HAS_MUTEX_TIMEOUTS */
 }
 
 ACE_INLINE int
