@@ -466,6 +466,14 @@ typedef ACE_UINT16 ACE_USHORT16;
 # define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lld")
 #endif /* ACE_INT64_FORMAT_SPECIFIER */
 
+#if !defined (ACE_SSIZE_T_FORMAT_SPECIFIER)
+# define ACE_SSIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%d")
+#endif /* ACE_SSIZE_T_FORMAT_SPECIFIER */
+
+#if !defined (ACE_SIZE_T_FORMAT_SPECIFIER)
+# define ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%u")
+#endif /* ACE_SIZE_T_FORMAT_SPECIFIER */
+
 // Cast from UINT64 to a double requires an intermediate cast to INT64
 // on some platforms.
 # if defined (ACE_LACKS_LONGLONG_T)
@@ -508,7 +516,11 @@ typedef ACE_UINT16 ACE_USHORT16;
 #     define ACE_SIZEOF_LONG_DOUBLE 8
 #   elif LDBL_MAX_EXP == 16384
 #     if defined (LDBL_DIG)  &&  LDBL_DIG == 18
+#       if defined (__ia64)
+#         define ACE_SIZEOF_LONG_DOUBLE 16
+#       else /* ! __ia64 */
 #       define ACE_SIZEOF_LONG_DOUBLE 12
+#       endif /* __ia64 */
 #     else  /* ! LDBL_DIG  ||  LDBL_DIG != 18 */
 #       define ACE_SIZEOF_LONG_DOUBLE 16
 #     endif /* ! LDBL_DIG  ||  LDBL_DIG != 18 */

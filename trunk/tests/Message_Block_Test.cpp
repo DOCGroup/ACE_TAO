@@ -201,7 +201,7 @@ produce (Worker_Task &worker_task,
   for (size_t count = 0; count < n_iterations; count++)
     {
       ACE_TCHAR buf[BUFSIZ];
-      ACE_OS::sprintf (buf, ACE_TEXT ("%d\n"), count);
+      ACE_OS::sprintf (buf, ACE_SIZE_T_FORMAT_SPECIFIER, count);
 
       int n = (ACE_OS::strlen (buf) + 1) * sizeof (ACE_TCHAR);
 
