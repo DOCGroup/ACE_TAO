@@ -157,7 +157,7 @@ run_test (int argc, ACE_TCHAR *argv[])
 
   ACE_Time_Value tv (argc > 1 ? ACE_OS::atoi (argv[1]) : 2);
 
-  ACE_ASSERT (ACE_Reactor::run_event_loop (tv) == 0);
+  ACE_ASSERT (ACE_Reactor::instance()->run_reactor_event_loop (tv) == 0);
 }
 
 int
