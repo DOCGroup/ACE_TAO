@@ -17,9 +17,10 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
-// Needed to differentiate between libc 5 and libc 6 (aka glibc)
-// It's there on all libc 5 systems I checked
+// Needed to differentiate between libc 5 and libc 6 (aka glibc).
+// It's there on all libc 5 systems I checked.
 #include <features.h>
+
 
 // First the machine specific part
 
@@ -32,6 +33,7 @@
 # define ACE_HAS_PENTIUM
 #endif /* i386 */
 
+
 // Then glibc/libc5 specific parts
 
 #if defined(__GLIBC__)
@@ -40,14 +42,13 @@
 # define ACE_HAS_RLIMIT_RESOURCE_ENUM enum __rlimit_resource
 # define ACE_HAS_SIZET_SOCKET_LEN
 
-// NOTE:  the following defines are necessary with glibc 2.0 (0.961212-5)
-//        on Alpha.  I assume that they're necessary on Intel as well,
-//        but that may depend on the version of glibc that is used.
+  // NOTE:  the following defines are necessary with glibc 2.0 (0.961212-5)
+  //        on Alpha.  I assume that they're necessary on Intel as well,
+  //        but that may depend on the version of glibc that is used.
 # define ACE_HAS_DLFCN_H_BROKEN_EXTERN_C
 # define ACE_HAS_VOIDPTR_SOCKOPT
 # define ACE_LACKS_GETPGID
 # define ACE_LACKS_RPC_H
-# define ACE_LACKS_SOME_POSIX_PROTOTYPES
   // To avoid compilation warnings about TCP_NODELAY and TCP_MAXSEG
   // being redefined, because they're defined in linux/socket.h:
 # define ACE_LACKS_TCP_H
@@ -55,12 +56,9 @@
   // The strtok_r declaration is protected in string.h.
   extern "C" char *strtok_r __P ((char *__s, __const char *__delim,
                                   char **__save_ptr));
-// NOTE:  end of glibc 2.0 (0.961212-5)-specific configuration.
+  // NOTE:  end of glibc 2.0 (0.961212-5)-specific configuration.
 
 #else
-  // Platform lacks POSIX prototypes for certain System V functions
-  // like shared memory and message queues.
-# define ACE_LACKS_SOME_POSIX_PROTOTYPES
 #endif /* __GLIBC__ */
 
 
@@ -85,7 +83,6 @@
 // Platform/compiler has the sigwait(2) prototype
 #define ACE_HAS_SIGWAIT
 
-// The following is necessary on Alpha, and might be necessary on Intel.
 # define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 
 // Fixes a problem with new versions of Linux...
@@ -133,6 +130,10 @@
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096
 
+// Platform lacks POSIX prototypes for certain System V functions
+// like shared memory and message queues.
+#define ACE_LACKS_SOME_POSIX_PROTOTYPES
+
 // Platform defines struct timespec but not timespec_t
 #define ACE_LACKS_TIMESPEC_T
 
@@ -175,11 +176,11 @@
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
-#define ACE_NTRACE 1
+# define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
 #if defined(__EXCEPTIONS)
-#define ACE_HAS_EXCEPTIONS
+# define ACE_HAS_EXCEPTIONS
 #endif
 
 #endif /* ACE_LINUX_COMMON_H */
