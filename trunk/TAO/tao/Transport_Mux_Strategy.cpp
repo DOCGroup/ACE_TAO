@@ -47,10 +47,14 @@ TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
   // @@ Carlos: This method marks the <start> of an invocation. This
   //    should be the correct place to <reset> the message state. Do I
   //    make sense? (Alex).
+  // @@ Alex: the state must be reset, but the contents are always
+  //    clean because: 
+  //    1) it starts clean
+  //    2) it is reset after each reply arrives...
 
   // If there was a previous reply, cleanup its state first.
   if (this->message_state_.message_size != 0)
-    this->message_state_.reset ();
+    this->message_state_.reset (0);
 
   return 0;
 }
