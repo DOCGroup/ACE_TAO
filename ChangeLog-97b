@@ -1,3 +1,10 @@
+Sat Sep  6 02:36:31 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* tests/test_config.h (set_output): Added openning flag ios::trunc
+ 	  explicitly if we are not appending to the opening ofstream.
+  	  This is required by standard CPP iostream libraries on NT (i.e.,
+	  we can't use ios::out alone when ofstream.open a file.)
+
 Sat Sep  6 00:21:33 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
          * ace/Synch_T.h: Added new constructors:
