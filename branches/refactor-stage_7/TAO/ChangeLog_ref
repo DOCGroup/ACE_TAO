@@ -1,3 +1,9 @@
+Wed Sep  3 17:35:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_codegen.cpp (gen_stub_hdr_includes): #included
+	  Any_Impl_T.h if valuetypes are seen. Any_Impl_T<>::to_value ()
+	  generated in the inlined file.
+
 Wed Sep  3 16:47:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Merged with the main trunk and created a new branch
