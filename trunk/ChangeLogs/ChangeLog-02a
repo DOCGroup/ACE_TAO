@@ -1,3 +1,12 @@
+Tue Dec 19 11:02:41 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.{h cpp} (open(char), open(wchar)): Changed the <perms>
+          argument to be used in the CreateFile call on Win32. Made the
+          default value of the argument match the old behavior (defaults
+          to FILE_SHARE_READ | FILE_SHARE_WRITE (and FILE_SHARE_DELETE on
+          NT4 and Win2K)). Thanks to Edan Ayal <edana@bandwiz.com> for this
+          suggestion!
+
 Mon Dec 18 20:47:40 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/POSIX_Asynch_IO.h:
