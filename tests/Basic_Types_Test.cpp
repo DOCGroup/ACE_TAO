@@ -52,13 +52,13 @@ main (int, char *[])
 
   errors += check ("ACE_SIZEOF_CHAR: %u%s",
                    sizeof (char), ACE_SIZEOF_CHAR);
-#if defined (VXWORKS) && defined (ghs)
+#if defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
   errors += check ("ACE_SIZEOF_WCHAR: %u%s",
                    sizeof (char), ACE_SIZEOF_WCHAR);
 #else
   errors += check ("ACE_SIZEOF_WCHAR: %u%s",
                    sizeof (wchar_t), ACE_SIZEOF_WCHAR);
-#endif /* VXWORKS && ghs */
+#endif /* ACE_HAS_WCHAR_TYPEDEFS_CHAR */
   errors += check ("ACE_SIZEOF_SHORT: %u%s",
                    sizeof (short), ACE_SIZEOF_SHORT);
   errors += check ("ACE_SIZEOF_INT: %u%s",
@@ -87,6 +87,7 @@ main (int, char *[])
   errors += check ("sizeof (ACE_UINT32) is %u%s", sizeof (ACE_INT32), 4);
   errors += check ("sizeof (ACE_UINT64) is %u%s", sizeof (ACE_UINT64), 8);
 
+
 #if defined (ACE_LITTLE_ENDIAN)
   ACE_DEBUG ((LM_DEBUG, "\nlittle endian\n"));
 #elif defined (ACE_BIG_ENDIAN)
@@ -94,6 +95,7 @@ main (int, char *[])
 #else
   ACE_ERROR ((LM_ERROR, "assertion failed: no ACE_*_ENDIAN definition!\n"));
 #endif /* ACE_LITTLE_ENDIAN */
+
 
   ACE_DEBUG ((LM_DEBUG, "OS page size: %u\n", ACE_OS::getpagesize ()));
 
@@ -105,6 +107,7 @@ main (int, char *[])
   ACE_DEBUG ((LM_DEBUG, "clock ticks/sec = %d\n",
               (int) sysconf (_SC_CLK_TCK)));
 #endif /* _SC_CLK_TCK */
+
 
   ACE_END_TEST;
   return errors == 0  ?  0  :  1;
