@@ -1,6 +1,7 @@
 #include "IdAssignmentPolicy.h"
 #include "IdAssignmentPolicyValue.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Service_Config.h"
 
 #define TAO_PORTABLESERVER_SAFE_INCLUDE
 #include "PortableServerC.h"
@@ -42,30 +43,32 @@ namespace TAO
         case ::PortableServer::USER_ID :
           {
             this->value_ =
-              ACE_Dynamic_Service<User_IdAssignment_Policy>::instance ("User_IdAssignment_Policy");
+              ACE_Dynamic_Service<IdAssignmentPolicyValue>::instance ("User_IdAssignment_Policy");
 
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::Portable_Server::ace_svc_desc_User_IdAssignment_Policy);
+                  ACE_TEXT("dynamic User_IdAssignment_Policy Service_Object *")
+                  ACE_TEXT("TAO_PortableServer:_make_User_IdAssignment_Policy()"));
 
                 this->value_ =
-                  ACE_Dynamic_Service<User_IdAssignment_Policy>::instance ("User_IdAssignment_Policy");
+                  ACE_Dynamic_Service<IdAssignmentPolicyValue>::instance ("User_IdAssignment_Policy");
               }
             break;
           }
         case ::PortableServer::SYSTEM_ID :
           {
             this->value_ =
-              ACE_Dynamic_Service<System_IdAssignment_Policy>::instance ("System_IdAssignment_Policy");
+              ACE_Dynamic_Service<IdAssignmentPolicyValue>::instance ("System_IdAssignment_Policy");
 
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::Portable_Server::ace_svc_desc_System_IdAssignment_Policy);
+                  ACE_TEXT("dynamic System_IdAssignment_Policy Service_Object *")
+                  ACE_TEXT("TAO_PortableServer:_make_System_IdAssignment_Policy()"));
 
                 this->value_ =
-                  ACE_Dynamic_Service<System_IdAssignment_Policy>::instance ("System_IdAssignment_Policy");
+                  ACE_Dynamic_Service<IdAssignmentPolicyValue>::instance ("System_IdAssignment_Policy");
               }
 
             break;

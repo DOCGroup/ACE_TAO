@@ -38,7 +38,7 @@ namespace TAO
           ACE_THROW_SPEC ((CORBA::SystemException));
     };
 
-    ACE_STATIC_SVC_DECLARE (SINGLE_THREAD_Thread_Policy)
+    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, SINGLE_THREAD_Thread_Policy)
     ACE_FACTORY_DECLARE (TAO_PortableServer, SINGLE_THREAD_Thread_Policy)
   }
 }
