@@ -14,6 +14,8 @@ package JACE.Reactor;
 import java.util.*;
 import JACE.ASX.*;
 
+import JACE.OS.*;
+
 class TimerNode
 {
   public TimerNode (EventHandler handler,
@@ -224,8 +226,13 @@ public class TimerQueue implements Runnable
 			    TimeValue timeout,
 			    TimeValue interval)
   {
+
     // Increment the sequence number (it will wrap around).
     this.timerId_++;
+
+    ACE.DEBUG("scheduleTimer (" + this.timerId_ + "): " + timeout + ", " + interval);
+
+
     TimeValue futureTime = TimeValue.plus (timeout, TimeValue.getTimeOfDay ());
     TimerNode node = new TimerNode (handler, 
 				    arg,
@@ -360,6 +367,8 @@ public class TimerQueue implements Runnable
 	    this.reschedule (expired);
 	  }
 	
+	ACE.DEBUG("handleTimeout " + expired.timerId_);
+
 	// Perform the callback.
 	result = handler.handleTimeout (currentTime, arg);
 	
@@ -372,6 +381,9 @@ public class TimerQueue implements Runnable
   // position in the queue.
   private void reschedule (TimerNode expired)
   {
+    ACE.DEBUG("reschedule " + expired.timerId_ + " for " + expired.timerValue_);
+    // *** Shouldn't it use interval here?
+
     if (this.isEmpty () || 
 	expired.timerValue_.lessThan (this.earliestTime ()))
       {
