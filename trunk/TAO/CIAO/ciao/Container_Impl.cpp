@@ -46,7 +46,7 @@ CIAO::Container_Impl::init (const ::Components::ConfigValues &options,
 }
 
 ::Components::ConfigValues *
-CIAO::Container_Impl::configuration (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CIAO::Container_Impl::configuration (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Components::ConfigValues *retval;
@@ -166,7 +166,7 @@ CIAO::Container_Impl::get_homes (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CIAO::Container_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::Container_Impl::remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
 {
@@ -191,7 +191,7 @@ CIAO::Container_Impl::parse_config_values (const char *id,
 
   for (CORBA::ULong i = 0; i < options.length (); ++i)
     {
-      CORBA::String_var *info;
+      CORBA::String_var *info = 0;
       const char *str_in = 0;
 
       // @@ The following code need cleaning up.
@@ -201,10 +201,18 @@ CIAO::Container_Impl::parse_config_values (const char *id,
         info = &component_install_info.servant_entrypt_;
       else
         {
-          Components::InvalidConfiguration exc;
-          exc.name = CORBA::string_dup (options[i]->name ());
-          exc.reason = Components::UnknownConfigValueName;
-          ACE_THROW (exc);
+          Components::InvalidConfiguration *exc = 0;
+          ACE_NEW_THROW_EX (exc,
+                            Components::InvalidConfiguration,
+                            CORBA::NO_MEMORY ());
+          exc->name = CORBA::string_dup (options[i]->name ());
+          exc->reason = Components::UnknownConfigValueName;
+#if defined (ACE_HAS_EXCEPTIONS)
+          auto_ptr<Components::InvalidConfiguration> safety (exc);
+          exc->_raise ();
+#else
+          ACE_TRY_ENV.exception (exc);
+#endif /*ACE_HAS_EXCEPTIONS*/
         }
 
       if (options[i]->value () >>= str_in)
@@ -218,10 +226,18 @@ CIAO::Container_Impl::parse_config_values (const char *id,
         }
       else
         {
-          Components::InvalidConfiguration exc;
-          exc.name = CORBA::string_dup (options[i]->name ());
-          exc.reason = Components::InvalidConfigValueType;
-          ACE_THROW (exc);
+          Components::InvalidConfiguration *exc = 0;
+          ACE_NEW_THROW_EX (exc,
+                            Components::InvalidConfiguration,
+                            CORBA::NO_MEMORY ());
+          exc->name = CORBA::string_dup (options[i]->name ());
+          exc->reason = Components::UnknownConfigValueName;
+#if defined (ACE_HAS_EXCEPTIONS)
+          auto_ptr<Components::InvalidConfiguration> safety (exc);
+          exc->_raise ();
+#else
+          ACE_TRY_ENV.exception (exc);
+#endif /*ACE_HAS_EXCEPTIONS*/
         }
     }
 
@@ -239,10 +255,17 @@ CIAO::Container_Impl::parse_config_values (const char *id,
       component_install_info.servant_dll_.in () == 0 ||
       component_install_info.servant_entrypt_.in () == 0)
     {
-      Components::InvalidConfiguration exc;
-      // The following should really be the exact missing configvalue name:
-      exc.name = CORBA::string_dup ("home_installation_info");
-      exc.reason = Components::ConfigValueRequired;
-      ACE_THROW (exc);
+      Components::InvalidConfiguration *exc = 0;
+      ACE_NEW_THROW_EX (exc,
+                        Components::InvalidConfiguration,
+                        CORBA::NO_MEMORY ());
+      exc->name = CORBA::string_dup ("home_installation_info");
+      exc->reason = Components::ConfigValueRequired;
+#if defined (ACE_HAS_EXCEPTIONS)
+      auto_ptr<Components::InvalidConfiguration> safety (exc);
+      exc->_raise ();
+#else
+      ACE_TRY_ENV.exception (exc);
+#endif /*ACE_HAS_EXCEPTIONS*/
     }
 }

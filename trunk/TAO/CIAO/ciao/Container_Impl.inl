@@ -13,7 +13,7 @@ CIAO::Container_Impl::Container_Impl (CORBA::ORB_ptr o,
 
 ACE_INLINE void
 CIAO::Container_Impl::set_objref (Components::Deployment::Container_ptr o
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                  ACE_ENV_ARG_DECL)
 {
   if (!CORBA::is_nil (this->objref_.in ()))
     ACE_THROW (CORBA::BAD_INV_ORDER ());
@@ -22,7 +22,7 @@ CIAO::Container_Impl::set_objref (Components::Deployment::Container_ptr o
 }
 
 ACE_INLINE Components::Deployment::Container_ptr
-CIAO::Container_Impl::get_objref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO::Container_Impl::get_objref (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (CORBA::is_nil (this->objref_.in ()))
     {
