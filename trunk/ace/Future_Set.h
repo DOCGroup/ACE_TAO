@@ -29,13 +29,13 @@
  * @class ACE_Future_Set
  *
  * @brief This class implements a mechanism which allows the values of
- * a collection of <ACE_Future> objects to be accessed by reader threads
- * as they become available.  The caller(s) provide the <ACE_Future_Set>
- * (i.e. the observer...) with the collection of <ACE_Future> objects
+ * a collection of ACE_Future objects to be accessed by reader threads
+ * as they become available.  The caller(s) provide the ACE_Future_Set
+ * (i.e. the observer...) with the collection of ACE_Future objects
  * (i.e. the subjects...) that are to be observed using the
- * the <ACE_Future_Set::insert> method.  The caller(s) may then iterate
+ * the ACE_Future_Set::insert() method.  The caller(s) may then iterate
  * over the collection in the order in which they become readable using
- * the <ACE_Future_Set::next_readable> method.
+ * the ACE_Future_Set::next_readable() method.
  */
 template <class T>
 class ACE_Future_Set : public ACE_Future_Observer<T>
@@ -50,19 +50,19 @@ public:
   ~ACE_Future_Set (void);
 
   /**
-   * Return 1 if their are no <ACE_Future> objects left on its queue and
+   * Return 1 if their are no ACE_Future objects left on its queue and
    * 0 otherwise.
    *
-   * When an <ACE_Future_Set> has no <ACE_Future> subjects to observe it is
-   * empty. The <ACE_Future_Set> is in the empty state when either the caller(s)
-   * have retrieved every readable <ACE_Future> subject assigned the
-   * <ACE_Future_Set> via the <ACE_Future_Set::next_readable> method,
-   * or when the <ACE_Future_Set> has not been assigned any subjects.
+   * When an ACE_Future_Set has no ACE_Future>subjects to observe it is
+   * empty. The ACE_Future_Set is in the empty state when either the caller(s)
+   * have retrieved every readable ACE_Future subject assigned the
+   * ACE_Future_Set via the ACE_Future_Set::next_readable() method,
+   * or when the ACE_Future_Set has not been assigned any subjects.
    */
   int is_empty (void) const;
 
   /**
-   * Enqueus the given <ACE_Future> into this objects queue when it is
+   * Enqueus the given ACE_Future into this objects queue when it is
    * readable.
    *
    * Returns 0 if the future is successfully inserted, 1 if the
@@ -88,7 +88,7 @@ public:
   int next_readable (ACE_Future<T> &result,
                      ACE_Time_Value *tv = 0);
 
-  /// Called by the <ACE_Future> subject in which we are subscribed to
+  /// Called by the ACE_Future subject in which we are subscribed to
   /// when its value is written to.
   virtual void update (const ACE_Future<T> &future);
 
