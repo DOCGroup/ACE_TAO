@@ -10,9 +10,3 @@ public:
   static int sockbufsiz;
   int id;
 };
-
-Client_Parameters::Client_Parameters(int i) {
-
-  id = i;
-
-}
