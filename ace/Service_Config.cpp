@@ -139,7 +139,7 @@ ACE_Service_Config::static_svcs (void)
 }
 
 ACE_Allocator *
-ACE_Service_Config::allocator (void)
+ACE_Service_Config::alloc (void)
 {
   ACE_TRACE ("ACE_Service_Config::allocator");
   if (ACE_Service_Config::allocator_ == 0)
@@ -153,7 +153,7 @@ ACE_Service_Config::allocator (void)
 }
 
 ACE_Allocator *
-ACE_Service_Config::allocator (ACE_Allocator *r)
+ACE_Service_Config::alloc (ACE_Allocator *r)
 {
   ACE_TRACE ("ACE_Service_Config::allocator");
 

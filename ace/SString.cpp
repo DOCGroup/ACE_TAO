@@ -21,7 +21,7 @@ ACE_CString::ACE_CString (const ACE_CString &s)
   ACE_TRACE ("ACE_CString::ACE_CString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::allocator ();
+    this->allocator_ = ACE_Service_Config::alloc ();
 
   this->rep_ = (char *) this->allocator_->malloc (s.len_ + 1);
   ACE_OS::memcpy ((void *) this->rep_, (const void *) s.rep_, this->len_);
@@ -49,26 +49,26 @@ ACE_CString::length (void) const
 
 // Default constructor.
 
-ACE_CString::ACE_CString (ACE_Allocator *allocator)
-  : allocator_ (allocator),
+ACE_CString::ACE_CString (ACE_Allocator *alloc)
+  : allocator_ (alloc),
     len_ (0), 
     rep_ (0)
 {
   ACE_TRACE ("ACE_CString::ACE_CString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::allocator ();
+    this->allocator_ = ACE_Service_Config::alloc ();
 }
 
 // Constructor that actually copies memory.
 
-ACE_CString::ACE_CString (const char *s, ACE_Allocator *allocator)
-  : allocator_ (allocator)
+ACE_CString::ACE_CString (const char *s, ACE_Allocator *alloc)
+  : allocator_ (alloc)
 {
   ACE_TRACE ("ACE_CString::ACE_CString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::allocator ();
+    this->allocator_ = ACE_Service_Config::alloc ();
 
   if (s == 0)
     {
@@ -87,13 +87,13 @@ ACE_CString::ACE_CString (const char *s, ACE_Allocator *allocator)
 
 ACE_CString::ACE_CString (const char *s, 
 			    size_t len, 
-			    ACE_Allocator *allocator)
-  : allocator_ (allocator)
+			    ACE_Allocator *alloc)
+  : allocator_ (alloc)
 {
   ACE_TRACE ("ACE_CString::ACE_CString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::allocator ();
+    this->allocator_ = ACE_Service_Config::alloc ();
 
   if (s == 0)
     {
@@ -203,7 +203,7 @@ ACE_SString::ACE_SString (const ACE_SString &s)
   ACE_TRACE ("ACE_SString::ACE_SString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::allocator ();
+    this->allocator_ = ACE_Service_Config::alloc ();
 
   this->rep_ = (char *) this->allocator_->malloc (s.len_ + 1);
   ACE_OS::memcpy ((void *) this->rep_, (const void *) s.rep_, this->len_);
@@ -212,8 +212,8 @@ ACE_SString::ACE_SString (const ACE_SString &s)
 
 // Default constructor.
 
-ACE_SString::ACE_SString (ACE_Allocator *allocator)
-  : allocator_ (allocator),
+ACE_SString::ACE_SString (ACE_Allocator *alloc)
+  : allocator_ (alloc),
     len_ (0), 
     rep_ (0)
     
@@ -221,7 +221,7 @@ ACE_SString::ACE_SString (ACE_Allocator *allocator)
   ACE_TRACE ("ACE_SString::ACE_SString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::allocator ();
+    this->allocator_ = ACE_Service_Config::alloc ();
 }
 
 int
@@ -277,13 +277,13 @@ ACE_SString::rep (char *s)
 // Constructor that actually copies memory.
 
 ACE_SString::ACE_SString (const char *s, 
-			  ACE_Allocator *allocator)
-  : allocator_ (allocator)
+			  ACE_Allocator *alloc)
+  : allocator_ (alloc)
 {
   ACE_TRACE ("ACE_SString::ACE_SString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::allocator ();
+    this->allocator_ = ACE_Service_Config::alloc ();
 
   if (s == 0)
     {
@@ -302,13 +302,13 @@ ACE_SString::ACE_SString (const char *s,
 
 ACE_SString::ACE_SString (const char *s, 
 			    size_t len, 
-			    ACE_Allocator *allocator)
-  : allocator_ (allocator)
+			    ACE_Allocator *alloc)
+  : allocator_ (alloc)
 {
   ACE_TRACE ("ACE_SString::ACE_SString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::allocator ();
+    this->allocator_ = ACE_Service_Config::alloc ();
 
   if (s == 0)
     {
@@ -355,15 +355,15 @@ ACE_WString::dump (void) const
 
 // Default constructor.
 
-ACE_WString::ACE_WString (ACE_Allocator *allocator)
-  : allocator_ (allocator),
+ACE_WString::ACE_WString (ACE_Allocator *alloc)
+  : allocator_ (alloc),
     len_ (0),
     rep_ (0)
 {
   ACE_TRACE ("ACE_WString::ACE_WString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::allocator ();
+    this->allocator_ = ACE_Service_Config::alloc ();
 }
 
 size_t
@@ -405,13 +405,13 @@ ACE_WString::char_rep (void) const
 // Constructor that actually copies memory.
 
 ACE_WString::ACE_WString (const char *s, 
-			  ACE_Allocator *allocator)
-  : allocator_ (allocator)
+			  ACE_Allocator *alloc)
+  : allocator_ (alloc)
 {
   ACE_TRACE ("ACE_WString::ACE_WString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::allocator ();
+    this->allocator_ = ACE_Service_Config::alloc ();
 
   if (s == 0)
     {
@@ -436,13 +436,13 @@ ACE_WString::ACE_WString (const char *s,
 // Constructor that actually copies memory.
 
 ACE_WString::ACE_WString (const ACE_USHORT16 *s, 
-			  ACE_Allocator *allocator)
-  : allocator_ (allocator)
+			  ACE_Allocator *alloc)
+  : allocator_ (alloc)
 {
   ACE_TRACE ("ACE_WString::ACE_WString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::allocator ();
+    this->allocator_ = ACE_Service_Config::alloc ();
 
   if (s == 0)
     {
@@ -465,13 +465,13 @@ ACE_WString::ACE_WString (const ACE_USHORT16 *s,
 
 ACE_WString::ACE_WString (const ACE_USHORT16 *s, 
 			  size_t len, 
-			  ACE_Allocator *allocator)
-  : allocator_ (allocator)
+			  ACE_Allocator *alloc)
+  : allocator_ (alloc)
 {
   ACE_TRACE ("ACE_WString::ACE_WString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::allocator ();
+    this->allocator_ = ACE_Service_Config::alloc ();
 
   if (s == 0)
     {
@@ -506,7 +506,7 @@ ACE_WString::ACE_WString (const ACE_WString &s)
   ACE_TRACE ("ACE_WString::ACE_WString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::allocator ();
+    this->allocator_ = ACE_Service_Config::alloc ();
 
   this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc ((s.len_ + 1) * sizeof (ACE_USHORT16));
   ACE_OS::memcpy ((void *) this->rep_, (const void *) s.rep_,

@@ -217,10 +217,10 @@ public:
   // Set pointer to a process-wide <ACE_Thread_Manager> and return
   // existing pointer.
 
-  static ACE_Allocator *allocator (void);
+  static ACE_Allocator *alloc (void);
   // Get pointer to a default <ACE_Allocator>.
 
-  static ACE_Allocator *allocator (ACE_Allocator *);
+  static ACE_Allocator *alloc (ACE_Allocator *);
   // Set pointer to a process-wide <ACE_Allocator> and return existing
   // pointer.
 

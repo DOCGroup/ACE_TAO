@@ -19,7 +19,7 @@ ACE_Allocator_Adapter<MALLOC>::calloc (size_t nbytes,
 }
 
 template <class MALLOC> ACE_INLINE MALLOC &
-ACE_Allocator_Adapter<MALLOC>::allocator (void)
+ACE_Allocator_Adapter<MALLOC>::alloc (void)
 { 
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::allocator");
   return this->allocator_;

@@ -126,7 +126,7 @@ public:
   // Change the protection of the pages of the mapped region to <prot>
   // starting at <addr> up to <len> bytes.
 
-  ALLOCATOR &allocator (void);
+  ALLOCATOR &alloc (void);
   // Returns the underlying allocator.
 
   virtual void dump (void) const;
