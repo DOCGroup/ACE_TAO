@@ -230,7 +230,7 @@ Task_State::~Task_State (void)
   for (i = 0; i < this->iors_count_; i++)
     ACE_OS::free (this->iors_ [i]);
 
-  delete this->iors_;
+  delete [] this->iors_;
   // Delete the barrier.
 
   delete this->barrier_;
