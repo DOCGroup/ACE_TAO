@@ -1,6 +1,28 @@
+Tue Nov  6 16:51:28 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ORB_Core.cpp :
+	  Fixed some memory leaks. Thanks to Ossama for finding them out.
+
+	* tao/ORB.cpp (resolve_service):
+	  Fixed bug 1057  by rearranging the order in the
+          resolve_initial_references method. The new order is such that
+          everything else is checked before the defaultinitref values are
+          checked.
+
+	  Thanks to Alex Hornby <alex@anvil.co.uk> for reporting this and
+	  Bruce McIntosh <Bruce.McIntosh@Australia.Boeing.com> for
+	  the bug report.
+
+	* tao/params.cpp (TAO_ORB_Parameters):
+	  Removed an extra colon in the default value for default_init_ref_
+	  variable. The extra colon lead to a position where the ttl value
+	  is set to ':'.
+	  Thanks to Mark Laffoon <mark.laffoon@burning-glass.com> for
+	  reporting this.
+
 Mon Nov  5 06:51:16 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp (copy_in_follow_option): 
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp (copy_in_follow_option):
 	  Added casts to the ternary operators to work around bugs with
  	  HP/UX 11.  Thanks to Steve Osselton
  	  <steve@prismtechnologies.com> for reporting this.
@@ -83,28 +105,28 @@ Mon Nov  5 12:56:15 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Mon Nov  5 19:23:03 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.cpp: 
+	* orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.cpp:
 	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.cpp:
-	  Corrected formatting in ACE_DEBUG.	  
-	* orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.cpp: 
+	  Corrected formatting in ACE_DEBUG.
+	* orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.cpp:
 	  Corrected to use prefix++ operation in get() method.
-	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushSupplier_i.cpp: 
+	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushSupplier_i.cpp:
 	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.cpp:
 	  Call shutdown to disconnect from unresponsive consumers.
 	  Thanks to Alex Hornby <alex.anvil.co.uk> for providing the fixes.
-	
+
 Sun Nov  4 09:43:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile.FaultTolerance: Updated dependencies. 
+	* orbsvcs/orbsvcs/Makefile.FaultTolerance: Updated dependencies.
 	* orbsvcs/orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.h:
 	* orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.h:
 	  Added TAO_FT_Export to the class declarations. The export
 	  directives were wrong. This should set the build problems on
 	  Win2K right.
-	
+
 Fri Nov  2 09:07:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Fault_Tolerance.dsp: Added the new files. 
+	* orbsvcs/orbsvcs/Fault_Tolerance.dsp: Added the new files.
 
 Fri Nov  2 07:05:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -121,7 +143,7 @@ Fri Nov  2 07:05:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Stub.i: Added comments around code that would no longer be
 	  used. The FT service was using this. Just leaving the code there
 	  for the time being, till 1.2.1 goes out.
-	  
+
 	* tao/LF_Event.h:
 	* tao/LF_Event.inl: Added a method reset_state (). This method
 	  just resets the state to the said state without caring about the
@@ -131,7 +153,7 @@ Fri Nov  2 07:05:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  the states is needed for the life time of a single invocation
 	  object (read as one invocation). But that will not help if the
 	  same object reconnects to a different target to which the
-	  invocation is *not* forwarded. 
+	  invocation is *not* forwarded.
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.cpp:
 	* orbsvcs/orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.h:
@@ -145,23 +167,23 @@ Fri Nov  2 07:05:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  endpoints. Added a few optimizations, wherein we dont hold any
 	  lock if the primary is the first profile but holds a lock if the
 	  primary is in the subsequent profiles. The holding of a lock is
-	  done only once in the life time of the endpoint. 
-	  
+	  done only once in the life time of the endpoint.
+
 	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp: Added
-	  FT_Endpoint_Selector_Factory to the list of services. 
+	  FT_Endpoint_Selector_Factory to the list of services.
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
 	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp: The old
 	  implementations in select_profile () and reselect_profile ()
 	  will be deprecated after 1.2.1. The definition and declaration
 	  just exists for the sake of backward compatibility. Will be gone
-	  anyway. 
+	  anyway.
 
 	* orbsvcs/orbsvcs/Makefile.FaultTolerance: Added the new files.
 
 	  Thanks to Russ Carter <rcarter@pinyon.org> who by reporting a
-	  bug motivated this whole set of changes. 
-	
+	  bug motivated this whole set of changes.
+
 
 Thu Nov  1 12:27:28 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
@@ -171,7 +193,7 @@ Thu Nov  1 12:27:28 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 Tue Oct 30 17:40:06 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* tao/IOPC.h: #undef the IOR symbol to protect against weird 
+	* tao/IOPC.h: #undef the IOR symbol to protect against weird
 	  clashes on HP/UX 11.11.  Thanks to Steve Osselton
  	  <steve@prismtechnologies.com> for reporting this.
 
@@ -185,7 +207,7 @@ Thu Nov  1 14:01:40 2001  Jeff Parsons <parsons@cs.wustl.edu>
           failure it would be a silent one. This fix enables the output
           to be sent to an arbitrary file, leaving errors and warnings
           in stdout. There is a corresponding fix to config-win32-borland.h
-          to ACE_CC_PREPROCESSOR_ARGS enabling the recognition of the 
+          to ACE_CC_PREPROCESSOR_ARGS enabling the recognition of the
           filename.
 
 Thu Nov  1 14:01:15 2001  Chad Elliott  <elliott_c@ociweb.com>
@@ -226,8 +248,8 @@ Tue Oct 30 15:34:32 2001  Jeff Parsons <parsons@cs.wustl.edu>
           TAO_Marshal_Union::skip() fails if a match is found neither with
           one of the union's labeled members or with an explicit default
           case. However, a union can also have an implicit default case, so
-          the code has been changed to return 
-          CORBA::TypeCode::TRAVERSE_CONTINUE if neither of the first two 
+          the code has been changed to return
+          CORBA::TypeCode::TRAVERSE_CONTINUE if neither of the first two
           cases are found to hold. There is no need for further checking
           at this point because the only CORBA-compliant way for the
           discriminator to be set to such value is through the union's
@@ -241,7 +263,7 @@ Tue Oct 30 15:34:32 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * TAO_IDL/be/be_visitor_array/array.cpp:
 
           Add missing '_var' to some declarations in code generated for
-          an array of typedef'd interfaces. Thanks to Dmitry 
+          an array of typedef'd interfaces. Thanks to Dmitry
           Goldshtain <goldstein@arcormail.de> for pointing out the bug.
 
 Sat Oct 27 13:49:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
@@ -257,12 +279,12 @@ Sat Oct 27 13:49:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  is useful for modules that are outside the ORB and requires
 	  parsing the list of profiles to pick one for invocation, like
 	  the FT service.
-	  	
+
 Wed Oct 24 14:51:03 2001  Angelo Corsaro  <corsaro@doc.ece.uci.edu>
 
-	* examples/Quoter/Client.bor: 
+	* examples/Quoter/Client.bor:
 	* examples/Quoter/Server.bor:
-	* examples/Quoter/Generic_factory.bor: 
+	* examples/Quoter/Generic_factory.bor:
 	* examples/Quoter/Factory_finder.bor:
 
 	  Updated makefiles to use ACE_ROOT instead of TAO_ROOT
@@ -286,21 +308,21 @@ Wed Oct 24 14:12:29 2001  Ossama Othman  <ossama@uci.edu>
 Tue Oct 23 18:55:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/examples/Security/Send_File/Makefile: Updated
-	  dependencies.  
+	  dependencies.
 
 Tue Oct 23 09:49:01 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* examples/Quoter/Client.bor: 
-	* examples/Quoter/Server.bor: 
-	* examples/Quoter/Generic_factory.bor: 
-	* examples/Quoter/Factory_finder.bor: 
+	* examples/Quoter/Client.bor:
+	* examples/Quoter/Server.bor:
+	* examples/Quoter/Generic_factory.bor:
+	* examples/Quoter/Factory_finder.bor:
 
 	  Changed CPPDIR from ".;.." to "." this should fix the build
 	  problem. Thanks to Jonny Willemsen for suggesting this fix.
-	
+
 Mon Oct 22 23:48:13 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/default_resource.cpp: 
+	* orbsvcs/orbsvcs/AV/default_resource.cpp:
 
 	  Fixed compile errors on Win2K.
 
@@ -312,7 +334,7 @@ Mon Oct 22 18:54:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Mon Oct 22 15:41:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Endpoint.cpp (is_equivalent): 
+	* tao/IIOP_Endpoint.cpp (is_equivalent):
 	* tao/Strategies/DIOP_Endpoint.cpp: Instead of checking the
 	  hostname in the above method, we check the ip addresses. This
 	  solves the following problems
@@ -320,24 +342,24 @@ Mon Oct 22 15:41:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  (1) If the a connection is created using an IOR to a host A
 	      using a dotted decimal address and at some later point in
 	      time a corbaloc call uses the host name to resolve a service
-	      on the same machine, we happen to create a new connection 
+	      on the same machine, we happen to create a new connection
 
 	  (2) Variation of 1, if the initial connection is established
 	      using a fully qualified name and the corbaloc uses a partial
-	      name. 
+	      name.
 
 	  (3) If an alias'ed name is used.
 
 	  Thanks to Jonathan Reis <reis@stentor.com>,  Wayne Erchak
 	  <wayne@stentor.com> and Chris Hughes <chughes@stentor.com> for
-	  finding this one out and providing a patch. 
-	  
+	  finding this one out and providing a patch.
+
 
 Mon Oct 22 07:54:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/Security/SecurityLevel1/makefile:
-	* orbsvcs/tests//Security/Secure_Invocation/Makefile: 
-          Updated dependencies.  
+	* orbsvcs/tests//Security/Secure_Invocation/Makefile:
+          Updated dependencies.
 
 Mon Oct 22 14:21:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
