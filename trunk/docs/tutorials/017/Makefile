@@ -5,14 +5,14 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-BIN    = barrier
+BIN    = barrier barrier2
 
 FILES  = Barrier_i
 
 BUILD  = $(VBIN)
 
-SRC  = $(addsuffix .cpp,$(BIN))
-SRC += $(addsuffix .cpp,$(FILES))
+LSRC = $(addsuffix .cpp,$(BIN))
+SRC  = $(addsuffix .cpp,$(FILES))
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
@@ -62,7 +62,7 @@ HTML : #
 
 SHAR : #
 	[ ! -f combine.shar ] || exit 1
-	shar -T hdr bodies *.pre > combine.shar && rm -f hdr bodies *.pre
+	shar -T hdr bodies *.pre *.pst > combine.shar && rm -f hdr bodies *.pre *.pst
 
 UNSHAR : #
 	sh combine.shar

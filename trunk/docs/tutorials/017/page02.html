@@ -35,30 +35,63 @@ class Test : public ACE_Task&lt;ACE_NULL_SYNCH>
 {
 public:
 
-        <font color=red>// Open the object with a few threads</font>
-    int open(int _threads);
+        <font color=red>// Construct the object with a desired thread count</font>
+    Test(int _threads);
+
+        <font color=red>// Open/begin the test.  As usual, we have to match the</font>
+        <font color=red>// ACE_Task signature.</font>
+    int open(void * _unused = 0);
+
+        <font color=red>// Change the threads_ value for the next invocation of open()</font>
+    void threads(int _threads);
+
+        <font color=red>// Get the current threads_ value.</font>
+    int threads(void);
 
         <font color=red>// Perform the test</font>
     int svc(void);
 
 protected:
+        <font color=red>// How many threads the barrier will test.</font>
+    int threads_;
+
         <font color=red>// The Barrier object we'll use in our tests below</font>
     Barrier barrier_;
 };
 
+<font color=red>/* Construct the object & initialize the threads value for open() to
+   use.
+*/</font>
+<font color=#008888>Test::Test</font>(int _threads)
+        : threads_(_threads)
+{
+}
+
 <font color=red>/* As usual, our open() will create one or more threads where we'll do 
    the interesting work.
 */</font>  
-int <font color=#008888>Test::open</font>( int _threads )
+int <font color=#008888>Test::open</font>(void * _unused)
 {
+    ACE_UNUSED_ARG(_unused);
+
         <font color=red>// One thing about the barrier:  You have to tell it how many</font>
         <font color=red>// threads it will be synching.  The threads() mutator on my</font>
         <font color=red>// Barrier class lets you do that and hides the implementation </font>
         <font color=red>// details at the same time.</font>
-    barrier_.threads(_threads);
+    barrier_.threads(threads_);
 
         <font color=red>// Activate the tasks as usual...</font>
-    return this->activate(THR_NEW_LWP, _threads);
+    return this->activate(THR_NEW_LWP, threads_);
+}
+
+void <font color=#008888>Test::threads</font>(int _threads)
+{
+    threads_ = _threads;
+}
+
+int <font color=#008888>Test::threads</font>(void)
+{
+    return threads_;
 }
 
 <font color=red>/* svc() will execute in each thread & do a few things with the
@@ -112,7 +145,7 @@ int <font color=#008888>Test::svc</font>(void)
         <font color=red>// actually invokes wait() but before returning here, it will </font>
         <font color=red>// clean up a few resources.  The goal is to prevent carrying</font>
         <font color=red>// around objects you don't need.</font>
-    if( barrier_.wait() == -1 )
+    if( barrier_.done() == -1 )
     {
         ACE_DEBUG ((LM_INFO, "<font color=green>(%P|%t|%T)\tbarrier_.done() failed!\n</font>"));
         return 0;
@@ -137,16 +170,17 @@ int <font color=#008888>Test::svc</font>(void)
  */</font>
 int main(int, char**)
 {
-        <font color=red>// Create the test object</font>
-    Test test;
+        <font color=red>// Create the test object with 10 threads</font>
+    Test test(10);
 
-        <font color=red>// and open it with 10 threads.</font>
-    test.open(10);
+        <font color=red>// and open it to test the barrier.</font>
+    test.open();
         <font color=red>// Now wait for them all to exit.</font>
     test.wait();
 
         <font color=red>// Re-open the Test object with just 5 threads</font>
-    test.open(5);
+    test.threads(5);
+    test.open();
         <font color=red>// and wait for them to complete also.</font>
     test.wait();
     

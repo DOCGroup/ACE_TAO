@@ -34,10 +34,10 @@ the Barrier object almost as a "synchronization guard".
 <font color=blue>#include</font> "<font color=green>ace/Synch.h</font>"
 
 <font color=red>/* Barrier is a simple wrapper for the ACE_Barrier synchronization
-   class.  The ACE_Barrier is already pretty easy to use but I thought 
+   class.  The ACE_Barrier is already pretty easy to use but I thought
    I'd wrap it up to create just a bit more abstraction at the
-   application level.
- */</font>
+   application level.  */</font>
+
 class Barrier
 {
 public:
@@ -66,13 +66,22 @@ public:
   <font color=red>// done() will invoke wait().  Before returning though, it will</font>
   <font color=red>// delete the barrier_ pointer below to reclaim some memory.</font>
   int done (void);
-    
+
+  <font color=red>// Reset the owning thread of the barrier.</font>
+  void owner( ACE_thread_t _owner );
+
 protected:
   <font color=red>// The number of threads we're synching</font>
-  ACE_Atomic_Op&lt;ACE_Mutex,u_int> threads_;
+  ACE_Atomic_Op&lt;ACE_Mutex, u_int> threads_;
 
   <font color=red>// The ACE_Barrier that does all of the work</font>
   ACE_Barrier *barrier_;
+
+  <font color=red>// If we mutate the number of threads we have to do some black magic </font>
+  <font color=red>// to make sure there isn't a memory leak.  These two member</font>
+  <font color=red>// variables are a part of that magic.</font>
+  ACE_Barrier *new_barrier_;
+  ACE_Mutex    barrier_mutex_;
 
   <font color=red>// The thread which created the Barrier in the first place.  Only</font>
   <font color=red>// this thread can change the threads_ value.</font>
