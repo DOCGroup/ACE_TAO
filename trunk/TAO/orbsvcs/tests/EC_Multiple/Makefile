@@ -6,16 +6,11 @@ SRC = $(BIN:%=%$(VAR).cpp)
 LDLIBS= -lorbsvcs -lTAO
 
 ifndef TAO_ROOT
-TAO_ROOT = $(ACE_ROOT)/TAO
+ TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs \
             -I$(TAO_ROOT)
-
-ifdef quantify
-  CCFLAGS += -Dquantify
-  CPPFLAGS += -I/pkg/purify/quantify-2.1-solaris2
-endif # quantify
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

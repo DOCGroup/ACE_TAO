@@ -21,11 +21,6 @@ SRC =   $(addsuffix .cpp, $(BIN)) \
 	$(addsuffix .cpp, $(IDL_SRC)) \
 	ECM_Data.cpp
 
-ifdef quantify
-  CCFLAGS += -Dquantify
-  CPPFLAGS += -I/pkg/purify/quantify-2.1-solaris2
-endif # quantify
-
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
