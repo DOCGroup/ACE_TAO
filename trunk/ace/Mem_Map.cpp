@@ -50,11 +50,11 @@ ACE_Mem_Map::~ACE_Mem_Map (void)
 
 int
 ACE_Mem_Map::map_it (ACE_HANDLE handle,
-                     int len_request,
+                     int length_request,
                      int prot,
                      int share,
                      void *addr,
-                     off_t pos,
+                     off_t offset,
                      LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_Mem_Map::map_it");
@@ -69,31 +69,36 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
     return -1;
 
   // At this point we know <result> is not negative...
-  size_t file_len = ACE_static_cast (size_t, result);
+  size_t current_file_length = ACE_static_cast (size_t, result);
 
-  if (this->length_ < file_len)
-    {
-      // If the length of the mapped region is less than the length of
-      // the file then we force a complete new remapping by setting
-      // the descriptor to ACE_INVALID_HANDLE (closing down the
-      // descriptor if necessary).
-      this->close_filemapping_handle ();
-    }
-
-  // Check to see if we need to extend the backing store
+  // Flag to indicate if we need to extend the back store
   int extend_backing_store = 0;
-  if (len_request != -1)
-    {
-      if (file_len < ACE_static_cast (size_t,
-                                      len_request))
-        extend_backing_store = 1;
 
-      // Set length to len_request
-      this->length_ = len_request;
-    }
-  else
+  // Check <length_request>
+  if (length_request == -1)
     // Set length to file_request
-    this->length_ = file_len;
+    this->length_ = current_file_length;
+  else
+    {
+      // File length implicitly requested by user
+      size_t requested_file_length = length_request + offset;
+        
+      // Check to see if we need to extend the backing store
+      if (requested_file_length < current_file_length)
+        {
+          // If the length of the mapped region is less than the
+          // length of the file then we force a complete new remapping
+          // by setting the descriptor to ACE_INVALID_HANDLE (closing
+          // down the descriptor if necessary).
+          this->close_filemapping_handle ();
+
+          // Remember to extend the backing store
+          extend_backing_store = 1;
+        }
+
+      // Set length to length_request
+      this->length_ = length_request;
+    }
 
   if (extend_backing_store
       // Extend the backing store.
@@ -120,7 +125,7 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
                                    prot,
                                    share,
                                    this->handle_,
-                                   off_t (ACE::round_to_allocation_granularity (pos)),
+                                   offset,
                                    &this->file_mapping_,
                                    sa);
   return this->base_addr_ == MAP_FAILED ? -1 : 0;
@@ -161,7 +166,7 @@ ACE_Mem_Map::map (LPCTSTR file_name,
                   int prot,
                   int share,
                   void *addr,
-                  off_t pos,
+                  off_t offset,
                   LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_Mem_Map::map");
@@ -178,7 +183,7 @@ ACE_Mem_Map::map (LPCTSTR file_name,
                          prot,
                          share,
                          addr,
-                         pos,
+                         offset,
                          sa);
 }
 
@@ -202,7 +207,7 @@ ACE_Mem_Map::ACE_Mem_Map (LPCTSTR file_name,
                           int prot,
                           int share,
                           void *addr,
-                          off_t pos,
+                          off_t offset,
                           LPSECURITY_ATTRIBUTES sa)
   : base_addr_ (MAP_FAILED),
     length_ (0),
@@ -218,7 +223,7 @@ ACE_Mem_Map::ACE_Mem_Map (LPCTSTR file_name,
                  prot,
                  share,
                  addr,
-                 pos,
+                 offset,
                  sa) < 0)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p\n"),
@@ -233,7 +238,7 @@ ACE_Mem_Map::ACE_Mem_Map (ACE_HANDLE handle,
                           int prot,
                           int share,
                           void *addr,
-                          off_t pos,
+                          off_t offset,
                           LPSECURITY_ATTRIBUTES sa)
   : base_addr_ (MAP_FAILED),
     length_ (0),
@@ -251,7 +256,7 @@ ACE_Mem_Map::ACE_Mem_Map (ACE_HANDLE handle,
                  prot,
                  share,
                  addr,
-                 pos,
+                 offset,
                  sa) < 0)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p\n"),

@@ -1,3 +1,16 @@
+Mon Oct 12 18:39:09 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Mem_Map.cpp: Revised the code to take the offset into
+ 	  account when deciding whether to grow the backing store.  
+
+	  Also, ACE_Mem_Map was trying to be too clever when it tries to
+ 	  make sure that your offset is a multiple of the allocation
+ 	  granularity.  It ends up messing up user offset and length
+ 	  calculations.  Therefore, I have taken this out of ACE_Mem_Map
+ 	  code.  Users is still welcome to use
+ 	  ACE_OS::allocation_granularity and
+ 	  ACE::round_to_allocation_granularity by themselves.
+
 Mon Oct 12 14:39:15 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Parse_Node.cpp: Added some ACE_const_casts to cleanup the

@@ -22,11 +22,11 @@ ACE_Mem_Map::map (ACE_HANDLE handle,
                   int prot,
                   int share,
                   void *addr,
-                  off_t pos,
+                  off_t offset,
                   LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_Mem_Map::map");
-  return this->map_it (handle, len, prot, share, addr, pos, sa);
+  return this->map_it (handle, len, prot, share, addr, offset, sa);
 }
 
 // Remap the file associated with <this->handle_>.
@@ -36,12 +36,12 @@ ACE_Mem_Map::map (int len,
                   int prot,
                   int share,
                   void *addr,
-                  off_t pos,
+                  off_t offset,
                   LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_Mem_Map::map");
   return this->map_it (this->handle (), len, prot,
-                       share, addr, pos, sa);
+                       share, addr, offset, sa);
 }
 
 // This operator passes back the starting address of the mapped file.
