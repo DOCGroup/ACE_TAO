@@ -6,6 +6,11 @@ Mon Jun 14 15:56:27 1999  David L. Levine  <levine@cs.wustl.edu>
           QNX4 host for Neutrino target.  Builds are almost (but not
           completely) clean.
 
+        * include/makeinclude/platform_qnx_neutrino.GNU: only
+          build static libs, because they seem to work better.  Many
+          of the ACE tests pass with this configuration!  (Some of
+          the usual suspects, such as Conn_Test, don't.)
+
 Mon Jun 14 14:33:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Reactor_Performance_Test.cpp (handle_input): removed
