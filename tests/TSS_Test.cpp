@@ -38,7 +38,10 @@ static u_int errors = 0;
   // of keys quickly in the first thread, set the number of
   // ITERATIONS to be small as well.
   static const int ITERATIONS =
-    ACE_DEFAULT_THREAD_KEYS/8 < 2  ?  1  :  ACE_DEFAULT_THREAD_KEYS/8;
+    (ACE_DEFAULT_THREAD_KEYS - ACE_MAX_THREADS) / (2 * ACE_MAX_THREADS) < 2
+      ?  1
+      :  (ACE_DEFAULT_THREAD_KEYS - ACE_MAX_THREADS) / (2 * ACE_MAX_THREADS);
+
 #elif defined (__Lynx__)
   // LynxOS only has 16 native TSS keys, and most of those don't seem
   // to be available.
