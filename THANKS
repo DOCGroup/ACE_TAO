@@ -923,6 +923,7 @@ Charles Meier <cmeier@concentus-tech.com>
 Tim Sim <tim_sim@optusnet.com.au>
 Shalabh Bhatnagar <shalabh_b@hotmail.com>
 Charles Scott <Charles.P.Scott@jpl.nasa.gov>
+Espen Harlinn <espen.harlinn@seamos.no>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
@@ -943,4 +944,3 @@ improvements, suggestions, and or comments, I'd like to hear about it.
 
                 Douglas C. Schmidt
                 schmidt@cs.wustl.edu
-
