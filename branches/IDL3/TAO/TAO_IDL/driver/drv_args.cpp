@@ -1137,6 +1137,7 @@ DRV_parse_args (long ac, char **av)
 
                   ACE_OS::exit (99);
                 }
+
               break;
             case 'G':
               // Enable generation of ...
@@ -1167,9 +1168,44 @@ DRV_parse_args (long ac, char **av)
               else if (av[i][2] == 's')
                 {
                   if (av[i][3] == 'p')
-                    // smart proxies
-                    be_global->gen_smart_proxies (I_TRUE);
+                    {
+                      // smart proxies
+                      be_global->gen_smart_proxies (I_TRUE);
+                    }
+                  else
+                    {
+                      ACE_ERROR ((
+                          LM_ERROR,
+                          ACE_TEXT ("IDL: I don't understand ")
+                          ACE_TEXT ("the '%s' option\n"),
+                          av[i]
+                        ));
 
+                      ACE_OS::exit (99);
+                    }
+
+                  break;
+                }
+              else if (av[i][2] == 'i')
+                {
+                  if (av[i][3] == 'c')
+                    {
+                      // inline constants
+                      be_global->gen_inline_constants (I_TRUE);
+                    }
+                  else
+                    {
+                      ACE_ERROR ((
+                          LM_ERROR,
+                          ACE_TEXT ("IDL: I don't understand ")
+                          ACE_TEXT ("the '%s' option\n"),
+                          av[i]
+                        ));
+
+                      ACE_OS::exit (99);
+                    }
+
+                  break;
                 }
               else if (av[i][2] == 't')
                 {

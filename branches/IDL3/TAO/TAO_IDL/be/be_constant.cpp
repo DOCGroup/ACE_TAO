@@ -21,6 +21,8 @@
 
 #include "be_constant.h"
 #include "be_visitor.h"
+#include "utl_scope.h"
+#include "nr_extern.h"
 
 ACE_RCSID (be, 
            be_constant, 
@@ -44,7 +46,7 @@ be_constant::be_constant (AST_Expression::ExprType et,
 const char *
 be_constant::exprtype_to_string (void)
 {
-  switch (this->et ())
+  switch (this->pd_et)
     {
     case AST_Expression::EV_short:
       return "CORBA::Short";
@@ -66,8 +68,6 @@ be_constant::exprtype_to_string (void)
       return "CORBA::Boolean";
     case AST_Expression::EV_string:
       return "char *const";
-    case AST_Expression::EV_any:
-      return "CORBA::Any";
     case AST_Expression::EV_void:
       return "void";
     case AST_Expression::EV_none:
@@ -81,9 +81,27 @@ be_constant::exprtype_to_string (void)
     case AST_Expression::EV_wstring:
       return "CORBA::WChar *const";
     case AST_Expression::EV_longdouble:
-      return NULL;
+    case AST_Expression::EV_any:
+      return 0;
     }
-  return NULL;
+
+  return 0;
+}
+
+UTL_ScopedName *
+be_constant::enum_full_name (void)
+{
+  if (this->pd_et == AST_Expression::EV_any)
+    {
+      UTL_Scope *s = this->defined_in ();
+      AST_Decl *d = s->lookup_by_name (this->pd_constant_value->n (),
+                                       1);
+      return (ScopeAsDecl (d->defined_in ()))->name ();
+    }
+  else
+    {
+      return 0;
+    }
 }
 
 int

@@ -1519,6 +1519,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
       switch (ev->et)
         {
         case AST_Expression::EV_any:
+        case AST_Expression::EV_ulong:
           return ev;
         default:
           return 0;
@@ -2514,8 +2515,8 @@ AST_Expression::ast_accept (ast_visitor *visitor)
 void
 AST_Expression::destroy (void)
 {
-  delete this->pd_ev;
-  this->pd_ev = 0;
+//  delete this->pd_ev;
+//  this->pd_ev = 0;
 }
 
 // Data accessors.

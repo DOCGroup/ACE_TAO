@@ -118,7 +118,7 @@ public:
   // Cleanup.
   virtual void destroy (void);
 
-private:
+protected:
   AST_Expression *pd_constant_value;
   // The value.
 
