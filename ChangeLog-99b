@@ -1,3 +1,10 @@
+Sun Dec  5 16:50:37 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/OS.h:
+
+	  Some compilers were picky about the circular dependency fix.
+	  Moved inclusion of ace/Log_Msg.h after ace/OS.i yet again.
+
 Sat Dec 04 21:14:37 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Malloc_Test.cpp (init_test): Need to call init_acquire to
