@@ -1,3 +1,20 @@
+Wed Jul 23 12:43:48 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/UUID.cpp:
+
+	  Added missing ACE_RCSID macro.
+
+	  (UUID_node):
+
+	  Use UUID_node::NODE_ID_SIZE instead of the hardcoded constant
+	  "6".  Improves code maintanability.
+
+	  (ACE_UUID):
+
+	  Corrected format specifier mismatch warnings exhibited by G++
+	  3.2.2.  Hexadecimal format specifiers ("%x") expect the
+	  corresponding argument to be an unsigned int, not a signed int.
+
 Wed Jul 23 19:35:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * THANKS:
