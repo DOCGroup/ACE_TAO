@@ -12,7 +12,7 @@
 //    Reads stringified IORs and outputs the encoded information.
 //
 // = AUTHORS
-//      Jeff Hopper <jhopper@nosc.mil>
+//      Jeff Hopper <jrhopper@cts.com>
 //
 // ============================================================================
 
