@@ -45,9 +45,9 @@ namespace CIAO
                 CIAO::Static_Config::ResolveInfoAttributes* resolvers,
                 int resolvers_count);
 
-    int create_components ();
-    int create_homes ();
-    int create_connections ();
+    int create_components (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+    int create_homes (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+    int create_connections (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
     void make_connection (int connections_table_index
                           ACE_ENV_ARG_DECL);
     CORBA::Object_ptr resolve_interface (int resolvers_table_index

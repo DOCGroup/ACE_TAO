@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Static_Configurator.h"
+#include "ace/OS_NS_stdio.h"
 
 int CIAO::Static_Configurator::configure(
                    CORBA::ORB_ptr orb,
@@ -39,7 +40,7 @@ int CIAO::Static_Configurator::configure(
   return 0;
 }
 
-int CIAO::Static_Configurator::create_homes ()
+int CIAO::Static_Configurator::create_homes (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG, "Creating Homes...\n"));
   for (int i=0; i<homes_count_; ++i)
@@ -103,11 +104,11 @@ int CIAO::Static_Configurator::create_homes ()
   return 0;
 }
 
-int CIAO::Static_Configurator::create_connections ()
+int CIAO::Static_Configurator::create_connections (ACE_ENV_SINGLE_ARG_DECL)
 {
   for (int i=0; i<connections_count_; ++i)
     {
-      make_connection (i);
+      make_connection (i ACE_ENV_ARG_PARAMETER);
     }
   return 0;
 }
@@ -191,7 +192,7 @@ CIAO::Static_Configurator::make_connection (int connections_table_index
 
 CORBA::Object_ptr
 CIAO::Static_Configurator::resolve_interface (int resolvers_table_index
-                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                        ACE_ENV_ARG_DECL)
 {
   if (resolvers_table_index == -1)
     return CORBA::Object::_nil ();
@@ -246,7 +247,7 @@ CIAO::Static_Configurator::resolve_interface (int resolvers_table_index
 
 Components::CCMObject_ptr
 CIAO::Static_Configurator::resolve_component (int resolvers_table_index
-                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                        ACE_ENV_ARG_DECL)
 {
   if (resolvers_table_index == -1)
     return 0;
@@ -281,7 +282,7 @@ CIAO::Static_Configurator::resolve_component (int resolvers_table_index
 
 Components::CCMHome_ptr
 CIAO::Static_Configurator::resolve_home (int resolvers_table_index
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                   ACE_ENV_ARG_DECL)
 {
   if (resolvers_table_index == -1)
     return 0;
@@ -326,7 +327,7 @@ CIAO::Static_Configurator::resolve_home (int resolvers_table_index
 
 Components::EventConsumerBase_ptr
 CIAO::Static_Configurator::resolve_consumer (int resolvers_table_index
-                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                       ACE_ENV_ARG_DECL)
 {
   if (resolvers_table_index == -1)
     return 0;
@@ -369,7 +370,7 @@ CIAO::Static_Configurator::get_container (const ACE_CString& rtpolicy
     {
       if (containers_[i].rtpolicyset_ref_ == rtpolicy)
         {
-          if (!is_nil (containers_[i].container_.in ()))
+          if (!CORBA::is_nil (containers_[i].container_.in ()))
             return Components::Deployment::Container::_duplicate
               (containers_[i].container_.in ());
           else break;
@@ -412,7 +413,7 @@ CIAO::Static_Configurator::get_container (const ACE_CString& rtpolicy
     (this->containers_[container_index].container_.in ());
 }
 
-int CIAO::Static_Configurator::create_components ()
+int CIAO::Static_Configurator::create_components (ACE_ENV_SINGLE_ARG_DECL)
 {
   for (int i=0; i<components_count_; ++i)
     {
@@ -490,16 +491,21 @@ CIAO::Static_Configurator::register_component (
                                           ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
 
-        FILE* ior_output_file_ =
+        FILE* ior_output_file =
           ACE_OS::fopen (i.name_.c_str (), "w");
 
-        if (ior_output_file_)
+        if (ior_output_file)
           {
-            ACE_OS::fprintf (ior_output_file_,
+            ACE_OS::fprintf (ior_output_file,
                              "%s",
                              ior.in ());
-            ACE_OS::fclose (ior_output_file_);
+            ACE_DEBUG ((LM_DEBUG, "Done writing ior to file %s\n", i.name_.c_str ()));
+            ACE_OS::fclose (ior_output_file);
           }
+        else
+        {
+            ACE_DEBUG ((LM_DEBUG, "Error writing ior to file %s\n", i.name_.c_str ()));
+		}
       }
     break;
 

@@ -1,3 +1,13 @@
+Sun Feb 29 20:57:40 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* tools/static_configurator/Static_Configurator.h: 
+	* tools/static_configurator/Static_Configurator.cpp: 
+	* tools/static_configurator/Static_Assembly_Parser.cpp: Fixed
+	  compile errors in builds with native exceptions disabled.
+	
+	* tools/static_configurator/Static_Assembly_Visitors.cpp: Fixed
+	  compile errors in gcc 3.3.2. Thanks to Bala for pointing out.
+
 Sat Feb 28 15:42:22 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tools/static_configurator/Static_Assembly_Visitors.cpp:

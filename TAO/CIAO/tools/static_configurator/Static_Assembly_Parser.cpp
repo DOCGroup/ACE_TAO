@@ -5,6 +5,7 @@
 #include "../XML_Helpers/XML_Utils.h"
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
+#include "ace/OS_NS_stdio.h"
 
 char *config_filename = 0;
 char *cads_filename = 0;
@@ -78,8 +79,8 @@ main (int argc, char *argv[])
                                                      installation_file,
                                                      static_config_info);
 
-      int build_result = assembly_spec.partitioning_.accept (builder
-                                                             ACE_ENV_ARG_PARAMETER);
+      assembly_spec.partitioning_.accept (builder
+                                          ACE_ENV_ARG_PARAMETER);
 
       builder.build_connections (assembly_spec.connections_);
 
