@@ -1,3 +1,15 @@
+Thu Sep 02 20:23:44 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/source.cpp:
+	* orbsvcs/orbsvcs/AV/MCast.cpp:
+	* orbsvcs/orbsvcs/AV/Policy.cpp: The inline files were not
+	  included in the cpp files when inlining was disable.
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp: Tons of AV related files
+	  were missing.  Also added TAO_ORBSVCS_HAS_Trader to avoid
+	  defining TAO_String_Hash_Key twice.
+
 Thu Sep  2 17:56:29 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/util/utl_scope.cpp:
@@ -11,7 +23,7 @@ Thu Sep  2 17:56:29 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  scoped name of the referenced identifier, and that
 	  would be confusing (only the top level component is
 	  'in' the scope and can cause a collision). Thanks to
-	  Kristopher Johnson <kjohnson@gardnersys.com> for 
+	  Kristopher Johnson <kjohnson@gardnersys.com> for
 	  reporting the bug and to Jonathan Biggar <jon@floorboard.com>
 	  for his clarification of the 2.3 spec changes.
 
