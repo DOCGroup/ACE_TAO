@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Process.h
 //
 // = AUTHOR
 //    Tim Harrison <harrison@cs.wustl.edu>
-// 
+//
 // ============================================================================
 
 #if !defined (ACE_PROCESS_H)
@@ -33,8 +33,8 @@ class ACE_Export ACE_Process_Options
   //    options, set environment,...  So, basically, this class only
   //    set the command line and nothing else.
 public:
-  enum 
-  { 
+  enum
+  {
     DEFAULT_COMMAND_LINE_BUF_LEN = 1024,
     // UNIX process creation flags.
 #if defined (ACE_WIN32)
@@ -44,8 +44,20 @@ public:
 #endif /* ACE_WIN32 */
   };
 
+
+// Default settings not part of public Iface
+protected:
+  enum {
+    MAX_COMMAND_LINE_OPTIONS = 128,
+    ENVIRONMENT_BUFFER = 8192,
+    MAX_ENVIRONMENT_ARGS = 128
+  };
+
+public:
   ACE_Process_Options (int inherit_environment = 1,
-		       int command_line_buf_len = DEFAULT_COMMAND_LINE_BUF_LEN);
+                       int command_line_buf_len = DEFAULT_COMMAND_LINE_BUF_LEN,
+                       int env_buf_len = ENVIRONMENT_BUFFER,
+                       int max_env_args = MAX_ENVIRONMENT_ARGS);
   // If <inherit_environment> == 1, the new process will inherit the
   // environment of the current process.  <command_line_buf_len> is the
   // max strlen for command-line arguments.
@@ -59,8 +71,8 @@ public:
   // ************************************************************
 
   int set_handles (ACE_HANDLE std_in,
-		   ACE_HANDLE std_out = ACE_INVALID_HANDLE,
-		   ACE_HANDLE std_err = ACE_INVALID_HANDLE);
+                   ACE_HANDLE std_out = ACE_INVALID_HANDLE,
+                   ACE_HANDLE std_err = ACE_INVALID_HANDLE);
   // Set the standard handles of the new process to the respective
   // handles.  If you want to affect a subset of the handles, make
   // sure to set the others to ACE_INVALID_HANDLE.  Returns 0 on
@@ -74,7 +86,7 @@ public:
   // Set a single environment variable, <variable_name>.  Since
   // different platforms separate each environment variable
   // differently, you must call this method once for each variable.
-  // <format> can be any printf format string.  
+  // <format> can be any printf format string.
   // So options->setenv ("FOO","one + two = %s", "three") will result
   // in "FOO=one + two = three".
 
@@ -163,12 +175,6 @@ public:
 
 protected:
 
-  enum { 
-    MAX_COMMAND_LINE_OPTIONS = 128,
-    ENVIRONMENT_BUFFER = 8192,
-    MAX_ENVIRONMENT_ARGS = 128
-  };
-
 #if !defined (ACE_HAS_WINCE)
   int setenv_i (LPTSTR assignment, int len);
   // Add <assignment> to environment_buf_ and adjust
@@ -224,11 +230,20 @@ protected:
   int environment_argv_index_;
   // Pointer to environment_argv_.
 
-  TCHAR environment_buf_[ENVIRONMENT_BUFFER];
-  // Buffer containing all environment strings.
+  LPTSTR environment_buf_;
+  // Pointer to buffer of the environment settings.
 
-  LPTSTR environment_argv_[MAX_ENVIRONMENT_ARGS];
+  int environment_buf_len_;
+  // Size of the environment buffer. Configurable
+
+  LPTSTR* environment_argv_;
   // Pointers into environment_buf_.
+
+  int max_environment_args_;
+  // Maximum number of environment variables. Configurable
+
+  int max_environ_argv_index_;
+  // Maximum index of environment_argv_ buffer
 
   TCHAR working_directory_[MAXPATHLEN + 1];
   // The current working directory.
