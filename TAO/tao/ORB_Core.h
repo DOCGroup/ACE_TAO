@@ -61,6 +61,7 @@ class TAO_Transport_Cache;
 class TAO_TSS_Resources;
 class TAO_Reactor_Registry;
 class TAO_Leader_Follower;
+class TAO_LF_Strategy;
 class TAO_Priority_Mapping;
 class TAO_Priority_Mapping_Manager;
 class TAO_RT_ORB;
@@ -632,6 +633,9 @@ public:
 
   /// Get access to the leader_follower class.
   TAO_Leader_Follower &leader_follower (void);
+
+  /// Get access to the leader follower strategy.
+  TAO_LF_Strategy &lf_strategy (void);
 
   /// Run the event loop.
   int run (ACE_Time_Value *tv,

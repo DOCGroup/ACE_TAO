@@ -15,6 +15,7 @@
 
 #include "tao/debug.h"
 #include "tao/Single_Reactor.h"
+#include "tao/Leader_Follower.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/Dynamic_Service.h"
@@ -574,6 +575,27 @@ TAO_Advanced_Resource_Factory::input_cdr_allocator_type_locked (void)
 {
   return this->cdr_allocator_type_ == TAO_ALLOCATOR_NULL_LOCK ? 0 : 1;
 }
+
+TAO_LF_Strategy *
+TAO_Advanced_Resource_Factory::create_lf_strategy (void)
+{
+  TAO_LF_Strategy *strategy = 0;
+
+  if (this->reactor_type_ == TAO_REACTOR_SELECT_ST)
+    {
+      ACE_NEW_RETURN (strategy,
+                      TAO_Null_LF_Strategy,
+                      0);
+    }
+  else
+    {
+      ACE_NEW_RETURN (strategy,
+                      TAO_Complete_LF_Strategy,
+                      0);
+    }
+  return strategy;
+}
+
 
 TAO_Priority_Mapping *
 TAO_Advanced_Resource_Factory::get_priority_mapping (void)

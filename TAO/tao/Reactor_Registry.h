@@ -22,6 +22,7 @@
 
 class TAO_ORB_Core;
 class TAO_Leader_Follower;
+class TAO_LF_Strategy;
 class TAO_Acceptor;
 class ACE_Reactor;
 
@@ -59,6 +60,9 @@ public:
   /// Return the Leader-Follower group for the current thread
   virtual TAO_Leader_Follower &leader_follower (void) = 0;
 
+  /// Return the leader follower strategy
+  virtual TAO_LF_Strategy &lf_strategy (void);
+
   /// Return the Leader-Follower group for a given acceptor
   virtual TAO_Leader_Follower &leader_follower (TAO_Acceptor *acceptor) = 0;
 
@@ -75,6 +79,9 @@ public:
 private:
   /// The orb_core
   TAO_ORB_Core *orb_core_;
+
+  /// The leader follower strategy
+  TAO_LF_Strategy *lf_strategy_;
 };
 
 #if defined (__ACE_INLINE__)
