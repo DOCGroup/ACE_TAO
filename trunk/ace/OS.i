@@ -1252,7 +1252,7 @@ ACE_OS::strrchr (char *s, int c)
       p--;
 
   return p;
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_LACKS_STRRCHR */
 }
 
 ACE_INLINE const char *
@@ -1271,7 +1271,7 @@ ACE_OS::strrchr (const char *s, int c)
       p--;
 
   return p;
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_LACKS_STRRCHR */
 }
 
 ACE_INLINE int
@@ -8587,7 +8587,19 @@ ACE_INLINE const wchar_t *
 ACE_OS::strrchr (const wchar_t *s, wint_t c)
 {
   // ACE_TRACE ("ACE_OS::strrchr");
+#if !defined (ACE_HAS_WINCE)
   return (const wchar_t *) ::wcsrchr (s, c);
+#else
+  const wchar_t *p = s + ::wcslen (s);
+
+  while (*p != c)
+    if (p == s)
+      return 0;
+    else
+      p--;
+
+  return p;
+#endif /* ACE_HAS_WINCE */
 }
 
 ACE_INLINE wchar_t *
@@ -8607,7 +8619,19 @@ ACE_INLINE wchar_t *
 ACE_OS::strrchr (wchar_t *s, wint_t c)
 {
   // ACE_TRACE ("ACE_OS::strrchr");
-  return ::wcsrchr (s, c);
+#if !defined (ACE_HAS_WINCE)
+  return (const wchar_t *) ::wcsrchr (s, c);
+#else
+  wchar_t *p = s + ::wcslen (s);
+
+  while (*p != c)
+    if (p == s)
+      return 0;
+    else
+      p--;
+
+  return p;
+#endif /* ACE_HAS_WINCE */
 }
 
 ACE_INLINE int
