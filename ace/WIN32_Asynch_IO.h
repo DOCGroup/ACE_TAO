@@ -1316,6 +1316,11 @@ private:
    *                   connects.
    *                   According WIN32 standards we should receive
    *                   notifications on canceled AIO requests.
+   *
+   * @param set        Receives the set of I/O handles on which asynchronous
+   *                   connect requests were canceled as a result of this
+   *                   method. The contents of @a set are completely
+   *                   replaced.
    */
   int cancel_uncompleted (int flg_notify, ACE_Handle_Set & set);
 
