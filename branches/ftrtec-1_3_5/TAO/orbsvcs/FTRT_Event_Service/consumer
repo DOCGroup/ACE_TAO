@@ -13,15 +13,12 @@ do
                 EndpointParam="$EndpointParam -ORBEndpoint sciop://";;
         -td)    FTEC_TransactionDepth=$2
                 shift;;
-        -d)     EndpointParam="$EndpointParam -d $2"
-                shift;;
-        -k)     EndpointParam="$EndpointParam -k $2"
-                shift;;
-        -n)     EndpointParam="$EndpointParam -n";;
+        *)      EndpointParam="$EndpointParam $1";;
     esac
     shift
 done
 
 cd $TAO_ROOT/orbsvcs/tests/FtRtEvent
 export FTEC_TransactionDepth
-./consumer $EndpointParam $*
+echo $EndpointParam
+./ftrtec_consumer $EndpointParam
