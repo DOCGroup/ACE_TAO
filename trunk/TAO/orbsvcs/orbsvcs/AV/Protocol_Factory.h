@@ -23,18 +23,6 @@
 #include "Policy.h"
 #include "FlowSpec_Entry.h"
 
-class TAO_AV_Export TAO_AV_Transport_Factory : public ACE_Service_Object
-{
-public:
-  TAO_AV_Transport_Factory (void);
-  virtual ~TAO_AV_Transport_Factory (void);
-  virtual int init (int argc, char *argv[]);
-  // Initialization hook.
-  virtual int match_protocol (const char *protocol_string);
-  virtual TAO_AV_Acceptor *make_acceptor (void);
-  virtual TAO_AV_Connector *make_connector (void);
-};
-
 class TAO_AV_Protocol_Object
 {
 public:

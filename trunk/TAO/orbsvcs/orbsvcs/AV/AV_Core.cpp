@@ -1,14 +1,14 @@
 // $Id$
-#include "AV/AV_Core.h"
-#include "AV/Transport.h"
-#include "AV/FlowSpec_Entry.h"
-#include "AV/Protocol_Factory.h"
+#include "AV_Core.h"
+#include "Transport.h"
+#include "FlowSpec_Entry.h"
+#include "Protocol_Factory.h"
 #include "ace/Dynamic_Service.h"
-#include "AV/UDP.h"
-#include "AV/TCP.h"
-#include "AV/RTP.h"
-#include "AV/RTCP.h"
-#include "AV/sfp.h"
+#include "UDP.h"
+#include "TCP.h"
+#include "RTP.h"
+#include "RTCP.h"
+#include "sfp.h"
 
 //------------------------------------------------------------
 // TAO_AV_Core
@@ -343,9 +343,9 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
         //        int index = flow_spec.length () + 1;
         int index = new_flowspec.length ();
         flow_spec.length (index);
-        for (i = 0; i < new_flowspec.length (); i++)
+        for (unsigned int j = 0; j < new_flowspec.length (); j++)
           {
-            flow_spec [i] = new_flowspec [i];
+            flow_spec [j] = new_flowspec [j];
           }
       }
       break;
