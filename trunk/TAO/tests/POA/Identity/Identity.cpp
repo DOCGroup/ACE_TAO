@@ -168,17 +168,23 @@ test_poas (CORBA::ORB_ptr orb,
 
     ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
-    PortableServer::Servant servant_from_reference = root_poa->reference_to_servant (obj.in (),
-                                                                                     ACE_TRY_ENV);
+    PortableServer::Servant servant_from_reference =
+      root_poa->reference_to_servant (obj.in (),
+                                      ACE_TRY_ENV);
     ACE_CHECK;
 
-    PortableServer::Servant servant_from_id = root_poa->id_to_servant (id.in (),
-                                                                       ACE_TRY_ENV);
+    PortableServer::Servant servant_from_id =
+      root_poa->id_to_servant (id.in (),
+                               ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_ASSERT (servant_from_reference == servant_from_id);
-    ACE_ASSERT (servant_from_reference == &servant);
-    ACE_UNUSED_ARG (servant_from_id);
+    if (servant_from_reference != servant_from_id
+        || servant_from_reference != &servant)
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "Mismatched servant_from_reference, "
+                    "servant_from_id and &servant\n"));
+      }
 
     obj = root_poa->servant_to_reference (&servant,
                                           ACE_TRY_ENV);
@@ -293,17 +299,23 @@ test_poas (CORBA::ORB_ptr orb,
 
     ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
-    PortableServer::Servant servant_from_reference = first_poa->reference_to_servant (obj.in (),
-                                                                                      ACE_TRY_ENV);
+    PortableServer::Servant servant_from_reference =
+      first_poa->reference_to_servant (obj.in (),
+                                       ACE_TRY_ENV);
     ACE_CHECK;
 
-    PortableServer::Servant servant_from_id = first_poa->id_to_servant (id.in (),
-                                                                        ACE_TRY_ENV);
+    PortableServer::Servant servant_from_id =
+      first_poa->id_to_servant (id.in (),
+                                ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_ASSERT (servant_from_reference == servant_from_id);
-    ACE_ASSERT (servant_from_reference == &servant);
-    ACE_UNUSED_ARG (servant_from_id);
+    if (servant_from_reference != servant_from_id
+        || servant_from_reference != &servant)
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "Mismatched servant_from_reference, "
+                    "servant_from_id and &servant\n"));
+      }
 
     first_poa->deactivate_object (id.in (),
                                   ACE_TRY_ENV);
@@ -393,17 +405,23 @@ test_poas (CORBA::ORB_ptr orb,
 
     ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
-    PortableServer::Servant servant_from_reference = second_poa->reference_to_servant (obj.in (),
-                                                                                       ACE_TRY_ENV);
+    PortableServer::Servant servant_from_reference =
+      second_poa->reference_to_servant (obj.in (),
+                                        ACE_TRY_ENV);
     ACE_CHECK;
 
-    PortableServer::Servant servant_from_id = second_poa->id_to_servant (id.in (),
-                                                                         ACE_TRY_ENV);
+    PortableServer::Servant servant_from_id =
+      second_poa->id_to_servant (id.in (),
+                                 ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_ASSERT (servant_from_reference == servant_from_id);
-    ACE_ASSERT (servant_from_reference == &servant);
-    ACE_UNUSED_ARG (servant_from_id);
+    if (servant_from_reference != servant_from_id
+        || servant_from_reference != &servant)
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "Mismatched servant_from_reference, "
+                    "servant_from_id and &servant\n"));
+      }
 
     obj = second_poa->servant_to_reference (&servant,
                                             ACE_TRY_ENV);
@@ -525,17 +543,23 @@ test_poas (CORBA::ORB_ptr orb,
 
     ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
-    PortableServer::Servant servant_from_reference = third_poa->reference_to_servant (obj.in (),
-                                                                                      ACE_TRY_ENV);
+    PortableServer::Servant servant_from_reference =
+      third_poa->reference_to_servant (obj.in (),
+                                       ACE_TRY_ENV);
     ACE_CHECK;
 
-    PortableServer::Servant servant_from_id = third_poa->id_to_servant (id.in (),
-                                                                        ACE_TRY_ENV);
+    PortableServer::Servant servant_from_id =
+      third_poa->id_to_servant (id.in (),
+                                ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_ASSERT (servant_from_reference == servant_from_id);
-    ACE_ASSERT (servant_from_reference == &servant);
-    ACE_UNUSED_ARG (servant_from_id);
+    if (servant_from_reference != servant_from_id
+        || servant_from_reference != &servant)
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "Mismatched servant_from_reference, "
+                    "servant_from_id and &servant\n"));
+      }
 
     obj = third_poa->servant_to_reference (&servant,
                                            ACE_TRY_ENV);
@@ -627,17 +651,23 @@ test_poas (CORBA::ORB_ptr orb,
 
     ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
-    PortableServer::Servant servant_from_reference = forth_poa->reference_to_servant (obj.in (),
-                                                                                      ACE_TRY_ENV);
+    PortableServer::Servant servant_from_reference =
+      forth_poa->reference_to_servant (obj.in (),
+                                       ACE_TRY_ENV);
     ACE_CHECK;
 
-    PortableServer::Servant servant_from_id = forth_poa->id_to_servant (id.in (),
-                                                                        ACE_TRY_ENV);
+    PortableServer::Servant servant_from_id =
+      forth_poa->id_to_servant (id.in (),
+                                ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_ASSERT (servant_from_reference == servant_from_id);
-    ACE_ASSERT (servant_from_reference == &servant);
-    ACE_UNUSED_ARG (servant_from_id);
+    if (servant_from_reference != servant_from_id
+        || servant_from_reference != &servant)
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "Mismatched servant_from_reference, "
+                    "servant_from_id and &servant\n"));
+      }
 
     forth_poa->deactivate_object (id.in ());
 
