@@ -8,6 +8,9 @@
 #include "ace/Memory_Pool.h"
 #include "ace/RW_Process_Mutex.h"
 #include "ace/OS_NS_string.h"
+#if defined (ACE_HAS_TRACE)
+# include "ace/OS_NS_strings.h"
+#endif /* ACE_HAS_TRACE */
 
 ACE_RCSID(ace, Naming_Context, "$Id$")
 
