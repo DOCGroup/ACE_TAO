@@ -742,7 +742,7 @@ be_visitor_union_branch_private_ch::visit_interface (be_interface *node)
   os->indent (); // start from current indentation
   // C++ does not allow an object declaration inside a union. Hence we
   // must have a pointer. This changes some of the methods
-  *os << bt->nested_type_name (bu, "_var") << " *" << ub->local_name () <<
+  *os << bt->nested_type_name (bu, "_ptr") << " " << ub->local_name () <<
     "_;\n";
   return 0;
 }
@@ -775,7 +775,7 @@ be_visitor_union_branch_private_ch::visit_interface_fwd (be_interface_fwd *node)
   os->indent (); // start from current indentation
   // C++ does not allow an object declaration inside a union. Hence we
   // must have a pointer. This changes some of the methods
-  *os << bt->nested_type_name (bu, "_var") << " *" << ub->local_name () <<
+  *os << bt->nested_type_name (bu, "_ptr") << " " << ub->local_name () <<
     "_;\n";
   return 0;
 }
@@ -809,7 +809,7 @@ be_visitor_union_branch_private_ch::visit_predefined_type (be_predefined_type *n
     {
       // Cannot have an object inside of a union
       os->indent (); // start from current indentation
-      *os << bt->nested_type_name (bu, "_var") << " *" << ub->local_name () <<
+      *os << bt->nested_type_name (bu, "_ptr") << " " << ub->local_name () <<
         "_;\n";
     }
   else
@@ -878,7 +878,7 @@ be_visitor_union_branch_private_ch::visit_string (be_string *node)
 
   os = this->ctx_->stream ();
 
-  *os << "CORBA::String_var *" << ub->local_name () << "_;\n";
+  *os << "char *" << ub->local_name () << "_;\n";
   return 0;
 }
 
@@ -1467,6 +1467,9 @@ be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
               << be_nl;
         }
       *os << "// set the value" << be_nl
+          << "if (!this->" << ub->local_name () << "_)" << be_idt_nl
+          << "this->" << ub->local_name () << "_ = new "
+          << bt->name () << ";" << be_uidt_nl
           << "*this->" << ub->local_name () << "_ = val;" << be_uidt_nl;
     }
   else
