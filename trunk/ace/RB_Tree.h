@@ -221,8 +221,8 @@ private:
 
   // declare private and do not define: explicitly
   // prevent assignment and copy construction of iterators
-  RB_Tree_Iterator (const RB_Tree_Iterator<KEY, T> &);
-  operator = (const RB_Tree_Iterator<KEY, T> &);
+  ACE_UNIMPLEMENTED_FUNC (RB_Tree_Iterator (const RB_Tree_Iterator<KEY, T> &))
+  ACE_UNIMPLEMENTED_FUNC (void operator = (const RB_Tree_Iterator<KEY, T> &))
 
   // private members
 
