@@ -1,3 +1,11 @@
+Fri Aug 13 23:58:50 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Thread_Per_Connection_Handler.cpp (svc):
+
+	  The "ACE_Flag_Manip" pseudo namespace no longer exists, and was
+	  not meant to be used in the long run in this code.  Use the true
+	  "ACE" C++ namespace instead.
+
 Sat Aug 14 03:32:38 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bug_1904_Regression/test.cpp:
