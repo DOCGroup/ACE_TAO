@@ -99,7 +99,8 @@ AST_InterfaceFwd::~AST_InterfaceFwd (void)
 
 // Private operations.
 
-idl_bool AST_InterfaceFwd::is_local (void)
+idl_bool 
+AST_InterfaceFwd::is_local (void)
 {
   return this->full_definition ()->is_local ();
 }
@@ -109,16 +110,16 @@ idl_bool AST_InterfaceFwd::is_valuetype (void)
   return this->full_definition ()->is_valuetype ();
 }
 
-idl_bool AST_InterfaceFwd::is_abstract_valuetype (void)
+idl_bool 
+AST_InterfaceFwd::is_abstract_valuetype (void)
 {
   return this->full_definition ()->is_abstract_valuetype ();
 }
 
-void AST_InterfaceFwd::set_abstract_valuetype (void)
+void 
+AST_InterfaceFwd::set_abstract_valuetype (void)
 {
-  // Don't forget about dummy placeholder ! (see constructor)
-  // (only if the be class isn't used).
-  ACE_ASSERT (0);
+  this->full_definition ()->set_abstract_valuetype ();
 }
 
 // Redefinition of inherited virtual operations.
@@ -155,7 +156,7 @@ AST_InterfaceFwd::dump (ostream &o)
 
 // Data accessors.
 
-AST_Interface   *
+AST_Interface *
 AST_InterfaceFwd::full_definition (void)
 {
   return this->pd_full_definition;

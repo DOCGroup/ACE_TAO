@@ -227,8 +227,8 @@ public:
   // constructors of all the base classes.
 
   static int gen_copy_ctors_helper (be_interface* node,
-                                   be_interface* base,
-                                   TAO_OutStream *os);
+                                    be_interface* base,
+                                    TAO_OutStream *os);
 
   // Helper method to generate a call to the copy 
   // constructors of all the base classes.
