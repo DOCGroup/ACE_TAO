@@ -1,7 +1,7 @@
 // $Id$
+
 #include "Root_POA.h"
 #include "Regular_POA.h"
-
 
 #include "ThreadPolicyFactory.h"
 #include "LifespanPolicyFactory.h"
@@ -857,12 +857,6 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
       ++i;
     }
-
-  // Notify the state changes to the IORInterceptors
-  this->adapter_state_changed (array_obj_ref_template,
-                               PortableInterceptor::INACTIVE
-                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Destroy all child POA's now.
   for (CHILDREN::iterator destroy_iterator = this->children_.begin ();
