@@ -10,8 +10,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Test_and_Set.h"
-
 ACE_RCSID(ace, Test_and_Set, "$Id$")
 
 template <class ACE_LOCK, class TYPE>
