@@ -188,6 +188,10 @@ public:
   ACE_HANDLE get_stdout (void);
   ACE_HANDLE get_stderr (void);
 
+  void avoid_zombies (int);
+  // Set value for avoid_zombies.
+  int avoid_zombies (void);
+  // Get current value for avoid_zombies.
 #endif /* ACE_WIN32 */
 
 protected:
@@ -234,6 +238,8 @@ protected:
   ACE_HANDLE stdin_;
   ACE_HANDLE stdout_;
   ACE_HANDLE stderr_;
+  // Avoid zombies for spawned processes.
+  int avoid_zombies_;
 #endif /* ACE_WIN32 */
 
 #if !defined (ACE_HAS_WINCE)

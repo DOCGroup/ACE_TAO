@@ -92,7 +92,8 @@ ACE_Process::spawn (ACE_Process_Options &options)
   return this->child_id_;
 #else /* ACE_WIN32 */
   // Fork the new process.
-  this->child_id_ = ACE_OS::fork (options.command_line_argv ()[0]);
+  this->child_id_ = ACE::fork (options.command_line_argv ()[0],
+                               options.avoid_zombies ());
 
   // If we're not supposed to exec, return the process id.
   if (ACE_BIT_ENABLED (options.creation_flags (), ACE_Process_Options::NO_EXEC))
@@ -225,6 +226,7 @@ ACE_Process_Options::ACE_Process_Options (int ie,
     stdin_ (ACE_INVALID_HANDLE),
     stdout_ (ACE_INVALID_HANDLE),
     stderr_ (ACE_INVALID_HANDLE),
+    avoid_zombies_ (0),
 #endif /* ACE_WIN32 */
     set_handles_called_ (0),
     environment_buf_index_ (0),
