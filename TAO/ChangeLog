@@ -1,12 +1,29 @@
+Tue Mar  2 21:15:47 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* docs/Security/Conformance.html:
+	* docs/Security/Download.html:
+	* docs/Security/FAQ.html:
+	* docs/Security/SSLIOP-INSTALL.html:
+	* docs/Security/SSLIOP-USAGE.html:
+	* docs/Security/SSLIOP.html:
+	* docs/Security/Security_Service.html:
+	* docs/Security/index.html:
+	* docs/Security/Templates:
+	* docs/Security/fireworks:
+	* docs/Security/images:
+
+	  Documentation for TAO's SSLIOP pluggable protocol and Security
+	  Service.
+
 Tue Mar  2 19:57:30 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.h: 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.cpp: 
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.h:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.cpp:
 
 	  Added the Receiver_Callback::handle_destroy method to shutdown
 	  the receiver when the stream was destroyed.
-	
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp: 
+
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp:
 
 	  Set the QoS Params in Sender::fill_qos to Diffserv_Codepoint if
 	  rapi=0. Else the QoS Params are set to the intserv values. This
@@ -15,16 +32,16 @@ Tue Mar  2 19:57:30 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	  Added the graceful shutdown of the process when all frames were
 	  sent.
-	
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/README: 
+
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/README:
 
 	  Modified to include details of diffserv testing.
-	  
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/runtest.pl: 	
+
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/runtest.pl:
 
 	  Modified to specify transport protocols and debug levels from
 	  the command line.
-	
+
 	* orbsvcs/tests/AVStreams/Makefile:
 
 	  Added the compilation of Simple_Two_Stage_With_QoS test.
@@ -35,12 +52,12 @@ Tue Mar  2 13:12:43 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Check for EAGAIN in addition to EWOULDBLOCK. POSIX conformant
 	  implementations can use either EWOULDBLOCK or EAGAIN. Thanks to
-	  Kris Dekeyser <Kris.Dekeyser@lms.be> for pointing this out. 
+	  Kris Dekeyser <Kris.Dekeyser@lms.be> for pointing this out.
 
 Tue Mar  2 07:43:07 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.inl:
-	
+
           Add file missing from previous checkin.
 
 Tue Mar  2 19:09:33 2004  Olli Savia  <ops@iki.fi>
@@ -64,7 +81,7 @@ Tue Mar  2 13:59:33 2004  David Smith  <dts@prismtechnologies.com>
 Tue Mar  2 09:05:48 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:
- 
+
           Added specialization of TAO::Any_Impl_T<>::to_object for
           CORBA::Object. Otherwise the default template implementation
           is used, which always returns (boolean) 0 and does nothing.
