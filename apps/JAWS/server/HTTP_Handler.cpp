@@ -120,14 +120,14 @@ HTTP_Handler::receive_file_error (int result)
   int status_code;
   switch (result)
     {
-    case ACE_Filecache_Handle::ACCESS_FAILED:
-    case ACE_Filecache_Handle::WRITE_FAILED:
-    case ACE_Filecache_Handle::OPEN_FAILED:
+    case ACE_Filecache_Handle::ACE_ACCESS_FAILED:
+    case ACE_Filecache_Handle::ACE_WRITE_FAILED:
+    case ACE_Filecache_Handle::ACE_OPEN_FAILED:
       status_code = HTTP_Status_Code::STATUS_NOT_FOUND;
       break;
-    case ACE_Filecache_Handle::COPY_FAILED:
-    case ACE_Filecache_Handle::STAT_FAILED:
-    case ACE_Filecache_Handle::MEMMAP_FAILED:
+    case ACE_Filecache_Handle::ACE_COPY_FAILED:
+    case ACE_Filecache_Handle::ACE_STAT_FAILED:
+    case ACE_Filecache_Handle::ACE_MEMMAP_FAILED:
       status_code = HTTP_Status_Code::STATUS_FORBIDDEN;
       break;
     default:
@@ -176,14 +176,14 @@ HTTP_Handler::transmit_file_error (int result)
 
   switch (result)
     {
-    case ACE_Filecache_Handle::ACCESS_FAILED:
-    case ACE_Filecache_Handle::WRITE_FAILED:
-    case ACE_Filecache_Handle::OPEN_FAILED:
+    case ACE_Filecache_Handle::ACE_ACCESS_FAILED:
+    case ACE_Filecache_Handle::ACE_WRITE_FAILED:
+    case ACE_Filecache_Handle::ACE_OPEN_FAILED:
       status_code = HTTP_Status_Code::STATUS_NOT_FOUND;
       break;
-    case ACE_Filecache_Handle::COPY_FAILED:
-    case ACE_Filecache_Handle::STAT_FAILED:
-    case ACE_Filecache_Handle::MEMMAP_FAILED:
+    case ACE_Filecache_Handle::ACE_COPY_FAILED:
+    case ACE_Filecache_Handle::ACE_STAT_FAILED:
+    case ACE_Filecache_Handle::ACE_MEMMAP_FAILED:
       status_code = HTTP_Status_Code::STATUS_FORBIDDEN;
       break;
     default:

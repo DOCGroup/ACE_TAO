@@ -72,7 +72,7 @@ JAWS_Synch_IO::receive_file (const char *filename,
 
   int result = handle.error ();
 
-  if (result == ACE_Filecache_Handle::SUCCESS)
+  if (result == ACE_Filecache_Handle::ACE_SUCCESS)
     {
       ACE_SOCK_Stream stream;
       stream.set_handle (this->handle_);
@@ -90,7 +90,7 @@ JAWS_Synch_IO::receive_file (const char *filename,
 	result = -1;
     }
 
-  if (result != ACE_Filecache_Handle::SUCCESS)
+  if (result != ACE_Filecache_Handle::ACE_SUCCESS)
     this->handler_->receive_file_error (result);
 }
 
@@ -105,7 +105,7 @@ JAWS_Synch_IO::transmit_file (const char *filename,
 
   int result = handle.error ();
 
-  if (result == ACE_Filecache_Handle::SUCCESS)
+  if (result == ACE_Filecache_Handle::ACE_SUCCESS)
     {
 #if defined (ACE_JAWS_BASELINE)
       ACE_SOCK_Stream stream;
@@ -148,7 +148,7 @@ JAWS_Synch_IO::transmit_file (const char *filename,
 #endif /* ACE_JAWS_BASELINE */
     }
 
-  if (result != ACE_Filecache_Handle::SUCCESS)
+  if (result != ACE_Filecache_Handle::ACE_SUCCESS)
     this->handler_->transmit_file_error (result);
 }
 
@@ -213,7 +213,7 @@ JAWS_Asynch_IO::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result
       if (result.success () && result.bytes_transferred () != 0)
 	{
 	  if (result.message_block ().length () == result.message_block ().size ())
-	    code = ACE_Filecache_Handle::SUCCESS;
+	    code = ACE_Filecache_Handle::ACE_SUCCESS;
 	  else
 	    {
 	      ACE_Asynch_Read_Stream ar;
@@ -229,7 +229,7 @@ JAWS_Asynch_IO::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result
       else
 	code = -1;
 
-      if (code == ACE_Filecache_Handle::SUCCESS)
+      if (code == ACE_Filecache_Handle::ACE_SUCCESS)
 	this->handler_->receive_file_complete ();
       else
 	this->handler_->receive_file_error (code);
@@ -261,7 +261,7 @@ JAWS_Asynch_IO::receive_file (const char *filename,
 
   int result = handle->error ();
 
-  if (result == ACE_Filecache_Handle::SUCCESS)
+  if (result == ACE_Filecache_Handle::ACE_SUCCESS)
     {
       ACE_OS::memcpy (handle->address (),
 		      initial_data,
@@ -287,7 +287,7 @@ JAWS_Asynch_IO::receive_file (const char *filename,
         }
     }
 
-  if (result != ACE_Filecache_Handle::SUCCESS)
+  if (result != ACE_Filecache_Handle::ACE_SUCCESS)
     {
       this->handler_->receive_file_error (result);
       delete mb;
@@ -307,7 +307,7 @@ JAWS_Asynch_IO::transmit_file (const char *filename,
 
   int result = handle->error ();
 
-  if (result == ACE_Filecache_Handle::SUCCESS)
+  if (result == ACE_Filecache_Handle::ACE_SUCCESS)
     {
       ACE_Message_Block header_mb (header, header_size);
       ACE_Message_Block trailer_mb (trailer, trailer_size);
@@ -330,7 +330,7 @@ JAWS_Asynch_IO::transmit_file (const char *filename,
 	result = -1;
     }
 
-  if (result != ACE_Filecache_Handle::SUCCESS)
+  if (result != ACE_Filecache_Handle::ACE_SUCCESS)
     {
       this->handler_->transmit_file_error (result);
       delete header_and_trailer;
