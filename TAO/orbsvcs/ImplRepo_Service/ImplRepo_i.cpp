@@ -692,7 +692,7 @@ ImplRepo_i::shutdown_server (const char *server,
             {
               ACE_ERROR ((LM_ERROR,
                           "Error: Invalid ServerObject IOR: <%s>\n",
-                          server_object_ior));
+                          server_object_ior.c_str ()));
               ACE_TRY_THROW (ImplementationRepository::Administration::NotFound ());
             }
 
