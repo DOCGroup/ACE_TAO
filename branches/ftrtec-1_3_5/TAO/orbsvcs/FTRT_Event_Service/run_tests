@@ -1,0 +1,19 @@
+#!/bin/sh
+
+for num_ecs in 5
+do
+  for num_suppliers in 1
+  do
+     for num_consumers in 1 2 3 4 5 
+     do
+       for transaction_depth in  1 2 3 4 5
+       do
+         PARAM="-num_ecs $num_ecs -num_suppliers $num_suppliers -num_consumers $num_consumers -transaction_depth $transaction_depth -iteration 10"
+         echo $PARAM
+         ./test.pl $PARAM
+         echo with AMI
+         ./test.pl $PARAM -AMI
+       done
+     done
+  done
+done
