@@ -133,6 +133,9 @@ private:
 // Include the templates here.
 #include "ace/Message_Queue_T.h"
 
+// This typedef is used to get around a compiler bug in g++/vxworks.
+typedef ACE_Message_Queue<ACE_SYNCH> ACE_DEFAULT_MESSAGE_QUEUE_TYPE;
+
 #if defined (VXWORKS)
 # include /**/ <msgQLib.h>
 
