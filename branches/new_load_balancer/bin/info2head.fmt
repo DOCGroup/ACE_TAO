@@ -1,0 +1,23 @@
+start
+hide section FILENAME
+hide section COPYRIGHT
+hide prelude
+hide title
+print synopsis
+hide section CLASS TYPE
+hide section AUDIENCE
+hide section DESCRIPTION
+hide section EXAMPLE
+hide contract *
+hide section *
+hide section NOTES
+hide section PORTABILITY
+hide section SEE ALSO
+hide section LIBRARY
+hide section VERSION
+hide section DATE RELEASED
+hide section RCSID
+hide section SCCSID
+hide section AUTHOR(S)
+hide copyright
+end

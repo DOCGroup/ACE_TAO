@@ -1,0 +1,35 @@
+The directory contains the source code that implements an Orbix
+version of the distributed Logger.  Other ACE versions of this code
+appear in the ./apps/Logger directory.  It is interesting to compare
+and contrast the alternative implementations.
+
+RUNNING:
+
+The client is run as follows:
+
+client -h host -m max_message_size
+
+The -h host is optional if the locator service is properly configured.
+The -m specifies the maximum number of kilobytes to be sent per log.  This
+is useful when redirecting messages to stdin.
+
+TIMING:
+
+I recommend timing the log's by specifying a max_message_size and 
+redirecting /usr/dict/words.  This will give you several trials from
+which to take an average.
+
+CLIENT:
+
+While using the client and typing in messages manually, capital Q and V
+must be used to quit and toggle verbose respectively.  This allows you
+to redirect /usr/dict/words without quiting at the q's!!
+
+SERVER:
+
+To turn off message reporting on the server side, do a
+
+setenv NO_MESSAGES
+
+in the enviroment where the server will be run.  If this is done, the server
+will only report that a message was received, but not display the messages.
