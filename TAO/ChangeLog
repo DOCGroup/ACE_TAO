@@ -1,3 +1,9 @@
+Mon Jan  5 18:37:22 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/FT_App/FT_App.mpc:
+	  
+	  Cosmetic fix.
+
 Mon Jan  5 15:33:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Smart_Proxies/Policy/Makefile:
