@@ -1,3 +1,26 @@
+Wed Sep  9 15:00:16 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* TAO/tests/DynAny_Test/server.dsp:
+	* TAO/tests/DynAny_Test/client.dsp:
+	* TAO/tests/DynAny_Test/DynAny_Test.dsw:
+	* TAO/tests/DynAny_Test/driver.cpp:
+	* TAO/tests/DynAny_Test/DynAny.idl:
+	* TAO/tests/DynAny_Test/tckind.idl:
+	* TAO/tests/DynAny_Test/da_tests.idl:
+	* TAO/tests/DynAny_Test/DynAny_i.{h,cpp}:
+	* TAO/tests/DynAny_Test/DynArray_i.{h,cpp}:
+	* TAO/tests/DynAny_Test/DynStruct_i.{h,cpp}:
+	* TAO/tests/DynAny_Test/DynEnum_i.{h,cpp}:
+	* TAO/tests/DynAny_Test/DynUnion_i.{h,cpp}:
+	* TAO/tests/DynAny_Test/DynSequence_i.{h,cpp}:
+	  All the DynAny stuff so far. DynUnion isn't finished yet.
+	  The client project is just a repository for the idl files
+	  and driver.cpp has nothing in it. IDL-generated files need
+	  to be modified before this will compile. These files have
+	  been committed so Carlos can start moving stuff into TAO
+	  while I work on class assignments and modifications to 
+	  TypeCode.cpp and Any.cpp in order to finish DynUnion.
+
 Wed Sep  9 13:03:20 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp: Adapted the behavior to use the new
