@@ -1,3 +1,8 @@
+Sat Aug 14 14:11:25 1999  Everett Anderson  <eea1@cs.wustl.edu>
+
+	* ace/Remote_Tokens.cpp (tryacquire): Fixed so that it uses
+	  ACE_Token_Request::TRY_ACQUIRE instead of RELEASE.
+
 Fri Aug 13 18:55:51 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Handle_Set.h (ACE_Handle_Set): Clarified the meaning of the
