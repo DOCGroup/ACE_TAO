@@ -53,7 +53,9 @@ ALL : "$(OUTDIR)\TAO_Baseline.lib"
 
 CLEAN : 
 	-@erase "$(INTDIR)\any.obj"
+	-@erase "$(INTDIR)\boa.obj"
 	-@erase "$(INTDIR)\cdr.obj"
+	-@erase "$(INTDIR)\connect.obj"
 	-@erase "$(INTDIR)\connmgr.obj"
 	-@erase "$(INTDIR)\corbacom.obj"
 	-@erase "$(INTDIR)\debug.obj"
@@ -67,12 +69,12 @@ CLEAN :
 	-@erase "$(INTDIR)\nvlist.obj"
 	-@erase "$(INTDIR)\object.obj"
 	-@erase "$(INTDIR)\orbobj.obj"
+	-@erase "$(INTDIR)\params.obj"
 	-@erase "$(INTDIR)\principa.obj"
 	-@erase "$(INTDIR)\request.obj"
+	-@erase "$(INTDIR)\roa.obj"
 	-@erase "$(INTDIR)\svrrqst.obj"
 	-@erase "$(INTDIR)\tc_const.obj"
-	-@erase "$(INTDIR)\tcpoa.obj"
-	-@erase "$(INTDIR)\toa.obj"
 	-@erase "$(INTDIR)\typecode.obj"
 	-@erase "$(OUTDIR)\TAO_Baseline.lib"
 
@@ -83,9 +85,8 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers" /I "." /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "__IIOP_BUILD" /YX /c
-CPP_PROJ=/nologo /MD /W3 /GX /O2 /I\
- "\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers" /I "." /D\
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "\users\mendel\ACE_Wrappers" /I "." /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "__IIOP_BUILD" /YX /c
+CPP_PROJ=/nologo /MD /W3 /GX /O2 /I "\users\mendel\ACE_Wrappers" /I "." /D\
  "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "__IIOP_BUILD"\
  /Fp"$(INTDIR)/TAO_Baseline.pch" /YX /Fo"$(INTDIR)/" /c 
 CPP_OBJS=.\Release/
@@ -102,7 +103,9 @@ LIB32=link.exe -lib
 LIB32_FLAGS=/nologo /out:"$(OUTDIR)/TAO_Baseline.lib" 
 LIB32_OBJS= \
 	"$(INTDIR)\any.obj" \
+	"$(INTDIR)\boa.obj" \
 	"$(INTDIR)\cdr.obj" \
+	"$(INTDIR)\connect.obj" \
 	"$(INTDIR)\connmgr.obj" \
 	"$(INTDIR)\corbacom.obj" \
 	"$(INTDIR)\debug.obj" \
@@ -116,14 +119,14 @@ LIB32_OBJS= \
 	"$(INTDIR)\nvlist.obj" \
 	"$(INTDIR)\object.obj" \
 	"$(INTDIR)\orbobj.obj" \
+	"$(INTDIR)\params.obj" \
 	"$(INTDIR)\principa.obj" \
 	"$(INTDIR)\request.obj" \
+	"$(INTDIR)\roa.obj" \
 	"$(INTDIR)\svrrqst.obj" \
 	"$(INTDIR)\tc_const.obj" \
-	"$(INTDIR)\tcpoa.obj" \
-	"$(INTDIR)\toa.obj" \
 	"$(INTDIR)\typecode.obj" \
-	"..\..\..\OFP\Workspace\libfiles\ace.lib"
+	"..\..\..\..\users\mendel\ACE_wrappers\ace\ace.lib"
 
 "$(OUTDIR)\TAO_Baseline.lib" : "$(OUTDIR)" $(DEF_FILE) $(LIB32_OBJS)
     $(LIB32) @<<
@@ -149,7 +152,9 @@ ALL : "$(OUTDIR)\TAO_Baseline.lib"
 
 CLEAN : 
 	-@erase "$(INTDIR)\any.obj"
+	-@erase "$(INTDIR)\boa.obj"
 	-@erase "$(INTDIR)\cdr.obj"
+	-@erase "$(INTDIR)\connect.obj"
 	-@erase "$(INTDIR)\connmgr.obj"
 	-@erase "$(INTDIR)\corbacom.obj"
 	-@erase "$(INTDIR)\debug.obj"
@@ -163,12 +168,12 @@ CLEAN :
 	-@erase "$(INTDIR)\nvlist.obj"
 	-@erase "$(INTDIR)\object.obj"
 	-@erase "$(INTDIR)\orbobj.obj"
+	-@erase "$(INTDIR)\params.obj"
 	-@erase "$(INTDIR)\principa.obj"
 	-@erase "$(INTDIR)\request.obj"
+	-@erase "$(INTDIR)\roa.obj"
 	-@erase "$(INTDIR)\svrrqst.obj"
 	-@erase "$(INTDIR)\tc_const.obj"
-	-@erase "$(INTDIR)\tcpoa.obj"
-	-@erase "$(INTDIR)\toa.obj"
 	-@erase "$(INTDIR)\typecode.obj"
 	-@erase "$(OUTDIR)\TAO_Baseline.lib"
 
@@ -179,9 +184,8 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /MDd /W3 /GX /Z7 /Od /I "\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers" /I "." /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "__IIOP_BUILD" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /GX /Z7 /Od /I\
- "\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers" /I "." /D\
+# ADD CPP /nologo /MDd /W3 /GX /Z7 /Od /I "\users\mendel\ACE_Wrappers" /I "." /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "__IIOP_BUILD" /YX /c
+CPP_PROJ=/nologo /MDd /W3 /GX /Z7 /Od /I "\users\mendel\ACE_Wrappers" /I "." /D\
  "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "__IIOP_BUILD"\
  /Fp"$(INTDIR)/TAO_Baseline.pch" /YX /Fo"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
@@ -198,7 +202,9 @@ LIB32=link.exe -lib
 LIB32_FLAGS=/nologo /out:"$(OUTDIR)/TAO_Baseline.lib" 
 LIB32_OBJS= \
 	"$(INTDIR)\any.obj" \
+	"$(INTDIR)\boa.obj" \
 	"$(INTDIR)\cdr.obj" \
+	"$(INTDIR)\connect.obj" \
 	"$(INTDIR)\connmgr.obj" \
 	"$(INTDIR)\corbacom.obj" \
 	"$(INTDIR)\debug.obj" \
@@ -212,14 +218,14 @@ LIB32_OBJS= \
 	"$(INTDIR)\nvlist.obj" \
 	"$(INTDIR)\object.obj" \
 	"$(INTDIR)\orbobj.obj" \
+	"$(INTDIR)\params.obj" \
 	"$(INTDIR)\principa.obj" \
 	"$(INTDIR)\request.obj" \
+	"$(INTDIR)\roa.obj" \
 	"$(INTDIR)\svrrqst.obj" \
 	"$(INTDIR)\tc_const.obj" \
-	"$(INTDIR)\tcpoa.obj" \
-	"$(INTDIR)\toa.obj" \
 	"$(INTDIR)\typecode.obj" \
-	"..\..\..\OFP\Workspace\libfiles\ace.lib"
+	"..\..\..\..\users\mendel\ACE_wrappers\ace\ace.lib"
 
 "$(OUTDIR)\TAO_Baseline.lib" : "$(OUTDIR)" $(DEF_FILE) $(LIB32_OBJS)
     $(LIB32) @<<
@@ -279,20 +285,20 @@ DEP_CPP_CDR_C=\
 	".\sequence.hh"\
 	".\svrrqst.hh"\
 	".\typecode.hh"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\config.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Msg.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Priority.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\stdcpp.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Trace.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ws2tcpip.h"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.h"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.i"\
+	"\users\mendel\ACE_Wrappers\ace\config.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Msg.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Priority.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.i"\
+	"\users\mendel\ACE_Wrappers\ace\OS.h"\
+	"\users\mendel\ACE_Wrappers\ace\OS.i"\
+	"\users\mendel\ACE_Wrappers\ace\SString.h"\
+	"\users\mendel\ACE_Wrappers\ace\SString.i"\
+	"\users\mendel\ACE_Wrappers\ace\stdcpp.h"\
+	"\users\mendel\ACE_Wrappers\ace\Trace.h"\
+	"\users\mendel\ACE_Wrappers\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\cdr.obj" : $(SOURCE) $(DEP_CPP_CDR_C) "$(INTDIR)"
@@ -303,131 +309,37 @@ DEP_CPP_CDR_C=\
 # Begin Source File
 
 SOURCE=.\connmgr.cpp
-
-!IF  "$(CFG)" == "TAO_Baseline - Win32 Release"
-
 DEP_CPP_CONNM=\
-	".\align.hh"\
-	".\any.hh"\
-	".\cdr.hh"\
 	".\connmgr.hh"\
-	".\corbacom.hh"\
 	".\debug.hh"\
-	".\except.hh"\
-	".\nvlist.hh"\
-	".\object.hh"\
-	".\orb.hh"\
-	".\orbconf.hh"\
-	".\orbobj.hh"\
-	".\principa.hh"\
-	".\request.hh"\
-	".\sequence.hh"\
-	".\stub.hh"\
-	".\svrrqst.hh"\
 	".\thread.hh"\
-	".\typecode.hh"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\config.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Msg.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Priority.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\stdcpp.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Trace.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ws2tcpip.h"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.h"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.i"\
+	"\users\mendel\ACE_Wrappers\ace\config.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Msg.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Priority.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.i"\
+	"\users\mendel\ACE_Wrappers\ace\OS.h"\
+	"\users\mendel\ACE_Wrappers\ace\OS.i"\
+	"\users\mendel\ACE_Wrappers\ace\SString.h"\
+	"\users\mendel\ACE_Wrappers\ace\SString.i"\
+	"\users\mendel\ACE_Wrappers\ace\stdcpp.h"\
+	"\users\mendel\ACE_Wrappers\ace\Trace.h"\
+	"\users\mendel\ACE_Wrappers\ace\ws2tcpip.h"\
 	{$(INCLUDE)}"\sys\TYPES.H"\
 	
 
 "$(INTDIR)\connmgr.obj" : $(SOURCE) $(DEP_CPP_CONNM) "$(INTDIR)"
 
-
-!ELSEIF  "$(CFG)" == "TAO_Baseline - Win32 Debug"
-
-DEP_CPP_CONNM=\
-	".\align.hh"\
-	".\any.hh"\
-	".\cdr.hh"\
-	".\connmgr.hh"\
-	".\corbacom.hh"\
-	".\debug.hh"\
-	".\except.hh"\
-	".\nvlist.hh"\
-	".\object.hh"\
-	".\orb.hh"\
-	".\orbconf.hh"\
-	".\orbobj.hh"\
-	".\principa.hh"\
-	".\request.hh"\
-	".\sequence.hh"\
-	".\stub.hh"\
-	".\svrrqst.hh"\
-	".\thread.hh"\
-	".\typecode.hh"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\config.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Msg.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Priority.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\stdcpp.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Trace.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\TYPES.H"\
-	
-
-"$(INTDIR)\connmgr.obj" : $(SOURCE) $(DEP_CPP_CONNM) "$(INTDIR)"
-
-
-!ENDIF 
 
 # End Source File
 ################################################################################
 # Begin Source File
 
 SOURCE=.\corbacom.cpp
-DEP_CPP_CORBA=\
-	".\align.hh"\
-	".\any.hh"\
-	".\cdr.hh"\
-	".\corbacom.hh"\
-	".\except.hh"\
-	".\nvlist.hh"\
-	".\object.hh"\
-	".\orb.hh"\
-	".\orbconf.hh"\
-	".\orbobj.hh"\
-	".\principa.hh"\
-	".\request.hh"\
-	".\sequence.hh"\
-	".\svrrqst.hh"\
-	".\typecode.hh"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\config.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Msg.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Priority.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\stdcpp.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Trace.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ws2tcpip.h"\
-	
 
-"$(INTDIR)\corbacom.obj" : $(SOURCE) $(DEP_CPP_CORBA) "$(INTDIR)"
+"$(INTDIR)\corbacom.obj" : $(SOURCE) "$(INTDIR)"
 
 
 # End Source File
@@ -436,37 +348,8 @@ DEP_CPP_CORBA=\
 
 SOURCE=.\debug.cpp
 DEP_CPP_DEBUG=\
-	".\align.hh"\
-	".\any.hh"\
-	".\cdr.hh"\
-	".\corbacom.hh"\
 	".\debug.hh"\
-	".\except.hh"\
-	".\nvlist.hh"\
-	".\object.hh"\
-	".\orb.hh"\
-	".\orbconf.hh"\
-	".\orbobj.hh"\
-	".\principa.hh"\
-	".\request.hh"\
-	".\sequence.hh"\
-	".\svrrqst.hh"\
 	".\thread.hh"\
-	".\typecode.hh"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\config.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Msg.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Priority.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\stdcpp.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Trace.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ws2tcpip.h"\
 	{$(INCLUDE)}"\sys\TYPES.H"\
 	
 
@@ -496,20 +379,20 @@ DEP_CPP_EXCEP=\
 	".\svrrqst.hh"\
 	".\thread.hh"\
 	".\typecode.hh"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\config.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Msg.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Priority.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\stdcpp.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Trace.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ws2tcpip.h"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.h"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.i"\
+	"\users\mendel\ACE_Wrappers\ace\config.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Msg.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Priority.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.i"\
+	"\users\mendel\ACE_Wrappers\ace\OS.h"\
+	"\users\mendel\ACE_Wrappers\ace\OS.i"\
+	"\users\mendel\ACE_Wrappers\ace\SString.h"\
+	"\users\mendel\ACE_Wrappers\ace\SString.i"\
+	"\users\mendel\ACE_Wrappers\ace\stdcpp.h"\
+	"\users\mendel\ACE_Wrappers\ace\Trace.h"\
+	"\users\mendel\ACE_Wrappers\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\except.obj" : $(SOURCE) $(DEP_CPP_EXCEP) "$(INTDIR)"
@@ -542,20 +425,32 @@ DEP_CPP_GIOP_=\
 	".\svrrqst.hh"\
 	".\thread.hh"\
 	".\typecode.hh"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\config.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Msg.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Priority.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\stdcpp.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Trace.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ws2tcpip.h"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.h"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.i"\
+	"\users\mendel\ACE_Wrappers\ace\Addr.h"\
+	"\users\mendel\ACE_Wrappers\ace\Addr.i"\
+	"\users\mendel\ACE_Wrappers\ace\config.h"\
+	"\users\mendel\ACE_Wrappers\ace\INET_Addr.h"\
+	"\users\mendel\ACE_Wrappers\ace\INET_Addr.i"\
+	"\users\mendel\ACE_Wrappers\ace\IPC_SAP.h"\
+	"\users\mendel\ACE_Wrappers\ace\IPC_SAP.i"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Msg.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Priority.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.i"\
+	"\users\mendel\ACE_Wrappers\ace\OS.h"\
+	"\users\mendel\ACE_Wrappers\ace\OS.i"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK.h"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK.i"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_IO.h"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_IO.i"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_Stream.h"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_Stream.i"\
+	"\users\mendel\ACE_Wrappers\ace\SString.h"\
+	"\users\mendel\ACE_Wrappers\ace\SString.i"\
+	"\users\mendel\ACE_Wrappers\ace\stdcpp.h"\
+	"\users\mendel\ACE_Wrappers\ace\Trace.h"\
+	"\users\mendel\ACE_Wrappers\ace\ws2tcpip.h"\
 	{$(INCLUDE)}"\sys\TYPES.H"\
 	
 
@@ -568,38 +463,8 @@ DEP_CPP_GIOP_=\
 
 SOURCE=.\iiopobj.cpp
 DEP_CPP_IIOPO=\
-	".\align.hh"\
-	".\any.hh"\
-	".\cdr.hh"\
-	".\corbacom.hh"\
-	".\except.hh"\
 	".\iiopobj.hh"\
-	".\nvlist.hh"\
-	".\object.hh"\
-	".\orb.hh"\
-	".\orbconf.hh"\
-	".\orbobj.hh"\
-	".\principa.hh"\
-	".\request.hh"\
-	".\sequence.hh"\
-	".\stub.hh"\
-	".\svrrqst.hh"\
 	".\thread.hh"\
-	".\typecode.hh"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\config.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Msg.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Priority.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\stdcpp.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Trace.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\iiopobj.obj" : $(SOURCE) $(DEP_CPP_IIOPO) "$(INTDIR)"
@@ -626,23 +491,22 @@ DEP_CPP_IIOPOR=\
 	".\principa.hh"\
 	".\request.hh"\
 	".\sequence.hh"\
-	".\stub.hh"\
 	".\svrrqst.hh"\
 	".\typecode.hh"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\config.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Msg.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Priority.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\stdcpp.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Trace.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ws2tcpip.h"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.h"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.i"\
+	"\users\mendel\ACE_Wrappers\ace\config.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Msg.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Priority.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.i"\
+	"\users\mendel\ACE_Wrappers\ace\OS.h"\
+	"\users\mendel\ACE_Wrappers\ace\OS.i"\
+	"\users\mendel\ACE_Wrappers\ace\SString.h"\
+	"\users\mendel\ACE_Wrappers\ace\SString.i"\
+	"\users\mendel\ACE_Wrappers\ace\stdcpp.h"\
+	"\users\mendel\ACE_Wrappers\ace\Trace.h"\
+	"\users\mendel\ACE_Wrappers\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\iioporb.obj" : $(SOURCE) $(DEP_CPP_IIOPOR) "$(INTDIR)"
@@ -670,20 +534,20 @@ DEP_CPP_INTER=\
 	".\sequence.hh"\
 	".\svrrqst.hh"\
 	".\typecode.hh"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\config.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Msg.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Priority.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\stdcpp.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Trace.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ws2tcpip.h"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.h"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.i"\
+	"\users\mendel\ACE_Wrappers\ace\config.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Msg.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Priority.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.i"\
+	"\users\mendel\ACE_Wrappers\ace\OS.h"\
+	"\users\mendel\ACE_Wrappers\ace\OS.i"\
+	"\users\mendel\ACE_Wrappers\ace\SString.h"\
+	"\users\mendel\ACE_Wrappers\ace\SString.i"\
+	"\users\mendel\ACE_Wrappers\ace\stdcpp.h"\
+	"\users\mendel\ACE_Wrappers\ace\Trace.h"\
+	"\users\mendel\ACE_Wrappers\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\interp.obj" : $(SOURCE) $(DEP_CPP_INTER) "$(INTDIR)"
@@ -716,20 +580,32 @@ DEP_CPP_INVOK=\
 	".\svrrqst.hh"\
 	".\thread.hh"\
 	".\typecode.hh"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\config.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Msg.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Priority.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\stdcpp.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Trace.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ws2tcpip.h"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.h"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.i"\
+	"\users\mendel\ACE_Wrappers\ace\Addr.h"\
+	"\users\mendel\ACE_Wrappers\ace\Addr.i"\
+	"\users\mendel\ACE_Wrappers\ace\config.h"\
+	"\users\mendel\ACE_Wrappers\ace\INET_Addr.h"\
+	"\users\mendel\ACE_Wrappers\ace\INET_Addr.i"\
+	"\users\mendel\ACE_Wrappers\ace\IPC_SAP.h"\
+	"\users\mendel\ACE_Wrappers\ace\IPC_SAP.i"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Msg.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Priority.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.i"\
+	"\users\mendel\ACE_Wrappers\ace\OS.h"\
+	"\users\mendel\ACE_Wrappers\ace\OS.i"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK.h"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK.i"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_IO.h"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_IO.i"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_Stream.h"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_Stream.i"\
+	"\users\mendel\ACE_Wrappers\ace\SString.h"\
+	"\users\mendel\ACE_Wrappers\ace\SString.i"\
+	"\users\mendel\ACE_Wrappers\ace\stdcpp.h"\
+	"\users\mendel\ACE_Wrappers\ace\Trace.h"\
+	"\users\mendel\ACE_Wrappers\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\invoke.obj" : $(SOURCE) $(DEP_CPP_INVOK) "$(INTDIR)"
@@ -761,20 +637,32 @@ DEP_CPP_MARSH=\
 	".\stub.hh"\
 	".\svrrqst.hh"\
 	".\typecode.hh"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\config.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Msg.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Priority.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\stdcpp.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Trace.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ws2tcpip.h"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.h"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.i"\
+	"\users\mendel\ACE_Wrappers\ace\Addr.h"\
+	"\users\mendel\ACE_Wrappers\ace\Addr.i"\
+	"\users\mendel\ACE_Wrappers\ace\config.h"\
+	"\users\mendel\ACE_Wrappers\ace\INET_Addr.h"\
+	"\users\mendel\ACE_Wrappers\ace\INET_Addr.i"\
+	"\users\mendel\ACE_Wrappers\ace\IPC_SAP.h"\
+	"\users\mendel\ACE_Wrappers\ace\IPC_SAP.i"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Msg.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Priority.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.i"\
+	"\users\mendel\ACE_Wrappers\ace\OS.h"\
+	"\users\mendel\ACE_Wrappers\ace\OS.i"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK.h"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK.i"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_IO.h"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_IO.i"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_Stream.h"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_Stream.i"\
+	"\users\mendel\ACE_Wrappers\ace\SString.h"\
+	"\users\mendel\ACE_Wrappers\ace\SString.i"\
+	"\users\mendel\ACE_Wrappers\ace\stdcpp.h"\
+	"\users\mendel\ACE_Wrappers\ace\Trace.h"\
+	"\users\mendel\ACE_Wrappers\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\marshal.obj" : $(SOURCE) $(DEP_CPP_MARSH) "$(INTDIR)"
@@ -786,37 +674,8 @@ DEP_CPP_MARSH=\
 
 SOURCE=.\nvlist.cpp
 DEP_CPP_NVLIS=\
-	".\align.hh"\
-	".\any.hh"\
-	".\cdr.hh"\
-	".\corbacom.hh"\
 	".\debug.hh"\
-	".\except.hh"\
-	".\nvlist.hh"\
-	".\object.hh"\
-	".\orb.hh"\
-	".\orbconf.hh"\
-	".\orbobj.hh"\
-	".\principa.hh"\
-	".\request.hh"\
-	".\sequence.hh"\
-	".\svrrqst.hh"\
 	".\thread.hh"\
-	".\typecode.hh"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\config.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Msg.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Priority.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\stdcpp.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Trace.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\nvlist.obj" : $(SOURCE) $(DEP_CPP_NVLIS) "$(INTDIR)"
@@ -828,37 +687,7 @@ DEP_CPP_NVLIS=\
 
 SOURCE=.\object.cpp
 DEP_CPP_OBJEC=\
-	".\align.hh"\
-	".\any.hh"\
-	".\cdr.hh"\
-	".\corbacom.hh"\
 	".\debug.hh"\
-	".\except.hh"\
-	".\nvlist.hh"\
-	".\object.hh"\
-	".\orb.hh"\
-	".\orbconf.hh"\
-	".\orbobj.hh"\
-	".\principa.hh"\
-	".\request.hh"\
-	".\sequence.hh"\
-	".\stub.hh"\
-	".\svrrqst.hh"\
-	".\typecode.hh"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\config.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Msg.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Priority.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\stdcpp.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Trace.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\object.obj" : $(SOURCE) $(DEP_CPP_OBJEC) "$(INTDIR)"
@@ -870,39 +699,9 @@ DEP_CPP_OBJEC=\
 
 SOURCE=.\orbobj.cpp
 DEP_CPP_ORBOB=\
-	".\align.hh"\
-	".\any.hh"\
-	".\cdr.hh"\
-	".\corbacom.hh"\
 	".\debug.hh"\
-	".\except.hh"\
 	".\iioporb.hh"\
-	".\nvlist.hh"\
-	".\object.hh"\
-	".\orb.hh"\
-	".\orbconf.hh"\
-	".\orbobj.hh"\
-	".\principa.hh"\
-	".\request.hh"\
-	".\sequence.hh"\
-	".\stub.hh"\
-	".\svrrqst.hh"\
 	".\thread.hh"\
-	".\typecode.hh"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\config.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Msg.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Priority.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\stdcpp.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Trace.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\orbobj.obj" : $(SOURCE) $(DEP_CPP_ORBOB) "$(INTDIR)"
@@ -914,36 +713,7 @@ DEP_CPP_ORBOB=\
 
 SOURCE=.\principa.cpp
 DEP_CPP_PRINC=\
-	".\align.hh"\
-	".\any.hh"\
-	".\cdr.hh"\
-	".\corbacom.hh"\
-	".\except.hh"\
-	".\nvlist.hh"\
-	".\object.hh"\
-	".\orb.hh"\
-	".\orbconf.hh"\
-	".\orbobj.hh"\
-	".\principa.hh"\
-	".\request.hh"\
-	".\sequence.hh"\
-	".\svrrqst.hh"\
 	".\thread.hh"\
-	".\typecode.hh"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\config.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Msg.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Priority.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\stdcpp.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Trace.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\principa.obj" : $(SOURCE) $(DEP_CPP_PRINC) "$(INTDIR)"
@@ -969,24 +739,23 @@ DEP_CPP_REQUE=\
 	".\principa.hh"\
 	".\request.hh"\
 	".\sequence.hh"\
-	".\stub.hh"\
 	".\svrrqst.hh"\
 	".\thread.hh"\
 	".\typecode.hh"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\config.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Msg.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Priority.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\stdcpp.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Trace.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ws2tcpip.h"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.h"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.i"\
+	"\users\mendel\ACE_Wrappers\ace\config.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Msg.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Priority.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.i"\
+	"\users\mendel\ACE_Wrappers\ace\OS.h"\
+	"\users\mendel\ACE_Wrappers\ace\OS.i"\
+	"\users\mendel\ACE_Wrappers\ace\SString.h"\
+	"\users\mendel\ACE_Wrappers\ace\SString.i"\
+	"\users\mendel\ACE_Wrappers\ace\stdcpp.h"\
+	"\users\mendel\ACE_Wrappers\ace\Trace.h"\
+	"\users\mendel\ACE_Wrappers\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\request.obj" : $(SOURCE) $(DEP_CPP_REQUE) "$(INTDIR)"
@@ -1015,20 +784,20 @@ DEP_CPP_SVRRQ=\
 	".\svrrqst.hh"\
 	".\thread.hh"\
 	".\typecode.hh"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\config.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Msg.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Priority.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\stdcpp.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Trace.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ws2tcpip.h"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.h"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.i"\
+	"\users\mendel\ACE_Wrappers\ace\config.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Msg.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Priority.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.i"\
+	"\users\mendel\ACE_Wrappers\ace\OS.h"\
+	"\users\mendel\ACE_Wrappers\ace\OS.i"\
+	"\users\mendel\ACE_Wrappers\ace\SString.h"\
+	"\users\mendel\ACE_Wrappers\ace\SString.i"\
+	"\users\mendel\ACE_Wrappers\ace\stdcpp.h"\
+	"\users\mendel\ACE_Wrappers\ace\Trace.h"\
+	"\users\mendel\ACE_Wrappers\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\svrrqst.obj" : $(SOURCE) $(DEP_CPP_SVRRQ) "$(INTDIR)"
@@ -1039,133 +808,8 @@ DEP_CPP_SVRRQ=\
 # Begin Source File
 
 SOURCE=.\tc_const.cpp
-DEP_CPP_TC_CO=\
-	".\align.hh"\
-	".\any.hh"\
-	".\cdr.hh"\
-	".\corbacom.hh"\
-	".\except.hh"\
-	".\nvlist.hh"\
-	".\object.hh"\
-	".\orb.hh"\
-	".\orbconf.hh"\
-	".\orbobj.hh"\
-	".\principa.hh"\
-	".\request.hh"\
-	".\sequence.hh"\
-	".\svrrqst.hh"\
-	".\typecode.hh"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\config.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Msg.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Priority.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\stdcpp.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Trace.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ws2tcpip.h"\
-	
 
-"$(INTDIR)\tc_const.obj" : $(SOURCE) $(DEP_CPP_TC_CO) "$(INTDIR)"
-
-
-# End Source File
-################################################################################
-# Begin Source File
-
-SOURCE=.\tcpoa.cpp
-DEP_CPP_TCPOA=\
-	".\align.hh"\
-	".\any.hh"\
-	".\cdr.hh"\
-	".\connmgr.hh"\
-	".\corbacom.hh"\
-	".\debug.hh"\
-	".\except.hh"\
-	".\giop.hh"\
-	".\iiopobj.hh"\
-	".\nvlist.hh"\
-	".\object.hh"\
-	".\orb.hh"\
-	".\orbconf.hh"\
-	".\orbobj.hh"\
-	".\principa.hh"\
-	".\request.hh"\
-	".\sequence.hh"\
-	".\stub.hh"\
-	".\svrrqst.hh"\
-	".\tcpoa.hh"\
-	".\thread.hh"\
-	".\toa.hh"\
-	".\typecode.hh"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\config.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Msg.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Priority.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\stdcpp.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Trace.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ws2tcpip.h"\
-	
-
-"$(INTDIR)\tcpoa.obj" : $(SOURCE) $(DEP_CPP_TCPOA) "$(INTDIR)"
-
-
-# End Source File
-################################################################################
-# Begin Source File
-
-SOURCE=.\toa.cpp
-DEP_CPP_TOA_C=\
-	".\align.hh"\
-	".\any.hh"\
-	".\cdr.hh"\
-	".\connmgr.hh"\
-	".\corbacom.hh"\
-	".\debug.hh"\
-	".\except.hh"\
-	".\iioporb.hh"\
-	".\nvlist.hh"\
-	".\object.hh"\
-	".\orb.hh"\
-	".\orbconf.hh"\
-	".\orbobj.hh"\
-	".\principa.hh"\
-	".\request.hh"\
-	".\sequence.hh"\
-	".\svrrqst.hh"\
-	".\tcpoa.hh"\
-	".\thread.hh"\
-	".\toa.hh"\
-	".\typecode.hh"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\config.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Msg.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Priority.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\stdcpp.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Trace.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ws2tcpip.h"\
-	
-
-"$(INTDIR)\toa.obj" : $(SOURCE) $(DEP_CPP_TOA_C) "$(INTDIR)"
+"$(INTDIR)\tc_const.obj" : $(SOURCE) "$(INTDIR)"
 
 
 # End Source File
@@ -1191,20 +835,20 @@ DEP_CPP_TYPEC=\
 	".\svrrqst.hh"\
 	".\thread.hh"\
 	".\typecode.hh"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\config.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Msg.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Priority.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\stdcpp.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Trace.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ws2tcpip.h"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.h"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.i"\
+	"\users\mendel\ACE_Wrappers\ace\config.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Msg.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Priority.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.i"\
+	"\users\mendel\ACE_Wrappers\ace\OS.h"\
+	"\users\mendel\ACE_Wrappers\ace\OS.i"\
+	"\users\mendel\ACE_Wrappers\ace\SString.h"\
+	"\users\mendel\ACE_Wrappers\ace\SString.i"\
+	"\users\mendel\ACE_Wrappers\ace\stdcpp.h"\
+	"\users\mendel\ACE_Wrappers\ace\Trace.h"\
+	"\users\mendel\ACE_Wrappers\ace\ws2tcpip.h"\
 	{$(INCLUDE)}"\sys\TYPES.H"\
 	
 
@@ -1217,37 +861,8 @@ DEP_CPP_TYPEC=\
 
 SOURCE=.\any.cpp
 DEP_CPP_ANY_C=\
-	".\align.hh"\
-	".\any.hh"\
-	".\cdr.hh"\
-	".\corbacom.hh"\
 	".\debug.hh"\
-	".\except.hh"\
-	".\nvlist.hh"\
-	".\object.hh"\
-	".\orb.hh"\
-	".\orbconf.hh"\
-	".\orbobj.hh"\
-	".\principa.hh"\
-	".\request.hh"\
-	".\sequence.hh"\
-	".\svrrqst.hh"\
 	".\thread.hh"\
-	".\typecode.hh"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ACE.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\config.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Msg.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Priority.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Log_Record.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\OS.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\SString.i"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\stdcpp.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\Trace.h"\
-	"\Ofp\Workspace\InfrastructureServices\PlatformServices\ACE_Wrappers\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\any.obj" : $(SOURCE) $(DEP_CPP_ANY_C) "$(INTDIR)"
@@ -1257,13 +872,616 @@ DEP_CPP_ANY_C=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\OFP\Workspace\libfiles\ace.lib
+SOURCE=.\roa.cpp
+DEP_CPP_ROA_C=\
+	".\align.hh"\
+	".\any.hh"\
+	".\boa.hh"\
+	".\cdr.hh"\
+	".\connect.hh"\
+	".\connect.i"\
+	".\connmgr.hh"\
+	".\corbacom.hh"\
+	".\debug.hh"\
+	".\except.hh"\
+	".\giop.hh"\
+	".\iiopobj.hh"\
+	".\nvlist.hh"\
+	".\object.hh"\
+	".\orb.hh"\
+	".\orbconf.hh"\
+	".\orbobj.hh"\
+	".\params.hh"\
+	".\params.i"\
+	".\principa.hh"\
+	".\request.hh"\
+	".\roa.hh"\
+	".\roa.i"\
+	".\sequence.hh"\
+	".\stub.hh"\
+	".\svrrqst.hh"\
+	".\typecode.hh"\
+	"\users\mendel\ACE_Wrappers\ace\Acceptor.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Acceptor.h"\
+	"\users\mendel\ACE_Wrappers\ace\Acceptor.i"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.h"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.i"\
+	"\users\mendel\ACE_Wrappers\ace\Addr.h"\
+	"\users\mendel\ACE_Wrappers\ace\Addr.i"\
+	"\users\mendel\ACE_Wrappers\ace\config.h"\
+	"\users\mendel\ACE_Wrappers\ace\Dynamic.h"\
+	"\users\mendel\ACE_Wrappers\ace\Dynamic.i"\
+	"\users\mendel\ACE_Wrappers\ace\Event_Handler.h"\
+	"\users\mendel\ACE_Wrappers\ace\Event_Handler.i"\
+	"\users\mendel\ACE_Wrappers\ace\Handle_Set.h"\
+	"\users\mendel\ACE_Wrappers\ace\Handle_Set.i"\
+	"\users\mendel\ACE_Wrappers\ace\INET_Addr.h"\
+	"\users\mendel\ACE_Wrappers\ace\INET_Addr.i"\
+	"\users\mendel\ACE_Wrappers\ace\IO_Cntl_Msg.h"\
+	"\users\mendel\ACE_Wrappers\ace\IPC_SAP.h"\
+	"\users\mendel\ACE_Wrappers\ace\IPC_SAP.i"\
+	"\users\mendel\ACE_Wrappers\ace\Local_Tokens.h"\
+	"\users\mendel\ACE_Wrappers\ace\Local_Tokens.i"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Msg.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Priority.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.i"\
+	"\users\mendel\ACE_Wrappers\ace\Malloc.h"\
+	"\users\mendel\ACE_Wrappers\ace\Malloc.i"\
+	"\users\mendel\ACE_Wrappers\ace\Malloc_T.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Malloc_T.h"\
+	"\users\mendel\ACE_Wrappers\ace\Malloc_T.i"\
+	"\users\mendel\ACE_Wrappers\ace\Map_Manager.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Map_Manager.h"\
+	"\users\mendel\ACE_Wrappers\ace\Map_Manager.i"\
+	"\users\mendel\ACE_Wrappers\ace\Mem_Map.h"\
+	"\users\mendel\ACE_Wrappers\ace\Mem_Map.i"\
+	"\users\mendel\ACE_Wrappers\ace\Memory_Pool.h"\
+	"\users\mendel\ACE_Wrappers\ace\Memory_Pool.i"\
+	"\users\mendel\ACE_Wrappers\ace\Message_Block.h"\
+	"\users\mendel\ACE_Wrappers\ace\Message_Block.i"\
+	"\users\mendel\ACE_Wrappers\ace\Message_Queue.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Message_Queue.h"\
+	"\users\mendel\ACE_Wrappers\ace\Message_Queue.i"\
+	"\users\mendel\ACE_Wrappers\ace\Module.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Module.h"\
+	"\users\mendel\ACE_Wrappers\ace\Module.i"\
+	"\users\mendel\ACE_Wrappers\ace\OS.h"\
+	"\users\mendel\ACE_Wrappers\ace\OS.i"\
+	"\users\mendel\ACE_Wrappers\ace\Pipe.h"\
+	"\users\mendel\ACE_Wrappers\ace\Pipe.i"\
+	"\users\mendel\ACE_Wrappers\ace\Proactor.h"\
+	"\users\mendel\ACE_Wrappers\ace\Proactor.i"\
+	"\users\mendel\ACE_Wrappers\ace\Reactor.h"\
+	"\users\mendel\ACE_Wrappers\ace\Reactor.i"\
+	"\users\mendel\ACE_Wrappers\ace\ReactorEx.h"\
+	"\users\mendel\ACE_Wrappers\ace\ReactorEx.i"\
+	"\users\mendel\ACE_Wrappers\ace\Service_Config.h"\
+	"\users\mendel\ACE_Wrappers\ace\Service_Config.i"\
+	"\users\mendel\ACE_Wrappers\ace\Service_Object.h"\
+	"\users\mendel\ACE_Wrappers\ace\Service_Object.i"\
+	"\users\mendel\ACE_Wrappers\ace\Set.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Set.h"\
+	"\users\mendel\ACE_Wrappers\ace\Set.i"\
+	"\users\mendel\ACE_Wrappers\ace\Shared_Object.h"\
+	"\users\mendel\ACE_Wrappers\ace\Shared_Object.i"\
+	"\users\mendel\ACE_Wrappers\ace\Signal.h"\
+	"\users\mendel\ACE_Wrappers\ace\Signal.i"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK.h"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK.i"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_Acceptor.h"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_Acceptor.i"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_IO.h"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_IO.i"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_Stream.h"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_Stream.i"\
+	"\users\mendel\ACE_Wrappers\ace\SString.h"\
+	"\users\mendel\ACE_Wrappers\ace\SString.i"\
+	"\users\mendel\ACE_Wrappers\ace\Stack.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Stack.h"\
+	"\users\mendel\ACE_Wrappers\ace\Stack.i"\
+	"\users\mendel\ACE_Wrappers\ace\stdcpp.h"\
+	"\users\mendel\ACE_Wrappers\ace\Strategies.h"\
+	"\users\mendel\ACE_Wrappers\ace\Strategies_T.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Strategies_T.h"\
+	"\users\mendel\ACE_Wrappers\ace\Stream_Modules.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Stream_Modules.h"\
+	"\users\mendel\ACE_Wrappers\ace\Stream_Modules.i"\
+	"\users\mendel\ACE_Wrappers\ace\SV_Semaphore_Complex.h"\
+	"\users\mendel\ACE_Wrappers\ace\SV_Semaphore_Complex.i"\
+	"\users\mendel\ACE_Wrappers\ace\SV_Semaphore_Simple.h"\
+	"\users\mendel\ACE_Wrappers\ace\SV_Semaphore_Simple.i"\
+	"\users\mendel\ACE_Wrappers\ace\Svc_Conf_Tokens.h"\
+	"\users\mendel\ACE_Wrappers\ace\Svc_Handler.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Svc_Handler.h"\
+	"\users\mendel\ACE_Wrappers\ace\Svc_Handler.i"\
+	"\users\mendel\ACE_Wrappers\ace\Synch.h"\
+	"\users\mendel\ACE_Wrappers\ace\Synch.i"\
+	"\users\mendel\ACE_Wrappers\ace\Synch_Options.h"\
+	"\users\mendel\ACE_Wrappers\ace\Synch_T.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Synch_T.h"\
+	"\users\mendel\ACE_Wrappers\ace\Synch_T.i"\
+	"\users\mendel\ACE_Wrappers\ace\Task.h"\
+	"\users\mendel\ACE_Wrappers\ace\Task.i"\
+	"\users\mendel\ACE_Wrappers\ace\Task_T.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Task_T.h"\
+	"\users\mendel\ACE_Wrappers\ace\Task_T.i"\
+	"\users\mendel\ACE_Wrappers\ace\Thread.h"\
+	"\users\mendel\ACE_Wrappers\ace\Thread.i"\
+	"\users\mendel\ACE_Wrappers\ace\Thread_Manager.h"\
+	"\users\mendel\ACE_Wrappers\ace\Thread_Manager.i"\
+	"\users\mendel\ACE_Wrappers\ace\Time_Value.h"\
+	"\users\mendel\ACE_Wrappers\ace\Timer_Queue.h"\
+	"\users\mendel\ACE_Wrappers\ace\Timer_Queue.i"\
+	"\users\mendel\ACE_Wrappers\ace\Token.h"\
+	"\users\mendel\ACE_Wrappers\ace\Token.i"\
+	"\users\mendel\ACE_Wrappers\ace\Trace.h"\
+	"\users\mendel\ACE_Wrappers\ace\ws2tcpip.h"\
+	
+
+"$(INTDIR)\roa.obj" : $(SOURCE) $(DEP_CPP_ROA_C) "$(INTDIR)"
+
+
+# End Source File
+################################################################################
+# Begin Source File
+
+SOURCE=.\boa.cpp
+DEP_CPP_BOA_C=\
+	".\align.hh"\
+	".\any.hh"\
+	".\boa.hh"\
+	".\cdr.hh"\
+	".\connect.hh"\
+	".\connect.i"\
+	".\corbacom.hh"\
+	".\debug.hh"\
+	".\except.hh"\
+	".\iioporb.hh"\
+	".\nvlist.hh"\
+	".\object.hh"\
+	".\orb.hh"\
+	".\orbconf.hh"\
+	".\orbobj.hh"\
+	".\params.hh"\
+	".\params.i"\
+	".\principa.hh"\
+	".\request.hh"\
+	".\roa.hh"\
+	".\roa.i"\
+	".\sequence.hh"\
+	".\svrrqst.hh"\
+	".\thread.hh"\
+	".\typecode.hh"\
+	"\users\mendel\ACE_Wrappers\ace\Acceptor.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Acceptor.h"\
+	"\users\mendel\ACE_Wrappers\ace\Acceptor.i"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.h"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.i"\
+	"\users\mendel\ACE_Wrappers\ace\Addr.h"\
+	"\users\mendel\ACE_Wrappers\ace\Addr.i"\
+	"\users\mendel\ACE_Wrappers\ace\config.h"\
+	"\users\mendel\ACE_Wrappers\ace\Dynamic.h"\
+	"\users\mendel\ACE_Wrappers\ace\Dynamic.i"\
+	"\users\mendel\ACE_Wrappers\ace\Event_Handler.h"\
+	"\users\mendel\ACE_Wrappers\ace\Event_Handler.i"\
+	"\users\mendel\ACE_Wrappers\ace\Handle_Set.h"\
+	"\users\mendel\ACE_Wrappers\ace\Handle_Set.i"\
+	"\users\mendel\ACE_Wrappers\ace\INET_Addr.h"\
+	"\users\mendel\ACE_Wrappers\ace\INET_Addr.i"\
+	"\users\mendel\ACE_Wrappers\ace\IO_Cntl_Msg.h"\
+	"\users\mendel\ACE_Wrappers\ace\IPC_SAP.h"\
+	"\users\mendel\ACE_Wrappers\ace\IPC_SAP.i"\
+	"\users\mendel\ACE_Wrappers\ace\Local_Tokens.h"\
+	"\users\mendel\ACE_Wrappers\ace\Local_Tokens.i"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Msg.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Priority.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.i"\
+	"\users\mendel\ACE_Wrappers\ace\Malloc.h"\
+	"\users\mendel\ACE_Wrappers\ace\Malloc.i"\
+	"\users\mendel\ACE_Wrappers\ace\Malloc_T.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Malloc_T.h"\
+	"\users\mendel\ACE_Wrappers\ace\Malloc_T.i"\
+	"\users\mendel\ACE_Wrappers\ace\Map_Manager.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Map_Manager.h"\
+	"\users\mendel\ACE_Wrappers\ace\Map_Manager.i"\
+	"\users\mendel\ACE_Wrappers\ace\Mem_Map.h"\
+	"\users\mendel\ACE_Wrappers\ace\Mem_Map.i"\
+	"\users\mendel\ACE_Wrappers\ace\Memory_Pool.h"\
+	"\users\mendel\ACE_Wrappers\ace\Memory_Pool.i"\
+	"\users\mendel\ACE_Wrappers\ace\Message_Block.h"\
+	"\users\mendel\ACE_Wrappers\ace\Message_Block.i"\
+	"\users\mendel\ACE_Wrappers\ace\Message_Queue.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Message_Queue.h"\
+	"\users\mendel\ACE_Wrappers\ace\Message_Queue.i"\
+	"\users\mendel\ACE_Wrappers\ace\Module.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Module.h"\
+	"\users\mendel\ACE_Wrappers\ace\Module.i"\
+	"\users\mendel\ACE_Wrappers\ace\OS.h"\
+	"\users\mendel\ACE_Wrappers\ace\OS.i"\
+	"\users\mendel\ACE_Wrappers\ace\Pipe.h"\
+	"\users\mendel\ACE_Wrappers\ace\Pipe.i"\
+	"\users\mendel\ACE_Wrappers\ace\Proactor.h"\
+	"\users\mendel\ACE_Wrappers\ace\Proactor.i"\
+	"\users\mendel\ACE_Wrappers\ace\Reactor.h"\
+	"\users\mendel\ACE_Wrappers\ace\Reactor.i"\
+	"\users\mendel\ACE_Wrappers\ace\ReactorEx.h"\
+	"\users\mendel\ACE_Wrappers\ace\ReactorEx.i"\
+	"\users\mendel\ACE_Wrappers\ace\Service_Config.h"\
+	"\users\mendel\ACE_Wrappers\ace\Service_Config.i"\
+	"\users\mendel\ACE_Wrappers\ace\Service_Object.h"\
+	"\users\mendel\ACE_Wrappers\ace\Service_Object.i"\
+	"\users\mendel\ACE_Wrappers\ace\Set.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Set.h"\
+	"\users\mendel\ACE_Wrappers\ace\Set.i"\
+	"\users\mendel\ACE_Wrappers\ace\Shared_Object.h"\
+	"\users\mendel\ACE_Wrappers\ace\Shared_Object.i"\
+	"\users\mendel\ACE_Wrappers\ace\Signal.h"\
+	"\users\mendel\ACE_Wrappers\ace\Signal.i"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK.h"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK.i"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_Acceptor.h"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_Acceptor.i"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_IO.h"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_IO.i"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_Stream.h"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_Stream.i"\
+	"\users\mendel\ACE_Wrappers\ace\SString.h"\
+	"\users\mendel\ACE_Wrappers\ace\SString.i"\
+	"\users\mendel\ACE_Wrappers\ace\Stack.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Stack.h"\
+	"\users\mendel\ACE_Wrappers\ace\Stack.i"\
+	"\users\mendel\ACE_Wrappers\ace\stdcpp.h"\
+	"\users\mendel\ACE_Wrappers\ace\Strategies.h"\
+	"\users\mendel\ACE_Wrappers\ace\Strategies_T.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Strategies_T.h"\
+	"\users\mendel\ACE_Wrappers\ace\Stream_Modules.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Stream_Modules.h"\
+	"\users\mendel\ACE_Wrappers\ace\Stream_Modules.i"\
+	"\users\mendel\ACE_Wrappers\ace\SV_Semaphore_Complex.h"\
+	"\users\mendel\ACE_Wrappers\ace\SV_Semaphore_Complex.i"\
+	"\users\mendel\ACE_Wrappers\ace\SV_Semaphore_Simple.h"\
+	"\users\mendel\ACE_Wrappers\ace\SV_Semaphore_Simple.i"\
+	"\users\mendel\ACE_Wrappers\ace\Svc_Conf_Tokens.h"\
+	"\users\mendel\ACE_Wrappers\ace\Svc_Handler.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Svc_Handler.h"\
+	"\users\mendel\ACE_Wrappers\ace\Svc_Handler.i"\
+	"\users\mendel\ACE_Wrappers\ace\Synch.h"\
+	"\users\mendel\ACE_Wrappers\ace\Synch.i"\
+	"\users\mendel\ACE_Wrappers\ace\Synch_Options.h"\
+	"\users\mendel\ACE_Wrappers\ace\Synch_T.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Synch_T.h"\
+	"\users\mendel\ACE_Wrappers\ace\Synch_T.i"\
+	"\users\mendel\ACE_Wrappers\ace\Task.h"\
+	"\users\mendel\ACE_Wrappers\ace\Task.i"\
+	"\users\mendel\ACE_Wrappers\ace\Task_T.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Task_T.h"\
+	"\users\mendel\ACE_Wrappers\ace\Task_T.i"\
+	"\users\mendel\ACE_Wrappers\ace\Thread.h"\
+	"\users\mendel\ACE_Wrappers\ace\Thread.i"\
+	"\users\mendel\ACE_Wrappers\ace\Thread_Manager.h"\
+	"\users\mendel\ACE_Wrappers\ace\Thread_Manager.i"\
+	"\users\mendel\ACE_Wrappers\ace\Time_Value.h"\
+	"\users\mendel\ACE_Wrappers\ace\Timer_Queue.h"\
+	"\users\mendel\ACE_Wrappers\ace\Timer_Queue.i"\
+	"\users\mendel\ACE_Wrappers\ace\Token.h"\
+	"\users\mendel\ACE_Wrappers\ace\Token.i"\
+	"\users\mendel\ACE_Wrappers\ace\Trace.h"\
+	"\users\mendel\ACE_Wrappers\ace\ws2tcpip.h"\
+	
+
+"$(INTDIR)\boa.obj" : $(SOURCE) $(DEP_CPP_BOA_C) "$(INTDIR)"
+
+
+# End Source File
+################################################################################
+# Begin Source File
+
+SOURCE=\users\mendel\ACE_wrappers\ace\ace.lib
 
 !IF  "$(CFG)" == "TAO_Baseline - Win32 Release"
 
 !ELSEIF  "$(CFG)" == "TAO_Baseline - Win32 Debug"
 
 !ENDIF 
+
+# End Source File
+################################################################################
+# Begin Source File
+
+SOURCE=.\params.cpp
+DEP_CPP_PARAM=\
+	".\align.hh"\
+	".\any.hh"\
+	".\boa.hh"\
+	".\cdr.hh"\
+	".\connect.hh"\
+	".\connect.i"\
+	".\corbacom.hh"\
+	".\except.hh"\
+	".\nvlist.hh"\
+	".\object.hh"\
+	".\orb.hh"\
+	".\orbconf.hh"\
+	".\orbobj.hh"\
+	".\params.hh"\
+	".\params.i"\
+	".\principa.hh"\
+	".\request.hh"\
+	".\sequence.hh"\
+	".\svrrqst.hh"\
+	".\typecode.hh"\
+	"\users\mendel\ACE_Wrappers\ace\Acceptor.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Acceptor.h"\
+	"\users\mendel\ACE_Wrappers\ace\Acceptor.i"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.h"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.i"\
+	"\users\mendel\ACE_Wrappers\ace\Addr.h"\
+	"\users\mendel\ACE_Wrappers\ace\Addr.i"\
+	"\users\mendel\ACE_Wrappers\ace\config.h"\
+	"\users\mendel\ACE_Wrappers\ace\Dynamic.h"\
+	"\users\mendel\ACE_Wrappers\ace\Dynamic.i"\
+	"\users\mendel\ACE_Wrappers\ace\Event_Handler.h"\
+	"\users\mendel\ACE_Wrappers\ace\Event_Handler.i"\
+	"\users\mendel\ACE_Wrappers\ace\Handle_Set.h"\
+	"\users\mendel\ACE_Wrappers\ace\Handle_Set.i"\
+	"\users\mendel\ACE_Wrappers\ace\INET_Addr.h"\
+	"\users\mendel\ACE_Wrappers\ace\INET_Addr.i"\
+	"\users\mendel\ACE_Wrappers\ace\IO_Cntl_Msg.h"\
+	"\users\mendel\ACE_Wrappers\ace\IPC_SAP.h"\
+	"\users\mendel\ACE_Wrappers\ace\IPC_SAP.i"\
+	"\users\mendel\ACE_Wrappers\ace\Local_Tokens.h"\
+	"\users\mendel\ACE_Wrappers\ace\Local_Tokens.i"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Msg.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Priority.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.i"\
+	"\users\mendel\ACE_Wrappers\ace\Malloc.h"\
+	"\users\mendel\ACE_Wrappers\ace\Malloc.i"\
+	"\users\mendel\ACE_Wrappers\ace\Malloc_T.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Malloc_T.h"\
+	"\users\mendel\ACE_Wrappers\ace\Malloc_T.i"\
+	"\users\mendel\ACE_Wrappers\ace\Map_Manager.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Map_Manager.h"\
+	"\users\mendel\ACE_Wrappers\ace\Map_Manager.i"\
+	"\users\mendel\ACE_Wrappers\ace\Mem_Map.h"\
+	"\users\mendel\ACE_Wrappers\ace\Mem_Map.i"\
+	"\users\mendel\ACE_Wrappers\ace\Memory_Pool.h"\
+	"\users\mendel\ACE_Wrappers\ace\Memory_Pool.i"\
+	"\users\mendel\ACE_Wrappers\ace\Message_Block.h"\
+	"\users\mendel\ACE_Wrappers\ace\Message_Block.i"\
+	"\users\mendel\ACE_Wrappers\ace\Message_Queue.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Message_Queue.h"\
+	"\users\mendel\ACE_Wrappers\ace\Message_Queue.i"\
+	"\users\mendel\ACE_Wrappers\ace\Module.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Module.h"\
+	"\users\mendel\ACE_Wrappers\ace\Module.i"\
+	"\users\mendel\ACE_Wrappers\ace\OS.h"\
+	"\users\mendel\ACE_Wrappers\ace\OS.i"\
+	"\users\mendel\ACE_Wrappers\ace\Pipe.h"\
+	"\users\mendel\ACE_Wrappers\ace\Pipe.i"\
+	"\users\mendel\ACE_Wrappers\ace\Proactor.h"\
+	"\users\mendel\ACE_Wrappers\ace\Proactor.i"\
+	"\users\mendel\ACE_Wrappers\ace\Reactor.h"\
+	"\users\mendel\ACE_Wrappers\ace\Reactor.i"\
+	"\users\mendel\ACE_Wrappers\ace\ReactorEx.h"\
+	"\users\mendel\ACE_Wrappers\ace\ReactorEx.i"\
+	"\users\mendel\ACE_Wrappers\ace\Service_Config.h"\
+	"\users\mendel\ACE_Wrappers\ace\Service_Config.i"\
+	"\users\mendel\ACE_Wrappers\ace\Service_Object.h"\
+	"\users\mendel\ACE_Wrappers\ace\Service_Object.i"\
+	"\users\mendel\ACE_Wrappers\ace\Set.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Set.h"\
+	"\users\mendel\ACE_Wrappers\ace\Set.i"\
+	"\users\mendel\ACE_Wrappers\ace\Shared_Object.h"\
+	"\users\mendel\ACE_Wrappers\ace\Shared_Object.i"\
+	"\users\mendel\ACE_Wrappers\ace\Signal.h"\
+	"\users\mendel\ACE_Wrappers\ace\Signal.i"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK.h"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK.i"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_Acceptor.h"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_Acceptor.i"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_IO.h"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_IO.i"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_Stream.h"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_Stream.i"\
+	"\users\mendel\ACE_Wrappers\ace\SString.h"\
+	"\users\mendel\ACE_Wrappers\ace\SString.i"\
+	"\users\mendel\ACE_Wrappers\ace\Stack.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Stack.h"\
+	"\users\mendel\ACE_Wrappers\ace\Stack.i"\
+	"\users\mendel\ACE_Wrappers\ace\stdcpp.h"\
+	"\users\mendel\ACE_Wrappers\ace\Strategies.h"\
+	"\users\mendel\ACE_Wrappers\ace\Strategies_T.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Strategies_T.h"\
+	"\users\mendel\ACE_Wrappers\ace\Stream_Modules.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Stream_Modules.h"\
+	"\users\mendel\ACE_Wrappers\ace\Stream_Modules.i"\
+	"\users\mendel\ACE_Wrappers\ace\SV_Semaphore_Complex.h"\
+	"\users\mendel\ACE_Wrappers\ace\SV_Semaphore_Complex.i"\
+	"\users\mendel\ACE_Wrappers\ace\SV_Semaphore_Simple.h"\
+	"\users\mendel\ACE_Wrappers\ace\SV_Semaphore_Simple.i"\
+	"\users\mendel\ACE_Wrappers\ace\Svc_Conf_Tokens.h"\
+	"\users\mendel\ACE_Wrappers\ace\Svc_Handler.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Svc_Handler.h"\
+	"\users\mendel\ACE_Wrappers\ace\Svc_Handler.i"\
+	"\users\mendel\ACE_Wrappers\ace\Synch.h"\
+	"\users\mendel\ACE_Wrappers\ace\Synch.i"\
+	"\users\mendel\ACE_Wrappers\ace\Synch_Options.h"\
+	"\users\mendel\ACE_Wrappers\ace\Synch_T.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Synch_T.h"\
+	"\users\mendel\ACE_Wrappers\ace\Synch_T.i"\
+	"\users\mendel\ACE_Wrappers\ace\Task.h"\
+	"\users\mendel\ACE_Wrappers\ace\Task.i"\
+	"\users\mendel\ACE_Wrappers\ace\Task_T.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Task_T.h"\
+	"\users\mendel\ACE_Wrappers\ace\Task_T.i"\
+	"\users\mendel\ACE_Wrappers\ace\Thread.h"\
+	"\users\mendel\ACE_Wrappers\ace\Thread.i"\
+	"\users\mendel\ACE_Wrappers\ace\Thread_Manager.h"\
+	"\users\mendel\ACE_Wrappers\ace\Thread_Manager.i"\
+	"\users\mendel\ACE_Wrappers\ace\Time_Value.h"\
+	"\users\mendel\ACE_Wrappers\ace\Timer_Queue.h"\
+	"\users\mendel\ACE_Wrappers\ace\Timer_Queue.i"\
+	"\users\mendel\ACE_Wrappers\ace\Token.h"\
+	"\users\mendel\ACE_Wrappers\ace\Token.i"\
+	"\users\mendel\ACE_Wrappers\ace\Trace.h"\
+	"\users\mendel\ACE_Wrappers\ace\ws2tcpip.h"\
+	
+
+"$(INTDIR)\params.obj" : $(SOURCE) $(DEP_CPP_PARAM) "$(INTDIR)"
+
+
+# End Source File
+################################################################################
+# Begin Source File
+
+SOURCE=.\connect.cpp
+DEP_CPP_CONNE=\
+	".\align.hh"\
+	".\any.hh"\
+	".\boa.hh"\
+	".\cdr.hh"\
+	".\connect.hh"\
+	".\connect.i"\
+	".\corbacom.hh"\
+	".\debug.hh"\
+	".\except.hh"\
+	".\nvlist.hh"\
+	".\object.hh"\
+	".\orb.hh"\
+	".\orbconf.hh"\
+	".\orbobj.hh"\
+	".\params.hh"\
+	".\params.i"\
+	".\principa.hh"\
+	".\request.hh"\
+	".\roa.hh"\
+	".\roa.i"\
+	".\sequence.hh"\
+	".\svrrqst.hh"\
+	".\typecode.hh"\
+	"\users\mendel\ACE_Wrappers\ace\Acceptor.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Acceptor.h"\
+	"\users\mendel\ACE_Wrappers\ace\Acceptor.i"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.h"\
+	"\users\mendel\ACE_Wrappers\ace\ACE.i"\
+	"\users\mendel\ACE_Wrappers\ace\Addr.h"\
+	"\users\mendel\ACE_Wrappers\ace\Addr.i"\
+	"\users\mendel\ACE_Wrappers\ace\config.h"\
+	"\users\mendel\ACE_Wrappers\ace\Dynamic.h"\
+	"\users\mendel\ACE_Wrappers\ace\Dynamic.i"\
+	"\users\mendel\ACE_Wrappers\ace\Event_Handler.h"\
+	"\users\mendel\ACE_Wrappers\ace\Event_Handler.i"\
+	"\users\mendel\ACE_Wrappers\ace\Handle_Set.h"\
+	"\users\mendel\ACE_Wrappers\ace\Handle_Set.i"\
+	"\users\mendel\ACE_Wrappers\ace\INET_Addr.h"\
+	"\users\mendel\ACE_Wrappers\ace\INET_Addr.i"\
+	"\users\mendel\ACE_Wrappers\ace\IO_Cntl_Msg.h"\
+	"\users\mendel\ACE_Wrappers\ace\IPC_SAP.h"\
+	"\users\mendel\ACE_Wrappers\ace\IPC_SAP.i"\
+	"\users\mendel\ACE_Wrappers\ace\Local_Tokens.h"\
+	"\users\mendel\ACE_Wrappers\ace\Local_Tokens.i"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Msg.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Priority.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.h"\
+	"\users\mendel\ACE_Wrappers\ace\Log_Record.i"\
+	"\users\mendel\ACE_Wrappers\ace\Malloc.h"\
+	"\users\mendel\ACE_Wrappers\ace\Malloc.i"\
+	"\users\mendel\ACE_Wrappers\ace\Malloc_T.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Malloc_T.h"\
+	"\users\mendel\ACE_Wrappers\ace\Malloc_T.i"\
+	"\users\mendel\ACE_Wrappers\ace\Map_Manager.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Map_Manager.h"\
+	"\users\mendel\ACE_Wrappers\ace\Map_Manager.i"\
+	"\users\mendel\ACE_Wrappers\ace\Mem_Map.h"\
+	"\users\mendel\ACE_Wrappers\ace\Mem_Map.i"\
+	"\users\mendel\ACE_Wrappers\ace\Memory_Pool.h"\
+	"\users\mendel\ACE_Wrappers\ace\Memory_Pool.i"\
+	"\users\mendel\ACE_Wrappers\ace\Message_Block.h"\
+	"\users\mendel\ACE_Wrappers\ace\Message_Block.i"\
+	"\users\mendel\ACE_Wrappers\ace\Message_Queue.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Message_Queue.h"\
+	"\users\mendel\ACE_Wrappers\ace\Message_Queue.i"\
+	"\users\mendel\ACE_Wrappers\ace\Module.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Module.h"\
+	"\users\mendel\ACE_Wrappers\ace\Module.i"\
+	"\users\mendel\ACE_Wrappers\ace\OS.h"\
+	"\users\mendel\ACE_Wrappers\ace\OS.i"\
+	"\users\mendel\ACE_Wrappers\ace\Pipe.h"\
+	"\users\mendel\ACE_Wrappers\ace\Pipe.i"\
+	"\users\mendel\ACE_Wrappers\ace\Proactor.h"\
+	"\users\mendel\ACE_Wrappers\ace\Proactor.i"\
+	"\users\mendel\ACE_Wrappers\ace\Reactor.h"\
+	"\users\mendel\ACE_Wrappers\ace\Reactor.i"\
+	"\users\mendel\ACE_Wrappers\ace\ReactorEx.h"\
+	"\users\mendel\ACE_Wrappers\ace\ReactorEx.i"\
+	"\users\mendel\ACE_Wrappers\ace\Service_Config.h"\
+	"\users\mendel\ACE_Wrappers\ace\Service_Config.i"\
+	"\users\mendel\ACE_Wrappers\ace\Service_Object.h"\
+	"\users\mendel\ACE_Wrappers\ace\Service_Object.i"\
+	"\users\mendel\ACE_Wrappers\ace\Set.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Set.h"\
+	"\users\mendel\ACE_Wrappers\ace\Set.i"\
+	"\users\mendel\ACE_Wrappers\ace\Shared_Object.h"\
+	"\users\mendel\ACE_Wrappers\ace\Shared_Object.i"\
+	"\users\mendel\ACE_Wrappers\ace\Signal.h"\
+	"\users\mendel\ACE_Wrappers\ace\Signal.i"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK.h"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK.i"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_Acceptor.h"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_Acceptor.i"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_IO.h"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_IO.i"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_Stream.h"\
+	"\users\mendel\ACE_Wrappers\ace\SOCK_Stream.i"\
+	"\users\mendel\ACE_Wrappers\ace\SString.h"\
+	"\users\mendel\ACE_Wrappers\ace\SString.i"\
+	"\users\mendel\ACE_Wrappers\ace\Stack.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Stack.h"\
+	"\users\mendel\ACE_Wrappers\ace\Stack.i"\
+	"\users\mendel\ACE_Wrappers\ace\stdcpp.h"\
+	"\users\mendel\ACE_Wrappers\ace\Strategies.h"\
+	"\users\mendel\ACE_Wrappers\ace\Strategies_T.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Strategies_T.h"\
+	"\users\mendel\ACE_Wrappers\ace\Stream_Modules.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Stream_Modules.h"\
+	"\users\mendel\ACE_Wrappers\ace\Stream_Modules.i"\
+	"\users\mendel\ACE_Wrappers\ace\SV_Semaphore_Complex.h"\
+	"\users\mendel\ACE_Wrappers\ace\SV_Semaphore_Complex.i"\
+	"\users\mendel\ACE_Wrappers\ace\SV_Semaphore_Simple.h"\
+	"\users\mendel\ACE_Wrappers\ace\SV_Semaphore_Simple.i"\
+	"\users\mendel\ACE_Wrappers\ace\Svc_Conf_Tokens.h"\
+	"\users\mendel\ACE_Wrappers\ace\Svc_Handler.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Svc_Handler.h"\
+	"\users\mendel\ACE_Wrappers\ace\Svc_Handler.i"\
+	"\users\mendel\ACE_Wrappers\ace\Synch.h"\
+	"\users\mendel\ACE_Wrappers\ace\Synch.i"\
+	"\users\mendel\ACE_Wrappers\ace\Synch_Options.h"\
+	"\users\mendel\ACE_Wrappers\ace\Synch_T.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Synch_T.h"\
+	"\users\mendel\ACE_Wrappers\ace\Synch_T.i"\
+	"\users\mendel\ACE_Wrappers\ace\Task.h"\
+	"\users\mendel\ACE_Wrappers\ace\Task.i"\
+	"\users\mendel\ACE_Wrappers\ace\Task_T.cpp"\
+	"\users\mendel\ACE_Wrappers\ace\Task_T.h"\
+	"\users\mendel\ACE_Wrappers\ace\Task_T.i"\
+	"\users\mendel\ACE_Wrappers\ace\Thread.h"\
+	"\users\mendel\ACE_Wrappers\ace\Thread.i"\
+	"\users\mendel\ACE_Wrappers\ace\Thread_Manager.h"\
+	"\users\mendel\ACE_Wrappers\ace\Thread_Manager.i"\
+	"\users\mendel\ACE_Wrappers\ace\Time_Value.h"\
+	"\users\mendel\ACE_Wrappers\ace\Timer_Queue.h"\
+	"\users\mendel\ACE_Wrappers\ace\Timer_Queue.i"\
+	"\users\mendel\ACE_Wrappers\ace\Token.h"\
+	"\users\mendel\ACE_Wrappers\ace\Token.i"\
+	"\users\mendel\ACE_Wrappers\ace\Trace.h"\
+	"\users\mendel\ACE_Wrappers\ace\ws2tcpip.h"\
+	
+
+"$(INTDIR)\connect.obj" : $(SOURCE) $(DEP_CPP_CONNE) "$(INTDIR)"
+
 
 # End Source File
 # End Target
