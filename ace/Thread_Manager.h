@@ -739,9 +739,16 @@ public:
   // = Operations on ACE_Tasks.
 
   /**
-   * Block until there are no more threads running in <task>.  Returns
-   * 0 on success and -1 on failure.  Note that <wait_task> will not
-   * wait on detached threads.
+   * Block until there are no more threads running in a specified task.
+   * This method will not wait for either detached or daemon threads;
+   * the threads must have been spawned with the @c THR_JOINABLE flag.
+   * Upon successful completion, the threads have been joined, so further
+   * attempts to join with any of the waited-for threads will fail.
+   *
+   * @param task  The ACE_Task_Base object whose threads are to waited for.
+   *
+   * @retval 0  Success.
+   * @retval -1 Failure (consult errno for further information).
    */
   int wait_task (ACE_Task_Base *task);
 
