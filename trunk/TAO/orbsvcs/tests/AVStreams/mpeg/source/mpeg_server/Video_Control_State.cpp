@@ -555,10 +555,10 @@ Video_Control_Play_State::speed (Video_Control::SPEEDpara &para)
   VIDEO_SINGLETON::instance ()->currentUPF = para.usecPerFrame;
   VIDEO_SINGLETON::instance ()->addedUPF = 0;
   for (int i=0; i<para.sendPattern.length (); i++)
-    VIDEO_SINGLETON::instance ()->sendPattern [i] =para.sendPattern [i];
+    VIDEO_SINGLETON::instance ()->sendPattern [i] = para.sendPattern [i];
   //  memcpy(VIDEO_SINGLETON::instance ()->sendPattern, para.sendPattern, PATTERN_SIZE);
   Video_Timer_Global::TimerSpeed ();
-  return 0;
+  return CORBA::B_TRUE;
 }
 
 

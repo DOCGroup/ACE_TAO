@@ -81,8 +81,6 @@ CORBA::Boolean
 Video_Control_i::fast_forward (const Video_Control::FFpara &para,
                                CORBA::Environment& env)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Video_Control_i::fast_forward () called\n"));
   return this->get_video_control_handler ()->fast_forward (para,
                                                            env);
 }
@@ -132,6 +130,8 @@ CORBA::Boolean
 Video_Control_i::speed (const Video_Control::SPEEDpara &para,
                         CORBA::Environment& env)
 {
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) Video_Control_i::speed () called\n"));
   return this->get_video_control_handler ()->speed (para,
                                                     env);
 }
