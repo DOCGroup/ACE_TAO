@@ -4,9 +4,6 @@
 
 ACE_RCSID (ExposedPolicies, RT_Properties, "$Id$")
 
-#if (TAO_HAS_RT_CORBA == 1)
-
-
 RT_Properties::RT_Properties (void)
   : priority_ (10)
 {
@@ -109,4 +106,3 @@ RT_Properties::ior_source (void)
   return this->ior_source_;
 }
 
-#endif /* (TAO_HAS_RT_CORBA == 1) */

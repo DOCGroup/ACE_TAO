@@ -98,10 +98,6 @@ SOURCE=.\advanced_resource.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Direct_Priority_Mapping.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\FIFO_Connection_Purging_Strategy.cpp
 # End Source File
 # Begin Source File
@@ -111,10 +107,6 @@ SOURCE=.\GIOP_Message_NonReactive_Base.cpp
 # Begin Source File
 
 SOURCE=.\GIOP_Message_NonReactive_Handler.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Linear_Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
@@ -206,19 +198,11 @@ SOURCE=.\advanced_resource.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Direct_Priority_Mapping.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_NonReactive_Base.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\GIOP_Message_NonReactive_Handler.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Linear_Priority_Mapping.h
 # End Source File
 # Begin Source File
 
@@ -318,19 +302,11 @@ SOURCE=.\advanced_resource.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Direct_Priority_Mapping.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_NonReactive_Base.inl
 # End Source File
 # Begin Source File
 
 SOURCE=.\GIOP_Message_NonReactive_Handler.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\Linear_Priority_Mapping.i
 # End Source File
 # Begin Source File
 

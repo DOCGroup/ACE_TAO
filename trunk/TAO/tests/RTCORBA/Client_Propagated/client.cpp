@@ -1,14 +1,14 @@
 // $Id$
 
 #include "testC.h"
-#include "tao/RT_CORBA.h"
-#include "ace/Get_Opt.h"
-#include "ace/Sched_Params.h"
 #include "Client_ORBInitializer.h"
 
-#include "tao/Strategies/advanced_resource.h"
+#include "tao/RTCORBA/RTCORBA.h"
+#include "tao/RTCORBA/Priority_Mapping_Manager.h"
 
-#if (TAO_HAS_RT_CORBA == 1)
+#include "ace/Get_Opt.h"
+#include "ace/Sched_Params.h"
+
 
 const char *ior = "file://test.ior";
 
@@ -133,8 +133,8 @@ main (int argc, char *argv[])
       object = orb->resolve_initial_references ("PriorityMappingManager",
                                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      TAO::PriorityMappingManager_var mapping_manager =
-        TAO::PriorityMappingManager::_narrow (object.in (),
+      RTCORBA::PriorityMappingManager_var mapping_manager =
+        RTCORBA::PriorityMappingManager::_narrow (object.in (),
                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -191,20 +191,6 @@ main (int argc, char *argv[])
 
   return 0;
 }
-
-#else /* TAO_HAS_RT_CORBA == 1 */
-
-int
-main (int argc, char *argv[])
-{
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     "\nRTCORBA must be enabled to run this test!\n"),
-                    1);
-}
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
 
 
 

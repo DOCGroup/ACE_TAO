@@ -66,16 +66,6 @@ TAO_Messaging_ORBInitializer::register_policy_factories (
                                  ACE_TRY_ENV);
   ACE_CHECK;
   
-#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
-
-  type = TAO_CLIENT_PRIORITY_POLICY_TYPE;
-  info->register_policy_factory (type,
-                                 policy_factory,
-                                 ACE_TRY_ENV);
-  ACE_CHECK;
-
-#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
-
   type = TAO_MESSAGING_SYNC_SCOPE_POLICY_TYPE;
   info->register_policy_factory (type,
                                  policy_factory,

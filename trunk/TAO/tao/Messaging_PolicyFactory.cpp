@@ -11,7 +11,6 @@ ACE_RCSID (tao, Messaging_PolicyFactory, "$Id$")
 #include "tao/PolicyC.h"
 #include "tao/Messaging_Policy_i.h"
 #include "tao/Buffering_Constraint_Policy.h"
-#include "tao/Client_Priority_Policy.h"
 
 CORBA::Policy_ptr
 TAO_Messaging_PolicyFactory::create_policy (
@@ -35,13 +34,6 @@ TAO_Messaging_PolicyFactory::create_policy (
 
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
-#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
-
-    case TAO_CLIENT_PRIORITY_POLICY_TYPE:
-      return TAO_Client_Priority_Policy::create (value
-                                                 TAO_ENV_ARG_PARAMETER);
-
-#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
 
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
 

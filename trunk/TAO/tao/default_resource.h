@@ -95,7 +95,6 @@ public:
   virtual TAO_Resource_Factory::Caching_Strategy connection_caching_strategy_type (void) const;
   virtual int cache_maximum (void) const;
   virtual int purge_percentage (void) const;
-  virtual TAO_Priority_Mapping *get_priority_mapping (void);
   virtual ACE_Lock *create_cached_connection_lock (void);
   virtual TAO_Flushing_Strategy *create_flushing_strategy (void);
   virtual TAO_Connection_Purging_Strategy *create_purging_strategy (void);
@@ -142,13 +141,6 @@ protected:
 
   /// If <0> then we create reactors with signal handling disabled.
   int reactor_mask_signals_;
-
-  /// The scheduling policy used to initialize the priority mapping
-  /// strategy.
-  int sched_policy_;
-
-  /// The type of priority mapping class created by this factory.
-  int priority_mapping_type_;
 
   /**
    * Flag that is set to 1 if the reactor obtained from the

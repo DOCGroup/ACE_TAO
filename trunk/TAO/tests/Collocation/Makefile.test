@@ -44,8 +44,7 @@ include $(TAO_ROOT)/taoconfig.mk
 
 
 .obj/Coll_Tester.o .obj/Coll_Tester.so .shobj/Coll_Tester.o .shobj/Coll_Tester.so: Coll_Tester.cpp Coll_Tester.h Diamond_i.h DiamondS.h \
- DiamondC.h \
- $(TAO_ROOT)/tao/corba.h \
+ DiamondC.h $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -233,12 +232,8 @@ include $(TAO_ROOT)/taoconfig.mk
  stub_export.h DiamondC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
- $(TAO_ROOT)/tao/RTCORBAC.h \
- $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \

@@ -28,8 +28,6 @@ TAO_ORB_Core::transport_cache (void)
   return this->transport_cache_;
 }
 
-
-
 ACE_INLINE CORBA::Boolean
 TAO_ORB_Core::bidir_giop_policy (void)
 {
@@ -42,7 +40,6 @@ TAO_ORB_Core::bidir_giop_policy (CORBA::Boolean val)
   this->bidir_giop_policy_ = val;
 }
 
-
 ACE_INLINE TAO_Object_Ref_Table &
 TAO_ORB_Core::object_ref_table (void)
 {
@@ -53,6 +50,12 @@ ACE_INLINE TAO_Flushing_Strategy *
 TAO_ORB_Core::flushing_strategy (void)
 {
   return this->flushing_strategy_;
+}
+
+ACE_INLINE TAO_POA_Extension_Initializer *
+TAO_ORB_Core::poa_extension_initializer (void)
+{
+  return this->poa_extension_initializer_;
 }
 
 ACE_INLINE CORBA::Boolean
@@ -275,87 +278,7 @@ TAO_ORB_Core::policy_manager (void)
   return this->policy_manager_;
 }
 
-ACE_INLINE CORBA::Policy_ptr
-TAO_ORB_Core::get_default_policy (
-      CORBA::PolicyType policy,
-      CORBA::Environment &ACE_TRY_ENV)
-{
-  return this->default_policies_->get_policy (policy, ACE_TRY_ENV);
-}
-
-ACE_INLINE CORBA::Policy *
-TAO_ORB_Core::default_relative_roundtrip_timeout (void) const
-{
-  return this->default_policies_->relative_roundtrip_timeout ();
-}
-
-ACE_INLINE CORBA::Policy *
-TAO_ORB_Core::default_sync_scope (void) const
-{
-  return this->default_policies_->sync_scope ();
-}
-
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
-#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
-
-ACE_INLINE TAO_Client_Priority_Policy *
-TAO_ORB_Core::default_client_priority (void) const
-{
-  return this->default_policies_->client_priority ();
-}
-
-#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
-
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-
-ACE_INLINE TAO_Buffering_Constraint_Policy *
-TAO_ORB_Core::default_buffering_constraint (void) const
-{
-  return this->default_policies_->buffering_constraint ();
-}
-
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
-#if (TAO_HAS_RT_CORBA == 1)
-
-ACE_INLINE CORBA::Policy *
-TAO_ORB_Core::default_threadpool (void) const
-{
-  return this->default_policies_->threadpool ();
-}
-
-ACE_INLINE CORBA::Policy *
-TAO_ORB_Core::default_priority_model (void) const
-{
-  return this->default_policies_->priority_model ();
-}
-
-ACE_INLINE CORBA::Policy *
-TAO_ORB_Core::default_server_protocol (void) const
-{
-  return this->default_policies_->server_protocol ();
-}
-
-ACE_INLINE CORBA::Policy *
-TAO_ORB_Core::default_client_protocol (void) const
-{
-  return this->default_policies_->client_protocol ();
-}
-
-ACE_INLINE CORBA::Policy *
-TAO_ORB_Core::default_private_connection (void) const
-{
-  return this->default_policies_->private_connection ();
-}
-
-ACE_INLINE CORBA::Policy *
-TAO_ORB_Core::default_priority_banded_connection (void) const
-{
-  return this->default_policies_->priority_banded_connection ();
-}
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
 
 ACE_INLINE TAO_ORB_Core_TSS_Resources*
 TAO_ORB_Core::get_tss_resources (void)
@@ -590,7 +513,7 @@ TAO_ORB_Core::poa_current (CORBA::Object_ptr current)
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-ACE_INLINE  TAO_Policy_Manager_Impl *
+ACE_INLINE  TAO_Policy_Set *
 TAO_ORB_Core::get_default_policies (void)
 {
   return this->default_policies_;
@@ -610,55 +533,31 @@ TAO_ORB_Core::default_environment (CORBA_Environment *env)
   TAO_TSS_RESOURCES::instance ()->default_environment_ = env;
 }
 
-ACE_INLINE TAO_Endpoint_Selector_Factory *
-TAO_ORB_Core::endpoint_selector_factory (void)
-{
-  return this->endpoint_selector_factory_;
-}
-
-#if (TAO_HAS_RT_CORBA == 1)
-
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::rt_orb (CORBA::Environment &ACE_TRY_ENV)
+TAO_ORB_Core::resolve_rt_orb (CORBA::Environment &ACE_TRY_ENV)
 {
-  if (CORBA::is_nil (this->rt_orb_.in ()))
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
+                    CORBA::Object::_nil ());
+  if (CORBA::is_nil (this->rt_orb_))
     {
       this->resolve_rt_orb_i (ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
-
-  return CORBA::Object::_duplicate (this->rt_orb_.in ());
+  return CORBA::Object::_duplicate (this->rt_orb_);
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::rt_current (void)
+TAO_ORB_Core::resolve_rt_current (CORBA::Environment &ACE_TRY_ENV)
 {
-  if (CORBA::is_nil (this->rt_current_.in ()))
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
+                    CORBA::Object::_nil ());
+  if (CORBA::is_nil (this->rt_current_))
     {
-      ACE_TRY_NEW_ENV
-        {
-          // Make sure the RT ORB is loaded and initialized since it
-          // also initializes the RTCurrent object.
-          this->resolve_rt_orb_i (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          return CORBA::Object::_nil ();
-        }
-      ACE_ENDTRY;
+      this->resolve_rt_current_i (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
-
-  return CORBA::Object::_duplicate (this->rt_current_.in ());
+  return CORBA::Object::_duplicate (this->rt_current_);
 }
-
-ACE_INLINE void
-TAO_ORB_Core::rt_current (CORBA::Object_ptr current)
-{
-  this->rt_current_ = CORBA::Object::_duplicate (current);
-}
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 ACE_INLINE void

@@ -26,8 +26,7 @@
 // -- TAO Include --
 #include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
-
-#if (TAO_HAS_RT_CORBA == 1)
+#include "tao/RTPortableServer/RTPortableServer.h"
 
 class Policy_Tester
 {
@@ -67,7 +66,5 @@ private:
   RT_Properties *rt_poa_properties_;
 };
 
-#endif /* (TAO_HAS_RT_CORBA == 1) */
 
-
-#endif
+#endif /* POLICY_TESTER_H_ */

@@ -167,12 +167,6 @@ TAO_Resource_Factory::purge_percentage (void) const
   return 0;
 }
 
-TAO_Priority_Mapping *
-TAO_Resource_Factory::get_priority_mapping (void)
-{
-  return 0;
-}
-
 int
 TAO_Resource_Factory::get_parser_names (char **&,
                                         int &)

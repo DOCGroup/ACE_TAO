@@ -2,12 +2,11 @@
 
 #include "testS.h"
 #include "ace/Get_Opt.h"
-#include "tao/RTCORBAC.h"
-#include "tao/Pool_Per_Endpoint.h"
+#include "tao/RTCORBA/RTCORBA.h"
+#include "tao/RTCORBA/Pool_Per_Endpoint.h"
+#include "tao/RTPortableServer/RTPortableServer.h"
 
 #include "tao/Strategies/advanced_resource.h"
-
-#if (TAO_HAS_RT_CORBA == 1)
 
 class Test_i : public POA_Test
 {
@@ -343,7 +342,7 @@ main (int argc, char *argv[])
       if (result == -1)
         return 1;
 
-	  // Attempt to create object 3, overriding POA's priority with
+          // Attempt to create object 3, overriding POA's priority with
       // the priority value that does not match server resource
       // configuration.  Should get BAD_PARAM exception.
       exception_test (rt_poa.in (), &server_impl, wrong_priority,
@@ -376,15 +375,3 @@ main (int argc, char *argv[])
   return 0;
 }
 
-#else /* TAO_HAS_RT_CORBA == 1 */
-
-int
-main (int argc, char *argv[])
-{
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     "\nRTCORBA must be enabled to run this test!\n"),
-                    1);
-}
-#endif /* TAO_HAS_RT_CORBA == 1 */

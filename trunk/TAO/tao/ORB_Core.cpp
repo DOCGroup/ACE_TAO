@@ -31,18 +31,19 @@
 #include "Invocation.h"
 #include "BiDir_Adapter.h"
 
-#if (TAO_HAS_RT_CORBA == 1)
- #include "RT_Endpoint_Selector_Factory.h"
- #include "RT_Stub_Factory.h"
-#else
- #include "Stub_Factory.h"
- #include "Endpoint_Selector_Factory.h"
-#endif /* TAO_HAS_RT_CORBA == 1 */
+#include "Default_Stub_Factory.h"
+#include "Default_Endpoint_Selector_Factory.h"
+#include "Default_Protocols_Hooks.h"
 
 #include "IORInfo.h"
 
 #include "Flushing_Strategy.h"
 
+#include "POA_Extension_Initializer.h"
+
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
+# include "Buffering_Constraint_Policy.h"
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 #if defined(ACE_MVS)
 #include "ace/Codeset_IBM1047.h"
 #endif /* ACE_MVS */
@@ -66,9 +67,10 @@ TAO_default_environment ()
 TAO_ORB_Core::Timeout_Hook TAO_ORB_Core::timeout_hook_ = 0;
 TAO_ORB_Core::Sync_Scope_Hook TAO_ORB_Core::sync_scope_hook_ = 0;
 
+const char * TAO_ORB_Core::endpoint_selector_factory_name_ =
+  "Default_Endpoint_Selector_Factory";
 const char * TAO_ORB_Core::stub_factory_name_ =
-  "Stub_Factory";
-
+  "Default_Stub_Factory";
 const char * TAO_ORB_Core::resource_factory_name_ =
   "Resource_Factory";
 const char * TAO_ORB_Core::protocols_hooks_name_ =
@@ -79,17 +81,18 @@ const char * TAO_ORB_Core::ifr_client_adapter_name_ =
   "IFR_Client_Adapter";
 const char * TAO_ORB_Core::typecodefactory_adapter_name_ =
   "TypeCodeFactory_Adapter";
+const char * TAO_ORB_Core::poa_factory_name_ =
+  "TAO_POA";
+const char * TAO_ORB_Core::poa_factory_directive_ =
+  "dynamic TAO_POA Service_Object * TAO_PortableServer:_make_TAO_Object_Adapter_Factory()";
 
 TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
-  : protocols_hooks_ (0),
-#if (TAO_HAS_RT_CORBA == 1)
-    rt_orb_ (),
-    rt_current_ (),
-    priority_mapping_manager_ (),
-#endif /* TAO_HAS_RT_CORBA == 1 */
+  : poa_extension_initializer_ (0),
+    protocols_hooks_ (0),
     lock_ (),
     connector_registry_ (0),
     acceptor_registry_ (0),
+    stub_factory_ (0),
     protocol_factories_ (0),
     implrepo_service_ (CORBA::Object::_nil ()),
     use_implrepo_ (0),
@@ -97,6 +100,9 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     dynany_factory_ (CORBA::Object::_nil ()),
     ior_manip_factory_ (CORBA::Object::_nil ()),
     ior_table_ (CORBA::Object::_nil ()),
+    rt_orb_ (CORBA::Object::_nil ()),
+    rt_current_ (CORBA::Object::_nil ()),
+    rt_priority_mapping_manager_ (CORBA::Object::_nil ()),
     orb_ (),
     root_poa_ (),
     orb_params_ (),
@@ -145,14 +151,14 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     reactor_registry_ (0),
     reactor_ (0),
     has_shutdown_ (1),
-    // Start the ORB in a  "shutdown" state.  Only after
-    // CORBA::ORB_init() is called will the ORB no longer be shutdown.
-    // This does not mean that the ORB can be reinitialized.  It can
-    // only be initialized once.
     thread_per_connection_use_timeout_ (1),
     open_lock_ (),
     open_called_ (0),
     endpoint_selector_factory_ (0),
+    // Start the ORB in a  "shutdown" state.  Only after
+    // CORBA::ORB_init() is called will the ORB no longer be shutdown.
+    // This does not mean that the ORB can be reinitialized.  It can
+    // only be initialized once.
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
     eager_buffering_sync_strategy_ (0),
     delayed_buffering_sync_strategy_ (0),
@@ -168,8 +174,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     parser_registry_ (),
     transport_cache_ (0),
     bidir_adapter_ (0),
-    bidir_giop_policy_ (0)
-  , flushing_strategy_ (0)
+    bidir_giop_policy_ (0),
+    flushing_strategy_ (0)
 {
 #if defined(ACE_MVS)
   ACE_NEW (this->from_iso8859_, ACE_IBM1047_ISO8859);
@@ -192,26 +198,12 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
            TAO_Policy_Manager);
 
   ACE_NEW (this->default_policies_,
-           TAO_Policy_Manager_Impl);
+           TAO_Policy_Set (TAO_POLICY_ORB_SCOPE));
 
   ACE_NEW (this->policy_current_,
            TAO_Policy_Current);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
-#if (TAO_HAS_RT_CORBA == 1)
-  ACE_NEW (this->endpoint_selector_factory_,
-           RT_Endpoint_Selector_Factory);
-
-  ACE_NEW (this->stub_factory_,
-           TAO_RT_Stub_Factory);
-#else /* TAO_HAS_RT_CORBA == 1 */
-  ACE_NEW (this->endpoint_selector_factory_,
-           TAO_Endpoint_Selector_Factory);
-
-  ACE_NEW (this->stub_factory_,
-           TAO_Stub_Factory);
-#endif /* TAO_HAS_RT_CORBA == 1 */
 
   ACE_NEW (this->transport_sync_strategy_,
            TAO_Transport_Sync_Strategy);
@@ -243,12 +235,26 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-  delete this->endpoint_selector_factory_;
-
-  delete this->stub_factory_;
-
   delete this->transport_sync_strategy_;
+
+  delete this->poa_extension_initializer_;
 }
+
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
+
+TAO_Buffering_Constraint_Policy *
+TAO_ORB_Core::default_buffering_constraint (void) const
+{
+  CORBA::Policy_var policy =
+    this->default_policies_->get_cached_policy (TAO_CACHED_POLICY_BUFFERING_CONSTRAINT);
+
+  TAO::BufferingConstraintPolicy_ptr bcp =
+    TAO::BufferingConstraintPolicy::_narrow (policy.in ());
+  return ACE_dynamic_cast (TAO_Buffering_Constraint_Policy *, bcp);
+}
+
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
+
 
 int
 TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
@@ -905,15 +911,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
     trf->get_reactor_registry ();
   this->reactor_registry_->open (this);
 
-#if (TAO_HAS_RT_CORBA == 1)
-
-  this->get_protocols_hooks()->set_priority_mapping (this,
-                                                     trf,
-                                                     ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
-
   // @@ ????
   // Make sure the reactor is initialized...
   ACE_Reactor *reactor = this->reactor ();
@@ -1046,7 +1043,13 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   // registries!
 
   // Set ORB-level policy defaults.
-  if (this->get_protocols_hooks ()->set_default_policies (this) != 0)
+  TAO_Protocols_Hooks *tph = this->get_protocols_hooks (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  int status = tph->set_default_policies (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  if (status != 0)
     ACE_THROW_RETURN (CORBA::INITIALIZE (
                         CORBA::SystemException::_tao_minor_code (
                           TAO_ORB_CORE_INIT_LOCATION_CODE,
@@ -1098,61 +1101,9 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   // in the shutdown state.
   this->has_shutdown_ = 0;
 
-#if (TAO_HAS_RT_CORBA == 1)
-  // Check RT ORB options.
-  int rt_result = this->RT_ORB_init (argc, argv, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
-
-  if (rt_result != 0)
-    return -1;
-#endif /* TAO_HAS_RT_CORBA */
-
   return 0;
 }
 
-#if (TAO_HAS_RT_CORBA == 1)
-int
-TAO_ORB_Core::RT_ORB_init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_Arg_Shifter arg_shifter (argc, argv);
-
-  while (arg_shifter.is_anything_left ())
-    {
-      char *current_arg = 0;
-
-      /* Place holder for future RTORB options */
-
-      if (arg_shifter.cur_arg_strncasecmp ("-RTORB") != -1)
-        {
-          if (TAO_debug_level > 0)
-            {
-              current_arg = arg_shifter.get_current ();
-              ACE_DEBUG ((LM_ERROR,
-                          ACE_TEXT ("ERROR: Unknown \"-RTORB\" option ")
-                          ACE_TEXT ("<%s>.\n"),
-                          ((current_arg == 0) ? "<NULL>" : current_arg)));
-            }
-
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                                  CORBA::SystemException::_tao_minor_code (
-                                          TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                          EINVAL),
-                                  CORBA::COMPLETED_NO),
-                            -1);
-        }
-
-      ////////////////////////////////////////////////////////////////
-      // ok, we can't interpret this argument, move to next argument//
-      ////////////////////////////////////////////////////////////////
-      else
-        // Any arguments that don't match are ignored so that the
-        // caller can still use them.
-        arg_shifter.ignore_arg ();
-    }
-
-  return 0;
-}
-#endif /* TAO_HAS_RT_CORBA */
 
 int
 TAO_ORB_Core::fini (void)
@@ -1188,6 +1139,10 @@ TAO_ORB_Core::fini (void)
   CORBA::release (this->ior_manip_factory_);
 
   CORBA::release (this->ior_table_);
+
+  CORBA::release (this->rt_orb_);
+
+  CORBA::release (this->rt_current_);
 
   if (TAO_debug_level >= 3)
     {
@@ -1249,6 +1204,10 @@ TAO_ORB_Core::fini (void)
   // Pass reactor back to the resource factory.
   if (this->resource_factory_ != 0)
     this->resource_factory_->reclaim_reactor (this->reactor_);
+
+  // Release the priority mapping manager here since it can be used when
+  // shutting down the reactor above.
+  CORBA::release (this->rt_priority_mapping_manager_);
 
   (void) TAO_Internal::close_services ();
 
@@ -1379,6 +1338,104 @@ TAO_ORB_Core::resource_factory (void)
   return this->resource_factory_;
 }
 
+TAO_Stub_Factory *
+TAO_ORB_Core::stub_factory (void)
+{
+  // Check if there is a cached reference.
+  if (this->stub_factory_ != 0)
+    return this->stub_factory_;
+
+  // If not, look in the service repository for an instance.
+  this->stub_factory_ =
+    ACE_Dynamic_Service<TAO_Stub_Factory>::instance
+    (TAO_ORB_Core::stub_factory_name_);
+
+  // If there still isn't a reference, allocate the default.
+  if (this->stub_factory_ == 0)
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_WARNING,
+                    ACE_TEXT ("(%P|%t) WARNING - No Stub Factory found ")
+                    ACE_TEXT ("in Service Repository.\n")
+                    ACE_TEXT ("  Using default instance with GLOBAL resource ")
+                    ACE_TEXT ("source specifier.\n")));
+
+      // @@ RTCORBA Subsetting: The following comment probably should say
+      //    this if this doesn't work, a segmentation fault will be quickly
+      //    generated...
+
+      // This will throw an exception if it fails on exception-throwing
+      // platforms.
+      TAO_Stub_Factory *stub_factory;
+      ACE_NEW_RETURN (stub_factory,
+                      TAO_Default_Stub_Factory,
+                      0);
+
+      // Store a copy for later use.
+      this->stub_factory_ = stub_factory;
+    }
+
+  return this->stub_factory_;
+}
+
+void
+TAO_ORB_Core::set_poa_factory (
+                    const char *poa_factory_name,
+                    const char *poa_factory_directive)
+{
+  TAO_ORB_Core::poa_factory_name_ = poa_factory_name;
+  TAO_ORB_Core::poa_factory_directive_ = poa_factory_directive;
+}
+
+
+void
+TAO_ORB_Core::set_endpoint_selector_factory (
+                    const char *endpoint_selector_factory_name)
+{
+  TAO_ORB_Core::endpoint_selector_factory_name_ =
+    endpoint_selector_factory_name;
+}
+
+TAO_Endpoint_Selector_Factory *
+TAO_ORB_Core::endpoint_selector_factory (void)
+{
+  // Check if there is a cached reference.
+  if (this->endpoint_selector_factory_ != 0)
+    return this->endpoint_selector_factory_;
+
+  // If not, look in the service repository for an instance.
+  this->endpoint_selector_factory_ =
+    ACE_Dynamic_Service<TAO_Endpoint_Selector_Factory>::instance
+    (TAO_ORB_Core::endpoint_selector_factory_name_);
+
+  // If there still isn't a reference, allocate the default.
+  if (this->endpoint_selector_factory_ == 0)
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_WARNING,
+                    ACE_TEXT ("(%P|%t) WARNING - No Endpoint Selector Factory found ")
+                    ACE_TEXT ("in Service Repository.\n")
+                    ACE_TEXT ("  Using default instance with GLOBAL resource ")
+                    ACE_TEXT ("source specifier.\n")));
+
+      // @@ RTCORBA Subsetting: The following comment probably should say
+      //    this if this doesn't work, a segmentation fault will be quickly
+      //    generated...
+
+      // This will throw an exception if it fails on exception-throwing
+      // platforms.
+      TAO_Endpoint_Selector_Factory *selector_factory;
+      ACE_NEW_RETURN (selector_factory,
+                      TAO_Default_Endpoint_Selector_Factory,
+                      0);
+
+      // Store a copy for later use.
+      this->endpoint_selector_factory_ = selector_factory;
+    }
+
+  return this->endpoint_selector_factory_;
+}
+
 void
 TAO_ORB_Core::set_protocols_hooks (const char *protocols_hooks)
 {
@@ -1386,52 +1443,42 @@ TAO_ORB_Core::set_protocols_hooks (const char *protocols_hooks)
 }
 
 TAO_Protocols_Hooks *
-TAO_ORB_Core::get_protocols_hooks (void)
+TAO_ORB_Core::get_protocols_hooks (CORBA::Environment &ACE_TRY_ENV)
 {
-  if (TAO_ORB_Core::protocols_hooks_ == 0)
+  // Check if there is a cached reference.
+  if (this->protocols_hooks_ != 0)
+    return this->protocols_hooks_;
+
+  // If not, look in the service repository for an instance.
+  this->protocols_hooks_ =
+    ACE_Dynamic_Service<TAO_Protocols_Hooks>::instance
+    (TAO_ORB_Core::protocols_hooks_name_);
+
+  // If there still isn't a reference, allocate the default.
+  if (this->protocols_hooks_ == 0)
     {
-      // Look in the service repository for an instance.
-      TAO_ORB_Core::protocols_hooks_ =
-        ACE_Dynamic_Service<TAO_Protocols_Hooks>::instance
-        (TAO_ORB_Core::protocols_hooks_name_);
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_WARNING,
+                    ACE_TEXT ("(%P|%t) WARNING - No Protocols Hooks found ")
+                    ACE_TEXT ("in Service Repository.\n")
+                    ACE_TEXT ("  Using default instance with GLOBAL resource ")
+                    ACE_TEXT ("source specifier.\n")));
 
-      if (TAO_ORB_Core::protocols_hooks_ == 0)
-        {
-          if (ACE_OS::strcmp (TAO_ORB_Core::protocols_hooks_name_,
-                              "RT_Protocols_Hooks") == 0)
-            {
-              // @@ Kind of hard-coding .. on the fact that this is
-              // needed only when RT_CORBA==1 and if it is not
-              // RT_CORBA==1, the second if loop will serve the
-              // purpose.
-              int r = ACE_Service_Config::process_directive
-                (
-                 "dynamic RT_Protocols_Hooks Service_Object * TAO:_make_TAO_RT_Protocols_Hooks ()"
-                 );
-
-              if (r != 0)
-                {
-                  ACE_ERROR_RETURN ((LM_ERROR,
-                                     "Error Configuring RT_Protocols_Hooks\n"), 0);
-                }
-            }
-        }
-    }
-
-  if (TAO_ORB_Core::protocols_hooks_ == 0)
-    {
-      // Still don't have one, so let's allocate the default.  This
-      // will throw an exception if it fails on exception-throwing
-      // platforms.
       TAO_Protocols_Hooks *protocols_hooks;
-      ACE_NEW_RETURN (protocols_hooks,
-                      TAO_Protocols_Hooks,
-                      0);
+      ACE_NEW_THROW_EX (protocols_hooks,
+                        TAO_Default_Protocols_Hooks,
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (0);
 
-      TAO_ORB_Core::protocols_hooks_ = protocols_hooks;
+      // Store a copy for later use.
+      this->protocols_hooks_ = protocols_hooks;
     }
 
-  return TAO_ORB_Core::protocols_hooks_;
+  // Initialize the protocols hooks instance.
+  this->protocols_hooks_->init_hooks (this,
+                                      ACE_TRY_ENV);
+
+  return this->protocols_hooks_;
 }
 
 int
@@ -1679,15 +1726,13 @@ TAO_ORB_Core::root_poa (CORBA::Environment &ACE_TRY_ENV)
     return CORBA::Object::_duplicate (this->root_poa_.in ());
 
   TAO_Adapter_Factory *factory =
-    ACE_Dynamic_Service<TAO_Adapter_Factory>::instance ("TAO_POA");
+    ACE_Dynamic_Service<TAO_Adapter_Factory>::instance (TAO_ORB_Core::poa_factory_name_);
   if (factory == 0)
     {
       // Try again, using the default directive...
-      ACE_Service_Config::process_directive (
-                                             "dynamic TAO_POA Service_Object * TAO_PortableServer:_make_TAO_Object_Adapter_Factory()"
-                                             );
+      ACE_Service_Config::process_directive (TAO_ORB_Core::poa_factory_directive_);
       factory =
-        ACE_Dynamic_Service<TAO_Adapter_Factory>::instance ("TAO_POA");
+        ACE_Dynamic_Service<TAO_Adapter_Factory>::instance (TAO_ORB_Core::poa_factory_name_);
     }
 
   if (factory == 0)
@@ -1751,10 +1796,10 @@ TAO_ORB_Core::create_stub(const char *repository_id,
                           CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Stub *retval =
-    this->stub_factory_->create_stub (repository_id,
-                                      profiles,
-                                      orb_core,
-                                      ACE_TRY_ENV);
+    this->stub_factory ()->create_stub (repository_id,
+                                        profiles,
+                                        orb_core,
+                                        ACE_TRY_ENV);
   ACE_CHECK_RETURN(0);
   return retval;
 }
@@ -2243,12 +2288,9 @@ TAO_ORB_Core::open (CORBA::Environment &ACE_TRY_ENV)
   return 0;
 }
 
-#if (TAO_HAS_RT_CORBA == 1)
-
 void
 TAO_ORB_Core::resolve_rt_orb_i (CORBA::Environment &ACE_TRY_ENV)
 {
-  // @@
   TAO_Object_Loader *loader =
     ACE_Dynamic_Service<TAO_Object_Loader>::instance ("RT_ORB_Loader");
 
@@ -2258,7 +2300,7 @@ TAO_ORB_Core::resolve_rt_orb_i (CORBA::Environment &ACE_TRY_ENV)
       // dynamically load it...
       ACE_Service_Config::process_directive (
                                              "dynamic RT_ORB_Loader Service_Object *"
-                                             "TAO:_make_TAO_RT_ORB_Loader()"
+                                             "TAO_RTCORBA:_make_TAO_RT_ORB_Loader()"
                                              );
 
       loader =
@@ -2270,10 +2312,33 @@ TAO_ORB_Core::resolve_rt_orb_i (CORBA::Environment &ACE_TRY_ENV)
   /// Create RT_ORB object.
   this->rt_orb_ =
     loader->create_object (this->orb_.in (), 0, 0, ACE_TRY_ENV);
-
 }
 
-#endif /* TAO_HAS_RT_CORBA == 1 */
+void
+TAO_ORB_Core::resolve_rt_current_i (CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Object_Loader *loader =
+    ACE_Dynamic_Service<TAO_Object_Loader>::instance ("RT_Current_Loader");
+
+  if (loader == 0)
+    {
+      // The Loader has not been statically configured, try to
+      // dynamically load it...
+      ACE_Service_Config::process_directive (
+                                             "dynamic RT_Current_Loader Service_Object *"
+                                             "TAO_RTCORBA:_make_TAO_RT_Current_Loader()"
+                                             );
+
+      loader =
+        ACE_Dynamic_Service<TAO_Object_Loader>::instance ("RT_Current_Loader");
+      if (loader == 0)
+        ACE_THROW (CORBA::ORB::InvalidName ());
+    }
+
+  /// Create RT_Current object.
+  this->rt_current_ =
+    loader->create_object (this->orb_.in (), 0, 0, ACE_TRY_ENV);
+}
 
 void
 TAO_ORB_Core::resolve_typecodefactory_i (CORBA::Environment &ACE_TRY_ENV)
@@ -2967,7 +3032,7 @@ TAO_ORB_Core::stubless_sync_scope (CORBA::Policy *&result)
   // No need to lock, the object is in TSS storage....
   TAO_Policy_Current &policy_current =
     this->policy_current ();
-  result = policy_current.sync_scope ();
+  result = policy_current.get_cached_policy (TAO_CACHED_POLICY_SYNC_SCOPE);
 
   // @@ Must lock, but is is harder to implement than just modifying
   //    this call: the ORB does take a lock to modify the policy
@@ -2977,11 +3042,11 @@ TAO_ORB_Core::stubless_sync_scope (CORBA::Policy *&result)
       TAO_Policy_Manager *policy_manager =
         this->policy_manager ();
       if (policy_manager != 0)
-        result = policy_manager->sync_scope ();
+        result = policy_manager->get_cached_policy (TAO_CACHED_POLICY_SYNC_SCOPE);
     }
 
   if (result == 0)
-    result = this->default_sync_scope ();
+    result = this->default_policies_->get_cached_policy (TAO_CACHED_POLICY_SYNC_SCOPE);
 
   return;
 }
@@ -3020,7 +3085,7 @@ TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
   // No need to lock, the object is in TSS storage....
   TAO_Policy_Current &policy_current =
     this->policy_current ();
-  result = policy_current.relative_roundtrip_timeout ();
+  result = policy_current.get_cached_policy (TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
 
   // @@ Must lock, but is is harder to implement than just modifying
   //    this call: the ORB does take a lock to modify the policy
@@ -3030,49 +3095,19 @@ TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
       TAO_Policy_Manager *policy_manager =
         this->policy_manager ();
       if (policy_manager != 0)
-        result = policy_manager->relative_roundtrip_timeout ();
+        result = policy_manager->get_cached_policy (TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
     }
 
   if (result == 0)
-    result = this->default_relative_roundtrip_timeout ();
+    result = this->default_policies_->get_cached_policy (TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   return result;
 
 }
 
-#if (TAO_HAS_RT_CORBA==1)
-
-CORBA::Object_ptr
-TAO_ORB_Core::priority_mapping_manager (void)
-{
-  if (CORBA::is_nil (this->priority_mapping_manager_.in ()))
-    {
-      ACE_TRY_NEW_ENV
-        {
-          this->priority_mapping_manager_ =
-            this->object_ref_table_.resolve_initial_references (
-              "PriorityMappingManager",
-              ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          if (TAO_debug_level > 1)
-            ACE_DEBUG ((LM_DEBUG,
-                        "Could not resolve "
-                        "\"PriorityMappingManager\".\n"));
-
-          return CORBA::Object::_nil ();
-        }
-      ACE_ENDTRY;
-    }
-
-  return CORBA::Object::_duplicate (this->priority_mapping_manager_.in ());
-}
-
 CORBA::Policy *
-TAO_ORB_Core::threadpool (void)
+TAO_ORB_Core::get_cached_policy (TAO_Cached_Policy_Type type)
 {
   CORBA::Policy *result = 0;
 
@@ -3082,53 +3117,23 @@ TAO_ORB_Core::threadpool (void)
   TAO_Policy_Manager *policy_manager =
     this->policy_manager ();
   if (policy_manager != 0)
-    result = policy_manager->threadpool ();
+    result = policy_manager->get_cached_policy (type);
 
   if (result == 0)
-    result = this->default_threadpool ();
+    result = this->get_default_policies ()->get_cached_policy (type);
 
   return result;
 }
 
-CORBA::Policy *
-TAO_ORB_Core::priority_model (void)
+void
+TAO_ORB_Core::add_poa_extension_initializer (TAO_POA_Extension_Initializer *initializer)
 {
-  CORBA::Policy *result = 0;
-
-  // @@ Must lock, but is is harder to implement than just modifying
-  //    this call: the ORB does take a lock to modify the policy
-  //    manager
-  TAO_Policy_Manager *policy_manager =
-    this->policy_manager ();
-  if (policy_manager != 0)
-    result = policy_manager->priority_model ();
-
-  if (result == 0)
-    result = this->default_priority_model ();
-
-  return result;
+  if (this->poa_extension_initializer_)
+    this->poa_extension_initializer_->add_initializer (initializer);
+  else
+    this->poa_extension_initializer_ = initializer;
 }
 
-CORBA::Policy *
-TAO_ORB_Core::server_protocol (void)
-{
-  CORBA::Policy *result = 0;
-
-  // @@ Must lock, but is is harder to implement than just modifying
-  //    this call: the ORB does take a lock to modify the policy
-  //    manager
-  TAO_Policy_Manager *policy_manager =
-    this->policy_manager ();
-  if (policy_manager != 0)
-    result = policy_manager->server_protocol ();
-
-  if (result == 0)
-    result = this->default_server_protocol ();
-
-  return result;
-}
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
 
 // ****************************************************************
 

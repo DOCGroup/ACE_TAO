@@ -26,8 +26,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "poa_macros.h"
-// Stubs
-#include "RTPortableServerC.h"
 
 // Servant
 #include "Servant_Base.h"
@@ -38,14 +36,16 @@
 #include "tao/Adapter.h"
 #include "tao/Server_Strategy_Factory.h"
 
-// RTCORBA
-#include "tao/RTCORBAC.h"
-#include "tao/Service_Context.h"
-
 // Local Object
 #include "tao/LocalObject.h"
 
 #include "ace/Service_Config.h"
+
+// Policy Validators
+#include "Default_Policy_Validator.h"
+
+// Policy Set
+#include "POA_Policy_Set.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -282,6 +282,20 @@ public:
 
   static CORBA::ULong transient_poa_name_size (void);
 
+  /// Return the validator.
+  TAO_POA_Policy_Validator &validator (void);
+
+  /// Return the set of default policies.
+  TAO_POA_Policy_Set &default_poa_policies (void);
+
+  /// Set the servant dispatcher method.  Ownership is transferred to
+  /// this Object Adapter.  Note: This should only be called
+  /// at initialization.
+  void servant_dispatcher (TAO_Servant_Dispatcher *dispatcher);
+
+  /// Initialize the default set of POA policies.
+  void init_default_policies (TAO_POA_Policy_Set &policies,
+                              CORBA::Environment &ACE_TRY_ENV);
 
   // = The TAO_Adapter methods, please check tao/Adapter.h for the
   // documentation
@@ -737,6 +751,14 @@ private:
 
   TAO_POA *root_;
   // The Root POA
+
+  /// The default validator and the beginning of the chain of
+  /// policy validators.
+  TAO_POA_Default_Policy_Validator default_validator_;
+
+  /// Save a list of default policies that should be included in
+  /// every POA (unless overridden).
+  TAO_POA_Policy_Set default_poa_policies_;
 };
 
 // ****************************************************************

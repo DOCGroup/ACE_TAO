@@ -49,7 +49,7 @@ class TAO_Buffering_Constraint_Policy;
 
 class TAO_Sync_Strategy;
 class TAO_GIOP_Invocation;
-class TAO_Policy_Manager_Impl;
+class TAO_Policy_Set;
 
 
 // Descriptions of parameters.
@@ -141,12 +141,6 @@ public:
   //   and, finally, ORB default values are checked.
 
   CORBA::Policy *relative_roundtrip_timeout (void);
-
-#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
-
-  TAO_Client_Priority_Policy *client_priority (void);
-
-#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
 
   CORBA::Policy *sync_scope (void);
 
@@ -387,7 +381,7 @@ protected:
 
   /// The policy overrides in this object, if nil then use the default
   /// policies.
-  TAO_Policy_Manager_Impl *policies_;
+  TAO_Policy_Set *policies_;
 
   /// The addressing mode.
   CORBA::Short addressing_mode_;

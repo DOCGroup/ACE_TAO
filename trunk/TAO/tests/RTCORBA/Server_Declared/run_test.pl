@@ -40,14 +40,14 @@ if ($^O eq "MSWin32") {
 
 if ($^O eq "dec_osf") {
     $server_args =
-	"-p $iorfile1 -o $iorfile2 -a 20 -b 30 -c 25 -ORBSvcConf $server_conf "
+        "-p $iorfile1 -o $iorfile2 -a 20 -b 30 -c 25 -ORBSvcConf $server_conf "
       ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=20 "
       ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=30 "
       ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=28 ";
 }
 
 $client_args = "-p file://$iorfile1 -o file://$iorfile2";
-
+print STDERR "server $server_args\n";
 $SV = new PerlACE::Process ("server", $server_args);
 $CL = new PerlACE::Process ("client", $client_args);
 
@@ -58,7 +58,7 @@ $SV->Spawn ();
 
 if (PerlACE::waitforfile_timed ($iorfile2, 10) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile2>\n";
-    $SV->Kill (); 
+    $SV->Kill ();
     exit 1;
 }
 

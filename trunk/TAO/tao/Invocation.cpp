@@ -15,9 +15,7 @@
 #include "Transport_Mux_Strategy.h"
 #include "Bind_Dispatcher_Guard.h"
 #include "Endpoint.h"
-#include "RT_Policy_i.h"
 #include "Base_Transport_Property.h"
-#include "Private_Transport_Descriptor.h"
 
 #include "Messaging_Policy_i.h"
 #include "GIOP_Utils.h"
@@ -208,95 +206,6 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   this->endpoint_selector_->select_endpoint (this,
                                              ACE_TRY_ENV);
   ACE_CHECK;
-
-  // Loop until a connection is established or there aren't any more
-  // profiles to try.
-  //  for (;;)
-  // {
-//       // Allow loaded services to select the profile.
-//       if (this->stub_->service_profile_selection ())
-//         {
-//           this->profile_ = this->stub_->profile_in_use ();
-//           this->endpoint_ = this->profile_->endpoint ();
-//         }
-//       else
-//         {
-//           // If loaded services have nothing to say on
-//           // profile/endpoint selection, let the strategy do the work.
-//           this->endpoint_selector_->select_endpoint (this,
-//                                                      ACE_TRY_ENV);
-//           ACE_CHECK;
-//         }
-
-//       // Get the transport object.
-//       if (this->transport_ != 0)
-//         {
-//           this->transport_->make_idle ();
-//         }
-
-//       // Create descriptor for the connection we need to find.
-//       TAO_Transport_Descriptor_Interface *desc;
-//       TAO_Base_Transport_Property default_desc (this->endpoint_);
-//       desc = &default_desc;
-
-// #if (TAO_HAS_RT_CORBA == 1)
-
-//       // RTCORBA::PrivateConnectionPolicy processing.
-//       TAO_Private_Transport_Descriptor
-//         private_desc (this->endpoint_,
-//                       ACE_reinterpret_cast (long, this->stub_));
-//       if (this->endpoint_selection_state_.private_connection_)
-//         desc = &private_desc;
-
-// #endif /* TAO_HAS_RT_CORBA == 1 */
-
-//       // Release the transport prior to connecting.
-//       // In most cases the transport_ will already be zero.
-//       TAO_Transport::release (this->transport_);
-//       this->transport_ = 0;
-
-//       // Obtain a connection.
-//       int result = this->conn_reg_->connect (desc,
-//                                       this->transport_,
-//                                       this->max_wait_time_,
-//                                       ACE_TRY_ENV);
-//       ACE_CHECK;
-
-//       if (result == 0)
-//         {
-//           // Now that we have the client connection handler object we need to
-//           // set the right messaging protocol for in the client side transport.
-//           const TAO_GIOP_Message_Version& version = this->profile_->version ();
-//           result = this->transport_->messaging_init (version.major,
-//                                                      version.minor);
-//           if (result == -1)
-//             {
-//               if (TAO_debug_level > 0)
-//                 {
-//                   ACE_DEBUG ((LM_DEBUG,
-//                               ACE_TEXT ("(%N|%l|%p|%t) ")
-//                               ACE_TEXT ("messaging_init() failed\n")));
-//                 }
-//             }
-//           else
-//             break;
-//         }
-
-//       if (errno == ETIME)
-//         {
-//           ACE_THROW (CORBA::TIMEOUT (
-//               CORBA_SystemException::_tao_minor_code (
-//                   TAO_TIMEOUT_CONNECT_MINOR_CODE,
-//                   errno),
-//               CORBA::COMPLETED_NO));
-//         }
-
-//       // Try another profile/endpoint.
-//       this->endpoint_selector_->next (this, ACE_TRY_ENV);
-//       ACE_CHECK;
-
-//       countdown.update ();
-//    }
 
   // Set the unique request ID associated with this request.
   this->op_details_.request_id (this->transport_->tms ()->request_id ());
@@ -624,12 +533,6 @@ TAO_GIOP_Invocation::location_forward_i (TAO_Stub *stubobj,
 
   this->restart_flag_ = 1;
 }
-
-
-#if (TAO_HAS_RT_CORBA == 1)
-#include "tao/RT_Stub.h"
-#endif /* TAO_HAS_RT_CORBA */
-
 
 // ****************************************************************
 

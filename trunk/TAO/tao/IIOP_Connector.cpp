@@ -483,9 +483,6 @@ TAO_IIOP_Connector::object_key_delimiter (void) const
 int
 TAO_IIOP_Connector::init_tcp_properties (void)
 {
-
-#if (TAO_HAS_RT_CORBA == 1)
-
   // Connector protocol properties are obtained from ORB-level
   // RTCORBA::ClientProtocolProperties policy override.
   // If the override doesn't exist or doesn't contain the
@@ -498,11 +495,14 @@ TAO_IIOP_Connector::init_tcp_properties (void)
 
   ACE_DECLARE_NEW_CORBA_ENV;
 
-  int send_buffer_size = 0;
-  int recv_buffer_size = 0;
-  int no_delay = 0;
+  // Initialize the settings to the ORB defaults.  If RT CORBA is enabled,
+  // it may override these.
+  int send_buffer_size = this->orb_core ()->orb_params ()->sock_sndbuf_size ();
+  int recv_buffer_size = this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
+  int no_delay = this->orb_core ()->orb_params ()->nodelay ();
 
-  TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
+  TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   if (tph != 0)
     {
@@ -510,8 +510,7 @@ TAO_IIOP_Connector::init_tcp_properties (void)
       const char *protocol_type = protocol;
 
       int hook_result =
-        tph->call_client_protocols_hook (this->orb_core (),
-                                         send_buffer_size,
+        tph->call_client_protocols_hook (send_buffer_size,
                                          recv_buffer_size,
                                          no_delay,
                                          protocol_type);
@@ -527,19 +526,6 @@ TAO_IIOP_Connector::init_tcp_properties (void)
     recv_buffer_size;
   this->tcp_properties_.no_delay =
     no_delay;
-
-#else /* TAO_HAS_RT_CORBA == 1 */
-
-  // Without RTCORBA, protocol configuration properties come from ORB
-  // options.
-  this->tcp_properties_.send_buffer_size =
-    this->orb_core ()->orb_params ()->sock_sndbuf_size ();
-  this->tcp_properties_.recv_buffer_size =
-    this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
-  this->tcp_properties_.no_delay =
-    this->orb_core ()->orb_params ()->nodelay ();
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
 
   return 0;
 }
