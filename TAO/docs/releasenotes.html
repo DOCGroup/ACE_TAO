@@ -32,24 +32,26 @@ Point of contact: <A HREF="mailto:cleeland@cs.wustl.edu">Chris Cleeland</A>
 <BLOCKQUOTE>
   <P>Current status:</P>
   <UL>
+    <LI>Provides dynamically linked wholesale assignment of ORB strategies for
+    communication, concurrency, demultiplexing, scheduling, and dispatching
+    using the ACE Service Configurator framework.
+    <LI>Supports several concurrency models out of the box: Reactive,
+    Thread-per-Connection, and ORB-per-thread.  The ORB-per-thread design
+    is optimized for real-time I/O subsystems.
+  </UL>
+  <P>Future work:</P>
+  <UL>
     <LI>There is a bug in the ORB-per-thread concurrency model caused by its
     use of the ACE Service Configurator.  The bug is understood,
     and a patch is being readied and should be released no later than October 3rd.
-    <LI>Provides dynamically linked wholesale strategy assignment using the
-    ACE Service Configurator framework.
-    <LI>Supports several concurrency models out of the box: Reactive, Thread-per-Connection,
-    and ORB-per-thread. We're in the process of creating new models, e.g., Thread-per-Request
     <LI>The ORB-per-thread model is not yet integrated with the other concurrency
     models; it must be selected at <EM>compile time</EM> rather than run time.
     In order to use it, one must add <CODE>-DTAO_HAS_TSS_ORBCORE</CODE> to the compile
     line in both the library (<code>$(TAO_ROOT)/tao</code>) and the application
     (<em>e.g.</em>, <code>$(TAO_ROOT)/tests/multiCubit</code>).  Future releases of
     TAO will fix this restriction so that all threading models are available at run-time. 
-  </UL>
-  <P>Future work:</P>
-  <UL>
     <LI>Add Orbix-like <CODE>_bind</CODE> calls in lieu of always needing a Naming Service.
-    <LI>Better integrate ORB-per-thread so it can be selected at run-time.
+    <LI>Support new concurrency models, e.g., Thread-per-Request.
     <LI>Clean up the internals and analyze for performance bottlenecks using
     Quantify.
     <LI>Integrate the <A HREF="#poa">POA</A> implementation.
@@ -86,26 +88,27 @@ Point of contact: <A HREF="mailto:gokhale@cs.wustl.edu">Andy Gokhale</A>
     in performance (or slightly less) than compiled stubs. Hence, it will be
     useful for small distributed equipment such as handsets, PDAs, etc.
     <LI>In doing the above, improvements to the IIOP protocol engine in terms
-    of size/performance will be made.
+    of size/performance/determinism will be made.
   </UL>
 </BLOCKQUOTE>
 
 <HR><P>
-<H3><A NAME="eventchannel"></A>Event Channel</H3>
+<H3><A NAME="eventchannel"></A>Real-time Event Channel</H3>
 
 Point of contact: <A HREF="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</A>
 
 <BLOCKQUOTE>
   <P>Current status:</P>
   <UL>
-    <LI>The current Event Channel is running under Orbix, fully distributed,
-    the main test I've running has three processes, one runs the EC itself,
-    one a Supplier and yet another a Consumer.
+    <LI>The current real-time Event Channel is running under Orbix, fully distributed.
+        The main test has three processes, one runs the EC itself, one a
+	 Supplier and yet another a Consumer. 
     <LI>The configuration runs can be done even on the distributed scenario,using
-    an IDL &quot;Scheduling Service.&quot;
-    <LI>At run-time (no config runs) there is no need to use the Scheduling
-    Service, a faster, collocated implementation for the service is available.
-    Obviously the information is generated on the config runs and linked into
+    the Real-time Scheduling Service, which now has an IDL interface.
+    <LI>At run-time (no config runs) there is no need to use the
+	 Real-time Scheduling Service, a faster, collocated
+	 implementation for the service is available. 
+    Obviously, the information is generated on the config runs and linked into
     the program.
   </UL>
   <P>Future work:</P>
