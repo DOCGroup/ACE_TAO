@@ -419,3 +419,23 @@ the first joined multicast group to the socket, and all future joins on that
 socket will fail with an error.])
 fi
 ])
+
+
+# ACE_VAR_TIMEZONE
+#
+# Checks whether platform has global "timezone" variable.
+#
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_VAR_TIMEZONE],
+[AC_CACHE_CHECK([for timezone variable],
+		[ace_cv_var_timezone],
+		[AC_TRY_LINK([#include <time.h>],
+			     [return (int)timezone;],
+		             [ace_cv_var_timezone=yes],
+			     [ace_cv_var_timezone=no])
+		])
+if test "$ace_cv_var_timezone" = yes; then
+  AC_DEFINE([ACE_HAS_TIMEZONE], 1,
+	    [Define to 1 if platform has global timezone variable])
+fi
+])

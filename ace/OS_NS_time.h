@@ -133,48 +133,35 @@ struct tm {
  */
 inline long ace_timezone()
 {
-#if !defined (VXWORKS) && !defined (ACE_PSOS) && !defined (CHORUS)
-# if defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WINCE)
   TIME_ZONE_INFORMATION tz;
   GetTimeZoneInformation (&tz);
   return tz.Bias * 60;
-# elif defined (ACE_WIN32) && !defined (ACE_HAS_DINKUM_STL)
+#elif defined (ACE_WIN32) && !defined (ACE_HAS_DINKUM_STL)
   return _timezone;  // For Win32.
-# elif defined (ACE_WIN32) && defined (ACE_HAS_DINKUM_STL)
+#elif defined (ACE_WIN32) && defined (ACE_HAS_DINKUM_STL)
   time_t tod = time(0);   // get current time
   time_t t1 = mktime(gmtime(&tod));   // convert without timezone
   time_t t2 = mktime(localtime(&tod));   // convert with timezone
   return difftime(t1, t2); // compute difference in seconds
-# elif defined (ACE_HAS_TIMEZONE_GETTIMEOFDAY) \
-	&& !defined (__linux__)  \
-	&& !defined (__FreeBSD__) \
-	&& !defined (__NetBSD__)
+#elif defined (ACE_HAS_TIMEZONE)
+  // The XPG/POSIX specification requires that tzset() be called to
+  // set the global variable <timezone>.
+  ::tzset();
+  return timezone;
+#elif defined (ACE_HAS_TIMEZONE_GETTIMEOFDAY)
   // The XPG/POSIX specification does not require gettimeofday to
   // set the timezone struct (it leaves the behavior of passing a
-  // non-null struct undefined).  We know gettimeofday() on Linux
-  // *BSD systems does not set the timezone, so we avoid using it
-  // and use the global variable <timezone> instead. 
-  //
-  // @note As of this writing, OpenBSD does not provide the global
-  // variable timezone.
-  //
-  // @todo It would be better if we had a feature test macro that
-  // could be used instead of a list of operating systems.
+  // non-null struct undefined). 
   long result = 0;
   struct timeval time;
   struct timezone zone;
   ACE_UNUSED_ARG (result);
   ACE_OSCALL (::gettimeofday (&time, &zone), int, -1, result);
   return zone.tz_minuteswest * 60;
-# else  /* ACE_HAS_TIMEZONE_GETTIMEOFDAY */
-  // The XPG/POSIX specification requires that tzset() be called to
-  // set the global variable <timezone>.
-  ::tzset();
-  return timezone;
-# endif /* ACE_HAS_TIMEZONE_GETTIMEOFDAY */
-#else
+#else  
   ACE_NOTSUP_RETURN (0);
-#endif /* !ACE_HAS_WINCE && !VXWORKS && !ACE_PSOS */
+#endif
 }
 
 
