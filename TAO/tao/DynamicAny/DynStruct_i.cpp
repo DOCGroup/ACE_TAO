@@ -104,18 +104,27 @@ TAO_DynStruct_i::init (CORBA_TypeCode_ptr tc,
   ACE_CHECK;
 
   this->type_ = CORBA::TypeCode::_duplicate (tc);
-  this->current_index_ = 0;
 
   CORBA::ULong numfields = tc->member_count (ACE_TRY_ENV);
   ACE_CHECK;
 
+  this->current_index_ = numfields ? 0 : -1;
+
   // Resize the array.
   this->da_members_.size (numfields);
 
+  CORBA::TypeCode_var mtype;
+
   for (CORBA::ULong i = 0; i < numfields; i++)
     {
-      // With a typecode arg, we just create the top level.
-      this->da_members_[i] = 0;
+      mtype = tc->member_type (i,
+                               ACE_TRY_ENV);
+      ACE_CHECK;
+
+      // Recursively initialize each member.
+      this->da_members_[i] = TAO_DynAnyFactory::make_dyn_any (mtype.in (),
+                                                              ACE_TRY_ENV);
+      ACE_CHECK;
     }
 }
 

@@ -106,8 +106,11 @@ TAO_DynSequence_i::init (CORBA_TypeCode_ptr tc,
       ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
     }
 
+  // Empty sequence.
+  this->da_members_.size (0U);
+
   this->type_ = CORBA::TypeCode::_duplicate (tc);
-  this->current_index_ = 0;
+  this->current_index_ = -1;
 }
 
 // ****************************************************************
