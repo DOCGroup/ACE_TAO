@@ -65,7 +65,11 @@ malloc_recurse (int count)
 static void *
 worker (void *arg)
 {
+#if defined (ACE_HAS_64BIT_LONGS)
+  malloc_recurse ((long) arg);
+#else /* ! ACE_HAS_64BIT_LONGS */
   malloc_recurse ((int) arg);
+#endif /* ! ACE_HAS_64BIT_LONGS */
   return 0;
 }
 #endif /* ACE_HAS_THREADS */
