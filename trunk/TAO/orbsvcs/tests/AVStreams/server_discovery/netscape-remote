@@ -1,8 +1,0 @@
-#!/pkg/gnu/bin/bash
-if [ -h $HOME/.netscape/lock ]
-then echo hello > /dev/console
-else exec netscape $1 2>&1 > /dev/console
-fi
-
-exec netscape -remote openURL'('$1')' 2>&1 | cat > /dev/console
-
