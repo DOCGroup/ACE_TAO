@@ -66,7 +66,7 @@ class ACE_Export ACE_Lib_Find
   // it returns pieces one at a time instead of into an array.
 
 #if defined (ACE_HAS_WCHAR)
-  size_t strrepl (wchar_t *s, wchar_t search, wchar_t replace);
+  static size_t strrepl (wchar_t *s, wchar_t search, wchar_t replace);
   // As strrepl, but for wide characters.
 
   static wchar_t *strsplit_r (wchar_t *s, const wchar_t *token,
