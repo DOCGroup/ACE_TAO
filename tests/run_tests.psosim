@@ -155,6 +155,8 @@ run Enum_Interfaces_Test                # uses ACE::get_ip_interfaces()
 #Conn_Test: requires either fork or threads
 #run Conn_Test                           # uses Thread_Manager, Acceptor/Connector, SOCK_SAP
 
+run Upgradable_RW_Test                  # uses RW locks
+
 echo "Tests complete..."
 
 /bin/rm -f ace_pipe_name pattern $tmp/ace_temp_file $tmp/ace_temp_file2 $tmp/ace_test_file $tmp/Naming_Test*
