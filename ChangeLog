@@ -1,3 +1,12 @@
+Mon Dec 10 19:10:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Refcountable.h: 
+	* ace/Recyclable.h:
+	* ace/Hashable.h:
+	* ace/Hashable.inl:
+	* ace/Notification_Strategy.inl:
+	* ace/Reactor_Notification_Strategy.inl: Fixed fuzz errors.
+
 Mon Dec 10 18:54:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/ace_dll.dsp:
